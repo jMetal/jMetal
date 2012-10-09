@@ -100,7 +100,7 @@ public class XInt {
 		else if (type_.getClass() == ArrayIntSolutionType.class) 
 			return (int)((ArrayInt)(solution_.getDecisionVariables()[0])).getLowerBound(index) ;
 		else {
-			Configuration.logger_.severe("jmetal.util.wrapper.Xreal.getLowerBound, solution type " +
+			Configuration.logger_.severe("jmetal.util.wrapper.XInt.getLowerBound, solution type " +
 					type_ + "+ invalid") ;		
 		}
 		return 0 ;
@@ -118,7 +118,7 @@ public class XInt {
 		else if (type_.getClass() == ArrayIntSolutionType.class) 
 			return (int)((ArrayInt)(solution_.getDecisionVariables()[0])).getUpperBound(index) ;
 		else
-			Configuration.logger_.severe("jmetal.util.wrapper.Xreal.getUpperBound, solution type " +
+			Configuration.logger_.severe("jmetal.util.wrapper.XInt.getUpperBound, solution type " +
 					type_ + "+ invalid") ;		
 
 		return 0 ;
