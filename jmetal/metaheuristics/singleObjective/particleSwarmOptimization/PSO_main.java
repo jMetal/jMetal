@@ -59,7 +59,8 @@ public class PSO_main {
    *      - jmetal.metaheuristics.mocell.MOCell_main problemName
    *      - jmetal.metaheuristics.mocell.MOCell_main problemName ParetoFrontFile
    */
-  public static void main(String [] args) throws JMException, IOException, ClassNotFoundException {
+  public static void main(String [] args) 
+  		throws JMException, IOException, ClassNotFoundException {
     Problem   problem   ;  // The problem to solve
     Algorithm algorithm ;  // The algorithm to use
     Mutation  mutation  ;  // "Turbulence" operator
