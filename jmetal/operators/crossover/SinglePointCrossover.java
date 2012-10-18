@@ -75,7 +75,7 @@ public class SinglePointCrossover extends Crossover {
    * Perform the crossover operation.
    * @param probability Crossover probability
    * @param parent1 The first parent
-   * @param parent2 The second parent
+   * @param parent2 The second parent   
    * @return An array containig the two offsprings
    * @throws JMException
    */
@@ -96,10 +96,10 @@ public class SinglePointCrossover extends Crossover {
                     ((Binary) parent1.getDecisionVariables()[i]).getNumberOfBits();
           }
 
-          //2. Calcule the point to make the crossover
+          //2. Calculate the point to make the crossover
           int crossoverPoint = PseudoRandom.randInt(0, totalNumberOfBits - 1);
 
-          //3. Compute the variable that containt the crossoverPoint bit
+          //3. Compute the variable containing the crossoverPoint bit
           int variable = 0;
           int acountBits =
                   ((Binary) parent1.getDecisionVariables()[variable]).getNumberOfBits();
@@ -110,12 +110,12 @@ public class SinglePointCrossover extends Crossover {
                     ((Binary) parent1.getDecisionVariables()[variable]).getNumberOfBits();
           }
 
-          //4. Compute the bit into the variable selected
+          //4. Compute the bit into the selected variable
           int diff = acountBits - crossoverPoint;
           int intoVariableCrossoverPoint =
-                  ((Binary) parent1.getDecisionVariables()[variable]).getNumberOfBits() - diff;
+                  ((Binary) parent1.getDecisionVariables()[variable]).getNumberOfBits() - diff ;
 
-          //5. Make the crossover into the the gene;
+          //5. Make the crossover into the gene;
           Binary offSpring1, offSpring2;
           offSpring1 =
                   (Binary) parent1.getDecisionVariables()[variable].deepCopy();
