@@ -65,8 +65,6 @@ public class NSGAIIAdaptive extends Algorithm {
 
 		//Read parameter values
 		populationSize_ = ((Integer) getInputParameter("populationSize")).intValue();
-		//CR_ = ((Double) getInputParameter("CR")).doubleValue();
-		//F_ = ((Double) getInputParameter("F")).doubleValue();
 		maxEvaluations_ = ((Integer) getInputParameter("maxEvaluations")).intValue();
 		indicators_ = (QualityIndicator) getInputParameter("indicators");
 		
