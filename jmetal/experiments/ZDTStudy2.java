@@ -41,76 +41,77 @@ import jmetal.util.JMException;
  * Class implementing an example experimental study. Three algorithms are 
  * compared when solving the benchmarks, and the hypervolume,
  * spread and additive epsilon indicators are used for performance assessment.
+ * This experiment assumes that the reference Pareto fronts are unknown
  */
-public class ZDTStudy extends Experiment {
+public class ZDTStudy2 extends Experiment {
 
-  /**
-   * Configures the algorithms in each independent run
-   * @param problemName The problem to solve
-   * @param problemIndex
-   * @throws ClassNotFoundException 
-   */
-  public void algorithmSettings(String problemName, 
-  		                          int problemIndex, 
-  		                          Algorithm[] algorithm) throws ClassNotFoundException {
-    try {
-      int numberOfAlgorithms = algorithmNameList_.length;
+	/**
+	 * Configures the algorithms in each independent run
+	 * @param problemName The problem to solve
+	 * @param problemIndex
+	 * @throws ClassNotFoundException 
+	 */
+	public void algorithmSettings(String problemName, 
+			int problemIndex, 
+			Algorithm[] algorithm) throws ClassNotFoundException {
+		try {
+			int numberOfAlgorithms = algorithmNameList_.length;
 
-      HashMap[] parameters = new HashMap[numberOfAlgorithms];
+			HashMap[] parameters = new HashMap[numberOfAlgorithms];
 
-      for (int i = 0; i < numberOfAlgorithms; i++) {
-        parameters[i] = new HashMap();
-      } // for
+			for (int i = 0; i < numberOfAlgorithms; i++) {
+				parameters[i] = new HashMap();
+			} // for
 
-      if (!paretoFrontFile_[problemIndex].equals("")) {
-        for (int i = 0; i < numberOfAlgorithms; i++)
-          parameters[i].put("paretoFrontFile_", paretoFrontFile_[problemIndex]);
-        } // if
+			if (!(paretoFrontFile_[problemIndex] == null) && !paretoFrontFile_[problemIndex].equals("")) {
+				for (int i = 0; i < numberOfAlgorithms; i++)
+					parameters[i].put("frontPath_", frontPath_[problemIndex]);
+				//parameters[i].put("paretoFrontFile_", paretoFrontFile_[problemIndex]);
+			} // if
 
-        algorithm[0] = new NSGAII_Settings(problemName).configure(parameters[0]);
-        algorithm[1] = new SMPSO_Settings(problemName).configure(parameters[1]);
-        algorithm[2] = new GDE3_Settings(problemName).configure(parameters[2]);
-      } catch (IllegalArgumentException ex) {
-      Logger.getLogger(StandardStudy.class.getName()).log(Level.SEVERE, null, ex);
-    } catch (IllegalAccessException ex) {
-      Logger.getLogger(StandardStudy.class.getName()).log(Level.SEVERE, null, ex);
-    } catch  (JMException ex) {
-      Logger.getLogger(StandardStudy.class.getName()).log(Level.SEVERE, null, ex);
-    }
-  } // algorithmSettings
+			algorithm[0] = new NSGAII_Settings(problemName).configure(parameters[0]);
+			algorithm[1] = new SMPSO_Settings(problemName).configure(parameters[1]);
+			algorithm[2] = new GDE3_Settings(problemName).configure(parameters[2]);
+		} catch (IllegalArgumentException ex) {
+			Logger.getLogger(StandardStudy.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (IllegalAccessException ex) {
+			Logger.getLogger(StandardStudy.class.getName()).log(Level.SEVERE, null, ex);
+		} catch  (JMException ex) {
+			Logger.getLogger(StandardStudy.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	} // algorithmSettings
 
-  /**
-   * Main method
-   * @param args
-   * @throws JMException
-   * @throws IOException
-   */
-  public static void main(String[] args) throws JMException, IOException {
-    ZDTStudy exp = new ZDTStudy();
+	/**
+	 * Main method
+	 * @param args
+	 * @throws JMException
+	 * @throws IOException
+	 */
+	public static void main(String[] args) throws JMException, IOException {
+		ZDTStudy2 exp = new ZDTStudy2();
 
-    exp.experimentName_ = "ZDTStudy";
-    exp.algorithmNameList_ = new String[]{
-                                "NSGAII", "SMPSO", "GDE3"};
-    exp.problemList_ = new String[]{"ZDT1", "ZDT2","ZDT3", "ZDT4","ZDT6"};
-    exp.paretoFrontFile_ = new String[]{"ZDT1.pf", "ZDT2.pf","ZDT3.pf",
-                                    "ZDT4.pf","ZDT6.pf"};
+		exp.experimentName_ = "ZDTStudy2";
+		exp.algorithmNameList_ = new String[]{
+				"NSGAII", "SMPSO", "GDE3"};
+		exp.problemList_ = new String[]{"ZDT1", "ZDT2","ZDT3", "ZDT4","ZDT6"};
+		exp.paretoFrontFile_ = new String[5];
 
-    exp.indicatorList_ = new String[]{"HV", "SPREAD", "EPSILON"};
+		exp.indicatorList_ = new String[]{"HV", "SPREAD", "EPSILON"};
 
-    int numberOfAlgorithms = exp.algorithmNameList_.length;
+		int numberOfAlgorithms = exp.algorithmNameList_.length;
 
-    exp.experimentBaseDirectory_ = "/Users/antelverde/Softw/pruebas/jmetal/" +
-                                   exp.experimentName_;
-    exp.paretoFrontDirectory_ = "/Users/antelverde/Softw/pruebas/data/paretoFronts";
+		exp.experimentBaseDirectory_ = "/Users/antelverde/Softw/pruebas/jmetal/" +
+				exp.experimentName_;
+		exp.paretoFrontDirectory_ = "";
 
-    exp.algorithmSettings_ = new Settings[numberOfAlgorithms];
+		exp.algorithmSettings_ = new Settings[numberOfAlgorithms];
 
-    exp.independentRuns_ = 20;
+		exp.independentRuns_ = 20;
 
-    // Run the experiments
-    int numberOfThreads ;
-    exp.runExperiment(numberOfThreads = 7) ;
-
+		// Run the experiments
+		int numberOfThreads ;
+		exp.runExperiment(numberOfThreads = 7) ;
+		
     // Generate latex tables
     exp.generateLatexTables() ;
 
@@ -126,10 +127,10 @@ public class ZDTStudy extends Experiment {
     columns = 2 ;
     prefix = new String("ZDT");
     problems = new String[]{"ZDT1", "ZDT2","ZDT3", "ZDT4","ZDT6"} ;
-    
+
     exp.generateRBoxplotScripts(rows, columns, problems, prefix, notch = false, exp) ;
     exp.generateRWilcoxonScripts(problems, prefix, exp) ;
-  } // main
+	} // main
 } // ZDTStudy
 
 

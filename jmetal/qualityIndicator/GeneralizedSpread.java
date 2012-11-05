@@ -33,7 +33,7 @@ import java.util.Arrays;
  */
 public class GeneralizedSpread {
   
-  static jmetal.qualityIndicator.util.MetricsUtil utils_;  // MetricsUtil provides some 
+  public static jmetal.qualityIndicator.util.MetricsUtil utils_;  // MetricsUtil provides some 
                                                   // utilities for implementing
                                                   // the metric
   

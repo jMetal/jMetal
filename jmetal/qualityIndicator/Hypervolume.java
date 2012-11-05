@@ -37,7 +37,7 @@ import java.io.*;
  */
 public class Hypervolume {
 
-  jmetal.qualityIndicator.util.MetricsUtil utils_;
+  public jmetal.qualityIndicator.util.MetricsUtil utils_;
   
   /**
   * Constructor

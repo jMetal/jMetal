@@ -101,12 +101,13 @@ public class SMPSO_Settings extends Settings{
 
     algorithm.addOperator("mutation",mutation);
 
+    /*
 		// Creating the indicator object
     if ((paretoFrontFile_!=null) && (!paretoFrontFile_.equals(""))) {
 			indicators = new QualityIndicator(problem_, paretoFrontFile_);
 			algorithm.setInputParameter("indicators", indicators) ;  
 		} // if
-		
+		*/
 		return algorithm ;
   } // Configure
 } // SMPSO_Settings

@@ -107,12 +107,13 @@ public class GDE3_Settings extends Settings {
     algorithm.addOperator("crossover", crossover);
     algorithm.addOperator("selection", selection);
 
+    /*
     // Creating the indicator object
     if ((paretoFrontFile_!=null) && (!paretoFrontFile_.equals(""))) {
       indicators = new QualityIndicator(problem_, paretoFrontFile_);
       algorithm.setInputParameter("indicators", indicators);
     } // if
-
+*/
     return algorithm;
   } // configure
 } // GDE3_Settings

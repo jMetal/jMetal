@@ -115,12 +115,13 @@ public class NSGAII_Settings extends Settings {
     algorithm.addOperator("mutation",mutation);
     algorithm.addOperator("selection",selection);
     
+    /*
    // Creating the indicator object
    if ((paretoFrontFile_!=null) && (!paretoFrontFile_.equals(""))) {
       indicators = new QualityIndicator(problem_, paretoFrontFile_);
       algorithm.setInputParameter("indicators", indicators) ;  
    } // if
-   
+   */
     return algorithm ;
   } // configure
 } // NSGAII_Settings

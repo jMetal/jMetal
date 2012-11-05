@@ -32,7 +32,7 @@ package jmetal.qualityIndicator;
  *            Inst. Technol. (1998)
  */
 public class GenerationalDistance {
-  jmetal.qualityIndicator.util.MetricsUtil utils_;  //utils_ is used to access to the
+  public jmetal.qualityIndicator.util.MetricsUtil utils_;  //utils_ is used to access to the
                                            //MetricsUtil funcionalities
   
   static final double pow_ = 2.0;          //pow. This is the pow used for the
