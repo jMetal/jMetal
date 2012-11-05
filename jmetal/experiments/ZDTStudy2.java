@@ -106,11 +106,11 @@ public class ZDTStudy2 extends Experiment {
 
 		exp.algorithmSettings_ = new Settings[numberOfAlgorithms];
 
-		exp.independentRuns_ = 20;
+		exp.independentRuns_ = 2;
 
 		// Run the experiments
 		int numberOfThreads ;
-		exp.runExperiment(numberOfThreads = 7) ;
+		exp.runExperiment(numberOfThreads = 1) ;
 		
     // Generate latex tables
     exp.generateLatexTables() ;
