@@ -289,6 +289,7 @@ public class MetricsUtil {
 				StringTokenizer st = new StringTokenizer(aux);
 				int i = 0;
 				Solution solution = new Solution(st.countTokens());
+				
 				while (st.hasMoreTokens()) {
 					double value = (new Double(st.nextToken())).doubleValue();
 					solution.setObjective(i,value);

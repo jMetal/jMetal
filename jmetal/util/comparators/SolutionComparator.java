@@ -53,8 +53,9 @@ public class SolutionComparator implements Comparator {
     solution1 = (Solution)o1;
     solution2 = (Solution)o2;
         
-    if (solution1.numberOfVariables() != solution2.numberOfVariables())
-      return -1;
+    if ((solution1.getDecisionVariables() != null) && (solution1.getDecisionVariables()!= null))
+      if (solution1.numberOfVariables() != solution2.numberOfVariables())
+        return -1;
 
     try {
       if ((new Distance()).distanceBetweenSolutions(solution1,solution2) < EPSILON)

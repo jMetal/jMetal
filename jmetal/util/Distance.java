@@ -117,19 +117,20 @@ public class Distance {
   */
   public double distanceBetweenSolutions(Solution solutionI, Solution solutionJ) 
   throws JMException{                
-    //->Obtain his decision variables
-    Variable[] decisionVariableI = solutionI.getDecisionVariables();
-    Variable[] decisionVariableJ = solutionJ.getDecisionVariables();    
-    
-    double diff;    //Auxiliar var
     double distance = 0.0;
-    //-> Calculate the Euclidean distance
-    for (int i = 0; i < decisionVariableI.length; i++){
-      diff = decisionVariableI[i].getValue() -
-             decisionVariableJ[i].getValue();
-      distance += Math.pow(diff,2.0);
-    } // for    
-        
+    if ((solutionI.getDecisionVariables() != null) && 
+    		(solutionJ.getDecisionVariables() != null)) {
+      Variable[] decisionVariableI = solutionI.getDecisionVariables();
+      Variable[] decisionVariableJ = solutionJ.getDecisionVariables();    
+    
+      double diff;    //Auxiliar var
+      //-> Calculate the Euclidean distance
+      for (int i = 0; i < decisionVariableI.length; i++){
+        diff = decisionVariableI[i].getValue() -
+               decisionVariableJ[i].getValue();
+        distance += Math.pow(diff,2.0);
+      } // for    
+    }    
     //-> Return the euclidean distance
     return Math.sqrt(distance);
   } // distanceBetweenSolutions

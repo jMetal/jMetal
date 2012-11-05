@@ -93,8 +93,8 @@ public class ZDTStudy2 extends Experiment {
 		exp.experimentName_ = "ZDTStudy2";
 		exp.algorithmNameList_ = new String[]{
 				"NSGAII", "SMPSO", "GDE3"};
-		exp.problemList_ = new String[]{"ZDT1", "ZDT2","ZDT3", "ZDT4","ZDT6"};
-		exp.paretoFrontFile_ = new String[5];
+		exp.problemList_ = new String[]{"ZDT1", "ZDT2","ZDT3", "ZDT4","ZDT6", "Golinski", "Kursawe"};
+		exp.paretoFrontFile_ = new String[7];
 
 		exp.indicatorList_ = new String[]{"HV", "SPREAD", "EPSILON"};
 
@@ -106,11 +106,11 @@ public class ZDTStudy2 extends Experiment {
 
 		exp.algorithmSettings_ = new Settings[numberOfAlgorithms];
 
-		exp.independentRuns_ = 2;
+		exp.independentRuns_ = 20;
 
 		// Run the experiments
 		int numberOfThreads ;
-		exp.runExperiment(numberOfThreads = 1) ;
+		exp.runExperiment(numberOfThreads = 8) ;
 		
     // Generate latex tables
     exp.generateLatexTables() ;
@@ -124,9 +124,9 @@ public class ZDTStudy2 extends Experiment {
 
     // Configuring scripts for ZDT
     rows = 3 ;
-    columns = 2 ;
+    columns = 3 ;
     prefix = new String("ZDT");
-    problems = new String[]{"ZDT1", "ZDT2","ZDT3", "ZDT4","ZDT6"} ;
+    problems = new String[]{"ZDT1", "ZDT2","ZDT3", "ZDT4","ZDT6", "Golinski", "Kursawe"} ;
 
     exp.generateRBoxplotScripts(rows, columns, problems, prefix, notch = false, exp) ;
     exp.generateRWilcoxonScripts(problems, prefix, exp) ;
