@@ -270,4 +270,37 @@ public class MetricsUtil {
     }
     return null;
   } // readNonDominatedSolutionSet
+  
+	/**
+	 * Reads a set of non dominated solutions from a file
+	 * and store it in a existing non dominated solution set
+	 * @param path The path of the file containing the data
+	 * @return A solution set
+	 */
+	public void readNonDominatedSolutionSet(String path, NonDominatedSolutionList solutionSet) {
+		try {
+			/* Open the file */
+			FileInputStream fis   = new FileInputStream(path)     ;
+			InputStreamReader isr = new InputStreamReader(fis)    ;
+			BufferedReader br      = new BufferedReader(isr)      ;	      	     
+
+			String aux = br.readLine();
+			while (aux!= null) {
+				StringTokenizer st = new StringTokenizer(aux);
+				int i = 0;
+				Solution solution = new Solution(st.countTokens());
+				while (st.hasMoreTokens()) {
+					double value = (new Double(st.nextToken())).doubleValue();
+					solution.setObjective(i,value);
+					i++;
+				}
+				solutionSet.add(solution);
+				aux = br.readLine();
+			}
+			br.close();
+		} catch (Exception e) {
+			System.out.println("jmetal.qualityIndicator.util.readNonDominatedSolutionSet: "+path);
+			e.printStackTrace();
+		}
+	}
 } // MetricsUtil
