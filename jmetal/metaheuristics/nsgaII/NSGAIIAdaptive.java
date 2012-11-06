@@ -16,7 +16,7 @@ import jmetal.util.archive.CrowdingArchive;
 import jmetal.util.comparators.CrowdingComparator;
 import jmetal.util.comparators.DominanceComparator;
 import jmetal.util.offspring.Offspring;
-import jmetal.util.offspring.PolynomialOffspringGenerator;
+import jmetal.util.offspring.PolynomialOffspring;
 
 public class NSGAIIAdaptive extends Algorithm {
   public int populationSize_            ;
@@ -119,11 +119,11 @@ public class NSGAIIAdaptive extends Algorithm {
   					if (!found && (rnd <= contribution_[selected])) {
   						if ("DE".equals(getOffspring[selected].id())) {
   							offSpring = getOffspring[selected].getOffspring(population_, i) ;
-  						} else if ("SBX_Polynomial".equals(getOffspring[selected].id())) {
+  						} else if ("SBX".equals(getOffspring[selected].id())) {
   							offSpring = getOffspring[selected].getOffspring(population_);
   						} else if ("Polynomial".equals(getOffspring[selected].id())) {
-  							offSpring = ((PolynomialOffspringGenerator)getOffspring[selected]).getOffspring(individual);
-  						}
+  							offSpring = ((PolynomialOffspring)getOffspring[selected]).getOffspring(individual);
+  						} 
 
   						offSpring.setFitness((int) selected);
   						currentCrossover_ = selected;
@@ -187,7 +187,7 @@ public class NSGAIIAdaptive extends Algorithm {
         contributionCounter_[i] = 0 ;
       }       
       
-      // Second: deteRmine the contribution of each operator
+      // Second: determine the contribution of each operator
       for (int i = 0; i < population_.size(); i++) {
         if ((int) population_.get(i).getFitness() != -1) {
           contributionCounter_[(int) population_.get(i).getFitness()] += 1;
@@ -204,7 +204,8 @@ public class NSGAIIAdaptive extends Algorithm {
           }
           totalContributionCounter += contributionCounter_[i];
       }
-            
+      
+      //-- NOTE:COMMENT THIS CODE TO SELECT THE OPERATORS RANDOMLY
       // Third: calculating contribution
       contribution_[0] = contributionCounter_[0] * 1.0
               / (double) totalContributionCounter;
@@ -213,6 +214,8 @@ public class NSGAIIAdaptive extends Algorithm {
                   * contributionCounter_[i]
                   / (double) totalContributionCounter;
       }
+      //--
+      
     } // while
 
 

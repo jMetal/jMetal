@@ -17,24 +17,18 @@ import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.util.JMException;
 
-public class SBXCrossoverAndPolynomialMutation extends Offspring {
+public class SBXOffspring extends Offspring {
 
-  double mutationProbability_ = 0.0;
   double crossoverProbability_ = 0.9;
-  double distributionIndexForMutation_ = 20;
   double distributionIndexForCrossover_ = 20;
   Operator crossover_;
   Operator mutation_;
   Operator selection_;
 
-  public SBXCrossoverAndPolynomialMutation(double mutationProbability,
-    double crossoverProbability,
-    double distributionIndexForMutation,
-    double distributionIndexForCrossover) throws JMException {
+  public SBXOffspring(double crossoverProbability,
+                     double distributionIndexForCrossover) throws JMException {
   	HashMap parameters ;
-    mutationProbability_ = mutationProbability;
     crossoverProbability_ = crossoverProbability;
-    distributionIndexForMutation_ = distributionIndexForMutation;
     distributionIndexForCrossover_ = distributionIndexForCrossover;
 
     // Crossover operator
@@ -44,15 +38,9 @@ public class SBXCrossoverAndPolynomialMutation extends Offspring {
 
     crossover_ = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters);
 
-    parameters = new HashMap() ;
-    parameters.put("probability", mutationProbability_) ;
-    parameters.put("distributionIndex", distributionIndexForMutation_) ;
-
-    mutation_ = MutationFactory.getMutationOperator("PolynomialMutation", parameters);
-
     selection_ = SelectionFactory.getSelectionOperator("BinaryTournament", null);
     
-    id_ = "SBX_Polynomial";
+    id_ = "SBX";
   }
 
   public Solution getOffspring(SolutionSet solutionSet) {
@@ -65,10 +53,9 @@ public class SBXCrossoverAndPolynomialMutation extends Offspring {
 
       Solution[] children = (Solution[]) crossover_.execute(parents);
       offSpring = children[0];
-      mutation_.execute(offSpring);
       //Create a new solution, using DE
     } catch (JMException ex) {
-      Logger.getLogger(SBXCrossoverAndPolynomialMutation.class.getName()).log(Level.SEVERE, null, ex);
+      Logger.getLogger(SBXOffspring.class.getName()).log(Level.SEVERE, null, ex);
     }
     return offSpring;
 
@@ -89,13 +76,11 @@ public class SBXCrossoverAndPolynomialMutation extends Offspring {
 
       Solution[] children = (Solution[]) crossover_.execute(parents);
       offSpring = children[0];
-      mutation_.execute(offSpring);
-      //Create a new solution, using DE
     } catch (JMException ex) {
-      Logger.getLogger(SBXCrossoverAndPolynomialMutation.class.getName()).log(Level.SEVERE, null, ex);
+      Logger.getLogger(SBXOffspring.class.getName()).log(Level.SEVERE, null, ex);
     }
     return offSpring;
 
   } // getOffpring
-} // DifferentialEvolutionOffspring
+} // SBXOffspring
 

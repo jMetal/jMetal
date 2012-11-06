@@ -57,7 +57,7 @@ public class DifferentialEvolutionOffspring extends Offspring {
 		id_ = "DE" ;
 	}
 
-	public Solution getOffspring(SolutionSet solutionSet, Solution solution, int index) {
+	public Solution getOffspring(SolutionSet solutionSet, int index) {
 		Solution[] parents = new Solution[3] ;
 		Solution offSpring = null ;
 
@@ -82,5 +82,6 @@ public class DifferentialEvolutionOffspring extends Offspring {
 		//Create a new solution, using DE
 		return offSpring ;
 	} // getOffpring
+	
 } // DifferentialEvolutionOffspring
 

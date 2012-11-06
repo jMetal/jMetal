@@ -37,8 +37,8 @@ import jmetal.util.MersenneTwisterFast;
 import jmetal.util.PseudoRandom;
 import jmetal.util.offspring.DifferentialEvolutionOffspring;
 import jmetal.util.offspring.Offspring;
-import jmetal.util.offspring.PolynomialOffspringGenerator;
-import jmetal.util.offspring.SBXCrossoverAndPolynomialMutation;
+import jmetal.util.offspring.PolynomialOffspring;
+import jmetal.util.offspring.SBXOffspring;
 
 import java.io.IOException;
 import java.util.* ;
@@ -153,13 +153,11 @@ public class NSGAIIAdaptive_main {
     double CR, F;
     getOffspring[0] = new DifferentialEvolutionOffspring(CR = 1.0, F = 0.5);
     
-    getOffspring[1] = new SBXCrossoverAndPolynomialMutation(
-      1.0 / problem.getNumberOfVariables(), // mutation probability
+    getOffspring[1] = new SBXOffspring(
       0.9, // crossover probability
-      20, // distribution index for mutation
       20); // distribution index for crossover
 
-    getOffspring[2] = new PolynomialOffspringGenerator(1.0/problem.getNumberOfVariables(), 20);
+    getOffspring[2] = new PolynomialOffspring(1.0/problem.getNumberOfVariables(), 20);
 
     algorithm.setInputParameter("offspringsCreators", getOffspring);
     

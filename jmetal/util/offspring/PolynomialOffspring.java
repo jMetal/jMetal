@@ -1,5 +1,5 @@
 /*
- * PolynomialOffspringGenerator.java
+ * PolynomialOffspring.java
  *
  * @author Antonio J. Nebro
  * @version 1.0
@@ -17,14 +17,14 @@ import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.util.JMException;
 
-public class PolynomialOffspringGenerator extends Offspring {
+public class PolynomialOffspring extends Offspring {
 
 	Operator mutation_;
 	Operator selection_;
 
-	public PolynomialOffspringGenerator(double mutationProbability,
-			double distributionIndexForMutation
-			) throws JMException {     
+	public PolynomialOffspring(double mutationProbability,
+		                         double distributionIndexForMutation
+		                         ) throws JMException {     
 		HashMap  parameters ; // Operator parameters
 		parameters = new HashMap() ;
 		parameters.put("probability", mutationProbability) ;
@@ -45,6 +45,6 @@ public class PolynomialOffspringGenerator extends Offspring {
 		}
 		return res;
 	}
-} // PolynomialOffspringGenerator
+} // PolynomialOffspring
 
 
