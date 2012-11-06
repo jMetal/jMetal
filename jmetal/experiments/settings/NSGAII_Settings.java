@@ -115,7 +115,8 @@ public class NSGAII_Settings extends Settings {
     algorithm.addOperator("mutation",mutation);
     algorithm.addOperator("selection",selection);
     
-    /*
+    
+    /* Deleted since jMetal 4.2
    // Creating the indicator object
    if ((paretoFrontFile_!=null) && (!paretoFrontFile_.equals(""))) {
       indicators = new QualityIndicator(problem_, paretoFrontFile_);

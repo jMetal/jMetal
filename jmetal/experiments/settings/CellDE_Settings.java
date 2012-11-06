@@ -115,11 +115,13 @@ public class CellDE_Settings extends Settings{
     algorithm.addOperator("crossover",crossover);
     algorithm.addOperator("selection",selection);
    
+    /* Deleted since jMetal 4.2
    // Creating the indicator object
-    if ((paretoFrontFile_!=null) && (!paretoFrontFile_.equals(""))) {
+   if ((paretoFrontFile_!=null) && (!paretoFrontFile_.equals(""))) {
       indicators = new QualityIndicator(problem_, paretoFrontFile_);
       algorithm.setInputParameter("indicators", indicators) ;  
    } // if
+   */
     
     return algorithm ;
   } // configure

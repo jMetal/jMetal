@@ -333,7 +333,7 @@ public abstract class Experiment {
 	private void resetFile(String file) {
 		File f = new File(file);
 		if(f.exists()){			
-			System.out.println("File " + file + " exist.");
+			//System.out.println("File " + file + " exist.");
 
 			if(f.isDirectory()){
 				System.out.println("File " + file + " is a directory. Deleting directory.");
@@ -351,7 +351,7 @@ public abstract class Experiment {
 				}
 			}			 
 		}else{
-			System.out.println("File " + file + " does NOT exist.");
+			//System.out.println("File " + file + " does NOT exist.");
 		}
 	} // resetFile
 

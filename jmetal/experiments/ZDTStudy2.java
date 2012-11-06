@@ -28,6 +28,7 @@ import java.util.Properties;
 
 import jmetal.core.Algorithm;
 import jmetal.core.Problem;
+import jmetal.experiments.settings.AbYSS_Settings;
 import jmetal.experiments.settings.GDE3_Settings;
 import jmetal.experiments.settings.MOCell_Settings;
 import jmetal.experiments.settings.NSGAII_Settings;
@@ -72,6 +73,7 @@ public class ZDTStudy2 extends Experiment {
 			algorithm[0] = new NSGAII_Settings(problemName).configure(parameters[0]);
 			algorithm[1] = new SMPSO_Settings(problemName).configure(parameters[1]);
 			algorithm[2] = new GDE3_Settings(problemName).configure(parameters[2]);
+			algorithm[3] = new AbYSS_Settings(problemName).configure(parameters[3]);
 		} catch (IllegalArgumentException ex) {
 			Logger.getLogger(StandardStudy.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (IllegalAccessException ex) {
@@ -92,9 +94,9 @@ public class ZDTStudy2 extends Experiment {
 
 		exp.experimentName_ = "ZDTStudy2";
 		exp.algorithmNameList_ = new String[]{
-				"NSGAII", "SMPSO", "GDE3"};
+				"NSGAII", "SMPSO", "GDE3", "AbySS"};
 		exp.problemList_ = new String[]{"ZDT1", "ZDT2","ZDT3", "ZDT4","ZDT6", "Golinski", "Kursawe"};
-		exp.paretoFrontFile_ = new String[7];
+		exp.paretoFrontFile_ = new String[7]; // 7 problems
 
 		exp.indicatorList_ = new String[]{"HV", "SPREAD", "EPSILON"};
 
@@ -102,7 +104,7 @@ public class ZDTStudy2 extends Experiment {
 
 		exp.experimentBaseDirectory_ = "/Users/antelverde/Softw/pruebas/jmetal/" +
 				exp.experimentName_;
-		exp.paretoFrontDirectory_ = "";
+		exp.paretoFrontDirectory_ = ""; // This directory must be null
 
 		exp.algorithmSettings_ = new Settings[numberOfAlgorithms];
 
@@ -110,7 +112,7 @@ public class ZDTStudy2 extends Experiment {
 
 		// Run the experiments
 		int numberOfThreads ;
-		exp.runExperiment(numberOfThreads = 8) ;
+		exp.runExperiment(numberOfThreads = 7) ;
 		
     // Generate latex tables
     exp.generateLatexTables() ;

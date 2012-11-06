@@ -108,11 +108,15 @@ public class OMOPSO_Settings extends Settings{
     // Add the operators to the algorithm
     algorithm.addOperator("uniformMutation",uniformMutation);
     algorithm.addOperator("nonUniformMutation",nonUniformMutation);
+    
+    /* Deleted since jMetal 4.2
    // Creating the indicator object
-    if ((paretoFrontFile_!=null) && (!paretoFrontFile_.equals(""))) {
+   if ((paretoFrontFile_!=null) && (!paretoFrontFile_.equals(""))) {
       indicators = new QualityIndicator(problem_, paretoFrontFile_);
       algorithm.setInputParameter("indicators", indicators) ;  
    } // if
+   */
+
     return algorithm ;
   } // configure
 } // OMOPSO_Settings

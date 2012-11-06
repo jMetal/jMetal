@@ -71,11 +71,14 @@ public class RandomSearch_Settings extends Settings {
     // Algorithm parameters
     algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
 
-    // Creating the indicator object
-    if ((paretoFrontFile_!=null) && (!paretoFrontFile_.equals(""))) {
+    /* Deleted since jMetal 4.2
+   // Creating the indicator object
+   if ((paretoFrontFile_!=null) && (!paretoFrontFile_.equals(""))) {
       indicators = new QualityIndicator(problem_, paretoFrontFile_);
-      algorithm.setInputParameter("indicators", indicators);
-    } // if
+      algorithm.setInputParameter("indicators", indicators) ;  
+   } // if
+   */
+
     return algorithm;
   } // Constructor
 } // RandomSearch_Settings

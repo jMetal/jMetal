@@ -83,9 +83,7 @@ public class NonDominatedSolutionList extends SolutionSet{
 				int flag = dominance_.compare(solution,listIndividual);
 
 				if (flag == -1) {  // A solution in the list is dominated by the new one
-					System.out.println("size antes: " + solutionsList_.size()) ;
 					iterator.remove();
-					System.out.println("size despu: " + solutionsList_.size()) ;
 				} else if (flag == 0) { // Non-dominated solutions
 					//flag = equal_.compare(solution,listIndividual);
 					//if (flag == 0) {
