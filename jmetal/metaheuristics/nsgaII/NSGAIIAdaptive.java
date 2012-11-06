@@ -180,7 +180,6 @@ public class NSGAIIAdaptive extends Algorithm {
         remain = 0;
       } // if                 
       
-
       // CONTRIBUTION CALCULATING PHASE
       // First: reset contribution counter
       for (int i = 0; i < N_O; i++) {
@@ -205,7 +204,7 @@ public class NSGAIIAdaptive extends Algorithm {
           totalContributionCounter += contributionCounter_[i];
       }
       
-      //-- NOTE:COMMENT THIS CODE TO SELECT THE OPERATORS RANDOMLY
+      //--- NOTE:COMMENT THIS CODE TO SELECT THE OPERATORS RANDOMLY
       // Third: calculating contribution
       contribution_[0] = contributionCounter_[0] * 1.0
               / (double) totalContributionCounter;
@@ -214,7 +213,7 @@ public class NSGAIIAdaptive extends Algorithm {
                   * contributionCounter_[i]
                   / (double) totalContributionCounter;
       }
-      //--
+      //---
       
     } // while
 
