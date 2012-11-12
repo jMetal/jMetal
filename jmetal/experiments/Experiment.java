@@ -4,7 +4,7 @@
 //       Antonio J. Nebro <antonio@lcc.uma.es>
 //       Juan J. Durillo <durillo@lcc.uma.es>
 //			 Jorgo Rodriguez
-//
+// 
 //  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo, Jorge Rodriguez
 //
 //  This program is free software: you can redistribute it and/or modify
@@ -75,21 +75,16 @@ public abstract class Experiment {
 	//Algorithm[] algorithm_; // jMetal algorithms to be executed
 	HashMap<String, Object> map_; // Map used to send experiment parameters to threads
 	public HashMap<String, Boolean> indicatorMinimize_; // To indicate whether an indicator
-	// is to be minimized. Hard-coded
-	// in the constructor
+	// is to be minimized. Hard-coded in the constructor
 
 	public Properties [] problemsSettings_ ;
 
-	//Inicio modificación ReferenceFronts
 	public String[] frontPath_; // Path of each reference front file
-	// Fin modificación ReferenceFronts
 
-	// Inicio modificación planificación Threads
 	public boolean finished_;	// Flag to indicate when the experiment has ended
 	public static int algorithmIndex; // Index of the next algorithm to run
 	public static int problemIndex; // Index of the next problem to solve
 	public static int irunIndex; // Counter of the independent runs
-	// Fin modificación planificación Threads
 
 	/**
 	 * Constructor
@@ -108,9 +103,7 @@ public abstract class Experiment {
 		paretoFrontFile_ = null;
 		indicatorList_ = null;
 
-		// Inicio modificación ReferenceFronts
 		frontPath_ = null;
-		// Fin modificación ReferenceFronts
 
 		experimentBaseDirectory_ = "";
 		paretoFrontDirectory_ = "";
@@ -131,11 +124,9 @@ public abstract class Experiment {
 		indicatorMinimize_.put("GD", true);
 		indicatorMinimize_.put("IGD", true);
 
-		// Inicio modificación planificación Threads
 		problemIndex = 0;
 		algorithmIndex = 0;
 		irunIndex = 0;
-		// Fin modificacion planificación Threads
 	} // Constructor
 
 	/**
@@ -157,14 +148,10 @@ public abstract class Experiment {
 		map_.put("outputParetoSetFile", outputParetoSetFile_);
 		map_.put("problemsSettings", problemsSettings_);
 
-		// Inicio modificación ReferenceFronts
 		frontPath_ = new String[problemList_.length];
 		map_.put("frontPath",frontPath_);
-		// Fin modificación ReferenceFrons
 
 		//SolutionSet[] resultFront = new SolutionSet[algorithmNameList_.length];
-
-		// Inicio modificación planificación Threads
 		
 		System.out.println("Experiment: creating " + numberOfThreads + " threads");
 		System.out.println("Experiment: Number of algorithms: " + algorithmNameList_.length) ;
@@ -172,8 +159,6 @@ public abstract class Experiment {
 		System.out.println("Experiment: runs: " + independentRuns_) ;		
 		System.out.println("Experiment: Name: " + experimentName_);
 		System.out.println("Experiment: Experiment directory: " + experimentBaseDirectory_);
-
-		// Fin modificación planificación Threads
 
 		Thread[] p = new RunExperiment[numberOfThreads];
 		for (int i = 0; i < numberOfThreads; i++) {
@@ -190,9 +175,7 @@ public abstract class Experiment {
 			Logger.getLogger(Experiment.class.getName()).log(Level.SEVERE, null, ex);
 		}
 
-		// Inicio modificación ReferenceFronts
 		generateQualityIndicators();
-		// Fin modificación ReferenceFronts
 	}
 
 	/**
@@ -234,10 +217,6 @@ public abstract class Experiment {
 
 	public static void main(String[] args) throws JMException, IOException {
 	}
-
-	;
-
-	//Inicio modificación ReferenceFronts
 
 	/**
 	 * Checks if exist paretoFront files
@@ -397,8 +376,8 @@ public abstract class Experiment {
 		
 		rfDirectory = new File(referenceFrontDirectory);
 
-		if(!rfDirectory.exists()) { 													// Si no existe el directorio
-			boolean result = new File(referenceFrontDirectory).mkdirs();				// Lo creamos
+		if(!rfDirectory.exists()) { 													
+			boolean result = new File(referenceFrontDirectory).mkdirs();			
 			System.out.println("Creating " + referenceFrontDirectory);
 		}
 
@@ -429,14 +408,10 @@ public abstract class Experiment {
 	 */
 	public void generateReferenceFronts() {
 
-		for (int problemIndex=0; problemIndex<problemList_.length; problemIndex++) {	// Por cada problema, generamos el frente de referencia
-
+		for (int problemIndex=0; problemIndex<problemList_.length; problemIndex++) {	
 			this.generateReferenceFronts(problemIndex);
-
 		} // for
 	} // generateReferenceFronts
-
-	// Fin modificación ReferenceFronts
 
 	public void generateLatexTables() throws FileNotFoundException, IOException {
 		latexDirectory_ = experimentBaseDirectory_ + "/" + latexDirectory_;
@@ -917,7 +892,6 @@ public abstract class Experiment {
 		RWilcoxon.generateScripts(problems, prefix, this) ;
 	} // generateRWilcoxonScripts
 
-	// Inicio modificación planificación Threads
 	/**
 	 * 
 	 * @return
@@ -964,6 +938,5 @@ public abstract class Experiment {
 
 		return res;
 	}// getNextProblem
-	// Fin modificación planificación Threads
 }  // Experiment
 
