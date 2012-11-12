@@ -5,7 +5,7 @@
 //       Juan J. Durillo <durillo@lcc.uma.es>
 //       Jorge Rodriguez
 //
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo, Jorge Rodriguez
+//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo, Jorge Rodriguez 
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
