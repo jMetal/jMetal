@@ -1,10 +1,11 @@
-//  run Experiment.java
+//  runExperiment.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
 //       Juan J. Durillo <durillo@lcc.uma.es>
+//       Jorge Rodriguez
 //
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
+//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo, Jorge Rodriguez
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -47,7 +48,9 @@ public class RunExperiment extends Thread {
 	public int numberOfThreads_ ;
 	public int numberOfProblems_ ;
 
+	// Inicio modificaci贸n planificaci贸n Threads
 	static boolean finished;
+	// Fin modificaci贸n planificaci贸n Threads
 
 	String experimentName_;
 	String[] algorithmNameList_; // List of the names of the algorithms to be executed
@@ -65,10 +68,7 @@ public class RunExperiment extends Thread {
 	// Pareto set
 	int independentRuns_; // Number of independent runs per algorithm
 	Settings[] algorithmSettings_; // Paremeter settings of each algorithm
-
-	// Inicio modificaci梟 ReferenceFronts
-	String[] frontPath_;
-	// Fin modificaci梟 ReferenceFronts
+	
 
 	public RunExperiment(Experiment experiment, 
 			HashMap<String, Object> map,
@@ -81,7 +81,9 @@ public class RunExperiment extends Thread {
 		numberOfThreads_ = numberOfThreads  ;
 		numberOfProblems_ = numberOfProblems;
 
+		// Inicio modificaci贸n planificaci贸n Threads
 		finished = false;
+		// Fin modificaci贸n planificaci贸n Threads		
 	}
 
 	public void run() {
@@ -98,10 +100,11 @@ public class RunExperiment extends Thread {
 		outputParetoFrontFile_ = (String) map_.get("outputParetoFrontFile");
 		outputParetoSetFile_ = (String) map_.get("outputParetoSetFile");
 
-		frontPath_ = (String[]) map_.get("frontPath");
-
 		int numberOfAlgorithms = algorithmNameList_.length;
+		
 		algorithm = new Algorithm[numberOfAlgorithms] ;
+
+		// Inicio modificaci贸n planificaci贸n Threads
 
 		SolutionSet resultFront = null;  
 
@@ -125,20 +128,8 @@ public class RunExperiment extends Thread {
 				problemName = problemList_[problemId];
 
 				// STEP 3: check the file containing the Pareto front of the problem
-				synchronized(experiment_) {
 
-					if (paretoFrontDirectory_ != "") {
-						if (paretoFrontFile_[problemId] != "") {
-							frontPath_[problemId] = paretoFrontDirectory_ + "/" + paretoFrontFile_[problemId];
-						}else{
-							frontPath_[problemId] = experimentBaseDirectory_ + "/referenceFronts/" + 
-									problemList_[problemId] + ".rf";
-						}
-					}else{
-						frontPath_[problemId] = experimentBaseDirectory_ + "/referenceFronts/" + 
-								problemList_[problemId] + ".rf";
-					}
-				}
+				// STEP 4: configure the algorithms
 				try {
 					experiment_.algorithmSettings(problemName, problemId, algorithm);
 				} catch (ClassNotFoundException e1) {
@@ -147,8 +138,10 @@ public class RunExperiment extends Thread {
 				}
 
 				problem = algorithm[0].getProblem() ;
-
-				// STEP 4: create output directories
+				
+				// STEP 5: run the algorithms
+				
+				// STEP 6: create output directories
 				File experimentDirectory;
 				String directory;
 
@@ -161,7 +154,7 @@ public class RunExperiment extends Thread {
 					System.out.println("Creating " + directory);
 				}
 
-				// STEP 5: run the algorithm
+				// STEP 7: run the algorithm
 				System.out.println(Thread.currentThread().getName() + " Running algorithm: " + 
 						algorithmNameList_[alg] +
 						", problem: " + problemList_[problemId] +
@@ -187,5 +180,6 @@ public class RunExperiment extends Thread {
 				}
 			} // if
 		} //while
+		// Fin modificaci贸n planificaci贸n Threads
 	}
 }

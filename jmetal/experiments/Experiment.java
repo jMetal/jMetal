@@ -3,8 +3,9 @@
 //  Authors:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
 //       Juan J. Durillo <durillo@lcc.uma.es>
+//			 Jorgo Rodriguez
 //
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
+//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo, Jorge Rodriguez
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -79,12 +80,16 @@ public abstract class Experiment {
 
 	public Properties [] problemsSettings_ ;
 
+	//Inicio modificaci贸n ReferenceFronts
 	public String[] frontPath_; // Path of each reference front file
+	// Fin modificaci贸n ReferenceFronts
 
+	// Inicio modificaci贸n planificaci贸n Threads
 	public boolean finished_;	// Flag to indicate when the experiment has ended
 	public static int algorithmIndex; // Index of the next algorithm to run
 	public static int problemIndex; // Index of the next problem to solve
 	public static int irunIndex; // Counter of the independent runs
+	// Fin modificaci贸n planificaci贸n Threads
 
 	/**
 	 * Constructor
@@ -103,7 +108,9 @@ public abstract class Experiment {
 		paretoFrontFile_ = null;
 		indicatorList_ = null;
 
+		// Inicio modificaci贸n ReferenceFronts
 		frontPath_ = null;
+		// Fin modificaci贸n ReferenceFronts
 
 		experimentBaseDirectory_ = "";
 		paretoFrontDirectory_ = "";
@@ -113,6 +120,7 @@ public abstract class Experiment {
 		outputParetoSetFile_ = "VAR";
 
 		algorithmSettings_ = null;
+		//algorithm_ = null;
 
 		independentRuns_ = 0;
 
@@ -123,9 +131,11 @@ public abstract class Experiment {
 		indicatorMinimize_.put("GD", true);
 		indicatorMinimize_.put("IGD", true);
 
+		// Inicio modificaci贸n planificaci贸n Threads
 		problemIndex = 0;
 		algorithmIndex = 0;
 		irunIndex = 0;
+		// Fin modificacion planificaci贸n Threads
 	} // Constructor
 
 	/**
@@ -147,9 +157,15 @@ public abstract class Experiment {
 		map_.put("outputParetoSetFile", outputParetoSetFile_);
 		map_.put("problemsSettings", problemsSettings_);
 
-				frontPath_ = new String[problemList_.length];
+		// Inicio modificaci贸n ReferenceFronts
+		frontPath_ = new String[problemList_.length];
 		map_.put("frontPath",frontPath_);
+		// Fin modificaci贸n ReferenceFrons
 
+		//SolutionSet[] resultFront = new SolutionSet[algorithmNameList_.length];
+
+		// Inicio modificaci贸n planificaci贸n Threads
+		
 		System.out.println("Experiment: creating " + numberOfThreads + " threads");
 		System.out.println("Experiment: Number of algorithms: " + algorithmNameList_.length) ;
 		System.out.println("Experiment: Number of problems: " + problemList_.length);
@@ -157,6 +173,7 @@ public abstract class Experiment {
 		System.out.println("Experiment: Name: " + experimentName_);
 		System.out.println("Experiment: Experiment directory: " + experimentBaseDirectory_);
 
+		// Fin modificaci贸n planificaci贸n Threads
 
 		Thread[] p = new RunExperiment[numberOfThreads];
 		for (int i = 0; i < numberOfThreads; i++) {
@@ -172,8 +189,10 @@ public abstract class Experiment {
 		} catch (InterruptedException ex) {
 			Logger.getLogger(Experiment.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		
+
+		// Inicio modificaci贸n ReferenceFronts
 		generateQualityIndicators();
+		// Fin modificaci贸n ReferenceFronts
 	}
 
 	/**
@@ -218,10 +237,12 @@ public abstract class Experiment {
 
 	;
 
+	//Inicio modificaci贸n ReferenceFronts
+
 	/**
 	 * Checks if exist paretoFront files
 	 */
-	private void checkParetoFronts(){
+	private void checkParetoFronts(){					
 		if(paretoFrontDirectory_=="" || paretoFrontDirectory_ == null){
 			generateReferenceFronts();
 		}else{
@@ -229,10 +250,19 @@ public abstract class Experiment {
 				if(paretoFrontFile_[i]==null || paretoFrontFile_[i].equals("")){
 					paretoFrontFile_[i] = "";
 					generateReferenceFronts(i);
-				}
-			}
-		}
-	}
+				}else{
+					String filePath = paretoFrontDirectory_ + "/" + paretoFrontFile_[i];					
+					File f = new File(filePath);					
+					if(!f.exists()){
+						paretoFrontFile_[i] = "";
+						generateReferenceFronts(i);
+					}else{
+						frontPath_[i] = paretoFrontDirectory_ + "/" + paretoFrontFile_[i];
+					} // if
+				} // if
+			} // for
+		} // if
+	} // checkParetoFronts
 
 	/**
 	 * Generate the Quality Indicators
@@ -276,6 +306,7 @@ public abstract class Experiment {
 								value = indicators.hypervolume(solutionFront, trueFront, trueFront[0].length);
 
 								qualityIndicatorFile = qualityIndicatorFile + "/HV";
+
 							}
 							if (indicatorList_[indicatorIndex].equals("SPREAD")) {
 								Spread indicators = new Spread();
@@ -333,7 +364,7 @@ public abstract class Experiment {
 	private void resetFile(String file) {
 		File f = new File(file);
 		if(f.exists()){			
-			//System.out.println("File " + file + " exist.");
+			System.out.println("File " + file + " exist.");
 
 			if(f.isDirectory()){
 				System.out.println("File " + file + " is a directory. Deleting directory.");
@@ -351,7 +382,7 @@ public abstract class Experiment {
 				}
 			}			 
 		}else{
-			//System.out.println("File " + file + " does NOT exist.");
+			System.out.println("File " + file + " does NOT exist.");
 		}
 	} // resetFile
 
@@ -363,7 +394,7 @@ public abstract class Experiment {
 
 		File rfDirectory;
 		String referenceFrontDirectory = experimentBaseDirectory_ + "/referenceFronts";
-
+		
 		rfDirectory = new File(referenceFrontDirectory);
 
 		if(!rfDirectory.exists()) { 													// Si no existe el directorio
@@ -371,7 +402,7 @@ public abstract class Experiment {
 			System.out.println("Creating " + referenceFrontDirectory);
 		}
 
-		String paretoFrontPath = referenceFrontDirectory + "/" + problemList_[problemIndex] + ".rf";
+		frontPath_[problemIndex] = referenceFrontDirectory + "/" + problemList_[problemIndex] + ".rf";
 
 		MetricsUtil metricsUtils = new MetricsUtil();
 		NonDominatedSolutionList solutionSet = new NonDominatedSolutionList();
@@ -389,7 +420,7 @@ public abstract class Experiment {
 				metricsUtils.readNonDominatedSolutionSet(solutionFrontFile, solutionSet);
 			} // for
 		} // for
-		solutionSet.printObjectivesToFile(paretoFrontPath);		
+		solutionSet.printObjectivesToFile(frontPath_[problemIndex]);		
 	} // generateReferenceFronts
 
 
@@ -401,9 +432,11 @@ public abstract class Experiment {
 		for (int problemIndex=0; problemIndex<problemList_.length; problemIndex++) {	// Por cada problema, generamos el frente de referencia
 
 			this.generateReferenceFronts(problemIndex);
-			
+
 		} // for
 	} // generateReferenceFronts
+
+	// Fin modificaci贸n ReferenceFronts
 
 	public void generateLatexTables() throws FileNotFoundException, IOException {
 		latexDirectory_ = experimentBaseDirectory_ + "/" + latexDirectory_;
@@ -884,7 +917,7 @@ public abstract class Experiment {
 		RWilcoxon.generateScripts(problems, prefix, this) ;
 	} // generateRWilcoxonScripts
 
-	// Inicio modificaci梟 planificaci梟 Threads
+	// Inicio modificaci贸n planificaci贸n Threads
 	/**
 	 * 
 	 * @return
@@ -931,6 +964,6 @@ public abstract class Experiment {
 
 		return res;
 	}// getNextProblem
-	// Fin modificaci梟 planificaci梟 Threads
+	// Fin modificaci贸n planificaci贸n Threads
 }  // Experiment
 
