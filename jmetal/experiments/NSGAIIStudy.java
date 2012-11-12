@@ -30,6 +30,7 @@ import java.util.logging.Level;
 import jmetal.core.Algorithm;
 import jmetal.core.Problem;
 import jmetal.experiments.settings.NSGAII_Settings;
+import jmetal.experiments.util.Friedman;
 import jmetal.experiments.util.RBoxplot;
 import jmetal.experiments.util.RWilcoxon;
 import jmetal.util.JMException;
@@ -97,17 +98,17 @@ public class NSGAIIStudy extends Experiment {
     
     int numberOfAlgorithms = exp.algorithmNameList_.length ;
 
-    exp.experimentBaseDirectory_ = "/Users/antonio/Softw/pruebas/jmetal/kk/" +
+    exp.experimentBaseDirectory_ = "/Users/antonio/Softw/pruebas/jmetal/" +
                                    exp.experimentName_;
     exp.paretoFrontDirectory_ = "/Users/antonio/Softw/pruebas/data/paretoFronts";
     
     exp.algorithmSettings_ = new Settings[numberOfAlgorithms] ;
     
-    exp.independentRuns_ = 4 ;
+    exp.independentRuns_ = 30 ;
     
     // Run the experiments
     int numberOfThreads ;
-    exp.runExperiment(numberOfThreads = 1) ;
+    exp.runExperiment(numberOfThreads = 8) ;
     
     // Generate latex tables (comment this sentence is not desired)
     exp.generateLatexTables() ;
@@ -126,6 +127,13 @@ public class NSGAIIStudy extends Experiment {
     boolean notch ;
     exp.generateRBoxplotScripts(rows, columns, problems, prefix, notch = true, exp) ;
     exp.generateRWilcoxonScripts(problems, prefix, exp) ;  
+    
+    // Run the Friedman test
+    Friedman f = new Friedman(exp) ;
+    f.executeFriedmanTest("HV") ;
+    f.executeFriedmanTest("SPREAD") ;
+    f.executeFriedmanTest("EPSILON") ;
+    f.executeFriedmanTest("IGD") ;
   } // main
 } // NSGAIIStudy
 

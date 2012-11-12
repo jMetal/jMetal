@@ -48,9 +48,7 @@ public class RunExperiment extends Thread {
 	public int numberOfThreads_ ;
 	public int numberOfProblems_ ;
 
-	// Inicio modificación planificación Threads
 	static boolean finished;
-	// Fin modificación planificación Threads
 
 	String experimentName_;
 	String[] algorithmNameList_; // List of the names of the algorithms to be executed
@@ -103,8 +101,6 @@ public class RunExperiment extends Thread {
 		int numberOfAlgorithms = algorithmNameList_.length;
 		
 		algorithm = new Algorithm[numberOfAlgorithms] ;
-
-		// Inicio modificación planificación Threads
 
 		SolutionSet resultFront = null;  
 
@@ -180,6 +176,5 @@ public class RunExperiment extends Thread {
 				}
 			} // if
 		} //while
-		// Fin modificación planificación Threads
 	}
 }
