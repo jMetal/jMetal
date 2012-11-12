@@ -34,6 +34,7 @@ import jmetal.experiments.settings.MOCell_Settings;
 import jmetal.experiments.settings.NSGAII_Settings;
 import jmetal.experiments.settings.SPEA2_Settings;
 import jmetal.experiments.settings.SMPSO_Settings;
+import jmetal.experiments.util.Friedman;
 import jmetal.experiments.util.RBoxplot;
 import jmetal.experiments.util.RWilcoxon;
 import jmetal.util.JMException;
@@ -95,7 +96,7 @@ public class ZDTStudy2 extends Experiment {
 		exp.experimentName_ = "ZDTStudy2";
 		exp.algorithmNameList_ = new String[]{
 				"NSGAII", "SMPSO", "GDE3", "AbySS"};
-		exp.problemList_ = new String[]{"ZDT1", "ZDT2","ZDT3", "ZDT4","ZDT6", "Golinski", "Kursawe"};
+		exp.problemList_ = new String[]{"ZDT1", "ZDT2","ZDT3", "ZDT4","ZDT6"};
 		exp.paretoFrontFile_ = new String[7]; // 7 problems
 
 		exp.indicatorList_ = new String[]{"HV", "SPREAD", "EPSILON"};
@@ -128,10 +129,16 @@ public class ZDTStudy2 extends Experiment {
     rows = 3 ;
     columns = 3 ;
     prefix = new String("ZDT");
-    problems = new String[]{"ZDT1", "ZDT2","ZDT3", "ZDT4","ZDT6", "Golinski", "Kursawe"} ;
+    problems = new String[]{"ZDT1", "ZDT2","ZDT3", "ZDT4","ZDT6"} ;
 
     exp.generateRBoxplotScripts(rows, columns, problems, prefix, notch = false, exp) ;
     exp.generateRWilcoxonScripts(problems, prefix, exp) ;
+		
+    // Run the Friedman test
+    Friedman f = new Friedman(exp) ;
+    f.executeFriedmanTest("HV") ;
+    f.executeFriedmanTest("SPREAD") ;
+    f.executeFriedmanTest("EPSILON") ;
 	} // main
 } // ZDTStudy
 
