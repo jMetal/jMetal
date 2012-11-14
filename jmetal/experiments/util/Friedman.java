@@ -1,9 +1,6 @@
 //  Friedman.java
 //
-//  Author:
-//       Jorge Rodriguez
-//
-//  Copyright (c) 2012 Jorge Rodriguez
+//  THIS CLASS IS NOT FINISHED.
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
