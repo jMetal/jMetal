@@ -4,7 +4,7 @@
 //       Antonio J. Nebro <antonio@lcc.uma.es>
 //       Juan J. Durillo <durillo@lcc.uma.es>
 //
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
+//  Copyright (c) 2012 Antonio J. Nebro, Juan J. Durillo
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -42,20 +42,8 @@ import java.util.logging.Logger;
 import jmetal.qualityIndicator.QualityIndicator;
 
 /** 
- * Class implementing the NSGA-II algorithm.  
- * This implementation of NSGA-II makes use of a QualityIndicator object
- *  to obtained the convergence speed of the algorithm. This version is used
- *  in the paper:
- *     A.J. Nebro, J.J. Durillo, C.A. Coello Coello, F. Luna, E. Alba 
- *     "A Study of Convergence Speed in Multi-Objective Metaheuristics." 
- *     To be presented in: PPSN'08. Dortmund. September 2008.
- *     
- *   Besides the classic NSGA-II, a steady-state version (ssNSGAII) is also
- *   included (See: J.J. Durillo, A.J. Nebro, F. Luna and E. Alba 
- *                  "On the Effect of the Steady-State Selection Scheme in 
- *                  Multi-Objective Genetic Algorithms"
- *                  5th International Conference, EMO 2009, pp: 183-197. 
- *                  April 2009)
+ * Class to configure and execute the NSGA-II algorithm. The settings are aimed
+ * at solving the MOTSP problem.
  */
 
 public class NSGAII_MOTSP_main {

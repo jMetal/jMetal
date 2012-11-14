@@ -45,21 +45,15 @@ import java.util.logging.Logger;
 import jmetal.qualityIndicator.QualityIndicator;
 
 /** 
- * Class implementing the NSGA-II algorithm.  
- * This implementation of NSGA-II makes use of a QualityIndicator object
- *  to obtained the convergence speed of the algorithm. This version is used
- *  in the paper:
- *     A.J. Nebro, J.J. Durillo, C.A. Coello Coello, F. Luna, E. Alba 
- *     "A Study of Convergence Speed in Multi-Objective Metaheuristics." 
- *     To be presented in: PPSN'08. Dortmund. September 2008.
+ * Class to configure and execute the NSGA-II algorithm.  
  *     
- *   Besides the classic NSGA-II, a steady-state version (ssNSGAII) is also
- *   included (See: J.J. Durillo, A.J. Nebro, F. Luna and E. Alba 
+ * Besides the classic NSGA-II, a steady-state version (ssNSGAII) is also
+ * included (See: J.J. Durillo, A.J. Nebro, F. Luna and E. Alba 
  *                  "On the Effect of the Steady-State Selection Scheme in 
  *                  Multi-Objective Genetic Algorithms"
  *                  5th International Conference, EMO 2009, pp: 183-197. 
  *                  April 2009)
- */
+ */ 
 
 public class NSGAII_main {
   public static Logger      logger_ ;      // Logger object
