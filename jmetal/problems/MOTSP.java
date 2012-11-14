@@ -67,7 +67,7 @@ public class MOTSP extends Problem {
     	System.out.println("Error: solution type " + solutionType + " invalid") ;
     	System.exit(-1) ;
     }
-  } // TSP
+  } // MOTSP
     
  /** 
   * Evaluates a solution 
@@ -173,6 +173,4 @@ public class MOTSP extends Problem {
     } // catch
     return matrix;
   } // readProblem
-
-
 } // MOTSP

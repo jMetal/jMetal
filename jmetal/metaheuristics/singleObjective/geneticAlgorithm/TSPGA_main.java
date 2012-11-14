@@ -53,13 +53,13 @@ public class TSPGA_main {
         
     String problemName = "eil101.tsp" ;
     
-    problem = new TSP(problemName);
+    problem = new TSP("Permutation", problemName);
     
     algorithm = new ssGA(problem);
     //algorithm = new gGA(problem) ;
     
     // Algorithm params
-    algorithm.setInputParameter("populationSize",512);
+    algorithm.setInputParameter("populationSize",100);
     algorithm.setInputParameter("maxEvaluations",2000000);
     
     // Mutation and Crossover for Real codification

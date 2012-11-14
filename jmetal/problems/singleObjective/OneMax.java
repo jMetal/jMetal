@@ -24,6 +24,7 @@ package jmetal.problems.singleObjective;
 import jmetal.core.*;
 import jmetal.encodings.solutionType.BinaryRealSolutionType;
 import jmetal.encodings.solutionType.BinarySolutionType;
+import jmetal.encodings.solutionType.RealSolutionType;
 import jmetal.encodings.variable.Binary;
 
 /**
@@ -37,7 +38,7 @@ public class OneMax extends Problem {
   * Creates a new OneMax problem instance
   * @param numberOfBits Length of the problem
   */
-  public OneMax(Integer numberOfBits)  throws ClassNotFoundException {
+  public OneMax(String solutionType, Integer numberOfBits)  throws ClassNotFoundException {
     numberOfVariables_  = 1;
     numberOfObjectives_ = 1;
     numberOfConstraints_= 0;
@@ -47,9 +48,15 @@ public class OneMax extends Problem {
     	    
     //variableType_ = new Class[numberOfVariables_] ;
     length_       = new int[numberOfVariables_];
-    
-    //variableType_[0] = Class.forName("jmetal.encodings.variable.Binary") ;
     length_      [0] = numberOfBits ;
+    
+    if (solutionType.compareTo("Binary") == 0)
+    	solutionType_ = new BinarySolutionType(this) ;
+    else {
+    	System.out.println("OneMax: solution type " + solutionType + " invalid") ;
+    	System.exit(-1) ;
+    }  
+    
   } // OneMax
     
  /** 

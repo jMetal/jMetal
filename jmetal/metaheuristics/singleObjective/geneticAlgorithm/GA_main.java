@@ -49,7 +49,7 @@ public class GA_main {
     HashMap  parameters ; // Operator parameters
 
     int bits = 512 ;
-    problem = new OneMax(bits);
+    problem = new OneMax("Binary", bits);
  
     //problem = new Sphere("Real", 10) ;
     //problem = new Easom("Real") ;

@@ -23,6 +23,7 @@ package jmetal.problems.singleObjective;
 
 import jmetal.core.*;
 import jmetal.encodings.solutionType.BinaryRealSolutionType;
+import jmetal.encodings.solutionType.BinarySolutionType;
 import jmetal.encodings.solutionType.PermutationSolutionType;
 import jmetal.encodings.variable.Binary;
 import jmetal.encodings.variable.Permutation;
@@ -42,7 +43,7 @@ public class TSP extends Problem {
   * Creates a new TSP problem instance. It accepts data files from TSPLIB
   * @param filename The file containing the definition of the problem
   */
-  public TSP(String filename) throws FileNotFoundException, IOException, ClassNotFoundException  {
+  public TSP(String solutionType, String filename) throws FileNotFoundException, IOException, ClassNotFoundException  {
     numberOfVariables_  = 1;
     numberOfObjectives_ = 1;
     numberOfConstraints_= 0;
@@ -50,11 +51,15 @@ public class TSP extends Problem {
              
     solutionType_ = new PermutationSolutionType(this) ; 
     
-    //variableType_ = new Class[numberOfVariables_] ;
     length_       = new int[numberOfVariables_];
     
-    //variableType_[0] = Class.forName("jmetal.base.variable.Permutation") ;
-    
+    if (solutionType.compareTo("Permutation") == 0)
+    	solutionType_ = new PermutationSolutionType(this) ;
+    else {
+    	System.out.println("TSP: solution type " + solutionType + " invalid") ;
+    	System.exit(-1) ;
+    }  
+
     readProblem(filename) ;
     System.out.println(numberOfCities_) ;
     length_      [0] = numberOfCities_ ;
@@ -157,6 +162,4 @@ public class TSP extends Problem {
       System.exit(1);
     } // catch
   } // readProblem
-
-
 } // TSP

@@ -46,7 +46,7 @@ public class ES_main {
     int bits ; // Length of bit string in the OneMax problem
     
     bits = 512 ;
-    problem = new OneMax(bits);
+    problem = new OneMax("Binary", bits);
     
     int mu     ; 
     int lambda ; 
