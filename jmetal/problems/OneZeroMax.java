@@ -1,10 +1,9 @@
-//  OneMax.java
+//  OneZeroMax.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
 //
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
+//  Copyright (c) 2012 Antonio J. Nebro
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -17,9 +16,9 @@
 //  GNU Lesser General Public License for more details.
 // 
 //  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>. * OneMax.java
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>. * OneZeroMax.java
 
-package jmetal.problems.singleObjective;
+package jmetal.problems ;
 
 import jmetal.core.*;
 import jmetal.encodings.solutionType.BinaryRealSolutionType;
@@ -28,36 +27,35 @@ import jmetal.encodings.solutionType.RealSolutionType;
 import jmetal.encodings.variable.Binary;
 
 /**
- * Class representing problem OneMax. The problem consist of maximizing the
- * number of '1's in a binary string.
+ * Class representing problem OneZeroMax. The problem consist of maximizing the
+ * number of '1's and '0's in a binary string.
  */
-public class OneMax extends Problem {
+public class OneZeroMax extends Problem {
 
   
  /**
-  * Creates a new OneMax problem instance
+  * Creates a new OneZeroMax problem instance
   * @param numberOfBits Length of the problem
   */
-  public OneMax(String solutionType, Integer numberOfBits)  throws ClassNotFoundException {
+  public OneZeroMax(String solutionType, Integer numberOfBits)  throws ClassNotFoundException {
     numberOfVariables_  = 1;
-    numberOfObjectives_ = 1;
+    numberOfObjectives_ = 2;
     numberOfConstraints_= 0;
-    problemName_        = "ONEMAX";
+    problemName_        = "OneZeroMax";
              
     solutionType_ = new BinarySolutionType(this) ;
     	    
-    //variableType_ = new Class[numberOfVariables_] ;
     length_       = new int[numberOfVariables_];
     length_      [0] = numberOfBits ;
     
     if (solutionType.compareTo("Binary") == 0)
     	solutionType_ = new BinarySolutionType(this) ;
     else {
-    	System.out.println("OneMax: solution type " + solutionType + " invalid") ;
+    	System.out.println("OneZeroMax: solution type " + solutionType + " invalid") ;
     	System.exit(-1) ;
     }  
     
-  } // OneMax
+  } // OneZeroMax
     
  /** 
   * Evaluates a solution 
@@ -65,17 +63,22 @@ public class OneMax extends Problem {
   */      
   public void evaluate(Solution solution) {
     Binary variable ;
-    int    counter  ;
+    int    counterOnes   ;
+    int    counterZeroes ;
     
     variable = ((Binary)solution.getDecisionVariables()[0]) ;
     
-    counter = 0 ;
+    counterOnes = 0 ;
+    counterZeroes = 0 ;
 
     for (int i = 0; i < variable.getNumberOfBits() ; i++) 
       if (variable.bits_.get(i) == true)
-        counter ++ ;
+        counterOnes ++ ;
+      else
+      	counterZeroes ++ ;
 
-    // OneMax is a maximization problem: multiply by -1 to minimize
-    solution.setObjective(0, -1.0*counter);            
+    // OneZeroMax is a maximization problem: multiply by -1 to minimize
+    solution.setObjective(0, -1.0*counterOnes);            
+    solution.setObjective(0, -1.0*counterZeroes);            
   } // evaluate
-} // OneMax
+} // OneZeroMax
