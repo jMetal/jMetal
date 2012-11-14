@@ -32,9 +32,18 @@ import jmetal.encodings.variable.Binary;
  */
 public class OneZeroMax extends Problem {
 
-  
+	 /**
+	  * Creates a new OneZeroMax problem instance
+  * @param solutionType Solution type
+	 * @throws ClassNotFoundException 
+	  */
+  public OneZeroMax(String solutionType) throws ClassNotFoundException {
+  	this(solutionType, 512) ;
+  }
+	
  /**
   * Creates a new OneZeroMax problem instance
+  * @param solutionType Solution type
   * @param numberOfBits Length of the problem
   */
   public OneZeroMax(String solutionType, Integer numberOfBits)  throws ClassNotFoundException {
@@ -79,6 +88,6 @@ public class OneZeroMax extends Problem {
 
     // OneZeroMax is a maximization problem: multiply by -1 to minimize
     solution.setObjective(0, -1.0*counterOnes);            
-    solution.setObjective(0, -1.0*counterZeroes);            
+    solution.setObjective(1, -1.0*counterZeroes);            
   } // evaluate
 } // OneZeroMax

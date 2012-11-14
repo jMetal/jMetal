@@ -56,7 +56,7 @@ public class NSGAIIBinary_Settings extends Settings {
   public NSGAIIBinary_Settings(String problem) {
     super(problem) ;
     
-    Object [] problemParams = {"BinaryReal"};
+    Object [] problemParams = {"Binary"};
     try {
 	    problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
     } catch (JMException e) {
