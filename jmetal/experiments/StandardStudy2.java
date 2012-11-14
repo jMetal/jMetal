@@ -159,6 +159,6 @@ public class StandardStudy2 extends Experiment {
     exp.generateRBoxplotScripts(rows, columns, problems, prefix, notch=false, exp) ;
     exp.generateRWilcoxonScripts(problems, prefix, exp) ;
   } // main
-} // StandardStudy
+} // StandardStudy2
 
 

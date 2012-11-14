@@ -43,7 +43,7 @@ import jmetal.util.JMException;
  * Class implementing an example experimental study. Three algorithms are 
  * compared when solving the benchmarks, and the hypervolume,
  * spread and additive epsilon indicators are used for performance assessment.
- * This experiment assumes that the reference Pareto fronts are unknown
+ * This experiment assumes that the reference Pareto fronts are unknown.
  */
 public class ZDTStudy2 extends Experiment {
 
@@ -133,12 +133,6 @@ public class ZDTStudy2 extends Experiment {
 
     exp.generateRBoxplotScripts(rows, columns, problems, prefix, notch = false, exp) ;
     exp.generateRWilcoxonScripts(problems, prefix, exp) ;
-		
-    // Run the Friedman test
-    Friedman f = new Friedman(exp) ;
-    f.executeFriedmanTest("HV") ;
-    f.executeFriedmanTest("SPREAD") ;
-    f.executeFriedmanTest("EPSILON") ;
 	} // main
 } // ZDTStudy
 
