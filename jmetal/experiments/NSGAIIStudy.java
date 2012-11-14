@@ -127,13 +127,6 @@ public class NSGAIIStudy extends Experiment {
     boolean notch ;
     exp.generateRBoxplotScripts(rows, columns, problems, prefix, notch = true, exp) ;
     exp.generateRWilcoxonScripts(problems, prefix, exp) ;  
-    
-    // Run the Friedman test
-    Friedman f = new Friedman(exp) ;
-    f.executeFriedmanTest("HV") ;
-    f.executeFriedmanTest("SPREAD") ;
-    f.executeFriedmanTest("EPSILON") ;
-    f.executeFriedmanTest("IGD") ;
   } // main
 } // NSGAIIStudy
 
