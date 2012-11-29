@@ -1,4 +1,4 @@
-//  Binh2.java
+//  FourBarTruss.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -31,26 +31,35 @@ import jmetal.util.Configuration.*;
 import jmetal.util.wrapper.XReal;
 
 /**
- * Class representing problem Binh2
+ * Class representing problem FourBarTruss
  */
-public class Binh2 extends Problem{
+public class FourBarTruss extends Problem {
+	double F_     = 10   ; // 10kN
+	double E_     = 200000; // 20000 kN/cm2
+	double L_     = 200  ; // 200 cm
+	double sigma_ = 10   ; // 10kN/cm2 ;
+	
   /**
    * Constructor
-   * Creates a default instance of the Binh2 problem
+   * Creates a default instance of the FourBarTruss problem
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
-  public Binh2(String solutionType) throws ClassNotFoundException {
-    numberOfVariables_  = 2;
+  public FourBarTruss(String solutionType) throws ClassNotFoundException {
+    numberOfVariables_  = 4;
     numberOfObjectives_ = 2;
-    numberOfConstraints_= 2;
-    problemName_        = "Binh2";
+    numberOfConstraints_= 0;
+    problemName_        = "FourBarTruss";
         
     lowerLimit_ = new double[numberOfVariables_];
     upperLimit_ = new double[numberOfVariables_];        
-    lowerLimit_[0] = 0.0;
-    lowerLimit_[1] = 0.0;        
-    upperLimit_[0] = 5.0;
-    upperLimit_[1] = 3.0;
+    lowerLimit_[0] = F_/sigma_;
+    lowerLimit_[1] = Math.sqrt(2.0)*(F_/sigma_) ;    
+    lowerLimit_[2] = lowerLimit_[1];        
+    lowerLimit_[3] = lowerLimit_[0] ;
+    upperLimit_[0] = 3*(F_/sigma_);
+    upperLimit_[1] = upperLimit_[0] ;
+    upperLimit_[2] = upperLimit_[0] ;
+    upperLimit_[3] = upperLimit_[0] ;
         
     if (solutionType.compareTo("BinaryReal") == 0)
       solutionType_ = new BinaryRealSolutionType(this) ;
@@ -75,36 +84,10 @@ public class Binh2 extends Problem{
     for (int i = 0 ; i < numberOfVariables_; i++)
     	x[i] = vars.getValue(i) ;
     
-    fx[0] = 4.0*x[0]*x[0] + 4*x[1]*x[1] ;        
-    fx[1] = (x[0]-5.0)*(x[0]-5.0) + (x[1]-5.0)*(x[1]-5.0) ;        
+    fx[0] = L_*(2*x[0]+ Math.sqrt(2.0)*x[1]+ Math.sqrt(x[2])+x[3]) ;        
+    fx[1] = (F_*L_/E_)*(2/x[0] + 2*Math.sqrt(2)/x[1] - 2*Math.sqrt(2)/x[2] + 2/x[3]);        
     
     solution.setObjective(0,fx[0]);
     solution.setObjective(1,fx[1]);
   } // evaluate
-
- /** 
-  * Evaluates the constraint overhead of a solution 
-  * @param solution The solution
- * @throws JMException 
-  */  
-  public void evaluateConstraints(Solution solution) throws JMException {
-    double [] constraint = new double[this.getNumberOfConstraints()];
-
-    double x0 = solution.getDecisionVariables()[0].getValue();
-    double x1 = solution.getDecisionVariables()[1].getValue();
-        
-    constraint[0] =  -1.0*(x0-5)*(x0-5) - x1*x1 + 25.0 ;
-    constraint[1] =  (x0-8)*(x0-8) + (x1+3)*(x1+3) - 7.7 ;
-        
-    double total = 0.0;
-    int number = 0;
-    for (int i = 0; i < this.getNumberOfConstraints(); i++)
-      if (constraint[i]<0.0){
-        total+=constraint[i];
-        number++;
-      }
-        
-    solution.setOverallConstraintViolation(total);    
-    solution.setNumberOfViolatedConstraint(number);         
-  } // evaluateConstraints  
-} // Binh2
+} // FourBarTruss
