@@ -8,6 +8,7 @@ import jmetal.core.Solution;
 public class Task implements Callable<Solution>{
 	private Problem problem_ ;
 	private Solution solution_ ;
+	
   public Task(Problem problem,  Solution solution) {
   	problem_ = problem ;
   	solution_ = solution ;
@@ -18,7 +19,7 @@ public class Task implements Callable<Solution>{
     problem_.evaluate(solution_) ;
     problem_.evaluateConstraints(solution_) ;
     long estimatedTime = System.currentTimeMillis() - initTime;
-    System.out.println("Time: "+ estimatedTime) ;
+    //System.out.println("Time: "+ estimatedTime) ;
     return solution_ ;
   }
   

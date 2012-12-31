@@ -78,7 +78,7 @@ public class pNSGAII extends Algorithm {
 
 		Distance distance = new Distance();
 
-		Threads threads = new Threads(1) ;
+		Threads threads = new Threads() ;
 		
 		//Read the parameters
 		populationSize = ((Integer) getInputParameter("populationSize")).intValue();
@@ -99,7 +99,6 @@ public class pNSGAII extends Algorithm {
 		// Create the initial solutionSet
 		Solution newSolution;
 		
-		Future<Solution>future ;
     Collection<Callable<Solution>> tasks = new ArrayList<Callable<Solution>>();
 		for (int i = 0; i < populationSize; i++) {
 			newSolution = new Solution(problem_);
@@ -120,7 +119,7 @@ public class pNSGAII extends Algorithm {
 	      e.printStackTrace();
       }
 			evaluations++;
-			population.add(new Solution(solution));
+			population.add(solution);
     }
 
 	/*	
@@ -177,7 +176,7 @@ public class pNSGAII extends Algorithm {
 		      e.printStackTrace();
 	      }
 				evaluations++;
-				offspringPopulation.add(new Solution(solution));
+				offspringPopulation.add(solution);
 	    }
 	     
 			// Create the solutionSet union of solutionSet and offSpring

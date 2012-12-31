@@ -95,7 +95,7 @@ public class SMPSO_main {
       //problem = new OKA2("Real") ;
     } // else
     
-    algorithm = new SMPSO(problem) ;
+    algorithm = new pSMPSO(problem) ;
     
     // Algorithm parameters
     algorithm.setInputParameter("swarmSize",100);
