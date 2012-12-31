@@ -28,8 +28,7 @@ import java.util.concurrent.* ;
 
 import jmetal.core.*;
 import jmetal.util.comparators.CrowdingComparator;
-import jmetal.util.threads.Task;
-import jmetal.util.threads.Threads;
+import jmetal.util.parallel.ParallelEvaluator;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.*;
 
@@ -78,7 +77,7 @@ public class pNSGAII extends Algorithm {
 
 		Distance distance = new Distance();
 
-		Threads threads = new Threads() ;
+		ParallelEvaluator parallelEvaluator = new ParallelEvaluator(8) ;
 		
 		//Read the parameters
 		populationSize = ((Integer) getInputParameter("populationSize")).intValue();
@@ -102,50 +101,20 @@ public class pNSGAII extends Algorithm {
     Collection<Callable<Solution>> tasks = new ArrayList<Callable<Solution>>();
 		for (int i = 0; i < populationSize; i++) {
 			newSolution = new Solution(problem_);
-      tasks.add(new Task(problem_, newSolution)) ;			
-		}
-		
-		List<Future<Solution>> solutions = threads.evaluate(tasks) ;
-		
-    for(Future<Solution> result : solutions){
-    	Solution solution = null ;
-      try {
-	      solution = result.get();
-      } catch (InterruptedException e) {
-	      // TODO Auto-generated catch block
-	      e.printStackTrace();
-      } catch (ExecutionException e) {
-	      // TODO Auto-generated catch block
-	      e.printStackTrace();
-      }
-			evaluations++;
-			population.add(solution);
-    }
+			//population.add(newSolution) ;
+			//evaluations++;
 
-	/*	
-    for (int i = 0; i < populationSize; i++) {
-			newSolution = new Solution(problem_);
-			//problem_.evaluate(newSolution);
-			//problem_.evaluateConstraints(newSolution);
-			future = threads.evaluate(problem_, newSolution) ;
-			Solution s2 = null ;
-      try {
-	      s2 = future.get();
-      } catch (InterruptedException e) {
-	      // TODO Auto-generated catch block
-	      e.printStackTrace();
-      } catch (ExecutionException e) {
-	      // TODO Auto-generated catch block
-	      e.printStackTrace();
-      }
-			evaluations++;
-			population.add(s2);
-		} //for       
-*/
+      parallelEvaluator.addSolutionForEvaluation(problem_, newSolution) ;
+    }
+		
+		List<Solution> solutionList = parallelEvaluator.parallelEvaluation() ;
+		for (Solution solution : solutionList) {
+			population.add(solution) ;
+			evaluations ++ ;
+		}
 		
 		// Generations 
 		while (evaluations < maxEvaluations) {
-
 			// Create the offSpring solutionSet      
 			offspringPopulation = new SolutionSet(populationSize);
 			Solution[] parents = new Solution[2];
@@ -157,28 +126,24 @@ public class pNSGAII extends Algorithm {
 					Solution[] offSpring = (Solution[]) crossoverOperator.execute(parents);
 					mutationOperator.execute(offSpring[0]);
 					mutationOperator.execute(offSpring[1]);
-			    tasks = new ArrayList<Callable<Solution>>();
-		      tasks.add(new Task(problem_, offSpring[0])) ;	
-		      tasks.add(new Task(problem_, offSpring[1])) ;	
+					parallelEvaluator.addSolutionForEvaluation(problem_, offSpring[0]) ;
+					parallelEvaluator.addSolutionForEvaluation(problem_, offSpring[1]) ;
 				} // if                            
 			} // for
 
-		 solutions = threads.evaluate(tasks) ;
-	    for(Future<Solution> result : solutions){
-	    	Solution solution = null ;
-	      try {
-		      solution = result.get();
-	      } catch (InterruptedException e) {
-		      // TODO Auto-generated catch block
-		      e.printStackTrace();
-	      } catch (ExecutionException e) {
-		      // TODO Auto-generated catch block
-		      e.printStackTrace();
-	      }
-				evaluations++;
-				offspringPopulation.add(solution);
-	    }
-	     
+			List<Solution> solutions = parallelEvaluator.parallelEvaluation() ;
+
+			for (int i = 0; i < solutions.size(); i++) {
+				offspringPopulation.add(solutions.get(i)) ;
+				evaluations++ ;
+			}
+				
+			
+	    //for(Solution s : solutions){
+			//	offspringPopulation.add(new Solution(s));
+			//	System.out.println("Offspring: " + offspringPopulation.size()) ;
+	    //}
+
 			// Create the solutionSet union of solutionSet and offSpring
 			union = ((SolutionSet) population).union(offspringPopulation);
 
@@ -235,7 +200,7 @@ public class pNSGAII extends Algorithm {
 			} // if
 		} // while
 
-		threads.shutdown();
+		parallelEvaluator.shutdown();
 
 		// Return as output parameter the required evaluations
 		setOutputParameter("evaluations", requiredEvaluations);

@@ -34,8 +34,7 @@ import jmetal.util.comparators.*;
 import jmetal.operators.mutation.*;
 import jmetal.qualityIndicator.Hypervolume;
 import jmetal.util.*;
-import jmetal.util.threads.Task;
-import jmetal.util.threads.Threads;
+import jmetal.util.parallel.ParallelEvaluator;
 import jmetal.util.wrapper.XReal;
 
 import java.util.ArrayList;
@@ -118,7 +117,7 @@ public class pSMPSO extends Algorithm {
   double ChVel1_;
   double ChVel2_;
 
-	Threads threads_ ; 
+  ParallelEvaluator parallelEvaluator_ ; 
 
   /** 
    * Constructor
@@ -206,7 +205,7 @@ public class pSMPSO extends Algorithm {
    * Initialize all parameter of the algorithm
    */
   public void initParams() {
-  	threads_  = new Threads() ;
+  	parallelEvaluator_  = new ParallelEvaluator() ;
 
     swarmSize_ = ((Integer) getInputParameter("swarmSize")).intValue();
     archiveSize_ = ((Integer) getInputParameter("archiveSize")).intValue();
@@ -216,7 +215,7 @@ public class pSMPSO extends Algorithm {
 
     polynomialMutation_ = operators_.get("mutation") ; 
 
-    iteration_ = 0 ;
+    iteration_ = 1 ;
 
     success_ = false;
 
@@ -381,16 +380,17 @@ public class pSMPSO extends Algorithm {
    */
   public SolutionSet execute() throws JMException, ClassNotFoundException {
     initParams();
-
+System.out.println("asdfasfdasf") ;
     success_ = false;
     //->Step 1 (and 3) Create the initial population and evaluate
     for (int i = 0; i < swarmSize_; i++) {
       Solution particle = new Solution(problem_);
-      problem_.evaluate(particle);
-      problem_.evaluateConstraints(particle);
       particles_.add(particle);
+      parallelEvaluator_.addSolutionForEvaluation(problem_, particle) ;
     }
 
+    parallelEvaluator_.parallelEvaluation() ;
+    
     //-> Step2. Initialize the speed_ of each particle to 0
     for (int i = 0; i < swarmSize_; i++) {
       for (int j = 0; j < problem_.getNumberOfVariables(); j++) {
@@ -413,8 +413,12 @@ public class pSMPSO extends Algorithm {
     //Crowding the leaders_
     distance_.crowdingDistanceAssignment(leaders_, problem_.getNumberOfObjectives());
 
+    //Collection<Callable<Solution>> tasks = new ArrayList<Callable<Solution>>();
+
     //-> Step 7. Iterations ..        
     while (iteration_ < maxIterations_) {
+    	System.out.println("I: " + iteration_) ;
+
       try {
         //Compute the speed_
         computeSpeed(iteration_, maxIterations_);
@@ -428,13 +432,15 @@ public class pSMPSO extends Algorithm {
       //Mutate the particles_          
       mopsoMutation(iteration_, maxIterations_);
 
-      Collection<Callable<Solution>> tasks = new ArrayList<Callable<Solution>>();
       for (int i = 0; i < particles_.size(); i++) {
         Solution particle = particles_.get(i);
-        tasks.add(new Task(problem_, particle)) ;			
+        ////tasks.add(new Task(problem_, particle)) ;			
+        parallelEvaluator_.addSolutionForEvaluation(problem_, particle) ;
       }
       
-  		List<Future<Solution>> solutions = threads_.evaluate(tasks) ;
+      parallelEvaluator_.parallelEvaluation() ;
+      /*
+  		List<Future<Solution>> solutions = parallelEvaluator_.evaluate(tasks) ;
   		
       for(Future<Solution> result : solutions){
       	Solution solution = null ;
@@ -450,6 +456,9 @@ public class pSMPSO extends Algorithm {
 //  			evaluations++;
 //  			population.add(solution);
       }
+      */
+      
+      
       /*
       //Evaluate the new particles_ in new positions
       for (int i = 0; i < particles_.size(); i++) {
@@ -479,7 +488,7 @@ public class pSMPSO extends Algorithm {
       iteration_++;
     }
     
-    threads_.shutdown() ;
+    parallelEvaluator_.shutdown() ;
     return this.leaders_;
   } // execute
 
