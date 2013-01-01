@@ -1,10 +1,9 @@
-//  SMPSO.java
+//  pSMPSO.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
 //
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
+//  Copyright (c) 2013 Antonio J. Nebro
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -104,6 +103,17 @@ public class pSMPSO extends Algorithm {
 
   QualityIndicator indicators_; // QualityIndicator object
 
+  /**
+   * ParallelEvaluator object
+   */
+  ParallelEvaluator parallelEvaluator_ ; 
+
+  /**
+   * Number of threads to be executed in parallel
+   */
+  private int numberOfThreads_;
+
+  
   double r1Max_;
   double r1Min_;
   double r2Max_;
@@ -117,7 +127,6 @@ public class pSMPSO extends Algorithm {
   double ChVel1_;
   double ChVel2_;
 
-  ParallelEvaluator parallelEvaluator_ ; 
 
   /** 
    * Constructor
@@ -205,15 +214,16 @@ public class pSMPSO extends Algorithm {
    * Initialize all parameter of the algorithm
    */
   public void initParams() {
-  	parallelEvaluator_  = new ParallelEvaluator() ;
-
     swarmSize_ = ((Integer) getInputParameter("swarmSize")).intValue();
     archiveSize_ = ((Integer) getInputParameter("archiveSize")).intValue();
     maxIterations_ = ((Integer) getInputParameter("maxIterations")).intValue();
+    numberOfThreads_ = ((Integer) getInputParameter("numberOfThreads")).intValue();
 
     indicators_ = (QualityIndicator) getInputParameter("indicators");
 
     polynomialMutation_ = operators_.get("mutation") ; 
+
+  	parallelEvaluator_  = new ParallelEvaluator(numberOfThreads_) ;
 
     iteration_ = 1 ;
 
@@ -380,7 +390,6 @@ public class pSMPSO extends Algorithm {
    */
   public SolutionSet execute() throws JMException, ClassNotFoundException {
     initParams();
-System.out.println("asdfasfdasf") ;
     success_ = false;
     //->Step 1 (and 3) Create the initial population and evaluate
     for (int i = 0; i < swarmSize_; i++) {
@@ -413,12 +422,8 @@ System.out.println("asdfasfdasf") ;
     //Crowding the leaders_
     distance_.crowdingDistanceAssignment(leaders_, problem_.getNumberOfObjectives());
 
-    //Collection<Callable<Solution>> tasks = new ArrayList<Callable<Solution>>();
-
     //-> Step 7. Iterations ..        
     while (iteration_ < maxIterations_) {
-    	System.out.println("I: " + iteration_) ;
-
       try {
         //Compute the speed_
         computeSpeed(iteration_, maxIterations_);
@@ -434,39 +439,11 @@ System.out.println("asdfasfdasf") ;
 
       for (int i = 0; i < particles_.size(); i++) {
         Solution particle = particles_.get(i);
-        ////tasks.add(new Task(problem_, particle)) ;			
         parallelEvaluator_.addSolutionForEvaluation(problem_, particle) ;
       }
       
       parallelEvaluator_.parallelEvaluation() ;
-      /*
-  		List<Future<Solution>> solutions = parallelEvaluator_.evaluate(tasks) ;
-  		
-      for(Future<Solution> result : solutions){
-      	Solution solution = null ;
-        try {
-  	      solution = result.get();
-        } catch (InterruptedException e) {
-  	      // TODO Auto-generated catch block
-  	      e.printStackTrace();
-        } catch (ExecutionException e) {
-  	      // TODO Auto-generated catch block
-  	      e.printStackTrace();
-        }
-//  			evaluations++;
-//  			population.add(solution);
-      }
-      */
-      
-      
-      /*
-      //Evaluate the new particles_ in new positions
-      for (int i = 0; i < particles_.size(); i++) {
-        Solution particle = particles_.get(i);
-        problem_.evaluate(particle);
-        problem_.evaluateConstraints(particle) ;
-      }
-*/
+
       //Actualize the archive          
       for (int i = 0; i < particles_.size(); i++) {
         Solution particle = new Solution(particles_.get(i));

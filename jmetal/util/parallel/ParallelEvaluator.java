@@ -32,22 +32,27 @@ import java.util.concurrent.Callable;
 
 import jmetal.core.Problem;
 import jmetal.core.Solution;
+import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
 public class ParallelEvaluator {
-	private int numberOfCores_ ;
+	private int numberOfThreads_ ;
 	private ExecutorService executor_ ;
 	private Collection<Callable<Solution>> taskList_ ;
 
 	/**
-	 * 
-	 * @author antelverde
-	 *
+	 * @author Antonio J. Nebro
+	 * Private class representing tasks to evaluate solutions
 	 */
 	private class EvaluationTask implements Callable<Solution> {
 		private Problem problem_ ;
 		private Solution solution_ ;
 
+		/**
+		 * Constructor
+		 * @param problem Problem to solve
+		 * @param solution Solution to evaluate
+		 */
 		public EvaluationTask(Problem problem,  Solution solution) {
 			problem_ = problem ;
 			solution_ = solution ;
@@ -63,22 +68,40 @@ public class ParallelEvaluator {
 		} 
 	}
 
-	Collection<Callable<Solution>> tasks = new ArrayList<Callable<Solution>>();
-
+	/**
+	 * Constructor
+	 */
 	public ParallelEvaluator() {
-		numberOfCores_ = Runtime.getRuntime().availableProcessors() ;
-		executor_ = Executors.newFixedThreadPool(numberOfCores_) ;
-		System.out.println("Cores: "+ numberOfCores_) ;
+		numberOfThreads_ = Runtime.getRuntime().availableProcessors() ;
+		executor_ = Executors.newFixedThreadPool(numberOfThreads_) ;
+		System.out.println("Cores: "+ numberOfThreads_) ;
 		taskList_ = null ; 
 	}
 
-	public ParallelEvaluator(int cores) {
-		numberOfCores_ = cores ;
-		executor_ = Executors.newFixedThreadPool(numberOfCores_) ;
-		System.out.println("Cores: "+ numberOfCores_) ;
+	/**
+	 * Constructor
+	 * @param cores Number of threads
+	 */
+	public ParallelEvaluator(int threads) {
+		if (threads == 0)
+			numberOfThreads_ = Runtime.getRuntime().availableProcessors() ;
+		else if (threads < 0) {
+			Configuration.logger_.severe("ParallelEvaluator: the number of threads" +
+		 " cannot be negative number " + threads);
+		}
+		else {
+		  numberOfThreads_ = threads ;
+		}
+		executor_ = Executors.newFixedThreadPool(numberOfThreads_) ;
+		System.out.println("Cores: "+ numberOfThreads_) ;
 		taskList_ = null ; 
 	}
 
+	/**
+	 * Adds a solution to be evaluated to a list of tasks
+	 * @param problem Problem being solved
+	 * @param solution Solution to be evaluated
+	 */
 	public void addSolutionForEvaluation(Problem problem, Solution solution) {
 		if (taskList_ == null)
 			taskList_ = new ArrayList<Callable<Solution>>();
@@ -86,6 +109,10 @@ public class ParallelEvaluator {
 		taskList_.add(new EvaluationTask(problem, solution)) ;			
 	}
 
+	/**
+	 * Evaluates a list of solutions
+	 * @return A list with the evaluated solutions
+	 */
 	public List<Solution> parallelEvaluation() {
 		List<Future<Solution>> future = null ;
 		try {
@@ -108,55 +135,15 @@ public class ParallelEvaluator {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			// 			evaluations++;
-			// 			population.add(solution);
 		}
 		taskList_ = null ;
 		return solutionList ;
 	}
 
+	/**
+	 * Shutdown the executor
+	 */
 	public void shutdown() {
 		executor_.shutdown() ;
 	}
-
-/*	
-	
-	
-	public List<Future<Solution>> evaluate(Collection<Callable<Solution>> tasks) {
-		List<Future<Solution>> solutions = null ;
-		try {
-			solutions = executor_.invokeAll(tasks);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return solutions ;
-	}
-
-	public Future<Solution> evaluate(final Problem problem, final Solution solution) {
-		Future<Solution> future = null ;
-		future = executor_.submit(new Callable<Solution>() {
-			public Solution call() {
-				//Solution sol = new Solution(solution) ;
-				try {
-					problem.evaluate(solution) ;
-				} catch (JMException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				return solution ;
-			}});
-
-		return future ;
-	}
-
-
-	public int getNumberOfCores() {
-		return numberOfCores_ ;
-	}
-	public void setNumberOfCores(int cores) {
-		numberOfCores_ = cores ;
-		idleCores_ = numberOfCores_ ;
-	}   
-	*/
 }

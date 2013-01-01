@@ -109,7 +109,7 @@ public class NSGAII_main {
       //problem = new OKA2("Real") ;
     } // else
     
-    algorithm = new pNSGAII(problem);
+    algorithm = new NSGAII(problem);
     //algorithm = new ssNSGAII(problem);
 
     // Algorithm parameters

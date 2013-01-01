@@ -1,10 +1,9 @@
-//  NSGAII.java
+//  pNSGAII.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
 //
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
+//  Copyright (c) 2013 Antonio J. Nebro
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -62,6 +61,7 @@ public class pNSGAII extends Algorithm {
 		int populationSize;
 		int maxEvaluations;
 		int evaluations;
+		int numberOfThreads ;
 
 		QualityIndicator indicators; // QualityIndicator object
 		int requiredEvaluations; // Use in the example of use of the
@@ -77,12 +77,15 @@ public class pNSGAII extends Algorithm {
 
 		Distance distance = new Distance();
 
-		ParallelEvaluator parallelEvaluator = new ParallelEvaluator(8) ;
-		
+		ParallelEvaluator parallelEvaluator ; 
+
 		//Read the parameters
 		populationSize = ((Integer) getInputParameter("populationSize")).intValue();
 		maxEvaluations = ((Integer) getInputParameter("maxEvaluations")).intValue();
 		indicators = (QualityIndicator) getInputParameter("indicators");
+		numberOfThreads = ((Integer) getInputParameter("numberOfThreads")).intValue();
+
+		parallelEvaluator  = new ParallelEvaluator(numberOfThreads) ;
 
 		//Initialize the variables
 		population = new SolutionSet(populationSize);
@@ -97,22 +100,18 @@ public class pNSGAII extends Algorithm {
 
 		// Create the initial solutionSet
 		Solution newSolution;
-		
-    Collection<Callable<Solution>> tasks = new ArrayList<Callable<Solution>>();
+
 		for (int i = 0; i < populationSize; i++) {
 			newSolution = new Solution(problem_);
-			//population.add(newSolution) ;
-			//evaluations++;
+			parallelEvaluator.addSolutionForEvaluation(problem_, newSolution) ;
+		}
 
-      parallelEvaluator.addSolutionForEvaluation(problem_, newSolution) ;
-    }
-		
 		List<Solution> solutionList = parallelEvaluator.parallelEvaluation() ;
 		for (Solution solution : solutionList) {
 			population.add(solution) ;
 			evaluations ++ ;
 		}
-		
+
 		// Generations 
 		while (evaluations < maxEvaluations) {
 			// Create the offSpring solutionSet      
@@ -133,16 +132,10 @@ public class pNSGAII extends Algorithm {
 
 			List<Solution> solutions = parallelEvaluator.parallelEvaluation() ;
 
-			for (int i = 0; i < solutions.size(); i++) {
-				offspringPopulation.add(solutions.get(i)) ;
-				evaluations++ ;
+			for(Solution solution : solutions) {
+				offspringPopulation.add(solution);
+				evaluations++;	    
 			}
-				
-			
-	    //for(Solution s : solutions){
-			//	offspringPopulation.add(new Solution(s));
-			//	System.out.println("Offspring: " + offspringPopulation.size()) ;
-	    //}
 
 			// Create the solutionSet union of solutionSet and offSpring
 			union = ((SolutionSet) population).union(offspringPopulation);
@@ -209,4 +202,4 @@ public class pNSGAII extends Algorithm {
 		Ranking ranking = new Ranking(population);
 		return ranking.getSubfront(0);
 	} // execute
-} // NSGA-II
+} // pNSGAII

@@ -1,10 +1,9 @@
-//  SMPSO_main.java
+//  pSMPSO_main.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
 //
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
+//  Copyright (c) 2013 Antonio J. Nebro
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -40,13 +39,10 @@ import java.util.logging.Logger;
 import jmetal.qualityIndicator.QualityIndicator;
 
 /**
- * This class executes the SMPSO algorithm described in:
- * A.J. Nebro, J.J. Durillo, J. Garcia-Nieto, C.A. Coello Coello, F. Luna and E. Alba
- * "SMPSO: A New PSO-based Metaheuristic for Multi-objective Optimization". 
- * IEEE Symposium on Computational Intelligence in Multicriteria Decision-Making 
- * (MCDM 2009), pp: 66-73. March 2009
+ * This class executes pSMPSO, a multithreaded version of SMPSO, characterized
+ * by evaluating the particles in parallel.
  */
-public class SMPSO_main {
+public class pSMPSO_main {
   public static Logger      logger_ ;      // Logger object
   public static FileHandler fileHandler_ ; // FileHandler object
 
@@ -95,13 +91,16 @@ public class SMPSO_main {
       //problem = new OKA2("Real") ;
     } // else
     
-    algorithm = new SMPSO(problem) ;
+    algorithm = new pSMPSO(problem) ;
     
     // Algorithm parameters
+    int threads = 4 ; // 0 - use all the available cores
+    
     algorithm.setInputParameter("swarmSize",100);
     algorithm.setInputParameter("archiveSize",100);
     algorithm.setInputParameter("maxIterations",250);
-    
+    algorithm.setInputParameter("numberOfThreads", threads) ;
+
     parameters = new HashMap() ;
     parameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
     parameters.put("distributionIndex", 20.0) ;
