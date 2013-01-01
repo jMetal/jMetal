@@ -34,7 +34,6 @@ import jmetal.operators.mutation.*;
 import jmetal.qualityIndicator.Hypervolume;
 import jmetal.util.*;
 import jmetal.util.parallel.IParallelEvaluator;
-import jmetal.util.parallel.ParallelEvaluator;
 import jmetal.util.wrapper.XReal;
 
 import java.util.ArrayList;

@@ -28,7 +28,6 @@ import java.util.concurrent.* ;
 import jmetal.core.*;
 import jmetal.util.comparators.CrowdingComparator;
 import jmetal.util.parallel.IParallelEvaluator;
-import jmetal.util.parallel.ParallelEvaluator;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.*;
 
