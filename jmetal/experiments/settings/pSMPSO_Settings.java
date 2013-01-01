@@ -1,10 +1,9 @@
-//  SMPSO_Settings.java 
+//  pSMPSO_Settings.java 
 //
 //  Authors:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
 //
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
+//  Copyright (c) 2013 Antonio J. Nebro
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -27,6 +26,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import jmetal.metaheuristics.smpso.*;
+
 import java.util.Properties;
 
 import jmetal.core.Algorithm;
@@ -39,22 +39,25 @@ import jmetal.problems.ProblemFactory;
 import jmetal.problems.ZDT.ZDT1;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.JMException;
+import jmetal.util.parallel.IParallelEvaluator;
+import jmetal.util.parallel.MultithreadedEvaluator;
 
 /**
- * Settings class of algorithm SMPSO
+ * Settings class of algorithm pSMPSO
  */
-public class SMPSO_Settings extends Settings{
+public class pSMPSO_Settings extends Settings{
   
 	public int    swarmSize_                 ;
   public int    maxIterations_             ;
   public int    archiveSize_               ;
   public double mutationDistributionIndex_ ;
   public double mutationProbability_       ;
+  public int    numberOfThreads_           ;
 
   /**
    * Constructor
    */
-  public SMPSO_Settings(String problem) {
+  public pSMPSO_Settings(String problem) {
     super(problem) ;
     
     Object [] problemParams = {"Real"};
@@ -71,6 +74,7 @@ public class SMPSO_Settings extends Settings{
     archiveSize_               = 100 ;
     mutationDistributionIndex_ = 20.0 ;
     mutationProbability_       = 1.0/problem_.getNumberOfVariables() ;
+    numberOfThreads_           = 4 ; // 0 - number of available cores
   } // SMPSO_Settings
   
   /**
@@ -86,8 +90,9 @@ public class SMPSO_Settings extends Settings{
     
     HashMap  parameters ; // Operator parameters
 
-    // Creating the problem
-    algorithm = new SMPSO(problem_) ;
+    IParallelEvaluator parallelEvaluator = new MultithreadedEvaluator(numberOfThreads_) ;
+
+    algorithm = new pSMPSO(problem_, parallelEvaluator) ;
     
     // Algorithm parameters
     algorithm.setInputParameter("swarmSize", swarmSize_);
@@ -101,13 +106,6 @@ public class SMPSO_Settings extends Settings{
 
     algorithm.addOperator("mutation",mutation);
 
-    /*
-		// Creating the indicator object
-    if ((paretoFrontFile_!=null) && (!paretoFrontFile_.equals(""))) {
-			indicators = new QualityIndicator(problem_, paretoFrontFile_);
-			algorithm.setInputParameter("indicators", indicators) ;  
-		} // if
-		*/
-		return algorithm ;
+    return algorithm ;
   } // Configure
-} // SMPSO_Settings
+} // pSMPSO_Settings

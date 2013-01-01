@@ -32,6 +32,8 @@ import jmetal.problems.WFG.*;
 import jmetal.problems.LZ09.* ;
 import jmetal.util.Configuration;
 import jmetal.util.JMException ;
+import jmetal.util.parallel.IParallelEvaluator;
+import jmetal.util.parallel.MultithreadedEvaluator;
 
 import java.util.HashMap;
 import java.util.logging.FileHandler;
@@ -91,15 +93,15 @@ public class pSMPSO_main {
       //problem = new OKA2("Real") ;
     } // else
     
-    algorithm = new pSMPSO(problem) ;
-    
-    // Algorithm parameters
     int threads = 4 ; // 0 - use all the available cores
+    IParallelEvaluator parallelEvaluator = new MultithreadedEvaluator(threads) ;
+
+    algorithm = new pSMPSO(problem, parallelEvaluator) ;
     
+    // Algorithm parameters    
     algorithm.setInputParameter("swarmSize",100);
     algorithm.setInputParameter("archiveSize",100);
     algorithm.setInputParameter("maxIterations",250);
-    algorithm.setInputParameter("numberOfThreads", threads) ;
 
     parameters = new HashMap() ;
     parameters.put("probability", 1.0/problem.getNumberOfVariables()) ;

@@ -34,6 +34,8 @@ import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.MersenneTwisterFast;
 import jmetal.util.PseudoRandom;
+import jmetal.util.parallel.IParallelEvaluator;
+import jmetal.util.parallel.MultithreadedEvaluator;
 
 import java.io.IOException;
 import java.util.* ;
@@ -104,14 +106,14 @@ public class pNSGAII_main {
       //problem = new OKA2("Real") ;
     } // else
     
-    algorithm = new pNSGAII(problem);
+    int threads = 4 ; // 0 - use all the available cores
+    IParallelEvaluator parallelEvaluator = new MultithreadedEvaluator(threads) ;
+    
+    algorithm = new pNSGAII(problem, parallelEvaluator);
 
     // Algorithm parameters
-    int threads = 8 ; // 0 - use all the available cores 
-
     algorithm.setInputParameter("populationSize",100);
     algorithm.setInputParameter("maxEvaluations",25000);
-    algorithm.setInputParameter("numberOfThreads", threads) ;
 
     // Mutation and Crossover for Real codification 
     parameters = new HashMap() ;

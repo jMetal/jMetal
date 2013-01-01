@@ -33,6 +33,7 @@ import jmetal.util.comparators.*;
 import jmetal.operators.mutation.*;
 import jmetal.qualityIndicator.Hypervolume;
 import jmetal.util.*;
+import jmetal.util.parallel.IParallelEvaluator;
 import jmetal.util.parallel.ParallelEvaluator;
 import jmetal.util.wrapper.XReal;
 
@@ -106,7 +107,7 @@ public class pSMPSO extends Algorithm {
   /**
    * ParallelEvaluator object
    */
-  ParallelEvaluator parallelEvaluator_ ; 
+  IParallelEvaluator parallelEvaluator_ ; 
 
   /**
    * Number of threads to be executed in parallel
@@ -127,54 +128,6 @@ public class pSMPSO extends Algorithm {
   double ChVel1_;
   double ChVel2_;
 
-
-  /** 
-   * Constructor
-   * @param problem Problem to solve
-   */
-  public pSMPSO(Problem problem) {
-    super(problem) ;
-
-    r1Max_ = 1.0;
-    r1Min_ = 0.0;
-    r2Max_ = 1.0;
-    r2Min_ = 0.0;
-    C1Max_ = 2.5;
-    C1Min_ = 1.5;
-    C2Max_ = 2.5;
-    C2Min_ = 1.5;
-    WMax_ = 0.1;
-    WMin_ = 0.1;
-    ChVel1_ = -1;
-    ChVel2_ = -1;
-  } // Constructor
-
-  public pSMPSO(Problem problem,
-    Vector<Double> variables,
-    String trueParetoFront) throws FileNotFoundException {
-    super(problem) ;
-
-    r1Max_ = variables.get(0);
-    r1Min_ = variables.get(1);
-    r2Max_ = variables.get(2);
-    r2Min_ = variables.get(3);
-    C1Max_ = variables.get(4);
-    C1Min_ = variables.get(5);
-    C2Max_ = variables.get(6);
-    C2Min_ = variables.get(7);
-    WMax_ = variables.get(8);
-    WMin_ = variables.get(9);
-    ChVel1_ = variables.get(10);
-    ChVel2_ = variables.get(11);
-
-    hy_ = new Hypervolume();
-    jmetal.qualityIndicator.util.MetricsUtil mu = new jmetal.qualityIndicator.util.MetricsUtil();
-    trueFront_ = mu.readNonDominatedSolutionSet(trueParetoFront);
-    trueHypervolume_ = hy_.hypervolume(trueFront_.writeObjectivesToMatrix(),
-      trueFront_.writeObjectivesToMatrix(),
-      problem_.getNumberOfObjectives());
-
-  } // SMPSO
   private double trueHypervolume_;
   private Hypervolume hy_;
   private SolutionSet trueFront_;
@@ -182,20 +135,14 @@ public class pSMPSO extends Algorithm {
   private double deltaMin_[];
   boolean success_;
 
+
   /** 
    * Constructor
    * @param problem Problem to solve
    */
-  public pSMPSO(Problem problem, String trueParetoFront) throws FileNotFoundException {
+  public pSMPSO(Problem problem, IParallelEvaluator evaluator) {
     super(problem) ;
-    hy_ = new Hypervolume();
-    jmetal.qualityIndicator.util.MetricsUtil mu = new jmetal.qualityIndicator.util.MetricsUtil();
-    trueFront_ = mu.readNonDominatedSolutionSet(trueParetoFront);
-    trueHypervolume_ = hy_.hypervolume(trueFront_.writeObjectivesToMatrix(),
-      trueFront_.writeObjectivesToMatrix(),
-      problem_.getNumberOfObjectives());
 
-    // Default configuration
     r1Max_ = 1.0;
     r1Min_ = 0.0;
     r2Max_ = 1.0;
@@ -208,7 +155,10 @@ public class pSMPSO extends Algorithm {
     WMin_ = 0.1;
     ChVel1_ = -1;
     ChVel2_ = -1;
+    
+    parallelEvaluator_ = evaluator ;
   } // Constructor
+
 
   /**
    * Initialize all parameter of the algorithm
@@ -217,13 +167,12 @@ public class pSMPSO extends Algorithm {
     swarmSize_ = ((Integer) getInputParameter("swarmSize")).intValue();
     archiveSize_ = ((Integer) getInputParameter("archiveSize")).intValue();
     maxIterations_ = ((Integer) getInputParameter("maxIterations")).intValue();
-    numberOfThreads_ = ((Integer) getInputParameter("numberOfThreads")).intValue();
 
     indicators_ = (QualityIndicator) getInputParameter("indicators");
 
     polynomialMutation_ = operators_.get("mutation") ; 
 
-  	parallelEvaluator_  = new ParallelEvaluator(numberOfThreads_) ;
+  	parallelEvaluator_.startEvaluator() ;
 
     iteration_ = 1 ;
 
@@ -424,6 +373,7 @@ public class pSMPSO extends Algorithm {
 
     //-> Step 7. Iterations ..        
     while (iteration_ < maxIterations_) {
+
       try {
         //Compute the speed_
         computeSpeed(iteration_, maxIterations_);
@@ -465,7 +415,7 @@ public class pSMPSO extends Algorithm {
       iteration_++;
     }
     
-    parallelEvaluator_.shutdown() ;
+    parallelEvaluator_.stopEvaluator() ;
     return this.leaders_;
   } // execute
 

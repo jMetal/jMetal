@@ -27,6 +27,7 @@ import java.util.concurrent.* ;
 
 import jmetal.core.*;
 import jmetal.util.comparators.CrowdingComparator;
+import jmetal.util.parallel.IParallelEvaluator;
 import jmetal.util.parallel.ParallelEvaluator;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.*;
@@ -43,12 +44,16 @@ import jmetal.util.*;
 
 public class pNSGAII extends Algorithm {
 
+  IParallelEvaluator parallelEvaluator_ ; 
+  
 	/**
 	 * Constructor
 	 * @param problem Problem to solve
 	 */
-	public pNSGAII(Problem problem) {
+	public pNSGAII(Problem problem, IParallelEvaluator evaluator) {
 		super (problem) ;
+
+    parallelEvaluator_ = evaluator ;
 	} // NSGAII
 
 	/**   
@@ -77,15 +82,13 @@ public class pNSGAII extends Algorithm {
 
 		Distance distance = new Distance();
 
-		ParallelEvaluator parallelEvaluator ; 
 
 		//Read the parameters
 		populationSize = ((Integer) getInputParameter("populationSize")).intValue();
 		maxEvaluations = ((Integer) getInputParameter("maxEvaluations")).intValue();
 		indicators = (QualityIndicator) getInputParameter("indicators");
-		numberOfThreads = ((Integer) getInputParameter("numberOfThreads")).intValue();
 
-		parallelEvaluator  = new ParallelEvaluator(numberOfThreads) ;
+		parallelEvaluator_.startEvaluator() ;
 
 		//Initialize the variables
 		population = new SolutionSet(populationSize);
@@ -103,10 +106,10 @@ public class pNSGAII extends Algorithm {
 
 		for (int i = 0; i < populationSize; i++) {
 			newSolution = new Solution(problem_);
-			parallelEvaluator.addSolutionForEvaluation(problem_, newSolution) ;
+			parallelEvaluator_.addSolutionForEvaluation(problem_, newSolution) ;
 		}
 
-		List<Solution> solutionList = parallelEvaluator.parallelEvaluation() ;
+		List<Solution> solutionList = parallelEvaluator_.parallelEvaluation() ;
 		for (Solution solution : solutionList) {
 			population.add(solution) ;
 			evaluations ++ ;
@@ -125,12 +128,12 @@ public class pNSGAII extends Algorithm {
 					Solution[] offSpring = (Solution[]) crossoverOperator.execute(parents);
 					mutationOperator.execute(offSpring[0]);
 					mutationOperator.execute(offSpring[1]);
-					parallelEvaluator.addSolutionForEvaluation(problem_, offSpring[0]) ;
-					parallelEvaluator.addSolutionForEvaluation(problem_, offSpring[1]) ;
+					parallelEvaluator_.addSolutionForEvaluation(problem_, offSpring[0]) ;
+					parallelEvaluator_.addSolutionForEvaluation(problem_, offSpring[1]) ;
 				} // if                            
 			} // for
 
-			List<Solution> solutions = parallelEvaluator.parallelEvaluation() ;
+			List<Solution> solutions = parallelEvaluator_.parallelEvaluation() ;
 
 			for(Solution solution : solutions) {
 				offspringPopulation.add(solution);
@@ -193,7 +196,7 @@ public class pNSGAII extends Algorithm {
 			} // if
 		} // while
 
-		parallelEvaluator.shutdown();
+		parallelEvaluator_.stopEvaluator();
 
 		// Return as output parameter the required evaluations
 		setOutputParameter("evaluations", requiredEvaluations);

@@ -1,4 +1,4 @@
-//  ParallelEvaluator.java
+//  MultithreadedEvaluator.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -35,15 +35,25 @@ import jmetal.core.Solution;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
-public class ParallelEvaluator {
+/**
+ * @author Antonio J. Nebro
+ * Class for evaluating solutions in parallel
+ * The procedure is:
+ * 1- create the parallel evaluator indicating the number of threads
+ * 2- add solutions for being evaluated wigh addSolutionforEvaluation()
+ * 3- evaluate the solutions with parallelEvaluation()
+ * 4- shutdown the parallel evaluator
+ */
+public class MultithreadedEvaluator implements IParallelEvaluator {
 	private int numberOfThreads_ ;
 	private ExecutorService executor_ ;
 	private Collection<Callable<Solution>> taskList_ ;
 
 	/**
 	 * @author Antonio J. Nebro
-	 * Private class representing tasks to evaluate solutions
+	 * Private class representing tasks to evaluate solutions. 
 	 */
+	
 	private class EvaluationTask implements Callable<Solution> {
 		private Problem problem_ ;
 		private Solution solution_ ;
@@ -70,19 +80,10 @@ public class ParallelEvaluator {
 
 	/**
 	 * Constructor
+	 * @param threads
 	 */
-	public ParallelEvaluator() {
-		numberOfThreads_ = Runtime.getRuntime().availableProcessors() ;
-		executor_ = Executors.newFixedThreadPool(numberOfThreads_) ;
-		System.out.println("Cores: "+ numberOfThreads_) ;
-		taskList_ = null ; 
-	}
-
-	/**
-	 * Constructor
-	 * @param cores Number of threads
-	 */
-	public ParallelEvaluator(int threads) {
+	public MultithreadedEvaluator(int threads) {
+		numberOfThreads_ = threads ;
 		if (threads == 0)
 			numberOfThreads_ = Runtime.getRuntime().availableProcessors() ;
 		else if (threads < 0) {
@@ -92,6 +93,13 @@ public class ParallelEvaluator {
 		else {
 		  numberOfThreads_ = threads ;
 		}
+	}
+	
+	/**
+	 * Constructor
+	 * @param cores Number of threads
+	 */
+	public void startEvaluator() {
 		executor_ = Executors.newFixedThreadPool(numberOfThreads_) ;
 		System.out.println("Cores: "+ numberOfThreads_) ;
 		taskList_ = null ; 
@@ -143,7 +151,7 @@ public class ParallelEvaluator {
 	/**
 	 * Shutdown the executor
 	 */
-	public void shutdown() {
+	public void stopEvaluator() {
 		executor_.shutdown() ;
 	}
 }
