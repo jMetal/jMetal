@@ -80,7 +80,7 @@ public class MultithreadedEvaluator implements IParallelEvaluator {
 
 	/**
 	 * Constructor
-	 * @param threads
+	 * @param threads 
 	 */
 	public MultithreadedEvaluator(int threads) {
 		numberOfThreads_ = threads ;

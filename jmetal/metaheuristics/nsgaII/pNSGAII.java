@@ -48,12 +48,13 @@ public class pNSGAII extends Algorithm {
 	/**
 	 * Constructor
 	 * @param problem Problem to solve
+	 * @param evaluator Parallel evaluator
 	 */
 	public pNSGAII(Problem problem, IParallelEvaluator evaluator) {
 		super (problem) ;
 
     parallelEvaluator_ = evaluator ;
-	} // NSGAII
+	} // pNSGAII
 
 	/**   
 	 * Runs the NSGA-II algorithm.
@@ -81,7 +82,6 @@ public class pNSGAII extends Algorithm {
 
 		Distance distance = new Distance();
 
-
 		//Read the parameters
 		populationSize = ((Integer) getInputParameter("populationSize")).intValue();
 		maxEvaluations = ((Integer) getInputParameter("maxEvaluations")).intValue();
@@ -102,7 +102,6 @@ public class pNSGAII extends Algorithm {
 
 		// Create the initial solutionSet
 		Solution newSolution;
-
 		for (int i = 0; i < populationSize; i++) {
 			newSolution = new Solution(problem_);
 			parallelEvaluator_.addSolutionForEvaluation(problem_, newSolution) ;

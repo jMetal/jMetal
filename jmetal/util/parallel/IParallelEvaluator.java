@@ -29,14 +29,13 @@ import jmetal.core.Solution;
  * @author Antonio J. Nebro
  * Interface representing classes for evaluating solutions in parallel
  * The procedure is:
- * 1- create the parallel evaluator indicating the number of threads
- * 2- add solutions for being evaluated wigh addSolutionforEvaluation()
+ * 1- create the parallel evaluator with startEvaluator()
+ * 2- add solutions for being evaluated with addSolutionforEvaluation()
  * 3- evaluate the solutions with parallelEvaluation()
- * 4- shutdown the parallel evaluator
+ * 4- shutdown the parallel evaluator with stopEvaluator()
  */
 
 public interface IParallelEvaluator {
-
 	public void startEvaluator() ;
 	public void addSolutionForEvaluation(Problem problem, Solution solution) ;
 	public List<Solution> parallelEvaluation() ;

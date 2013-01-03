@@ -70,7 +70,7 @@ public class pNSGAII_Settings extends Settings {
     crossoverProbability_        = 0.9   ;
     mutationDistributionIndex_   = 20.0  ;
     crossoverDistributionIndex_  = 20.0  ;
-    numberOfThreads_             = 6 ; // 0 - number of available cores
+    numberOfThreads_             = 8 ; // 0 - number of available cores
   } // pNSGAII_Settings
 
   

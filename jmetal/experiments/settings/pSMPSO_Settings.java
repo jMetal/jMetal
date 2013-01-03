@@ -74,7 +74,7 @@ public class pSMPSO_Settings extends Settings{
     archiveSize_               = 100 ;
     mutationDistributionIndex_ = 20.0 ;
     mutationProbability_       = 1.0/problem_.getNumberOfVariables() ;
-    numberOfThreads_           = 4 ; // 0 - number of available cores
+    numberOfThreads_           = 8 ; // 0 - number of available cores
   } // SMPSO_Settings
   
   /**
