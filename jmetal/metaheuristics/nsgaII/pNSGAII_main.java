@@ -50,7 +50,7 @@ import jmetal.qualityIndicator.QualityIndicator;
  * multihreaded version of NSGA-II, where solution evaluations are carried out
  * in parallel.
  */ 
- 
+
 
 public class pNSGAII_main {
   public static Logger      logger_ ;      // Logger object
@@ -67,25 +67,25 @@ public class pNSGAII_main {
    *      - jmetal.metaheuristics.nsgaII.pNSGAII_main problemName paretoFrontFile
    */
   public static void main(String [] args) throws 
-                                  JMException, 
-                                  SecurityException, 
-                                  IOException, 
-                                  ClassNotFoundException {
+  JMException, 
+  SecurityException, 
+  IOException, 
+  ClassNotFoundException {
     Problem   problem   ; // The problem to solve
     Algorithm algorithm ; // The algorithm to use
     Operator  crossover ; // Crossover operator
     Operator  mutation  ; // Mutation operator
     Operator  selection ; // Selection operator
-    
+
     HashMap  parameters ; // Operator parameters
-    
+
     QualityIndicator indicators ; // Object to get quality indicators
 
     // Logger object and file to store log messages
     logger_      = Configuration.logger_ ;
     fileHandler_ = new FileHandler("pNSGAII_main.log"); 
     logger_.addHandler(fileHandler_) ;
-        
+
     indicators = null ;
     if (args.length == 1) {
       Object [] params = {"Real"};
@@ -105,10 +105,10 @@ public class pNSGAII_main {
       //problem = new DTLZ1("Real");
       //problem = new OKA2("Real") ;
     } // else
-    
+
     int threads = 4 ; // 0 - use all the available cores
     IParallelEvaluator parallelEvaluator = new MultithreadedEvaluator(threads) ;
-    
+
     algorithm = new pNSGAII(problem, parallelEvaluator);
 
     // Algorithm parameters
@@ -137,19 +137,19 @@ public class pNSGAII_main {
 
     // Add the indicator object to the algorithm
     algorithm.setInputParameter("indicators", indicators) ;
-    
+
     // Execute the Algorithm
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;
-    
+
     // Result messages 
     logger_.info("Total execution time: "+estimatedTime + "ms");
     logger_.info("Variables values have been writen to file VAR");
     population.printVariablesToFile("VAR");    
     logger_.info("Objectives values have been writen to file FUN");
     population.printObjectivesToFile("FUN");
-  
+
     if (indicators != null) {
       logger_.info("Quality indicators") ;
       logger_.info("Hypervolume: " + indicators.getHypervolume(population)) ;
@@ -157,7 +157,7 @@ public class pNSGAII_main {
       logger_.info("IGD        : " + indicators.getIGD(population)) ;
       logger_.info("Spread     : " + indicators.getSpread(population)) ;
       logger_.info("Epsilon    : " + indicators.getEpsilon(population)) ;  
-     
+
       int evaluations = ((Integer)algorithm.getOutputParameter("evaluations")).intValue();
       logger_.info("Speed      : " + evaluations + " evaluations") ;      
     } // if

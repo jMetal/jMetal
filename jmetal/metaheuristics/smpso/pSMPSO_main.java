@@ -63,16 +63,16 @@ public class pSMPSO_main {
     Problem   problem   ;  // The problem to solve
     Algorithm algorithm ;  // The algorithm to use
     Mutation  mutation  ;  // "Turbulence" operator
-    
+
     QualityIndicator indicators ; // Object to get quality indicators
-        
+
     HashMap  parameters ; // Operator parameters
 
     // Logger object and file to store log messages
     logger_      = Configuration.logger_ ;
     fileHandler_ = new FileHandler("SMPSO_main.log"); 
     logger_.addHandler(fileHandler_) ;
-    
+
     indicators = null ;
     if (args.length == 1) {
       Object [] params = {"Real"};
@@ -92,12 +92,12 @@ public class pSMPSO_main {
       //problem = new DTLZ1("Real");
       //problem = new OKA2("Real") ;
     } // else
-    
+
     int threads = 4 ; // 0 - use all the available cores
     IParallelEvaluator parallelEvaluator = new MultithreadedEvaluator(threads) ;
 
     algorithm = new pSMPSO(problem, parallelEvaluator) ;
-    
+
     // Algorithm parameters    
     algorithm.setInputParameter("swarmSize",100);
     algorithm.setInputParameter("archiveSize",100);
@@ -114,14 +114,14 @@ public class pSMPSO_main {
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;
-    
+
     // Result messages 
     logger_.info("Total execution time: "+estimatedTime + "ms");
     logger_.info("Objectives values have been writen to file FUN");
     population.printObjectivesToFile("FUN");
     logger_.info("Variables values have been writen to file VAR");
     population.printVariablesToFile("VAR");      
-    
+
     if (indicators != null) {
       logger_.info("Quality indicators") ;
       logger_.info("Hypervolume: " + indicators.getHypervolume(population)) ;

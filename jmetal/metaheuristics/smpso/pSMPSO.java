@@ -113,7 +113,7 @@ public class pSMPSO extends Algorithm {
    */
   private int numberOfThreads_;
 
-  
+
   double r1Max_;
   double r1Min_;
   double r2Max_;
@@ -154,7 +154,7 @@ public class pSMPSO extends Algorithm {
     WMin_ = 0.1;
     ChVel1_ = -1;
     ChVel2_ = -1;
-    
+
     parallelEvaluator_ = evaluator ;
   } // Constructor
 
@@ -171,7 +171,7 @@ public class pSMPSO extends Algorithm {
 
     polynomialMutation_ = operators_.get("mutation") ; 
 
-  	parallelEvaluator_.startEvaluator(problem_) ;
+    parallelEvaluator_.startEvaluator(problem_) ;
 
     iteration_ = 1 ;
 
@@ -194,7 +194,7 @@ public class pSMPSO extends Algorithm {
     deltaMin_ = new double[problem_.getNumberOfVariables()];
     for (int i = 0; i < problem_.getNumberOfVariables(); i++) {
       deltaMax_[i] = (problem_.getUpperLimit(i) -
-        problem_.getLowerLimit(i)) / 2.0;
+          problem_.getLowerLimit(i)) / 2.0;
       deltaMin_[i] = -deltaMax_[i];
     } // for
   } // initParams 
@@ -218,8 +218,8 @@ public class pSMPSO extends Algorithm {
 
   // velocity bounds
   private double velocityConstriction(double v, double[] deltaMax,
-                                      double[] deltaMin, int variableIndex,
-                                      int particleIndex) throws IOException {
+      double[] deltaMin, int variableIndex,
+      int particleIndex) throws IOException {
 
 
     double result;
@@ -250,8 +250,8 @@ public class pSMPSO extends Algorithm {
     XReal bestGlobal;
 
     for (int i = 0; i < swarmSize_; i++) {
-    	XReal particle = new XReal(particles_.get(i)) ;
-    	XReal bestParticle = new XReal(best_[i]) ;
+      XReal particle = new XReal(particles_.get(i)) ;
+      XReal bestParticle = new XReal(best_[i]) ;
 
       //Select a global best_ for calculate the speed of particle i, bestGlobal
       Solution one, two;
@@ -264,7 +264,7 @@ public class pSMPSO extends Algorithm {
         bestGlobal = new XReal(one);
       } else {
         bestGlobal = new XReal(two);
-      //Params for velocity equation
+        //Params for velocity equation
       }
       r1 = PseudoRandom.randDouble(r1Min_, r1Max_);
       r2 = PseudoRandom.randDouble(r2Min_, r2Max_);
@@ -278,15 +278,15 @@ public class pSMPSO extends Algorithm {
       for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
         //Computing the velocity of this particle 
         speed_[i][var] = velocityConstriction(constrictionCoefficient(C1, C2) *
-          (inertiaWeight(iter, miter, wmax, wmin) *
-          speed_[i][var] +
-          C1 * r1 * (bestParticle.getValue(var) -
-          particle.getValue(var)) +
-          C2 * r2 * (bestGlobal.getValue(var) -
-          particle.getValue(var))), deltaMax_, //[var],
-          deltaMin_, //[var], 
-          var,
-          i);
+            (inertiaWeight(iter, miter, wmax, wmin) *
+                speed_[i][var] +
+                C1 * r1 * (bestParticle.getValue(var) -
+                    particle.getValue(var)) +
+                    C2 * r2 * (bestGlobal.getValue(var) -
+                        particle.getValue(var))), deltaMax_, //[var],
+                        deltaMin_, //[var], 
+                        var,
+                        i);
       }
     }
   } // computeSpeed
@@ -297,10 +297,10 @@ public class pSMPSO extends Algorithm {
    */
   private void computeNewPositions() throws JMException {
     for (int i = 0; i < swarmSize_; i++) {
-    	XReal particle = new XReal(particles_.get(i)) ;
+      XReal particle = new XReal(particles_.get(i)) ;
       for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
-      	particle.setValue(var, particle.getValue(var) +  speed_[i][var]) ;
-      	
+        particle.setValue(var, particle.getValue(var) +  speed_[i][var]) ;
+
         if (particle.getValue(var) < problem_.getLowerLimit(var)) {
           particle.setValue(var, problem_.getLowerLimit(var));
           speed_[i][var] = speed_[i][var] * ChVel1_; //    
@@ -347,7 +347,7 @@ public class pSMPSO extends Algorithm {
     }
 
     parallelEvaluator_.parallelEvaluation() ;
-    
+
     //-> Step2. Initialize the speed_ of each particle to 0
     for (int i = 0; i < swarmSize_; i++) {
       for (int j = 0; j < problem_.getNumberOfVariables(); j++) {
@@ -390,7 +390,7 @@ public class pSMPSO extends Algorithm {
         Solution particle = particles_.get(i);
         parallelEvaluator_.addSolutionForEvaluation(particle) ;
       }
-      
+
       parallelEvaluator_.parallelEvaluation() ;
 
       //Actualize the archive          
@@ -410,10 +410,10 @@ public class pSMPSO extends Algorithm {
 
       //Assign crowding distance to the leaders_
       distance_.crowdingDistanceAssignment(leaders_,
-        problem_.getNumberOfObjectives());
+          problem_.getNumberOfObjectives());
       iteration_++;
     }
-    
+
     parallelEvaluator_.stopEvaluator() ;
     return this.leaders_;
   } // execute
