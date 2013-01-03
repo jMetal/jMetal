@@ -36,8 +36,8 @@ import jmetal.core.Solution;
  */
 
 public interface IParallelEvaluator {
-	public void startEvaluator() ;
-	public void addSolutionForEvaluation(Problem problem, Solution solution) ;
+	public void startEvaluator(Problem problem) ;
+	public void addSolutionForEvaluation(Solution solution) ;
 	public List<Solution> parallelEvaluation() ;
 	public void stopEvaluator() ;
 }

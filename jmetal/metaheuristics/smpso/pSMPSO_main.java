@@ -55,9 +55,9 @@ public class pSMPSO_main {
    * @throws IOException 
    * @throws SecurityException 
    * Usage: three options
-   *      - jmetal.metaheuristics.mocell.MOCell_main
-   *      - jmetal.metaheuristics.mocell.MOCell_main problemName
-   *      - jmetal.metaheuristics.mocell.MOCell_main problemName ParetoFrontFile
+   *      - jmetal.metaheuristics.smpso.pSMPSO_main
+   *      - jmetal.metaheuristics.smpso.pSMPSO_main problemName
+   *      - jmetal.metaheuristics.smpso.pSMPSO_main problemName ParetoFrontFile
    */
   public static void main(String [] args) throws JMException, IOException, ClassNotFoundException {
     Problem   problem   ;  // The problem to solve

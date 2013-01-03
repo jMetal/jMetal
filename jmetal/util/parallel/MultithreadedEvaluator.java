@@ -41,6 +41,7 @@ import jmetal.util.JMException;
  */
 public class MultithreadedEvaluator implements IParallelEvaluator {
   private int numberOfThreads_ ;
+  private Problem problem_ ;
   private ExecutorService executor_ ;
   private Collection<Callable<Solution>> taskList_ ;
 
@@ -94,10 +95,11 @@ public class MultithreadedEvaluator implements IParallelEvaluator {
    * Constructor
    * @param cores Number of threads
    */
-  public void startEvaluator() {
+  public void startEvaluator(Problem problem) {
     executor_ = Executors.newFixedThreadPool(numberOfThreads_) ;
     System.out.println("Cores: "+ numberOfThreads_) ;
     taskList_ = null ; 
+    problem_ = problem ;
   }
 
   /**
@@ -105,11 +107,11 @@ public class MultithreadedEvaluator implements IParallelEvaluator {
    * @param problem Problem being solved
    * @param solution Solution to be evaluated
    */
-  public void addSolutionForEvaluation(Problem problem, Solution solution) {
+  public void addSolutionForEvaluation(Solution solution) {
     if (taskList_ == null)
       taskList_ = new ArrayList<Callable<Solution>>();
 
-    taskList_.add(new EvaluationTask(problem, solution)) ;			
+    taskList_.add(new EvaluationTask(problem_, solution)) ;			
   }
 
   /**

@@ -62,9 +62,9 @@ public class pNSGAII_main {
    * @throws IOException 
    * @throws SecurityException 
    * Usage: three options
-   *      - jmetal.metaheuristics.nsgaII.NSGAII_main
-   *      - jmetal.metaheuristics.nsgaII.NSGAII_main problemName
-   *      - jmetal.metaheuristics.nsgaII.NSGAII_main problemName paretoFrontFile
+   *      - jmetal.metaheuristics.nsgaII.pNSGAII_main
+   *      - jmetal.metaheuristics.nsgaII.pNSGAII_main problemName
+   *      - jmetal.metaheuristics.nsgaII.pNSGAII_main problemName paretoFrontFile
    */
   public static void main(String [] args) throws 
                                   JMException, 
@@ -83,7 +83,7 @@ public class pNSGAII_main {
 
     // Logger object and file to store log messages
     logger_      = Configuration.logger_ ;
-    fileHandler_ = new FileHandler("NSGAII_main.log"); 
+    fileHandler_ = new FileHandler("pNSGAII_main.log"); 
     logger_.addHandler(fileHandler_) ;
         
     indicators = null ;

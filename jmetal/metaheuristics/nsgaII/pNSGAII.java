@@ -87,7 +87,7 @@ public class pNSGAII extends Algorithm {
 		maxEvaluations = ((Integer) getInputParameter("maxEvaluations")).intValue();
 		indicators = (QualityIndicator) getInputParameter("indicators");
 
-		parallelEvaluator_.startEvaluator() ;
+		parallelEvaluator_.startEvaluator(problem_) ;
 
 		//Initialize the variables
 		population = new SolutionSet(populationSize);
@@ -104,7 +104,7 @@ public class pNSGAII extends Algorithm {
 		Solution newSolution;
 		for (int i = 0; i < populationSize; i++) {
 			newSolution = new Solution(problem_);
-			parallelEvaluator_.addSolutionForEvaluation(problem_, newSolution) ;
+			parallelEvaluator_.addSolutionForEvaluation(newSolution) ;
 		}
 
 		List<Solution> solutionList = parallelEvaluator_.parallelEvaluation() ;
@@ -126,8 +126,8 @@ public class pNSGAII extends Algorithm {
 					Solution[] offSpring = (Solution[]) crossoverOperator.execute(parents);
 					mutationOperator.execute(offSpring[0]);
 					mutationOperator.execute(offSpring[1]);
-					parallelEvaluator_.addSolutionForEvaluation(problem_, offSpring[0]) ;
-					parallelEvaluator_.addSolutionForEvaluation(problem_, offSpring[1]) ;
+					parallelEvaluator_.addSolutionForEvaluation(offSpring[0]) ;
+					parallelEvaluator_.addSolutionForEvaluation(offSpring[1]) ;
 				} // if                            
 			} // for
 
