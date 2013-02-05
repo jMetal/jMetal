@@ -255,11 +255,13 @@ public class SolutionSet implements Serializable {
       OutputStreamWriter osw = new OutputStreamWriter(fos)    ;
       BufferedWriter bw      = new BufferedWriter(osw)        ;            
             
-      int numberOfVariables = solutionsList_.get(0).getDecisionVariables().length ;
-      for (int i = 0; i < solutionsList_.size(); i++) {  
-      	for (int j = 0; j < numberOfVariables; j++)
-          bw.write(solutionsList_.get(i).getDecisionVariables()[j].toString() + " ");
-        bw.newLine();        
+      if (size() > 0) {
+        int numberOfVariables = solutionsList_.get(0).getDecisionVariables().length ;
+        for (int i = 0; i < solutionsList_.size(); i++) {  
+      	  for (int j = 0; j < numberOfVariables; j++)
+            bw.write(solutionsList_.get(i).getDecisionVariables()[j].toString() + " ");
+          bw.newLine();        
+        }
       }
       
       /* Close the file */
