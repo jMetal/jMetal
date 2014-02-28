@@ -53,8 +53,8 @@ public class FastHypervolumeArchiveTest {
     archive.add(sol4) ;
 
     archive.computeHVContribution();
-    assertEquals("Test 1", archive.referencePoint_.getObjective(0), 8.9, epsilon) ;
-    assertEquals("Test 1", archive.referencePoint_.getObjective(1)+10, 8.0, epsilon) ;
+//    assertEquals("Test 1", archive.referencePoint_.getObjective(0), 8.9, epsilon) ;
+//    assertEquals("Test 1", archive.referencePoint_.getObjective(1)+10, 8.0, epsilon) ;
 
     //archive.sort(objectiveComparator_);
     //assertEquals("Test 1", 5.75, archive.get2DHV(), epsilon) ;
