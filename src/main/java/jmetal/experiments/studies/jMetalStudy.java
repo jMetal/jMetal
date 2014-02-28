@@ -20,7 +20,7 @@
 
 package jmetal.experiments.studies;
 
-import jmetal.experiments.Experiment2;
+import jmetal.experiments.Experiment;
 import jmetal.util.JMException;
 
 import java.io.IOException;
@@ -30,7 +30,7 @@ import java.io.IOException;
  * compared when solving the benchmarks, and the hypervolume,
  * spread and additive epsilon indicators are used for performance assessment.
  */
-public class jMetalStudy extends Experiment2 {
+public class jMetalStudy extends Experiment {
 
   public jMetalStudy() {
     experimentName_ = "jMetalStudy" ;

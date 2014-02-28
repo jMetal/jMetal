@@ -1,8 +1,29 @@
+//  MultithreadedAlgorithmRunner.java
+//
+//  Authors:
+//       Antonio J. Nebro <antonio@lcc.uma.es>
+//
+//  Copyright (c) 2014 Antonio J. Nebro
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU Lesser General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU Lesser General Public License for more details.
+//
+//  You should have received a copy of the GNU Lesser General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
+
 package jmetal.util.parallel;
 
 import jmetal.core.Algorithm;
 import jmetal.core.SolutionSet;
-import jmetal.experiments.Experiment2;
+import jmetal.experiments.Experiment;
 import jmetal.experiments.Settings;
 import jmetal.experiments.SettingsFactory;
 
@@ -16,17 +37,18 @@ import java.util.concurrent.Future;
 
 /**
  * Created by Antonio J. Nebro on 09/02/14.
+ * Class for executing independent runs of algorithms
  */
 public class MultithreadedAlgorithmRunner extends SynchronousParallelRunner {
   private Collection<EvaluationTask> taskList_ ;
-  private Experiment2 experiment_ ;
+  private Experiment experiment_ ;
 
   public MultithreadedAlgorithmRunner(int threads) {
     super(threads) ;
   }
 
   public void startParallelRunner(Object experiment) {
-    experiment_ = (Experiment2) experiment ;
+    experiment_ = (Experiment) experiment ;
     executor_ = Executors.newFixedThreadPool(numberOfThreads_) ;
     System.out.println("Cores: "+ numberOfThreads_) ;
     taskList_ = null ;
