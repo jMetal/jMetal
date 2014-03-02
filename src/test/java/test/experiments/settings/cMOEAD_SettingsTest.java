@@ -81,7 +81,6 @@ public class cMOEAD_SettingsTest {
     System.out.println(dataDirectory);
     File experimentDirectory = new File(dataDirectory) ;
 
-
     DifferentialEvolutionCrossover crossover = (DifferentialEvolutionCrossover)algorithm.getOperator("crossover") ;
     double CR = (Double)crossover.getParameter("CR") ;
     double F = (Double)crossover.getParameter("F") ;
