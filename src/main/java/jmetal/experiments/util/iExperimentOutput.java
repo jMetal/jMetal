@@ -1,4 +1,4 @@
-//  iExperiment.java
+//  iExperimentOutput.java
 //
 //  Authors:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
