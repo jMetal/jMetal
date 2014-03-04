@@ -78,10 +78,11 @@ public class SMPSOD_main {
     //algorithm = new psoMOEAD(problem) ;
     
     // Algorithm parameters
-    algorithm.setInputParameter("swarmSize",100);
-    algorithm.setInputParameter("maxIterations",250);   
-    algorithm.setInputParameter("functionType","_AGG");
-    
+    algorithm.setInputParameter("swarmSize",300);
+    algorithm.setInputParameter("maxIterations",250);
+    //algorithm.setInputParameter("functionType","_AGG");
+    algorithm.setInputParameter("functionType","_TCHE");
+
     parameters = new HashMap() ;
     parameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
     parameters.put("distributionIndex", 20.0) ;
