@@ -78,8 +78,8 @@ public class SMPSOD_main {
     //algorithm = new psoMOEAD(problem) ;
     
     // Algorithm parameters
-    algorithm.setInputParameter("swarmSize",300);
-    algorithm.setInputParameter("maxIterations",250);
+    algorithm.setInputParameter("swarmSize",100);
+    algorithm.setInputParameter("maxIterations",1500);
     //algorithm.setInputParameter("functionType","_AGG");
     algorithm.setInputParameter("functionType","_TCHE");
 
