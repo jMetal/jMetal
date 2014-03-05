@@ -7,33 +7,25 @@
  */
 package jmetal.metaheuristics.smpso;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Comparator;
-import java.util.StringTokenizer;
-import java.util.Vector;
-
-import jmetal.core.Algorithm;
-import jmetal.core.Operator;
-import jmetal.core.Problem;
-import jmetal.core.Solution;
-import jmetal.core.SolutionSet;
+import jmetal.core.*;
 import jmetal.metaheuristics.moead.Utils;
 import jmetal.operators.crossover.Crossover;
 import jmetal.qualityIndicator.Hypervolume;
 import jmetal.qualityIndicator.QualityIndicator;
+import jmetal.qualityIndicator.fastHypervolume.FastHypervolumeArchive;
 import jmetal.util.Distance;
 import jmetal.util.JMException;
 import jmetal.util.PseudoRandom;
-import jmetal.util.archive.CrowdingArchive;
 import jmetal.util.comparators.CrowdingDistanceComparator;
 import jmetal.util.comparators.DominanceComparator;
 import jmetal.util.wrapper.XReal;
 
-public class SMPSOD extends Algorithm {
+import java.io.*;
+import java.util.Comparator;
+import java.util.StringTokenizer;
+import java.util.Vector;
+
+public class SMPSODhv extends Algorithm {
 
 	/**
 	 * Stores the number of particles_ used
@@ -68,7 +60,7 @@ public class SMPSOD extends Algorithm {
 	/**
 	 * Stores the leaders_
 	 */
-	private CrowdingArchive leaders_;
+	private FastHypervolumeArchive leaders_;
 	/**
 	 * Stores the speed_ of each particle
 	 */
@@ -147,7 +139,7 @@ public class SMPSOD extends Algorithm {
 	private double deltaMin_[];
 	//boolean success_;
 
-	public SMPSOD(Problem problem) {
+	public SMPSODhv(Problem problem) {
 		super(problem);
 		r1Max_ = 1.0;
 		r1Min_ = 0.0;
@@ -163,7 +155,7 @@ public class SMPSOD extends Algorithm {
 		ChVel2_ = -1.0;
 	}
 
-	public SMPSOD(Problem problem,
+	public SMPSODhv(Problem problem,
 			Vector<Double> variables,
 			String trueParetoFront) throws FileNotFoundException {
 		super(problem);
@@ -214,7 +206,7 @@ public class SMPSOD extends Algorithm {
 		lBest_ = new Solution[particlesSize_];
 		gBest_ = new Solution[particlesSize_];
 
-		leaders_ = new CrowdingArchive(archiveSize_, problem_.getNumberOfObjectives());
+		leaders_ = new FastHypervolumeArchive(archiveSize_, problem_.getNumberOfObjectives());
 
 		// Create comparators for dominance and crowding distance
 		dominance_ = new DominanceComparator();
@@ -446,12 +438,12 @@ public class SMPSOD extends Algorithm {
 	public SolutionSet execute() throws JMException, ClassNotFoundException {
 		initParams();
 
-
 		//->Step 1 (and 3) Create the initial population and evaluate
 		for (int i = 0; i < particlesSize_; i++) {
 			Solution particle = new Solution(problem_);
 			problem_.evaluate(particle);
 			particles_.add(particle);
+      leaders_.add(new Solution(particle)) ;
 		}
 
 		//-> Step2. Initialize the speed_ of each particle to 0
@@ -504,7 +496,13 @@ public class SMPSOD extends Algorithm {
 				updateGlobalBest(i, 2) ;
 			}
 
-			iteration_++;			
+			iteration_++;
+
+      for (int i = 0 ; i < particles_.size(); i++) {
+        leaders_.add(new Solution(particles_.get(i))) ;
+        if (leaders_.size() < archiveSize_)
+          leaders_.computeHVContribution() ;
+      }
 		}
 
 		SolutionSet ss = new SolutionSet(gBest_.length);
@@ -512,16 +510,9 @@ public class SMPSOD extends Algorithm {
 			ss.add(gBest_[i]);
 		}
 
+    leaders_.printObjectivesToFile("LEADERS");
 		return ss;
 	} // execute
-
-	/** 
-	 * Gets the leaders of the FPSO algorithm
-	 */
-	public SolutionSet getLeader() {
-		return leaders_;
-	}  // getLeader   
-
 
 
 	/**
@@ -700,7 +691,7 @@ public class SMPSOD extends Algorithm {
 	}
 
 	/**
-	 * @param individual
+	 * @param indiv
 	 * @param id
 	 * @param type
 	 */

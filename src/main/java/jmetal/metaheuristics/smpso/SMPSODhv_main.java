@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
-public class SMPSOD_main {
+public class SMPSODhv_main {
   public static Logger      logger_ ;      // Logger object
   public static FileHandler fileHandler_ ; // FileHandler object
 
@@ -74,7 +74,7 @@ public class SMPSOD_main {
       //problem = new LZ09_F2("Real");
     } // else
     //algorithm = new FPSO2(problem) ;
-    algorithm = new SMPSOD(problem) ;
+    algorithm = new SMPSODhv(problem) ;
     //algorithm = new psoMOEAD(problem) ;
     
     // Algorithm parameters
