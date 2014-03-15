@@ -79,6 +79,7 @@ public class StandardPSO2011_main {
     // Algorithm parameters
     algorithm.setInputParameter("swarmSize",40);
     algorithm.setInputParameter("maxIterations",5000);
+    algorithm.setInputParameter("numberOfParticlesToInform",3);
 
     // Execute the Algorithm 
     long initTime = System.currentTimeMillis();

@@ -1,3 +1,23 @@
+//  StandardPSO2011Test.java
+//
+//  Author:
+//       Antonio J. Nebro <antonio@lcc.uma.es>
+//
+//  Copyright (c) 2014 Antonio J. Nebro
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU Lesser General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU Lesser General Public License for more details.
+//
+//  You should have received a copy of the GNU Lesser General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 package test.metaheuristics.singleObjective.particleSwarmOptimization;
 
 import jmetal.core.Problem;
@@ -23,7 +43,15 @@ public class StandardPSO2011Test {
     standardPSO_ = new StandardPSO2011(problem_) ;
     standardPSO_.setInputParameter("swarmSize",40);
     standardPSO_.setInputParameter("maxIterations",5000);
+    standardPSO_.setInputParameter("numberOfParticlesToInform",3);
     standardPSO_.initParams();
+  }
+
+  @Test
+  public void initParamsTest() {
+    assertEquals("StandardPSO2011Test.initParamsTest", 40, (int) standardPSO_.getInputParameter("swarmSize"));
+    assertEquals("StandardPSO2011Test.initParamsTest", 5000, (int) standardPSO_.getInputParameter("maxIterations"));
+    assertEquals("StandardPSO2011Test.initParamsTest", 3, (int) standardPSO_.getInputParameter("numberOfParticlesToInform"));
   }
 
   @Test
@@ -45,6 +73,12 @@ public class StandardPSO2011Test {
     assertEquals("StandardPSO2011Test.neighbourhoodMethodTest", 39, neighbours[1]) ;
     assertEquals("StandardPSO2011Test.neighbourhoodMethodTest", 0, neighbours[2]) ;
   }
+
+  @Test
+  public void getNeighborWithMinimumFitnessTest() {
+
+  }
+
 
   @After
   public void tearDown() throws Exception {
