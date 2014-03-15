@@ -25,7 +25,6 @@ import jmetal.core.Algorithm;
 import jmetal.core.Problem;
 import jmetal.core.SolutionSet;
 import jmetal.operators.mutation.Mutation;
-import jmetal.operators.mutation.MutationFactory;
 import jmetal.problems.singleObjective.Sphere;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Configuration;
@@ -78,15 +77,8 @@ public class StandardPSO2011_main {
     algorithm = new StandardPSO2011(problem) ;
     
     // Algorithm parameters
-    algorithm.setInputParameter("swarmSize",50);
+    algorithm.setInputParameter("swarmSize",40);
     algorithm.setInputParameter("maxIterations",5000);
-    
-    parameters = new HashMap() ;
-    parameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
-    parameters.put("distributionIndex", 20.0) ;
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);                    
-
-    algorithm.addOperator("mutation", mutation);
 
     // Execute the Algorithm 
     long initTime = System.currentTimeMillis();

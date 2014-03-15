@@ -67,10 +67,6 @@ public class StandardPSO2011 extends Algorithm {
    * Stores the speed_ of each particle
    */
   private double[][] speed_;
-  /**
-   * Stores a operator for non uniform mutations
-   */
-  private Operator polynomialMutation_;
 
   int evaluations_ ;
 
@@ -124,11 +120,17 @@ public class StandardPSO2011 extends Algorithm {
     evaluations_ = 0 ;
   } // Constructor
 
-  private SolutionSet trueFront_;
-  private double deltaMax_[];
-  private double deltaMin_[];
   boolean success_;
 
+
+  private int[] neighbourhood(int i) {
+    int[] neighbors = new int[3] ;
+    neighbors[0] = (i - 1)% particlesSize_ ;
+    neighbors[1] = 1 ;
+    neighbors[2] = (i + 1)%particlesSize_ ;
+
+    return neighbors ;
+  }
 
   /**
    * Initialize all parameter of the algorithm
@@ -137,7 +139,6 @@ public class StandardPSO2011 extends Algorithm {
     particlesSize_ = ((Integer) getInputParameter("swarmSize")).intValue();
     maxIterations_ = ((Integer) getInputParameter("maxIterations")).intValue();
 
-    polynomialMutation_ = operators_.get("mutation") ;
 
     iteration_ = 0 ;
 
@@ -149,14 +150,6 @@ public class StandardPSO2011 extends Algorithm {
     // Create the speed_ vector
     speed_ = new double[particlesSize_][problem_.getNumberOfVariables()];
 
-
-    deltaMax_ = new double[problem_.getNumberOfVariables()];
-    deltaMin_ = new double[problem_.getNumberOfVariables()];
-    for (int i = 0; i < problem_.getNumberOfVariables(); i++) {
-      deltaMax_[i] = (problem_.getUpperLimit(i) -
-        problem_.getLowerLimit(i)) / 2.0;
-      deltaMin_[i] = -deltaMax_[i];
-    } // for
   } // initParams
 
   // Adaptive inertia
@@ -297,22 +290,6 @@ public class StandardPSO2011 extends Algorithm {
     }
   } // computeNewPositions
 
-  /**
-   * Apply a mutation operator to some particles in the swarm
-   * @throws jmetal.util.JMException
-   */
-  private void mopsoMutation(int actualIteration, int totalIterations) throws JMException {
-    for (int i = 0; i < particles_.size(); i++) {
-      if ( (i % 6) == 0)
-        polynomialMutation_.execute(particles_.get(i)) ;
-      //if (i % 3 == 0) { //particles_ mutated with a non-uniform mutation %3
-      //  nonUniformMutation_.execute(particles_.get(i));
-      //} else if (i % 3 == 1) { //particles_ mutated with a uniform mutation operator
-      //  uniformMutation_.execute(particles_.get(i));
-      //} else //particles_ without mutation
-      //;
-    }
-  } // mopsoMutation
 
   /**
    * Runs of the SMPSO algorithm.
