@@ -32,7 +32,6 @@ import java.util.Comparator;
  */ 
 public class AdaptiveRandomNeighborhood {
   private SolutionSet solutionSet_ ;
-  private Problem problem_ ;
 
   //private ArrayList<ArrayList<Solution>> solutionList_ ;
   private ArrayList<ArrayList<Integer>> list_ ;
@@ -46,7 +45,6 @@ public class AdaptiveRandomNeighborhood {
   public AdaptiveRandomNeighborhood(SolutionSet solutionSet, int numberOfRandomNeighbours) {
     solutionSet_ = solutionSet;
     numberOfRandomNeighbours_ = numberOfRandomNeighbours ;
-    problem_ = solutionSet_.get(0).getProblem() ;
 
     //solutionList_ = new ArrayList<ArrayList<Solution>>(solutionSet_.size()) ;
     list_ = new ArrayList<ArrayList<Integer>>(solutionSet.size()) ;
@@ -58,6 +56,10 @@ public class AdaptiveRandomNeighborhood {
         list_.get(random).add(i) ;
       }
     }
+  }
+
+  public ArrayList<Integer> getNeighbors(int i) {
+    return list_.get(i) ;
   }
 
   public SolutionSet getBestFitnessSolutionInNeighborhood(Comparator comparator) {

@@ -22,11 +22,13 @@ package jmetal.metaheuristics.singleObjective.particleSwarmOptimization;
 
 import jmetal.core.*;
 import jmetal.operators.selection.BestSolutionSelection;
+import jmetal.util.AdaptiveRandomNeighborhood;
 import jmetal.util.JMException;
 import jmetal.util.PseudoRandom;
 import jmetal.util.comparators.ObjectiveComparator;
 import jmetal.util.wrapper.XReal;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 
@@ -43,7 +45,7 @@ public class StandardPSO2007 extends Algorithm {
   private Solution[] localBest_;
   private Solution[] neighborhoodBest_;
   private double[][] speed_;
-
+  private AdaptiveRandomNeighborhood neighborhood_ ;
 
   int evaluations_ ;
 
@@ -91,27 +93,27 @@ public class StandardPSO2007 extends Algorithm {
   boolean success_;
 
 
-  public int[] getNeighbourhood(int i) {
-    int[] neighbors = new int[3] ;
-    neighbors[0] = (i - 1 + swarmSize_)% swarmSize_;
-    neighbors[1] = i ;
-    neighbors[2] = (i + 1)% swarmSize_;
+//  public int[] getNeighbourhood(int i) {
+//    int[] neighbors = new int[3] ;
+//    neighbors[0] = (i - 1 + swarmSize_)% swarmSize_;
+//    neighbors[1] = i ;
+//    neighbors[2] = (i + 1)% swarmSize_;
+//
+//    return neighbors ;
+//  }
 
-    return neighbors ;
-  }
-
-  public Solution getNeighbourWithMinimumFitness(int i) {
-    int[] neighborIndex = getNeighbourhood(i) ;
-
-    SolutionSet neighbors = new SolutionSet() ;
-    for (int j = 0 ; j < neighborIndex.length; j++) {
-      neighbors.add(swarm_.get(neighborIndex[j])) ;
-    }
-
-    neighbors.sort(comparator_) ;
-
-    return neighbors.get(0) ;
-  }
+//  public Solution getNeighbourWithMinimumFitness(int i) {
+//    int[] neighborIndex = getNeighbourhood(i) ;
+//
+//    SolutionSet neighbors = new SolutionSet() ;
+//    for (int j = 0 ; j < neighborIndex.length; j++) {
+//      neighbors.add(swarm_.get(neighborIndex[j])) ;
+//    }
+//
+//    neighbors.sort(comparator_) ;
+//
+//    return neighbors.get(0) ;
+//  }
 
   /**
    * Initialize all parameter of the algorithm
@@ -129,11 +131,24 @@ public class StandardPSO2007 extends Algorithm {
     localBest_ = new Solution[swarmSize_];
     neighborhoodBest_ = new Solution[swarmSize_];
 
+    neighborhood_ = new AdaptiveRandomNeighborhood(swarm_, numberOfParticlesToInform_) ;
+
     // Create the speed_ vector
     speed_ = new double[swarmSize_][problem_.getNumberOfVariables()];
   } // initParams
 
+  private Solution getNeighbourWithMinimumFitness(int i) {
+    Solution bestSolution = null ;
+    ArrayList<Integer> neighbors = neighborhood_.getNeighbors(i) ;
 
+    for (Integer index : neighbors) {
+      if ((bestSolution == null) || (bestSolution.getObjective(0) > swarm_.get(index).getObjective(0))) {
+        bestSolution = swarm_.get(i) ;
+      }
+    }
+
+    return bestSolution ;
+  }
 
   private void computeSpeed() {
     double r1, r2 ;
@@ -259,4 +274,4 @@ public class StandardPSO2007 extends Algorithm {
     
     return resultPopulation ;
   } // execute
-} // StandardPSO2011
+} // StandardPSO2007
