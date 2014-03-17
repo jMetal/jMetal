@@ -76,7 +76,6 @@ public class StandardPSO2007_main {
     algorithm = new StandardPSO2007(problem) ;
     
     // Algorithm parameters
-    algorithm.setInputParameter("swarmSize",40);
     algorithm.setInputParameter("maxIterations",5000);
     algorithm.setInputParameter("numberOfParticlesToInform",3);
 

@@ -117,7 +117,7 @@ public class StandardPSO2007 extends Algorithm {
    * Initialize all parameter of the algorithm
    */
   public void initParams() {
-    swarmSize_ = ((Integer) getInputParameter("swarmSize")).intValue();
+    swarmSize_ = 10 + 2 * (int)Math.sqrt(problem_.getNumberOfObjectives()) ;
     maxIterations_ = ((Integer) getInputParameter("maxIterations")).intValue();
     numberOfParticlesToInform_ = ((Integer) getInputParameter("numberOfParticlesToInform")).intValue() ;
 
