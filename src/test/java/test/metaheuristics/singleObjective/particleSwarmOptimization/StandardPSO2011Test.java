@@ -49,9 +49,9 @@ public class StandardPSO2011Test {
 
   @Test
   public void initParamsTest() {
-    assertEquals("StandardPSO2011Test.initParamsTest", 40, (int) standardPSO_.getInputParameter("swarmSize"));
-    assertEquals("StandardPSO2011Test.initParamsTest", 5000, (int) standardPSO_.getInputParameter("maxIterations"));
-    assertEquals("StandardPSO2011Test.initParamsTest", 3, (int) standardPSO_.getInputParameter("numberOfParticlesToInform"));
+    assertEquals("StandardPSO2011Test.initParamsTest", 40, ((Integer) standardPSO_.getInputParameter("swarmSize")).intValue());
+    assertEquals("StandardPSO2011Test.initParamsTest", 5000, ((Integer) standardPSO_.getInputParameter("maxIterations")).intValue());
+    assertEquals("StandardPSO2011Test.initParamsTest", 3, ((Integer) standardPSO_.getInputParameter("numberOfParticlesToInform")).intValue());
   }
 
   @Test
