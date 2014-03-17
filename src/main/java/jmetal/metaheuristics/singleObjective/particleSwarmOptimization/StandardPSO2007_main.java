@@ -1,4 +1,4 @@
-//  StandardPSO2011_main.java
+//  StandardPSO2007_main.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -37,7 +37,7 @@ import java.util.logging.Logger;
 /**
  * Class for configuring and running a single-objective PSO algorithm
  */
-public class StandardPSO2011_main {
+public class StandardPSO2007_main {
   public static Logger      logger_ ;      // Logger object
   public static FileHandler fileHandler_ ; // FileHandler object
 
@@ -73,7 +73,7 @@ public class StandardPSO2011_main {
 
     problem = new Sphere("Real", 20); 
 
-    algorithm = new StandardPSO2011(problem) ;
+    algorithm = new StandardPSO2007(problem) ;
     
     // Algorithm parameters
     algorithm.setInputParameter("swarmSize",40);

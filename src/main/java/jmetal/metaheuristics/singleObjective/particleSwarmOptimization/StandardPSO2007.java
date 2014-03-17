@@ -1,4 +1,4 @@
-//  StandardPSO2011.java
+//  StandardPSO2007.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -33,7 +33,7 @@ import java.util.HashMap;
 /**
  * Class implementing a Stantard PSO 2011 algorithm
  */
-public class StandardPSO2011 extends Algorithm {
+public class StandardPSO2007 extends Algorithm {
 
   private SolutionSet swarm_;
   private int swarmSize_;
@@ -66,7 +66,7 @@ public class StandardPSO2011 extends Algorithm {
    * Constructor
    * @param problem Problem to solve
    */
-  public StandardPSO2011(Problem problem) {
+  public StandardPSO2007(Problem problem) {
     super(problem) ;
 
     r1Max_ = 1.0;
