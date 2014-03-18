@@ -46,8 +46,8 @@ public class AdaptiveRandomNeighborhood {
     solutionSet_ = solutionSet;
     numberOfRandomNeighbours_ = numberOfRandomNeighbours ;
 
-    //solutionList_ = new ArrayList<ArrayList<Solution>>(solutionSet_.size()) ;
-    list_ = new ArrayList<ArrayList<Integer>>(solutionSet.size()) ;
+System.out.println("Solutionset size: " + solutionSet_.size()) ;
+    list_ = new ArrayList<ArrayList<Integer>>(solutionSet_.size()) ;
 
     for (int i = 0 ; i < solutionSet_.size(); i++) {
       list_.get(i).add(i) ;
@@ -60,6 +60,10 @@ public class AdaptiveRandomNeighborhood {
 
   public ArrayList<Integer> getNeighbors(int i) {
     return list_.get(i) ;
+  }
+
+  public int getNumberOfRandomNeighbours() {
+    return numberOfRandomNeighbours_ ;
   }
 
   public SolutionSet getBestFitnessSolutionInNeighborhood(Comparator comparator) {
@@ -77,6 +81,9 @@ public class AdaptiveRandomNeighborhood {
     return result ;
   }
 
+  public ArrayList<ArrayList<Integer>> getNeighborhood() {
+    return list_ ;
+  }
 //  public AdaptiveRandomNeighborhood(int size, int numberOfInformants) {
 //    list_ = new ArrayList<ArrayList<Integer>>(size) ;
 //
