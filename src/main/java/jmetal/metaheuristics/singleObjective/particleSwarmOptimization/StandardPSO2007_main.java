@@ -71,12 +71,12 @@ public class StandardPSO2007_main {
     //problem = new Easom("Real") ;
     // problem = new Griewank("Real", 10) ;
 
-    problem = new Sphere("Real", 20); 
+    problem = new Sphere("Real", 20);
 
     algorithm = new StandardPSO2007(problem) ;
     
     // Algorithm parameters
-    algorithm.setInputParameter("maxIterations",5000);
+    algorithm.setInputParameter("maxIterations",50000);
     algorithm.setInputParameter("numberOfParticlesToInform",3);
 
     // Execute the Algorithm 

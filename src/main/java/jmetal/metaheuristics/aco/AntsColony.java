@@ -20,18 +20,16 @@ public class AntsColony {
 	
 	public AntsColony(HashMap<String, Object> parameters){		
 		//readDataColony("dataColony.csv");
-		alpha = (int) parameters.get("alpha");
-		beta = (int) parameters.get("beta");
-		rho = (double) parameters.get("rho");
-		Q = (double) parameters.get("Q");
-		numAnts = (int) parameters.get("numAnts");
-		maxTime = (int) parameters.get("maxTime");
+		alpha = (Integer) parameters.get("alpha");
+		beta = (Integer) parameters.get("beta");
+		rho = (Double) parameters.get("rho");
+		Q = (Double) parameters.get("Q");
+		numAnts = (Integer) parameters.get("numAnts");
+		maxTime = (Integer) parameters.get("maxTime");
 		
 	}
 	
-	
-	
-	
+
 	public int[][] InitAnts(int numAnts, int numCities)throws IOException{
 		int[][] antsI = new int[numAnts][];
 		
