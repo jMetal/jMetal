@@ -46,7 +46,7 @@ public class AdaptiveRandomNeighborhood {
   public AdaptiveRandomNeighborhood(SolutionSet solutionSet, int numberOfRandomNeighbours) {
     solutionSet_ = solutionSet;
     numberOfRandomNeighbours_ = numberOfRandomNeighbours ;
-    problem_ = solutionSet_.get(0).getProblem() ;
+    //problem_ = solutionSet_.get(0).getProblem() ;
 
     //solutionList_ = new ArrayList<ArrayList<Solution>>(solutionSet_.size()) ;
     list_ = new ArrayList<ArrayList<Integer>>(solutionSet.size()) ;
