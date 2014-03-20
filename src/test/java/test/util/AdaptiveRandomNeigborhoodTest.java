@@ -1,7 +1,9 @@
 package test.util ;
 
+import jmetal.core.Problem;
 import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
+import jmetal.problems.singleObjective.Sphere;
 import jmetal.util.AdaptiveRandomNeighborhood;
 import jmetal.util.JMException;
 import org.junit.After;
@@ -108,6 +110,21 @@ public class AdaptiveRandomNeigborhoodTest {
     solutionSet.add(solution) ;
     adaptiveRandomNeighborhood_ = new AdaptiveRandomNeighborhood(solutionSet, numberOfRandomNeighbours_) ;
     adaptiveRandomNeighborhood_.getNeighbors(6) ;
+  }
 
+  @Test
+  public void testUsingPopulationOf100Individuals() throws ClassNotFoundException, JMException {
+    int solutionSetSize = 100 ;
+    Problem problem = new Sphere("Real", 10) ;
+    SolutionSet solutionSet = new SolutionSet(solutionSetSize) ;
+
+    for (int i = 0; i < 100; i++) {
+      Solution solution = new Solution(problem) ;
+      problem.evaluate(solution);
+      solutionSet.add(solution) ;
+    }
+    adaptiveRandomNeighborhood_ = new AdaptiveRandomNeighborhood(solutionSet, numberOfRandomNeighbours_) ;
+    ArrayList<ArrayList<Integer>> list = adaptiveRandomNeighborhood_.getNeighborhood() ;
+    assertEquals("AdaptiveRandomNeigborhoodTest.testUsingPopulationOf100Individuals", solutionSetSize, list.size()) ;
   }
 }

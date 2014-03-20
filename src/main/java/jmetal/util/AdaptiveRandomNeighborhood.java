@@ -59,7 +59,7 @@ public class AdaptiveRandomNeighborhood {
       for (int j = 0; j < numberOfRandomNeighbours_; j++) {
         int random = PseudoRandom.randInt(0, solutionSet_.size() - 1);
         //System.out.println("i: " + i + " random: " + random + " listb: " + list_.get(random)) ;
-        if (random != i) {
+        if (!list_.get(random).contains((Integer) i)) {
           list_.get(random).add(i);
         }
       }
@@ -122,9 +122,10 @@ public class AdaptiveRandomNeighborhood {
     for (int i = 0; i < solutionSet_.size(); i++) {
       for (int j = 0; j < numberOfRandomNeighbours_; j++) {
         int random = PseudoRandom.randInt(0, solutionSet_.size() - 1);
-        if (random != i) {
+        if (!list_.get(random).contains((Integer)i)) {
           list_.get(random).add(i);
-        }      }
+        }
+      }
     }
   }
 
