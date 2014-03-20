@@ -92,29 +92,29 @@ public class StandardPSO2007 extends Algorithm {
 
   boolean success_;
 
+/*
+  public int[] getNeighbourhood(int i) {
+    int[] neighbors = new int[3] ;
+    neighbors[0] = (i - 1 + swarmSize_)% swarmSize_;
+    neighbors[1] = i ;
+    neighbors[2] = (i + 1)% swarmSize_;
 
-//  public int[] getNeighbourhood(int i) {
-//    int[] neighbors = new int[3] ;
-//    neighbors[0] = (i - 1 + swarmSize_)% swarmSize_;
-//    neighbors[1] = i ;
-//    neighbors[2] = (i + 1)% swarmSize_;
-//
-//    return neighbors ;
-//  }
+    return neighbors ;
+  }
 
-//  public Solution getNeighbourWithMinimumFitness(int i) {
-//    int[] neighborIndex = getNeighbourhood(i) ;
-//
-//    SolutionSet neighbors = new SolutionSet() ;
-//    for (int j = 0 ; j < neighborIndex.length; j++) {
-//      neighbors.add(swarm_.get(neighborIndex[j])) ;
-//    }
-//
-//    neighbors.sort(comparator_) ;
-//
-//    return neighbors.get(0) ;
-//  }
+  public Solution getNeighbourWithMinimumFitness(int i) {
+    int[] neighborIndex = getNeighbourhood(i) ;
 
+    SolutionSet neighbors = new SolutionSet() ;
+    for (int j = 0 ; j < neighborIndex.length; j++) {
+      neighbors.add(swarm_.get(neighborIndex[j])) ;
+    }
+
+    neighbors.sort(comparator_) ;
+
+    return neighbors.get(0) ;
+  }
+*/
   /**
    * Initialize all parameter of the algorithm
    */
@@ -146,8 +146,8 @@ public class StandardPSO2007 extends Algorithm {
     }
 
     for (Integer index : neighbors) {
-      if ((bestSolution == null) || (bestSolution.getObjective(0) > swarm_.get(index).getObjective(0))) {
-        bestSolution = swarm_.get(i) ;
+      if ((bestSolution == null) || (bestSolution.getObjective(0) > localBest_[index].getObjective(0))) {
+        bestSolution = swarm_.get(index) ;
       }
     }
 
@@ -242,6 +242,9 @@ public class StandardPSO2007 extends Algorithm {
     for (int i = 0; i < swarm_.size(); i++) {
       Solution particle = new Solution(swarm_.get(i));
       localBest_[i] = particle;
+    }
+
+    for (int i = 0; i < swarm_.size(); i++) {
       neighborhoodBest_[i] = getNeighbourWithMinimumFitness(i) ;
     }
 
@@ -269,11 +272,11 @@ public class StandardPSO2007 extends Algorithm {
           Solution particle = new Solution(swarm_.get(i));
           localBest_[i] = particle;
         } // if
-      	if ((swarm_.get(i).getObjective(0) < neighborhoodBest_[i].getObjective(0))) {
-          Solution particle = new Solution(swarm_.get(i));
-          neighborhoodBest_[i] = particle;
-        } // if
-      	
+      	//if ((swarm_.get(i).getObjective(0) < neighborhoodBest_[i].getObjective(0))) {
+        //  Solution particle = new Solution(swarm_.get(i));
+        //  neighborhoodBest_[i] = particle;
+        //} // if
+        neighborhoodBest_[i] = getNeighbourWithMinimumFitness(i) ;
       }
       iteration_++;
       Double bestCurrentFitness = swarm_.best(comparator_).getObjective(0) ;

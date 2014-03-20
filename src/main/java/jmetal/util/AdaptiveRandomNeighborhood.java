@@ -64,7 +64,7 @@ public class AdaptiveRandomNeighborhood {
         }
       }
     }
-    //System.out.println("L: " + list_) ;
+    System.out.println("L: " + list_) ;
   }
 
   public ArrayList<Integer> getNeighbors(int i) throws JMException {
