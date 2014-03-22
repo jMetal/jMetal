@@ -26,6 +26,8 @@ import jmetal.core.Problem;
 import jmetal.core.SolutionSet;
 import jmetal.operators.mutation.Mutation;
 import jmetal.operators.mutation.MutationFactory;
+import jmetal.problems.singleObjective.Griewank;
+import jmetal.problems.singleObjective.Rosenbrock;
 import jmetal.problems.singleObjective.Sphere;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Configuration;
@@ -69,16 +71,16 @@ public class PSO_main {
     fileHandler_ = new FileHandler("PSO_main.log"); 
     logger_.addHandler(fileHandler_) ;
 
-    //problem = new Sphere("Real", 20) ;
+    problem = new Griewank("Real", 10) ;
+    problem = new Sphere("Real", 20) ;
     //problem = new Easom("Real") ;
-    // problem = new Griewank("Real", 10) ;
 
-    problem = new Sphere("Real", 20); 
+    //problem = new Rosenbrock("Real", 10);
 
     algorithm = new PSO(problem) ;
     
     // Algorithm parameters
-    algorithm.setInputParameter("swarmSize",50);
+    algorithm.setInputParameter("swarmSize",100);
     algorithm.setInputParameter("maxIterations",5000);
     
     parameters = new HashMap() ;

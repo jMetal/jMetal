@@ -4,7 +4,7 @@ import jmetal.core.*;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Distance;
 import jmetal.util.JMException;
-import jmetal.util.PseudoRandom;
+import jmetal.util.random.PseudoRandom;
 import jmetal.util.Ranking;
 import jmetal.util.comparators.CrowdingComparator;
 import jmetal.util.comparators.DominanceComparator;

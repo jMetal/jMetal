@@ -23,7 +23,7 @@ package jmetal.metaheuristics.moead;
 
 import jmetal.core.*;
 import jmetal.util.JMException;
-import jmetal.util.PseudoRandom;
+import jmetal.util.random.PseudoRandom;
 import jmetal.util.comparators.IConstraintViolationComparator;
 import jmetal.util.comparators.ViolationThresholdComparator;
 

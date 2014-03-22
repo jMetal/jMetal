@@ -25,6 +25,7 @@ import jmetal.core.*;
 import jmetal.util.*;
 import jmetal.util.comparators.CrowdingComparator;
 import jmetal.util.comparators.DominanceComparator;
+import jmetal.util.random.PseudoRandom;
 
 import java.util.Comparator;
 
@@ -152,7 +153,7 @@ public class CellDE extends Algorithm{
       //Store a portion of the archive into the population
       for (int j = 0; j < feedBack; j++){
         if (archive.size() > j){
-          int r = PseudoRandom.randInt(0,currentSolutionSet.size()-1);
+          int r = PseudoRandom.randInt(0, currentSolutionSet.size() - 1);
           if (r < currentSolutionSet.size()){
             Solution individual = archive.get(j);
             individual.setLocation(r);            

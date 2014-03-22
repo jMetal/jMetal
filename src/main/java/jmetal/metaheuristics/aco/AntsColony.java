@@ -1,10 +1,7 @@
 package jmetal.metaheuristics.aco;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
-
-import jmetal.util.RandomGenerator;
 
 
 public class AntsColony {

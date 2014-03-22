@@ -26,6 +26,7 @@ import jmetal.util.*;
 import jmetal.util.archive.CrowdingArchive;
 import jmetal.util.comparators.CrowdingComparator;
 import jmetal.util.comparators.DominanceComparator;
+import jmetal.util.random.PseudoRandom;
 
 import java.util.Comparator;
 
@@ -146,7 +147,7 @@ public class aMOCell1 extends Algorithm{
       (distance).crowdingDistanceAssignment(archive,problem_.getNumberOfObjectives());                      
       for (int j = 0; j < feedBack; j++){
         if (archive.size() > j){
-          int r = PseudoRandom.randInt(0,currentSolutionSet.size()-1);
+          int r = PseudoRandom.randInt(0, currentSolutionSet.size() - 1);
           if (r < currentSolutionSet.size()){
             Solution individual = archive.get(j);
             individual.setLocation(r);

@@ -24,7 +24,7 @@ package jmetal.metaheuristics.singleObjective.particleSwarmOptimization;
 import jmetal.core.*;
 import jmetal.operators.selection.BestSolutionSelection;
 import jmetal.util.JMException;
-import jmetal.util.PseudoRandom;
+import jmetal.util.random.PseudoRandom;
 import jmetal.util.comparators.ObjectiveComparator;
 import jmetal.util.wrapper.XReal;
 
@@ -383,7 +383,8 @@ public class PSO extends Algorithm {
           Solution particle = new Solution(particles_.get(i));
           globalBest_ = particle;
         } // if
-      	
+        Double bestCurrentFitness = particles_.best(comparator_).getObjective(0) ;
+        System.out.println("Best: " + bestCurrentFitness) ;
       }
       iteration_++;
     }

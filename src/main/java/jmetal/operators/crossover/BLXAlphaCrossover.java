@@ -25,7 +25,7 @@ import jmetal.encodings.solutionType.ArrayRealSolutionType;
 import jmetal.encodings.solutionType.RealSolutionType;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
-import jmetal.util.PseudoRandom;
+import jmetal.util.random.PseudoRandom;
 import jmetal.util.wrapper.XReal;
 
 import java.util.Arrays;

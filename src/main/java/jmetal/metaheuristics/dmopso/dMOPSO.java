@@ -12,7 +12,7 @@ import jmetal.core.SolutionSet;
 import jmetal.qualityIndicator.Hypervolume;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.JMException;
-import jmetal.util.PseudoRandom;
+import jmetal.util.random.PseudoRandom;
 import jmetal.util.wrapper.XReal;
 
 import java.io.*;

@@ -23,7 +23,7 @@ package jmetal.operators.selection;
 
 import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
-import jmetal.util.PseudoRandom;
+import jmetal.util.random.PseudoRandom;
 import jmetal.util.comparators.DominanceComparator;
 
 import java.util.Comparator;

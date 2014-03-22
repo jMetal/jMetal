@@ -26,7 +26,7 @@ import jmetal.operators.mutation.Mutation;
 import jmetal.util.Distance;
 import jmetal.util.JMException;
 import jmetal.util.NonDominatedSolutionList;
-import jmetal.util.PseudoRandom;
+import jmetal.util.random.PseudoRandom;
 import jmetal.util.archive.CrowdingArchive;
 import jmetal.util.comparators.CrowdingDistanceComparator;
 import jmetal.util.comparators.DominanceComparator;

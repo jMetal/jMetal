@@ -126,5 +126,7 @@ public class AdaptiveRandomNeigborhoodTest {
     adaptiveRandomNeighborhood_ = new AdaptiveRandomNeighborhood(solutionSet, numberOfRandomNeighbours_) ;
     ArrayList<ArrayList<Integer>> list = adaptiveRandomNeighborhood_.getNeighborhood() ;
     assertEquals("AdaptiveRandomNeigborhoodTest.testUsingPopulationOf100Individuals", solutionSetSize, list.size()) ;
+    for (int i = 0 ; i < solutionSetSize; i++)
+      assertEquals("AdaptiveRandomNeigborhoodTest.testUsingPopulationOf100Individuals", i, (int)(list.get(i).get(0)));
   }
 }

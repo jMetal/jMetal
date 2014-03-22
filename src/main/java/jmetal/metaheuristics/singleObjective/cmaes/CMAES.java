@@ -22,7 +22,7 @@ package jmetal.metaheuristics.singleObjective.cmaes;
 
 import jmetal.core.*;
 import jmetal.util.JMException;
-import jmetal.util.PseudoRandom;
+import jmetal.util.random.PseudoRandom;
 import jmetal.util.comparators.ObjectiveComparator;
 
 import java.util.Comparator;

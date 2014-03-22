@@ -15,7 +15,7 @@ import jmetal.core.SolutionSet;
 import jmetal.operators.crossover.DifferentialEvolutionCrossover;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.util.JMException;
-import jmetal.util.PseudoRandom;
+import jmetal.util.random.PseudoRandom;
 
 import java.util.HashMap;
 import java.util.logging.Level;

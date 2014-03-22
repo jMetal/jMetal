@@ -21,6 +21,8 @@
 
 package jmetal.util;
 
+import jmetal.util.random.PseudoRandom;
+
 /**
  * Class that provide an int permutation
  */
@@ -37,7 +39,7 @@ public class PermutationUtility {
     // Also is needed to create an random array of size length
     for (int i = 0; i < length; i++) {
       result[i] = i;
-      aux[i] = PseudoRandom.randInt(0,length-1);
+      aux[i] = PseudoRandom.randInt(0, length - 1);
     } // for
         
     // Sort the random array with effect in result, and then we obtain a

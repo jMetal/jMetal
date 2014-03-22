@@ -23,7 +23,7 @@ package jmetal.metaheuristics.moead;
 
 import jmetal.core.*;
 import jmetal.util.JMException;
-import jmetal.util.PseudoRandom;
+import jmetal.util.random.PseudoRandom;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;

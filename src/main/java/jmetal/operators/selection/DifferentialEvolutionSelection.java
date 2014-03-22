@@ -24,7 +24,7 @@ package jmetal.operators.selection;
 import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
 import jmetal.util.JMException;
-import jmetal.util.PseudoRandom;
+import jmetal.util.random.PseudoRandom;
 
 import java.util.HashMap;
 

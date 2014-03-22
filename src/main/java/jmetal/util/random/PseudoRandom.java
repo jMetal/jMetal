@@ -19,7 +19,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package jmetal.util;
+package jmetal.util.random;
 
 /**
  * Class representing a pseudo-random number generator
@@ -39,7 +39,6 @@ public class PseudoRandom  {
   private PseudoRandom() {
     if (random_ == null){
       //this.random = new java.util.Random((long)seed);
-      System.out.println("sadfasfsafsdsfdfs") ;
       random_ = new RandomGenerator();
     }
   } // PseudoRandom

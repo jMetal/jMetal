@@ -1,4 +1,4 @@
-package jmetal.util;
+package jmetal.util.random;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

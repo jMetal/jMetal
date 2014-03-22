@@ -22,6 +22,7 @@ package jmetal.util;
 
 import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
+import jmetal.util.random.PseudoRandom;
 
 import java.util.ArrayList;
 import java.util.Comparator;

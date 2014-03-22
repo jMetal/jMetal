@@ -25,6 +25,8 @@ import jmetal.core.*;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.*;
 import jmetal.util.comparators.CrowdingComparator;
+import jmetal.util.random.PseudoRandom;
+import jmetal.util.random.RandomGenerator;
 
 /** 
  *  Implementation of NSGA-II.

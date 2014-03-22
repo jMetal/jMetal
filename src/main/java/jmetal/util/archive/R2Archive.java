@@ -23,7 +23,7 @@ package jmetal.util.archive;
 
 import jmetal.core.Solution;
 import jmetal.qualityIndicator.R2;
-import jmetal.util.PseudoRandom;
+import jmetal.util.random.PseudoRandom;
 import jmetal.util.comparators.CrowdingDistanceComparator;
 import jmetal.util.comparators.DominanceComparator;
 import jmetal.util.comparators.EqualSolutions;

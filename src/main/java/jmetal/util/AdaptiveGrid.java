@@ -23,6 +23,7 @@ package jmetal.util;
 
 import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
+import jmetal.util.random.PseudoRandom;
 
 /**
  * This class defines an adaptive grid over a SolutionSet as the one used the
@@ -335,7 +336,7 @@ public class AdaptiveGrid {
     }
         
     //Calculate a random value between 0 and sumaInversa
-    double random = PseudoRandom.randDouble(0.0,inverseSum);
+    double random = PseudoRandom.randDouble(0.0, inverseSum);
     int hypercube = 0;
     double accumulatedSum = 0.0;
     while (hypercube < hypercubes_.length){
