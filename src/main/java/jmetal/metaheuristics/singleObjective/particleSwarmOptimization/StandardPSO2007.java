@@ -78,10 +78,7 @@ public class StandardPSO2007 extends Algorithm {
     findBestSolution_ = new BestSolutionSelection(parameters) ;
 
     evaluations_ = 0 ;
-
   } // Constructor
-
-  boolean success_;
 
 /*
   public int[] getNeighbourhood(int i) {
@@ -117,8 +114,6 @@ public class StandardPSO2007 extends Algorithm {
     System.out.println("Swarm size: " + swarmSize_) ;
 
     iteration_ = 0 ;
-
-    success_ = false;
 
     swarm_ = new SolutionSet(swarmSize_);
     localBest_ = new Solution[swarmSize_];
@@ -204,15 +199,13 @@ public class StandardPSO2007 extends Algorithm {
 
 
   /**
-   * Runs of the SMPSO algorithm.
+   * Runs of the StandardPSO2007 algorithm.
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
    * as a result of the algorithm execution
    * @throws jmetal.util.JMException
    */
   public SolutionSet execute() throws JMException, ClassNotFoundException {
     initParams();
-
-    success_ = false;
 
     // Step 1 Create the initial population and evaluate
     for (int i = 0; i < swarmSize_; i++) {
