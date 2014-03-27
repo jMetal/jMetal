@@ -8,28 +8,17 @@
  */
 package jmetal.problems;
 
-import jmetal.core.*;
+import jmetal.core.Problem;
+import jmetal.core.Solution;
+import jmetal.core.Variable;
 import jmetal.encodings.solutionType.ArrayRealSolutionType;
 import jmetal.encodings.solutionType.BinaryRealSolutionType;
 import jmetal.encodings.solutionType.RealSolutionType;
-import jmetal.encodings.variable.ArrayReal;
-import jmetal.experiments.studies.jMetalExperiment;
 import jmetal.util.JMException;
-import jmetal.util.Configuration.*;
-import jmetal.util.wrapper.XReal;
 
+import java.io.PrintStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jmetal.core.*;
-import jmetal.encodings.solutionType.ArrayRealSolutionType;
-import jmetal.encodings.solutionType.BinaryRealSolutionType;
-import jmetal.encodings.solutionType.RealSolutionType;
-import jmetal.experiments.Main;
-import jmetal.metaheuristics.nsgaII.NSGAII;
-import jmetal.util.JMException;
-import jmetal.util.Configuration.*;
-import jmetal.util.wrapper.XReal;
-import java.io.PrintStream;
 
 /**
  * Class representing problem EBEs

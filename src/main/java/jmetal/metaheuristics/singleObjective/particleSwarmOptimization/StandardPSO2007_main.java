@@ -24,8 +24,6 @@ import jmetal.core.Algorithm;
 import jmetal.core.Problem;
 import jmetal.core.SolutionSet;
 import jmetal.operators.mutation.Mutation;
-import jmetal.problems.singleObjective.Griewank;
-import jmetal.problems.singleObjective.Rosenbrock;
 import jmetal.problems.singleObjective.Sphere;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Configuration;
@@ -79,8 +77,8 @@ public class StandardPSO2007_main {
     algorithm = new StandardPSO2007(problem) ;
     
     // Algorithm parameters
-    algorithm.setInputParameter("swarmSize",10 + 2 * (int)Math.sqrt(problem.getNumberOfObjectives()));
-    algorithm.setInputParameter("maxIterations",5000);
+    algorithm.setInputParameter("swarmSize",10 + (int)(2 * Math.sqrt(problem.getNumberOfVariables())));
+    algorithm.setInputParameter("maxIterations",50000);
     algorithm.setInputParameter("numberOfParticlesToInform",3);
 
     // Execute the Algorithm 

@@ -24,17 +24,15 @@ import jmetal.core.*;
 import jmetal.operators.selection.BestSolutionSelection;
 import jmetal.util.AdaptiveRandomNeighborhood;
 import jmetal.util.JMException;
-import jmetal.util.random.PseudoRandom;
 import jmetal.util.comparators.ObjectiveComparator;
+import jmetal.util.random.PseudoRandom;
 import jmetal.util.wrapper.XReal;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 
 /**
- * Class implementing a Stantard PSO 2011 algorithm
+ * Class implementing a Standard PSO 2007 algorithm
  */
 public class StandardPSO2007 extends Algorithm {
 
@@ -42,13 +40,12 @@ public class StandardPSO2007 extends Algorithm {
   private int swarmSize_;
   private int maxIterations_;
   private int iteration_;
-  private int numberOfParticlesToInform_ ; // Referred a K in SPSO document
+  private int numberOfParticlesToInform_ ; // Referred a K in the SPSO document
   private Solution[] localBest_;
   private Solution[] neighborhoodBest_;
   private double[][] speed_;
   private AdaptiveRandomNeighborhood neighborhood_ ;
 
-  private Solution globalBest_;
   int evaluations_ ;
 
   /**
@@ -58,27 +55,11 @@ public class StandardPSO2007 extends Algorithm {
 
   Operator findBestSolution_ ;
 
-  double r1Max_;
-  double r1Min_;
-  double r2Max_;
-  double r2Min_;
-  double W_;
-  double C_;
-  double ChVel_;
+  private double W_;
+  private double C_;
 
-
-  //double r1Max_;
-  //double r1Min_;
-  //double r2Max_;
-  //double r2Min_;
-  double C1Max_;
-  double C1Min_;
-  double C2Max_;
-  double C2Min_;
-  double WMax_;
-  double WMin_;
-  double ChVel1_;
-  double ChVel2_;
+  public double getW() { return W_ ;}
+  public double getC() { return C_ ;}
   /**
    * Constructor
    * @param problem Problem to solve
@@ -86,14 +67,8 @@ public class StandardPSO2007 extends Algorithm {
   public StandardPSO2007(Problem problem) {
     super(problem) ;
 
-    r1Max_ = 1.0;
-    r1Min_ = 0.0;
-    r2Max_ = 1.0;
-    r2Min_ = 0.0;
-    C_ = 1.193;
-    W_ = 0.721;
-
-    ChVel_ = -0.5;
+    W_ = 1.0/(2.0 * Math.log(2)) ; //0.721;
+    C_ = 1.0/2.0 + Math.log(2) ; //1.193;
 
     comparator_ = new ObjectiveComparator(0) ; // Single objective comparator
     HashMap  parameters ; // Operator parameters
@@ -104,7 +79,6 @@ public class StandardPSO2007 extends Algorithm {
 
     evaluations_ = 0 ;
 
-    globalBest_ = null ;
   } // Constructor
 
   boolean success_;
@@ -140,6 +114,8 @@ public class StandardPSO2007 extends Algorithm {
     maxIterations_ = ((Integer) getInputParameter("maxIterations")).intValue();
     numberOfParticlesToInform_ = ((Integer) getInputParameter("numberOfParticlesToInform")).intValue() ;
 
+    System.out.println("Swarm size: " + swarmSize_) ;
+
     iteration_ = 0 ;
 
     success_ = false;
@@ -154,54 +130,20 @@ public class StandardPSO2007 extends Algorithm {
 
 
   private Solution getNeighborBest(int i) {
-    Solution bestSolution = null ;
+    Solution bestLocalBestSolution = null ;
 
-    ArrayList<Integer> neighbors = null;
     try {
-      neighbors = neighborhood_.getNeighbors(i);
+      for (int index : neighborhood_.getNeighbors(i)) {
+        if ((bestLocalBestSolution == null) || (bestLocalBestSolution.getObjective(0) > localBest_[index].getObjective(0))) {
+          bestLocalBestSolution = localBest_[index] ;
+        }
+      }
     } catch (JMException e) {
       e.printStackTrace();
     }
 
-    for (Integer index : neighbors) {
-      if ((bestSolution == null) || (bestSolution.getObjective(0) > localBest_[index].getObjective(0))) {
-        bestSolution = localBest_[index] ;
-      }
-    }
-
-    return bestSolution ;
+    return bestLocalBestSolution ;
   }
-
-  private void computeSpeed(int iter, int miter) throws JMException, IOException {
-    double r1, r2 ;
-    //double W ;
-    double C1, C2;
-    double wmax, wmin, deltaMax, deltaMin;
-    XReal bestGlobal;
-
-    bestGlobal = new XReal(globalBest_) ;
-
-    for (int i = 0; i < swarmSize_; i++) {
-      XReal particle = new XReal(swarm_.get(i)) ;
-      XReal bestParticle = new XReal(localBest_[i]) ;
-
-      double W = 0.9 ;
-      r1 = PseudoRandom.randDouble(0, C_);
-      r2 = PseudoRandom.randDouble(0, C_);
-      for (int var = 0; var < particle.size(); var++) {
-        //Computing the velocity of this particle
-        //speed_[i][var] = inertiaWeight(iter, miter, wmax, wmin) * speed_[i][var] +
-         speed_[i][var] = W * speed_[i][var] +
-                r1 * (bestParticle.getValue(var) - particle.getValue(var)) +
-                r2 * (bestGlobal.getValue(var) - particle.getValue(var)) ;
-      }
-    }
-  } // computeSpeed
-
-  private double inertiaWeight(int iter, int miter, double wmax, double wmin) {
-    return wmax; // - (((wmax-wmin)*(double)iter)/(double)miter);
-    //return wmax - (((wmax-wmin)*(double)iter)/(double)miter);
-  } // inertiaWeight
 
   private void computeSpeed() {
     double r1, r2 ;
@@ -210,7 +152,7 @@ public class StandardPSO2007 extends Algorithm {
 
       XReal particle = new XReal(swarm_.get(i)) ;
       XReal localBest = new XReal(localBest_[i]) ;
-     XReal neighborhoodBest = new XReal(neighborhoodBest_[i]) ;
+      XReal neighborhoodBest = new XReal(neighborhoodBest_[i]) ;
       //XReal neighborhoodBest = new XReal(globalBest_) ;
 
       r1 = PseudoRandom.randDouble(0, C_);
@@ -218,11 +160,16 @@ public class StandardPSO2007 extends Algorithm {
 
       //W_ = 0.9 ;
       for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
-        //Computing the velocity of this particle
         try {
-          speed_[i][var] = W_* speed_[i][var] +
-                  r1 * (localBest.getValue(var) - particle.getValue(var)) +
-                  r2 * (neighborhoodBest.getValue(var) - particle.getValue(var)) ;
+          if (localBest_[i] != neighborhoodBest_[i]) {
+            speed_[i][var] = W_* speed_[i][var] +
+                    r1 * (localBest.getValue(var) - particle.getValue(var)) +
+                    r2 * (neighborhoodBest.getValue(var) - particle.getValue(var)) ;
+          }
+          else {
+            speed_[i][var] = W_* speed_[i][var] +
+                    r1 * (localBest.getValue(var) - particle.getValue(var)) ;
+          }
         } catch (JMException e) {
           e.printStackTrace();
         }
@@ -236,19 +183,19 @@ public class StandardPSO2007 extends Algorithm {
    */
   private void computeNewPositions() throws JMException {
     for (int i = 0; i < swarmSize_; i++) {
-    	//Variable[] particle = swarm_.get(i).getDecisionVariables();
-    	XReal particle = new XReal(swarm_.get(i)) ;
+      //Variable[] particle = swarm_.get(i).getDecisionVariables();
+      XReal particle = new XReal(swarm_.get(i)) ;
       //particle.move(speed_[i]);
       for (int var = 0; var < particle.size(); var++) {
-      	particle.setValue(var, particle.getValue(var) +  speed_[i][var]) ;
+        particle.setValue(var, particle.getValue(var) +  speed_[i][var]) ;
 
         if (particle.getValue(var) < problem_.getLowerLimit(var)) {
           particle.setValue(var, problem_.getLowerLimit(var));
-          speed_[i][var] = 0; //speed_[i][var] * ChVel_; //
+          speed_[i][var] = 0;
         }
         if (particle.getValue(var) > problem_.getUpperLimit(var)) {
           particle.setValue(var, problem_.getUpperLimit(var));
-          speed_[i][var] = 0; //speed_[i][var] * ChVel_; //
+          speed_[i][var] = 0;
         }
 
       }
@@ -273,8 +220,6 @@ public class StandardPSO2007 extends Algorithm {
       problem_.evaluate(particle);
       evaluations_ ++ ;
       swarm_.add(particle);
-      if ((globalBest_ == null) || (particle.getObjective(0) < globalBest_.getObjective(0)))
-        globalBest_ = new Solution(particle) ;
     }
 
     neighborhood_ = new AdaptiveRandomNeighborhood(swarm_, numberOfParticlesToInform_) ;
@@ -287,7 +232,8 @@ public class StandardPSO2007 extends Algorithm {
     for (int i = 0; i < swarmSize_; i++) {
       XReal particle = new XReal(swarm_.get(i))  ;
       for (int j = 0; j < problem_.getNumberOfVariables(); j++) {
-        speed_[i][j] = (PseudoRandom.randDouble(particle.getLowerBound(j),particle.getUpperBound(j))-particle.getValue(j))/2.0 ;
+        speed_[i][j] = (PseudoRandom.randDouble(particle.getLowerBound(j),particle.getUpperBound(j))
+                - particle.getValue(j))/2.0 ;
       }
     }
 
@@ -298,28 +244,30 @@ public class StandardPSO2007 extends Algorithm {
     }
 
     for (int i = 0; i < swarm_.size(); i++) {
-      if ((swarm_.get(i).getObjective(0) < globalBest_.getObjective(0))) {
-        Solution particle = new Solution(swarm_.get(i));
-        globalBest_ = particle;
-      } // if
-
       neighborhoodBest_[i] = getNeighborBest(i) ;
     }
+
+    System.out.println("neighborhood_i " + neighborhood_.getNeighbors(0) );
+    for (int s :  neighborhood_.getNeighbors(0)) {
+      System.out.println(s + ": " + localBest_[s].getObjective(0)) ;
+    }
+
+    System.out.println("localBest_i " + localBest_[0].getObjective(0) );
+    System.out.println("neighborhoodBest_i " + getNeighborBest(0).getObjective(0) );
+
+    System.out.println("Swarm: " + swarm_) ;
+    swarm_.printObjectives();
+    Double b = swarm_.best(comparator_).getObjective(0) ;
+    System.out.println("Best: " + b) ;
+
 
     double bestFoundFitness = Double.MAX_VALUE ;
     //-> Step 7. Iterations ..        
     while (iteration_ < maxIterations_) {
-        //Compute the speed_
+      //Compute the speed
       computeSpeed() ;
-/*
-      try {
-        //Compute the speed_
-        computeSpeed(iteration_, maxIterations_);
-      } catch (IOException ex) {
-        Logger.getLogger(PSO.class.getName()).log(Level.SEVERE, null, ex);
-      }
-*/
-      //Compute the new positions for the swarm_
+
+      //Compute the new positions for the swarm
       computeNewPositions();
 
       //Evaluate the new swarm_ in new positions
@@ -329,38 +277,38 @@ public class StandardPSO2007 extends Algorithm {
         evaluations_ ++ ;
       }
 
-      //Actualize the memory of this particle
+      //Update the memory of the particles
       for (int i = 0; i < swarm_.size(); i++) {
-        //int flag = comparator_.compare(swarm_.get(i), localBest_[i]);
-        //if (flag < 0) { // the new particle is best_ than the older remember        
-      	if ((swarm_.get(i).getObjective(0) < localBest_[i].getObjective(0))) {
+        if ((swarm_.get(i).getObjective(0) < localBest_[i].getObjective(0))) {
           Solution particle = new Solution(swarm_.get(i));
           localBest_[i] = particle;
         } // if
-        //if ((swarm_.get(i).getObjective(0) < neighborhoodBest_[i].getObjective(0))) {
-        //  Solution particle = new Solution(swarm_.get(i));
-        //  neighborhoodBest_[i] = particle;
-        //} // if
-        neighborhoodBest_[i] = getNeighborBest(i) ;
-        if ((swarm_.get(i).getObjective(0) < globalBest_.getObjective(0))) {
-          Solution particle = new Solution(swarm_.get(i));
-          globalBest_ = particle;
-        } // if
       }
+      for (int i = 0; i < swarm_.size(); i++) {
+        neighborhoodBest_[i] = getNeighborBest(i) ;
+      }
+
+
       iteration_++;
+      //System.out.println("Swarm( " + iteration_+ "): " + swarm_) ;
+      //swarm_.printObjectives();
       Double bestCurrentFitness = swarm_.best(comparator_).getObjective(0) ;
       System.out.println("Best: " + bestCurrentFitness) ;
+
       if (bestCurrentFitness == bestFoundFitness) {
+        System.out.println("Recomputing") ;
         neighborhood_.recompute();
       }
+
+      if (bestCurrentFitness < bestFoundFitness) {
+        bestFoundFitness = bestCurrentFitness ;
+      }
     }
-    
+
     // Return a population with the best individual
     SolutionSet resultPopulation = new SolutionSet(1) ;
     resultPopulation.add(swarm_.get((Integer)findBestSolution_.execute(swarm_))) ;
-    
+
     return resultPopulation ;
   } // execute
-
-
 } // StandardPSO2007
