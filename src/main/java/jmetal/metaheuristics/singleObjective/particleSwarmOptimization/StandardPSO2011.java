@@ -24,9 +24,8 @@ import jmetal.core.*;
 import jmetal.operators.selection.BestSolutionSelection;
 import jmetal.util.AdaptiveRandomNeighborhood;
 import jmetal.util.JMException;
-import jmetal.util.random.PseudoRandom;
 import jmetal.util.comparators.ObjectiveComparator;
-import jmetal.util.random.RandomGenerator;
+import jmetal.util.random.PseudoRandom;
 import jmetal.util.wrapper.XReal;
 
 import java.util.Comparator;
@@ -159,7 +158,7 @@ public class StandardPSO2011 extends Algorithm {
           e.printStackTrace();
         }
       }
-
+  /*
 
       for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
         try {
@@ -177,6 +176,7 @@ public class StandardPSO2011 extends Algorithm {
           e.printStackTrace();
         }
       }
+      */
     }
   }
 
@@ -314,19 +314,32 @@ public class StandardPSO2011 extends Algorithm {
   } // execute
 
   private XReal SphereRandomPoint(XReal center, XReal radius) {
-    XReal random = new XReal() ;
-    int lenght ;
+    XReal result = new XReal(center) ;
+    double length ;
+    double random ;
 
-    lenght = 0 ;
+    length = 0 ;
     for (int i = 0; i < center.getNumberOfDecisionVariables(); i++) {
       try {
-        random.setValue(i, PseudoRandom.randDouble());
-        lenght += random.getValue(i)*random.getValue(i) ;
+        result.setValue(i, PseudoRandom.randDouble());
+        length += result.getValue(i)*result.getValue(i) ;
       } catch (JMException e) {
         e.printStackTrace();
       }
     }
 
-    return random ;
+    length = Math.sqrt(length) ;
+    random = PseudoRandom.randDouble() ;
+    random = Math.pow(random, 1.0/center.getNumberOfDecisionVariables()) ;
+
+    for (int i = 0; i < center.getNumberOfDecisionVariables(); i++) {
+      try {
+        result.setValue(i, radius.getValue(i)*random*result.getValue(i)/length );
+      } catch (JMException e) {
+        e.printStackTrace();
+      }
+    }
+
+    return result ;
   }
 } // StandardPSO2011

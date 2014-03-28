@@ -98,5 +98,28 @@ public class PseudoRandom  {
     }
     return minBound + random_.nextDouble() * (maxBound-minBound);
     //return minBound + (maxBound - minBound)*randomJava.nextDouble();
-  } // randDouble    
+  } // randDouble
+
+  /**
+   * Use the polar form of the Box-Muller transformation to obtain
+   * a pseudo random number from a Gaussian distribution
+   * Code taken from Maurice Clerc's implementation
+   * @param mean
+   * @param standardDeviation
+   * @return
+   */
+  public static double randNormal(double mean, double standardDeviation) {
+    double x1, x2, w, y1;
+
+    do {
+      x1 = 2.0 * random_.nextDouble() - 1.0;
+      x2 = 2.0 * random_.nextDouble() - 1.0;
+      w = x1 * x1 + x2 * x2;
+    } while ( w >= 1.0);
+
+    w = Math.sqrt( (-2.0 * Math.log(w)) / w );
+    y1 = x1 * w;
+    y1 = y1 * standardDeviation + mean;
+    return y1;
+  }
 } // PseudoRandom
