@@ -26,6 +26,7 @@ import jmetal.util.AdaptiveRandomNeighborhood;
 import jmetal.util.JMException;
 import jmetal.util.random.PseudoRandom;
 import jmetal.util.comparators.ObjectiveComparator;
+import jmetal.util.random.RandomGenerator;
 import jmetal.util.wrapper.XReal;
 
 import java.util.Comparator;
@@ -140,21 +141,29 @@ public class StandardPSO2011 extends Algorithm {
   }
 
   private void computeSpeed() {
-    double r1, r2 ;
-
     for (int i = 0; i < swarmSize_; i++) {
 
       XReal particle = new XReal(swarm_.get(i)) ;
       XReal localBest = new XReal(localBest_[i]) ;
       XReal neighborhoodBest = new XReal(neighborhoodBest_[i]) ;
-      //XReal neighborhoodBest = new XReal(globalBest_) ;
+      XReal gravityCenter = new XReal(swarm_.get(i)) ;
 
-      r1 = PseudoRandom.randDouble(0, C_);
-      r2 = PseudoRandom.randDouble(0, C_);
+      for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
+        double G ;
+        try {
+          G = particle.getValue(var) +
+              C_*(localBest.getValue(var)+neighborhoodBest.getValue(var)-2*particle.getValue(var))/3.0 ;
 
-      //W_ = 0.9 ;
+          gravityCenter.setValue(var, G);
+        } catch (JMException e) {
+          e.printStackTrace();
+        }
+      }
+
+
       for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
         try {
+
           if (localBest_[i] != neighborhoodBest_[i]) {
             speed_[i][var] = W_* speed_[i][var] +
                     r1 * (localBest.getValue(var) - particle.getValue(var)) +
@@ -303,4 +312,21 @@ public class StandardPSO2011 extends Algorithm {
     
     return resultPopulation ;
   } // execute
+
+  private XReal SphereRandomPoint(XReal center, XReal radius) {
+    XReal random = new XReal() ;
+    int lenght ;
+
+    lenght = 0 ;
+    for (int i = 0; i < center.getNumberOfDecisionVariables(); i++) {
+      try {
+        random.setValue(i, PseudoRandom.randDouble());
+        lenght += random.getValue(i)*random.getValue(i) ;
+      } catch (JMException e) {
+        e.printStackTrace();
+      }
+    }
+
+    return random ;
+  }
 } // StandardPSO2011

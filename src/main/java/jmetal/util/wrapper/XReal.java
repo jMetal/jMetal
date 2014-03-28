@@ -54,6 +54,12 @@ public class XReal {
 		solution_ = solution ;
 	}
 
+  public XReal(XReal solution) {
+    this() ;
+    solution_ = solution.solution_ ;
+    type_ = solution.type_ ;
+  }
+
 	/**
 	 * Gets value of a encodings.variable
 	 * @param index Index of the encodings.variable

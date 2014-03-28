@@ -54,7 +54,7 @@ public class StandardPSO2011Test {
     assertEquals("StandardPSO2011Test.initParamsTest", 3, ((Integer) standardPSO_.getInputParameter("numberOfParticlesToInform")).intValue());
   }
 
-  @Test
+/*  @Test
   public void neighbourhoodMethodTest() {
     int [] neighbours;
     neighbours = standardPSO_.getNeighbourhood(0) ;
@@ -72,7 +72,7 @@ public class StandardPSO2011Test {
     assertEquals("StandardPSO2011Test.neighbourhoodMethodTest", 38, neighbours[0]) ;
     assertEquals("StandardPSO2011Test.neighbourhoodMethodTest", 39, neighbours[1]) ;
     assertEquals("StandardPSO2011Test.neighbourhoodMethodTest", 0, neighbours[2]) ;
-  }
+  }*/
 
   @Test
   public void getNeighborWithMinimumFitnessTest() {
