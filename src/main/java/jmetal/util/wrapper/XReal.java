@@ -35,9 +35,8 @@ import jmetal.util.JMException;
  * Wrapper for accessing real-coded solutions
  */
 public class XReal {
-	private Solution solution_ ;
-	private SolutionType type_ ;
-
+	public Solution solution_ ;
+	public SolutionType type_ ;
 
 	/**
 	 * Constructor
@@ -159,14 +158,6 @@ public class XReal {
 	 * @return
 	 */
 	public int size() {
-		if ((type_.getClass().equals(RealSolutionType.class)) ||
-				(type_.getClass().equals(BinaryRealSolutionType.class)))		
-			return solution_.getDecisionVariables().length ;
-		else if (type_.getClass().equals(ArrayRealSolutionType.class)) 
-			return ((ArrayReal)(solution_.getDecisionVariables()[0])).getLength() ;
-		else
-			Configuration.logger_.severe("jmetal.util.wrapper.XReal.size, solution type " +
-					type_ + "+ invalid") ;		
-		return 0 ;
+     return getNumberOfDecisionVariables() ;
 	} // size
 } // XReal
