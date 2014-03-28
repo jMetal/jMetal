@@ -38,19 +38,21 @@ public class XInt {
 
 	/**
 	 * Constructor
-	 */
-  private XInt() {
-	} // Constructor
-
-	/**
-	 * Constructor
 	 * @param solution
 	 */
 	public XInt(Solution solution) {
-		this() ;
 		type_ = solution.getType() ;
 		solution_ = solution ;
 	}
+
+  /**
+   * Constructor
+   * @param solution
+   */
+  public XInt(XInt solution) {
+    type_ = solution.type_ ;
+    solution_ = solution.solution_ ;
+  }
 
 	/**
 	 * Gets value of a encodings.variable

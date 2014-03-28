@@ -321,7 +321,7 @@ public class StandardPSO2011 extends Algorithm {
     length = 0 ;
     for (int i = 0; i < center.getNumberOfDecisionVariables(); i++) {
       try {
-        result.setValue(i, PseudoRandom.randDouble());
+        result.setValue(i, PseudoRandom.randNormal(0, 1));
         length += result.getValue(i)*result.getValue(i) ;
       } catch (JMException e) {
         e.printStackTrace();
@@ -334,7 +334,7 @@ public class StandardPSO2011 extends Algorithm {
 
     for (int i = 0; i < center.getNumberOfDecisionVariables(); i++) {
       try {
-        result.setValue(i, radius.getValue(i)*random*result.getValue(i)/length );
+        result.setValue(i, random*result.getValue(i)/length );
       } catch (JMException e) {
         e.printStackTrace();
       }
