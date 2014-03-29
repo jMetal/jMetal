@@ -21,6 +21,14 @@
 
 package jmetal.util.random;
 
+import jmetal.core.Solution;
+import jmetal.util.Configuration;
+
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+
 /**
  * Class representing a pseudo-random number generator
  */
@@ -106,14 +114,14 @@ public class PseudoRandom  {
    * Code taken from Maurice Clerc's implementation
    * @param mean
    * @param standardDeviation
-   * @return
+   * @return A pseudo random number
    */
   public static double randNormal(double mean, double standardDeviation) {
     double x1, x2, w, y1;
 
     do {
-      x1 = 2.0 * random_.nextDouble() - 1.0;
-      x2 = 2.0 * random_.nextDouble() - 1.0;
+      x1 = 2.0 * randDouble() - 1.0;
+      x2 = 2.0 * randDouble() - 1.0;
       w = x1 * x1 + x2 * x2;
     } while ( w >= 1.0);
 
@@ -121,5 +129,76 @@ public class PseudoRandom  {
     y1 = x1 * w;
     y1 = y1 * standardDeviation + mean;
     return y1;
+  }
+
+  /**
+   * Ger a random point from an hypersphere
+   * Code taken from Maurice Clerc's implementation
+   * @param center
+   * @param radius
+   * @return A pseudo random number
+   */
+  public static double[] randSphere(double center, double radius) {
+    int D = 2 ;
+    double[] x = new double[2] ;
+
+    double length = 0 ;
+
+    // --------- Step 1. Direction
+
+    for (int i = 0; i < D; i++) {
+      x[i] = randNormal(0, 1) ;
+      length += length + x[i]*x[i] ;
+    }
+
+    length = Math.sqrt(length) ;
+
+    // --------- Step 2. Random radius
+
+    double r = PseudoRandom.randDouble(0, 1) ;
+
+    for (int i = 0; i < D;  i++) {
+      x[i]=radius*r*x[i]/length;
+    }
+
+    return x ;
+  }
+
+
+  public static void  main (String[] args) {
+    int numberOfPoints ;
+    String fileName    ;
+
+    if (args.length != 2) {
+      System.err.println("Usage: PseudoRandom numberOfPoints outputFileName") ;
+      System.exit(-1);
+    }
+    numberOfPoints = Integer.valueOf(args[0]) ;
+    fileName = args[1] ;
+
+    try {
+      FileOutputStream fos   = new FileOutputStream(fileName)     ;
+      OutputStreamWriter osw = new OutputStreamWriter(fos)    ;
+      BufferedWriter bw      = new BufferedWriter(osw)        ;
+/*
+      for (int i = 0 ; i < numberOfPoints ; i++) {
+        bw.write("" + PseudoRandom.randNormal(100, 10) + " " + PseudoRandom.randNormal(100, 10));
+        //bw.write("" + PseudoRandom.randDouble(0, 1)) ;
+        bw.newLine();
+      }
+          */
+      double [] x  ;
+      for (int i = 0 ; i < numberOfPoints ; i++) {
+        x = randSphere(0, 1) ;
+        bw.write("" + x[0] + " " + x[1]);
+        bw.newLine();
+      }
+
+      bw.close();
+    }catch (IOException e) {
+      Configuration.logger_.severe("Error acceding to the file");
+      e.printStackTrace();
+    }
+
   }
 } // PseudoRandom
