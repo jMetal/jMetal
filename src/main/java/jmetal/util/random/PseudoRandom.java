@@ -138,11 +138,13 @@ public class PseudoRandom  {
    * @param radius
    * @return A pseudo random number
    */
-  public static double[] randSphere(double center, double radius) {
-    int D = 2 ;
-    double[] x = new double[2] ;
+  public static double[] randSphere(int dimension, double center, double radius) {
+    int D = dimension ;
+    double[] x = new double[dimension] ;
 
     double length = 0 ;
+    for (int i = 0; i < dimension; i++)
+      x[i] = 0.0 ;
 
     // --------- Step 1. Direction
 
@@ -158,7 +160,7 @@ public class PseudoRandom  {
     double r = PseudoRandom.randDouble(0, 1) ;
 
     for (int i = 0; i < D;  i++) {
-      x[i]=radius*r*x[i]/length;
+      x[i]=center + radius*r*x[i]/length;
     }
 
     return x ;
@@ -189,7 +191,7 @@ public class PseudoRandom  {
           */
       double [] x  ;
       for (int i = 0 ; i < numberOfPoints ; i++) {
-        x = randSphere(0, 1) ;
+        x = randSphere(2, 0.0, 1.0) ;
         bw.write("" + x[0] + " " + x[1]);
         bw.newLine();
       }

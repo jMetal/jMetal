@@ -23,6 +23,7 @@ package jmetal.metaheuristics.singleObjective.particleSwarmOptimization;
 import jmetal.core.*;
 import jmetal.operators.selection.BestSolutionSelection;
 import jmetal.util.AdaptiveRandomNeighborhood;
+import jmetal.util.Distance;
 import jmetal.util.JMException;
 import jmetal.util.comparators.ObjectiveComparator;
 import jmetal.util.random.PseudoRandom;
@@ -141,19 +142,33 @@ public class StandardPSO2011 extends Algorithm {
 
   private void computeSpeed() {
     for (int i = 0; i < swarmSize_; i++) {
+      Solution particle = swarm_.get(i) ;
+      Solution localBest = localBest_[i] ;
+      Solution neighborhoodBest = neighborhoodBest_[i] ;
+      Solution gravityCenter = new Solution(particle) ;
+      Solution randomParticle = new Solution(swarm_.get(i)) ;
 
-      XReal particle = new XReal(swarm_.get(i)) ;
-      XReal localBest = new XReal(localBest_[i]) ;
-      XReal neighborhoodBest = new XReal(neighborhoodBest_[i]) ;
-      XReal gravityCenter = new XReal(swarm_.get(i)) ;
-
-      for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
+      for (int var = 0; var < particle.getDecisionVariables().length; var++) {
         double G ;
         try {
-          G = particle.getValue(var) +
-              C_*(localBest.getValue(var)+neighborhoodBest.getValue(var)-2*particle.getValue(var))/3.0 ;
+          G = particle.getDecisionVariables()[var] +
+              C_*(localBest.getDecisionVariables()[var]+neighborhoodBest.getValue(var)-2*particle.getValue(var))/3.0 ;
 
           gravityCenter.setValue(var, G);
+        } catch (JMException e) {
+          e.printStackTrace();
+        }
+      }
+      double radius = 0 ; //= new Distance().distanceBetweenSolutions(gravityCenter, particle);
+      for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
+         radius += radius ;
+
+      }
+
+      for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
+        try {
+          speed_[i][var] = W_*speed_[i][var] - particle.getValue(var);
+
         } catch (JMException e) {
           e.printStackTrace();
         }
@@ -179,7 +194,43 @@ public class StandardPSO2011 extends Algorithm {
       */
     }
   }
+/*
+  private void computeSpeed() {
+    for (int i = 0; i < swarmSize_; i++) {
+      XReal particle = new XReal(swarm_.get(i)) ;
+      XReal localBest = new XReal(localBest_[i]) ;
+      XReal neighborhoodBest = new XReal(neighborhoodBest_[i]) ;
+      XReal gravityCenter = new XReal(swarm_.get(i)) ;
+      XReal randomParticle = new XReal(swarm_.get(i)) ;
 
+      for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
+        double G ;
+        try {
+          G = particle.getValue(var) +
+                  C_*(localBest.getValue(var)+neighborhoodBest.getValue(var)-2*particle.getValue(var))/3.0 ;
+
+          gravityCenter.setValue(var, G);
+        } catch (JMException e) {
+          e.printStackTrace();
+        }
+      }
+      double radius = 0 ; //= new Distance().distanceBetweenSolutions(gravityCenter, particle);
+      for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
+        radius += radius ;
+
+      }
+
+      for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
+        try {
+          speed_[i][var] = W_*speed_[i][var] - particle.getValue(var);
+
+        } catch (JMException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+  }
+*/
   /**
    * Update the position of each particle
    * @throws jmetal.util.JMException
@@ -317,6 +368,8 @@ public class StandardPSO2011 extends Algorithm {
     XReal result = new XReal(center) ;
     double length ;
     double random ;
+
+
 
     length = 0 ;
     for (int i = 0; i < center.getNumberOfDecisionVariables(); i++) {
