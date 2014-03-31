@@ -160,4 +160,8 @@ public class XReal {
 	public int size() {
      return getNumberOfDecisionVariables() ;
 	} // size
+
+  public Solution getSolution() {
+    return solution_ ;
+  }
 } // XReal

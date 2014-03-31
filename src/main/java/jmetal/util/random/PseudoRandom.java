@@ -21,7 +21,6 @@
 
 package jmetal.util.random;
 
-import jmetal.core.Solution;
 import jmetal.util.Configuration;
 
 import java.io.BufferedWriter;
@@ -191,7 +190,7 @@ public class PseudoRandom  {
           */
       double [] x  ;
       for (int i = 0 ; i < numberOfPoints ; i++) {
-        x = randSphere(2, 0.0, 1.0) ;
+        x = randSphere(2, 100, 500) ;
         bw.write("" + x[0] + " " + x[1]);
         bw.newLine();
       }

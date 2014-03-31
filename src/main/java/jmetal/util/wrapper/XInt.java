@@ -140,4 +140,16 @@ public class XInt {
 					type_ + "+ invalid") ;		
 		return 0 ;
 	} // size
+
+  /**
+   * Returns the number of variables of the solution
+   * @return
+   */
+  public int size() {
+    return getNumberOfDecisionVariables() ;
+  } // size
+
+  public Solution getSolution() {
+    return solution_ ;
+  }
 } // XInt
