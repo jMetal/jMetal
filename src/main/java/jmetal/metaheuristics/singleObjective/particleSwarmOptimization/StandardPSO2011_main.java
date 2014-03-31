@@ -71,13 +71,13 @@ public class StandardPSO2011_main {
     //problem = new Easom("Real") ;
     // problem = new Griewank("Real", 10) ;
 
-    problem = new Sphere("Real", 20); 
+    problem = new Sphere("Real", 20);
 
     algorithm = new StandardPSO2011(problem) ;
     
     // Algorithm parameters
-    algorithm.setInputParameter("swarmSize",40);
-    algorithm.setInputParameter("maxIterations",5000);
+    algorithm.setInputParameter("swarmSize",100);
+    algorithm.setInputParameter("maxIterations",8000);
     algorithm.setInputParameter("numberOfParticlesToInform",3);
 
     // Execute the Algorithm 

@@ -68,7 +68,7 @@ public class StandardPSO2007_main {
     logger_.addHandler(fileHandler_) ;
 
 //    problem = new Rosenbrock("Real", 10) ;
-    problem = new Sphere("Real", 30) ;
+    problem = new Sphere("Real", 20) ;
     //problem = new Easom("Real") ;
     //problem = new Griewank("Real", 10) ;
 
@@ -77,8 +77,8 @@ public class StandardPSO2007_main {
     algorithm = new StandardPSO2007(problem) ;
     
     // Algorithm parameters
-    algorithm.setInputParameter("swarmSize",10 + (int)(2 * Math.sqrt(problem.getNumberOfVariables())));
-    algorithm.setInputParameter("maxIterations",50000);
+    algorithm.setInputParameter("swarmSize", 10 + (int)(2 * Math.sqrt(problem.getNumberOfVariables())));
+    algorithm.setInputParameter("maxIterations",80000);
     algorithm.setInputParameter("numberOfParticlesToInform",3);
 
     // Execute the Algorithm 
