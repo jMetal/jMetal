@@ -130,6 +130,41 @@ public class PseudoRandom  {
     return y1;
   }
 
+
+  /**
+   * Ger a random point from an hypersphere (center = 0, radius = 1)
+   * Code taken from Maurice Clerc's implementation
+   * @param dimension
+   * @return A pseudo random point
+   */
+  public static double[] randSphere(int dimension) {
+    int D = dimension ;
+    double[] x = new double[dimension] ;
+
+    double length = 0 ;
+    for (int i = 0; i < dimension; i++)
+      x[i] = 0.0 ;
+
+    // --------- Step 1. Direction
+
+    for (int i = 0; i < D; i++) {
+      x[i] = randNormal(0, 1) ;
+      length += length + x[i]*x[i] ;
+    }
+
+    length = Math.sqrt(length) ;
+
+    // --------- Step 2. Random radius
+
+    double r = PseudoRandom.randDouble(0, 1) ;
+
+    for (int i = 0; i < D;  i++) {
+      x[i]=r*x[i]/length;
+    }
+
+    return x ;
+  }
+
   /**
    * Ger a random point from an hypersphere
    * Code taken from Maurice Clerc's implementation
@@ -190,8 +225,8 @@ public class PseudoRandom  {
           */
       double [] x  ;
       for (int i = 0 ; i < numberOfPoints ; i++) {
-        x = randSphere(2, 100, 500) ;
-        bw.write("" + x[0] + " " + x[1]);
+        x = randSphere(2) ;
+        bw.write("" + (0+500*x[0]) + " " + (0 + 500*x[1]));
         bw.newLine();
       }
 

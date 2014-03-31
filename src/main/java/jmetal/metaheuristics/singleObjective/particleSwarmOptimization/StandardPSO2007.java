@@ -140,7 +140,7 @@ public class StandardPSO2007 extends Algorithm {
     return bestLocalBestSolution ;
   }
 
-  private void computeSpeed() {
+  private void computeSpeed() throws JMException {
     double r1, r2 ;
 
     for (int i = 0; i < swarmSize_; i++) {
@@ -154,19 +154,17 @@ public class StandardPSO2007 extends Algorithm {
       r2 = PseudoRandom.randDouble(0, C_);
 
       //W_ = 0.9 ;
-      for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
-        try {
-          if (localBest_[i] != neighborhoodBest_[i]) {
-            speed_[i][var] = W_* speed_[i][var] +
-                    r1 * (localBest.getValue(var) - particle.getValue(var)) +
-                    r2 * (neighborhoodBest.getValue(var) - particle.getValue(var)) ;
-          }
-          else {
-            speed_[i][var] = W_* speed_[i][var] +
+      if (localBest_[i] != neighborhoodBest_[i]) {
+        for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
+          speed_[i][var] = W_ * speed_[i][var] +
+                  r1 * (localBest.getValue(var) - particle.getValue(var)) +
+                  r2 * (neighborhoodBest.getValue(var) - particle.getValue(var));
+        }
+      }
+      else {
+        for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
+          speed_[i][var] = W_* speed_[i][var] +
                     r1 * (localBest.getValue(var) - particle.getValue(var)) ;
-          }
-        } catch (JMException e) {
-          e.printStackTrace();
         }
       }
     }
@@ -255,7 +253,7 @@ public class StandardPSO2007 extends Algorithm {
 
 
     double bestFoundFitness = Double.MAX_VALUE ;
-    //-> Step 7. Iterations ..        
+
     while (iteration_ < maxIterations_) {
       //Compute the speed
       computeSpeed() ;

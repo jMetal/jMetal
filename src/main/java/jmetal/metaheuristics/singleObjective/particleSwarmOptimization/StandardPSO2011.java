@@ -140,7 +140,7 @@ public class StandardPSO2011 extends Algorithm {
     return bestLocalBestSolution ;
   }
 
-  private void computeSpeed() throws ClassNotFoundException {
+  private void computeSpeed() throws ClassNotFoundException, JMException {
     for (int i = 0; i < swarmSize_; i++) {
       XReal particle = new XReal(swarm_.get(i)) ;
       XReal localBest = new XReal(localBest_[i]) ;
@@ -148,85 +148,41 @@ public class StandardPSO2011 extends Algorithm {
       XReal gravityCenter = new XReal(new Solution(problem_)) ;
       XReal randomParticle = new XReal (new Solution(swarm_.get(i))) ;
 
-      for (int var = 0; var < particle.size(); var++) {
-        double G ;
-        try {
+      if (localBest_[i] != neighborhoodBest_[i]) {
+        for (int var = 0; var < particle.size(); var++) {
+          double G;
           G = particle.getValue(var) +
-              C_*(localBest.getValue(var)+neighborhoodBest.getValue(var) - 2*particle.getValue(var))/3.0 ;
+              C_ * (localBest.getValue(var) + neighborhoodBest.getValue(var) - 2 * particle.getValue(var)) / 3.0;
 
           gravityCenter.setValue(var, G);
-        } catch (JMException e) {
-          e.printStackTrace();
         }
       }
+       else {
+        for (int var = 0; var < particle.size(); var++) {
+          double G;
+          G = particle.getValue(var) +
+              C_ * (localBest.getValue(var) - particle.getValue(var)) / 2.0;
+
+          gravityCenter.setValue(var, G);
+        }
+      }
+
       double radius = 0;
-      try {
-        radius = new Distance().distanceBetweenSolutions(gravityCenter.getSolution(), particle.getSolution());
-      } catch (JMException e) {
-        e.printStackTrace();
+      radius = new Distance().distanceBetweenSolutions(gravityCenter.getSolution(), particle.getSolution());
+
+      double [] random = PseudoRandom.randSphere(problem_.getNumberOfVariables()) ;
+
+      for (int var = 0; var < particle.size(); var++) {
+        randomParticle.setValue(var, gravityCenter.getValue(var) + radius*random[var]) ;
       }
 
       for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
-        try {
-          double [] random = PseudoRandom.randSphere(
-                  problem_.getNumberOfVariables(),
-                  gravityCenter.getValue(var),
-                  radius) ;
-          randomParticle.setValue(var, 0) ;
-        } catch (JMException e) {
-          e.printStackTrace();
-        }
+        speed_[i][var] = W_*speed_[i][var] + randomParticle.getValue(var) - particle.getValue(var);
       }
-
-      for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
-        try {
-          speed_[i][var] = W_*speed_[i][var] - particle.getValue(var);
-
-        } catch (JMException e) {
-          e.printStackTrace();
-        }
-      }
-
     }
 
   }
-/*
-  private void computeSpeed() {
-    for (int i = 0; i < swarmSize_; i++) {
-      XReal particle = new XReal(swarm_.get(i)) ;
-      XReal localBest = new XReal(localBest_[i]) ;
-      XReal neighborhoodBest = new XReal(neighborhoodBest_[i]) ;
-      XReal gravityCenter = new XReal(swarm_.get(i)) ;
-      XReal randomParticle = new XReal(swarm_.get(i)) ;
 
-      for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
-        double G ;
-        try {
-          G = particle.getValue(var) +
-                  C_*(localBest.getValue(var)+neighborhoodBest.getValue(var)-2*particle.getValue(var))/3.0 ;
-
-          gravityCenter.setValue(var, G);
-        } catch (JMException e) {
-          e.printStackTrace();
-        }
-      }
-      double radius = 0 ; //= new Distance().distanceBetweenSolutions(gravityCenter, particle);
-      for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
-        radius += radius ;
-
-      }
-
-      for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
-        try {
-          speed_[i][var] = W_*speed_[i][var] - particle.getValue(var);
-
-        } catch (JMException e) {
-          e.printStackTrace();
-        }
-      }
-    }
-  }
-*/
   /**
    * Update the position of each particle
    * @throws jmetal.util.JMException
@@ -311,7 +267,6 @@ public class StandardPSO2011 extends Algorithm {
 
 
     double bestFoundFitness = Double.MAX_VALUE ;
-    //-> Step 7. Iterations ..
     while (iteration_ < maxIterations_) {
       //Compute the speed
       computeSpeed() ;
@@ -352,43 +307,11 @@ public class StandardPSO2011 extends Algorithm {
         bestFoundFitness = bestCurrentFitness ;
       }
     }
-    
+
     // Return a population with the best individual
     SolutionSet resultPopulation = new SolutionSet(1) ;
     resultPopulation.add(swarm_.get((Integer)findBestSolution_.execute(swarm_))) ;
-    
+
     return resultPopulation ;
   } // execute
-
-  private XReal SphereRandomPoint(XReal center, XReal radius) {
-    XReal result = new XReal(center) ;
-    double length ;
-    double random ;
-
-
-
-    length = 0 ;
-    for (int i = 0; i < center.getNumberOfDecisionVariables(); i++) {
-      try {
-        result.setValue(i, PseudoRandom.randNormal(0, 1));
-        length += result.getValue(i)*result.getValue(i) ;
-      } catch (JMException e) {
-        e.printStackTrace();
-      }
-    }
-
-    length = Math.sqrt(length) ;
-    random = PseudoRandom.randDouble() ;
-    random = Math.pow(random, 1.0/center.getNumberOfDecisionVariables()) ;
-
-    for (int i = 0; i < center.getNumberOfDecisionVariables(); i++) {
-      try {
-        result.setValue(i, random*result.getValue(i)/length );
-      } catch (JMException e) {
-        e.printStackTrace();
-      }
-    }
-
-    return result ;
-  }
 } // StandardPSO2011
