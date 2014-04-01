@@ -1,0 +1,117 @@
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ASCII txt data files:
+
+test_data_func1.mat
+% 10 points (50D each) & corresponding fitnesses given to assist verification for code translation for function 1. 
+% Variables:x1, line1-line10
+% Corresponding Function Values: f1, line11-line20
+
+test_data_func2.mat
+% 10 points (50D each) & corresponding fitnesses given to assist verification for code translation for function 2. 
+% Variables:x2, line1-line10
+% Corresponding Function Values: f2, line11-line20
+
+test_data_func3.mat
+....
+...
+test_data_func25.mat
+% 10 points (50D each) & corresponding fitnesses given to assist verification for code translation for function 25. 
+% Variables:x25, line1-line10
+% Corresponding Function Values: f25, line11-line20
+
+***Notice, for function 4,17,24,25, since they have noise, please set noise to 0 (e.g setting 0.0*N(0,1)) before test.
+
+fbias_data.txt
+
+global_optima.txt
+%all 25 global optima for the 25 global optima,
+% line1:global optimum for the function 1, line2:global optimum for the function 2,..., line25:global optimum for the function 25
+% please notice, function 5,8,20 set the global optima on the bounds, so the corresponding global optima are
+%if func_num==5,o(1:ceil(D/4))=-100;x(max(floor(0.75*D),1):D)=100;end
+%if func_num==8,o(2.*[1:floor(D/2)]-1)=-32;end
+%if func_num==20,o(1,2.*[1:floor(D/2)])=5;end
+sphere_func_data.txt
+
+schwefel_102_data.txt
+
+high_cond_elliptic_rot_data.txt
+elliptic_M_D2.txt
+elliptic_M_D10.txt
+elliptic_M_D30.txt
+elliptic_M_D50.txt
+
+schwefel_206_data.txt
+there are two variables:o &A, the first line is o (1*100 vector),and line2-line101 is A(100*100 matrix)
+
+rosenbrock_func_data.txt
+
+griewank_func_data.txt
+griewank_M_D2.txt
+griewank_M_D10.txt
+griewank_M_D30.txt
+griewank_M_D50.txt
+
+ackley_func_data.txt
+ackley_M_D2.txt
+ackley_M_D10.txt
+ackley_M_D30.txt
+ackley_M_D50.txt
+
+rastrigin_func_data.txt
+rastrigin_M_D2.txt
+rastrigin_M_D10.txt
+rastrigin_M_D30.txt
+rastrigin_M_D50.txt
+
+weierstrass_data.txt
+weierstrass_M_D2.txt
+weierstrass_M_D10.txt
+weierstrass_M_D30.txt
+weierstrass_M_D50.txt
+
+schwefel_213_data.txt
+line1-line100 is a(100*100 matrix),and line101-line200 is b (100*100 matrix),the last line is alpha (1*100 vector),
+
+EF8F2_func_data.txt
+
+E_ScafferF6_func_data.txt
+E_ScafferF6_M_D2.txt
+E_ScafferF6_M_D10.txt
+E_ScafferF6_M_D30.txt
+E_ScafferF6_M_D50.txt
+
+hybrid_func1_data.txt
+hybrid_func1_M_D2.txt	1-2 lines are M1, 3-4 lines are M2,....,19-20 lines are M10
+hybrid_func1_M_D10.txt	1-10 lines are M1, 11-20 lines are M2,....,91-100 lines are M10
+hybrid_func1_M_D30.txt	1-30 lines are M1, 31-60 lines are M2,....,271-300 lines are M10
+hybrid_func1_M_D50.txt	1-50 lines are M1, 51-100 lines are M2,....,451-500 lines are M10
+
+hybrid_func2_data.txt
+hybrid_func2_M_D2.txt	1-2 lines are M1, 3-4 lines are M2,....,19-20 lines are M10
+hybrid_func2_M_D10.txt	1-10 lines are M1, 11-20 lines are M2,....,91-100 lines are M10
+hybrid_func2_M_D30.txt	1-30 lines are M1, 31-60 lines are M2,....,271-300 lines are M10
+hybrid_func2_M_D50.txt	1-50 lines are M1, 51-100 lines are M2,....,451-500 lines are M10
+
+hybrid_func3_data.txt
+hybrid_func3_M_D2.txt	1-2 lines are M1, 3-4 lines are M2,....,19-20 lines are M10
+hybrid_func3_M_D10.txt	1-10 lines are M1, 11-20 lines are M2,....,91-100 lines are M10
+hybrid_func3_M_D30.txt	1-30 lines are M1, 31-60 lines are M2,....,271-300 lines are M10
+hybrid_func3_M_D50.txt	1-50 lines are M1, 51-100 lines are M2,....,451-500 lines are M10
+
+hybrid_func3_HM_D2.txt	1-2 lines are M1, 3-4 lines are M2,....,19-20 lines are M10
+hybrid_func3_HM_D10.txt	1-10 lines are M1, 11-20 lines are M2,....,91-100 lines are M10
+hybrid_func3_HM_D30.txt	1-30 lines are M1, 31-60 lines are M2,....,271-300 lines are M10
+hybrid_func3_HM_D50.txt	1-50 lines are M1, 51-100 lines are M2,....,451-500 lines are M10
+
+hybrid_func4_data.txt
+hybrid_func4_M_D2.txt	1-2 lines are M1, 3-4 lines are M2,....,19-20 lines are M10
+hybrid_func4_M_D10.txt	1-10 lines are M1, 11-20 lines are M2,....,91-100 lines are M10
+hybrid_func4_M_D30.txt	1-30 lines are M1, 31-60 lines are M2,....,271-300 lines are M10
+hybrid_func4_M_D50.txt	1-50 lines are M1, 51-100 lines are M2,....,451-500 lines are M10
+
+%%%%%%%%%%
+NOTICE:
+hybrid_func1_M_D......matrix data in matlab contain a structure M, and M.M1,M.M2...M.M10 are ten D*D matrix
+But  hybrid_func1_M_D......matrix data in ASCII 's structure is different.
