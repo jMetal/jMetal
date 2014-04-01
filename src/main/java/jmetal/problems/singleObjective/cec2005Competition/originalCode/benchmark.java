@@ -47,6 +47,8 @@
 
 package jmetal.problems.singleObjective.cec2005Competition.originalCode ;
 
+import jmetal.util.Configuration;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.text.DecimalFormat;
@@ -57,7 +59,7 @@ public class Benchmark {
 
 	// Fixed (class) parameters
 	static final public int NUM_TEST_FUNC = 25;
-	static final public String DEFAULT_FILE_BIAS = "supportData/fbias_data.txt";
+	static final public String DEFAULT_FILE_BIAS = Configuration.cec2005SupportDataDirectory + "/fbias_data.txt";
 	static final public String[] test_func_class_names = {
 		"F01_shifted_sphere",
 		"F02_shifted_schwefel",

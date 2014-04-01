@@ -42,7 +42,7 @@ public class CEC2005Problem extends Problem {
    */
   TestFunc testFunction_ ;
 
-  public CEC2005Problem(String solutionType, Integer problemID, Integer numberOfVariables) {
+  public CEC2005Problem(String solutionType, int problemID, int numberOfVariables) {
     numberOfVariables_   = numberOfVariables ;
     numberOfObjectives_  = 1;
     numberOfConstraints_ = 0;

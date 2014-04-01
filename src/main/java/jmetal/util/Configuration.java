@@ -33,5 +33,6 @@ public class Configuration implements Serializable {
    * Logger object 
    */
   public static Logger logger_ = Logger.getLogger("jMetal");
+  public static String cec2005SupportDataDirectory = "/Users/antelverde/Softw/jMetal/jMetalMV/cec2005CompetitionResources/supportData" ;
     
 } // Configuration
