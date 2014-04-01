@@ -75,7 +75,11 @@ public class Rosenbrock extends Problem {
     }
 
     for (int i = 0; i < numberOfVariables_ - 1; i++) {
-      sum += 100.0 * (x[i+1]-x[i]*x[i])*(x[i+1]-x[i]*x[i]) +(x[i]-1)*(x[i]-1) ;
+      //sum += 100.0 * (x[i+1]-x[i]*x[i])*(x[i+1]-x[i]*x[i]) +(x[i]-1)*(x[i]-1) ;
+      double temp1 = (x[i] * x[i]) - x[i+1];
+      double temp2 = x[i] - 1.0;
+      sum += (100.0 * temp1 * temp1) + (temp2 * temp2);
+
     }
 
     solution.setObjective(0, sum);
