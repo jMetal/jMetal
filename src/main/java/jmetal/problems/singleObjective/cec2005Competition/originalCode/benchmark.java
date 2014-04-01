@@ -23,14 +23,14 @@
 //		ypchen@csie.nctu.edu.tw
 //		http://www.csie.nctu.edu.tw/~ypchen/
 //
-// Typical use of the test functions in the benchmark:
+// Typical use of the test functions in the Benchmark:
 //
-//		// Create a benchmark object
-// 		benchmark theBenchmark = new benchmark();
+//		// Create a Benchmark object
+// 		Benchmark theBenchmark = new Benchmark();
 //		// Use the factory function call to create a test function object
 //		//		test function 3 with 50 dimension
-//		//		the object class is "test_func"
-//		test_func aTestFunc = theBenchmark.testFunctionFactory(3, 50);
+//		//		the object class is "TestFunc"
+//		TestFunc aTestFunc = theBenchmark.testFunctionFactory(3, 50);
 //		// Invoke the function with x
 //		double result = aTestFunc.f(x);
 //
@@ -44,12 +44,16 @@
 //		Revised according to the Matlab reference code and the PDF document
 //		dated March 8, 2005.
 //
-import java.io.*;
-import java.util.*;
-import java.text.*;
-import java.lang.reflect.*;
 
-public class benchmark {
+package jmetal.problems.singleObjective.cec2005Competition.originalCode ;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.text.DecimalFormat;
+import java.util.Random;
+import java.util.StringTokenizer;
+
+public class Benchmark {
 
 	// Fixed (class) parameters
 	static final public int NUM_TEST_FUNC = 25;
@@ -108,20 +112,21 @@ public class benchmark {
 	private double[] m_biases;
 
 	// Entry point
-	//	If the benchmark class is executed as a stand-alone application,
+	//	If the Benchmark class is executed as a stand-alone application,
 	//	its job is to run the test on all the test functions.
 	static public void main (String args[]) {
-		benchmark theBenchmark = new benchmark();
+		Benchmark theBenchmark = new Benchmark();
 		theBenchmark.runTest(0);
 	}
 
 	// Constructors
 	//	Load the data common to all test functions.
 	//	Get ready for creating test function instances.
-	benchmark () {
+  public Benchmark() {
 		this(DEFAULT_FILE_BIAS);
 	}
-	benchmark (String file_bias) {
+
+  public Benchmark(String file_bias) {
 		m_biases = new double[NUM_TEST_FUNC];
 		m_iSqrt = new double[MAX_SUPPORT_DIM];
 
@@ -135,10 +140,10 @@ public class benchmark {
 	//
 	// Use this function to manufacture new test function objects
 	//
-	public test_func testFunctionFactory(int func_num, int dimension) {
-		test_func returnFunc = null;
+	public TestFunc testFunctionFactory(int func_num, int dimension) {
+    TestFunc returnFunc = null;
 		try {
-			returnFunc = (test_func )
+			returnFunc = (TestFunc )
 				loader.loadClass(test_func_class_names[func_num-1])
 					.getConstructor(test_func_arg_types)
 					.newInstance(
@@ -182,7 +187,7 @@ public class benchmark {
 			String file_test = "testData/test_data_func" + func_num + ".txt";
 
 			// Create the test function object
-			test_func aFunc = testFunctionFactory(func_num, test_dimension);
+      TestFunc aFunc = testFunctionFactory(func_num, test_dimension);
 
 			System.out.println("Run tests on function " + func_num +
 				" (" + aFunc.name() + "):");

@@ -23,14 +23,14 @@
 //		ypchen@csie.nctu.edu.tw
 //		http://www.csie.nctu.edu.tw/~ypchen/
 //
-// Typical use of the test functions in the benchmark:
+// Typical use of the test functions in the Benchmark:
 //
-//		// Create a benchmark object
-// 		benchmark theBenchmark = new benchmark();
+//		// Create a Benchmark object
+// 		Benchmark theBenchmark = new Benchmark();
 //		// Use the factory function call to create a test function object
 //		//		test function 3 with 50 dimension
-//		//		the object class is "test_func"
-//		test_func aTestFunc = theBenchmark.testFunctionFactory(3, 50);
+//		//		the object class is "TestFunc"
+//		TestFunc aTestFunc = theBenchmark.testFunctionFactory(3, 50);
 //		// Invoke the function with x
 //		double result = aTestFunc.f(x);
 //
@@ -44,10 +44,9 @@
 //		Revised according to the Matlab reference code and the PDF document
 //		dated March 8, 2005.
 //
-import java.io.*;
-import java.util.*;
+package jmetal.problems.singleObjective.cec2005Competition.originalCode ;
 
-public class F14_shifted_rotated_expanded_scaffer extends test_func {
+public class F14_shifted_rotated_expanded_scaffer extends TestFunc {
 
 	// Fixed (class) parameters
 	static final public String FUNCTION_NAME = "Shifted Rotated Expanded Scaffer's F6 Function";
@@ -79,9 +78,9 @@ public class F14_shifted_rotated_expanded_scaffer extends test_func {
 		m_zM = new double[m_dimension];
 
 		// Load the shifted global optimum
-		benchmark.loadRowVectorFromFile(file_data, m_dimension, m_o);
+		Benchmark.loadRowVectorFromFile(file_data, m_dimension, m_o);
 		// Load the matrix
-		benchmark.loadMatrixFromFile(file_m, m_dimension, m_dimension, m_matrix);
+		Benchmark.loadMatrixFromFile(file_m, m_dimension, m_dimension, m_matrix);
 	}
 
 	// Function body
@@ -89,10 +88,10 @@ public class F14_shifted_rotated_expanded_scaffer extends test_func {
 
 		double result = 0.0;
 
-		benchmark.shift(m_z, x, m_o);
-		benchmark.rotate(m_zM, m_z, m_matrix);
+		Benchmark.shift(m_z, x, m_o);
+		Benchmark.rotate(m_zM, m_z, m_matrix);
 
-		result = benchmark.EScafferF6(m_zM);
+		result = Benchmark.EScafferF6(m_zM);
 
 		result += m_bias;
 

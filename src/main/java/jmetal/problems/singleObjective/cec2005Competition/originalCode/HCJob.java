@@ -23,14 +23,14 @@
 //		ypchen@csie.nctu.edu.tw
 //		http://www.csie.nctu.edu.tw/~ypchen/
 //
-// Typical use of the test functions in the benchmark:
+// Typical use of the test functions in the Benchmark:
 //
-//		// Create a benchmark object
-// 		benchmark theBenchmark = new benchmark();
+//		// Create a Benchmark object
+// 		Benchmark theBenchmark = new Benchmark();
 //		// Use the factory function call to create a test function object
 //		//		test function 3 with 50 dimension
-//		//		the object class is "test_func"
-//		test_func aTestFunc = theBenchmark.testFunctionFactory(3, 50);
+//		//		the object class is "TestFunc"
+//		TestFunc aTestFunc = theBenchmark.testFunctionFactory(3, 50);
 //		// Invoke the function with x
 //		double result = aTestFunc.f(x);
 //
@@ -44,6 +44,9 @@
 //		Revised according to the Matlab reference code and the PDF document
 //		dated March 8, 2005.
 //
+
+package jmetal.problems.singleObjective.cec2005Competition.originalCode ;
+
 public abstract class HCJob {
 
 	// Number of basic functions

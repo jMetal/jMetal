@@ -24,7 +24,7 @@ package jmetal.problems.LZ09;
 import java.util.Vector;
 
 /**
- * Base class to implement the problems of the LZ09 benchmark, which is
+ * Base class to implement the problems of the LZ09 Benchmark, which is
  * defined in:
  * H. Li and Q. Zhang. Multiobjective optimization problems with complicated 
  * pareto sets, MOEA/D and NSGA-II. IEEE Transactions on Evolutionary 

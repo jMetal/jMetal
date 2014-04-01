@@ -23,14 +23,14 @@
 //		ypchen@csie.nctu.edu.tw
 //		http://www.csie.nctu.edu.tw/~ypchen/
 //
-// Typical use of the test functions in the benchmark:
+// Typical use of the test functions in the Benchmark:
 //
-//		// Create a benchmark object
-// 		benchmark theBenchmark = new benchmark();
+//		// Create a Benchmark object
+// 		Benchmark theBenchmark = new Benchmark();
 //		// Use the factory function call to create a test function object
 //		//		test function 3 with 50 dimension
-//		//		the object class is "test_func"
-//		test_func aTestFunc = theBenchmark.testFunctionFactory(3, 50);
+//		//		the object class is "TestFunc"
+//		TestFunc aTestFunc = theBenchmark.testFunctionFactory(3, 50);
 //		// Invoke the function with x
 //		double result = aTestFunc.f(x);
 //
@@ -44,10 +44,9 @@
 //		Revised according to the Matlab reference code and the PDF document
 //		dated March 8, 2005.
 //
-import java.io.*;
-import java.util.*;
+package jmetal.problems.singleObjective.cec2005Competition.originalCode ;
 
-public class F04_shifted_schwefel_noise extends test_func {
+public class F04_shifted_schwefel_noise extends TestFunc {
 
 	// Fixed (class) parameters
 	static final public String FUNCTION_NAME = "Shifted Schwefel's Problem 1.2 with Noise in Fitness";
@@ -72,20 +71,20 @@ public class F04_shifted_schwefel_noise extends test_func {
 		m_z = new double[m_dimension];
 
 		// Load the shifted global optimum
-		benchmark.loadRowVectorFromFile(file_data, m_dimension, m_o);
+		Benchmark.loadRowVectorFromFile(file_data, m_dimension, m_o);
 	}
 
 	// Function body
 	public double f(double[] x) {
 		double result = 0.0;
 
-		benchmark.shift(m_z, x, m_o);
+		Benchmark.shift(m_z, x, m_o);
 
-		result = benchmark.schwefel_102(m_z);
+		result = Benchmark.schwefel_102(m_z);
 
 		// NOISE
 		// Comment the next line to remove the noise
-		result *= (1.0 + 0.4 * Math.abs(benchmark.random.nextGaussian()));
+		result *= (1.0 + 0.4 * Math.abs(Benchmark.random.nextGaussian()));
 
 		result += m_bias;
 

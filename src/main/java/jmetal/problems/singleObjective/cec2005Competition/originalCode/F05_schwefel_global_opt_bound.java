@@ -23,14 +23,14 @@
 //		ypchen@csie.nctu.edu.tw
 //		http://www.csie.nctu.edu.tw/~ypchen/
 //
-// Typical use of the test functions in the benchmark:
+// Typical use of the test functions in the Benchmark:
 //
-//		// Create a benchmark object
-// 		benchmark theBenchmark = new benchmark();
+//		// Create a Benchmark object
+// 		Benchmark theBenchmark = new Benchmark();
 //		// Use the factory function call to create a test function object
 //		//		test function 3 with 50 dimension
-//		//		the object class is "test_func"
-//		test_func aTestFunc = theBenchmark.testFunctionFactory(3, 50);
+//		//		the object class is "TestFunc"
+//		TestFunc aTestFunc = theBenchmark.testFunctionFactory(3, 50);
 //		// Invoke the function with x
 //		double result = aTestFunc.f(x);
 //
@@ -44,10 +44,9 @@
 //		Revised according to the Matlab reference code and the PDF document
 //		dated March 8, 2005.
 //
-import java.io.*;
-import java.util.*;
+package jmetal.problems.singleObjective.cec2005Competition.originalCode ;
 
-public class F05_schwefel_global_opt_bound extends test_func {
+public class F05_schwefel_global_opt_bound extends TestFunc {
 
 	// Fixed (class) parameters
 	static final public String FUNCTION_NAME = "Schwefel's Problem 2.6 with Global Optimum on Bounds";
@@ -79,7 +78,7 @@ public class F05_schwefel_global_opt_bound extends test_func {
 		double[][] m_data = new double[m_dimension+1][m_dimension];
 
 		// Load the shifted global optimum
-		benchmark.loadMatrixFromFile(file_data, m_dimension+1, m_dimension, m_data);
+		Benchmark.loadMatrixFromFile(file_data, m_dimension + 1, m_dimension, m_data);
 		for (int i = 0 ; i < m_dimension ; i ++) {
 			if ((i+1) <= Math.ceil(m_dimension / 4.0))
 				m_o[i] = -100.0;
@@ -93,7 +92,7 @@ public class F05_schwefel_global_opt_bound extends test_func {
 				m_A[i][j] = m_data[i+1][j];
 			}
 		}
-		benchmark.Ax(m_B, m_A, m_o);
+		Benchmark.Ax(m_B, m_A, m_o);
 	}
 
 	// Function body
@@ -101,7 +100,7 @@ public class F05_schwefel_global_opt_bound extends test_func {
 
 		double max = Double.NEGATIVE_INFINITY;
 
-		benchmark.Ax(m_z, m_A, x);
+		Benchmark.Ax(m_z, m_A, x);
 
 		for (int i = 0 ; i < m_dimension ; i ++) {
 			double temp = Math.abs(m_z[i] - m_B[i]);

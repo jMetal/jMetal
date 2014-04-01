@@ -23,14 +23,14 @@
 //		ypchen@csie.nctu.edu.tw
 //		http://www.csie.nctu.edu.tw/~ypchen/
 //
-// Typical use of the test functions in the benchmark:
+// Typical use of the test functions in the Benchmark:
 //
-//		// Create a benchmark object
-// 		benchmark theBenchmark = new benchmark();
+//		// Create a Benchmark object
+// 		Benchmark theBenchmark = new Benchmark();
 //		// Use the factory function call to create a test function object
 //		//		test function 3 with 50 dimension
-//		//		the object class is "test_func"
-//		test_func aTestFunc = theBenchmark.testFunctionFactory(3, 50);
+//		//		the object class is "TestFunc"
+//		TestFunc aTestFunc = theBenchmark.testFunctionFactory(3, 50);
 //		// Invoke the function with x
 //		double result = aTestFunc.f(x);
 //
@@ -44,10 +44,9 @@
 //		Revised according to the Matlab reference code and the PDF document
 //		dated March 8, 2005.
 //
-import java.io.*;
-import java.util.*;
+package jmetal.problems.singleObjective.cec2005Competition.originalCode ;
 
-public class F22_rotated_hybrid_composition_3_high_cond_num_matrix extends test_func {
+public class F22_rotated_hybrid_composition_3_high_cond_num_matrix extends TestFunc {
 
 	// Fixed (class) parameters
 	static final public String FUNCTION_NAME = "Rotated Hybrid Composition Function 3 with High Condition Number Matrix";
@@ -105,9 +104,9 @@ public class F22_rotated_hybrid_composition_3_high_cond_num_matrix extends test_
 		m_zM = new double[NUM_FUNC][m_dimension];
 
 		// Load the shifted global optimum
-		benchmark.loadMatrixFromFile(file_data, NUM_FUNC, m_dimension, m_o);
+		Benchmark.loadMatrixFromFile(file_data, NUM_FUNC, m_dimension, m_o);
 		// Load the matrix
-		benchmark.loadNMatrixFromFile(file_m, NUM_FUNC, m_dimension, m_dimension, m_M);
+		Benchmark.loadNMatrixFromFile(file_m, NUM_FUNC, m_dimension, m_dimension, m_M);
 
 		// Initialize the hybrid composition job object
 		theJob.num_func = NUM_FUNC;
@@ -126,7 +125,7 @@ public class F22_rotated_hybrid_composition_3_high_cond_num_matrix extends test_
 			for (int j = 0 ; j < m_dimension ; j ++) {
 				m_testPoint[j] = (5.0 / m_lambda[i]);
 			}
-			benchmark.rotate(m_testPointM, m_testPoint, m_M[i]);
+			Benchmark.rotate(m_testPointM, m_testPoint, m_M[i]);
 			m_fmax[i] = Math.abs(theJob.basic_func(i, m_testPointM));
 		}
 		theJob.fmax = m_fmax;
@@ -138,23 +137,23 @@ public class F22_rotated_hybrid_composition_3_high_cond_num_matrix extends test_
 			switch(func_no) {
 				case 0:
 				case 1:
-					result = benchmark.EScafferF6(x);
+					result = Benchmark.EScafferF6(x);
 					break;
 				case 2:
 				case 3:
-					result = benchmark.rastrigin(x);
+					result = Benchmark.rastrigin(x);
 					break;
 				case 4:
 				case 5:
-					result = benchmark.F8F2(x);
+					result = Benchmark.F8F2(x);
 					break;
 				case 6:
 				case 7:
-					result = benchmark.weierstrass(x);
+					result = Benchmark.weierstrass(x);
 					break;
 				case 8:
 				case 9:
-					result = benchmark.griewank(x);
+					result = Benchmark.griewank(x);
 					break;
 				default:
 					System.err.println("func_no is out of range.");
@@ -169,7 +168,7 @@ public class F22_rotated_hybrid_composition_3_high_cond_num_matrix extends test_
 
 		double result = 0.0;
 
-		result = benchmark.hybrid_composition(x, theJob);
+		result = Benchmark.hybrid_composition(x, theJob);
 
 		result += m_bias;
 

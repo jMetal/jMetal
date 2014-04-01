@@ -36,9 +36,9 @@ Version 0.91
 1. FILES:
 	README.txt
 		This file
-	benchmark.java
-		The main class for the whole benchmark
-	test_func.java
+	Benchmark.java
+		The main class for the whole Benchmark
+	TestFunc.java
 		The parent class for the actual test functions
 	HCJob.java
 		The storage class for hybrid composition functions
@@ -54,12 +54,12 @@ Version 0.91
 		The files are split from "test_data.mat" and save as ASCII files
 
 3. Typical Usage
-	// Create a benchmark object
-	benchmark theBenchmark = new benchmark();
+	// Create a Benchmark object
+	Benchmark theBenchmark = new Benchmark();
 	// Use the factory function call to create a test function object
 	//		test function 3 with 50 dimension
-	//		the object class is "test_func"
-	test_func aTestFunc = theBenchmark.testFunctionFactory(3, 50);
+	//		the object class is "TestFunc"
+	TestFunc aTestFunc = theBenchmark.testFunctionFactory(3, 50);
 	// Invoke the function with x
 	double result = aTestFunc.f(x);
 
