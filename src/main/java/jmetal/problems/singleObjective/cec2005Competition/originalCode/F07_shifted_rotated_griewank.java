@@ -46,12 +46,14 @@
 //
 package jmetal.problems.singleObjective.cec2005Competition.originalCode ;
 
+import jmetal.util.Configuration;
+
 public class F07_shifted_rotated_griewank extends TestFunc {
 
 	// Fixed (class) parameters
 	static final public String FUNCTION_NAME = "Shifted Rotated Griewank's Function without Bounds";
-	static final public String DEFAULT_FILE_DATA = "supportData/griewank_func_data.txt";
-	static final public String DEFAULT_FILE_MX_PREFIX = "supportData/griewank_M_D";
+	static final public String DEFAULT_FILE_DATA = "" + Configuration.cec2005SupportDataDirectory +"/griewank_func_data.txt";
+	static final public String DEFAULT_FILE_MX_PREFIX = "" + Configuration.cec2005SupportDataDirectory +"/griewank_M_D";
 	static final public String DEFAULT_FILE_MX_SUFFIX = ".txt";
 
 	// Shifted global optimum

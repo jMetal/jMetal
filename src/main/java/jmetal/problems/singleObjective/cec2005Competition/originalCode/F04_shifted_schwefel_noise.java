@@ -46,11 +46,13 @@
 //
 package jmetal.problems.singleObjective.cec2005Competition.originalCode ;
 
+import jmetal.util.Configuration;
+
 public class F04_shifted_schwefel_noise extends TestFunc {
 
 	// Fixed (class) parameters
 	static final public String FUNCTION_NAME = "Shifted Schwefel's Problem 1.2 with Noise in Fitness";
-	static final public String DEFAULT_FILE_DATA = "supportData/schwefel_102_data.txt";
+	static final public String DEFAULT_FILE_DATA = "" + Configuration.cec2005SupportDataDirectory +"/schwefel_102_data.txt";
 
 	// Shifted global optimum
 	private final double[] m_o;

@@ -72,7 +72,7 @@ public class StandardPSO2011_main {
     // problem = new Griewank("Real", 10) ;
 
     //problem = new Sphere("Real", 20);
-    problem = new CEC2005Problem("Real", 1, 10);
+    problem = new CEC2005Problem("Real", 5, 10);
 
     algorithm = new StandardPSO2011(problem) ;
     

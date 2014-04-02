@@ -46,11 +46,13 @@
 //
 package jmetal.problems.singleObjective.cec2005Competition.originalCode ;
 
+import jmetal.util.Configuration;
+
 public class F05_schwefel_global_opt_bound extends TestFunc {
 
 	// Fixed (class) parameters
 	static final public String FUNCTION_NAME = "Schwefel's Problem 2.6 with Global Optimum on Bounds";
-	static final public String DEFAULT_FILE_DATA = "supportData/schwefel_206_data.txt";
+	static final public String DEFAULT_FILE_DATA = "" + Configuration.cec2005SupportDataDirectory +"/schwefel_206_data.txt";
 
 	// Shifted global optimum
 	private final double[] m_o;

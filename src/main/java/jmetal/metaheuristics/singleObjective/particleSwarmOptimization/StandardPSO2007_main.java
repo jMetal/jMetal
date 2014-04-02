@@ -24,7 +24,7 @@ import jmetal.core.Algorithm;
 import jmetal.core.Problem;
 import jmetal.core.SolutionSet;
 import jmetal.operators.mutation.Mutation;
-import jmetal.problems.singleObjective.Sphere;
+import jmetal.problems.singleObjective.CEC2005Problem;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
@@ -68,14 +68,15 @@ public class StandardPSO2007_main {
     logger_.addHandler(fileHandler_) ;
 
 //    problem = new Rosenbrock("Real", 10) ;
-    problem = new Sphere("Real", 20) ;
+    //problem = new Sphere("Real", 20) ;
     //problem = new Easom("Real") ;
     //problem = new Griewank("Real", 10) ;
 
     //problem = new Sphere("Real", 20);
+    problem = new CEC2005Problem("Real", 5, 10);
 
     algorithm = new StandardPSO2007(problem) ;
-    
+
     // Algorithm parameters
     algorithm.setInputParameter("swarmSize", 10 + (int)(2 * Math.sqrt(problem.getNumberOfVariables())));
     algorithm.setInputParameter("maxIterations",80000);

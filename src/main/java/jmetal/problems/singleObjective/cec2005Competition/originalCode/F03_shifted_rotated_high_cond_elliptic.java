@@ -46,12 +46,14 @@
 //
 package jmetal.problems.singleObjective.cec2005Competition.originalCode ;
 
+import jmetal.util.Configuration;
+
 public class F03_shifted_rotated_high_cond_elliptic extends TestFunc {
 
 	// Fixed (class) parameters
 	static final public String FUNCTION_NAME = "Shifted Rotated High Conditioned Elliptic Function";
-	static final public String DEFAULT_FILE_DATA = "supportData/high_cond_elliptic_rot_data.txt";
-	static final public String DEFAULT_FILE_MX_PREFIX = "supportData/Elliptic_M_D";
+	static final public String DEFAULT_FILE_DATA = "" + Configuration.cec2005SupportDataDirectory +"/high_cond_elliptic_rot_data.txt";
+	static final public String DEFAULT_FILE_MX_PREFIX = "" + Configuration.cec2005SupportDataDirectory +"/Elliptic_M_D";
 	static final public String DEFAULT_FILE_MX_SUFFIX = ".txt";
 
 	// Shifted global optimum

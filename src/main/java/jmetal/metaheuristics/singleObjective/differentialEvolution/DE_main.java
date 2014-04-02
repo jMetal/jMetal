@@ -27,7 +27,6 @@ import jmetal.core.SolutionSet;
 import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.singleObjective.CEC2005Problem;
-import jmetal.problems.singleObjective.Sphere;
 import jmetal.util.JMException;
 
 import java.util.HashMap;
@@ -51,10 +50,10 @@ public class DE_main {
     //bits = 512 ;
     //problem = new OneMax(bits);
  
-    problem = new Sphere("Real", 20) ;
+    //problem = new Sphere("Real", 20) ;
     //problem = new Easom("Real") ;
     //problem = new Griewank("Real", 10) ;
-    problem = new CEC2005Problem("Real", 1, 10);
+    problem = new CEC2005Problem("Real", 5, 10);
 
     algorithm = new DE(problem) ;   // Asynchronous cGA
     
