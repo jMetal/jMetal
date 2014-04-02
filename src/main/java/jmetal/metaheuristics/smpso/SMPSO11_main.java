@@ -44,15 +44,15 @@ import java.util.logging.Logger;
  * IEEE Symposium on Computational Intelligence in Multicriteria Decision-Making 
  * (MCDM 2009), pp: 66-73. March 2009
  */
-public class SMPSO_main {
+public class SMPSO11_main {
   public static Logger      logger_ ;      // Logger object
   public static FileHandler fileHandler_ ; // FileHandler object
 
   /**
-   * @param args Command line arguments. The first (optional) argument specifies 
+   * @param args Command line arguments. The first (optional) argument specifies
    *             the problem to solve.
-   * @throws JMException 
-   * @throws IOException 
+   * @throws jmetal.util.JMException
+   * @throws java.io.IOException
    * @throws SecurityException 
    * Usage: three options
    *      - jmetal.metaheuristics.smpso.SMPSO_main
@@ -95,7 +95,7 @@ public class SMPSO_main {
         problem = new ZDT4("Real");
     } // else
 
-    algorithm = new SMPSO(problem) ;
+    algorithm = new SMPSO11(problem) ;
     
     // Algorithm parameters
     algorithm.setInputParameter("swarmSize",40);
