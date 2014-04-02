@@ -61,7 +61,7 @@ public abstract class TestFunc {
 		m_dimension = dimension;
 		m_bias = bias;
 		m_func_name = func_name;
-	}
+  }
 
 	// Function body to be defined in the child classes
 	public abstract double f(double[] x);

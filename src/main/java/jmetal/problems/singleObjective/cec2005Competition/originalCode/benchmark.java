@@ -146,7 +146,7 @@ public class Benchmark {
     TestFunc returnFunc = null;
 		try {
 			returnFunc = (TestFunc )
-				loader.loadClass(test_func_class_names[func_num-1])
+				loader.loadClass(Configuration.cec2005Package + "." + test_func_class_names[func_num-1])
 					.getConstructor(test_func_arg_types)
 					.newInstance(
 						new Object[] {
@@ -564,7 +564,9 @@ public class Benchmark {
 	//
 	static public void loadTestDataFromFile(String file, int num_test_points, int test_dimension, double[][] x, double[] f) {
 		try {
-			BufferedReader brSrc = new BufferedReader(new FileReader(file));
+      System.out.println("File bias: " + file) ;
+
+      BufferedReader brSrc = new BufferedReader(new FileReader(file));
 			loadMatrix(brSrc, num_test_points, test_dimension, x);
 			loadColumnVector(brSrc, num_test_points, f);
 			brSrc.close();

@@ -46,11 +46,13 @@
 //
 package jmetal.problems.singleObjective.cec2005Competition.originalCode ;
 
+import jmetal.util.Configuration;
+
 public class F01_shifted_sphere extends TestFunc {
 
 	// Fixed (class) parameters
 	static final public String FUNCTION_NAME = "Shifted Sphere Function";
-	static final public String DEFAULT_FILE_DATA = "supportData/sphere_func_data.txt";
+	static final public String DEFAULT_FILE_DATA = "" + Configuration.cec2005SupportDataDirectory +"/sphere_func_data.txt";
 
 	// Shifted global optimum
 	private final double[] m_o;
@@ -70,7 +72,7 @@ public class F01_shifted_sphere extends TestFunc {
 		m_o = new double[m_dimension];
 		m_z = new double[m_dimension];
 
-		// Load the shifted global optimum
+    // Load the shifted global optimum
 		Benchmark.loadRowVectorFromFile(file_data, m_dimension, m_o);
 	}
 
