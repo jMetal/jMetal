@@ -31,6 +31,7 @@ import jmetal.util.comparators.CrowdingDistanceComparator;
 import jmetal.util.comparators.DominanceComparator;
 import jmetal.util.comparators.EpsilonDominanceComparator;
 import jmetal.util.random.PseudoRandom;
+import jmetal.util.wrapper.XReal;
 
 import java.util.Comparator;
 
@@ -159,6 +160,71 @@ public class OMOPSO11 extends Algorithm {
    * @throws jmetal.util.JMException
    */
   private void computeSpeed() throws JMException{
+    double r1, r2, W, C1, C2;
+    XReal bestGlobal;
+
+    for (int i = 0; i < particlesSize_; i++) {
+      XReal particle = new XReal(particles_.get(i)) ;
+      XReal bestParticle = new XReal(best_[i]) ;
+      XReal randomParticle = new XReal (new Solution(particles_.get(i))) ;
+
+      //Select a global best_ for calculate the speed of particle i, bestGlobal
+      Solution one, two;
+      int pos1 = PseudoRandom.randInt(0, leaders_.size() - 1);
+      int pos2 = PseudoRandom.randInt(0, leaders_.size() - 1);
+      one = leaders_.get(pos1);
+      two = leaders_.get(pos2);
+
+      if (crowdingDistanceComparator_.compare(one, two) < 1) {
+        bestGlobal = new XReal(one);
+      } else {
+        bestGlobal = new XReal(two);
+        //Params for velocity equation
+      }
+      r1 = PseudoRandom.randDouble();
+      r2 = PseudoRandom.randDouble();
+      C1 = PseudoRandom.randDouble(1.5,2.0);
+      C2 = PseudoRandom.randDouble(1.5,2.0);
+      W  = PseudoRandom.randDouble(0.1,0.5);
+
+      //
+      XReal gravityCenter = new XReal(new Solution(particles_.get(i))) ;
+
+      for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
+        //Computing the velocity of this particle
+        double G;
+        G = particle.getValue(var) +
+                C1 * (bestParticle.getValue(var) + bestGlobal.getValue(var) - 2 * particle.getValue(var)) / 3.0;
+        gravityCenter.setValue(var, G);
+      }
+
+      double radius = 0;
+      radius = new Distance().distanceBetweenSolutions(gravityCenter.getSolution(), particle.getSolution());
+
+      double [] random = PseudoRandom.randSphere(problem_.getNumberOfVariables()) ;
+
+      for (int var = 0; var < particle.size(); var++) {
+        randomParticle.setValue(var, gravityCenter.getValue(var) + radius*random[var]) ;
+      }
+
+      for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
+        speed_[i][var] =
+                W*speed_[i][var] + randomParticle.getValue(var) - particle.getValue(var);
+/*
+        speed_[i][var] = velocityConstriction(constrictionCoefficient(C1, C2) *
+          (W_ *
+          speed_[i][var] +
+          C1 * r1 * (bestParticle.getValue(var) -
+          particle.getValue(var)) +
+          C2 * r2 * (bestGlobal.getValue(var) -
+          particle.getValue(var))), deltaMax_, //[var],
+          deltaMin_, //[var],
+          var,
+          i);
+          */
+      }
+    }
+    /*
     double r1,r2,W,C1,C2;
     Variable[] bestGlobal;
 
@@ -197,6 +263,7 @@ public class OMOPSO11 extends Algorithm {
       }
 
     }
+    */
   } // computeSpeed
 
   /**
@@ -211,11 +278,11 @@ public class OMOPSO11 extends Algorithm {
         particle[var].setValue(particle[var].getValue()+ speed_[i][var]);
         if (particle[var].getValue() < problem_.getLowerLimit(var)){
           particle[var].setValue(problem_.getLowerLimit(var));
-          speed_[i][var] = speed_[i][var] * -1.0;
+          speed_[i][var] = speed_[i][var] * -0.5;
         }
         if (particle[var].getValue() > problem_.getUpperLimit(var)){
           particle[var].setValue(problem_.getUpperLimit(var));
-          speed_[i][var] = speed_[i][var] * -1.0;
+          speed_[i][var] = speed_[i][var] * -0.5;
         }
       }
     }
@@ -262,8 +329,11 @@ public class OMOPSO11 extends Algorithm {
         
     //-> Step2. Initialize the speed_ of each particle to 0
     for (int i = 0; i < particlesSize_; i++) {
+      XReal particle = new XReal(particles_.get(i))  ;
       for (int j = 0; j < problem_.getNumberOfVariables(); j++) {
-        speed_[i][j] = 0.0;
+        speed_[i][j] = (PseudoRandom.randDouble(
+                particle.getLowerBound(j) - particle.getValue(0),
+                particle.getUpperBound(j) - particle.getValue(0))) ;
       }
     }
     

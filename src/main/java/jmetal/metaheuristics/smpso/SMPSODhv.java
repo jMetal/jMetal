@@ -1,5 +1,5 @@
 /**
- * SMPSOD.java
+ * SMPSOD11.java
  * 
  * @author Juan J. Durillo
  * @author Antonio J. Nebro

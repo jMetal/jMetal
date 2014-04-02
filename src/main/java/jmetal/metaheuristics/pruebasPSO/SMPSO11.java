@@ -301,7 +301,7 @@ public class SMPSO11 extends Algorithm {
         //Computing the velocity of this particle
         double G;
         G = particle.getValue(var) +
-                C1*r1 * (bestParticle.getValue(var) + C2*r2*bestGlobal.getValue(var) - 2 * particle.getValue(var)) / 3.0;
+                C1*(bestParticle.getValue(var) + bestGlobal.getValue(var) - 2 * particle.getValue(var)) / 3.0;
         gravityCenter.setValue(var, G);
       }
 
@@ -392,8 +392,11 @@ public class SMPSO11 extends Algorithm {
 
     //-> Step2. Initialize the speed_ of each particle to 0
     for (int i = 0; i < swarmSize_; i++) {
+      XReal particle = new XReal(particles_.get(i))  ;
       for (int j = 0; j < problem_.getNumberOfVariables(); j++) {
-        speed_[i][j] = 0.0;
+        speed_[i][j] = (PseudoRandom.randDouble(
+                particle.getLowerBound(j) - particle.getValue(0),
+                particle.getUpperBound(j) - particle.getValue(0))) ;
       }
     }
 

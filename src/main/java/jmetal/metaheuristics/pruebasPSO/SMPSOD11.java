@@ -5,35 +5,27 @@
  * @author Antonio J. Nebro
  * @version 1.0
  */
-package jmetal.metaheuristics.smpso;
+package jmetal.metaheuristics.pruebasPSO;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Comparator;
-import java.util.StringTokenizer;
-import java.util.Vector;
-
-import jmetal.core.Algorithm;
-import jmetal.core.Operator;
-import jmetal.core.Problem;
-import jmetal.core.Solution;
-import jmetal.core.SolutionSet;
+import jmetal.core.*;
 import jmetal.metaheuristics.moead.Utils;
 import jmetal.operators.crossover.Crossover;
 import jmetal.qualityIndicator.Hypervolume;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Distance;
 import jmetal.util.JMException;
-import jmetal.util.random.PseudoRandom;
 import jmetal.util.archive.CrowdingArchive;
 import jmetal.util.comparators.CrowdingDistanceComparator;
 import jmetal.util.comparators.DominanceComparator;
+import jmetal.util.random.PseudoRandom;
 import jmetal.util.wrapper.XReal;
 
-public class SMPSOD extends Algorithm {
+import java.io.*;
+import java.util.Comparator;
+import java.util.StringTokenizer;
+import java.util.Vector;
+
+public class SMPSOD11 extends Algorithm {
 
 	/**
 	 * Stores the number of particles_ used
@@ -147,7 +139,7 @@ public class SMPSOD extends Algorithm {
 	private double deltaMin_[];
 	//boolean success_;
 
-	public SMPSOD(Problem problem) {
+	public SMPSOD11(Problem problem) {
 		super(problem);
 		r1Max_ = 1.0;
 		r1Min_ = 0.0;
@@ -163,7 +155,7 @@ public class SMPSOD extends Algorithm {
 		ChVel2_ = -1.0;
 	}
 
-	public SMPSOD(Problem problem,
+	public SMPSOD11(Problem problem,
 			Vector<Double> variables,
 			String trueParetoFront) throws FileNotFoundException {
 		super(problem);
@@ -281,7 +273,7 @@ public class SMPSOD extends Algorithm {
 
 	/**
 	 * Update the speed of each particle
-	 * @throws JMException 
+	 * @throws jmetal.util.JMException
 	 */
 	private void computeSpeed(int iter, int miter) throws JMException{
 		double r1, r2, W, C1, C2;
@@ -304,7 +296,7 @@ public class SMPSOD extends Algorithm {
 			wmin = WMin_;
 
 			for (int var = 0; var < particle.size(); var++) {
-				//Computing the velocity of this particle 				
+				//Computing the velocity of this particle
 				try {
 					speed_[i][var] = velocityConstriction(constrictionCoefficient(C1, C2) *
 							(inertiaWeight(iter, miter, wmax, wmin) * speed_[i][var] +
@@ -322,7 +314,7 @@ public class SMPSOD extends Algorithm {
 
 	/**
 	 * Update the speed of each particle
-	 * @throws JMException 
+	 * @throws jmetal.util.JMException
 	 */
 	private void computeSpeed(int iter, int miter, int i) throws JMException {
 		double r1, r2, W, C1, C2;
@@ -332,7 +324,7 @@ public class SMPSOD extends Algorithm {
 
 		XReal particle = new XReal(particles_.get(i)) ;
 		XReal bestParticle = new XReal(lBest_[i]) ;
-		
+
 		bestGlobal = new XReal(gBest_[i]) ;
 
 		r1 = PseudoRandom.randDouble(r1Min_, r1Max_);
@@ -345,11 +337,11 @@ public class SMPSOD extends Algorithm {
 		wmin = WMin_;
 
 		for (int var = 0; var < particle.size(); var++) {
-			//Computing the velocity of this particle 
+			//Computing the velocity of this particle
 			speed_[i][var] = W  * speed_[i][var] +
-					C1 * r1 * (bestParticle.getValue(var) - 
+					C1 * r1 * (bestParticle.getValue(var) -
 							particle.getValue(var)) +
-							C2 * r2 * (bestGlobal.getValue(var) - 
+							C2 * r2 * (bestGlobal.getValue(var) -
 									particle.getValue(var));
 		}
 
@@ -360,7 +352,7 @@ public class SMPSOD extends Algorithm {
 
 	/**
 	 * Update the position of each particle
-	 * @throws JMException 
+	 * @throws jmetal.util.JMException
 	 */
 	private void computeNewPositions() throws JMException {
 		for (int i = 0; i < particlesSize_; i++) {
@@ -376,13 +368,13 @@ public class SMPSOD extends Algorithm {
 
 				if (particle.getValue(var) < problem_.getLowerLimit(var)) {
 					particle.setValue(var, problem_.getLowerLimit(var));
-					speed_[i][var] = speed_[i][var] * ChVel1_; //    
-					//speed_[i][var] = speed_[i][var] * c1; //    
+					speed_[i][var] = speed_[i][var] * ChVel1_; //
+					//speed_[i][var] = speed_[i][var] * c1; //
 				}
 				if (particle.getValue(var) > problem_.getUpperLimit(var)) {
 					particle.setValue(var, problem_.getUpperLimit(var));
-					speed_[i][var] = speed_[i][var] * ChVel2_; //   
-					//speed_[i][var] = speed_[i][var] * c2; //   
+					speed_[i][var] = speed_[i][var] * ChVel2_; //
+					//speed_[i][var] = speed_[i][var] * c2; //
 				}
 			}
 			problem_.evaluate(particles_.get(i));
@@ -393,7 +385,7 @@ public class SMPSOD extends Algorithm {
 
 	/**
 	 * Update the position of each particle
-	 * @throws JMException 
+	 * @throws jmetal.util.JMException
 	 */
 	private void computeNewPositions(int i) throws JMException {
 
@@ -406,11 +398,11 @@ public class SMPSOD extends Algorithm {
 
 			if (particle.getValue(var) < problem_.getLowerLimit(var)) {
 				particle.setValue(var, problem_.getLowerLimit(var));
-				speed_[i][var] = speed_[i][var] * ChVel1_; //    
+				speed_[i][var] = speed_[i][var] * ChVel1_; //
 			}
 			if (particle.getValue(var) > problem_.getUpperLimit(var)) {
 				particle.setValue(var, problem_.getUpperLimit(var));
-				speed_[i][var] = speed_[i][var] * ChVel2_; //   
+				speed_[i][var] = speed_[i][var] * ChVel2_; //
 			}
 		}
 		problem_.evaluate(particles_.get(i));
@@ -422,7 +414,7 @@ public class SMPSOD extends Algorithm {
 
 	/**
 	 * Apply a mutation operator to some particles in the swarm
-	 * @throws JMException 
+	 * @throws jmetal.util.JMException
 	 */
 	private void mopsoMutation(int actualIteration, int totalIterations) throws JMException {
 		for (int i = 0; i < particles_.size(); i++) {
@@ -437,11 +429,11 @@ public class SMPSOD extends Algorithm {
 		}
 	} // mopsoMutation
 
-	/**   
+	/**
 	 * Runs of the FPSO algorithm.
 	 * @return a <code>SolutionSet</code> that is a set of non dominated solutions
-	 * as a result of the algorithm execution  
-	 * @throws JMException 
+	 * as a result of the algorithm execution
+	 * @throws jmetal.util.JMException
 	 */
 	public SolutionSet execute() throws JMException, ClassNotFoundException {
 		initParams();
@@ -484,8 +476,6 @@ public class SMPSOD extends Algorithm {
 
 		//-> Step 7. Iterations ..        
 		while (iteration_ < maxIterations_) {
-
-
 			computeSpeed(iteration_, maxIterations_);
 			computeNewPositions();
 			for (int i = 0; i < particles_.size(); i++) {
