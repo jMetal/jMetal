@@ -79,9 +79,10 @@ public class SMPSOD11_main {
     
     // Algorithm parameters
     algorithm.setInputParameter("swarmSize",100);
-    algorithm.setInputParameter("maxIterations",1500);
+    algorithm.setInputParameter("maxIterations",250);
     //algorithm.setInputParameter("functionType","_AGG");
     algorithm.setInputParameter("functionType","_TCHE");
+    //algorithm.setInputParameter("functionType","_PBI");
 
     parameters = new HashMap() ;
     parameters.put("probability", 1.0/problem.getNumberOfVariables()) ;

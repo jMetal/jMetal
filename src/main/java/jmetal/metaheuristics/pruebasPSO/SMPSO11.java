@@ -108,7 +108,10 @@ public class SMPSO11 extends Algorithm {
   double C2Max_;
   double C2Min_;
   double W_;
+  double WMax_;
+  double WMin_;
   double ChVel_;
+  double C_ ;
 
   /**
    * Constructor
@@ -127,6 +130,10 @@ public class SMPSO11 extends Algorithm {
     C2Min_ = 1.5;
     W_ = 1.0/(2.0 * Math.log(2)) ;
     ChVel_ = -0.5;
+    WMax_ = 0.1;
+    WMin_ = 0.1;
+    C_ = 1.0/2.0 + Math.log(2) ; //1.193;
+
   } // Constructor
 
   public SMPSO11(Problem problem,
@@ -272,6 +279,80 @@ public class SMPSO11 extends Algorithm {
     XReal bestGlobal;
 
     for (int i = 0; i < swarmSize_; i++) {
+      XReal particle = new XReal(particles_.get(i)) ;
+      XReal bestParticle = new XReal(best_[i]) ;
+      XReal randomParticle = new XReal (new Solution(particles_.get(i))) ;
+
+      //Select a global best_ for calculate the speed of particle i, bestGlobal
+      Solution one, two;
+      int pos1 = PseudoRandom.randInt(0, leaders_.size() - 1);
+      int pos2 = PseudoRandom.randInt(0, leaders_.size() - 1);
+      one = leaders_.get(pos1);
+      two = leaders_.get(pos2);
+
+      if (crowdingDistanceComparator_.compare(one, two) < 1) {
+        bestGlobal = new XReal(one);
+      } else {
+        bestGlobal = new XReal(two);
+        //Params for velocity equation
+      }
+      r1 = PseudoRandom.randDouble(r1Min_, r1Max_);
+      r2 = PseudoRandom.randDouble(r2Min_, r2Max_);
+      C1 = PseudoRandom.randDouble(C1Min_, C1Max_);
+      C2 = PseudoRandom.randDouble(C2Min_, C2Max_);
+      W = PseudoRandom.randDouble(WMin_, WMax_);
+      //
+      wmax = WMax_;
+      wmin = WMin_;
+
+      XReal gravityCenter = new XReal(new Solution(particles_.get(i))) ;
+
+      for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
+        //Computing the velocity of this particle
+        double G;
+        G = particle.getValue(var) +
+                C_*(bestParticle.getValue(var) + bestGlobal.getValue(var) - 2 * particle.getValue(var)) / 3.0;
+        gravityCenter.setValue(var, G);
+      }
+
+      double radius = 0;
+      radius = new Distance().distanceBetweenSolutions(gravityCenter.getSolution(), particle.getSolution());
+
+      double [] random = PseudoRandom.randSphere(problem_.getNumberOfVariables()) ;
+
+      for (int var = 0; var < particle.size(); var++) {
+        randomParticle.setValue(var, gravityCenter.getValue(var) + radius*random[var]) ;
+      }
+
+      for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
+        //speed_[i][var] = velocityConstriction(constrictionCoefficient(C1, C2) *
+        //        (inertiaWeight(iter, miter, wmax, wmin) *
+        //         speed_[i][var] + randomParticle.getValue(var) - particle.getValue(var)), deltaMax_, deltaMin_, var, i);
+        speed_[i][var] = W_ *
+                        speed_[i][var] + randomParticle.getValue(var) - particle.getValue(var);
+      }
+      /*
+      for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
+        //Computing the velocity of this particle
+        speed_[i][var] = velocityConstriction(constrictionCoefficient(C1, C2) *
+                        (inertiaWeight(iter, miter, wmax, wmin) *
+                                speed_[i][var] +
+                                C1 * r1 * (bestParticle.getValue(var) -
+                                        particle.getValue(var)) +
+                                C2 * r2 * (bestGlobal.getValue(var) -
+                                        particle.getValue(var))), deltaMax_, //[var],
+                deltaMin_, //[var],
+                var,
+                i);
+      }
+      */
+    }
+    /*
+    double r1, r2, W, C1, C2;
+    double wmax, wmin, deltaMax, deltaMin;
+    XReal bestGlobal;
+
+    for (int i = 0; i < swarmSize_; i++) {
     	XReal particle = new XReal(particles_.get(i)) ;
     	XReal bestParticle = new XReal(best_[i]) ;
       XReal randomParticle = new XReal (new Solution(particles_.get(i))) ;
@@ -293,7 +374,11 @@ public class SMPSO11 extends Algorithm {
       r2 = PseudoRandom.randDouble(r2Min_, r2Max_);
       C1 = PseudoRandom.randDouble(C1Min_, C1Max_);
       C2 = PseudoRandom.randDouble(C2Min_, C2Max_);
-      W = W_ ;
+      wmax = 0.1 ;
+      wmin = 0.1 ;
+      W = PseudoRandom.randDouble(wmin, wmax);
+
+      //W = W_ ;
       //
       XReal gravityCenter = new XReal(new Solution(particles_.get(i))) ;
 
@@ -316,21 +401,11 @@ public class SMPSO11 extends Algorithm {
 
       for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
         speed_[i][var] = velocityConstriction(constrictionCoefficient(C1, C2) *
-                W_*speed_[i][var] + randomParticle.getValue(var) - particle.getValue(var), deltaMax_, deltaMin_, var, i);
-/*
-        speed_[i][var] = velocityConstriction(constrictionCoefficient(C1, C2) *
-          (W_ *
-          speed_[i][var] +
-          C1 * r1 * (bestParticle.getValue(var) -
-          particle.getValue(var)) +
-          C2 * r2 * (bestGlobal.getValue(var) -
-          particle.getValue(var))), deltaMax_, //[var],
-          deltaMin_, //[var],
-          var,
-          i);
-          */
+                        (inertiaWeight(iter, miter, wmax, wmin) *
+                W_*speed_[i][var] + randomParticle.getValue(var) - particle.getValue(var)), deltaMax_, deltaMin_, var, i);
       }
     }
+    */
   } // computeSpeed
 
   /**

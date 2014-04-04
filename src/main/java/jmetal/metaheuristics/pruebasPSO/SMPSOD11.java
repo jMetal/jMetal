@@ -14,7 +14,6 @@ import jmetal.qualityIndicator.Hypervolume;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Distance;
 import jmetal.util.JMException;
-import jmetal.util.archive.CrowdingArchive;
 import jmetal.util.comparators.CrowdingDistanceComparator;
 import jmetal.util.comparators.DominanceComparator;
 import jmetal.util.random.PseudoRandom;
@@ -57,10 +56,6 @@ public class SMPSOD11 extends Algorithm {
 	 */
 	private Solution[] gBest_;
 
-	/**
-	 * Stores the leaders_
-	 */
-	private CrowdingArchive leaders_;
 	/**
 	 * Stores the speed_ of each particle
 	 */
@@ -151,8 +146,8 @@ public class SMPSOD11 extends Algorithm {
 		C2Min_ = 1.5;
 		WMax_ = 0.4;
 		WMin_ = 0.1;
-		ChVel1_ = -1.0;
-		ChVel2_ = -1.0;
+		ChVel1_ = -0.5;
+		ChVel2_ = -0.5;
 	}
 
 	public SMPSOD11(Problem problem,
@@ -205,8 +200,6 @@ public class SMPSOD11 extends Algorithm {
 		particles_ = new SolutionSet(particlesSize_);
 		lBest_ = new Solution[particlesSize_];
 		gBest_ = new Solution[particlesSize_];
-
-		leaders_ = new CrowdingArchive(archiveSize_, problem_.getNumberOfObjectives());
 
 		// Create comparators for dominance and crowding distance
 		dominance_ = new DominanceComparator();
@@ -295,6 +288,11 @@ public class SMPSOD11 extends Algorithm {
 			wmax = WMax_;
 			wmin = WMin_;
 
+
+      //W = 1.0/(2.0 * Math.log(2)) ; //0.721;
+      //double C = 1.0/2.0 + Math.log(2) ; //1.193;
+      //C1 = C2 = C ;
+
 			for (int var = 0; var < particle.size(); var++) {
 				//Computing the velocity of this particle
 				try {
@@ -312,42 +310,88 @@ public class SMPSOD11 extends Algorithm {
 		}
 	} // computeSpeed
 
+  private void computeSpeed2(int iter, int miter) throws ClassNotFoundException, JMException {
+    for (int i = 0; i < particlesSize_; i++) {
+      XReal particle = new XReal(particles_.get(i)) ;
+      XReal localBest = new XReal(lBest_[i]) ;
+      XReal neighborhoodBest = new XReal(gBest_[i]) ;
+      XReal gravityCenter = new XReal(new Solution(problem_)) ;
+      XReal randomParticle = new XReal (new Solution(particles_.get(i))) ;
+
+      double r1 = PseudoRandom.randDouble(r1Min_, r1Max_);
+      double r2 = PseudoRandom.randDouble(r2Min_, r2Max_);
+      double C1 = PseudoRandom.randDouble(C1Min_, C1Max_);
+      double C2 = PseudoRandom.randDouble(C2Min_, C2Max_);
+
+      double C_ = 1.8 ;
+      double W_ = 1.0/(2.0 * Math.log(2)) ;
+
+
+      for (int var = 0; var < particle.size(); var++) {
+          double G;
+          G = particle.getValue(var) +
+                  C_ * (localBest.getValue(var) + neighborhoodBest.getValue(var) - 2 * particle.getValue(var)) / 3.0;
+
+          gravityCenter.setValue(var, G);
+        }
+
+      double radius = 0;
+      radius = new Distance().distanceBetweenSolutions(gravityCenter.getSolution(), particle.getSolution());
+
+      double [] random = PseudoRandom.randSphere(problem_.getNumberOfVariables()) ;
+
+      for (int var = 0; var < particle.size(); var++) {
+        randomParticle.setValue(var, gravityCenter.getValue(var) + radius*random[var]) ;
+      }
+
+      for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
+        speed_[i][var] = W_*speed_[i][var] + randomParticle.getValue(var) - particle.getValue(var);
+      }
+    }
+
+  }
+
 	/**
 	 * Update the speed of each particle
 	 * @throws jmetal.util.JMException
 	 */
-	private void computeSpeed(int iter, int miter, int i) throws JMException {
+	private void computeSpeed() throws JMException {
 		double r1, r2, W, C1, C2;
-		double wmax, wmin, deltaMax, deltaMin;
 		XReal bestGlobal;
 
+    for (int i = 0; i < particlesSize_; i++) {
+      XReal particle = new XReal(particles_.get(i));
+      XReal bestParticle = new XReal(lBest_[i]);
 
-		XReal particle = new XReal(particles_.get(i)) ;
-		XReal bestParticle = new XReal(lBest_[i]) ;
+      bestGlobal = new XReal(gBest_[i]);
 
-		bestGlobal = new XReal(gBest_[i]) ;
+      r1 = PseudoRandom.randDouble(r1Min_, r1Max_);
+      r2 = PseudoRandom.randDouble(r2Min_, r2Max_);
+      C1 = PseudoRandom.randDouble(C1Min_, C1Max_);
+      C2 = PseudoRandom.randDouble(C2Min_, C2Max_);
+      W = PseudoRandom.randDouble(WMin_, WMax_);
+      //
 
-		r1 = PseudoRandom.randDouble(r1Min_, r1Max_);
-		r2 = PseudoRandom.randDouble(r2Min_, r2Max_);
-		C1 = PseudoRandom.randDouble(C1Min_, C1Max_);
-		C2 = PseudoRandom.randDouble(C2Min_, C2Max_);
-		W = PseudoRandom.randDouble(WMin_, WMax_);
-		//
-		wmax = WMax_;
-		wmin = WMin_;
+      r1 = PseudoRandom.randDouble();
+      r2 = PseudoRandom.randDouble();
+      C1 = PseudoRandom.randDouble(1.5,2.0);
+      C2 = PseudoRandom.randDouble(1.5,2.0);
+      W  = PseudoRandom.randDouble(0.1,0.5);
 
-		for (int var = 0; var < particle.size(); var++) {
-			//Computing the velocity of this particle
-			speed_[i][var] = W  * speed_[i][var] +
-					C1 * r1 * (bestParticle.getValue(var) -
-							particle.getValue(var)) +
-							C2 * r2 * (bestGlobal.getValue(var) -
-									particle.getValue(var));
-		}
+      //W = 1.0/(2.0 * Math.log(2)) ; //0.721;
+      //double C = 1.0/2.0 + Math.log(2) ; //1.193;
+      //C1 = C2 = C ;
 
+      for (int var = 0; var < particle.size(); var++) {
+        //Computing the velocity of this particle
+        speed_[i][var] = W * speed_[i][var] +
+                C1 * r1 * (bestParticle.getValue(var) -
+                        particle.getValue(var)) +
+                C2 * r2 * (bestGlobal.getValue(var) -
+                        particle.getValue(var));
+      }
+    }
 	} // computeSpeed
-
-
 
 
 	/**
@@ -356,25 +400,17 @@ public class SMPSOD11 extends Algorithm {
 	 */
 	private void computeNewPositions() throws JMException {
 		for (int i = 0; i < particlesSize_; i++) {
-			//Variable[] particle = particles_.get(i).getDecisionVariables();
 			XReal particle = new XReal(particles_.get(i)) ;
-			//particle.move(speed_[i]);
 			for (int var = 0; var < particle.size(); var++) {
 				particle.setValue(var, particle.getValue(var) +  speed_[i][var]) ;
-				//particle[var].setValue((particle[var].getValue() + speed_[i][var]));
-
-				double c1 = PseudoRandom.randDouble(-1.0, 0.1);
-				double c2 = PseudoRandom.randDouble(-1.0, 0.1);
 
 				if (particle.getValue(var) < problem_.getLowerLimit(var)) {
 					particle.setValue(var, problem_.getLowerLimit(var));
 					speed_[i][var] = speed_[i][var] * ChVel1_; //
-					//speed_[i][var] = speed_[i][var] * c1; //
 				}
 				if (particle.getValue(var) > problem_.getUpperLimit(var)) {
 					particle.setValue(var, problem_.getUpperLimit(var));
 					speed_[i][var] = speed_[i][var] * ChVel2_; //
-					//speed_[i][var] = speed_[i][var] * c2; //
 				}
 			}
 			problem_.evaluate(particles_.get(i));
@@ -382,35 +418,6 @@ public class SMPSOD11 extends Algorithm {
 
 		}
 	} // computeNewPositions
-
-	/**
-	 * Update the position of each particle
-	 * @throws jmetal.util.JMException
-	 */
-	private void computeNewPositions(int i) throws JMException {
-
-		//Variable[] particle = particles_.get(i).getDecisionVariables();
-		XReal particle = new XReal(particles_.get(i)) ;
-		//particle.move(speed_[i]);
-		for (int var = 0; var < particle.size(); var++) {
-			particle.setValue(var, particle.getValue(var) +  speed_[i][var]) ;
-			//particle[var].setValue((particle[var].getValue() + speed_[i][var]));
-
-			if (particle.getValue(var) < problem_.getLowerLimit(var)) {
-				particle.setValue(var, problem_.getLowerLimit(var));
-				speed_[i][var] = speed_[i][var] * ChVel1_; //
-			}
-			if (particle.getValue(var) > problem_.getUpperLimit(var)) {
-				particle.setValue(var, problem_.getUpperLimit(var));
-				speed_[i][var] = speed_[i][var] * ChVel2_; //
-			}
-		}
-		problem_.evaluate(particles_.get(i));
-		updateReference(particles_.get(i));
-
-	} // computeNewPositions
-
-
 
 	/**
 	 * Apply a mutation operator to some particles in the swarm
@@ -453,7 +460,6 @@ public class SMPSOD11 extends Algorithm {
 			}
 		}
 
-		/////// BEGIN MOEAD //////
 		indArray_ = new Solution[problem_.getNumberOfObjectives()];
 		T_ = 20;
 		delta_ = 0.9;
@@ -464,7 +470,6 @@ public class SMPSOD11 extends Algorithm {
 		initUniformWeight();
 		initNeighborhood();
 		initIdealPoint();
-		/////// END MOEAD //////
 
 		//-> Step 6. Initialize the memory of each particle
 		for (int i = 0; i < particles_.size(); i++) {
@@ -476,7 +481,9 @@ public class SMPSOD11 extends Algorithm {
 
 		//-> Step 7. Iterations ..        
 		while (iteration_ < maxIterations_) {
-			computeSpeed(iteration_, maxIterations_);
+      //computeSpeed(iteration_, maxIterations_);
+      computeSpeed2(iteration_, maxIterations_);
+      //computeSpeed();
 			computeNewPositions();
 			for (int i = 0; i < particles_.size(); i++) {
 				int type;
@@ -504,13 +511,6 @@ public class SMPSOD11 extends Algorithm {
 
 		return ss;
 	} // execute
-
-	/** 
-	 * Gets the leaders of the FPSO algorithm
-	 */
-	public SolutionSet getLeader() {
-		return leaders_;
-	}  // getLeader   
 
 
 
@@ -690,7 +690,7 @@ public class SMPSOD11 extends Algorithm {
 	}
 
 	/**
-	 * @param individual
+	 * @param indiv
 	 * @param id
 	 * @param type
 	 */
