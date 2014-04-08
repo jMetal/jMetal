@@ -165,4 +165,33 @@ public class FastHypervolume {
       solutionSet.get(i).setCrowdingDistance(contributions[i]) ;
     }
   }
+
+  /**
+   * Computes the HV contribution of a solution in a solution
+   * REQUIRES: the HV of the solution set is computed beforehand and its value is passed as third parameter
+   * @return The hv contribution of the solution
+   */
+  public double computeSolutionHVContribution(SolutionSet solutionSet, int solutionIndex, double solutionSetHV) {
+    double contribution ;
+
+    Solution currentPoint = solutionSet.get(solutionIndex);
+    solutionSet.remove(solutionIndex) ;
+
+    if (numberOfObjectives_ == 2) {
+      //updateReferencePoint(solutionSet);
+      //solutionSet.sort(new ObjectiveComparator(numberOfObjectives_-1, true));
+      contribution = solutionSetHV - get2DHV(solutionSet) ;
+    }
+    else {
+      Front front = new Front(solutionSet.size(), numberOfObjectives_, solutionSet) ;
+      double hv = new WFGHV(numberOfObjectives_, solutionSet.size(), referencePoint_).getHV(front) ;
+      contribution = solutionSetHV - hv ;
+    }
+    solutionSet.add(solutionIndex, currentPoint) ;
+
+
+    solutionSet.get(solutionIndex).setCrowdingDistance(contribution) ;
+
+    return contribution ;
+  }
 }

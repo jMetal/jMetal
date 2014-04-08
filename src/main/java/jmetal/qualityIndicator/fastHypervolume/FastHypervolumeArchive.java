@@ -122,7 +122,7 @@ public class FastHypervolumeArchive extends Archive {
   
      
   /**
-   * This method forces to compute the contribution of each solution (required for PAEShv)
+   * This method forces to compute the contribution of each solution
    */
   public void computeHVContribution() {
 	  if (size() > 2) { // The contribution can be updated

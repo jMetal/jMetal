@@ -198,6 +198,7 @@ public class Distance {
    * @param solutionSet The <code>SolutionSet</code>.
    * @param nObjs Number of objectives.
    */
+
   public void crowdingDistanceAssignment(SolutionSet solutionSet, int nObjs) {
     int size = solutionSet.size();
 
@@ -215,7 +216,7 @@ public class Distance {
       return;
     } // if       
 
-    //Use a new SolutionSet to evite alter original solutionSet
+    //Use a new SolutionSet to avoid altering the original solutionSet
     SolutionSet front = new SolutionSet(size);
     for (int i = 0; i < size; i++){
       front.add(solutionSet.get(i));
@@ -245,6 +246,6 @@ public class Distance {
         front.get(j).setCrowdingDistance(distance);
       } // for
     } // for        
-  } // crowdingDistanceAssing            
+  } // crowdingDistanceAssignment
 } // Distance
 
