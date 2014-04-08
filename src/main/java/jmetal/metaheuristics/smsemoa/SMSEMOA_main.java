@@ -106,8 +106,9 @@ public class SMSEMOA_main {
       //problem = new OKA2("Real") ;
     } // else
 
-    algorithm = new SMSEMOA(problem);
+    //algorithm = new SMSEMOA(problem);
     //algorithm = new FastSMSEMOA(problem);
+    algorithm = new iFastSMSEMOA(problem);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", 100);
