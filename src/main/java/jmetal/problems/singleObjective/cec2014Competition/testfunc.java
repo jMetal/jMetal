@@ -4,6 +4,10 @@
   Dec. 19th 2013
 */
 
+package jmetal.problems.singleObjective.cec2014Competition;
+
+
+import jmetal.util.Configuration;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -34,7 +38,7 @@ public class testfunc {
 	//double schwefel_func (double[] , double , int , double[] ,double[] ,int ,int) /* Schwefel's  */
 	//double katsuura_func (double[] , double , int , double[] ,double[] ,int ,int) /* Katsuura  */
 	//double grie_rosen_func (double[] , double , int , double[] ,double[] ,int ,int) /* Griewank-Rosenbrock  */
-	//double escaffer6_func (double[] , double , int , double[] ,double[] ,int ,int) /* Expanded Scaffer¡s
+	//double escaffer6_func (double[] , double , int , double[] ,double[] ,int ,int) /* Expanded Scafferï¿½s
 	//double happycat_func (double[] , double , int , double[] ,double[] ,int ,int) /* HappyCat */
 	//double hgbat_func (double[] , double , int , double[] ,double[] ,int ,int) /* HGBat  */
 	
@@ -62,7 +66,7 @@ public class testfunc {
 	//double cf_cal(double[] , double , int , double[] ,double[] ,double[] ,double[] , int )
 	
 	
-	void test_func(double[] x, double[] f, int nx, int mx,int func_num)throws Exception{
+	public void test_func(double[] x, double[] f, int nx, int mx,int func_num)throws Exception{
 		int cf_num=10,i,j;
 		if (ini_flag==1) 
 		{
@@ -91,7 +95,7 @@ public class testfunc {
 			}
 
 			/*Load Matrix M*****************************************************/
-			File fpt = new File("input_data/M_"+func_num+"_D"+nx+".txt");//* Load M data *
+			File fpt = new File(Configuration.cec2014SupportDataDirectory+"/input_data/M_"+func_num+"_D"+nx+".txt");//* Load M data *
 			Scanner input = new Scanner(fpt);
 			if (!fpt.exists())
 			{
@@ -126,7 +130,7 @@ public class testfunc {
 			
 			if (func_num<23)
 			{
-				fpt=new File("input_data/shift_data_"+func_num+".txt");
+				fpt=new File(Configuration.cec2014SupportDataDirectory+"/input_data/shift_data_"+func_num+".txt");
 				input = new Scanner(fpt);
 				if (!fpt.exists())
 				{
@@ -149,7 +153,7 @@ public class testfunc {
 			
 				OShift=new double[nx*cf_num];
 				
-				fpt=new File("input_data/shift_data_"+func_num+".txt");								
+				fpt=new File(Configuration.cec2014SupportDataDirectory+"/input_data/shift_data_"+func_num+".txt");
 				FileReader reader = new FileReader(fpt);
 				BufferedReader br = new BufferedReader(reader);
 				String[] s = new String[100];
@@ -187,7 +191,7 @@ public class testfunc {
 			
 			if (func_num>=17&&func_num<=22)
 			{
-				fpt = new File("input_data/shuffle_data_"+func_num+"_D"+nx+".txt");
+				fpt = new File(Configuration.cec2014SupportDataDirectory+"/input_data/shuffle_data_"+func_num+"_D"+nx+".txt");
 				//sprintf(FileName, "input_data/shuffle_data_%d_D%d.txt", func_num, nx);
 				//fpt = fopen(FileName,"r");
 				input = new Scanner(fpt);
@@ -208,7 +212,7 @@ public class testfunc {
 			else if (func_num==29||func_num==30)
 			{
 				//sprintf(FileName, "input_data/shuffle_data_%d_D%d.txt", func_num, nx);
-				fpt = new File("input_data/shuffle_data_"+func_num+"_D"+nx+".txt");
+				fpt = new File(Configuration.cec2014SupportDataDirectory+"/input_data/shuffle_data_"+func_num+"_D"+nx+".txt");
 				//fpt = fopen(FileName,"r");
 				input = new Scanner(fpt);
 				if (!fpt.exists())
