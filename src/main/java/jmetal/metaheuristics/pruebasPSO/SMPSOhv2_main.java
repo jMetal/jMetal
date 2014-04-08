@@ -19,7 +19,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package jmetal.metaheuristics.smpso;
+package jmetal.metaheuristics.pruebasPSO;
 
 import jmetal.core.Algorithm;
 import jmetal.core.Problem;
@@ -43,7 +43,7 @@ import java.util.logging.Logger;
  * Analysis of leader selection strategies in a multi-objective Particle Swarm Optimizer.
  * IEEE Congress on Evolutionary Computation 2013: 3153-3160
  */
-public class SMPSOhv_main {
+public class SMPSOhv2_main {
   public static Logger      logger_ ;      // Logger object
   public static FileHandler fileHandler_ ; // FileHandler object
 
@@ -94,7 +94,7 @@ public class SMPSOhv_main {
         problem = new ZDT4("Real");
     } // else
 
-    algorithm = new SMPSOhv(problem) ;
+    algorithm = new SMPSOhv2(problem) ;
     
     // Algorithm parameters
     algorithm.setInputParameter("swarmSize",100);
