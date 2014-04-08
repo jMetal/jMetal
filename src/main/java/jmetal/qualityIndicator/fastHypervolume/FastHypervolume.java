@@ -167,7 +167,8 @@ public class FastHypervolume {
   }
 
   /**
-   * Computes the HV contribution of a solution in a solution
+   * Computes the HV contribution of a solution in a solution set.
+   * REQUIRES: the solution belongs to the solution set
    * REQUIRES: the HV of the solution set is computed beforehand and its value is passed as third parameter
    * @return The hv contribution of the solution
    */

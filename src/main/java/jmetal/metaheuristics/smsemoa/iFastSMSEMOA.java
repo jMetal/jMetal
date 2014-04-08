@@ -25,9 +25,11 @@ import jmetal.qualityIndicator.Hypervolume;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.qualityIndicator.fastHypervolume.FastHypervolume;
 import jmetal.qualityIndicator.util.MetricsUtil;
+import jmetal.util.Distance;
 import jmetal.util.JMException;
 import jmetal.util.Ranking;
 import jmetal.util.comparators.CrowdingDistanceComparator;
+import jmetal.util.random.PseudoRandom;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -144,35 +146,95 @@ public class iFastSMSEMOA extends Algorithm {
       parents = selectedParents.toArray(parents);
 
       // crossover
-      Solution[] offSpring = (Solution[]) crossoverOperator.execute(parents);
+      Solution[] offspring = (Solution[]) crossoverOperator.execute(parents);
 
       // mutation
-      mutationOperator.execute(offSpring[0]);
+      mutationOperator.execute(offspring[0]);
 
       // evaluation
-      problem_.evaluate(offSpring[0]);
-      problem_.evaluateConstraints(offSpring[0]);
+      problem_.evaluate(offspring[0]);
+      problem_.evaluateConstraints(offspring[0]);
 
       // insert child into the offspring population
-      offspringPopulation.add(offSpring[0]);
+      offspringPopulation.add(offspring[0]);
 
       evaluations++;
 
       // Create the solutionSet union of solutionSet and offSpring
       union = ((SolutionSet) population).union(offspringPopulation);
 
-      // Ranking the union (non-dominated sorting)
-      Ranking ranking = new Ranking(union);
+      int nearestSolution ;
+      int randomSolution;
+      int currentSolution ;
 
-      // ensure crowding distance values are up to date
-      // (may be important for parent selection)
-      for (int j = 0; j < population.size(); j++) {
-        population.get(j).setCrowdingDistance(0.0);
+      Distance distance= new Distance() ;
+      nearestSolution = distance.indexToNearestSolutionInSolutionSpace(offspring[0], population) ;
+      randomSolution = PseudoRandom.randInt(0, population.size() - 1) ;
+      currentSolution = union.size()-1 ;
+
+
+      /*
+      fastHypervolume.computeHVContributions(union);
+      union.sort(new CrowdingDistanceComparator());
+
+      // all but the worst are carried over to the survivor population
+      population.clear();
+      for (int i = 0; i < (union.size() - 1); i++) {
+        population.add(union.get(i));
+      }
+      */
+
+
+
+      double hv ;
+      hv = fastHypervolume.computeHypervolume(union) ;
+      for (int i = 0 ; i < union.size(); i++) {
+        fastHypervolume.computeSolutionHVContribution(union, i, hv) ;
+      }
+      //System.out.println("HV: " + hv) ;
+      /*
+      double nearestSolutionContribution ;
+      double randomSolutionContribution ;
+      double currentSolutionContribution ;
+      currentSolutionContribution = fastHypervolume.computeSolutionHVContribution(union, currentSolution, hv) ;
+      union.get(currentSolution).setCrowdingDistance(currentSolutionContribution);
+      nearestSolutionContribution = fastHypervolume.computeSolutionHVContribution(union, nearestSolution, hv) ;
+      union.get(nearestSolution).setCrowdingDistance(nearestSolutionContribution);
+      randomSolutionContribution = fastHypervolume.computeSolutionHVContribution(union, randomSolution, hv) ;
+      union.get(randomSolution).setCrowdingDistance(randomSolutionContribution);
+
+      //System.out.println("union size before: " + union.size()) ;
+
+      if ((currentSolutionContribution <= nearestSolutionContribution) &&
+        (currentSolutionContribution <= randomSolutionContribution)) {
+           union.remove(currentSolution);
+      }
+      else if ((randomSolutionContribution <= nearestSolutionContribution) &&
+              (randomSolutionContribution <= currentSolutionContribution)) {
+        union.remove(randomSolution);
+      }
+      else
+        union.remove(nearestSolution);
+
+       */
+      //System.out.println("union size after: " + union.size()) ;
+
+      union.sort(new CrowdingDistanceComparator());
+
+      population.clear() ;
+      for (int i = 0 ; i < union.size()-1; i++) {
+        if (!population.add(union.get(i))) {
+          System.err.println("Pop size: " + population.size()) ;
+          System.err.println("Union size: " + union.size()) ;
+          System.exit(-1) ;
+        }
       }
 
-      SolutionSet lastFront = ranking.getSubfront(ranking.getNumberOfSubfronts() - 1);
+      union.clear();
 
-      //FastHypervolume fastHypervolume = new FastHypervolume() ;
+
+      //System.out.println("Evaluation: " + evaluations) ;
+      /*
       fastHypervolume.computeHVContributions(lastFront);
       lastFront.sort(new CrowdingDistanceComparator());
 
@@ -188,22 +250,9 @@ public class iFastSMSEMOA extends Algorithm {
       for (int i = 0; i < lastFront.size() - 1; i++) {
         population.add(lastFront.get(i));
       }
-
-      // This piece of code shows how to use the indicator object into the code
-      // of SMS-EMOA. In particular, it finds the number of evaluations required
-      // by the algorithm to obtain a Pareto front with a hypervolume higher
-      // than the hypervolume of the true Pareto front.
-      if (indicators != null && requiredEvaluations == 0) {
-        double HV = indicators.getHypervolume(population);
-        if (HV >= (0.98 * indicators.getTrueParetoFrontHypervolume())) {
-          requiredEvaluations = evaluations;
-        } // if
-      } // if
+                                */
     } // while
 
-    // Return as output parameter the required evaluations
-    setOutputParameter("evaluations", requiredEvaluations);
-    
     // Return the first non-dominated front
     Ranking ranking = new Ranking(population);
     //ranking.getSubfront(0).printFeasibleFUN("FUN") ;

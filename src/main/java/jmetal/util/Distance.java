@@ -181,16 +181,26 @@ public class Distance {
     try {
       for (int i = 0 ; i < solutionSet.size(); i++) {
         double distance = 0;
-          distance = distanceBetweenSolutions(solution, solutionSet.get(i));
-          if (distance < minimumDistance) {
-            minimumDistance = distance ;
-            index = i ;
+        distance = distanceBetweenSolutions(solution, solutionSet.get(i));
+
+        if (distance < minimumDistance) {
+          minimumDistance = distance ;
+          index = i ;
         }
       }
     }
     catch (Exception e) {
       e.printStackTrace();
     }
+    /*
+    if (minimumDistance == 0) {
+      System.out.println("distance is null") ;
+      System.out.println("solution: " + solution) ;
+      System.out.println("index(" + index+ "): " + solution) ;
+ solutionSet.printObjectivesToFile("pepe");
+      System.exit(-1);
+    }
+    */
     return index ;
   }
 
