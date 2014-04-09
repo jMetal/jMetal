@@ -57,7 +57,6 @@ public class MainC {
                                   JMException, SecurityException, IOException, 
                                   IllegalArgumentException, IllegalAccessException, 
                                   ClassNotFoundException {
-    Problem   problem   ;         // The problem to solve
     Algorithm algorithm ;         // The algorithm to use
 
     QualityIndicator indicators ; // Object to get quality indicators
@@ -69,45 +68,53 @@ public class MainC {
     String paretoFrontFile = "" ;
 
     indicators = null ;
-    problem = null ;
+
+    Properties configuration = new Properties();
+    InputStreamReader inputStreamReader = null  ;
 
     if (args.length == 0) { //
       System.err.println("Sintax error. Usage:") ;
-      System.err.println("a) jmetal.experiments.Main algorithmName ") ;
-      System.err.println("b) jmetal.experiments.Main algorithmName problemName") ;
-      System.err.println("c) jmetal.experiments.Main algorithmName problemName paretoFrontFile") ;
+      System.err.println("a) jmetal.experiments.Main configurationFile ") ;
+      System.err.println("b) jmetal.experiments.Main configurationFile problemName") ;
+      System.err.println("c) jmetal.experiments.Main configurationFile problemName paretoFrontFile") ;
       System.exit(-1) ;
     } // if
     else if (args.length == 1) { // algorithmName
-      algorithmName = args[0] ;
+      inputStreamReader = new InputStreamReader(new FileInputStream(args[0]));
+      configuration.load(inputStreamReader);
+
+      algorithmName = algorithmName = configuration.getProperty("algorithm") ;
       Object [] settingsParams = {problemName} ;
       settings = (new SettingsFactory()).getSettingsObject(algorithmName, settingsParams) ;
       } // if
     else if (args.length == 2) { // algorithmName problemName
-      algorithmName = args[0] ;
+      inputStreamReader = new InputStreamReader(new FileInputStream(args[0]));
+      configuration.load(inputStreamReader);
+
+      algorithmName = algorithmName = configuration.getProperty("algorithm") ;
       problemName = args[1] ;
       Object [] settingsParams = {problemName} ;
       settings = (new SettingsFactory()).getSettingsObject(algorithmName, settingsParams) ;
       } // if
     else if (args.length == 3) { // algorithmName problemName paretoFrontFile
-      algorithmName = args[0] ;
+      inputStreamReader = new InputStreamReader(new FileInputStream(args[0]));
+      configuration.load(inputStreamReader);
+
+      algorithmName = algorithmName = configuration.getProperty("algorithm") ;
       problemName = args[1] ;
       paretoFrontFile = args[2] ;
       Object [] settingsParams = {problemName} ;
       settings = (new SettingsFactory()).getSettingsObject(algorithmName, settingsParams) ;
     } // if
 
+    algorithm = settings.configure(configuration);
+    inputStreamReader.close();
+
     // Logger object and file to store log messages
     logger_      = Configuration.logger_ ;
     fileHandler_ = new FileHandler(algorithmName + ".log");
     logger_.addHandler(fileHandler_) ;
 
-    Properties configuration = new Properties();
-    InputStreamReader isr = new InputStreamReader(new FileInputStream(algorithmName+".conf"));
-    configuration.load(isr);
-
-    algorithm = settings.configure(configuration);
-    isr.close();
 
     if (args.length == 3) {
     	Problem p = algorithm.getProblem() ;
