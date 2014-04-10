@@ -23,10 +23,10 @@ package jmetal.metaheuristics.nsgaII;
 
 import jmetal.core.*;
 import jmetal.qualityIndicator.QualityIndicator;
-import jmetal.util.*;
+import jmetal.util.Distance;
+import jmetal.util.JMException;
+import jmetal.util.Ranking;
 import jmetal.util.comparators.CrowdingComparator;
-import jmetal.util.random.PseudoRandom;
-import jmetal.util.random.RandomGenerator;
 
 /** 
  *  Implementation of NSGA-II.
@@ -87,10 +87,6 @@ public class NSGAII extends Algorithm {
     mutationOperator = operators_.get("mutation");
     crossoverOperator = operators_.get("crossover");
     selectionOperator = operators_.get("selection");
-
-    RandomGenerator generator = new RandomGenerator(0.2) ;
-    //generator.setSeed(4.0);
-    PseudoRandom.setRandomGenerator(generator);
 
     // Create the initial solutionSet
     Solution newSolution;

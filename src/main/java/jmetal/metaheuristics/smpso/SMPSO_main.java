@@ -98,9 +98,17 @@ public class SMPSO_main {
     algorithm = new SMPSO(problem) ;
     
     // Algorithm parameters
-    algorithm.setInputParameter("swarmSize",40);
+    algorithm.setInputParameter("swarmSize",100);
     algorithm.setInputParameter("archiveSize",100);
     algorithm.setInputParameter("maxIterations",250);
+    algorithm.setInputParameter("C1Min",1.5);
+    algorithm.setInputParameter("C1Max",2.5);
+    algorithm.setInputParameter("C2Min",1.5);
+    algorithm.setInputParameter("C2Max",2.5);
+    algorithm.setInputParameter("WMin",0.1);
+    algorithm.setInputParameter("WMax",0.1);
+    algorithm.setInputParameter("ChVel1",-1.0);
+    algorithm.setInputParameter("ChVel2",-1.0);
 
     parameters = new HashMap() ;
     parameters.put("probability", 1.0/problem.getNumberOfVariables()) ;

@@ -201,6 +201,14 @@ public class SMPSO extends Algorithm {
     swarmSize_ = ((Integer) getInputParameter("swarmSize")).intValue();
     archiveSize_ = ((Integer) getInputParameter("archiveSize")).intValue();
     maxIterations_ = ((Integer) getInputParameter("maxIterations")).intValue();
+    C1Min_ = ((Double) getInputParameter("C1Min")).doubleValue();
+    C1Max_ = ((Double) getInputParameter("C1Max")).doubleValue();
+    C2Min_ = ((Double) getInputParameter("C1Min")).doubleValue();
+    C2Max_ = ((Double) getInputParameter("C2Max")).doubleValue();
+    WMax_ = ((Double) getInputParameter("WMax")).doubleValue();
+    WMin_ = ((Double) getInputParameter("WMin")).doubleValue();
+    ChVel1_ = ((Double) getInputParameter("ChVel1")).doubleValue();
+    ChVel2_ = ((Double) getInputParameter("ChVel2")).doubleValue();
 
     indicators_ = (QualityIndicator) getInputParameter("indicators");
 
