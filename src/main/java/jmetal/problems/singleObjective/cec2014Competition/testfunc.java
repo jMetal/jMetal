@@ -12,9 +12,8 @@ import jmetal.util.Configuration;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.Locale;
 import java.util.Scanner;
-import java.io.BufferedReader;
-import java.io.FileReader;
 
 public class testfunc {
 	final double INF = 1.0e99;
@@ -94,6 +93,8 @@ public class testfunc {
 				System.out.println("\nError: hf01,hf02,hf03,hf04,hf05,hf06,cf07&cf08 are NOT defined for D=2.\n");
 			}
 
+      java.util.Locale locale = Locale.ENGLISH ;
+
 			/*Load Matrix M*****************************************************/
 			File fpt = new File(Configuration.cec2014SupportDataDirectory+"/input_data/M_"+func_num+"_D"+nx+".txt");//* Load M data *
 			Scanner input = new Scanner(fpt);
@@ -101,6 +102,8 @@ public class testfunc {
 			{
 			    System.out.println("\n Error: Cannot open input file for reading ");
 			}
+
+      input.useLocale(locale) ;
 			
 			if (func_num<23)
 			{
@@ -136,7 +139,9 @@ public class testfunc {
 				{
 					System.out.println("\n Error: Cannot open input file for reading ");
 				}
-				
+
+        input.useLocale(locale) ;
+
 				OShift=new double[nx];
 				for(i=0;i<nx;i++)
 				{
@@ -199,7 +204,9 @@ public class testfunc {
 				{
 				    System.out.println("\n Error: Cannot open input file for reading ");
 				}
-				
+
+        input.useLocale(locale) ;
+
 				//SS=(int *)malloc(nx*sizeof(int));
 				SS = new int[nx];
 				
@@ -219,7 +226,8 @@ public class testfunc {
 				{
 				    System.out.println("\n Error: Cannot open input file for reading ");
 				}
-				
+
+        input.useLocale(locale) ;
 				//SS=(int *)malloc(nx*cf_num*sizeof(int));
 				SS = new int[nx*cf_num];
 				
