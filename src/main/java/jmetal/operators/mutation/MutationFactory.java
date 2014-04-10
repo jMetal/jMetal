@@ -45,6 +45,8 @@ public class MutationFactory {
       return new BitFlipMutation(parameters);
     else if (name.equalsIgnoreCase("NonUniformMutation"))
       return new NonUniformMutation(parameters);
+    else if (name.equalsIgnoreCase("UniformMutation"))
+      return new UniformMutation(parameters);
     else if (name.equalsIgnoreCase("SwapMutation"))
       return new SwapMutation(parameters);
     else
