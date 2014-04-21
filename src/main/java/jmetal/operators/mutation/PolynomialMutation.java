@@ -55,9 +55,9 @@ public class PolynomialMutation extends Mutation {
 	public PolynomialMutation(HashMap<String, Object> parameters) {
 		super(parameters) ;
   	if (parameters.get("probability") != null)
-  		mutationProbability_ = (double) parameters.get("probability") ;
+  		mutationProbability_ = (Double) parameters.get("probability") ;
   	if (parameters.get("distributionIndex") != null)
-  		distributionIndex_ = (double) parameters.get("distributionIndex") ;
+  		distributionIndex_ = (Double) parameters.get("distributionIndex") ;
 	} // PolynomialMutation
 
 	/**
