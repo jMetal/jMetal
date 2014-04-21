@@ -38,10 +38,9 @@ import java.util.List;
  */
 public class PolynomialMutation extends Mutation {
 	private static final double ETA_M_DEFAULT_ = 20.0;
-	private final double eta_m_=ETA_M_DEFAULT_;
-	
+
   private double mutationProbability_ = 0.0 ;
-  private double distributionIndex_ = eta_m_;
+  private double distributionIndex_ = ETA_M_DEFAULT_;
 
   /**
    * Valid solution types to apply this operator 
@@ -79,7 +78,7 @@ public class PolynomialMutation extends Mutation {
 				delta1 = (y-yl)/(yu-yl);
 				delta2 = (yu-y)/(yu-yl);
 				rnd = PseudoRandom.randDouble();
-				mut_pow = 1.0/(eta_m_+1.0);
+				mut_pow = 1.0/(distributionIndex_+1.0);
 				if (rnd <= 0.5)
 				{
 					xy     = 1.0-delta1;
