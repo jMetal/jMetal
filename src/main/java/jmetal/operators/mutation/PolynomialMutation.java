@@ -40,8 +40,8 @@ public class PolynomialMutation extends Mutation {
 	private static final double ETA_M_DEFAULT_ = 20.0;
 	private final double eta_m_=ETA_M_DEFAULT_;
 	
-  private Double mutationProbability_ = null ;
-  private Double distributionIndex_ = eta_m_;
+  private double mutationProbability_ = 0.0 ;
+  private double distributionIndex_ = eta_m_;
 
   /**
    * Valid solution types to apply this operator 
@@ -55,9 +55,9 @@ public class PolynomialMutation extends Mutation {
 	public PolynomialMutation(HashMap<String, Object> parameters) {
 		super(parameters) ;
   	if (parameters.get("probability") != null)
-  		mutationProbability_ = (Double) parameters.get("probability") ;  		
+  		mutationProbability_ = (double) parameters.get("probability") ;
   	if (parameters.get("distributionIndex") != null)
-  		distributionIndex_ = (Double) parameters.get("distributionIndex") ;  		
+  		distributionIndex_ = (double) parameters.get("distributionIndex") ;
 	} // PolynomialMutation
 
 	/**
@@ -125,4 +125,12 @@ public class PolynomialMutation extends Mutation {
 		return solution;      
 	} // execute
 
+
+  public double getMutationProbability() {
+    return mutationProbability_ ;
+  }
+
+  public double getDistributionIndex() {
+    return distributionIndex_ ;
+  }
 } // PolynomialMutation
