@@ -1,4 +1,4 @@
-//  PolynomialMutationTest.java
+//  SBXCrossoverTest.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -18,12 +18,12 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package test.operators.mutation;
+package test.operators.crossover;
 
 import jmetal.core.Operator;
 import jmetal.core.Problem;
-import jmetal.operators.mutation.MutationFactory;
-import jmetal.operators.mutation.PolynomialMutation;
+import jmetal.operators.crossover.CrossoverFactory;
+import jmetal.operators.crossover.SBXCrossover;
 import jmetal.problems.Kursawe;
 import jmetal.util.JMException;
 import org.junit.After;
@@ -33,13 +33,12 @@ import org.junit.Test;
 import java.util.HashMap;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 /**
  * Created by Antonio J. Nebro on 21/04/14.
  */
-public class PolynomialMutationTest {
-  Operator mutation_ ;
+public class SBXCrossoverTest {
+  Operator crossover_ ;
   Problem problem_ ;
   HashMap parameters_ ;
 
@@ -51,7 +50,7 @@ public class PolynomialMutationTest {
 
     parameters_ = new HashMap() ;
     try {
-      mutation_ = MutationFactory.getMutationOperator("PolynomialMutation", parameters_);
+      crossover_ = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters_);
     } catch (JMException e) {
       e.printStackTrace();
     }
@@ -59,31 +58,31 @@ public class PolynomialMutationTest {
 
   @After
   public void tearDown() throws Exception {
-    mutation_ = null ;
+    crossover_ = null ;
     problem_ = null ;
   }
 
   @Test
   public void defaultParametersTest() {
-    assertEquals("PolynomialMutationTest.testDefaultParameters",
-            20.0, ((PolynomialMutation)mutation_).getDistributionIndex(), DELTA) ;
-    assertNull("PolynomialMutationTest.testDefaultParameters",
-            mutation_.getParameter("probability"));
+    assertEquals("SBXCrossoverTest.testDefaultParameters",
+            20.0, ((SBXCrossover)crossover_).getDistributionIndex(), DELTA) ;
+    assertEquals("SBXCrossoverTest.testDefaultParameters",
+            0.9, ((SBXCrossover)crossover_).getCrossoverProbability(), DELTA) ;
   }
 
   @Test
-  public void setMutationProbabilityTest() {
-    parameters_.put("probability", 1.0/problem_.getNumberOfVariables()) ;
+  public void setCrossoverProbabilityTest() {
+    parameters_.put("probability", 1.0) ;
 
     try {
-      mutation_ = MutationFactory.getMutationOperator("PolynomialMutation", parameters_);
+      crossover_ = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters_);
     } catch (JMException e) {
       e.printStackTrace();
     }
 
-    assertEquals("PolynomialMutationTest.setMutationProbabilityTest",
-            1.0/problem_.getNumberOfVariables(),
-            ((PolynomialMutation)mutation_).getMutationProbability(), DELTA) ;
+    assertEquals("SBXCrossoverTest.setCrossoverProbabilityTest",
+            1.0,
+            ((SBXCrossover)crossover_).getCrossoverProbability(), DELTA) ;
   }
 
   @Test
@@ -91,13 +90,13 @@ public class PolynomialMutationTest {
     parameters_.put("distributionIndex", 5.0) ;
 
     try {
-      mutation_ = MutationFactory.getMutationOperator("PolynomialMutation", parameters_);
+      crossover_ = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters_);
     } catch (JMException e) {
       e.printStackTrace();
     }
 
-    assertEquals("PolynomialMutationTest.setMutationDistributionIndex",
+    assertEquals("SBXCrossoverTest.setCrossoverDistributionIndex",
             5.0,
-            ((PolynomialMutation)mutation_).getDistributionIndex(), DELTA) ;
+            ((SBXCrossover)crossover_).getDistributionIndex(), DELTA) ;
   }
 }

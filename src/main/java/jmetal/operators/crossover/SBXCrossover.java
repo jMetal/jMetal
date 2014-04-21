@@ -44,7 +44,7 @@ public class SBXCrossover extends Crossover {
   private static final double EPS= 1.0e-14;
                                                                                       
   private static final double ETA_C_DEFAULT_ = 20.0;
-  private Double crossoverProbability_ = 0.9 ;
+  private double crossoverProbability_ = 0.9 ;
   private double distributionIndex_ = ETA_C_DEFAULT_;
 
   /**
@@ -62,9 +62,9 @@ public class SBXCrossover extends Crossover {
   	super (parameters) ;
   	
   	if (parameters.get("probability") != null)
-  		crossoverProbability_ = (Double) parameters.get("probability") ;  		
+  		crossoverProbability_ = (Double) parameters.get("probability") ;
   	if (parameters.get("distributionIndex") != null)
-  		distributionIndex_    = (Double) parameters.get("distributionIndex") ;  		
+  		distributionIndex_    = (Double) parameters.get("distributionIndex") ;
   } // SBXCrossover
     
   /**
@@ -207,5 +207,12 @@ public class SBXCrossover extends Crossover {
     //  offSpring[i].setRank(0);
     //} 
     return offSpring;
-  } // execute 
+  } // execute
+
+  public double getCrossoverProbability() {
+    return crossoverProbability_ ;
+  }
+  public double getDistributionIndex() {
+    return distributionIndex_ ;
+  }
 } // SBXCrossover

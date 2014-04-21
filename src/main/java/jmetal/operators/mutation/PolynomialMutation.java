@@ -128,7 +128,6 @@ public class PolynomialMutation extends Mutation {
   public double getMutationProbability() {
     return mutationProbability_ ;
   }
-
   public double getDistributionIndex() {
     return distributionIndex_ ;
   }
