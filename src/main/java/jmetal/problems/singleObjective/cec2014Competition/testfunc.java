@@ -248,7 +248,11 @@ public class testfunc {
 		
 		
 		double[] t = new double[nx];
-		
+
+    System.out.println("nx: " + nx) ;
+    System.out.println("mx: " + mx) ;
+    System.exit(-9);
+
 		for (i = 0; i < mx; i++)
 		{
 			for ( j=0; j<nx; j++){

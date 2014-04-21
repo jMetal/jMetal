@@ -54,7 +54,7 @@ public class DE_main {
     //problem = new Easom("Real") ;
     //problem = new Griewank("Real", 10) ;
     //problem = new CEC2005Problem("Real", 5, 10);
-    problem = new CEC2014Problem("Real", 1, 10, 100);
+    problem = new CEC2014Problem("Real", 1, 10, 3);
 
     algorithm = new DE(problem) ;   // Asynchronous cGA
     

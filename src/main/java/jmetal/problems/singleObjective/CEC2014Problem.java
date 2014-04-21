@@ -92,7 +92,7 @@ public class CEC2014Problem extends Problem {
     }
 
     try {
-      testFunc_.test_func(x, f, numberOfVariables_, 3, problemID_) ;
+      testFunc_.test_func(x, f, numberOfVariables_, populationSize_, problemID_) ;
     } catch (Exception e) {
       e.printStackTrace();
     }
