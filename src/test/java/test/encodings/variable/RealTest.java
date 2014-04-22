@@ -57,14 +57,12 @@ public class RealTest extends Real{
 
   @Test
   public void testSetLowerBound() throws Exception {
-    double oldValue = real_.getValue() ;
     real_.setLowerBound(0.1);
     assertEquals("RealTest", 0.1, real_.getLowerBound(), EPSILON);
   }
 
   @Test
   public void testSetUpperBound() throws Exception {
-    double oldValue = real_.getValue() ;
     real_.setUpperBound(2.0);
     assertEquals("RealTest", 2.0, real_.getUpperBound(), EPSILON);
   }
