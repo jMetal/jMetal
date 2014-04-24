@@ -93,6 +93,15 @@ public class Experiment {
     independentRuns_ = 0;
     numberOfExecutionThreads_ = 1 ;
 
+    runTheAlgorithms_  = false ;
+    generateReferenceParetoFronts_ = false ;
+    generateQualityIndicators_ = false ;
+    generateLatexTables_ = false ;
+    generateBoxplots_ = false ;
+    generateWilcoxonTables_ = false ;
+    generateFriedmanTables_ = false ;
+    useConfigurationFilesForAlgorithms_ = false ;
+
     indicatorMinimize_ = new HashMap<String, Boolean>();
     indicatorMinimize_.put("HV", false);
     indicatorMinimize_.put("EPSILON", true);
@@ -162,6 +171,10 @@ public class Experiment {
 
       parallelRunner.parallelExecution();
       parallelRunner.stopParallelRunner();
+    }
+
+    if (generateReferenceParetoFronts_){
+      new ReferenceParetoFronts(this).generate() ;
     }
 
     if (generateQualityIndicators_) {

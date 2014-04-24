@@ -51,9 +51,9 @@ public class QualityIndicatorTables implements iExperimentOutput {
     String paretoFront[] = new String[experiment_.problemList_.length] ;
 
     //checkParetoFronts();
-    if (experiment_.generateReferenceParetoFronts_){
-      new ReferenceParetoFronts(experiment_).generate() ;
-    }
+    //if (experiment_.generateReferenceParetoFronts_){
+    //  new ReferenceParetoFronts(experiment_).generate() ;
+    //}
 
     for (int i = 0; i < experiment_.problemList_.length; i++) {
       if (experiment_.generateReferenceParetoFronts_){
