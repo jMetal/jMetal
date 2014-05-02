@@ -14,6 +14,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <junit.version>4.11</junit.version>
     <jdk.version>1.7</jdk.version>
+    <skipTests>true</skipTests>
   </properties>
 
   <developers>
@@ -61,6 +62,9 @@
   <build>
     <defaultGoal>package</defaultGoal>
     <plugins>
+      <!--
+        Compile
+      -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -70,6 +74,9 @@
           <target>${jdk.version}</target>
         </configuration>
       </plugin>
+      <!--
+        Create jar file
+      -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
@@ -95,6 +102,88 @@
             </goals>
           </execution>
         </executions>
+      </plugin>
+      <!--
+        FindBugs
+      -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>findbugs-maven-plugin</artifactId>
+        <version>2.5.3</version>
+        <configuration>
+          <!--
+            Enables analysis which takes more memory but finds more bugs.
+            If you run out of memory, changes the value of the effort element
+            to 'Low'.
+          -->
+          <effort>Max</effort>
+          <!-- Build doesn't fail if problems are found -->
+          <failOnError>false</failOnError>
+          <!-- Reports all bugs (other values are medium and max) -->
+          <threshold>Low</threshold>
+          <!-- Produces XML report -->
+          <xmlOutput>true</xmlOutput>
+          <!-- Configures the directory in which the XML report is created -->
+          <findbugsXmlOutputDirectory>${project.build.directory}/findbugs</findbugsXmlOutputDirectory>
+        </configuration>
+        <executions>
+          <!--
+            Ensures that FindBugs inspects source code when project is compiled.
+          -->
+          <execution>
+            <id>analyze-compile</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <!--
+        FindBugs (transform XML into HTML)
+      -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>xml-maven-plugin</artifactId>
+        <version>1.0</version>
+        <configuration>
+          <transformationSets>
+            <transformationSet>
+              <!-- Configures the source directory of XML files. -->
+              <dir>${project.build.directory}/findbugs</dir>
+              <!-- Configures the directory in which the FindBugs report is written.-->
+              <outputDir>${project.build.directory}/findbugs</outputDir>
+              <!-- Selects the used stylesheet. -->
+              <!-- <stylesheet>fancy-hist.xsl</stylesheet> -->
+              <stylesheet>default.xsl</stylesheet>
+              <!--<stylesheet>plain.xsl</stylesheet>-->
+              <!--<stylesheet>fancy.xsl</stylesheet>-->
+              <!--<stylesheet>summary.xsl</stylesheet>-->
+              <fileMappers>
+                <!-- Configures the file extension of the output files. -->
+                <fileMapper implementation="org.codehaus.plexus.components.io.filemappers.FileExtensionMapper">
+                  <targetExtension>.html</targetExtension>
+                </fileMapper>
+              </fileMappers>
+            </transformationSet>
+          </transformationSets>
+        </configuration>
+        <executions>
+          <!-- Ensures that the XSLT transformation is run when the project is compiled. -->
+          <execution>
+            <phase>compile</phase>
+            <goals>
+              <goal>transform</goal>
+            </goals>
+          </execution>
+        </executions>
+        <dependencies>
+          <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>findbugs</artifactId>
+            <version>2.0.3</version>
+          </dependency>
+        </dependencies>
       </plugin>
     </plugins>
   </build>
