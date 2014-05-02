@@ -1,6 +1,5 @@
 package jmetal.test.experiments.settings;
 
-import jmetal.test.experiments.settings.jMetalHome;
 import jmetal.core.Algorithm;
 import jmetal.core.Problem;
 import jmetal.experiments.Settings;
@@ -8,6 +7,7 @@ import jmetal.experiments.settings.CellDE_Settings;
 import jmetal.operators.crossover.DifferentialEvolutionCrossover;
 import jmetal.problems.Fonseca;
 import jmetal.util.JMException;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,7 +32,7 @@ public class CellDE_SettingsTest  {
   @Before
   public void init() throws FileNotFoundException, IOException {
     configuration_ = new Properties();
-    InputStreamReader isr = new InputStreamReader(new FileInputStream(jMetalHome.jMetalHomeConfDir+"/CellDE.conf"));
+    InputStreamReader isr = new InputStreamReader(new FileInputStream(ClassLoader.getSystemResource("CellDE.conf").getPath()));
     configuration_.load(isr);
   }
 

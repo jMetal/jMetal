@@ -1,6 +1,5 @@
 package jmetal.test.experiments.settings;
 
-import jmetal.test.experiments.settings.jMetalHome;
 import jmetal.core.Algorithm;
 import jmetal.core.Problem;
 import jmetal.experiments.Settings;
@@ -9,6 +8,7 @@ import jmetal.operators.crossover.HUXCrossover;
 import jmetal.operators.mutation.BitFlipMutation;
 import jmetal.operators.selection.RankingAndCrowdingSelection;
 import jmetal.problems.ZDT.ZDT5;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -35,7 +35,7 @@ public class MOCHC_SettingsTest {
   @Before
   public void init() throws FileNotFoundException, IOException {
     configuration_ = new Properties();
-    InputStreamReader isr = new InputStreamReader(new FileInputStream(jMetalHome.jMetalHomeConfDir+"/MOCHC.conf"));
+    InputStreamReader isr = new InputStreamReader(new FileInputStream(ClassLoader.getSystemResource("MOCHC.conf").getPath()));
     configuration_.load(isr);
   }
 

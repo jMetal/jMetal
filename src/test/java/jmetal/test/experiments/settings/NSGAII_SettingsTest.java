@@ -1,6 +1,5 @@
 package jmetal.test.experiments.settings;
 
-import jmetal.test.experiments.settings.jMetalHome;
 import jmetal.core.Algorithm;
 import jmetal.core.Problem;
 import jmetal.experiments.Settings;
@@ -8,6 +7,7 @@ import jmetal.experiments.settings.NSGAII_Settings;
 import jmetal.operators.crossover.SBXCrossover;
 import jmetal.operators.mutation.PolynomialMutation;
 import jmetal.problems.Fonseca;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,7 +32,7 @@ public class NSGAII_SettingsTest {
   @Before
   public void init() throws FileNotFoundException, IOException {
     configuration_ = new Properties();
-    InputStreamReader isr = new InputStreamReader(new FileInputStream(jMetalHome.jMetalHomeConfDir+"/NSGAII.conf"));
+    InputStreamReader isr = new InputStreamReader(new FileInputStream(ClassLoader.getSystemResource("NSGAII.conf").getPath()));
     configuration_.load(isr);
   }
 

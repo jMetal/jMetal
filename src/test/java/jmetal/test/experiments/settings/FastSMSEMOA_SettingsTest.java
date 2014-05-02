@@ -7,6 +7,7 @@ import jmetal.experiments.settings.FastSMSEMOA_Settings;
 import jmetal.operators.crossover.SBXCrossover;
 import jmetal.operators.mutation.PolynomialMutation;
 import jmetal.problems.Fonseca;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,7 +32,7 @@ public class FastSMSEMOA_SettingsTest {
   @Before
   public void init() throws FileNotFoundException, IOException {
     configuration_ = new Properties();
-    InputStreamReader isr = new InputStreamReader(new FileInputStream(jMetalHome.jMetalHomeConfDir+"/FastSMSEMOA.conf"));
+    InputStreamReader isr = new InputStreamReader(new FileInputStream(ClassLoader.getSystemResource("FastSMSEMOA.conf").getPath()));
     configuration_.load(isr);
   }
 

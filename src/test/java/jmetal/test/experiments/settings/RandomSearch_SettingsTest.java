@@ -1,9 +1,9 @@
 package jmetal.test.experiments.settings;
 
-import jmetal.test.experiments.settings.jMetalHome;
 import jmetal.core.Algorithm;
 import jmetal.experiments.Settings;
 import jmetal.experiments.settings.RandomSearch_Settings;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -28,7 +28,7 @@ public class RandomSearch_SettingsTest {
   @Before
   public void init() throws FileNotFoundException, IOException {
     configuration_ = new Properties();
-    InputStreamReader isr = new InputStreamReader(new FileInputStream(jMetalHome.jMetalHomeConfDir+"/RandomSearch.conf"));
+    InputStreamReader isr = new InputStreamReader(new FileInputStream(ClassLoader.getSystemResource("RandomSearch.conf").getPath()));
     configuration_.load(isr);
   }
 
