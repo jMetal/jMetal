@@ -34,7 +34,11 @@ import java.io.*;
  */
 public class mTSP extends Problem {
 
-  public int         numberOfCities_ ; 
+  /**
+     * 
+     */
+    private static final long serialVersionUID = 3869748855198680149L;
+public int         numberOfCities_ ; 
   public double [][] distanceMatrix_ ;
   public double [][] costMatrix_;
 

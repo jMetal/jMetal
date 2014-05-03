@@ -41,8 +41,6 @@ public class ES_main {
     Problem   problem   ;         // The problem to solve
     Algorithm algorithm ;         // The algorithm to use
     Operator  mutation  ;         // Mutation operator
-            
-    HashMap  parameters ; // Operator parameters
 
     int bits ; // Length of bit string in the OneMax problem
     
@@ -62,10 +60,10 @@ public class ES_main {
     /* Algorithm params*/
     algorithm.setInputParameter("maxEvaluations", 20000);
     
-    /* Mutation and Crossover for Real codification */
-    parameters = new HashMap() ;
-    parameters.put("probability", 1.0/bits) ;
-    mutation = MutationFactory.getMutationOperator("BitFlipMutation", parameters);                    
+    /* Mutation for Real codification */
+    HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
+    mutationParameters.put("probability", 1.0/bits) ;
+    mutation = MutationFactory.getMutationOperator("BitFlipMutation", mutationParameters);                    
     
     algorithm.addOperator("mutation",mutation);
  

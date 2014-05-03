@@ -34,6 +34,11 @@ import jmetal.util.JMException;
 public class DTLZ3 extends Problem{
   
  /**
+     * 
+     */
+    private static final long serialVersionUID = 8831165539071271912L;
+
+/**
   * Creates a default DTLZ3 problem (12 variables and 3 objectives)
   * @param solutionType The solution type must "Real" or "BinaryReal". 
   */

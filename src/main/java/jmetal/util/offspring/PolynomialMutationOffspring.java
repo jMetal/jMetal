@@ -27,11 +27,10 @@ public class PolynomialMutationOffspring extends Offspring {
 	public PolynomialMutationOffspring(double mutationProbability,
 			double distributionIndexForMutation
 			) throws JMException {     
-		HashMap  parameters ; // Operator parameters
-		parameters = new HashMap() ;
-		parameters.put("probability", mutationProbability_= mutationProbability) ;
-		parameters.put("distributionIndex", distributionIndex_= distributionIndexForMutation) ;
-		mutation_ = MutationFactory.getMutationOperator("PolynomialMutation", parameters);                    
+		HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
+		mutationParameters.put("probability", mutationProbability_= mutationProbability) ;
+		mutationParameters.put("distributionIndex", distributionIndex_= distributionIndexForMutation) ;
+		mutation_ = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);                    
 
 		selection_ = SelectionFactory.getSelectionOperator("BinaryTournament", null);
 		id_ = "PolynomialMutation";

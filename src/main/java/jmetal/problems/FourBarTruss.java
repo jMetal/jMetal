@@ -31,7 +31,11 @@ import jmetal.util.wrapper.XReal;
  * Class representing problem FourBarTruss
  */
 public class FourBarTruss extends Problem {
-	double F_     = 10   ; // 10kN
+	/**
+     * 
+     */
+    private static final long serialVersionUID = -9117986919170703133L;
+    double F_     = 10   ; // 10kN
 	double E_     = 200000; // 20000 kN/cm2
 	double L_     = 200  ; // 200 cm
 	double sigma_ = 10   ; // 10kN/cm2 ;

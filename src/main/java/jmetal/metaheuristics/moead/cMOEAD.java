@@ -39,6 +39,11 @@ import java.util.Vector;
 //
 public class cMOEAD extends Algorithm {
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 6039874453533436343L;
+
   private int populationSize_;
   /**
    * Stores the population
@@ -225,14 +230,12 @@ public class cMOEAD extends Algorithm {
         InputStreamReader isr = new InputStreamReader(fis);
         BufferedReader br = new BufferedReader(isr);
 
-        int numberOfObjectives = 0;
         int i = 0;
         int j = 0;
         String aux = br.readLine();
         while (aux != null) {
           StringTokenizer st = new StringTokenizer(aux);
           j = 0;
-          numberOfObjectives = st.countTokens();
           while (st.hasMoreTokens()) {
             double value = (new Double(st.nextToken())).doubleValue();
             lambda_[i][j] = value;

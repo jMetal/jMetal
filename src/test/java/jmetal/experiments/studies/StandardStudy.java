@@ -118,8 +118,7 @@ public class StandardStudy extends Experiment {
     exp.initExperiment();
 
     // Run the experiments
-    int numberOfThreads ;
-    exp.runExperiment(numberOfThreads = 4) ;
+    exp.runExperiment(4) ;
 
     exp.generateQualityIndicators() ;
 
@@ -131,7 +130,6 @@ public class StandardStudy extends Experiment {
     int columns  ;
     String prefix ;
     String [] problems ;
-    boolean notch ;
 
     // Configuring scripts for ZDT
     rows = 3 ;
@@ -139,7 +137,7 @@ public class StandardStudy extends Experiment {
     prefix = new String("ZDT");
     problems = new String[]{"ZDT1", "ZDT2","ZDT3", "ZDT4","ZDT6"} ;
     
-    exp.generateRBoxplotScripts(rows, columns, problems, prefix, notch = false, exp) ;
+    exp.generateRBoxplotScripts(rows, columns, problems, prefix, false, exp) ;
     exp.generateRWilcoxonScripts(problems, prefix, exp) ;
 
     // Configure scripts for DTLZ
@@ -149,7 +147,7 @@ public class StandardStudy extends Experiment {
     problems = new String[]{"DTLZ1","DTLZ2","DTLZ3","DTLZ4","DTLZ5",
                                     "DTLZ6","DTLZ7"} ;
 
-    exp.generateRBoxplotScripts(rows, columns, problems, prefix, notch=false, exp) ;
+    exp.generateRBoxplotScripts(rows, columns, problems, prefix, false, exp) ;
     exp.generateRWilcoxonScripts(problems, prefix, exp) ;
 
     // Configure scripts for WFG
@@ -159,7 +157,7 @@ public class StandardStudy extends Experiment {
     problems = new String[]{"WFG1","WFG2","WFG3","WFG4","WFG5","WFG6",
                             "WFG7","WFG8","WFG9"} ;
 
-    exp.generateRBoxplotScripts(rows, columns, problems, prefix, notch=false, exp) ;
+    exp.generateRBoxplotScripts(rows, columns, problems, prefix, false, exp) ;
     exp.generateRWilcoxonScripts(problems, prefix, exp) ;
 
     // Applying Friedman test

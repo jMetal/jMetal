@@ -32,6 +32,11 @@ import java.util.HashMap;
  * random parents
  */
 public class RandomSelection extends Selection {
+  /**
+     * 
+     */
+    private static final long serialVersionUID = -3975079865177120226L;
+
   public RandomSelection(HashMap<String, Object> parameters) {
   	super(parameters) ;
   }

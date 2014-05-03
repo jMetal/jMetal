@@ -109,8 +109,7 @@ public class pMOEADStudy extends Experiment {
     exp.initExperiment();
 
     // Run the experiments
-    int numberOfThreads;
-    exp.runExperiment(numberOfThreads = 1);
+    exp.runExperiment(1);
 
     exp.generateQualityIndicators();
 
@@ -122,7 +121,6 @@ public class pMOEADStudy extends Experiment {
     int columns;
     String prefix;
     String[] problems;
-    boolean notch;
 
     // Configuring scripts for LZ09
     rows = 3;
@@ -131,7 +129,7 @@ public class pMOEADStudy extends Experiment {
     problems = new String[]{"LZ09_F1", "LZ09_F2", "LZ09_F3", "LZ09_F4", "LZ09_F5",
             "LZ09_F6", "LZ09_F7", "LZ09_F8", "LZ09_F9"};
 
-    exp.generateRBoxplotScripts(rows, columns, problems, prefix, notch = false, exp);
+    exp.generateRBoxplotScripts(rows, columns, problems, prefix, false, exp);
     exp.generateRWilcoxonScripts(problems, prefix, exp);
 
     // Applying Friedman test

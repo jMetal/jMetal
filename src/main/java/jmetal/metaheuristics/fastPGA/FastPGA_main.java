@@ -60,8 +60,6 @@ public class FastPGA_main {
 
     QualityIndicator indicators ; // Object to get quality indicators
 
-    HashMap  parameters ; // Operator parameters
-
     // Logger object and file to store log messages
     logger_      = Configuration.logger_ ;
     fileHandler_ = new FileHandler("FastPGA_main.log"); 
@@ -105,22 +103,22 @@ public class FastPGA_main {
     algorithm.setInputParameter("termination",1);
 
     // Mutation and Crossover for Real codification 
-    parameters = new HashMap() ;
-    parameters.put("probability", 0.9) ;
-    parameters.put("distributionIndex", 20.0) ;
-    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters);                   
+    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
+    crossoverParameters.put("probability", 0.9) ;
+    crossoverParameters.put("distributionIndex", 20.0) ;
+    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", crossoverParameters);                   
     //crossover.setParameter("probability",0.9);                   
     //crossover.setParameter("distributionIndex",20.0);
 
-    parameters = new HashMap() ;
-    parameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
-    parameters.put("distributionIndex", 20.0) ;
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);         
+    HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
+    mutationParameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
+    mutationParameters.put("distributionIndex", 20.0) ;
+    mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);         
     // Mutation and Crossover for Binary codification
     
-    parameters = new HashMap() ; 
-    parameters.put("comparator", new FPGAFitnessComparator()) ;
-    selection = new BinaryTournament(parameters);
+    HashMap<String, Object> selectionParameters = new HashMap<String, Object>() ; 
+    selectionParameters.put("comparator", new FPGAFitnessComparator()) ;
+    selection = new BinaryTournament(selectionParameters);
     
     algorithm.addOperator("crossover",crossover);
     algorithm.addOperator("mutation",mutation);

@@ -34,7 +34,12 @@ import java.util.Comparator;
  */
 public class aMOCell1 extends Algorithm{
 
-  /** 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = -2634874614451620996L;
+
+/** 
    * Constructor
    * @param problem Problem to solve
    */
@@ -55,7 +60,7 @@ public class aMOCell1 extends Algorithm{
     CrowdingArchive archive;
     SolutionSet [] neighbors;    
     Neighborhood neighborhood;
-    Comparator dominance = new DominanceComparator(),
+    Comparator<Solution> dominance = new DominanceComparator(),
     crowding  = new CrowdingComparator();                   
     Distance distance = new Distance();
 

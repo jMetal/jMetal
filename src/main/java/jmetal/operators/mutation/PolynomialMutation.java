@@ -22,6 +22,7 @@
 package jmetal.operators.mutation;
 
 import jmetal.core.Solution;
+import jmetal.core.SolutionType;
 import jmetal.encodings.solutionType.ArrayRealSolutionType;
 import jmetal.encodings.solutionType.RealSolutionType;
 import jmetal.util.Configuration;
@@ -37,7 +38,12 @@ import java.util.List;
  * This class implements a polynomial mutation operator. 
  */
 public class PolynomialMutation extends Mutation {
-	private static final double ETA_M_DEFAULT_ = 20.0;
+	/**
+     * 
+     */
+    private static final long serialVersionUID = -153752278089303329L;
+
+    private static final double ETA_M_DEFAULT_ = 20.0;
 	private final double eta_m_=ETA_M_DEFAULT_;
 	
   private Double mutationProbability_ = null ;
@@ -46,7 +52,7 @@ public class PolynomialMutation extends Mutation {
   /**
    * Valid solution types to apply this operator 
    */
-  private static final List VALID_TYPES = Arrays.asList(RealSolutionType.class, ArrayRealSolutionType.class) ;
+  private static final List<Class<? extends SolutionType>> VALID_TYPES = Arrays.asList(RealSolutionType.class, ArrayRealSolutionType.class) ;
 
 	/**
 	 * Constructor
@@ -116,7 +122,7 @@ public class PolynomialMutation extends Mutation {
 			Configuration.logger_.severe("PolynomialMutation.execute: the solution " +
 					"type " + solution.getType() + " is not allowed with this operator");
 
-			Class cls = java.lang.String.class;
+			Class<String> cls = java.lang.String.class;
 			String name = cls.getName(); 
 			throw new JMException("Exception in " + name + ".execute()") ;
 		} // if 

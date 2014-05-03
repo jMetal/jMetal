@@ -145,11 +145,12 @@ public class ReadInstance {
      
      
      // at this point the instances has been read
+     br.close();
     } catch (FileNotFoundException ex) {
       Logger.getLogger(ReadInstance.class.getName()).log(Level.SEVERE, "The file doesn't exist", ex);
     } catch (IOException ex2) {
       Logger.getLogger(ReadInstance.class.getName()).log(Level.SEVERE, "Error reading from file", ex2);
-    }                          
+    }
   } // loadInstance
   
   /**

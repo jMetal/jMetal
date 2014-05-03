@@ -74,8 +74,6 @@ public class GDE3_Settings extends Settings {
     Operator selection;
     Operator crossover;
 
-    HashMap  parameters ; // Operator parameters
-
     // Creating the problem
     Object [] problemParams = {"Real"};
     problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);      
@@ -86,7 +84,7 @@ public class GDE3_Settings extends Settings {
     algorithm.setInputParameter("maxIterations", maxIterations_);
 
     // Crossover operator 
-    parameters = new HashMap() ;
+    HashMap<String, Object> parameters = new HashMap<String, Object>() ;
     parameters.put("CR", CR_) ;
     parameters.put("F", F_) ;
     crossover = CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", parameters);                   
@@ -111,8 +109,6 @@ public class GDE3_Settings extends Settings {
     Operator  selection ;
     Crossover crossover ;
 
-    HashMap  parameters ; // Operator parameters
-
     // Creating the algorithm.
     algorithm = new GDE3(problem_) ;
 
@@ -124,7 +120,7 @@ public class GDE3_Settings extends Settings {
 
     CR_ = Double.parseDouble(configuration.getProperty("CR",String.valueOf(CR_)));
     F_ = Double.parseDouble(configuration.getProperty("F",String.valueOf(F_)));
-    parameters = new HashMap() ;
+    HashMap<String, Object> parameters = new HashMap<String, Object>() ;
     parameters.put("CR", CR_) ;
     parameters.put("F", F_) ;
     crossover = CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", parameters);

@@ -37,6 +37,11 @@ import java.util.Map;
 public abstract class Algorithm implements Serializable {
    
   /**
+   * 
+   */
+  private static final long serialVersionUID = -5414794431994226777L;
+
+/**
    * Stores the problem to solve
    */
   protected Problem problem_;        

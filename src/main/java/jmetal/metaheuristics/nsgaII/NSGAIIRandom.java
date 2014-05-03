@@ -10,6 +10,12 @@ import jmetal.util.offspring.Offspring;
 import jmetal.util.offspring.PolynomialMutationOffspring;
 
 public class NSGAIIRandom extends Algorithm {
+
+  /**
+   * 
+   */
+  private static final long serialVersionUID = -9113018415834859888L;
+
   public int populationSize_            ;
   public SolutionSet population_        ;
   public SolutionSet offspringPopulation_;
@@ -78,7 +84,6 @@ public class NSGAIIRandom extends Algorithm {
 
       // Create the offSpring solutionSet      
       offspringPopulation_ = new SolutionSet(populationSize_);
-      Solution[] parents = new Solution[2];
       for (int i = 0; i < (populationSize_ / 1); i++) {
         if (evaluations_ < maxEvaluations_) {
           Solution individual = new Solution(population_.get(PseudoRandom.randInt(0, populationSize_-1)));

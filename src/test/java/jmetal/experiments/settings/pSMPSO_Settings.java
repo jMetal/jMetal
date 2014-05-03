@@ -76,8 +76,6 @@ public class pSMPSO_Settings extends Settings{
     Algorithm algorithm ;
     Mutation  mutation ;
 
-    HashMap  parameters ; // Operator parameters
-
     IParallelEvaluator parallelEvaluator = new MultithreadedEvaluator(numberOfThreads_) ;
 
     algorithm = new pSMPSO(problem_, parallelEvaluator) ;
@@ -87,7 +85,7 @@ public class pSMPSO_Settings extends Settings{
     algorithm.setInputParameter("maxIterations", maxIterations_);
     algorithm.setInputParameter("archiveSize", archiveSize_);
     
-    parameters = new HashMap() ;
+    HashMap<String, Object> parameters = new HashMap<String, Object>() ;
     parameters.put("probability", mutationProbability_) ;
     parameters.put("distributionIndex", mutationDistributionIndex_) ;
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);                    
@@ -105,8 +103,6 @@ public class pSMPSO_Settings extends Settings{
   public Algorithm configure(Properties configuration) throws JMException {
     Algorithm algorithm ;
     Mutation  mutation ;
-
-    HashMap  parameters ; // Operator parameters
 
     numberOfThreads_  = Integer.parseInt(configuration.getProperty("numberOfThreads",String.valueOf(numberOfThreads_)));
 
@@ -126,7 +122,7 @@ public class pSMPSO_Settings extends Settings{
 
     mutationProbability_ = Double.parseDouble(configuration.getProperty("mutationProbability",String.valueOf(mutationProbability_)));
     mutationDistributionIndex_ = Double.parseDouble(configuration.getProperty("mutationDistributionIndex",String.valueOf(mutationDistributionIndex_)));
-    parameters = new HashMap() ;
+    HashMap<String, Object> parameters = new HashMap<String, Object>() ;
     parameters.put("probability", mutationProbability_) ;
     parameters.put("distributionIndex", mutationDistributionIndex_) ;
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);

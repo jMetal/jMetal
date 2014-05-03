@@ -34,6 +34,11 @@ import java.util.List;
 
 public class pgGA extends Algorithm {
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = -409634466251175115L;
+
   IParallelEvaluator parallelEvaluator_ ;
 
   /**
@@ -57,17 +62,15 @@ public class pgGA extends Algorithm {
     int populationSize;
     int maxEvaluations;
     int evaluations;
-    int numberOfThreads ;
 
     SolutionSet population;
     SolutionSet offspringPopulation;
-    SolutionSet union;
 
     Operator mutationOperator;
     Operator crossoverOperator;
     Operator selectionOperator;
 
-    Comparator comparator        ;
+    Comparator<Solution> comparator        ;
     comparator = new ObjectiveComparator(0) ; // Single objective comparator
 
     //Read the parameters

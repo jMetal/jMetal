@@ -36,6 +36,11 @@ import java.util.Comparator;
  public class SPEA2DensityArchive extends Archive {
   
   /**
+   * 
+   */
+  private static final long serialVersionUID = -2639011270346617749L;
+
+  /**
    * Stores the maximum size of the archive.
    */
   private int maxSize_;    
@@ -43,18 +48,18 @@ import java.util.Comparator;
   /**
    * Stores a <code>Comparator</code> for dominance checking.
    */
-  private Comparator dominance_;
+  private Comparator<Solution> dominance_;
   
   /**
    * Stores a <code>Comparator</code> for fitness checking.
    */
-  private Comparator fitnessComparator_;
+  private Comparator<Solution> fitnessComparator_;
   
   /**
    * Stores a <code>Comparator</code> for equality checking (in the objective
    * space).
    */
-  private Comparator equals_;  
+  private Comparator<Solution> equals_;  
     
   /** 
   * Constructor.

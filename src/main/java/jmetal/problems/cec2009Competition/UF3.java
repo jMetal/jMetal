@@ -33,7 +33,12 @@ import jmetal.util.JMException;
  */
 public class UF3 extends Problem {
     
- /** 
+ /**
+     * 
+     */
+    private static final long serialVersionUID = -7007725110235707109L;
+
+/** 
   * Constructor.
   * Creates a default instance of problem CEC2009_UF3 (30 decision variables)
   * @param solutionType The solution type must "Real" or "BinaryReal".

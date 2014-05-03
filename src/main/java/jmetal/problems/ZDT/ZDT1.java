@@ -34,7 +34,12 @@ import jmetal.util.wrapper.XReal;
  */
 public class ZDT1 extends Problem {
     
- /** 
+ /**
+     * 
+     */
+    private static final long serialVersionUID = 7747361492814788270L;
+
+/** 
   * Constructor.
   * Creates a default instance of problem ZDT1 (30 decision variables)
   * @param solutionType The solution type must "Real", "BinaryReal, and "ArrayReal". 

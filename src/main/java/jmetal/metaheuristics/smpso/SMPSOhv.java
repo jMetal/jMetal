@@ -47,6 +47,11 @@ import java.util.logging.Logger;
 public class SMPSOhv extends Algorithm {
 
   /**
+   * 
+   */
+  private static final long serialVersionUID = -4057884567637182255L;
+
+  /**
    * Stores the number of particles_ used
    */
   private int swarmSize_;
@@ -81,11 +86,11 @@ public class SMPSOhv extends Algorithm {
   /**
    * Stores a comparator for checking dominance
    */
-  private Comparator dominance_;
+  private Comparator<Solution> dominance_;
   /**
    * Stores a comparator for crowding checking
    */
-  private Comparator crowdingDistanceComparator_;
+  private Comparator<Solution> crowdingDistanceComparator_;
   /**
    * Stores a <code>Distance</code> object
    */
@@ -276,8 +281,8 @@ public class SMPSOhv extends Algorithm {
    * @throws JMException 
    */
   private void computeSpeed(int iter, int miter) throws JMException, IOException {
-    double r1, r2, W, C1, C2;
-    double wmax, wmin, deltaMax, deltaMin;
+    double r1, r2, C1, C2;
+    double wmax, wmin;
     XReal bestGlobal;
 
     for (int i = 0; i < swarmSize_; i++) {
@@ -306,7 +311,6 @@ public class SMPSOhv extends Algorithm {
       r2 = PseudoRandom.randDouble(r2Min_, r2Max_);
       C1 = PseudoRandom.randDouble(C1Min_, C1Max_);
       C2 = PseudoRandom.randDouble(C2Min_, C2Max_);
-      W = PseudoRandom.randDouble(WMin_, WMax_);
       //
       wmax = WMax_;
       wmin = WMin_;

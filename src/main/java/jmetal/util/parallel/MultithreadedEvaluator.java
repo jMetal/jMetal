@@ -60,7 +60,7 @@ public class MultithreadedEvaluator implements IParallelEvaluator {
     }
 
     public Solution call() throws Exception {
-      long initTime = System.currentTimeMillis();
+      //long initTime = System.currentTimeMillis();
       problem_.evaluate(solution_) ;
       problem_.evaluateConstraints(solution_) ;
       //long estimatedTime = System.currentTimeMillis() - initTime;

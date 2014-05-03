@@ -47,8 +47,13 @@ import java.util.Comparator;
  *   No. 4 (August 2008), pp. 439-457
  */
 public class AbYSS extends Algorithm {
-     
+
   /**
+   * 
+   */
+  private static final long serialVersionUID = 1682316167611498510L;
+
+/**
    * Stores the number of subranges in which each encodings.variable is divided. Used in
    * the diversification method. By default it takes the value 4 (see the method
    * <code>initParams</code>).
@@ -122,10 +127,10 @@ public class AbYSS extends Algorithm {
   /**
    * Stores the comparators for dominance and equality, respectively
    */
-  private Comparator dominance_ ;
-  private Comparator equal_     ;
-  private Comparator fitness_   ;
-  private Comparator crowdingDistance_;
+  private Comparator<Solution> dominance_ ;
+  private Comparator<Solution> equal_     ;
+  private Comparator<Solution> fitness_   ;
+  private Comparator<Solution> crowdingDistance_;
   
   /**
    * Stores the crossover operator

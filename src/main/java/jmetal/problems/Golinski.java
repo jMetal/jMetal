@@ -32,7 +32,11 @@ import jmetal.util.JMException;
  */
 public class Golinski extends Problem{
 
-  // defining lowerLimits and upperLimits for the problem
+  /**
+     * 
+     */
+    private static final long serialVersionUID = -92489834119695520L;
+// defining lowerLimits and upperLimits for the problem
   public static final double [] LOWERLIMIT = {2.6, 0.7, 17.0, 7.3, 7.3, 2.9, 5.0};
   public static final double [] UPPERLIMIT = {3.6, 0.8, 28.0, 8.3, 8.3, 3.9, 5.5};                          
     

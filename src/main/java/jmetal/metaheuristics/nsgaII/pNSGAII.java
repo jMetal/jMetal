@@ -42,6 +42,11 @@ import java.util.List;
 
 public class pNSGAII extends Algorithm {
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = -1418163498352372364L;
+
   IParallelEvaluator parallelEvaluator_ ; 
 
   /**
@@ -65,7 +70,6 @@ public class pNSGAII extends Algorithm {
     int populationSize;
     int maxEvaluations;
     int evaluations;
-    int numberOfThreads ;
 
     QualityIndicator indicators; // QualityIndicator object
     int requiredEvaluations; // Use in the example of use of the

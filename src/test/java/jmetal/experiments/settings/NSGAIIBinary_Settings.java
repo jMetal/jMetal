@@ -80,7 +80,7 @@ public class NSGAIIBinary_Settings extends Settings {
     Operator  crossover ;
     Operator  mutation  ;
 
-    HashMap  parameters ; // Operator parameters
+    HashMap<String, Object> parameters = new HashMap<String, Object>() ;
 
     // Creating the problem
     algorithm = new NSGAII(problem_) ;
@@ -91,11 +91,11 @@ public class NSGAIIBinary_Settings extends Settings {
 
     
     // Mutation and Crossover Binary codification
-    parameters = new HashMap() ;
+    parameters = new HashMap<String, Object>() ;
     parameters.put("probability", crossoverProbability_) ;
     crossover = CrossoverFactory.getCrossoverOperator("SinglePointCrossover", parameters);                   
 
-    parameters = new HashMap() ;
+    parameters = new HashMap<String, Object>() ;
     parameters.put("probability", mutationProbability_) ;
     mutation = MutationFactory.getMutationOperator("BitFlipMutation",parameters);    
     
@@ -122,8 +122,6 @@ public class NSGAIIBinary_Settings extends Settings {
     Crossover crossover ;
     Mutation mutation  ;
 
-    HashMap  parameters ; // Operator parameters
-
     // Creating the algorithm.
     algorithm = new NSGAII(problem_) ;
 
@@ -135,12 +133,12 @@ public class NSGAIIBinary_Settings extends Settings {
 
     // Mutation and Crossover for Real codification
     crossoverProbability_ = Double.parseDouble(configuration.getProperty("crossoverProbability",String.valueOf(crossoverProbability_)));
-    parameters = new HashMap() ;
+    HashMap<String, Object> parameters = new HashMap<String, Object>() ;
     parameters.put("probability", crossoverProbability_) ;
     crossover = CrossoverFactory.getCrossoverOperator("SinglePointCrossover", parameters);
 
     mutationProbability_ = Double.parseDouble(configuration.getProperty("mutationProbability",String.valueOf(mutationProbability_)));
-    parameters = new HashMap() ;
+    parameters = new HashMap<String, Object>() ;
     parameters.put("probability", mutationProbability_) ;
     mutation = MutationFactory.getMutationOperator("BitFlipMutation", parameters);
 

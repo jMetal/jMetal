@@ -29,12 +29,11 @@ public class NonUniformMutationOffspring extends Offspring {
 			double perturbation,
 			int maxIterations
 			) throws JMException {     
-		HashMap  parameters ; // Operator parameters
-		parameters = new HashMap() ;
-		parameters.put("probability", mutationProbatility_ = mutationProbability) ;
-		parameters.put("perturbation", perturbation_ = perturbation) ;
-		parameters.put("maxIterations", maxIterations_ = maxIterations) ;
-		mutation_ = MutationFactory.getMutationOperator("NonUniformMutation", parameters);                    
+		HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
+		mutationParameters.put("probability", mutationProbatility_ = mutationProbability) ;
+		mutationParameters.put("perturbation", perturbation_ = perturbation) ;
+		mutationParameters.put("maxIterations", maxIterations_ = maxIterations) ;
+		mutation_ = MutationFactory.getMutationOperator("NonUniformMutation", mutationParameters);                    
 
 		selection_ = SelectionFactory.getSelectionOperator("BinaryTournament", null);
 		id_ = "NonUniformMutation";

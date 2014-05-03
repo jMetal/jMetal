@@ -29,6 +29,11 @@ import java.util.logging.Logger;
  */
 public class Configuration implements Serializable {
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 891486004065726989L;
+    
   /** 
    * Logger object 
    */

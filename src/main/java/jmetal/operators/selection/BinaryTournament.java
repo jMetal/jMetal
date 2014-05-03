@@ -35,19 +35,25 @@ import java.util.HashMap;
 public class BinaryTournament extends Selection {
 
   /**
+   * 
+   */
+  private static final long serialVersionUID = 1727470902640158437L;
+
+/**
    * Stores the <code>Comparator</code> used to compare two
    * solutions
    */
-  private Comparator comparator_;
+  private Comparator<Solution> comparator_;
 
   /**
    * Constructor
    * Creates a new Binary tournament operator using a BinaryTournamentComparator
    */
+  @SuppressWarnings({"unchecked"})
   public BinaryTournament(HashMap<String, Object> parameters){
   	super(parameters) ;
   	if ((parameters != null) && (parameters.get("comparator") != null))
-  		comparator_ = (Comparator) parameters.get("comparator") ;  	
+  		comparator_ = (Comparator<Solution>) parameters.get("comparator") ;
   	else
       //comparator_ = new BinaryTournamentComparator();
       comparator_ = new DominanceComparator();

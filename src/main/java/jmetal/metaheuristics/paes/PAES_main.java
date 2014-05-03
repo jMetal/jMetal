@@ -62,8 +62,6 @@ public class PAES_main {
     
     QualityIndicator indicators ; // Object to get quality indicators
 
-    HashMap  parameters ; // Operator parameters
-
     // Logger object and file to store log messages
     logger_      = Configuration.logger_ ;
     fileHandler_ = new FileHandler("PAES_main.log");
@@ -98,10 +96,10 @@ public class PAES_main {
     algorithm.setInputParameter("maxEvaluations",25000);
       
     // Mutation (Real variables)
-    parameters = new HashMap() ;
-    parameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
-    parameters.put("distributionIndex", 20.0) ;
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);                    
+    HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
+    mutationParameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
+    mutationParameters.put("distributionIndex", 20.0) ;
+    mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);                    
     
     // Mutation (BinaryReal variables)
     //mutation = MutationFactory.getMutationOperator("BitFlipMutation");                    

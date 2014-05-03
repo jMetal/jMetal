@@ -6,13 +6,16 @@ import jmetal.util.JMException;
 import jmetal.util.PseudoRandom;
 import jmetal.util.Ranking;
 import jmetal.util.comparators.CrowdingComparator;
-import jmetal.util.comparators.DominanceComparator;
 import jmetal.util.offspring.Offspring;
 import jmetal.util.offspring.PolynomialMutationOffspring;
 
-import java.util.Comparator;
-
 public class NSGAIIAdaptive extends Algorithm {
+
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 4290510927100994634L;
+
   public int populationSize_            ;
   public SolutionSet population_        ;
   public SolutionSet offspringPopulation_;
@@ -29,6 +32,7 @@ public class NSGAIIAdaptive extends Algorithm {
 	}
 
 	public SolutionSet execute() throws JMException, ClassNotFoundException {
+	// FIXME: those variables are necessary? because they only store value, we don't do anything with it
     double contrDE = 0;
     double contrSBX = 0;
     double contrPol = 0;
@@ -37,13 +41,8 @@ public class NSGAIIAdaptive extends Algorithm {
     double contrTotalPol = 0;
 
     double contrReal [] = new double[3] ;
-    contrReal[0] = contrReal[1] = contrReal[2] = 0 ;    
-
-		Comparator dominance = new DominanceComparator();
-		Comparator crowdingComparator = new CrowdingComparator();
+    contrReal[0] = contrReal[1] = contrReal[2] = 0 ;
 		Distance distance = new Distance();
-
-    Operator selectionOperator;
 
 		//Read parameter values
 		populationSize_ = ((Integer) getInputParameter("populationSize")).intValue();
@@ -55,7 +54,6 @@ public class NSGAIIAdaptive extends Algorithm {
 		population_ = new SolutionSet(populationSize_);
 		evaluations_ = 0;
 
-    selectionOperator = operators_.get("selection");
 
 		Offspring[] getOffspring;
 		int N_O; // number of offpring objects
@@ -91,7 +89,6 @@ public class NSGAIIAdaptive extends Algorithm {
 
     	// Create the offSpring solutionSet      
       offspringPopulation_ = new SolutionSet(populationSize_);
-      Solution[] parents = new Solution[2];
       for (int i = 0; i < (populationSize_ / 1); i++) {
         if (evaluations_ < maxEvaluations_) {
   				Solution individual = new Solution(population_.get(PseudoRandom.randInt(0, populationSize_-1)));

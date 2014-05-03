@@ -33,7 +33,12 @@ import java.util.Comparator;
  */
 public class PAES extends Algorithm {        
    
- /** 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 264140016408197977L;
+
+  /** 
   * Create a new PAES instance for resolve a problem
   * @param problem Problem to solve
   */                 
@@ -80,7 +85,7 @@ public class PAES extends Algorithm {
     int bisections, archiveSize, maxEvaluations, evaluations;
     AdaptiveGridArchive archive;
     Operator mutationOperator;
-    Comparator dominance;
+    Comparator<Solution> dominance;
     
     //Read the params
     bisections     = ((Integer)this.getInputParameter("biSections")).intValue();

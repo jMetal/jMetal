@@ -41,9 +41,14 @@ import java.util.List;
 public class PMXCrossover extends Crossover {
 
   /**
+   * 
+   */
+  private static final long serialVersionUID = -4059314233890056350L;
+
+/**
    * Valid solution types to apply this operator
    */
-  private static final List VALID_TYPES = Arrays.asList(PermutationSolutionType.class);
+  private static final List<Class<PermutationSolutionType>> VALID_TYPES = Arrays.asList(PermutationSolutionType.class);
 
   private Double crossoverProbability_ = null;
 
@@ -167,7 +172,7 @@ public class PMXCrossover extends Crossover {
     if (parents.length < 2) {
       Configuration.logger_.severe("PMXCrossover.execute: operator needs two " +
               "parents");
-      Class cls = java.lang.String.class;
+      Class<String> cls = java.lang.String.class;
       String name = cls.getName();
       throw new JMException("Exception in " + name + ".execute()");
     }

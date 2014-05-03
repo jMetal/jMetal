@@ -35,6 +35,11 @@ import java.util.HashMap;
 public class DifferentialEvolutionSelection extends Selection {
 
   /**
+   * 
+   */
+  private static final long serialVersionUID = 2866073033079299561L;
+
+  /**
    * Constructor
    */
   DifferentialEvolutionSelection(HashMap<String, Object> parameters) {

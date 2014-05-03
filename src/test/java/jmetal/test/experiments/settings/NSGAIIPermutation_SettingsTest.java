@@ -27,8 +27,8 @@ public class NSGAIIPermutation_SettingsTest {
 
   @Test
   public void testConfigure() throws Exception {
-    double epsilon = 0.000000000000001 ;
-    /*
+    /*double epsilon = 0.000000000000001 ;
+    
     Settings nsgaIISettings = new NSGAIIPermutation_Settings("mQAP");
     Algorithm algorithm = nsgaIISettings.configure() ;
     Problem problem = new mQAP("Permutation") ;

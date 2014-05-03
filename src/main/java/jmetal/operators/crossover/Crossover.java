@@ -30,7 +30,12 @@ import java.util.HashMap;
  */
 public abstract class Crossover extends Operator {
 
-	public Crossover(HashMap<String, Object> parameters) {
+	/**
+     * 
+     */
+    private static final long serialVersionUID = 4720992679275654728L;
+
+    public Crossover(HashMap<String, Object> parameters) {
 	  super(parameters);
   }
 } // Crossover

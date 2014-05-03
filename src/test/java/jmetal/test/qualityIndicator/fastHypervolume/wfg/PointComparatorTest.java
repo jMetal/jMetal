@@ -20,7 +20,7 @@ import static org.junit.Assert.assertEquals;
 public class PointComparatorTest {
   Point point1_ ;
   Point point2_ ;
-  Comparator pointComparator_ ;
+  Comparator<Point> pointComparator_ ;
 
   @Before
   public void setUp() {

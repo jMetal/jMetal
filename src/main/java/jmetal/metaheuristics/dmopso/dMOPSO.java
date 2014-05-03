@@ -21,7 +21,12 @@ import java.util.Vector;
 
 public class dMOPSO extends Algorithm {
 
-	//static double y2;
+  /**
+   * 
+   */
+  private static final long serialVersionUID = -7045622315440304387L;
+
+    //static double y2;
 	//static int use_last = 0;
 	/**
 	 * Stores the number of particles_ used

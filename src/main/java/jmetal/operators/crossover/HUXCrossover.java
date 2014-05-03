@@ -22,6 +22,7 @@
 package jmetal.operators.crossover;
 
 import jmetal.core.Solution;
+import jmetal.core.SolutionType;
 import jmetal.encodings.solutionType.BinaryRealSolutionType;
 import jmetal.encodings.solutionType.BinarySolutionType;
 import jmetal.encodings.variable.Binary;
@@ -41,10 +42,15 @@ import java.util.List;
  */
 public class HUXCrossover extends Crossover{
 
-	/**
+  /**
+   * 
+   */
+  private static final long serialVersionUID = -5600218276088232241L;
+
+    /**
    * Valid solution types to apply this operator 
    */
-  private static final List VALID_TYPES = Arrays.asList(BinarySolutionType.class,
+  private static final List<Class<? extends SolutionType>> VALID_TYPES = Arrays.asList(BinarySolutionType.class,
   		                                            BinaryRealSolutionType.class) ;
 
   private Double probability_ = null ;
@@ -112,7 +118,7 @@ public class HUXCrossover extends Crossover{
       
       Configuration.logger_.severe("HUXCrossover.doCrossover: Cannot perfom " +
           "SinglePointCrossover ") ;
-      Class cls = java.lang.String.class;
+      Class<String> cls = java.lang.String.class;
       String name = cls.getName(); 
       throw new JMException("Exception in " + name + ".doCrossover()") ;
     }        
@@ -132,7 +138,7 @@ public class HUXCrossover extends Crossover{
     {
       Configuration.logger_.severe("HUXCrossover.execute: operator needs two " +
           "parents");
-      Class cls = java.lang.String.class;
+      Class<String> cls = java.lang.String.class;
       String name = cls.getName(); 
       throw new JMException("Exception in " + name + ".execute()") ;      
     }
@@ -146,7 +152,7 @@ public class HUXCrossover extends Crossover{
           parents[0].getType() + " and " + 
           parents[1].getType() + " are obtained");
 
-      Class cls = java.lang.String.class;
+      Class<String> cls = java.lang.String.class;
       String name = cls.getName(); 
       throw new JMException("Exception in " + name + ".execute()") ;
 

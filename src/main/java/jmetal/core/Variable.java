@@ -37,7 +37,12 @@ import java.io.Serializable;
  */
 public abstract class Variable implements Serializable {
 
-  /** 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 8958332113562350950L;
+
+/** 
    * Creates an exact copy of a <code>Variable</code> object.
    * @return the copy of the object.
    */
@@ -53,7 +58,7 @@ public abstract class Variable implements Serializable {
    * must redefine it.
    */
   public double getValue() throws JMException {
-    Class cls = java.lang.String.class;
+    Class<String> cls = java.lang.String.class;
     String name = cls.getName(); 
     Configuration.logger_.severe("Class " + name + " does not implement " +
         "method getValue");
@@ -68,7 +73,7 @@ public abstract class Variable implements Serializable {
   * must redefine it.
   */
   public void setValue(double value) throws JMException {
-    Class cls = java.lang.String.class;
+    Class<String> cls = java.lang.String.class;
     String name = cls.getName(); 
     Configuration.logger_.severe("Class " + name + " does not implement " +
         "method setValue");
@@ -83,7 +88,7 @@ public abstract class Variable implements Serializable {
    * Those classes requiring this method must redefine it.
    */
   public double getLowerBound() throws JMException { 
-    Class cls = java.lang.String.class;
+    Class<String> cls = java.lang.String.class;
     String name = cls.getName(); 
     Configuration.logger_.severe("Class " + name + 
                        " does not implement method getLowerBound()");
@@ -97,7 +102,7 @@ public abstract class Variable implements Serializable {
    * program is terminated. Those classes requiring this method must redefine it.
    */
   public double getUpperBound() throws JMException {
-    Class cls = java.lang.String.class;
+    Class<String> cls = java.lang.String.class;
     String name = cls.getName(); 
     Configuration.logger_.severe("Class " + name + 
                        " does not implement method getUpperBound()");
@@ -111,7 +116,7 @@ public abstract class Variable implements Serializable {
    * Those classes requiring this method must to redefine it.
    */
   public void setLowerBound(double lowerBound) throws JMException {
-    Class cls = java.lang.String.class;
+    Class<String> cls = java.lang.String.class;
     String name = cls.getName(); 
     Configuration.logger_.severe("Class " + name + 
                        " does not implement method setLowerBound()");
@@ -125,7 +130,7 @@ public abstract class Variable implements Serializable {
    * Those classes requiring this method must redefine it.
    */
   public void setUpperBound(double upperBound) throws JMException {
-    Class cls = java.lang.String.class;
+    Class<String> cls = java.lang.String.class;
     String name = cls.getName(); 
     Configuration.logger_.severe("Class " + name + 
                        " does not implement method setUpperBound()");
@@ -137,7 +142,7 @@ public abstract class Variable implements Serializable {
    * @return The type of the encodings.variable
    */
   
-  public Class getVariableType() {
+  public Class<? extends Variable> getVariableType() {
     return this.getClass() ;
   } // getVariableType
 } // Variable

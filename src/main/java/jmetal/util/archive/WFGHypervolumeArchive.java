@@ -38,6 +38,11 @@ import java.util.Comparator;
  */
 public class WFGHypervolumeArchive extends Archive {
   
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 2607976470731454148L;
+
   /** 
    * Stores the maximum size of the archive.
    */
@@ -51,13 +56,13 @@ public class WFGHypervolumeArchive extends Archive {
   /**
    * Stores a <code>Comparator</code> for dominance checking.
    */
-  private Comparator dominance_;
+  private Comparator<Solution> dominance_;
   
   /**
    * Stores a <code>Comparator</code> for equality checking (in the objective
    * space).
    */
-  private Comparator equals_; 
+  private Comparator<Solution> equals_; 
   
   /**
    * Stores a <code>Distance</code> object, for distances utilities
@@ -67,7 +72,7 @@ public class WFGHypervolumeArchive extends Archive {
   private MetricsUtil utils_ ;
   
   private double      offset_ ;
-  private Comparator crowdingDistance_; 
+  private Comparator<Solution> crowdingDistance_; 
   private WFGHV wfg = null;
 
   /**

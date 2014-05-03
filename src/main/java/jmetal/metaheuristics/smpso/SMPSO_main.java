@@ -65,8 +65,6 @@ public class SMPSO_main {
     Mutation  mutation  ;  // "Turbulence" operator
     
     QualityIndicator indicators ; // Object to get quality indicators
-        
-    HashMap  parameters ; // Operator parameters
 
     // Logger object and file to store log messages
     logger_      = Configuration.logger_ ;
@@ -102,10 +100,10 @@ public class SMPSO_main {
     algorithm.setInputParameter("archiveSize",100);
     algorithm.setInputParameter("maxIterations",250);
 
-    parameters = new HashMap() ;
-    parameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
-    parameters.put("distributionIndex", 20.0) ;
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);                    
+    HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
+    mutationParameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
+    mutationParameters.put("distributionIndex", 20.0) ;
+    mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);                    
 
     algorithm.addOperator("mutation", mutation);
 

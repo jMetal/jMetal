@@ -5,10 +5,10 @@ import jmetal.core.Problem;
 import jmetal.experiments.Settings;
 import jmetal.experiments.settings.IBEA_Settings;
 import jmetal.operators.crossover.SBXCrossover;
-import jmetal.operators.localSearch.MutationLocalSearch;
 import jmetal.operators.mutation.PolynomialMutation;
 import jmetal.problems.Fonseca;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,8 +17,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Properties;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * Created with IntelliJ IDEA.
@@ -46,20 +44,20 @@ public class IBEA_SettingsTest {
     SBXCrossover crossover = (SBXCrossover)algorithm.getOperator("crossover") ;
     double pc = (Double)crossover.getParameter("probability") ;
     double dic = (Double)crossover.getParameter("distributionIndex") ;
-    MutationLocalSearch improvement = (MutationLocalSearch)algorithm.getOperator("improvement") ;
+    //MutationLocalSearch improvement = (MutationLocalSearch)algorithm.getOperator("improvement") ;
     PolynomialMutation mutation = (PolynomialMutation)algorithm.getOperator("mutation") ;
     double pm = (Double)mutation.getParameter("probability") ;
     double dim = (Double)mutation.getParameter("distributionIndex") ;
 
-    assertEquals("IBEA_SettingsTest", 100, ((Integer)algorithm.getInputParameter("populationSize")).intValue());
-    assertEquals("IBEA_SettingsTest", 25000, ((Integer)algorithm.getInputParameter("maxEvaluations")).intValue());
-    assertEquals("IBEA_SettingsTest", 100, ((Integer)algorithm.getInputParameter("archiveSize")).intValue());
+    Assert.assertEquals("IBEA_SettingsTest", 100, ((Integer)algorithm.getInputParameter("populationSize")).intValue());
+    Assert.assertEquals("IBEA_SettingsTest", 25000, ((Integer)algorithm.getInputParameter("maxEvaluations")).intValue());
+    Assert.assertEquals("IBEA_SettingsTest", 100, ((Integer)algorithm.getInputParameter("archiveSize")).intValue());
 
-    assertEquals("IBEA_SettingsTest", 0.9, pc, epsilon);
-    assertEquals("IBEA_SettingsTest", 20.0, dic, epsilon);
+    Assert.assertEquals("IBEA_SettingsTest", 0.9, pc, epsilon);
+    Assert.assertEquals("IBEA_SettingsTest", 20.0, dic, epsilon);
 
-    assertEquals("IBEA_SettingsTest", 1.0/problem.getNumberOfVariables(), pm, epsilon);
-    assertEquals("IBEA_SettingsTest", 20.0, dim, epsilon);
+    Assert.assertEquals("IBEA_SettingsTest", 1.0/problem.getNumberOfVariables(), pm, epsilon);
+    Assert.assertEquals("IBEA_SettingsTest", 20.0, dim, epsilon);
   }
 
   @Test
@@ -71,19 +69,19 @@ public class IBEA_SettingsTest {
     SBXCrossover crossover = (SBXCrossover)algorithm.getOperator("crossover") ;
     double pc = (Double)crossover.getParameter("probability") ;
     double dic = (Double)crossover.getParameter("distributionIndex") ;
-    MutationLocalSearch improvement = (MutationLocalSearch)algorithm.getOperator("improvement") ;
+    //MutationLocalSearch improvement = (MutationLocalSearch)algorithm.getOperator("improvement") ;
     PolynomialMutation mutation = (PolynomialMutation)algorithm.getOperator("mutation") ;
     double pm = (Double)mutation.getParameter("probability") ;
     double dim = (Double)mutation.getParameter("distributionIndex") ;
 
-    assertEquals("IBEA_SettingsTest", 100, ((Integer)algorithm.getInputParameter("populationSize")).intValue());
-    assertEquals("IBEA_SettingsTest", 25000, ((Integer)algorithm.getInputParameter("maxEvaluations")).intValue());
-    assertEquals("IBEA_SettingsTest", 100, ((Integer)algorithm.getInputParameter("archiveSize")).intValue());
+    Assert.assertEquals("IBEA_SettingsTest", 100, ((Integer)algorithm.getInputParameter("populationSize")).intValue());
+    Assert.assertEquals("IBEA_SettingsTest", 25000, ((Integer)algorithm.getInputParameter("maxEvaluations")).intValue());
+    Assert.assertEquals("IBEA_SettingsTest", 100, ((Integer)algorithm.getInputParameter("archiveSize")).intValue());
 
-    assertEquals("IBEA_SettingsTest", 0.9, pc, epsilon);
-    assertEquals("IBEA_SettingsTest", 20.0, dic, epsilon);
+    Assert.assertEquals("IBEA_SettingsTest", 0.9, pc, epsilon);
+    Assert.assertEquals("IBEA_SettingsTest", 20.0, dic, epsilon);
 
-    assertEquals("IBEA_SettingsTest", 1.0/problem.getNumberOfVariables(), pm, epsilon);
-    assertEquals("IBEA_SettingsTest", 20.0, dim, epsilon);
+    Assert.assertEquals("IBEA_SettingsTest", 1.0/problem.getNumberOfVariables(), pm, epsilon);
+    Assert.assertEquals("IBEA_SettingsTest", 20.0, dim, epsilon);
   }
 }

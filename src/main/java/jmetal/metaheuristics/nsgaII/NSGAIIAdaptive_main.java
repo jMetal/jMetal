@@ -80,11 +80,7 @@ public class NSGAIIAdaptive_main {
                                   ClassNotFoundException {
     Problem   problem   ; // The problem to solve
     Algorithm algorithm ; // The algorithm to use
-    Operator  crossover ; // Crossover operator
-    Operator  mutation  ; // Mutation operator
     Operator  selection ; // Selection operator
-    
-    HashMap  parameters ; // Operator parameters
     
     QualityIndicator indicators ; // Object to get quality indicators
 
@@ -121,8 +117,8 @@ public class NSGAIIAdaptive_main {
     algorithm.setInputParameter("maxEvaluations",150000);                
 
     // Selection Operator 
-    parameters = null ;
-    selection = SelectionFactory.getSelectionOperator("BinaryTournament2", parameters) ;                           
+    HashMap<String, Object> selectionParameters = null ;
+    selection = SelectionFactory.getSelectionOperator("BinaryTournament2", selectionParameters) ;                           
 
     // Add the operators to the algorithm
     algorithm.addOperator("selection",selection);
@@ -131,8 +127,7 @@ public class NSGAIIAdaptive_main {
     algorithm.setInputParameter("indicators", indicators) ;
     
     Offspring[] getOffspring = new Offspring[3];
-    double CR, F;
-    getOffspring[0] = new DifferentialEvolutionOffspring(CR = 1.0, F = 0.5);
+    getOffspring[0] = new DifferentialEvolutionOffspring(1.0, 0.5);
     
     getOffspring[1] = new SBXCrossoverOffspring(1.0, 20); 
     //getOffspring[1] = new BLXAlphaCrossoverOffspring(1.0, 0.5); 

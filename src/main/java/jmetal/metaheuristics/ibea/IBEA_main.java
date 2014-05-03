@@ -66,8 +66,6 @@ public class IBEA_main {
 
     QualityIndicator indicators ; // Object to get quality indicators
 
-    HashMap  parameters ; // Operator parameters
-
     // Logger object and file to store log messages
     logger_      = Configuration.logger_ ;
     fileHandler_ = new FileHandler("IBEA.log"); 
@@ -101,20 +99,20 @@ public class IBEA_main {
     algorithm.setInputParameter("maxEvaluations",25000);
 
     // Mutation and Crossover for Real codification 
-    parameters = new HashMap() ;
-    parameters.put("probability", 0.9) ;
-    parameters.put("distributionIndex", 20.0) ;
-    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters);                   
+    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
+    crossoverParameters.put("probability", 0.9) ;
+    crossoverParameters.put("distributionIndex", 20.0) ;
+    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", crossoverParameters);                   
 
-    parameters = new HashMap() ;
-    parameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
-    parameters.put("distributionIndex", 20.0) ;
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);         
+    HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
+    mutationParameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
+    mutationParameters.put("distributionIndex", 20.0) ;
+    mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);         
 
     /* Selection Operator */
-    parameters = new HashMap() ; 
-    parameters.put("comparator", new FitnessComparator()) ;
-    selection = new BinaryTournament(parameters);
+    HashMap<String, Object> selectionParameters = new HashMap<String, Object>() ; 
+    selectionParameters.put("comparator", new FitnessComparator()) ;
+    selection = new BinaryTournament(selectionParameters);
     
     // Add the operators to the algorithm
     algorithm.addOperator("crossover",crossover);

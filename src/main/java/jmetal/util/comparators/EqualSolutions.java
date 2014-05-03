@@ -31,7 +31,7 @@ import java.util.Comparator;
  * equal or not. A dominance test is applied to decide about what solution
  * is the best.
  */
-public class EqualSolutions implements Comparator{        
+public class EqualSolutions implements Comparator<Solution> {
    
   /**
    * Compares two solutions.
@@ -41,7 +41,8 @@ public class EqualSolutions implements Comparator{
    * and solution2 are equals, or solution1 is greater than solution2, 
    * respectively. 
    */
-  public int compare(Object object1, Object object2) {
+  @Override
+  public int compare(Solution object1, Solution object2) {
     if (object1==null)
       return 1;
     else if (object2 == null)

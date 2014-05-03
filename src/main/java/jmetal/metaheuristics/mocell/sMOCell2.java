@@ -38,6 +38,11 @@ import java.util.Comparator;
  */
 public class sMOCell2 extends Algorithm{
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = -2245599709758873327L;
+
   /** 
    * Constructor
    * @param problem Problem to solve
@@ -53,13 +58,13 @@ public class sMOCell2 extends Algorithm{
    * @throws JMException 
    */   
   public SolutionSet execute() throws JMException, ClassNotFoundException {
-    int populationSize, archiveSize, maxEvaluations, evaluations, feedBack;
+    int populationSize, archiveSize, maxEvaluations, evaluations;
     Operator mutationOperator, crossoverOperator, selectionOperator;
     SolutionSet currentSolutionSet, newSolutionSet;
     CrowdingArchive archive;
     SolutionSet [] neighbors;    
     Neighborhood neighborhood;
-    Comparator dominance = new DominanceComparator(),
+    Comparator<Solution> dominance = new DominanceComparator(),
     crowding  = new CrowdingComparator();  
     Distance distance = new Distance();
 
@@ -89,9 +94,7 @@ public class sMOCell2 extends Algorithm{
       currentSolutionSet.add(solution);
       solution.setLocation(i);
       evaluations++;
-    }       
-    //
-    int iterations = 0;
+    }
 
     while (evaluations < maxEvaluations){                 
       newSolutionSet = new SolutionSet(populationSize);

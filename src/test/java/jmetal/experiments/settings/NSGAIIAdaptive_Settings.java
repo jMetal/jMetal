@@ -87,7 +87,7 @@ public class NSGAIIAdaptive_Settings extends Settings {
     Algorithm algorithm ;
     Selection  selection ;
 
-    HashMap  parameters ; // Operator parameters
+    HashMap<String, Object> parameters = new HashMap<String, Object>() ;
     
     algorithm = new NSGAIIAdaptive(problem_) ;
     
@@ -123,7 +123,7 @@ public class NSGAIIAdaptive_Settings extends Settings {
     Algorithm algorithm ;
     Selection  selection ;
 
-    HashMap  parameters ; // Operator parameters
+    HashMap<String, Object> parameters = new HashMap<String, Object>() ;
 
     // Creating the algorithm.
     algorithm = new NSGAIIAdaptive(problem_) ;

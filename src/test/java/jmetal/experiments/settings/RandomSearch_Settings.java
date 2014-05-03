@@ -27,7 +27,6 @@ import jmetal.metaheuristics.randomSearch.RandomSearch;
 import jmetal.problems.ProblemFactory;
 import jmetal.util.JMException;
 
-import java.util.HashMap;
 import java.util.Properties;
 
 /**
@@ -76,8 +75,6 @@ public class RandomSearch_Settings extends Settings {
   @Override
   public Algorithm configure(Properties configuration) throws JMException {
     Algorithm algorithm ;
-
-    HashMap parameters ; // Operator parameters
 
     // Creating the algorithm.
     algorithm = new RandomSearch(problem_) ;

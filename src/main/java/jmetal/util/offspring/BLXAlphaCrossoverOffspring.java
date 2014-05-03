@@ -30,16 +30,15 @@ public class BLXAlphaCrossoverOffspring extends Offspring {
   private BLXAlphaCrossoverOffspring(
           double crossoverProbability,
           double alpha) throws JMException {
-  	HashMap parameters ;
     crossoverProbability_ = crossoverProbability;
     alpha_ = alpha;
 
     // Crossover operator
-    parameters = new HashMap() ;
-    parameters.put("probability", crossoverProbability_) ;
-    parameters.put("alpha", alpha_) ;
+    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
+    crossoverParameters.put("probability", crossoverProbability_) ;
+    crossoverParameters.put("alpha", alpha_) ;
 
-    crossover_ = CrossoverFactory.getCrossoverOperator("BLXAlphaCrossover", parameters);
+    crossover_ = CrossoverFactory.getCrossoverOperator("BLXAlphaCrossover", crossoverParameters);
 
     selection_ = SelectionFactory.getSelectionOperator("BinaryTournament", null);
     

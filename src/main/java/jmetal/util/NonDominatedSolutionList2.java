@@ -35,15 +35,16 @@ import java.util.Iterator;
 public class NonDominatedSolutionList2 extends SolutionSet{
 
 	/**
+     * 
+     */
+    private static final long serialVersionUID = -7677616121792063119L;
+
+    /**
 	 * Stores a <code>Comparator</code> for dominance checking
 	 */
-	private Comparator dominance_ = new DominanceComparator();
-  private int solutionCounter_ ;
+	private Comparator<Solution> dominance_ = new DominanceComparator();
 
-	/**
-	 * Stores a <code>Comparator</code> for checking if two solutions are equal
-	 */
-	private static final Comparator equal_ = new SolutionComparator();
+	private int solutionCounter_ ;
 
 	/**
 	 * Constructor.
@@ -61,7 +62,7 @@ public class NonDominatedSolutionList2 extends SolutionSet{
 	 * comparator object.
 	 * @param dominance The comparator for dominance checking.
 	 */
-	public NonDominatedSolutionList2(Comparator dominance) {
+	public NonDominatedSolutionList2(Comparator<Solution> dominance) {
 		super();
 		dominance_ = dominance;
     solutionCounter_ = 0 ;

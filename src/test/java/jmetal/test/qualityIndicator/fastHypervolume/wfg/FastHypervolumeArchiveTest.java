@@ -19,12 +19,11 @@ import static org.junit.Assert.assertEquals;
  */
 public class FastHypervolumeArchiveTest {
 
-  Comparator objectiveComparator_ ;
+  Comparator<Solution> objectiveComparator_ ;
 
   @Before
   public void setup() {
-    boolean descending ;
-    objectiveComparator_  = new ObjectiveComparator(1, descending = true) ;
+    objectiveComparator_  = new ObjectiveComparator(1, true) ;
   }
 
   @Test

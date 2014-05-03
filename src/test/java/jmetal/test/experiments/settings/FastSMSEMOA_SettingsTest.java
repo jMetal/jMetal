@@ -8,6 +8,7 @@ import jmetal.operators.crossover.SBXCrossover;
 import jmetal.operators.mutation.PolynomialMutation;
 import jmetal.problems.Fonseca;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,8 +17,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Properties;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * Created with IntelliJ IDEA.
@@ -49,15 +48,15 @@ public class FastSMSEMOA_SettingsTest {
     double pm = (Double)mutation.getParameter("probability") ;
     double dim = (Double)mutation.getParameter("distributionIndex") ;
 
-    assertEquals("SMSEMOA_SettingsTest", 100, ((Integer)algorithm.getInputParameter("populationSize")).intValue());
-    assertEquals("SMSEMOA_SettingsTest", 25000, ((Integer)algorithm.getInputParameter("maxEvaluations")).intValue());
+    Assert.assertEquals("SMSEMOA_SettingsTest", 100, ((Integer)algorithm.getInputParameter("populationSize")).intValue());
+    Assert.assertEquals("SMSEMOA_SettingsTest", 25000, ((Integer)algorithm.getInputParameter("maxEvaluations")).intValue());
 
-    assertEquals("SMSEMOA_SettingsTest", 0.9, pc, epsilon);
-    assertEquals("SMSEMOA_SettingsTest", 20.0, dic, epsilon);
+    Assert.assertEquals("SMSEMOA_SettingsTest", 0.9, pc, epsilon);
+    Assert.assertEquals("SMSEMOA_SettingsTest", 20.0, dic, epsilon);
 
-    assertEquals("SMSEMOA_SettingsTest", 1.0/problem.getNumberOfVariables(), pm, epsilon);
-    assertEquals("SMSEMOA_SettingsTest", 20.0, dim, epsilon);
-    assertEquals("SMSEMOA_SettingsTest", 100.0, ((Double)algorithm.getInputParameter("offset")).doubleValue(), epsilon);
+    Assert.assertEquals("SMSEMOA_SettingsTest", 1.0/problem.getNumberOfVariables(), pm, epsilon);
+    Assert.assertEquals("SMSEMOA_SettingsTest", 20.0, dim, epsilon);
+    Assert.assertEquals("SMSEMOA_SettingsTest", 100.0, ((Double)algorithm.getInputParameter("offset")).doubleValue(), epsilon);
   }
 
   @Test
@@ -73,14 +72,14 @@ public class FastSMSEMOA_SettingsTest {
     double pm = (Double)mutation.getParameter("probability") ;
     double dim = (Double)mutation.getParameter("distributionIndex") ;
 
-    assertEquals("SMSEMOA_SettingsTest", 100, ((Integer)algorithm.getInputParameter("populationSize")).intValue());
-    assertEquals("SMSEMOA_SettingsTest", 25000, ((Integer)algorithm.getInputParameter("maxEvaluations")).intValue());
+    Assert.assertEquals("SMSEMOA_SettingsTest", 100, ((Integer)algorithm.getInputParameter("populationSize")).intValue());
+    Assert.assertEquals("SMSEMOA_SettingsTest", 25000, ((Integer)algorithm.getInputParameter("maxEvaluations")).intValue());
 
-    assertEquals("SMSEMOA_SettingsTest", 0.9, pc, epsilon);
-    assertEquals("SMSEMOA_SettingsTest", 20.0, dic, epsilon);
+    Assert.assertEquals("SMSEMOA_SettingsTest", 0.9, pc, epsilon);
+    Assert.assertEquals("SMSEMOA_SettingsTest", 20.0, dic, epsilon);
 
-    assertEquals("SMSEMOA_SettingsTest", 1.0/problem.getNumberOfVariables(), pm, epsilon);
-    assertEquals("SMSEMOA_SettingsTest", 20.0, dim, epsilon);
-    assertEquals("SMSEMOA_SettingsTest", 100.0, ((Double)algorithm.getInputParameter("offset")).doubleValue(), epsilon);
+    Assert.assertEquals("SMSEMOA_SettingsTest", 1.0/problem.getNumberOfVariables(), pm, epsilon);
+    Assert.assertEquals("SMSEMOA_SettingsTest", 20.0, dim, epsilon);
+    Assert.assertEquals("SMSEMOA_SettingsTest", 100.0, ((Double)algorithm.getInputParameter("offset")).doubleValue(), epsilon);
   }
 }
