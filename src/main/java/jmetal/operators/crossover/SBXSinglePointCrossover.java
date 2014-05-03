@@ -34,6 +34,11 @@ import java.util.List;
 
 public class SBXSinglePointCrossover extends Crossover {
 	/**
+     * 
+     */
+    private static final long serialVersionUID = 5802652792685626443L;
+
+    /**
 	 * EPS defines the minimum difference allowed between real values
 	 */
 	private static final double EPS= 1.0e-14;
@@ -46,7 +51,7 @@ public class SBXSinglePointCrossover extends Crossover {
 	/**
 	 * Valid solution types to apply this operator 
 	 */
-	private static final List VALID_TYPES = Arrays.asList(ArrayRealAndBinarySolutionType.class) ;
+	private static final List<Class<ArrayRealAndBinarySolutionType>> VALID_TYPES = Arrays.asList(ArrayRealAndBinarySolutionType.class) ;
 
 	/**
 	 * Constructor
@@ -90,8 +95,6 @@ public class SBXSinglePointCrossover extends Crossover {
 		XReal x2 = new XReal(parent2) ;		
 		XReal offs1 = new XReal(offSpring[0]) ;
 		XReal offs2 = new XReal(offSpring[1]) ;
-
-		int numberOfVariables = x1.size() ;
 
 		if (PseudoRandom.randDouble() <= realProbability) {
 			for (int i=0; i<x1.size(); i++){
@@ -193,7 +196,7 @@ public class SBXSinglePointCrossover extends Crossover {
 		if (parents.length != 2) {
 			Configuration.logger_.severe("SBXSinglePointCrossover.execute: operator " +
 			"needs two parents");
-			Class cls = java.lang.String.class;
+			Class<String> cls = java.lang.String.class;
 			String name = cls.getName(); 
 			throw new JMException("Exception in " + name + ".execute()") ;      
 		} // if
@@ -203,7 +206,7 @@ public class SBXSinglePointCrossover extends Crossover {
 			Configuration.logger_.severe("SBXSinglePointCrossover.execute: the solutions " +
 					"type " + parents[0].getType() + " is not allowed with this operator");
 
-			Class cls = java.lang.String.class;
+			Class<String> cls = java.lang.String.class;
 			String name = cls.getName(); 
 			throw new JMException("Exception in " + name + ".execute()") ;
 		} // if 

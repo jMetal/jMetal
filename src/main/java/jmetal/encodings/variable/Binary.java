@@ -32,8 +32,13 @@ import java.util.BitSet;
  * or real variables).
  */ 
 public class Binary extends Variable {
-  
+
   /**
+   * 
+   */
+  private static final long serialVersionUID = -3553927010701150789L;
+
+/**
    * Stores the bits constituting the binary string. It is
    * implemented using a BitSet object
    */

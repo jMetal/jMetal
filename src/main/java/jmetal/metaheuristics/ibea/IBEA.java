@@ -36,6 +36,11 @@ import java.util.List;
 public class IBEA extends Algorithm{
 
   /**
+   * 
+   */
+  private static final long serialVersionUID = -1889165434725718813L;
+
+/**
    * Defines the number of tournaments for creating the mating pool
    */
   public static final int TOURNAMENTS_ROUNDS = 1;

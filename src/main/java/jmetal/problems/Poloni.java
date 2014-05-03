@@ -36,6 +36,11 @@ import jmetal.util.JMException;
 public class Poloni extends Problem{    
     
  /**
+     * 
+     */
+    private static final long serialVersionUID = -530548126202625574L;
+
+/**
   * Constructor.
   * Creates a default instance of the Poloni problem
   * @param solutionType The solution type must "Real" or "BinaryReal".

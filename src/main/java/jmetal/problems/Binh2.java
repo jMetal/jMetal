@@ -32,6 +32,11 @@ import jmetal.util.wrapper.XReal;
  */
 public class Binh2 extends Problem{
   /**
+     * 
+     */
+    private static final long serialVersionUID = 8733721399158738615L;
+
+/**
    * Constructor
    * Creates a default instance of the Binh2 problem
    * @param solutionType The solution type must "Real" or "BinaryReal".

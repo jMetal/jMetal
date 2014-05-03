@@ -34,6 +34,11 @@ import jmetal.util.comparators.CrowdingComparator;
 public class ssNSGAII extends Algorithm {
 
   /**
+   * 
+   */
+  private static final long serialVersionUID = 3588191288161132897L;
+
+  /**
    * Constructor
    * @param problem Problem to solve
    */

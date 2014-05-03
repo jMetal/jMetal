@@ -128,7 +128,7 @@ public class jMetalExperiment extends Experiment {
     exp.initExperiment();
 
     // Run the experiments
-    int numberOfThreads ;
+    //int numberOfThreads ;
     //exp.runExperiment(numberOfThreads = 8) ;
 
     //exp.generateQualityIndicators() ;
@@ -147,11 +147,11 @@ public class jMetalExperiment extends Experiment {
     exp.generateLatexTables() ;
 
     // Configure the R scripts to be generated
-    int rows  ;
-    int columns  ;
+    //int rows  ;
+    //int columns  ;
     String prefix ;
     String [] problems ;
-    boolean notch ;
+    //boolean notch ;
 
 
     

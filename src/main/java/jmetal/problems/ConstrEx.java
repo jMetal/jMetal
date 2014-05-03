@@ -33,6 +33,11 @@ import jmetal.util.JMException;
  */
 public class ConstrEx extends Problem{
   /**
+     * 
+     */
+    private static final long serialVersionUID = 1790825694174189801L;
+
+/**
    * Constructor
    * Creates a default instance of the Constr_Ex problem
    * @param solutionType The solution type must "Real" or "BinaryReal".

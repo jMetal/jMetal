@@ -29,7 +29,7 @@ import java.util.Comparator;
  * This class implements a <code>Comparator</code> (a method for comparing
  * <code>Solution</code> objects) based on epsilon dominance.
  */
-public class EpsilonDominanceComparator implements Comparator{
+public class EpsilonDominanceComparator implements Comparator<Solution> {
    
   /**
    * Stores the value of eta, needed for epsilon-dominance.
@@ -39,7 +39,7 @@ public class EpsilonDominanceComparator implements Comparator{
   /** 
    * stores a comparator for check the OverallConstraintComparator
    */
-  private static final Comparator overallConstraintViolationComparator_ =
+  private static final Comparator<Solution> overallConstraintViolationComparator_ =
                               new OverallConstraintViolationComparator();
   
   /**
@@ -57,7 +57,8 @@ public class EpsilonDominanceComparator implements Comparator{
   * @return -1, or 0, or 1 if solution1 dominates solution2, both are 
   * non-dominated, or solution1 is dominated by solution2, respectively.
   */
-  public int compare(Object object1, Object object2) {
+  @Override
+  public int compare(Solution object1, Solution object2) {
     if (object1==null)
       return 1;
     else if (object2 == null)
@@ -74,7 +75,7 @@ public class EpsilonDominanceComparator implements Comparator{
     Solution solution2 = (Solution)object2;
     
     int flag; 
-    Comparator constraint = new OverallConstraintViolationComparator();
+    Comparator<Solution> constraint = new OverallConstraintViolationComparator();
     flag = constraint.compare(solution1,solution2);
     
     if (flag != 0) {      

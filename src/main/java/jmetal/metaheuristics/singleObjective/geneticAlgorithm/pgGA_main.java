@@ -48,7 +48,6 @@ public class pgGA_main {
     Operator  selection ;         // Selection operator
             
     //int bits ; // Length of bit string in the OneMax problem
-    HashMap  parameters ; // Operator parameters
 
     int threads = 4 ; // 0 - use all the available cores
     IParallelEvaluator parallelEvaluator = new MultithreadedEvaluator(threads) ;
@@ -63,19 +62,19 @@ public class pgGA_main {
     algorithm.setInputParameter("maxEvaluations", 2500000);
 
     // Mutation and Crossover for Real codification 
-    parameters = new HashMap() ;
-    parameters.put("probability", 0.9) ;
-    parameters.put("distributionIndex", 20.0) ;
-    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters);                   
+    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
+    crossoverParameters.put("probability", 0.9) ;
+    crossoverParameters.put("distributionIndex", 20.0) ;
+    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", crossoverParameters);                   
 
-    parameters = new HashMap() ;
-    parameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
-    parameters.put("distributionIndex", 20.0) ;
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);
+    HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
+    mutationParameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
+    mutationParameters.put("distributionIndex", 20.0) ;
+    mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
     
     /* Selection Operator */
-    parameters = null ;
-    selection = SelectionFactory.getSelectionOperator("BinaryTournament", parameters) ;                            
+    HashMap<String, Object> selectionParameters = null ; // FIXME: why we are passing null?
+    selection = SelectionFactory.getSelectionOperator("BinaryTournament", selectionParameters) ;                            
     
     /* Add the operators to the algorithm*/
     algorithm.addOperator("crossover",crossover);

@@ -28,16 +28,15 @@ public class SBXCrossoverOffspring extends Offspring {
 
   public SBXCrossoverOffspring(double crossoverProbability,
       double distributionIndexForCrossover) throws JMException {
-    HashMap parameters ;
     crossoverProbability_ = crossoverProbability;
     distributionIndexForCrossover_ = distributionIndexForCrossover;
 
     // Crossover operator
-    parameters = new HashMap() ;
-    parameters.put("probability", crossoverProbability_) ;
-    parameters.put("distributionIndex", distributionIndexForCrossover_) ;
+    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
+    crossoverParameters.put("probability", crossoverProbability_) ;
+    crossoverParameters.put("distributionIndex", distributionIndexForCrossover_) ;
 
-    crossover_ = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters);
+    crossover_ = CrossoverFactory.getCrossoverOperator("SBXCrossover", crossoverParameters);
 
     selection_ = SelectionFactory.getSelectionOperator("BinaryTournament", null);
 

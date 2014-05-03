@@ -33,6 +33,11 @@ import jmetal.util.PseudoRandom;
 public class Real extends Variable{
 
   /**
+   * 
+   */
+  private static final long serialVersionUID = -227984897558565037L;
+
+/**
    * Stores the value of the real encodings.variable
    */
   private double value_;

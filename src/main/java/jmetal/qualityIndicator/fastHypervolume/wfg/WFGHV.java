@@ -50,7 +50,7 @@ public class WFGHV {
   int maxNumberOfPoints_ ;
   int maxNumberOfObjectives_ ;
   final int OPT = 2 ;
-  Comparator pointComparator_;
+  Comparator<Point> pointComparator_;
 
   public WFGHV(int dimension, int maxNumberOfPoints) {
     referencePoint_ = null ;
@@ -114,7 +114,7 @@ public class WFGHV {
       for (int j = 0; j < v.length; j++){
         v[j] = set.get(i).getObjective(j);
       }
-      Point p = new Point(v);
+      //Point p = new Point(v);
       double aux = this.getExclusiveHV(wholeFront, i);
       if ((aux) < contribution) {
         index = i;

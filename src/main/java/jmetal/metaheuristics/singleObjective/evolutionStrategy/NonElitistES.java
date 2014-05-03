@@ -31,6 +31,12 @@ import java.util.Comparator;
  * Class implementing a (mu,lambda) ES. Lambda must be divisible by mu.
  */
 public class NonElitistES extends Algorithm {
+
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 5994321940086052871L;
+
   private int     mu_     ;
   private int     lambda_ ;
   
@@ -61,7 +67,7 @@ public class NonElitistES extends Algorithm {
     SolutionSet offspringPopulation ;  
 
     Operator   mutationOperator ;
-    Comparator comparator       ;
+    Comparator<Solution> comparator       ;
     
     comparator = new ObjectiveComparator(0) ; // Single objective comparator
     

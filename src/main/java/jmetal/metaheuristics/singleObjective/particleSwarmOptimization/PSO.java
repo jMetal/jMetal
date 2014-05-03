@@ -39,7 +39,12 @@ import java.util.logging.Logger;
  */
 public class PSO extends Algorithm {
 
-	/**
+  /**
+   * 
+   */
+  private static final long serialVersionUID = -2657053204274107750L;
+
+    /**
    * Stores the number of particles_ used
    */
   private int particlesSize_;
@@ -77,7 +82,7 @@ public class PSO extends Algorithm {
   /**
    * Comparator object
    */
-  Comparator  comparator_  ;
+  Comparator<Solution> comparator_  ;
   
   Operator findBestSolution_ ;
   
@@ -115,16 +120,13 @@ public class PSO extends Algorithm {
     ChVel2_ = 1.0;
     
     comparator_ = new ObjectiveComparator(0) ; // Single objective comparator
-    HashMap  parameters ; // Operator parameters
-
-    parameters = new HashMap() ;
-    parameters.put("comparator", comparator_) ;
-    findBestSolution_ = new BestSolutionSelection(parameters) ;
+    HashMap<String, Object> selectionParameters = new HashMap<String, Object>() ;
+    selectionParameters.put("comparator", comparator_) ;
+    findBestSolution_ = new BestSolutionSelection(selectionParameters) ;
 
     evaluations_ = 0 ;
   } // Constructor
 
-  private SolutionSet trueFront_;
   private double deltaMax_[];
   private double deltaMin_[];
   boolean success_;
@@ -213,7 +215,7 @@ public class PSO extends Algorithm {
     double r1, r2 ;
     //double W ;
     double C1, C2;
-    double wmax, wmin, deltaMax, deltaMin;
+    double wmax, wmin;
     XReal bestGlobal;
 
   	bestGlobal = new XReal(globalBest_) ;
@@ -350,7 +352,7 @@ public class PSO extends Algorithm {
 
     //-> Step 7. Iterations ..        
     while (iteration_ < maxIterations_) {
-      int bestIndividual = (Integer)findBestSolution_.execute(particles_) ;
+      //int bestIndividual = (Integer)findBestSolution_.execute(particles_) ;
       try {
         //Compute the speed_
         computeSpeed(iteration_, maxIterations_);

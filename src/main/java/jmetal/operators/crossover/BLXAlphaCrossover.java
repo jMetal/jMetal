@@ -21,6 +21,7 @@
 package jmetal.operators.crossover;
 
 import jmetal.core.Solution;
+import jmetal.core.SolutionType;
 import jmetal.encodings.solutionType.ArrayRealSolutionType;
 import jmetal.encodings.solutionType.RealSolutionType;
 import jmetal.util.Configuration;
@@ -38,6 +39,11 @@ import java.util.List;
  */
 public class BLXAlphaCrossover extends Crossover {
 	/**
+     * 
+     */
+    private static final long serialVersionUID = -7738534841007212922L;
+
+    /**
 	 * EPS defines the minimum difference allowed between real values
 	 */
 	private static final double DEFAULT_ALPHA = 0.5;
@@ -48,7 +54,7 @@ public class BLXAlphaCrossover extends Crossover {
 	/**
 	 * Valid solution types to apply this operator 
 	 */
-	private static final List VALID_TYPES = Arrays.asList(RealSolutionType.class,
+	private static final List<Class<? extends SolutionType>> VALID_TYPES = Arrays.asList(RealSolutionType.class,
 			ArrayRealSolutionType.class) ;
 
 	/** 
@@ -162,7 +168,7 @@ public class BLXAlphaCrossover extends Crossover {
 		if (parents.length != 2) {
 			Configuration.logger_.severe("BLXAlphaCrossover.execute: operator needs two " +
 					"parents");
-			Class cls = java.lang.String.class;
+			Class<String> cls = java.lang.String.class;
 			String name = cls.getName(); 
 			throw new JMException("Exception in " + name + ".execute()") ;      
 		} // if
@@ -172,7 +178,7 @@ public class BLXAlphaCrossover extends Crossover {
 			Configuration.logger_.severe("BLXAlphaCrossover.execute: the solutions " +
 					"type " + parents[0].getType() + " is not allowed with this operator");
 
-			Class cls = java.lang.String.class;
+			Class<String> cls = java.lang.String.class;
 			String name = cls.getName(); 
 			throw new JMException("Exception in " + name + ".execute()") ;
 		} // if 

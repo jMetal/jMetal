@@ -27,7 +27,6 @@ import jmetal.core.SolutionSet;
 import jmetal.operators.mutation.Mutation;
 import jmetal.operators.mutation.MutationFactory;
 import jmetal.problems.singleObjective.Sphere;
-import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
@@ -59,10 +58,6 @@ public class PSO_main {
     Problem   problem   ;  // The problem to solve
     Algorithm algorithm ;  // The algorithm to use
     Mutation  mutation  ;  // "Turbulence" operator
-    
-    QualityIndicator indicators ; // Object to get quality indicators
-        
-    HashMap  parameters ; // Operator parameters
 
     // Logger object and file to store log messages
     logger_      = Configuration.logger_ ;
@@ -81,10 +76,10 @@ public class PSO_main {
     algorithm.setInputParameter("swarmSize",50);
     algorithm.setInputParameter("maxIterations",5000);
     
-    parameters = new HashMap() ;
-    parameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
-    parameters.put("distributionIndex", 20.0) ;
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);                    
+    HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
+    mutationParameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
+    mutationParameters.put("distributionIndex", 20.0) ;
+    mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);                    
 
     algorithm.addOperator("mutation", mutation);
 

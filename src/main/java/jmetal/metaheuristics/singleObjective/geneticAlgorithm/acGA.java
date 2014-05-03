@@ -36,6 +36,11 @@ import java.util.HashMap;
 public class acGA extends Algorithm {
 
   /**
+   * 
+   */
+  private static final long serialVersionUID = -3128274013412638310L;
+
+  /**
    * Stores the problem to solve
    */
   private Problem problem_;
@@ -64,14 +69,14 @@ public class acGA extends Algorithm {
     SolutionSet population ;
     Neighborhood neighborhood;
 
-    Comparator  comparator      ;
+    Comparator<Solution>  comparator      ;
     comparator = new ObjectiveComparator(0) ; // Single objective comparator
     
     Operator findBestSolution ;
-    HashMap  parameters ; // Operator parameters
-    parameters = new HashMap() ;
-    parameters.put("comparator", comparator) ;
-    findBestSolution = new BestSolutionSelection(parameters) ;
+
+    HashMap<String, Object>  selectionParameters = new HashMap<String, Object>();
+    selectionParameters.put("comparator", comparator) ;
+    findBestSolution = new BestSolutionSelection(selectionParameters) ;
 
     //Read the params
     populationSize    = ((Integer)getInputParameter("populationSize")).intValue();

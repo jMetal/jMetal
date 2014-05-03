@@ -22,6 +22,7 @@
 package jmetal.operators.mutation;
 
 import jmetal.core.Solution;
+import jmetal.core.SolutionType;
 import jmetal.encodings.solutionType.ArrayRealSolutionType;
 import jmetal.encodings.solutionType.RealSolutionType;
 import jmetal.util.Configuration;
@@ -38,9 +39,14 @@ import java.util.List;
   */
 public class NonUniformMutation extends Mutation{
   /**
+   * 
+   */
+  private static final long serialVersionUID = -2440053123382478633L;
+
+  /**
    * Valid solution types to apply this operator 
    */
-  private static final List VALID_TYPES = Arrays.asList(RealSolutionType.class,
+  private static final List<Class<? extends SolutionType>> VALID_TYPES = Arrays.asList(RealSolutionType.class,
   		                                            ArrayRealSolutionType.class) ;
   /**
    * perturbation_ stores the perturbation value used in the Non Uniform 
@@ -148,7 +154,7 @@ public class NonUniformMutation extends Mutation{
       Configuration.logger_.severe("NonUniformMutation.execute: the solution " +
       		solution.getType() + "is not of the right type");
 
-      Class cls = java.lang.String.class;
+      Class<String> cls = java.lang.String.class;
       String name = cls.getName(); 
       throw new JMException("Exception in " + name + ".execute()") ;
     } // if  

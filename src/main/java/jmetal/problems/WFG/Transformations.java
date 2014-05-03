@@ -43,7 +43,7 @@ public class Transformations {
       
       Configuration.logger_.severe("WFG.Transformations.b_poly: Param alpha " +
           "must be > 0") ;
-      Class cls = java.lang.String.class;
+      Class<String> cls = java.lang.String.class;
       String name = cls.getName(); 
       throw new JMException("Exception in " + name + ".b_poly()") ; 
     }

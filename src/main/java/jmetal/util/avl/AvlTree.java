@@ -53,11 +53,11 @@ public class AvlTree<T> {
     insertAvlNode(node);
   }
 
-  public void insertAvlNode(AvlNode node) {
+  public void insertAvlNode(AvlNode<T> node) {
     if (AvlIsEmpty()) {
       insertTop(node);
     } else {
-      AvlNode<T> closestNode = null;
+      //AvlNode<T> closestNode = null;
       int result = searchClosestNode(node);
 
       switch (result) {
@@ -181,7 +181,7 @@ public class AvlTree<T> {
    * @return -1 if node has to be inserted in the left, +1 if it must be
    *         inserted in the right, 0 otherwise
    */
-  public int searchClosestNode(AvlNode node) {
+  public int searchClosestNode(AvlNode<T> node) {
     AvlNode<T> currentNode;
     int result = 0;
 
@@ -266,7 +266,7 @@ public class AvlTree<T> {
    * @param node2
    * @return -1 if node1 < node2, +1 if node1 > node2; 0 if node1 == node2
    */
-  public int compareNodes(AvlNode node1, AvlNode node2) {
+  public int compareNodes(AvlNode<T> node1, AvlNode<T> node2) {
     return comparator_.compare(node1.getItem(), node2.getItem());
   }
 
@@ -388,7 +388,7 @@ public class AvlTree<T> {
     return (top_ == null);
   }
 
-  public void insertTop(AvlNode node) {
+  public void insertTop(AvlNode<T> node) {
     top_ = node;
   }
 

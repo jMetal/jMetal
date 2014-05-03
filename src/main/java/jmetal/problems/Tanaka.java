@@ -34,6 +34,12 @@ import jmetal.util.JMException;
 public class Tanaka extends Problem{    
    
  /**
+     * 
+     */
+    private static final long serialVersionUID = 6305140494344001015L;
+
+
+/**
   * Constructor.
   * Creates a default instance of the problem Tanaka
   * @param solutionType The solution type must "Real" or "BinaryReal". 

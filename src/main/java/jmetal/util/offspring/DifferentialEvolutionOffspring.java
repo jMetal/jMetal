@@ -38,19 +38,18 @@ public class DifferentialEvolutionOffspring extends Offspring {
    * @param F
    */
   public DifferentialEvolutionOffspring(double CR, double F)  {
-    HashMap parameters = null ;
     CR_ = CR ;
     F_  = F  ;
     try {
       // Crossover operator
-      parameters = new HashMap() ;
-      parameters.put("CR", CR_) ;
-      parameters.put("F", F_) ;      
-      crossover_ = new DifferentialEvolutionCrossover(parameters) ;
+      HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
+      crossoverParameters.put("CR", CR_) ;
+      crossoverParameters.put("F", F_) ;      
+      crossover_ = new DifferentialEvolutionCrossover(crossoverParameters) ;
 
       // Selecion operator
-      parameters = null ;
-      selection_ = SelectionFactory.getSelectionOperator("DifferentialEvolutionSelection", parameters);
+      HashMap<String, Object> selectionParameters = null; // FIXME: why we are passing null?
+      selection_ = SelectionFactory.getSelectionOperator("DifferentialEvolutionSelection", selectionParameters);
     } catch (JMException ex) {
       Logger.getLogger(DifferentialEvolutionOffspring.class.getName()).log(Level.SEVERE, null, ex);
     }

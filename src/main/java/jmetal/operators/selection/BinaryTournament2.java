@@ -36,9 +36,14 @@ import java.util.HashMap;
 public class BinaryTournament2 extends Selection {
   
   /**
+   * 
+   */
+  private static final long serialVersionUID = -6853195126789856216L;
+
+  /**
    * dominance_ store the <code>Comparator</code> for check dominance_
    */
-  private Comparator dominance_;
+  private Comparator<Solution> dominance_;
   
   /**
    * a_ stores a permutation of the solutions in the solutionSet used

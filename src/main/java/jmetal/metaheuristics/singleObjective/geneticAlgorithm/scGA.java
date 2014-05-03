@@ -22,7 +22,6 @@
 package jmetal.metaheuristics.singleObjective.geneticAlgorithm;
 
 import jmetal.core.*;
-import jmetal.operators.selection.BestSolutionSelection;
 import jmetal.util.JMException;
 import jmetal.util.Neighborhood;
 import jmetal.util.comparators.ObjectiveComparator;
@@ -34,6 +33,11 @@ import java.util.HashMap;
  * Class implementing a single-objective synchronous cellular genetic algorithm
  */
 public class scGA extends Algorithm{
+
+  /**
+   * 
+   */
+  private static final long serialVersionUID = -7315994069313234885L;
 
   /** 
    * Constructor
@@ -60,14 +64,12 @@ public class scGA extends Algorithm{
     SolutionSet tempPopulation ;
     Neighborhood neighborhood;
 
-    Comparator  comparator      ;
+    Comparator<Solution>  comparator      ;
     comparator = new ObjectiveComparator(0) ; // Single objective comparator
     
-    Operator findBestSolution ;
-    HashMap  parameters ; // Operator parameters
-    parameters = new HashMap() ;
-    parameters.put("comparator", comparator) ;
-    findBestSolution = new BestSolutionSelection(parameters) ;
+    HashMap<String, Object> selectionParameters = new HashMap<String, Object>() ;
+    selectionParameters.put("comparator", comparator) ;
+    //Operator findBestSolution = new BestSolutionSelection(selectionParameters) ;
 
     //Read the parameters
     populationSize    = ((Integer)getInputParameter("populationSize")).intValue();

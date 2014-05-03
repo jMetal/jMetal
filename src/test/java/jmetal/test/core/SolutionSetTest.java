@@ -2,12 +2,12 @@ package jmetal.test.core;
 
 import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
+
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 
 /**
@@ -39,8 +39,8 @@ public class SolutionSetTest {
   public void testAddOneElementToAnEmptySolutionSet() throws Exception {
     boolean result ;
     result = solutionSet_.add(new Solution()) ;
-    assertEquals("SolutionSetTest", 1, solutionSet_.size()) ;
-    assertTrue("SolutionSetTest", result);
+    Assert.assertEquals("SolutionSetTest", 1, solutionSet_.size()) ;
+    Assert.assertTrue("SolutionSetTest", result);
   }
 
   /**
@@ -64,11 +64,11 @@ public class SolutionSetTest {
     for (int i = 0 ; i < 5 ; i++)
       solutionSet_.add(new Solution()) ;
 
-    Solution solution = solutionSet_.get(6) ;
+    //Solution solution = solutionSet_.get(6) ;
   }
 
   @Test
   public void testGetMaxSize() {
-    assertEquals("SolutionSetTest", 10, solutionSet_.getMaxSize());
+      Assert.assertEquals("SolutionSetTest", 10, solutionSet_.getMaxSize());
   }
 }

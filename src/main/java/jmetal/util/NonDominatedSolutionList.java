@@ -24,7 +24,6 @@ package jmetal.util;
 import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
 import jmetal.util.comparators.DominanceComparator;
-import jmetal.util.comparators.SolutionComparator;
 
 import java.util.Comparator;
 import java.util.Iterator;
@@ -35,14 +34,14 @@ import java.util.Iterator;
 public class NonDominatedSolutionList extends SolutionSet{
 
 	/**
+     * 
+     */
+    private static final long serialVersionUID = 7994329981209043992L;
+
+    /**
 	 * Stores a <code>Comparator</code> for dominance checking
 	 */
-	private Comparator dominance_ = new DominanceComparator(); 
-
-	/**
-	 * Stores a <code>Comparator</code> for checking if two solutions are equal
-	 */
-	private static final Comparator equal_ = new SolutionComparator();     
+	private Comparator<Solution> dominance_ = new DominanceComparator();
 
 	/** 
 	 * Constructor.
@@ -59,7 +58,7 @@ public class NonDominatedSolutionList extends SolutionSet{
 	 * comparator object.
 	 * @param dominance The comparator for dominance checking.
 	 */
-	public NonDominatedSolutionList(Comparator dominance) {
+	public NonDominatedSolutionList(Comparator<Solution> dominance) {
 		super();
 		dominance_ = dominance;
 	} // NonDominatedList

@@ -38,8 +38,13 @@ import java.util.Comparator;
  * This class representing an asynchronous version of OMOPSO algorithm
  */
 public class OMOPSO extends Algorithm {
-                 
+
   /**
+   * 
+   */
+  private static final long serialVersionUID = -4920101693175195923L;
+
+/**
    * Stores the number of particles_ used
    */
   private int particlesSize_;
@@ -58,11 +63,6 @@ public class OMOPSO extends Algorithm {
   * Stores the current number of iteration_
   */
   private int iteration_;
-  
-  /**
-  * Stores the perturbation used by the non-uniform mutation
-  */
-  private double perturbation_;
   
   /**
   * Stores the particles
@@ -92,12 +92,12 @@ public class OMOPSO extends Algorithm {
   /**
   * Stores a comparator for checking dominance
   */
-  private Comparator dominance_;
+  private Comparator<Solution> dominance_;
   
   /**
   * Stores a comparator for crowding checking
   */
-  private Comparator crowdingDistanceComparator_;
+  private Comparator<Solution> crowdingDistanceComparator_;
   
   /**
    * Stores a <code>Distance</code> object

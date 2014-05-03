@@ -33,6 +33,11 @@ import jmetal.encodings.variable.Binary;
 public class ZDT5 extends Problem {
      
  /**
+     * 
+     */
+    private static final long serialVersionUID = 6980764091779887017L;
+
+/**
   * Creates a default instance of problem ZDT5 (11 decision variables).
   * This problem allows only "Binary" representations.
   */

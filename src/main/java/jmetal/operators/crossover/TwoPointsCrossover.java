@@ -40,9 +40,14 @@ import java.util.List;
 public class TwoPointsCrossover extends Crossover {
 
   /**
+   * 
+   */
+  private static final long serialVersionUID = 5639984540815130543L;
+
+  /**
    * Valid solution types to apply this operator 
    */
-  private static final List VALID_TYPES = Arrays.asList(PermutationSolutionType.class) ;
+  private static final List<Class<PermutationSolutionType>> VALID_TYPES = Arrays.asList(PermutationSolutionType.class) ;
 
   private Double crossoverProbability_ = null;
 
@@ -157,7 +162,7 @@ public class TwoPointsCrossover extends Crossover {
 				Configuration.logger_.severe("TwoPointsCrossover.doCrossover: invalid " +
 						"type" + 
 						parent1.getDecisionVariables()[0].getVariableType());
-				Class cls = java.lang.String.class;
+				Class<String> cls = java.lang.String.class;
 				String name = cls.getName(); 
 				throw new JMException("Exception in " + name + ".doCrossover()") ; 
 			}
@@ -173,7 +178,7 @@ public class TwoPointsCrossover extends Crossover {
 	 */
 	public Object execute(Object object) throws JMException {
 		Solution [] parents = (Solution [])object;
-		Double crossoverProbability ;
+		//Double crossoverProbability ;
 
     if (!(VALID_TYPES.contains(parents[0].getType().getClass())  &&
         VALID_TYPES.contains(parents[1].getType().getClass())) ) {
@@ -184,13 +189,13 @@ public class TwoPointsCrossover extends Crossover {
 					parents[1].getType() + " are obtained");
 		} // if 
 
-		crossoverProbability = (Double)getParameter("probability");
+		//crossoverProbability = (Double)getParameter("probability");
 
 		if (parents.length < 2)
 		{
 			Configuration.logger_.severe("TwoPointsCrossover.execute: operator needs two " +
 			"parents");
-			Class cls = java.lang.String.class;
+			Class<String> cls = java.lang.String.class;
 			String name = cls.getName(); 
 			throw new JMException("Exception in " + name + ".execute()") ;      
 		}

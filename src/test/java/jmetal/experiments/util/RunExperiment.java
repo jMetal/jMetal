@@ -146,7 +146,7 @@ public class RunExperiment extends Thread {
 
 				experimentDirectory = new File(directory);
 				if (!experimentDirectory.exists()) {
-					boolean result = new File(directory).mkdirs();
+					//boolean result = new File(directory).mkdirs();
 					System.out.println("Creating " + directory);
 				}
 

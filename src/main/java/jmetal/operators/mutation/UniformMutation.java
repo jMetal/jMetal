@@ -22,6 +22,7 @@
 package jmetal.operators.mutation;
 
 import jmetal.core.Solution;
+import jmetal.core.SolutionType;
 import jmetal.encodings.solutionType.ArrayRealSolutionType;
 import jmetal.encodings.solutionType.RealSolutionType;
 import jmetal.util.Configuration;
@@ -38,9 +39,14 @@ import java.util.List;
  */
 public class UniformMutation extends Mutation{
   /**
+   * 
+   */
+  private static final long serialVersionUID = -2304129118963396274L;
+
+  /**
    * Valid solution types to apply this operator 
    */
-  private static final List VALID_TYPES = Arrays.asList(RealSolutionType.class,
+  private static final List<Class<? extends SolutionType>> VALID_TYPES = Arrays.asList(RealSolutionType.class,
   		                                            ArrayRealSolutionType.class) ;
   /**
    * Stores the value used in a uniform mutation operator
@@ -112,7 +118,7 @@ public class UniformMutation extends Mutation{
           "is not of the right type. The type should be 'Real', but " +
           solution.getType() + " is obtained");
 
-      Class cls = java.lang.String.class;
+      Class<String> cls = java.lang.String.class;
       String name = cls.getName(); 
       throw new JMException("Exception in " + name + ".execute()") ;
     } // if 

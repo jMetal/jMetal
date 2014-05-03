@@ -33,7 +33,13 @@ import jmetal.util.PseudoRandom;
  * The real values of the array have their own bounds.
  */
 public class ArrayReal extends Variable {
+
   /**
+   * 
+   */
+  private static final long serialVersionUID = -731434436787291959L;
+
+/**
    * Problem using the type
    */
   private Problem problem_;

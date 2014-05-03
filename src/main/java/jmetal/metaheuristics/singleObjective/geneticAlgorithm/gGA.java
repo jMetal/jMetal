@@ -33,6 +33,11 @@ import java.util.Comparator;
 public class gGA extends Algorithm {
   
  /**
+   * 
+   */
+  private static final long serialVersionUID = -8566068150403243344L;
+
+  /**
   *
   * Constructor
   * Create a new GGA instance.
@@ -58,7 +63,7 @@ public class gGA extends Algorithm {
     Operator    crossoverOperator ;
     Operator    selectionOperator ;
     
-    Comparator  comparator        ;
+    Comparator<Solution>  comparator        ;
     comparator = new ObjectiveComparator(0) ; // Single objective comparator
     
     // Read the params

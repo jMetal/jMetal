@@ -35,6 +35,11 @@ public class DTLZ4 extends Problem{
    
   
  /**
+     * 
+     */
+    private static final long serialVersionUID = -7953256730107339909L;
+
+/**
   * Creates a default DTLZ4 problem (12 variables and 3 objectives) 
   * @param solutionType The solution type must "Real" or "BinaryReal". 
   */

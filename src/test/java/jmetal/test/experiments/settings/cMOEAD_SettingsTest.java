@@ -9,14 +9,12 @@ import jmetal.operators.mutation.PolynomialMutation;
 import jmetal.problems.Fonseca;
 import jmetal.util.JMException;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.*;
 import java.util.Properties;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
 
 /**
  * Created with IntelliJ IDEA.
@@ -54,19 +52,19 @@ public class cMOEAD_SettingsTest {
     double CR = (Double)crossover.getParameter("CR") ;
     double F = (Double)crossover.getParameter("F") ;
 
-    assertEquals("cMOEAD_SettingsTest", 300, ((Integer)algorithm.getInputParameter("populationSize")).intValue());
-    assertEquals("cMOEAD_SettingsTest", 150000, ((Integer)algorithm.getInputParameter("maxEvaluations")).intValue());
+    Assert.assertEquals("cMOEAD_SettingsTest", 300, ((Integer)algorithm.getInputParameter("populationSize")).intValue());
+    Assert.assertEquals("cMOEAD_SettingsTest", 150000, ((Integer)algorithm.getInputParameter("maxEvaluations")).intValue());
 
-    assertEquals("cMOEAD_SettingsTest", 0.9, ((Double)algorithm.getInputParameter("delta")).doubleValue(), epsilon) ;
-    assertEquals("cMOEAD_SettingsTest", 20, ((Integer) algorithm.getInputParameter("T")).intValue());
-    assertEquals("cMOEAD_SettingsTest", 2,   ((Integer)algorithm.getInputParameter("nr")).intValue());
+    Assert.assertEquals("cMOEAD_SettingsTest", 0.9, ((Double)algorithm.getInputParameter("delta")).doubleValue(), epsilon) ;
+    Assert.assertEquals("cMOEAD_SettingsTest", 20, ((Integer) algorithm.getInputParameter("T")).intValue());
+    Assert.assertEquals("cMOEAD_SettingsTest", 2,   ((Integer)algorithm.getInputParameter("nr")).intValue());
 
-    assertEquals("cMOEAD_SettingsTest", 1.0, CR, epsilon);
-    assertEquals("cMOEAD_SettingsTest", 0.5, F, epsilon);
-    assertEquals("cMOEAD_SettingsTest", 20.0, dim, epsilon);
-    assertEquals("cMOEAD_SettingsTest", 1.0/problem.getNumberOfVariables(), pm, epsilon);
+    Assert.assertEquals("cMOEAD_SettingsTest", 1.0, CR, epsilon);
+    Assert.assertEquals("cMOEAD_SettingsTest", 0.5, F, epsilon);
+    Assert.assertEquals("cMOEAD_SettingsTest", 20.0, dim, epsilon);
+    Assert.assertEquals("cMOEAD_SettingsTest", 1.0/problem.getNumberOfVariables(), pm, epsilon);
 
-    assertTrue("cMOEAD_SettingsTest", experimentDirectory.exists());
+    Assert.assertTrue("cMOEAD_SettingsTest", experimentDirectory.exists());
   }
 
   @Test
@@ -87,18 +85,18 @@ public class cMOEAD_SettingsTest {
     double CR = (Double)crossover.getParameter("CR") ;
     double F = (Double)crossover.getParameter("F") ;
 
-    assertEquals("cMOEAD_SettingsTest", 300, ((Integer)algorithm.getInputParameter("populationSize")).intValue());
-    assertEquals("cMOEAD_SettingsTest", 150000, ((Integer)algorithm.getInputParameter("maxEvaluations")).intValue());
+    Assert.assertEquals("cMOEAD_SettingsTest", 300, ((Integer)algorithm.getInputParameter("populationSize")).intValue());
+    Assert.assertEquals("cMOEAD_SettingsTest", 150000, ((Integer)algorithm.getInputParameter("maxEvaluations")).intValue());
 
-    assertEquals("cMOEAD_SettingsTest", 0.9, ((Double)algorithm.getInputParameter("delta")).doubleValue(), epsilon) ;
-    assertEquals("cMOEAD_SettingsTest", 20, ((Integer) algorithm.getInputParameter("T")).intValue());
-    assertEquals("cMOEAD_SettingsTest", 2,   ((Integer)algorithm.getInputParameter("nr")).intValue());
+    Assert.assertEquals("cMOEAD_SettingsTest", 0.9, ((Double)algorithm.getInputParameter("delta")).doubleValue(), epsilon) ;
+    Assert.assertEquals("cMOEAD_SettingsTest", 20, ((Integer) algorithm.getInputParameter("T")).intValue());
+    Assert.assertEquals("cMOEAD_SettingsTest", 2,   ((Integer)algorithm.getInputParameter("nr")).intValue());
 
-    assertEquals("cMOEAD_SettingsTest", 1.0, CR, epsilon);
-    assertEquals("cMOEAD_SettingsTest", 0.5, F, epsilon);
-    assertEquals("cMOEAD_SettingsTest", 20.0, dim, epsilon);
-    assertEquals("cMOEAD_SettingsTest", 1.0/problem.getNumberOfVariables(), pm, epsilon);
+    Assert.assertEquals("cMOEAD_SettingsTest", 1.0, CR, epsilon);
+    Assert.assertEquals("cMOEAD_SettingsTest", 0.5, F, epsilon);
+    Assert.assertEquals("cMOEAD_SettingsTest", 20.0, dim, epsilon);
+    Assert.assertEquals("cMOEAD_SettingsTest", 1.0/problem.getNumberOfVariables(), pm, epsilon);
 
-    assertTrue("cMOEAD_SettingsTest", experimentDirectory.exists());
+    Assert.assertTrue("cMOEAD_SettingsTest", experimentDirectory.exists());
   }
 }

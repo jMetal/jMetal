@@ -32,8 +32,13 @@ import java.util.HashMap;
  * This class implements the PESA2 algorithm. 
  */
 public class PESA2 extends Algorithm{
-    
+
   /**
+   * 
+   */
+  private static final long serialVersionUID = 6904671980699718772L;
+
+/**
   * Constructor
   * Creates a new instance of PESA2
   */
@@ -68,8 +73,8 @@ public class PESA2 extends Algorithm{
     archive = new AdaptiveGridArchive(archiveSize,bisections,
                                         problem_.getNumberOfObjectives());
     solutionSet  = new SolutionSet(populationSize);
-    HashMap  parameters = null ;
-    selection    = new PESA2Selection(parameters);
+    HashMap<String, Object> selectionParameters = null ; // FIXME: why we are passing null?
+    selection    = new PESA2Selection(selectionParameters);
 
     //-> Create the initial individual and evaluate it and his constraints
     for (int i = 0; i < populationSize; i++){

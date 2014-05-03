@@ -30,6 +30,11 @@ import jmetal.util.JMException;
 public class Rastrigin extends Problem {
 
   /**
+     * 
+     */
+    private static final long serialVersionUID = -6521581306133870406L;
+
+/**
    * Constructor
    * Creates a default instance of the Rastrigin problem
    * @param numberOfVariables Number of variables of the problem

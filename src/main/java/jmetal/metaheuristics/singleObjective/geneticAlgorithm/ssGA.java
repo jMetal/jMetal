@@ -34,6 +34,11 @@ import java.util.HashMap;
  */
 public class ssGA extends Algorithm {
   
+  /**
+   * 
+   */
+  private static final long serialVersionUID = -6340093758636629106L;
+
  /**
   *
   * Constructor
@@ -59,16 +64,14 @@ public class ssGA extends Algorithm {
     Operator    crossoverOperator ;
     Operator    selectionOperator ;
     
-    Comparator  comparator        ;
+    Comparator<Solution>  comparator        ;
     
     comparator = new ObjectiveComparator(0) ; // Single objective comparator
     
-    Operator findWorstSolution ;
-    HashMap  parameters ; // Operator parameters
-    parameters = new HashMap() ;
-    parameters.put("comparator", comparator) ;
+    HashMap<String, Object> selectionParameters = new HashMap<String, Object>() ;
+    selectionParameters.put("comparator", comparator) ;
 
-    findWorstSolution = new WorstSolutionSelection(parameters) ;
+    Operator findWorstSolution = new WorstSolutionSelection(selectionParameters) ;
 
     // Read the parameters
     populationSize = ((Integer)this.getInputParameter("populationSize")).intValue();

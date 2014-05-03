@@ -39,7 +39,13 @@ import java.util.Comparator;
  */
 public class CellDE extends Algorithm{
 
-  /** 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 8699667515096532262L;
+
+
+/** 
    * Constructor
    * @param problem Problem to solve
    */
@@ -62,8 +68,8 @@ public class CellDE extends Algorithm{
     SolutionSet archive;
     SolutionSet [] neighbors;    
     Neighborhood neighborhood;
-    Comparator dominance = new DominanceComparator(),
-    crowding  = new CrowdingComparator();  
+    Comparator<Solution> dominance = new DominanceComparator();
+    Comparator<Solution> crowding  = new CrowdingComparator();  
     Distance distance = new Distance();
 
     //Read the params

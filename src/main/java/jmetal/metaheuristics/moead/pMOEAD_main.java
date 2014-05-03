@@ -69,10 +69,7 @@ public class pMOEAD_main {
      
     QualityIndicator indicators ; // Object to get quality indicators
 
-    HashMap  parameters ; // Operator parameters
-
     int numberOfThreads = 1 ;
-    String dataDirectory = "" ;
     
     // Logger object and file to store log messages
     logger_      = Configuration.logger_ ;
@@ -94,7 +91,6 @@ public class pMOEAD_main {
         Object [] params = {"Real"};
         problem = (new ProblemFactory()).getProblem(args[0],params);
         numberOfThreads = Integer.parseInt(args[1]) ;
-        dataDirectory = args[2] ;
       } // if
     else { // Problem + number of threads + data directory
       problem = new Kursawe("Real", 3); 
@@ -127,18 +123,19 @@ public class pMOEAD_main {
     algorithm.setInputParameter("nr", 2) ;
     
     // Crossover operator 
-    parameters = new HashMap() ;
-    parameters.put("CR", 1.0) ;
-    parameters.put("F", 0.5) ;
-    crossover = CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", parameters);                   
+    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
+    crossoverParameters.put("CR", 1.0) ;
+    crossoverParameters.put("F", 0.5) ;
+    crossover = CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", crossoverParameters);
+    // FIXME: is these two statements necessary?
     crossover.setParameter("CR", 1.0);                   
     crossover.setParameter("F", 0.5);
     
     // Mutation operator
-    parameters = new HashMap() ;
-    parameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
-    parameters.put("distributionIndex", 20.0) ;
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);  
+    HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
+    mutationParameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
+    mutationParameters.put("distributionIndex", 20.0) ;
+    mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);  
     
     algorithm.addOperator("crossover",crossover);
     algorithm.addOperator("mutation",mutation);

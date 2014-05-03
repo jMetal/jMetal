@@ -35,7 +35,12 @@ import java.util.HashMap;
  */
 public class PESA2Selection extends Selection {      
         
-	public PESA2Selection(HashMap<String, Object> parameters) {
+	/**
+     * 
+     */
+    private static final long serialVersionUID = 4941044300155040616L;
+
+    public PESA2Selection(HashMap<String, Object> parameters) {
 		super(parameters) ;
 	}
 	
@@ -87,7 +92,7 @@ public class PESA2Selection extends Selection {
     } catch (ClassCastException e) {
       Configuration.logger_.severe("PESA2Selection.execute: ClassCastException. " +
           "Found" + object.getClass() + "Expected: AdaptativeGridArchive") ;
-      Class cls = java.lang.String.class;
+      Class<String> cls = java.lang.String.class;
       String name = cls.getName(); 
       throw new JMException("Exception in " + name + ".execute()") ;  
     }

@@ -30,7 +30,12 @@ import java.util.HashMap;
  */
 public abstract class Mutation extends Operator {
 
-	public Mutation(HashMap<String, Object> parameters) {
+	/**
+     * 
+     */
+    private static final long serialVersionUID = -4307112630484321270L;
+
+    public Mutation(HashMap<String, Object> parameters) {
 	  super(parameters);
 	  // TODO Auto-generated constructor stub
   }

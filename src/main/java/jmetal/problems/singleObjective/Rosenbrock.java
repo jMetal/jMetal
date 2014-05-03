@@ -30,6 +30,11 @@ import jmetal.util.JMException;
 public class Rosenbrock extends Problem {
 
   /**
+     * 
+     */
+    private static final long serialVersionUID = -4545223899906374214L;
+
+/**
    * Constructor
    * Creates a default instance of the Rosenbrock problem
    * @param numberOfVariables Number of variables of the problem

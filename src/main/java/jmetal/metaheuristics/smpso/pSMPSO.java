@@ -21,7 +21,6 @@
 package jmetal.metaheuristics.smpso;
 
 import jmetal.core.*;
-import jmetal.qualityIndicator.Hypervolume;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Distance;
 import jmetal.util.JMException;
@@ -45,6 +44,11 @@ import java.util.logging.Logger;
  * (MCDM 2009), pp: 66-73. March 2009
  */
 public class pSMPSO extends Algorithm {
+
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 6433458914602768519L;
 
   /**
    * Stores the number of particles_ used
@@ -81,11 +85,11 @@ public class pSMPSO extends Algorithm {
   /**
    * Stores a comparator for checking dominance
    */
-  private Comparator dominance_;
+  private Comparator<Solution> dominance_;
   /**
    * Stores a comparator for crowding checking
    */
-  private Comparator crowdingDistanceComparator_;
+  private Comparator<Solution> crowdingDistanceComparator_;
   /**
    * Stores a <code>Distance</code> object
    */
@@ -102,11 +106,6 @@ public class pSMPSO extends Algorithm {
    */
   IParallelEvaluator parallelEvaluator_ ; 
 
-  /**
-   * Number of threads to be executed in parallel
-   */
-  private int numberOfThreads_;
-
 
   double r1Max_;
   double r1Min_;
@@ -121,9 +120,6 @@ public class pSMPSO extends Algorithm {
   double ChVel1_;
   double ChVel2_;
 
-  private double trueHypervolume_;
-  private Hypervolume hy_;
-  private SolutionSet trueFront_;
   private double deltaMax_[];
   private double deltaMin_[];
   boolean success_;
@@ -239,8 +235,8 @@ public class pSMPSO extends Algorithm {
    * @throws JMException 
    */
   private void computeSpeed(int iter, int miter) throws JMException, IOException {
-    double r1, r2, W, C1, C2;
-    double wmax, wmin, deltaMax, deltaMin;
+    double r1, r2, C1, C2;
+    double wmax, wmin;
     XReal bestGlobal;
 
     for (int i = 0; i < swarmSize_; i++) {
@@ -264,7 +260,6 @@ public class pSMPSO extends Algorithm {
       r2 = PseudoRandom.randDouble(r2Min_, r2Max_);
       C1 = PseudoRandom.randDouble(C1Min_, C1Max_);
       C2 = PseudoRandom.randDouble(C2Min_, C2Max_);
-      W = PseudoRandom.randDouble(WMin_, WMax_);
       //
       wmax = WMax_;
       wmin = WMin_;

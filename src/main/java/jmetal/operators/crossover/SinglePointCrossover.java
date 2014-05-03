@@ -22,6 +22,7 @@
 package jmetal.operators.crossover;
 
 import jmetal.core.Solution;
+import jmetal.core.SolutionType;
 import jmetal.encodings.solutionType.BinaryRealSolutionType;
 import jmetal.encodings.solutionType.BinarySolutionType;
 import jmetal.encodings.solutionType.IntSolutionType;
@@ -40,9 +41,14 @@ import java.util.List;
  */
 public class SinglePointCrossover extends Crossover {
   /**
+   * 
+   */
+  private static final long serialVersionUID = 2375915160877386980L;
+
+  /**
    * Valid solution types to apply this operator 
    */
-  private static final List VALID_TYPES = Arrays.asList(BinarySolutionType.class,
+  private static final List<Class<? extends SolutionType>> VALID_TYPES = Arrays.asList(BinarySolutionType.class,
   		                                            BinaryRealSolutionType.class,
   		                                            IntSolutionType.class) ;
 
@@ -160,7 +166,7 @@ public class SinglePointCrossover extends Crossover {
     } catch (ClassCastException e1) {
       Configuration.logger_.severe("SinglePointCrossover.doCrossover: Cannot perfom " +
               "SinglePointCrossover");
-      Class cls = java.lang.String.class;
+      Class<String> cls = java.lang.String.class;
       String name = cls.getName();
       throw new JMException("Exception in " + name + ".doCrossover()");
     }
@@ -184,7 +190,7 @@ public class SinglePointCrossover extends Crossover {
               parents[0].getType() + " and " +
               parents[1].getType() + " are obtained");
 
-      Class cls = java.lang.String.class;
+      Class<String> cls = java.lang.String.class;
       String name = cls.getName();
       throw new JMException("Exception in " + name + ".execute()");
     } // if
@@ -192,7 +198,7 @@ public class SinglePointCrossover extends Crossover {
     if (parents.length < 2) {
       Configuration.logger_.severe("SinglePointCrossover.execute: operator " +
               "needs two parents");
-      Class cls = java.lang.String.class;
+      Class<String> cls = java.lang.String.class;
       String name = cls.getName();
       throw new JMException("Exception in " + name + ".execute()");
     } 

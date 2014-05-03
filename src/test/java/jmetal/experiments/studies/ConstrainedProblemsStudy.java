@@ -101,8 +101,7 @@ public class ConstrainedProblemsStudy extends Experiment {
     exp.initExperiment();
 
     // Run the experiments
-    int numberOfThreads ;
-    exp.runExperiment(numberOfThreads = 4) ;
+    exp.runExperiment(4) ;
 
     exp.generateQualityIndicators() ;
 
@@ -120,15 +119,13 @@ public class ConstrainedProblemsStudy extends Experiment {
     int columns  ;
     String prefix ;
     String [] problems ;
-    boolean notch ;
-
 
     // Configuring scripts for ZDT
     rows = 2 ;
     columns = 2 ;
     prefix = new String("Constrained");
     problems = new String[]{"Golinski", "Srinivas","Tanaka", "Osyczka2"} ;
-    exp.generateRBoxplotScripts(rows, columns, problems, prefix, notch = false, exp) ;
+    exp.generateRBoxplotScripts(rows, columns, problems, prefix, false, exp) ;
     exp.generateRWilcoxonScripts(problems, prefix, exp) ;  }
 } // ConstrainedProblemsStudy
 

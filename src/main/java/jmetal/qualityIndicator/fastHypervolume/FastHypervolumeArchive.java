@@ -34,6 +34,11 @@ import java.util.Comparator;
 public class FastHypervolumeArchive extends Archive {
 
   /**
+     * 
+     */
+    private static final long serialVersionUID = 124744170266943517L;
+
+/**
    * Stores the maximum size of the archive.
    */
   private int maxSize_;
@@ -46,15 +51,15 @@ public class FastHypervolumeArchive extends Archive {
   /**
    * Stores a <code>Comparator</code> for dominance checking.
    */
-  private Comparator dominance_;
+  private Comparator<Solution> dominance_;
 
   /**
    * Stores a <code>Comparator</code> for equality checking (in the objective
    * space).
    */
-  private Comparator equals_;
+  private Comparator<Solution> equals_;
 
-  private Comparator crowdingDistance_ ;
+  private Comparator<Solution> crowdingDistance_ ;
 
   public Solution referencePoint_ ;
 

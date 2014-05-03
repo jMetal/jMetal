@@ -38,6 +38,11 @@ import java.util.Random;
 public abstract class WFG extends Problem{
   
   /**
+     * 
+     */
+    private static final long serialVersionUID = 2252390688690699199L;
+
+/**
    * stores a epsilon default value
    */
   private final float epsilon = (float)1e-7;

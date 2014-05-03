@@ -22,6 +22,7 @@
 package jmetal.operators.mutation;
 
 import jmetal.core.Solution;
+import jmetal.core.SolutionType;
 import jmetal.encodings.solutionType.BinaryRealSolutionType;
 import jmetal.encodings.solutionType.BinarySolutionType;
 import jmetal.encodings.solutionType.IntSolutionType;
@@ -41,9 +42,14 @@ import java.util.List;
  */
 public class BitFlipMutation extends Mutation {
   /**
+   * 
+   */
+  private static final long serialVersionUID = -3349165791496573889L;
+
+/**
    * Valid solution types to apply this operator 
    */
-  private static final List VALID_TYPES = Arrays.asList(BinarySolutionType.class,
+  private static final List<Class<? extends SolutionType>> VALID_TYPES = Arrays.asList(BinarySolutionType.class,
       BinaryRealSolutionType.class,
       IntSolutionType.class) ;
 
@@ -93,7 +99,7 @@ public class BitFlipMutation extends Mutation {
 		} catch (ClassCastException e1) {
 			Configuration.logger_.severe("BitFlipMutation.doMutation: " +
 					"ClassCastException error" + e1.getMessage());
-			Class cls = java.lang.String.class;
+			Class<String> cls = java.lang.String.class;
 			String name = cls.getName();
 			throw new JMException("Exception in " + name + ".doMutation()");
 		}
@@ -113,7 +119,7 @@ public class BitFlipMutation extends Mutation {
 					"is not of the right type. The type should be 'Binary', " +
 					"'BinaryReal' or 'Int', but " + solution.getType() + " is obtained");
 
-			Class cls = java.lang.String.class;
+			Class<String> cls = java.lang.String.class;
 			String name = cls.getName();
 			throw new JMException("Exception in " + name + ".execute()");
 		} // if 

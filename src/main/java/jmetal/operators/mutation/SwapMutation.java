@@ -38,9 +38,14 @@ import java.util.List;
  */
 public class SwapMutation extends Mutation{
   /**
+   * 
+   */
+  private static final long serialVersionUID = -3982393451733347035L;
+
+  /**
    * Valid solution types to apply this operator 
    */
-  private static final List VALID_TYPES = Arrays.asList(PermutationSolutionType.class) ;
+  private static final List<Class<PermutationSolutionType>> VALID_TYPES = Arrays.asList(PermutationSolutionType.class) ;
   
   private Double mutationProbability_ = null ;
 
@@ -99,7 +104,7 @@ public class SwapMutation extends Mutation{
 	      Configuration.logger_.severe("SwapMutation.doMutation: invalid type. " +
 	          ""+ solution.getDecisionVariables()[0].getVariableType());
 
-	      Class cls = java.lang.String.class;
+	      Class<String> cls = java.lang.String.class;
 	      String name = cls.getName(); 
 	      throw new JMException("Exception in " + name + ".doMutation()") ;
 	    }
@@ -119,7 +124,7 @@ public class SwapMutation extends Mutation{
 					"is not of the right type. The type should be 'Binary', " +
 					"'BinaryReal' or 'Int', but " + solution.getType() + " is obtained");
 
-			Class cls = java.lang.String.class;
+			Class<String> cls = java.lang.String.class;
 			String name = cls.getName();
 			throw new JMException("Exception in " + name + ".execute()");
 		} // if 

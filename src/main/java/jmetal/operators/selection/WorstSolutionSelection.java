@@ -21,6 +21,7 @@
 
 package jmetal.operators.selection;
 
+import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
 
 import java.util.Comparator;
@@ -32,13 +33,19 @@ import java.util.HashMap;
  */
 public class WorstSolutionSelection extends Selection {
   
-	// Comparator
-  private Comparator comparator_;
+	/**
+     * 
+     */
+    private static final long serialVersionUID = 1456768976790614200L;
+
+  // Comparator
+  private Comparator<Solution> comparator_;
     
+  @SuppressWarnings("unchecked")
   public WorstSolutionSelection(HashMap<String, Object> parameters) {
   	super(parameters) ;
   	
-  	comparator_ = (Comparator)parameters.get("comparator") ;
+  	comparator_ = (Comparator<Solution>)parameters.get("comparator") ;
   }
   
   /**

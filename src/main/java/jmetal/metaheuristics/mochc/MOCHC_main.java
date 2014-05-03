@@ -41,8 +41,6 @@ import java.util.HashMap;
 public class MOCHC_main {
 
   public static void main(String [] args) {
-  	
-    HashMap  parameters ; // Operator parameters
 
     try {                               
       Problem problem = new ZDT5("Binary");
@@ -62,23 +60,23 @@ public class MOCHC_main {
       Operator newGenerationSelection ;
       
       // Crossover operator
-      parameters = new HashMap() ;
-      parameters.put("probability", 1.0) ;
-      crossoverOperator = CrossoverFactory.getCrossoverOperator("HUXCrossover", parameters);
+      HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
+      crossoverParameters.put("probability", 1.0) ;
+      crossoverOperator = CrossoverFactory.getCrossoverOperator("HUXCrossover", crossoverParameters);
      
       //parentsSelection = new RandomSelection();
       //newGenerationSelection = new RankingAndCrowdingSelection(problem);
-      parameters = null ;
-      parentsSelection = SelectionFactory.getSelectionOperator("RandomSelection", parameters) ;     
+      HashMap<String, Object> selectionParameters = null ; // FIXME: why we are passing null?
+      parentsSelection = SelectionFactory.getSelectionOperator("RandomSelection", selectionParameters) ;     
       
-      parameters = new HashMap() ;
-      parameters.put("problem", problem) ;
-      newGenerationSelection = SelectionFactory.getSelectionOperator("RankingAndCrowdingSelection", parameters) ;
+      HashMap<String, Object> newSelectionParameters = new HashMap<String, Object>() ;
+      newSelectionParameters.put("problem", problem) ;
+      newGenerationSelection = SelectionFactory.getSelectionOperator("RankingAndCrowdingSelection", newSelectionParameters) ;
      
       // Mutation operator
-      parameters = new HashMap() ;
-      parameters.put("probability", 0.35) ;
-      mutationOperator = MutationFactory.getMutationOperator("BitFlipMutation", parameters);                    
+      HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
+      mutationParameters.put("probability", 0.35) ;
+      mutationOperator = MutationFactory.getMutationOperator("BitFlipMutation", mutationParameters);                    
       
       algorithm.addOperator("crossover",crossoverOperator);
       algorithm.addOperator("cataclysmicMutation",mutationOperator);

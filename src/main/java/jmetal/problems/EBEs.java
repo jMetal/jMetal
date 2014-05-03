@@ -32,6 +32,11 @@ public class EBEs extends Problem{
    */
 
   /**
+     * 
+     */
+    private static final long serialVersionUID = 5594441053487310416L;
+
+/**
    * Stores the number of Bar Groups
    */
   protected int numberOfEval_ ;
@@ -2187,7 +2192,7 @@ switch(selectedOF){
 
     int n2 = numberOfLibertyDegree_ * numberOfNodes_;
 
-    Salto1:
+    //Salto1:
     for(i=1; i<n2 ;i++){
       if(MatrixStiffness_[s1 - 1] >= 1.0E+25){
         s1 = s1 + matrixWidthBand_;
@@ -3657,7 +3662,7 @@ switch(selectedOF){
 // [2]: TensiÃ³n tangencial
     double [][][]Strain = new double [3][numberOfElements_][numberOfWeigthHypothesis_];
     double z, y;
-    double ez, ey;
+    //double ez, ey;
     double  A, Iz, Iy, It;
     // Effort
     double Nxx, Qxy, Qxz, Mxx, Mxy, Mxz;
@@ -3678,8 +3683,8 @@ switch(selectedOF){
 
         y = Groups_[idx][Y_];
         z = Groups_[idx][Z_];
-        ey = Groups_[idx][eY_];
-        ez = Groups_[idx][eZ_];
+        //ey = Groups_[idx][eY_];
+        //ez = Groups_[idx][eZ_];
         A = Groups_[idx][AREA];
         Az = Groups_[idx][Az_];
         Ay = Groups_[idx][Ay_];

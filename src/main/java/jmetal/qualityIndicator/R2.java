@@ -104,15 +104,12 @@ public class R2 {
         InputStreamReader isr = new InputStreamReader(fis);
         BufferedReader br = new BufferedReader(isr);
 
-        int numberOfObjectives = 0;
-        int i = 0;
         int j = 0;
         String aux = br.readLine();
         LinkedList<double[]> list = new LinkedList<double[]>();
         while (aux != null) {
             StringTokenizer st = new StringTokenizer(aux);
             j = 0;
-            numberOfObjectives = st.countTokens();
             double [] vector = new double[nObj];
             while (st.hasMoreTokens()) {
                 double value = new Double(st.nextToken());
@@ -434,8 +431,7 @@ public class R2 {
    * @param set
    * @return 
    */
-  public double
-  R2(SolutionSet set) {
+  public double R2(SolutionSet set) {
       double [][] approximationFront = set.writeObjectivesToMatrix();
       double [][] trueFront          = set.writeObjectivesToMatrix();
       

@@ -32,7 +32,12 @@ import jmetal.util.JMException;
  * Class representing a Sphere problem.
  */
 public class Sphere extends Problem {
-  /** 
+  /**
+     * 
+     */
+    private static final long serialVersionUID = 6623348682217370725L;
+
+/** 
    * Constructor
    * Creates a default instance of the Sphere problem
    * @param numberOfVariables Number of variables of the problem 

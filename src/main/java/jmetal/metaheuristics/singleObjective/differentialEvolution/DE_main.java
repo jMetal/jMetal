@@ -40,10 +40,7 @@ public class DE_main {
     Problem   problem   ;         // The problem to solve
     Algorithm algorithm ;         // The algorithm to use
     Operator  crossover ;         // Crossover operator
-    Operator  mutation  ;         // Mutation operator
     Operator  selection ;         // Selection operator
-            
-    HashMap  parameters ; // Operator parameters
 
     //int bits ; // Length of bit string in the OneMax problem
   
@@ -61,16 +58,15 @@ public class DE_main {
     algorithm.setInputParameter("maxEvaluations", 1000000);
     
     // Crossover operator 
-    parameters = new HashMap() ;
-    parameters.put("CR", 0.5) ;
-    parameters.put("F", 0.5) ;
-    parameters.put("DE_VARIANT", "rand/1/bin") ;
-
-    crossover = CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", parameters);                   
+    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
+    crossoverParameters.put("CR", 0.5) ;
+    crossoverParameters.put("F", 0.5) ;
+    crossoverParameters.put("DE_VARIANT", "rand/1/bin") ;
+    crossover = CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", crossoverParameters);                   
     
     // Add the operators to the algorithm
-    parameters = null;
-    selection = SelectionFactory.getSelectionOperator("DifferentialEvolutionSelection", parameters) ;
+    HashMap<String, Object> selectionParameters = null; // FIXME: why we are passing null?
+    selection = SelectionFactory.getSelectionOperator("DifferentialEvolutionSelection", selectionParameters) ;
 
     algorithm.addOperator("crossover",crossover);
     algorithm.addOperator("selection",selection);
