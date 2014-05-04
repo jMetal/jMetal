@@ -30,6 +30,14 @@ import java.io.Serializable;
 public class JMException extends Exception implements Serializable {
   
   /**
+<<<<<<< HEAD
+=======
+   * 
+   */
+  private static final long serialVersionUID = 4288481737365385068L;
+
+  /**
+>>>>>>> master
    * Constructor
    * @param Error message
    */

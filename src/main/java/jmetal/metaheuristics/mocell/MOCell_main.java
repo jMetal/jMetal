@@ -70,8 +70,11 @@ import java.util.logging.Logger;
 
     QualityIndicator indicators ; // Object to get quality indicators
 
+<<<<<<< HEAD
     HashMap  parameters ; // Operator parameters
 
+=======
+>>>>>>> master
     // Logger object and file to store log messages
     logger_      = Configuration.logger_ ;
     fileHandler_ = new FileHandler("MOCell_main.log"); 
@@ -111,6 +114,7 @@ import java.util.logging.Logger;
     algorithm.setInputParameter("feedBack",20);
       
     // Mutation and Crossover for Real codification 
+<<<<<<< HEAD
     parameters = new HashMap() ;
     parameters.put("probability", 0.9) ;
     parameters.put("distributionIndex", 20.0) ;
@@ -124,6 +128,21 @@ import java.util.logging.Logger;
     // Selection Operator 
     parameters = null ;
     selection = SelectionFactory.getSelectionOperator("BinaryTournament", parameters) ;         
+=======
+    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
+    crossoverParameters.put("probability", 0.9) ;
+    crossoverParameters.put("distributionIndex", 20.0) ;
+    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", crossoverParameters);                   
+
+    HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
+    mutationParameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
+    mutationParameters.put("distributionIndex", 20.0) ;
+    mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);                    
+
+    // Selection Operator 
+    HashMap<String, Object> selectionParameters = null ; // FIXME: why we are passing null?
+    selection = SelectionFactory.getSelectionOperator("BinaryTournament", selectionParameters) ;         
+>>>>>>> master
     
     // Add the operators to the algorithm
     algorithm.addOperator("crossover",crossover);

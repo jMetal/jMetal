@@ -37,7 +37,12 @@ public class NumberOfViolatedConstraintComparator
   * @return -1, or 0, or 1 if o1 is less than, equal, or greater than o2,
   * respectively.
   */
+<<<<<<< HEAD
   public int compare(Object o1, Object o2) {
+=======
+  @Override
+  public int compare(Solution o1, Solution o2) {
+>>>>>>> master
     Solution solution1 = (Solution) o1;
     Solution solution2 = (Solution) o2;
     

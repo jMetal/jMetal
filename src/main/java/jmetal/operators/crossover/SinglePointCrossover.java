@@ -22,13 +22,21 @@
 package jmetal.operators.crossover;
 
 import jmetal.core.Solution;
+<<<<<<< HEAD
+=======
+import jmetal.core.SolutionType;
+>>>>>>> master
 import jmetal.encodings.solutionType.BinaryRealSolutionType;
 import jmetal.encodings.solutionType.BinarySolutionType;
 import jmetal.encodings.solutionType.IntSolutionType;
 import jmetal.encodings.variable.Binary;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
+<<<<<<< HEAD
 import jmetal.util.random.PseudoRandom;
+=======
+import jmetal.util.PseudoRandom;
+>>>>>>> master
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -40,9 +48,20 @@ import java.util.List;
  */
 public class SinglePointCrossover extends Crossover {
   /**
+<<<<<<< HEAD
    * Valid solution types to apply this operator 
    */
   private static final List VALID_TYPES = Arrays.asList(BinarySolutionType.class,
+=======
+   * 
+   */
+  private static final long serialVersionUID = 2375915160877386980L;
+
+  /**
+   * Valid solution types to apply this operator 
+   */
+  private static final List<Class<? extends SolutionType>> VALID_TYPES = Arrays.asList(BinarySolutionType.class,
+>>>>>>> master
   		                                            BinaryRealSolutionType.class,
   		                                            IntSolutionType.class) ;
 
@@ -160,7 +179,11 @@ public class SinglePointCrossover extends Crossover {
     } catch (ClassCastException e1) {
       Configuration.logger_.severe("SinglePointCrossover.doCrossover: Cannot perfom " +
               "SinglePointCrossover");
+<<<<<<< HEAD
       Class cls = java.lang.String.class;
+=======
+      Class<String> cls = java.lang.String.class;
+>>>>>>> master
       String name = cls.getName();
       throw new JMException("Exception in " + name + ".doCrossover()");
     }
@@ -184,7 +207,11 @@ public class SinglePointCrossover extends Crossover {
               parents[0].getType() + " and " +
               parents[1].getType() + " are obtained");
 
+<<<<<<< HEAD
       Class cls = java.lang.String.class;
+=======
+      Class<String> cls = java.lang.String.class;
+>>>>>>> master
       String name = cls.getName();
       throw new JMException("Exception in " + name + ".execute()");
     } // if
@@ -192,7 +219,11 @@ public class SinglePointCrossover extends Crossover {
     if (parents.length < 2) {
       Configuration.logger_.severe("SinglePointCrossover.execute: operator " +
               "needs two parents");
+<<<<<<< HEAD
       Class cls = java.lang.String.class;
+=======
+      Class<String> cls = java.lang.String.class;
+>>>>>>> master
       String name = cls.getName();
       throw new JMException("Exception in " + name + ".execute()");
     } 

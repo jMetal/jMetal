@@ -25,7 +25,10 @@ import jmetal.operators.crossover.Crossover;
 import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.mutation.Mutation;
 import jmetal.operators.mutation.MutationFactory;
+<<<<<<< HEAD
 import jmetal.operators.selection.Selection;
+=======
+>>>>>>> master
 import jmetal.problems.ProblemFactory;
 import jmetal.util.JMException;
 
@@ -102,8 +105,11 @@ public class pMOEAD_Settings extends Settings {
     Operator crossover;
     Operator mutation;
 
+<<<<<<< HEAD
     HashMap parameters; // Operator parameters
 
+=======
+>>>>>>> master
     // Creating the problem
     algorithm = new pMOEAD(problem_);
 
@@ -117,13 +123,21 @@ public class pMOEAD_Settings extends Settings {
     algorithm.setInputParameter("nr", nr_);
 
     // Crossover operator
+<<<<<<< HEAD
     parameters = new HashMap();
+=======
+    HashMap<String, Object> parameters = new HashMap<String, Object>() ;
+>>>>>>> master
     parameters.put("CR", CR_);
     parameters.put("F", F_);
     crossover = CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", parameters);
 
     // Mutation operator
+<<<<<<< HEAD
     parameters = new HashMap();
+=======
+    parameters = new HashMap<String, Object>();
+>>>>>>> master
     parameters.put("probability", mutationProbability_);
     parameters.put("distributionIndex", mutationDistributionIndex_);
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);
@@ -141,12 +155,18 @@ public class pMOEAD_Settings extends Settings {
   @Override
   public Algorithm configure(Properties configuration) throws JMException {
     Algorithm algorithm ;
+<<<<<<< HEAD
     Selection selection ;
     Crossover crossover ;
     Mutation mutation  ;
 
     HashMap  parameters ; // Operator parameters
 
+=======
+    Crossover crossover ;
+    Mutation mutation  ;
+
+>>>>>>> master
     // Creating the algorithm.
     algorithm = new pMOEAD(problem_) ;
 
@@ -170,7 +190,11 @@ public class pMOEAD_Settings extends Settings {
     // Crossover operator
     CR_ = Double.parseDouble(configuration.getProperty("CR",String.valueOf(CR_)));
     F_ = Double.parseDouble(configuration.getProperty("F",String.valueOf(F_)));
+<<<<<<< HEAD
     parameters = new HashMap() ;
+=======
+    HashMap<String, Object> parameters = new HashMap<String, Object>() ;
+>>>>>>> master
     parameters.put("CR", CR_) ;
     parameters.put("F", F_) ;
     crossover = CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", parameters);
@@ -178,7 +202,11 @@ public class pMOEAD_Settings extends Settings {
     // Mutation parameters
     mutationProbability_ = Double.parseDouble(configuration.getProperty("mutationProbability",String.valueOf(mutationProbability_)));
     mutationDistributionIndex_ = Double.parseDouble(configuration.getProperty("mutationDistributionIndex",String.valueOf(mutationDistributionIndex_)));
+<<<<<<< HEAD
     parameters = new HashMap() ;
+=======
+    parameters = new HashMap<String, Object>() ;
+>>>>>>> master
     parameters.put("probability", mutationProbability_) ;
     parameters.put("distributionIndex", mutationDistributionIndex_) ;
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);

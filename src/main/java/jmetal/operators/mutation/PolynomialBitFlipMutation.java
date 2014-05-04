@@ -25,7 +25,11 @@ import jmetal.encodings.solutionType.ArrayRealAndBinarySolutionType;
 import jmetal.encodings.variable.Binary;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
+<<<<<<< HEAD
 import jmetal.util.random.PseudoRandom;
+=======
+import jmetal.util.PseudoRandom;
+>>>>>>> master
 import jmetal.util.wrapper.XReal;
 
 import java.util.Arrays;
@@ -33,16 +37,34 @@ import java.util.HashMap;
 import java.util.List;
 
 public class PolynomialBitFlipMutation extends Mutation {
+<<<<<<< HEAD
 	private static final double ETA_M_DEFAULT_ = 20.0;
 
   private Double realMutationProbability_ = null ;
   private Double binaryMutationProbability_ = null ;
   private double distributionIndex_ = ETA_M_DEFAULT_;
+=======
+	/**
+     * 
+     */
+    private static final long serialVersionUID = 1400932673945460731L;
+
+    private static final double ETA_M_DEFAULT_ = 20.0;
+	private final double eta_m_=ETA_M_DEFAULT_;
+	
+  private Double realMutationProbability_ = null ;
+  private Double binaryMutationProbability_ = null ;
+  private double distributionIndex_ = eta_m_;
+>>>>>>> master
 
   /**
    * Valid solution types to apply this operator 
    */
+<<<<<<< HEAD
 	private static final List VALID_TYPES = Arrays.asList(ArrayRealAndBinarySolutionType.class) ;
+=======
+	private static final List<Class<ArrayRealAndBinarySolutionType>> VALID_TYPES = Arrays.asList(ArrayRealAndBinarySolutionType.class) ;
+>>>>>>> master
 
   /**
    * Constructor
@@ -65,7 +87,11 @@ public class PolynomialBitFlipMutation extends Mutation {
 			Configuration.logger_.severe("PolynomialBitFlipMutation.execute: the solution " +
 					"type " + solution.getType() + " is not allowed with this operator");
 
+<<<<<<< HEAD
 			Class cls = java.lang.String.class;
+=======
+			Class<String> cls = java.lang.String.class;
+>>>>>>> master
 			String name = cls.getName(); 
 			throw new JMException("Exception in " + name + ".execute()") ;
 		} // if 
@@ -98,7 +124,11 @@ public class PolynomialBitFlipMutation extends Mutation {
 				delta1 = (y-yl)/(yu-yl);
 				delta2 = (yu-y)/(yu-yl);
 				rnd = PseudoRandom.randDouble();
+<<<<<<< HEAD
 				mut_pow = 1.0/(distributionIndex_+1.0);
+=======
+				mut_pow = 1.0/(eta_m_+1.0);
+>>>>>>> master
 				if (rnd <= 0.5)
 				{
 					xy     = 1.0-delta1;

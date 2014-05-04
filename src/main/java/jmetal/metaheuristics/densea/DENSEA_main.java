@@ -50,8 +50,11 @@ public class DENSEA_main {
     Operator  crossover ;         // Crossover operator
     Operator  mutation  ;         // Mutation operator
     Operator  selection ;         // Selection operator
+<<<<<<< HEAD
       
     HashMap  parameters ; // Operator parameters
+=======
+>>>>>>> master
 
     // Logger object and file to store log messages
     logger_      = Configuration.logger_ ;
@@ -67,6 +70,7 @@ public class DENSEA_main {
     algorithm.setInputParameter("maxEvaluations",25000);
     
     // Mutation and Crossover Binary codification 
+<<<<<<< HEAD
     parameters = new HashMap() ;
     parameters.put("probability", 0.9) ;
     crossover = CrossoverFactory.getCrossoverOperator("SinglePointCrossover", parameters);                   
@@ -79,6 +83,20 @@ public class DENSEA_main {
     // Selection Operator 
     parameters = null ;
     selection = new BinaryTournament(parameters);                            
+=======
+    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
+    crossoverParameters.put("probability", 0.9) ;
+    crossover = CrossoverFactory.getCrossoverOperator("SinglePointCrossover", crossoverParameters);
+    crossover.setParameter("probability",0.9);                   
+    
+    HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
+    mutationParameters.put("probability", 1.0/149) ;
+    mutation = MutationFactory.getMutationOperator("BitFlipMutation", mutationParameters);                    
+    
+    // Selection Operator 
+    HashMap<String, Object> selectionParameters = null ; // FIXME: why we are passing null?
+    selection = new BinaryTournament(selectionParameters);                            
+>>>>>>> master
     
     // Add the operators to the algorithm
     algorithm.addOperator("crossover",crossover);

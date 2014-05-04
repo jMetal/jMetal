@@ -34,6 +34,15 @@ import jmetal.util.JMException;
 public class Schaffer extends Problem {    
 
  /**
+<<<<<<< HEAD
+=======
+     * 
+     */
+    private static final long serialVersionUID = -2366503015218789989L;
+
+
+/**
+>>>>>>> master
   * Constructor.
   * Creates a default instance of problem Schaffer
   * @param solutionType The solution type must "Real" or "BinaryReal".

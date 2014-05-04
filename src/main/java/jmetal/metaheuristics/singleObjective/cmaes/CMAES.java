@@ -22,7 +22,11 @@ package jmetal.metaheuristics.singleObjective.cmaes;
 
 import jmetal.core.*;
 import jmetal.util.JMException;
+<<<<<<< HEAD
 import jmetal.util.random.PseudoRandom;
+=======
+import jmetal.util.PseudoRandom;
+>>>>>>> master
 import jmetal.util.comparators.ObjectiveComparator;
 
 import java.util.Comparator;
@@ -34,6 +38,14 @@ import java.util.Random;
 public class CMAES extends Algorithm {
 
   /**
+<<<<<<< HEAD
+=======
+   * 
+   */
+  private static final long serialVersionUID = -1341901419653809198L;
+
+  /**
+>>>>>>> master
    * Stores the population size
    */
   private int populationSize;
@@ -279,7 +291,11 @@ public class CMAES extends Algorithm {
 
   } // genoPhenoTransformation
 
+<<<<<<< HEAD
   private void storeBest(Comparator comparator) {
+=======
+  private void storeBest(Comparator<Solution> comparator) {
+>>>>>>> master
 
     Solution bestInPopulation = new Solution(population_.best(comparator));
     if ((bestSolutionEver == null) || (bestSolutionEver.getObjective(0) > bestInPopulation.getObjective(0))) {
@@ -445,7 +461,11 @@ public class CMAES extends Algorithm {
     //Initialize the variables
     counteval = 0;
 
+<<<<<<< HEAD
     Comparator comparator = new ObjectiveComparator(0);
+=======
+    Comparator<Solution> comparator = new ObjectiveComparator(0);
+>>>>>>> master
 
     init();
 

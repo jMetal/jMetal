@@ -31,6 +31,7 @@ public class DifferentialEvolutionOffspringPolynomial extends Offspring {
   private DifferentialEvolutionOffspringPolynomial(double mutationProbability,
                                                    double distributionIndexForMutation
   ) throws JMException {
+<<<<<<< HEAD
   	HashMap parameters ;
     mutationProbability_ = mutationProbability;    
     distributionIndexForMutation_ = distributionIndexForMutation;
@@ -39,6 +40,15 @@ public class DifferentialEvolutionOffspringPolynomial extends Offspring {
     parameters.put("probability", mutationProbability_) ;
     parameters.put("distributionIndex", distributionIndexForMutation_) ;
     mutation_ = MutationFactory.getMutationOperator("PolynomialMutation", parameters);
+=======
+    mutationProbability_ = mutationProbability;    
+    distributionIndexForMutation_ = distributionIndexForMutation;
+    
+    HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
+    mutationParameters.put("probability", mutationProbability_) ;
+    mutationParameters.put("distributionIndex", distributionIndexForMutation_) ;
+    mutation_ = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
+>>>>>>> master
 
     selection_ = SelectionFactory.getSelectionOperator("BinaryTournament", null);
 
@@ -68,6 +78,10 @@ public class DifferentialEvolutionOffspringPolynomial extends Offspring {
     Solution offSpring = null;
 
     try {
+<<<<<<< HEAD
+=======
+        // FIXME: this will return an exception
+>>>>>>> master
       parents[0] = (Solution) selection_.execute(solutionSet);
 
       if (archive.size() > 0) {

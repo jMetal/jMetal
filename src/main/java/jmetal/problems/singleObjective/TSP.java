@@ -34,7 +34,15 @@ import java.io.*;
  */
 public class TSP extends Problem {
 
+<<<<<<< HEAD
   public int         numberOfCities_ ;
+=======
+  /**
+     * 
+     */
+    private static final long serialVersionUID = 7271160768259648914L;
+public int         numberOfCities_ ;
+>>>>>>> master
   public double [][] distanceMatrix_ ;
 
   public TSP(String solutionType){

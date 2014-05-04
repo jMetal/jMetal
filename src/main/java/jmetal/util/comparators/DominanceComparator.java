@@ -30,7 +30,11 @@ import java.util.Comparator;
  * <code>Solution</code> objects) based on a constraint violation test + 
  * dominance checking, as in NSGA-II.
  */
+<<<<<<< HEAD
 public class DominanceComparator implements Comparator {
+=======
+public class DominanceComparator implements Comparator<Solution> {
+>>>>>>> master
   IConstraintViolationComparator violationConstraintComparator_ ;
  
   /**
@@ -56,7 +60,12 @@ public class DominanceComparator implements Comparator {
   * @return -1, or 0, or 1 if solution1 dominates solution2, both are 
   * non-dominated, or solution1  is dominated by solution22, respectively.
   */
+<<<<<<< HEAD
   public int compare(Object object1, Object object2) {
+=======
+  @Override
+  public int compare(Solution object1, Solution object2) {
+>>>>>>> master
     if (object1==null)
       return 1;
     else if (object2 == null)

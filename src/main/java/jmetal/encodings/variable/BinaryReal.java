@@ -30,8 +30,12 @@ import java.util.BitSet;
  * a binary string
  */
 public class BinaryReal extends Binary {
-	
-	/**
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 7465120044544948197L;
+
+    /**
    * Defines the default number of bits used for binary coded variables.
    */	
 	public static final int DEFAULT_PRECISION = 30; 

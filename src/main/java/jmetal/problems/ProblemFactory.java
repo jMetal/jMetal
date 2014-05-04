@@ -67,8 +67,13 @@ public class ProblemFactory {
       base += "LZ06.";
 
     try {
+<<<<<<< HEAD
       Class problemClass = Class.forName(base+name);
       Constructor [] constructors = problemClass.getConstructors();
+=======
+      Class<?> problemClass = Class.forName(base+name);
+      Constructor<?> [] constructors = problemClass.getConstructors();
+>>>>>>> master
       int i = 0;
       //find the constructor
       while ((i < constructors.length) && 

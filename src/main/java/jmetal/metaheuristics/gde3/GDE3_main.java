@@ -60,8 +60,11 @@ public class GDE3_main {
     Operator  selection ;
     Operator  crossover ;
     
+<<<<<<< HEAD
     HashMap  parameters ; // Operator parameters
     
+=======
+>>>>>>> master
     QualityIndicator indicators ; // Object to get quality indicators
 
     // Logger object and file to store log messages
@@ -95,6 +98,7 @@ public class GDE3_main {
     algorithm.setInputParameter("maxIterations",250);
     
     // Crossover operator 
+<<<<<<< HEAD
     parameters = new HashMap() ;
     parameters.put("CR", 0.5) ;
     parameters.put("F", 0.5) ;
@@ -103,6 +107,16 @@ public class GDE3_main {
     // Add the operators to the algorithm
     parameters = null ;
     selection = SelectionFactory.getSelectionOperator("DifferentialEvolutionSelection", parameters) ;
+=======
+    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
+    crossoverParameters.put("CR", 0.5) ;
+    crossoverParameters.put("F", 0.5) ;
+    crossover = CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", crossoverParameters);                   
+    
+    // Add the operators to the algorithm
+    HashMap<String, Object> selectionParameters = null ; // FIXME: why we are passing null?
+    selection = SelectionFactory.getSelectionOperator("DifferentialEvolutionSelection", selectionParameters) ;
+>>>>>>> master
 
     algorithm.addOperator("crossover",crossover);
     algorithm.addOperator("selection",selection);

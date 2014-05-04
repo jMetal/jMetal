@@ -22,7 +22,10 @@ package jmetal.util.archive;
 
 import jmetal.core.Solution;
 import jmetal.qualityIndicator.util.MetricsUtil;
+<<<<<<< HEAD
 import jmetal.util.Distance;
+=======
+>>>>>>> master
 import jmetal.util.comparators.CrowdingDistanceComparator;
 import jmetal.util.comparators.DominanceComparator;
 import jmetal.util.comparators.EqualSolutions;
@@ -35,6 +38,14 @@ import java.util.Comparator;
  */
 public class HypervolumeArchive extends Archive {
   
+<<<<<<< HEAD
+=======
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 3084983453913397884L;
+
+>>>>>>> master
   /** 
    * Stores the maximum size of the archive.
    */
@@ -48,23 +59,39 @@ public class HypervolumeArchive extends Archive {
   /**
    * Stores a <code>Comparator</code> for dominance checking.
    */
+<<<<<<< HEAD
   private Comparator dominance_;
+=======
+  private Comparator<Solution> dominance_;
+>>>>>>> master
   
   /**
    * Stores a <code>Comparator</code> for equality checking (in the objective
    * space).
    */
+<<<<<<< HEAD
   private Comparator equals_; 
+=======
+  private Comparator<Solution> equals_; 
+>>>>>>> master
   
   /**
    * Stores a <code>Distance</code> object, for distances utilities
    */
+<<<<<<< HEAD
   private Distance distance_; 
+=======
+  //private Distance distance_; 
+>>>>>>> master
       
   private MetricsUtil utils_ ;
   
   private double      offset_ ;
+<<<<<<< HEAD
   private Comparator crowdingDistance_; 
+=======
+  //private Comparator<Solution> crowdingDistance_; 
+>>>>>>> master
 
   /**
    * Constructor. 
@@ -77,10 +104,17 @@ public class HypervolumeArchive extends Archive {
     objectives_       = numberOfObjectives;        
     dominance_        = new DominanceComparator();
     equals_           = new EqualSolutions();
+<<<<<<< HEAD
     distance_         = new Distance();
     utils_            = new MetricsUtil() ;
     offset_           = 100 ;
     crowdingDistance_ = new CrowdingDistanceComparator();
+=======
+    //distance_         = new Distance();
+    utils_            = new MetricsUtil() ;
+    offset_           = 100 ;
+    //crowdingDistance_ = new CrowdingDistanceComparator();
+>>>>>>> master
 
   } // CrowdingArchive
     

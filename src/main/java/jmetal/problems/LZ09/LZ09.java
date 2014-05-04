@@ -24,7 +24,11 @@ package jmetal.problems.LZ09;
 import java.util.Vector;
 
 /**
+<<<<<<< HEAD
  * Base class to implement the problems of the LZ09 Benchmark, which is
+=======
+ * Base class to implement the problems of the LZ09 benchmark, which is
+>>>>>>> master
  * defined in:
  * H. Li and Q. Zhang. Multiobjective optimization problems with complicated 
  * pareto sets, MOEA/D and NSGA-II. IEEE Transactions on Evolutionary 
@@ -251,8 +255,13 @@ public class LZ09 {
 			if(ltype==21||ltype==22||ltype==23||ltype==24||ltype==26)
 			{
 				double g = 0, h = 0, a, b;
+<<<<<<< HEAD
 				Vector <Double> aa = new Vector();
 				Vector <Double> bb = new Vector();
+=======
+				Vector <Double> aa = new Vector<Double>();
+				Vector <Double> bb = new Vector<Double>();
+>>>>>>> master
 				for(int n=1;n<nvar;n++)
 				{
 
@@ -282,9 +291,15 @@ public class LZ09 {
 			if(ltype==25)
 			{
 				double g = 0, h = 0, a, b;
+<<<<<<< HEAD
 				double e = 0, c;
 				Vector <Double> aa = new Vector() ;
 				Vector <Double> bb = new Vector() ;
+=======
+				double /*e = 0,*/ c;
+				Vector <Double> aa = new Vector<Double>() ;
+				Vector <Double> bb = new Vector<Double>() ;
+>>>>>>> master
 				for(int n=1;n<nvar;n++){
 					if(n%3==0){
 						a = psfunc2(x_var.elementAt(n),x_var.elementAt(0),n,ltype,1); 
@@ -319,9 +334,15 @@ public class LZ09 {
 			if(ltype==31||ltype==32)
 			{
 				double g = 0, h = 0, e = 0, a;
+<<<<<<< HEAD
 				Vector <Double> aa  = new Vector() ;
 				Vector <Double> bb = new Vector();
 				Vector <Double> cc = new Vector();
+=======
+				Vector <Double> aa  = new Vector<Double>() ;
+				Vector <Double> bb = new Vector<Double>();
+				Vector <Double> cc = new Vector<Double>();
+>>>>>>> master
 				for(int n=2;n<nvar;n++)
 				{
 					a = psfunc3(x_var.elementAt(n),x_var.elementAt(0),x_var.elementAt(1),n,ltype);

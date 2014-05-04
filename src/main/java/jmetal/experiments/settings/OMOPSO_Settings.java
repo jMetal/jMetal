@@ -74,8 +74,11 @@ public class OMOPSO_Settings extends Settings{
     Mutation  uniformMutation ;
     Mutation nonUniformMutation ;
 
+<<<<<<< HEAD
     HashMap  parameters ; // Operator parameters
 
+=======
+>>>>>>> master
     // Creating the problem
     algorithm = new OMOPSO(problem_) ;
 
@@ -85,12 +88,20 @@ public class OMOPSO_Settings extends Settings{
     algorithm.setInputParameter("maxIterations",maxIterations_);
     
     
+<<<<<<< HEAD
     parameters = new HashMap() ;
+=======
+    HashMap<String, Object> parameters = new HashMap<String, Object>() ;
+>>>>>>> master
     parameters.put("probability", mutationProbability_) ;
     parameters.put("perturbation", perturbationIndex_) ;
     uniformMutation = new UniformMutation(parameters);
     
+<<<<<<< HEAD
     parameters = new HashMap() ;
+=======
+    parameters = new HashMap<String, Object>() ;
+>>>>>>> master
     parameters.put("probability", mutationProbability_) ;
     parameters.put("perturbation", perturbationIndex_) ;
     parameters.put("maxIterations", maxIterations_) ;
@@ -113,8 +124,11 @@ public class OMOPSO_Settings extends Settings{
     Mutation  uniformMutation ;
     Mutation nonUniformMutation ;
 
+<<<<<<< HEAD
     HashMap  parameters ; // Operator parameters
 
+=======
+>>>>>>> master
     // Creating the algorithm.
     algorithm = new OMOPSO(problem_) ;
 
@@ -129,12 +143,20 @@ public class OMOPSO_Settings extends Settings{
 
     mutationProbability_ = Double.parseDouble(configuration.getProperty("mutationProbability",String.valueOf(mutationProbability_)));
     perturbationIndex_ = Double.parseDouble(configuration.getProperty("perturbationIndex",String.valueOf(mutationProbability_)));
+<<<<<<< HEAD
     parameters = new HashMap() ;
+=======
+    HashMap<String, Object> parameters = new HashMap<String, Object>() ;
+>>>>>>> master
     parameters.put("probability", mutationProbability_) ;
     parameters.put("perturbation", perturbationIndex_) ;
     uniformMutation = new UniformMutation(parameters);
 
+<<<<<<< HEAD
     parameters = new HashMap() ;
+=======
+    parameters = new HashMap<String, Object>() ;
+>>>>>>> master
     parameters.put("probability", mutationProbability_) ;
     parameters.put("perturbation", perturbationIndex_) ;
     parameters.put("maxIterations", maxIterations_) ;

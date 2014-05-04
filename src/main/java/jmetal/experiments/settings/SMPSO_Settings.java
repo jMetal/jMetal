@@ -42,6 +42,7 @@ public class SMPSO_Settings extends Settings{
   public int    archiveSize_               ;
   public double mutationDistributionIndex_ ;
   public double mutationProbability_       ;
+<<<<<<< HEAD
   double C1Max_;
   double C1Min_;
   double C2Max_;
@@ -50,6 +51,8 @@ public class SMPSO_Settings extends Settings{
   double WMin_;
   double ChVel1_;
   double ChVel2_;
+=======
+>>>>>>> master
 
   /**
    * Constructor
@@ -71,6 +74,7 @@ public class SMPSO_Settings extends Settings{
     archiveSize_               = 100 ;
     mutationDistributionIndex_ = 20.0 ;
     mutationProbability_       = 1.0/problem_.getNumberOfVariables() ;
+<<<<<<< HEAD
     C1Max_ = 2.5;
     C1Min_ = 1.5;
     C2Max_ = 2.5;
@@ -79,6 +83,8 @@ public class SMPSO_Settings extends Settings{
     WMin_ = 0.1;
     ChVel1_ = -1;
     ChVel2_ = -1;
+=======
+>>>>>>> master
   } // SMPSO_Settings
   
   /**
@@ -90,8 +96,11 @@ public class SMPSO_Settings extends Settings{
     Algorithm algorithm ;
     Mutation  mutation ;
 
+<<<<<<< HEAD
     HashMap  parameters ; // Operator parameters
 
+=======
+>>>>>>> master
     // Creating the problem
     algorithm = new SMPSO(problem_) ;
     
@@ -99,6 +108,7 @@ public class SMPSO_Settings extends Settings{
     algorithm.setInputParameter("swarmSize", swarmSize_);
     algorithm.setInputParameter("maxIterations", maxIterations_);
     algorithm.setInputParameter("archiveSize", archiveSize_);
+<<<<<<< HEAD
     algorithm.setInputParameter("C1Min",1.5);
     algorithm.setInputParameter("C1Max",2.5);
     algorithm.setInputParameter("C2Min",1.5);
@@ -109,6 +119,10 @@ public class SMPSO_Settings extends Settings{
     algorithm.setInputParameter("ChVel2",-1.0);
 
     parameters = new HashMap() ;
+=======
+    
+    HashMap<String, Object> parameters = new HashMap<String, Object>() ;
+>>>>>>> master
     parameters.put("probability", mutationProbability_) ;
     parameters.put("distributionIndex", mutationDistributionIndex_) ;
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);                    
@@ -127,8 +141,11 @@ public class SMPSO_Settings extends Settings{
     Algorithm algorithm ;
     Mutation  mutation ;
 
+<<<<<<< HEAD
     HashMap  parameters ; // Operator parameters
 
+=======
+>>>>>>> master
     // Creating the algorithm.
     algorithm = new SMPSO(problem_) ;
 
@@ -136,16 +153,20 @@ public class SMPSO_Settings extends Settings{
     swarmSize_ = Integer.parseInt(configuration.getProperty("swarmSize",String.valueOf(swarmSize_)));
     maxIterations_  = Integer.parseInt(configuration.getProperty("maxIterations",String.valueOf(maxIterations_)));
     archiveSize_ = Integer.parseInt(configuration.getProperty("archiveSize", String.valueOf(archiveSize_)));
+<<<<<<< HEAD
     C1Min_ = Double.parseDouble(configuration.getProperty("C1Min", String.valueOf(C1Min_)));
     C1Max_ = Double.parseDouble(configuration.getProperty("C1Max", String.valueOf(C1Max_)));
     C2Min_ = Double.parseDouble(configuration.getProperty("C2Min", String.valueOf(C2Min_)));
     C2Min_ = Double.parseDouble(configuration.getProperty("C2Max", String.valueOf(C2Max_)));
     WMin_ = Double.parseDouble(configuration.getProperty("WMin", String.valueOf(WMin_)));
     WMax_ = Double.parseDouble(configuration.getProperty("WMax", String.valueOf(WMax_)));
+=======
+>>>>>>> master
 
     algorithm.setInputParameter("swarmSize", swarmSize_);
     algorithm.setInputParameter("maxIterations", maxIterations_);
     algorithm.setInputParameter("archiveSize", archiveSize_);
+<<<<<<< HEAD
     algorithm.setInputParameter("C1Min",C1Min_);
     algorithm.setInputParameter("C1Max",C1Max_);
     algorithm.setInputParameter("C2Min",C2Min_);
@@ -158,6 +179,12 @@ public class SMPSO_Settings extends Settings{
     mutationProbability_ = Double.parseDouble(configuration.getProperty("mutationProbability",String.valueOf(mutationProbability_)));
     mutationDistributionIndex_ = Double.parseDouble(configuration.getProperty("mutationDistributionIndex",String.valueOf(mutationDistributionIndex_)));
     parameters = new HashMap() ;
+=======
+
+    mutationProbability_ = Double.parseDouble(configuration.getProperty("mutationProbability",String.valueOf(mutationProbability_)));
+    mutationDistributionIndex_ = Double.parseDouble(configuration.getProperty("mutationDistributionIndex",String.valueOf(mutationDistributionIndex_)));
+    HashMap<String, Object> parameters = new HashMap<String, Object>() ;
+>>>>>>> master
     parameters.put("probability", mutationProbability_) ;
     parameters.put("distributionIndex", mutationDistributionIndex_) ;
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);

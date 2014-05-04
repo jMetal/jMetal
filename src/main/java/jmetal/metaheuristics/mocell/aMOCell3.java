@@ -26,7 +26,10 @@ import jmetal.util.*;
 import jmetal.util.archive.CrowdingArchive;
 import jmetal.util.comparators.CrowdingComparator;
 import jmetal.util.comparators.DominanceComparator;
+<<<<<<< HEAD
 import jmetal.util.random.PseudoRandom;
+=======
+>>>>>>> master
 
 import java.util.Comparator;
 
@@ -36,6 +39,14 @@ import java.util.Comparator;
  */
 public class aMOCell3 extends Algorithm{
 
+<<<<<<< HEAD
+=======
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 7923330703025056895L;
+
+>>>>>>> master
   public aMOCell3(Problem problem){
     super (problem) ;
   }
@@ -49,8 +60,13 @@ public class aMOCell3 extends Algorithm{
     CrowdingArchive archive;
     SolutionSet [] neighbors;    
     Neighborhood neighborhood;
+<<<<<<< HEAD
     Comparator dominance = new DominanceComparator(); 
     Comparator crowdingComparator = new CrowdingComparator();
+=======
+    Comparator<Solution> dominance = new DominanceComparator(); 
+    Comparator<Solution> crowdingComparator = new CrowdingComparator();
+>>>>>>> master
     Distance distance = new Distance();
 
     //Read the parameters
@@ -140,7 +156,11 @@ public class aMOCell3 extends Algorithm{
       distance.crowdingDistanceAssignment(archive,problem_.getNumberOfObjectives());                      
       for (int j = 0; j < feedBack; j++){
         if (archive.size() > j){
+<<<<<<< HEAD
           int r = PseudoRandom.randInt(0, currentPopulation.size() - 1);
+=======
+          int r = PseudoRandom.randInt(0,currentPopulation.size()-1);
+>>>>>>> master
           if (r < currentPopulation.size()){
             Solution individual = archive.get(j);
             individual.setLocation(r);

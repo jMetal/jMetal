@@ -31,8 +31,13 @@ import jmetal.operators.selection.Selection;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.ProblemFactory;
 import jmetal.util.JMException;
+<<<<<<< HEAD
 import jmetal.util.parallel.MultithreadedEvaluator;
 import jmetal.util.parallel.SynchronousParallelRunner;
+=======
+import jmetal.util.parallel.IParallelEvaluator;
+import jmetal.util.parallel.MultithreadedEvaluator;
+>>>>>>> master
 
 import java.util.HashMap;
 import java.util.Properties;
@@ -83,9 +88,13 @@ public class pNSGAII_Settings extends Settings {
     Crossover  crossover ;
     Mutation   mutation  ;
 
+<<<<<<< HEAD
     HashMap  parameters ; // Operator parameters
 
     SynchronousParallelRunner parallelEvaluator = new MultithreadedEvaluator(numberOfThreads_) ;
+=======
+    IParallelEvaluator parallelEvaluator = new MultithreadedEvaluator(numberOfThreads_) ;
+>>>>>>> master
 
     // Creating the algorithm. 
     algorithm = new pNSGAII(problem_, parallelEvaluator) ;
@@ -95,12 +104,20 @@ public class pNSGAII_Settings extends Settings {
     algorithm.setInputParameter("maxEvaluations",maxEvaluations_);
 
     // Mutation and Crossover for Real codification
+<<<<<<< HEAD
     parameters = new HashMap() ;
+=======
+    HashMap<String, Object> parameters = new HashMap<String, Object>() ;
+>>>>>>> master
     parameters.put("probability", crossoverProbability_) ;
     parameters.put("distributionIndex", crossoverDistributionIndex_) ;
     crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters);                   
 
+<<<<<<< HEAD
     parameters = new HashMap() ;
+=======
+    parameters = new HashMap<String, Object>() ;
+>>>>>>> master
     parameters.put("probability", mutationProbability_) ;
     parameters.put("distributionIndex", mutationDistributionIndex_) ;
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);                        
@@ -128,11 +145,17 @@ public class pNSGAII_Settings extends Settings {
     Crossover  crossover ;
     Mutation   mutation  ;
 
+<<<<<<< HEAD
     HashMap  parameters ; // Operator parameters
 
     numberOfThreads_ = Integer.parseInt(configuration.getProperty("numberOfThreads",String.valueOf(numberOfThreads_)));
 
     SynchronousParallelRunner parallelEvaluator = new MultithreadedEvaluator(numberOfThreads_) ;
+=======
+    numberOfThreads_ = Integer.parseInt(configuration.getProperty("numberOfThreads",String.valueOf(numberOfThreads_)));
+
+    IParallelEvaluator parallelEvaluator = new MultithreadedEvaluator(numberOfThreads_) ;
+>>>>>>> master
 
     // Creating the algorithm.
     algorithm = new pNSGAII(problem_, parallelEvaluator) ;
@@ -146,14 +169,22 @@ public class pNSGAII_Settings extends Settings {
     // Mutation and Crossover for Real codification
     crossoverProbability_ = Double.parseDouble(configuration.getProperty("crossoverProbability",String.valueOf(crossoverProbability_)));
     crossoverDistributionIndex_ = Double.parseDouble(configuration.getProperty("crossoverDistributionIndex",String.valueOf(crossoverDistributionIndex_)));
+<<<<<<< HEAD
     parameters = new HashMap() ;
+=======
+    HashMap<String, Object> parameters = new HashMap<String, Object>() ;
+>>>>>>> master
     parameters.put("probability", crossoverProbability_) ;
     parameters.put("distributionIndex", crossoverDistributionIndex_) ;
     crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters);
 
     mutationProbability_ = Double.parseDouble(configuration.getProperty("mutationProbability",String.valueOf(mutationProbability_)));
     mutationDistributionIndex_ = Double.parseDouble(configuration.getProperty("mutationDistributionIndex",String.valueOf(mutationDistributionIndex_)));
+<<<<<<< HEAD
     parameters = new HashMap() ;
+=======
+    parameters = new HashMap<String, Object>() ;
+>>>>>>> master
     parameters.put("probability", mutationProbability_) ;
     parameters.put("distributionIndex", mutationDistributionIndex_) ;
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);

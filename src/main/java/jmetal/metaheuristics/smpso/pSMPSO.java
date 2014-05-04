@@ -21,6 +21,7 @@
 package jmetal.metaheuristics.smpso;
 
 import jmetal.core.*;
+<<<<<<< HEAD
 import jmetal.qualityIndicator.Hypervolume;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Distance;
@@ -30,6 +31,16 @@ import jmetal.util.archive.CrowdingArchive;
 import jmetal.util.comparators.CrowdingDistanceComparator;
 import jmetal.util.comparators.DominanceComparator;
 import jmetal.util.parallel.SynchronousParallelRunner;
+=======
+import jmetal.qualityIndicator.QualityIndicator;
+import jmetal.util.Distance;
+import jmetal.util.JMException;
+import jmetal.util.PseudoRandom;
+import jmetal.util.archive.CrowdingArchive;
+import jmetal.util.comparators.CrowdingDistanceComparator;
+import jmetal.util.comparators.DominanceComparator;
+import jmetal.util.parallel.IParallelEvaluator;
+>>>>>>> master
 import jmetal.util.wrapper.XReal;
 
 import java.io.IOException;
@@ -47,6 +58,14 @@ import java.util.logging.Logger;
 public class pSMPSO extends Algorithm {
 
   /**
+<<<<<<< HEAD
+=======
+   * 
+   */
+  private static final long serialVersionUID = 6433458914602768519L;
+
+  /**
+>>>>>>> master
    * Stores the number of particles_ used
    */
   private int swarmSize_;
@@ -81,11 +100,19 @@ public class pSMPSO extends Algorithm {
   /**
    * Stores a comparator for checking dominance
    */
+<<<<<<< HEAD
   private Comparator dominance_;
   /**
    * Stores a comparator for crowding checking
    */
   private Comparator crowdingDistanceComparator_;
+=======
+  private Comparator<Solution> dominance_;
+  /**
+   * Stores a comparator for crowding checking
+   */
+  private Comparator<Solution> crowdingDistanceComparator_;
+>>>>>>> master
   /**
    * Stores a <code>Distance</code> object
    */
@@ -100,12 +127,16 @@ public class pSMPSO extends Algorithm {
   /**
    * ParallelEvaluator object
    */
+<<<<<<< HEAD
   SynchronousParallelRunner parallelEvaluator_ ;
 
   /**
    * Number of threads to be executed in parallel
    */
   private int numberOfThreads_;
+=======
+  IParallelEvaluator parallelEvaluator_ ; 
+>>>>>>> master
 
 
   double r1Max_;
@@ -121,9 +152,12 @@ public class pSMPSO extends Algorithm {
   double ChVel1_;
   double ChVel2_;
 
+<<<<<<< HEAD
   private double trueHypervolume_;
   private Hypervolume hy_;
   private SolutionSet trueFront_;
+=======
+>>>>>>> master
   private double deltaMax_[];
   private double deltaMin_[];
   boolean success_;
@@ -133,7 +167,11 @@ public class pSMPSO extends Algorithm {
    * Constructor
    * @param problem Problem to solve
    */
+<<<<<<< HEAD
   public pSMPSO(Problem problem, SynchronousParallelRunner evaluator) {
+=======
+  public pSMPSO(Problem problem, IParallelEvaluator evaluator) {
+>>>>>>> master
     super(problem) ;
 
     r1Max_ = 1.0;
@@ -165,7 +203,11 @@ public class pSMPSO extends Algorithm {
 
     polynomialMutation_ = operators_.get("mutation") ; 
 
+<<<<<<< HEAD
     parallelEvaluator_.startParallelRunner(problem_); ;
+=======
+    parallelEvaluator_.startEvaluator(problem_) ;
+>>>>>>> master
 
     iteration_ = 1 ;
 
@@ -239,8 +281,13 @@ public class pSMPSO extends Algorithm {
    * @throws JMException 
    */
   private void computeSpeed(int iter, int miter) throws JMException, IOException {
+<<<<<<< HEAD
     double r1, r2, W, C1, C2;
     double wmax, wmin, deltaMax, deltaMin;
+=======
+    double r1, r2, C1, C2;
+    double wmax, wmin;
+>>>>>>> master
     XReal bestGlobal;
 
     for (int i = 0; i < swarmSize_; i++) {
@@ -264,7 +311,10 @@ public class pSMPSO extends Algorithm {
       r2 = PseudoRandom.randDouble(r2Min_, r2Max_);
       C1 = PseudoRandom.randDouble(C1Min_, C1Max_);
       C2 = PseudoRandom.randDouble(C2Min_, C2Max_);
+<<<<<<< HEAD
       W = PseudoRandom.randDouble(WMin_, WMax_);
+=======
+>>>>>>> master
       //
       wmax = WMax_;
       wmin = WMin_;
@@ -337,10 +387,17 @@ public class pSMPSO extends Algorithm {
     for (int i = 0; i < swarmSize_; i++) {
       Solution particle = new Solution(problem_);
       particles_.add(particle);
+<<<<<<< HEAD
       parallelEvaluator_.addTaskForExecution(new Object[]{particle}); ;
     }
 
     parallelEvaluator_.parallelExecution() ;
+=======
+      parallelEvaluator_.addSolutionForEvaluation(particle) ;
+    }
+
+    parallelEvaluator_.parallelEvaluation() ;
+>>>>>>> master
 
     //-> Step2. Initialize the speed_ of each particle to 0
     for (int i = 0; i < swarmSize_; i++) {
@@ -382,10 +439,17 @@ public class pSMPSO extends Algorithm {
 
       for (int i = 0; i < particles_.size(); i++) {
         Solution particle = particles_.get(i);
+<<<<<<< HEAD
         parallelEvaluator_.addTaskForExecution(new Object[]{particle}); ;
       }
 
       parallelEvaluator_.parallelExecution() ;
+=======
+        parallelEvaluator_.addSolutionForEvaluation(particle) ;
+      }
+
+      parallelEvaluator_.parallelEvaluation() ;
+>>>>>>> master
 
       //Actualize the archive          
       for (int i = 0; i < particles_.size(); i++) {

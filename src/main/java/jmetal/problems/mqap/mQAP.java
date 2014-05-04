@@ -35,7 +35,15 @@ import jmetal.util.JMException;
  */
 public class mQAP extends Problem {
   
+<<<<<<< HEAD
   int [][] a_matrix;
+=======
+  /**
+     * 
+     */
+    private static final long serialVersionUID = 5585099487667493237L;
+int [][] a_matrix;
+>>>>>>> master
   int [][][] b_matrixs;
 
   public mQAP(String solutionType) {

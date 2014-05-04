@@ -41,8 +41,11 @@ import java.util.HashMap;
 public class MOCHC_main {
 
   public static void main(String [] args) {
+<<<<<<< HEAD
   	
     HashMap  parameters ; // Operator parameters
+=======
+>>>>>>> master
 
     try {                               
       Problem problem = new ZDT5("Binary");
@@ -62,6 +65,7 @@ public class MOCHC_main {
       Operator newGenerationSelection ;
       
       // Crossover operator
+<<<<<<< HEAD
       parameters = new HashMap() ;
       parameters.put("probability", 1.0) ;
       crossoverOperator = CrossoverFactory.getCrossoverOperator("HUXCrossover", parameters);
@@ -79,6 +83,25 @@ public class MOCHC_main {
       parameters = new HashMap() ;
       parameters.put("probability", 0.35) ;
       mutationOperator = MutationFactory.getMutationOperator("BitFlipMutation", parameters);                    
+=======
+      HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
+      crossoverParameters.put("probability", 1.0) ;
+      crossoverOperator = CrossoverFactory.getCrossoverOperator("HUXCrossover", crossoverParameters);
+     
+      //parentsSelection = new RandomSelection();
+      //newGenerationSelection = new RankingAndCrowdingSelection(problem);
+      HashMap<String, Object> selectionParameters = null ; // FIXME: why we are passing null?
+      parentsSelection = SelectionFactory.getSelectionOperator("RandomSelection", selectionParameters) ;     
+      
+      HashMap<String, Object> newSelectionParameters = new HashMap<String, Object>() ;
+      newSelectionParameters.put("problem", problem) ;
+      newGenerationSelection = SelectionFactory.getSelectionOperator("RankingAndCrowdingSelection", newSelectionParameters) ;
+     
+      // Mutation operator
+      HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
+      mutationParameters.put("probability", 0.35) ;
+      mutationOperator = MutationFactory.getMutationOperator("BitFlipMutation", mutationParameters);                    
+>>>>>>> master
       
       algorithm.addOperator("crossover",crossoverOperator);
       algorithm.addOperator("cataclysmicMutation",mutationOperator);

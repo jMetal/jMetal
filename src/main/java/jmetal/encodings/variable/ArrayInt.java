@@ -34,7 +34,12 @@ import jmetal.util.random.PseudoRandom;
  */
 public class ArrayInt extends Variable {
 	
-	/**
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 2165010259190501390L;
+
+    /**
 	 * Problem using the type
 	 */
   private Problem problem_ ;

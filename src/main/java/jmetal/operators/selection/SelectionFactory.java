@@ -37,7 +37,11 @@ public class SelectionFactory {
    * @return the operator
    * @throws JMException 
    */
+<<<<<<< HEAD
   public static Selection getSelectionOperator(String name, HashMap parameters) throws JMException {
+=======
+  public static Selection getSelectionOperator(String name, HashMap<String, Object> parameters) throws JMException {
+>>>>>>> master
     if (name.equalsIgnoreCase("BinaryTournament"))
       return new BinaryTournament(parameters);
     else if (name.equalsIgnoreCase("BinaryTournament2"))

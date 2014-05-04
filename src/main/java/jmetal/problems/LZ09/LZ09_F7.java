@@ -34,7 +34,15 @@ import java.util.Vector;
  * Class representing problem LZ09_F7 
  */
 public class LZ09_F7 extends Problem {   
+<<<<<<< HEAD
 	LZ09 LZ09_ ; 
+=======
+	/**
+     * 
+     */
+    private static final long serialVersionUID = 5477277027254029099L;
+    LZ09 LZ09_ ; 
+>>>>>>> master
  /** 
   * Creates a default LZ09_F7 problem (10 variables and 2 objectives)
   * @param solutionType The solution type must "Real" or "BinaryReal". 

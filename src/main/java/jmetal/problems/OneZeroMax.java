@@ -32,6 +32,14 @@ import jmetal.encodings.variable.Binary;
 public class OneZeroMax extends Problem {
 
 	 /**
+<<<<<<< HEAD
+=======
+     * 
+     */
+    private static final long serialVersionUID = 2580449794690931406L;
+
+    /**
+>>>>>>> master
 	  * Creates a new OneZeroMax problem instance
   * @param solutionType Solution type
 	 * @throws ClassNotFoundException 

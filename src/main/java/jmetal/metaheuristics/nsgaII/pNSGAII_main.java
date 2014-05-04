@@ -32,8 +32,13 @@ import jmetal.problems.ProblemFactory;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
+<<<<<<< HEAD
 import jmetal.util.parallel.MultithreadedEvaluator;
 import jmetal.util.parallel.SynchronousParallelRunner;
+=======
+import jmetal.util.parallel.IParallelEvaluator;
+import jmetal.util.parallel.MultithreadedEvaluator;
+>>>>>>> master
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -72,8 +77,11 @@ public class pNSGAII_main {
     Operator  mutation  ; // Mutation operator
     Operator  selection ; // Selection operator
 
+<<<<<<< HEAD
     HashMap  parameters ; // Operator parameters
 
+=======
+>>>>>>> master
     QualityIndicator indicators ; // Object to get quality indicators
 
     // Logger object and file to store log messages
@@ -102,7 +110,11 @@ public class pNSGAII_main {
     } // else
 
     int threads = 4 ; // 0 - use all the available cores
+<<<<<<< HEAD
     SynchronousParallelRunner parallelEvaluator = new MultithreadedEvaluator(threads) ;
+=======
+    IParallelEvaluator parallelEvaluator = new MultithreadedEvaluator(threads) ;
+>>>>>>> master
 
     algorithm = new pNSGAII(problem, parallelEvaluator);
 
@@ -111,6 +123,7 @@ public class pNSGAII_main {
     algorithm.setInputParameter("maxEvaluations",25000);
 
     // Mutation and Crossover for Real codification 
+<<<<<<< HEAD
     parameters = new HashMap() ;
     parameters.put("probability", 0.9) ;
     parameters.put("distributionIndex", 20.0) ;
@@ -124,6 +137,21 @@ public class pNSGAII_main {
     // Selection Operator 
     parameters = null ;
     selection = SelectionFactory.getSelectionOperator("BinaryTournament2", parameters) ;                           
+=======
+    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
+    crossoverParameters.put("probability", 0.9) ;
+    crossoverParameters.put("distributionIndex", 20.0) ;
+    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", crossoverParameters);                   
+
+    HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
+    mutationParameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
+    mutationParameters.put("distributionIndex", 20.0) ;
+    mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);                    
+
+    // Selection Operator 
+    HashMap<String, Object> selectionParameters = null ; // FIXME: why we are passing null?
+    selection = SelectionFactory.getSelectionOperator("BinaryTournament2", selectionParameters) ;                           
+>>>>>>> master
 
     // Add the operators to the algorithm
     algorithm.addOperator("crossover",crossover);

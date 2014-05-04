@@ -22,6 +22,10 @@
 package jmetal.operators.selection;
 
 import jmetal.core.Problem;
+<<<<<<< HEAD
+=======
+import jmetal.core.Solution;
+>>>>>>> master
 import jmetal.core.SolutionSet;
 import jmetal.util.Configuration;
 import jmetal.util.Distance;
@@ -42,6 +46,14 @@ import java.util.HashMap;
 public class RankingAndCrowdingSelection extends Selection {
 
   /**
+<<<<<<< HEAD
+=======
+   * 
+   */
+  private static final long serialVersionUID = 3650068556668255844L;
+
+  /**
+>>>>>>> master
    * stores the problem to solve 
    */
   private Problem problem_ = null ;
@@ -49,7 +61,11 @@ public class RankingAndCrowdingSelection extends Selection {
   /**
    * stores a <code>Comparator</code> for crowding comparator checking.
    */
+<<<<<<< HEAD
   private static final Comparator crowdingComparator_ = 
+=======
+  private static final Comparator<Solution> crowdingComparator_ = 
+>>>>>>> master
                                   new CrowdingComparator();
 
   
@@ -70,8 +86,13 @@ public class RankingAndCrowdingSelection extends Selection {
     if (problem_ == null) {
       Configuration.logger_.severe("RankingAndCrowdingSelection.execute: " +
           "problem not specified") ;
+<<<<<<< HEAD
       Class cls = java.lang.String.class;
       String name = cls.getName(); 
+=======
+      //Class<String> cls = java.lang.String.class;
+      //String name = cls.getName(); 
+>>>>>>> master
     } // if
 
   } // RankingAndCrowdingSelection

@@ -21,6 +21,10 @@
 
 package jmetal.operators.selection;
 
+<<<<<<< HEAD
+=======
+import jmetal.core.Solution;
+>>>>>>> master
 import jmetal.core.SolutionSet;
 
 import java.util.Comparator;
@@ -31,17 +35,37 @@ import java.util.HashMap;
  * solution in a SolutionSet according to a given comparator
  */
 public class BestSolutionSelection extends Selection {
+<<<<<<< HEAD
   
 	// Comparator
   private Comparator comparator_;
     
+=======
+
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 7515153213699830920L;
+
+  // Comparator
+  private Comparator<Solution> comparator_;
+
+  @SuppressWarnings({"unchecked"})
+>>>>>>> master
   public BestSolutionSelection(HashMap<String, Object> parameters) {
   	super(parameters) ;
 
   	comparator_ = null ;
+<<<<<<< HEAD
   	
   	if (parameters.get("comparator") != null)
   		comparator_ = (Comparator) parameters.get("comparator") ;  		
+=======
+
+  	Object obj = parameters.get("comparator");
+  	if (obj != null && obj instanceof Comparator<?>)
+  		comparator_ = (Comparator<Solution>) obj;
+>>>>>>> master
   }
 
   /**

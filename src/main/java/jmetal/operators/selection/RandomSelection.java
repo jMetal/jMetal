@@ -23,7 +23,11 @@ package jmetal.operators.selection;
 
 import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
+<<<<<<< HEAD
 import jmetal.util.random.PseudoRandom;
+=======
+import jmetal.util.PseudoRandom;
+>>>>>>> master
 
 import java.util.HashMap;
 
@@ -32,6 +36,14 @@ import java.util.HashMap;
  * random parents
  */
 public class RandomSelection extends Selection {
+<<<<<<< HEAD
+=======
+  /**
+     * 
+     */
+    private static final long serialVersionUID = -3975079865177120226L;
+
+>>>>>>> master
   public RandomSelection(HashMap<String, Object> parameters) {
   	super(parameters) ;
   }

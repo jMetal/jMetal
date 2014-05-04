@@ -25,7 +25,11 @@ import jmetal.encodings.solutionType.ArrayRealAndBinarySolutionType;
 import jmetal.encodings.variable.Binary;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
+<<<<<<< HEAD
 import jmetal.util.random.PseudoRandom;
+=======
+import jmetal.util.PseudoRandom;
+>>>>>>> master
 import jmetal.util.wrapper.XReal;
 
 import java.util.Arrays;
@@ -34,6 +38,14 @@ import java.util.List;
 
 public class SBXSinglePointCrossover extends Crossover {
 	/**
+<<<<<<< HEAD
+=======
+     * 
+     */
+    private static final long serialVersionUID = 5802652792685626443L;
+
+    /**
+>>>>>>> master
 	 * EPS defines the minimum difference allowed between real values
 	 */
 	private static final double EPS= 1.0e-14;
@@ -46,7 +58,11 @@ public class SBXSinglePointCrossover extends Crossover {
 	/**
 	 * Valid solution types to apply this operator 
 	 */
+<<<<<<< HEAD
 	private static final List VALID_TYPES = Arrays.asList(ArrayRealAndBinarySolutionType.class) ;
+=======
+	private static final List<Class<ArrayRealAndBinarySolutionType>> VALID_TYPES = Arrays.asList(ArrayRealAndBinarySolutionType.class) ;
+>>>>>>> master
 
 	/**
 	 * Constructor
@@ -91,8 +107,11 @@ public class SBXSinglePointCrossover extends Crossover {
 		XReal offs1 = new XReal(offSpring[0]) ;
 		XReal offs2 = new XReal(offSpring[1]) ;
 
+<<<<<<< HEAD
 		int numberOfVariables = x1.size() ;
 
+=======
+>>>>>>> master
 		if (PseudoRandom.randDouble() <= realProbability) {
 			for (int i=0; i<x1.size(); i++){
 				valueX1 = x1.getValue(i);
@@ -193,7 +212,11 @@ public class SBXSinglePointCrossover extends Crossover {
 		if (parents.length != 2) {
 			Configuration.logger_.severe("SBXSinglePointCrossover.execute: operator " +
 			"needs two parents");
+<<<<<<< HEAD
 			Class cls = java.lang.String.class;
+=======
+			Class<String> cls = java.lang.String.class;
+>>>>>>> master
 			String name = cls.getName(); 
 			throw new JMException("Exception in " + name + ".execute()") ;      
 		} // if
@@ -203,7 +226,11 @@ public class SBXSinglePointCrossover extends Crossover {
 			Configuration.logger_.severe("SBXSinglePointCrossover.execute: the solutions " +
 					"type " + parents[0].getType() + " is not allowed with this operator");
 
+<<<<<<< HEAD
 			Class cls = java.lang.String.class;
+=======
+			Class<String> cls = java.lang.String.class;
+>>>>>>> master
 			String name = cls.getName(); 
 			throw new JMException("Exception in " + name + ".execute()") ;
 		} // if 

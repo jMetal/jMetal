@@ -32,7 +32,17 @@ import jmetal.util.JMException;
  */
 public class Viennet4 extends Problem{           
   
+<<<<<<< HEAD
  /** 
+=======
+ /**
+     * 
+     */
+    private static final long serialVersionUID = -8264999884031176005L;
+
+
+/** 
+>>>>>>> master
   * Constructor.
   * Creates a default instance of the Viennet4 problem.
   * @param solutionType The solution type must "Real" or "BinaryReal".

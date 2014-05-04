@@ -34,13 +34,17 @@ public class BLXAlphaCrossoverAndPolynomialMutation extends Offspring {
                                                  double crossoverProbability,
                                                  double distributionIndexForMutation,
                                                  double alpha) throws JMException {
+<<<<<<< HEAD
   	HashMap parameters ;
+=======
+>>>>>>> master
     mutationProbability_ = mutationProbability;
     crossoverProbability_ = crossoverProbability;
     distributionIndexForMutation_ = distributionIndexForMutation;
     alpha_ = alpha;
 
     // Crossover operator
+<<<<<<< HEAD
     parameters = new HashMap() ;
     parameters.put("probability", crossoverProbability_) ;
     parameters.put("alpha", alpha_) ;
@@ -52,6 +56,19 @@ public class BLXAlphaCrossoverAndPolynomialMutation extends Offspring {
     parameters.put("distributionIndex", distributionIndexForMutation_) ;
 
     mutation_ = MutationFactory.getMutationOperator("PolynomialMutation", parameters);
+=======
+    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
+    crossoverParameters.put("probability", crossoverProbability_) ;
+    crossoverParameters.put("alpha", alpha_) ;
+
+    crossover_ = CrossoverFactory.getCrossoverOperator("BLXAlphaCrossover", crossoverParameters);
+
+    HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
+    mutationParameters.put("probability", mutationProbability_) ;
+    mutationParameters.put("distributionIndex", distributionIndexForMutation_) ;
+
+    mutation_ = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
+>>>>>>> master
 
     selection_ = SelectionFactory.getSelectionOperator("BinaryTournament", null);
     

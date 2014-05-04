@@ -42,6 +42,14 @@ import java.util.Comparator;
  */
 public class MOCell extends Algorithm{
 
+<<<<<<< HEAD
+=======
+  /**
+   * 
+   */
+  private static final long serialVersionUID = -2479285259392945976L;
+
+>>>>>>> master
   public MOCell(Problem problem){
     super (problem) ;
   }
@@ -56,8 +64,13 @@ public class MOCell extends Algorithm{
     CrowdingArchive archive;
     SolutionSet [] neighbors;    
     Neighborhood neighborhood;
+<<<<<<< HEAD
     Comparator dominance = new DominanceComparator();  
     Comparator crowdingComparator = new CrowdingComparator();
+=======
+    Comparator<Solution> dominance = new DominanceComparator();  
+    Comparator<Solution> crowdingComparator = new CrowdingComparator();
+>>>>>>> master
     Distance distance = new Distance();
 
     // Read the parameters
@@ -142,7 +155,11 @@ public class MOCell extends Algorithm{
         }
       }                                 
     }    
+<<<<<<< HEAD
     //archive.printFeasibleFUN("FUN_MOCell") ;
+=======
+    archive.printFeasibleFUN("FUN_MOCell") ;
+>>>>>>> master
 
     return archive;
   } // while       

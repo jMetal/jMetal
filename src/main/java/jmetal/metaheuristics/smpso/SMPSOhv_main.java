@@ -54,9 +54,15 @@ public class SMPSOhv_main {
    * @throws java.io.IOException
    * @throws SecurityException 
    * Usage: three options
+<<<<<<< HEAD
    *      - jmetal.metaheuristics.smpso.SMPSOhv2_main
    *      - jmetal.metaheuristics.smpso.SMPSOhv2_main problemName
    *      - jmetal.metaheuristics.smpso.SMPSOhv2_main problemName ParetoFrontFile
+=======
+   *      - jmetal.metaheuristics.smpso.SMPSOhv_main
+   *      - jmetal.metaheuristics.smpso.SMPSOhv_main problemName
+   *      - jmetal.metaheuristics.smpso.SMPSOhv_main problemName ParetoFrontFile
+>>>>>>> master
    */
   public static void main(String [] args) throws JMException, IOException, ClassNotFoundException {
     Problem   problem   ;  // The problem to solve
@@ -64,8 +70,11 @@ public class SMPSOhv_main {
     Mutation  mutation  ;  // "Turbulence" operator
     
     QualityIndicator indicators ; // Object to get quality indicators
+<<<<<<< HEAD
         
     HashMap  parameters ; // Operator parameters
+=======
+>>>>>>> master
 
     // Logger object and file to store log messages
     logger_      = Configuration.logger_ ;
@@ -101,10 +110,17 @@ public class SMPSOhv_main {
     algorithm.setInputParameter("archiveSize",100);
     algorithm.setInputParameter("maxIterations",250);
 
+<<<<<<< HEAD
     parameters = new HashMap() ;
     parameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
     parameters.put("distributionIndex", 20.0) ;
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);                    
+=======
+    HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
+    mutationParameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
+    mutationParameters.put("distributionIndex", 20.0) ;
+    mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);                    
+>>>>>>> master
 
     algorithm.addOperator("mutation", mutation);
 
@@ -129,4 +145,8 @@ public class SMPSOhv_main {
       logger_.info("Epsilon    : " + indicators.getEpsilon(population)) ;
     } // if                   
   } //main
+<<<<<<< HEAD
 } // SMPSOhv2_main
+=======
+} // SMPSOhv_main
+>>>>>>> master

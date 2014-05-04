@@ -33,6 +33,14 @@ import jmetal.util.JMException;
  */
 public class Osyczka2 extends Problem{
  /**
+<<<<<<< HEAD
+=======
+     * 
+     */
+    private static final long serialVersionUID = 5547671401217847034L;
+
+/**
+>>>>>>> master
   * Constructor.
   * Creates a default instance of the Osyczka2 problem.
   * @param solutionType The solution type must "Real" or "BinaryReal". 

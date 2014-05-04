@@ -32,7 +32,16 @@ import jmetal.util.JMException;
  * Class representing a Sphere problem.
  */
 public class Sphere extends Problem {
+<<<<<<< HEAD
   /** 
+=======
+  /**
+     * 
+     */
+    private static final long serialVersionUID = 6623348682217370725L;
+
+/** 
+>>>>>>> master
    * Constructor
    * Creates a default instance of the Sphere problem
    * @param numberOfVariables Number of variables of the problem 
@@ -71,12 +80,18 @@ public class Sphere extends Problem {
     Variable[] decisionVariables  = solution.getDecisionVariables();
 
     double sum = 0.0;
+<<<<<<< HEAD
     double value ;
     for (int var = 0; var < numberOfVariables_; var++) {
       //sum += StrictMath.pow(decisionVariables[var].getValue(), 2.0);
       value = decisionVariables[var].getValue() ;
       sum += value * value;
     }
+=======
+    for (int var = 0; var < numberOfVariables_; var++) {
+      sum += StrictMath.pow(decisionVariables[var].getValue(), 2.0);      
+    }        
+>>>>>>> master
     solution.setObjective(0, sum);
   } // evaluate
 } // Sphere

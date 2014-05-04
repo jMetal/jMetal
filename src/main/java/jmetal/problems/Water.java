@@ -32,7 +32,15 @@ import jmetal.util.JMException;
  */
 public class Water extends Problem {
   
+<<<<<<< HEAD
   // defining the lower and upper limits
+=======
+  /**
+     * 
+     */
+    private static final long serialVersionUID = -3540685430646123468L;
+// defining the lower and upper limits
+>>>>>>> master
   public static final double [] LOWERLIMIT = {0.01, 0.01, 0.01};
   public static final double [] UPPERLIMIT = {0.45, 0.10, 0.10};                          
 

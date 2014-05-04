@@ -23,7 +23,11 @@ package jmetal.metaheuristics.singleObjective.geneticAlgorithm;
 import jmetal.core.*;
 import jmetal.util.JMException;
 import jmetal.util.comparators.ObjectiveComparator;
+<<<<<<< HEAD
 import jmetal.util.parallel.SynchronousParallelRunner;
+=======
+import jmetal.util.parallel.IParallelEvaluator;
+>>>>>>> master
 
 import java.util.Comparator;
 import java.util.List;
@@ -34,14 +38,27 @@ import java.util.List;
 
 public class pgGA extends Algorithm {
 
+<<<<<<< HEAD
   SynchronousParallelRunner parallelEvaluator_ ;
+=======
+  /**
+   * 
+   */
+  private static final long serialVersionUID = -409634466251175115L;
+
+  IParallelEvaluator parallelEvaluator_ ;
+>>>>>>> master
 
   /**
    * Constructor
    * @param problem Problem to solve
    * @param evaluator Parallel evaluator
    */
+<<<<<<< HEAD
   public pgGA(Problem problem, SynchronousParallelRunner evaluator) {
+=======
+  public pgGA(Problem problem, IParallelEvaluator evaluator) {
+>>>>>>> master
     super (problem) ;
 
     parallelEvaluator_ = evaluator ;
@@ -57,24 +74,38 @@ public class pgGA extends Algorithm {
     int populationSize;
     int maxEvaluations;
     int evaluations;
+<<<<<<< HEAD
     int numberOfThreads ;
 
     SolutionSet population;
     SolutionSet offspringPopulation;
     SolutionSet union;
+=======
+
+    SolutionSet population;
+    SolutionSet offspringPopulation;
+>>>>>>> master
 
     Operator mutationOperator;
     Operator crossoverOperator;
     Operator selectionOperator;
 
+<<<<<<< HEAD
     Comparator comparator        ;
+=======
+    Comparator<Solution> comparator        ;
+>>>>>>> master
     comparator = new ObjectiveComparator(0) ; // Single objective comparator
 
     //Read the parameters
     populationSize = ((Integer) getInputParameter("populationSize")).intValue();
     maxEvaluations = ((Integer) getInputParameter("maxEvaluations")).intValue();
 
+<<<<<<< HEAD
     parallelEvaluator_.startParallelRunner(problem_);
+=======
+    parallelEvaluator_.startEvaluator(problem_) ;
+>>>>>>> master
 
     //Initialize the variables
     population = new SolutionSet(populationSize);
@@ -91,10 +122,17 @@ public class pgGA extends Algorithm {
     Solution newSolution;
     for (int i = 0; i < populationSize; i++) {
       newSolution = new Solution(problem_);
+<<<<<<< HEAD
       parallelEvaluator_.addTaskForExecution(new Object[]{newSolution}); ;
     }
 
     List<Solution> solutionList = (List<Solution>)parallelEvaluator_.parallelExecution() ;
+=======
+      parallelEvaluator_.addSolutionForEvaluation(newSolution) ;
+    }
+
+    List<Solution> solutionList = parallelEvaluator_.parallelEvaluation() ;
+>>>>>>> master
     for (Solution solution : solutionList) {
       population.add(solution) ;
       evaluations ++ ;
@@ -117,12 +155,21 @@ public class pgGA extends Algorithm {
           Solution[] offSpring = (Solution[]) crossoverOperator.execute(parents);
           mutationOperator.execute(offSpring[0]);
           mutationOperator.execute(offSpring[1]);
+<<<<<<< HEAD
           parallelEvaluator_.addTaskForExecution(new Object[]{offSpring[0]}); ;
           parallelEvaluator_.addTaskForExecution(new Object[]{offSpring[1]}); ;
         } // if                            
       } // for
 
       List<Solution> solutions = (List<Solution>)parallelEvaluator_.parallelExecution() ;
+=======
+          parallelEvaluator_.addSolutionForEvaluation(offSpring[0]) ;
+          parallelEvaluator_.addSolutionForEvaluation(offSpring[1]) ;
+        } // if                            
+      } // for
+
+      List<Solution> solutions = parallelEvaluator_.parallelEvaluation() ;
+>>>>>>> master
 
       for(Solution solution : solutions) {
         offspringPopulation.add(solution);

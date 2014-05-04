@@ -26,7 +26,11 @@ import jmetal.encodings.solutionType.PermutationSolutionType;
 import jmetal.encodings.variable.Permutation;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
+<<<<<<< HEAD
 import jmetal.util.random.PseudoRandom;
+=======
+import jmetal.util.PseudoRandom;
+>>>>>>> master
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -40,9 +44,20 @@ import java.util.List;
 public class TwoPointsCrossover extends Crossover {
 
   /**
+<<<<<<< HEAD
    * Valid solution types to apply this operator 
    */
   private static final List VALID_TYPES = Arrays.asList(PermutationSolutionType.class) ;
+=======
+   * 
+   */
+  private static final long serialVersionUID = 5639984540815130543L;
+
+  /**
+   * Valid solution types to apply this operator 
+   */
+  private static final List<Class<PermutationSolutionType>> VALID_TYPES = Arrays.asList(PermutationSolutionType.class) ;
+>>>>>>> master
 
   private Double crossoverProbability_ = null;
 
@@ -157,7 +172,11 @@ public class TwoPointsCrossover extends Crossover {
 				Configuration.logger_.severe("TwoPointsCrossover.doCrossover: invalid " +
 						"type" + 
 						parent1.getDecisionVariables()[0].getVariableType());
+<<<<<<< HEAD
 				Class cls = java.lang.String.class;
+=======
+				Class<String> cls = java.lang.String.class;
+>>>>>>> master
 				String name = cls.getName(); 
 				throw new JMException("Exception in " + name + ".doCrossover()") ; 
 			}
@@ -173,7 +192,11 @@ public class TwoPointsCrossover extends Crossover {
 	 */
 	public Object execute(Object object) throws JMException {
 		Solution [] parents = (Solution [])object;
+<<<<<<< HEAD
 		Double crossoverProbability ;
+=======
+		//Double crossoverProbability ;
+>>>>>>> master
 
     if (!(VALID_TYPES.contains(parents[0].getType().getClass())  &&
         VALID_TYPES.contains(parents[1].getType().getClass())) ) {
@@ -184,13 +207,21 @@ public class TwoPointsCrossover extends Crossover {
 					parents[1].getType() + " are obtained");
 		} // if 
 
+<<<<<<< HEAD
 		crossoverProbability = (Double)getParameter("probability");
+=======
+		//crossoverProbability = (Double)getParameter("probability");
+>>>>>>> master
 
 		if (parents.length < 2)
 		{
 			Configuration.logger_.severe("TwoPointsCrossover.execute: operator needs two " +
 			"parents");
+<<<<<<< HEAD
 			Class cls = java.lang.String.class;
+=======
+			Class<String> cls = java.lang.String.class;
+>>>>>>> master
 			String name = cls.getName(); 
 			throw new JMException("Exception in " + name + ".execute()") ;      
 		}

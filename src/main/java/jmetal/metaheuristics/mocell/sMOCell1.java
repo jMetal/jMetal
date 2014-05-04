@@ -26,7 +26,10 @@ import jmetal.util.*;
 import jmetal.util.archive.CrowdingArchive;
 import jmetal.util.comparators.CrowdingComparator;
 import jmetal.util.comparators.DominanceComparator;
+<<<<<<< HEAD
 import jmetal.util.random.PseudoRandom;
+=======
+>>>>>>> master
 
 import java.util.Comparator;
 
@@ -40,6 +43,14 @@ import java.util.Comparator;
  */
 public class sMOCell1 extends Algorithm{
 
+<<<<<<< HEAD
+=======
+  /**
+   * 
+   */
+  private static final long serialVersionUID = -5671233949239815443L;
+
+>>>>>>> master
   /** 
    * Constructor
    * @param problem Problem to solve
@@ -62,7 +73,11 @@ public class sMOCell1 extends Algorithm{
     CrowdingArchive archive;
     SolutionSet [] neighbors;    
     Neighborhood neighborhood;
+<<<<<<< HEAD
     Comparator dominance = new DominanceComparator(),
+=======
+    Comparator<Solution> dominance = new DominanceComparator(),
+>>>>>>> master
     crowding  = new CrowdingComparator();  
     Distance distance = new Distance();
 
@@ -161,7 +176,11 @@ public class sMOCell1 extends Algorithm{
       distance.crowdingDistanceAssignment(archive,problem_.getNumberOfObjectives());                      
       for (int j = 0; j < feedBack; j++){
         if (archive.size() > j){
+<<<<<<< HEAD
           int r = PseudoRandom.randInt(0, currentSolutionSet.size() - 1);
+=======
+          int r = PseudoRandom.randInt(0,currentSolutionSet.size()-1);
+>>>>>>> master
           if (r < currentSolutionSet.size()){
             Solution individual = archive.get(j);
             individual.setLocation(r);            

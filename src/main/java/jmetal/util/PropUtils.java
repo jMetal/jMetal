@@ -38,7 +38,11 @@ public abstract class PropUtils {
 	
 	static public Properties getPropertiesWithPrefix (Properties pro, String prefix)
 	{
+<<<<<<< HEAD
 		Enumeration en;
+=======
+		Enumeration<?> en;
+>>>>>>> master
 		Properties aux = new Properties();
 		
 		en = pro.propertyNames();
@@ -59,7 +63,11 @@ public abstract class PropUtils {
 	
 	static public Properties putPrefixToProperties (String prefix, Properties pro)
 	{
+<<<<<<< HEAD
 		Enumeration en;
+=======
+		Enumeration<?> en;
+>>>>>>> master
 		Properties res = new Properties();
 		
 		en = pro.propertyNames();
@@ -78,7 +86,11 @@ public abstract class PropUtils {
 	{
 		Properties res = new Properties ();
 		Properties aux;
+<<<<<<< HEAD
 		Enumeration en;
+=======
+		Enumeration<?> en;
+>>>>>>> master
 		String key;
 		String value;
 		
@@ -118,7 +130,11 @@ public abstract class PropUtils {
 	{
 		Properties res = new Properties();
 		Properties aux;
+<<<<<<< HEAD
 		Enumeration en;
+=======
+		Enumeration<?> en;
+>>>>>>> master
 		String key;
 		String value;
 		
@@ -175,7 +191,11 @@ public abstract class PropUtils {
 	static public void main (String [] argv) throws Exception
 	{
 		Properties base = new Properties();
+<<<<<<< HEAD
 		Properties delta = new Properties();
+=======
+		//Properties delta = new Properties();
+>>>>>>> master
 		
 		InputStream isbase = new FileInputStream (argv[0]);
 		//InputStream isdelta = new FileInputStream (argv[1]);
@@ -183,7 +203,11 @@ public abstract class PropUtils {
 		base.load(isbase);
 		//delta.load(isdelta);
 		
+<<<<<<< HEAD
 		Properties res = dereferenceProperties (base);
+=======
+		//Properties res = dereferenceProperties (base);
+>>>>>>> master
 		
 
 				

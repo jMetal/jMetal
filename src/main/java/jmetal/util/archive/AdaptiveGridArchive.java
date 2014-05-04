@@ -33,7 +33,16 @@ import java.util.Iterator;
  */
 public class AdaptiveGridArchive extends Archive {
 
+<<<<<<< HEAD
 	/** 
+=======
+	/**
+     * 
+     */
+    private static final long serialVersionUID = -1265707693992803196L;
+
+    /** 
+>>>>>>> master
 	 * Stores the adaptive grid
 	 */
 	private AdaptiveGrid grid_;
@@ -46,7 +55,11 @@ public class AdaptiveGridArchive extends Archive {
 	/**
 	 * Stores a <code>Comparator</code> for dominance checking
 	 */
+<<<<<<< HEAD
 	private Comparator dominance_;
+=======
+	private Comparator<Solution> dominance_;
+>>>>>>> master
 
 	/**
 	 * Constructor.

@@ -34,6 +34,14 @@ import java.util.Comparator;
 public class FastHypervolumeArchive extends Archive {
 
   /**
+<<<<<<< HEAD
+=======
+     * 
+     */
+    private static final long serialVersionUID = 124744170266943517L;
+
+/**
+>>>>>>> master
    * Stores the maximum size of the archive.
    */
   private int maxSize_;
@@ -46,15 +54,25 @@ public class FastHypervolumeArchive extends Archive {
   /**
    * Stores a <code>Comparator</code> for dominance checking.
    */
+<<<<<<< HEAD
   private Comparator dominance_;
+=======
+  private Comparator<Solution> dominance_;
+>>>>>>> master
 
   /**
    * Stores a <code>Comparator</code> for equality checking (in the objective
    * space).
    */
+<<<<<<< HEAD
   private Comparator equals_;
 
   private Comparator crowdingDistance_ ;
+=======
+  private Comparator<Solution> equals_;
+
+  private Comparator<Solution> crowdingDistance_ ;
+>>>>>>> master
 
   public Solution referencePoint_ ;
 
@@ -122,7 +140,11 @@ public class FastHypervolumeArchive extends Archive {
   
      
   /**
+<<<<<<< HEAD
    * This method forces to compute the contribution of each solution
+=======
+   * This method forces to compute the contribution of each solution (required for PAEShv)
+>>>>>>> master
    */
   public void computeHVContribution() {
 	  if (size() > 2) { // The contribution can be updated

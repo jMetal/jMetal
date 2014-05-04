@@ -23,21 +23,38 @@ package jmetal.util.comparators;
 
 import java.util.Comparator;
 
+<<<<<<< HEAD
+=======
+import jmetal.core.Solution;
+
+>>>>>>> master
 /**
  * This class implements a <code>Comparator</code> (a method for comparing
  * <code>Solution</code> objects) based on the fitness and crowding distance.
  */
+<<<<<<< HEAD
 public class FitnessAndCrowdingDistanceComparator implements Comparator{
+=======
+public class FitnessAndCrowdingDistanceComparator implements Comparator<Solution> {
+>>>>>>> master
   
   /** 
    * stores a comparator for check the fitness value of the solutions
    */
+<<<<<<< HEAD
   private static final Comparator fitnessComparator_ =
+=======
+  private static final Comparator<Solution> fitnessComparator_ =
+>>>>>>> master
                               new FitnessComparator();
   /** 
    * stores a comparator for check the crowding distance
    */
+<<<<<<< HEAD
   private static final Comparator crowdingDistanceComparator_ = 
+=======
+  private static final Comparator<Solution> crowdingDistanceComparator_ = 
+>>>>>>> master
                               new CrowdingDistanceComparator();
   
  /**
@@ -47,7 +64,12 @@ public class FitnessAndCrowdingDistanceComparator implements Comparator{
   * @return -1, or 0, or 1 if solution1 is less than, equal, or greater than 
   * solution2, respectively.
   */
+<<<<<<< HEAD
   public int compare(Object solution1, Object solution2) {    
+=======
+  @Override
+  public int compare(Solution solution1, Solution solution2) {    
+>>>>>>> master
     
     int flag = fitnessComparator_.compare(solution1,solution2);
     if (flag != 0) {

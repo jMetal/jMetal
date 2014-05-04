@@ -34,6 +34,15 @@ import jmetal.util.JMException;
 public class Srinivas extends Problem  {    
     
  /**
+<<<<<<< HEAD
+=======
+     * 
+     */
+    private static final long serialVersionUID = 7618455041050464606L;
+
+
+/**
+>>>>>>> master
   * Constructor.
   * Creates a default instance of the Srinivas problem
   * @param solutionType The solution type must "Real" or "BinaryReal".

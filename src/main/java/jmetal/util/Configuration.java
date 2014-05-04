@@ -29,12 +29,24 @@ import java.util.logging.Logger;
  */
 public class Configuration implements Serializable {
 
+<<<<<<< HEAD
+=======
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 891486004065726989L;
+    
+>>>>>>> master
   /** 
    * Logger object 
    */
   public static Logger logger_ = Logger.getLogger("jMetal");
+<<<<<<< HEAD
   public static String cec2005SupportDataDirectory = "/Users/antelverde/Softw/jMetal/jMetalMV/cec2005CompetitionResources/supportData" ;
   public static String cec2005Package = "jmetal.problems.singleObjective.cec2005Competition.originalCode" ;
   public static String cec2014SupportDataDirectory = "/Users/antelverde/Softw/jMetal/jMetalMV/cec2014CompetitionResources" ;
 
+=======
+    
+>>>>>>> master
 } // Configuration

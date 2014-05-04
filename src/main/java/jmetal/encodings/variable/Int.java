@@ -31,7 +31,12 @@ import jmetal.util.random.PseudoRandom;
  */
 public class Int extends Variable {
 	
-	private int value_;       //Stores the value of the encodings.variable
+  /**
+   * 
+   */
+  private static final long serialVersionUID = -220713455225959427L;
+
+    private int value_;       //Stores the value of the encodings.variable
 	private int lowerBound_;  //Stores the lower limit of the encodings.variable
 	private int upperBound_;  //Stores the upper limit of the encodings.variable
 

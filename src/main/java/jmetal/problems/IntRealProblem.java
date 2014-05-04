@@ -33,7 +33,15 @@ import jmetal.util.JMException;
  */
 public class IntRealProblem extends Problem {  
     
+<<<<<<< HEAD
   int intVariables_  ;
+=======
+  /**
+     * 
+     */
+    private static final long serialVersionUID = -3553215776619374111L;
+int intVariables_  ;
+>>>>>>> master
   int realVariables_ ;
   
   /** 

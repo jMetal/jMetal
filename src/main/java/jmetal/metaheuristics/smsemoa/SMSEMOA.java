@@ -50,6 +50,14 @@ import java.util.LinkedList;
 public class SMSEMOA extends Algorithm {
 
   /**
+<<<<<<< HEAD
+=======
+   * 
+   */
+  private static final long serialVersionUID = -5932329422133559836L;
+
+  /**
+>>>>>>> master
    * stores the problem  to solve
    */
   private MetricsUtil utils_;

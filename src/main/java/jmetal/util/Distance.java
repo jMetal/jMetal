@@ -181,17 +181,25 @@ public class Distance {
     try {
       for (int i = 0 ; i < solutionSet.size(); i++) {
         double distance = 0;
+<<<<<<< HEAD
         distance = distanceBetweenSolutions(solution, solutionSet.get(i));
 
         if (distance < minimumDistance) {
           minimumDistance = distance ;
           index = i ;
+=======
+          distance = distanceBetweenSolutions(solution, solutionSet.get(i));
+          if (distance < minimumDistance) {
+            minimumDistance = distance ;
+            index = i ;
+>>>>>>> master
         }
       }
     }
     catch (Exception e) {
       e.printStackTrace();
     }
+<<<<<<< HEAD
     /*
     if (minimumDistance == 0) {
       System.out.println("distance is null") ;
@@ -201,6 +209,8 @@ public class Distance {
       System.exit(-1);
     }
     */
+=======
+>>>>>>> master
     return index ;
   }
 
@@ -208,7 +218,10 @@ public class Distance {
    * @param solutionSet The <code>SolutionSet</code>.
    * @param nObjs Number of objectives.
    */
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
   public void crowdingDistanceAssignment(SolutionSet solutionSet, int nObjs) {
     int size = solutionSet.size();
 
@@ -226,7 +239,11 @@ public class Distance {
       return;
     } // if       
 
+<<<<<<< HEAD
     //Use a new SolutionSet to avoid altering the original solutionSet
+=======
+    //Use a new SolutionSet to evite alter original solutionSet
+>>>>>>> master
     SolutionSet front = new SolutionSet(size);
     for (int i = 0; i < size; i++){
       front.add(solutionSet.get(i));
@@ -256,6 +273,10 @@ public class Distance {
         front.get(j).setCrowdingDistance(distance);
       } // for
     } // for        
+<<<<<<< HEAD
   } // crowdingDistanceAssignment
+=======
+  } // crowdingDistanceAssing            
+>>>>>>> master
 } // Distance
 

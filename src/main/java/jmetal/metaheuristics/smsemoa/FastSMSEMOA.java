@@ -21,10 +21,15 @@
 package jmetal.metaheuristics.smsemoa;
 
 import jmetal.core.*;
+<<<<<<< HEAD
 import jmetal.qualityIndicator.Hypervolume;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.qualityIndicator.fastHypervolume.FastHypervolume;
 import jmetal.qualityIndicator.util.MetricsUtil;
+=======
+import jmetal.qualityIndicator.QualityIndicator;
+import jmetal.qualityIndicator.fastHypervolume.FastHypervolume;
+>>>>>>> master
 import jmetal.util.JMException;
 import jmetal.util.Ranking;
 import jmetal.util.comparators.CrowdingDistanceComparator;
@@ -53,10 +58,22 @@ import java.util.LinkedList;
 public class FastSMSEMOA extends Algorithm {
 
   /**
+<<<<<<< HEAD
    * stores the problem  to solve
    */
   private MetricsUtil utils_;
   private Hypervolume hv_;
+=======
+   * 
+   */
+  private static final long serialVersionUID = 2217597718629923190L;
+
+  /**
+   * stores the problem  to solve
+   */
+  /*private MetricsUtil utils_;
+  private Hypervolume hv_;*/
+>>>>>>> master
 
 
   /**
@@ -65,8 +82,13 @@ public class FastSMSEMOA extends Algorithm {
    */
   public FastSMSEMOA(Problem problem) {
     super(problem) ;
+<<<<<<< HEAD
     this.utils_ = new MetricsUtil();
     this.hv_ = new Hypervolume();
+=======
+    /*this.utils_ = new MetricsUtil();
+    this.hv_ = new Hypervolume();*/
+>>>>>>> master
   } // SMSEMOA
 
   /**
@@ -206,7 +228,11 @@ public class FastSMSEMOA extends Algorithm {
     
     // Return the first non-dominated front
     Ranking ranking = new Ranking(population);
+<<<<<<< HEAD
     //ranking.getSubfront(0).printFeasibleFUN("FUN") ;
+=======
+    ranking.getSubfront(0).printFeasibleFUN("FUN") ;
+>>>>>>> master
     return ranking.getSubfront(0);
   } // execute
 } // FastSMSEMOA

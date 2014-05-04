@@ -24,7 +24,11 @@ package jmetal.operators.selection;
 import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
 import jmetal.util.JMException;
+<<<<<<< HEAD
 import jmetal.util.random.PseudoRandom;
+=======
+import jmetal.util.PseudoRandom;
+>>>>>>> master
 
 import java.util.HashMap;
 
@@ -35,6 +39,14 @@ import java.util.HashMap;
 public class DifferentialEvolutionSelection extends Selection {
 
   /**
+<<<<<<< HEAD
+=======
+   * 
+   */
+  private static final long serialVersionUID = 2866073033079299561L;
+
+  /**
+>>>>>>> master
    * Constructor
    */
   DifferentialEvolutionSelection(HashMap<String, Object> parameters) {

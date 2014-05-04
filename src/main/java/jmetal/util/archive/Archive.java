@@ -27,6 +27,14 @@ import jmetal.core.SolutionSet;
  */
 public class Archive extends SolutionSet{
 
+<<<<<<< HEAD
+=======
+  /**
+   * 
+   */
+  private static final long serialVersionUID = -84460522040441282L;
+
+>>>>>>> master
   public Archive (int size) {
     super(size);
   }

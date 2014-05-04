@@ -36,6 +36,14 @@ public class ZDT3 extends Problem {
     
 
  /**
+<<<<<<< HEAD
+=======
+     * 
+     */
+    private static final long serialVersionUID = -773138580076559651L;
+
+/**
+>>>>>>> master
   * Constructor.
   * Creates default instance of problem ZDT3 (30 decision variables.
   * @param solutionType The solution type must "Real", "BinaryReal, and "ArrayReal". 

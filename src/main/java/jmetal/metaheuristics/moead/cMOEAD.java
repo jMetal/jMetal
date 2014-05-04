@@ -23,7 +23,11 @@ package jmetal.metaheuristics.moead;
 
 import jmetal.core.*;
 import jmetal.util.JMException;
+<<<<<<< HEAD
 import jmetal.util.random.PseudoRandom;
+=======
+import jmetal.util.PseudoRandom;
+>>>>>>> master
 import jmetal.util.comparators.IConstraintViolationComparator;
 import jmetal.util.comparators.ViolationThresholdComparator;
 
@@ -39,6 +43,14 @@ import java.util.Vector;
 //
 public class cMOEAD extends Algorithm {
 
+<<<<<<< HEAD
+=======
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 6039874453533436343L;
+
+>>>>>>> master
   private int populationSize_;
   /**
    * Stores the population
@@ -198,7 +210,11 @@ public class cMOEAD extends Algorithm {
       ((ViolationThresholdComparator)this.comparator).updateThreshold(this.population_);
     } while (evaluations_ < maxEvaluations);
 
+<<<<<<< HEAD
     //population_.printFeasibleFUN("FUN_cMOEAD") ;
+=======
+    population_.printFeasibleFUN("FUN_cMOEAD") ;
+>>>>>>> master
     return population_;
   }
 
@@ -225,14 +241,20 @@ public class cMOEAD extends Algorithm {
         InputStreamReader isr = new InputStreamReader(fis);
         BufferedReader br = new BufferedReader(isr);
 
+<<<<<<< HEAD
         int numberOfObjectives = 0;
+=======
+>>>>>>> master
         int i = 0;
         int j = 0;
         String aux = br.readLine();
         while (aux != null) {
           StringTokenizer st = new StringTokenizer(aux);
           j = 0;
+<<<<<<< HEAD
           numberOfObjectives = st.countTokens();
+=======
+>>>>>>> master
           while (st.hasMoreTokens()) {
             double value = (new Double(st.nextToken())).doubleValue();
             lambda_[i][j] = value;

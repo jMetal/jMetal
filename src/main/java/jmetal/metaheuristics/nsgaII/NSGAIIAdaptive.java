@@ -3,6 +3,7 @@ package jmetal.metaheuristics.nsgaII;
 import jmetal.core.*;
 import jmetal.util.Distance;
 import jmetal.util.JMException;
+<<<<<<< HEAD
 import jmetal.util.random.PseudoRandom;
 import jmetal.util.Ranking;
 import jmetal.util.comparators.CrowdingComparator;
@@ -13,6 +14,21 @@ import jmetal.util.offspring.PolynomialMutationOffspring;
 import java.util.Comparator;
 
 public class NSGAIIAdaptive extends Algorithm {
+=======
+import jmetal.util.PseudoRandom;
+import jmetal.util.Ranking;
+import jmetal.util.comparators.CrowdingComparator;
+import jmetal.util.offspring.Offspring;
+import jmetal.util.offspring.PolynomialMutationOffspring;
+
+public class NSGAIIAdaptive extends Algorithm {
+
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 4290510927100994634L;
+
+>>>>>>> master
   public int populationSize_            ;
   public SolutionSet population_        ;
   public SolutionSet offspringPopulation_;
@@ -29,6 +45,10 @@ public class NSGAIIAdaptive extends Algorithm {
 	}
 
 	public SolutionSet execute() throws JMException, ClassNotFoundException {
+<<<<<<< HEAD
+=======
+	// FIXME: those variables are necessary? because they only store value, we don't do anything with it
+>>>>>>> master
     double contrDE = 0;
     double contrSBX = 0;
     double contrPol = 0;
@@ -37,6 +57,7 @@ public class NSGAIIAdaptive extends Algorithm {
     double contrTotalPol = 0;
 
     double contrReal [] = new double[3] ;
+<<<<<<< HEAD
     contrReal[0] = contrReal[1] = contrReal[2] = 0 ;    
 
 		Comparator dominance = new DominanceComparator();
@@ -45,6 +66,11 @@ public class NSGAIIAdaptive extends Algorithm {
 
     Operator selectionOperator;
 
+=======
+    contrReal[0] = contrReal[1] = contrReal[2] = 0 ;
+		Distance distance = new Distance();
+
+>>>>>>> master
 		//Read parameter values
 		populationSize_ = ((Integer) getInputParameter("populationSize")).intValue();
 		//CR_ = ((Double) getInputParameter("CR")).doubleValue();
@@ -55,7 +81,10 @@ public class NSGAIIAdaptive extends Algorithm {
 		population_ = new SolutionSet(populationSize_);
 		evaluations_ = 0;
 
+<<<<<<< HEAD
     selectionOperator = operators_.get("selection");
+=======
+>>>>>>> master
 
 		Offspring[] getOffspring;
 		int N_O; // number of offpring objects
@@ -91,7 +120,10 @@ public class NSGAIIAdaptive extends Algorithm {
 
     	// Create the offSpring solutionSet      
       offspringPopulation_ = new SolutionSet(populationSize_);
+<<<<<<< HEAD
       Solution[] parents = new Solution[2];
+=======
+>>>>>>> master
       for (int i = 0; i < (populationSize_ / 1); i++) {
         if (evaluations_ < maxEvaluations_) {
   				Solution individual = new Solution(population_.get(PseudoRandom.randInt(0, populationSize_-1)));

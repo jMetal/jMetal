@@ -31,6 +31,11 @@ import java.io.Serializable;
 public abstract class Problem implements Serializable {
 
   /**
+   *
+   */
+  private static final long serialVersionUID = 7027317068597003106L;
+
+/**
    * Defines the default precision of binary-coded variables
    */
   private final static int DEFAULT_PRECISSION = 16;

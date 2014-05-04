@@ -24,7 +24,11 @@ package jmetal.operators.selection;
 import jmetal.core.Solution;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
+<<<<<<< HEAD
 import jmetal.util.random.PseudoRandom;
+=======
+import jmetal.util.PseudoRandom;
+>>>>>>> master
 import jmetal.util.archive.AdaptiveGridArchive;
 
 import java.util.HashMap;
@@ -35,7 +39,16 @@ import java.util.HashMap;
  */
 public class PESA2Selection extends Selection {      
         
+<<<<<<< HEAD
 	public PESA2Selection(HashMap<String, Object> parameters) {
+=======
+	/**
+     * 
+     */
+    private static final long serialVersionUID = 4941044300155040616L;
+
+    public PESA2Selection(HashMap<String, Object> parameters) {
+>>>>>>> master
 		super(parameters) ;
 	}
 	
@@ -87,7 +100,11 @@ public class PESA2Selection extends Selection {
     } catch (ClassCastException e) {
       Configuration.logger_.severe("PESA2Selection.execute: ClassCastException. " +
           "Found" + object.getClass() + "Expected: AdaptativeGridArchive") ;
+<<<<<<< HEAD
       Class cls = java.lang.String.class;
+=======
+      Class<String> cls = java.lang.String.class;
+>>>>>>> master
       String name = cls.getName(); 
       throw new JMException("Exception in " + name + ".execute()") ;  
     }

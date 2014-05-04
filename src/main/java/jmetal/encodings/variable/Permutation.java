@@ -29,6 +29,11 @@ import jmetal.core.Variable;
 public class Permutation extends Variable {
 
   /**
+   *
+   */
+  private static final long serialVersionUID = 2657470069340722041L;
+
+/**
    * Stores a permutation of <code>int</code> values
    */
   public int [] vector_;

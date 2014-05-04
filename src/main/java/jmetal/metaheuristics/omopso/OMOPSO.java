@@ -26,7 +26,11 @@ import jmetal.operators.mutation.Mutation;
 import jmetal.util.Distance;
 import jmetal.util.JMException;
 import jmetal.util.NonDominatedSolutionList;
+<<<<<<< HEAD
 import jmetal.util.random.PseudoRandom;
+=======
+import jmetal.util.PseudoRandom;
+>>>>>>> master
 import jmetal.util.archive.CrowdingArchive;
 import jmetal.util.comparators.CrowdingDistanceComparator;
 import jmetal.util.comparators.DominanceComparator;
@@ -38,8 +42,18 @@ import java.util.Comparator;
  * This class representing an asynchronous version of OMOPSO algorithm
  */
 public class OMOPSO extends Algorithm {
+<<<<<<< HEAD
                  
   /**
+=======
+
+  /**
+   * 
+   */
+  private static final long serialVersionUID = -4920101693175195923L;
+
+/**
+>>>>>>> master
    * Stores the number of particles_ used
    */
   private int particlesSize_;
@@ -60,11 +74,14 @@ public class OMOPSO extends Algorithm {
   private int iteration_;
   
   /**
+<<<<<<< HEAD
   * Stores the perturbation used by the non-uniform mutation
   */
   private double perturbation_;
   
   /**
+=======
+>>>>>>> master
   * Stores the particles
   */
   private SolutionSet particles_;
@@ -92,12 +109,20 @@ public class OMOPSO extends Algorithm {
   /**
   * Stores a comparator for checking dominance
   */
+<<<<<<< HEAD
   private Comparator dominance_;
+=======
+  private Comparator<Solution> dominance_;
+>>>>>>> master
   
   /**
   * Stores a comparator for crowding checking
   */
+<<<<<<< HEAD
   private Comparator crowdingDistanceComparator_;
+=======
+  private Comparator<Solution> crowdingDistanceComparator_;
+>>>>>>> master
   
   /**
    * Stores a <code>Distance</code> object

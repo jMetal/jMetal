@@ -12,7 +12,11 @@ import jmetal.core.SolutionSet;
 import jmetal.qualityIndicator.Hypervolume;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.JMException;
+<<<<<<< HEAD
 import jmetal.util.random.PseudoRandom;
+=======
+import jmetal.util.PseudoRandom;
+>>>>>>> master
 import jmetal.util.wrapper.XReal;
 
 import java.io.*;
@@ -21,7 +25,16 @@ import java.util.Vector;
 
 public class dMOPSO extends Algorithm {
 
+<<<<<<< HEAD
 	//static double y2;
+=======
+  /**
+   * 
+   */
+  private static final long serialVersionUID = -7045622315440304387L;
+
+    //static double y2;
+>>>>>>> master
 	//static int use_last = 0;
 	/**
 	 * Stores the number of particles_ used

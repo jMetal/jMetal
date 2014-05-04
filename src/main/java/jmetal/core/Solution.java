@@ -31,7 +31,13 @@ import java.io.Serializable;
  * Class representing a solution for a problem.
  */
 public class Solution implements Serializable {  
-	/**
+
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 7093303373342354904L;
+
+    /**
 	 * Stores the problem 
 	 */
   private Problem problem_ ;

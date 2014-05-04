@@ -21,11 +21,19 @@
 package jmetal.operators.crossover;
 
 import jmetal.core.Solution;
+<<<<<<< HEAD
+=======
+import jmetal.core.SolutionType;
+>>>>>>> master
 import jmetal.encodings.solutionType.ArrayRealSolutionType;
 import jmetal.encodings.solutionType.RealSolutionType;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
+<<<<<<< HEAD
 import jmetal.util.random.PseudoRandom;
+=======
+import jmetal.util.PseudoRandom;
+>>>>>>> master
 import jmetal.util.wrapper.XReal;
 
 import java.util.Arrays;
@@ -38,6 +46,14 @@ import java.util.List;
  */
 public class BLXAlphaCrossover extends Crossover {
 	/**
+<<<<<<< HEAD
+=======
+     * 
+     */
+    private static final long serialVersionUID = -7738534841007212922L;
+
+    /**
+>>>>>>> master
 	 * EPS defines the minimum difference allowed between real values
 	 */
 	private static final double DEFAULT_ALPHA = 0.5;
@@ -48,7 +64,11 @@ public class BLXAlphaCrossover extends Crossover {
 	/**
 	 * Valid solution types to apply this operator 
 	 */
+<<<<<<< HEAD
 	private static final List VALID_TYPES = Arrays.asList(RealSolutionType.class,
+=======
+	private static final List<Class<? extends SolutionType>> VALID_TYPES = Arrays.asList(RealSolutionType.class,
+>>>>>>> master
 			ArrayRealSolutionType.class) ;
 
 	/** 
@@ -162,7 +182,11 @@ public class BLXAlphaCrossover extends Crossover {
 		if (parents.length != 2) {
 			Configuration.logger_.severe("BLXAlphaCrossover.execute: operator needs two " +
 					"parents");
+<<<<<<< HEAD
 			Class cls = java.lang.String.class;
+=======
+			Class<String> cls = java.lang.String.class;
+>>>>>>> master
 			String name = cls.getName(); 
 			throw new JMException("Exception in " + name + ".execute()") ;      
 		} // if
@@ -172,7 +196,11 @@ public class BLXAlphaCrossover extends Crossover {
 			Configuration.logger_.severe("BLXAlphaCrossover.execute: the solutions " +
 					"type " + parents[0].getType() + " is not allowed with this operator");
 
+<<<<<<< HEAD
 			Class cls = java.lang.String.class;
+=======
+			Class<String> cls = java.lang.String.class;
+>>>>>>> master
 			String name = cls.getName(); 
 			throw new JMException("Exception in " + name + ".execute()") ;
 		} // if 

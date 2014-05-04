@@ -21,6 +21,10 @@
 
 package jmetal.util;
 
+<<<<<<< HEAD
+=======
+import jmetal.core.Solution;
+>>>>>>> master
 import jmetal.core.SolutionSet;
 import jmetal.util.comparators.DominanceComparator;
 import jmetal.util.comparators.OverallConstraintViolationComparator;
@@ -54,13 +58,21 @@ public class Ranking {
   /**
    * stores a <code>Comparator</code> for dominance checking
    */
+<<<<<<< HEAD
   private static final Comparator dominance_ = new DominanceComparator();
+=======
+  private static final Comparator<Solution> dominance_ = new DominanceComparator();
+>>>>>>> master
   
   /**
    * stores a <code>Comparator</code> for Overal Constraint Violation Comparator
    * checking
    */
+<<<<<<< HEAD
   private static final Comparator constraint_ = new OverallConstraintViolationComparator();
+=======
+  private static final Comparator<Solution> constraint_ = new OverallConstraintViolationComparator();
+>>>>>>> master
     
   /** 
    * Constructor.

@@ -9,7 +9,10 @@ package jmetal.metaheuristics.dmopso;
 import jmetal.core.Algorithm;
 import jmetal.core.Problem;
 import jmetal.core.SolutionSet;
+<<<<<<< HEAD
 import jmetal.operators.mutation.Mutation;
+=======
+>>>>>>> master
 import jmetal.problems.ProblemFactory;
 import jmetal.problems.ZDT.ZDT1;
 import jmetal.qualityIndicator.QualityIndicator;
@@ -17,7 +20,10 @@ import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
 import java.io.IOException;
+<<<<<<< HEAD
 import java.util.HashMap;
+=======
+>>>>>>> master
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
@@ -39,8 +45,11 @@ public class dMOPSO_main {
   public static void main(String [] args) throws JMException, IOException, ClassNotFoundException {
     Problem   problem   ;  // The problem to solve
     Algorithm algorithm ;  // The algorithm to use
+<<<<<<< HEAD
     Mutation  mutation  ;  // "Turbulence" operator
     HashMap  parameters ; // Operator parameters
+=======
+>>>>>>> master
     QualityIndicator indicators ; // Object to get quality indicators
         
     // Logger object and file to store log messages
@@ -79,8 +88,11 @@ public class dMOPSO_main {
     algorithm.setInputParameter("maxAge",2);
     algorithm.setInputParameter("maxIterations",250);
     algorithm.setInputParameter("functionType","_TCHE");
+<<<<<<< HEAD
     
     parameters = new HashMap() ;
+=======
+>>>>>>> master
 
     // Execute the Algorithm 
     long initTime = System.currentTimeMillis();

@@ -22,7 +22,10 @@
 package jmetal.metaheuristics.randomSearch;
 
 import jmetal.core.Algorithm;
+<<<<<<< HEAD
 import jmetal.core.Operator;
+=======
+>>>>>>> master
 import jmetal.core.Problem;
 import jmetal.core.SolutionSet;
 import jmetal.problems.Kursawe;
@@ -55,9 +58,12 @@ public class RandomSearch_main {
                                   JMException, SecurityException, IOException, ClassNotFoundException {
     Problem   problem   ;         // The problem to solve
     Algorithm algorithm ;         // The algorithm to use
+<<<<<<< HEAD
     Operator  crossover ;         // Crossover operator
     Operator  mutation  ;         // Mutation operator
     Operator  selection ;         // Selection operator
+=======
+>>>>>>> master
 
     QualityIndicator indicators ; // Object to get quality indicators
 

@@ -66,8 +66,11 @@ public class NSGAII_mTSP_main {
     Operator  mutation  ; // Mutation operator
     Operator  selection ; // Selection operator
     
+<<<<<<< HEAD
     HashMap  parameters ; // Operator parameters
     
+=======
+>>>>>>> master
     QualityIndicator indicators ; // Object to get quality indicators
 
     // Logger object and file to store log messages
@@ -86,6 +89,7 @@ public class NSGAII_mTSP_main {
     algorithm.setInputParameter("maxEvaluations",10000000);
     
     /* Crossver operator */
+<<<<<<< HEAD
     parameters = new HashMap() ;
     parameters.put("probability", 0.95) ;
     //crossover = CrossoverFactory.getCrossoverOperator("TwoPointsCrossover", parameters);
@@ -99,6 +103,21 @@ public class NSGAII_mTSP_main {
     /* Selection Operator */
     parameters = null;
     selection = SelectionFactory.getSelectionOperator("BinaryTournament", parameters) ;                            
+=======
+    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
+    crossoverParameters.put("probability", 0.95) ;
+    //crossover = CrossoverFactory.getCrossoverOperator("TwoPointsCrossover", parameters);
+    crossover = CrossoverFactory.getCrossoverOperator("PMXCrossover", crossoverParameters);
+    
+    /* Mutation operator */
+    HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
+    mutationParameters.put("probability", 0.2) ;
+    mutation = MutationFactory.getMutationOperator("SwapMutation", mutationParameters);                    
+  
+    /* Selection Operator */
+    HashMap<String, Object> selectionParameters = null; // FIXME: why we are passing null?
+    selection = SelectionFactory.getSelectionOperator("BinaryTournament", selectionParameters) ;                            
+>>>>>>> master
 
     // Add the operators to the algorithm
     algorithm.addOperator("crossover",crossover);
@@ -119,7 +138,12 @@ public class NSGAII_mTSP_main {
     population.printVariablesToFile("VAR");    
     logger_.info("Objectives values have been writen to file FUN");
     population.printObjectivesToFile("FUN");
+<<<<<<< HEAD
   
+=======
+
+    // FIXME: dead code
+>>>>>>> master
     if (indicators != null) {
       logger_.info("Quality indicators") ;
       logger_.info("Hypervolume: " + indicators.getHypervolume(population)) ;

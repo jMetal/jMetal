@@ -34,7 +34,16 @@ import jmetal.util.wrapper.XReal;
  */
 public class Kursawe extends Problem {  
     
+<<<<<<< HEAD
   /** 
+=======
+  /**
+     * 
+     */
+    private static final long serialVersionUID = -5505939545760890022L;
+
+/** 
+>>>>>>> master
    * Constructor.
    * Creates a default instance of the Kursawe problem.
    * @param solutionType The solution type must "Real", "BinaryReal, and "ArrayReal". 

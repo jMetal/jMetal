@@ -165,6 +165,7 @@ public class FastHypervolume {
       solutionSet.get(i).setCrowdingDistance(contributions[i]) ;
     }
   }
+<<<<<<< HEAD
 
   /**
    * Computes the HV contribution of a solution in a solution set.
@@ -195,4 +196,6 @@ public class FastHypervolume {
 
     return contribution ;
   }
+=======
+>>>>>>> master
 }

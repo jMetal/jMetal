@@ -25,7 +25,11 @@ import jmetal.core.*;
 import jmetal.operators.localSearch.LocalSearch;
 import jmetal.util.Distance;
 import jmetal.util.JMException;
+<<<<<<< HEAD
 import jmetal.util.random.PseudoRandom;
+=======
+import jmetal.util.PseudoRandom;
+>>>>>>> master
 import jmetal.util.Spea2Fitness;
 import jmetal.util.archive.CrowdingArchive;
 import jmetal.util.comparators.CrowdingDistanceComparator;
@@ -47,8 +51,18 @@ import java.util.Comparator;
  *   No. 4 (August 2008), pp. 439-457
  */
 public class AbYSS extends Algorithm {
+<<<<<<< HEAD
      
   /**
+=======
+
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1682316167611498510L;
+
+/**
+>>>>>>> master
    * Stores the number of subranges in which each encodings.variable is divided. Used in
    * the diversification method. By default it takes the value 4 (see the method
    * <code>initParams</code>).
@@ -122,10 +136,17 @@ public class AbYSS extends Algorithm {
   /**
    * Stores the comparators for dominance and equality, respectively
    */
+<<<<<<< HEAD
   private Comparator dominance_ ;
   private Comparator equal_     ;
   private Comparator fitness_   ;
   private Comparator crowdingDistance_;
+=======
+  private Comparator<Solution> dominance_ ;
+  private Comparator<Solution> equal_     ;
+  private Comparator<Solution> fitness_   ;
+  private Comparator<Solution> crowdingDistance_;
+>>>>>>> master
   
   /**
    * Stores the crossover operator
@@ -571,7 +592,11 @@ public class AbYSS extends Algorithm {
       } // if   
     } // while       
     
+<<<<<<< HEAD
     //archive_.printFeasibleFUN("FUN_AbYSS") ;
+=======
+    archive_.printFeasibleFUN("FUN_AbYSS") ;
+>>>>>>> master
 
     // STEP 4. Return the archive
     return archive_;                

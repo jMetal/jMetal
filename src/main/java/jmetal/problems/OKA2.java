@@ -33,7 +33,16 @@ import jmetal.util.JMException;
 public class OKA2 extends Problem {  
    
   
+<<<<<<< HEAD
   /** 
+=======
+  /**
+     * 
+     */
+    private static final long serialVersionUID = -5304272499032352455L;
+
+/** 
+>>>>>>> master
    * Constructor.
    * Creates a new instance of the OKA2 problem.
    * @param solutionType The solution type must "Real" or "BinaryReal".

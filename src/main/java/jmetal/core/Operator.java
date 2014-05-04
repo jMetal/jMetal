@@ -33,6 +33,11 @@ import java.util.Map;
 public abstract class Operator implements Serializable {
    
   /**
+   *
+   */
+  private static final long serialVersionUID = -8976295845748676798L;
+
+/**
    * Stores the current operator parameters. 
    * It is defined as a Map of pairs <<code>String</code>, <code>Object</code>>, 
    * and it allow objects to be accessed by their names, which  are specified 

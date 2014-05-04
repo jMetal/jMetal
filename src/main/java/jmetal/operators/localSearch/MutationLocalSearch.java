@@ -41,6 +41,14 @@ import java.util.HashMap;
 public class MutationLocalSearch extends LocalSearch {
     
   /**
+<<<<<<< HEAD
+=======
+   * 
+   */
+  private static final long serialVersionUID = 6152832404856574555L;
+
+  /**
+>>>>>>> master
    * Stores the problem to solve
    */
   private Problem problem_;
@@ -57,8 +65,13 @@ public class MutationLocalSearch extends LocalSearch {
    * Stores comparators for dealing with constraints and dominance checking, 
    * respectively.
    */
+<<<<<<< HEAD
   private Comparator constraintComparator_ ;
   private Comparator dominanceComparator_ ;
+=======
+  private Comparator<Solution> constraintComparator_ ;
+  private Comparator<Solution> dominanceComparator_ ;
+>>>>>>> master
   
   /**
    * Stores the mutation operator 

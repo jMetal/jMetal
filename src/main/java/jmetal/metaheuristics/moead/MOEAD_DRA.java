@@ -24,7 +24,11 @@ package jmetal.metaheuristics.moead;
 import jmetal.core.*;
 import jmetal.util.Distance;
 import jmetal.util.JMException;
+<<<<<<< HEAD
 import jmetal.util.random.PseudoRandom;
+=======
+import jmetal.util.PseudoRandom;
+>>>>>>> master
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -38,7 +42,17 @@ import java.util.*;
   */
 public class MOEAD_DRA extends Algorithm {
 
+<<<<<<< HEAD
 	private int populationSize_;
+=======
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 4289052728188335534L;
+    
+  private int populationSize_;
+
+>>>>>>> master
   /**
    * Stores the population
    */
@@ -251,14 +265,20 @@ public class MOEAD_DRA extends Algorithm {
         InputStreamReader isr = new InputStreamReader(fis);
         BufferedReader br = new BufferedReader(isr);
 
+<<<<<<< HEAD
         int numberOfObjectives = 0;
+=======
+>>>>>>> master
         int i = 0;
         int j = 0;
         String aux = br.readLine();
         while (aux != null) {
           StringTokenizer st = new StringTokenizer(aux);
           j = 0;
+<<<<<<< HEAD
           numberOfObjectives = st.countTokens();
+=======
+>>>>>>> master
           while (st.hasMoreTokens()) {
             double value = (new Double(st.nextToken())).doubleValue();
             lambda_[i][j] = value;
@@ -560,7 +580,10 @@ public class MOEAD_DRA extends Algorithm {
        // we have now the weights, now select the best solution for each of them
        for (int i = 0; i < n; i++) {
          Solution current_best = population_.get(0);
+<<<<<<< HEAD
          int index             = 0;
+=======
+>>>>>>> master
          double value          = fitnessFunction(current_best, intern_lambda[i]);
          for (int j = 1; j < n; j++) {           
              double aux = fitnessFunction(population_.get(j),intern_lambda[i]); // we are looking the best for the weight i

@@ -26,7 +26,11 @@ import jmetal.encodings.solutionType.PermutationSolutionType;
 import jmetal.encodings.variable.Permutation;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
+<<<<<<< HEAD
 import jmetal.util.random.PseudoRandom;
+=======
+import jmetal.util.PseudoRandom;
+>>>>>>> master
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -38,9 +42,20 @@ import java.util.List;
  */
 public class SwapMutation extends Mutation{
   /**
+<<<<<<< HEAD
    * Valid solution types to apply this operator 
    */
   private static final List VALID_TYPES = Arrays.asList(PermutationSolutionType.class) ;
+=======
+   * 
+   */
+  private static final long serialVersionUID = -3982393451733347035L;
+
+  /**
+   * Valid solution types to apply this operator 
+   */
+  private static final List<Class<PermutationSolutionType>> VALID_TYPES = Arrays.asList(PermutationSolutionType.class) ;
+>>>>>>> master
   
   private Double mutationProbability_ = null ;
 
@@ -99,7 +114,11 @@ public class SwapMutation extends Mutation{
 	      Configuration.logger_.severe("SwapMutation.doMutation: invalid type. " +
 	          ""+ solution.getDecisionVariables()[0].getVariableType());
 
+<<<<<<< HEAD
 	      Class cls = java.lang.String.class;
+=======
+	      Class<String> cls = java.lang.String.class;
+>>>>>>> master
 	      String name = cls.getName(); 
 	      throw new JMException("Exception in " + name + ".doMutation()") ;
 	    }
@@ -119,7 +138,11 @@ public class SwapMutation extends Mutation{
 					"is not of the right type. The type should be 'Binary', " +
 					"'BinaryReal' or 'Int', but " + solution.getType() + " is obtained");
 
+<<<<<<< HEAD
 			Class cls = java.lang.String.class;
+=======
+			Class<String> cls = java.lang.String.class;
+>>>>>>> master
 			String name = cls.getName();
 			throw new JMException("Exception in " + name + ".execute()");
 		} // if 

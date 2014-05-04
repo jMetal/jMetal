@@ -32,7 +32,15 @@ import jmetal.util.JMException;
  * Class representing problem CEC2009_UF5
  */
 public class UF5 extends Problem {
+<<<<<<< HEAD
   int    N_       ;
+=======
+  /**
+     * 
+     */
+    private static final long serialVersionUID = 8594333314569742162L;
+int    N_       ;
+>>>>>>> master
   double epsilon_ ;
  /** 
   * Constructor.

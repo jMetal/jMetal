@@ -69,8 +69,11 @@ public class MOEAD_main {
      
     QualityIndicator indicators ; // Object to get quality indicators
 
+<<<<<<< HEAD
     HashMap  parameters ; // Operator parameters
 
+=======
+>>>>>>> master
     // Logger object and file to store log messages
     logger_      = Configuration.logger_ ;
     fileHandler_ = new FileHandler("MOEAD.log"); 
@@ -118,6 +121,7 @@ public class MOEAD_main {
     algorithm.setInputParameter("nr", 2) ;
 
     // Crossover operator 
+<<<<<<< HEAD
     parameters = new HashMap() ;
     parameters.put("CR", 1.0) ;
     parameters.put("F", 0.5) ;
@@ -128,6 +132,18 @@ public class MOEAD_main {
     parameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
     parameters.put("distributionIndex", 20.0) ;
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);                    
+=======
+    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
+    crossoverParameters.put("CR", 1.0) ;
+    crossoverParameters.put("F", 0.5) ;
+    crossover = CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", crossoverParameters);                   
+    
+    // Mutation operator
+    HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
+    mutationParameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
+    mutationParameters.put("distributionIndex", 20.0) ;
+    mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);                    
+>>>>>>> master
     
     algorithm.addOperator("crossover",crossover);
     algorithm.addOperator("mutation",mutation);

@@ -36,6 +36,14 @@ import jmetal.util.JMException;
 public class WFG6 extends WFG{
     
  /**
+<<<<<<< HEAD
+=======
+     * 
+     */
+    private static final long serialVersionUID = 9031916537404107537L;
+
+/**
+>>>>>>> master
   * Creates a default WFG6 with  
   * 2 position-related parameters, 
   * 4 distance-related parameters,

@@ -35,7 +35,11 @@ import java.util.Comparator;
  * Time: 11:09
  * To change this template use File | Settings | File Templates.
  */
+<<<<<<< HEAD
 public class PointComparator implements Comparator {
+=======
+public class PointComparator implements Comparator<Point> {
+>>>>>>> master
   boolean maximizing_ ;
 
   public PointComparator(boolean maximizing) {
@@ -48,7 +52,12 @@ public class PointComparator implements Comparator {
    * @param o2 An object that reference a Point
    * @return -1 if o1 < o1, 1 if o1 > o2 or 0 in other case.
    */
+<<<<<<< HEAD
   public int compare(Object o1, Object o2) {
+=======
+  @Override
+  public int compare(Point o1, Point o2) {
+>>>>>>> master
     //Cast to double [] o1 and o2.
     Point pointOne = (Point)o1;
     Point pointTwo = (Point)o2;

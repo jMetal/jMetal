@@ -26,7 +26,11 @@ import jmetal.util.Distance;
 import jmetal.util.JMException;
 import jmetal.util.Ranking;
 import jmetal.util.comparators.CrowdingComparator;
+<<<<<<< HEAD
 import jmetal.util.parallel.SynchronousParallelRunner;
+=======
+import jmetal.util.parallel.IParallelEvaluator;
+>>>>>>> master
 
 import java.util.List;
 
@@ -42,14 +46,27 @@ import java.util.List;
 
 public class pNSGAII extends Algorithm {
 
+<<<<<<< HEAD
   SynchronousParallelRunner parallelEvaluator_ ;
+=======
+  /**
+   * 
+   */
+  private static final long serialVersionUID = -1418163498352372364L;
+
+  IParallelEvaluator parallelEvaluator_ ; 
+>>>>>>> master
 
   /**
    * Constructor
    * @param problem Problem to solve
    * @param evaluator Parallel evaluator
    */
+<<<<<<< HEAD
   public pNSGAII(Problem problem, SynchronousParallelRunner evaluator) {
+=======
+  public pNSGAII(Problem problem, IParallelEvaluator evaluator) {
+>>>>>>> master
     super (problem) ;
 
     parallelEvaluator_ = evaluator ;
@@ -65,7 +82,10 @@ public class pNSGAII extends Algorithm {
     int populationSize;
     int maxEvaluations;
     int evaluations;
+<<<<<<< HEAD
     int numberOfThreads ;
+=======
+>>>>>>> master
 
     QualityIndicator indicators; // QualityIndicator object
     int requiredEvaluations; // Use in the example of use of the
@@ -86,7 +106,11 @@ public class pNSGAII extends Algorithm {
     maxEvaluations = ((Integer) getInputParameter("maxEvaluations")).intValue();
     indicators = (QualityIndicator) getInputParameter("indicators");
 
+<<<<<<< HEAD
     parallelEvaluator_.startParallelRunner(problem_); ;
+=======
+    parallelEvaluator_.startEvaluator(problem_) ;
+>>>>>>> master
 
     //Initialize the variables
     population = new SolutionSet(populationSize);
@@ -103,10 +127,17 @@ public class pNSGAII extends Algorithm {
     Solution newSolution;
     for (int i = 0; i < populationSize; i++) {
       newSolution = new Solution(problem_);
+<<<<<<< HEAD
       parallelEvaluator_.addTaskForExecution(new Object[]{newSolution}); ;
     }
 
     List<Solution> solutionList = (List<Solution>)parallelEvaluator_.parallelExecution() ;
+=======
+      parallelEvaluator_.addSolutionForEvaluation(newSolution) ;
+    }
+
+    List<Solution> solutionList = parallelEvaluator_.parallelEvaluation() ;
+>>>>>>> master
     for (Solution solution : solutionList) {
       population.add(solution) ;
       evaluations ++ ;
@@ -125,12 +156,21 @@ public class pNSGAII extends Algorithm {
           Solution[] offSpring = (Solution[]) crossoverOperator.execute(parents);
           mutationOperator.execute(offSpring[0]);
           mutationOperator.execute(offSpring[1]);
+<<<<<<< HEAD
           parallelEvaluator_.addTaskForExecution(new Object[]{offSpring[0]}); ;
           parallelEvaluator_.addTaskForExecution(new Object[]{offSpring[1]}); ;
         } // if                            
       } // for
 
       List<Solution> solutions = (List<Solution>)parallelEvaluator_.parallelExecution() ;
+=======
+          parallelEvaluator_.addSolutionForEvaluation(offSpring[0]) ;
+          parallelEvaluator_.addSolutionForEvaluation(offSpring[1]) ;
+        } // if                            
+      } // for
+
+      List<Solution> solutions = parallelEvaluator_.parallelEvaluation() ;
+>>>>>>> master
 
       for(Solution solution : solutions) {
         offspringPopulation.add(solution);

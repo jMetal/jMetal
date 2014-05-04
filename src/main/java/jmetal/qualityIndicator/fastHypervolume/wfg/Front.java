@@ -48,7 +48,11 @@ public class Front {
   private boolean maximizing_ ;
   public int nPoints_ ;
 
+<<<<<<< HEAD
   private Comparator pointComparator ;
+=======
+  private Comparator<Point> pointComparator ;
+>>>>>>> master
 
   public Front() {
     maximizing_ = true ;
@@ -125,6 +129,10 @@ public class Front {
       list.add(vector);
       aux = br.readLine();
     }
+<<<<<<< HEAD
+=======
+    br.close();
+>>>>>>> master
     numberOfPoints_ = list.size() ;
     dimension_ = numberOfObjectives ;
     points_ = new Point[numberOfPoints_] ;

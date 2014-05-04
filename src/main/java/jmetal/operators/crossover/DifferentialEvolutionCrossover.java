@@ -22,11 +22,19 @@
 package jmetal.operators.crossover;
 
 import jmetal.core.Solution;
+<<<<<<< HEAD
+=======
+import jmetal.core.SolutionType;
+>>>>>>> master
 import jmetal.encodings.solutionType.ArrayRealSolutionType;
 import jmetal.encodings.solutionType.RealSolutionType;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
+<<<<<<< HEAD
 import jmetal.util.random.PseudoRandom;
+=======
+import jmetal.util.PseudoRandom;
+>>>>>>> master
 import jmetal.util.wrapper.XReal;
 
 import java.util.Arrays;
@@ -51,6 +59,14 @@ import java.util.List;
  */
 public class DifferentialEvolutionCrossover extends Crossover {
 	/**
+<<<<<<< HEAD
+=======
+     * 
+     */
+    private static final long serialVersionUID = 1253079594829862056L;
+
+    /**
+>>>>>>> master
 	 * DEFAULT_CR defines a default CR (crossover operation control) value
 	 */
 	private static final double DEFAULT_CR = 0.5;
@@ -75,7 +91,11 @@ public class DifferentialEvolutionCrossover extends Crossover {
   /**
    * Valid solution types to apply this operator 
    */
+<<<<<<< HEAD
   private static final List VALID_TYPES = Arrays.asList(RealSolutionType.class,
+=======
+  private static final List<Class<? extends SolutionType>> VALID_TYPES = Arrays.asList(RealSolutionType.class,
+>>>>>>> master
   		                                            ArrayRealSolutionType.class) ;
 
 	private double CR_  ;
@@ -140,7 +160,11 @@ public class DifferentialEvolutionCrossover extends Crossover {
 					parent[1].getType() + " and " + 
 					parent[2].getType() + " are obtained");
 
+<<<<<<< HEAD
 			Class cls = java.lang.String.class;
+=======
+			Class<String> cls = java.lang.String.class;
+>>>>>>> master
 			String name = cls.getName(); 
 			throw new JMException("Exception in " + name + ".execute()") ;
 		}

@@ -32,7 +32,11 @@ import java.util.Comparator;
  * This class implements a <code>Comparator</code> (a method for comparing
  * <code>Solution</code> objects) based on the values of the variables.
  */
+<<<<<<< HEAD
 public class SolutionComparator implements Comparator {
+=======
+public class SolutionComparator implements Comparator<Solution> {
+>>>>>>> master
    
   /**
    * Establishes a value of allowed dissimilarity
@@ -48,7 +52,12 @@ public class SolutionComparator implements Comparator {
    * @throws JMException 
    * @throws JMException 
    */
+<<<<<<< HEAD
   public int compare(Object o1, Object o2) {
+=======
+  @Override
+  public int compare(Solution o1, Solution o2) {
+>>>>>>> master
     Solution solution1, solution2;        
     solution1 = (Solution)o1;
     solution2 = (Solution)o2;

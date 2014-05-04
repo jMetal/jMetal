@@ -25,7 +25,10 @@ import jmetal.core.*;
 import jmetal.util.*;
 import jmetal.util.comparators.CrowdingComparator;
 import jmetal.util.comparators.DominanceComparator;
+<<<<<<< HEAD
 import jmetal.util.random.PseudoRandom;
+=======
+>>>>>>> master
 
 import java.util.Comparator;
 
@@ -40,7 +43,17 @@ import java.util.Comparator;
  */
 public class CellDE extends Algorithm{
 
+<<<<<<< HEAD
   /** 
+=======
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 8699667515096532262L;
+
+
+/** 
+>>>>>>> master
    * Constructor
    * @param problem Problem to solve
    */
@@ -63,8 +76,13 @@ public class CellDE extends Algorithm{
     SolutionSet archive;
     SolutionSet [] neighbors;    
     Neighborhood neighborhood;
+<<<<<<< HEAD
     Comparator dominance = new DominanceComparator(),
     crowding  = new CrowdingComparator();  
+=======
+    Comparator<Solution> dominance = new DominanceComparator();
+    Comparator<Solution> crowding  = new CrowdingComparator();  
+>>>>>>> master
     Distance distance = new Distance();
 
     //Read the params
@@ -153,7 +171,11 @@ public class CellDE extends Algorithm{
       //Store a portion of the archive into the population
       for (int j = 0; j < feedBack; j++){
         if (archive.size() > j){
+<<<<<<< HEAD
           int r = PseudoRandom.randInt(0, currentSolutionSet.size() - 1);
+=======
+          int r = PseudoRandom.randInt(0,currentSolutionSet.size()-1);
+>>>>>>> master
           if (r < currentSolutionSet.size()){
             Solution individual = archive.get(j);
             individual.setLocation(r);            

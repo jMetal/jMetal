@@ -30,8 +30,13 @@ import jmetal.problems.ProblemFactory;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
+<<<<<<< HEAD
 import jmetal.util.parallel.MultithreadedEvaluator;
 import jmetal.util.parallel.SynchronousParallelRunner;
+=======
+import jmetal.util.parallel.IParallelEvaluator;
+import jmetal.util.parallel.MultithreadedEvaluator;
+>>>>>>> master
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -64,8 +69,11 @@ public class pSMPSO_main {
 
     QualityIndicator indicators ; // Object to get quality indicators
 
+<<<<<<< HEAD
     HashMap  parameters ; // Operator parameters
 
+=======
+>>>>>>> master
     // Logger object and file to store log messages
     logger_      = Configuration.logger_ ;
     fileHandler_ = new FileHandler("SMPSO_main.log"); 
@@ -92,7 +100,11 @@ public class pSMPSO_main {
     } // else
 
     int threads = 4 ; // 0 - use all the available cores
+<<<<<<< HEAD
     SynchronousParallelRunner parallelEvaluator = new MultithreadedEvaluator(threads) ;
+=======
+    IParallelEvaluator parallelEvaluator = new MultithreadedEvaluator(threads) ;
+>>>>>>> master
 
     algorithm = new pSMPSO(problem, parallelEvaluator) ;
 
@@ -101,10 +113,17 @@ public class pSMPSO_main {
     algorithm.setInputParameter("archiveSize",100);
     algorithm.setInputParameter("maxIterations",250);
 
+<<<<<<< HEAD
     parameters = new HashMap() ;
     parameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
     parameters.put("distributionIndex", 20.0) ;
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);                    
+=======
+    HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
+    mutationParameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
+    mutationParameters.put("distributionIndex", 20.0) ;
+    mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);                    
+>>>>>>> master
 
     algorithm.addOperator("mutation", mutation);
 
