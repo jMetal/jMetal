@@ -58,12 +58,9 @@ public abstract class Variable implements Serializable {
    * must redefine it.
    */
   public double getValue() throws JMException {
-<<<<<<< HEAD
-    Class cls = java.lang.String.class;
-=======
     Class<String> cls = java.lang.String.class;
->>>>>>> master
-    String name = cls.getName(); 
+
+    String name = cls.getName();
     Configuration.logger_.severe("Class " + name + " does not implement " +
         "method getValue");
     throw new JMException("Exception in " + name + ".getValue()") ;
@@ -77,12 +74,9 @@ public abstract class Variable implements Serializable {
   * must redefine it.
   */
   public void setValue(double value) throws JMException {
-<<<<<<< HEAD
-    Class cls = java.lang.String.class;
-=======
     Class<String> cls = java.lang.String.class;
->>>>>>> master
-    String name = cls.getName(); 
+
+    String name = cls.getName();
     Configuration.logger_.severe("Class " + name + " does not implement " +
         "method setValue");
     throw new JMException("Exception in " + name + ".setValue()") ;
@@ -95,13 +89,10 @@ public abstract class Variable implements Serializable {
    * and the program is terminated.
    * Those classes requiring this method must redefine it.
    */
-  public double getLowerBound() throws JMException { 
-<<<<<<< HEAD
-    Class cls = java.lang.String.class;
-=======
+  public double getLowerBound() throws JMException {
     Class<String> cls = java.lang.String.class;
->>>>>>> master
-    String name = cls.getName(); 
+
+    String name = cls.getName();
     Configuration.logger_.severe("Class " + name + 
                        " does not implement method getLowerBound()");
     throw new JMException("Exception in " + name + ".getLowerBound()") ;
@@ -114,12 +105,9 @@ public abstract class Variable implements Serializable {
    * program is terminated. Those classes requiring this method must redefine it.
    */
   public double getUpperBound() throws JMException {
-<<<<<<< HEAD
-    Class cls = java.lang.String.class;
-=======
     Class<String> cls = java.lang.String.class;
->>>>>>> master
-    String name = cls.getName(); 
+
+    String name = cls.getName();
     Configuration.logger_.severe("Class " + name + 
                        " does not implement method getUpperBound()");
     throw new JMException("Exception in " + name + ".getUpperBound()") ;
@@ -132,12 +120,9 @@ public abstract class Variable implements Serializable {
    * Those classes requiring this method must to redefine it.
    */
   public void setLowerBound(double lowerBound) throws JMException {
-<<<<<<< HEAD
-    Class cls = java.lang.String.class;
-=======
     Class<String> cls = java.lang.String.class;
->>>>>>> master
-    String name = cls.getName(); 
+
+    String name = cls.getName();
     Configuration.logger_.severe("Class " + name + 
                        " does not implement method setLowerBound()");
     throw new JMException("Exception in " + name + ".setLowerBound()") ;
@@ -150,12 +135,9 @@ public abstract class Variable implements Serializable {
    * Those classes requiring this method must redefine it.
    */
   public void setUpperBound(double upperBound) throws JMException {
-<<<<<<< HEAD
-    Class cls = java.lang.String.class;
-=======
     Class<String> cls = java.lang.String.class;
->>>>>>> master
-    String name = cls.getName(); 
+
+    String name = cls.getName();
     Configuration.logger_.severe("Class " + name + 
                        " does not implement method setUpperBound()");
     throw new JMException("Exception in " + name + ".setUpperBound()") ;
@@ -165,12 +147,8 @@ public abstract class Variable implements Serializable {
    * Gets the type of the encodings.variable. The types are defined in class Problem.
    * @return The type of the encodings.variable
    */
-  
-<<<<<<< HEAD
-  public Class getVariableType() {
-=======
+
   public Class<? extends Variable> getVariableType() {
->>>>>>> master
     return this.getClass() ;
   } // getVariableType
 } // Variable

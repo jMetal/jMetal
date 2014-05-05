@@ -88,11 +88,6 @@ public class MOCell_Settings extends Settings{
     Mutation  mutation  ;
     Operator  selection ;
 
-<<<<<<< HEAD
-    HashMap  parameters ; // Operator parameters
-
-=======
->>>>>>> master
     // Selecting the algorithm: there are six MOCell variants
     //algorithm = new sMOCell1(problem_) ;
     //algorithm = new sMOCell2(problem_) ;
@@ -109,20 +104,12 @@ public class MOCell_Settings extends Settings{
 
 
     // Mutation and Crossover for Real codification 
-<<<<<<< HEAD
-    parameters = new HashMap() ;
-=======
     HashMap<String, Object> parameters = new HashMap<String, Object>() ;
->>>>>>> master
     parameters.put("probability", crossoverProbability_) ;
     parameters.put("distributionIndex", crossoverDistributionIndex_) ;
     crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters);                   
 
-<<<<<<< HEAD
-    parameters = new HashMap() ;
-=======
     parameters = new HashMap<String, Object>() ;
->>>>>>> master
     parameters.put("probability", mutationProbability_) ;
     parameters.put("distributionIndex", mutationDistributionIndex_) ;
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);                         
@@ -150,11 +137,6 @@ public class MOCell_Settings extends Settings{
     Crossover  crossover ;
     Mutation   mutation  ;
 
-<<<<<<< HEAD
-    HashMap  parameters ; // Operator parameters
-
-=======
->>>>>>> master
     // Selecting the algorithm: there are six MOCell variants
     //algorithm = new sMOCell1(problem_) ;
     //algorithm = new sMOCell2(problem_) ;
@@ -176,22 +158,16 @@ public class MOCell_Settings extends Settings{
     // Mutation and Crossover for Real codification
     crossoverProbability_ = Double.parseDouble(configuration.getProperty("crossoverProbability",String.valueOf(crossoverProbability_)));
     crossoverDistributionIndex_ = Double.parseDouble(configuration.getProperty("crossoverDistributionIndex",String.valueOf(crossoverDistributionIndex_)));
-<<<<<<< HEAD
-    parameters = new HashMap() ;
-=======
+
     HashMap<String, Object> parameters = new HashMap<String, Object>() ;
->>>>>>> master
     parameters.put("probability", crossoverProbability_) ;
     parameters.put("distributionIndex", crossoverDistributionIndex_) ;
     crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters);
 
     mutationProbability_ = Double.parseDouble(configuration.getProperty("mutationProbability",String.valueOf(mutationProbability_)));
     mutationDistributionIndex_ = Double.parseDouble(configuration.getProperty("mutationDistributionIndex",String.valueOf(mutationDistributionIndex_)));
-<<<<<<< HEAD
-    parameters = new HashMap() ;
-=======
+
     parameters = new HashMap<String, Object>() ;
->>>>>>> master
     parameters.put("probability", mutationProbability_) ;
     parameters.put("distributionIndex", mutationDistributionIndex_) ;
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);

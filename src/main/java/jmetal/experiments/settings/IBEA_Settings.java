@@ -43,100 +43,83 @@ import java.util.Properties;
  */
 public class IBEA_Settings extends Settings {
 
-	public int populationSize_   ;
-	public int maxEvaluations_   ;
-	public int archiveSize_      ;
+  public int populationSize_   ;
+  public int maxEvaluations_   ;
+  public int archiveSize_      ;
 
-	public double mutationProbability_   ;
-	public double crossoverProbability_  ;
+  public double mutationProbability_   ;
+  public double crossoverProbability_  ;
 
   public double crossoverDistributionIndex_ ;
   public double mutationDistributionIndex_  ;
 
-	/**
-	 * Constructor
-	 */
-	public IBEA_Settings(String problemName) {
-		super(problemName) ;
+  /**
+   * Constructor
+   */
+  public IBEA_Settings(String problemName) {
+    super(problemName) ;
 
-		Object [] problemParams = {"Real"};
+    Object [] problemParams = {"Real"};
     try {
-	    problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
+      problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
     } catch (JMException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
+      // TODO Auto-generated catch block
+      e.printStackTrace();
     }      
 
-  	// Default experiments.settings
-		populationSize_ = 100   ;
-		maxEvaluations_ = 25000 ;
-		archiveSize_    = 100 ;
+    // Default experiments.settings
+    populationSize_ = 100   ;
+    maxEvaluations_ = 25000 ;
+    archiveSize_    = 100 ;
 
-		mutationProbability_  = 1.0/problem_.getNumberOfVariables() ;
-		crossoverProbability_ = 0.9 ;
+    mutationProbability_  = 1.0/problem_.getNumberOfVariables() ;
+    crossoverProbability_ = 0.9 ;
 
     crossoverDistributionIndex_ = 20.0  ;
     mutationDistributionIndex_  = 20.0  ;
-	} // IBEA_Settings
+  } // IBEA_Settings
 
-	/**
-	 * Configure IBEA with user-defined parameter experiments.settings
-	 * @return A IBEA algorithm object
-	 * @throws jmetal.util.JMException
-	 */
-	public Algorithm configure() throws JMException {
-		Algorithm algorithm ;
-		Operator  selection ;
-		Operator  crossover ;
-		Operator  mutation  ;
+  /**
+   * Configure IBEA with user-defined parameter experiments.settings
+   * @return A IBEA algorithm object
+   * @throws jmetal.util.JMException
+   */
+  public Algorithm configure() throws JMException {
+    Algorithm algorithm ;
+    Operator  selection ;
+    Operator  crossover ;
+    Operator  mutation  ;
 
-<<<<<<< HEAD
-    HashMap  parameters ; // Operator parameters
+    algorithm = new IBEA(problem_) ;
 
-=======
->>>>>>> master
-		algorithm = new IBEA(problem_) ;
-
-		// Algorithm parameters
-		algorithm.setInputParameter("populationSize", populationSize_);
-		algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
-		algorithm.setInputParameter("archiveSize", archiveSize_);
+    // Algorithm parameters
+    algorithm.setInputParameter("populationSize", populationSize_);
+    algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
+    algorithm.setInputParameter("archiveSize", archiveSize_);
 
     // Mutation and Crossover for Real codification 
-<<<<<<< HEAD
-    parameters = new HashMap() ;
-=======
-	HashMap<String, Object> parameters = new HashMap<String, Object>() ;
->>>>>>> master
+    HashMap<String, Object> parameters = new HashMap<String, Object>() ;
     parameters.put("probability", crossoverProbability_) ;
     parameters.put("distributionIndex", crossoverDistributionIndex_) ;
     crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters);                   
 
-<<<<<<< HEAD
-    parameters = new HashMap() ;
-=======
     parameters = new HashMap<String, Object>() ;
->>>>>>> master
     parameters.put("probability", mutationProbability_) ;
     parameters.put("distributionIndex", mutationDistributionIndex_) ;
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);                    
 
     /* Selection Operator */
-<<<<<<< HEAD
-    parameters = new HashMap() ; 
-=======
     parameters = new HashMap<String, Object>() ; 
->>>>>>> master
     parameters.put("comparator", new FitnessComparator()) ;
     selection = new BinaryTournament(parameters);
 
-		// Add the operators to the algorithm
-		algorithm.addOperator("crossover",crossover);
-		algorithm.addOperator("mutation",mutation);
-		algorithm.addOperator("selection",selection);
+    // Add the operators to the algorithm
+    algorithm.addOperator("crossover",crossover);
+    algorithm.addOperator("mutation",mutation);
+    algorithm.addOperator("selection",selection);
 
-		return algorithm ;
-	} // configure
+    return algorithm ;
+  } // configure
 
   /**
    * Configure IBEA with user-defined parameter experiments.settings
@@ -149,11 +132,6 @@ public class IBEA_Settings extends Settings {
     Crossover crossover ;
     Mutation mutation  ;
 
-<<<<<<< HEAD
-    HashMap  parameters ; // Operator parameters
-
-=======
->>>>>>> master
     // Creating the algorithm.
     algorithm = new IBEA(problem_) ;
 
@@ -168,33 +146,23 @@ public class IBEA_Settings extends Settings {
     // Mutation and Crossover for Real codification
     crossoverProbability_ = Double.parseDouble(configuration.getProperty("crossoverProbability",String.valueOf(crossoverProbability_)));
     crossoverDistributionIndex_ = Double.parseDouble(configuration.getProperty("crossoverDistributionIndex",String.valueOf(crossoverDistributionIndex_)));
-<<<<<<< HEAD
-    parameters = new HashMap() ;
-=======
+
     HashMap<String, Object> parameters = new HashMap<String, Object>() ;
->>>>>>> master
     parameters.put("probability", crossoverProbability_) ;
     parameters.put("distributionIndex", crossoverDistributionIndex_) ;
     crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters);
 
     mutationProbability_ = Double.parseDouble(configuration.getProperty("mutationProbability",String.valueOf(mutationProbability_)));
     mutationDistributionIndex_ = Double.parseDouble(configuration.getProperty("mutationDistributionIndex",String.valueOf(mutationDistributionIndex_)));
-<<<<<<< HEAD
-    parameters = new HashMap() ;
-=======
+
     parameters = new HashMap<String, Object>() ;
->>>>>>> master
     parameters.put("probability", mutationProbability_) ;
     parameters.put("distributionIndex", mutationDistributionIndex_) ;
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);
 
 
     /* Selection Operator */
-<<<<<<< HEAD
-    parameters = new HashMap() ;
-=======
     parameters = new HashMap<String, Object>() ;
->>>>>>> master
     parameters.put("comparator", new FitnessComparator()) ;
     selection = new BinaryTournament(parameters);
 

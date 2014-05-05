@@ -59,10 +59,5 @@ public class SettingsFactory {
           "Please, check the algorithm name in jmetal/metaheuristics") ;
       throw new JMException("Exception in " + base + ".getSettingsObject()") ;
     } // catch            
-<<<<<<< HEAD
-  } // getSettingsObject
-=======
-  } // getSttingsObject    
->>>>>>> master
- 
+  } // getSttingsObject     
 } // SettingsFactory
