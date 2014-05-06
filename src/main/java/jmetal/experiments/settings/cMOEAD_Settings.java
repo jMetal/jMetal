@@ -84,8 +84,9 @@ public class cMOEAD_Settings extends Settings {
     // on CEC09 Unconstrained MOP Test Instances Working Report CES-491, School 
     // of CS & EE, University of Essex, 02/2009.
     // http://dces.essex.ac.uk/staff/qzhang/MOEAcompetition/CEC09final/code/ZhangMOEADcode/moead0305.rar
-    dataDirectory_ =  "/Users/antelverde/Softw/pruebas/data/MOEAD_parameters/Weight" ;
-  } // MOEAD_Settings
+
+    dataDirectory_ = "MOEAD_Weights" ;
+  } // cMOEAD_Settings
 
   /**
    * Configure the algorithm with the specified parameter experiments.settings
