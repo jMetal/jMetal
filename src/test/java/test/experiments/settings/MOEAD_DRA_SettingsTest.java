@@ -1,4 +1,4 @@
-package test.experiments.settings;
+package jmetal.test.experiments.settings;
 
 import jmetal.core.Algorithm;
 import jmetal.core.Problem;
@@ -7,14 +7,13 @@ import jmetal.experiments.settings.MOEAD_DRA_Settings;
 import jmetal.operators.crossover.DifferentialEvolutionCrossover;
 import jmetal.operators.mutation.PolynomialMutation;
 import jmetal.problems.Fonseca;
+
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.*;
 import java.util.Properties;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
 
 /**
  * Created with IntelliJ IDEA.
@@ -29,7 +28,7 @@ public class MOEAD_DRA_SettingsTest {
   @Before
   public void init() throws FileNotFoundException, IOException {
     configuration_ = new Properties();
-    InputStreamReader isr = new InputStreamReader(new FileInputStream(jMetalHome.jMetalHomeConfDir+"/MOEAD_DRA.conf"));
+    InputStreamReader isr = new InputStreamReader(new FileInputStream(ClassLoader.getSystemResource("MOEAD_DRA.conf").getPath()));
     configuration_.load(isr);
   }
 
@@ -52,20 +51,20 @@ public class MOEAD_DRA_SettingsTest {
     double CR = (Double)crossover.getParameter("CR") ;
     double F = (Double)crossover.getParameter("F") ;
 
-    assertEquals("MOEAD_DRASettings", 600, populationSize);
-    assertEquals("MOEAD_DRASettings", 300000, ((Integer)algorithm.getInputParameter("maxEvaluations")).intValue());
-    assertEquals("MOEAD_DRASettings", 300, ((Integer)algorithm.getInputParameter("finalSize")).intValue());
+    Assert.assertEquals("MOEAD_DRASettings", 600, populationSize);
+    Assert.assertEquals("MOEAD_DRASettings", 300000, ((Integer)algorithm.getInputParameter("maxEvaluations")).intValue());
+    Assert.assertEquals("MOEAD_DRASettings", 300, ((Integer)algorithm.getInputParameter("finalSize")).intValue());
 
-    assertEquals("MOEAD_DRASettings", 0.9, ((Double)algorithm.getInputParameter("delta")).doubleValue(), epsilon) ;
-    assertEquals("MOEAD_DRASettings", 60, ((Integer) algorithm.getInputParameter("T")).intValue());
-    assertEquals("MOEAD_DRASettings", 6,   ((Integer)algorithm.getInputParameter("nr")).intValue());
+    Assert.assertEquals("MOEAD_DRASettings", 0.9, ((Double)algorithm.getInputParameter("delta")).doubleValue(), epsilon) ;
+    Assert.assertEquals("MOEAD_DRASettings", 60, ((Integer) algorithm.getInputParameter("T")).intValue());
+    Assert.assertEquals("MOEAD_DRASettings", 6,   ((Integer)algorithm.getInputParameter("nr")).intValue());
 
-    assertEquals("MOEAD_DRASettings", 1.0, CR, epsilon);
-    assertEquals("MOEAD_DRASettings", 0.5, F, epsilon);
-    assertEquals("MOEAD_DRASettings", 20.0, dim, epsilon);
-    assertEquals("MOEAD_DRASettings", 1.0/problem.getNumberOfVariables(), pm, epsilon);
+    Assert.assertEquals("MOEAD_DRASettings", 1.0, CR, epsilon);
+    Assert.assertEquals("MOEAD_DRASettings", 0.5, F, epsilon);
+    Assert.assertEquals("MOEAD_DRASettings", 20.0, dim, epsilon);
+    Assert.assertEquals("MOEAD_DRASettings", 1.0/problem.getNumberOfVariables(), pm, epsilon);
 
-    assertTrue("MOEAD_DRASettings", experimentDirectory.exists());
+    Assert.assertTrue("MOEAD_DRASettings", experimentDirectory.exists());
   }
 
   @Test
@@ -87,19 +86,19 @@ public class MOEAD_DRA_SettingsTest {
     double CR = (Double)crossover.getParameter("CR") ;
     double F = (Double)crossover.getParameter("F") ;
 
-    assertEquals("MOEAD_DRASettings", 600, populationSize);
-    assertEquals("MOEAD_DRASettings", 300000, ((Integer)algorithm.getInputParameter("maxEvaluations")).intValue());
-    assertEquals("MOEAD_DRASettings", 300, ((Integer)algorithm.getInputParameter("finalSize")).intValue());
+    Assert.assertEquals("MOEAD_DRASettings", 600, populationSize);
+    Assert.assertEquals("MOEAD_DRASettings", 300000, ((Integer)algorithm.getInputParameter("maxEvaluations")).intValue());
+    Assert.assertEquals("MOEAD_DRASettings", 300, ((Integer)algorithm.getInputParameter("finalSize")).intValue());
 
-    assertEquals("MOEAD_DRASettings", 0.9, ((Double)algorithm.getInputParameter("delta")).doubleValue(), epsilon) ;
-    assertEquals("MOEAD_DRASettings", 60, ((Integer) algorithm.getInputParameter("T")).intValue());
-    assertEquals("MOEAD_DRASettings", 6,   ((Integer)algorithm.getInputParameter("nr")).intValue());
+    Assert.assertEquals("MOEAD_DRASettings", 0.9, ((Double)algorithm.getInputParameter("delta")).doubleValue(), epsilon) ;
+    Assert.assertEquals("MOEAD_DRASettings", 60, ((Integer) algorithm.getInputParameter("T")).intValue());
+    Assert.assertEquals("MOEAD_DRASettings", 6,   ((Integer)algorithm.getInputParameter("nr")).intValue());
 
-    assertEquals("MOEAD_DRASettings", 1.0, CR, epsilon);
-    assertEquals("MOEAD_DRASettings", 0.5, F, epsilon);
-    assertEquals("MOEAD_DRASettings", 20.0, dim, epsilon);
-    assertEquals("MOEAD_DRASettings", 1.0/problem.getNumberOfVariables(), pm, epsilon);
+    Assert.assertEquals("MOEAD_DRASettings", 1.0, CR, epsilon);
+    Assert.assertEquals("MOEAD_DRASettings", 0.5, F, epsilon);
+    Assert.assertEquals("MOEAD_DRASettings", 20.0, dim, epsilon);
+    Assert.assertEquals("MOEAD_DRASettings", 1.0/problem.getNumberOfVariables(), pm, epsilon);
 
-    assertTrue("MOEAD_DRASettings", experimentDirectory.exists());
+    Assert.assertTrue("MOEAD_DRASettings", experimentDirectory.exists());
   }
 }

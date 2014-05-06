@@ -1,4 +1,4 @@
-package test.experiments.settings;
+package jmetal.test.experiments.settings;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -21,14 +21,14 @@ public class NSGAIIPermutation_SettingsTest {
   @Before
   public void init() throws FileNotFoundException, IOException {
     configuration_ = new Properties();
-    InputStreamReader isr = new InputStreamReader(new FileInputStream(jMetalHome.jMetalHomeConfDir+"/NSGAIIPermutation.conf"));
+    InputStreamReader isr = new InputStreamReader(new FileInputStream(ClassLoader.getSystemResource("NSGAIIPermutation.conf").getPath()));
     configuration_.load(isr);
   }
 
   @Test
   public void testConfigure() throws Exception {
-    double epsilon = 0.000000000000001 ;
-    /*
+    /*double epsilon = 0.000000000000001 ;
+    
     Settings nsgaIISettings = new NSGAIIPermutation_Settings("mQAP");
     Algorithm algorithm = nsgaIISettings.configure() ;
     Problem problem = new mQAP("Permutation") ;

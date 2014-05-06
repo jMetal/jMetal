@@ -1,12 +1,11 @@
-package test.experiments.settings;
+package jmetal.test.experiments.settings;
 
 import jmetal.core.Algorithm;
-import jmetal.core.Problem;
 import jmetal.experiments.Settings;
 import jmetal.experiments.settings.CellDE_Settings;
 import jmetal.operators.crossover.DifferentialEvolutionCrossover;
-import jmetal.problems.Fonseca;
 import jmetal.util.JMException;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,7 +30,7 @@ public class CellDE_SettingsTest  {
   @Before
   public void init() throws FileNotFoundException, IOException {
     configuration_ = new Properties();
-    InputStreamReader isr = new InputStreamReader(new FileInputStream(jMetalHome.jMetalHomeConfDir+"/CellDE.conf"));
+    InputStreamReader isr = new InputStreamReader(new FileInputStream(ClassLoader.getSystemResource("CellDE.conf").getPath()));
     configuration_.load(isr);
   }
 
@@ -40,7 +39,7 @@ public class CellDE_SettingsTest  {
     double epsilon = 0.000000000000001 ;
     Settings cellDESettings = new CellDE_Settings("Fonseca");
     Algorithm algorithm = cellDESettings.configure() ;
-    Problem problem = new Fonseca("Real") ;
+    //Problem problem = new Fonseca("Real") ;
 
     DifferentialEvolutionCrossover crossover = (DifferentialEvolutionCrossover)algorithm.getOperator("crossover") ;
     double CR = (Double)crossover.getParameter("CR") ;
@@ -60,7 +59,7 @@ public class CellDE_SettingsTest  {
     double epsilon = 0.000000000000001 ;
     Settings cellDESettings = new CellDE_Settings("Fonseca");
     Algorithm algorithm = cellDESettings.configure(configuration_) ;
-    Problem problem = new Fonseca("Real") ;
+    //Problem problem = new Fonseca("Real") ;
 
     DifferentialEvolutionCrossover crossover = (DifferentialEvolutionCrossover)algorithm.getOperator("crossover") ;
     double CR = (Double)crossover.getParameter("CR") ;

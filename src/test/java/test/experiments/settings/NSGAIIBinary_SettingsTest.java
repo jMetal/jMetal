@@ -1,4 +1,4 @@
-package test.experiments.settings;
+package jmetal.test.experiments.settings;
 
 import jmetal.core.Algorithm;
 import jmetal.core.Problem;
@@ -7,6 +7,7 @@ import jmetal.experiments.settings.NSGAIIBinary_Settings;
 import jmetal.operators.crossover.SinglePointCrossover;
 import jmetal.operators.mutation.BitFlipMutation;
 import jmetal.problems.ZDT.ZDT5;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,7 +32,7 @@ public class NSGAIIBinary_SettingsTest {
   @Before
   public void init() throws FileNotFoundException, IOException {
     configuration_ = new Properties();
-    InputStreamReader isr = new InputStreamReader(new FileInputStream(jMetalHome.jMetalHomeConfDir+"/NSGAIIBinary.conf"));
+    InputStreamReader isr = new InputStreamReader(new FileInputStream(ClassLoader.getSystemResource("NSGAIIBinary.conf").getPath()));
     configuration_.load(isr);
   }
 
