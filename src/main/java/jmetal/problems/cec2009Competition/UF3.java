@@ -32,30 +32,26 @@ import jmetal.util.JMException;
  * Class representing problem CEC2009_UF3
  */
 public class UF3 extends Problem {
-    
-<<<<<<< HEAD
- /** 
-=======
- /**
-     * 
-     */
-    private static final long serialVersionUID = -7007725110235707109L;
 
-/** 
->>>>>>> master
-  * Constructor.
-  * Creates a default instance of problem CEC2009_UF3 (30 decision variables)
-  * @param solutionType The solution type must "Real" or "BinaryReal".
-  */
+  /**
+   * 
+   */
+  private static final long serialVersionUID = -7007725110235707109L;
+
+  /** 
+   * Constructor.
+   * Creates a default instance of problem CEC2009_UF3 (30 decision variables)
+   * @param solutionType The solution type must "Real" or "BinaryReal".
+   */
   public UF3(String solutionType) throws ClassNotFoundException {
     this(solutionType, 30); // 30 variables by default
   } // CEC2009_UF3
-  
- /**
-  * Creates a new instance of problem CEC2009_UF3.
-  * @param numberOfVariables Number of variables.
-  * @param solutionType The solution type must "Real" or "BinaryReal".
-  */
+
+  /**
+   * Creates a new instance of problem CEC2009_UF3.
+   * @param numberOfVariables Number of variables.
+   * @param solutionType The solution type must "Real" or "BinaryReal".
+   */
   public UF3(String solutionType, Integer numberOfVariables) {
     numberOfVariables_  = numberOfVariables;
     numberOfObjectives_ =  2;
@@ -73,15 +69,15 @@ public class UF3 extends Problem {
     } // for
 
     if (solutionType.compareTo("BinaryReal") == 0)
-    	solutionType_ = new BinaryRealSolutionType(this) ;
+      solutionType_ = new BinaryRealSolutionType(this) ;
     else if (solutionType.compareTo("Real") == 0)
-    	solutionType_ = new RealSolutionType(this) ;
+      solutionType_ = new RealSolutionType(this) ;
     else {
-    	System.out.println("Error: solution type " + solutionType + " invalid") ;
-    	System.exit(-1) ;
+      System.out.println("Error: solution type " + solutionType + " invalid") ;
+      System.exit(-1) ;
     }  
   } // CEC2009_UF3
-    
+
   /** 
    * Evaluates a solution.
    * @param solution The solution to evaluate.
@@ -89,32 +85,32 @@ public class UF3 extends Problem {
    */
   public void evaluate(Solution solution) throws JMException {
     Variable[] decisionVariables  = solution.getDecisionVariables();
-    
+
     double [] x = new double[numberOfVariables_] ;
     for (int i = 0; i < numberOfVariables_; i++)
       x[i] = decisionVariables[i].getValue() ;
 
-  	int count1, count2;
-		double sum1, sum2, prod1, prod2, yj, pj;
-		sum1   = sum2   = 0.0;
-		count1 = count2 = 0;
- 		prod1  = prod2  = 1.0;
+    int count1, count2;
+    double sum1, sum2, prod1, prod2, yj, pj;
+    sum1   = sum2   = 0.0;
+    count1 = count2 = 0;
+    prod1  = prod2  = 1.0;
 
-    
+
     for (int j = 2 ; j <= numberOfVariables_; j++) {
-			yj = x[j-1]-Math.pow(x[0],0.5*(1.0+3.0*(j-2.0)/(numberOfVariables_-2.0)));
-			pj = Math.cos(20.0*yj*Math.PI/Math.sqrt(j));
-			if (j % 2 == 0) {
-				sum2  += yj*yj;
-				prod2 *= pj;
-				count2++;
-			} else {
-				sum1  += yj*yj;
-				prod1 *= pj;
-				count1++;
-			}
+      yj = x[j-1]-Math.pow(x[0],0.5*(1.0+3.0*(j-2.0)/(numberOfVariables_-2.0)));
+      pj = Math.cos(20.0*yj*Math.PI/Math.sqrt(j));
+      if (j % 2 == 0) {
+        sum2  += yj*yj;
+        prod2 *= pj;
+        count2++;
+      } else {
+        sum1  += yj*yj;
+        prod1 *= pj;
+        count1++;
+      }
     }
-    
+
     solution.setObjective(0,  x[0] + 2.0*(4.0*sum1 - 2.0*prod1 + 2.0) / (double)count1);
     solution.setObjective(1, 1.0 - Math.sqrt(x[0]) + 2.0*(4.0*sum2 - 2.0*prod2 + 2.0) / (double)count2);
   } // evaluate

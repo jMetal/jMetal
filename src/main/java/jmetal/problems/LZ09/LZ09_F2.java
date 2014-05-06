@@ -34,79 +34,75 @@ import java.util.Vector;
  * Class representing problem LZ09_F2 
  */
 public class LZ09_F2 extends Problem {   
-<<<<<<< HEAD
-	LZ09 LZ09_ ; 
-=======
-	/**
-     * 
-     */
-    private static final long serialVersionUID = 7111515393473519322L;
-    LZ09 LZ09_ ; 
->>>>>>> master
- /** 
-  * Creates a default LZ09_F2 problem (30 variables and 3 objectives)
-  * @param solutionType The solution type must "Real" or "BinaryReal". 
-  */
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 7111515393473519322L;
+  LZ09 LZ09_ ; 
+  /** 
+   * Creates a default LZ09_F2 problem (30 variables and 3 objectives)
+   * @param solutionType The solution type must "Real" or "BinaryReal". 
+   */
   public LZ09_F2(String solutionType) throws ClassNotFoundException {
     this(solutionType, 21, 1, 22);
   } // LZ09_F2
-  
+
   /** 
    * Creates a LZ09_F2 problem instance
    * @param solutionType The solution type must "Real" or "BinaryReal". 
    */
-   public LZ09_F2(String solutionType,
-                  Integer ptype, 
-                  Integer dtype,
-                  Integer ltype) {
-     numberOfVariables_  = 30;
-     numberOfObjectives_ = 2;
-     numberOfConstraints_= 0;
-     problemName_        = "LZ09_F2";
-         
-   	 LZ09_  = new LZ09(numberOfVariables_, 
-   			               numberOfObjectives_, 
-   			               ptype, 
-   			               dtype, 
-   			               ltype) ;
+  public LZ09_F2(String solutionType,
+      Integer ptype, 
+      Integer dtype,
+      Integer ltype) {
+    numberOfVariables_  = 30;
+    numberOfObjectives_ = 2;
+    numberOfConstraints_= 0;
+    problemName_        = "LZ09_F2";
 
-     lowerLimit_ = new double[numberOfVariables_];
-     upperLimit_ = new double[numberOfVariables_];      
-     for (int var = 0; var < numberOfVariables_; var++){
-       lowerLimit_[var] = 0.0;
-       upperLimit_[var] = 1.0;
-     } //for
-         
-     if (solutionType.compareTo("BinaryReal") == 0)
-    	 solutionType_ = new BinaryRealSolutionType(this) ;
-     else if (solutionType.compareTo("Real") == 0)
-    	 solutionType_ = new RealSolutionType(this) ;
-     else {
-     	System.out.println("Error: solution type " + solutionType + " invalid") ;
-     	System.exit(-1) ;
-     }                   
-   } // LZ09_F2
-   
-   /** 
-    * Evaluates a solution 
-    * @param solution The solution to evaluate
-     * @throws JMException 
-    */    
-    public void evaluate(Solution solution) throws JMException {
-      Variable[] gen  = solution.getDecisionVariables();
-      
-      Vector<Double> x = new Vector<Double>(numberOfVariables_) ;
-      Vector<Double> y = new Vector<Double>(numberOfObjectives_);
-          
-      for (int i = 0; i < numberOfVariables_; i++) {
-      	x.addElement(gen[i].getValue());
-      	y.addElement(0.0) ;
-      } // for
-        
-      LZ09_.objective(x, y) ;
-      
-      for (int i = 0; i < numberOfObjectives_; i++)
-        solution.setObjective(i, y.get(i)); 
-    } // evaluate
+    LZ09_  = new LZ09(numberOfVariables_, 
+        numberOfObjectives_, 
+        ptype, 
+        dtype, 
+        ltype) ;
+
+    lowerLimit_ = new double[numberOfVariables_];
+    upperLimit_ = new double[numberOfVariables_];      
+    for (int var = 0; var < numberOfVariables_; var++){
+      lowerLimit_[var] = 0.0;
+      upperLimit_[var] = 1.0;
+    } //for
+
+    if (solutionType.compareTo("BinaryReal") == 0)
+      solutionType_ = new BinaryRealSolutionType(this) ;
+    else if (solutionType.compareTo("Real") == 0)
+      solutionType_ = new RealSolutionType(this) ;
+    else {
+      System.out.println("Error: solution type " + solutionType + " invalid") ;
+      System.exit(-1) ;
+    }                   
+  } // LZ09_F2
+
+  /** 
+   * Evaluates a solution 
+   * @param solution The solution to evaluate
+   * @throws JMException 
+   */    
+  public void evaluate(Solution solution) throws JMException {
+    Variable[] gen  = solution.getDecisionVariables();
+
+    Vector<Double> x = new Vector<Double>(numberOfVariables_) ;
+    Vector<Double> y = new Vector<Double>(numberOfObjectives_);
+
+    for (int i = 0; i < numberOfVariables_; i++) {
+      x.addElement(gen[i].getValue());
+      y.addElement(0.0) ;
+    } // for
+
+    LZ09_.objective(x, y) ;
+
+    for (int i = 0; i < numberOfObjectives_; i++)
+      solution.setObjective(i, y.get(i)); 
+  } // evaluate
 } // LZ09_F2
 

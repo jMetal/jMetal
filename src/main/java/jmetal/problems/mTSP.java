@@ -34,93 +34,89 @@ import java.io.*;
  */
 public class mTSP extends Problem {
 
-<<<<<<< HEAD
-  public int         numberOfCities_ ; 
-=======
   /**
-     * 
-     */
-    private static final long serialVersionUID = 3869748855198680149L;
-public int         numberOfCities_ ; 
->>>>>>> master
+   * 
+   */
+  private static final long serialVersionUID = 3869748855198680149L;
+  public int         numberOfCities_ ; 
   public double [][] distanceMatrix_ ;
   public double [][] costMatrix_;
 
-  
- /**
-  * Creates a new mTSP problem instance. It accepts data files from TSPLIB
-  */
+
+  /**
+   * Creates a new mTSP problem instance. It accepts data files from TSPLIB
+   */
   public mTSP(String solutionType,
-              String file_distances,
-              String file_cost) throws IOException {
+      String file_distances,
+      String file_cost) throws IOException {
     numberOfVariables_  = 1;
     numberOfObjectives_ = 2;
     numberOfConstraints_= 0;
     problemName_        = "mTSP";
-             
+
     //variableType_ = new Class[numberOfVariables_] ;
     length_       = new int[numberOfVariables_];
-    
+
     //variableType_[0] = Class.forName("jmetal.base.encodings.variable.Permutation") ;
-    
+
     distanceMatrix_ = readProblem(file_distances) ;
     costMatrix_     = readProblem(file_cost);
     System.out.println(numberOfCities_) ;
     length_      [0] = numberOfCities_ ;
     if (solutionType.compareTo("Permutation") == 0)
-    	solutionType_ = new PermutationSolutionType(this) ;
+      solutionType_ = new PermutationSolutionType(this) ;
     else {
-    	System.out.println("Error: solution type " + solutionType + " invalid") ;
-    	System.exit(-1) ;
+      System.out.println("Error: solution type " + solutionType + " invalid") ;
+      System.exit(-1) ;
     }
   } // mTSP
-    
- /** 
-  * Evaluates a solution 
-  * @param solution The solution to evaluate
-  */      
+
+  /** 
+   * Evaluates a solution 
+   * @param solution The solution to evaluate
+   */      
   public void evaluate(Solution solution) {
     double fitness1   ;
     double fitness2   ;
-    
+
     fitness1   = 0.0 ;
     fitness2   = 0.0 ;
 
     for (int i = 0; i < (numberOfCities_ - 1); i++) {
       int x ; 
       int y ;
-      
+
       x = ((Permutation)solution.getDecisionVariables()[0]).vector_[i] ;
       y = ((Permutation)solution.getDecisionVariables()[0]).vector_[i+1] ;
-//  cout << "I : " << i << ", x = " << x << ", y = " << y << endl ;    
+      //  cout << "I : " << i << ", x = " << x << ", y = " << y << endl ;    
       fitness1 += distanceMatrix_[x][y] ;
       fitness2 += costMatrix_[x][y];
     } // for
     int firstCity ;
     int lastCity  ;
-    
+
     firstCity = ((Permutation)solution.getDecisionVariables()[0]).vector_[0] ;
     lastCity  = ((Permutation)solution.getDecisionVariables()[0]).vector_[numberOfCities_ - 1] ;
     fitness1 += distanceMatrix_[firstCity][lastCity] ;
     fitness2 += costMatrix_[firstCity][lastCity];
-    
+
     solution.setObjective(0, fitness1);            
     solution.setObjective(1, fitness2);
   } // evaluate
 
 
   public double [][] readProblem(String file) throws
-          IOException {
+  IOException {
     double [][] matrix = null;
     Reader inputFile = new BufferedReader(
-                       new InputStreamReader(
-                       new FileInputStream(file)));
+        new InputStreamReader(
+            new FileInputStream(file)));
 
     StreamTokenizer token = new StreamTokenizer(inputFile);
     try {
       boolean found ;
       found = false ;
-      
+
       token.nextToken();
       while(!found) {
         if ((token.sval != null) && ((token.sval.compareTo("DIMENSION") == 0)))
@@ -131,7 +127,7 @@ public int         numberOfCities_ ;
 
       token.nextToken() ;
       token.nextToken() ;
-      
+
       numberOfCities_ =  (int)token.nval ;
 
       matrix = new double[numberOfCities_][numberOfCities_] ;
@@ -141,13 +137,13 @@ public int         numberOfCities_ ;
       token.nextToken();
       while(!found) {
         if ((token.sval != null) &&
-           ((token.sval.compareTo("SECTION") == 0)))
+            ((token.sval.compareTo("SECTION") == 0)))
           found = true ;
         else
           token.nextToken() ;
       } // while
 
-    // Read the data
+      // Read the data
 
       double [] c = new double[2*numberOfCities_] ;
 

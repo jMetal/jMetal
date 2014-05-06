@@ -34,16 +34,12 @@ import jmetal.util.wrapper.XReal;
  */
 public class Fonseca extends Problem {
 
-<<<<<<< HEAD
-	/** 
-=======
 	/**
      * 
      */
     private static final long serialVersionUID = -5170038987171863224L;
 
     /** 
->>>>>>> master
 	 * Constructor
 	 * Creates a default instance of the Fonseca problem
 	 * @param solutionType The solution type must "Real", "BinaryReal, 

@@ -33,31 +33,27 @@ import jmetal.util.wrapper.XReal;
  * Class representing problem ZDT1
  */
 public class ZDT1 extends Problem {
-    
-<<<<<<< HEAD
- /** 
-=======
- /**
-     * 
-     */
-    private static final long serialVersionUID = 7747361492814788270L;
 
-/** 
->>>>>>> master
-  * Constructor.
-  * Creates a default instance of problem ZDT1 (30 decision variables)
-  * @param solutionType The solution type must "Real", "BinaryReal, and "ArrayReal". 
-	* ArrayReal, or ArrayRealC".
-  */
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 7747361492814788270L;
+
+  /** 
+   * Constructor.
+   * Creates a default instance of problem ZDT1 (30 decision variables)
+   * @param solutionType The solution type must "Real", "BinaryReal, and "ArrayReal". 
+   * ArrayReal, or ArrayRealC".
+   */
   public ZDT1(String solutionType) throws ClassNotFoundException {
     this(solutionType, 30); // 30 variables by default
   } // ZDT1
-  
- /**
-  * Creates a new instance of problem ZDT1.
-  * @param numberOfVariables Number of variables.
-  * @param solutionType The solution type must "Real", "BinaryReal, and "ArrayReal". 
-  */
+
+  /**
+   * Creates a new instance of problem ZDT1.
+   * @param numberOfVariables Number of variables.
+   * @param solutionType The solution type must "Real", "BinaryReal, and "ArrayReal". 
+   */
   public ZDT1(String solutionType, Integer numberOfVariables) {
     numberOfVariables_  = numberOfVariables;
     numberOfObjectives_ =  2;
@@ -75,35 +71,35 @@ public class ZDT1 extends Problem {
     } // for
 
     if (solutionType.compareTo("BinaryReal") == 0)
-    	solutionType_ = new BinaryRealSolutionType(this) ;
+      solutionType_ = new BinaryRealSolutionType(this) ;
     else if (solutionType.compareTo("Real") == 0) 
-    	solutionType_ = new RealSolutionType(this) ;
+      solutionType_ = new RealSolutionType(this) ;
     else if (solutionType.compareTo("ArrayReal") == 0)
-    	solutionType_ = new ArrayRealSolutionType(this) ;
+      solutionType_ = new ArrayRealSolutionType(this) ;
     else {
-    	System.out.println("Error: solution type " + solutionType + " invalid") ;
-    	System.exit(-1) ;
+      System.out.println("Error: solution type " + solutionType + " invalid") ;
+      System.exit(-1) ;
     }
   } // ZDT1
-    
+
   /** 
    * Evaluates a solution.
    * @param solution The solution to evaluate.
    * @throws JMException 
    */
   public void evaluate(Solution solution) throws JMException {
-		XReal x = new XReal(solution) ;
- 		
+    XReal x = new XReal(solution) ;
+
     double [] f = new double[numberOfObjectives_]  ;
     f[0]        = x.getValue(0)     ;
     double g    = this.evalG(x)                 ;
     double h    = this.evalH(f[0],g)              ;
     f[1]        = h * g                           ;
-    
+
     solution.setObjective(0,f[0]);
     solution.setObjective(1,f[1]);
   } // evaluate
-    
+
   /**
    * Returns the value of the ZDT1 function G.
    * @param  x Solution
@@ -118,7 +114,7 @@ public class ZDT1 extends Problem {
     g = g + 1.0;
     return g;
   } // evalG
-    
+
   /**
    * Returns the value of the ZDT1 function H.
    * @param f First argument of the function H.

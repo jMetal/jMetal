@@ -33,14 +33,11 @@ import jmetal.encodings.variable.Binary;
 public class OneMax extends Problem {
 
   /**
-<<<<<<< HEAD
-=======
-     * 
-     */
-    private static final long serialVersionUID = -8546255672894127575L;
+   * 
+   */
+  private static final long serialVersionUID = -8546255672894127575L;
 
-/**
->>>>>>> master
+  /**
    * Creates a new OneZeroMax problem instance
    * @param solutionType Solution type
    * @throws ClassNotFoundException
@@ -48,42 +45,42 @@ public class OneMax extends Problem {
   public OneMax(String solutionType) throws ClassNotFoundException {
     this(solutionType, 512) ;
   }
-  
- /**
-  * Creates a new OneMax problem instance
-  * @param numberOfBits Length of the problem
-  */
+
+  /**
+   * Creates a new OneMax problem instance
+   * @param numberOfBits Length of the problem
+   */
   public OneMax(String solutionType, Integer numberOfBits) {
     numberOfVariables_  = 1;
     numberOfObjectives_ = 1;
     numberOfConstraints_= 0;
     problemName_        = "ONEMAX";
-             
+
     solutionType_ = new BinarySolutionType(this) ;
-    	    
+
     //variableType_ = new Class[numberOfVariables_] ;
     length_       = new int[numberOfVariables_];
     length_      [0] = numberOfBits ;
-    
+
     if (solutionType.compareTo("Binary") == 0)
-    	solutionType_ = new BinarySolutionType(this) ;
+      solutionType_ = new BinarySolutionType(this) ;
     else {
-    	System.out.println("OneMax: solution type " + solutionType + " invalid") ;
-    	System.exit(-1) ;
+      System.out.println("OneMax: solution type " + solutionType + " invalid") ;
+      System.exit(-1) ;
     }  
-    
+
   } // OneMax
-    
- /** 
-  * Evaluates a solution 
-  * @param solution The solution to evaluate
-  */      
+
+  /** 
+   * Evaluates a solution 
+   * @param solution The solution to evaluate
+   */      
   public void evaluate(Solution solution) {
     Binary variable ;
     int    counter  ;
-    
+
     variable = ((Binary)solution.getDecisionVariables()[0]) ;
-    
+
     counter = 0 ;
 
     for (int i = 0; i < variable.getNumberOfBits() ; i++) 

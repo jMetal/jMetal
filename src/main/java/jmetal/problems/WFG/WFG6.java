@@ -34,56 +34,53 @@ import jmetal.util.JMException;
  *            Proceedings, volume 3410 of Lecture Notes in Computer Science
  */
 public class WFG6 extends WFG{
-    
- /**
-<<<<<<< HEAD
-=======
-     * 
-     */
-    private static final long serialVersionUID = 9031916537404107537L;
 
-/**
->>>>>>> master
-  * Creates a default WFG6 with  
-  * 2 position-related parameters, 
-  * 4 distance-related parameters,
-  * and 2 objectives
-  * @param solutionType The solution type must "Real" or "BinaryReal".
-  */
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 9031916537404107537L;
+
+  /**
+   * Creates a default WFG6 with  
+   * 2 position-related parameters, 
+   * 4 distance-related parameters,
+   * and 2 objectives
+   * @param solutionType The solution type must "Real" or "BinaryReal".
+   */
   public WFG6(String solutionType) throws ClassNotFoundException {
     this(solutionType, 2, 4, 2) ;
   } // WFG6
 
- /**
-  * Creates a WFG6 problem instance
-  * @param k Number of position parameters
-  * @param l Number of distance parameters
-  * @param M Number of objective functions
-  * @param solutionType The solution type must "Real" or "BinaryReal".
-  */
+  /**
+   * Creates a WFG6 problem instance
+   * @param k Number of position parameters
+   * @param l Number of distance parameters
+   * @param M Number of objective functions
+   * @param solutionType The solution type must "Real" or "BinaryReal".
+   */
   public WFG6 (String solutionType, Integer k, Integer l, Integer M) throws ClassNotFoundException {
     super(solutionType, k,l,M);
     problemName_ = "WFG6";
-        
+
     S_ = new int[M_];
     for (int i = 0; i < M_; i++) {
       S_[i] = 2 * (i+1);
     }
-        
+
     A_ = new int[M_-1];        
     for (int i = 0; i < M_-1; i++) {
       A_[i] = 1;          
     }        
   } // WFG6           
-          
+
   /** 
-  * Evaluates a solution 
-  * @param z The solution to evaluate
-  * @return double [] with the evaluation results
-  */  
+   * Evaluates a solution 
+   * @param z The solution to evaluate
+   * @return double [] with the evaluation results
+   */  
   public float [] evaluate(float [] z){                
     float [] y;
-        
+
     y = normalise(z);
     y = t1(y,k_);
     y = t2(y,k_,M_);            
@@ -93,10 +90,10 @@ public class WFG6 extends WFG{
     for (int m = 1; m <= M_ ; m++) {
       result [m-1] = D_*x[M_-1] + S_[m-1] * (new Shapes()).concave(x,m);                
     }
-        
+
     return result;
   } //  evaluate
-    
+
   /**
    * WFG6 t1 transformation
    */    
@@ -104,53 +101,53 @@ public class WFG6 extends WFG{
     float [] result = new float[z.length];
 
     System.arraycopy(z, 0, result, 0, k);
-        
+
     for (int i = k; i < z.length; i++) {
       result[i] = (new Transformations()).s_linear(z[i],(float)0.35);
     }
-        
+
     return result;      
   } // t1
-        
+
   /**
    * WFG6 t2 transformation
    */      
   public float [] t2(float [] z, int k, int M){
     float [] result = new float[M];        
-        
+
     for (int i = 1; i <= M-1; i++){
       int head = (i - 1)*k/(M-1) + 1;
       int tail = i * k / (M - 1);                                   
       float [] subZ = subVector(z,head-1,tail-1);            
-            
+
       result[i-1] = (new Transformations()).r_nonsep(subZ,k/(M-1));            
     }
-        
+
     int head = k + 1;
     int tail = z.length;
     int l = z.length - k;
-              
+
     float [] subZ = subVector(z,head-1,tail-1);              
     result[M-1] = (new Transformations()).r_nonsep(subZ,l);
-                
+
     return result;
   } // t2       
-        
+
   /** 
-  * Evaluates a solution 
-  * @param solution The solution to evaluate
+   * Evaluates a solution 
+   * @param solution The solution to evaluate
    * @throws JMException 
-  */   
+   */   
   public final void evaluate(Solution solution) throws JMException {
     float [] variables = new float[getNumberOfVariables()];
     Variable[] dv = solution.getDecisionVariables();
-        
+
     for (int i = 0; i < getNumberOfVariables(); i++) {
       variables[i] = (float)dv[i].getValue();    
     }
-        
+
     float [] sol = evaluate(variables);
-        
+
     for (int i = 0; i < sol.length; i++) {
       solution.setObjective(i,sol[i]);
     }

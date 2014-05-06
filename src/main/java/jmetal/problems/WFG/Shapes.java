@@ -22,11 +22,7 @@
 package jmetal.problems.WFG;
 
 /** 
-<<<<<<< HEAD
-* Class implementing shape functions for WFG Benchmark
-=======
 * Class implementing shape functions for WFG benchmark
->>>>>>> master
 * Reference: Simon Huband, Luigi Barone, Lyndon While, Phil Hingston
 *            A Scalable Multi-objective Test Problem Toolkit.
 *            Evolutionary Multi-Criterion Optimization: 

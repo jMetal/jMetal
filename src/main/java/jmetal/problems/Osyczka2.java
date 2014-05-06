@@ -32,25 +32,22 @@ import jmetal.util.JMException;
  * Class representing problem Oyczka2
  */
 public class Osyczka2 extends Problem{
- /**
-<<<<<<< HEAD
-=======
-     * 
-     */
-    private static final long serialVersionUID = 5547671401217847034L;
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 5547671401217847034L;
 
-/**
->>>>>>> master
-  * Constructor.
-  * Creates a default instance of the Osyczka2 problem.
-  * @param solutionType The solution type must "Real" or "BinaryReal". 
-  */
+  /**
+   * Constructor.
+   * Creates a default instance of the Osyczka2 problem.
+   * @param solutionType The solution type must "Real" or "BinaryReal". 
+   */
   public Osyczka2(String solutionType) {
     numberOfVariables_  = 6;
     numberOfObjectives_ = 2;
     numberOfConstraints_= 6;
     problemName_        = "Osyczka2";
-    
+
     lowerLimit_ = new double[numberOfVariables_];
     upperLimit_ = new double[numberOfVariables_];           
     //Fill lower and upper limits
@@ -60,7 +57,7 @@ public class Osyczka2 extends Problem{
     lowerLimit_[3] = 0.0;
     lowerLimit_[4] = 1.0;
     lowerLimit_[5] = 0.0;
-        
+
     upperLimit_[0] = 10.0;
     upperLimit_[1] = 10.0;
     upperLimit_[2] = 5.0;
@@ -68,27 +65,27 @@ public class Osyczka2 extends Problem{
     upperLimit_[4] = 5.0;
     upperLimit_[5] = 10.0;
     //
-        
+
     if (solutionType.compareTo("BinaryReal") == 0)
-    	solutionType_ = new BinaryRealSolutionType(this) ;
+      solutionType_ = new BinaryRealSolutionType(this) ;
     else if (solutionType.compareTo("Real") == 0)
-    	solutionType_ = new RealSolutionType(this) ;
+      solutionType_ = new RealSolutionType(this) ;
     else {
-    	System.out.println("Error: solution type " + solutionType + " invalid") ;
-    	System.exit(-1) ;
+      System.out.println("Error: solution type " + solutionType + " invalid") ;
+      System.exit(-1) ;
     }    
   } // Osyczka2
-    
+
   /** 
-  * Evaluates a solution 
-  * @param solution The solution to evaluate
+   * Evaluates a solution 
+   * @param solution The solution to evaluate
    * @throws JMException 
-  */  
+   */  
   public void evaluate(Solution solution) throws JMException {
     Variable [] decisionVariables  = solution.getDecisionVariables();     
-  
+
     double [] f = new double[numberOfObjectives_];
-    
+
     double x1,x2,x3,x4,x5,x6;
     x1 = decisionVariables[0].getValue();
     x2 = decisionVariables[1].getValue();
@@ -97,26 +94,26 @@ public class Osyczka2 extends Problem{
     x5 = decisionVariables[4].getValue();
     x6 = decisionVariables[5].getValue();                
     f[0] = - (25.0*(x1-2.0)*(x1-2.0) + 
-                  (x2-2.0)*(x2-2.0) + 
-                  (x3-1.0)*(x3-1.0) + 
-                  (x4-4.0)*(x4-4.0)+
-                  (x5-1.0)*(x5-1.0));
-                
+        (x2-2.0)*(x2-2.0) + 
+        (x3-1.0)*(x3-1.0) + 
+        (x4-4.0)*(x4-4.0)+
+        (x5-1.0)*(x5-1.0));
+
     f[1] = x1*x1 + x2*x2 + x3*x3 + x4*x4 + x5*x5 + x6*x6;
-    
+
     solution.setObjective(0,f[0]);
     solution.setObjective(1,f[1]);
   } // evaluate
-   
+
   /** 
    * Evaluates the constraint overhead of a solution 
    * @param solution The solution
    * @throws JMException 
    */  
- public void evaluateConstraints(Solution solution) throws JMException {
+  public void evaluateConstraints(Solution solution) throws JMException {
     double [] constraint = new double[this.getNumberOfConstraints()];
     Variable[] decisionVariables = solution.getDecisionVariables();
-        
+
     double x1,x2,x3,x4,x5,x6;
     x1 = decisionVariables[0].getValue();
     x2 = decisionVariables[1].getValue();
@@ -124,7 +121,7 @@ public class Osyczka2 extends Problem{
     x4 = decisionVariables[3].getValue();
     x5 = decisionVariables[4].getValue();
     x6 = decisionVariables[5].getValue();
-        
+
     constraint[0] = (x1 + x2)/2.0 - 1.0;
     constraint[1] = (6.0 - x1 - x2)/6.0;
     constraint[2] = (2.0 - x2 + x1)/2.0;
@@ -139,7 +136,7 @@ public class Osyczka2 extends Problem{
         total+=constraint[i];
         number++;
       }        
-       
+
     solution.setOverallConstraintViolation(total);    
     solution.setNumberOfViolatedConstraint(number);
   } // evaluateConstraints 

@@ -33,28 +33,25 @@ import jmetal.util.JMException;
  */
 public class UF2 extends Problem {
 
- /**
-<<<<<<< HEAD
-=======
-     * 
-     */
-    private static final long serialVersionUID = 4519800231479689814L;
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 4519800231479689814L;
 
-/**
->>>>>>> master
-  * Constructor.
-  * Creates a default instance of problem CEC2009_UF2 (30 decision variables)
-  * @param solutionType The solution type must "Real" or "BinaryReal".
-  */
+  /**
+   * Constructor.
+   * Creates a default instance of problem CEC2009_UF2 (30 decision variables)
+   * @param solutionType The solution type must "Real" or "BinaryReal".
+   */
   public UF2(String solutionType) throws ClassNotFoundException {
     this(solutionType, 30); // 30 variables by default
   } // CEC2009_UF2
 
- /**
-  * Creates a new instance of problem CEC2009_UF2.
-  * @param numberOfVariables Number of variables.
-  * @param solutionType The solution type must "Real" or "BinaryReal".
-  */
+  /**
+   * Creates a new instance of problem CEC2009_UF2.
+   * @param numberOfVariables Number of variables.
+   * @param solutionType The solution type must "Real" or "BinaryReal".
+   */
   public UF2(String solutionType, Integer numberOfVariables) {
     numberOfVariables_  = numberOfVariables;
     numberOfObjectives_ =  2;
@@ -64,20 +61,20 @@ public class UF2 extends Problem {
     upperLimit_ = new double[numberOfVariables_];
     lowerLimit_ = new double[numberOfVariables_];
 
-        lowerLimit_[0] = 0.0 ;
-     upperLimit_[0] = 1.0 ;
-     for (int var = 1; var < numberOfVariables_; var++){
-       lowerLimit_[var] = -1.0;
-       upperLimit_[var] = 1.0;
-     } //for
+    lowerLimit_[0] = 0.0 ;
+    upperLimit_[0] = 1.0 ;
+    for (int var = 1; var < numberOfVariables_; var++){
+      lowerLimit_[var] = -1.0;
+      upperLimit_[var] = 1.0;
+    } //for
 
     if (solutionType.compareTo("BinaryReal") == 0)
-    	solutionType_ = new BinaryRealSolutionType(this) ;
+      solutionType_ = new BinaryRealSolutionType(this) ;
     else if (solutionType.compareTo("Real") == 0)
-    	solutionType_ = new RealSolutionType(this) ;
+      solutionType_ = new RealSolutionType(this) ;
     else {
-    	System.out.println("Error: solution type " + solutionType + " invalid") ;
-    	System.exit(-1) ;
+      System.out.println("Error: solution type " + solutionType + " invalid") ;
+      System.exit(-1) ;
     }
   } // CEC2009_UF2
 
@@ -93,42 +90,42 @@ public class UF2 extends Problem {
     for (int i = 0; i < numberOfVariables_; i++)
       x[i] = decisionVariables[i].getValue() ;
 
-  	int count1, count2;
-		double sum1, sum2, yj;
-		sum1   = sum2   = 0.0;
-		count1 = count2 = 0;
+    int count1, count2;
+    double sum1, sum2, yj;
+    sum1   = sum2   = 0.0;
+    count1 = count2 = 0;
 
     for (int j = 2 ; j <= numberOfVariables_; j++) {
-			if(j % 2 == 0) {
-				/*yj = x[j-1]-0.3*x[0]*
+      if(j % 2 == 0) {
+        /*yj = x[j-1]-0.3*x[0]*
              (x[0]*Math.cos(24.0*Math.PI*x[0]+4.0*j*Math.PI/numberOfVariables_)+2.0)*
              Math.sin(6.0*Math.PI*x[0]+j*Math.PI/numberOfVariables_);*/
 
-                              yj = x[j-1] -
-                                  (0.3 * x[0] * x[0] * Math.cos(24 * Math.PI * x[0] + 4 * j * Math.PI / numberOfVariables_) + 0.6 * x[0])*
-                                  Math.sin(6.0 * Math.PI* x[0] + j * Math.PI / numberOfVariables_);
-
-                           
-				sum2 += yj*yj;
-				count2++;
-			} else {
+        yj = x[j-1] -
+            (0.3 * x[0] * x[0] * Math.cos(24 * Math.PI * x[0] + 4 * j * Math.PI / numberOfVariables_) + 0.6 * x[0])*
+            Math.sin(6.0 * Math.PI* x[0] + j * Math.PI / numberOfVariables_);
 
 
-
-                            yj = x[j-1] -
-                                (0.3 * x[0] * x[0] * Math.cos(24 * Math.PI * x[0] + 4 * j * Math.PI / numberOfVariables_) + 0.6 * x[0])*
-                                  Math.cos(6.0 * Math.PI* x[0] + j * Math.PI / numberOfVariables_);
+        sum2 += yj*yj;
+        count2++;
+      } else {
 
 
 
+        yj = x[j-1] -
+            (0.3 * x[0] * x[0] * Math.cos(24 * Math.PI * x[0] + 4 * j * Math.PI / numberOfVariables_) + 0.6 * x[0])*
+            Math.cos(6.0 * Math.PI* x[0] + j * Math.PI / numberOfVariables_);
 
 
-				/*yj = x[j-1]-0.3*x[0]*
+
+
+
+        /*yj = x[j-1]-0.3*x[0]*
              (x[0]*Math.cos(24.0*Math.PI*x[0]+4.0*j*Math.PI/numberOfVariables_)+2.0)*
              Math.cos(6.0*Math.PI*x[0]+j*Math.PI/numberOfVariables_);*/
-				sum1 += yj*yj;
-				count1++;
-			}
+        sum1 += yj*yj;
+        count1++;
+      }
     }
 
     solution.setObjective(0, x[0] + 2.0 * sum1 / (double)count1);

@@ -34,15 +34,11 @@ import java.io.*;
  */
 public class TSP extends Problem {
 
-<<<<<<< HEAD
-  public int         numberOfCities_ ;
-=======
   /**
-     * 
-     */
-    private static final long serialVersionUID = 7271160768259648914L;
-public int         numberOfCities_ ;
->>>>>>> master
+   * 
+   */
+  private static final long serialVersionUID = 7271160768259648914L;
+  public int         numberOfCities_ ;
   public double [][] distanceMatrix_ ;
 
   public TSP(String solutionType){
@@ -96,7 +92,7 @@ public int         numberOfCities_ ;
 
       x = ((Permutation)solution.getDecisionVariables()[0]).vector_[i] ;
       y = ((Permutation)solution.getDecisionVariables()[0]).vector_[i+1] ;
-//  cout << "I : " << i << ", x = " << x << ", y = " << y << endl ;    
+      //  cout << "I : " << i << ", x = " << x << ", y = " << y << endl ;    
       fitness += distanceMatrix_[x][y] ;
     } // for
     int firstCity ;
@@ -111,10 +107,10 @@ public int         numberOfCities_ ;
 
 
   public void readProblem(String fileName) throws
-          IOException {
+  IOException {
     Reader inputFile = new BufferedReader(
-            new InputStreamReader(
-                    new FileInputStream(fileName)));
+        new InputStreamReader(
+            new FileInputStream(fileName)));
 
     StreamTokenizer token = new StreamTokenizer(inputFile);
     try {
@@ -141,7 +137,7 @@ public int         numberOfCities_ ;
       token.nextToken();
       while(!found) {
         if ((token.sval != null) &&
-                ((token.sval.compareTo("SECTION") == 0)))
+            ((token.sval.compareTo("SECTION") == 0)))
           found = true ;
         else
           token.nextToken() ;
@@ -166,7 +162,7 @@ public int         numberOfCities_ ;
         distanceMatrix_[k][k] = 0;
         for (int j = k + 1; j < numberOfCities_; j++) {
           dist = Math.sqrt(Math.pow((c[k*2]-c[j*2]),2.0) +
-                  Math.pow((c[k*2+1]-c[j*2+1]), 2));
+              Math.pow((c[k*2+1]-c[j*2+1]), 2));
           dist = (int)(dist + .5);
           distanceMatrix_[k][j] = dist;
           distanceMatrix_[j][k] = dist;
