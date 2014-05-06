@@ -36,11 +36,11 @@ public class FastHypervolumeArchive extends Archive {
   /**
 <<<<<<< HEAD
 =======
-     * 
-     */
-    private static final long serialVersionUID = 124744170266943517L;
+   * 
+   */
+  private static final long serialVersionUID = 124744170266943517L;
 
-/**
+  /**
 >>>>>>> master
    * Stores the maximum size of the archive.
    */
@@ -54,25 +54,15 @@ public class FastHypervolumeArchive extends Archive {
   /**
    * Stores a <code>Comparator</code> for dominance checking.
    */
-<<<<<<< HEAD
-  private Comparator dominance_;
-=======
   private Comparator<Solution> dominance_;
->>>>>>> master
 
   /**
    * Stores a <code>Comparator</code> for equality checking (in the objective
    * space).
    */
-<<<<<<< HEAD
-  private Comparator equals_;
-
-  private Comparator crowdingDistance_ ;
-=======
   private Comparator<Solution> equals_;
 
   private Comparator<Solution> crowdingDistance_ ;
->>>>>>> master
 
   public Solution referencePoint_ ;
 
@@ -93,8 +83,8 @@ public class FastHypervolumeArchive extends Archive {
 
     crowdingDistance_ = new CrowdingComparator();
   } // FastHypervolumeArchive
-    
-  
+
+
   /**
    * Adds a <code>Solution</code> to the archive. If the <code>Solution</code>
    * is dominated by any member of the archive, then it is discarded. If the 
@@ -113,18 +103,18 @@ public class FastHypervolumeArchive extends Archive {
 
     while (i < solutionsList_.size()){
       aux = solutionsList_.get(i);            
-            
+
       flag = dominance_.compare(solution,aux);
       if (flag == 1) {               // The solution to add is dominated
         return false;                // Discard the new solution
       } else if (flag == -1) {       // A solution in the archive is dominated
         solutionsList_.remove(i);    // Remove it from the population            
       } else {
-          if (equals_.compare(aux,solution)==0) { // There is an equal solution 
-                                                  // in the population
-            return false; // Discard the new solution
-          }  // if
-          i++;
+        if (equals_.compare(aux,solution)==0) { // There is an equal solution 
+          // in the population
+          return false; // Discard the new solution
+        }  // if
+        i++;
       }
     }
     // Insert the solution into the archive
@@ -137,8 +127,8 @@ public class FastHypervolumeArchive extends Archive {
     }
     return true;
   } // add
-  
-     
+
+
   /**
 <<<<<<< HEAD
    * This method forces to compute the contribution of each solution
@@ -147,7 +137,7 @@ public class FastHypervolumeArchive extends Archive {
 >>>>>>> master
    */
   public void computeHVContribution() {
-	  if (size() > 2) { // The contribution can be updated
+    if (size() > 2) { // The contribution can be updated
 
       FastHypervolume fastHV = new FastHypervolume() ;
       fastHV.computeHVContributions(this);

@@ -21,6 +21,8 @@
 
 package jmetal.util;
 
+import jmetal.util.random.PseudoRandom;
+
 /**
  * Class that provide an int permutation
  */

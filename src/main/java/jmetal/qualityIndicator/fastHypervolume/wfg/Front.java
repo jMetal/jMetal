@@ -36,7 +36,7 @@ import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
- * User: antelverde
+ * User: Antonio J. Nebro
  * Date: 25/07/13
  * Time: 16:26
  * To change this template use File | Settings | File Templates.
@@ -48,11 +48,7 @@ public class Front {
   private boolean maximizing_ ;
   public int nPoints_ ;
 
-<<<<<<< HEAD
-  private Comparator pointComparator ;
-=======
   private Comparator<Point> pointComparator ;
->>>>>>> master
 
   public Front() {
     maximizing_ = true ;
@@ -71,7 +67,7 @@ public class Front {
     for (int i = 0 ; i < numberOfPoints_; i++) {
       double [] p = new double[dimension] ;
       for (int j = 0 ; j < dimension; j++) {
-         p[j] = solutionSet.get(i).getObjective(j) ;
+        p[j] = solutionSet.get(i).getObjective(j) ;
       }
       points_[i] = new Point(p) ;
     }
@@ -129,10 +125,7 @@ public class Front {
       list.add(vector);
       aux = br.readLine();
     }
-<<<<<<< HEAD
-=======
     br.close();
->>>>>>> master
     numberOfPoints_ = list.size() ;
     dimension_ = numberOfObjectives ;
     points_ = new Point[numberOfPoints_] ;
@@ -141,33 +134,33 @@ public class Front {
       points_[i] = new Point(list.get(i)) ;
     }
   }
-  
-  
+
+
   public void loadFront(SolutionSet solutionSet, int notLoadingIndex) {          
-      
-      if (notLoadingIndex >= 0 && notLoadingIndex < solutionSet.size()) {
-          numberOfPoints_ = solutionSet.size()-1;
-      } else {
-          numberOfPoints_ = solutionSet.size();
+
+    if (notLoadingIndex >= 0 && notLoadingIndex < solutionSet.size()) {
+      numberOfPoints_ = solutionSet.size()-1;
+    } else {
+      numberOfPoints_ = solutionSet.size();
+    }
+
+    nPoints_ = numberOfPoints_;
+    dimension_ = solutionSet.get(0).getNumberOfObjectives();
+
+    points_ = new Point[numberOfPoints_];
+
+    int index = 0;
+    for (int i = 0; i < solutionSet.size(); i++) {
+      if (i != notLoadingIndex) {          
+        double [] vector = new double[dimension_];
+        for (int j = 0; j < dimension_; j++) {
+          vector[j] = solutionSet.get(i).getObjective(j);
+        }                        
+        points_[index++] = new Point(vector);            
       }
-          
-      nPoints_ = numberOfPoints_;
-      dimension_ = solutionSet.get(0).getNumberOfObjectives();
-      
-      points_ = new Point[numberOfPoints_];
-      
-      int index = 0;
-      for (int i = 0; i < solutionSet.size(); i++) {
-        if (i != notLoadingIndex) {          
-          double [] vector = new double[dimension_];
-          for (int j = 0; j < dimension_; j++) {
-              vector[j] = solutionSet.get(i).getObjective(j);
-          }                        
-          points_[index++] = new Point(vector);            
-        }
-      }
+    }
   }
-  
+
 
   public void printFront() {
     System.out.println("Objectives:       " + dimension_) ;

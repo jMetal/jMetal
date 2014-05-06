@@ -30,7 +30,7 @@ import jmetal.core.Solution;
 
 /**
  * Created with IntelliJ IDEA.
- * User: antelverde
+ * User: Antonio J. Nebro
  * Date: 25/07/13
  * Time: 16:25
  * To change this template use File | Settings | File Templates.
