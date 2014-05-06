@@ -87,8 +87,8 @@ public class MOEAD_DRA_Settings extends Settings {
     // on CEC09 Unconstrained MOP Test Instances Working Report CES-491, School 
     // of CS & EE, University of Essex, 02/2009.
     // http://dces.essex.ac.uk/staff/qzhang/MOEAcompetition/CEC09final/code/ZhangMOEADcode/moead0305.rar
-    //dataDirectory_ =  "/Users/antonio/Softw/pruebas/data/MOEAD_parameters/Weight" ;
-    dataDirectory_ =  "/Users/antelverde/Dropbox/jMetal/data/MOEAD_parameters/Weight" ;
+
+    dataDirectory_ = "MOEAD_Weights" ;
 
   } // MOEAD_DRA_Settings
 

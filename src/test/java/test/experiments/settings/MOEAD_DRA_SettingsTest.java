@@ -15,6 +15,8 @@ import org.junit.Test;
 import java.io.*;
 import java.util.Properties;
 
+import static org.junit.Assert.assertNotNull;
+
 /**
  * Created with IntelliJ IDEA.
  * User: antelverde
@@ -43,7 +45,9 @@ public class MOEAD_DRA_SettingsTest {
     double dim = (Double)mutation.getParameter("distributionIndex") ;
     String dataDirectory = (String) algorithm.getInputParameter("dataDirectory");
     System.out.println(dataDirectory);
-    File experimentDirectory = new File(dataDirectory) ;
+    //File experimentDirectory = new File(dataDirectory) ;
+    String experimentDirectoryName = this.getClass().getClassLoader().getResource(dataDirectory).getPath();
+
     int populationSize =  ((Integer)algorithm.getInputParameter("populationSize")).intValue() ;
 
 
@@ -64,7 +68,7 @@ public class MOEAD_DRA_SettingsTest {
     Assert.assertEquals("MOEAD_DRASettings", 20.0, dim, epsilon);
     Assert.assertEquals("MOEAD_DRASettings", 1.0/problem.getNumberOfVariables(), pm, epsilon);
 
-    Assert.assertTrue("MOEAD_DRASettings", experimentDirectory.exists());
+    assertNotNull("MOEAD_DRASettings", experimentDirectoryName);
   }
 
   @Test
@@ -78,9 +82,10 @@ public class MOEAD_DRA_SettingsTest {
     double dim = (Double)mutation.getParameter("distributionIndex") ;
     String dataDirectory = (String) algorithm.getInputParameter("dataDirectory");
     System.out.println(dataDirectory);
-    File experimentDirectory = new File(dataDirectory) ;
-    int populationSize =  ((Integer)algorithm.getInputParameter("populationSize")).intValue() ;
+    //File experimentDirectory = new File(dataDirectory) ;
+    String experimentDirectoryName = this.getClass().getClassLoader().getResource(dataDirectory).getPath();
 
+    int populationSize =  ((Integer)algorithm.getInputParameter("populationSize")).intValue() ;
 
     DifferentialEvolutionCrossover crossover = (DifferentialEvolutionCrossover)algorithm.getOperator("crossover") ;
     double CR = (Double)crossover.getParameter("CR") ;
@@ -99,6 +104,6 @@ public class MOEAD_DRA_SettingsTest {
     Assert.assertEquals("MOEAD_DRASettings", 20.0, dim, epsilon);
     Assert.assertEquals("MOEAD_DRASettings", 1.0/problem.getNumberOfVariables(), pm, epsilon);
 
-    Assert.assertTrue("MOEAD_DRASettings", experimentDirectory.exists());
+    assertNotNull("MOEAD_DRASettings", experimentDirectoryName);
   }
 }

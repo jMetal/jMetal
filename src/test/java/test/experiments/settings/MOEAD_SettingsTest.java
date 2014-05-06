@@ -15,6 +15,7 @@ import org.junit.Test;
 import java.io.*;
 import java.util.Properties;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -46,8 +47,8 @@ public class MOEAD_SettingsTest {
     double dim = (Double) mutation.getParameter("distributionIndex");
     String dataDirectory = (String) algorithm.getInputParameter("dataDirectory");
     System.out.println(dataDirectory);
-    File experimentDirectory = new File(dataDirectory);
-
+    //File experimentDirectory = new File(dataDirectory);
+    String experimentDirectoryName = ClassLoader.getSystemResource(dataDirectory).getPath();
 
     DifferentialEvolutionCrossover crossover = (DifferentialEvolutionCrossover) algorithm.getOperator("crossover");
     double CR = (Double) crossover.getParameter("CR");
@@ -65,7 +66,7 @@ public class MOEAD_SettingsTest {
     Assert.assertEquals("MOEAD_SettingsTest", 20.0, dim, epsilon);
     Assert.assertEquals("MOEAD_SettingsTest", 1.0 / problem.getNumberOfVariables(), pm, epsilon);
 
-    assertTrue("MOEAD_SettingsTest", experimentDirectory.exists());
+    assertNotNull("MOEAD_SettingsTest", experimentDirectoryName);
   }
 
   @Test
@@ -77,10 +78,10 @@ public class MOEAD_SettingsTest {
     PolynomialMutation mutation = (PolynomialMutation) algorithm.getOperator("mutation");
     double pm = (Double) mutation.getParameter("probability");
     double dim = (Double) mutation.getParameter("distributionIndex");
+
     String dataDirectory = (String) algorithm.getInputParameter("dataDirectory");
     System.out.println(dataDirectory);
-    File experimentDirectory = new File(dataDirectory);
-
+    String experimentDirectoryName = ClassLoader.getSystemResource(dataDirectory).getPath();
 
     DifferentialEvolutionCrossover crossover = (DifferentialEvolutionCrossover) algorithm.getOperator("crossover");
     double CR = (Double) crossover.getParameter("CR");
@@ -98,6 +99,6 @@ public class MOEAD_SettingsTest {
     Assert.assertEquals("MOEAD_SettingsTest", 20.0, dim, epsilon);
     Assert.assertEquals("MOEAD_SettingsTest", 1.0 / problem.getNumberOfVariables(), pm, epsilon);
 
-    assertTrue("MOEAD_SettingsTest", experimentDirectory.exists());
+    assertNotNull("MOEAD_SettingsTest", experimentDirectoryName);
   }
 }
