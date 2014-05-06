@@ -29,7 +29,6 @@ import static org.junit.Assert.assertEquals;
  * To change this template use File | Settings | File Templates.
  */
 public class AbYSS_SettingsTest {
-
   Properties configuration_ ;
 
   @Before
