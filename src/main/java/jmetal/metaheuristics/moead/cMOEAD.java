@@ -23,11 +23,7 @@ package jmetal.metaheuristics.moead;
 
 import jmetal.core.*;
 import jmetal.util.JMException;
-<<<<<<< HEAD
 import jmetal.util.random.PseudoRandom;
-=======
-import jmetal.util.PseudoRandom;
->>>>>>> master
 import jmetal.util.comparators.IConstraintViolationComparator;
 import jmetal.util.comparators.ViolationThresholdComparator;
 
@@ -43,14 +39,11 @@ import java.util.Vector;
 //
 public class cMOEAD extends Algorithm {
 
-<<<<<<< HEAD
-=======
   /**
    * 
    */
   private static final long serialVersionUID = 6039874453533436343L;
 
->>>>>>> master
   private int populationSize_;
   /**
    * Stores the population
@@ -91,7 +84,7 @@ public class cMOEAD extends Algorithm {
   Operator mutation_;
 
   String dataDirectory_;
-  
+
   /** 
    * Use this encodings.variable as comparator for the constraints
    */
@@ -128,12 +121,12 @@ public class cMOEAD extends Algorithm {
     T_ = 20;
     delta_ = 0.9;
     nr_ = 2;
-    */
-/*
+     */
+    /*
     T_ = (int) (0.1 * populationSize_);
     delta_ = 0.9;
     nr_ = (int) (0.01 * populationSize_);
-*/
+     */
     neighborhood_ = new int[populationSize_][T_];
 
     z_ = new double[problem_.getNumberOfObjectives()];
@@ -147,8 +140,8 @@ public class cMOEAD extends Algorithm {
     // STEP 1.1. Compute euclidean distances between weight vectors and find T
     initUniformWeight();
     //for (int i = 0; i < 300; i++)
-   // 	System.out.println(lambda_[i][0] + " " + lambda_[i][1]) ;
-    
+    // 	System.out.println(lambda_[i][0] + " " + lambda_[i][1]) ;
+
     initNeighborhood();
 
     // STEP 1.2. Initialize population
@@ -196,7 +189,7 @@ public class cMOEAD extends Algorithm {
         // Evaluation
         problem_.evaluate(child);  
         problem_.evaluateConstraints(child);
-        
+
         evaluations_++;
 
         // STEP 2.3. Repair. Not necessary
@@ -210,15 +203,10 @@ public class cMOEAD extends Algorithm {
       ((ViolationThresholdComparator)this.comparator).updateThreshold(this.population_);
     } while (evaluations_ < maxEvaluations);
 
-<<<<<<< HEAD
-    //population_.printFeasibleFUN("FUN_cMOEAD") ;
-=======
-    population_.printFeasibleFUN("FUN_cMOEAD") ;
->>>>>>> master
     return population_;
   }
 
- 
+
   /**
    * initUniformWeight
    */
@@ -233,28 +221,23 @@ public class cMOEAD extends Algorithm {
     else {
       String dataFileName;
       dataFileName = "W" + problem_.getNumberOfObjectives() + "D_" +
-        populationSize_ + ".dat";
-   
+          populationSize_ + ".dat";
+
       try {
         // Open the file
         FileInputStream fis = new FileInputStream(dataDirectory_ + "/" + dataFileName);
         InputStreamReader isr = new InputStreamReader(fis);
         BufferedReader br = new BufferedReader(isr);
 
-<<<<<<< HEAD
         int numberOfObjectives = 0;
-=======
->>>>>>> master
         int i = 0;
         int j = 0;
         String aux = br.readLine();
         while (aux != null) {
           StringTokenizer st = new StringTokenizer(aux);
           j = 0;
-<<<<<<< HEAD
+
           numberOfObjectives = st.countTokens();
-=======
->>>>>>> master
           while (st.hasMoreTokens()) {
             double value = (new Double(st.nextToken())).doubleValue();
             lambda_[i][j] = value;
@@ -286,14 +269,14 @@ public class cMOEAD extends Algorithm {
         x[j] = Utils.distVector(lambda_[i], lambda_[j]);
         //x[j] = dist_vector(population[i].namda,population[j].namda);
         idx[j] = j;
-      //System.out.println("x["+j+"]: "+x[j]+ ". idx["+j+"]: "+idx[j]) ;
+        //System.out.println("x["+j+"]: "+x[j]+ ". idx["+j+"]: "+idx[j]) ;
       } // for
 
       // find 'niche' nearest neighboring subproblems
       Utils.minFastSort(x, idx, populationSize_, T_);
       //minfastsort(x,idx,population.size(),niche);
 
-        System.arraycopy(idx, 0, neighborhood_[i], 0, T_);
+      System.arraycopy(idx, 0, neighborhood_[i], 0, T_);
     } // for
   } // initNeighborhood
 
@@ -345,18 +328,18 @@ public class cMOEAD extends Algorithm {
       if (type == 1) {
         r = PseudoRandom.randInt(0, ss - 1);
         p = neighborhood_[cid][r];
-      //p = population[cid].table[r];
+        //p = population[cid].table[r];
       } else {
         p = PseudoRandom.randInt(0, populationSize_ - 1);
       }
       boolean flag = true;
-        for (Integer aList : list) {
-            if (aList == p) // p is in the list
-            {
-                flag = false;
-                break;
-            }
+      for (Integer aList : list) {
+        if (aList == p) // p is in the list
+        {
+          flag = false;
+          break;
         }
+      }
 
       //if (flag) list.push_back(p);
       if (flag) {
@@ -414,23 +397,23 @@ public class cMOEAD extends Algorithm {
       f1 = fitnessFunction(population_.get(k), lambda_[k]);
       f2 = fitnessFunction(indiv, lambda_[k]);
 
-      
+
       /***** This part is new according to the violation of constraints *****/
       if (comparator.needToCompare(population_.get(k), indiv)) {
-          int flag = comparator.compare(population_.get(k), indiv);
-          if (flag == 1) 
-              population_.replace(k,new Solution(indiv));
-          else if (flag == 0) 
-              if (f2 < f1) {
-                 population_.replace(k, new Solution(indiv));
-                 //population[k].indiv = indiv;
-                time++;
-              }
-      } else {            
+        int flag = comparator.compare(population_.get(k), indiv);
+        if (flag == 1) 
+          population_.replace(k,new Solution(indiv));
+        else if (flag == 0) 
           if (f2 < f1) {
             population_.replace(k, new Solution(indiv));
             //population[k].indiv = indiv;
             time++;
+          }
+      } else {            
+        if (f2 < f1) {
+          population_.replace(k, new Solution(indiv));
+          //population[k].indiv = indiv;
+          time++;
         }
       }
       // the maximal number of solutions updated is not allowed to exceed 'limit'
@@ -469,5 +452,5 @@ public class cMOEAD extends Algorithm {
     }
     return fitness;
   } // fitnessEvaluation    
-    
+
 }

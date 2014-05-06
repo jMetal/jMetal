@@ -21,11 +21,8 @@
 
 package jmetal.metaheuristics.moead;
 
-<<<<<<< HEAD
 import jmetal.util.random.PseudoRandom;
 
-=======
->>>>>>> master
 /**
  * Utilities methods to used by MOEA/D
  */
@@ -67,11 +64,7 @@ public class Utils {
 
     int num = 0;
     while (num < size) {
-<<<<<<< HEAD
       int start = PseudoRandom.randInt(0, size - 1);
-=======
-      int start = jmetal.util.PseudoRandom.randInt(0, size - 1);
->>>>>>> master
       //int start = int(size*nd_uni(&rnd_uni_init));
       while (true) {
         if (flag[start]) {

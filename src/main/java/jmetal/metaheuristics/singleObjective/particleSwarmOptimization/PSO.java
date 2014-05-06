@@ -24,11 +24,7 @@ package jmetal.metaheuristics.singleObjective.particleSwarmOptimization;
 import jmetal.core.*;
 import jmetal.operators.selection.BestSolutionSelection;
 import jmetal.util.JMException;
-<<<<<<< HEAD
 import jmetal.util.random.PseudoRandom;
-=======
-import jmetal.util.PseudoRandom;
->>>>>>> master
 import jmetal.util.comparators.ObjectiveComparator;
 import jmetal.util.wrapper.XReal;
 
@@ -43,16 +39,12 @@ import java.util.logging.Logger;
  */
 public class PSO extends Algorithm {
 
-<<<<<<< HEAD
-	/**
-=======
   /**
    * 
    */
   private static final long serialVersionUID = -2657053204274107750L;
 
     /**
->>>>>>> master
    * Stores the number of particles_ used
    */
   private int particlesSize_;
@@ -90,11 +82,7 @@ public class PSO extends Algorithm {
   /**
    * Comparator object
    */
-<<<<<<< HEAD
-  Comparator  comparator_  ;
-=======
   Comparator<Solution> comparator_  ;
->>>>>>> master
   
   Operator findBestSolution_ ;
   
@@ -132,25 +120,15 @@ public class PSO extends Algorithm {
     ChVel2_ = 1.0;
     
     comparator_ = new ObjectiveComparator(0) ; // Single objective comparator
-<<<<<<< HEAD
-    HashMap  parameters ; // Operator parameters
-
-    parameters = new HashMap() ;
-    parameters.put("comparator", comparator_) ;
-    findBestSolution_ = new BestSolutionSelection(parameters) ;
-=======
     HashMap<String, Object> selectionParameters = new HashMap<String, Object>() ;
     selectionParameters.put("comparator", comparator_) ;
     findBestSolution_ = new BestSolutionSelection(selectionParameters) ;
->>>>>>> master
 
     evaluations_ = 0 ;
   } // Constructor
 
-<<<<<<< HEAD
   private SolutionSet trueFront_;
-=======
->>>>>>> master
+
   private double deltaMax_[];
   private double deltaMin_[];
   boolean success_;
@@ -239,11 +217,7 @@ public class PSO extends Algorithm {
     double r1, r2 ;
     //double W ;
     double C1, C2;
-<<<<<<< HEAD
     double wmax, wmin, deltaMax, deltaMin;
-=======
-    double wmax, wmin;
->>>>>>> master
     XReal bestGlobal;
 
   	bestGlobal = new XReal(globalBest_) ;
@@ -380,11 +354,7 @@ public class PSO extends Algorithm {
 
     //-> Step 7. Iterations ..        
     while (iteration_ < maxIterations_) {
-<<<<<<< HEAD
       int bestIndividual = (Integer)findBestSolution_.execute(particles_) ;
-=======
-      //int bestIndividual = (Integer)findBestSolution_.execute(particles_) ;
->>>>>>> master
       try {
         //Compute the speed_
         computeSpeed(iteration_, maxIterations_);
@@ -417,12 +387,8 @@ public class PSO extends Algorithm {
           Solution particle = new Solution(particles_.get(i));
           globalBest_ = particle;
         } // if
-<<<<<<< HEAD
         Double bestCurrentFitness = particles_.best(comparator_).getObjective(0) ;
         System.out.println("Best: " + bestCurrentFitness) ;
-=======
-      	
->>>>>>> master
       }
       iteration_++;
     }

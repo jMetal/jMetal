@@ -23,12 +23,7 @@ package jmetal.metaheuristics.moead;
 
 import jmetal.core.*;
 import jmetal.util.JMException;
-<<<<<<< HEAD
 import jmetal.util.random.PseudoRandom;
-=======
-import jmetal.util.PseudoRandom;
->>>>>>> master
-
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
@@ -37,14 +32,11 @@ import java.util.Vector;
 
 public class MOEAD extends Algorithm {
 
-<<<<<<< HEAD
-=======
   /**
    * 
    */
   private static final long serialVersionUID = -8602634334286344579L;
     
->>>>>>> master
   private int populationSize_;
   /**
    * Stores the population
@@ -217,20 +209,14 @@ public class MOEAD extends Algorithm {
         InputStreamReader isr = new InputStreamReader(fis);
         BufferedReader br = new BufferedReader(isr);
 
-<<<<<<< HEAD
         int numberOfObjectives = 0;
-=======
->>>>>>> master
         int i = 0;
         int j = 0;
         String aux = br.readLine();
         while (aux != null) {
           StringTokenizer st = new StringTokenizer(aux);
           j = 0;
-<<<<<<< HEAD
           numberOfObjectives = st.countTokens();
-=======
->>>>>>> master
           while (st.hasMoreTokens()) {
             double value = (new Double(st.nextToken())).doubleValue();
             lambda_[i][j] = value;

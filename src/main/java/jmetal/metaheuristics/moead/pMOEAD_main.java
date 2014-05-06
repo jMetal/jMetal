@@ -69,14 +69,10 @@ public class pMOEAD_main {
      
     QualityIndicator indicators ; // Object to get quality indicators
 
-<<<<<<< HEAD
     HashMap  parameters ; // Operator parameters
 
     int numberOfThreads = 1 ;
     String dataDirectory = "" ;
-=======
-    int numberOfThreads = 1 ;
->>>>>>> master
     
     // Logger object and file to store log messages
     logger_      = Configuration.logger_ ;
@@ -98,10 +94,7 @@ public class pMOEAD_main {
         Object [] params = {"Real"};
         problem = (new ProblemFactory()).getProblem(args[0],params);
         numberOfThreads = Integer.parseInt(args[1]) ;
-<<<<<<< HEAD
         dataDirectory = args[2] ;
-=======
->>>>>>> master
       } // if
     else { // Problem + number of threads + data directory
       problem = new Kursawe("Real", 3); 
@@ -134,33 +127,19 @@ public class pMOEAD_main {
     algorithm.setInputParameter("nr", 2) ;
     
     // Crossover operator 
-<<<<<<< HEAD
-    parameters = new HashMap() ;
-    parameters.put("CR", 1.0) ;
-    parameters.put("F", 0.5) ;
-    crossover = CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", parameters);                   
-=======
     HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
     crossoverParameters.put("CR", 1.0) ;
     crossoverParameters.put("F", 0.5) ;
     crossover = CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", crossoverParameters);
     // FIXME: is these two statements necessary?
->>>>>>> master
     crossover.setParameter("CR", 1.0);                   
     crossover.setParameter("F", 0.5);
     
     // Mutation operator
-<<<<<<< HEAD
-    parameters = new HashMap() ;
-    parameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
-    parameters.put("distributionIndex", 20.0) ;
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);  
-=======
     HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
     mutationParameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
     mutationParameters.put("distributionIndex", 20.0) ;
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);  
->>>>>>> master
     
     algorithm.addOperator("crossover",crossover);
     algorithm.addOperator("mutation",mutation);

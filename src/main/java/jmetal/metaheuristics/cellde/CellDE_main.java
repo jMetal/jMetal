@@ -60,11 +60,6 @@ public class CellDE_main {
     
     QualityIndicator indicators ; // Object to get quality indicators
 
-<<<<<<< HEAD
-    HashMap  parameters ; // Operator parameters
-
-=======
->>>>>>> master
     // Logger object and file to store log messages
     logger_      = Configuration.logger_ ;
     fileHandler_ = new FileHandler("MOCell_main.log");
@@ -99,16 +94,6 @@ public class CellDE_main {
     algorithm.setInputParameter("archiveFeedBack", 20);
     
     // Crossover operator 
-<<<<<<< HEAD
-    parameters = new HashMap() ;
-    parameters.put("CR", 0.5) ;
-    parameters.put("F", 0.5) ;
-    crossover = CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", parameters);                   
-    
-    // Add the operators to the algorithm
-    parameters = null ;
-    selection = SelectionFactory.getSelectionOperator("BinaryTournament", parameters) ; 
-=======
     HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
     crossoverParameters.put("CR", 0.5) ;
     crossoverParameters.put("F", 0.5) ;
@@ -117,7 +102,6 @@ public class CellDE_main {
     // Add the operators to the algorithm
     HashMap<String, Object> selectionParameters = null; // FIXME why we are passing null?
     selection = SelectionFactory.getSelectionOperator("BinaryTournament", selectionParameters) ; 
->>>>>>> master
 
     algorithm.addOperator("crossover",crossover);
     algorithm.addOperator("selection",selection);

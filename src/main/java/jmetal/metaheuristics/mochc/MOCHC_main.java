@@ -41,12 +41,6 @@ import java.util.HashMap;
 public class MOCHC_main {
 
   public static void main(String [] args) {
-<<<<<<< HEAD
-  	
-    HashMap  parameters ; // Operator parameters
-=======
->>>>>>> master
-
     try {                               
       Problem problem = new ZDT5("Binary");
 
@@ -65,25 +59,6 @@ public class MOCHC_main {
       Operator newGenerationSelection ;
       
       // Crossover operator
-<<<<<<< HEAD
-      parameters = new HashMap() ;
-      parameters.put("probability", 1.0) ;
-      crossoverOperator = CrossoverFactory.getCrossoverOperator("HUXCrossover", parameters);
-     
-      //parentsSelection = new RandomSelection();
-      //newGenerationSelection = new RankingAndCrowdingSelection(problem);
-      parameters = null ;
-      parentsSelection = SelectionFactory.getSelectionOperator("RandomSelection", parameters) ;     
-      
-      parameters = new HashMap() ;
-      parameters.put("problem", problem) ;
-      newGenerationSelection = SelectionFactory.getSelectionOperator("RankingAndCrowdingSelection", parameters) ;
-     
-      // Mutation operator
-      parameters = new HashMap() ;
-      parameters.put("probability", 0.35) ;
-      mutationOperator = MutationFactory.getMutationOperator("BitFlipMutation", parameters);                    
-=======
       HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
       crossoverParameters.put("probability", 1.0) ;
       crossoverOperator = CrossoverFactory.getCrossoverOperator("HUXCrossover", crossoverParameters);
@@ -101,7 +76,6 @@ public class MOCHC_main {
       HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
       mutationParameters.put("probability", 0.35) ;
       mutationOperator = MutationFactory.getMutationOperator("BitFlipMutation", mutationParameters);                    
->>>>>>> master
       
       algorithm.addOperator("crossover",crossoverOperator);
       algorithm.addOperator("cataclysmicMutation",mutationOperator);

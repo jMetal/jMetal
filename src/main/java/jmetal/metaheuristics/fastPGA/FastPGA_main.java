@@ -60,11 +60,6 @@ public class FastPGA_main {
 
     QualityIndicator indicators ; // Object to get quality indicators
 
-<<<<<<< HEAD
-    HashMap  parameters ; // Operator parameters
-
-=======
->>>>>>> master
     // Logger object and file to store log messages
     logger_      = Configuration.logger_ ;
     fileHandler_ = new FileHandler("FastPGA_main.log"); 
@@ -108,24 +103,6 @@ public class FastPGA_main {
     algorithm.setInputParameter("termination",1);
 
     // Mutation and Crossover for Real codification 
-<<<<<<< HEAD
-    parameters = new HashMap() ;
-    parameters.put("probability", 0.9) ;
-    parameters.put("distributionIndex", 20.0) ;
-    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters);                   
-    //crossover.setParameter("probability",0.9);                   
-    //crossover.setParameter("distributionIndex",20.0);
-
-    parameters = new HashMap() ;
-    parameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
-    parameters.put("distributionIndex", 20.0) ;
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);         
-    // Mutation and Crossover for Binary codification
-    
-    parameters = new HashMap() ; 
-    parameters.put("comparator", new FPGAFitnessComparator()) ;
-    selection = new BinaryTournament(parameters);
-=======
     HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
     crossoverParameters.put("probability", 0.9) ;
     crossoverParameters.put("distributionIndex", 20.0) ;
@@ -142,7 +119,6 @@ public class FastPGA_main {
     HashMap<String, Object> selectionParameters = new HashMap<String, Object>() ; 
     selectionParameters.put("comparator", new FPGAFitnessComparator()) ;
     selection = new BinaryTournament(selectionParameters);
->>>>>>> master
     
     algorithm.addOperator("crossover",crossover);
     algorithm.addOperator("mutation",mutation);

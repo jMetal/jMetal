@@ -38,9 +38,6 @@ import java.util.Comparator;
  */
 public class aMOCell2 extends Algorithm{
 
-<<<<<<< HEAD
-  /** 
-=======
   /**
    * 
    */
@@ -48,7 +45,6 @@ public class aMOCell2 extends Algorithm{
 
 
 /** 
->>>>>>> master
    * Constructor
    * @param problem Problem to solve
    */
@@ -71,11 +67,7 @@ public class aMOCell2 extends Algorithm{
     CrowdingArchive archive;
     SolutionSet [] neighbors;    
     Neighborhood neighborhood;
-<<<<<<< HEAD
-    Comparator dominance = new DominanceComparator(),
-=======
     Comparator<Solution> dominance = new DominanceComparator(),
->>>>>>> master
     crowding  = new CrowdingComparator();  
     Distance distance = new Distance();
 

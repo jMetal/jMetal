@@ -4,7 +4,6 @@ import jmetal.core.*;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Distance;
 import jmetal.util.JMException;
-<<<<<<< HEAD
 import jmetal.util.random.PseudoRandom;
 import jmetal.util.Ranking;
 import jmetal.util.comparators.CrowdingComparator;
@@ -15,21 +14,12 @@ import jmetal.util.offspring.PolynomialMutationOffspring;
 import java.util.Comparator;
 
 public class ssNSGAIIRandom extends Algorithm {
-=======
-import jmetal.util.PseudoRandom;
-import jmetal.util.Ranking;
-import jmetal.util.comparators.CrowdingComparator;
-import jmetal.util.offspring.Offspring;
-import jmetal.util.offspring.PolynomialMutationOffspring;
-
-public class ssNSGAIIRandom extends Algorithm {
 
   /**
    * 
    */
   private static final long serialVersionUID = -6325748871154235037L;
 
->>>>>>> master
   public int populationSize_            ;
   public SolutionSet population_        ;
   public SolutionSet offspringPopulation_;
@@ -63,10 +53,7 @@ public class ssNSGAIIRandom extends Algorithm {
   }
 
   public SolutionSet execute() throws JMException, ClassNotFoundException {
-<<<<<<< HEAD
-=======
     // FIXME: do we need these variables?
->>>>>>> master
     double contrDE = 0;
     double contrSBX = 0;
     double contrBLXA = 0;
@@ -78,11 +65,8 @@ public class ssNSGAIIRandom extends Algorithm {
     double contrReal [] = new double[3] ;
     contrReal[0] = contrReal[1] = contrReal[2] = 0 ;    
 
-<<<<<<< HEAD
     Comparator dominance = new DominanceComparator();
     Comparator crowdingComparator = new CrowdingComparator();
-=======
->>>>>>> master
     Distance distance = new Distance();
 
     Operator selectionOperator;

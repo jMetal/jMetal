@@ -39,14 +39,11 @@ import java.util.Comparator;
 public class MOCHC extends Algorithm {
 
   /**
-<<<<<<< HEAD
-=======
    * 
    */
   private static final long serialVersionUID = -2880293437154543456L;
 
   /**
->>>>>>> master
   * Constructor
   * Creates a new instance of MOCHC 
   */
@@ -103,21 +100,14 @@ public class MOCHC extends Algorithm {
   * as a result of the algorithm execution  
   */  
   public SolutionSet execute() throws JMException, ClassNotFoundException {
-<<<<<<< HEAD
     int iterations       ;
-=======
->>>>>>> master
     int populationSize   ;
     int convergenceValue ;
     int maxEvaluations   ;
     int minimumDistance  ;
     int evaluations      ;
     
-<<<<<<< HEAD
     Comparator crowdingComparator = new CrowdingComparator();
-=======
-    Comparator<Solution> crowdingComparator = new CrowdingComparator();
->>>>>>> master
     
     Operator crossover              ;
     Operator parentSelection        ;
@@ -148,10 +138,7 @@ public class MOCHC extends Algorithm {
     parentSelection = (Operator)getOperator("parentSelection");
     newGenerationSelection = (Operator)getOperator("newGenerationSelection");
 
-<<<<<<< HEAD
     iterations  = 0 ;
-=======
->>>>>>> master
     evaluations = 0 ;
     
     //Calculate the maximum problem sizes
@@ -214,10 +201,7 @@ public class MOCHC extends Algorithm {
           newPopulation.add(solution);
         }                        
       }
-<<<<<<< HEAD
       iterations++;
-=======
->>>>>>> master
 
       solutionSet = newPopulation;
       if (evaluations >= maxEvaluations) {
@@ -234,4 +218,5 @@ public class MOCHC extends Algorithm {
 
     return archive;
   } // execute
+
 }  // MOCHC

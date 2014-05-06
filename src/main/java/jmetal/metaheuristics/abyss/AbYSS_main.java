@@ -67,11 +67,6 @@ public class AbYSS_main {
     Operator  crossover   ; // Crossover operator
     Operator  mutation    ; // Mutation operator
     Operator  improvement ; // Operator for improvement
-<<<<<<< HEAD
-            
-    HashMap  parameters ; // Operator parameters
-=======
->>>>>>> master
 
     QualityIndicator indicators ; // Object to get quality indicators
 
@@ -112,25 +107,6 @@ public class AbYSS_main {
       
     // STEP 4. Specify and configure the crossover operator, used in the
     //         solution combination method of the scatter search
-<<<<<<< HEAD
-    parameters = new HashMap() ;
-    parameters.put("probability", 0.9) ;
-    parameters.put("distributionIndex", 20.0) ;
-    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters);                   
-    
-    // STEP 5. Specify and configure the improvement method. We use by default
-    //         a polynomial mutation in this method.
-    parameters = new HashMap() ;
-    parameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
-    parameters.put("distributionIndex", 20.0) ;
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);
-    
-    parameters = new HashMap() ;
-    parameters.put("improvementRounds", 1) ;
-    parameters.put("problem",problem) ;
-    parameters.put("mutation",mutation) ;
-    improvement = new MutationLocalSearch(parameters);
-=======
     HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
     crossoverParameters.put("probability", 0.9) ;
     crossoverParameters.put("distributionIndex", 20.0) ;
@@ -148,7 +124,6 @@ public class AbYSS_main {
     parametersLocalSearch.put("problem",problem) ;
     parametersLocalSearch.put("mutation",mutation) ;
     improvement = new MutationLocalSearch(parametersLocalSearch);
->>>>>>> master
           
     // STEP 6. Add the operators to the algorithm
     algorithm.addOperator("crossover",crossover);

@@ -33,16 +33,12 @@ import java.util.Comparator;
  */
 public class PAES extends Algorithm {        
    
-<<<<<<< HEAD
- /** 
-=======
   /**
    * 
    */
   private static final long serialVersionUID = 264140016408197977L;
 
   /** 
->>>>>>> master
   * Create a new PAES instance for resolve a problem
   * @param problem Problem to solve
   */                 
@@ -89,11 +85,7 @@ public class PAES extends Algorithm {
     int bisections, archiveSize, maxEvaluations, evaluations;
     AdaptiveGridArchive archive;
     Operator mutationOperator;
-<<<<<<< HEAD
-    Comparator dominance;
-=======
     Comparator<Solution> dominance;
->>>>>>> master
     
     //Read the params
     bisections     = ((Integer)this.getInputParameter("biSections")).intValue();
@@ -148,13 +140,7 @@ public class PAES extends Algorithm {
       */
     } while (evaluations < maxEvaluations);                                    
         
-    //Return the  population of non-dominated solution
-<<<<<<< HEAD
-    //archive.printFeasibleFUN("FUN_PAES") ;
-=======
-    archive.printFeasibleFUN("FUN_PAES") ;
->>>>>>> master
-
+    //Return the  archive with the non-dominated solutions
     return archive;                
   }  // execute  
 } // PAES

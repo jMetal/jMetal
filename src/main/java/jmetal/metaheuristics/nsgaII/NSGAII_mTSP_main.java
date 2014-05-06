@@ -66,11 +66,6 @@ public class NSGAII_mTSP_main {
     Operator  mutation  ; // Mutation operator
     Operator  selection ; // Selection operator
     
-<<<<<<< HEAD
-    HashMap  parameters ; // Operator parameters
-    
-=======
->>>>>>> master
     QualityIndicator indicators ; // Object to get quality indicators
 
     // Logger object and file to store log messages
@@ -88,22 +83,7 @@ public class NSGAII_mTSP_main {
     algorithm.setInputParameter("populationSize",100);
     algorithm.setInputParameter("maxEvaluations",10000000);
     
-    /* Crossver operator */
-<<<<<<< HEAD
-    parameters = new HashMap() ;
-    parameters.put("probability", 0.95) ;
-    //crossover = CrossoverFactory.getCrossoverOperator("TwoPointsCrossover", parameters);
-    crossover = CrossoverFactory.getCrossoverOperator("PMXCrossover", parameters);
-    
-    /* Mutation operator */
-    parameters = new HashMap() ;
-    parameters.put("probability", 0.2) ;
-    mutation = MutationFactory.getMutationOperator("SwapMutation", parameters);                    
-  
-    /* Selection Operator */
-    parameters = null;
-    selection = SelectionFactory.getSelectionOperator("BinaryTournament", parameters) ;                            
-=======
+    /* Crossover operator */
     HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
     crossoverParameters.put("probability", 0.95) ;
     //crossover = CrossoverFactory.getCrossoverOperator("TwoPointsCrossover", parameters);
@@ -117,7 +97,6 @@ public class NSGAII_mTSP_main {
     /* Selection Operator */
     HashMap<String, Object> selectionParameters = null; // FIXME: why we are passing null?
     selection = SelectionFactory.getSelectionOperator("BinaryTournament", selectionParameters) ;                            
->>>>>>> master
 
     // Add the operators to the algorithm
     algorithm.addOperator("crossover",crossover);
@@ -138,22 +117,5 @@ public class NSGAII_mTSP_main {
     population.printVariablesToFile("VAR");    
     logger_.info("Objectives values have been writen to file FUN");
     population.printObjectivesToFile("FUN");
-<<<<<<< HEAD
-  
-=======
-
-    // FIXME: dead code
->>>>>>> master
-    if (indicators != null) {
-      logger_.info("Quality indicators") ;
-      logger_.info("Hypervolume: " + indicators.getHypervolume(population)) ;
-      logger_.info("GD         : " + indicators.getGD(population)) ;
-      logger_.info("IGD        : " + indicators.getIGD(population)) ;
-      logger_.info("Spread     : " + indicators.getSpread(population)) ;
-      logger_.info("Epsilon    : " + indicators.getEpsilon(population)) ;  
-     
-      int evaluations = ((Integer)algorithm.getOutputParameter("evaluations")).intValue();
-      logger_.info("Speed      : " + evaluations + " evaluations") ;      
-    } // if
   } //main
 } // NSGAII_main

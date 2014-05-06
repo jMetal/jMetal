@@ -36,14 +36,11 @@ import java.util.Comparator;
 public class GDE3 extends Algorithm {
     
   /**
-<<<<<<< HEAD
-=======
    * 
    */
   private static final long serialVersionUID = -8007862618252202475L;
 
 /**
->>>>>>> master
   * Constructor
   * @param problem Problem to solve
   */
@@ -60,24 +57,15 @@ public class GDE3 extends Algorithm {
   public SolutionSet execute() throws JMException, ClassNotFoundException {
     int populationSize ;
     int maxIterations  ;
-<<<<<<< HEAD
     int evaluations    ;
-=======
->>>>>>> master
     int iterations     ;
     
     SolutionSet population          ;
     SolutionSet offspringPopulation ;
-<<<<<<< HEAD
     SolutionSet union               ;
     
     Distance   distance  ;
     Comparator dominance ;
-=======
-    
-    Distance   distance  ;
-    Comparator<Solution> dominance ;
->>>>>>> master
     
     Operator selectionOperator ;
     Operator crossoverOperator ;
@@ -96,10 +84,7 @@ public class GDE3 extends Algorithm {
     
     //Initialize the variables
     population  = new SolutionSet(populationSize);        
-<<<<<<< HEAD
     evaluations = 0;                
-=======
->>>>>>> master
     iterations  = 0 ;
 
     // Create the initial solutionSet
@@ -108,10 +93,7 @@ public class GDE3 extends Algorithm {
       newSolution = new Solution(problem_);                    
       problem_.evaluate(newSolution);            
       problem_.evaluateConstraints(newSolution);
-<<<<<<< HEAD
       evaluations++;
-=======
->>>>>>> master
       population.add(newSolution);
     } //for       
   
@@ -132,10 +114,7 @@ public class GDE3 extends Algorithm {
 
         problem_.evaluate(child) ;
         problem_.evaluateConstraints(child);
-<<<<<<< HEAD
         evaluations++ ;
-=======
->>>>>>> master
         
         // Dominance test
         int result  ;

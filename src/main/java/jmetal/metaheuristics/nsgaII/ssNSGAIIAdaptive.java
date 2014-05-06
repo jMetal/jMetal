@@ -4,7 +4,6 @@ import jmetal.core.*;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Distance;
 import jmetal.util.JMException;
-<<<<<<< HEAD
 import jmetal.util.random.PseudoRandom;
 import jmetal.util.Ranking;
 import jmetal.util.comparators.CrowdingComparator;
@@ -15,21 +14,11 @@ import jmetal.util.offspring.PolynomialMutationOffspring;
 import java.util.Comparator;
 
 public class ssNSGAIIAdaptive extends Algorithm {
-=======
-import jmetal.util.PseudoRandom;
-import jmetal.util.Ranking;
-import jmetal.util.comparators.CrowdingComparator;
-import jmetal.util.offspring.Offspring;
-import jmetal.util.offspring.PolynomialMutationOffspring;
-
-public class ssNSGAIIAdaptive extends Algorithm {
-
   /**
    * 
    */
   private static final long serialVersionUID = 1657750075907889859L;
 
->>>>>>> master
   public int populationSize_            ;
   public SolutionSet population_        ;
   public SolutionSet offspringPopulation_;
@@ -63,10 +52,7 @@ public class ssNSGAIIAdaptive extends Algorithm {
   }
 
   public SolutionSet execute() throws JMException, ClassNotFoundException {
-<<<<<<< HEAD
-=======
     // FIXME: do we need these variables?
->>>>>>> master
     double contrDE = 0;
     double contrSBX = 0;
     double contrBLXA = 0;
@@ -78,11 +64,8 @@ public class ssNSGAIIAdaptive extends Algorithm {
     double contrReal [] = new double[3] ;
     contrReal[0] = contrReal[1] = contrReal[2] = 0 ;    
 
-<<<<<<< HEAD
     Comparator dominance = new DominanceComparator();
     Comparator crowdingComparator = new CrowdingComparator();
-=======
->>>>>>> master
     Distance distance = new Distance();
 
     Operator selectionOperator;
@@ -130,10 +113,7 @@ public class ssNSGAIIAdaptive extends Algorithm {
       // Create the offSpring solutionSet      
       // Create the offSpring solutionSet      
       offspringPopulation_ = new SolutionSet(2);
-<<<<<<< HEAD
       Solution[] parents = new Solution[2];
-=======
->>>>>>> master
 
       int selectedSolution = PseudoRandom.randInt(0, populationSize_-1) ;
       Solution individual = new Solution(population_.get(selectedSolution));

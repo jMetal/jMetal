@@ -49,10 +49,6 @@ public class GA_main {
     Operator  selection ;         // Selection operator
             
     //int bits ; // Length of bit string in the OneMax problem
-<<<<<<< HEAD
-    HashMap  parameters ; // Operator parameters
-=======
->>>>>>> master
 
     int bits = 512 ;
     problem = new OneMax("Binary", bits);
@@ -83,19 +79,6 @@ public class GA_main {
     */
     
     // Mutation and Crossover for Binary codification 
-<<<<<<< HEAD
-    parameters = new HashMap() ;
-    parameters.put("probability", 0.9) ;
-    crossover = CrossoverFactory.getCrossoverOperator("SinglePointCrossover", parameters);                   
-
-    parameters = new HashMap() ;
-    parameters.put("probability", 1.0/bits) ;
-    mutation = MutationFactory.getMutationOperator("BitFlipMutation", parameters);                    
-    
-    /* Selection Operator */
-    parameters = null ;
-    selection = SelectionFactory.getSelectionOperator("BinaryTournament", parameters) ;                            
-=======
     HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
     crossoverParameters.put("probability", 0.9) ;
     crossover = CrossoverFactory.getCrossoverOperator("SinglePointCrossover", crossoverParameters);                   
@@ -107,7 +90,6 @@ public class GA_main {
     /* Selection Operator */
     HashMap<String, Object> selectionParameters = null ; // FIXME: why we are passing null?
     selection = SelectionFactory.getSelectionOperator("BinaryTournament", selectionParameters) ;                            
->>>>>>> master
     
     /* Add the operators to the algorithm*/
     algorithm.addOperator("crossover",crossover);

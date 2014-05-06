@@ -63,11 +63,6 @@ public class OMOPSO_main {
     Mutation nonUniformMutation ;
     
     QualityIndicator indicators ; // Object to get quality indicators
-<<<<<<< HEAD
-        
-    HashMap  parameters ; // Operator parameters
-=======
->>>>>>> master
     
     // Logger object and file to store log messages
     logger_      = Configuration.logger_ ;
@@ -104,18 +99,6 @@ public class OMOPSO_main {
     algorithm.setInputParameter("archiveSize",100);
     algorithm.setInputParameter("maxIterations",maxIterations);
     
-<<<<<<< HEAD
-    parameters = new HashMap() ;
-    parameters.put("probability", mutationProbability) ;
-    parameters.put("perturbation", perturbationIndex) ;
-    uniformMutation = new UniformMutation(parameters);
-    
-    parameters = new HashMap() ;
-    parameters.put("probability", mutationProbability) ;
-    parameters.put("perturbation", perturbationIndex) ;
-    parameters.put("maxIterations", maxIterations) ;
-    nonUniformMutation = new NonUniformMutation(parameters);
-=======
     HashMap<String, Object> uniMutationParameters = new HashMap<String, Object>() ;
     uniMutationParameters.put("probability", mutationProbability) ;
     uniMutationParameters.put("perturbation", perturbationIndex) ;
@@ -126,7 +109,6 @@ public class OMOPSO_main {
     nonUniMutationParameters.put("perturbation", perturbationIndex) ;
     nonUniMutationParameters.put("maxIterations", maxIterations) ;
     nonUniformMutation = new NonUniformMutation(nonUniMutationParameters);
->>>>>>> master
 
     // Add the operators to the algorithm
     algorithm.addOperator("uniformMutation",uniformMutation);

@@ -26,14 +26,10 @@ import jmetal.core.Problem;
 import jmetal.core.SolutionSet;
 import jmetal.operators.mutation.Mutation;
 import jmetal.operators.mutation.MutationFactory;
-<<<<<<< HEAD
 import jmetal.problems.singleObjective.Griewank;
 import jmetal.problems.singleObjective.Rosenbrock;
 import jmetal.problems.singleObjective.Sphere;
 import jmetal.qualityIndicator.QualityIndicator;
-=======
-import jmetal.problems.singleObjective.Sphere;
->>>>>>> master
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
@@ -65,45 +61,24 @@ public class PSO_main {
     Problem   problem   ;  // The problem to solve
     Algorithm algorithm ;  // The algorithm to use
     Mutation  mutation  ;  // "Turbulence" operator
-<<<<<<< HEAD
     
     QualityIndicator indicators ; // Object to get quality indicators
         
-    HashMap  parameters ; // Operator parameters
-=======
->>>>>>> master
 
     // Logger object and file to store log messages
     logger_      = Configuration.logger_ ;
     fileHandler_ = new FileHandler("PSO_main.log"); 
     logger_.addHandler(fileHandler_) ;
 
-<<<<<<< HEAD
     problem = new Griewank("Real", 10) ;
     problem = new Sphere("Real", 20) ;
     //problem = new Easom("Real") ;
 
     //problem = new Rosenbrock("Real", 10);
-=======
-    //problem = new Sphere("Real", 20) ;
-    //problem = new Easom("Real") ;
-    // problem = new Griewank("Real", 10) ;
-
-    problem = new Sphere("Real", 20); 
->>>>>>> master
 
     algorithm = new PSO(problem) ;
     
     // Algorithm parameters
-<<<<<<< HEAD
-    algorithm.setInputParameter("swarmSize",100);
-    algorithm.setInputParameter("maxIterations",5000);
-    
-    parameters = new HashMap() ;
-    parameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
-    parameters.put("distributionIndex", 20.0) ;
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);                    
-=======
     algorithm.setInputParameter("swarmSize",50);
     algorithm.setInputParameter("maxIterations",5000);
     
@@ -111,7 +86,6 @@ public class PSO_main {
     mutationParameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
     mutationParameters.put("distributionIndex", 20.0) ;
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);                    
->>>>>>> master
 
     algorithm.addOperator("mutation", mutation);
 

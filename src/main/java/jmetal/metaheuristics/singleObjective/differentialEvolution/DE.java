@@ -33,14 +33,11 @@ import java.util.Comparator;
 public class DE extends Algorithm {
   
   /**
-<<<<<<< HEAD
-=======
    * 
    */
   private static final long serialVersionUID = 7663009441358542943L;
 
   /**
->>>>>>> master
   * Constructor
   * @param problem Problem to solve
   */
@@ -65,16 +62,6 @@ public class DE extends Algorithm {
      Operator selectionOperator ;
      Operator crossoverOperator ;
                
-<<<<<<< HEAD
-     Comparator  comparator ;
-     comparator = new ObjectiveComparator(0) ; // Single objective comparator
-     
-     // Differential evolution parameters
-     int r1    ;
-     int r2    ;
-     int r3    ;
-     int jrand ;
-=======
      Comparator<Solution>  comparator ;
      comparator = new ObjectiveComparator(0) ; // Single objective comparator
      
@@ -83,7 +70,6 @@ public class DE extends Algorithm {
      int r2    ;
      int r3    ;
      int jrand ;*/
->>>>>>> master
 
      Solution parent[] ;
      

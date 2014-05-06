@@ -29,13 +29,8 @@ import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.singleObjective.Griewank;
 import jmetal.util.JMException;
-<<<<<<< HEAD
 import jmetal.util.parallel.MultithreadedEvaluator;
 import jmetal.util.parallel.SynchronousParallelRunner;
-=======
-import jmetal.util.parallel.IParallelEvaluator;
-import jmetal.util.parallel.MultithreadedEvaluator;
->>>>>>> master
 
 import java.util.HashMap;
 
@@ -53,16 +48,8 @@ public class pgGA_main {
     Operator  selection ;         // Selection operator
             
     //int bits ; // Length of bit string in the OneMax problem
-<<<<<<< HEAD
-    HashMap  parameters ; // Operator parameters
-
     int threads = 4 ; // 0 - use all the available cores
     SynchronousParallelRunner parallelEvaluator = new MultithreadedEvaluator(threads) ;
-=======
-
-    int threads = 4 ; // 0 - use all the available cores
-    IParallelEvaluator parallelEvaluator = new MultithreadedEvaluator(threads) ;
->>>>>>> master
  
     //problem = new Sphere("Real", 10) ;
     problem = new Griewank("Real", 10) ;
@@ -74,21 +61,7 @@ public class pgGA_main {
     algorithm.setInputParameter("maxEvaluations", 2500000);
 
     // Mutation and Crossover for Real codification 
-<<<<<<< HEAD
-    parameters = new HashMap() ;
-    parameters.put("probability", 0.9) ;
-    parameters.put("distributionIndex", 20.0) ;
-    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters);                   
 
-    parameters = new HashMap() ;
-    parameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
-    parameters.put("distributionIndex", 20.0) ;
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);
-    
-    /* Selection Operator */
-    parameters = null ;
-    selection = SelectionFactory.getSelectionOperator("BinaryTournament", parameters) ;                            
-=======
     HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
     crossoverParameters.put("probability", 0.9) ;
     crossoverParameters.put("distributionIndex", 20.0) ;
@@ -102,7 +75,6 @@ public class pgGA_main {
     /* Selection Operator */
     HashMap<String, Object> selectionParameters = null ; // FIXME: why we are passing null?
     selection = SelectionFactory.getSelectionOperator("BinaryTournament", selectionParameters) ;                            
->>>>>>> master
     
     /* Add the operators to the algorithm*/
     algorithm.addOperator("crossover",crossover);

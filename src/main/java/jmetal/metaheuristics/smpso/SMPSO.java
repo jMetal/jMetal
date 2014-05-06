@@ -26,11 +26,7 @@ import jmetal.qualityIndicator.Hypervolume;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Distance;
 import jmetal.util.JMException;
-<<<<<<< HEAD
 import jmetal.util.random.PseudoRandom;
-=======
-import jmetal.util.PseudoRandom;
->>>>>>> master
 import jmetal.util.archive.CrowdingArchive;
 import jmetal.util.comparators.CrowdingDistanceComparator;
 import jmetal.util.comparators.DominanceComparator;
@@ -53,8 +49,6 @@ import java.util.logging.Logger;
 public class SMPSO extends Algorithm {
 
   /**
-<<<<<<< HEAD
-=======
    * 
    */
   private static final long serialVersionUID = 3008407962396502302L;
@@ -95,19 +89,11 @@ public class SMPSO extends Algorithm {
   /**
    * Stores a comparator for checking dominance
    */
-<<<<<<< HEAD
-  private Comparator dominance_;
-  /**
-   * Stores a comparator for crowding checking
-   */
-  private Comparator crowdingDistanceComparator_;
-=======
   private Comparator<Solution> dominance_;
   /**
    * Stores a comparator for crowding checking
    */
   private Comparator<Solution> crowdingDistanceComparator_;
->>>>>>> master
   /**
    * Stores a <code>Distance</code> object
    */
@@ -221,7 +207,6 @@ public class SMPSO extends Algorithm {
     swarmSize_ = ((Integer) getInputParameter("swarmSize")).intValue();
     archiveSize_ = ((Integer) getInputParameter("archiveSize")).intValue();
     maxIterations_ = ((Integer) getInputParameter("maxIterations")).intValue();
-<<<<<<< HEAD
     C1Min_ = ((Double) getInputParameter("C1Min")).doubleValue();
     C1Max_ = ((Double) getInputParameter("C1Max")).doubleValue();
     C2Min_ = ((Double) getInputParameter("C1Min")).doubleValue();
@@ -230,8 +215,6 @@ public class SMPSO extends Algorithm {
     WMin_ = ((Double) getInputParameter("WMin")).doubleValue();
     ChVel1_ = ((Double) getInputParameter("ChVel1")).doubleValue();
     ChVel2_ = ((Double) getInputParameter("ChVel2")).doubleValue();
-=======
->>>>>>> master
 
     indicators_ = (QualityIndicator) getInputParameter("indicators");
 
@@ -309,13 +292,8 @@ public class SMPSO extends Algorithm {
    * @throws JMException 
    */
   private void computeSpeed(int iter, int miter) throws JMException, IOException {
-<<<<<<< HEAD
     double r1, r2, W, C1, C2;
     double wmax, wmin, deltaMax, deltaMin;
-=======
-    double r1, r2, C1, C2;
-    double wmax, wmin;
->>>>>>> master
     XReal bestGlobal;
 
     for (int i = 0; i < swarmSize_; i++) {
@@ -339,10 +317,7 @@ public class SMPSO extends Algorithm {
       r2 = PseudoRandom.randDouble(r2Min_, r2Max_);
       C1 = PseudoRandom.randDouble(C1Min_, C1Max_);
       C2 = PseudoRandom.randDouble(C2Min_, C2Max_);
-<<<<<<< HEAD
       W = PseudoRandom.randDouble(WMin_, WMax_);
-=======
->>>>>>> master
       //
       wmax = WMax_;
       wmin = WMin_;
@@ -483,20 +458,7 @@ public class SMPSO extends Algorithm {
       distance_.crowdingDistanceAssignment(leaders_,
         problem_.getNumberOfObjectives());
       iteration_++;
-<<<<<<< HEAD
     }
-=======
-   /*   
-      if ((iteration_ % 1) == 0) {
-        leaders_.printObjectivesOfValidSolutionsToFile("FUNV"+iteration_) ;
-        leaders_.printObjectivesToFile("FUN"+iteration_) ;
-        leaders_.printVariablesToFile("VAR"+iteration_) ;
-      }
-*/
-    }
-    //leaders_.printObjectivesOfValidSolutionsToFile("FUNV.SMPSO") ;
-    leaders_.printFeasibleFUN("FUN_SMPSO") ;
->>>>>>> master
 
     return this.leaders_;
   } // execute

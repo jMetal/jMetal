@@ -26,11 +26,8 @@ import jmetal.core.Problem;
 import jmetal.core.SolutionSet;
 import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.selection.SelectionFactory;
-<<<<<<< HEAD
-import jmetal.problems.singleObjective.CEC2014Problem;
-=======
+import jmetal.problems.singleObjective.CEC2005Problem;
 import jmetal.problems.singleObjective.Sphere;
->>>>>>> master
 import jmetal.util.JMException;
 
 import java.util.HashMap;
@@ -44,33 +41,22 @@ public class DE_main {
     Problem   problem   ;         // The problem to solve
     Algorithm algorithm ;         // The algorithm to use
     Operator  crossover ;         // Crossover operator
-<<<<<<< HEAD
-    Operator  mutation  ;         // Mutation operator
     Operator  selection ;         // Selection operator
-            
-    HashMap  parameters ; // Operator parameters
-=======
-    Operator  selection ;         // Selection operator
->>>>>>> master
 
     //int bits ; // Length of bit string in the OneMax problem
   
     //bits = 512 ;
     //problem = new OneMax(bits);
  
-<<<<<<< HEAD
     //problem = new Sphere("Real", 20) ;
     //problem = new Easom("Real") ;
     //problem = new Griewank("Real", 10) ;
-    //problem = new CEC2005Problem("Real", 5, 10);
-    problem = new CEC2014Problem("Real", 1, 10, 3);
+    problem = new CEC2005Problem("Real", 5, 10);
 
-=======
-    problem = new Sphere("Real", 20) ;
+    //problem = new Sphere("Real", 20) ;
     //problem = new Easom("Real") ;
     //problem = new Griewank("Real", 10) ;
     
->>>>>>> master
     algorithm = new DE(problem) ;   // Asynchronous cGA
     
     /* Algorithm parameters*/
@@ -78,18 +64,6 @@ public class DE_main {
     algorithm.setInputParameter("maxEvaluations", 1000000);
     
     // Crossover operator 
-<<<<<<< HEAD
-    parameters = new HashMap() ;
-    parameters.put("CR", 0.5) ;
-    parameters.put("F", 0.5) ;
-    parameters.put("DE_VARIANT", "rand/1/bin") ;
-
-    crossover = CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", parameters);                   
-    
-    // Add the operators to the algorithm
-    parameters = null;
-    selection = SelectionFactory.getSelectionOperator("DifferentialEvolutionSelection", parameters) ;
-=======
     HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
     crossoverParameters.put("CR", 0.5) ;
     crossoverParameters.put("F", 0.5) ;
@@ -99,7 +73,6 @@ public class DE_main {
     // Add the operators to the algorithm
     HashMap<String, Object> selectionParameters = null; // FIXME: why we are passing null?
     selection = SelectionFactory.getSelectionOperator("DifferentialEvolutionSelection", selectionParameters) ;
->>>>>>> master
 
     algorithm.addOperator("crossover",crossover);
     algorithm.addOperator("selection",selection);

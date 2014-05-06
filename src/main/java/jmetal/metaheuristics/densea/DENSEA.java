@@ -34,27 +34,19 @@ import java.util.Comparator;
  */
 public class DENSEA extends Algorithm{
 
-<<<<<<< HEAD
-  /* Create a new instance of DENSEA algorithm */
-=======
   /**
    * 
    */
   private static final long serialVersionUID = -2201287768907955178L;
 
 /* Create a new instance of DENSEA algorithm */
->>>>>>> master
   public DENSEA(Problem problem) {
     super (problem) ;
   }
 
   //Implements the Densea delete duplicate elements
   public void deleteDuplicates(SolutionSet population) {
-<<<<<<< HEAD
-    Comparator equalIndividuals = new EqualSolutions();
-=======
     Comparator<Solution> equalIndividuals = new EqualSolutions();
->>>>>>> master
     for (int i = 0; i < population.size()/2; i++) {
       for (int j = i+1; j < population.size()/2; j++) {
         int flag = equalIndividuals.compare(population.get(i),population.get(j));
@@ -70,11 +62,7 @@ public class DENSEA extends Algorithm{
   /* Execute the algorithm */
   public SolutionSet execute() throws JMException, ClassNotFoundException {
     int populationSize, maxEvaluations, evaluations               ;
-<<<<<<< HEAD
-    SolutionSet population, offspringPopulation, union            ;
-=======
     SolutionSet population;
->>>>>>> master
     Operator mutationOperator,crossoverOperator,selectionOperator ;
     Distance distance    = new Distance()                         ;               
 

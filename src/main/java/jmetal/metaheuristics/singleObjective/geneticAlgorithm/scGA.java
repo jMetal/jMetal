@@ -22,10 +22,7 @@
 package jmetal.metaheuristics.singleObjective.geneticAlgorithm;
 
 import jmetal.core.*;
-<<<<<<< HEAD
 import jmetal.operators.selection.BestSolutionSelection;
-=======
->>>>>>> master
 import jmetal.util.JMException;
 import jmetal.util.Neighborhood;
 import jmetal.util.comparators.ObjectiveComparator;
@@ -38,14 +35,11 @@ import java.util.HashMap;
  */
 public class scGA extends Algorithm{
 
-<<<<<<< HEAD
-=======
   /**
    * 
    */
   private static final long serialVersionUID = -7315994069313234885L;
 
->>>>>>> master
   /** 
    * Constructor
    * @param problem Problem to solve
@@ -71,23 +65,12 @@ public class scGA extends Algorithm{
     SolutionSet tempPopulation ;
     Neighborhood neighborhood;
 
-<<<<<<< HEAD
-    Comparator  comparator      ;
-    comparator = new ObjectiveComparator(0) ; // Single objective comparator
-    
-    Operator findBestSolution ;
-    HashMap  parameters ; // Operator parameters
-    parameters = new HashMap() ;
-    parameters.put("comparator", comparator) ;
-    findBestSolution = new BestSolutionSelection(parameters) ;
-=======
     Comparator<Solution>  comparator      ;
     comparator = new ObjectiveComparator(0) ; // Single objective comparator
     
     HashMap<String, Object> selectionParameters = new HashMap<String, Object>() ;
     selectionParameters.put("comparator", comparator) ;
     //Operator findBestSolution = new BestSolutionSelection(selectionParameters) ;
->>>>>>> master
 
     //Read the parameters
     populationSize    = ((Integer)getInputParameter("populationSize")).intValue();

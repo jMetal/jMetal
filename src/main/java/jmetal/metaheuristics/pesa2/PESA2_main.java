@@ -61,16 +61,9 @@ public class PESA2_main {
     Algorithm algorithm ;         // The algorithm to use
     Operator  crossover ;         // Crossover operator
     Operator  mutation  ;         // Mutation operator    
-<<<<<<< HEAD
-     
-    QualityIndicator indicators ; // Object to get quality indicators
-
-    HashMap  parameters ; // Operator parameters
-=======
 
     // FIXME: do we need this?
     QualityIndicator indicators ; // Object to get quality indicators
->>>>>>> master
 
     // Logger object and file to store log messages
     logger_      = Configuration.logger_ ;
@@ -106,17 +99,6 @@ public class PESA2_main {
     algorithm.setInputParameter("maxEvaluations",25000);
     
     // Mutation and Crossover for Real codification 
-<<<<<<< HEAD
-    parameters = new HashMap() ;
-    parameters.put("probability", 0.9) ;
-    parameters.put("distributionIndex", 20.0) ;
-    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters);                   
-
-    parameters = new HashMap() ;
-    parameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
-    parameters.put("distributionIndex", 20.0) ;
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);    
-=======
     HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
     crossoverParameters.put("probability", 0.9) ;
     crossoverParameters.put("distributionIndex", 20.0) ;
@@ -126,7 +108,6 @@ public class PESA2_main {
     mutationParameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
     mutationParameters.put("distributionIndex", 20.0) ;
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);    
->>>>>>> master
     
     // Mutation and Crossover Binary codification
     /*

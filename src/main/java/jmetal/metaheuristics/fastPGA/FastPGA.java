@@ -34,18 +34,13 @@ import java.util.Comparator;
  * This class implements the FPGA (Fast Pareto Genetic Algorithm).
  */
 public class FastPGA extends Algorithm{
-<<<<<<< HEAD
-  
-  /**
-=======
 
   /**
    * 
    */
   private static final long serialVersionUID = -1288400553889158174L;
 
-/**
->>>>>>> master
+  /*
    * Constructor
    * Creates a new instance of FastPGA
    */
@@ -67,11 +62,7 @@ public class FastPGA extends Algorithm{
     Operator crossover, mutation, selection;    
     int termination;
     Distance distance = new Distance();
-<<<<<<< HEAD
-    Comparator fpgaFitnessComparator = new FPGAFitnessComparator();
-=======
     Comparator<Solution> fpgaFitnessComparator = new FPGAFitnessComparator();
->>>>>>> master
     
     //Read the parameters
     maxPopSize     = ((Integer)getInputParameter("maxPopSize")).intValue();

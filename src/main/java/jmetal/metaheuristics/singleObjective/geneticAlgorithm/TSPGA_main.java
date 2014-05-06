@@ -51,11 +51,6 @@ public class TSPGA_main {
     Operator  crossover ;         // Crossover operator
     Operator  mutation  ;         // Mutation operator
     Operator  selection ;         // Selection operator
-<<<<<<< HEAD
-
-    HashMap  parameters ; // Operator parameters
-=======
->>>>>>> master
         
     String problemName = "eil101.tsp" ;
     
@@ -69,20 +64,6 @@ public class TSPGA_main {
     algorithm.setInputParameter("maxEvaluations",2000000);
     
     // Mutation and Crossover for Real codification
-<<<<<<< HEAD
-    parameters = new HashMap() ;
-    parameters.put("probability", 0.95) ;
-    crossover = CrossoverFactory.getCrossoverOperator("TwoPointsCrossover", parameters);
-    //crossover = CrossoverFactory.getCrossoverOperator("PMXCrossover");
-    
-    parameters = new HashMap() ;
-    parameters.put("probability", 0.2) ;
-    mutation = MutationFactory.getMutationOperator("SwapMutation", parameters);                    
-  
-    /* Selection Operator */
-    parameters = null;
-    selection = SelectionFactory.getSelectionOperator("BinaryTournament", parameters) ;                            
-=======
     HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
     crossoverParameters.put("probability", 0.95) ;
     crossover = CrossoverFactory.getCrossoverOperator("TwoPointsCrossover", crossoverParameters);
@@ -95,7 +76,6 @@ public class TSPGA_main {
     /* Selection Operator */
     HashMap<String, Object> selectionParameters = null; // FIXME: why we are passing null?
     selection = SelectionFactory.getSelectionOperator("BinaryTournament", selectionParameters) ;                            
->>>>>>> master
     
     /* Add the operators to the algorithm*/
     algorithm.addOperator("crossover",crossover);
