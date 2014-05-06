@@ -26,12 +26,7 @@ import jmetal.encodings.solutionType.PermutationSolutionType;
 import jmetal.encodings.variable.Permutation;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
-<<<<<<< HEAD
 import jmetal.util.random.PseudoRandom;
-=======
-import jmetal.util.PseudoRandom;
->>>>>>> master
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -45,11 +40,6 @@ import java.util.List;
 public class PMXCrossover extends Crossover {
 
   /**
-<<<<<<< HEAD
-   * Valid solution types to apply this operator
-   */
-  private static final List VALID_TYPES = Arrays.asList(PermutationSolutionType.class);
-=======
    * 
    */
   private static final long serialVersionUID = -4059314233890056350L;
@@ -58,7 +48,6 @@ public class PMXCrossover extends Crossover {
    * Valid solution types to apply this operator
    */
   private static final List<Class<PermutationSolutionType>> VALID_TYPES = Arrays.asList(PermutationSolutionType.class);
->>>>>>> master
 
   private Double crossoverProbability_ = null;
 
@@ -182,11 +171,7 @@ public class PMXCrossover extends Crossover {
     if (parents.length < 2) {
       Configuration.logger_.severe("PMXCrossover.execute: operator needs two " +
               "parents");
-<<<<<<< HEAD
-      Class cls = java.lang.String.class;
-=======
       Class<String> cls = java.lang.String.class;
->>>>>>> master
       String name = cls.getName();
       throw new JMException("Exception in " + name + ".execute()");
     }

@@ -36,11 +36,7 @@ public class CrossoverFactory {
    * @param name Name of the operator
    * @return The operator
    */
-<<<<<<< HEAD
-  public static Crossover getCrossoverOperator(String name, HashMap parameters) throws JMException {
-=======
   public static Crossover getCrossoverOperator(String name, HashMap<String, Object> parameters) throws JMException {
->>>>>>> master
     if (name.equalsIgnoreCase("SBXCrossover"))
       return new SBXCrossover(parameters);
     else if (name.equalsIgnoreCase("SinglePointCrossover"))

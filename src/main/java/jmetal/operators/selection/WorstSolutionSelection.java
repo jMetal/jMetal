@@ -21,10 +21,7 @@
 
 package jmetal.operators.selection;
 
-<<<<<<< HEAD
-=======
 import jmetal.core.Solution;
->>>>>>> master
 import jmetal.core.SolutionSet;
 
 import java.util.Comparator;
@@ -35,32 +32,22 @@ import java.util.HashMap;
  * solution in a SolutionSet according to a given comparator
  */
 public class WorstSolutionSelection extends Selection {
-  
-<<<<<<< HEAD
-	// Comparator
-  private Comparator comparator_;
-    
-  public WorstSolutionSelection(HashMap<String, Object> parameters) {
-  	super(parameters) ;
-  	
-  	comparator_ = (Comparator)parameters.get("comparator") ;
-=======
-	/**
-     * 
-     */
-    private static final long serialVersionUID = 1456768976790614200L;
+
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1456768976790614200L;
 
   // Comparator
   private Comparator<Solution> comparator_;
-    
+
   @SuppressWarnings("unchecked")
   public WorstSolutionSelection(HashMap<String, Object> parameters) {
-  	super(parameters) ;
-  	
-  	comparator_ = (Comparator<Solution>)parameters.get("comparator") ;
->>>>>>> master
+    super(parameters) ;
+
+    comparator_ = (Comparator<Solution>)parameters.get("comparator") ;
   }
-  
+
   /**
    * Constructor
    * @param comparator
@@ -68,27 +55,27 @@ public class WorstSolutionSelection extends Selection {
   //public WorstSolutionSelection(Comparator comparator) {
   //	comparator_ = comparator ;
   //}
-  
+
   /**
-  * Performs the operation
-  * @param object Object representing a SolutionSet.
-  * @return the best solution found
-  */
+   * Performs the operation
+   * @param object Object representing a SolutionSet.
+   * @return the best solution found
+   */
   public Object execute(Object object) {
     SolutionSet solutionSet = (SolutionSet)object;
-    
+
     if (solutionSet.size() == 0) {
       return null;
     }
     int worstSolution ;
-    
+
     worstSolution = 0 ;
-   	
+
     for (int i = 1; i < solutionSet.size(); i++) {
-    	if (comparator_.compare(solutionSet.get(i), solutionSet.get(worstSolution)) > 0)  
-    		worstSolution = i ;
+      if (comparator_.compare(solutionSet.get(i), solutionSet.get(worstSolution)) > 0)  
+        worstSolution = i ;
     } // for
-    
+
     return worstSolution ;    
   } // Execute     
 } // WorstObjectiveSelection

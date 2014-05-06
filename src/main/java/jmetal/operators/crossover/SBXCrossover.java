@@ -22,19 +22,12 @@
 package jmetal.operators.crossover;
 
 import jmetal.core.Solution;
-<<<<<<< HEAD
-=======
 import jmetal.core.SolutionType;
->>>>>>> master
 import jmetal.encodings.solutionType.ArrayRealSolutionType;
 import jmetal.encodings.solutionType.RealSolutionType;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
-<<<<<<< HEAD
 import jmetal.util.random.PseudoRandom;
-=======
-import jmetal.util.PseudoRandom;
->>>>>>> master
 import jmetal.util.wrapper.XReal;
 
 import java.util.Arrays;
@@ -60,21 +53,13 @@ public class SBXCrossover extends Crossover {
   private static final double EPS= 1.0e-14;
                                                                                       
   private static final double ETA_C_DEFAULT_ = 20.0;
-<<<<<<< HEAD
   private double crossoverProbability_ = 0.9 ;
-=======
-  private Double crossoverProbability_ = 0.9 ;
->>>>>>> master
   private double distributionIndex_ = ETA_C_DEFAULT_;
 
   /**
    * Valid solution types to apply this operator 
    */
-<<<<<<< HEAD
-  private static final List VALID_TYPES = Arrays.asList(RealSolutionType.class,
-=======
   private static final List<Class<? extends SolutionType>> VALID_TYPES = Arrays.asList(RealSolutionType.class,
->>>>>>> master
                                                   ArrayRealSolutionType.class) ;
   
   /** 
@@ -86,15 +71,9 @@ public class SBXCrossover extends Crossover {
   	super (parameters) ;
   	
   	if (parameters.get("probability") != null)
-<<<<<<< HEAD
   		crossoverProbability_ = (Double) parameters.get("probability") ;
   	if (parameters.get("distributionIndex") != null)
   		distributionIndex_    = (Double) parameters.get("distributionIndex") ;
-=======
-  		crossoverProbability_ = (Double) parameters.get("probability") ;  		
-  	if (parameters.get("distributionIndex") != null)
-  		distributionIndex_    = (Double) parameters.get("distributionIndex") ;  		
->>>>>>> master
   } // SBXCrossover
     
   /**
@@ -210,11 +189,7 @@ public class SBXCrossover extends Crossover {
     if (parents.length != 2) {
       Configuration.logger_.severe("SBXCrossover.execute: operator needs two " +
           "parents");
-<<<<<<< HEAD
       Class cls = java.lang.String.class;
-=======
-      Class<String> cls = java.lang.String.class;
->>>>>>> master
       String name = cls.getName(); 
       throw new JMException("Exception in " + name + ".execute()") ;      
     } // if
@@ -224,11 +199,7 @@ public class SBXCrossover extends Crossover {
       Configuration.logger_.severe("SBXCrossover.execute: the solutions " +
 					"type " + parents[0].getType() + " is not allowed with this operator");
 
-<<<<<<< HEAD
-      Class cls = java.lang.String.class;
-=======
       Class<String> cls = java.lang.String.class;
->>>>>>> master
       String name = cls.getName(); 
       throw new JMException("Exception in " + name + ".execute()") ;
     } // if 
@@ -245,7 +216,6 @@ public class SBXCrossover extends Crossover {
     //  offSpring[i].setRank(0);
     //} 
     return offSpring;
-<<<<<<< HEAD
   } // execute
 
   public double getCrossoverProbability() {
@@ -254,7 +224,4 @@ public class SBXCrossover extends Crossover {
   public double getDistributionIndex() {
     return distributionIndex_ ;
   }
-=======
-  } // execute 
->>>>>>> master
 } // SBXCrossover

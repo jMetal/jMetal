@@ -23,11 +23,7 @@ package jmetal.operators.selection;
 
 import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
-<<<<<<< HEAD
 import jmetal.util.random.PseudoRandom;
-=======
-import jmetal.util.PseudoRandom;
->>>>>>> master
 import jmetal.util.comparators.DominanceComparator;
 
 import java.util.Comparator;
@@ -40,11 +36,6 @@ import java.util.HashMap;
 public class BinaryTournament2 extends Selection {
   
   /**
-<<<<<<< HEAD
-   * dominance_ store the <code>Comparator</code> for check dominance_
-   */
-  private Comparator dominance_;
-=======
    * 
    */
   private static final long serialVersionUID = -6853195126789856216L;
@@ -53,7 +44,6 @@ public class BinaryTournament2 extends Selection {
    * dominance_ store the <code>Comparator</code> for check dominance_
    */
   private Comparator<Solution> dominance_;
->>>>>>> master
   
   /**
    * a_ stores a permutation of the solutions in the solutionSet used

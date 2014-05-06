@@ -23,11 +23,7 @@ package jmetal.operators.selection;
 
 import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
-<<<<<<< HEAD
 import jmetal.util.random.PseudoRandom;
-=======
-import jmetal.util.PseudoRandom;
->>>>>>> master
 import jmetal.util.comparators.DominanceComparator;
 
 import java.util.Comparator;
@@ -39,12 +35,6 @@ import java.util.HashMap;
 public class BinaryTournament extends Selection {
 
   /**
-<<<<<<< HEAD
-   * Stores the <code>Comparator</code> used to compare two
-   * solutions
-   */
-  private Comparator comparator_;
-=======
    * 
    */
   private static final long serialVersionUID = 1727470902640158437L;
@@ -54,24 +44,16 @@ public class BinaryTournament extends Selection {
    * solutions
    */
   private Comparator<Solution> comparator_;
->>>>>>> master
 
   /**
    * Constructor
    * Creates a new Binary tournament operator using a BinaryTournamentComparator
    */
-<<<<<<< HEAD
-  public BinaryTournament(HashMap<String, Object> parameters){
-  	super(parameters) ;
-  	if ((parameters != null) && (parameters.get("comparator") != null))
-  		comparator_ = (Comparator) parameters.get("comparator") ;  	
-=======
   @SuppressWarnings({"unchecked"})
   public BinaryTournament(HashMap<String, Object> parameters){
   	super(parameters) ;
   	if ((parameters != null) && (parameters.get("comparator") != null))
   		comparator_ = (Comparator<Solution>) parameters.get("comparator") ;
->>>>>>> master
   	else
       //comparator_ = new BinaryTournamentComparator();
       comparator_ = new DominanceComparator();

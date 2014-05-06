@@ -24,12 +24,7 @@ package jmetal.operators.selection;
 import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
 import jmetal.util.JMException;
-<<<<<<< HEAD
 import jmetal.util.random.PseudoRandom;
-=======
-import jmetal.util.PseudoRandom;
->>>>>>> master
-
 import java.util.HashMap;
 
 /**

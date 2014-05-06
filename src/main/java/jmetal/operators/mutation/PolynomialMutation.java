@@ -22,19 +22,12 @@
 package jmetal.operators.mutation;
 
 import jmetal.core.Solution;
-<<<<<<< HEAD
-=======
 import jmetal.core.SolutionType;
->>>>>>> master
 import jmetal.encodings.solutionType.ArrayRealSolutionType;
 import jmetal.encodings.solutionType.RealSolutionType;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
-<<<<<<< HEAD
 import jmetal.util.random.PseudoRandom;
-=======
-import jmetal.util.PseudoRandom;
->>>>>>> master
 import jmetal.util.wrapper.XReal;
 
 import java.util.Arrays;
@@ -45,32 +38,15 @@ import java.util.List;
  * This class implements a polynomial mutation operator. 
  */
 public class PolynomialMutation extends Mutation {
-<<<<<<< HEAD
 	private static final double ETA_M_DEFAULT_ = 20.0;
 
   private double mutationProbability_ = 0.0 ;
   private double distributionIndex_ = ETA_M_DEFAULT_;
-=======
-	/**
-     * 
-     */
-    private static final long serialVersionUID = -153752278089303329L;
-
-    private static final double ETA_M_DEFAULT_ = 20.0;
-	private final double eta_m_=ETA_M_DEFAULT_;
-	
-  private Double mutationProbability_ = null ;
-  private Double distributionIndex_ = eta_m_;
->>>>>>> master
 
   /**
    * Valid solution types to apply this operator 
    */
-<<<<<<< HEAD
-  private static final List VALID_TYPES = Arrays.asList(RealSolutionType.class, ArrayRealSolutionType.class) ;
-=======
   private static final List<Class<? extends SolutionType>> VALID_TYPES = Arrays.asList(RealSolutionType.class, ArrayRealSolutionType.class) ;
->>>>>>> master
 
 	/**
 	 * Constructor
@@ -79,15 +55,9 @@ public class PolynomialMutation extends Mutation {
 	public PolynomialMutation(HashMap<String, Object> parameters) {
 		super(parameters) ;
   	if (parameters.get("probability") != null)
-<<<<<<< HEAD
   		mutationProbability_ = (Double) parameters.get("probability") ;
   	if (parameters.get("distributionIndex") != null)
   		distributionIndex_ = (Double) parameters.get("distributionIndex") ;
-=======
-  		mutationProbability_ = (Double) parameters.get("probability") ;  		
-  	if (parameters.get("distributionIndex") != null)
-  		distributionIndex_ = (Double) parameters.get("distributionIndex") ;  		
->>>>>>> master
 	} // PolynomialMutation
 
 	/**
@@ -109,11 +79,7 @@ public class PolynomialMutation extends Mutation {
 				delta1 = (y-yl)/(yu-yl);
 				delta2 = (yu-y)/(yu-yl);
 				rnd = PseudoRandom.randDouble();
-<<<<<<< HEAD
 				mut_pow = 1.0/(distributionIndex_+1.0);
-=======
-				mut_pow = 1.0/(eta_m_+1.0);
->>>>>>> master
 				if (rnd <= 0.5)
 				{
 					xy     = 1.0-delta1;
@@ -150,11 +116,7 @@ public class PolynomialMutation extends Mutation {
 			Configuration.logger_.severe("PolynomialMutation.execute: the solution " +
 					"type " + solution.getType() + " is not allowed with this operator");
 
-<<<<<<< HEAD
 			Class cls = java.lang.String.class;
-=======
-			Class<String> cls = java.lang.String.class;
->>>>>>> master
 			String name = cls.getName(); 
 			throw new JMException("Exception in " + name + ".execute()") ;
 		} // if 
@@ -163,14 +125,10 @@ public class PolynomialMutation extends Mutation {
 		return solution;      
 	} // execute
 
-<<<<<<< HEAD
-
   public double getMutationProbability() {
     return mutationProbability_ ;
   }
   public double getDistributionIndex() {
     return distributionIndex_ ;
   }
-=======
->>>>>>> master
 } // PolynomialMutation

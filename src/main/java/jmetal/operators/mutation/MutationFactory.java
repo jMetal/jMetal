@@ -37,11 +37,7 @@ public class MutationFactory {
    * @return the operator
    * @throws JMException 
    */
-<<<<<<< HEAD
-  public static Mutation getMutationOperator(String name, HashMap parameters) throws JMException{
-=======
   public static Mutation getMutationOperator(String name, HashMap<String, Object> parameters) throws JMException{
->>>>>>> master
  
     if (name.equalsIgnoreCase("PolynomialMutation"))
       return new PolynomialMutation(parameters);
@@ -49,21 +45,14 @@ public class MutationFactory {
       return new BitFlipMutation(parameters);
     else if (name.equalsIgnoreCase("NonUniformMutation"))
       return new NonUniformMutation(parameters);
-<<<<<<< HEAD
     else if (name.equalsIgnoreCase("UniformMutation"))
       return new UniformMutation(parameters);
-=======
->>>>>>> master
     else if (name.equalsIgnoreCase("SwapMutation"))
       return new SwapMutation(parameters);
     else
     {
       Configuration.logger_.severe("Operator '" + name + "' not found ");
-<<<<<<< HEAD
-      Class cls = java.lang.String.class;
-=======
       Class<String> cls = java.lang.String.class;
->>>>>>> master
       String name2 = cls.getName() ;    
       throw new JMException("Exception in " + name2 + ".getMutationOperator()") ;
     }        

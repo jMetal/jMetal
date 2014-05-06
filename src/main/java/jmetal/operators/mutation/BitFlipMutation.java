@@ -22,21 +22,14 @@
 package jmetal.operators.mutation;
 
 import jmetal.core.Solution;
-<<<<<<< HEAD
-=======
 import jmetal.core.SolutionType;
->>>>>>> master
 import jmetal.encodings.solutionType.BinaryRealSolutionType;
 import jmetal.encodings.solutionType.BinarySolutionType;
 import jmetal.encodings.solutionType.IntSolutionType;
 import jmetal.encodings.variable.Binary;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
-<<<<<<< HEAD
 import jmetal.util.random.PseudoRandom;
-=======
-import jmetal.util.PseudoRandom;
->>>>>>> master
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -49,11 +42,6 @@ import java.util.List;
  */
 public class BitFlipMutation extends Mutation {
   /**
-<<<<<<< HEAD
-   * Valid solution types to apply this operator 
-   */
-  private static final List VALID_TYPES = Arrays.asList(BinarySolutionType.class,
-=======
    * 
    */
   private static final long serialVersionUID = -3349165791496573889L;
@@ -62,7 +50,6 @@ public class BitFlipMutation extends Mutation {
    * Valid solution types to apply this operator 
    */
   private static final List<Class<? extends SolutionType>> VALID_TYPES = Arrays.asList(BinarySolutionType.class,
->>>>>>> master
       BinaryRealSolutionType.class,
       IntSolutionType.class) ;
 
@@ -112,11 +99,7 @@ public class BitFlipMutation extends Mutation {
 		} catch (ClassCastException e1) {
 			Configuration.logger_.severe("BitFlipMutation.doMutation: " +
 					"ClassCastException error" + e1.getMessage());
-<<<<<<< HEAD
-			Class cls = java.lang.String.class;
-=======
 			Class<String> cls = java.lang.String.class;
->>>>>>> master
 			String name = cls.getName();
 			throw new JMException("Exception in " + name + ".doMutation()");
 		}
@@ -136,11 +119,7 @@ public class BitFlipMutation extends Mutation {
 					"is not of the right type. The type should be 'Binary', " +
 					"'BinaryReal' or 'Int', but " + solution.getType() + " is obtained");
 
-<<<<<<< HEAD
-			Class cls = java.lang.String.class;
-=======
 			Class<String> cls = java.lang.String.class;
->>>>>>> master
 			String name = cls.getName();
 			throw new JMException("Exception in " + name + ".execute()");
 		} // if 
