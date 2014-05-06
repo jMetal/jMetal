@@ -21,10 +21,7 @@
 
 package jmetal.util;
 
-<<<<<<< HEAD
-=======
 import jmetal.core.Solution;
->>>>>>> master
 import jmetal.core.SolutionSet;
 import jmetal.util.comparators.DominanceComparator;
 import jmetal.util.comparators.FitnessComparator;
@@ -54,20 +51,12 @@ public class Spea2Fitness {
   /**
    * stores a <code>Comparator</code> for distance between nodes checking
    */
-<<<<<<< HEAD
-  private static final Comparator distanceNodeComparator = new DistanceNodeComparator();      
-=======
   private static final Comparator<DistanceNode> distanceNodeComparator = new DistanceNodeComparator();      
->>>>>>> master
   
   /**
    * stores a <code>Comparator</code> for dominance checking
    */
-<<<<<<< HEAD
-  private static final Comparator dominance_ = new DominanceComparator();
-=======
   private static final Comparator<Solution> dominance_ = new DominanceComparator();
->>>>>>> master
   
   /** 
    * Constructor.
@@ -152,11 +141,7 @@ public class Spea2Fitness {
     } // while
                 
     if (aux.size() < size){
-<<<<<<< HEAD
-      Comparator comparator = new FitnessComparator();
-=======
       Comparator<Solution> comparator = new FitnessComparator();
->>>>>>> master
       solutionSet_.sort(comparator);
       int remain = size - aux.size();
       for (i = 0; i < remain; i++){

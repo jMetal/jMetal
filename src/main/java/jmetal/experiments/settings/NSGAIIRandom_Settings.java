@@ -86,11 +86,6 @@ public class NSGAIIRandom_Settings extends Settings {
   public Algorithm configure() throws JMException {
     Algorithm algorithm ;
     Selection  selection ;
-<<<<<<< HEAD
-
-    HashMap  parameters ; // Operator parameters
-=======
->>>>>>> master
     
     algorithm = new NSGAIIRandom(problem_) ;
     
@@ -99,11 +94,7 @@ public class NSGAIIRandom_Settings extends Settings {
     algorithm.setInputParameter("maxEvaluations",maxEvaluations_);
 
     Offspring[] getOffspring = new Offspring[3];
-<<<<<<< HEAD
-    double CR, F;
-=======
-    //double CR, F;
->>>>>>> master
+
     getOffspring[0] = new DifferentialEvolutionOffspring(CR_, F_);
 
     getOffspring[1] = new SBXCrossoverOffspring(crossoverProbability_, crossoverDistributionIndex_);
@@ -113,11 +104,8 @@ public class NSGAIIRandom_Settings extends Settings {
     algorithm.setInputParameter("offspringsCreators", getOffspring);
 
     // Selection Operator 
-<<<<<<< HEAD
-    parameters = null ;
-=======
+
     HashMap<String, Object> parameters = null ;
->>>>>>> master
     selection = SelectionFactory.getSelectionOperator("BinaryTournament2", parameters) ;     
 
     // Add the operators to the algorithm
@@ -135,11 +123,6 @@ public class NSGAIIRandom_Settings extends Settings {
     Algorithm algorithm ;
     Selection  selection ;
 
-<<<<<<< HEAD
-    HashMap  parameters ; // Operator parameters
-
-=======
->>>>>>> master
     // Creating the algorithm.
     algorithm = new NSGAIIRandom(problem_) ;
 
@@ -167,11 +150,7 @@ public class NSGAIIRandom_Settings extends Settings {
     algorithm.setInputParameter("offspringsCreators", getOffspring);
 
     // Selection Operator
-<<<<<<< HEAD
-    parameters = null ;
-=======
     HashMap<String, Object> parameters = null ;
->>>>>>> master
     selection = SelectionFactory.getSelectionOperator("BinaryTournament2", parameters) ;
 
     // Add the operators to the algorithm

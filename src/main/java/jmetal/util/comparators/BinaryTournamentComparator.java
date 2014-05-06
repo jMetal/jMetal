@@ -28,20 +28,12 @@ import java.util.Comparator;
 /**
  * This class implements a <code>Comparator</code> for <code>Solution</code>
  */
-<<<<<<< HEAD
-public class BinaryTournamentComparator implements Comparator{
-=======
 public class BinaryTournamentComparator implements Comparator<Solution> {
->>>>>>> master
   
   /**
    * stores a dominance comparator
    */
-<<<<<<< HEAD
-  private static final Comparator dominance_ = new DominanceComparator();
-=======
   private static final Comparator<Solution> dominance_ = new DominanceComparator();
->>>>>>> master
   
   /**
    * Compares two solutions.
@@ -52,12 +44,8 @@ public class BinaryTournamentComparator implements Comparator<Solution> {
    * @return -1, or 0, or 1 if o1 is less than, equals, or greater than o2,
    * respectively.
    */
-<<<<<<< HEAD
-  public int compare(Object o1, Object o2) {
-=======
   @Override
   public int compare(Solution o1, Solution o2) {
->>>>>>> master
     int flag = dominance_.compare(o1,o2);
     if (flag!=0) {
       return flag;

@@ -22,10 +22,7 @@
 package jmetal.util;
 
 import jmetal.core.Problem;
-<<<<<<< HEAD
-=======
 import jmetal.core.Solution;
->>>>>>> master
 import jmetal.core.SolutionSet;
 import jmetal.util.comparators.DominanceComparator;
 
@@ -50,11 +47,7 @@ public class FPGAFitness {
   /**
    * stores a <code>Comparator</code> for dominance checking
    */
-<<<<<<< HEAD
-  private static final Comparator dominance_ = new DominanceComparator();
-=======
   private static final Comparator<Solution> dominance_ = new DominanceComparator();
->>>>>>> master
   
   /**
    * Constructor.
@@ -76,11 +69,6 @@ public class FPGAFitness {
    */
   public void fitnessAssign() {
     double [] strength    = new double[solutionSet_.size()];
-<<<<<<< HEAD
-    double [] rawFitness  = new double[solutionSet_.size()];  
-=======
-    //double [] rawFitness  = new double[solutionSet_.size()];  
->>>>>>> master
     
     //Ranking  ranking  = new Ranking(solutionSet_);
     //Distance distance = new Distance();

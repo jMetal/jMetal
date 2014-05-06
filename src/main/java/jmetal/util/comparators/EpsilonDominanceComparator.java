@@ -29,11 +29,7 @@ import java.util.Comparator;
  * This class implements a <code>Comparator</code> (a method for comparing
  * <code>Solution</code> objects) based on epsilon dominance.
  */
-<<<<<<< HEAD
-public class EpsilonDominanceComparator implements Comparator{
-=======
 public class EpsilonDominanceComparator implements Comparator<Solution> {
->>>>>>> master
    
   /**
    * Stores the value of eta, needed for epsilon-dominance.
@@ -43,11 +39,7 @@ public class EpsilonDominanceComparator implements Comparator<Solution> {
   /** 
    * stores a comparator for check the OverallConstraintComparator
    */
-<<<<<<< HEAD
-  private static final Comparator overallConstraintViolationComparator_ =
-=======
   private static final Comparator<Solution> overallConstraintViolationComparator_ =
->>>>>>> master
                               new OverallConstraintViolationComparator();
   
   /**
@@ -65,12 +57,8 @@ public class EpsilonDominanceComparator implements Comparator<Solution> {
   * @return -1, or 0, or 1 if solution1 dominates solution2, both are 
   * non-dominated, or solution1 is dominated by solution2, respectively.
   */
-<<<<<<< HEAD
-  public int compare(Object object1, Object object2) {
-=======
   @Override
   public int compare(Solution object1, Solution object2) {
->>>>>>> master
     if (object1==null)
       return 1;
     else if (object2 == null)
@@ -87,11 +75,7 @@ public class EpsilonDominanceComparator implements Comparator<Solution> {
     Solution solution2 = (Solution)object2;
     
     int flag; 
-<<<<<<< HEAD
-    Comparator constraint = new OverallConstraintViolationComparator();
-=======
     Comparator<Solution> constraint = new OverallConstraintViolationComparator();
->>>>>>> master
     flag = constraint.compare(solution1,solution2);
     
     if (flag != 0) {      

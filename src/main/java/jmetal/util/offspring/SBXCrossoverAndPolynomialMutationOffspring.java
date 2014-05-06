@@ -34,29 +34,12 @@ public class SBXCrossoverAndPolynomialMutationOffspring extends Offspring {
                                                      double crossoverProbability,
                                                      double distributionIndexForMutation,
                                                      double distributionIndexForCrossover) throws JMException {
-<<<<<<< HEAD
-  	HashMap parameters ;
-=======
->>>>>>> master
     mutationProbability_ = mutationProbability;
     crossoverProbability_ = crossoverProbability;
     distributionIndexForMutation_ = distributionIndexForMutation;
     distributionIndexForCrossover_ = distributionIndexForCrossover;
 
     // Crossover operator
-<<<<<<< HEAD
-    parameters = new HashMap() ;
-    parameters.put("probability", crossoverProbability_) ;
-    parameters.put("distributionIndex", distributionIndexForCrossover_) ;
-
-    crossover_ = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters);
-
-    parameters = new HashMap() ;
-    parameters.put("probability", mutationProbability_) ;
-    parameters.put("distributionIndex", distributionIndexForMutation_) ;
-
-    mutation_ = MutationFactory.getMutationOperator("PolynomialMutation", parameters);
-=======
     HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
     crossoverParameters.put("probability", crossoverProbability_) ;
     crossoverParameters.put("distributionIndex", distributionIndexForCrossover_) ;
@@ -68,7 +51,6 @@ public class SBXCrossoverAndPolynomialMutationOffspring extends Offspring {
     mutationParameters.put("distributionIndex", distributionIndexForMutation_) ;
 
     mutation_ = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
->>>>>>> master
 
     selection_ = SelectionFactory.getSelectionOperator("BinaryTournament", null);
     

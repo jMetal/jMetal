@@ -36,8 +36,7 @@ import java.util.Properties;
  * Settings class of algorithm SMPSOhv
  */
 public class SMPSOhv_Settings extends Settings{
-  
-	public int    swarmSize_                 ;
+  public int    swarmSize_                 ;
   public int    maxIterations_             ;
   public int    archiveSize_               ;
   public double mutationDistributionIndex_ ;
@@ -74,11 +73,6 @@ public class SMPSOhv_Settings extends Settings{
     Algorithm algorithm ;
     Mutation  mutation ;
 
-<<<<<<< HEAD
-    HashMap  parameters ; // Operator parameters
-
-=======
->>>>>>> master
     // Creating the problem
     algorithm = new SMPSOhv(problem_) ;
     
@@ -87,11 +81,7 @@ public class SMPSOhv_Settings extends Settings{
     algorithm.setInputParameter("maxIterations", maxIterations_);
     algorithm.setInputParameter("archiveSize", archiveSize_);
     
-<<<<<<< HEAD
-    parameters = new HashMap() ;
-=======
     HashMap<String, Object> parameters = new HashMap<String, Object>() ;
->>>>>>> master
     parameters.put("probability", mutationProbability_) ;
     parameters.put("distributionIndex", mutationDistributionIndex_) ;
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);                    
@@ -110,11 +100,6 @@ public class SMPSOhv_Settings extends Settings{
     Algorithm algorithm ;
     Mutation  mutation ;
 
-<<<<<<< HEAD
-    HashMap  parameters ; // Operator parameters
-
-=======
->>>>>>> master
     // Creating the algorithm.
     algorithm = new SMPSOhv(problem_) ;
 
@@ -129,11 +114,8 @@ public class SMPSOhv_Settings extends Settings{
 
     mutationProbability_ = Double.parseDouble(configuration.getProperty("mutationProbability",String.valueOf(mutationProbability_)));
     mutationDistributionIndex_ = Double.parseDouble(configuration.getProperty("mutationDistributionIndex",String.valueOf(mutationDistributionIndex_)));
-<<<<<<< HEAD
-    parameters = new HashMap() ;
-=======
+
     HashMap<String, Object> parameters = new HashMap<String, Object>() ;
->>>>>>> master
     parameters.put("probability", mutationProbability_) ;
     parameters.put("distributionIndex", mutationDistributionIndex_) ;
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);

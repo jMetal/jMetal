@@ -36,7 +36,7 @@ import java.util.Properties;
 
 /**
  * Created with IntelliJ IDEA.
- * User: antelverde
+ * User: Antonio J. Nebro
  * Date: 17/06/13
  * Time: 23:40
  * To change this template use File | Settings | File Templates.
@@ -84,11 +84,6 @@ public class MOCHC_Settings extends Settings {
     Operator parentsSelection       ;
     Operator newGenerationSelection ;
 
-<<<<<<< HEAD
-    HashMap parameters ; // Operator parameters
-
-=======
->>>>>>> master
     // Creating the problem
     algorithm = new MOCHC(problem_) ;
 
@@ -100,31 +95,19 @@ public class MOCHC_Settings extends Settings {
     algorithm.setInputParameter("maxEvaluations",maxEvaluations_);
 
     // Crossover operator
-<<<<<<< HEAD
-    parameters = new HashMap() ;
-=======
     HashMap<String, Object> parameters = new HashMap<String, Object>() ;
->>>>>>> master
     parameters.put("probability", crossoverProbability_) ;
     crossover = CrossoverFactory.getCrossoverOperator("HUXCrossover", parameters);
 
     parameters = null ;
     parentsSelection = SelectionFactory.getSelectionOperator("RandomSelection", parameters) ;
 
-<<<<<<< HEAD
-    parameters = new HashMap() ;
-=======
     parameters = new HashMap<String, Object>() ;
->>>>>>> master
     parameters.put("problem", problem_) ;
     newGenerationSelection = SelectionFactory.getSelectionOperator("RankingAndCrowdingSelection", parameters) ;
 
     // Mutation operator
-<<<<<<< HEAD
-    parameters = new HashMap() ;
-=======
     parameters = new HashMap<String, Object>() ;
->>>>>>> master
     parameters.put("probability", mutationProbability_) ;
     mutation = MutationFactory.getMutationOperator("BitFlipMutation", parameters);
 
@@ -148,11 +131,6 @@ public class MOCHC_Settings extends Settings {
     Operator parentsSelection       ;
     Operator newGenerationSelection ;
 
-<<<<<<< HEAD
-    HashMap  parameters ; // Operator parameters
-
-=======
->>>>>>> master
     algorithm = new MOCHC(problem_) ;
 
     // Algorithm parameters
@@ -170,11 +148,8 @@ public class MOCHC_Settings extends Settings {
 
     // Mutation and Crossover for Real codification
     crossoverProbability_ = Double.parseDouble(configuration.getProperty("crossoverProbability",String.valueOf(crossoverProbability_)));
-<<<<<<< HEAD
-    parameters = new HashMap() ;
-=======
+
     HashMap<String, Object> parameters = new HashMap<String, Object>() ;
->>>>>>> master
     parameters.put("probability", crossoverProbability_) ;
     crossover = CrossoverFactory.getCrossoverOperator("HUXCrossover", parameters);
 
@@ -182,20 +157,13 @@ public class MOCHC_Settings extends Settings {
     parentsSelection = SelectionFactory.getSelectionOperator("RandomSelection", parameters)  ;
 
     mutationProbability_ = Double.parseDouble(configuration.getProperty("mutationProbability",String.valueOf(mutationProbability_)));
-<<<<<<< HEAD
-    parameters = new HashMap() ;
-=======
+
     parameters = new HashMap<String, Object>() ;
->>>>>>> master
     parameters.put("probability", mutationProbability_) ;
     mutation = MutationFactory.getMutationOperator("BitFlipMutation", parameters);
 
     // Selection Operator
-<<<<<<< HEAD
-    parameters = new HashMap() ;
-=======
     parameters = new HashMap<String, Object>() ;
->>>>>>> master
     parameters.put("problem", problem_) ;
     newGenerationSelection = SelectionFactory.getSelectionOperator("RankingAndCrowdingSelection", parameters) ;
 

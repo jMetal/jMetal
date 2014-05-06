@@ -51,30 +51,18 @@ import java.util.Comparator;
   /**
    * Stores a <code>Comparator</code> for dominance checking.
    */
-<<<<<<< HEAD
-  private Comparator dominance_;
-=======
   private Comparator<Solution> dominance_;
->>>>>>> master
   
   /**
    * Stores a <code>Comparator</code> for fitness checking.
    */
-<<<<<<< HEAD
-  private Comparator fitnessComparator_;
-=======
   private Comparator<Solution> fitnessComparator_;
->>>>>>> master
   
   /**
    * Stores a <code>Comparator</code> for equality checking (in the objective
    * space).
    */
-<<<<<<< HEAD
-  private Comparator equals_;  
-=======
   private Comparator<Solution> equals_;  
->>>>>>> master
     
   /** 
   * Constructor.

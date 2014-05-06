@@ -72,11 +72,6 @@ public class PAES_Settings extends Settings{
     Algorithm algorithm ;
     Mutation  mutation   ;
 
-<<<<<<< HEAD
-    HashMap  parameters ; // Operator parameters
-
-=======
->>>>>>> master
     // Creating the problem
     algorithm = new PAES(problem_) ;
 
@@ -86,11 +81,7 @@ public class PAES_Settings extends Settings{
     algorithm.setInputParameter("archiveSize",archiveSize_ );
 
     // Mutation (Real variables)
-<<<<<<< HEAD
-    parameters = new HashMap() ;
-=======
     HashMap<String, Object> parameters = new HashMap<String, Object>() ;
->>>>>>> master
     parameters.put("probability", mutationProbability_) ;
     parameters.put("distributionIndex", mutationDistributionIndex_) ;
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);                    
@@ -110,11 +101,6 @@ public class PAES_Settings extends Settings{
     Algorithm algorithm ;
     Mutation   mutation  ;
 
-<<<<<<< HEAD
-    HashMap  parameters ; // Operator parameters
-
-=======
->>>>>>> master
     // Creating the algorithm.
     algorithm = new PAES(problem_) ;
 
@@ -129,11 +115,8 @@ public class PAES_Settings extends Settings{
 
     mutationProbability_ = Double.parseDouble(configuration.getProperty("mutationProbability",String.valueOf(mutationProbability_)));
     mutationDistributionIndex_ = Double.parseDouble(configuration.getProperty("mutationDistributionIndex",String.valueOf(mutationDistributionIndex_)));
-<<<<<<< HEAD
-    parameters = new HashMap() ;
-=======
+
     HashMap<String, Object> parameters = new HashMap<String, Object>() ;
->>>>>>> master
     parameters.put("probability", mutationProbability_) ;
     parameters.put("distributionIndex", mutationDistributionIndex_) ;
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);

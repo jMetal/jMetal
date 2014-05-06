@@ -26,11 +26,6 @@ import jmetal.experiments.Settings;
 import jmetal.metaheuristics.randomSearch.RandomSearch;
 import jmetal.problems.ProblemFactory;
 import jmetal.util.JMException;
-
-<<<<<<< HEAD
-import java.util.HashMap;
-=======
->>>>>>> master
 import java.util.Properties;
 
 /**
@@ -80,11 +75,6 @@ public class RandomSearch_Settings extends Settings {
   public Algorithm configure(Properties configuration) throws JMException {
     Algorithm algorithm ;
 
-<<<<<<< HEAD
-    HashMap parameters ; // Operator parameters
-
-=======
->>>>>>> master
     // Creating the algorithm.
     algorithm = new RandomSearch(problem_) ;
 

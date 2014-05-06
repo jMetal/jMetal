@@ -34,16 +34,13 @@ import jmetal.util.JMException;
  *  version of the problem)
  */
 public class mQAP extends Problem {
-  
-<<<<<<< HEAD
-  int [][] a_matrix;
-=======
+
   /**
-     * 
-     */
-    private static final long serialVersionUID = 5585099487667493237L;
-int [][] a_matrix;
->>>>>>> master
+   * 
+   */
+  private static final long serialVersionUID = 5585099487667493237L;
+  
+  int [][] a_matrix;
   int [][][] b_matrixs;
 
   public mQAP(String solutionType) {
@@ -51,9 +48,9 @@ int [][] a_matrix;
   }
 
   /**
-  * Creates a new instance of problem mQAP.
-  * @param fileName: name of the file containing the instance  
-  */
+   * Creates a new instance of problem mQAP.
+   * @param fileName: name of the file containing the instance  
+   */
   public mQAP(String solutionType, String fileName)  {
 
     ReadInstance ri = new ReadInstance(fileName);    
@@ -74,13 +71,13 @@ int [][] a_matrix;
       lowerLimit_[var] = 0.0;
       upperLimit_[var] = ri.getNumberOfFacilities()-1;
     } // for
-    
+
     // Establishes the length of every encodings.variable
     length_ = new int[numberOfVariables_];
     for (int var = 0; var < numberOfVariables_; var++)
     {
       length_[var] = ri.getNumberOfFacilities();
-      
+
     } // for
     if (solutionType.compareTo("Permutation") == 0)
       solutionType_ = new PermutationSolutionType(this);
@@ -91,8 +88,8 @@ int [][] a_matrix;
         e.printStackTrace();
       }
   } // mQAP
-  
-  
+
+
   // evaluation of the problem
   public void evaluate(Solution solution) throws JMException {
     int [] permutation = ((Permutation)solution.getDecisionVariables()[0]).vector_;

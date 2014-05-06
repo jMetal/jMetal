@@ -30,20 +30,17 @@ import jmetal.util.comparators.FitnessComparator;
 import java.util.Comparator;
 
 /**
- * This class implemens a bounded archive based on strength raw fitness (as
+ * This class implements a bounded archive based on strength raw fitness (as
  * defined in SPEA2).
  */ 
  public class SPEA2DensityArchive extends Archive {
   
   /**
-<<<<<<< HEAD
-=======
    * 
    */
   private static final long serialVersionUID = -2639011270346617749L;
 
   /**
->>>>>>> master
    * Stores the maximum size of the archive.
    */
   private int maxSize_;    
@@ -51,30 +48,18 @@ import java.util.Comparator;
   /**
    * Stores a <code>Comparator</code> for dominance checking.
    */
-<<<<<<< HEAD
-  private Comparator dominance_;
-=======
   private Comparator<Solution> dominance_;
->>>>>>> master
   
   /**
    * Stores a <code>Comparator</code> for fitness checking.
    */
-<<<<<<< HEAD
-  private Comparator fitnessComparator_;
-=======
   private Comparator<Solution> fitnessComparator_;
->>>>>>> master
   
   /**
    * Stores a <code>Comparator</code> for equality checking (in the objective
    * space).
    */
-<<<<<<< HEAD
-  private Comparator equals_;  
-=======
   private Comparator<Solution> equals_;  
->>>>>>> master
     
   /** 
   * Constructor.

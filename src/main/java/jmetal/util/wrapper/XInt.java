@@ -33,34 +33,18 @@ import jmetal.util.JMException;
  * Wrapper class for accessing integer-coded solutions
  */
 public class XInt {
-<<<<<<< HEAD
 	public Solution solution_ ;
 	public SolutionType type_ ;
-=======
-	private Solution solution_ ;
-	private SolutionType type_ ;
-
-	/**
-	 * Constructor
-	 */
-  private XInt() {
-	} // Constructor
->>>>>>> master
 
 	/**
 	 * Constructor
 	 * @param solution
 	 */
 	public XInt(Solution solution) {
-<<<<<<< HEAD
-=======
-		this() ;
->>>>>>> master
 		type_ = solution.getType() ;
 		solution_ = solution ;
 	}
 
-<<<<<<< HEAD
   /**
    * Constructor
    * @param solution
@@ -70,8 +54,6 @@ public class XInt {
     solution_ = solution.solution_ ;
   }
 
-=======
->>>>>>> master
 	/**
 	 * Gets value of a encodings.variable
 	 * @param index Index of the encodings.variable
@@ -158,7 +140,6 @@ public class XInt {
 					type_ + "+ invalid") ;		
 		return 0 ;
 	} // size
-<<<<<<< HEAD
 
   /**
    * Returns the number of variables of the solution
@@ -171,6 +152,4 @@ public class XInt {
   public Solution getSolution() {
     return solution_ ;
   }
-=======
->>>>>>> master
 } // XInt

@@ -27,13 +27,8 @@ import jmetal.operators.mutation.Mutation;
 import jmetal.operators.mutation.MutationFactory;
 import jmetal.problems.ProblemFactory;
 import jmetal.util.JMException;
-<<<<<<< HEAD
 import jmetal.util.parallel.MultithreadedEvaluator;
 import jmetal.util.parallel.SynchronousParallelRunner;
-=======
-import jmetal.util.parallel.IParallelEvaluator;
-import jmetal.util.parallel.MultithreadedEvaluator;
->>>>>>> master
 
 import java.util.HashMap;
 import java.util.Properties;
@@ -42,8 +37,7 @@ import java.util.Properties;
  * Settings class of algorithm pSMPSO
  */
 public class pSMPSO_Settings extends Settings{
-  
-	public int    swarmSize_                 ;
+  public int    swarmSize_                 ;
   public int    maxIterations_             ;
   public int    archiveSize_               ;
   public double mutationDistributionIndex_ ;
@@ -81,13 +75,7 @@ public class pSMPSO_Settings extends Settings{
     Algorithm algorithm ;
     Mutation  mutation ;
 
-<<<<<<< HEAD
-    HashMap  parameters ; // Operator parameters
-
     SynchronousParallelRunner parallelEvaluator = new MultithreadedEvaluator(numberOfThreads_) ;
-=======
-    IParallelEvaluator parallelEvaluator = new MultithreadedEvaluator(numberOfThreads_) ;
->>>>>>> master
 
     algorithm = new pSMPSO(problem_, parallelEvaluator) ;
     
@@ -96,11 +84,7 @@ public class pSMPSO_Settings extends Settings{
     algorithm.setInputParameter("maxIterations", maxIterations_);
     algorithm.setInputParameter("archiveSize", archiveSize_);
     
-<<<<<<< HEAD
-    parameters = new HashMap() ;
-=======
     HashMap<String, Object> parameters = new HashMap<String, Object>() ;
->>>>>>> master
     parameters.put("probability", mutationProbability_) ;
     parameters.put("distributionIndex", mutationDistributionIndex_) ;
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);                    
@@ -119,17 +103,9 @@ public class pSMPSO_Settings extends Settings{
     Algorithm algorithm ;
     Mutation  mutation ;
 
-<<<<<<< HEAD
-    HashMap  parameters ; // Operator parameters
-
     numberOfThreads_  = Integer.parseInt(configuration.getProperty("numberOfThreads",String.valueOf(numberOfThreads_)));
 
     SynchronousParallelRunner parallelEvaluator = new MultithreadedEvaluator(numberOfThreads_) ;
-=======
-    numberOfThreads_  = Integer.parseInt(configuration.getProperty("numberOfThreads",String.valueOf(numberOfThreads_)));
-
-    IParallelEvaluator parallelEvaluator = new MultithreadedEvaluator(numberOfThreads_) ;
->>>>>>> master
 
     // Creating the algorithm.
     algorithm = new pSMPSO(problem_, parallelEvaluator) ;
@@ -145,11 +121,9 @@ public class pSMPSO_Settings extends Settings{
 
     mutationProbability_ = Double.parseDouble(configuration.getProperty("mutationProbability",String.valueOf(mutationProbability_)));
     mutationDistributionIndex_ = Double.parseDouble(configuration.getProperty("mutationDistributionIndex",String.valueOf(mutationDistributionIndex_)));
-<<<<<<< HEAD
-    parameters = new HashMap() ;
-=======
+
     HashMap<String, Object> parameters = new HashMap<String, Object>() ;
->>>>>>> master
+    parameters = new HashMap() ;
     parameters.put("probability", mutationProbability_) ;
     parameters.put("distributionIndex", mutationDistributionIndex_) ;
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);

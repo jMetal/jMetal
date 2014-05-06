@@ -55,29 +55,6 @@ public class AvlNode<T> {
     this.item_ = item_;
   }
 
-<<<<<<< HEAD
-  public AvlNode getLeft() {
-    return left_;
-  }
-
-  public void setLeft(AvlNode left) {
-    this.left_ = left;
-  }
-
-  public AvlNode getParent() {
-    return parent_;
-  }
-
-  public void setParent(AvlNode parent) {
-    this.parent_ = parent;
-  }
-
-  public AvlNode getRight() {
-    return right_;
-  }
-
-  public void setRight(AvlNode right) {
-=======
   public AvlNode<T> getLeft() {
     return left_;
   }
@@ -99,7 +76,6 @@ public class AvlNode<T> {
   }
 
   public void setRight(AvlNode<T> right) {
->>>>>>> master
     this.right_ = right;
   }
 

@@ -79,11 +79,6 @@ public class NSGAIIPermutation_Settings extends Settings {
     Operator  crossover ;
     Operator  mutation  ;
 
-<<<<<<< HEAD
-    HashMap  parameters ; // Operator parameters
-
-=======
->>>>>>> master
     // Creating the problem
     algorithm = new NSGAII(problem_) ;
     
@@ -93,19 +88,11 @@ public class NSGAIIPermutation_Settings extends Settings {
 
     
     // Mutation and Crossover Permutation codification
-<<<<<<< HEAD
-    parameters = new HashMap() ;
-    parameters.put("probability", crossoverProbability_) ;
-    crossover = CrossoverFactory.getCrossoverOperator("PMXCrossover", parameters);
-
-    parameters = new HashMap() ;
-=======
     HashMap<String, Object> parameters = new HashMap<String, Object>() ;
     parameters.put("probability", crossoverProbability_) ;
     crossover = CrossoverFactory.getCrossoverOperator("PMXCrossover", parameters);
 
     parameters = new HashMap<String, Object>() ;
->>>>>>> master
     parameters.put("probability", mutationProbability_) ;
     mutation = MutationFactory.getMutationOperator("SwapMutation",parameters);
     
@@ -132,11 +119,6 @@ public class NSGAIIPermutation_Settings extends Settings {
     Crossover crossover ;
     Mutation mutation  ;
 
-<<<<<<< HEAD
-    HashMap  parameters ; // Operator parameters
-
-=======
->>>>>>> master
     // Creating the algorithm.
     algorithm = new NSGAII(problem_) ;
 
@@ -148,20 +130,13 @@ public class NSGAIIPermutation_Settings extends Settings {
 
     // Mutation and Crossover for Real codification
     crossoverProbability_ = Double.parseDouble(configuration.getProperty("crossoverProbability",String.valueOf(crossoverProbability_)));
-<<<<<<< HEAD
-    parameters = new HashMap() ;
-=======
+
     HashMap<String, Object> parameters = new HashMap<String, Object>() ;
->>>>>>> master
     parameters.put("probability", crossoverProbability_) ;
     crossover = CrossoverFactory.getCrossoverOperator("PMXCrossover", parameters);
 
     mutationProbability_ = Double.parseDouble(configuration.getProperty("mutationProbability",String.valueOf(mutationProbability_)));
-<<<<<<< HEAD
-    parameters = new HashMap() ;
-=======
     parameters = new HashMap<String, Object>() ;
->>>>>>> master
     parameters.put("probability", mutationProbability_) ;
     mutation = MutationFactory.getMutationOperator("SwapMutation", parameters);
 

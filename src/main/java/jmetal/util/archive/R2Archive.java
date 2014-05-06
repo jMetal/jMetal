@@ -23,11 +23,7 @@ package jmetal.util.archive;
 
 import jmetal.core.Solution;
 import jmetal.qualityIndicator.R2;
-<<<<<<< HEAD
 import jmetal.util.random.PseudoRandom;
-=======
-import jmetal.util.PseudoRandom;
->>>>>>> master
 import jmetal.util.comparators.CrowdingDistanceComparator;
 import jmetal.util.comparators.DominanceComparator;
 import jmetal.util.comparators.EqualSolutions;
@@ -40,14 +36,11 @@ import java.util.Comparator;
  */
 public class R2Archive extends Archive {
   
-<<<<<<< HEAD
-=======
   /**
    * 
    */
   private static final long serialVersionUID = -2344933516980116613L;
 
->>>>>>> master
   /** 
    * Stores the maximum size of the archive.
    */
@@ -61,28 +54,14 @@ public class R2Archive extends Archive {
   /**
    * Stores a <code>Comparator</code> for dominance checking.
    */
-<<<<<<< HEAD
-  private Comparator dominance_;
-=======
   private Comparator<Solution> dominance_;
->>>>>>> master
   
   /**
    * Stores a <code>Comparator</code> for equality checking (in the objective
    * space).
    */
-<<<<<<< HEAD
-  private Comparator equals_; 
-  
-  
-  private Comparator crowdingDistance_; 
-=======
-  private Comparator<Solution> equals_; 
-  
-  
-  private Comparator<Solution> crowdingDistance_; 
->>>>>>> master
-  
+  private Comparator<Solution> equals_;   
+  private Comparator<Solution> crowdingDistance_;   
   private R2 r2Indicator_; 
 
   /**
