@@ -204,8 +204,9 @@ public class MOEAD extends Algorithm {
         populationSize_ + ".dat";
    
       try {
-        // Open the file
-        FileInputStream fis = new FileInputStream(dataDirectory_ + "/" + dataFileName);
+        // Open the file from the resources directory
+        FileInputStream fis =
+                new FileInputStream(this.getClass().getClassLoader().getResource(dataDirectory_ + "/" + dataFileName).getPath());
         InputStreamReader isr = new InputStreamReader(fis);
         BufferedReader br = new BufferedReader(isr);
 
@@ -344,8 +345,8 @@ public class MOEAD extends Algorithm {
    * @param id
    * @param type
    */
-  void updateProblem(Solution indiv, int id, int type) {
-    // indiv: child solution
+  void updateProblem(Solution individual, int id, int type) {
+    // individual: child solution
     // id:   the id of current subproblem
     // type: update solutions in - neighborhood (1) or whole population (otherwise)
     int size;
@@ -372,10 +373,10 @@ public class MOEAD extends Algorithm {
       double f1, f2;
 
       f1 = fitnessFunction(population_.get(k), lambda_[k]);
-      f2 = fitnessFunction(indiv, lambda_[k]);
+      f2 = fitnessFunction(individual, lambda_[k]);
 
       if (f2 < f1) {
-        population_.replace(k, new Solution(indiv));
+        population_.replace(k, new Solution(individual));
         //population[k].indiv = indiv;
         time++;
       }
