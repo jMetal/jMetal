@@ -9,16 +9,17 @@
 
 package jmetal.util.offspring;
 
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import jmetal.core.Operator;
 import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
 import jmetal.operators.crossover.DifferentialEvolutionCrossover;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.util.JMException;
-import jmetal.util.PseudoRandom;
-import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import jmetal.util.random.PseudoRandom;
 
 public class DifferentialEvolutionOffspring extends Offspring {
   private double CR_ ;
