@@ -153,12 +153,10 @@ public class dMOPSO extends Algorithm {
    */
   public void initParams() {
     swarmSize_ = ((Integer) getInputParameter("swarmSize")).intValue();
-
     maxIterations_ = ((Integer) getInputParameter("maxIterations")).intValue();
-
     maxAge_ = ((Integer) getInputParameter("maxAge")).intValue();
-
     indicators_ = (QualityIndicator) getInputParameter("indicators");
+    dataDirectory_ = getInputParameter("dataDirectory").toString();
 
     String funcType = ((String) getInputParameter("functionType"));
     if(funcType != null && funcType != ""){
@@ -359,122 +357,6 @@ public class dMOPSO extends Algorithm {
     return ss;
   } // execute
 
-  //	public SolutionSet execute() throws JMException, ClassNotFoundException {
-  //		//->Step 1.1 Initialize parameters (iteration_ = 0)
-  //		initParams();
-  //		
-  //		//->Step 1.3 Generate a swarm of N random particles
-  //		for (int i = 0; i < swarmSize_; i++) {
-  //			Solution particle = new Solution(problem_);
-  //			problem_.evaluate(particle);
-  //			particles_.add(particle);
-  //		}
-  //
-  //		//-> Step 1.4 Initialize the speed_ and age_ of each particle to 0
-  //		for (int i = 0; i < swarmSize_; i++) {
-  //			for (int j = 0; j < problem_.getNumberOfVariables(); j++) {
-  //				speed_[i][j] = 0.0;
-  //			}
-  //			age_[i] = 0;
-  //		}
-  //
-  //		/////// BEGIN MOEAD //////
-  //		indArray_ = new Solution[problem_.getNumberOfObjectives()];
-  //		z_ = new double[problem_.getNumberOfObjectives()];		
-  //		lambda_ = new double[swarmSize_][problem_.getNumberOfObjectives()];
-  //
-  //		//-> Step 1.2 Generate a well-distributed set of N weighted vectors
-  //		initUniformWeight();
-  //		initIdealPoint();
-  //		/////// END MOEAD //////
-  //
-  //		//-> Step 1.5 and 1.6 Define the personal best and the global best
-  //		for (int i = 0; i < particles_.size(); i++) {
-  //			Solution particle = new Solution(particles_.get(i));
-  //			lBest_[i] = particle;
-  //			gBest_[i] = particle;
-  //			//updateGlobalBest(i);
-  //		}
-  //		updateGlobalBest();
-  //
-  //		//BORRAR
-  //		particles_.printObjectivesToFile("EXEC/FUN"+iteration_);
-  //		SolutionSet sgb = new SolutionSet(particles_.size());
-  //		for (int i =0; i < gBest_.length; i++) {
-  //			sgb.add(gBest_[i]);
-  //		}
-  //		sgb.printObjectivesToFile("EXEC/GB"+iteration_);
-  //		
-  //		// Iterations ...        
-  //		while (iteration_ < maxIterations_) {
-  //	
-  //			
-  //			//-> Step 2 Suffle the global best
-  //			shuffleGlobalBest();
-  //			
-  //			//-> Step 3 The cycle
-  //			for (int i = 0; i < particles_.size(); i++) {	
-  //				
-  //				if(age_[i] < maxAge_){
-  //					//-> Step 3.1 Update particle
-  //					updateParticle(i);					
-  //				}else{
-  //					//-> Step 3.2 Reset particle
-  //					resetParticle(i);
-  //				}
-  //
-  //				//-> Step 3.3 Repair bounds
-  //				repairBounds(i);
-  //				
-  //				//-> Step 3.4 Evaluate the particle and update Z*
-  //				problem_.evaluate(particles_.get(i));
-  //				updateReference(particles_.get(i));
-  //				
-  //				//-> Step 3.5 Update the personal best
-  //				updateLocalBest(i);
-  //				//updateGlobalBest(i);	
-  //			}
-  //			
-  //			//-> Step 4 Update the global best
-  //			updateGlobalBest();			
-  //			iteration_++;
-  //			//BORRAR
-  //			particles_.printObjectivesToFile("EXEC/FUN"+iteration_);
-  //			sgb = new SolutionSet(particles_.size());
-  //			for (int i =0; i < gBest_.length; i++) {
-  //				sgb.add(gBest_[i]);
-  //			}
-  //			sgb.printObjectivesToFile("EXEC/GB"+iteration_);
-  //		}
-  //
-  //		SolutionSet ss = new SolutionSet(gBest_.length);
-  //		for (int i =0; i < gBest_.length; i++) {
-  //			ss.add(gBest_[i]);
-  //		}
-  //
-  //		return ss;
-  //	} // execute
-
-
-  //	private void shuffleGlobalBest(){
-  //		Solution[] aux = new Solution[swarmSize_];
-  //		int rnd;
-  //		Solution tmp;
-  //
-  //		for (int i = 0; i < swarmSize_; i++)
-  //		{
-  //			aux[i] = new Solution(gBest_[i]);
-  //		}
-  //
-  //		for (int i = 0; i < swarmSize_; i++)
-  //		{
-  //			rnd = PseudoRandom.randInt(i, swarmSize_ - 1);
-  //			tmp = new Solution(aux[rnd]);
-  //			aux[rnd] = new Solution(aux[i]);
-  //			gBest_[i] = new Solution(tmp);
-  //		}
-  //	} // shuffleGlobalBest
-
   private void shuffleGlobalBest(){
     int[] aux = new int[swarmSize_];
     int rnd;
@@ -535,37 +417,6 @@ public class dMOPSO extends Algorithm {
     }
   } // resetParticle
 
-  /******************************************/
-  //	double box_muller(double m, double s)
-  //	{
-  //		/* mean m, standard deviation s */
-  //		double x1, x2, w, y1;
-  //		
-  //		RandomGenerator rnd = new RandomGenerator(); 
-  //
-  //		if (use_last!=0) /* use value from previous call */
-  //		{
-  //			y1 = y2;
-  //			use_last = 0;
-  //		}
-  //		else
-  //		{
-  //			do
-  //			{
-  //				x1 = 2.0 * rnd.randomperc() - 1.0;
-  //				x2 = 2.0 * rnd.randomperc() - 1.0;
-  //				w = x1 * x1 + x2 * x2;
-  //			} while (w >= 1.0);
-  //
-  //			w = Math.sqrt((-2.0 * Math.log(w)) / w);
-  //			y1 = x1 * w;
-  //			y2 = x2 * w;
-  //			use_last = 1;
-  //		}
-  //		return (m + y1 * s);
-  //	}
-  /******************************************/
-
   private void updateParticle(int i) throws JMException {
     computeSpeed(i);
     computeNewPositions(i);	
@@ -584,28 +435,24 @@ public class dMOPSO extends Algorithm {
     } // if
     else {
       String dataFileName;
-      //			dataDirectory_ = "/home/juanjo/Dropbox/jMetalDropboxJuanjo/MOEAD_parameters/Weight";
-      dataDirectory_ = "/Users/antelverde/Softw/pruebas/data/MOEAD_parameters/Weight";
-      //			dataDirectory_ = "/home/jorgero/moead/weight";
       dataFileName = "W" + problem_.getNumberOfObjectives() + "D_" +
           swarmSize_ + ".dat";
 
-      //			System.out.println(dataDirectory_);
-      //			System.out.println(dataDirectory_ + "/" + dataFileName);
-
       try {
         // Open the file
-        FileInputStream fis = new FileInputStream(dataDirectory_ + "/" + dataFileName);
+        FileInputStream fis =
+                new FileInputStream(this.getClass().getClassLoader().getResource(dataDirectory_ + "/" + dataFileName).getPath());
         InputStreamReader isr = new InputStreamReader(fis);
         BufferedReader br = new BufferedReader(isr);
 
-
+        int numberOfObjectives = 0;
         int i = 0;
         int j = 0;
         String aux = br.readLine();
         while (aux != null) {
           StringTokenizer st = new StringTokenizer(aux);
           j = 0;
+          numberOfObjectives = st.countTokens();
           while (st.hasMoreTokens()) {
             double value = (new Double(st.nextToken())).doubleValue();
             lambda_[i][j] = value;
