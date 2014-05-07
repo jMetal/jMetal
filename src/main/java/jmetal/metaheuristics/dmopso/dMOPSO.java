@@ -440,18 +440,19 @@ public class dMOPSO extends Algorithm {
 
       try {
         // Open the file
-        //FileInputStream fis = new FileInputStream(dataDirectory_ + "/" + dataFileName);
         FileInputStream fis =
                 new FileInputStream(this.getClass().getClassLoader().getResource(dataDirectory_ + "/" + dataFileName).getPath());
         InputStreamReader isr = new InputStreamReader(fis);
         BufferedReader br = new BufferedReader(isr);
 
+        int numberOfObjectives = 0;
         int i = 0;
         int j = 0;
         String aux = br.readLine();
         while (aux != null) {
           StringTokenizer st = new StringTokenizer(aux);
           j = 0;
+          numberOfObjectives = st.countTokens();
           while (st.hasMoreTokens()) {
             double value = (new Double(st.nextToken())).doubleValue();
             lambda_[i][j] = value;

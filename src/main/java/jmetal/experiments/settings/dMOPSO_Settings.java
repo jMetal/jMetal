@@ -54,7 +54,7 @@ public class dMOPSO_Settings extends Settings {
 		}
 
 		// Default experiments.settings
-		swarmSize_         = 100 ;
+		swarmSize_         = 300 ;
 		maxIterations_     = 250 ;
 		maxAge_			       = 2	 ;
 		functionType_	     = "_TCHE"  ;  // _TCHE, _PBI, _AGG
