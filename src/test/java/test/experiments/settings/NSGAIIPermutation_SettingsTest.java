@@ -1,4 +1,4 @@
-package jmetal.test.experiments.settings;
+package test.experiments.settings;
 
 import org.junit.Before;
 import org.junit.Test;
