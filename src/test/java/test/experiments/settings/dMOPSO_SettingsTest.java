@@ -12,6 +12,8 @@ import org.junit.Test;
 import java.io.*;
 import java.util.Properties;
 
+import static org.junit.Assert.assertNotNull;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Antonio J. Nebro
@@ -30,21 +32,22 @@ public class dMOPSO_SettingsTest {
 
   @Test
   public void test() throws JMException {
-    //double epsilon = 0.000000000000001;
+    double epsilon = 0.000000000000001;
     Settings dMOPSOSettings = new dMOPSO_Settings("Fonseca");
     Algorithm algorithm = dMOPSOSettings.configure();
-    //Problem problem = new Fonseca("Real");
-
-    //int swarmSize = (Integer)algorithm.getInputParameter("swarmSize");
 
     String dataDirectory = (String) algorithm.getInputParameter("dataDirectory");
     System.out.println(dataDirectory);
-    File experimentDirectory = new File(dataDirectory);
+    //File experimentDirectory = new File(dataDirectory);
+    String experimentDirectoryName = ClassLoader.getSystemResource(dataDirectory).getPath();
+
 
     Assert.assertEquals("dMOPSO_SettingsTest", 100, ((Integer) algorithm.getInputParameter("swarmSize")).intValue());
     Assert.assertEquals("dMOPSO_SettingsTest", 250, ((Integer) algorithm.getInputParameter("maxIterations")).intValue());
+    Assert.assertEquals("dMOPSO_SettingsTest", 2, ((Integer) algorithm.getInputParameter("maxAge")).intValue());
+    Assert.assertEquals("dMOPSO_SettingsTest", "_TCHE", algorithm.getInputParameter("functionType"));
 
-    Assert.assertTrue("cMOEAD_SettingsTest", experimentDirectory.exists());
+    assertNotNull("dMOPSO_SettingsTest", experimentDirectoryName);
   }
 
   @Test
@@ -52,17 +55,19 @@ public class dMOPSO_SettingsTest {
     //double epsilon = 0.000000000000001;
     Settings dMOPSOSettings = new dMOPSO_Settings("Fonseca");
     Algorithm algorithm = dMOPSOSettings.configure(configuration_);
-    //Problem problem = new Fonseca("Real");
-
-    //int swarmSize = (Integer)algorithm.getInputParameter("swarmSize");
 
     String dataDirectory = (String) algorithm.getInputParameter("dataDirectory");
     System.out.println(dataDirectory);
-    File experimentDirectory = new File(dataDirectory);
+    //File experimentDirectory = new File(dataDirectory);
+    String experimentDirectoryName = ClassLoader.getSystemResource(dataDirectory).getPath();
 
     Assert.assertEquals("dMOPSO_SettingsTest", 100, ((Integer) algorithm.getInputParameter("swarmSize")).intValue());
     Assert.assertEquals("dMOPSO_SettingsTest", 250, ((Integer) algorithm.getInputParameter("maxIterations")).intValue());
+    Assert.assertEquals("dMOPSO_SettingsTest", 100, ((Integer) algorithm.getInputParameter("swarmSize")).intValue());
+    Assert.assertEquals("dMOPSO_SettingsTest", 250, ((Integer) algorithm.getInputParameter("maxIterations")).intValue());
+    Assert.assertEquals("dMOPSO_SettingsTest", 2, ((Integer) algorithm.getInputParameter("maxAge")).intValue());
+    Assert.assertEquals("dMOPSO_SettingsTest", "_TCHE", algorithm.getInputParameter("functionType"));
 
-    Assert.assertTrue("cMOEAD_SettingsTest", experimentDirectory.exists());
+    assertNotNull("dMOPSO_SettingsTest", experimentDirectoryName);
   }
 }

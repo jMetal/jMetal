@@ -75,6 +75,7 @@ public class dMOPSO_main {
     algorithm.setInputParameter("maxAge",2);
     algorithm.setInputParameter("maxIterations",250);
     algorithm.setInputParameter("functionType","_TCHE");
+    algorithm.setInputParameter("dataDirectory", "MOEAD_Weight");
 
     // Execute the Algorithm 
     long initTime = System.currentTimeMillis();

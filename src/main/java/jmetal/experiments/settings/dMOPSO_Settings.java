@@ -65,8 +65,8 @@ public class dMOPSO_Settings extends Settings {
 		// of CS & EE, University of Essex, 02/2009.
 		// http://dces.essex.ac.uk/staff/qzhang/MOEAcompetition/CEC09final/code/ZhangMOEADcode/moead0305.rar
 
-		dataDirectory_ =  "/Users/antelverde/Softw/pruebas/data/MOEAD_parameters/Weight" ;
-	} // MOEAD_Settings
+    dataDirectory_ = "MOEAD_Weights" ;
+	} // dMOPSO_Settings
 
 	/**
 	 * Configure the algorithm with the specified parameter experiments.settings
