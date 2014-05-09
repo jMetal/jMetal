@@ -238,7 +238,7 @@ public class SolutionSet implements Serializable {
    * objects into the set in a file.
    * @param path The output file name
    */
-  public void printObjectivesToFile(String path){
+  public void printObjectivesToFile(String path) throws IOException {
     try {
       /* Open the file */
       FileOutputStream fos   = new FileOutputStream(path)     ;
@@ -256,7 +256,8 @@ public class SolutionSet implements Serializable {
       bw.close();
     }catch (IOException e) {
       Configuration.logger_.severe("Error acceding to the file");
-      e.printStackTrace();
+      throw new IOException(e) ;
+      //e.printStackTrace();
     }
   } // printObjectivesToFile
 
