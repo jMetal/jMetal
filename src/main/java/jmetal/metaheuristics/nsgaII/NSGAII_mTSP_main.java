@@ -55,11 +55,8 @@ public class NSGAII_mTSP_main {
    * Usage: 
    *      - jmetal.metaheuristics.nsgaII.NSGAII_mTSP_main
    */
-  public static void main(String [] args) throws 
-                                  JMException, 
-                                  SecurityException, 
-                                  IOException, 
-                                  ClassNotFoundException {
+  public static void main(String [] args) throws
+          Exception {
     Problem   problem   ; // The problem to solve
     Algorithm algorithm ; // The algorithm to use
     Operator  crossover ; // Crossover operator

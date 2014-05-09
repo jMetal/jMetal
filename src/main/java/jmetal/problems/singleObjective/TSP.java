@@ -41,7 +41,7 @@ public class TSP extends Problem {
   public int         numberOfCities_ ;
   public double [][] distanceMatrix_ ;
 
-  public TSP(String solutionType){
+  public TSP(String solutionType) throws Exception {
     this(solutionType, "eil101.tsp") ;
   }
 
@@ -49,7 +49,7 @@ public class TSP extends Problem {
    * Creates a new TSP problem instance. It accepts data files from TSPLIB
    * @param filename The file containing the definition of the problem
    */
-  public TSP(String solutionType, String filename) {
+  public TSP(String solutionType, String filename) throws Exception {
     numberOfVariables_  = 1;
     numberOfObjectives_ = 1;
     numberOfConstraints_= 0;
@@ -68,11 +68,8 @@ public class TSP extends Problem {
     } catch (JMException e) {
       e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
     }
-    try {
-      readProblem(filename) ;
-    } catch (IOException e) {
-      e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-    }
+    readProblem(filename) ;
+
     System.out.println(numberOfCities_) ;
     length_      [0] = numberOfCities_ ;
   } // TSP
@@ -107,7 +104,7 @@ public class TSP extends Problem {
 
 
   public void readProblem(String fileName) throws
-  IOException {
+          Exception {
     Reader inputFile = new BufferedReader(
         new InputStreamReader(
             new FileInputStream(fileName)));
@@ -170,8 +167,7 @@ public class TSP extends Problem {
       } // for
     } // try
     catch (Exception e) {
-      System.err.println ("TSP.readProblem(): error when reading data file "+e);
-      System.exit(1);
+      throw new Exception ("TSP.readProblem(): error when reading data file "+e);
     } // catch
   } // readProblem
 } // TSP

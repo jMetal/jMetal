@@ -49,7 +49,7 @@ public class mTSP extends Problem {
    */
   public mTSP(String solutionType,
       String file_distances,
-      String file_cost) throws IOException, JMException {
+      String file_cost) throws Exception {
     numberOfVariables_  = 1;
     numberOfObjectives_ = 2;
     numberOfConstraints_= 0;
@@ -106,7 +106,7 @@ public class mTSP extends Problem {
 
 
   public double [][] readProblem(String file) throws
-  IOException {
+          Exception {
     double [][] matrix = null;
     Reader inputFile = new BufferedReader(
         new InputStreamReader(
@@ -170,8 +170,7 @@ public class mTSP extends Problem {
       } // for
     } // try
     catch (Exception e) { 
-      System.err.println ("TSP.readProblem(): error when reading data file "+e);
-      System.exit(1);
+      throw new Exception ("mTSP.readProblem(): error when reading data file "+e);
     } // catch
     return matrix;
   } // readProblem

@@ -49,35 +49,35 @@ package jmetal.problems.singleObjective.cec2005Competition.originalCode ;
 
 public abstract class HCJob {
 
-	// Number of basic functions
-	public int num_func;
-	// Number of dimensions
-	public int num_dim;
+  // Number of basic functions
+  public int num_func;
+  // Number of dimensions
+  public int num_dim;
 
-	// Predefined constant
-	public double C;
-	// Coverage range for each basic function
-	public double[] sigma;
-	// Biases for each basic function
-	public double[] biases;
-	// Stretch / compress each basic function
-	public double[] lambda;
-	// Estimated fmax
-	public double[] fmax;
-	// Shift global optimum for each basic function
-	public double[][] o;
-	// Linear transformation matrix for each basic function
-	public double[][][] M;
+  // Predefined constant
+  public double C;
+  // Coverage range for each basic function
+  public double[] sigma;
+  // Biases for each basic function
+  public double[] biases;
+  // Stretch / compress each basic function
+  public double[] lambda;
+  // Estimated fmax
+  public double[] fmax;
+  // Shift global optimum for each basic function
+  public double[][] o;
+  // Linear transformation matrix for each basic function
+  public double[][][] M;
 
-	// Working areas to avoid memory allocation operations
-	public double[] w;
-	public double[][] z;
-	public double[][] zM;
+  // Working areas to avoid memory allocation operations
+  public double[] w;
+  public double[][] z;
+  public double[][] zM;
 
-	public HCJob() {
-		// Nothing
-		// This class is just a place holder.
-	}
+  public HCJob() {
+    // Nothing
+    // This class is just a place holder.
+  }
 
-	public abstract double basic_func(int func_no, double[] x);
+  public abstract double basic_func(int func_no, double[] x);
 }

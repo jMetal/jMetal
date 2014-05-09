@@ -42,8 +42,9 @@ public class Sphere extends Problem {
    * Creates a default instance of the Sphere problem
    * @param numberOfVariables Number of variables of the problem 
    * @param solutionType The solution type must "Real" or "BinaryReal". 
+   * @throws JMException 
    */
-  public Sphere(String solutionType, Integer numberOfVariables) {
+  public Sphere(String solutionType, Integer numberOfVariables) throws JMException {
     numberOfVariables_   = numberOfVariables ;
     numberOfObjectives_  = 1;
     numberOfConstraints_ = 0;
@@ -61,8 +62,7 @@ public class Sphere extends Problem {
     else if (solutionType.compareTo("Real") == 0)
       solutionType_ = new RealSolutionType(this) ;
     else {
-      System.out.println("Error: solution type " + solutionType + " invalid") ;
-      System.exit(-1) ;
+      throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }  
 
   } // Sphere
