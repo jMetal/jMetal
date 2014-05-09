@@ -21,6 +21,8 @@
 
 package jmetal.qualityIndicator;
 
+import jmetal.util.JMException;
+
 /**
  * This class implements the inverted generational distance metric. 
  * It can be used also as a command line by typing: 
@@ -109,13 +111,13 @@ public class InvertedGenerationalDistance {
    * This class can be invoqued from the command line. Two params are required:
    * 1) the name of the file containing the front, and 2) the name of the file 
    * containig the true Pareto front
+   * @throws JMException 
    **/
-  public static void main(String args[]) {
+  public static void main(String args[]) throws JMException {
     if (args.length < 2) {
-      System.err.println("InvertedGenerationalDistance::Main: Usage: java " +
+      throw new JMException("InvertedGenerationalDistance::Main: Usage: java " +
       		             "InvertedGenerationalDistance <FrontFile> " +
       		             "<TrueFrontFile>  <getNumberOfObjectives>");
-      System.exit(1);
     } // if
     
     // STEP 1. Create an instance of Generational Distance

@@ -141,7 +141,7 @@ public class F20_rotated_hybrid_composition_2_global_opt_bound extends TestFunc 
   }
 
   private class MyHCJob extends HCJob {
-    public double basic_func(int func_no, double[] x) {
+    public double basic_func(int func_no, double[] x) throws JMException {
       double result = 0.0;
       switch(func_no) {
       case 0:
@@ -165,8 +165,7 @@ public class F20_rotated_hybrid_composition_2_global_opt_bound extends TestFunc 
         result = Benchmark.griewank(x);
         break;
       default:
-        System.err.println("func_no is out of range.");
-        System.exit(-1);
+        throw new JMException("func_no is out of range.");
       }
       return (result);
     }

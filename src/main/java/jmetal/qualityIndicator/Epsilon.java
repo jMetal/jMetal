@@ -21,6 +21,8 @@
 
 package jmetal.qualityIndicator ;
 
+import jmetal.util.JMException;
+
 /**
  * This class implements the unary epsilon additive indicator as proposed in
  * E. Zitzler, E. Thiele, L. Laummanns, M., Fonseca, C., and Grunert da Fonseca.
@@ -44,7 +46,7 @@ public class Epsilon {
   int     method_; 
   /* stores a reference to  qualityIndicatorUtils */
   public jmetal.qualityIndicator.util.MetricsUtil utils_ = 
-  		new jmetal.qualityIndicator.util.MetricsUtil();
+      new jmetal.qualityIndicator.util.MetricsUtil();
 
 
   /**
@@ -52,14 +54,15 @@ public class Epsilon {
    * @param b True Pareto front
    * @param a Solution front
    * @return the value of the epsilon indicator
+   * @throws JMException 
    */
-  public double epsilon(double [][] b, double [][] a, int dim) {
+  public double epsilon(double [][] b, double [][] a, int dim) throws JMException {
     int  i, j, k;
     double  eps, eps_j = 0.0, eps_k=0.0, eps_temp;
 
     dim_ = dim ;
     set_params() ;
-    
+
     if (method_ == 0)
       eps = Double.MIN_VALUE;
     else
@@ -69,30 +72,29 @@ public class Epsilon {
       for (j = 0; j < b.length; j++) {
         for (k = 0; k < dim_; k++) {
           switch (method_) {
-            case 0:
-              if (obj_[k] == 0)
-                eps_temp = b[j][k] - a[i][k];                
-                //eps_temp = b[j * dim_ + k] - a[i * dim_ + k];
-              else
-                eps_temp = a[i][k] - b[j][k];
-                //eps_temp = a[i * dim_ + k] - b[j * dim_ + k];
-              break;
-            default:
-              if ( (a[i][k] < 0 && b[j][k] > 0) ||
-                   (a[i][k] > 0 && b[j][k] < 0) ||
-                   (a[i][k] == 0 || b[j][k] == 0)) {
+          case 0:
+            if (obj_[k] == 0)
+              eps_temp = b[j][k] - a[i][k];                
+            //eps_temp = b[j * dim_ + k] - a[i * dim_ + k];
+            else
+              eps_temp = a[i][k] - b[j][k];
+            //eps_temp = a[i * dim_ + k] - b[j * dim_ + k];
+            break;
+          default:
+            if ( (a[i][k] < 0 && b[j][k] > 0) ||
+                (a[i][k] > 0 && b[j][k] < 0) ||
+                (a[i][k] == 0 || b[j][k] == 0)) {
               //if ( (a[i * dim_ + k] < 0 && b[j * dim_ + k] > 0) ||
               //     (a[i * dim_ + k] > 0 && b[j * dim_ + k] < 0) ||
               //     (a[i * dim_ + k] == 0 || b[j * dim_ + k] == 0)) {
-                System.err.println("error in data file");
-                System.exit(0);
-              }
-              if (obj_[k] == 0)
-                eps_temp = b[j][k] / a[i][k];
-                //eps_temp = b[j * dim_ + k] / a[i * dim_ + k];
-              else
-                eps_temp = a[i][k] / b[j][k];
-                //eps_temp = a[i * dim_ + k] / b[j * dim_ + k];
+              throw new JMException("Error in data file");
+            }
+            if (obj_[k] == 0)
+              eps_temp = b[j][k] / a[i][k];
+            //eps_temp = b[j * dim_ + k] / a[i * dim_ + k];
+            else
+              eps_temp = a[i][k] / b[j][k];
+            //eps_temp = a[i * dim_ + k] / b[j * dim_ + k];
             break;
           }
           if (k == 0)
@@ -112,7 +114,7 @@ public class Epsilon {
     }
     return eps;
   } // epsilon
- 
+
   /**
    * Established the params by default
    */
@@ -124,32 +126,34 @@ public class Epsilon {
     }
     method_ = 0;
   } // set_params
-  
-  
+
+
   /** 
-  * Returns the additive-epsilon value of the paretoFront. This method call to the
-  * calculate epsilon-indicator one
-  */
-  public static void main(String [] args) {
+   * Returns the additive-epsilon value of the paretoFront. This method call to the
+   * calculate epsilon-indicator one
+   * @throws JMException 
+   * @throws NumberFormatException 
+   */
+  public static void main(String [] args) throws NumberFormatException, JMException {
     double ind_value;
- 
+
     if (args.length < 2) {
       System.err.println("Error using Epsilon. Type: \n java AdditiveEpsilon " +
-                         "<FrontFile>" +
-                         "<TrueFrontFile> + <getNumberOfObjectives>");
+          "<FrontFile>" +
+          "<TrueFrontFile> + <getNumberOfObjectives>");
       System.exit(1);
     }
-   
+
     Epsilon qualityIndicator = new Epsilon();
     double [][] solutionFront = qualityIndicator.utils_.readFront(args[0]);
     double [][] trueFront     = qualityIndicator.utils_.readFront(args[1]);
     //qualityIndicator.dim_ = trueParetoFront[0].length;
     //qualityIndicator.set_params();
-            
+
     ind_value = qualityIndicator.epsilon(trueFront,
-                                         solutionFront,
-            new Integer(args[2]));
-    
+        solutionFront,
+        new Integer(args[2]));
+
     System.out.println(ind_value);
   } // main
 } // Epsilon

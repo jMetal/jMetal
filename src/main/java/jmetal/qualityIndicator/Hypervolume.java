@@ -21,6 +21,8 @@
 
 package jmetal.qualityIndicator;
 
+import jmetal.util.JMException;
+
 /**
  * This class implements the hypervolume indicator. The code is the a Java version
  * of the original metric implementation by Eckart Zitzler.
@@ -251,13 +253,13 @@ public class Hypervolume {
    * 1) the name of the file containing the front,  
    * 2) the name of the file containig the true Pareto front
    * 3) the number of objectives
+   * @throws JMException 
    */
-  public static void main(String args[]) {
+  public static void main(String args[]) throws JMException {
     if (args.length < 2) {
-      System.err.println("Error using Hypervolume. Usage: \n java jmetal.qualityIndicator.Hypervolume " +
+      throw new JMException("Error using Hypervolume. Usage: \n java jmetal.qualityIndicator.Hypervolume " +
                          "<SolutionFrontFile> " +
                          "<TrueFrontFile> " + "<getNumberOfObjectives>");
-      System.exit(1);
     }
     
     //Create a new instance of the metric

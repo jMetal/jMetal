@@ -22,6 +22,8 @@
 package jmetal.qualityIndicator;
 import java.util.Arrays;
 
+import jmetal.util.JMException;
+
 /**
  * This class implements the generalized spread metric for two or more dimensions.
  * It can be used also as command line program just by typing. 
@@ -146,14 +148,14 @@ public class GeneralizedSpread {
    * 1) the name of the file containing the front,  
    * 2) the name of the file containig the true Pareto front
    * 3) the number of objectives
+   * @throws JMException 
    */
-  public static void main(String args[]) {
+  public static void main(String args[]) throws JMException {
     if (args.length < 3) {
-      System.err.println("Error using GeneralizedSpread. " +
-                         "Usage: \n java GeneralizedSpread" +
-                         " <SolutionFrontFile> " +
-                         " <TrueFrontFile> + <getNumberOfObjectives>");
-      System.exit(1);
+      throw new JMException("Error using GeneralizedSpread. " +
+          "Usage: \n java GeneralizedSpread" +
+          " <SolutionFrontFile> " +
+          " <TrueFrontFile> + <getNumberOfObjectives>") ;
     }
     
     //Create a new instance of the metric

@@ -135,7 +135,7 @@ public class F25_rotated_hybrid_composition_4_bound extends TestFunc {
   }
 
   private class MyHCJob extends HCJob {
-    public double basic_func(int func_no, double[] x) {
+    public double basic_func(int func_no, double[] x) throws JMException {
       double result = 0.0;
       // This part is according to Matlab reference code
       switch(func_no) {
@@ -170,8 +170,7 @@ public class F25_rotated_hybrid_composition_4_bound extends TestFunc {
         result = Benchmark.sphere_noise(x);
         break;
       default:
-        System.err.println("func_no is out of range.");
-        System.exit(-1);
+        throw new JMException("func_no is out of range.");
       }
       return (result);
     }
