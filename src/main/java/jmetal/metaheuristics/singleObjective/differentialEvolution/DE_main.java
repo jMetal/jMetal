@@ -27,9 +27,9 @@ import jmetal.core.SolutionSet;
 import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.singleObjective.CEC2005Problem;
-import jmetal.problems.singleObjective.Sphere;
 import jmetal.util.JMException;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -37,7 +37,7 @@ import java.util.HashMap;
  */
 public class DE_main {
 
-  public static void main(String [] args) throws JMException, ClassNotFoundException {
+  public static void main(String [] args) throws JMException, ClassNotFoundException, IOException {
     Problem   problem   ;         // The problem to solve
     Algorithm algorithm ;         // The algorithm to use
     Operator  crossover ;         // Crossover operator

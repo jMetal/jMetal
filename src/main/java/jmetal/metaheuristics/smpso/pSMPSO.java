@@ -339,7 +339,7 @@ public class pSMPSO extends Algorithm {
    * as a result of the algorithm execution  
    * @throws JMException 
    */
-  public SolutionSet execute() throws JMException, ClassNotFoundException {
+  public SolutionSet execute() throws JMException, ClassNotFoundException, IOException {
     initParams();
     success_ = false;
     //->Step 1 (and 3) Create the initial population and evaluate

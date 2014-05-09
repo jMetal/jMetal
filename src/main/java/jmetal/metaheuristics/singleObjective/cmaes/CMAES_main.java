@@ -25,12 +25,14 @@ import jmetal.core.SolutionSet;
 import jmetal.problems.singleObjective.Rosenbrock;
 import jmetal.util.JMException;
 
+import java.io.IOException;
+
 /**
  * This class runs a single-objective CMA-ES algorithm.
  */
 public class CMAES_main {
 
-  public static void main(String [] args) throws JMException, ClassNotFoundException {
+  public static void main(String [] args) throws JMException, ClassNotFoundException, IOException {
     int numberOfVariables = 20;
     int populationSize = 10;
     int maxEvaluations = 1000000;

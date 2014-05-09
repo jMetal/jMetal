@@ -5,6 +5,7 @@ import jmetal.qualityIndicator.util.MetricsUtil;
 import jmetal.util.NonDominatedSolutionList;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by Antonio J. Nebro on 23/02/14.
@@ -60,7 +61,11 @@ public class ReferenceParetoFronts implements iExperimentOutput {
       } // for
     } // for
     //solutionSet.printObjectivesToFile(frontPath_[problemIndex]);
-    solutionSet.printObjectivesToFile(referenceParetoFront);
+    try {
+      solutionSet.printObjectivesToFile(referenceParetoFront);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
     //solutionSet.printVariablesToFile(referenceParetoSet);
   } // generateReferenceFronts
 }

@@ -414,7 +414,11 @@ public class Experiment {
       } // for
     } // for
     //solutionSet.printObjectivesToFile(frontPath_[problemIndex]);
-    solutionSet.printObjectivesToFile(referenceParetoFront);
+    try {
+      solutionSet.printObjectivesToFile(referenceParetoFront);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
     //solutionSet.printVariablesToFile(referenceParetoSet);
   } // generateReferenceFronts
 }

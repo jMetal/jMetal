@@ -31,6 +31,7 @@ import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.singleObjective.OneMax;
 import jmetal.util.JMException;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -41,7 +42,7 @@ import java.util.HashMap;
  */
 public class GA_main {
 
-  public static void main(String [] args) throws JMException, ClassNotFoundException {
+  public static void main(String [] args) throws JMException, ClassNotFoundException, IOException {
     Problem   problem   ;         // The problem to solve
     Algorithm algorithm ;         // The algorithm to use
     Operator  crossover ;         // Crossover operator
