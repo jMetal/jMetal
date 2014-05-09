@@ -21,6 +21,8 @@
 
 package jmetal.qualityIndicator;
 
+import jmetal.util.JMException;
+
 /**
  * This class implements the generational distance indicator. It can be used also 
  * as a command line by typing: 
@@ -109,13 +111,13 @@ public class GenerationalDistance {
    * This class can be invoqued from the command line. Two params are required:
    * 1) the name of the file containing the front, and 2) the name of the file 
    * containig the true Pareto front
+   * @throws JMException 
    **/
-  public static void main(String args[]) {
+  public static void main(String args[]) throws JMException {
     if (args.length < 2) {
-      System.err.println("GenerationalDistance::Main: Usage: java " +
+      throw new JMException("GenerationalDistance::Main: Usage: java " +
       		             "GenerationalDistance <FrontFile> " +
       		             "<TrueFrontFile>  <getNumberOfObjectives>");
-      System.exit(1);
     } // if
     
     // STEP 1. Create an instance of Generational Distance

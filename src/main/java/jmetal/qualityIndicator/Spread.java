@@ -23,6 +23,8 @@ package jmetal.qualityIndicator;
 
 import java.util.Arrays;
 
+import jmetal.util.JMException;
+
 /**
  * This class implements the spread quality indicator. 
  * It can be used also as command line program just by typing:
@@ -133,13 +135,13 @@ public class Spread {
    * 1) the name of the file containing the front,  
    * 2) the name of the file containig the true Pareto front
    * 3) the number of objectives
+   * @throws JMException 
    */
-  public static void main(String args[]) {
+  public static void main(String args[]) throws JMException {
 	if (args.length < 2) {
-      System.err.println("Spread::Main: Error using Spread. Usage: \n java " +
+      throw new JMException("Spread::Main: Error using Spread. Usage: \n java " +
 			             "Spread <FrontFile> <TrueFrontFile>  " +
 		                 "<getNumberOfObjectives>");
-      System.exit(1);
 	} // if
 
 	// STEP 1. Create a new instance of the metric

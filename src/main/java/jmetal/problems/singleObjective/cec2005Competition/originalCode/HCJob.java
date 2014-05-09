@@ -47,6 +47,8 @@
 
 package jmetal.problems.singleObjective.cec2005Competition.originalCode ;
 
+import jmetal.util.JMException;
+
 public abstract class HCJob {
 
   // Number of basic functions
@@ -79,5 +81,5 @@ public abstract class HCJob {
     // This class is just a place holder.
   }
 
-  public abstract double basic_func(int func_no, double[] x);
+  public abstract double basic_func(int func_no, double[] x) throws JMException;
 }

@@ -595,15 +595,14 @@ public class Benchmark {
     }
   }
 
-  static public void loadColumnVectorFromFile(String file, int rows, double[] column) {
+  static public void loadColumnVectorFromFile(String file, int rows, double[] column) throws JMException {
     try {
       BufferedReader brSrc = new BufferedReader(new FileReader(file));
       loadColumnVector(brSrc, rows, column);
       brSrc.close();
     }
     catch (Exception e) {
-      e.printStackTrace();
-      System.exit(-1);
+      throw new JMException("Error in Benchmark.java") ;
     }
   }
 

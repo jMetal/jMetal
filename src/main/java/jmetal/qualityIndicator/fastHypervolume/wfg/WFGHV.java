@@ -29,6 +29,7 @@ package jmetal.qualityIndicator.fastHypervolume.wfg;
 
 import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
+import jmetal.util.JMException;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -288,12 +289,11 @@ public class WFGHV {
     Arrays.sort(front.points_, 0, front.nPoints_, pointComparator_);
   }
 
-  public static void main(String args[]) throws IOException {
+  public static void main(String args[]) throws IOException, JMException {
     Front front = new Front() ;
 
     if (args.length == 0) {
-      System.out.println("Usage: WFGHV front [reference point]") ;
-      System.exit(-1) ;
+      throw new JMException("Usage: WFGHV front [reference point]") ;
     }
 
     if (args.length > 0) {
