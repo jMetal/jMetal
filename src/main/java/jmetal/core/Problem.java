@@ -103,7 +103,7 @@ public abstract class Problem implements Serializable {
    * Constructor. 
    */
   public Problem(SolutionType solutionType) {
-	  solutionType_ = solutionType ;
+    solutionType_ = solutionType ;
   } // Problem
         
   /** 

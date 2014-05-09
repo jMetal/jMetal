@@ -345,7 +345,7 @@ public class MOEAD extends Algorithm {
    * @param id
    * @param type
    */
-  void updateProblem(Solution individual, int id, int type) {
+  void updateProblem(Solution individual, int id, int type) throws JMException {
     // individual: child solution
     // id:   the id of current subproblem
     // type: update solutions in - neighborhood (1) or whole population (otherwise)
@@ -387,7 +387,7 @@ public class MOEAD extends Algorithm {
     }
   } // updateProblem
 
-  double fitnessFunction(Solution individual, double[] lambda) {
+  double fitnessFunction(Solution individual, double[] lambda) throws JMException {
     double fitness;
     fitness = 0.0;
 
@@ -411,8 +411,7 @@ public class MOEAD extends Algorithm {
       fitness = maxFun;
     } // if
     else {
-      System.out.println("MOEAD.fitnessFunction: unknown type " + functionType_);
-      System.exit(-1);
+      throw new JMException(" MOEAD.fitnessFunction: unknown type " + functionType_) ;
     }
     return fitness;
   } // fitnessEvaluation

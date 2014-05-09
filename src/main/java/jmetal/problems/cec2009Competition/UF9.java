@@ -43,7 +43,7 @@ public class UF9 extends Problem {
    * Creates a default instance of problem CEC2009_UF9 (30 decision variables)
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
-  public UF9(String solutionType) throws ClassNotFoundException{
+  public UF9(String solutionType) throws ClassNotFoundException, JMException {
     this(solutionType, 30, 0.1); // 30 variables by default, epsilon = 0.1
   } // CEC2009_UF9
 
@@ -52,7 +52,7 @@ public class UF9 extends Problem {
    * @param numberOfVariables Number of variables.
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
-  public UF9(String solutionType, Integer numberOfVariables, double epsilon) {
+  public UF9(String solutionType, Integer numberOfVariables, double epsilon) throws JMException {
     numberOfVariables_  = numberOfVariables;
     numberOfObjectives_ =  3;
     numberOfConstraints_=  0;
@@ -79,9 +79,8 @@ public class UF9 extends Problem {
     else if (solutionType.compareTo("Real") == 0)
       solutionType_ = new RealSolutionType(this) ;
     else {
-      System.out.println("Error: solution type " + solutionType + " invalid") ;
-      System.exit(-1) ;
-    }  
+      throw new JMException("Error: solution type " + solutionType + " invalid") ;
+    }
   } // CEC2009_UF9
 
   /** 

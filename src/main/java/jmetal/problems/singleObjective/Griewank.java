@@ -44,7 +44,7 @@ public class Griewank extends Problem {
    * @param numberOfVariables Number of variables of the problem 
    * @param solutionType The solution type must "Real" or "BinaryReal". 
    */
-  public Griewank(String solutionType, Integer numberOfVariables) {
+  public Griewank(String solutionType, Integer numberOfVariables) throws JMException {
     numberOfVariables_   = numberOfVariables;
     numberOfObjectives_  = 1;
     numberOfConstraints_ = 0;
@@ -62,9 +62,8 @@ public class Griewank extends Problem {
     else if (solutionType.compareTo("Real") == 0)
     	solutionType_ = new RealSolutionType(this) ;
     else {
-    	System.out.println("Error: solution type " + solutionType + " invalid") ;
-    	System.exit(-1) ;
-    }  
+      throw new JMException("Error: solution type " + solutionType + " invalid") ;
+    }
   } // Griewank
     
   /** 

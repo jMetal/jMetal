@@ -42,7 +42,7 @@ public class CEC2005Problem extends Problem {
    */
   TestFunc testFunction_ ;
 
-  public CEC2005Problem(String solutionType, int problemID, int numberOfVariables) {
+  public CEC2005Problem(String solutionType, int problemID, int numberOfVariables) throws JMException {
     numberOfVariables_   = numberOfVariables ;
     numberOfObjectives_  = 1;
     numberOfConstraints_ = 0;
@@ -109,8 +109,7 @@ public class CEC2005Problem extends Problem {
     else if (solutionType.compareTo("Real") == 0)
     	solutionType_ = new RealSolutionType(this) ;
     else {
-    	System.out.println("Error: solution type " + solutionType + " invalid") ;
-    	System.exit(-1) ;
+      throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
 
   } // Sphere

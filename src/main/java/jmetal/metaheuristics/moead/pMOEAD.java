@@ -226,7 +226,11 @@ public class pMOEAD extends Algorithm implements Runnable {
         updateReference(child);
 
         // STEP 2.5. Update of solutions
-        updateOfSolutions(child, n, type);
+        try {
+          updateOfSolutions(child, n, type);
+        } catch (JMException e) {
+          e.printStackTrace();
+        }
       } // for
     } while (evaluations_ < maxEvaluations_);
 
@@ -460,7 +464,7 @@ public class pMOEAD extends Algorithm implements Runnable {
    * @param id
    * @param type
    */
-  void updateOfSolutions(Solution indiv, int id, int type) {
+  void updateOfSolutions(Solution individual, int id, int type) throws JMException {
     // indiv: child solution
     // id:   the id of current subproblem
     // type: update solutions in - neighborhood (1) or whole population (otherwise)
@@ -487,12 +491,12 @@ public class pMOEAD extends Algorithm implements Runnable {
       }
       double f1, f2;
 
-      f2 = fitnessFunction(indiv, parentThread_.lambda_[k]);
+      f2 = fitnessFunction(individual, parentThread_.lambda_[k]);
       synchronized (parentThread_) {
         f1 = fitnessFunction(parentThread_.population_.get(k), parentThread_.lambda_[k]);
 
         if (f2 < f1) {
-          parentThread_.population_.replace(k, new Solution(indiv));
+          parentThread_.population_.replace(k, new Solution(individual));
           //population[k].indiv = indiv;
           time++;
         }
@@ -504,7 +508,7 @@ public class pMOEAD extends Algorithm implements Runnable {
     }
   } // updateProblem
 
-  double fitnessFunction(Solution individual, double[] lambda) {
+  double fitnessFunction(Solution individual, double[] lambda) throws JMException {
     double fitness;
     fitness = 0.0;
 
@@ -528,8 +532,7 @@ public class pMOEAD extends Algorithm implements Runnable {
       fitness = maxFun;
     } // if
     else {
-      System.out.println("MOEAD.fitnessFunction: unknown type " + functionType_);
-      System.exit(-1);
+      throw new JMException("pMOEAD.fitnessFunction: unknown type " + functionType_) ;
     }
     return fitness;
   } // fitnessEvaluation

@@ -494,7 +494,7 @@ public class dMOPSO extends Algorithm {
     }
   } // updateReference
 
-  private void updateGlobalBest() {
+  private void updateGlobalBest() throws JMException {
 
     double gBestFitness ;
 
@@ -512,7 +512,7 @@ public class dMOPSO extends Algorithm {
     }	
   }
 
-  private void updateLocalBest(int part) {
+  private void updateLocalBest(int part) throws JMException {
 
     double f1, f2;
     Solution indiv = new Solution(particles_.get(part));
@@ -532,7 +532,7 @@ public class dMOPSO extends Algorithm {
   } // updateLocalBest
 
 
-  private double fitnessFunction(Solution sol, double[] lambda){
+  private double fitnessFunction(Solution sol, double[] lambda) throws JMException {
     double fitness = 0.0;
 
     if (functionType_.equals("_TCHE")) {
@@ -585,8 +585,7 @@ public class dMOPSO extends Algorithm {
       fitness = (d1 + theta * d2);	
 
     }else{
-      System.out.println("dMOPSO.fitnessFunction: unknown type " + functionType_);
-      System.exit(-1);
+      throw new JMException("dMOPSO.fitnessFunction: unknown type " + functionType_) ;
     }
     return fitness;	
   } // fitnessFunction

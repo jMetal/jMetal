@@ -44,7 +44,7 @@ public class IntRealProblem extends Problem {
    * Constructor.
    * Creates a default instance of the IntRealProblem problem.
    */
-  public IntRealProblem(String solutionType) throws ClassNotFoundException {
+  public IntRealProblem(String solutionType) throws ClassNotFoundException, JMException {
     this(solutionType, 3, 3);
   } // IntRealProblem
 
@@ -54,7 +54,7 @@ public class IntRealProblem extends Problem {
    * @param intVariables Number of integer variables of the problem 
    * @param realVariables Number of real variables of the problem 
    */
-  public IntRealProblem(String solutionType, int intVariables, int realVariables) {
+  public IntRealProblem(String solutionType, int intVariables, int realVariables) throws JMException {
     intVariables_  = intVariables  ;
     realVariables_ = realVariables ;
 
@@ -79,8 +79,7 @@ public class IntRealProblem extends Problem {
     if (solutionType.compareTo("IntReal") == 0)
       solutionType_ = new IntRealSolutionType(this, intVariables, realVariables) ;
     else {
-      System.out.println("Error: solution type " + solutionType + " invalid") ;
-      System.exit(-1) ;
+      throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
   } // IntRealProblem
 

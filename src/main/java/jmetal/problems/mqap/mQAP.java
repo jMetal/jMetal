@@ -43,7 +43,7 @@ public class mQAP extends Problem {
   int [][] a_matrix;
   int [][][] b_matrixs;
 
-  public mQAP(String solutionType) {
+  public mQAP(String solutionType) throws JMException {
     this(solutionType, "KC10-2fl-2rl.dat") ;
   }
 
@@ -51,7 +51,7 @@ public class mQAP extends Problem {
    * Creates a new instance of problem mQAP.
    * @param fileName: name of the file containing the instance  
    */
-  public mQAP(String solutionType, String fileName)  {
+  public mQAP(String solutionType, String fileName) throws JMException {
 
     ReadInstance ri = new ReadInstance(fileName);    
     ri.loadInstance(); // necessary step (because I say it :-))
@@ -81,11 +81,8 @@ public class mQAP extends Problem {
     } // for
     if (solutionType.compareTo("Permutation") == 0)
       solutionType_ = new PermutationSolutionType(this);
-    else
-      try {
-        throw new JMException("SolutionType must be Permutation") ;
-      } catch (JMException e) {
-        e.printStackTrace();
+    else {
+        throw new JMException("Error: solution type " + solutionType + " invalid") ;
       }
   } // mQAP
 

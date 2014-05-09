@@ -44,7 +44,7 @@ public class Schaffer extends Problem {
    * Creates a default instance of problem Schaffer
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
-  public Schaffer(String solutionType) {
+  public Schaffer(String solutionType) throws JMException {
     numberOfVariables_   = 1;
     numberOfObjectives_  = 2;
     numberOfConstraints_ = 0;
@@ -60,9 +60,7 @@ public class Schaffer extends Problem {
     else if (solutionType.compareTo("Real") == 0)
       solutionType_ = new RealSolutionType(this) ;
     else {
-      System.out.println("Error: solution type " + solutionType + " invalid") ;
-      System.exit(-1) ;
-    }  
+      throw new JMException("Error: solution type " + solutionType + " invalid") ;    }
   } //Schaffer
 
 

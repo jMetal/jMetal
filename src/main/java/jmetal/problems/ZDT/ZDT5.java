@@ -26,6 +26,7 @@ import jmetal.core.Solution;
 import jmetal.core.Variable;
 import jmetal.encodings.solutionType.BinarySolutionType;
 import jmetal.encodings.variable.Binary;
+import jmetal.util.JMException;
 
 /**
  * Class representing problem ZDT5
@@ -41,7 +42,7 @@ public class ZDT5 extends Problem {
    * Creates a default instance of problem ZDT5 (11 decision variables).
    * This problem allows only "Binary" representations.
    */
-  public ZDT5(String solutionType) throws ClassNotFoundException {
+  public ZDT5(String solutionType) throws ClassNotFoundException, JMException {
     this(solutionType, 11); // 11 variables by default
   } // ZDT5
 
@@ -50,7 +51,7 @@ public class ZDT5 extends Problem {
    * @param numberOfVariables Number of variables.
    * This problem allows only "Binary" representations.
    */
-  public ZDT5(String solutionType, Integer numberOfVariables) {
+  public ZDT5(String solutionType, Integer numberOfVariables) throws JMException {
     numberOfVariables_  = numberOfVariables;
     numberOfObjectives_ = 2;
     numberOfConstraints_= 0;
@@ -62,13 +63,11 @@ public class ZDT5 extends Problem {
       length_[var] = 5;
     }
 
-    solutionType_ = new BinarySolutionType(this) ; 
-
-    // All the variables of this problem are Binary
-    //variableType_ = new Class[numberOfVariables_];
-    //for (int var = 0; var < numberOfVariables_; var++){
-    //  variableType_[var] = Class.forName("jmetal.base.encodings.variable.Binary") ;
-    //} // for
+    if (solutionType.compareTo("Binary") == 0)
+      solutionType_ = new BinarySolutionType(this) ;
+    else {
+      throw new JMException("Error: solution type " + solutionType + " invalid") ;
+    }
   } //ZDT5
 
   /** 

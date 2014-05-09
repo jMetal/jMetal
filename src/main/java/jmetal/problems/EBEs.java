@@ -548,7 +548,7 @@ public class EBEs extends Problem{
     // selected objetive functions
     int  selectedOF = 12;
 
-    public EBEs(String solutionType) throws ClassNotFoundException {
+    public EBEs(String solutionType) throws ClassNotFoundException, JMException {
 
     if (solutionType.compareTo("BinaryReal") == 0)
       solutionType_ = new BinaryRealSolutionType(this) ;
@@ -557,8 +557,7 @@ public class EBEs extends Problem{
     else if (solutionType.compareTo("ArrayReal") == 0)
       solutionType_ = new ArrayRealSolutionType(this) ;
     else {
-      System.out.println("Error: solution type " + solutionType + " invalid") ;
-      System.exit(-1) ;
+      throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
 
     EBEsInitialize();

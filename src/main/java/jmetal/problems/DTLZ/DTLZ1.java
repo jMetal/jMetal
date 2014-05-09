@@ -41,7 +41,7 @@ public class DTLZ1 extends Problem {
    * Creates a default DTLZ1 problem (7 variables and 3 objectives)
    * @param solutionType The solution type must "Real" or "BinaryReal". 
    */
-  public DTLZ1(String solutionType) throws ClassNotFoundException {
+  public DTLZ1(String solutionType) throws ClassNotFoundException, JMException {
     this(solutionType, 7, 3);
   } // DTLZ1   
 
@@ -53,7 +53,7 @@ public class DTLZ1 extends Problem {
    */
   public DTLZ1(String solutionType, 
       Integer numberOfVariables, 
-      Integer numberOfObjectives) {
+      Integer numberOfObjectives) throws JMException {
     numberOfVariables_  = numberOfVariables;
     numberOfObjectives_ = numberOfObjectives;
     numberOfConstraints_= 0;
@@ -71,9 +71,8 @@ public class DTLZ1 extends Problem {
     else if (solutionType.compareTo("Real") == 0)
       solutionType_ = new RealSolutionType(this) ;
     else {
-      System.out.println("Error: solution type " + solutionType + " invalid") ;
-      System.exit(-1) ;
-    }            
+      throw new JMException("Error: solution type " + solutionType + " invalid") ;
+    }
   }            
 
   /** 

@@ -367,7 +367,7 @@ public class cMOEAD extends Algorithm {
    * @param id
    * @param type
    */
-  void updateProblem(Solution indiv, int id, int type) {
+  void updateProblem(Solution individual, int id, int type) throws JMException {
     // indiv: child solution
     // id:   the id of current subproblem
     // type: update solutions in - neighborhood (1) or whole population (otherwise)
@@ -395,23 +395,23 @@ public class cMOEAD extends Algorithm {
       double f1, f2;
 
       f1 = fitnessFunction(population_.get(k), lambda_[k]);
-      f2 = fitnessFunction(indiv, lambda_[k]);
+      f2 = fitnessFunction(individual, lambda_[k]);
 
 
       /***** This part is new according to the violation of constraints *****/
-      if (comparator.needToCompare(population_.get(k), indiv)) {
-        int flag = comparator.compare(population_.get(k), indiv);
+      if (comparator.needToCompare(population_.get(k), individual)) {
+        int flag = comparator.compare(population_.get(k), individual);
         if (flag == 1) 
-          population_.replace(k,new Solution(indiv));
+          population_.replace(k,new Solution(individual));
         else if (flag == 0) 
           if (f2 < f1) {
-            population_.replace(k, new Solution(indiv));
+            population_.replace(k, new Solution(individual));
             //population[k].indiv = indiv;
             time++;
           }
       } else {            
         if (f2 < f1) {
-          population_.replace(k, new Solution(indiv));
+          population_.replace(k, new Solution(individual));
           //population[k].indiv = indiv;
           time++;
         }
@@ -423,7 +423,7 @@ public class cMOEAD extends Algorithm {
     }
   } // updateProblem
 
-  double fitnessFunction(Solution individual, double[] lambda) {
+  double fitnessFunction(Solution individual, double[] lambda) throws JMException {
     double fitness;
     fitness = 0.0;
 
@@ -447,8 +447,7 @@ public class cMOEAD extends Algorithm {
       fitness = maxFun;
     } // if
     else {
-      System.out.println("MOEAD.fitnessFunction: unknown type " + functionType_);
-      System.exit(-1);
+      throw new JMException("cMOEAD.fitnessFunction: unknown type " + functionType_) ;
     }
     return fitness;
   } // fitnessEvaluation    

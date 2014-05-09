@@ -43,7 +43,7 @@ public class OKA2 extends Problem {
    * Creates a new instance of the OKA2 problem.
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
-  public OKA2(String solutionType) {
+  public OKA2(String solutionType) throws JMException {
     numberOfVariables_   = 3  ;
     numberOfObjectives_  = 2  ;
     numberOfConstraints_ = 0  ;
@@ -64,9 +64,8 @@ public class OKA2 extends Problem {
     else if (solutionType.compareTo("Real") == 0)
       solutionType_ = new RealSolutionType(this) ;
     else {
-      System.out.println("Error: solution type " + solutionType + " invalid") ;
-      System.exit(-1) ;
-    }  
+      throw new JMException("Error: solution type " + solutionType + " invalid") ;
+    }
   } // OKA2
 
   /** 

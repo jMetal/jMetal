@@ -45,7 +45,7 @@ public class Poloni extends Problem{
    * Creates a default instance of the Poloni problem
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
-  public Poloni(String solutionType) {
+  public Poloni(String solutionType) throws JMException {
     numberOfVariables_  = 2;
     numberOfObjectives_ = 2;
     numberOfConstraints_= 0;
@@ -63,9 +63,8 @@ public class Poloni extends Problem{
     else if (solutionType.compareTo("Real") == 0)
       solutionType_ = new RealSolutionType(this) ;
     else {
-      System.out.println("Error: solution type " + solutionType + " invalid") ;
-      System.exit(-1) ;
-    }  
+      throw new JMException("Error: solution type " + solutionType + " invalid") ;
+    }
   } //Poloni
 
   /** 
