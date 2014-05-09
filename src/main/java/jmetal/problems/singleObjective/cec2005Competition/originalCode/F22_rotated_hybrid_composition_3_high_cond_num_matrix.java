@@ -166,7 +166,7 @@ public class F22_rotated_hybrid_composition_3_high_cond_num_matrix extends TestF
   }
 
   // Function body
-  public double f(double[] x) {
+  public double f(double[] x) throws JMException {
 
     double result = 0.0;
 

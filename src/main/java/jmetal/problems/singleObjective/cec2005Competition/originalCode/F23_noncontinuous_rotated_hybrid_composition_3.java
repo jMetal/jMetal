@@ -166,7 +166,7 @@ public class F23_noncontinuous_rotated_hybrid_composition_3 extends TestFunc {
   }
 
   // Function body
-  public double f(double[] x) {
+  public double f(double[] x) throws JMException {
 
     double result = 0.0;
 

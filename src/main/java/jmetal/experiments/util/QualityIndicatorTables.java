@@ -26,6 +26,7 @@ import jmetal.qualityIndicator.Epsilon;
 import jmetal.qualityIndicator.Hypervolume;
 import jmetal.qualityIndicator.InvertedGenerationalDistance;
 import jmetal.qualityIndicator.Spread;
+import jmetal.util.JMException;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -47,7 +48,7 @@ public class QualityIndicatorTables implements iExperimentOutput {
 
 
   @Override
-  public void generate() {
+  public void generate() throws JMException {
     String paretoFront[] = new String[experiment_.problemList_.length] ;
 
     //checkParetoFronts();

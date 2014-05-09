@@ -169,7 +169,7 @@ public class F19_rotated_hybrid_composition_2_narrow_basin_global_opt extends Te
   }
 
   // Function body
-  public double f(double[] x) {
+  public double f(double[] x) throws JMException {
 
     double result = 0.0;
 

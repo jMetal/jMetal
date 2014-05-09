@@ -23,6 +23,7 @@ package jmetal.experiments;
 import jmetal.experiments.util.*;
 import jmetal.util.parallel.MultithreadedAlgorithmRunner;
 import jmetal.qualityIndicator.util.MetricsUtil;
+import jmetal.util.JMException;
 import jmetal.util.NonDominatedSolutionList;
 
 import java.io.*;
@@ -136,7 +137,7 @@ public class Experiment {
     checkIfExperimentDirectoryExists();
   }
 
-  public void runExperiment()  {
+  public void runExperiment() throws JMException  {
     System.out.println("Experiment: Name: " + experimentName_);
     System.out.println("Experiment: creating " + numberOfExecutionThreads_ + " threads");
     System.out.println("Experiment: Number of algorithms: " + algorithmNameList_.length);

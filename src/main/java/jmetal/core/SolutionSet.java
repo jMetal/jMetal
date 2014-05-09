@@ -287,6 +287,41 @@ public class SolutionSet implements Serializable {
     }       
   } // printVariablesToFile
 
+  /**
+   * Compares two solution sets
+   * @param object Solution set to compare with
+   * @return true or false depending on the result of the comparison
+   */
+  @Override
+  public boolean equals(Object object) {
+    boolean result ;
+    if (object == null) {
+      result = false ;
+    }
+    else if (object == this) {
+      result = true ;
+    }
+    else if (!(object instanceof SolutionSet)) {
+      result = false ;
+    }
+    else {
+      SolutionSet solutionSet = (SolutionSet) object;
+
+      boolean areEquals = true;
+      int i = 0;
+      while (areEquals && (i < solutionSet.size())) {
+        int j = 0;
+        while (areEquals && (j < this.size())) {
+          if (!solutionSet.get(i).equals(this.get(j))) {
+            areEquals = false;
+          }
+          j++;
+        }
+      }
+      result = areEquals ;
+    }
+    return result ;
+  }
 
   /**
    * Write the function values of feasible solutions into a file
