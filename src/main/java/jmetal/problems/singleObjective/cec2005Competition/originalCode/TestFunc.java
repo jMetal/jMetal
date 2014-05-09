@@ -48,34 +48,34 @@ package jmetal.problems.singleObjective.cec2005Competition.originalCode;
 
 public abstract class TestFunc {
 
-	protected int		m_dimension;
-	protected double	m_bias;
+  protected int		m_dimension;
+  protected double	m_bias;
 
-	protected String	m_func_name;
+  protected String	m_func_name;
 
-	// Constructors
-	public TestFunc(int dimension, double bias) {
-		this(dimension, bias, "undefined");
-	}
-	public TestFunc(int dimension, double bias, String func_name) {
-		m_dimension = dimension;
-		m_bias = bias;
-		m_func_name = func_name;
+  // Constructors
+  public TestFunc(int dimension, double bias) {
+    this(dimension, bias, "undefined");
+  }
+  public TestFunc(int dimension, double bias, String func_name) {
+    m_dimension = dimension;
+    m_bias = bias;
+    m_func_name = func_name;
   }
 
-	// Function body to be defined in the child classes
-	public abstract double f(double[] x);
+  // Function body to be defined in the child classes
+  public abstract double f(double[] x);
 
-	// Property functions common for all child classes
-	public int dimension() {
-		return (m_dimension);
-	}
+  // Property functions common for all child classes
+  public int dimension() {
+    return (m_dimension);
+  }
 
-	public double bias() {
-		return (m_bias);
-	}
+  public double bias() {
+    return (m_bias);
+  }
 
-	public String name() {
-		return (m_func_name);
-	}
+  public String name() {
+    return (m_func_name);
+  }
 }

@@ -29,10 +29,7 @@ import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.singleObjective.TSP;
-import jmetal.util.JMException;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -43,9 +40,7 @@ import java.util.HashMap;
  */
 public class TSPGA_main {
 
-  public static void main(String [] args)  throws FileNotFoundException, 
-                                                  IOException, JMException, 
-                                                  ClassNotFoundException {
+  public static void main(String [] args) throws Exception {
     Problem   problem   ;         // The problem to solve
     Algorithm algorithm ;         // The algorithm to use
     Operator  crossover ;         // Crossover operator
