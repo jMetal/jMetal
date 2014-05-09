@@ -125,7 +125,7 @@ public class FriedmanTables implements iExperimentOutput {
         }
         catch (IOException e) {
           e.printStackTrace();
-          System.exit(-1);
+          throw new RuntimeException();
         }
 
         lineas = new StringTokenizer (string,"\n\r");
@@ -261,7 +261,7 @@ public class FriedmanTables implements iExperimentOutput {
     }
     catch (IOException e) {
       e.printStackTrace();
-      System.exit(-1);
+      throw new RuntimeException() ;
     }
   }
 
