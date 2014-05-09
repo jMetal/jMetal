@@ -44,7 +44,7 @@ public class Srinivas extends Problem  {
    * Creates a default instance of the Srinivas problem
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
-  public Srinivas(String solutionType) {
+  public Srinivas(String solutionType) throws JMException {
     numberOfVariables_  = 2;
     numberOfObjectives_ = 2;
     numberOfConstraints_= 2;
@@ -62,9 +62,8 @@ public class Srinivas extends Problem  {
     else if (solutionType.compareTo("Real") == 0)
       solutionType_ = new RealSolutionType(this) ;
     else {
-      System.out.println("Error: solution type " + solutionType + " invalid") ;
-      System.exit(-1) ;
-    }  
+      throw new JMException("Error: solution type " + solutionType + " invalid") ;
+    }
   } //Srinivas
 
   /** 

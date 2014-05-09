@@ -285,8 +285,7 @@ public class MOEAD_DRA extends Algorithm {
 
 
 
-  public void comp_utility()
-  {
+  public void comp_utility() throws JMException {
     double f1, f2, uti, delta;
     for(int n=0; n<populationSize_; n++)
     {
@@ -457,7 +456,7 @@ public class MOEAD_DRA extends Algorithm {
    * @param id
    * @param type
    */
-  void updateProblem(Solution indiv, int id, int type) {
+  void updateProblem(Solution individual, int id, int type) throws JMException {
     // indiv: child solution
     // id:   the id of current subproblem
     // type: update solutions in - neighborhood (1) or whole population (otherwise)
@@ -485,10 +484,10 @@ public class MOEAD_DRA extends Algorithm {
       double f1, f2;
 
       f1 = fitnessFunction(population_.get(k), lambda_[k]);
-      f2 = fitnessFunction(indiv, lambda_[k]);
+      f2 = fitnessFunction(individual, lambda_[k]);
 
       if (f2 < f1) {
-        population_.replace(k, new Solution(indiv));
+        population_.replace(k, new Solution(individual));
         //population[k].indiv = indiv;
         time++;
       }
@@ -499,7 +498,7 @@ public class MOEAD_DRA extends Algorithm {
     }
   } // updateProblem
 
-  double fitnessFunction(Solution individual, double[] lambda) {
+  double fitnessFunction(Solution individual, double[] lambda) throws JMException {
     double fitness;
     fitness = 0.0;
 
@@ -523,8 +522,7 @@ public class MOEAD_DRA extends Algorithm {
       fitness = maxFun;
     } // if
     else {
-      System.err.println("MOEAD.fitnessFunction: unknown type " + functionType_);
-      System.exit(-1);
+      throw new JMException("MOEAD.fitnessFunction: unknown type " + functionType_) ;
     }
     return fitness;
   } // fitnessEvaluation

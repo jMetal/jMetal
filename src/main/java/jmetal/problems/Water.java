@@ -45,7 +45,7 @@ public class Water extends Problem {
    * Creates a default instance of the Water problem.
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
-  public Water(String solutionType) {
+  public Water(String solutionType) throws JMException {
     numberOfVariables_   = 3 ;
     numberOfObjectives_  = 5 ;
     numberOfConstraints_ = 7 ;
@@ -65,9 +65,8 @@ public class Water extends Problem {
     else if (solutionType.compareTo("Real") == 0)
       solutionType_ = new RealSolutionType(this) ;
     else {
-      System.out.println("Error: solution type " + solutionType + " invalid") ;
-      System.exit(-1) ;
-    }  
+      throw new JMException("Error: solution type " + solutionType + " invalid") ;
+    }
   } // Water
 
   /**

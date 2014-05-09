@@ -43,7 +43,7 @@ public class UF10 extends Problem {
    * Creates a default instance of problem CEC2009_UF10 (30 decision variables)
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
-  public UF10(String solutionType) throws ClassNotFoundException {
+  public UF10(String solutionType) throws ClassNotFoundException, JMException {
     this(solutionType, 30); // 30 variables by default
   } // CEC2009_UF10
 
@@ -52,7 +52,7 @@ public class UF10 extends Problem {
    * @param numberOfVariables Number of variables.
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
-  public UF10(String solutionType, Integer numberOfVariables) {
+  public UF10(String solutionType, Integer numberOfVariables) throws JMException {
     numberOfVariables_  = numberOfVariables;
     numberOfObjectives_ =  3;
     numberOfConstraints_=  0;
@@ -76,9 +76,8 @@ public class UF10 extends Problem {
     else if (solutionType.compareTo("Real") == 0)
       solutionType_ = new RealSolutionType(this) ;
     else {
-      System.out.println("Error: solution type " + solutionType + " invalid") ;
-      System.exit(-1) ;
-    }  
+      throw new JMException("Error: solution type " + solutionType + " invalid") ;
+    }
   } // CEC2009_UF10
 
   /** 

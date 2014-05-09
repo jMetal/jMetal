@@ -24,6 +24,7 @@ package jmetal.problems.WFG;
 import jmetal.core.Problem;
 import jmetal.encodings.solutionType.BinaryRealSolutionType;
 import jmetal.encodings.solutionType.RealSolutionType;
+import jmetal.util.JMException;
 
 import java.util.Random;
 
@@ -63,7 +64,7 @@ public abstract class WFG extends Problem{
    * @param M Number of objectives
    * @param solutionType The solution type must "Real" or "BinaryReal". 
    */
-  public WFG (String solutionType, Integer k, Integer l, Integer M) {
+  public WFG (String solutionType, Integer k, Integer l, Integer M) throws JMException {
     this.k_ = k;
     this.l_ = l;
     this.M_ = M;
@@ -83,9 +84,8 @@ public abstract class WFG extends Problem{
     else if (solutionType.compareTo("Real") == 0)
       solutionType_ = new RealSolutionType(this) ;
     else {
-      System.out.println("Error: solution type " + solutionType + " invalid") ;
-      System.exit(-1) ;
-    }     
+      throw new JMException("Error: solution type " + solutionType + " invalid") ;
+    }
   } // WFG
 
   /**

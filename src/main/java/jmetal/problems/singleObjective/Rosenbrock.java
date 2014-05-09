@@ -40,7 +40,7 @@ public class Rosenbrock extends Problem {
    * @param numberOfVariables Number of variables of the problem
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
-  public Rosenbrock(String solutionType, Integer numberOfVariables)  throws ClassNotFoundException {
+  public Rosenbrock(String solutionType, Integer numberOfVariables) throws ClassNotFoundException, JMException {
     numberOfVariables_   = numberOfVariables ;
     numberOfObjectives_  = 1;
     numberOfConstraints_ = 0;
@@ -58,8 +58,7 @@ public class Rosenbrock extends Problem {
     else if (solutionType.compareTo("Real") == 0)
       solutionType_ = new RealSolutionType(this) ;
     else {
-      System.out.println("Error: solution type " + solutionType + " invalid") ;
-      System.exit(-1) ;
+      throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
 
   } // Rosenbrock

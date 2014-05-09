@@ -45,7 +45,7 @@ public class Fonseca extends Problem {
 	 * @param solutionType The solution type must "Real", "BinaryReal, 
 	 * ArrayReal, or ArrayRealC".
 	 */
-	public Fonseca(String solutionType) {
+	public Fonseca(String solutionType) throws JMException {
 		numberOfVariables_   = 3;
 		numberOfObjectives_  = 2;
 		numberOfConstraints_ = 0;
@@ -65,8 +65,7 @@ public class Fonseca extends Problem {
     else if (solutionType.compareTo("ArrayReal") == 0)
     	solutionType_ = new ArrayRealSolutionType(this) ;
     else {
-    	System.out.println("Error: solution type " + solutionType + " invalid") ;
-    	System.exit(-1) ;
+      throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
 	} //Fonseca
 

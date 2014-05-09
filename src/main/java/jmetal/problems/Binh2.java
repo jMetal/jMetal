@@ -41,7 +41,7 @@ public class Binh2 extends Problem{
    * Creates a default instance of the Binh2 problem
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
-  public Binh2(String solutionType) {
+  public Binh2(String solutionType) throws JMException {
     numberOfVariables_  = 2;
     numberOfObjectives_ = 2;
     numberOfConstraints_= 2;
@@ -59,8 +59,7 @@ public class Binh2 extends Problem{
     else if (solutionType.compareTo("Real") == 0)
       solutionType_ = new RealSolutionType(this) ;
     else {
-      System.out.println("Error: solution type " + solutionType + " invalid") ;
-      System.exit(-1) ;
+      throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }  
   } // ConstrEx
 

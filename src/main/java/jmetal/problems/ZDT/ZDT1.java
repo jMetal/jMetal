@@ -45,7 +45,7 @@ public class ZDT1 extends Problem {
    * @param solutionType The solution type must "Real", "BinaryReal, and "ArrayReal". 
    * ArrayReal, or ArrayRealC".
    */
-  public ZDT1(String solutionType) throws ClassNotFoundException {
+  public ZDT1(String solutionType) throws ClassNotFoundException, JMException {
     this(solutionType, 30); // 30 variables by default
   } // ZDT1
 
@@ -54,7 +54,7 @@ public class ZDT1 extends Problem {
    * @param numberOfVariables Number of variables.
    * @param solutionType The solution type must "Real", "BinaryReal, and "ArrayReal". 
    */
-  public ZDT1(String solutionType, Integer numberOfVariables) {
+  public ZDT1(String solutionType, Integer numberOfVariables) throws JMException {
     numberOfVariables_  = numberOfVariables;
     numberOfObjectives_ =  2;
     numberOfConstraints_=  0;
@@ -77,8 +77,7 @@ public class ZDT1 extends Problem {
     else if (solutionType.compareTo("ArrayReal") == 0)
       solutionType_ = new ArrayRealSolutionType(this) ;
     else {
-      System.out.println("Error: solution type " + solutionType + " invalid") ;
-      System.exit(-1) ;
+      throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
   } // ZDT1
 

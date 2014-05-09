@@ -44,7 +44,7 @@ public class Kursawe extends Problem {
    * Creates a default instance of the Kursawe problem.
    * @param solutionType The solution type must "Real", "BinaryReal, and "ArrayReal". 
    */
-  public Kursawe(String solutionType) throws ClassNotFoundException {
+  public Kursawe(String solutionType) throws ClassNotFoundException, JMException {
     this(solutionType, 3);
   } // Kursawe
 
@@ -54,7 +54,7 @@ public class Kursawe extends Problem {
    * @param numberOfVariables Number of variables of the problem 
    * @param solutionType The solution type must "Real", "BinaryReal, and "ArrayReal". 
    */
-  public Kursawe(String solutionType, Integer numberOfVariables) {
+  public Kursawe(String solutionType, Integer numberOfVariables) throws JMException {
     numberOfVariables_   = numberOfVariables;
     numberOfObjectives_  = 2                            ;
     numberOfConstraints_ = 0                            ;
@@ -75,8 +75,7 @@ public class Kursawe extends Problem {
     else if (solutionType.compareTo("ArrayReal") == 0)
       solutionType_ = new ArrayRealSolutionType(this) ;
     else {
-      System.out.println("Error: solution type " + solutionType + " invalid") ;
-      System.exit(-1) ;
+      throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
   } // Kursawe
 

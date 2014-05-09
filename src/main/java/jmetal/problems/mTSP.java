@@ -24,6 +24,7 @@ import jmetal.core.Problem;
 import jmetal.core.Solution;
 import jmetal.encodings.solutionType.PermutationSolutionType;
 import jmetal.encodings.variable.Permutation;
+import jmetal.util.JMException;
 
 import java.io.*;
 
@@ -48,7 +49,7 @@ public class mTSP extends Problem {
    */
   public mTSP(String solutionType,
       String file_distances,
-      String file_cost) throws IOException {
+      String file_cost) throws IOException, JMException {
     numberOfVariables_  = 1;
     numberOfObjectives_ = 2;
     numberOfConstraints_= 0;
@@ -66,8 +67,7 @@ public class mTSP extends Problem {
     if (solutionType.compareTo("Permutation") == 0)
       solutionType_ = new PermutationSolutionType(this) ;
     else {
-      System.out.println("Error: solution type " + solutionType + " invalid") ;
-      System.exit(-1) ;
+      throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
   } // mTSP
 

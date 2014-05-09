@@ -73,7 +73,7 @@ public class Main {
       System.err.println("a) jmetal.experiments.Main algorithmName ") ;
       System.err.println("b) jmetal.experiments.Main algorithmName problemName") ;
       System.err.println("c) jmetal.experiments.Main algorithmName problemName paretoFrontFile") ;
-      System.exit(-1) ;
+      throw new RuntimeException("Sintax error when invoking the program") ;
     } // if
     else if (args.length == 1) { // algorithmName
       algorithmName = args[0] ;

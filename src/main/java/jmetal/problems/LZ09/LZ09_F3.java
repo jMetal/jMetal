@@ -43,7 +43,7 @@ public class LZ09_F3 extends Problem {
    * Creates a default LZ09_F3 problem (30 variables and 2 objectives)
    * @param solutionType The solution type must "Real" or "BinaryReal". 
    */
-  public LZ09_F3(String solutionType) throws ClassNotFoundException {
+  public LZ09_F3(String solutionType) throws ClassNotFoundException, JMException {
     this(solutionType, 21, 1, 23);
   } // LZ09_F3
 
@@ -54,7 +54,7 @@ public class LZ09_F3 extends Problem {
   public LZ09_F3(String solutionType,
       Integer ptype, 
       Integer dtype,
-      Integer ltype) {
+      Integer ltype) throws JMException {
     numberOfVariables_  = 30;
     numberOfObjectives_ = 2;
     numberOfConstraints_= 0;
@@ -78,9 +78,8 @@ public class LZ09_F3 extends Problem {
     else if (solutionType.compareTo("Real") == 0)
       solutionType_ = new RealSolutionType(this) ;
     else {
-      System.out.println("Error: solution type " + solutionType + " invalid") ;
-      System.exit(-1) ;
-    }                       
+      throw new JMException("Error: solution type " + solutionType + " invalid") ;
+    }
   } // LZ09_F2
 
   /** 

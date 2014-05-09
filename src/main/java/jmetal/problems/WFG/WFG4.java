@@ -47,7 +47,7 @@ public class WFG4 extends WFG{
    * 2 objectives
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
-  public WFG4(String solutionType) throws ClassNotFoundException {
+  public WFG4(String solutionType) throws ClassNotFoundException, JMException {
     this(solutionType, 2, 4, 2) ;
   } // WFG4
 
@@ -58,7 +58,7 @@ public class WFG4 extends WFG{
    * @param M Number of objective functions
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
-  public WFG4 (String solutionType, Integer k, Integer l, Integer M) throws ClassNotFoundException {
+  public WFG4 (String solutionType, Integer k, Integer l, Integer M) throws ClassNotFoundException, JMException {
     super(solutionType, k,l,M);
     problemName_ = "WFG4";
 

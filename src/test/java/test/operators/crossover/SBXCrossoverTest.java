@@ -45,7 +45,7 @@ public class SBXCrossoverTest {
   static final double DELTA = 0.0000000000001 ;
 
   @Before
-  public void setUp()  {
+  public void setUp() throws JMException {
     problem_ = new Kursawe("Real", 3) ;
 
     parameters_ = new HashMap() ;

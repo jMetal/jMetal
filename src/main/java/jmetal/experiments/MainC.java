@@ -77,7 +77,7 @@ public class MainC {
       System.err.println("a) jmetal.experiments.Main configurationFile ") ;
       System.err.println("b) jmetal.experiments.Main configurationFile problemName") ;
       System.err.println("c) jmetal.experiments.Main configurationFile problemName paretoFrontFile") ;
-      System.exit(-1) ;
+      throw new RuntimeException("Sintax error when invoking the program") ;
     } // if
     else if (args.length == 1) { // algorithmName
       inputStreamReader = new InputStreamReader(new FileInputStream(args[0]));

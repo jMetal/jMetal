@@ -43,7 +43,7 @@ public class Viennet3 extends Problem{
    * Creates a default instance of the Viennet3 problem.
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
-  public Viennet3(String solutionType) {
+  public Viennet3(String solutionType) throws JMException {
     numberOfVariables_   = 2 ;
     numberOfObjectives_  = 3 ;
     numberOfConstraints_ = 0;
@@ -61,9 +61,8 @@ public class Viennet3 extends Problem{
     else if (solutionType.compareTo("Real") == 0)
       solutionType_ = new RealSolutionType(this) ;
     else {
-      System.out.println("Error: solution type " + solutionType + " invalid") ;
-      System.exit(-1) ;
-    }  
+      throw new JMException("Error: solution type " + solutionType + " invalid") ;
+    }
   } //Viennet3
 
 
