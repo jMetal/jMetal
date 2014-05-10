@@ -38,7 +38,10 @@ public class ExtractParetoFront {
 		double [] vector_; 
 
 		public Point (double [] vector) {
-			vector_ = vector;
+      vector_= new double[vector.length] ;
+      for (int i = 0; i < vector.length; i++) {
+        vector_[i] = vector[i];
+      }
 		}
 
 		public Point (int size) {

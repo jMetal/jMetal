@@ -21,12 +21,11 @@
 package jmetal.experiments;
 
 import jmetal.experiments.util.*;
-import jmetal.util.parallel.MultithreadedAlgorithmRunner;
-import jmetal.qualityIndicator.util.MetricsUtil;
 import jmetal.util.JMException;
-import jmetal.util.NonDominatedSolutionList;
+import jmetal.util.parallel.MultithreadedAlgorithmRunner;
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Properties;
 
@@ -262,7 +261,8 @@ public class Experiment {
 
   public void setAlgorithmNameList(String[] values) {
     if (configuration_.getProperty("algorithmNameList") == null) {
-      algorithmNameList_ = values ;
+      algorithmNameList_ = Arrays.copyOf(values, values.length) ;
+
     }
     else {
       algorithmNameList_ = configuration_.getProperty("algorithmNameList").split(",") ;
@@ -271,7 +271,7 @@ public class Experiment {
 
   public void setProblemList(String[] values) {
     if (configuration_.getProperty("problemList") == null) {
-      problemList_ = values ;
+      problemList_ = Arrays.copyOf(values, values.length) ;
     }
     else {
       problemList_ = configuration_.getProperty("problemList").split(",") ;
@@ -280,7 +280,7 @@ public class Experiment {
 
   public void setParetoFrontFileList(String[] values) {
     if (configuration_.getProperty("paretoFrontFileList") == null) {
-      paretoFrontFileList_ = values ;
+      paretoFrontFileList_ = Arrays.copyOf(values, values.length) ;
     }
     else {
       paretoFrontFileList_ = configuration_.getProperty("paretoFrontFileList").split(",") ;
@@ -289,7 +289,7 @@ public class Experiment {
 
   public void setIndicatorList(String[] values) {
     if (configuration_.getProperty("indicatorList") == null) {
-      indicatorList_ = values ;
+      indicatorList_ = Arrays.copyOf(values, values.length) ;
     }
     else {
       indicatorList_ = configuration_.getProperty("indicatorList").split(",") ;
@@ -382,7 +382,7 @@ public class Experiment {
   /**
    * @param problemIndex
    */
-  public void generateReferenceFronts(int problemIndex) {
+/*  public void generateReferenceFronts(int problemIndex) {
 
     File rfDirectory;
     String referenceFrontDirectory = experimentBaseDirectory_ + "/referenceFronts";
@@ -421,5 +421,5 @@ public class Experiment {
       e.printStackTrace();
     }
     //solutionSet.printVariablesToFile(referenceParetoSet);
-  } // generateReferenceFronts
+  } // generateReferenceFronts*/
 }

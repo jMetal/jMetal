@@ -25,6 +25,7 @@ import jmetal.util.Configuration;
 
 import java.io.*;
 import java.util.*;
+import java.util.logging.Level;
 
 /** 
  * Class representing a SolutionSet (a set of solutions)
@@ -348,8 +349,7 @@ public class SolutionSet implements Serializable {
       }
       bw.close();
     }catch (IOException e) {
-      Configuration.logger_.severe("Error acceding to the file");
-      e.printStackTrace();
+      Configuration.logger_.log(Level.SEVERE,"Error acceding to the file", e);
     }
   }
 
@@ -375,9 +375,8 @@ public class SolutionSet implements Serializable {
       }
       bw.close();
     }catch (IOException e) {
-      Configuration.logger_.severe("Error acceding to the file");
-      e.printStackTrace();
-    }       
+      Configuration.logger_.log(Level.SEVERE, "Error acceding to the file", e);
+    }
   }
   
   /** 

@@ -26,6 +26,7 @@ package jmetal.core;
 import jmetal.encodings.variable.Binary;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * Class representing a solution for a problem.
@@ -180,7 +181,11 @@ public class Solution implements Serializable {
     distanceToSolutionSet_ = Double.POSITIVE_INFINITY ;
     //<-
 
-    variable_ = variables ;
+//    variable_ = new Variable[variables.length] ;
+//    for (int i = 0; i < variables.length; i++) {
+//      variable_[i] = variables[i] ;
+//    }
+    variable_ = Arrays.copyOf(variables, variables.length) ;
   } // Constructor
   
   /** 
