@@ -22,10 +22,12 @@
 package jmetal.experiments.util ;
 
 import jmetal.experiments.Experiment;
+import jmetal.util.Configuration;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.logging.Level;
 
 /**
  * Created by Antonio J. Nebro on 18/02/14.
@@ -111,7 +113,7 @@ public class BoxPlots implements iExperimentOutput{
         os.close();
       }
       catch (IOException e) {
-        e.printStackTrace();
+        Configuration.logger_.log(Level.SEVERE, "Error", e);
       }
     } // for
 

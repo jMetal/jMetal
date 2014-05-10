@@ -23,11 +23,13 @@
 package jmetal.experiments.util ;
 
 import jmetal.experiments.Experiment;
+import jmetal.util.Configuration;
 
 import java.io.*;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 import java.util.Vector;
+import java.util.logging.Level;
 
 /**
  * Created by Antonio J. Nebro on 20/02/14.
@@ -44,7 +46,6 @@ public class FriedmanTables implements iExperimentOutput {
     for (String indicator : experiment_.indicatorList_) {
       executeTest(indicator);
     }
-
   }
   
   private void executeTest(String indic){
@@ -124,7 +125,7 @@ public class FriedmanTables implements iExperimentOutput {
           fis.close();
         }
         catch (IOException e) {
-          e.printStackTrace();
+          Configuration.logger_.log(Level.SEVERE, "Error", e);
           throw new RuntimeException();
         }
 
@@ -260,7 +261,7 @@ public class FriedmanTables implements iExperimentOutput {
       f.close();
     }
     catch (IOException e) {
-      e.printStackTrace();
+      Configuration.logger_.log(Level.SEVERE, "Error", e);
       throw new RuntimeException() ;
     }
   }
@@ -271,7 +272,6 @@ public class FriedmanTables implements iExperimentOutput {
     public double valor;
 
     public Pair() {
-
     }
 
     public Pair(double i, double v) {
@@ -279,17 +279,18 @@ public class FriedmanTables implements iExperimentOutput {
       valor = v;
     }
 
-    public int compareTo (Object o1) { //ordena por valor absoluto
-
+    public int compareTo (Object o1) {
       if (Math.abs(this.valor) > Math.abs(((Pair)o1).valor)){
         //return -1;
         return 1;
-      }else if (Math.abs(this.valor) < Math.abs(((Pair)o1).valor)){
+      }
+      else if (Math.abs(this.valor) < Math.abs(((Pair)o1).valor)){
         //return 1;
         return -1;
-      }else return 0;
+      }
+      else {
+        return 0;
+      }
     }
-
-
   }
 }

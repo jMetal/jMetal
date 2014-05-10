@@ -28,6 +28,7 @@ import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.logging.Level;
 
 /**
  * Class representing a pseudo-random number generator
@@ -232,8 +233,7 @@ public class PseudoRandom  {
 
       bw.close();
     }catch (IOException e) {
-      Configuration.logger_.severe("Error acceding to the file");
-      e.printStackTrace();
+      Configuration.logger_.log(Level.SEVERE, "Error acceding to the file", e);
     }
 
   }

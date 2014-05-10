@@ -23,6 +23,7 @@ package jmetal.metaheuristics.singleObjective.particleSwarmOptimization;
 import jmetal.core.*;
 import jmetal.operators.selection.BestSolutionSelection;
 import jmetal.util.AdaptiveRandomNeighborhood;
+import jmetal.util.Configuration;
 import jmetal.util.Distance;
 import jmetal.util.JMException;
 import jmetal.util.comparators.ObjectiveComparator;
@@ -31,6 +32,7 @@ import jmetal.util.wrapper.XReal;
 
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.logging.Level;
 
 /**
  * Class implementing a Stantard PSO 2011 algorithm
@@ -134,7 +136,7 @@ public class StandardPSO2011 extends Algorithm {
         }
       }
     } catch (JMException e) {
-      e.printStackTrace();
+      Configuration.logger_.log(Level.SEVERE, "Error", e);
     }
 
     return bestLocalBestSolution ;

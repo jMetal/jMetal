@@ -24,12 +24,14 @@ package jmetal.qualityIndicator.util;
 import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
 import jmetal.qualityIndicator.Hypervolume;
+import jmetal.util.Configuration;
 import jmetal.util.NonDominatedSolutionList;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.*;
+import java.util.logging.Level;
 
 /**
  * This class provides some utilities to compute quality indicators. 
@@ -74,8 +76,10 @@ public class MetricsUtil {
       return front;
       
     } catch (Exception e) {
-      System.out.println("InputFacilities crashed reading for file: "+path);
-      e.printStackTrace();
+      Configuration.logger_.log(
+              Level.SEVERE,
+              "InputFacilities crashed reading for file: " + path,
+              e);
     }
     return null;
   } // readFront
@@ -269,8 +273,10 @@ public class MetricsUtil {
       br.close();
       return solutionSet;
     } catch (Exception e) {
-      System.out.println("jmetal.qualityIndicator.util.readNonDominatedSolutionSet: "+path);
-      e.printStackTrace();
+      Configuration.logger_.log(
+              Level.SEVERE,
+              "jmetal.qualityIndicator.util.readNonDominatedSolutionSet: "+path,
+              e);
     }
     return null;
   } // readSolutionSet
@@ -305,8 +311,10 @@ public class MetricsUtil {
       br.close();
       return solutionSet;
     } catch (Exception e) {
-      System.out.println("jmetal.qualityIndicator.util.readNonDominatedSolutionSet: "+path);
-      e.printStackTrace();
+      Configuration.logger_.log(
+              Level.SEVERE,
+              "jmetal.qualityIndicator.util.readNonDominatedSolutionSet: "+path,
+              e);
     }
     return null;
   } // readNonDominatedSolutionSet
@@ -340,8 +348,10 @@ public class MetricsUtil {
 			}
 			br.close();
 		} catch (Exception e) {
-			System.out.println("jmetal.qualityIndicator.util.readNonDominatedSolutionSet: "+path);
-			e.printStackTrace();
+			Configuration.logger_.log(
+              Level.SEVERE,
+              "jmetal.qualityIndicator.util.readNonDominatedSolutionSet: "+path,
+              e);
 		}
 	}
 	

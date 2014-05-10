@@ -28,10 +28,12 @@ import jmetal.operators.mutation.Mutation;
 import jmetal.operators.mutation.NonUniformMutation;
 import jmetal.operators.mutation.UniformMutation;
 import jmetal.problems.ProblemFactory;
+import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
 import java.util.HashMap;
 import java.util.Properties;
+import java.util.logging.Level;
 
 /**
  * Settings class of algorithm OMOPSO
@@ -54,7 +56,7 @@ public class OMOPSO_Settings extends Settings{
     try {
 	    problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
     } catch (JMException e) {
-	    e.printStackTrace();
+      Configuration.logger_.log(Level.SEVERE, "Unable to get problem", e);
     }      
     // Default experiments.settings
     swarmSize_         = 100 ;

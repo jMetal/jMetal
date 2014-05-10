@@ -22,6 +22,7 @@
 package jmetal.metaheuristics.moead;
 
 import jmetal.core.*;
+import jmetal.util.Configuration;
 import jmetal.util.Distance;
 import jmetal.util.JMException;
 import jmetal.util.random.PseudoRandom;
@@ -29,6 +30,7 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.*;
+import java.util.logging.Level;
 
 /**
  * Reference: Q. Zhang,  W. Liu,  and H Li, The Performance of a New Version of 
@@ -275,8 +277,10 @@ public class MOEAD_DRA extends Algorithm {
         }
         br.close();
       } catch (Exception e) {
-        System.err.println("initUniformWeight: failed when reading for file: " + dataDirectory_ + "/" + dataFileName);
-        e.printStackTrace();
+        Configuration.logger_.log(
+                Level.SEVERE,
+                "initUniformWeight: failed when reading for file: " + dataDirectory_ + "/" + dataFileName,
+                e);
       }
     } // else
 

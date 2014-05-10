@@ -26,12 +26,14 @@ import jmetal.metaheuristics.smpso.pSMPSO;
 import jmetal.operators.mutation.Mutation;
 import jmetal.operators.mutation.MutationFactory;
 import jmetal.problems.ProblemFactory;
+import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.parallel.MultithreadedEvaluator;
 import jmetal.util.parallel.SynchronousParallelRunner;
 
 import java.util.HashMap;
 import java.util.Properties;
+import java.util.logging.Level;
 
 /**
  * Settings class of algorithm pSMPSO
@@ -54,7 +56,7 @@ public class pSMPSO_Settings extends Settings{
     try {
 	    problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
     } catch (JMException e) {
-	    e.printStackTrace();
+      Configuration.logger_.log(Level.SEVERE, "Unable to get problem", e);
     }      
 
     // Default experiments.settings

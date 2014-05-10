@@ -22,6 +22,7 @@ package jmetal.util.parallel;
 
 import jmetal.core.Problem;
 import jmetal.core.Solution;
+import jmetal.util.Configuration;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,6 +31,7 @@ import java.util.Vector;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.logging.Level;
 
 /**
  * @author Antonio J. Nebro
@@ -80,8 +82,7 @@ public class MultithreadedEvaluator extends SynchronousParallelRunner {
     try {
       future = executor_.invokeAll(taskList_);
     } catch (InterruptedException e1) {
-      // TODO Auto-generated catch block
-      e1.printStackTrace();
+      Configuration.logger_.log(Level.SEVERE, "Error", e1);
     }
     List<Object> solutionList = new Vector<Object>() ;
 
@@ -91,11 +92,9 @@ public class MultithreadedEvaluator extends SynchronousParallelRunner {
         solution = result.get();
         solutionList.add(solution) ;
       } catch (InterruptedException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
+        Configuration.logger_.log(Level.SEVERE, "Error", e);
       } catch (ExecutionException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
+        Configuration.logger_.log(Level.SEVERE, "Error", e);
       }
     }
     taskList_ = null ;

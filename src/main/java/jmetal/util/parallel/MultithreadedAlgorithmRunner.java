@@ -26,6 +26,7 @@ import jmetal.core.SolutionSet;
 import jmetal.experiments.Experiment;
 import jmetal.experiments.Settings;
 import jmetal.experiments.SettingsFactory;
+import jmetal.util.Configuration;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -34,6 +35,7 @@ import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.logging.Level;
 
 /**
  * Created by Antonio J. Nebro on 09/02/14.
@@ -69,8 +71,7 @@ public class MultithreadedAlgorithmRunner extends SynchronousParallelRunner {
     try {
       future = executor_.invokeAll(taskList_);
     } catch (InterruptedException e1) {
-      // TODO Auto-generated catch block
-      e1.printStackTrace();
+      Configuration.logger_.log(Level.SEVERE, "Error", e1);
     }
     List<Object> resultList = new Vector<Object>() ;
 
@@ -80,11 +81,9 @@ public class MultithreadedAlgorithmRunner extends SynchronousParallelRunner {
         returnValue = result.get();
         resultList.add(returnValue) ;
       } catch (InterruptedException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
+        Configuration.logger_.log(Level.SEVERE, "Error", e);
       } catch (ExecutionException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
+        Configuration.logger_.log(Level.SEVERE, "Error", e);
       }
     }
     taskList_ = null ;

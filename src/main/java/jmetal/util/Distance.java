@@ -26,6 +26,8 @@ import jmetal.core.SolutionSet;
 import jmetal.util.comparators.ObjectiveComparator;
 import jmetal.util.wrapper.XReal;
 
+import java.util.logging.Level;
+
 /**
  * This class implements some utilities for calculating distances
  */
@@ -190,7 +192,7 @@ public class Distance {
       }
     }
     catch (Exception e) {
-      e.printStackTrace();
+      Configuration.logger_.log(Level.SEVERE, "Error", e);
     }
     /*
     if (minimumDistance == 0) {

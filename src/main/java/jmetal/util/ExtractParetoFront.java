@@ -22,6 +22,7 @@ package jmetal.util;
 
 import java.io.*;
 import java.util.*;
+import java.util.logging.Level;
 
 /**
  *  This class extract the Pareto front among a set of dominated and 
@@ -175,8 +176,8 @@ public class ExtractParetoFront {
 
 			/* Close the file */
 			bw.close();
-		}catch (IOException e) {        
-			e.printStackTrace();
+		}catch (IOException e) {
+      Configuration.logger_.log(Level.SEVERE, "Error", e);
 		}       
 	}
 

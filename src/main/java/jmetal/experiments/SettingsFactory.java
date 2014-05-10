@@ -25,6 +25,8 @@ import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
 import java.lang.reflect.Constructor;
+import java.util.logging.Level;
+
 /**
  * This class represents a factory for Setting object
  */
@@ -53,10 +55,9 @@ public class SettingsFactory {
       return algorithmSettings;      
     }// try
     catch(Exception e) {
-    	e.printStackTrace() ;
-      Configuration.logger_.severe("SettingsFactory.getSettingsObject: " +
-          "Settings '"+ base + "' does not exist. "  +
-          "Please, check the algorithm name in jmetal/metaheuristics") ;
+      Configuration.logger_.log(Level.SEVERE, "SettingsFactory.getSettingsObject: " +
+              "Settings '" + base + "' does not exist. " +
+              "Please, check the algorithm name in jmetal/metaheuristics", e) ;
       throw new JMException("Exception in " + base + ".getSettingsObject()") ;
     } // catch            
   } // getSttingsObject     

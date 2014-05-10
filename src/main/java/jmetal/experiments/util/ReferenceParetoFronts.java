@@ -2,10 +2,12 @@ package jmetal.experiments.util ;
 
 import jmetal.experiments.Experiment;
 import jmetal.qualityIndicator.util.MetricsUtil;
+import jmetal.util.Configuration;
 import jmetal.util.NonDominatedSolutionList;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
 
 /**
  * Created by Antonio J. Nebro on 23/02/14.
@@ -64,7 +66,7 @@ public class ReferenceParetoFronts implements iExperimentOutput {
     try {
       solutionSet.printObjectivesToFile(referenceParetoFront);
     } catch (IOException e) {
-      e.printStackTrace();
+      Configuration.logger_.log(Level.SEVERE, "Error", e);
     }
     //solutionSet.printVariablesToFile(referenceParetoSet);
   } // generateReferenceFronts

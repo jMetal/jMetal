@@ -25,9 +25,11 @@ import jmetal.core.Algorithm;
 import jmetal.experiments.Settings;
 import jmetal.metaheuristics.dmopso.dMOPSO;
 import jmetal.problems.ProblemFactory;
+import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
 import java.util.Properties;
+import java.util.logging.Level;
 
 /**
  * Settings class of algorithm dMOPSO
@@ -49,8 +51,7 @@ public class dMOPSO_Settings extends Settings {
 		try {
 			problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
 		} catch (JMException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+      Configuration.logger_.log(Level.SEVERE, "Unable to get problem", e);
 		}
 
 		// Default experiments.settings

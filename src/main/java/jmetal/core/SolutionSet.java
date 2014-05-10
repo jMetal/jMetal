@@ -256,7 +256,7 @@ public class SolutionSet implements Serializable {
       /* Close the file */
       bw.close();
     }catch (IOException e) {
-      Configuration.logger_.severe("Error acceding to the file");
+      Configuration.logger_.log(Level.SEVERE, "Error acceding to the file", e);
       throw new IOException(e) ;
       //e.printStackTrace();
     }
@@ -283,9 +283,8 @@ public class SolutionSet implements Serializable {
       }
       bw.close();
     }catch (IOException e) {
-      Configuration.logger_.severe("Error acceding to the file");
-      e.printStackTrace();
-    }       
+      Configuration.logger_.log(Level.SEVERE, "Error acceding to the file", e);
+    }
   } // printVariablesToFile
 
   /**
@@ -392,7 +391,7 @@ public class SolutionSet implements Serializable {
    */
   public void remove(int i){        
     if (i > solutionsList_.size()-1) {            
-      Configuration.logger_.severe("Size is: "+this.size());
+      Configuration.logger_.log(Level.SEVERE, "Size is: "+this.size());
     } // if
     solutionsList_.remove(i);    
   } // remove

@@ -26,6 +26,7 @@ import jmetal.metaheuristics.nsgaII.NSGAIIAdaptive;
 import jmetal.operators.selection.Selection;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.ProblemFactory;
+import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.offspring.DifferentialEvolutionOffspring;
 import jmetal.util.offspring.Offspring;
@@ -34,6 +35,7 @@ import jmetal.util.offspring.SBXCrossoverOffspring;
 
 import java.util.HashMap;
 import java.util.Properties;
+import java.util.logging.Level;
 
 /**
  * Settings class of algorithm NSGAIIAdaptive
@@ -63,9 +65,9 @@ public class NSGAIIAdaptive_Settings extends Settings {
     try {
 	    problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
     } catch (JMException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
-    }  
+      Configuration.logger_.log(Level.SEVERE, "Unable to get problem", e);
+    }
+
     // Default settings
     populationSize_              = 100   ; 
     maxEvaluations_              = 150000 ;

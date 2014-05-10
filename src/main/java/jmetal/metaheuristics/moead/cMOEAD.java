@@ -22,6 +22,7 @@ package jmetal.metaheuristics.moead;
 
 
 import jmetal.core.*;
+import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.random.PseudoRandom;
 import jmetal.util.comparators.IConstraintViolationComparator;
@@ -32,6 +33,7 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 import java.util.Vector;
+import java.util.logging.Level;
 
 // This class implements a constrained version of the MOEAD algorithm based on
 // the paper:
@@ -249,8 +251,10 @@ public class cMOEAD extends Algorithm {
         }
         br.close();
       } catch (Exception e) {
-        System.out.println("initUniformWeight: failed when reading for file: " + dataDirectory_ + "/" + dataFileName);
-        e.printStackTrace();
+        Configuration.logger_.log(
+                Level.SEVERE,
+                "initUniformWeight: failed when reading for file: " + dataDirectory_ + "/" + dataFileName,
+                e);
       }
     } // else
 

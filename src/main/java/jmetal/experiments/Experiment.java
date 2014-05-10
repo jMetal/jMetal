@@ -21,6 +21,7 @@
 package jmetal.experiments;
 
 import jmetal.experiments.util.*;
+import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.parallel.MultithreadedAlgorithmRunner;
 
@@ -28,6 +29,7 @@ import java.io.*;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Properties;
+import java.util.logging.Level;
 
 /**
  * Created by Antonio J. Nebro on 08/02/14.
@@ -235,7 +237,7 @@ public class Experiment {
         try {
           configuration_.load(propertiesFile_);
         } catch (IOException e) {
-          e.printStackTrace();
+          Configuration.logger_.log(Level.SEVERE, "Error reading properties file", e);
         }
 
       } catch (FileNotFoundException e) {

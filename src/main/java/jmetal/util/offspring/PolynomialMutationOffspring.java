@@ -12,9 +12,11 @@ import jmetal.core.Operator;
 import jmetal.core.Solution;
 import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.SelectionFactory;
+import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
 import java.util.HashMap;
+import java.util.logging.Level;
 
 public class PolynomialMutationOffspring extends Offspring {
 
@@ -41,8 +43,7 @@ public class PolynomialMutationOffspring extends Offspring {
 		try {
 			mutation_.execute(res);
 		} catch (JMException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+      Configuration.logger_.log(Level.SEVERE, "Error", e);
 		}
 		return res;
 	}

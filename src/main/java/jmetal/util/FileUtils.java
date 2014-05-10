@@ -1,6 +1,7 @@
 package jmetal.util;
 
 import java.io.*;
+import java.util.logging.Level;
 
 public class FileUtils {
   static public void appendObjectToFile(String fileName, Object object) {
@@ -14,11 +15,9 @@ public class FileUtils {
 	    bw.newLine();
 	    bw.close();
     } catch (FileNotFoundException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
+      Configuration.logger_.log(Level.SEVERE, "Error", e);
     } catch (IOException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
+      Configuration.logger_.log(Level.SEVERE, "Error", e);
     }
   }
   
@@ -31,11 +30,9 @@ public class FileUtils {
 	                      
 	    bw.close();
     } catch (FileNotFoundException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
+      Configuration.logger_.log(Level.SEVERE, "Error", e);
     } catch (IOException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
+      Configuration.logger_.log(Level.SEVERE, "Error", e);
     }
   }
 }
