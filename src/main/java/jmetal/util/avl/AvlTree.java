@@ -66,10 +66,9 @@ public class AvlTree<T> {
           break;
         case +1:
           insertNodeRight(node);
-          ;
           break;
         default:
-          ;
+          break ;
       }
     }
   }

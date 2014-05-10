@@ -29,7 +29,9 @@ import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.ZDT.ZDT5;
+import jmetal.util.JMException;
 
+import java.io.IOException;
 import java.util.HashMap;
 /**
  * This class executes the algorithm described in:
@@ -40,61 +42,55 @@ import java.util.HashMap;
  */
 public class MOCHC_main {
 
-  public static void main(String [] args) {
-    try {                               
-      Problem problem = new ZDT5("Binary");
+  public static void main(String [] args) throws IOException, JMException, ClassNotFoundException {
+    Problem problem = new ZDT5("Binary");
 
-      Algorithm algorithm = null;
-      algorithm = new MOCHC(problem);
-      
-      algorithm.setInputParameter("initialConvergenceCount",0.25);
-      algorithm.setInputParameter("preservedPopulation",0.05);
-      algorithm.setInputParameter("convergenceValue",3);
-      algorithm.setInputParameter("populationSize",100);
-      algorithm.setInputParameter("maxEvaluations",25000);
-      
-      Operator crossoverOperator      ;
-      Operator mutationOperator       ;
-      Operator parentsSelection       ;
-      Operator newGenerationSelection ;
-      
-      // Crossover operator
-      HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
-      crossoverParameters.put("probability", 1.0) ;
-      crossoverOperator = CrossoverFactory.getCrossoverOperator("HUXCrossover", crossoverParameters);
-     
-      //parentsSelection = new RandomSelection();
-      //newGenerationSelection = new RankingAndCrowdingSelection(problem);
-      HashMap<String, Object> selectionParameters = null ; // FIXME: why we are passing null?
-      parentsSelection = SelectionFactory.getSelectionOperator("RandomSelection", selectionParameters) ;     
-      
-      HashMap<String, Object> newSelectionParameters = new HashMap<String, Object>() ;
-      newSelectionParameters.put("problem", problem) ;
-      newGenerationSelection = SelectionFactory.getSelectionOperator("RankingAndCrowdingSelection", newSelectionParameters) ;
-     
-      // Mutation operator
-      HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
-      mutationParameters.put("probability", 0.35) ;
-      mutationOperator = MutationFactory.getMutationOperator("BitFlipMutation", mutationParameters);                    
-      
-      algorithm.addOperator("crossover",crossoverOperator);
-      algorithm.addOperator("cataclysmicMutation",mutationOperator);
-      algorithm.addOperator("parentSelection",parentsSelection);
-      algorithm.addOperator("newGenerationSelection",newGenerationSelection);
-      
-      // Execute the Algorithm 
-      long initTime = System.currentTimeMillis();
-      SolutionSet population = algorithm.execute();
-      long estimatedTime = System.currentTimeMillis() - initTime;
-      System.out.println("Total execution time: "+estimatedTime);
+    Algorithm algorithm = null;
+    algorithm = new MOCHC(problem);
 
-      // Print results
-      population.printVariablesToFile("VAR");
-      population.printObjectivesToFile("FUN");
-    } //try           
-    catch (Exception e) {
-      System.err.println(e);
-      e.printStackTrace();
-    } //catch    
+    algorithm.setInputParameter("initialConvergenceCount",0.25);
+    algorithm.setInputParameter("preservedPopulation",0.05);
+    algorithm.setInputParameter("convergenceValue",3);
+    algorithm.setInputParameter("populationSize",100);
+    algorithm.setInputParameter("maxEvaluations",25000);
+
+    Operator crossoverOperator      ;
+    Operator mutationOperator       ;
+    Operator parentsSelection       ;
+    Operator newGenerationSelection ;
+
+    // Crossover operator
+    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
+    crossoverParameters.put("probability", 1.0) ;
+    crossoverOperator = CrossoverFactory.getCrossoverOperator("HUXCrossover", crossoverParameters);
+
+    //parentsSelection = new RandomSelection();
+    //newGenerationSelection = new RankingAndCrowdingSelection(problem);
+    HashMap<String, Object> selectionParameters = null ; // FIXME: why we are passing null?
+    parentsSelection = SelectionFactory.getSelectionOperator("RandomSelection", selectionParameters) ;
+
+    HashMap<String, Object> newSelectionParameters = new HashMap<String, Object>() ;
+    newSelectionParameters.put("problem", problem) ;
+    newGenerationSelection = SelectionFactory.getSelectionOperator("RankingAndCrowdingSelection", newSelectionParameters) ;
+
+    // Mutation operator
+    HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
+    mutationParameters.put("probability", 0.35) ;
+    mutationOperator = MutationFactory.getMutationOperator("BitFlipMutation", mutationParameters);
+
+    algorithm.addOperator("crossover",crossoverOperator);
+    algorithm.addOperator("cataclysmicMutation",mutationOperator);
+    algorithm.addOperator("parentSelection",parentsSelection);
+    algorithm.addOperator("newGenerationSelection",newGenerationSelection);
+
+    // Execute the Algorithm
+    long initTime = System.currentTimeMillis();
+    SolutionSet population = algorithm.execute();
+    long estimatedTime = System.currentTimeMillis() - initTime;
+    System.out.println("Total execution time: "+estimatedTime);
+
+    // Print results
+    population.printVariablesToFile("VAR");
+    population.printObjectivesToFile("FUN");
   }//main
 }

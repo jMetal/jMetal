@@ -20,6 +20,8 @@
 
 package jmetal.problems.mqap;
 
+import jmetal.util.Configuration;
+
 import java.io.*;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
@@ -157,7 +159,7 @@ public class ReadInstance {
    * @author Juan J. Durillo
    * This methods creates a single-objective instance using a weighted aggregative approach
    * and write all the information to file
-   * @param vector: a vector containing the weights for the aggregative approach
+   * @param weights: a vector containing the weights for the aggregative approach
    */
   public void createSingleObjectiveInstance(int [] weights) {
     // safe comprobation: is the number of weights == objectives_?
@@ -252,9 +254,8 @@ public class ReadInstance {
       // second argument should indicate if we do want to generte the aggregatives
       if (args[1].toUpperCase().contains("Y")) {
         if (ri.getNumberOfObjectives() > 3) {
-          Logger.getLogger(ReadInstance.class.getName()).log(Level.SEVERE, "Aggregative approache with more than 2 objectives not implemented yet");          
+          Logger.getLogger(ReadInstance.class.getName()).log(Level.SEVERE, "Aggregation approach with more than 2 objectives not implemented yet");
         } else if (ri.getNumberOfObjectives() == 3) {                                       
-            System.out.println("3 objetivos");
             try {
                 // Open the file
                 String dataFile = "/home/juan/Dropbox/workingOn/qap/W3D_100.dat";
@@ -279,8 +280,10 @@ public class ReadInstance {
                 }
                 br.close();
             } catch (Exception e) {
-                System.out.println("initUniformWeight: failed when reading for file containing the weight");
-                e.printStackTrace();
+                Configuration.logger_.log(
+                        Level.SEVERE,
+                        "initUniformWeight: failed when reading for file containing the weight",
+                        e);
             }
         } else {
           int a = 100, b = 0;
@@ -293,7 +296,5 @@ public class ReadInstance {
         }
       }
     }
-    //int [] weights = {5, 5};
-    //ri.createSingleObjectiveInstance(weights);
   }
 }

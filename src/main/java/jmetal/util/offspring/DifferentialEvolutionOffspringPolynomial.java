@@ -13,6 +13,7 @@ import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
 import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.SelectionFactory;
+import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
 import java.util.HashMap;
@@ -31,9 +32,9 @@ public class DifferentialEvolutionOffspringPolynomial extends Offspring {
   private DifferentialEvolutionOffspringPolynomial(double mutationProbability,
                                                    double distributionIndexForMutation
   ) throws JMException {
-    mutationProbability_ = mutationProbability;    
+    mutationProbability_ = mutationProbability;
     distributionIndexForMutation_ = distributionIndexForMutation;
-    
+
     HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
     mutationParameters.put("probability", mutationProbability_) ;
     mutationParameters.put("distributionIndex", distributionIndexForMutation_) ;
@@ -61,18 +62,18 @@ public class DifferentialEvolutionOffspringPolynomial extends Offspring {
 
   } // getOffspring
 
-    public Solution getOffspring(SolutionSet solutionSet, SolutionSet archive) {
+  public Solution getOffspring(SolutionSet solutionSet, SolutionSet archive) {
     Solution[] parents = null;
     Solution offSpring = null;
 
     try {
-        // FIXME: this will return an exception
+      // FIXME: this will return an exception
       parents[0] = (Solution) selection_.execute(solutionSet);
 
       if (archive.size() > 0) {
-          parents[1] = (Solution)selection_.execute(archive);
+        parents[1] = (Solution)selection_.execute(archive);
       } else {
-          parents[1] = (Solution)selection_.execute(solutionSet);
+        parents[1] = (Solution)selection_.execute(solutionSet);
       }
 
       offSpring = new Solution( new Solution((Solution) selection_.execute(solutionSet)));
@@ -86,19 +87,16 @@ public class DifferentialEvolutionOffspringPolynomial extends Offspring {
     return offSpring;
 
   } // getOffpring
-    
-    public Solution getOffspring(Solution solution) {
-    	Solution res = new Solution(solution);
-    	try {
-			mutation_.execute(res);
-		} catch (JMException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return res;
-    	
+
+  public Solution getOffspring(Solution solution) {
+    Solution res = new Solution(solution);
+    try {
+      mutation_.execute(res);
+    } catch (JMException e) {
+      Configuration.logger_.log(Level.SEVERE, "Error", e);
     }
-    
-    
+    return res;
+
+  }
 } // DifferentialEvolutionOffspring
 

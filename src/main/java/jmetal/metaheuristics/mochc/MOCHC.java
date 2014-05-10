@@ -55,9 +55,9 @@ public class MOCHC extends Algorithm {
   * Compares two solutionSets to determine if both are equals
   * @param solutionSet A <code>SolutionSet</code>
   * @param newSolutionSet A <code>SolutionSet</code>
-  * @return true if both are cotains the same solutions, false in other case
+  * @return true if both are contains the same solutions, false in other case
   */
-  public boolean equals(SolutionSet solutionSet, SolutionSet newSolutionSet) {
+  public boolean solutionSetsAreEquals(SolutionSet solutionSet, SolutionSet newSolutionSet) {
     boolean found;
     for (int i = 0; i < solutionSet.size(); i++){
 
@@ -179,7 +179,7 @@ public class MOCHC extends Algorithm {
       newGenerationSelection.setParameter("populationSize",populationSize);
       newPopulation = (SolutionSet)newGenerationSelection.execute(union);
 
-      if (equals(solutionSet,newPopulation)) {
+      if (solutionSetsAreEquals(solutionSet,newPopulation)) {
         minimumDistance--;
       }
       if (minimumDistance <= -convergenceValue) {

@@ -37,7 +37,7 @@ public class SolutionComparator implements Comparator<Solution> {
   /**
    * Establishes a value of allowed dissimilarity
    */
-  private static final double EPSILON  = 1e-10;    
+  private static final double EPSILON  = 1e-25;
         
   /**
    * Compares two solutions.

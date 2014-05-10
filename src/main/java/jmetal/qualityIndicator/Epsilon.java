@@ -26,7 +26,7 @@ import jmetal.util.JMException;
 /**
  * This class implements the unary epsilon additive indicator as proposed in
  * E. Zitzler, E. Thiele, L. Laummanns, M., Fonseca, C., and Grunert da Fonseca.
- * V (2003): Performance Assesment of Multiobjective Optimizers: An Analysis and
+ * V (2003): Performance Assessment of Multiobjective Optimizers: An Analysis and
  * Review. The code is the a Java version of the original metric implementation
  * by Eckart Zitzler.
  * It can be used also as a command line program just by typing
@@ -138,10 +138,9 @@ public class Epsilon {
     double ind_value;
 
     if (args.length < 2) {
-      System.err.println("Error using Epsilon. Type: \n java AdditiveEpsilon " +
+      throw new JMException("Error using Epsilon. Type: \n java AdditiveEpsilon " +
           "<FrontFile>" +
           "<TrueFrontFile> + <getNumberOfObjectives>");
-      System.exit(1);
     }
 
     Epsilon qualityIndicator = new Epsilon();

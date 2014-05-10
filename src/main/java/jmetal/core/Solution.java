@@ -26,6 +26,7 @@ package jmetal.core;
 import jmetal.encodings.variable.Binary;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * Class representing a solution for a problem.
@@ -180,7 +181,11 @@ public class Solution implements Serializable {
     distanceToSolutionSet_ = Double.POSITIVE_INFINITY ;
     //<-
 
-    variable_ = variables ;
+//    variable_ = new Variable[variables.length] ;
+//    for (int i = 0; i < variables.length; i++) {
+//      variable_[i] = variables[i] ;
+//    }
+    variable_ = Arrays.copyOf(variables, variables.length) ;
   } // Constructor
   
   /** 
@@ -354,7 +359,10 @@ public class Solution implements Serializable {
    * representing the decision variables of the solution.
    */
   public void setDecisionVariables(Variable [] variables) {
-    variable_ = variables ;
+    variable_ = new Variable[variables.length] ;
+    for (int i = 0; i < variables.length; i++) {
+      variable_[i] = variables[i] ;
+    }
   } // setDecisionVariables
 
   public Problem getProblem() {
@@ -511,4 +519,33 @@ public class Solution implements Serializable {
 
     return bits ;
   } // getNumberOfBits
+
+/*  @Override
+TO-DO
+  public boolean equals(Object object) {
+    boolean result ;
+    if (object == null) {
+      result = false ;
+    }
+    else if (object == this) {
+      result = true ;
+    }
+    else if (!(object instanceof Solution)) {
+      result = false ;
+    }
+    else if (type_ != ((Solution)object).getType()) {
+      result = false ;
+    }
+    else if (new SolutionComparator().compare(this, (Solution)object) == 0) {
+      result = true ;
+    }
+    else if (new ObjectiveComparator(problem_.getNumberOfObjectives()).compare(this, (Solution)object) == 0) {
+      result = true ;
+    }
+    else {
+      result = false ;
+    }
+
+    return result ;
+  }*/
 } // Solution

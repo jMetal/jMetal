@@ -11,6 +11,7 @@ import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
 import jmetal.qualityIndicator.Hypervolume;
 import jmetal.qualityIndicator.QualityIndicator;
+import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.random.PseudoRandom;
 import jmetal.util.wrapper.XReal;
@@ -18,6 +19,7 @@ import jmetal.util.wrapper.XReal;
 import java.io.*;
 import java.util.StringTokenizer;
 import java.util.Vector;
+import java.util.logging.Level;
 
 public class dMOPSO extends Algorithm {
 
@@ -257,7 +259,7 @@ public class dMOPSO extends Algorithm {
                     C2 * r2 * (bestGlobal.getValue(var) -
                         particle.getValue(var))), deltaMax_, deltaMin_, var, i) ;
       } catch (IOException e) {
-        e.printStackTrace();
+        Configuration.logger_.log(Level.SEVERE, "Error", e);
       }
     }
   } // computeSpeed
@@ -464,8 +466,10 @@ public class dMOPSO extends Algorithm {
         }
         br.close();
       } catch (Exception e) {
-        System.out.println("initUniformWeight: failed when reading for file: " + dataDirectory_ + "/" + dataFileName);
-        e.printStackTrace();
+        Configuration.logger_.log(
+                Level.SEVERE,
+                "initUniformWeight: failed when reading for file: " + dataDirectory_ + "/" + dataFileName,
+                e);
       }
     } // else
 

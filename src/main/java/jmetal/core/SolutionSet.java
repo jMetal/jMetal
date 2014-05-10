@@ -25,6 +25,7 @@ import jmetal.util.Configuration;
 
 import java.io.*;
 import java.util.*;
+import java.util.logging.Level;
 
 /** 
  * Class representing a SolutionSet (a set of solutions)
@@ -255,7 +256,7 @@ public class SolutionSet implements Serializable {
       /* Close the file */
       bw.close();
     }catch (IOException e) {
-      Configuration.logger_.severe("Error acceding to the file");
+      Configuration.logger_.log(Level.SEVERE, "Error acceding to the file", e);
       throw new IOException(e) ;
       //e.printStackTrace();
     }
@@ -282,11 +283,52 @@ public class SolutionSet implements Serializable {
       }
       bw.close();
     }catch (IOException e) {
-      Configuration.logger_.severe("Error acceding to the file");
-      e.printStackTrace();
-    }       
+      Configuration.logger_.log(Level.SEVERE, "Error acceding to the file", e);
+    }
   } // printVariablesToFile
 
+  /**
+   * Compares two solution sets
+   * @param object Solution set to compare with
+   * @return true or false depending on the result of the comparison
+   */
+  @Override
+  public boolean equals(Object object) {
+    boolean result ;
+    if (object == null) {
+      result = false ;
+    }
+    else if (object == this) {
+      result = true ;
+    }
+    else if (!(object instanceof SolutionSet)) {
+      result = false ;
+    }
+    else if (this.size() != ((SolutionSet)object).size()) {
+      result = false ;
+    }
+    else {
+      SolutionSet solutionSet = (SolutionSet) object;
+
+      boolean areEquals = true;
+      int i = 0;
+      while (areEquals && (i < solutionSet.size())) {
+        int j = 0;
+        boolean found = false ;
+        while (!found && (j < this.size())) {
+          if (solutionSet.get(i).equals(this.get(j))) {
+            found = true;
+          }
+          j++;
+        }
+        if (!found) {
+          areEquals = false ;
+        }
+      }
+      result = areEquals ;
+    }
+    return result ;
+  }
 
   /**
    * Write the function values of feasible solutions into a file
@@ -306,8 +348,7 @@ public class SolutionSet implements Serializable {
       }
       bw.close();
     }catch (IOException e) {
-      Configuration.logger_.severe("Error acceding to the file");
-      e.printStackTrace();
+      Configuration.logger_.log(Level.SEVERE,"Error acceding to the file", e);
     }
   }
 
@@ -333,9 +374,8 @@ public class SolutionSet implements Serializable {
       }
       bw.close();
     }catch (IOException e) {
-      Configuration.logger_.severe("Error acceding to the file");
-      e.printStackTrace();
-    }       
+      Configuration.logger_.log(Level.SEVERE, "Error acceding to the file", e);
+    }
   }
   
   /** 
@@ -351,7 +391,7 @@ public class SolutionSet implements Serializable {
    */
   public void remove(int i){        
     if (i > solutionsList_.size()-1) {            
-      Configuration.logger_.severe("Size is: "+this.size());
+      Configuration.logger_.log(Level.SEVERE, "Size is: "+this.size());
     } // if
     solutionsList_.remove(i);    
   } // remove

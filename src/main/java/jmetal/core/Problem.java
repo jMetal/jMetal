@@ -194,8 +194,11 @@ public abstract class Problem implements Serializable {
    * @param precision The array
    */
   public void setPrecision(int [] precision) {
-    precision_ = precision;
-  } // getPrecision
+    precision_ = new int[precision.length] ;
+    for (int i = 0; i < precision.length; i++) {
+      precision_ [i] = precision[i] ;
+    }
+  } // setPrecision
 
   /**
    * Returns the length of the encodings.variable.

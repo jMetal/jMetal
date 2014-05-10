@@ -169,7 +169,7 @@ public class F18_rotated_hybrid_composition_2 extends TestFunc {
   }
 
   // Function body
-  public double f(double[] x) {
+  public double f(double[] x) throws JMException {
 
     double result = 0.0;
 

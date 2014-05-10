@@ -22,6 +22,7 @@
 package jmetal.util;
 
 import java.io.Serializable;
+import java.util.logging.Level;
 
 
 /**
@@ -43,6 +44,6 @@ public class JMException extends Exception implements Serializable {
   } // JMException
 
   public JMException (Exception e) {
-    e.printStackTrace();
+    Configuration.logger_.log(Level.SEVERE, "Error", e);
   }
 }

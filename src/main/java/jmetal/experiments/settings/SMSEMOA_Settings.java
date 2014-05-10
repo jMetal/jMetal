@@ -31,10 +31,12 @@ import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.Selection;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.ProblemFactory;
+import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
 import java.util.HashMap;
 import java.util.Properties;
+import java.util.logging.Level;
 
 /**
  * Settings class of algorithm SMSEMOA
@@ -58,8 +60,7 @@ public class SMSEMOA_Settings extends Settings {
     try {
 	    problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
     } catch (JMException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
+      Configuration.logger_.log(Level.SEVERE, "Unable to get problem", e);
     }      
     populationSize_             = 100   ; 
     maxEvaluations_             = 25000 ;

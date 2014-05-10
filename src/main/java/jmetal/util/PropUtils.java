@@ -88,7 +88,7 @@ public abstract class PropUtils {
 
       value = base.getProperty (key);
 
-      value.trim();
+      //value.trim();
 
       if (isLabel(value))
       {
@@ -128,7 +128,7 @@ public abstract class PropUtils {
 
       value = pro.getProperty (key);
 
-      value.trim();
+      //value.trim();
 
       if (isLabel(value))
       {

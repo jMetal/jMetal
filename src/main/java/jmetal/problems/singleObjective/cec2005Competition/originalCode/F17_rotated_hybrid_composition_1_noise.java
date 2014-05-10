@@ -167,7 +167,7 @@ public class F17_rotated_hybrid_composition_1_noise extends TestFunc {
   }
 
   // Function body
-  public double f(double[] x) {
+  public double f(double[] x) throws JMException {
 
     double result = 0.0;
 

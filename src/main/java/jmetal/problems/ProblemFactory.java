@@ -26,6 +26,7 @@ import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
 import java.lang.reflect.Constructor;
+import java.util.logging.Level;
 
 /**
  * This class represents a factory for problems
@@ -80,10 +81,11 @@ public class ProblemFactory {
       return problem;      
     }// try
     catch(Exception e) {
-      Configuration.logger_.severe("ProblemFactory.getProblem: " +
-          "Problem '"+ name + "' does not exist. "  +
-          "Please, check the problem names in jmetal/problems") ;
-      e.printStackTrace();
+      Configuration.logger_.log(
+              Level.SEVERE,
+              "ProblemFactory.getProblem: " + "Problem '" + name + "' does not exist. " +
+                      "Please, check the problem names in jmetal/problems",
+              e) ;
       throw new JMException("Exception in " + name + ".getProblem()") ;
     } // catch              
   }    

@@ -27,10 +27,12 @@ import jmetal.metaheuristics.smpso.SMPSOhv;
 import jmetal.operators.mutation.Mutation;
 import jmetal.operators.mutation.MutationFactory;
 import jmetal.problems.ProblemFactory;
+import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
 import java.util.HashMap;
 import java.util.Properties;
+import java.util.logging.Level;
 
 /**
  * Settings class of algorithm SMPSOhv
@@ -52,8 +54,7 @@ public class SMPSOhv_Settings extends Settings{
     try {
 	    problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
     } catch (JMException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
+      Configuration.logger_.log(Level.SEVERE, "Unable to get problem", e);
     }      
 
     // Default experiments.settings

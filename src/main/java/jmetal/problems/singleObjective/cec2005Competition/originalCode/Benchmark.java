@@ -459,7 +459,7 @@ public class Benchmark {
   }
 
   // Hybrid composition
-  static public double hybrid_composition(double[] x, HCJob job) {
+  static public double hybrid_composition(double[] x, HCJob job) throws JMException {
 
     int num_func = job.num_func;
     int num_dim = job.num_dim;

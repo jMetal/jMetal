@@ -1,9 +1,11 @@
 package jmetal.experiments.util;
 
 import jmetal.experiments.Experiment;
+import jmetal.util.Configuration;
 
 import java.io.*;
 import java.util.*;
+import java.util.logging.Level;
 
 /**
  * Created by Antonio J. Nebro on 16/02/14.
@@ -44,7 +46,7 @@ public class LatexTables implements iExperimentOutput {
             try {
               fis = new FileInputStream(directory);
             } catch (FileNotFoundException e) {
-              e.printStackTrace();
+              Configuration.logger_.log(Level.SEVERE, "Error", e);
             }
             InputStreamReader isr = new InputStreamReader(fis);
             BufferedReader br = new BufferedReader(isr);
@@ -58,7 +60,7 @@ public class LatexTables implements iExperimentOutput {
                 aux = br.readLine();
               } // while
             } catch (IOException e) {
-              e.printStackTrace();
+              Configuration.logger_.log(Level.SEVERE, "Error", e);
             }
 
           } // for
@@ -157,7 +159,7 @@ public class LatexTables implements iExperimentOutput {
       printEndLatexCommands(latexFile);
     }
     catch (IOException e) {
-      e.printStackTrace();
+      Configuration.logger_.log(Level.SEVERE, "Error", e);
     } // generateLatexTables
   }
 

@@ -25,9 +25,11 @@ import jmetal.core.Problem;
 import jmetal.core.Solution;
 import jmetal.encodings.solutionType.PermutationSolutionType;
 import jmetal.encodings.variable.Permutation;
+import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
 import java.io.*;
+import java.util.logging.Level;
 
 /**
  * Class representing a TSP (Traveling Salesman Problem) problem.
@@ -66,7 +68,7 @@ public class TSP extends Problem {
         throw new JMException("Solution type invalid") ;
       }
     } catch (JMException e) {
-      e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+      Configuration.logger_.log(Level.SEVERE, "Error", e);
     }
     readProblem(filename) ;
 

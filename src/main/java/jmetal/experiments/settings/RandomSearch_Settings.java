@@ -25,8 +25,10 @@ import jmetal.core.Algorithm;
 import jmetal.experiments.Settings;
 import jmetal.metaheuristics.randomSearch.RandomSearch;
 import jmetal.problems.ProblemFactory;
+import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import java.util.Properties;
+import java.util.logging.Level;
 
 /**
  * Settings class of algorithm RandomSearch
@@ -46,7 +48,7 @@ public class RandomSearch_Settings extends Settings {
     try {
 	    problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
     } catch (JMException e) {
-	    e.printStackTrace();
+      Configuration.logger_.log(Level.SEVERE, "Unable to get problem", e);
     }      
   } // RandomSearch_Settings
 

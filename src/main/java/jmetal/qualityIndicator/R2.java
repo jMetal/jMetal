@@ -21,6 +21,7 @@
 package jmetal.qualityIndicator;
 
 import jmetal.core.SolutionSet;
+import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
 import java.io.BufferedReader;
@@ -28,6 +29,7 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.StringTokenizer;
+import java.util.logging.Level;
 
 public class R2 {
 
@@ -131,19 +133,17 @@ public class R2 {
             
             
     } catch (Exception e) {
-        System.out.println("initUniformWeight: failed when reading for file: " + file);
-        e.printStackTrace();
-    }                
+        Configuration.logger_.log(
+                Level.SEVERE,
+                "initUniformWeight: failed when reading for file: " + file,
+                e);
+    }
   } // R2
   
   
   
    /**
    * Returns the R2 indicator value of a given front
-   * @param front The front 
-   * @param trueParetoFront The true Pareto front
-   * @param numberOfObjectives The number of objectives
-   * @param lambda A vector containing the lambda vectors for R2
    */
   private double 
   R2Withouth(double [][] approximation,double [][] paretoFront, int index) 
@@ -245,10 +245,6 @@ public class R2 {
 
    /**
    * Returns the element contributing the less to the R2
-   * @param front The front 
-   * @param trueParetoFront The true Pareto front
-   * @param numberOfObjectives The number of objectives
-   * @param lambda A vector containing the lambda vectors for R2
    */
   public int 
   getWorst(double [][] approximation,double [][] paretoFront) 
@@ -284,12 +280,8 @@ public class R2 {
   
    /**
    * Returns the element contributing the less to the R2
-   * @param front The front 
-   * @param trueParetoFront The true Pareto front      
    */
-  public int 
-  getWorst(SolutionSet set) 
-  {
+  public int getWorst(SolutionSet set) {
       double [][] approximationFront = set.writeObjectivesToMatrix();
       double [][] trueFront          = set.writeObjectivesToMatrix();
 

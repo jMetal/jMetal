@@ -22,6 +22,7 @@
 package jmetal.metaheuristics.moead;
 
 import jmetal.core.*;
+import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.random.PseudoRandom;
 import java.io.BufferedReader;
@@ -154,11 +155,9 @@ public class pMOEAD extends Algorithm implements Runnable {
       barrier_.await();
       //System.out.println("Running: " + id_ ) ;
     } catch (InterruptedException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
+      Configuration.logger_.log(Level.SEVERE, "Error", e);
     } catch (BrokenBarrierException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
+      Configuration.logger_.log(Level.SEVERE, "Error", e);
     }
 
 
@@ -229,7 +228,7 @@ public class pMOEAD extends Algorithm implements Runnable {
         try {
           updateOfSolutions(child, n, type);
         } catch (JMException e) {
-          e.printStackTrace();
+          Configuration.logger_.log(Level.SEVERE, "Error", e);
         }
       } // for
     } while (evaluations_ < maxEvaluations_);
@@ -371,8 +370,10 @@ public class pMOEAD extends Algorithm implements Runnable {
         }
         br.close();
       } catch (Exception e) {
-        System.out.println("initUniformWeight: fail when reading for file: " + dataDirectory_ + "/" + dataFileName);
-        e.printStackTrace();
+        Configuration.logger_.log(
+                Level.SEVERE,
+                "initUniformWeight: fail when reading for file: " + dataDirectory_ + "/" + dataFileName,
+                e);
       }
     } // else
   } // initUniformWeight
