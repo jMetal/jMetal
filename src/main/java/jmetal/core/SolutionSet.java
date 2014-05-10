@@ -304,6 +304,9 @@ public class SolutionSet implements Serializable {
     else if (!(object instanceof SolutionSet)) {
       result = false ;
     }
+    else if (this.size() != ((SolutionSet)object).size()) {
+      result = false ;
+    }
     else {
       SolutionSet solutionSet = (SolutionSet) object;
 
@@ -311,11 +314,15 @@ public class SolutionSet implements Serializable {
       int i = 0;
       while (areEquals && (i < solutionSet.size())) {
         int j = 0;
-        while (areEquals && (j < this.size())) {
-          if (!solutionSet.get(i).equals(this.get(j))) {
-            areEquals = false;
+        boolean found = false ;
+        while (!found && (j < this.size())) {
+          if (solutionSet.get(i).equals(this.get(j))) {
+            found = true;
           }
           j++;
+        }
+        if (!found) {
+          areEquals = false ;
         }
       }
       result = areEquals ;

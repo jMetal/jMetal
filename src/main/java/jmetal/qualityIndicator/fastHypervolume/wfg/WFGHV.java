@@ -232,9 +232,11 @@ public class WFGHV {
             fs_[currentDeep_].points_[j] = fs_[currentDeep_].points_[fs_[currentDeep_].nPoints_];
             fs_[currentDeep_].points_[fs_[currentDeep_].nPoints_] = t;
             break;
-          case  0: j++; break;
+          case  0:
+            j++; break;
           // case  2: printf("Identical points!\n");
-          default: keep = false;
+          default:
+            keep = false;
         }
       }
       if (keep) {t = fs_[currentDeep_].points_[fs_[currentDeep_].nPoints_];

@@ -1,7 +1,10 @@
 package test.core;
 
+import jmetal.core.Problem;
 import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
+import jmetal.problems.Kursawe;
+import jmetal.util.JMException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,7 +26,6 @@ public class SolutionSetTest {
   @Before
   public void setUp() throws Exception {
     solutionSet_ = new SolutionSet(maxSize_) ;
-
   }
 
   @After
@@ -64,11 +66,36 @@ public class SolutionSetTest {
     for (int i = 0 ; i < 5 ; i++)
       solutionSet_.add(new Solution()) ;
 
-    Solution solution = solutionSet_.get(6) ;
+    Solution solution = solutionSet_.get(7) ;
   }
 
   @Test
   public void testGetMaxSize() {
     assertEquals("SolutionSetTest", 10, solutionSet_.getMaxSize());
+  }
+
+  @Test
+  public void testEquals() throws JMException, ClassNotFoundException {
+    Problem problem = new Kursawe("Real", 3) ;
+    SolutionSet solutionSet1 = new SolutionSet(10) ;
+    SolutionSet solutionSet2 = new SolutionSet(10) ;
+    //SolutionSet solutionSet3 = new SolutionSet(10) ;
+    Solution solution = null ;
+
+    for (int i = 0 ; i < 10; i++) {
+      solution = new Solution(problem) ;
+      problem.evaluate(solution);
+      solutionSet1.add(solution) ;
+      //solutionSet3.add(new Solution(solution)) ;
+    }
+
+    solutionSet2.add(new Solution(problem)) ;
+
+    assertFalse(solutionSet1.equals(null)) ;
+    assertFalse(solutionSet1.equals(solution)) ;
+    assertTrue(solutionSet1.equals(solutionSet1)) ;
+    assertFalse(solutionSet1.equals(solutionSet2)) ;
+
+    //assertTrue(solutionSet1.equals(solutionSet3)) ;
   }
 }
