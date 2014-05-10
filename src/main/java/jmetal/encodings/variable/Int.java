@@ -26,6 +26,8 @@ import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.random.PseudoRandom;
 
+import java.util.logging.Level;
+
 /**
  * This class implements an integer decision encodings.variable
  */
@@ -109,7 +111,7 @@ public class Int extends Variable {
 		try {
 			return new Int(this);
 		} catch (JMException e) {
-			Configuration.logger_.severe("Int.deepCopy.execute: JMException");
+			Configuration.logger_.log(Level.SEVERE, "Int.deepCopy.execute: JMException", e);
 			return null ;
 		}
 	} // deepCopy
