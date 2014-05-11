@@ -33,6 +33,7 @@ import jmetal.util.random.PseudoRandom;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
 
 /**
  * This class allows to apply a HUX crossover operator using two parent
@@ -115,9 +116,9 @@ public class HUXCrossover extends Crossover{
         }
       }          
     }catch (ClassCastException e1) {
-      
-      Configuration.logger_.severe("HUXCrossover.doCrossover: Cannot perfom " +
-          "SinglePointCrossover ") ;
+      Configuration.logger_.log(Level.SEVERE,
+              "HUXCrossover.doCrossover: Cannot perfom " + "SinglePointCrossover ",
+              e1) ;
       Class<String> cls = java.lang.String.class;
       String name = cls.getName(); 
       throw new JMException("Exception in " + name + ".doCrossover()") ;

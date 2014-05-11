@@ -27,6 +27,7 @@ import jmetal.util.Distance;
 import jmetal.util.JMException;
 
 import java.util.Comparator;
+import java.util.logging.Level;
 
 /**
  * This class implements a <code>Comparator</code> (a method for comparing
@@ -62,7 +63,7 @@ public class SolutionComparator implements Comparator<Solution> {
       if ((new Distance()).distanceBetweenSolutions(solution1,solution2) < EPSILON)
         return 0;
     } catch (JMException e) {
-      Configuration.logger_.severe("SolutionComparator.compare: JMException ") ; 
+      Configuration.logger_.log(Level.SEVERE, "SolutionComparator.compare: JMException ", e) ;
     }
                 
     return -1;

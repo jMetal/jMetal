@@ -34,6 +34,7 @@ import jmetal.util.random.PseudoRandom;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
 
 /**
  * This class implements a bit flip mutation operator.
@@ -97,8 +98,10 @@ public class BitFlipMutation extends Mutation {
 					} // if
 			} // else
 		} catch (ClassCastException e1) {
-			Configuration.logger_.severe("BitFlipMutation.doMutation: " +
-					"ClassCastException error" + e1.getMessage());
+			Configuration.logger_.log(Level.SEVERE,
+              "BitFlipMutation.doMutation: " +
+              "ClassCastException error" + e1.getMessage(),
+              e1);
 			Class<String> cls = java.lang.String.class;
 			String name = cls.getName();
 			throw new JMException("Exception in " + name + ".doMutation()");

@@ -97,6 +97,7 @@ public class ReadInstance {
             objectives_ = new Integer(aux);
             newLine += "1 ";
           } catch (NumberFormatException ne) {
+            Configuration.logger_.log(Level.WARNING, "NumberFormatException", ne);
             newLine += aux + " ";
             continue;            
           }

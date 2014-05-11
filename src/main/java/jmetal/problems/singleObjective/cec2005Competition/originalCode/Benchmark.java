@@ -55,6 +55,7 @@ import java.io.FileReader;
 import java.text.DecimalFormat;
 import java.util.Random;
 import java.util.StringTokenizer;
+import java.util.logging.Level;
 
 public class Benchmark {
 
@@ -157,6 +158,7 @@ public class Benchmark {
               );
     }
     catch (Exception e) {
+      Configuration.logger_.log(Level.SEVERE,"Error in Benchmark.java", e);
       throw new JMException("Error in Benchmark.java") ; 
     }
     return (returnFunc);
@@ -571,6 +573,7 @@ public class Benchmark {
       brSrc.close();
     }
     catch (Exception e) {
+      Configuration.logger_.log(Level.SEVERE,"Error in Benchmark.java", e);
       throw new JMException("Error in Benchmark.java") ;
     }
   }
@@ -582,6 +585,7 @@ public class Benchmark {
       brSrc.close();
     }
     catch (Exception e) {
+      Configuration.logger_.log(Level.SEVERE,"Error in Benchmark.java", e);
       throw new JMException("Error in Benchmark.java") ;
     }
   }
@@ -602,6 +606,7 @@ public class Benchmark {
       brSrc.close();
     }
     catch (Exception e) {
+      Configuration.logger_.log(Level.SEVERE,"Error in Benchmark.java", e);
       throw new JMException("Error in Benchmark.java") ;
     }
   }
@@ -624,6 +629,7 @@ public class Benchmark {
       brSrc.close();
     }
     catch (Exception e) {
+      Configuration.logger_.log(Level.SEVERE,"Error in Benchmark.java", e);
       throw new JMException("Error in Benchmark.java") ;
     }
   }
@@ -635,6 +641,7 @@ public class Benchmark {
       brSrc.close();
     }
     catch (Exception e) {
+      Configuration.logger_.log(Level.SEVERE,"Error in Benchmark.java", e);
       throw new JMException("Error in Benchmark.java") ;
     }
   }
