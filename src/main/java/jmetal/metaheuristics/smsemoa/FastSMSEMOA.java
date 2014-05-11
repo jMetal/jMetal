@@ -25,12 +25,14 @@ import jmetal.qualityIndicator.Hypervolume;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.qualityIndicator.fastHypervolume.FastHypervolume;
 import jmetal.qualityIndicator.util.MetricsUtil;
+import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.Ranking;
 import jmetal.util.comparators.CrowdingDistanceComparator;
 
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.logging.Level;
 
 /**
  * This class implements the SMS-EMOA algorithm, as described in
@@ -74,7 +76,7 @@ public class FastSMSEMOA extends Algorithm {
     super(problem) ;
     this.utils_ = new MetricsUtil();
     this.hv_ = new Hypervolume();
-  } // SMSEMOA
+  } // FastSMSEMOA
 
   /**
    * Runs the FastSMSEMOA algorithm.
@@ -144,8 +146,9 @@ public class FastSMSEMOA extends Algorithm {
           Solution parent = (Solution) selected;
           selectedParents.add(parent);
         } catch (ClassCastException e) {
+          Configuration.logger_.log(Level.WARNING, "Class cast exception", e);
           parents = (Solution[]) selected;
-            Collections.addAll(selectedParents, parents);
+          Collections.addAll(selectedParents, parents);
         }
       }
       parents = selectedParents.toArray(parents);

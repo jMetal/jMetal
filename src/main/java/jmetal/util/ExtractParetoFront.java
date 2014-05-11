@@ -49,8 +49,7 @@ public class ExtractParetoFront {
 			vector_ = new double[size];
 			for (int i = 0; i < size; i++)
 				vector_[i] = 0.0f;
-		}            
-
+		}
 	}
 
 	/**
@@ -95,22 +94,24 @@ public class ExtractParetoFront {
 					line = br.readLine();
 					lineCnt++;
 				} catch (NumberFormatException e) {
-					System.err.println("Number in a wrong format in line "+lineCnt);
-					System.err.println(line);
+					Configuration.logger_.log(
+                  Level.WARNING,
+                  "Number in a wrong format in line "+lineCnt+"\n"+line, e);
 					line = br.readLine();
 					lineCnt++;
 				} catch (NoSuchElementException e2) {
-					System.err.println("Line "+lineCnt+" does not have the right number of objectives");
-					System.err.println(line);
+					Configuration.logger_.log(
+                  Level.WARNING,
+                  "Line "+lineCnt+" does not have the right number of objectives\n"+line, e2);
 					line = br.readLine();
 					lineCnt++;
 				}
 			}
 			br.close();
 		} catch (FileNotFoundException e3) {
-			System.err.println("The file " + fileName_+ " has not been found in your file system");
+			Configuration.logger_.log(Level.SEVERE, "The file " + fileName_+ " has not been found in your file system", e3);
 		}  catch (IOException e3) {
-			System.err.println("The file " + fileName_+ " has not been found in your file system");
+			Configuration.logger_.log(Level.SEVERE, "The file " + fileName_+ " has not been found in your file system", e3);
 		}
 
 	} // loadInstance

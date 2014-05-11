@@ -222,8 +222,9 @@ public class MOEAD_DRA extends Algorithm {
       final_size= (Integer) (getInputParameter("finalSize"));
       System.out.println("FINAL SOZE: " + final_size) ;
     } catch (Exception e) { // if there is an exception indicate it!
-      System.err.println("The final size paramater has been ignored");
-      System.err.println("The number of solutions is " + population_.size());
+      Configuration.logger_.log(Level.SEVERE,
+              "The final size parameter has been ignored. The number of solutions is " + population_.size(),
+              e);
       return population_;
 
     }    

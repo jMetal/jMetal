@@ -169,6 +169,7 @@ public class TSP extends Problem {
       } // for
     } // try
     catch (Exception e) {
+      Configuration.logger_.log(Level.SEVERE, "TSP.readProblem(): error when reading data file", e);
       throw new Exception ("TSP.readProblem(): error when reading data file "+e);
     } // catch
   } // readProblem

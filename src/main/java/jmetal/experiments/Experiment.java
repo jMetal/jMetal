@@ -241,6 +241,7 @@ public class Experiment {
         }
 
       } catch (FileNotFoundException e) {
+        Configuration.logger_.log(Level.SEVERE, "File not found", e);
         propertiesFile_ = null ;
       }
 

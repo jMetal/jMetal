@@ -26,6 +26,8 @@ import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.random.PseudoRandom;
 
+import java.util.logging.Level;
+
 
 /**
  * This class implements a Real value decision encodings.variable
@@ -118,7 +120,7 @@ public class Real extends Variable{
     try {
       return new Real(this);
     } catch (JMException e) {
-      Configuration.logger_.severe("Real.deepCopy.execute: JMException");
+      Configuration.logger_.log(Level.SEVERE, "Real.deepCopy.execute: JMException", e);
       return null ;
     }
   } // deepCopy

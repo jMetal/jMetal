@@ -24,9 +24,11 @@ import jmetal.core.Problem;
 import jmetal.core.Solution;
 import jmetal.encodings.solutionType.PermutationSolutionType;
 import jmetal.encodings.variable.Permutation;
+import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
 import java.io.*;
+import java.util.logging.Level;
 
 /**
  * Class representing a multi-objective TSP (Traveling Salesman Problem) problem.
@@ -169,7 +171,8 @@ public class mTSP extends Problem {
         } // for
       } // for
     } // try
-    catch (Exception e) { 
+    catch (Exception e) {
+      Configuration.logger_.log(Level.SEVERE, "mTSP.readProblem(): error when reading data file", e);
       throw new Exception ("mTSP.readProblem(): error when reading data file "+e);
     } // catch
     return matrix;

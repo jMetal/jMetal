@@ -462,8 +462,9 @@ public class SolutionSet implements Serializable {
   } // writeObjectivesMatrix
 
   public void printObjectives() {
-    for (int i = 0; i < solutionsList_.size(); i++)
-      System.out.println(""+ solutionsList_.get(i)) ;
+    for (int i = 0; i < solutionsList_.size(); i++) {
+      Configuration.logger_.log(Level.INFO, "" + solutionsList_.get(i));
+    }
   }
 
   public void setCapacity(int capacity) {
