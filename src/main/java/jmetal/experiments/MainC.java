@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Properties;
 import java.util.logging.FileHandler;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -60,7 +61,11 @@ public class MainC {
     Algorithm algorithm ;         // The algorithm to use
     
     QualityIndicator indicators ; // Object to get quality indicators
-    
+
+    logger_      = Configuration.logger_ ;
+    fileHandler_ = new FileHandler("jMetal.log");
+    logger_.addHandler(fileHandler_) ;
+
     Settings settings = null;
     
     String algorithmName   = "" ;
@@ -73,10 +78,10 @@ public class MainC {
     InputStreamReader inputStreamReader = null  ;
     
     if (args.length == 0) { //
-      System.err.println("Sintax error. Usage:") ;
-      System.err.println("a) jmetal.experiments.Main configurationFile ") ;
-      System.err.println("b) jmetal.experiments.Main configurationFile problemName") ;
-      System.err.println("c) jmetal.experiments.Main configurationFile problemName paretoFrontFile") ;
+      logger_.log(Level.SEVERE, "Sintax error. Usage:") ;
+      logger_.log(Level.SEVERE,"a) jmetal.experiments.Main configurationFile ") ;
+      logger_.log(Level.SEVERE,"b) jmetal.experiments.Main configurationFile problemName") ;
+      logger_.log(Level.SEVERE,"c) jmetal.experiments.Main configurationFile problemName paretoFrontFile") ;
       throw new RuntimeException("Sintax error when invoking the program") ;
     } // if
     else if (args.length == 1) { // algorithmName
@@ -111,9 +116,9 @@ public class MainC {
     inputStreamReader.close();
     
     // Logger object and file to store log messages
-    logger_      = Configuration.logger_ ;
-    fileHandler_ = new FileHandler(algorithmName + ".log");
-    logger_.addHandler(fileHandler_) ;
+//    logger_      = Configuration.logger_ ;
+//    fileHandler_ = new FileHandler(algorithmName + ".log");
+//    logger_.addHandler(fileHandler_) ;
     
     
     if (args.length == 3) {

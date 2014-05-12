@@ -24,6 +24,7 @@ package jmetal.core;
 import jmetal.util.JMException;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * Abstract class representing a multiobjective optimization problem
@@ -35,7 +36,7 @@ public abstract class Problem implements Serializable {
    */
   private static final long serialVersionUID = 7027317068597003106L;
 
-/**
+  /**
    * Defines the default precision of binary-coded variables
    */
   private final static int DEFAULT_PRECISSION = 16;
@@ -44,92 +45,87 @@ public abstract class Problem implements Serializable {
    * Stores the number of variables of the problem
    */
   protected int numberOfVariables_ ;
-  
-  /** 
+
+  /**
    * Stores the number of objectives of the problem
    */
   protected int numberOfObjectives_ ;
-  
+
   /**
    * Stores the number of constraints of the problem
    */
   protected int numberOfConstraints_ ;
-  
+
   /**
    * Stores the problem name
    */
   protected String problemName_ ;
-  
+
   /**
    * Stores the type of the solutions of the problem
    */
   protected SolutionType solutionType_ ;
-  
+
   /**
    * Stores the lower bound values for each encodings.variable (only if needed)
    */
   protected double [] lowerLimit_ ;
-  
+
   /**
    * Stores the upper bound values for each encodings.variable (only if needed)
    */
   protected double [] upperLimit_ ;
-  
+
   /**
    * Stores the number of bits used by binary-coded variables (e.g., BinaryReal
    * variables). By default, they are initialized to DEFAULT_PRECISION)
    */
   private int    [] precision_  ;
-    
+
   /**
    * Stores the length of each encodings.variable when applicable (e.g., Binary and
    * Permutation variables)
    */
   protected int    [] length_  ;
-  
+
   /**
-   * Stores the type of each encodings.variable
-   */
-  //public Class [] variableType_;
-    
-  /** 
    * Constructor. 
    */
   public Problem() {
-	  solutionType_ = null ;
+    solutionType_ = null ;
   } // Problem
 
-  /** 
+  /**
    * Constructor. 
    */
   public Problem(SolutionType solutionType) {
     solutionType_ = solutionType ;
   } // Problem
-        
-  /** 
+
+  /**
    * Gets the number of decision variables of the problem.
    * @return the number of decision variables.
    */
   public int getNumberOfVariables() {
-    return numberOfVariables_ ;   
+    return numberOfVariables_ ;
   } // getNumberOfVariables
-  
-  /** 
+
+  /**
    * Sets the number of decision variables of the problem.
    */
   public void setNumberOfVariables(int numberOfVariables) {
-    numberOfVariables_ = numberOfVariables;   
+    numberOfVariables_ = numberOfVariables;
   } // getNumberOfVariables
-    
-  /** 
+
+  /**
    * Gets the the number of objectives of the problem.
    * @return the number of objectives.
    */
   public int getNumberOfObjectives() {
     return numberOfObjectives_ ;
   } // getNumberOfObjectives
-    
-  /** 
+
+  /**
    * Gets the lower bound of the ith encodings.variable of the problem.
    * @param i The index of the encodings.variable.
    * @return The lower bound.
@@ -137,8 +133,8 @@ public abstract class Problem implements Serializable {
   public double getLowerLimit(int i) {
     return lowerLimit_[i] ;
   } // getLowerLimit
-    
-  /** 
+
+  /**
    * Gets the upper bound of the ith encodings.variable of the problem.
    * @param i The index of the encodings.variable.
    * @return The upper bound.
@@ -146,13 +142,13 @@ public abstract class Problem implements Serializable {
   public double getUpperLimit(int i) {
     return upperLimit_[i] ;
   } // getUpperLimit 
-    
+
   /**
    * Evaluates a <code>Solution</code> object.
    * @param solution The <code>Solution</code> to evaluate.
-   */    
-  public abstract void evaluate(Solution solution) throws JMException ;    
-    
+   */
+  public abstract void evaluate(Solution solution) throws JMException ;
+
   /**
    * Gets the number of side constraints in the problem.
    * @return the number of constraints.
@@ -160,12 +156,12 @@ public abstract class Problem implements Serializable {
   public int getNumberOfConstraints() {
     return numberOfConstraints_ ;
   } // getNumberOfConstraints
-    
+
   /**
    * Evaluates the overall constraint violation of a <code>Solution</code> 
    * object.
    * @param solution The <code>Solution</code> to evaluate.
-   */    
+   */
   public void evaluateConstraints(Solution solution) throws JMException {
     // The default behavior is to do nothing. Only constrained problems have to
     // re-define this method
@@ -194,10 +190,11 @@ public abstract class Problem implements Serializable {
    * @param precision The array
    */
   public void setPrecision(int [] precision) {
-    precision_ = new int[precision.length] ;
-    for (int i = 0; i < precision.length; i++) {
-      precision_ [i] = precision[i] ;
-    }
+    precision_ = Arrays.copyOf(precision, precision.length) ;
+//    precision_ = new int[precision.length] ;
+//    for (int i = 0; i < precision.length; i++) {
+//      precision_ [i] = precision[i] ;
+//    }
   } // setPrecision
 
   /**
@@ -205,8 +202,9 @@ public abstract class Problem implements Serializable {
    * @return the encodings.variable length.
    */
   public int getLength(int var) {
-    if (length_ == null)
+    if (length_ == null) {
       return DEFAULT_PRECISSION;
+    }
     return length_[var] ;
   } // getLength
 
@@ -225,7 +223,7 @@ public abstract class Problem implements Serializable {
   public SolutionType getSolutionType() {
     return solutionType_ ;
   } // getSolutionType
-  
+
   /**
    * Returns the problem name
    * @return The problem name

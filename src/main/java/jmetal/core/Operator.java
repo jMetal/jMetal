@@ -24,7 +24,6 @@ package jmetal.core;
 import jmetal.util.JMException;
 
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -48,7 +47,7 @@ public abstract class Operator implements Serializable {
   /**
    * Constructor.
    */
-  public Operator(HashMap<String , Object> parameters) {
+  public Operator(Map<String , Object> parameters) {
     parameters_ = parameters; 
   } // Operator
         

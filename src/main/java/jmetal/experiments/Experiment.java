@@ -40,7 +40,7 @@ public class Experiment {
   public String[] algorithmNameList_; // List of the names of the algorithms to be executed
   public String[] problemList_; // List of problems to be solved
   public String[] paretoFrontFileList_; // List of the files containing the pareto fronts
-                                        // corresponding to the problems in problemList_
+  // corresponding to the problems in problemList_
   public String[] indicatorList_; // List of the quality indicators to be applied
   public String experimentBaseDirectory_; // Directory to store the results
   public String latexDirectory_; // Directory to store the latex files
@@ -53,7 +53,7 @@ public class Experiment {
   public Settings[] algorithmSettings_; // Parameter experiments.settings of each algorithm
   HashMap<String, Object> map_; // Map used to send experiment parameters to threads
   public HashMap<String, Boolean> indicatorMinimize_; // To indicate whether an indicator is to be minimized. Hard-coded
-                                                      // in the constructor
+  // in the constructor
 
   public boolean  runTheAlgorithms_ ;
   public boolean  generateReferenceParetoFronts_ ;
@@ -246,9 +246,9 @@ public class Experiment {
       }
 
       if (propertiesFile_ == null) {
-        System.out.println("Properties file " + args[0] + " doesn't exist");
+        Configuration.logger_.log(Level.INFO, "Properties file " + args[0] + " doesn't exist");
       } else {
-        System.out.println("Properties file loaded");
+        Configuration.logger_.log(Level.INFO, "Properties file loaded");
       }
     }
 
@@ -381,48 +381,4 @@ public class Experiment {
 
     return result ;
   }
-
-  /**
-   * @param problemIndex
-   */
-/*  public void generateReferenceFronts(int problemIndex) {
-
-    File rfDirectory;
-    String referenceFrontDirectory = experimentBaseDirectory_ + "/referenceFronts";
-
-    rfDirectory = new File(referenceFrontDirectory);
-
-    if (!rfDirectory.exists()) {                          // Si no existe el directorio
-      boolean result = new File(referenceFrontDirectory).mkdirs();        // Lo creamos
-      System.out.println("Creating " + referenceFrontDirectory);
-    }
-
-    //frontPath_[problemIndex] = referenceFrontDirectory + "/" + problemList_[problemIndex] + ".rf";
-    String referenceParetoFront = referenceFrontDirectory + "/" + problemList_[problemIndex] + ".pf";
-    //String referenceParetoSet = referenceFrontDirectory + "/" + problemList_[problemIndex] + ".ps";
-
-    MetricsUtil metricsUtils = new MetricsUtil();
-    NonDominatedSolutionList solutionSet = new NonDominatedSolutionList();
-    for (String anAlgorithmNameList_ : algorithmNameList_) {
-
-      String problemDirectory = experimentBaseDirectory_ + "/data/" + anAlgorithmNameList_ +
-              "/" + problemList_[problemIndex];
-
-      for (int numRun = 0; numRun < independentRuns_; numRun++) {
-
-        String outputParetoFrontFilePath;
-        outputParetoFrontFilePath = problemDirectory + "/FUN." + numRun;
-        String solutionFrontFile = outputParetoFrontFilePath;
-
-        metricsUtils.readNonDominatedSolutionSet(solutionFrontFile, solutionSet);
-      } // for
-    } // for
-    //solutionSet.printObjectivesToFile(frontPath_[problemIndex]);
-    try {
-      solutionSet.printObjectivesToFile(referenceParetoFront);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    //solutionSet.printVariablesToFile(referenceParetoSet);
-  } // generateReferenceFronts*/
 }
