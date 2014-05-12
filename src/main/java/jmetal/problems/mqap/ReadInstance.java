@@ -84,6 +84,7 @@ public class ReadInstance {
             facilities_ = new Integer(aux);
             newLine += aux + " ";
           } catch (NumberFormatException ne) {
+            Configuration.logger_.log(Level.WARNING, "Number Format Exception", ne);
             newLine += aux + " ";
             continue;            
           }

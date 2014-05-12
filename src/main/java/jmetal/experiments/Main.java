@@ -30,6 +30,7 @@ import jmetal.util.JMException;
 
 import java.io.IOException;
 import java.util.logging.FileHandler;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -48,14 +49,17 @@ public class Main {
    *      - jmetal.experiments.Main algorithmName
    *      - jmetal.experiments.Main algorithmName problemName
    *      - jmetal.experiments.Main algorithmName problemName paretoFrontFile
-   * @throws ClassNotFoundException 
+   * @throws ClassNotFoundException
    */
   public static void main(String [] args) throws
-                                  JMException, SecurityException, IOException, 
-                                  IllegalArgumentException, IllegalAccessException, 
-                                  ClassNotFoundException {
-    Problem   problem   ;         // The problem to solve
+          JMException, SecurityException, IOException,
+          IllegalArgumentException, IllegalAccessException,
+          ClassNotFoundException {
     Algorithm algorithm ;         // The algorithm to use
+
+    logger_      = Configuration.logger_ ;
+    fileHandler_ = new FileHandler("jMetal.log");
+    logger_.addHandler(fileHandler_) ;
 
     QualityIndicator indicators ; // Object to get quality indicators
 
@@ -66,26 +70,25 @@ public class Main {
     String paretoFrontFile = "" ;
 
     indicators = null ;
-    problem = null ;
 
     if (args.length == 0) { //
-      System.err.println("Sintax error. Usage:") ;
-      System.err.println("a) jmetal.experiments.Main algorithmName ") ;
-      System.err.println("b) jmetal.experiments.Main algorithmName problemName") ;
-      System.err.println("c) jmetal.experiments.Main algorithmName problemName paretoFrontFile") ;
-      throw new RuntimeException("Sintax error when invoking the program") ;
+      logger_.log(Level.SEVERE, "Sintax error. Usage:\n"+
+              "a) jmetal.experiments.Main algorithmName \n" +
+              "b) jmetal.experiments.Main algorithmName problemName\n" +
+              "c) jmetal.experiments.Main algorithmName problemName paretoFrontFile") ;
+      throw new JMException("Sintax error when invoking the program") ;
     } // if
     else if (args.length == 1) { // algorithmName
       algorithmName = args[0] ;
       Object [] settingsParams = {problemName} ;
       settings = (new SettingsFactory()).getSettingsObject(algorithmName, settingsParams) ;
-      } // if
+    } // if
     else if (args.length == 2) { // algorithmName problemName
       algorithmName = args[0] ;
       problemName = args[1] ;
       Object [] settingsParams = {problemName} ;
       settings = (new SettingsFactory()).getSettingsObject(algorithmName, settingsParams) ;
-      } // if
+    } // if
     else if (args.length == 3) { // algorithmName problemName paretoFrontFile
       algorithmName = args[0] ;
       problemName = args[1] ;
@@ -95,17 +98,17 @@ public class Main {
     } // if
 
     // Logger object and file to store log messages
-    logger_      = Configuration.logger_ ;
-    fileHandler_ = new FileHandler(algorithmName + ".log");
-    logger_.addHandler(fileHandler_) ;
+//    logger_      = Configuration.logger_ ;
+//    fileHandler_ = new FileHandler(algorithmName + ".log");
+//    logger_.addHandler(fileHandler_) ;
 
     algorithm = settings.configure();
 
     if (args.length == 3) {
-    	Problem p = algorithm.getProblem() ;
+      Problem p = algorithm.getProblem() ;
       indicators = new QualityIndicator(p, paretoFrontFile);
     }
-    
+
     // Execute the Algorithm
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();

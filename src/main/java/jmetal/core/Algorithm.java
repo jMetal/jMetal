@@ -156,10 +156,12 @@ public abstract class Algorithm implements Serializable {
   * doesn't exist or the name is wrong.
   */
   public Object getOutputParameter(String name) {
-    if (outPutParameters_ != null) 
+    if (outPutParameters_ != null) {
       return outPutParameters_.get(name);
-    else
-      return null ;
+    }
+    else {
+      return null;
+    }
   } // getOutputParameter   
   
   /**
