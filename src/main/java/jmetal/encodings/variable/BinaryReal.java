@@ -31,34 +31,34 @@ import java.util.BitSet;
  */
 public class BinaryReal extends Binary {
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = 7465120044544948197L;
 
-    /**
+  /**
    * Defines the default number of bits used for binary coded variables.
-   */	
-	public static final int DEFAULT_PRECISION = 30; 
-	
+   */
+  public static final int DEFAULT_PRECISION = 30;
+
   /**
    * Stores the real value of the encodings.variable
    */
   private double value_;
-  
+
   /**
    * Stores the lower limit for the encodings.variable
    */
   private double lowerBound_;
-  
+
   /**
    * Stores the upper limit for the encodings.variable
    */
-  private double upperBound_;  
-     
+  private double upperBound_;
+
   /**
    * Constructor.
    */
-  public BinaryReal() {    
+  public BinaryReal() {
     super();
   } //BinaryReal
 
@@ -72,23 +72,23 @@ public class BinaryReal extends Binary {
     super(numberOfBits);
     lowerBound_     = lowerBound;
     upperBound_     = upperBound;
-    
-    decode();                              
+
+    decode();
   } //BinaryReal
-    
-	/**
-	 * @param bits  BitSet
-	 * @param nbBits  Number of bits
-	 * @param lowerBound  Lower bound
-	 * @param upperBound  Upper bound
-	 */
-	public BinaryReal(BitSet bits, int nbBits, double lowerBound, double upperBound) {
-		super(nbBits);
-		bits_ = bits;
-		lowerBound_ = lowerBound;
-		upperBound_ = upperBound;
-		decode();
-	} // BinaryReal
+
+  /**
+   * @param bits  BitSet
+   * @param nbBits  Number of bits
+   * @param lowerBound  Lower bound
+   * @param upperBound  Upper bound
+   */
+  public BinaryReal(BitSet bits, int nbBits, double lowerBound, double upperBound) {
+    super(nbBits);
+    bits_ = bits;
+    lowerBound_ = lowerBound;
+    upperBound_ = upperBound;
+    decode();
+  } // BinaryReal
 
   /**
    * Copy constructor
@@ -105,11 +105,11 @@ public class BinaryReal extends Binary {
     bits_ = new BitSet(numberOfBits_);
     for (int i = 0; i < numberOfBits_; i++)
       bits_.set(i,encodings.variable.bits_.get(i));
-    */  
+    */
     value_ = variable.value_;
   } //BinaryReal
-    
-  
+
+
   /**
    * Decodes the real value encoded in the binary string represented
    * by the <code>BinaryReal</code> object. The decoded value is stores in the 
@@ -117,18 +117,18 @@ public class BinaryReal extends Binary {
    * <code>getValue</code>.
    */
   public void decode(){
-    double value = 0.0;        
+    double value = 0.0;
     for (int i = 0; i < numberOfBits_; i++) {
       if (bits_.get(i)) {
         value += Math.pow(2.0,i);
       }
     }
-        
+
     value_ = value * (upperBound_ - lowerBound_) /
-                                              (Math.pow(2.0,numberOfBits_)-1.0);        
-    value_ += lowerBound_;    
+            (Math.pow(2.0,numberOfBits_)-1.0);
+    value_ += lowerBound_;
   } //decode
- 
+
   /**
    * Returns the double value of the encodings.variable.
    * @return the double value.
@@ -137,63 +137,65 @@ public class BinaryReal extends Binary {
     return value_;
   } //getValue
 
-	/**
-	 * This implementation is efficient for binary string of length up to 24
-	 * bits, and for positive intervals.
-	 * 
-	 * @see jmetal.core.Variable#setValue(double)
-	 * 
-	 * Contributor: jl hippolyte
-	 */
-	@Override
-	public void setValue(double value) throws JMException {
-		if (numberOfBits_ <= 24 && lowerBound_ >= 0) {
-			BitSet bitSet;
-			if (value <= lowerBound_) {
-				 bitSet = new BitSet(numberOfBits_);
-				bitSet.clear();
-			} else if (value >= upperBound_) {
-				 bitSet = new BitSet(numberOfBits_);
-				bitSet.set(0, numberOfBits_);
-			} else {
-				 bitSet = new BitSet(numberOfBits_);
-				bitSet.clear();
-				// value is the integerToCode-th possible value, what is integerToCode?
-				int integerToCode = 0;
-				double tmp = lowerBound_;
-				double path = (upperBound_ - lowerBound_) / (Math.pow(2.0, numberOfBits_) - 1);
-				while (tmp < value) {
-					tmp +=  path;
-					integerToCode++;
-				}
-				int remain = integerToCode;
-				for (int i = numberOfBits_ - 1; i >= 0; i--) {
-					//System.out.println("i= " + i);
-					int ithPowerOf2 = (int) Math.pow(2, i);
+  /**
+   * This implementation is efficient for binary string of length up to 24
+   * bits, and for positive intervals.
+   *
+   * @see jmetal.core.Variable#setValue(double)
+   *
+   * Contributor: jl hippolyte
+   */
+  @Override
+  public void setValue(double value) throws JMException {
+    if (numberOfBits_ <= 24 && lowerBound_ >= 0) {
+      BitSet bitSet;
+      if (value <= lowerBound_) {
+        bitSet = new BitSet(numberOfBits_);
+        bitSet.clear();
+      } else if (value >= upperBound_) {
+        bitSet = new BitSet(numberOfBits_);
+        bitSet.set(0, numberOfBits_);
+      } else {
+        bitSet = new BitSet(numberOfBits_);
+        bitSet.clear();
+        // value is the integerToCode-th possible value, what is integerToCode?
+        int integerToCode = 0;
+        double tmp = lowerBound_;
+        double path = (upperBound_ - lowerBound_) / (Math.pow(2.0, numberOfBits_) - 1);
+        while (tmp < value) {
+          tmp +=  path;
+          integerToCode++;
+        }
+        int remain = integerToCode;
+        for (int i = numberOfBits_ - 1; i >= 0; i--) {
+          //System.out.println("i= " + i);
+          int ithPowerOf2 = (int) Math.pow(2, i);
 
-					if (ithPowerOf2 <= remain) {
-						//System.out
-					//			.println(ithPowerOf2thValue + " <= " + remain);
-						bitSet.set(i);
-						remain -= ithPowerOf2;
-					} else {
-						bitSet.clear(i);
-					}
-				}		
-			}
-			this.bits_ = bitSet;
-			this.decode();
-			
-		} else {
-			if (lowerBound_ < 0)
-				throw new JMException("Unsupported lowerbound: " + lowerBound_
-						+ " > 0");
-			if (numberOfBits_>= 24)
-				throw new JMException("Unsupported bit string length"
-						+ numberOfBits_ + " is > 24 bits");
-		}
-	}// setValue
-  
+          if (ithPowerOf2 <= remain) {
+            //System.out
+            //			.println(ithPowerOf2thValue + " <= " + remain);
+            bitSet.set(i);
+            remain -= ithPowerOf2;
+          }
+          else {
+            bitSet.clear(i);
+          }
+        }
+      }
+      this.bits_ = bitSet;
+      this.decode();
+
+    } else {
+      if (lowerBound_ < 0) {
+        throw new JMException("Unsupported lowerbound: " + lowerBound_ + " > 0");
+      }
+      if (numberOfBits_>= 24) {
+        throw new JMException("Unsupported bit string length"
+                + numberOfBits_ + " is > 24 bits");
+      }
+    }
+  }// setValue
+
   /**
    * Creates an exact copy of a <code>BinaryReal</code> object.
    * @return The copy of the object
@@ -233,7 +235,7 @@ public class BinaryReal extends Binary {
   public void setUpperBound(double upperBound) {
     upperBound_ = upperBound;
   } // setUpperBound
-  
+
   /**
    * Returns a string representing the object.
    * @return the string.

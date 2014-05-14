@@ -142,8 +142,9 @@ public class Experiment {
     System.out.println("Experiment: Name: " + experimentName_);
     System.out.println("Experiment: creating " + numberOfExecutionThreads_ + " threads");
     System.out.println("Experiment: Number of algorithms: " + algorithmNameList_.length);
-    for (String s : algorithmNameList_)
+    for (String s : algorithmNameList_) {
       System.out.println("  - " + s);
+    }
     System.out.println("Experiment: Number of problems: " + problemList_.length);
     System.out.println("Experiment: runs: " + independentRuns_);
     System.out.println("Experiment: Experiment directory: " + experimentBaseDirectory_);

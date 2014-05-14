@@ -153,11 +153,14 @@ public class Binary extends Variable {
     String result ;
     
     result = "" ;
-    for (int i = 0; i < numberOfBits_; i ++)
-      if (bits_.get(i))
-        result = result + "1" ;
-      else
-        result = result + "0" ;
+    for (int i = 0; i < numberOfBits_; i ++) {
+      if (bits_.get(i)) {
+        result = result + "1";
+      }
+      else {
+        result = result + "0";
+      }
+    }
         
     return result ;
   } // toString

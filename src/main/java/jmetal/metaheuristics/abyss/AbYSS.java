@@ -522,8 +522,9 @@ public class AbYSS extends Algorithm {
       newSolutions = subSetGeneration();        
       while (newSolutions > 0) { // New solutions are created           
         referenceSetUpdate(false);
-        if (evaluations_ >= maxEvaluations)                                        
-          return archive_;                
+        if (evaluations_ >= maxEvaluations) {
+          return archive_;
+        }
         newSolutions = subSetGeneration();                
       } // while
 
@@ -548,11 +549,13 @@ public class AbYSS extends Algorithm {
         archive_.sort(crowdingDistance_);                
 
         int insert = solutionSetSize_  / 2;
-        if (insert > archive_.size()) 
+        if (insert > archive_.size()) {
           insert = archive_.size();
+        }
 
-        if (insert > (solutionSetSize_ - solutionSet_.size())) 
-          insert = solutionSetSize_ - solutionSet_.size();         
+        if (insert > (solutionSetSize_ - solutionSet_.size())) {
+          insert = solutionSetSize_ - solutionSet_.size();
+        }
 
         // Insert solutions 
         for (int i = 0; i < insert; i++){                

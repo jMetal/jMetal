@@ -405,14 +405,16 @@ public class cMOEAD extends Algorithm {
       /***** This part is new according to the violation of constraints *****/
       if (comparator.needToCompare(population_.get(k), individual)) {
         int flag = comparator.compare(population_.get(k), individual);
-        if (flag == 1) 
-          population_.replace(k,new Solution(individual));
-        else if (flag == 0) 
+        if (flag == 1) {
+          population_.replace(k, new Solution(individual));
+        }
+        else if (flag == 0) {
           if (f2 < f1) {
             population_.replace(k, new Solution(individual));
             //population[k].indiv = indiv;
             time++;
           }
+        }
       } else {            
         if (f2 < f1) {
           population_.replace(k, new Solution(individual));

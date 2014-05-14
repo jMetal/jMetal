@@ -111,8 +111,9 @@ public class PESA2 extends Algorithm{
         solutionSet.add(offSpring[0]);                
       }
             
-      for (int i = 0; i < solutionSet.size(); i++)
+      for (int i = 0; i < solutionSet.size(); i++) {
         archive.add(solutionSet.get(i));
+      }
       
       // Clear the solutionSet
       solutionSet.clear();

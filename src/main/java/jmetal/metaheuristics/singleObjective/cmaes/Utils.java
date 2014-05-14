@@ -275,25 +275,26 @@ public class Utils {
     double cc, dd;
     String s;
 
-    for (i=0; i < N; ++i)
-      for (j=0; j < N; ++j) {
-        for (cc=0.,dd=0., k=0; k < N; ++k) {
+    for (i=0; i < N; ++i) {
+      for (j = 0; j < N; ++j) {
+        for (cc = 0., dd = 0., k = 0; k < N; ++k) {
           cc += diag[k] * Q[i][k] * Q[j][k];
           dd += Q[i][k] * Q[j][k];
         }
   		  /* check here, is the normalization the right one? */
-        if (Math.abs(cc - C[i>j?i:j][i>j?j:i])/Math.sqrt(C[i][i]*C[j][j]) > 1e-10
-            && Math.abs(cc - C[i>j?i:j][i>j?j:i]) > 1e-9) { /* quite large */
-          s = " " + i + " " + j + " " + cc + " " + C[i>j?i:j][i>j?j:i] + " " + (cc-C[i>j?i:j][i>j?j:i]);
+        if (Math.abs(cc - C[i > j ? i : j][i > j ? j : i]) / Math.sqrt(C[i][i] * C[j][j]) > 1e-10
+                && Math.abs(cc - C[i > j ? i : j][i > j ? j : i]) > 1e-9) { /* quite large */
+          s = " " + i + " " + j + " " + cc + " " + C[i > j ? i : j][i > j ? j : i] + " " + (cc - C[i > j ? i : j][i > j ? j : i]);
           System.err.println("jmetal.metaheuristics.cmaes.Utils.checkEigenSystem(): WARNING - imprecise result detected " + s);
           ++res;
         }
-        if (Math.abs(dd - (i==j?1:0)) > 1e-10) {
+        if (Math.abs(dd - (i == j ? 1 : 0)) > 1e-10) {
           s = i + " " + j + " " + dd;
           System.err.println("jmetal.metaheuristics.cmaes.Utils.checkEigenSystem(): WARNING - imprecise result detected (Q not orthog.) " + s);
           ++res;
         }
       }
+    }
     return res;
   }
 

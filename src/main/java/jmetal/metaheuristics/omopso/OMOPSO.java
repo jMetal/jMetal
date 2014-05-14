@@ -181,13 +181,14 @@ public class OMOPSO extends Algorithm {
       one = leaders_.get(pos1);
       two = leaders_.get(pos2);
 
-      if (crowdingDistanceComparator_.compare(one,two) < 1)
+      if (crowdingDistanceComparator_.compare(one,two) < 1) {
         bestGlobal = one.getDecisionVariables();
-      else
+      }
+      else {
         bestGlobal = two.getDecisionVariables();
-      //
+      }
             
-      //Params for velocity equation
+      //Parameters for velocity equation
       r1 = PseudoRandom.randDouble();
       r2 = PseudoRandom.randDouble();
       C1 = PseudoRandom.randDouble(1.5,2.0);
@@ -241,13 +242,15 @@ public class OMOPSO extends Algorithm {
     nonUniformMutation_.setParameter("currentIteration",actualIteration);
     //*/
 
-    for (int i = 0; i < particles_.size();i++)            
+    for (int i = 0; i < particles_.size();i++) {
       if (i % 3 == 0) { //particles_ mutated with a non-uniform mutation
-        nonUniformMutation_.execute(particles_.get(i));                                
+        nonUniformMutation_.execute(particles_.get(i));
       } else if (i % 3 == 1) { //particles_ mutated with a uniform mutation operator
-        uniformMutation_.execute(particles_.get(i));                
-      } else //particles_ without mutation
-          ;      
+        uniformMutation_.execute(particles_.get(i));
+      } else {//particles_ without mutation
+        ;
+      }
+    }
   } // mopsoMutation
    
     

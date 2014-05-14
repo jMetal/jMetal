@@ -128,8 +128,9 @@ public class sMOCell1 extends Algorithm{
 
         int flag = dominance.compare(individual,offSpring[0]);
 
-        if (flag == -1)
+        if (flag == -1) {
           newSolutionSet.add(new Solution(currentSolutionSet.get(ind)));
+        }
 
         if (flag == 1){ //The offSpring dominates
           offSpring[0].setLocation(individual.getLocation());                                      
