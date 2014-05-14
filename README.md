@@ -1,34 +1,21 @@
-# jMetal
+# jMetal Development Site
 
-**jMetal** stands for Metaheuristic Algorithms in Java, and it is an object-oriented Java-based framework for
-multi-objective optimization with metaheuristics.
+**jMetal** is an object-oriented Java-based framework for multi-objective optimization with metaheuristics
+(http://jmetal.sourceforge.net).
 
-### Features
+The current jMetal development version is hosted in this repository; this way, interested users can take a look to
+the new incoming features in advance. If you want to make some contribution, please feel free to clone the project
+and submit a pull request.
 
-- Portability
-- Multi-objective algoritms: NSGA-II (variants: ssNSGAII, NSGAIIadaptive, NSGAIIrandom), SPEA2, PAES, PESA-II, OMOPSO,
-MOCell, AbYSS, MOEA/D, Densea, CellDE, GDE3, FastPGA, IBEA, SMPSO, SMPSOhv, SMS-EMOA, dMOPSO
-- Single-objective algoritms: genetic algorithm (variants: generational, steady-state, synchronous cellular, asynchronous
-cellular), evolution strategy (variants: elitist or mu+lambda, non-elitist or mu, lambda), PSO, DE, CMA-ES
-- Parallel algorithms: pNSGAII, pSMPSO, pMOEAD, pgGA
-- Included problems:
-  - Problem families: ZDT, DTLZ, WFG, CEC2009, LZ09
-  - Classical problems: Kursawe, Fonseca, Schaffer
-  - Constrained problems: Srinivas, Tanaka, Osyczka2, Constr_Ex, Golinski, Water
-  - Combinatorial problems: multi-objective TSP, multi-objective QAP
-- Quality indicators: hypervolume, spread, generational distance, inverted generational distance, additive epsilon, R2,
-WFG hypervolume
-- Variable representations: binary, real, binary-coded real, integer, permutation, mixed encoding (real+binary, int+real)
+### Incoming features
 
-### You can use it to ...
+- We are using Maven since now on.
+- SonarQube is used to improve the code quality.
+- The multithreaded support (package: jmetal.util.parallel) has been rewritten. TO BE TESTED.
+- The Experiment class (package: jmetal.experiments) has been refactored and now the configuration of any experiment
+can be set by using properties files. TO BE TESTED.
+- New algorithms: StandardPSO2007 and StandardPSO2011 (package: jmetal.metaheuristics.singleObjctive.particleSwarmOptimization).
+- New problems: CEC 2005 Competition test suite (class: jmetal.problems.singleObjective.CEC2005Problem). TO BE TESTED.
+- New test package to apply unit testing (a lot of work to do here).
 
-The object-oriented architecture of the framework and the included features allow you to: experiment with the provided
-classic and state-of-the-art techniques, develop your own algorithms, solve your optimization problems, integrate jMetal
-in other tools, etc.
-
-### Our motivation is ...
-
-The motivation driving us is to provide the programs we use in our own works to the multi-objective optimization research
-community. We have made an effort in trying to produce an ease-to-use software, and we are continuously modifying and
-extending jMetal according to our needs and those suggested by people interested in using it.
 
