@@ -7,6 +7,8 @@ The current jMetal development version is hosted in this repository; this way, i
 the new incoming features in advance. If you want to make some contribution, please feel free to clone the project
 and submit a pull request.
 
+Suggestions and comments are welcome.
+
 ### Incoming features
 
 - We are using Maven since now on.

@@ -513,12 +513,13 @@ public class Solution implements Serializable {
   public int getNumberOfBits() {
     int bits = 0 ;
 
-    for (int i = 0;  i < variable_.length  ; i++)
+    for (int i = 0;  i < variable_.length  ; i++) {
       if ((variable_[i].getVariableType() == jmetal.encodings.variable.Binary.class) ||
-          (variable_[i].getVariableType() == jmetal.encodings.variable.BinaryReal.class)) {
+              (variable_[i].getVariableType() == jmetal.encodings.variable.BinaryReal.class)) {
 
         bits += ((Binary) (variable_[i])).getNumberOfBits();
       }
+    }
 
     return bits ;
   } // getNumberOfBits

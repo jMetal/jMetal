@@ -34,11 +34,11 @@ import jmetal.util.random.PseudoRandom;
  */
 public class ArrayReal extends Variable {
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = -731434436787291959L;
 
-/**
+  /**
    * Problem using the type
    */
   private Problem problem_;
@@ -113,8 +113,9 @@ public class ArrayReal extends Variable {
    * @return the value in position index
    */
   public double getValue(int index) throws JMException {
-    if ((index >= 0) && (index < size_))
+    if ((index >= 0) && (index < size_)) {
       return array_[index];
+    }
     else {
       Configuration.logger_.severe(jmetal.encodings.variable.ArrayReal.class + ".getValue(): index value (" + index + ") invalid");
       throw new JMException(jmetal.encodings.variable.ArrayReal.class + ".ArrayReal: index value (" + index + ") invalid");
@@ -128,8 +129,9 @@ public class ArrayReal extends Variable {
    * @param value The value to be set in position index
    */
   public void setValue(int index, double value) throws JMException {
-    if ((index >= 0) && (index < size_))
+    if ((index >= 0) && (index < size_)) {
       array_[index] = value;
+    }
     else {
       Configuration.logger_.severe(jmetal.encodings.variable.ArrayReal.class + ".setValue(): index value (" + index + ") invalid");
       throw new JMException(jmetal.encodings.variable.ArrayReal.class + ": index value (" + index + ") invalid");
@@ -143,8 +145,9 @@ public class ArrayReal extends Variable {
    * @return the lower bound
    */
   public double getLowerBound(int index) throws JMException {
-    if ((index >= 0) && (index < size_))
+    if ((index >= 0) && (index < size_)) {
       return problem_.getLowerLimit(index);
+    }
     else {
       Configuration.logger_.severe(jmetal.encodings.variable.ArrayReal.class + ".getLowerBound(): index value (" + index + ") invalid");
       throw new JMException(jmetal.encodings.variable.ArrayReal.class + ".getLowerBound: index value (" + index + ") invalid");
@@ -158,8 +161,9 @@ public class ArrayReal extends Variable {
    * @return the upper bound
    */
   public double getUpperBound(int index) throws JMException {
-    if ((index >= 0) && (index < size_))
+    if ((index >= 0) && (index < size_)) {
       return problem_.getUpperLimit(index);
+    }
     else {
       Configuration.logger_.severe(jmetal.encodings.variable.ArrayReal.class + ".getUpperBound(): index value (" + index + ") invalid");
       throw new JMException(jmetal.encodings.variable.ArrayReal.class + ".getUpperBound: index value (" + index + ") invalid");
@@ -175,8 +179,9 @@ public class ArrayReal extends Variable {
     String string;
 
     string = "";
-    for (int i = 0; i < (size_ - 1); i++)
+    for (int i = 0; i < (size_ - 1); i++) {
       string += array_[i] + " ";
+    }
 
     string += array_[size_ - 1];
     return string;

@@ -369,8 +369,9 @@ public class SolutionSet implements Serializable {
         int numberOfVariables = solutionsList_.get(0).getDecisionVariables().length ;
         for (Solution aSolutionsList_ : solutionsList_) {
           if (aSolutionsList_.getOverallConstraintViolation() == 0.0) {
-            for (int j = 0; j < numberOfVariables; j++)
+            for (int j = 0; j < numberOfVariables; j++) {
               bw.write(aSolutionsList_.getDecisionVariables()[j].toString() + " ");
+            }
             bw.newLine();
           }
         }

@@ -45,9 +45,10 @@ public class IntSolutionType extends SolutionType {
 	public Variable[] createVariables() {
 		Variable[] variables = new Variable[problem_.getNumberOfVariables()];
 
-		for (int var = 0; var < problem_.getNumberOfVariables(); var++)
-			variables[var] = new Int((int)problem_.getLowerLimit(var),
-					(int)problem_.getUpperLimit(var));    
+		for (int var = 0; var < problem_.getNumberOfVariables(); var++) {
+      variables[var] = new Int((int) problem_.getLowerLimit(var),
+              (int) problem_.getUpperLimit(var));
+    }
 
 		return variables ;
 	} // createVariables

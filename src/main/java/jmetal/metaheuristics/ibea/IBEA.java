@@ -36,14 +36,11 @@ import java.util.List;
 public class IBEA extends Algorithm{
 
   /**
-<<<<<<< HEAD
-=======
-   * 
+   *
    */
   private static final long serialVersionUID = -1889165434725718813L;
 
-/**
->>>>>>> master
+  /**
    * Defines the number of tournaments for creating the mating pool
    */
   public static final int TOURNAMENTS_ROUNDS = 1;
@@ -59,10 +56,10 @@ public class IBEA extends Algorithm{
    */
   private double maxIndicatorValue_;
   /**
-  * Constructor.
-  * Create a new IBEA instance
-  * @param problem Problem to solve
-  */
+   * Constructor.
+   * Create a new IBEA instance
+   * @param problem Problem to solve
+   */
   public IBEA(Problem problem) {
     super (problem) ;
   } // Spea2
@@ -85,31 +82,31 @@ public class IBEA extends Algorithm{
 
 
     a = p_ind_a.getObjective(d-1);
-    if (p_ind_b == null)
+    if (p_ind_b == null) {
       b = max;
-    else
-      b = p_ind_b.getObjective(d-1);
-
-    if (d == 1)
-    {
-      if (a < b)
-        volume = (b - a) / r;
-      else
-        volume = 0;
     }
-    else
-    {
-      if (a < b)
-      {
-         volume = calcHypervolumeIndicator(p_ind_a, null, d - 1, maximumValues, minimumValues) *
-         (b - a) / r;
-         volume += calcHypervolumeIndicator(p_ind_a, p_ind_b, d - 1, maximumValues, minimumValues) *
-         (max - b) / r;
+    else {
+      b = p_ind_b.getObjective(d - 1);
+    }
+
+    if (d == 1) {
+      if (a < b) {
+        volume = (b - a) / r;
       }
-      else
-      {
-         volume = calcHypervolumeIndicator(p_ind_a, p_ind_b, d - 1, maximumValues, minimumValues) *
-         (max - b) / r;
+      else {
+        volume = 0;
+      }
+    }
+    else {
+      if (a < b) {
+        volume = calcHypervolumeIndicator(p_ind_a, null, d - 1, maximumValues, minimumValues) *
+                (b - a) / r;
+        volume += calcHypervolumeIndicator(p_ind_a, p_ind_b, d - 1, maximumValues, minimumValues) *
+                (max - b) / r;
+      }
+      else {
+        volume = calcHypervolumeIndicator(p_ind_a, p_ind_b, d - 1, maximumValues, minimumValues) *
+                (max - b) / r;
       }
     }
 
@@ -118,12 +115,12 @@ public class IBEA extends Algorithm{
 
 
 
-    /**
+  /**
    * This structure store the indicator values of each pair of elements
    */
   public void computeIndicatorValuesHD(SolutionSet solutionSet,
-                                     double [] maximumValues,
-                                     double [] minimumValues) {
+                                       double [] maximumValues,
+                                       double [] minimumValues) {
     SolutionSet A, B;
     // Initialize the structures
     indicatorValues_ = new ArrayList<List<Double>>();
@@ -142,20 +139,21 @@ public class IBEA extends Algorithm{
 
         double value = 0.0;
         if (flag == -1) {
-            value = - calcHypervolumeIndicator(A.get(0), B.get(0), problem_.getNumberOfObjectives(), maximumValues, minimumValues);
+          value = - calcHypervolumeIndicator(A.get(0), B.get(0), problem_.getNumberOfObjectives(), maximumValues, minimumValues);
         } else {
-            value = calcHypervolumeIndicator(B.get(0), A.get(0), problem_.getNumberOfObjectives(), maximumValues, minimumValues);
+          value = calcHypervolumeIndicator(B.get(0), A.get(0), problem_.getNumberOfObjectives(), maximumValues, minimumValues);
         }
         //double value = epsilon.epsilon(matrixA,matrixB,problem_.getNumberOfObjectives());
 
-        
+
         //Update the max value of the indicator
-        if (Math.abs(value) > maxIndicatorValue_)
+        if (Math.abs(value) > maxIndicatorValue_) {
           maxIndicatorValue_ = Math.abs(value);
+        }
         aux.add(value);
-     }
-     indicatorValues_.add(aux);
-   }
+      }
+      indicatorValues_.add(aux);
+    }
   } // computeIndicatorValues
 
 
@@ -164,59 +162,59 @@ public class IBEA extends Algorithm{
    * Calculate the fitness for the individual at position pos
    */
   public void fitness(SolutionSet solutionSet,int pos) {
-      double fitness = 0.0;
-      double kappa   = 0.05;
-    
-      for (int i = 0; i < solutionSet.size(); i++) {
-        if (i!=pos) {
-           fitness += Math.exp((-1 * indicatorValues_.get(i).get(pos)/maxIndicatorValue_) / kappa);
-        }
+    double fitness = 0.0;
+    double kappa   = 0.05;
+
+    for (int i = 0; i < solutionSet.size(); i++) {
+      if (i!=pos) {
+        fitness += Math.exp((-1 * indicatorValues_.get(i).get(pos)/maxIndicatorValue_) / kappa);
       }
-      solutionSet.get(pos).setFitness(fitness);
+    }
+    solutionSet.get(pos).setFitness(fitness);
   }
 
 
   /**
    * Calculate the fitness for the entire population.
-  **/
+   **/
   public void calculateFitness(SolutionSet solutionSet) {
     // Obtains the lower and upper bounds of the population
     double [] maximumValues = new double[problem_.getNumberOfObjectives()];
     double [] minimumValues = new double[problem_.getNumberOfObjectives()];
 
     for (int i = 0; i < problem_.getNumberOfObjectives();i++) {
-        maximumValues[i] = - Double.MAX_VALUE; // i.e., the minus maxium value
-        minimumValues[i] =   Double.MAX_VALUE; // i.e., the maximum value
+      maximumValues[i] = - Double.MAX_VALUE; // i.e., the minus maxium value
+      minimumValues[i] =   Double.MAX_VALUE; // i.e., the maximum value
     }
 
     for (int pos = 0; pos < solutionSet.size(); pos++) {
-        for (int obj = 0; obj < problem_.getNumberOfObjectives(); obj++) {
-          double value = solutionSet.get(pos).getObjective(obj);
-          if (value > maximumValues[obj])
-              maximumValues[obj] = value;
-          if (value < minimumValues[obj])
-              minimumValues[obj] = value;
-        }
+      for (int obj = 0; obj < problem_.getNumberOfObjectives(); obj++) {
+        double value = solutionSet.get(pos).getObjective(obj);
+        if (value > maximumValues[obj])
+          maximumValues[obj] = value;
+        if (value < minimumValues[obj])
+          minimumValues[obj] = value;
+      }
     }
 
     computeIndicatorValuesHD(solutionSet,maximumValues,minimumValues);
     for (int pos =0; pos < solutionSet.size(); pos++) {
-        fitness(solutionSet,pos);
+      fitness(solutionSet,pos);
     }
   }
 
 
 
-  /** 
+  /**
    * Update the fitness before removing an individual
    */
   public void removeWorst(SolutionSet solutionSet) {
-   
+
     // Find the worst;
     double worst      = solutionSet.get(0).getFitness();
     int    worstIndex = 0;
     double kappa = 0.05;
-     
+
     for (int i = 1; i < solutionSet.size(); i++) {
       if (solutionSet.get(i).getFitness() > worst) {
         worst = solutionSet.get(i).getFitness();
@@ -233,17 +231,18 @@ public class IBEA extends Algorithm{
     // Update the population
     for (int i = 0; i < solutionSet.size(); i++) {
       if (i!=worstIndex) {
-          double fitness = solutionSet.get(i).getFitness();
-          fitness -= Math.exp((- indicatorValues_.get(worstIndex).get(i)/maxIndicatorValue_) / kappa);
-          solutionSet.get(i).setFitness(fitness);
+        double fitness = solutionSet.get(i).getFitness();
+        fitness -= Math.exp((- indicatorValues_.get(worstIndex).get(i)/maxIndicatorValue_) / kappa);
+        solutionSet.get(i).setFitness(fitness);
       }
     }
 
     // remove worst from the indicatorValues list
     indicatorValues_.remove(worstIndex); // Remove its own list
     Iterator<List<Double>> it = indicatorValues_.iterator();
-    while (it.hasNext())
-        it.next().remove(worstIndex);
+    while (it.hasNext()) {
+      it.next().remove(worstIndex);
+    }
 
     // remove the worst individual from the population
     solutionSet.remove(worstIndex);
@@ -251,11 +250,11 @@ public class IBEA extends Algorithm{
 
 
   /**
-  * Runs of the IBEA algorithm.
-  * @return a <code>SolutionSet</code> that is a set of non dominated solutions
-  * as a result of the algorithm execution
-  * @throws JMException
-  */
+   * Runs of the IBEA algorithm.
+   * @return a <code>SolutionSet</code> that is a set of non dominated solutions
+   * as a result of the algorithm execution
+   * @throws JMException
+   */
   public SolutionSet execute() throws JMException, ClassNotFoundException{
     int populationSize, archiveSize, maxEvaluations, evaluations;
     Operator crossoverOperator, mutationOperator, selectionOperator;
@@ -290,7 +289,7 @@ public class IBEA extends Algorithm{
       SolutionSet union = ((SolutionSet)solutionSet).union(archive);
       calculateFitness(union);
       archive = union;
-      
+
       while (archive.size() > populationSize) {
         removeWorst(archive);
       }
@@ -299,12 +298,12 @@ public class IBEA extends Algorithm{
       Solution  [] parents = new Solution[2];
       while (offSpringSolutionSet.size() < populationSize){
         int j = 0;
-        do{
+        do {
           j++;
           parents[0] = (Solution)selectionOperator.execute(archive);
         } while (j < IBEA.TOURNAMENTS_ROUNDS); // do-while
         int k = 0;
-        do{
+        do {
           k++;
           parents[1] = (Solution)selectionOperator.execute(archive);
         } while (k < IBEA.TOURNAMENTS_ROUNDS); // do-while
@@ -324,4 +323,4 @@ public class IBEA extends Algorithm{
     Ranking ranking = new Ranking(archive);
     return ranking.getSubfront(0);
   } // execute
-} // Spea2
+} // IBEA

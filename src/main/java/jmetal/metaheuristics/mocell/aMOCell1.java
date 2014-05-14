@@ -135,8 +135,9 @@ public class aMOCell1 extends Algorithm{
 
           boolean deleteMutant = true;          
           int compareResult = crowding.compare(individual,offSpring[0]);
-          if (compareResult == 1) //The offSpring[0] is better
+          if (compareResult == 1) {
             deleteMutant = false;
+          }
 
           if (!deleteMutant){
             offSpring[0].setLocation(individual.getLocation());

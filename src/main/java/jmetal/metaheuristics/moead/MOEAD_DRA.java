@@ -172,8 +172,7 @@ public class MOEAD_DRA extends Algorithm {
         double rnd = PseudoRandom.randDouble();
 
         // STEP 2.1. Mating selection based on probability
-        if (rnd < delta_) // if (rnd < realb)
-        {
+        if (rnd < delta_) {
           type = 1;   // neighborhood
         } else {
           type = 2;   // whole population
@@ -210,8 +209,7 @@ public class MOEAD_DRA extends Algorithm {
       } // for
 
       gen++;
-      if(gen%30==0)
-      {
+      if (gen%30==0) {
         comp_utility();
       }
 
@@ -284,8 +282,6 @@ public class MOEAD_DRA extends Algorithm {
                 e);
       }
     } // else
-
-    //System.exit(0) ;
   } // initUniformWeight
 
 
@@ -297,8 +293,9 @@ public class MOEAD_DRA extends Algorithm {
       f1 = fitnessFunction(population_.get(n), lambda_[n]);
       f2 = fitnessFunction(savedValues_[n], lambda_[n]);
       delta = f2 - f1;
-      if(delta>0.001)  
+      if(delta>0.001) {
         utility_[n] = 1.0;
+      }
       else{
         // uti = 0.95*(1.0+delta/0.001)*utility_[n];
         uti = (0.95 + (0.05 * delta/0.001)) * utility_[n];
@@ -409,12 +406,14 @@ public class MOEAD_DRA extends Algorithm {
     List<Integer> selected     = new ArrayList<Integer>();
     List<Integer> candidate    = new ArrayList<Integer>();
 
-    for(int k=0; k<problem_.getNumberOfObjectives(); k++)
+    for(int k=0; k<problem_.getNumberOfObjectives(); k++) {
       selected.add(k);   // WARNING! HERE YOU HAVE TO USE THE WEIGHT PROVIDED BY QINGFU (NOT SORTED!!!!)
+    }
 
 
-    for(int n=problem_.getNumberOfObjectives(); n<populationSize_; n++)
+    for(int n=problem_.getNumberOfObjectives(); n<populationSize_; n++) {
       candidate.add(n);  // set of unselected weights
+    }
 
     while(selected.size()<(int)(populationSize_/5.0))
     {
@@ -424,13 +423,10 @@ public class MOEAD_DRA extends Algorithm {
       int i2;
       int best_sub = candidate.get(best_idd);
       int s2;
-      for(int i=1; i<depth; i++)
-      {
+      for(int i=1; i<depth; i++) {
         i2  = (int) (PseudoRandom.randDouble()*candidate.size());
         s2  = candidate.get(i2);
-        //System.out.println("Candidate: "+i2);
-        if(utility_[s2]>utility_[best_sub])
-        {
+        if(utility_[s2]>utility_[best_sub]) {
           best_idd = i2;
           best_sub = s2;
         }
@@ -591,8 +587,9 @@ public class MOEAD_DRA extends Algorithm {
 
 
       for (int i = 0; i< population_.size(); i++) {
-        if (i != random_index)
+        if (i != random_index) {
           candidate.add(population_.get(i));
+        }
       } // for
 
       while (res.size() < n) {
