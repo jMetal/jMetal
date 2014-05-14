@@ -173,7 +173,8 @@ public class SolutionSet implements Serializable {
     int indexBest = indexBest(comparator);
     if (indexBest < 0) {
       return null;
-    } else {
+    }
+    else {
       return solutionsList_.get(indexBest);
     }
 
@@ -219,7 +220,8 @@ public class SolutionSet implements Serializable {
     int index = indexWorst(comparator);
     if (index < 0) {
       return null;
-    } else {
+    }
+    else {
       return solutionsList_.get(index);
     }
 
@@ -276,8 +278,9 @@ public class SolutionSet implements Serializable {
       if (size()>0) {
         int numberOfVariables = solutionsList_.get(0).getDecisionVariables().length ;
         for (Solution aSolutionsList_ : solutionsList_) {
-          for (int j = 0; j < numberOfVariables; j++)
+          for (int j = 0; j < numberOfVariables; j++) {
             bw.write(aSolutionsList_.getDecisionVariables()[j].toString() + " ");
+          }
           bw.newLine();
         }
       }
@@ -414,8 +417,9 @@ public class SolutionSet implements Serializable {
   public SolutionSet union(SolutionSet solutionSet) {       
     //Check the correct size. In development
     int newSize = this.size() + solutionSet.size();
-    if (newSize < capacity_)
+    if (newSize < capacity_) {
       newSize = capacity_;
+    }
 
     //Create a new population 
     SolutionSet union = new SolutionSet(newSize);                

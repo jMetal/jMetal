@@ -318,10 +318,12 @@ public class Solution implements Serializable {
    * @return The number of objectives.
    */
   public int getNumberOfObjectives() {
-    if (objective_ == null)
-      return 0 ;
-    else
+    if (objective_ == null) {
+      return 0;
+    }
+    else {
       return numberOfObjectives_;
+    }
   } // getNumberOfObjectives
 
   /**  
@@ -338,9 +340,9 @@ public class Solution implements Serializable {
    */
   public String toString() {
     String aux="";
-    for (int i = 0; i < this.numberOfObjectives_; i++)
+    for (int i = 0; i < this.numberOfObjectives_; i++) {
       aux = aux + this.getObjective(i) + " ";
-
+    }
     return aux;
   } // toString
 
@@ -496,7 +498,7 @@ public class Solution implements Serializable {
    */
   public double getAggregativeValue() {
     double value = 0.0;                
-    for (int i = 0; i < getNumberOfObjectives(); i++){
+    for (int i = 0; i < getNumberOfObjectives(); i++) {
       value += getObjective(i);
     }                
     return value;
@@ -513,9 +515,10 @@ public class Solution implements Serializable {
 
     for (int i = 0;  i < variable_.length  ; i++)
       if ((variable_[i].getVariableType() == jmetal.encodings.variable.Binary.class) ||
-          (variable_[i].getVariableType() == jmetal.encodings.variable.BinaryReal.class))
+          (variable_[i].getVariableType() == jmetal.encodings.variable.BinaryReal.class)) {
 
-        bits += ((Binary)(variable_[i])).getNumberOfBits() ;
+        bits += ((Binary) (variable_[i])).getNumberOfBits();
+      }
 
     return bits ;
   } // getNumberOfBits
