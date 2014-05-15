@@ -117,8 +117,9 @@ public class ElitistES extends Algorithm {
       offspringPopulation.sort(comparator) ;
             
       // STEP 4. Create the new mu population
-      for (int i = 0; i < mu_; i++)
-        population.add(offspringPopulation.get(i)) ;
+      for (int i = 0; i < mu_; i++) {
+        population.add(offspringPopulation.get(i));
+      }
 
       System.out.println("Evaluation: " + evaluations + " Fitness: " + 
           population.get(0).getObjective(0)) ; 

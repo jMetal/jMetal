@@ -118,8 +118,9 @@ public class acGA extends Algorithm {
         parents[1] = (Solution)selectionOperator.execute(neighbors[ind]);
 
         //Create a new solution, using genetic operators mutation and crossover
-        if (crossoverOperator != null)
-          offSpring = (Solution [])crossoverOperator.execute(parents);        
+        if (crossoverOperator != null) {
+          offSpring = (Solution[]) crossoverOperator.execute(parents);
+        }
         else {
         	offSpring = new Solution[1] ;
         	offSpring[0] = new Solution(parents[0]) ;
@@ -131,8 +132,9 @@ public class acGA extends Algorithm {
         //problem_.evaluateConstraints(offSpring[0]);
         evaluations++;
 
-        if (comparator.compare(individual, offSpring[0]) > 0)
-        	population.replace(ind, offSpring[0]) ;          
+        if (comparator.compare(individual, offSpring[0]) > 0) {
+          population.replace(ind, offSpring[0]);
+        }
         
         if ((evaluations % 1000) == 0) {
           int bestSolution = (Integer)findBestSolution.execute(population) ;

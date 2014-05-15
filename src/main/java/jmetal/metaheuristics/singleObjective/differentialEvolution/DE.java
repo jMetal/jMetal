@@ -118,10 +118,12 @@ public class DE extends Algorithm {
 
          evaluations++ ;
          
-         if (comparator.compare(population.get(i), child) < 0) 
-           offspringPopulation.add(new Solution(population.get(i))) ;
-         else
-           offspringPopulation.add(child) ;
+         if (comparator.compare(population.get(i), child) < 0) {
+           offspringPopulation.add(new Solution(population.get(i)));
+         }
+         else {
+           offspringPopulation.add(child);
+         }
        } // for
        
        // The offspring population becomes the new current population

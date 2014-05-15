@@ -190,10 +190,12 @@ public class IBEA extends Algorithm{
     for (int pos = 0; pos < solutionSet.size(); pos++) {
       for (int obj = 0; obj < problem_.getNumberOfObjectives(); obj++) {
         double value = solutionSet.get(pos).getObjective(obj);
-        if (value > maximumValues[obj])
+        if (value > maximumValues[obj]) {
           maximumValues[obj] = value;
-        if (value < minimumValues[obj])
+        }
+        if (value < minimumValues[obj]) {
           minimumValues[obj] = value;
+        }
       }
     }
 

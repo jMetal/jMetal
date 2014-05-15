@@ -307,14 +307,9 @@ public class PSO extends Algorithm {
    */
   private void mopsoMutation(int actualIteration, int totalIterations) throws JMException {
     for (int i = 0; i < particles_.size(); i++) {
-      if ( (i % 6) == 0)
-        polynomialMutation_.execute(particles_.get(i)) ;
-      //if (i % 3 == 0) { //particles_ mutated with a non-uniform mutation %3
-      //  nonUniformMutation_.execute(particles_.get(i));
-      //} else if (i % 3 == 1) { //particles_ mutated with a uniform mutation operator
-      //  uniformMutation_.execute(particles_.get(i));
-      //} else //particles_ without mutation
-      //;
+      if ( (i % 6) == 0) {
+        polynomialMutation_.execute(particles_.get(i));
+      }
     }
   } // mopsoMutation
 
@@ -335,8 +330,9 @@ public class PSO extends Algorithm {
       problem_.evaluate(particle);
       evaluations_ ++ ;
       particles_.add(particle);
-      if ((globalBest_ == null) || (particle.getObjective(0) < globalBest_.getObjective(0)))
-        globalBest_ = new Solution(particle) ;
+      if ((globalBest_ == null) || (particle.getObjective(0) < globalBest_.getObjective(0))) {
+        globalBest_ = new Solution(particle);
+      }
     }
 
     //-> Step2. Initialize the speed_ of each particle to 0

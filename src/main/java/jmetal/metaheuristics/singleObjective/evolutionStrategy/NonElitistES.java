@@ -100,8 +100,9 @@ public class NonElitistES extends Algorithm {
       evaluations++;
       population.add(newIndividual);
       
-      if (comparator.compare(bestIndividual, newIndividual) > 0 )
-        bestIndividual = new Solution(newIndividual) ;
+      if (comparator.compare(bestIndividual, newIndividual) > 0 ) {
+        bestIndividual = new Solution(newIndividual);
+      }
     } //for       
      
     // Main loop
@@ -123,13 +124,15 @@ public class NonElitistES extends Algorithm {
       offspringPopulation.sort(comparator) ;
             
       // STEP 3. Update the best individual 
-      if (comparator.compare(bestIndividual, offspringPopulation.get(0)) > 0 )
-        bestIndividual = new Solution(offspringPopulation.get(0)) ;
+      if (comparator.compare(bestIndividual, offspringPopulation.get(0)) > 0 ) {
+        bestIndividual = new Solution(offspringPopulation.get(0));
+      }
       
       // STEP 4. Create the new mu population
       population.clear() ;
-      for (int i = 0; i < mu_; i++)
-        population.add(offspringPopulation.get(i)) ;
+      for (int i = 0; i < mu_; i++) {
+        population.add(offspringPopulation.get(i));
+      }
 
       System.out.println("Evaluation: " + evaluations + 
           " Current best fitness: " +  population.get(0).getObjective(0) +
