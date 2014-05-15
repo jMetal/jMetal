@@ -22,7 +22,6 @@
 package jmetal.metaheuristics.singleObjective.geneticAlgorithm;
 
 import jmetal.core.*;
-import jmetal.operators.selection.BestSolutionSelection;
 import jmetal.util.JMException;
 import jmetal.util.Neighborhood;
 import jmetal.util.comparators.ObjectiveComparator;
@@ -113,8 +112,9 @@ public class scGA extends Algorithm{
         parents[1] = (Solution)selectionOperator.execute(neighbors[ind]);
 
         //Create a new solution, using genetic operators mutation and crossover
-        if (crossoverOperator != null)
-          offSpring = (Solution [])crossoverOperator.execute(parents);        
+        if (crossoverOperator != null) {
+          offSpring = (Solution[]) crossoverOperator.execute(parents);
+        }
         else {
         	offSpring = new Solution[1] ;
         	offSpring[0] = new Solution(parents[0]) ;
@@ -125,10 +125,12 @@ public class scGA extends Algorithm{
         problem_.evaluate(offSpring[0]);
         evaluations++;
 
-        if (comparator.compare(individual, offSpring[0]) < 0)
-        	tempPopulation.add(individual) ;
-        else
-        	tempPopulation.add(offSpring[0]) ;     
+        if (comparator.compare(individual, offSpring[0]) < 0) {
+          tempPopulation.add(individual);
+        }
+        else {
+          tempPopulation.add(offSpring[0]);
+        }
       } // for                     
       
       population = tempPopulation;

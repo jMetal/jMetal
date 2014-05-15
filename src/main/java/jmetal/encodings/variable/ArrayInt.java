@@ -160,8 +160,9 @@ public class ArrayInt extends Variable {
    * @return the value in position index
    */
   public int getValue(int index) throws JMException {
-    if ((index >= 0) && (index < size_))
-      return array_[index] ;
+    if ((index >= 0) && (index < size_)) {
+      return array_[index];
+    }
     else {
       Configuration.logger_.severe(jmetal.encodings.variable.ArrayInt.class+".getValue(): index value (" + index + ") invalid");
       throw new JMException(jmetal.encodings.variable.ArrayInt.class+": index value (" + index + ") invalid") ;
