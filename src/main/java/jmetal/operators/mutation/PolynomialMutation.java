@@ -38,7 +38,7 @@ import java.util.List;
  * This class implements a polynomial mutation operator. 
  */
 public class PolynomialMutation extends Mutation {
-	private static final double ETA_M_DEFAULT_ = 20.0;
+  private static final double ETA_M_DEFAULT_ = 20.0;
 
   private double mutationProbability_ = 0.0 ;
   private double distributionIndex_ = ETA_M_DEFAULT_;
@@ -48,82 +48,83 @@ public class PolynomialMutation extends Mutation {
    */
   private static final List<Class<? extends SolutionType>> VALID_TYPES = Arrays.asList(RealSolutionType.class, ArrayRealSolutionType.class) ;
 
-	/**
-	 * Constructor
-	 * Creates a new instance of the polynomial mutation operator
-	 */
-	public PolynomialMutation(HashMap<String, Object> parameters) {
-		super(parameters) ;
-  	if (parameters.get("probability") != null)
-  		mutationProbability_ = (Double) parameters.get("probability") ;
-  	if (parameters.get("distributionIndex") != null)
-  		distributionIndex_ = (Double) parameters.get("distributionIndex") ;
-	} // PolynomialMutation
+  /**
+   * Constructor
+   * Creates a new instance of the polynomial mutation operator
+   */
+  public PolynomialMutation(HashMap<String, Object> parameters) {
+    super(parameters) ;
+    if (parameters.get("probability") != null) {
+      mutationProbability_ = (Double) parameters.get("probability");
+    }
+    if (parameters.get("distributionIndex") != null) {
+      distributionIndex_ = (Double) parameters.get("distributionIndex");
+    }
+  }
 
-	/**
-	 * Perform the mutation operation
-	 * @param probability Mutation probability
-	 * @param solution The solution to mutate
-	 * @throws JMException 
-	 */
-	public void doMutation(double probability, Solution solution) throws JMException {        
-		double rnd, delta1, delta2, mut_pow, deltaq;
-		double y, yl, yu, val, xy;
-		XReal x = new XReal(solution) ;		
-		for (int var=0; var < solution.numberOfVariables(); var++) {
-			if (PseudoRandom.randDouble() <= probability)
-			{
-				y      = x.getValue(var);
-				yl     = x.getLowerBound(var);                
-				yu     = x.getUpperBound(var);
-				delta1 = (y-yl)/(yu-yl);
-				delta2 = (yu-y)/(yu-yl);
-				rnd = PseudoRandom.randDouble();
-				mut_pow = 1.0/(distributionIndex_+1.0);
-				if (rnd <= 0.5)
-				{
-					xy     = 1.0-delta1;
-					val    = 2.0*rnd+(1.0-2.0*rnd)*(Math.pow(xy,(distributionIndex_+1.0)));
-					deltaq =  java.lang.Math.pow(val,mut_pow) - 1.0;
-				}
-				else
-				{
-					xy = 1.0-delta2;
-					val = 2.0*(1.0-rnd)+2.0*(rnd-0.5)*(java.lang.Math.pow(xy,(distributionIndex_+1.0)));
-					deltaq = 1.0 - (java.lang.Math.pow(val,mut_pow));
-				}
-				y = y + deltaq*(yu-yl);
-				if (y<yl)
-					y = yl;
-				if (y>yu)
-					y = yu;
-				x.setValue(var, y);                           
-			}
-		} // for
+  /**
+   * Perform the mutation operation
+   * @param probability Mutation probability
+   * @param solution The solution to mutate
+   * @throws JMException
+   */
+  public void doMutation(double probability, Solution solution) throws JMException {
+    double rnd, delta1, delta2, mut_pow, deltaq;
+    double y, yl, yu, val, xy;
+    XReal x = new XReal(solution) ;
+    for (int var=0; var < solution.numberOfVariables(); var++) {
+      if (PseudoRandom.randDouble() <= probability) {
+        y      = x.getValue(var);
+        yl     = x.getLowerBound(var);
+        yu     = x.getUpperBound(var);
+        delta1 = (y-yl)/(yu-yl);
+        delta2 = (yu-y)/(yu-yl);
+        rnd = PseudoRandom.randDouble();
+        mut_pow = 1.0/(distributionIndex_+1.0);
+        if (rnd <= 0.5) {
+          xy     = 1.0-delta1;
+          val    = 2.0*rnd+(1.0-2.0*rnd)*(Math.pow(xy,(distributionIndex_+1.0)));
+          deltaq =  java.lang.Math.pow(val,mut_pow) - 1.0;
+        }
+        else
+        {
+          xy = 1.0-delta2;
+          val = 2.0*(1.0-rnd)+2.0*(rnd-0.5)*(java.lang.Math.pow(xy,(distributionIndex_+1.0)));
+          deltaq = 1.0 - (java.lang.Math.pow(val,mut_pow));
+        }
+        y = y + deltaq*(yu-yl);
+        if (y<yl) {
+          y = yl;
+        }
+        if (y>yu) {
+          y = yu;
+        }
+        x.setValue(var, y);
+      }
+    }
+  }
 
-	} // doMutation
+  /**
+   * Executes the operation
+   * @param object An object containing a solution
+   * @return An object containing the mutated solution
+   * @throws JMException
+   */
+  public Object execute(Object object) throws JMException {
+    Solution solution = (Solution)object;
 
-	/**
-	 * Executes the operation
-	 * @param object An object containing a solution
-	 * @return An object containing the mutated solution
-	 * @throws JMException 
-	 */  
-	public Object execute(Object object) throws JMException {
-		Solution solution = (Solution)object;
+    if (!VALID_TYPES.contains(solution.getType().getClass())) {
+      Configuration.logger_.severe("PolynomialMutation.execute: the solution " +
+              "type " + solution.getType() + " is not allowed with this operator");
 
-		if (!VALID_TYPES.contains(solution.getType().getClass())) {
-			Configuration.logger_.severe("PolynomialMutation.execute: the solution " +
-					"type " + solution.getType() + " is not allowed with this operator");
+      Class cls = java.lang.String.class;
+      String name = cls.getName();
+      throw new JMException("Exception in " + name + ".execute()") ;
+    }
 
-			Class cls = java.lang.String.class;
-			String name = cls.getName(); 
-			throw new JMException("Exception in " + name + ".execute()") ;
-		} // if 
-
-		doMutation(mutationProbability_, solution);
-		return solution;      
-	} // execute
+    doMutation(mutationProbability_, solution);
+    return solution;
+  }
 
   public double getMutationProbability() {
     return mutationProbability_ ;
@@ -131,4 +132,4 @@ public class PolynomialMutation extends Mutation {
   public double getDistributionIndex() {
     return distributionIndex_ ;
   }
-} // PolynomialMutation
+}

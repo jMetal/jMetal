@@ -40,11 +40,11 @@ import java.util.List;
 public class PMXCrossover extends Crossover {
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = -4059314233890056350L;
 
-/**
+  /**
    * Valid solution types to apply this operator
    */
   private static final List<Class<PermutationSolutionType>> VALID_TYPES = Arrays.asList(PermutationSolutionType.class);
@@ -57,9 +57,10 @@ public class PMXCrossover extends Crossover {
   public PMXCrossover(HashMap<String, Object> parameters) {
     super(parameters);
 
-    if (parameters.get("probability") != null)
+    if (parameters.get("probability") != null) {
       crossoverProbability_ = (Double) parameters.get("probability");
-  } // PMXCrossover
+    }
+  }
 
   /**
    * Perform the crossover operation
@@ -92,23 +93,25 @@ public class PMXCrossover extends Crossover {
       int cuttingPoint1;
       int cuttingPoint2;
 
-      //      STEP 1: Get two cutting points
+      // STEP 1: Get two cutting points
       cuttingPoint1 = PseudoRandom.randInt(0, permutationLength - 1);
       cuttingPoint2 = PseudoRandom.randInt(0, permutationLength - 1);
-      while (cuttingPoint2 == cuttingPoint1)
+      while (cuttingPoint2 == cuttingPoint1) {
         cuttingPoint2 = PseudoRandom.randInt(0, permutationLength - 1);
+      }
 
       if (cuttingPoint1 > cuttingPoint2) {
         int swap;
         swap = cuttingPoint1;
         cuttingPoint1 = cuttingPoint2;
         cuttingPoint2 = swap;
-      } // if
-      //      STEP 2: Get the subchains to interchange
+      }
+      // STEP 2: Get the subchains to interchange
       int replacement1[] = new int[permutationLength];
       int replacement2[] = new int[permutationLength];
-      for (int i = 0; i < permutationLength; i++)
+      for (int i = 0; i < permutationLength; i++) {
         replacement1[i] = replacement2[i] = -1;
+      }
 
       //      STEP 3: Interchange
       for (int i = cuttingPoint1; i <= cuttingPoint2; i++) {
@@ -117,12 +120,13 @@ public class PMXCrossover extends Crossover {
 
         replacement1[parent2Vector[i]] = parent1Vector[i];
         replacement2[parent1Vector[i]] = parent2Vector[i];
-      } // for
+      }
 
       //      STEP 4: Repair offsprings
       for (int i = 0; i < permutationLength; i++) {
-        if ((i >= cuttingPoint1) && (i <= cuttingPoint2))
+        if ((i >= cuttingPoint1) && (i <= cuttingPoint2)) {
           continue;
+        }
 
         int n1 = parent1Vector[i];
         int m1 = replacement1[n1];
@@ -140,11 +144,11 @@ public class PMXCrossover extends Crossover {
         } // while
         offspring1Vector[i] = n1;
         offspring2Vector[i] = n2;
-      } // for
-    } // if
+      }
+    }
 
     return offspring;
-  } // doCrossover
+  }
 
   /**
    * Executes the operation
@@ -165,7 +169,6 @@ public class PMXCrossover extends Crossover {
               parents[1].getType() + " are obtained");
     }
 
-    //crossoverProbability = (Double)parameters_.get("probability");
     crossoverProbability = (Double) getParameter("probability");
 
     if (parents.length < 2) {
@@ -181,5 +184,5 @@ public class PMXCrossover extends Crossover {
             parents[1]);
 
     return offspring;
-  } // execute
-} // PMXCrossover
+  }
+}

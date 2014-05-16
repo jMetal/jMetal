@@ -33,14 +33,14 @@ import jmetal.util.JMException;
 public class OneZeroMax extends Problem {
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = 2580449794690931406L;
 
   /**
    * Creates a new OneZeroMax problem instance
    * @param solutionType Solution type
-   * @throws ClassNotFoundException 
+   * @throws ClassNotFoundException
    */
   public OneZeroMax(String solutionType) throws ClassNotFoundException, JMException {
     this(solutionType, 512) ;
@@ -62,18 +62,18 @@ public class OneZeroMax extends Problem {
     length_       = new int[numberOfVariables_];
     length_      [0] = numberOfBits ;
 
-    if (solutionType.compareTo("Binary") == 0)
-      solutionType_ = new BinarySolutionType(this) ;
+    if (solutionType.compareTo("Binary") == 0) {
+      solutionType_ = new BinarySolutionType(this);
+    }
     else {
       throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
+  }
 
-  } // OneZeroMax
-
-  /** 
+  /**
    * Evaluates a solution 
    * @param solution The solution to evaluate
-   */      
+   */
   public void evaluate(Solution solution) {
     Binary variable ;
     int    counterOnes   ;
@@ -84,14 +84,16 @@ public class OneZeroMax extends Problem {
     counterOnes = 0 ;
     counterZeroes = 0 ;
 
-    for (int i = 0; i < variable.getNumberOfBits() ; i++) 
-      if (variable.bits_.get(i))
-        counterOnes ++ ;
-      else
-        counterZeroes ++ ;
+    for (int i = 0; i < variable.getNumberOfBits() ; i++) {
+      if (variable.bits_.get(i)) {
+        counterOnes++;
+      } else {
+        counterZeroes++;
+      }
+    }
 
     // OneZeroMax is a maximization problem: multiply by -1 to minimize
-    solution.setObjective(0, -1.0*counterOnes);            
-    solution.setObjective(1, -1.0*counterZeroes);            
-  } // evaluate
-} // OneZeroMax
+    solution.setObjective(0, -1.0*counterOnes);
+    solution.setObjective(1, -1.0*counterZeroes);
+  }
+}

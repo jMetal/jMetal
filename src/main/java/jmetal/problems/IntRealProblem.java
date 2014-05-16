@@ -31,16 +31,16 @@ import jmetal.util.JMException;
  * Class representing a problem having N integer and M real variables.
  * This is not a true problem; it is only intended as an example
  */
-public class IntRealProblem extends Problem {  
+public class IntRealProblem extends Problem {
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = -3553215776619374111L;
   int intVariables_  ;
   int realVariables_ ;
 
-  /** 
+  /**
    * Constructor.
    * Creates a default instance of the IntRealProblem problem.
    */
@@ -48,7 +48,7 @@ public class IntRealProblem extends Problem {
     this(solutionType, 3, 3);
   } // IntRealProblem
 
-  /** 
+  /**
    * Constructor.
    * Creates a new instance of the IntRealProblem problem.
    * @param intVariables Number of integer variables of the problem 
@@ -69,41 +69,42 @@ public class IntRealProblem extends Problem {
     for (int i = 0; i < intVariables; i++) {
       lowerLimit_[i] = -5 ;
       upperLimit_[i] =  5 ;
-    } // for
+    }
 
     for (int i = intVariables; i < (intVariables + realVariables); i++) {
       lowerLimit_[i] = -5.0 ;
       upperLimit_[i] =  5.0  ;
-    } // for
+    }
 
-    if (solutionType.compareTo("IntReal") == 0)
-      solutionType_ = new IntRealSolutionType(this, intVariables, realVariables) ;
+    if (solutionType.compareTo("IntReal") == 0) {
+      solutionType_ = new IntRealSolutionType(this, intVariables, realVariables);
+    }
     else {
       throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
-  } // IntRealProblem
+  }
 
-  /** 
+  /**
    * Evaluates a solution 
    * @param solution The solution to evaluate
-   * @throws JMException 
+   * @throws JMException
    */
   public void evaluate(Solution solution) throws JMException {
     Variable[] variable = solution.getDecisionVariables();
 
-    double [] fx = new double[2] ; // function values     
+    double [] fx = new double[2] ;
 
-    fx[0] = 0.0 ; 
-    for (int var = 0; var < intVariables_ ; var++) {        
+    fx[0] = 0.0 ;
+    for (int var = 0; var < intVariables_ ; var++) {
       fx[0] += (int)variable[var].getValue() ;
-    } // for
+    }
 
-    fx[1] = 0.0 ; 
-    for (int var = intVariables_; var < numberOfVariables_ ; var++) {        
+    fx[1] = 0.0 ;
+    for (int var = intVariables_; var < numberOfVariables_ ; var++) {
       fx[1] += variable[var].getValue() ;
-    } // for
+    }
 
     solution.setObjective(0, fx[0]);
     solution.setObjective(1, fx[1]);
-  } // evaluate
-} // IntRealProblem
+  }
+}

@@ -37,7 +37,6 @@ public class Viennet3 extends Problem{
    */
   private static final long serialVersionUID = -1045562049962940126L;
 
-
   /** 
    * Constructor.
    * Creates a default instance of the Viennet3 problem.
@@ -56,14 +55,16 @@ public class Viennet3 extends Problem{
       upperLimit_[var] =   3.0;
     } // for
 
-    if (solutionType.compareTo("BinaryReal") == 0)
-      solutionType_ = new BinaryRealSolutionType(this) ;
-    else if (solutionType.compareTo("Real") == 0)
-      solutionType_ = new RealSolutionType(this) ;
+    if (solutionType.compareTo("BinaryReal") == 0) {
+      solutionType_ = new BinaryRealSolutionType(this);
+    }
+    else if (solutionType.compareTo("Real") == 0) {
+      solutionType_ = new RealSolutionType(this);
+    }
     else {
       throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
-  } //Viennet3
+  }
 
 
   /**
@@ -89,10 +90,10 @@ public class Viennet3 extends Problem{
     f[2] = 1.0 / (x[0]*x[0] + x[1]*x[1]+1) - 1.1 *
         Math.exp(-(x[0]*x[0])-(x[1]*x[1])) ;
 
-
-    for (int i = 0; i < numberOfObjectives_; i++)
-      solution.setObjective(i,f[i]);        
-  } // evaluate
-} // Viennet3
+    for (int i = 0; i < numberOfObjectives_; i++) {
+      solution.setObjective(i, f[i]);
+    }
+  }
+}
 
 

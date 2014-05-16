@@ -61,22 +61,13 @@ public class UniformMutation extends Mutation{
   public UniformMutation(HashMap<String, Object> parameters) {
   	super(parameters) ;
   	
-  	if (parameters.get("probability") != null)
-  		mutationProbability_ = (Double) parameters.get("probability") ;  		
-  	if (parameters.get("perturbation") != null)
-  		perturbation_ = (Double) parameters.get("perturbation") ;  		
-
-  } // UniformMutation
-
-
-  /**
-   * Constructor
-   * Creates a new uniform mutation operator instance
-   */
-  //public UniformMutation(Properties properties) {
-  //  this();
-  //} // UniformMutation
-
+  	if (parameters.get("probability") != null) {
+      mutationProbability_ = (Double) parameters.get("probability");
+    }
+  	if (parameters.get("perturbation") != null) {
+      perturbation_ = (Double) parameters.get("perturbation");
+    }
+  }
 
   /**
   * Performs the operation
@@ -94,15 +85,17 @@ public class UniformMutation extends Mutation{
                                 
         tmp += x.getValue(var);
                 
-        if (tmp < x.getLowerBound(var))
+        if (tmp < x.getLowerBound(var)) {
           tmp = x.getLowerBound(var);
-        else if (tmp > x.getUpperBound(var))
+        }
+        else if (tmp > x.getUpperBound(var)) {
           tmp = x.getUpperBound(var);
+        }
                 
         x.setValue(var, tmp) ;
-      } // if
-    } // for
-  } // doMutation
+      }
+    }
+  }
   
   /**
   * Executes the operation
@@ -120,10 +113,10 @@ public class UniformMutation extends Mutation{
       Class<String> cls = java.lang.String.class;
       String name = cls.getName(); 
       throw new JMException("Exception in " + name + ".execute()") ;
-    } // if 
+    }
     
     doMutation(mutationProbability_,solution);
         
     return solution;
-  } // execute                  
-} // UniformMutation
+  }
+}

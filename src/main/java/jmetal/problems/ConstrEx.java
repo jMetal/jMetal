@@ -33,7 +33,7 @@ import jmetal.util.JMException;
  */
 public class ConstrEx extends Problem{
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = 1790825694174189801L;
 
@@ -49,42 +49,44 @@ public class ConstrEx extends Problem{
     problemName_        = "Constr_Ex";
 
     lowerLimit_ = new double[numberOfVariables_];
-    upperLimit_ = new double[numberOfVariables_];        
+    upperLimit_ = new double[numberOfVariables_];
     lowerLimit_[0] = 0.1;
-    lowerLimit_[1] = 0.0;        
+    lowerLimit_[1] = 0.0;
     upperLimit_[0] = 1.0;
     upperLimit_[1] = 5.0;
 
-    if (solutionType.compareTo("BinaryReal") == 0)
-      solutionType_ = new BinaryRealSolutionType(this) ;
-    else if (solutionType.compareTo("Real") == 0)
-      solutionType_ = new RealSolutionType(this) ;
+    if (solutionType.compareTo("BinaryReal") == 0) {
+      solutionType_ = new BinaryRealSolutionType(this);
+    }
+    else if (solutionType.compareTo("Real") == 0) {
+      solutionType_ = new RealSolutionType(this);
+    }
     else {
       throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
-  } // ConstrEx
+  }
 
-  /** 
+  /**
    * Evaluates a solution 
    * @param solution The solution to evaluate
-   * @throws JMException 
+   * @throws JMException
    */
   public void evaluate(Solution solution) throws JMException {
     Variable[] variable  = solution.getDecisionVariables();
 
     double [] f = new double[numberOfObjectives_];
-    f[0] = variable[0].getValue();        
-    f[1] = (1.0 + variable[1].getValue())/variable[0].getValue();        
+    f[0] = variable[0].getValue();
+    f[1] = (1.0 + variable[1].getValue())/variable[0].getValue();
 
     solution.setObjective(0,f[0]);
     solution.setObjective(1,f[1]);
-  } // evaluate
+  }
 
-  /** 
+  /**
    * Evaluates the constraint overhead of a solution 
    * @param solution The solution
-   * @throws JMException 
-   */  
+   * @throws JMException
+   */
   public void evaluateConstraints(Solution solution) throws JMException {
     double [] constraint = new double[this.getNumberOfConstraints()];
 
@@ -96,13 +98,14 @@ public class ConstrEx extends Problem{
 
     double total = 0.0;
     int number = 0;
-    for (int i = 0; i < this.getNumberOfConstraints(); i++)
-      if (constraint[i]<0.0){
-        total+=constraint[i];
+    for (int i = 0; i < this.getNumberOfConstraints(); i++) {
+      if (constraint[i] < 0.0) {
+        total += constraint[i];
         number++;
       }
+    }
 
-    solution.setOverallConstraintViolation(total);    
-    solution.setNumberOfViolatedConstraint(number);         
-  } // evaluateConstraints  
-} // ConstrEx
+    solution.setOverallConstraintViolation(total);
+    solution.setNumberOfViolatedConstraint(number);
+  }
+}

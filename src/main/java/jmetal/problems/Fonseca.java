@@ -29,72 +29,75 @@ import jmetal.encodings.solutionType.RealSolutionType;
 import jmetal.util.JMException;
 import jmetal.util.wrapper.XReal;
 
-/** 
+/**
  * Class representing problem Fonseca
  */
 public class Fonseca extends Problem {
 
-	/**
-     * 
-     */
-    private static final long serialVersionUID = -5170038987171863224L;
+  /**
+   *
+   */
+  private static final long serialVersionUID = -5170038987171863224L;
 
-    /** 
-	 * Constructor
-	 * Creates a default instance of the Fonseca problem
-	 * @param solutionType The solution type must "Real", "BinaryReal, 
-	 * ArrayReal, or ArrayRealC".
-	 */
-	public Fonseca(String solutionType) throws JMException {
-		numberOfVariables_   = 3;
-		numberOfObjectives_  = 2;
-		numberOfConstraints_ = 0;
-		problemName_         = "Fonseca";
+  /**
+   * Constructor
+   * Creates a default instance of the Fonseca problem
+   * @param solutionType The solution type must "Real", "BinaryReal,
+   * ArrayReal, or ArrayRealC".
+   */
+  public Fonseca(String solutionType) throws JMException {
+    numberOfVariables_   = 3;
+    numberOfObjectives_  = 2;
+    numberOfConstraints_ = 0;
+    problemName_         = "Fonseca";
 
-		upperLimit_ = new double[numberOfVariables_];
-		lowerLimit_ = new double[numberOfVariables_];
-		for (int var = 0; var < numberOfVariables_; var++){
-			lowerLimit_[var] = -4.0;
-			upperLimit_[var] = 4.0;
-		} // for
-    
-    if (solutionType.compareTo("BinaryReal") == 0)
-    	solutionType_ = new BinaryRealSolutionType(this) ;
-    else if (solutionType.compareTo("Real") == 0)
-    	solutionType_ = new RealSolutionType(this) ;
-    else if (solutionType.compareTo("ArrayReal") == 0)
-    	solutionType_ = new ArrayRealSolutionType(this) ;
+    upperLimit_ = new double[numberOfVariables_];
+    lowerLimit_ = new double[numberOfVariables_];
+    for (int var = 0; var < numberOfVariables_; var++){
+      lowerLimit_[var] = -4.0;
+      upperLimit_[var] = 4.0;
+    } // for
+
+    if (solutionType.compareTo("BinaryReal") == 0) {
+      solutionType_ = new BinaryRealSolutionType(this);
+    }
+    else if (solutionType.compareTo("Real") == 0) {
+      solutionType_ = new RealSolutionType(this);
+    }
+    else if (solutionType.compareTo("ArrayReal") == 0) {
+      solutionType_ = new ArrayRealSolutionType(this);
+    }
     else {
       throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
-	} //Fonseca
+  }
 
-	/** 
-	 * Evaluates a solution 
-	 * @param solution The solution to evaluate
-	 * @throws JMException 
-	 */        
-	public void evaluate(Solution solution) throws JMException {
-		XReal x = new XReal(solution) ;
+  /**
+   * Evaluates a solution
+   * @param solution The solution to evaluate
+   * @throws JMException
+   */
+  public void evaluate(Solution solution) throws JMException {
+    XReal x = new XReal(solution) ;
 
-		double [] f = new double[numberOfObjectives_];
-		double sum1 = 0.0;
-		for (int var = 0; var < numberOfVariables_; var++){
-			sum1 += StrictMath.pow(x.getValue(var) 
-					- (1.0/StrictMath.sqrt((double)numberOfVariables_)),2.0);            
-		}
-		double exp1 = StrictMath.exp((-1.0)*sum1);
-		f[0] = 1 - exp1;
+    double [] f = new double[numberOfObjectives_];
+    double sum1 = 0.0;
+    for (int var = 0; var < numberOfVariables_; var++){
+      sum1 += StrictMath.pow(x.getValue(var)
+              - (1.0/StrictMath.sqrt((double)numberOfVariables_)),2.0);
+    }
+    double exp1 = StrictMath.exp((-1.0)*sum1);
+    f[0] = 1 - exp1;
 
-		double sum2 = 0.0;        
-		for (int var = 0; var < numberOfVariables_; var++){
-			sum2 += StrictMath.pow(x.getValue(var) 
-					+ (1.0/StrictMath.sqrt((double)numberOfVariables_)),2.0);
-		}    
-		double exp2 = StrictMath.exp((-1.0)*sum2);
-		f[1] = 1 - exp2;
+    double sum2 = 0.0;
+    for (int var = 0; var < numberOfVariables_; var++){
+      sum2 += StrictMath.pow(x.getValue(var)
+              + (1.0/StrictMath.sqrt((double)numberOfVariables_)),2.0);
+    }
+    double exp2 = StrictMath.exp((-1.0)*sum2);
+    f[1] = 1 - exp2;
 
-		solution.setObjective(0,f[0]);
-		solution.setObjective(1,f[1]);
-	} // evaluate
-} // Fonseca
+    solution.setObjective(0,f[0]);
+    solution.setObjective(1,f[1]);
+  }
+}

@@ -33,7 +33,7 @@ import java.util.HashMap;
  */
 public class BestSolutionSelection extends Selection {
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = 7515153213699830920L;
 
@@ -42,43 +42,37 @@ public class BestSolutionSelection extends Selection {
 
   @SuppressWarnings({"unchecked"})
   public BestSolutionSelection(HashMap<String, Object> parameters) {
-  	super(parameters) ;
+    super(parameters) ;
 
-  	comparator_ = null ;
+    comparator_ = null ;
 
-  	Object obj = parameters.get("comparator");
-  	if (obj != null && obj instanceof Comparator<?>)
-  		comparator_ = (Comparator<Solution>) obj;
+    Object obj = parameters.get("comparator");
+    if (obj != null && obj instanceof Comparator<?>) {
+      comparator_ = (Comparator<Solution>) obj;
+    }
   }
 
   /**
-   * Constructor
-   * @param comparator
+   * Performs the operation
+   * @param object Object representing a SolutionSet.
+   * @return the best solution found
    */
-  //public BestSolutionSelection(Comparator comparator) {
-  //	comparator_ = comparator ;
-  //}
-  
-  /**
-  * Performs the operation
-  * @param object Object representing a SolutionSet.
-  * @return the best solution found
-  */
   public Object execute(Object object) {
     SolutionSet solutionSet     = (SolutionSet)object;
-    
+
     if (solutionSet.size() == 0) {
       return null;
     }
     int bestSolution ;
-    
+
     bestSolution = 0 ;
-   	
+
     for (int i = 1; i < solutionSet.size(); i++) {
-    	if (comparator_.compare(solutionSet.get(i), solutionSet.get(bestSolution)) < 0)  
-    		bestSolution = i ;
+      if (comparator_.compare(solutionSet.get(i), solutionSet.get(bestSolution)) < 0) {
+        bestSolution = i;
+      }
     } // for
-    
-    return bestSolution ;    
-  } // Execute     
-} // BestObjectiveSelection
+
+    return bestSolution ;
+  }
+}

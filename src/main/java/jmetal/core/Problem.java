@@ -80,7 +80,7 @@ public abstract class Problem implements Serializable {
    * Stores the number of bits used by binary-coded variables (e.g., BinaryReal
    * variables). By default, they are initialized to DEFAULT_PRECISION)
    */
-  private int    [] precision_  ;
+  protected int    [] precision_  ;
 
   /**
    * Stores the length of each encodings.variable when applicable (e.g., Binary and
@@ -165,7 +165,7 @@ public abstract class Problem implements Serializable {
   public void evaluateConstraints(Solution solution) throws JMException {
     // The default behavior is to do nothing. Only constrained problems have to
     // re-define this method
-  } // evaluateConstraints
+  }
 
   /**
    * Returns the number of bits that must be used to encode binary-real variables
@@ -191,11 +191,7 @@ public abstract class Problem implements Serializable {
    */
   public void setPrecision(int [] precision) {
     precision_ = Arrays.copyOf(precision, precision.length) ;
-//    precision_ = new int[precision.length] ;
-//    for (int i = 0; i < precision.length; i++) {
-//      precision_ [i] = precision[i] ;
-//    }
-  } // setPrecision
+  }
 
   /**
    * Returns the length of the encodings.variable.
@@ -206,7 +202,7 @@ public abstract class Problem implements Serializable {
       return DEFAULT_PRECISSION;
     }
     return length_[var] ;
-  } // getLength
+  }
 
   /**
    * Sets the type of the variables of the problem.
@@ -242,5 +238,5 @@ public abstract class Problem implements Serializable {
       result += getLength(var);
     }
     return result;
-  } // getNumberOfBits();
-} // Problem
+  }
+}

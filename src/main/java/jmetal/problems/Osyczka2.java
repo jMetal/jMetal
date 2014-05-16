@@ -33,7 +33,7 @@ import jmetal.util.JMException;
  */
 public class Osyczka2 extends Problem{
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = 5547671401217847034L;
 
@@ -49,7 +49,7 @@ public class Osyczka2 extends Problem{
     problemName_        = "Osyczka2";
 
     lowerLimit_ = new double[numberOfVariables_];
-    upperLimit_ = new double[numberOfVariables_];           
+    upperLimit_ = new double[numberOfVariables_];
     //Fill lower and upper limits
     lowerLimit_[0] = 0.0;
     lowerLimit_[1] = 0.0;
@@ -66,22 +66,24 @@ public class Osyczka2 extends Problem{
     upperLimit_[5] = 10.0;
     //
 
-    if (solutionType.compareTo("BinaryReal") == 0)
-      solutionType_ = new BinaryRealSolutionType(this) ;
-    else if (solutionType.compareTo("Real") == 0)
-      solutionType_ = new RealSolutionType(this) ;
+    if (solutionType.compareTo("BinaryReal") == 0) {
+      solutionType_ = new BinaryRealSolutionType(this);
+    }
+    else if (solutionType.compareTo("Real") == 0) {
+      solutionType_ = new RealSolutionType(this);
+    }
     else {
       throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
-  } // Osyczka2
+  }
 
-  /** 
+  /**
    * Evaluates a solution 
    * @param solution The solution to evaluate
-   * @throws JMException 
-   */  
+   * @throws JMException
+   */
   public void evaluate(Solution solution) throws JMException {
-    Variable [] decisionVariables  = solution.getDecisionVariables();     
+    Variable [] decisionVariables  = solution.getDecisionVariables();
 
     double [] f = new double[numberOfObjectives_];
 
@@ -91,24 +93,24 @@ public class Osyczka2 extends Problem{
     x3 = decisionVariables[2].getValue();
     x4 = decisionVariables[3].getValue();
     x5 = decisionVariables[4].getValue();
-    x6 = decisionVariables[5].getValue();                
-    f[0] = - (25.0*(x1-2.0)*(x1-2.0) + 
-        (x2-2.0)*(x2-2.0) + 
-        (x3-1.0)*(x3-1.0) + 
-        (x4-4.0)*(x4-4.0)+
-        (x5-1.0)*(x5-1.0));
+    x6 = decisionVariables[5].getValue();
+    f[0] = - (25.0*(x1-2.0)*(x1-2.0) +
+            (x2-2.0)*(x2-2.0) +
+            (x3-1.0)*(x3-1.0) +
+            (x4-4.0)*(x4-4.0)+
+            (x5-1.0)*(x5-1.0));
 
     f[1] = x1*x1 + x2*x2 + x3*x3 + x4*x4 + x5*x5 + x6*x6;
 
     solution.setObjective(0,f[0]);
     solution.setObjective(1,f[1]);
-  } // evaluate
+  }
 
-  /** 
+  /**
    * Evaluates the constraint overhead of a solution 
    * @param solution The solution
-   * @throws JMException 
-   */  
+   * @throws JMException
+   */
   public void evaluateConstraints(Solution solution) throws JMException {
     double [] constraint = new double[this.getNumberOfConstraints()];
     Variable[] decisionVariables = solution.getDecisionVariables();
@@ -130,14 +132,15 @@ public class Osyczka2 extends Problem{
 
     double total = 0.0;
     int number = 0;
-    for (int i = 0; i < this.getNumberOfConstraints(); i++)
-      if (constraint[i]<0.0){
-        total+=constraint[i];
+    for (int i = 0; i < this.getNumberOfConstraints(); i++) {
+      if (constraint[i] < 0.0) {
+        total += constraint[i];
         number++;
-      }        
+      }
+    }
 
-    solution.setOverallConstraintViolation(total);    
+    solution.setOverallConstraintViolation(total);
     solution.setNumberOfViolatedConstraint(number);
-  } // evaluateConstraints 
-} // Osyczka2
+  }
+}
 

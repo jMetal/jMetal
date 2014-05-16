@@ -33,12 +33,12 @@ import jmetal.util.JMException;
 public class Water extends Problem {
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = -3540685430646123468L;
   // defining the lower and upper limits
   public static final double [] LOWERLIMIT = {0.01, 0.01, 0.01};
-  public static final double [] UPPERLIMIT = {0.45, 0.10, 0.10};                          
+  public static final double [] UPPERLIMIT = {0.45, 0.10, 0.10};
 
   /**
    * Constructor.
@@ -60,27 +60,28 @@ public class Water extends Problem {
       upperLimit_[var] = UPPERLIMIT[var];
     } // for
 
-    if (solutionType.compareTo("BinaryReal") == 0)
-      solutionType_ = new BinaryRealSolutionType(this) ;
-    else if (solutionType.compareTo("Real") == 0)
-      solutionType_ = new RealSolutionType(this) ;
+    if (solutionType.compareTo("BinaryReal") == 0) {
+      solutionType_ = new BinaryRealSolutionType(this);
+    }
+    else if (solutionType.compareTo("Real") == 0) {
+      solutionType_ = new RealSolutionType(this);
+    }
     else {
       throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
-  } // Water
+  }
 
   /**
    * Evaluates a solution
    * @param solution The solution to evaluate
-   * @throws JMException 
+   * @throws JMException
    */
-  public void evaluate(Solution solution) throws JMException {         
+  public void evaluate(Solution solution) throws JMException {
     double [] x = new double[3] ; // 3 decision variables
     double [] f = new double[5] ; // 5 functions
     x[0] = solution.getDecisionVariables()[0].getValue();
     x[1] = solution.getDecisionVariables()[1].getValue();
     x[2] = solution.getDecisionVariables()[2].getValue();
-
 
     // First function
     f[0] = 106780.37 * (x[1] + x[2]) + 61704.67 ;
@@ -93,18 +94,18 @@ public class Water extends Problem {
     // Third function
     f[4] = 25 * (1.39 /(x[0]*x[1]) + 4940*x[2] -80) ;
 
-    solution.setObjective(0,f[0]);    
+    solution.setObjective(0,f[0]);
     solution.setObjective(1,f[1]);
     solution.setObjective(2,f[2]);
     solution.setObjective(3,f[3]);
     solution.setObjective(4,f[4]);
-  } // evaluate
+  }
 
-  /** 
+  /**
    * Evaluates the constraint overhead of a solution 
    * @param solution The solution
-   * @throws JMException 
-   */  
+   * @throws JMException
+   */
   public void evaluateConstraints(Solution solution) throws JMException {
     double [] constraint = new double[7]; // 7 constraints
     double [] x          = new double[3]; // 3 objectives
@@ -127,10 +128,10 @@ public class Water extends Problem {
       if (constraint[i]<0.0){
         total+=constraint[i];
         number++;
-      } // int
-    } // for
+      }
+    }
 
-    solution.setOverallConstraintViolation(total);    
-    solution.setNumberOfViolatedConstraint(number);        
-  } // evaluateConstraints   
-} // Water
+    solution.setOverallConstraintViolation(total);
+    solution.setNumberOfViolatedConstraint(number);
+  }
+}

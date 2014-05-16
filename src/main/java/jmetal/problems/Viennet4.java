@@ -30,15 +30,14 @@ import jmetal.util.JMException;
 /**
  * Class representing problem Viennet4
  */
-public class Viennet4 extends Problem{           
+public class Viennet4 extends Problem{
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = -8264999884031176005L;
 
-
-  /** 
+  /**
    * Constructor.
    * Creates a default instance of the Viennet4 problem.
    * @param solutionType The solution type must "Real" or "BinaryReal".
@@ -54,7 +53,7 @@ public class Viennet4 extends Problem{
     for (int var = 0; var < numberOfVariables_; var++){
       lowerLimit_[var] =  -4.0;
       upperLimit_[var] =   4.0;
-    } // for
+    }
 
     if (solutionType.compareTo("BinaryReal") == 0)
       solutionType_ = new BinaryRealSolutionType(this) ;
@@ -63,15 +62,15 @@ public class Viennet4 extends Problem{
     else {
       throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
-  } //Viennet4
+  }
 
 
-  /** 
+  /**
    * Evaluates a solution
    * @param solution The solution to evaluate
-   * @throws JMException 
-   */  
-  public void evaluate(Solution solution) throws JMException {          
+   * @throws JMException
+   */
+  public void evaluate(Solution solution) throws JMException {
     double [] x = new double[numberOfVariables_];
     double [] f = new double[numberOfObjectives_];
 
@@ -79,27 +78,27 @@ public class Viennet4 extends Problem{
       x[i] = solution.getDecisionVariables()[i].getValue();
     }
 
-    f[0] = (x[0]-2.0)*(x[0]-2.0)/2.0 + 
-        (x[1]+1.0)*(x[1]+1.0)/13.0 + 3.0;
+    f[0] = (x[0]-2.0)*(x[0]-2.0)/2.0 +
+            (x[1]+1.0)*(x[1]+1.0)/13.0 + 3.0;
 
     f[1] = (x[0]+ x[1]-3.0)*(x[0]+x[1]-3.0)/175.0 +
-        (2.0*x[1]-x[0])*(2.0*x[1]-x[0])/17.0 -13.0;
+            (2.0*x[1]-x[0])*(2.0*x[1]-x[0])/17.0 -13.0;
 
-    f[2] = (3.0*x[0]-2.0*x[1]+4.0)*(3.0*x[0]-2.0*x[1]+4.0)/8.0 + 
-        (x[0]-x[1]+1.0)*(x[0]-x[1]+1.0)/27.0 + 15.0;
+    f[2] = (3.0*x[0]-2.0*x[1]+4.0)*(3.0*x[0]-2.0*x[1]+4.0)/8.0 +
+            (x[0]-x[1]+1.0)*(x[0]-x[1]+1.0)/27.0 + 15.0;
 
 
     for (int i = 0; i < numberOfObjectives_; i++) {
-      solution.setObjective(i,f[i]);        
+      solution.setObjective(i,f[i]);
     }
-  } // evaluate
+  }
 
 
-  /** 
+  /**
    * Evaluates the constraint overhead of a solution 
    * @param solution The solution
-   * @throws JMException 
-   */  
+   * @throws JMException
+   */
   public void evaluateConstraints(Solution solution) throws JMException {
     double [] constraint = new double[numberOfConstraints_];
 
@@ -118,8 +117,8 @@ public class Viennet4 extends Problem{
         total+=constraint[i];
       }
     }
-    solution.setOverallConstraintViolation(total);    
+    solution.setOverallConstraintViolation(total);
     solution.setNumberOfViolatedConstraint(number);
-  } // evaluateConstraints
-} // Viennet4
+  }
+}
 

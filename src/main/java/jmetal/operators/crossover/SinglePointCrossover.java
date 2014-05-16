@@ -27,10 +27,10 @@ import jmetal.encodings.solutionType.BinaryRealSolutionType;
 import jmetal.encodings.solutionType.BinarySolutionType;
 import jmetal.encodings.solutionType.IntSolutionType;
 import jmetal.encodings.variable.Binary;
-import jmetal.operators.localSearch.LocalSearch;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.random.PseudoRandom;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -42,7 +42,7 @@ import java.util.logging.Level;
  */
 public class SinglePointCrossover extends Crossover {
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = 2375915160877386980L;
 
@@ -50,8 +50,8 @@ public class SinglePointCrossover extends Crossover {
    * Valid solution types to apply this operator 
    */
   private static final List<Class<? extends SolutionType>> VALID_TYPES = Arrays.asList(BinarySolutionType.class,
-  		                                            BinaryRealSolutionType.class,
-  		                                            IntSolutionType.class) ;
+          BinaryRealSolutionType.class,
+          IntSolutionType.class) ;
 
   private Double crossoverProbability_ = null;
 
@@ -60,19 +60,11 @@ public class SinglePointCrossover extends Crossover {
    * Creates a new instance of the single point crossover operator
    */
   public SinglePointCrossover(HashMap<String, Object> parameters) {
-  	super(parameters) ;
-  	if (parameters.get("probability") != null)
-  		crossoverProbability_ = (Double) parameters.get("probability") ;  		
-  } // SinglePointCrossover
-
-
-  /**
-   * Constructor
-   * Creates a new instance of the single point crossover operator
-   */
-  //public SinglePointCrossover(Properties properties) {
-  //    this();
-  //} // SinglePointCrossover
+    super(parameters) ;
+    if (parameters.get("probability") != null) {
+      crossoverProbability_ = (Double) parameters.get("probability");
+    }
+  }
 
   /**
    * Perform the crossover operation.
@@ -83,38 +75,38 @@ public class SinglePointCrossover extends Crossover {
    * @throws JMException
    */
   public Solution[] doCrossover(double probability,
-          Solution parent1,
-          Solution parent2) throws JMException {
+                                Solution parent1,
+                                Solution parent2) throws JMException {
     Solution[] offSpring = new Solution[2];
     offSpring[0] = new Solution(parent1);
     offSpring[1] = new Solution(parent2);
     try {
       if (PseudoRandom.randDouble() < probability) {
         if ((parent1.getType().getClass() == BinarySolutionType.class) ||
-            (parent1.getType().getClass() == BinaryRealSolutionType.class)) {
-          //1. Compute the total number of bits
+                (parent1.getType().getClass() == BinaryRealSolutionType.class)) {
+          // 1. Compute the total number of bits
           int totalNumberOfBits = 0;
           for (int i = 0; i < parent1.getDecisionVariables().length; i++) {
             totalNumberOfBits +=
                     ((Binary) parent1.getDecisionVariables()[i]).getNumberOfBits();
           }
 
-          //2. Calculate the point to make the crossover
+          // 2. Calculate the point to make the crossover
           int crossoverPoint = PseudoRandom.randInt(0, totalNumberOfBits - 1);
 
-          //3. Compute the encodings.variable containing the crossoverPoint bit
+          // 3. Compute the encodings.variable containing the crossoverPoint bit
           int variable = 0;
-          int acountBits =
+          int accountBits =
                   ((Binary) parent1.getDecisionVariables()[variable]).getNumberOfBits();
 
-          while (acountBits < (crossoverPoint + 1)) {
+          while (accountBits < (crossoverPoint + 1)) {
             variable++;
-            acountBits +=
+            accountBits +=
                     ((Binary) parent1.getDecisionVariables()[variable]).getNumberOfBits();
           }
 
           //4. Compute the bit into the selected encodings.variable
-          int diff = acountBits - crossoverPoint;
+          int diff = accountBits - crossoverPoint;
           int intoVariableCrossoverPoint =
                   ((Binary) parent1.getDecisionVariables()[variable]).getNumberOfBits() - diff ;
 
@@ -126,8 +118,8 @@ public class SinglePointCrossover extends Crossover {
                   (Binary) parent2.getDecisionVariables()[variable].deepCopy();
 
           for (int i = intoVariableCrossoverPoint;
-                  i < offSpring1.getNumberOfBits();
-                  i++) {
+               i < offSpring1.getNumberOfBits();
+               i++) {
             boolean swap = offSpring1.bits_.get(i);
             offSpring1.bits_.set(i, offSpring2.bits_.get(i));
             offSpring2.bits_.set(i, swap);
@@ -151,8 +143,8 @@ public class SinglePointCrossover extends Crossover {
             ((Binary) offSpring[0].getDecisionVariables()[i]).decode();
             ((Binary) offSpring[1].getDecisionVariables()[i]).decode();
           }
-        } // Binary or BinaryReal
-        else { // Integer representation
+        }
+        else {
           int crossoverPoint = PseudoRandom.randInt(0, parent1.numberOfVariables() - 1);
           int valueX1;
           int valueX2;
@@ -161,8 +153,8 @@ public class SinglePointCrossover extends Crossover {
             valueX2 = (int) parent2.getDecisionVariables()[i].getValue();
             offSpring[0].getDecisionVariables()[i].setValue(valueX2);
             offSpring[1].getDecisionVariables()[i].setValue(valueX1);
-          } // for
-        } // Int representation
+          }
+        }
       }
     } catch (ClassCastException e1) {
       Configuration.logger_.log(Level.SEVERE,
@@ -173,7 +165,7 @@ public class SinglePointCrossover extends Crossover {
       throw new JMException("Exception in " + name + ".doCrossover()");
     }
     return offSpring;
-  } // doCrossover
+  }
 
   /**
    * Executes the operation
@@ -185,7 +177,7 @@ public class SinglePointCrossover extends Crossover {
     Solution[] parents = (Solution[]) object;
 
     if (!(VALID_TYPES.contains(parents[0].getType().getClass())  &&
-        VALID_TYPES.contains(parents[1].getType().getClass())) ) {
+            VALID_TYPES.contains(parents[1].getType().getClass())) ) {
 
       Configuration.logger_.log(Level.SEVERE,
               "SinglePointCrossover.execute: the solutions " +
@@ -197,27 +189,27 @@ public class SinglePointCrossover extends Crossover {
       Class<String> cls = java.lang.String.class;
       String name = cls.getName();
       throw new JMException("Exception in " + name + ".execute()");
-    } // if
+    }
 
     if (parents.length < 2) {
       Configuration.logger_.log(Level.SEVERE,
               "SinglePointCrossover.execute: operator " +
-              "needs two parents");
+                      "needs two parents");
       Class<String> cls = java.lang.String.class;
       String name = cls.getName();
       throw new JMException("Exception in " + name + ".execute()");
-    } 
-    
+    }
+
     Solution[] offSpring;
     offSpring = doCrossover(crossoverProbability_,
             parents[0],
             parents[1]);
 
-    //-> Update the offSpring solutions
+    // Update the offSpring solutions
     for (int i = 0; i < offSpring.length; i++) {
       offSpring[i].setCrowdingDistance(0.0);
       offSpring[i].setRank(0);
     }
     return offSpring;
-  } // execute
-} // SinglePointCrossover
+  }
+}

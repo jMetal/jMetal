@@ -31,10 +31,10 @@ import jmetal.util.JMException;
 /**
  * Class representing problem Tanaka
  */
-public class Tanaka extends Problem{    
+public class Tanaka extends Problem{
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = 6305140494344001015L;
 
@@ -54,21 +54,23 @@ public class Tanaka extends Problem{
     for (int var = 0; var < numberOfVariables_; var++){
       lowerLimit_[var] = 10e-5;
       upperLimit_[var] = Math.PI;
-    } // for
+    }
 
-    if (solutionType.compareTo("BinaryReal") == 0)
-      solutionType_ = new BinaryRealSolutionType(this) ;
-    else if (solutionType.compareTo("Real") == 0)
-      solutionType_ = new RealSolutionType(this) ;
+    if (solutionType.compareTo("BinaryReal") == 0) {
+      solutionType_ = new BinaryRealSolutionType(this);
+    }
+    else if (solutionType.compareTo("Real") == 0) {
+      solutionType_ = new RealSolutionType(this);
+    }
     else {
       throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
   }
 
-  /** 
+  /**
    * Evaluates a solution 
    * @param solution The solution to evaluate
-   * @throws JMException 
+   * @throws JMException
    */
   public void evaluate(Solution solution) throws JMException {
     Variable[] variable = solution.getDecisionVariables();
@@ -79,14 +81,14 @@ public class Tanaka extends Problem{
 
     solution.setObjective(0,f[0]);
     solution.setObjective(1,f[1]);
-  } // evaluate
+  }
 
 
-  /** 
+  /**
    * Evaluates the constraint overhead of a solution 
    * @param solution The solution
-   * @throws JMException 
-   */  
+   * @throws JMException
+   */
   public void evaluateConstraints(Solution solution) throws JMException {
     double [] constraint = new double[this.getNumberOfConstraints()];
 
@@ -98,13 +100,14 @@ public class Tanaka extends Problem{
 
     int number = 0;
     double total = 0.0;
-    for (int i = 0; i < this.getNumberOfConstraints(); i++)
-      if (constraint[i]<0.0){
+    for (int i = 0; i < this.getNumberOfConstraints(); i++) {
+      if (constraint[i] < 0.0) {
         number++;
-        total+=constraint[i];
+        total += constraint[i];
       }
+    }
 
-    solution.setOverallConstraintViolation(total);    
+    solution.setOverallConstraintViolation(total);
     solution.setNumberOfViolatedConstraint(number);
-  } // evaluateConstraints   
-} // Tanaka
+  }
+}
