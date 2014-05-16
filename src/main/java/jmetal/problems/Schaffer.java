@@ -31,10 +31,10 @@ import jmetal.util.JMException;
 /**
  * Class representing problem Schaffer
  */
-public class Schaffer extends Problem {    
+public class Schaffer extends Problem {
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = -2366503015218789989L;
 
@@ -51,23 +51,25 @@ public class Schaffer extends Problem {
     problemName_         = "Schaffer";
 
     lowerLimit_ = new double[numberOfVariables_];
-    upperLimit_ = new double[numberOfVariables_];        
+    upperLimit_ = new double[numberOfVariables_];
     lowerLimit_[0] = -100000;
     upperLimit_[0] =  100000;
 
-    if (solutionType.compareTo("BinaryReal") == 0)
-      solutionType_ = new BinaryRealSolutionType(this) ;
-    else if (solutionType.compareTo("Real") == 0)
-      solutionType_ = new RealSolutionType(this) ;
+    if (solutionType.compareTo("BinaryReal") == 0) {
+      solutionType_ = new BinaryRealSolutionType(this);
+    }
+    else if (solutionType.compareTo("Real") == 0) {
+      solutionType_ = new RealSolutionType(this);
+    }
     else {
       throw new JMException("Error: solution type " + solutionType + " invalid") ;    }
-  } //Schaffer
+  }
 
 
-  /** 
+  /**
    * Evaluates a solution 
    * @param solution The solution to evaluate
-   * @throws JMException 
+   * @throws JMException
    */
   public void evaluate(Solution solution) throws JMException {
     Variable[] variable  = solution.getDecisionVariables();
@@ -75,10 +77,10 @@ public class Schaffer extends Problem {
     double [] f = new double[numberOfObjectives_];
     f[0] = variable[0].getValue() * variable[0].getValue();
 
-    f[1] = (variable[0].getValue() - 2.0) * 
-        (variable[0].getValue() - 2.0);
+    f[1] = (variable[0].getValue() - 2.0) *
+            (variable[0].getValue() - 2.0);
 
     solution.setObjective(0,f[0]);
     solution.setObjective(1,f[1]);
-  } //evaluate    
-} //Schaffer
+  }
+}

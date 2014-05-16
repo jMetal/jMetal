@@ -58,16 +58,18 @@ public class Golinski extends Problem{
     for (int var = 0; var < numberOfVariables_; var++){
       lowerLimit_[var] =  LOWERLIMIT[var];
       upperLimit_[var] =  UPPERLIMIT[var];
-    } // for
+    }
 
-    if (solutionType.compareTo("BinaryReal") == 0)
-      solutionType_ = new BinaryRealSolutionType(this) ;
-    else if (solutionType.compareTo("Real") == 0)
-      solutionType_ = new RealSolutionType(this) ;
+    if (solutionType.compareTo("BinaryReal") == 0) {
+      solutionType_ = new BinaryRealSolutionType(this);
+    }
+    else if (solutionType.compareTo("Real") == 0) {
+      solutionType_ = new RealSolutionType(this);
+    }
     else {
       throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
-  } //Golinski
+  }
 
   /**
    * Evaluates a solution.
@@ -93,7 +95,7 @@ public class Golinski extends Problem{
 
     solution.setObjective(0,f1);
     solution.setObjective(1,f2);
-  } // evaluate
+  }
 
   /**
    * Evaluates the constraint overhead of a solution 
@@ -141,6 +143,6 @@ public class Golinski extends Problem{
 
     solution.setOverallConstraintViolation(total);
     solution.setNumberOfViolatedConstraint(number);
-  } // evaluateConstraints
-} // Golinski
+  }
+}
 

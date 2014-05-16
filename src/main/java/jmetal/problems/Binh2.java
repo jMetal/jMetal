@@ -32,7 +32,7 @@ import jmetal.util.wrapper.XReal;
  */
 public class Binh2 extends Problem{
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = 8733721399158738615L;
 
@@ -48,46 +48,49 @@ public class Binh2 extends Problem{
     problemName_        = "Binh2";
 
     lowerLimit_ = new double[numberOfVariables_];
-    upperLimit_ = new double[numberOfVariables_];        
+    upperLimit_ = new double[numberOfVariables_];
     lowerLimit_[0] = 0.0;
-    lowerLimit_[1] = 0.0;        
+    lowerLimit_[1] = 0.0;
     upperLimit_[0] = 5.0;
     upperLimit_[1] = 3.0;
 
-    if (solutionType.compareTo("BinaryReal") == 0)
-      solutionType_ = new BinaryRealSolutionType(this) ;
-    else if (solutionType.compareTo("Real") == 0)
-      solutionType_ = new RealSolutionType(this) ;
+    if (solutionType.compareTo("BinaryReal") == 0) {
+      solutionType_ = new BinaryRealSolutionType(this);
+    }
+    else if (solutionType.compareTo("Real") == 0) {
+      solutionType_ = new RealSolutionType(this);
+    }
     else {
       throw new JMException("Error: solution type " + solutionType + " invalid") ;
-    }  
-  } // ConstrEx
+    }
+  }
 
-  /** 
+  /**
    * Evaluates a solution 
    * @param solution The solution to evaluate
-   * @throws JMException 
+   * @throws JMException
    */
   public void evaluate(Solution solution) throws JMException {
     XReal vars = new XReal(solution) ;
 
-    double [] fx = new double[2] ; // function values     
+    double [] fx = new double[2] ;
     double [] x = new double[numberOfVariables_] ;
-    for (int i = 0 ; i < numberOfVariables_; i++)
-      x[i] = vars.getValue(i) ;
+    for (int i = 0 ; i < numberOfVariables_; i++) {
+      x[i] = vars.getValue(i);
+    }
 
-    fx[0] = 4.0*x[0]*x[0] + 4*x[1]*x[1] ;        
-    fx[1] = (x[0]-5.0)*(x[0]-5.0) + (x[1]-5.0)*(x[1]-5.0) ;        
+    fx[0] = 4.0*x[0]*x[0] + 4*x[1]*x[1] ;
+    fx[1] = (x[0]-5.0)*(x[0]-5.0) + (x[1]-5.0)*(x[1]-5.0) ;
 
     solution.setObjective(0,fx[0]);
     solution.setObjective(1,fx[1]);
-  } // evaluate
+  }
 
-  /** 
+  /**
    * Evaluates the constraint overhead of a solution 
    * @param solution The solution
-   * @throws JMException 
-   */  
+   * @throws JMException
+   */
   public void evaluateConstraints(Solution solution) throws JMException {
     double [] constraint = new double[this.getNumberOfConstraints()];
 
@@ -99,13 +102,14 @@ public class Binh2 extends Problem{
 
     double total = 0.0;
     int number = 0;
-    for (int i = 0; i < this.getNumberOfConstraints(); i++)
-      if (constraint[i]<0.0){
-        total+=constraint[i];
+    for (int i = 0; i < this.getNumberOfConstraints(); i++) {
+      if (constraint[i] < 0.0) {
+        total += constraint[i];
         number++;
       }
+    }
 
-    solution.setOverallConstraintViolation(total);    
-    solution.setNumberOfViolatedConstraint(number);         
-  } // evaluateConstraints  
-} // Binh2
+    solution.setOverallConstraintViolation(total);
+    solution.setNumberOfViolatedConstraint(number);
+  }
+}

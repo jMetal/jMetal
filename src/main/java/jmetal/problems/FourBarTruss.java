@@ -62,14 +62,16 @@ public class FourBarTruss extends Problem {
     upperLimit_[2] = upperLimit_[0] ;
     upperLimit_[3] = upperLimit_[0] ;
 
-    if (solutionType.compareTo("BinaryReal") == 0)
-      solutionType_ = new BinaryRealSolutionType(this) ;
-    else if (solutionType.compareTo("Real") == 0)
-      solutionType_ = new RealSolutionType(this) ;
+    if (solutionType.compareTo("BinaryReal") == 0) {
+      solutionType_ = new BinaryRealSolutionType(this);
+    }
+    else if (solutionType.compareTo("Real") == 0) {
+      solutionType_ = new RealSolutionType(this);
+    }
     else {
       throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
-  } // ConstrEx
+  }
 
   /**
    * Evaluates a solution
@@ -81,13 +83,14 @@ public class FourBarTruss extends Problem {
 
     double [] fx = new double[2] ; // function values     
     double [] x = new double[numberOfVariables_] ;
-    for (int i = 0 ; i < numberOfVariables_; i++)
-      x[i] = vars.getValue(i) ;
+    for (int i = 0 ; i < numberOfVariables_; i++) {
+      x[i] = vars.getValue(i);
+    }
 
     fx[0] = L_*(2*x[0]+ Math.sqrt(2.0)*x[1]+ Math.sqrt(x[2])+x[3]) ;
     fx[1] = (F_*L_/E_)*(2/x[0] + 2*Math.sqrt(2)/x[1] - 2*Math.sqrt(2)/x[2] + 2/x[3]);
 
     solution.setObjective(0,fx[0]);
     solution.setObjective(1,fx[1]);
-  } // evaluate
-} // FourBarTruss
+  }
+}

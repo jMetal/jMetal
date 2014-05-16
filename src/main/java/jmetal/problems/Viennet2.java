@@ -30,15 +30,14 @@ import jmetal.util.JMException;
 /**
  * Class representing problem Viennet2
  */
-public class Viennet2 extends Problem{           
+public class Viennet2 extends Problem{
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = -8978340739025117554L;
 
-
-  /** 
+  /**
    * Constructor.
    * Creates a default instance of the Viennet2 problem
    * @param solutionType The solution type must "Real" or "BinaryReal".
@@ -56,22 +55,24 @@ public class Viennet2 extends Problem{
       upperLimit_[var] =   4.0;
     } // for
 
-    if (solutionType.compareTo("BinaryReal") == 0)
-      solutionType_ = new BinaryRealSolutionType(this) ;
-    else if (solutionType.compareTo("Real") == 0)
-      solutionType_ = new RealSolutionType(this) ;
+    if (solutionType.compareTo("BinaryReal") == 0) {
+      solutionType_ = new BinaryRealSolutionType(this);
+    }
+    else if (solutionType.compareTo("Real") == 0) {
+      solutionType_ = new RealSolutionType(this);
+    }
     else {
       throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
-  } //Viennet2
+  }
 
 
   /**
    * Evaluates a solution
    * @param solution The solution to evaluate
-   * @throws JMException 
+   * @throws JMException
    */
-  public void evaluate(Solution solution) throws JMException {                    
+  public void evaluate(Solution solution) throws JMException {
     double [] x = new double[numberOfVariables_];
     double [] f = new double[numberOfObjectives_];
 
@@ -83,15 +84,15 @@ public class Viennet2 extends Problem{
 
     // Second function
     f[1] = (x[0]+x[1]-3.0)*(x[0]+x[1]-3.0)/36.0 +
-        (-x[0]+x[1]+2.0)*(-x[0]+x[1]+2.0)/8.0 - 17.0;
+            (-x[0]+x[1]+2.0)*(-x[0]+x[1]+2.0)/8.0 - 17.0;
 
     // Third function
     f[2] = (x[0]+2*x[1]-1)*(x[0]+2*x[1]-1)/175.0 +
-        (2*x[1]-x[0])*(2*x[1]-x[0])/17.0 - 13.0 ;        
+            (2*x[1]-x[0])*(2*x[1]-x[0])/17.0 - 13.0 ;
 
     for (int i = 0; i < numberOfObjectives_; i++)
-      solution.setObjective(i,f[i]);        
-  } // evaluate 
-} // Viennet2
+      solution.setObjective(i,f[i]);
+  }
+}
 
 
