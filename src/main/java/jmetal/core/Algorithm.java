@@ -93,7 +93,7 @@ public abstract class Algorithm implements Serializable {
       operators_ = new HashMap<String,Operator>();
     }        
     operators_.put(name,operator);
-  } // addOperator 
+  }
   
  /**
   * Gets an operator through his name. If the operator doesn't exist or the name 
@@ -120,7 +120,7 @@ public abstract class Algorithm implements Serializable {
       inputParameters_ = new HashMap<String,Object>();
     }        
     inputParameters_.put(name,object);
-  } // setInputParameter  
+  }
   
  /**
   * Gets an input parameter through its name. Typically,
@@ -146,7 +146,7 @@ public abstract class Algorithm implements Serializable {
       outPutParameters_ = new HashMap<String,Object>();
     }        
     outPutParameters_.put(name,object);
-  } // setOutputParameter  
+  }
   
  /**
   * Gets an output parameter through its name. Typically,
@@ -162,7 +162,7 @@ public abstract class Algorithm implements Serializable {
     else {
       return null;
     }
-  } // getOutputParameter   
+  }
   
   /**
    * Returns the problem to solve
@@ -171,4 +171,4 @@ public abstract class Algorithm implements Serializable {
   public Problem getProblem() {
   	return problem_ ;
   }
-} // Algorithm
+}

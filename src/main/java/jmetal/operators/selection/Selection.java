@@ -30,13 +30,12 @@ import java.util.HashMap;
  */
 public abstract class Selection extends Operator {
 
-	/**
-     * 
-     */
-    private static final long serialVersionUID = 6981472547330074954L;
+  /**
+   *
+   */
+  private static final long serialVersionUID = 6981472547330074954L;
 
-    public Selection(HashMap<String, Object> parameters) {
-	  super(parameters);
-	  // TODO Auto-generated constructor stub
+  public Selection(HashMap<String, Object> parameters) {
+    super(parameters);
   }
-} // Selection
+}

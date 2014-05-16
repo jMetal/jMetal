@@ -35,11 +35,11 @@ import java.util.HashMap;
 public class BinaryTournament extends Selection {
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = 1727470902640158437L;
 
-/**
+  /**
    * Stores the <code>Comparator</code> used to compare two
    * solutions
    */
@@ -51,38 +51,46 @@ public class BinaryTournament extends Selection {
    */
   @SuppressWarnings({"unchecked"})
   public BinaryTournament(HashMap<String, Object> parameters){
-  	super(parameters) ;
-  	if ((parameters != null) && (parameters.get("comparator") != null))
-  		comparator_ = (Comparator<Solution>) parameters.get("comparator") ;
-  	else
-      //comparator_ = new BinaryTournamentComparator();
+    super(parameters) ;
+    if ((parameters != null) && (parameters.get("comparator") != null)) {
+      comparator_ = (Comparator<Solution>) parameters.get("comparator");
+    }
+    else {
       comparator_ = new DominanceComparator();
-  } // BinaryTournament
-  
+    }
+  }
+
   /**
-  * Performs the operation
-  * @param object Object representing a SolutionSet
-  * @return the selected solution
-  */
+   * Performs the operation
+   * @param object Object representing a SolutionSet
+   * @return the selected solution
+   */
   public Object execute(Object object){
     SolutionSet solutionSet = (SolutionSet)object;
     Solution solution1, solution2;
     solution1 = solutionSet.get(PseudoRandom.randInt(0,solutionSet.size()-1));
     solution2 = solutionSet.get(PseudoRandom.randInt(0,solutionSet.size()-1));
 
-    if (solutionSet.size() >= 2)
-    	while (solution1 == solution2)
-        solution2 = solutionSet.get(PseudoRandom.randInt(0,solutionSet.size()-1));
-    
+    if (solutionSet.size() >= 2) {
+      while (solution1 == solution2) {
+        solution2 = solutionSet.get(PseudoRandom.randInt(0, solutionSet.size() - 1));
+      }
+    }
+
     int flag = comparator_.compare(solution1,solution2);
-    if (flag == -1)
+    if (flag == -1) {
       return solution1;
-    else if (flag == 1)
+    }
+    else if (flag == 1) {
       return solution2;
-    else
-      if (PseudoRandom.randDouble()<0.5)
+    }
+    else {
+      if (PseudoRandom.randDouble() < 0.5) {
         return solution1;
-      else
-        return solution2;                       
-  } // execute
-} // BinaryTournament
+      }
+      else {
+        return solution2;
+      }
+    }
+  }
+}

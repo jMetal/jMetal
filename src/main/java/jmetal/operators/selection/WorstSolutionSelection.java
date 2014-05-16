@@ -52,9 +52,6 @@ public class WorstSolutionSelection extends Selection {
    * Constructor
    * @param comparator
    */
-  //public WorstSolutionSelection(Comparator comparator) {
-  //	comparator_ = comparator ;
-  //}
 
   /**
    * Performs the operation
@@ -72,10 +69,11 @@ public class WorstSolutionSelection extends Selection {
     worstSolution = 0 ;
 
     for (int i = 1; i < solutionSet.size(); i++) {
-      if (comparator_.compare(solutionSet.get(i), solutionSet.get(worstSolution)) > 0)  
-        worstSolution = i ;
-    } // for
+      if (comparator_.compare(solutionSet.get(i), solutionSet.get(worstSolution)) > 0) {
+        worstSolution = i;
+      }
+    }
 
     return worstSolution ;    
-  } // Execute     
-} // WorstObjectiveSelection
+  }
+}

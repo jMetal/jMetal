@@ -39,7 +39,7 @@ import java.util.List;
  */
 public class BLXAlphaCrossover extends Crossover {
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = -7738534841007212922L;
 
@@ -55,9 +55,9 @@ public class BLXAlphaCrossover extends Crossover {
    * Valid solution types to apply this operator 
    */
   private static final List<Class<? extends SolutionType>> VALID_TYPES = Arrays.asList(RealSolutionType.class,
-      ArrayRealSolutionType.class) ;
+          ArrayRealSolutionType.class) ;
 
-  /** 
+  /**
    * Constructor
    * Create a new SBX crossover operator whit a default
    * index given by <code>DEFAULT_INDEX_CROSSOVER</code>
@@ -65,11 +65,13 @@ public class BLXAlphaCrossover extends Crossover {
   public BLXAlphaCrossover(HashMap<String, Object> parameters) {
     super (parameters) ;
 
-    if (parameters.get("probability") != null)
-      crossoverProbability_ = (Double) parameters.get("probability") ;  		
-    if (parameters.get("alpha") != null)
-      alpha_  = (Double) parameters.get("alpha") ;  		
-  } // SBXCrossover
+    if (parameters.get("probability") != null) {
+      crossoverProbability_ = (Double) parameters.get("probability");
+    }
+    if (parameters.get("alpha") != null) {
+      alpha_ = (Double) parameters.get("alpha");
+    }
+  }
 
   /**
    * Perform the crossover operation. 
@@ -78,9 +80,9 @@ public class BLXAlphaCrossover extends Crossover {
    * @param parent2 The second parent
    * @return An array containing the two offsprings
    */
-  public Solution[] doCrossover(double probability, 
-      Solution parent1, 
-      Solution parent2) throws JMException {
+  public Solution[] doCrossover(double probability,
+                                Solution parent1,
+                                Solution parent2) throws JMException {
 
     Solution [] offSpring = new Solution[2];
 
@@ -96,8 +98,8 @@ public class BLXAlphaCrossover extends Crossover {
     double upperValue ;
     double lowerValue ;
 
-    XReal x1 = new XReal(parent1) ;		
-    XReal x2 = new XReal(parent2) ;		
+    XReal x1 = new XReal(parent1) ;
+    XReal x2 = new XReal(parent2) ;
     XReal offs1 = new XReal(offSpring[0]) ;
     XReal offs2 = new XReal(offSpring[1]) ;
 
@@ -117,11 +119,11 @@ public class BLXAlphaCrossover extends Crossover {
         if (valueX2 > valueX1) {
           max = valueX2 ;
           min = valueX1 ;
-        } // if
+        }
         else {
           max = valueX1 ;
           min = valueX2 ;
-        } // else
+        }
 
         range = max - min ;
         // Ranges of the new alleles ;
@@ -137,24 +139,30 @@ public class BLXAlphaCrossover extends Crossover {
         random = PseudoRandom.randDouble() ;
         valueY2 =  minRange + random * (maxRange - minRange) ;
 
-        if (valueY1 < lowerValue)
-          offs1.setValue(i, lowerValue) ;
-        else if (valueY1 > upperValue)
+        if (valueY1 < lowerValue) {
+          offs1.setValue(i, lowerValue);
+        }
+        else if (valueY1 > upperValue) {
           offs1.setValue(i, upperValue);
-        else
+        }
+        else {
           offs1.setValue(i, valueY1);
+        }
 
-        if (valueY2 < lowerValue)
-          offs2.setValue(i, lowerValue) ;
-        else if (valueY2 > upperValue)
-          offs2.setValue(i, upperValue) ;
-        else
-          offs2.setValue(i, valueY2) ;
-      } // if
-    } // if
+        if (valueY2 < lowerValue) {
+          offs2.setValue(i, lowerValue);
+        }
+        else if (valueY2 > upperValue) {
+          offs2.setValue(i, upperValue);
+        }
+        else {
+          offs2.setValue(i, valueY2);
+        }
+      }
+    }
 
-    return offSpring;                                                                                      
-  } // doCrossover
+    return offSpring;
+  }
 
 
   /**
@@ -163,31 +171,31 @@ public class BLXAlphaCrossover extends Crossover {
    * @return An object containing the offSprings
    */
   public Object execute(Object object) throws JMException {
-    Solution [] parents = (Solution [])object;    	
+    Solution [] parents = (Solution [])object;
 
     if (parents.length != 2) {
       Configuration.logger_.severe("BLXAlphaCrossover.execute: operator needs two " +
-          "parents");
+              "parents");
       Class<String> cls = java.lang.String.class;
-      String name = cls.getName(); 
-      throw new JMException("Exception in " + name + ".execute()") ;      
+      String name = cls.getName();
+      throw new JMException("Exception in " + name + ".execute()") ;
     } // if
 
     if (!(VALID_TYPES.contains(parents[0].getType().getClass())  &&
-        VALID_TYPES.contains(parents[1].getType().getClass())) ) {
+            VALID_TYPES.contains(parents[1].getType().getClass())) ) {
       Configuration.logger_.severe("BLXAlphaCrossover.execute: the solutions " +
-          "type " + parents[0].getType() + " is not allowed with this operator");
+              "type " + parents[0].getType() + " is not allowed with this operator");
 
       Class<String> cls = java.lang.String.class;
-      String name = cls.getName(); 
+      String name = cls.getName();
       throw new JMException("Exception in " + name + ".execute()") ;
     } // if 
 
     Solution [] offSpring;
     offSpring = doCrossover(crossoverProbability_,
-        parents[0],
-        parents[1]);
+            parents[0],
+            parents[1]);
 
     return offSpring;
-  } // execute 
-} // BLXAlphaCrossover
+  }
+}

@@ -43,91 +43,93 @@ import java.util.logging.Level;
  */
 public class BitFlipMutation extends Mutation {
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = -3349165791496573889L;
 
-/**
+  /**
    * Valid solution types to apply this operator 
    */
   private static final List<Class<? extends SolutionType>> VALID_TYPES = Arrays.asList(BinarySolutionType.class,
-      BinaryRealSolutionType.class,
-      IntSolutionType.class) ;
+          BinaryRealSolutionType.class,
+          IntSolutionType.class) ;
 
   private Double mutationProbability_ = null ;
-  
-	/**
-	 * Constructor
-	 * Creates a new instance of the Bit Flip mutation operator
-	 */
-	public BitFlipMutation(HashMap<String, Object> parameters) {
-		super(parameters) ;
-  	if (parameters.get("probability") != null)
-  		mutationProbability_ = (Double) parameters.get("probability") ;  		
-	} // BitFlipMutation
 
-	/**
-	 * Perform the mutation operation
-	 * @param probability Mutation probability
-	 * @param solution The solution to mutate
-	 * @throws JMException
-	 */
-	public void doMutation(double probability, Solution solution) throws JMException {
-		try {
-			if ((solution.getType().getClass() == BinarySolutionType.class) ||
-					(solution.getType().getClass() == BinaryRealSolutionType.class)) {
-				for (int i = 0; i < solution.getDecisionVariables().length; i++) {
-					for (int j = 0; j < ((Binary) solution.getDecisionVariables()[i]).getNumberOfBits(); j++) {
-						if (PseudoRandom.randDouble() < probability) {
-							((Binary) solution.getDecisionVariables()[i]).bits_.flip(j);
-						}
-					}
-				}
+  /**
+   * Constructor
+   * Creates a new instance of the Bit Flip mutation operator
+   */
+  public BitFlipMutation(HashMap<String, Object> parameters) {
+    super(parameters) ;
+    if (parameters.get("probability") != null) {
+      mutationProbability_ = (Double) parameters.get("probability");
+    }
+  }
 
-				for (int i = 0; i < solution.getDecisionVariables().length; i++) {
-					((Binary) solution.getDecisionVariables()[i]).decode();
-				}
-			} // if
-			else { // Integer representation
-				for (int i = 0; i < solution.getDecisionVariables().length; i++)
-					if (PseudoRandom.randDouble() < probability) {
-						int value = PseudoRandom.randInt(
-								(int)solution.getDecisionVariables()[i].getLowerBound(),
-								(int)solution.getDecisionVariables()[i].getUpperBound());
-						solution.getDecisionVariables()[i].setValue(value);
-					} // if
-			} // else
-		} catch (ClassCastException e1) {
-			Configuration.logger_.log(Level.SEVERE,
+  /**
+   * Perform the mutation operation
+   * @param probability Mutation probability
+   * @param solution The solution to mutate
+   * @throws JMException
+   */
+  public void doMutation(double probability, Solution solution) throws JMException {
+    try {
+      if ((solution.getType().getClass() == BinarySolutionType.class) ||
+              (solution.getType().getClass() == BinaryRealSolutionType.class)) {
+        for (int i = 0; i < solution.getDecisionVariables().length; i++) {
+          for (int j = 0; j < ((Binary) solution.getDecisionVariables()[i]).getNumberOfBits(); j++) {
+            if (PseudoRandom.randDouble() < probability) {
+              ((Binary) solution.getDecisionVariables()[i]).bits_.flip(j);
+            }
+          }
+        }
+
+        for (int i = 0; i < solution.getDecisionVariables().length; i++) {
+          ((Binary) solution.getDecisionVariables()[i]).decode();
+        }
+      }
+      else {
+        for (int i = 0; i < solution.getDecisionVariables().length; i++) {
+          if (PseudoRandom.randDouble() < probability) {
+            int value = PseudoRandom.randInt(
+                    (int) solution.getDecisionVariables()[i].getLowerBound(),
+                    (int) solution.getDecisionVariables()[i].getUpperBound());
+            solution.getDecisionVariables()[i].setValue(value);
+          }
+        }
+      }
+    } catch (ClassCastException e1) {
+      Configuration.logger_.log(Level.SEVERE,
               "BitFlipMutation.doMutation: " +
-              "ClassCastException error" + e1.getMessage(),
+                      "ClassCastException error" + e1.getMessage(),
               e1);
-			Class<String> cls = java.lang.String.class;
-			String name = cls.getName();
-			throw new JMException("Exception in " + name + ".doMutation()");
-		}
-	} // doMutation
+      Class<String> cls = java.lang.String.class;
+      String name = cls.getName();
+      throw new JMException("Exception in " + name + ".doMutation()");
+    }
+  }
 
-	/**
-	 * Executes the operation
-	 * @param object An object containing a solution to mutate
-	 * @return An object containing the mutated solution
-	 * @throws JMException 
-	 */
-	public Object execute(Object object) throws JMException {
-		Solution solution = (Solution) object;
+  /**
+   * Executes the operation
+   * @param object An object containing a solution to mutate
+   * @return An object containing the mutated solution
+   * @throws JMException
+   */
+  public Object execute(Object object) throws JMException {
+    Solution solution = (Solution) object;
 
-		if (!VALID_TYPES.contains(solution.getType().getClass())) {
-			Configuration.logger_.severe("BitFlipMutation.execute: the solution " +
-					"is not of the right type. The type should be 'Binary', " +
-					"'BinaryReal' or 'Int', but " + solution.getType() + " is obtained");
+    if (!VALID_TYPES.contains(solution.getType().getClass())) {
+      Configuration.logger_.severe("BitFlipMutation.execute: the solution " +
+              "is not of the right type. The type should be 'Binary', " +
+              "'BinaryReal' or 'Int', but " + solution.getType() + " is obtained");
 
-			Class<String> cls = java.lang.String.class;
-			String name = cls.getName();
-			throw new JMException("Exception in " + name + ".execute()");
-		} // if 
+      Class<String> cls = java.lang.String.class;
+      String name = cls.getName();
+      throw new JMException("Exception in " + name + ".execute()");
+    }
 
-		doMutation(mutationProbability_, solution);
-		return solution;
-	} // execute
-} // BitFlipMutation
+    doMutation(mutationProbability_, solution);
+    return solution;
+  }
+}

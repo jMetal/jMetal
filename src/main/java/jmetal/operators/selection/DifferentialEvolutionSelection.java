@@ -34,18 +34,15 @@ import java.util.HashMap;
 public class DifferentialEvolutionSelection extends Selection {
 
   /**
-<<<<<<< HEAD
-=======
-   * 
+   *
    */
   private static final long serialVersionUID = 2866073033079299561L;
 
   /**
->>>>>>> master
    * Constructor
    */
   DifferentialEvolutionSelection(HashMap<String, Object> parameters) {
-  	super(parameters) ;
+    super(parameters) ;
   } // Constructor
 
   /**
@@ -62,8 +59,9 @@ public class DifferentialEvolutionSelection extends Selection {
     Solution[] parents = new Solution[3] ;
     int r1, r2, r3 ;
 
-    if (population.size() < 4)
-      throw new JMException("DifferentialEvolutionSelection: the population has less than four solutions") ;
+    if (population.size() < 4) {
+      throw new JMException("DifferentialEvolutionSelection: the population has less than four solutions");
+    }
 
     do {
       r1 = (int)(PseudoRandom.randInt(0,population.size()-1));
@@ -80,5 +78,5 @@ public class DifferentialEvolutionSelection extends Selection {
     parents[2] = population.get(r3) ;
 
     return parents ;
-  } // execute
-} // DifferentialEvolutionSelection
+  }
+}
