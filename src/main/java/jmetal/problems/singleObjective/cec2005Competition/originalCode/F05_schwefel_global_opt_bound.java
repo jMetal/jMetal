@@ -83,12 +83,15 @@ public class F05_schwefel_global_opt_bound extends TestFunc {
     // Load the shifted global optimum
     Benchmark.loadMatrixFromFile(file_data, m_dimension + 1, m_dimension, m_data);
     for (int i = 0 ; i < m_dimension ; i ++) {
-      if ((i+1) <= Math.ceil(m_dimension / 4.0))
+      if ((i+1) <= Math.ceil(m_dimension / 4.0)) {
         m_o[i] = -100.0;
-      else if ((i+1) >= Math.floor((3.0 * m_dimension) / 4.0))
+      }
+      else if ((i+1) >= Math.floor((3.0 * m_dimension) / 4.0)) {
         m_o[i] = 100.0;
-      else
+      }
+      else {
         m_o[i] = m_data[0][i];
+      }
     }
     for (int i = 0 ; i < m_dimension ; i ++) {
       for (int j = 0 ; j < m_dimension ; j ++) {
@@ -107,8 +110,9 @@ public class F05_schwefel_global_opt_bound extends TestFunc {
 
     for (int i = 0 ; i < m_dimension ; i ++) {
       double temp = Math.abs(m_z[i] - m_B[i]);
-      if (max < temp)
+      if (max < temp) {
         max = temp;
+      }
     }
 
     return (max + m_bias);

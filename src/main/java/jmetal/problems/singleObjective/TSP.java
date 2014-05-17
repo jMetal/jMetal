@@ -62,8 +62,9 @@ public class TSP extends Problem {
     length_       = new int[numberOfVariables_];
 
     try {
-      if (solutionType.compareTo("Permutation") == 0)
-        solutionType_ = new PermutationSolutionType(this) ;
+      if (solutionType.compareTo("Permutation") == 0) {
+        solutionType_ = new PermutationSolutionType(this);
+      }
       else {
         throw new JMException("Solution type invalid") ;
       }
@@ -74,7 +75,7 @@ public class TSP extends Problem {
 
     System.out.println(numberOfCities_) ;
     length_      [0] = numberOfCities_ ;
-  } // TSP
+  }
 
   /**
    * Evaluates a solution
@@ -91,9 +92,9 @@ public class TSP extends Problem {
 
       x = ((Permutation)solution.getDecisionVariables()[0]).vector_[i] ;
       y = ((Permutation)solution.getDecisionVariables()[0]).vector_[i+1] ;
-      //  cout << "I : " << i << ", x = " << x << ", y = " << y << endl ;    
+
       fitness += distanceMatrix_[x][y] ;
-    } // for
+    }
     int firstCity ;
     int lastCity  ;
 
@@ -102,7 +103,7 @@ public class TSP extends Problem {
     fitness += distanceMatrix_[firstCity][lastCity] ;
 
     solution.setObjective(0, fitness);
-  } // evaluate
+  }
 
 
   public void readProblem(String fileName) throws
@@ -118,11 +119,13 @@ public class TSP extends Problem {
 
       token.nextToken();
       while(!found) {
-        if ((token.sval != null) && ((token.sval.compareTo("DIMENSION") == 0)))
-          found = true ;
-        else
-          token.nextToken() ;
-      } // while
+        if ((token.sval != null) && ((token.sval.compareTo("DIMENSION") == 0))) {
+          found = true;
+        }
+        else {
+          token.nextToken();
+        }
+      }
 
       token.nextToken() ;
       token.nextToken() ;
@@ -136,14 +139,15 @@ public class TSP extends Problem {
       token.nextToken();
       while(!found) {
         if ((token.sval != null) &&
-            ((token.sval.compareTo("SECTION") == 0)))
-          found = true ;
-        else
-          token.nextToken() ;
-      } // while
+            ((token.sval.compareTo("SECTION") == 0))) {
+          found = true;
+        }
+        else {
+          token.nextToken();
+        }
+      }
 
       // Read the data
-
       double [] c = new double[2*numberOfCities_] ;
 
       for (int i = 0; i < numberOfCities_; i++) {
@@ -165,12 +169,12 @@ public class TSP extends Problem {
           dist = (int)(dist + .5);
           distanceMatrix_[k][j] = dist;
           distanceMatrix_[j][k] = dist;
-        } // for
-      } // for
-    } // try
+        }
+      }
+    }
     catch (Exception e) {
       Configuration.logger_.log(Level.SEVERE, "TSP.readProblem(): error when reading data file", e);
       throw new Exception ("TSP.readProblem(): error when reading data file "+e);
-    } // catch
-  } // readProblem
-} // TSP
+    }
+  }
+}

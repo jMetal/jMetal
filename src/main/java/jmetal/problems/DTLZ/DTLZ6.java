@@ -34,7 +34,7 @@ import jmetal.util.JMException;
 public class DTLZ6 extends Problem{
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = -6129675039815081872L;
 
@@ -53,8 +53,8 @@ public class DTLZ6 extends Problem{
    * @param solutionType The solution type must "Real" or "BinaryReal". 
    */
   public DTLZ6(String  solutionType,
-      Integer numberOfVariables,
-      Integer numberOfObjectives) throws JMException {
+               Integer numberOfVariables,
+               Integer numberOfObjectives) throws JMException {
     numberOfVariables_  = numberOfVariables;
     numberOfObjectives_ = numberOfObjectives;
     numberOfConstraints_= 0;
@@ -67,20 +67,22 @@ public class DTLZ6 extends Problem{
       upperLimit_[var] = 1.0;
     } //for
 
-    if (solutionType.compareTo("BinaryReal") == 0)
-      solutionType_ = new BinaryRealSolutionType(this) ;
-    else if (solutionType.compareTo("Real") == 0)
-      solutionType_ = new RealSolutionType(this) ;
+    if (solutionType.compareTo("BinaryReal") == 0) {
+      solutionType_ = new BinaryRealSolutionType(this);
+    }
+    else if (solutionType.compareTo("Real") == 0) {
+      solutionType_ = new RealSolutionType(this);
+    }
     else {
       throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
-  } // DTLZ6
+  }
 
-  /** 
+  /**
    * Evaluates a solution 
    * @param solution The solution to evaluate
-   * @throws JMException 
-   */      
+   * @throws JMException
+   */
   public void evaluate(Solution solution) throws JMException {
     Variable[] gen  = solution.getDecisionVariables();
 
@@ -89,32 +91,38 @@ public class DTLZ6 extends Problem{
     double [] theta = new double[numberOfObjectives_-1];
     int k = numberOfVariables_ - numberOfObjectives_ + 1;
 
-    for (int i = 0; i < numberOfVariables_; i++)
+    for (int i = 0; i < numberOfVariables_; i++) {
       x[i] = gen[i].getValue();
+    }
 
     double g = 0.0;
-    for (int i = numberOfVariables_ - k; i < numberOfVariables_; i++)
-      g += java.lang.Math.pow(x[i],0.1);
+    for (int i = numberOfVariables_ - k; i < numberOfVariables_; i++) {
+      g += java.lang.Math.pow(x[i], 0.1);
+    }
 
     double t = java.lang.Math.PI  / (4.0 * (1.0 + g));
-    theta[0] = x[0] * java.lang.Math.PI / 2;  
-    for (int i = 1; i < (numberOfObjectives_-1); i++) 
-      theta[i] = t * (1.0 + 2.0 * g * x[i]);			
+    theta[0] = x[0] * java.lang.Math.PI / 2;
+    for (int i = 1; i < (numberOfObjectives_-1); i++) {
+      theta[i] = t * (1.0 + 2.0 * g * x[i]);
+    }
 
-    for (int i = 0; i < numberOfObjectives_; i++)
+    for (int i = 0; i < numberOfObjectives_; i++) {
       f[i] = 1.0 + g;
+    }
 
-    for (int i = 0; i < numberOfObjectives_; i++){
-      for (int j = 0; j < numberOfObjectives_ - (i + 1); j++)            
-        f[i] *= java.lang.Math.cos(theta[j]);                
+    for (int i = 0; i < numberOfObjectives_; i++) {
+      for (int j = 0; j < numberOfObjectives_ - (i + 1); j++) {
+        f[i] *= java.lang.Math.cos(theta[j]);
+      }
       if (i != 0){
         int aux = numberOfObjectives_ - (i + 1);
         f[i] *= java.lang.Math.sin(theta[aux]);
-      } //if
-    } // for
+      }
+    }
 
-    for (int i = 0; i < numberOfObjectives_; i++)
-      solution.setObjective(i,f[i]);        
-  } // evaluate
+    for (int i = 0; i < numberOfObjectives_; i++) {
+      solution.setObjective(i, f[i]);
+    }
+  }
 }
 

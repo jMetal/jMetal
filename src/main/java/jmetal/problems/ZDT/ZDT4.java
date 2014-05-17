@@ -67,18 +67,21 @@ public class ZDT4 extends Problem{
     for (int var = 1; var < numberOfVariables_; var++){
       lowerLimit_[var] = -5.0;
       upperLimit_[var] =  5.0;
-    } //for
+    }
 
-    if (solutionType.compareTo("BinaryReal") == 0)
-      solutionType_ = new BinaryRealSolutionType(this) ;
-    else if (solutionType.compareTo("Real") == 0)
-      solutionType_ = new RealSolutionType(this) ;
-    else if (solutionType.compareTo("ArrayReal") == 0)
-      solutionType_ = new ArrayRealSolutionType(this) ;
+    if (solutionType.compareTo("BinaryReal") == 0) {
+      solutionType_ = new BinaryRealSolutionType(this);
+    }
+    else if (solutionType.compareTo("Real") == 0) {
+      solutionType_ = new RealSolutionType(this);
+    }
+    else if (solutionType.compareTo("ArrayReal") == 0) {
+      solutionType_ = new ArrayRealSolutionType(this);
+    }
     else {
       throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
-  } //ZDT4
+  }
 
   /** 
    * Evaluates a solution 
@@ -96,7 +99,7 @@ public class ZDT4 extends Problem{
 
     solution.setObjective(0,f[0]);
     solution.setObjective(1,f[1]);
-  } //evaluate
+  }
 
   /**
    * Returns the value of the ZDT4 function G.
@@ -105,13 +108,14 @@ public class ZDT4 extends Problem{
    */  
   public double evalG(XReal x) throws JMException{
     double g = 0.0;
-    for (int var = 1; var < numberOfVariables_; var++)
-      g += Math.pow(x.getValue(var),2.0) + 
-      - 10.0 * Math.cos(4.0*Math.PI*x.getValue(var));
+    for (int var = 1; var < numberOfVariables_; var++) {
+      g += Math.pow(x.getValue(var), 2.0) +
+              -10.0 * Math.cos(4.0 * Math.PI * x.getValue(var));
+    }
 
     double constante = 1.0 + 10.0*(numberOfVariables_ - 1);
     return g + constante;
-  } // evalG
+  }
 
   /**
    * Returns the value of the ZDT4 function H.
@@ -120,5 +124,5 @@ public class ZDT4 extends Problem{
    */
   public double evalH(double f, double g){
     return 1.0 - Math.sqrt(f/g);
-  } // evalH      
-} // ZDT4
+  }
+}

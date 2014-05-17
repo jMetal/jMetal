@@ -61,13 +61,15 @@ public class WFG8 extends WFG{
     problemName_ = "WFG8";
 
     S_ = new int[M_];
-    for (int i = 0; i < M_; i++)
-      S_[i] = 2 * (i+1);
+    for (int i = 0; i < M_; i++) {
+      S_[i] = 2 * (i + 1);
+    }
 
     A_ = new int[M_-1];          
-    for (int i = 0; i < M_-1; i++)
-      A_[i] = 1;                  
-  } // WFG8           
+    for (int i = 0; i < M_-1; i++) {
+      A_[i] = 1;
+    }
+  }
 
   /** 
    * Evaluates a solution 
@@ -89,7 +91,7 @@ public class WFG8 extends WFG{
     }        
 
     return result;
-  } // evaluate
+  }
 
 
   /**
@@ -116,7 +118,7 @@ public class WFG8 extends WFG{
     }
 
     return result;
-  } // t1
+  }
 
   /**
    * WFG8 t2 transformation
@@ -131,7 +133,7 @@ public class WFG8 extends WFG{
     }
 
     return result;      
-  } // t2
+  }
 
   /**
    * WFG8 t3 transformation
@@ -160,7 +162,7 @@ public class WFG8 extends WFG{
     result[M-1] = (new Transformations()).r_sum(subZ,subW);
 
     return result;
-  } // t3
+  }
 
   /** 
    * Evaluates a solution 
@@ -180,7 +182,7 @@ public class WFG8 extends WFG{
     for (int i = 0; i < sol.length; i++) {
       solution.setObjective(i,sol[i]);
     }
-  } // evaluate
-} // WFG8
+  }
+}
 
 

@@ -66,26 +66,24 @@ public class mQAP extends Problem {
     lowerLimit_ = new double[numberOfVariables_];
 
     // Establishes upper and lower limits for the variables
-    for (int var = 0; var < numberOfVariables_; var++)
-    {
+    for (int var = 0; var < numberOfVariables_; var++) {
       lowerLimit_[var] = 0.0;
       upperLimit_[var] = ri.getNumberOfFacilities()-1;
-    } // for
+    }
 
     // Establishes the length of every encodings.variable
     length_ = new int[numberOfVariables_];
-    for (int var = 0; var < numberOfVariables_; var++)
-    {
+    for (int var = 0; var < numberOfVariables_; var++) {
       length_[var] = ri.getNumberOfFacilities();
+    }
 
-    } // for
-    if (solutionType.compareTo("Permutation") == 0)
+    if (solutionType.compareTo("Permutation") == 0) {
       solutionType_ = new PermutationSolutionType(this);
+    }
     else {
         throw new JMException("Error: solution type " + solutionType + " invalid") ;
       }
-  } // mQAP
-
+  }
 
   // evaluation of the problem
   public void evaluate(Solution solution) throws JMException {
@@ -99,5 +97,5 @@ public class mQAP extends Problem {
       }
       solution.setObjective(k, aux);
     }
-  } // evaluate
-} // mQAP
+  }
+}

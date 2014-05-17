@@ -64,18 +64,21 @@ public class ZDT6 extends Problem {
     for (int var = 0; var < numberOfVariables_; var++) {
       lowerLimit_[var] = 0.0;
       upperLimit_[var] = 1.0;
-    } //for
+    }
 
-    if (solutionType.compareTo("BinaryReal") == 0)
-      solutionType_ = new BinaryRealSolutionType(this) ;
-    else if (solutionType.compareTo("Real") == 0)
-      solutionType_ = new RealSolutionType(this) ;
-    else if (solutionType.compareTo("ArrayReal") == 0)
-      solutionType_ = new ArrayRealSolutionType(this) ;
+    if (solutionType.compareTo("BinaryReal") == 0) {
+      solutionType_ = new BinaryRealSolutionType(this);
+    }
+    else if (solutionType.compareTo("Real") == 0) {
+      solutionType_ = new RealSolutionType(this);
+    }
+    else if (solutionType.compareTo("ArrayReal") == 0) {
+      solutionType_ = new ArrayRealSolutionType(this);
+    }
     else {
       throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
-  } //ZDT6
+  }
 
   /** 
    * Evaluates a solution 
@@ -94,7 +97,7 @@ public class ZDT6 extends Problem {
 
     solution.setObjective(0,f[0]);
     solution.setObjective(1,f[1]);    
-  } //evaluate
+  }
 
   /**
    * Returns the value of the ZDT6 function G.
@@ -103,14 +106,15 @@ public class ZDT6 extends Problem {
    */
   public double evalG(XReal x) throws JMException{
     double g = 0.0;
-    for (int var = 1; var < this.numberOfVariables_; var++)
+    for (int var = 1; var < this.numberOfVariables_; var++) {
       g += x.getValue(var);
+    }
     g = g / (numberOfVariables_ - 1);
     g = java.lang.Math.pow(g,0.25);
     g = 9.0 * g;
     g = 1.0 + g;        
     return g;
-  } // evalG
+  }
 
   /**
    * Returns the value of the ZDT6 function H.
@@ -119,5 +123,5 @@ public class ZDT6 extends Problem {
    */
   public double evalH(double f, double g){
     return 1.0 - Math.pow((f/g),2.0);
-  } // evalH       
-} //ZDT6
+  }
+}

@@ -54,7 +54,7 @@ public class WFG9 extends WFG{
     for (int i = 0; i < M_-1; i++) {
       A_[i] = 1;               
     }
-  } // WFG9
+  }
 
 
   /** 
@@ -76,7 +76,7 @@ public class WFG9 extends WFG{
       result [m-1] = D_*x[M_-1] + S_[m-1] * (new Shapes()).concave(x,m);                
     }        
     return result;
-  } //evaluate
+  }
 
   /**
    * WFG9 t1 transformation
@@ -100,7 +100,7 @@ public class WFG9 extends WFG{
 
     result[z.length-1] = z[z.length-1];
     return result;
-  } // t1
+  }
 
   /**
    * WFG9 t2 transformation
@@ -117,7 +117,7 @@ public class WFG9 extends WFG{
     }        
 
     return result;      
-  } // t2   
+  }
 
   /**
    * WFG9 t3 transformation
@@ -139,7 +139,7 @@ public class WFG9 extends WFG{
     result[M-1] = (new Transformations()).r_nonsep(subZ,l);
 
     return result;
-  } // t3
+  }
 
   /** 
    * Evaluates a solution 
@@ -159,7 +159,7 @@ public class WFG9 extends WFG{
     for (int i = 0; i < sol.length; i++) {
       solution.setObjective(i,sol[i]);
     }
-  }  // evaluate
+  }
 } // WFG9
 
 

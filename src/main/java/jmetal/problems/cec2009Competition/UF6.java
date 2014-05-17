@@ -45,7 +45,7 @@ public class UF6 extends Problem {
    */
   public UF6(String solutionType) throws ClassNotFoundException, JMException {
     this(solutionType, 30, 2, 0.1); // 30 variables, N =10, epsilon = 0.1
-  } // CEC2009_UF1
+  }
 
   /**
    * Creates a new instance of problem CEC2009_UF6.
@@ -69,16 +69,18 @@ public class UF6 extends Problem {
     for (int var = 1; var < numberOfVariables_; var++){
       lowerLimit_[var] = -1.0;
       upperLimit_[var] = 1.0;
-    } //for
+    }
 
-    if (solutionType.compareTo("BinaryReal") == 0)
-      solutionType_ = new BinaryRealSolutionType(this) ;
-    else if (solutionType.compareTo("Real") == 0)
-      solutionType_ = new RealSolutionType(this) ;
+    if (solutionType.compareTo("BinaryReal") == 0) {
+      solutionType_ = new BinaryRealSolutionType(this);
+    }
+    else if (solutionType.compareTo("Real") == 0) {
+      solutionType_ = new RealSolutionType(this);
+    }
     else {
       throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
-  } // CEC2009_UF6
+  }
 
   /** 
    * Evaluates a solution.
@@ -89,8 +91,9 @@ public class UF6 extends Problem {
     Variable[] decisionVariables  = solution.getDecisionVariables();
 
     double [] x = new double[numberOfVariables_] ;
-    for (int i = 0; i < numberOfVariables_; i++)
-      x[i] = decisionVariables[i].getValue() ;
+    for (int i = 0; i < numberOfVariables_; i++) {
+      x[i] = decisionVariables[i].getValue();
+    }
 
     int count1, count2 ;
     double prod1, prod2 ;
@@ -113,10 +116,11 @@ public class UF6 extends Problem {
       }
     }
     hj = 2.0*(0.5/N_ + epsilon_)*Math.sin(2.0*N_*Math.PI*x[0]);
-    if (hj < 0.0) 
+    if (hj < 0.0) {
       hj = 0.0;
+    }
 
     solution.setObjective(0, x[0] + hj + 2.0*(4.0*sum1 - 2.0*prod1 + 2.0) / (double)count1);
     solution.setObjective(1, 1.0 - x[0] + hj + 2.0*(4.0*sum2 - 2.0*prod2 + 2.0) / (double)count2);
-  } // evaluate
-} // CEC2009_UF6
+  }
+}

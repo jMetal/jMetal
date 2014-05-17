@@ -45,7 +45,7 @@ public class UF2 extends Problem {
    */
   public UF2(String solutionType) throws ClassNotFoundException, JMException {
     this(solutionType, 30); // 30 variables by default
-  } // CEC2009_UF2
+  }
 
   /**
    * Creates a new instance of problem CEC2009_UF2.
@@ -66,16 +66,18 @@ public class UF2 extends Problem {
     for (int var = 1; var < numberOfVariables_; var++){
       lowerLimit_[var] = -1.0;
       upperLimit_[var] = 1.0;
-    } //for
+    }
 
-    if (solutionType.compareTo("BinaryReal") == 0)
-      solutionType_ = new BinaryRealSolutionType(this) ;
-    else if (solutionType.compareTo("Real") == 0)
-      solutionType_ = new RealSolutionType(this) ;
+    if (solutionType.compareTo("BinaryReal") == 0) {
+      solutionType_ = new BinaryRealSolutionType(this);
+    }
+    else if (solutionType.compareTo("Real") == 0) {
+      solutionType_ = new RealSolutionType(this);
+    }
     else {
       throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
-  } // CEC2009_UF2
+  }
 
   /**
    * Evaluates a solution.
@@ -86,8 +88,9 @@ public class UF2 extends Problem {
     Variable[] decisionVariables  = solution.getDecisionVariables();
 
     double [] x = new double[numberOfVariables_] ;
-    for (int i = 0; i < numberOfVariables_; i++)
-      x[i] = decisionVariables[i].getValue() ;
+    for (int i = 0; i < numberOfVariables_; i++) {
+      x[i] = decisionVariables[i].getValue();
+    }
 
     int count1, count2;
     double sum1, sum2, yj;
@@ -96,10 +99,6 @@ public class UF2 extends Problem {
 
     for (int j = 2 ; j <= numberOfVariables_; j++) {
       if(j % 2 == 0) {
-        /*yj = x[j-1]-0.3*x[0]*
-             (x[0]*Math.cos(24.0*Math.PI*x[0]+4.0*j*Math.PI/numberOfVariables_)+2.0)*
-             Math.sin(6.0*Math.PI*x[0]+j*Math.PI/numberOfVariables_);*/
-
         yj = x[j-1] -
             (0.3 * x[0] * x[0] * Math.cos(24 * Math.PI * x[0] + 4 * j * Math.PI / numberOfVariables_) + 0.6 * x[0])*
             Math.sin(6.0 * Math.PI* x[0] + j * Math.PI / numberOfVariables_);
@@ -108,20 +107,9 @@ public class UF2 extends Problem {
         sum2 += yj*yj;
         count2++;
       } else {
-
-
-
         yj = x[j-1] -
             (0.3 * x[0] * x[0] * Math.cos(24 * Math.PI * x[0] + 4 * j * Math.PI / numberOfVariables_) + 0.6 * x[0])*
             Math.cos(6.0 * Math.PI* x[0] + j * Math.PI / numberOfVariables_);
-
-
-
-
-
-        /*yj = x[j-1]-0.3*x[0]*
-             (x[0]*Math.cos(24.0*Math.PI*x[0]+4.0*j*Math.PI/numberOfVariables_)+2.0)*
-             Math.cos(6.0*Math.PI*x[0]+j*Math.PI/numberOfVariables_);*/
         sum1 += yj*yj;
         count1++;
       }
@@ -129,5 +117,5 @@ public class UF2 extends Problem {
 
     solution.setObjective(0, x[0] + 2.0 * sum1 / (double)count1);
     solution.setObjective(1, 1.0 - Math.sqrt(x[0]) + 2.0 * sum2 / (double)count2);
-  } // evaluate
-} // CEC2009_UF2
+  }
+}

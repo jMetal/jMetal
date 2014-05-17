@@ -71,7 +71,7 @@ public class WFG2 extends WFG{
     for (int i = 0; i < M_-1; i++) {
       A_[i] = 1;          
     }        
-  } // WFG2          
+  }
 
   /** 
    * Evaluates a solution 
@@ -94,7 +94,7 @@ public class WFG2 extends WFG{
     result[M_-1] = D_*x[M_-1] + S_[M_-1] * (new Shapes()).disc(x,5,(float)1.0,(float)1.0);
 
     return result;
-  } // evaluate
+  }
 
 
   /**
@@ -110,7 +110,7 @@ public class WFG2 extends WFG{
     }
 
     return result;      
-  } // t1
+  }
 
   /**
    * WFG2 t2 transformation
@@ -131,7 +131,7 @@ public class WFG2 extends WFG{
     }
 
     return result;
-  } // t2
+  }
 
   /**
    * WFG2 t3 transformation
@@ -163,7 +163,7 @@ public class WFG2 extends WFG{
     result[M-1] = (new Transformations()).r_sum(subZ,subW);
 
     return result;
-  } // t3
+  }
 
   /** 
    * Evaluates a solution 
@@ -183,6 +183,6 @@ public class WFG2 extends WFG{
     for (int i = 0; i < sol.length; i++) {
       solution.setObjective(i,sol[i]);
     }
-  } // evaluate
-} // WFG2
+  }
+}
 

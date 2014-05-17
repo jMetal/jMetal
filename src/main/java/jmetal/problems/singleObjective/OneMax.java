@@ -63,13 +63,13 @@ public class OneMax extends Problem {
     length_       = new int[numberOfVariables_];
     length_      [0] = numberOfBits ;
 
-    if (solutionType.compareTo("Binary") == 0)
-      solutionType_ = new BinarySolutionType(this) ;
+    if (solutionType.compareTo("Binary") == 0) {
+      solutionType_ = new BinarySolutionType(this);
+    }
     else {
       throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
-
-  } // OneMax
+  }
 
   /** 
    * Evaluates a solution 
@@ -83,11 +83,13 @@ public class OneMax extends Problem {
 
     counter = 0 ;
 
-    for (int i = 0; i < variable.getNumberOfBits() ; i++) 
-      if (variable.bits_.get(i))
-        counter ++ ;
+    for (int i = 0; i < variable.getNumberOfBits() ; i++) {
+      if (variable.bits_.get(i)) {
+        counter++;
+      }
+    }
 
     // OneMax is a maximization problem: multiply by -1 to minimize
     solution.setObjective(0, -1.0*counter);            
-  } // evaluate
-} // OneMax
+  }
+}

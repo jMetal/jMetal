@@ -34,11 +34,11 @@ import jmetal.util.JMException;
 public class DTLZ2 extends Problem{
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = -2703201174639538194L;
 
-  /** 
+  /**
    * Creates a default DTLZ2 problem (12 variables and 3 objectives)
    * @param solutionType The solution type must "Real" or "BinaryReal". 
    */
@@ -53,34 +53,36 @@ public class DTLZ2 extends Problem{
    * @param solutionType The solution type must "Real" or "BinaryReal". 
    */
   public DTLZ2(String  solutionType,
-      Integer numberOfVariables,
-      Integer numberOfObjectives) throws JMException {
+               Integer numberOfVariables,
+               Integer numberOfObjectives) throws JMException {
     numberOfVariables_  = numberOfVariables;
     numberOfObjectives_ = numberOfObjectives;
     numberOfConstraints_= 0;
     problemName_        = "DTLZ2";
 
     upperLimit_ = new double[numberOfVariables_];
-    lowerLimit_ = new double[numberOfVariables_];        
+    lowerLimit_ = new double[numberOfVariables_];
     for (int var = 0; var < numberOfVariables_; var++){
       lowerLimit_[var] = 0.0;
       upperLimit_[var] = 1.0;
-    } //for
+    }
 
-    if (solutionType.compareTo("BinaryReal") == 0)
-      solutionType_ = new BinaryRealSolutionType(this) ;
-    else if (solutionType.compareTo("Real") == 0)
-      solutionType_ = new RealSolutionType(this) ;
+    if (solutionType.compareTo("BinaryReal") == 0) {
+      solutionType_ = new BinaryRealSolutionType(this);
+    }
+    else if (solutionType.compareTo("Real") == 0) {
+      solutionType_ = new RealSolutionType(this);
+    }
     else {
       throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
-  } //DTLZ2
+  }
 
-  /** 
+  /**
    * Evaluates a solution 
    * @param solution The solution to evaluate
-   * @throws JMException 
-   */    
+   * @throws JMException
+   */
   public void evaluate(Solution solution) throws JMException {
     Variable[] gen  = solution.getDecisionVariables();
 
@@ -88,26 +90,31 @@ public class DTLZ2 extends Problem{
     double [] f = new double[numberOfObjectives_];
     int k = numberOfVariables_ - numberOfObjectives_ + 1;
 
-    for (int i = 0; i < numberOfVariables_; i++)
+    for (int i = 0; i < numberOfVariables_; i++) {
       x[i] = gen[i].getValue();
+    }
 
     double g = 0.0;
-    for (int i = numberOfVariables_ - k; i < numberOfVariables_; i++)
-      g += (x[i] - 0.5)*(x[i] - 0.5);
+    for (int i = numberOfVariables_ - k; i < numberOfVariables_; i++) {
+      g += (x[i] - 0.5) * (x[i] - 0.5);
+    }
 
-    for (int i = 0; i < numberOfObjectives_; i++)
+    for (int i = 0; i < numberOfObjectives_; i++) {
       f[i] = 1.0 + g;
+    }
 
     for (int i = 0; i < numberOfObjectives_; i++){
-      for (int j = 0; j < numberOfObjectives_ - (i + 1); j++)            
-        f[i] *= Math.cos(x[j]*0.5*Math.PI);                
+      for (int j = 0; j < numberOfObjectives_ - (i + 1); j++) {
+        f[i] *= Math.cos(x[j] * 0.5 * Math.PI);
+      }
       if (i != 0){
         int aux = numberOfObjectives_ - (i + 1);
         f[i] *= Math.sin(x[aux]*0.5*Math.PI);
-      } //if 
-    } // for
+      }
+    }
 
-    for (int i = 0; i < numberOfObjectives_; i++)
-      solution.setObjective(i,f[i]);        
-  }    
-} //evaluate
+    for (int i = 0; i < numberOfObjectives_; i++) {
+      solution.setObjective(i, f[i]);
+    }
+  }
+}

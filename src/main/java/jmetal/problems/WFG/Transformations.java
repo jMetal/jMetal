@@ -49,7 +49,7 @@ public class Transformations {
     }
         
     return correct_to_01((float)StrictMath.pow(y,alpha));
-  } //b_poly
+  }
     
   
   /**
@@ -60,14 +60,14 @@ public class Transformations {
     float tmp2 = Math.min((float)0, (float)Math.floor(C - y))* (1 - A)*(y - C)/(1 - C);
         
     return correct_to_01(A + tmp1 - tmp2);
-  }  // b_flat      
+  }
     
   /**
    * s_linear transformation
    */
   public float s_linear(float y, float A){
     return correct_to_01(Math.abs(y - A) /(float)Math.abs(Math.floor(A - y) + A));
-  } // s_linear
+  }
     
   /**
    * s_decept transformation
@@ -81,7 +81,7 @@ public class Transformations {
     tmp = Math.abs(y - A) - B;
         
     return correct_to_01((float)1 + tmp * (tmp1 + tmp2 + (float)1.0/B));
-  } // s_decept
+  }
     
   /**
    * s_multi transformation
@@ -97,7 +97,7 @@ public class Transformations {
                                  ,(float)2.0);
         
     return correct_to_01(((float)1.0 + (float)Math.cos(tmp1) + tmp2) / (B + (float)2.0));
-  } //s_multi
+  }
     
   /**
    * r_sum transformation
@@ -110,7 +110,7 @@ public class Transformations {
     }
         
     return correct_to_01(tmp1 / tmp2);
-  } // r_sum  
+  }
     
   /**
    * r_nonsep transformation
@@ -129,7 +129,7 @@ public class Transformations {
     }
         
     return correct_to_01(numerator/denominator);
-  } // r_nonsep
+  }
     
   /**
    * b_param transformation
@@ -143,7 +143,7 @@ public class Transformations {
     result = (float)StrictMath.pow(y,exp);
         
     return correct_to_01(result);                  
-  } // b_param
+  }
     
   /**
    */
@@ -160,5 +160,5 @@ public class Transformations {
     } else {
       return a;        
     }
-  } // correct_to_01      
-} // Transformations
+  }
+}

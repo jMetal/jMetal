@@ -41,7 +41,6 @@ public class MultithreadedEvaluator extends SynchronousParallelRunner {
   private Problem problem_ ;
   private Collection<EvaluationTask> taskList_ ;
 
-
   /**
    * Constructor
    * @param threads 

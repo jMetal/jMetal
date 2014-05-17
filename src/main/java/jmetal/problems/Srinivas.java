@@ -106,11 +106,12 @@ public class Srinivas extends Problem  {
 
     double total = 0.0;
     int number = 0;
-    for (int i = 0; i < this.getNumberOfConstraints(); i++)
-      if (constraint[i]<0.0){
+    for (int i = 0; i < this.getNumberOfConstraints(); i++) {
+      if (constraint[i]<0.0) {
         number++;
-        total+=constraint[i];
+        total += constraint[i];
       }
+    }
 
     solution.setOverallConstraintViolation(total);    
     solution.setNumberOfViolatedConstraint(number);

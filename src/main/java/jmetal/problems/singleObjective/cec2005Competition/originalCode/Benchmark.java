@@ -151,15 +151,15 @@ public class Benchmark {
           loader.loadClass(Configuration.cec2005Package + "." + test_func_class_names[func_num-1])
           .getConstructor(test_func_arg_types)
           .newInstance(
-              new Object[] {
-                  new Integer(dimension),
-                  new Double(m_biases[func_num-1])
-              }
-              );
+                  new Object[]{
+                          new Integer(dimension),
+                          new Double(m_biases[func_num - 1])
+                  }
+          );
     }
     catch (Exception e) {
       Configuration.logger_.log(Level.SEVERE,"Error in Benchmark.java", e);
-      throw new JMException("Error in Benchmark.java") ; 
+      throw new JMException("Error in Benchmark.java") ;
     }
     return (returnFunc);
   }
@@ -173,8 +173,9 @@ public class Benchmark {
   }
   public void runTest(int func_num) throws JMException {
     if (func_num == 0) {
-      for (int i = 1 ; i <= NUM_TEST_FUNC ; i ++)
+      for (int i = 1 ; i <= NUM_TEST_FUNC ; i ++) {
         runTest(i);
+      }
     }
     else if ((func_num < 0) || (func_num > NUM_TEST_FUNC)) {
       throw new JMException("The specified func_num is out of range.");
@@ -475,8 +476,9 @@ public class Benchmark {
         sumSqr += (job.z[i][j] * job.z[i][j]);
       }
       job.w[i] = Math.exp(-1.0 * sumSqr / (2.0 * num_dim * job.sigma[i] * job.sigma[i]));
-      if (wMax < job.w[i])
+      if (wMax < job.w[i]) {
         wMax = job.w[i];
+      }
     }
 
     // Modify the weights
