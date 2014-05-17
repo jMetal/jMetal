@@ -67,18 +67,21 @@ public class ZDT2 extends Problem{
     for (int var = 0; var < numberOfVariables_; var++){
       lowerLimit_[var] = 0.0;
       upperLimit_[var] = 1.0;
-    } //for
+    }
 
-    if (solutionType.compareTo("BinaryReal") == 0)
-      solutionType_ = new BinaryRealSolutionType(this) ;
-    else if (solutionType.compareTo("Real") == 0)
-      solutionType_ = new RealSolutionType(this) ;
-    else if (solutionType.compareTo("ArrayReal") == 0)
-      solutionType_ = new ArrayRealSolutionType(this) ;
+    if (solutionType.compareTo("BinaryReal") == 0) {
+      solutionType_ = new BinaryRealSolutionType(this);
+    }
+    else if (solutionType.compareTo("Real") == 0) {
+      solutionType_ = new RealSolutionType(this);
+    }
+    else if (solutionType.compareTo("ArrayReal") == 0) {
+      solutionType_ = new ArrayRealSolutionType(this);
+    }
     else {
       throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
-  } //ZDT2
+  }
 
   /** 
    * Evaluates a solution 
@@ -96,7 +99,7 @@ public class ZDT2 extends Problem{
 
     solution.setObjective(0,fx[0]);
     solution.setObjective(1,fx[1]);
-  } //evaluate
+  }
 
   /**
    * Returns the value of the ZDT2 function G.
@@ -105,13 +108,14 @@ public class ZDT2 extends Problem{
    */  
   private double evalG(XReal x) throws JMException {
     double g = 0.0;        
-    for (int i = 1; i < x.getNumberOfDecisionVariables();i++)
+    for (int i = 1; i < x.getNumberOfDecisionVariables();i++) {
       g += x.getValue(i);
+    }
     double constant = (9.0 / (numberOfVariables_-1));
     g = constant * g;
     g = g + 1.0;
     return g;        
-  } //evalG
+  }
 
   /**
    * Returns the value of the ZDT2 function H.
@@ -122,5 +126,5 @@ public class ZDT2 extends Problem{
     double h = 0.0;
     h = 1.0 - java.lang.Math.pow(f/g,2.0);
     return h;        
-  } // evalH
-} //ZDT2
+  }
+}

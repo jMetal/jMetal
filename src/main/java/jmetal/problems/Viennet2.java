@@ -76,8 +76,9 @@ public class Viennet2 extends Problem{
     double [] x = new double[numberOfVariables_];
     double [] f = new double[numberOfObjectives_];
 
-    for (int i = 0; i < numberOfVariables_; i++)
+    for (int i = 0; i < numberOfVariables_; i++) {
       x[i] = solution.getDecisionVariables()[i].getValue();
+    }
 
     // First function
     f[0] = (x[0]-2)*(x[0]-2)/2.0 + (x[1]+1)*(x[1]+1)/13.0 + 3.0 ;
@@ -90,8 +91,9 @@ public class Viennet2 extends Problem{
     f[2] = (x[0]+2*x[1]-1)*(x[0]+2*x[1]-1)/175.0 +
             (2*x[1]-x[0])*(2*x[1]-x[0])/17.0 - 13.0 ;
 
-    for (int i = 0; i < numberOfObjectives_; i++)
-      solution.setObjective(i,f[i]);
+    for (int i = 0; i < numberOfObjectives_; i++) {
+      solution.setObjective(i, f[i]);
+    }
   }
 }
 

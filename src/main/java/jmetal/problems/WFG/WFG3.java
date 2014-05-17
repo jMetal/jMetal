@@ -72,7 +72,7 @@ public class WFG3 extends WFG{
     for (int i = 1; i < M_-1; i++) {
       A_[i] = 0;               
     }
-  } // WFG3
+  }
 
   /** 
    * Evaluates a solution 
@@ -94,7 +94,7 @@ public class WFG3 extends WFG{
     }
 
     return result;
-  } // evaluate
+  }
 
   /**
    * WFG3 t1 transformation
@@ -109,7 +109,7 @@ public class WFG3 extends WFG{
     }
 
     return result;      
-  } // t1
+  }
 
 
   /**
@@ -129,7 +129,7 @@ public class WFG3 extends WFG{
       result[i-1] = (new Transformations()).r_nonsep(subZ,2);
     }        
     return result;
-  } // t2
+  }
 
   /**
    * WFG3 t3 transformation
@@ -159,7 +159,7 @@ public class WFG3 extends WFG{
     result[M-1] = (new Transformations()).r_sum(subZ,subW);
 
     return result;
-  } // t3
+  }
 
   /** 
    * Evaluates a solution 
@@ -179,5 +179,5 @@ public class WFG3 extends WFG{
     for (int i = 0; i < sol.length; i++) {
       solution.setObjective(i,sol[i]);
     }
-  } // evaluate
-} // WFG3
+  }
+}

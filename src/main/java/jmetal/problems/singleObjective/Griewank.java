@@ -55,16 +55,18 @@ public class Griewank extends Problem {
     for (int var = 0; var < numberOfVariables_; var++){
       lowerLimit_[var] = -600.0;
       upperLimit_[var] = 600.0;
-    } // for
+    }
         
-    if (solutionType.compareTo("BinaryReal") == 0)
-    	solutionType_ = new BinaryRealSolutionType(this) ;
-    else if (solutionType.compareTo("Real") == 0)
-    	solutionType_ = new RealSolutionType(this) ;
+    if (solutionType.compareTo("BinaryReal") == 0) {
+      solutionType_ = new BinaryRealSolutionType(this);
+    }
+    else if (solutionType.compareTo("Real") == 0) {
+      solutionType_ = new RealSolutionType(this);
+    }
     else {
       throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
-  } // Griewank
+  }
     
   /** 
   * Evaluates a solution 
@@ -84,6 +86,6 @@ public class Griewank extends Problem {
     }        
 
     solution.setObjective(0, 1.0/d * sum - mult + 1.0) ;
-  } // evaluate
-} // Griewank
+  }
+}
 

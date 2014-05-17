@@ -51,16 +51,17 @@ public class Rastrigin extends Problem {
     for (int var = 0; var < numberOfVariables_; var++){
       lowerLimit_[var] = -5.12;
       upperLimit_[var] = 5.12;
-    } // for
+    }
 
-    if (solutionType.compareTo("BinaryReal") == 0)
-      solutionType_ = new BinaryRealSolutionType(this) ;
-    else if (solutionType.compareTo("Real") == 0)
-      solutionType_ = new RealSolutionType(this) ;
+    if (solutionType.compareTo("BinaryReal") == 0) {
+      solutionType_ = new BinaryRealSolutionType(this);
+    }
+    else if (solutionType.compareTo("Real") == 0) {
+      solutionType_ = new RealSolutionType(this);
+    }
     else {
       throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
-
   } // Rastrigin
 
   /**
@@ -87,7 +88,6 @@ public class Rastrigin extends Problem {
     result += a*numberOfVariables_;
 
     solution.setObjective(0, result);
-  } // evaluate
-
-} // Rastrigin
+  }
+}
 

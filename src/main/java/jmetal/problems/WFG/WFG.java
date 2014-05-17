@@ -79,14 +79,16 @@ public abstract class WFG extends Problem{
       upperLimit_[var] = 2 * (var + 1);
     }
 
-    if (solutionType.compareTo("BinaryReal") == 0)
-      solutionType_ = new BinaryRealSolutionType(this) ;
-    else if (solutionType.compareTo("Real") == 0)
-      solutionType_ = new RealSolutionType(this) ;
+    if (solutionType.compareTo("BinaryReal") == 0) {
+      solutionType_ = new BinaryRealSolutionType(this);
+    }
+    else if (solutionType.compareTo("Real") == 0) {
+      solutionType_ = new RealSolutionType(this);
+    }
     else {
       throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
-  } // WFG
+  }
 
   /**
    * Gets the x vector (consulte WFG tooltik reference)
@@ -101,7 +103,7 @@ public abstract class WFG extends Problem{
     x[M_-1] = t[M_-1];
 
     return x;
-  } // calculate_x
+  }
 
   /**
    * Normalizes a vector (consulte WFG toolkit reference)
@@ -116,7 +118,7 @@ public abstract class WFG extends Problem{
     }
 
     return result;
-  } // normalize    
+  }
 
 
   /**
@@ -135,7 +137,7 @@ public abstract class WFG extends Problem{
     } else {
       return a;        
     }
-  } // correct_to_01  
+  }
 
   /**
    * Gets a subvector of a given vector
@@ -150,7 +152,7 @@ public abstract class WFG extends Problem{
     System.arraycopy(z, head, result, head - head, tail + 1 - head);
 
     return result;
-  } // subVector
+  }
 
   /** 
    * Evaluates a solution 
@@ -158,5 +160,5 @@ public abstract class WFG extends Problem{
    * @return a double [] with the evaluation results
    */  
   abstract public float[] evaluate(float[] variables);
-  // evaluate
+
 }

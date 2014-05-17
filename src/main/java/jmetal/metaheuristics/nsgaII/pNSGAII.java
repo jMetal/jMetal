@@ -68,7 +68,7 @@ public class pNSGAII extends Algorithm {
     int populationSize;
     int maxEvaluations;
     int evaluations;
-    int numberOfThreads ;
+
 
     QualityIndicator indicators; // QualityIndicator object
     int requiredEvaluations; // Use in the example of use of the
@@ -106,7 +106,7 @@ public class pNSGAII extends Algorithm {
     Solution newSolution;
     for (int i = 0; i < populationSize; i++) {
       newSolution = new Solution(problem_);
-      parallelEvaluator_.addTaskForExecution(new Object[]{newSolution}); ;
+      parallelEvaluator_.addTaskForExecution(new Object[]{newSolution});
     }
 
     List<Solution> solutionList = (List<Solution>)parallelEvaluator_.parallelExecution() ;
@@ -130,8 +130,8 @@ public class pNSGAII extends Algorithm {
           mutationOperator.execute(offSpring[1]);
           parallelEvaluator_.addTaskForExecution(new Object[]{offSpring[0]}); ;
           parallelEvaluator_.addTaskForExecution(new Object[]{offSpring[1]}); ;
-        } // if                            
-      } // for
+        }
+      }
 
       List<Solution> solutions = (List<Solution>)parallelEvaluator_.parallelExecution() ;
 
@@ -160,7 +160,7 @@ public class pNSGAII extends Algorithm {
         //Add the individuals of this front
         for (int k = 0; k < front.size(); k++) {
           population.add(front.get(k));
-        } // for
+        }
 
         //Decrement remain
         remain = remain - front.size();
@@ -169,8 +169,8 @@ public class pNSGAII extends Algorithm {
         index++;
         if (remain > 0) {
           front = ranking.getSubfront(index);
-        } // if        
-      } // while
+        }
+      }
 
       // Remain is less than front(index).size, insert only the best one
       if (remain > 0) {  // front contains individuals to insert                        
@@ -178,10 +178,10 @@ public class pNSGAII extends Algorithm {
         front.sort(new CrowdingComparator());
         for (int k = 0; k < remain; k++) {
           population.add(front.get(k));
-        } // for
+        }
 
         remain = 0;
-      } // if                               
+      }
 
       // This piece of code shows how to use the indicator object into the code
       // of NSGA-II. In particular, it finds the number of evaluations required
@@ -192,10 +192,9 @@ public class pNSGAII extends Algorithm {
         double HV = indicators.getHypervolume(population);
         if (HV >= (0.98 * indicators.getTrueParetoFrontHypervolume())) {
           requiredEvaluations = evaluations;
-        } // if
-      } // if
-      
-    } // while
+        }
+      }
+    }
 
     parallelEvaluator_.stopEvaluator();
 
@@ -205,5 +204,5 @@ public class pNSGAII extends Algorithm {
     // Return the first non-dominated front
     Ranking ranking = new Ranking(population);
     return ranking.getSubfront(0);
-  } // execute
-} // pNSGAII
+  }
+}

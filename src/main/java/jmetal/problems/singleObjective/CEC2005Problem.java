@@ -102,17 +102,18 @@ public class CEC2005Problem extends Problem {
     for (int var = 0; var < numberOfVariables_; var++){
       lowerLimit_[var] = llimit ;
       upperLimit_[var] = ulimit ;
-    } // for
-
-    if (solutionType.compareTo("BinaryReal") == 0)
-    	solutionType_ = new BinaryRealSolutionType(this) ;
-    else if (solutionType.compareTo("Real") == 0)
-    	solutionType_ = new RealSolutionType(this) ;
-    else {
-      throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
 
-  } // Sphere
+    if (solutionType.compareTo("BinaryReal") == 0) {
+      solutionType_ = new BinaryRealSolutionType(this);
+    }
+    else if (solutionType.compareTo("Real") == 0) {
+      solutionType_ = new RealSolutionType(this);
+    }
+    else {
+      throw new JMException("Error: solution type " + solutionType + " invalid");
+    }
+  }
 
   /**
   * Evaluates a solution
@@ -131,6 +132,6 @@ public class CEC2005Problem extends Problem {
     result = testFunction_.f(x) ;
 
     solution.setObjective(0, result);
-  } // evaluate
-} // Sphere
+  }
+}
 

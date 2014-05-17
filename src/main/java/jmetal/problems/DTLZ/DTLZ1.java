@@ -64,12 +64,14 @@ public class DTLZ1 extends Problem {
     for (int var = 0; var < numberOfVariables; var++){
       lowerLimit_[var] = 0.0;
       upperLimit_[var] = 1.0;
-    } //for
+    }
 
-    if (solutionType.compareTo("BinaryReal") == 0)
-      solutionType_ = new BinaryRealSolutionType(this) ;
-    else if (solutionType.compareTo("Real") == 0)
-      solutionType_ = new RealSolutionType(this) ;
+    if (solutionType.compareTo("BinaryReal") == 0) {
+      solutionType_ = new BinaryRealSolutionType(this);
+    }
+    else if (solutionType.compareTo("Real") == 0) {
+      solutionType_ = new RealSolutionType(this);
+    }
     else {
       throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
@@ -87,29 +89,33 @@ public class DTLZ1 extends Problem {
     double [] f = new double[numberOfObjectives_];
     int k = numberOfVariables_ - numberOfObjectives_ + 1;
 
-    for (int i = 0; i < numberOfVariables_; i++)
+    for (int i = 0; i < numberOfVariables_; i++) {
       x[i] = gen[i].getValue();
+    }
 
     double g = 0.0;
-    for (int i = numberOfVariables_ - k; i < numberOfVariables_; i++)
-      g += (x[i] - 0.5)*(x[i] - 0.5) - Math.cos(20.0 * Math.PI * ( x[i] - 0.5));
+    for (int i = numberOfVariables_ - k; i < numberOfVariables_; i++) {
+      g += (x[i] - 0.5) * (x[i] - 0.5) - Math.cos(20.0 * Math.PI * (x[i] - 0.5));
+    }
 
     g = 100 * (k + g);        
-    for (int i = 0; i < numberOfObjectives_; i++)
+    for (int i = 0; i < numberOfObjectives_; i++) {
       f[i] = (1.0 + g) * 0.5;
+    }
 
     for (int i = 0; i < numberOfObjectives_; i++){
-      for (int j = 0; j < numberOfObjectives_ - (i + 1); j++)            
-        f[i] *= x[j];                
+      for (int j = 0; j < numberOfObjectives_ - (i + 1); j++) {
+        f[i] *= x[j];
+      }
       if (i != 0){
         int aux = numberOfObjectives_ - (i + 1);
         f[i] *= 1 - x[aux];
-      } //if
-    }//for
+      }
+    }
 
-    for (int i = 0; i < numberOfObjectives_; i++)
-      solution.setObjective(i,f[i]);        
-  } // evaluate   
-
+    for (int i = 0; i < numberOfObjectives_; i++) {
+      solution.setObjective(i, f[i]);
+    }
+  }
 }
 

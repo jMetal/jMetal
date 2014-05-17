@@ -67,14 +67,16 @@ public class DTLZ5 extends Problem{
       upperLimit_[var] = 1.0;
     }    
 
-    if (solutionType.compareTo("BinaryReal") == 0)
-      solutionType_ = new BinaryRealSolutionType(this) ;
-    else if (solutionType.compareTo("Real") == 0)
-      solutionType_ = new RealSolutionType(this) ;
+    if (solutionType.compareTo("BinaryReal") == 0) {
+      solutionType_ = new BinaryRealSolutionType(this);
+    }
+    else if (solutionType.compareTo("Real") == 0) {
+      solutionType_ = new RealSolutionType(this);
+    }
     else {
       throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
-  } // DTLZ5
+  }
 
   /** 
    * Evaluates a solution 
@@ -90,31 +92,37 @@ public class DTLZ5 extends Problem{
     double g = 0.0;
     int k = numberOfVariables_ - numberOfObjectives_ + 1;
 
-    for (int i = 0; i < numberOfVariables_; i++)
+    for (int i = 0; i < numberOfVariables_; i++) {
       x[i] = gen[i].getValue();
+    }
 
-    for (int i = numberOfVariables_ - k; i < numberOfVariables_; i++)
-      g += (x[i] - 0.5)*(x[i] - 0.5);        
+    for (int i = numberOfVariables_ - k; i < numberOfVariables_; i++) {
+      g += (x[i] - 0.5) * (x[i] - 0.5);
+    }
 
     double t = java.lang.Math.PI  / (4.0 * (1.0 + g)); 
 
     theta[0] = x[0] * java.lang.Math.PI / 2.0;  
-    for (int i = 1; i < (numberOfObjectives_-1); i++) 
-      theta[i] = t * (1.0 + 2.0 * g * x[i]);			
+    for (int i = 1; i < (numberOfObjectives_-1); i++) {
+      theta[i] = t * (1.0 + 2.0 * g * x[i]);
+    }
 
-    for (int i = 0; i < numberOfObjectives_; i++)
+    for (int i = 0; i < numberOfObjectives_; i++) {
       f[i] = 1.0 + g;
+    }
 
     for (int i = 0; i < numberOfObjectives_; i++){
-      for (int j = 0; j < numberOfObjectives_ - (i + 1); j++)            
-        f[i] *= java.lang.Math.cos(theta[j]);                
+      for (int j = 0; j < numberOfObjectives_ - (i + 1); j++) {
+        f[i] *= java.lang.Math.cos(theta[j]);
+      }
       if (i != 0){
         int aux = numberOfObjectives_ - (i + 1);
         f[i] *= java.lang.Math.sin(theta[aux]);
-      } // if
-    } //for
+      }
+    }
 
-    for (int i = 0; i < numberOfObjectives_; i++)
-      solution.setObjective(i,f[i]);                
-  } // evaluate
+    for (int i = 0; i < numberOfObjectives_; i++) {
+      solution.setObjective(i, f[i]);
+    }
+  }
 }

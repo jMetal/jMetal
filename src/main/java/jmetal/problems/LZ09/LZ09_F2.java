@@ -71,16 +71,18 @@ public class LZ09_F2 extends Problem {
     for (int var = 0; var < numberOfVariables_; var++){
       lowerLimit_[var] = 0.0;
       upperLimit_[var] = 1.0;
-    } //for
+    }
 
-    if (solutionType.compareTo("BinaryReal") == 0)
-      solutionType_ = new BinaryRealSolutionType(this) ;
-    else if (solutionType.compareTo("Real") == 0)
-      solutionType_ = new RealSolutionType(this) ;
+    if (solutionType.compareTo("BinaryReal") == 0) {
+      solutionType_ = new BinaryRealSolutionType(this);
+    }
+    else if (solutionType.compareTo("Real") == 0) {
+      solutionType_ = new RealSolutionType(this);
+    }
     else {
       throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
-  } // LZ09_F2
+  }
 
   /** 
    * Evaluates a solution 
@@ -100,8 +102,9 @@ public class LZ09_F2 extends Problem {
 
     LZ09_.objective(x, y) ;
 
-    for (int i = 0; i < numberOfObjectives_; i++)
-      solution.setObjective(i, y.get(i)); 
-  } // evaluate
-} // LZ09_F2
+    for (int i = 0; i < numberOfObjectives_; i++) {
+      solution.setObjective(i, y.get(i));
+    }
+  }
+}
 

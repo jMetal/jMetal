@@ -63,7 +63,7 @@ public class WFG7 extends WFG{
     for (int i = 0; i < M_-1; i++) {
       A_[i] = 1;          
     }
-  } // WFG7       
+  }
 
   /** 
    * Evaluates a solution 
@@ -85,7 +85,7 @@ public class WFG7 extends WFG{
     }
 
     return result;
-  } // evaluate
+  }
 
   /**
    * WFG7 t1 transformation
@@ -111,7 +111,7 @@ public class WFG7 extends WFG{
     System.arraycopy(z, k, result, k, z.length - k);
 
     return result;
-  } // t1
+  }
 
   /**
    * WFG7 t2 transformation
@@ -126,7 +126,7 @@ public class WFG7 extends WFG{
     }
 
     return result;      
-  } // t2
+  }
 
   /**
    * WFG7 t3 transformation
@@ -155,7 +155,7 @@ public class WFG7 extends WFG{
     result[M-1] = (new Transformations()).r_sum(subZ,subW);                        
 
     return result;
-  } // t3   
+  }
 
   /** 
    * Evaluates a solution 
@@ -175,6 +175,6 @@ public class WFG7 extends WFG{
     for (int i = 0; i < sol.length; i++) {
       solution.setObjective(i,sol[i]);
     }
-  } // evaluate
-} // WFG7
+  }
+}
 

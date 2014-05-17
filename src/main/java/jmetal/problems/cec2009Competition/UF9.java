@@ -33,19 +33,19 @@ import jmetal.util.JMException;
  */
 public class UF9 extends Problem {
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = -4553566469157782591L;
   double epsilon_ ;
 
-  /** 
+  /**
    * Constructor.
    * Creates a default instance of problem CEC2009_UF9 (30 decision variables)
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
   public UF9(String solutionType) throws ClassNotFoundException, JMException {
     this(solutionType, 30, 0.1); // 30 variables by default, epsilon = 0.1
-  } // CEC2009_UF9
+  }
 
   /**
    * Creates a new instance of problem CEC2009_UF9.
@@ -71,29 +71,31 @@ public class UF9 extends Problem {
     for (int var = 2; var < numberOfVariables_; var++){
       lowerLimit_[var] = -2.0;
       upperLimit_[var] = 2.0;
-    } //for
+    }
 
-
-    if (solutionType.compareTo("BinaryReal") == 0)
-      solutionType_ = new BinaryRealSolutionType(this) ;
-    else if (solutionType.compareTo("Real") == 0)
-      solutionType_ = new RealSolutionType(this) ;
+    if (solutionType.compareTo("BinaryReal") == 0) {
+      solutionType_ = new BinaryRealSolutionType(this);
+    }
+    else if (solutionType.compareTo("Real") == 0) {
+      solutionType_ = new RealSolutionType(this);
+    }
     else {
       throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
-  } // CEC2009_UF9
+  }
 
-  /** 
+  /**
    * Evaluates a solution.
    * @param solution The solution to evaluate.
-   * @throws JMException 
+   * @throws JMException
    */
   public void evaluate(Solution solution) throws JMException {
     Variable[] decisionVariables  = solution.getDecisionVariables();
 
     double [] x = new double[numberOfVariables_] ;
-    for (int i = 0; i < numberOfVariables_; i++)
-      x[i] = decisionVariables[i].getValue() ;
+    for (int i = 0; i < numberOfVariables_; i++) {
+      x[i] = decisionVariables[i].getValue();
+    }
 
     int count1, count2, count3;
     double sum1, sum2, sum3, yj;
@@ -115,11 +117,12 @@ public class UF9 extends Problem {
     }
 
     yj = (1.0+epsilon_)*(1.0-4.0*(2.0*x[0]-1.0)*(2.0*x[0]-1.0));
-    if (yj < 0.0) 
+    if (yj < 0.0) {
       yj = 0.0;
+    }
 
     solution.setObjective(0, 0.5*(yj + 2*x[0])*x[1]		+ 2.0*sum1 / (double)count1);
     solution.setObjective(1, 0.5*(yj - 2*x[0] + 2.0)*x[1] + 2.0*sum2 / (double)count2);
     solution.setObjective(2, 1.0 - x[1]                   + 2.0*sum3 / (double)count3) ;
-  } // evaluate
-} // CEC2009_UF9
+  }
+}

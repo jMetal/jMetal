@@ -63,12 +63,13 @@ public class ZDT5 extends Problem {
       length_[var] = 5;
     }
 
-    if (solutionType.compareTo("Binary") == 0)
-      solutionType_ = new BinarySolutionType(this) ;
+    if (solutionType.compareTo("Binary") == 0) {
+      solutionType_ = new BinarySolutionType(this);
+    }
     else {
       throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
-  } //ZDT5
+  }
 
   /** 
    * Evaluates a solution 
@@ -83,7 +84,7 @@ public class ZDT5 extends Problem {
 
     solution.setObjective(0,f[0]);
     solution.setObjective(1,f[1]);
-  } //evaluate
+  }
 
   /**
    * Returns the value of the ZDT5 function G.
@@ -97,7 +98,7 @@ public class ZDT5 extends Problem {
     }
 
     return res;
-  } // evalG
+  }
 
   /**
    * Returns the value of the ZDT5 function V.
@@ -109,7 +110,7 @@ public class ZDT5 extends Problem {
     } else {
       return 1.0;
     }    
-  } // evalV
+  }
 
   /**
    * Returns the value of the ZDT5 function H.
@@ -118,7 +119,7 @@ public class ZDT5 extends Problem {
    */
   public double evalH(double f, double g) {
     return 1 / f;
-  } // evalH
+  }
 
   /**
    * Returns the u value defined in ZDT5 for a encodings.variable.
@@ -126,5 +127,5 @@ public class ZDT5 extends Problem {
    */
   private double u(Binary variable) {
     return variable.bits_.cardinality();
-  } // u
-} // ZDT5
+  }
+}

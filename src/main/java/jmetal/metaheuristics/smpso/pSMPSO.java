@@ -48,14 +48,11 @@ import java.util.logging.Logger;
 public class pSMPSO extends Algorithm {
 
   /**
-<<<<<<< HEAD
-=======
    * 
    */
   private static final long serialVersionUID = 6433458914602768519L;
 
   /**
->>>>>>> master
    * Stores the number of particles_ used
    */
   private int swarmSize_;

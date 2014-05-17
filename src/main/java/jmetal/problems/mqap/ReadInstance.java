@@ -113,8 +113,9 @@ public class ReadInstance {
      // reading A matrix (discarding empty lines on the way)
      a_matrix = new int[facilities_][facilities_];
      line = br.readLine();
-     while (line.isEmpty())
+     while (line.isEmpty()) {
        line = br.readLine();
+     }
      
      for (int i = 0; i < facilities_; i++) {
        st = new StringTokenizer(line);
@@ -127,8 +128,9 @@ public class ReadInstance {
      // reading B matrixes (discarding empty lines on the way)
      b_matrixs = new int[objectives_][facilities_][facilities_];
      for (int k = 0; k < objectives_; k++) {
-       while (line.isEmpty())
+       while (line.isEmpty()) {
          line = br.readLine();
+       }
        for (int i = 0; i < facilities_; i++) {
          st = new StringTokenizer(line);
          for (int j = 0; j < facilities_; j++) {

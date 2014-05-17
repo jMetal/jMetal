@@ -76,8 +76,9 @@ public class Viennet3 extends Problem{
     double [] x = new double[numberOfVariables_];
     double [] f = new double[numberOfObjectives_];
 
-    for (int i = 0; i < numberOfVariables_; i++)
+    for (int i = 0; i < numberOfVariables_; i++) {
       x[i] = solution.getDecisionVariables()[i].getValue();
+    }
 
     f[0] = 0.5 * (x[0]*x[0] + x[1]*x[1]) + Math.sin(x[0]*x[0] + x[1]*x[1]) ;
 

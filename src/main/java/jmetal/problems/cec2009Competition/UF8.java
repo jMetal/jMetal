@@ -68,16 +68,18 @@ public class UF8 extends Problem {
     for (int var = 2; var < numberOfVariables_; var++){
       lowerLimit_[var] = -2.0;
       upperLimit_[var] = 2.0;
-    } //for
+    }
 
-    if (solutionType.compareTo("BinaryReal") == 0)
-      solutionType_ = new BinaryRealSolutionType(this) ;
-    else if (solutionType.compareTo("Real") == 0)
-      solutionType_ = new RealSolutionType(this) ;
+    if (solutionType.compareTo("BinaryReal") == 0) {
+      solutionType_ = new BinaryRealSolutionType(this);
+    }
+    else if (solutionType.compareTo("Real") == 0) {
+      solutionType_ = new RealSolutionType(this);
+    }
     else {
       throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
-  } // CEC2009_UF7
+  }
 
   /** 
    * Evaluates a solution.
@@ -88,8 +90,9 @@ public class UF8 extends Problem {
     Variable[] decisionVariables  = solution.getDecisionVariables();
 
     double [] x = new double[numberOfVariables_] ;
-    for (int i = 0; i < numberOfVariables_; i++)
-      x[i] = decisionVariables[i].getValue() ;
+    for (int i = 0; i < numberOfVariables_; i++) {
+      x[i] = decisionVariables[i].getValue();
+    }
 
     int count1, count2, count3;
     double sum1, sum2, sum3, yj;
@@ -113,5 +116,5 @@ public class UF8 extends Problem {
     solution.setObjective(0, Math.cos(0.5*Math.PI*x[0])*Math.cos(0.5*Math.PI*x[1]) + 2.0*sum1 / (double)count1);
     solution.setObjective(1, Math.cos(0.5*Math.PI*x[0])*Math.sin(0.5*Math.PI*x[1]) + 2.0*sum2 / (double)count2);
     solution.setObjective(2, Math.sin(0.5*Math.PI*x[0])                       + 2.0*sum3 / (double)count3) ;
-  } // evaluate
-} // CEC2009_UF8
+  }
+}

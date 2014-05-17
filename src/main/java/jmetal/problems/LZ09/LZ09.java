@@ -62,7 +62,7 @@ public class LZ09 {
       if (type == 23) {
         alpha[0] = x.elementAt(0);
         alpha[1] = 1 - Math.sqrt(alpha[0]) - alpha[0]
-            * Math.sin(10 * alpha[0] * alpha[0] * Math.PI);
+                * Math.sin(10 * alpha[0] * alpha[0] * Math.PI);
       }
 
       if (type == 24) {
@@ -78,9 +78,9 @@ public class LZ09 {
 
       if (type == 32) {
         alpha[0] = 1 - Math.cos(x.elementAt(0) * Math.PI / 2)
-            * Math.cos(x.elementAt(1) * Math.PI / 2);
+                * Math.cos(x.elementAt(1) * Math.PI / 2);
         alpha[1] = 1 - Math.cos(x.elementAt(0) * Math.PI / 2)
-            * Math.sin(x.elementAt(1) * Math.PI / 2);
+                * Math.sin(x.elementAt(1) * Math.PI / 2);
         alpha[2] = 1 - Math.sin(x.elementAt(0) * Math.PI / 2);
       }
 
@@ -88,8 +88,8 @@ public class LZ09 {
         alpha[0] = x.elementAt(0);
         alpha[1] = x.elementAt(1);
         alpha[2] = 3
-            - (Math.sin(3 * Math.PI * x.elementAt(0)) + Math.sin(3 * Math.PI * x.elementAt(1))) - 2
-            * (x.elementAt(0) + x.elementAt(1));
+                - (Math.sin(3 * Math.PI * x.elementAt(0)) + Math.sin(3 * Math.PI * x.elementAt(1))) - 2
+                * (x.elementAt(0) + x.elementAt(1));
       }
 
       if (type == 34) {
@@ -98,7 +98,7 @@ public class LZ09 {
         alpha[2] = (1 - x.elementAt(0));
       }
     }
-  } // alphaFunction
+  }
 
   // control the distance
   double betaFunction(Vector<Double> x, int type) {
@@ -106,8 +106,9 @@ public class LZ09 {
     beta = 0;
     int dim = x.size();
 
-    if (dim == 0)
+    if (dim == 0) {
       beta = 0;
+    }
 
     if (type == 1) {
       beta = 0;
@@ -145,8 +146,7 @@ public class LZ09 {
     }
 
     return beta;
-  } // betaFunction
-
+  }
 
   //	control the PS shape of 2-d instances
   double psfunc2(double x, double t1, int dim, int type, int css) {
@@ -160,10 +160,10 @@ public class LZ09 {
     if(type==21){
       double xy   = 2*(x - 0.5);
       beta = xy - Math.pow(t1, 0.5*(nvar + 3*dim - 8)/(nvar - 2));
-    }	
+    }
 
     if(type==22){
-      double theta = 6*Math.PI*t1 + dim*Math.PI/nvar;  
+      double theta = 6*Math.PI*t1 + dim*Math.PI/nvar;
       double xy    = 2*(x - 0.5);
       beta = xy - Math.sin(theta);
     }
@@ -172,9 +172,10 @@ public class LZ09 {
       double theta = 6*Math.PI*t1 + dim*Math.PI/nvar;
       double ra    = 0.8*t1;
       double xy    = 2*(x - 0.5);
-      if(css==1)
-        beta = xy - ra*Math.cos(theta);
-      else{
+      if(css==1) {
+        beta = xy - ra * Math.cos(theta);
+      }
+      else {
         beta = xy - ra*Math.sin(theta);
       }
     }
@@ -183,9 +184,10 @@ public class LZ09 {
       double theta = 6*Math.PI*t1 + dim*Math.PI/nvar;
       double xy    = 2*(x - 0.5);
       double ra    = 0.8*t1;
-      if(css==1)
-        beta = xy - ra*Math.cos(theta/3);
-      else{
+      if(css==1) {
+        beta = xy - ra * Math.cos(theta / 3);
+      }
+      else {
         beta = xy - ra*Math.sin(theta);
       }
     }
@@ -195,21 +197,25 @@ public class LZ09 {
       double phi   = Math.PI*t1;
       double theta = 6*Math.PI*t1 + dim*Math.PI/nvar;
       double xy    = 2*(x - 0.5);
-      if(css==1)
-        beta = xy - rho*Math.sin(phi)*Math.sin(theta);
-      else if(css==2)
-        beta = xy - rho*Math.sin(phi)*Math.cos(theta);
-      else
-        beta = xy - rho*Math.cos(phi);			
+      if(css==1) {
+        beta = xy - rho * Math.sin(phi) * Math.sin(theta);
+      }
+      else if(css==2) {
+        beta = xy - rho * Math.sin(phi) * Math.cos(theta);
+      }
+      else {
+        beta = xy - rho * Math.cos(phi);
+      }
     }
 
     if(type==26){
       double theta = 6*Math.PI*t1 + dim*Math.PI/nvar;
       double ra    = 0.3*t1*(t1*Math.cos(4*theta) + 2);
       double xy    = 2*(x - 0.5);
-      if(css==1)
-        beta = xy - ra*Math.cos(theta);
-      else{
+      if(css==1) {
+        beta = xy - ra * Math.cos(theta);
+      }
+      else {
         beta = xy - ra*Math.sin(theta);
       }
     }
@@ -233,10 +239,10 @@ public class LZ09 {
       beta = xy - 4*(t1*t1*rate + t2*(1.0-rate)) + 2;
     }
 
-    if(type==32){
+    if(type==32) {
       double theta = 2*Math.PI*t1 + dim*Math.PI/nvar;
       double xy    = 4*(x - 0.5);
-      beta = xy - 2*t2*Math.sin(theta);	
+      beta = xy - 2*t2*Math.sin(theta);
     }
 
     return beta;
@@ -246,88 +252,86 @@ public class LZ09 {
   void objective(Vector<Double> x_var, Vector <Double> y_obj)
   {
     // 2-objective case
-    if(nobj==2)
-    {
-      if(ltype==21||ltype==22||ltype==23||ltype==24||ltype==26)
-      {
+    if(nobj==2) {
+      if(ltype==21||ltype==22||ltype==23||ltype==24||ltype==26) {
         double g = 0, h = 0, a, b;
         Vector <Double> aa = new Vector<Double>();
         Vector <Double> bb = new Vector<Double>();
-        for(int n=1;n<nvar;n++)
-        {
-
-          if(n%2==0){
+        for(int n=1;n<nvar;n++) {
+          if(n%2==0) {
             a = psfunc2(x_var.elementAt(n),x_var.elementAt(0),n,ltype,1);  // linkage
             aa.addElement(a);
           }
-          else
-          {
+          else {
             b = psfunc2(x_var.elementAt(n),x_var.elementAt(0),n,ltype,2);
             bb.addElement(b);
-          }	
+          }
 
         }
-
         g = betaFunction(aa, dtype);
         h = betaFunction(bb, dtype);
 
         double alpha [] = new double[2] ;
         alphaFunction(alpha,x_var,2,ptype);  // shape function
         y_obj.set(0, alpha[0] + h);
-        y_obj.set(1, alpha[1] + g); 
-        aa.clear(); 
+        y_obj.set(1, alpha[1] + g);
+        aa.clear();
         bb.clear();
       }
 
-      if(ltype==25)
-      {
+      if(ltype==25) {
         double g = 0, h = 0, a, b;
         double /*e = 0,*/ c;
         Vector <Double> aa = new Vector<Double>() ;
         Vector <Double> bb = new Vector<Double>() ;
         for(int n=1;n<nvar;n++){
           if(n%3==0){
-            a = psfunc2(x_var.elementAt(n),x_var.elementAt(0),n,ltype,1); 
+            a = psfunc2(x_var.elementAt(n),x_var.elementAt(0),n,ltype,1);
             aa.addElement(a);
           }
-          else if(n%3==1)
-          {
+          else if(n%3==1) {
             b = psfunc2(x_var.elementAt(n),x_var.elementAt(0),n,ltype,2);
             bb.addElement(b);
-          }	
+          }
           else{
             c = psfunc2(x_var.elementAt(n),x_var.elementAt(0),n,ltype,3);
-            if(n%2==0)    aa.addElement(c);			
-            else          bb.addElement(c);
+            if(n%2==0) {
+              aa.addElement(c);
+            }
+            else {
+              bb.addElement(c);
+            }
           }
-        }		
+        }
         g = betaFunction(aa,dtype);          // distance function
         h = betaFunction(bb,dtype);
         double alpha[] = new double[2];
         alphaFunction(alpha,x_var,2,ptype);  // shape function
         y_obj.set(0, alpha[0] + h);
-        y_obj.set(1, alpha[1] + g); 
-        aa.clear(); 
+        y_obj.set(1, alpha[1] + g);
+        aa.clear();
         bb.clear();
       }
     }
 
-
     // 3-objective case
-    if(nobj==3)
-    {
-      if(ltype==31||ltype==32)
-      {
+    if(nobj==3) {
+      if(ltype==31||ltype==32) {
         double g = 0, h = 0, e = 0, a;
         Vector <Double> aa  = new Vector<Double>() ;
         Vector <Double> bb = new Vector<Double>();
         Vector <Double> cc = new Vector<Double>();
-        for(int n=2;n<nvar;n++)
-        {
+        for(int n=2;n<nvar;n++) {
           a = psfunc3(x_var.elementAt(n),x_var.elementAt(0),x_var.elementAt(1),n,ltype);
-          if(n%3==0)	    aa.addElement(a);
-          else if(n%3==1)	bb.addElement(a);
-          else            cc.addElement(a);
+          if(n%3==0) {
+            aa.addElement(a);
+          }
+          else if(n%3==1) {
+            bb.addElement(a);
+          }
+          else {
+            cc.addElement(a);
+          }
         }
 
         g = betaFunction(aa,dtype);
@@ -335,11 +339,11 @@ public class LZ09 {
         e = betaFunction(cc,dtype);
 
         double alpha[] = new double[3];
-        alphaFunction(alpha,x_var,3,ptype);  // shape function
+        alphaFunction(alpha,x_var,3,ptype);
         y_obj.set(0, alpha[0] + h);
-        y_obj.set(1 ,alpha[1] + g); 
-        y_obj.set(2, alpha[2] + e); 
-        aa.clear(); 
+        y_obj.set(1 ,alpha[1] + g);
+        y_obj.set(2, alpha[2] + e);
+        aa.clear();
         bb.clear();
         cc.clear();
       }
