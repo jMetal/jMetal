@@ -120,9 +120,9 @@ public class SinglePointCrossover extends Crossover {
           for (int i = intoVariableCrossoverPoint;
                i < offSpring1.getNumberOfBits();
                i++) {
-            boolean swap = offSpring1.bits_.get(i);
-            offSpring1.bits_.set(i, offSpring2.bits_.get(i));
-            offSpring2.bits_.set(i, swap);
+            boolean swap = offSpring1.getBits().get(i);
+            offSpring1.getBits().set(i, offSpring2.getBits().get(i));
+            offSpring2.getBits().set(i, swap);
           }
 
           offSpring[0].getDecisionVariables()[variable] = offSpring1;

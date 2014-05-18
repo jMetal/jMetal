@@ -82,7 +82,7 @@ public class OneMax extends Problem {
     counter = 0 ;
 
     for (int i = 0; i < variable.getNumberOfBits() ; i++) {
-      if (variable.bits_.get(i)) {
+      if (variable.getBits().get(i)) {
         counter++;
       }
     }

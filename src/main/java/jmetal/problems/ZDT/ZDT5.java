@@ -125,6 +125,6 @@ public class ZDT5 extends Problem {
    * @param variable The binary encodings.variable
    */
   private double u(Binary variable) {
-    return variable.bits_.cardinality();
+    return variable.getBits().cardinality();
   }
 }

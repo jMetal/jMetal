@@ -84,7 +84,7 @@ public class BinaryReal extends Binary {
    */
   public BinaryReal(BitSet bits, int nbBits, double lowerBound, double upperBound) {
     super(nbBits);
-    bits_ = bits;
+    setBits(bits);
     lowerBound_ = lowerBound;
     upperBound_ = upperBound;
     decode();
@@ -113,7 +113,7 @@ public class BinaryReal extends Binary {
   public void decode(){
     double value = 0.0;
     for (int i = 0; i < numberOfBits_; i++) {
-      if (bits_.get(i)) {
+      if (getBits().get(i)) {
         value += Math.pow(2.0,i);
       }
     }
@@ -172,7 +172,7 @@ public class BinaryReal extends Binary {
           }
         }
       }
-      this.bits_ = bitSet;
+      setBits(bitSet);
       this.decode();
 
     } else {

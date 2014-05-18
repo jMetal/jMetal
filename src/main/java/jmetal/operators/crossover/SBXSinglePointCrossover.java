@@ -192,9 +192,9 @@ public class SBXSinglePointCrossover extends Crossover {
 
       //5. Make the crossover;
       for (int i = crossoverPoint; i < totalNumberOfBits; i++) {
-        boolean swap = binaryChild0.bits_.get(i);
-        binaryChild0.bits_.set(i, binaryChild1.bits_.get(i));
-        binaryChild1.bits_.set(i, swap);
+        boolean swap = binaryChild0.getBits().get(i);
+        binaryChild0.getBits().set(i, binaryChild1.getBits().get(i));
+        binaryChild1.getBits().set(i, swap);
       }
     }
 

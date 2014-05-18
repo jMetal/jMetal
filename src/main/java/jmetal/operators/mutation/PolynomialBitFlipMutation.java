@@ -125,7 +125,7 @@ public class PolynomialBitFlipMutation extends Mutation {
     // BitFlip mutation applied to the binary part
     for (int i = 0; i < binaryVariable.getNumberOfBits(); i++) {
       if (PseudoRandom.randDouble() < binaryProbability) {
-        binaryVariable.bits_.flip(i);
+        binaryVariable.getBits().flip(i);
       }
     }
   }

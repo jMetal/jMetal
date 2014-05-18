@@ -41,7 +41,15 @@ public class Binary extends Variable {
    * Stores the bits constituting the binary string. It is
    * implemented using a BitSet object
    */
-  public BitSet bits_;
+  private BitSet bits_;
+
+  public BitSet getBits() {
+    return bits_ ;
+  }
+
+  public void setBits(BitSet bits) {
+    bits_ = bits ;
+  }
   
   /**
    * Store the length of the binary string
