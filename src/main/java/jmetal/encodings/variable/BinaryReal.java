@@ -74,7 +74,7 @@ public class BinaryReal extends Binary {
     upperBound_     = upperBound;
 
     decode();
-  } //BinaryReal
+  }
 
   /**
    * @param bits  BitSet
@@ -88,7 +88,7 @@ public class BinaryReal extends Binary {
     lowerBound_ = lowerBound;
     upperBound_ = upperBound;
     decode();
-  } // BinaryReal
+  }
 
   /**
    * Copy constructor
@@ -99,15 +99,9 @@ public class BinaryReal extends Binary {
 
     lowerBound_   = variable.lowerBound_;
     upperBound_   = variable.upperBound_;
-    /*
-    numberOfBits_ = encodings.variable.numberOfBits_;
-     
-    bits_ = new BitSet(numberOfBits_);
-    for (int i = 0; i < numberOfBits_; i++)
-      bits_.set(i,encodings.variable.bits_.get(i));
-    */
+
     value_ = variable.value_;
-  } //BinaryReal
+  }
 
 
   /**
@@ -127,7 +121,7 @@ public class BinaryReal extends Binary {
     value_ = value * (upperBound_ - lowerBound_) /
             (Math.pow(2.0,numberOfBits_)-1.0);
     value_ += lowerBound_;
-  } //decode
+  }
 
   /**
    * Returns the double value of the encodings.variable.
@@ -168,16 +162,12 @@ public class BinaryReal extends Binary {
         }
         int remain = integerToCode;
         for (int i = numberOfBits_ - 1; i >= 0; i--) {
-          //System.out.println("i= " + i);
           int ithPowerOf2 = (int) Math.pow(2, i);
 
           if (ithPowerOf2 <= remain) {
-            //System.out
-            //			.println(ithPowerOf2thValue + " <= " + remain);
             bitSet.set(i);
             remain -= ithPowerOf2;
-          }
-          else {
+          } else {
             bitSet.clear(i);
           }
         }
@@ -194,7 +184,7 @@ public class BinaryReal extends Binary {
                 + numberOfBits_ + " is > 24 bits");
       }
     }
-  }// setValue
+  }
 
   /**
    * Creates an exact copy of a <code>BinaryReal</code> object.
@@ -202,7 +192,7 @@ public class BinaryReal extends Binary {
    */
   public Variable deepCopy() {
     return new BinaryReal(this);
-  } //deepCopy
+  }
 
   /**
    * Returns the lower bound of the encodings.variable.
@@ -210,7 +200,7 @@ public class BinaryReal extends Binary {
    */
   public double getLowerBound() {
     return lowerBound_;
-  } // getLowerBound
+  }
 
   /**
    * Returns the upper bound of the encodings.variable.
@@ -218,7 +208,7 @@ public class BinaryReal extends Binary {
    */
   public double getUpperBound() {
     return upperBound_;
-  } // getUpperBound
+  }
 
   /**
    * Sets the lower bound of the encodings.variable.
@@ -226,7 +216,7 @@ public class BinaryReal extends Binary {
    */
   public void setLowerBound(double lowerBound) {
     lowerBound_ = lowerBound;
-  } // setLowerBound
+  }
 
   /**
    * Sets the upper bound of the encodings.variable.
@@ -234,7 +224,7 @@ public class BinaryReal extends Binary {
    */
   public void setUpperBound(double upperBound) {
     upperBound_ = upperBound;
-  } // setUpperBound
+  }
 
   /**
    * Returns a string representing the object.
@@ -243,5 +233,5 @@ public class BinaryReal extends Binary {
   @Override
   public String toString() {
     return value_+"";
-  } // toString
-} // BinaryReal
+  }
+}

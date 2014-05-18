@@ -87,8 +87,7 @@ public class NonDominatedSolutionList2 extends SolutionSet{
       solutionsList_.add(s);
       solutionCounter_ = 1 ;
       return true ;
-    }
-    else {
+    } else {
       Iterator<Solution> iterator = solutionsList_.iterator();
 
       while (iterator.hasNext()){

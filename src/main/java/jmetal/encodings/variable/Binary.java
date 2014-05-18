@@ -52,7 +52,7 @@ public class Binary extends Variable {
    * Default constructor.
    */
   public Binary() {       
-  } //Binary
+  }
   
   /**
    *  Constructor
@@ -69,7 +69,7 @@ public class Binary extends Variable {
         bits_.set(i,false);                      
       }
     }
-  } //Binary
+  }
   
   /**
    * Copy constructor.
@@ -82,7 +82,7 @@ public class Binary extends Variable {
     for (int i = 0; i < numberOfBits_; i++) {
       bits_.set(i,variable.bits_.get(i));      
     }
-  } //Binary
+  }
 
   /**
    * This method is intended to be used in subclass of <code>Binary</code>, 
@@ -93,7 +93,7 @@ public class Binary extends Variable {
    */
   public void decode() {
     //do nothing
-  } //decode
+  }
   
   /** 
    * Creates an exact copy of a Binary object
@@ -101,7 +101,7 @@ public class Binary extends Variable {
    **/
   public Variable deepCopy() {
     return new Binary(this);
-  } //deepCopy
+  }
 
   /**
    * Returns the length of the binary string.
@@ -109,7 +109,7 @@ public class Binary extends Variable {
    */
   public int getNumberOfBits(){
     return numberOfBits_;
-  } //getNumberOfBits
+  }
   
   /**
    * Returns the value of the ith bit.
@@ -118,7 +118,7 @@ public class Binary extends Variable {
    */
   public boolean getIth(int bit){
     return bits_.get(bit);
-  } //getNumberOfBits
+  }
 
   /**
    * Sets the value of the ith bit.
@@ -126,7 +126,7 @@ public class Binary extends Variable {
    */
   public void setIth(int bit, boolean value){
     bits_.set(bit, value) ;
-  } //getNumberOfBits
+  }
 
   
  /**
@@ -144,7 +144,7 @@ public class Binary extends Variable {
       i++;
     }
     return distance;
-  } // hammingDistance
+  }
 
  /**
   *  
@@ -156,12 +156,11 @@ public class Binary extends Variable {
     for (int i = 0; i < numberOfBits_; i ++) {
       if (bits_.get(i)) {
         result = result + "1";
-      }
-      else {
+      } else {
         result = result + "0";
       }
     }
         
     return result ;
-  } // toString
-} // Binary
+  }
+}

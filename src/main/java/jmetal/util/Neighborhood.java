@@ -26,14 +26,14 @@ import jmetal.core.SolutionSet;
 /**
  * Class representing neighborhoods for a <code>Solution</code> into a
  * <code>SolutionSet</code>.
- */ 
-public class Neighborhood {    
-  
+ */
+public class Neighborhood {
+
   /**
    * Maximum rate considered
    */
   private static int MAXRADIO = 2;
-  
+
   /**
    * Stores the neighborhood.
    * structure_ [i] represents a neighborhood for a solution.
@@ -41,33 +41,33 @@ public class Neighborhood {
    * structure_ [i][j][k] represents a neighbor of a solution.
    */
   private int [][][] structure_;
-  
+
   /**
    * Stores the size of the solutionSet.
    */
   private int solutionSetSize_;
-  
+
   /**
    * Stores the size for each row
    */
   private int rowSize_;
-  
+
   /**
    * Enum type for defining the North, South, East, West, North-West, South-West,
    * North-East, South-East neighbor.
    */
   enum Row {N, S, E, W, NW, SW, NE, SE}
 
-    /**
+  /**
    * Constructor.
    * Defines a neighborhood of a given size.
    * @param solutionSetSize The size.
    */
-  public Neighborhood(int solutionSetSize) {            
+  public Neighborhood(int solutionSetSize) {
     solutionSetSize_ = solutionSetSize;
     //Create the structure_ for store the neighborhood
     structure_ = new int[solutionSetSize_][MAXRADIO][];
-        
+
     //For each individual, and different rates the individual has a different 
     //number of neighborhoods
     for (int ind = 0; ind < solutionSetSize_; ind ++) {
@@ -75,11 +75,11 @@ public class Neighborhood {
         if (radio == 0) {
           structure_[ind][radio] = new int[8];
         } else if (radio == 1) {
-          structure_[ind][radio] = new int[24];       
+          structure_[ind][radio] = new int[24];
         }
       }
     }
-        
+
     //Calculate the size of a row
     rowSize_ = (int) Math.sqrt((double)solutionSetSize_);
 
@@ -90,15 +90,14 @@ public class Neighborhood {
       if (ind > rowSize_ - 1){
         structure_[ind][0][Row.N.ordinal()] = ind - rowSize_;
       } else {
-        structure_[ind][0][Row.N.ordinal()] = 
-       (ind - rowSize_ + solutionSetSize) % solutionSetSize;                                                          
+        structure_[ind][0][Row.N.ordinal()] =
+                (ind - rowSize_ + solutionSetSize) % solutionSetSize;
       }
-            
+
       //East neighbors
       if  ((ind + 1) % rowSize_ == 0) {
         structure_[ind][0][Row.E.ordinal()] = (ind - (rowSize_ - 1));
-      }
-      else {
+      } else {
         structure_[ind][0][Row.E.ordinal()] = (ind + 1);
       }
 
@@ -110,18 +109,18 @@ public class Neighborhood {
       }
 
       //South neighbors
-      structure_[ind][0][Row.S.ordinal()] = (ind + rowSize_) % solutionSetSize;                        
-    }                
-        
+      structure_[ind][0][Row.S.ordinal()] = (ind + rowSize_) % solutionSetSize;
+    }
+
     for (int ind = 0; ind < solutionSetSize_; ind++){
-      structure_[ind][0][Row.NE.ordinal()] = 
-        structure_[structure_[ind][0][Row.N.ordinal()]][0][Row.E.ordinal()];
-      structure_[ind][0][Row.NW.ordinal()] = 
-        structure_[structure_[ind][0][Row.N.ordinal()]][0][Row.W.ordinal()];
-      structure_[ind][0][Row.SE.ordinal()] = 
-        structure_[structure_[ind][0][Row.S.ordinal()]][0][Row.E.ordinal()];
-      structure_[ind][0][Row.SW.ordinal()] = 
-        structure_[structure_[ind][0][Row.S.ordinal()]][0][Row.W.ordinal()];
+      structure_[ind][0][Row.NE.ordinal()] =
+              structure_[structure_[ind][0][Row.N.ordinal()]][0][Row.E.ordinal()];
+      structure_[ind][0][Row.NW.ordinal()] =
+              structure_[structure_[ind][0][Row.N.ordinal()]][0][Row.W.ordinal()];
+      structure_[ind][0][Row.SE.ordinal()] =
+              structure_[structure_[ind][0][Row.S.ordinal()]][0][Row.E.ordinal()];
+      structure_[ind][0][Row.SW.ordinal()] =
+              structure_[structure_[ind][0][Row.S.ordinal()]][0][Row.W.ordinal()];
     }
   }
 
@@ -136,17 +135,17 @@ public class Neighborhood {
   public SolutionSet getFourNeighbors(SolutionSet solutionSet, int location){
     //SolutionSet that contains the neighbors (to return)
     SolutionSet neighbors;
-        
+
     //instance the solutionSet to a non dominated li of individuals
     neighbors = new SolutionSet(24);
-        
+
     //Gets the neighborhoods N, S, E, W
-    int index;        
-        
+    int index;
+
     //North
-    index = structure_[location][0][Row.N.ordinal()];        
+    index = structure_[location][0][Row.N.ordinal()];
     neighbors.add(solutionSet.get(index));
-      
+
     //South
     index = structure_[location][0][Row.S.ordinal()];
     neighbors.add(solutionSet.get(index));
@@ -157,12 +156,12 @@ public class Neighborhood {
 
     //West
     index = structure_[location][0][Row.W.ordinal()];
-    neighbors.add(solutionSet.get(index));         
-    
+    neighbors.add(solutionSet.get(index));
+
     //Return the list of non-dominated individuals
-    return neighbors;        
+    return neighbors;
   }
-    
+
   /**
    * Returns a <code>SolutionSet</code> with the North, Sout, East, West, 
    * North-West, South-West, North-East and South-East neighbors solutions of
@@ -180,10 +179,10 @@ public class Neighborhood {
     neighbors = new SolutionSet(24);
 
     //Gets the neighboords N, S, E, W
-    int index;        
-        
+    int index;
+
     //N
-    index = this.structure_[individual][0][Row.N.ordinal()];        
+    index = this.structure_[individual][0][Row.N.ordinal()];
     neighbors.add(population.get(index));
 
     //S
@@ -215,6 +214,6 @@ public class Neighborhood {
     neighbors.add(population.get(index));
 
     //Return the list of non-dominated individuals
-    return neighbors;        
+    return neighbors;
   }
 }

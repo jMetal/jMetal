@@ -173,8 +173,7 @@ public class Distance {
           index = i ;
         }
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       Configuration.logger_.log(Level.SEVERE, "Error", e);
     }
     return index ;
