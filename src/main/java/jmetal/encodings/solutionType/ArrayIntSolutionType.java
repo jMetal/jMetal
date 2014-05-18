@@ -46,9 +46,9 @@ public class ArrayIntSolutionType extends SolutionType {
 	public Variable[] createVariables() {
 		Variable [] variables = new Variable[1];
 		
-    variables[0] = new ArrayInt(problem_.getNumberOfVariables(), problem_);
+    variables[0] = new ArrayInt(getProblem().getNumberOfVariables(), getProblem());
     return variables ;
-	} // createVariables
+	}
 	
 	/**
 	 * Copy the variables
@@ -62,5 +62,5 @@ public class ArrayIntSolutionType extends SolutionType {
 	  variables[0] = vars[0].deepCopy();
 		
 		return variables ;
-	} // copyVariables
-} // ArrayIntSolutionType
+	}
+}

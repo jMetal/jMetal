@@ -32,32 +32,32 @@ import jmetal.encodings.variable.BinaryReal;
  */
 public class BinaryRealSolutionType extends SolutionType {
 
-	/**
-	 * Constructor
-	 * @param problem Problem to solve
-	 */
-	public BinaryRealSolutionType(Problem problem) {
-		super(problem) ;
-	} // Constructor
-	
-	/**
-	 * Creates the variables of the solution
-	 */
-	public Variable[] createVariables() {
-		Variable [] variables = new Variable[problem_.getNumberOfVariables()];
-	  
-    for (int var = 0; var < problem_.getNumberOfVariables(); var++) {
-      if (problem_.getPrecision() == null) {
-        int [] precision = new int[problem_.getNumberOfVariables()] ;
-        for (int i = 0; i < problem_.getNumberOfVariables(); i++) {
+  /**
+   * Constructor
+   * @param problem Problem to solve
+   */
+  public BinaryRealSolutionType(Problem problem) {
+    super(problem) ;
+  } // Constructor
+
+  /**
+   * Creates the variables of the solution
+   */
+  public Variable[] createVariables() {
+    Variable [] variables = new Variable[getProblem().getNumberOfVariables()];
+
+    for (int var = 0; var < getProblem().getNumberOfVariables(); var++) {
+      if (getProblem().getPrecision() == null) {
+        int [] precision = new int[getProblem().getNumberOfVariables()] ;
+        for (int i = 0; i < getProblem().getNumberOfVariables(); i++) {
           precision[i] = jmetal.encodings.variable.BinaryReal.DEFAULT_PRECISION;
         }
-        problem_.setPrecision(precision) ;
-      } // if
-      variables[var] = new BinaryReal(problem_.getPrecision(var),
-                                      problem_.getLowerLimit(var),
-                                      problem_.getUpperLimit(var));   
-    } // for 
-    return variables ;    
-	} // createVariables
-} // BinaryRealSolutionType
+        getProblem().setPrecision(precision) ;
+      }
+      variables[var] = new BinaryReal(getProblem().getPrecision(var),
+              getProblem().getLowerLimit(var),
+              getProblem().getUpperLimit(var));
+    }
+    return variables ;
+  }
+}

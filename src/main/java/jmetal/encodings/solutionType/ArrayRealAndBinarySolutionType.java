@@ -62,7 +62,7 @@ public class ArrayRealAndBinarySolutionType extends SolutionType {
 	public Variable[] createVariables() throws ClassNotFoundException {
 		Variable [] variables = new Variable[2];
 
-    variables[0] = new ArrayReal(numberOfRealVariables_, problem_);
+    variables[0] = new ArrayReal(numberOfRealVariables_, getProblem());
     variables[1] = new Binary(binaryStringLength_); 
     return variables ;
 	} // createVariables

@@ -46,7 +46,7 @@ public class ArrayRealSolutionType extends SolutionType {
 	public Variable[] createVariables() {
 		Variable [] variables = new Variable[1];
 		
-    variables[0] = new ArrayReal(problem_.getNumberOfVariables(), problem_); 
+    variables[0] = new ArrayReal(getProblem().getNumberOfVariables(), getProblem());
     return variables ;
 	} // createVariables
 	
@@ -62,5 +62,5 @@ public class ArrayRealSolutionType extends SolutionType {
 	  variables[0] = vars[0].deepCopy();
 		
 		return variables ;
-	} // copyVariables
-} // ArrayRealSolutionType
+	}
+}

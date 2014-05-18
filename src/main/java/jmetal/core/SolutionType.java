@@ -27,7 +27,12 @@ package jmetal.core;
  */
 public abstract class SolutionType {	
 	
-	public final Problem problem_ ; /** Problem to be solved */
+	private final Problem problem_ ;
+
+  // Getter
+  public Problem getProblem() {
+    return problem_  ;
+  }
 	
   /**
    * Constructor
@@ -35,7 +40,7 @@ public abstract class SolutionType {
    */
   public SolutionType(Problem problem) {
   	problem_ = problem ;
-  } // Constructor
+  }
     
   /**
    * Abstract method to create the variables of the solution
@@ -54,9 +59,8 @@ public abstract class SolutionType {
 
 		for (int var = 0; var < vars.length; var++) {
 			variables[var] = vars[var].deepCopy();
-		} // for
+		}
 		
 		return variables ;
-	} // copyVariables
-	  
-} // SolutionType
+	}
+}

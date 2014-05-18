@@ -44,10 +44,10 @@ public class PermutationSolutionType extends SolutionType {
 	 * Creates the variables of the solution
 	 */
 	public Variable[]  createVariables() {
-		Variable [] variables = new Variable[problem_.getNumberOfVariables()];
+		Variable [] variables = new Variable[getProblem().getNumberOfVariables()];
 		    
-    for (int var = 0; var < problem_.getNumberOfVariables(); var++) {
-      variables[var] = new Permutation(problem_.getLength(var));
+    for (int var = 0; var < getProblem().getNumberOfVariables(); var++) {
+      variables[var] = new Permutation(getProblem().getLength(var));
     }
     
     return variables ;

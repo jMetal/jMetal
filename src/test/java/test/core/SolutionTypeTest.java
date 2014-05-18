@@ -1,4 +1,4 @@
-//  SolutionTest.java
+//  SolutionTypeTest.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -18,36 +18,26 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>
 
-
 package test.core;
 
 import jmetal.core.Problem;
-import jmetal.core.Solution;
-import jmetal.problems.Kursawe;
+import jmetal.core.SolutionType;
+import jmetal.encodings.solutionType.BinarySolutionType;
+import jmetal.problems.ZDT.ZDT5;
 import jmetal.util.JMException;
 import org.junit.Test;
-
-import java.util.Arrays;
-
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
 
 /**
- * Created by Antonio J. Nebro on 10/05/14.
+ * Created by Antonio J. Nebro on 18/05/14.
  */
-public class SolutionTest {
+public class SolutionTypeTest {
 
   @Test
-  public void setDecisionVariablesTest() throws JMException, ClassNotFoundException {
-    Problem problem = new Kursawe("Real", 3) ;
-    Solution solution1 = new Solution(problem) ;
-    Solution solution2 = new Solution(problem) ;
+  public void getProblemTest() throws JMException {
+    Problem problem = new ZDT5("Binary", 10) ;
 
-    assertFalse(Arrays.equals(solution1.getDecisionVariables(), solution2.getDecisionVariables())) ;
-
-    solution2.setDecisionVariables(solution1.getDecisionVariables()) ;
-    //assertArrayEquals(solution1.getDecisionVariables(), solution2.getDecisionVariables()) ;
-    assertTrue(Arrays.equals(solution1.getDecisionVariables(), solution2.getDecisionVariables())) ;
-
+    SolutionType solutionType = new BinarySolutionType(problem) ;
+    assertEquals(problem, solutionType.getProblem()) ;
   }
 }
