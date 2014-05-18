@@ -46,7 +46,11 @@ public class ArrayReal extends Variable {
   /**
    * Stores an array of real values
    */
-  public Double[] array_;
+  private double[] array_;
+
+  public double[] gerArray() {
+    return array_ ;
+  }
 
   /**
    * Stores the length of the array
@@ -60,7 +64,7 @@ public class ArrayReal extends Variable {
     problem_ = null;
     size_ = 0;
     array_ = null;
-  } // Constructor
+  }
 
   /**
    * Constructor
@@ -70,14 +74,14 @@ public class ArrayReal extends Variable {
   public ArrayReal(int size, Problem problem) {
     problem_ = problem;
     size_ = size;
-    array_ = new Double[size_];
+    array_ = new double[size_];
 
     for (int i = 0; i < size_; i++) {
       array_[i] = PseudoRandom.randDouble() * (problem_.getUpperLimit(i) -
               problem_.getLowerLimit(i)) +
               problem_.getLowerLimit(i);
-    } // for
-  } // Constructor
+    }
+  }
 
   /**
    * Copy Constructor
@@ -87,15 +91,15 @@ public class ArrayReal extends Variable {
   private ArrayReal(ArrayReal arrayReal) {
     problem_ = arrayReal.problem_;
     size_ = arrayReal.size_;
-    array_ = new Double[size_];
+    array_ = new double[size_];
 
     System.arraycopy(arrayReal.array_, 0, array_, 0, size_);
-  } // Copy Constructor
+  }
 
   @Override
   public Variable deepCopy() {
     return new ArrayReal(this);
-  } // deepCopy
+  }
 
   /**
    * Returns the length of the arrayReal.
@@ -104,7 +108,7 @@ public class ArrayReal extends Variable {
    */
   public int getLength() {
     return size_;
-  } // getLength
+  }
 
   /**
    * getValue
@@ -119,8 +123,8 @@ public class ArrayReal extends Variable {
     else {
       Configuration.logger_.severe(jmetal.encodings.variable.ArrayReal.class + ".getValue(): index value (" + index + ") invalid");
       throw new JMException(jmetal.encodings.variable.ArrayReal.class + ".ArrayReal: index value (" + index + ") invalid");
-    } // if
-  } // getValue
+    }
+  }
 
   /**
    * setValue
@@ -135,8 +139,8 @@ public class ArrayReal extends Variable {
     else {
       Configuration.logger_.severe(jmetal.encodings.variable.ArrayReal.class + ".setValue(): index value (" + index + ") invalid");
       throw new JMException(jmetal.encodings.variable.ArrayReal.class + ": index value (" + index + ") invalid");
-    } // else
-  } // setValue
+    }
+  }
 
   /**
    * Get the lower bound of a value
@@ -151,8 +155,8 @@ public class ArrayReal extends Variable {
     else {
       Configuration.logger_.severe(jmetal.encodings.variable.ArrayReal.class + ".getLowerBound(): index value (" + index + ") invalid");
       throw new JMException(jmetal.encodings.variable.ArrayReal.class + ".getLowerBound: index value (" + index + ") invalid");
-    } // else
-  } // getLowerBound
+    }
+  }
 
   /**
    * Get the upper bound of a value
