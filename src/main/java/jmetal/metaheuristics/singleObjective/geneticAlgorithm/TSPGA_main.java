@@ -41,11 +41,11 @@ import java.util.HashMap;
 public class TSPGA_main {
 
   public static void main(String [] args) throws Exception {
-    Problem   problem   ;         // The problem to solve
-    Algorithm algorithm ;         // The algorithm to use
-    Operator  crossover ;         // Crossover operator
-    Operator  mutation  ;         // Mutation operator
-    Operator  selection ;         // Selection operator
+    Problem   problem   ;
+    Algorithm algorithm ;
+    Operator  crossover ;
+    Operator  mutation  ;
+    Operator  selection ;
         
     String problemName = "eil101.tsp" ;
     
@@ -88,5 +88,5 @@ public class TSPGA_main {
     population.printObjectivesToFile("FUN");
     System.out.println("Variables values have been writen to file VAR");
     population.printVariablesToFile("VAR");          
-  }//main
-} // TSPGA_main
+  }
+}

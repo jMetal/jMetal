@@ -51,36 +51,34 @@ public class RandomSearch_main {
    *      - jmetal.metaheuristics.randomSearch.RandomSearch_main problemName
    */
   public static void main(String [] args) throws
-                                  JMException, SecurityException, IOException, ClassNotFoundException {
-    Problem   problem   ;         // The problem to solve
-    Algorithm algorithm ;         // The algorithm to use
+          JMException, SecurityException, IOException, ClassNotFoundException {
+    Problem   problem   ;
+    Algorithm algorithm ;
 
-    QualityIndicator indicators ; // Object to get quality indicators
+    QualityIndicator indicators ;
 
     // Logger object and file to store log messages
     logger_      = Configuration.logger_ ;
-    fileHandler_ = new FileHandler("RandomSearch_main.log"); 
+    fileHandler_ = new FileHandler("RandomSearch_main.log");
     logger_.addHandler(fileHandler_) ;
 
     indicators = null ;
     if (args.length == 1) {
       Object [] params = {"Real"};
       problem = (new ProblemFactory()).getProblem(args[0],params);
-    } // if
-    else if (args.length == 2) {
+    } else if (args.length == 2) {
       Object [] params = {"Real"};
       problem = (new ProblemFactory()).getProblem(args[0],params);
       indicators = new QualityIndicator(problem, args[1]) ;
-    } // if
-    else { // Default problem
-      problem = new Kursawe("Real", 3); 
+    } else {
+      problem = new Kursawe("Real", 3);
       //problem = new Water("Real");
       //problem = new ZDT1("ArrayReal", 1000);
       //problem = new ZDT4("BinaryReal");
       //problem = new WFG1("Real");
       //problem = new DTLZ1("Real");
       //problem = new OKA2("Real") ;
-    } // else
+    }
 
     algorithm = new RandomSearch(problem);
 
@@ -97,8 +95,8 @@ public class RandomSearch_main {
     logger_.info("Objectives values have been writen to file FUN");
     population.printObjectivesToFile("FUN");
     logger_.info("Variables values have been writen to file VAR");
-    population.printVariablesToFile("VAR");      
-    
+    population.printVariablesToFile("VAR");
+
     if (indicators != null) {
       logger_.info("Quality indicators") ;
       logger_.info("Hypervolume: " + indicators.getHypervolume(population)) ;
@@ -106,6 +104,6 @@ public class RandomSearch_main {
       logger_.info("IGD        : " + indicators.getIGD(population)) ;
       logger_.info("Spread     : " + indicators.getSpread(population)) ;
       logger_.info("Epsilon    : " + indicators.getEpsilon(population)) ;
-    } // if                   
-  } //main
-} // Randomsearch_main
+    }
+  }
+}

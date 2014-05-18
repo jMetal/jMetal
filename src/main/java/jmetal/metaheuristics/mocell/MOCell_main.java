@@ -62,13 +62,13 @@ import java.util.logging.Logger;
    *      - jmetal.metaheuristics.mocell.MOCell_main problemName ParetoFrontFile
    */
   public static void main(String [] args) throws JMException, SecurityException, IOException, ClassNotFoundException {
-    Problem   problem   ;         // The problem to solve
-    Algorithm algorithm ;         // The algorithm to use
-    Operator  crossover ;         // Crossover operator
-    Operator  mutation  ;         // Mutation operator
-    Operator  selection ;         // Selection operator
+    Problem   problem   ;
+    Algorithm algorithm ;
+    Operator  crossover ;
+    Operator  mutation  ;
+    Operator  selection ;
 
-    QualityIndicator indicators ; // Object to get quality indicators
+    QualityIndicator indicators ;
 
     // Logger object and file to store log messages
     logger_      = Configuration.logger_ ;
@@ -79,13 +79,11 @@ import java.util.logging.Logger;
     if (args.length == 1) {
       Object [] params = {"Real"};
       problem = (new ProblemFactory()).getProblem(args[0],params);
-    } // if
-    else if (args.length == 2) {
+    } else if (args.length == 2) {
       Object [] params = {"Real"};
       problem = (new ProblemFactory()).getProblem(args[0],params);
       indicators = new QualityIndicator(problem, args[1]) ;
-    } // if
-    else { // Default problem
+    } else {
       problem = new Kursawe("Real", 3); 
       //problem = new Water("Real");
       //problem = new ZDT1("ArrayReal", 1000);
@@ -93,7 +91,7 @@ import java.util.logging.Logger;
       //problem = new WFG1("Real");
       //problem = new DTLZ1("Real");
       //problem = new OKA2("Real") ;
-    } // else
+    }
 
     //algorithm = new sMOCell1(problem_) ;
     //algorithm = new sMOCell2(problem_) ;
@@ -146,6 +144,6 @@ import java.util.logging.Logger;
       logger_.info("IGD        : " + indicators.getIGD(population)) ;
       logger_.info("Spread     : " + indicators.getSpread(population)) ;
       logger_.info("Epsilon    : " + indicators.getEpsilon(population)) ;
-    } // if                   
-  }//main
-} // MOCell_main
+    }
+  }
+}

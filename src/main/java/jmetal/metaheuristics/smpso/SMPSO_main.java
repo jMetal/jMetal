@@ -60,9 +60,9 @@ public class SMPSO_main {
    *      - jmetal.metaheuristics.smpso.SMPSO_main problemName ParetoFrontFile
    */
   public static void main(String [] args) throws JMException, IOException, ClassNotFoundException {
-    Problem   problem   ;  // The problem to solve
-    Algorithm algorithm ;  // The algorithm to use
-    Mutation  mutation  ;  // "Turbulence" operator
+    Problem   problem   ;
+    Algorithm algorithm ;
+    Mutation  mutation  ;
     
     QualityIndicator indicators ; // Object to get quality indicators
 
@@ -75,13 +75,11 @@ public class SMPSO_main {
     if (args.length == 1) {
       Object [] params = {"Real"};
       problem = (new ProblemFactory()).getProblem(args[0],params);
-    } // if
-    else if (args.length == 2) {
+    } else if (args.length == 2) {
       Object [] params = {"Real"};
       problem = (new ProblemFactory()).getProblem(args[0],params);
       indicators = new QualityIndicator(problem, args[1]) ;
-    } // if
-    else { // Default problem
+    } else {
       //problem = new Kursawe("Real", 3); 
       //problem = new Water("Real");
       //problem = new ZDT1("ArrayReal", 1000);
@@ -91,7 +89,7 @@ public class SMPSO_main {
       //problem = new OKA2("Real") ;
        //problem = new DTLZ1("Real",7,5);
         problem = new ZDT4("Real");
-    } // else
+    }
 
     algorithm = new SMPSO(problem) ;
     
@@ -134,6 +132,6 @@ public class SMPSO_main {
       logger_.info("IGD        : " + indicators.getIGD(population)) ;
       logger_.info("Spread     : " + indicators.getSpread(population)) ;
       logger_.info("Epsilon    : " + indicators.getEpsilon(population)) ;
-    } // if                   
-  } //main
-} // SMPSO_main
+    }
+  }
+}

@@ -105,7 +105,6 @@ public class FriedmanTables implements IExperimentOutput {
 
         String ruta = rutaAlg + experiment_.problemList_[prob] + "/" + indicator_;
 
-        //Leemos el fichero
         string = "";
 
         try {
@@ -144,10 +143,8 @@ public class FriedmanTables implements IExperimentOutput {
         }else{
           ((Vector)data.elementAt(alg)).add(new Double(valor));
         }
-
-      } // for
-    } // for
-
+      }
+    }
 
     /*Compute the average performance per algorithm for each data set*/
     mean = new double[datasets.size()][algorithms.size()];
@@ -259,8 +256,7 @@ public class FriedmanTables implements IExperimentOutput {
 
       fis.close();
       f.close();
-    }
-    catch (IOException e) {
+    } catch (IOException e) {
       Configuration.logger_.log(Level.SEVERE, "Error", e);
       throw new RuntimeException() ;
     }
@@ -283,12 +279,10 @@ public class FriedmanTables implements IExperimentOutput {
       if (Math.abs(this.valor) > Math.abs(((Pair)o1).valor)){
         //return -1;
         return 1;
-      }
-      else if (Math.abs(this.valor) < Math.abs(((Pair)o1).valor)){
+      } else if (Math.abs(this.valor) < Math.abs(((Pair)o1).valor)){
         //return 1;
         return -1;
-      }
-      else {
+      } else {
         return 0;
       }
     }

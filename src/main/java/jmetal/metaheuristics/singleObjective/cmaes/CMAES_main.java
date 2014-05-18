@@ -37,8 +37,8 @@ public class CMAES_main {
     int populationSize = 10;
     int maxEvaluations = 1000000;
 
-    Problem problem   ;         // The problem to solve
-    Algorithm algorithm ;         // The algorithm to use
+    Problem problem   ;
+    Algorithm algorithm ;
 
     //problem = new Sphere("Real", numberOfVariables) ;
     //problem = new Easom("Real") ;
@@ -64,7 +64,5 @@ public class CMAES_main {
     population.printObjectivesToFile("FUN");
     System.out.println("Variables values have been written to file VAR");
     population.printVariablesToFile("VAR");
-
-  } //main
-
-} // CMAES_main
+  }
+}

@@ -39,9 +39,9 @@ import java.util.HashMap;
 public class ES_main {
 
   public static void main(String [] args) throws JMException, ClassNotFoundException, IOException {
-    Problem   problem   ;         // The problem to solve
-    Algorithm algorithm ;         // The algorithm to use
-    Operator  mutation  ;         // Mutation operator
+    Problem   problem   ;
+    Algorithm algorithm ;
+    Operator  mutation  ;
 
     int bits ; // Length of bit string in the OneMax problem
     
@@ -80,6 +80,5 @@ public class ES_main {
     population.printObjectivesToFile("FUN");
     System.out.println("Variables values have been writen to file VAR");
     population.printVariablesToFile("VAR");          
-  }//main
-
-} // ES_main
+  }
+}

@@ -50,14 +50,14 @@ public abstract class Settings {
 	 * Constructor
 	 */
 	public Settings() {
-	} // Constructor
+	}
 
 	/**
 	 * Constructor
 	 */
 	public Settings (String problemName) {
 		problemName_ = problemName ;
-	} // Constructor
+	}
 
 	/**
 	 * Default configure method
@@ -85,7 +85,8 @@ public abstract class Settings {
 		if (settings != null) {
 			Field [] fields = this.getClass().getFields();
 			for (int i=0; i < fields.length; i++) {
-				if (fields[i].getName().endsWith("_")) { // it is a configuration field      
+				if (fields[i].getName().endsWith("_")) {
+				  // it is a configuration field
 					// The configuration field is an integer
 					if (fields[i].getType().equals(int.class) ||
 							fields[i].getType().equals(Integer.class)) {
@@ -118,7 +119,7 @@ public abstract class Settings {
 									value = 1.0 / length;
 								}
 								fields[i].setDouble(this, value);
-							} // if
+							}
 							else {
 								fields[i].setDouble(this, value);
 							}
@@ -141,7 +142,7 @@ public abstract class Settings {
 						}
 					}
 				}
-			} // for
+			}
 
 			// At this point all the fields have been read from the properties
 			// parameter. Those fields representing crossover and mutations should also
@@ -180,7 +181,7 @@ public abstract class Settings {
 		}
 
 		return configure();
-	} // configure
+	}
 
 	/**
 	 * Changes the problem to solve
@@ -188,12 +189,12 @@ public abstract class Settings {
 	 */
 	void setProblem(Problem problem) {
 		problem_ = problem ;
-	} // setProblem
+	}
 
 	/**
 	 * Returns the problem
 	 */
 	Problem getProblem() {
 		return problem_ ;
-	} // getProblem
-} // Settings
+	}
+}

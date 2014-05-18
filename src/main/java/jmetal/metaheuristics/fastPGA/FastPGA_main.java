@@ -52,13 +52,13 @@ public class FastPGA_main {
    * @throws JMException 
    */
   public static void main(String [] args) throws JMException, IOException, ClassNotFoundException {
-    Problem   problem   ;         // The problem to solve
-    Algorithm algorithm ;         // The algorithm to use
-    Operator  crossover ;         // Crossover operator
-    Operator  mutation  ;         // Mutation operator
-    Operator  selection ;         // Selection operator
+    Problem   problem   ;
+    Algorithm algorithm ;
+    Operator  crossover ;
+    Operator  mutation  ;
+    Operator  selection ;
 
-    QualityIndicator indicators ; // Object to get quality indicators
+    QualityIndicator indicators ;
 
     // Logger object and file to store log messages
     logger_      = Configuration.logger_ ;
@@ -69,13 +69,11 @@ public class FastPGA_main {
     if (args.length == 1) {
       Object [] params = {"Real"};
       problem = (new ProblemFactory()).getProblem(args[0],params);
-    } // if
-    else if (args.length == 2) {
+    } else if (args.length == 2) {
       Object [] params = {"Real"};
       problem = (new ProblemFactory()).getProblem(args[0],params);
       indicators = new QualityIndicator(problem, args[1]) ;
-    } // if
-    else { // Default problem
+    } else {
       problem = new Kursawe("Real", 3); 
       //problem = new Kursawe("BinaryReal", 3);
       //problem = new Water("Real");
@@ -83,7 +81,7 @@ public class FastPGA_main {
       //problem = new ConstrEx("Real");
       //problem = new DTLZ1("Real");
       //problem = new OKA2("Real") ;
-    } // else
+    }
 
     algorithm = new FastPGA(problem);
 
@@ -145,6 +143,6 @@ public class FastPGA_main {
      
       int evaluations = ((Integer)algorithm.getOutputParameter("evaluations")).intValue();
       logger_.info("Speed      : " + evaluations + " evaluations") ;      
-    } // if
-  }//main
-} // FastPGA_main
+    }
+  }
+}

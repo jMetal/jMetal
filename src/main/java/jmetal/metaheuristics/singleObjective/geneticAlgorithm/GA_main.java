@@ -43,13 +43,11 @@ import java.util.HashMap;
 public class GA_main {
 
   public static void main(String [] args) throws JMException, ClassNotFoundException, IOException {
-    Problem   problem   ;         // The problem to solve
-    Algorithm algorithm ;         // The algorithm to use
-    Operator  crossover ;         // Crossover operator
-    Operator  mutation  ;         // Mutation operator
-    Operator  selection ;         // Selection operator
-            
-    //int bits ; // Length of bit string in the OneMax problem
+    Problem   problem   ;
+    Algorithm algorithm ;
+    Operator  crossover ;
+    Operator  mutation  ;
+    Operator  selection ;
 
     int bits = 512 ;
     problem = new OneMax("Binary", bits);
@@ -108,5 +106,5 @@ public class GA_main {
     population.printObjectivesToFile("FUN");
     System.out.println("Variables values have been writen to file VAR");
     population.printVariablesToFile("VAR");          
-  } //main
-} // GA_main
+  }
+}

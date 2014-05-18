@@ -221,8 +221,8 @@ public class Experiment {
     else {
       System.out.println("Experiment directory does NOT exist. Creating");
       new File(experimentBaseDirectory_).mkdirs();
-    } // else
-  } // checkIfExperimentDirectoryExists
+    }
+  }
 
   /**
    * Test if a property file with the experiment settings is provided
@@ -267,8 +267,7 @@ public class Experiment {
     if (configuration_.getProperty("algorithmNameList") == null) {
       algorithmNameList_ = Arrays.copyOf(values, values.length) ;
 
-    }
-    else {
+    } else {
       algorithmNameList_ = configuration_.getProperty("algorithmNameList").split(",") ;
     }
   }
@@ -276,8 +275,7 @@ public class Experiment {
   public void setProblemList(String[] values) {
     if (configuration_.getProperty("problemList") == null) {
       problemList_ = Arrays.copyOf(values, values.length) ;
-    }
-    else {
+    } else {
       problemList_ = configuration_.getProperty("problemList").split(",") ;
     }
   }
@@ -285,8 +283,7 @@ public class Experiment {
   public void setParetoFrontFileList(String[] values) {
     if (configuration_.getProperty("paretoFrontFileList") == null) {
       paretoFrontFileList_ = Arrays.copyOf(values, values.length) ;
-    }
-    else {
+    } else {
       paretoFrontFileList_ = configuration_.getProperty("paretoFrontFileList").split(",") ;
     }
   }
@@ -294,8 +291,7 @@ public class Experiment {
   public void setIndicatorList(String[] values) {
     if (configuration_.getProperty("indicatorList") == null) {
       indicatorList_ = Arrays.copyOf(values, values.length) ;
-    }
-    else {
+    } else {
       indicatorList_ = configuration_.getProperty("indicatorList").split(",") ;
     }
   }

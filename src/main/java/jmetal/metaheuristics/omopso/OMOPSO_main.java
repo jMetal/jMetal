@@ -57,12 +57,12 @@ public class OMOPSO_main {
    *      - jmetal.metaheuristics.mocell.MOCell_main problemName ParetoFrontFile
    */
   public static void main(String [] args) throws JMException, IOException, ClassNotFoundException {
-    Problem   problem   ;         // The problem to solve
-    Algorithm algorithm ;         // The algorithm to use
+    Problem   problem   ;
+    Algorithm algorithm ;
     Mutation  uniformMutation ;
     Mutation nonUniformMutation ;
     
-    QualityIndicator indicators ; // Object to get quality indicators
+    QualityIndicator indicators ;
     
     // Logger object and file to store log messages
     logger_      = Configuration.logger_ ;
@@ -73,13 +73,11 @@ public class OMOPSO_main {
     if (args.length == 1) {
       Object [] params = {"Real"};
       problem = (new ProblemFactory()).getProblem(args[0],params);
-    } // if
-    else if (args.length == 2) {
+    } else if (args.length == 2) {
       Object [] params = {"Real"};
       problem = (new ProblemFactory()).getProblem(args[0],params);
       indicators = new QualityIndicator(problem, args[1]) ;
-    } // if
-    else { // Default problem
+    } else {
       problem = new Kursawe("Real", 3); 
       //problem = new Water("Real");
       //problem = new ZDT4("Real");
@@ -133,6 +131,6 @@ public class OMOPSO_main {
       logger_.info("IGD        : " + indicators.getIGD(population)) ;
       logger_.info("Spread     : " + indicators.getSpread(population)) ;
       logger_.info("Epsilon    : " + indicators.getEpsilon(population)) ;  
-    } // if
-  }//main
-} // OMOPSO_main
+    }
+  }
+}
