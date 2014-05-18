@@ -66,8 +66,9 @@ public class MultithreadedEvaluator extends SynchronousParallelRunner {
    */
   public void addTaskForExecution(Object[] taskParameters) {
     Solution solution = (Solution)taskParameters[0] ;
-    if (taskList_ == null)
+    if (taskList_ == null) {
       taskList_ = new ArrayList<EvaluationTask>();
+    }
 
     taskList_.add(new EvaluationTask(problem_, solution)) ;			
   }

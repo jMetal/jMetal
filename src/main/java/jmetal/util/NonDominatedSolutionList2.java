@@ -24,7 +24,6 @@ package jmetal.util;
 import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
 import jmetal.util.comparators.DominanceComparator;
-import jmetal.util.comparators.SolutionComparator;
 
 import java.util.Comparator;
 import java.util.Iterator;
@@ -54,7 +53,7 @@ public class NonDominatedSolutionList2 extends SolutionSet{
   public NonDominatedSolutionList2() {
     super();
     solutionCounter_ = 0 ;
-  } // NonDominatedList
+  }
 
   /**
    * Constructor.
@@ -66,7 +65,7 @@ public class NonDominatedSolutionList2 extends SolutionSet{
     super();
     dominance_ = dominance;
     solutionCounter_ = 0 ;
-  } // NonDominatedList
+  }
 
   public void reset() {
     solutionCounter_ = 0 ;
@@ -82,8 +81,9 @@ public class NonDominatedSolutionList2 extends SolutionSet{
   public boolean add(Solution solution){
     if (solutionsList_.size() == 0) {
       Solution s = new Solution(solution.getNumberOfObjectives()) ;
-      for (int i = 0; i < s.getNumberOfObjectives(); i++)
+      for (int i = 0; i < s.getNumberOfObjectives(); i++) {
         s.setObjective(i, solution.getObjective(i));
+      }
       solutionsList_.add(s);
       solutionCounter_ = 1 ;
       return true ;
@@ -91,31 +91,31 @@ public class NonDominatedSolutionList2 extends SolutionSet{
     else {
       Iterator<Solution> iterator = solutionsList_.iterator();
 
-      //if (solution.getDecisionVariables() != null) {
       while (iterator.hasNext()){
         Solution listIndividual = iterator.next();
         int flag = dominance_.compare(solution,listIndividual);
 
-        if (flag == -1) {  // A solution in the list is dominated by the new one
+        if (flag == -1) {
+        // A solution in the list is dominated by the new one
           iterator.remove();
         } else if (flag == 0) { // Non-dominated solutions
           //flag = equal_.compare(solution,listIndividual);
           //if (flag == 0) {
-          //	return false;   // The new solution is in the list  
+          //	return false;   // The new solution is in the list
           //}
         } else if (flag == 1) { // The new solution is dominated
           return false;
         }
-      } // while 
-      //} // if
+      }
 
       //At this point, the solution is inserted into the list
       Solution s = new Solution(solution.getNumberOfObjectives()) ;
-      for (int i = 0; i < s.getNumberOfObjectives(); i++)
+      for (int i = 0; i < s.getNumberOfObjectives(); i++) {
         s.setObjective(i, solution.getObjective(i));
+      }
       solutionsList_.add(s);
 
       return true;        
     }
-  } // add                   
-} // NonDominatedList
+  }
+}

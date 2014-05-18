@@ -41,33 +41,33 @@ import java.util.List;
  * belonging to subset 0, and so on.
  */
 public class Ranking {
-  
+
   /**
    * The <code>SolutionSet</code> to rank
    */
   private SolutionSet   solutionSet_ ;
-  
+
   /**
    * An array containing all the fronts found during the search
    */
   private SolutionSet[] ranking_  ;
-  
+
   /**
    * stores a <code>Comparator</code> for dominance checking
    */
   private static final Comparator<Solution> dominance_ = new DominanceComparator();
-  
+
   /**
    * stores a <code>Comparator</code> for Overal Constraint Violation Comparator
    * checking
    */
   private static final Comparator<Solution> constraint_ = new OverallConstraintViolationComparator();
-    
-  /** 
+
+  /**
    * Constructor.
    * @param solutionSet The <code>SolutionSet</code> to be ranked.
-   */       
-  public Ranking(SolutionSet solutionSet) {        
+   */
+  public Ranking(SolutionSet solutionSet) {
     solutionSet_ = solutionSet ;
 
     // dominateMe[i] contains the number of solutions dominating i        
@@ -78,48 +78,20 @@ public class Ranking {
 
     // front[i] contains the list of individuals belonging to the front i
     List<Integer> [] front = new List[solutionSet_.size()+1];
-        
+
     // flagDominate is an auxiliar encodings.variable
-    int flagDominate;    
+    int flagDominate;
 
     // Initialize the fronts 
-    for (int i = 0; i < front.length; i++)
+    for (int i = 0; i < front.length; i++) {
       front[i] = new LinkedList<Integer>();
-        
-    /*
-    //-> Fast non dominated sorting algorithm
-    for (int p = 0; p < solutionSet_.size(); p++) {
-    // Initialice the list of individuals that i dominate and the number
-    // of individuals that dominate me
-      iDominate[p] = new LinkedList<Integer>();
-      dominateMe[p] = 0;            
-      // For all q individuals , calculate if p dominates q or vice versa
-      for (int q = 0; q < solutionSet_.size(); q++) {
-        flagDominate =constraint_.compare(solutionSet.get(p),solutionSet.get(q));
-        if (flagDominate == 0) {
-          flagDominate =dominance_.compare(solutionSet.get(p),solutionSet.get(q));                                
-        }
-        
-        if (flagDominate == -1) {
-          iDominate[p].add(new Integer(q));
-        } else if (flagDominate == 1) {
-                    dominateMe[p]++;   
-        }
-      }
-            
-      // If nobody dominates p, p belongs to the first front
-      if (dominateMe[p] == 0) {
-        front[0].add(new Integer(p));
-        solutionSet.get(p).setRank(0);
-      }            
     }
-    */
-    
-    //-> Fast non dominated sorting algorithm
+
+    // Fast non dominated sorting algorithm
     // Contribution of Guillaume Jacquenot
     for (int p = 0; p < solutionSet_.size(); p++) {
-    // Initialize the list of individuals that i dominate and the number
-    // of individuals that dominate me
+      // Initialize the list of individuals that i dominate and the number
+      // of individuals that dominate me
       iDominate[p] = new LinkedList<Integer>();
       dominateMe[p] = 0;
     }
@@ -130,13 +102,11 @@ public class Ranking {
         if (flagDominate == 0) {
           flagDominate =dominance_.compare(solutionSet.get(p),solutionSet.get(q));
         }
-        if (flagDominate == -1)
-        {
+        if (flagDominate == -1) {
           iDominate[p].add(q);
           dominateMe[q]++;
         }
-        else if (flagDominate == 1)
-        {
+        else if (flagDominate == 1) {
           iDominate[q].add(p);
           dominateMe[p]++;
         }
@@ -148,8 +118,8 @@ public class Ranking {
         front[0].add(p);
         solutionSet.get(p).setRank(0);
       }
-    }    
-    
+    }
+
     //Obtain the rest of fronts
     int i = 0;
     Iterator<Integer> it1, it2 ; // Iterators
@@ -168,19 +138,18 @@ public class Ranking {
         }
       }
     }
-    //<-
-        
+
     ranking_ = new SolutionSet[i];
     //0,1,2,....,i-1 are front, then i fronts
     for (int j = 0; j < i; j++) {
       ranking_[j] = new SolutionSet(front[j].size());
       it1 = front[j].iterator();
       while (it1.hasNext()) {
-                ranking_[j].add(solutionSet.get(it1.next()));
+        ranking_[j].add(solutionSet.get(it1.next()));
       }
     }
-    
-  } // Ranking
+
+  }
 
   /**
    * Returns a <code>SolutionSet</code> containing the solutions of a given rank. 
@@ -189,12 +158,12 @@ public class Ranking {
    */
   public SolutionSet getSubfront(int rank) {
     return ranking_[rank];
-  } // getSubFront
+  }
 
-  /** 
-  * Returns the total number of subFronts founds.
-  */
+  /**
+   * Returns the total number of subFronts founds.
+   */
   public int getNumberOfSubfronts() {
     return ranking_.length;
-  } // getNumberOfSubfronts
-} // Ranking
+  }
+}

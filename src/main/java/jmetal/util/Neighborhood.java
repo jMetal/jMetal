@@ -72,18 +72,17 @@ public class Neighborhood {
     //number of neighborhoods
     for (int ind = 0; ind < solutionSetSize_; ind ++) {
       for (int radio = 0; radio < MAXRADIO; radio ++) {
-        if (radio == 0) {//neighboors whit rate 1
+        if (radio == 0) {
           structure_[ind][radio] = new int[8];
-        } else if (radio == 1) { //neighboors whit rate 2
+        } else if (radio == 1) {
           structure_[ind][radio] = new int[24];       
-        } // if
-      } // for
-    } // for
+        }
+      }
+    }
         
     //Calculate the size of a row
     rowSize_ = (int) Math.sqrt((double)solutionSetSize_);
-        
-        
+
     //Calculates the neighbors of a individual 
     for (int ind = 0; ind < solutionSetSize_; ind++){
       //rate 1
@@ -96,19 +95,21 @@ public class Neighborhood {
       }
             
       //East neighbors
-      if  ((ind + 1) % rowSize_ == 0)
+      if  ((ind + 1) % rowSize_ == 0) {
         structure_[ind][0][Row.E.ordinal()] = (ind - (rowSize_ - 1));
-      else
+      }
+      else {
         structure_[ind][0][Row.E.ordinal()] = (ind + 1);
+      }
 
-      //Western neigbors
+      //Western neighbors
       if (ind % rowSize_ == 0) {
         structure_[ind][0][Row.W.ordinal()] = (ind + (rowSize_ - 1));
       } else {
         structure_[ind][0][Row.W.ordinal()] = (ind - 1);
       }
 
-      //South neigbors
+      //South neighbors
       structure_[ind][0][Row.S.ordinal()] = (ind + rowSize_) % solutionSetSize;                        
     }                
         
@@ -122,8 +123,8 @@ public class Neighborhood {
       structure_[ind][0][Row.SW.ordinal()] = 
         structure_[structure_[ind][0][Row.S.ordinal()]][0][Row.W.ordinal()];
     }
-  } // Neighborhood
-    
+  }
+
   /**
    * Returns a <code>SolutionSet</code> with the North, Sout, East and West
    * neighbors solutions of ratio 0 of a given location into a given 
@@ -139,7 +140,7 @@ public class Neighborhood {
     //instance the solutionSet to a non dominated li of individuals
     neighbors = new SolutionSet(24);
         
-    //Gets the neighboords N, S, E, W
+    //Gets the neighborhoods N, S, E, W
     int index;        
         
     //North
@@ -160,7 +161,7 @@ public class Neighborhood {
     
     //Return the list of non-dominated individuals
     return neighbors;        
-  } //getFourNeighbors           
+  }
     
   /**
    * Returns a <code>SolutionSet</code> with the North, Sout, East, West, 
@@ -213,8 +214,7 @@ public class Neighborhood {
     index = this.structure_[individual][0][Row.SW.ordinal()];
     neighbors.add(population.get(index));
 
-
     //Return the list of non-dominated individuals
     return neighbors;        
-  }  // getEightNeighbors
-} // Neighborhood
+  }
+}

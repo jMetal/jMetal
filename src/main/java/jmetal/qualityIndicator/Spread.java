@@ -21,9 +21,9 @@
 
 package jmetal.qualityIndicator;
 
-import java.util.Arrays;
-
 import jmetal.util.JMException;
+
+import java.util.Arrays;
 
 /**
  * This class implements the spread quality indicator. 
@@ -126,8 +126,9 @@ public class Spread {
       } // for
       return diversitySum / (df + dl + (numberOfPoints-1)*mean);
     } 
-    else 
-    	return 1.0;
+    else {
+      return 1.0;
+    }
   } // spread
 
   /**

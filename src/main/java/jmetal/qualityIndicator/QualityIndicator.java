@@ -47,7 +47,7 @@ public class QualityIndicator {
                  trueParetoFront_.writeObjectivesToMatrix(),   
                  trueParetoFront_.writeObjectivesToMatrix(),
                  problem_.getNumberOfObjectives());
-  } // Constructor 
+  }
   
   /**
    * Returns the hypervolume of solution set
@@ -58,7 +58,7 @@ public class QualityIndicator {
     return new Hypervolume().hypervolume(solutionSet.writeObjectivesToMatrix(),
                                          trueParetoFront_.writeObjectivesToMatrix(),
                                          problem_.getNumberOfObjectives());
-  } // getHypervolume
+  }
 
     
   /**
@@ -79,7 +79,7 @@ public class QualityIndicator {
                     solutionSet.writeObjectivesToMatrix(),
                     trueParetoFront_.writeObjectivesToMatrix(),
                     problem_.getNumberOfObjectives());
-  } // getIGD
+  }
   
  /**
    * Returns the generational distance of solution set
@@ -91,7 +91,7 @@ public class QualityIndicator {
                     solutionSet.writeObjectivesToMatrix(),
                     trueParetoFront_.writeObjectivesToMatrix(),
                     problem_.getNumberOfObjectives());
-  } // getGD
+  }
   
   /**
    * Returns the spread of solution set
@@ -102,7 +102,7 @@ public class QualityIndicator {
     return new Spread().spread(solutionSet.writeObjectivesToMatrix(),
                                trueParetoFront_.writeObjectivesToMatrix(),
                                problem_.getNumberOfObjectives());
-  } // getGD
+  }
   
     /**
    * Returns the epsilon indicator of solution set
@@ -114,5 +114,5 @@ public class QualityIndicator {
     return new Epsilon().epsilon(solutionSet.writeObjectivesToMatrix(),
                                  trueParetoFront_.writeObjectivesToMatrix(),
                                  problem_.getNumberOfObjectives());
-  } // getEpsilon
-} // QualityIndicator
+  }
+}

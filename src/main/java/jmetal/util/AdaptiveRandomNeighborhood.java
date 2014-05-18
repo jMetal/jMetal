@@ -100,17 +100,6 @@ public class AdaptiveRandomNeighborhood {
   public ArrayList<ArrayList<Integer>> getNeighborhood() {
     return list_;
   }
-//  public AdaptiveRandomNeighborhood(int size, int numberOfInformants) {
-//    list_ = new ArrayList<ArrayList<Integer>>(size) ;
-//
-//    for (int i = 0 ; i < size; i++) {
-//      list_.get(i).add(i) ;
-//      for (int j = 0 ; j < numberOfInformants; j++) {
-//        int random = PseudoRandom.randInt(0, size-1) ;
-//        list_.get(random).add(i) ;
-//      }
-//    }
-//  }
 
   public void recompute() {
     list_ = new ArrayList<ArrayList<Integer>>(solutionSet_.size());
@@ -142,5 +131,4 @@ public class AdaptiveRandomNeighborhood {
 
     return result;
   }
-
-} // AdaptiveRandomNeighborhood
+}

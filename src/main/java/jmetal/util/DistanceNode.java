@@ -51,15 +51,15 @@ public class DistanceNode {
   public DistanceNode(double distance, int reference){
     distance_ = distance;
     reference_ = reference;
-  } // DistanceNode
-    
+  }
+
   /**
    * Sets the distance to a <code>Solution</code>
    * @param distance The distance
    */
   public void setDistance(double distance){
     distance_ = distance;
-  } // setDistance
+  }
     
   /**
    * Sets the reference to a <code>Solution</code>
@@ -67,7 +67,7 @@ public class DistanceNode {
    */
   public void setReferece(int reference){
     reference_ = reference;
-  } // setReference
+  }
     
   /** 
    * Gets the distance
@@ -75,7 +75,7 @@ public class DistanceNode {
    */
   public double getDistance(){
     return distance_;        
-  } // getDistance
+  }
     
   /**
    * Gets the reference
@@ -83,5 +83,5 @@ public class DistanceNode {
    */
   public int getReference(){
     return reference_;
-  } // getReference
-} // DistanceNode
+  }
+}

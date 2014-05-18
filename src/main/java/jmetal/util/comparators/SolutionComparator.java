@@ -34,38 +34,41 @@ import java.util.logging.Level;
  * <code>Solution</code> objects) based on the values of the variables.
  */
 public class SolutionComparator implements Comparator<Solution> {
-   
+
   /**
    * Establishes a value of allowed dissimilarity
    */
   private static final double EPSILON  = 1e-25;
-        
+
   /**
    * Compares two solutions.
    * @param o1 Object representing the first <code>Solution</code>. 
    * @param o2 Object representing the second <code>Solution</code>.
    * @return 0, if both solutions are equals with a certain dissimilarity, -1
    * otherwise.
-   * @throws JMException 
-   * @throws JMException 
+   * @throws JMException
+   * @throws JMException
    */
   @Override
   public int compare(Solution o1, Solution o2) {
-    Solution solution1, solution2;        
+    Solution solution1, solution2;
     solution1 = (Solution)o1;
     solution2 = (Solution)o2;
-        
-    if ((solution1.getDecisionVariables() != null) && (solution2.getDecisionVariables()!= null))
-      if (solution1.numberOfVariables() != solution2.numberOfVariables())
+
+    if ((solution1.getDecisionVariables() != null) && (solution2.getDecisionVariables()!= null)) {
+      if (solution1.numberOfVariables() != solution2.numberOfVariables()) {
         return -1;
+      }
+    }
 
     try {
-      if ((new Distance()).distanceBetweenSolutions(solution1,solution2) < EPSILON)
+      if ((new Distance()).distanceBetweenSolutions(solution1,solution2) < EPSILON) {
         return 0;
+      }
     } catch (JMException e) {
       Configuration.logger_.log(Level.SEVERE, "SolutionComparator.compare: JMException ", e) ;
     }
-                
+
     return -1;
-  } // compare
-} // SolutionComparator
+  }
+}

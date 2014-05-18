@@ -52,7 +52,7 @@ public class BLXAlphaCrossoverAndPolynomialMutation extends Offspring {
 
     mutation_ = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
     selection_ = SelectionFactory.getSelectionOperator("BinaryTournament", null);
-    
+
     id_ = "BLXAlpha_Polynomial";
   }
 
@@ -72,10 +72,9 @@ public class BLXAlphaCrossoverAndPolynomialMutation extends Offspring {
       Logger.getLogger(BLXAlphaCrossoverAndPolynomialMutation.class.getName()).log(Level.SEVERE, null, ex);
     }
     return offSpring;
+  }
 
-  } // getOffpring
-
-    public Solution getOffspring(SolutionSet solutionSet, SolutionSet archive) {
+  public Solution getOffspring(SolutionSet solutionSet, SolutionSet archive) {
     Solution[] parents = new Solution[2];
     Solution offSpring = null;
 
@@ -83,9 +82,9 @@ public class BLXAlphaCrossoverAndPolynomialMutation extends Offspring {
       parents[0] = (Solution) selection_.execute(solutionSet);
 
       if (archive.size() > 0) {
-          parents[1] = (Solution)selection_.execute(archive);
+        parents[1] = (Solution)selection_.execute(archive);
       } else {
-          parents[1] = (Solution)selection_.execute(solutionSet);
+        parents[1] = (Solution)selection_.execute(solutionSet);
       }
 
       Solution[] children = (Solution[]) crossover_.execute(parents);
@@ -96,7 +95,6 @@ public class BLXAlphaCrossoverAndPolynomialMutation extends Offspring {
       Logger.getLogger(BLXAlphaCrossoverAndPolynomialMutation.class.getName()).log(Level.SEVERE, null, ex);
     }
     return offSpring;
-
-  } // getOffpring
-} // DifferentialEvolutionOffspring
+  }
+}
 

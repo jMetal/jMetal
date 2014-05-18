@@ -52,8 +52,9 @@ public class FastHypervolume {
 
   public double computeHypervolume(SolutionSet solutionSet) {
     double hv ;
-    if (solutionSet.size() == 0)
-      hv = 0.0 ;
+    if (solutionSet.size() == 0) {
+      hv = 0.0;
+    }
     else {
       numberOfObjectives_ = solutionSet.get(0).getNumberOfObjectives() ;
       referencePoint_ = new Solution(numberOfObjectives_) ;
@@ -74,8 +75,9 @@ public class FastHypervolume {
 
   public double computeHypervolume(SolutionSet solutionSet, Solution referencePoint) {
     double hv = 0.0;
-    if (solutionSet.size() == 0)
+    if (solutionSet.size() == 0) {
       hv = 0.0;
+    }
     else {
       numberOfObjectives_ = solutionSet.get(0).getNumberOfObjectives();
       referencePoint_ = referencePoint;
@@ -94,19 +96,22 @@ public class FastHypervolume {
     return hv;
   }
 
-
   /**
    * Updates the reference point
    */
   private void updateReferencePoint(SolutionSet solutionSet) {
     double [] maxObjectives = new double[numberOfObjectives_] ;
-    for (int i = 0; i < numberOfObjectives_; i++)
-      maxObjectives[i] = 0 ;
+    for (int i = 0; i < numberOfObjectives_; i++) {
+      maxObjectives[i] = 0;
+    }
 
-    for (int i = 0; i < solutionSet.size(); i++)
-      for (int j = 0 ; j < numberOfObjectives_; j++)
-        if (maxObjectives[j] < solutionSet.get(i).getObjective(j))
-          maxObjectives[j] = solutionSet.get(i).getObjective(j) ;
+    for (int i = 0; i < solutionSet.size(); i++) {
+      for (int j = 0; j < numberOfObjectives_; j++) {
+        if (maxObjectives[j] < solutionSet.get(i).getObjective(j)) {
+          maxObjectives[j] = solutionSet.get(i).getObjective(j);
+        }
+      }
+    }
 
     for (int i = 0; i < referencePoint_.getNumberOfObjectives(); i++) {
       referencePoint_.setObjective(i, maxObjectives[i]+ offset_) ;
@@ -189,8 +194,6 @@ public class FastHypervolume {
       contribution = solutionSetHV - hv ;
     }
     solutionSet.add(solutionIndex, currentPoint) ;
-
-
     solutionSet.get(solutionIndex).setCrowdingDistance(contribution) ;
 
     return contribution ;

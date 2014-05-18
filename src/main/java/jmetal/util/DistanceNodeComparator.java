@@ -28,7 +28,7 @@ import java.util.Comparator;
  * <code>DistanceNode</code>.
  */
 public class DistanceNodeComparator implements Comparator<DistanceNode> {
-    
+
   /**
    * Compares two <code>DistanceNode</code>.
    * @param o1 Object representing a DistanceNode
@@ -41,16 +41,19 @@ public class DistanceNodeComparator implements Comparator<DistanceNode> {
   public int compare(DistanceNode o1, DistanceNode o2){
     DistanceNode node1 = (DistanceNode) o1;
     DistanceNode node2 = (DistanceNode) o2;
-        
+
     double distance1,distance2;
     distance1 = node1.getDistance();
     distance2 = node2.getDistance();
-        
-    if (distance1 < distance2)
+
+    if (distance1 < distance2) {
       return -1;
-    else if (distance1 > distance2)
+    }
+    else if (distance1 > distance2) {
       return 1;
-    else
+    }
+    else {
       return 0;
-  } // DistanceNodeComparator 
-} // DistanceNodeComparator
+    }
+  }
+}

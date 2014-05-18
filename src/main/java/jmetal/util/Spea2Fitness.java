@@ -32,104 +32,99 @@ import java.util.*;
  * This class implements some facilities for calculating the Spea2 fitness
  */
 public class Spea2Fitness {
-    
+
   /**
    * Stores the distance between solutions
    */
   private double [][] distance = null;
-  
+
   /**
    * Stores the solutionSet to assign the fitness
    */
   private SolutionSet solutionSet_ = null;
-  
-  /** 
+
+  /**
    * stores a <code>Distance</code> object
    */
   private static final Distance distance_ = new Distance();
-  
+
   /**
    * stores a <code>Comparator</code> for distance between nodes checking
    */
-  private static final Comparator<DistanceNode> distanceNodeComparator = new DistanceNodeComparator();      
-  
+  private static final Comparator<DistanceNode> distanceNodeComparator = new DistanceNodeComparator();
+
   /**
    * stores a <code>Comparator</code> for dominance checking
    */
   private static final Comparator<Solution> dominance_ = new DominanceComparator();
-  
-  /** 
+
+  /**
    * Constructor.
    * Creates a new instance of Spea2Fitness for a given <code>SolutionSet</code>.
    * @param solutionSet The <code>SolutionSet</code>
    */
   public Spea2Fitness(SolutionSet solutionSet) {
-    distance     = distance_.distanceMatrix(solutionSet);        
+    distance     = distance_.distanceMatrix(solutionSet);
     solutionSet_ = solutionSet;
     for (int i = 0; i < solutionSet_.size(); i++) {
       solutionSet_.get(i).setLocation(i);
-    } // for
-  } // Spea2Fitness
-    
-    
-  /** 
+    }
+  }
+
+  /**
    * Assigns fitness for all the solutions.
    */
   public void fitnessAssign() {
     double [] strength    = new double[solutionSet_.size()];
     double [] rawFitness  = new double[solutionSet_.size()];
     double kDistance                                          ;
-  
-    
+
+
     //Calculate the strength value
     // strength(i) = |{j | j <- SolutionSet and i dominate j}|
     for (int i = 0; i < solutionSet_.size(); i++) {
       for (int j = 0; j < solutionSet_.size();j++) {
         if (dominance_.compare(solutionSet_.get(i),solutionSet_.get(j))==-1) {
           strength[i] += 1.0;
-        } // if        
-      } // for
-    } // for
-       
-        
+        }
+      }
+    }
+
     //Calculate the raw fitness
     // rawFitness(i) = |{sum strenght(j) | j <- SolutionSet and j dominate i}|
     for (int i = 0;i < solutionSet_.size(); i++) {
       for (int j = 0; j < solutionSet_.size();j++) {
         if (dominance_.compare(solutionSet_.get(i),solutionSet_.get(j))==1) {
           rawFitness[i] += strength[j];
-        } // if
-      } // for
-    } // for
-       
-        
+        }
+      }
+    }
+
     // Add the distance to the k-th individual. In the reference paper of SPEA2, 
     // k = sqrt(population.size()), but a value of k = 1 recommended. See
     // http://www.tik.ee.ethz.ch/pisa/selectors/spea2/spea2_documentation.txt
     int k = 1 ;
     for (int i = 0; i < distance.length; i++) {
       Arrays.sort(distance[i]);
-      kDistance = 1.0 / (distance[i][k] + 2.0); // Calcule de D(i) distance
-      //population.get(i).setFitness(rawFitness[i]);
-      solutionSet_.get(i).setFitness(rawFitness[i] + kDistance);           
-    } // for                  
-  } // fitnessAsign
-    
-    
-  /** 
-  *  Gets 'size' elements from a population of more than 'size' elements
-  *  using for this de enviromentalSelection truncation
-  *  @param size The number of elements to get.
-  */
-  public SolutionSet environmentalSelection(int size){        
-    
+      kDistance = 1.0 / (distance[i][k] + 2.0);
+      solutionSet_.get(i).setFitness(rawFitness[i] + kDistance);
+    }
+  }
+
+  /**
+   *  Gets 'size' elements from a population of more than 'size' elements
+   *  using for this de enviromentalSelection truncation
+   *  @param size The number of elements to get.
+   */
+  public SolutionSet environmentalSelection(int size){
+
     if (solutionSet_.size() < size) {
       size = solutionSet_.size();
     }
-        
+
     // Create a new auxiliar population for no alter the original population
     SolutionSet aux = new SolutionSet(solutionSet_.size());
-                
+
     int i = 0;
     while (i < solutionSet_.size()){
       if (solutionSet_.get(i).getFitness()<1.0){
@@ -137,9 +132,9 @@ public class Spea2Fitness {
         solutionSet_.remove(i);
       } else {
         i++;
-      } // if
-    } // while
-                
+      }
+    }
+
     if (aux.size() < size){
       Comparator<Solution> comparator = new FitnessComparator();
       solutionSet_.sort(comparator);
@@ -149,10 +144,10 @@ public class Spea2Fitness {
       }
       return aux;
     } else if (aux.size() == size) {
-      return aux;            
-    }        
-                                                
-    double [][] distance = distance_.distanceMatrix(aux);   
+      return aux;
+    }
+
+    double [][] distance = distance_.distanceMatrix(aux);
     List< List<DistanceNode> > distanceList = new LinkedList< List<DistanceNode> >();
     for (int pos = 0; pos < aux.size(); pos++) {
       aux.get(pos).setLocation(pos);
@@ -160,18 +155,17 @@ public class Spea2Fitness {
       for (int ref = 0; ref < aux.size(); ref++) {
         if (pos != ref) {
           distanceNodeList.add(new DistanceNode(distance[pos][ref],ref));
-        } // if
-      } // for
+        }
+      }
       distanceList.add(distanceNodeList);
-    } // for                        
-
+    }
 
     for (List<DistanceNode> aDistanceList : distanceList) {
       Collections.sort(aDistanceList, distanceNodeComparator);
-    } // for
-                              
+    }
+
     while (aux.size() > size) {
-      double minDistance = Double.MAX_VALUE;            
+      double minDistance = Double.MAX_VALUE;
       int toRemove = 0;
       i = 0;
       for (List<DistanceNode> dn : distanceList) {
@@ -190,13 +184,13 @@ public class Spea2Fitness {
           if (dn.get(k).getDistance() <
                   distanceList.get(toRemove).get(k).getDistance()) {
             toRemove = i;
-          } // if
-        } // if
+          }
+        }
         i++;
-      } // while
-      
+      }
+
       int tmp = aux.get(toRemove).getLocation();
-      aux.remove(toRemove);            
+      aux.remove(toRemove);
       distanceList.remove(toRemove);
 
       for (List<DistanceNode> aDistanceList : distanceList) {
@@ -204,10 +198,10 @@ public class Spea2Fitness {
         while (interIterator.hasNext()) {
           if (interIterator.next().getReference() == tmp) {
             interIterator.remove();
-          } // if
-        } // while
-      } // while      
-    } // while   
+          }
+        }
+      }
+    }
     return aux;
-  } // environmentalSelection   
-} // Spea2Fitness
+  }
+}

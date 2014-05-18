@@ -45,15 +45,17 @@ public class ObjectiveComparator implements Comparator<Solution> {
   public ObjectiveComparator(int nObj) {
     this.nObj = nObj;
     ascendingOrder_ = true;
-  } // ObjectiveComparator
+  }
 
   public ObjectiveComparator(int nObj, boolean descendingOrder) {
     this.nObj = nObj;
-    if (descendingOrder)
+    if (descendingOrder) {
       ascendingOrder_ = false;
-    else
-      ascendingOrder_ = true ;
-  } // ObjectiveComparator
+    }
+    else {
+      ascendingOrder_ = true;
+    }
+  }
 
   /**
    * Compares two solutions.
@@ -65,10 +67,12 @@ public class ObjectiveComparator implements Comparator<Solution> {
    */
   @Override
   public int compare(Solution o1, Solution o2) {
-    if (o1 == null)
+    if (o1 == null) {
       return 1;
-    else if (o2 == null)
+    }
+    else if (o2 == null) {
       return -1;
+    }
 
     double objetive1 = ((Solution) o1).getObjective(this.nObj);
     double objetive2 = ((Solution) o2).getObjective(this.nObj);
@@ -89,5 +93,5 @@ public class ObjectiveComparator implements Comparator<Solution> {
         return 0;
       }
     }
-  } // compare
-} // ObjectiveComparator
+  }
+}

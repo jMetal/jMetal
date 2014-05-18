@@ -31,18 +31,18 @@ import java.util.Comparator;
  * objective function.
  */
 public class EpsilonObjectiveComparator implements Comparator<Solution> {
-    
+
   /**
    * Stores the objective index to compare
    */
   private int objective_;
-  
+
   /**
    * Stores the eta value for epsilon-dominance
    */
   private double eta_;
-    
-  /** 
+
+  /**
    * Constructor.
    * @param nObj Index of the objective to compare.
    * @param eta Value for epsilon-dominance.
@@ -50,25 +50,27 @@ public class EpsilonObjectiveComparator implements Comparator<Solution> {
   public EpsilonObjectiveComparator(int nObj,double eta) {
     objective_ = nObj;
     eta_       = eta;
-  } // EObjectiveComparator
-    
- /**
-  * Compares two solutions.
-  * @param o1 Object representing the first <code>Solution</code>.
-  * @param o2 Object representing the second <code>Solution</code>.
-  * @return -1, or 0, or 1 if o1 is less than, equal, or greater than o2,
-  * respectively.
-  */
+  }
+
+  /**
+   * Compares two solutions.
+   * @param o1 Object representing the first <code>Solution</code>.
+   * @param o2 Object representing the second <code>Solution</code>.
+   * @return -1, or 0, or 1 if o1 is less than, equal, or greater than o2,
+   * respectively.
+   */
   @Override
   public int compare(Solution o1, Solution o2) {
-    if (o1==null)
+    if (o1==null) {
       return 1;
-    else if (o2 == null)
+    }
+    else if (o2 == null) {
       return -1;
-    
+    }
+
     double objetive1 = ((Solution)o1).getObjective(objective_);
     double objetive2 = ((Solution)o2).getObjective(objective_);
-        
+
     //Objetive implements comparable!!! 
     if (objetive1/(1 + eta_) < objetive2) {
       return -1;
@@ -77,5 +79,5 @@ public class EpsilonObjectiveComparator implements Comparator<Solution> {
     } else {
       return 0;
     }
-  } // compare
-} // EObjectiveComparator
+  }
+}

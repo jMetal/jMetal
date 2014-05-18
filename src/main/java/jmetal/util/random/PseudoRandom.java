@@ -50,7 +50,7 @@ public class PseudoRandom  {
       //this.random = new java.util.Random((long)seed);
       random_ = new RandomGenerator();
     }
-  } // PseudoRandom
+  }
     
   public static void setRandomGenerator(IRandomGenerator generator) {
     random_ = generator ;
@@ -65,7 +65,7 @@ public class PseudoRandom  {
       random_ = defaultGenerator_ ;
     }
     return random_.nextInt(Integer.MAX_VALUE);
-  } // randInt
+  }
     
   /** 
    * Returns a random double value using the PseudoRandom generator.
@@ -75,10 +75,8 @@ public class PseudoRandom  {
     if (random_ == null) {
       random_ = defaultGenerator_ ;
     }
-    //return random_.rndReal(0.0,1.0);
     return random_.nextDouble();
-    //return randomJava.nextDouble();
-  } // randDouble
+  }
     
   /** 
    * Returns a random int value between a minimum bound and maximum bound using
@@ -92,8 +90,7 @@ public class PseudoRandom  {
       random_ = defaultGenerator_ ;
     }
     return minBound + random_.nextInt(maxBound-minBound);
-    //return minBound + randomJava.nextInt(maxBound-minBound+1);
-  } // randInt
+  }
     
   /** Returns a random double value between a minimum bound and a maximum bound
    * using the PseudoRandom generator.
@@ -106,8 +103,7 @@ public class PseudoRandom  {
       random_ = defaultGenerator_ ;
     }
     return minBound + random_.nextDouble() * (maxBound-minBound);
-    //return minBound + (maxBound - minBound)*randomJava.nextDouble();
-  } // randDouble
+  }
 
   /**
    * Use the polar form of the Box-Muller transformation to obtain
@@ -144,8 +140,9 @@ public class PseudoRandom  {
     double[] x = new double[dimension] ;
 
     double length = 0 ;
-    for (int i = 0; i < dimension; i++)
-      x[i] = 0.0 ;
+    for (int i = 0; i < dimension; i++) {
+      x[i] = 0.0;
+    }
 
     // --------- Step 1. Direction
 
@@ -179,8 +176,9 @@ public class PseudoRandom  {
     double[] x = new double[dimension] ;
 
     double length = 0 ;
-    for (int i = 0; i < dimension; i++)
-      x[i] = 0.0 ;
+    for (int i = 0; i < dimension; i++) {
+      x[i] = 0.0;
+    }
 
     // --------- Step 1. Direction
 
@@ -217,13 +215,7 @@ public class PseudoRandom  {
       FileOutputStream fos   = new FileOutputStream(fileName)     ;
       OutputStreamWriter osw = new OutputStreamWriter(fos)    ;
       BufferedWriter bw      = new BufferedWriter(osw)        ;
-/*
-      for (int i = 0 ; i < numberOfPoints ; i++) {
-        bw.write("" + PseudoRandom.randNormal(100, 10) + " " + PseudoRandom.randNormal(100, 10));
-        //bw.write("" + PseudoRandom.randDouble(0, 1)) ;
-        bw.newLine();
-      }
-          */
+
       double [] x  ;
       for (int i = 0 ; i < numberOfPoints ; i++) {
         x = randSphere(2) ;
@@ -237,4 +229,4 @@ public class PseudoRandom  {
     }
 
   }
-} // PseudoRandom
+}

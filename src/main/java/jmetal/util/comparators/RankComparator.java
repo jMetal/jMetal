@@ -38,22 +38,24 @@ public class RankComparator implements Comparator<Solution> {
    * respectively.
    */
   @Override
-  public int compare(Solution o1, Solution o2) {    
-    if (o1==null)
+  public int compare(Solution o1, Solution o2) {
+    if (o1==null) {
       return 1;
-    else if (o2 == null)
+    }
+    else if (o2 == null) {
       return -1;
-      
+    }
+
     Solution solution1 = (Solution)o1;
     Solution solution2 = (Solution)o2;
     if (solution1.getRank()<solution2.getRank()) {
       return -1;
     }
-    
+
     if (solution1.getRank()>solution2.getRank()) {
       return 1;
     }
-    
+
     return 0;
-  } // compare
-} // RankComparator
+  }
+}

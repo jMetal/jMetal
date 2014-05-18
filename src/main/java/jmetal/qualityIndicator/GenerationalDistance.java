@@ -34,11 +34,12 @@ import jmetal.util.JMException;
  *            Inst. Technol. (1998)
  */
 public class GenerationalDistance {
-  public jmetal.qualityIndicator.util.MetricsUtil utils_;  //utils_ is used to access to the
-                                           //MetricsUtil funcionalities
-  
-  static final double pow_ = 2.0;          //pow. This is the pow used for the
-                                           //distances
+  //utils_ is used to access to the MetricsUtil functionalities
+  public jmetal.qualityIndicator.util.MetricsUtil utils_;
+
+  //pow. This is the pow used for the
+  //distances
+  static final double pow_ = 2.0;
   
   /**
    * Constructor.
@@ -46,8 +47,8 @@ public class GenerationalDistance {
    */
   public GenerationalDistance() {
     utils_ = new jmetal.qualityIndicator.util.MetricsUtil();
-  } // GenerationalDistance
-  
+  }
+
   /**
    * Returns the generational distance value for a given front
    * @param front The front 
@@ -92,10 +93,12 @@ public class GenerationalDistance {
     // STEP 3. Sum the distances between each point of the front and the 
     // nearest point in the true Pareto front
     double sum = 0.0;
-    for (int i = 0; i < front.length; i++) 
+    for (int i = 0; i < front.length; i++) {
       sum += Math.pow(utils_.distanceToClosedPoint(normalizedFront[i],
-    		                                       normalizedParetoFront),
-    		                                       pow_);
+                      normalizedParetoFront),
+              pow_
+      );
+    }
    
     
     // STEP 4. Obtain the sqrt of the sum
@@ -105,7 +108,7 @@ public class GenerationalDistance {
     double generationalDistance = sum / normalizedFront.length;
     
     return generationalDistance;
-  } // generationalDistance
+  }
   
   /**
    * This class can be invoqued from the command line. Two params are required:
@@ -134,6 +137,5 @@ public class GenerationalDistance {
             new Integer(args[2]));
     
     System.out.println(value);  
-  } // main  
-  
-} // GenerationalDistance
+  }
+}
