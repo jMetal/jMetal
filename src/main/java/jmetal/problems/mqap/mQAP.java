@@ -86,7 +86,7 @@ public class mQAP extends Problem {
 
   // evaluation of the problem
   public void evaluate(Solution solution) throws JMException {
-    int [] permutation = ((Permutation)solution.getDecisionVariables()[0]).vector_;
+    int [] permutation = ((Permutation)solution.getDecisionVariables()[0]).getVector();
     for (int k = 0; k < numberOfObjectives_; k++) {
       double aux = 0.0;
       for (int i = 0; i < a_matrix.length; i++) {

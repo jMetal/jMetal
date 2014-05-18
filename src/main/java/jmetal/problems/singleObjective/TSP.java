@@ -90,16 +90,16 @@ public class TSP extends Problem {
       int x ;
       int y ;
 
-      x = ((Permutation)solution.getDecisionVariables()[0]).vector_[i] ;
-      y = ((Permutation)solution.getDecisionVariables()[0]).vector_[i+1] ;
+      x = ((Permutation)solution.getDecisionVariables()[0]).getVector()[i] ;
+      y = ((Permutation)solution.getDecisionVariables()[0]).getVector()[i+1] ;
 
       fitness += distanceMatrix_[x][y] ;
     }
     int firstCity ;
     int lastCity  ;
 
-    firstCity = ((Permutation)solution.getDecisionVariables()[0]).vector_[0] ;
-    lastCity  = ((Permutation)solution.getDecisionVariables()[0]).vector_[numberOfCities_ - 1] ;
+    firstCity = ((Permutation)solution.getDecisionVariables()[0]).getVector()[0] ;
+    lastCity  = ((Permutation)solution.getDecisionVariables()[0]).getVector()[numberOfCities_ - 1] ;
     fitness += distanceMatrix_[firstCity][lastCity] ;
 
     solution.setObjective(0, fitness);

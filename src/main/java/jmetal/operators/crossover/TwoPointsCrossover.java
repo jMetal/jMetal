@@ -90,10 +90,10 @@ public class TwoPointsCrossover extends Crossover {
         int offspring2Vector[] ;
 
         permutationLength = ((Permutation)parent1.getDecisionVariables()[0]).getLength() ;
-        parent1Vector     = ((Permutation)parent1.getDecisionVariables()[0]).vector_ ;
-        parent2Vector    = ((Permutation)parent2.getDecisionVariables()[0]).vector_ ;
-        offspring1Vector = ((Permutation)offspring[0].getDecisionVariables()[0]).vector_ ;
-        offspring2Vector = ((Permutation)offspring[1].getDecisionVariables()[0]).vector_ ;
+        parent1Vector     = ((Permutation)parent1.getDecisionVariables()[0]).getVector() ;
+        parent2Vector    = ((Permutation)parent2.getDecisionVariables()[0]).getVector() ;
+        offspring1Vector = ((Permutation)offspring[0].getDecisionVariables()[0]).getVector() ;
+        offspring2Vector = ((Permutation)offspring[1].getDecisionVariables()[0]).getVector() ;
 
         // STEP 1: Get two cutting points
         crosspoint1 = PseudoRandom.randInt(0,permutationLength-1) ;

@@ -60,7 +60,7 @@ public class BinaryReal extends Binary {
    */
   public BinaryReal() {
     super();
-  } //BinaryReal
+  }
 
   /**
    * Constructor
@@ -110,6 +110,7 @@ public class BinaryReal extends Binary {
    * <code>value_</code> field and can be accessed by the method
    * <code>getValue</code>.
    */
+  @Override
   public void decode(){
     double value = 0.0;
     for (int i = 0; i < numberOfBits_; i++) {
@@ -129,7 +130,7 @@ public class BinaryReal extends Binary {
    */
   public double getValue() {
     return value_;
-  } //getValue
+  }
 
   /**
    * This implementation is efficient for binary string of length up to 24

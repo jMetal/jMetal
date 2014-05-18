@@ -84,10 +84,10 @@ public class PMXCrossover extends Crossover {
 
     permutationLength = ((Permutation) parent1.getDecisionVariables()[0]).getLength();
 
-    int parent1Vector[] = ((Permutation) parent1.getDecisionVariables()[0]).vector_;
-    int parent2Vector[] = ((Permutation) parent2.getDecisionVariables()[0]).vector_;
-    int offspring1Vector[] = ((Permutation) offspring[0].getDecisionVariables()[0]).vector_;
-    int offspring2Vector[] = ((Permutation) offspring[1].getDecisionVariables()[0]).vector_;
+    int parent1Vector[] = ((Permutation) parent1.getDecisionVariables()[0]).getVector();
+    int parent2Vector[] = ((Permutation) parent2.getDecisionVariables()[0]).getVector();
+    int offspring1Vector[] = ((Permutation) offspring[0].getDecisionVariables()[0]).getVector();
+    int offspring2Vector[] = ((Permutation) offspring[1].getDecisionVariables()[0]).getVector();
 
     if (PseudoRandom.randDouble() < probability) {
       int cuttingPoint1;
