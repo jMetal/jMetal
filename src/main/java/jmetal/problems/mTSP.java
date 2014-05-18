@@ -62,10 +62,10 @@ public class mTSP extends Problem {
     costMatrix_     = readProblem(file_cost);
     System.out.println(numberOfCities_) ;
     length_      [0] = numberOfCities_ ;
+
     if (solutionType.compareTo("Permutation") == 0) {
       solutionType_ = new PermutationSolutionType(this);
-    }
-    else {
+    } else {
       throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
   }

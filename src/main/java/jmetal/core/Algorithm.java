@@ -158,8 +158,7 @@ public abstract class Algorithm implements Serializable {
   public Object getOutputParameter(String name) {
     if (outPutParameters_ != null) {
       return outPutParameters_.get(name);
-    }
-    else {
+    } else {
       return null;
     }
   }

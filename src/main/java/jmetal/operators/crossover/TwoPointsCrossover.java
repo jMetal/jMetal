@@ -148,8 +148,7 @@ public class TwoPointsCrossover extends Crossover {
           }
         }
       }
-    }
-    else {
+    } else {
       Configuration.logger_.severe("TwoPointsCrossover.doCrossover: invalid " +
               "type" +
               parent1.getDecisionVariables()[0].getVariableType());

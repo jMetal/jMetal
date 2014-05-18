@@ -174,8 +174,7 @@ public class LZ09 {
       double xy    = 2*(x - 0.5);
       if(css==1) {
         beta = xy - ra * Math.cos(theta);
-      }
-      else {
+      } else {
         beta = xy - ra*Math.sin(theta);
       }
     }
@@ -186,8 +185,7 @@ public class LZ09 {
       double ra    = 0.8*t1;
       if(css==1) {
         beta = xy - ra * Math.cos(theta / 3);
-      }
-      else {
+      } else {
         beta = xy - ra*Math.sin(theta);
       }
     }
@@ -199,11 +197,9 @@ public class LZ09 {
       double xy    = 2*(x - 0.5);
       if(css==1) {
         beta = xy - rho * Math.sin(phi) * Math.sin(theta);
-      }
-      else if(css==2) {
+      } else if(css==2) {
         beta = xy - rho * Math.sin(phi) * Math.cos(theta);
-      }
-      else {
+      } else {
         beta = xy - rho * Math.cos(phi);
       }
     }
@@ -214,8 +210,7 @@ public class LZ09 {
       double xy    = 2*(x - 0.5);
       if(css==1) {
         beta = xy - ra * Math.cos(theta);
-      }
-      else {
+      } else {
         beta = xy - ra*Math.sin(theta);
       }
     }

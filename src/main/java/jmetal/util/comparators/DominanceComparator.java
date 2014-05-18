@@ -60,8 +60,7 @@ public class DominanceComparator implements Comparator<Solution> {
   public int compare(Solution object1, Solution object2) {
     if (object1==null) {
       return 1;
-    }
-    else if (object2 == null) {
+    } else if (object2 == null) {
       return -1;
     }
 

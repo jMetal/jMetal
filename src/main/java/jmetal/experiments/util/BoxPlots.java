@@ -34,7 +34,7 @@ import java.util.logging.Level;
  *
  * Class for generating R scripts to obtain boxplots from the data experiments
  */
-public class BoxPlots implements iExperimentOutput{
+public class BoxPlots implements IExperimentOutput{
   Experiment experiment_ ;
 
   public BoxPlots (Experiment experiment) {
@@ -59,7 +59,7 @@ public class BoxPlots implements iExperimentOutput{
 
       try {
         FileWriter os = new FileWriter(rFile, false);
-        os.write("postscript(\""  +
+        os.write("postscript(\"" +
                 experiment_.indicatorList_[indicator] +
                 ".Boxplot.eps\", horizontal=FALSE, onefile=FALSE, height=8, width=12, pointsize=10)" +
                 "\n");
@@ -68,29 +68,29 @@ public class BoxPlots implements iExperimentOutput{
         os.write("qIndicator <- function(indicator, problem)" + "\n");
         os.write("{" + "\n");
 
-        for (int i = 0; i <  experiment_.algorithmNameList_.length; i++) {
-          os.write("file" +  experiment_.algorithmNameList_[i] +
+        for (int i = 0; i < experiment_.algorithmNameList_.length; i++) {
+          os.write("file" + experiment_.algorithmNameList_[i] +
                   "<-paste(resultDirectory, \"" +
                   experiment_.algorithmNameList_[i] + "\", sep=\"/\")" + "\n");
-          os.write("file" +  experiment_.algorithmNameList_[i] +
-                  "<-paste(file" +  experiment_.algorithmNameList_[i] + ", " +
+          os.write("file" + experiment_.algorithmNameList_[i] +
+                  "<-paste(file" + experiment_.algorithmNameList_[i] + ", " +
                   "problem, sep=\"/\")" + "\n");
-          os.write("file" +  experiment_.algorithmNameList_[i] +
-                  "<-paste(file" +  experiment_.algorithmNameList_[i] + ", " +
+          os.write("file" + experiment_.algorithmNameList_[i] +
+                  "<-paste(file" + experiment_.algorithmNameList_[i] + ", " +
                   "indicator, sep=\"/\")" + "\n");
-          os.write( experiment_.algorithmNameList_[i] + "<-scan(" + "file" +  experiment_.algorithmNameList_[i] + ")" + "\n");
+          os.write(experiment_.algorithmNameList_[i] + "<-scan(" + "file" + experiment_.algorithmNameList_[i] + ")" + "\n");
           os.write("\n");
         } // for
 
         os.write("algs<-c(");
-        for (int i = 0; i <  experiment_.algorithmNameList_.length - 1; i++) {
-          os.write("\"" +  experiment_.algorithmNameList_[i] + "\",");
+        for (int i = 0; i < experiment_.algorithmNameList_.length - 1; i++) {
+          os.write("\"" + experiment_.algorithmNameList_[i] + "\",");
         } // for
-        os.write("\"" +  experiment_.algorithmNameList_[ experiment_.algorithmNameList_.length - 1] + "\")" + "\n");
+        os.write("\"" + experiment_.algorithmNameList_[experiment_.algorithmNameList_.length - 1] + "\")" + "\n");
 
         os.write("boxplot(");
-        for (int i = 0; i <  experiment_.algorithmNameList_.length; i++) {
-          os.write( experiment_.algorithmNameList_[i] + ",");
+        for (int i = 0; i < experiment_.algorithmNameList_.length; i++) {
+          os.write(experiment_.algorithmNameList_[i] + ",");
         } // for
         if (experiment_.boxplotNotch_) {
           os.write("names=algs, notch = TRUE)" + "\n");
@@ -104,18 +104,16 @@ public class BoxPlots implements iExperimentOutput{
 
         os.write("par(mfrow=c(" + experiment_.boxplotRows_ + "," + experiment_.boxplotColumns_ + "))" + "\n");
 
-        os.write("indicator<-\"" +  experiment_.indicatorList_[indicator] + "\"" + "\n");
+        os.write("indicator<-\"" + experiment_.indicatorList_[indicator] + "\"" + "\n");
 
         for (String problem : experiment_.problemList_) {
           os.write("qIndicator(indicator, \"" + problem + "\")" + "\n");
         }
 
         os.close();
-      }
-      catch (IOException e) {
+      } catch (IOException e) {
         Configuration.logger_.log(Level.SEVERE, "Error", e);
       }
-    } // for
-
+    }
   }
 }

@@ -105,8 +105,7 @@ public class Ranking {
         if (flagDominate == -1) {
           iDominate[p].add(q);
           dominateMe[q]++;
-        }
-        else if (flagDominate == 1) {
+        } else if (flagDominate == 1) {
           iDominate[q].add(p);
           dominateMe[p]++;
         }

@@ -59,14 +59,12 @@ public class OneMax extends Problem {
 
     solutionType_ = new BinarySolutionType(this) ;
 
-    //variableType_ = new Class[numberOfVariables_] ;
     length_       = new int[numberOfVariables_];
     length_      [0] = numberOfBits ;
 
     if (solutionType.compareTo("Binary") == 0) {
       solutionType_ = new BinarySolutionType(this);
-    }
-    else {
+    } else {
       throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
   }

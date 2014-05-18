@@ -34,7 +34,7 @@ import java.util.logging.Level;
 /**
  * Created by Antonio J. Nebro on 20/02/14.
  */
-public class FriedmanTables implements iExperimentOutput {
+public class FriedmanTables implements IExperimentOutput {
   Experiment experiment_ ;
 
   public FriedmanTables(Experiment experiment) {

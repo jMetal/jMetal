@@ -125,8 +125,7 @@ public class MultithreadedAlgorithmRunner extends SynchronousParallelRunner {
         settings = (new SettingsFactory()).getSettingsObject(algorithmName, settingsParams) ;
         algorithm = settings.configure(configuration);
         isr.close();
-      }
-      else {
+      } else {
         settings = (new SettingsFactory()).getSettingsObject(algorithmName_, settingsParams) ;
         algorithm = settings.configure();
       }

@@ -13,7 +13,7 @@ import java.util.logging.Level;
  * Created by Antonio J. Nebro on 23/02/14.
  */
 
-public class ReferenceParetoFronts implements iExperimentOutput {
+public class ReferenceParetoFronts implements IExperimentOutput {
   public Experiment experiment_ ;
 
   public ReferenceParetoFronts(Experiment experiment) {

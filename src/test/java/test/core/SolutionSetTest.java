@@ -98,4 +98,12 @@ public class SolutionSetTest {
 
     //assertTrue(solutionSet1.equals(solutionSet3)) ;
   }
+
+  @Test
+  public void isEmptyTest() {
+    assertTrue(solutionSet_.isEmtpy()) ;
+
+    solutionSet_.add(new Solution()) ;
+    assertFalse(solutionSet_.isEmtpy()) ;
+  }
 }

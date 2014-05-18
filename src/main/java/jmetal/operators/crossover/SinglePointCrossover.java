@@ -143,8 +143,7 @@ public class SinglePointCrossover extends Crossover {
             ((Binary) offSpring[0].getDecisionVariables()[i]).decode();
             ((Binary) offSpring[1].getDecisionVariables()[i]).decode();
           }
-        }
-        else {
+        } else {
           int crossoverPoint = PseudoRandom.randInt(0, parent1.numberOfVariables() - 1);
           int valueX1;
           int valueX2;

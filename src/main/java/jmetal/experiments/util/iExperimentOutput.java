@@ -28,6 +28,6 @@ import jmetal.util.JMException;
  *
  * Interface for all the outputs of an experiment
  */
-public interface iExperimentOutput {
+public interface IExperimentOutput {
   public void generate() throws JMException ;
 }

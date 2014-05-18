@@ -10,7 +10,7 @@ import java.util.logging.Level;
 /**
  * Created by Antonio J. Nebro on 16/02/14.
  */
-public class LatexTables implements iExperimentOutput {
+public class LatexTables implements IExperimentOutput {
   private Experiment experiment_ ;
 
   /**

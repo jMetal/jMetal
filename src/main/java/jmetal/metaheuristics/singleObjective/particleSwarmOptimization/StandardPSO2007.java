@@ -60,8 +60,13 @@ public class StandardPSO2007 extends Algorithm {
   private double W_;
   private double C_;
 
-  public double getW() { return W_ ;}
-  public double getC() { return C_ ;}
+  public double getW() {
+    return W_ ;
+  }
+  public double getC() {
+    return C_ ;
+  }
+
   /**
    * Constructor
    * @param problem Problem to solve
@@ -80,31 +85,8 @@ public class StandardPSO2007 extends Algorithm {
     findBestSolution_ = new BestSolutionSelection(parameters) ;
 
     evaluations_ = 0 ;
-  } // Constructor
-
-/*
-  public int[] getNeighbourhood(int i) {
-    int[] neighbors = new int[3] ;
-    neighbors[0] = (i - 1 + swarmSize_)% swarmSize_;
-    neighbors[1] = i ;
-    neighbors[2] = (i + 1)% swarmSize_;
-
-    return neighbors ;
   }
 
-  public Solution getNeighborBest(int i) {
-    int[] neighborIndex = getNeighbourhood(i) ;
-
-    SolutionSet neighbors = new SolutionSet() ;
-    for (int j = 0 ; j < neighborIndex.length; j++) {
-      neighbors.add(swarm_.get(neighborIndex[j])) ;
-    }
-
-    neighbors.sort(comparator_) ;
-
-    return neighbors.get(0) ;
-  }
-*/
   /**
    * Initialize all parameter of the algorithm
    */
@@ -113,7 +95,7 @@ public class StandardPSO2007 extends Algorithm {
     maxIterations_ = ((Integer) getInputParameter("maxIterations")).intValue();
     numberOfParticlesToInform_ = ((Integer) getInputParameter("numberOfParticlesToInform")).intValue() ;
 
-    System.out.println("Swarm size: " + swarmSize_) ;
+    //System.out.println("Swarm size: " + swarmSize_) ;
 
     iteration_ = 0 ;
 
@@ -123,7 +105,7 @@ public class StandardPSO2007 extends Algorithm {
 
     // Create the speed_ vector
     speed_ = new double[swarmSize_][problem_.getNumberOfVariables()];
-  } // initParams
+  }
 
 
   private Solution getNeighborBest(int i) {
@@ -150,20 +132,17 @@ public class StandardPSO2007 extends Algorithm {
       XReal particle = new XReal(swarm_.get(i)) ;
       XReal localBest = new XReal(localBest_[i]) ;
       XReal neighborhoodBest = new XReal(neighborhoodBest_[i]) ;
-      //XReal neighborhoodBest = new XReal(globalBest_) ;
 
       r1 = PseudoRandom.randDouble(0, C_);
       r2 = PseudoRandom.randDouble(0, C_);
 
-      //W_ = 0.9 ;
       if (localBest_[i] != neighborhoodBest_[i]) {
         for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
           speed_[i][var] = W_ * speed_[i][var] +
                   r1 * (localBest.getValue(var) - particle.getValue(var)) +
                   r2 * (neighborhoodBest.getValue(var) - particle.getValue(var));
         }
-      }
-      else {
+      } else {
         for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
           speed_[i][var] = W_* speed_[i][var] +
                     r1 * (localBest.getValue(var) - particle.getValue(var)) ;
@@ -178,9 +157,7 @@ public class StandardPSO2007 extends Algorithm {
    */
   private void computeNewPositions() throws JMException {
     for (int i = 0; i < swarmSize_; i++) {
-      //Variable[] particle = swarm_.get(i).getDecisionVariables();
       XReal particle = new XReal(swarm_.get(i)) ;
-      //particle.move(speed_[i]);
       for (int var = 0; var < particle.size(); var++) {
         particle.setValue(var, particle.getValue(var) +  speed_[i][var]) ;
 
@@ -192,10 +169,9 @@ public class StandardPSO2007 extends Algorithm {
           particle.setValue(var, problem_.getUpperLimit(var));
           speed_[i][var] = 0;
         }
-
       }
     }
-  } // computeNewPositions
+  }
 
 
   /**
@@ -221,7 +197,7 @@ public class StandardPSO2007 extends Algorithm {
     System.out.println("Swarm size: " + swarm_.size()) ;
     System.out.println("list size: " + neighborhood_.getNeighborhood().size()) ;
 
-    //-> Step2. Initialize the speed_ of each particle
+    // Step2. Initialize the speed_ of each particle
     for (int i = 0; i < swarmSize_; i++) {
       XReal particle = new XReal(swarm_.get(i))  ;
       for (int j = 0; j < problem_.getNumberOfVariables(); j++) {
@@ -240,19 +216,18 @@ public class StandardPSO2007 extends Algorithm {
       neighborhoodBest_[i] = getNeighborBest(i) ;
     }
 
-    System.out.println("neighborhood_i " + neighborhood_.getNeighbors(0) );
-    for (int s :  neighborhood_.getNeighbors(0)) {
-      System.out.println(s + ": " + localBest_[s].getObjective(0)) ;
-    }
+    //System.out.println("neighborhood_i " + neighborhood_.getNeighbors(0) );
+    //for (int s :  neighborhood_.getNeighbors(0)) {
+    //  System.out.println(s + ": " + localBest_[s].getObjective(0)) ;
+    //}
 
-    System.out.println("localBest_i " + localBest_[0].getObjective(0) );
-    System.out.println("neighborhoodBest_i " + getNeighborBest(0).getObjective(0) );
+    //System.out.println("localBest_i " + localBest_[0].getObjective(0) );
+    //System.out.println("neighborhoodBest_i " + getNeighborBest(0).getObjective(0) );
 
-    System.out.println("Swarm: " + swarm_) ;
+    //System.out.println("Swarm: " + swarm_) ;
     swarm_.printObjectives();
     Double b = swarm_.best(comparator_).getObjective(0) ;
-    System.out.println("Best: " + b) ;
-
+    //System.out.println("Best: " + b) ;
 
     double bestFoundFitness = Double.MAX_VALUE ;
 
@@ -275,7 +250,7 @@ public class StandardPSO2007 extends Algorithm {
         if ((swarm_.get(i).getObjective(0) < localBest_[i].getObjective(0))) {
           Solution particle = new Solution(swarm_.get(i));
           localBest_[i] = particle;
-        } // if
+        }
       }
       for (int i = 0; i < swarm_.size(); i++) {
         neighborhoodBest_[i] = getNeighborBest(i) ;
@@ -283,8 +258,7 @@ public class StandardPSO2007 extends Algorithm {
 
 
       iteration_++;
-      //System.out.println("Swarm( " + iteration_+ "): " + swarm_) ;
-      //swarm_.printObjectives();
+
       Double bestCurrentFitness = swarm_.best(comparator_).getObjective(0) ;
       System.out.println("Best: " + bestCurrentFitness) ;
 
@@ -303,5 +277,5 @@ public class StandardPSO2007 extends Algorithm {
     resultPopulation.add(swarm_.get((Integer)findBestSolution_.execute(swarm_))) ;
 
     return resultPopulation ;
-  } // execute
-} // StandardPSO2007
+  }
+}

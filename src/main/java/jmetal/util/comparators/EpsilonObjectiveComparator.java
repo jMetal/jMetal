@@ -63,18 +63,17 @@ public class EpsilonObjectiveComparator implements Comparator<Solution> {
   public int compare(Solution o1, Solution o2) {
     if (o1==null) {
       return 1;
-    }
-    else if (o2 == null) {
+    } else if (o2 == null) {
       return -1;
     }
 
-    double objetive1 = ((Solution)o1).getObjective(objective_);
-    double objetive2 = ((Solution)o2).getObjective(objective_);
+    double objective1 = ((Solution)o1).getObjective(objective_);
+    double objective2 = ((Solution)o2).getObjective(objective_);
 
-    //Objetive implements comparable!!! 
-    if (objetive1/(1 + eta_) < objetive2) {
+    //Objective implements comparable!!!
+    if (objective1/(1 + eta_) < objective2) {
       return -1;
-    } else if (objetive1/(1 + eta_) > objetive2) {
+    } else if (objective1/(1 + eta_) > objective2) {
       return 1;
     } else {
       return 0;

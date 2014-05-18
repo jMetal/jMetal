@@ -312,8 +312,7 @@ public class Solution implements Serializable {
   public int getNumberOfObjectives() {
     if (objective_ == null) {
       return 0;
-    }
-    else {
+    } else {
       return numberOfObjectives_;
     }
   }

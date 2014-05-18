@@ -46,35 +46,25 @@ public class ProblemFactory {
     String base = "jmetal.problems.";
     if (name.equals("TSP") || name.equals("OneMax")) {
       base += "singleObjective.";
-    }
-    else if (name.equals("mQAP")) {
+    } else if (name.equals("mQAP")) {
       base += "mqap.";
-    }
-    else if (name.substring(0,name.length()-1).equalsIgnoreCase("DTLZ")) {
+    } else if (name.substring(0,name.length()-1).equalsIgnoreCase("DTLZ")) {
       base += "DTLZ.";
-    }
-    else if (name.substring(0,name.length()-1).equalsIgnoreCase("WFG")) {
+    } else if (name.substring(0,name.length()-1).equalsIgnoreCase("WFG")) {
       base += "WFG.";
-    }
-    else if (name.substring(0,name.length()-1).equalsIgnoreCase("UF")) {
+    } else if (name.substring(0,name.length()-1).equalsIgnoreCase("UF")) {
       base += "cec2009Competition.";
-    }
-    else if (name.substring(0,name.length()-2).equalsIgnoreCase("UF")) {
+    } else if (name.substring(0,name.length()-2).equalsIgnoreCase("UF")) {
       base += "cec2009Competition.";
-    }
-    else if (name.substring(0,name.length()-1).equalsIgnoreCase("ZDT")) {
+    } else if (name.substring(0,name.length()-1).equalsIgnoreCase("ZDT")) {
       base += "ZDT.";
-    }
-    else if (name.substring(0,name.length()-3).equalsIgnoreCase("ZZJ07")) {
+    } else if (name.substring(0,name.length()-3).equalsIgnoreCase("ZZJ07")) {
       base += "ZZJ07.";
-    }
-    else if (name.substring(0,name.length()-3).equalsIgnoreCase("LZ09")) {
+    } else if (name.substring(0,name.length()-3).equalsIgnoreCase("LZ09")) {
       base += "LZ09.";
-    }
-    else if (name.substring(0,name.length()-4).equalsIgnoreCase("ZZJ07")) {
+    } else if (name.substring(0,name.length()-4).equalsIgnoreCase("ZZJ07")) {
       base += "ZZJ07.";
-    }
-    else if (name.substring(0,name.length()-3).equalsIgnoreCase("LZ06")) {
+    } else if (name.substring(0,name.length()-3).equalsIgnoreCase("LZ06")) {
       base += "LZ06.";
     }
 
@@ -90,8 +80,7 @@ public class ProblemFactory {
       // constructors[i] is the selected one constructor
       Problem problem = (Problem)constructors[i].newInstance(params);
       return problem;
-    }
-    catch(Exception e) {
+    } catch(Exception e) {
       Configuration.logger_.log(
               Level.SEVERE,
               "ProblemFactory.getProblem: " + "Problem '" + name + "' does not exist. " +
