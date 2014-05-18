@@ -38,7 +38,7 @@ public class Distance {
    */
   public Distance() {
     //do nothing.
-  } // Distance
+  }
 
 
   /**
@@ -60,12 +60,12 @@ public class Distance {
         solutionJ = solutionSet.get(j);
         distance[i][j] = this.distanceBetweenObjectives(solutionI,solutionJ);
         distance[j][i] = distance[i][j];
-      } // for
-    } // for        
+      }
+    }
 
-    //->Return the matrix of distances
+    // Return the matrix of distances
     return distance;
-  } // distanceMatrix
+  }
 
   /** Returns the minimum distance from a <code>Solution</code> to a
    * <code>SolutionSet according to the objective values</code>.
@@ -82,13 +82,14 @@ public class Distance {
     // found the min distance respect to population
     for (int i = 0; i < solutionSet.size();i++){
       double aux = this.distanceBetweenObjectives(solution,solutionSet.get(i));
-      if (aux < distance)
+      if (aux < distance) {
         distance = aux;
-    } // for
+      }
+    }
 
-    //->Return the best distance
+    // Return the best distance
     return distance;
-  } // distanceToSolutionSetinObjectiveSpace
+  }
 
   /** Returns the minimum distance from a <code>Solution</code> to a 
    * <code>SolutionSet according to the encodings.variable values</code>.
@@ -105,13 +106,14 @@ public class Distance {
     // found the min distance respect to population
     for (int i = 0; i < solutionSet.size();i++){
       double aux = this.distanceBetweenSolutions(solution,solutionSet.get(i));
-      if (aux < distance)
+      if (aux < distance) {
         distance = aux;
-    } // for
+      }
+    }
 
-    //->Return the best distance
+    // Return the best distance
     return distance;
-  } // distanceToSolutionSetInSolutionSpace
+  }
 
   /** Returns the distance between two solutions in the search space.
    *  @param solutionI The first <code>Solution</code>.
@@ -121,37 +123,18 @@ public class Distance {
    */
   public double distanceBetweenSolutions(Solution solutionI, Solution solutionJ)
           throws JMException{
-    /*
-    double distance = 0.0;
-    if ((solutionI.getDecisionVariables() != null) &&
-            (solutionJ.getDecisionVariables() != null)) {
-      Variable[] decisionVariableI = solutionI.getDecisionVariables();
-      Variable[] decisionVariableJ = solutionJ.getDecisionVariables();
-
-      double diff;    //Auxiliar var
-      //-> Calculate the Euclidean distance
-      for (int i = 0; i < decisionVariableI.length; i++){
-        diff = decisionVariableI[i].getValue() -
-                decisionVariableJ[i].getValue();
-        distance += Math.pow(diff,2.0);
-      } // for    
-    }
-    //-> Return the euclidean distance
-    return Math.sqrt(distance);
-    */
     double distance = 0.0;
     XReal solI = new XReal(solutionI) ;
     XReal solJ = new XReal(solutionJ) ;
-
-      double diff;    //Auxiliar var
-      //-> Calculate the Euclidean distance
-      for (int i = 0; i < solI.getNumberOfDecisionVariables(); i++){
-        diff = solI.getValue(i) - solJ.getValue(i);
-        distance += Math.pow(diff,2.0);
-      } // for
-    //-> Return the euclidean distance
+    double diff;
+    // Calculate the Euclidean distance
+    for (int i = 0; i < solI.getNumberOfDecisionVariables(); i++){
+      diff = solI.getValue(i) - solJ.getValue(i);
+      distance += Math.pow(diff,2.0);
+    }
+    // Return the euclidean distance
     return Math.sqrt(distance);
-  } // distanceBetweenSolutions
+  }
 
   /** Returns the distance between two solutions in objective space.
    *  @param solutionI The first <code>Solution</code>.
@@ -159,17 +142,17 @@ public class Distance {
    *  @return the distance between solutions in objective space.
    */
   public double distanceBetweenObjectives(Solution solutionI, Solution solutionJ){
-    double diff;    //Auxiliar var
+    double diff;
     double distance = 0.0;
-    //-> Calculate the euclidean distance
+    // Calculate the euclidean distance
     for (int nObj = 0; nObj < solutionI.getNumberOfObjectives();nObj++){
       diff = solutionI.getObjective(nObj) - solutionJ.getObjective(nObj);
       distance += Math.pow(diff,2.0);
-    } // for   
+    }
 
     //Return the euclidean distance
     return Math.sqrt(distance);
-  } // distanceBetweenObjectives.
+  }
 
   /**
    * Return the index of the nearest solution in the solution set to a given solution
@@ -194,15 +177,6 @@ public class Distance {
     catch (Exception e) {
       Configuration.logger_.log(Level.SEVERE, "Error", e);
     }
-    /*
-    if (minimumDistance == 0) {
-      System.out.println("distance is null") ;
-      System.out.println("solution: " + solution) ;
-      System.out.println("index(" + index+ "): " + solution) ;
- solutionSet.printObjectivesToFile("pepe");
-      System.exit(-1);
-    }
-    */
     return index ;
   }
 
@@ -214,19 +188,20 @@ public class Distance {
   public void crowdingDistanceAssignment(SolutionSet solutionSet, int nObjs) {
     int size = solutionSet.size();
 
-    if (size == 0)
+    if (size == 0) {
       return;
+    }
 
     if (size == 1) {
       solutionSet.get(0).setCrowdingDistance(Double.POSITIVE_INFINITY);
       return;
-    } // if
+    }
 
     if (size == 2) {
       solutionSet.get(0).setCrowdingDistance(Double.POSITIVE_INFINITY);
       solutionSet.get(1).setCrowdingDistance(Double.POSITIVE_INFINITY);
       return;
-    } // if       
+    }
 
     //Use a new SolutionSet to avoid altering the original solutionSet
     SolutionSet front = new SolutionSet(size);
@@ -234,8 +209,9 @@ public class Distance {
       front.add(solutionSet.get(i));
     }
 
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < size; i++) {
       front.get(i).setCrowdingDistance(0.0);
+    }
 
     double objetiveMaxn;
     double objetiveMinn;
@@ -256,8 +232,8 @@ public class Distance {
         distance = distance / (objetiveMaxn - objetiveMinn);
         distance += front.get(j).getCrowdingDistance();
         front.get(j).setCrowdingDistance(distance);
-      } // for
-    } // for        
-  } // crowdingDistanceAssignment
-} // Distance
+      }
+    }
+  }
+}
 

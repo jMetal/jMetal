@@ -57,8 +57,9 @@ public class MultithreadedAlgorithmRunner extends SynchronousParallelRunner {
   }
 
   public void addTaskForExecution(Object[] taskParameters) {
-    if (taskList_ == null)
+    if (taskList_ == null) {
       taskList_ = new ArrayList<EvaluationTask>();
+    }
 
     String algorithm = (String)taskParameters[0] ;
     String problem = (String)taskParameters[1];
@@ -112,7 +113,7 @@ public class MultithreadedAlgorithmRunner extends SynchronousParallelRunner {
     public Integer call() throws Exception {
       Algorithm algorithm ;
       Object [] settingsParams = {problemName_} ;
-      Settings settings  ; //= (new SettingsFactory()).getSettingsObject(algorithmName_, settingsParams) ;
+      Settings settings  ;
 
       if (experiment_.useConfigurationFilesForAlgorithms_) {
         Properties configuration = new Properties();

@@ -55,5 +55,5 @@ public class LexicoGraphicalComparator implements Comparator{
       return 1;
     }
     return 0;
-  } // compare
-} // LexicoGraphicalComparator
+  }
+}

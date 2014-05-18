@@ -53,7 +53,6 @@ public class Front {
   public Front() {
     maximizing_ = true ;
     pointComparator = new PointComparator(maximizing_) ;
-
   }
 
   public Front (int numberOfPoints, int dimension, SolutionSet solutionSet) {
@@ -115,7 +114,7 @@ public class Front {
       StringTokenizer st = new StringTokenizer(aux);
       int i = 0;
       numberOfObjectives = st.countTokens();
-      ////System.out.println("objectives: " + getNumberOfObjectives);
+
       double [] vector = new double[st.countTokens()];
       while (st.hasMoreTokens()) {
         double value = new Double(st.nextToken());
@@ -136,7 +135,7 @@ public class Front {
   }
 
 
-  public void loadFront(SolutionSet solutionSet, int notLoadingIndex) {          
+  public void loadFront(SolutionSet solutionSet, int notLoadingIndex) {
 
     if (notLoadingIndex >= 0 && notLoadingIndex < solutionSet.size()) {
       numberOfPoints_ = solutionSet.size()-1;
@@ -151,16 +150,15 @@ public class Front {
 
     int index = 0;
     for (int i = 0; i < solutionSet.size(); i++) {
-      if (i != notLoadingIndex) {          
+      if (i != notLoadingIndex) {
         double [] vector = new double[dimension_];
         for (int j = 0; j < dimension_; j++) {
           vector[j] = solutionSet.get(i).getObjective(j);
-        }                        
-        points_[index++] = new Point(vector);            
+        }
+        points_[index++] = new Point(vector);
       }
     }
   }
-
 
   public void printFront() {
     System.out.println("Objectives:       " + dimension_) ;
@@ -205,21 +203,21 @@ public class Front {
     Point referencePoint = new Point(dimension_) ;
 
     double [] maxObjectives = new double[numberOfPoints_] ;
-    for (int i = 0; i < numberOfPoints_; i++)
-      maxObjectives[i] = 0 ;
+    for (int i = 0; i < numberOfPoints_; i++) {
+      maxObjectives[i] = 0;
+    }
 
-    for (int i = 0; i < points_.length; i++)
-      for (int j = 0 ; j < dimension_; j++)
-        if (maxObjectives[j] < points_[i].objectives_[j])
-          maxObjectives[j] = points_[i].objectives_[j] ;
+    for (int i = 0; i < points_.length; i++) {
+      for (int j = 0; j < dimension_; j++) {
+        if (maxObjectives[j] < points_[i].objectives_[j]) {
+          maxObjectives[j] = points_[i].objectives_[j];
+        }
+      }
+    }
 
-    //for (int i = 0; i < solution.getNumberOfObjectives(); i++) {
-    //  if (maxObjectives[i] < referencePoint_.objectives_[i])
-    //    referencePoint_.objectives_[i] = maxObjectives[i] ;
-    //
-    // }
-    for (int i = 0; i < dimension_; i++)
-      referencePoint.objectives_[i] = maxObjectives[i] ;
+    for (int i = 0; i < dimension_; i++) {
+      referencePoint.objectives_[i] = maxObjectives[i];
+    }
 
     return referencePoint ;
   }

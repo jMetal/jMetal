@@ -24,17 +24,17 @@ package jmetal.util;
 import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
 import jmetal.util.comparators.DominanceComparator;
-import jmetal.util.comparators.SolutionComparator;
+
 import java.util.Comparator;
 import java.util.Iterator;
 
-/** 
+/**
  * This class implements an unbound list of non-dominated solutions
  */
 public class NonDominatedSolutionList extends SolutionSet{
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = 7994329981209043992L;
 
@@ -43,14 +43,14 @@ public class NonDominatedSolutionList extends SolutionSet{
    */
   private Comparator<Solution> dominance_ = new DominanceComparator();
 
-  /** 
+  /**
    * Constructor.
    * The objects of this class are lists of non-dominated solutions according to
    * a Pareto dominance comparator. 
    */
   public NonDominatedSolutionList() {
     super();
-  } // NonDominatedList
+  }
 
   /**
    * Constructor.
@@ -61,7 +61,7 @@ public class NonDominatedSolutionList extends SolutionSet{
   public NonDominatedSolutionList(Comparator<Solution> dominance) {
     super();
     dominance_ = dominance;
-  } // NonDominatedList
+  }
 
   /** Inserts a solution in the list
    * @param solution The solution to be inserted.
@@ -72,34 +72,35 @@ public class NonDominatedSolutionList extends SolutionSet{
    */
   public boolean add(Solution solution){
     if (solutionsList_.size() == 0) {
-      solutionsList_.add(solution);    
+      solutionsList_.add(solution);
       return true ;
     }
     else {
       Iterator<Solution> iterator = solutionsList_.iterator();
 
-      //if (solution.getDecisionVariables() != null) {
       while (iterator.hasNext()){
         Solution listIndividual = iterator.next();
         int flag = dominance_.compare(solution,listIndividual);
 
-        if (flag == -1) {  // A solution in the list is dominated by the new one
+        if (flag == -1) {
+          // A solution in the list is dominated by the new one
           iterator.remove();
-        } else if (flag == 0) { // Non-dominated solutions
+        } else if (flag == 0) {
+          // Non-dominated solutions
           //flag = equal_.compare(solution,listIndividual);
           //if (flag == 0) {
           //	return false;   // The new solution is in the list  
           //}
-        } else if (flag == 1) { // The new solution is dominated
+        } else if (flag == 1) {
+          // The new solution is dominated
           return false;
         }
-      } // while 
-      //} // if
+      }
 
       //At this point, the solution is inserted into the list
-      solutionsList_.add(solution);                
+      solutionsList_.add(solution);
 
-      return true;        
+      return true;
     }
-  } // add                   
-} // NonDominatedList
+  }
+}

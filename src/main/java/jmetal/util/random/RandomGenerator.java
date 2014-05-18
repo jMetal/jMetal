@@ -21,8 +21,6 @@
 
 package jmetal.util.random;
 
-import jmetal.util.random.IRandomGenerator;
-
 import java.util.Random;
 
 /**
@@ -33,7 +31,7 @@ import java.util.Random;
  */
 
 public class RandomGenerator implements IRandomGenerator {
-    
+
   /* Definition of random number generation routines */
   double seed;
   double [] oldrand = new double[55];
@@ -45,18 +43,14 @@ public class RandomGenerator implements IRandomGenerator {
   public RandomGenerator(){
     this.seed = (new Random(System.nanoTime())).nextDouble();
     this.randomize();
-  } // RandomGenerator
+  }
 
   public RandomGenerator(double seed) {
     this.seed = seed ;
     this.randomize();
   }
-  //public void setSeed(double seed) {
-  //  this.seed = seed ;
-  //  this.randomize();
-  //}
 
-   /* Get seed number for random and start it up */
+  /* Get seed number for random and start it up */
   void randomize(){
     int j1;
     for(j1=0; j1<=54; j1++){
@@ -64,7 +58,7 @@ public class RandomGenerator implements IRandomGenerator {
     }
     jrand=0;
     warmup_random (seed);
-  } // randomize
+  }
 
   /* Get randomize off and running */
   void warmup_random (double seed){
@@ -120,14 +114,14 @@ public class RandomGenerator implements IRandomGenerator {
 
   /* Fetch a single integer between 0 and upperbound */
   synchronized public int nextInt(int upperBound) {
-  	return rndInt(0, upperBound) ;
+    return rndInt(0, upperBound) ;
   }
 
   /* Fetch a single double between 0.0 and 1.0 */
   synchronized public double nextDouble() {
-  	return randomperc() ;
+    return randomperc() ;
   }
-  
+
   /* Fetch a single random integer between low and high including the bounds */
   synchronized public int rndInt (int low, int high){
     int res;

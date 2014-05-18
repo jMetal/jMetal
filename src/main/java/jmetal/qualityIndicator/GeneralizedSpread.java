@@ -20,9 +20,9 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 package jmetal.qualityIndicator;
-import java.util.Arrays;
-
 import jmetal.util.JMException;
+
+import java.util.Arrays;
 
 /**
  * This class implements the generalized spread metric for two or more dimensions.
@@ -141,7 +141,7 @@ public class GeneralizedSpread {
       return value;
       
     }
-  } // generalizedSpread
+  }
      
   /**
    * This class can be invoked from the command line. Three params are required:
@@ -160,6 +160,7 @@ public class GeneralizedSpread {
     
     //Create a new instance of the metric
     GeneralizedSpread qualityIndicator = new GeneralizedSpread();
+
     //Read the front from the files
     double [][] solutionFront = utils_.readFront(args[0]);
     double [][] trueFront     = utils_.readFront(args[1]);
@@ -170,5 +171,5 @@ public class GeneralizedSpread {
             new Integer(args[2]));
     
     System.out.println(value);  
-  }  // main
-} // GeneralizedSpread
+  }
+}

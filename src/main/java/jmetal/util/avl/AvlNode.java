@@ -132,8 +132,9 @@ public class AvlNode<T> {
     if (!hasLeft() && !hasRight()) {
       result = true ;
     }
-    else
-      result = false ;
+    else {
+      result = false;
+    }
 
     return result ;
   }
@@ -143,8 +144,9 @@ public class AvlNode<T> {
     if (hasLeft() && !hasRight()) {
       result = true ;
     }
-    else
-      result = false ;
+    else {
+      result = false;
+    }
 
     return result ;
   }
@@ -154,8 +156,9 @@ public class AvlNode<T> {
     if (hasRight() && !hasLeft()) {
       result = true ;
     }
-    else
-      result = false ;
+    else {
+      result = false;
+    }
 
     return result ;
   }

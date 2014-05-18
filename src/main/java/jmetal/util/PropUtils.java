@@ -36,20 +36,15 @@ public abstract class PropUtils {
   static public final char LABEL_RIGHT_DELIMITER = '>';
   static public final char LABEL_LEFT_DELIMITER = '<';
 
-  static public Properties getPropertiesWithPrefix (Properties pro, String prefix)
-  {
+  static public Properties getPropertiesWithPrefix (Properties pro, String prefix) {
     Enumeration<?> en;
     Properties aux = new Properties();
 
     en = pro.propertyNames();
 
-    for (;en.hasMoreElements();)
-    {
+    for (;en.hasMoreElements();) {
       String nom = (String) en.nextElement();
-
-      if (nom.startsWith(prefix))
-      {
-
+      if (nom.startsWith(prefix)) {
         aux.setProperty (nom.substring(prefix.length()), pro.getProperty(nom));
       }
     }
@@ -57,15 +52,13 @@ public abstract class PropUtils {
     return aux;
   }
 
-  static public Properties putPrefixToProperties (String prefix, Properties pro)
-  {
+  static public Properties putPrefixToProperties (String prefix, Properties pro) {
     Enumeration<?> en;
     Properties res = new Properties();
 
     en = pro.propertyNames();
 
-    for (; en.hasMoreElements();)
-    {
+    for (; en.hasMoreElements();) {
       String nom = (String) en.nextElement();
 
       res.setProperty (prefix+nom, pro.getProperty (nom));
@@ -82,8 +75,7 @@ public abstract class PropUtils {
     String key;
     String value;
 
-    for (en = base.propertyNames();en.hasMoreElements();)
-    {
+    for (en = base.propertyNames();en.hasMoreElements();) {
       key = (String)en.nextElement();
 
       value = base.getProperty (key);
@@ -132,13 +124,6 @@ public abstract class PropUtils {
 
       if (isLabel(value))
       {
-        /*
-				if (labels.getProperty(value) != null)
-				{
-					res.setProperty (key, labels.getProperty (value));
-				}
-         */
-
         String lab = value.substring(1,value.length()-1);
 
         aux = getPropertiesWithPrefix (pro, lab);
@@ -168,13 +153,13 @@ public abstract class PropUtils {
 
   static public boolean isLabel (String str)
   {
-    return  (str.indexOf (LABEL_LEFT_DELIMITER)==0 && 
-        str.indexOf (LABEL_RIGHT_DELIMITER) == str.length()-1);
+    return  (str.indexOf (LABEL_LEFT_DELIMITER)==0 &&
+            str.indexOf (LABEL_RIGHT_DELIMITER) == str.length()-1);
   }
 
   static public void main (String [] argv) throws Exception
   {
-    Properties base = new Properties();		
+    Properties base = new Properties();
     InputStream isbase = new FileInputStream (argv[0]);
     //InputStream isdelta = new FileInputStream (argv[1]);
 
@@ -190,7 +175,7 @@ public abstract class PropUtils {
    * @throws java.io.IOException
    */
   static public Properties load(String file) throws IOException {
-    Properties properties = new Properties();    
+    Properties properties = new Properties();
     FileInputStream in = new FileInputStream(file);
     properties.load(in);
     in.close();

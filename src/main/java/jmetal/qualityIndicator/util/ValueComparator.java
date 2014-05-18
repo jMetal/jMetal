@@ -61,5 +61,5 @@ public class ValueComparator implements Comparator {
     } else {
       return 0;
     }
-  } // compare
-} // ValueComparator
+  }
+}

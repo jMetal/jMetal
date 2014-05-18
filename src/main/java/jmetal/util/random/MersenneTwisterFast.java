@@ -194,8 +194,7 @@ public strictfp class MersenneTwisterFast implements Serializable, Cloneable, IR
   private boolean __haveNextNextGaussian;
 
   /* We're overriding all internal data, to my knowledge, so this should be okay */
-  public Object clone()
-  {
+  public Object clone() {
     try
     {
       MersenneTwisterFast f = (MersenneTwisterFast)(super.clone());
@@ -211,26 +210,41 @@ public strictfp class MersenneTwisterFast implements Serializable, Cloneable, IR
 
   public boolean stateEquals(Object o)
   {
-    if (o==this) return true;
-    if (o == null || !(o instanceof MersenneTwisterFast))
+    if (o==this) {
+      return true;
+    }
+    if (o == null || !(o instanceof MersenneTwisterFast)) {
       return false;
+    }
+
     MersenneTwisterFast other = (MersenneTwisterFast) o;
-    if (mti != other.mti) return false;
-    for(int x=0;x<mag01.length;x++)
-      if (mag01[x] != other.mag01[x]) return false;
-    for(int x=0;x<mt.length;x++)
-      if (mt[x] != other.mt[x]) return false;
+    if (mti != other.mti) {
+      return false;
+    }
+    for(int x=0;x<mag01.length;x++) {
+      if (mag01[x] != other.mag01[x]) {
+        return false;
+      }
+    }
+    for(int x=0;x<mt.length;x++) {
+      if (mt[x] != other.mt[x]) {
+        return false;
+      }
+    }
     return true;
   }
 
   /** Reads the entire state of the MersenneTwister RNG from the stream */
-  public void readState(DataInputStream stream) throws IOException
-  {
+  public void readState(DataInputStream stream) throws IOException {
     int len = mt.length;
-    for(int x=0;x<len;x++) mt[x] = stream.readInt();
+    for(int x=0;x<len;x++) {
+      mt[x] = stream.readInt();
+    }
 
     len = mag01.length;
-    for(int x=0;x<len;x++) mag01[x] = stream.readInt();
+    for(int x=0;x<len;x++) {
+      mag01[x] = stream.readInt();
+    }
 
     mti = stream.readInt();
     __nextNextGaussian = stream.readDouble();
@@ -241,10 +255,14 @@ public strictfp class MersenneTwisterFast implements Serializable, Cloneable, IR
   public void writeState(DataOutputStream stream) throws IOException
   {
     int len = mt.length;
-    for(int x=0;x<len;x++) stream.writeInt(mt[x]);
+    for(int x=0;x<len;x++){
+      stream.writeInt(mt[x]);
+    }
 
     len = mag01.length;
-    for(int x=0;x<len;x++) stream.writeInt(mag01[x]);
+    for(int x=0;x<len;x++) {
+      stream.writeInt(mag01[x]);
+    }
 
     stream.writeInt(mti);
     stream.writeDouble(__nextNextGaussian);
@@ -327,8 +345,9 @@ public strictfp class MersenneTwisterFast implements Serializable, Cloneable, IR
 
   synchronized public void setSeed(final int[] array)
   {
-    if (array.length == 0)
+    if (array.length == 0) {
       throw new IllegalArgumentException("Array length must be greater than zero");
+    }
     int i, j, k;
     setSeed(19650218);
     i=1; j=0;
@@ -339,8 +358,13 @@ public strictfp class MersenneTwisterFast implements Serializable, Cloneable, IR
       mt[i] &= 0xffffffff; /* for WORDSIZE > 32 machines */
       i++;
       j++;
-      if (i>=N) { mt[0] = mt[N-1]; i=1; }
-      if (j>=array.length) j=0;
+      if (i>=N) {
+        mt[0] = mt[N-1];
+        i=1;
+      }
+      if (j>=array.length) {
+        j=0;
+      }
     }
     for (k=N-1; k!=0; k--)
     {
@@ -513,10 +537,15 @@ public strictfp class MersenneTwisterFast implements Serializable, Cloneable, IR
   {
     int y;
 
-    if (probability < 0.0f || probability > 1.0f)
-      throw new IllegalArgumentException ("probability must be between 0.0 and 1.0 inclusive.");
-    if (probability==0.0f) return false;            // fix half-open issues
-    else if (probability==1.0f) return true;        // fix half-open issues
+    if (probability < 0.0f || probability > 1.0f) {
+      throw new IllegalArgumentException("probability must be between 0.0 and 1.0 inclusive.");
+    }
+    if (probability==0.0f) {
+      return false;            // fix half-open issues
+    }
+    else if (probability==1.0f) {
+      return true;        // fix half-open issues
+    }
     if (mti >= N)   // generate N words at one time
     {
       int kk;
@@ -558,10 +587,15 @@ public strictfp class MersenneTwisterFast implements Serializable, Cloneable, IR
     int y;
     int z;
 
-    if (probability < 0.0 || probability > 1.0)
-      throw new IllegalArgumentException ("probability must be between 0.0 and 1.0 inclusive.");
-    if (probability==0.0) return false;             // fix half-open issues
-    else if (probability==1.0) return true; // fix half-open issues
+    if (probability < 0.0 || probability > 1.0) {
+      throw new IllegalArgumentException("probability must be between 0.0 and 1.0 inclusive.");
+    }
+    if (probability==0.0) {
+      return false;             // fix half-open issues
+    }
+    else if (probability==1.0){
+      return true; // fix half-open issues
+    }
     if (mti >= N)   // generate N words at one time
     {
       int kk;
@@ -768,8 +802,9 @@ public strictfp class MersenneTwisterFast implements Serializable, Cloneable, IR
    n must be > 0, or an IllegalArgumentException is raised. */
   public final long nextLong(final long n)
   {
-    if (n<=0)
+    if (n<=0) {
       throw new IllegalArgumentException("n must be positive, got: " + n);
+    }
 
     long bits, val;
     do
@@ -1101,8 +1136,9 @@ public strictfp class MersenneTwisterFast implements Serializable, Cloneable, IR
    n must be > 0, or an IllegalArgumentException is raised. */
   public final int nextInt(final int n)
   {
-    if (n<=0)
+    if (n<=0) {
       throw new IllegalArgumentException("n must be positive, got: " + n);
+    }
 
     if ((n & -n) == n)  // i.e., n is a power of 2
     {
@@ -1197,11 +1233,17 @@ public strictfp class MersenneTwisterFast implements Serializable, Cloneable, IR
     {
       // first, convert the int from signed to "unsigned"
       long l = (long)r.nextInt();
-      if (l < 0 ) l += 4294967296L;  // max int value
+      if (l < 0 ) {
+        l += 4294967296L;  // max int value
+      }
       String s = String.valueOf(l);
-      while(s.length() < 10) s = " " + s;  // buffer
+      while(s.length() < 10) {
+        s = " " + s;  // buffer
+      }
       System.out.print(s + " ");
-      if (j%5==4) System.out.println();
+      if (j%5==4) {
+        System.out.println();
+      }
     }
 
     // SPEED TEST
@@ -1214,15 +1256,17 @@ public strictfp class MersenneTwisterFast implements Serializable, Cloneable, IR
     Random rr = new Random(SEED);
     xx = 0;
     ms = System.currentTimeMillis();
-    for (j = 0; j < 100000000; j++)
+    for (j = 0; j < 100000000; j++) {
       xx += rr.nextInt();
+    }
     System.out.println("java.util.Random: " + (System.currentTimeMillis()-ms) + "          Ignore this: " + xx);
 
     r = new MersenneTwisterFast(SEED);
     ms = System.currentTimeMillis();
     xx=0;
-    for (j = 0; j < 100000000; j++)
+    for (j = 0; j < 100000000; j++) {
       xx += r.nextInt();
+    }
     System.out.println("Mersenne Twister Fast: " + (System.currentTimeMillis()-ms) + "          Ignore this: " + xx);
 
     // TEST TO COMPARE TYPE CONVERSION BETWEEN
@@ -1233,27 +1277,39 @@ public strictfp class MersenneTwisterFast implements Serializable, Cloneable, IR
     for (j = 0; j < 1000; j++)
     {
       System.out.print(r.nextBoolean() + " ");
-      if (j%8==7) System.out.println();
+      if (j%8==7) {
+        System.out.println();
+      }
     }
-    if (!(j%8==7)) System.out.println();
+    if (!(j%8==7)) {
+      System.out.println();
+    }
 
     System.out.println("\nGrab 1000 booleans of increasing probability using nextBoolean(double)");
     r = new MersenneTwisterFast(SEED);
     for (j = 0; j < 1000; j++)
     {
       System.out.print(r.nextBoolean((double)(j/999.0)) + " ");
-      if (j%8==7) System.out.println();
+      if (j%8==7) {
+        System.out.println();
+      }
     }
-    if (!(j%8==7)) System.out.println();
+    if (!(j%8==7)) {
+      System.out.println();
+    }
 
     System.out.println("\nGrab 1000 booleans of increasing probability using nextBoolean(float)");
     r = new MersenneTwisterFast(SEED);
     for (j = 0; j < 1000; j++)
     {
       System.out.print(r.nextBoolean((float)(j/999.0f)) + " ");
-      if (j%8==7) System.out.println();
+      if (j%8==7) {
+        System.out.println();
+      }
     }
-    if (!(j%8==7)) System.out.println();
+    if (!(j%8==7)) {
+      System.out.println();
+    }
 
     byte[] bytes = new byte[1000];
     System.out.println("\nGrab the first 1000 bytes using nextBytes");
@@ -1262,9 +1318,13 @@ public strictfp class MersenneTwisterFast implements Serializable, Cloneable, IR
     for (j = 0; j < 1000; j++)
     {
       System.out.print(bytes[j] + " ");
-      if (j%16==15) System.out.println();
+      if (j%16==15) {
+        System.out.println();
+      }
     }
-    if (!(j%16==15)) System.out.println();
+    if (!(j%16==15)) {
+      System.out.println();
+    }
 
     byte b;
     System.out.println("\nGrab the first 1000 bytes -- must be same as nextBytes");
@@ -1272,28 +1332,42 @@ public strictfp class MersenneTwisterFast implements Serializable, Cloneable, IR
     for (j = 0; j < 1000; j++)
     {
       System.out.print((b = r.nextByte()) + " ");
-      if (b!=bytes[j]) System.out.print("BAD ");
-      if (j%16==15) System.out.println();
+      if (b!=bytes[j]) {
+        System.out.print("BAD ");
+      }
+      if (j%16==15) {
+        System.out.println();
+      }
     }
-    if (!(j%16==15)) System.out.println();
+    if (!(j%16==15)) {
+      System.out.println();
+    }
 
     System.out.println("\nGrab the first 1000 shorts");
     r = new MersenneTwisterFast(SEED);
     for (j = 0; j < 1000; j++)
     {
       System.out.print(r.nextShort() + " ");
-      if (j%8==7) System.out.println();
+      if (j%8==7) {
+        System.out.println();
+      }
     }
-    if (!(j%8==7)) System.out.println();
+    if (!(j%8==7)) {
+      System.out.println();
+    }
 
     System.out.println("\nGrab the first 1000 ints");
     r = new MersenneTwisterFast(SEED);
     for (j = 0; j < 1000; j++)
     {
       System.out.print(r.nextInt() + " ");
-      if (j%4==3) System.out.println();
+      if (j%4==3) {
+        System.out.println();
+      }
     }
-    if (!(j%4==3)) System.out.println();
+    if (!(j%4==3)) {
+      System.out.println();
+    }
 
     System.out.println("\nGrab the first 1000 ints of different sizes");
     r = new MersenneTwisterFast(SEED);
@@ -1302,19 +1376,29 @@ public strictfp class MersenneTwisterFast implements Serializable, Cloneable, IR
     {
       System.out.print(r.nextInt(max) + " ");
       max *= 2;
-      if (max <= 0) max = 1;
-      if (j%4==3) System.out.println();
+      if (max <= 0) {
+        max = 1;
+      }
+      if (j%4==3) {
+        System.out.println();
+      }
     }
-    if (!(j%4==3)) System.out.println();
+    if (!(j%4==3)) {
+      System.out.println();
+    }
 
     System.out.println("\nGrab the first 1000 longs");
     r = new MersenneTwisterFast(SEED);
     for (j = 0; j < 1000; j++)
     {
       System.out.print(r.nextLong() + " ");
-      if (j%3==2) System.out.println();
+      if (j%3==2) {
+        System.out.println();
+      }
     }
-    if (!(j%3==2)) System.out.println();
+    if (!(j%3==2)) {
+      System.out.println();
+    }
 
     System.out.println("\nGrab the first 1000 longs of different sizes");
     r = new MersenneTwisterFast(SEED);
@@ -1323,37 +1407,55 @@ public strictfp class MersenneTwisterFast implements Serializable, Cloneable, IR
     {
       System.out.print(r.nextLong(max2) + " ");
       max2 *= 2;
-      if (max2 <= 0) max2 = 1;
-      if (j%4==3) System.out.println();
+      if (max2 <= 0) {
+        max2 = 1;
+      }
+      if (j%4==3) {
+        System.out.println();
+      }
     }
-    if (!(j%4==3)) System.out.println();
+    if (!(j%4==3)) {
+      System.out.println();
+    }
 
     System.out.println("\nGrab the first 1000 floats");
     r = new MersenneTwisterFast(SEED);
     for (j = 0; j < 1000; j++)
     {
       System.out.print(r.nextFloat() + " ");
-      if (j%4==3) System.out.println();
+      if (j%4==3) {
+        System.out.println();
+      }
     }
-    if (!(j%4==3)) System.out.println();
+    if (!(j%4==3)) {
+      System.out.println();
+    }
 
     System.out.println("\nGrab the first 1000 doubles");
     r = new MersenneTwisterFast(SEED);
     for (j = 0; j < 1000; j++)
     {
       System.out.print(r.nextDouble() + " ");
-      if (j%3==2) System.out.println();
+      if (j%3==2) {
+        System.out.println();
+      }
     }
-    if (!(j%3==2)) System.out.println();
+    if (!(j%3==2)) {
+      System.out.println();
+    }
 
     System.out.println("\nGrab the first 1000 gaussian doubles");
     r = new MersenneTwisterFast(SEED);
     for (j = 0; j < 1000; j++)
     {
       System.out.print(r.nextGaussian() + " ");
-      if (j%3==2) System.out.println();
+      if (j%3==2) {
+        System.out.println();
+      }
     }
-    if (!(j%3==2)) System.out.println();
+    if (!(j%3==2)) {
+      System.out.println();
+    }
 
   }
 }

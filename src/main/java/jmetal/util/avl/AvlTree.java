@@ -57,7 +57,6 @@ public class AvlTree<T> {
     if (AvlIsEmpty()) {
       insertTop(node);
     } else {
-      //AvlNode<T> closestNode = null;
       int result = searchClosestNode(node);
 
       switch (result) {
@@ -224,8 +223,9 @@ public class AvlTree<T> {
 
     if (node.hasRight()) {
       AvlNode<T> tmp = node.getRight();
-      while (tmp.hasLeft())
+      while (tmp.hasLeft()) {
         tmp = tmp.getLeft();
+      }
       result = tmp;
     } else {
       while (node.hasParent() && (node.getParent().getRight() == node)) {
@@ -290,11 +290,10 @@ public class AvlTree<T> {
       if (getBalance(currentNode) == 2) {
         if (height(currentNode.getRight().getRight()) >= height(currentNode.getRight().getLeft())) {
           rightRotation(currentNode);
-        } else
+        } else {
           doubleRightRotation(currentNode);
+        }
       }
-
-      //currentNode.updateHeight();
 
       if (currentNode.hasParent()) {
         currentNode.getParent().updateHeight();
@@ -311,8 +310,9 @@ public class AvlTree<T> {
 
     if (node.hasParent()) {
       leftNode.setParent(node.getParent());
-      if (node.getParent().getLeft() == node)
+      if (node.getParent().getLeft() == node) {
         node.getParent().setLeft(leftNode);
+      }
       else {
         node.getParent().setRight(leftNode);
       }
@@ -333,10 +333,12 @@ public class AvlTree<T> {
 
     if (node.hasParent()) {
       rightNode.setParent(node.getParent());
-      if (node.getParent().getRight() == node)
+      if (node.getParent().getRight() == node) {
         node.getParent().setRight(rightNode);
-      else
+      }
+      else {
         node.getParent().setLeft(rightNode);
+      }
     } else {
       setTop(rightNode);
     }
@@ -403,8 +405,9 @@ public class AvlTree<T> {
 
   public int height(AvlNode<T> node) {
     int result = 0;
-    if (node == null)
+    if (node == null) {
       result = -1;
+    }
     else {
       result = node.getHeight();
     }

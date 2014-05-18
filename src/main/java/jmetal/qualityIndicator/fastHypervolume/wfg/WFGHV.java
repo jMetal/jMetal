@@ -102,7 +102,6 @@ public class WFGHV {
   }
 
   public int getLessContributorHV(SolutionSet set) {
-
     Front wholeFront   = new Front();
 
     wholeFront.loadFront(set, -1);
@@ -132,8 +131,9 @@ public class WFGHV {
     double volume = 0.0 ;
     sort(front) ;
 
-    if (currentDimension_ == 2)
-      volume = get2DHV(front) ;
+    if (currentDimension_ == 2) {
+      volume = get2DHV(front);
+    }
     else {
       volume = 0.0 ;
 
@@ -153,8 +153,9 @@ public class WFGHV {
     double volume = 0.0 ;
     sort(front) ;
 
-    if (currentDimension_ == 2)
-      volume = get2DHV(front) ;
+    if (currentDimension_ == 2) {
+      volume = get2DHV(front);
+    }
     else {
       volume = 0.0 ;
 
@@ -183,7 +184,6 @@ public class WFGHV {
     }
 
     return hv ;
-
   }
 
   public double getInclusiveHV(Point p) {
@@ -212,11 +212,11 @@ public class WFGHV {
   public void makeDominatedBit(Front front, int p) {
     int z = front.nPoints_ - 1 - p ;
 
-    for (int i = 0 ; i < z ; i++)
-      for (int j = 0 ; j < currentDimension_; j++) {
-        fs_[currentDeep_].getPoint(i).objectives_[j] = worse(front.points_[p].objectives_[j], front.points_[p+1+i].objectives_[j], false) ;
+    for (int i = 0 ; i < z ; i++) {
+      for (int j = 0; j < currentDimension_; j++) {
+        fs_[currentDeep_].getPoint(i).objectives_[j] = worse(front.points_[p].objectives_[j], front.points_[p + 1 + i].objectives_[j], false);
       }
-
+    }
 
     Point t ;
     fs_[currentDeep_].nPoints_ = 1 ;
@@ -241,7 +241,8 @@ public class WFGHV {
             break;
         }
       }
-      if (keep) {t = fs_[currentDeep_].points_[fs_[currentDeep_].nPoints_];
+      if (keep) {
+        t = fs_[currentDeep_].points_[fs_[currentDeep_].nPoints_];
         fs_[currentDeep_].points_[fs_[currentDeep_].nPoints_] = fs_[currentDeep_].points_[i];
         fs_[currentDeep_].points_[i] = t;
         fs_[currentDeep_].nPoints_++;
@@ -254,38 +255,47 @@ public class WFGHV {
   private double worse (double x, double y, boolean maximizing) {
     double result ;
     if (maximizing) {
-      if (x > y)
-        result = y ;
-      else
-        result = x ;
+      if (x > y) {
+        result = y;
+      }
+      else {
+        result = x;
+      }
     }
     else {
-      if (x > y)
-        result = x ;
-      else
-        result = y ;
+      if (x > y) {
+        result = x;
+      }
+      else {
+        result = y;
+      }
     }
     return result ;
   }
 
-  int dominates2way(Point p, Point q)
+  int dominates2way(Point p, Point q) {
 // returns -1 if p dominates q, 1 if q dominates p, 2 if p == q, 0 otherwise
   // ASSUMING MINIMIZATION
-  {
+
     // domination could be checked in either order
 
-    for (int i = currentDimension_ - 1; i >= 0; i--)
-      if (p.objectives_[i] < q.objectives_[i]){
-        for (int j = i - 1; j >= 0; j--)
-          if (q.objectives_[j] < p.objectives_[j]) return 0;
+    for (int i = currentDimension_ - 1; i >= 0; i--) {
+      if (p.objectives_[i] < q.objectives_[i]) {
+        for (int j = i - 1; j >= 0; j--) {
+          if (q.objectives_[j] < p.objectives_[j]) {
+            return 0;
+          }
+        }
         return -1;
+      } else if (q.objectives_[i] < p.objectives_[i]) {
+        for (int j = i - 1; j >= 0; j--) {
+          if (p.objectives_[j] < q.objectives_[j]) {
+            return 0;
+          }
+        }
+        return 1;
       }
-      else
-      if (q.objectives_[i] < p.objectives_[i]){
-        for (int j = i - 1; j >= 0; j--)
-          if (p.objectives_[j] < q.objectives_[j]) return 0;
-        return  1;
-      }
+    }
     return 2;
   }
 
@@ -309,20 +319,19 @@ public class WFGHV {
     double [] points = new double[dimensions] ;
 
     if (args.length == (dimensions + 1)) {
-       for (int i = 1; i <= dimensions; i++)
-         points[i-1] = Double.parseDouble(args[i]) ;
+       for (int i = 1; i <= dimensions; i++) {
+         points[i - 1] = Double.parseDouble(args[i]);
+       }
     }
     else {
-      for (int i = 1; i <= dimensions; i++)
-        points[i-1] = 0.0 ;
+      for (int i = 1; i <= dimensions; i++) {
+        points[i - 1] = 0.0;
+      }
     }
 
     referencePoint = new Point(points) ;
     System.out.println("Using reference point: " + referencePoint) ;
 
     WFGHV wfghv = new WFGHV(referencePoint.getNumberOfObjectives(), front.getNumberOfPoints(), referencePoint) ;
-
-    System.out.println("hv = " + wfghv.getHV(front)) ;
   }
-
 }

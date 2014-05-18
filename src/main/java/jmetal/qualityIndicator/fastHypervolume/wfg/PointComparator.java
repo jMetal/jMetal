@@ -55,18 +55,22 @@ public class PointComparator implements Comparator<Point> {
     Point pointTwo = (Point)o2;
 
     for (int i = pointOne.getNumberOfObjectives() - 1 ; i >= 0 ; i--) {
-      if (isBetter(pointOne.objectives_[i], pointTwo.objectives_[i]))
-        return -1 ;
-      else if (isBetter(pointTwo.objectives_[i], pointOne.objectives_[i]))
-        return 1 ;
+      if (isBetter(pointOne.objectives_[i], pointTwo.objectives_[i])) {
+        return -1;
+      }
+      else if (isBetter(pointTwo.objectives_[i], pointOne.objectives_[i])) {
+        return 1;
+      }
     }
     return 0 ;
-  } // compare
+  }
 
   private boolean isBetter(double v1, double v2) {
-    if (maximizing_)
-      return (v1 > v2) ;
-    else
-      return (v2 > v1) ;
+    if (maximizing_) {
+      return (v1 > v2);
+    }
+    else {
+      return (v2 > v1);
+    }
   }
 }

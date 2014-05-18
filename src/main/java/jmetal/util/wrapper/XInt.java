@@ -72,7 +72,7 @@ public class XInt {
 					type_ + "+ invalid") ;		
 		}
 		return 0;
-	} // Get value
+	}
 
 	/**
 	 * Sets the value of a encodings.variable
@@ -81,14 +81,17 @@ public class XInt {
 	 * @throws JMException
 	 */
 	public void setValue(int index, int value) throws JMException {
-		if (type_.getClass() == IntSolutionType.class)
-			solution_.getDecisionVariables()[index].setValue(value) ;
-		else if (type_.getClass() == ArrayIntSolutionType.class)
-			((ArrayInt)(solution_.getDecisionVariables()[0])).array_[index]=value ;
-		else
-			Configuration.logger_.severe("jmetal.util.wrapper.XInt.setValue, solution type " +
-					type_ + "+ invalid") ;		
-	} // setValue	
+		if (type_.getClass() == IntSolutionType.class) {
+      solution_.getDecisionVariables()[index].setValue(value);
+    }
+		else if (type_.getClass() == ArrayIntSolutionType.class) {
+      ((ArrayInt) (solution_.getDecisionVariables()[0])).array_[index] = value;
+    }
+		else {
+      Configuration.logger_.severe("jmetal.util.wrapper.XInt.setValue, solution type " +
+              type_ + "+ invalid");
+    }
+	}
 
 	/**
 	 * Gets the lower bound of a encodings.variable
@@ -97,16 +100,18 @@ public class XInt {
 	 * @throws JMException
 	 */
 	public int getLowerBound(int index) throws JMException {
-		if (type_.getClass() == IntSolutionType.class)
-			return (int)solution_.getDecisionVariables()[index].getLowerBound() ;
-		else if (type_.getClass() == ArrayIntSolutionType.class) 
-			return (int)((ArrayInt)(solution_.getDecisionVariables()[0])).getLowerBound(index) ;
+		if (type_.getClass() == IntSolutionType.class) {
+      return (int) solution_.getDecisionVariables()[index].getLowerBound();
+    }
+		else if (type_.getClass() == ArrayIntSolutionType.class) {
+      return (int) ((ArrayInt) (solution_.getDecisionVariables()[0])).getLowerBound(index);
+    }
 		else {
 			Configuration.logger_.severe("jmetal.util.wrapper.XInt.getLowerBound, solution type " +
 					type_ + "+ invalid") ;		
 		}
 		return 0 ;
-	} // getLowerBound
+	}
 
 	/**
 	 * Gets the upper bound of a encodings.variable
@@ -115,31 +120,37 @@ public class XInt {
 	 * @throws JMException
 	 */
 	public int getUpperBound(int index) throws JMException {
-		if (type_.getClass() == IntSolutionType.class)		
-			return (int)solution_.getDecisionVariables()[index].getUpperBound() ;
-		else if (type_.getClass() == ArrayIntSolutionType.class) 
-			return (int)((ArrayInt)(solution_.getDecisionVariables()[0])).getUpperBound(index) ;
-		else
-			Configuration.logger_.severe("jmetal.util.wrapper.XInt.getUpperBound, solution type " +
-					type_ + "+ invalid") ;		
+		if (type_.getClass() == IntSolutionType.class) {
+      return (int) solution_.getDecisionVariables()[index].getUpperBound();
+    }
+		else if (type_.getClass() == ArrayIntSolutionType.class) {
+      return (int) ((ArrayInt) (solution_.getDecisionVariables()[0])).getUpperBound(index);
+    }
+		else {
+      Configuration.logger_.severe("jmetal.util.wrapper.XInt.getUpperBound, solution type " +
+              type_ + "+ invalid");
+    }
 
 		return 0 ;
-	} // getUpperBound
+	}
 
 	/**
 	 * Returns the number of variables of the solution
 	 * @return
 	 */
 	public int getNumberOfDecisionVariables() {
-		if (type_.getClass() == IntSolutionType.class)		
-			return solution_.getDecisionVariables().length ;
-		else if (type_.getClass() == ArrayIntSolutionType.class) 
-			return ((ArrayInt)(solution_.getDecisionVariables()[0])).getLength() ;
-		else
-			Configuration.logger_.severe("jmetal.util.wrapper.XInt.size, solution type " +
-					type_ + "+ invalid") ;		
+		if (type_.getClass() == IntSolutionType.class) {
+      return solution_.getDecisionVariables().length;
+    }
+		else if (type_.getClass() == ArrayIntSolutionType.class) {
+      return ((ArrayInt) (solution_.getDecisionVariables()[0])).getLength();
+    }
+		else {
+      Configuration.logger_.severe("jmetal.util.wrapper.XInt.size, solution type " +
+              type_ + "+ invalid");
+    }
 		return 0 ;
-	} // size
+	}
 
   /**
    * Returns the number of variables of the solution
@@ -147,9 +158,9 @@ public class XInt {
    */
   public int size() {
     return getNumberOfDecisionVariables() ;
-  } // size
+  }
 
   public Solution getSolution() {
     return solution_ ;
   }
-} // XInt
+}

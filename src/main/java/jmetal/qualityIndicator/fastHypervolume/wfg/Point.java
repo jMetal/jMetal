@@ -37,7 +37,6 @@ import jmetal.core.Solution;
  */
 public class Point {
   public double[] objectives_ ;
-  //AvlTree<Integer> node_ ;
 
   public Point(int dimension) {
     objectives_ = new double[dimension] ;
@@ -71,8 +70,9 @@ public class Point {
 
   public String toString() {
     String result = "" ;
-    for (int i = 0; i < objectives_.length; i++)
-      result += objectives_[i] + " " ;
+    for (int i = 0; i < objectives_.length; i++) {
+      result += objectives_[i] + " ";
+    }
 
     return result ;
   }

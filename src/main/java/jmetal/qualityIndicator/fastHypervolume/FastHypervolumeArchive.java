@@ -34,14 +34,11 @@ import java.util.Comparator;
 public class FastHypervolumeArchive extends Archive {
 
   /**
-<<<<<<< HEAD
-=======
    * 
    */
   private static final long serialVersionUID = 124744170266943517L;
 
   /**
->>>>>>> master
    * Stores the maximum size of the archive.
    */
   private int maxSize_;
@@ -78,12 +75,12 @@ public class FastHypervolumeArchive extends Archive {
     dominance_        = new DominanceComparator();
     equals_           = new EqualSolutions();
     referencePoint_   = new Solution(objectives_) ;
-    for (int i = 0; i < objectives_; i++)
-      referencePoint_.setObjective(i, Double.MAX_VALUE) ;
+    for (int i = 0; i < objectives_; i++) {
+      referencePoint_.setObjective(i, Double.MAX_VALUE);
+    }
 
     crowdingDistance_ = new CrowdingComparator();
-  } // FastHypervolumeArchive
-
+  }
 
   /**
    * Adds a <code>Solution</code> to the archive. If the <code>Solution</code>
@@ -113,7 +110,7 @@ public class FastHypervolumeArchive extends Archive {
         if (equals_.compare(aux,solution)==0) { // There is an equal solution 
           // in the population
           return false; // Discard the new solution
-        }  // if
+        }
         i++;
       }
     }
@@ -123,18 +120,13 @@ public class FastHypervolumeArchive extends Archive {
       computeHVContribution();
 
       remove(indexWorst(crowdingDistance_));
-      //remove(solutionsList_.size()-1);
     }
     return true;
-  } // add
+  }
 
 
   /**
-<<<<<<< HEAD
-   * This method forces to compute the contribution of each solution
-=======
    * This method forces to compute the contribution of each solution (required for PAEShv)
->>>>>>> master
    */
   public void computeHVContribution() {
     if (size() > 2) { // The contribution can be updated
@@ -142,5 +134,5 @@ public class FastHypervolumeArchive extends Archive {
       FastHypervolume fastHV = new FastHypervolume() ;
       fastHV.computeHVContributions(this);
     }
-  } // computeHVContribution
-} // FastHypervolumeArchive
+  }
+}
