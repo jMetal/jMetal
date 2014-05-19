@@ -65,10 +65,9 @@ public class pMOEAD extends Algorithm implements Runnable {
   /**
    * Lambda vectors
    */
-  //Vector<Vector<Double>> lambda_ ; 
   double[][] lambda_;
   /**
-   * T: neighbour size
+   * T: neighbor size
    */
   int T_;
   /**
@@ -87,6 +86,7 @@ public class pMOEAD extends Algorithm implements Runnable {
   String functionType_;
   int evaluations_;
   int maxEvaluations_;
+  
   /**
    * Operators
    */
@@ -114,7 +114,7 @@ public class pMOEAD extends Algorithm implements Runnable {
     functionType_ = "_TCHE1";
 
     id_ = 0;
-  } // DMOEA
+  } 
 
   /**
    * Constructor
@@ -131,10 +131,9 @@ public class pMOEAD extends Algorithm implements Runnable {
     functionType_ = "_TCHE1";
 
     id_ = id;
-  } // DMOEA
+  } 
 
   public void run() {
-
     neighborhood_ = parentThread_.neighborhood_ ;
     problem_      = parentThread_.problem_ ;
     lambda_       = parentThread_.lambda_ ;
@@ -143,12 +142,10 @@ public class pMOEAD extends Algorithm implements Runnable {
     indArray_     = parentThread_.indArray_ ;
     barrier_      = parentThread_.barrier_ ;
 
-
-    int partitions = parentThread_.populationSize_ / parentThread_.numberOfThreads_;
+ int partitions = parentThread_.populationSize_ / parentThread_.numberOfThreads_;
 
     evaluations_ = 0;
     maxEvaluations_ = parentThread_.maxEvaluations_ / parentThread_.numberOfThreads_;
-
 
     try {
       //System.out.println("en espera: " + barrier_.getNumberWaiting()) ;
@@ -159,7 +156,6 @@ public class pMOEAD extends Algorithm implements Runnable {
     } catch (BrokenBarrierException e) {
       Configuration.logger_.log(Level.SEVERE, "Error", e);
     }
-
 
     int first;
     int last;
@@ -175,21 +171,18 @@ public class pMOEAD extends Algorithm implements Runnable {
         " First: " + first + " Last: " + last);
 
     do {
-      // int[] permutation = new int[populationSize_];
-      //Utils.randomPermutation(permutation, populationSize_);
-
       for (int i = first; i <= last; i++) {
-        //int n = permutation[i]; // or int n = i;
-        int n = i; // or int n = i;
+        int n = i; 
         int type;
         double rnd = PseudoRandom.randDouble();
 
         // STEP 2.1. Mating selection based on probability
-        if (rnd < parentThread_.delta_) // if (rnd < realb)
-        {
-          type = 1;   // neighborhood
+        if (rnd < parentThread_.delta_) {
+          // neighborhood
+          type = 1;   
         } else {
-          type = 2;   // whole population
+       // whole population
+          type = 2;   
         }
 
         Vector<Integer> p = new Vector<Integer>();
@@ -230,11 +223,11 @@ public class pMOEAD extends Algorithm implements Runnable {
         } catch (JMException e) {
           Configuration.logger_.log(Level.SEVERE, "Error", e);
         }
-      } // for
+      } 
     } while (evaluations_ < maxEvaluations_);
 
     long estimatedTime = System.currentTimeMillis() - parentThread_.initTime_;
-    System.out.println("Time thread " + id_ +": " + estimatedTime) ;
+    Configuration.logger_.info("Time thread " + id_ +": " + estimatedTime) ;
   }
 
   public SolutionSet execute() throws JMException, ClassNotFoundException {
@@ -257,18 +250,13 @@ public class pMOEAD extends Algorithm implements Runnable {
     nr_ = ((Integer) this.getInputParameter("nr")).intValue();
     delta_ = ((Double) this.getInputParameter("delta")).doubleValue();
 
-    //T_ = (int) (0.1 * populationSize_);
-    //delta_ = 0.9;
-    //nr_ = (int) (0.01 * populationSize_);
-
     neighborhood_ = new int[populationSize_][T_];
 
     z_ = new double[problem_.getNumberOfObjectives()];
-    //lambda_ = new Vector(problem_.getNumberOfObjectives()) ;
     lambda_ = new double[populationSize_][problem_.getNumberOfObjectives()];
 
-    crossover_ = operators_.get("crossover"); // default: DE crossover
-    mutation_ = operators_.get("mutation");  // default: polynomial mutation
+    crossover_ = operators_.get("crossover"); 
+    mutation_ = operators_.get("mutation"); 
 
     // STEP 1. Initialization
     // STEP 1.1. Compute euclidean distances between weight vectors and find T
@@ -292,8 +280,6 @@ public class pMOEAD extends Algorithm implements Runnable {
     for (int i = 0; i < numberOfThreads_; i++) {
       try {
         thread_[i].join();
-        //long estimatedTime = System.currentTimeMillis() - initTime;
-        //System.out.println("Time thread " + i +": " + estimatedTime) ;
       } catch (InterruptedException ex) {
         Logger.getLogger(pMOEAD.class.getName()).log(Level.SEVERE, null, ex);
       }
@@ -303,9 +289,8 @@ public class pMOEAD extends Algorithm implements Runnable {
   }
 
   /**
-   * 
+   * Initialize neighborhoods
    */
-
   public void initNeighborhood() {
     double[] x = new double[populationSize_];
     int[] idx = new int[populationSize_];
@@ -314,36 +299,33 @@ public class pMOEAD extends Algorithm implements Runnable {
       // calculate the distances based on weight vectors
       for (int j = 0; j < populationSize_; j++) {
         x[j] = Utils.distVector(lambda_[i], lambda_[j]);
-        //x[j] = dist_vector(population[i].namda,population[j].namda);
         idx[j] = j;
-        //System.out.println("x["+j+"]: "+x[j]+ ". idx["+j+"]: "+idx[j]) ;
-      } // for
+      } 
 
       // find 'niche' nearest neighboring subproblems
       Utils.minFastSort(x, idx, populationSize_, T_);
-      //minfastsort(x,idx,population.size(),niche);
 
       for (int k = 0; k < T_; k++) {
         neighborhood_[i][k] = idx[k];
       }
-    } // for
-  } // initNeighborhood
+    } 
+  } 
 
+  /**
+   * Initialize weights
+   */
   public void initUniformWeight() {
     if ((problem_.getNumberOfObjectives() == 2) && (populationSize_ < 300)) {
       for (int n = 0; n < populationSize_; n++) {
         double a = 1.0 * n / (populationSize_ - 1);
         lambda_[n][0] = a;
         lambda_[n][1] = 1 - a;
-      } // for
-    } // if
+      } 
+    } 
     else {
       String dataFileName;
       dataFileName = "W" + problem_.getNumberOfObjectives() + "D_" +
           populationSize_ + ".dat";
-
-      System.out.println(dataDirectory_);
-      System.out.println(dataDirectory_ + "/" + dataFileName);
 
       try {
         // Open the file
@@ -362,7 +344,6 @@ public class pMOEAD extends Algorithm implements Runnable {
           while (st.hasMoreTokens()) {
             double value = (new Double(st.nextToken())).doubleValue();
             lambda_[i][j] = value;
-            //System.out.println("lambda["+i+","+j+"] = " + value) ;
             j++;
           }
           aux = br.readLine();
@@ -375,8 +356,8 @@ public class pMOEAD extends Algorithm implements Runnable {
                 "initUniformWeight: fail when reading for file: " + dataDirectory_ + "/" + dataFileName,
                 e);
       }
-    } // else
-  } // initUniformWeight
+    } 
+  } 
 
   /**
    * 
@@ -386,11 +367,10 @@ public class pMOEAD extends Algorithm implements Runnable {
       Solution newSolution = new Solution(problem_);
 
       problem_.evaluate(newSolution);
-      //problem_.evaluateConstraints(newSolution);
       evaluations_++;
       population_.add(newSolution);
-    } // for
-  } // initPopulation
+    } 
+  }
 
   /**
    * 
@@ -401,12 +381,12 @@ public class pMOEAD extends Algorithm implements Runnable {
       indArray_[i] = new Solution(problem_);
       problem_.evaluate(indArray_[i]);
       evaluations_++;
-    } // for
+    } 
 
     for (int i = 0; i < populationSize_; i++) {
       updateReference(population_.get(i));
-    } // for
-  } // initIdealPoint
+    } 
+  } 
 
   /**
    * 
@@ -425,40 +405,35 @@ public class pMOEAD extends Algorithm implements Runnable {
       if (type == 1) {
         r = PseudoRandom.randInt(0, ss - 1);
         p = parentThread_.neighborhood_[cid][r];
-        //p = population[cid].table[r];
       } else {
         p = PseudoRandom.randInt(0, parentThread_.populationSize_ - 1);
-        //p = int(population.size()*rnd_uni(&rnd_uni_init));
       }
       boolean flag = true;
       for (int i = 0; i < list.size(); i++) {
-        if (list.get(i) == p) // p is in the list
-        {
+        if (list.get(i) == p) {
           flag = false;
           break;
         }
       }
 
-      //if (flag) list.push_back(p);
       if (flag) {
         list.addElement(p);
       }
     }
-  } // matingSelection
+  } 
 
   /**
-   * 
+   * Update reference point
    * @param individual
    */
   synchronized void updateReference(Solution individual) {
     for (int n = 0; n < parentThread_.problem_.getNumberOfObjectives(); n++) {
       if (individual.getObjective(n) < z_[n]) {
         parentThread_.z_[n] = individual.getObjective(n);
-
         parentThread_.indArray_[n] = individual;
       }
     }
-  } // updateReference
+  } 
 
   /**
    * @param individual
@@ -466,7 +441,7 @@ public class pMOEAD extends Algorithm implements Runnable {
    * @param type
    */
   void updateOfSolutions(Solution individual, int id, int type) throws JMException {
-    // indiv: child solution
+    // individual: child solution
     // id:   the id of current subproblem
     // type: update solutions in - neighborhood (1) or whole population (otherwise)
     int size;
@@ -488,7 +463,7 @@ public class pMOEAD extends Algorithm implements Runnable {
       if (type == 1) {
         k = parentThread_.neighborhood_[id][perm[i]];
       } else {
-        k = perm[i];      // calculate the values of objective function regarding the current subproblem
+        k = perm[i];      
       }
       double f1, f2;
 
@@ -498,8 +473,7 @@ public class pMOEAD extends Algorithm implements Runnable {
 
         if (f2 < f1) {
           parentThread_.population_.replace(k, new Solution(individual));
-          //population[k].indiv = indiv;
-          time++;
+                    time++;
         }
       }
       // the maximal number of solutions updated is not allowed to exceed 'limit'
@@ -507,7 +481,7 @@ public class pMOEAD extends Algorithm implements Runnable {
         return;
       }
     }
-  } // updateProblem
+  } 
 
   double fitnessFunction(Solution individual, double[] lambda) throws JMException {
     double fitness;
@@ -528,14 +502,14 @@ public class pMOEAD extends Algorithm implements Runnable {
         if (feval > maxFun) {
           maxFun = feval;
         }
-      } // for
+      }
 
       fitness = maxFun;
-    } // if
+    } 
     else {
       throw new JMException("pMOEAD.fitnessFunction: unknown type " + functionType_) ;
     }
     return fitness;
-  } // fitnessEvaluation
+  } 
 } // pMOEAD
 

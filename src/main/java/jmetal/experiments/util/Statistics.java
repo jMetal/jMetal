@@ -28,7 +28,7 @@ import java.util.Vector;
  */
 public class Statistics {
 
-    /**
+  /**
    * Calculates the median of a vector considering the positions indicated by
    * the parameters first and last
    * @param vector
@@ -40,17 +40,15 @@ public class Statistics {
     double median = 0.0;
 
     int size = last - first + 1;
-    // System.out.println("size: " + size + "first: " + first + " last:  " + last) ;
-
     if (size % 2 != 0) {
       median = (Double) vector.elementAt(first + size / 2);
     } else {
       median = ((Double) vector.elementAt(first + size / 2 - 1) +
-              (Double) vector.elementAt(first + size / 2)) / 2.0;
+          (Double) vector.elementAt(first + size / 2)) / 2.0;
     }
 
     return median;
-  } // calculatemedian
+  } 
 
   /**
    * Calculates the interquartile range (IQR) of a vector of Doubles
@@ -65,18 +63,11 @@ public class Statistics {
       if (vector.size() % 2 != 0) {
         q3 = calculateMedian(vector, vector.size() / 2 + 1, vector.size() - 1);
         q1 = calculateMedian(vector, 0, vector.size() / 2 - 1);
-        //System.out.println("Q1: [" + 0 + ", " + (vector.size()/2 - 1) + "] = " + q1) ;
-        //System.out.println("Q3: [" + (vector.size()/2+1) + ", " + (vector.size()-1) + "]= " + q3) ;
       } else {
         q3 = calculateMedian(vector, vector.size() / 2, vector.size() - 1);
         q1 = calculateMedian(vector, 0, vector.size() / 2 - 1);
-        //System.out.println("Q1: [" + 0 + ", " + (vector.size()/2 - 1) + "] = " + q1) ;
-        //System.out.println("Q3: [" + (vector.size()/2) + ", " + (vector.size()-1) + "]= " + q3) ;
-      } // else
-    } // if
-
+      } 
+    } 
     return q3 - q1;
-  } // calculateIQR
-
-
+  }
 }

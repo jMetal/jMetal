@@ -53,7 +53,7 @@ public class WFG1 extends WFG {
    */
   public WFG1(String solutionType) throws ClassNotFoundException, JMException {
     this(solutionType, 2, 4, 2) ;
-  } // WFG1
+  }
 
   /**
    * Creates a WFG1 problem instance

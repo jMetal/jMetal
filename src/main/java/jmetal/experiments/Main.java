@@ -77,30 +77,22 @@ public class Main {
               "b) jmetal.experiments.Main algorithmName problemName\n" +
               "c) jmetal.experiments.Main algorithmName problemName paretoFrontFile") ;
       throw new JMException("Sintax error when invoking the program") ;
-    } // if
-    else if (args.length == 1) { // algorithmName
+    } else if (args.length == 1) {
       algorithmName = args[0] ;
       Object [] settingsParams = {problemName} ;
       settings = (new SettingsFactory()).getSettingsObject(algorithmName, settingsParams) ;
-    } // if
-    else if (args.length == 2) { // algorithmName problemName
+    } else if (args.length == 2) {
       algorithmName = args[0] ;
       problemName = args[1] ;
       Object [] settingsParams = {problemName} ;
       settings = (new SettingsFactory()).getSettingsObject(algorithmName, settingsParams) ;
-    } // if
-    else if (args.length == 3) { // algorithmName problemName paretoFrontFile
+    } else if (args.length == 3) {
       algorithmName = args[0] ;
       problemName = args[1] ;
       paretoFrontFile = args[2] ;
       Object [] settingsParams = {problemName} ;
       settings = (new SettingsFactory()).getSettingsObject(algorithmName, settingsParams) ;
-    } // if
-
-    // Logger object and file to store log messages
-//    logger_      = Configuration.logger_ ;
-//    fileHandler_ = new FileHandler(algorithmName + ".log");
-//    logger_.addHandler(fileHandler_) ;
+    }
 
     algorithm = settings.configure();
 
@@ -133,7 +125,7 @@ public class Main {
         Integer evals = (Integer)algorithm.getOutputParameter("evaluations") ;
         int evaluations = (Integer)evals.intValue();
         logger_.info("Speed      : " + evaluations + " evaluations") ;
-      } // if
-    } // if
-  } //main
-} // Main
+      }
+    }
+  }
+}

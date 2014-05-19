@@ -120,9 +120,9 @@ public class SinglePointCrossover extends Crossover {
           for (int i = intoVariableCrossoverPoint;
                i < offSpring1.getNumberOfBits();
                i++) {
-            boolean swap = offSpring1.bits_.get(i);
-            offSpring1.bits_.set(i, offSpring2.bits_.get(i));
-            offSpring2.bits_.set(i, swap);
+            boolean swap = offSpring1.getBits().get(i);
+            offSpring1.getBits().set(i, offSpring2.getBits().get(i));
+            offSpring2.getBits().set(i, swap);
           }
 
           offSpring[0].getDecisionVariables()[variable] = offSpring1;
@@ -143,8 +143,7 @@ public class SinglePointCrossover extends Crossover {
             ((Binary) offSpring[0].getDecisionVariables()[i]).decode();
             ((Binary) offSpring[1].getDecisionVariables()[i]).decode();
           }
-        }
-        else {
+        } else {
           int crossoverPoint = PseudoRandom.randInt(0, parent1.numberOfVariables() - 1);
           int valueX1;
           int valueX2;

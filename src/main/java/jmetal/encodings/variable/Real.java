@@ -40,7 +40,6 @@ public class Real extends Variable{
   private static final long serialVersionUID = -227984897558565037L;
 
 /**
->>>>>>> master
    * Stores the value of the real encodings.variable
    */
   private double value_;
@@ -59,7 +58,7 @@ public class Real extends Variable{
    * Constructor
    */
   public Real() {
-  } // Real
+  }
     
   
   /**
@@ -71,7 +70,7 @@ public class Real extends Variable{
     lowerBound_ = lowerBound;
     upperBound_ = upperBound;
     value_ = PseudoRandom.randDouble()*(upperBound-lowerBound)+lowerBound;        
-  } //Real
+  }
 
   /**
    * Constructor
@@ -79,11 +78,11 @@ public class Real extends Variable{
    * @param upperBound Upper limit for the encodings.variable
    * @param value Value of the variable
    */
-  public Real(double lowerBound, double upperBound, double value){
+  public Real(double value, double lowerBound, double upperBound){
     lowerBound_ = lowerBound;
     upperBound_ = upperBound;
     value_ = value ;
-  } //Real
+  }
   
   /** 
    * Copy constructor.
@@ -94,7 +93,7 @@ public class Real extends Variable{
     lowerBound_ = variable.getLowerBound();
     upperBound_ = variable.getUpperBound();
     value_ = variable.getValue();        
-  } //Real
+  }
 
   /**
    * Gets the value of the <code>Real</code> encodings.variable.
@@ -123,8 +122,7 @@ public class Real extends Variable{
       Configuration.logger_.log(Level.SEVERE, "Real.deepCopy.execute: JMException", e);
       return null ;
     }
-  } // deepCopy
-
+  }
   
   /**
    * Gets the lower bound of the encodings.variable.
@@ -132,7 +130,7 @@ public class Real extends Variable{
    */
   public double getLowerBound() {
     return lowerBound_;
-  } //getLowerBound
+  }
 
   /**
    * Gets the upper bound of the encodings.variable.
@@ -140,7 +138,7 @@ public class Real extends Variable{
    */
   public double getUpperBound() {
     return upperBound_;
-  } // getUpperBound
+  }
     
   
   /**
@@ -149,7 +147,7 @@ public class Real extends Variable{
    */
   public void setLowerBound(double lowerBound)  {
     lowerBound_ = lowerBound;
-  } // setLowerBound
+  }
     
   /**
    * Sets the upper bound of the encodings.variable.
@@ -157,14 +155,13 @@ public class Real extends Variable{
    */
   public void setUpperBound(double upperBound) {
     upperBound_ = upperBound;
-  } // setUpperBound
-  
-  
+  }
+
   /**
    * Returns a string representing the object
    * @return the string
    */
   public String toString(){
     return value_+"";
-  } //toString
-} // Real
+  }
+}

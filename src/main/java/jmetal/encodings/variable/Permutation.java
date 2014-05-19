@@ -36,12 +36,21 @@ public class Permutation extends Variable {
   /**
    * Stores a permutation of <code>int</code> values
    */
-  public int [] vector_;
+  private int [] vector_;
+
+  public int[] getVector() {
+    return vector_ ;
+  }
+
 
   /**
    * Stores the length of the permutation
    */
-  public int size_;
+  private int size_;
+
+  public int getSize() {
+    return size_ ;
+  }
 
   /**
    * Constructor
@@ -49,8 +58,7 @@ public class Permutation extends Variable {
   public Permutation() {
     size_   = 0;
     vector_ = null;
-
-  } //Permutation
+  }
 
   /**
    * Constructor
@@ -73,8 +81,7 @@ public class Permutation extends Variable {
     for (int j = 0; j < randomSequence.size(); j++) {
       vector_[j] = randomSequence.get(j);
     }
-  } // Constructor
-
+  }
 
   /**
    * Copy Constructor
@@ -85,8 +92,7 @@ public class Permutation extends Variable {
     vector_ = new int[size_];
 
     System.arraycopy(permutation.vector_, 0, vector_, 0, size_);
-  } //Permutation
-
+  }
 
   /**
    * Create an exact copy of the <code>Permutation</code> object.
@@ -117,5 +123,5 @@ public class Permutation extends Variable {
     }
 
     return string ;
-  } // toString
-} // Permutation
+  }
+}

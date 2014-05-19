@@ -27,9 +27,7 @@ import jmetal.core.SolutionSet;
 import jmetal.operators.mutation.Mutation;
 import jmetal.operators.mutation.MutationFactory;
 import jmetal.problems.singleObjective.Griewank;
-import jmetal.problems.singleObjective.Rosenbrock;
 import jmetal.problems.singleObjective.Sphere;
-import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
@@ -50,20 +48,13 @@ public class PSO_main {
    *             the problem to solve.
    * @throws JMException 
    * @throws IOException 
-   * @throws SecurityException 
-   * Usage: three options
-   *      - jmetal.metaheuristics.mocell.MOCell_main
-   *      - jmetal.metaheuristics.mocell.MOCell_main problemName
-   *      - jmetal.metaheuristics.mocell.MOCell_main problemName ParetoFrontFile
+   * @throws SecurityException
    */
   public static void main(String [] args) 
   		throws JMException, IOException, ClassNotFoundException {
-    Problem   problem   ;  // The problem to solve
-    Algorithm algorithm ;  // The algorithm to use
-    Mutation  mutation  ;  // "Turbulence" operator
-    
-    QualityIndicator indicators ; // Object to get quality indicators
-        
+    Problem   problem   ;
+    Algorithm algorithm ;
+    Mutation  mutation  ;
 
     // Logger object and file to store log messages
     logger_      = Configuration.logger_ ;
@@ -100,5 +91,5 @@ public class PSO_main {
     population.printObjectivesToFile("FUN");
     logger_.info("Variables values have been writen to file VAR");
     population.printVariablesToFile("VAR");                         
-  } //main
-} // PSO_main
+  }
+}

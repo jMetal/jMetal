@@ -62,12 +62,12 @@ public class MOEAD_main {
  
    */
   public static void main(String [] args) throws JMException, SecurityException, IOException, ClassNotFoundException {
-    Problem   problem   ;         // The problem to solve
-    Algorithm algorithm ;         // The algorithm to use
-    Operator  crossover ;         // Crossover operator
-    Operator  mutation  ;         // Mutation operator
+    Problem   problem   ;
+    Algorithm algorithm ;
+    Operator  crossover ;
+    Operator  mutation  ;
      
-    QualityIndicator indicators ; // Object to get quality indicators
+    QualityIndicator indicators ;
 
     // Logger object and file to store log messages
     logger_      = Configuration.logger_ ;
@@ -78,13 +78,11 @@ public class MOEAD_main {
     if (args.length == 1) {
       Object [] params = {"Real"};
       problem = (new ProblemFactory()).getProblem(args[0],params);
-    } // if
-    else if (args.length == 2) {
+    } else if (args.length == 2) {
       Object [] params = {"Real"};
       problem = (new ProblemFactory()).getProblem(args[0],params);
       indicators = new QualityIndicator(problem, args[1]) ;
-    } // if
-    else { // Default problem
+    } else { // Default problem
       problem = new Kursawe("Real", 3); 
       //problem = new Kursawe("BinaryReal", 3);
       //problem = new Water("Real");
@@ -108,7 +106,8 @@ public class MOEAD_main {
     // http://dces.essex.ac.uk/staff/qzhang/MOEAcompetition/CEC09final/code/ZhangMOEADcode/moead0305.rar
     algorithm.setInputParameter("dataDirectory", "MOEAD_Weight");
 
-    algorithm.setInputParameter("finalSize", 300) ; // used by MOEAD_DRA
+    // used by MOEAD_DRA
+    algorithm.setInputParameter("finalSize", 300) ;
 
     algorithm.setInputParameter("T", 20) ;
     algorithm.setInputParameter("delta", 0.9) ;
@@ -148,6 +147,6 @@ public class MOEAD_main {
       logger_.info("GD         : " + indicators.getGD(population)) ;
       logger_.info("IGD        : " + indicators.getIGD(population)) ;
       logger_.info("Spread     : " + indicators.getSpread(population)) ;
-    } // if          
-  } //main
-} // MOEAD_main
+    }
+  }
+}

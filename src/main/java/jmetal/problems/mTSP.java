@@ -62,10 +62,10 @@ public class mTSP extends Problem {
     costMatrix_     = readProblem(file_cost);
     System.out.println(numberOfCities_) ;
     length_      [0] = numberOfCities_ ;
+
     if (solutionType.compareTo("Permutation") == 0) {
       solutionType_ = new PermutationSolutionType(this);
-    }
-    else {
+    } else {
       throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
   }
@@ -85,16 +85,16 @@ public class mTSP extends Problem {
       int x ;
       int y ;
 
-      x = ((Permutation)solution.getDecisionVariables()[0]).vector_[i] ;
-      y = ((Permutation)solution.getDecisionVariables()[0]).vector_[i+1] ;
+      x = ((Permutation)solution.getDecisionVariables()[0]).getVector()[i] ;
+      y = ((Permutation)solution.getDecisionVariables()[0]).getVector()[i+1] ;
       fitness1 += distanceMatrix_[x][y] ;
       fitness2 += costMatrix_[x][y];
     }
     int firstCity ;
     int lastCity  ;
 
-    firstCity = ((Permutation)solution.getDecisionVariables()[0]).vector_[0] ;
-    lastCity  = ((Permutation)solution.getDecisionVariables()[0]).vector_[numberOfCities_ - 1] ;
+    firstCity = ((Permutation)solution.getDecisionVariables()[0]).getVector()[0] ;
+    lastCity  = ((Permutation)solution.getDecisionVariables()[0]).getVector()[numberOfCities_ - 1] ;
     fitness1 += distanceMatrix_[firstCity][lastCity] ;
     fitness2 += costMatrix_[firstCity][lastCity];
 
@@ -119,8 +119,7 @@ public class mTSP extends Problem {
       while(!found) {
         if ((token.sval != null) && ((token.sval.compareTo("DIMENSION") == 0))) {
           found = true;
-        }
-        else {
+        } else {
           token.nextToken();
         }
       }
@@ -139,8 +138,7 @@ public class mTSP extends Problem {
         if ((token.sval != null) &&
                 ((token.sval.compareTo("SECTION") == 0))) {
           found = true;
-        }
-        else {
+        } else {
           token.nextToken();
         }
       }
@@ -169,8 +167,7 @@ public class mTSP extends Problem {
           matrix[j][k] = dist;
         }
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       Configuration.logger_.log(Level.SEVERE, "mTSP.readProblem(): error when reading data file", e);
       throw new Exception ("mTSP.readProblem(): error when reading data file "+e);
     }

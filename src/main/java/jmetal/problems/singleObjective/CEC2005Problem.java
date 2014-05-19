@@ -97,6 +97,8 @@ public class CEC2005Problem extends Problem {
       case 13:
         ulimit = 3; llimit = 1 ;
         break ;
+      default:
+        throw new JMException("Invalid problem value");
     }
 
     for (int var = 0; var < numberOfVariables_; var++){

@@ -62,13 +62,13 @@ public class AbYSS_main {
    */
   public static void main(String [] args) throws 
                                  JMException, SecurityException, IOException, ClassNotFoundException {    
-    Problem   problem     ; // The problem to solve
-    Algorithm algorithm   ; // The algorithm to use
-    Operator  crossover   ; // Crossover operator
-    Operator  mutation    ; // Mutation operator
-    Operator  improvement ; // Operator for improvement
+    Problem   problem     ;
+    Algorithm algorithm   ;
+    Operator  crossover   ;
+    Operator  mutation    ;
+    Operator  improvementOperator ;
 
-    QualityIndicator indicators ; // Object to get quality indicators
+    QualityIndicator indicators ;
 
     // Logger object and file to store log messages
     logger_      = Configuration.logger_ ;
@@ -79,13 +79,11 @@ public class AbYSS_main {
     if (args.length == 1) {
       Object [] params = {"Real"};
       problem = (new ProblemFactory()).getProblem(args[0],params);
-    } // if
-    else if (args.length == 2) {
+    } else if (args.length == 2) {
       Object [] params = {"Real"};
       problem = (new ProblemFactory()).getProblem(args[0],params);
       indicators = new QualityIndicator(problem, args[1]) ;
-    } // if
-    else { // Default problem
+    } else { // Default problem
       //problem = new Kursawe("Real", 3);
       //problem = new Kursawe("BinaryReal", 3);
       //problem = new Water("Real");
@@ -123,11 +121,11 @@ public class AbYSS_main {
     parametersLocalSearch.put("improvementRounds", 1) ;
     parametersLocalSearch.put("problem",problem) ;
     parametersLocalSearch.put("mutation",mutation) ;
-    improvement = new MutationLocalSearch(parametersLocalSearch);
+    improvementOperator = new MutationLocalSearch(parametersLocalSearch);
           
     // STEP 6. Add the operators to the algorithm
     algorithm.addOperator("crossover",crossover);
-    algorithm.addOperator("improvement",improvement);   
+    algorithm.addOperator("improvement",improvementOperator);
     
     long initTime      ;
     long estimatedTime ;    
@@ -151,6 +149,6 @@ public class AbYSS_main {
       logger_.info("IGD        : " + indicators.getIGD(population)) ;
       logger_.info("Spread     : " + indicators.getSpread(population)) ;
       logger_.info("Epsilon    : " + indicators.getEpsilon(population)) ;  
-    } // if
-  } //main
-} // AbYSS_main
+    }
+  }
+}

@@ -183,8 +183,7 @@ public class OMOPSO extends Algorithm {
 
       if (crowdingDistanceComparator_.compare(one,two) < 1) {
         bestGlobal = one.getDecisionVariables();
-      }
-      else {
+      } else {
         bestGlobal = two.getDecisionVariables();
       }
             

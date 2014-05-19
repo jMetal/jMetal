@@ -64,8 +64,7 @@ public class OneZeroMax extends Problem {
 
     if (solutionType.compareTo("Binary") == 0) {
       solutionType_ = new BinarySolutionType(this);
-    }
-    else {
+    } else {
       throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
   }
@@ -85,7 +84,7 @@ public class OneZeroMax extends Problem {
     counterZeroes = 0 ;
 
     for (int i = 0; i < variable.getNumberOfBits() ; i++) {
-      if (variable.bits_.get(i)) {
+      if (variable.getBits().get(i)) {
         counterOnes++;
       } else {
         counterZeroes++;

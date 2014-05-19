@@ -43,13 +43,13 @@ public class RealSolutionType extends SolutionType {
 	 * Creates the variables of the solution
 	 */
 	public Variable[] createVariables() {
-		Variable[] variables = new Variable[problem_.getNumberOfVariables()];
+		Variable[] variables = new Variable[getProblem().getNumberOfVariables()];
 
-		for (int var = 0; var < problem_.getNumberOfVariables(); var++) {
-      variables[var] = new Real(problem_.getLowerLimit(var),
-              problem_.getUpperLimit(var));
+		for (int var = 0; var < getProblem().getNumberOfVariables(); var++) {
+      variables[var] = new Real(getProblem().getLowerLimit(var),
+              getProblem().getUpperLimit(var));
     }
 
 		return variables ;
-	} // createVariables
-} // RealSolutionType
+	}
+}

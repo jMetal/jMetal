@@ -20,42 +20,40 @@ import java.util.logging.Level;
 
 public class PolynomialMutationOffspring extends Offspring {
 
-	private Operator mutation_;
-	private Operator selection_;
-	
-	private double mutationProbability_ ;
-	private double distributionIndex_ ;
+  private Operator mutation_;
 
-	public PolynomialMutationOffspring(double mutationProbability,
-			double distributionIndexForMutation
-			) throws JMException {     
-		HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
-		mutationParameters.put("probability", mutationProbability_= mutationProbability) ;
-		mutationParameters.put("distributionIndex", distributionIndex_= distributionIndexForMutation) ;
-		mutation_ = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);                    
+  private double mutationProbability_ ;
+  private double distributionIndex_ ;
 
-		selection_ = SelectionFactory.getSelectionOperator("BinaryTournament", null);
-		id_ = "PolynomialMutation";
-	}
+  public PolynomialMutationOffspring(double mutationProbability,
+      double distributionIndexForMutation
+      ) throws JMException {     
+    HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
+    mutationParameters.put("probability", mutationProbability_= mutationProbability) ;
+    mutationParameters.put("distributionIndex", distributionIndex_= distributionIndexForMutation) ;
+    mutation_ = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);                    
 
-	public Solution getOffspring(Solution solution) {
-		Solution res = new Solution(solution);
-		try {
-			mutation_.execute(res);
-		} catch (JMException e) {
-      Configuration.logger_.log(Level.SEVERE, "Error", e);
-		}
-		return res;
-	}
-	
-  public String configuration() {
-  	String result = "-----\n" ;
-  	result += "Operator: " + id_ + "\n" ;
-  	result += "Probability: " + mutationProbability_ + "\n" ;
-  	result += "DistributionIndex: " + distributionIndex_ ;
-  	
-  	return result ;
+    id_ = "PolynomialMutation";
   }
-} // PolynomialOffspringGenerator
+
+  public Solution getOffspring(Solution solution) {
+    Solution res = new Solution(solution);
+    try {
+      mutation_.execute(res);
+    } catch (JMException e) {
+      Configuration.logger_.log(Level.SEVERE, "Error", e);
+    }
+    return res;
+  }
+
+  public String configuration() {
+    String result = "-----\n" ;
+    result += "Operator: " + id_ + "\n" ;
+    result += "Probability: " + mutationProbability_ + "\n" ;
+    result += "DistributionIndex: " + distributionIndex_ ;
+
+    return result ;
+  }
+}
 
 

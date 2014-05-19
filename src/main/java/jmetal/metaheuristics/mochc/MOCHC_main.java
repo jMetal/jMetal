@@ -64,8 +64,6 @@ public class MOCHC_main {
     crossoverParameters.put("probability", 1.0) ;
     crossoverOperator = CrossoverFactory.getCrossoverOperator("HUXCrossover", crossoverParameters);
 
-    //parentsSelection = new RandomSelection();
-    //newGenerationSelection = new RankingAndCrowdingSelection(problem);
     HashMap<String, Object> selectionParameters = null ; // FIXME: why we are passing null?
     parentsSelection = SelectionFactory.getSelectionOperator("RandomSelection", selectionParameters) ;
 
@@ -92,5 +90,5 @@ public class MOCHC_main {
     // Print results
     population.printVariablesToFile("VAR");
     population.printObjectivesToFile("FUN");
-  }//main
+  }
 }

@@ -60,14 +60,11 @@ public class Fonseca extends Problem {
 
     if (solutionType.compareTo("BinaryReal") == 0) {
       solutionType_ = new BinaryRealSolutionType(this);
-    }
-    else if (solutionType.compareTo("Real") == 0) {
+    } else if (solutionType.compareTo("Real") == 0) {
       solutionType_ = new RealSolutionType(this);
-    }
-    else if (solutionType.compareTo("ArrayReal") == 0) {
+    } else if (solutionType.compareTo("ArrayReal") == 0) {
       solutionType_ = new ArrayRealSolutionType(this);
-    }
-    else {
+    } else {
       throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
   }

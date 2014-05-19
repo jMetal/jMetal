@@ -19,7 +19,7 @@ public class RealTest extends Real{
 
   @Before
   public void setUp() throws  Exception {
-    real_  = new Real(-1.0, 1.0, 0.5) ;
+    real_  = new Real(0.5, -1.0, 1.0) ;
   }
 
   @After
@@ -35,8 +35,8 @@ public class RealTest extends Real{
   @Test
   public void testSetValue() throws Exception {
      double oldValue = real_.getValue() ;
-     real_.setValue(0.5);
-     assertEquals("RealTest", oldValue, real_.getValue(), EPSILON);
+     real_.setValue(0.364);
+     assertEquals("RealTest", 0.364, real_.getValue(), EPSILON);
   }
 
   @Test
@@ -57,13 +57,18 @@ public class RealTest extends Real{
 
   @Test
   public void testSetLowerBound() throws Exception {
-    real_.setLowerBound(0.1);
-    assertEquals("RealTest", 0.1, real_.getLowerBound(), EPSILON);
+    real_.setLowerBound(0.325);
+    assertEquals("RealTest", 0.325, real_.getLowerBound(), EPSILON);
   }
 
   @Test
   public void testSetUpperBound() throws Exception {
-    real_.setUpperBound(2.0);
-    assertEquals("RealTest", 2.0, real_.getUpperBound(), EPSILON);
+    real_.setUpperBound(-254.0354);
+    assertEquals("RealTest", -254.0354, real_.getUpperBound(), EPSILON);
+  }
+
+  @Test
+  public void testToString() {
+    assertEquals("RealTest", "0.5", real_.toString());
   }
 }

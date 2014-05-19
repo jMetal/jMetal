@@ -88,12 +88,12 @@ public class HUXCrossover extends Crossover{
           Binary p2 = (Binary)parent2.getDecisionVariables()[var];
 
           for (int bit = 0; bit < p1.getNumberOfBits(); bit++) {
-            if (p1.bits_.get(bit) != p2.bits_.get(bit)) {
+            if (p1.getBits().get(bit) != p2.getBits().get(bit)) {
               if (PseudoRandom.randDouble() < 0.5) {
                 ((Binary)offSpring[0].getDecisionVariables()[var])
-                        .bits_.set(bit,p2.bits_.get(bit));
+                        .getBits().set(bit,p2.getBits().get(bit));
                 ((Binary)offSpring[1].getDecisionVariables()[var])
-                        .bits_.set(bit,p1.bits_.get(bit));
+                        .getBits().set(bit,p1.getBits().get(bit));
               }
             }
           }

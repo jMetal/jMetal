@@ -65,8 +65,7 @@ public class ZDT5 extends Problem {
 
     if (solutionType.compareTo("Binary") == 0) {
       solutionType_ = new BinarySolutionType(this);
-    }
-    else {
+    } else {
       throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
   }
@@ -126,6 +125,6 @@ public class ZDT5 extends Problem {
    * @param variable The binary encodings.variable
    */
   private double u(Binary variable) {
-    return variable.bits_.cardinality();
+    return variable.getBits().cardinality();
   }
 }

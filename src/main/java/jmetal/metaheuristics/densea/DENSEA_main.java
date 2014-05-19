@@ -45,11 +45,11 @@ public class DENSEA_main {
   public static FileHandler fileHandler_ ; // FileHandler object
   
   public static void main(String [] args) throws JMException, IOException, ClassNotFoundException {
-    Problem   problem   ;         // The problem to solve
-    Algorithm algorithm ;         // The algorithm to use
-    Operator  crossover ;         // Crossover operator
-    Operator  mutation  ;         // Mutation operator
-    Operator  selection ;         // Selection operator
+    Problem   problem   ;
+    Algorithm algorithm ;
+    Operator  crossover ;
+    Operator  mutation  ;
+    Operator  selection ;
 
     // Logger object and file to store log messages
     logger_      = Configuration.logger_ ;
@@ -94,6 +94,6 @@ public class DENSEA_main {
     population.printObjectivesToFile("FUN");
     logger_.info("Variables values have been writen to file VAR");
     population.printVariablesToFile("VAR");           
-  }//main
+  }
 }
 

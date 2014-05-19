@@ -47,8 +47,7 @@ public class CrowdingComparator implements Comparator<Solution> {
   public int compare(Solution o1, Solution o2) {
     if (o1==null) {
       return 1;
-    }
-    else if (o2 == null) {
+    } else if (o2 == null) {
       return -1;
     }
 

@@ -1,5 +1,5 @@
 /*
- * SBXCrossoverAndPolynomialMutation.java
+ * DifferentialEvolutionOffspringPolynomial.java
  *
  * @author Antonio J. Nebro
  * @version 1.0
@@ -98,5 +98,5 @@ public class DifferentialEvolutionOffspringPolynomial extends Offspring {
     return res;
 
   }
-} // DifferentialEvolutionOffspring
+} 
 

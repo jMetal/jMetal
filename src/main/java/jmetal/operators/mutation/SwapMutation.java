@@ -71,7 +71,7 @@ public class SwapMutation extends Mutation{
     if (solution.getType().getClass() == PermutationSolutionType.class) {
 
       permutationLength = ((Permutation)solution.getDecisionVariables()[0]).getLength() ;
-      permutation = ((Permutation)solution.getDecisionVariables()[0]).vector_ ;
+      permutation = ((Permutation)solution.getDecisionVariables()[0]).getVector() ;
 
       if (PseudoRandom.randDouble() < probability) {
         int pos1 ;

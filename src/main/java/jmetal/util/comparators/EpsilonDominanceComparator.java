@@ -61,8 +61,7 @@ public class EpsilonDominanceComparator implements Comparator<Solution> {
   public int compare(Solution object1, Solution object2) {
     if (object1==null) {
       return 1;
-    }
-    else if (object2 == null) {
+    } else if (object2 == null) {
       return -1;
     }
 
@@ -90,7 +89,7 @@ public class EpsilonDominanceComparator implements Comparator<Solution> {
       value1 = solution1.getObjective(i);
       value2 = solution2.getObjective(i);
 
-      //Objetive implements comparable!!! 
+      //Objective implements comparable!!!
       if (value1/(1 + eta_) < value2) {
         flag = -1;
       } else if (value1/(1 + eta_) > value2) {
@@ -109,13 +108,15 @@ public class EpsilonDominanceComparator implements Comparator<Solution> {
     }
 
     if (dominate1 == dominate2) {
-      return 0; // No one dominates the other
+      // No one dominates the other
+      return 0;
     }
 
     if (dominate1 == 1) {
-      return -1; // solution1 dominates
+      // solution1 dominates
+      return -1;
     }
-
-    return 1;    // solution2 dominates
+    // solution2 dominates
+    return 1;
   }
 }

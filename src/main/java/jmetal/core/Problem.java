@@ -39,7 +39,7 @@ public abstract class Problem implements Serializable {
   /**
    * Defines the default precision of binary-coded variables
    */
-  private final static int DEFAULT_PRECISSION = 16;
+  private static final int DEFAULT_PRECISSION = 16;
 
   /**
    * Stores the number of variables of the problem

@@ -34,7 +34,7 @@ import java.util.logging.Level;
 /**
  * Created by Antonio J. Nebro on 20/02/14.
  */
-public class FriedmanTables implements iExperimentOutput {
+public class FriedmanTables implements IExperimentOutput {
   Experiment experiment_ ;
 
   public FriedmanTables(Experiment experiment) {
@@ -43,7 +43,7 @@ public class FriedmanTables implements iExperimentOutput {
 
   @Override
   public void generate() {
-    for (String indicator : experiment_.indicatorList_) {
+    for (String indicator : experiment_.getIndicatorList()) {
       executeTest(indicator);
     }
   }
@@ -74,7 +74,7 @@ public class FriedmanTables implements iExperimentOutput {
 
     /*Read the result file*/
 
-    String outDir = experiment_.experimentBaseDirectory_ + "/latex";
+    String outDir = experiment_.getExperimentBaseDirectory() + "/latex";
     String outFile = outDir +"/FriedmanTest"+indicator_+".tex";
 
     String Output = "";
@@ -92,20 +92,19 @@ public class FriedmanTables implements iExperimentOutput {
     datasets = new Vector();
     data = new Vector();
 
-    for(int alg = 0; alg<experiment_.algorithmNameList_.length; alg++){
-      algorithms.add(new String(experiment_.algorithmNameList_[alg]));
+    for(int alg = 0; alg<experiment_.getAlgorithmNameList().length; alg++){
+      algorithms.add(new String(experiment_.getAlgorithmNameList()[alg]));
       data.add(new Vector());
-      String rutaAlg = experiment_.experimentBaseDirectory_ + "/data/"
-              + experiment_.algorithmNameList_[alg] + "/";
+      String rutaAlg = experiment_.getExperimentBaseDirectory() + "/data/"
+              + experiment_.getAlgorithmNameList()[alg] + "/";
 
-      for(int prob = 0; prob<experiment_.problemList_.length; prob++){
+      for(int prob = 0; prob<experiment_.getProblemList().length; prob++){
         if(alg == 0){
-          datasets.add(experiment_.problemList_[prob]);
+          datasets.add(experiment_.getProblemList()[prob]);
         }
 
-        String ruta = rutaAlg + experiment_.problemList_[prob] + "/" + indicator_;
+        String ruta = rutaAlg + experiment_.getProblemList()[prob] + "/" + indicator_;
 
-        //Leemos el fichero
         string = "";
 
         try {
@@ -144,10 +143,8 @@ public class FriedmanTables implements iExperimentOutput {
         }else{
           ((Vector)data.elementAt(alg)).add(new Double(valor));
         }
-
-      } // for
-    } // for
-
+      }
+    }
 
     /*Compute the average performance per algorithm for each data set*/
     mean = new double[datasets.size()][algorithms.size()];
@@ -259,8 +256,7 @@ public class FriedmanTables implements iExperimentOutput {
 
       fis.close();
       f.close();
-    }
-    catch (IOException e) {
+    } catch (IOException e) {
       Configuration.logger_.log(Level.SEVERE, "Error", e);
       throw new RuntimeException() ;
     }
@@ -283,12 +279,10 @@ public class FriedmanTables implements iExperimentOutput {
       if (Math.abs(this.valor) > Math.abs(((Pair)o1).valor)){
         //return -1;
         return 1;
-      }
-      else if (Math.abs(this.valor) < Math.abs(((Pair)o1).valor)){
+      } else if (Math.abs(this.valor) < Math.abs(((Pair)o1).valor)){
         //return 1;
         return -1;
-      }
-      else {
+      } else {
         return 0;
       }
     }

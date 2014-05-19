@@ -120,8 +120,7 @@ public class acGA extends Algorithm {
         //Create a new solution, using genetic operators mutation and crossover
         if (crossoverOperator != null) {
           offSpring = (Solution[]) crossoverOperator.execute(parents);
-        }
-        else {
+        } else {
         	offSpring = new Solution[1] ;
         	offSpring[0] = new Solution(parents[0]) ;
         }

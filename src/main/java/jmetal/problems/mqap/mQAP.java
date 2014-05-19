@@ -36,10 +36,10 @@ import jmetal.util.JMException;
 public class mQAP extends Problem {
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = 5585099487667493237L;
-  
+
   int [][] a_matrix;
   int [][][] b_matrixs;
 
@@ -53,7 +53,7 @@ public class mQAP extends Problem {
    */
   public mQAP(String solutionType, String fileName) throws JMException {
 
-    ReadInstance ri = new ReadInstance(fileName);    
+    ReadInstance ri = new ReadInstance(fileName);
     ri.loadInstance(); // necessary step (because I say it :-))
     numberOfVariables_  =   1; // the permutation
     numberOfObjectives_ =   ri.getNumberOfObjectives();
@@ -79,18 +79,17 @@ public class mQAP extends Problem {
 
     if (solutionType.compareTo("Permutation") == 0) {
       solutionType_ = new PermutationSolutionType(this);
+    } else {
+      throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
-    else {
-        throw new JMException("Error: solution type " + solutionType + " invalid") ;
-      }
   }
 
   // evaluation of the problem
   public void evaluate(Solution solution) throws JMException {
-    int [] permutation = ((Permutation)solution.getDecisionVariables()[0]).vector_;
-    for (int k = 0; k < numberOfObjectives_; k++) {      
+    int [] permutation = ((Permutation)solution.getDecisionVariables()[0]).getVector();
+    for (int k = 0; k < numberOfObjectives_; k++) {
       double aux = 0.0;
-      for (int i = 0; i < a_matrix.length; i++) {        
+      for (int i = 0; i < a_matrix.length; i++) {
         for (int j = 0; j < a_matrix[i].length; j++) {
           aux += a_matrix[i][j] * b_matrixs[k][permutation[i]][permutation[j]];
         }

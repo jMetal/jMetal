@@ -47,7 +47,11 @@ public class ArrayInt extends Variable {
   /**
    * Stores an array of integer values
    */
-  public int [] array_;
+  private int [] array_;
+
+  public int[] getArray() {
+    return array_ ;
+  }
 
   /**
    * Stores the length of the array

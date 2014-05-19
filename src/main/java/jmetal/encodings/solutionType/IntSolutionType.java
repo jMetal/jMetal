@@ -31,25 +31,25 @@ import jmetal.encodings.variable.Int;
  */
 public class IntSolutionType extends SolutionType {
 
-	/**
-	 * Constructor
-	 * @param problem  Problem to solve
-	 */
-	public IntSolutionType(Problem problem) {
-		super(problem) ;
-	} // Constructor
+  /**
+   * Constructor
+   * @param problem  Problem to solve
+   */
+  public IntSolutionType(Problem problem) {
+    super(problem) ;
+  } // Constructor
 
-	/**
-	 * Creates the variables of the solution
-	 */
-	public Variable[] createVariables() {
-		Variable[] variables = new Variable[problem_.getNumberOfVariables()];
+  /**
+   * Creates the variables of the solution
+   */
+  public Variable[] createVariables() {
+    Variable[] variables = new Variable[getProblem().getNumberOfVariables()];
 
-		for (int var = 0; var < problem_.getNumberOfVariables(); var++) {
-      variables[var] = new Int((int) problem_.getLowerLimit(var),
-              (int) problem_.getUpperLimit(var));
+    for (int var = 0; var < getProblem().getNumberOfVariables(); var++) {
+      variables[var] = new Int((int) getProblem().getLowerLimit(var),
+              (int) getProblem().getUpperLimit(var));
     }
 
-		return variables ;
-	} // createVariables
-} // IntSolutionType
+    return variables ;
+  }
+}

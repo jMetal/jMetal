@@ -78,8 +78,7 @@ public class IntRealProblem extends Problem {
 
     if (solutionType.compareTo("IntReal") == 0) {
       solutionType_ = new IntRealSolutionType(this, intVariables, realVariables);
-    }
-    else {
+    } else {
       throw new JMException("Error: solution type " + solutionType + " invalid") ;
     }
   }

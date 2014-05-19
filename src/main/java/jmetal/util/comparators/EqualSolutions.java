@@ -45,8 +45,7 @@ public class EqualSolutions implements Comparator<Solution> {
   public int compare(Solution object1, Solution object2) {
     if (object1==null) {
       return 1;
-    }
-    else if (object2 == null) {
+    } else if (object2 == null) {
       return -1;
     }
 
@@ -85,13 +84,16 @@ public class EqualSolutions implements Comparator<Solution> {
     }
 
     if (dominate1== 0 && dominate2 ==0) {
-      return 0; //No one dominate the other
+      //No one dominates the other
+      return 0;
     }
 
     if (dominate1 == 1) {
-      return -1; // solution1 dominate
+      // solution1 dominates
+      return -1;
     } else if (dominate2 == 1) {
-      return 1;    // solution2 dominate
+      // solution2 dominates
+      return 1;
     }
     return 2;
   }

@@ -80,7 +80,7 @@ public class BitFlipMutation extends Mutation {
         for (int i = 0; i < solution.getDecisionVariables().length; i++) {
           for (int j = 0; j < ((Binary) solution.getDecisionVariables()[i]).getNumberOfBits(); j++) {
             if (PseudoRandom.randDouble() < probability) {
-              ((Binary) solution.getDecisionVariables()[i]).bits_.flip(j);
+              ((Binary) solution.getDecisionVariables()[i]).getBits().flip(j);
             }
           }
         }
@@ -88,8 +88,7 @@ public class BitFlipMutation extends Mutation {
         for (int i = 0; i < solution.getDecisionVariables().length; i++) {
           ((Binary) solution.getDecisionVariables()[i]).decode();
         }
-      }
-      else {
+      } else {
         for (int i = 0; i < solution.getDecisionVariables().length; i++) {
           if (PseudoRandom.randDouble() < probability) {
             int value = PseudoRandom.randInt(
