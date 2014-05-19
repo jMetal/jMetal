@@ -43,7 +43,7 @@ public class FriedmanTables implements IExperimentOutput {
 
   @Override
   public void generate() {
-    for (String indicator : experiment_.indicatorList_) {
+    for (String indicator : experiment_.getIndicatorList()) {
       executeTest(indicator);
     }
   }
@@ -74,7 +74,7 @@ public class FriedmanTables implements IExperimentOutput {
 
     /*Read the result file*/
 
-    String outDir = experiment_.experimentBaseDirectory_ + "/latex";
+    String outDir = experiment_.getExperimentBaseDirectory() + "/latex";
     String outFile = outDir +"/FriedmanTest"+indicator_+".tex";
 
     String Output = "";
@@ -92,18 +92,18 @@ public class FriedmanTables implements IExperimentOutput {
     datasets = new Vector();
     data = new Vector();
 
-    for(int alg = 0; alg<experiment_.algorithmNameList_.length; alg++){
-      algorithms.add(new String(experiment_.algorithmNameList_[alg]));
+    for(int alg = 0; alg<experiment_.getAlgorithmNameList().length; alg++){
+      algorithms.add(new String(experiment_.getAlgorithmNameList()[alg]));
       data.add(new Vector());
-      String rutaAlg = experiment_.experimentBaseDirectory_ + "/data/"
-              + experiment_.algorithmNameList_[alg] + "/";
+      String rutaAlg = experiment_.getExperimentBaseDirectory() + "/data/"
+              + experiment_.getAlgorithmNameList()[alg] + "/";
 
-      for(int prob = 0; prob<experiment_.problemList_.length; prob++){
+      for(int prob = 0; prob<experiment_.getProblemList().length; prob++){
         if(alg == 0){
-          datasets.add(experiment_.problemList_[prob]);
+          datasets.add(experiment_.getProblemList()[prob]);
         }
 
-        String ruta = rutaAlg + experiment_.problemList_[prob] + "/" + indicator_;
+        String ruta = rutaAlg + experiment_.getProblemList()[prob] + "/" + indicator_;
 
         string = "";
 

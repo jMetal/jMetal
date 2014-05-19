@@ -1,3 +1,24 @@
+//  LatexTables.java
+//
+//  Authors:
+//       Antonio J. Nebro <antonio@lcc.uma.es>
+//
+//  Copyright (c) 2014 Antonio J. Nebro
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU Lesser General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU Lesser General Public License for more details.
+//
+//  You should have received a copy of the GNU Lesser General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
+
 package jmetal.experiments.util;
 
 import jmetal.experiments.Experiment;
@@ -22,25 +43,25 @@ public class LatexTables implements IExperimentOutput {
   }
   @Override
   public void generate() {
-    experiment_.latexDirectory_ = experiment_.experimentBaseDirectory_ + "/" + experiment_.latexDirectory_;
-      System.out.println("latex directory: " + experiment_.latexDirectory_);
+    experiment_.setLatexDirectory(experiment_.getExperimentBaseDirectory() + "/" + experiment_.getLatexDirectory())  ;
+      System.out.println("latex directory: " + experiment_.getLatexDirectory());
 
-      Vector[][][] data = new Vector[experiment_.indicatorList_.length][][];
-      for (int indicator = 0; indicator < experiment_.indicatorList_.length; indicator++) {
+      Vector[][][] data = new Vector[experiment_.getIndicatorList().length][][];
+      for (int indicator = 0; indicator < experiment_.getIndicatorList().length; indicator++) {
         // A data vector per problem
-        data[indicator] = new Vector[experiment_.problemList_.length][];
+        data[indicator] = new Vector[experiment_.getProblemList().length][];
 
-        for (int problem = 0; problem < experiment_.problemList_.length; problem++) {
-          data[indicator][problem] = new Vector[experiment_.algorithmNameList_.length];
+        for (int problem = 0; problem < experiment_.getProblemList().length; problem++) {
+          data[indicator][problem] = new Vector[experiment_.getAlgorithmNameList().length];
 
-          for (int algorithm = 0; algorithm < experiment_.algorithmNameList_.length; algorithm++) {
+          for (int algorithm = 0; algorithm < experiment_.getAlgorithmNameList().length; algorithm++) {
             data[indicator][problem][algorithm] = new Vector();
 
-            String directory = experiment_.experimentBaseDirectory_;
+            String directory = experiment_.getExperimentBaseDirectory();
             directory += "/data/";
-            directory += "/" + experiment_.algorithmNameList_[algorithm];
-            directory += "/" + experiment_.problemList_[problem];
-            directory += "/" + experiment_.indicatorList_[indicator];
+            directory += "/" + experiment_.getAlgorithmNameList()[algorithm];
+            directory += "/" + experiment_.getProblemList()[problem];
+            directory += "/" + experiment_.getIndicatorList()[indicator];
             // Read values from data files
             FileInputStream fis = null;
             try {
@@ -84,40 +105,40 @@ public class LatexTables implements IExperimentOutput {
       statValues.put("max", 0.0);
       statValues.put("min", 0.0);
 
-      mean = new double[experiment_.indicatorList_.length][][];
-      median = new double[experiment_.indicatorList_.length][][];
-      stdDeviation = new double[experiment_.indicatorList_.length][][];
-      iqr = new double[experiment_.indicatorList_.length][][];
-      min = new double[experiment_.indicatorList_.length][][];
-      max = new double[experiment_.indicatorList_.length][][];
-      numberOfValues = new int[experiment_.indicatorList_.length][][];
+      mean = new double[experiment_.getIndicatorList().length][][];
+      median = new double[experiment_.getIndicatorList().length][][];
+      stdDeviation = new double[experiment_.getIndicatorList().length][][];
+      iqr = new double[experiment_.getIndicatorList().length][][];
+      min = new double[experiment_.getIndicatorList().length][][];
+      max = new double[experiment_.getIndicatorList().length][][];
+      numberOfValues = new int[experiment_.getIndicatorList().length][][];
 
-      for (int indicator = 0; indicator < experiment_.indicatorList_.length; indicator++) {
+      for (int indicator = 0; indicator < experiment_.getIndicatorList().length; indicator++) {
         // A data vector per problem
-        mean[indicator] = new double[experiment_.problemList_.length][];
-        median[indicator] = new double[experiment_.problemList_.length][];
-        stdDeviation[indicator] = new double[experiment_.problemList_.length][];
-        iqr[indicator] = new double[experiment_.problemList_.length][];
-        min[indicator] = new double[experiment_.problemList_.length][];
-        max[indicator] = new double[experiment_.problemList_.length][];
-        numberOfValues[indicator] = new int[experiment_.problemList_.length][];
+        mean[indicator] = new double[experiment_.getProblemList().length][];
+        median[indicator] = new double[experiment_.getProblemList().length][];
+        stdDeviation[indicator] = new double[experiment_.getProblemList().length][];
+        iqr[indicator] = new double[experiment_.getProblemList().length][];
+        min[indicator] = new double[experiment_.getProblemList().length][];
+        max[indicator] = new double[experiment_.getProblemList().length][];
+        numberOfValues[indicator] = new int[experiment_.getProblemList().length][];
 
-        for (int problem = 0; problem < experiment_.problemList_.length; problem++) {
-          mean[indicator][problem] = new double[experiment_.algorithmNameList_.length];
-          median[indicator][problem] = new double[experiment_.algorithmNameList_.length];
-          stdDeviation[indicator][problem] = new double[experiment_.algorithmNameList_.length];
-          iqr[indicator][problem] = new double[experiment_.algorithmNameList_.length];
-          min[indicator][problem] = new double[experiment_.algorithmNameList_.length];
-          max[indicator][problem] = new double[experiment_.algorithmNameList_.length];
-          numberOfValues[indicator][problem] = new int[experiment_.algorithmNameList_.length];
+        for (int problem = 0; problem < experiment_.getProblemList().length; problem++) {
+          mean[indicator][problem] = new double[experiment_.getAlgorithmNameList().length];
+          median[indicator][problem] = new double[experiment_.getAlgorithmNameList().length];
+          stdDeviation[indicator][problem] = new double[experiment_.getAlgorithmNameList().length];
+          iqr[indicator][problem] = new double[experiment_.getAlgorithmNameList().length];
+          min[indicator][problem] = new double[experiment_.getAlgorithmNameList().length];
+          max[indicator][problem] = new double[experiment_.getAlgorithmNameList().length];
+          numberOfValues[indicator][problem] = new int[experiment_.getAlgorithmNameList().length];
 
-          for (int algorithm = 0; algorithm < experiment_.algorithmNameList_.length; algorithm++) {
+          for (int algorithm = 0; algorithm < experiment_.getAlgorithmNameList().length; algorithm++) {
             Collections.sort(data[indicator][problem][algorithm]);
 
-            String directory = experiment_.experimentBaseDirectory_;
-            directory += "/" + experiment_.algorithmNameList_[algorithm];
-            directory += "/" + experiment_.problemList_[problem];
-            directory += "/" + experiment_.indicatorList_[indicator];
+            String directory = experiment_.getExperimentBaseDirectory();
+            directory += "/" + experiment_.getAlgorithmNameList()[algorithm];
+            directory += "/" + experiment_.getProblemList()[problem];
+            directory += "/" + experiment_.getIndicatorList()[indicator];
 
             //System.out.println("----" + directory + "-----");
             //calculateStatistics(data[indicator][problem][algorithm], meanV, medianV, minV, maxV, stdDeviationV, iqrV) ;
@@ -143,16 +164,16 @@ public class LatexTables implements IExperimentOutput {
       }
 
       File latexOutput;
-      latexOutput = new File(experiment_.latexDirectory_);
+      latexOutput = new File(experiment_.getLatexDirectory());
       if (!latexOutput.exists()) {
-        boolean result = new File(experiment_.latexDirectory_).mkdirs();
-        System.out.println("Creating " + experiment_.latexDirectory_ + " directory");
+        boolean result = new File(experiment_.getLatexDirectory()).mkdirs();
+        System.out.println("Creating " + experiment_.getLatexDirectory() + " directory");
       }
       //System.out.println("Experiment name: " + experimentName_);
-      String latexFile = experiment_.latexDirectory_ + "/" + experiment_.experimentName_ + ".tex";
+      String latexFile = experiment_.getLatexDirectory() + "/" + experiment_.getExperimentName() + ".tex";
     try {
       printHeaderLatexCommands(latexFile);
-      for (int i = 0; i < experiment_.indicatorList_.length; i++) {
+      for (int i = 0; i < experiment_.getIndicatorList().length; i++) {
         printMeanStdDev(latexFile, i, mean, stdDeviation);
         printMedianIQR(latexFile, i, median, iqr);
       } // for
@@ -233,7 +254,7 @@ public class LatexTables implements IExperimentOutput {
   void printHeaderLatexCommands(String fileName) throws IOException {
     FileWriter os = new FileWriter(fileName, false);
     os.write("\\documentclass{article}" + "\n");
-    os.write("\\title{" + experiment_.experimentName_ + "}" + "\n");
+    os.write("\\title{" + experiment_.getExperimentName() + "}" + "\n");
     os.write("\\usepackage{colortbl}" + "\n");
     os.write("\\usepackage[table*]{xcolor}" + "\n");
     os.write("\\usepackage[margin=0.6in]{geometry}" + "\n");
@@ -257,34 +278,34 @@ public class LatexTables implements IExperimentOutput {
     FileWriter os = new FileWriter(fileName, true);
     os.write("\\" + "\n");
     os.write("\\begin{table}" + "\n");
-    os.write("\\caption{" + experiment_.indicatorList_[indicator] + ". Mean and standard deviation}" + "\n");
-    os.write("\\label{table:mean." + experiment_.indicatorList_[indicator] + "}" + "\n");
+    os.write("\\caption{" + experiment_.getIndicatorList()[indicator] + ". Mean and standard deviation}" + "\n");
+    os.write("\\label{table:mean." + experiment_.getIndicatorList()[indicator] + "}" + "\n");
     os.write("\\centering" + "\n");
     os.write("\\begin{scriptsize}" + "\n");
     os.write("\\begin{tabular}{l");
 
     // calculate the number of columns
-    for (String anAlgorithmNameList_ : experiment_.algorithmNameList_) {
+    for (String anAlgorithmNameList_ : experiment_.getAlgorithmNameList()) {
       os.write("l");
     }
     os.write("}\n");
 
     os.write("\\hline");
     // write table head
-    for (int i = -1; i < experiment_.algorithmNameList_.length; i++) {
+    for (int i = -1; i < experiment_.getAlgorithmNameList().length; i++) {
       if (i == -1) {
         os.write(" & ");
-      } else if (i == (experiment_.algorithmNameList_.length - 1)) {
-        os.write(" " + experiment_.algorithmNameList_[i] + "\\\\" + "\n");
+      } else if (i == (experiment_.getAlgorithmNameList().length - 1)) {
+        os.write(" " + experiment_.getAlgorithmNameList()[i] + "\\\\" + "\n");
       } else {
-        os.write("" + experiment_.algorithmNameList_[i] + " & ");
+        os.write("" + experiment_.getAlgorithmNameList()[i] + " & ");
       }
     }
     os.write("\\hline" + "\n");
 
     String m, s;
     // write lines
-    for (int i = 0; i < experiment_.problemList_.length; i++) {
+    for (int i = 0; i < experiment_.getProblemList().length; i++) {
       // find the best value and second best value
       double bestValue;
       double bestValueIQR;
@@ -292,12 +313,12 @@ public class LatexTables implements IExperimentOutput {
       double secondBestValueIQR;
       int bestIndex = -1;
       int secondBestIndex = -1;
-      if ((Boolean) experiment_.indicatorMinimize_.get(experiment_.indicatorList_[indicator])) {// minimize by default
+      if ((Boolean) experiment_.indicatorMinimize().get(experiment_.getIndicatorList()[indicator])) {// minimize by default
         bestValue = Double.MAX_VALUE;
         bestValueIQR = Double.MAX_VALUE;
         secondBestValue = Double.MAX_VALUE;
         secondBestValueIQR = Double.MAX_VALUE;
-        for (int j = 0; j < (experiment_.algorithmNameList_.length); j++) {
+        for (int j = 0; j < (experiment_.getAlgorithmNameList().length); j++) {
           if ((mean[indicator][i][j] < bestValue) ||
                   ((mean[indicator][i][j] == bestValue) && (stdDev[indicator][i][j] < bestValueIQR))) {
             secondBestIndex = bestIndex;
@@ -319,7 +340,7 @@ public class LatexTables implements IExperimentOutput {
         bestValueIQR = Double.MIN_VALUE;
         secondBestValue = Double.MIN_VALUE;
         secondBestValueIQR = Double.MIN_VALUE;
-        for (int j = 0; j < (experiment_.algorithmNameList_.length); j++) {
+        for (int j = 0; j < (experiment_.getAlgorithmNameList().length); j++) {
           if ((mean[indicator][i][j] > bestValue) ||
                   ((mean[indicator][i][j] == bestValue) && (stdDev[indicator][i][j] < bestValueIQR))) {
             secondBestIndex = bestIndex;
@@ -337,8 +358,8 @@ public class LatexTables implements IExperimentOutput {
         } // for
       } // else
 
-      os.write(experiment_.problemList_[i].replace("_", "\\_") + " & ");
-      for (int j = 0; j < (experiment_.algorithmNameList_.length - 1); j++) {
+      os.write(experiment_.getProblemList()[i].replace("_", "\\_") + " & ");
+      for (int j = 0; j < (experiment_.getAlgorithmNameList().length - 1); j++) {
         if (j == bestIndex) {
           os.write("\\cellcolor{gray95}");
         }
@@ -350,11 +371,11 @@ public class LatexTables implements IExperimentOutput {
         s = String.format(Locale.ENGLISH, "%8.1e", stdDev[indicator][i][j]);
         os.write("$" + m + "_{" + s + "}$ & ");
       }
-      if (bestIndex == (experiment_.algorithmNameList_.length - 1)) {
+      if (bestIndex == (experiment_.getAlgorithmNameList().length - 1)) {
         os.write("\\cellcolor{gray95}");
       }
-      m = String.format(Locale.ENGLISH, "%10.2e", mean[indicator][i][experiment_.algorithmNameList_.length - 1]);
-      s = String.format(Locale.ENGLISH, "%8.1e", stdDev[indicator][i][experiment_.algorithmNameList_.length - 1]);
+      m = String.format(Locale.ENGLISH, "%10.2e", mean[indicator][i][experiment_.getAlgorithmNameList().length - 1]);
+      s = String.format(Locale.ENGLISH, "%8.1e", stdDev[indicator][i][experiment_.getAlgorithmNameList().length - 1]);
       os.write("$" + m + "_{" + s + "}$ \\\\" + "\n");
     } // for
     //os.write("" + mean[0][problemList_.length-1][algorithmNameList_.length-1] + "\\\\"+ "\n" ) ;
@@ -370,34 +391,34 @@ public class LatexTables implements IExperimentOutput {
     FileWriter os = new FileWriter(fileName, true);
     os.write("\\" + "\n");
     os.write("\\begin{table}" + "\n");
-    os.write("\\caption{" + experiment_.indicatorList_[indicator] + ". Median and IQR}" + "\n");
-    os.write("\\label{table:median." + experiment_.indicatorList_[indicator] + "}" + "\n");
+    os.write("\\caption{" + experiment_.getIndicatorList()[indicator] + ". Median and IQR}" + "\n");
+    os.write("\\label{table:median." + experiment_.getIndicatorList()[indicator] + "}" + "\n");
     os.write("\\begin{scriptsize}" + "\n");
     os.write("\\centering" + "\n");
     os.write("\\begin{tabular}{l");
 
     // calculate the number of columns
-    for (String anAlgorithmNameList_ : experiment_.algorithmNameList_) {
+    for (String anAlgorithmNameList_ : experiment_.getAlgorithmNameList()) {
       os.write("l");
     }
     os.write("}\n");
 
     os.write("\\hline");
     // write table head
-    for (int i = -1; i < experiment_.algorithmNameList_.length; i++) {
+    for (int i = -1; i < experiment_.getAlgorithmNameList().length; i++) {
       if (i == -1) {
         os.write(" & ");
-      } else if (i == (experiment_.algorithmNameList_.length - 1)) {
-        os.write(" " + experiment_.algorithmNameList_[i] + "\\\\" + "\n");
+      } else if (i == (experiment_.getAlgorithmNameList().length - 1)) {
+        os.write(" " + experiment_.getAlgorithmNameList()[i] + "\\\\" + "\n");
       } else {
-        os.write("" + experiment_.algorithmNameList_[i] + " & ");
+        os.write("" + experiment_.getAlgorithmNameList()[i] + " & ");
       }
     }
     os.write("\\hline" + "\n");
 
     String m, s;
     // write lines
-    for (int i = 0; i < experiment_.problemList_.length; i++) {
+    for (int i = 0; i < experiment_.getProblemList().length; i++) {
       // find the best value and second best value
       double bestValue;
       double bestValueIQR;
@@ -405,12 +426,12 @@ public class LatexTables implements IExperimentOutput {
       double secondBestValueIQR;
       int bestIndex = -1;
       int secondBestIndex = -1;
-      if ((Boolean) experiment_.indicatorMinimize_.get(experiment_.indicatorList_[indicator])) {// minimize by default
+      if ((Boolean) experiment_.indicatorMinimize().get(experiment_.getIndicatorList()[indicator])) {// minimize by default
         bestValue = Double.MAX_VALUE;
         bestValueIQR = Double.MAX_VALUE;
         secondBestValue = Double.MAX_VALUE;
         secondBestValueIQR = Double.MAX_VALUE;
-        for (int j = 0; j < (experiment_.algorithmNameList_.length); j++) {
+        for (int j = 0; j < (experiment_.getAlgorithmNameList().length); j++) {
           if ((median[indicator][i][j] < bestValue) ||
                   ((median[indicator][i][j] == bestValue) && (IQR[indicator][i][j] < bestValueIQR))) {
             secondBestIndex = bestIndex;
@@ -432,7 +453,7 @@ public class LatexTables implements IExperimentOutput {
         bestValueIQR = Double.MIN_VALUE;
         secondBestValue = Double.MIN_VALUE;
         secondBestValueIQR = Double.MIN_VALUE;
-        for (int j = 0; j < (experiment_.algorithmNameList_.length); j++) {
+        for (int j = 0; j < (experiment_.getAlgorithmNameList().length); j++) {
           if ((median[indicator][i][j] > bestValue) ||
                   ((median[indicator][i][j] == bestValue) && (IQR[indicator][i][j] < bestValueIQR))) {
             secondBestIndex = bestIndex;
@@ -450,8 +471,8 @@ public class LatexTables implements IExperimentOutput {
         } // for
       } // else
 
-      os.write(experiment_.problemList_[i].replace("_", "\\_") + " & ");
-      for (int j = 0; j < (experiment_.algorithmNameList_.length - 1); j++) {
+      os.write(experiment_.getProblemList()[i].replace("_", "\\_") + " & ");
+      for (int j = 0; j < (experiment_.getAlgorithmNameList().length - 1); j++) {
         if (j == bestIndex) {
           os.write("\\cellcolor{gray95}");
         }
@@ -462,11 +483,11 @@ public class LatexTables implements IExperimentOutput {
         s = String.format(Locale.ENGLISH, "%8.1e", IQR[indicator][i][j]);
         os.write("$" + m + "_{" + s + "}$ & ");
       }
-      if (bestIndex == (experiment_.algorithmNameList_.length - 1)) {
+      if (bestIndex == (experiment_.getAlgorithmNameList().length - 1)) {
         os.write("\\cellcolor{gray95}");
       }
-      m = String.format(Locale.ENGLISH, "%10.2e", median[indicator][i][experiment_.algorithmNameList_.length - 1]);
-      s = String.format(Locale.ENGLISH, "%8.1e", IQR[indicator][i][experiment_.algorithmNameList_.length - 1]);
+      m = String.format(Locale.ENGLISH, "%10.2e", median[indicator][i][experiment_.getAlgorithmNameList().length - 1]);
+      s = String.format(Locale.ENGLISH, "%8.1e", IQR[indicator][i][experiment_.getAlgorithmNameList().length - 1]);
       os.write("$" + m + "_{" + s + "}$ \\\\" + "\n");
     } // for
     //os.write("" + mean[0][problemList_.length-1][algorithmNameList_.length-1] + "\\\\"+ "\n" ) ;

@@ -22,7 +22,7 @@ public class ReferenceParetoFronts implements IExperimentOutput {
 
   @Override
   public void generate() {
-    for (int i = 0; i < experiment_.problemList_.length; i++) {
+    for (int i = 0; i < experiment_.getProblemList().length; i++) {
        generateReferenceFronts(i);
     }
   }
@@ -33,7 +33,7 @@ public class ReferenceParetoFronts implements IExperimentOutput {
   private void generateReferenceFronts(int problemIndex) {
 
     File rfDirectory;
-    String referenceFrontDirectory = experiment_.experimentBaseDirectory_ + "/referenceFronts";
+    String referenceFrontDirectory = experiment_.getExperimentBaseDirectory() + "/referenceFronts";
 
     rfDirectory = new File(referenceFrontDirectory);
 
@@ -43,17 +43,17 @@ public class ReferenceParetoFronts implements IExperimentOutput {
     }
 
     //frontPath_[problemIndex] = referenceFrontDirectory + "/" + problemList_[problemIndex] + ".rf";
-    String referenceParetoFront = referenceFrontDirectory + "/" + experiment_.problemList_[problemIndex] + ".pf";
+    String referenceParetoFront = referenceFrontDirectory + "/" + experiment_.getProblemList()[problemIndex] + ".pf";
     //String referenceParetoSet = referenceFrontDirectory + "/" + problemList_[problemIndex] + ".ps";
 
     MetricsUtil metricsUtils = new MetricsUtil();
     NonDominatedSolutionList solutionSet = new NonDominatedSolutionList();
-    for (String anAlgorithmNameList_ : experiment_.algorithmNameList_) {
+    for (String anAlgorithmNameList_ : experiment_.getAlgorithmNameList()) {
 
-      String problemDirectory = experiment_.experimentBaseDirectory_ + "/data/" + anAlgorithmNameList_ +
-              "/" + experiment_.problemList_[problemIndex];
+      String problemDirectory = experiment_.getExperimentBaseDirectory() + "/data/" + anAlgorithmNameList_ +
+              "/" + experiment_.getProblemList()[problemIndex];
 
-      for (int numRun = 0; numRun < experiment_.independentRuns_; numRun++) {
+      for (int numRun = 0; numRun < experiment_.getIndependentRuns(); numRun++) {
 
         String outputParetoFrontFilePath;
         outputParetoFrontFilePath = problemDirectory + "/FUN." + numRun;

@@ -49,37 +49,37 @@ public class QualityIndicatorTables implements IExperimentOutput {
 
   @Override
   public void generate() throws JMException {
-    String paretoFront[] = new String[experiment_.problemList_.length] ;
+    String paretoFront[] = new String[experiment_.getProblemList().length] ;
 
-    for (int i = 0; i < experiment_.problemList_.length; i++) {
-      if (experiment_.generateReferenceParetoFronts_){
-        paretoFront[i] = experiment_.experimentBaseDirectory_
-                + "/referenceFronts" + "/" + experiment_.problemList_[i] + ".pf" ;
+    for (int i = 0; i < experiment_.getProblemList().length; i++) {
+      if (experiment_.generateReferenceParetoFronts()){
+        paretoFront[i] = experiment_.getExperimentBaseDirectory()
+                + "/referenceFronts" + "/" + experiment_.getProblemList()[i] + ".pf" ;
       } else {
-        paretoFront[i] = experiment_.paretoFrontDirectory_ + "/" + experiment_.paretoFrontFileList_[i];
+        paretoFront[i] = experiment_.getParetoFrontDirectory() + "/" + experiment_.getParetoFrontFileList()[i];
       }
       System.out.println("Pareto front " + i + ": " + paretoFront[i]) ;
     }
 
-    if (experiment_.indicatorList_.length > 0) {
+    if (experiment_.getIndicatorList().length > 0) {
 
-      for (int algorithmIndex = 0; algorithmIndex < experiment_.algorithmNameList_.length; algorithmIndex++) {
+      for (int algorithmIndex = 0; algorithmIndex < experiment_.getAlgorithmNameList().length; algorithmIndex++) {
 
         String algorithmDirectory;
-        algorithmDirectory = experiment_.experimentBaseDirectory_
-                + "/data/" + experiment_.algorithmNameList_[algorithmIndex] + "/";
+        algorithmDirectory = experiment_.getExperimentBaseDirectory()
+                + "/data/" + experiment_.getAlgorithmNameList()[algorithmIndex] + "/";
 
-        for (int problemIndex = 0; problemIndex < experiment_.problemList_.length; problemIndex++) {
+        for (int problemIndex = 0; problemIndex < experiment_.getProblemList().length; problemIndex++) {
 
-          String problemDirectory = algorithmDirectory + experiment_.problemList_[problemIndex];
+          String problemDirectory = algorithmDirectory + experiment_.getProblemList()[problemIndex];
           //String paretoFrontPath = frontPath_[problemIndex];
 
-          for (String anIndicatorList_ : experiment_.indicatorList_) {
+          for (String anIndicatorList_ : experiment_.getIndicatorList()) {
             System.out.println("Experiment - Quality indicator: " + anIndicatorList_);
 
             resetFile(problemDirectory + "/" + anIndicatorList_);
 
-            for (int numRun = 0; numRun < experiment_.independentRuns_; numRun++) {
+            for (int numRun = 0; numRun < experiment_.getIndependentRuns(); numRun++) {
 
               String outputParetoFrontFilePath;
               outputParetoFrontFilePath = problemDirectory + "/FUN." + numRun;
