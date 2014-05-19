@@ -30,27 +30,27 @@ import java.util.Map;
  * Class representing an operator
  */
 public abstract class Operator implements Serializable {
-   
+
   /**
    *
    */
   private static final long serialVersionUID = -8976295845748676798L;
 
-/**
+  /**
    * Stores the current operator parameters. 
    * It is defined as a Map of pairs <<code>String</code>, <code>Object</code>>, 
    * and it allow objects to be accessed by their names, which  are specified 
    * by the string.
    */
   protected final Map<String , Object> parameters_;
-  
+
   /**
    * Constructor.
    */
   public Operator(Map<String , Object> parameters) {
     parameters_ = parameters; 
   } // Operator
-        
+
   /**
    * Abstract method that must be defined by all the operators. When invoked, 
    * this method executes the operator represented by the current object.
@@ -61,9 +61,9 @@ public abstract class Operator implements Serializable {
    *                <code>Solution</code>.
    * @return An object reference. The returned value depends on the operator. 
    */
-  abstract public Object execute(Object object) throws JMException ;
+  public abstract Object execute(Object object) throws JMException ;
 
-  
+
   /**
    * Sets a new <code>Object</code> parameter to the operator.
    * @param name The parameter name.
@@ -72,7 +72,7 @@ public abstract class Operator implements Serializable {
   public void setParameter(String name, Object value) {
     parameters_.put(name, value);
   } // setParameter
-  
+
   /**
    * Returns an object representing a parameter of the <code>Operator</code>
    * @param name The parameter name.

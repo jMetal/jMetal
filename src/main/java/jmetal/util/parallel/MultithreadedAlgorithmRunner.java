@@ -115,7 +115,7 @@ public class MultithreadedAlgorithmRunner extends SynchronousParallelRunner {
       Object [] settingsParams = {problemName_} ;
       Settings settings  ;
 
-      if (experiment_.useConfigurationFilesForAlgorithms_) {
+      if (experiment_.useConfigurationFilesForAlgorithms()) {
         Properties configuration = new Properties();
         InputStreamReader isr = new InputStreamReader(new FileInputStream(algorithmName_+".conf"));
         configuration.load(isr);
@@ -137,7 +137,7 @@ public class MultithreadedAlgorithmRunner extends SynchronousParallelRunner {
       File experimentDirectory;
       String directory;
 
-      directory = experiment_.experimentBaseDirectory_ + "/data/" + algorithmName_ + "/" + problemName_ ;
+      directory = experiment_.getExperimentBaseDirectory() + "/data/" + algorithmName_ + "/" + problemName_ ;
 
       experimentDirectory = new File(directory);
       if (!experimentDirectory.exists()) {
@@ -145,8 +145,8 @@ public class MultithreadedAlgorithmRunner extends SynchronousParallelRunner {
         System.out.println("Creating " + directory);
       }
 
-      resultFront.printObjectivesToFile(directory + "/" + experiment_.outputParetoFrontFile_ + "." + id_);
-      resultFront.printVariablesToFile(directory + "/" + experiment_.outputParetoSetFile_ + "." + id_);
+      resultFront.printObjectivesToFile(directory + "/" + experiment_.getOutputParetoFrontFile() + "." + id_);
+      resultFront.printVariablesToFile(directory + "/" + experiment_.getOutputParetoSetFile() + "." + id_);
 
       return id_ ;
     }

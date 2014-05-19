@@ -66,10 +66,9 @@ public class MOEAD_DRA extends Algorithm {
   /**
    * Lambda vectors
    */
-  //Vector<Vector<Double>> lambda_ ;
   double[][] lambda_;
   /**
-   * T: neighbour size
+   * T: neighbor size
    */
   int T_;
   /**
@@ -102,9 +101,8 @@ public class MOEAD_DRA extends Algorithm {
   public MOEAD_DRA(Problem problem) {
     super (problem) ;
 
-    functionType_ = "_TCHE1";
-
-  } // DMOEA
+    functionType_ = "_TCHE1" ;
+  } 
 
   public SolutionSet execute() throws JMException, ClassNotFoundException {
     int maxEvaluations;
@@ -124,14 +122,6 @@ public class MOEAD_DRA extends Algorithm {
     }
     indArray_    = new Solution[problem_.getNumberOfObjectives()];
 
-    //T_ = 20;
-    //delta_ = 0.9;
-    //nr_ = 2;
-
-    //T_ = (int) (0.1 * populationSize_);
-    //delta_ = 0.9;
-    //nr_ = (int) (0.01 * populationSize_);
-
     T_ = ((Integer) this.getInputParameter("T")).intValue();
     nr_ = ((Integer) this.getInputParameter("nr")).intValue();
     delta_ = ((Double) this.getInputParameter("delta")).doubleValue();
@@ -139,11 +129,10 @@ public class MOEAD_DRA extends Algorithm {
     neighborhood_ = new int[populationSize_][T_];
 
     z_ = new double[problem_.getNumberOfObjectives()];
-    //lambda_ = new Vector(problem_.getNumberOfObjectives()) ;
     lambda_ = new double[populationSize_][problem_.getNumberOfObjectives()];
 
-    crossover_ = operators_.get("crossover"); // default: DE crossover
-    mutation_ = operators_.get("mutation");  // default: polynomial mutation
+    crossover_ = operators_.get("crossover"); 
+    mutation_ = operators_.get("mutation");  
 
     // STEP 1. Initialization
     // STEP 1.1. Compute euclidean distances between weight vectors and find T
@@ -164,8 +153,7 @@ public class MOEAD_DRA extends Algorithm {
       List<Integer> order = tour_selection(10);
 
       for (int i = 0; i < order.size(); i++) {
-        //int n = permutation[i]; // or int n = i;
-        int n = order.get(i) ; // or int n = i;
+        int n = order.get(i) ; 
         frequency_[n]++;
 
         int type;
@@ -173,9 +161,9 @@ public class MOEAD_DRA extends Algorithm {
 
         // STEP 2.1. Mating selection based on probability
         if (rnd < delta_) {
-          type = 1;   // neighborhood
+          type = 1;   
         } else {
-          type = 2;   // whole population
+          type = 2;   
         }
         Vector<Integer> p = new Vector<Integer>();
         matingSelection(p, n, 2, type);
@@ -206,7 +194,7 @@ public class MOEAD_DRA extends Algorithm {
 
         // STEP 2.5. Update of solutions
         updateProblem(child, n, type);
-      } // for
+      } 
 
       gen++;
       if (gen%30==0) {
@@ -218,11 +206,11 @@ public class MOEAD_DRA extends Algorithm {
     int final_size = populationSize_;
     try {
       final_size= (Integer) (getInputParameter("finalSize"));
-      System.out.println("FINAL SOZE: " + final_size) ;
+      Configuration.logger_.info("FINAL SIZE: " + final_size) ;
     } catch (Exception e) { // if there is an exception indicate it!
       Configuration.logger_.log(Level.SEVERE,
-              "The final size parameter has been ignored. The number of solutions is " + population_.size(),
-              e);
+          "The final size parameter has been ignored. The number of solutions is " + population_.size(),
+          e);
       return population_;
 
     }    
@@ -239,17 +227,12 @@ public class MOEAD_DRA extends Algorithm {
         double a = 1.0 * n / (populationSize_ - 1);
         lambda_[n][0] = a;
         lambda_[n][1] = 1 - a;
-        //      System.out.println(lambda_[n][0]);
-        //      System.out.println(lambda_[n][1]);
-      } // for
-    } // if
+      } 
+    } 
     else {
       String dataFileName;
       dataFileName = "W" + problem_.getNumberOfObjectives() + "D_" +
           populationSize_ + ".dat";
-
-      //      System.out.println(dataDirectory_);
-      //      System.out.println(dataDirectory_ + "/" + dataFileName);
 
       try {
         // Open the file
@@ -268,7 +251,6 @@ public class MOEAD_DRA extends Algorithm {
           while (st.hasMoreTokens()) {
             double value = (new Double(st.nextToken())).doubleValue();
             lambda_[i][j] = value;
-            //System.out.println("lambda["+i+","+j+"] = " + value) ;
             j++;
           }
           aux = br.readLine();
@@ -277,19 +259,16 @@ public class MOEAD_DRA extends Algorithm {
         br.close();
       } catch (Exception e) {
         Configuration.logger_.log(
-                Level.SEVERE,
-                "initUniformWeight: failed when reading for file: " + dataDirectory_ + "/" + dataFileName,
-                e);
+            Level.SEVERE,
+            "initUniformWeight: failed when reading for file: " + dataDirectory_ + "/" + dataFileName,
+            e);
       }
-    } // else
-  } // initUniformWeight
-
-
+    }
+  } 
 
   public void comp_utility() throws JMException {
     double f1, f2, uti, delta;
-    for(int n=0; n<populationSize_; n++)
-    {
+    for(int n=0; n<populationSize_; n++) {
       f1 = fitnessFunction(population_.get(n), lambda_[n]);
       f2 = fitnessFunction(savedValues_[n], lambda_[n]);
       delta = f2 - f1;
@@ -297,15 +276,12 @@ public class MOEAD_DRA extends Algorithm {
         utility_[n] = 1.0;
       }
       else{
-        // uti = 0.95*(1.0+delta/0.001)*utility_[n];
         uti = (0.95 + (0.05 * delta/0.001)) * utility_[n];
         utility_[n] = uti<1.0?uti:1.0;
       }            
       savedValues_[n] = new Solution(population_.get(n));
     }
-
   }
-
 
   /**
    *
@@ -318,18 +294,14 @@ public class MOEAD_DRA extends Algorithm {
       // calculate the distances based on weight vectors
       for (int j = 0; j < populationSize_; j++) {
         x[j] = Utils.distVector(lambda_[i], lambda_[j]);
-        //x[j] = dist_vector(population[i].namda,population[j].namda);
         idx[j] = j;
-        //System.out.println("x["+j+"]: "+x[j]+ ". idx["+j+"]: "+idx[j]) ;
-      } // for
+      } 
 
       // find 'niche' nearest neighboring subproblems
       Utils.minFastSort(x, idx, populationSize_, T_);
-      //minfastsort(x,idx,population.size(),niche);
-
       System.arraycopy(idx, 0, neighborhood_[i], 0, T_);
-    } // for
-  } // initNeighborhood
+    } 
+  } 
 
   /**
    *
@@ -342,8 +314,8 @@ public class MOEAD_DRA extends Algorithm {
       evaluations_++;
       population_.add(newSolution) ;
       savedValues_[i] = new Solution(newSolution);
-    } // for
-  } // initPopulation
+    } 
+  } 
 
   /**
    *
@@ -354,12 +326,12 @@ public class MOEAD_DRA extends Algorithm {
       indArray_[i] = new Solution(problem_);
       problem_.evaluate(indArray_[i]);
       evaluations_++;
-    } // for
+    } 
 
     for (int i = 0; i < populationSize_; i++) {
       updateReference(population_.get(i));
-    } // for
-  } // initIdealPoint
+    } 
+  } 
 
   /**
    *
@@ -378,48 +350,41 @@ public class MOEAD_DRA extends Algorithm {
       if (type == 1) {
         r = PseudoRandom.randInt(0, ss - 1);
         p = neighborhood_[cid][r];
-        //p = population[cid].table[r];
       } else {
         p = PseudoRandom.randInt(0, populationSize_ - 1);
       }
       boolean flag = true;
       for (int i = 0; i < list.size(); i++) {
-        if (list.get(i) == p) // p is in the list
-        {
+        if (list.get(i) == p) {
           flag = false;
           break;
         }
       }
-
-      //if (flag) list.push_back(p);
       if (flag) {
         list.addElement(p);
       }
     }
-  } // matingSelection
+  } 
 
 
-  public List<Integer> tour_selection(int depth)
-  {
-
+  public List<Integer> tour_selection(int depth) {
     // selection based on utility
     List<Integer> selected     = new ArrayList<Integer>();
     List<Integer> candidate    = new ArrayList<Integer>();
 
     for(int k=0; k<problem_.getNumberOfObjectives(); k++) {
-      selected.add(k);   // WARNING! HERE YOU HAVE TO USE THE WEIGHT PROVIDED BY QINGFU (NOT SORTED!!!!)
+      // WARNING! HERE YOU HAVE TO USE THE WEIGHT PROVIDED BY QINGFU (NOT SORTED!!!!)
+      selected.add(k);   
     }
 
 
-    for(int n=problem_.getNumberOfObjectives(); n<populationSize_; n++) {
-      candidate.add(n);  // set of unselected weights
+    for( int n=problem_.getNumberOfObjectives(); n<populationSize_; n++) {
+      // set of unselected weights
+      candidate.add(n);  
     }
 
-    while(selected.size()<(int)(populationSize_/5.0))
-    {
-      //int best_idd = (int) (rnd_uni(&rnd_uni_init)*candidate.size()), i2;
+    while(selected.size()<(int)(populationSize_/5.0)) {
       int best_idd = (int) (PseudoRandom.randDouble()*candidate.size());
-      //System.out.println(best_idd);
       int i2;
       int best_sub = candidate.get(best_idd);
       int s2;
@@ -450,7 +415,7 @@ public class MOEAD_DRA extends Algorithm {
         indArray_[n] = individual;
       }
     }
-  } // updateReference
+  } 
 
   /**
    * @param individual
@@ -458,7 +423,7 @@ public class MOEAD_DRA extends Algorithm {
    * @param type
    */
   void updateProblem(Solution individual, int id, int type) throws JMException {
-    // indiv: child solution
+    // individual: child solution
     // id:   the id of current subproblem
     // type: update solutions in - neighborhood (1) or whole population (otherwise)
     int size;
@@ -480,7 +445,7 @@ public class MOEAD_DRA extends Algorithm {
       if (type == 1) {
         k = neighborhood_[id][perm[i]];
       } else {
-        k = perm[i];      // calculate the values of objective function regarding the current subproblem
+        k = perm[i];      
       }
       double f1, f2;
 
@@ -489,7 +454,6 @@ public class MOEAD_DRA extends Algorithm {
 
       if (f2 < f1) {
         population_.replace(k, new Solution(individual));
-        //population[k].indiv = indiv;
         time++;
       }
       // the maximal number of solutions updated is not allowed to exceed 'limit'
@@ -497,7 +461,7 @@ public class MOEAD_DRA extends Algorithm {
         return;
       }
     }
-  } // updateProblem
+  } 
 
   double fitnessFunction(Solution individual, double[] lambda) throws JMException {
     double fitness;
@@ -518,18 +482,18 @@ public class MOEAD_DRA extends Algorithm {
         if (feval > maxFun) {
           maxFun = feval;
         }
-      } // for
+      } 
 
       fitness = maxFun;
-    } // if
+    } 
     else {
       throw new JMException("MOEAD.fitnessFunction: unknown type " + functionType_) ;
     }
     return fitness;
-  } // fitnessEvaluation
+  } 
 
 
-  /** @author Juanjo
+  /** @author Juanjo Durililo
    * This method selects N solutions from a set M, where N <= M
    * using the same method proposed by Qingfu Zhang, W. Liu, and Hui Li in
    * the paper describing MOEA/D-DRA (CEC 09 COMPTETITION)
@@ -553,55 +517,58 @@ public class MOEAD_DRA extends Algorithm {
    */
   SolutionSet finalSelection(int n) throws JMException {
     SolutionSet res = new SolutionSet(n);
-    if (problem_.getNumberOfObjectives() == 2) { // subcase 1                     
-      double [][] intern_lambda = new double[n][2];
+    if (problem_.getNumberOfObjectives() == 2) {                   
+      double [][] internLambda = new double[n][2];
       for (int i = 0; i < n; i++) {
         double a = 1.0 * i / (n - 1);
-        intern_lambda[i][0] = a;
-        intern_lambda[i][1] = 1 - a;                
-      } // for
+        internLambda[i][0] = a;
+        internLambda[i][1] = 1 - a;                
+      } 
 
       // we have now the weights, now select the best solution for each of them
       for (int i = 0; i < n; i++) {
-        Solution current_best = population_.get(0);
+        Solution currentBest = population_.get(0);
         int index             = 0;
-        double value          = fitnessFunction(current_best, intern_lambda[i]);
+        double value          = fitnessFunction(currentBest, internLambda[i]);
         for (int j = 1; j < n; j++) {           
-          double aux = fitnessFunction(population_.get(j),intern_lambda[i]); // we are looking the best for the weight i
-          if (aux < value) { // solution in position j is better!               
+          // we are looking the best for the weight i
+          double aux = fitnessFunction(population_.get(j),internLambda[i]); 
+          if (aux < value) { 
+            // solution in position j is better!
             value = aux;
-            current_best = population_.get(j);           
+            currentBest = population_.get(j);           
           }
         }
-        res.add(new Solution(current_best));
+        res.add(new Solution(currentBest));
       }
 
-    } else { // general case (more than two objectives)
-
+    } else { 
+      // general case (more than two objectives)
       Distance distance_utility = new Distance();
-      int random_index = PseudoRandom.randInt(0, population_.size()-1);
+      int randomIndex = PseudoRandom.randInt(0, population_.size()-1);
 
       // create a list containing all the solutions but the selected one (only references to them)
       List<Solution> candidate = new LinkedList<Solution>();
-      candidate.add(population_.get(random_index));
+      candidate.add(population_.get(randomIndex));
 
 
       for (int i = 0; i< population_.size(); i++) {
-        if (i != random_index) {
+        if (i != randomIndex) {
           candidate.add(population_.get(i));
         }
-      } // for
+      } 
 
       while (res.size() < n) {
         int index = 0;
-        Solution selected = candidate.get(0); // it should be a next! (n <= population size!)
-        double   distance_value = distance_utility.distanceToSolutionSetInObjectiveSpace(selected, res);
+        // it should be a next! (n <= population size!)
+        Solution selected = candidate.get(0); 
+        double   distanceValue = distance_utility.distanceToSolutionSetInObjectiveSpace(selected, res);
         int i = 1;
         while (i < candidate.size()) {
-          Solution next_candidate = candidate.get(i);
-          double aux = distance_value = distance_utility.distanceToSolutionSetInObjectiveSpace(next_candidate, res);
-          if (aux > distance_value) {
-            distance_value = aux;
+          Solution nextCandidate = candidate.get(i);
+          double aux = distanceValue = distance_utility.distanceToSolutionSetInObjectiveSpace(nextCandidate, res);
+          if (aux > distanceValue) {
+            distanceValue = aux;
             index = i;
           }
           i++;
@@ -609,8 +576,8 @@ public class MOEAD_DRA extends Algorithm {
 
         // add the selected to res and remove from candidate list
         res.add(new Solution(candidate.remove(index)));                           
-      } // 
+      } 
     }
     return res;
   }
-} // MOEAD_DRA
+} 

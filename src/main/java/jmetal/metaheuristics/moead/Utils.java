@@ -35,7 +35,7 @@ public class Utils {
       sum += (vector1[n] - vector2[n]) * (vector1[n] - vector2[n]);
     }
     return Math.sqrt(sum);
-  } // distVector
+  } 
 
   public static void minFastSort(double x[], int idx[], int n, int m) {
     for (int i = 0; i < m; i++) {
@@ -47,12 +47,11 @@ public class Utils {
           int id = idx[i];
           idx[i] = idx[j];
           idx[j] = id;
-        } // if
+        } 
       }
-    } // for
-
-  } // minFastSort
-
+    } 
+  } 
+  
   public static void randomPermutation(int[] perm, int size) {
     int[] index = new int[size];
     boolean[] flag = new boolean[size];
@@ -65,7 +64,6 @@ public class Utils {
     int num = 0;
     while (num < size) {
       int start = PseudoRandom.randInt(0, size - 1);
-      //int start = int(size*nd_uni(&rnd_uni_init));
       while (true) {
         if (flag[start]) {
           perm[num] = index[start];
@@ -79,6 +77,6 @@ public class Utils {
           start++;
         }
       }
-    } // while
-  } // randomPermutation
+    } 
+  } 
 }

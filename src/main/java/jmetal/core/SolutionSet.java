@@ -327,7 +327,7 @@ public class SolutionSet implements Serializable {
       }
       bw.close();
     }catch (IOException e) {
-      Configuration.logger_.log(Level.SEVERE,"Error acceding to the file", e);
+      Configuration.logger_.log(Level.SEVERE,"Error generating the FUN file", e);
     }
   }
 
@@ -354,7 +354,7 @@ public class SolutionSet implements Serializable {
       }
       bw.close();
     }catch (IOException e) {
-      Configuration.logger_.log(Level.SEVERE, "Error acceding to the file", e);
+      Configuration.logger_.log(Level.SEVERE, "Error generating the VAR file", e);
     }
   }
 

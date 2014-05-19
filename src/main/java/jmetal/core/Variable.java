@@ -42,14 +42,14 @@ public abstract class Variable implements Serializable {
    */
   private static final long serialVersionUID = 8958332113562350950L;
 
-/** 
+  /** 
    * Creates an exact copy of a <code>Variable</code> object.
    * @return the copy of the object.
    */
   public abstract Variable deepCopy();
 
   /**
-   * Gets the double value representating the encodings.variable.
+   * Gets the double value representing the encodings.variable.
    * It is used in subclasses of <code>Variable</code> (i.e. <code>Real</code> 
    * and <code>Int</code>).
    * As not all objects belonging to a subclass of <code>Variable</code> have a 
@@ -64,15 +64,15 @@ public abstract class Variable implements Serializable {
     Configuration.logger_.severe("Class " + name + " does not implement " +
         "method getValue");
     throw new JMException("Exception in " + name + ".getValue()") ;
-  } // getValue
-  
+  } 
+
   /**
-  * Sets a double value to a encodings.variable in subclasses of <code>Variable</code>.
-  * As not all objects belonging to a subclass of <code>Variable</code> have a 
-  * double value, a call to this method it is considered a fatal error by 
-  * default, and the program is terminated. Those classes requiring this method 
-  * must redefine it.
-  */
+   * Sets a double value to a encodings.variable in subclasses of <code>Variable</code>.
+   * As not all objects belonging to a subclass of <code>Variable</code> have a 
+   * double value, a call to this method it is considered a fatal error by 
+   * default, and the program is terminated. Those classes requiring this method 
+   * must redefine it.
+   */
   public void setValue(double value) throws JMException {
     Class<String> cls = java.lang.String.class;
 
@@ -94,10 +94,10 @@ public abstract class Variable implements Serializable {
 
     String name = cls.getName();
     Configuration.logger_.severe("Class " + name + 
-                       " does not implement method getLowerBound()");
+        " does not implement method getLowerBound()");
     throw new JMException("Exception in " + name + ".getLowerBound()") ;
-  } // getLowerBound
-  
+  } 
+
   /**
    * Gets the upper bound value of a encodings.variable. As not all
    * objects belonging to a subclass of <code>Variable</code> have an upper 
@@ -109,10 +109,10 @@ public abstract class Variable implements Serializable {
 
     String name = cls.getName();
     Configuration.logger_.severe("Class " + name + 
-                       " does not implement method getUpperBound()");
+        " does not implement method getUpperBound()");
     throw new JMException("Exception in " + name + ".getUpperBound()") ;
-  } // getUpperBound
-  
+  } 
+
   /**
    * Sets the lower bound for a encodings.variable. As not all objects belonging to a
    * subclass of <code>Variable</code> have a lower bound, a call to this method 
@@ -124,10 +124,10 @@ public abstract class Variable implements Serializable {
 
     String name = cls.getName();
     Configuration.logger_.severe("Class " + name + 
-                       " does not implement method setLowerBound()");
+        " does not implement method setLowerBound()");
     throw new JMException("Exception in " + name + ".setLowerBound()") ;
-  } // setLowerBound
-  
+  } 
+
   /**
    * Sets the upper bound for a encodings.variable. As not all objects belonging to a
    * subclass of <code>Variable</code> have an upper bound, a call to this method
@@ -139,9 +139,9 @@ public abstract class Variable implements Serializable {
 
     String name = cls.getName();
     Configuration.logger_.severe("Class " + name + 
-                       " does not implement method setUpperBound()");
+        " does not implement method setUpperBound()");
     throw new JMException("Exception in " + name + ".setUpperBound()") ;
-  } // setUpperBound
+  } 
 
   /**
    * Gets the type of the encodings.variable. The types are defined in class Problem.
@@ -150,5 +150,5 @@ public abstract class Variable implements Serializable {
 
   public Class<? extends Variable> getVariableType() {
     return this.getClass() ;
-  } // getVariableType
-} // Variable
+  } 
+} 

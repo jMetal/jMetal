@@ -158,7 +158,7 @@ public class Solution implements Serializable {
     variable_ = type_.createVariables() ;
   }
 
-  static public Solution getNewSolution(Problem problem) throws ClassNotFoundException {
+  public static Solution getNewSolution(Problem problem) throws ClassNotFoundException {
     return new Solution(problem) ;
   }
 
@@ -498,7 +498,7 @@ public class Solution implements Serializable {
 
     for (int i = 0;  i < variable_.length  ; i++) {
       if ((variable_[i].getVariableType() == jmetal.encodings.variable.Binary.class) ||
-              (variable_[i].getVariableType() == jmetal.encodings.variable.BinaryReal.class)) {
+          (variable_[i].getVariableType() == jmetal.encodings.variable.BinaryReal.class)) {
 
         bits += ((Binary) (variable_[i])).getNumberOfBits();
       }
@@ -507,7 +507,7 @@ public class Solution implements Serializable {
     return bits ;
   }
 
-/*  @Override
+  /*  @Override
 TO-DO
   public boolean equals(Object object) {
     boolean result ;
