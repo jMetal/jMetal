@@ -129,30 +129,37 @@ public class Experiment {
   public boolean runTheAlgorithms() {
     return runTheAlgorithms_ ;
   }
+  
   protected boolean  generateReferenceParetoFronts_ ;
   public boolean generateReferenceParetoFronts() {
     return generateReferenceParetoFronts_ ;
   }
+  
   protected boolean  generateQualityIndicators_ ;
   public boolean generateQualityIndicators() {
     return generateQualityIndicators_ ;
   }
+  
   protected boolean  generateLatexTables_ ;
   public boolean generateLatexTables() {
     return generateLatexTables_ ;
   }
+  
   protected boolean  generateBoxplots_ ;
   public boolean generateBoxplots() {
     return generateBoxplots_ ;
   }
+  
   protected boolean  generateWilcoxonTables_ ;
   public boolean generateWilcoxonTables() {
     return generateWilcoxonTables_ ;
   }
+  
   protected boolean  generateFriedmanTables_ ;
   public boolean generateFriedmanTables() {
     return generateFriedmanTables_ ;
   }
+  
   protected boolean  useConfigurationFilesForAlgorithms_ ;
   public boolean useConfigurationFilesForAlgorithms() {
     return useConfigurationFilesForAlgorithms_ ;
