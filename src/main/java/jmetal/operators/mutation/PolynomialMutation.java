@@ -23,8 +23,8 @@ package jmetal.operators.mutation;
 
 import jmetal.core.Solution;
 import jmetal.core.SolutionType;
-import jmetal.encodings.solutionType.ArrayRealSolutionType;
-import jmetal.encodings.solutionType.RealSolutionType;
+import jmetal.encodings.solutiontype.ArrayRealSolutionType;
+import jmetal.encodings.solutiontype.RealSolutionType;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.random.PseudoRandom;

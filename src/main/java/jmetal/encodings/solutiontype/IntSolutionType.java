@@ -1,4 +1,4 @@
-//  PermutationSolutionType.java
+//  IntSolutionType.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -19,37 +19,37 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package jmetal.encodings.solutionType;
+package jmetal.encodings.solutiontype;
 
 import jmetal.core.Problem;
 import jmetal.core.SolutionType;
 import jmetal.core.Variable;
-import jmetal.encodings.variable.Permutation;
+import jmetal.encodings.variable.Int;
 
-/** 
- * Class representing the solution type of solutions composed of Permutation
- * variables 
+/**
+ * Class representing the solution type of solutions composed of Int variables 
  */
-public class PermutationSolutionType extends SolutionType {
+public class IntSolutionType extends SolutionType {
 
-	/**
-	 * Constructor
-	 * @param problem  Problem to solve
-	 */
-	public PermutationSolutionType(Problem problem) {
-		super(problem) ;
-  } // PermutationSolution
-	
-	/**
-	 * Creates the variables of the solution
-	 */
-	public Variable[]  createVariables() {
-		Variable [] variables = new Variable[getProblem().getNumberOfVariables()];
-		    
+  /**
+   * Constructor
+   * @param problem  Problem to solve
+   */
+  public IntSolutionType(Problem problem) {
+    super(problem) ;
+  } // Constructor
+
+  /**
+   * Creates the variables of the solution
+   */
+  public Variable[] createVariables() {
+    Variable[] variables = new Variable[getProblem().getNumberOfVariables()];
+
     for (int var = 0; var < getProblem().getNumberOfVariables(); var++) {
-      variables[var] = new Permutation(getProblem().getLength(var));
+      variables[var] = new Int((int) getProblem().getLowerLimit(var),
+              (int) getProblem().getUpperLimit(var));
     }
-    
+
     return variables ;
-	} // createVariables
-} // PermutationSolutionType
+  }
+}

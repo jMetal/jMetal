@@ -40,7 +40,7 @@ import java.util.Properties;
 
 /**
  * Created with IntelliJ IDEA.
- * User: antelverde
+ * User: Antonio J. Nebro
  * Date: 17/06/13
  * Time: 22:54
  * To change this template use File | Settings | File Templates.
@@ -72,7 +72,7 @@ public class MOCell_SettingsTest {
     Assert.assertEquals("MOCell_SettingsTest", 100, ((Integer)algorithm.getInputParameter("populationSize")).intValue());
     Assert.assertEquals("MOCell_SettingsTest", 25000, ((Integer)algorithm.getInputParameter("maxEvaluations")).intValue());
     Assert.assertEquals("MOCell_SettingsTest", 100, ((Integer)algorithm.getInputParameter("archiveSize")).intValue());
-    Assert.assertEquals("MOCell_SettingsTest", 20, ((Integer)algorithm.getInputParameter("feedBack")).intValue());
+    Assert.assertEquals("MOCell_SettingsTest", 20, ((Integer)algorithm.getInputParameter("feedback")).intValue());
 
     Assert.assertEquals("MOCell_SettingsTest", 0.9, pc, epsilon);
     Assert.assertEquals("MOCell_SettingsTest", 20.0, dic, epsilon);

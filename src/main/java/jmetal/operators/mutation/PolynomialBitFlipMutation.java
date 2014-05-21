@@ -21,7 +21,7 @@
 package jmetal.operators.mutation;
 
 import jmetal.core.Solution;
-import jmetal.encodings.solutionType.ArrayRealAndBinarySolutionType;
+import jmetal.encodings.solutiontype.ArrayRealAndBinarySolutionType;
 import jmetal.encodings.variable.Binary;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;

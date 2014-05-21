@@ -40,30 +40,27 @@ import java.util.logging.Level;
  * Settings class of algorithm GDE3
  */
 public class GDE3_Settings extends Settings {
-  public double CR_ ;
-  public double F_  ;
-  public int populationSize_ ;
-  public int maxIterations_  ;
+  private double cr_ ;
+  private double f_  ;
+  private int populationSize_ ;
+  private int maxIterations_  ;
   
   /**
    * Constructor
+   * @throws JMException 
    */
-  public GDE3_Settings(String problemName) {
+  public GDE3_Settings(String problemName) throws JMException {
     super(problemName);
     
     Object [] problemParams = {"Real"};
-    try {
 	    problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
-    } catch (JMException e) {
-      Configuration.logger_.log(Level.SEVERE, "Unable to get problem", e);
-    }      
 
     // Default experiments.settings
-    CR_ = 0.5;
-    F_ = 0.5;
+    cr_ = 0.5;
+    f_ = 0.5;
     populationSize_ = 100;
     maxIterations_ = 250;
-  } // CellDE_Settings
+  } 
 
   /**
    * Configure the algorithm with the specified parameter experiments.settings
@@ -86,8 +83,8 @@ public class GDE3_Settings extends Settings {
 
     // Crossover operator 
     HashMap<String, Object> parameters = new HashMap<String, Object>() ;
-    parameters.put("CR", CR_) ;
-    parameters.put("F", F_) ;
+    parameters.put("CR", cr_) ;
+    parameters.put("F", f_) ;
     crossover = CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", parameters);                   
     
     parameters = null ;
@@ -106,34 +103,12 @@ public class GDE3_Settings extends Settings {
    */
   @Override
   public Algorithm configure(Properties configuration) throws JMException {
-    Algorithm algorithm ;
-    Operator  selection ;
-    Crossover crossover ;
-
-    // Creating the algorithm.
-    algorithm = new GDE3(problem_) ;
-
-    // Algorithm parameters
     populationSize_ = Integer.parseInt(configuration.getProperty("populationSize",String.valueOf(populationSize_)));
     maxIterations_  = Integer.parseInt(configuration.getProperty("maxIterations",String.valueOf(maxIterations_)));
-    algorithm.setInputParameter("populationSize", populationSize_);
-    algorithm.setInputParameter("maxIterations", maxIterations_);
 
-    CR_ = Double.parseDouble(configuration.getProperty("CR",String.valueOf(CR_)));
-    F_ = Double.parseDouble(configuration.getProperty("F",String.valueOf(F_)));
+    cr_ = Double.parseDouble(configuration.getProperty("CR",String.valueOf(cr_)));
+    f_ = Double.parseDouble(configuration.getProperty("F",String.valueOf(f_)));
 
-    HashMap<String, Object> parameters = new HashMap<String, Object>() ;
-    parameters.put("CR", CR_) ;
-    parameters.put("F", F_) ;
-    crossover = CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", parameters);
-
-    parameters = null ;
-    selection = SelectionFactory.getSelectionOperator("DifferentialEvolutionSelection", parameters) ;
-
-    // Add the operators to the algorithm
-    algorithm.addOperator("crossover",crossover);
-    algorithm.addOperator("selection",selection);
-
-    return algorithm ;
+    return configure() ;
   }
-} // GDE3_Settings
+}

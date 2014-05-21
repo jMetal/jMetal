@@ -40,15 +40,15 @@ import java.util.logging.Level;
  * Settings class of algorithm cMOEA/D
  */
 public class cMOEAD_Settings extends Settings {
-  private double CR_ ;
-  private double F_  ;
+  private double cr_ ;
+  private double f_  ;
   private int populationSize_ ;
   private int maxEvaluations_ ;
  
   private double mutationProbability_          ;
   private double mutationDistributionIndex_ ;
 
-  private int T_        ;
+  private int t_        ;
   private double delta_ ;
   private int nr_    ;
 
@@ -68,12 +68,12 @@ public class cMOEAD_Settings extends Settings {
     }      
 
     // Default experiments.settings
-    CR_ = 1.0 ;
-    F_  = 0.5 ;
+    cr_ = 1.0 ;
+    f_  = 0.5 ;
     populationSize_ = 300;
     maxEvaluations_ = 150000;
 
-    T_ = 20;
+    t_ = 20;
     delta_ = 0.9;
     nr_ = 2;
 
@@ -105,14 +105,14 @@ public class cMOEAD_Settings extends Settings {
     algorithm.setInputParameter("populationSize", populationSize_);
     algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
     algorithm.setInputParameter("dataDirectory", dataDirectory_) ;
-    algorithm.setInputParameter("T", T_) ;
+    algorithm.setInputParameter("T", t_) ;
     algorithm.setInputParameter("delta", delta_) ;
     algorithm.setInputParameter("nr", nr_) ;
 
     // Crossover operator 
     HashMap<String, Object> parameters = new HashMap<String, Object>() ;
-    parameters.put("CR", CR_) ;
-    parameters.put("F", F_) ;
+    parameters.put("CR", cr_) ;
+    parameters.put("F", f_) ;
     crossover = CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", parameters);                   
     
     // Mutation operator
@@ -133,49 +133,19 @@ public class cMOEAD_Settings extends Settings {
    */
   @Override
   public Algorithm configure(Properties configuration) throws JMException {
-    Algorithm algorithm ;
-    Crossover crossover ;
-    Mutation mutation  ;
-
-    // Creating the algorithm.
-    algorithm = new cMOEAD(problem_) ;
-
-    // Algorithm parameters
     populationSize_ = Integer.parseInt(configuration.getProperty("populationSize",String.valueOf(populationSize_)));
     maxEvaluations_  = Integer.parseInt(configuration.getProperty("maxEvaluations",String.valueOf(maxEvaluations_)));
     dataDirectory_  = configuration.getProperty("dataDirectory", dataDirectory_);
     delta_ = Double.parseDouble(configuration.getProperty("delta", String.valueOf(delta_)));
-    T_ = Integer.parseInt(configuration.getProperty("T", String.valueOf(T_)));
+    t_ = Integer.parseInt(configuration.getProperty("T", String.valueOf(t_)));
     nr_ = Integer.parseInt(configuration.getProperty("nr", String.valueOf(nr_)));
-    algorithm.setInputParameter("populationSize",populationSize_);
-    algorithm.setInputParameter("maxEvaluations",maxEvaluations_);
-    algorithm.setInputParameter("dataDirectory",dataDirectory_);
-    algorithm.setInputParameter("T", T_) ;
-    algorithm.setInputParameter("delta", delta_) ;
-    algorithm.setInputParameter("nr", nr_) ;
 
-    // Crossover operator
-    CR_ = Double.parseDouble(configuration.getProperty("CR",String.valueOf(CR_)));
-    F_ = Double.parseDouble(configuration.getProperty("F",String.valueOf(F_)));
+    cr_ = Double.parseDouble(configuration.getProperty("CR",String.valueOf(cr_)));
+    f_ = Double.parseDouble(configuration.getProperty("F",String.valueOf(f_)));
 
-    HashMap<String, Object> parameters = new HashMap<String, Object>() ;
-    parameters.put("CR", CR_) ;
-    parameters.put("F", F_) ;
-    crossover = CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", parameters);
-
-    // Mutation parameters
     mutationProbability_ = Double.parseDouble(configuration.getProperty("mutationProbability",String.valueOf(mutationProbability_)));
     mutationDistributionIndex_ = Double.parseDouble(configuration.getProperty("mutationDistributionIndex",String.valueOf(mutationDistributionIndex_)));
 
-    parameters = new HashMap<String, Object>() ;
-    parameters.put("probability", mutationProbability_) ;
-    parameters.put("distributionIndex", mutationDistributionIndex_) ;
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);
-
-    // Add the operators to the algorithm
-    algorithm.addOperator("crossover",crossover);
-    algorithm.addOperator("mutation",mutation);
-
-    return algorithm ;
+    return configure() ;
   }
 } 

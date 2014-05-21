@@ -45,14 +45,14 @@ import java.util.logging.Level;
  * DOI: http://dx.doi.org/10.1007/978-3-642-40643-0_28
  */
 public class NSGAIIAdaptive_Settings extends Settings {
-  public int populationSize_                 ; 
-  public int maxEvaluations_                 ;
-  public double mutationProbability_         ;
-  public double crossoverProbability_        ;
-  public double mutationDistributionIndex_   ;
-  public double crossoverDistributionIndex_  ;
-  public double CR_                          ;
-  public double F_                           ;
+  private int populationSize_                 ; 
+  private int maxEvaluations_                 ;
+  private double mutationProbability_         ;
+  private double crossoverProbability_        ;
+  private double mutationDistributionIndex_   ;
+  private double crossoverDistributionIndex_  ;
+  private double cr_                          ;
+  private double f_                           ;
 
   /**
    * Constructor
@@ -62,11 +62,7 @@ public class NSGAIIAdaptive_Settings extends Settings {
     super(problem) ;
     
     Object [] problemParams = {"Real"};
-    try {
 	    problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
-    } catch (JMException e) {
-      Configuration.logger_.log(Level.SEVERE, "Unable to get problem", e);
-    }
 
     // Default settings
     populationSize_              = 100   ; 
@@ -75,10 +71,9 @@ public class NSGAIIAdaptive_Settings extends Settings {
     crossoverProbability_        = 0.9 ;
     mutationDistributionIndex_   = 20 ;
     crossoverDistributionIndex_  = 20 ;
-    CR_                          = 1.0 ;
-    F_                           = 0.5 ;
-  } // NSGAII_Settings
-
+    cr_                          = 1.0 ;
+    f_                           = 0.5 ;
+  } 
 
   /**
    * Configure NSGAIIAdaptive with user-defined parameter settings
@@ -98,7 +93,7 @@ public class NSGAIIAdaptive_Settings extends Settings {
     algorithm.setInputParameter("maxEvaluations",maxEvaluations_);
 
     Offspring[] getOffspring = new Offspring[3];
-    getOffspring[0] = new DifferentialEvolutionOffspring(CR_, F_);
+    getOffspring[0] = new DifferentialEvolutionOffspring(cr_, f_);
     
     getOffspring[1] = new SBXCrossoverOffspring(crossoverProbability_, crossoverDistributionIndex_);
 
@@ -114,7 +109,7 @@ public class NSGAIIAdaptive_Settings extends Settings {
     algorithm.addOperator("selection",selection);
     
     return algorithm ;
-  } // configure
+  } 
 
   /**
    * Configure NSGAIIAdaptive with user-defined parameter experiments.settings
@@ -122,44 +117,16 @@ public class NSGAIIAdaptive_Settings extends Settings {
    */
   @Override
   public Algorithm configure(Properties configuration) throws JMException {
-    Algorithm algorithm ;
-    Selection  selection ;
-
-    HashMap<String, Object> parameters = new HashMap<String, Object>() ;
-
-    // Creating the algorithm.
-    algorithm = new NSGAIIAdaptive(problem_) ;
-
-    // Algorithm parameters
     populationSize_ = Integer.parseInt(configuration.getProperty("populationSize",String.valueOf(populationSize_)));
     maxEvaluations_  = Integer.parseInt(configuration.getProperty("maxEvaluations",String.valueOf(maxEvaluations_)));
-    algorithm.setInputParameter("populationSize",populationSize_);
-    algorithm.setInputParameter("maxEvaluations",maxEvaluations_);
 
-    // Mutation and Crossover for Real codification
     crossoverProbability_ = Double.parseDouble(configuration.getProperty("crossoverProbability",String.valueOf(crossoverProbability_)));
     crossoverDistributionIndex_ = Double.parseDouble(configuration.getProperty("crossoverDistributionIndex",String.valueOf(crossoverDistributionIndex_)));
     mutationProbability_ = Double.parseDouble(configuration.getProperty("mutationProbability",String.valueOf(mutationProbability_)));
     mutationDistributionIndex_ = Double.parseDouble(configuration.getProperty("mutationDistributionIndex",String.valueOf(mutationDistributionIndex_)));
-    CR_ = Double.parseDouble(configuration.getProperty("CR",String.valueOf(CR_)));
-    F_ = Double.parseDouble(configuration.getProperty("F",String.valueOf(F_)));
+    cr_ = Double.parseDouble(configuration.getProperty("CR",String.valueOf(cr_)));
+    f_ = Double.parseDouble(configuration.getProperty("F",String.valueOf(f_)));
 
-    Offspring[] getOffspring = new Offspring[3];
-    getOffspring[0] = new DifferentialEvolutionOffspring(CR_, F_);
-
-    getOffspring[1] = new SBXCrossoverOffspring(crossoverProbability_, crossoverDistributionIndex_);
-
-    getOffspring[2] = new PolynomialMutationOffspring(mutationProbability_, mutationDistributionIndex_);
-
-    algorithm.setInputParameter("offspringsCreators", getOffspring);
-
-    // Selection Operator
-    parameters = null ;
-    selection = SelectionFactory.getSelectionOperator("BinaryTournament2", parameters) ;
-
-    // Add the operators to the algorithm
-    algorithm.addOperator("selection",selection);
-
-    return algorithm ;
+    return configure() ;
   }
-} // NSGAIIAdaptive_Settings
+}

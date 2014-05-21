@@ -22,8 +22,8 @@
 package jmetal.problems.WFG;
 
 import jmetal.core.Problem;
-import jmetal.encodings.solutionType.BinaryRealSolutionType;
-import jmetal.encodings.solutionType.RealSolutionType;
+import jmetal.encodings.solutiontype.BinaryRealSolutionType;
+import jmetal.encodings.solutiontype.RealSolutionType;
 import jmetal.util.JMException;
 
 import java.util.Random;

@@ -42,26 +42,22 @@ import java.util.logging.Level;
 /**
  * Settings class of algorithm NSGA-II (binary encoding)
  */
-public class NSGAIIBinary_Settings extends Settings {
-  
-  public int populationSize_  ;
-  public int maxEvaluations_  ;
+public class NSGAIIBinary_Settings extends Settings { 
+  private int populationSize_  ;
+  private int maxEvaluations_  ;
 
-  public double mutationProbability_  ;
-  public double crossoverProbability_ ;
+  private double mutationProbability_  ;
+  private double crossoverProbability_ ;
   
   /**
    * Constructor
+   * @throws JMException 
    */
-  public NSGAIIBinary_Settings(String problem) {
+  public NSGAIIBinary_Settings(String problem) throws JMException {
     super(problem) ;
     
     Object [] problemParams = {"Binary"};
-    try {
 	    problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
-    } catch (JMException e) {
-      Configuration.logger_.log(Level.SEVERE, "Unable to get problem", e);
-    }      
     
     // Default experiments.settings
     populationSize_ = 100   ;
@@ -69,7 +65,7 @@ public class NSGAIIBinary_Settings extends Settings {
 
     mutationProbability_  = 1.0/problem_.getNumberOfBits();
     crossoverProbability_ = 0.9 ; 
-  } // NSGAIIBinary_Settings
+  } 
   
   /**
    * Configure NSGAII with user-defined parameter experiments.settings
@@ -111,7 +107,7 @@ public class NSGAIIBinary_Settings extends Settings {
     algorithm.addOperator("selection",selection);
 
     return algorithm ;
-  } // configure
+  } 
 
   /**
    * Configure NSGAII with user-defined parameter experiments.settings
@@ -119,42 +115,12 @@ public class NSGAIIBinary_Settings extends Settings {
    */
   @Override
   public Algorithm configure(Properties configuration) throws JMException {
-    Algorithm algorithm ;
-    Selection selection ;
-    Crossover crossover ;
-    Mutation mutation  ;
-
-    // Creating the algorithm.
-    algorithm = new NSGAII(problem_) ;
-
-    // Algorithm parameters
     populationSize_ = Integer.parseInt(configuration.getProperty("populationSize",String.valueOf(populationSize_)));
     maxEvaluations_  = Integer.parseInt(configuration.getProperty("maxEvaluations",String.valueOf(maxEvaluations_)));
-    algorithm.setInputParameter("populationSize",populationSize_);
-    algorithm.setInputParameter("maxEvaluations",maxEvaluations_);
 
-    // Mutation and Crossover for Real codification
     crossoverProbability_ = Double.parseDouble(configuration.getProperty("crossoverProbability",String.valueOf(crossoverProbability_)));
-
-    HashMap<String, Object> parameters = new HashMap<String, Object>() ;
-    parameters.put("probability", crossoverProbability_) ;
-    crossover = CrossoverFactory.getCrossoverOperator("SinglePointCrossover", parameters);
-
     mutationProbability_ = Double.parseDouble(configuration.getProperty("mutationProbability",String.valueOf(mutationProbability_)));
 
-    parameters = new HashMap<String, Object>() ;
-    parameters.put("probability", mutationProbability_) ;
-    mutation = MutationFactory.getMutationOperator("BitFlipMutation", parameters);
-
-    // Selection Operator
-    parameters = null ;
-    selection = SelectionFactory.getSelectionOperator("BinaryTournament2", parameters) ;
-
-    // Add the operators to the algorithm
-    algorithm.addOperator("crossover",crossover);
-    algorithm.addOperator("mutation",mutation);
-    algorithm.addOperator("selection",selection);
-
-    return algorithm ;
+    return configure() ;
   }
-} // NSGAIIBinary_Settings
+}

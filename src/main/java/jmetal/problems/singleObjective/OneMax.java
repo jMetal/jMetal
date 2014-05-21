@@ -23,7 +23,7 @@ package jmetal.problems.singleObjective;
 
 import jmetal.core.Problem;
 import jmetal.core.Solution;
-import jmetal.encodings.solutionType.BinarySolutionType;
+import jmetal.encodings.solutiontype.BinarySolutionType;
 import jmetal.encodings.variable.Binary;
 import jmetal.util.JMException;
 

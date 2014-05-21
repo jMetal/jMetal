@@ -24,7 +24,7 @@ package jmetal.problems;
 import jmetal.core.Problem;
 import jmetal.core.Solution;
 import jmetal.core.Variable;
-import jmetal.encodings.solutionType.IntRealSolutionType;
+import jmetal.encodings.solutiontype.IntRealSolutionType;
 import jmetal.util.JMException;
 
 /**

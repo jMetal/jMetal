@@ -41,46 +41,43 @@ import java.util.logging.Level;
  * Settings class of algorithm MOEA/D-DRA
  */
 public class MOEAD_DRA_Settings extends Settings {
-  public double CR_ ;
-  public double F_  ;
-  public int populationSize_ ;
-  public int maxEvaluations_ ;
-  public int finalSize_      ;
+  private double cr_ ;
+  private double f_  ;
+  private int populationSize_ ;
+  private int maxEvaluations_ ;
+  private int finalSize_      ;
 
-  public double mutationProbability_          ;
-  public double mutationDistributionIndex_ ;
+  private double mutationProbability_          ;
+  private double mutationDistributionIndex_ ;
 
-  public int T_        ;
-  public double delta_ ;
-  public int nr_    ;
+  private int t_        ;
+  private double delta_ ;
+  private int nr_    ;
 
-  public String dataDirectory_  ;
+  private String dataDirectory_  ;
 
   /**
    * Constructor
+   * @throws JMException 
    */
-  public MOEAD_DRA_Settings(String problem) {
+  public MOEAD_DRA_Settings(String problem) throws JMException {
     super(problem);
-    
+
     Object [] problemParams = {"Real"};
-    try {
-	    problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
-    } catch (JMException e) {
-      Configuration.logger_.log(Level.SEVERE, "Unable to get problem", e);
-    }      
+    problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
 
     // Default experiments.settings
-    CR_ = 1.0 ;
-    F_  = 0.5 ;
+    cr_ = 1.0 ;
+    f_  = 0.5 ;
     populationSize_ = 600;
     maxEvaluations_ = 300000;
-    
+
     finalSize_ = 300 ;
-   
+
     mutationProbability_ = 1.0/problem_.getNumberOfVariables() ;
     mutationDistributionIndex_ = 20;
 
-    T_ = (int) (0.1 * populationSize_);
+    t_ = (int) (0.1 * populationSize_);
     delta_ = 0.9;
     nr_ = (int) (0.01 * populationSize_);
 
@@ -91,8 +88,7 @@ public class MOEAD_DRA_Settings extends Settings {
     // http://dces.essex.ac.uk/staff/qzhang/MOEAcompetition/CEC09final/code/ZhangMOEADcode/moead0305.rar
 
     dataDirectory_ = "MOEAD_Weights" ;
-
-  } // MOEAD_DRA_Settings
+  } 
 
   /**
    * Configure the algorithm with the specified parameter experiments.settings
@@ -106,34 +102,34 @@ public class MOEAD_DRA_Settings extends Settings {
 
     // Creating the problem
     algorithm = new MOEAD_DRA(problem_);
-    
+
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", populationSize_) ;
     algorithm.setInputParameter("maxEvaluations", maxEvaluations_) ;
     algorithm.setInputParameter("dataDirectory", dataDirectory_)   ;
     algorithm.setInputParameter("finalSize", finalSize_)           ;
 
-    algorithm.setInputParameter("T", T_) ;
+    algorithm.setInputParameter("T", t_) ;
     algorithm.setInputParameter("delta", delta_) ;
     algorithm.setInputParameter("nr", nr_) ;
 
     // Crossover operator 
     HashMap<String, Object> parameters = new HashMap<String, Object>() ;
-    parameters.put("CR", CR_) ;
-    parameters.put("F", F_) ;
+    parameters.put("CR", cr_) ;
+    parameters.put("F", f_) ;
     crossover = CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", parameters);                   
-    
+
     // Mutation operator
     parameters = new HashMap<String, Object>() ;
     parameters.put("probability", mutationProbability_) ;
     parameters.put("distributionIndex", mutationDistributionIndex_) ;
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);         
-    
+
     algorithm.addOperator("crossover", crossover);
     algorithm.addOperator("mutation", mutation);
 
     return algorithm;
-  } // configure
+  } 
 
   /**
    * Configure MOEAD_DRA with user-defined parameter experiments.settings
@@ -141,52 +137,22 @@ public class MOEAD_DRA_Settings extends Settings {
    */
   @Override
   public Algorithm configure(Properties configuration) throws JMException {
-    Algorithm algorithm ;
-    Crossover crossover ;
-    Mutation mutation  ;
-
-    // Creating the algorithm.
-    algorithm = new MOEAD_DRA(problem_) ;
-
-    // Algorithm parameters
     populationSize_ = Integer.parseInt(configuration.getProperty("populationSize",String.valueOf(populationSize_)));
     maxEvaluations_  = Integer.parseInt(configuration.getProperty("maxEvaluations",String.valueOf(maxEvaluations_)));
     finalSize_  = Integer.parseInt(configuration.getProperty("finalSize",String.valueOf(finalSize_)));
     dataDirectory_  = configuration.getProperty("dataDirectory", dataDirectory_);
     delta_ = Double.parseDouble(configuration.getProperty("delta", String.valueOf(delta_)));
-    T_ = Integer.parseInt(configuration.getProperty("T", String.valueOf(T_)));
+    t_ = Integer.parseInt(configuration.getProperty("T", String.valueOf(t_)));
     nr_ = Integer.parseInt(configuration.getProperty("nr", String.valueOf(nr_)));
 
-    algorithm.setInputParameter("populationSize",populationSize_);
-    algorithm.setInputParameter("maxEvaluations",maxEvaluations_);
-    algorithm.setInputParameter("dataDirectory",dataDirectory_)  ;
-    algorithm.setInputParameter("finalSize", finalSize_)         ;
-
-    algorithm.setInputParameter("T", T_) ;
-    algorithm.setInputParameter("delta", delta_) ;
-    algorithm.setInputParameter("nr", nr_) ;
-
     // Crossover operator
-    CR_ = Double.parseDouble(configuration.getProperty("CR",String.valueOf(CR_)));
-    F_ = Double.parseDouble(configuration.getProperty("F",String.valueOf(F_)));
-
-    HashMap<String, Object> parameters = new HashMap<String, Object>() ;
-    parameters.put("CR", CR_) ;
-    parameters.put("F", F_) ;
-    crossover = CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", parameters);
+    cr_ = Double.parseDouble(configuration.getProperty("CR",String.valueOf(cr_)));
+    f_ = Double.parseDouble(configuration.getProperty("F",String.valueOf(f_)));
 
     // Mutation parameters
     mutationProbability_ = Double.parseDouble(configuration.getProperty("mutationProbability",String.valueOf(mutationProbability_)));
     mutationDistributionIndex_ = Double.parseDouble(configuration.getProperty("mutationDistributionIndex",String.valueOf(mutationDistributionIndex_)));
-    parameters = new HashMap<String, Object>() ;
-    parameters.put("probability", mutationProbability_) ;
-    parameters.put("distributionIndex", mutationDistributionIndex_) ;
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);
 
-    // Add the operators to the algorithm
-    algorithm.addOperator("crossover",crossover);
-    algorithm.addOperator("mutation",mutation);
-
-    return algorithm ;
+    return configure() ;
   }
-} // MOEAD_DRA_Settings
+} 

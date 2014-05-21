@@ -22,10 +22,12 @@ package test.core;
 
 import jmetal.core.Problem;
 import jmetal.core.SolutionType;
-import jmetal.encodings.solutionType.BinarySolutionType;
+import jmetal.encodings.solutiontype.BinarySolutionType;
 import jmetal.problems.ZDT.ZDT5;
 import jmetal.util.JMException;
+
 import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 
 /**
