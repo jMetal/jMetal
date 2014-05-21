@@ -40,17 +40,17 @@ import java.util.logging.Level;
  * Settings class of algorithm cMOEA/D
  */
 public class cMOEAD_Settings extends Settings {
-  public double CR_ ;
-  public double F_  ;
-  public int populationSize_ ;
-  public int maxEvaluations_ ;
+  private double CR_ ;
+  private double F_  ;
+  private int populationSize_ ;
+  private int maxEvaluations_ ;
  
-  public double mutationProbability_          ;
-  public double mutationDistributionIndex_ ;
+  private double mutationProbability_          ;
+  private double mutationDistributionIndex_ ;
 
-  public int T_        ;
-  public double delta_ ;
-  public int nr_    ;
+  private int T_        ;
+  private double delta_ ;
+  private int nr_    ;
 
   public String dataDirectory_  ;
 
@@ -87,7 +87,7 @@ public class cMOEAD_Settings extends Settings {
     // http://dces.essex.ac.uk/staff/qzhang/MOEAcompetition/CEC09final/code/ZhangMOEADcode/moead0305.rar
 
     dataDirectory_ = "MOEAD_Weights" ;
-  } // cMOEAD_Settings
+  } 
 
   /**
    * Configure the algorithm with the specified parameter experiments.settings
@@ -125,7 +125,7 @@ public class cMOEAD_Settings extends Settings {
     algorithm.addOperator("mutation", mutation);
 
     return algorithm;
-  } // configure
+  } 
 
   /**
    * Configure cMOEAD with user-defined parameter experiments.settings
@@ -178,4 +178,4 @@ public class cMOEAD_Settings extends Settings {
 
     return algorithm ;
   }
-} // cMOEAD_Settings
+} 

@@ -40,9 +40,9 @@ import java.util.logging.Logger;
  * Class for running algorithms reading the configuration from properties files
  */
 public class MainC {
-  public static Logger      logger_ ;      // Logger object
-  public static FileHandler fileHandler_ ; // FileHandler object
-  
+  private static Logger      logger_ ;      
+  private static FileHandler fileHandler_ ; 
+
   /**
    * @param args Command line arguments.
    * @throws jmetal.util.JMException
@@ -59,7 +59,7 @@ public class MainC {
   IllegalArgumentException, IllegalAccessException,
   ClassNotFoundException {
     Algorithm algorithm ;
-    
+
     QualityIndicator indicators ;
 
     logger_      = Configuration.logger_ ;
@@ -67,16 +67,16 @@ public class MainC {
     logger_.addHandler(fileHandler_) ;
 
     Settings settings = null;
-    
+
     String algorithmName   = "" ;
     String problemName     = "Kursawe" ;
     String paretoFrontFile = "" ;
-    
+
     indicators = null ;
-    
+
     Properties configuration = new Properties();
     InputStreamReader inputStreamReader = null  ;
-    
+
     if (args.length == 0) { //
       logger_.log(Level.SEVERE, "Sintax error. Usage:") ;
       logger_.log(Level.SEVERE,"a) jmetal.experiments.Main configurationFile ") ;
@@ -86,47 +86,47 @@ public class MainC {
     } else if (args.length == 1) {
       inputStreamReader = new InputStreamReader(new FileInputStream(args[0]));
       configuration.load(inputStreamReader);
-      
+
       algorithmName = configuration.getProperty("algorithm") ;
       Object [] settingsParams = {problemName} ;
       settings = (new SettingsFactory()).getSettingsObject(algorithmName, settingsParams) ;
     } else if (args.length == 2) {
       inputStreamReader = new InputStreamReader(new FileInputStream(args[0]));
       configuration.load(inputStreamReader);
-      
+
       problemName = args[1] ;
       Object [] settingsParams = {problemName} ;
       settings = (new SettingsFactory()).getSettingsObject(algorithmName, settingsParams) ;
     } else if (args.length == 3) { // algorithmName problemName paretoFrontFile
       inputStreamReader = new InputStreamReader(new FileInputStream(args[0]));
       configuration.load(inputStreamReader);
-      
+
       problemName = args[1] ;
       paretoFrontFile = args[2] ;
       Object [] settingsParams = {problemName} ;
       settings = (new SettingsFactory()).getSettingsObject(algorithmName, settingsParams) ;
     }
-    
+
     algorithm = settings.configure(configuration);
     inputStreamReader.close();
-    
+
     if (args.length == 3) {
-    	Problem p = algorithm.getProblem() ;
+      Problem p = algorithm.getProblem() ;
       indicators = new QualityIndicator(p, paretoFrontFile);
     }
-    
+
     // Execute the Algorithm
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;
-    
+
     // Result messages
     logger_.info("Total execution time: "+estimatedTime + "ms");
     logger_.info("Objectives values have been writen to file FUN");
     population.printObjectivesToFile("FUN");
     logger_.info("Variables values have been writen to file VAR");
     population.printVariablesToFile("VAR");
-    
+
     if (indicators != null) {
       logger_.info("Quality indicators") ;
       logger_.info("Hypervolume: " + indicators.getHypervolume(population)) ;
@@ -134,7 +134,7 @@ public class MainC {
       logger_.info("IGD        : " + indicators.getIGD(population)) ;
       logger_.info("Spread     : " + indicators.getSpread(population)) ;
       logger_.info("Epsilon    : " + indicators.getEpsilon(population)) ;
-      
+
       if (algorithm.getOutputParameter("evaluations") != null) {
         Integer evals = (Integer)algorithm.getOutputParameter("evaluations") ;
         int evaluations = (Integer)evals.intValue();

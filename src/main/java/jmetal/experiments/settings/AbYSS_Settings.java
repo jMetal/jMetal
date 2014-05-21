@@ -41,17 +41,16 @@ import java.util.logging.Level;
  * Settings class of algorithm AbYSS
  */
 public class AbYSS_Settings extends Settings {
-
-  public int populationSize_ ;
-  public int maxEvaluations_ ;
-  public int archiveSize_ ;
-  public int refSet1Size_ ;
-  public int refSet2Size_ ;
-  public double mutationProbability_ ;
-  public double crossoverProbability_ ;
-  public double crossoverDistributionIndex_ ;
-  public double mutationDistributionIndex_  ;
-  public int improvementRounds_ ;
+  private int populationSize_ ;
+  private int maxEvaluations_ ;
+  private int archiveSize_ ;
+  private int refSet1Size_ ;
+  private int refSet2Size_ ;
+  private double mutationProbability_ ;
+  private double crossoverProbability_ ;
+  private double crossoverDistributionIndex_ ;
+  private double mutationDistributionIndex_  ;
+  private int improvementRounds_ ;
   
   /**
    * Constructor
@@ -78,7 +77,7 @@ public class AbYSS_Settings extends Settings {
     mutationDistributionIndex_  = 20.0  ;
     improvementRounds_ = 1;
     
-  } // AbYSS_Settings
+  }
 
   /**
    * Configure the AbYSS algorithm with default parameter experiments.settings
@@ -89,7 +88,7 @@ public class AbYSS_Settings extends Settings {
     Algorithm algorithm;
     Operator crossover;
     Operator mutation;
-    Operator improvement; // Operator for improvement
+    Operator improvement; 
 
     // Creating the problem
     algorithm = new AbYSS(problem_);
@@ -122,7 +121,7 @@ public class AbYSS_Settings extends Settings {
     algorithm.addOperator("improvement", improvement);
 
     return algorithm;
-  } // Constructor
+  } 
 
   /**
    * Configure AbYSS with user-defined parameter experiments.settings
@@ -130,14 +129,6 @@ public class AbYSS_Settings extends Settings {
    */
   @Override
   public Algorithm configure(Properties configuration) throws JMException {
-    Algorithm algorithm ;
-    Operator improvement; // Operator for improvement
-    Crossover crossover ;
-    Operator mutation;
-
-    // Creating the algorithm.
-    algorithm = new AbYSS(problem_) ;
-
     // Algorithm parameters
     populationSize_ = Integer.parseInt(configuration.getProperty("populationSize",String.valueOf(populationSize_)));
     maxEvaluations_  = Integer.parseInt(configuration.getProperty("maxEvaluations",String.valueOf(maxEvaluations_)));
@@ -145,39 +136,13 @@ public class AbYSS_Settings extends Settings {
     refSet1Size_  = Integer.parseInt(configuration.getProperty("refSet1Size",String.valueOf(refSet1Size_)));
     refSet2Size_ = Integer.parseInt(configuration.getProperty("refSet2Size",String.valueOf(refSet2Size_)));
     improvementRounds_ = Integer.parseInt(configuration.getProperty("improvementRounds",String.valueOf(improvementRounds_)));
-    algorithm.setInputParameter("populationSize", populationSize_);
-    algorithm.setInputParameter("refSet1Size", refSet1Size_);
-    algorithm.setInputParameter("refSet2Size", refSet2Size_);
-    algorithm.setInputParameter("archiveSize", archiveSize_);
-    algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
 
-    // Crossover for Real codification
     crossoverProbability_ = Double.parseDouble(configuration.getProperty("crossoverProbability",String.valueOf(crossoverProbability_)));
     crossoverDistributionIndex_ = Double.parseDouble(configuration.getProperty("crossoverDistributionIndex",String.valueOf(crossoverDistributionIndex_)));
-
-    HashMap<String, Object> parameters = new HashMap<String, Object>() ;
-    parameters.put("probability", crossoverProbability_) ;
-    parameters.put("distributionIndex", crossoverDistributionIndex_) ;
-    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters);
 
     mutationProbability_ = Double.parseDouble(configuration.getProperty("mutationProbability",String.valueOf(mutationProbability_)));
     mutationDistributionIndex_ = Double.parseDouble(configuration.getProperty("mutationDistributionIndex",String.valueOf(mutationDistributionIndex_)));
 
-    parameters = new HashMap<String, Object>() ;
-    parameters.put("probability", mutationProbability_) ;
-    parameters.put("distributionIndex", mutationDistributionIndex_) ;
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);
-
-    parameters = new HashMap<String, Object>() ;
-    parameters.put("improvementRounds", improvementRounds_) ;
-    parameters.put("problem",problem_) ;
-    parameters.put("mutation",mutation) ;
-    improvement = new MutationLocalSearch(parameters);
-
-    // Add the operators to the algorithm
-    algorithm.addOperator("crossover",crossover);
-    algorithm.addOperator("improvement",improvement);
-
-    return algorithm ;
+    return configure() ;
   }
-} // AbYSS_Settings
+} 
