@@ -44,14 +44,14 @@ import java.util.logging.Level;
  */
 public class MOCell_Settings extends Settings{
 
-  public int populationSize_                ;
-  public int maxEvaluations_                ;
-  public int archiveSize_                   ;
-  public int feedback_                      ;
-  public double mutationProbability_        ;
-  public double crossoverProbability_       ;
-  public double crossoverDistributionIndex_ ;
-  public double mutationDistributionIndex_  ;
+  private int populationSize_                ;
+  private int maxEvaluations_                ;
+  private int archiveSize_                   ;
+  private int feedback_                      ;
+  private double mutationProbability_        ;
+  private double crossoverProbability_       ;
+  private double crossoverDistributionIndex_ ;
+  private double mutationDistributionIndex_  ;
 
   /**
    * Constructor
@@ -101,7 +101,7 @@ public class MOCell_Settings extends Settings{
     algorithm.setInputParameter("populationSize", populationSize_);
     algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
     algorithm.setInputParameter("archiveSize",archiveSize_ );
-    algorithm.setInputParameter("feedBack", feedback_);
+    algorithm.setInputParameter("feedback", feedback_);
 
 
     // Mutation and Crossover for Real codification 
@@ -133,55 +133,17 @@ public class MOCell_Settings extends Settings{
    */
   @Override
   public Algorithm configure(Properties configuration) throws JMException {
-    Algorithm algorithm ;
-    Selection selection ;
-    Crossover  crossover ;
-    Mutation   mutation  ;
-
-    // Selecting the algorithm: there are six MOCell variants
-    //algorithm = new sMOCell1(problem_) ;
-    //algorithm = new sMOCell2(problem_) ;
-    //algorithm = new aMOCell1(problem_) ;
-    //algorithm = new aMOCell2(problem_) ;
-    //algorithm = new aMOCell3(problem_) ;
-    algorithm = new MOCell(problem_) ;
-
-    // Algorithm parameters
     populationSize_ = Integer.parseInt(configuration.getProperty("populationSize",String.valueOf(populationSize_)));
     maxEvaluations_  = Integer.parseInt(configuration.getProperty("maxEvaluations",String.valueOf(maxEvaluations_)));
     archiveSize_  = Integer.parseInt(configuration.getProperty("archiveSize",String.valueOf(archiveSize_)));
     feedback_  = Integer.parseInt(configuration.getProperty("feedback",String.valueOf(feedback_)));
-    algorithm.setInputParameter("populationSize",populationSize_);
-    algorithm.setInputParameter("maxEvaluations",maxEvaluations_);
-    algorithm.setInputParameter("archiveSize",archiveSize_);
-    algorithm.setInputParameter("feedback",feedback_);
 
-    // Mutation and Crossover for Real codification
     crossoverProbability_ = Double.parseDouble(configuration.getProperty("crossoverProbability",String.valueOf(crossoverProbability_)));
-    crossoverDistributionIndex_ = Double.parseDouble(configuration.getProperty("crossoverDistributionIndex",String.valueOf(crossoverDistributionIndex_)));
-
-    HashMap<String, Object> parameters = new HashMap<String, Object>() ;
-    parameters.put("probability", crossoverProbability_) ;
-    parameters.put("distributionIndex", crossoverDistributionIndex_) ;
-    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters);
+    crossoverDistributionIndex_ = Double.parseDouble(configuration.getProperty("crossoverDistributionIndex",String.valueOf(crossoverDistributionIndex_))) ;
 
     mutationProbability_ = Double.parseDouble(configuration.getProperty("mutationProbability",String.valueOf(mutationProbability_)));
     mutationDistributionIndex_ = Double.parseDouble(configuration.getProperty("mutationDistributionIndex",String.valueOf(mutationDistributionIndex_)));
 
-    parameters = new HashMap<String, Object>() ;
-    parameters.put("probability", mutationProbability_) ;
-    parameters.put("distributionIndex", mutationDistributionIndex_) ;
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);
-
-    // Selection Operator
-    parameters = null ;
-    selection = SelectionFactory.getSelectionOperator("BinaryTournament", parameters) ;
-
-    // Add the operators to the algorithm
-    algorithm.addOperator("crossover",crossover);
-    algorithm.addOperator("mutation",mutation);
-    algorithm.addOperator("selection",selection);
-
-    return algorithm ;
+    return configure() ;
   }
-} // MOCell_Settings
+} 

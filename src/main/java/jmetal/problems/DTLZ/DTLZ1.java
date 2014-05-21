@@ -24,8 +24,8 @@ package jmetal.problems.DTLZ;
 import jmetal.core.Problem;
 import jmetal.core.Solution;
 import jmetal.core.Variable;
-import jmetal.encodings.solutionType.BinaryRealSolutionType;
-import jmetal.encodings.solutionType.RealSolutionType;
+import jmetal.encodings.solutiontype.BinaryRealSolutionType;
+import jmetal.encodings.solutiontype.RealSolutionType;
 import jmetal.util.JMException;
 
 /** 

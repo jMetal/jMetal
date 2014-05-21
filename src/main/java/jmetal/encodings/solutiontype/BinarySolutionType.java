@@ -1,4 +1,4 @@
-//  ArrayIntSolutionType.java
+//  BinarySolutionType.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -19,48 +19,37 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package jmetal.encodings.solutionType;
+package jmetal.encodings.solutiontype;
 
 import jmetal.core.Problem;
 import jmetal.core.SolutionType;
 import jmetal.core.Variable;
-import jmetal.encodings.variable.ArrayInt;
+import jmetal.encodings.variable.Binary;
 
 /**
-* Class representing the solution type of solutions composed of an ArrayInt 
-* encodings.variable
-*/
-public class ArrayIntSolutionType extends SolutionType {
+ * Class representing the solution type of solutions composed of Binary 
+ * variables
+ */
+public class BinarySolutionType extends SolutionType {
 
 	/**
 	 * Constructor
-	 * @param problem Problem being solved
+	 * @param problem Problem to solve
 	 */
-	public ArrayIntSolutionType(Problem problem) {
+	public BinarySolutionType(Problem problem) {
 		super(problem) ;
-	}
+	} // Constructor
 	
 	/**
 	 * Creates the variables of the solution
 	 */
 	public Variable[] createVariables() {
-		Variable [] variables = new Variable[1];
+		Variable[]  variables = new Variable[getProblem().getNumberOfVariables()];
 		
-    variables[0] = new ArrayInt(getProblem().getNumberOfVariables(), getProblem());
+    for (int var = 0; var < getProblem().getNumberOfVariables(); var++) {
+      variables[var] = new Binary(getProblem().getLength(var));
+    }
+    
     return variables ;
-	}
-	
-	/**
-	 * Copy the variables
-	 * @param vars Variables to copy
-	 * @return An array of variables
-	 */
-	public Variable[] copyVariables(Variable[] vars) {
-		Variable[] variables ;
-		
-		variables = new Variable[1];
-	  variables[0] = vars[0].deepCopy();
-		
-		return variables ;
 	}
 }

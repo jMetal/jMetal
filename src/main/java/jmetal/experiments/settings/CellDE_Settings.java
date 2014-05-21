@@ -40,38 +40,37 @@ import java.util.logging.Level;
  * Settings class of algorithm CellDE
  */
 public class CellDE_Settings extends Settings{
-  
-  public double CR_           ;
-  public double F_            ;
+  private double cr_          ;
+  private double f_            ;
 
-  public int populationSize_  ;
-  public int archiveSize_     ;
-  public int maxEvaluations_  ;
-  public int archiveFeedback_ ;
- 
+  private int populationSize_  ;
+  private int archiveSize_     ;
+  private int maxEvaluations_  ;
+  private int archiveFeedback_ ;
+
   /**
    * Constructor
    */
   public CellDE_Settings(String problemName) {
     super(problemName) ;
-    
+
     Object [] problemParams = {"Real"};
     try {
-	    problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
+      problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
     } catch (JMException e) {
       Configuration.logger_.log(Level.SEVERE, "Unable to get problem", e);
     }      
 
     // Default experiments.settings
-    CR_          = 0.5;
-    F_           = 0.5    ;
-    
+    cr_          = 0.5;
+    f_           = 0.5    ;
+
     populationSize_ = 100   ;
     archiveSize_    = 100   ;
     maxEvaluations_ = 25000 ;
     archiveFeedback_= 20    ;
-  } // CellDE_Settings
-  
+  } 
+
   /**
    * Configure the algorithm with the specified parameter experiments.settings
    * @return an algorithm object
@@ -86,28 +85,28 @@ public class CellDE_Settings extends Settings{
     Object [] problemParams = {"Real"};
     problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);      
     algorithm = new CellDE(problem_) ;
-    
+
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", populationSize_);
     algorithm.setInputParameter("archiveSize", archiveSize_);
     algorithm.setInputParameter("maxEvaluations",maxEvaluations_);
     algorithm.setInputParameter("archiveFeedBack", archiveFeedback_);
-    
+
     // Crossover operator 
     HashMap<String, Object> parameters = new HashMap<String, Object>() ;
-    parameters.put("CR", CR_) ;
-    parameters.put("F", F_) ;
+    parameters.put("CR", cr_) ;
+    parameters.put("F", f_) ;
     crossover = CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", parameters);                   
-    
+
     // Add the operators to the algorithm
     parameters = null ;
     selection = SelectionFactory.getSelectionOperator("BinaryTournament", parameters) ; 
 
     algorithm.addOperator("crossover",crossover);
     algorithm.addOperator("selection",selection);
-    
+
     return algorithm ;
-  } // configure
+  } 
 
   /**
    * Configure CellDE with user-defined parameter experiments.settings
@@ -115,37 +114,14 @@ public class CellDE_Settings extends Settings{
    */
   @Override
   public Algorithm configure(Properties configuration) throws JMException {
-    Algorithm algorithm ;
-    Operator  selection ;
-    Crossover crossover ;
-
-    // Creating the algorithm.
-    algorithm = new CellDE(problem_) ;
-
-    // Algorithm parameters
     populationSize_ = Integer.parseInt(configuration.getProperty("populationSize",String.valueOf(populationSize_)));
     maxEvaluations_  = Integer.parseInt(configuration.getProperty("maxEvaluations",String.valueOf(maxEvaluations_)));
-    algorithm.setInputParameter("populationSize", populationSize_);
-    algorithm.setInputParameter("archiveFeedBack", archiveFeedback_);
-    algorithm.setInputParameter("archiveSize", archiveSize_);
-    algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
+    archiveSize_ = Integer.parseInt(configuration.getProperty("archiveSize",String.valueOf(archiveSize_)));
+    archiveFeedback_  = Integer.parseInt(configuration.getProperty("archiveFeedback",String.valueOf(archiveFeedback_)));
 
-    CR_ = Double.parseDouble(configuration.getProperty("CR",String.valueOf(CR_)));
-    F_ = Double.parseDouble(configuration.getProperty("F",String.valueOf(F_)));
+    cr_ = Double.parseDouble(configuration.getProperty("CR",String.valueOf(cr_)));
+    f_ = Double.parseDouble(configuration.getProperty("F",String.valueOf(f_)));
 
-    HashMap<String, Object> parameters = new HashMap<String, Object>() ;
-    parameters.put("CR", CR_) ;
-    parameters.put("F", F_) ;
-    crossover = CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", parameters);
-
-    // Add the operators to the algorithm
-    parameters = null ;
-    selection = SelectionFactory.getSelectionOperator("BinaryTournament", parameters) ;
-
-    // Add the operators to the algorithm
-    algorithm.addOperator("crossover",crossover);
-    algorithm.addOperator("selection",selection);
-
-    return algorithm ;
+    return configure() ;
   }
-} // CellDE_Settings
+} 

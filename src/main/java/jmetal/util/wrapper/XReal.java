@@ -23,10 +23,10 @@ package jmetal.util.wrapper;
 
 import jmetal.core.Solution;
 import jmetal.core.SolutionType;
-import jmetal.encodings.solutionType.ArrayRealAndBinarySolutionType;
-import jmetal.encodings.solutionType.ArrayRealSolutionType;
-import jmetal.encodings.solutionType.BinaryRealSolutionType;
-import jmetal.encodings.solutionType.RealSolutionType;
+import jmetal.encodings.solutiontype.ArrayRealAndBinarySolutionType;
+import jmetal.encodings.solutiontype.ArrayRealSolutionType;
+import jmetal.encodings.solutiontype.BinaryRealSolutionType;
+import jmetal.encodings.solutiontype.RealSolutionType;
 import jmetal.encodings.variable.ArrayReal;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;

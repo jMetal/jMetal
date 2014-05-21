@@ -37,8 +37,8 @@ import java.util.logging.Logger;
  * Class for running algorithms
  */
 public class Main {
-  public static Logger      logger_ ;      // Logger object
-  public static FileHandler fileHandler_ ; // FileHandler object
+  private static Logger      logger_ ;      
+  private static FileHandler fileHandler_ ; 
 
   /**
    * @param args Command line arguments.
@@ -61,17 +61,17 @@ public class Main {
     fileHandler_ = new FileHandler("jMetal.log");
     logger_.addHandler(fileHandler_) ;
 
-    QualityIndicator indicators ; // Object to get quality indicators
+    QualityIndicator indicators ; 
 
     Settings settings = null;
 
     String algorithmName   = "" ;
-    String problemName     = "Kursawe" ; // Default problem
+    String problemName     = "Kursawe" ; 
     String paretoFrontFile = "" ;
 
     indicators = null ;
 
-    if (args.length == 0) { //
+    if (args.length == 0) { 
       logger_.log(Level.SEVERE, "Sintax error. Usage:\n"+
               "a) jmetal.experiments.Main algorithmName \n" +
               "b) jmetal.experiments.Main algorithmName problemName\n" +

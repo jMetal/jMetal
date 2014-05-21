@@ -59,7 +59,6 @@ public class CellDE_SettingsTest  {
     double epsilon = 0.000000000000001 ;
     Settings cellDESettings = new CellDE_Settings("Fonseca");
     Algorithm algorithm = cellDESettings.configure() ;
-    //Problem problem = new Fonseca("Real") ;
 
     DifferentialEvolutionCrossover crossover = (DifferentialEvolutionCrossover)algorithm.getOperator("crossover") ;
     double CR = (Double)crossover.getParameter("CR") ;
@@ -79,7 +78,6 @@ public class CellDE_SettingsTest  {
     double epsilon = 0.000000000000001 ;
     Settings cellDESettings = new CellDE_Settings("Fonseca");
     Algorithm algorithm = cellDESettings.configure(configuration_) ;
-    //Problem problem = new Fonseca("Real") ;
 
     DifferentialEvolutionCrossover crossover = (DifferentialEvolutionCrossover)algorithm.getOperator("crossover") ;
     double CR = (Double)crossover.getParameter("CR") ;

@@ -45,7 +45,7 @@ public class CellDE extends Algorithm{
    */
   private static final long serialVersionUID = 8699667515096532262L;
 
-/** 
+  /** 
    * Constructor
    * @param problem Problem to solve
    */
@@ -108,7 +108,7 @@ public class CellDE extends Algorithm{
         Solution offSpring;
 
         neighbors[ind] = neighborhood.getEightNeighbors(currentSolutionSet,ind);   
-        
+
         //parents
         parents[0] = (Solution)selectionOperator.execute(neighbors[ind]);
         parents[1] = (Solution)selectionOperator.execute(neighbors[ind]);
@@ -116,7 +116,7 @@ public class CellDE extends Algorithm{
 
         //Create a new solution, using genetic operators mutation and crossover
         offSpring = (Solution)crossoverOperator.execute(new Object[]{individual, parents});               
-        
+
         //->Evaluate offspring and constraints
         problem_.evaluate(offSpring);
         problem_.evaluateConstraints(offSpring);
@@ -139,7 +139,7 @@ public class CellDE extends Algorithm{
 
           boolean deleteMutant = true;          
           int compareResult = crowding.compare(individual,offSpring);
-          if (compareResult == 1) {//The offSpring[0] is better
+          if (compareResult == 1) {
             deleteMutant = false;
           }
 
@@ -155,7 +155,7 @@ public class CellDE extends Algorithm{
           }
         }                              
       }             
-      
+
       //Store a portion of the archive into the population
       for (int j = 0; j < feedBack; j++){
         if (archive.size() > j){
@@ -169,5 +169,5 @@ public class CellDE extends Algorithm{
       }           
     }
     return archive;
-  } // execute        
-} // CellDE
+  }         
+} 

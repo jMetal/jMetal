@@ -1,4 +1,4 @@
-//  RealSolutionType.java
+//  ArrayRealSolutionType.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -19,37 +19,48 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package jmetal.encodings.solutionType;
+package jmetal.encodings.solutiontype;
 
 import jmetal.core.Problem;
 import jmetal.core.SolutionType;
 import jmetal.core.Variable;
-import jmetal.encodings.variable.Real;
+import jmetal.encodings.variable.ArrayReal;
 
 /**
- * Class representing a solution type composed of real variables
- */
-public class RealSolutionType extends SolutionType {
+  * Class representing the solution type of solutions composed of an ArrayReal 
+  * encodings.variable
+  */
+public class ArrayRealSolutionType extends SolutionType {
 
 	/**
 	 * Constructor
 	 * @param problem Problem to solve
 	 */
-	public RealSolutionType(Problem problem) {
+	public ArrayRealSolutionType(Problem problem) {
 		super(problem) ;
-	} // Constructor
-
+	}
+	
 	/**
 	 * Creates the variables of the solution
 	 */
 	public Variable[] createVariables() {
-		Variable[] variables = new Variable[getProblem().getNumberOfVariables()];
-
-		for (int var = 0; var < getProblem().getNumberOfVariables(); var++) {
-      variables[var] = new Real(getProblem().getLowerLimit(var),
-              getProblem().getUpperLimit(var));
-    }
-
+		Variable [] variables = new Variable[1];
+		
+    variables[0] = new ArrayReal(getProblem().getNumberOfVariables(), getProblem());
+    return variables ;
+	} // createVariables
+	
+	/**
+	 * Copy the variables
+	 * @param vars Variables
+	 * @return An array of variables
+	 */
+	public Variable[] copyVariables(Variable[] vars) {
+		Variable[] variables ;
+		
+		variables = new Variable[1];
+	  variables[0] = vars[0].deepCopy();
+		
 		return variables ;
 	}
 }

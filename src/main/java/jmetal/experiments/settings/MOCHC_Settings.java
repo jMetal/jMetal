@@ -44,25 +44,22 @@ import java.util.logging.Level;
  * To change this template use File | Settings | File Templates.
  */
 public class MOCHC_Settings extends Settings {
-  int populationSize_  ;
-  int maxEvaluations_  ;
+  private int populationSize_  ;
+  private int maxEvaluations_  ;
 
-  double initialConvergenceCount_ ;
-  double preservedPopulation_     ;
-  int    convergenceValue_        ;
-  double crossoverProbability_    ;
-  double mutationProbability_     ;
+  private double initialConvergenceCount_ ;
+  private double preservedPopulation_     ;
+  private int    convergenceValue_        ;
+  private double crossoverProbability_    ;
+  private double mutationProbability_     ;
 
-  public MOCHC_Settings(String problemName) {
+  public MOCHC_Settings(String problemName) throws JMException {
     super(problemName);
 
     Object [] problemParams = {"Binary"};
-    try {
       problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
-    } catch (JMException e) {
-      Configuration.logger_.log(Level.SEVERE, "Unable to get problem", e);
-    }
-    // Default experiments.settings
+
+      // Default experiments.settings
     populationSize_ = 100 ;
     maxEvaluations_ = 25000 ;
     initialConvergenceCount_ = 0.25 ;
@@ -71,7 +68,6 @@ public class MOCHC_Settings extends Settings {
 
     crossoverProbability_ = 1.0 ;
     mutationProbability_ = 0.35 ;
-
   }
 
   /**
@@ -119,7 +115,7 @@ public class MOCHC_Settings extends Settings {
     algorithm.addOperator("newGenerationSelection",newGenerationSelection);
 
     return algorithm ;
-  } // configure
+  } 
 
   /**
    * Configure MOCHC with user-defined parameter experiments.settings
@@ -127,54 +123,15 @@ public class MOCHC_Settings extends Settings {
    */
   @Override
   public Algorithm configure(Properties configuration) throws JMException {
-    Algorithm algorithm ;
-    Operator crossover      ;
-    Operator mutation       ;
-    Operator parentsSelection       ;
-    Operator newGenerationSelection ;
-
-    algorithm = new MOCHC(problem_) ;
-
-    // Algorithm parameters
     populationSize_ = Integer.parseInt(configuration.getProperty("populationSize",String.valueOf(populationSize_)));
     maxEvaluations_  = Integer.parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations_)));
     initialConvergenceCount_ = Double.parseDouble(configuration.getProperty("initialConvergenceCount", String.valueOf(initialConvergenceCount_)));
     preservedPopulation_ = Double.parseDouble(configuration.getProperty("preservedPopulation", String.valueOf(preservedPopulation_)));
     convergenceValue_  = Integer.parseInt(configuration.getProperty("convergenceValue", String.valueOf(convergenceValue_)));
 
-    algorithm.setInputParameter("initialConvergenceCount",initialConvergenceCount_);
-    algorithm.setInputParameter("preservedPopulation",preservedPopulation_);
-    algorithm.setInputParameter("convergenceValue",convergenceValue_);
-    algorithm.setInputParameter("populationSize",populationSize_);
-    algorithm.setInputParameter("maxEvaluations",maxEvaluations_);
-
-    // Mutation and Crossover for Real codification
     crossoverProbability_ = Double.parseDouble(configuration.getProperty("crossoverProbability",String.valueOf(crossoverProbability_)));
-
-    HashMap<String, Object> parameters = new HashMap<String, Object>() ;
-    parameters.put("probability", crossoverProbability_) ;
-    crossover = CrossoverFactory.getCrossoverOperator("HUXCrossover", parameters);
-
-    parameters = null ;
-    parentsSelection = SelectionFactory.getSelectionOperator("RandomSelection", parameters)  ;
-
     mutationProbability_ = Double.parseDouble(configuration.getProperty("mutationProbability",String.valueOf(mutationProbability_)));
 
-    parameters = new HashMap<String, Object>() ;
-    parameters.put("probability", mutationProbability_) ;
-    mutation = MutationFactory.getMutationOperator("BitFlipMutation", parameters);
-
-    // Selection Operator
-    parameters = new HashMap<String, Object>() ;
-    parameters.put("problem", problem_) ;
-    newGenerationSelection = SelectionFactory.getSelectionOperator("RankingAndCrowdingSelection", parameters) ;
-
-    // Add the operators to the algorithm
-    algorithm.addOperator("crossover",crossover);
-    algorithm.addOperator("cataclysmicMutation",mutation);
-    algorithm.addOperator("parentSelection",parentsSelection);
-    algorithm.addOperator("newGenerationSelection",newGenerationSelection);
-
-    return algorithm ;
+    return configure() ;
   }
 }
