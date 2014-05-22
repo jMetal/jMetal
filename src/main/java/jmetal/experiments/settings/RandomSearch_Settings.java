@@ -35,22 +35,19 @@ import java.util.logging.Level;
  */
 public class RandomSearch_Settings extends Settings {
   // Default experiments.settings
-  public int maxEvaluations_ = 25000;
-  
+  private int maxEvaluations_ = 25000;
+
   /**
    * Constructor
    * @param problem Problem to solve
+   * @throws JMException 
    */
-  public RandomSearch_Settings(String problem) {
+  public RandomSearch_Settings(String problem) throws JMException {
     super(problem);
-    
+
     Object [] problemParams = {"Real"};
-    try {
-	    problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
-    } catch (JMException e) {
-      Configuration.logger_.log(Level.SEVERE, "Unable to get problem", e);
-    }      
-  } // RandomSearch_Settings
+    problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
+  } 
 
   /**
    * Configure the random search algorithm with default parameter experiments.settings
@@ -75,16 +72,8 @@ public class RandomSearch_Settings extends Settings {
    */
   @Override
   public Algorithm configure(Properties configuration) throws JMException {
-    Algorithm algorithm ;
-
-    // Creating the algorithm.
-    algorithm = new RandomSearch(problem_) ;
-
-    // Algorithm parameters
     maxEvaluations_  = Integer.parseInt(configuration.getProperty("maxEvaluations",String.valueOf(maxEvaluations_)));
 
-    algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
-
-    return algorithm ;
+    return configure() ;
   }
-} // RandomSearch_Settings
+} 

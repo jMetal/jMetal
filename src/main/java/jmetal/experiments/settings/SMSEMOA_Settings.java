@@ -42,35 +42,32 @@ import java.util.logging.Level;
  * Settings class of algorithm SMSEMOA
  */
 public class SMSEMOA_Settings extends Settings {
-  public int populationSize_                ;
-  public int maxEvaluations_                ;
-  public double mutationProbability_        ;
-  public double crossoverProbability_       ;
-  public double crossoverDistributionIndex_ ;
-  public double mutationDistributionIndex_  ;
-  public double offset_                     ;
+  private int populationSize_                ;
+  private int maxEvaluations_                ;
+  private double mutationProbability_        ;
+  private double crossoverProbability_       ;
+  private double crossoverDistributionIndex_ ;
+  private double mutationDistributionIndex_  ;
+  private double offset_                     ;
   
   /**
    * Constructor
+   * @throws JMException 
    */
-  public SMSEMOA_Settings(String problem) {
+  public SMSEMOA_Settings(String problem) throws JMException {
     super(problem) ;
     
     Object [] problemParams = {"Real"};
-    try {
 	    problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
-    } catch (JMException e) {
-      Configuration.logger_.log(Level.SEVERE, "Unable to get problem", e);
-    }      
-    populationSize_             = 100   ; 
+
+	    populationSize_             = 100   ; 
     maxEvaluations_             = 25000 ;
     mutationProbability_        = 1.0/problem_.getNumberOfVariables() ;
     crossoverProbability_       = 0.9   ;
     crossoverDistributionIndex_ = 20.0  ;
     mutationDistributionIndex_  = 20.0  ;
     offset_                     = 100.0 ;
-
-  } // SMSEMOA_Settings
+  } 
 
   
   /**
@@ -113,7 +110,7 @@ public class SMSEMOA_Settings extends Settings {
     algorithm.addOperator("selection",selection);
    
     return algorithm ;
-  } // configure
+  } 
 
   /**
    * Configure SMSEMOA with user-defined parameter experiments.settings
@@ -121,48 +118,14 @@ public class SMSEMOA_Settings extends Settings {
    */
   @Override
   public Algorithm configure(Properties configuration) throws JMException {
-    Algorithm algorithm ;
-    Selection  selection ;
-    Crossover  crossover ;
-    Mutation   mutation  ;
-
-    // Creating the algorithm.
-    algorithm = new SMSEMOA(problem_) ;
-
-    // Algorithm parameters
     populationSize_ = Integer.parseInt(configuration.getProperty("populationSize",String.valueOf(populationSize_)));
     maxEvaluations_  = Integer.parseInt(configuration.getProperty("maxEvaluations",String.valueOf(maxEvaluations_)));
     offset_ = Double.parseDouble(configuration.getProperty("offset",String.valueOf(offset_)));
-    algorithm.setInputParameter("populationSize",populationSize_);
-    algorithm.setInputParameter("maxEvaluations",maxEvaluations_);
-    algorithm.setInputParameter("offset", offset_);
-
-    // Mutation and Crossover for Real codification
     crossoverProbability_ = Double.parseDouble(configuration.getProperty("crossoverProbability",String.valueOf(crossoverProbability_)));
     crossoverDistributionIndex_ = Double.parseDouble(configuration.getProperty("crossoverDistributionIndex",String.valueOf(crossoverDistributionIndex_)));
-
-    HashMap<String, Object> parameters = new HashMap<String, Object>() ;
-    parameters.put("probability", crossoverProbability_) ;
-    parameters.put("distributionIndex", crossoverDistributionIndex_) ;
-    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters);
-
     mutationProbability_ = Double.parseDouble(configuration.getProperty("mutationProbability",String.valueOf(mutationProbability_)));
-    mutationDistributionIndex_ = Double.parseDouble(configuration.getProperty("mutationDistributionIndex",String.valueOf(mutationDistributionIndex_)));
-    parameters = new HashMap<String, Object>() ;
+    mutationDistributionIndex_ = Double.parseDouble(configuration.getProperty("mutationDistributionIndex",String.valueOf(mutationDistributionIndex_)));;
 
-    parameters.put("probability", mutationProbability_) ;
-    parameters.put("distributionIndex", mutationDistributionIndex_) ;
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);
-
-    // Selection Operator
-    parameters = null ;
-    selection = SelectionFactory.getSelectionOperator("RandomSelection", parameters) ;
-
-    // Add the operators to the algorithm
-    algorithm.addOperator("crossover",crossover);
-    algorithm.addOperator("mutation",mutation);
-    algorithm.addOperator("selection",selection);
-
-    return algorithm ;
+    return configure() ;
   }
-} // SMSEMOA_Settings
+} 

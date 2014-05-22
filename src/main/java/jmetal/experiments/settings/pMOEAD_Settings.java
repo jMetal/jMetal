@@ -37,47 +37,42 @@ import java.util.logging.Level;
  * Settings class of algorithm MOEA/D
  */
 public class pMOEAD_Settings extends Settings {
+  private double cr_;
+  private double f_;
+  private int populationSize_;
+  private int maxEvaluations_;
 
-  public double CR_;
-  public double F_;
-  public int populationSize_;
-  public int maxEvaluations_;
+  private double mutationProbability_;
+  private double mutationDistributionIndex_;
 
-  public double mutationProbability_;
-  public double mutationDistributionIndex_;
+  private String dataDirectory_;
 
-  public String dataDirectory_;
+  private int t_;
+  private double delta_;
+  private int nr_;
 
-  public int T_;
-  public double delta_;
-  public int nr_;
-
-  public int numberOfThreads_; // Parameter used by the pMOEAD version
-  //public String moeadVersion;
+  private int numberOfThreads_; 
 
   /**
    * Constructor
+   * @throws JMException 
    */
-  public pMOEAD_Settings(String problem) {
+  public pMOEAD_Settings(String problem) throws JMException {
     super(problem);
 
     Object[] problemParams = {"Real"};
-    try {
-      problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
-    } catch (JMException e) {
-      Configuration.logger_.log(Level.SEVERE, "Unable to get problem", e);
-    }
+    problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
 
     // Default experiments.settings
-    CR_ = 1.0;
-    F_ = 0.5;
+    cr_ = 1.0;
+    f_ = 0.5;
     populationSize_ = 600;
     maxEvaluations_ = 150000;
 
     mutationProbability_ = 1.0 / problem_.getNumberOfVariables();
     mutationDistributionIndex_ = 20;
 
-    T_ = 60;
+    t_ = 60;
     delta_ = 0.9;
     nr_ = 6;
 
@@ -89,8 +84,8 @@ public class pMOEAD_Settings extends Settings {
 
     dataDirectory_ = "MOEAD_Weights" ;
 
-    numberOfThreads_ = 4; // Parameter used by the pMOEAD version
-  } // pMOEAD_Settings
+    numberOfThreads_ = 4; 
+  } 
 
   /**
    * Configure the algorithm with the specified parameter experiments.settings
@@ -111,14 +106,14 @@ public class pMOEAD_Settings extends Settings {
     algorithm.setInputParameter("populationSize", populationSize_);
     algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
     algorithm.setInputParameter("dataDirectory", dataDirectory_);
-    algorithm.setInputParameter("T", T_);
+    algorithm.setInputParameter("T", t_);
     algorithm.setInputParameter("delta", delta_);
     algorithm.setInputParameter("nr", nr_);
 
     // Crossover operator
     HashMap<String, Object> parameters = new HashMap<String, Object>() ;
-    parameters.put("CR", CR_);
-    parameters.put("F", F_);
+    parameters.put("CR", cr_);
+    parameters.put("F", f_);
     crossover = CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", parameters);
 
     // Mutation operator
@@ -131,7 +126,7 @@ public class pMOEAD_Settings extends Settings {
     algorithm.addOperator("mutation", mutation);
 
     return algorithm;
-  } // configure
+  } 
 
   /**
    * Configure pMOEAD with user-defined parameter experiments.settings
@@ -139,52 +134,14 @@ public class pMOEAD_Settings extends Settings {
    */
   @Override
   public Algorithm configure(Properties configuration) throws JMException {
-    Algorithm algorithm ;
-    Crossover crossover ;
-    Mutation mutation  ;
-
-    // Creating the algorithm.
-    algorithm = new pMOEAD(problem_) ;
-
-    // Algorithm parameters
     populationSize_ = Integer.parseInt(configuration.getProperty("populationSize",String.valueOf(populationSize_)));
     maxEvaluations_  = Integer.parseInt(configuration.getProperty("maxEvaluations",String.valueOf(maxEvaluations_)));
     numberOfThreads_  = Integer.parseInt(configuration.getProperty("numberOfThreads",String.valueOf(numberOfThreads_)));
     dataDirectory_  = configuration.getProperty("dataDirectory", dataDirectory_);
     delta_ = Double.parseDouble(configuration.getProperty("delta", String.valueOf(delta_)));
-    T_ = Integer.parseInt(configuration.getProperty("T", String.valueOf(T_)));
+    t_ = Integer.parseInt(configuration.getProperty("T", String.valueOf(t_)));
     nr_ = Integer.parseInt(configuration.getProperty("nr", String.valueOf(nr_)));
 
-    algorithm.setInputParameter("numberOfThreads", numberOfThreads_);
-    algorithm.setInputParameter("populationSize",populationSize_);
-    algorithm.setInputParameter("maxEvaluations",maxEvaluations_);
-    algorithm.setInputParameter("dataDirectory",dataDirectory_);
-    algorithm.setInputParameter("T", T_) ;
-    algorithm.setInputParameter("delta", delta_) ;
-    algorithm.setInputParameter("nr", nr_) ;
-
-    // Crossover operator
-    CR_ = Double.parseDouble(configuration.getProperty("CR",String.valueOf(CR_)));
-    F_ = Double.parseDouble(configuration.getProperty("F",String.valueOf(F_)));
-
-    HashMap<String, Object> parameters = new HashMap<String, Object>() ;
-    parameters.put("CR", CR_) ;
-    parameters.put("F", F_) ;
-    crossover = CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", parameters);
-
-    // Mutation parameters
-    mutationProbability_ = Double.parseDouble(configuration.getProperty("mutationProbability",String.valueOf(mutationProbability_)));
-    mutationDistributionIndex_ = Double.parseDouble(configuration.getProperty("mutationDistributionIndex",String.valueOf(mutationDistributionIndex_)));
-
-    parameters = new HashMap<String, Object>() ;
-    parameters.put("probability", mutationProbability_) ;
-    parameters.put("distributionIndex", mutationDistributionIndex_) ;
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);
-
-    // Add the operators to the algorithm
-    algorithm.addOperator("crossover",crossover);
-    algorithm.addOperator("mutation",mutation);
-
-    return algorithm ;
+    return configure() ;
   }
-} // pMOEAD_Settings
+} 
