@@ -39,7 +39,7 @@ import java.util.logging.Logger;
 public class Main {
   private static Logger      logger_ ;      
   private static FileHandler fileHandler_ ; 
-
+  
   /**
    * @param args Command line arguments.
    * @throws JMException
@@ -55,7 +55,7 @@ public class Main {
           JMException, SecurityException, IOException,
           IllegalArgumentException, IllegalAccessException,
           ClassNotFoundException {
-    Algorithm algorithm ;         // The algorithm to use
+    Algorithm algorithm ;        
 
     logger_      = Configuration.logger_ ;
     fileHandler_ = new FileHandler("jMetal.log");

@@ -39,7 +39,7 @@ public class SettingsFactory {
    * @throws JMException
    */
   public Settings getSettingsObject(String algorithmName, Object [] params)
-          throws JMException {
+      throws JMException {
     String base = "jmetal.experiments.settings." + algorithmName + "_Settings";
     try {
       Class problemClass = Class.forName(base);
@@ -47,16 +47,15 @@ public class SettingsFactory {
       int i = 0;
       //find the constructor
       while ((i < constructors.length) &&
-              (constructors[i].getParameterTypes().length!=params.length)) {
+          (constructors[i].getParameterTypes().length!=params.length)) {
         i++;
       }
       // constructors[i] is the selected one constructor
-      Settings algorithmSettings = (Settings)constructors[i].newInstance(params);
-      return algorithmSettings;
+      return (Settings)constructors[i].newInstance(params);
     } catch(Exception e) {
       Configuration.logger_.log(Level.SEVERE, "SettingsFactory.getSettingsObject: " +
-              "Settings '" + base + "' does not exist. " +
-              "Please, check the algorithm name in jmetal/metaheuristics", e) ;
+          "Settings '" + base + "' does not exist. " +
+          "Please, check the algorithm name in jmetal/metaheuristics", e) ;
       throw new JMException("Exception in " + base + ".getSettingsObject()") ;
     }
   }

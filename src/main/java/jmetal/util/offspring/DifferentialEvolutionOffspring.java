@@ -22,29 +22,26 @@ import jmetal.util.JMException;
 import jmetal.util.random.PseudoRandom;
 
 public class DifferentialEvolutionOffspring extends Offspring {
-  private double CR_ ;
-  private double F_  ;
+  private double cr_ ;
+  private double f_  ;
 
   private Operator crossover_ ;
   private Operator selection_ ;
-  Operator mutation_;
+  private Operator mutation_;
 
-  private DifferentialEvolutionOffspring() {
-
-  }
   /**
    * Constructor
    * @param CR
    * @param F
    */
   public DifferentialEvolutionOffspring(double CR, double F)  {
-    CR_ = CR ;
-    F_  = F  ;
+    cr_ = CR ;
+    f_  = F  ;
     try {
       // Crossover operator
       HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
-      crossoverParameters.put("CR", CR_) ;
-      crossoverParameters.put("F", F_) ;      
+      crossoverParameters.put("CR", cr_) ;
+      crossoverParameters.put("F", f_) ;      
       crossover_ = new DifferentialEvolutionCrossover(crossoverParameters) ;
 
       // Selecion operator
@@ -80,7 +77,7 @@ public class DifferentialEvolutionOffspring extends Offspring {
 
     //Create a new solution, using DE
     return offSpring ;
-  } // getOffpring
+  }
 
   /**
    * 
@@ -102,14 +99,13 @@ public class DifferentialEvolutionOffspring extends Offspring {
     //Create a new solution, using DE
     return offspring ;
   } // getOffpring
-  
+
   public String configuration() {
     String result = "-----\n" ;
     result += "Operator: " + id_ + "\n" ;
-    result += "CR: " + CR_ + "\n" ;
-    result += "F: " + F_ ;
+    result += "CR: " + cr_ + "\n" ;
+    result += "F: " + f_ ;
 
     return result ;
   }
-} // DifferentialEvolutionOffspring
-
+} 

@@ -77,16 +77,16 @@ public class MetricsUtil {
 
     } catch (Exception e) {
       Configuration.logger_.log(
-              Level.SEVERE,
-              "InputFacilities crashed reading for file: " + path,
-              e);
+          Level.SEVERE,
+          "InputFacilities crashed reading for file: " + path,
+          e);
     }
-    return null;
-  } // readFront
+    return new double[0][0];
+  } 
 
   /** Gets the maximum values for each objectives in a given pareto
    *  front
-   *  @param front The pareto front
+   *  @param front The Pareto front
    *  @param noObjectives Number of objectives in the pareto front
    *  @return double [] An array of noOjectives values whit the maximun values
    *  for each objective
@@ -200,8 +200,8 @@ public class MetricsUtil {
    * @return the normalized pareto front
    **/
   public double [][] getNormalizedFront(double [][] front,
-                                        double [] maximumValue,
-                                        double [] minimumValue) {
+      double [] maximumValue,
+      double [] minimumValue) {
 
     double [][] normalizedFront = new double[front.length][];
 
@@ -209,7 +209,7 @@ public class MetricsUtil {
       normalizedFront[i] = new double[front[i].length];
       for (int j = 0; j < front[i].length; j++) {
         normalizedFront[i][j] = (front[i][j] - minimumValue[j]) /
-                (maximumValue[j] - minimumValue[j]);
+            (maximumValue[j] - minimumValue[j]);
       }
     }
     return normalizedFront;
@@ -271,9 +271,9 @@ public class MetricsUtil {
       return solutionSet;
     } catch (Exception e) {
       Configuration.logger_.log(
-              Level.SEVERE,
-              "jmetal.qualityIndicator.util.readNonDominatedSolutionSet: "+path,
-              e);
+          Level.SEVERE,
+          "jmetal.qualityIndicator.util.readNonDominatedSolutionSet: "+path,
+          e);
     }
     return null;
   }
@@ -309,9 +309,9 @@ public class MetricsUtil {
       return solutionSet;
     } catch (Exception e) {
       Configuration.logger_.log(
-              Level.SEVERE,
-              "jmetal.qualityIndicator.util.readNonDominatedSolutionSet: "+path,
-              e);
+          Level.SEVERE,
+          "jmetal.qualityIndicator.util.readNonDominatedSolutionSet: "+path,
+          e);
     }
     return null;
   }
@@ -324,7 +324,7 @@ public class MetricsUtil {
    */
   public void readNonDominatedSolutionSet(String path, NonDominatedSolutionList solutionSet) {
     try {
-			/* Open the file */
+      /* Open the file */
       FileInputStream fis   = new FileInputStream(path)     ;
       InputStreamReader isr = new InputStreamReader(fis)    ;
       BufferedReader br      = new BufferedReader(isr)      ;
@@ -346,9 +346,9 @@ public class MetricsUtil {
       br.close();
     } catch (Exception e) {
       Configuration.logger_.log(
-              Level.SEVERE,
-              "jmetal.qualityIndicator.util.readNonDominatedSolutionSet: "+path,
-              e);
+          Level.SEVERE,
+          "jmetal.qualityIndicator.util.readNonDominatedSolutionSet: "+path,
+          e);
     }
   }
 
@@ -510,7 +510,7 @@ public class MetricsUtil {
           //System.out.println(hypervolume.calculateHypervolume(aux, aux.length, getNumberOfObjectives));
 
           contribution[i] = hypervolume.calculateHypervolume(invertedFront[0], invertedFront[0].length, numberOfObjectives) -
-                  hypervolume.calculateHypervolume(aux, aux.length, numberOfObjectives);
+              hypervolume.calculateHypervolume(aux, aux.length, numberOfObjectives);
         } else {
           contribution[i] = hypervolume.calculateHypervolume(invertedFront[0], invertedFront[0].length, numberOfObjectives);
         }
@@ -633,7 +633,7 @@ public class MetricsUtil {
             }
           }
           contribution[i] = hypervolume.calculateHypervolume(invertedFront[0], invertedFront[0].length, numberOfObjectives) -
-                  hypervolume.calculateHypervolume(aux, aux.length, numberOfObjectives);
+              hypervolume.calculateHypervolume(aux, aux.length, numberOfObjectives);
         }
       }
     }

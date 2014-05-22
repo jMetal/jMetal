@@ -29,6 +29,7 @@ package jmetal.qualityIndicator.fastHypervolume.wfg;
 
 import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
+import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
 import java.io.IOException;
@@ -133,8 +134,7 @@ public class WFGHV {
 
     if (currentDimension_ == 2) {
       volume = get2DHV(front);
-    }
-    else {
+    } else {
       volume = 0.0 ;
 
       currentDimension_ -- ;
@@ -182,7 +182,6 @@ public class WFGHV {
               (front.getPoint(i).getObjectives()[1] - front.getPoint(i-1).getObjectives()[1])) ;
 
     }
-
     return hv ;
   }
 
@@ -278,7 +277,6 @@ public class WFGHV {
   // ASSUMING MINIMIZATION
 
     // domination could be checked in either order
-
     for (int i = currentDimension_ - 1; i >= 0; i--) {
       if (p.objectives_[i] < q.objectives_[i]) {
         for (int j = i - 1; j >= 0; j--) {
@@ -322,16 +320,16 @@ public class WFGHV {
        for (int i = 1; i <= dimensions; i++) {
          points[i - 1] = Double.parseDouble(args[i]);
        }
-    }
-    else {
+    } else {
       for (int i = 1; i <= dimensions; i++) {
         points[i - 1] = 0.0;
       }
     }
 
     referencePoint = new Point(points) ;
-    System.out.println("Using reference point: " + referencePoint) ;
 
     WFGHV wfghv = new WFGHV(referencePoint.getNumberOfObjectives(), front.getNumberOfPoints(), referencePoint) ;
+    Configuration.logger_.info("Using reference point: " + referencePoint) ;
+    Configuration.logger_.info("Hypervolume value: " + wfghv.get2DHV(front));
   }
 }

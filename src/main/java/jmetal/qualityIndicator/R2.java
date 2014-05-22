@@ -76,8 +76,7 @@ public class R2 {
       lambda_[n][0] = a;
       lambda_[n][1] = 1 - a;
     }
-  } // R2
-
+  } 
 
 
   /**
@@ -128,9 +127,9 @@ public class R2 {
       }
     } catch (Exception e) {
       Configuration.logger_.log(
-              Level.SEVERE,
-              "initUniformWeight: failed when reading for file: " + file,
-              e);
+          Level.SEVERE,
+          "initUniformWeight: failed when reading for file: " + file,
+          e);
     }
   }
 
@@ -165,11 +164,11 @@ public class R2 {
 
     // STEP 2. Get the normalized front and true Pareto fronts
     normalizedApproximation       = utils_.getNormalizedFront(approximation,
-            maximumValue,
-            minimumValue);
+        maximumValue,
+        minimumValue);
     normalizedParetoFront = utils_.getNormalizedFront(paretoFront,
-            maximumValue,
-            minimumValue);
+        maximumValue,
+        minimumValue);
 
     // STEP 3. compute all the matrix of tchebicheff values if it is null
     matrix_ = new double[approximation.length][lambda_.length];
@@ -266,7 +265,7 @@ public class R2 {
    * Returns the element contributing the most to the R2 indicator
    */
   public int []
-  getNBest(double [][] approximation,double [][] paretoFront, int N)
+      getNBest(double [][] approximation,double [][] paretoFront, int N)
   {
     int  []    index_bests = new int[approximation.length];
     double [] values       = new double[approximation.length];
@@ -318,7 +317,7 @@ public class R2 {
    * @param numberOfObjectives The number of objectives
    * @param lambda A vector containing the lambda vectors for R2
    */
-  public double R2(double [][] approximation,double [][] paretoFront) {
+  public double r2(double [][] approximation,double [][] paretoFront) {
     /**
      * Stores the maximum values of true pareto front.
      */
@@ -345,11 +344,11 @@ public class R2 {
 
     // STEP 2. Get the normalized front and true Pareto fronts
     normalizedApproximation       = utils_.getNormalizedFront(approximation,
-            maximumValue,
-            minimumValue);
+        maximumValue,
+        minimumValue);
     normalizedParetoFront = utils_.getNormalizedFront(paretoFront,
-            maximumValue,
-            minimumValue);
+        maximumValue,
+        minimumValue);
 
     // STEP 3. compute all the matrix of tchebicheff values if it is null
     matrix_ = new double[approximation.length][lambda_.length];
@@ -386,7 +385,7 @@ public class R2 {
     double [][] approximationFront = set.writeObjectivesToMatrix();
     double [][] trueFront          = set.writeObjectivesToMatrix();
 
-    return this.R2(approximationFront, trueFront);
+    return this.r2(approximationFront, trueFront);
   }
 
   /**
@@ -396,7 +395,7 @@ public class R2 {
   R2Without(SolutionSet set, int index) {
     double [][] approximationFront = set.writeObjectivesToMatrix();
     double [][] trueFront          = set.writeObjectivesToMatrix();
-    return this.R2(approximationFront, trueFront);
+    return this.r2(approximationFront, trueFront);
   }
 
   /**
@@ -411,8 +410,8 @@ public class R2 {
   public static void main(String args[]) throws JMException {
     if (args.length < 3) {
       throw new JMException("Error using R2. Usage: \n java jmetal.qualityIndicator.Hypervolume " +
-              "<SolutionFrontFile> " +
-              "<TrueFrontFile> " + "<getNumberOfObjectives>");
+          "<SolutionFrontFile> " +
+          "<TrueFrontFile> " + "<getNumberOfObjectives>");
     }
 
     //Create a new instance of the metric
@@ -431,7 +430,7 @@ public class R2 {
     double [][] paretoFront             = qualityIndicator.utils_.readFront(args[1]);
 
     //Obtain delta value
-    double value = qualityIndicator.R2(approximationFront,paretoFront);
+    double value = qualityIndicator.r2(approximationFront,paretoFront);
 
     System.out.println(value);
 
