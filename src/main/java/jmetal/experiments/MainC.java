@@ -42,8 +42,6 @@ import java.util.logging.Logger;
 public class MainC {
   private static Logger      logger_ ;      
   private static FileHandler fileHandler_ ; 
-
-  private MainC() {}
   
   /**
    * @param args Command line arguments.

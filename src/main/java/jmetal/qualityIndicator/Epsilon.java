@@ -46,7 +46,7 @@ public class Epsilon {
    */
   private int method_;
   /* stores a reference to  qualityIndicatorUtils */
-  private jmetal.qualityIndicator.util.MetricsUtil utils_ =
+  public jmetal.qualityIndicator.util.MetricsUtil utils_ =
       new jmetal.qualityIndicator.util.MetricsUtil();
 
   /**
