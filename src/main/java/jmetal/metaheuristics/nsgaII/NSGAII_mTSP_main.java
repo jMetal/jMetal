@@ -38,80 +38,79 @@ import java.util.HashMap;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
-/** 
+/**
  * Class to configure and execute the NSGA-II algorithm. The experiments.settings are aimed
  * at solving the mTSP problem.
  */
 
 public class NSGAII_mTSP_main {
-  public static Logger      logger_ ;      // Logger object
-  public static FileHandler fileHandler_ ; // FileHandler object
+  public static Logger logger_;      // Logger object
+  public static FileHandler fileHandler_; // FileHandler object
 
   /**
    * @param args Command line arguments.
-   * @throws JMException 
-   * @throws IOException 
-   * @throws SecurityException 
-   * Usage: 
-   *      - jmetal.metaheuristics.nsgaII.NSGAII_mTSP_main
+   * @throws JMException
+   * @throws IOException
+   * @throws SecurityException Usage:
+   *                           - jmetal.metaheuristics.nsgaII.NSGAII_mTSP_main
    */
-  public static void main(String [] args) throws
-          Exception {
-    Problem   problem   ; // The problem to solve
-    Algorithm algorithm ; // The algorithm to use
-    Operator  crossover ; // Crossover operator
-    Operator  mutation  ; // Mutation operator
-    Operator  selection ; // Selection operator
-    
-    QualityIndicator indicators ; // Object to get quality indicators
+  public static void main(String[] args) throws
+    Exception {
+    Problem problem; // The problem to solve
+    Algorithm algorithm; // The algorithm to use
+    Operator crossover; // Crossover operator
+    Operator mutation; // Mutation operator
+    Operator selection; // Selection operator
+
+    QualityIndicator indicators; // Object to get quality indicators
 
     // Logger object and file to store log messages
-    logger_      = Configuration.logger_ ;
-    fileHandler_ = new FileHandler("NSGAII_main.log"); 
-    logger_.addHandler(fileHandler_) ;
-    
-    indicators = null ;
-    problem = new mTSP("Permutation", "kroA150.tsp","kroB150.tsp");
-    
+    logger_ = Configuration.logger_;
+    fileHandler_ = new FileHandler("NSGAII_main.log");
+    logger_.addHandler(fileHandler_);
+
+    indicators = null;
+    problem = new mTSP("Permutation", "kroA150.tsp", "kroB150.tsp");
+
     algorithm = new NSGAII(problem);
     //algorithm = new ssNSGAII(problem);
-    
+
     // Algorithm parameters
-    algorithm.setInputParameter("populationSize",100);
-    algorithm.setInputParameter("maxEvaluations",10000000);
+    algorithm.setInputParameter("populationSize", 100);
+    algorithm.setInputParameter("maxEvaluations", 10000000);
     
     /* Crossover operator */
-    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
-    crossoverParameters.put("probability", 0.95) ;
+    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
+    crossoverParameters.put("probability", 0.95);
     //crossover = CrossoverFactory.getCrossoverOperator("TwoPointsCrossover", parameters);
     crossover = CrossoverFactory.getCrossoverOperator("PMXCrossover", crossoverParameters);
     
     /* Mutation operator */
-    HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
-    mutationParameters.put("probability", 0.2) ;
+    HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
+    mutationParameters.put("probability", 0.2);
     mutation = MutationFactory.getMutationOperator("SwapMutation", mutationParameters);                    
   
     /* Selection Operator */
     HashMap<String, Object> selectionParameters = null; // FIXME: why we are passing null?
-    selection = SelectionFactory.getSelectionOperator("BinaryTournament", selectionParameters) ;                            
+    selection = SelectionFactory.getSelectionOperator("BinaryTournament", selectionParameters);
 
     // Add the operators to the algorithm
-    algorithm.addOperator("crossover",crossover);
-    algorithm.addOperator("mutation",mutation);
-    algorithm.addOperator("selection",selection);
+    algorithm.addOperator("crossover", crossover);
+    algorithm.addOperator("mutation", mutation);
+    algorithm.addOperator("selection", selection);
 
     // Add the indicator object to the algorithm
-    algorithm.setInputParameter("indicators", indicators) ;
-    
+    algorithm.setInputParameter("indicators", indicators);
+
     // Execute the Algorithm
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;
-    
+
     // Result messages 
-    logger_.info("Total execution time: "+estimatedTime + "ms");
+    logger_.info("Total execution time: " + estimatedTime + "ms");
     logger_.info("Variables values have been writen to file VAR");
-    population.printVariablesToFile("VAR");    
+    population.printVariablesToFile("VAR");
     logger_.info("Objectives values have been writen to file FUN");
     population.printObjectivesToFile("FUN");
   } //main

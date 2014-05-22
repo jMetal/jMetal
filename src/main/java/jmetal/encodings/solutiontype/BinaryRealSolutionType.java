@@ -27,37 +27,38 @@ import jmetal.core.Variable;
 import jmetal.encodings.variable.BinaryReal;
 
 /**
- *  Class representing the solution type of solutions composed of BinaryReal 
- *  variables
+ * Class representing the solution type of solutions composed of BinaryReal
+ * variables
  */
 public class BinaryRealSolutionType extends SolutionType {
 
   /**
    * Constructor
+   *
    * @param problem Problem to solve
    */
   public BinaryRealSolutionType(Problem problem) {
-    super(problem) ;
+    super(problem);
   } // Constructor
 
   /**
    * Creates the variables of the solution
    */
   public Variable[] createVariables() {
-    Variable [] variables = new Variable[getProblem().getNumberOfVariables()];
+    Variable[] variables = new Variable[getProblem().getNumberOfVariables()];
 
     for (int var = 0; var < getProblem().getNumberOfVariables(); var++) {
       if (getProblem().getPrecision() == null) {
-        int [] precision = new int[getProblem().getNumberOfVariables()] ;
+        int[] precision = new int[getProblem().getNumberOfVariables()];
         for (int i = 0; i < getProblem().getNumberOfVariables(); i++) {
           precision[i] = jmetal.encodings.variable.BinaryReal.DEFAULT_PRECISION;
         }
-        getProblem().setPrecision(precision) ;
+        getProblem().setPrecision(precision);
       }
       variables[var] = new BinaryReal(getProblem().getPrecision(var),
-              getProblem().getLowerLimit(var),
-              getProblem().getUpperLimit(var));
+        getProblem().getLowerLimit(var),
+        getProblem().getUpperLimit(var));
     }
-    return variables ;
+    return variables;
   }
 }

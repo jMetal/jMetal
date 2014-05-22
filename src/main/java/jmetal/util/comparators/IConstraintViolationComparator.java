@@ -29,6 +29,7 @@ import java.util.Comparator;
  * Interface representing constraint violation comparators.
  */
 public interface IConstraintViolationComparator extends Comparator<Solution> {
-  public int compare(Solution o1, Solution o2) ;
-  public boolean needToCompare(Solution s1, Solution s2) ;
+  public int compare(Solution o1, Solution o2);
+
+  public boolean needToCompare(Solution s1, Solution s2);
 }

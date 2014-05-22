@@ -35,34 +35,35 @@ public class EqualSolutions implements Comparator<Solution> {
 
   /**
    * Compares two solutions.
+   *
    * @param object1 Object representing the first <code>Solution</code>.
    * @param object2 Object representing the second <code>Solution</code>.
-   * @return -1, or 0, or 1, or 2 if solution1 is dominates solution2, solution1 
-   * and solution2 are equals, or solution1 is greater than solution2, 
-   * respectively. 
+   * @return -1, or 0, or 1, or 2 if solution1 is dominates solution2, solution1
+   * and solution2 are equals, or solution1 is greater than solution2,
+   * respectively.
    */
   @Override
   public int compare(Solution object1, Solution object2) {
-    if (object1==null) {
+    if (object1 == null) {
       return 1;
     } else if (object2 == null) {
       return -1;
     }
 
-    int dominate1 ; // dominate1 indicates if some objective of solution1 
+    int dominate1; // dominate1 indicates if some objective of solution1
     // dominates the same objective in solution2. dominate2
-    int dominate2 ; // is the complementary of dominate1.
+    int dominate2; // is the complementary of dominate1.
 
-    dominate1 = 0 ;
-    dominate2 = 0 ;
+    dominate1 = 0;
+    dominate2 = 0;
 
-    Solution solution1 = (Solution)object1;
-    Solution solution2 = (Solution)object2;
+    Solution solution1 = (Solution) object1;
+    Solution solution2 = (Solution) object2;
 
     int flag;
     double value1, value2;
     for (int i = 0; i < solution1.getNumberOfObjectives(); i++) {
-      flag = (new ObjectiveComparator(i)).compare(solution1,solution2);
+      flag = (new ObjectiveComparator(i)).compare(solution1, solution2);
       value1 = solution1.getObjective(i);
       value2 = solution2.getObjective(i);
 
@@ -83,7 +84,7 @@ public class EqualSolutions implements Comparator<Solution> {
       }
     }
 
-    if (dominate1== 0 && dominate2 ==0) {
+    if (dominate1 == 0 && dominate2 == 0) {
       //No one dominates the other
       return 0;
     }

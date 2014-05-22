@@ -30,7 +30,7 @@ import java.util.Comparator;
 import java.util.logging.Level;
 
 /**
- * This class implements a differential evolution algorithm. 
+ * This class implements a differential evolution algorithm.
  */
 public class DE extends Algorithm {
 
@@ -41,43 +41,45 @@ public class DE extends Algorithm {
 
   /**
    * Constructor
+   *
    * @param problem Problem to solve
    */
-  public DE(Problem problem){
-    super(problem) ;
+  public DE(Problem problem) {
+    super(problem);
   } // gDE
 
   /**
    * Runs of the DE algorithm.
+   *
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
-   * as a result of the algorithm execution  
+   * as a result of the algorithm execution
    * @throws JMException
    */
   public SolutionSet execute() throws JMException, ClassNotFoundException {
-    int populationSize ;
-    int maxEvaluations ;
-    int evaluations    ;
+    int populationSize;
+    int maxEvaluations;
+    int evaluations;
 
-    SolutionSet population          ;
-    SolutionSet offspringPopulation ;
+    SolutionSet population;
+    SolutionSet offspringPopulation;
 
-    Operator selectionOperator ;
-    Operator crossoverOperator ;
+    Operator selectionOperator;
+    Operator crossoverOperator;
 
-    Comparator<Solution>  comparator ;
-    comparator = new ObjectiveComparator(0) ;
+    Comparator<Solution> comparator;
+    comparator = new ObjectiveComparator(0);
 
-    Solution parent[] ;
+    Solution parent[];
 
     //Read the parameters
-    populationSize = ((Integer)this.getInputParameter("populationSize")).intValue();
-    maxEvaluations  = ((Integer)this.getInputParameter("maxEvaluations")).intValue();
+    populationSize = ((Integer) this.getInputParameter("populationSize")).intValue();
+    maxEvaluations = ((Integer) this.getInputParameter("maxEvaluations")).intValue();
 
     selectionOperator = operators_.get("selection");
-    crossoverOperator = operators_.get("crossover") ;
+    crossoverOperator = operators_.get("crossover");
 
     //Initialize the variables
-    population  = new SolutionSet(populationSize);
+    population = new SolutionSet(populationSize);
     evaluations = 0;
 
     // Create the initial solutionSet
@@ -91,26 +93,26 @@ public class DE extends Algorithm {
     } //for
 
     // Generations ...
-    population.sort(comparator) ;
+    population.sort(comparator);
     while (evaluations < maxEvaluations) {
 
       // Create the offSpring solutionSet
-      offspringPopulation  = new SolutionSet(populationSize);
+      offspringPopulation = new SolutionSet(populationSize);
 
       for (int i = 0; i < populationSize; i++) {
         // Obtain parents. Two parameters are required: the population and the
         //                 index of the current individual
-        parent = (Solution [])selectionOperator.execute(new Object[]{population, i});
+        parent = (Solution[]) selectionOperator.execute(new Object[] {population, i});
 
-        Solution child ;
+        Solution child;
 
         // Crossover. Two parameters are required: the current individual and the
         //            array of parents
-        child = (Solution)crossoverOperator.execute(new Object[]{population.get(i), parent}) ;
+        child = (Solution) crossoverOperator.execute(new Object[] {population.get(i), parent});
 
-        problem_.evaluate(child) ;
+        problem_.evaluate(child);
 
-        evaluations++ ;
+        evaluations++;
 
         if (comparator.compare(population.get(i), child) < 0) {
           offspringPopulation.add(new Solution(population.get(i)));
@@ -122,17 +124,18 @@ public class DE extends Algorithm {
       // The offspring population becomes the new current population
       population.clear();
       for (int i = 0; i < populationSize; i++) {
-        population.add(offspringPopulation.get(i)) ;
+        population.add(offspringPopulation.get(i));
       }
       offspringPopulation.clear();
-      population.sort(comparator) ;
+      population.sort(comparator);
     }
 
     // Return a population with the best individual
-    SolutionSet resultPopulation = new SolutionSet(1) ;
-    resultPopulation.add(population.get(0)) ;
+    SolutionSet resultPopulation = new SolutionSet(1);
+    resultPopulation.add(population.get(0));
 
-    Configuration.logger_.log(Level.INFO, "Evaluations: " + evaluations); ;
-    return resultPopulation ;
+    Configuration.logger_.log(Level.INFO, "Evaluations: " + evaluations);
+    ;
+    return resultPopulation;
   }
 }

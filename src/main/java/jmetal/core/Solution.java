@@ -37,27 +37,22 @@ public class Solution implements Serializable {
    *
    */
   private static final long serialVersionUID = 7093303373342354904L;
-
-  /**
-   * Stores the problem
-   */
-  private Problem problem_;
-
-  /**
-   * Stores the type of the encodings.variable
-   */
-  private SolutionType type_;
-
-  /**
-   * Stores the decision variables of the solution.
-   */
-  private Variable[] variable_;
-
   /**
    * Stores the objectives values of the solution.
    */
   private final double[] objective_;
-
+  /**
+   * Stores the problem
+   */
+  private Problem problem_;
+  /**
+   * Stores the type of the encodings.variable
+   */
+  private SolutionType type_;
+  /**
+   * Stores the decision variables of the solution.
+   */
+  private Variable[] variable_;
   /**
    * Stores the number of objective values of the solution
    */
@@ -128,12 +123,11 @@ public class Solution implements Serializable {
 
   /**
    * Constructor
-   * 
-   * @param numberOfObjectives
-   *          Number of objectives of the solution
-   * 
-   *          This constructor is used mainly to read objective values from a
-   *          file to variables of a SolutionSet to apply quality indicators
+   *
+   * @param numberOfObjectives Number of objectives of the solution
+   *                           <p/>
+   *                           This constructor is used mainly to read objective values from a
+   *                           file to variables of a SolutionSet to apply quality indicators
    */
   public Solution(int numberOfObjectives) {
     numberOfObjectives_ = numberOfObjectives;
@@ -142,9 +136,8 @@ public class Solution implements Serializable {
 
   /**
    * Constructor.
-   * 
-   * @param problem
-   *          The problem to solve
+   *
+   * @param problem The problem to solve
    * @throws ClassNotFoundException
    */
   public Solution(Problem problem) throws ClassNotFoundException {
@@ -162,16 +155,10 @@ public class Solution implements Serializable {
     variable_ = type_.createVariables();
   }
 
-  public static Solution getNewSolution(Problem problem)
-      throws ClassNotFoundException {
-    return new Solution(problem);
-  }
-
   /**
    * Constructor
-   * 
-   * @param problem
-   *          The problem to solve
+   *
+   * @param problem The problem to solve
    */
   public Solution(Problem problem, Variable[] variables) {
     problem_ = problem;
@@ -190,9 +177,8 @@ public class Solution implements Serializable {
 
   /**
    * Copy constructor.
-   * 
-   * @param solution
-   *          Solution to copy.
+   *
+   * @param solution Solution to copy.
    */
   public Solution(Solution solution) {
     problem_ = solution.problem_;
@@ -216,22 +202,16 @@ public class Solution implements Serializable {
     location_ = solution.getLocation();
   }
 
-  /**
-   * Sets the distance between this solution and a <code>SolutionSet</code>. The
-   * value is stored in <code>distanceToSolutionSet_</code>.
-   * 
-   * @param distance
-   *          The distance to a solutionSet.
-   */
-  public void setDistanceToSolutionSet(double distance) {
-    distanceToSolutionSet_ = distance;
+  public static Solution getNewSolution(Problem problem)
+    throws ClassNotFoundException {
+    return new Solution(problem);
   }
 
   /**
    * Gets the distance from the solution to a <code>SolutionSet</code>. <b>
    * REQUIRE </b>: this method has to be invoked after calling
    * <code>setDistanceToPopulation</code>.
-   * 
+   *
    * @return the distance to a specific solutionSet.
    */
   public double getDistanceToSolutionSet() {
@@ -239,14 +219,13 @@ public class Solution implements Serializable {
   }
 
   /**
-   * Sets the distance between the solution and its k-nearest neighbor in a
-   * <code>SolutionSet</code>. The value is stored in <code>kDistance_</code>.
-   * 
-   * @param distance
-   *          The distance to the k-nearest neighbor.
+   * Sets the distance between this solution and a <code>SolutionSet</code>. The
+   * value is stored in <code>distanceToSolutionSet_</code>.
+   *
+   * @param distance The distance to a solutionSet.
    */
-  public void setKDistance(double distance) {
-    kDistance_ = distance;
+  public void setDistanceToSolutionSet(double distance) {
+    distanceToSolutionSet_ = distance;
   }
 
   /**
@@ -254,7 +233,7 @@ public class Solution implements Serializable {
    * <code>SolutionSet</code>. Returns the value stored in
    * <code>kDistance_</code>. <b> REQUIRE </b>: this method has to be invoked
    * after calling <code>setKDistance</code>.
-   * 
+   *
    * @return the distance to k-nearest neighbor.
    */
   double getKDistance() {
@@ -262,14 +241,13 @@ public class Solution implements Serializable {
   }
 
   /**
-   * Sets the crowding distance of a solution in a <code>SolutionSet</code>. The
-   * value is stored in <code>crowdingDistance_</code>.
-   * 
-   * @param distance
-   *          The crowding distance of the solution.
+   * Sets the distance between the solution and its k-nearest neighbor in a
+   * <code>SolutionSet</code>. The value is stored in <code>kDistance_</code>.
+   *
+   * @param distance The distance to the k-nearest neighbor.
    */
-  public void setCrowdingDistance(double distance) {
-    crowdingDistance_ = distance;
+  public void setKDistance(double distance) {
+    kDistance_ = distance;
   }
 
   /**
@@ -277,7 +255,7 @@ public class Solution implements Serializable {
    * Returns the value stored in <code>crowdingDistance_</code>. <b> REQUIRE
    * </b>: this method has to be invoked after calling
    * <code>setCrowdingDistance</code>.
-   * 
+   *
    * @return the distance crowding distance of the solution.
    */
   public double getCrowdingDistance() {
@@ -285,21 +263,20 @@ public class Solution implements Serializable {
   }
 
   /**
-   * Sets the fitness of a solution. The value is stored in
-   * <code>fitness_</code>.
-   * 
-   * @param fitness
-   *          The fitness of the solution.
+   * Sets the crowding distance of a solution in a <code>SolutionSet</code>. The
+   * value is stored in <code>crowdingDistance_</code>.
+   *
+   * @param distance The crowding distance of the solution.
    */
-  public void setFitness(double fitness) {
-    fitness_ = fitness;
+  public void setCrowdingDistance(double distance) {
+    crowdingDistance_ = distance;
   }
 
   /**
    * Gets the fitness of the solution. Returns the value of stored in the
    * encodings.variable <code>fitness_</code>. <b> REQUIRE </b>: This method has
    * to be invoked after calling <code>setFitness()</code>.
-   * 
+   *
    * @return the fitness.
    */
   public double getFitness() {
@@ -307,12 +284,20 @@ public class Solution implements Serializable {
   }
 
   /**
+   * Sets the fitness of a solution. The value is stored in
+   * <code>fitness_</code>.
+   *
+   * @param fitness The fitness of the solution.
+   */
+  public void setFitness(double fitness) {
+    fitness_ = fitness;
+  }
+
+  /**
    * Sets the value of the i-th objective.
-   * 
-   * @param i
-   *          The number identifying the objective.
-   * @param value
-   *          The value to be stored.
+   *
+   * @param i     The number identifying the objective.
+   * @param value The value to be stored.
    */
   public void setObjective(int i, double value) {
     objective_[i] = value;
@@ -320,9 +305,8 @@ public class Solution implements Serializable {
 
   /**
    * Returns the value of the i-th objective.
-   * 
-   * @param i
-   *          The value of the objective.
+   *
+   * @param i The value of the objective.
    */
   public double getObjective(int i) {
     return objective_[i];
@@ -330,7 +314,7 @@ public class Solution implements Serializable {
 
   /**
    * Returns the number of objectives.
-   * 
+   *
    * @return The number of objectives.
    */
   public int getNumberOfObjectives() {
@@ -343,7 +327,7 @@ public class Solution implements Serializable {
 
   /**
    * Returns the number of decision variables of the solution.
-   * 
+   *
    * @return The number of decision variables.
    */
   public int numberOfVariables() {
@@ -352,7 +336,7 @@ public class Solution implements Serializable {
 
   /**
    * Returns a string representing the solution.
-   * 
+   *
    * @return The string.
    */
   public String toString() {
@@ -365,9 +349,9 @@ public class Solution implements Serializable {
 
   /**
    * Returns the decision variables of the solution.
-   * 
+   *
    * @return the <code>DecisionVariables</code> object representing the decision
-   *         variables of the solution.
+   * variables of the solution.
    */
   public Variable[] getDecisionVariables() {
     return variable_;
@@ -375,10 +359,9 @@ public class Solution implements Serializable {
 
   /**
    * Sets the decision variables for the solution.
-   * 
-   * @param variables
-   *          The <code>DecisionVariables</code> object representing the
-   *          decision variables of the solution.
+   *
+   * @param variables The <code>DecisionVariables</code> object representing the
+   *                  decision variables of the solution.
    */
   public void setDecisionVariables(Variable[] variables) {
     variable_ = new Variable[variables.length];
@@ -393,10 +376,10 @@ public class Solution implements Serializable {
 
   /**
    * Indicates if the solution is marked.
-   * 
+   *
    * @return true if the method <code>marked</code> has been called and, after
-   *         that, the method <code>unmarked</code> hasn't been called. False in
-   *         other case.
+   * that, the method <code>unmarked</code> hasn't been called. False in
+   * other case.
    */
   public boolean isMarked() {
     return this.marked_;
@@ -417,19 +400,9 @@ public class Solution implements Serializable {
   }
 
   /**
-   * Sets the rank of a solution.
-   * 
-   * @param value
-   *          The rank of the solution.
-   */
-  public void setRank(int value) {
-    this.rank_ = value;
-  }
-
-  /**
    * Gets the rank of the solution. <b> REQUIRE </b>: This method has to be
    * invoked after calling <code>setRank()</code>.
-   * 
+   *
    * @return the rank of the solution.
    */
   public int getRank() {
@@ -437,20 +410,19 @@ public class Solution implements Serializable {
   }
 
   /**
-   * Sets the overall constraints violated by the solution.
-   * 
-   * @param value
-   *          The overall constraints violated by the solution.
+   * Sets the rank of a solution.
+   *
+   * @param value The rank of the solution.
    */
-  public void setOverallConstraintViolation(double value) {
-    this.overallConstraintViolation_ = value;
+  public void setRank(int value) {
+    this.rank_ = value;
   }
 
   /**
    * Gets the overall constraint violated by the solution. <b> REQUIRE </b>:
    * This method has to be invoked after calling
    * <code>overallConstraintViolation</code>.
-   * 
+   *
    * @return the overall constraint violation by the solution.
    */
   public double getOverallConstraintViolation() {
@@ -458,20 +430,19 @@ public class Solution implements Serializable {
   }
 
   /**
-   * Sets the number of constraints violated by the solution.
-   * 
-   * @param value
-   *          The number of constraints violated by the solution.
+   * Sets the overall constraints violated by the solution.
+   *
+   * @param value The overall constraints violated by the solution.
    */
-  public void setNumberOfViolatedConstraint(int value) {
-    this.numberOfViolatedConstraints_ = value;
+  public void setOverallConstraintViolation(double value) {
+    this.overallConstraintViolation_ = value;
   }
 
   /**
    * Gets the number of constraint violated by the solution. <b> REQUIRE </b>:
    * This method has to be invoked after calling
    * <code>setNumberOfViolatedConstraint</code>.
-   * 
+   *
    * @return the number of constraints violated by the solution.
    */
   public int getNumberOfViolatedConstraint() {
@@ -479,20 +450,19 @@ public class Solution implements Serializable {
   }
 
   /**
-   * Sets the location of the solution into a solutionSet.
-   * 
-   * @param location
-   *          The location of the solution.
+   * Sets the number of constraints violated by the solution.
+   *
+   * @param value The number of constraints violated by the solution.
    */
-  public void setLocation(int location) {
-    this.location_ = location;
+  public void setNumberOfViolatedConstraint(int value) {
+    this.numberOfViolatedConstraints_ = value;
   }
 
   /**
    * Gets the location of this solution in a <code>SolutionSet</code>. <b>
    * REQUIRE </b>: This method has to be invoked after calling
    * <code>setLocation</code>.
-   * 
+   *
    * @return the location of the solution into a solutionSet
    */
   public int getLocation() {
@@ -500,18 +470,17 @@ public class Solution implements Serializable {
   }
 
   /**
-   * Sets the type of the encodings.variable.
-   * 
-   * @param type
-   *          The type of the encodings.variable.
+   * Sets the location of the solution into a solutionSet.
+   *
+   * @param location The location of the solution.
    */
-  public void setType(SolutionType type) {
-    type_ = type;
+  public void setLocation(int location) {
+    this.location_ = location;
   }
 
   /**
    * Gets the type of the encodings.variable
-   * 
+   *
    * @return the type of the encodings.variable
    */
   public SolutionType getType() {
@@ -519,8 +488,17 @@ public class Solution implements Serializable {
   }
 
   /**
+   * Sets the type of the encodings.variable.
+   *
+   * @param type The type of the encodings.variable.
+   */
+  public void setType(SolutionType type) {
+    type_ = type;
+  }
+
+  /**
    * Returns the aggregative value of the solution
-   * 
+   *
    * @return The aggregative value.
    */
   public double getAggregativeValue() {
@@ -534,16 +512,16 @@ public class Solution implements Serializable {
   /**
    * Returns the number of bits of the chromosome in case of using a binary
    * representation
-   * 
+   *
    * @return The number of bits if the case of binary variables, 0 otherwise
-   *         This method had a bug which was fixed by Rafael Olaechea
+   * This method had a bug which was fixed by Rafael Olaechea
    */
   public int getNumberOfBits() {
     int bits = 0;
 
     for (int i = 0; i < variable_.length; i++) {
       if ((variable_[i].getVariableType() == jmetal.encodings.variable.Binary.class)
-          || (variable_[i].getVariableType() == jmetal.encodings.variable.BinaryReal.class)) {
+        || (variable_[i].getVariableType() == jmetal.encodings.variable.BinaryReal.class)) {
 
         bits += ((Binary) (variable_[i])).getNumberOfBits();
       }

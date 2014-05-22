@@ -48,20 +48,21 @@ public class BitFlipMutation extends Mutation {
   private static final long serialVersionUID = -3349165791496573889L;
 
   /**
-   * Valid solution types to apply this operator 
+   * Valid solution types to apply this operator
    */
-  private static final List<Class<? extends SolutionType>> VALID_TYPES = Arrays.asList(BinarySolutionType.class,
-          BinaryRealSolutionType.class,
-          IntSolutionType.class) ;
+  private static final List<Class<? extends SolutionType>> VALID_TYPES =
+    Arrays.asList(BinarySolutionType.class,
+      BinaryRealSolutionType.class,
+      IntSolutionType.class);
 
-  private Double mutationProbability_ = null ;
+  private Double mutationProbability_ = null;
 
   /**
    * Constructor
    * Creates a new instance of the Bit Flip mutation operator
    */
   public BitFlipMutation(HashMap<String, Object> parameters) {
-    super(parameters) ;
+    super(parameters);
     if (parameters.get("probability") != null) {
       mutationProbability_ = (Double) parameters.get("probability");
     }
@@ -69,16 +70,18 @@ public class BitFlipMutation extends Mutation {
 
   /**
    * Perform the mutation operation
+   *
    * @param probability Mutation probability
-   * @param solution The solution to mutate
+   * @param solution    The solution to mutate
    * @throws JMException
    */
   public void doMutation(double probability, Solution solution) throws JMException {
     try {
       if ((solution.getType().getClass() == BinarySolutionType.class) ||
-              (solution.getType().getClass() == BinaryRealSolutionType.class)) {
+        (solution.getType().getClass() == BinaryRealSolutionType.class)) {
         for (int i = 0; i < solution.getDecisionVariables().length; i++) {
-          for (int j = 0; j < ((Binary) solution.getDecisionVariables()[i]).getNumberOfBits(); j++) {
+          for (int j = 0;
+               j < ((Binary) solution.getDecisionVariables()[i]).getNumberOfBits(); j++) {
             if (PseudoRandom.randDouble() < probability) {
               ((Binary) solution.getDecisionVariables()[i]).getBits().flip(j);
             }
@@ -92,17 +95,18 @@ public class BitFlipMutation extends Mutation {
         for (int i = 0; i < solution.getDecisionVariables().length; i++) {
           if (PseudoRandom.randDouble() < probability) {
             int value = PseudoRandom.randInt(
-                    (int) solution.getDecisionVariables()[i].getLowerBound(),
-                    (int) solution.getDecisionVariables()[i].getUpperBound());
+              (int) solution.getDecisionVariables()[i].getLowerBound(),
+              (int) solution.getDecisionVariables()[i].getUpperBound());
             solution.getDecisionVariables()[i].setValue(value);
           }
         }
       }
     } catch (ClassCastException e1) {
       Configuration.logger_.log(Level.SEVERE,
-              "BitFlipMutation.doMutation: " +
-                      "ClassCastException error" + e1.getMessage(),
-              e1);
+        "BitFlipMutation.doMutation: " +
+          "ClassCastException error" + e1.getMessage(),
+        e1
+      );
       Class<String> cls = java.lang.String.class;
       String name = cls.getName();
       throw new JMException("Exception in " + name + ".doMutation()");
@@ -111,6 +115,7 @@ public class BitFlipMutation extends Mutation {
 
   /**
    * Executes the operation
+   *
    * @param object An object containing a solution to mutate
    * @return An object containing the mutated solution
    * @throws JMException
@@ -120,8 +125,8 @@ public class BitFlipMutation extends Mutation {
 
     if (!VALID_TYPES.contains(solution.getType().getClass())) {
       Configuration.logger_.severe("BitFlipMutation.execute: the solution " +
-              "is not of the right type. The type should be 'Binary', " +
-              "'BinaryReal' or 'Int', but " + solution.getType() + " is obtained");
+        "is not of the right type. The type should be 'Binary', " +
+        "'BinaryReal' or 'Int', but " + solution.getType() + " is obtained");
 
       Class<String> cls = java.lang.String.class;
       String name = cls.getName();

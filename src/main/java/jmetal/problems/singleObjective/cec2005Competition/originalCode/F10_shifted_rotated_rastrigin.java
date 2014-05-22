@@ -44,7 +44,7 @@
 //		Revised according to the Matlab reference code and the PDF document
 //		dated March 8, 2005.
 //
-package jmetal.problems.singleObjective.cec2005Competition.originalCode ;
+package jmetal.problems.singleObjective.cec2005Competition.originalCode;
 
 import jmetal.util.JMException;
 
@@ -66,10 +66,13 @@ public class F10_shifted_rotated_rastrigin extends TestFunc {
   private double[] m_zM;
 
   // Constructors
-  public F10_shifted_rotated_rastrigin (int dimension, double bias) throws JMException {
-    this(dimension, bias, DEFAULT_FILE_DATA, DEFAULT_FILE_MX_PREFIX + dimension + DEFAULT_FILE_MX_SUFFIX);
+  public F10_shifted_rotated_rastrigin(int dimension, double bias) throws JMException {
+    this(dimension, bias, DEFAULT_FILE_DATA,
+      DEFAULT_FILE_MX_PREFIX + dimension + DEFAULT_FILE_MX_SUFFIX);
   }
-  public F10_shifted_rotated_rastrigin (int dimension, double bias, String file_data, String file_m) throws JMException {
+
+  public F10_shifted_rotated_rastrigin(int dimension, double bias, String file_data, String file_m)
+    throws JMException {
     super(dimension, bias, FUNCTION_NAME);
 
     // Note: dimension starts from 0

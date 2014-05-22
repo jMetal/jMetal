@@ -32,19 +32,19 @@ import java.util.Comparator;
 public class EpsilonDominanceComparator implements Comparator<Solution> {
 
   /**
+   * stores a comparator for check the OverallConstraintComparator
+   */
+  private static final Comparator<Solution> overallConstraintViolationComparator_ =
+    new OverallConstraintViolationComparator();
+  /**
    * Stores the value of eta, needed for epsilon-dominance.
    */
   private double eta_;
 
   /**
-   * stores a comparator for check the OverallConstraintComparator
-   */
-  private static final Comparator<Solution> overallConstraintViolationComparator_ =
-          new OverallConstraintViolationComparator();
-
-  /**
    * Constructor.
-   *  @param eta Value for epsilon-dominance.
+   *
+   * @param eta Value for epsilon-dominance.
    */
   public EpsilonDominanceComparator(double eta) {
     eta_ = eta;
@@ -52,6 +52,7 @@ public class EpsilonDominanceComparator implements Comparator<Solution> {
 
   /**
    * Compares two solutions.
+   *
    * @param object1 Object representing the first <code>Solution</code>.
    * @param object2 Object representing the second <code>Solution</code>.
    * @return -1, or 0, or 1 if solution1 dominates solution2, both are
@@ -59,25 +60,25 @@ public class EpsilonDominanceComparator implements Comparator<Solution> {
    */
   @Override
   public int compare(Solution object1, Solution object2) {
-    if (object1==null) {
+    if (object1 == null) {
       return 1;
     } else if (object2 == null) {
       return -1;
     }
 
-    int dominate1 ; // dominate1 indicates if some objective of solution1 
+    int dominate1; // dominate1 indicates if some objective of solution1
     // dominates the same objective in solution2. dominate2
-    int dominate2 ; // is the complementary of dominate1.
+    int dominate2; // is the complementary of dominate1.
 
-    dominate1 = 0 ;
-    dominate2 = 0 ;
+    dominate1 = 0;
+    dominate2 = 0;
 
-    Solution solution1 = (Solution)object1;
-    Solution solution2 = (Solution)object2;
+    Solution solution1 = (Solution) object1;
+    Solution solution2 = (Solution) object2;
 
     int flag;
     Comparator<Solution> constraint = new OverallConstraintViolationComparator();
-    flag = constraint.compare(solution1,solution2);
+    flag = constraint.compare(solution1, solution2);
 
     if (flag != 0) {
       return flag;
@@ -85,17 +86,17 @@ public class EpsilonDominanceComparator implements Comparator<Solution> {
 
     double value1, value2;
     // Idem number of violated constraint. Apply a dominance Test
-    for (int i = 0; i < ((Solution)solution1).getNumberOfObjectives(); i++) {
+    for (int i = 0; i < ((Solution) solution1).getNumberOfObjectives(); i++) {
       value1 = solution1.getObjective(i);
       value2 = solution2.getObjective(i);
 
       //Objective implements comparable!!!
-      if (value1/(1 + eta_) < value2) {
+      if (value1 / (1 + eta_) < value2) {
         flag = -1;
-      } else if (value1/(1 + eta_) > value2) {
+      } else if (value1 / (1 + eta_) > value2) {
         flag = 1;
       } else {
-        flag =  0;
+        flag = 0;
       }
 
       if (flag == -1) {

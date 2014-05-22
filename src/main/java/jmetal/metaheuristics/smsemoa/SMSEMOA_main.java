@@ -47,7 +47,7 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
 /**
- * Class for configuring and running the SMS-EMOA algorithm. This 
+ * Class for configuring and running the SMS-EMOA algorithm. This
  * implementation of SMS-EMOA makes use of a QualityIndicator object
  * to obtained the convergence speed of the algorithm.
  */
@@ -60,17 +60,16 @@ public class SMSEMOA_main {
    * @param args Command line arguments.
    * @throws JMException
    * @throws IOException
-   * @throws SecurityException
-   * Usage: three options
-   *      - jmetal.metaheuristics.smsemoa.SMSEMOA_main
-   *      - jmetal.metaheuristics.smsemoa.SMSEMOA_main problemName
-   *      - jmetal.metaheuristics.smsemoa.SMSEMOA_main problemName paretoFrontFile
+   * @throws SecurityException Usage: three options
+   *                           - jmetal.metaheuristics.smsemoa.SMSEMOA_main
+   *                           - jmetal.metaheuristics.smsemoa.SMSEMOA_main problemName
+   *                           - jmetal.metaheuristics.smsemoa.SMSEMOA_main problemName paretoFrontFile
    */
   public static void main(String[] args) throws
-          JMException,
-          SecurityException,
-          IOException,
-          ClassNotFoundException {
+    JMException,
+    SecurityException,
+    IOException,
+    ClassNotFoundException {
     Problem problem;
     Algorithm algorithm;
     Operator crossover;
@@ -111,18 +110,18 @@ public class SMSEMOA_main {
     algorithm.setInputParameter("offset", 10.0);
 
     // Mutation and Crossover for Real codification 
-    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
-    crossoverParameters.put("probability", 0.9) ;
-    crossoverParameters.put("distributionIndex", 20.0) ;
+    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
+    crossoverParameters.put("probability", 0.9);
+    crossoverParameters.put("distributionIndex", 20.0);
     crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", crossoverParameters);
 
-    HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
-    mutationParameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
-    mutationParameters.put("distributionIndex", 20.0) ;
+    HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
+    mutationParameters.put("probability", 1.0 / problem.getNumberOfVariables());
+    mutationParameters.put("distributionIndex", 20.0);
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
 
     // Selection Operator
-    HashMap<String, Object> selectionParameters = null ; // FIXME: why we are passing null?
+    HashMap<String, Object> selectionParameters = null; // FIXME: why we are passing null?
     selection = SelectionFactory.getSelectionOperator("RandomSelection", selectionParameters);
 
     // Add the operators to the algorithm

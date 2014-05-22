@@ -37,25 +37,27 @@ public class CEC2005Problem extends Problem {
   /**
    * Constructor
    * Creates a default instance of the Sphere problem
+   *
    * @param numberOfVariables Number of variables of the problem
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
-  TestFunc testFunction_ ;
+  TestFunc testFunction_;
 
-  public CEC2005Problem(String solutionType, int problemID, int numberOfVariables) throws JMException {
-    numberOfVariables_   = numberOfVariables ;
-    numberOfObjectives_  = 1;
+  public CEC2005Problem(String solutionType, int problemID, int numberOfVariables)
+    throws JMException {
+    numberOfVariables_ = numberOfVariables;
+    numberOfObjectives_ = 1;
     numberOfConstraints_ = 0;
-    problemName_         = "CEC2005";
+    problemName_ = "CEC2005";
 
-    Benchmark cec2005ProblemFactory = new Benchmark() ;
-    testFunction_ = cec2005ProblemFactory.testFunctionFactory(problemID, numberOfVariables) ;
+    Benchmark cec2005ProblemFactory = new Benchmark();
+    testFunction_ = cec2005ProblemFactory.testFunctionFactory(problemID, numberOfVariables);
 
     upperLimit_ = new double[numberOfVariables_];
     lowerLimit_ = new double[numberOfVariables_];
 
-    double ulimit = 0 ;
-    double llimit = 0 ;
+    double ulimit = 0;
+    double llimit = 0;
 
     switch (problemID) {
       case 1:
@@ -65,15 +67,18 @@ public class CEC2005Problem extends Problem {
       case 5:
       case 6:
       case 14:
-        ulimit = 100; llimit = -100 ;
-        break ;
+        ulimit = 100;
+        llimit = -100;
+        break;
       case 7:
       case 25:
-        ulimit = Double.MAX_VALUE ; llimit = Double.MIN_VALUE ;
-        break ;
+        ulimit = Double.MAX_VALUE;
+        llimit = Double.MIN_VALUE;
+        break;
       case 8:
-        ulimit = 32; llimit = -32 ;
-        break ;
+        ulimit = 32;
+        llimit = -32;
+        break;
       case 9:
       case 10:
       case 15:
@@ -86,52 +91,55 @@ public class CEC2005Problem extends Problem {
       case 22:
       case 23:
       case 24:
-        ulimit = 5; llimit = -5 ;
-        break ;
+        ulimit = 5;
+        llimit = -5;
+        break;
       case 11:
-        ulimit = 0.5; llimit = -0.5 ;
-        break ;
+        ulimit = 0.5;
+        llimit = -0.5;
+        break;
       case 12:
-        ulimit = Math.PI; llimit = -Math.PI ;
-        break ;
+        ulimit = Math.PI;
+        llimit = -Math.PI;
+        break;
       case 13:
-        ulimit = 3; llimit = 1 ;
-        break ;
+        ulimit = 3;
+        llimit = 1;
+        break;
       default:
         throw new JMException("Invalid problem value");
     }
 
-    for (int var = 0; var < numberOfVariables_; var++){
-      lowerLimit_[var] = llimit ;
-      upperLimit_[var] = ulimit ;
+    for (int var = 0; var < numberOfVariables_; var++) {
+      lowerLimit_[var] = llimit;
+      upperLimit_[var] = ulimit;
     }
 
     if (solutionType.compareTo("BinaryReal") == 0) {
       solutionType_ = new BinaryRealSolutionType(this);
-    }
-    else if (solutionType.compareTo("Real") == 0) {
+    } else if (solutionType.compareTo("Real") == 0) {
       solutionType_ = new RealSolutionType(this);
-    }
-    else {
+    } else {
       throw new JMException("Error: solution type " + solutionType + " invalid");
     }
   }
 
   /**
-  * Evaluates a solution
-  * @param solution The solution to evaluate
+   * Evaluates a solution
+   *
+   * @param solution The solution to evaluate
    * @throws jmetal.util.JMException
-  */        
+   */
   public void evaluate(Solution solution) throws JMException {
-    Variable[] decisionVariables  = solution.getDecisionVariables();
-    double [] x = new double[decisionVariables.length] ;
+    Variable[] decisionVariables = solution.getDecisionVariables();
+    double[] x = new double[decisionVariables.length];
 
-    for (int i = 0 ; i < decisionVariables.length; i++) {
-      x[i] = decisionVariables[i].getValue() ;
+    for (int i = 0; i < decisionVariables.length; i++) {
+      x[i] = decisionVariables[i].getValue();
     }
 
-    double result ;
-    result = testFunction_.f(x) ;
+    double result;
+    result = testFunction_.f(x);
 
     solution.setObjective(0, result);
   }

@@ -27,11 +27,11 @@ import java.util.Comparator;
 
 /**
  * This class implements a <code>Comparator</code> (a method for comparing
- * <code>Solution</code> objects) based on a constraint violation test + 
+ * <code>Solution</code> objects) based on a constraint violation test +
  * dominance checking, as in NSGA-II.
  */
 public class DominanceComparator implements Comparator<Solution> {
-  IConstraintViolationComparator violationConstraintComparator_ ;
+  IConstraintViolationComparator violationConstraintComparator_;
 
   /**
    * Constructor
@@ -43,14 +43,16 @@ public class DominanceComparator implements Comparator<Solution> {
 
   /**
    * Constructor
+   *
    * @param comparator
    */
   public DominanceComparator(IConstraintViolationComparator comparator) {
-    violationConstraintComparator_ = comparator ;
+    violationConstraintComparator_ = comparator;
   }
 
   /**
    * Compares two solutions.
+   *
    * @param object1 Object representing the first <code>Solution</code>.
    * @param object2 Object representing the second <code>Solution</code>.
    * @return -1, or 0, or 1 if solution1 dominates solution2, both are
@@ -58,21 +60,21 @@ public class DominanceComparator implements Comparator<Solution> {
    */
   @Override
   public int compare(Solution object1, Solution object2) {
-    if (object1==null) {
+    if (object1 == null) {
       return 1;
     } else if (object2 == null) {
       return -1;
     }
 
-    Solution solution1 = (Solution)object1;
-    Solution solution2 = (Solution)object2;
+    Solution solution1 = (Solution) object1;
+    Solution solution2 = (Solution) object2;
 
-    int dominate1 ; // dominate1 indicates if some objective of solution1 
+    int dominate1; // dominate1 indicates if some objective of solution1
     // dominates the same objective in solution2. dominate2
-    int dominate2 ; // is the complementary of dominate1.
+    int dominate2; // is the complementary of dominate1.
 
-    dominate1 = 0 ;
-    dominate2 = 0 ;
+    dominate1 = 0;
+    dominate2 = 0;
 
     int flag; //stores the result of the comparison
 

@@ -41,59 +41,59 @@ import java.util.logging.Logger;
  * Class for configuring and running the DENSEA algorithm
  */
 public class DENSEA_main {
-  public static Logger      logger_ ;      // Logger object
-  public static FileHandler fileHandler_ ; // FileHandler object
-  
-  public static void main(String [] args) throws JMException, IOException, ClassNotFoundException {
-    Problem   problem   ;
-    Algorithm algorithm ;
-    Operator  crossover ;
-    Operator  mutation  ;
-    Operator  selection ;
+  public static Logger logger_;      // Logger object
+  public static FileHandler fileHandler_; // FileHandler object
+
+  public static void main(String[] args) throws JMException, IOException, ClassNotFoundException {
+    Problem problem;
+    Algorithm algorithm;
+    Operator crossover;
+    Operator mutation;
+    Operator selection;
 
     // Logger object and file to store log messages
-    logger_      = Configuration.logger_ ;
-    fileHandler_ = new FileHandler("Densea.log"); 
-    logger_.addHandler(fileHandler_) ;
-    
+    logger_ = Configuration.logger_;
+    fileHandler_ = new FileHandler("Densea.log");
+    logger_.addHandler(fileHandler_);
+
     problem = new ZDT5("Binary");
-    
+
     algorithm = new DENSEA(problem);
-    
+
     // Algorithm parameters
-    algorithm.setInputParameter("populationSize",100);
-    algorithm.setInputParameter("maxEvaluations",25000);
-    
+    algorithm.setInputParameter("populationSize", 100);
+    algorithm.setInputParameter("maxEvaluations", 25000);
+
     // Mutation and Crossover Binary codification 
-    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
-    crossoverParameters.put("probability", 0.9) ;
+    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
+    crossoverParameters.put("probability", 0.9);
     crossover = CrossoverFactory.getCrossoverOperator("SinglePointCrossover", crossoverParameters);
-    crossover.setParameter("probability",0.9);                   
-    
-    HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
-    mutationParameters.put("probability", 1.0/149) ;
-    mutation = MutationFactory.getMutationOperator("BitFlipMutation", mutationParameters);                    
-    
+    crossover.setParameter("probability", 0.9);
+
+    HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
+    mutationParameters.put("probability", 1.0 / 149);
+    mutation = MutationFactory.getMutationOperator("BitFlipMutation", mutationParameters);
+
     // Selection Operator 
-    HashMap<String, Object> selectionParameters = null ; // FIXME: why we are passing null?
-    selection = new BinaryTournament(selectionParameters);                            
-    
+    HashMap<String, Object> selectionParameters = null; // FIXME: why we are passing null?
+    selection = new BinaryTournament(selectionParameters);
+
     // Add the operators to the algorithm
-    algorithm.addOperator("crossover",crossover);
-    algorithm.addOperator("mutation",mutation);
-    algorithm.addOperator("selection",selection);
-    
+    algorithm.addOperator("crossover", crossover);
+    algorithm.addOperator("mutation", mutation);
+    algorithm.addOperator("selection", selection);
+
     // Execute the Algorithm
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;
-    System.out.println("Total time of execution: "+estimatedTime);
+    System.out.println("Total time of execution: " + estimatedTime);
 
     // Log messages 
     logger_.info("Objectives values have been writen to file FUN");
     population.printObjectivesToFile("FUN");
     logger_.info("Variables values have been writen to file VAR");
-    population.printVariablesToFile("VAR");           
+    population.printVariablesToFile("VAR");
   }
 }
 

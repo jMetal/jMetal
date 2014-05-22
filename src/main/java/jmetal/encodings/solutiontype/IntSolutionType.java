@@ -27,16 +27,17 @@ import jmetal.core.Variable;
 import jmetal.encodings.variable.Int;
 
 /**
- * Class representing the solution type of solutions composed of Int variables 
+ * Class representing the solution type of solutions composed of Int variables
  */
 public class IntSolutionType extends SolutionType {
 
   /**
    * Constructor
-   * @param problem  Problem to solve
+   *
+   * @param problem Problem to solve
    */
   public IntSolutionType(Problem problem) {
-    super(problem) ;
+    super(problem);
   } // Constructor
 
   /**
@@ -47,9 +48,9 @@ public class IntSolutionType extends SolutionType {
 
     for (int var = 0; var < getProblem().getNumberOfVariables(); var++) {
       variables[var] = new Int((int) getProblem().getLowerLimit(var),
-              (int) getProblem().getUpperLimit(var));
+        (int) getProblem().getUpperLimit(var));
     }
 
-    return variables ;
+    return variables;
   }
 }

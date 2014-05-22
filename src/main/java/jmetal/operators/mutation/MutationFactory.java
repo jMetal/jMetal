@@ -33,32 +33,29 @@ public class MutationFactory {
 
   /**
    * Gets a crossover operator through its name.
+   *
    * @param name of the operator
    * @return the operator
    * @throws JMException
    */
-  public static Mutation getMutationOperator(String name, HashMap<String, Object> parameters) throws JMException{
+  public static Mutation getMutationOperator(String name, HashMap<String, Object> parameters)
+    throws JMException {
 
     if (name.equalsIgnoreCase("PolynomialMutation")) {
       return new PolynomialMutation(parameters);
-    }
-    else if (name.equalsIgnoreCase("BitFlipMutation")) {
+    } else if (name.equalsIgnoreCase("BitFlipMutation")) {
       return new BitFlipMutation(parameters);
-    }
-    else if (name.equalsIgnoreCase("NonUniformMutation")) {
+    } else if (name.equalsIgnoreCase("NonUniformMutation")) {
       return new NonUniformMutation(parameters);
-    }
-    else if (name.equalsIgnoreCase("UniformMutation")) {
+    } else if (name.equalsIgnoreCase("UniformMutation")) {
       return new UniformMutation(parameters);
-    }
-    else if (name.equalsIgnoreCase("SwapMutation")) {
+    } else if (name.equalsIgnoreCase("SwapMutation")) {
       return new SwapMutation(parameters);
-    }
-    else {
+    } else {
       Configuration.logger_.severe("Operator '" + name + "' not found ");
       Class<String> cls = java.lang.String.class;
-      String name2 = cls.getName() ;
-      throw new JMException("Exception in " + name2 + ".getMutationOperator()") ;
+      String name2 = cls.getName();
+      throw new JMException("Exception in " + name2 + ".getMutationOperator()");
     }
   }
 }

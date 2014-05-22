@@ -37,17 +37,17 @@ import java.util.HashMap;
  */
 public class DE_main {
 
-  public static void main(String [] args) throws JMException, ClassNotFoundException, IOException {
-    Problem   problem   ;
-    Algorithm algorithm ;
-    Operator  crossover ;
-    Operator  selection ;
+  public static void main(String[] args) throws JMException, ClassNotFoundException, IOException {
+    Problem problem;
+    Algorithm algorithm;
+    Operator crossover;
+    Operator selection;
 
     //int bits ; // Length of bit string in the OneMax problem
-  
+
     //bits = 512 ;
     //problem = new OneMax(bits);
- 
+
     //problem = new Sphere("Real", 20) ;
     //problem = new Easom("Real") ;
     //problem = new Griewank("Real", 10) ;
@@ -56,26 +56,28 @@ public class DE_main {
     //problem = new Sphere("Real", 20) ;
     //problem = new Easom("Real") ;
     //problem = new Griewank("Real", 10) ;
-    
-    algorithm = new DE(problem) ;   // Asynchronous cGA
+
+    algorithm = new DE(problem);   // Asynchronous cGA
     
     /* Algorithm parameters*/
-    algorithm.setInputParameter("populationSize",100);
+    algorithm.setInputParameter("populationSize", 100);
     algorithm.setInputParameter("maxEvaluations", 1000000);
-    
+
     // Crossover operator 
-    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
-    crossoverParameters.put("CR", 0.5) ;
-    crossoverParameters.put("F", 0.5) ;
-    crossoverParameters.put("DE_VARIANT", "rand/1/bin") ;
-    crossover = CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", crossoverParameters);                   
-    
+    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
+    crossoverParameters.put("CR", 0.5);
+    crossoverParameters.put("F", 0.5);
+    crossoverParameters.put("DE_VARIANT", "rand/1/bin");
+    crossover =
+      CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", crossoverParameters);
+
     // Add the operators to the algorithm
     HashMap<String, Object> selectionParameters = null; // FIXME: why we are passing null?
-    selection = SelectionFactory.getSelectionOperator("DifferentialEvolutionSelection", selectionParameters) ;
+    selection =
+      SelectionFactory.getSelectionOperator("DifferentialEvolutionSelection", selectionParameters);
 
-    algorithm.addOperator("crossover",crossover);
-    algorithm.addOperator("selection",selection);
+    algorithm.addOperator("crossover", crossover);
+    algorithm.addOperator("selection", selection);
  
     /* Execute the Algorithm */
     long initTime = System.currentTimeMillis();
@@ -87,6 +89,6 @@ public class DE_main {
     System.out.println("Objectives values have been writen to file FUN");
     population.printObjectivesToFile("FUN");
     System.out.println("Variables values have been writen to file VAR");
-    population.printVariablesToFile("VAR");          
+    population.printVariablesToFile("VAR");
   }
 }

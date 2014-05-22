@@ -33,26 +33,26 @@ import java.io.IOException;
 public class ConfigurationFileStudy extends Experiment {
 
   public ConfigurationFileStudy() {
-    experimentName_ = "ConfigurationFileStudy" ;
-    independentRuns_= 0;
-    algorithmNameList_ = null ;
-    problemList_ = null ;
-    paretoFrontFileList_ = null ;
-    indicatorList_ = null ;
-    experimentBaseDirectory_ = null ;
-    paretoFrontDirectory_ = null ;
-    numberOfExecutionThreads_ = 1 ;
+    experimentName_ = "ConfigurationFileStudy";
+    independentRuns_ = 0;
+    algorithmNameList_ = null;
+    problemList_ = null;
+    paretoFrontFileList_ = null;
+    indicatorList_ = null;
+    experimentBaseDirectory_ = null;
+    paretoFrontDirectory_ = null;
+    numberOfExecutionThreads_ = 1;
 
-    generateReferenceParetoFronts_ = false ;
-    runTheAlgorithms_ = false ;
-    generateBoxplots_ = false ;
-    boxplotRows_ = 0 ;
-    boxplotColumns_ = 0 ;
-    boxplotNotch_ = false ;
-    generateFriedmanTables_ = false ;
-    generateLatexTables_ = false ;
-    generateWilcoxonTables_ = false ;
-    generateQualityIndicators_ = false ;
+    generateReferenceParetoFronts_ = false;
+    runTheAlgorithms_ = false;
+    generateBoxplots_ = false;
+    boxplotRows_ = 0;
+    boxplotColumns_ = 0;
+    boxplotNotch_ = false;
+    generateFriedmanTables_ = false;
+    generateLatexTables_ = false;
+    generateWilcoxonTables_ = false;
+    generateQualityIndicators_ = false;
   }
 
 
@@ -70,7 +70,7 @@ public class ConfigurationFileStudy extends Experiment {
 
     exp.initExperiment(args);
 
-    System.out.println(exp) ;
+    System.out.println(exp);
 
     exp.runExperiment();
   } // main

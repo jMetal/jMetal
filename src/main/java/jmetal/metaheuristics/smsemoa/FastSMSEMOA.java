@@ -36,30 +36,30 @@ import java.util.logging.Level;
 
 /**
  * This class implements the SMS-EMOA algorithm, as described in
- *
+ * <p/>
  * Michael Emmerich, Nicola Beume, and Boris Naujoks.
  * An EMO algorithm using the hypervolume measure as selection criterion.
  * In C. A. Coello Coello et al., Eds., Proc. Evolutionary Multi-Criterion Optimization,
  * 3rd Int'l Conf. (EMO 2005), LNCS 3410, pp. 62-76. Springer, Berlin, 2005.
- *
+ * <p/>
  * and
- * 
+ * <p/>
  * Boris Naujoks, Nicola Beume, and Michael Emmerich.
  * Multi-objective optimisation using S-metric selection: Application to
  * three-dimensional solution spaces. In B. McKay et al., Eds., Proc. of the 2005
  * Congress on Evolutionary Computation (CEC 2005), Edinburgh, Band 2, pp. 1282-1289.
  * IEEE Press, Piscataway NJ, 2005.
- *
+ * <p/>
  * This algoritm is SMS-EMOA using the FastHypervolume class
  */
 public class FastSMSEMOA extends Algorithm {
 
+  private static final long serialVersionUID = 2217597718629923190L;
   /**
    * stores the problem  to solve
    */
   private MetricsUtil utils_;
   private Hypervolume hv_;
-  private static final long serialVersionUID = 2217597718629923190L;
 
   /**
    * stores the problem  to solve
@@ -70,16 +70,18 @@ public class FastSMSEMOA extends Algorithm {
 
   /**
    * Constructor
+   *
    * @param problem Problem to solve
    */
   public FastSMSEMOA(Problem problem) {
-    super(problem) ;
+    super(problem);
     this.utils_ = new MetricsUtil();
     this.hv_ = new Hypervolume();
   } // FastSMSEMOA
 
   /**
    * Runs the FastSMSEMOA algorithm.
+   *
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
    * as a result of the algorithm execution
    * @throws jmetal.util.JMException
@@ -88,12 +90,12 @@ public class FastSMSEMOA extends Algorithm {
     int populationSize;
     int maxEvaluations;
     int evaluations;
-    double offset ;
+    double offset;
 
     QualityIndicator indicators; // QualityIndicator object
     int requiredEvaluations; // Use in the example of use of the indicators object (see below)
 
-    FastHypervolume fastHypervolume ;
+    FastHypervolume fastHypervolume;
 
     SolutionSet population;
     SolutionSet offspringPopulation;
@@ -116,7 +118,7 @@ public class FastSMSEMOA extends Algorithm {
 
     requiredEvaluations = 0;
 
-    fastHypervolume = new FastHypervolume(offset) ;
+    fastHypervolume = new FastHypervolume(offset);
 
     //Read the operators
     mutationOperator = operators_.get("mutation");
@@ -213,7 +215,7 @@ public class FastSMSEMOA extends Algorithm {
 
     // Return as output parameter the required evaluations
     setOutputParameter("evaluations", requiredEvaluations);
-    
+
     // Return the first non-dominated front
     Ranking ranking = new Ranking(population);
 

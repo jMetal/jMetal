@@ -67,7 +67,7 @@ public class AvlTree<T> {
           insertNodeRight(node);
           break;
         default:
-          break ;
+          break;
       }
     }
   }
@@ -177,7 +177,7 @@ public class AvlTree<T> {
    *
    * @param node
    * @return -1 if node has to be inserted in the left, +1 if it must be
-   *         inserted in the right, 0 otherwise
+   * inserted in the right, 0 otherwise
    */
   public int searchClosestNode(AvlNode<T> node) {
     AvlNode<T> currentNode;
@@ -312,8 +312,7 @@ public class AvlTree<T> {
       leftNode.setParent(node.getParent());
       if (node.getParent().getLeft() == node) {
         node.getParent().setLeft(leftNode);
-      }
-      else {
+      } else {
         node.getParent().setRight(leftNode);
       }
     } else {
@@ -335,8 +334,7 @@ public class AvlTree<T> {
       rightNode.setParent(node.getParent());
       if (node.getParent().getRight() == node) {
         node.getParent().setRight(rightNode);
-      }
-      else {
+      } else {
         node.getParent().setLeft(rightNode);
       }
     } else {
@@ -407,8 +405,7 @@ public class AvlTree<T> {
     int result = 0;
     if (node == null) {
       result = -1;
-    }
-    else {
+    } else {
       result = node.getHeight();
     }
 

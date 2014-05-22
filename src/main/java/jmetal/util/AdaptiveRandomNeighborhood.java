@@ -51,7 +51,7 @@ public class AdaptiveRandomNeighborhood {
 
     for (int i = 0; i < solutionSet_.size(); i++) {
       list_.add(new ArrayList<Integer>());
-      list_.get(i).add(i) ;
+      list_.get(i).add(i);
     }
 
     //System.out.println("list: " + list_) ;
@@ -65,13 +65,13 @@ public class AdaptiveRandomNeighborhood {
         }
       }
     }
-    System.out.println("L: " + list_) ;
+    System.out.println("L: " + list_);
   }
 
   public ArrayList<Integer> getNeighbors(int i) throws JMException {
     if (i > list_.size()) {
-      String message = "Error in AdaptiveRandomNeighborhood.getNeighbors"  ;
-      message += "the parameter " + i + " is less than " + list_.size() ;
+      String message = "Error in AdaptiveRandomNeighborhood.getNeighbors";
+      message += "the parameter " + i + " is less than " + list_.size();
       throw new JMException(message);
     }
 
@@ -112,7 +112,7 @@ public class AdaptiveRandomNeighborhood {
     for (int i = 0; i < solutionSet_.size(); i++) {
       for (int j = 0; j < numberOfRandomNeighbours_; j++) {
         int random = PseudoRandom.randInt(0, solutionSet_.size() - 1);
-        if (!list_.get(random).contains((Integer)i)) {
+        if (!list_.get(random).contains((Integer) i)) {
           list_.get(random).add(i);
         }
       }

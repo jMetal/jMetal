@@ -37,95 +37,102 @@ import java.util.logging.Level;
 /**
  * Settings class of algorithm PAES
  */
-public class PAES_Settings extends Settings{
+public class PAES_Settings extends Settings {
 
-  public int maxEvaluations_ ;
-  public int archiveSize_    ;
-  public int biSections_     ;
-  public double mutationProbability_ ;
+  public int maxEvaluations_;
+  public int archiveSize_;
+  public int biSections_;
+  public double mutationProbability_;
   public double mutationDistributionIndex_;
 
   /**
    * Constructor
    */
   public PAES_Settings(String problem) {
-    super(problem) ;
+    super(problem);
 
-    Object [] problemParams = {"Real"};
+    Object[] problemParams = {"Real"};
     try {
       problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
     } catch (JMException e) {
       Configuration.logger_.log(Level.SEVERE, "Unable to get problem", e);
-    }      
+    }
     // Default experiments.settings
-    maxEvaluations_ = 25000 ;
-    archiveSize_    = 100   ;
-    biSections_     = 5     ;
-    mutationProbability_ = 1.0/problem_.getNumberOfVariables() ;
-    mutationDistributionIndex_ = 20.0 ;
+    maxEvaluations_ = 25000;
+    archiveSize_ = 100;
+    biSections_ = 5;
+    mutationProbability_ = 1.0 / problem_.getNumberOfVariables();
+    mutationDistributionIndex_ = 20.0;
   } // PAES_Settings
 
   /**
    * Configure the MOCell algorithm with default parameter experiments.settings
+   *
    * @return an algorithm object
    * @throws jmetal.util.JMException
    */
   public Algorithm configure() throws JMException {
-    Algorithm algorithm ;
-    Mutation  mutation   ;
+    Algorithm algorithm;
+    Mutation mutation;
 
     // Creating the problem
-    algorithm = new PAES(problem_) ;
+    algorithm = new PAES(problem_);
 
     // Algorithm parameters
     algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
     algorithm.setInputParameter("biSections", biSections_);
-    algorithm.setInputParameter("archiveSize",archiveSize_ );
+    algorithm.setInputParameter("archiveSize", archiveSize_);
 
     // Mutation (Real variables)
-    HashMap<String, Object> parameters = new HashMap<String, Object>() ;
-    parameters.put("probability", mutationProbability_) ;
-    parameters.put("distributionIndex", mutationDistributionIndex_) ;
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);                    
+    HashMap<String, Object> parameters = new HashMap<String, Object>();
+    parameters.put("probability", mutationProbability_);
+    parameters.put("distributionIndex", mutationDistributionIndex_);
+    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);
 
     // Add the operators to the algorithm
     algorithm.addOperator("mutation", mutation);
 
-    return algorithm ;
+    return algorithm;
   } // configure
 
   /**
    * Configure PAES with user-defined parameter experiments.settings
+   *
    * @return A PAES algorithm object
    */
   @Override
   public Algorithm configure(Properties configuration) throws JMException {
-    Algorithm algorithm ;
-    Mutation   mutation  ;
+    Algorithm algorithm;
+    Mutation mutation;
 
     // Creating the algorithm.
-    algorithm = new PAES(problem_) ;
+    algorithm = new PAES(problem_);
 
     // Algorithm parameters
-    archiveSize_ = Integer.parseInt(configuration.getProperty("archiveSize",String.valueOf(archiveSize_)));
-    maxEvaluations_  = Integer.parseInt(configuration.getProperty("maxEvaluations",String.valueOf(maxEvaluations_)));
-    biSections_  = Integer.parseInt(configuration.getProperty("biSections",String.valueOf(biSections_)));
+    archiveSize_ =
+      Integer.parseInt(configuration.getProperty("archiveSize", String.valueOf(archiveSize_)));
+    maxEvaluations_ = Integer
+      .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations_)));
+    biSections_ =
+      Integer.parseInt(configuration.getProperty("biSections", String.valueOf(biSections_)));
     algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
     algorithm.setInputParameter("biSections", biSections_);
-    algorithm.setInputParameter("archiveSize",archiveSize_ );
+    algorithm.setInputParameter("archiveSize", archiveSize_);
 
 
-    mutationProbability_ = Double.parseDouble(configuration.getProperty("mutationProbability",String.valueOf(mutationProbability_)));
-    mutationDistributionIndex_ = Double.parseDouble(configuration.getProperty("mutationDistributionIndex",String.valueOf(mutationDistributionIndex_)));
+    mutationProbability_ = Double.parseDouble(
+      configuration.getProperty("mutationProbability", String.valueOf(mutationProbability_)));
+    mutationDistributionIndex_ = Double.parseDouble(configuration
+      .getProperty("mutationDistributionIndex", String.valueOf(mutationDistributionIndex_)));
 
-    HashMap<String, Object> parameters = new HashMap<String, Object>() ;
-    parameters.put("probability", mutationProbability_) ;
-    parameters.put("distributionIndex", mutationDistributionIndex_) ;
+    HashMap<String, Object> parameters = new HashMap<String, Object>();
+    parameters.put("probability", mutationProbability_);
+    parameters.put("distributionIndex", mutationDistributionIndex_);
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);
 
     // Add the operators to the algorithm
-    algorithm.addOperator("mutation",mutation);
+    algorithm.addOperator("mutation", mutation);
 
-    return algorithm ;
+    return algorithm;
   }
 } // PAES_Settings

@@ -50,15 +50,16 @@ import jmetal.util.JMException;
 
 public abstract class TestFunc {
 
-  protected int		m_dimension;
-  protected double	m_bias;
+  protected int m_dimension;
+  protected double m_bias;
 
-  protected String	m_func_name;
+  protected String m_func_name;
 
   // Constructors
   public TestFunc(int dimension, double bias) {
     this(dimension, bias, "undefined");
   }
+
   public TestFunc(int dimension, double bias, String func_name) {
     m_dimension = dimension;
     m_bias = bias;

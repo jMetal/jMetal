@@ -40,43 +40,43 @@ import java.util.logging.Logger;
  * Class for configuring and running a single-objective PSO algorithm
  */
 public class PSO_main {
-  public static Logger      logger_ ;      // Logger object
-  public static FileHandler fileHandler_ ; // FileHandler object
+  public static Logger logger_;      // Logger object
+  public static FileHandler fileHandler_; // FileHandler object
 
   /**
-   * @param args Command line arguments. The first (optional) argument specifies 
+   * @param args Command line arguments. The first (optional) argument specifies
    *             the problem to solve.
-   * @throws JMException 
-   * @throws IOException 
+   * @throws JMException
+   * @throws IOException
    * @throws SecurityException
    */
-  public static void main(String [] args) 
-  		throws JMException, IOException, ClassNotFoundException {
-    Problem   problem   ;
-    Algorithm algorithm ;
-    Mutation  mutation  ;
+  public static void main(String[] args)
+    throws JMException, IOException, ClassNotFoundException {
+    Problem problem;
+    Algorithm algorithm;
+    Mutation mutation;
 
     // Logger object and file to store log messages
-    logger_      = Configuration.logger_ ;
-    fileHandler_ = new FileHandler("PSO_main.log"); 
-    logger_.addHandler(fileHandler_) ;
+    logger_ = Configuration.logger_;
+    fileHandler_ = new FileHandler("PSO_main.log");
+    logger_.addHandler(fileHandler_);
 
-    problem = new Griewank("Real", 10) ;
-    problem = new Sphere("Real", 20) ;
+    problem = new Griewank("Real", 10);
+    problem = new Sphere("Real", 20);
     //problem = new Easom("Real") ;
 
     //problem = new Rosenbrock("Real", 10);
 
-    algorithm = new PSO(problem) ;
-    
+    algorithm = new PSO(problem);
+
     // Algorithm parameters
-    algorithm.setInputParameter("swarmSize",50);
-    algorithm.setInputParameter("maxIterations",5000);
-    
-    HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
-    mutationParameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
-    mutationParameters.put("distributionIndex", 20.0) ;
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);                    
+    algorithm.setInputParameter("swarmSize", 50);
+    algorithm.setInputParameter("maxIterations", 5000);
+
+    HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
+    mutationParameters.put("probability", 1.0 / problem.getNumberOfVariables());
+    mutationParameters.put("distributionIndex", 20.0);
+    mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
 
     algorithm.addOperator("mutation", mutation);
 
@@ -84,12 +84,12 @@ public class PSO_main {
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;
-    
+
     // Result messages 
-    logger_.info("Total execution time: "+estimatedTime + "ms");
+    logger_.info("Total execution time: " + estimatedTime + "ms");
     logger_.info("Objectives values have been writen to file FUN");
     population.printObjectivesToFile("FUN");
     logger_.info("Variables values have been writen to file VAR");
-    population.printVariablesToFile("VAR");                         
+    population.printVariablesToFile("VAR");
   }
 }

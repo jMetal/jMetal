@@ -44,7 +44,7 @@
 //		Revised according to the Matlab reference code and the PDF document
 //		dated March 8, 2005.
 //
-package jmetal.problems.singleObjective.cec2005Competition.originalCode ;
+package jmetal.problems.singleObjective.cec2005Competition.originalCode;
 
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
@@ -53,7 +53,8 @@ public class F15_hybrid_composition_1 extends TestFunc {
 
   // Fixed (class) parameters
   static final public String FUNCTION_NAME = "Hybrid Composition Function 1";
-  static final public String DEFAULT_FILE_DATA = "" + Configuration.cec2005SupportDataDirectory +"/hybrid_func1_data.txt";
+  static final public String DEFAULT_FILE_DATA =
+    "" + Configuration.cec2005SupportDataDirectory + "/hybrid_func1_data.txt";
 
   // Number of functions
   static final public int NUM_FUNC = 10;
@@ -64,17 +65,17 @@ public class F15_hybrid_composition_1 extends TestFunc {
   private final double[][] m_o;
   private final double[][][] m_M;
   private final double[] m_sigma = {
-      1.0,	1.0,	1.0,	1.0,	1.0,
-      1.0,	1.0,	1.0,	1.0,	1.0
+    1.0, 1.0, 1.0, 1.0, 1.0,
+    1.0, 1.0, 1.0, 1.0, 1.0
   };
   private final double[] m_lambda = {
-      1.0,		1.0,		10.0,		10.0,
-      5.0/60.0,	5.0/60.0,	5.0/32.0,	5.0/32.0,
-      5.0/100.0,	5.0/100.0
+    1.0, 1.0, 10.0, 10.0,
+    5.0 / 60.0, 5.0 / 60.0, 5.0 / 32.0, 5.0 / 32.0,
+    5.0 / 100.0, 5.0 / 100.0
   };
   private final double[] m_func_biases = {
-      0.0,	100.0,	200.0,	300.0,	400.0,
-      500.0,	600.0,	700.0,	800.0,	900.0
+    0.0, 100.0, 200.0, 300.0, 400.0,
+    500.0, 600.0, 700.0, 800.0, 900.0
   };
   private final double[] m_testPoint;
   private final double[] m_testPointM;
@@ -87,10 +88,11 @@ public class F15_hybrid_composition_1 extends TestFunc {
   private double[][] m_zM;
 
   // Constructors
-  public F15_hybrid_composition_1 (int dimension, double bias) throws JMException {
+  public F15_hybrid_composition_1(int dimension, double bias) throws JMException {
     this(dimension, bias, DEFAULT_FILE_DATA);
   }
-  public F15_hybrid_composition_1 (int dimension, double bias, String file_data) throws JMException {
+
+  public F15_hybrid_composition_1(int dimension, double bias, String file_data) throws JMException {
     super(dimension, bias, FUNCTION_NAME);
 
     // Note: dimension starts from 0
@@ -108,13 +110,13 @@ public class F15_hybrid_composition_1 extends TestFunc {
     // Load the shifted global optimum
     Benchmark.loadMatrixFromFile(file_data, NUM_FUNC, m_dimension, m_o);
     // Generate identity matrices
-    for (int i = 0 ; i < NUM_FUNC ; i ++) {
-      for (int j = 0 ; j < m_dimension ; j ++) {
-        for (int k = 0 ; k < m_dimension ; k ++) {
+    for (int i = 0; i < NUM_FUNC; i++) {
+      for (int j = 0; j < m_dimension; j++) {
+        for (int k = 0; k < m_dimension; k++) {
           m_M[i][j][k] = 0.0;
         }
       }
-      for (int j = 0 ; j < m_dimension ; j ++) {
+      for (int j = 0; j < m_dimension; j++) {
         m_M[i][j][j] = 1.0;
       }
     }
@@ -132,45 +134,14 @@ public class F15_hybrid_composition_1 extends TestFunc {
     theJob.z = m_z;
     theJob.zM = m_zM;
     // Calculate/estimate the fmax for all the functions involved
-    for (int i = 0 ; i < NUM_FUNC ; i ++) {
-      for (int j = 0 ; j < m_dimension ; j ++) {
+    for (int i = 0; i < NUM_FUNC; i++) {
+      for (int j = 0; j < m_dimension; j++) {
         m_testPoint[j] = (5.0 / m_lambda[i]);
       }
       Benchmark.rotate(m_testPointM, m_testPoint, m_M[i]);
       m_fmax[i] = Math.abs(theJob.basic_func(i, m_testPointM));
     }
     theJob.fmax = m_fmax;
-  }
-
-  private class MyHCJob extends HCJob {
-    public double basic_func(int func_no, double[] x) throws JMException {
-      double result = 0.0;
-      switch(func_no) {
-      case 0:
-      case 1:
-        result = Benchmark.rastrigin(x);
-        break;
-      case 2:
-      case 3:
-        result = Benchmark.weierstrass(x);
-        break;
-      case 4:
-      case 5:
-        result = Benchmark.griewank(x);
-        break;
-      case 6:
-      case 7:
-        result = Benchmark.ackley(x);
-        break;
-      case 8:
-      case 9:
-        result = Benchmark.sphere(x);
-        break;
-      default:
-        throw new JMException("func_no is out of range.");
-      }
-      return (result);
-    }
   }
 
   // Function body
@@ -183,5 +154,37 @@ public class F15_hybrid_composition_1 extends TestFunc {
     result += m_bias;
 
     return (result);
+  }
+
+
+  private class MyHCJob extends HCJob {
+    public double basic_func(int func_no, double[] x) throws JMException {
+      double result = 0.0;
+      switch (func_no) {
+        case 0:
+        case 1:
+          result = Benchmark.rastrigin(x);
+          break;
+        case 2:
+        case 3:
+          result = Benchmark.weierstrass(x);
+          break;
+        case 4:
+        case 5:
+          result = Benchmark.griewank(x);
+          break;
+        case 6:
+        case 7:
+          result = Benchmark.ackley(x);
+          break;
+        case 8:
+        case 9:
+          result = Benchmark.sphere(x);
+          break;
+        default:
+          throw new JMException("func_no is out of range.");
+      }
+      return (result);
+    }
   }
 }

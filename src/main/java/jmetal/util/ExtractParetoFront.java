@@ -25,8 +25,8 @@ import java.util.*;
 import java.util.logging.Level;
 
 /**
- *  This class extract the Pareto front among a set of dominated and 
- *  non-dominated solutions
+ * This class extract the Pareto front among a set of dominated and
+ * non-dominated solutions
  */
 
 public class ExtractParetoFront {
@@ -35,28 +35,11 @@ public class ExtractParetoFront {
   int dimensions_;
   List<Point> points_ = new LinkedList<Point>();
 
-  private class Point {
-    double [] vector_;
-
-    public Point (double [] vector) {
-      vector_= new double[vector.length] ;
-      for (int i = 0; i < vector.length; i++) {
-        vector_[i] = vector[i];
-      }
-    }
-
-    public Point (int size) {
-      vector_ = new double[size];
-      for (int i = 0; i < size; i++) {
-        vector_[i] = 0.0f;
-      }
-    }
-  }
 
   /**
+   * @param name: the name of the file
    * @author Juan J. Durillo
    * Creates a new instance
-   * @param name: the name of the file
    */
   public ExtractParetoFront(String name, int dimensions) {
     fileName_ = name;
@@ -64,15 +47,29 @@ public class ExtractParetoFront {
     loadInstance();
   }
 
+  public static void main(String[] args) throws JMException {
+    if (args.length != 2) {
+      System.out.println("Wrong number of arguments: ");
+      System.out.println("Sintaxt: java ExtractParetoFront <file> <dimensions>");
+      System.out.println("\t<file> is a file containing points");
+      System.out.println("\t<dimensions> represents the number of dimensions of the problem");
+      throw new JMException("");
+    }
+
+    ExtractParetoFront epf = new ExtractParetoFront(args[0], new Integer(args[1]));
+
+    epf.writeParetoFront();
+  }
+
   /**
    * Read the points instance from file
    */
-  public void loadInstance()  {
+  public void loadInstance() {
     try {
       File archivo = new File(fileName_);
       FileReader fr = null;
       BufferedReader br = null;
-      fr = new FileReader (archivo);
+      fr = new FileReader(archivo);
       br = new BufferedReader(fr);
 
       // File reading
@@ -80,7 +77,7 @@ public class ExtractParetoFront {
       int lineCnt = 0;
       line = br.readLine(); // reading the first line (special case)
 
-      while (line!=null) {
+      while (line != null) {
         StringTokenizer st = new StringTokenizer(line);
         try {
           Point auxPoint = new Point(dimensions_);
@@ -94,23 +91,25 @@ public class ExtractParetoFront {
           lineCnt++;
         } catch (NumberFormatException e) {
           Configuration.logger_.log(
-                  Level.WARNING,
-                  "Number in a wrong format in line "+lineCnt+"\n"+line, e);
+            Level.WARNING,
+            "Number in a wrong format in line " + lineCnt + "\n" + line, e);
           line = br.readLine();
           lineCnt++;
         } catch (NoSuchElementException e2) {
           Configuration.logger_.log(
-                  Level.WARNING,
-                  "Line "+lineCnt+" does not have the right number of objectives\n"+line, e2);
+            Level.WARNING,
+            "Line " + lineCnt + " does not have the right number of objectives\n" + line, e2);
           line = br.readLine();
           lineCnt++;
         }
       }
       br.close();
     } catch (FileNotFoundException e3) {
-      Configuration.logger_.log(Level.SEVERE, "The file " + fileName_+ " has not been found in your file system", e3);
-    }  catch (IOException e3) {
-      Configuration.logger_.log(Level.SEVERE, "The file " + fileName_+ " has not been found in your file system", e3);
+      Configuration.logger_
+        .log(Level.SEVERE, "The file " + fileName_ + " has not been found in your file system", e3);
+    } catch (IOException e3) {
+      Configuration.logger_
+        .log(Level.SEVERE, "The file " + fileName_ + " has not been found in your file system", e3);
     }
   }
 
@@ -118,9 +117,9 @@ public class ExtractParetoFront {
   public void add(Point point) {
     Iterator<Point> iterator = points_.iterator();
 
-    while (iterator.hasNext()){
+    while (iterator.hasNext()) {
       Point auxPoint = iterator.next();
-      int flag = compare(point,auxPoint);
+      int flag = compare(point, auxPoint);
 
       if (flag == -1) {
         // A solution in the list is dominated by the new one
@@ -162,10 +161,10 @@ public class ExtractParetoFront {
 
   public void writeParetoFront() {
     try {
-			/* Open the file */
-      FileOutputStream fos   = new FileOutputStream(fileName_+".pf") ;
-      OutputStreamWriter osw = new OutputStreamWriter(fos)    ;
-      BufferedWriter bw      = new BufferedWriter(osw)        ;
+      /* Open the file */
+      FileOutputStream fos = new FileOutputStream(fileName_ + ".pf");
+      OutputStreamWriter osw = new OutputStreamWriter(fos);
+      BufferedWriter bw = new BufferedWriter(osw);
 
       for (Point auxPoint : points_) {
         String aux = "";
@@ -179,22 +178,27 @@ public class ExtractParetoFront {
 
       // Close the file
       bw.close();
-    }catch (IOException e) {
+    } catch (IOException e) {
       Configuration.logger_.log(Level.SEVERE, "Error", e);
     }
   }
 
-  public static void main(String [] args) throws JMException {
-    if (args.length != 2) {
-      System.out.println("Wrong number of arguments: ");
-      System.out.println("Sintaxt: java ExtractParetoFront <file> <dimensions>");
-      System.out.println("\t<file> is a file containing points");
-      System.out.println("\t<dimensions> represents the number of dimensions of the problem");
-      throw new JMException("");
+
+  private class Point {
+    double[] vector_;
+
+    public Point(double[] vector) {
+      vector_ = new double[vector.length];
+      for (int i = 0; i < vector.length; i++) {
+        vector_[i] = vector[i];
+      }
     }
 
-    ExtractParetoFront epf = new ExtractParetoFront(args[0], new Integer(args[1]));
-
-    epf.writeParetoFront();
+    public Point(int size) {
+      vector_ = new double[size];
+      for (int i = 0; i < size; i++) {
+        vector_[i] = 0.0f;
+      }
+    }
   }
 }

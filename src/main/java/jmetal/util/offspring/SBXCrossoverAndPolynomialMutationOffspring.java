@@ -31,29 +31,29 @@ public class SBXCrossoverAndPolynomialMutationOffspring extends Offspring {
   private Operator selection_;
 
   private SBXCrossoverAndPolynomialMutationOffspring(double mutationProbability,
-                                                     double crossoverProbability,
-                                                     double distributionIndexForMutation,
-                                                     double distributionIndexForCrossover) throws JMException {
+    double crossoverProbability,
+    double distributionIndexForMutation,
+    double distributionIndexForCrossover) throws JMException {
     mutationProbability_ = mutationProbability;
     crossoverProbability_ = crossoverProbability;
     distributionIndexForMutation_ = distributionIndexForMutation;
     distributionIndexForCrossover_ = distributionIndexForCrossover;
 
     // Crossover operator
-    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
-    crossoverParameters.put("probability", crossoverProbability_) ;
-    crossoverParameters.put("distributionIndex", distributionIndexForCrossover_) ;
+    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
+    crossoverParameters.put("probability", crossoverProbability_);
+    crossoverParameters.put("distributionIndex", distributionIndexForCrossover_);
 
     crossover_ = CrossoverFactory.getCrossoverOperator("SBXCrossover", crossoverParameters);
 
-    HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
-    mutationParameters.put("probability", mutationProbability_) ;
-    mutationParameters.put("distributionIndex", distributionIndexForMutation_) ;
+    HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
+    mutationParameters.put("probability", mutationProbability_);
+    mutationParameters.put("distributionIndex", distributionIndexForMutation_);
 
     mutation_ = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
 
     selection_ = SelectionFactory.getSelectionOperator("BinaryTournament", null);
-    
+
     id_ = "SBX_Polynomial";
   }
 
@@ -68,15 +68,16 @@ public class SBXCrossoverAndPolynomialMutationOffspring extends Offspring {
       Solution[] children = (Solution[]) crossover_.execute(parents);
       offSpring = children[0];
       mutation_.execute(offSpring);
-      
+
     } catch (JMException ex) {
-      Logger.getLogger(SBXCrossoverAndPolynomialMutationOffspring.class.getName()).log(Level.SEVERE, null, ex);
+      Logger.getLogger(SBXCrossoverAndPolynomialMutationOffspring.class.getName())
+        .log(Level.SEVERE, null, ex);
     }
     return offSpring;
 
   } // getOffpring
 
-    public Solution getOffspring(SolutionSet solutionSet, SolutionSet archive) {
+  public Solution getOffspring(SolutionSet solutionSet, SolutionSet archive) {
     Solution[] parents = new Solution[2];
     Solution offSpring = null;
 
@@ -84,9 +85,9 @@ public class SBXCrossoverAndPolynomialMutationOffspring extends Offspring {
       parents[0] = (Solution) selection_.execute(solutionSet);
 
       if (archive.size() > 0) {
-          parents[1] = (Solution)selection_.execute(archive);
+        parents[1] = (Solution) selection_.execute(archive);
       } else {
-          parents[1] = (Solution)selection_.execute(solutionSet);
+        parents[1] = (Solution) selection_.execute(solutionSet);
       }
 
       Solution[] children = (Solution[]) crossover_.execute(parents);
@@ -94,7 +95,8 @@ public class SBXCrossoverAndPolynomialMutationOffspring extends Offspring {
       mutation_.execute(offSpring);
       //Create a new solution, using DE
     } catch (JMException ex) {
-      Logger.getLogger(SBXCrossoverAndPolynomialMutationOffspring.class.getName()).log(Level.SEVERE, null, ex);
+      Logger.getLogger(SBXCrossoverAndPolynomialMutationOffspring.class.getName())
+        .log(Level.SEVERE, null, ex);
     }
     return offSpring;
 

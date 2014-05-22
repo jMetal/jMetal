@@ -30,27 +30,28 @@ package jmetal.util.avl;
  * To change this template use File | Settings | File Templates.
  */
 public class AvlNode<T> {
-  private AvlNode<T> left_ ;
-  private AvlNode<T> right_ ;
-  private AvlNode<T> parent_ ;
+  private AvlNode<T> left_;
+  private AvlNode<T> right_;
+  private AvlNode<T> parent_;
 
-  private int height_ ;
+  private int height_;
 
-  private AvlNode<T> closestNode_ ;
+  private AvlNode<T> closestNode_;
 
-  private T item_ ;
+  private T item_;
 
 
   /**
    * Constructor
+   *
    * @param item_
    */
   public AvlNode(T item_) {
     this.left_ = null;
     this.right_ = null;
     this.parent_ = null;
-    height_ = 0 ;
-    closestNode_ = null ;
+    height_ = 0;
+    closestNode_ = null;
 
     this.item_ = item_;
   }
@@ -116,50 +117,47 @@ public class AvlNode<T> {
   }
 
   public boolean hasParent() {
-    return parent_ != null ;
+    return parent_ != null;
   }
 
   public boolean hasLeft() {
-    return left_ != null ;
+    return left_ != null;
   }
 
   public boolean hasRight() {
-    return right_ != null ;
+    return right_ != null;
   }
 
   public boolean isLeaf() {
-    boolean result ;
+    boolean result;
     if (!hasLeft() && !hasRight()) {
-      result = true ;
-    }
-    else {
+      result = true;
+    } else {
       result = false;
     }
 
-    return result ;
+    return result;
   }
 
   public boolean hasOnlyALeftChild() {
-    boolean result ;
+    boolean result;
     if (hasLeft() && !hasRight()) {
-      result = true ;
-    }
-    else {
+      result = true;
+    } else {
       result = false;
     }
 
-    return result ;
+    return result;
   }
 
   public boolean hasOnlyARightChild() {
-    boolean result ;
+    boolean result;
     if (hasRight() && !hasLeft()) {
-      result = true ;
-    }
-    else {
+      result = true;
+    } else {
       result = false;
     }
 
-    return result ;
+    return result;
   }
 }

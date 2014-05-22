@@ -40,45 +40,44 @@ import java.util.logging.Logger;
 /**
  * This class executes the SMPSO algorithm described in:
  * A.J. Nebro, J.J. Durillo, J. Garcia-Nieto, C.A. Coello Coello, F. Luna and E. Alba
- * "SMPSO: A New PSO-based Metaheuristic for Multi-objective Optimization". 
- * IEEE Symposium on Computational Intelligence in Multicriteria Decision-Making 
+ * "SMPSO: A New PSO-based Metaheuristic for Multi-objective Optimization".
+ * IEEE Symposium on Computational Intelligence in Multicriteria Decision-Making
  * (MCDM 2009), pp: 66-73. March 2009
  */
 public class SMPSO_main {
-  public static Logger      logger_ ;      // Logger object
-  public static FileHandler fileHandler_ ; // FileHandler object
+  public static Logger logger_;      // Logger object
+  public static FileHandler fileHandler_; // FileHandler object
 
   /**
-   * @param args Command line arguments. The first (optional) argument specifies 
+   * @param args Command line arguments. The first (optional) argument specifies
    *             the problem to solve.
-   * @throws JMException 
-   * @throws IOException 
-   * @throws SecurityException 
-   * Usage: three options
-   *      - jmetal.metaheuristics.smpso.SMPSO_main
-   *      - jmetal.metaheuristics.smpso.SMPSO_main problemName
-   *      - jmetal.metaheuristics.smpso.SMPSO_main problemName ParetoFrontFile
+   * @throws JMException
+   * @throws IOException
+   * @throws SecurityException Usage: three options
+   *                           - jmetal.metaheuristics.smpso.SMPSO_main
+   *                           - jmetal.metaheuristics.smpso.SMPSO_main problemName
+   *                           - jmetal.metaheuristics.smpso.SMPSO_main problemName ParetoFrontFile
    */
-  public static void main(String [] args) throws JMException, IOException, ClassNotFoundException {
-    Problem   problem   ;
-    Algorithm algorithm ;
-    Mutation  mutation  ;
-    
-    QualityIndicator indicators ; // Object to get quality indicators
+  public static void main(String[] args) throws JMException, IOException, ClassNotFoundException {
+    Problem problem;
+    Algorithm algorithm;
+    Mutation mutation;
+
+    QualityIndicator indicators; // Object to get quality indicators
 
     // Logger object and file to store log messages
-    logger_      = Configuration.logger_ ;
-    fileHandler_ = new FileHandler("SMPSO_main.log"); 
-    logger_.addHandler(fileHandler_) ;
-    
-    indicators = null ;
+    logger_ = Configuration.logger_;
+    fileHandler_ = new FileHandler("SMPSO_main.log");
+    logger_.addHandler(fileHandler_);
+
+    indicators = null;
     if (args.length == 1) {
-      Object [] params = {"Real"};
-      problem = (new ProblemFactory()).getProblem(args[0],params);
+      Object[] params = {"Real"};
+      problem = (new ProblemFactory()).getProblem(args[0], params);
     } else if (args.length == 2) {
-      Object [] params = {"Real"};
-      problem = (new ProblemFactory()).getProblem(args[0],params);
-      indicators = new QualityIndicator(problem, args[1]) ;
+      Object[] params = {"Real"};
+      problem = (new ProblemFactory()).getProblem(args[0], params);
+      indicators = new QualityIndicator(problem, args[1]);
     } else {
       //problem = new Kursawe("Real", 3); 
       //problem = new Water("Real");
@@ -87,29 +86,29 @@ public class SMPSO_main {
       //problem = new WFG1("Real");
       //problem = new DTLZ1("Real");
       //problem = new OKA2("Real") ;
-       //problem = new DTLZ1("Real",7,5);
-        problem = new ZDT4("Real");
+      //problem = new DTLZ1("Real",7,5);
+      problem = new ZDT4("Real");
     }
 
-    algorithm = new SMPSO(problem) ;
-    
-    // Algorithm parameters
-    algorithm.setInputParameter("swarmSize",100);
-    algorithm.setInputParameter("archiveSize",100);
-    algorithm.setInputParameter("maxIterations",250);
-    algorithm.setInputParameter("C1Min",1.5);
-    algorithm.setInputParameter("C1Max",2.5);
-    algorithm.setInputParameter("C2Min",1.5);
-    algorithm.setInputParameter("C2Max",2.5);
-    algorithm.setInputParameter("WMin",0.1);
-    algorithm.setInputParameter("WMax",0.1);
-    algorithm.setInputParameter("ChVel1",-1.0);
-    algorithm.setInputParameter("ChVel2",-1.0);
+    algorithm = new SMPSO(problem);
 
-    HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
-    mutationParameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
-    mutationParameters.put("distributionIndex", 20.0) ;
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);                    
+    // Algorithm parameters
+    algorithm.setInputParameter("swarmSize", 100);
+    algorithm.setInputParameter("archiveSize", 100);
+    algorithm.setInputParameter("maxIterations", 250);
+    algorithm.setInputParameter("C1Min", 1.5);
+    algorithm.setInputParameter("C1Max", 2.5);
+    algorithm.setInputParameter("C2Min", 1.5);
+    algorithm.setInputParameter("C2Max", 2.5);
+    algorithm.setInputParameter("WMin", 0.1);
+    algorithm.setInputParameter("WMax", 0.1);
+    algorithm.setInputParameter("ChVel1", -1.0);
+    algorithm.setInputParameter("ChVel2", -1.0);
+
+    HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
+    mutationParameters.put("probability", 1.0 / problem.getNumberOfVariables());
+    mutationParameters.put("distributionIndex", 20.0);
+    mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
 
     algorithm.addOperator("mutation", mutation);
 
@@ -117,21 +116,21 @@ public class SMPSO_main {
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;
-    
+
     // Result messages 
-    logger_.info("Total execution time: "+estimatedTime + "ms");
+    logger_.info("Total execution time: " + estimatedTime + "ms");
     logger_.info("Objectives values have been writen to file FUN");
     population.printObjectivesToFile("FUN");
     logger_.info("Variables values have been writen to file VAR");
-    population.printVariablesToFile("VAR");      
-    
+    population.printVariablesToFile("VAR");
+
     if (indicators != null) {
-      logger_.info("Quality indicators") ;
-      logger_.info("Hypervolume: " + indicators.getHypervolume(population)) ;
-      logger_.info("GD         : " + indicators.getGD(population)) ;
-      logger_.info("IGD        : " + indicators.getIGD(population)) ;
-      logger_.info("Spread     : " + indicators.getSpread(population)) ;
-      logger_.info("Epsilon    : " + indicators.getEpsilon(population)) ;
+      logger_.info("Quality indicators");
+      logger_.info("Hypervolume: " + indicators.getHypervolume(population));
+      logger_.info("GD         : " + indicators.getGD(population));
+      logger_.info("IGD        : " + indicators.getIGD(population));
+      logger_.info("Spread     : " + indicators.getSpread(population));
+      logger_.info("Epsilon    : " + indicators.getEpsilon(population));
     }
   }
 }

@@ -56,9 +56,8 @@ public class SolutionSet implements Serializable {
 
   /**
    * Creates a empty solutionSet with a maximum capacity.
-   * 
-   * @param maximumSize
-   *          Maximum size.
+   *
+   * @param maximumSize Maximum size.
    */
   public SolutionSet(int maximumSize) {
     solutionsList_ = new ArrayList<Solution>();
@@ -67,11 +66,10 @@ public class SolutionSet implements Serializable {
 
   /**
    * Inserts a new solution into the SolutionSet.
-   * 
-   * @param solution
-   *          The <code>Solution</code> to store
+   *
+   * @param solution The <code>Solution</code> to store
    * @return True If the <code>Solution</code> has been inserted, false
-   *         otherwise.
+   * otherwise.
    */
   public boolean add(Solution solution) {
     if (solutionsList_.size() == capacity_) {
@@ -92,12 +90,10 @@ public class SolutionSet implements Serializable {
 
   /**
    * Returns the ith solution in the set.
-   * 
-   * @param i
-   *          Position of the solution to obtain.
+   *
+   * @param i Position of the solution to obtain.
    * @return The <code>Solution</code> at the position i.
-   * @throws IndexOutOfBoundsException
-   *           Exception
+   * @throws IndexOutOfBoundsException Exception
    */
   public Solution get(int i) {
     if (i >= solutionsList_.size()) {
@@ -108,7 +104,7 @@ public class SolutionSet implements Serializable {
 
   /**
    * Returns the maximum capacity of the solution set
-   * 
+   *
    * @return The maximum capacity of the solution set
    */
   public int getMaxSize() {
@@ -117,9 +113,8 @@ public class SolutionSet implements Serializable {
 
   /**
    * Sorts a SolutionSet using a <code>Comparator</code>.
-   * 
-   * @param comparator
-   *          <code>Comparator</code> used to sort.
+   *
+   * @param comparator <code>Comparator</code> used to sort.
    */
 
   public void sort(Comparator<Solution> comparator) {
@@ -134,11 +129,10 @@ public class SolutionSet implements Serializable {
    * Returns the index of the best Solution using a <code>Comparator</code>. If
    * there are more than one occurrences, only the index of the first one is
    * returned
-   * 
-   * @param comparator
-   *          <code>Comparator</code> used to compare solutions.
+   *
+   * @param comparator <code>Comparator</code> used to compare solutions.
    * @return The index of the best Solution attending to the comparator or
-   *         <code>-1<code> if the SolutionSet is empty
+   * <code>-1<code> if the SolutionSet is empty
    */
 
   int indexBest(Comparator<Solution> comparator) {
@@ -164,9 +158,8 @@ public class SolutionSet implements Serializable {
   /**
    * Returns the best Solution using a <code>Comparator</code>. If there are
    * more than one occurrences, only the first one is returned
-   * 
-   * @param comparator
-   *          <code>Comparator</code> used to compare solutions.
+   *
+   * @param comparator <code>Comparator</code> used to compare solutions.
    * @return The best Solution attending to the comparator or <code>null<code>
    * if the SolutionSet is empty
    */
@@ -184,11 +177,10 @@ public class SolutionSet implements Serializable {
    * Returns the index of the worst Solution using a <code>Comparator</code>. If
    * there are more than one occurrences, only the index of the first one is
    * returned
-   * 
-   * @param comparator
-   *          <code>Comparator</code> used to compare solutions.
+   *
+   * @param comparator <code>Comparator</code> used to compare solutions.
    * @return The index of the worst Solution attending to the comparator or
-   *         <code>-1<code> if the SolutionSet is empty
+   * <code>-1<code> if the SolutionSet is empty
    */
   public int indexWorst(Comparator<Solution> comparator) {
     if ((solutionsList_ == null) || (this.solutionsList_.isEmpty())) {
@@ -213,9 +205,8 @@ public class SolutionSet implements Serializable {
   /**
    * Returns the worst Solution using a <code>Comparator</code>. If there are
    * more than one occurrences, only the first one is returned
-   * 
-   * @param comparator
-   *          <code>Comparator</code> used to compare solutions.
+   *
+   * @param comparator <code>Comparator</code> used to compare solutions.
    * @return The worst Solution attending to the comparator or <code>null<code>
    * if the SolutionSet is empty
    */
@@ -230,7 +221,7 @@ public class SolutionSet implements Serializable {
 
   /**
    * Returns the number of solutions in the SolutionSet.
-   * 
+   *
    * @return The size of the SolutionSet.
    */
   public int size() {
@@ -238,7 +229,6 @@ public class SolutionSet implements Serializable {
   } // size
 
   /**
-   * 
    * @return true if the solution set if empty
    */
   public boolean isEmtpy() {
@@ -248,9 +238,8 @@ public class SolutionSet implements Serializable {
   /**
    * Writes the objective function values of the <code>Solution</code> objects
    * into the set in a file.
-   * 
-   * @param path
-   *          The output file name
+   *
+   * @param path The output file name
    */
   public void printObjectivesToFile(String path) throws IOException {
     /* Open the file */
@@ -270,9 +259,8 @@ public class SolutionSet implements Serializable {
   /**
    * Writes the decision encodings.variable values of the <code>Solution</code>
    * solutions objects into the set in a file.
-   * 
-   * @param path
-   *          The output file name
+   *
+   * @param path The output file name
    */
   public void printVariablesToFile(String path) throws IOException {
     FileOutputStream fos = new FileOutputStream(path);
@@ -293,9 +281,8 @@ public class SolutionSet implements Serializable {
 
   /**
    * Compares two solution sets
-   * 
-   * @param object
-   *          Solution set to compare with
+   *
+   * @param object Solution set to compare with
    * @return true or false depending on the result of the comparison
    */
   @Override
@@ -334,9 +321,8 @@ public class SolutionSet implements Serializable {
 
   /**
    * Write the function values of feasible solutions into a file
-   * 
-   * @param path
-   *          File name
+   *
+   * @param path File name
    */
   public void printFeasibleFUN(String path) {
     try {
@@ -353,15 +339,14 @@ public class SolutionSet implements Serializable {
       bw.close();
     } catch (IOException e) {
       Configuration.logger_.log(Level.SEVERE, "Error generating the FUN file",
-          e);
+        e);
     }
   }
 
   /**
    * Write the encodings.variable values of feasible solutions into a file
-   * 
-   * @param path
-   *          File name
+   *
+   * @param path File name
    */
   public void printFeasibleVAR(String path) {
     try {
@@ -375,7 +360,7 @@ public class SolutionSet implements Serializable {
           if (aSolutionsList.getOverallConstraintViolation() == 0.0) {
             for (int j = 0; j < numberOfVariables; j++) {
               bw.write(aSolutionsList.getDecisionVariables()[j].toString()
-                  + " ");
+                + " ");
             }
             bw.newLine();
           }
@@ -384,7 +369,7 @@ public class SolutionSet implements Serializable {
       bw.close();
     } catch (IOException e) {
       Configuration.logger_.log(Level.SEVERE, "Error generating the VAR file",
-          e);
+        e);
     }
   }
 
@@ -397,9 +382,8 @@ public class SolutionSet implements Serializable {
 
   /**
    * Deletes the <code>Solution</code> at position i in the set.
-   * 
-   * @param i
-   *          The position of the solution to remove.
+   *
+   * @param i The position of the solution to remove.
    */
   public void remove(int i) {
     if (i > solutionsList_.size() - 1) {
@@ -410,7 +394,7 @@ public class SolutionSet implements Serializable {
 
   /**
    * Returns an <code>Iterator</code> to access to the solution set list.
-   * 
+   *
    * @return the <code>Iterator</code>.
    */
   public Iterator<Solution> iterator() {
@@ -420,9 +404,8 @@ public class SolutionSet implements Serializable {
   /**
    * Returns a new <code>SolutionSet</code> which is the result of the union
    * between the current solution set and the one passed as a parameter.
-   * 
-   * @param solutionSet
-   *          SolutionSet to join with the current solutionSet.
+   *
+   * @param solutionSet SolutionSet to join with the current solutionSet.
    * @return The result of the union operation.
    */
   public SolutionSet union(SolutionSet solutionSet) {
@@ -447,11 +430,9 @@ public class SolutionSet implements Serializable {
 
   /**
    * Replaces a solution by a new one
-   * 
-   * @param position
-   *          The position of the solution to replace
-   * @param solution
-   *          The new solution
+   *
+   * @param position The position of the solution to replace
+   * @param solution The new solution
    */
   public void replace(int position, Solution solution) {
     if (position > this.solutionsList_.size()) {
@@ -463,7 +444,7 @@ public class SolutionSet implements Serializable {
 
   /**
    * Copies the objectives of the solution set to a matrix
-   * 
+   *
    * @return A matrix containing the objectives
    */
   public double[][] writeObjectivesToMatrix() {
@@ -486,11 +467,11 @@ public class SolutionSet implements Serializable {
     }
   }
 
-  public void setCapacity(int capacity) {
-    capacity_ = capacity;
-  }
-
   public int getCapacity() {
     return capacity_;
+  }
+
+  public void setCapacity(int capacity) {
+    capacity_ = capacity;
   }
 }

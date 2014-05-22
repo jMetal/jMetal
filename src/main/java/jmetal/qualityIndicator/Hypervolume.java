@@ -29,10 +29,10 @@ import jmetal.util.JMException;
  * It can be used also as a command line program just by typing
  * $java jmetal.qualityIndicator.Hypervolume <solutionFrontFile> <trueFrontFile> <numberOfOjbectives>
  * Reference: E. Zitzler and L. Thiele
- *           Multiobjective Evolutionary Algorithms: A Comparative Case Study 
- *           and the Strength Pareto Approach,
- *           IEEE Transactions on Evolutionary Computation, vol. 3, no. 4, 
- *           pp. 257-271, 1999.
+ * Multiobjective Evolutionary Algorithms: A Comparative Case Study
+ * and the Strength Pareto Approach,
+ * IEEE Transactions on Evolutionary Computation, vol. 3, no. 4,
+ * pp. 257-271, 1999.
  */
 public class Hypervolume {
 
@@ -46,13 +46,42 @@ public class Hypervolume {
     utils_ = new jmetal.qualityIndicator.util.MetricsUtil();
   }
 
-  /* 
-   returns true if 'point1' dominates 'points2' with respect to the 
-   to the first 'noObjectives' objectives 
+  /**
+   * This class can be invoqued from the command line. Three params are required:
+   * 1) the name of the file containing the front,
+   * 2) the name of the file containig the true Pareto front
+   * 3) the number of objectives
+   *
+   * @throws JMException
    */
-  boolean  dominates(double  point1[], double  point2[], int  noObjectives) {
-    int  i;
-    int  betterInAnyObjective;
+  public static void main(String args[]) throws JMException {
+    if (args.length < 2) {
+      throw new JMException(
+        "Error using Hypervolume. Usage: \n java jmetal.qualityIndicator.Hypervolume " +
+          "<SolutionFrontFile> " +
+          "<TrueFrontFile> " + "<getNumberOfObjectives>");
+    }
+
+    //Create a new instance of the metric
+    Hypervolume qualityIndicator = new Hypervolume();
+
+    //Read the front from the files
+    double[][] solutionFront = qualityIndicator.utils_.readFront(args[0]);
+    double[][] trueFront = qualityIndicator.utils_.readFront(args[1]);
+
+    //Obtain delta value
+    double value = qualityIndicator.hypervolume(solutionFront, trueFront, new Integer(args[2]));
+
+    System.out.println(value);
+  }
+
+  /*
+   returns true if 'point1' dominates 'points2' with respect to the
+   to the first 'noObjectives' objectives
+   */
+  boolean dominates(double point1[], double point2[], int noObjectives) {
+    int i;
+    int betterInAnyObjective;
 
     betterInAnyObjective = 0;
     for (i = 0; i < noObjectives && point1[i] >= point2[i]; i++) {
@@ -61,25 +90,24 @@ public class Hypervolume {
       }
     }
 
-    return ((i >= noObjectives) && (betterInAnyObjective>0));
+    return ((i >= noObjectives) && (betterInAnyObjective > 0));
   }
 
-  void  swap(double [][] front, int  i, int  j){
-    double  [] temp;
+  void swap(double[][] front, int i, int j) {
+    double[] temp;
 
     temp = front[i];
     front[i] = front[j];
     front[j] = temp;
   }
 
-
   /* all nondominated points regarding the first 'noObjectives' dimensions
   are collected; the points referenced by 'front[0..noPoints-1]' are
   considered; 'front' is resorted, such that 'front[0..n-1]' contains
   the nondominated points; n is returned */
-  int  filterNondominatedSet(double [][] front, int  noPoints, int  noObjectives){
-    int  i, j;
-    int  n;
+  int filterNondominatedSet(double[][] front, int noPoints, int noObjectives) {
+    int i, j;
+    int n;
 
     n = noPoints;
     i = 0;
@@ -87,7 +115,7 @@ public class Hypervolume {
       j = i + 1;
       while (j < n) {
         if (dominates(front[i], front[j], noObjectives)) {
-	/* remove point 'j' */
+  /* remove point 'j' */
           n--;
           swap(front, j, n);
         } else if (dominates(front[j], front[i], noObjectives)) {
@@ -106,12 +134,11 @@ public class Hypervolume {
     return n;
   }
 
-
   /* calculate next value regarding dimension 'objective'; consider
      points referenced in 'front[0..noPoints-1]' */
-  double  surfaceUnchangedTo(double [][] front, int  noPoints, int  objective) {
-    int     i;
-    double  minValue, value;
+  double surfaceUnchangedTo(double[][] front, int noPoints, int objective) {
+    int i;
+    double minValue, value;
 
     if (noPoints < 1) {
       System.err.println("run-time error");
@@ -131,10 +158,10 @@ public class Hypervolume {
      dimension 'objective'; the points referenced by
      'front[0..noPoints-1]' are considered; 'front' is resorted, such that
      'front[0..n-1]' contains the remaining points; 'n' is returned */
-  int  reduceNondominatedSet(double [][] front, int  noPoints, int  objective,
-                             double  threshold){
-    int  n;
-    int  i;
+  int reduceNondominatedSet(double[][] front, int noPoints, int objective,
+    double threshold) {
+    int n;
+    int i;
 
     n = noPoints;
     for (i = 0; i < n; i++) {
@@ -147,16 +174,16 @@ public class Hypervolume {
     return n;
   }
 
-  public double calculateHypervolume(double [][] front, int  noPoints,int  noObjectives){
-    int     n;
-    double  volume, distance;
+  public double calculateHypervolume(double[][] front, int noPoints, int noObjectives) {
+    int n;
+    double volume, distance;
 
     volume = 0;
     distance = 0;
     n = noPoints;
     while (n > 0) {
-      int     noNondominatedPoints;
-      double  tempVolume, tempDistance;
+      int noNondominatedPoints;
+      double tempVolume, tempDistance;
 
       noNondominatedPoints = filterNondominatedSet(front, n, noObjectives - 1);
       //noNondominatedPoints = front.length;
@@ -168,8 +195,8 @@ public class Hypervolume {
         tempVolume = front[0][0];
       } else {
         tempVolume = calculateHypervolume(front,
-                noNondominatedPoints,
-                noObjectives - 1);
+          noNondominatedPoints,
+          noObjectives - 1);
       }
 
       tempDistance = surfaceUnchangedTo(front, n, noObjectives - 1);
@@ -180,14 +207,12 @@ public class Hypervolume {
     return volume;
   }
 
-
   /* merge two fronts */
-  double [][] mergeFronts(double [][] front1, int  sizeFront1,
-                          double [][] front2, int  sizeFront2, int  noObjectives)
-  {
-    int  i, j;
-    int  noPoints;
-    double [][] frontPtr;
+  double[][] mergeFronts(double[][] front1, int sizeFront1,
+    double[][] front2, int sizeFront2, int noObjectives) {
+    int i, j;
+    int noPoints;
+    double[][] frontPtr;
 
     /* allocate memory */
     noPoints = sizeFront1 + sizeFront2;
@@ -213,13 +238,14 @@ public class Hypervolume {
   /**
    * Returns the hypevolume value of the paretoFront. This method call to the
    * calculate hipervolume one
-   * @param paretoFront The pareto front
-   * @param paretoTrueFront The true pareto front
+   *
+   * @param paretoFront        The pareto front
+   * @param paretoTrueFront    The true pareto front
    * @param numberOfObjectives Number of objectives of the pareto front
    */
-  public double hypervolume(double [][] paretoFront,
-                            double [][] paretoTrueFront,
-                            int numberOfObjectives) {
+  public double hypervolume(double[][] paretoFront,
+    double[][] paretoTrueFront,
+    int numberOfObjectives) {
 
     /**
      * Stores the maximum values of true pareto front.
@@ -234,54 +260,27 @@ public class Hypervolume {
     /**
      * Stores the normalized front.
      */
-    double [][] normalizedFront;
+    double[][] normalizedFront;
 
     /**
      * Stores the inverted front. Needed for minimization problems
      */
-    double [][] invertedFront;
+    double[][] invertedFront;
 
     // STEP 1. Obtain the maximum and minimum values of the Pareto front
-    maximumValues = utils_.getMaximumValues(paretoTrueFront,numberOfObjectives);
-    minimumValues = utils_.getMinimumValues(paretoTrueFront,numberOfObjectives);
+    maximumValues = utils_.getMaximumValues(paretoTrueFront, numberOfObjectives);
+    minimumValues = utils_.getMinimumValues(paretoTrueFront, numberOfObjectives);
 
     // STEP 2. Get the normalized front
     normalizedFront = utils_.getNormalizedFront(paretoFront,
-            maximumValues,
-            minimumValues);
+      maximumValues,
+      minimumValues);
 
     // STEP 3. Inverse the pareto front. This is needed because of the original
     //metric by Zitzler is for maximization problems
     invertedFront = utils_.invertedFront(normalizedFront);
 
     // STEP4. The hypervolumen (control is passed to java version of Zitzler code)
-    return this.calculateHypervolume(invertedFront,invertedFront.length,numberOfObjectives);
-  }
-
-  /**
-   * This class can be invoqued from the command line. Three params are required:
-   * 1) the name of the file containing the front,  
-   * 2) the name of the file containig the true Pareto front
-   * 3) the number of objectives
-   * @throws JMException
-   */
-  public static void main(String args[]) throws JMException {
-    if (args.length < 2) {
-      throw new JMException("Error using Hypervolume. Usage: \n java jmetal.qualityIndicator.Hypervolume " +
-              "<SolutionFrontFile> " +
-              "<TrueFrontFile> " + "<getNumberOfObjectives>");
-    }
-
-    //Create a new instance of the metric
-    Hypervolume qualityIndicator = new Hypervolume();
-
-    //Read the front from the files
-    double [][] solutionFront = qualityIndicator.utils_.readFront(args[0]);
-    double [][] trueFront     = qualityIndicator.utils_.readFront(args[1]);
-
-    //Obtain delta value
-    double value = qualityIndicator.hypervolume(solutionFront, trueFront, new Integer(args[2]));
-
-    System.out.println(value);
+    return this.calculateHypervolume(invertedFront, invertedFront.length, numberOfObjectives);
   }
 }

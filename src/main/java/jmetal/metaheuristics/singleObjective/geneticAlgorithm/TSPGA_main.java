@@ -33,60 +33,60 @@ import jmetal.problems.singleObjective.TSP;
 import java.util.HashMap;
 
 /**
- * This class runs a single-objective genetic algorithm (GA). The GA can be 
+ * This class runs a single-objective genetic algorithm (GA). The GA can be
  * a steady-state GA (class SSGA) or a generational GA (class GGA). The TSP
  * is used to test the algorithms. The data files accepted as in input are from
  * TSPLIB.
  */
 public class TSPGA_main {
 
-  public static void main(String [] args) throws Exception {
-    Problem   problem   ;
-    Algorithm algorithm ;
-    Operator  crossover ;
-    Operator  mutation  ;
-    Operator  selection ;
-        
-    String problemName = "eil101.tsp" ;
-    
+  public static void main(String[] args) throws Exception {
+    Problem problem;
+    Algorithm algorithm;
+    Operator crossover;
+    Operator mutation;
+    Operator selection;
+
+    String problemName = "eil101.tsp";
+
     problem = new TSP("Permutation", problemName);
-    
+
     algorithm = new ssGA(problem);
     //algorithm = new gGA(problem) ;
-    
+
     // Algorithm params
-    algorithm.setInputParameter("populationSize",100);
-    algorithm.setInputParameter("maxEvaluations",2000000);
-    
+    algorithm.setInputParameter("populationSize", 100);
+    algorithm.setInputParameter("maxEvaluations", 2000000);
+
     // Mutation and Crossover for Real codification
-    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
-    crossoverParameters.put("probability", 0.95) ;
+    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
+    crossoverParameters.put("probability", 0.95);
     crossover = CrossoverFactory.getCrossoverOperator("TwoPointsCrossover", crossoverParameters);
     //crossover = CrossoverFactory.getCrossoverOperator("PMXCrossover");
-    
-    HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
-    mutationParameters.put("probability", 0.2) ;
+
+    HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
+    mutationParameters.put("probability", 0.2);
     mutation = MutationFactory.getMutationOperator("SwapMutation", mutationParameters);                    
   
     /* Selection Operator */
     HashMap<String, Object> selectionParameters = null; // FIXME: why we are passing null?
-    selection = SelectionFactory.getSelectionOperator("BinaryTournament", selectionParameters) ;                            
+    selection = SelectionFactory.getSelectionOperator("BinaryTournament", selectionParameters);
     
     /* Add the operators to the algorithm*/
-    algorithm.addOperator("crossover",crossover);
-    algorithm.addOperator("mutation",mutation);
-    algorithm.addOperator("selection",selection);
+    algorithm.addOperator("crossover", crossover);
+    algorithm.addOperator("mutation", mutation);
+    algorithm.addOperator("selection", selection);
 
     /* Execute the Algorithm */
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;
-    System.out.println("Total time of execution: "+estimatedTime);
+    System.out.println("Total time of execution: " + estimatedTime);
 
     /* Log messages */
     System.out.println("Objectives values have been writen to file FUN");
     population.printObjectivesToFile("FUN");
     System.out.println("Variables values have been writen to file VAR");
-    population.printVariablesToFile("VAR");          
+    population.printVariablesToFile("VAR");
   }
 }

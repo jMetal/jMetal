@@ -43,38 +43,38 @@ import java.util.logging.Logger;
  * Class for configuring and running the FastPGA algorithm
  */
 public class FastPGA_main {
-  public static Logger      logger_ ;      // Logger object
-  public static FileHandler fileHandler_ ; // FileHandler object
-  
-  /**
-   * @param args Command line arguments. The first (optional) argument specifies 
-   *             the problem to solve.
-   * @throws JMException 
-   */
-  public static void main(String [] args) throws JMException, IOException, ClassNotFoundException {
-    Problem   problem   ;
-    Algorithm algorithm ;
-    Operator  crossover ;
-    Operator  mutation  ;
-    Operator  selection ;
+  public static Logger logger_;      // Logger object
+  public static FileHandler fileHandler_; // FileHandler object
 
-    QualityIndicator indicators ;
+  /**
+   * @param args Command line arguments. The first (optional) argument specifies
+   *             the problem to solve.
+   * @throws JMException
+   */
+  public static void main(String[] args) throws JMException, IOException, ClassNotFoundException {
+    Problem problem;
+    Algorithm algorithm;
+    Operator crossover;
+    Operator mutation;
+    Operator selection;
+
+    QualityIndicator indicators;
 
     // Logger object and file to store log messages
-    logger_      = Configuration.logger_ ;
-    fileHandler_ = new FileHandler("FastPGA_main.log"); 
-    logger_.addHandler(fileHandler_) ;
-    
-    indicators = null ;
+    logger_ = Configuration.logger_;
+    fileHandler_ = new FileHandler("FastPGA_main.log");
+    logger_.addHandler(fileHandler_);
+
+    indicators = null;
     if (args.length == 1) {
-      Object [] params = {"Real"};
-      problem = (new ProblemFactory()).getProblem(args[0],params);
+      Object[] params = {"Real"};
+      problem = (new ProblemFactory()).getProblem(args[0], params);
     } else if (args.length == 2) {
-      Object [] params = {"Real"};
-      problem = (new ProblemFactory()).getProblem(args[0],params);
-      indicators = new QualityIndicator(problem, args[1]) ;
+      Object[] params = {"Real"};
+      problem = (new ProblemFactory()).getProblem(args[0], params);
+      indicators = new QualityIndicator(problem, args[1]);
     } else {
-      problem = new Kursawe("Real", 3); 
+      problem = new Kursawe("Real", 3);
       //problem = new Kursawe("BinaryReal", 3);
       //problem = new Water("Real");
       //problem = new ZDT1("ArrayReal", 100);
@@ -85,64 +85,64 @@ public class FastPGA_main {
 
     algorithm = new FastPGA(problem);
 
-    algorithm.setInputParameter("maxPopSize",100);
-    algorithm.setInputParameter("initialPopulationSize",100);
-    algorithm.setInputParameter("maxEvaluations",25000);
-    algorithm.setInputParameter("a",20.0);
-    algorithm.setInputParameter("b",1.0);
-    algorithm.setInputParameter("c",20.0);
-    algorithm.setInputParameter("d",0.0);
+    algorithm.setInputParameter("maxPopSize", 100);
+    algorithm.setInputParameter("initialPopulationSize", 100);
+    algorithm.setInputParameter("maxEvaluations", 25000);
+    algorithm.setInputParameter("a", 20.0);
+    algorithm.setInputParameter("b", 1.0);
+    algorithm.setInputParameter("c", 20.0);
+    algorithm.setInputParameter("d", 0.0);
 
     // Parameter "termination"
     // If the preferred stopping criterium is PPR based, termination must 
     // be set to 0; otherwise, if the algorithm is intended to iterate until 
     // a give number of evaluations is carried out, termination must be set to 
     // that number
-    algorithm.setInputParameter("termination",1);
+    algorithm.setInputParameter("termination", 1);
 
     // Mutation and Crossover for Real codification 
-    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
-    crossoverParameters.put("probability", 0.9) ;
-    crossoverParameters.put("distributionIndex", 20.0) ;
-    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", crossoverParameters);                   
+    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
+    crossoverParameters.put("probability", 0.9);
+    crossoverParameters.put("distributionIndex", 20.0);
+    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", crossoverParameters);
     //crossover.setParameter("probability",0.9);                   
     //crossover.setParameter("distributionIndex",20.0);
 
-    HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
-    mutationParameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
-    mutationParameters.put("distributionIndex", 20.0) ;
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);         
+    HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
+    mutationParameters.put("probability", 1.0 / problem.getNumberOfVariables());
+    mutationParameters.put("distributionIndex", 20.0);
+    mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
     // Mutation and Crossover for Binary codification
-    
-    HashMap<String, Object> selectionParameters = new HashMap<String, Object>() ; 
-    selectionParameters.put("comparator", new FPGAFitnessComparator()) ;
+
+    HashMap<String, Object> selectionParameters = new HashMap<String, Object>();
+    selectionParameters.put("comparator", new FPGAFitnessComparator());
     selection = new BinaryTournament(selectionParameters);
-    
-    algorithm.addOperator("crossover",crossover);
-    algorithm.addOperator("mutation",mutation);
-    algorithm.addOperator("selection",selection);
+
+    algorithm.addOperator("crossover", crossover);
+    algorithm.addOperator("mutation", mutation);
+    algorithm.addOperator("selection", selection);
 
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;
-    
+
     // Result messages 
-    logger_.info("Total execution time: "+estimatedTime + "ms");
+    logger_.info("Total execution time: " + estimatedTime + "ms");
     logger_.info("Variables values have been writen to file VAR");
-    population.printVariablesToFile("VAR");    
+    population.printVariablesToFile("VAR");
     logger_.info("Objectives values have been writen to file FUN");
     population.printObjectivesToFile("FUN");
-  
+
     if (indicators != null) {
-      logger_.info("Quality indicators") ;
-      logger_.info("Hypervolume: " + indicators.getHypervolume(population)) ;
-      logger_.info("GD         : " + indicators.getGD(population)) ;
-      logger_.info("IGD        : " + indicators.getIGD(population)) ;
-      logger_.info("Spread     : " + indicators.getSpread(population)) ;
-      logger_.info("Epsilon    : " + indicators.getEpsilon(population)) ;  
-     
-      int evaluations = ((Integer)algorithm.getOutputParameter("evaluations")).intValue();
-      logger_.info("Speed      : " + evaluations + " evaluations") ;      
+      logger_.info("Quality indicators");
+      logger_.info("Hypervolume: " + indicators.getHypervolume(population));
+      logger_.info("GD         : " + indicators.getGD(population));
+      logger_.info("IGD        : " + indicators.getIGD(population));
+      logger_.info("Spread     : " + indicators.getSpread(population));
+      logger_.info("Epsilon    : " + indicators.getEpsilon(population));
+
+      int evaluations = ((Integer) algorithm.getOutputParameter("evaluations")).intValue();
+      logger_.info("Speed      : " + evaluations + " evaluations");
     }
   }
 }

@@ -28,13 +28,13 @@ import jmetal.util.comparators.DominanceComparator;
 import java.util.Comparator;
 import java.util.Iterator;
 
-/** 
+/**
  * This class implements an unbound list of non-dominated solutions
  */
-public class NonDominatedSolutionList2 extends SolutionSet{
+public class NonDominatedSolutionList2 extends SolutionSet {
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = -7677616121792063119L;
 
@@ -43,7 +43,7 @@ public class NonDominatedSolutionList2 extends SolutionSet{
    */
   private Comparator<Solution> dominance_ = new DominanceComparator();
 
-  private int solutionCounter_ ;
+  private int solutionCounter_;
 
   /**
    * Constructor.
@@ -52,50 +52,53 @@ public class NonDominatedSolutionList2 extends SolutionSet{
    */
   public NonDominatedSolutionList2() {
     super();
-    solutionCounter_ = 0 ;
+    solutionCounter_ = 0;
   }
 
   /**
    * Constructor.
    * This constructor creates a list of non-dominated individuals using a
    * comparator object.
+   *
    * @param dominance The comparator for dominance checking.
    */
   public NonDominatedSolutionList2(Comparator<Solution> dominance) {
     super();
     dominance_ = dominance;
-    solutionCounter_ = 0 ;
+    solutionCounter_ = 0;
   }
 
   public void reset() {
-    solutionCounter_ = 0 ;
+    solutionCounter_ = 0;
   }
 
-  /** Inserts a solution in the list
+  /**
+   * Inserts a solution in the list
+   *
    * @param solution The solution to be inserted.
-   * @return true if the operation success, and false if the solution is 
+   * @return true if the operation success, and false if the solution is
    * dominated or if an identical individual exists.
    * The decision variables can be null if the solution is read from a file; in
    * that case, the domination tests are omitted
    */
-  public boolean add(Solution solution){
+  public boolean add(Solution solution) {
     if (solutionsList_.size() == 0) {
-      Solution s = new Solution(solution.getNumberOfObjectives()) ;
+      Solution s = new Solution(solution.getNumberOfObjectives());
       for (int i = 0; i < s.getNumberOfObjectives(); i++) {
         s.setObjective(i, solution.getObjective(i));
       }
       solutionsList_.add(s);
-      solutionCounter_ = 1 ;
-      return true ;
+      solutionCounter_ = 1;
+      return true;
     } else {
       Iterator<Solution> iterator = solutionsList_.iterator();
 
-      while (iterator.hasNext()){
+      while (iterator.hasNext()) {
         Solution listIndividual = iterator.next();
-        int flag = dominance_.compare(solution,listIndividual);
+        int flag = dominance_.compare(solution, listIndividual);
 
         if (flag == -1) {
-        // A solution in the list is dominated by the new one
+          // A solution in the list is dominated by the new one
           iterator.remove();
         } else if (flag == 0) { // Non-dominated solutions
           //flag = equal_.compare(solution,listIndividual);
@@ -108,13 +111,13 @@ public class NonDominatedSolutionList2 extends SolutionSet{
       }
 
       //At this point, the solution is inserted into the list
-      Solution s = new Solution(solution.getNumberOfObjectives()) ;
+      Solution s = new Solution(solution.getNumberOfObjectives());
       for (int i = 0; i < s.getNumberOfObjectives(); i++) {
         s.setObjective(i, solution.getObjective(i));
       }
       solutionsList_.add(s);
 
-      return true;        
+      return true;
     }
   }
 }

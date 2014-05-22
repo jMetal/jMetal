@@ -41,44 +41,44 @@ import java.util.HashMap;
  */
 public class pgGA_main {
 
-  public static void main(String [] args) throws JMException, ClassNotFoundException, IOException {
-    Problem   problem   ;
-    Algorithm algorithm ;
-    Operator  crossover ;
-    Operator  mutation  ;
-    Operator  selection ;
+  public static void main(String[] args) throws JMException, ClassNotFoundException, IOException {
+    Problem problem;
+    Algorithm algorithm;
+    Operator crossover;
+    Operator mutation;
+    Operator selection;
 
-    int threads = 4 ; // 0 - use all the available cores
-    SynchronousParallelRunner parallelEvaluator = new MultithreadedEvaluator(threads) ;
+    int threads = 4; // 0 - use all the available cores
+    SynchronousParallelRunner parallelEvaluator = new MultithreadedEvaluator(threads);
 
     //problem = new Sphere("Real", 10) ;
-    problem = new Griewank("Real", 10) ;
+    problem = new Griewank("Real", 10);
 
-    algorithm = new pgGA(problem, parallelEvaluator) ; // Generational GA
+    algorithm = new pgGA(problem, parallelEvaluator); // Generational GA
 
     /* Algorithm parameters*/
-    algorithm.setInputParameter("populationSize",100);
+    algorithm.setInputParameter("populationSize", 100);
     algorithm.setInputParameter("maxEvaluations", 2500000);
 
     // Mutation and Crossover for Real codification
-    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
-    crossoverParameters.put("probability", 0.9) ;
-    crossoverParameters.put("distributionIndex", 20.0) ;
+    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
+    crossoverParameters.put("probability", 0.9);
+    crossoverParameters.put("distributionIndex", 20.0);
     crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", crossoverParameters);
 
-    HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
-    mutationParameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
-    mutationParameters.put("distributionIndex", 20.0) ;
+    HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
+    mutationParameters.put("probability", 1.0 / problem.getNumberOfVariables());
+    mutationParameters.put("distributionIndex", 20.0);
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
     
     /* Selection Operator */
-    HashMap<String, Object> selectionParameters = null ; // FIXME: why we are passing null?
-    selection = SelectionFactory.getSelectionOperator("BinaryTournament", selectionParameters) ;                            
+    HashMap<String, Object> selectionParameters = null; // FIXME: why we are passing null?
+    selection = SelectionFactory.getSelectionOperator("BinaryTournament", selectionParameters);
     
     /* Add the operators to the algorithm*/
-    algorithm.addOperator("crossover",crossover);
-    algorithm.addOperator("mutation",mutation);
-    algorithm.addOperator("selection",selection);
+    algorithm.addOperator("crossover", crossover);
+    algorithm.addOperator("mutation", mutation);
+    algorithm.addOperator("selection", selection);
  
     /* Execute the Algorithm */
     long initTime = System.currentTimeMillis();

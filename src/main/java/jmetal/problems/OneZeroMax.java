@@ -18,7 +18,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>. * OneZeroMax.java
 
-package jmetal.problems ;
+package jmetal.problems;
 
 import jmetal.core.Problem;
 import jmetal.core.Solution;
@@ -39,51 +39,54 @@ public class OneZeroMax extends Problem {
 
   /**
    * Creates a new OneZeroMax problem instance
+   *
    * @param solutionType Solution type
    * @throws ClassNotFoundException
    */
   public OneZeroMax(String solutionType) throws ClassNotFoundException, JMException {
-    this(solutionType, 512) ;
+    this(solutionType, 512);
   }
 
   /**
    * Creates a new OneZeroMax problem instance
+   *
    * @param solutionType Solution type
    * @param numberOfBits Length of the problem
    */
   public OneZeroMax(String solutionType, Integer numberOfBits) throws JMException {
-    numberOfVariables_  = 1;
+    numberOfVariables_ = 1;
     numberOfObjectives_ = 2;
-    numberOfConstraints_= 0;
-    problemName_        = "OneZeroMax";
+    numberOfConstraints_ = 0;
+    problemName_ = "OneZeroMax";
 
-    solutionType_ = new BinarySolutionType(this) ;
+    solutionType_ = new BinarySolutionType(this);
 
-    length_       = new int[numberOfVariables_];
-    length_      [0] = numberOfBits ;
+    length_ = new int[numberOfVariables_];
+    length_[0] = numberOfBits;
 
     if (solutionType.compareTo("Binary") == 0) {
       solutionType_ = new BinarySolutionType(this);
     } else {
-      throw new JMException("Error: solution type " + solutionType + " invalid") ;
+      throw new JMException("Error: solution type " + solutionType + " invalid");
     }
   }
 
   /**
-   * Evaluates a solution 
+   * Evaluates a solution
+   *
    * @param solution The solution to evaluate
    */
   public void evaluate(Solution solution) {
-    Binary variable ;
-    int    counterOnes   ;
-    int    counterZeroes ;
+    Binary variable;
+    int counterOnes;
+    int counterZeroes;
 
-    variable = ((Binary)solution.getDecisionVariables()[0]) ;
+    variable = ((Binary) solution.getDecisionVariables()[0]);
 
-    counterOnes = 0 ;
-    counterZeroes = 0 ;
+    counterOnes = 0;
+    counterZeroes = 0;
 
-    for (int i = 0; i < variable.getNumberOfBits() ; i++) {
+    for (int i = 0; i < variable.getNumberOfBits(); i++) {
       if (variable.getBits().get(i)) {
         counterOnes++;
       } else {
@@ -92,7 +95,7 @@ public class OneZeroMax extends Problem {
     }
 
     // OneZeroMax is a maximization problem: multiply by -1 to minimize
-    solution.setObjective(0, -1.0*counterOnes);
-    solution.setObjective(1, -1.0*counterZeroes);
+    solution.setObjective(0, -1.0 * counterOnes);
+    solution.setObjective(1, -1.0 * counterZeroes);
   }
 }

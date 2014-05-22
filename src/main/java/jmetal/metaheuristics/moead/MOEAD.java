@@ -25,6 +25,7 @@ import jmetal.core.*;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.random.PseudoRandom;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
@@ -35,15 +36,9 @@ import java.util.logging.Level;
 public class MOEAD extends Algorithm {
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = -8602634334286344579L;
-    
-  private int populationSize_;
-  /**
-   * Stores the population
-   */
-  private SolutionSet population_;
   /**
    * Z vector (ideal point)
    */
@@ -51,7 +46,7 @@ public class MOEAD extends Algorithm {
   /**
    * Lambda vectors
    */
-  //Vector<Vector<Double>> lambda_ ; 
+  //Vector<Vector<Double>> lambda_ ;
   double[][] lambda_;
   /**
    * T: neighbour size
@@ -77,15 +72,20 @@ public class MOEAD extends Algorithm {
    */
   Operator crossover_;
   Operator mutation_;
-
   String dataDirectory_;
+  private int populationSize_;
+  /**
+   * Stores the population
+   */
+  private SolutionSet population_;
 
-  /** 
+  /**
    * Constructor
+   *
    * @param problem Problem to solve
    */
   public MOEAD(Problem problem) {
-    super (problem) ;
+    super(problem);
 
     functionType_ = "_TCHE1";
 
@@ -98,7 +98,7 @@ public class MOEAD extends Algorithm {
     maxEvaluations = ((Integer) this.getInputParameter("maxEvaluations")).intValue();
     populationSize_ = ((Integer) this.getInputParameter("populationSize")).intValue();
     dataDirectory_ = this.getInputParameter("dataDirectory").toString();
-    System.out.println("POPSIZE: "+ populationSize_) ;
+    System.out.println("POPSIZE: " + populationSize_);
 
     population_ = new SolutionSet(populationSize_);
     indArray_ = new Solution[problem_.getNumberOfObjectives()];
@@ -125,8 +125,8 @@ public class MOEAD extends Algorithm {
     // STEP 1.1. Compute euclidean distances between weight vectors and find T
     initUniformWeight();
     //for (int i = 0; i < 300; i++)
-   // 	System.out.println(lambda_[i][0] + " " + lambda_[i][1]) ;
-    
+    // 	System.out.println(lambda_[i][0] + " " + lambda_[i][1]) ;
+
     initNeighborhood();
 
     // STEP 1.2. Initialize population
@@ -165,14 +165,14 @@ public class MOEAD extends Algorithm {
         parents[2] = population_.get(n);
 
         // Apply DE crossover 
-        child = (Solution) crossover_.execute(new Object[]{population_.get(n), parents});
+        child = (Solution) crossover_.execute(new Object[] {population_.get(n), parents});
 
         // Apply mutation
         mutation_.execute(child);
 
         // Evaluation
-        problem_.evaluate(child);      
-        
+        problem_.evaluate(child);
+
         evaluations_++;
 
         // STEP 2.3. Repair. Not necessary
@@ -188,7 +188,7 @@ public class MOEAD extends Algorithm {
     return population_;
   }
 
- 
+
   /**
    * initUniformWeight
    */
@@ -204,11 +204,13 @@ public class MOEAD extends Algorithm {
       String dataFileName;
       dataFileName = "W" + problem_.getNumberOfObjectives() + "D_" +
         populationSize_ + ".dat";
-   
+
       try {
         // Open the file from the resources directory
         FileInputStream fis =
-                new FileInputStream(this.getClass().getClassLoader().getResource(dataDirectory_ + "/" + dataFileName).getPath());
+          new FileInputStream(
+            this.getClass().getClassLoader().getResource(dataDirectory_ + "/" + dataFileName)
+              .getPath());
         InputStreamReader isr = new InputStreamReader(fis);
         BufferedReader br = new BufferedReader(isr);
 
@@ -232,16 +234,17 @@ public class MOEAD extends Algorithm {
         br.close();
       } catch (Exception e) {
         Configuration.logger_.log(
-                Level.SEVERE,
-                "initUniformWeight: failed when reading for file: " + dataDirectory_ + "/" + dataFileName,
-                e);
+          Level.SEVERE,
+          "initUniformWeight: failed when reading for file: " + dataDirectory_ + "/" + dataFileName,
+          e);
       }
     } // else
 
     //System.exit(0) ;
   } // initUniformWeight
+
   /**
-   * 
+   *
    */
   public void initNeighborhood() {
     double[] x = new double[populationSize_];
@@ -253,19 +256,19 @@ public class MOEAD extends Algorithm {
         x[j] = Utils.distVector(lambda_[i], lambda_[j]);
         //x[j] = dist_vector(population[i].namda,population[j].namda);
         idx[j] = j;
-      //System.out.println("x["+j+"]: "+x[j]+ ". idx["+j+"]: "+idx[j]) ;
+        //System.out.println("x["+j+"]: "+x[j]+ ". idx["+j+"]: "+idx[j]) ;
       } // for
 
       // find 'niche' nearest neighboring subproblems
       Utils.minFastSort(x, idx, populationSize_, T_);
       //minfastsort(x,idx,population.size(),niche);
 
-        System.arraycopy(idx, 0, neighborhood_[i], 0, T_);
+      System.arraycopy(idx, 0, neighborhood_[i], 0, T_);
     } // for
   } // initNeighborhood
 
   /**
-   * 
+   *
    */
   public void initPopulation() throws JMException, ClassNotFoundException {
     for (int i = 0; i < populationSize_; i++) {
@@ -273,12 +276,12 @@ public class MOEAD extends Algorithm {
 
       problem_.evaluate(newSolution);
       evaluations_++;
-      population_.add(newSolution) ;
+      population_.add(newSolution);
     } // for
   } // initPopulation
 
   /**
-   * 
+   *
    */
   void initIdealPoint() throws JMException, ClassNotFoundException {
     for (int i = 0; i < problem_.getNumberOfObjectives(); i++) {
@@ -294,7 +297,7 @@ public class MOEAD extends Algorithm {
   } // initIdealPoint
 
   /**
-   * 
+   *
    */
   public void matingSelection(Vector<Integer> list, int cid, int size, int type) {
     // list : the set of the indexes of selected mating parents
@@ -310,7 +313,7 @@ public class MOEAD extends Algorithm {
       if (type == 1) {
         r = PseudoRandom.randInt(0, ss - 1);
         p = neighborhood_[cid][r];
-      //p = population[cid].table[r];
+        //p = population[cid].table[r];
       } else {
         p = PseudoRandom.randInt(0, populationSize_ - 1);
       }
@@ -331,7 +334,6 @@ public class MOEAD extends Algorithm {
   } // matingSelection
 
   /**
-   * 
    * @param individual
    */
   void updateReference(Solution individual) {
@@ -372,7 +374,8 @@ public class MOEAD extends Algorithm {
       if (type == 1) {
         k = neighborhood_[id][perm[i]];
       } else {
-        k = perm[i];      // calculate the values of objective function regarding the current subproblem
+        k =
+          perm[i];      // calculate the values of objective function regarding the current subproblem
       }
       double f1, f2;
 
@@ -415,7 +418,7 @@ public class MOEAD extends Algorithm {
       fitness = maxFun;
     } // if
     else {
-      throw new JMException(" MOEAD.fitnessFunction: unknown type " + functionType_) ;
+      throw new JMException(" MOEAD.fitnessFunction: unknown type " + functionType_);
     }
     return fitness;
   } // fitnessEvaluation

@@ -1,6 +1,6 @@
 /**
  * dMOPSO_main.java
- * 
+ *
  * @version 1.0
  */
 
@@ -20,40 +20,39 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
 public class dMOPSO_main {
-  public static Logger      logger_ ;      // Logger object
-  public static FileHandler fileHandler_ ; // FileHandler object
+  public static Logger logger_;      // Logger object
+  public static FileHandler fileHandler_; // FileHandler object
 
   /**
-   * @param args Command line arguments. The first (optional) argument specifies 
+   * @param args Command line arguments. The first (optional) argument specifies
    *             the problem to solve.
-   * @throws JMException 
-   * @throws IOException 
-   * @throws SecurityException 
-   * Usage: three options
-   *      - jmetal.metaheuristics.mocell.MOCell_main
-   *      - jmetal.metaheuristics.mocell.MOCell_main problemName
-   *      - jmetal.metaheuristics.mocell.MOCell_main problemName ParetoFrontFile
+   * @throws JMException
+   * @throws IOException
+   * @throws SecurityException Usage: three options
+   *                           - jmetal.metaheuristics.mocell.MOCell_main
+   *                           - jmetal.metaheuristics.mocell.MOCell_main problemName
+   *                           - jmetal.metaheuristics.mocell.MOCell_main problemName ParetoFrontFile
    */
-  public static void main(String [] args) throws JMException, IOException, ClassNotFoundException {
-    Problem   problem   ;
-    Algorithm algorithm ;
-    QualityIndicator indicators ;
-        
+  public static void main(String[] args) throws JMException, IOException, ClassNotFoundException {
+    Problem problem;
+    Algorithm algorithm;
+    QualityIndicator indicators;
+
     // Logger object and file to store log messages
-    logger_      = Configuration.logger_ ;
-    fileHandler_ = new FileHandler("dMOPSO_main.log"); 
-    logger_.addHandler(fileHandler_) ;
-    
-    indicators = null ;
+    logger_ = Configuration.logger_;
+    fileHandler_ = new FileHandler("dMOPSO_main.log");
+    logger_.addHandler(fileHandler_);
+
+    indicators = null;
     if (args.length == 1) {
-      Object [] params = {"Real"};
-      problem = (new ProblemFactory()).getProblem(args[0],params);
+      Object[] params = {"Real"};
+      problem = (new ProblemFactory()).getProblem(args[0], params);
     } else if (args.length == 2) {
-      Object [] params = {"Real"};
-      problem = (new ProblemFactory()).getProblem(args[0],params);
-      indicators = new QualityIndicator(problem, args[1]) ;
+      Object[] params = {"Real"};
+      problem = (new ProblemFactory()).getProblem(args[0], params);
+      indicators = new QualityIndicator(problem, args[1]);
     } else { // Default problem
-//      problem = new Metamatching("Real"); 
+      //      problem = new Metamatching("Real");
       //problem = new Kursawe("Real", 3);
       //problem = new Fonseca("Real");
       //problem = new Water("Real");
@@ -66,34 +65,34 @@ public class dMOPSO_main {
       //problem = new LZ09_F1("Real");
     }
 
-    algorithm = new dMOPSO(problem) ;
-    
+    algorithm = new dMOPSO(problem);
+
     // Algorithm parameters
-    algorithm.setInputParameter("swarmSize",100);
-    algorithm.setInputParameter("maxAge",2);
-    algorithm.setInputParameter("maxIterations",250);
-    algorithm.setInputParameter("functionType","_TCHE");
+    algorithm.setInputParameter("swarmSize", 100);
+    algorithm.setInputParameter("maxAge", 2);
+    algorithm.setInputParameter("maxIterations", 250);
+    algorithm.setInputParameter("functionType", "_TCHE");
     algorithm.setInputParameter("dataDirectory", "MOEAD_Weight");
 
     // Execute the Algorithm 
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;
-    
+
     // Result messages 
-    logger_.info("Total execution time: "+estimatedTime + "ms");
+    logger_.info("Total execution time: " + estimatedTime + "ms");
     logger_.info("Objectives values have been writen to file FUN");
     population.printObjectivesToFile("FUN");
     logger_.info("Variables values have been writen to file VAR");
-    population.printVariablesToFile("VAR");      
-    
+    population.printVariablesToFile("VAR");
+
     if (indicators != null) {
-      logger_.info("Quality indicators") ;
-      logger_.info("Hypervolume: " + indicators.getHypervolume(population)) ;
-      logger_.info("GD         : " + indicators.getGD(population)) ;
-      logger_.info("IGD        : " + indicators.getIGD(population)) ;
-      logger_.info("Spread     : " + indicators.getSpread(population)) ;
-      logger_.info("Epsilon    : " + indicators.getEpsilon(population)) ;
+      logger_.info("Quality indicators");
+      logger_.info("Hypervolume: " + indicators.getHypervolume(population));
+      logger_.info("GD         : " + indicators.getGD(population));
+      logger_.info("IGD        : " + indicators.getIGD(population));
+      logger_.info("Spread     : " + indicators.getSpread(population));
+      logger_.info("Epsilon    : " + indicators.getEpsilon(population));
     }
   }
 }

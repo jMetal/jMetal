@@ -38,38 +38,37 @@ import java.util.logging.Logger;
  * Class for configuring and running the RandomSearch algorithm
  */
 public class RandomSearch_main {
-  public static Logger      logger_ ;      // Logger object
-  public static FileHandler fileHandler_ ; // FileHandler object
+  public static Logger logger_;      // Logger object
+  public static FileHandler fileHandler_; // FileHandler object
 
   /**
    * @param args Command line arguments.
    * @throws JMException
    * @throws IOException
-   * @throws SecurityException
-   * Usage: three options
-   *      - jmetal.metaheuristics.randomSearch.RandomSearch_main
-   *      - jmetal.metaheuristics.randomSearch.RandomSearch_main problemName
+   * @throws SecurityException Usage: three options
+   *                           - jmetal.metaheuristics.randomSearch.RandomSearch_main
+   *                           - jmetal.metaheuristics.randomSearch.RandomSearch_main problemName
    */
-  public static void main(String [] args) throws
-          JMException, SecurityException, IOException, ClassNotFoundException {
-    Problem   problem   ;
-    Algorithm algorithm ;
+  public static void main(String[] args) throws
+    JMException, SecurityException, IOException, ClassNotFoundException {
+    Problem problem;
+    Algorithm algorithm;
 
-    QualityIndicator indicators ;
+    QualityIndicator indicators;
 
     // Logger object and file to store log messages
-    logger_      = Configuration.logger_ ;
+    logger_ = Configuration.logger_;
     fileHandler_ = new FileHandler("RandomSearch_main.log");
-    logger_.addHandler(fileHandler_) ;
+    logger_.addHandler(fileHandler_);
 
-    indicators = null ;
+    indicators = null;
     if (args.length == 1) {
-      Object [] params = {"Real"};
-      problem = (new ProblemFactory()).getProblem(args[0],params);
+      Object[] params = {"Real"};
+      problem = (new ProblemFactory()).getProblem(args[0], params);
     } else if (args.length == 2) {
-      Object [] params = {"Real"};
-      problem = (new ProblemFactory()).getProblem(args[0],params);
-      indicators = new QualityIndicator(problem, args[1]) ;
+      Object[] params = {"Real"};
+      problem = (new ProblemFactory()).getProblem(args[0], params);
+      indicators = new QualityIndicator(problem, args[1]);
     } else {
       problem = new Kursawe("Real", 3);
       //problem = new Water("Real");
@@ -83,7 +82,7 @@ public class RandomSearch_main {
     algorithm = new RandomSearch(problem);
 
     // Algorithm parameters
-    algorithm.setInputParameter("maxEvaluations",25000);
+    algorithm.setInputParameter("maxEvaluations", 25000);
 
     // Execute the Algorithm
     long initTime = System.currentTimeMillis();
@@ -91,19 +90,19 @@ public class RandomSearch_main {
     long estimatedTime = System.currentTimeMillis() - initTime;
 
     // Result messages 
-    logger_.info("Total execution time: "+estimatedTime + "ms");
+    logger_.info("Total execution time: " + estimatedTime + "ms");
     logger_.info("Objectives values have been writen to file FUN");
     population.printObjectivesToFile("FUN");
     logger_.info("Variables values have been writen to file VAR");
     population.printVariablesToFile("VAR");
 
     if (indicators != null) {
-      logger_.info("Quality indicators") ;
-      logger_.info("Hypervolume: " + indicators.getHypervolume(population)) ;
-      logger_.info("GD         : " + indicators.getGD(population)) ;
-      logger_.info("IGD        : " + indicators.getIGD(population)) ;
-      logger_.info("Spread     : " + indicators.getSpread(population)) ;
-      logger_.info("Epsilon    : " + indicators.getEpsilon(population)) ;
+      logger_.info("Quality indicators");
+      logger_.info("Hypervolume: " + indicators.getHypervolume(population));
+      logger_.info("GD         : " + indicators.getGD(population));
+      logger_.info("IGD        : " + indicators.getIGD(population));
+      logger_.info("Spread     : " + indicators.getSpread(population));
+      logger_.info("Epsilon    : " + indicators.getEpsilon(population));
     }
   }
 }

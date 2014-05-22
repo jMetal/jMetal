@@ -36,14 +36,15 @@ import java.util.Comparator;
  * To change this template use File | Settings | File Templates.
  */
 public class PointComparator implements Comparator<Point> {
-  boolean maximizing_ ;
+  boolean maximizing_;
 
   public PointComparator(boolean maximizing) {
-    maximizing_ = maximizing ;
+    maximizing_ = maximizing;
   }
 
   /**
    * Compares two POINT objects according to the last objectives
+   *
    * @param o1 An object that reference a Point
    * @param o2 An object that reference a Point
    * @return -1 if o1 < o1, 1 if o1 > o2 or 0 in other case.
@@ -51,25 +52,23 @@ public class PointComparator implements Comparator<Point> {
   @Override
   public int compare(Point o1, Point o2) {
     //Cast to double [] o1 and o2.
-    Point pointOne = (Point)o1;
-    Point pointTwo = (Point)o2;
+    Point pointOne = (Point) o1;
+    Point pointTwo = (Point) o2;
 
-    for (int i = pointOne.getNumberOfObjectives() - 1 ; i >= 0 ; i--) {
+    for (int i = pointOne.getNumberOfObjectives() - 1; i >= 0; i--) {
       if (isBetter(pointOne.objectives_[i], pointTwo.objectives_[i])) {
         return -1;
-      }
-      else if (isBetter(pointTwo.objectives_[i], pointOne.objectives_[i])) {
+      } else if (isBetter(pointTwo.objectives_[i], pointOne.objectives_[i])) {
         return 1;
       }
     }
-    return 0 ;
+    return 0;
   }
 
   private boolean isBetter(double v1, double v2) {
     if (maximizing_) {
       return (v1 > v2);
-    }
-    else {
+    } else {
       return (v2 > v1);
     }
   }

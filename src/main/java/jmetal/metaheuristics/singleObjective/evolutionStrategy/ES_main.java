@@ -32,29 +32,29 @@ import java.io.IOException;
 import java.util.HashMap;
 
 /**
- * This class runs a single-objective Evolution Strategy (ES). The ES can be 
- * a (mu+lambda) ES (class ElitistES) or a (mu,lambda) ES (class NonElitistGA). 
+ * This class runs a single-objective Evolution Strategy (ES). The ES can be
+ * a (mu+lambda) ES (class ElitistES) or a (mu,lambda) ES (class NonElitistGA).
  * The OneMax problem is used to test the algorithms.
  */
 public class ES_main {
 
-  public static void main(String [] args) throws JMException, ClassNotFoundException, IOException {
-    Problem   problem   ;
-    Algorithm algorithm ;
-    Operator  mutation  ;
+  public static void main(String[] args) throws JMException, ClassNotFoundException, IOException {
+    Problem problem;
+    Algorithm algorithm;
+    Operator mutation;
 
-    int bits ; // Length of bit string in the OneMax problem
-    
-    bits = 512 ;
+    int bits; // Length of bit string in the OneMax problem
+
+    bits = 512;
     problem = new OneMax("Binary", bits);
-    
-    int mu     ; 
-    int lambda ; 
-    
+
+    int mu;
+    int lambda;
+
     // Requirement: lambda must be divisible by mu
-    mu     = 1  ;
-    lambda = 10 ;
-    
+    mu = 1;
+    lambda = 10;
+
     algorithm = new ElitistES(problem, mu, lambda);
     //algorithm = new NonElitistES(problem, mu, lambda);
     
@@ -63,22 +63,22 @@ public class ES_main {
     
     /* Mutation and Crossover for Real codification */
     /* Mutation for Real codification */
-    HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
-    mutationParameters.put("probability", 1.0/bits) ;
-    mutation = MutationFactory.getMutationOperator("BitFlipMutation", mutationParameters);                    
-    
-    algorithm.addOperator("mutation",mutation);
+    HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
+    mutationParameters.put("probability", 1.0 / bits);
+    mutation = MutationFactory.getMutationOperator("BitFlipMutation", mutationParameters);
+
+    algorithm.addOperator("mutation", mutation);
  
     /* Execute the Algorithm */
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;
-    System.out.println("Total execution time: "+estimatedTime);
+    System.out.println("Total execution time: " + estimatedTime);
 
     /* Log messages */
     System.out.println("Objectives values have been writen to file FUN");
     population.printObjectivesToFile("FUN");
     System.out.println("Variables values have been writen to file VAR");
-    population.printVariablesToFile("VAR");          
+    population.printVariablesToFile("VAR");
   }
 }

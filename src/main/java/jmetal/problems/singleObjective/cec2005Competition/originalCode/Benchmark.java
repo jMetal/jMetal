@@ -45,7 +45,7 @@
 //		dated March 8, 2005.
 //
 
-package jmetal.problems.singleObjective.cec2005Competition.originalCode ;
+package jmetal.problems.singleObjective.cec2005Competition.originalCode;
 
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
@@ -61,7 +61,8 @@ public class Benchmark {
 
   // Fixed (class) parameters
   static final public int NUM_TEST_FUNC = 25;
-  static final public String DEFAULT_FILE_BIAS = Configuration.cec2005SupportDataDirectory + "/fbias_data.txt";
+  static final public String DEFAULT_FILE_BIAS =
+    Configuration.cec2005SupportDataDirectory + "/fbias_data.txt";
   static final public String[] test_func_class_names = {
     "F01_shifted_sphere",
     "F02_shifted_schwefel",
@@ -97,7 +98,8 @@ public class Benchmark {
   static final public double PIx2 = Math.PI * 2.0;
 
   // Formatter for the number representation
-  static final public DecimalFormat scientificFormatter = new DecimalFormat("0.0000000000000000E00");
+  static final public DecimalFormat scientificFormatter =
+    new DecimalFormat("0.0000000000000000E00");
   static final public DecimalFormat numberFormatter = scientificFormatter;
   static final public DecimalFormat percentageFormatter = new DecimalFormat("0.0000000000");
 
@@ -107,21 +109,13 @@ public class Benchmark {
 
   // Class loader & reflection
   static final public ClassLoader loader = ClassLoader.getSystemClassLoader();
-  static final Class[] test_func_arg_types = { int.class, double.class };
+  static final Class[] test_func_arg_types = {int.class, double.class};
 
   // Class variables
   static private double[] m_iSqrt;
 
   // Instance variables
   private double[] m_biases;
-
-  // Entry point
-  //	If the Benchmark class is executed as a stand-alone application,
-  //	its job is to run the test on all the test functions.
-  static public void main (String args[]) throws JMException {
-    Benchmark theBenchmark = new Benchmark();
-    theBenchmark.runTest(0);
-  }
 
   // Constructors
   //	Load the data common to all test functions.
@@ -136,110 +130,25 @@ public class Benchmark {
 
     loadRowVectorFromFile(file_bias, NUM_TEST_FUNC, m_biases);
 
-    for (int i = 0 ; i < MAX_SUPPORT_DIM ; i ++) {
-      m_iSqrt[i] = Math.sqrt(((double )i) + 1.0);
+    for (int i = 0; i < MAX_SUPPORT_DIM; i++) {
+      m_iSqrt[i] = Math.sqrt(((double) i) + 1.0);
     }
   }
 
-  //
-  // Use this function to manufacture new test function objects
-  //
-  public TestFunc testFunctionFactory(int func_num, int dimension) throws JMException {
-    TestFunc returnFunc = null;
-    try {
-      returnFunc = (TestFunc )
-          loader.loadClass(Configuration.cec2005Package + "." + test_func_class_names[func_num-1])
-          .getConstructor(test_func_arg_types)
-          .newInstance(
-                  new Object[]{
-                          new Integer(dimension),
-                          new Double(m_biases[func_num - 1])
-                  }
-          );
-    }
-    catch (Exception e) {
-      Configuration.logger_.log(Level.SEVERE,"Error in Benchmark.java", e);
-      throw new JMException("Error in Benchmark.java") ;
-    }
-    return (returnFunc);
+  // Entry point
+  //	If the Benchmark class is executed as a stand-alone application,
+  //	its job is to run the test on all the test functions.
+  static public void main(String args[]) throws JMException {
+    Benchmark theBenchmark = new Benchmark();
+    theBenchmark.runTest(0);
   }
-
-  // Run tests on the test functions
-  //	< 0:	Error!
-  //	= 0:	On all the functions
-  //	> 0:	On the specified test function
-  public void runTest() throws JMException {
-    runTest(0);
-  }
-  public void runTest(int func_num) throws JMException {
-    if (func_num == 0) {
-      for (int i = 1 ; i <= NUM_TEST_FUNC ; i ++) {
-        runTest(i);
-      }
-    }
-    else if ((func_num < 0) || (func_num > NUM_TEST_FUNC)) {
-      throw new JMException("The specified func_num is out of range.");
-    }
-    else {
-      // Run the test function against the check points
-      int num_test_points = 10;
-      int test_dimension = 50;
-
-      double[] test_f = new double[num_test_points];
-      double[][] test_x = new double[num_test_points][test_dimension];
-
-      String file_test = "testData/test_data_func" + func_num + ".txt";
-
-      // Create the test function object
-      TestFunc aFunc = testFunctionFactory(func_num, test_dimension);
-
-      System.out.println("Run tests on function " + func_num +
-          " (" + aFunc.name() + "):");
-      System.out.println("  " +
-          num_test_points + " " +
-          aFunc.dimension() + "-dimension check points");
-
-      loadTestDataFromFile(file_test, num_test_points, test_dimension, test_x, test_f);
-
-      for (int i = 0 ; i < num_test_points ; i ++) {
-        // Execute the test function
-        // Collect and compare the results
-        double result = aFunc.f(test_x[i]);
-        double diff = result - test_f[i];
-        double ratio = Math.abs(diff / test_f[i]);
-        System.out.println("    " +
-            numberFormatter.format(result) +
-            " - " +
-            numberFormatter.format(test_f[i]) +
-            " = " +
-            numberFormatter.format(diff));
-        System.out.print("    " + "    " +
-            "Difference ratio = " + numberFormatter.format(ratio));
-        if (ratio != 0.0) {
-          if (ratio <= 1e-12) {
-            System.out.println(" (<= 1E-12)");
-          }
-          else {
-            System.out.println(" (> 1E-12) *****");
-          }
-        }
-        else {
-          System.out.println();
-        }
-      }
-    }
-  }
-
-  //
-  // Basic functions
-  //
 
   // Sphere function
   static public double sphere(double[] x) {
 
     double sum = 0.0;
 
-    for (int i = 0 ; i < x.length ; i ++) {
+    for (int i = 0; i < x.length; i++) {
       sum += x[i] * x[i];
     }
 
@@ -251,7 +160,7 @@ public class Benchmark {
 
     double sum = 0.0;
 
-    for (int i = 0 ; i < x.length ; i ++) {
+    for (int i = 0; i < x.length; i++) {
       sum += x[i] * x[i];
     }
 
@@ -270,7 +179,7 @@ public class Benchmark {
     curr_sum = x[0];
     outer_sum = (curr_sum * curr_sum);
 
-    for (int i = 1 ; i < x.length ; i ++) {
+    for (int i = 1; i < x.length; i++) {
       prev_sum = curr_sum;
       curr_sum = prev_sum + x[i];
       outer_sum += (curr_sum * curr_sum);
@@ -279,13 +188,17 @@ public class Benchmark {
     return (outer_sum);
   }
 
+  //
+  // Basic functions
+  //
+
   // Rosenbrock's function
   static public double rosenbrock(double[] x) {
 
     double sum = 0.0;
 
-    for (int i = 0 ; i < (x.length-1) ; i ++) {
-      double temp1 = (x[i] * x[i]) - x[i+1];
+    for (int i = 0; i < (x.length - 1); i++) {
+      double temp1 = (x[i] * x[i]) - x[i + 1];
       double temp2 = x[i] - 1.0;
       sum += (100.0 * temp1 * temp1) + (temp2 * temp2);
     }
@@ -306,7 +219,7 @@ public class Benchmark {
     double sum = 0.0;
     double product = 1.0;
 
-    for (int i = 0 ; i < x.length ; i ++) {
+    for (int i = 0; i < x.length; i++) {
       sum += ((x[i] * x[i]) / 4000.0);
       product *= Math.cos(x[i] / m_iSqrt[i]);
     }
@@ -325,12 +238,13 @@ public class Benchmark {
     double sum1 = 0.0;
     double sum2 = 0.0;
 
-    for (int i = 0 ; i < x.length ; i ++) {
+    for (int i = 0; i < x.length; i++) {
       sum1 += (x[i] * x[i]);
       sum2 += (Math.cos(PIx2 * x[i]));
     }
 
-    return (-20.0 * Math.exp(-0.2 * Math.sqrt(sum1 / ((double )x.length))) - Math.exp(sum2 / ((double )x.length)) + 20.0 + Math.E);
+    return (-20.0 * Math.exp(-0.2 * Math.sqrt(sum1 / ((double) x.length))) - Math
+      .exp(sum2 / ((double) x.length)) + 20.0 + Math.E);
   }
 
   // Round function
@@ -338,10 +252,12 @@ public class Benchmark {
   static public double myRound(double x) {
     return (Math.signum(x) * Math.round(Math.abs(x)));
   }
+
   // 1. "o" is provided
   static public double myXRound(double x, double o) {
     return ((Math.abs(x - o) < 0.5) ? x : (myRound(2.0 * x) / 2.0));
   }
+
   // 2. "o" is not provided
   static public double myXRound(double x) {
     return ((Math.abs(x) < 0.5) ? x : (myRound(2.0 * x) / 2.0));
@@ -352,7 +268,7 @@ public class Benchmark {
 
     double sum = 0.0;
 
-    for (int i = 0 ; i < x.length ; i ++) {
+    for (int i = 0; i < x.length; i++) {
       sum += (x[i] * x[i]) - (10.0 * Math.cos(PIx2 * x[i])) + 10.0;
     }
 
@@ -365,7 +281,7 @@ public class Benchmark {
     double sum = 0.0;
     double currX;
 
-    for (int i = 0 ; i < x.length ; i ++) {
+    for (int i = 0; i < x.length; i++) {
       currX = myXRound(x[i]);
       sum += (currX * currX) - (10.0 * Math.cos(PIx2 * currX)) + 10.0;
     }
@@ -381,18 +297,18 @@ public class Benchmark {
   static public double weierstrass(double[] x, double a, double b, int Kmax) {
 
     double sum1 = 0.0;
-    for (int i = 0 ; i < x.length ; i ++) {
-      for (int k = 0 ; k <= Kmax ; k ++) {
+    for (int i = 0; i < x.length; i++) {
+      for (int k = 0; k <= Kmax; k++) {
         sum1 += Math.pow(a, k) * Math.cos(PIx2 * Math.pow(b, k) * (x[i] + 0.5));
       }
     }
 
     double sum2 = 0.0;
-    for (int k = 0 ; k <= Kmax ; k ++) {
+    for (int k = 0; k <= Kmax; k++) {
       sum2 += Math.pow(a, k) * Math.cos(PIx2 * Math.pow(b, k) * (0.5));
     }
 
-    return (sum1 - sum2*((double )(x.length)));
+    return (sum1 - sum2 * ((double) (x.length)));
   }
 
   // F8F2
@@ -400,20 +316,20 @@ public class Benchmark {
 
     double sum = 0.0;
 
-    for (int i = 1 ; i < x.length ; i ++) {
-      sum += F8(F2(x[i-1], x[i]));
+    for (int i = 1; i < x.length; i++) {
+      sum += F8(F2(x[i - 1], x[i]));
     }
-    sum += F8(F2(x[x.length-1], x[0]));
+    sum += F8(F2(x[x.length - 1], x[0]));
 
     return (sum);
   }
 
   // Scaffer's F6 function
   static public double ScafferF6(double x, double y) {
-    double temp1 = x*x + y*y;
+    double temp1 = x * x + y * y;
     double temp2 = Math.sin(Math.sqrt(temp1));
     double temp3 = 1.0 + 0.001 * temp1;
-    return (0.5 + ((temp2 * temp2 - 0.5)/(temp3 * temp3)));
+    return (0.5 + ((temp2 * temp2 - 0.5) / (temp3 * temp3)));
   }
 
   // Expanded Scaffer's F6 function
@@ -421,10 +337,10 @@ public class Benchmark {
 
     double sum = 0.0;
 
-    for (int i = 1 ; i < x.length ; i ++) {
-      sum += ScafferF6(x[i-1], x[i]);
+    for (int i = 1; i < x.length; i++) {
+      sum += ScafferF6(x[i - 1], x[i]);
     }
-    sum += ScafferF6(x[x.length-1], x[0]);
+    sum += ScafferF6(x[x.length - 1], x[0]);
 
     return (sum);
   }
@@ -436,7 +352,7 @@ public class Benchmark {
     double prevX, currX;
 
     currX = myXRound(x[0]);
-    for (int i = 1 ; i < x.length ; i ++) {
+    for (int i = 1; i < x.length; i++) {
       prevX = currX;
       currX = myXRound(x[i]);
       sum += ScafferF6(prevX, currX);
@@ -454,8 +370,8 @@ public class Benchmark {
     double sum = 0.0;
     double a = 1e6;
 
-    for (int i = 0 ; i < x.length ; i ++) {
-      sum += Math.pow(a, (((double )i)/((double )(x.length-1)))) * x[i] * x[i];
+    for (int i = 0; i < x.length; i++) {
+      sum += Math.pow(a, (((double) i) / ((double) (x.length - 1)))) * x[i] * x[i];
     }
 
     return (sum);
@@ -469,10 +385,10 @@ public class Benchmark {
 
     // Get the raw weights
     double wMax = Double.NEGATIVE_INFINITY;
-    for (int i = 0 ; i < num_func ; i ++) {
+    for (int i = 0; i < num_func; i++) {
       double sumSqr = 0.0;
       shift(job.z[i], x, job.o[i]);
-      for (int j = 0 ; j < num_dim ; j ++) {
+      for (int j = 0; j < num_dim; j++) {
         sumSqr += (job.z[i][j] * job.z[i][j]);
       }
       job.w[i] = Math.exp(-1.0 * sumSqr / (2.0 * num_dim * job.sigma[i] * job.sigma[i]));
@@ -484,7 +400,7 @@ public class Benchmark {
     // Modify the weights
     double wSum = 0.0;
     double w1mMaxPow = 1.0 - Math.pow(wMax, 10.0);
-    for (int i = 0 ; i < num_func ; i ++) {
+    for (int i = 0; i < num_func; i++) {
       if (job.w[i] != wMax) {
         job.w[i] *= w1mMaxPow;
       }
@@ -492,33 +408,29 @@ public class Benchmark {
     }
 
     // Normalize the weights
-    for (int i = 0 ; i < num_func ; i ++) {
+    for (int i = 0; i < num_func; i++) {
       job.w[i] /= wSum;
     }
 
     double sumF = 0.0;
-    for (int i = 0 ; i < num_func ; i ++) {
-      for (int j = 0 ; j < num_dim ; j ++) {
+    for (int i = 0; i < num_func; i++) {
+      for (int j = 0; j < num_dim; j++) {
         job.z[i][j] /= job.lambda[i];
       }
       rotate(job.zM[i], job.z[i], job.M[i]);
       sumF +=
-          job.w[i] *
+        job.w[i] *
           (
-              job.C * job.basic_func(i, job.zM[i]) / job.fmax[i] +
+            job.C * job.basic_func(i, job.zM[i]) / job.fmax[i] +
               job.biases[i]
-              );
+          );
     }
     return (sumF);
   }
 
-  //
-  // Elementary operations
-  //
-
   // Shift
   static public void shift(double[] results, double[] x, double[] o) {
-    for (int i = 0 ; i < x.length ; i ++) {
+    for (int i = 0; i < x.length; i++) {
       results[i] = x[i] - o[i];
     }
   }
@@ -528,25 +440,25 @@ public class Benchmark {
     xA(results, x, matrix);
   }
 
-  //
-  // Matrix & vector operations
-  //
-
   // (1xD) row vector * (Dx1) column vector = (1) scalar
   static public double xy(double[] x, double[] y) {
     double result = 0.0;
-    for (int i = 0 ; i < x.length ; i ++) {
+    for (int i = 0; i < x.length; i++) {
       result += (x[i] * y[i]);
     }
 
     return (result);
   }
 
+  //
+  // Elementary operations
+  //
+
   // (1xD) row vector * (DxD) matrix = (1xD) row vector
   static public void xA(double[] result, double[] x, double[][] A) {
-    for (int i = 0 ; i < result.length ; i ++) {
+    for (int i = 0; i < result.length; i++) {
       result[i] = 0.0;
-      for (int j = 0 ; j < result.length ; j ++) {
+      for (int j = 0; j < result.length; j++) {
         result[i] += (x[j] * A[j][i]);
       }
     }
@@ -554,103 +466,195 @@ public class Benchmark {
 
   // (DxD) matrix * (Dx1) column vector = (Dx1) column vector
   static public void Ax(double[] result, double[][] A, double[] x) {
-    for (int i = 0 ; i < result.length ; i ++) {
+    for (int i = 0; i < result.length; i++) {
       result[i] = 0.0;
-      for (int j = 0 ; j < result.length ; j ++) {
+      for (int j = 0; j < result.length; j++) {
         result[i] += (A[i][j] * x[j]);
       }
     }
   }
 
   //
+  // Matrix & vector operations
+  //
+
+  //
   // Utility functions for loading data from the given text file
   //
-  static public void loadTestDataFromFile(String file, int num_test_points, int test_dimension, double[][] x, double[] f) throws JMException {
+  static public void loadTestDataFromFile(String file, int num_test_points, int test_dimension,
+    double[][] x, double[] f) throws JMException {
     try {
-      System.out.println("File bias: " + file) ;
+      System.out.println("File bias: " + file);
 
       BufferedReader brSrc = new BufferedReader(new FileReader(file));
       loadMatrix(brSrc, num_test_points, test_dimension, x);
       loadColumnVector(brSrc, num_test_points, f);
       brSrc.close();
-    }
-    catch (Exception e) {
-      Configuration.logger_.log(Level.SEVERE,"Error in Benchmark.java", e);
-      throw new JMException("Error in Benchmark.java") ;
+    } catch (Exception e) {
+      Configuration.logger_.log(Level.SEVERE, "Error in Benchmark.java", e);
+      throw new JMException("Error in Benchmark.java");
     }
   }
 
-  static public void loadRowVectorFromFile(String file, int columns, double[] row) throws JMException {
+  static public void loadRowVectorFromFile(String file, int columns, double[] row)
+    throws JMException {
     try {
       BufferedReader brSrc = new BufferedReader(new FileReader(file));
       loadRowVector(brSrc, columns, row);
       brSrc.close();
-    }
-    catch (Exception e) {
-      Configuration.logger_.log(Level.SEVERE,"Error in Benchmark.java", e);
-      throw new JMException("Error in Benchmark.java") ;
+    } catch (Exception e) {
+      Configuration.logger_.log(Level.SEVERE, "Error in Benchmark.java", e);
+      throw new JMException("Error in Benchmark.java");
     }
   }
 
-  static public void loadRowVector(BufferedReader brSrc, int columns, double[] row) throws Exception {
+  static public void loadRowVector(BufferedReader brSrc, int columns, double[] row)
+    throws Exception {
     String stToken;
     StringTokenizer stTokenizer = new StringTokenizer(brSrc.readLine());
-    for (int i = 0 ; i < columns ; i ++) {
+    for (int i = 0; i < columns; i++) {
       stToken = stTokenizer.nextToken();
       row[i] = Double.parseDouble(stToken);
     }
   }
 
-  static public void loadColumnVectorFromFile(String file, int rows, double[] column) throws JMException {
+  static public void loadColumnVectorFromFile(String file, int rows, double[] column)
+    throws JMException {
     try {
       BufferedReader brSrc = new BufferedReader(new FileReader(file));
       loadColumnVector(brSrc, rows, column);
       brSrc.close();
-    }
-    catch (Exception e) {
-      Configuration.logger_.log(Level.SEVERE,"Error in Benchmark.java", e);
-      throw new JMException("Error in Benchmark.java") ;
+    } catch (Exception e) {
+      Configuration.logger_.log(Level.SEVERE, "Error in Benchmark.java", e);
+      throw new JMException("Error in Benchmark.java");
     }
   }
 
-  static public void loadColumnVector(BufferedReader brSrc, int rows, double[] column) throws Exception {
+  static public void loadColumnVector(BufferedReader brSrc, int rows, double[] column)
+    throws Exception {
     String stToken;
-    for (int i = 0 ; i < rows ; i ++) {
+    for (int i = 0; i < rows; i++) {
       StringTokenizer stTokenizer = new StringTokenizer(brSrc.readLine());
       stToken = stTokenizer.nextToken();
       column[i] = Double.parseDouble(stToken);
     }
   }
 
-  static public void loadNMatrixFromFile(String file, int N, int rows, int columns, double[][][] matrix) throws JMException {
+  static public void loadNMatrixFromFile(String file, int N, int rows, int columns,
+    double[][][] matrix) throws JMException {
     try {
       BufferedReader brSrc = new BufferedReader(new FileReader(file));
-      for (int i = 0 ; i < N ; i ++) {
+      for (int i = 0; i < N; i++) {
         loadMatrix(brSrc, rows, columns, matrix[i]);
       }
       brSrc.close();
-    }
-    catch (Exception e) {
-      Configuration.logger_.log(Level.SEVERE,"Error in Benchmark.java", e);
-      throw new JMException("Error in Benchmark.java") ;
+    } catch (Exception e) {
+      Configuration.logger_.log(Level.SEVERE, "Error in Benchmark.java", e);
+      throw new JMException("Error in Benchmark.java");
     }
   }
 
-  static public void loadMatrixFromFile(String file, int rows, int columns, double[][] matrix) throws JMException {
+  static public void loadMatrixFromFile(String file, int rows, int columns, double[][] matrix)
+    throws JMException {
     try {
       BufferedReader brSrc = new BufferedReader(new FileReader(file));
       loadMatrix(brSrc, rows, columns, matrix);
       brSrc.close();
-    }
-    catch (Exception e) {
-      Configuration.logger_.log(Level.SEVERE,"Error in Benchmark.java", e);
-      throw new JMException("Error in Benchmark.java") ;
+    } catch (Exception e) {
+      Configuration.logger_.log(Level.SEVERE, "Error in Benchmark.java", e);
+      throw new JMException("Error in Benchmark.java");
     }
   }
 
-  static public void loadMatrix(BufferedReader brSrc, int rows, int columns, double[][] matrix) throws Exception {
-    for (int i = 0 ; i < rows ; i ++) {
+  static public void loadMatrix(BufferedReader brSrc, int rows, int columns, double[][] matrix)
+    throws Exception {
+    for (int i = 0; i < rows; i++) {
       loadRowVector(brSrc, columns, matrix[i]);
+    }
+  }
+
+  //
+  // Use this function to manufacture new test function objects
+  //
+  public TestFunc testFunctionFactory(int func_num, int dimension) throws JMException {
+    TestFunc returnFunc = null;
+    try {
+      returnFunc = (TestFunc)
+        loader.loadClass(Configuration.cec2005Package + "." + test_func_class_names[func_num - 1])
+          .getConstructor(test_func_arg_types)
+          .newInstance(
+            new Object[] {
+              new Integer(dimension),
+              new Double(m_biases[func_num - 1])
+            }
+          );
+    } catch (Exception e) {
+      Configuration.logger_.log(Level.SEVERE, "Error in Benchmark.java", e);
+      throw new JMException("Error in Benchmark.java");
+    }
+    return (returnFunc);
+  }
+
+  // Run tests on the test functions
+  //	< 0:	Error!
+  //	= 0:	On all the functions
+  //	> 0:	On the specified test function
+  public void runTest() throws JMException {
+    runTest(0);
+  }
+
+  public void runTest(int func_num) throws JMException {
+    if (func_num == 0) {
+      for (int i = 1; i <= NUM_TEST_FUNC; i++) {
+        runTest(i);
+      }
+    } else if ((func_num < 0) || (func_num > NUM_TEST_FUNC)) {
+      throw new JMException("The specified func_num is out of range.");
+    } else {
+      // Run the test function against the check points
+      int num_test_points = 10;
+      int test_dimension = 50;
+
+      double[] test_f = new double[num_test_points];
+      double[][] test_x = new double[num_test_points][test_dimension];
+
+      String file_test = "testData/test_data_func" + func_num + ".txt";
+
+      // Create the test function object
+      TestFunc aFunc = testFunctionFactory(func_num, test_dimension);
+
+      System.out.println("Run tests on function " + func_num +
+        " (" + aFunc.name() + "):");
+      System.out.println("  " +
+        num_test_points + " " +
+        aFunc.dimension() + "-dimension check points");
+
+      loadTestDataFromFile(file_test, num_test_points, test_dimension, test_x, test_f);
+
+      for (int i = 0; i < num_test_points; i++) {
+        // Execute the test function
+        // Collect and compare the results
+        double result = aFunc.f(test_x[i]);
+        double diff = result - test_f[i];
+        double ratio = Math.abs(diff / test_f[i]);
+        System.out.println("    " +
+          numberFormatter.format(result) +
+          " - " +
+          numberFormatter.format(test_f[i]) +
+          " = " +
+          numberFormatter.format(diff));
+        System.out.print("    " + "    " +
+          "Difference ratio = " + numberFormatter.format(ratio));
+        if (ratio != 0.0) {
+          if (ratio <= 1e-12) {
+            System.out.println(" (<= 1E-12)");
+          } else {
+            System.out.println(" (> 1E-12) *****");
+          }
+        } else {
+          System.out.println();
+        }
+      }
     }
   }
 }

@@ -35,103 +35,107 @@ import java.util.logging.Level;
 
 /**
  * @author Antonio J. Nebro
- * Class for evaluating solutions in parallel using threads
+ *         Class for evaluating solutions in parallel using threads
  */
 public class MultithreadedEvaluator extends SynchronousParallelRunner {
-  private Problem problem_ ;
-  private Collection<EvaluationTask> taskList_ ;
+  private Problem problem_;
+  private Collection<EvaluationTask> taskList_;
 
   /**
    * Constructor
-   * @param threads 
+   *
+   * @param threads
    */
   public MultithreadedEvaluator(int threads) {
-    super(threads) ;
+    super(threads);
   }
 
   /**
    * Constructor
+   *
    * @param problem problem to solve
    */
   public void startParallelRunner(Object problem) {
-    problem_ = (Problem)problem ;
+    problem_ = (Problem) problem;
 
-    executor_ = Executors.newFixedThreadPool(numberOfThreads_) ;
-    System.out.println("Cores: "+ numberOfThreads_) ;
-    taskList_ = null ; 
+    executor_ = Executors.newFixedThreadPool(numberOfThreads_);
+    System.out.println("Cores: " + numberOfThreads_);
+    taskList_ = null;
   }
 
   /**
    * Adds a solution to be evaluated to a list of tasks
    */
   public void addTaskForExecution(Object[] taskParameters) {
-    Solution solution = (Solution)taskParameters[0] ;
+    Solution solution = (Solution) taskParameters[0];
     if (taskList_ == null) {
       taskList_ = new ArrayList<EvaluationTask>();
     }
 
-    taskList_.add(new EvaluationTask(problem_, solution)) ;			
+    taskList_.add(new EvaluationTask(problem_, solution));
   }
 
   /**
    * Evaluates a list of solutions
+   *
    * @return A list with the evaluated solutions
    */
   public Object parallelExecution() {
-    List<Future<Object>> future = null ;
+    List<Future<Object>> future = null;
     try {
       future = executor_.invokeAll(taskList_);
     } catch (InterruptedException e1) {
       Configuration.logger_.log(Level.SEVERE, "Error", e1);
     }
-    List<Object> solutionList = new Vector<Object>() ;
+    List<Object> solutionList = new Vector<Object>();
 
-    for(Future<Object> result : future){
-      Object solution = null ;
+    for (Future<Object> result : future) {
+      Object solution = null;
       try {
         solution = result.get();
-        solutionList.add(solution) ;
+        solutionList.add(solution);
       } catch (InterruptedException e) {
         Configuration.logger_.log(Level.SEVERE, "Error", e);
       } catch (ExecutionException e) {
         Configuration.logger_.log(Level.SEVERE, "Error", e);
       }
     }
-    taskList_ = null ;
-    return solutionList ;
+    taskList_ = null;
+    return solutionList;
   }
 
   /**
    * Shutdown the executor
    */
   public void stopEvaluator() {
-    executor_.shutdown() ;
+    executor_.shutdown();
   }
 
   /**
    * @author Antonio J. Nebro
-   * Private class representing tasks to evaluate solutions.
+   *         Private class representing tasks to evaluate solutions.
    */
 
   private class EvaluationTask extends ParallelTask {
-    private Problem problem_ ;
-    private Solution solution_ ;
+    private Problem problem_;
+    private Solution solution_;
 
     /**
      * Constructor
-     * @param problem Problem to solve
+     *
+     * @param problem  Problem to solve
      * @param solution Solution to evaluate
      */
-    public EvaluationTask(Problem problem,  Solution solution) {
-      problem_ = problem ;
-      solution_ = solution ;
+    public EvaluationTask(Problem problem, Solution solution) {
+      problem_ = problem;
+      solution_ = solution;
     }
 
     public Solution call() throws Exception {
-      problem_.evaluate(solution_) ;
-      problem_.evaluateConstraints(solution_) ;
+      problem_.evaluate(solution_);
+      problem_.evaluateConstraints(solution_);
 
-      return solution_ ;
+      return solution_;
     }
   }
 }

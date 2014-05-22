@@ -22,22 +22,22 @@ import java.util.logging.Logger;
 
 public class DifferentialEvolutionOffspringPolynomial extends Offspring {
 
-  private double mutationProbability_ = 0.0;
   double crossoverProbability_ = 0.9;
-  private double distributionIndexForMutation_ = 20;
   double distributionIndexForCrossover_ = 20;
+  private double mutationProbability_ = 0.0;
+  private double distributionIndexForMutation_ = 20;
   private Operator mutation_;
   private Operator selection_;
 
   private DifferentialEvolutionOffspringPolynomial(double mutationProbability,
-                                                   double distributionIndexForMutation
+    double distributionIndexForMutation
   ) throws JMException {
     mutationProbability_ = mutationProbability;
     distributionIndexForMutation_ = distributionIndexForMutation;
 
-    HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
-    mutationParameters.put("probability", mutationProbability_) ;
-    mutationParameters.put("distributionIndex", distributionIndexForMutation_) ;
+    HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
+    mutationParameters.put("probability", mutationProbability_);
+    mutationParameters.put("distributionIndex", distributionIndexForMutation_);
     mutation_ = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
 
     selection_ = SelectionFactory.getSelectionOperator("BinaryTournament", null);
@@ -56,7 +56,8 @@ public class DifferentialEvolutionOffspringPolynomial extends Offspring {
       mutation_.execute(offSpring);
       //Create a new solution, using DE
     } catch (JMException ex) {
-      Logger.getLogger(DifferentialEvolutionOffspringPolynomial.class.getName()).log(Level.SEVERE, null, ex);
+      Logger.getLogger(DifferentialEvolutionOffspringPolynomial.class.getName())
+        .log(Level.SEVERE, null, ex);
     }
     return offSpring;
 
@@ -71,18 +72,19 @@ public class DifferentialEvolutionOffspringPolynomial extends Offspring {
       parents[0] = (Solution) selection_.execute(solutionSet);
 
       if (archive.size() > 0) {
-        parents[1] = (Solution)selection_.execute(archive);
+        parents[1] = (Solution) selection_.execute(archive);
       } else {
-        parents[1] = (Solution)selection_.execute(solutionSet);
+        parents[1] = (Solution) selection_.execute(solutionSet);
       }
 
-      offSpring = new Solution( new Solution((Solution) selection_.execute(solutionSet)));
+      offSpring = new Solution(new Solution((Solution) selection_.execute(solutionSet)));
 
 
       mutation_.execute(offSpring);
       //Create a new solution, using DE
     } catch (JMException ex) {
-      Logger.getLogger(DifferentialEvolutionOffspringPolynomial.class.getName()).log(Level.SEVERE, null, ex);
+      Logger.getLogger(DifferentialEvolutionOffspringPolynomial.class.getName())
+        .log(Level.SEVERE, null, ex);
     }
     return offSpring;
 

@@ -34,37 +34,35 @@ import java.util.*;
 public class Spea2Fitness {
 
   /**
+   * stores a <code>Distance</code> object
+   */
+  private static final Distance distance_ = new Distance();
+  /**
+   * stores a <code>Comparator</code> for distance between nodes checking
+   */
+  private static final Comparator<DistanceNode> distanceNodeComparator =
+    new DistanceNodeComparator();
+  /**
+   * stores a <code>Comparator</code> for dominance checking
+   */
+  private static final Comparator<Solution> dominance_ = new DominanceComparator();
+  /**
    * Stores the distance between solutions
    */
-  private double [][] distance = null;
-
+  private double[][] distance = null;
   /**
    * Stores the solutionSet to assign the fitness
    */
   private SolutionSet solutionSet_ = null;
 
   /**
-   * stores a <code>Distance</code> object
-   */
-  private static final Distance distance_ = new Distance();
-
-  /**
-   * stores a <code>Comparator</code> for distance between nodes checking
-   */
-  private static final Comparator<DistanceNode> distanceNodeComparator = new DistanceNodeComparator();
-
-  /**
-   * stores a <code>Comparator</code> for dominance checking
-   */
-  private static final Comparator<Solution> dominance_ = new DominanceComparator();
-
-  /**
    * Constructor.
    * Creates a new instance of Spea2Fitness for a given <code>SolutionSet</code>.
+   *
    * @param solutionSet The <code>SolutionSet</code>
    */
   public Spea2Fitness(SolutionSet solutionSet) {
-    distance     = distance_.distanceMatrix(solutionSet);
+    distance = distance_.distanceMatrix(solutionSet);
     solutionSet_ = solutionSet;
     for (int i = 0; i < solutionSet_.size(); i++) {
       solutionSet_.get(i).setLocation(i);
@@ -75,16 +73,16 @@ public class Spea2Fitness {
    * Assigns fitness for all the solutions.
    */
   public void fitnessAssign() {
-    double [] strength    = new double[solutionSet_.size()];
-    double [] rawFitness  = new double[solutionSet_.size()];
-    double kDistance                                          ;
+    double[] strength = new double[solutionSet_.size()];
+    double[] rawFitness = new double[solutionSet_.size()];
+    double kDistance;
 
 
     //Calculate the strength value
     // strength(i) = |{j | j <- SolutionSet and i dominate j}|
     for (int i = 0; i < solutionSet_.size(); i++) {
-      for (int j = 0; j < solutionSet_.size();j++) {
-        if (dominance_.compare(solutionSet_.get(i),solutionSet_.get(j))==-1) {
+      for (int j = 0; j < solutionSet_.size(); j++) {
+        if (dominance_.compare(solutionSet_.get(i), solutionSet_.get(j)) == -1) {
           strength[i] += 1.0;
         }
       }
@@ -92,9 +90,9 @@ public class Spea2Fitness {
 
     //Calculate the raw fitness
     // rawFitness(i) = |{sum strenght(j) | j <- SolutionSet and j dominate i}|
-    for (int i = 0;i < solutionSet_.size(); i++) {
-      for (int j = 0; j < solutionSet_.size();j++) {
-        if (dominance_.compare(solutionSet_.get(i),solutionSet_.get(j))==1) {
+    for (int i = 0; i < solutionSet_.size(); i++) {
+      for (int j = 0; j < solutionSet_.size(); j++) {
+        if (dominance_.compare(solutionSet_.get(i), solutionSet_.get(j)) == 1) {
           rawFitness[i] += strength[j];
         }
       }
@@ -103,7 +101,7 @@ public class Spea2Fitness {
     // Add the distance to the k-th individual. In the reference paper of SPEA2, 
     // k = sqrt(population.size()), but a value of k = 1 recommended. See
     // http://www.tik.ee.ethz.ch/pisa/selectors/spea2/spea2_documentation.txt
-    int k = 1 ;
+    int k = 1;
     for (int i = 0; i < distance.length; i++) {
       Arrays.sort(distance[i]);
       kDistance = 1.0 / (distance[i][k] + 2.0);
@@ -112,11 +110,12 @@ public class Spea2Fitness {
   }
 
   /**
-   *  Gets 'size' elements from a population of more than 'size' elements
-   *  using for this de enviromentalSelection truncation
-   *  @param size The number of elements to get.
+   * Gets 'size' elements from a population of more than 'size' elements
+   * using for this de enviromentalSelection truncation
+   *
+   * @param size The number of elements to get.
    */
-  public SolutionSet environmentalSelection(int size){
+  public SolutionSet environmentalSelection(int size) {
 
     if (solutionSet_.size() < size) {
       size = solutionSet_.size();
@@ -126,8 +125,8 @@ public class Spea2Fitness {
     SolutionSet aux = new SolutionSet(solutionSet_.size());
 
     int i = 0;
-    while (i < solutionSet_.size()){
-      if (solutionSet_.get(i).getFitness()<1.0){
+    while (i < solutionSet_.size()) {
+      if (solutionSet_.get(i).getFitness() < 1.0) {
         aux.add(solutionSet_.get(i));
         solutionSet_.remove(i);
       } else {
@@ -135,11 +134,11 @@ public class Spea2Fitness {
       }
     }
 
-    if (aux.size() < size){
+    if (aux.size() < size) {
       Comparator<Solution> comparator = new FitnessComparator();
       solutionSet_.sort(comparator);
       int remain = size - aux.size();
-      for (i = 0; i < remain; i++){
+      for (i = 0; i < remain; i++) {
         aux.add(solutionSet_.get(i));
       }
       return aux;
@@ -147,14 +146,14 @@ public class Spea2Fitness {
       return aux;
     }
 
-    double [][] distance = distance_.distanceMatrix(aux);
-    List< List<DistanceNode> > distanceList = new LinkedList< List<DistanceNode> >();
+    double[][] distance = distance_.distanceMatrix(aux);
+    List<List<DistanceNode>> distanceList = new LinkedList<List<DistanceNode>>();
     for (int pos = 0; pos < aux.size(); pos++) {
       aux.get(pos).setLocation(pos);
       List<DistanceNode> distanceNodeList = new ArrayList<DistanceNode>();
       for (int ref = 0; ref < aux.size(); ref++) {
         if (pos != ref) {
-          distanceNodeList.add(new DistanceNode(distance[pos][ref],ref));
+          distanceNodeList.add(new DistanceNode(distance[pos][ref], ref));
         }
       }
       distanceList.add(distanceNodeList);
@@ -176,13 +175,13 @@ public class Spea2Fitness {
         } else if (dn.get(0).getDistance() == minDistance) {
           int k = 0;
           while ((dn.get(k).getDistance() ==
-                  distanceList.get(toRemove).get(k).getDistance()) &&
-                  k < (distanceList.get(i).size() - 1)) {
+            distanceList.get(toRemove).get(k).getDistance()) &&
+            k < (distanceList.get(i).size() - 1)) {
             k++;
           }
 
           if (dn.get(k).getDistance() <
-                  distanceList.get(toRemove).get(k).getDistance()) {
+            distanceList.get(toRemove).get(k).getDistance()) {
             toRemove = i;
           }
         }

@@ -29,18 +29,19 @@ import java.util.HashMap;
 /**
  * Abstract class representing a generic local search operator
  */
-public abstract class LocalSearch extends Operator{
+public abstract class LocalSearch extends Operator {
 
   /**
    *
    */
   private static final long serialVersionUID = -2211279064487607699L;
 
-  public LocalSearch(HashMap<String, Object> parameters){
-    super(parameters) ;
+  public LocalSearch(HashMap<String, Object> parameters) {
+    super(parameters);
   }
+
   /**
    * Returns the number of evaluations made by the local search operator
    */
   public abstract int getEvaluations();
-} // LocalSearch
+}

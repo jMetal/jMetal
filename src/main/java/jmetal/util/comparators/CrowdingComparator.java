@@ -38,6 +38,7 @@ public class CrowdingComparator implements Comparator<Solution> {
 
   /**
    * Compare two solutions.
+   *
    * @param o1 Object representing the first <code>Solution</code>.
    * @param o2 Object representing the second <code>Solution</code>.
    * @return -1, or 0, or 1 if o1 is less than, equal, or greater than o2,
@@ -45,21 +46,21 @@ public class CrowdingComparator implements Comparator<Solution> {
    */
   @Override
   public int compare(Solution o1, Solution o2) {
-    if (o1==null) {
+    if (o1 == null) {
       return 1;
     } else if (o2 == null) {
       return -1;
     }
 
-    int flagComparatorRank = comparator.compare(o1,o2);
+    int flagComparatorRank = comparator.compare(o1, o2);
     if (flagComparatorRank != 0) {
       return flagComparatorRank;
     }
     
     /* His rank is equal, then distance crowding comparator */
-    double distance1 = ((Solution)o1).getCrowdingDistance();
-    double distance2 = ((Solution)o2).getCrowdingDistance();
-    if (distance1 >  distance2) {
+    double distance1 = ((Solution) o1).getCrowdingDistance();
+    double distance2 = ((Solution) o2).getCrowdingDistance();
+    if (distance1 > distance2) {
       return -1;
     }
 

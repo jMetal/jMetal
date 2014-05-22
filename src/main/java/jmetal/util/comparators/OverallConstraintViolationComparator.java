@@ -29,10 +29,11 @@ import jmetal.core.Solution;
  * the solucions, as in NSGA-II.
  */
 public class OverallConstraintViolationComparator
-        implements IConstraintViolationComparator {
+  implements IConstraintViolationComparator {
 
   /**
    * Compares two solutions.
+   *
    * @param o1 Object representing the first <code>Solution</code>.
    * @param o2 Object representing the second <code>Solution</code>.
    * @return -1, or 0, or 1 if o1 is less than, equal, or greater than o2,
@@ -41,13 +42,13 @@ public class OverallConstraintViolationComparator
   @Override
   public int compare(Solution o1, Solution o2) {
     double overall1, overall2;
-    overall1 = ((Solution)o1).getOverallConstraintViolation();
-    overall2 = ((Solution)o2).getOverallConstraintViolation();
+    overall1 = ((Solution) o1).getOverallConstraintViolation();
+    overall2 = ((Solution) o2).getOverallConstraintViolation();
 
     if ((overall1 < 0) && (overall2 < 0)) {
-      if (overall1 > overall2){
+      if (overall1 > overall2) {
         return -1;
-      } else if (overall2 > overall1){
+      } else if (overall2 > overall1) {
         return 1;
       } else {
         return 0;
@@ -66,10 +67,10 @@ public class OverallConstraintViolationComparator
    * violation < 0
    */
   public boolean needToCompare(Solution s1, Solution s2) {
-    boolean needToCompare ;
+    boolean needToCompare;
     needToCompare = (s1.getOverallConstraintViolation() < 0) ||
-            (s2.getOverallConstraintViolation() < 0);
+      (s2.getOverallConstraintViolation() < 0);
 
-    return needToCompare ;
+    return needToCompare;
   }
 }

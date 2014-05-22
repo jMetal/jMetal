@@ -28,5 +28,5 @@ import java.util.concurrent.Callable;
  * Abstract class for tasks to be executed by a SynchronousParallelRunner subclass
  */
 abstract public class ParallelTask implements Callable<Object> {
-  abstract public Object call() throws Exception ;
+  abstract public Object call() throws Exception;
 }

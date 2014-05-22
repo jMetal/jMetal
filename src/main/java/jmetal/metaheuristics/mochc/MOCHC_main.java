@@ -33,59 +33,62 @@ import jmetal.util.JMException;
 
 import java.io.IOException;
 import java.util.HashMap;
+
 /**
  * This class executes the algorithm described in:
- * A.J. Nebro, E. Alba, G. Molina, F. Chicano, F. Luna, J.J. Durillo 
- * "Optimal antenna placement using a new multi-objective chc algorithm". 
- * GECCO '07: Proceedings of the 9th annual conference on Genetic and 
+ * A.J. Nebro, E. Alba, G. Molina, F. Chicano, F. Luna, J.J. Durillo
+ * "Optimal antenna placement using a new multi-objective chc algorithm".
+ * GECCO '07: Proceedings of the 9th annual conference on Genetic and
  * evolutionary computation. London, England. July 2007.
  */
 public class MOCHC_main {
 
-  public static void main(String [] args) throws IOException, JMException, ClassNotFoundException {
+  public static void main(String[] args) throws IOException, JMException, ClassNotFoundException {
     Problem problem = new ZDT5("Binary");
 
     Algorithm algorithm = null;
     algorithm = new MOCHC(problem);
 
-    algorithm.setInputParameter("initialConvergenceCount",0.25);
-    algorithm.setInputParameter("preservedPopulation",0.05);
-    algorithm.setInputParameter("convergenceValue",3);
-    algorithm.setInputParameter("populationSize",100);
-    algorithm.setInputParameter("maxEvaluations",25000);
+    algorithm.setInputParameter("initialConvergenceCount", 0.25);
+    algorithm.setInputParameter("preservedPopulation", 0.05);
+    algorithm.setInputParameter("convergenceValue", 3);
+    algorithm.setInputParameter("populationSize", 100);
+    algorithm.setInputParameter("maxEvaluations", 25000);
 
-    Operator crossoverOperator      ;
-    Operator mutationOperator       ;
-    Operator parentsSelection       ;
-    Operator newGenerationSelection ;
+    Operator crossoverOperator;
+    Operator mutationOperator;
+    Operator parentsSelection;
+    Operator newGenerationSelection;
 
     // Crossover operator
-    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
-    crossoverParameters.put("probability", 1.0) ;
+    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
+    crossoverParameters.put("probability", 1.0);
     crossoverOperator = CrossoverFactory.getCrossoverOperator("HUXCrossover", crossoverParameters);
 
-    HashMap<String, Object> selectionParameters = null ; // FIXME: why we are passing null?
-    parentsSelection = SelectionFactory.getSelectionOperator("RandomSelection", selectionParameters) ;
+    HashMap<String, Object> selectionParameters = null; // FIXME: why we are passing null?
+    parentsSelection =
+      SelectionFactory.getSelectionOperator("RandomSelection", selectionParameters);
 
-    HashMap<String, Object> newSelectionParameters = new HashMap<String, Object>() ;
-    newSelectionParameters.put("problem", problem) ;
-    newGenerationSelection = SelectionFactory.getSelectionOperator("RankingAndCrowdingSelection", newSelectionParameters) ;
+    HashMap<String, Object> newSelectionParameters = new HashMap<String, Object>();
+    newSelectionParameters.put("problem", problem);
+    newGenerationSelection =
+      SelectionFactory.getSelectionOperator("RankingAndCrowdingSelection", newSelectionParameters);
 
     // Mutation operator
-    HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
-    mutationParameters.put("probability", 0.35) ;
+    HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
+    mutationParameters.put("probability", 0.35);
     mutationOperator = MutationFactory.getMutationOperator("BitFlipMutation", mutationParameters);
 
-    algorithm.addOperator("crossover",crossoverOperator);
-    algorithm.addOperator("cataclysmicMutation",mutationOperator);
-    algorithm.addOperator("parentSelection",parentsSelection);
-    algorithm.addOperator("newGenerationSelection",newGenerationSelection);
+    algorithm.addOperator("crossover", crossoverOperator);
+    algorithm.addOperator("cataclysmicMutation", mutationOperator);
+    algorithm.addOperator("parentSelection", parentsSelection);
+    algorithm.addOperator("newGenerationSelection", newGenerationSelection);
 
     // Execute the Algorithm
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;
-    System.out.println("Total execution time: "+estimatedTime);
+    System.out.println("Total execution time: " + estimatedTime);
 
     // Print results
     population.printVariablesToFile("VAR");

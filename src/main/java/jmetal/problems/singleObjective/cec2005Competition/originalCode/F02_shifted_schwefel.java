@@ -45,7 +45,7 @@
 //		dated March 8, 2005.
 //
 
-package jmetal.problems.singleObjective.cec2005Competition.originalCode ;
+package jmetal.problems.singleObjective.cec2005Competition.originalCode;
 
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
@@ -54,7 +54,8 @@ public class F02_shifted_schwefel extends TestFunc {
 
   // Fixed (class) parameters
   static final public String FUNCTION_NAME = "Shifted Schwefel's Problem 1.2";
-  static final public String DEFAULT_FILE_DATA = "" + Configuration.cec2005SupportDataDirectory +"/schwefel_102_data.txt";
+  static final public String DEFAULT_FILE_DATA =
+    "" + Configuration.cec2005SupportDataDirectory + "/schwefel_102_data.txt";
 
   // Shifted global optimum
   private final double[] m_o;
@@ -64,10 +65,11 @@ public class F02_shifted_schwefel extends TestFunc {
   private double[] m_z;
 
   // Constructors
-  public F02_shifted_schwefel (int dimension, double bias) throws JMException {
+  public F02_shifted_schwefel(int dimension, double bias) throws JMException {
     this(dimension, bias, DEFAULT_FILE_DATA);
   }
-  public F02_shifted_schwefel (int dimension, double bias, String file_data) throws JMException {
+
+  public F02_shifted_schwefel(int dimension, double bias, String file_data) throws JMException {
     super(dimension, bias, FUNCTION_NAME);
 
     // Note: dimension starts from 0

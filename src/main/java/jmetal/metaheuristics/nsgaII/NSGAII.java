@@ -28,36 +28,38 @@ import jmetal.util.JMException;
 import jmetal.util.Ranking;
 import jmetal.util.comparators.CrowdingComparator;
 
-/** 
- *  Implementation of NSGA-II.
- *  This implementation of NSGA-II makes use of a QualityIndicator object
- *  to obtained the convergence speed of the algorithm. This version is used
- *  in the paper:
- *     A.J. Nebro, J.J. Durillo, C.A. Coello Coello, F. Luna, E. Alba 
- *     "A Study of Convergence Speed in Multi-Objective Metaheuristics." 
- *     To be presented in: PPSN'08. Dortmund. September 2008.
+/**
+ * Implementation of NSGA-II.
+ * This implementation of NSGA-II makes use of a QualityIndicator object
+ * to obtained the convergence speed of the algorithm. This version is used
+ * in the paper:
+ * A.J. Nebro, J.J. Durillo, C.A. Coello Coello, F. Luna, E. Alba
+ * "A Study of Convergence Speed in Multi-Objective Metaheuristics."
+ * To be presented in: PPSN'08. Dortmund. September 2008.
  */
 
 public class NSGAII extends Algorithm {
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = 5815971727148859507L;
 
   /**
    * Constructor
+   *
    * @param problem Problem to solve
    */
   public NSGAII(Problem problem) {
-    super (problem) ;
+    super(problem);
   } // NSGAII
 
-  /**   
+  /**
    * Runs the NSGA-II algorithm.
+   *
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
    * as a result of the algorithm execution
-   * @throws JMException 
+   * @throws JMException
    */
   public SolutionSet execute() throws JMException, ClassNotFoundException {
     int populationSize;
@@ -176,7 +178,7 @@ public class NSGAII extends Algorithm {
       // by the algorithm to obtain a Pareto front with a hypervolume higher
       // than the hypervolume of the true Pareto front.
       if ((indicators != null) &&
-          (requiredEvaluations == 0)) {
+        (requiredEvaluations == 0)) {
         double HV = indicators.getHypervolume(population);
         if (HV >= (0.98 * indicators.getTrueParetoFrontHypervolume())) {
           requiredEvaluations = evaluations;

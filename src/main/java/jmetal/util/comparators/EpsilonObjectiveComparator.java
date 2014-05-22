@@ -44,16 +44,18 @@ public class EpsilonObjectiveComparator implements Comparator<Solution> {
 
   /**
    * Constructor.
+   *
    * @param nObj Index of the objective to compare.
-   * @param eta Value for epsilon-dominance.
+   * @param eta  Value for epsilon-dominance.
    */
-  public EpsilonObjectiveComparator(int nObj,double eta) {
+  public EpsilonObjectiveComparator(int nObj, double eta) {
     objective_ = nObj;
-    eta_       = eta;
+    eta_ = eta;
   }
 
   /**
    * Compares two solutions.
+   *
    * @param o1 Object representing the first <code>Solution</code>.
    * @param o2 Object representing the second <code>Solution</code>.
    * @return -1, or 0, or 1 if o1 is less than, equal, or greater than o2,
@@ -61,19 +63,19 @@ public class EpsilonObjectiveComparator implements Comparator<Solution> {
    */
   @Override
   public int compare(Solution o1, Solution o2) {
-    if (o1==null) {
+    if (o1 == null) {
       return 1;
     } else if (o2 == null) {
       return -1;
     }
 
-    double objective1 = ((Solution)o1).getObjective(objective_);
-    double objective2 = ((Solution)o2).getObjective(objective_);
+    double objective1 = ((Solution) o1).getObjective(objective_);
+    double objective2 = ((Solution) o2).getObjective(objective_);
 
     //Objective implements comparable!!!
-    if (objective1/(1 + eta_) < objective2) {
+    if (objective1 / (1 + eta_) < objective2) {
       return -1;
-    } else if (objective1/(1 + eta_) > objective2) {
+    } else if (objective1 / (1 + eta_) > objective2) {
       return 1;
     } else {
       return 0;

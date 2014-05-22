@@ -23,8 +23,8 @@ package jmetal.operators.selection;
 
 import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
-import jmetal.util.random.PseudoRandom;
 import jmetal.util.comparators.DominanceComparator;
+import jmetal.util.random.PseudoRandom;
 
 import java.util.Comparator;
 import java.util.HashMap;
@@ -50,26 +50,26 @@ public class BinaryTournament extends Selection {
    * Creates a new Binary tournament operator using a BinaryTournamentComparator
    */
   @SuppressWarnings({"unchecked"})
-  public BinaryTournament(HashMap<String, Object> parameters){
-    super(parameters) ;
+  public BinaryTournament(HashMap<String, Object> parameters) {
+    super(parameters);
     if ((parameters != null) && (parameters.get("comparator") != null)) {
       comparator_ = (Comparator<Solution>) parameters.get("comparator");
-    }
-    else {
+    } else {
       comparator_ = new DominanceComparator();
     }
   }
 
   /**
    * Performs the operation
+   *
    * @param object Object representing a SolutionSet
    * @return the selected solution
    */
-  public Object execute(Object object){
-    SolutionSet solutionSet = (SolutionSet)object;
+  public Object execute(Object object) {
+    SolutionSet solutionSet = (SolutionSet) object;
     Solution solution1, solution2;
-    solution1 = solutionSet.get(PseudoRandom.randInt(0,solutionSet.size()-1));
-    solution2 = solutionSet.get(PseudoRandom.randInt(0,solutionSet.size()-1));
+    solution1 = solutionSet.get(PseudoRandom.randInt(0, solutionSet.size() - 1));
+    solution2 = solutionSet.get(PseudoRandom.randInt(0, solutionSet.size() - 1));
 
     if (solutionSet.size() >= 2) {
       while (solution1 == solution2) {
@@ -77,18 +77,15 @@ public class BinaryTournament extends Selection {
       }
     }
 
-    int flag = comparator_.compare(solution1,solution2);
+    int flag = comparator_.compare(solution1, solution2);
     if (flag == -1) {
       return solution1;
-    }
-    else if (flag == 1) {
+    } else if (flag == 1) {
       return solution2;
-    }
-    else {
+    } else {
       if (PseudoRandom.randDouble() < 0.5) {
         return solution1;
-      }
-      else {
+      } else {
         return solution2;
       }
     }

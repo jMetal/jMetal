@@ -40,56 +40,55 @@ import java.util.logging.Logger;
 
 /**
  * This class executes a parallel version of the MOEAD algorithm described in:
- *   A.J. Nebro, J.J. Durillo, 
- *   "A Study of the parallelization of the multi-objective metaheuristic 
- *   MOEA/D"
- *   LION 4, Venice, January 2010.
+ * A.J. Nebro, J.J. Durillo,
+ * "A Study of the parallelization of the multi-objective metaheuristic
+ * MOEA/D"
+ * LION 4, Venice, January 2010.
  */
 public class pMOEAD_main {
-  public static Logger      logger_ ;
-  public static FileHandler fileHandler_ ;
+  public static Logger logger_;
+  public static FileHandler fileHandler_;
 
   /**
-   * @param args Command line arguments. The first (optional) argument specifies 
-   *      the problem to solve.
+   * @param args Command line arguments. The first (optional) argument specifies
+   *             the problem to solve.
    * @throws JMException
    * @throws IOException
-   * @throws SecurityException
-   * Usage: three options
-   *      - jmetal.metaheuristics.moead.MOEAD_main
-   *      - jmetal.metaheuristics.moead.MOEAD_main problemName
-   *      - jmetal.metaheuristics.moead.MOEAD_main problemName ParetoFrontFile
-
+   * @throws SecurityException Usage: three options
+   *                           - jmetal.metaheuristics.moead.MOEAD_main
+   *                           - jmetal.metaheuristics.moead.MOEAD_main problemName
+   *                           - jmetal.metaheuristics.moead.MOEAD_main problemName ParetoFrontFile
    */
-  public static void main(String [] args) throws JMException, SecurityException, IOException, ClassNotFoundException {
-    Problem   problem   ;
-    Algorithm algorithm ;
-    Operator  crossover ;
-    Operator  mutation  ;
+  public static void main(String[] args)
+    throws JMException, SecurityException, IOException, ClassNotFoundException {
+    Problem problem;
+    Algorithm algorithm;
+    Operator crossover;
+    Operator mutation;
 
-    QualityIndicator indicators ;
+    QualityIndicator indicators;
 
-    int numberOfThreads = 1 ;
-    String dataDirectory = "" ;
+    int numberOfThreads = 1;
+    String dataDirectory = "";
 
     // Logger object and file to store log messages
-    logger_      = Configuration.logger_ ;
+    logger_ = Configuration.logger_;
     fileHandler_ = new FileHandler("pMOEAD.log");
-    logger_.addHandler(fileHandler_) ;
+    logger_.addHandler(fileHandler_);
 
-    indicators = null ;
+    indicators = null;
     if (args.length == 1) {
-      Object [] params = {"Real"};
-      problem = (new ProblemFactory()).getProblem(args[0],params);
+      Object[] params = {"Real"};
+      problem = (new ProblemFactory()).getProblem(args[0], params);
     } else if (args.length == 2) {
-      Object [] params = {"Real"};
-      problem = (new ProblemFactory()).getProblem(args[0],params);
-      indicators = new QualityIndicator(problem, args[1]) ;
+      Object[] params = {"Real"};
+      problem = (new ProblemFactory()).getProblem(args[0], params);
+      indicators = new QualityIndicator(problem, args[1]);
     } else if (args.length == 3) {
-      Object [] params = {"Real"};
-      problem = (new ProblemFactory()).getProblem(args[0],params);
-      numberOfThreads = Integer.parseInt(args[1]) ;
-      dataDirectory = args[2] ;
+      Object[] params = {"Real"};
+      problem = (new ProblemFactory()).getProblem(args[0], params);
+      numberOfThreads = Integer.parseInt(args[1]);
+      dataDirectory = args[2];
     } else {
       problem = new Kursawe("Real", 3);
       //problem = new Kursawe("BinaryReal", 3);
@@ -103,9 +102,9 @@ public class pMOEAD_main {
     algorithm = new pMOEAD(problem);
 
     // Algorithm parameters
-    numberOfThreads = 4 ;
-    algorithm.setInputParameter("populationSize",300);
-    algorithm.setInputParameter("maxEvaluations",150000);
+    numberOfThreads = 4;
+    algorithm.setInputParameter("populationSize", 300);
+    algorithm.setInputParameter("maxEvaluations", 150000);
     algorithm.setInputParameter("numberOfThreads", numberOfThreads);
 
     // Directory with the files containing the weight vectors used in 
@@ -115,27 +114,28 @@ public class pMOEAD_main {
     // http://dces.essex.ac.uk/staff/qzhang/MOEAcompetition/CEC09final/code/ZhangMOEADcode/moead0305.rar
     algorithm.setInputParameter("dataDirectory", "MOEAD_Weight");
 
-    algorithm.setInputParameter("T", 20) ;
-    algorithm.setInputParameter("delta", 0.9) ;
-    algorithm.setInputParameter("nr", 2) ;
+    algorithm.setInputParameter("T", 20);
+    algorithm.setInputParameter("delta", 0.9);
+    algorithm.setInputParameter("nr", 2);
 
     // Crossover operator 
-    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
-    crossoverParameters.put("CR", 1.0) ;
-    crossoverParameters.put("F", 0.5) ;
-    crossover = CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", crossoverParameters);
+    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
+    crossoverParameters.put("CR", 1.0);
+    crossoverParameters.put("F", 0.5);
+    crossover =
+      CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", crossoverParameters);
     // FIXME: is these two statements necessary?
     crossover.setParameter("CR", 1.0);
     crossover.setParameter("F", 0.5);
 
     // Mutation operator
-    HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
-    mutationParameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
-    mutationParameters.put("distributionIndex", 20.0) ;
+    HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
+    mutationParameters.put("probability", 1.0 / problem.getNumberOfVariables());
+    mutationParameters.put("distributionIndex", 20.0);
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
 
-    algorithm.addOperator("crossover",crossover);
-    algorithm.addOperator("mutation",mutation);
+    algorithm.addOperator("crossover", crossover);
+    algorithm.addOperator("mutation", mutation);
 
     // Execute the Algorithm
     long initTime = System.currentTimeMillis();
@@ -143,18 +143,18 @@ public class pMOEAD_main {
     long estimatedTime = System.currentTimeMillis() - initTime;
 
     // Result messages 
-    logger_.info("Total execution time: "+estimatedTime + " ms");
+    logger_.info("Total execution time: " + estimatedTime + " ms");
     logger_.info("Objectives values have been writen to file FUN");
     population.printObjectivesToFile("FUN");
     logger_.info("Variables values have been writen to file VAR");
     population.printVariablesToFile("VAR");
 
     if (indicators != null) {
-      logger_.info("Quality indicators") ;
-      logger_.info("Hypervolume: " + indicators.getHypervolume(population)) ;
-      logger_.info("GD         : " + indicators.getGD(population)) ;
-      logger_.info("IGD        : " + indicators.getIGD(population)) ;
-      logger_.info("Spread     : " + indicators.getSpread(population)) ;
+      logger_.info("Quality indicators");
+      logger_.info("Hypervolume: " + indicators.getHypervolume(population));
+      logger_.info("GD         : " + indicators.getGD(population));
+      logger_.info("IGD        : " + indicators.getIGD(population));
+      logger_.info("Spread     : " + indicators.getSpread(population));
     }
   }
 }

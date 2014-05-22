@@ -3,26 +3,26 @@ package jmetal.metaheuristics.nsgaII;
 import jmetal.core.*;
 import jmetal.util.Distance;
 import jmetal.util.JMException;
-import jmetal.util.random.PseudoRandom;
 import jmetal.util.Ranking;
 import jmetal.util.comparators.CrowdingComparator;
 import jmetal.util.offspring.Offspring;
 import jmetal.util.offspring.PolynomialMutationOffspring;
+import jmetal.util.random.PseudoRandom;
 
 public class NSGAIIRandom extends Algorithm {
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = -9113018415834859888L;
 
-  public int populationSize_            ;
-  public SolutionSet population_        ;
+  public int populationSize_;
+  public SolutionSet population_;
   public SolutionSet offspringPopulation_;
-  public SolutionSet union_              ;
+  public SolutionSet union_;
 
-  int maxEvaluations_                   ;
-  int evaluations_                      ;
+  int maxEvaluations_;
+  int evaluations_;
 
   int[] contributionCounter_; // contribution per crossover operator
   double[] contribution_; // contribution per crossover operator
@@ -35,8 +35,8 @@ public class NSGAIIRandom extends Algorithm {
   }
 
   public SolutionSet execute() throws JMException, ClassNotFoundException {
-    double contrReal [] = new double[3] ;
-    contrReal[0] = contrReal[1] = contrReal[2] = 0 ;    
+    double contrReal[] = new double[3];
+    contrReal[0] = contrReal[1] = contrReal[2] = 0;
 
     Distance distance = new Distance();
 
@@ -56,17 +56,18 @@ public class NSGAIIRandom extends Algorithm {
     getOffspring = ((Offspring[]) getInputParameter("offspringsCreators"));
     N_O = getOffspring.length;
 
-    contribution_               = new double[N_O];
-    contributionCounter_        = new int[N_O];
+    contribution_ = new double[N_O];
+    contributionCounter_ = new int[N_O];
 
     contribution_[0] = (double) (populationSize_ / (double) N_O) / (double) populationSize_;
     for (int i = 1; i < N_O; i++) {
-      contribution_[i] = (double) (populationSize_ / (double) N_O) / (double) populationSize_ + (double) contribution_[i - 1];
+      contribution_[i] = (double) (populationSize_ / (double) N_O) / (double) populationSize_
+        + (double) contribution_[i - 1];
     }
 
     for (int i = 0; i < N_O; i++) {
-      System.out.println(getOffspring[i].configuration()) ;
-      System.out.println("Contribution: " + contribution_[i]) ;
+      System.out.println(getOffspring[i].configuration());
+      System.out.println("Contribution: " + contribution_[i]);
     }
 
     // Create the initial solutionSet
@@ -87,27 +88,30 @@ public class NSGAIIRandom extends Algorithm {
       Solution[] parents = new Solution[2];
       for (int i = 0; i < (populationSize_ / 1); i++) {
         if (evaluations_ < maxEvaluations_) {
-          Solution individual = new Solution(population_.get(PseudoRandom.randInt(0, populationSize_-1)));
+          Solution individual =
+            new Solution(population_.get(PseudoRandom.randInt(0, populationSize_ - 1)));
           //  				Solution individual = new Solution(population_.get(i));
 
           int selected = 0;
-          boolean found = false ;
+          boolean found = false;
           Solution offSpring = null;
           double rnd = PseudoRandom.randDouble();
           for (selected = 0; selected < N_O; selected++) {
 
             if (!found && (rnd <= contribution_[selected])) {
               if ("DE".equals(getOffspring[selected].id())) {
-                offSpring = getOffspring[selected].getOffspring(population_, i) ;
+                offSpring = getOffspring[selected].getOffspring(population_, i);
                 //contrDE++;
               } else if ("SBXCrossover".equals(getOffspring[selected].id())) {
                 offSpring = getOffspring[selected].getOffspring(population_);
                 //contrSBX++;
               } else if ("PolynomialMutation".equals(getOffspring[selected].id())) {
-                offSpring = ((PolynomialMutationOffspring)getOffspring[selected]).getOffspring(individual);
+                offSpring =
+                  ((PolynomialMutationOffspring) getOffspring[selected]).getOffspring(individual);
                 //contrPol++;
               } else {
-                System.out.println("Error in NSGAIIAdaptive. Operator " + offSpring + " does not exist") ;
+                System.out
+                  .println("Error in NSGAIIAdaptive. Operator " + offSpring + " does not exist");
               }
 
               offSpring.setFitness((int) selected);
@@ -115,9 +119,9 @@ public class NSGAIIRandom extends Algorithm {
             } // if
           } // for
 
-          problem_.evaluate(offSpring) ;
+          problem_.evaluate(offSpring);
           offspringPopulation_.add(offSpring);
-          evaluations_ +=1 ; 
+          evaluations_ += 1;
         } // if                            
       } // for
 

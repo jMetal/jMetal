@@ -33,82 +33,87 @@ import java.util.logging.Level;
 /**
  * Class representing a pseudo-random number generator
  */
-public class PseudoRandom  {
-    
+public class PseudoRandom {
+
   /**
    * generator used to obtain the random values
    */
   private static IRandomGenerator random_ = null;
-  private static RandomGenerator defaultGenerator_ = new RandomGenerator() ;
-               
-  /** 
+  private static RandomGenerator defaultGenerator_ = new RandomGenerator();
+
+  /**
    * Constructor.
    * Creates a new instance of PseudoRandom.
    */
   private PseudoRandom() {
-    if (random_ == null){
+    if (random_ == null) {
       //this.random = new java.util.Random((long)seed);
       random_ = new RandomGenerator();
     }
   }
-    
+
   public static void setRandomGenerator(IRandomGenerator generator) {
-    random_ = generator ;
+    random_ = generator;
   }
-  
-  /** 
+
+  /**
    * Returns a random int value using the Java random generator.
+   *
    * @return A random int value.
    */
   public static int randInt() {
     if (random_ == null) {
-      random_ = defaultGenerator_ ;
+      random_ = defaultGenerator_;
     }
     return random_.nextInt(Integer.MAX_VALUE);
   }
-    
-  /** 
+
+  /**
    * Returns a random double value using the PseudoRandom generator.
    * Returns A random double value.
    */
   public static double randDouble() {
     if (random_ == null) {
-      random_ = defaultGenerator_ ;
+      random_ = defaultGenerator_;
     }
     return random_.nextDouble();
   }
-    
-  /** 
+
+  /**
    * Returns a random int value between a minimum bound and maximum bound using
    * the PseudoRandom generator.
+   *
    * @param minBound The minimum bound.
    * @param maxBound The maximum bound.
-   * Return A pseudo random int value between minBound and maxBound.
+   *                 Return A pseudo random int value between minBound and maxBound.
    */
   public static int randInt(int minBound, int maxBound) {
     if (random_ == null) {
-      random_ = defaultGenerator_ ;
+      random_ = defaultGenerator_;
     }
-    return minBound + random_.nextInt(maxBound-minBound);
+    return minBound + random_.nextInt(maxBound - minBound);
   }
-    
-  /** Returns a random double value between a minimum bound and a maximum bound
+
+  /**
+   * Returns a random double value between a minimum bound and a maximum bound
    * using the PseudoRandom generator.
+   *
    * @param minBound The minimum bound.
    * @param maxBound The maximum bound.
    * @return A pseudo random double value between minBound and maxBound
    */
   public static double randDouble(double minBound, double maxBound) {
     if (random_ == null) {
-      random_ = defaultGenerator_ ;
+      random_ = defaultGenerator_;
     }
-    return minBound + random_.nextDouble() * (maxBound-minBound);
+    return minBound + random_.nextDouble() * (maxBound - minBound);
   }
 
   /**
    * Use the polar form of the Box-Muller transformation to obtain
    * a pseudo random number from a Gaussian distribution
    * Code taken from Maurice Clerc's implementation
+   *
    * @param mean
    * @param standardDeviation
    * @return A pseudo random number
@@ -120,9 +125,9 @@ public class PseudoRandom  {
       x1 = 2.0 * randDouble() - 1.0;
       x2 = 2.0 * randDouble() - 1.0;
       w = x1 * x1 + x2 * x2;
-    } while ( w >= 1.0);
+    } while (w >= 1.0);
 
-    w = Math.sqrt( (-2.0 * Math.log(w)) / w );
+    w = Math.sqrt((-2.0 * Math.log(w)) / w);
     y1 = x1 * w;
     y1 = y1 * standardDeviation + mean;
     return y1;
@@ -132,14 +137,15 @@ public class PseudoRandom  {
   /**
    * Ger a random point from an hypersphere (center = 0, radius = 1)
    * Code taken from Maurice Clerc's implementation
+   *
    * @param dimension
    * @return A pseudo random point
    */
   public static double[] randSphere(int dimension) {
-    int D = dimension ;
-    double[] x = new double[dimension] ;
+    int D = dimension;
+    double[] x = new double[dimension];
 
-    double length = 0 ;
+    double length = 0;
     for (int i = 0; i < dimension; i++) {
       x[i] = 0.0;
     }
@@ -147,35 +153,36 @@ public class PseudoRandom  {
     // --------- Step 1. Direction
 
     for (int i = 0; i < D; i++) {
-      x[i] = randNormal(0, 1) ;
-      length += length + x[i]*x[i] ;
+      x[i] = randNormal(0, 1);
+      length += length + x[i] * x[i];
     }
 
-    length = Math.sqrt(length) ;
+    length = Math.sqrt(length);
 
     // --------- Step 2. Random radius
 
-    double r = PseudoRandom.randDouble(0, 1) ;
+    double r = PseudoRandom.randDouble(0, 1);
 
-    for (int i = 0; i < D;  i++) {
-      x[i]=r*x[i]/length;
+    for (int i = 0; i < D; i++) {
+      x[i] = r * x[i] / length;
     }
 
-    return x ;
+    return x;
   }
 
   /**
    * Ger a random point from an hypersphere
    * Code taken from Maurice Clerc's implementation
+   *
    * @param center
    * @param radius
    * @return A pseudo random number
    */
   public static double[] randSphere(int dimension, double center, double radius) {
-    int D = dimension ;
-    double[] x = new double[dimension] ;
+    int D = dimension;
+    double[] x = new double[dimension];
 
-    double length = 0 ;
+    double length = 0;
     for (int i = 0; i < dimension; i++) {
       x[i] = 0.0;
     }
@@ -183,48 +190,48 @@ public class PseudoRandom  {
     // --------- Step 1. Direction
 
     for (int i = 0; i < D; i++) {
-      x[i] = randNormal(0, 1) ;
-      length += length + x[i]*x[i] ;
+      x[i] = randNormal(0, 1);
+      length += length + x[i] * x[i];
     }
 
-    length = Math.sqrt(length) ;
+    length = Math.sqrt(length);
 
     // --------- Step 2. Random radius
 
-    double r = PseudoRandom.randDouble(0, 1) ;
+    double r = PseudoRandom.randDouble(0, 1);
 
-    for (int i = 0; i < D;  i++) {
-      x[i]=center + radius*r*x[i]/length;
+    for (int i = 0; i < D; i++) {
+      x[i] = center + radius * r * x[i] / length;
     }
 
-    return x ;
+    return x;
   }
 
 
-  public static void  main (String[] args) throws JMException {
-    int numberOfPoints ;
-    String fileName    ;
+  public static void main(String[] args) throws JMException {
+    int numberOfPoints;
+    String fileName;
 
     if (args.length != 2) {
-      throw new JMException("Usage: PseudoRandom numberOfPoints outputFileName") ;
+      throw new JMException("Usage: PseudoRandom numberOfPoints outputFileName");
     }
-    numberOfPoints = Integer.valueOf(args[0]) ;
-    fileName = args[1] ;
+    numberOfPoints = Integer.valueOf(args[0]);
+    fileName = args[1];
 
     try {
-      FileOutputStream fos   = new FileOutputStream(fileName)     ;
-      OutputStreamWriter osw = new OutputStreamWriter(fos)    ;
-      BufferedWriter bw      = new BufferedWriter(osw)        ;
+      FileOutputStream fos = new FileOutputStream(fileName);
+      OutputStreamWriter osw = new OutputStreamWriter(fos);
+      BufferedWriter bw = new BufferedWriter(osw);
 
-      double [] x  ;
-      for (int i = 0 ; i < numberOfPoints ; i++) {
-        x = randSphere(2) ;
-        bw.write("" + (0+500*x[0]) + " " + (0 + 500*x[1]));
+      double[] x;
+      for (int i = 0; i < numberOfPoints; i++) {
+        x = randSphere(2);
+        bw.write("" + (0 + 500 * x[0]) + " " + (0 + 500 * x[1]));
         bw.newLine();
       }
 
       bw.close();
-    }catch (IOException e) {
+    } catch (IOException e) {
       Configuration.logger_.log(Level.SEVERE, "Error acceding to the file", e);
     }
 

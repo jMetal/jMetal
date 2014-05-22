@@ -33,35 +33,30 @@ public class CrossoverFactory {
 
   /**
    * Gets a crossover operator through its name.
+   *
    * @param name Name of the operator
    * @return The operator
    */
-  public static Crossover getCrossoverOperator(String name, HashMap<String, Object> parameters) throws JMException {
+  public static Crossover getCrossoverOperator(String name, HashMap<String, Object> parameters)
+    throws JMException {
     if (name.equalsIgnoreCase("SBXCrossover")) {
       return new SBXCrossover(parameters);
-    }
-    else if (name.equalsIgnoreCase("SinglePointCrossover")) {
+    } else if (name.equalsIgnoreCase("SinglePointCrossover")) {
       return new SinglePointCrossover(parameters);
-    }
-    else if (name.equalsIgnoreCase("PMXCrossover")) {
+    } else if (name.equalsIgnoreCase("PMXCrossover")) {
       return new PMXCrossover(parameters);
-    }
-    else if (name.equalsIgnoreCase("TwoPointsCrossover")) {
+    } else if (name.equalsIgnoreCase("TwoPointsCrossover")) {
       return new TwoPointsCrossover(parameters);
-    }
-    else if (name.equalsIgnoreCase("HUXCrossover")) {
+    } else if (name.equalsIgnoreCase("HUXCrossover")) {
       return new HUXCrossover(parameters);
-    }
-    else if (name.equalsIgnoreCase("DifferentialEvolutionCrossover")) {
+    } else if (name.equalsIgnoreCase("DifferentialEvolutionCrossover")) {
       return new DifferentialEvolutionCrossover(parameters);
-    }
-    else if (name.equalsIgnoreCase("BLXAlphaCrossover")) {
+    } else if (name.equalsIgnoreCase("BLXAlphaCrossover")) {
       return new BLXAlphaCrossover(parameters);
-    }
-    else {
+    } else {
       Configuration.logger_.severe("CrossoverFactory.getCrossoverOperator. " +
-              "Operator '" + name + "' not found ");
-      throw new JMException("Exception in " + name + ".getCrossoverOperator()") ;
+        "Operator '" + name + "' not found ");
+      throw new JMException("Exception in " + name + ".getCrossoverOperator()");
     }
   }
 }

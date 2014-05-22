@@ -38,13 +38,13 @@ import java.io.Serializable;
 public abstract class Variable implements Serializable {
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = 8958332113562350950L;
 
   /**
    * Creates an exact copy of a <code>Variable</code> object.
-   * 
+   *
    * @return the copy of the object.
    */
   public abstract Variable deepCopy();
@@ -62,7 +62,7 @@ public abstract class Variable implements Serializable {
 
     String name = cls.getName();
     Configuration.logger_.severe("Class " + name + " does not implement "
-        + "method getValue");
+      + "method getValue");
     throw new JMException("Exception in " + name + ".getValue()");
   }
 
@@ -78,7 +78,7 @@ public abstract class Variable implements Serializable {
 
     String name = cls.getName();
     Configuration.logger_.severe("Class " + name + " does not implement "
-        + "method setValue");
+      + "method setValue");
     throw new JMException("Exception in " + name + ".setValue()");
   } // setValue
 
@@ -93,23 +93,8 @@ public abstract class Variable implements Serializable {
 
     String name = cls.getName();
     Configuration.logger_.severe("Class " + name
-        + " does not implement method getLowerBound()");
+      + " does not implement method getLowerBound()");
     throw new JMException("Exception in " + name + ".getLowerBound()");
-  }
-
-  /**
-   * Gets the upper bound value of a encodings.variable. As not all objects
-   * belonging to a subclass of <code>Variable</code> have an upper bound, a
-   * call to this method is considered a fatal error by default, and the program
-   * is terminated. Those classes requiring this method must redefine it.
-   */
-  public double getUpperBound() throws JMException {
-    Class<String> cls = java.lang.String.class;
-
-    String name = cls.getName();
-    Configuration.logger_.severe("Class " + name
-        + " does not implement method getUpperBound()");
-    throw new JMException("Exception in " + name + ".getUpperBound()");
   }
 
   /**
@@ -123,8 +108,23 @@ public abstract class Variable implements Serializable {
 
     String name = cls.getName();
     Configuration.logger_.severe("Class " + name
-        + " does not implement method setLowerBound()");
+      + " does not implement method setLowerBound()");
     throw new JMException("Exception in " + name + ".setLowerBound()");
+  }
+
+  /**
+   * Gets the upper bound value of a encodings.variable. As not all objects
+   * belonging to a subclass of <code>Variable</code> have an upper bound, a
+   * call to this method is considered a fatal error by default, and the program
+   * is terminated. Those classes requiring this method must redefine it.
+   */
+  public double getUpperBound() throws JMException {
+    Class<String> cls = java.lang.String.class;
+
+    String name = cls.getName();
+    Configuration.logger_.severe("Class " + name
+      + " does not implement method getUpperBound()");
+    throw new JMException("Exception in " + name + ".getUpperBound()");
   }
 
   /**
@@ -138,14 +138,14 @@ public abstract class Variable implements Serializable {
 
     String name = cls.getName();
     Configuration.logger_.severe("Class " + name
-        + " does not implement method setUpperBound()");
+      + " does not implement method setUpperBound()");
     throw new JMException("Exception in " + name + ".setUpperBound()");
   }
 
   /**
    * Gets the type of the encodings.variable. The types are defined in class
    * Problem.
-   * 
+   *
    * @return The type of the encodings.variable
    */
 

@@ -34,12 +34,13 @@ import java.util.logging.Level;
 public class ProblemFactory {
   /**
    * Creates an object representing a problem
-   * @param name Name of the problem
+   *
+   * @param name   Name of the problem
    * @param params Parameters characterizing the problem
    * @return The object representing the problem
    * @throws JMException
    */
-  public Problem getProblem(String name, Object [] params) throws JMException {
+  public Problem getProblem(String name, Object[] params) throws JMException {
     // Params are the arguments
     // The number of argument must correspond with the problem constructor params
 
@@ -48,45 +49,46 @@ public class ProblemFactory {
       base += "singleObjective.";
     } else if (name.equals("mQAP")) {
       base += "mqap.";
-    } else if (name.substring(0,name.length()-1).equalsIgnoreCase("DTLZ")) {
+    } else if (name.substring(0, name.length() - 1).equalsIgnoreCase("DTLZ")) {
       base += "DTLZ.";
-    } else if (name.substring(0,name.length()-1).equalsIgnoreCase("WFG")) {
+    } else if (name.substring(0, name.length() - 1).equalsIgnoreCase("WFG")) {
       base += "WFG.";
-    } else if (name.substring(0,name.length()-1).equalsIgnoreCase("UF")) {
+    } else if (name.substring(0, name.length() - 1).equalsIgnoreCase("UF")) {
       base += "cec2009Competition.";
-    } else if (name.substring(0,name.length()-2).equalsIgnoreCase("UF")) {
+    } else if (name.substring(0, name.length() - 2).equalsIgnoreCase("UF")) {
       base += "cec2009Competition.";
-    } else if (name.substring(0,name.length()-1).equalsIgnoreCase("ZDT")) {
+    } else if (name.substring(0, name.length() - 1).equalsIgnoreCase("ZDT")) {
       base += "ZDT.";
-    } else if (name.substring(0,name.length()-3).equalsIgnoreCase("ZZJ07")) {
+    } else if (name.substring(0, name.length() - 3).equalsIgnoreCase("ZZJ07")) {
       base += "ZZJ07.";
-    } else if (name.substring(0,name.length()-3).equalsIgnoreCase("LZ09")) {
+    } else if (name.substring(0, name.length() - 3).equalsIgnoreCase("LZ09")) {
       base += "LZ09.";
-    } else if (name.substring(0,name.length()-4).equalsIgnoreCase("ZZJ07")) {
+    } else if (name.substring(0, name.length() - 4).equalsIgnoreCase("ZZJ07")) {
       base += "ZZJ07.";
-    } else if (name.substring(0,name.length()-3).equalsIgnoreCase("LZ06")) {
+    } else if (name.substring(0, name.length() - 3).equalsIgnoreCase("LZ06")) {
       base += "LZ06.";
     }
 
     try {
-      Class<?> problemClass = Class.forName(base+name);
-      Constructor<?> [] constructors = problemClass.getConstructors();
+      Class<?> problemClass = Class.forName(base + name);
+      Constructor<?>[] constructors = problemClass.getConstructors();
       int i = 0;
       //find the constructor
       while ((i < constructors.length) &&
-              (constructors[i].getParameterTypes().length!=params.length)) {
+        (constructors[i].getParameterTypes().length != params.length)) {
         i++;
       }
       // constructors[i] is the selected one constructor
-      Problem problem = (Problem)constructors[i].newInstance(params);
+      Problem problem = (Problem) constructors[i].newInstance(params);
       return problem;
-    } catch(Exception e) {
+    } catch (Exception e) {
       Configuration.logger_.log(
-              Level.SEVERE,
-              "ProblemFactory.getProblem: " + "Problem '" + name + "' does not exist. " +
-                      "Please, check the problem names in jmetal/problems",
-              e) ;
-      throw new JMException("Exception in " + name + ".getProblem()") ;
+        Level.SEVERE,
+        "ProblemFactory.getProblem: " + "Problem '" + name + "' does not exist. " +
+          "Please, check the problem names in jmetal/problems",
+        e
+      );
+      throw new JMException("Exception in " + name + ".getProblem()");
     }
   }
 }

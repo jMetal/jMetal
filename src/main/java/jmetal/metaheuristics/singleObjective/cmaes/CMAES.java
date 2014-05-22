@@ -22,8 +22,8 @@ package jmetal.metaheuristics.singleObjective.cmaes;
 
 import jmetal.core.*;
 import jmetal.util.JMException;
-import jmetal.util.random.PseudoRandom;
 import jmetal.util.comparators.ObjectiveComparator;
+import jmetal.util.random.PseudoRandom;
 
 import java.util.Comparator;
 import java.util.Random;
@@ -34,7 +34,7 @@ import java.util.Random;
 public class CMAES extends Algorithm {
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = -1341901419653809198L;
 
@@ -50,14 +50,14 @@ public class CMAES extends Algorithm {
 
   //private double axisratio;
 
-  private double [] xmean;
-  private double [] xold;
+  private double[] xmean;
+  private double[] xold;
 
   /*
    * Strategy parameter setting: Selection
    */
   private int mu;
-  private double [] weights;
+  private double[] weights;
   private double mueff;
 
   /*
@@ -72,16 +72,16 @@ public class CMAES extends Algorithm {
   /*
    * Dynamic (internal) strategy parameters and constants
    */
-  private double [] pc;
-  private double [] ps;
-  private double [][] B;
-  private double [] diagD;
-  private double [][] C;
-  private double [][] invsqrtC;
+  private double[] pc;
+  private double[] ps;
+  private double[][] B;
+  private double[] diagD;
+  private double[][] C;
+  private double[][] invsqrtC;
   private int eigeneval;
   private double chiN;
 
-  private double [][] arx;
+  private double[][] arx;
   private SolutionSet population_;
   private Solution bestSolutionEver = null;
 
@@ -89,12 +89,13 @@ public class CMAES extends Algorithm {
 
   /**
    * Constructor
+   *
    * @param problem Problem to solve
    */
   public CMAES(Problem problem) {
-    super(problem) ;
-    long seed = System.currentTimeMillis() ;
-    rand = new Random(seed) ;
+    super(problem);
+    long seed = System.currentTimeMillis();
+    rand = new Random(seed);
   } // Constructor
 
   private void init() throws ClassNotFoundException {
@@ -121,18 +122,18 @@ public class CMAES extends Algorithm {
     //lambda = 4+Math.floor(3*Math.log(N));
 
     // number of parents/points for recombination
-    mu = (int) Math.floor(lambda/2);
+    mu = (int) Math.floor(lambda / 2);
 
     // muXone array for weighted recombination
     weights = new double[mu];
     double sum = 0;
-    for (int i=0; i<mu; i++) {
-      weights[i] = (Math.log(mu + 1/2) - Math.log(i + 1));
+    for (int i = 0; i < mu; i++) {
+      weights[i] = (Math.log(mu + 1 / 2) - Math.log(i + 1));
       sum += weights[i];
     }
     // normalize recombination weights array
-    for (int i=0; i<mu; i++) {
-      weights[i] = weights[i]/sum;
+    for (int i = 0; i < mu; i++) {
+      weights[i] = weights[i] / sum;
     }
 
     // variance-effectiveness of sum w_i x_i
@@ -147,19 +148,19 @@ public class CMAES extends Algorithm {
     /* Strategy parameter setting: Adaptation */
 
     // time constant for cumulation for C
-    cc = (4 + mueff/N) / (N + 4 + 2*mueff/N);
+    cc = (4 + mueff / N) / (N + 4 + 2 * mueff / N);
 
     // t-const for cumulation for sigma control
     cs = (mueff + 2) / (N + mueff + 5);
 
     // learning rate for rank-one update of C
-    c1 = 2 / ((N+1.3)*(N+1.3) + mueff);
+    c1 = 2 / ((N + 1.3) * (N + 1.3) + mueff);
 
     // learning rate for rank-mu update
-    cmu = Math.min(1 - c1, 2 * (mueff - 2 + 1/mueff) / ((N+2)*(N+2) + mueff));
+    cmu = Math.min(1 - c1, 2 * (mueff - 2 + 1 / mueff) / ((N + 2) * (N + 2) + mueff));
 
     // damping for sigma, usually close to 1
-    damps = 1 + 2 * Math.max(0, Math.sqrt((mueff - 1) / (N+1)) -1) + cs;
+    damps = 1 + 2 * Math.max(0, Math.sqrt((mueff - 1) / (N + 1)) - 1) + cs;
 
     /* Initialize dynamic (internal) strategy parameters and constants */
 
@@ -171,12 +172,12 @@ public class CMAES extends Algorithm {
     ps = new double[N];
 
     // B defines the coordinate system
-    B  = new double[N][N];
+    B = new double[N][N];
     // covariance matrix C
-    C  = new double[N][N];
+    C = new double[N][N];
 
     // C^-1/2
-    invsqrtC  = new double[N][N];
+    invsqrtC = new double[N][N];
 
     for (int i = 0; i < N; i++) {
       pc[i] = 0;
@@ -197,7 +198,7 @@ public class CMAES extends Algorithm {
     // track update of B and D
     eigeneval = 0;
 
-    chiN = Math.sqrt(N) * ( 1 - 1/(4*N) + 1/(21*N*N) );
+    chiN = Math.sqrt(N) * (1 - 1 / (4 * N) + 1 / (21 * N * N));
 
     /* non-settable parameters */
 
@@ -209,7 +210,7 @@ public class CMAES extends Algorithm {
   private SolutionSet samplePopulation() throws JMException, ClassNotFoundException {
 
     int N = problem_.getNumberOfVariables();
-    double [] artmp = new double[N];
+    double[] artmp = new double[N];
     double sum;
 
     for (int iNk = 0; iNk < populationSize; iNk++) {
@@ -231,7 +232,8 @@ public class CMAES extends Algorithm {
 
   } // samplePopulation
 
-  private SolutionSet genoPhenoTransformation(double [][] popx) throws JMException, ClassNotFoundException {
+  private SolutionSet genoPhenoTransformation(double[][] popx)
+    throws JMException, ClassNotFoundException {
 
     SolutionSet population_ = new SolutionSet(populationSize);
     for (int i = 0; i < populationSize; i++) {
@@ -274,7 +276,7 @@ public class CMAES extends Algorithm {
 
   } // resampleSingle
 
-  private Solution genoPhenoTransformation(double [] x) throws JMException, ClassNotFoundException {
+  private Solution genoPhenoTransformation(double[] x) throws JMException, ClassNotFoundException {
 
     Solution solution = new Solution(problem_);
     for (int i = 0; i < problem_.getNumberOfVariables(); i++) {
@@ -286,7 +288,8 @@ public class CMAES extends Algorithm {
 
   private void storeBest(Comparator<Solution> comparator) {
     Solution bestInPopulation = new Solution(population_.best(comparator));
-    if ((bestSolutionEver == null) || (bestSolutionEver.getObjective(0) > bestInPopulation.getObjective(0))) {
+    if ((bestSolutionEver == null) || (bestSolutionEver.getObjective(0) > bestInPopulation
+      .getObjective(0))) {
       bestSolutionEver = bestInPopulation;
     }
 
@@ -297,8 +300,8 @@ public class CMAES extends Algorithm {
     int N = problem_.getNumberOfVariables();
     int lambda = populationSize;
 
-    double [] arfitness = new double[lambda];
-    int [] arindex = new int[lambda];
+    double[] arfitness = new double[lambda];
+    int[] arindex = new int[lambda];
 
 
     /* Sort by fitness and compute weighted mean into xmean */
@@ -335,8 +338,8 @@ public class CMAES extends Algorithm {
     // cumulation for sigma (ps)
     for (int i = 0; i < N; i++) {
       ps[i] = (1. - cs) * ps[i]
-          + Math.sqrt(cs * (2. - cs) * mueff)
-          * artmp[i];
+        + Math.sqrt(cs * (2. - cs) * mueff)
+        * artmp[i];
     }
 
     // calculate norm(ps)^2
@@ -347,13 +350,13 @@ public class CMAES extends Algorithm {
 
     // cumulation for covariance matrix (pc)
     int hsig = 0;
-    if ((Math.sqrt(psxps) / Math.sqrt(1. - Math.pow(1. - cs, 2. * counteval/lambda)) / chiN)
-          < (1.4 + 2. / (N + 1.))) {
+    if ((Math.sqrt(psxps) / Math.sqrt(1. - Math.pow(1. - cs, 2. * counteval / lambda)) / chiN)
+      < (1.4 + 2. / (N + 1.))) {
       hsig = 1;
     }
     for (int i = 0; i < N; i++) {
       pc[i] = (1. - cc) * pc[i]
-          + hsig * Math.sqrt(cc * (2. - cc) * mueff) * (xmean[i] - xold[i]) / sigma;
+        + hsig * Math.sqrt(cc * (2. - cc) * mueff) * (xmean[i] - xold[i]) / sigma;
     }
 
 
@@ -361,21 +364,21 @@ public class CMAES extends Algorithm {
 
     for (int i = 0; i < N; i++) {
       for (int j = 0; j <= i; j++) {
-        C[i][j] =  (1 - c1 -cmu)
-            * C[i][j]
-            + c1
-            * (pc[i] * pc[j] + (1 - hsig) * cc
-            * (2. - cc) * C[i][j]);
+        C[i][j] = (1 - c1 - cmu)
+          * C[i][j]
+          + c1
+          * (pc[i] * pc[j] + (1 - hsig) * cc
+          * (2. - cc) * C[i][j]);
         for (int k = 0; k < mu; k++) {
           /*
            * additional rank mu
            * update
            */
           C[i][j] += cmu
-              * weights[k]
-              * (arx[arindex[k]][i] - xold[i])
-              * (arx[arindex[k]][j] - xold[j]) / sigma
-              / sigma;
+            * weights[k]
+            * (arx[arindex[k]][i] - xold[i])
+            * (arx[arindex[k]][j] - xold[j]) / sigma
+            / sigma;
         }
       }
     }
@@ -383,12 +386,12 @@ public class CMAES extends Algorithm {
 
     /* Adapt step size sigma */
 
-    sigma *= Math.exp((cs/damps) * (Math.sqrt(psxps)/chiN - 1));
+    sigma *= Math.exp((cs / damps) * (Math.sqrt(psxps) / chiN - 1));
 
 
     /* Decomposition of C into B*diag(D.^2)*B' (diagonalization) */
 
-    if (counteval - eigeneval > lambda /(c1+cmu)/N/10) { // to achieve O(N^2)
+    if (counteval - eigeneval > lambda / (c1 + cmu) / N / 10) { // to achieve O(N^2)
 
       eigeneval = counteval;
 
@@ -400,7 +403,7 @@ public class CMAES extends Algorithm {
       }
 
       // eigen decomposition, B==normalized eigenvectors
-      double [] offdiag = new double[N];
+      double[] offdiag = new double[N];
       Utils.tred2(N, B, diagD, offdiag);
       Utils.tql2(N, diagD, offdiag, B);
 
@@ -410,7 +413,8 @@ public class CMAES extends Algorithm {
 
       for (int i = 0; i < N; i++) {
         if (diagD[i] < 0) { // numerical problem?
-          System.err.println("jmetal.metaheuristics.cmaes.CMAES.updateDistribution(): WARNING - an eigenvalue has become negative.");
+          System.err.println(
+            "jmetal.metaheuristics.cmaes.CMAES.updateDistribution(): WARNING - an eigenvalue has become negative.");
           counteval = maxEvaluations;
           //throw new JMException("Exception in CMAES.execute(): an eigenvalue has become negative.") ;
         }
@@ -419,11 +423,11 @@ public class CMAES extends Algorithm {
       // diagD is a vector of standard deviations now
 
       //invsqrtC = B * diag(D.^-1) * B';
-      double [][] artmp2 = new double[N][N];
+      double[][] artmp2 = new double[N][N];
       for (int i = 0; i < N; i++) {
         //double value = (xmean[i] - xold[i]) / sigma;
         for (int j = 0; j < N; j++) {
-          artmp2[i][j] = B[i][j] * (1/diagD[j]);
+          artmp2[i][j] = B[i][j] * (1 / diagD[j]);
         }
       }
       for (int i = 0; i < N; i++) {
@@ -459,7 +463,7 @@ public class CMAES extends Algorithm {
       // --- core iteration step ---
       population_ = samplePopulation(); // get a new population of solutions
 
-      for(int i = 0; i < populationSize; i++) {
+      for (int i = 0; i < populationSize; i++) {
         if (!isFeasible(population_.get(i))) {
           //System.out.println("RESAMPLING!");
           population_.replace(i, resampleSingle(i));
@@ -476,10 +480,10 @@ public class CMAES extends Algorithm {
 
     }
 
-    SolutionSet resultPopulation  = new SolutionSet(1) ;
-    resultPopulation.add(bestSolutionEver) ;
+    SolutionSet resultPopulation = new SolutionSet(1);
+    resultPopulation.add(bestSolutionEver);
 
-    return resultPopulation ;
+    return resultPopulation;
 
   } // execute
 

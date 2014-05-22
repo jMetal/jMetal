@@ -34,47 +34,42 @@ import java.util.Comparator;
 public class FastHypervolumeArchive extends Archive {
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = 124744170266943517L;
-
+  public Solution referencePoint_;
   /**
    * Stores the maximum size of the archive.
    */
   private int maxSize_;
-
   /**
    * stores the number of the objectives.
    */
   private int objectives_;
-
   /**
    * Stores a <code>Comparator</code> for dominance checking.
    */
   private Comparator<Solution> dominance_;
-
   /**
    * Stores a <code>Comparator</code> for equality checking (in the objective
    * space).
    */
   private Comparator<Solution> equals_;
-
-  private Comparator<Solution> crowdingDistance_ ;
-
-  public Solution referencePoint_ ;
+  private Comparator<Solution> crowdingDistance_;
 
   /**
    * Constructor.
-   * @param maxSize The maximum size of the archive.
+   *
+   * @param maxSize            The maximum size of the archive.
    * @param numberOfObjectives The number of objectives.
    */
   public FastHypervolumeArchive(int maxSize, int numberOfObjectives) {
     super(maxSize);
-    maxSize_          = maxSize;
-    objectives_       = numberOfObjectives;        
-    dominance_        = new DominanceComparator();
-    equals_           = new EqualSolutions();
-    referencePoint_   = new Solution(objectives_) ;
+    maxSize_ = maxSize;
+    objectives_ = numberOfObjectives;
+    dominance_ = new DominanceComparator();
+    equals_ = new EqualSolutions();
+    referencePoint_ = new Solution(objectives_);
     for (int i = 0; i < objectives_; i++) {
       referencePoint_.setObjective(i, Double.MAX_VALUE);
     }
@@ -84,30 +79,31 @@ public class FastHypervolumeArchive extends Archive {
 
   /**
    * Adds a <code>Solution</code> to the archive. If the <code>Solution</code>
-   * is dominated by any member of the archive, then it is discarded. If the 
+   * is dominated by any member of the archive, then it is discarded. If the
    * <code>Solution</code> dominates some members of the archive, these are
    * removed. If the archive is full and the <code>Solution</code> has to be
    * inserted, the solution contributing the least to the HV of the solution set
    * is discarded.
+   *
    * @param solution The <code>Solution</code>
-   * @return true if the <code>Solution</code> has been inserted, false 
+   * @return true if the <code>Solution</code> has been inserted, false
    * otherwise.
    */
-  public boolean add(Solution solution){
+  public boolean add(Solution solution) {
     int flag = 0;
     int i = 0;
     Solution aux; //Store an solution temporally
 
-    while (i < solutionsList_.size()){
-      aux = solutionsList_.get(i);            
+    while (i < solutionsList_.size()) {
+      aux = solutionsList_.get(i);
 
-      flag = dominance_.compare(solution,aux);
+      flag = dominance_.compare(solution, aux);
       if (flag == 1) {               // The solution to add is dominated
         return false;                // Discard the new solution
       } else if (flag == -1) {       // A solution in the archive is dominated
         solutionsList_.remove(i);    // Remove it from the population            
       } else {
-        if (equals_.compare(aux,solution)==0) { // There is an equal solution 
+        if (equals_.compare(aux, solution) == 0) { // There is an equal solution
           // in the population
           return false; // Discard the new solution
         }
@@ -131,7 +127,7 @@ public class FastHypervolumeArchive extends Archive {
   public void computeHVContribution() {
     if (size() > 2) { // The contribution can be updated
 
-      FastHypervolume fastHV = new FastHypervolume() ;
+      FastHypervolume fastHV = new FastHypervolume();
       fastHV.computeHVContributions(this);
     }
   }

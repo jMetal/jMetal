@@ -34,26 +34,27 @@ import jmetal.util.comparators.CrowdingComparator;
 public class ssNSGAII extends Algorithm {
 
   /**
-<<<<<<< HEAD
-=======
-   * 
+   * <<<<<<< HEAD
+   * =======
    */
   private static final long serialVersionUID = 3588191288161132897L;
 
   /**
->>>>>>> master
+   * >>>>>>> master
    * Constructor
+   *
    * @param problem Problem to solve
    */
   public ssNSGAII(Problem problem) {
-    super (problem) ;
+    super(problem);
   } // NSGAII
 
-  /**   
+  /**
    * Runs the ssNSGA-II algorithm.
+   *
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
    * as a result of the algorithm execution
-   * @throws JMException 
+   * @throws JMException
    */
   public SolutionSet execute() throws JMException, ClassNotFoundException {
     int populationSize;
@@ -110,7 +111,7 @@ public class ssNSGAII extends Algorithm {
       //obtain parents
       parents[0] = (Solution) selectionOperator.execute(population);
       parents[1] = (Solution) selectionOperator.execute(population);
-      
+
       // crossover
       Solution[] offSpring = (Solution[]) crossoverOperator.execute(parents);
 
@@ -124,7 +125,7 @@ public class ssNSGAII extends Algorithm {
       // insert child into the offspring population
       offspringPopulation.add(offSpring[0]);
 
-      evaluations ++;
+      evaluations++;
 
       // Create the solutionSet union of solutionSet and offSpring
       union = ((SolutionSet) population).union(offspringPopulation);

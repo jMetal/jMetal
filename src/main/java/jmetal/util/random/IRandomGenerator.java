@@ -22,6 +22,7 @@
 package jmetal.util.random;
 
 public interface IRandomGenerator {
-	public int nextInt(int upperLimit) ;
-	public double nextDouble() ;
+  public int nextInt(int upperLimit);
+
+  public double nextDouble();
 }

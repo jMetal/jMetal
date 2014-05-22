@@ -30,58 +30,59 @@ import jmetal.util.JMException;
 public class Rosenbrock extends Problem {
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = -4545223899906374214L;
 
   /**
    * Constructor
    * Creates a default instance of the Rosenbrock problem
+   *
    * @param numberOfVariables Number of variables of the problem
-   * @param solutionType The solution type must "Real" or "BinaryReal".
+   * @param solutionType      The solution type must "Real" or "BinaryReal".
    */
-  public Rosenbrock(String solutionType, Integer numberOfVariables) throws ClassNotFoundException, JMException {
-    numberOfVariables_   = numberOfVariables ;
-    numberOfObjectives_  = 1;
+  public Rosenbrock(String solutionType, Integer numberOfVariables)
+    throws ClassNotFoundException, JMException {
+    numberOfVariables_ = numberOfVariables;
+    numberOfObjectives_ = 1;
     numberOfConstraints_ = 0;
-    problemName_         = "Rastrigin";
+    problemName_ = "Rastrigin";
 
     upperLimit_ = new double[numberOfVariables_];
     lowerLimit_ = new double[numberOfVariables_];
-    for (int var = 0; var < numberOfVariables_; var++){
+    for (int var = 0; var < numberOfVariables_; var++) {
       lowerLimit_[var] = -5.12;
       upperLimit_[var] = 5.12;
     }
 
     if (solutionType.compareTo("BinaryReal") == 0) {
       solutionType_ = new BinaryRealSolutionType(this);
-    }
-    else if (solutionType.compareTo("Real") == 0) {
+    } else if (solutionType.compareTo("Real") == 0) {
       solutionType_ = new RealSolutionType(this);
-    }
-    else {
-      throw new JMException("Error: solution type " + solutionType + " invalid") ;
+    } else {
+      throw new JMException("Error: solution type " + solutionType + " invalid");
     }
   }
 
   /**
    * Evaluates a solution
+   *
    * @param solution The solution to evaluate
    * @throws jmetal.util.JMException
    */
   public void evaluate(Solution solution) throws JMException {
-    Variable[] decisionVariables  = solution.getDecisionVariables();
+    Variable[] decisionVariables = solution.getDecisionVariables();
 
     double sum = 0.0;
-    double [] x = new double[numberOfVariables_];
+    double[] x = new double[numberOfVariables_];
 
     for (int i = 0; i < numberOfVariables_; i++) {
-      x[i] = decisionVariables[i].getValue() ;
+      x[i] = decisionVariables[i].getValue();
     }
 
     for (int i = 0; i < numberOfVariables_ - 1; i++) {
       //sum += 100.0 * (x[i+1]-x[i]*x[i])*(x[i+1]-x[i]*x[i]) +(x[i]-1)*(x[i]-1) ;
-      double temp1 = (x[i] * x[i]) - x[i+1];
+      double temp1 = (x[i] * x[i]) - x[i + 1];
       double temp2 = x[i] - 1.0;
       sum += (100.0 * temp1 * temp1) + (temp2 * temp2);
     }

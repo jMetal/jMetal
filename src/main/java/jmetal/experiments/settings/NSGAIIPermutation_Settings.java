@@ -43,114 +43,120 @@ import java.util.logging.Level;
  */
 public class NSGAIIPermutation_Settings extends Settings {
 
-  public int populationSize_  ;
-  public int maxEvaluations_  ;
+  public int populationSize_;
+  public int maxEvaluations_;
 
-  public double mutationProbability_  ;
-  public double crossoverProbability_ ;
+  public double mutationProbability_;
+  public double crossoverProbability_;
 
   /**
    * Constructor
    */
   public NSGAIIPermutation_Settings(String problem) {
-    super(problem) ;
-    
-    Object [] problemParams = {"Permutation"};
+    super(problem);
+
+    Object[] problemParams = {"Permutation"};
     try {
-	    problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
+      problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
     } catch (JMException e) {
       Configuration.logger_.log(Level.SEVERE, "Unable to get problem", e);
-    }      
-    
-    // Default experiments.settings
-    populationSize_ = 100   ;
-    maxEvaluations_ = 25000 ;
+    }
 
-    mutationProbability_  = 1.0/problem_.getNumberOfVariables();
-    crossoverProbability_ = 0.9 ; 
+    // Default experiments.settings
+    populationSize_ = 100;
+    maxEvaluations_ = 25000;
+
+    mutationProbability_ = 1.0 / problem_.getNumberOfVariables();
+    crossoverProbability_ = 0.9;
   } // NSGAIIPermutation_Settings
-  
+
   /**
    * Configure NSGAII with user-defined parameter experiments.settings
+   *
    * @return A NSGAII algorithm object
    * @throws jmetal.util.JMException
    */
   public Algorithm configure() throws JMException {
-    Algorithm algorithm ;
-    Operator  selection ;
-    Operator  crossover ;
-    Operator  mutation  ;
+    Algorithm algorithm;
+    Operator selection;
+    Operator crossover;
+    Operator mutation;
 
     // Creating the problem
-    algorithm = new NSGAII(problem_) ;
-    
+    algorithm = new NSGAII(problem_);
+
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", populationSize_);
     algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
 
-    
+
     // Mutation and Crossover Permutation codification
-    HashMap<String, Object> parameters = new HashMap<String, Object>() ;
-    parameters.put("probability", crossoverProbability_) ;
+    HashMap<String, Object> parameters = new HashMap<String, Object>();
+    parameters.put("probability", crossoverProbability_);
     crossover = CrossoverFactory.getCrossoverOperator("PMXCrossover", parameters);
 
-    parameters = new HashMap<String, Object>() ;
-    parameters.put("probability", mutationProbability_) ;
-    mutation = MutationFactory.getMutationOperator("SwapMutation",parameters);
-    
-    // Selection Operator 
-    parameters = null ;
-    selection = SelectionFactory.getSelectionOperator("BinaryTournament2", parameters) ;   
-    
-    // Add the operators to the algorithm
-    algorithm.addOperator("crossover",crossover);
-    algorithm.addOperator("mutation",mutation);
-    algorithm.addOperator("selection",selection);
+    parameters = new HashMap<String, Object>();
+    parameters.put("probability", mutationProbability_);
+    mutation = MutationFactory.getMutationOperator("SwapMutation", parameters);
 
-    return algorithm ;
+    // Selection Operator 
+    parameters = null;
+    selection = SelectionFactory.getSelectionOperator("BinaryTournament2", parameters);
+
+    // Add the operators to the algorithm
+    algorithm.addOperator("crossover", crossover);
+    algorithm.addOperator("mutation", mutation);
+    algorithm.addOperator("selection", selection);
+
+    return algorithm;
   } // configure
 
   /**
    * Configure NSGAII with user-defined parameter experiments.settings
+   *
    * @return A NSGAII algorithm object
    */
   @Override
   public Algorithm configure(Properties configuration) throws JMException {
-    Algorithm algorithm ;
-    Selection selection ;
-    Crossover crossover ;
-    Mutation mutation  ;
+    Algorithm algorithm;
+    Selection selection;
+    Crossover crossover;
+    Mutation mutation;
 
     // Creating the algorithm.
-    algorithm = new NSGAII(problem_) ;
+    algorithm = new NSGAII(problem_);
 
     // Algorithm parameters
-    populationSize_ = Integer.parseInt(configuration.getProperty("populationSize",String.valueOf(populationSize_)));
-    maxEvaluations_  = Integer.parseInt(configuration.getProperty("maxEvaluations",String.valueOf(maxEvaluations_)));
-    algorithm.setInputParameter("populationSize",populationSize_);
-    algorithm.setInputParameter("maxEvaluations",maxEvaluations_);
+    populationSize_ = Integer
+      .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize_)));
+    maxEvaluations_ = Integer
+      .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations_)));
+    algorithm.setInputParameter("populationSize", populationSize_);
+    algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
 
     // Mutation and Crossover for Real codification
-    crossoverProbability_ = Double.parseDouble(configuration.getProperty("crossoverProbability",String.valueOf(crossoverProbability_)));
+    crossoverProbability_ = Double.parseDouble(
+      configuration.getProperty("crossoverProbability", String.valueOf(crossoverProbability_)));
 
-    HashMap<String, Object> parameters = new HashMap<String, Object>() ;
-    parameters.put("probability", crossoverProbability_) ;
+    HashMap<String, Object> parameters = new HashMap<String, Object>();
+    parameters.put("probability", crossoverProbability_);
     crossover = CrossoverFactory.getCrossoverOperator("PMXCrossover", parameters);
 
-    mutationProbability_ = Double.parseDouble(configuration.getProperty("mutationProbability",String.valueOf(mutationProbability_)));
-    parameters = new HashMap<String, Object>() ;
-    parameters.put("probability", mutationProbability_) ;
+    mutationProbability_ = Double.parseDouble(
+      configuration.getProperty("mutationProbability", String.valueOf(mutationProbability_)));
+    parameters = new HashMap<String, Object>();
+    parameters.put("probability", mutationProbability_);
     mutation = MutationFactory.getMutationOperator("SwapMutation", parameters);
 
     // Selection Operator
-    parameters = null ;
-    selection = SelectionFactory.getSelectionOperator("BinaryTournament2", parameters) ;
+    parameters = null;
+    selection = SelectionFactory.getSelectionOperator("BinaryTournament2", parameters);
 
     // Add the operators to the algorithm
-    algorithm.addOperator("crossover",crossover);
-    algorithm.addOperator("mutation",mutation);
-    algorithm.addOperator("selection",selection);
+    algorithm.addOperator("crossover", crossover);
+    algorithm.addOperator("mutation", mutation);
+    algorithm.addOperator("selection", selection);
 
-    return algorithm ;
+    return algorithm;
   }
 } // NSGAIIPermutation_Settings

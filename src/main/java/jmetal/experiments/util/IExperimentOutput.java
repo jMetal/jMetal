@@ -19,15 +19,15 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-package jmetal.experiments.util ;
+package jmetal.experiments.util;
 
 import jmetal.util.JMException;
 
 /**
  * Created by Antonio J. Nebro on 16/02/14.
- *
+ * <p/>
  * Interface for all the outputs of an experiment
  */
 public interface IExperimentOutput {
-  public void generate() throws JMException ;
+  public void generate() throws JMException;
 }

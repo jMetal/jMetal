@@ -31,9 +31,10 @@ public class Statistics {
   /**
    * Calculates the median of a vector considering the positions indicated by
    * the parameters first and last
+   *
    * @param vector
-   * @param first index of first position to consider in the vector
-   * @param last index of last position to consider in the vector
+   * @param first  index of first position to consider in the vector
+   * @param last   index of last position to consider in the vector
    * @return The median
    */
   public static Double calculateMedian(Vector vector, int first, int last) {
@@ -44,14 +45,15 @@ public class Statistics {
       median = (Double) vector.elementAt(first + size / 2);
     } else {
       median = ((Double) vector.elementAt(first + size / 2 - 1) +
-          (Double) vector.elementAt(first + size / 2)) / 2.0;
+        (Double) vector.elementAt(first + size / 2)) / 2.0;
     }
 
     return median;
-  } 
+  }
 
   /**
    * Calculates the interquartile range (IQR) of a vector of Doubles
+   *
    * @param vector
    * @return The IQR
    */
@@ -66,8 +68,8 @@ public class Statistics {
       } else {
         q3 = calculateMedian(vector, vector.size() / 2, vector.size() - 1);
         q1 = calculateMedian(vector, 0, vector.size() / 2 - 1);
-      } 
-    } 
+      }
+    }
     return q3 - q1;
   }
 }

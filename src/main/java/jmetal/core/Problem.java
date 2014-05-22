@@ -93,85 +93,81 @@ public abstract class Problem implements Serializable {
    */
   public Problem() {
     solutionType_ = null;
-  } 
+  }
 
   /**
    * Constructor.
    */
   public Problem(SolutionType solutionType) {
     solutionType_ = solutionType;
-  } 
+  }
 
   /**
    * Gets the number of decision variables of the problem.
-   * 
+   *
    * @return the number of decision variables.
    */
   public int getNumberOfVariables() {
     return numberOfVariables_;
-  } 
+  }
 
   /**
    * Sets the number of decision variables of the problem.
    */
   public void setNumberOfVariables(int numberOfVariables) {
     numberOfVariables_ = numberOfVariables;
-  } 
+  }
 
   /**
    * Gets the the number of objectives of the problem.
-   * 
+   *
    * @return the number of objectives.
    */
   public int getNumberOfObjectives() {
     return numberOfObjectives_;
-  } 
+  }
 
   /**
    * Gets the lower bound of the ith encodings.variable of the problem.
-   * 
-   * @param i
-   *          The index of the encodings.variable.
+   *
+   * @param i The index of the encodings.variable.
    * @return The lower bound.
    */
   public double getLowerLimit(int i) {
     return lowerLimit_[i];
-  } 
+  }
 
   /**
    * Gets the upper bound of the ith encodings.variable of the problem.
-   * 
-   * @param i
-   *          The index of the encodings.variable.
+   *
+   * @param i The index of the encodings.variable.
    * @return The upper bound.
    */
   public double getUpperLimit(int i) {
     return upperLimit_[i];
-  } 
+  }
 
   /**
    * Evaluates a <code>Solution</code> object.
-   * 
-   * @param solution
-   *          The <code>Solution</code> to evaluate.
+   *
+   * @param solution The <code>Solution</code> to evaluate.
    */
   public abstract void evaluate(Solution solution) throws JMException;
 
   /**
    * Gets the number of side constraints in the problem.
-   * 
+   *
    * @return the number of constraints.
    */
   public int getNumberOfConstraints() {
     return numberOfConstraints_;
-  } 
+  }
 
   /**
    * Evaluates the overall constraint violation of a <code>Solution</code>
    * object.
-   * 
-   * @param solution
-   *          The <code>Solution</code> to evaluate.
+   *
+   * @param solution The <code>Solution</code> to evaluate.
    */
   public void evaluateConstraints(Solution solution) throws JMException {
     // The default behavior is to do nothing. Only constrained problems have to
@@ -181,7 +177,7 @@ public abstract class Problem implements Serializable {
   /**
    * Returns the number of bits that must be used to encode binary-real
    * variables
-   * 
+   *
    * @return the number of bits.
    */
   public int getPrecision(int var) {
@@ -191,19 +187,18 @@ public abstract class Problem implements Serializable {
   /**
    * Returns array containing the number of bits that must be used to encode
    * binary-real variables.
-   * 
+   *
    * @return the number of bits.
    */
   public int[] getPrecision() {
     return precision_;
-  } 
+  }
 
   /**
    * Sets the array containing the number of bits that must be used to encode
    * binary-real variables.
-   * 
-   * @param precision
-   *          The array
+   *
+   * @param precision The array
    */
   public void setPrecision(int[] precision) {
     precision_ = Arrays.copyOf(precision, precision.length);
@@ -211,7 +206,7 @@ public abstract class Problem implements Serializable {
 
   /**
    * Returns the length of the encodings.variable.
-   * 
+   *
    * @return the encodings.variable length.
    */
   public int getLength(int var) {
@@ -222,27 +217,26 @@ public abstract class Problem implements Serializable {
   }
 
   /**
+   * Returns the type of the variables of the problem.
+   *
+   * @return type of the variables of the problem.
+   */
+  public SolutionType getSolutionType() {
+    return solutionType_;
+  }
+
+  /**
    * Sets the type of the variables of the problem.
-   * 
-   * @param type
-   *          The type of the variables
+   *
+   * @param type The type of the variables
    */
   public void setSolutionType(SolutionType type) {
     solutionType_ = type;
   } // setSolutionType
 
   /**
-   * Returns the type of the variables of the problem.
-   * 
-   * @return type of the variables of the problem.
-   */
-  public SolutionType getSolutionType() {
-    return solutionType_;
-  } 
-
-  /**
    * Returns the problem name
-   * 
+   *
    * @return The problem name
    */
   public String getName() {
@@ -251,7 +245,7 @@ public abstract class Problem implements Serializable {
 
   /**
    * Returns the number of bits of the solutions of the problem
-   * 
+   *
    * @return The number of bits solutions of the problem
    */
   public int getNumberOfBits() {

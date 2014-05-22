@@ -25,7 +25,6 @@ import jmetal.core.Algorithm;
 import jmetal.core.Operator;
 import jmetal.experiments.Settings;
 import jmetal.metaheuristics.cellde.CellDE;
-import jmetal.operators.crossover.Crossover;
 import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.ProblemFactory;
@@ -39,89 +38,95 @@ import java.util.logging.Level;
 /**
  * Settings class of algorithm CellDE
  */
-public class CellDE_Settings extends Settings{
-  private double cr_          ;
-  private double f_            ;
+public class CellDE_Settings extends Settings {
+  private double cr_;
+  private double f_;
 
-  private int populationSize_  ;
-  private int archiveSize_     ;
-  private int maxEvaluations_  ;
-  private int archiveFeedback_ ;
+  private int populationSize_;
+  private int archiveSize_;
+  private int maxEvaluations_;
+  private int archiveFeedback_;
 
   /**
    * Constructor
    */
   public CellDE_Settings(String problemName) {
-    super(problemName) ;
+    super(problemName);
 
-    Object [] problemParams = {"Real"};
+    Object[] problemParams = {"Real"};
     try {
       problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
     } catch (JMException e) {
       Configuration.logger_.log(Level.SEVERE, "Unable to get problem", e);
-    }      
+    }
 
     // Default experiments.settings
-    cr_          = 0.5;
-    f_           = 0.5    ;
+    cr_ = 0.5;
+    f_ = 0.5;
 
-    populationSize_ = 100   ;
-    archiveSize_    = 100   ;
-    maxEvaluations_ = 25000 ;
-    archiveFeedback_= 20    ;
-  } 
+    populationSize_ = 100;
+    archiveSize_ = 100;
+    maxEvaluations_ = 25000;
+    archiveFeedback_ = 20;
+  }
 
   /**
    * Configure the algorithm with the specified parameter experiments.settings
+   *
    * @return an algorithm object
    * @throws jmetal.util.JMException
    */
   public Algorithm configure() throws JMException {
-    Algorithm algorithm ;
-    Operator  selection ;
-    Operator  crossover ;
+    Algorithm algorithm;
+    Operator selection;
+    Operator crossover;
 
     // Creating the problem
-    Object [] problemParams = {"Real"};
-    problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);      
-    algorithm = new CellDE(problem_) ;
+    Object[] problemParams = {"Real"};
+    problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
+    algorithm = new CellDE(problem_);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", populationSize_);
     algorithm.setInputParameter("archiveSize", archiveSize_);
-    algorithm.setInputParameter("maxEvaluations",maxEvaluations_);
+    algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
     algorithm.setInputParameter("archiveFeedBack", archiveFeedback_);
 
     // Crossover operator 
-    HashMap<String, Object> parameters = new HashMap<String, Object>() ;
-    parameters.put("CR", cr_) ;
-    parameters.put("F", f_) ;
-    crossover = CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", parameters);                   
+    HashMap<String, Object> parameters = new HashMap<String, Object>();
+    parameters.put("CR", cr_);
+    parameters.put("F", f_);
+    crossover = CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", parameters);
 
     // Add the operators to the algorithm
-    parameters = null ;
-    selection = SelectionFactory.getSelectionOperator("BinaryTournament", parameters) ; 
+    parameters = null;
+    selection = SelectionFactory.getSelectionOperator("BinaryTournament", parameters);
 
-    algorithm.addOperator("crossover",crossover);
-    algorithm.addOperator("selection",selection);
+    algorithm.addOperator("crossover", crossover);
+    algorithm.addOperator("selection", selection);
 
-    return algorithm ;
-  } 
+    return algorithm;
+  }
 
   /**
    * Configure CellDE with user-defined parameter experiments.settings
+   *
    * @return A CellDE algorithm object
    */
   @Override
   public Algorithm configure(Properties configuration) throws JMException {
-    populationSize_ = Integer.parseInt(configuration.getProperty("populationSize",String.valueOf(populationSize_)));
-    maxEvaluations_  = Integer.parseInt(configuration.getProperty("maxEvaluations",String.valueOf(maxEvaluations_)));
-    archiveSize_ = Integer.parseInt(configuration.getProperty("archiveSize",String.valueOf(archiveSize_)));
-    archiveFeedback_  = Integer.parseInt(configuration.getProperty("archiveFeedback",String.valueOf(archiveFeedback_)));
+    populationSize_ = Integer
+      .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize_)));
+    maxEvaluations_ = Integer
+      .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations_)));
+    archiveSize_ =
+      Integer.parseInt(configuration.getProperty("archiveSize", String.valueOf(archiveSize_)));
+    archiveFeedback_ = Integer
+      .parseInt(configuration.getProperty("archiveFeedback", String.valueOf(archiveFeedback_)));
 
-    cr_ = Double.parseDouble(configuration.getProperty("CR",String.valueOf(cr_)));
-    f_ = Double.parseDouble(configuration.getProperty("F",String.valueOf(f_)));
+    cr_ = Double.parseDouble(configuration.getProperty("CR", String.valueOf(cr_)));
+    f_ = Double.parseDouble(configuration.getProperty("F", String.valueOf(f_)));
 
-    return configure() ;
+    return configure();
   }
 } 

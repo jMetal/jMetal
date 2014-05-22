@@ -37,13 +37,13 @@ import java.util.logging.Level;
 /**
  * Settings class of algorithm SMPSO
  */
-public class SMPSO_Settings extends Settings{
-  
-  public int    swarmSize_                 ;
-  public int    maxIterations_             ;
-  public int    archiveSize_               ;
-  public double mutationDistributionIndex_ ;
-  public double mutationProbability_       ;
+public class SMPSO_Settings extends Settings {
+
+  public int swarmSize_;
+  public int maxIterations_;
+  public int archiveSize_;
+  public double mutationDistributionIndex_;
+  public double mutationProbability_;
 
   double C1Max_;
   double C1Min_;
@@ -58,21 +58,21 @@ public class SMPSO_Settings extends Settings{
    * Constructor
    */
   public SMPSO_Settings(String problem) {
-    super(problem) ;
-    
-    Object [] problemParams = {"Real"};
+    super(problem);
+
+    Object[] problemParams = {"Real"};
     try {
-	    problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
+      problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
     } catch (JMException e) {
       Configuration.logger_.log(Level.SEVERE, "Unable to get problem", e);
-    }      
+    }
 
     // Default experiments.settings
-    swarmSize_                 = 100 ;
-    maxIterations_             = 250 ;
-    archiveSize_               = 100 ;
-    mutationDistributionIndex_ = 20.0 ;
-    mutationProbability_       = 1.0/problem_.getNumberOfVariables() ;
+    swarmSize_ = 100;
+    maxIterations_ = 250;
+    archiveSize_ = 100;
+    mutationDistributionIndex_ = 20.0;
+    mutationProbability_ = 1.0 / problem_.getNumberOfVariables();
 
     C1Max_ = 2.5;
     C1Min_ = 1.5;
@@ -83,58 +83,63 @@ public class SMPSO_Settings extends Settings{
     ChVel1_ = -1;
     ChVel2_ = -1;
   } // SMPSO_Settings
-  
+
   /**
    * Configure SMPSO with user-defined parameter experiments.settings
+   *
    * @return A SMPSO algorithm object
    * @throws jmetal.util.JMException
    */
   public Algorithm configure() throws JMException {
-    Algorithm algorithm ;
-    Mutation  mutation ;
+    Algorithm algorithm;
+    Mutation mutation;
 
     // Creating the problem
-    algorithm = new SMPSO(problem_) ;
-    
+    algorithm = new SMPSO(problem_);
+
     // Algorithm parameters
     algorithm.setInputParameter("swarmSize", swarmSize_);
     algorithm.setInputParameter("maxIterations", maxIterations_);
     algorithm.setInputParameter("archiveSize", archiveSize_);
-    algorithm.setInputParameter("C1Min",1.5);
-    algorithm.setInputParameter("C1Max",2.5);
-    algorithm.setInputParameter("C2Min",1.5);
-    algorithm.setInputParameter("C2Max",2.5);
-    algorithm.setInputParameter("WMin",0.1);
-    algorithm.setInputParameter("WMax",0.1);
-    algorithm.setInputParameter("ChVel1",-1.0);
-    algorithm.setInputParameter("ChVel2",-1.0);
+    algorithm.setInputParameter("C1Min", 1.5);
+    algorithm.setInputParameter("C1Max", 2.5);
+    algorithm.setInputParameter("C2Min", 1.5);
+    algorithm.setInputParameter("C2Max", 2.5);
+    algorithm.setInputParameter("WMin", 0.1);
+    algorithm.setInputParameter("WMax", 0.1);
+    algorithm.setInputParameter("ChVel1", -1.0);
+    algorithm.setInputParameter("ChVel2", -1.0);
 
-    HashMap<String, Object> parameters = new HashMap<String, Object>() ;
-    parameters.put("probability", mutationProbability_) ;
-    parameters.put("distributionIndex", mutationDistributionIndex_) ;
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);                    
+    HashMap<String, Object> parameters = new HashMap<String, Object>();
+    parameters.put("probability", mutationProbability_);
+    parameters.put("distributionIndex", mutationDistributionIndex_);
+    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);
 
-    algorithm.addOperator("mutation",mutation);
+    algorithm.addOperator("mutation", mutation);
 
-		return algorithm ;
+    return algorithm;
   } // Configure
 
   /**
    * Configure SMPSO with user-defined parameter experiments.settings
+   *
    * @return A SMPSO algorithm object
    */
   @Override
   public Algorithm configure(Properties configuration) throws JMException {
-    Algorithm algorithm ;
-    Mutation  mutation ;
+    Algorithm algorithm;
+    Mutation mutation;
 
     // Creating the algorithm.
-    algorithm = new SMPSO(problem_) ;
+    algorithm = new SMPSO(problem_);
 
     // Algorithm parameters
-    swarmSize_ = Integer.parseInt(configuration.getProperty("swarmSize",String.valueOf(swarmSize_)));
-    maxIterations_  = Integer.parseInt(configuration.getProperty("maxIterations",String.valueOf(maxIterations_)));
-    archiveSize_ = Integer.parseInt(configuration.getProperty("archiveSize", String.valueOf(archiveSize_)));
+    swarmSize_ =
+      Integer.parseInt(configuration.getProperty("swarmSize", String.valueOf(swarmSize_)));
+    maxIterations_ =
+      Integer.parseInt(configuration.getProperty("maxIterations", String.valueOf(maxIterations_)));
+    archiveSize_ =
+      Integer.parseInt(configuration.getProperty("archiveSize", String.valueOf(archiveSize_)));
 
     C1Min_ = Double.parseDouble(configuration.getProperty("C1Min", String.valueOf(C1Min_)));
     C1Max_ = Double.parseDouble(configuration.getProperty("C1Max", String.valueOf(C1Max_)));
@@ -146,28 +151,32 @@ public class SMPSO_Settings extends Settings{
     algorithm.setInputParameter("swarmSize", swarmSize_);
     algorithm.setInputParameter("maxIterations", maxIterations_);
     algorithm.setInputParameter("archiveSize", archiveSize_);
-    algorithm.setInputParameter("C1Min",C1Min_);
-    algorithm.setInputParameter("C1Max",C1Max_);
-    algorithm.setInputParameter("C2Min",C2Min_);
-    algorithm.setInputParameter("C2Max",C2Max_);
-    algorithm.setInputParameter("WMin",WMin_);
-    algorithm.setInputParameter("WMax",WMax_);
-    algorithm.setInputParameter("ChVel1",ChVel1_);
-    algorithm.setInputParameter("ChVel2",ChVel2_);
+    algorithm.setInputParameter("C1Min", C1Min_);
+    algorithm.setInputParameter("C1Max", C1Max_);
+    algorithm.setInputParameter("C2Min", C2Min_);
+    algorithm.setInputParameter("C2Max", C2Max_);
+    algorithm.setInputParameter("WMin", WMin_);
+    algorithm.setInputParameter("WMax", WMax_);
+    algorithm.setInputParameter("ChVel1", ChVel1_);
+    algorithm.setInputParameter("ChVel2", ChVel2_);
 
-    mutationProbability_ = Double.parseDouble(configuration.getProperty("mutationProbability",String.valueOf(mutationProbability_)));
-    mutationDistributionIndex_ = Double.parseDouble(configuration.getProperty("mutationDistributionIndex",String.valueOf(mutationDistributionIndex_)));
+    mutationProbability_ = Double.parseDouble(
+      configuration.getProperty("mutationProbability", String.valueOf(mutationProbability_)));
+    mutationDistributionIndex_ = Double.parseDouble(configuration
+      .getProperty("mutationDistributionIndex", String.valueOf(mutationDistributionIndex_)));
 
-    mutationProbability_ = Double.parseDouble(configuration.getProperty("mutationProbability",String.valueOf(mutationProbability_)));
-    mutationDistributionIndex_ = Double.parseDouble(configuration.getProperty("mutationDistributionIndex",String.valueOf(mutationDistributionIndex_)));
-    HashMap<String, Object> parameters = new HashMap<String, Object>() ;
+    mutationProbability_ = Double.parseDouble(
+      configuration.getProperty("mutationProbability", String.valueOf(mutationProbability_)));
+    mutationDistributionIndex_ = Double.parseDouble(configuration
+      .getProperty("mutationDistributionIndex", String.valueOf(mutationDistributionIndex_)));
+    HashMap<String, Object> parameters = new HashMap<String, Object>();
 
-    parameters.put("probability", mutationProbability_) ;
-    parameters.put("distributionIndex", mutationDistributionIndex_) ;
+    parameters.put("probability", mutationProbability_);
+    parameters.put("distributionIndex", mutationDistributionIndex_);
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);
 
-    algorithm.addOperator("mutation",mutation);
+    algorithm.addOperator("mutation", mutation);
 
-    return algorithm ;
+    return algorithm;
   }
 } // SMPSO_Settings

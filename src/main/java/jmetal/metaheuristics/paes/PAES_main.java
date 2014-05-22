@@ -41,42 +41,41 @@ import java.util.logging.Logger;
  * Class for configuring and running the PAES algorithm
  */
 public class PAES_main {
-  public static Logger      logger_ ;      // Logger object
-  public static FileHandler fileHandler_ ; // FileHandler object
+  public static Logger logger_;      // Logger object
+  public static FileHandler fileHandler_; // FileHandler object
 
   /**
-   * @param args Command line arguments. The first (optional) argument specifies 
+   * @param args Command line arguments. The first (optional) argument specifies
    *             the problem to solve.
-   * @throws JMException 
-   * @throws IOException 
-   * @throws SecurityException 
-   * Usage: three options
-   *      - jmetal.metaheuristics.mocell.MOCell_main
-   *      - jmetal.metaheuristics.mocell.MOCell_main problemName
-   *      - jmetal.metaheuristics.mocell.MOCell_main problemName ParetoFrontFile
+   * @throws JMException
+   * @throws IOException
+   * @throws SecurityException Usage: three options
+   *                           - jmetal.metaheuristics.mocell.MOCell_main
+   *                           - jmetal.metaheuristics.mocell.MOCell_main problemName
+   *                           - jmetal.metaheuristics.mocell.MOCell_main problemName ParetoFrontFile
    */
-  public static void main(String [] args) throws JMException, IOException, ClassNotFoundException {
-    Problem   problem   ;
-    Algorithm algorithm ;
-    Operator  mutation  ;
-    
-    QualityIndicator indicators ;
+  public static void main(String[] args) throws JMException, IOException, ClassNotFoundException {
+    Problem problem;
+    Algorithm algorithm;
+    Operator mutation;
+
+    QualityIndicator indicators;
 
     // Logger object and file to store log messages
-    logger_      = Configuration.logger_ ;
+    logger_ = Configuration.logger_;
     fileHandler_ = new FileHandler("PAES_main.log");
-    logger_.addHandler(fileHandler_) ;
-    
-    indicators = null ;
+    logger_.addHandler(fileHandler_);
+
+    indicators = null;
     if (args.length == 1) {
-      Object [] params = {"Real"};
-      problem = (new ProblemFactory()).getProblem(args[0],params);
+      Object[] params = {"Real"};
+      problem = (new ProblemFactory()).getProblem(args[0], params);
     } else if (args.length == 2) {
-      Object [] params = {"Real"};
-      problem = (new ProblemFactory()).getProblem(args[0],params);
-      indicators = new QualityIndicator(problem, args[1]) ;
+      Object[] params = {"Real"};
+      problem = (new ProblemFactory()).getProblem(args[0], params);
+      indicators = new QualityIndicator(problem, args[1]);
     } else {
-      problem = new Kursawe("ArrayReal", 3); 
+      problem = new Kursawe("ArrayReal", 3);
       //problem = new Fonseca("Real"); 
       //problem = new Kursawe("BinaryReal",3);
       //problem = new Water("Real");
@@ -85,43 +84,43 @@ public class PAES_main {
       //problem = new DTLZ1("Real");
       //problem = new OKA2("Real") ;
     }
-    
+
     algorithm = new PAES(problem);
-    
+
     // Algorithm parameters
-    algorithm.setInputParameter("archiveSize",100);
-    algorithm.setInputParameter("biSections",5);
-    algorithm.setInputParameter("maxEvaluations",25000);
-      
+    algorithm.setInputParameter("archiveSize", 100);
+    algorithm.setInputParameter("biSections", 5);
+    algorithm.setInputParameter("maxEvaluations", 25000);
+
     // Mutation (Real variables)
-    HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
-    mutationParameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
-    mutationParameters.put("distributionIndex", 20.0) ;
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);                    
+    HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
+    mutationParameters.put("probability", 1.0 / problem.getNumberOfVariables());
+    mutationParameters.put("distributionIndex", 20.0);
+    mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
 
     // Add the operators to the algorithm
     algorithm.addOperator("mutation", mutation);
-    
+
     // Execute the Algorithm 
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;
-    
+
     // Result messages 
     // STEP 8. Print the results
-    logger_.info("Total execution time: "+estimatedTime + "ms");
+    logger_.info("Total execution time: " + estimatedTime + "ms");
     logger_.info("Variables values have been writen to file VAR");
-    population.printVariablesToFile("VAR");    
+    population.printVariablesToFile("VAR");
     logger_.info("Objectives values have been writen to file FUN");
     population.printObjectivesToFile("FUN");
-  
+
     if (indicators != null) {
-      logger_.info("Quality indicators") ;
-      logger_.info("Hypervolume: " + indicators.getHypervolume(population)) ;
-      logger_.info("GD         : " + indicators.getGD(population)) ;
-      logger_.info("IGD        : " + indicators.getIGD(population)) ;
-      logger_.info("Spread     : " + indicators.getSpread(population)) ;
-      logger_.info("Epsilon    : " + indicators.getEpsilon(population)) ;  
+      logger_.info("Quality indicators");
+      logger_.info("Hypervolume: " + indicators.getHypervolume(population));
+      logger_.info("GD         : " + indicators.getGD(population));
+      logger_.info("IGD        : " + indicators.getIGD(population));
+      logger_.info("Spread     : " + indicators.getSpread(population));
+      logger_.info("Epsilon    : " + indicators.getEpsilon(population));
     }
   }
 }

@@ -35,8 +35,8 @@ import java.util.logging.Logger;
  * Class for configuring and running a single-objective PSO algorithm
  */
 public class StandardPSO2007_main {
-  public static Logger      logger_ ;      // Logger object
-  public static FileHandler fileHandler_ ; // FileHandler object
+  public static Logger logger_;      // Logger object
+  public static FileHandler fileHandler_; // FileHandler object
 
   /**
    * @param args Command line arguments. The first (optional) argument specifies
@@ -45,15 +45,15 @@ public class StandardPSO2007_main {
    * @throws java.io.IOException
    * @throws SecurityException
    */
-  public static void main(String [] args) 
-  		throws JMException, IOException, ClassNotFoundException {
-    Problem   problem   ;  // The problem to solve
-    Algorithm algorithm ;  // The algorithm to use
+  public static void main(String[] args)
+    throws JMException, IOException, ClassNotFoundException {
+    Problem problem;  // The problem to solve
+    Algorithm algorithm;  // The algorithm to use
 
     // Logger object and file to store log messages
-    logger_      = Configuration.logger_ ;
-    fileHandler_ = new FileHandler("PSO_main.log"); 
-    logger_.addHandler(fileHandler_) ;
+    logger_ = Configuration.logger_;
+    fileHandler_ = new FileHandler("PSO_main.log");
+    logger_.addHandler(fileHandler_);
 
     //problem = new Rosenbrock("Real", 10) ;
     //problem = new Sphere("Real", 20) ;
@@ -63,23 +63,24 @@ public class StandardPSO2007_main {
     //problem = new Sphere("Real", 20);
     problem = new CEC2005Problem("Real", 5, 10);
 
-    algorithm = new StandardPSO2007(problem) ;
+    algorithm = new StandardPSO2007(problem);
 
     // Algorithm parameters
-    algorithm.setInputParameter("swarmSize", 10 + (int)(2 * Math.sqrt(problem.getNumberOfVariables())));
-    algorithm.setInputParameter("maxIterations",80000);
-    algorithm.setInputParameter("numberOfParticlesToInform",3);
+    algorithm
+      .setInputParameter("swarmSize", 10 + (int) (2 * Math.sqrt(problem.getNumberOfVariables())));
+    algorithm.setInputParameter("maxIterations", 80000);
+    algorithm.setInputParameter("numberOfParticlesToInform", 3);
 
     // Execute the Algorithm 
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;
-    
+
     // Result messages 
-    logger_.info("Total execution time: "+estimatedTime + "ms");
+    logger_.info("Total execution time: " + estimatedTime + "ms");
     logger_.info("Objectives values have been writen to file FUN");
     population.printObjectivesToFile("FUN");
     logger_.info("Variables values have been writen to file VAR");
-    population.printVariablesToFile("VAR");                         
+    population.printVariablesToFile("VAR");
   }
 }

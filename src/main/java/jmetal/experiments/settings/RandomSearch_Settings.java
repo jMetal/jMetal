@@ -27,6 +27,7 @@ import jmetal.metaheuristics.randomSearch.RandomSearch;
 import jmetal.problems.ProblemFactory;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
+
 import java.util.Properties;
 import java.util.logging.Level;
 
@@ -36,24 +37,26 @@ import java.util.logging.Level;
 public class RandomSearch_Settings extends Settings {
   // Default experiments.settings
   public int maxEvaluations_ = 25000;
-  
+
   /**
    * Constructor
+   *
    * @param problem Problem to solve
    */
   public RandomSearch_Settings(String problem) {
     super(problem);
-    
-    Object [] problemParams = {"Real"};
+
+    Object[] problemParams = {"Real"};
     try {
-	    problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
+      problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
     } catch (JMException e) {
       Configuration.logger_.log(Level.SEVERE, "Unable to get problem", e);
-    }      
+    }
   } // RandomSearch_Settings
 
   /**
    * Configure the random search algorithm with default parameter experiments.settings
+   *
    * @return an algorithm object
    * @throws jmetal.util.JMException
    */
@@ -71,20 +74,22 @@ public class RandomSearch_Settings extends Settings {
 
   /**
    * Configure SMPSO with user-defined parameter experiments.settings
+   *
    * @return A SMPSO algorithm object
    */
   @Override
   public Algorithm configure(Properties configuration) throws JMException {
-    Algorithm algorithm ;
+    Algorithm algorithm;
 
     // Creating the algorithm.
-    algorithm = new RandomSearch(problem_) ;
+    algorithm = new RandomSearch(problem_);
 
     // Algorithm parameters
-    maxEvaluations_  = Integer.parseInt(configuration.getProperty("maxEvaluations",String.valueOf(maxEvaluations_)));
+    maxEvaluations_ = Integer
+      .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations_)));
 
     algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
 
-    return algorithm ;
+    return algorithm;
   }
 } // RandomSearch_Settings

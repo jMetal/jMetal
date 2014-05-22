@@ -44,7 +44,7 @@
 //		Revised according to the Matlab reference code and the PDF document
 //		dated March 8, 2005.
 //
-package jmetal.problems.singleObjective.cec2005Competition.originalCode ;
+package jmetal.problems.singleObjective.cec2005Competition.originalCode;
 
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
@@ -52,9 +52,12 @@ import jmetal.util.JMException;
 public class F19_rotated_hybrid_composition_2_narrow_basin_global_opt extends TestFunc {
 
   // Fixed (class) parameters
-  static final public String FUNCTION_NAME = "Rotated Hybrid Composition Function 2 with narrow basin global optimum";
-  static final public String DEFAULT_FILE_DATA = "" + Configuration.cec2005SupportDataDirectory +"/hybrid_func2_data.txt";
-  static final public String DEFAULT_FILE_MX_PREFIX = "" + Configuration.cec2005SupportDataDirectory +"/hybrid_func2_M_D";
+  static final public String FUNCTION_NAME =
+    "Rotated Hybrid Composition Function 2 with narrow basin global optimum";
+  static final public String DEFAULT_FILE_DATA =
+    "" + Configuration.cec2005SupportDataDirectory + "/hybrid_func2_data.txt";
+  static final public String DEFAULT_FILE_MX_PREFIX =
+    "" + Configuration.cec2005SupportDataDirectory + "/hybrid_func2_M_D";
   static final public String DEFAULT_FILE_MX_SUFFIX = ".txt";
 
   // Number of functions
@@ -66,16 +69,16 @@ public class F19_rotated_hybrid_composition_2_narrow_basin_global_opt extends Te
   private final double[][] m_o;
   private final double[][][] m_M;
   private final double[] m_sigma = {
-      0.1,	2.0,	1.5,	1.5,	1.0,	1.0,
-      1.5,	1.5,	2.0,	2.0
+    0.1, 2.0, 1.5, 1.5, 1.0, 1.0,
+    1.5, 1.5, 2.0, 2.0
   };
   private final double[] m_lambda = {
-      0.1*5.0/32.0,	5.0/32.0,	2.0*1,	1.0,			2.0*5.0/100.0,
-      5.0/100.0,		2.0*10.0,	10.0,	2.0*5.0/60.0,	5.0/60.0
+    0.1 * 5.0 / 32.0, 5.0 / 32.0, 2.0 * 1, 1.0, 2.0 * 5.0 / 100.0,
+    5.0 / 100.0, 2.0 * 10.0, 10.0, 2.0 * 5.0 / 60.0, 5.0 / 60.0
   };
   private final double[] m_func_biases = {
-      0.0,	100.0,	200.0,	300.0,	400.0,
-      500.0,	600.0,	700.0,	800.0,	900.0
+    0.0, 100.0, 200.0, 300.0, 400.0,
+    500.0, 600.0, 700.0, 800.0, 900.0
   };
   private final double[] m_testPoint;
   private final double[] m_testPointM;
@@ -88,10 +91,14 @@ public class F19_rotated_hybrid_composition_2_narrow_basin_global_opt extends Te
   private double[][] m_zM;
 
   // Constructors
-  public F19_rotated_hybrid_composition_2_narrow_basin_global_opt (int dimension, double bias) throws JMException {
-    this(dimension, bias, DEFAULT_FILE_DATA, DEFAULT_FILE_MX_PREFIX + dimension + DEFAULT_FILE_MX_SUFFIX);
+  public F19_rotated_hybrid_composition_2_narrow_basin_global_opt(int dimension, double bias)
+    throws JMException {
+    this(dimension, bias, DEFAULT_FILE_DATA,
+      DEFAULT_FILE_MX_PREFIX + dimension + DEFAULT_FILE_MX_SUFFIX);
   }
-  public F19_rotated_hybrid_composition_2_narrow_basin_global_opt (int dimension, double bias, String file_data, String file_m) throws JMException {
+
+  public F19_rotated_hybrid_composition_2_narrow_basin_global_opt(int dimension, double bias,
+    String file_data, String file_m) throws JMException {
     super(dimension, bias, FUNCTION_NAME);
 
     // Note: dimension starts from 0
@@ -108,7 +115,7 @@ public class F19_rotated_hybrid_composition_2_narrow_basin_global_opt extends Te
 
     // Load the shifted global optimum
     Benchmark.loadMatrixFromFile(file_data, NUM_FUNC, m_dimension, m_o);
-    for (int i = 0 ; i < m_dimension ; i ++) {
+    for (int i = 0; i < m_dimension; i++) {
       m_o[9][i] = 0.0;
     }
     // Load the matrix
@@ -127,45 +134,14 @@ public class F19_rotated_hybrid_composition_2_narrow_basin_global_opt extends Te
     theJob.z = m_z;
     theJob.zM = m_zM;
     // Calculate/estimate the fmax for all the functions involved
-    for (int i = 0 ; i < NUM_FUNC ; i ++) {
-      for (int j = 0 ; j < m_dimension ; j ++) {
+    for (int i = 0; i < NUM_FUNC; i++) {
+      for (int j = 0; j < m_dimension; j++) {
         m_testPoint[j] = (5.0 / m_lambda[i]);
       }
       Benchmark.rotate(m_testPointM, m_testPoint, m_M[i]);
       m_fmax[i] = Math.abs(theJob.basic_func(i, m_testPointM));
     }
     theJob.fmax = m_fmax;
-  }
-
-  private class MyHCJob extends HCJob {
-    public double basic_func(int func_no, double[] x) throws JMException {
-      double result = 0.0;
-      switch(func_no) {
-      case 0:
-      case 1:
-        result = Benchmark.ackley(x);
-        break;
-      case 2:
-      case 3:
-        result = Benchmark.rastrigin(x);
-        break;
-      case 4:
-      case 5:
-        result = Benchmark.sphere(x);
-        break;
-      case 6:
-      case 7:
-        result = Benchmark.weierstrass(x);
-        break;
-      case 8:
-      case 9:
-        result = Benchmark.griewank(x);
-        break;
-      default:
-        throw new JMException("func_no is out of range.");
-      }
-      return (result);
-    }
   }
 
   // Function body
@@ -178,5 +154,37 @@ public class F19_rotated_hybrid_composition_2_narrow_basin_global_opt extends Te
     result += m_bias;
 
     return (result);
+  }
+
+
+  private class MyHCJob extends HCJob {
+    public double basic_func(int func_no, double[] x) throws JMException {
+      double result = 0.0;
+      switch (func_no) {
+        case 0:
+        case 1:
+          result = Benchmark.ackley(x);
+          break;
+        case 2:
+        case 3:
+          result = Benchmark.rastrigin(x);
+          break;
+        case 4:
+        case 5:
+          result = Benchmark.sphere(x);
+          break;
+        case 6:
+        case 7:
+          result = Benchmark.weierstrass(x);
+          break;
+        case 8:
+        case 9:
+          result = Benchmark.griewank(x);
+          break;
+        default:
+          throw new JMException("func_no is out of range.");
+      }
+      return (result);
+    }
   }
 }

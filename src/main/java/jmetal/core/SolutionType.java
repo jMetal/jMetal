@@ -29,18 +29,17 @@ public abstract class SolutionType {
 
   private final Problem problem_;
 
-  public Problem getProblem() {
-    return problem_;
-  }
-
   /**
    * Constructor
-   * 
-   * @param problem
-   *          The problem to solve
+   *
+   * @param problem The problem to solve
    */
   public SolutionType(Problem problem) {
     problem_ = problem;
+  }
+
+  public Problem getProblem() {
+    return problem_;
   }
 
   /**
@@ -50,7 +49,7 @@ public abstract class SolutionType {
 
   /**
    * Copies the decision variables
-   * 
+   *
    * @param vars
    * @return An array of variables
    */

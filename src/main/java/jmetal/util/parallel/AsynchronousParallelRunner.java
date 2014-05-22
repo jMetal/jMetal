@@ -30,32 +30,33 @@ import java.util.concurrent.ExecutorService;
  * Abstract class for running tasks in parallel using threads
  */
 abstract public class AsynchronousParallelRunner {
-  protected int numberOfThreads_ ;
-  protected ExecutorService executor_ ;
+  protected int numberOfThreads_;
+  protected ExecutorService executor_;
 
 
   public AsynchronousParallelRunner(int threads) {
-    numberOfThreads_ = threads ;
+    numberOfThreads_ = threads;
     if (threads == 0) {
       numberOfThreads_ = Runtime.getRuntime().availableProcessors();
-    }
-    else if (threads < 0) {
+    } else if (threads < 0) {
       Configuration.logger_.severe("SynchronousParallelRunner: the number of threads" +
-              " cannot be negative number " + threads);
+        " cannot be negative number " + threads);
+    } else {
+      numberOfThreads_ = threads;
     }
-    else {
-      numberOfThreads_ = threads ;
-    }
-    System.out.println("THREADS: " + numberOfThreads_) ;
+    System.out.println("THREADS: " + numberOfThreads_);
   }
 
-  abstract public void startParallelRunner(Object configuration) ;
-  abstract public void addTaskForExecution(Object[] taskParameters) ;
-  abstract public Object parallelExecution() ;
+  abstract public void startParallelRunner(Object configuration);
+
+  abstract public void addTaskForExecution(Object[] taskParameters);
+
+  abstract public Object parallelExecution();
 
   /**
    * Shutdown the executor
    */
   public void stopEvaluator() {
-    executor_.shutdown() ;
-  }}
+    executor_.shutdown();
+  }
+}

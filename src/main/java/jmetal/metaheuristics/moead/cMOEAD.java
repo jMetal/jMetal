@@ -24,9 +24,9 @@ package jmetal.metaheuristics.moead;
 import jmetal.core.*;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
-import jmetal.util.random.PseudoRandom;
 import jmetal.util.comparators.IConstraintViolationComparator;
 import jmetal.util.comparators.ViolationThresholdComparator;
+import jmetal.util.random.PseudoRandom;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -42,15 +42,9 @@ import java.util.logging.Level;
 public class cMOEAD extends Algorithm {
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = 6039874453533436343L;
-
-  private int populationSize_;
-  /**
-   * Stores the population
-   */
-  private SolutionSet population_;
   /**
    * Z vector (ideal point)
    */
@@ -58,7 +52,7 @@ public class cMOEAD extends Algorithm {
   /**
    * Lambda vectors
    */
-  //Vector<Vector<Double>> lambda_ ; 
+  //Vector<Vector<Double>> lambda_ ;
   double[][] lambda_;
   /**
    * T: neighbour size
@@ -84,20 +78,24 @@ public class cMOEAD extends Algorithm {
    */
   Operator crossover_;
   Operator mutation_;
-
   String dataDirectory_;
-
-  /** 
+  /**
    * Use this encodings.variable as comparator for the constraints
    */
   IConstraintViolationComparator comparator = new ViolationThresholdComparator();
+  private int populationSize_;
+  /**
+   * Stores the population
+   */
+  private SolutionSet population_;
 
-  /** 
+  /**
    * Constructor
+   *
    * @param problem Problem to solve
    */
   public cMOEAD(Problem problem) {
-    super (problem) ;
+    super(problem);
 
     functionType_ = "_TCHE1";
 
@@ -110,7 +108,7 @@ public class cMOEAD extends Algorithm {
     maxEvaluations = ((Integer) this.getInputParameter("maxEvaluations")).intValue();
     populationSize_ = ((Integer) this.getInputParameter("populationSize")).intValue();
     dataDirectory_ = this.getInputParameter("dataDirectory").toString();
-    System.out.println("POPSIZE: "+ populationSize_) ;
+    System.out.println("POPSIZE: " + populationSize_);
 
     population_ = new SolutionSet(populationSize_);
     indArray_ = new Solution[problem_.getNumberOfObjectives()];
@@ -148,7 +146,7 @@ public class cMOEAD extends Algorithm {
 
     // STEP 1.2. Initialize population
     initPopulation();
-    ((ViolationThresholdComparator)this.comparator).updateThreshold(this.population_);
+    ((ViolationThresholdComparator) this.comparator).updateThreshold(this.population_);
 
     // STEP 1.3. Initialize z_
     initIdealPoint();
@@ -183,13 +181,13 @@ public class cMOEAD extends Algorithm {
         parents[2] = population_.get(n);
 
         // Apply DE crossover 
-        child = (Solution) crossover_.execute(new Object[]{population_.get(n), parents});
+        child = (Solution) crossover_.execute(new Object[] {population_.get(n), parents});
 
         // Apply mutation
         mutation_.execute(child);
 
         // Evaluation
-        problem_.evaluate(child);  
+        problem_.evaluate(child);
         problem_.evaluateConstraints(child);
 
         evaluations_++;
@@ -202,7 +200,7 @@ public class cMOEAD extends Algorithm {
         // STEP 2.5. Update of solutions
         updateProblem(child, n, type);
       } // for 
-      ((ViolationThresholdComparator)this.comparator).updateThreshold(this.population_);
+      ((ViolationThresholdComparator) this.comparator).updateThreshold(this.population_);
     } while (evaluations_ < maxEvaluations);
 
     return population_;
@@ -223,7 +221,7 @@ public class cMOEAD extends Algorithm {
     else {
       String dataFileName;
       dataFileName = "W" + problem_.getNumberOfObjectives() + "D_" +
-          populationSize_ + ".dat";
+        populationSize_ + ".dat";
 
       try {
         // Open the file
@@ -252,16 +250,17 @@ public class cMOEAD extends Algorithm {
         br.close();
       } catch (Exception e) {
         Configuration.logger_.log(
-                Level.SEVERE,
-                "initUniformWeight: failed when reading for file: " + dataDirectory_ + "/" + dataFileName,
-                e);
+          Level.SEVERE,
+          "initUniformWeight: failed when reading for file: " + dataDirectory_ + "/" + dataFileName,
+          e);
       }
     } // else
 
     //System.exit(0) ;
   } // initUniformWeight
+
   /**
-   * 
+   *
    */
   public void initNeighborhood() {
     double[] x = new double[populationSize_];
@@ -285,7 +284,7 @@ public class cMOEAD extends Algorithm {
   } // initNeighborhood
 
   /**
-   * 
+   *
    */
   public void initPopulation() throws JMException, ClassNotFoundException {
     for (int i = 0; i < populationSize_; i++) {
@@ -294,12 +293,12 @@ public class cMOEAD extends Algorithm {
       problem_.evaluate(newSolution);
       problem_.evaluateConstraints(newSolution);
       evaluations_++;
-      population_.add(newSolution) ;
+      population_.add(newSolution);
     } // for
   } // initPopulation
 
   /**
-   * 
+   *
    */
   void initIdealPoint() throws JMException, ClassNotFoundException {
     for (int i = 0; i < problem_.getNumberOfObjectives(); i++) {
@@ -316,7 +315,7 @@ public class cMOEAD extends Algorithm {
   } // initIdealPoint
 
   /**
-   * 
+   *
    */
   public void matingSelection(Vector<Integer> list, int cid, int size, int type) {
     // list : the set of the indexes of selected mating parents
@@ -353,7 +352,6 @@ public class cMOEAD extends Algorithm {
   } // matingSelection
 
   /**
-   * 
    * @param individual
    */
   void updateReference(Solution individual) {
@@ -394,7 +392,8 @@ public class cMOEAD extends Algorithm {
       if (type == 1) {
         k = neighborhood_[id][perm[i]];
       } else {
-        k = perm[i];      // calculate the values of objective function regarding the current subproblem
+        k =
+          perm[i];      // calculate the values of objective function regarding the current subproblem
       }
       double f1, f2;
 
@@ -407,15 +406,14 @@ public class cMOEAD extends Algorithm {
         int flag = comparator.compare(population_.get(k), individual);
         if (flag == 1) {
           population_.replace(k, new Solution(individual));
-        }
-        else if (flag == 0) {
+        } else if (flag == 0) {
           if (f2 < f1) {
             population_.replace(k, new Solution(individual));
             //population[k].indiv = indiv;
             time++;
           }
         }
-      } else {            
+      } else {
         if (f2 < f1) {
           population_.replace(k, new Solution(individual));
           //population[k].indiv = indiv;
@@ -453,7 +451,7 @@ public class cMOEAD extends Algorithm {
       fitness = maxFun;
     } // if
     else {
-      throw new JMException("cMOEAD.fitnessFunction: unknown type " + functionType_) ;
+      throw new JMException("cMOEAD.fitnessFunction: unknown type " + functionType_);
     }
     return fitness;
   } // fitnessEvaluation    

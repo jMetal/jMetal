@@ -33,47 +33,51 @@ import jmetal.util.JMException;
  * Wrapper class for accessing integer-coded solutions
  */
 public class XInt {
-  public Solution solution_ ;
-  public SolutionType type_ ;
+  public Solution solution_;
+  public SolutionType type_;
 
   /**
    * Constructor
+   *
    * @param solution
    */
   public XInt(Solution solution) {
-    type_ = solution.getType() ;
-    solution_ = solution ;
+    type_ = solution.getType();
+    solution_ = solution;
   }
 
   /**
    * Constructor
+   *
    * @param solution
    */
   public XInt(XInt solution) {
-    type_ = solution.type_ ;
-    solution_ = solution.solution_ ;
+    type_ = solution.type_;
+    solution_ = solution.solution_;
   }
 
   /**
    * Gets value of a encodings.variable
+   *
    * @param index Index of the encodings.variable
    * @return The value of the encodings.variable
    * @throws JMException
    */
   public int getValue(int index) throws JMException {
-    if (type_.getClass() == IntSolutionType.class){
-      return (int)solution_.getDecisionVariables()[index].getValue() ;			
+    if (type_.getClass() == IntSolutionType.class) {
+      return (int) solution_.getDecisionVariables()[index].getValue();
     } else if (type_.getClass() == ArrayIntSolutionType.class) {
-      return ((ArrayInt)(solution_.getDecisionVariables()[0])).getArray()[index] ;
+      return ((ArrayInt) (solution_.getDecisionVariables()[0])).getArray()[index];
     } else {
       Configuration.logger_.severe("jmetal.util.wrapper.XInt.getValue, solution type " +
-          type_ + "+ invalid") ;		
+        type_ + "+ invalid");
     }
     return 0;
   }
 
   /**
    * Sets the value of a encodings.variable
+   *
    * @param index Index of the encodings.variable
    * @param value Value to be assigned
    * @throws JMException
@@ -85,12 +89,13 @@ public class XInt {
       ((ArrayInt) (solution_.getDecisionVariables()[0])).getArray()[index] = value;
     } else {
       Configuration.logger_.severe("jmetal.util.wrapper.XInt.setValue, solution type " +
-          type_ + "+ invalid");
+        type_ + "+ invalid");
     }
   }
 
   /**
    * Gets the lower bound of a encodings.variable
+   *
    * @param index Index of the encodings.variable
    * @return The lower bound of the encodings.variable
    * @throws JMException
@@ -102,13 +107,14 @@ public class XInt {
       return (int) ((ArrayInt) (solution_.getDecisionVariables()[0])).getLowerBound(index);
     } else {
       Configuration.logger_.severe("jmetal.util.wrapper.XInt.getLowerBound, solution type " +
-          type_ + "+ invalid") ;		
+        type_ + "+ invalid");
     }
-    return 0 ;
+    return 0;
   }
 
   /**
    * Gets the upper bound of a encodings.variable
+   *
    * @param index Index of the encodings.variable
    * @return The upper bound of the encodings.variable
    * @throws JMException
@@ -120,14 +126,15 @@ public class XInt {
       return (int) ((ArrayInt) (solution_.getDecisionVariables()[0])).getUpperBound(index);
     } else {
       Configuration.logger_.severe("jmetal.util.wrapper.XInt.getUpperBound, solution type " +
-          type_ + "+ invalid");
+        type_ + "+ invalid");
     }
 
-    return 0 ;
+    return 0;
   }
 
   /**
    * Returns the number of variables of the solution
+   *
    * @return
    */
   public int getNumberOfDecisionVariables() {
@@ -137,20 +144,21 @@ public class XInt {
       return ((ArrayInt) (solution_.getDecisionVariables()[0])).getLength();
     } else {
       Configuration.logger_.severe("jmetal.util.wrapper.XInt.size, solution type " +
-          type_ + "+ invalid");
+        type_ + "+ invalid");
     }
-    return 0 ;
+    return 0;
   }
 
   /**
    * Returns the number of variables of the solution
+   *
    * @return
    */
   public int size() {
-    return getNumberOfDecisionVariables() ;
+    return getNumberOfDecisionVariables();
   }
 
   public Solution getSolution() {
-    return solution_ ;
+    return solution_;
   }
 }

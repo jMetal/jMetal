@@ -51,8 +51,7 @@ public class ObjectiveComparator implements Comparator<Solution> {
     this.nObj = nObj;
     if (descendingOrder) {
       ascendingOrder_ = false;
-    }
-    else {
+    } else {
       ascendingOrder_ = true;
     }
   }
@@ -63,7 +62,7 @@ public class ObjectiveComparator implements Comparator<Solution> {
    * @param o1 Object representing the first <code>Solution</code>.
    * @param o2 Object representing the second <code>Solution</code>.
    * @return -1, or 0, or 1 if o1 is less than, equal, or greater than o2,
-   *         respectively.
+   * respectively.
    */
   @Override
   public int compare(Solution o1, Solution o2) {

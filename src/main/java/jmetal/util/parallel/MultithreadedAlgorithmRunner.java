@@ -42,18 +42,18 @@ import java.util.logging.Level;
  * Class for executing independent runs of algorithms
  */
 public class MultithreadedAlgorithmRunner extends SynchronousParallelRunner {
-  private Collection<EvaluationTask> taskList_ ;
-  private Experiment experiment_ ;
+  private Collection<EvaluationTask> taskList_;
+  private Experiment experiment_;
 
   public MultithreadedAlgorithmRunner(int threads) {
-    super(threads) ;
+    super(threads);
   }
 
   public void startParallelRunner(Object experiment) {
-    experiment_ = (Experiment) experiment ;
-    executor_ = Executors.newFixedThreadPool(numberOfThreads_) ;
-    System.out.println("Cores: "+ numberOfThreads_) ;
-    taskList_ = null ;
+    experiment_ = (Experiment) experiment;
+    executor_ = Executors.newFixedThreadPool(numberOfThreads_);
+    System.out.println("Cores: " + numberOfThreads_);
+    taskList_ = null;
   }
 
   public void addTaskForExecution(Object[] taskParameters) {
@@ -61,83 +61,87 @@ public class MultithreadedAlgorithmRunner extends SynchronousParallelRunner {
       taskList_ = new ArrayList<EvaluationTask>();
     }
 
-    String algorithm = (String)taskParameters[0] ;
-    String problem = (String)taskParameters[1];
-    Integer id = (Integer)taskParameters[2] ;
-    taskList_.add(new EvaluationTask(algorithm, problem, id)) ;
+    String algorithm = (String) taskParameters[0];
+    String problem = (String) taskParameters[1];
+    Integer id = (Integer) taskParameters[2];
+    taskList_.add(new EvaluationTask(algorithm, problem, id));
   }
 
   public Object parallelExecution() {
-    List<Future<Object>> future = null ;
+    List<Future<Object>> future = null;
     try {
       future = executor_.invokeAll(taskList_);
     } catch (InterruptedException e1) {
       Configuration.logger_.log(Level.SEVERE, "Error", e1);
     }
-    List<Object> resultList = new Vector<Object>() ;
+    List<Object> resultList = new Vector<Object>();
 
-    for(Future<Object> result : future){
-      Object returnValue = null ;
+    for (Future<Object> result : future) {
+      Object returnValue = null;
       try {
         returnValue = result.get();
-        resultList.add(returnValue) ;
+        resultList.add(returnValue);
       } catch (InterruptedException e) {
         Configuration.logger_.log(Level.SEVERE, "Error", e);
       } catch (ExecutionException e) {
         Configuration.logger_.log(Level.SEVERE, "Error", e);
       }
     }
-    taskList_ = null ;
-    return null ;
+    taskList_ = null;
+    return null;
   }
 
   public void stopParallelRunner() {
-    executor_.shutdown() ;
+    executor_.shutdown();
   }
 
   private class EvaluationTask extends ParallelTask {
-    private String problemName_ ;
-    private String algorithmName_ ;
-    private int id_ ;
+    private String problemName_;
+    private String algorithmName_;
+    private int id_;
 
     /**
      * Constructor
+     *
      * @param problem Problem to solve
      */
-    public EvaluationTask(String algorithm,  String problem, int id) {
-      problemName_ = problem ;
-      algorithmName_ = algorithm ;
-      id_ = id ;
+    public EvaluationTask(String algorithm, String problem, int id) {
+      problemName_ = problem;
+      algorithmName_ = algorithm;
+      id_ = id;
     }
 
     public Integer call() throws Exception {
-      Algorithm algorithm ;
-      Object [] settingsParams = {problemName_} ;
-      Settings settings  ;
+      Algorithm algorithm;
+      Object[] settingsParams = {problemName_};
+      Settings settings;
 
       if (experiment_.useConfigurationFilesForAlgorithms()) {
         Properties configuration = new Properties();
-        InputStreamReader isr = new InputStreamReader(new FileInputStream(algorithmName_+".conf"));
+        InputStreamReader isr =
+          new InputStreamReader(new FileInputStream(algorithmName_ + ".conf"));
         configuration.load(isr);
 
-        String algorithmName = configuration.getProperty("algorithm", algorithmName_) ;
+        String algorithmName = configuration.getProperty("algorithm", algorithmName_);
 
-        settings = (new SettingsFactory()).getSettingsObject(algorithmName, settingsParams) ;
+        settings = (new SettingsFactory()).getSettingsObject(algorithmName, settingsParams);
         algorithm = settings.configure(configuration);
         isr.close();
       } else {
-        settings = (new SettingsFactory()).getSettingsObject(algorithmName_, settingsParams) ;
+        settings = (new SettingsFactory()).getSettingsObject(algorithmName_, settingsParams);
         algorithm = settings.configure();
       }
 
-      System.out.println(" Running algorithm: " + algorithmName_ + ", problem: " + problemName_ + ", run: " + id_);
+      System.out.println(
+        " Running algorithm: " + algorithmName_ + ", problem: " + problemName_ + ", run: " + id_);
 
-      SolutionSet resultFront = algorithm.execute() ;
+      SolutionSet resultFront = algorithm.execute();
 
       File experimentDirectory;
       String directory;
 
-      directory = experiment_.getExperimentBaseDirectory() + "/data/" + algorithmName_ + "/" + problemName_ ;
+      directory =
+        experiment_.getExperimentBaseDirectory() + "/data/" + algorithmName_ + "/" + problemName_;
 
       experimentDirectory = new File(directory);
       if (!experimentDirectory.exists()) {
@@ -145,10 +149,12 @@ public class MultithreadedAlgorithmRunner extends SynchronousParallelRunner {
         System.out.println("Creating " + directory);
       }
 
-      resultFront.printObjectivesToFile(directory + "/" + experiment_.getOutputParetoFrontFile() + "." + id_);
-      resultFront.printVariablesToFile(directory + "/" + experiment_.getOutputParetoSetFile() + "." + id_);
+      resultFront.printObjectivesToFile(
+        directory + "/" + experiment_.getOutputParetoFrontFile() + "." + id_);
+      resultFront
+        .printVariablesToFile(directory + "/" + experiment_.getOutputParetoSetFile() + "." + id_);
 
-      return id_ ;
+      return id_;
     }
   }
 }

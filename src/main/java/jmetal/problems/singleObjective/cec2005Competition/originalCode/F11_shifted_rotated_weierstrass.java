@@ -44,7 +44,7 @@
 //		Revised according to the Matlab reference code and the PDF document
 //		dated March 8, 2005.
 //
-package jmetal.problems.singleObjective.cec2005Competition.originalCode ;
+package jmetal.problems.singleObjective.cec2005Competition.originalCode;
 
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
@@ -53,8 +53,10 @@ public class F11_shifted_rotated_weierstrass extends TestFunc {
 
   // Fixed (class) parameters
   static final public String FUNCTION_NAME = "Shifted Rotated Weierstrass Function";
-  static final public String DEFAULT_FILE_DATA = "" + Configuration.cec2005SupportDataDirectory +"/weierstrass_data.txt";
-  static final public String DEFAULT_FILE_MX_PREFIX = "" + Configuration.cec2005SupportDataDirectory +"/weierstrass_M_D";
+  static final public String DEFAULT_FILE_DATA =
+    "" + Configuration.cec2005SupportDataDirectory + "/weierstrass_data.txt";
+  static final public String DEFAULT_FILE_MX_PREFIX =
+    "" + Configuration.cec2005SupportDataDirectory + "/weierstrass_M_D";
   static final public String DEFAULT_FILE_MX_SUFFIX = ".txt";
 
   static final public double PIx2 = Math.PI * 2.0;
@@ -72,10 +74,13 @@ public class F11_shifted_rotated_weierstrass extends TestFunc {
   private double[] m_zM;
 
   // Constructors
-  public F11_shifted_rotated_weierstrass (int dimension, double bias) throws JMException {
-    this(dimension, bias, DEFAULT_FILE_DATA, DEFAULT_FILE_MX_PREFIX + dimension + DEFAULT_FILE_MX_SUFFIX);
+  public F11_shifted_rotated_weierstrass(int dimension, double bias) throws JMException {
+    this(dimension, bias, DEFAULT_FILE_DATA,
+      DEFAULT_FILE_MX_PREFIX + dimension + DEFAULT_FILE_MX_SUFFIX);
   }
-  public F11_shifted_rotated_weierstrass (int dimension, double bias, String file_data, String file_m) throws JMException {
+
+  public F11_shifted_rotated_weierstrass(int dimension, double bias, String file_data,
+    String file_m) throws JMException {
     super(dimension, bias, FUNCTION_NAME);
 
     // Note: dimension starts from 0

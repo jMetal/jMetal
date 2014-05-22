@@ -27,42 +27,45 @@ import jmetal.util.JMException;
 import jmetal.util.Ranking;
 import jmetal.util.comparators.CrowdingComparator;
 import jmetal.util.parallel.SynchronousParallelRunner;
+
 import java.util.List;
 
-/** 
- *  Implementation of NSGA-II.
- *  This implementation of NSGA-II makes use of a QualityIndicator object
- *  to obtained the convergence speed of the algorithm. This version is used
- *  in the paper:
- *     A.J. Nebro, J.J. Durillo, C.A. Coello Coello, F. Luna, E. Alba 
- *     "A Study of Convergence Speed in Multi-Objective Metaheuristics." 
- *     To be presented in: PPSN'08. Dortmund. September 2008.
+/**
+ * Implementation of NSGA-II.
+ * This implementation of NSGA-II makes use of a QualityIndicator object
+ * to obtained the convergence speed of the algorithm. This version is used
+ * in the paper:
+ * A.J. Nebro, J.J. Durillo, C.A. Coello Coello, F. Luna, E. Alba
+ * "A Study of Convergence Speed in Multi-Objective Metaheuristics."
+ * To be presented in: PPSN'08. Dortmund. September 2008.
  */
 
 public class pNSGAII extends Algorithm {
 
-  SynchronousParallelRunner parallelEvaluator_ ;
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = -1418163498352372364L;
+  SynchronousParallelRunner parallelEvaluator_;
 
   /**
    * Constructor
-   * @param problem Problem to solve
+   *
+   * @param problem   Problem to solve
    * @param evaluator Parallel evaluator
    */
   public pNSGAII(Problem problem, SynchronousParallelRunner evaluator) {
-    super (problem) ;
+    super(problem);
 
-    parallelEvaluator_ = evaluator ;
+    parallelEvaluator_ = evaluator;
   } // pNSGAII
 
-  /**   
+  /**
    * Runs the NSGA-II algorithm.
+   *
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
    * as a result of the algorithm execution
-   * @throws JMException 
+   * @throws JMException
    */
   public SolutionSet execute() throws JMException, ClassNotFoundException {
     int populationSize;
@@ -89,7 +92,8 @@ public class pNSGAII extends Algorithm {
     maxEvaluations = ((Integer) getInputParameter("maxEvaluations")).intValue();
     indicators = (QualityIndicator) getInputParameter("indicators");
 
-    parallelEvaluator_.startParallelRunner(problem_); ;
+    parallelEvaluator_.startParallelRunner(problem_);
+    ;
 
     //Initialize the variables
     population = new SolutionSet(populationSize);
@@ -106,13 +110,13 @@ public class pNSGAII extends Algorithm {
     Solution newSolution;
     for (int i = 0; i < populationSize; i++) {
       newSolution = new Solution(problem_);
-      parallelEvaluator_.addTaskForExecution(new Object[]{newSolution});
+      parallelEvaluator_.addTaskForExecution(new Object[] {newSolution});
     }
 
-    List<Solution> solutionList = (List<Solution>)parallelEvaluator_.parallelExecution() ;
+    List<Solution> solutionList = (List<Solution>) parallelEvaluator_.parallelExecution();
     for (Solution solution : solutionList) {
-      population.add(solution) ;
-      evaluations ++ ;
+      population.add(solution);
+      evaluations++;
     }
 
     // Generations 
@@ -128,16 +132,18 @@ public class pNSGAII extends Algorithm {
           Solution[] offSpring = (Solution[]) crossoverOperator.execute(parents);
           mutationOperator.execute(offSpring[0]);
           mutationOperator.execute(offSpring[1]);
-          parallelEvaluator_.addTaskForExecution(new Object[]{offSpring[0]}); ;
-          parallelEvaluator_.addTaskForExecution(new Object[]{offSpring[1]}); ;
+          parallelEvaluator_.addTaskForExecution(new Object[] {offSpring[0]});
+          ;
+          parallelEvaluator_.addTaskForExecution(new Object[] {offSpring[1]});
+          ;
         }
       }
 
-      List<Solution> solutions = (List<Solution>)parallelEvaluator_.parallelExecution() ;
+      List<Solution> solutions = (List<Solution>) parallelEvaluator_.parallelExecution();
 
-      for(Solution solution : solutions) {
+      for (Solution solution : solutions) {
         offspringPopulation.add(solution);
-        evaluations++;	    
+        evaluations++;
       }
 
       // Create the solutionSet union of solutionSet and offSpring
@@ -188,7 +194,7 @@ public class pNSGAII extends Algorithm {
       // by the algorithm to obtain a Pareto front with a hypervolume higher
       // than the hypervolume of the true Pareto front.
       if ((indicators != null) &&
-          (requiredEvaluations == 0)) {
+        (requiredEvaluations == 0)) {
         double HV = indicators.getHypervolume(population);
         if (HV >= (0.98 * indicators.getTrueParetoFrontHypervolume())) {
           requiredEvaluations = evaluations;

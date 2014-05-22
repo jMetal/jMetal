@@ -25,7 +25,6 @@ import jmetal.core.Algorithm;
 import jmetal.core.Operator;
 import jmetal.experiments.Settings;
 import jmetal.metaheuristics.abyss.AbYSS;
-import jmetal.operators.crossover.Crossover;
 import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.localSearch.MutationLocalSearch;
 import jmetal.operators.mutation.MutationFactory;
@@ -41,27 +40,28 @@ import java.util.logging.Level;
  * Settings class of algorithm AbYSS
  */
 public class AbYSS_Settings extends Settings {
-  private int populationSize_ ;
-  private int maxEvaluations_ ;
-  private int archiveSize_ ;
-  private int refSet1Size_ ;
-  private int refSet2Size_ ;
-  private double mutationProbability_ ;
-  private double crossoverProbability_ ;
-  private double crossoverDistributionIndex_ ;
-  private double mutationDistributionIndex_  ;
-  private int improvementRounds_ ;
-  
+  private int populationSize_;
+  private int maxEvaluations_;
+  private int archiveSize_;
+  private int refSet1Size_;
+  private int refSet2Size_;
+  private double mutationProbability_;
+  private double crossoverProbability_;
+  private double crossoverDistributionIndex_;
+  private double mutationDistributionIndex_;
+  private int improvementRounds_;
+
   /**
    * Constructor
+   *
    * @param problemName Problem to solve
    */
   public AbYSS_Settings(String problemName) {
     super(problemName);
 
-    Object [] problemParams = {"Real"};
+    Object[] problemParams = {"Real"};
     try {
-	    problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
+      problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
     } catch (JMException e) {
       Configuration.logger_.log(Level.SEVERE, "Unable to get problem", e);
     }
@@ -73,14 +73,15 @@ public class AbYSS_Settings extends Settings {
     refSet2Size_ = 10;
     mutationProbability_ = 1.0 / problem_.getNumberOfVariables();
     crossoverProbability_ = 1.0;
-    crossoverDistributionIndex_ = 20.0  ;
-    mutationDistributionIndex_  = 20.0  ;
+    crossoverDistributionIndex_ = 20.0;
+    mutationDistributionIndex_ = 20.0;
     improvementRounds_ = 1;
-    
+
   }
 
   /**
    * Configure the AbYSS algorithm with default parameter experiments.settings
+   *
    * @return an algorithm object
    * @throws jmetal.util.JMException
    */
@@ -88,7 +89,7 @@ public class AbYSS_Settings extends Settings {
     Algorithm algorithm;
     Operator crossover;
     Operator mutation;
-    Operator improvement; 
+    Operator improvement;
 
     // Creating the problem
     algorithm = new AbYSS(problem_);
@@ -100,20 +101,20 @@ public class AbYSS_Settings extends Settings {
     algorithm.setInputParameter("archiveSize", archiveSize_);
     algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
 
-    HashMap<String, Object> parameters = new HashMap<String, Object>() ;
-    parameters.put("probability", crossoverProbability_) ;
-    parameters.put("distributionIndex", crossoverDistributionIndex_) ;
-    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters);                   
+    HashMap<String, Object> parameters = new HashMap<String, Object>();
+    parameters.put("probability", crossoverProbability_);
+    parameters.put("distributionIndex", crossoverDistributionIndex_);
+    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters);
 
-    parameters = new HashMap<String, Object>() ;
-    parameters.put("probability", mutationProbability_) ;
-    parameters.put("distributionIndex", mutationDistributionIndex_) ;
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);    
-    
-    parameters = new HashMap<String, Object>() ;
-    parameters.put("improvementRounds", improvementRounds_) ;
-    parameters.put("problem",problem_) ;
-    parameters.put("mutation",mutation) ;
+    parameters = new HashMap<String, Object>();
+    parameters.put("probability", mutationProbability_);
+    parameters.put("distributionIndex", mutationDistributionIndex_);
+    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);
+
+    parameters = new HashMap<String, Object>();
+    parameters.put("improvementRounds", improvementRounds_);
+    parameters.put("problem", problem_);
+    parameters.put("mutation", mutation);
     improvement = new MutationLocalSearch(parameters);
 
     // Adding the operators to the algorithm
@@ -121,28 +122,39 @@ public class AbYSS_Settings extends Settings {
     algorithm.addOperator("improvement", improvement);
 
     return algorithm;
-  } 
+  }
 
   /**
    * Configure AbYSS with user-defined parameter experiments.settings
+   *
    * @return An AbYSS algorithm object
    */
   @Override
   public Algorithm configure(Properties configuration) throws JMException {
     // Algorithm parameters
-    populationSize_ = Integer.parseInt(configuration.getProperty("populationSize",String.valueOf(populationSize_)));
-    maxEvaluations_  = Integer.parseInt(configuration.getProperty("maxEvaluations",String.valueOf(maxEvaluations_)));
-    archiveSize_ = Integer.parseInt(configuration.getProperty("archiveSize",String.valueOf(archiveSize_)));
-    refSet1Size_  = Integer.parseInt(configuration.getProperty("refSet1Size",String.valueOf(refSet1Size_)));
-    refSet2Size_ = Integer.parseInt(configuration.getProperty("refSet2Size",String.valueOf(refSet2Size_)));
-    improvementRounds_ = Integer.parseInt(configuration.getProperty("improvementRounds",String.valueOf(improvementRounds_)));
+    populationSize_ = Integer
+      .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize_)));
+    maxEvaluations_ = Integer
+      .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations_)));
+    archiveSize_ =
+      Integer.parseInt(configuration.getProperty("archiveSize", String.valueOf(archiveSize_)));
+    refSet1Size_ =
+      Integer.parseInt(configuration.getProperty("refSet1Size", String.valueOf(refSet1Size_)));
+    refSet2Size_ =
+      Integer.parseInt(configuration.getProperty("refSet2Size", String.valueOf(refSet2Size_)));
+    improvementRounds_ = Integer
+      .parseInt(configuration.getProperty("improvementRounds", String.valueOf(improvementRounds_)));
 
-    crossoverProbability_ = Double.parseDouble(configuration.getProperty("crossoverProbability",String.valueOf(crossoverProbability_)));
-    crossoverDistributionIndex_ = Double.parseDouble(configuration.getProperty("crossoverDistributionIndex",String.valueOf(crossoverDistributionIndex_)));
+    crossoverProbability_ = Double.parseDouble(
+      configuration.getProperty("crossoverProbability", String.valueOf(crossoverProbability_)));
+    crossoverDistributionIndex_ = Double.parseDouble(configuration
+      .getProperty("crossoverDistributionIndex", String.valueOf(crossoverDistributionIndex_)));
 
-    mutationProbability_ = Double.parseDouble(configuration.getProperty("mutationProbability",String.valueOf(mutationProbability_)));
-    mutationDistributionIndex_ = Double.parseDouble(configuration.getProperty("mutationDistributionIndex",String.valueOf(mutationDistributionIndex_)));
+    mutationProbability_ = Double.parseDouble(
+      configuration.getProperty("mutationProbability", String.valueOf(mutationProbability_)));
+    mutationDistributionIndex_ = Double.parseDouble(configuration
+      .getProperty("mutationDistributionIndex", String.valueOf(mutationDistributionIndex_)));
 
-    return configure() ;
+    return configure();
   }
 } 

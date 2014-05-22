@@ -31,6 +31,31 @@ public class dMOPSO extends Algorithm {
   //static double y2;
   //static int use_last = 0;
   /**
+   * Z vector (ideal point)
+   */
+  double[] z_;
+  /**
+   * Lambda vectors
+   */
+  double[][] lambda_;
+  Solution[] indArray_;
+  //"_PBI";//"_TCHE";//"_AGG";
+  String functionType_ = "_PBI";
+  String dataDirectory_;
+  QualityIndicator indicators_;
+  double r1Max_;
+  double r1Min_;
+  double r2Max_;
+  double r2Min_;
+  double C1Max_;
+  double C1Min_;
+  double C2Max_;
+  double C2Min_;
+  double WMax_;
+  double WMin_;
+  double ChVel1_;
+  double ChVel2_;
+  /**
    * Stores the number of particles_ used
    */
   private int swarmSize_;
@@ -67,38 +92,6 @@ public class dMOPSO extends Algorithm {
    * Stores the age_ of each particle
    */
   private int[] age_;
-
-  /**
-   * Z vector (ideal point)
-   */
-  double[] z_;
-  /**
-   * Lambda vectors
-   */
-  double[][] lambda_;
-
-  Solution[] indArray_;
-
-  //"_PBI";//"_TCHE";//"_AGG";
-  String functionType_ = "_PBI";
-
-  String dataDirectory_ ;
-
-
-  QualityIndicator indicators_;
-
-  double r1Max_;
-  double r1Min_;
-  double r2Max_;
-  double r2Min_;
-  double C1Max_;
-  double C1Min_;
-  double C2Max_;
-  double C2Min_;
-  double WMax_;
-  double WMin_;
-  double ChVel1_;
-  double ChVel2_;
   private double trueHypervolume_;
   private Hypervolume hy_;
   private SolutionSet trueFront_;
@@ -122,8 +115,8 @@ public class dMOPSO extends Algorithm {
   }
 
   public dMOPSO(Problem problem,
-                Vector<Double> variables,
-                String trueParetoFront) throws FileNotFoundException {
+    Vector<Double> variables,
+    String trueParetoFront) throws FileNotFoundException {
     super(problem);
 
     r1Max_ = variables.get(0);
@@ -143,8 +136,8 @@ public class dMOPSO extends Algorithm {
     jmetal.qualityIndicator.util.MetricsUtil mu = new jmetal.qualityIndicator.util.MetricsUtil();
     trueFront_ = mu.readNonDominatedSolutionSet(trueParetoFront);
     trueHypervolume_ = hy_.hypervolume(trueFront_.writeObjectivesToMatrix(),
-            trueFront_.writeObjectivesToMatrix(),
-            problem_.getNumberOfObjectives());
+      trueFront_.writeObjectivesToMatrix(),
+      problem_.getNumberOfObjectives());
 
   }
 
@@ -160,11 +153,11 @@ public class dMOPSO extends Algorithm {
     dataDirectory_ = getInputParameter("dataDirectory").toString();
 
     String funcType = ((String) getInputParameter("functionType"));
-    if(funcType != null && funcType != ""){
+    if (funcType != null && funcType != "") {
       functionType_ = funcType;
     }
 
-    iteration_ = 0 ;
+    iteration_ = 0;
 
     particles_ = new SolutionSet(swarmSize_);
     lBest_ = new Solution[swarmSize_];
@@ -179,7 +172,7 @@ public class dMOPSO extends Algorithm {
     deltaMin_ = new double[problem_.getNumberOfVariables()];
     for (int i = 0; i < problem_.getNumberOfVariables(); i++) {
       deltaMax_[i] = (problem_.getUpperLimit(i) -
-              problem_.getLowerLimit(i)) / 2.0;
+        problem_.getLowerLimit(i)) / 2.0;
       deltaMin_[i] = -deltaMax_[i];
     }
   }
@@ -204,8 +197,8 @@ public class dMOPSO extends Algorithm {
 
   // velocity bounds
   private double velocityConstriction(double v, double[] deltaMax,
-                                      double[] deltaMin, int variableIndex,
-                                      int particleIndex) throws IOException {
+    double[] deltaMin, int variableIndex,
+    int particleIndex) throws IOException {
 
     double result;
 
@@ -227,15 +220,16 @@ public class dMOPSO extends Algorithm {
 
   /**
    * Update the speed of each particle
+   *
    * @throws JMException
    */
-  private void computeSpeed(int i) throws JMException{
+  private void computeSpeed(int i) throws JMException {
     double r1, r2, W, C1, C2;
     double wmax, wmin;
 
-    XReal particle = new XReal(particles_.get(i)) ;
-    XReal bestParticle = new XReal(lBest_[i]) ;
-    XReal bestGlobal = new XReal(gBest_[shfGBest_[i]]) ;
+    XReal particle = new XReal(particles_.get(i));
+    XReal bestParticle = new XReal(lBest_[i]);
+    XReal bestGlobal = new XReal(gBest_[shfGBest_[i]]);
 
     r1 = PseudoRandom.randDouble(r1Min_, r1Max_);
     r2 = PseudoRandom.randDouble(r2Min_, r2Max_);
@@ -250,11 +244,11 @@ public class dMOPSO extends Algorithm {
       //Computing the velocity of this particle 
       try {
         speed_[i][var] = velocityConstriction(constrictionCoefficient(C1, C2) *
-                (inertiaWeight(iteration_, maxIterations_, wmax, wmin) * speed_[i][var] +
-                        C1 * r1 * (bestParticle.getValue(var) -
-                                particle.getValue(var)) +
-                        C2 * r2 * (bestGlobal.getValue(var) -
-                                particle.getValue(var))), deltaMax_, deltaMin_, var, i) ;
+          (inertiaWeight(iteration_, maxIterations_, wmax, wmin) * speed_[i][var] +
+            C1 * r1 * (bestParticle.getValue(var) -
+              particle.getValue(var)) +
+            C2 * r2 * (bestGlobal.getValue(var) -
+              particle.getValue(var))), deltaMax_, deltaMin_, var, i);
       } catch (IOException e) {
         Configuration.logger_.log(Level.SEVERE, "Error", e);
       }
@@ -263,19 +257,21 @@ public class dMOPSO extends Algorithm {
 
   /**
    * Update the position of each particle
+   *
    * @throws JMException
    */
   private void computeNewPositions(int i) throws JMException {
-    XReal particle = new XReal(particles_.get(i)) ;
+    XReal particle = new XReal(particles_.get(i));
     for (int var = 0; var < particle.size(); var++) {
-      particle.setValue(var, particle.getValue(var) +  speed_[i][var]) ;
+      particle.setValue(var, particle.getValue(var) + speed_[i][var]);
     }
   } // computeNewPositions
 
   /**
    * Runs of the dMOPSO algorithm.
+   *
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
-   * as a result of the algorithm execution  
+   * as a result of the algorithm execution
    * @throws JMException
    */
   public SolutionSet execute() throws JMException, ClassNotFoundException {
@@ -322,10 +318,10 @@ public class dMOPSO extends Algorithm {
       //-> Step 3 The cycle
       for (int i = 0; i < particles_.size(); i++) {
 
-        if(age_[i] < maxAge_){
+        if (age_[i] < maxAge_) {
           //-> Step 3.1 Update particle
           updateParticle(i);
-        }else{
+        } else {
           //-> Step 3.2 Reset particle
           resetParticle(i);
         }
@@ -347,25 +343,23 @@ public class dMOPSO extends Algorithm {
     }
 
     SolutionSet ss = new SolutionSet(gBest_.length);
-    for (int i =0; i < gBest_.length; i++) {
+    for (int i = 0; i < gBest_.length; i++) {
       ss.add(gBest_[i]);
     }
 
     return ss;
   } // execute
 
-  private void shuffleGlobalBest(){
+  private void shuffleGlobalBest() {
     int[] aux = new int[swarmSize_];
     int rnd;
     int tmp;
 
-    for (int i = 0; i < swarmSize_; i++)
-    {
+    for (int i = 0; i < swarmSize_; i++) {
       aux[i] = i;
     }
 
-    for (int i = 0; i < swarmSize_; i++)
-    {
+    for (int i = 0; i < swarmSize_; i++) {
       rnd = PseudoRandom.randInt(i, swarmSize_ - 1);
       tmp = aux[rnd];
       aux[rnd] = aux[i];
@@ -373,11 +367,11 @@ public class dMOPSO extends Algorithm {
     }
   }
 
-  private void repairBounds(int part) throws JMException{
+  private void repairBounds(int part) throws JMException {
 
-    XReal particle = new XReal(particles_.get(part)) ;
+    XReal particle = new XReal(particles_.get(part));
 
-    for(int var = 0; var < particle.getNumberOfDecisionVariables(); var++){
+    for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
       if (particle.getValue(var) < problem_.getLowerLimit(var)) {
         particle.setValue(var, problem_.getLowerLimit(var));
         speed_[part][var] = speed_[part][var] * ChVel1_;
@@ -390,7 +384,7 @@ public class dMOPSO extends Algorithm {
   }
 
   private void resetParticle(int i) throws JMException {
-    XReal particle = new XReal(particles_.get(i)) ;
+    XReal particle = new XReal(particles_.get(i));
     double mean, sigma, N;
 
     for (int var = 0; var < particle.size(); var++) {
@@ -398,16 +392,16 @@ public class dMOPSO extends Algorithm {
       gB = new XReal(gBest_[shfGBest_[i]]);
       pB = new XReal(lBest_[i]);
 
-      mean = (gB.getValue(var) - pB.getValue(var))/2;
+      mean = (gB.getValue(var) - pB.getValue(var)) / 2;
 
       sigma = Math.abs(gB.getValue(var) - pB.getValue(var));
 
       java.util.Random rnd = new java.util.Random();
 
-      N = rnd.nextGaussian()*sigma + mean; // N(mean, sigma)
+      N = rnd.nextGaussian() * sigma + mean; // N(mean, sigma)
       //N = box_muller(mean, sigma);
 
-      particle.setValue(var,N);
+      particle.setValue(var, N);
       speed_[i][var] = 0.0;
     }
   } // resetParticle
@@ -430,12 +424,14 @@ public class dMOPSO extends Algorithm {
     } else {
       String dataFileName;
       dataFileName = "W" + problem_.getNumberOfObjectives() + "D_" +
-              swarmSize_ + ".dat";
+        swarmSize_ + ".dat";
 
       try {
         // Open the file
         FileInputStream fis =
-                new FileInputStream(this.getClass().getClassLoader().getResource(dataDirectory_ + "/" + dataFileName).getPath());
+          new FileInputStream(
+            this.getClass().getClassLoader().getResource(dataDirectory_ + "/" + dataFileName)
+              .getPath());
         InputStreamReader isr = new InputStreamReader(fis);
         BufferedReader br = new BufferedReader(isr);
 
@@ -458,9 +454,9 @@ public class dMOPSO extends Algorithm {
         br.close();
       } catch (Exception e) {
         Configuration.logger_.log(
-                Level.SEVERE,
-                "initUniformWeight: failed when reading for file: " + dataDirectory_ + "/" + dataFileName,
-                e);
+          Level.SEVERE,
+          "initUniformWeight: failed when reading for file: " + dataDirectory_ + "/" + dataFileName,
+          e);
       }
     }
   }
@@ -490,16 +486,16 @@ public class dMOPSO extends Algorithm {
 
   private void updateGlobalBest() throws JMException {
 
-    double gBestFitness ;
+    double gBestFitness;
 
-    for(int j = 0; j<lambda_.length; j++){
-      gBestFitness = fitnessFunction(gBest_[j], lambda_[j]) ;
+    for (int j = 0; j < lambda_.length; j++) {
+      gBestFitness = fitnessFunction(gBest_[j], lambda_[j]);
 
-      for (int i = 0 ; i < particles_.size(); i++) {
-        double v1 = fitnessFunction(particles_.get(i), lambda_[j]) ;
-        double v2 = gBestFitness ;
+      for (int i = 0; i < particles_.size(); i++) {
+        double v1 = fitnessFunction(particles_.get(i), lambda_[j]);
+        double v2 = gBestFitness;
         if (v1 < v2) {
-          gBest_[j] = new Solution(particles_.get(i)) ;
+          gBest_[j] = new Solution(particles_.get(i));
           gBestFitness = v1;
         }
       }
@@ -514,10 +510,10 @@ public class dMOPSO extends Algorithm {
     f1 = fitnessFunction(lBest_[part], lambda_[part]);
     f2 = fitnessFunction(indiv, lambda_[part]);
 
-    if(age_[part] >= maxAge_ || f2 <= f1){
+    if (age_[part] >= maxAge_ || f2 <= f1) {
       lBest_[part] = indiv;
       age_[part] = 0;
-    }else{
+    } else {
       age_[part]++;
     }
   }
@@ -545,7 +541,7 @@ public class dMOPSO extends Algorithm {
 
       fitness = maxFun;
 
-    }else if(functionType_.equals("_AGG")){
+    } else if (functionType_.equals("_AGG")) {
       double sum = 0.0;
       for (int n = 0; n < problem_.getNumberOfObjectives(); n++) {
         sum += (lambda[n]) * sol.getObjective(n);
@@ -553,30 +549,28 @@ public class dMOPSO extends Algorithm {
 
       fitness = sum;
 
-    }else if(functionType_.equals("_PBI")){
+    } else if (functionType_.equals("_PBI")) {
       double d1, d2, nl;
       double theta = 5.0;
 
       d1 = d2 = nl = 0.0;
 
-      for (int i = 0; i < problem_.getNumberOfObjectives(); i++)
-      {
+      for (int i = 0; i < problem_.getNumberOfObjectives(); i++) {
         d1 += (sol.getObjective(i) - z_[i]) * lambda[i];
         nl += Math.pow(lambda[i], 2.0);
       }
       nl = Math.sqrt(nl);
       d1 = Math.abs(d1) / nl;
 
-      for (int i = 0; i < problem_.getNumberOfObjectives(); i++)
-      {
+      for (int i = 0; i < problem_.getNumberOfObjectives(); i++) {
         d2 += Math.pow((sol.getObjective(i) - z_[i]) - d1 * (lambda[i] / nl), 2.0);
       }
       d2 = Math.sqrt(d2);
 
       fitness = (d1 + theta * d2);
 
-    }else{
-      throw new JMException("dMOPSO.fitnessFunction: unknown type " + functionType_) ;
+    } else {
+      throw new JMException("dMOPSO.fitnessFunction: unknown type " + functionType_);
     }
     return fitness;
   }

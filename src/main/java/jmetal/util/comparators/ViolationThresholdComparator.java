@@ -25,13 +25,15 @@ import jmetal.core.SolutionSet;
 
 // This class implements the ViolationThreshold Comparator 
 public class ViolationThresholdComparator
-        implements IConstraintViolationComparator {
+  implements IConstraintViolationComparator {
 
 
   // threshold used for the comparations
   private double threshold_ = 0.0;
+
   /**
    * Compares two solutions.
+   *
    * @param o1 Object representing the first <code>Solution</code>.
    * @param o2 Object representing the second <code>Solution</code>.
    * @return -1, or 0, or 1 if o1 is less than, equal, or greater than o2,
@@ -41,14 +43,14 @@ public class ViolationThresholdComparator
   public int compare(Solution o1, Solution o2) {
     double overall1, overall2;
     overall1 = ((Solution) o1).getNumberOfViolatedConstraint() *
-            ((Solution)o1).getOverallConstraintViolation();
+      ((Solution) o1).getOverallConstraintViolation();
     overall2 = ((Solution) o2).getNumberOfViolatedConstraint() *
-            ((Solution)o2).getOverallConstraintViolation();
+      ((Solution) o2).getOverallConstraintViolation();
 
     if ((overall1 < 0) && (overall2 < 0)) {
-      if (overall1 > overall2){
+      if (overall1 > overall2) {
         return -1;
-      } else if (overall2 > overall1){
+      } else if (overall2 > overall1) {
         return 1;
       } else {
         return 0;
@@ -67,16 +69,16 @@ public class ViolationThresholdComparator
    * violation < 0
    */
   public boolean needToCompare(Solution o1, Solution o2) {
-    boolean needToCompare ;
+    boolean needToCompare;
     double overall1, overall2;
     overall1 = Math.abs(((Solution) o1).getNumberOfViolatedConstraint() *
-            ((Solution)o1).getOverallConstraintViolation());
+      ((Solution) o1).getOverallConstraintViolation());
     overall2 = Math.abs(((Solution) o2).getNumberOfViolatedConstraint() *
-            ((Solution)o2).getOverallConstraintViolation());
+      ((Solution) o2).getOverallConstraintViolation());
 
     needToCompare = (overall1 > this.threshold_) || (overall2 > this.threshold_);
 
-    return needToCompare ;
+    return needToCompare;
   }
 
   /**
@@ -87,10 +89,10 @@ public class ViolationThresholdComparator
     double aux = 0.0;
     for (int i = 0; i < solutionSet.size(); i++) {
       if (solutionSet.get(i).getOverallConstraintViolation() < 0) {
-        aux = aux+1.0;
+        aux = aux + 1.0;
       }
     }
-    return aux / (double)solutionSet.size();
+    return aux / (double) solutionSet.size();
   }
 
   /**
@@ -101,9 +103,9 @@ public class ViolationThresholdComparator
     double aux = 0.0;
     for (int i = 0; i < solutionSet.size(); i++) {
       aux += Math.abs(solutionSet.get(i).getNumberOfViolatedConstraint() *
-              solutionSet.get(i).getOverallConstraintViolation());
+        solutionSet.get(i).getOverallConstraintViolation());
     }
-    return aux / (double)solutionSet.size();
+    return aux / (double) solutionSet.size();
   }
 
 

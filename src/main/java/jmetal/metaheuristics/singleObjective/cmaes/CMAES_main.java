@@ -32,22 +32,22 @@ import java.io.IOException;
  */
 public class CMAES_main {
 
-  public static void main(String [] args) throws JMException, ClassNotFoundException, IOException {
+  public static void main(String[] args) throws JMException, ClassNotFoundException, IOException {
     int numberOfVariables = 20;
     int populationSize = 10;
     int maxEvaluations = 1000000;
 
-    Problem problem   ;
-    Algorithm algorithm ;
+    Problem problem;
+    Algorithm algorithm;
 
     //problem = new Sphere("Real", numberOfVariables) ;
     //problem = new Easom("Real") ;
     //problem = new Griewank("Real", populationSize) ;
     //problem = new Schwefel("Real", numberOfVariables) ;
-    problem = new Rosenbrock("Real", numberOfVariables) ;
+    problem = new Rosenbrock("Real", numberOfVariables);
     //problem = new Rastrigin("Real", numberOfVariables) ;
 
-    algorithm = new CMAES(problem) ;
+    algorithm = new CMAES(problem);
     
     /* Algorithm parameters*/
     algorithm.setInputParameter("populationSize", populationSize);

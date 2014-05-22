@@ -26,10 +26,10 @@ import jmetal.qualityIndicator.Hypervolume;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Distance;
 import jmetal.util.JMException;
-import jmetal.util.random.PseudoRandom;
 import jmetal.util.archive.CrowdingArchive;
 import jmetal.util.comparators.CrowdingDistanceComparator;
 import jmetal.util.comparators.DominanceComparator;
+import jmetal.util.random.PseudoRandom;
 import jmetal.util.wrapper.XReal;
 
 import java.io.FileNotFoundException;
@@ -42,19 +42,32 @@ import java.util.logging.Logger;
 /**
  * This class implements the SMPSO algorithm described in:
  * A.J. Nebro, J.J. Durillo, J. Garcia-Nieto, C.A. Coello Coello, F. Luna and E. Alba
- * "SMPSO: A New PSO-based Metaheuristic for Multi-objective Optimization". 
- * IEEE Symposium on Computational Intelligence in Multicriteria Decision-Making 
+ * "SMPSO: A New PSO-based Metaheuristic for Multi-objective Optimization".
+ * IEEE Symposium on Computational Intelligence in Multicriteria Decision-Making
  * (MCDM 2009), pp: 66-73. March 2009
  */
 public class SMPSO extends Algorithm {
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = 3008407962396502302L;
-
+  QualityIndicator indicators_; // QualityIndicator object
+  double r1Max_;
+  double r1Min_;
+  double r2Max_;
+  double r2Min_;
+  double C1Max_;
+  double C1Min_;
+  double C2Max_;
+  double C2Min_;
+  double WMax_;
+  double WMin_;
+  double ChVel1_;
+  double ChVel2_;
+  boolean success_;
   /**
->>>>>>> master
+   * >>>>>>> master
    * Stores the number of particles_ used
    */
   private int swarmSize_;
@@ -102,28 +115,18 @@ public class SMPSO extends Algorithm {
    * Stores a operator for non uniform mutations
    */
   private Operator polynomialMutation_;
-
-  QualityIndicator indicators_; // QualityIndicator object
-
-  double r1Max_;
-  double r1Min_;
-  double r2Max_;
-  double r2Min_;
-  double C1Max_;
-  double C1Min_;
-  double C2Max_;
-  double C2Min_;
-  double WMax_;
-  double WMin_;
-  double ChVel1_;
-  double ChVel2_;
-
-  /** 
+  private double trueHypervolume_;
+  private Hypervolume hy_;
+  private SolutionSet trueFront_;
+  private double deltaMax_[];
+  private double deltaMin_[];
+  /**
    * Constructor
+   *
    * @param problem Problem to solve
    */
   public SMPSO(Problem problem) {
-    super(problem) ;
+    super(problem);
 
     r1Max_ = 1.0;
     r1Min_ = 0.0;
@@ -138,11 +141,10 @@ public class SMPSO extends Algorithm {
     ChVel1_ = -1;
     ChVel2_ = -1;
   } // Constructor
-
   public SMPSO(Problem problem,
     Vector<Double> variables,
     String trueParetoFront) throws FileNotFoundException {
-    super(problem) ;
+    super(problem);
 
     r1Max_ = variables.get(0);
     r1Min_ = variables.get(1);
@@ -165,19 +167,14 @@ public class SMPSO extends Algorithm {
       problem_.getNumberOfObjectives());
 
   } // SMPSO
-  private double trueHypervolume_;
-  private Hypervolume hy_;
-  private SolutionSet trueFront_;
-  private double deltaMax_[];
-  private double deltaMin_[];
-  boolean success_;
 
-  /** 
+  /**
    * Constructor
+   *
    * @param problem Problem to solve
    */
   public SMPSO(Problem problem, String trueParetoFront) throws FileNotFoundException {
-    super(problem) ;
+    super(problem);
     hy_ = new Hypervolume();
     jmetal.qualityIndicator.util.MetricsUtil mu = new jmetal.qualityIndicator.util.MetricsUtil();
     trueFront_ = mu.readNonDominatedSolutionSet(trueParetoFront);
@@ -218,9 +215,9 @@ public class SMPSO extends Algorithm {
 
     indicators_ = (QualityIndicator) getInputParameter("indicators");
 
-    polynomialMutation_ = operators_.get("mutation") ; 
+    polynomialMutation_ = operators_.get("mutation");
 
-    iteration_ = 0 ;
+    iteration_ = 0;
 
     success_ = false;
 
@@ -265,8 +262,8 @@ public class SMPSO extends Algorithm {
 
   // velocity bounds
   private double velocityConstriction(double v, double[] deltaMax,
-                                      double[] deltaMin, int variableIndex,
-                                      int particleIndex) throws IOException {
+    double[] deltaMin, int variableIndex,
+    int particleIndex) throws IOException {
 
 
     double result;
@@ -289,7 +286,8 @@ public class SMPSO extends Algorithm {
 
   /**
    * Update the speed of each particle
-   * @throws JMException 
+   *
+   * @throws JMException
    */
   private void computeSpeed(int iter, int miter) throws JMException, IOException {
     double r1, r2, W, C1, C2;
@@ -297,8 +295,8 @@ public class SMPSO extends Algorithm {
     XReal bestGlobal;
 
     for (int i = 0; i < swarmSize_; i++) {
-    	XReal particle = new XReal(particles_.get(i)) ;
-    	XReal bestParticle = new XReal(best_[i]) ;
+      XReal particle = new XReal(particles_.get(i));
+      XReal bestParticle = new XReal(best_[i]);
 
       //Select a global best_ for calculate the speed of particle i, bestGlobal
       Solution one, two;
@@ -311,7 +309,7 @@ public class SMPSO extends Algorithm {
         bestGlobal = new XReal(one);
       } else {
         bestGlobal = new XReal(two);
-      //Params for velocity equation
+        //Params for velocity equation
       }
       r1 = PseudoRandom.randDouble(r1Min_, r1Max_);
       r2 = PseudoRandom.randDouble(r2Min_, r2Max_);
@@ -325,29 +323,31 @@ public class SMPSO extends Algorithm {
       for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
         //Computing the velocity of this particle 
         speed_[i][var] = velocityConstriction(constrictionCoefficient(C1, C2) *
-          (inertiaWeight(iter, miter, wmax, wmin) *
-          speed_[i][var] +
-          C1 * r1 * (bestParticle.getValue(var) -
-          particle.getValue(var)) +
-          C2 * r2 * (bestGlobal.getValue(var) -
-          particle.getValue(var))), deltaMax_, //[var],
+            (inertiaWeight(iter, miter, wmax, wmin) *
+              speed_[i][var] +
+              C1 * r1 * (bestParticle.getValue(var) -
+                particle.getValue(var)) +
+              C2 * r2 * (bestGlobal.getValue(var) -
+                particle.getValue(var))), deltaMax_, //[var],
           deltaMin_, //[var], 
           var,
-          i);
+          i
+        );
       }
     }
   } // computeSpeed
 
   /**
    * Update the position of each particle
-   * @throws JMException 
+   *
+   * @throws JMException
    */
   private void computeNewPositions() throws JMException {
     for (int i = 0; i < swarmSize_; i++) {
-    	XReal particle = new XReal(particles_.get(i)) ;
+      XReal particle = new XReal(particles_.get(i));
       for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
-      	particle.setValue(var, particle.getValue(var) +  speed_[i][var]) ;
-      	
+        particle.setValue(var, particle.getValue(var) + speed_[i][var]);
+
         if (particle.getValue(var) < problem_.getLowerLimit(var)) {
           particle.setValue(var, problem_.getLowerLimit(var));
           speed_[i][var] = speed_[i][var] * ChVel1_; //    
@@ -362,21 +362,23 @@ public class SMPSO extends Algorithm {
 
   /**
    * Apply a mutation operator to some particles in the swarm
-   * @throws JMException 
+   *
+   * @throws JMException
    */
   private void mopsoMutation(int actualIteration, int totalIterations) throws JMException {
     for (int i = 0; i < particles_.size(); i++) {
-      if ( (i % 6) == 0) {
+      if ((i % 6) == 0) {
         polynomialMutation_.execute(particles_.get(i));
       }
     }
   } // mopsoMutation
 
-  /**   
+  /**
    * Runs of the SMPSO algorithm.
+   *
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
-   * as a result of the algorithm execution  
-   * @throws JMException 
+   * as a result of the algorithm execution
+   * @throws JMException
    */
   public SolutionSet execute() throws JMException, ClassNotFoundException {
     initParams();
@@ -431,7 +433,7 @@ public class SMPSO extends Algorithm {
       for (int i = 0; i < particles_.size(); i++) {
         Solution particle = particles_.get(i);
         problem_.evaluate(particle);
-        problem_.evaluateConstraints(particle) ;
+        problem_.evaluateConstraints(particle);
       }
 
       //Actualize the archive          
@@ -458,7 +460,7 @@ public class SMPSO extends Algorithm {
     return this.leaders_;
   } // execute
 
-  /** 
+  /**
    * Gets the leaders of the SMPSO algorithm
    */
   public SolutionSet getLeader() {

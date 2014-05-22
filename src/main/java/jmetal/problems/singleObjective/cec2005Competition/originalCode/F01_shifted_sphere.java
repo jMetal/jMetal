@@ -44,7 +44,7 @@
 //		Revised according to the Matlab reference code and the PDF document
 //		dated March 8, 2005.
 //
-package jmetal.problems.singleObjective.cec2005Competition.originalCode ;
+package jmetal.problems.singleObjective.cec2005Competition.originalCode;
 
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
@@ -53,7 +53,8 @@ public class F01_shifted_sphere extends TestFunc {
 
   // Fixed (class) parameters
   static final public String FUNCTION_NAME = "Shifted Sphere Function";
-  static final public String DEFAULT_FILE_DATA = "" + Configuration.cec2005SupportDataDirectory +"/sphere_func_data.txt";
+  static final public String DEFAULT_FILE_DATA =
+    "" + Configuration.cec2005SupportDataDirectory + "/sphere_func_data.txt";
 
   // Shifted global optimum
   private final double[] m_o;
@@ -63,10 +64,11 @@ public class F01_shifted_sphere extends TestFunc {
   private double[] m_z;
 
   // Constructors
-  public F01_shifted_sphere (int dimension, double bias) throws JMException {
+  public F01_shifted_sphere(int dimension, double bias) throws JMException {
     this(dimension, bias, DEFAULT_FILE_DATA);
   }
-  public F01_shifted_sphere (int dimension, double bias, String file_data) throws JMException {
+
+  public F01_shifted_sphere(int dimension, double bias, String file_data) throws JMException {
     super(dimension, bias, FUNCTION_NAME);
 
     // Note: dimension starts from 0

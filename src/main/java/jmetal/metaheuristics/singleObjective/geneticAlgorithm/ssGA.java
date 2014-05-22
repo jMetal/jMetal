@@ -29,108 +29,108 @@ import jmetal.util.comparators.ObjectiveComparator;
 import java.util.Comparator;
 import java.util.HashMap;
 
-/** 
+/**
  * Class implementing a steady-state genetic algorithm
  */
 public class ssGA extends Algorithm {
-  
+
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = -6340093758636629106L;
 
- /**
-  *
-  * Constructor
-  * Create a new SSGA instance.
-  * @param problem Problem to solve
-  *
-  */
-  public ssGA(Problem problem){
-    super(problem) ;
+  /**
+   * Constructor
+   * Create a new SSGA instance.
+   *
+   * @param problem Problem to solve
+   */
+  public ssGA(Problem problem) {
+    super(problem);
   } // SSGA
-  
- /**
-  * Execute the SSGA algorithm
- * @throws JMException 
-  */
+
+  /**
+   * Execute the SSGA algorithm
+   *
+   * @throws JMException
+   */
   public SolutionSet execute() throws JMException, ClassNotFoundException {
-    int populationSize ;
-    int maxEvaluations ;
-    int evaluations    ;
+    int populationSize;
+    int maxEvaluations;
+    int evaluations;
 
-    SolutionSet population        ;
-    Operator    mutationOperator  ;
-    Operator    crossoverOperator ;
-    Operator    selectionOperator ;
-    
-    Comparator<Solution>  comparator        ;
-    
-    comparator = new ObjectiveComparator(0) ; // Single objective comparator
-    
-    HashMap<String, Object> selectionParameters = new HashMap<String, Object>() ;
-    selectionParameters.put("comparator", comparator) ;
+    SolutionSet population;
+    Operator mutationOperator;
+    Operator crossoverOperator;
+    Operator selectionOperator;
 
-    Operator findWorstSolution = new WorstSolutionSelection(selectionParameters) ;
+    Comparator<Solution> comparator;
+
+    comparator = new ObjectiveComparator(0); // Single objective comparator
+
+    HashMap<String, Object> selectionParameters = new HashMap<String, Object>();
+    selectionParameters.put("comparator", comparator);
+
+    Operator findWorstSolution = new WorstSolutionSelection(selectionParameters);
 
     // Read the parameters
-    populationSize = ((Integer)this.getInputParameter("populationSize")).intValue();
-    maxEvaluations = ((Integer)this.getInputParameter("maxEvaluations")).intValue();                
-   
+    populationSize = ((Integer) this.getInputParameter("populationSize")).intValue();
+    maxEvaluations = ((Integer) this.getInputParameter("maxEvaluations")).intValue();
+
     // Initialize the variables
-    population   = new SolutionSet(populationSize);        
-    evaluations  = 0;                
+    population = new SolutionSet(populationSize);
+    evaluations = 0;
 
     // Read the operators
-    mutationOperator  = this.operators_.get("mutation");
+    mutationOperator = this.operators_.get("mutation");
     crossoverOperator = this.operators_.get("crossover");
-    selectionOperator = this.operators_.get("selection");  
+    selectionOperator = this.operators_.get("selection");
 
     // Create the initial population
     Solution newIndividual;
     for (int i = 0; i < populationSize; i++) {
-      newIndividual = new Solution(problem_);                    
-      problem_.evaluate(newIndividual);            
+      newIndividual = new Solution(problem_);
+      problem_.evaluate(newIndividual);
       evaluations++;
       population.add(newIndividual);
     } //for       
 
     // main loop
     while (evaluations < maxEvaluations) {
-      Solution [] parents = new Solution[2];
-      
+      Solution[] parents = new Solution[2];
+
       // Selection
-      parents[0] = (Solution)selectionOperator.execute(population);
-      parents[1] = (Solution)selectionOperator.execute(population);
- 
+      parents[0] = (Solution) selectionOperator.execute(population);
+      parents[1] = (Solution) selectionOperator.execute(population);
+
       // Crossover
-      Solution [] offspring = (Solution []) crossoverOperator.execute(parents);  
+      Solution[] offspring = (Solution[]) crossoverOperator.execute(parents);
 
       // Mutation
       mutationOperator.execute(offspring[0]);
 
       // Evaluation of the new individual
-      problem_.evaluate(offspring[0]);            
-          
-      evaluations ++;
-    
+      problem_.evaluate(offspring[0]);
+
+      evaluations++;
+
       // Replacement: replace the last individual is the new one is better
-      int worstIndividual = (Integer)findWorstSolution.execute(population) ;
-          
+      int worstIndividual = (Integer) findWorstSolution.execute(population);
+
       if (comparator.compare(population.get(worstIndividual), offspring[0]) > 0) {
-        population.remove(worstIndividual) ;
+        population.remove(worstIndividual);
         population.add(offspring[0]);
       } // if
     } // while
-    
-    // Return a population with the best individual
-    
 
-    SolutionSet resultPopulation = new SolutionSet(1) ;    
+    // Return a population with the best individual
+
+
+    SolutionSet resultPopulation = new SolutionSet(1);
     resultPopulation.add(population.best(comparator));
-    
-    System.out.println("Evaluations: " + evaluations ) ;
-    
-    return resultPopulation ;
+
+    System.out.println("Evaluations: " + evaluations);
+
+    return resultPopulation;
   } // execute
 } // ssGA

@@ -26,20 +26,19 @@ import jmetal.util.JMException;
 
 import java.util.BitSet;
 
-/** This class extends the Binary class to represent a Real encodings.variable encoded by
+/**
+ * This class extends the Binary class to represent a Real encodings.variable encoded by
  * a binary string
  */
 public class BinaryReal extends Binary {
   /**
-   *
-   */
-  private static final long serialVersionUID = 7465120044544948197L;
-
-  /**
    * Defines the default number of bits used for binary coded variables.
    */
   public static final int DEFAULT_PRECISION = 30;
-
+  /**
+   *
+   */
+  private static final long serialVersionUID = 7465120044544948197L;
   /**
    * Stores the real value of the encodings.variable
    */
@@ -64,23 +63,24 @@ public class BinaryReal extends Binary {
 
   /**
    * Constructor
+   *
    * @param numberOfBits Length of the binary string.
-   * @param lowerBound The lower limit for the encodings.variable
-   * @param upperBound The upper limit for the encodings.variable.
+   * @param lowerBound   The lower limit for the encodings.variable
+   * @param upperBound   The upper limit for the encodings.variable.
    */
-  public BinaryReal(int numberOfBits, double lowerBound, double upperBound){
+  public BinaryReal(int numberOfBits, double lowerBound, double upperBound) {
     super(numberOfBits);
-    lowerBound_     = lowerBound;
-    upperBound_     = upperBound;
+    lowerBound_ = lowerBound;
+    upperBound_ = upperBound;
 
     decode();
   }
 
   /**
-   * @param bits  BitSet
-   * @param nbBits  Number of bits
-   * @param lowerBound  Lower bound
-   * @param upperBound  Upper bound
+   * @param bits       BitSet
+   * @param nbBits     Number of bits
+   * @param lowerBound Lower bound
+   * @param upperBound Upper bound
    */
   public BinaryReal(BitSet bits, int nbBits, double lowerBound, double upperBound) {
     super(nbBits);
@@ -92,13 +92,14 @@ public class BinaryReal extends Binary {
 
   /**
    * Copy constructor
+   *
    * @param variable The encodings.variable to copy
    */
-  public BinaryReal(BinaryReal variable){
+  public BinaryReal(BinaryReal variable) {
     super(variable);
 
-    lowerBound_   = variable.lowerBound_;
-    upperBound_   = variable.upperBound_;
+    lowerBound_ = variable.lowerBound_;
+    upperBound_ = variable.upperBound_;
 
     value_ = variable.value_;
   }
@@ -106,26 +107,27 @@ public class BinaryReal extends Binary {
 
   /**
    * Decodes the real value encoded in the binary string represented
-   * by the <code>BinaryReal</code> object. The decoded value is stores in the 
+   * by the <code>BinaryReal</code> object. The decoded value is stores in the
    * <code>value_</code> field and can be accessed by the method
    * <code>getValue</code>.
    */
   @Override
-  public void decode(){
+  public void decode() {
     double value = 0.0;
     for (int i = 0; i < numberOfBits_; i++) {
       if (getBits().get(i)) {
-        value += Math.pow(2.0,i);
+        value += Math.pow(2.0, i);
       }
     }
 
     value_ = value * (upperBound_ - lowerBound_) /
-            (Math.pow(2.0,numberOfBits_)-1.0);
+      (Math.pow(2.0, numberOfBits_) - 1.0);
     value_ += lowerBound_;
   }
 
   /**
    * Returns the double value of the encodings.variable.
+   *
    * @return the double value.
    */
   public double getValue() {
@@ -137,7 +139,7 @@ public class BinaryReal extends Binary {
    * bits, and for positive intervals.
    *
    * @see jmetal.core.Variable#setValue(double)
-   *
+   * <p/>
    * Contributor: jl hippolyte
    */
   @Override
@@ -158,7 +160,7 @@ public class BinaryReal extends Binary {
         double tmp = lowerBound_;
         double path = (upperBound_ - lowerBound_) / (Math.pow(2.0, numberOfBits_) - 1);
         while (tmp < value) {
-          tmp +=  path;
+          tmp += path;
           integerToCode++;
         }
         int remain = integerToCode;
@@ -180,15 +182,16 @@ public class BinaryReal extends Binary {
       if (lowerBound_ < 0) {
         throw new JMException("Unsupported lowerbound: " + lowerBound_ + " > 0");
       }
-      if (numberOfBits_>= 24) {
+      if (numberOfBits_ >= 24) {
         throw new JMException("Unsupported bit string length"
-                + numberOfBits_ + " is > 24 bits");
+          + numberOfBits_ + " is > 24 bits");
       }
     }
   }
 
   /**
    * Creates an exact copy of a <code>BinaryReal</code> object.
+   *
    * @return The copy of the object
    */
   public Variable deepCopy() {
@@ -197,6 +200,7 @@ public class BinaryReal extends Binary {
 
   /**
    * Returns the lower bound of the encodings.variable.
+   *
    * @return the lower bound.
    */
   public double getLowerBound() {
@@ -204,15 +208,8 @@ public class BinaryReal extends Binary {
   }
 
   /**
-   * Returns the upper bound of the encodings.variable.
-   * @return the upper bound.
-   */
-  public double getUpperBound() {
-    return upperBound_;
-  }
-
-  /**
    * Sets the lower bound of the encodings.variable.
+   *
    * @param lowerBound the lower bound.
    */
   public void setLowerBound(double lowerBound) {
@@ -220,7 +217,17 @@ public class BinaryReal extends Binary {
   }
 
   /**
+   * Returns the upper bound of the encodings.variable.
+   *
+   * @return the upper bound.
+   */
+  public double getUpperBound() {
+    return upperBound_;
+  }
+
+  /**
    * Sets the upper bound of the encodings.variable.
+   *
    * @param upperBound the upper bound.
    */
   public void setUpperBound(double upperBound) {
@@ -229,10 +236,11 @@ public class BinaryReal extends Binary {
 
   /**
    * Returns a string representing the object.
+   *
    * @return the string.
    */
   @Override
   public String toString() {
-    return value_+"";
+    return value_ + "";
   }
 }

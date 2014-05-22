@@ -33,26 +33,26 @@ import java.io.IOException;
 public class jMetalStudy extends Experiment {
 
   public jMetalStudy() {
-    experimentName_ = "jMetalStudy" ;
-    independentRuns_= 100;
-    algorithmNameList_ = new String[]{"NSGAII", "SMPSO", "GDE3"};
-    problemList_ = new String[]{"ZDT1", "ZDT2", "ZDT3", "ZDT4", "ZDT6"};
-    paretoFrontFileList_ = new String[]{"ZDT1.pf", "ZDT2.pf", "ZDT3.pf", "ZDT4.pf", "ZDT6.pf"};
-    indicatorList_ = new String[]{"HV", "SPREAD", "EPSILON"};
-    experimentBaseDirectory_ = "/Users/antelverde/Softw/pruebas/jmetal/" + experimentName_ ;
+    experimentName_ = "jMetalStudy";
+    independentRuns_ = 100;
+    algorithmNameList_ = new String[] {"NSGAII", "SMPSO", "GDE3"};
+    problemList_ = new String[] {"ZDT1", "ZDT2", "ZDT3", "ZDT4", "ZDT6"};
+    paretoFrontFileList_ = new String[] {"ZDT1.pf", "ZDT2.pf", "ZDT3.pf", "ZDT4.pf", "ZDT6.pf"};
+    indicatorList_ = new String[] {"HV", "SPREAD", "EPSILON"};
+    experimentBaseDirectory_ = "/Users/antelverde/Softw/pruebas/jmetal/" + experimentName_;
     paretoFrontDirectory_ = "/Users/antelverde/Softw/pruebas/data/paretoFronts";
-    numberOfExecutionThreads_ = 2 ;
+    numberOfExecutionThreads_ = 2;
 
-    generateReferenceParetoFronts_ = false ;
-    runTheAlgorithms_ = true ;
-    generateBoxplots_ = true ;
-    boxplotRows_ = 2 ;
-    boxplotColumns_ = 2 ;
-    boxplotNotch_ = true ;
-    generateFriedmanTables_ = true ;
-    generateLatexTables_ = true ;
-    generateWilcoxonTables_ = true ;
-    generateQualityIndicators_ = true ;
+    generateReferenceParetoFronts_ = false;
+    runTheAlgorithms_ = true;
+    generateBoxplots_ = true;
+    boxplotRows_ = 2;
+    boxplotColumns_ = 2;
+    boxplotNotch_ = true;
+    generateFriedmanTables_ = true;
+    generateLatexTables_ = true;
+    generateWilcoxonTables_ = true;
+    generateQualityIndicators_ = true;
   }
 
 
@@ -70,7 +70,7 @@ public class jMetalStudy extends Experiment {
 
     exp.initExperiment(args);
 
-    System.out.println(exp) ;
+    System.out.println(exp);
 
     exp.runExperiment();
   } // main

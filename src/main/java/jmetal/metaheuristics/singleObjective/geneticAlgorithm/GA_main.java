@@ -35,34 +35,34 @@ import java.io.IOException;
 import java.util.HashMap;
 
 /**
- * This class runs a single-objective genetic algorithm (GA). The GA can be 
+ * This class runs a single-objective genetic algorithm (GA). The GA can be
  * a steady-state GA (class ssGA), a generational GA (class gGA), a synchronous
  * cGA (class scGA) or an asynchronous cGA (class acGA). The OneMax
  * problem is used to test the algorithms.
  */
 public class GA_main {
 
-  public static void main(String [] args) throws JMException, ClassNotFoundException, IOException {
-    Problem   problem   ;
-    Algorithm algorithm ;
-    Operator  crossover ;
-    Operator  mutation  ;
-    Operator  selection ;
+  public static void main(String[] args) throws JMException, ClassNotFoundException, IOException {
+    Problem problem;
+    Algorithm algorithm;
+    Operator crossover;
+    Operator mutation;
+    Operator selection;
 
-    int bits = 512 ;
+    int bits = 512;
     problem = new OneMax("Binary", bits);
- 
+
     //problem = new Sphere("Real", 10) ;
     //problem = new Easom("Real") ;
     //problem = new Griewank("Real", 10) ;
-    
-    algorithm = new gGA(problem) ; // Generational GA
+
+    algorithm = new gGA(problem); // Generational GA
     //algorithm = new ssGA(problem); // Steady-state GA
     //algorithm = new scGA(problem) ; // Synchronous cGA
     //algorithm = new acGA(problem) ;   // Asynchronous cGA
     
     /* Algorithm parameters*/
-    algorithm.setInputParameter("populationSize",100);
+    algorithm.setInputParameter("populationSize", 100);
     algorithm.setInputParameter("maxEvaluations", 25000);
     /*
     // Mutation and Crossover for Real codification 
@@ -76,24 +76,24 @@ public class GA_main {
     parameters.put("distributionIndex", 20.0) ;
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);                    
     */
-    
-    // Mutation and Crossover for Binary codification 
-    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
-    crossoverParameters.put("probability", 0.9) ;
-    crossover = CrossoverFactory.getCrossoverOperator("SinglePointCrossover", crossoverParameters);                   
 
-    HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
-    mutationParameters.put("probability", 1.0/bits) ;
+    // Mutation and Crossover for Binary codification 
+    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
+    crossoverParameters.put("probability", 0.9);
+    crossover = CrossoverFactory.getCrossoverOperator("SinglePointCrossover", crossoverParameters);
+
+    HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
+    mutationParameters.put("probability", 1.0 / bits);
     mutation = MutationFactory.getMutationOperator("BitFlipMutation", mutationParameters);                    
     
     /* Selection Operator */
-    HashMap<String, Object> selectionParameters = null ; // FIXME: why we are passing null?
-    selection = SelectionFactory.getSelectionOperator("BinaryTournament", selectionParameters) ;                            
+    HashMap<String, Object> selectionParameters = null; // FIXME: why we are passing null?
+    selection = SelectionFactory.getSelectionOperator("BinaryTournament", selectionParameters);
     
     /* Add the operators to the algorithm*/
-    algorithm.addOperator("crossover",crossover);
-    algorithm.addOperator("mutation",mutation);
-    algorithm.addOperator("selection",selection);
+    algorithm.addOperator("crossover", crossover);
+    algorithm.addOperator("mutation", mutation);
+    algorithm.addOperator("selection", selection);
  
     /* Execute the Algorithm */
     long initTime = System.currentTimeMillis();
@@ -105,6 +105,6 @@ public class GA_main {
     System.out.println("Objectives values have been writen to file FUN");
     population.printObjectivesToFile("FUN");
     System.out.println("Variables values have been writen to file VAR");
-    population.printVariablesToFile("VAR");          
+    population.printVariablesToFile("VAR");
   }
 }

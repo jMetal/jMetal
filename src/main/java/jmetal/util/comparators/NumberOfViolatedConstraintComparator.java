@@ -28,10 +28,11 @@ import jmetal.core.Solution;
  * <code>Solution</code> objects) based on the number of violated constraints.
  */
 public class NumberOfViolatedConstraintComparator
-        implements IConstraintViolationComparator{
+  implements IConstraintViolationComparator {
 
   /**
    * Compares two solutions.
+   *
    * @param o1 Object representing the first <code>Solution</code>.
    * @param o2 Object representing the second <code>Solution</code>.
    * @return -1, or 0, or 1 if o1 is less than, equal, or greater than o2,
@@ -43,10 +44,10 @@ public class NumberOfViolatedConstraintComparator
     Solution solution2 = (Solution) o2;
 
     if (solution1.getNumberOfViolatedConstraint() <
-            solution2.getNumberOfViolatedConstraint()) {
+      solution2.getNumberOfViolatedConstraint()) {
       return -1;
     } else if (solution2.getNumberOfViolatedConstraint() <
-            solution1.getNumberOfViolatedConstraint()) {
+      solution1.getNumberOfViolatedConstraint()) {
       return 1;
     }
 
@@ -54,14 +55,14 @@ public class NumberOfViolatedConstraintComparator
   }
 
   /**
-   * Returns true if solutions s1 and/or s2 violates a 
+   * Returns true if solutions s1 and/or s2 violates a
    * number n > 0 of constraints
    */
   public boolean needToCompare(Solution s1, Solution s2) {
-    boolean needToCompare ;
+    boolean needToCompare;
     needToCompare = (s1.getNumberOfViolatedConstraint() > 0) ||
-            (s2.getNumberOfViolatedConstraint() > 0);
+      (s2.getNumberOfViolatedConstraint() > 0);
 
-    return needToCompare ;
+    return needToCompare;
   }
 }

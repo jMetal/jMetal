@@ -37,25 +37,26 @@ import java.util.List;
 /**
  * This class implements a non-uniform mutation operator.
  */
-public class NonUniformMutation extends Mutation{
+public class NonUniformMutation extends Mutation {
   /**
    *
    */
   private static final long serialVersionUID = -2440053123382478633L;
 
   /**
-   * Valid solution types to apply this operator 
+   * Valid solution types to apply this operator
    */
-  private static final List<Class<? extends SolutionType>> VALID_TYPES = Arrays.asList(RealSolutionType.class,
-          ArrayRealSolutionType.class) ;
+  private static final List<Class<? extends SolutionType>> VALID_TYPES =
+    Arrays.asList(RealSolutionType.class,
+      ArrayRealSolutionType.class);
   /**
-   * perturbation_ stores the perturbation value used in the Non Uniform 
+   * perturbation_ stores the perturbation value used in the Non Uniform
    * mutation operator
    */
   private Double perturbation_ = null;
 
   /**
-   * maxIterations_ stores the maximun number of iterations. 
+   * maxIterations_ stores the maximun number of iterations.
    */
   private Integer maxIterations_ = null;
 
@@ -72,7 +73,7 @@ public class NonUniformMutation extends Mutation{
    * Creates a new instance of the non uniform mutation
    */
   public NonUniformMutation(HashMap<String, Object> parameters) {
-    super(parameters) ;
+    super(parameters);
     if (parameters.get("probability") != null) {
       mutationProbability_ = (Double) parameters.get("probability");
     }
@@ -86,12 +87,13 @@ public class NonUniformMutation extends Mutation{
 
   /**
    * Perform the mutation operation
+   *
    * @param probability Mutation probability
-   * @param solution The solution to mutate
+   * @param solution    The solution to mutate
    * @throws JMException
    */
   public void doMutation(double probability, Solution solution) throws JMException {
-    XReal x = new XReal(solution) ;
+    XReal x = new XReal(solution);
     for (int var = 0; var < solution.getDecisionVariables().length; var++) {
       if (PseudoRandom.randDouble() < probability) {
         double rand = PseudoRandom.randDouble();
@@ -99,22 +101,20 @@ public class NonUniformMutation extends Mutation{
 
         if (rand <= 0.5) {
           tmp = delta(x.getUpperBound(var) - x.getValue(var),
-                  perturbation_.doubleValue());
+            perturbation_.doubleValue());
           tmp += x.getValue(var);
-        }
-        else {
+        } else {
           tmp = delta(x.getLowerBound(var) - x.getValue(var),
-                  perturbation_.doubleValue());
+            perturbation_.doubleValue());
           tmp += x.getValue(var);
         }
 
         if (tmp < x.getLowerBound(var)) {
           tmp = x.getLowerBound(var);
-        }
-        else if (tmp > x.getUpperBound(var)) {
+        } else if (tmp > x.getUpperBound(var)) {
           tmp = x.getUpperBound(var);
         }
-        x.setValue(var, tmp) ;
+        x.setValue(var, tmp);
       }
     }
   }
@@ -125,39 +125,40 @@ public class NonUniformMutation extends Mutation{
    */
   private double delta(double y, double bMutationParameter) {
     double rand = PseudoRandom.randDouble();
-    int it,maxIt;
-    it    = currentIteration_.intValue();
+    int it, maxIt;
+    it = currentIteration_.intValue();
     maxIt = maxIterations_.intValue();
 
     return (y * (1.0 -
-            Math.pow(rand,
-                    Math.pow((1.0 - it /(double) maxIt),bMutationParameter)
-            )));
+      Math.pow(rand,
+        Math.pow((1.0 - it / (double) maxIt), bMutationParameter)
+      )));
   }
 
   /**
    * Executes the operation
+   *
    * @param object An object containing a solution
    * @return An object containing the mutated solution
    * @throws JMException
    */
   public Object execute(Object object) throws JMException {
-    Solution solution = (Solution)object;
+    Solution solution = (Solution) object;
 
     if (!VALID_TYPES.contains(solution.getType().getClass())) {
       Configuration.logger_.severe("NonUniformMutation.execute: the solution " +
-              solution.getType() + "is not of the right type");
+        solution.getType() + "is not of the right type");
 
       Class<String> cls = java.lang.String.class;
       String name = cls.getName();
-      throw new JMException("Exception in " + name + ".execute()") ;
+      throw new JMException("Exception in " + name + ".execute()");
     } // if  
 
     if (getParameter("currentIteration") != null) {
       currentIteration_ = (Integer) getParameter("currentIteration");
     }
 
-    doMutation(mutationProbability_,solution);
+    doMutation(mutationProbability_, solution);
 
     return solution;
   }

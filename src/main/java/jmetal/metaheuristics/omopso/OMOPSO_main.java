@@ -42,95 +42,94 @@ import java.util.logging.Logger;
  * Class for configuring and running the OMOPSO algorithm
  */
 public class OMOPSO_main {
-  public static Logger      logger_ ;      // Logger object
-  public static FileHandler fileHandler_ ; // FileHandler object
+  public static Logger logger_;      // Logger object
+  public static FileHandler fileHandler_; // FileHandler object
 
   /**
-   * @param args Command line arguments. The first (optional) argument specifies 
+   * @param args Command line arguments. The first (optional) argument specifies
    *             the problem to solve.
-   * @throws JMException 
-   * @throws IOException 
-   * @throws SecurityException 
-   * Usage: three options
-   *      - jmetal.metaheuristics.mocell.MOCell_main
-   *      - jmetal.metaheuristics.mocell.MOCell_main problemName
-   *      - jmetal.metaheuristics.mocell.MOCell_main problemName ParetoFrontFile
+   * @throws JMException
+   * @throws IOException
+   * @throws SecurityException Usage: three options
+   *                           - jmetal.metaheuristics.mocell.MOCell_main
+   *                           - jmetal.metaheuristics.mocell.MOCell_main problemName
+   *                           - jmetal.metaheuristics.mocell.MOCell_main problemName ParetoFrontFile
    */
-  public static void main(String [] args) throws JMException, IOException, ClassNotFoundException {
-    Problem   problem   ;
-    Algorithm algorithm ;
-    Mutation  uniformMutation ;
-    Mutation nonUniformMutation ;
-    
-    QualityIndicator indicators ;
-    
+  public static void main(String[] args) throws JMException, IOException, ClassNotFoundException {
+    Problem problem;
+    Algorithm algorithm;
+    Mutation uniformMutation;
+    Mutation nonUniformMutation;
+
+    QualityIndicator indicators;
+
     // Logger object and file to store log messages
-    logger_      = Configuration.logger_ ;
-    fileHandler_ = new FileHandler("OMOPSO_main.log"); 
-    logger_.addHandler(fileHandler_) ;
-    
-    indicators = null ;
+    logger_ = Configuration.logger_;
+    fileHandler_ = new FileHandler("OMOPSO_main.log");
+    logger_.addHandler(fileHandler_);
+
+    indicators = null;
     if (args.length == 1) {
-      Object [] params = {"Real"};
-      problem = (new ProblemFactory()).getProblem(args[0],params);
+      Object[] params = {"Real"};
+      problem = (new ProblemFactory()).getProblem(args[0], params);
     } else if (args.length == 2) {
-      Object [] params = {"Real"};
-      problem = (new ProblemFactory()).getProblem(args[0],params);
-      indicators = new QualityIndicator(problem, args[1]) ;
+      Object[] params = {"Real"};
+      problem = (new ProblemFactory()).getProblem(args[0], params);
+      indicators = new QualityIndicator(problem, args[1]);
     } else {
-      problem = new Kursawe("Real", 3); 
+      problem = new Kursawe("Real", 3);
       //problem = new Water("Real");
       //problem = new ZDT4("Real");
       //problem = new WFG1("Real");
       //problem = new DTLZ1("Real");
       //problem = new OKA2("Real") ;
     }
-    
-    algorithm = new OMOPSO(problem) ;
-    
-    Integer maxIterations = 250 ;
-    Double perturbationIndex = 0.5 ;
-    Double mutationProbability = 1.0/problem.getNumberOfVariables() ;
-    
+
+    algorithm = new OMOPSO(problem);
+
+    Integer maxIterations = 250;
+    Double perturbationIndex = 0.5;
+    Double mutationProbability = 1.0 / problem.getNumberOfVariables();
+
     // Algorithm parameters
-    algorithm.setInputParameter("swarmSize",100);
-    algorithm.setInputParameter("archiveSize",100);
-    algorithm.setInputParameter("maxIterations",maxIterations);
-    
-    HashMap<String, Object> uniMutationParameters = new HashMap<String, Object>() ;
-    uniMutationParameters.put("probability", mutationProbability) ;
-    uniMutationParameters.put("perturbation", perturbationIndex) ;
+    algorithm.setInputParameter("swarmSize", 100);
+    algorithm.setInputParameter("archiveSize", 100);
+    algorithm.setInputParameter("maxIterations", maxIterations);
+
+    HashMap<String, Object> uniMutationParameters = new HashMap<String, Object>();
+    uniMutationParameters.put("probability", mutationProbability);
+    uniMutationParameters.put("perturbation", perturbationIndex);
     uniformMutation = new UniformMutation(uniMutationParameters);
-    
-    HashMap<String, Object> nonUniMutationParameters = new HashMap<String, Object>() ;
-    nonUniMutationParameters.put("probability", mutationProbability) ;
-    nonUniMutationParameters.put("perturbation", perturbationIndex) ;
-    nonUniMutationParameters.put("maxIterations", maxIterations) ;
+
+    HashMap<String, Object> nonUniMutationParameters = new HashMap<String, Object>();
+    nonUniMutationParameters.put("probability", mutationProbability);
+    nonUniMutationParameters.put("perturbation", perturbationIndex);
+    nonUniMutationParameters.put("maxIterations", maxIterations);
     nonUniformMutation = new NonUniformMutation(nonUniMutationParameters);
 
     // Add the operators to the algorithm
-    algorithm.addOperator("uniformMutation",uniformMutation);
-    algorithm.addOperator("nonUniformMutation",nonUniformMutation);
+    algorithm.addOperator("uniformMutation", uniformMutation);
+    algorithm.addOperator("nonUniformMutation", nonUniformMutation);
 
     // Execute the Algorithm 
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;
-    
+
     // Print the results
-    logger_.info("Total execution time: "+estimatedTime + "ms");
+    logger_.info("Total execution time: " + estimatedTime + "ms");
     logger_.info("Variables values have been writen to file VAR");
-    population.printVariablesToFile("VAR");    
+    population.printVariablesToFile("VAR");
     logger_.info("Objectives values have been writen to file FUN");
     population.printObjectivesToFile("FUN");
-  
+
     if (indicators != null) {
-      logger_.info("Quality indicators") ;
-      logger_.info("Hypervolume: " + indicators.getHypervolume(population)) ;
-      logger_.info("GD         : " + indicators.getGD(population)) ;
-      logger_.info("IGD        : " + indicators.getIGD(population)) ;
-      logger_.info("Spread     : " + indicators.getSpread(population)) ;
-      logger_.info("Epsilon    : " + indicators.getEpsilon(population)) ;  
+      logger_.info("Quality indicators");
+      logger_.info("Hypervolume: " + indicators.getHypervolume(population));
+      logger_.info("GD         : " + indicators.getGD(population));
+      logger_.info("IGD        : " + indicators.getIGD(population));
+      logger_.info("Spread     : " + indicators.getSpread(population));
+      logger_.info("Epsilon    : " + indicators.getEpsilon(population));
     }
   }
 }

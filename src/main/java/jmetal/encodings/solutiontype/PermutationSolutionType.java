@@ -26,30 +26,31 @@ import jmetal.core.SolutionType;
 import jmetal.core.Variable;
 import jmetal.encodings.variable.Permutation;
 
-/** 
+/**
  * Class representing the solution type of solutions composed of Permutation
- * variables 
+ * variables
  */
 public class PermutationSolutionType extends SolutionType {
 
-	/**
-	 * Constructor
-	 * @param problem  Problem to solve
-	 */
-	public PermutationSolutionType(Problem problem) {
-		super(problem) ;
+  /**
+   * Constructor
+   *
+   * @param problem Problem to solve
+   */
+  public PermutationSolutionType(Problem problem) {
+    super(problem);
   } // PermutationSolution
-	
-	/**
-	 * Creates the variables of the solution
-	 */
-	public Variable[]  createVariables() {
-		Variable [] variables = new Variable[getProblem().getNumberOfVariables()];
-		    
+
+  /**
+   * Creates the variables of the solution
+   */
+  public Variable[] createVariables() {
+    Variable[] variables = new Variable[getProblem().getNumberOfVariables()];
+
     for (int var = 0; var < getProblem().getNumberOfVariables(); var++) {
       variables[var] = new Permutation(getProblem().getLength(var));
     }
-    
-    return variables ;
-	} // createVariables
+
+    return variables;
+  } // createVariables
 } // PermutationSolutionType
