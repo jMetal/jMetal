@@ -38,33 +38,30 @@ import java.util.logging.Level;
 /**
  * Settings class of algorithm OMOPSO
  */
-public class OMOPSO_Settings extends Settings{
-  
-  public int    swarmSize_         ;
-  public int    maxIterations_     ;
-  public int    archiveSize_       ;
-  public double perturbationIndex_ ;
-  public double mutationProbability_ ;
+public class OMOPSO_Settings extends Settings{ 
+  private int    swarmSize_         ;
+  private int    maxIterations_     ;
+  private int    archiveSize_       ;
+  private double perturbationIndex_ ;
+  private double mutationProbability_ ;
   
   /**
    * Constructor
+   * @throws JMException 
    */
-  public OMOPSO_Settings(String problem) {
+  public OMOPSO_Settings(String problem) throws JMException {
     super(problem) ;
     
     Object [] problemParams = {"Real"};
-    try {
 	    problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
-    } catch (JMException e) {
-      Configuration.logger_.log(Level.SEVERE, "Unable to get problem", e);
-    }      
-    // Default experiments.settings
+
+	    // Default experiments.settings
     swarmSize_         = 100 ;
     maxIterations_     = 250 ;
     archiveSize_       = 100 ;
     perturbationIndex_ = 0.5 ;
     mutationProbability_ = 1.0/problem_.getNumberOfVariables() ;
-  } // OMOPSO_Settings
+  } 
   
   /**
    * Configure OMOPSO with user-defined parameter experiments.settings
@@ -101,7 +98,7 @@ public class OMOPSO_Settings extends Settings{
     algorithm.addOperator("nonUniformMutation",nonUniformMutation);
 
     return algorithm ;
-  } // configure
+  } 
 
   /**
    * Configure dMOPSO with user-defined parameter experiments.settings
@@ -109,39 +106,13 @@ public class OMOPSO_Settings extends Settings{
    */
   @Override
   public Algorithm configure(Properties configuration) throws JMException {
-    Algorithm algorithm ;
-    Mutation  uniformMutation ;
-    Mutation nonUniformMutation ;
-
-    // Creating the algorithm.
-    algorithm = new OMOPSO(problem_) ;
-
-    // Algorithm parameters
     swarmSize_ = Integer.parseInt(configuration.getProperty("swarmSize",String.valueOf(swarmSize_)));
     maxIterations_  = Integer.parseInt(configuration.getProperty("maxIterations",String.valueOf(maxIterations_)));
     archiveSize_ = Integer.parseInt(configuration.getProperty("archiveSize", String.valueOf(archiveSize_)));
 
-    algorithm.setInputParameter("swarmSize",swarmSize_);
-    algorithm.setInputParameter("maxIterations",maxIterations_);
-    algorithm.setInputParameter("archiveSize",archiveSize_);
-
     mutationProbability_ = Double.parseDouble(configuration.getProperty("mutationProbability",String.valueOf(mutationProbability_)));
     perturbationIndex_ = Double.parseDouble(configuration.getProperty("perturbationIndex",String.valueOf(mutationProbability_)));
 
-    HashMap<String, Object> parameters = new HashMap<String, Object>() ;
-    parameters.put("probability", mutationProbability_) ;
-    parameters.put("perturbation", perturbationIndex_) ;
-    uniformMutation = new UniformMutation(parameters);
-
-    parameters = new HashMap<String, Object>() ;
-    parameters.put("probability", mutationProbability_) ;
-    parameters.put("perturbation", perturbationIndex_) ;
-    parameters.put("maxIterations", maxIterations_) ;
-    nonUniformMutation = new NonUniformMutation(parameters);
-
-    // Add the operators to the algorithm
-    algorithm.addOperator("uniformMutation",uniformMutation);
-    algorithm.addOperator("nonUniformMutation",nonUniformMutation);
-    return algorithm ;
+    return configure() ;
   }
-} // OMOPSO_Settings
+} 
