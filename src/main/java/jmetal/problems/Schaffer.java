@@ -60,7 +60,8 @@ public class Schaffer extends Problem {
     } else if (solutionType.compareTo("Real") == 0) {
       solutionType_ = new RealSolutionType(this);
     } else {
-      throw new JMException("Error: solution type " + solutionType + " invalid") ;    }
+      throw new JMException("Error: solution type " + solutionType + " invalid") ;    
+    }
   }
 
 
@@ -76,7 +77,7 @@ public class Schaffer extends Problem {
     f[0] = variable[0].getValue() * variable[0].getValue();
 
     f[1] = (variable[0].getValue() - 2.0) *
-            (variable[0].getValue() - 2.0);
+        (variable[0].getValue() - 2.0);
 
     solution.setObjective(0,f[0]);
     solution.setObjective(1,f[1]);

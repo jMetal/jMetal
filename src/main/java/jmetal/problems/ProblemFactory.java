@@ -78,8 +78,7 @@ public class ProblemFactory {
         i++;
       }
       // constructors[i] is the selected one constructor
-      Problem problem = (Problem)constructors[i].newInstance(params);
-      return problem;
+      return (Problem)constructors[i].newInstance(params);
     } catch(Exception e) {
       Configuration.logger_.log(
               Level.SEVERE,

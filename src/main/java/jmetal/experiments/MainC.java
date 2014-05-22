@@ -43,6 +43,8 @@ public class MainC {
   private static Logger      logger_ ;      
   private static FileHandler fileHandler_ ; 
 
+  private MainC() {}
+  
   /**
    * @param args Command line arguments.
    * @throws jmetal.util.JMException
@@ -77,7 +79,7 @@ public class MainC {
     Properties configuration = new Properties();
     InputStreamReader inputStreamReader = null  ;
 
-    if (args.length == 0) { //
+    if (args.length == 0) { 
       logger_.log(Level.SEVERE, "Sintax error. Usage:") ;
       logger_.log(Level.SEVERE,"a) jmetal.experiments.Main configurationFile ") ;
       logger_.log(Level.SEVERE,"b) jmetal.experiments.Main configurationFile problemName") ;

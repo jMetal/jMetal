@@ -21,6 +21,7 @@
 
 package jmetal.qualityIndicator ;
 
+import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
 /**
@@ -36,18 +37,17 @@ import jmetal.util.JMException;
 public class Epsilon {
 
   /* stores the number of objectives */
-  int     dim_   ;
+  private int  dim_   ;
   /* obj_[i]=0 means objective i is to be minimized. This code always assume the minimization of all the objectives
    */
-  int  [] obj_    ;     /* obj_[i] = 0 means objective i is to be minimized */
+  private int  [] obj_    ;     
   /* method_ = 0 means apply additive epsilon and method_ = 1 means multiplicative
    * epsilon. This code always apply additive epsilon
    */
-  int     method_;
+  private int method_;
   /* stores a reference to  qualityIndicatorUtils */
-  public jmetal.qualityIndicator.util.MetricsUtil utils_ =
-          new jmetal.qualityIndicator.util.MetricsUtil();
-
+  private jmetal.qualityIndicator.util.MetricsUtil utils_ =
+      new jmetal.qualityIndicator.util.MetricsUtil();
 
   /**
    * Returns the epsilon indicator.
@@ -61,12 +61,11 @@ public class Epsilon {
     double  eps, eps_j = 0.0, eps_k=0.0, eps_temp;
 
     dim_ = dim ;
-    set_params() ;
+    setParameters() ;
 
     if (method_ == 0) {
       eps = Double.MIN_VALUE;
-    }
-    else {
+    } else {
       eps = 0;
     }
 
@@ -74,27 +73,26 @@ public class Epsilon {
       for (j = 0; j < b.length; j++) {
         for (k = 0; k < dim_; k++) {
           switch (method_) {
-            case 0:
-              if (obj_[k] == 0) {
-                eps_temp = b[j][k] - a[i][k];
-              }
-              else {
-                eps_temp = a[i][k] - b[j][k];
-              }
-              break;
-            default:
-              if ( (a[i][k] < 0 && b[j][k] > 0) ||
-                      (a[i][k] > 0 && b[j][k] < 0) ||
-                      (a[i][k] == 0 || b[j][k] == 0)) {
-                throw new JMException("Error in data file");
-              }
-              if (obj_[k] == 0) {
-                eps_temp = b[j][k] / a[i][k];
-              }
-              else {
-                eps_temp = a[i][k] / b[j][k];
-              }
-              break;
+          case 0:
+            if (obj_[k] == 0) {
+              eps_temp = b[j][k] - a[i][k];
+            } else {
+              eps_temp = a[i][k] - b[j][k];
+            }
+            break;
+          default:
+            if ( (a[i][k] < 0 && b[j][k] > 0) ||
+                (a[i][k] > 0 && b[j][k] < 0) ||
+                (a[i][k] == 0 || b[j][k] == 0)) {
+              throw new JMException("Error in data file");
+            }
+            if (obj_[k] == 0) {
+              eps_temp = b[j][k] / a[i][k];
+            }
+            else {
+              eps_temp = a[i][k] / b[j][k];
+            }
+            break;
           }
           if (k == 0) {
             eps_k = eps_temp;
@@ -121,9 +119,9 @@ public class Epsilon {
   }
 
   /**
-   * Established the params by default
+   * Established the default parameters
    */
-  void  set_params() {
+  void  setParameters() {
     int  i;
     obj_ = new int[dim_];
     for (i = 0; i < dim_; i++) {
@@ -140,23 +138,23 @@ public class Epsilon {
    * @throws NumberFormatException
    */
   public static void main(String [] args) throws NumberFormatException, JMException {
-    double ind_value;
+    double indicatorvalue;
 
     if (args.length < 2) {
       throw new JMException("Error using Epsilon. Type: \n java AdditiveEpsilon " +
-              "<FrontFile>" +
-              "<TrueFrontFile> + <getNumberOfObjectives>");
+          "<FrontFile>" +
+          "<TrueFrontFile> + <getNumberOfObjectives>");
     }
 
     Epsilon qualityIndicator = new Epsilon();
     double [][] solutionFront = qualityIndicator.utils_.readFront(args[0]);
     double [][] trueFront     = qualityIndicator.utils_.readFront(args[1]);
 
-    ind_value = qualityIndicator.epsilon(trueFront,
-            solutionFront,
-            new Integer(args[2]));
+    indicatorvalue = qualityIndicator.epsilon(trueFront,
+        solutionFront,
+        new Integer(args[2]));
 
-    System.out.println(ind_value);
+    Configuration.logger_.info(""+indicatorvalue);
   }
 }
 
