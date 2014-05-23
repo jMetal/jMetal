@@ -22,6 +22,7 @@
 package jmetal.metaheuristics.singleObjective.evolutionStrategy;
 
 import jmetal.core.*;
+import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.comparators.ObjectiveComparator;
 
@@ -85,7 +86,7 @@ public class NonElitistES extends Algorithm {
     // Read the operators
     mutationOperator = this.operators_.get("mutation");
 
-    System.out.println("(" + mu_ + " , " + lambda_ + ")ES");
+    Configuration.logger_.info("(" + mu_ + " , " + lambda_ + ")ES");
 
     // Create the parent population of mu solutions
     Solution newIndividual;
@@ -96,7 +97,7 @@ public class NonElitistES extends Algorithm {
     bestIndividual = new Solution(newIndividual);
 
     for (int i = 1; i < mu_; i++) {
-      System.out.println(i);
+      Configuration.logger_.info(""+i);
       newIndividual = new Solution(problem_);
       problem_.evaluate(newIndividual);
       evaluations++;
@@ -105,7 +106,7 @@ public class NonElitistES extends Algorithm {
       if (comparator.compare(bestIndividual, newIndividual) > 0) {
         bestIndividual = new Solution(newIndividual);
       }
-    } //for       
+    }
 
     // Main loop
     int offsprings;
@@ -119,8 +120,8 @@ public class NonElitistES extends Algorithm {
           problem_.evaluate(offspring);
           offspringPopulation.add(offspring);
           evaluations++;
-        } // for
-      } // for
+        }
+      }
 
       // STEP 2. Sort the lambda population
       offspringPopulation.sort(comparator);
@@ -136,18 +137,18 @@ public class NonElitistES extends Algorithm {
         population.add(offspringPopulation.get(i));
       }
 
-      System.out.println("Evaluation: " + evaluations +
+      Configuration.logger_.info("Evaluation: " + evaluations +
         " Current best fitness: " + population.get(0).getObjective(0) +
         " Global best fitness: " + bestIndividual.getObjective(0));
 
       // STEP 5. Delete the lambda population
       offspringPopulation.clear();
-    } // while
+    }
 
     // Return a population with the best individual
     SolutionSet resultPopulation = new SolutionSet(1);
     resultPopulation.add(population.get(0));
 
     return resultPopulation;
-  } // execute
-} // NonElitisES
+  }
+}

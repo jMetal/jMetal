@@ -87,7 +87,7 @@ public class DENSEA_main {
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;
-    System.out.println("Total time of execution: " + estimatedTime);
+    Configuration.logger_.info("Total time of execution: " + estimatedTime);
 
     // Log messages 
     logger_.info("Objectives values have been writen to file FUN");

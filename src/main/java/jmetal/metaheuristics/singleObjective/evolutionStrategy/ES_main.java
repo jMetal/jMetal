@@ -26,6 +26,7 @@ import jmetal.core.Problem;
 import jmetal.core.SolutionSet;
 import jmetal.operators.mutation.MutationFactory;
 import jmetal.problems.singleObjective.OneMax;
+import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
 import java.io.IOException;
@@ -73,12 +74,12 @@ public class ES_main {
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;
-    System.out.println("Total execution time: " + estimatedTime);
+    Configuration.logger_.info("Total execution time: " + estimatedTime);
 
     /* Log messages */
-    System.out.println("Objectives values have been writen to file FUN");
+    Configuration.logger_.info("Objectives values have been writen to file FUN");
     population.printObjectivesToFile("FUN");
-    System.out.println("Variables values have been writen to file VAR");
+    Configuration.logger_.info("Variables values have been writen to file VAR");
     population.printVariablesToFile("VAR");
   }
 }

@@ -25,6 +25,7 @@ import jmetal.core.*;
 import jmetal.qualityIndicator.Hypervolume;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.qualityIndicator.fastHypervolume.FastHypervolumeArchive;
+import jmetal.util.Configuration;
 import jmetal.util.Distance;
 import jmetal.util.JMException;
 import jmetal.util.comparators.CrowdingDistanceComparator;
@@ -412,7 +413,7 @@ public class SMPSOhv extends Algorithm {
 
     //-> Step 7. Iterations ..        
     while (iteration_ < maxIterations_) {
-      System.out.println("Iteration: " + iteration_ + " times");
+      Configuration.logger_.info("Iteration: " + iteration_ + " times");
       try {
         //Compute the speed_
         computeSpeed(iteration_, maxIterations_);

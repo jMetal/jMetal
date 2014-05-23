@@ -23,6 +23,7 @@ package jmetal.metaheuristics.singleObjective.geneticAlgorithm;
 
 import jmetal.core.*;
 import jmetal.operators.selection.WorstSolutionSelection;
+import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.comparators.ObjectiveComparator;
 
@@ -129,7 +130,7 @@ public class ssGA extends Algorithm {
     SolutionSet resultPopulation = new SolutionSet(1);
     resultPopulation.add(population.best(comparator));
 
-    System.out.println("Evaluations: " + evaluations);
+    Configuration.logger_.info("Evaluations: " + evaluations);
 
     return resultPopulation;
   } // execute

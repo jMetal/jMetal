@@ -27,6 +27,7 @@
 package jmetal.qualityIndicator.fastHypervolume.wfg;
 
 import jmetal.core.SolutionSet;
+import jmetal.util.Configuration;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -160,11 +161,11 @@ public class Front {
   }
 
   public void printFront() {
-    System.out.println("Objectives:       " + dimension_);
-    System.out.println("Number of points: " + numberOfPoints_);
+    Configuration.logger_.info("Objectives:       " + dimension_);
+    Configuration.logger_.info("Number of points: " + numberOfPoints_);
 
     for (Point point : points_) {
-      System.out.println(point);
+      Configuration.logger_.info(""+point);
     }
   }
 

@@ -45,16 +45,16 @@ public class BoxPlots implements IExperimentOutput {
   public void generate() {
     String rDirectory = "R";
     rDirectory = experiment_.getExperimentBaseDirectory() + "/" + rDirectory;
-    System.out.println("R    : " + rDirectory);
+    Configuration.logger_.info("R    : " + rDirectory);
     File rOutput;
     rOutput = new File(rDirectory);
     if (!rOutput.exists()) {
       new File(rDirectory).mkdirs();
-      System.out.println("Creating " + rDirectory + " directory");
+      Configuration.logger_.info("Creating " + rDirectory + " directory");
     }
 
     for (int indicator = 0; indicator < experiment_.getIndicatorList().length; indicator++) {
-      System.out.println("Indicator: " + experiment_.getIndicatorList()[indicator]);
+      Configuration.logger_.info("Indicator: " + experiment_.getIndicatorList()[indicator]);
       String rFile = rDirectory + "/" + experiment_.getIndicatorList()[indicator] + ".Boxplot.R";
 
       try {

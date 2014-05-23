@@ -29,6 +29,7 @@ package jmetal.qualityIndicator.fastHypervolume.wfg;
 
 import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
+import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
 import java.io.IOException;
@@ -127,7 +128,7 @@ public class WFGHV {
     }
 
     referencePoint = new Point(points);
-    System.out.println("Using reference point: " + referencePoint);
+    Configuration.logger_.info("Using reference point: " + referencePoint);
 
     WFGHV wfghv =
       new WFGHV(referencePoint.getNumberOfObjectives(), front.getNumberOfPoints(), referencePoint);

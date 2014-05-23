@@ -29,6 +29,7 @@ import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.ZDT.ZDT5;
+import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
 import java.io.IOException;
@@ -88,7 +89,7 @@ public class MOCHC_main {
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;
-    System.out.println("Total execution time: " + estimatedTime);
+    Configuration.logger_.info("Total execution time: " + estimatedTime);
 
     // Print results
     population.printVariablesToFile("VAR");

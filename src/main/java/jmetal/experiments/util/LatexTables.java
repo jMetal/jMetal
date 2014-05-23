@@ -47,7 +47,7 @@ public class LatexTables implements IExperimentOutput {
   public void generate() {
     experiment_.setLatexDirectory(
       experiment_.getExperimentBaseDirectory() + "/" + experiment_.getLatexDirectory());
-    System.out.println("latex directory: " + experiment_.getLatexDirectory());
+    Configuration.logger_.info("latex directory: " + experiment_.getLatexDirectory());
 
     Vector[][][] data = new Vector[experiment_.getIndicatorList().length][][];
     for (int indicator = 0; indicator < experiment_.getIndicatorList().length; indicator++) {
@@ -75,22 +75,20 @@ public class LatexTables implements IExperimentOutput {
           }
           InputStreamReader isr = new InputStreamReader(fis);
           BufferedReader br = new BufferedReader(isr);
-          //System.out.println(directory);
+          //Configuration.logger_.info(directory);
           String aux = null;
           try {
             aux = br.readLine();
             while (aux != null) {
               data[indicator][problem][algorithm].add(Double.parseDouble(aux));
-              //System.out.println(Double.parseDouble(aux));
               aux = br.readLine();
-            } // while
+            }
           } catch (IOException e) {
             Configuration.logger_.log(Level.SEVERE, "Error", e);
           }
-
-        } // for
-      } // for
-    } // for
+        }
+      }
+    }
 
     double[][][] mean;
     double[][][] median;
@@ -145,18 +143,8 @@ public class LatexTables implements IExperimentOutput {
           directory += "/" + experiment_.getProblemList()[problem];
           directory += "/" + experiment_.getIndicatorList()[indicator];
 
-          //System.out.println("----" + directory + "-----");
-          //calculateStatistics(data[indicator][problem][algorithm], meanV, medianV, minV, maxV, stdDeviationV, iqrV) ;
           calculateStatistics(data[indicator][problem][algorithm], statValues);
-            /*
-            System.out.println("Mean: " + statValues.get("mean"));
-            System.out.println("Median : " + statValues.get("median"));
-            System.out.println("Std : " + statValues.get("stdDeviation"));
-            System.out.println("IQR : " + statValues.get("iqr"));
-            System.out.println("Min : " + statValues.get("min"));
-            System.out.println("Max : " + statValues.get("max"));
-            System.out.println("N_values: " + data[indicator][problem][algorithm].size()) ;
-             */
+
           mean[indicator][problem][algorithm] = statValues.get("mean");
           median[indicator][problem][algorithm] = statValues.get("median");
           stdDeviation[indicator][problem][algorithm] = statValues.get("stdDeviation");
@@ -173,9 +161,9 @@ public class LatexTables implements IExperimentOutput {
     latexOutput = new File(experiment_.getLatexDirectory());
     if (!latexOutput.exists()) {
       boolean result = new File(experiment_.getLatexDirectory()).mkdirs();
-      System.out.println("Creating " + experiment_.getLatexDirectory() + " directory");
+      Configuration.logger_.info("Creating " + experiment_.getLatexDirectory() + " directory");
     }
-    //System.out.println("Experiment name: " + experimentName_);
+    //Configuration.logger_.info("Experiment name: " + experimentName_);
     String latexFile =
       experiment_.getLatexDirectory() + "/" + experiment_.getExperimentName() + ".tex";
     try {
@@ -183,11 +171,11 @@ public class LatexTables implements IExperimentOutput {
       for (int i = 0; i < experiment_.getIndicatorList().length; i++) {
         printMeanStdDev(latexFile, i, mean, stdDeviation);
         printMedianIQR(latexFile, i, median, iqr);
-      } // for
+      }
       printEndLatexCommands(latexFile);
     } catch (IOException e) {
       Configuration.logger_.log(Level.SEVERE, "Error", e);
-    } // generateLatexTables
+    }
   }
 
   /**
@@ -218,8 +206,8 @@ public class LatexTables implements IExperimentOutput {
         }
         if (val > max) {
           max = val;
-        } // if
-      } // for
+        }
+      }
 
       // Mean
       mean = sum / vector.size();
@@ -229,7 +217,7 @@ public class LatexTables implements IExperimentOutput {
         stdDeviation = 0.0;
       } else {
         stdDeviation = Math.sqrt(sqsum / vector.size() - mean * mean);
-      } // if
+      }
 
       // Median
       if (vector.size() % 2 != 0) {
@@ -237,7 +225,7 @@ public class LatexTables implements IExperimentOutput {
       } else {
         median = ((Double) vector.elementAt(vector.size() / 2 - 1) +
           (Double) vector.elementAt(vector.size() / 2)) / 2.0;
-      } // if
+      }
 
       values.put("mean", mean);
       values.put("median", Statistics.calculateMedian(vector, 0, vector.size() - 1));
@@ -253,8 +241,8 @@ public class LatexTables implements IExperimentOutput {
       values.put("stdDeviation", Double.NaN);
       values.put("min", Double.NaN);
       values.put("max", Double.NaN);
-    } // else
-  } // calculateStatistics
+    }
+  }
 
 
   void printHeaderLatexCommands(String fileName) throws IOException {
@@ -344,9 +332,9 @@ public class LatexTables implements IExperimentOutput {
             secondBestIndex = j;
             secondBestValue = mean[indicator][i][j];
             secondBestValueIQR = stdDev[indicator][i][j];
-          } // else if
+          }
         }
-      } // if
+      }
       else { // indicator to maximize e.g., the HV
         bestValue = Double.MIN_VALUE;
         bestValueIQR = Double.MIN_VALUE;
@@ -367,9 +355,9 @@ public class LatexTables implements IExperimentOutput {
             secondBestIndex = j;
             secondBestValue = mean[indicator][i][j];
             secondBestValueIQR = stdDev[indicator][i][j];
-          } // else if
-        } // for
-      } // else
+          }
+        }
+      }
 
       os.write(experiment_.getProblemList()[i].replace("_", "\\_") + " & ");
       for (int j = 0; j < (experiment_.getAlgorithmNameList().length - 1); j++) {
@@ -392,15 +380,14 @@ public class LatexTables implements IExperimentOutput {
       s = String.format(Locale.ENGLISH, "%8.1e",
         stdDev[indicator][i][experiment_.getAlgorithmNameList().length - 1]);
       os.write("$" + m + "_{" + s + "}$ \\\\" + "\n");
-    } // for
-    //os.write("" + mean[0][problemList_.length-1][algorithmNameList_.length-1] + "\\\\"+ "\n" ) ;
+    }
 
     os.write("\\hline" + "\n");
     os.write("\\end{tabular}" + "\n");
     os.write("\\end{scriptsize}" + "\n");
     os.write("\\end{table}" + "\n");
     os.close();
-  } // printMeanStdDev
+  }
 
   void printMedianIQR(String fileName, int indicator, double[][][] median, double[][][] IQR)
     throws IOException {
@@ -463,9 +450,9 @@ public class LatexTables implements IExperimentOutput {
             secondBestIndex = j;
             secondBestValue = median[indicator][i][j];
             secondBestValueIQR = IQR[indicator][i][j];
-          } // else if
-        } // for
-      } // if
+          }
+        }
+      }
       else { // indicator to maximize e.g., the HV
         bestValue = Double.MIN_VALUE;
         bestValueIQR = Double.MIN_VALUE;
@@ -486,9 +473,9 @@ public class LatexTables implements IExperimentOutput {
             secondBestIndex = j;
             secondBestValue = median[indicator][i][j];
             secondBestValueIQR = IQR[indicator][i][j];
-          } // else if
-        } // for
-      } // else
+          }
+        }
+      }
 
       os.write(experiment_.getProblemList()[i].replace("_", "\\_") + " & ");
       for (int j = 0; j < (experiment_.getAlgorithmNameList().length - 1); j++) {
@@ -510,13 +497,11 @@ public class LatexTables implements IExperimentOutput {
       s = String.format(Locale.ENGLISH, "%8.1e",
         IQR[indicator][i][experiment_.getAlgorithmNameList().length - 1]);
       os.write("$" + m + "_{" + s + "}$ \\\\" + "\n");
-    } // for
-    //os.write("" + mean[0][problemList_.length-1][algorithmNameList_.length-1] + "\\\\"+ "\n" ) ;
-
+    }
     os.write("\\hline" + "\n");
     os.write("\\end{tabular}" + "\n");
     os.write("\\end{scriptsize}" + "\n");
     os.write("\\end{table}" + "\n");
     os.close();
-  } // printMedianIQR
+  }
 }

@@ -39,9 +39,8 @@ public class R2 {
   int nObj_ = 0;
 
   /**
-   * Constructor
-   * Creates a new instance of the R2 indicator for a problem with two objectives
-   * and 100 lambda vectors
+   * Constructor Creates a new instance of the R2 indicator for a problem with
+   * two objectives and 100 lambda vectors
    */
   public R2() {
     utils_ = new jmetal.qualityIndicator.util.MetricsUtil();
@@ -59,9 +58,8 @@ public class R2 {
   }
 
   /**
-   * Constructor
-   * Creates a new instance of the R2 indicator for a problem with two objectives
-   * and N lambda vectors
+   * Constructor Creates a new instance of the R2 indicator for a problem with
+   * two objectives and N lambda vectors
    */
   public R2(int nVectors) {
     utils_ = new jmetal.qualityIndicator.util.MetricsUtil();
@@ -78,12 +76,9 @@ public class R2 {
     }
   } // R2
 
-
-
   /**
-   * Constructor
-   * Creates a new instance of the R2 indicator for nDimensiosn
-   * It loads the weight vectors from the file fileName
+   * Constructor Creates a new instance of the R2 indicator for nDimensiosn It
+   * loads the weight vectors from the file fileName
    */
   public R2(int nObj, String file) {
     utils_ = new jmetal.qualityIndicator.util.MetricsUtil();
@@ -127,33 +122,30 @@ public class R2 {
         lambda_[index++] = aList;
       }
     } catch (Exception e) {
-      Configuration.logger_.log(
-        Level.SEVERE,
-        "initUniformWeight: failed when reading for file: " + file,
-        e);
+      Configuration.logger_.log(Level.SEVERE,
+          "initUniformWeight: failed when reading for file: " + file, e);
     }
   }
 
   /**
-   * This class can be call from the command line. At least three parameters
-   * are required:
-   * 1) the name of the file containing the front,
-   * 2) the number of objectives
-   * 2) a file containing the reference point / the Optimal Pareto front for normalizing
-   * 3) the file containing the weight vector
-   *
+   * This class can be call from the command line. At least three parameters are
+   * required: 1) the name of the file containing the front, 2) the number of
+   * objectives 2) a file containing the reference point / the Optimal Pareto
+   * front for normalizing 3) the file containing the weight vector
+   * 
    * @throws JMException
    */
   public static void main(String args[]) throws JMException {
     if (args.length < 3) {
-      throw new JMException("Error using R2. Usage: \n java jmetal.qualityIndicator.Hypervolume " +
-        "<SolutionFrontFile> " +
-        "<TrueFrontFile> " + "<getNumberOfObjectives>");
+      throw new JMException(
+          "Error using R2. Usage: \n java jmetal.qualityIndicator.Hypervolume "
+              + "<SolutionFrontFile> " + "<TrueFrontFile> "
+              + "<getNumberOfObjectives>");
     }
 
-    //Create a new instance of the metric
+    // Create a new instance of the metric
     R2 qualityIndicator;
-    //Read the front from the files
+    // Read the front from the files
     int nObj = new Integer(args[2]);
 
     if (nObj == 2 && args.length == 3) {
@@ -166,22 +158,26 @@ public class R2 {
     double[][] approximationFront = qualityIndicator.utils_.readFront(args[0]);
     double[][] paretoFront = qualityIndicator.utils_.readFront(args[1]);
 
-    //Obtain delta value
-    double value = qualityIndicator.R2(approximationFront, paretoFront);
+    // Obtain delta value
+    double value = qualityIndicator.r2(approximationFront, paretoFront);
 
-    System.out.println(value);
-
-    System.out.println(qualityIndicator.R2Withouth(approximationFront, paretoFront, 1));
-    System.out.println(qualityIndicator.R2Withouth(approximationFront, paretoFront, 15));
-    System.out.println(qualityIndicator.R2Withouth(approximationFront, paretoFront, 25));
-    System.out.println(qualityIndicator.R2Withouth(approximationFront, paretoFront, 75));
+    Configuration.logger_.info(""+value);
+    Configuration.logger_.info(""+qualityIndicator.R2Without(approximationFront,
+      paretoFront, 1));
+    Configuration.logger_.info(""+qualityIndicator.R2Without(approximationFront,
+      paretoFront, 15));
+    Configuration.logger_.info(""+qualityIndicator.R2Without(approximationFront,
+      paretoFront, 25));
+    Configuration.logger_.info(""+qualityIndicator.R2Without(approximationFront,
+      paretoFront, 75));
 
   }
 
   /**
    * Returns the R2 indicator value of a given front
    */
-  private double R2Withouth(double[][] approximation, double[][] paretoFront, int index) {
+  private double R2Without(double[][] approximation, double[][] paretoFront,
+    int index) {
 
     /**
      * Stores the maximum values of true Pareto front.
@@ -209,11 +205,9 @@ public class R2 {
 
     // STEP 2. Get the normalized front and true Pareto fronts
     normalizedApproximation = utils_.getNormalizedFront(approximation,
-      maximumValue,
-      minimumValue);
+        maximumValue, minimumValue);
     normalizedParetoFront = utils_.getNormalizedFront(paretoFront,
-      maximumValue,
-      minimumValue);
+        maximumValue, minimumValue);
 
     // STEP 3. compute all the matrix of tchebicheff values if it is null
     matrix_ = new double[approximation.length][lambda_.length];
@@ -221,12 +215,11 @@ public class R2 {
       for (int j = 0; j < lambda_.length; j++) {
         matrix_[i][j] = lambda_[j][0] * Math.abs(normalizedApproximation[i][0]);
         for (int n = 1; n < nObj_; n++) {
-          matrix_[i][j] =
-            Math.max(matrix_[i][j], lambda_[j][n] * Math.abs(normalizedApproximation[i][n]));
+          matrix_[i][j] = Math.max(matrix_[i][j],
+              lambda_[j][n] * Math.abs(normalizedApproximation[i][n]));
         }
       }
     }
-
 
     // STEP45. Compute the R2 value withouth the point
     double sumWithout = 0.0;
@@ -257,7 +250,7 @@ public class R2 {
     double value = Double.NEGATIVE_INFINITY;
 
     for (int i = 0; i < approximation.length; i++) {
-      double aux = this.R2Withouth(approximation, paretoFront, i);
+      double aux = this.R2Without(approximation, paretoFront, i);
       if (aux > value) {
         index_best = i;
         value = aux;
@@ -275,7 +268,7 @@ public class R2 {
     double value = Double.POSITIVE_INFINITY;
 
     for (int i = 0; i < approximation.length; i++) {
-      double aux = this.R2Withouth(approximation, paretoFront, i);
+      double aux = this.R2Without(approximation, paretoFront, i);
       if (aux < value) {
         index_worst = i;
         value = aux;
@@ -308,17 +301,14 @@ public class R2 {
   /**
    * Returns the element contributing the most to the R2 indicator
    */
-  public int[]
-  getNBest(double[][] approximation, double[][] paretoFront, int N) {
+  public int[] getNBest(double[][] approximation, double[][] paretoFront, int N) {
     int[] index_bests = new int[approximation.length];
     double[] values = new double[approximation.length];
 
-
     for (int i = 0; i < approximation.length; i++) {
-      values[i] = this.R2Withouth(approximation, paretoFront, i);
+      values[i] = this.R2Without(approximation, paretoFront, i);
       index_bests[i] = i;
-    } // for
-
+    }
 
     // sorting the values and index_bests
     for (int i = 0; i < approximation.length; i++) {
@@ -355,13 +345,17 @@ public class R2 {
 
   /**
    * Returns the R2 indicator value of a given front
-   *
-   * @param front              The front
-   * @param trueParetoFront    The true Pareto front
-   * @param numberOfObjectives The number of objectives
-   * @param lambda             A vector containing the lambda vectors for R2
+   * 
+   * @param front
+   *          The front
+   * @param trueParetoFront
+   *          The true Pareto front
+   * @param numberOfObjectives
+   *          The number of objectives
+   * @param lambda
+   *          A vector containing the lambda vectors for R2
    */
-  public double R2(double[][] approximation, double[][] paretoFront) {
+  public double r2(double[][] approximation, double[][] paretoFront) {
     /**
      * Stores the maximum values of true pareto front.
      */
@@ -388,11 +382,9 @@ public class R2 {
 
     // STEP 2. Get the normalized front and true Pareto fronts
     normalizedApproximation = utils_.getNormalizedFront(approximation,
-      maximumValue,
-      minimumValue);
+        maximumValue, minimumValue);
     normalizedParetoFront = utils_.getNormalizedFront(paretoFront,
-      maximumValue,
-      minimumValue);
+        maximumValue, minimumValue);
 
     // STEP 3. compute all the matrix of tchebicheff values if it is null
     matrix_ = new double[approximation.length][lambda_.length];
@@ -400,8 +392,8 @@ public class R2 {
       for (int j = 0; j < lambda_.length; j++) {
         matrix_[i][j] = lambda_[j][0] * Math.abs(normalizedApproximation[i][0]);
         for (int n = 1; n < nObj_; n++) {
-          matrix_[i][j] =
-            Math.max(matrix_[i][j], lambda_[j][n] * Math.abs(normalizedApproximation[i][n]));
+          matrix_[i][j] = Math.max(matrix_[i][j],
+              lambda_[j][n] * Math.abs(normalizedApproximation[i][n]));
         }
       }
     }
@@ -421,26 +413,25 @@ public class R2 {
   }
 
   /**
-   * Returns the R2 indicator of a given population, using as a reference
-   * point 0, 0. Normalization is using taking into account the population itself
-   *
+   * Returns the R2 indicator of a given population, using as a reference point
+   * 0, 0. Normalization is using taking into account the population itself
+   * 
    * @param set
    * @return
    */
-  public double R2(SolutionSet set) {
+  public double r2(SolutionSet set) {
     double[][] approximationFront = set.writeObjectivesToMatrix();
     double[][] trueFront = set.writeObjectivesToMatrix();
 
-    return this.R2(approximationFront, trueFront);
+    return this.r2(approximationFront, trueFront);
   }
 
   /**
    * Returns the R2 indicator value of a given front
    */
-  public double
-  R2Without(SolutionSet set, int index) {
+  public double R2Without(SolutionSet set, int index) {
     double[][] approximationFront = set.writeObjectivesToMatrix();
     double[][] trueFront = set.writeObjectivesToMatrix();
-    return this.R2(approximationFront, trueFront);
+    return this.r2(approximationFront, trueFront);
   }
 }

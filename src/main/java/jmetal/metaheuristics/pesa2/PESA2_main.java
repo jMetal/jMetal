@@ -104,7 +104,7 @@ public class PESA2_main {
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;
-    System.out.println("Total execution time: " + estimatedTime);
+    Configuration.logger_.info("Total execution time: " + estimatedTime);
 
     // Result messages 
     logger_.info("Total execution time: " + estimatedTime);

@@ -73,7 +73,7 @@ public class TSP extends Problem {
     }
     readProblem(filename);
 
-    System.out.println(numberOfCities_);
+    Configuration.logger_.info(""+numberOfCities_);
     length_[0] = numberOfCities_;
   }
 

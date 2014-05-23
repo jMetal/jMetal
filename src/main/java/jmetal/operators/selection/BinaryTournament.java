@@ -72,7 +72,7 @@ public class BinaryTournament extends Selection {
     solution2 = solutionSet.get(PseudoRandom.randInt(0, solutionSet.size() - 1));
 
     if (solutionSet.size() >= 2) {
-      while (solution1 == solution2) {
+      while (solution1.equals(solution2)) {
         solution2 = solutionSet.get(PseudoRandom.randInt(0, solutionSet.size() - 1));
       }
     }

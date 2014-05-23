@@ -52,7 +52,7 @@ public class MultithreadedAlgorithmRunner extends SynchronousParallelRunner {
   public void startParallelRunner(Object experiment) {
     experiment_ = (Experiment) experiment;
     executor_ = Executors.newFixedThreadPool(numberOfThreads_);
-    System.out.println("Cores: " + numberOfThreads_);
+    Configuration.logger_.info("Cores: " + numberOfThreads_);
     taskList_ = null;
   }
 
@@ -132,7 +132,7 @@ public class MultithreadedAlgorithmRunner extends SynchronousParallelRunner {
         algorithm = settings.configure();
       }
 
-      System.out.println(
+      Configuration.logger_.info(
         " Running algorithm: " + algorithmName_ + ", problem: " + problemName_ + ", run: " + id_);
 
       SolutionSet resultFront = algorithm.execute();
@@ -146,7 +146,7 @@ public class MultithreadedAlgorithmRunner extends SynchronousParallelRunner {
       experimentDirectory = new File(directory);
       if (!experimentDirectory.exists()) {
         boolean result = new File(directory).mkdirs();
-        System.out.println("Creating " + directory);
+        Configuration.logger_.info("Creating " + directory);
       }
 
       resultFront.printObjectivesToFile(

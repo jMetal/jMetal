@@ -22,6 +22,10 @@
 package jmetal.metaheuristics.singleObjective.cmaes;
 
 
+import jmetal.util.Configuration;
+
+import java.util.logging.Level;
+
 public class Utils {
 
   // Symmetric Householder reduction to tridiagonal form, taken from JAMA package.
@@ -285,14 +289,15 @@ public class Utils {
           && Math.abs(cc - C[i > j ? i : j][i > j ? j : i]) > 1e-9) { /* quite large */
           s = " " + i + " " + j + " " + cc + " " + C[i > j ? i : j][i > j ? j : i] + " " + (cc - C[
             i > j ? i : j][i > j ? j : i]);
-          System.err.println(
+          Configuration.logger_.log(Level.SEVERE,
             "jmetal.metaheuristics.cmaes.Utils.checkEigenSystem(): WARNING - imprecise result detected "
-              + s);
+              + s
+          );
           ++res;
         }
         if (Math.abs(dd - (i == j ? 1 : 0)) > 1e-10) {
           s = i + " " + j + " " + dd;
-          System.err.println(
+          Configuration.logger_.log(Level.SEVERE,
             "jmetal.metaheuristics.cmaes.Utils.checkEigenSystem(): WARNING - imprecise result detected (Q not orthog.) "
               + s);
           ++res;
@@ -337,11 +342,8 @@ public class Utils {
             idx[i] = idx[j];
             idx[j] = tempIdx;
           }
-        } // if
+        }
       }
-    } // for
-
-  } // minFastSort
-
-
-} // Utils
+    }
+  }
+}

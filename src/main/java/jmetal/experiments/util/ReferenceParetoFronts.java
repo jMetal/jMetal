@@ -39,7 +39,7 @@ public class ReferenceParetoFronts implements IExperimentOutput {
 
     if (!rfDirectory.exists()) {                          // Si no existe el directorio
       boolean result = new File(referenceFrontDirectory).mkdirs();        // Lo creamos
-      System.out.println("Creating " + referenceFrontDirectory);
+      Configuration.logger_.info("Creating " + referenceFrontDirectory);
     }
 
     //frontPath_[problemIndex] = referenceFrontDirectory + "/" + problemList_[problemIndex] + ".rf";

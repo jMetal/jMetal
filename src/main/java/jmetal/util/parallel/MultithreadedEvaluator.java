@@ -59,7 +59,7 @@ public class MultithreadedEvaluator extends SynchronousParallelRunner {
     problem_ = (Problem) problem;
 
     executor_ = Executors.newFixedThreadPool(numberOfThreads_);
-    System.out.println("Cores: " + numberOfThreads_);
+    Configuration.logger_.info("Cores: " + numberOfThreads_);
     taskList_ = null;
   }
 

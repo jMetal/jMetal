@@ -23,6 +23,7 @@ package jmetal.metaheuristics.singleObjective.geneticAlgorithm;
 
 import jmetal.core.*;
 import jmetal.operators.selection.BestSolutionSelection;
+import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.Neighborhood;
 import jmetal.util.comparators.ObjectiveComparator;
@@ -139,7 +140,7 @@ public class acGA extends Algorithm {
 
         if ((evaluations % 1000) == 0) {
           int bestSolution = (Integer) findBestSolution.execute(population);
-          System.out.println("Evals: " + evaluations + "\t Fitness: " +
+          Configuration.logger_.info("Evals: " + evaluations + "\t Fitness: " +
             population.get(bestSolution).getObjective(0));
         } // if
       } // for                     
@@ -149,7 +150,7 @@ public class acGA extends Algorithm {
     SolutionSet resultPopulation = new SolutionSet(1);
     resultPopulation.add(bestSolution);
 
-    System.out.println("Evaluations: " + evaluations);
+    Configuration.logger_.info("Evaluations: " + evaluations);
     return resultPopulation;
   } // execute        
 } // acGA

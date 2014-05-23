@@ -21,6 +21,7 @@
 package jmetal.experiments.studies;
 
 import jmetal.experiments.Experiment;
+import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
 import java.io.IOException;
@@ -66,14 +67,14 @@ public class jMetalStudy extends Experiment {
   public static void main(String[] args) throws JMException, IOException {
     jMetalStudy exp = new jMetalStudy();
 
-    System.out.println("START");
+    Configuration.logger_.info("START");
 
     exp.initExperiment(args);
 
-    System.out.println(exp);
+    Configuration.logger_.info(""+exp);
 
     exp.runExperiment();
-  } // main
-} // ZDTStudy
+  } 
+} 
 
 

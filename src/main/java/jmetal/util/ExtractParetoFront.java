@@ -49,10 +49,10 @@ public class ExtractParetoFront {
 
   public static void main(String[] args) throws JMException {
     if (args.length != 2) {
-      System.out.println("Wrong number of arguments: ");
-      System.out.println("Sintaxt: java ExtractParetoFront <file> <dimensions>");
-      System.out.println("\t<file> is a file containing points");
-      System.out.println("\t<dimensions> represents the number of dimensions of the problem");
+      Configuration.logger_.info("Wrong number of arguments: ");
+      Configuration.logger_.info("Sintaxt: java ExtractParetoFront <file> <dimensions>");
+      Configuration.logger_.info("\t<file> is a file containing points");
+      Configuration.logger_.info("\t<dimensions> represents the number of dimensions of the problem");
       throw new JMException("");
     }
 

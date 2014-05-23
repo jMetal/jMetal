@@ -484,7 +484,7 @@ public class Benchmark {
   static public void loadTestDataFromFile(String file, int num_test_points, int test_dimension,
     double[][] x, double[] f) throws JMException {
     try {
-      System.out.println("File bias: " + file);
+      Configuration.logger_.info("File bias: " + file);
 
       BufferedReader brSrc = new BufferedReader(new FileReader(file));
       loadMatrix(brSrc, num_test_points, test_dimension, x);
@@ -623,9 +623,9 @@ public class Benchmark {
       // Create the test function object
       TestFunc aFunc = testFunctionFactory(func_num, test_dimension);
 
-      System.out.println("Run tests on function " + func_num +
+      Configuration.logger_.info("Run tests on function " + func_num +
         " (" + aFunc.name() + "):");
-      System.out.println("  " +
+      Configuration.logger_.info("  " +
         num_test_points + " " +
         aFunc.dimension() + "-dimension check points");
 
@@ -637,22 +637,22 @@ public class Benchmark {
         double result = aFunc.f(test_x[i]);
         double diff = result - test_f[i];
         double ratio = Math.abs(diff / test_f[i]);
-        System.out.println("    " +
+        Configuration.logger_.info("    " +
           numberFormatter.format(result) +
           " - " +
           numberFormatter.format(test_f[i]) +
           " = " +
           numberFormatter.format(diff));
-        System.out.print("    " + "    " +
+        Configuration.logger_.info("    " + "    " +
           "Difference ratio = " + numberFormatter.format(ratio));
         if (ratio != 0.0) {
           if (ratio <= 1e-12) {
-            System.out.println(" (<= 1E-12)");
+            Configuration.logger_.info(" (<= 1E-12)");
           } else {
-            System.out.println(" (> 1E-12) *****");
+            Configuration.logger_.info(" (> 1E-12) *****");
           }
         } else {
-          System.out.println();
+          Configuration.logger_.info("");
         }
       }
     }

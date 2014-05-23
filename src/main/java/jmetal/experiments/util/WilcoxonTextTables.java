@@ -53,7 +53,7 @@ public class WilcoxonTextTables implements IExperimentOutput {
 
     try {
       for (int indicator = 0; indicator < experiment_.getIndicatorList().length; indicator++) {
-        System.out.println("Indicator: " + experiment_.getIndicatorList()[indicator]);
+        Configuration.logger_.info("Indicator: " + experiment_.getIndicatorList()[indicator]);
         String rFile =
           outputDirectoryName_ + "/" + experiment_.getIndicatorList()[indicator] + ".Wilcoxon.R";
         String texFile =
@@ -364,11 +364,11 @@ public class WilcoxonTextTables implements IExperimentOutput {
   private void createOutputDirectory() {
     outputDirectoryName_ = "R";
     outputDirectoryName_ = experiment_.getExperimentBaseDirectory() + "/" + outputDirectoryName_;
-    System.out.println("R    : " + outputDirectoryName_);
+    Configuration.logger_.info("R    : " + outputDirectoryName_);
     outputDirectory_ = new File(outputDirectoryName_);
     if (!outputDirectory_.exists()) {
       new File(outputDirectoryName_).mkdirs();
-      System.out.println("Creating " + outputDirectoryName_ + " directory");
+      Configuration.logger_.info("Creating " + outputDirectoryName_ + " directory");
     }
   }
 }

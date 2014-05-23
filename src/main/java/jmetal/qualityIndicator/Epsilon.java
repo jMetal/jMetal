@@ -21,6 +21,7 @@
 
 package jmetal.qualityIndicator;
 
+import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
 /**
@@ -76,7 +77,7 @@ public class Epsilon {
     ind_value = qualityIndicator.epsilon(trueFront, solutionFront, new Integer(
       args[2]));
 
-    System.out.println(ind_value);
+    Configuration.logger_.info(""+ind_value);
   }
 
   /**

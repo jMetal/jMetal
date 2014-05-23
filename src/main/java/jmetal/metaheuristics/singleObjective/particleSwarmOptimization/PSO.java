@@ -23,6 +23,7 @@ package jmetal.metaheuristics.singleObjective.particleSwarmOptimization;
 
 import jmetal.core.*;
 import jmetal.operators.selection.BestSolutionSelection;
+import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.comparators.ObjectiveComparator;
 import jmetal.util.random.PseudoRandom;
@@ -182,7 +183,7 @@ public class PSO extends Algorithm {
     return v;
     /*
 
-    //System.out.println("v: " + v + "\tdmax: " + dmax + "\tdmin: " + dmin) ;
+    //Configuration.logger_.info("v: " + v + "\tdmax: " + dmax + "\tdmin: " + dmin) ;
     double result;
 
     double dmax = deltaMax[variableIndex];
@@ -381,7 +382,7 @@ public class PSO extends Algorithm {
           globalBest_ = particle;
         } // if
         Double bestCurrentFitness = particles_.best(comparator_).getObjective(0);
-        System.out.println("Best: " + bestCurrentFitness);
+        Configuration.logger_.info("Best: " + bestCurrentFitness);
       }
       iteration_++;
     }

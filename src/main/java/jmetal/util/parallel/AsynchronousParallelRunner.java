@@ -44,7 +44,7 @@ abstract public class AsynchronousParallelRunner {
     } else {
       numberOfThreads_ = threads;
     }
-    System.out.println("THREADS: " + numberOfThreads_);
+    Configuration.logger_.info("THREADS: " + numberOfThreads_);
   }
 
   abstract public void startParallelRunner(Object configuration);

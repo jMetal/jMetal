@@ -29,6 +29,7 @@ import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.singleObjective.TSP;
+import jmetal.util.Configuration;
 
 import java.util.HashMap;
 
@@ -81,12 +82,12 @@ public class TSPGA_main {
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;
-    System.out.println("Total time of execution: " + estimatedTime);
+    Configuration.logger_.info("Total time of execution: " + estimatedTime);
 
     /* Log messages */
-    System.out.println("Objectives values have been writen to file FUN");
+    Configuration.logger_.info("Objectives values have been writen to file FUN");
     population.printObjectivesToFile("FUN");
-    System.out.println("Variables values have been writen to file VAR");
+    Configuration.logger_.info("Variables values have been writen to file VAR");
     population.printVariablesToFile("VAR");
   }
 }

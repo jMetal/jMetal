@@ -22,6 +22,7 @@
 package jmetal.metaheuristics.singleObjective.evolutionStrategy;
 
 import jmetal.core.*;
+import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.comparators.ObjectiveComparator;
 
@@ -83,7 +84,7 @@ public class ElitistES extends Algorithm {
     // Read the operators
     mutationOperator = this.operators_.get("mutation");
 
-    System.out.println("(" + mu_ + " + " + lambda_ + ")ES");
+    Configuration.logger_.info("(" + mu_ + " + " + lambda_ + ")ES");
 
     // Create the parent population of mu solutions
     Solution newIndividual;
@@ -92,7 +93,7 @@ public class ElitistES extends Algorithm {
       problem_.evaluate(newIndividual);
       evaluations++;
       population.add(newIndividual);
-    } //for       
+    }
 
     // Main loop
     int offsprings;
@@ -106,13 +107,13 @@ public class ElitistES extends Algorithm {
           problem_.evaluate(offspring);
           offspringPopulation.add(offspring);
           evaluations++;
-        } // for
-      } // for
+        }
+      }
 
       // STEP 2. Add the mu individuals to the offspring population
       for (int i = 0; i < mu_; i++) {
         offspringPopulation.add(population.get(i));
-      } // for
+      }
       population.clear();
 
       // STEP 3. Sort the mu+lambda population
@@ -123,17 +124,17 @@ public class ElitistES extends Algorithm {
         population.add(offspringPopulation.get(i));
       }
 
-      System.out.println("Evaluation: " + evaluations + " Fitness: " +
+      Configuration.logger_.info("Evaluation: " + evaluations + " Fitness: " +
         population.get(0).getObjective(0));
 
       // STEP 6. Delete the mu+lambda population
       offspringPopulation.clear();
-    } // while
+    }
 
     // Return a population with the best individual
     SolutionSet resultPopulation = new SolutionSet(1);
     resultPopulation.add(population.get(0));
 
     return resultPopulation;
-  } // execute
-} // ElitistES
+  }
+}

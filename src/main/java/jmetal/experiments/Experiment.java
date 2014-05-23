@@ -117,7 +117,7 @@ public class Experiment {
     indicatorMinimize_.put("SPREAD", true);
     indicatorMinimize_.put("GD", true);
     indicatorMinimize_.put("IGD", true);
-  } // Constructor
+  }
 
   public String getExperimentName() {
     return experimentName_;
@@ -315,26 +315,25 @@ public class Experiment {
   }
 
   public void runExperiment() throws JMException {
-    System.out.println("Experiment: Name: " + experimentName_);
-    System.out.println("Experiment: creating " + numberOfExecutionThreads_ + " threads");
-    System.out.println("Experiment: Number of algorithms: " + algorithmNameList_.length);
+    Configuration.logger_.info("Experiment: Name: " + experimentName_);
+    Configuration.logger_.info("Experiment: creating " + numberOfExecutionThreads_ + " threads");
+    Configuration.logger_.info("Experiment: Number of algorithms: " + algorithmNameList_.length);
     for (String s : algorithmNameList_) {
-      System.out.println("  - " + s);
+      Configuration.logger_.info("  - " + s);
     }
-    System.out.println("Experiment: Number of problems: " + problemList_.length);
-    System.out.println("Experiment: runs: " + independentRuns_);
-    System.out.println("Experiment: Experiment directory: " + experimentBaseDirectory_);
-    System.out.println(
+    Configuration.logger_.info("Experiment: Number of problems: " + problemList_.length);
+    Configuration.logger_.info("Experiment: runs: " + independentRuns_);
+    Configuration.logger_.info("Experiment: Experiment directory: " + experimentBaseDirectory_);
+    Configuration.logger_.info(
       "Experiment: Use config files for algorithms: " + useConfigurationFilesForAlgorithms_);
-    System.out
-      .println("Experiment: Generate reference Pareto fronts: " + generateReferenceParetoFronts_);
-    System.out.println("Experiment: Generate Latex tables: " + generateLatexTables_);
-    System.out.println("Experiment: Generate Friedman tables: " + generateFriedmanTables_);
-    System.out.println("Experiment: Generate boxplots: " + generateBoxplots_);
+    Configuration.logger_.info("Experiment: Generate reference Pareto fronts: " + generateReferenceParetoFronts_);
+    Configuration.logger_.info("Experiment: Generate Latex tables: " + generateLatexTables_);
+    Configuration.logger_.info("Experiment: Generate Friedman tables: " + generateFriedmanTables_);
+    Configuration.logger_.info("Experiment: Generate boxplots: " + generateBoxplots_);
     if (generateBoxplots_) {
-      System.out.println("Experiment: Boxplots Rows: " + boxplotRows_);
-      System.out.println("Experiment: Boxplots Columns: " + boxplotColumns_);
-      System.out.println("Experiment: Boxplots Notch: " + boxplotNotch_);
+      Configuration.logger_.info("Experiment: Boxplots Rows: " + boxplotRows_);
+      Configuration.logger_.info("Experiment: Boxplots Columns: " + boxplotColumns_);
+      Configuration.logger_.info("Experiment: Boxplots Notch: " + boxplotNotch_);
     }
 
     if (runTheAlgorithms_) {
@@ -345,7 +344,7 @@ public class Experiment {
       for (String algorithm : algorithmNameList_) {
         for (String problem : problemList_) {
           for (int i = 0; i < independentRuns_; i++) {
-            System.out.println(
+            Configuration.logger_.info(
               "Adding task. Algorithm:  " + algorithm + " Problem: " + problem + " Run: " + i);
             parallelRunner.addTaskForExecution(new Object[] {algorithm, problem, i});
           }
@@ -389,18 +388,17 @@ public class Experiment {
 
     experimentDirectory = new File(experimentBaseDirectory_);
     if (experimentDirectory.exists()) {
-      System.out.println("Experiment directory exists");
+      Configuration.logger_.info("Experiment directory exists");
       if (experimentDirectory.isDirectory()) {
-        System.out.println("Experiment directory is a directory");
+        Configuration.logger_.info("Experiment directory is a directory");
       } else {
-        System.out
-          .println("Experiment directory is not a directory. Deleting file and creating directory");
+        Configuration.logger_.info("Experiment directory is not a directory. Deleting file and creating directory");
       }
       experimentDirectory.delete();
       new File(experimentBaseDirectory_).mkdirs();
     } // if
     else {
-      System.out.println("Experiment directory does NOT exist. Creating");
+      Configuration.logger_.info("Experiment directory does NOT exist. Creating");
       new File(experimentBaseDirectory_).mkdirs();
     }
   }
@@ -414,7 +412,7 @@ public class Experiment {
     if (args.length == 1) {
       configuration_ = new Properties();
 
-      System.out.println("ARGS[0]: " + args[0]);
+      Configuration.logger_.info("ARGS[0]: " + args[0]);
       try {
         propertiesFile_ = new InputStreamReader(new FileInputStream(args[0]));
         try {
@@ -434,7 +432,6 @@ public class Experiment {
         Configuration.logger_.log(Level.INFO, "Properties file loaded");
       }
     }
-
   }
 
   public void setNumberOfExecutionThreads(int value) {

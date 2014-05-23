@@ -21,6 +21,7 @@
 
 package jmetal.qualityIndicator;
 
+import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
 /**
@@ -74,7 +75,7 @@ public class InvertedGenerationalDistance {
       trueFront,
       new Integer(args[2]));
 
-    System.out.println(value);
+    Configuration.logger_.info(""+value);
   }
 
   /**

@@ -1,6 +1,7 @@
 package jmetal.metaheuristics.nsgaII;
 
 import jmetal.core.*;
+import jmetal.util.Configuration;
 import jmetal.util.Distance;
 import jmetal.util.JMException;
 import jmetal.util.Ranking;
@@ -24,8 +25,9 @@ public class NSGAIIRandom extends Algorithm {
   int maxEvaluations_;
   int evaluations_;
 
-  int[] contributionCounter_; // contribution per crossover operator
-  double[] contribution_; // contribution per crossover operator
+  int[] contributionCounter_;
+  double[] contribution_;
+
   double total = 0.0;
 
   Operator selectionOperator_;
@@ -66,8 +68,8 @@ public class NSGAIIRandom extends Algorithm {
     }
 
     for (int i = 0; i < N_O; i++) {
-      System.out.println(getOffspring[i].configuration());
-      System.out.println("Contribution: " + contribution_[i]);
+      Configuration.logger_.info(getOffspring[i].configuration());
+      Configuration.logger_.info("Contribution: " + contribution_[i]);
     }
 
     // Create the initial solutionSet
@@ -79,7 +81,7 @@ public class NSGAIIRandom extends Algorithm {
       evaluations_++;
       newSolution.setLocation(i);
       population_.add(newSolution);
-    } //for       
+    }
 
     while (evaluations_ < maxEvaluations_) {
 
@@ -90,7 +92,6 @@ public class NSGAIIRandom extends Algorithm {
         if (evaluations_ < maxEvaluations_) {
           Solution individual =
             new Solution(population_.get(PseudoRandom.randInt(0, populationSize_ - 1)));
-          //  				Solution individual = new Solution(population_.get(i));
 
           int selected = 0;
           boolean found = false;
@@ -110,20 +111,19 @@ public class NSGAIIRandom extends Algorithm {
                   ((PolynomialMutationOffspring) getOffspring[selected]).getOffspring(individual);
                 //contrPol++;
               } else {
-                System.out
-                  .println("Error in NSGAIIAdaptive. Operator " + offSpring + " does not exist");
+                Configuration.logger_.info("Error in NSGAIIAdaptive. Operator " + offSpring + " does not exist");
               }
 
               offSpring.setFitness((int) selected);
               found = true;
-            } // if
-          } // for
+            }
+          }
 
           problem_.evaluate(offSpring);
           offspringPopulation_.add(offSpring);
           evaluations_ += 1;
-        } // if                            
-      } // for
+        }
+      }
 
       // Create the solutionSet union of solutionSet and offSpring
       union_ = ((SolutionSet) population_).union(offspringPopulation_);
@@ -154,8 +154,8 @@ public class NSGAIIRandom extends Algorithm {
         index++;
         if (remain > 0) {
           front = ranking.getSubfront(index);
-        } // if        
-      } // while
+        }
+      }
 
       // Remain is less than front(index).size, insert only the best one
       if (remain > 0) {  // front contains individuals to insert                        
@@ -163,11 +163,9 @@ public class NSGAIIRandom extends Algorithm {
         front.sort(new CrowdingComparator());
         for (int k = 0; k < remain; k++) {
           population_.add(front.get(k));
-        } // for
-
-      } // if                 
-    } // while
-
+        }
+      }
+    }
 
     // Return the first non-dominated front
     Ranking ranking = new Ranking(population_);

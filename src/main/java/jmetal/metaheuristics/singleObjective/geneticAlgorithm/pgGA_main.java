@@ -28,6 +28,7 @@ import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.singleObjective.Griewank;
+import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.parallel.MultithreadedEvaluator;
 import jmetal.util.parallel.SynchronousParallelRunner;
@@ -84,12 +85,12 @@ public class pgGA_main {
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;
-    System.out.println("Total execution time: " + estimatedTime);
+    Configuration.logger_.info("Total execution time: " + estimatedTime);
 
     /* Log messages */
-    System.out.println("Objectives values have been writen to file FUN");
+    Configuration.logger_.info("Objectives values have been writen to file FUN");
     population.printObjectivesToFile("FUN");
-    System.out.println("Variables values have been writen to file VAR");
+    Configuration.logger_.info("Variables values have been writen to file VAR");
     population.printVariablesToFile("VAR");
   }
 }

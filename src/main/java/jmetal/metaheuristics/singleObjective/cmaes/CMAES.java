@@ -21,12 +21,14 @@
 package jmetal.metaheuristics.singleObjective.cmaes;
 
 import jmetal.core.*;
+import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.comparators.ObjectiveComparator;
 import jmetal.util.random.PseudoRandom;
 
 import java.util.Comparator;
 import java.util.Random;
+import java.util.logging.Level;
 
 /**
  * This class implements the CMA-ES algorithm
@@ -204,8 +206,7 @@ public class CMAES extends Algorithm {
 
     xold = new double[N];
     arx = new double[lambda][N];
-
-  } // init
+  }
 
   private SolutionSet samplePopulation() throws JMException, ClassNotFoundException {
 
@@ -230,7 +231,7 @@ public class CMAES extends Algorithm {
 
     return genoPhenoTransformation(arx);
 
-  } // samplePopulation
+  }
 
   private SolutionSet genoPhenoTransformation(double[][] popx)
     throws JMException, ClassNotFoundException {
@@ -245,7 +246,7 @@ public class CMAES extends Algorithm {
     }
     return population_;
 
-  } // genoPhenoTransformation
+  }
 
   private boolean isFeasible(Solution solution) throws JMException {
 
@@ -260,10 +261,9 @@ public class CMAES extends Algorithm {
     }
     return res;
 
-  } // isFeasible
+  }
 
   private Solution resampleSingle(int iNk) throws JMException, ClassNotFoundException {
-
     for (int i = 0; i < problem_.getNumberOfVariables(); i++) {
       if (arx[iNk][i] > problem_.getUpperLimit(i)) {
         arx[iNk][i] = problem_.getUpperLimit(i);
@@ -273,8 +273,7 @@ public class CMAES extends Algorithm {
     }
 
     return genoPhenoTransformation(arx[iNk]);
-
-  } // resampleSingle
+  }
 
   private Solution genoPhenoTransformation(double[] x) throws JMException, ClassNotFoundException {
 
@@ -320,7 +319,6 @@ public class CMAES extends Algorithm {
       for (int iNk = 0; iNk < mu; iNk++) {
         xmean[i] += weights[iNk] * arx[arindex[iNk]][i];
       }
-      //BDz[i] = sqrt(sp->getMueff()) * (xmean[i] - xold[i]) / sigma;
     }
 
 
@@ -383,7 +381,6 @@ public class CMAES extends Algorithm {
       }
     }
 
-
     /* Adapt step size sigma */
 
     sigma *= Math.exp((cs / damps) * (Math.sqrt(psxps) / chiN - 1));
@@ -413,16 +410,13 @@ public class CMAES extends Algorithm {
 
       for (int i = 0; i < N; i++) {
         if (diagD[i] < 0) { // numerical problem?
-          System.err.println(
+          Configuration.logger_.log(Level.SEVERE,
             "jmetal.metaheuristics.cmaes.CMAES.updateDistribution(): WARNING - an eigenvalue has become negative.");
           counteval = maxEvaluations;
-          //throw new JMException("Exception in CMAES.execute(): an eigenvalue has become negative.") ;
         }
         diagD[i] = Math.sqrt(diagD[i]);
       }
-      // diagD is a vector of standard deviations now
 
-      //invsqrtC = B * diag(D.^-1) * B';
       double[][] artmp2 = new double[N][N];
       for (int i = 0; i < N; i++) {
         //double value = (xmean[i] - xold[i]) / sigma;
@@ -431,7 +425,6 @@ public class CMAES extends Algorithm {
         }
       }
       for (int i = 0; i < N; i++) {
-        //double value = (xmean[i] - xold[i]) / sigma;
         for (int j = 0; j < N; j++) {
           invsqrtC[i][j] = 0.0;
           for (int k = 0; k < N; k++) {
@@ -441,8 +434,7 @@ public class CMAES extends Algorithm {
       }
 
     }
-
-  } // updateDistribution()
+  }
 
   public SolutionSet execute() throws JMException, ClassNotFoundException {
 
@@ -465,7 +457,6 @@ public class CMAES extends Algorithm {
 
       for (int i = 0; i < populationSize; i++) {
         if (!isFeasible(population_.get(i))) {
-          //System.out.println("RESAMPLING!");
           population_.replace(i, resampleSingle(i));
         }
         problem_.evaluate(population_.get(i));
@@ -475,7 +466,7 @@ public class CMAES extends Algorithm {
       }
 
       storeBest(comparator);
-      System.out.println(counteval + ": " + bestSolutionEver);
+      Configuration.logger_.info(counteval + ": " + bestSolutionEver);
       updateDistribution();
 
     }
@@ -485,6 +476,5 @@ public class CMAES extends Algorithm {
 
     return resultPopulation;
 
-  } // execute
-
+  }
 }

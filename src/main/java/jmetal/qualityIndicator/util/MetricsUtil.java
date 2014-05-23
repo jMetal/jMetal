@@ -82,8 +82,8 @@ public class MetricsUtil {
         "InputFacilities crashed reading for file: " + path,
         e);
     }
-    return null;
-  } // readFront
+    return new double[0][0];
+  } 
 
   /**
    * Gets the maximum values for each objectives in a given pareto
@@ -420,7 +420,7 @@ public class MetricsUtil {
         contributions[i] = 0;
       }
       for (int i = 0; i < populations.length; i++) {
-        System.out.println(contributions[i]);
+        Configuration.logger_.info(""+contributions[i]);
       }
       return contributions;
     }
@@ -521,8 +521,8 @@ public class MetricsUtil {
               aux[index++] = invertedFront[0][j];
             }
           }
-          //System.out.println(hypervolume.calculateHypervolume(invertedFront[0], invertedFront[0].length, getNumberOfObjectives));
-          //System.out.println(hypervolume.calculateHypervolume(aux, aux.length, getNumberOfObjectives));
+          //Configuration.logger_.info(hypervolume.calculateHypervolume(invertedFront[0], invertedFront[0].length, getNumberOfObjectives));
+          //Configuration.logger_.info(hypervolume.calculateHypervolume(aux, aux.length, getNumberOfObjectives));
 
           contribution[i] = hypervolume
             .calculateHypervolume(invertedFront[0], invertedFront[0].length, numberOfObjectives) -

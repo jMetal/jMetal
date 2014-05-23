@@ -98,7 +98,7 @@ public class MOEAD extends Algorithm {
     maxEvaluations = ((Integer) this.getInputParameter("maxEvaluations")).intValue();
     populationSize_ = ((Integer) this.getInputParameter("populationSize")).intValue();
     dataDirectory_ = this.getInputParameter("dataDirectory").toString();
-    System.out.println("POPSIZE: " + populationSize_);
+    Configuration.logger_.info("POPSIZE: " + populationSize_);
 
     population_ = new SolutionSet(populationSize_);
     indArray_ = new Solution[problem_.getNumberOfObjectives()];
@@ -125,7 +125,7 @@ public class MOEAD extends Algorithm {
     // STEP 1.1. Compute euclidean distances between weight vectors and find T
     initUniformWeight();
     //for (int i = 0; i < 300; i++)
-    // 	System.out.println(lambda_[i][0] + " " + lambda_[i][1]) ;
+    // 	Configuration.logger_.info(lambda_[i][0] + " " + lambda_[i][1]) ;
 
     initNeighborhood();
 
@@ -225,7 +225,7 @@ public class MOEAD extends Algorithm {
           while (st.hasMoreTokens()) {
             double value = (new Double(st.nextToken())).doubleValue();
             lambda_[i][j] = value;
-            //System.out.println("lambda["+i+","+j+"] = " + value) ;
+            //Configuration.logger_.info("lambda["+i+","+j+"] = " + value) ;
             j++;
           }
           aux = br.readLine();
@@ -256,7 +256,7 @@ public class MOEAD extends Algorithm {
         x[j] = Utils.distVector(lambda_[i], lambda_[j]);
         //x[j] = dist_vector(population[i].namda,population[j].namda);
         idx[j] = j;
-        //System.out.println("x["+j+"]: "+x[j]+ ". idx["+j+"]: "+idx[j]) ;
+        //Configuration.logger_.info("x["+j+"]: "+x[j]+ ". idx["+j+"]: "+idx[j]) ;
       } // for
 
       // find 'niche' nearest neighboring subproblems

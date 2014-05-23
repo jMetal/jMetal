@@ -54,18 +54,18 @@ public class AdaptiveRandomNeighborhood {
       list_.get(i).add(i);
     }
 
-    //System.out.println("list: " + list_) ;
+    //Configuration.logger_.info("list: " + list_) ;
     for (int i = 0; i < solutionSet_.size(); i++) {
       //list_.get(i).add(i);
       for (int j = 0; j < numberOfRandomNeighbours_; j++) {
         int random = PseudoRandom.randInt(0, solutionSet_.size() - 1);
-        //System.out.println("i: " + i + " random: " + random + " listb: " + list_.get(random)) ;
+        //Configuration.logger_.info("i: " + i + " random: " + random + " listb: " + list_.get(random)) ;
         if (!list_.get(random).contains((Integer) i)) {
           list_.get(random).add(i);
         }
       }
     }
-    System.out.println("L: " + list_);
+    Configuration.logger_.info("L: " + list_);
   }
 
   public ArrayList<Integer> getNeighbors(int i) throws JMException {

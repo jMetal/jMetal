@@ -60,7 +60,7 @@ public class mTSP extends Problem {
 
     distanceMatrix_ = readProblem(file_distances);
     costMatrix_ = readProblem(file_cost);
-    System.out.println(numberOfCities_);
+    Configuration.logger_.info(""+numberOfCities_);
     length_[0] = numberOfCities_;
 
     if (solutionType.compareTo("Permutation") == 0) {

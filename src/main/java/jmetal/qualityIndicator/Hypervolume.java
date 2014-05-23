@@ -21,7 +21,10 @@
 
 package jmetal.qualityIndicator;
 
+import jmetal.util.Configuration;
 import jmetal.util.JMException;
+
+import java.util.logging.Level;
 
 /**
  * This class implements the hypervolume indicator. The code is the a Java version
@@ -72,7 +75,7 @@ public class Hypervolume {
     //Obtain delta value
     double value = qualityIndicator.hypervolume(solutionFront, trueFront, new Integer(args[2]));
 
-    System.out.println(value);
+    Configuration.logger_.info(""+value);
   }
 
   /*
@@ -141,7 +144,7 @@ public class Hypervolume {
     double minValue, value;
 
     if (noPoints < 1) {
-      System.err.println("run-time error");
+      Configuration.logger_.log(Level.SEVERE, "run-time error");
     }
 
     minValue = front[0][objective];
@@ -189,7 +192,7 @@ public class Hypervolume {
       //noNondominatedPoints = front.length;
       if (noObjectives < 3) {
         if (noNondominatedPoints < 1) {
-          System.err.println("run-time error");
+          Configuration.logger_.log(Level.SEVERE, "run-time error");
         }
 
         tempVolume = front[0][0];

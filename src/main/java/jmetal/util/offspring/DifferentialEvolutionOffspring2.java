@@ -23,8 +23,8 @@ import java.util.logging.Logger;
 
 public class DifferentialEvolutionOffspring2 extends Offspring {
   Operator mutation_;
-  private double CR_;
-  private double F_;
+  private double cr_;
+  private double f_;
   private Operator crossover_;
   private Operator selection_;
 
@@ -35,13 +35,13 @@ public class DifferentialEvolutionOffspring2 extends Offspring {
    * @param F
    */
   private DifferentialEvolutionOffspring2(double CR, double F) {
-    CR_ = CR;
-    F_ = F;
+    cr_ = CR;
+    f_ = F;
     try {
       // Crossover operator
       HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
-      crossoverParameters.put("CR", CR_);
-      crossoverParameters.put("F", F_);
+      crossoverParameters.put("CR", cr_);
+      crossoverParameters.put("F", f_);
       crossover_ = new DifferentialEvolutionCrossover(crossoverParameters);
 
       // Selecion operator
@@ -52,10 +52,6 @@ public class DifferentialEvolutionOffspring2 extends Offspring {
       Logger.getLogger(DifferentialEvolutionOffspring2.class.getName()).log(Level.SEVERE, null, ex);
     }
     id_ = "DE2";
-  }
-
-  public void DifferentialEvolutionOffspring() {
-
   }
 
   public Solution getOffspring(SolutionSet solutionSet, int index) {
@@ -80,8 +76,7 @@ public class DifferentialEvolutionOffspring2 extends Offspring {
       Logger.getLogger(DifferentialEvolutionOffspring2.class.getName()).log(Level.SEVERE, null, ex);
     }
 
-    //Create a new solution, using DE
     return offSpring;
-  } // getOffpring
-} // DifferentialEvolutionOffspring
+  } 
+} 
 

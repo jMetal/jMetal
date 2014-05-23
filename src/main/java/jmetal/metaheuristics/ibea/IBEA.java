@@ -223,10 +223,10 @@ public class IBEA extends Algorithm {
     }
 
     //if (worstIndex == -1) {
-    //    System.out.println("Yes " + worst);
+    //    Configuration.logger_.info("Yes " + worst);
     //}
-    //System.out.println("Solution Size "+solutionSet.size());
-    //System.out.println(worstIndex);
+    //Configuration.logger_.info("Solution Size "+solutionSet.size());
+    //Configuration.logger_.info(worstIndex);
 
     // Update the population
     for (int i = 0; i < solutionSet.size(); i++) {

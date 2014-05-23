@@ -146,9 +146,9 @@ public class pMOEAD extends Algorithm implements Runnable {
     maxEvaluations_ = parentThread_.maxEvaluations_ / parentThread_.numberOfThreads_;
 
     try {
-      //System.out.println("en espera: " + barrier_.getNumberWaiting()) ;
+      //Configuration.logger_.info("en espera: " + barrier_.getNumberWaiting()) ;
       barrier_.await();
-      //System.out.println("Running: " + id_ ) ;
+      //Configuration.logger_.info("Running: " + id_ ) ;
     } catch (InterruptedException e) {
       Configuration.logger_.log(Level.SEVERE, "Error", e);
     } catch (BrokenBarrierException e) {
@@ -165,7 +165,7 @@ public class pMOEAD extends Algorithm implements Runnable {
       last = first + partitions - 1;
     }
 
-    System.out.println("Id: " + id_ + "  Partitions: " + partitions +
+    Configuration.logger_.info("Id: " + id_ + "  Partitions: " + partitions +
       " First: " + first + " Last: " + last);
 
     do {

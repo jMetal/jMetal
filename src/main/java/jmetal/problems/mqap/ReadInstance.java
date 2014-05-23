@@ -77,7 +77,7 @@ public class ReadInstance {
               int[] weight = new int[numberOfObjectives];
               for (int k = 0; k < numberOfObjectives; k++) {
                 weight[k] = (new Integer(st.nextToken()).intValue());
-                System.out.println(weight[k]);
+                Configuration.logger_.info(""+weight[k]);
               }
               ri.createSingleObjectiveInstance(weight);
 
@@ -159,7 +159,7 @@ public class ReadInstance {
           newLine += newToken + " ";
         }
       }
-      //System.out.println(newLine);
+      //Configuration.logger_.info(newLine);
       singleObjectiveFirstLine_ = newLine;
 
       // reading A matrix (discarding empty lines on the way)
@@ -198,7 +198,7 @@ public class ReadInstance {
         for (int j = 0; j < facilities_; j++) {
           //  System.out.print(b_matrixs[0][i][j]+" ");
         }
-        //System.out.println();
+        //Configuration.logger_.info();
       }
 
 
@@ -233,8 +233,8 @@ public class ReadInstance {
       for (int k = 0; k < objectives_; k++) {
         name += "_" + weights[k];
       }
-      System.out.println(name);
-      System.out.println(fileName_ + name);
+      Configuration.logger_.info(name);
+      Configuration.logger_.info(fileName_ + name);
       FileOutputStream fos = new FileOutputStream(fileName_ + name);
       OutputStreamWriter osw = new OutputStreamWriter(fos);
       BufferedWriter bw = new BufferedWriter(osw);
