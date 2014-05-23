@@ -186,14 +186,12 @@ public class dMOPSO extends Algorithm {
   // constriction coefficient (M. Clerc)
   private double constrictionCoefficient(double c1, double c2) {
     double rho = c1 + c2;
-    //rho = 1.0 ;
-    if (rho <= 4) {
+        if (rho <= 4) {
       return 1.0;
     } else {
       return 2 / (2 - rho - Math.sqrt(Math.pow(rho, 2.0) - 4.0 * rho));
     }
   }
-
 
   // velocity bounds
   private double velocityConstriction(double v, double[] deltaMax,
@@ -522,7 +520,7 @@ public class dMOPSO extends Algorithm {
   private double fitnessFunction(Solution sol, double[] lambda) throws JMException {
     double fitness = 0.0;
 
-    if (functionType_.equals("_TCHE")) {
+    if ("_TCHE".equals(functionType_)) {
       double maxFun = -1.0e+30;
 
       for (int n = 0; n < problem_.getNumberOfObjectives(); n++) {
@@ -541,7 +539,7 @@ public class dMOPSO extends Algorithm {
 
       fitness = maxFun;
 
-    } else if (functionType_.equals("_AGG")) {
+    } else if ("_AGG".equals(functionType_)) {
       double sum = 0.0;
       for (int n = 0; n < problem_.getNumberOfObjectives(); n++) {
         sum += (lambda[n]) * sol.getObjective(n);
@@ -549,7 +547,7 @@ public class dMOPSO extends Algorithm {
 
       fitness = sum;
 
-    } else if (functionType_.equals("_PBI")) {
+    } else if ("_PBI".equals(functionType_)) {
       double d1, d2, nl;
       double theta = 5.0;
 

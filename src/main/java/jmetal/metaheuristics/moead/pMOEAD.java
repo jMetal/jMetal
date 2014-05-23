@@ -38,7 +38,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Class implemeting the pMOEA/D algorithm
+ * Class implementing the pMOEA/D algorithm
  */
 public class pMOEAD extends Algorithm implements Runnable {
 
@@ -486,7 +486,7 @@ public class pMOEAD extends Algorithm implements Runnable {
     double fitness;
     fitness = 0.0;
 
-    if (parentThread_.functionType_.equals("_TCHE1")) {
+    if ("_TCHE1".equals(parentThread_.functionType_)) {
       double maxFun = -1.0e+30;
 
       for (int n = 0; n < parentThread_.problem_.getNumberOfObjectives(); n++) {

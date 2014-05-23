@@ -40,17 +40,17 @@ public class SelectionFactory {
    */
   public static Selection getSelectionOperator(String name, HashMap<String, Object> parameters)
     throws JMException {
-    if (name.equalsIgnoreCase("BinaryTournament")) {
+    if ("BinaryTournament".equalsIgnoreCase(name)) {
       return new BinaryTournament(parameters);
-    } else if (name.equalsIgnoreCase("BinaryTournament2")) {
+    } else if ("BinaryTournament2".equalsIgnoreCase(name)) {
       return new BinaryTournament2(parameters);
-    } else if (name.equalsIgnoreCase("PESA2Selection")) {
+    } else if ("PESA2Selection".equalsIgnoreCase(name)) {
       return new PESA2Selection(parameters);
-    } else if (name.equalsIgnoreCase("RandomSelection")) {
+    } else if ("RandomSelection".equalsIgnoreCase(name)) {
       return new RandomSelection(parameters);
-    } else if (name.equalsIgnoreCase("RankingAndCrowdingSelection")) {
+    } else if ("RankingAndCrowdingSelection".equalsIgnoreCase(name)) {
       return new RankingAndCrowdingSelection(parameters);
-    } else if (name.equalsIgnoreCase("DifferentialEvolutionSelection")) {
+    } else if ("DifferentialEvolutionSelection".equalsIgnoreCase(name)) {
       return new DifferentialEvolutionSelection(parameters);
     } else {
       Configuration.logger_.severe("Operator '" + name + "' not found ");

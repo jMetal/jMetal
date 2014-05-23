@@ -431,7 +431,7 @@ public class cMOEAD extends Algorithm {
     double fitness;
     fitness = 0.0;
 
-    if (functionType_.equals("_TCHE1")) {
+    if ("_TCHE1".equals(functionType_)) {
       double maxFun = -1.0e+30;
 
       for (int n = 0; n < problem_.getNumberOfObjectives(); n++) {

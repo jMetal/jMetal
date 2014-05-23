@@ -39,19 +39,19 @@ public class CrossoverFactory {
    */
   public static Crossover getCrossoverOperator(String name, HashMap<String, Object> parameters)
     throws JMException {
-    if (name.equalsIgnoreCase("SBXCrossover")) {
+    if ("SBXCrossover".equalsIgnoreCase(name)) {
       return new SBXCrossover(parameters);
-    } else if (name.equalsIgnoreCase("SinglePointCrossover")) {
+    } else if ("SinglePointCrossover".equalsIgnoreCase(name)) {
       return new SinglePointCrossover(parameters);
-    } else if (name.equalsIgnoreCase("PMXCrossover")) {
+    } else if ("PMXCrossover".equalsIgnoreCase(name)) {
       return new PMXCrossover(parameters);
-    } else if (name.equalsIgnoreCase("TwoPointsCrossover")) {
+    } else if ("TwoPointsCrossover".equalsIgnoreCase(name)) {
       return new TwoPointsCrossover(parameters);
-    } else if (name.equalsIgnoreCase("HUXCrossover")) {
+    } else if ("HUXCrossover".equalsIgnoreCase(name)) {
       return new HUXCrossover(parameters);
-    } else if (name.equalsIgnoreCase("DifferentialEvolutionCrossover")) {
+    } else if ("DifferentialEvolutionCrossover".equalsIgnoreCase(name)) {
       return new DifferentialEvolutionCrossover(parameters);
-    } else if (name.equalsIgnoreCase("BLXAlphaCrossover")) {
+    } else if ("BLXAlphaCrossover".equalsIgnoreCase(name)) {
       return new BLXAlphaCrossover(parameters);
     } else {
       Configuration.logger_.severe("CrossoverFactory.getCrossoverOperator. " +

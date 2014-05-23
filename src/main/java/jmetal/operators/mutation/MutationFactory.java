@@ -41,15 +41,15 @@ public class MutationFactory {
   public static Mutation getMutationOperator(String name, HashMap<String, Object> parameters)
     throws JMException {
 
-    if (name.equalsIgnoreCase("PolynomialMutation")) {
+    if ("PolynomialMutation".equalsIgnoreCase(name)) {
       return new PolynomialMutation(parameters);
-    } else if (name.equalsIgnoreCase("BitFlipMutation")) {
+    } else if ("BitFlipMutation".equalsIgnoreCase(name)) {
       return new BitFlipMutation(parameters);
-    } else if (name.equalsIgnoreCase("NonUniformMutation")) {
+    } else if ("NonUniformMutation".equalsIgnoreCase(name)) {
       return new NonUniformMutation(parameters);
-    } else if (name.equalsIgnoreCase("UniformMutation")) {
+    } else if ("UniformMutation".equalsIgnoreCase(name)) {
       return new UniformMutation(parameters);
-    } else if (name.equalsIgnoreCase("SwapMutation")) {
+    } else if ("SwapMutation".equalsIgnoreCase(name)) {
       return new SwapMutation(parameters);
     } else {
       Configuration.logger_.severe("Operator '" + name + "' not found ");

@@ -45,27 +45,27 @@ public class ProblemFactory {
     // The number of argument must correspond with the problem constructor params
 
     String base = "jmetal.problems.";
-    if (name.equals("TSP") || name.equals("OneMax")) {
+    if ("TSP".equals(name) || "OneMax".equals(name)) {
       base += "singleObjective.";
-    } else if (name.equals("mQAP")) {
+    } else if ("mQAP".equals(name)) {
       base += "mqap.";
-    } else if (name.substring(0, name.length() - 1).equalsIgnoreCase("DTLZ")) {
+    } else if ("DTLZ".equalsIgnoreCase(name.substring(0, name.length() - 1))) {
       base += "DTLZ.";
-    } else if (name.substring(0, name.length() - 1).equalsIgnoreCase("WFG")) {
+    } else if ("WFG".equalsIgnoreCase(name.substring(0, name.length() - 1))) {
       base += "WFG.";
-    } else if (name.substring(0, name.length() - 1).equalsIgnoreCase("UF")) {
+    } else if ("UF".equalsIgnoreCase(name.substring(0, name.length() - 1))) {
       base += "cec2009Competition.";
-    } else if (name.substring(0, name.length() - 2).equalsIgnoreCase("UF")) {
+    } else if ("UF".equalsIgnoreCase(name.substring(0, name.length() - 2))) {
       base += "cec2009Competition.";
-    } else if (name.substring(0, name.length() - 1).equalsIgnoreCase("ZDT")) {
+    } else if ("ZDT".equalsIgnoreCase(name.substring(0, name.length() - 1))) {
       base += "ZDT.";
-    } else if (name.substring(0, name.length() - 3).equalsIgnoreCase("ZZJ07")) {
+    } else if ("ZZJ07".equalsIgnoreCase(name.substring(0, name.length() - 3))) {
       base += "ZZJ07.";
-    } else if (name.substring(0, name.length() - 3).equalsIgnoreCase("LZ09")) {
+    } else if ("LZ09".equalsIgnoreCase(name.substring(0, name.length() - 3))) {
       base += "LZ09.";
-    } else if (name.substring(0, name.length() - 4).equalsIgnoreCase("ZZJ07")) {
+    } else if ("ZZJ07".equalsIgnoreCase(name.substring(0, name.length() - 4))) {
       base += "ZZJ07.";
-    } else if (name.substring(0, name.length() - 3).equalsIgnoreCase("LZ06")) {
+    } else if ("LZ06".equalsIgnoreCase(name.substring(0, name.length() - 3))) {
       base += "LZ06.";
     }
 
