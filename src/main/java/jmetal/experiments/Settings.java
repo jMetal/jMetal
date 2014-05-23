@@ -95,7 +95,6 @@ public abstract class Settings {
       for (int i = 0; i < fields.length; i++) {
         if (fields[i].getName().endsWith("_")) {
           // it is a configuration field
-          // The configuration field is an integer
           if (fields[i].getType().equals(int.class) ||
             fields[i].getType().equals(Integer.class)) {
             if (settings.containsKey(fields[i].getName())) {
@@ -104,18 +103,16 @@ public abstract class Settings {
             }
           } else if (fields[i].getType().equals(double.class) ||
             fields[i].getType().equals(Double.class)) {
-            // The configuration field is a double
-            //double value = Double.parseDouble(experiments.settings.getProperty(fields[i].getName(),""+fields[i].getDouble(this)));
             Double value = (Double) settings.get(fields[i].getName());
 
             if (settings.containsKey(fields[i].getName())) {
-              if (fields[i].getName().equals("mutationProbability_") &&
+              if ("mutationProbability_".equals(fields[i].getName()) &&
                 value == null) {
-                if ((problem_.getSolutionType().getClass() == RealSolutionType.class) ||
-                  (problem_.getSolutionType().getClass() == ArrayRealSolutionType.class)) {
+                if ((RealSolutionType.class == problem_.getSolutionType().getClass()) ||
+                  (ArrayRealSolutionType.class == problem_.getSolutionType().getClass())) {
                   value = 1.0 / problem_.getNumberOfVariables();
-                } else if (problem_.getSolutionType().getClass() == BinarySolutionType.class ||
-                  problem_.getSolutionType().getClass() == BinaryRealSolutionType.class) {
+                } else if (BinarySolutionType.class == problem_.getSolutionType().getClass() ||
+                    BinaryRealSolutionType.class == problem_.getSolutionType().getClass()) {
                   int length = problem_.getNumberOfBits();
                   value = 1.0 / length;
                 } else {
@@ -167,8 +164,7 @@ public abstract class Settings {
                 // The field is a configuration parameter of the crossover
                 tmp = fields[j].getName().substring(aux.length(), fields[j].getName().length() - 1);
 
-                if (
-                  (fields[j].get(this) != null)) {
+                if (fields[j].get(this) != null) {
                   if (fields[j].getType().equals(int.class) ||
                     fields[j].getType().equals(Integer.class)) {
                     operator.setParameter(tmp, fields[j].getInt(this));
@@ -182,7 +178,6 @@ public abstract class Settings {
           }
         }
       }
-      //At this point, we should compare if the pareto front have been added
       paretoFrontFile_ = (String) settings.get("paretoFrontFileList_");
     }
 

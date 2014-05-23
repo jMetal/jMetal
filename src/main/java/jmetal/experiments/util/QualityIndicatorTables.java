@@ -26,6 +26,7 @@ import jmetal.qualityIndicator.Epsilon;
 import jmetal.qualityIndicator.Hypervolume;
 import jmetal.qualityIndicator.InvertedGenerationalDistance;
 import jmetal.qualityIndicator.Spread;
+import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
 import java.io.File;
@@ -49,38 +50,37 @@ public class QualityIndicatorTables implements IExperimentOutput {
 
   @Override
   public void generate() throws JMException {
-    String paretoFront[] = new String[experiment_.getProblemList().length];
+    String [] paretoFront = new String[experiment_.getProblemList().length];
 
     for (int i = 0; i < experiment_.getProblemList().length; i++) {
       if (experiment_.generateReferenceParetoFronts()) {
         paretoFront[i] = experiment_.getExperimentBaseDirectory()
-          + "/referenceFronts" + "/" + experiment_.getProblemList()[i] + ".pf";
+            + "/referenceFronts" + "/" + experiment_.getProblemList()[i] + ".pf";
       } else {
         paretoFront[i] =
-          experiment_.getParetoFrontDirectory() + "/" + experiment_.getParetoFrontFileList()[i];
+            experiment_.getParetoFrontDirectory() + "/" + experiment_.getParetoFrontFileList()[i];
       }
-      System.out.println("Pareto front " + i + ": " + paretoFront[i]);
+      Configuration.logger_.info("Pareto front " + i + ": " + paretoFront[i]);
     }
 
     if (experiment_.getIndicatorList().length > 0) {
 
       for (int algorithmIndex = 0;
-           algorithmIndex < experiment_.getAlgorithmNameList().length; algorithmIndex++) {
+          algorithmIndex < experiment_.getAlgorithmNameList().length; algorithmIndex++) {
 
         String algorithmDirectory;
         algorithmDirectory = experiment_.getExperimentBaseDirectory()
-          + "/data/" + experiment_.getAlgorithmNameList()[algorithmIndex] + "/";
+            + "/data/" + experiment_.getAlgorithmNameList()[algorithmIndex] + "/";
 
         for (int problemIndex = 0;
-             problemIndex < experiment_.getProblemList().length; problemIndex++) {
+            problemIndex < experiment_.getProblemList().length; problemIndex++) {
 
           String problemDirectory = algorithmDirectory + experiment_.getProblemList()[problemIndex];
-          //String paretoFrontPath = frontPath_[problemIndex];
 
-          for (String anIndicatorList_ : experiment_.getIndicatorList()) {
-            System.out.println("Experiment - Quality indicator: " + anIndicatorList_);
+          for (String anIndicatorList : experiment_.getIndicatorList()) {
+            Configuration.logger_.info("Experiment - Quality indicator: " + anIndicatorList);
 
-            resetFile(problemDirectory + "/" + anIndicatorList_);
+            resetFile(problemDirectory + "/" + anIndicatorList);
 
             for (int numRun = 0; numRun < experiment_.getIndependentRuns(); numRun++) {
 
@@ -90,54 +90,43 @@ public class QualityIndicatorTables implements IExperimentOutput {
               String qualityIndicatorFile = problemDirectory;
               double value = 0;
 
-              //double[][] trueFront =  new Hypervolume().utils_.readFront(paretoFrontPath);
               double[][] trueFront = new Hypervolume().utils_.readFront(paretoFront[problemIndex]);
 
-              if (anIndicatorList_.equals("HV")) {
+              if ("HV".equals(anIndicatorList)) {
 
                 Hypervolume indicators = new Hypervolume();
                 double[][] solutionFront =
-                  indicators.utils_.readFront(solutionFrontFile);
-                //double[][] trueFront =
-                //        indicators.utils_.readFront(paretoFrontPath);
+                    indicators.utils_.readFront(solutionFrontFile);
                 value = indicators.hypervolume(solutionFront, trueFront, trueFront[0].length);
 
                 qualityIndicatorFile = qualityIndicatorFile + "/HV";
-
               }
-              if (anIndicatorList_.equals("SPREAD")) {
+              if ("SPREAD".equals(anIndicatorList)) {
                 Spread indicators = new Spread();
                 double[][] solutionFront =
-                  indicators.utils_.readFront(solutionFrontFile);
-                //double[][] trueFront =
-                //        indicators.utils_.readFront(paretoFrontPath);
+                    indicators.utils_.readFront(solutionFrontFile);
                 value = indicators.spread(solutionFront, trueFront, trueFront[0].length);
 
                 qualityIndicatorFile = qualityIndicatorFile + "/SPREAD";
               }
-              if (anIndicatorList_.equals("IGD")) {
+              if ("IGD".equals(anIndicatorList)) {
                 InvertedGenerationalDistance indicators = new InvertedGenerationalDistance();
                 double[][] solutionFront =
-                  indicators.utils_.readFront(solutionFrontFile);
-                //double[][] trueFront =
-                //        indicators.utils_.readFront(paretoFrontPath);
+                    indicators.utils_.readFront(solutionFrontFile);
                 value = indicators
-                  .invertedGenerationalDistance(solutionFront, trueFront, trueFront[0].length);
+                    .invertedGenerationalDistance(solutionFront, trueFront, trueFront[0].length);
 
                 qualityIndicatorFile = qualityIndicatorFile + "/IGD";
               }
-              if (anIndicatorList_.equals("EPSILON")) {
+              if ("EPSILON".equals(anIndicatorList)) {
                 Epsilon indicators = new Epsilon();
                 double[][] solutionFront =
-                  indicators.utils_.readFront(solutionFrontFile);
-                //double[][] trueFront =
-                //        indicators.utils_.readFront(paretoFrontPath);
+                    indicators.utils_.readFront(solutionFrontFile);
                 value = indicators.epsilon(solutionFront, trueFront, trueFront[0].length);
 
                 qualityIndicatorFile = qualityIndicatorFile + "/EPSILON";
               }
-
-
+              
               if (!qualityIndicatorFile.equals(problemDirectory)) {
                 FileWriter os;
                 try {
@@ -161,25 +150,25 @@ public class QualityIndicatorTables implements IExperimentOutput {
   private void resetFile(String file) {
     File f = new File(file);
     if (f.exists()) {
-      System.out.println("File " + file + " exist.");
+      Configuration.logger_.info("File " + file + " exist.");
 
       if (f.isDirectory()) {
-        System.out.println("File " + file + " is a directory. Deleting directory.");
+        Configuration.logger_.info("File " + file + " is a directory. Deleting directory.");
         if (f.delete()) {
-          System.out.println("Directory successfully deleted.");
+          Configuration.logger_.info("Directory successfully deleted.");
         } else {
-          System.out.println("Error deleting directory.");
+          Configuration.logger_.info("Error deleting directory.");
         }
       } else {
-        System.out.println("File " + file + " is a file. Deleting file.");
+        Configuration.logger_.info("File " + file + " is a file. Deleting file.");
         if (f.delete()) {
-          System.out.println("File succesfully deleted.");
+          Configuration.logger_.info("File succesfully deleted.");
         } else {
-          System.out.println("Error deleting file.");
+          Configuration.logger_.info("Error deleting file.");
         }
       }
     } else {
-      ; //System.out.println("File " + file + " does NOT exist.");
+      ; 
     }
   }
 }
