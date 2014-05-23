@@ -43,38 +43,41 @@ public class SolutionSet implements Serializable {
   protected final List<Solution> solutionsList_;
 
   /**
-   * Maximum size of the solution set 
+   * Maximum size of the solution set
    */
   private int capacity_ = 0;
 
   /**
-   * Constructor.
-   * Creates an unbounded solution set.
+   * Constructor. Creates an unbounded solution set.
    */
   public SolutionSet() {
     solutionsList_ = new ArrayList<Solution>();
-  } // SolutionSet
+  }
 
   /**
    * Creates a empty solutionSet with a maximum capacity.
-   * @param maximumSize Maximum size.
+   * 
+   * @param maximumSize
+   *          Maximum size.
    */
-  public SolutionSet(int maximumSize){
+  public SolutionSet(int maximumSize) {
     solutionsList_ = new ArrayList<Solution>();
-    capacity_      = maximumSize;
+    capacity_ = maximumSize;
   } // SolutionSet
 
   /**
-   * Inserts a new solution into the SolutionSet. 
-   * @param solution The <code>Solution</code> to store
-   * @return True If the <code>Solution</code> has been inserted, false 
-   * otherwise. 
+   * Inserts a new solution into the SolutionSet.
+   * 
+   * @param solution
+   *          The <code>Solution</code> to store
+   * @return True If the <code>Solution</code> has been inserted, false
+   *         otherwise.
    */
   public boolean add(Solution solution) {
     if (solutionsList_.size() == capacity_) {
       Configuration.logger_.severe("The population is full");
-      Configuration.logger_.severe("Capacity is : "+capacity_);
-      Configuration.logger_.severe("\t Size is: "+ this.size());
+      Configuration.logger_.severe("Capacity is : " + capacity_);
+      Configuration.logger_.severe("\t Size is: " + this.size());
       return false;
     }
 
@@ -83,53 +86,62 @@ public class SolutionSet implements Serializable {
   }
 
   public boolean add(int index, Solution solution) {
-    solutionsList_.add(index, solution) ;
-    return true ;
+    solutionsList_.add(index, solution);
+    return true;
   }
 
   /**
    * Returns the ith solution in the set.
-   * @param i Position of the solution to obtain.
+   * 
+   * @param i
+   *          Position of the solution to obtain.
    * @return The <code>Solution</code> at the position i.
-   * @throws IndexOutOfBoundsException Exception
+   * @throws IndexOutOfBoundsException
+   *           Exception
    */
   public Solution get(int i) {
     if (i >= solutionsList_.size()) {
-      throw new IndexOutOfBoundsException("Index out of Bound "+i);
+      throw new IndexOutOfBoundsException("Index out of Bound " + i);
     }
     return solutionsList_.get(i);
   }
 
   /**
    * Returns the maximum capacity of the solution set
+   * 
    * @return The maximum capacity of the solution set
    */
-  public int getMaxSize(){
-    return capacity_ ;
+  public int getMaxSize() {
+    return capacity_;
   } // getMaxSize
 
   /**
    * Sorts a SolutionSet using a <code>Comparator</code>.
-   * @param comparator <code>Comparator</code> used to sort.
+   * 
+   * @param comparator
+   *          <code>Comparator</code> used to sort.
    */
 
-  public void sort(Comparator<Solution> comparator){
+  public void sort(Comparator<Solution> comparator) {
     if (comparator == null) {
       Configuration.logger_.severe("No criterium for comparing exist");
-      return ;
+      return;
     }
-    Collections.sort(solutionsList_,comparator);
+    Collections.sort(solutionsList_, comparator);
   }
 
   /**
-   * Returns the index of the best Solution using a <code>Comparator</code>.
-   * If there are more than one occurrences, only the index of the first one is returned
-   * @param comparator <code>Comparator</code> used to compare solutions.
-   * @return The index of the best Solution attending to the comparator or 
-   * <code>-1<code> if the SolutionSet is empty
+   * Returns the index of the best Solution using a <code>Comparator</code>. If
+   * there are more than one occurrences, only the index of the first one is
+   * returned
+   * 
+   * @param comparator
+   *          <code>Comparator</code> used to compare solutions.
+   * @return The index of the best Solution attending to the comparator or
+   *         <code>-1<code> if the SolutionSet is empty
    */
 
-  int indexBest(Comparator<Solution> comparator){
+  int indexBest(Comparator<Solution> comparator) {
     if ((solutionsList_ == null) || (this.solutionsList_.isEmpty())) {
       return -1;
     }
@@ -150,32 +162,35 @@ public class SolutionSet implements Serializable {
   }
 
   /**
-   * Returns the best Solution using a <code>Comparator</code>.
-   * If there are more than one occurrences, only the first one is returned
-   * @param comparator <code>Comparator</code> used to compare solutions.
+   * Returns the best Solution using a <code>Comparator</code>. If there are
+   * more than one occurrences, only the first one is returned
+   * 
+   * @param comparator
+   *          <code>Comparator</code> used to compare solutions.
    * @return The best Solution attending to the comparator or <code>null<code>
    * if the SolutionSet is empty
    */
 
-  public Solution best(Comparator<Solution> comparator){
+  public Solution best(Comparator<Solution> comparator) {
     int indexBest = indexBest(comparator);
     if (indexBest < 0) {
       return null;
-    }
-    else {
+    } else {
       return solutionsList_.get(indexBest);
     }
   }
 
-
   /**
-   * Returns the index of the worst Solution using a <code>Comparator</code>.
-   * If there are more than one occurrences, only the index of the first one is returned
-   * @param comparator <code>Comparator</code> used to compare solutions.
-   * @return The index of the worst Solution attending to the comparator or 
-   * <code>-1<code> if the SolutionSet is empty
+   * Returns the index of the worst Solution using a <code>Comparator</code>. If
+   * there are more than one occurrences, only the index of the first one is
+   * returned
+   * 
+   * @param comparator
+   *          <code>Comparator</code> used to compare solutions.
+   * @return The index of the worst Solution attending to the comparator or
+   *         <code>-1<code> if the SolutionSet is empty
    */
-  public int indexWorst(Comparator<Solution> comparator){
+  public int indexWorst(Comparator<Solution> comparator) {
     if ((solutionsList_ == null) || (this.solutionsList_.isEmpty())) {
       return -1;
     }
@@ -196,13 +211,15 @@ public class SolutionSet implements Serializable {
   }
 
   /**
-   * Returns the worst Solution using a <code>Comparator</code>.
-   * If there are more than one occurrences, only the first one is returned
-   * @param comparator <code>Comparator</code> used to compare solutions.
+   * Returns the worst Solution using a <code>Comparator</code>. If there are
+   * more than one occurrences, only the first one is returned
+   * 
+   * @param comparator
+   *          <code>Comparator</code> used to compare solutions.
    * @return The worst Solution attending to the comparator or <code>null<code>
    * if the SolutionSet is empty
    */
-  public Solution worst(Comparator<Solution> comparator){
+  public Solution worst(Comparator<Solution> comparator) {
     int index = indexWorst(comparator);
     if (index < 0) {
       return null;
@@ -211,55 +228,59 @@ public class SolutionSet implements Serializable {
     }
   }
 
-
   /**
    * Returns the number of solutions in the SolutionSet.
+   * 
    * @return The size of the SolutionSet.
    */
-  public int size(){
+  public int size() {
     return solutionsList_.size();
   } // size
 
   /**
-   *
+   * 
    * @return true if the solution set if empty
    */
   public boolean isEmtpy() {
-    return (solutionsList_.isEmpty()) ;
+    return (solutionsList_.isEmpty());
   }
 
   /**
-   * Writes the objective function values of the <code>Solution</code> 
-   * objects into the set in a file.
-   * @param path The output file name
+   * Writes the objective function values of the <code>Solution</code> objects
+   * into the set in a file.
+   * 
+   * @param path
+   *          The output file name
    */
   public void printObjectivesToFile(String path) throws IOException {
-      /* Open the file */
-    FileOutputStream fos   = new FileOutputStream(path)     ;
-    OutputStreamWriter osw = new OutputStreamWriter(fos)    ;
-    BufferedWriter bw      = new BufferedWriter(osw)        ;
+    /* Open the file */
+    FileOutputStream fos = new FileOutputStream(path);
+    OutputStreamWriter osw = new OutputStreamWriter(fos);
+    BufferedWriter bw = new BufferedWriter(osw);
 
     for (Solution aSolutionsList : solutionsList_) {
       bw.write(aSolutionsList.toString());
       bw.newLine();
     }
 
-      /* Close the file */
+    /* Close the file */
     bw.close();
   }
 
   /**
    * Writes the decision encodings.variable values of the <code>Solution</code>
    * solutions objects into the set in a file.
-   * @param path The output file name
+   * 
+   * @param path
+   *          The output file name
    */
   public void printVariablesToFile(String path) throws IOException {
-    FileOutputStream fos   = new FileOutputStream(path)     ;
-    OutputStreamWriter osw = new OutputStreamWriter(fos)    ;
-    BufferedWriter bw      = new BufferedWriter(osw)        ;
+    FileOutputStream fos = new FileOutputStream(path);
+    OutputStreamWriter osw = new OutputStreamWriter(fos);
+    BufferedWriter bw = new BufferedWriter(osw);
 
     if (isEmtpy()) {
-      int numberOfVariables = solutionsList_.get(0).getDecisionVariables().length ;
+      int numberOfVariables = solutionsList_.get(0).getDecisionVariables().length;
       for (Solution aSolutionsList : solutionsList_) {
         for (int j = 0; j < numberOfVariables; j++) {
           bw.write(aSolutionsList.getDecisionVariables()[j].toString() + " ");
@@ -272,20 +293,22 @@ public class SolutionSet implements Serializable {
 
   /**
    * Compares two solution sets
-   * @param object Solution set to compare with
+   * 
+   * @param object
+   *          Solution set to compare with
    * @return true or false depending on the result of the comparison
    */
   @Override
   public boolean equals(Object object) {
-    boolean result ;
+    boolean result;
     if (object == null) {
-      result = false ;
+      result = false;
     } else if (object == this) {
-      result = true ;
+      result = true;
     } else if (!(object instanceof SolutionSet)) {
-      result = false ;
-    } else if (this.size() != ((SolutionSet)object).size()) {
-      result = false ;
+      result = false;
+    } else if (this.size() != ((SolutionSet) object).size()) {
+      result = false;
     } else {
       SolutionSet solutionSet = (SolutionSet) object;
 
@@ -293,7 +316,7 @@ public class SolutionSet implements Serializable {
       int i = 0;
       while (areEquals && (i < solutionSet.size())) {
         int j = 0;
-        boolean found = false ;
+        boolean found = false;
         while (!found && (j < this.size())) {
           if (solutionSet.get(i).equals(this.get(j))) {
             found = true;
@@ -301,23 +324,25 @@ public class SolutionSet implements Serializable {
           j++;
         }
         if (!found) {
-          areEquals = false ;
+          areEquals = false;
         }
       }
-      result = areEquals ;
+      result = areEquals;
     }
-    return result ;
+    return result;
   }
 
   /**
    * Write the function values of feasible solutions into a file
-   * @param path File name
+   * 
+   * @param path
+   *          File name
    */
   public void printFeasibleFUN(String path) {
     try {
-      FileOutputStream fos   = new FileOutputStream(path)     ;
-      OutputStreamWriter osw = new OutputStreamWriter(fos)    ;
-      BufferedWriter bw      = new BufferedWriter(osw)        ;
+      FileOutputStream fos = new FileOutputStream(path);
+      OutputStreamWriter osw = new OutputStreamWriter(fos);
+      BufferedWriter bw = new BufferedWriter(osw);
 
       for (Solution aSolutionsList : solutionsList_) {
         if (aSolutionsList.getOverallConstraintViolation() == 0.0) {
@@ -326,113 +351,126 @@ public class SolutionSet implements Serializable {
         }
       }
       bw.close();
-    }catch (IOException e) {
-      Configuration.logger_.log(Level.SEVERE,"Error generating the FUN file", e);
+    } catch (IOException e) {
+      Configuration.logger_.log(Level.SEVERE, "Error generating the FUN file",
+          e);
     }
   }
 
   /**
    * Write the encodings.variable values of feasible solutions into a file
-   * @param path File name
+   * 
+   * @param path
+   *          File name
    */
   public void printFeasibleVAR(String path) {
     try {
-      FileOutputStream fos   = new FileOutputStream(path)     ;
-      OutputStreamWriter osw = new OutputStreamWriter(fos)    ;
-      BufferedWriter bw      = new BufferedWriter(osw)        ;
+      FileOutputStream fos = new FileOutputStream(path);
+      OutputStreamWriter osw = new OutputStreamWriter(fos);
+      BufferedWriter bw = new BufferedWriter(osw);
 
       if (!isEmtpy()) {
-        int numberOfVariables = solutionsList_.get(0).getDecisionVariables().length ;
+        int numberOfVariables = solutionsList_.get(0).getDecisionVariables().length;
         for (Solution aSolutionsList : solutionsList_) {
           if (aSolutionsList.getOverallConstraintViolation() == 0.0) {
             for (int j = 0; j < numberOfVariables; j++) {
-              bw.write(aSolutionsList.getDecisionVariables()[j].toString() + " ");
+              bw.write(aSolutionsList.getDecisionVariables()[j].toString()
+                  + " ");
             }
             bw.newLine();
           }
         }
       }
       bw.close();
-    }catch (IOException e) {
-      Configuration.logger_.log(Level.SEVERE, "Error generating the VAR file", e);
+    } catch (IOException e) {
+      Configuration.logger_.log(Level.SEVERE, "Error generating the VAR file",
+          e);
     }
   }
 
   /**
    * Empties the SolutionSet
    */
-  public void clear(){
+  public void clear() {
     solutionsList_.clear();
   } // clear
 
   /**
    * Deletes the <code>Solution</code> at position i in the set.
-   * @param i The position of the solution to remove.
+   * 
+   * @param i
+   *          The position of the solution to remove.
    */
-  public void remove(int i){
-    if (i > solutionsList_.size()-1) {
-      Configuration.logger_.log(Level.SEVERE, "Size is: "+this.size());
+  public void remove(int i) {
+    if (i > solutionsList_.size() - 1) {
+      Configuration.logger_.log(Level.SEVERE, "Size is: " + this.size());
     } // if
     solutionsList_.remove(i);
   } // remove
 
-
   /**
    * Returns an <code>Iterator</code> to access to the solution set list.
+   * 
    * @return the <code>Iterator</code>.
    */
-  public Iterator<Solution> iterator(){
+  public Iterator<Solution> iterator() {
     return solutionsList_.iterator();
-  } // iterator   
+  } // iterator
 
   /**
    * Returns a new <code>SolutionSet</code> which is the result of the union
    * between the current solution set and the one passed as a parameter.
-   * @param solutionSet SolutionSet to join with the current solutionSet.
+   * 
+   * @param solutionSet
+   *          SolutionSet to join with the current solutionSet.
    * @return The result of the union operation.
    */
   public SolutionSet union(SolutionSet solutionSet) {
-    //Check the correct size. In development
+    // Check the correct size. In development
     int newSize = this.size() + solutionSet.size();
     if (newSize < capacity_) {
       newSize = capacity_;
     }
 
-    //Create a new population 
+    // Create a new population
     SolutionSet union = new SolutionSet(newSize);
     for (int i = 0; i < this.size(); i++) {
       union.add(this.get(i));
     } // for
 
     for (int i = this.size(); i < (this.size() + solutionSet.size()); i++) {
-      union.add(solutionSet.get(i-this.size()));
+      union.add(solutionSet.get(i - this.size()));
     } // for
 
     return union;
-  } // union                   
+  } // union
 
   /**
    * Replaces a solution by a new one
-   * @param position The position of the solution to replace
-   * @param solution The new solution
+   * 
+   * @param position
+   *          The position of the solution to replace
+   * @param solution
+   *          The new solution
    */
   public void replace(int position, Solution solution) {
     if (position > this.solutionsList_.size()) {
       solutionsList_.add(solution);
     }
     solutionsList_.remove(position);
-    solutionsList_.add(position,solution);
+    solutionsList_.add(position, solution);
   }
 
   /**
    * Copies the objectives of the solution set to a matrix
+   * 
    * @return A matrix containing the objectives
    */
-  public double [][] writeObjectivesToMatrix() {
+  public double[][] writeObjectivesToMatrix() {
     if (isEmtpy()) {
-      return new double[0][0] ;
+      return new double[0][0];
     }
-    double [][] objectives;
+    double[][] objectives;
     objectives = new double[size()][get(0).getNumberOfObjectives()];
     for (int i = 0; i < size(); i++) {
       for (int j = 0; j < get(0).getNumberOfObjectives(); j++) {
@@ -441,6 +479,7 @@ public class SolutionSet implements Serializable {
     }
     return objectives;
   }
+
   public void printObjectives() {
     for (int i = 0; i < solutionsList_.size(); i++) {
       Configuration.logger_.log(Level.INFO, "" + solutionsList_.get(i));
@@ -448,11 +487,10 @@ public class SolutionSet implements Serializable {
   }
 
   public void setCapacity(int capacity) {
-    capacity_ = capacity ;
+    capacity_ = capacity;
   }
 
   public int getCapacity() {
-    return capacity_ ;
+    return capacity_;
   }
 }
-
