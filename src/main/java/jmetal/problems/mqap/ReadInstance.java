@@ -49,7 +49,7 @@ public class ReadInstance {
    */
   public ReadInstance(String name) {
     fileName_ = name;
-  } // ReadInstance
+  }
 
   public static void main(String[] args) {
     ReadInstance ri = new ReadInstance(args[0]);
@@ -60,7 +60,7 @@ public class ReadInstance {
       if (args[1].toUpperCase().contains("Y")) {
         if (ri.getNumberOfObjectives() > 3) {
           Logger.getLogger(ReadInstance.class.getName()).log(Level.SEVERE,
-            "Aggregation approach with more than 2 objectives not implemented yet");
+              "Aggregation approach with more than 2 objectives not implemented yet");
         } else if (ri.getNumberOfObjectives() == 3) {
           try {
             // Open the file
@@ -80,16 +80,14 @@ public class ReadInstance {
                 Configuration.logger_.info(""+weight[k]);
               }
               ri.createSingleObjectiveInstance(weight);
-
-
               aux = br.readLine();
             }
             br.close();
           } catch (Exception e) {
             Configuration.logger_.log(
-              Level.SEVERE,
-              "initUniformWeight: failed when reading for file containing the weight",
-              e);
+                Level.SEVERE,
+                "initUniformWeight: failed when reading for file containing the weight",
+                e);
           }
         } else {
           int a = 100, b = 0;
@@ -109,7 +107,6 @@ public class ReadInstance {
    * This method should be called for reading all the data from file.
    */
   public void loadInstance() {
-
     try {
       File archivo = new File(fileName_);
       FileReader fr = null;
@@ -119,7 +116,8 @@ public class ReadInstance {
 
       // File reading
       String line;
-      line = br.readLine(); // reading the first line (special case)
+      // reading the first line (special case)
+      line = br.readLine(); 
 
       // first line must contain the number of utilities and objectives
       StringTokenizer st = new StringTokenizer(line);
@@ -127,7 +125,7 @@ public class ReadInstance {
       // looking for the tokens facilities and objectives
       while (st.hasMoreTokens()) {
         String newToken = st.nextToken();
-        if (newToken.toUpperCase().contains("FACILITIES")) {// facilities found
+        if (newToken.toUpperCase().contains("FACILITIES")) {
           newLine += newToken + " ";
           String aux = "";
           do {
@@ -192,26 +190,21 @@ public class ReadInstance {
         }
       }
 
-
       // comprobation
       for (int i = 0; i < facilities_; i++) {
         for (int j = 0; j < facilities_; j++) {
-          //  System.out.print(b_matrixs[0][i][j]+" ");
         }
-        //Configuration.logger_.info();
       }
-
-
       // at this point the instances has been read
       br.close();
     } catch (FileNotFoundException ex) {
       Logger.getLogger(ReadInstance.class.getName())
-        .log(Level.SEVERE, "The file doesn't exist", ex);
+      .log(Level.SEVERE, "The file doesn't exist", ex);
     } catch (IOException ex2) {
       Logger.getLogger(ReadInstance.class.getName())
-        .log(Level.SEVERE, "Error reading from file", ex2);
+      .log(Level.SEVERE, "Error reading from file", ex2);
     }
-  } // loadInstance
+  } 
 
   /**
    * @param weights: a vector containing the weights for the aggregative approach
@@ -223,11 +216,10 @@ public class ReadInstance {
     // safe comprobation: is the number of weights == objectives_?
     if (weights.length != objectives_) {
       Logger.getLogger(ReadInstance.class.getName()).log(Level.SEVERE,
-        "The number of weights and number of objectives don't match");
+          "The number of weights and number of objectives don't match");
+    } 
 
-    } // safe comprobation
-
-    // generating the intance
+    // generating the instance
     try {
       String name = "";
       for (int k = 0; k < objectives_; k++) {
@@ -239,19 +231,9 @@ public class ReadInstance {
       OutputStreamWriter osw = new OutputStreamWriter(fos);
       BufferedWriter bw = new BufferedWriter(osw);
 
-
-      // generating a new first line with weight information
-      /* Fran's sofware does not need this, but the number of facilities
-      String newFirstLine = "";
-      for (int k = 0; k < objectives_; k++) {
-        newFirstLine += " weight " + k + " " + weights[k];
-      }
-      bw.write(singleObjectiveFirstLine_+ newFirstLine);
-      bw.newLine(); */
       bw.write(facilities_ + "");
       bw.newLine();
       bw.newLine();
-
 
       // writting matrix_a
       String line;
@@ -283,10 +265,10 @@ public class ReadInstance {
 
     } catch (FileNotFoundException ex) {
       Logger.getLogger(ReadInstance.class.getName())
-        .log(Level.SEVERE, "The file cannot be created", ex);
+      .log(Level.SEVERE, "The file cannot be created", ex);
     } catch (IOException ex1) {
       Logger.getLogger(ReadInstance.class.getName())
-        .log(Level.SEVERE, "Error writting in the file", ex1);
+      .log(Level.SEVERE, "Error writting in the file", ex1);
     }
   }
 

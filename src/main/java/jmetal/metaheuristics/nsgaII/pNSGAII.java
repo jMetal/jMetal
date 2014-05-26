@@ -93,7 +93,6 @@ public class pNSGAII extends Algorithm {
     indicators = (QualityIndicator) getInputParameter("indicators");
 
     parallelEvaluator_.startParallelRunner(problem_);
-    ;
 
     //Initialize the variables
     population = new SolutionSet(populationSize);
