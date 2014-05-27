@@ -47,14 +47,14 @@ public class dMOPSO extends Algorithm {
   double r1Min_;
   double r2Max_;
   double r2Min_;
-  double C1Max_;
-  double C1Min_;
-  double C2Max_;
-  double C2Min_;
-  double WMax_;
-  double WMin_;
-  double ChVel1_;
-  double ChVel2_;
+  double c1Max_;
+  double c1Min_;
+  double c2Max_;
+  double c2Min_;
+  double weightMax_;
+  double weightMin_;
+  double changeVelocity1_;
+  double changeVelocity2_;
   /**
    * Stores the number of particles_ used
    */
@@ -104,14 +104,14 @@ public class dMOPSO extends Algorithm {
     r1Min_ = 0.0;
     r2Max_ = 1.0;
     r2Min_ = 0.0;
-    C1Max_ = 2.5;
-    C1Min_ = 1.5;
-    C2Max_ = 2.5;
-    C2Min_ = 1.5;
-    WMax_ = 0.4;
-    WMin_ = 0.1;
-    ChVel1_ = -1.0;
-    ChVel2_ = -1.0;
+    c1Max_ = 2.5;
+    c1Min_ = 1.5;
+    c2Max_ = 2.5;
+    c2Min_ = 1.5;
+    weightMax_ = 0.4;
+    weightMin_ = 0.1;
+    changeVelocity1_ = -1.0;
+    changeVelocity2_ = -1.0;
   }
 
   public dMOPSO(Problem problem,
@@ -123,14 +123,14 @@ public class dMOPSO extends Algorithm {
     r1Min_ = variables.get(1);
     r2Max_ = variables.get(2);
     r2Min_ = variables.get(3);
-    C1Max_ = variables.get(4);
-    C1Min_ = variables.get(5);
-    C2Max_ = variables.get(6);
-    C2Min_ = variables.get(7);
-    WMax_ = variables.get(8);
-    WMin_ = variables.get(9);
-    ChVel1_ = variables.get(10);
-    ChVel2_ = variables.get(11);
+    c1Max_ = variables.get(4);
+    c1Min_ = variables.get(5);
+    c2Max_ = variables.get(6);
+    c2Min_ = variables.get(7);
+    weightMax_ = variables.get(8);
+    weightMin_ = variables.get(9);
+    changeVelocity1_ = variables.get(10);
+    changeVelocity2_ = variables.get(11);
 
     hy_ = new Hypervolume();
     jmetal.qualityIndicator.util.MetricsUtil mu = new jmetal.qualityIndicator.util.MetricsUtil();
@@ -231,12 +231,12 @@ public class dMOPSO extends Algorithm {
 
     r1 = PseudoRandom.randDouble(r1Min_, r1Max_);
     r2 = PseudoRandom.randDouble(r2Min_, r2Max_);
-    C1 = PseudoRandom.randDouble(C1Min_, C1Max_);
-    C2 = PseudoRandom.randDouble(C2Min_, C2Max_);
-    W = PseudoRandom.randDouble(WMin_, WMax_);
+    C1 = PseudoRandom.randDouble(c1Min_, c1Max_);
+    C2 = PseudoRandom.randDouble(c2Min_, c2Max_);
+    W = PseudoRandom.randDouble(weightMin_, weightMax_);
 
-    wmax = WMax_;
-    wmin = WMin_;
+    wmax = weightMax_;
+    wmin = weightMin_;
 
     for (int var = 0; var < particle.size(); var++) {
       //Computing the velocity of this particle 
@@ -263,7 +263,7 @@ public class dMOPSO extends Algorithm {
     for (int var = 0; var < particle.size(); var++) {
       particle.setValue(var, particle.getValue(var) + speed_[i][var]);
     }
-  } // computeNewPositions
+  } 
 
   /**
    * Runs of the dMOPSO algorithm.
@@ -346,7 +346,7 @@ public class dMOPSO extends Algorithm {
     }
 
     return ss;
-  } // execute
+  } 
 
   private void shuffleGlobalBest() {
     int[] aux = new int[swarmSize_];
@@ -366,17 +366,16 @@ public class dMOPSO extends Algorithm {
   }
 
   private void repairBounds(int part) throws JMException {
-
     XReal particle = new XReal(particles_.get(part));
 
     for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
       if (particle.getValue(var) < problem_.getLowerLimit(var)) {
         particle.setValue(var, problem_.getLowerLimit(var));
-        speed_[part][var] = speed_[part][var] * ChVel1_;
+        speed_[part][var] = speed_[part][var] * changeVelocity1_;
       }
       if (particle.getValue(var) > problem_.getUpperLimit(var)) {
         particle.setValue(var, problem_.getUpperLimit(var));
-        speed_[part][var] = speed_[part][var] * ChVel2_;
+        speed_[part][var] = speed_[part][var] * changeVelocity2_;
       }
     }
   }
@@ -396,13 +395,12 @@ public class dMOPSO extends Algorithm {
 
       java.util.Random rnd = new java.util.Random();
 
-      N = rnd.nextGaussian() * sigma + mean; // N(mean, sigma)
-      //N = box_muller(mean, sigma);
-
+      N = rnd.nextGaussian() * sigma + mean; 
+      
       particle.setValue(var, N);
       speed_[i][var] = 0.0;
     }
-  } // resetParticle
+  } 
 
   private void updateParticle(int i) throws JMException {
     computeSpeed(i);

@@ -77,8 +77,6 @@ public abstract class Settings {
     return null;
   }
 
-  ;
-
   /**
    * Configure method. Change the default configuration
    *
@@ -128,19 +126,16 @@ public abstract class Settings {
               }
             }
           } else {
-            //Object value = experiments.settings.getProperty(fields[i].getName(), null) ;
             Object value = settings.get(fields[i].getName());
             if (value != null) {
               if (fields[i].getType().equals(Crossover.class)) {
                 Object value2 = CrossoverFactory.getCrossoverOperator((String) value, settings);
                 value = value2;
               }
-
               if (fields[i].getType().equals(Mutation.class)) {
                 Object value2 = MutationFactory.getMutationOperator((String) value, settings);
                 value = value2;
               }
-
               fields[i].set(this, value);
             }
           }
