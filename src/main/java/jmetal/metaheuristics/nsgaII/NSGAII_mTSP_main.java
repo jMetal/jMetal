@@ -44,8 +44,8 @@ import java.util.logging.Logger;
  */
 
 public class NSGAII_mTSP_main {
-  public static Logger logger_;      // Logger object
-  public static FileHandler fileHandler_; // FileHandler object
+  public static Logger logger_;      
+  public static FileHandler fileHandler_; 
 
   /**
    * @param args Command line arguments.
@@ -54,15 +54,14 @@ public class NSGAII_mTSP_main {
    * @throws SecurityException Usage:
    *                           - jmetal.metaheuristics.nsgaII.NSGAII_mTSP_main
    */
-  public static void main(String[] args) throws
-    Exception {
-    Problem problem; // The problem to solve
-    Algorithm algorithm; // The algorithm to use
-    Operator crossover; // Crossover operator
-    Operator mutation; // Mutation operator
-    Operator selection; // Selection operator
+  public static void main(String[] args) throws Exception {
+    Problem problem; 
+    Algorithm algorithm; 
+    Operator crossover; 
+    Operator mutation; 
+    Operator selection; 
 
-    QualityIndicator indicators; // Object to get quality indicators
+    QualityIndicator indicators; 
 
     // Logger object and file to store log messages
     logger_ = Configuration.logger_;
@@ -113,5 +112,5 @@ public class NSGAII_mTSP_main {
     population.printVariablesToFile("VAR");
     logger_.info("Objectives values have been writen to file FUN");
     population.printObjectivesToFile("FUN");
-  } //main
-} // NSGAII_main
+  } 
+} 

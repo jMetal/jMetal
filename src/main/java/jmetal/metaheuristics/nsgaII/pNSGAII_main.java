@@ -42,14 +42,14 @@ import java.util.logging.Logger;
 
 /**
  * Class to configure and execute the pNSGAII algorithm. pNSGAII is a
- * multihreaded version of NSGA-II, where solution evaluations are carried out
+ * multithreaded version of NSGA-II, where solution evaluations are carried out
  * in parallel.
  */
 
 
 public class pNSGAII_main {
-  public static Logger logger_;      // Logger object
-  public static FileHandler fileHandler_; // FileHandler object
+  public static Logger logger_;      
+  public static FileHandler fileHandler_; 
 
   /**
    * @param args Command line arguments.

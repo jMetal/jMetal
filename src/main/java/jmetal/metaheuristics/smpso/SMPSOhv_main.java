@@ -44,8 +44,8 @@ import java.util.logging.Logger;
  * IEEE Congress on Evolutionary Computation 2013: 3153-3160
  */
 public class SMPSOhv_main {
-  public static Logger logger_;      // Logger object
-  public static FileHandler fileHandler_; // FileHandler object
+  public static Logger logger_;      
+  public static FileHandler fileHandler_; 
 
   /**
    * @param args Command line arguments. The first (optional) argument specifies
@@ -77,7 +77,7 @@ public class SMPSOhv_main {
       Object[] params = {"Real"};
       problem = (new ProblemFactory()).getProblem(args[0], params);
       indicators = new QualityIndicator(problem, args[1]);
-    } else { // Default problem
+    } else { 
       //problem = new Kursawe("Real", 3); 
       //problem = new Water("Real");
       //problem = new ZDT1("ArrayReal", 1000);

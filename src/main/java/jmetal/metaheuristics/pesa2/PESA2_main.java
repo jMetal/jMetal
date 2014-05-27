@@ -41,8 +41,8 @@ import java.util.logging.Logger;
  * Class for configuring and running the PESA2 algorithm
  */
 public class PESA2_main {
-  public static Logger logger_;      // Logger object
-  public static FileHandler fileHandler_; // FileHandler object
+  public static Logger logger_;      
+  public static FileHandler fileHandler_; 
 
   /**
    * @param args Command line arguments. The first (optional) argument specifies

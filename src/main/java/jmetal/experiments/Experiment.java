@@ -396,8 +396,7 @@ public class Experiment {
       }
       experimentDirectory.delete();
       new File(experimentBaseDirectory_).mkdirs();
-    } // if
-    else {
+    } else {
       Configuration.logger_.info("Experiment directory does NOT exist. Creating");
       new File(experimentBaseDirectory_).mkdirs();
     }

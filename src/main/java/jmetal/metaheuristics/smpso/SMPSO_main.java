@@ -45,8 +45,8 @@ import java.util.logging.Logger;
  * (MCDM 2009), pp: 66-73. March 2009
  */
 public class SMPSO_main {
-  public static Logger logger_;      // Logger object
-  public static FileHandler fileHandler_; // FileHandler object
+  public static Logger logger_;     
+  public static FileHandler fileHandler_; 
 
   /**
    * @param args Command line arguments. The first (optional) argument specifies
@@ -63,7 +63,7 @@ public class SMPSO_main {
     Algorithm algorithm;
     Mutation mutation;
 
-    QualityIndicator indicators; // Object to get quality indicators
+    QualityIndicator indicators;
 
     // Logger object and file to store log messages
     logger_ = Configuration.logger_;

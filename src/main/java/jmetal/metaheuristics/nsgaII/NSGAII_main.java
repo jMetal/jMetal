@@ -51,8 +51,8 @@ import java.util.logging.Logger;
  */
 
 public class NSGAII_main {
-  public static Logger logger_;      // Logger object
-  public static FileHandler fileHandler_; // FileHandler object
+  public static Logger logger_;      
+  public static FileHandler fileHandler_; 
 
   /**
    * @param args Command line arguments.

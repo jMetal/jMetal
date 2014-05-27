@@ -48,8 +48,8 @@ import java.util.logging.Logger;
  */
 
 public class AbYSS_main {
-  public static Logger logger_;      // Logger object
-  public static FileHandler fileHandler_; // FileHandler object
+  public static Logger logger_;      
+  public static FileHandler fileHandler_; 
 
   /**
    * @param args Command line arguments.
@@ -83,7 +83,7 @@ public class AbYSS_main {
       Object[] params = {"Real"};
       problem = (new ProblemFactory()).getProblem(args[0], params);
       indicators = new QualityIndicator(problem, args[1]);
-    } else { // Default problem
+    } else { 
       //problem = new Kursawe("Real", 3);
       //problem = new Kursawe("BinaryReal", 3);
       //problem = new Water("Real");

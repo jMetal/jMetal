@@ -60,8 +60,8 @@ import java.util.logging.Logger;
  */
 
 public class NSGAIIAdaptive_main {
-  public static Logger logger_;      // Logger object
-  public static FileHandler fileHandler_; // FileHandler object
+  public static Logger logger_;      
+  public static FileHandler fileHandler_; 
 
   /**
    * @param args Command line arguments.
@@ -77,15 +77,15 @@ public class NSGAIIAdaptive_main {
     SecurityException,
     IOException,
     ClassNotFoundException {
-    Problem problem; // The problem to solve
-    Algorithm algorithm; // The algorithm to use
-    Operator crossover; // Crossover operator
-    Operator mutation; // Mutation operator
-    Operator selection; // Selection operator
+    Problem problem; 
+    Algorithm algorithm; 
+    Operator crossover;
+    Operator mutation; 
+    Operator selection; 
 
-    HashMap parameters; // Operator parameters
+    HashMap parameters; 
 
-    QualityIndicator indicators; // Object to get quality indicators
+    QualityIndicator indicators; 
 
     // Logger object and file to store log messages
     logger_ = Configuration.logger_;
@@ -96,13 +96,13 @@ public class NSGAIIAdaptive_main {
     if (args.length == 1) {
       Object[] params = {"Real"};
       problem = (new ProblemFactory()).getProblem(args[0], params);
-    } // if
+    } 
     else if (args.length == 2) {
       Object[] params = {"Real"};
       problem = (new ProblemFactory()).getProblem(args[0], params);
       indicators = new QualityIndicator(problem, args[1]);
-    } // if
-    else { // Default problem
+    } 
+    else { 
       problem = new Kursawe("Real", 3);
       //problem = new Kursawe("BinaryReal", 3);
       //problem = new Water("Real");
@@ -110,7 +110,7 @@ public class NSGAIIAdaptive_main {
       //problem = new ConstrEx("Real");
       //problem = new DTLZ1("Real");
       //problem = new OKA2("Real") ;
-    } // else
+    } 
     problem = new LZ09_F3("Real");
     algorithm = new NSGAIIAdaptive(problem);
     //algorithm = new ssNSGAIIAdaptive(problem);
@@ -134,20 +134,8 @@ public class NSGAIIAdaptive_main {
     double CR, F;
     getOffspring[0] = new DifferentialEvolutionOffspring(CR = 1.0, F = 0.5);
     getOffspring[1] = new SBXCrossoverOffspring(1.0, 20);
-    //getOffspring[1] = new BLXAlphaCrossoverOffspring(1.0, 0.5); 
-
     getOffspring[2] = new PolynomialMutationOffspring(1.0 / problem.getNumberOfVariables(), 20);
-    //getOffspring[2] = new NonUniformMutationOffspring(1.0/problem.getNumberOfVariables(), 0.5, 150000);
     
-    /*
-    Offspring[] getOffspring = new Offspring[2];
-    double CR, F;    
-    getOffspring[0] = new SBXCrossoverOffspring(
-      0.9, // crossover probability
-      20); // distribution index for crossover
-
-    getOffspring[1] = new PolynomialOffspring(1.0/problem.getNumberOfVariables(), 20);
-    */
     algorithm.setInputParameter("offspringsCreators", getOffspring);
 
     // Execute the Algorithm
@@ -169,9 +157,6 @@ public class NSGAIIAdaptive_main {
       logger_.info("IGD        : " + indicators.getIGD(population));
       logger_.info("Spread     : " + indicators.getSpread(population));
       logger_.info("Epsilon    : " + indicators.getEpsilon(population));
-
-      //int evaluations = ((Integer)algorithm.getOutputParameter("evaluations")).intValue();
-      //logger_.info("Speed      : " + evaluations + " evaluations") ;      
-    } // if
-  } //main
-} // NSGAII_main
+    } 
+  } 
+} 
