@@ -109,7 +109,7 @@ public class SolutionSet implements Serializable {
    */
   public int getMaxSize() {
     return capacity_;
-  } // getMaxSize
+  } 
 
   /**
    * Sorts a SolutionSet using a <code>Comparator</code>.
@@ -226,7 +226,7 @@ public class SolutionSet implements Serializable {
    */
   public int size() {
     return solutionsList_.size();
-  } // size
+  } 
 
   /**
    * @return true if the solution set if empty
@@ -251,8 +251,6 @@ public class SolutionSet implements Serializable {
       bw.write(aSolutionsList.toString());
       bw.newLine();
     }
-
-    /* Close the file */
     bw.close();
   }
 
@@ -267,7 +265,7 @@ public class SolutionSet implements Serializable {
     OutputStreamWriter osw = new OutputStreamWriter(fos);
     BufferedWriter bw = new BufferedWriter(osw);
 
-    if (isEmtpy()) {
+    if (!isEmtpy()) {
       int numberOfVariables = solutionsList_.get(0).getDecisionVariables().length;
       for (Solution aSolutionsList : solutionsList_) {
         for (int j = 0; j < numberOfVariables; j++) {
@@ -399,7 +397,7 @@ public class SolutionSet implements Serializable {
    */
   public Iterator<Solution> iterator() {
     return solutionsList_.iterator();
-  } // iterator
+  } 
 
   /**
    * Returns a new <code>SolutionSet</code> which is the result of the union
@@ -419,14 +417,14 @@ public class SolutionSet implements Serializable {
     SolutionSet union = new SolutionSet(newSize);
     for (int i = 0; i < this.size(); i++) {
       union.add(this.get(i));
-    } // for
+    } 
 
     for (int i = this.size(); i < (this.size() + solutionSet.size()); i++) {
       union.add(solutionSet.get(i - this.size()));
-    } // for
+    } 
 
     return union;
-  } // union
+  }
 
   /**
    * Replaces a solution by a new one

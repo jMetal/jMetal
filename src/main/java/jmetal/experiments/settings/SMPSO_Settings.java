@@ -51,8 +51,8 @@ public class SMPSO_Settings extends Settings {
   private double c2Min_;
   private double weightMax_;
   private double weightMin_;
-  private double changeVelocity1;
-  private double changeVelocity2;
+  private double changeVelocity1_;
+  private double changeVelocity2_;
 
   /**
    * Constructor
@@ -80,8 +80,8 @@ public class SMPSO_Settings extends Settings {
     c2Min_ = 1.5;
     weightMax_ = 0.1;
     weightMin_ = 0.1;
-    changeVelocity1 = -1;
-    changeVelocity2 = -1;
+    changeVelocity1_ = -1;
+    changeVelocity2_ = -1;
   } 
 
   /**
@@ -101,14 +101,14 @@ public class SMPSO_Settings extends Settings {
     algorithm.setInputParameter("swarmSize", swarmSize_);
     algorithm.setInputParameter("maxIterations", maxIterations_);
     algorithm.setInputParameter("archiveSize", archiveSize_);
-    algorithm.setInputParameter("c1Min", 1.5);
-    algorithm.setInputParameter("c1Max", 2.5);
-    algorithm.setInputParameter("c2Min", 1.5);
-    algorithm.setInputParameter("c2Max", 2.5);
-    algorithm.setInputParameter("weightMin", 0.1);
-    algorithm.setInputParameter("weightMax", 0.1);
-    algorithm.setInputParameter("changeVelocity1", -1.0);
-    algorithm.setInputParameter("changeVelocity2", -1.0);
+    algorithm.setInputParameter("c1Min", c1Min_);
+    algorithm.setInputParameter("c1Max", c1Max_);
+    algorithm.setInputParameter("c2Min", c2Min_);
+    algorithm.setInputParameter("c2Max", c2Max_);
+    algorithm.setInputParameter("weightMin", weightMin_);
+    algorithm.setInputParameter("weightMax", weightMax_);
+    algorithm.setInputParameter("changeVelocity1", changeVelocity1_);
+    algorithm.setInputParameter("changeVelocity2", changeVelocity2_);
 
     HashMap<String, Object> parameters = new HashMap<String, Object>();
     parameters.put("probability", mutationProbability_);
@@ -157,8 +157,8 @@ public class SMPSO_Settings extends Settings {
     algorithm.setInputParameter("c2Max", c2Max_);
     algorithm.setInputParameter("weightMin", weightMin_);
     algorithm.setInputParameter("weightMax", weightMax_);
-    algorithm.setInputParameter("changeVelocity1", changeVelocity1);
-    algorithm.setInputParameter("changeVelocity2", changeVelocity2);
+    algorithm.setInputParameter("changeVelocity1", changeVelocity1_);
+    algorithm.setInputParameter("changeVelocity2", changeVelocity2_);
 
     mutationProbability_ = Double.parseDouble(
       configuration.getProperty("mutationProbability", String.valueOf(mutationProbability_)));

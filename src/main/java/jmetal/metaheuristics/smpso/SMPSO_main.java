@@ -96,14 +96,14 @@ public class SMPSO_main {
     algorithm.setInputParameter("swarmSize", 100);
     algorithm.setInputParameter("archiveSize", 100);
     algorithm.setInputParameter("maxIterations", 250);
-    algorithm.setInputParameter("C1Min", 1.5);
-    algorithm.setInputParameter("C1Max", 2.5);
-    algorithm.setInputParameter("C2Min", 1.5);
-    algorithm.setInputParameter("C2Max", 2.5);
-    algorithm.setInputParameter("WMin", 0.1);
-    algorithm.setInputParameter("WMax", 0.1);
-    algorithm.setInputParameter("ChVel1", -1.0);
-    algorithm.setInputParameter("ChVel2", -1.0);
+    algorithm.setInputParameter("c1Min", 1.5);
+    algorithm.setInputParameter("c1Max", 2.5);
+    algorithm.setInputParameter("c2Min", 1.5);
+    algorithm.setInputParameter("c2Max", 2.5);
+    algorithm.setInputParameter("weightMin", 0.1);
+    algorithm.setInputParameter("weightMax", 0.1);
+    algorithm.setInputParameter("changeVelocity1", -1.0);
+    algorithm.setInputParameter("changeVelocity2", -1.0);
 
     HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
     mutationParameters.put("probability", 1.0 / problem.getNumberOfVariables());
