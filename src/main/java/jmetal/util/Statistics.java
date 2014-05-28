@@ -19,7 +19,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package jmetal.experiments.util;
+package jmetal.util;
 
 import java.util.Vector;
 
@@ -117,7 +117,6 @@ public class Statistics {
   }
 
   public static Double calculateStandardDeviation(Vector<Double> vector, double mean) {
-    double sum = 0.0 ;
     double sqsum = 0.0 ;
     double stdDeviation ;
     for (int i = 0; i < vector.size(); i++) {

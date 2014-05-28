@@ -23,6 +23,7 @@ package jmetal.experiments.util;
 
 import jmetal.experiments.Experiment;
 import jmetal.util.Configuration;
+import jmetal.util.Statistics;
 
 import java.io.*;
 import java.util.*;
