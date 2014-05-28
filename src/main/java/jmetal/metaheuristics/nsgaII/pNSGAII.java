@@ -132,9 +132,7 @@ public class pNSGAII extends Algorithm {
           mutationOperator.execute(offSpring[0]);
           mutationOperator.execute(offSpring[1]);
           parallelEvaluator_.addTaskForExecution(new Object[] {offSpring[0]});
-          ;
           parallelEvaluator_.addTaskForExecution(new Object[] {offSpring[1]});
-          ;
         }
       }
 

@@ -135,7 +135,7 @@ public class DE extends Algorithm {
     resultPopulation.add(population.get(0));
 
     Configuration.logger_.log(Level.INFO, "Evaluations: " + evaluations);
-    ;
+
     return resultPopulation;
   }
 }

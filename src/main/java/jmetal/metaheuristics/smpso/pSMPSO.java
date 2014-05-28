@@ -165,7 +165,6 @@ public class pSMPSO extends Algorithm {
     polynomialMutation_ = operators_.get("mutation");
 
     parallelEvaluator_.startParallelRunner(problem_);
-    ;
 
     iteration_ = 1;
 
@@ -338,7 +337,6 @@ public class pSMPSO extends Algorithm {
       Solution particle = new Solution(problem_);
       particles_.add(particle);
       parallelEvaluator_.addTaskForExecution(new Object[] {particle});
-      ;
     }
 
     parallelEvaluator_.parallelExecution();
@@ -384,7 +382,6 @@ public class pSMPSO extends Algorithm {
       for (int i = 0; i < particles_.size(); i++) {
         Solution particle = particles_.get(i);
         parallelEvaluator_.addTaskForExecution(new Object[] {particle});
-        ;
       }
 
       parallelEvaluator_.parallelExecution();

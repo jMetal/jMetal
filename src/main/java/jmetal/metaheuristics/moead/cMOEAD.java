@@ -105,17 +105,17 @@ public class cMOEAD extends Algorithm {
     int maxEvaluations;
 
     evaluations_ = 0;
-    maxEvaluations = ((Integer) this.getInputParameter("maxEvaluations")).intValue();
-    populationSize_ = ((Integer) this.getInputParameter("populationSize")).intValue();
+    maxEvaluations = (Integer) this.getInputParameter("maxEvaluations");
+    populationSize_ = (Integer) this.getInputParameter("populationSize");
     dataDirectory_ = this.getInputParameter("dataDirectory").toString();
     Configuration.logger_.info("POPSIZE: " + populationSize_);
 
     population_ = new SolutionSet(populationSize_);
     indArray_ = new Solution[problem_.getNumberOfObjectives()];
 
-    T_ = ((Integer) this.getInputParameter("T")).intValue();
-    nr_ = ((Integer) this.getInputParameter("nr")).intValue();
-    delta_ = ((Double) this.getInputParameter("delta")).doubleValue();
+    T_ = (Integer) this.getInputParameter("T");
+    nr_ = (Integer) this.getInputParameter("nr");
+    delta_ = (Double) this.getInputParameter("delta");
 
     /*
     T_ = 20;
@@ -239,7 +239,7 @@ public class cMOEAD extends Algorithm {
 
           numberOfObjectives = st.countTokens();
           while (st.hasMoreTokens()) {
-            double value = (new Double(st.nextToken())).doubleValue();
+            double value = new Double(st.nextToken());
             lambda_[i][j] = value;
             //Configuration.logger_.info("lambda["+i+","+j+"] = " + value) ;
             j++;

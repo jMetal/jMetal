@@ -37,9 +37,7 @@ public class Utils {
     //  Auto. Comp., Vol.ii-Linear Algebra, and the corresponding
     //  Fortran subroutine in EISPACK.
 
-    for (int j = 0; j < n; j++) {
-      d[j] = V[n - 1][j];
-    }
+    System.arraycopy(V[n - 1], 0, d, 0, n);
 
     // Householder reduction to tridiagonal form.
 
@@ -154,9 +152,7 @@ public class Utils {
     //  Auto. Comp., Vol.ii-Linear Algebra, and the corresponding
     //  Fortran subroutine in EISPACK.
 
-    for (int i = 1; i < n; i++) {
-      e[i - 1] = e[i];
-    }
+    System.arraycopy(e, 1, e, 0, n - 1);
     e[n - 1] = 0.0;
 
     double f = 0.0;

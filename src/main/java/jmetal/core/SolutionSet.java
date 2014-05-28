@@ -460,8 +460,8 @@ public class SolutionSet implements Serializable {
   }
 
   public void printObjectives() {
-    for (int i = 0; i < solutionsList_.size(); i++) {
-      Configuration.logger_.log(Level.INFO, "" + solutionsList_.get(i));
+    for (Solution aSolutionsList_ : solutionsList_) {
+      Configuration.logger_.log(Level.INFO, "" + aSolutionsList_);
     }
   }
 

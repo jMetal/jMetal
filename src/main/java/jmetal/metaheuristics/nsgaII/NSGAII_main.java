@@ -149,7 +149,7 @@ public class NSGAII_main {
       logger_.info("Spread     : " + indicators.getSpread(population));
       logger_.info("Epsilon    : " + indicators.getEpsilon(population));
 
-      int evaluations = ((Integer) algorithm.getOutputParameter("evaluations")).intValue();
+      int evaluations = (Integer) algorithm.getOutputParameter("evaluations");
       logger_.info("Speed      : " + evaluations + " evaluations");
     }
   }

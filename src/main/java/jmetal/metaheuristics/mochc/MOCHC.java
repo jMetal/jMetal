@@ -124,15 +124,15 @@ public class MOCHC extends Algorithm {
 
     // Read parameters
     initialConvergenceCount =
-      ((Double) getInputParameter("initialConvergenceCount")).doubleValue();
+      (Double) getInputParameter("initialConvergenceCount");
     preservedPopulation =
-      ((Double) getInputParameter("preservedPopulation")).doubleValue();
+      (Double) getInputParameter("preservedPopulation");
     convergenceValue =
-      ((Integer) getInputParameter("convergenceValue")).intValue();
+      (Integer) getInputParameter("convergenceValue");
     populationSize =
-      ((Integer) getInputParameter("populationSize")).intValue();
+      (Integer) getInputParameter("populationSize");
     maxEvaluations =
-      ((Integer) getInputParameter("maxEvaluations")).intValue();
+      (Integer) getInputParameter("maxEvaluations");
 
 
     // Read operators

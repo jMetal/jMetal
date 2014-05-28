@@ -145,7 +145,7 @@ public class MutationLocalSearch extends LocalSearch {
         solution = mutatedSolution;
       } else if (best == 1) {
         // original is best
-        ;
+
       } else {
         // mutatedSolution and original are non-dominated
         if (archive_ != null) {

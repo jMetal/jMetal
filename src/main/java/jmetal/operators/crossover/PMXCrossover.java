@@ -181,7 +181,7 @@ public class PMXCrossover extends Crossover {
       throw new JMException("Exception in " + name + ".execute()");
     }
 
-    Solution[] offspring = doCrossover(crossoverProbability.doubleValue(),
+    Solution[] offspring = doCrossover(crossoverProbability,
       parents[0],
       parents[1]);
 

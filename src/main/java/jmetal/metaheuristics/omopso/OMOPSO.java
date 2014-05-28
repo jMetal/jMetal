@@ -246,15 +246,14 @@ public class OMOPSO extends Algorithm {
     //*/
 
     for (int i = 0; i < particles_.size(); i++) {
-      if (i % 3 == 0) { //particles_ mutated with a non-uniform mutation
+      if (i % 3 == 0) {
         nonUniformMutation_.execute(particles_.get(i));
-      } else if (i % 3 == 1) { //particles_ mutated with a uniform mutation operator
+      } else if (i % 3 == 1) {
         uniformMutation_.execute(particles_.get(i));
-      } else {//particles_ without mutation
-        ;
+      } else {
       }
     }
-  } // mopsoMutation
+  }
 
 
   /**

@@ -67,8 +67,8 @@ public class DENSEA extends Algorithm {
     Distance distance = new Distance();
 
     //Read the params
-    populationSize = ((Integer) this.getInputParameter("populationSize")).intValue();
-    maxEvaluations = ((Integer) this.getInputParameter("maxEvaluations")).intValue();
+    populationSize = (Integer) this.getInputParameter("populationSize");
+    maxEvaluations = (Integer) this.getInputParameter("maxEvaluations");
 
     //Init the variables
     population = new SolutionSet(populationSize);

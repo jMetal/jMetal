@@ -146,9 +146,9 @@ public class dMOPSO extends Algorithm {
    * Initialize all parameter of the algorithm
    */
   public void initParams() {
-    swarmSize_ = ((Integer) getInputParameter("swarmSize")).intValue();
-    maxIterations_ = ((Integer) getInputParameter("maxIterations")).intValue();
-    maxAge_ = ((Integer) getInputParameter("maxAge")).intValue();
+    swarmSize_ = (Integer) getInputParameter("swarmSize");
+    maxIterations_ = (Integer) getInputParameter("maxIterations");
+    maxAge_ = (Integer) getInputParameter("maxAge");
     indicators_ = (QualityIndicator) getInputParameter("indicators");
     dataDirectory_ = getInputParameter("dataDirectory").toString();
 
@@ -440,7 +440,7 @@ public class dMOPSO extends Algorithm {
           j = 0;
           numberOfObjectives = st.countTokens();
           while (st.hasMoreTokens()) {
-            double value = (new Double(st.nextToken())).doubleValue();
+            double value = new Double(st.nextToken());
             lambda_[i][j] = value;
             j++;
           }

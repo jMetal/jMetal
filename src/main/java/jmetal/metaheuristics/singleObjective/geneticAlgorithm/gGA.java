@@ -69,8 +69,8 @@ public class gGA extends Algorithm {
     comparator = new ObjectiveComparator(0); // Single objective comparator
 
     // Read the params
-    populationSize = ((Integer) this.getInputParameter("populationSize")).intValue();
-    maxEvaluations = ((Integer) this.getInputParameter("maxEvaluations")).intValue();
+    populationSize = (Integer) this.getInputParameter("populationSize");
+    maxEvaluations = (Integer) this.getInputParameter("maxEvaluations");
 
     // Initialize the variables
     population = new SolutionSet(populationSize);

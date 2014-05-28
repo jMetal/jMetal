@@ -66,11 +66,11 @@ public class FastPGA extends Algorithm {
     Comparator<Solution> fpgaFitnessComparator = new FPGAFitnessComparator();
 
     //Read the parameters
-    maxPopSize = ((Integer) getInputParameter("maxPopSize")).intValue();
-    maxEvaluations = ((Integer) getInputParameter("maxEvaluations")).intValue();
+    maxPopSize = (Integer) getInputParameter("maxPopSize");
+    maxEvaluations = (Integer) getInputParameter("maxEvaluations");
     initialPopulationSize =
-      ((Integer) getInputParameter("initialPopulationSize")).intValue();
-    termination = ((Integer) getInputParameter("termination")).intValue();
+      (Integer) getInputParameter("initialPopulationSize");
+    termination = (Integer) getInputParameter("termination");
 
     //Read the operators
     crossover = (Operator) operators_.get("crossover");
@@ -78,10 +78,10 @@ public class FastPGA extends Algorithm {
     selection = (Operator) operators_.get("selection");
 
     //Read the params
-    a = ((Double) getInputParameter("a")).doubleValue();
-    b = ((Double) getInputParameter("b")).doubleValue();
-    c = ((Double) getInputParameter("c")).doubleValue();
-    d = ((Double) getInputParameter("d")).doubleValue();
+    a = (Double) getInputParameter("a");
+    b = (Double) getInputParameter("b");
+    c = (Double) getInputParameter("c");
+    d = (Double) getInputParameter("d");
 
     //Initialize populationSize and offSpringSize
     evaluations = 0;

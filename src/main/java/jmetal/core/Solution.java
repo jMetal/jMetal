@@ -24,6 +24,7 @@
 package jmetal.core;
 
 import jmetal.encodings.variable.Binary;
+import jmetal.encodings.variable.BinaryReal;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -365,9 +366,7 @@ public class Solution implements Serializable {
    */
   public void setDecisionVariables(Variable[] variables) {
     variable_ = new Variable[variables.length];
-    for (int i = 0; i < variables.length; i++) {
-      variable_[i] = variables[i];
-    }
+    System.arraycopy(variables, 0, variable_, 0, variables.length);
   }
 
   public Problem getProblem() {
@@ -519,11 +518,11 @@ public class Solution implements Serializable {
   public int getNumberOfBits() {
     int bits = 0;
 
-    for (int i = 0; i < variable_.length; i++) {
-      if ((variable_[i].getVariableType() == jmetal.encodings.variable.Binary.class)
-        || (variable_[i].getVariableType() == jmetal.encodings.variable.BinaryReal.class)) {
+    for (Variable aVariable_ : variable_) {
+      if ((aVariable_.getVariableType() == Binary.class)
+        || (aVariable_.getVariableType() == BinaryReal.class)) {
 
-        bits += ((Binary) (variable_[i])).getNumberOfBits();
+        bits += ((Binary) (aVariable_)).getNumberOfBits();
       }
     }
 

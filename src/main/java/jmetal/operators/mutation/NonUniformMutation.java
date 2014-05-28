@@ -101,11 +101,11 @@ public class NonUniformMutation extends Mutation {
 
         if (rand <= 0.5) {
           tmp = delta(x.getUpperBound(var) - x.getValue(var),
-            perturbation_.doubleValue());
+            perturbation_);
           tmp += x.getValue(var);
         } else {
           tmp = delta(x.getLowerBound(var) - x.getValue(var),
-            perturbation_.doubleValue());
+            perturbation_);
           tmp += x.getValue(var);
         }
 
@@ -126,8 +126,8 @@ public class NonUniformMutation extends Mutation {
   private double delta(double y, double bMutationParameter) {
     double rand = PseudoRandom.randDouble();
     int it, maxIt;
-    it = currentIteration_.intValue();
-    maxIt = maxIterations_.intValue();
+    it = currentIteration_;
+    maxIt = maxIterations_;
 
     return (y * (1.0 -
       Math.pow(rand,

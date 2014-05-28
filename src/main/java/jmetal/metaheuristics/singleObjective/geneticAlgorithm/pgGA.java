@@ -78,8 +78,8 @@ public class pgGA extends Algorithm {
     comparator = new ObjectiveComparator(0); // Single objective comparator
 
     //Read the parameters
-    populationSize = ((Integer) getInputParameter("populationSize")).intValue();
-    maxEvaluations = ((Integer) getInputParameter("maxEvaluations")).intValue();
+    populationSize = (Integer) getInputParameter("populationSize");
+    maxEvaluations = (Integer) getInputParameter("maxEvaluations");
 
     parallelEvaluator_.startParallelRunner(problem_);
 
@@ -99,7 +99,6 @@ public class pgGA extends Algorithm {
     for (int i = 0; i < populationSize; i++) {
       newSolution = new Solution(problem_);
       parallelEvaluator_.addTaskForExecution(new Object[] {newSolution});
-      ;
     }
 
     List<Solution> solutionList = (List<Solution>) parallelEvaluator_.parallelExecution();
@@ -127,11 +126,9 @@ public class pgGA extends Algorithm {
           mutationOperator.execute(offSpring[0]);
           mutationOperator.execute(offSpring[1]);
           parallelEvaluator_.addTaskForExecution(new Object[] {offSpring[0]});
-          ;
           parallelEvaluator_.addTaskForExecution(new Object[] {offSpring[1]});
-          ;
-        } // if
-      } // for
+        }
+      }
 
       List<Solution> solutions = (List<Solution>) parallelEvaluator_.parallelExecution();
 

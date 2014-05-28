@@ -84,7 +84,7 @@ public class UniformMutation extends Mutation {
     for (int var = 0; var < solution.getDecisionVariables().length; var++) {
       if (PseudoRandom.randDouble() < probability) {
         double rand = PseudoRandom.randDouble();
-        double tmp = (rand - 0.5) * perturbation_.doubleValue();
+        double tmp = (rand - 0.5) * perturbation_;
 
         tmp += x.getValue(var);
 

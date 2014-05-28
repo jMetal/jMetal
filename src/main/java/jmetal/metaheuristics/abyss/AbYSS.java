@@ -168,11 +168,11 @@ public class AbYSS extends Algorithm {
    */
   public void initParam() {
     //Read the parameters
-    solutionSetSize_ = ((Integer) getInputParameter("populationSize")).intValue();
-    refSet1Size_ = ((Integer) getInputParameter("refSet1Size")).intValue();
-    refSet2Size_ = ((Integer) getInputParameter("refSet2Size")).intValue();
-    archiveSize_ = ((Integer) getInputParameter("archiveSize")).intValue();
-    maxEvaluations_ = ((Integer) getInputParameter("maxEvaluations")).intValue();
+    solutionSetSize_ = (Integer) getInputParameter("populationSize");
+    refSet1Size_ = (Integer) getInputParameter("refSet1Size");
+    refSet2Size_ = (Integer) getInputParameter("refSet2Size");
+    archiveSize_ = (Integer) getInputParameter("archiveSize");
+    maxEvaluations_ = (Integer) getInputParameter("maxEvaluations");
 
     //Initialize the variables
     solutionSet_ = new SolutionSet(solutionSetSize_);

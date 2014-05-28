@@ -27,7 +27,6 @@ import jmetal.util.Ranking;
 import jmetal.util.comparators.DominanceComparator;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -240,9 +239,8 @@ public class IBEA extends Algorithm {
 
     // remove worst from the indicatorValues list
     indicatorValues_.remove(worstIndex); // Remove its own list
-    Iterator<List<Double>> it = indicatorValues_.iterator();
-    while (it.hasNext()) {
-      it.next().remove(worstIndex);
+    for (List<Double> anIndicatorValues_ : indicatorValues_) {
+      anIndicatorValues_.remove(worstIndex);
     }
 
     // remove the worst individual from the population

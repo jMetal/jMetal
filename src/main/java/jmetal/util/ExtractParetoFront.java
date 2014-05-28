@@ -177,9 +177,7 @@ public class ExtractParetoFront {
 
     public Point(double[] vector) {
       vector_ = new double[vector.length];
-      for (int i = 0; i < vector.length; i++) {
-        vector_[i] = vector[i];
-      }
+      System.arraycopy(vector, 0, vector_, 0, vector.length);
     }
 
     public Point(int size) {

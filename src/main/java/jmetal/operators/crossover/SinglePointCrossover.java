@@ -212,9 +212,9 @@ public class SinglePointCrossover extends Crossover {
         parents[1]);
 
     // Update the offSpring solutions
-    for (int i = 0; i < offSpring.length; i++) {
-      offSpring[i].setCrowdingDistance(0.0);
-      offSpring[i].setRank(0);
+    for (Solution anOffSpring : offSpring) {
+      anOffSpring.setCrowdingDistance(0.0);
+      anOffSpring.setRank(0);
     }
     return offSpring;
   }

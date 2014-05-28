@@ -95,17 +95,17 @@ public class MOEAD extends Algorithm {
     int maxEvaluations;
 
     evaluations_ = 0;
-    maxEvaluations = ((Integer) this.getInputParameter("maxEvaluations")).intValue();
-    populationSize_ = ((Integer) this.getInputParameter("populationSize")).intValue();
+    maxEvaluations = (Integer) this.getInputParameter("maxEvaluations");
+    populationSize_ = (Integer) this.getInputParameter("populationSize");
     dataDirectory_ = this.getInputParameter("dataDirectory").toString();
     Configuration.logger_.info("POPSIZE: " + populationSize_);
 
     population_ = new SolutionSet(populationSize_);
     indArray_ = new Solution[problem_.getNumberOfObjectives()];
 
-    T_ = ((Integer) this.getInputParameter("T")).intValue();
-    nr_ = ((Integer) this.getInputParameter("nr")).intValue();
-    delta_ = ((Double) this.getInputParameter("delta")).doubleValue();
+    T_ = (Integer) this.getInputParameter("T");
+    nr_ = (Integer) this.getInputParameter("nr");
+    delta_ = (Double) this.getInputParameter("delta");
 
 /*
     T_ = (int) (0.1 * populationSize_);
@@ -223,7 +223,7 @@ public class MOEAD extends Algorithm {
           j = 0;
           numberOfObjectives = st.countTokens();
           while (st.hasMoreTokens()) {
-            double value = (new Double(st.nextToken())).doubleValue();
+            double value = new Double(st.nextToken());
             lambda_[i][j] = value;
             //Configuration.logger_.info("lambda["+i+","+j+"] = " + value) ;
             j++;
@@ -318,8 +318,8 @@ public class MOEAD extends Algorithm {
         p = PseudoRandom.randInt(0, populationSize_ - 1);
       }
       boolean flag = true;
-      for (int i = 0; i < list.size(); i++) {
-        if (list.get(i) == p) // p is in the list
+      for (Integer aList : list) {
+        if (aList == p)
         {
           flag = false;
           break;

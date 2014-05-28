@@ -168,7 +168,6 @@ public class QualityIndicatorTables implements IExperimentOutput {
         }
       }
     } else {
-      ; 
     }
   }
 }

@@ -71,9 +71,9 @@ public class sMOCell2 extends Algorithm {
     Distance distance = new Distance();
 
     //Read the params
-    populationSize = ((Integer) getInputParameter("populationSize")).intValue();
-    archiveSize = ((Integer) getInputParameter("archiveSize")).intValue();
-    maxEvaluations = ((Integer) getInputParameter("maxEvaluations")).intValue();
+    populationSize = (Integer) getInputParameter("populationSize");
+    archiveSize = (Integer) getInputParameter("archiveSize");
+    maxEvaluations = (Integer) getInputParameter("maxEvaluations");
 
     //Read the operators
     mutationOperator = operators_.get("mutation");

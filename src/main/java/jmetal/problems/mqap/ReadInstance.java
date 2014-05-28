@@ -76,7 +76,7 @@ public class ReadInstance {
               numberOfObjectives = st.countTokens();
               int[] weight = new int[numberOfObjectives];
               for (int k = 0; k < numberOfObjectives; k++) {
-                weight[k] = (new Integer(st.nextToken()).intValue());
+                weight[k] = (Integer.parseInt(st.nextToken()));
                 Configuration.logger_.info(""+weight[k]);
               }
               ri.createSingleObjectiveInstance(weight);

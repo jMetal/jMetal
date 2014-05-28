@@ -93,7 +93,7 @@ public class FriedmanTables implements IExperimentOutput {
     data = new Vector();
 
     for (int alg = 0; alg < experiment_.getAlgorithmNameList().length; alg++) {
-      algorithms.add(new String(experiment_.getAlgorithmNameList()[alg]));
+      algorithms.add(experiment_.getAlgorithmNameList()[alg]);
       data.add(new Vector());
       String rutaAlg = experiment_.getExperimentBaseDirectory() + "/data/"
         + experiment_.getAlgorithmNameList()[alg] + "/";
@@ -150,7 +150,7 @@ public class FriedmanTables implements IExperimentOutput {
 
     for (j = 0; j < algorithms.size(); j++) {
       for (i = 0; i < datasets.size(); i++) {
-        mean[i][j] = ((Double) ((Vector) data.elementAt(j)).elementAt(i)).doubleValue();
+        mean[i][j] = (Double) ((Vector) data.elementAt(j)).elementAt(i);
       }
     }
 
@@ -201,7 +201,7 @@ public class FriedmanTables implements IExperimentOutput {
         sum /= (double) ig;
         rank[i][j].index_ = sum;
         for (k = 0; k < porVisitar.size(); k++) {
-          rank[i][((Integer) porVisitar.elementAt(k)).intValue()].index_ = sum;
+          rank[i][((Integer) porVisitar.elementAt(k))].index_ = sum;
         }
       }
     }

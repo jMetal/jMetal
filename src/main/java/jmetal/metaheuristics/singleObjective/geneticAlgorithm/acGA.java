@@ -82,8 +82,8 @@ public class acGA extends Algorithm {
     findBestSolution = new BestSolutionSelection(selectionParameters);
 
     //Read the params
-    populationSize = ((Integer) getInputParameter("populationSize")).intValue();
-    maxEvaluations = ((Integer) getInputParameter("maxEvaluations")).intValue();
+    populationSize = (Integer) getInputParameter("populationSize");
+    maxEvaluations = (Integer) getInputParameter("maxEvaluations");
 
     //Read the operators
     mutationOperator = operators_.get("mutation");

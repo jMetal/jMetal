@@ -65,10 +65,10 @@ public class aMOCell3 extends Algorithm {
     Distance distance = new Distance();
 
     //Read the parameters
-    populationSize = ((Integer) getInputParameter("populationSize")).intValue();
-    archiveSize = ((Integer) getInputParameter("archiveSize")).intValue();
-    maxEvaluations = ((Integer) getInputParameter("maxEvaluations")).intValue();
-    feedBack = ((Integer) getInputParameter("feedBack")).intValue();
+    populationSize = (Integer) getInputParameter("populationSize");
+    archiveSize = (Integer) getInputParameter("archiveSize");
+    maxEvaluations = (Integer) getInputParameter("maxEvaluations");
+    feedBack = (Integer) getInputParameter("feedBack");
 
 
     //Read the operators

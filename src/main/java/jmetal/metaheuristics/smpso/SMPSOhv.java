@@ -200,9 +200,9 @@ public class SMPSOhv extends Algorithm {
    * Initialize all parameter of the algorithm
    */
   public void initParams() {
-    swarmSize_ = ((Integer) getInputParameter("swarmSize")).intValue();
-    archiveSize_ = ((Integer) getInputParameter("archiveSize")).intValue();
-    maxIterations_ = ((Integer) getInputParameter("maxIterations")).intValue();
+    swarmSize_ = (Integer) getInputParameter("swarmSize");
+    archiveSize_ = (Integer) getInputParameter("archiveSize");
+    maxIterations_ = (Integer) getInputParameter("maxIterations");
 
     indicators_ = (QualityIndicator) getInputParameter("indicators");
 

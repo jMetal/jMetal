@@ -70,8 +70,8 @@ public class Point {
 
   public String toString() {
     String result = "";
-    for (int i = 0; i < objectives_.length; i++) {
-      result += objectives_[i] + " ";
+    for (double anObjectives_ : objectives_) {
+      result += anObjectives_ + " ";
     }
 
     return result;
