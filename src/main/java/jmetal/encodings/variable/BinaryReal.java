@@ -87,6 +87,7 @@ public class BinaryReal extends Binary {
     setBits(bits);
     lowerBound_ = lowerBound;
     upperBound_ = upperBound;
+    
     decode();
   }
 

@@ -277,8 +277,6 @@ public class AvlTree<T> {
     notFinished = true;
 
     while (notFinished) {
-      //setBalance(currentNode);
-
       if (getBalance(currentNode) == -2) {
         if (height(currentNode.getLeft().getLeft()) >= height(currentNode.getLeft().getRight())) {
           leftRotation(currentNode);

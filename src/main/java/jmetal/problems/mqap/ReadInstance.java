@@ -157,7 +157,6 @@ public class ReadInstance {
           newLine += newToken + " ";
         }
       }
-      //Configuration.logger_.info(newLine);
       singleObjectiveFirstLine_ = newLine;
 
       // reading A matrix (discarding empty lines on the way)

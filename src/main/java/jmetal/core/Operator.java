@@ -37,8 +37,8 @@ public abstract class Operator implements Serializable {
   private static final long serialVersionUID = -8976295845748676798L;
 
   /**
-   * Stores the current operator parameters. It is defined as a Map of pairs <
-   * <code>String</code>, <code>Object</code>>, and it allow objects to be
+   * Stores the current operator parameters. It is defined as a Map of pairs 
+   * (<code>String</code>, <code>Object</code>), and it allows objects to be
    * accessed by their names, which are specified by the string.
    */
   protected final Map<String, Object> parameters_;
@@ -54,7 +54,7 @@ public abstract class Operator implements Serializable {
    * Abstract method that must be defined by all the operators. When invoked,
    * this method executes the operator represented by the current object.
    *
-   * @param object This param inherits from Object to allow different kinds of
+   * @param object This parameter inherits from Object to allow different kinds of
    *               parameters for each operator. For example, a selection operator
    *               typically receives a <code>SolutionSet</code> as a parameter,
    *               while a mutation operator receives a <code>Solution</code>.

@@ -42,8 +42,8 @@ import java.util.logging.Logger;
  * Class for configuring and running the OMOPSO algorithm
  */
 public class OMOPSO_main {
-  public static Logger logger_;      // Logger object
-  public static FileHandler fileHandler_; // FileHandler object
+  public static Logger logger_;      
+  public static FileHandler fileHandler_; 
 
   /**
    * @param args Command line arguments. The first (optional) argument specifies

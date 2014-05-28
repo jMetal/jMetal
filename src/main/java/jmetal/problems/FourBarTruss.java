@@ -35,10 +35,14 @@ public class FourBarTruss extends Problem {
    *
    */
   private static final long serialVersionUID = -9117986919170703133L;
-  double F_ = 10; // 10kN
-  double E_ = 200000; // 20000 kN/cm2
-  double L_ = 200; // 200 cm
-  double sigma_ = 10; // 10kN/cm2 ;
+  // 10kN
+  double f_ = 10;
+  // 20000 kN/cm2
+  double e_ = 200000;
+  // 200 cm
+  double l = 200;
+  // 10kN/cm2
+  double sigma_ = 10;
 
   /**
    * Constructor
@@ -54,11 +58,11 @@ public class FourBarTruss extends Problem {
 
     lowerLimit_ = new double[numberOfVariables_];
     upperLimit_ = new double[numberOfVariables_];
-    lowerLimit_[0] = F_ / sigma_;
-    lowerLimit_[1] = Math.sqrt(2.0) * (F_ / sigma_);
+    lowerLimit_[0] = f_ / sigma_;
+    lowerLimit_[1] = Math.sqrt(2.0) * (f_ / sigma_);
     lowerLimit_[2] = lowerLimit_[1];
     lowerLimit_[3] = lowerLimit_[0];
-    upperLimit_[0] = 3 * (F_ / sigma_);
+    upperLimit_[0] = 3 * (f_ / sigma_);
     upperLimit_[1] = upperLimit_[0];
     upperLimit_[2] = upperLimit_[0];
     upperLimit_[3] = upperLimit_[0];
@@ -87,9 +91,9 @@ public class FourBarTruss extends Problem {
       x[i] = vars.getValue(i);
     }
 
-    fx[0] = L_ * (2 * x[0] + Math.sqrt(2.0) * x[1] + Math.sqrt(x[2]) + x[3]);
+    fx[0] = l * (2 * x[0] + Math.sqrt(2.0) * x[1] + Math.sqrt(x[2]) + x[3]);
     fx[1] =
-      (F_ * L_ / E_) * (2 / x[0] + 2 * Math.sqrt(2) / x[1] - 2 * Math.sqrt(2) / x[2] + 2 / x[3]);
+      (f_ * l / e_) * (2 / x[0] + 2 * Math.sqrt(2) / x[1] - 2 * Math.sqrt(2) / x[2] + 2 / x[3]);
 
     solution.setObjective(0, fx[0]);
     solution.setObjective(1, fx[1]);

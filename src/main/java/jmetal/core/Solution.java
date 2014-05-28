@@ -529,17 +529,4 @@ public class Solution implements Serializable {
 
     return bits;
   }
-
-  /*
-   * @Override TO-DO public boolean equals(Object object) { boolean result ; if
-   * (object == null) { result = false ; } else if (object == this) { result =
-   * true ; } else if (!(object instanceof Solution)) { result = false ; } else
-   * if (type_ != ((Solution)object).getType()) { result = false ; } else if
-   * (new SolutionComparator().compare(this, (Solution)object) == 0) { result =
-   * true ; } else if (new
-   * ObjectiveComparator(problem_.getNumberOfObjectives()).compare(this,
-   * (Solution)object) == 0) { result = true ; } else { result = false ; }
-   * 
-   * return result ; }
-   */
 }
