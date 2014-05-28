@@ -1,4 +1,4 @@
-//  IntTest.java
+//  Statistics.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -18,43 +18,51 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package test.encodings.variable;
+package test.util;
 
-import jmetal.encodings.variable.Int;
-import org.junit.After;
-import org.junit.Before;
+import jmetal.util.Statistics;
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
+import java.util.Vector;
+
+import static org.junit.Assert.assertEquals;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Antonio J. Nebro
- * Date: 29/06/13
- * Time: 17:13
+ * Created by Antonio J. Nebro on 28/05/14.
  */
-public class IntTest extends Int {
-  Int integer_ ;
-
+public class StatisticsTest {
+  static final double EPSILON = 0.000000000001 ;
+  Vector<Double> vector_ ;
+ /*
   @Before
   public void setUp() throws  Exception {
-    integer_  = new Int(1, 2, 3) ;
+    vector_ = new Vector<Double>(1) ;
   }
 
   @After
   public void tearDown() throws Exception {
-    integer_ = null ;
+    vector_ = null ;
+  }
+ */
+  @Test
+  public void testMeanOneElement() {
+    vector_ = new Vector<Double>(1) ;
+    vector_.add(0, 4.0);
+    assertEquals(4.0, (double) Statistics.calculateMean(vector_), EPSILON) ;
   }
 
   @Test
-  public void testGetValue() throws Exception {
-    assertEquals("IntTest", 1, (int)integer_.getValue()) ;
+  public void testMeanTwoElements() {
+    vector_ = new Vector<Double>(2) ;
+    vector_.add(0, 4.0);
+    vector_.add(1, 3.0);
+    assertEquals(3.5, (double) Statistics.calculateMean(vector_), EPSILON) ;
   }
-
+/*
   @Test
   public void testSetValue() throws Exception {
-     integer_.setValue(-235);
-     assertEquals("IntTest", -235, (int)integer_.getValue());
+    integer_.setValue(-235);
+    assertEquals("IntTest", -235, (int)integer_.getValue());
   }
 
   @Test
@@ -89,4 +97,5 @@ public class IntTest extends Int {
   public void testToString() {
     assertEquals("IntTest", "1", integer_.toString());
   }
+  */
 }
