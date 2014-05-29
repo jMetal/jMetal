@@ -132,11 +132,11 @@ public class aMOCell2 extends Algorithm {
 
         int flag = dominance.compare(individual, offSpring[0]);
 
-        if (flag == 1) { // OffSpring[0] dominates
+        if (flag == 1) {
           offSpring[0].setLocation(individual.getLocation());
           currentSolutionSet.replace(offSpring[0].getLocation(), offSpring[0]);
           archive.add(new Solution(offSpring[0]));
-        } else if (flag == 0) { //Both two are non-dominated               
+        } else if (flag == 0) {
           neighbors[ind].add(offSpring[0]);
           Ranking rank = new Ranking(neighbors[ind]);
           for (int j = 0; j < rank.getNumberOfSubfronts(); j++) {
@@ -146,9 +146,8 @@ public class aMOCell2 extends Algorithm {
 
           boolean deleteMutant = true;
 
-
           int compareResult = crowding.compare(individual, offSpring[0]);
-          if (compareResult == 1) { //The offSpring[0] is better
+          if (compareResult == 1) {
             deleteMutant = false;
           }
 
@@ -163,6 +162,6 @@ public class aMOCell2 extends Algorithm {
       }
     }
     return archive;
-  } // execute     
-} // aMOCell2
+  }
+}
 

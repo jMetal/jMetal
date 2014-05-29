@@ -28,7 +28,7 @@ import jmetal.util.JMException;
 import jmetal.util.archive.CrowdingArchive;
 import jmetal.util.comparators.CrowdingDistanceComparator;
 import jmetal.util.comparators.DominanceComparator;
-import jmetal.util.parallel.SynchronousParallelRunner;
+import jmetal.util.parallel.SynchronousParallelTaskExecutor;
 import jmetal.util.random.PseudoRandom;
 import jmetal.util.wrapper.XReal;
 
@@ -54,7 +54,7 @@ public class pSMPSO extends Algorithm {
   /**
    * ParallelEvaluator object
    */
-  SynchronousParallelRunner parallelEvaluator_;
+  SynchronousParallelTaskExecutor parallelEvaluator_;
   double r1Max_;
   double r1Min_;
   double r2Max_;
@@ -132,7 +132,7 @@ public class pSMPSO extends Algorithm {
    *
    * @param problem Problem to solve
    */
-  public pSMPSO(Problem problem, SynchronousParallelRunner evaluator) {
+  public pSMPSO(Problem problem, SynchronousParallelTaskExecutor evaluator) {
     super(problem);
 
     r1Max_ = 1.0;
@@ -164,8 +164,7 @@ public class pSMPSO extends Algorithm {
 
     polynomialMutation_ = operators_.get("mutation");
 
-    parallelEvaluator_.startParallelRunner(problem_);
-    ;
+    parallelEvaluator_.start(problem_);
 
     iteration_ = 1;
 
@@ -337,8 +336,7 @@ public class pSMPSO extends Algorithm {
     for (int i = 0; i < swarmSize_; i++) {
       Solution particle = new Solution(problem_);
       particles_.add(particle);
-      parallelEvaluator_.addTaskForExecution(new Object[] {particle});
-      ;
+      parallelEvaluator_.addTask(new Object[] {particle});
     }
 
     parallelEvaluator_.parallelExecution();
@@ -383,8 +381,7 @@ public class pSMPSO extends Algorithm {
 
       for (int i = 0; i < particles_.size(); i++) {
         Solution particle = particles_.get(i);
-        parallelEvaluator_.addTaskForExecution(new Object[] {particle});
-        ;
+        parallelEvaluator_.addTask(new Object[] {particle});
       }
 
       parallelEvaluator_.parallelExecution();
@@ -415,9 +412,9 @@ public class pSMPSO extends Algorithm {
 
     }
 
-    parallelEvaluator_.stopEvaluator();
+    parallelEvaluator_.stop();
     return this.leaders_;
-  } // execute
+  }
 
   /**
    * Gets the leaders of the SMPSO algorithm
@@ -425,4 +422,4 @@ public class pSMPSO extends Algorithm {
   public SolutionSet getLeader() {
     return leaders_;
   }  // getLeader   
-} // SMPSO
+}

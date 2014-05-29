@@ -26,7 +26,7 @@ import jmetal.util.Distance;
 import jmetal.util.JMException;
 import jmetal.util.Ranking;
 import jmetal.util.comparators.CrowdingComparator;
-import jmetal.util.parallel.SynchronousParallelRunner;
+import jmetal.util.parallel.SynchronousParallelTaskExecutor;
 
 import java.util.List;
 
@@ -46,7 +46,7 @@ public class pNSGAII extends Algorithm {
    *
    */
   private static final long serialVersionUID = -1418163498352372364L;
-  SynchronousParallelRunner parallelEvaluator_;
+  SynchronousParallelTaskExecutor parallelEvaluator_;
 
   /**
    * Constructor
@@ -54,7 +54,7 @@ public class pNSGAII extends Algorithm {
    * @param problem   Problem to solve
    * @param evaluator Parallel evaluator
    */
-  public pNSGAII(Problem problem, SynchronousParallelRunner evaluator) {
+  public pNSGAII(Problem problem, SynchronousParallelTaskExecutor evaluator) {
     super(problem);
 
     parallelEvaluator_ = evaluator;
@@ -92,8 +92,7 @@ public class pNSGAII extends Algorithm {
     maxEvaluations = ((Integer) getInputParameter("maxEvaluations")).intValue();
     indicators = (QualityIndicator) getInputParameter("indicators");
 
-    parallelEvaluator_.startParallelRunner(problem_);
-    ;
+    parallelEvaluator_.start(problem_);
 
     //Initialize the variables
     population = new SolutionSet(populationSize);
@@ -110,7 +109,7 @@ public class pNSGAII extends Algorithm {
     Solution newSolution;
     for (int i = 0; i < populationSize; i++) {
       newSolution = new Solution(problem_);
-      parallelEvaluator_.addTaskForExecution(new Object[] {newSolution});
+      parallelEvaluator_.addTask(new Object[] {newSolution});
     }
 
     List<Solution> solutionList = (List<Solution>) parallelEvaluator_.parallelExecution();
@@ -132,10 +131,8 @@ public class pNSGAII extends Algorithm {
           Solution[] offSpring = (Solution[]) crossoverOperator.execute(parents);
           mutationOperator.execute(offSpring[0]);
           mutationOperator.execute(offSpring[1]);
-          parallelEvaluator_.addTaskForExecution(new Object[] {offSpring[0]});
-          ;
-          parallelEvaluator_.addTaskForExecution(new Object[] {offSpring[1]});
-          ;
+          parallelEvaluator_.addTask(new Object[] {offSpring[0]});
+          parallelEvaluator_.addTask(new Object[] {offSpring[1]});
         }
       }
 
@@ -202,7 +199,7 @@ public class pNSGAII extends Algorithm {
       }
     }
 
-    parallelEvaluator_.stopEvaluator();
+    parallelEvaluator_.stop();
 
     // Return as output parameter the required evaluations
     setOutputParameter("evaluations", requiredEvaluations);

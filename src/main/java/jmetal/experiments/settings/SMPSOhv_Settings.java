@@ -132,4 +132,4 @@ public class SMPSOhv_Settings extends Settings {
 
     return algorithm;
   }
-} // SMPSOhv_Settings
+} 

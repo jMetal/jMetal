@@ -40,14 +40,15 @@ public class ExtractParetoFront {
    * @param name: the name of the file
    * @author Juan J. Durillo
    * Creates a new instance
+   * @throws IOException 
    */
-  public ExtractParetoFront(String name, int dimensions) {
+  public ExtractParetoFront(String name, int dimensions) throws IOException {
     fileName_ = name;
     dimensions_ = dimensions;
     loadInstance();
   }
 
-  public static void main(String[] args) throws JMException {
+  public static void main(String[] args) throws JMException, NumberFormatException, IOException {
     if (args.length != 2) {
       Configuration.logger_.info("Wrong number of arguments: ");
       Configuration.logger_.info("Sintaxt: java ExtractParetoFront <file> <dimensions>");
@@ -63,56 +64,46 @@ public class ExtractParetoFront {
 
   /**
    * Read the points instance from file
+   * @throws IOException 
    */
-  public void loadInstance() {
-    try {
-      File archivo = new File(fileName_);
-      FileReader fr = null;
-      BufferedReader br = null;
-      fr = new FileReader(archivo);
-      br = new BufferedReader(fr);
+  public void loadInstance() throws IOException {
+    File archivo = new File(fileName_);
+    FileReader fr = null;
+    BufferedReader br = null;
+    fr = new FileReader(archivo);
+    br = new BufferedReader(fr);
 
-      // File reading
-      String line;
-      int lineCnt = 0;
-      line = br.readLine(); // reading the first line (special case)
+    // File reading
+    String line;
+    int lineCnt = 0;
+    line = br.readLine(); // reading the first line (special case)
 
-      while (line != null) {
-        StringTokenizer st = new StringTokenizer(line);
-        try {
-          Point auxPoint = new Point(dimensions_);
-          for (int i = 0; i < dimensions_; i++) {
-            auxPoint.vector_[i] = new Double(st.nextToken());
-          }
-
-          add(auxPoint);
-
-          line = br.readLine();
-          lineCnt++;
-        } catch (NumberFormatException e) {
-          Configuration.logger_.log(
+    while (line != null) {
+      StringTokenizer st = new StringTokenizer(line);
+      try {
+        Point auxPoint = new Point(dimensions_);
+        for (int i = 0; i < dimensions_; i++) {
+          auxPoint.vector_[i] = new Double(st.nextToken());
+        }
+        add(auxPoint);
+        line = br.readLine();
+        lineCnt++;
+      } catch (NumberFormatException e) {
+        Configuration.logger_.log(
             Level.WARNING,
             "Number in a wrong format in line " + lineCnt + "\n" + line, e);
-          line = br.readLine();
-          lineCnt++;
-        } catch (NoSuchElementException e2) {
-          Configuration.logger_.log(
+        line = br.readLine();
+        lineCnt++;
+      } catch (NoSuchElementException e2) {
+        Configuration.logger_.log(
             Level.WARNING,
             "Line " + lineCnt + " does not have the right number of objectives\n" + line, e2);
-          line = br.readLine();
-          lineCnt++;
-        }
+        line = br.readLine();
+        lineCnt++;
       }
-      br.close();
-    } catch (FileNotFoundException e3) {
-      Configuration.logger_
-        .log(Level.SEVERE, "The file " + fileName_ + " has not been found in your file system", e3);
-    } catch (IOException e3) {
-      Configuration.logger_
-        .log(Level.SEVERE, "The file " + fileName_ + " has not been found in your file system", e3);
     }
+    br.close();
   }
-
 
   public void add(Point point) {
     Iterator<Point> iterator = points_.iterator();
@@ -131,7 +122,6 @@ public class ExtractParetoFront {
     }
     points_.add(point);
   }
-
 
   public int compare(Point one, Point two) {
     int flag1 = 0, flag2 = 0;
@@ -158,7 +148,6 @@ public class ExtractParetoFront {
     return 0;
   }
 
-
   public void writeParetoFront() {
     try {
       /* Open the file */
@@ -183,15 +172,12 @@ public class ExtractParetoFront {
     }
   }
 
-
   private class Point {
     double[] vector_;
 
     public Point(double[] vector) {
       vector_ = new double[vector.length];
-      for (int i = 0; i < vector.length; i++) {
-        vector_[i] = vector[i];
-      }
+      System.arraycopy(vector, 0, vector_, 0, vector.length);
     }
 
     public Point(int size) {

@@ -326,9 +326,7 @@ public class R2 {
     }
 
     int[] res = new int[N];
-    for (int i = 0; i < N; i++) {
-      res[i] = index_bests[i];
-    }
+    System.arraycopy(index_bests, 0, res, 0, N);
 
     return res;
   }

@@ -43,8 +43,8 @@ public class NSGAIIRandom extends Algorithm {
     Distance distance = new Distance();
 
     //Read parameter values
-    populationSize_ = ((Integer) getInputParameter("populationSize")).intValue();
-    maxEvaluations_ = ((Integer) getInputParameter("maxEvaluations")).intValue();
+    populationSize_ = (Integer) getInputParameter("populationSize");
+    maxEvaluations_ = (Integer) getInputParameter("maxEvaluations");
 
     //Init the variables
     population_ = new SolutionSet(populationSize_);
@@ -88,7 +88,7 @@ public class NSGAIIRandom extends Algorithm {
       // Create the offSpring solutionSet      
       offspringPopulation_ = new SolutionSet(populationSize_);
       Solution[] parents = new Solution[2];
-      for (int i = 0; i < (populationSize_ / 1); i++) {
+      for (int i = 0; i < populationSize_; i++) {
         if (evaluations_ < maxEvaluations_) {
           Solution individual =
             new Solution(population_.get(PseudoRandom.randInt(0, populationSize_ - 1)));

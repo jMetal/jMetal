@@ -94,17 +94,6 @@ public class Binary extends Variable {
   }
 
   /**
-   * This method is intended to be used in subclass of <code>Binary</code>,
-   * for examples the classes, <code>BinaryReal</code> and <code>BinaryInt<codes>.
-   * In this classes, the method allows to decode the
-   * value enconded in the binary string. As generic variables do not encode any
-   * value, this method do noting
-   */
-  public void decode() {
-    //do nothing
-  }
-
-  /**
    * Creates an exact copy of a Binary object
    *
    * @return An exact copy of the object.

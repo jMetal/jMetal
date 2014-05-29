@@ -41,8 +41,8 @@ import java.util.logging.Logger;
  * Class for configuring and running the DENSEA algorithm
  */
 public class DENSEA_main {
-  public static Logger logger_;      // Logger object
-  public static FileHandler fileHandler_; // FileHandler object
+  public static Logger logger_;     
+  public static FileHandler fileHandler_; 
 
   public static void main(String[] args) throws JMException, IOException, ClassNotFoundException {
     Problem problem;

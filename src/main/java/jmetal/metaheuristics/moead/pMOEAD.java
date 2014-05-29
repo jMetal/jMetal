@@ -233,10 +233,10 @@ public class pMOEAD extends Algorithm implements Runnable {
     parentThread_ = this;
 
     evaluations_ = 0;
-    maxEvaluations_ = ((Integer) this.getInputParameter("maxEvaluations")).intValue();
-    populationSize_ = ((Integer) this.getInputParameter("populationSize")).intValue();
+    maxEvaluations_ = (Integer) this.getInputParameter("maxEvaluations");
+    populationSize_ = (Integer) this.getInputParameter("populationSize");
     dataDirectory_ = this.getInputParameter("dataDirectory").toString();
-    numberOfThreads_ = ((Integer) this.getInputParameter("numberOfThreads")).intValue();
+    numberOfThreads_ = (Integer) this.getInputParameter("numberOfThreads");
 
     thread_ = new Thread[numberOfThreads_];
 
@@ -245,9 +245,9 @@ public class pMOEAD extends Algorithm implements Runnable {
     population_ = new SolutionSet(populationSize_);
     indArray_ = new Solution[problem_.getNumberOfObjectives()];
 
-    T_ = ((Integer) this.getInputParameter("T")).intValue();
-    nr_ = ((Integer) this.getInputParameter("nr")).intValue();
-    delta_ = ((Double) this.getInputParameter("delta")).doubleValue();
+    T_ = (Integer) this.getInputParameter("T");
+    nr_ = (Integer) this.getInputParameter("nr");
+    delta_ = (Double) this.getInputParameter("delta");
 
     neighborhood_ = new int[populationSize_][T_];
 
@@ -304,9 +304,7 @@ public class pMOEAD extends Algorithm implements Runnable {
       // find 'niche' nearest neighboring subproblems
       Utils.minFastSort(x, idx, populationSize_, T_);
 
-      for (int k = 0; k < T_; k++) {
-        neighborhood_[i][k] = idx[k];
-      }
+      System.arraycopy(idx, 0, neighborhood_[i], 0, T_);
     }
   }
 
@@ -340,7 +338,7 @@ public class pMOEAD extends Algorithm implements Runnable {
           j = 0;
           numberOfObjectives = st.countTokens();
           while (st.hasMoreTokens()) {
-            double value = (new Double(st.nextToken())).doubleValue();
+            double value = new Double(st.nextToken());
             lambda_[i][j] = value;
             j++;
           }
@@ -509,5 +507,5 @@ public class pMOEAD extends Algorithm implements Runnable {
     }
     return fitness;
   }
-} // pMOEAD
+}
 

@@ -39,6 +39,7 @@ import static org.junit.Assert.assertFalse;
  * Date: 10/06/13
  * Time: 07:41
  */
+
 public class SolutionSetTest {
   int maxSize_ = 10 ;
   SolutionSet solutionSet_ ;

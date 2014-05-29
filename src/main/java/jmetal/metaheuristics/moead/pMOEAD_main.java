@@ -46,8 +46,8 @@ import java.util.logging.Logger;
  * LION 4, Venice, January 2010.
  */
 public class pMOEAD_main {
-  public static Logger logger_;
-  public static FileHandler fileHandler_;
+  public static Logger logger_;      
+  public static FileHandler fileHandler_; 
 
   /**
    * @param args Command line arguments. The first (optional) argument specifies

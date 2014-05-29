@@ -33,7 +33,7 @@ import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.parallel.MultithreadedEvaluator;
-import jmetal.util.parallel.SynchronousParallelRunner;
+import jmetal.util.parallel.SynchronousParallelTaskExecutor;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -42,14 +42,14 @@ import java.util.logging.Logger;
 
 /**
  * Class to configure and execute the pNSGAII algorithm. pNSGAII is a
- * multihreaded version of NSGA-II, where solution evaluations are carried out
+ * multithreaded version of NSGA-II, where solution evaluations are carried out
  * in parallel.
  */
 
 
 public class pNSGAII_main {
-  public static Logger logger_;      // Logger object
-  public static FileHandler fileHandler_; // FileHandler object
+  public static Logger logger_;      
+  public static FileHandler fileHandler_; 
 
   /**
    * @param args Command line arguments.
@@ -98,7 +98,7 @@ public class pNSGAII_main {
 
     // 0 - use all the available cores
     int threads = 4;
-    SynchronousParallelRunner parallelEvaluator = new MultithreadedEvaluator(threads);
+    SynchronousParallelTaskExecutor parallelEvaluator = new MultithreadedEvaluator(threads);
 
     algorithm = new pNSGAII(problem, parallelEvaluator);
 
@@ -149,7 +149,7 @@ public class pNSGAII_main {
       logger_.info("Spread     : " + indicators.getSpread(population));
       logger_.info("Epsilon    : " + indicators.getEpsilon(population));
 
-      int evaluations = ((Integer) algorithm.getOutputParameter("evaluations")).intValue();
+      int evaluations = (Integer) algorithm.getOutputParameter("evaluations");
       logger_.info("Speed      : " + evaluations + " evaluations");
     }
   }

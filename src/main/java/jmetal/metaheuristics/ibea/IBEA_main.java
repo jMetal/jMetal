@@ -44,8 +44,8 @@ import java.util.logging.Logger;
  * Class for configuring and running the DENSEA algorithm
  */
 public class IBEA_main {
-  public static Logger logger_;      // Logger object
-  public static FileHandler fileHandler_; // FileHandler object
+  public static Logger logger_;      
+  public static FileHandler fileHandler_; 
 
   /**
    * @param args Command line arguments.
@@ -63,7 +63,7 @@ public class IBEA_main {
     Operator mutation;
     Operator selection;
 
-    QualityIndicator indicators; // Object to get quality indicators
+    QualityIndicator indicators; 
 
     // Logger object and file to store log messages
     logger_ = Configuration.logger_;

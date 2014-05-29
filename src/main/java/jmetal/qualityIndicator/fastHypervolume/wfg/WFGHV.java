@@ -267,7 +267,6 @@ public class WFGHV {
           case 0:
             j++;
             break;
-          // case  2: printf("Identical points!\n");
           default:
             keep = false;
             break;

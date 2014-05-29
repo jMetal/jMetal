@@ -49,11 +49,7 @@ public class ObjectiveComparator implements Comparator<Solution> {
 
   public ObjectiveComparator(int nObj, boolean descendingOrder) {
     this.nObj = nObj;
-    if (descendingOrder) {
-      ascendingOrder_ = false;
-    } else {
-      ascendingOrder_ = true;
-    }
+    ascendingOrder_ = !descendingOrder ;
   }
 
   /**

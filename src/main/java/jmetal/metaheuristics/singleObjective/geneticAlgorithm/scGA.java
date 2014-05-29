@@ -74,8 +74,8 @@ public class scGA extends Algorithm {
     //Operator findBestSolution = new BestSolutionSelection(selectionParameters) ;
 
     //Read the parameters
-    populationSize = ((Integer) getInputParameter("populationSize")).intValue();
-    maxEvaluations = ((Integer) getInputParameter("maxEvaluations")).intValue();
+    populationSize = (Integer) getInputParameter("populationSize");
+    maxEvaluations = (Integer) getInputParameter("maxEvaluations");
 
     //Read the operators
     mutationOperator = operators_.get("mutation");

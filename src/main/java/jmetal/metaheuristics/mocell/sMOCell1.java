@@ -77,11 +77,10 @@ public class sMOCell1 extends Algorithm {
     Distance distance = new Distance();
 
     //Read the params
-    populationSize = ((Integer) getInputParameter("populationSize")).intValue();
-    archiveSize = ((Integer) getInputParameter("archiveSize")).intValue();
-    maxEvaluations = ((Integer) getInputParameter("maxEvaluations")).intValue();
-    feedBack = ((Integer) getInputParameter("feedBack")).intValue();
-
+    populationSize = (Integer) getInputParameter("populationSize");
+    archiveSize = (Integer) getInputParameter("archiveSize");
+    maxEvaluations = (Integer) getInputParameter("maxEvaluations");
+    feedBack = (Integer) getInputParameter("feedBack");
 
     //Read the operators
     mutationOperator = operators_.get("mutation");
@@ -137,15 +136,12 @@ public class sMOCell1 extends Algorithm {
           newSolutionSet.add(new Solution(currentSolutionSet.get(ind)));
         }
 
-        if (flag == 1) { //The offSpring dominates
+        if (flag == 1) {
           offSpring[0].setLocation(individual.getLocation());
-          //currentSolutionSet.reemplace(offSpring[0].getLocation(),offSpring[0]);
           newSolutionSet.add(offSpring[0]);
           archive.add(new Solution(offSpring[0]));
-        } else if (flag == 0) { //Both two are non-dominates
+        } else if (flag == 0) {
           neighbors[ind].add(offSpring[0]);
-          //(new Spea2Fitness(neighbors[ind])).fitnessAssign();                   
-          //neighbors[ind].sort(new FitnessAndCrowdingDistanceComparator()); //Create a new comparator;
           Ranking rank = new Ranking(neighbors[ind]);
           for (int j = 0; j < rank.getNumberOfSubfronts(); j++) {
             distance
@@ -154,13 +150,12 @@ public class sMOCell1 extends Algorithm {
 
           boolean deleteMutant = true;
           int compareResult = crowding.compare(individual, offSpring[0]);
-          if (compareResult == 1) {//The offSpring[0] is better
+          if (compareResult == 1) {
             deleteMutant = false;
           }
 
           if (!deleteMutant) {
             offSpring[0].setLocation(individual.getLocation());
-            //currentSolutionSet.reemplace(offSpring[0].getLocation(),offSpring[0]);
             newSolutionSet.add(offSpring[0]);
             archive.add(new Solution(offSpring[0]));
           } else {
@@ -185,6 +180,6 @@ public class sMOCell1 extends Algorithm {
       currentSolutionSet = newSolutionSet;
     }
     return archive;
-  } // execute        
-} // sMOCell1
+  }
+}
 

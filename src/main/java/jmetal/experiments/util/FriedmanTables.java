@@ -35,7 +35,7 @@ import java.util.logging.Level;
  * Created by Antonio J. Nebro on 20/02/14.
  */
 public class FriedmanTables implements IExperimentOutput {
-  Experiment experiment_;
+  private Experiment experiment_;
 
   public FriedmanTables(Experiment experiment) {
     experiment_ = experiment;
@@ -93,7 +93,7 @@ public class FriedmanTables implements IExperimentOutput {
     data = new Vector();
 
     for (int alg = 0; alg < experiment_.getAlgorithmNameList().length; alg++) {
-      algorithms.add(new String(experiment_.getAlgorithmNameList()[alg]));
+      algorithms.add(experiment_.getAlgorithmNameList()[alg]);
       data.add(new Vector());
       String rutaAlg = experiment_.getExperimentBaseDirectory() + "/data/"
         + experiment_.getAlgorithmNameList()[alg] + "/";
@@ -150,10 +150,9 @@ public class FriedmanTables implements IExperimentOutput {
 
     for (j = 0; j < algorithms.size(); j++) {
       for (i = 0; i < datasets.size(); i++) {
-        mean[i][j] = ((Double) ((Vector) data.elementAt(j)).elementAt(i)).doubleValue();
+        mean[i][j] = (Double) ((Vector) data.elementAt(j)).elementAt(i);
       }
     }
-
 
     /*We use the pareja structure to compute and order rankings*/
     order = new Pair[datasets.size()][algorithms.size()];
@@ -171,12 +170,12 @@ public class FriedmanTables implements IExperimentOutput {
       for (j = 0; j < algorithms.size(); j++) {
         found = false;
         for (k = 0; k < algorithms.size() && !found; k++) {
-          if (order[i][k].indice == j) {
+          if (order[i][k].index_ == j) {
             found = true;
             position = k + 1;
           }
         }
-        rank[i][j] = new Pair(position, order[i][position - 1].valor);
+        rank[i][j] = new Pair(position, order[i][position - 1].value_);
       }
     }
 
@@ -188,21 +187,21 @@ public class FriedmanTables implements IExperimentOutput {
       Arrays.fill(visto, false);
       for (j = 0; j < algorithms.size(); j++) {
         porVisitar.removeAllElements();
-        sum = rank[i][j].indice;
+        sum = rank[i][j].index_;
         visto[j] = true;
         ig = 1;
         for (k = j + 1; k < algorithms.size(); k++) {
-          if (rank[i][j].valor == rank[i][k].valor && !visto[k]) {
-            sum += rank[i][k].indice;
+          if (rank[i][j].value_ == rank[i][k].value_ && !visto[k]) {
+            sum += rank[i][k].index_;
             ig++;
             porVisitar.add(new Integer(k));
             visto[k] = true;
           }
         }
         sum /= (double) ig;
-        rank[i][j].indice = sum;
+        rank[i][j].index_ = sum;
         for (k = 0; k < porVisitar.size(); k++) {
-          rank[i][((Integer) porVisitar.elementAt(k)).intValue()].indice = sum;
+          rank[i][((Integer) porVisitar.elementAt(k))].index_ = sum;
         }
       }
     }
@@ -212,7 +211,7 @@ public class FriedmanTables implements IExperimentOutput {
     for (i = 0; i < algorithms.size(); i++) {
       Rj[i] = 0;
       for (j = 0; j < datasets.size(); j++) {
-        Rj[i] += rank[j][i].indice / ((double) datasets.size());
+        Rj[i] += rank[j][i].index_ / ((double) datasets.size());
       }
     }
 
@@ -270,23 +269,21 @@ public class FriedmanTables implements IExperimentOutput {
 
   private class Pair implements Comparable {
 
-    public double indice;
-    public double valor;
+    public double index_;
+    public double value_;
 
     public Pair() {
     }
 
     public Pair(double i, double v) {
-      indice = i;
-      valor = v;
+      index_ = i;
+      value_ = v;
     }
 
     public int compareTo(Object o1) {
-      if (Math.abs(this.valor) > Math.abs(((Pair) o1).valor)) {
-        //return -1;
+      if (Math.abs(this.value_) > Math.abs(((Pair) o1).value_)) {
         return 1;
-      } else if (Math.abs(this.valor) < Math.abs(((Pair) o1).valor)) {
-        //return 1;
+      } else if (Math.abs(this.value_) < Math.abs(((Pair) o1).value_)) {
         return -1;
       } else {
         return 0;

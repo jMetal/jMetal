@@ -132,8 +132,8 @@ public class PSO extends Algorithm {
    * Initialize all parameter of the algorithm
    */
   public void initParams() {
-    particlesSize_ = ((Integer) getInputParameter("swarmSize")).intValue();
-    maxIterations_ = ((Integer) getInputParameter("maxIterations")).intValue();
+    particlesSize_ = (Integer) getInputParameter("swarmSize");
+    maxIterations_ = (Integer) getInputParameter("maxIterations");
 
     polynomialMutation_ = operators_.get("mutation");
 

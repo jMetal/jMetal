@@ -87,6 +87,7 @@ public class BinaryReal extends Binary {
     setBits(bits);
     lowerBound_ = lowerBound;
     upperBound_ = upperBound;
+    
     decode();
   }
 
@@ -111,7 +112,6 @@ public class BinaryReal extends Binary {
    * <code>value_</code> field and can be accessed by the method
    * <code>getValue</code>.
    */
-  @Override
   public void decode() {
     double value = 0.0;
     for (int i = 0; i < numberOfBits_; i++) {

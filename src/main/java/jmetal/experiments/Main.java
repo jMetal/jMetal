@@ -122,7 +122,7 @@ public class Main {
 
       if (algorithm.getOutputParameter("evaluations") != null) {
         Integer evals = (Integer) algorithm.getOutputParameter("evaluations");
-        int evaluations = (Integer) evals.intValue();
+        int evaluations = (Integer) evals;
         logger_.info("Speed      : " + evaluations + " evaluations");
       }
     }

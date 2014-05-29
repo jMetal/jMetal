@@ -1,10 +1,9 @@
 //  IBEA.java
 //
 //  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
 //       Juan J. Durillo <durillo@lcc.uma.es>
 //
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
+//  Copyright (c) 2011 Juan J. Durillo
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -27,7 +26,6 @@ import jmetal.util.Ranking;
 import jmetal.util.comparators.DominanceComparator;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -62,7 +60,7 @@ public class IBEA extends Algorithm {
    */
   public IBEA(Problem problem) {
     super(problem);
-  } // Spea2
+  }
 
   /**
    * calculates the hypervolume of that portion of the objective space that
@@ -109,8 +107,6 @@ public class IBEA extends Algorithm {
     return (volume);
   }
 
-
-
   /**
    * This structure store the indicator values of each pair of elements
    */
@@ -141,8 +137,6 @@ public class IBEA extends Algorithm {
           value = calcHypervolumeIndicator(B.get(0), A.get(0), problem_.getNumberOfObjectives(),
             maximumValues, minimumValues);
         }
-        //double value = epsilon.epsilon(matrixA,matrixB,problem_.getNumberOfObjectives());
-
 
         //Update the max value of the indicator
         if (Math.abs(value) > maxIndicatorValue_) {
@@ -152,9 +146,7 @@ public class IBEA extends Algorithm {
       }
       indicatorValues_.add(aux);
     }
-  } // computeIndicatorValues
-
-
+  }
 
   /**
    * Calculate the fitness for the individual at position pos
@@ -171,7 +163,6 @@ public class IBEA extends Algorithm {
     solutionSet.get(pos).setFitness(fitness);
   }
 
-
   /**
    * Calculate the fitness for the entire population.
    */
@@ -181,8 +172,8 @@ public class IBEA extends Algorithm {
     double[] minimumValues = new double[problem_.getNumberOfObjectives()];
 
     for (int i = 0; i < problem_.getNumberOfObjectives(); i++) {
-      maximumValues[i] = -Double.MAX_VALUE; // i.e., the minus maxium value
-      minimumValues[i] = Double.MAX_VALUE; // i.e., the maximum value
+      maximumValues[i] = -Double.MAX_VALUE;
+      minimumValues[i] = Double.MAX_VALUE;
     }
 
     for (int pos = 0; pos < solutionSet.size(); pos++) {
@@ -203,8 +194,6 @@ public class IBEA extends Algorithm {
     }
   }
 
-
-
   /**
    * Update the fitness before removing an individual
    */
@@ -222,12 +211,6 @@ public class IBEA extends Algorithm {
       }
     }
 
-    //if (worstIndex == -1) {
-    //    Configuration.logger_.info("Yes " + worst);
-    //}
-    //Configuration.logger_.info("Solution Size "+solutionSet.size());
-    //Configuration.logger_.info(worstIndex);
-
     // Update the population
     for (int i = 0; i < solutionSet.size(); i++) {
       if (i != worstIndex) {
@@ -239,16 +222,14 @@ public class IBEA extends Algorithm {
     }
 
     // remove worst from the indicatorValues list
-    indicatorValues_.remove(worstIndex); // Remove its own list
-    Iterator<List<Double>> it = indicatorValues_.iterator();
-    while (it.hasNext()) {
-      it.next().remove(worstIndex);
+    indicatorValues_.remove(worstIndex);
+    for (List<Double> anIndicatorValues_ : indicatorValues_) {
+      anIndicatorValues_.remove(worstIndex);
     }
 
-    // remove the worst individual from the population
-    solutionSet.remove(worstIndex);
-  } // removeWorst
 
+    solutionSet.remove(worstIndex);
+  }
 
   /**
    * Runs of the IBEA algorithm.
@@ -303,12 +284,12 @@ public class IBEA extends Algorithm {
         do {
           j++;
           parents[0] = (Solution) selectionOperator.execute(archive);
-        } while (j < IBEA.TOURNAMENTS_ROUNDS); // do-while
+        } while (j < IBEA.TOURNAMENTS_ROUNDS);
         int k = 0;
         do {
           k++;
           parents[1] = (Solution) selectionOperator.execute(archive);
-        } while (k < IBEA.TOURNAMENTS_ROUNDS); // do-while
+        } while (k < IBEA.TOURNAMENTS_ROUNDS);
 
         //make the crossover
         Solution[] offSpring = (Solution[]) crossoverOperator.execute(parents);
@@ -317,12 +298,12 @@ public class IBEA extends Algorithm {
         problem_.evaluateConstraints(offSpring[0]);
         offSpringSolutionSet.add(offSpring[0]);
         evaluations++;
-      } // while
+      }
       // End Create a offSpring solutionSet
       solutionSet = offSpringSolutionSet;
-    } // while
+    }
 
     Ranking ranking = new Ranking(archive);
     return ranking.getSubfront(0);
-  } // execute
-} // IBEA
+  }
+}

@@ -129,14 +129,15 @@ public class AvlNode<T> {
   }
 
   public boolean isLeaf() {
-      return !(hasLeft() || hasRight());
+
+    return (!hasLeft() && !hasRight()) ;
   }
 
   public boolean hasOnlyALeftChild() {
-      return hasLeft() && !hasRight();
+    return (hasLeft() && !hasRight()) ;
   }
 
   public boolean hasOnlyARightChild() {
-      return hasRight() && !hasLeft();
+    return  (hasRight() && !hasLeft()) ;
   }
 }

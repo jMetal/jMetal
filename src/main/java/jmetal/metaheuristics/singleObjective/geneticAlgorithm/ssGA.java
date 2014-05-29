@@ -75,8 +75,8 @@ public class ssGA extends Algorithm {
     Operator findWorstSolution = new WorstSolutionSelection(selectionParameters);
 
     // Read the parameters
-    populationSize = ((Integer) this.getInputParameter("populationSize")).intValue();
-    maxEvaluations = ((Integer) this.getInputParameter("maxEvaluations")).intValue();
+    populationSize = (Integer) this.getInputParameter("populationSize");
+    maxEvaluations = (Integer) this.getInputParameter("maxEvaluations");
 
     // Initialize the variables
     population = new SolutionSet(populationSize);

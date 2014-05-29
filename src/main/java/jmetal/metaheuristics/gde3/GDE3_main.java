@@ -41,8 +41,8 @@ import java.util.logging.Logger;
  * Class for configuring and running the GDE3 algorithm
  */
 public class GDE3_main {
-  public static Logger logger_;      // Logger object
-  public static FileHandler fileHandler_; // FileHandler object
+  public static Logger logger_;      
+  public static FileHandler fileHandler_; 
 
   /**
    * @param args Command line arguments.

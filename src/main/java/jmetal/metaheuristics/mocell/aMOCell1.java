@@ -15,7 +15,7 @@
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU Lesser General Public License for more details.
-// 
+//
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -50,7 +50,7 @@ public class aMOCell1 extends Algorithm {
    */
   public aMOCell1(Problem problem) {
     super(problem);
-  } //aMOCell1       
+  } //aMOCell1
 
   /**
    * Runs of the aMOCell1 algorithm.
@@ -71,10 +71,10 @@ public class aMOCell1 extends Algorithm {
     Distance distance = new Distance();
 
     //Read the params
-    populationSize = ((Integer) getInputParameter("populationSize")).intValue();
-    archiveSize = ((Integer) getInputParameter("archiveSize")).intValue();
-    maxEvaluations = ((Integer) getInputParameter("maxEvaluations")).intValue();
-    feedBack = ((Integer) getInputParameter("feedBack")).intValue();
+    populationSize = (Integer) getInputParameter("populationSize");
+    archiveSize = (Integer) getInputParameter("archiveSize");
+    maxEvaluations = (Integer) getInputParameter("maxEvaluations");
+    feedBack = (Integer) getInputParameter("feedBack");
 
     //Read the operators
     mutationOperator = operators_.get("mutation");
@@ -98,7 +98,6 @@ public class aMOCell1 extends Algorithm {
       solution.setLocation(i);
       evaluations++;
     }
-
 
     while (evaluations < maxEvaluations) {
       for (int ind = 0; ind < currentSolutionSet.size(); ind++) {
@@ -126,11 +125,11 @@ public class aMOCell1 extends Algorithm {
 
         // Check dominance
         int flag = dominance.compare(individual, offSpring[0]);
-        if (flag == 1) { // offSpring[0] dominates
+        if (flag == 1) {
           offSpring[0].setLocation(individual.getLocation());
           currentSolutionSet.replace(offSpring[0].getLocation(), offSpring[0]);
           archive.add(new Solution(offSpring[0]));
-        } else if (flag == 0) { //Both two are non-dominates               
+        } else if (flag == 0) {
           neighbors[ind].add(offSpring[0]);
           Ranking rank = new Ranking(neighbors[ind]);
           for (int j = 0; j < rank.getNumberOfSubfronts(); j++) {
@@ -168,6 +167,6 @@ public class aMOCell1 extends Algorithm {
       }
     }
     return archive;
-  } // execute        
-} // aMOCell1
+  }
+}
 

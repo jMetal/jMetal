@@ -76,8 +76,8 @@ public class ssNSGAII extends Algorithm {
     Distance distance = new Distance();
 
     //Read the parameters
-    populationSize = ((Integer) getInputParameter("populationSize")).intValue();
-    maxEvaluations = ((Integer) getInputParameter("maxEvaluations")).intValue();
+    populationSize = (Integer) getInputParameter("populationSize");
+    maxEvaluations = (Integer) getInputParameter("maxEvaluations");
     indicators = (QualityIndicator) getInputParameter("indicators");
 
     //Initialize the variables

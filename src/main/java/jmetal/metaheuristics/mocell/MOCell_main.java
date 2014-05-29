@@ -47,8 +47,8 @@ import java.util.logging.Logger;
  * EMO 2007. Sendai/Matsushima, Japan, March 2007.
  */
 public class MOCell_main {
-  public static Logger logger_;      // Logger object
-  public static FileHandler fileHandler_; // FileHandler object
+  public static Logger logger_;      
+  public static FileHandler fileHandler_; 
 
   /**
    * @param args Command line arguments. The first (optional) argument specifies

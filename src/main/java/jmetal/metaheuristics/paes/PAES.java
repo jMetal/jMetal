@@ -91,9 +91,9 @@ public class PAES extends Algorithm {
     Comparator<Solution> dominance;
 
     //Read the params
-    bisections = ((Integer) this.getInputParameter("biSections")).intValue();
-    archiveSize = ((Integer) this.getInputParameter("archiveSize")).intValue();
-    maxEvaluations = ((Integer) this.getInputParameter("maxEvaluations")).intValue();
+    bisections = (Integer) this.getInputParameter("biSections");
+    archiveSize = (Integer) this.getInputParameter("archiveSize");
+    maxEvaluations = (Integer) this.getInputParameter("maxEvaluations");
 
     //Read the operators        
     mutationOperator = this.operators_.get("mutation");

@@ -29,12 +29,12 @@ import java.util.concurrent.ExecutorService;
  * Created by Antonio J. Nebro on 02/03/14.
  * Abstract class for running tasks in parallel using threads
  */
-abstract public class AsynchronousParallelRunner {
+abstract public class AsynchronousParallelTaskExecutor {
   protected int numberOfThreads_;
   protected ExecutorService executor_;
 
 
-  public AsynchronousParallelRunner(int threads) {
+  public AsynchronousParallelTaskExecutor(int threads) {
     numberOfThreads_ = threads;
     if (threads == 0) {
       numberOfThreads_ = Runtime.getRuntime().availableProcessors();

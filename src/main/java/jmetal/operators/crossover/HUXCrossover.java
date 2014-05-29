@@ -26,6 +26,7 @@ import jmetal.core.SolutionType;
 import jmetal.encodings.solutiontype.BinaryRealSolutionType;
 import jmetal.encodings.solutiontype.BinarySolutionType;
 import jmetal.encodings.variable.Binary;
+import jmetal.encodings.variable.BinaryReal;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.random.PseudoRandom;
@@ -102,9 +103,11 @@ public class HUXCrossover extends Crossover {
           }
         }
         //7. Decode the results
+        if (parent1.getType().getClass() == BinaryRealSolutionType.class) {
         for (int i = 0; i < offSpring[0].getDecisionVariables().length; i++) {
-          ((Binary) offSpring[0].getDecisionVariables()[i]).decode();
-          ((Binary) offSpring[1].getDecisionVariables()[i]).decode();
+          ((BinaryReal) offSpring[0].getDecisionVariables()[i]).decode();
+          ((BinaryReal) offSpring[1].getDecisionVariables()[i]).decode();
+        }
         }
       }
     } catch (ClassCastException e1) {
@@ -155,9 +158,9 @@ public class HUXCrossover extends Crossover {
       parents[0],
       parents[1]);
 
-    for (int i = 0; i < offSpring.length; i++) {
-      offSpring[i].setCrowdingDistance(0.0);
-      offSpring[i].setRank(0);
+    for (Solution anOffSpring : offSpring) {
+      anOffSpring.setCrowdingDistance(0.0);
+      anOffSpring.setRank(0);
     }
 
     return offSpring;

@@ -31,7 +31,7 @@ import jmetal.problems.singleObjective.Griewank;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.parallel.MultithreadedEvaluator;
-import jmetal.util.parallel.SynchronousParallelRunner;
+import jmetal.util.parallel.SynchronousParallelTaskExecutor;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -50,7 +50,7 @@ public class pgGA_main {
     Operator selection;
 
     int threads = 4; // 0 - use all the available cores
-    SynchronousParallelRunner parallelEvaluator = new MultithreadedEvaluator(threads);
+    SynchronousParallelTaskExecutor parallelEvaluator = new MultithreadedEvaluator(threads);
 
     //problem = new Sphere("Real", 10) ;
     problem = new Griewank("Real", 10);

@@ -52,9 +52,8 @@ import java.util.logging.Logger;
  * to obtained the convergence speed of the algorithm.
  */
 public class SMSEMOA_main {
-
-  public static Logger logger_;      // Logger object
-  public static FileHandler fileHandler_; // FileHandler object
+  public static Logger logger_;      
+  public static FileHandler fileHandler_; 
 
   /**
    * @param args Command line arguments.
@@ -152,7 +151,7 @@ public class SMSEMOA_main {
       logger_.info("Spread     : " + indicators.getSpread(population));
       logger_.info("Epsilon    : " + indicators.getEpsilon(population));
 
-      int evaluations = ((Integer) algorithm.getOutputParameter("evaluations")).intValue();
+      int evaluations = (Integer) algorithm.getOutputParameter("evaluations");
       logger_.info("Speed      : " + evaluations + " evaluations");
     }
   }

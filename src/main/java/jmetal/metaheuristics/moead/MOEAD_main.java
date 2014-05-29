@@ -46,8 +46,8 @@ import java.util.logging.Logger;
  * pp 284-302, April/2009.
  */
 public class MOEAD_main {
-  public static Logger logger_;      // Logger object
-  public static FileHandler fileHandler_; // FileHandler object
+  public static Logger logger_;      
+  public static FileHandler fileHandler_; 
 
   /**
    * @param args Command line arguments. The first (optional) argument specifies
@@ -82,7 +82,7 @@ public class MOEAD_main {
       Object[] params = {"Real"};
       problem = (new ProblemFactory()).getProblem(args[0], params);
       indicators = new QualityIndicator(problem, args[1]);
-    } else { // Default problem
+    } else { 
       problem = new Kursawe("Real", 3);
       //problem = new Kursawe("BinaryReal", 3);
       //problem = new Water("Real");
@@ -90,8 +90,8 @@ public class MOEAD_main {
       //problem = new ConstrEx("Real");
       //problem = new DTLZ1("Real");
       //problem = new OKA2("Real") ;
-    } // else
-
+    } 
+    
     algorithm = new MOEAD(problem);
     //algorithm = new MOEAD_DRA(problem);
 

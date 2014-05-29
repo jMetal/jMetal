@@ -23,7 +23,7 @@ package jmetal.experiments;
 import jmetal.experiments.util.*;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
-import jmetal.util.parallel.MultithreadedAlgorithmRunner;
+import jmetal.util.parallel.MultithreadedAlgorithmExecutor;
 
 import java.io.*;
 import java.util.Arrays;
@@ -218,7 +218,7 @@ public class Experiment {
 
   public void setIndependentRuns(int value) {
     independentRuns_ =
-      Integer.parseInt(configuration_.getProperty("independentRuns", Integer.toString(value)));
+        Integer.parseInt(configuration_.getProperty("independentRuns", Integer.toString(value)));
   }
 
   public Settings[] getAlgorithmSettings() {
@@ -267,7 +267,7 @@ public class Experiment {
 
   public void setBoxplotRows(int value) {
     boxplotRows_ =
-      Integer.parseInt(configuration_.getProperty("boxplotsRows", Integer.toString(value)));
+        Integer.parseInt(configuration_.getProperty("boxplotsRows", Integer.toString(value)));
   }
 
   public int getBoxplotColumns() {
@@ -276,7 +276,7 @@ public class Experiment {
 
   public void setBoxplotColumns(int value) {
     boxplotColumns_ =
-      Integer.parseInt(configuration_.getProperty("boxplotsColumns", Integer.toString(value)));
+        Integer.parseInt(configuration_.getProperty("boxplotsColumns", Integer.toString(value)));
   }
 
   public boolean getBoxplotNotch() {
@@ -285,7 +285,7 @@ public class Experiment {
 
   public void setBoxplotNotch(boolean value) {
     boxplotNotch_ =
-      Boolean.parseBoolean(configuration_.getProperty("boxplotsNotch", Boolean.toString(value)));
+        Boolean.parseBoolean(configuration_.getProperty("boxplotsNotch", Boolean.toString(value)));
   }
 
   public void initExperiment(String[] args) {
@@ -325,7 +325,7 @@ public class Experiment {
     Configuration.logger_.info("Experiment: runs: " + independentRuns_);
     Configuration.logger_.info("Experiment: Experiment directory: " + experimentBaseDirectory_);
     Configuration.logger_.info(
-      "Experiment: Use config files for algorithms: " + useConfigurationFilesForAlgorithms_);
+        "Experiment: Use config files for algorithms: " + useConfigurationFilesForAlgorithms_);
     Configuration.logger_.info("Experiment: Generate reference Pareto fronts: " + generateReferenceParetoFronts_);
     Configuration.logger_.info("Experiment: Generate Latex tables: " + generateLatexTables_);
     Configuration.logger_.info("Experiment: Generate Friedman tables: " + generateFriedmanTables_);
@@ -337,22 +337,22 @@ public class Experiment {
     }
 
     if (runTheAlgorithms_) {
-      MultithreadedAlgorithmRunner parallelRunner =
-        new MultithreadedAlgorithmRunner(numberOfExecutionThreads_);
-      parallelRunner.startParallelRunner(this);
+      MultithreadedAlgorithmExecutor parallelRunner =
+          new MultithreadedAlgorithmExecutor(numberOfExecutionThreads_);
+      parallelRunner.start(this);
 
       for (String algorithm : algorithmNameList_) {
         for (String problem : problemList_) {
           for (int i = 0; i < independentRuns_; i++) {
             Configuration.logger_.info(
-              "Adding task. Algorithm:  " + algorithm + " Problem: " + problem + " Run: " + i);
-            parallelRunner.addTaskForExecution(new Object[] {algorithm, problem, i});
+                "Adding task. Algorithm:  " + algorithm + " Problem: " + problem + " Run: " + i);
+            parallelRunner.addTask(new Object[] {algorithm, problem, i});
           }
         }
       }
 
       parallelRunner.parallelExecution();
-      parallelRunner.stopParallelRunner();
+      parallelRunner.stop();
     }
 
     if (generateReferenceParetoFronts_) {
@@ -396,8 +396,7 @@ public class Experiment {
       }
       experimentDirectory.delete();
       new File(experimentBaseDirectory_).mkdirs();
-    } // if
-    else {
+    } else {
       Configuration.logger_.info("Experiment directory does NOT exist. Creating");
       new File(experimentBaseDirectory_).mkdirs();
     }
@@ -415,15 +414,12 @@ public class Experiment {
       Configuration.logger_.info("ARGS[0]: " + args[0]);
       try {
         propertiesFile_ = new InputStreamReader(new FileInputStream(args[0]));
-        try {
-          configuration_.load(propertiesFile_);
-        } catch (IOException e) {
-          Configuration.logger_.log(Level.SEVERE, "Error reading properties file", e);
-        }
-
+        configuration_.load(propertiesFile_);
       } catch (FileNotFoundException e) {
         Configuration.logger_.log(Level.SEVERE, "File not found", e);
         propertiesFile_ = null;
+      }  catch (IOException e) {
+        Configuration.logger_.log(Level.SEVERE, "Error reading properties file", e);
       }
 
       if (propertiesFile_ == null) {
@@ -436,30 +432,30 @@ public class Experiment {
 
   public void setNumberOfExecutionThreads(int value) {
     numberOfExecutionThreads_ = Integer
-      .parseInt(configuration_.getProperty("numberOfExecutionThreads", Integer.toString(value)));
+        .parseInt(configuration_.getProperty("numberOfExecutionThreads", Integer.toString(value)));
   }
 
   public void setGenerateReferenceParetoFronts(boolean value) {
     generateReferenceParetoFronts_ =
-      Boolean.parseBoolean(
-        configuration_.getProperty("generateReferenceParetoFronts", Boolean.toString(value)));
+        Boolean.parseBoolean(
+            configuration_.getProperty("generateReferenceParetoFronts", Boolean.toString(value)));
   }
 
   public void setRunTheAlgorithms(boolean value) {
     runTheAlgorithms_ =
-      Boolean.parseBoolean(configuration_.getProperty("runTheAlgorithms", Boolean.toString(value)));
+        Boolean.parseBoolean(configuration_.getProperty("runTheAlgorithms", Boolean.toString(value)));
   }
 
   public void setGenerateQualityIndicators(boolean value) {
     generateQualityIndicators_ =
-      Boolean.parseBoolean(
-        configuration_.getProperty("generateQualityIndicators", Boolean.toString(value)));
+        Boolean.parseBoolean(
+            configuration_.getProperty("generateQualityIndicators", Boolean.toString(value)));
   }
 
   public void setUseConfigurationFilesForAlgorithms(boolean value) {
     useConfigurationFilesForAlgorithms_ =
-      Boolean.parseBoolean(
-        configuration_.getProperty("useConfigurationFilesForAlgorithms", Boolean.toString(value)));
+        Boolean.parseBoolean(
+            configuration_.getProperty("useConfigurationFilesForAlgorithms", Boolean.toString(value)));
   }
 
   public String toString() {

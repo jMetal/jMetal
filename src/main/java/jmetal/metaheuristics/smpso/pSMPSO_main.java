@@ -31,7 +31,7 @@ import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.parallel.MultithreadedEvaluator;
-import jmetal.util.parallel.SynchronousParallelRunner;
+import jmetal.util.parallel.SynchronousParallelTaskExecutor;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -43,8 +43,8 @@ import java.util.logging.Logger;
  * by evaluating the particles in parallel.
  */
 public class pSMPSO_main {
-  public static Logger logger_;      // Logger object
-  public static FileHandler fileHandler_; // FileHandler object
+  private static Logger logger_;     
+  private static FileHandler fileHandler_; 
 
   /**
    * @param args Command line arguments. The first (optional) argument specifies
@@ -61,7 +61,7 @@ public class pSMPSO_main {
     Algorithm algorithm;
     Mutation mutation;
 
-    QualityIndicator indicators; // Object to get quality indicators
+    QualityIndicator indicators; 
 
     // Logger object and file to store log messages
     logger_ = Configuration.logger_;
@@ -86,8 +86,9 @@ public class pSMPSO_main {
       //problem = new OKA2("Real") ;
     }
 
-    int threads = 4; // 0 - use all the available cores
-    SynchronousParallelRunner parallelEvaluator = new MultithreadedEvaluator(threads);
+    // 0 - use all the available cores
+    int threads = 4; 
+    SynchronousParallelTaskExecutor parallelEvaluator = new MultithreadedEvaluator(threads);
 
     algorithm = new pSMPSO(problem, parallelEvaluator);
 

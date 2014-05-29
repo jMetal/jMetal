@@ -20,8 +20,8 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
 public class dMOPSO_main {
-  public static Logger logger_;      // Logger object
-  public static FileHandler fileHandler_; // FileHandler object
+  public static Logger logger_;      
+  public static FileHandler fileHandler_; 
 
   /**
    * @param args Command line arguments. The first (optional) argument specifies
@@ -51,8 +51,7 @@ public class dMOPSO_main {
       Object[] params = {"Real"};
       problem = (new ProblemFactory()).getProblem(args[0], params);
       indicators = new QualityIndicator(problem, args[1]);
-    } else { // Default problem
-      //      problem = new Metamatching("Real");
+    } else { 
       //problem = new Kursawe("Real", 3);
       //problem = new Fonseca("Real");
       //problem = new Water("Real");

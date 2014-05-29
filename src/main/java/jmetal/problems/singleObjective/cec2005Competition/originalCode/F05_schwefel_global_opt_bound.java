@@ -95,9 +95,7 @@ public class F05_schwefel_global_opt_bound extends TestFunc {
       }
     }
     for (int i = 0; i < m_dimension; i++) {
-      for (int j = 0; j < m_dimension; j++) {
-        m_A[i][j] = m_data[i + 1][j];
-      }
+      System.arraycopy(m_data[i + 1], 0, m_A[i], 0, m_dimension);
     }
     Benchmark.Ax(m_B, m_A, m_o);
   }

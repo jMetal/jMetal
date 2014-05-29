@@ -207,17 +207,15 @@ public class Front {
       maxObjectives[i] = 0;
     }
 
-    for (int i = 0; i < points_.length; i++) {
+    for (Point aPoints_ : points_) {
       for (int j = 0; j < dimension_; j++) {
-        if (maxObjectives[j] < points_[i].objectives_[j]) {
-          maxObjectives[j] = points_[i].objectives_[j];
+        if (maxObjectives[j] < aPoints_.objectives_[j]) {
+          maxObjectives[j] = aPoints_.objectives_[j];
         }
       }
     }
 
-    for (int i = 0; i < dimension_; i++) {
-      referencePoint.objectives_[i] = maxObjectives[i];
-    }
+    System.arraycopy(maxObjectives, 0, referencePoint.objectives_, 0, dimension_);
 
     return referencePoint;
   }

@@ -27,6 +27,7 @@ import jmetal.encodings.solutiontype.BinaryRealSolutionType;
 import jmetal.encodings.solutiontype.BinarySolutionType;
 import jmetal.encodings.solutiontype.IntSolutionType;
 import jmetal.encodings.variable.Binary;
+import jmetal.encodings.variable.BinaryReal;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.random.PseudoRandom;
@@ -88,8 +89,10 @@ public class BitFlipMutation extends Mutation {
           }
         }
 
+        if (solution.getType().getClass() == BinaryRealSolutionType.class) {
         for (int i = 0; i < solution.getDecisionVariables().length; i++) {
-          ((Binary) solution.getDecisionVariables()[i]).decode();
+          ((BinaryReal) solution.getDecisionVariables()[i]).decode();
+        }
         }
       } else {
         for (int i = 0; i < solution.getDecisionVariables().length; i++) {
