@@ -46,7 +46,6 @@ public class MOEAD extends Algorithm {
   /**
    * Lambda vectors
    */
-  //Vector<Vector<Double>> lambda_ ;
   double[][] lambda_;
   /**
    * T: neighbour size
@@ -88,8 +87,7 @@ public class MOEAD extends Algorithm {
     super(problem);
 
     functionType_ = "_TCHE1";
-
-  } // DMOEA
+  } 
 
   public SolutionSet execute() throws JMException, ClassNotFoundException {
     int maxEvaluations;
@@ -124,7 +122,6 @@ public class MOEAD extends Algorithm {
     // STEP 1.1. Compute euclidean distances between weight vectors and find T
     initUniformWeight();
     //for (int i = 0; i < 300; i++)
-    // 	Configuration.logger_.info(lambda_[i][0] + " " + lambda_[i][1]) ;
 
     initNeighborhood();
 

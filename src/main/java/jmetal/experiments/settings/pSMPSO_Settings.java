@@ -29,7 +29,7 @@ import jmetal.problems.ProblemFactory;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.parallel.MultithreadedEvaluator;
-import jmetal.util.parallel.SynchronousParallelRunner;
+import jmetal.util.parallel.SynchronousParallelTaskExecutor;
 
 import java.util.HashMap;
 import java.util.Properties;
@@ -78,7 +78,7 @@ public class pSMPSO_Settings extends Settings {
     Algorithm algorithm;
     Mutation mutation;
 
-    SynchronousParallelRunner parallelEvaluator = new MultithreadedEvaluator(numberOfThreads_);
+    SynchronousParallelTaskExecutor parallelEvaluator = new MultithreadedEvaluator(numberOfThreads_);
 
     algorithm = new pSMPSO(problem_, parallelEvaluator);
 
@@ -110,7 +110,7 @@ public class pSMPSO_Settings extends Settings {
     numberOfThreads_ = Integer
       .parseInt(configuration.getProperty("numberOfThreads", String.valueOf(numberOfThreads_)));
 
-    SynchronousParallelRunner parallelEvaluator = new MultithreadedEvaluator(numberOfThreads_);
+    SynchronousParallelTaskExecutor parallelEvaluator = new MultithreadedEvaluator(numberOfThreads_);
 
     // Creating the algorithm.
     algorithm = new pSMPSO(problem_, parallelEvaluator);

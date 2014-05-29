@@ -28,26 +28,36 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Vector;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 import java.util.logging.Level;
 
 /**
  * @author Antonio J. Nebro
  *         Class for evaluating solutions in parallel using threads
  */
-public class MultithreadedEvaluator extends SynchronousParallelRunner {
+public class MultithreadedEvaluator implements SynchronousParallelTaskExecutor {
   private Problem problem_;
   private Collection<EvaluationTask> taskList_;
+  private int numberOfThreads_ ;
+  private ExecutorService executor_;
 
   /**
    * Constructor
    *
-   * @param threads
+   * @param threads Number of requested threads. A value of 0 implicates to request the maximum
+   *                number of available threads in the system.
    */
   public MultithreadedEvaluator(int threads) {
-    super(threads);
+    numberOfThreads_ = threads;
+    if (threads == 0) {
+      numberOfThreads_ = Runtime.getRuntime().availableProcessors();
+    } else if (threads < 0) {
+      Configuration.logger_.severe("MultithreadedEvaluator: the number of threads" +
+        " cannot be negative number " + threads);
+    } else {
+      numberOfThreads_ = threads;
+    }
+    Configuration.logger_.info("THREADS: " + numberOfThreads_);
   }
 
   /**
@@ -55,7 +65,7 @@ public class MultithreadedEvaluator extends SynchronousParallelRunner {
    *
    * @param problem problem to solve
    */
-  public void startParallelRunner(Object problem) {
+  public void start(Object problem) {
     problem_ = (Problem) problem;
 
     executor_ = Executors.newFixedThreadPool(numberOfThreads_);
@@ -66,7 +76,7 @@ public class MultithreadedEvaluator extends SynchronousParallelRunner {
   /**
    * Adds a solution to be evaluated to a list of tasks
    */
-  public void addTaskForExecution(Object[] taskParameters) {
+  public void addTask(Object[] taskParameters) {
     Solution solution = (Solution) taskParameters[0];
     if (taskList_ == null) {
       taskList_ = new ArrayList<EvaluationTask>();
@@ -107,7 +117,7 @@ public class MultithreadedEvaluator extends SynchronousParallelRunner {
   /**
    * Shutdown the executor
    */
-  public void stopEvaluator() {
+  public void stop() {
     executor_.shutdown();
   }
 
@@ -116,7 +126,7 @@ public class MultithreadedEvaluator extends SynchronousParallelRunner {
    *         Private class representing tasks to evaluate solutions.
    */
 
-  private class EvaluationTask extends ParallelTask {
+  private class EvaluationTask implements ParallelTask, Callable<Object> {
     private Problem problem_;
     private Solution solution_;
 

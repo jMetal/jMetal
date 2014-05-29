@@ -33,7 +33,7 @@ import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.parallel.MultithreadedEvaluator;
-import jmetal.util.parallel.SynchronousParallelRunner;
+import jmetal.util.parallel.SynchronousParallelTaskExecutor;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -98,7 +98,7 @@ public class pNSGAII_main {
 
     // 0 - use all the available cores
     int threads = 4;
-    SynchronousParallelRunner parallelEvaluator = new MultithreadedEvaluator(threads);
+    SynchronousParallelTaskExecutor parallelEvaluator = new MultithreadedEvaluator(threads);
 
     algorithm = new pNSGAII(problem, parallelEvaluator);
 

@@ -24,7 +24,7 @@ import jmetal.core.*;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.comparators.ObjectiveComparator;
-import jmetal.util.parallel.SynchronousParallelRunner;
+import jmetal.util.parallel.SynchronousParallelTaskExecutor;
 
 import java.util.Comparator;
 import java.util.List;
@@ -39,7 +39,7 @@ public class pgGA extends Algorithm {
    *
    */
   private static final long serialVersionUID = -409634466251175115L;
-  SynchronousParallelRunner parallelEvaluator_;
+  SynchronousParallelTaskExecutor parallelEvaluator_;
 
   /**
    * Constructor
@@ -47,7 +47,7 @@ public class pgGA extends Algorithm {
    * @param problem   Problem to solve
    * @param evaluator Parallel evaluator
    */
-  public pgGA(Problem problem, SynchronousParallelRunner evaluator) {
+  public pgGA(Problem problem, SynchronousParallelTaskExecutor evaluator) {
     super(problem);
 
     parallelEvaluator_ = evaluator;
@@ -81,7 +81,7 @@ public class pgGA extends Algorithm {
     populationSize = (Integer) getInputParameter("populationSize");
     maxEvaluations = (Integer) getInputParameter("maxEvaluations");
 
-    parallelEvaluator_.startParallelRunner(problem_);
+    parallelEvaluator_.start(problem_);
 
     //Initialize the variables
     population = new SolutionSet(populationSize);
@@ -98,7 +98,7 @@ public class pgGA extends Algorithm {
     Solution newSolution;
     for (int i = 0; i < populationSize; i++) {
       newSolution = new Solution(problem_);
-      parallelEvaluator_.addTaskForExecution(new Object[] {newSolution});
+      parallelEvaluator_.addTask(new Object[] {newSolution});
     }
 
     List<Solution> solutionList = (List<Solution>) parallelEvaluator_.parallelExecution();
@@ -125,8 +125,8 @@ public class pgGA extends Algorithm {
           Solution[] offSpring = (Solution[]) crossoverOperator.execute(parents);
           mutationOperator.execute(offSpring[0]);
           mutationOperator.execute(offSpring[1]);
-          parallelEvaluator_.addTaskForExecution(new Object[] {offSpring[0]});
-          parallelEvaluator_.addTaskForExecution(new Object[] {offSpring[1]});
+          parallelEvaluator_.addTask(new Object[] {offSpring[0]});
+          parallelEvaluator_.addTask(new Object[] {offSpring[1]});
         }
       }
 
@@ -146,7 +146,7 @@ public class pgGA extends Algorithm {
       population.sort(comparator);
     } // while
 
-    parallelEvaluator_.stopEvaluator();
+    parallelEvaluator_.stop();
 
     // Return a population with the best individual
     SolutionSet resultPopulation = new SolutionSet(1);

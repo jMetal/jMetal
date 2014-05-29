@@ -32,31 +32,40 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.*;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 import java.util.logging.Level;
 
 /**
  * Created by Antonio J. Nebro on 09/02/14.
  * Class for executing independent runs of algorithms
  */
-public class MultithreadedAlgorithmRunner extends SynchronousParallelRunner {
+public class MultithreadedAlgorithmExecutor implements SynchronousParallelTaskExecutor {
   private Collection<EvaluationTask> taskList_;
   private Experiment experiment_;
+  private int numberOfThreads_ ;
+  private ExecutorService executor_;
 
-  public MultithreadedAlgorithmRunner(int threads) {
-    super(threads);
+  public MultithreadedAlgorithmExecutor(int threads) {
+    numberOfThreads_ = threads;
+    if (threads == 0) {
+      numberOfThreads_ = Runtime.getRuntime().availableProcessors();
+    } else if (threads < 0) {
+      Configuration.logger_.severe("MultithreadedAlgorithmRunner: the number of threads" +
+        " cannot be negative number " + threads);
+    } else {
+      numberOfThreads_ = threads;
+    }
+    Configuration.logger_.info("THREADS: " + numberOfThreads_);
   }
 
-  public void startParallelRunner(Object experiment) {
+  public void start(Object experiment) {
     experiment_ = (Experiment) experiment;
     executor_ = Executors.newFixedThreadPool(numberOfThreads_);
     Configuration.logger_.info("Cores: " + numberOfThreads_);
     taskList_ = null;
   }
 
-  public void addTaskForExecution(Object[] taskParameters) {
+  public void addTask(Object[] taskParameters) {
     if (taskList_ == null) {
       taskList_ = new ArrayList<EvaluationTask>();
     }
@@ -91,11 +100,12 @@ public class MultithreadedAlgorithmRunner extends SynchronousParallelRunner {
     return null;
   }
 
-  public void stopParallelRunner() {
+  public void stop() {
     executor_.shutdown();
   }
 
-  private class EvaluationTask extends ParallelTask {
+
+  private class EvaluationTask implements ParallelTask, Callable<Object> {
     private String problemName_;
     private String algorithmName_;
     private int id_;
@@ -157,4 +167,5 @@ public class MultithreadedAlgorithmRunner extends SynchronousParallelRunner {
       return id_;
     }
   }
+
 }

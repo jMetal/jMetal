@@ -51,18 +51,13 @@ import java.util.logging.Level;
  */
 public class SMSEMOA extends Algorithm {
 
-  /**
-   * <<<<<<< HEAD
-   * =======
-   */
   private static final long serialVersionUID = -5932329422133559836L;
 
   /**
-   * >>>>>>> master
    * stores the problem  to solve
    */
   private MetricsUtil utils_;
-  private Hypervolume hv_;
+  private Hypervolume hypervolume_;
 
   /**
    * Constructor
@@ -72,7 +67,7 @@ public class SMSEMOA extends Algorithm {
   public SMSEMOA(Problem problem) {
     super(problem);
     this.utils_ = new jmetal.qualityIndicator.util.MetricsUtil();
-    this.hv_ = new Hypervolume();
+    this.hypervolume_ = new Hypervolume();
   } // SMSEMOA
 
   /**
@@ -232,9 +227,9 @@ public class SMSEMOA extends Algorithm {
         double HV = indicators.getHypervolume(population);
         if (HV >= (0.98 * indicators.getTrueParetoFrontHypervolume())) {
           requiredEvaluations = evaluations;
-        } // if
-      } // if
-    } // while
+        }
+      }
+    }
 
     // Return as output parameter the required evaluations
     setOutputParameter("evaluations", requiredEvaluations);
@@ -243,7 +238,7 @@ public class SMSEMOA extends Algorithm {
     Ranking ranking = new Ranking(population);
     ranking.getSubfront(0).printFeasibleFUN("FUN");
     return ranking.getSubfront(0);
-  } // execute
+  }
 
   /**
    * Calculates how much hypervolume each point dominates exclusively. The points
@@ -261,12 +256,12 @@ public class SMSEMOA extends Algorithm {
     Collections.addAll(frontCopy, front);
     double[][] totalFront = frontCopy.toArray(frontSubset);
     double totalVolume =
-      hv_.calculateHypervolume(totalFront, totalFront.length, numberOfObjectives);
+      hypervolume_.calculateHypervolume(totalFront, totalFront.length, numberOfObjectives);
     for (int i = 0; i < front.length; i++) {
       double[] evaluatedPoint = frontCopy.remove(i);
       frontSubset = frontCopy.toArray(frontSubset);
       // STEP4. The hypervolume (control is passed to java version of Zitzler code)
-      double hv = hv_.calculateHypervolume(frontSubset, frontSubset.length, numberOfObjectives);
+      double hv = hypervolume_.calculateHypervolume(frontSubset, frontSubset.length, numberOfObjectives);
       double contribution = totalVolume - hv;
       contributions[i] = contribution;
       // put point back
@@ -274,4 +269,4 @@ public class SMSEMOA extends Algorithm {
     }
     return contributions;
   }
-} // SMSEMOA
+}

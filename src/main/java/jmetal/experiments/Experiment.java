@@ -23,7 +23,7 @@ package jmetal.experiments;
 import jmetal.experiments.util.*;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
-import jmetal.util.parallel.MultithreadedAlgorithmRunner;
+import jmetal.util.parallel.MultithreadedAlgorithmExecutor;
 
 import java.io.*;
 import java.util.Arrays;
@@ -337,22 +337,22 @@ public class Experiment {
     }
 
     if (runTheAlgorithms_) {
-      MultithreadedAlgorithmRunner parallelRunner =
-          new MultithreadedAlgorithmRunner(numberOfExecutionThreads_);
-      parallelRunner.startParallelRunner(this);
+      MultithreadedAlgorithmExecutor parallelRunner =
+          new MultithreadedAlgorithmExecutor(numberOfExecutionThreads_);
+      parallelRunner.start(this);
 
       for (String algorithm : algorithmNameList_) {
         for (String problem : problemList_) {
           for (int i = 0; i < independentRuns_; i++) {
             Configuration.logger_.info(
                 "Adding task. Algorithm:  " + algorithm + " Problem: " + problem + " Run: " + i);
-            parallelRunner.addTaskForExecution(new Object[] {algorithm, problem, i});
+            parallelRunner.addTask(new Object[] {algorithm, problem, i});
           }
         }
       }
 
       parallelRunner.parallelExecution();
-      parallelRunner.stopParallelRunner();
+      parallelRunner.stop();
     }
 
     if (generateReferenceParetoFronts_) {
