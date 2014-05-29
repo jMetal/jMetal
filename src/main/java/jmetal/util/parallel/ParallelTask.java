@@ -25,6 +25,6 @@ package jmetal.util.parallel;
  * Created by Antonio J. Nebro on 20/02/14.
  * Abstract class for tasks to be executed by a SynchronousParallelRunner subclass
  */
+@Deprecated
 public interface ParallelTask {
-   public Object call() throws Exception;
 }

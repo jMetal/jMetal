@@ -105,7 +105,7 @@ public class MultithreadedAlgorithmExecutor implements SynchronousParallelTaskEx
   }
 
 
-  private class EvaluationTask implements ParallelTask, Callable<Object> {
+  private class EvaluationTask implements Callable<Object> {
     private String problemName_;
     private String algorithmName_;
     private int id_;

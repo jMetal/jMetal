@@ -126,7 +126,7 @@ public class MultithreadedEvaluator implements SynchronousParallelTaskExecutor {
    *         Private class representing tasks to evaluate solutions.
    */
 
-  private class EvaluationTask implements ParallelTask, Callable<Object> {
+  private class EvaluationTask implements Callable<Object> {
     private Problem problem_;
     private Solution solution_;
 
