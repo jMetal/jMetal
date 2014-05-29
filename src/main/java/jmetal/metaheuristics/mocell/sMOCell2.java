@@ -97,7 +97,7 @@ public class sMOCell2 extends Algorithm {
       solution.setLocation(i);
       evaluations++;
     }
-    //
+
     int iterations = 0;
 
     while (evaluations < maxEvaluations) {
@@ -136,15 +136,12 @@ public class sMOCell2 extends Algorithm {
           newSolutionSet.add(new Solution(currentSolutionSet.get(ind)));
         }
 
-        if (flag == 1) {//The new indivudlas dominate
+        if (flag == 1) {
           offSpring[0].setLocation(individual.getLocation());
-          //currentSolutionSet.reemplace(offSpring[0].getLocation(),offSpring[0]);
           newSolutionSet.add(offSpring[0]);
           archive.add(new Solution(offSpring[0]));
         } else if (flag == 0) { //The individuals are non-dominates
           neighbors[ind].add(offSpring[0]);
-          //(new Spea2Fitness(neighbors[ind])).fitnessAssign();                   
-          //neighbors[ind].sort(new FitnessAndCrowdingDistanceComparator()); //Create a new comparator;
           Ranking rank = new Ranking(neighbors[ind]);
           for (int j = 0; j < rank.getNumberOfSubfronts(); j++) {
             distance
@@ -153,13 +150,12 @@ public class sMOCell2 extends Algorithm {
           boolean deleteMutant = true;
 
           int compareResult = crowding.compare(individual, offSpring[0]);
-          if (compareResult == 1) { //The offSpring[0] is better
+          if (compareResult == 1) {
             deleteMutant = false;
           }
 
           if (!deleteMutant) {
             offSpring[0].setLocation(individual.getLocation());
-            //currentSolutionSet.reemplace(offSpring[0].getLocation(),offSpring[0]);
             newSolutionSet.add(offSpring[0]);
             archive.add(new Solution(offSpring[0]));
           } else {
@@ -171,7 +167,6 @@ public class sMOCell2 extends Algorithm {
       currentSolutionSet = newSolutionSet;
     }
     return archive;
-  } // execute       
-
-} // sMOCell2
+  }
+}
 

@@ -126,11 +126,11 @@ public class MOCell extends Algorithm {
 
         int flag = dominance.compare(individual, offSpring[0]);
 
-        if (flag == 1) { //The new individual dominates
+        if (flag == 1) {
           offSpring[0].setLocation(individual.getLocation());
           currentPopulation.replace(offSpring[0].getLocation(), offSpring[0]);
           archive.add(new Solution(offSpring[0]));
-        } else if (flag == 0) { //The new individual is non-dominated               
+        } else if (flag == 0) {
           neighbors[ind].add(offSpring[0]);
           offSpring[0].setLocation(-1);
           Ranking rank = new Ranking(neighbors[ind]);
@@ -140,7 +140,7 @@ public class MOCell extends Algorithm {
           }
           Solution worst = neighbors[ind].worst(crowdingComparator);
 
-          if (worst.getLocation() == -1) { //The worst is the offspring
+          if (worst.getLocation() == -1) {
             archive.add(new Solution(offSpring[0]));
           } else {
             offSpring[0].setLocation(worst.getLocation());
@@ -152,6 +152,6 @@ public class MOCell extends Algorithm {
     }
 
     return archive;
-  } // while       
-} // MOCell
+  }
+}
 

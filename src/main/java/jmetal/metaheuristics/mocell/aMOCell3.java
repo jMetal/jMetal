@@ -70,7 +70,6 @@ public class aMOCell3 extends Algorithm {
     maxEvaluations = (Integer) getInputParameter("maxEvaluations");
     feedBack = (Integer) getInputParameter("feedBack");
 
-
     //Read the operators
     mutationOperator = operators_.get("mutation");
     crossoverOperator = operators_.get("crossover");
@@ -124,11 +123,11 @@ public class aMOCell3 extends Algorithm {
 
         int flag = dominance.compare(individual, offSpring[0]);
 
-        if (flag == 1) { //The new individuals dominate
+        if (flag == 1) {
           offSpring[0].setLocation(individual.getLocation());
           currentPopulation.replace(offSpring[0].getLocation(), offSpring[0]);
           archive.add(new Solution(offSpring[0]));
-        } else if (flag == 0) {//The individuals are non-dominates
+        } else if (flag == 0) {
           neighbors[ind].add(offSpring[0]);
           offSpring[0].setLocation(-1);
           Ranking rank = new Ranking(neighbors[ind]);
@@ -138,7 +137,7 @@ public class aMOCell3 extends Algorithm {
           }
           Solution worst = neighbors[ind].worst(crowdingComparator);
 
-          if (worst.getLocation() == -1) {//The worst is the offspring
+          if (worst.getLocation() == -1) {
             archive.add(new Solution(offSpring[0]));
           } else {
             offSpring[0].setLocation(worst.getLocation());
@@ -165,5 +164,5 @@ public class aMOCell3 extends Algorithm {
 
     return archive;
   }
-} // aMOCell3
+}
 

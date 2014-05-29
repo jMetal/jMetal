@@ -507,5 +507,5 @@ public class pMOEAD extends Algorithm implements Runnable {
     }
     return fitness;
   }
-} // pMOEAD
+}
 

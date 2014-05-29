@@ -134,7 +134,6 @@ public class MOCHC extends Algorithm {
     maxEvaluations =
       (Integer) getInputParameter("maxEvaluations");
 
-
     // Read operators
     crossover = (Operator) getOperator("crossover");
     cataclysmicMutation = (Operator) getOperator("cataclysmicMutation");
@@ -188,7 +187,6 @@ public class MOCHC extends Algorithm {
       if (minimumDistance <= -convergenceValue) {
 
         minimumDistance = (int) (1.0 / size * (1 - 1.0 / size) * size);
-        //minimumDistance = (int) (0.35 * (1 - 0.35) * size);
 
         int preserve = (int) Math.floor(preservedPopulation * populationSize);
         newPopulation = new SolutionSet(populationSize);
@@ -220,6 +218,5 @@ public class MOCHC extends Algorithm {
     }
 
     return archive;
-  } // execute
-
-}  // MOCHC
+  }
+}
