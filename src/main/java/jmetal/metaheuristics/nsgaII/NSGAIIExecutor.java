@@ -22,6 +22,7 @@
 package jmetal.metaheuristics.nsgaII;
 
 import jmetal.core.*;
+import jmetal.metaheuristics.executors.Executor;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Distance;
 import jmetal.util.JMException;
@@ -38,7 +39,9 @@ import jmetal.util.comparators.CrowdingComparator;
  * To be presented in: PPSN'08. Dortmund. September 2008.
  */
 
-public class NSGAII extends Algorithm {
+public class NSGAIIExecutor extends Algorithm {
+
+  Executor executor_ ;
 
   /**
    *
@@ -50,8 +53,9 @@ public class NSGAII extends Algorithm {
    *
    * @param problem Problem to solve
    */
-  public NSGAII(Problem problem) {
+  public NSGAIIExecutor(Problem problem, Executor executor) {
     super(problem);
+    executor_ = executor ;
   } // NSGAII
 
   /**
@@ -59,7 +63,7 @@ public class NSGAII extends Algorithm {
    *
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
    * as a result of the algorithm execution
-   * @throws JMException
+   * @throws jmetal.util.JMException
    */
   public SolutionSet execute() throws JMException, ClassNotFoundException {
     int populationSize;
@@ -100,12 +104,13 @@ public class NSGAII extends Algorithm {
     Solution newSolution;
     for (int i = 0; i < populationSize; i++) {
       newSolution = new Solution(problem_);
-      problem_.evaluate(newSolution);
-      problem_.evaluateConstraints(newSolution);
-      evaluations++;
       population.add(newSolution);
     }
 
+    executor_.evaluate(population, problem_) ;
+    //problem_.evaluate(newSolution);
+    //problem_.evaluateConstraints(newSolution);
+    evaluations += populationSize ;
     // Generations 
     while (evaluations < maxEvaluations) {
 
@@ -120,15 +125,13 @@ public class NSGAII extends Algorithm {
           Solution[] offSpring = (Solution[]) crossoverOperator.execute(parents);
           mutationOperator.execute(offSpring[0]);
           mutationOperator.execute(offSpring[1]);
-          problem_.evaluate(offSpring[0]);
-          problem_.evaluateConstraints(offSpring[0]);
-          problem_.evaluate(offSpring[1]);
-          problem_.evaluateConstraints(offSpring[1]);
           offspringPopulation.add(offSpring[0]);
           offspringPopulation.add(offSpring[1]);
-          evaluations += 2;
-        } // if                            
-      } // for
+        }
+      }
+
+      executor_.evaluate(offspringPopulation, problem_) ;
+      evaluations += offspringPopulation.size() ;
 
       // Create the solutionSet union of solutionSet and offSpring
       union = ((SolutionSet) population).union(offspringPopulation);
