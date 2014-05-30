@@ -21,14 +21,11 @@
 
 package jmetal.metaheuristics.nsgaII;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 import jmetal.core.Algorithm;
 import jmetal.core.Operator;
 import jmetal.core.Problem;
 import jmetal.core.SolutionSet;
-import jmetal.metaheuristics.executors.Executor;
-import jmetal.metaheuristics.executors.ExecutorModule;
+import jmetal.metaheuristics.executors.SequentialExecutor;
 import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.SelectionFactory;
@@ -103,10 +100,10 @@ public class NSGAIIExecutorMain {
       //problem = new OKA2("Real") ;
     }
 
-    Injector injector = Guice.createInjector(new ExecutorModule()) ;
-    Executor executor = injector.getInstance(Executor.class) ;
+    //Injector injector = Guice.createInjector(new ExecutorModule()) ;
+    //Executor executor = injector.getInstance(Executor.class) ;
 
-    algorithm = new NSGAIIExecutor(problem, executor);
+    algorithm = new NSGAIIExecutor(problem, new SequentialExecutor());
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", 100);
