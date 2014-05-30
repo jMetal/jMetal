@@ -385,6 +385,7 @@ public class pSMPSO extends Algorithm {
       }
 
       parallelEvaluator_.parallelExecution();
+
       //Actualize the archive          
       for (int i = 0; i < particles_.size(); i++) {
         Solution particle = new Solution(particles_.get(i));
