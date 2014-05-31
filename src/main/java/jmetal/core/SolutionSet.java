@@ -247,8 +247,8 @@ public class SolutionSet implements Serializable {
     OutputStreamWriter osw = new OutputStreamWriter(fos);
     BufferedWriter bw = new BufferedWriter(osw);
 
-    for (Solution aSolutionsList : solutionsList_) {
-      bw.write(aSolutionsList.toString());
+    for (Solution solution : solutionsList_) {
+      bw.write(solution.toString());
       bw.newLine();
     }
     bw.close();
@@ -267,9 +267,9 @@ public class SolutionSet implements Serializable {
 
     if (!isEmtpy()) {
       int numberOfVariables = solutionsList_.get(0).getDecisionVariables().length;
-      for (Solution aSolutionsList : solutionsList_) {
+      for (Solution solution : solutionsList_) {
         for (int j = 0; j < numberOfVariables; j++) {
-          bw.write(aSolutionsList.getDecisionVariables()[j].toString() + " ");
+          bw.write(solution.getDecisionVariables()[j].toString() + " ");
         }
         bw.newLine();
       }
@@ -460,8 +460,8 @@ public class SolutionSet implements Serializable {
   }
 
   public void printObjectives() {
-    for (Solution aSolutionsList_ : solutionsList_) {
-      Configuration.logger_.log(Level.INFO, "" + aSolutionsList_);
+    for (Solution solution : solutionsList_) {
+      Configuration.logger_.log(Level.INFO, "" + solution);
     }
   }
 
