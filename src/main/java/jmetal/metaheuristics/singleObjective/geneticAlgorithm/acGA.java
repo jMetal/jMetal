@@ -26,7 +26,7 @@ import jmetal.operators.selection.BestSolutionSelection;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.Neighborhood;
-import jmetal.util.comparators.ObjectiveComparator;
+import jmetal.util.comparator.ObjectiveComparator;
 
 import java.util.Comparator;
 import java.util.HashMap;

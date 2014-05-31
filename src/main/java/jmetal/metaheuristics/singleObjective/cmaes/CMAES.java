@@ -23,7 +23,7 @@ package jmetal.metaheuristics.singleObjective.cmaes;
 import jmetal.core.*;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
-import jmetal.util.comparators.ObjectiveComparator;
+import jmetal.util.comparator.ObjectiveComparator;
 import jmetal.util.random.PseudoRandom;
 
 import java.util.Comparator;

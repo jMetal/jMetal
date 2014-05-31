@@ -27,10 +27,10 @@ import jmetal.util.Distance;
 import jmetal.util.JMException;
 import jmetal.util.Spea2Fitness;
 import jmetal.util.archive.CrowdingArchive;
-import jmetal.util.comparators.CrowdingDistanceComparator;
-import jmetal.util.comparators.DominanceComparator;
-import jmetal.util.comparators.EqualSolutions;
-import jmetal.util.comparators.FitnessComparator;
+import jmetal.util.comparator.CrowdingDistanceComparator;
+import jmetal.util.comparator.DominanceComparator;
+import jmetal.util.comparator.EqualSolutions;
+import jmetal.util.comparator.FitnessComparator;
 import jmetal.util.random.PseudoRandom;
 import jmetal.util.wrapper.XReal;
 
@@ -125,7 +125,7 @@ public class AbYSS extends Algorithm {
   private int evaluations_;
 
   /**
-   * Stores the comparators for dominance and equality, respectively
+   * Stores the comparator for dominance and equality, respectively
    */
   private Comparator<Solution> dominance_;
   private Comparator<Solution> equal_;

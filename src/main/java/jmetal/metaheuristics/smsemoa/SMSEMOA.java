@@ -27,7 +27,7 @@ import jmetal.qualityIndicator.util.MetricsUtil;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.Ranking;
-import jmetal.util.comparators.CrowdingDistanceComparator;
+import jmetal.util.comparator.CrowdingDistanceComparator;
 
 import java.util.Collections;
 import java.util.LinkedList;

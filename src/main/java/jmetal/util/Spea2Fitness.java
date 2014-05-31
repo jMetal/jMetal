@@ -23,8 +23,8 @@ package jmetal.util;
 
 import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
-import jmetal.util.comparators.DominanceComparator;
-import jmetal.util.comparators.FitnessComparator;
+import jmetal.util.comparator.DominanceComparator;
+import jmetal.util.comparator.FitnessComparator;
 
 import java.util.*;
 

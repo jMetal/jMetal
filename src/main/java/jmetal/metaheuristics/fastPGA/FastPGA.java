@@ -26,7 +26,7 @@ import jmetal.util.Distance;
 import jmetal.util.FPGAFitness;
 import jmetal.util.JMException;
 import jmetal.util.Ranking;
-import jmetal.util.comparators.FPGAFitnessComparator;
+import jmetal.util.comparator.FPGAFitnessComparator;
 
 import java.util.Comparator;
 

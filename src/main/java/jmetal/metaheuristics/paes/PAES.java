@@ -24,7 +24,7 @@ package jmetal.metaheuristics.paes;
 import jmetal.core.*;
 import jmetal.util.JMException;
 import jmetal.util.archive.AdaptiveGridArchive;
-import jmetal.util.comparators.DominanceComparator;
+import jmetal.util.comparator.DominanceComparator;
 
 import java.util.Comparator;
 

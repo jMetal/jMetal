@@ -30,7 +30,7 @@ import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.BinaryTournament;
 import jmetal.problems.ProblemFactory;
 import jmetal.util.JMException;
-import jmetal.util.comparators.FitnessComparator;
+import jmetal.util.comparator.FitnessComparator;
 
 import java.util.HashMap;
 import java.util.Properties;

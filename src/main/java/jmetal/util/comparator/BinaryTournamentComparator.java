@@ -1,4 +1,4 @@
-//  FPGAFitnessComparator.java
+//  BinaryTournamentComparator.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -19,44 +19,49 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package jmetal.util.comparators;
+package jmetal.util.comparator;
 
 import jmetal.core.Solution;
 
 import java.util.Comparator;
 
 /**
- * This class implements a <code>Comparator</code> (a method for comparing
- * <code>Solution</code> objects) based on the rank used in FPGA.
+ * This class implements a <code>Comparator</code> for <code>Solution</code>
  */
-public class FPGAFitnessComparator implements Comparator<Solution> {
+public class BinaryTournamentComparator implements Comparator<Solution> {
+
+  /**
+   * stores a dominance comparator
+   */
+  private static final Comparator<Solution> dominance_ = new DominanceComparator();
 
   /**
    * Compares two solutions.
+   * A <code>Solution</code> a is less than b for this <code>Comparator</code>.
+   * if the crowding distance of a if greater than the crowding distance of b.
    *
-   * @param o1 Object representing the first <code>Solution</code>.
-   * @param o2 Object representing the second <code>Solution</code>.
-   * @return -1, or 0, or 1 if o1 is less than, equal, or greater than o2,
+   * @param o1 Object representing a <code>Solution</code>.
+   * @param o2 Object representing a <code>Solution</code>.
+   * @return -1, or 0, or 1 if o1 is less than, equals, or greater than o2,
    * respectively.
    */
   @Override
   public int compare(Solution o1, Solution o2) {
-    Solution solution1, solution2;
-    solution1 = (Solution) o1;
-    solution2 = (Solution) o2;
+    int flag = dominance_.compare(o1, o2);
+    if (flag != 0) {
+      return flag;
+    }
 
-    if (solution1.getRank() == 0 && solution2.getRank() > 0) {
+    double crowding1, crowding2;
+    crowding1 = ((Solution) o1).getCrowdingDistance();
+    crowding2 = ((Solution) o2).getCrowdingDistance();
+
+    if (crowding1 > crowding2) {
       return -1;
-    } else if (solution1.getRank() > 0 && solution2.getRank() == 0) {
+    } else if (crowding2 > crowding1) {
       return 1;
     } else {
-      if (solution1.getFitness() > solution2.getFitness()) {
-        return -1;
-      } else if (solution1.getFitness() < solution2.getFitness()) {
-        return 1;
-      } else {
-        return 0;
-      }
+      return 0;
     }
   }
 }

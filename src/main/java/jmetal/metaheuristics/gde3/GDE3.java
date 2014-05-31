@@ -25,8 +25,8 @@ import jmetal.core.*;
 import jmetal.util.Distance;
 import jmetal.util.JMException;
 import jmetal.util.Ranking;
-import jmetal.util.comparators.CrowdingComparator;
-import jmetal.util.comparators.DominanceComparator;
+import jmetal.util.comparator.CrowdingComparator;
+import jmetal.util.comparator.DominanceComparator;
 
 import java.util.Comparator;
 

@@ -1,4 +1,4 @@
-//  DominanceComparator.java
+//  EqualSolutions.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -19,7 +19,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package jmetal.util.comparators;
+package jmetal.util.comparator;
 
 import jmetal.core.Solution;
 
@@ -27,36 +27,20 @@ import java.util.Comparator;
 
 /**
  * This class implements a <code>Comparator</code> (a method for comparing
- * <code>Solution</code> objects) based on a constraint violation test +
- * dominance checking, as in NSGA-II.
+ * <code>Solution</code> objects) based whether all the objective values are
+ * equal or not. A dominance test is applied to decide about what solution
+ * is the best.
  */
-public class DominanceComparator implements Comparator<Solution> {
-  IConstraintViolationComparator violationConstraintComparator_;
-
-  /**
-   * Constructor
-   */
-  public DominanceComparator() {
-    violationConstraintComparator_ = new OverallConstraintViolationComparator();
-    //violationConstraintComparator_ = new NumberOfViolatedConstraintComparator(); 
-  }
-
-  /**
-   * Constructor
-   *
-   * @param comparator
-   */
-  public DominanceComparator(IConstraintViolationComparator comparator) {
-    violationConstraintComparator_ = comparator;
-  }
+public class EqualSolutions implements Comparator<Solution> {
 
   /**
    * Compares two solutions.
    *
    * @param object1 Object representing the first <code>Solution</code>.
    * @param object2 Object representing the second <code>Solution</code>.
-   * @return -1, or 0, or 1 if solution1 dominates solution2, both are
-   * non-dominated, or solution1  is dominated by solution22, respectively.
+   * @return -1, or 0, or 1, or 2 if solution1 is dominates solution2, solution1
+   * and solution2 are equals, or solution1 is greater than solution2,
+   * respectively.
    */
   @Override
   public int compare(Solution object1, Solution object2) {
@@ -66,9 +50,6 @@ public class DominanceComparator implements Comparator<Solution> {
       return -1;
     }
 
-    Solution solution1 = (Solution) object1;
-    Solution solution2 = (Solution) object2;
-
     int dominate1; // dominate1 indicates if some objective of solution1
     // dominates the same objective in solution2. dominate2
     int dominate2; // is the complementary of dominate1.
@@ -76,18 +57,16 @@ public class DominanceComparator implements Comparator<Solution> {
     dominate1 = 0;
     dominate2 = 0;
 
-    int flag; //stores the result of the comparison
+    Solution solution1 = (Solution) object1;
+    Solution solution2 = (Solution) object2;
 
-    // Test to determine whether at least a solution violates some constraint
-    if (violationConstraintComparator_.needToCompare(solution1, solution2)) {
-      return violationConstraintComparator_.compare(solution1, solution2);
-    }
-
-    // Equal number of violated constraints. Applying a dominance Test then
+    int flag;
     double value1, value2;
     for (int i = 0; i < solution1.getNumberOfObjectives(); i++) {
+      flag = (new ObjectiveComparator(i)).compare(solution1, solution2);
       value1 = solution1.getObjective(i);
       value2 = solution2.getObjective(i);
+
       if (value1 < value2) {
         flag = -1;
       } else if (value1 > value2) {
@@ -105,12 +84,19 @@ public class DominanceComparator implements Comparator<Solution> {
       }
     }
 
-    if (dominate1 == dominate2) {
-      return 0; //No one dominate the other
+    if (dominate1 == 0 && dominate2 == 0) {
+      //No one dominates the other
+      return 0;
     }
+
     if (dominate1 == 1) {
-      return -1; // solution1 dominate
+      // solution1 dominates
+      return -1;
+    } else if (dominate2 == 1) {
+      // solution2 dominates
+      return 1;
     }
-    return 1;    // solution2 dominate   
+    return 2;
   }
 }
+

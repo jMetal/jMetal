@@ -23,8 +23,8 @@ package jmetal.util;
 
 import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
-import jmetal.util.comparators.DominanceComparator;
-import jmetal.util.comparators.OverallConstraintViolationComparator;
+import jmetal.util.comparator.DominanceComparator;
+import jmetal.util.comparator.OverallConstraintViolationComparator;
 
 import java.util.Comparator;
 import java.util.Iterator;

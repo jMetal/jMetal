@@ -25,7 +25,7 @@ import jmetal.core.*;
 import jmetal.operators.selection.BestSolutionSelection;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
-import jmetal.util.comparators.ObjectiveComparator;
+import jmetal.util.comparator.ObjectiveComparator;
 import jmetal.util.random.PseudoRandom;
 import jmetal.util.wrapper.XReal;
 

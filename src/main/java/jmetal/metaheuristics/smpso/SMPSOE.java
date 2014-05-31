@@ -26,8 +26,8 @@ import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Distance;
 import jmetal.util.JMException;
 import jmetal.util.archive.CrowdingArchive;
-import jmetal.util.comparators.CrowdingDistanceComparator;
-import jmetal.util.comparators.DominanceComparator;
+import jmetal.util.comparator.CrowdingDistanceComparator;
+import jmetal.util.comparator.DominanceComparator;
 import jmetal.util.evaluator.SolutionSetEvaluator;
 import jmetal.util.random.PseudoRandom;
 import jmetal.util.wrapper.XReal;
@@ -172,7 +172,7 @@ public class SMPSOE extends Algorithm {
     best_ = new Solution[swarmSize_];
     leaders_ = new CrowdingArchive(archiveSize_, problem_.getNumberOfObjectives());
 
-    // Create comparators for dominance and crowding distance
+    // Create comparator for dominance and crowding distance
     dominance_ = new DominanceComparator();
     crowdingDistanceComparator_ = new CrowdingDistanceComparator();
     distance_ = new Distance();

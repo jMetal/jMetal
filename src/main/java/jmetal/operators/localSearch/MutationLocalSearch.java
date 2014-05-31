@@ -27,8 +27,8 @@ import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
 import jmetal.operators.mutation.Mutation;
 import jmetal.util.JMException;
-import jmetal.util.comparators.DominanceComparator;
-import jmetal.util.comparators.OverallConstraintViolationComparator;
+import jmetal.util.comparator.DominanceComparator;
+import jmetal.util.comparator.OverallConstraintViolationComparator;
 
 import java.util.Comparator;
 import java.util.HashMap;
@@ -59,7 +59,7 @@ public class MutationLocalSearch extends LocalSearch {
   private SolutionSet archive_;
   private int improvementRounds_;
   /**
-   * Stores comparators for dealing with constraints and dominance checking,
+   * Stores comparator for dealing with constraints and dominance checking,
    * respectively.
    */
   private Comparator<Solution> constraintComparator_;

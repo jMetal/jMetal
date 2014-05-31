@@ -5,7 +5,7 @@ import jmetal.util.Configuration;
 import jmetal.util.Distance;
 import jmetal.util.JMException;
 import jmetal.util.Ranking;
-import jmetal.util.comparators.CrowdingComparator;
+import jmetal.util.comparator.CrowdingComparator;
 import jmetal.util.offspring.Offspring;
 import jmetal.util.offspring.PolynomialMutationOffspring;
 import jmetal.util.random.PseudoRandom;

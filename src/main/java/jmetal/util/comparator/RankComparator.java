@@ -1,4 +1,4 @@
-//  DistanceToPopulationComparator.java
+//  RankComparator.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -19,7 +19,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package jmetal.util.comparators;
+package jmetal.util.comparator;
 
 import jmetal.core.Solution;
 
@@ -27,12 +27,9 @@ import java.util.Comparator;
 
 /**
  * This class implements a <code>Comparator</code> (a method for comparing
- * <code>Solution</code> objects) based on the euclidean distance to a
- * solution set. This distances are obtained through the method
- * <code>getDistanceToPopulation<code>.
+ * <code>Solution</code> objects) based on the rank of the solutions.
  */
-public class DistanceToPopulationComparator implements Comparator<Solution> {
-
+public class RankComparator implements Comparator<Solution> {
   /**
    * Compares two solutions.
    *
@@ -49,11 +46,13 @@ public class DistanceToPopulationComparator implements Comparator<Solution> {
       return -1;
     }
 
-    double distance1 = ((Solution) o1).getDistanceToSolutionSet();
-    double distance2 = ((Solution) o2).getDistanceToSolutionSet();
-    if (distance1 < distance2) {
+    Solution solution1 = (Solution) o1;
+    Solution solution2 = (Solution) o2;
+    if (solution1.getRank() < solution2.getRank()) {
       return -1;
-    } else if (distance1 > distance2) {
+    }
+
+    if (solution1.getRank() > solution2.getRank()) {
       return 1;
     }
 

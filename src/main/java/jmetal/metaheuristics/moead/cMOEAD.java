@@ -24,8 +24,8 @@ package jmetal.metaheuristics.moead;
 import jmetal.core.*;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
-import jmetal.util.comparators.IConstraintViolationComparator;
-import jmetal.util.comparators.ViolationThresholdComparator;
+import jmetal.util.comparator.IConstraintViolationComparator;
+import jmetal.util.comparator.ViolationThresholdComparator;
 import jmetal.util.random.PseudoRandom;
 
 import java.io.BufferedReader;

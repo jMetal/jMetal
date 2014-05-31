@@ -1,4 +1,4 @@
-//  EqualSolutions.java
+//  EpsilonDominanceComparator.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -19,7 +19,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package jmetal.util.comparators;
+package jmetal.util.comparator;
 
 import jmetal.core.Solution;
 
@@ -27,20 +27,36 @@ import java.util.Comparator;
 
 /**
  * This class implements a <code>Comparator</code> (a method for comparing
- * <code>Solution</code> objects) based whether all the objective values are
- * equal or not. A dominance test is applied to decide about what solution
- * is the best.
+ * <code>Solution</code> objects) based on epsilon dominance.
  */
-public class EqualSolutions implements Comparator<Solution> {
+public class EpsilonDominanceComparator implements Comparator<Solution> {
+
+  /**
+   * stores a comparator for check the OverallConstraintComparator
+   */
+  private static final Comparator<Solution> overallConstraintViolationComparator_ =
+    new OverallConstraintViolationComparator();
+  /**
+   * Stores the value of eta, needed for epsilon-dominance.
+   */
+  private double eta_;
+
+  /**
+   * Constructor.
+   *
+   * @param eta Value for epsilon-dominance.
+   */
+  public EpsilonDominanceComparator(double eta) {
+    eta_ = eta;
+  }
 
   /**
    * Compares two solutions.
    *
    * @param object1 Object representing the first <code>Solution</code>.
    * @param object2 Object representing the second <code>Solution</code>.
-   * @return -1, or 0, or 1, or 2 if solution1 is dominates solution2, solution1
-   * and solution2 are equals, or solution1 is greater than solution2,
-   * respectively.
+   * @return -1, or 0, or 1 if solution1 dominates solution2, both are
+   * non-dominated, or solution1 is dominated by solution2, respectively.
    */
   @Override
   public int compare(Solution object1, Solution object2) {
@@ -61,15 +77,23 @@ public class EqualSolutions implements Comparator<Solution> {
     Solution solution2 = (Solution) object2;
 
     int flag;
+    Comparator<Solution> constraint = new OverallConstraintViolationComparator();
+    flag = constraint.compare(solution1, solution2);
+
+    if (flag != 0) {
+      return flag;
+    }
+
     double value1, value2;
-    for (int i = 0; i < solution1.getNumberOfObjectives(); i++) {
-      flag = (new ObjectiveComparator(i)).compare(solution1, solution2);
+    // Idem number of violated constraint. Apply a dominance Test
+    for (int i = 0; i < ((Solution) solution1).getNumberOfObjectives(); i++) {
       value1 = solution1.getObjective(i);
       value2 = solution2.getObjective(i);
 
-      if (value1 < value2) {
+      //Objective implements comparable!!!
+      if (value1 / (1 + eta_) < value2) {
         flag = -1;
-      } else if (value1 > value2) {
+      } else if (value1 / (1 + eta_) > value2) {
         flag = 1;
       } else {
         flag = 0;
@@ -84,19 +108,16 @@ public class EqualSolutions implements Comparator<Solution> {
       }
     }
 
-    if (dominate1 == 0 && dominate2 == 0) {
-      //No one dominates the other
+    if (dominate1 == dominate2) {
+      // No one dominates the other
       return 0;
     }
 
     if (dominate1 == 1) {
       // solution1 dominates
       return -1;
-    } else if (dominate2 == 1) {
-      // solution2 dominates
-      return 1;
     }
-    return 2;
+    // solution2 dominates
+    return 1;
   }
 }
-

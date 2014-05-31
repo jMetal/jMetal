@@ -32,7 +32,7 @@ import jmetal.problems.ProblemFactory;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
-import jmetal.util.comparators.FPGAFitnessComparator;
+import jmetal.util.comparator.FPGAFitnessComparator;
 
 import java.io.IOException;
 import java.util.HashMap;

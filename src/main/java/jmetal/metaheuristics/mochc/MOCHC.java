@@ -25,7 +25,7 @@ import jmetal.core.*;
 import jmetal.encodings.variable.Binary;
 import jmetal.util.JMException;
 import jmetal.util.archive.CrowdingArchive;
-import jmetal.util.comparators.CrowdingComparator;
+import jmetal.util.comparator.CrowdingComparator;
 
 import java.util.Comparator;
 

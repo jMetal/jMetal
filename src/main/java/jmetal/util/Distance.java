@@ -23,7 +23,7 @@ package jmetal.util;
 
 import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
-import jmetal.util.comparators.ObjectiveComparator;
+import jmetal.util.comparator.ObjectiveComparator;
 import jmetal.util.wrapper.XReal;
 
 import java.util.logging.Level;

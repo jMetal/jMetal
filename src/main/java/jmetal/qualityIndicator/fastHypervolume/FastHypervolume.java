@@ -26,7 +26,7 @@ import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
 import jmetal.qualityIndicator.fastHypervolume.wfg.Front;
 import jmetal.qualityIndicator.fastHypervolume.wfg.WFGHV;
-import jmetal.util.comparators.ObjectiveComparator;
+import jmetal.util.comparator.ObjectiveComparator;
 
 /**
  * Created with IntelliJ IDEA.

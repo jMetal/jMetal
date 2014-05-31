@@ -24,7 +24,7 @@ package jmetal.metaheuristics.singleObjective.geneticAlgorithm;
 import jmetal.core.*;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
-import jmetal.util.comparators.ObjectiveComparator;
+import jmetal.util.comparator.ObjectiveComparator;
 
 import java.util.Comparator;
 

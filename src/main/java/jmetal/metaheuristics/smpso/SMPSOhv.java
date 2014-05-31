@@ -28,8 +28,8 @@ import jmetal.qualityIndicator.fastHypervolume.FastHypervolumeArchive;
 import jmetal.util.Configuration;
 import jmetal.util.Distance;
 import jmetal.util.JMException;
-import jmetal.util.comparators.CrowdingDistanceComparator;
-import jmetal.util.comparators.DominanceComparator;
+import jmetal.util.comparator.CrowdingDistanceComparator;
+import jmetal.util.comparator.DominanceComparator;
 import jmetal.util.random.PseudoRandom;
 import jmetal.util.wrapper.XReal;
 
@@ -216,7 +216,7 @@ public class SMPSOhv extends Algorithm {
     best_ = new Solution[swarmSize_];
     leaders_ = new FastHypervolumeArchive(archiveSize_, problem_.getNumberOfObjectives());
 
-    // Create comparators for dominance and crowding distance
+    // Create comparator for dominance and crowding distance
     dominance_ = new DominanceComparator();
     crowdingDistanceComparator_ = new CrowdingDistanceComparator();
     distance_ = new Distance();

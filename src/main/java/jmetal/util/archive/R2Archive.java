@@ -23,9 +23,9 @@ package jmetal.util.archive;
 
 import jmetal.core.Solution;
 import jmetal.qualityIndicator.R2;
-import jmetal.util.comparators.CrowdingDistanceComparator;
-import jmetal.util.comparators.DominanceComparator;
-import jmetal.util.comparators.EqualSolutions;
+import jmetal.util.comparator.CrowdingDistanceComparator;
+import jmetal.util.comparator.DominanceComparator;
+import jmetal.util.comparator.EqualSolutions;
 import jmetal.util.random.PseudoRandom;
 
 import java.util.Comparator;

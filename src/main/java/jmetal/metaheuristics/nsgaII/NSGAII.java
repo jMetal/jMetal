@@ -26,7 +26,7 @@ import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Distance;
 import jmetal.util.JMException;
 import jmetal.util.Ranking;
-import jmetal.util.comparators.CrowdingComparator;
+import jmetal.util.comparator.CrowdingComparator;
 
 /**
  * Implementation of NSGA-II.

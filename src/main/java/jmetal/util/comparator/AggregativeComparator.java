@@ -1,4 +1,4 @@
-//  OverallConstraintViolationComparator.java
+//  AggregativeComparator.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -19,17 +19,18 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package jmetal.util.comparators;
+package jmetal.util.comparator;
 
 import jmetal.core.Solution;
 
+import java.util.Comparator;
+
 /**
  * This class implements a <code>Comparator</code> (a method for comparing
- * <code>Solution</code> objects) based on the overall constraint violation of
- * the solucions, as in NSGA-II.
+ * <code>Solution</code> objects) based on the aggregative sum of the objective
+ * values.
  */
-public class OverallConstraintViolationComparator
-  implements IConstraintViolationComparator {
+public class AggregativeComparator implements Comparator<Solution> {
 
   /**
    * Compares two solutions.
@@ -41,36 +42,24 @@ public class OverallConstraintViolationComparator
    */
   @Override
   public int compare(Solution o1, Solution o2) {
-    double overall1, overall2;
-    overall1 = ((Solution) o1).getOverallConstraintViolation();
-    overall2 = ((Solution) o2).getOverallConstraintViolation();
-
-    if ((overall1 < 0) && (overall2 < 0)) {
-      if (overall1 > overall2) {
-        return -1;
-      } else if (overall2 > overall1) {
-        return 1;
-      } else {
-        return 0;
-      }
-    } else if ((overall1 == 0) && (overall2 < 0)) {
+    if (o1 == null) {
+      return 1;
+    } else if (o2 == null) {
       return -1;
-    } else if ((overall1 < 0) && (overall2 == 0)) {
+    }
+
+    double value1, value2;
+    Solution solution1 = (Solution) o1;
+    Solution solution2 = (Solution) o2;
+
+    value1 = solution1.getAggregativeValue();
+    value2 = solution2.getAggregativeValue();
+    if (value1 < value2) {
+      return -1;
+    } else if (value2 < value1) {
       return 1;
     } else {
       return 0;
     }
-  }
-
-  /**
-   * Returns true if solutions s1 and/or s2 have an overall constraint
-   * violation < 0
-   */
-  public boolean needToCompare(Solution s1, Solution s2) {
-    boolean needToCompare;
-    needToCompare = (s1.getOverallConstraintViolation() < 0) ||
-      (s2.getOverallConstraintViolation() < 0);
-
-    return needToCompare;
   }
 }

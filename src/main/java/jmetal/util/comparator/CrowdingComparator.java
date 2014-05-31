@@ -1,4 +1,4 @@
-//  EpsilonObjectiveComparator.java
+//  CrowdingComparator.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -19,7 +19,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package jmetal.util.comparators;
+package jmetal.util.comparator;
 
 import jmetal.core.Solution;
 
@@ -27,34 +27,17 @@ import java.util.Comparator;
 
 /**
  * This class implements a <code>Comparator</code> (a method for comparing
- * <code>Solution</code> objects) based on epsilon dominance over a given
- * objective function.
+ * <code>Solution</code> objects) based on the crowding distance, as in NSGA-II.
  */
-public class EpsilonObjectiveComparator implements Comparator<Solution> {
+public class CrowdingComparator implements Comparator<Solution> {
 
   /**
-   * Stores the objective index to compare
+   * stores a comparator for check the rank of solutions
    */
-  private int objective_;
+  private static final Comparator<Solution> comparator = new RankComparator();
 
   /**
-   * Stores the eta value for epsilon-dominance
-   */
-  private double eta_;
-
-  /**
-   * Constructor.
-   *
-   * @param nObj Index of the objective to compare.
-   * @param eta  Value for epsilon-dominance.
-   */
-  public EpsilonObjectiveComparator(int nObj, double eta) {
-    objective_ = nObj;
-    eta_ = eta;
-  }
-
-  /**
-   * Compares two solutions.
+   * Compare two solutions.
    *
    * @param o1 Object representing the first <code>Solution</code>.
    * @param o2 Object representing the second <code>Solution</code>.
@@ -69,16 +52,22 @@ public class EpsilonObjectiveComparator implements Comparator<Solution> {
       return -1;
     }
 
-    double objective1 = ((Solution) o1).getObjective(objective_);
-    double objective2 = ((Solution) o2).getObjective(objective_);
-
-    //Objective implements comparable!!!
-    if (objective1 / (1 + eta_) < objective2) {
-      return -1;
-    } else if (objective1 / (1 + eta_) > objective2) {
-      return 1;
-    } else {
-      return 0;
+    int flagComparatorRank = comparator.compare(o1, o2);
+    if (flagComparatorRank != 0) {
+      return flagComparatorRank;
     }
+    
+    /* His rank is equal, then distance crowding comparator */
+    double distance1 = ((Solution) o1).getCrowdingDistance();
+    double distance2 = ((Solution) o2).getCrowdingDistance();
+    if (distance1 > distance2) {
+      return -1;
+    }
+
+    if (distance1 < distance2) {
+      return 1;
+    }
+
+    return 0;
   }
 }

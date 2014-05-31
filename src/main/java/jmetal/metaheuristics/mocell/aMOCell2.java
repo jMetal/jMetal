@@ -27,8 +27,8 @@ import jmetal.util.JMException;
 import jmetal.util.Neighborhood;
 import jmetal.util.Ranking;
 import jmetal.util.archive.CrowdingArchive;
-import jmetal.util.comparators.CrowdingComparator;
-import jmetal.util.comparators.DominanceComparator;
+import jmetal.util.comparator.CrowdingComparator;
+import jmetal.util.comparator.DominanceComparator;
 
 import java.util.Comparator;
 

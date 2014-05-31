@@ -2,7 +2,7 @@ package test.qualityIndicator.fastHypervolume.wfg;
 
 import jmetal.core.Solution;
 import jmetal.qualityIndicator.fastHypervolume.FastHypervolumeArchive;
-import jmetal.util.comparators.ObjectiveComparator;
+import jmetal.util.comparator.ObjectiveComparator;
 import org.junit.Before;
 import org.junit.Test;
 

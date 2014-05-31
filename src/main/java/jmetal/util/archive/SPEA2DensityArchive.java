@@ -23,9 +23,9 @@ package jmetal.util.archive;
 
 import jmetal.core.Solution;
 import jmetal.util.Spea2Fitness;
-import jmetal.util.comparators.DominanceComparator;
-import jmetal.util.comparators.EqualSolutions;
-import jmetal.util.comparators.FitnessComparator;
+import jmetal.util.comparator.DominanceComparator;
+import jmetal.util.comparator.EqualSolutions;
+import jmetal.util.comparator.FitnessComparator;
 
 import java.util.Comparator;
 

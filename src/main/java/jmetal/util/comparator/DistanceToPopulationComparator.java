@@ -1,4 +1,4 @@
-//  CrowdingComparator.java
+//  DistanceToPopulationComparator.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -19,7 +19,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package jmetal.util.comparators;
+package jmetal.util.comparator;
 
 import jmetal.core.Solution;
 
@@ -27,17 +27,14 @@ import java.util.Comparator;
 
 /**
  * This class implements a <code>Comparator</code> (a method for comparing
- * <code>Solution</code> objects) based on the crowding distance, as in NSGA-II.
+ * <code>Solution</code> objects) based on the euclidean distance to a
+ * solution set. This distances are obtained through the method
+ * <code>getDistanceToPopulation<code>.
  */
-public class CrowdingComparator implements Comparator<Solution> {
+public class DistanceToPopulationComparator implements Comparator<Solution> {
 
   /**
-   * stores a comparator for check the rank of solutions
-   */
-  private static final Comparator<Solution> comparator = new RankComparator();
-
-  /**
-   * Compare two solutions.
+   * Compares two solutions.
    *
    * @param o1 Object representing the first <code>Solution</code>.
    * @param o2 Object representing the second <code>Solution</code>.
@@ -52,19 +49,11 @@ public class CrowdingComparator implements Comparator<Solution> {
       return -1;
     }
 
-    int flagComparatorRank = comparator.compare(o1, o2);
-    if (flagComparatorRank != 0) {
-      return flagComparatorRank;
-    }
-    
-    /* His rank is equal, then distance crowding comparator */
-    double distance1 = ((Solution) o1).getCrowdingDistance();
-    double distance2 = ((Solution) o2).getCrowdingDistance();
-    if (distance1 > distance2) {
-      return -1;
-    }
-
+    double distance1 = ((Solution) o1).getDistanceToSolutionSet();
+    double distance2 = ((Solution) o2).getDistanceToSolutionSet();
     if (distance1 < distance2) {
+      return -1;
+    } else if (distance1 > distance2) {
       return 1;
     }
 

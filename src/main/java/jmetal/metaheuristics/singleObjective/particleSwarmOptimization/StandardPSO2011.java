@@ -26,7 +26,7 @@ import jmetal.util.AdaptiveRandomNeighborhood;
 import jmetal.util.Configuration;
 import jmetal.util.Distance;
 import jmetal.util.JMException;
-import jmetal.util.comparators.ObjectiveComparator;
+import jmetal.util.comparator.ObjectiveComparator;
 import jmetal.util.random.PseudoRandom;
 import jmetal.util.wrapper.XReal;
 

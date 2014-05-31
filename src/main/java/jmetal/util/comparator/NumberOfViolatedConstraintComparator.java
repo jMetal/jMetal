@@ -1,4 +1,4 @@
-//  AggregativeComparator.java
+//  NumberOfViolatedConstraintComparator.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -19,18 +19,16 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package jmetal.util.comparators;
+package jmetal.util.comparator;
 
 import jmetal.core.Solution;
 
-import java.util.Comparator;
-
 /**
  * This class implements a <code>Comparator</code> (a method for comparing
- * <code>Solution</code> objects) based on the aggregative sum of the objective
- * values.
+ * <code>Solution</code> objects) based on the number of violated constraints.
  */
-public class AggregativeComparator implements Comparator<Solution> {
+public class NumberOfViolatedConstraintComparator
+  implements IConstraintViolationComparator {
 
   /**
    * Compares two solutions.
@@ -42,24 +40,29 @@ public class AggregativeComparator implements Comparator<Solution> {
    */
   @Override
   public int compare(Solution o1, Solution o2) {
-    if (o1 == null) {
-      return 1;
-    } else if (o2 == null) {
-      return -1;
-    }
-
-    double value1, value2;
     Solution solution1 = (Solution) o1;
     Solution solution2 = (Solution) o2;
 
-    value1 = solution1.getAggregativeValue();
-    value2 = solution2.getAggregativeValue();
-    if (value1 < value2) {
+    if (solution1.getNumberOfViolatedConstraint() <
+      solution2.getNumberOfViolatedConstraint()) {
       return -1;
-    } else if (value2 < value1) {
+    } else if (solution2.getNumberOfViolatedConstraint() <
+      solution1.getNumberOfViolatedConstraint()) {
       return 1;
-    } else {
-      return 0;
     }
+
+    return 0;
+  }
+
+  /**
+   * Returns true if solutions s1 and/or s2 violates a
+   * number n > 0 of constraints
+   */
+  public boolean needToCompare(Solution s1, Solution s2) {
+    boolean needToCompare;
+    needToCompare = (s1.getNumberOfViolatedConstraint() > 0) ||
+      (s2.getNumberOfViolatedConstraint() > 0);
+
+    return needToCompare;
   }
 }

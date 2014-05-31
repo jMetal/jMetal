@@ -33,7 +33,7 @@ import jmetal.problems.ProblemFactory;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
-import jmetal.util.comparators.FitnessComparator;
+import jmetal.util.comparator.FitnessComparator;
 
 import java.io.IOException;
 import java.util.HashMap;

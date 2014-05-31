@@ -1,4 +1,4 @@
-//  EpsilonDominanceComparator.java
+//  DominanceComparator.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -19,7 +19,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package jmetal.util.comparators;
+package jmetal.util.comparator;
 
 import jmetal.core.Solution;
 
@@ -27,27 +27,27 @@ import java.util.Comparator;
 
 /**
  * This class implements a <code>Comparator</code> (a method for comparing
- * <code>Solution</code> objects) based on epsilon dominance.
+ * <code>Solution</code> objects) based on a constraint violation test +
+ * dominance checking, as in NSGA-II.
  */
-public class EpsilonDominanceComparator implements Comparator<Solution> {
+public class DominanceComparator implements Comparator<Solution> {
+  IConstraintViolationComparator violationConstraintComparator_;
 
   /**
-   * stores a comparator for check the OverallConstraintComparator
+   * Constructor
    */
-  private static final Comparator<Solution> overallConstraintViolationComparator_ =
-    new OverallConstraintViolationComparator();
-  /**
-   * Stores the value of eta, needed for epsilon-dominance.
-   */
-  private double eta_;
+  public DominanceComparator() {
+    violationConstraintComparator_ = new OverallConstraintViolationComparator();
+    //violationConstraintComparator_ = new NumberOfViolatedConstraintComparator(); 
+  }
 
   /**
-   * Constructor.
+   * Constructor
    *
-   * @param eta Value for epsilon-dominance.
+   * @param comparator
    */
-  public EpsilonDominanceComparator(double eta) {
-    eta_ = eta;
+  public DominanceComparator(IConstraintViolationComparator comparator) {
+    violationConstraintComparator_ = comparator;
   }
 
   /**
@@ -56,7 +56,7 @@ public class EpsilonDominanceComparator implements Comparator<Solution> {
    * @param object1 Object representing the first <code>Solution</code>.
    * @param object2 Object representing the second <code>Solution</code>.
    * @return -1, or 0, or 1 if solution1 dominates solution2, both are
-   * non-dominated, or solution1 is dominated by solution2, respectively.
+   * non-dominated, or solution1  is dominated by solution22, respectively.
    */
   @Override
   public int compare(Solution object1, Solution object2) {
@@ -66,6 +66,9 @@ public class EpsilonDominanceComparator implements Comparator<Solution> {
       return -1;
     }
 
+    Solution solution1 = (Solution) object1;
+    Solution solution2 = (Solution) object2;
+
     int dominate1; // dominate1 indicates if some objective of solution1
     // dominates the same objective in solution2. dominate2
     int dominate2; // is the complementary of dominate1.
@@ -73,27 +76,21 @@ public class EpsilonDominanceComparator implements Comparator<Solution> {
     dominate1 = 0;
     dominate2 = 0;
 
-    Solution solution1 = (Solution) object1;
-    Solution solution2 = (Solution) object2;
+    int flag; //stores the result of the comparison
 
-    int flag;
-    Comparator<Solution> constraint = new OverallConstraintViolationComparator();
-    flag = constraint.compare(solution1, solution2);
-
-    if (flag != 0) {
-      return flag;
+    // Test to determine whether at least a solution violates some constraint
+    if (violationConstraintComparator_.needToCompare(solution1, solution2)) {
+      return violationConstraintComparator_.compare(solution1, solution2);
     }
 
+    // Equal number of violated constraints. Applying a dominance Test then
     double value1, value2;
-    // Idem number of violated constraint. Apply a dominance Test
-    for (int i = 0; i < ((Solution) solution1).getNumberOfObjectives(); i++) {
+    for (int i = 0; i < solution1.getNumberOfObjectives(); i++) {
       value1 = solution1.getObjective(i);
       value2 = solution2.getObjective(i);
-
-      //Objective implements comparable!!!
-      if (value1 / (1 + eta_) < value2) {
+      if (value1 < value2) {
         flag = -1;
-      } else if (value1 / (1 + eta_) > value2) {
+      } else if (value1 > value2) {
         flag = 1;
       } else {
         flag = 0;
@@ -109,15 +106,11 @@ public class EpsilonDominanceComparator implements Comparator<Solution> {
     }
 
     if (dominate1 == dominate2) {
-      // No one dominates the other
-      return 0;
+      return 0; //No one dominate the other
     }
-
     if (dominate1 == 1) {
-      // solution1 dominates
-      return -1;
+      return -1; // solution1 dominate
     }
-    // solution2 dominates
-    return 1;
+    return 1;    // solution2 dominate   
   }
 }

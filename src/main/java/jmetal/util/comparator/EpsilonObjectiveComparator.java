@@ -1,4 +1,4 @@
-//  SolutionComparator.java
+//  EpsilonObjectiveComparator.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -19,57 +19,66 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package jmetal.util.comparators;
+package jmetal.util.comparator;
 
 import jmetal.core.Solution;
-import jmetal.util.Configuration;
-import jmetal.util.Distance;
-import jmetal.util.JMException;
 
 import java.util.Comparator;
-import java.util.logging.Level;
 
 /**
  * This class implements a <code>Comparator</code> (a method for comparing
- * <code>Solution</code> objects) based on the values of the variables.
+ * <code>Solution</code> objects) based on epsilon dominance over a given
+ * objective function.
  */
-public class SolutionComparator implements Comparator<Solution> {
+public class EpsilonObjectiveComparator implements Comparator<Solution> {
 
   /**
-   * Establishes a value of allowed dissimilarity
+   * Stores the objective index to compare
    */
-  private static final double EPSILON = 1e-25;
+  private int objective_;
+
+  /**
+   * Stores the eta value for epsilon-dominance
+   */
+  private double eta_;
+
+  /**
+   * Constructor.
+   *
+   * @param nObj Index of the objective to compare.
+   * @param eta  Value for epsilon-dominance.
+   */
+  public EpsilonObjectiveComparator(int nObj, double eta) {
+    objective_ = nObj;
+    eta_ = eta;
+  }
 
   /**
    * Compares two solutions.
    *
    * @param o1 Object representing the first <code>Solution</code>.
    * @param o2 Object representing the second <code>Solution</code>.
-   * @return 0, if both solutions are equals with a certain dissimilarity, -1
-   * otherwise.
-   * @throws JMException
-   * @throws JMException
+   * @return -1, or 0, or 1 if o1 is less than, equal, or greater than o2,
+   * respectively.
    */
   @Override
   public int compare(Solution o1, Solution o2) {
-    Solution solution1, solution2;
-    solution1 = (Solution) o1;
-    solution2 = (Solution) o2;
-
-    if ((solution1.getDecisionVariables() != null) && (solution2.getDecisionVariables() != null)) {
-      if (solution1.numberOfVariables() != solution2.numberOfVariables()) {
-        return -1;
-      }
+    if (o1 == null) {
+      return 1;
+    } else if (o2 == null) {
+      return -1;
     }
 
-    try {
-      if ((new Distance()).distanceBetweenSolutions(solution1, solution2) < EPSILON) {
-        return 0;
-      }
-    } catch (JMException e) {
-      Configuration.logger_.log(Level.SEVERE, "SolutionComparator.compare: JMException ", e);
-    }
+    double objective1 = ((Solution) o1).getObjective(objective_);
+    double objective2 = ((Solution) o2).getObjective(objective_);
 
-    return -1;
+    //Objective implements comparable!!!
+    if (objective1 / (1 + eta_) < objective2) {
+      return -1;
+    } else if (objective1 / (1 + eta_) > objective2) {
+      return 1;
+    } else {
+      return 0;
+    }
   }
 }

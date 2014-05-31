@@ -23,7 +23,7 @@ package jmetal.metaheuristics.ibea;
 import jmetal.core.*;
 import jmetal.util.JMException;
 import jmetal.util.Ranking;
-import jmetal.util.comparators.DominanceComparator;
+import jmetal.util.comparator.DominanceComparator;
 
 import java.util.ArrayList;
 import java.util.List;

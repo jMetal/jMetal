@@ -27,9 +27,9 @@ import jmetal.util.Distance;
 import jmetal.util.JMException;
 import jmetal.util.NonDominatedSolutionList;
 import jmetal.util.archive.CrowdingArchive;
-import jmetal.util.comparators.CrowdingDistanceComparator;
-import jmetal.util.comparators.DominanceComparator;
-import jmetal.util.comparators.EpsilonDominanceComparator;
+import jmetal.util.comparator.CrowdingDistanceComparator;
+import jmetal.util.comparator.DominanceComparator;
+import jmetal.util.comparator.EpsilonDominanceComparator;
 import jmetal.util.random.PseudoRandom;
 
 import java.util.Comparator;

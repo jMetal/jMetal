@@ -23,7 +23,7 @@ package jmetal.util.archive;
 
 import jmetal.core.Solution;
 import jmetal.util.AdaptiveGrid;
-import jmetal.util.comparators.DominanceComparator;
+import jmetal.util.comparator.DominanceComparator;
 
 import java.util.Comparator;
 import java.util.Iterator;

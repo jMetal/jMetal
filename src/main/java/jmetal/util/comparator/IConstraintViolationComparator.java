@@ -19,14 +19,14 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package jmetal.util.comparators;
+package jmetal.util.comparator;
 
 import jmetal.core.Solution;
 
 import java.util.Comparator;
 
 /**
- * Interface representing constraint violation comparators.
+ * Interface representing constraint violation comparator.
  */
 public interface IConstraintViolationComparator extends Comparator<Solution> {
   public int compare(Solution o1, Solution o2);

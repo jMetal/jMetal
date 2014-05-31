@@ -24,7 +24,7 @@ package jmetal.metaheuristics.singleObjective.differentialEvolution;
 import jmetal.core.*;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
-import jmetal.util.comparators.ObjectiveComparator;
+import jmetal.util.comparator.ObjectiveComparator;
 
 import java.util.Comparator;
 import java.util.logging.Level;
