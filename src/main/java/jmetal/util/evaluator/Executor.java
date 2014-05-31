@@ -1,4 +1,4 @@
-package jmetal.metaheuristics.executors;
+package jmetal.util.evaluator;
 
 import jmetal.core.Problem;
 import jmetal.core.SolutionSet;

@@ -1,4 +1,4 @@
-package jmetal.metaheuristics.executors;
+package jmetal.util.evaluator;
 
 import jmetal.core.Problem;
 import jmetal.core.SolutionSet;
@@ -7,7 +7,7 @@ import jmetal.util.parallel.MultithreadedEvaluator;
 /**
  * Created by Antonio J. Nebro on 30/05/14.
  */
-public class MultithreadedExecutor implements Executor{
+public class MultithreadedExecutor implements Executor {
   private MultithreadedEvaluator evaluator_ ;
   private Problem problem_ ;
 

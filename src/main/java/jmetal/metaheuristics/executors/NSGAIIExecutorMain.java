@@ -19,13 +19,12 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package jmetal.metaheuristics.nsgaII;
+package jmetal.metaheuristics.executors;
 
 import jmetal.core.Algorithm;
 import jmetal.core.Operator;
 import jmetal.core.Problem;
 import jmetal.core.SolutionSet;
-import jmetal.metaheuristics.executors.SequentialExecutor;
 import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.SelectionFactory;
@@ -103,7 +102,9 @@ public class NSGAIIExecutorMain {
     //Injector injector = Guice.createInjector(new ExecutorModule()) ;
     //Executor executor = injector.getInstance(Executor.class) ;
 
-    algorithm = new NSGAIIExecutor(problem, new SequentialExecutor());
+    //algorithm = new NSGAIIExecutor(problem, new SequentialExecutor());
+    Executor executor = new MultithreadedExecutor(4, problem) ;
+    algorithm = new NSGAIIExecutor(problem, executor);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", 100);
@@ -155,5 +156,7 @@ public class NSGAIIExecutorMain {
       int evaluations = (Integer) algorithm.getOutputParameter("evaluations");
       logger_.info("Speed      : " + evaluations + " evaluations");
     }
+
+    executor.shutdown();
   }
 }

@@ -1,4 +1,4 @@
-package jmetal.metaheuristics.executors;
+package jmetal.util.evaluator;
 
 import jmetal.core.Problem;
 import jmetal.core.SolutionSet;
@@ -7,7 +7,7 @@ import jmetal.util.JMException;
 /**
  * Created by Antonio J. Nebro on 30/05/14.
  */
-public class SequentialExecutor implements Executor{
+public class SequentialExecutor implements Executor {
 //  @Override
 //    public void startup(Object parameters) {
 //  }
