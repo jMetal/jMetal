@@ -36,16 +36,32 @@ public class SetCoverage {
   public double setCoverage(SolutionSet a, SolutionSet b) {
     double result = 0.0 ;
     int sum = 0 ;
-    dominance_ = new DominanceComparator();
 
-    for (int i = 0; i < b.size(); i++) {
-      for (int j = 0; j < a.size(); j++) {
-        int flag = dominance_.compare(b.get(i), a.get(j));
-        if (flag == 1) {
-          sum += 1 ;
+    if (b.size() > 0) {
+      dominance_ = new DominanceComparator();
+
+      for (int i = 0; i < b.size(); i++) {
+        if (solutionIsDominatedBySolutionSet(b.get(i), a)) {
+          sum++;
         }
       }
+      result = (double)sum/b.size() ;
     }
-    return (double)sum/b.size() ;
+    return result ;
+  }
+
+  private boolean solutionIsDominatedBySolutionSet(Solution solution, SolutionSet solutionSet) {
+    boolean result = false ;
+
+    int i = 0 ;
+
+    while (!result && (i < solutionSet.size())) {
+      if (dominance_.compare(solution, solutionSet.get(i)) == 1) {
+        result = true ;
+      }
+      i++ ;
+    }
+
+    return result ;
   }
 }

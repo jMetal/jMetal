@@ -10,7 +10,7 @@ import java.io.IOException;
  */
 public class SolutionSetOutput {
 
-  static void printVariablesToFile(FileOutputContext context, SolutionSet solutionSet) throws IOException {
+  static public void printVariablesToFile(FileOutputContext context, SolutionSet solutionSet) throws IOException {
     BufferedWriter bufferedWriter = context.getFileWriter() ;
 
       int numberOfVariables = solutionSet.get(0).getDecisionVariables().length;
@@ -24,14 +24,13 @@ public class SolutionSetOutput {
     bufferedWriter.close();
   }
 
-  static void printObjectivesToFile(FileOutputContext context, SolutionSet solutionSet) throws IOException {
+  static public void printObjectivesToFile(FileOutputContext context, SolutionSet solutionSet) throws IOException {
     BufferedWriter bufferedWriter = context.getFileWriter() ;
 
-    int numberOfVariables = solutionSet.get(0).getDecisionVariables().length;
+    int numberOfObjectives = solutionSet.get(0).getNumberOfObjectives() ;
     for (int i = 0; i < solutionSet.size(); i++) {
-      for (int j = 0; j < numberOfVariables; j++) {
-        bufferedWriter.write(solutionSet.get(i).getDecisionVariables()[j].toString() +
-          context.getSeparator());
+      for (int j = 0; j < numberOfObjectives; j++) {
+        bufferedWriter.write(solutionSet.get(i).getObjective(j) + context.getSeparator());
       }
       bufferedWriter.newLine();
     }

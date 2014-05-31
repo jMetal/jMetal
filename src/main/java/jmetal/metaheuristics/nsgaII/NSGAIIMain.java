@@ -33,8 +33,11 @@ import jmetal.problems.ZDT.ZDT3;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
-import jmetal.util.evaluator.MultithreadedSolutionSetEvaluator;
+import jmetal.util.evaluator.SequentialSolutionSetEvaluator;
 import jmetal.util.evaluator.SolutionSetEvaluator;
+import jmetal.util.fileOutput.DefaultFileOutputContext;
+import jmetal.util.fileOutput.FileOutputContext;
+import jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -104,9 +107,9 @@ public class NSGAIIMain {
     //Injector injector = Guice.createInjector(new ExecutorModule()) ;
     //Executor executor = injector.getInstance(Executor.class) ;
 
-    //algorithm = new NSGAIIExecutor(problem, new SequentialExecutor());
-    SolutionSetEvaluator executor = new MultithreadedSolutionSetEvaluator(4, problem) ;
-    algorithm = new NSGAIIE(problem, executor);
+    SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator();
+    //SolutionSetEvaluator executor = new MultithreadedSolutionSetEvaluator(4, problem) ;
+    algorithm = new NSGAIIE(problem, evaluator);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", 100);
@@ -140,12 +143,21 @@ public class NSGAIIMain {
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;
 
-    // Result messages 
+    // Result messages
+    FileOutputContext fileContext = new DefaultFileOutputContext("VAR.tsv") ;
+    fileContext.setSeparator("\t");
+
     logger_.info("Total execution time: " + estimatedTime + "ms");
     logger_.info("Variables values have been writen to file VAR");
-    population.printVariablesToFile("VAR");
-    logger_.info("Objectives values have been writen to file FUN");
+    SolutionSetOutput.printVariablesToFile(fileContext, population) ;
+
+    fileContext = new DefaultFileOutputContext("FUN.tsv");
+    fileContext.setSeparator("\t");
+
+    SolutionSetOutput.printObjectivesToFile(fileContext, population);
     population.printObjectivesToFile("FUN");
+    logger_.info("Objectives values have been written to file FUN");
+
 
     if (indicators != null) {
       logger_.info("Quality indicators");
@@ -159,6 +171,6 @@ public class NSGAIIMain {
       logger_.info("Speed      : " + evaluations + " evaluations");
     }
 
-    executor.shutdown();
+    evaluator.shutdown();
   }
 }

@@ -11,8 +11,6 @@ import java.io.OutputStreamWriter;
 public class DefaultFileOutputContext extends FileOutputContext {
 
   public DefaultFileOutputContext(String fileName) throws FileNotFoundException {
-    super(fileName) ;
-
     FileOutputStream outputStream = new FileOutputStream(fileName);
     OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream);
     bufferedWriter_ = new BufferedWriter(outputStreamWriter) ;
