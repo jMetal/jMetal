@@ -50,6 +50,7 @@ import java.util.logging.Logger;
  * April 2009)
  */
 
+@Deprecated
 public class NSGAII_main {
   public static Logger logger_;      
   public static FileHandler fileHandler_; 

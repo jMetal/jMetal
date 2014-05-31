@@ -42,6 +42,7 @@ import java.util.logging.Logger;
  * This class executes pSMPSO, a multithreaded version of SMPSO, characterized
  * by evaluating the particles in parallel.
  */
+@Deprecated
 public class pSMPSO_main {
   private static Logger logger_;     
   private static FileHandler fileHandler_; 

@@ -18,7 +18,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package jmetal.util.evaluator;
+package jmetal.metaheuristics.smpso;
 
 import jmetal.core.*;
 import jmetal.qualityIndicator.Hypervolume;
@@ -28,6 +28,7 @@ import jmetal.util.JMException;
 import jmetal.util.archive.CrowdingArchive;
 import jmetal.util.comparators.CrowdingDistanceComparator;
 import jmetal.util.comparators.DominanceComparator;
+import jmetal.util.evaluator.SolutionSetEvaluator;
 import jmetal.util.random.PseudoRandom;
 import jmetal.util.wrapper.XReal;
 
@@ -43,8 +44,8 @@ import java.util.logging.Logger;
  * IEEE Symposium on Computational Intelligence in Multicriteria Decision-Making
  * (MCDM 2009), pp: 66-73. March 2009
  */
-public class pSMPSO extends Algorithm {
-  Executor executor_ ;
+public class SMPSOE extends Algorithm {
+  SolutionSetEvaluator executor_ ;
 
   /**
    *
@@ -131,7 +132,7 @@ public class pSMPSO extends Algorithm {
    *
    * @param problem Problem to solve
    */
-  public pSMPSO(Problem problem, Executor executor) {
+  public SMPSOE(Problem problem, SolutionSetEvaluator executor) {
     super(problem);
 
     r1Max_ = 1.0;
@@ -366,7 +367,7 @@ public class pSMPSO extends Algorithm {
         //Compute the speed_
         computeSpeed(iteration_, maxIterations_);
       } catch (IOException ex) {
-        Logger.getLogger(pSMPSO.class.getName()).log(Level.SEVERE, null, ex);
+        Logger.getLogger(SMPSOE.class.getName()).log(Level.SEVERE, null, ex);
       }
 
       //Compute the new positions for the particles_            

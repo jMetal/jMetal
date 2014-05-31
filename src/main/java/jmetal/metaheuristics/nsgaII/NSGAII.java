@@ -38,6 +38,7 @@ import jmetal.util.comparators.CrowdingComparator;
  * To be presented in: PPSN'08. Dortmund. September 2008.
  */
 
+@Deprecated
 public class NSGAII extends Algorithm {
 
   /**

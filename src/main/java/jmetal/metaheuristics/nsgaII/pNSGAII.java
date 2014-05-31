@@ -40,6 +40,7 @@ import java.util.List;
  * To be presented in: PPSN'08. Dortmund. September 2008.
  */
 
+@Deprecated
 public class pNSGAII extends Algorithm {
 
   /**

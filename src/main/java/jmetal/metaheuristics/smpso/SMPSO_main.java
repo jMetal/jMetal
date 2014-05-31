@@ -44,6 +44,7 @@ import java.util.logging.Logger;
  * IEEE Symposium on Computational Intelligence in Multicriteria Decision-Making
  * (MCDM 2009), pp: 66-73. March 2009
  */
+@Deprecated
 public class SMPSO_main {
   public static Logger logger_;     
   public static FileHandler fileHandler_; 

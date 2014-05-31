@@ -19,7 +19,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package jmetal.util.evaluator;
+package jmetal.metaheuristics.nsgaII;
 
 import jmetal.core.*;
 import jmetal.qualityIndicator.QualityIndicator;
@@ -27,6 +27,7 @@ import jmetal.util.Distance;
 import jmetal.util.JMException;
 import jmetal.util.Ranking;
 import jmetal.util.comparators.CrowdingComparator;
+import jmetal.util.evaluator.SolutionSetEvaluator;
 
 /**
  * Implementation of NSGA-II.
@@ -38,9 +39,9 @@ import jmetal.util.comparators.CrowdingComparator;
  * To be presented in: PPSN'08. Dortmund. September 2008.
  */
 
-public class NSGAIIExecutor extends Algorithm {
+public class NSGAIIE extends Algorithm {
 
-  Executor executor_ ;
+  SolutionSetEvaluator executor_ ;
 
   /**
    *
@@ -52,7 +53,7 @@ public class NSGAIIExecutor extends Algorithm {
    *
    * @param problem Problem to solve
    */
-  public NSGAIIExecutor(Problem problem, Executor executor) {
+  public NSGAIIE(Problem problem, SolutionSetEvaluator executor) {
     super(problem);
     executor_ = executor ;
   } // NSGAII
