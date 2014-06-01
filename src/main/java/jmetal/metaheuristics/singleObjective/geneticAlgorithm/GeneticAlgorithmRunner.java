@@ -46,7 +46,7 @@ import java.util.HashMap;
  * cGA (class scGA) or an asynchronous cGA (class acGA). The OneMax
  * problem is used to test the algorithms.
  */
-public class GeneticAlgororithmRunner {
+public class GeneticAlgorithmRunner {
 
   public static void main(String[] args) throws JMException, ClassNotFoundException, IOException {
     Problem problem;
