@@ -33,19 +33,25 @@ import java.util.Comparator;
 public class SetCoverage {
   private Comparator<Solution> dominance_;
 
-  public double setCoverage(SolutionSet a, SolutionSet b) {
+  public double setCoverage(SolutionSet set1, SolutionSet set2) {
     double result = 0.0 ;
     int sum = 0 ;
 
-    if (b.size() > 0) {
+    if (set2.isEmtpy()) {
+      if (set1.isEmtpy()) {
+        result = 0.0 ;
+      } else {
+        result = 1.0 ;
+      }
+    } else {
       dominance_ = new DominanceComparator();
 
-      for (int i = 0; i < b.size(); i++) {
-        if (solutionIsDominatedBySolutionSet(b.get(i), a)) {
+      for (int i = 0; i < set2.size(); i++) {
+        if (solutionIsDominatedBySolutionSet(set2.get(i), set1)) {
           sum++;
         }
       }
-      result = (double)sum/b.size() ;
+      result = (double)sum/set2.size() ;
     }
     return result ;
   }

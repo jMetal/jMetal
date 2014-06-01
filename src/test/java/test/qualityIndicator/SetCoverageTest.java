@@ -1,3 +1,24 @@
+//  SetCoverageTest.java
+//
+//  Author:
+//       Antonio J. Nebro <antonio@lcc.uma.es>
+//       Juan J. Durillo <durillo@lcc.uma.es>
+//
+//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU Lesser General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU Lesser General Public License for more details.
+//
+//  You should have received a copy of the GNU Lesser General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 package test.qualityIndicator;
 
 import jmetal.core.Problem;
@@ -5,27 +26,32 @@ import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
 import jmetal.problems.Kursawe;
 import jmetal.qualityIndicator.SetCoverage;
+import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 /**
  * Created by Antonio J. Nebro on 31/05/14.
  */
 public class SetCoverageTest {
-  public static final double EPSILON = 0.0000000000001 ;
-  SolutionSet solutionSet1_ ;
-  SolutionSet solutionSet2_ ;
-  Problem problem_ ;
+  private static final double EPSILON = 0.0000000000001 ;
+  private SolutionSet solutionSet1_ ;
+  private SolutionSet solutionSet2_ ;
+  private int solutionSetSize_ ;
+  private Problem problem_ ;
+
 
   @Before
   public void startup() throws JMException {
     problem_ = new Kursawe("Real", 3) ;
-    solutionSet1_ = new SolutionSet(10) ;
-    solutionSet2_ = new SolutionSet(10) ;
+    solutionSetSize_ = 4 ;
+    solutionSet1_ = new SolutionSet(solutionSetSize_) ;
+    solutionSet2_ = new SolutionSet(solutionSetSize_) ;
   }
 
   @Test
@@ -33,29 +59,81 @@ public class SetCoverageTest {
     assertEquals(0.0, new SetCoverage().setCoverage(solutionSet2_, solutionSet1_), EPSILON) ;
   }
 
-
   @Test
-  public void coverageTest() throws ClassNotFoundException {
+  public void fullCoverageTest() throws ClassNotFoundException {
+    // Creating set (0,N-1), (1,N-2), (2, N-3), ... , (N-1, 0)
     Solution solution ;
-    for (int i = 0 ; i< 4; i++) {
+    for (int i = 0 ; i< solutionSetSize_; i++) {
       solution = new Solution(problem_);
-      for (int j = 0; j < problem_.getNumberOfObjectives(); j++) {
-        solution.setObjective(j, j);
-      }
+      solution.setObjective(0, i);
+      solution.setObjective(1, solutionSetSize_ - 1 - i);
       solutionSet1_.add(solution);
     }
-
-    for (int i = 0 ; i< 4; i++) {
+    // Creating set (0.5,N), (1.5, N-1), (2.5, N-2), ... , (N-1+0.5, 1)
+    for (int i = 0 ; i< solutionSetSize_; i++) {
       solution = new Solution(problem_);
-      for (int j = 0; j < problem_.getNumberOfObjectives(); j++) {
-        solution.setObjective(j, j * 2);
-      }
+      solution.setObjective(0, i+0.5);
+      solution.setObjective(1, solutionSetSize_ - i);
       solutionSet2_.add(solution);
     }
 
     assertEquals(1.0, new SetCoverage().setCoverage(solutionSet1_, solutionSet2_), EPSILON) ;
     assertEquals(0.0, new SetCoverage().setCoverage(solutionSet2_, solutionSet1_), EPSILON) ;
   }
+
+  @Test
+  public void nonDominatedSetsCoverageTest() throws ClassNotFoundException {
+    // Creating set (0,N-1), (1,N-2), (2, N-3), ... , (N-1, 0)
+    Solution solution ;
+    for (int i = 0 ; i< solutionSetSize_; i++) {
+      solution = new Solution(problem_);
+      solution.setObjective(0, i);
+      solution.setObjective(1, solutionSetSize_ - 1 - i);
+      solutionSet1_.add(solution);
+    }
+    // Creating set (0.5,N), (1.5, N-1), (2.5, N-2), ... , (N-1+0.5, 1)
+    for (int i = 0 ; i< solutionSetSize_; i++) {
+      solution = new Solution(problem_);
+      solution.setObjective(0, i+0.5);
+      solution.setObjective(1, solutionSetSize_ - i);
+      solutionSet2_.add(solution);
+    }
+
+    /*
+    Configuration.logger_.info("Set1");
+    solutionSet1_.printObjectives();
+    Configuration.logger_.info("Set2");
+    solutionSet2_.printObjectives();
+    */
+    // Modifying a solution to make it non-dominated with respect to solutionset 1
+    solutionSet2_.get(0).setObjective(0, -1.0);
+    solutionSet2_.get(0).setObjective(1, solutionSetSize_-1.2);
+    /*
+    Configuration.logger_.info("Set22222");
+    solutionSet2_.printObjectives();
+    */
+    assertNotEquals(1.0, new SetCoverage().setCoverage(solutionSet2_, solutionSet1_), EPSILON) ;
+    assertNotEquals(1.0, new SetCoverage().setCoverage(solutionSet1_, solutionSet2_), EPSILON) ;
+  }
+
+  @Test
+  public void coverageWhenASetIsEmpty() throws ClassNotFoundException {
+    // Creating set (0,N-1), (1,N-2), (2, N-3), ... , (N-1, 0)
+    Solution solution ;
+    for (int i = 0 ; i< solutionSetSize_; i++) {
+      solution = new Solution(problem_);
+      solution.setObjective(0, i);
+      solution.setObjective(1, solutionSetSize_ - 1 - i);
+      solutionSet1_.add(solution);
+    }
+
+    Configuration.logger_.info("SIze of set 2 " + solutionSet2_.size());
+
+    // The second solution set is empty. Try the tests
+    assertEquals(1.0, new SetCoverage().setCoverage(solutionSet1_, solutionSet2_), EPSILON) ;
+    assertEquals(0.0, new SetCoverage().setCoverage(solutionSet2_, solutionSet1_), EPSILON) ;
+  }
+
 
 
   @After

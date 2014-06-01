@@ -83,8 +83,8 @@ public class SMSEMOA extends Algorithm {
     int evaluations;
     double offset = 100.0;
 
-    QualityIndicator indicators; // QualityIndicator object
-    int requiredEvaluations; // Use in the example of use of the indicators object (see below)
+    QualityIndicator indicators;
+    int requiredEvaluations;
 
     SolutionSet population;
     SolutionSet offspringPopulation;

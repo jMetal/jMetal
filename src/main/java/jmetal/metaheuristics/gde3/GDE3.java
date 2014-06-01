@@ -64,7 +64,6 @@ public class GDE3 extends Algorithm {
 
     SolutionSet population;
     SolutionSet offspringPopulation;
-    SolutionSet union;
 
     Distance distance;
     Comparator dominance;
