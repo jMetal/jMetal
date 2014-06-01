@@ -1,10 +1,9 @@
-//  NSGAII_main.java
+//  NSGAIIRunner.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
 //
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
+//  Copyright (c) 2014 Antonio J. Nebro
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -142,23 +141,22 @@ public class NSGAIIRunner {
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;
+    logger_.info("Total execution time: " + estimatedTime + "ms");
 
     // Result messages
     FileOutputContext fileContext = new DefaultFileOutputContext("VAR.tsv") ;
     fileContext.setSeparator("\t");
 
-    logger_.info("Total execution time: " + estimatedTime + "ms");
-    logger_.info("Variables values have been writen to file VAR");
+    logger_.info("Variables values have been writen to file VAR.tsv");
     SolutionSetOutput.printVariablesToFile(fileContext, population) ;
 
     fileContext = new DefaultFileOutputContext("FUN.tsv");
     fileContext.setSeparator("\t");
 
     SolutionSetOutput.printObjectivesToFile(fileContext, population);
-    population.printObjectivesToFile("FUN");
-    logger_.info("Objectives values have been written to file FUN");
-
-
+    //population.printObjectivesToFile("FUN");
+    //logger_.info("Objectives values have been written to file FUN");
+    
     if (indicators != null) {
       logger_.info("Quality indicators");
       logger_.info("Hypervolume: " + indicators.getHypervolume(population));

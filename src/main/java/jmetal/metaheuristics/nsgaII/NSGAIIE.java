@@ -41,7 +41,7 @@ import jmetal.util.evaluator.SolutionSetEvaluator;
 
 public class NSGAIIE extends Algorithm {
 
-  SolutionSetEvaluator executor_ ;
+  SolutionSetEvaluator evaluator_ ;
 
   /**
    *
@@ -53,10 +53,10 @@ public class NSGAIIE extends Algorithm {
    *
    * @param problem Problem to solve
    */
-  public NSGAIIE(Problem problem, SolutionSetEvaluator executor) {
+  public NSGAIIE(Problem problem, SolutionSetEvaluator evaluator) {
     super(problem);
-    executor_ = executor ;
-  } // NSGAII
+    evaluator_ = evaluator ;
+  } 
 
   /**
    * Runs the NSGA-II algorithm.
@@ -71,8 +71,7 @@ public class NSGAIIE extends Algorithm {
     int evaluations;
 
     QualityIndicator indicators; 
-    // Used in the example of use of the
-    // indicators object (see below)
+    // Used in the example of use of the indicators object (see below)
     int requiredEvaluations; 
     
     SolutionSet population;
@@ -108,13 +107,12 @@ public class NSGAIIE extends Algorithm {
       population.add(newSolution);
     }
 
-    executor_.evaluate(population, problem_) ;
+    evaluator_.evaluate(population, problem_) ;
 
     evaluations += populationSize ;
+    
     // Generations 
-
     while (evaluations < maxEvaluations) {
-
       // Create the offSpring solutionSet      
       offspringPopulation = new SolutionSet(populationSize);
       Solution[] parents = new Solution[2];
@@ -131,7 +129,7 @@ public class NSGAIIE extends Algorithm {
         }
       }
 
-      executor_.evaluate(offspringPopulation, problem_) ;
+      evaluator_.evaluate(offspringPopulation, problem_) ;
       evaluations += offspringPopulation.size() ;
 
       // Create the solutionSet union of solutionSet and offSpring
