@@ -22,8 +22,11 @@
 
 package jmetal.util.evaluator;
 
+import java.util.logging.Level;
+
 import jmetal.core.Problem;
 import jmetal.core.SolutionSet;
+import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
 /**
@@ -36,13 +39,15 @@ public class SequentialSolutionSetEvaluator implements SolutionSetEvaluator {
 
 
   @Override
-  public SolutionSet evaluate(SolutionSet solutionSet, Problem problem) {
+  public SolutionSet evaluate(SolutionSet solutionSet, Problem problem) throws JMException {
     try {
       for (int i = 0 ; i < solutionSet.size(); i++) {
         problem.evaluate(solutionSet.get(i)) ;
+        problem.evaluateConstraints(solutionSet.get(i)) ;
       }
     } catch (JMException e) {
-      e.printStackTrace();
+      Configuration.logger_.log(Level.SEVERE, "Error evaluating solution", e);
+      throw new JMException("Error in SequentialSolutionSetEvaluatior.evaluate()") ;
     }
 
     return solutionSet;

@@ -44,7 +44,7 @@ public class PESA2 extends Algorithm {
    */
   public PESA2(Problem problem) {
     super(problem);
-  } // PESA2
+  } 
 
   /**
    * Runs of the PESA2 algorithm.
@@ -84,8 +84,7 @@ public class PESA2 extends Algorithm {
       problem_.evaluateConstraints(solution);
       evaluations++;
       solutionSet.add(solution);
-    }
-    //<-                
+    }               
 
     // Incorporate non-dominated solution to the archive
     for (int i = 0; i < solutionSet.size(); i++) {
@@ -122,5 +121,5 @@ public class PESA2 extends Algorithm {
     } while (evaluations < maxEvaluations);
     //Return the  solutionSet of non-dominated individual
     return archive;
-  } // execute      
-} // PESA2
+  }       
+} 

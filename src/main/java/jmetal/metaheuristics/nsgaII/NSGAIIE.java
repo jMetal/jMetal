@@ -70,10 +70,11 @@ public class NSGAIIE extends Algorithm {
     int maxEvaluations;
     int evaluations;
 
-    QualityIndicator indicators; // QualityIndicator object
-    int requiredEvaluations; // Use in the example of use of the
+    QualityIndicator indicators; 
+    // Used in the example of use of the
     // indicators object (see below)
-
+    int requiredEvaluations; 
+    
     SolutionSet population;
     SolutionSet offspringPopulation;
     SolutionSet union;
@@ -108,10 +109,10 @@ public class NSGAIIE extends Algorithm {
     }
 
     executor_.evaluate(population, problem_) ;
-    //problem_.evaluate(newSolution);
-    //problem_.evaluateConstraints(newSolution);
+
     evaluations += populationSize ;
     // Generations 
+
     while (evaluations < maxEvaluations) {
 
       // Create the offSpring solutionSet      
@@ -153,7 +154,7 @@ public class NSGAIIE extends Algorithm {
         //Add the individuals of this front
         for (int k = 0; k < front.size(); k++) {
           population.add(front.get(k));
-        } // for
+        } 
 
         //Decrement remain
         remain = remain - front.size();
@@ -162,8 +163,8 @@ public class NSGAIIE extends Algorithm {
         index++;
         if (remain > 0) {
           front = ranking.getSubfront(index);
-        } // if        
-      } // while
+        }        
+      } 
 
       // Remain is less than front(index).size, insert only the best one
       if (remain > 0) {  // front contains individuals to insert                        
@@ -171,10 +172,10 @@ public class NSGAIIE extends Algorithm {
         front.sort(new CrowdingComparator());
         for (int k = 0; k < remain; k++) {
           population.add(front.get(k));
-        } // for
+        } 
 
         remain = 0;
-      } // if                               
+      }                               
 
       // This piece of code shows how to use the indicator object into the code
       // of NSGA-II. In particular, it finds the number of evaluations required
@@ -185,9 +186,9 @@ public class NSGAIIE extends Algorithm {
         double HV = indicators.getHypervolume(population);
         if (HV >= (0.98 * indicators.getTrueParetoFrontHypervolume())) {
           requiredEvaluations = evaluations;
-        } // if
-      } // if
-    } // while
+        } 
+      } 
+    } 
 
     // Return as output parameter the required evaluations
     setOutputParameter("evaluations", requiredEvaluations);
@@ -196,5 +197,5 @@ public class NSGAIIE extends Algorithm {
     Ranking ranking = new Ranking(population);
 
     return ranking.getSubfront(0);
-  } // execute
-} // NSGA-II
+  } 
+} 

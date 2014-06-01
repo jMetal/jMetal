@@ -96,7 +96,7 @@ public class GDE3 extends Algorithm {
       problem_.evaluateConstraints(newSolution);
       evaluations++;
       population.add(newSolution);
-    } //for       
+    }       
 
     // Generations ...
     while (iterations < maxIterations) {
@@ -120,17 +120,19 @@ public class GDE3 extends Algorithm {
         // Dominance test
         int result;
         result = dominance.compare(population.get(i), child);
-        if (result == -1) { // Solution i dominates child
+        if (result == -1) { 
+          // Solution i dominates child
           offspringPopulation.add(population.get(i));
-        } // if
-        else if (result == 1) { // child dominates
+        } 
+        else if (result == 1) { 
+          // child dominates
           offspringPopulation.add(child);
-        } // else if
-        else { // the two solutions are non-dominated
+        } else { 
+          // the two solutions are non-dominated
           offspringPopulation.add(child);
           offspringPopulation.add(population.get(i));
-        } // else
-      } // for           
+        }
+      }          
 
       // Ranking the offspring population
       Ranking ranking = new Ranking(offspringPopulation);
@@ -149,7 +151,7 @@ public class GDE3 extends Algorithm {
         //Add the individuals of this front
         for (int k = 0; k < front.size(); k++) {
           population.add(front.get(k));
-        } // for
+        }
 
         //Decrement remain
         remain = remain - front.size();
@@ -158,8 +160,8 @@ public class GDE3 extends Algorithm {
         index++;
         if (remain > 0) {
           front = ranking.getSubfront(index);
-        } // if        
-      } // while
+        }        
+      } 
 
       // remain is less than front(index).size, insert only the best one
       if (remain > 0) {  // front contains individuals to insert                        
@@ -172,13 +174,13 @@ public class GDE3 extends Algorithm {
         }
 
         remain = 0;
-      } // if                   
+      }                    
 
       iterations++;
-    } // while
+    } 
 
     // Return the first non-dominated front
     Ranking ranking = new Ranking(population);
     return ranking.getSubfront(0);
-  } // execute
-} // GDE3
+  } 
+} 

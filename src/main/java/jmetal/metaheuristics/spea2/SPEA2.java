@@ -100,12 +100,12 @@ public class SPEA2 extends Algorithm {
         do {
           j++;
           parents[0] = (Solution) selectionOperator.execute(archive);
-        } while (j < SPEA2.TOURNAMENTS_ROUNDS); // do-while                    
+        } while (j < SPEA2.TOURNAMENTS_ROUNDS);                    
         int k = 0;
         do {
           k++;
           parents[1] = (Solution) selectionOperator.execute(archive);
-        } while (k < SPEA2.TOURNAMENTS_ROUNDS); // do-while
+        } while (k < SPEA2.TOURNAMENTS_ROUNDS); 
 
         //make the crossover 
         Solution[] offSpring = (Solution[]) crossoverOperator.execute(parents);
@@ -114,12 +114,12 @@ public class SPEA2 extends Algorithm {
         problem_.evaluateConstraints(offSpring[0]);
         offSpringSolutionSet.add(offSpring[0]);
         evaluations++;
-      } // while
+      } 
       // End Create a offSpring solutionSet
       solutionSet = offSpringSolutionSet;
-    } // while
+    } 
 
     Ranking ranking = new Ranking(archive);
     return ranking.getSubfront(0);
-  } // execute    
-} // SPEA2
+  }   
+} 

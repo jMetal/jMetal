@@ -45,28 +45,23 @@ import java.util.logging.Logger;
  * (MCDM 2009), pp: 66-73. March 2009
  */
 public class SMPSOE extends Algorithm {
-  SolutionSetEvaluator executor_ ;
+  SolutionSetEvaluator evaluator_ ;
 
-  /**
-   *
-   */
   private static final long serialVersionUID = 6433458914602768519L;
-  QualityIndicator indicators_; // QualityIndicator object
-  /**
-   * ParallelEvaluator object
-   */
+  QualityIndicator indicators_; 
+
   double r1Max_;
   double r1Min_;
   double r2Max_;
   double r2Min_;
-  double C1Max_;
-  double C1Min_;
-  double C2Max_;
-  double C2Min_;
-  double WMax_;
-  double WMin_;
-  double ChVel1_;
-  double ChVel2_;
+  double c1Max_;
+  double c1Min_;
+  double c2Max_;
+  double c2Min_;
+  double weightMax_;
+  double weightMin_;
+  double changeVelocity1_;
+  double changeVelocity2_;
   boolean success_;
   /**
    * Stores the number of particles_ used
@@ -139,17 +134,17 @@ public class SMPSOE extends Algorithm {
     r1Min_ = 0.0;
     r2Max_ = 1.0;
     r2Min_ = 0.0;
-    C1Max_ = 2.5;
-    C1Min_ = 1.5;
-    C2Max_ = 2.5;
-    C2Min_ = 1.5;
-    WMax_ = 0.1;
-    WMin_ = 0.1;
-    ChVel1_ = -1;
-    ChVel2_ = -1;
+    c1Max_ = 2.5;
+    c1Min_ = 1.5;
+    c2Max_ = 2.5;
+    c2Min_ = 1.5;
+    weightMax_ = 0.1;
+    weightMin_ = 0.1;
+    changeVelocity1_ = -1;
+    changeVelocity2_ = -1;
 
-    executor_ = executor;
-  } // Constructor
+    evaluator_ = executor;
+  } 
 
 
   /**
@@ -187,13 +182,14 @@ public class SMPSOE extends Algorithm {
       deltaMax_[i] = (problem_.getUpperLimit(i) -
         problem_.getLowerLimit(i)) / 2.0;
       deltaMin_[i] = -deltaMax_[i];
-    } // for
-  } // initParams 
+    } 
+  } 
 
   // Adaptive inertia 
   private double inertiaWeight(int iter, int miter, double wma, double wmin) {
-    return wma; // - (((wma-wmin)*(double)iter)/(double)miter);
-  } // inertiaWeight
+ // - (((wma-wmin)*(double)iter)/(double)miter);
+    return wma; 
+  } 
 
   // constriction coefficient (M. Clerc)
   private double constrictionCoefficient(double c1, double c2) {
@@ -204,14 +200,12 @@ public class SMPSOE extends Algorithm {
     } else {
       return 2 / (2 - rho - Math.sqrt(Math.pow(rho, 2.0) - 4.0 * rho));
     }
-  } // constrictionCoefficient
-
+  } 
 
   // velocity bounds
   private double velocityConstriction(double v, double[] deltaMax,
     double[] deltaMin, int variableIndex,
     int particleIndex) throws IOException {
-
 
     double result;
 
@@ -229,7 +223,7 @@ public class SMPSOE extends Algorithm {
     }
 
     return result;
-  } // velocityConstriction
+  } 
 
   /**
    * Update the speed of each particle
@@ -260,12 +254,12 @@ public class SMPSOE extends Algorithm {
       }
       r1 = PseudoRandom.randDouble(r1Min_, r1Max_);
       r2 = PseudoRandom.randDouble(r2Min_, r2Max_);
-      C1 = PseudoRandom.randDouble(C1Min_, C1Max_);
-      C2 = PseudoRandom.randDouble(C2Min_, C2Max_);
-      W = PseudoRandom.randDouble(WMin_, WMax_);
+      C1 = PseudoRandom.randDouble(c1Min_, c1Max_);
+      C2 = PseudoRandom.randDouble(c2Min_, c2Max_);
+      W = PseudoRandom.randDouble(weightMin_, weightMax_);
       //
-      wmax = WMax_;
-      wmin = WMin_;
+      wmax = weightMax_;
+      wmin = weightMin_;
 
       for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
         //Computing the velocity of this particle
@@ -275,14 +269,14 @@ public class SMPSOE extends Algorithm {
               C1 * r1 * (bestParticle.getValue(var) -
                 particle.getValue(var)) +
               C2 * r2 * (bestGlobal.getValue(var) -
-                particle.getValue(var))), deltaMax_, //[var],
-          deltaMin_, //[var],
+                particle.getValue(var))), deltaMax_,
+          deltaMin_, 
           var,
           i
         );
       }
     }
-  } // computeSpeed
+  } 
 
   /**
    * Update the position of each particle
@@ -297,15 +291,15 @@ public class SMPSOE extends Algorithm {
 
         if (particle.getValue(var) < problem_.getLowerLimit(var)) {
           particle.setValue(var, problem_.getLowerLimit(var));
-          speed_[i][var] = speed_[i][var] * ChVel1_; //
+          speed_[i][var] = speed_[i][var] * changeVelocity1_; //
         }
         if (particle.getValue(var) > problem_.getUpperLimit(var)) {
           particle.setValue(var, problem_.getUpperLimit(var));
-          speed_[i][var] = speed_[i][var] * ChVel2_; //
+          speed_[i][var] = speed_[i][var] * changeVelocity2_; //
         }
       }
     }
-  } // computeNewPositions
+  } 
 
   /**
    * Apply a mutation operator to some particles in the swarm
@@ -318,7 +312,7 @@ public class SMPSOE extends Algorithm {
         polynomialMutation_.execute(particles_.get(i));
       }
     }
-  } // mopsoMutation
+  }
 
   /**
    * Runs of the SMPSO algorithm.
@@ -336,7 +330,7 @@ public class SMPSOE extends Algorithm {
       particles_.add(particle);
     }
 
-    executor_.evaluate(particles_, problem_) ;
+    evaluator_.evaluate(particles_, problem_) ;
 
     //-> Step2. Initialize the speed_ of each particle to 0
     for (int i = 0; i < swarmSize_; i++) {
@@ -380,7 +374,7 @@ public class SMPSOE extends Algorithm {
         Solution particle = particles_.get(i);
       }
 
-      executor_.evaluate(particles_, problem_) ;
+      evaluator_.evaluate(particles_, problem_) ;
 
       //Actualize the archive          
       for (int i = 0; i < particles_.size(); i++) {
@@ -417,5 +411,5 @@ public class SMPSOE extends Algorithm {
    */
   public SolutionSet getLeader() {
     return leaders_;
-  }  // getLeader   
+  }   
 }

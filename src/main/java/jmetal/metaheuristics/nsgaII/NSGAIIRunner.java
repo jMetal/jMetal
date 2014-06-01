@@ -1,4 +1,4 @@
-//  GDE3_main.java
+//  NSGAII_main.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -18,19 +18,26 @@
 // 
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-package jmetal.metaheuristics.gde3;
+
+package jmetal.metaheuristics.nsgaII;
 
 import jmetal.core.Algorithm;
 import jmetal.core.Operator;
 import jmetal.core.Problem;
 import jmetal.core.SolutionSet;
 import jmetal.operators.crossover.CrossoverFactory;
+import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.SelectionFactory;
-import jmetal.problems.Kursawe;
 import jmetal.problems.ProblemFactory;
+import jmetal.problems.ZDT.ZDT3;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
+import jmetal.util.evaluator.SequentialSolutionSetEvaluator;
+import jmetal.util.evaluator.SolutionSetEvaluator;
+import jmetal.util.fileOutput.DefaultFileOutputContext;
+import jmetal.util.fileOutput.FileOutputContext;
+import jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -38,33 +45,45 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
 /**
- * Class for configuring and running the GDE3 algorithm
+ * Class to configure and execute the NSGA-II algorithm.
+ * <p/>
+ * Besides the classic NSGA-II, a steady-state version (ssNSGAII) is also
+ * included (See: J.J. Durillo, A.J. Nebro, F. Luna and E. Alba
+ * "On the Effect of the Steady-State Selection Scheme in
+ * Multi-Objective Genetic Algorithms"
+ * 5th International Conference, EMO 2009, pp: 183-197.
+ * April 2009)
  */
-public class GDE3_main {
-  public static Logger logger_;      
-  public static FileHandler fileHandler_; 
+
+public class NSGAIIRunner {
+  public static Logger logger_;
+  public static FileHandler fileHandler_;
 
   /**
    * @param args Command line arguments.
-   * @throws JMException
-   * @throws IOException
-   * @throws SecurityException Usage: three choices
+   * @throws jmetal.util.JMException
+   * @throws java.io.IOException
+   * @throws SecurityException Usage: three options
    *                           - jmetal.metaheuristics.nsgaII.NSGAII_main
    *                           - jmetal.metaheuristics.nsgaII.NSGAII_main problemName
    *                           - jmetal.metaheuristics.nsgaII.NSGAII_main problemName paretoFrontFile
    */
-  public static void main(String[] args)
-    throws JMException, SecurityException, IOException, ClassNotFoundException {
+  public static void main(String[] args) throws
+    JMException,
+    SecurityException,
+    IOException,
+    ClassNotFoundException {
     Problem problem;
     Algorithm algorithm;
-    Operator selection;
     Operator crossover;
+    Operator mutation;
+    Operator selection;
 
     QualityIndicator indicators;
 
     // Logger object and file to store log messages
     logger_ = Configuration.logger_;
-    fileHandler_ = new FileHandler("GDE3_main.log");
+    fileHandler_ = new FileHandler("NSGAII_main.log");
     logger_.addHandler(fileHandler_);
 
     indicators = null;
@@ -76,46 +95,69 @@ public class GDE3_main {
       problem = (new ProblemFactory()).getProblem(args[0], params);
       indicators = new QualityIndicator(problem, args[1]);
     } else {
-      problem = new Kursawe("Real", 3);
+      //problem = new Kursawe("Real", 3);
+      //problem = new Kursawe("BinaryReal", 3);
       //problem = new Water("Real");
-      //problem = new ZDT1("ArrayReal", 100);
+      problem = new ZDT3("ArrayReal", 30);
       //problem = new ConstrEx("Real");
       //problem = new DTLZ1("Real");
       //problem = new OKA2("Real") ;
     }
 
-    algorithm = new GDE3(problem);
+    //Injector injector = Guice.createInjector(new ExecutorModule()) ;
+    //Executor executor = injector.getInstance(Executor.class) ;
+
+    SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator();
+    //SolutionSetEvaluator executor = new MultithreadedSolutionSetEvaluator(4, problem) ;
+    algorithm = new NSGAIIE(problem, evaluator);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", 100);
-    algorithm.setInputParameter("maxIterations", 250);
+    algorithm.setInputParameter("maxEvaluations", 25000);
 
-    // Crossover operator 
+    // Mutation and Crossover for Real codification 
     HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
-    crossoverParameters.put("CR", 0.5);
-    crossoverParameters.put("F", 0.5);
-    crossover =
-      CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", crossoverParameters);
+    crossoverParameters.put("probability", 0.9);
+    crossoverParameters.put("distributionIndex", 20.0);
+    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", crossoverParameters);
+
+    HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
+    mutationParameters.put("probability", 1.0 / problem.getNumberOfVariables());
+    mutationParameters.put("distributionIndex", 20.0);
+    mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
+
+    // Selection Operator 
+    HashMap<String, Object> selectionParameters = null; // FIXME: why we are passing null?
+    selection = SelectionFactory.getSelectionOperator("BinaryTournament2", selectionParameters);
 
     // Add the operators to the algorithm
-    HashMap<String, Object> selectionParameters = null; // FIXME: why we are passing null?
-    selection =
-      SelectionFactory.getSelectionOperator("DifferentialEvolutionSelection", selectionParameters);
-
     algorithm.addOperator("crossover", crossover);
+    algorithm.addOperator("mutation", mutation);
     algorithm.addOperator("selection", selection);
 
-    // Execute the Algorithm 
+    // Add the indicator object to the algorithm
+    algorithm.setInputParameter("indicators", indicators);
+
+    // Execute the Algorithm
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;
 
-    // Result messages 
+    // Result messages
+    FileOutputContext fileContext = new DefaultFileOutputContext("VAR.tsv") ;
+    fileContext.setSeparator("\t");
+
     logger_.info("Total execution time: " + estimatedTime + "ms");
     logger_.info("Variables values have been writen to file VAR");
-    population.printVariablesToFile("VAR");
-    logger_.info("Objectives values have been writen to file FUN");
+    SolutionSetOutput.printVariablesToFile(fileContext, population) ;
+
+    fileContext = new DefaultFileOutputContext("FUN.tsv");
+    fileContext.setSeparator("\t");
+
+    SolutionSetOutput.printObjectivesToFile(fileContext, population);
     population.printObjectivesToFile("FUN");
+    logger_.info("Objectives values have been written to file FUN");
+
 
     if (indicators != null) {
       logger_.info("Quality indicators");
@@ -124,6 +166,11 @@ public class GDE3_main {
       logger_.info("IGD        : " + indicators.getIGD(population));
       logger_.info("Spread     : " + indicators.getSpread(population));
       logger_.info("Epsilon    : " + indicators.getEpsilon(population));
+
+      int evaluations = (Integer) algorithm.getOutputParameter("evaluations");
+      logger_.info("Speed      : " + evaluations + " evaluations");
     }
+
+    evaluator.shutdown();
   }
 }

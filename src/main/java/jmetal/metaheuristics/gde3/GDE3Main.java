@@ -1,9 +1,10 @@
-//  pSMPSO_main.java
+//  GDE3_main.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
+//       Juan J. Durillo <durillo@lcc.uma.es>
 //
-//  Copyright (c) 2013 Antonio J. Nebro
+//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -17,20 +18,20 @@
 // 
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-package jmetal.metaheuristics.smpso;
+package jmetal.metaheuristics.gde3;
 
 import jmetal.core.Algorithm;
+import jmetal.core.Operator;
 import jmetal.core.Problem;
 import jmetal.core.SolutionSet;
-import jmetal.operators.mutation.Mutation;
-import jmetal.operators.mutation.MutationFactory;
+import jmetal.operators.crossover.CrossoverFactory;
+import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.Kursawe;
 import jmetal.problems.ProblemFactory;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
-import jmetal.util.evaluator.MultithreadedSolutionSetEvaluator;
+import jmetal.util.evaluator.SequentialSolutionSetEvaluator;
 import jmetal.util.evaluator.SolutionSetEvaluator;
 
 import java.io.IOException;
@@ -39,33 +40,33 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
 /**
- * This class executes pSMPSO, a multithreaded version of SMPSO, characterized
- * by evaluating the particles in parallel.
+ * Class for configuring and running the GDE3 algorithm
  */
-public class SMPSOMain {
-  private static Logger logger_;     
-  private static FileHandler fileHandler_; 
+public class GDE3Main {
+  public static Logger logger_;      
+  public static FileHandler fileHandler_; 
 
   /**
-   * @param args Command line arguments. The first (optional) argument specifies
-   *             the problem to solve.
-   * @throws jmetal.util.JMException
-   * @throws java.io.IOException
-   * @throws SecurityException Usage: three options
-   *                           - jmetal.metaheuristics.smpso.pSMPSO_main
-   *                           - jmetal.metaheuristics.smpso.pSMPSO_main problemName
-   *                           - jmetal.metaheuristics.smpso.pSMPSO_main problemName ParetoFrontFile
+   * @param args Command line arguments.
+   * @throws JMException
+   * @throws IOException
+   * @throws SecurityException Usage: three choices
+   *                           - jmetal.metaheuristics.nsgaII.NSGAII_main
+   *                           - jmetal.metaheuristics.nsgaII.NSGAII_main problemName
+   *                           - jmetal.metaheuristics.nsgaII.NSGAII_main problemName paretoFrontFile
    */
-  public static void main(String[] args) throws JMException, IOException, ClassNotFoundException {
+  public static void main(String[] args)
+    throws JMException, SecurityException, IOException, ClassNotFoundException {
     Problem problem;
     Algorithm algorithm;
-    Mutation mutation;
+    Operator selection;
+    Operator crossover;
 
-    QualityIndicator indicators; 
+    QualityIndicator indicators;
 
     // Logger object and file to store log messages
     logger_ = Configuration.logger_;
-    fileHandler_ = new FileHandler("SMPSO_main.log");
+    fileHandler_ = new FileHandler("GDE3_main.log");
     logger_.addHandler(fileHandler_);
 
     indicators = null;
@@ -79,30 +80,32 @@ public class SMPSOMain {
     } else {
       problem = new Kursawe("Real", 3);
       //problem = new Water("Real");
-      //problem = new ZDT1("ArrayReal", 1000);
-      //problem = new ZDT4("BinaryReal");
-      //problem = new WFG1("Real");
+      //problem = new ZDT1("ArrayReal", 100);
+      //problem = new ConstrEx("Real");
       //problem = new DTLZ1("Real");
       //problem = new OKA2("Real") ;
     }
 
-    // 0 - use all the available cores
-    SolutionSetEvaluator executor = new MultithreadedSolutionSetEvaluator(0, problem) ;
-    //Executor executor = new SequentialExecutor() ;
+    algorithm = new GDE3(problem);
 
-    algorithm = new SMPSOE(problem, executor);
-
-    // Algorithm parameters    
-    algorithm.setInputParameter("swarmSize", 100);
-    algorithm.setInputParameter("archiveSize", 100);
+    // Algorithm parameters
+    algorithm.setInputParameter("populationSize", 100);
     algorithm.setInputParameter("maxIterations", 250);
 
-    HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
-    mutationParameters.put("probability", 1.0 / problem.getNumberOfVariables());
-    mutationParameters.put("distributionIndex", 20.0);
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
+    // Crossover operator 
+    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
+    crossoverParameters.put("CR", 0.5);
+    crossoverParameters.put("F", 0.5);
+    crossover =
+      CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", crossoverParameters);
 
-    algorithm.addOperator("mutation", mutation);
+    // Add the operators to the algorithm
+    HashMap<String, Object> selectionParameters = null; // FIXME: why we are passing null?
+    selection =
+      SelectionFactory.getSelectionOperator("DifferentialEvolutionSelection", selectionParameters);
+
+    algorithm.addOperator("crossover", crossover);
+    algorithm.addOperator("selection", selection);
 
     // Execute the Algorithm 
     long initTime = System.currentTimeMillis();
@@ -111,10 +114,10 @@ public class SMPSOMain {
 
     // Result messages 
     logger_.info("Total execution time: " + estimatedTime + "ms");
-    logger_.info("Objectives values have been writen to file FUN");
-    population.printObjectivesToFile("FUN");
     logger_.info("Variables values have been writen to file VAR");
     population.printVariablesToFile("VAR");
+    logger_.info("Objectives values have been writen to file FUN");
+    population.printObjectivesToFile("FUN");
 
     if (indicators != null) {
       logger_.info("Quality indicators");
@@ -124,7 +127,5 @@ public class SMPSOMain {
       logger_.info("Spread     : " + indicators.getSpread(population));
       logger_.info("Epsilon    : " + indicators.getEpsilon(population));
     }
-
-    executor.shutdown();
   }
 }
