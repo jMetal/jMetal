@@ -219,7 +219,7 @@ public class AvlTree<T> {
   }
 
   public AvlNode<T> findSuccessor(AvlNode<T> node) {
-    AvlNode<T> result = null;
+    AvlNode<T> result;
 
     if (node.hasRight()) {
       AvlNode<T> tmp = node.getRight();
@@ -364,8 +364,6 @@ public class AvlTree<T> {
   public int getBalance(AvlNode<T> node) {
     int leftHeight;
     int rightHeight;
-    leftHeight = 0;
-    rightHeight = 0;
 
     if (node.hasLeft()) {
       leftHeight = node.getLeft().getHeight();
@@ -411,7 +409,7 @@ public class AvlTree<T> {
   }
 
   public String toString() {
-    String result = "";
+    String result ;
 
     result = inOrder(top_);
 
@@ -423,7 +421,6 @@ public class AvlTree<T> {
     if (node == null) {
       return "";
     } else {
-      result = "";
       result = " | " + node.getItem();
       result += inOrder(node.getLeft());
       result += inOrder(node.getRight());

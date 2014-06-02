@@ -521,7 +521,7 @@ public class AbYSS extends Algorithm {
     } 
 
     // STEP 3. Main loop
-    int newSolutions = 0;
+    int newSolutions;
     while (evaluations_ < maxEvaluations_) {
       referenceSetUpdate(true);
       newSolutions = subSetGeneration();

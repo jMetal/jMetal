@@ -64,9 +64,9 @@ public class acGA extends Algorithm {
    */
   public SolutionSet execute() throws JMException, ClassNotFoundException {
     int populationSize, maxEvaluations, evaluations;
-    Operator mutationOperator = null;
-    Operator crossoverOperator = null;
-    Operator selectionOperator = null;
+    Operator mutationOperator;
+    Operator crossoverOperator;
+    Operator selectionOperator;
 
     SolutionSet[] neighbors;
     SolutionSet population;
@@ -111,7 +111,7 @@ public class acGA extends Algorithm {
         Solution individual = new Solution(population.get(ind));
 
         Solution[] parents = new Solution[2];
-        Solution[] offSpring = null;
+        Solution[] offSpring;
 
         neighbors[ind] = neighborhood.getEightNeighbors(population, ind);
         neighbors[ind].add(individual);

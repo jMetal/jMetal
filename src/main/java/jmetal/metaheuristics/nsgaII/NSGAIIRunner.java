@@ -27,8 +27,8 @@ import jmetal.core.SolutionSet;
 import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.SelectionFactory;
+import jmetal.problems.Kursawe;
 import jmetal.problems.ProblemFactory;
-import jmetal.problems.ZDT.ZDT3;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
@@ -94,10 +94,10 @@ public class NSGAIIRunner {
       problem = (new ProblemFactory()).getProblem(args[0], params);
       indicators = new QualityIndicator(problem, args[1]);
     } else {
-      //problem = new Kursawe("Real", 3);
+      problem = new Kursawe("Real", 3);
       //problem = new Kursawe("BinaryReal", 3);
       //problem = new Water("Real");
-      problem = new ZDT3("ArrayReal", 30);
+      //problem = new ZDT3("ArrayReal", 30);
       //problem = new ConstrEx("Real");
       //problem = new DTLZ1("Real");
       //problem = new OKA2("Real") ;
@@ -126,7 +126,7 @@ public class NSGAIIRunner {
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
 
     // Selection Operator 
-    HashMap<String, Object> selectionParameters = null; // FIXME: why we are passing null?
+    HashMap<String, Object> selectionParameters = new HashMap<String, Object>() ;
     selection = SelectionFactory.getSelectionOperator("BinaryTournament2", selectionParameters);
 
     // Add the operators to the algorithm
