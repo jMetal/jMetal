@@ -79,7 +79,7 @@ public class MetricsUtil {
     } catch (Exception e) {
       Configuration.logger_.log(
         Level.SEVERE,
-        "InputFacilities crashed reading for file: " + path,
+        "readFront() crashed reading for file: " + path,
         e);
     }
     return new double[0][0];

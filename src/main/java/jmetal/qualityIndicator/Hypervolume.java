@@ -185,20 +185,20 @@ public class Hypervolume {
     distance = 0;
     n = noPoints;
     while (n > 0) {
-      int noNondominatedPoints;
+      int nonDominatedPoints;
       double tempVolume, tempDistance;
 
-      noNondominatedPoints = filterNondominatedSet(front, n, noObjectives - 1);
+      nonDominatedPoints = filterNondominatedSet(front, n, noObjectives - 1);
       //noNondominatedPoints = front.length;
       if (noObjectives < 3) {
-        if (noNondominatedPoints < 1) {
+        if (nonDominatedPoints < 1) {
           Configuration.logger_.log(Level.SEVERE, "run-time error");
         }
 
         tempVolume = front[0][0];
       } else {
         tempVolume = calculateHypervolume(front,
-          noNondominatedPoints,
+          nonDominatedPoints,
           noObjectives - 1);
       }
 

@@ -134,6 +134,21 @@ public class SetCoverageTest {
     assertEquals(0.0, new SetCoverage().setCoverage(solutionSet2_, solutionSet1_), EPSILON) ;
   }
 
+  @Test
+  public void transformArraysToSolutionSetTest() {
+    // Creating set (0,N-1), (1,N-2), (2, N-3), ... , (N-1, 0)
+    double[][] arrayContainingFront = new double[solutionSetSize_][2];
+    for (int i = 0; i < solutionSetSize_; i++) {
+      arrayContainingFront[i][0] = i;
+      arrayContainingFront[i][1] = solutionSetSize_ - 1 - i;
+    }
+
+    SolutionSet solutionSet = new SetCoverage().transformArraysToSolutionSet(arrayContainingFront);
+    assertEquals(0.0, solutionSet.get(0).getObjective(0), EPSILON) ;
+    assertEquals(solutionSetSize_-1, solutionSet.get(0).getObjective(1), EPSILON) ;
+    assertEquals(solutionSetSize_-1, solutionSet.get(solutionSetSize_-1).getObjective(0), EPSILON) ;
+    assertEquals(0.0, solutionSet.get(solutionSetSize_-1).getObjective(1), EPSILON) ;
+  }
 
 
   @After

@@ -34,13 +34,13 @@ import java.util.logging.Level;
  * <p/>
  * This class allows to generate Latex tables with the results of applying the Wilcoxon Rank-Sum test
  */
-public class WilcoxonTextTables implements IExperimentOutput {
+public class WilcoxonTestTables implements IExperimentOutput {
   File outputDirectory_;
   String outputDirectoryName_;
   private Experiment experiment_;
 
 
-  public WilcoxonTextTables(Experiment experiment) {
+  public WilcoxonTestTables(Experiment experiment) {
     experiment_ = experiment;
     outputDirectory_ = null;
     outputDirectoryName_ = "";

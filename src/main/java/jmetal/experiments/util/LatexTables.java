@@ -56,48 +56,6 @@ public class LatexTables implements IExperimentOutput {
     Configuration.logger_.info("latex directory: " + experiment_.getLatexDirectory());
 
     readIndicatorData();
-    /*
-    data_ = new Vector[experiment_.getIndicatorList().length][][];
-    for (int indicator = 0; indicator < experiment_.getIndicatorList().length; indicator++) {
-      // A data_ vector per problem
-      data_[indicator] = new Vector[experiment_.getProblemList().length][];
-
-      for (int problem = 0; problem < experiment_.getProblemList().length; problem++) {
-        data_[indicator][problem] = new Vector[experiment_.getAlgorithmNameList().length];
-
-        for (int algorithm = 0;
-             algorithm < experiment_.getAlgorithmNameList().length; algorithm++) {
-          data_[indicator][problem][algorithm] = new Vector();
-
-          String directory = experiment_.getExperimentBaseDirectory();
-          directory += "/data_/";
-          directory += "/" + experiment_.getAlgorithmNameList()[algorithm];
-          directory += "/" + experiment_.getProblemList()[problem];
-          directory += "/" + experiment_.getIndicatorList()[indicator];
-          // Read values from data_ files
-          FileInputStream fis = null;
-          try {
-            fis = new FileInputStream(directory);
-          } catch (FileNotFoundException e) {
-            Configuration.logger_.log(Level.SEVERE, "Error", e);
-          }
-          InputStreamReader isr = new InputStreamReader(fis);
-          BufferedReader br = new BufferedReader(isr);
-          //Configuration.logger_.info(directory);
-          String aux = null;
-          try {
-            aux = br.readLine();
-            while (aux != null) {
-              data_[indicator][problem][algorithm].add(Double.parseDouble(aux));
-              aux = br.readLine();
-            }
-          } catch (IOException e) {
-            Configuration.logger_.log(Level.SEVERE, "Error", e);
-          }
-        }
-      }
-    }
-    */
 
     //double[][][] mean;
     //double[][][] median;
@@ -529,7 +487,7 @@ public class LatexTables implements IExperimentOutput {
           data_[indicator][problem][algorithm] = new Vector();
 
           String directory = experiment_.getExperimentBaseDirectory();
-          directory += "/data_/";
+          directory += "/data/";
           directory += "/" + experiment_.getAlgorithmNameList()[algorithm];
           directory += "/" + experiment_.getProblemList()[problem];
           directory += "/" + experiment_.getIndicatorList()[indicator];

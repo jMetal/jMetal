@@ -23,11 +23,13 @@ package jmetal.experiments.util;
 
 import jmetal.util.JMException;
 
+import java.io.IOException;
+
 /**
  * Created by Antonio J. Nebro on 16/02/14.
  * <p/>
  * Interface for all the outputs of an experiment
  */
 public interface IExperimentOutput {
-  public void generate() throws JMException;
+  public void generate() throws JMException, IOException;
 }

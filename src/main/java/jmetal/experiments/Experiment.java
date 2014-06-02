@@ -71,6 +71,7 @@ public class Experiment {
   protected boolean generateBoxplots_;
   protected boolean generateWilcoxonTables_;
   protected boolean generateFriedmanTables_;
+  protected boolean generateSetCoverageTables_;
   protected boolean useConfigurationFilesForAlgorithms_;
   protected int boxplotRows_;
   protected int boxplotColumns_;
@@ -257,6 +258,11 @@ public class Experiment {
     return generateFriedmanTables_;
   }
 
+  public boolean generateSetCoverageTables() {
+    return generateFriedmanTables_;
+  }
+
+
   public boolean useConfigurationFilesForAlgorithms() {
     return useConfigurationFilesForAlgorithms_;
   }
@@ -314,7 +320,7 @@ public class Experiment {
     checkIfExperimentDirectoryExists();
   }
 
-  public void runExperiment() throws JMException {
+  public void runExperiment() throws JMException, IOException {
     Configuration.logger_.info("Experiment: Name: " + experimentName_);
     Configuration.logger_.info("Experiment: creating " + numberOfExecutionThreads_ + " threads");
     Configuration.logger_.info("Experiment: Number of algorithms: " + algorithmNameList_.length);
@@ -368,7 +374,7 @@ public class Experiment {
     }
 
     if (generateWilcoxonTables_) {
-      new WilcoxonTextTables(this).generate();
+      new WilcoxonTestTables(this).generate();
     }
 
     if (generateBoxplots_) {
@@ -377,6 +383,10 @@ public class Experiment {
 
     if (generateFriedmanTables_) {
       new FriedmanTables(this).generate();
+    }
+
+    if (generateSetCoverageTables_) {
+      new SetCoverageTables(this).generate();
     }
   }
 

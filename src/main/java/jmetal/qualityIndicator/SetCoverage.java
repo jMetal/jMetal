@@ -23,6 +23,7 @@ package jmetal.qualityIndicator;
 
 import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
+import jmetal.qualityIndicator.util.MetricsUtil;
 import jmetal.util.comparator.DominanceComparator;
 
 import java.util.Comparator;
@@ -33,6 +34,12 @@ import java.util.Comparator;
 public class SetCoverage {
   private Comparator<Solution> dominance_;
 
+  /**
+   * Calculates the set coverage of set1 over set2
+   * @param set1
+   * @param set2
+   * @return
+   */
   public double setCoverage(SolutionSet set1, SolutionSet set2) {
     double result = 0.0 ;
     int sum = 0 ;
@@ -56,6 +63,23 @@ public class SetCoverage {
     return result ;
   }
 
+  /**
+   * Calculates the set coverage of the front stored in file1 over the front stored in file2
+   * @param file1
+   * @param file2
+   * @return
+   */
+  public double setCoverage(String file1, String file2) {
+    MetricsUtil utils = new MetricsUtil();
+    double[][]front1 = utils.readFront(file1) ;
+    double[][]front2 = utils.readFront(file2) ;
+
+    SolutionSet solutionSet1 = transformArraysToSolutionSet(front1) ;
+    SolutionSet solutionSet2 = transformArraysToSolutionSet(front2) ;
+
+    return setCoverage(solutionSet1, solutionSet2) ;
+  }
+
   private boolean solutionIsDominatedBySolutionSet(Solution solution, SolutionSet solutionSet) {
     boolean result = false ;
 
@@ -69,5 +93,22 @@ public class SetCoverage {
     }
 
     return result ;
+  }
+
+  public SolutionSet transformArraysToSolutionSet(double[][] array) {
+    int solutionSetSize = array.length ;
+    int numberOfObjectives = array[0].length ;
+    SolutionSet solutionSet = new SolutionSet(solutionSetSize) ;
+
+    for (int i = 0; i < array.length; i++) {
+      Solution solution = new Solution(numberOfObjectives) ;
+      for (int j = 0 ; j < numberOfObjectives; j++) {
+        solution.setObjective(j, array[i][j]);
+      }
+
+      solutionSet.add(solution) ;
+    }
+
+    return solutionSet ;
   }
 }

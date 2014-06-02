@@ -77,10 +77,10 @@ public class QualityIndicatorTables implements IExperimentOutput {
 
           String problemDirectory = algorithmDirectory + experiment_.getProblemList()[problemIndex];
 
-          for (String anIndicatorList : experiment_.getIndicatorList()) {
-            Configuration.logger_.info("Experiment - Quality indicator: " + anIndicatorList);
+          for (String indicator : experiment_.getIndicatorList()) {
+            Configuration.logger_.info("Experiment - Quality indicator: " + indicator);
 
-            resetFile(problemDirectory + "/" + anIndicatorList);
+            resetFile(problemDirectory + "/" + indicator);
 
             for (int numRun = 0; numRun < experiment_.getIndependentRuns(); numRun++) {
 
@@ -92,7 +92,7 @@ public class QualityIndicatorTables implements IExperimentOutput {
 
               double[][] trueFront = new Hypervolume().utils_.readFront(paretoFront[problemIndex]);
 
-              if ("HV".equals(anIndicatorList)) {
+              if ("HV".equals(indicator)) {
 
                 Hypervolume indicators = new Hypervolume();
                 double[][] solutionFront =
@@ -101,7 +101,7 @@ public class QualityIndicatorTables implements IExperimentOutput {
 
                 qualityIndicatorFile = qualityIndicatorFile + "/HV";
               }
-              if ("SPREAD".equals(anIndicatorList)) {
+              if ("SPREAD".equals(indicator)) {
                 Spread indicators = new Spread();
                 double[][] solutionFront =
                     indicators.utils_.readFront(solutionFrontFile);
@@ -109,7 +109,7 @@ public class QualityIndicatorTables implements IExperimentOutput {
 
                 qualityIndicatorFile = qualityIndicatorFile + "/SPREAD";
               }
-              if ("IGD".equals(anIndicatorList)) {
+              if ("IGD".equals(indicator)) {
                 InvertedGenerationalDistance indicators = new InvertedGenerationalDistance();
                 double[][] solutionFront =
                     indicators.utils_.readFront(solutionFrontFile);
@@ -118,7 +118,7 @@ public class QualityIndicatorTables implements IExperimentOutput {
 
                 qualityIndicatorFile = qualityIndicatorFile + "/IGD";
               }
-              if ("EPSILON".equals(anIndicatorList)) {
+              if ("EPSILON".equals(indicator)) {
                 Epsilon indicators = new Epsilon();
                 double[][] solutionFront =
                     indicators.utils_.readFront(solutionFrontFile);
