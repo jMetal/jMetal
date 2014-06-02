@@ -24,6 +24,7 @@ package jmetal.experiments.util;
 import jmetal.experiments.Experiment;
 import jmetal.qualityIndicator.SetCoverage;
 import jmetal.util.Configuration;
+import jmetal.util.Statistics;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -105,7 +106,7 @@ public class SetCoverageTables implements IExperimentOutput {
     fileWriter_.write("\\begin{tabular}{l");
 
     // calculate the number of columns
-    for (int i = 0 ; i < experiment_.getProblemList().length; i++) {
+    for (int i = 0 ; i < experiment_.getAlgorithmNameList().length; i++) {
       fileWriter_.write("l");
     }
     fileWriter_.write("}\n");
@@ -131,21 +132,20 @@ public class SetCoverageTables implements IExperimentOutput {
           problem,
           experiment_.getAlgorithmNameList()[algorithmIndex],
           experiment_.getAlgorithmNameList()[i]
-          ) ;
-        double setCoverageValueBA = calculateSetCoverage(
-          problem,
-          experiment_.getAlgorithmNameList()[i],
-          experiment_.getAlgorithmNameList()[algorithmIndex]
         ) ;
+
         String setCoverageAB =  String.format(Locale.ENGLISH, "%.2f",
           setCoverageValueAB);
 
-        fileWriter_.write("" + setCoverageAB + " & ");
+        fileWriter_.write("" + setCoverageAB);
         //String setCoverageBA =  String.format(Locale.ENGLISH, "%.2f",
         //  setCoverageValueBA);
         //fileWriter_.write("("+setCoverageAB +", " + setCoverageBA + ")"+ " & ");
       } else
-        fileWriter_.write("--" + " & ");
+        fileWriter_.write("--" );
+      if (i < (experiment_.getAlgorithmNameList().length-1)) {
+        fileWriter_.write("&") ;
+      }
     }
 
     fileWriter_.write("\\\\" );
@@ -171,7 +171,7 @@ public class SetCoverageTables implements IExperimentOutput {
       values.add(i, result);
     }
 
-    return result ;
+    return Statistics.calculateMean(values);
   }
 
   private void createOutputDirectory() {

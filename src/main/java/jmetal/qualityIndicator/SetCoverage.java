@@ -24,6 +24,8 @@ package jmetal.qualityIndicator;
 import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
 import jmetal.qualityIndicator.util.MetricsUtil;
+import jmetal.util.Configuration;
+import jmetal.util.JMException;
 import jmetal.util.comparator.DominanceComparator;
 
 import java.util.Comparator;
@@ -110,5 +112,17 @@ public class SetCoverage {
     }
 
     return solutionSet ;
+  }
+
+  public static void main(String args[]) throws JMException {
+    if (args.length < 2) {
+      throw new JMException(
+        "Error using Hypervolume. Usage: \n java jmetal.qualityIndicator.SetCoverage " +
+          "<SolutionFrontFile1> " +
+          "<SolutionFrontFile2> " + "<getNumberOfObjectives>");
+    } else {
+       double result = new SetCoverage().setCoverage(args[0], args[1]) ;
+      Configuration.logger_.info("Set coverage: " + result) ;
+    }
   }
 }

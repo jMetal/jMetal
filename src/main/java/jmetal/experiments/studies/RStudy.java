@@ -36,11 +36,11 @@ public class RStudy extends Experiment {
   public RStudy() {
     experimentName_ = "bridgeMedium";
     independentRuns_ = 30;
-    algorithmNameList_ = new String[] {"NSGAII", "MOCell"};
+    algorithmNameList_ = new String[] {"NSGAII", "MOCell", "MOEAD"};
     problemList_ = new String[] {"EBEs"};
     paretoFrontFileList_ = new String[] {"EBEs.pf"};
     indicatorList_ = new String[] {"HV", "SPREAD", "EPSILON"};
-    experimentBaseDirectory_ = "/home/antonio/Investigacion/Puentes/puenteMediano";
+    experimentBaseDirectory_ = "/home/antonio/Investigacion/Puentes/puenteMediano/puenteMediano";
     paretoFrontDirectory_ = "/Users/antelverde/Softw/pruebas/data/paretoFronts";
     numberOfExecutionThreads_ = 6;
 
