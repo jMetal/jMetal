@@ -23,6 +23,7 @@ package jmetal.experiments.settings;
 import jmetal.core.Algorithm;
 import jmetal.core.Operator;
 import jmetal.experiments.Settings;
+import jmetal.metaheuristics.nsgaII.NSGAII;
 import jmetal.operators.crossover.Crossover;
 import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.mutation.Mutation;
@@ -32,6 +33,8 @@ import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.ProblemFactory;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
+import jmetal.util.evaluator.SequentialSolutionSetEvaluator;
+import jmetal.util.evaluator.SolutionSetEvaluator;
 
 import java.util.HashMap;
 import java.util.Properties;
@@ -67,7 +70,7 @@ public class NSGAIIPermutation_Settings extends Settings {
 
     mutationProbability_ = 1.0 / problem_.getNumberOfVariables();
     crossoverProbability_ = 0.9;
-  } // NSGAIIPermutation_Settings
+  }
 
   /**
    * Configure NSGAII with user-defined parameter experiments.settings
@@ -81,8 +84,10 @@ public class NSGAIIPermutation_Settings extends Settings {
     Operator crossover;
     Operator mutation;
 
-    // Creating the problem
-    algorithm = new NSGAIIOld(problem_);
+    SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator() ;
+
+    // Creating the algorithm.
+    algorithm = new NSGAII(problem_, evaluator);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", populationSize_);
@@ -108,7 +113,7 @@ public class NSGAIIPermutation_Settings extends Settings {
     algorithm.addOperator("selection", selection);
 
     return algorithm;
-  } // configure
+  }
 
   /**
    * Configure NSGAII with user-defined parameter experiments.settings
@@ -122,8 +127,10 @@ public class NSGAIIPermutation_Settings extends Settings {
     Crossover crossover;
     Mutation mutation;
 
+    SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator() ;
+
     // Creating the algorithm.
-    algorithm = new NSGAIIOld(problem_);
+    algorithm = new NSGAII(problem_, evaluator);
 
     // Algorithm parameters
     populationSize_ = Integer
@@ -148,7 +155,7 @@ public class NSGAIIPermutation_Settings extends Settings {
     mutation = MutationFactory.getMutationOperator("SwapMutation", parameters);
 
     // Selection Operator
-    parameters = null;
+    parameters = new HashMap<String, Object>();
     selection = SelectionFactory.getSelectionOperator("BinaryTournament2", parameters);
 
     // Add the operators to the algorithm
@@ -158,4 +165,4 @@ public class NSGAIIPermutation_Settings extends Settings {
 
     return algorithm;
   }
-} // NSGAIIPermutation_Settings
+}

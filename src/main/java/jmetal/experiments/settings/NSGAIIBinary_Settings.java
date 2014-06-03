@@ -24,11 +24,14 @@ package jmetal.experiments.settings;
 import jmetal.core.Algorithm;
 import jmetal.core.Operator;
 import jmetal.experiments.Settings;
+import jmetal.metaheuristics.nsgaII.NSGAII;
 import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.ProblemFactory;
 import jmetal.util.JMException;
+import jmetal.util.evaluator.SequentialSolutionSetEvaluator;
+import jmetal.util.evaluator.SolutionSetEvaluator;
 
 import java.util.HashMap;
 import java.util.Properties;
@@ -76,8 +79,10 @@ public class NSGAIIBinary_Settings extends Settings {
 
     HashMap<String, Object> parameters = new HashMap<String, Object>();
 
-    // Creating the problem
-    algorithm = new NSGAIIOld(problem_);
+    SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator() ;
+
+    // Creating the algorithm.
+    algorithm = new NSGAII(problem_, evaluator);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", populationSize_);

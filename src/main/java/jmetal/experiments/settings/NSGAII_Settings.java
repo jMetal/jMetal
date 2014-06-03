@@ -23,6 +23,7 @@ package jmetal.experiments.settings;
 
 import jmetal.core.Algorithm;
 import jmetal.experiments.Settings;
+import jmetal.metaheuristics.nsgaII.NSGAII;
 import jmetal.operators.crossover.Crossover;
 import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.mutation.Mutation;
@@ -31,6 +32,8 @@ import jmetal.operators.selection.Selection;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.ProblemFactory;
 import jmetal.util.JMException;
+import jmetal.util.evaluator.SequentialSolutionSetEvaluator;
+import jmetal.util.evaluator.SolutionSetEvaluator;
 
 import java.util.HashMap;
 import java.util.Properties;
@@ -81,7 +84,10 @@ public class NSGAII_Settings extends Settings {
 
     // Creating the algorithm. There are two choices: NSGAII and its steady-
     // state variant ssNSGAII
-    algorithm = new NSGAIIOld(problem_);
+    SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator() ;
+
+    // Creating the algorithm.
+    algorithm = new NSGAII(problem_, evaluator);
     //algorithm = new ssNSGAII(problem_) ;
 
     // Algorithm parameters

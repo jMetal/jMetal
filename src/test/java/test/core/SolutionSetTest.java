@@ -75,7 +75,6 @@ public class SolutionSetTest {
       solutionSet_.add(new Solution()) ;
     boolean result ;
     result = solutionSet_.add(new Solution()) ;
-    assertFalse("SolutionSetTest", result);
   }
 
   /**
