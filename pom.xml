@@ -65,25 +65,20 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>cobertura-maven-plugin</artifactId>
-                <version>2.5.1</version>
+                <version>2.6</version>
                 <configuration>
                     <formats>
                         <format>html</format>
                     </formats>
                 </configuration>
             </plugin>
-                <plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>2.9.1</version>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.reporting</groupId>
-                <artifactId>maven-reporting-api</artifactId>
-                <version>2.0.8</version>
-            </plugin>
         </plugins>
-   </reporting>
+    </reporting>
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -92,14 +87,8 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
-            <version>1.9.0</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.google.inject</groupId>
-            <artifactId>guice</artifactId>
+            <groupId>org.apache.maven.reporting</groupId>
+            <artifactId>maven-reporting-api</artifactId>
             <version>3.0</version>
         </dependency>
     </dependencies>
