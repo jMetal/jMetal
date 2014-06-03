@@ -75,7 +75,7 @@ public class NSGAIImTSPRunner {
 
     SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator();
     //SolutionSetEvaluator executor = new MultithreadedSolutionSetEvaluator(4, problem) ;
-    algorithm = new NSGAIIE(problem, evaluator);
+    algorithm = new NSGAII(problem, evaluator);
     //algorithm = new ssNSGAII(problem);
 
     // Algorithm parameters

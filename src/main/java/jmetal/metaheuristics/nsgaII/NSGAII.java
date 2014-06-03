@@ -38,7 +38,7 @@ import jmetal.util.evaluator.SolutionSetEvaluator;
  * To be presented in: PPSN'08. Dortmund. September 2008.
  */
 
-public class NSGAIIE extends Algorithm {
+public class NSGAII extends Algorithm {
   private static final long serialVersionUID = 5815971727148859507L;
 
   private SolutionSetEvaluator evaluator_ ;
@@ -61,7 +61,7 @@ public class NSGAIIE extends Algorithm {
   private int requiredEvaluations_;
 
 
-  public NSGAIIE(Problem problemToSolve, SolutionSetEvaluator evaluator) {
+  public NSGAII(Problem problemToSolve, SolutionSetEvaluator evaluator) {
     super(problemToSolve);
     evaluator_ = evaluator ;
     evaluations_ = 0 ;

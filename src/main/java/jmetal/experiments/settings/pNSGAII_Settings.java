@@ -1,4 +1,4 @@
-//  pNSGAII_Settings.java 
+//  pNSGAIISettings.java
 //
 //  Authors:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -22,7 +22,7 @@ package jmetal.experiments.settings;
 
 import jmetal.core.Algorithm;
 import jmetal.experiments.Settings;
-import jmetal.metaheuristics.nsgaII.pNSGAII;
+import jmetal.metaheuristics.nsgaII.NSGAII;
 import jmetal.operators.crossover.Crossover;
 import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.mutation.Mutation;
@@ -32,8 +32,8 @@ import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.ProblemFactory;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
-import jmetal.util.parallel.MultithreadedEvaluator;
-import jmetal.util.parallel.SynchronousParallelTaskExecutor;
+import jmetal.util.evaluator.MultithreadedSolutionSetEvaluator;
+import jmetal.util.evaluator.SolutionSetEvaluator;
 
 import java.util.HashMap;
 import java.util.Properties;
@@ -72,7 +72,7 @@ public class pNSGAII_Settings extends Settings {
     mutationDistributionIndex_ = 20.0;
     crossoverDistributionIndex_ = 20.0;
     numberOfThreads_ = 8; // 0 - number of available cores
-  } // pNSGAII_Settings
+  }
 
 
   /**
@@ -87,12 +87,12 @@ public class pNSGAII_Settings extends Settings {
     Crossover crossover;
     Mutation mutation;
 
-    HashMap parameters; // Operator parameters
+    HashMap parameters;
 
-    SynchronousParallelTaskExecutor parallelEvaluator = new MultithreadedEvaluator(numberOfThreads_);
+    SolutionSetEvaluator evaluator = new MultithreadedSolutionSetEvaluator(4, problem_) ;
 
     // Creating the algorithm. 
-    algorithm = new pNSGAII(problem_, parallelEvaluator);
+    algorithm = new NSGAII(problem_, evaluator);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", populationSize_);
@@ -119,7 +119,7 @@ public class pNSGAII_Settings extends Settings {
     algorithm.addOperator("selection", selection);
 
     return algorithm;
-  } // configure
+  }
 
   /**
    * Configure pNSGAII with user-defined parameter experiments.settings
@@ -136,10 +136,10 @@ public class pNSGAII_Settings extends Settings {
     numberOfThreads_ = Integer
       .parseInt(configuration.getProperty("numberOfThreads", String.valueOf(numberOfThreads_)));
 
-    SynchronousParallelTaskExecutor parallelEvaluator = new MultithreadedEvaluator(numberOfThreads_);
+    SolutionSetEvaluator evaluator = new MultithreadedSolutionSetEvaluator(numberOfThreads_, problem_) ;
 
     // Creating the algorithm.
-    algorithm = new pNSGAII(problem_, parallelEvaluator);
+    algorithm = new NSGAII(problem_, evaluator);
 
     // Algorithm parameters
     populationSize_ = Integer
@@ -181,4 +181,4 @@ public class pNSGAII_Settings extends Settings {
 
     return algorithm;
   }
-} //pNSGAII_Settings
+}

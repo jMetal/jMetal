@@ -108,7 +108,7 @@ public class NSGAIIRunner {
 
     SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator();
     //SolutionSetEvaluator executor = new MultithreadedSolutionSetEvaluator(4, problem) ;
-    algorithm = new NSGAIIE(problem, evaluator);
+    algorithm = new NSGAII(problem, evaluator);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", 100);
