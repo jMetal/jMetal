@@ -332,8 +332,6 @@ public class MetricsUtil {
    * Reads a set of non dominated solutions from a file
    * and store it in a existing non dominated solution set
    *
-   * @param path The path of the file containing the data
-   * @return A solution set
    */
   public void readNonDominatedSolutionSet(String path, NonDominatedSolutionList solutionSet) {
     try {
@@ -403,7 +401,7 @@ public class MetricsUtil {
    * Receives an array of populations and computes the contribution to HV of the
    * population consisting in the union of all of them
    *
-   * @param populations, consisting in all the populatoins
+   * @param populations consisting in all the populations
    * @return HV contributions of each population
    */
   public double[] hvContributions(SolutionSet[] populations) {

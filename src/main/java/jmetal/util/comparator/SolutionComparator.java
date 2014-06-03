@@ -30,8 +30,8 @@ import java.util.Comparator;
 import java.util.logging.Level;
 
 /**
- * This class implements a <code>Comparator</code> (a method for comparing
- * <code>Solution</code> objects) based on the values of the variables.
+ * This class implements a Comparator (a method for comparing
+ * Solution objects) based on the values of the variables.
  */
 public class SolutionComparator implements Comparator<Solution> {
 
@@ -43,8 +43,8 @@ public class SolutionComparator implements Comparator<Solution> {
   /**
    * Compares two solutions.
    *
-   * @param o1 Object representing the first <code>Solution</code>.
-   * @param o2 Object representing the second <code>Solution</code>.
+   * @param o1 Object representing the first solution.
+   * @param o2 Object representing the second solution.
    * @return 0, if both solutions are equals with a certain dissimilarity, -1
    * otherwise.
    * @throws JMException

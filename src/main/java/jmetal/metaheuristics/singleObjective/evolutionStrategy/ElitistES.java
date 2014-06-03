@@ -46,8 +46,8 @@ public class ElitistES extends Algorithm {
    * Create a new ElitistES instance.
    *
    * @param problem Problem to solve.
-   * @mu Mu
-   * @lambda Lambda
+   * @param mu
+   * @param lambda
    */
   public ElitistES(Problem problem, int mu, int lambda) {
     super(problem);

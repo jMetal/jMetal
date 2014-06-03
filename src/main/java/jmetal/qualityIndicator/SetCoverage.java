@@ -40,7 +40,7 @@ public class SetCoverage {
    * Calculates the set coverage of set1 over set2
    * @param set1
    * @param set2
-   * @return
+   * @return The value of the set coverage
    */
   public double setCoverage(SolutionSet set1, SolutionSet set2) {
     double result = 0.0 ;
@@ -69,7 +69,7 @@ public class SetCoverage {
    * Calculates the set coverage of the front stored in file1 over the front stored in file2
    * @param file1
    * @param file2
-   * @return
+   * @return The value of the set coverage
    */
   public double setCoverage(String file1, String file2) {
     MetricsUtil utils = new MetricsUtil();

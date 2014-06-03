@@ -343,15 +343,7 @@ public class R2 {
 
   /**
    * Returns the R2 indicator value of a given front
-   * 
-   * @param front
-   *          The front
-   * @param trueParetoFront
-   *          The true Pareto front
-   * @param numberOfObjectives
-   *          The number of objectives
-   * @param lambda
-   *          A vector containing the lambda vectors for R2
+   *
    */
   public double r2(double[][] approximation, double[][] paretoFront) {
     /**
@@ -413,9 +405,6 @@ public class R2 {
   /**
    * Returns the R2 indicator of a given population, using as a reference point
    * 0, 0. Normalization is using taking into account the population itself
-   * 
-   * @param set
-   * @return
    */
   public double r2(SolutionSet set) {
     double[][] approximationFront = set.writeObjectivesToMatrix();

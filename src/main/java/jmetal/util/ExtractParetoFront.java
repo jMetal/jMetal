@@ -37,7 +37,7 @@ public class ExtractParetoFront {
 
 
   /**
-   * @param name: the name of the file
+   * @param name the name of the file
    * @author Juan J. Durillo
    * Creates a new instance
    * @throws IOException 

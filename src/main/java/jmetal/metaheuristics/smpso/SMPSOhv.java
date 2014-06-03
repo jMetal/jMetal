@@ -47,10 +47,8 @@ import java.util.logging.Logger;
  */
 public class SMPSOhv extends Algorithm {
 
-  /**
-   *
-   */
   private static final long serialVersionUID = -4057884567637182255L;
+
   QualityIndicator indicators_; // QualityIndicator object
   double r1Max_;
   double r1Min_;
@@ -66,7 +64,6 @@ public class SMPSOhv extends Algorithm {
   double ChVel2_;
   boolean success_;
   /**
-   * >>>>>>> master
    * Stores the number of particles_ used
    */
   private int swarmSize_;
@@ -140,6 +137,7 @@ public class SMPSOhv extends Algorithm {
     ChVel1_ = -1;
     ChVel2_ = -1;
   } // Constructor
+
   public SMPSOhv(Problem problem,
     Vector<Double> variables,
     String trueParetoFront) throws FileNotFoundException {

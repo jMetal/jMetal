@@ -65,14 +65,11 @@ public class OMOPSO extends Algorithm {
   private int iteration_;
 
   /**
-   * <<<<<<< HEAD
    * Stores the perturbation used by the non-uniform mutation
    */
   private double perturbation_;
 
   /**
-   * =======
-   * >>>>>>> master
    * Stores the particles
    */
   private SolutionSet particles_;

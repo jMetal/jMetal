@@ -43,7 +43,7 @@ public class ReadInstance {
   private String singleObjectiveFirstLine_ = "";
 
   /**
-   * @param name: the name of the file
+   * @param name the name of the file
    * @author Juan J. Durillo
    * Creates a new ReadInstance for the mQAP problem
    */
@@ -206,7 +206,7 @@ public class ReadInstance {
   } 
 
   /**
-   * @param weights: a vector containing the weights for the aggregative approach
+   * @param a vector containing the weights for the aggregative approach
    * @author Juan J. Durillo
    * This methods creates a single-objective instance using a weighted aggregative approach
    * and write all the information to file

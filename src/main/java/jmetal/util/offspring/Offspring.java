@@ -37,8 +37,6 @@ public class Offspring {
   /**
    * Return on offspring from a solution set, indicating the selection operator
    *
-   * @param solutionSet
-   * @return the offspring
    */
   public Solution getOffspring(SolutionSet solutionSet, int numberOfParents, int index,
     Selection selectionOperator) {
@@ -86,9 +84,6 @@ public class Offspring {
   /**
    * Return on offspring from two solution sets
    *
-   * @param solutionSet
-   * @param solution
-   * @return the offspring
    */
   public Solution getOffspring(SolutionSet solutionSet1, SolutionSet archive2) {
     Logger.getLogger(Offspring.class.getName()).log(Level.SEVERE, "method not implemented");
@@ -103,8 +98,6 @@ public class Offspring {
   /**
    * Return on offspring from a solution set and the index of the current individual
    *
-   * @param solutionSet
-   * @param solution
    * @return the offspring
    */
   public Solution getOffspring(SolutionSet solutionSet1, int index) {

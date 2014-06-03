@@ -134,8 +134,6 @@ public class XInt {
 
   /**
    * Returns the number of variables of the solution
-   *
-   * @return
    */
   public int getNumberOfDecisionVariables() {
     if (type_.getClass() == IntSolutionType.class) {
@@ -151,8 +149,6 @@ public class XInt {
 
   /**
    * Returns the number of variables of the solution
-   *
-   * @return
    */
   public int size() {
     return getNumberOfDecisionVariables();

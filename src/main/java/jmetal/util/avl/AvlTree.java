@@ -263,7 +263,7 @@ public class AvlTree<T> {
    *
    * @param node1
    * @param node2
-   * @return -1 if node1 < node2, +1 if node1 > node2; 0 if node1 == node2
+   * @return The result of the comparison according to the comparators
    */
   public int compareNodes(AvlNode<T> node1, AvlNode<T> node2) {
     return comparator_.compare(node1.getItem(), node2.getItem());

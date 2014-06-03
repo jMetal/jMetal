@@ -143,8 +143,6 @@ public class XReal {
 
   /**
    * Returns the number of variables of the solution
-   *
-   * @return
    */
   public int getNumberOfDecisionVariables() {
     if ((type_.getClass() == RealSolutionType.class) ||
@@ -161,8 +159,6 @@ public class XReal {
 
   /**
    * Returns the number of variables of the solution
-   *
-   * @return
    */
   public int size() {
     return getNumberOfDecisionVariables();

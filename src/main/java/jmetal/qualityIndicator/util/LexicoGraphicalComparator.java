@@ -25,8 +25,8 @@ import java.util.Comparator;
 
 
 /**
- * This class implements the <code>Comparator</code> interface. It is used
- * to compare points given as <code>double</code>.
+ * This class implements the Comparator interface. It is used
+ * to compare points given as double.
  * The order used is the lexicograhphical.
  */
 public class LexicoGraphicalComparator implements Comparator {
@@ -36,7 +36,7 @@ public class LexicoGraphicalComparator implements Comparator {
    *
    * @param o1 An object that reference a double[]
    * @param o2 An object that reference a double[]
-   * @return -1 if o1 < o1, 1 if o1 > o2 or 0 in other case.
+   * @return The following value: -1 if o1 < o1, 1 if o1 > o2 or 0 in other case.
    */
   public int compare(Object o1, Object o2) {
     //Cast to double [] o1 and o2.

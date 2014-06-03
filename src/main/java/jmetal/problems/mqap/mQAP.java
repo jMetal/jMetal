@@ -49,8 +49,6 @@ public class mQAP extends Problem {
 
   /**
    * Creates a new instance of problem mQAP.
-   *
-   * @param fileName: name of the file containing the instance
    */
   public mQAP(String solutionType, String fileName) throws JMException {
 

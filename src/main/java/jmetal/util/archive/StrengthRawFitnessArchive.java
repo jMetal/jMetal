@@ -35,32 +35,12 @@ import java.util.Comparator;
  */
 public class StrengthRawFitnessArchive extends Archive {
 
-  /**
-   * <<<<<<< HEAD
-   * =======
-   */
-  private static final long serialVersionUID = 7432108704079114025L;
 
-  /**
-   * >>>>>>> master
-   * Stores the maximum size of the archive.
-   */
+  private static final long serialVersionUID = 7432108704079114025L;
   private int maxSize_;
 
-  /**
-   * Stores a <code>Comparator</code> for dominance checking.
-   */
   private Comparator<Solution> dominance_;
-
-  /**
-   * Stores a <code>Comparator</code> for fitness checking.
-   */
   private Comparator<Solution> fitnessComparator_;
-
-  /**
-   * Stores a <code>Comparator</code> for equality checking (in the objective
-   * space).
-   */
   private Comparator<Solution> equals_;
 
   /**
@@ -74,10 +54,10 @@ public class StrengthRawFitnessArchive extends Archive {
     dominance_ = new DominanceComparator();
     equals_ = new EqualSolutions();
     fitnessComparator_ = new FitnessComparator();
-  } // StrengthRawFitnessArchive
+  }
 
   /**
-   * Adds a <code>Solution</code> to the archive. If the <code>Solution</code>
+   * Adds a Solution to the archive. If the <code>Solution</code>
    * is dominated by any member of the archive then it is discarded. If the
    * <code>Solution</code> dominates some members of the archive, these are
    * removed. If the archive is full and the <code>Solution</code> has to be
@@ -109,11 +89,11 @@ public class StrengthRawFitnessArchive extends Archive {
     // Insert the solution in the archive
     solutionsList_.add(solution);
 
-    if (size() > maxSize_) { // The archive is full
+    if (size() > maxSize_) {
       (new Spea2Fitness(this)).fitnessAssign();
       //Remove the last
       remove(indexWorst(fitnessComparator_));
     }
     return true;
-  } // add
-} //StrengthRawFitnessArchive
+  }
+}

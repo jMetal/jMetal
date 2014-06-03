@@ -34,6 +34,7 @@ import jmetal.util.JMException;
  * Class representing a Sphere problem.
  */
 public class CEC2005Problem extends Problem {
+  TestFunc testFunction_;
   /**
    * Constructor
    * Creates a default instance of the Sphere problem
@@ -41,8 +42,6 @@ public class CEC2005Problem extends Problem {
    * @param numberOfVariables Number of variables of the problem
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
-  TestFunc testFunction_;
-
   public CEC2005Problem(String solutionType, int problemID, int numberOfVariables)
     throws JMException {
     numberOfVariables_ = numberOfVariables;

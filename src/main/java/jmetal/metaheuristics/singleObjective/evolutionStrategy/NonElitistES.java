@@ -46,8 +46,8 @@ public class NonElitistES extends Algorithm {
    * Create a new NonElitistES instance.
    *
    * @param problem Problem to solve.
-   * @mu Mu
-   * @lambda Lambda
+   * @param mu
+   * @param lambda
    */
   public NonElitistES(Problem problem, int mu, int lambda) {
     super(problem);
