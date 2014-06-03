@@ -23,7 +23,6 @@ package jmetal.experiments.settings;
 
 import jmetal.core.Algorithm;
 import jmetal.experiments.Settings;
-import jmetal.metaheuristics.nsgaII.NSGAIIOld;
 import jmetal.operators.crossover.Crossover;
 import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.mutation.Mutation;
