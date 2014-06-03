@@ -51,7 +51,7 @@ import java.util.logging.Logger;
  */
 
 @Deprecated
-public class NSGAII_main {
+public class NSGAII_mainOld {
   public static Logger logger_;      
   public static FileHandler fileHandler_; 
 
@@ -100,7 +100,7 @@ public class NSGAII_main {
       //problem = new OKA2("Real") ;
     }
 
-    algorithm = new NSGAII(problem);
+    algorithm = new NSGAIIOld(problem);
     //algorithm = new ssNSGAII(problem);
 
     // Algorithm parameters

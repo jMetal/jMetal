@@ -22,6 +22,7 @@
 package jmetal.core;
 
 import jmetal.util.Configuration;
+import jmetal.util.JMException;
 
 import java.io.*;
 import java.util.*;
@@ -76,8 +77,13 @@ public class SolutionSet implements Serializable {
       Configuration.logger_.severe("The population is full");
       Configuration.logger_.severe("Capacity is : " + capacity_);
       Configuration.logger_.severe("\t Size is: " + this.size());
-      return false;
+      try {
+        throw new JMException("The population is full. Capacity is : " + capacity_ + "") ;
+      } catch (JMException e) {
+        e.printStackTrace();
+      }
     }
+
 
     solutionsList_.add(solution);
     return true;

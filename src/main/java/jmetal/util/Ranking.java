@@ -159,9 +159,6 @@ public class Ranking {
     return ranking_[rank];
   }
 
-  /**
-   * Returns the total number of subFronts founds.
-   */
   public int getNumberOfSubfronts() {
     return ranking_.length;
   }

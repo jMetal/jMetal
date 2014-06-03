@@ -24,7 +24,7 @@ package jmetal.experiments.settings;
 import jmetal.core.Algorithm;
 import jmetal.core.Operator;
 import jmetal.experiments.Settings;
-import jmetal.metaheuristics.nsgaII.NSGAII;
+import jmetal.metaheuristics.nsgaII.NSGAIIOld;
 import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.SelectionFactory;
@@ -78,7 +78,7 @@ public class NSGAIIBinary_Settings extends Settings {
     HashMap<String, Object> parameters = new HashMap<String, Object>();
 
     // Creating the problem
-    algorithm = new NSGAII(problem_);
+    algorithm = new NSGAIIOld(problem_);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", populationSize_);

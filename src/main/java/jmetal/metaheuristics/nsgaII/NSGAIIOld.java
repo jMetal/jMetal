@@ -39,7 +39,7 @@ import jmetal.util.comparator.CrowdingComparator;
  */
 
 @Deprecated
-public class NSGAII extends Algorithm {
+public class NSGAIIOld extends Algorithm {
 
   /**
    *
@@ -51,7 +51,7 @@ public class NSGAII extends Algorithm {
    *
    * @param problem Problem to solve
    */
-  public NSGAII(Problem problem) {
+  public NSGAIIOld(Problem problem) {
     super(problem);
   } // NSGAII
 
@@ -147,7 +147,7 @@ public class NSGAII extends Algorithm {
 
       while ((remain > 0) && (remain >= front.size())) {
         //Assign crowding distance to individuals
-        distance.crowdingDistanceAssignment(front, problem_.getNumberOfObjectives());
+        //distance.crowdingDistanceAssignment(front, problem_.getNumberOfObjectives());
         //Add the individuals of this front
         for (int k = 0; k < front.size(); k++) {
           population.add(front.get(k));

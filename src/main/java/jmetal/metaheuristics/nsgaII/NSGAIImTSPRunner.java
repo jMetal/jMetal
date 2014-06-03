@@ -32,6 +32,8 @@ import jmetal.problems.mTSP;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
+import jmetal.util.evaluator.SequentialSolutionSetEvaluator;
+import jmetal.util.evaluator.SolutionSetEvaluator;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -43,8 +45,8 @@ import java.util.logging.Logger;
  * at solving the mTSP problem.
  */
 
-public class NSGAII_mTSP_main {
-  public static Logger logger_;      
+public class NSGAIImTSPRunner {
+  public static Logger logger_;
   public static FileHandler fileHandler_; 
 
   /**
@@ -69,14 +71,16 @@ public class NSGAII_mTSP_main {
     logger_.addHandler(fileHandler_);
 
     indicators = null;
-    problem = new mTSP("Permutation", "kroA150.tsp", "kroB150.tsp");
+    problem = new mTSP("Permutation", "kroA100.tsp", "kroB100.tsp");
 
-    algorithm = new NSGAII(problem);
+    SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator();
+    //SolutionSetEvaluator executor = new MultithreadedSolutionSetEvaluator(4, problem) ;
+    algorithm = new NSGAIIE(problem, evaluator);
     //algorithm = new ssNSGAII(problem);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", 100);
-    algorithm.setInputParameter("maxEvaluations", 10000000);
+    algorithm.setInputParameter("maxEvaluations", 1000000);
     
     /* Crossover operator */
     HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
@@ -90,7 +94,7 @@ public class NSGAII_mTSP_main {
     mutation = MutationFactory.getMutationOperator("SwapMutation", mutationParameters);                    
   
     /* Selection Operator */
-    HashMap<String, Object> selectionParameters = null; // FIXME: why we are passing null?
+    HashMap<String, Object> selectionParameters = new HashMap<String, Object>() ;
     selection = SelectionFactory.getSelectionOperator("BinaryTournament", selectionParameters);
 
     // Add the operators to the algorithm

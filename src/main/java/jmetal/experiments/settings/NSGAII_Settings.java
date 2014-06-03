@@ -23,7 +23,7 @@ package jmetal.experiments.settings;
 
 import jmetal.core.Algorithm;
 import jmetal.experiments.Settings;
-import jmetal.metaheuristics.nsgaII.NSGAII;
+import jmetal.metaheuristics.nsgaII.NSGAIIOld;
 import jmetal.operators.crossover.Crossover;
 import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.mutation.Mutation;
@@ -82,7 +82,7 @@ public class NSGAII_Settings extends Settings {
 
     // Creating the algorithm. There are two choices: NSGAII and its steady-
     // state variant ssNSGAII
-    algorithm = new NSGAII(problem_);
+    algorithm = new NSGAIIOld(problem_);
     //algorithm = new ssNSGAII(problem_) ;
 
     // Algorithm parameters

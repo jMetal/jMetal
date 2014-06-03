@@ -79,7 +79,7 @@ public class NSGAIIE extends Algorithm {
   public SolutionSet execute() throws JMException, ClassNotFoundException {
     readParameterSettings();
     population_ = createInitialPopulation(populationSize_);
-    populationEvaluation(population_);
+    evaluatePopulation(population_);
 
     // Main loop
     while (!stoppingCondition()) {
@@ -100,15 +100,13 @@ public class NSGAIIE extends Algorithm {
         }
       }
 
-      populationEvaluation(offspringPopulation_);
+      evaluatePopulation(offspringPopulation_);
+      Ranking ranking = rankPopulation() ;
 
-      Ranking ranking = rankPopulations() ;
-
-      addRankedZeroSolutionsToPopulation(ranking) ;
-
-      int rankingIndex = 1 ;
+      population_.clear();
+      int rankingIndex = 0 ;
       while (population_.size() < populationSize_) {
-        if (ranking.getSubfront(rankingIndex).size() < (populationSize_-population_.size())) {
+        if (subfrontFillsIntoThePopulation(ranking, rankingIndex)) {
           addRankedSolutionsToPopulation(ranking, rankingIndex);
           rankingIndex ++ ;
         } else {
@@ -116,24 +114,7 @@ public class NSGAIIE extends Algorithm {
           addLastRankedSolutions(ranking, rankingIndex);
         }
       }
-
-      /*
-      // This piece of code shows how to use the indicator object into the code
-      // of NSGA-II. In particular, it finds the number of evaluations required
-      // by the algorithm to obtain a Pareto front with a hypervolume higher
-      // than the hypervolume of the true Pareto front.
-      if ((indicators != null) &&
-        (requiredEvaluations == 0)) {
-        double HV = indicators.getHypervolume(population);
-        if (HV >= (0.98 * indicators.getTrueParetoFrontHypervolume())) {
-          requiredEvaluations = evaluations;
-        }
-      }
-      */
     }
-
-    // Return as output parameter the required evaluations
-    //setOutputParameter("evaluations", requiredEvaluations);
 
     // Return the first non-dominated front
     Ranking ranking = new Ranking(population_);
@@ -141,7 +122,7 @@ public class NSGAIIE extends Algorithm {
     return ranking.getSubfront(0);
   }
 
-  private void readParameterSettings() {
+  void readParameterSettings() {
     populationSize_ = ((Integer) getInputParameter("populationSize")).intValue();
     maxEvaluations_ = ((Integer) getInputParameter("maxEvaluations")).intValue();
     indicators_ = (QualityIndicator) getInputParameter("indicators");
@@ -151,7 +132,7 @@ public class NSGAIIE extends Algorithm {
     selectionOperator_ = operators_.get("selection");
   }
 
-  private SolutionSet createInitialPopulation(int populationSize) throws ClassNotFoundException, JMException {
+  SolutionSet createInitialPopulation(int populationSize) throws ClassNotFoundException, JMException {
     SolutionSet population ;
     population = new SolutionSet(populationSize);
 
@@ -164,43 +145,37 @@ public class NSGAIIE extends Algorithm {
     return population ;
   }
 
-  private void populationEvaluation(SolutionSet population) throws JMException {
+  void evaluatePopulation(SolutionSet population) throws JMException {
     evaluator_.evaluate(population, problem_) ;
     evaluations_ += population.size() ;
   }
 
-  private boolean stoppingCondition() {
-    return evaluations_ < maxEvaluations_ ;
+  boolean stoppingCondition() {
+    return evaluations_ == maxEvaluations_ ;
   }
 
-  private Ranking rankPopulations() {
+  Ranking rankPopulation() {
     SolutionSet union = population_.union(offspringPopulation_);
 
     return new Ranking(union) ;
   }
 
-  private void addRankedZeroSolutionsToPopulation(Ranking ranking) {
-    population_.clear();
-
-    int rank = 0 ;
-    addRankedSolutionsToPopulation(ranking, rank);
-  }
-
-  private void addRankedSolutionsToPopulation(Ranking ranking, int rank) {
+  void addRankedSolutionsToPopulation(Ranking ranking, int rank) {
     SolutionSet front ;
 
     front = ranking.getSubfront(rank);
-    for (int i = rank; i < front.size(); i++) {
+
+    for (int i = 0 ; i < front.size(); i++) {
       population_.add(front.get(i));
     }
   }
 
-  private void computeCrowdingDistance(Ranking ranking, int rank) {
+  void computeCrowdingDistance(Ranking ranking, int rank) {
     SolutionSet currentRankedFront = ranking.getSubfront(rank) ;
     distance_.crowdingDistanceAssignment(currentRankedFront, problem_.getNumberOfObjectives());
   }
 
-  private void addLastRankedSolutions(Ranking ranking, int rank) {
+  void addLastRankedSolutions(Ranking ranking, int rank) {
     SolutionSet currentRankedFront = ranking.getSubfront(rank) ;
 
     currentRankedFront.sort(new CrowdingComparator());
@@ -208,7 +183,16 @@ public class NSGAIIE extends Algorithm {
     int i = 0 ;
     while (population_.size() < populationSize_) {
       population_.add(currentRankedFront.get(i)) ;
+      i++ ;
     }
+  }
+
+  boolean populationIsNotFull() {
+    return population_.size() < populationSize_ ;
+  }
+
+  boolean subfrontFillsIntoThePopulation(Ranking ranking, int rank) {
+    return ranking.getSubfront(rank).size() < (populationSize_ - population_.size()) ;
   }
 
 } 
