@@ -23,6 +23,7 @@ package jmetal.util.archive;
 
 import jmetal.core.Solution;
 import jmetal.util.Distance;
+import jmetal.util.JMException;
 import jmetal.util.comparator.CrowdingDistanceComparator;
 import jmetal.util.comparator.DominanceComparator;
 import jmetal.util.comparator.EqualSolutions;
@@ -100,8 +101,9 @@ public class CrowdingArchive extends Archive {
    * @param solution The <code>Solution</code>
    * @return true if the <code>Solution</code> has been inserted, false
    * otherwise.
+   * @throws JMException 
    */
-  public boolean add(Solution solution) {
+  public boolean add(Solution solution) throws JMException {
     int flag = 0;
     int i = 0;
     Solution aux; //Store an solution temporally

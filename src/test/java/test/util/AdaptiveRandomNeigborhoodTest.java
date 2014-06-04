@@ -68,7 +68,7 @@ public class AdaptiveRandomNeigborhoodTest {
   }
 
   @Test
-  public void testSolutionSetWithOneElement() {
+  public void testSolutionSetWithOneElement() throws JMException {
     SolutionSet solutionSet = new SolutionSet(1) ;
     Solution solution = new Solution(1) ;
     solution.setObjective(0, 1.0);
@@ -79,7 +79,7 @@ public class AdaptiveRandomNeigborhoodTest {
   }
 
   @Test
-  public void testSolutionSetWithThreeElements() {
+  public void testSolutionSetWithThreeElements() throws JMException {
     SolutionSet solutionSet = new SolutionSet(3) ;
     Solution solution = new Solution(1) ;
     solution.setObjective(0, 1.0);
@@ -99,7 +99,7 @@ public class AdaptiveRandomNeigborhoodTest {
   }
 
   @Test
-  public void testRecomputeNeighboursWithSolutionSetWithThreeElements() {
+  public void testRecomputeNeighboursWithSolutionSetWithThreeElements() throws JMException {
     SolutionSet solutionSet = new SolutionSet(3) ;
     Solution solution = new Solution(1) ;
     solution.setObjective(0, 1.0);

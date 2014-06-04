@@ -66,7 +66,7 @@ public class ViolationThresholdComparator
 
   /**
    * Returns true if solutions s1 and/or s2 have an overall constraint
-   * violation < 0
+   * violation with value less than 0
    */
   public boolean needToCompare(Solution o1, Solution o2) {
     boolean needToCompare;

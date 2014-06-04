@@ -194,9 +194,10 @@ public class Distance {
    *
    * @param solutionSet The <code>SolutionSet</code>.
    * @param nObjs       Number of objectives.
+   * @throws JMException 
    */
 
-  public void crowdingDistanceAssignment(SolutionSet solutionSet, int nObjs) {
+  public void crowdingDistanceAssignment(SolutionSet solutionSet, int nObjs) throws JMException {
     int size = solutionSet.size();
 
     if (size == 0) {

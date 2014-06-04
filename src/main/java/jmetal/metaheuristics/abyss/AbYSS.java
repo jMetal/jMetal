@@ -403,8 +403,9 @@ public class AbYSS extends Algorithm {
    * @param solution The <code>Solution</code>
    * @return true if the <code>Solution</code> has been inserted, false
    * otherwise.
+   * @throws JMException 
    */
-  public boolean refSet1Test(Solution solution) {
+  public boolean refSet1Test(Solution solution) throws JMException {
     boolean dominated = false;
     int flag;
     int i = 0;

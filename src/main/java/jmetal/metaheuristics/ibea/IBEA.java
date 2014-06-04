@@ -112,7 +112,7 @@ public class IBEA extends Algorithm {
    */
   public void computeIndicatorValuesHD(SolutionSet solutionSet,
     double[] maximumValues,
-    double[] minimumValues) {
+    double[] minimumValues) throws JMException {
     SolutionSet A, B;
     // Initialize the structures
     indicatorValues_ = new ArrayList<List<Double>>();
@@ -166,7 +166,7 @@ public class IBEA extends Algorithm {
   /**
    * Calculate the fitness for the entire population.
    */
-  public void calculateFitness(SolutionSet solutionSet) {
+  public void calculateFitness(SolutionSet solutionSet) throws JMException {
     // Obtains the lower and upper bounds of the population
     double[] maximumValues = new double[problem_.getNumberOfObjectives()];
     double[] minimumValues = new double[problem_.getNumberOfObjectives()];
@@ -234,7 +234,7 @@ public class IBEA extends Algorithm {
   /**
    * Runs of the IBEA algorithm.
    *
-   * @return a <code>SolutionSet</code> that is a set of non dominated solutions
+   * @return aSolutionSet that is a set of non dominated solutions
    * as a result of the algorithm execution
    * @throws JMException
    */

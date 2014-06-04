@@ -72,18 +72,13 @@ public class SolutionSet implements Serializable {
    * @return True If the <code>Solution</code> has been inserted, false
    * otherwise.
    */
-  public boolean add(Solution solution) {
+  public boolean add(Solution solution) throws JMException {
     if (solutionsList_.size() == capacity_) {
       Configuration.logger_.severe("The population is full");
       Configuration.logger_.severe("Capacity is : " + capacity_);
       Configuration.logger_.severe("\t Size is: " + this.size());
-      try {
         throw new JMException("The population is full. Capacity is : " + capacity_ + "") ;
-      } catch (JMException e) {
-        e.printStackTrace();
-      }
     }
-
 
     solutionsList_.add(solution);
     return true;
@@ -412,7 +407,7 @@ public class SolutionSet implements Serializable {
    * @param solutionSet SolutionSet to join with the current solutionSet.
    * @return The result of the union operation.
    */
-  public SolutionSet union(SolutionSet solutionSet) {
+  public SolutionSet union(SolutionSet solutionSet) throws JMException {
     // Check the correct size. In development
     int newSize = this.size() + solutionSet.size();
     if (newSize < capacity_) {

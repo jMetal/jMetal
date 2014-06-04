@@ -82,7 +82,7 @@ public class AdaptiveRandomNeighborhood {
     return numberOfRandomNeighbours_;
   }
 
-  public SolutionSet getBestFitnessSolutionInNeighborhood(Comparator comparator) {
+  public SolutionSet getBestFitnessSolutionInNeighborhood(Comparator comparator) throws JMException {
     SolutionSet result = new SolutionSet();
     for (int i = 0; i < list_.size(); i++) {
       Solution bestSolution = solutionSet_.get(list_.get(i).get(0));

@@ -25,6 +25,7 @@ import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
 import jmetal.qualityIndicator.Hypervolume;
 import jmetal.util.Configuration;
+import jmetal.util.JMException;
 import jmetal.util.NonDominatedSolutionList;
 
 import java.io.BufferedReader;
@@ -403,8 +404,9 @@ public class MetricsUtil {
    *
    * @param populations consisting in all the populations
    * @return HV contributions of each population
+   * @throws JMException 
    */
-  public double[] hvContributions(SolutionSet[] populations) {
+  public double[] hvContributions(SolutionSet[] populations) throws JMException {
     boolean empty = true;
     for (SolutionSet population2 : populations) {
       if (population2.size() > 0) {

@@ -154,13 +154,13 @@ public class NSGAII extends Algorithm {
     return evaluations_ == maxEvaluations_ ;
   }
 
-  Ranking rankPopulation() {
+  Ranking rankPopulation() throws JMException {
     SolutionSet union = population_.union(offspringPopulation_);
 
     return new Ranking(union) ;
   }
 
-  void addRankedSolutionsToPopulation(Ranking ranking, int rank) {
+  void addRankedSolutionsToPopulation(Ranking ranking, int rank) throws JMException {
     SolutionSet front ;
 
     front = ranking.getSubfront(rank);
@@ -170,12 +170,12 @@ public class NSGAII extends Algorithm {
     }
   }
 
-  void computeCrowdingDistance(Ranking ranking, int rank) {
+  void computeCrowdingDistance(Ranking ranking, int rank) throws JMException {
     SolutionSet currentRankedFront = ranking.getSubfront(rank) ;
     distance_.crowdingDistanceAssignment(currentRankedFront, problem_.getNumberOfObjectives());
   }
 
-  void addLastRankedSolutions(Ranking ranking, int rank) {
+  void addLastRankedSolutions(Ranking ranking, int rank) throws JMException {
     SolutionSet currentRankedFront = ranking.getSubfront(rank) ;
 
     currentRankedFront.sort(new CrowdingComparator());

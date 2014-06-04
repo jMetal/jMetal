@@ -47,8 +47,6 @@ public class SolutionComparator implements Comparator<Solution> {
    * @param o2 Object representing the second solution.
    * @return 0, if both solutions are equals with a certain dissimilarity, -1
    * otherwise.
-   * @throws JMException
-   * @throws JMException
    */
   @Override
   public int compare(Solution o1, Solution o2) {

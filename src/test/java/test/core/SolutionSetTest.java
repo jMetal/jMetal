@@ -68,13 +68,15 @@ public class SolutionSetTest {
 
   /**
    * Test: Adding an element to a full solution set must return a false value because it is not added
+   * @throws JMException 
    */
-  @Test
-  public void testAddOneElementToAFullSolutionSet() {
-    for (int i = 0 ; i < maxSize_ ; i++)
-      solutionSet_.add(new Solution()) ;
-    boolean result ;
-    result = solutionSet_.add(new Solution()) ;
+  @Test (expected = JMException.class)
+  public void testAddOneElementToAFullSolutionSet() throws JMException {
+    for (int i = 0 ; i < maxSize_ ; i++) {
+      solutionSet_.add(new Solution());
+    }
+
+    solutionSet_.add(new Solution()) ;
   }
 
   /**
@@ -120,7 +122,7 @@ public class SolutionSetTest {
   }
 
   @Test
-  public void isEmptyTest() {
+  public void isEmptyTest() throws JMException {
     assertTrue(solutionSet_.isEmtpy()) ;
 
     solutionSet_.add(new Solution()) ;

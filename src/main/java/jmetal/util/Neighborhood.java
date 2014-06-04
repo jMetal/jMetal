@@ -129,7 +129,7 @@ public class Neighborhood {
    * @param location    The location.
    * @return a <code>SolutionSet</code> with the neighbors.
    */
-  public SolutionSet getFourNeighbors(SolutionSet solutionSet, int location) {
+  public SolutionSet getFourNeighbors(SolutionSet solutionSet, int location) throws JMException {
     //SolutionSet that contains the neighbors (to return)
     SolutionSet neighbors;
 
@@ -169,7 +169,7 @@ public class Neighborhood {
    * @param individual The individual.
    * @return a <code>SolutionSet</code> with the neighbors.
    */
-  public SolutionSet getEightNeighbors(SolutionSet population, int individual) {
+  public SolutionSet getEightNeighbors(SolutionSet population, int individual) throws JMException {
     //SolutionSet that contains the neighbors (to return)
     SolutionSet neighbors;
 

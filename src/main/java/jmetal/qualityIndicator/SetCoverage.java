@@ -70,8 +70,9 @@ public class SetCoverage {
    * @param file1
    * @param file2
    * @return The value of the set coverage
+   * @throws JMException 
    */
-  public double setCoverage(String file1, String file2) {
+  public double setCoverage(String file1, String file2) throws JMException {
     MetricsUtil utils = new MetricsUtil();
     double[][]front1 = utils.readFront(file1) ;
     double[][]front2 = utils.readFront(file2) ;
@@ -97,7 +98,7 @@ public class SetCoverage {
     return result ;
   }
 
-  public SolutionSet transformArraysToSolutionSet(double[][] array) {
+  public SolutionSet transformArraysToSolutionSet(double[][] array) throws JMException {
     int solutionSetSize = array.length ;
     int numberOfObjectives = array[0].length ;
     SolutionSet solutionSet = new SolutionSet(solutionSetSize) ;

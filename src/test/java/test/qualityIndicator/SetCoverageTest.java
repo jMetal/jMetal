@@ -60,7 +60,7 @@ public class SetCoverageTest {
   }
 
   @Test
-  public void fullCoverageTest() throws ClassNotFoundException {
+  public void fullCoverageTest() throws ClassNotFoundException, JMException {
     // Creating set (0,N-1), (1,N-2), (2, N-3), ... , (N-1, 0)
     Solution solution ;
     for (int i = 0 ; i< solutionSetSize_; i++) {
@@ -82,7 +82,7 @@ public class SetCoverageTest {
   }
 
   @Test
-  public void nonDominatedSetsCoverageTest() throws ClassNotFoundException {
+  public void nonDominatedSetsCoverageTest() throws ClassNotFoundException, JMException {
     // Creating set (0,N-1), (1,N-2), (2, N-3), ... , (N-1, 0)
     Solution solution ;
     for (int i = 0 ; i< solutionSetSize_; i++) {
@@ -117,7 +117,7 @@ public class SetCoverageTest {
   }
 
   @Test
-  public void coverageWhenASetIsEmpty() throws ClassNotFoundException {
+  public void coverageWhenASetIsEmpty() throws ClassNotFoundException, JMException {
     // Creating set (0,N-1), (1,N-2), (2, N-3), ... , (N-1, 0)
     Solution solution ;
     for (int i = 0 ; i< solutionSetSize_; i++) {
@@ -135,7 +135,7 @@ public class SetCoverageTest {
   }
 
   @Test
-  public void transformArraysToSolutionSetTest() {
+  public void transformArraysToSolutionSetTest() throws JMException {
     // Creating set (0,N-1), (1,N-2), (2, N-3), ... , (N-1, 0)
     double[][] arrayContainingFront = new double[solutionSetSize_][2];
     for (int i = 0; i < solutionSetSize_; i++) {
