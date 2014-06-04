@@ -58,8 +58,8 @@ public class IBEA extends Algorithm {
    *
    * @param problem Problem to solve
    */
-  public IBEA(Problem problem) {
-    super(problem);
+  public IBEA() {
+    super();
   }
 
   /**

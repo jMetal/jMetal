@@ -26,9 +26,12 @@ import jmetal.core.Problem;
 import jmetal.core.SolutionSet;
 import jmetal.util.JMException;
 
+import com.google.inject.*;
 /**
  * Created by Antonio J. Nebro on 30/05/14.
  */
+
+@ImplementedBy(SequentialSolutionSetEvaluator.class)
 public interface SolutionSetEvaluator {
   //public void startup(Object parameters) ;
   public SolutionSet evaluate(SolutionSet solutionSet, Problem problem) throws JMException ;

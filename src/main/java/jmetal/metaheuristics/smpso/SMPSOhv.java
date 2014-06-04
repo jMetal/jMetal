@@ -121,8 +121,8 @@ public class SMPSOhv extends Algorithm {
    *
    * @param problem Problem to solve
    */
-  public SMPSOhv(Problem problem) {
-    super(problem);
+  public SMPSOhv() {
+    super();
 
     r1Max_ = 1.0;
     r1Min_ = 0.0;
@@ -138,10 +138,10 @@ public class SMPSOhv extends Algorithm {
     ChVel2_ = -1;
   } // Constructor
 
-  public SMPSOhv(Problem problem,
+  public SMPSOhv(
     Vector<Double> variables,
     String trueParetoFront) throws FileNotFoundException {
-    super(problem);
+    super();
 
     r1Max_ = variables.get(0);
     r1Min_ = variables.get(1);
@@ -156,6 +156,8 @@ public class SMPSOhv extends Algorithm {
     ChVel1_ = variables.get(10);
     ChVel2_ = variables.get(11);
 
+    
+    // This is going to crash the first time is called!
     hy_ = new Hypervolume();
     jmetal.qualityIndicator.util.MetricsUtil mu = new jmetal.qualityIndicator.util.MetricsUtil();
     trueFront_ = mu.readNonDominatedSolutionSet(trueParetoFront);
@@ -170,8 +172,8 @@ public class SMPSOhv extends Algorithm {
    *
    * @param problem Problem to solve
    */
-  public SMPSOhv(Problem problem, String trueParetoFront) throws FileNotFoundException {
-    super(problem);
+  public SMPSOhv(String trueParetoFront) throws FileNotFoundException {
+    super();
     hy_ = new Hypervolume();
     jmetal.qualityIndicator.util.MetricsUtil mu = new jmetal.qualityIndicator.util.MetricsUtil();
     trueFront_ = mu.readNonDominatedSolutionSet(trueParetoFront);

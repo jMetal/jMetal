@@ -83,7 +83,8 @@ public class FastPGA_main {
       //problem = new OKA2("Real") ;
     }
 
-    algorithm = new FastPGA(problem);
+    algorithm = new FastPGA();
+    algorithm.setProblem(problem);
 
     algorithm.setInputParameter("maxPopSize", 100);
     algorithm.setInputParameter("initialPopulationSize", 100);

@@ -28,6 +28,8 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.inject.Inject;
+
 /**
  * This class implements a generic template for the algorithms developed in
  * jMetal. Every algorithm must have a mapping between the parameters and and
@@ -45,6 +47,7 @@ public abstract class Algorithm implements Serializable {
   /**
    * Stores the problem to solve
    */
+  
   protected Problem problem_;
 
   /**
@@ -65,15 +68,6 @@ public abstract class Algorithm implements Serializable {
    * information from an algorithm.
    */
   private Map<String, Object> outPutParameters_ = null;
-
-  /**
-   * Constructor
-   *
-   * @param problem The problem to be solved
-   */
-  public Algorithm(Problem problem) {
-    problem_ = problem;
-  }
 
   /**
    * Launches the execution of an specific algorithm.
@@ -179,4 +173,12 @@ public abstract class Algorithm implements Serializable {
   public Problem getProblem() {
     return problem_;
   }
+  
+  /**
+   * Sets the problem to be solved by the Algorithm
+   **/
+  public void setProblem(Problem problem) {
+	  problem_ = problem;
+  }
+   
 }

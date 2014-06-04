@@ -101,7 +101,8 @@ public class SMSEMOA_main {
     }
 
     //algorithm = new SMSEMOA(problem);
-    algorithm = new FastSMSEMOA(problem);
+    algorithm = new FastSMSEMOA();
+    algorithm.setProblem(problem);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", 100);

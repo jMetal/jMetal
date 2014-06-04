@@ -75,7 +75,8 @@ public class dMOPSO_Settings extends Settings {
     Algorithm algorithm;
 
     // Creating the problem
-    algorithm = new dMOPSO(problem_);
+    algorithm = new dMOPSO();
+    algorithm.setProblem(problem_);
 
     // Algorithm parameters
     algorithm.setInputParameter("swarmSize", swarmSize_);

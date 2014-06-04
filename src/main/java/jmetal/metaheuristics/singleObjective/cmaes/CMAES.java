@@ -94,8 +94,7 @@ public class CMAES extends Algorithm {
    *
    * @param problem Problem to solve
    */
-  public CMAES(Problem problem) {
-    super(problem);
+  public CMAES() {
     long seed = System.currentTimeMillis();
     rand = new Random(seed);
   } // Constructor

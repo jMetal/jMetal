@@ -31,8 +31,8 @@ public class NSGAIIAdaptive extends Algorithm {
   int[] contributionCounter_;
   double[] contribution_;
 
-  public NSGAIIAdaptive(Problem problem) {
-    super(problem);
+  public NSGAIIAdaptive() {
+    super();
   }
 
   public SolutionSet execute() throws JMException, ClassNotFoundException {

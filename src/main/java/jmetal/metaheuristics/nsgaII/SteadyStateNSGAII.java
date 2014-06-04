@@ -35,8 +35,13 @@ public class SteadyStateNSGAII extends Algorithm {
 
   private static final long serialVersionUID = 3588191288161132897L;
 
-  public SteadyStateNSGAII(Problem problem) {
-    super(problem);
+  /**
+   * Constructor
+   *
+   * @param problem Problem to solve
+   */
+  public SteadyStateNSGAII() {
+    super();
   } 
 
   /**

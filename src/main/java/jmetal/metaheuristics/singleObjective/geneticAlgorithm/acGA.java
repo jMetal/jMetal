@@ -51,8 +51,8 @@ public class acGA extends Algorithm {
    *
    * @param problem Problem to solve
    */
-  public acGA(Problem problem) {
-    super(problem);
+  public acGA() {
+    super();
   } // sMOCell1
 
 

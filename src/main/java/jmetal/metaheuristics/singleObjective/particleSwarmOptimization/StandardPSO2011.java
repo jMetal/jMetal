@@ -60,8 +60,8 @@ public class StandardPSO2011 extends Algorithm {
    *
    * @param problem Problem to solve
    */
-  public StandardPSO2011(Problem problem) {
-    super(problem);
+  public StandardPSO2011() {
+    super();
 
     W_ = 1.0 / (2.0 * Math.log(2)); //0.721;
     C_ = 1.0 / 2.0 + Math.log(2); //1.193;

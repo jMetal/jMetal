@@ -28,6 +28,8 @@ import jmetal.util.evaluator.SolutionSetEvaluator;
 
 import java.util.Comparator;
 
+import com.google.inject.Inject;
+
 /**
  * Class implementing a generational genetic algorithm
  */
@@ -35,6 +37,7 @@ public class GenerationalGA extends Algorithm {
 
   private static final long serialVersionUID = -8566068150403243344L;
 
+  @Inject
   SolutionSetEvaluator evaluator_  ;
 
   /**
@@ -43,10 +46,14 @@ public class GenerationalGA extends Algorithm {
    *
    * @param problem Problem to solve.
    */
-  public GenerationalGA(Problem problem, SolutionSetEvaluator evaluator) {
-    super(problem);
-    evaluator_ = evaluator ;
+  public GenerationalGA() {
+    super();
   } 
+  
+  /** Temporal method to set the evaluator */
+  public  void setEvaluator(SolutionSetEvaluator evaluator) {
+	  evaluator_ = evaluator;
+  }
 
   /**
    * Execute the GGA algorithm

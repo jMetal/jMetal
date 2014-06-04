@@ -46,8 +46,8 @@ public class ssGA extends Algorithm {
    *
    * @param problem Problem to solve
    */
-  public ssGA(Problem problem) {
-    super(problem);
+  public ssGA() {
+    super();
   } // SSGA
 
   /**

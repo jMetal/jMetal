@@ -86,7 +86,8 @@ public class GDE3Main {
       //problem = new OKA2("Real") ;
     }
 
-    algorithm = new GDE3(problem);
+    algorithm = new GDE3();
+    algorithm.setProblem(problem);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", 100);

@@ -98,7 +98,8 @@ public class MOCell_main {
     //algorithm = new aMOCell1(problem_) ;
     //algorithm = new aMOCell2(problem_) ;
     //algorithm = new aMOCell3(problem_) ;
-    algorithm = new MOCell(problem);
+    algorithm = new MOCell();
+    algorithm.setProblem(problem);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", 100);

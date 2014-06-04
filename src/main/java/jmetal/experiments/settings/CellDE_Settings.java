@@ -84,7 +84,8 @@ public class CellDE_Settings extends Settings {
     // Creating the problem
     Object[] problemParams = {"Real"};
     problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
-    algorithm = new CellDE(problem_);
+    algorithm = new CellDE();
+    algorithm.setProblem(problem_);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", populationSize_);

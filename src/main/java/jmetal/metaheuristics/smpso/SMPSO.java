@@ -126,8 +126,8 @@ public class SMPSO extends Algorithm {
    *
    * @param problem Problem to solve
    */
-  public SMPSO(Problem problem) {
-    super(problem);
+  public SMPSO() {
+    super();
     r1Max_ = 1.0;
     r1Min_ = 0.0;
     r2Max_ = 1.0;
@@ -141,10 +141,10 @@ public class SMPSO extends Algorithm {
     changeVelocity1_ = -1;
     changeVelocity2_ = -1;
   } // Constructor
-  public SMPSO(Problem problem,
+  public SMPSO(
     Vector<Double> variables,
     String trueParetoFront) throws FileNotFoundException {
-    super(problem);
+    super();
 
     r1Max_ = variables.get(0);
     r1Min_ = variables.get(1);
@@ -159,12 +159,13 @@ public class SMPSO extends Algorithm {
     changeVelocity1_ = variables.get(10);
     changeVelocity2_ = variables.get(11);
 
+    // I LEAVE IT UNCOMMENTED. IT IS GOING TO CRASH THE FIRST TIME!
     hy_ = new Hypervolume();
     jmetal.qualityIndicator.util.MetricsUtil mu = new jmetal.qualityIndicator.util.MetricsUtil();
     trueFront_ = mu.readNonDominatedSolutionSet(trueParetoFront);
     trueHypervolume_ = hy_.hypervolume(trueFront_.writeObjectivesToMatrix(),
       trueFront_.writeObjectivesToMatrix(),
-      problem_.getNumberOfObjectives());
+     problem_.getNumberOfObjectives());
   } 
 
   /**
@@ -172,9 +173,10 @@ public class SMPSO extends Algorithm {
    *
    * @param problem Problem to solve
    */
-  public SMPSO(Problem problem, String trueParetoFront) throws FileNotFoundException {
-    super(problem);
+  public SMPSO(String trueParetoFront) throws FileNotFoundException {
+    super();
     hy_ = new Hypervolume();
+ // I LEAVE IT UNCOMMENTED. IT IS GOING TO CRASH THE FIRST TIME!
     jmetal.qualityIndicator.util.MetricsUtil mu = new jmetal.qualityIndicator.util.MetricsUtil();
     trueFront_ = mu.readNonDominatedSolutionSet(trueParetoFront);
     trueHypervolume_ = hy_.hypervolume(trueFront_.writeObjectivesToMatrix(),

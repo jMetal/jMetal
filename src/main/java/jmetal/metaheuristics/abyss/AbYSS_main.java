@@ -94,7 +94,8 @@ public class AbYSS_main {
     } // else
 
     // STEP 2. Select the algorithm (AbYSS)
-    algorithm = new AbYSS(problem);
+    algorithm = new AbYSS();
+    algorithm.setProblem(problem);
 
     // STEP 3. Set the input parameters required by the metaheuristic
     algorithm.setInputParameter("populationSize", 20);

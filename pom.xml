@@ -94,5 +94,10 @@
             <artifactId>maven-reporting-api</artifactId>
             <version>3.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>3.0-rc2</version>
+        </dependency>
     </dependencies>
 </project>

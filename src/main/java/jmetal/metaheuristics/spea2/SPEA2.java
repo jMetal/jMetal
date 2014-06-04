@@ -46,8 +46,8 @@ public class SPEA2 extends Algorithm {
    *
    * @param problem Problem to solve
    */
-  public SPEA2(Problem problem) {
-    super(problem);
+  public SPEA2() {
+    super();
   } // Spea2
 
   /**

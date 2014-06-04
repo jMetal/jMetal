@@ -53,8 +53,7 @@ public class CellDE extends Algorithm {
    *
    * @param problem Problem to solve
    */
-  public CellDE(Problem problem) {
-    super(problem);
+  public CellDE() {
   } // CellDE
 
 

@@ -92,7 +92,8 @@ public class AbYSS_Settings extends Settings {
     Operator improvement;
 
     // Creating the problem
-    algorithm = new AbYSS(problem_);
+    algorithm = new AbYSS();
+    algorithm.setProblem(problem_);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", populationSize_);

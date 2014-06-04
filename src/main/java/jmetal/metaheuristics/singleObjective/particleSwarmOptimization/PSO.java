@@ -104,8 +104,8 @@ public class PSO extends Algorithm {
    *
    * @param problem Problem to solve
    */
-  public PSO(Problem problem) {
-    super(problem);
+  public PSO() {
+    super();
 
     r1Max_ = 1.0;
     r1Min_ = 0.0;

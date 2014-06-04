@@ -44,8 +44,8 @@ public class aMOCell3 extends Algorithm {
    */
   private static final long serialVersionUID = 7923330703025056895L;
 
-  public aMOCell3(Problem problem) {
-    super(problem);
+  public aMOCell3() {
+    super();
   }
 
   /**

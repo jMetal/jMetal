@@ -95,7 +95,8 @@ public class cMOEAD_Settings extends Settings {
     Operator crossover;
     Operator mutation;
 
-    algorithm = new cMOEAD(problem_);
+    algorithm = new cMOEAD();
+    algorithm.setProblem(problem_);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", populationSize_);

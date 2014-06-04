@@ -48,7 +48,8 @@ public class CMAES_main {
     problem = new Rosenbrock("Real", numberOfVariables);
     //problem = new Rastrigin("Real", numberOfVariables) ;
 
-    algorithm = new CMAES(problem);
+    algorithm = new CMAES();
+    algorithm.setProblem(problem);
     
     /* Algorithm parameters*/
     algorithm.setInputParameter("populationSize", populationSize);

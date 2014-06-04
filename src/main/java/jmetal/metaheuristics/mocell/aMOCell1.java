@@ -48,8 +48,8 @@ public class aMOCell1 extends Algorithm {
    *
    * @param problem Problem to solve
    */
-  public aMOCell1(Problem problem) {
-    super(problem);
+  public aMOCell1() {
+    super();
   } //aMOCell1
 
   /**

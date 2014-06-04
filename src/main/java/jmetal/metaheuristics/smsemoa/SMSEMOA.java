@@ -64,8 +64,8 @@ public class SMSEMOA extends Algorithm {
    *
    * @param problem Problem to solve
    */
-  public SMSEMOA(Problem problem) {
-    super(problem);
+  public SMSEMOA() {
+    super();
     this.utils_ = new jmetal.qualityIndicator.util.MetricsUtil();
     this.hypervolume_ = new Hypervolume();
   } // SMSEMOA
