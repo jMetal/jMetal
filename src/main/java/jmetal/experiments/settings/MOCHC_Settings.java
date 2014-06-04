@@ -82,7 +82,8 @@ public class MOCHC_Settings extends Settings {
     Operator newGenerationSelection;
 
     // Creating the problem
-    algorithm = new MOCHC(problem_);
+    algorithm = new MOCHC();
+    algorithm.setProblem(problem_);
 
     // Algorithm parameters
     algorithm.setInputParameter("initialConvergenceCount", initialConvergenceCount_);

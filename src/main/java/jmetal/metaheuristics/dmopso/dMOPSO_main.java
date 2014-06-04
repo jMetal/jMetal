@@ -64,7 +64,8 @@ public class dMOPSO_main {
       //problem = new LZ09_F1("Real");
     }
 
-    algorithm = new dMOPSO(problem);
+    algorithm = new dMOPSO();
+    algorithm.setProblem(problem);
 
     // Algorithm parameters
     algorithm.setInputParameter("swarmSize", 100);
