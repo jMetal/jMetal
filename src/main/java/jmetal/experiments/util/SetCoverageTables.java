@@ -24,6 +24,7 @@ package jmetal.experiments.util;
 import jmetal.experiments.Experiment;
 import jmetal.qualityIndicator.SetCoverage;
 import jmetal.util.Configuration;
+import jmetal.util.JMException;
 import jmetal.util.Statistics;
 
 import java.io.File;
@@ -52,7 +53,7 @@ public class SetCoverageTables implements IExperimentOutput {
   }
 
   @Override
-  public void generate() throws IOException {
+  public void generate() throws IOException, JMException {
     createOutputDirectory();
 
     String outputTexFile = outputDirectoryName_ + "/" + "setCoverage.tex";
@@ -82,7 +83,7 @@ public class SetCoverageTables implements IExperimentOutput {
     fileWriter_.write("\\section{Tables}" + "\n");
   }
 
-  private void generateTable(String problem) throws IOException {
+  private void generateTable(String problem) throws IOException, JMException {
     writeTableHeader(problem);
 
     for (int i = 0 ; i < experiment_.getAlgorithmNameList().length; i++) {
@@ -124,7 +125,7 @@ public class SetCoverageTables implements IExperimentOutput {
     fileWriter_.write("\\hline" + "\n");
   }
 
-  private void writeTableRow(int algorithmIndex, String problem) throws IOException {
+  private void writeTableRow(int algorithmIndex, String problem) throws IOException, JMException {
     fileWriter_.write("" + experiment_.getAlgorithmNameList()[algorithmIndex] + " & ");
     for (int i = 0; i < experiment_.getAlgorithmNameList().length; i++) {
       if (i != algorithmIndex) {
@@ -158,7 +159,8 @@ public class SetCoverageTables implements IExperimentOutput {
     fileWriter_.write("\\end{table}" + "\n");
   }
 
-  private double calculateSetCoverage(String problem, String algorithmA, String algorithmB) {
+  private double calculateSetCoverage(String problem, String algorithmA, String algorithmB)
+    throws JMException {
     double result = 5.5 ;
     SetCoverage setCoverageMetric = new SetCoverage() ;
 

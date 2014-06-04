@@ -89,7 +89,7 @@ public class pNSGAII_Settings extends Settings {
 
     HashMap parameters;
 
-    SolutionSetEvaluator evaluator = new MultithreadedSolutionSetEvaluator(4, problem_) ;
+    SolutionSetEvaluator evaluator = new MultithreadedSolutionSetEvaluator(0, problem_) ;
 
     // Creating the algorithm. 
     algorithm = new NSGAII(problem_, evaluator);

@@ -105,7 +105,7 @@ public class NSGAII extends Algorithm {
 
       population_.clear();
       int rankingIndex = 0 ;
-      while (population_.size() < populationSize_) {
+      while (populationIsNotFull()) {
         if (subfrontFillsIntoThePopulation(ranking, rankingIndex)) {
           addRankedSolutionsToPopulation(ranking, rankingIndex);
           rankingIndex ++ ;
@@ -118,6 +118,8 @@ public class NSGAII extends Algorithm {
 
     // Return the first non-dominated front
     Ranking ranking = new Ranking(population_);
+
+    evaluator_.shutdown();
 
     return ranking.getSubfront(0);
   }
