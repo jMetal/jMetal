@@ -105,7 +105,8 @@ public class SteadyStateNSGAIIRunner {
       //problem = new OKA2("Real") ;
     }
 
-    algorithm = new SteadyStateNSGAII(problem);
+    algorithm = new SteadyStateNSGAII();
+    algorithm.setProblem(problem);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", 100);

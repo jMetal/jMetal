@@ -40,7 +40,8 @@ public class StandardPSO2011Test {
   @Before
   public void setUp() throws Exception {
     problem_ = new Fonseca("Real") ;
-    standardPSO_ = new StandardPSO2011(problem_) ;
+    standardPSO_ = new StandardPSO2011() ;
+    standardPSO_.setProblem(problem_);
     standardPSO_.setInputParameter("swarmSize",40);
     standardPSO_.setInputParameter("maxIterations",5000);
     standardPSO_.setInputParameter("numberOfParticlesToInform",3);

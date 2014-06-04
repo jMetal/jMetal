@@ -76,7 +76,8 @@ public class PAES_Settings extends Settings {
     Mutation mutation;
 
     // Creating the problem
-    algorithm = new PAES(problem_);
+    algorithm = new PAES();
+    algorithm.setProblem(problem_);
 
     // Algorithm parameters
     algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
@@ -106,7 +107,8 @@ public class PAES_Settings extends Settings {
     Mutation mutation;
 
     // Creating the algorithm.
-    algorithm = new PAES(problem_);
+    algorithm = new PAES();
+    algorithm.setProblem(problem_);
 
     // Algorithm parameters
     archiveSize_ =

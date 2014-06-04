@@ -64,11 +64,6 @@ public class NSGAII extends Algorithm {
   //public NSGAII(Problem problemToSolve) {
   public NSGAII() {
 	  super();
-	  /*try {
-	problem_ =  new ZDT3("Real");//evaluator_ = evaluator ;
-	  } catch (Exception e) {
-		  e.printStackTrace();
-	  }*/
     evaluations_ = 0 ;
     distance_ = new Distance();
   }

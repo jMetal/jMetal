@@ -82,7 +82,9 @@ public class NSGAIIBinary_Settings extends Settings {
     SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator() ;
 
     // Creating the algorithm.
-    algorithm = new NSGAII(problem_, evaluator);
+    algorithm = new NSGAII();
+    algorithm.setProblem(problem_);
+    
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", populationSize_);

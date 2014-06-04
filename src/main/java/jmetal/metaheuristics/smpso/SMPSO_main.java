@@ -91,7 +91,8 @@ public class SMPSO_main {
       problem = new ZDT4("Real");
     }
 
-    algorithm = new SMPSO(problem);
+    algorithm = new SMPSO();
+    algorithm.setProblem(problem);
 
     // Algorithm parameters
     algorithm.setInputParameter("swarmSize", 100);

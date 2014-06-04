@@ -78,7 +78,8 @@ public class OMOPSO_Settings extends Settings {
     Mutation nonUniformMutation;
 
     // Creating the problem
-    algorithm = new OMOPSO(problem_);
+    algorithm = new OMOPSO();
+    algorithm.setProblem(problem_);
 
     // Algorithm parameters
     algorithm.setInputParameter("swarmSize", swarmSize_);
@@ -116,7 +117,8 @@ public class OMOPSO_Settings extends Settings {
     Mutation nonUniformMutation;
 
     // Creating the algorithm.
-    algorithm = new OMOPSO(problem_);
+    algorithm = new OMOPSO();
+    algorithm.setProblem(problem_);
 
     // Algorithm parameters
     swarmSize_ =

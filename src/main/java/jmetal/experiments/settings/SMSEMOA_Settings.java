@@ -86,7 +86,8 @@ public class SMSEMOA_Settings extends Settings {
     Mutation mutation;
 
     // Creating the algorithm. 
-    algorithm = new SMSEMOA(problem_);
+    algorithm = new SMSEMOA();
+    algorithm.setProblem(problem_);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", populationSize_);
@@ -129,7 +130,8 @@ public class SMSEMOA_Settings extends Settings {
     Mutation mutation;
 
     // Creating the algorithm.
-    algorithm = new SMSEMOA(problem_);
+    algorithm = new SMSEMOA();
+    algorithm.setProblem(problem_);
 
     // Algorithm parameters
     populationSize_ = Integer

@@ -76,7 +76,8 @@ public class SMPSOhv_Settings extends Settings {
     Mutation mutation;
 
     // Creating the problem
-    algorithm = new SMPSOhv(problem_);
+    algorithm = new SMPSOhv();
+    algorithm.setProblem(problem_);
 
     // Algorithm parameters
     algorithm.setInputParameter("swarmSize", swarmSize_);
@@ -104,7 +105,8 @@ public class SMPSOhv_Settings extends Settings {
     Mutation mutation;
 
     // Creating the algorithm.
-    algorithm = new SMPSOhv(problem_);
+    algorithm = new SMPSOhv();
+    algorithm.setProblem(problem_);
 
     // Algorithm parameters
     swarmSize_ =

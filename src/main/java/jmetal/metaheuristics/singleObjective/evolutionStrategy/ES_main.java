@@ -57,7 +57,7 @@ public class ES_main {
     lambda = 10;
 
     algorithm = new ElitistES(mu, lambda);
-    algorithm.SetProblem(problem);
+    algorithm.setProblem(problem);
     //algorithm = new NonElitistES(problem, mu, lambda);
     
     /* Algorithm params*/

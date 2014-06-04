@@ -113,11 +113,9 @@ public class NSGAIIRunner {
 
     Injector injector = Guice.createInjector();
     algorithm = injector.getInstance(NSGAII.class);
+    algorithm.setProblem(problem);
     
-    SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator();
-    //SolutionSetEvaluator executor = new MultithreadedSolutionSetEvaluator(4, problem) ;
-    //algorithm = new NSGAII(problem, evaluator);
-
+    
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", 100);
     algorithm.setInputParameter("maxEvaluations", 25000);

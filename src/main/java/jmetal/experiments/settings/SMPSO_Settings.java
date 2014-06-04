@@ -95,7 +95,8 @@ public class SMPSO_Settings extends Settings {
     Mutation mutation;
 
     // Creating the problem
-    algorithm = new SMPSO(problem_);
+    algorithm = new SMPSO();
+    algorithm.setProblem(problem_);
 
     // Algorithm parameters
     algorithm.setInputParameter("swarmSize", swarmSize_);
@@ -131,7 +132,8 @@ public class SMPSO_Settings extends Settings {
     Mutation mutation;
 
     // Creating the algorithm.
-    algorithm = new SMPSO(problem_);
+    algorithm = new SMPSO();
+    algorithm.setProblem(problem_);
 
     // Algorithm parameters
     swarmSize_ =

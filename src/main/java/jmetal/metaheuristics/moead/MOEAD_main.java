@@ -92,7 +92,8 @@ public class MOEAD_main {
       //problem = new OKA2("Real") ;
     } 
     
-    algorithm = new MOEAD(problem);
+    algorithm = new MOEAD();
+    algorithm.setProblem(problem);
     //algorithm = new MOEAD_DRA(problem);
 
     // Algorithm parameters

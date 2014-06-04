@@ -80,8 +80,9 @@ public class pSMPSO_Settings extends Settings {
 
     SynchronousParallelTaskExecutor parallelEvaluator = new MultithreadedEvaluator(numberOfThreads_);
 
-    algorithm = new pSMPSO(problem_, parallelEvaluator);
-
+    algorithm = new pSMPSO();
+    algorithm.setProblem(problem_);
+    ((pSMPSO)algorithm).setEvaluator(parallelEvaluator);
     // Algorithm parameters
     algorithm.setInputParameter("swarmSize", swarmSize_);
     algorithm.setInputParameter("maxIterations", maxIterations_);
@@ -113,8 +114,9 @@ public class pSMPSO_Settings extends Settings {
     SynchronousParallelTaskExecutor parallelEvaluator = new MultithreadedEvaluator(numberOfThreads_);
 
     // Creating the algorithm.
-    algorithm = new pSMPSO(problem_, parallelEvaluator);
-
+    algorithm = new pSMPSO();
+    algorithm.setProblem(problem_);
+    ((pSMPSO)algorithm).setEvaluator(parallelEvaluator);
     // Algorithm parameters
     swarmSize_ =
       Integer.parseInt(configuration.getProperty("swarmSize", String.valueOf(swarmSize_)));

@@ -112,7 +112,8 @@ public class NSGAIIAdaptive_main {
       //problem = new OKA2("Real") ;
     } 
     problem = new LZ09_F3("Real");
-    algorithm = new NSGAIIAdaptive(problem);
+    algorithm = new NSGAIIAdaptive();
+    algorithm.setProblem(problem);
     //algorithm = new ssNSGAIIAdaptive(problem);
 
     // Algorithm parameters

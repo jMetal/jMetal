@@ -55,8 +55,10 @@ public class pgGA_main {
     //problem = new Sphere("Real", 10) ;
     problem = new Griewank("Real", 10);
 
-    algorithm = new pgGA(problem, parallelEvaluator); // Generational GA
-
+    algorithm = new pgGA(); // Generational GA
+    algorithm.setProblem(problem);
+    ((pgGA)algorithm).seteEvaluator(parallelEvaluator);
+    
     /* Algorithm parameters*/
     algorithm.setInputParameter("populationSize", 100);
     algorithm.setInputParameter("maxEvaluations", 2500000);

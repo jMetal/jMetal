@@ -85,7 +85,8 @@ public class OMOPSO_main {
       //problem = new OKA2("Real") ;
     }
 
-    algorithm = new OMOPSO(problem);
+    algorithm = new OMOPSO();
+    algorithm.setProblem(problem);
 
     Integer maxIterations = 250;
     Double perturbationIndex = 0.5;

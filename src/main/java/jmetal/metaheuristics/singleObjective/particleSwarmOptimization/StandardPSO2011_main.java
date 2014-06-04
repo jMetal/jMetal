@@ -62,7 +62,8 @@ public class StandardPSO2011_main {
     //problem = new Sphere("Real", 20);
     problem = new CEC2005Problem("Real", 5, 10);
 
-    algorithm = new StandardPSO2011(problem);
+    algorithm = new StandardPSO2011();
+    algorithm.setProblem(problem);
 
     // Algorithm parameters
     algorithm.setInputParameter("swarmSize", 100);

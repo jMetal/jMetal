@@ -57,7 +57,9 @@ public class GA_main {
     //problem = new Easom("Real") ;
     //problem = new Griewank("Real", 10) ;
 
-    algorithm = new gGA(problem); // Generational GA
+    algorithm = new gGA(); // Generational GA
+    algorithm.setProblem(problem);
+    
     //algorithm = new ssGA(problem); // Steady-state GA
     //algorithm = new scGA(problem) ; // Synchronous cGA
     //algorithm = new acGA(problem) ;   // Asynchronous cGA

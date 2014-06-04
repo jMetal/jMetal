@@ -104,7 +104,8 @@ public class pMOEAD_Settings extends Settings {
     Operator mutation;
 
     // Creating the problem
-    algorithm = new pMOEAD(problem_);
+    algorithm = new pMOEAD();
+    algorithm.setProblem(problem_);
 
     // Algorithm parameters
     algorithm.setInputParameter("numberOfThreads", numberOfThreads_);
@@ -145,7 +146,8 @@ public class pMOEAD_Settings extends Settings {
     Mutation mutation;
 
     // Creating the algorithm.
-    algorithm = new pMOEAD(problem_);
+    algorithm = new pMOEAD();
+    algorithm.setProblem(problem_);
 
     // Algorithm parameters
     populationSize_ = Integer

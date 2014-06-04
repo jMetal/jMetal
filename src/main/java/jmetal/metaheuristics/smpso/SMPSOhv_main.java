@@ -89,7 +89,8 @@ public class SMPSOhv_main {
       problem = new ZDT4("Real");
     }
 
-    algorithm = new SMPSOhv(problem);
+    algorithm = new SMPSOhv();
+    algorithm.setProblem(problem);
 
     // Algorithm parameters
     algorithm.setInputParameter("swarmSize", 100);

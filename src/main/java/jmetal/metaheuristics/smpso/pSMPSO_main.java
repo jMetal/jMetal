@@ -91,7 +91,9 @@ public class pSMPSO_main {
     int threads = 4; 
     SynchronousParallelTaskExecutor parallelEvaluator = new MultithreadedEvaluator(threads);
 
-    algorithm = new pSMPSO(problem, parallelEvaluator);
+    algorithm = new pSMPSO();
+    algorithm.setProblem(problem);
+    ((pSMPSO)algorithm).setEvaluator(parallelEvaluator);
 
     // Algorithm parameters    
     algorithm.setInputParameter("swarmSize", 100);

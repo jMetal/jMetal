@@ -39,13 +39,13 @@ public class XReal {
   private SolutionType type_;
 
   public XReal(Solution solution) {
-    type_ = solution.getType();
+    setType_(solution.getType());
     solution_ = solution;
   }
 
   public XReal(XReal solution) {
     solution_ = solution.solution_;
-    type_ = solution.type_;
+    setType_(solution.getType_());
   }
 
   /**
@@ -56,16 +56,16 @@ public class XReal {
    * @throws JMException
    */
   public double getValue(int index) throws JMException {
-    if ((type_.getClass() == RealSolutionType.class) ||
-      (type_.getClass() == BinaryRealSolutionType.class)) {
+    if ((getType_().getClass() == RealSolutionType.class) ||
+      (getType_().getClass() == BinaryRealSolutionType.class)) {
       return solution_.getDecisionVariables()[index].getValue();
-    } else if (type_.getClass() == ArrayRealSolutionType.class) {
+    } else if (getType_().getClass() == ArrayRealSolutionType.class) {
       return ((ArrayReal) (solution_.getDecisionVariables()[0])).gerArray()[index];
-    } else if (type_.getClass() == ArrayRealAndBinarySolutionType.class) {
+    } else if (getType_().getClass() == ArrayRealAndBinarySolutionType.class) {
       return ((ArrayReal) (solution_.getDecisionVariables()[0])).gerArray()[index];
     } else {
       Configuration.logger_.severe("jmetal.util.wrapper.XReal.getValue, solution type " +
-        type_ + "+ invalid");
+        getType_() + "+ invalid");
     }
     return 0.0;
   }
@@ -78,15 +78,15 @@ public class XReal {
    * @throws JMException
    */
   public void setValue(int index, double value) throws JMException {
-    if (type_.getClass() == RealSolutionType.class) {
+    if (getType_().getClass() == RealSolutionType.class) {
       solution_.getDecisionVariables()[index].setValue(value);
-    } else if (type_.getClass() == ArrayRealSolutionType.class) {
+    } else if (getType_().getClass() == ArrayRealSolutionType.class) {
       ((ArrayReal) (solution_.getDecisionVariables()[0])).gerArray()[index] = value;
-    } else if (type_.getClass() == ArrayRealAndBinarySolutionType.class) {
+    } else if (getType_().getClass() == ArrayRealAndBinarySolutionType.class) {
       ((ArrayReal) (solution_.getDecisionVariables()[0])).gerArray()[index] = value;
     } else {
       Configuration.logger_.severe("jmetal.util.wrapper.XReal.setValue, solution type " +
-        type_ + "+ invalid");
+        getType_() + "+ invalid");
     }
   }
 
@@ -98,16 +98,16 @@ public class XReal {
    * @throws JMException
    */
   public double getLowerBound(int index) throws JMException {
-    if ((type_.getClass() == RealSolutionType.class) ||
-      (type_.getClass() == BinaryRealSolutionType.class)) {
+    if ((getType_().getClass() == RealSolutionType.class) ||
+      (getType_().getClass() == BinaryRealSolutionType.class)) {
       return solution_.getDecisionVariables()[index].getLowerBound();
-    } else if (type_.getClass() == ArrayRealSolutionType.class) {
+    } else if (getType_().getClass() == ArrayRealSolutionType.class) {
       return ((ArrayReal) (solution_.getDecisionVariables()[0])).getLowerBound(index);
-    } else if (type_.getClass() == ArrayRealAndBinarySolutionType.class) {
+    } else if (getType_().getClass() == ArrayRealAndBinarySolutionType.class) {
       return ((ArrayReal) (solution_.getDecisionVariables()[0])).getLowerBound(index);
     } else {
       Configuration.logger_.severe("jmetal.util.wrapper.XReal.getLowerBound, solution type " +
-        type_ + "+ invalid");
+        getType_() + "+ invalid");
 
     }
     return 0.0;
@@ -121,16 +121,16 @@ public class XReal {
    * @throws JMException
    */
   public double getUpperBound(int index) throws JMException {
-    if ((type_.getClass() == RealSolutionType.class) ||
-      (type_.getClass() == BinaryRealSolutionType.class)) {
+    if ((getType_().getClass() == RealSolutionType.class) ||
+      (getType_().getClass() == BinaryRealSolutionType.class)) {
       return solution_.getDecisionVariables()[index].getUpperBound();
-    } else if (type_.getClass() == ArrayRealSolutionType.class) {
+    } else if (getType_().getClass() == ArrayRealSolutionType.class) {
       return ((ArrayReal) (solution_.getDecisionVariables()[0])).getUpperBound(index);
-    } else if (type_.getClass() == ArrayRealAndBinarySolutionType.class) {
+    } else if (getType_().getClass() == ArrayRealAndBinarySolutionType.class) {
       return ((ArrayReal) (solution_.getDecisionVariables()[0])).getUpperBound(index);
     } else {
       Configuration.logger_.severe("jmetal.util.wrapper.XReal.getUpperBound, solution type " +
-        type_ + "+ invalid");
+        getType_() + "+ invalid");
     }
 
     return 0.0;
@@ -140,14 +140,14 @@ public class XReal {
    * Returns the number of variables of the solution
    */
   public int getNumberOfDecisionVariables() {
-    if ((type_.getClass() == RealSolutionType.class) ||
-      (type_.getClass() == BinaryRealSolutionType.class)) {
+    if ((getType_().getClass() == RealSolutionType.class) ||
+      (getType_().getClass() == BinaryRealSolutionType.class)) {
       return solution_.getDecisionVariables().length;
-    } else if (type_.getClass() == ArrayRealSolutionType.class) {
+    } else if (getType_().getClass() == ArrayRealSolutionType.class) {
       return ((ArrayReal) (solution_.getDecisionVariables()[0])).getLength();
     } else {
       Configuration.logger_.severe("jmetal.util.wrapper.XReal.size, solution type " +
-        type_ + "+ invalid");
+        getType_() + "+ invalid");
     }
     return 0;
   }
@@ -162,4 +162,12 @@ public class XReal {
   public Solution getSolution() {
     return solution_;
   }
+
+public SolutionType getType_() {
+	return type_;
+}
+
+public void setType_(SolutionType type_) {
+	this.type_ = type_;
+}
 }

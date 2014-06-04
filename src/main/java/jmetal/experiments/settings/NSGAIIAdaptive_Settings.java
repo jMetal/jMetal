@@ -86,7 +86,8 @@ public class NSGAIIAdaptive_Settings extends Settings {
 
     HashMap<String, Object> parameters = new HashMap<String, Object>();
 
-    algorithm = new NSGAIIAdaptive(problem_);
+    algorithm = new NSGAIIAdaptive();
+    algorithm.setProblem(problem_);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", populationSize_);

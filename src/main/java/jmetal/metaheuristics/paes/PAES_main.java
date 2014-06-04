@@ -85,7 +85,8 @@ public class PAES_main {
       //problem = new OKA2("Real") ;
     }
 
-    algorithm = new PAES(problem);
+    algorithm = new PAES();
+    algorithm.setProblem(problem);
 
     // Algorithm parameters
     algorithm.setInputParameter("archiveSize", 100);

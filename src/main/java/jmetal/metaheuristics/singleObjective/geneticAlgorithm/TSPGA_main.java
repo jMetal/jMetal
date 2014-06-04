@@ -52,7 +52,8 @@ public class TSPGA_main {
 
     problem = new TSP("Permutation", problemName);
 
-    algorithm = new ssGA(problem);
+    algorithm = new ssGA();
+    algorithm.setProblem(problem);
     //algorithm = new gGA(problem) ;
 
     // Algorithm params

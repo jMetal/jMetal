@@ -67,7 +67,8 @@ public class PSO_main {
 
     //problem = new Rosenbrock("Real", 10);
 
-    algorithm = new PSO(problem);
+    algorithm = new PSO();
+    algorithm.setProblem(problem);
 
     // Algorithm parameters
     algorithm.setInputParameter("swarmSize", 50);

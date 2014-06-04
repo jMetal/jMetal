@@ -106,7 +106,8 @@ public class ParallelNSGAIIRunner {
     }
 
     SolutionSetEvaluator evaluator = new MultithreadedSolutionSetEvaluator(4, problem) ;
-    algorithm = new NSGAII(problem, evaluator);
+    algorithm = new NSGAII();
+    algorithm.setProblem(problem);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", 100);

@@ -91,8 +91,9 @@ public class SMPSORunner {
     //SolutionSetEvaluator evaluator = new MultithreadedSolutionSetEvaluator(0, problem) ;
     SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator() ;
 
-    algorithm = new SMPSOE(problem, evaluator);
-
+    algorithm = new SMPSOE();
+    algorithm.setProblem(problem);
+    ((SMPSOE)algorithm).setEvaluator(evaluator);
     // Algorithm parameters    
     algorithm.setInputParameter("swarmSize", 100);
     algorithm.setInputParameter("archiveSize", 100);

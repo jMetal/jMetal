@@ -99,8 +99,9 @@ public class pMOEAD_main {
       //problem = new OKA2("Real") ;
     }
 
-    algorithm = new pMOEAD(problem);
-
+    algorithm = new pMOEAD();
+    algorithm.setProblem(problem);
+    
     // Algorithm parameters
     numberOfThreads = 4;
     algorithm.setInputParameter("populationSize", 300);

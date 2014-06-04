@@ -64,7 +64,8 @@ public class RandomSearch_Settings extends Settings {
     Algorithm algorithm;
 
     // Creating the problem
-    algorithm = new RandomSearch(problem_);
+    algorithm = new RandomSearch();
+    algorithm.setProblem(problem_);
 
     // Algorithm parameters
     algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
@@ -82,7 +83,8 @@ public class RandomSearch_Settings extends Settings {
     Algorithm algorithm;
 
     // Creating the algorithm.
-    algorithm = new RandomSearch(problem_);
+    algorithm = new RandomSearch();
+    algorithm.setProblem(problem_);
 
     // Algorithm parameters
     maxEvaluations_ = Integer

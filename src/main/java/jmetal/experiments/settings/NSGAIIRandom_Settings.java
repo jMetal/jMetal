@@ -91,7 +91,8 @@ public class NSGAIIRandom_Settings extends Settings {
     Algorithm algorithm;
     Selection selection;
 
-    algorithm = new NSGAIIRandom(problem_);
+    algorithm = new NSGAIIRandom();
+    algorithm.setProblem(problem_);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", populationSize_);
@@ -130,7 +131,8 @@ public class NSGAIIRandom_Settings extends Settings {
     Selection selection;
 
     // Creating the algorithm.
-    algorithm = new NSGAIIRandom(problem_);
+    algorithm = new NSGAIIRandom();
+    algorithm.setProblem(problem_);
 
     // Algorithm parameters
     populationSize_ = Integer

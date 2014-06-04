@@ -272,7 +272,7 @@ public class pMOEAD extends Algorithm implements Runnable {
     initTime_ = System.currentTimeMillis();
 
     for (int i = 0; i < numberOfThreads_; i++) {
-      thread_[i] = new Thread(new pMOEAD(this, problem_, i, numberOfThreads_), "pepe");
+      thread_[i] = new Thread(new pMOEAD(this, i, numberOfThreads_), "pepe");
       thread_[i].start();
     }
 

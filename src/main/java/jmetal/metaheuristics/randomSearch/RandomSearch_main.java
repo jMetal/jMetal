@@ -79,7 +79,8 @@ public class RandomSearch_main {
       //problem = new OKA2("Real") ;
     }
 
-    algorithm = new RandomSearch(problem);
+    algorithm = new RandomSearch();
+    algorithm.setProblem(problem);
 
     // Algorithm parameters
     algorithm.setInputParameter("maxEvaluations", 25000);

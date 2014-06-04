@@ -77,7 +77,8 @@ public class PESA2_main {
       //problem = new OKA2("Real") ;
     }
 
-    algorithm = new PESA2(problem);
+    algorithm = new PESA2();
+    algorithm.setProblem(problem);
 
     // Algorithm parameters 
     algorithm.setInputParameter("populationSize", 10);

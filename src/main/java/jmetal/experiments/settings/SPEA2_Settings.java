@@ -88,7 +88,8 @@ public class SPEA2_Settings extends Settings {
     Operator selection;         // Selection operator
 
     // Creating the problem
-    algorithm = new SPEA2(problem_);
+    algorithm = new SPEA2();
+    algorithm.setProblem(problem_);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", populationSize_);
@@ -131,7 +132,8 @@ public class SPEA2_Settings extends Settings {
     Mutation mutation;
 
     // Creating the algorithm.
-    algorithm = new SPEA2(problem_);
+    algorithm = new SPEA2();
+    algorithm.setProblem(problem_);
 
     // Algorithm parameters
     populationSize_ = Integer

@@ -99,7 +99,8 @@ public class MOEAD_DRA_Settings extends Settings {
     Operator mutation;
 
     // Creating the problem
-    algorithm = new MOEAD_DRA(problem_);
+    algorithm = new MOEAD_DRA();
+    algorithm.setProblem(problem_);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", populationSize_);

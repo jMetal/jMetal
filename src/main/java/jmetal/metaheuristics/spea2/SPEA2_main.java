@@ -88,7 +88,8 @@ public class SPEA2_main {
       //problem = new OKA2("Real") ;
     }
 
-    algorithm = new SPEA2(problem);
+    algorithm = new SPEA2();
+    algorithm.setProblem(problem);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", 100);
