@@ -47,8 +47,6 @@ public class NSGAII extends Algorithm {
   private int maxEvaluations_;
   private int evaluations_;
 
-  private QualityIndicator indicators_;
-
   private SolutionSet population_;
   private SolutionSet offspringPopulation_;
 
@@ -58,15 +56,12 @@ public class NSGAII extends Algorithm {
   private Operator selectionOperator_;
 
   private Distance distance_ ;
-  private int requiredEvaluations_;
-
 
   public NSGAII(Problem problemToSolve, SolutionSetEvaluator evaluator) {
     super(problemToSolve);
     evaluator_ = evaluator ;
     evaluations_ = 0 ;
     distance_ = new Distance();
-    requiredEvaluations_ = 0;
   }
 
   /**
@@ -114,20 +109,16 @@ public class NSGAII extends Algorithm {
           addLastRankedSolutions(ranking, rankingIndex);
         }
       }
-    }
+    }    
 
-    // Return the first non-dominated front
-    Ranking ranking = new Ranking(population_);
+    tearDown() ;
 
-    evaluator_.shutdown();
-
-    return ranking.getSubfront(0);
+    return getNonDominatedSolutions() ;
   }
 
   void readParameterSettings() {
     populationSize_ = ((Integer) getInputParameter("populationSize")).intValue();
     maxEvaluations_ = ((Integer) getInputParameter("maxEvaluations")).intValue();
-    indicators_ = (QualityIndicator) getInputParameter("indicators");
 
     mutationOperator_ = operators_.get("mutation");
     crossoverOperator_ = operators_.get("crossover");
@@ -196,5 +187,12 @@ public class NSGAII extends Algorithm {
   boolean subfrontFillsIntoThePopulation(Ranking ranking, int rank) {
     return ranking.getSubfront(rank).size() < (populationSize_ - population_.size()) ;
   }
+  
+  SolutionSet getNonDominatedSolutions() throws JMException {
+    return new Ranking(population_).getSubfront(0);
+  }
 
+  void tearDown() {
+    evaluator_.shutdown(); 
+  }
 } 

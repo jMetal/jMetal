@@ -35,14 +35,9 @@ public class ssNSGAII extends Algorithm {
 
   private static final long serialVersionUID = 3588191288161132897L;
 
-  /**
-   * Constructor
-   *
-   * @param problem Problem to solve
-   */
   public ssNSGAII(Problem problem) {
     super(problem);
-  } // NSGAII
+  } 
 
   /**
    * Runs the ssNSGA-II algorithm.
@@ -151,8 +146,8 @@ public class ssNSGAII extends Algorithm {
         index++;
         if (remain > 0) {
           front = ranking.getSubfront(index);
-        } // if        
-      } // while
+        }      
+      } 
 
       // Remain is less than front(index).size, insert only the best one
       if (remain > 0) {  // front contains individuals to insert                        
@@ -184,5 +179,5 @@ public class ssNSGAII extends Algorithm {
     // Return the first non-dominated front
     Ranking ranking = new Ranking(population);
     return ranking.getSubfront(0);
-  } // execute
-} // NSGA-II
+  } 
+} 

@@ -35,14 +35,9 @@ import jmetal.util.JMException;
  * Wrapper for accessing real-coded solutions
  */
 public class XReal {
-  public Solution solution_;
-  public SolutionType type_;
+  private Solution solution_;
+  private SolutionType type_;
 
-  /**
-   * Constructor
-   *
-   * @param solution
-   */
   public XReal(Solution solution) {
     type_ = solution.getType();
     solution_ = solution;

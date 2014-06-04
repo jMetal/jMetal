@@ -55,7 +55,7 @@ import java.util.logging.Logger;
  * April 2009)
  */
 
-public class NSGAIIRunner {
+public class ParallelNSGAIIRunner {
   private static Logger logger_;
   private static FileHandler fileHandler_;
 
@@ -105,7 +105,7 @@ public class NSGAIIRunner {
       //problem = new OKA2("Real") ;
     }
 
-    SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator();
+    SolutionSetEvaluator evaluator = new MultithreadedSolutionSetEvaluator(4, problem) ;
     algorithm = new NSGAII(problem, evaluator);
 
     // Algorithm parameters
