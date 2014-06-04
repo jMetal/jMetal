@@ -48,7 +48,8 @@ public class MOCHC_main {
     Problem problem = new ZDT5("Binary");
 
     Algorithm algorithm = null;
-    algorithm = new MOCHC(problem);
+    algorithm = new MOCHC();
+    algorithm.setProblem(problem);
 
     algorithm.setInputParameter("initialConvergenceCount", 0.25);
     algorithm.setInputParameter("preservedPopulation", 0.05);

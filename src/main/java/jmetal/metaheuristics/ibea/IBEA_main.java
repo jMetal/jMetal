@@ -88,7 +88,8 @@ public class IBEA_main {
       //problem = new OKA2("Real") ;
     }
 
-    algorithm = new IBEA(problem);
+    algorithm = new IBEA();
+    algorithm.setProblem(problem);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", 100);

@@ -85,7 +85,8 @@ public class IBEA_Settings extends Settings {
     Operator crossover;
     Operator mutation;
 
-    algorithm = new IBEA(problem_);
+    algorithm = new IBEA();
+    algorithm.setProblem(problem_);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", populationSize_);

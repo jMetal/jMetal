@@ -96,7 +96,9 @@ public class MOEAD_Settings extends Settings {
     Operator mutation;
 
     // Creating the problem
-    algorithm = new MOEAD(problem_);
+    algorithm = new MOEAD();
+    algorithm.setProblem(problem_);
+    
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", populationSize_);
