@@ -44,9 +44,6 @@ import java.util.HashMap;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-
 /**
  * Class to configure and execute the NSGA-II algorithm.
  * <p/>
@@ -58,7 +55,7 @@ import com.google.inject.Injector;
  * April 2009)
  */
 
-public class NSGAIIRunner {
+public class SteadyStateNSGAIIRunner {
   private static Logger logger_;
   private static FileHandler fileHandler_;
 
@@ -108,15 +105,7 @@ public class NSGAIIRunner {
       //problem = new OKA2("Real") ;
     }
 
-    //Injector injector = Guice.createInjector(new ExecutorModule()) ;
-    //Executor executor = injector.getInstance(Executor.class) ;
-
-    Injector injector = Guice.createInjector();
-    algorithm = injector.getInstance(NSGAII.class);
-    
-    SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator();
-    //SolutionSetEvaluator executor = new MultithreadedSolutionSetEvaluator(4, problem) ;
-    //algorithm = new NSGAII(problem, evaluator);
+    algorithm = new SteadyStateNSGAII(problem);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", 100);

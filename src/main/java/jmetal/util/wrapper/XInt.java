@@ -33,24 +33,14 @@ import jmetal.util.JMException;
  * Wrapper class for accessing integer-coded solutions
  */
 public class XInt {
-  public Solution solution_;
-  public SolutionType type_;
+  private Solution solution_;
+  private SolutionType type_;
 
-  /**
-   * Constructor
-   *
-   * @param solution
-   */
   public XInt(Solution solution) {
     type_ = solution.getType();
     solution_ = solution;
   }
 
-  /**
-   * Constructor
-   *
-   * @param solution
-   */
   public XInt(XInt solution) {
     type_ = solution.type_;
     solution_ = solution.solution_;
