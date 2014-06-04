@@ -152,9 +152,7 @@ public class AbYSS extends Algorithm {
    *
    * @param problem Problem to solve
    */
-  public AbYSS(Problem problem) {
-    super(problem);
-    
+  public AbYSS() {
     solutionSet_ = null;
     archive_ = null;
     refSet1_ = null;

@@ -21,14 +21,16 @@
 
 package jmetal.core;
 
+import jmetal.problems.ZDT.ZDT4;
 import jmetal.util.JMException;
 
 import java.io.Serializable;
 import java.util.Arrays;
-
+import com.google.inject.*;
 /**
  * Abstract class representing a multiobjective optimization problem
  */
+@ImplementedBy(ZDT4.class)
 public abstract class Problem implements Serializable {
 
   /**

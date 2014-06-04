@@ -81,7 +81,8 @@ public class FastSMSEMOA_Settings extends Settings {
     Mutation mutation;
 
     // Creating the algorithm. 
-    algorithm = new FastSMSEMOA(problem_);
+    algorithm = new FastSMSEMOA();
+    algorithm.setProblem(problem_);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", populationSize_);

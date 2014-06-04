@@ -40,8 +40,8 @@ public class ssNSGAII extends Algorithm {
    *
    * @param problem Problem to solve
    */
-  public ssNSGAII(Problem problem) {
-    super(problem);
+  public ssNSGAII() {
+    super();
   } // NSGAII
 
   /**

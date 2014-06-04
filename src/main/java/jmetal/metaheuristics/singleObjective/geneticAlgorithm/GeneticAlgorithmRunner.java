@@ -61,9 +61,10 @@ public class GeneticAlgorithmRunner {
     //problem = new Easom("Real") ;
     //problem = new Griewank("Real", 10) ;
     
-    SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator();
+    //SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator();
     //SolutionSetEvaluator executor = new MultithreadedSolutionSetEvaluator(4, problem) ;
-    algorithm = new GenerationalGA(problem, evaluator);
+    algorithm = new GenerationalGA();
+    algorithm.setProblem(problem);
 
     //algorithm = new ssGA(problem); // Steady-state GA
     //algorithm = new scGA(problem) ; // Synchronous cGA

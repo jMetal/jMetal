@@ -47,12 +47,14 @@ public class pgGA extends Algorithm {
    * @param problem   Problem to solve
    * @param evaluator Parallel evaluator
    */
-  public pgGA(Problem problem, SynchronousParallelTaskExecutor evaluator) {
-    super(problem);
-
-    parallelEvaluator_ = evaluator;
+  public pgGA() {
+    super();
   } // pgGA
 
+  public void seteEvaluator(SynchronousParallelTaskExecutor evaluator) {
+	  parallelEvaluator_ = evaluator;
+  }
+  
   /**
    * Runs the pgGA algorithm.
    *

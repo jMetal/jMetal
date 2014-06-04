@@ -44,8 +44,8 @@ public class FastPGA extends Algorithm {
    * Constructor
    * Creates a new instance of FastPGA
    */
-  public FastPGA(Problem problem) {
-    super(problem);
+  public FastPGA() {
+    super();
   } // FastPGA
 
   /**

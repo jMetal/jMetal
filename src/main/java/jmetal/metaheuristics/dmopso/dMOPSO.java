@@ -98,8 +98,8 @@ public class dMOPSO extends Algorithm {
   private double deltaMax_[];
   private double deltaMin_[];
 
-  public dMOPSO(Problem problem) {
-    super(problem);
+  public dMOPSO() {
+    super();
     r1Max_ = 1.0;
     r1Min_ = 0.0;
     r2Max_ = 1.0;
@@ -114,10 +114,10 @@ public class dMOPSO extends Algorithm {
     changeVelocity2_ = -1.0;
   }
 
-  public dMOPSO(Problem problem,
+  public dMOPSO(
     Vector<Double> variables,
     String trueParetoFront) throws FileNotFoundException {
-    super(problem);
+    super();
 
     r1Max_ = variables.get(0);
     r1Min_ = variables.get(1);
@@ -132,6 +132,7 @@ public class dMOPSO extends Algorithm {
     changeVelocity1_ = variables.get(10);
     changeVelocity2_ = variables.get(11);
 
+    // THIS IS GOING TO CRASH
     hy_ = new Hypervolume();
     jmetal.qualityIndicator.util.MetricsUtil mu = new jmetal.qualityIndicator.util.MetricsUtil();
     trueFront_ = mu.readNonDominatedSolutionSet(trueParetoFront);

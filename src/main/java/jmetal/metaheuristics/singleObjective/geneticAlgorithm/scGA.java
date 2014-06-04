@@ -44,8 +44,8 @@ public class scGA extends Algorithm {
    *
    * @param problem Problem to solve
    */
-  public scGA(Problem problem) {
-    super(problem);
+  public scGA() {
+    super();
   } // sMOCell1
 
 

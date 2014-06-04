@@ -129,8 +129,8 @@ public class OMOPSO extends Algorithm {
    *
    * @param problem Problem to solve
    */
-  public OMOPSO(Problem problem) {
-    super(problem);
+  public OMOPSO() {
+    super();
   } // OMOPSO
 
   /**

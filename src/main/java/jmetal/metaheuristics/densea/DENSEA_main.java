@@ -58,7 +58,8 @@ public class DENSEA_main {
 
     problem = new ZDT5("Binary");
 
-    algorithm = new DENSEA(problem);
+    algorithm = new DENSEA();
+    algorithm.setProblem(problem);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", 100);

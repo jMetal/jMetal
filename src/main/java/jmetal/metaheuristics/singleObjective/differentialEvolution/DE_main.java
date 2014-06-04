@@ -58,7 +58,8 @@ public class DE_main {
     //problem = new Easom("Real") ;
     //problem = new Griewank("Real", 10) ;
 
-    algorithm = new DE(problem);   // Asynchronous cGA
+    algorithm = new DE();   // Asynchronous cGA
+    algorithm.setProblem(problem);
     
     /* Algorithm parameters*/
     algorithm.setInputParameter("populationSize", 100);

@@ -40,8 +40,8 @@ public class DENSEA extends Algorithm {
   private static final long serialVersionUID = -2201287768907955178L;
 
   /* Create a new instance of DENSEA algorithm */
-  public DENSEA(Problem problem) {
-    super(problem);
+  public DENSEA() {
+    super();
   }
 
   //Implements the Densea delete duplicate elements

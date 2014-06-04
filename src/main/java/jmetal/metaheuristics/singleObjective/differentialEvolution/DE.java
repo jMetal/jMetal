@@ -44,8 +44,8 @@ public class DE extends Algorithm {
    *
    * @param problem Problem to solve
    */
-  public DE(Problem problem) {
-    super(problem);
+  public DE() {
+	  super();
   } // gDE
 
   /**

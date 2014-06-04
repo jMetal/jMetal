@@ -134,8 +134,8 @@ public class pSMPSO extends Algorithm {
    *
    * @param problem Problem to solve
    */
-  public pSMPSO(Problem problem, SynchronousParallelTaskExecutor evaluator) {
-    super(problem);
+  public pSMPSO() {
+    super();
 
     r1Max_ = 1.0;
     r1Min_ = 0.0;
@@ -150,10 +150,13 @@ public class pSMPSO extends Algorithm {
     ChVel1_ = -1;
     ChVel2_ = -1;
 
-    parallelEvaluator_ = evaluator;
+    
   } // Constructor
 
-
+  public void setEvaluator(SynchronousParallelTaskExecutor evaluator) {
+	  parallelEvaluator_ = evaluator;  
+  }
+  
   /**
    * Initialize all parameter of the algorithm
    */

@@ -74,7 +74,8 @@ public class GDE3_Settings extends Settings {
     // Creating the problem
     Object[] problemParams = {"Real"};
     problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
-    algorithm = new GDE3(problem_);
+    algorithm = new GDE3();
+    algorithm.setProblem(problem_);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", populationSize_);

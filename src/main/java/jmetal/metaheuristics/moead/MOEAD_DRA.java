@@ -94,8 +94,8 @@ public class MOEAD_DRA extends Algorithm {
    *
    * @param problem Problem to solve
    */
-  public MOEAD_DRA(Problem problem) {
-    super(problem);
+  public MOEAD_DRA() {
+    super();
 
     functionType_ = "_TCHE1";
   }

@@ -83,8 +83,8 @@ public class MOEAD extends Algorithm {
    *
    * @param problem Problem to solve
    */
-  public MOEAD(Problem problem) {
-    super(problem);
+  public MOEAD() {
+    super();
 
     functionType_ = "_TCHE1";
   } 

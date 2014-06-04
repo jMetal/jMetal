@@ -42,8 +42,8 @@ public class PESA2 extends Algorithm {
    * Constructor
    * Creates a new instance of PESA2
    */
-  public PESA2(Problem problem) {
-    super(problem);
+  public PESA2() {
+    super();
   } 
 
   /**

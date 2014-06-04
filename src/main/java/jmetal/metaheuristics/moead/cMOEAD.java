@@ -94,8 +94,8 @@ public class cMOEAD extends Algorithm {
    *
    * @param problem Problem to solve
    */
-  public cMOEAD(Problem problem) {
-    super(problem);
+  public cMOEAD() {
+    super();
 
     functionType_ = "_TCHE1";
 

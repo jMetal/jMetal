@@ -75,9 +75,9 @@ public class NSGAIImTSPRunner {
 
     SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator();
     //SolutionSetEvaluator executor = new MultithreadedSolutionSetEvaluator(4, problem) ;
-    algorithm = new NSGAII(problem, evaluator);
+    //algorithm = new NSGAII(problem, evaluator);
     //algorithm = new ssNSGAII(problem);
-
+    algorithm = null;
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", 100);
     algorithm.setInputParameter("maxEvaluations", 1000000);

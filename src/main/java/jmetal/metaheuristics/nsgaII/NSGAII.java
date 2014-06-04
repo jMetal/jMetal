@@ -21,6 +21,7 @@
 package jmetal.metaheuristics.nsgaII;
 
 import jmetal.core.*;
+import jmetal.problems.ZDT.ZDT3;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Distance;
 import jmetal.util.JMException;
@@ -28,6 +29,7 @@ import jmetal.util.Ranking;
 import jmetal.util.comparator.CrowdingComparator;
 import jmetal.util.evaluator.SolutionSetEvaluator;
 
+import com.google.inject.*;
 /**
  * Implementation of NSGA-II.
  * This implementation of NSGA-II makes use of a QualityIndicator object
@@ -41,6 +43,7 @@ import jmetal.util.evaluator.SolutionSetEvaluator;
 public class NSGAII extends Algorithm {
   private static final long serialVersionUID = 5815971727148859507L;
 
+  @Inject
   private SolutionSetEvaluator evaluator_ ;
 
   private int populationSize_;
@@ -61,9 +64,15 @@ public class NSGAII extends Algorithm {
   private int requiredEvaluations_;
 
 
-  public NSGAII(Problem problemToSolve, SolutionSetEvaluator evaluator) {
-    super(problemToSolve);
-    evaluator_ = evaluator ;
+  //public NSGAII(Problem problemToSolve, SolutionSetEvaluator evaluator) {
+  //public NSGAII(Problem problemToSolve) {
+  public NSGAII() {
+	  super();
+	  /*try {
+	problem_ =  new ZDT3("Real");//evaluator_ = evaluator ;
+	  } catch (Exception e) {
+		  e.printStackTrace();
+	  }*/
     evaluations_ = 0 ;
     distance_ = new Distance();
     requiredEvaluations_ = 0;

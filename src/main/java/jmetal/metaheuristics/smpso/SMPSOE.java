@@ -127,8 +127,8 @@ public class SMPSOE extends Algorithm {
    *
    * @param problem Problem to solve
    */
-  public SMPSOE(Problem problem, SolutionSetEvaluator executor) {
-    super(problem);
+  public SMPSOE() {
+    super();
 
     r1Max_ = 1.0;
     r1Min_ = 0.0;
@@ -143,9 +143,11 @@ public class SMPSOE extends Algorithm {
     changeVelocity1_ = -1;
     changeVelocity2_ = -1;
 
-    evaluator_ = executor;
   } 
 
+  public void setEvaluator(SolutionSetEvaluator evaluator) {
+	  evaluator_ = evaluator;
+  }
 
   /**
    * Initialize all parameter of the algorithm

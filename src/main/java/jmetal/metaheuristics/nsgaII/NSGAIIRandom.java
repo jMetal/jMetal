@@ -32,8 +32,8 @@ public class NSGAIIRandom extends Algorithm {
 
   Operator selectionOperator_;
 
-  public NSGAIIRandom(Problem problem) {
-    super(problem);
+  public NSGAIIRandom() {
+    super();
   }
 
   public SolutionSet execute() throws JMException, ClassNotFoundException {

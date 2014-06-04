@@ -82,7 +82,8 @@ public class CellDE_main {
       //problem = new OKA2("Real") ;
     } // else
 
-    algorithm = new CellDE(problem);
+    algorithm = new CellDE();
+    algorithm.setProblem(problem);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", 100);

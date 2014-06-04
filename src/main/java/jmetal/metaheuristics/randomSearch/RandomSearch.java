@@ -45,8 +45,8 @@ public class RandomSearch extends Algorithm {
    *
    * @param problem Problem to solve
    */
-  public RandomSearch(Problem problem) {
-    super(problem);
+  public RandomSearch() {
+    super();
   } // RandomSearch
 
   /**

@@ -43,8 +43,8 @@ public class PAES extends Algorithm {
    *
    * @param problem Problem to solve
    */
-  public PAES(Problem problem) {
-    super(problem);
+  public PAES() {
+    super();
   } // Paes
 
   /**

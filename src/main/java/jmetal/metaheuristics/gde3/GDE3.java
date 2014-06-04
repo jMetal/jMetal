@@ -45,8 +45,8 @@ public class GDE3 extends Algorithm {
    *
    * @param problem Problem to solve
    */
-  public GDE3(Problem problem) {
-    super(problem);
+  public GDE3() {
+    super();
   } // GDE3
 
   /**

@@ -47,8 +47,8 @@ public class MOCell extends Algorithm {
    */
   private static final long serialVersionUID = -2479285259392945976L;
 
-  public MOCell(Problem problem) {
-    super(problem);
+  public MOCell() {
+    super();
   }
 
   /**

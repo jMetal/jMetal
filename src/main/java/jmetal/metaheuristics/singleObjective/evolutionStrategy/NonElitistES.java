@@ -49,8 +49,8 @@ public class NonElitistES extends Algorithm {
    * @param mu
    * @param lambda
    */
-  public NonElitistES(Problem problem, int mu, int lambda) {
-    super(problem);
+  public NonElitistES(int mu, int lambda) {
+    super();
     mu_ = mu;
     lambda_ = lambda;
   } // NonElitistES

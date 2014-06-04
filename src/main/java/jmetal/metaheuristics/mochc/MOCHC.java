@@ -47,8 +47,8 @@ public class MOCHC extends Algorithm {
    * Constructor
    * Creates a new instance of MOCHC
    */
-  public MOCHC(Problem problem) {
-    super(problem);
+  public MOCHC() {
+    super();
   }
 
   /**

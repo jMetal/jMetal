@@ -44,8 +44,8 @@ public class gGA extends Algorithm {
    *
    * @param problem Problem to solve.
    */
-  public gGA(Problem problem) {
-    super(problem);
+  public gGA() {
+    super();
   } // GGA
 
   /**

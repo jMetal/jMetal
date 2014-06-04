@@ -73,8 +73,8 @@ public class FastSMSEMOA extends Algorithm {
    *
    * @param problem Problem to solve
    */
-  public FastSMSEMOA(Problem problem) {
-    super(problem);
+  public FastSMSEMOA() {
+    super();
     this.utils_ = new MetricsUtil();
     this.hv_ = new Hypervolume();
   } // FastSMSEMOA
