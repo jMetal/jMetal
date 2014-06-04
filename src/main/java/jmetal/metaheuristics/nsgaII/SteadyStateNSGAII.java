@@ -1,4 +1,4 @@
-//  ssNSGAII.java
+//  SteadyStateNSGAII.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -31,11 +31,11 @@ import jmetal.util.comparator.CrowdingComparator;
 /**
  * This class implements a steady-state version of NSGA-II.
  */
-public class ssNSGAII extends Algorithm {
+public class SteadyStateNSGAII extends Algorithm {
 
   private static final long serialVersionUID = 3588191288161132897L;
 
-  public ssNSGAII(Problem problem) {
+  public SteadyStateNSGAII(Problem problem) {
     super(problem);
   } 
 
