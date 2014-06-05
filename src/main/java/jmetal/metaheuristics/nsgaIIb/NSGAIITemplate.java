@@ -76,7 +76,7 @@ public abstract class NSGAIITemplate extends Algorithm {
     selectionOperator_ = operators_.get("selection");
   }
 
-  SolutionSet createInitialPopulation(int populationSize) throws ClassNotFoundException, JMException {
+  protected SolutionSet createInitialPopulation(int populationSize) throws ClassNotFoundException, JMException {
     SolutionSet population ;
     population = new SolutionSet(populationSize);
 
@@ -89,22 +89,22 @@ public abstract class NSGAIITemplate extends Algorithm {
     return population ;
   }
 
-  void evaluatePopulation(SolutionSet population) throws JMException {
+  protected void evaluatePopulation(SolutionSet population) throws JMException {
     evaluator_.evaluate(population, problem_) ;
     evaluations_ += population.size() ;
   }
 
-  boolean stoppingCondition() {
+  protected boolean stoppingCondition() {
     return evaluations_ == maxEvaluations_ ;
   }
 
-  Ranking rankPopulation() throws JMException {
+  protected Ranking rankPopulation() throws JMException {
     SolutionSet union = population_.union(offspringPopulation_);
 
     return new Ranking(union) ;
   }
 
-  void addRankedSolutionsToPopulation(Ranking ranking, int rank) throws JMException {
+  protected void addRankedSolutionsToPopulation(Ranking ranking, int rank) throws JMException {
     SolutionSet front ;
 
     front = ranking.getSubfront(rank);
@@ -114,12 +114,12 @@ public abstract class NSGAIITemplate extends Algorithm {
     }
   }
 
-  void computeCrowdingDistance(Ranking ranking, int rank) throws JMException {
+  protected void computeCrowdingDistance(Ranking ranking, int rank) throws JMException {
     SolutionSet currentRankedFront = ranking.getSubfront(rank) ;
     distance_.crowdingDistanceAssignment(currentRankedFront, problem_.getNumberOfObjectives());
   }
 
-  void addLastRankedSolutions(Ranking ranking, int rank) throws JMException {
+  protected void addLastRankedSolutions(Ranking ranking, int rank) throws JMException {
     SolutionSet currentRankedFront = ranking.getSubfront(rank) ;
 
     currentRankedFront.sort(new CrowdingComparator());
@@ -131,19 +131,19 @@ public abstract class NSGAIITemplate extends Algorithm {
     }
   }
 
-  boolean populationIsNotFull() {
+  protected boolean populationIsNotFull() {
     return population_.size() < populationSize_ ;
   }
 
-  boolean subfrontFillsIntoThePopulation(Ranking ranking, int rank) {
+  protected boolean subfrontFillsIntoThePopulation(Ranking ranking, int rank) {
     return ranking.getSubfront(rank).size() < (populationSize_ - population_.size()) ;
   }
-  
-  SolutionSet getNonDominatedSolutions() throws JMException {
+
+  protected SolutionSet getNonDominatedSolutions() throws JMException {
     return new Ranking(population_).getSubfront(0);
   }
 
-  void tearDown() {
+  protected void tearDown() {
     evaluator_.shutdown(); 
   }
 } 

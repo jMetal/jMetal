@@ -95,6 +95,7 @@ public class RunnerC {
     } else if (args.length == 2) {
       inputStreamReader = new InputStreamReader(new FileInputStream(args[0]));
       configuration.load(inputStreamReader);
+      algorithmName = configuration.getProperty("algorithm");
 
       problemName = args[1];
       Object[] settingsParams = {problemName};
@@ -102,6 +103,7 @@ public class RunnerC {
     } else if (args.length == 3) {
       inputStreamReader = new InputStreamReader(new FileInputStream(args[0]));
       configuration.load(inputStreamReader);
+      algorithmName = configuration.getProperty("algorithm");
 
       problemName = args[1];
       paretoFrontFile = args[2];

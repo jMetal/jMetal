@@ -55,24 +55,10 @@ import java.util.logging.Level;
 public class FastSMSEMOA extends Algorithm {
 
   private static final long serialVersionUID = 2217597718629923190L;
-  /**
-   * stores the problem  to solve
-   */
+
   private MetricsUtil utils_;
   private Hypervolume hv_;
 
-  /**
-   * stores the problem  to solve
-   */
-  /*private MetricsUtil utils_;
-  private Hypervolume hv_;*/
-
-
-  /**
-   * Constructor
-   *
-   * @param problem Problem to solve
-   */
   public FastSMSEMOA() {
     super();
     this.utils_ = new MetricsUtil();
@@ -209,9 +195,9 @@ public class FastSMSEMOA extends Algorithm {
         double HV = indicators.getHypervolume(population);
         if (HV >= (0.98 * indicators.getTrueParetoFrontHypervolume())) {
           requiredEvaluations = evaluations;
-        } // if
-      } // if
-    } // while
+        }
+      }
+    }
 
     // Return as output parameter the required evaluations
     setOutputParameter("evaluations", requiredEvaluations);
@@ -220,5 +206,5 @@ public class FastSMSEMOA extends Algorithm {
     Ranking ranking = new Ranking(population);
 
     return ranking.getSubfront(0);
-  } // execute
-} // FastSMSEMOA
+  }
+}
