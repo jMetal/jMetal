@@ -1,4 +1,4 @@
-//  MainC.java
+//  RunnerC.java
 //
 //  Authors:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -42,7 +42,7 @@ import java.util.logging.Logger;
 /**
  * Class for running algorithms reading the configuration from properties files
  */
-public class MainC {
+public class RunnerC {
   private static Logger logger_;
   private static FileHandler fileHandler_;
 
@@ -83,8 +83,7 @@ public class MainC {
       logger_.log(Level.SEVERE, "Sintax error. Usage:");
       logger_.log(Level.SEVERE, "a) jmetal.experiments.Main configurationFile ");
       logger_.log(Level.SEVERE, "b) jmetal.experiments.Main configurationFile problemName");
-      logger_.log(Level.SEVERE,
-        "c) jmetal.experiments.Main configurationFile problemName paretoFrontFile");
+      logger_.log(Level.SEVERE, "c) jmetal.experiments.Main configurationFile problemName paretoFrontFile");
       throw new RuntimeException("Sintax error when invoking the program");
     } else if (args.length == 1) {
       inputStreamReader = new InputStreamReader(new FileInputStream(args[0]));
@@ -100,7 +99,7 @@ public class MainC {
       problemName = args[1];
       Object[] settingsParams = {problemName};
       settings = (new SettingsFactory()).getSettingsObject(algorithmName, settingsParams);
-    } else if (args.length == 3) { // algorithmName problemName paretoFrontFile
+    } else if (args.length == 3) {
       inputStreamReader = new InputStreamReader(new FileInputStream(args[0]));
       configuration.load(inputStreamReader);
 

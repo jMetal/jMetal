@@ -23,7 +23,7 @@ package jmetal.experiments.settings;
 
 import jmetal.core.Algorithm;
 import jmetal.experiments.Settings;
-import jmetal.metaheuristics.nsgaII.NSGAII;
+import jmetal.metaheuristics.nsgaIIb.NSGAII;
 import jmetal.operators.crossover.Crossover;
 import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.mutation.Mutation;
@@ -41,20 +41,21 @@ import java.util.Properties;
 /**
  * Settings class of algorithm NSGA-II (real encoding)
  */
-public class NSGAIISettings extends Settings {
+public class NSGAII_Settings extends Settings {
   private int populationSize_;
   private int maxEvaluations_;
   private double mutationProbability_;
   private double crossoverProbability_;
   private double mutationDistributionIndex_;
   private double crossoverDistributionIndex_;
+  private SolutionSetEvaluator evaluator_ ;
 
   /**
    * Constructor
    *
    * @throws JMException
    */
-  public NSGAIISettings(String problem) throws JMException {
+  public NSGAII_Settings(String problem) throws JMException {
     super(problem);
 
     Object[] problemParams = {"Real"};
@@ -67,6 +68,7 @@ public class NSGAIISettings extends Settings {
     crossoverProbability_ = 0.9;
     mutationDistributionIndex_ = 20.0;
     crossoverDistributionIndex_ = 20.0;
+    evaluator_ = new SequentialSolutionSetEvaluator() ;
   }
 
 
@@ -82,12 +84,8 @@ public class NSGAIISettings extends Settings {
     Crossover crossover;
     Mutation mutation;
 
-    // Creating the algorithm. There are two choices: NSGAII and its steady-
-    // state variant ssNSGAII
-    SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator() ;
-
     // Creating the algorithm.
-    algorithm = new NSGAII();
+    algorithm = new NSGAII(evaluator_);
     algorithm.setProblem(problem_);
     //algorithm = new ssNSGAII(problem_) ;
 

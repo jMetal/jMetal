@@ -1,4 +1,4 @@
-//  Main.java
+//  Runner.java
 //
 //  Authors:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -39,7 +39,7 @@ import java.util.logging.Logger;
 /**
  * Class for running algorithms
  */
-public class Main {
+public class Runner {
   private static Logger logger_;
   private static FileHandler fileHandler_;
 

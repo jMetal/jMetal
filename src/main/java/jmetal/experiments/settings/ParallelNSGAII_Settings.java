@@ -40,7 +40,7 @@ import java.util.Properties;
 /**
  * Settings class of algorithm pNSGA-II (real encoding)
  */
-public class ParallelNSGAIISettings extends Settings {
+public class ParallelNSGAII_Settings extends Settings {
   public int populationSize_;
   public int maxEvaluations_;
   public double mutationProbability_;
@@ -52,7 +52,7 @@ public class ParallelNSGAIISettings extends Settings {
   /**
    * Constructor
    */
-  public ParallelNSGAIISettings(String problem) throws JMException {
+  public ParallelNSGAII_Settings(String problem) throws JMException {
     super(problem);
 
     Object[] problemParams = {"Real"};
