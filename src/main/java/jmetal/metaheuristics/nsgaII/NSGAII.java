@@ -62,23 +62,14 @@ public class NSGAII extends Algorithm {
 
   //public NSGAII(Problem problemToSolve, SolutionSetEvaluator evaluator) {
   //public NSGAII(Problem problemToSolve) {
-  /*
+ 
   public NSGAII() {
 	  super();
     evaluations_ = 0 ;
     distance_ = new Distance();
-  }*/
-  
-  
-  @Inject
-  public NSGAII(SolutionSetEvaluator evaluator, Problem problem) {
-	  super();
-	    evaluations_ = 0 ;
-	    distance_ = new Distance();
-	  this.evaluator_ = evaluator;
-	  this.setProblem(problem);
   }
-
+  
+  
   /**
    * Runs the NSGA-II algorithm.
    *
