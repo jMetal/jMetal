@@ -58,7 +58,7 @@ public class pMOEAD_Settings extends Settings {
   /**
    * Constructor
    */
-  public pMOEAD_Settings(String problem) {
+  public pMOEAD_Settings(String problem) throws JMException {
     super(problem);
 
     Object[] problemParams = {"Real"};

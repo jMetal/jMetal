@@ -24,7 +24,6 @@ package test.experiments.settings;
 import jmetal.core.Algorithm;
 import jmetal.core.Problem;
 import jmetal.experiments.Settings;
-import jmetal.experiments.settings.NSGAII_Settings;
 import jmetal.operators.crossover.SBXCrossover;
 import jmetal.operators.mutation.PolynomialMutation;
 import jmetal.problems.Fonseca;
@@ -60,7 +59,7 @@ public class NSGAII_SettingsTest {
   @Test
   public void testConfigure() throws Exception {
     double epsilon = 0.000000000000001 ;
-    Settings NSGAIISettings = new NSGAII_Settings("Fonseca");
+    Settings NSGAIISettings = new jmetal.experiments.settings.NSGAIISettings("Fonseca");
     Algorithm algorithm = NSGAIISettings.configure() ;
     Problem problem = new Fonseca("Real") ;
     SBXCrossover crossover = (SBXCrossover)algorithm.getOperator("crossover") ;
@@ -83,7 +82,7 @@ public class NSGAII_SettingsTest {
   @Test
   public void testConfigure2() throws Exception {
     double epsilon = 0.000000000000001 ;
-    Settings NSGAIISettings = new NSGAII_Settings("Fonseca");
+    Settings NSGAIISettings = new jmetal.experiments.settings.NSGAIISettings("Fonseca");
     Algorithm algorithm = NSGAIISettings.configure(configuration_) ;
     Problem problem = new Fonseca("Real") ;
     SBXCrossover crossover = (SBXCrossover)algorithm.getOperator("crossover") ;

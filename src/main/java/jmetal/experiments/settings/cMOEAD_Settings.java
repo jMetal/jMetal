@@ -52,7 +52,7 @@ public class cMOEAD_Settings extends Settings {
   /**
    * Constructor
    */
-  public cMOEAD_Settings(String problem) {
+  public cMOEAD_Settings(String problem)  {
     super(problem);
 
     Object[] problemParams = {"Real"};

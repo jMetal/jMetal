@@ -29,12 +29,10 @@ import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.localSearch.MutationLocalSearch;
 import jmetal.operators.mutation.MutationFactory;
 import jmetal.problems.ProblemFactory;
-import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
 import java.util.HashMap;
 import java.util.Properties;
-import java.util.logging.Level;
 
 /**
  * Settings class of algorithm AbYSS
@@ -56,15 +54,11 @@ public class AbYSS_Settings extends Settings {
    *
    * @param problemName Problem to solve
    */
-  public AbYSS_Settings(String problemName) {
+  public AbYSS_Settings(String problemName) throws JMException {
     super(problemName);
 
     Object[] problemParams = {"Real"};
-    try {
-      problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
-    } catch (JMException e) {
-      Configuration.logger_.log(Level.SEVERE, "Unable to get problem", e);
-    }
+    problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
 
     populationSize_ = 20;
     maxEvaluations_ = 25000;
@@ -76,7 +70,6 @@ public class AbYSS_Settings extends Settings {
     crossoverDistributionIndex_ = 20.0;
     mutationDistributionIndex_ = 20.0;
     improvementRounds_ = 1;
-
   }
 
   /**

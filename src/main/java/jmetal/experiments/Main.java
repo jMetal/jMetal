@@ -27,6 +27,9 @@ import jmetal.core.SolutionSet;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
+import jmetal.util.fileOutput.DefaultFileOutputContext;
+import jmetal.util.fileOutput.FileOutputContext;
+import jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
 import java.util.logging.FileHandler;
@@ -54,7 +57,7 @@ public class Main {
     JMException, SecurityException, IOException,
     IllegalArgumentException, IllegalAccessException,
     ClassNotFoundException {
-    Algorithm algorithm;         // The algorithm to use
+    Algorithm algorithm;
 
     logger_ = Configuration.logger_;
     fileHandler_ = new FileHandler("jMetal.log");
@@ -107,10 +110,16 @@ public class Main {
 
     // Result messages
     logger_.info("Total execution time: " + estimatedTime + "ms");
-    logger_.info("Objectives values have been writen to file FUN");
-    population.printObjectivesToFile("FUN");
-    logger_.info("Variables values have been writen to file VAR");
-    population.printVariablesToFile("VAR");
+
+    FileOutputContext fileContext = new DefaultFileOutputContext("VAR.tsv") ;
+    fileContext.setSeparator("\t");
+    logger_.info("Variables values have been writen to file VAR.tsv");
+    SolutionSetOutput.printVariablesToFile(fileContext, population) ;
+
+    fileContext = new DefaultFileOutputContext("FUN.tsv");
+    fileContext.setSeparator("\t");
+    SolutionSetOutput.printObjectivesToFile(fileContext, population);
+    logger_.info("Objectives values have been written to file FUN");
 
     if (indicators != null) {
       logger_.info("Quality indicators");
@@ -119,12 +128,6 @@ public class Main {
       logger_.info("IGD        : " + indicators.getIGD(population));
       logger_.info("Spread     : " + indicators.getSpread(population));
       logger_.info("Epsilon    : " + indicators.getEpsilon(population));
-
-      if (algorithm.getOutputParameter("evaluations") != null) {
-        Integer evals = (Integer) algorithm.getOutputParameter("evaluations");
-        int evaluations = (Integer) evals;
-        logger_.info("Speed      : " + evaluations + " evaluations");
-      }
     }
   }
 }

@@ -1,10 +1,9 @@
-//  NSGAII_Settings.java 
+//  ParallelNSGAIISettings.java
 //
 //  Authors:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
 //
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
+//  Copyright (c) 2013 Antonio J. Nebro
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -23,7 +22,7 @@ package jmetal.experiments.settings;
 
 import jmetal.core.Algorithm;
 import jmetal.experiments.Settings;
-import jmetal.metaheuristics.nsgaII.NSGAII;
+import jmetal.metaheuristics.nsgaIIb.NSGAII;
 import jmetal.operators.crossover.Crossover;
 import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.mutation.Mutation;
@@ -32,29 +31,28 @@ import jmetal.operators.selection.Selection;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.ProblemFactory;
 import jmetal.util.JMException;
-import jmetal.util.evaluator.SequentialSolutionSetEvaluator;
+import jmetal.util.evaluator.MultithreadedSolutionSetEvaluator;
 import jmetal.util.evaluator.SolutionSetEvaluator;
 
 import java.util.HashMap;
 import java.util.Properties;
 
 /**
- * Settings class of algorithm NSGA-II (real encoding)
+ * Settings class of algorithm pNSGA-II (real encoding)
  */
-public class NSGAII_Settings extends Settings {
-  private int populationSize_;
-  private int maxEvaluations_;
-  private double mutationProbability_;
-  private double crossoverProbability_;
-  private double mutationDistributionIndex_;
-  private double crossoverDistributionIndex_;
+public class ParallelNSGAIISettings extends Settings {
+  public int populationSize_;
+  public int maxEvaluations_;
+  public double mutationProbability_;
+  public double crossoverProbability_;
+  public double mutationDistributionIndex_;
+  public double crossoverDistributionIndex_;
+  public int numberOfThreads_;
 
   /**
    * Constructor
-   *
-   * @throws JMException
    */
-  public NSGAII_Settings(String problem) throws JMException {
+  public ParallelNSGAIISettings(String problem) throws JMException {
     super(problem);
 
     Object[] problemParams = {"Real"};
@@ -67,11 +65,13 @@ public class NSGAII_Settings extends Settings {
     crossoverProbability_ = 0.9;
     mutationDistributionIndex_ = 20.0;
     crossoverDistributionIndex_ = 20.0;
+    // 0 - number of available cores
+    numberOfThreads_ = 8;
   }
 
 
   /**
-   * Configure NSGAII with default parameter experiments.settings
+   * Configure NSGAII with user-defined parameter experiments.settings
    *
    * @return A NSGAII algorithm object
    * @throws jmetal.util.JMException
@@ -82,26 +82,87 @@ public class NSGAII_Settings extends Settings {
     Crossover crossover;
     Mutation mutation;
 
-    // Creating the algorithm. There are two choices: NSGAII and its steady-
-    // state variant ssNSGAII
-    SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator() ;
+    HashMap parameters;
 
-    // Creating the algorithm.
-    algorithm = new NSGAII();
+    SolutionSetEvaluator evaluator = new MultithreadedSolutionSetEvaluator(0, problem_) ;
+
+    // Creating the algorithm. 
+    algorithm = new NSGAII(evaluator);
     algorithm.setProblem(problem_);
-    //algorithm = new ssNSGAII(problem_) ;
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", populationSize_);
     algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
 
     // Mutation and Crossover for Real codification
+    parameters = new HashMap();
+    parameters.put("probability", crossoverProbability_);
+    parameters.put("distributionIndex", crossoverDistributionIndex_);
+    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters);
+
+    parameters = new HashMap();
+    parameters.put("probability", mutationProbability_);
+    parameters.put("distributionIndex", mutationDistributionIndex_);
+    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);
+
+    // Selection Operator 
+    parameters = null;
+    selection = SelectionFactory.getSelectionOperator("BinaryTournament2", parameters);
+
+    // Add the operators to the algorithm
+    algorithm.addOperator("crossover", crossover);
+    algorithm.addOperator("mutation", mutation);
+    algorithm.addOperator("selection", selection);
+
+    return algorithm;
+  }
+
+  /**
+   * Configure pNSGAII with user-defined parameter experiments.settings
+   *
+   * @return A pNSGAII algorithm object
+   */
+  @Override
+  public Algorithm configure(Properties configuration) throws JMException {
+    Algorithm algorithm;
+    Selection selection;
+    Crossover crossover;
+    Mutation mutation;
+
+    numberOfThreads_ = Integer
+      .parseInt(configuration.getProperty("numberOfThreads", String.valueOf(numberOfThreads_)));
+
+    SolutionSetEvaluator evaluator = new MultithreadedSolutionSetEvaluator(numberOfThreads_, problem_) ;
+
+    // Creating the algorithm.
+    algorithm = new NSGAII(evaluator);
+    algorithm.setProblem(problem_);
+
+    // Algorithm parameters
+    populationSize_ = Integer
+      .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize_)));
+    maxEvaluations_ = Integer
+      .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations_)));
+    algorithm.setInputParameter("populationSize", populationSize_);
+    algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
+
+    // Mutation and Crossover for Real codification
+    crossoverProbability_ = Double.parseDouble(
+      configuration.getProperty("crossoverProbability", String.valueOf(crossoverProbability_)));
+    crossoverDistributionIndex_ = Double.parseDouble(configuration
+      .getProperty("crossoverDistributionIndex", String.valueOf(crossoverDistributionIndex_)));
+
     HashMap<String, Object> parameters = new HashMap<String, Object>();
     parameters.put("probability", crossoverProbability_);
     parameters.put("distributionIndex", crossoverDistributionIndex_);
     crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters);
 
-    parameters = new HashMap<String, Object>();
+    mutationProbability_ = Double.parseDouble(
+      configuration.getProperty("mutationProbability", String.valueOf(mutationProbability_)));
+    mutationDistributionIndex_ = Double.parseDouble(configuration
+      .getProperty("mutationDistributionIndex", String.valueOf(mutationDistributionIndex_)));
+
+    parameters = new HashMap();
     parameters.put("probability", mutationProbability_);
     parameters.put("distributionIndex", mutationDistributionIndex_);
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);
@@ -117,29 +178,4 @@ public class NSGAII_Settings extends Settings {
 
     return algorithm;
   }
-
-  /**
-   * Configure NSGAII with user-defined parameter experiments.settings
-   *
-   * @return A NSGAII algorithm object
-   */
-  @Override
-  public Algorithm configure(Properties configuration) throws JMException {
-    populationSize_ = Integer
-      .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize_)));
-    maxEvaluations_ = Integer
-      .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations_)));
-
-    crossoverProbability_ = Double.parseDouble(
-      configuration.getProperty("crossoverProbability", String.valueOf(crossoverProbability_)));
-    crossoverDistributionIndex_ = Double.parseDouble(configuration
-      .getProperty("crossoverDistributionIndex", String.valueOf(crossoverDistributionIndex_)));
-
-    mutationProbability_ = Double.parseDouble(
-      configuration.getProperty("mutationProbability", String.valueOf(mutationProbability_)));
-    mutationDistributionIndex_ = Double.parseDouble(configuration
-      .getProperty("mutationDistributionIndex", String.valueOf(mutationDistributionIndex_)));
-
-    return configure();
-  }
-} 
+}

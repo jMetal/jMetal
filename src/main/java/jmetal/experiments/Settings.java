@@ -55,7 +55,7 @@ public abstract class Settings {
   /**
    * Constructor
    */
-  public Settings(String problemName) {
+  public Settings(String problemName) throws JMException {
     problemName_ = problemName;
   }
 
