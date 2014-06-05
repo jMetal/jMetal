@@ -111,9 +111,10 @@ public class NSGAIIRunner {
     //Injector injector = Guice.createInjector(new ExecutorModule()) ;
     //Executor executor = injector.getInstance(Executor.class) ;
 
+    System.out.println(problem.getNumberOfObjectives());
     Injector injector = Guice.createInjector();
     algorithm = injector.getInstance(NSGAII.class);
-    algorithm.setProblem(problem);
+    //algorithm.setProblem(problem);
     
     
     // Algorithm parameters

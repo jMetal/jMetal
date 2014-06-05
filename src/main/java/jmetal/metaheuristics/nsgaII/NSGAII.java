@@ -43,7 +43,7 @@ import com.google.inject.*;
 public class NSGAII extends Algorithm {
   private static final long serialVersionUID = 5815971727148859507L;
 
-  @Inject
+  //@Inject
   private SolutionSetEvaluator evaluator_ ;
 
   private int populationSize_;
@@ -62,10 +62,21 @@ public class NSGAII extends Algorithm {
 
   //public NSGAII(Problem problemToSolve, SolutionSetEvaluator evaluator) {
   //public NSGAII(Problem problemToSolve) {
+  /*
   public NSGAII() {
 	  super();
     evaluations_ = 0 ;
     distance_ = new Distance();
+  }*/
+  
+  
+  @Inject
+  public NSGAII(SolutionSetEvaluator evaluator, Problem problem) {
+	  super();
+	    evaluations_ = 0 ;
+	    distance_ = new Distance();
+	  this.evaluator_ = evaluator;
+	  this.setProblem(problem);
   }
 
   /**

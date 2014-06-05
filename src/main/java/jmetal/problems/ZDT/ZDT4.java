@@ -21,6 +21,8 @@
 
 package jmetal.problems.ZDT;
 
+import com.google.inject.Inject;
+
 import jmetal.core.Problem;
 import jmetal.core.Solution;
 import jmetal.encodings.solutiontype.ArrayRealSolutionType;
@@ -39,6 +41,10 @@ public class ZDT4 extends Problem {
    */
   private static final long serialVersionUID = -8130678685721634674L;
 
+  @Inject
+  public ZDT4() throws JMException {
+	  this("Real",10);
+  }
   
   
   /**
