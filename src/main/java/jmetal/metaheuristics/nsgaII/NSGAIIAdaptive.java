@@ -1,23 +1,23 @@
 package jmetal.metaheuristics.nsgaII;
 
-import jmetal.core.*;
+import jmetal.core.Operator;
+import jmetal.core.Solution;
+import jmetal.core.SolutionSet;
 import jmetal.util.Configuration;
 import jmetal.util.Distance;
 import jmetal.util.JMException;
 import jmetal.util.Ranking;
 import jmetal.util.comparator.CrowdingComparator;
 import jmetal.util.comparator.DominanceComparator;
+import jmetal.util.evaluator.SolutionSetEvaluator;
 import jmetal.util.offspring.Offspring;
 import jmetal.util.offspring.PolynomialMutationOffspring;
 import jmetal.util.random.PseudoRandom;
 
 import java.util.Comparator;
 
-public class NSGAIIAdaptive extends Algorithm {
+public class NSGAIIAdaptive extends NSGAIITemplate {
 
-  /**
-   *
-   */
   private static final long serialVersionUID = 4290510927100994634L;
 
   public int populationSize_;
@@ -31,8 +31,8 @@ public class NSGAIIAdaptive extends Algorithm {
   int[] contributionCounter_;
   double[] contribution_;
 
-  public NSGAIIAdaptive() {
-    super();
+  public NSGAIIAdaptive(SolutionSetEvaluator evaluator) {
+    super(evaluator);
   }
 
   public SolutionSet execute() throws JMException, ClassNotFoundException {
@@ -85,15 +85,12 @@ public class NSGAIIAdaptive extends Algorithm {
       Configuration.logger_.info("Contribution: " + contribution_[i]);
     }
 
-    // Create the initial solutionSet
-    Solution newSolution;
+    createInitialPopulation();
+    evaluatePopulation(population_);
+
+
     for (int i = 0; i < populationSize_; i++) {
-      newSolution = new Solution(problem_);
-      problem_.evaluate(newSolution);
-      problem_.evaluateConstraints(newSolution);
-      evaluations_++;
-      newSolution.setLocation(i);
-      population_.add(newSolution);
+      population_.get(i).setLocation(i);
     }
 
     while (evaluations_ < maxEvaluations_) {
@@ -171,7 +168,7 @@ public class NSGAIIAdaptive extends Algorithm {
       }
 
       // Remain is less than front(index).size, insert only the best one
-      if (remain > 0) {  // front contains individuals to insert                        
+      if (remain > 0) {  // front contains individuals to insert
         distance.crowdingDistanceAssignment(front, problem_.getNumberOfObjectives());
         front.sort(new CrowdingComparator());
         for (int k = 0; k < remain; k++) {

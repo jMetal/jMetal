@@ -28,6 +28,8 @@ import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.ProblemFactory;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
+import jmetal.util.evaluator.SequentialSolutionSetEvaluator;
+import jmetal.util.evaluator.SolutionSetEvaluator;
 import jmetal.util.offspring.DifferentialEvolutionOffspring;
 import jmetal.util.offspring.Offspring;
 import jmetal.util.offspring.PolynomialMutationOffspring;
@@ -91,7 +93,9 @@ public class NSGAIIRandom_Settings extends Settings {
     Algorithm algorithm;
     Selection selection;
 
-    algorithm = new NSGAIIRandom();
+    SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator() ;
+
+    algorithm = new NSGAIIRandom(evaluator);
     algorithm.setProblem(problem_);
 
     // Algorithm parameters
@@ -130,8 +134,10 @@ public class NSGAIIRandom_Settings extends Settings {
     Algorithm algorithm;
     Selection selection;
 
+    SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator() ;
+
     // Creating the algorithm.
-    algorithm = new NSGAIIRandom();
+    algorithm = new NSGAIIRandom(evaluator);
     algorithm.setProblem(problem_);
 
     // Algorithm parameters

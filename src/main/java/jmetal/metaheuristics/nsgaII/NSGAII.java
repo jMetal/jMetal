@@ -20,16 +20,12 @@
 
 package jmetal.metaheuristics.nsgaII;
 
-import jmetal.core.*;
-import jmetal.problems.ZDT.ZDT3;
-import jmetal.qualityIndicator.QualityIndicator;
-import jmetal.util.Distance;
+import jmetal.core.Solution;
+import jmetal.core.SolutionSet;
 import jmetal.util.JMException;
 import jmetal.util.Ranking;
-import jmetal.util.comparator.CrowdingComparator;
 import jmetal.util.evaluator.SolutionSetEvaluator;
 
-import com.google.inject.*;
 /**
  * Implementation of NSGA-II.
  * This implementation of NSGA-II makes use of a QualityIndicator object
@@ -40,36 +36,13 @@ import com.google.inject.*;
  * To be presented in: PPSN'08. Dortmund. September 2008.
  */
 
-public class NSGAII extends Algorithm {
+public class NSGAII extends NSGAIITemplate {
   private static final long serialVersionUID = 5815971727148859507L;
 
-  //@Inject
-  private SolutionSetEvaluator evaluator_ ;
-
-  private int populationSize_;
-  private int maxEvaluations_;
-  private int evaluations_;
-
-  private SolutionSet population_;
-  private SolutionSet offspringPopulation_;
-
-
-  private Operator mutationOperator_;
-  private Operator crossoverOperator_;
-  private Operator selectionOperator_;
-
-  private Distance distance_ ;
-
-  //public NSGAII(Problem problemToSolve, SolutionSetEvaluator evaluator) {
-  //public NSGAII(Problem problemToSolve) {
- 
-  public NSGAII() {
-	  super();
-    evaluations_ = 0 ;
-    distance_ = new Distance();
+  public NSGAII(SolutionSetEvaluator evaluator) {
+	  super(evaluator);
   }
-  
-  
+
   /**
    * Runs the NSGA-II algorithm.
    *
@@ -79,7 +52,7 @@ public class NSGAII extends Algorithm {
    */
   public SolutionSet execute() throws JMException, ClassNotFoundException {
     readParameterSettings();
-    population_ = createInitialPopulation(populationSize_);
+    createInitialPopulation();
     evaluatePopulation(population_);
 
     // Main loop
@@ -120,85 +93,5 @@ public class NSGAII extends Algorithm {
     tearDown() ;
 
     return getNonDominatedSolutions() ;
-  }
-
-  void readParameterSettings() {
-    populationSize_ = ((Integer) getInputParameter("populationSize")).intValue();
-    maxEvaluations_ = ((Integer) getInputParameter("maxEvaluations")).intValue();
-
-    mutationOperator_ = operators_.get("mutation");
-    crossoverOperator_ = operators_.get("crossover");
-    selectionOperator_ = operators_.get("selection");
-  }
-
-  SolutionSet createInitialPopulation(int populationSize) throws ClassNotFoundException, JMException {
-    SolutionSet population ;
-    population = new SolutionSet(populationSize);
-
-    Solution newSolution;
-    for (int i = 0; i < populationSize; i++) {
-      newSolution = new Solution(problem_);
-      population.add(newSolution);
-    }
-
-    return population ;
-  }
-
-  void evaluatePopulation(SolutionSet population) throws JMException {
-    evaluator_.evaluate(population, problem_) ;
-    evaluations_ += population.size() ;
-  }
-
-  boolean stoppingCondition() {
-    return evaluations_ == maxEvaluations_ ;
-  }
-
-  Ranking rankPopulation() throws JMException {
-    SolutionSet union = population_.union(offspringPopulation_);
-
-    return new Ranking(union) ;
-  }
-
-  void addRankedSolutionsToPopulation(Ranking ranking, int rank) throws JMException {
-    SolutionSet front ;
-
-    front = ranking.getSubfront(rank);
-
-    for (int i = 0 ; i < front.size(); i++) {
-      population_.add(front.get(i));
-    }
-  }
-
-  void computeCrowdingDistance(Ranking ranking, int rank) throws JMException {
-    SolutionSet currentRankedFront = ranking.getSubfront(rank) ;
-    distance_.crowdingDistanceAssignment(currentRankedFront, problem_.getNumberOfObjectives());
-  }
-
-  void addLastRankedSolutions(Ranking ranking, int rank) throws JMException {
-    SolutionSet currentRankedFront = ranking.getSubfront(rank) ;
-
-    currentRankedFront.sort(new CrowdingComparator());
-
-    int i = 0 ;
-    while (population_.size() < populationSize_) {
-      population_.add(currentRankedFront.get(i)) ;
-      i++ ;
-    }
-  }
-
-  boolean populationIsNotFull() {
-    return population_.size() < populationSize_ ;
-  }
-
-  boolean subfrontFillsIntoThePopulation(Ranking ranking, int rank) {
-    return ranking.getSubfront(rank).size() < (populationSize_ - population_.size()) ;
-  }
-  
-  SolutionSet getNonDominatedSolutions() throws JMException {
-    return new Ranking(population_).getSubfront(0);
-  }
-
-  void tearDown() {
-    evaluator_.shutdown(); 
   }
 } 

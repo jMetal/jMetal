@@ -24,7 +24,7 @@ package jmetal.experiments.settings;
 import jmetal.core.Algorithm;
 import jmetal.core.Operator;
 import jmetal.experiments.Settings;
-import jmetal.metaheuristics.nsgaIIb.NSGAII;
+import jmetal.metaheuristics.nsgaII.NSGAII;
 import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.SelectionFactory;

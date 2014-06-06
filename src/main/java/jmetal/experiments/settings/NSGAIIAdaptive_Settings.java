@@ -27,6 +27,8 @@ import jmetal.operators.selection.Selection;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.ProblemFactory;
 import jmetal.util.JMException;
+import jmetal.util.evaluator.SequentialSolutionSetEvaluator;
+import jmetal.util.evaluator.SolutionSetEvaluator;
 import jmetal.util.offspring.DifferentialEvolutionOffspring;
 import jmetal.util.offspring.Offspring;
 import jmetal.util.offspring.PolynomialMutationOffspring;
@@ -86,7 +88,9 @@ public class NSGAIIAdaptive_Settings extends Settings {
 
     HashMap<String, Object> parameters = new HashMap<String, Object>();
 
-    algorithm = new NSGAIIAdaptive();
+    SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator() ;
+
+    algorithm = new NSGAIIAdaptive(evaluator);
     algorithm.setProblem(problem_);
 
     // Algorithm parameters

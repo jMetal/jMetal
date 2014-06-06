@@ -18,13 +18,13 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package jmetal.metaheuristics.nsgaIIb.runner;
+package jmetal.metaheuristics.nsgaII.runner;
 
 import jmetal.core.Algorithm;
 import jmetal.core.Operator;
 import jmetal.core.Problem;
 import jmetal.core.SolutionSet;
-import jmetal.metaheuristics.nsgaIIb.NSGAII;
+import jmetal.metaheuristics.nsgaII.SteadyStateNSGAII;
 import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.SelectionFactory;
@@ -55,7 +55,7 @@ import java.util.logging.Logger;
  * April 2009)
  */
 
-public class NSGAIIRunner {
+public class SteadyStateNSGAIIRunner {
   private static Logger logger_;
   private static FileHandler fileHandler_;
 
@@ -73,7 +73,7 @@ public class NSGAIIRunner {
     SecurityException,
     IOException,
     ClassNotFoundException {
-
+    
     Problem problem;
     Algorithm algorithm;
     Operator crossover;
@@ -108,7 +108,8 @@ public class NSGAIIRunner {
     }
 
     SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator() ;
-    algorithm = new NSGAII(evaluator);
+
+    algorithm = new SteadyStateNSGAII(evaluator);
     algorithm.setProblem(problem);
 
     // Algorithm parameters
@@ -153,7 +154,7 @@ public class NSGAIIRunner {
 
     SolutionSetOutput.printObjectivesToFile(fileContext, population);
     logger_.info("Objectives values have been written to file FUN");
-
+    
     if (indicators != null) {
       logger_.info("Quality indicators");
       logger_.info("Hypervolume: " + indicators.getHypervolume(population));

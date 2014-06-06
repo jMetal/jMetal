@@ -63,57 +63,22 @@ public class SMPSOE extends Algorithm {
   double changeVelocity1_;
   double changeVelocity2_;
   boolean success_;
-  /**
-   * Stores the number of particles_ used
-   */
+
   private int swarmSize_;
-  /**
-   * Stores the maximum size for the archive
-   */
   private int archiveSize_;
-  /**
-   * Stores the maximum number of iteration_
-   */
   private int maxIterations_;
-  /**
-   * Stores the current number of iteration_
-   */
   private int iteration_;
-  /**
-   * Stores the particles
-   */
   private SolutionSet particles_;
-  /**
-   * Stores the best_ solutions founds so far for each particles
-   */
   private Solution[] best_;
-  /**
-   * Stores the leaders_
-   */
+
   private CrowdingArchive leaders_;
-  /**
-   * Stores the speed_ of each particle
-   */
   private double[][] speed_;
-  /**
-   * Stores a comparator for checking dominance
-   */
   private Comparator<Solution> dominance_;
-  /**
-   * Stores a comparator for crowding checking
-   */
   private Comparator<Solution> crowdingDistanceComparator_;
-  /**
-   * Stores a <code>Distance</code> object
-   */
+
   private Distance distance_;
-  /**
-   * Stores a operator for non uniform mutations
-   */
   private Operator polynomialMutation_;
-  /**
-   * Number of threads to be executed in parallel
-   */
+
   private int numberOfThreads_;
   private double trueHypervolume_;
   private Hypervolume hy_;
@@ -122,11 +87,6 @@ public class SMPSOE extends Algorithm {
   private double deltaMin_[];
 
 
-  /**
-   * Constructor
-   *
-   * @param problem Problem to solve
-   */
   public SMPSOE() {
     super();
 
@@ -293,11 +253,11 @@ public class SMPSOE extends Algorithm {
 
         if (particle.getValue(var) < problem_.getLowerLimit(var)) {
           particle.setValue(var, problem_.getLowerLimit(var));
-          speed_[i][var] = speed_[i][var] * changeVelocity1_; //
+          speed_[i][var] = speed_[i][var] * changeVelocity1_;
         }
         if (particle.getValue(var) > problem_.getUpperLimit(var)) {
           particle.setValue(var, problem_.getUpperLimit(var));
-          speed_[i][var] = speed_[i][var] * changeVelocity2_; //
+          speed_[i][var] = speed_[i][var] * changeVelocity2_;
         }
       }
     }
@@ -398,10 +358,6 @@ public class SMPSOE extends Algorithm {
         problem_.getNumberOfObjectives());
       iteration_++;
 
-      if ((iteration_ % 1) == 0) {
-        leaders_.printObjectivesToFile("FUN" + iteration_);
-        leaders_.printVariablesToFile("VAR" + iteration_);
-      }
 
     }
 

@@ -165,13 +165,8 @@ public class SMPSOhv extends Algorithm {
       trueFront_.writeObjectivesToMatrix(),
       problem_.getNumberOfObjectives());
 
-  } // SMPSO
+  }
 
-  /**
-   * Constructor
-   *
-   * @param problem Problem to solve
-   */
   public SMPSOhv(String trueParetoFront) throws FileNotFoundException {
     super();
     hy_ = new Hypervolume();

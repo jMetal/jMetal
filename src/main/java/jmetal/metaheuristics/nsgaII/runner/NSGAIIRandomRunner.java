@@ -19,7 +19,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package jmetal.metaheuristics.nsgaIIb.runner;
+package jmetal.metaheuristics.nsgaII.runner;
 
 import jmetal.core.Algorithm;
 import jmetal.core.Operator;
@@ -32,6 +32,8 @@ import jmetal.problems.ProblemFactory;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
+import jmetal.util.evaluator.SequentialSolutionSetEvaluator;
+import jmetal.util.evaluator.SolutionSetEvaluator;
 import jmetal.util.offspring.DifferentialEvolutionOffspring;
 import jmetal.util.offspring.Offspring;
 import jmetal.util.offspring.PolynomialMutationOffspring;
@@ -115,7 +117,9 @@ public class NSGAIIRandomRunner {
       */
     }
 
-    algorithm = new NSGAIIRandom();
+    SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator() ;
+
+    algorithm = new NSGAIIRandom(evaluator);
     algorithm.setProblem(problem);
     //algorithm = new ssNSGAIIAdaptive(problem);
 

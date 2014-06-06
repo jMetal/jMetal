@@ -21,168 +21,78 @@
 
 package jmetal.metaheuristics.nsgaII;
 
-import jmetal.core.*;
-import jmetal.qualityIndicator.QualityIndicator;
-import jmetal.util.Distance;
+import jmetal.core.Solution;
+import jmetal.core.SolutionSet;
 import jmetal.util.JMException;
 import jmetal.util.Ranking;
-import jmetal.util.comparator.CrowdingComparator;
+import jmetal.util.evaluator.SolutionSetEvaluator;
 
 /**
  * This class implements a steady-state version of NSGA-II.
  */
-public class SteadyStateNSGAII extends Algorithm {
+public class SteadyStateNSGAII extends NSGAIITemplate {
 
   private static final long serialVersionUID = 3588191288161132897L;
 
-  /**
-   * Constructor
-   *
-   * @param problem Problem to solve
-   */
-  public SteadyStateNSGAII() {
-    super();
-  } 
+  public SteadyStateNSGAII(SolutionSetEvaluator evaluator) {
+    super(evaluator);
+  }
 
   /**
    * Runs the ssNSGA-II algorithm.
    *
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
    * as a result of the algorithm execution
-   * @throws JMException
+   * @throws jmetal.util.JMException
    */
   public SolutionSet execute() throws JMException, ClassNotFoundException {
-    int populationSize;
-    int maxEvaluations;
-    int evaluations;
-
-    QualityIndicator indicators; // QualityIndicator object
-    int requiredEvaluations; // Use in the example of use of the
-    // indicators object (see below)
-
-    SolutionSet population;
-    SolutionSet offspringPopulation;
-    SolutionSet union;
-
-    Operator mutationOperator;
-    Operator crossoverOperator;
-    Operator selectionOperator;
-
-    Distance distance = new Distance();
-
-    //Read the parameters
-    populationSize = (Integer) getInputParameter("populationSize");
-    maxEvaluations = (Integer) getInputParameter("maxEvaluations");
-    indicators = (QualityIndicator) getInputParameter("indicators");
-
-    //Initialize the variables
-    population = new SolutionSet(populationSize);
-    evaluations = 0;
-
-    requiredEvaluations = 0;
-
-    //Read the operators
-    mutationOperator = operators_.get("mutation");
-    crossoverOperator = operators_.get("crossover");
-    selectionOperator = operators_.get("selection");
-
-    // Create the initial solutionSet
-    Solution newSolution;
-    for (int i = 0; i < populationSize; i++) {
-      newSolution = new Solution(problem_);
-      problem_.evaluate(newSolution);
-      problem_.evaluateConstraints(newSolution);
-      evaluations++;
-      population.add(newSolution);
-    } //for       
+    readParameterSettings();
+    createInitialPopulation();
+    evaluatePopulation(population_);
 
     // Generations ...
-    while (evaluations < maxEvaluations) {
+    while (!stoppingCondition()) {
 
       // Create the offSpring solutionSet      
-      offspringPopulation = new SolutionSet(populationSize);
+      offspringPopulation_ = new SolutionSet(1);
       Solution[] parents = new Solution[2];
 
       //obtain parents
-      parents[0] = (Solution) selectionOperator.execute(population);
-      parents[1] = (Solution) selectionOperator.execute(population);
+      parents[0] = (Solution) selectionOperator_.execute(population_);
+      parents[1] = (Solution) selectionOperator_.execute(population_);
 
       // crossover
-      Solution[] offSpring = (Solution[]) crossoverOperator.execute(parents);
+      Solution[] offSpring = (Solution[]) crossoverOperator_.execute(parents);
 
       // mutation
-      mutationOperator.execute(offSpring[0]);
+      mutationOperator_.execute(offSpring[0]);
 
       // evaluation
       problem_.evaluate(offSpring[0]);
       problem_.evaluateConstraints(offSpring[0]);
 
       // insert child into the offspring population
-      offspringPopulation.add(offSpring[0]);
+      offspringPopulation_.add(offSpring[0]);
 
-      evaluations++;
+      evaluations_++;
 
-      // Create the solutionSet union of solutionSet and offSpring
-      union = ((SolutionSet) population).union(offspringPopulation);
+      Ranking ranking = rankPopulation() ;
 
-      // Ranking the union
-      Ranking ranking = new Ranking(union);
+      population_.clear();
+      int rankingIndex = 0 ;
+      while (populationIsNotFull()) {
+        if (subfrontFillsIntoThePopulation(ranking, rankingIndex)) {
+          addRankedSolutionsToPopulation(ranking, rankingIndex);
+          rankingIndex ++ ;
+        } else {
+          computeCrowdingDistance(ranking, rankingIndex) ;
+          addLastRankedSolutions(ranking, rankingIndex);
+        }
+      }
+    }
 
-      int remain = populationSize;
-      int index = 0;
-      SolutionSet front = null;
-      population.clear();
+    tearDown();
 
-      // Obtain the next front
-      front = ranking.getSubfront(index);
-
-      while ((remain > 0) && (remain >= front.size())) {
-        //Assign crowding distance to individuals
-        distance.crowdingDistanceAssignment(front, problem_.getNumberOfObjectives());
-        //Add the individuals of this front
-        for (int k = 0; k < front.size(); k++) {
-          population.add(front.get(k));
-        } // for
-
-        //Decrement remain
-        remain = remain - front.size();
-
-        //Obtain the next front
-        index++;
-        if (remain > 0) {
-          front = ranking.getSubfront(index);
-        }      
-      } 
-
-      // Remain is less than front(index).size, insert only the best one
-      if (remain > 0) {  // front contains individuals to insert                        
-        distance.crowdingDistanceAssignment(front, problem_.getNumberOfObjectives());
-        front.sort(new CrowdingComparator());
-        for (int k = 0; k < remain; k++) {
-          population.add(front.get(k));
-        } // for
-
-        remain = 0;
-      } // if                               
-
-      // This piece of code shows how to use the indicator object into the code
-      // of NSGA-II. In particular, it finds the number of evaluations required
-      // by the algorithm to obtain a Pareto front with a hypervolume higher
-      // than the hypervolume of the true Pareto front.
-      if ((indicators != null) &&
-        (requiredEvaluations == 0)) {
-        double HV = indicators.getHypervolume(population);
-        if (HV >= (0.98 * indicators.getTrueParetoFrontHypervolume())) {
-          requiredEvaluations = evaluations;
-        } // if
-      } // if
-    } // while
-
-    // Return as output parameter the required evaluations
-    setOutputParameter("evaluations", requiredEvaluations);
-
-    // Return the first non-dominated front
-    Ranking ranking = new Ranking(population);
-    return ranking.getSubfront(0);
+    return getNonDominatedSolutions() ;
   } 
 } 

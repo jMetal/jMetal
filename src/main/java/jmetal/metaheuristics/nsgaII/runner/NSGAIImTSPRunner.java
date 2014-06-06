@@ -19,23 +19,22 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package jmetal.metaheuristics.nsgaII;
+package jmetal.metaheuristics.nsgaII.runner;
 
 import jmetal.core.Algorithm;
 import jmetal.core.Operator;
 import jmetal.core.Problem;
 import jmetal.core.SolutionSet;
+import jmetal.metaheuristics.nsgaII.NSGAII;
 import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.mTSP;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
 import jmetal.util.evaluator.SequentialSolutionSetEvaluator;
 import jmetal.util.evaluator.SolutionSetEvaluator;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
@@ -51,8 +50,8 @@ public class NSGAIImTSPRunner {
 
   /**
    * @param args Command line arguments.
-   * @throws JMException
-   * @throws IOException
+   * @throws jmetal.util.JMException
+   * @throws java.io.IOException
    * @throws SecurityException Usage:
    *                           - jmetal.metaheuristics.nsgaII.NSGAII_mTSP_main
    */
@@ -75,9 +74,9 @@ public class NSGAIImTSPRunner {
 
     SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator();
     //SolutionSetEvaluator executor = new MultithreadedSolutionSetEvaluator(4, problem) ;
-    //algorithm = new NSGAII(problem, evaluator);
-    //algorithm = new ssNSGAII(problem);
-    algorithm = null;
+    algorithm = new NSGAII(evaluator);
+    algorithm.setProblem(problem);
+
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", 100);
     algorithm.setInputParameter("maxEvaluations", 1000000);

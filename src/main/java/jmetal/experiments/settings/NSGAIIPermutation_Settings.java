@@ -87,7 +87,7 @@ public class NSGAIIPermutation_Settings extends Settings {
     SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator() ;
 
     // Creating the algorithm.
-    algorithm = new NSGAII();
+    algorithm = new NSGAII(evaluator);
     algorithm.setProblem(problem_);
 
     // Algorithm parameters
@@ -131,7 +131,7 @@ public class NSGAIIPermutation_Settings extends Settings {
     SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator() ;
 
     // Creating the algorithm.
-    algorithm = new NSGAII();
+    algorithm = new NSGAII(evaluator);
     algorithm.setProblem(problem_);
 
     // Algorithm parameters

@@ -1,56 +1,31 @@
 package jmetal.metaheuristics.nsgaII;
 
-import jmetal.core.*;
+import jmetal.core.Solution;
+import jmetal.core.SolutionSet;
 import jmetal.util.Configuration;
-import jmetal.util.Distance;
 import jmetal.util.JMException;
 import jmetal.util.Ranking;
-import jmetal.util.comparator.CrowdingComparator;
+import jmetal.util.evaluator.SolutionSetEvaluator;
 import jmetal.util.offspring.Offspring;
 import jmetal.util.offspring.PolynomialMutationOffspring;
 import jmetal.util.random.PseudoRandom;
 
-public class NSGAIIRandom extends Algorithm {
+public class NSGAIIRandom extends NSGAIITemplate {
 
-  /**
-   *
-   */
   private static final long serialVersionUID = -9113018415834859888L;
-
-  public int populationSize_;
-  public SolutionSet population_;
-  public SolutionSet offspringPopulation_;
-  public SolutionSet union_;
-
-  int maxEvaluations_;
-  int evaluations_;
 
   int[] contributionCounter_;
   double[] contribution_;
 
   double total = 0.0;
 
-  Operator selectionOperator_;
-
-  public NSGAIIRandom() {
-    super();
+  public NSGAIIRandom(SolutionSetEvaluator evaluator) {
+    super(evaluator);
   }
 
   public SolutionSet execute() throws JMException, ClassNotFoundException {
     double contrReal[] = new double[3];
     contrReal[0] = contrReal[1] = contrReal[2] = 0;
-
-    Distance distance = new Distance();
-
-    //Read parameter values
-    populationSize_ = (Integer) getInputParameter("populationSize");
-    maxEvaluations_ = (Integer) getInputParameter("maxEvaluations");
-
-    //Init the variables
-    population_ = new SolutionSet(populationSize_);
-    evaluations_ = 0;
-
-    selectionOperator_ = operators_.get("selection");
 
     Offspring[] getOffspring;
     int N_O; // number of offpring objects
@@ -72,24 +47,22 @@ public class NSGAIIRandom extends Algorithm {
       Configuration.logger_.info("Contribution: " + contribution_[i]);
     }
 
-    // Create the initial solutionSet
-    Solution newSolution;
+    readParameterSettings();
+    createInitialPopulation();
+    evaluatePopulation(population_);
+
+
     for (int i = 0; i < populationSize_; i++) {
-      newSolution = new Solution(problem_);
-      problem_.evaluate(newSolution);
-      problem_.evaluateConstraints(newSolution);
-      evaluations_++;
-      newSolution.setLocation(i);
-      population_.add(newSolution);
+      population_.get(i).setLocation(i);
     }
 
-    while (evaluations_ < maxEvaluations_) {
+    while (!stoppingCondition()) {
 
       // Create the offSpring solutionSet      
       offspringPopulation_ = new SolutionSet(populationSize_);
       Solution[] parents = new Solution[2];
       for (int i = 0; i < populationSize_; i++) {
-        if (evaluations_ < maxEvaluations_) {
+        if (!stoppingCondition()) {
           Solution individual =
             new Solution(population_.get(PseudoRandom.randInt(0, populationSize_ - 1)));
 
@@ -102,16 +75,13 @@ public class NSGAIIRandom extends Algorithm {
             if (!found && (rnd <= contribution_[selected])) {
               if ("DE".equals(getOffspring[selected].id())) {
                 offSpring = getOffspring[selected].getOffspring(population_, i);
-                //contrDE++;
               } else if ("SBXCrossover".equals(getOffspring[selected].id())) {
                 offSpring = getOffspring[selected].getOffspring(population_);
-                //contrSBX++;
               } else if ("PolynomialMutation".equals(getOffspring[selected].id())) {
                 offSpring =
                   ((PolynomialMutationOffspring) getOffspring[selected]).getOffspring(individual);
-                //contrPol++;
               } else {
-                Configuration.logger_.info("Error in NSGAIIAdaptive. Operator " + offSpring + " does not exist");
+                Configuration.logger_.info("Error in NSGAIITRandom. Operator " + offSpring + " does not exist");
               }
 
               offSpring.setFitness((int) selected);
@@ -125,50 +95,23 @@ public class NSGAIIRandom extends Algorithm {
         }
       }
 
-      // Create the solutionSet union of solutionSet and offSpring
-      union_ = ((SolutionSet) population_).union(offspringPopulation_);
+      Ranking ranking = rankPopulation() ;
 
-      // Ranking the union
-      Ranking ranking = new Ranking(union_);
-
-      int remain = populationSize_;
-      int index = 0;
-      SolutionSet front = null;
       population_.clear();
-
-      // Obtain the next front
-      front = ranking.getSubfront(index);
-
-      while ((remain > 0) && (remain >= front.size())) {
-        //Assign crowding distance to individuals
-        distance.crowdingDistanceAssignment(front, problem_.getNumberOfObjectives());
-        //Add the individuals of this front
-        for (int k = 0; k < front.size(); k++) {
-          population_.add(front.get(k));
-        } // for
-
-        //Decrement remain
-        remain = remain - front.size();
-
-        //Obtain the next front
-        index++;
-        if (remain > 0) {
-          front = ranking.getSubfront(index);
-        }
-      }
-
-      // Remain is less than front(index).size, insert only the best one
-      if (remain > 0) {  // front contains individuals to insert                        
-        distance.crowdingDistanceAssignment(front, problem_.getNumberOfObjectives());
-        front.sort(new CrowdingComparator());
-        for (int k = 0; k < remain; k++) {
-          population_.add(front.get(k));
+      int rankingIndex = 0 ;
+      while (populationIsNotFull()) {
+        if (subfrontFillsIntoThePopulation(ranking, rankingIndex)) {
+          addRankedSolutionsToPopulation(ranking, rankingIndex);
+          rankingIndex ++ ;
+        } else {
+          computeCrowdingDistance(ranking, rankingIndex) ;
+          addLastRankedSolutions(ranking, rankingIndex);
         }
       }
     }
 
-    // Return the first non-dominated front
-    Ranking ranking = new Ranking(population_);
-    return ranking.getSubfront(0);
+    tearDown() ;
+
+    return getNonDominatedSolutions() ;
   }
 }

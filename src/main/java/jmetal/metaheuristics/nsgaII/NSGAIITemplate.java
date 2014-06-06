@@ -18,7 +18,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package jmetal.metaheuristics.nsgaIIb;
+package jmetal.metaheuristics.nsgaII;
 
 import com.google.inject.Inject;
 import jmetal.core.Algorithm;

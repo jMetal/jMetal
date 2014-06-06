@@ -18,11 +18,12 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package jmetal.metaheuristics.smpso;
+package jmetal.metaheuristics.smpso.runner;
 
 import jmetal.core.Algorithm;
 import jmetal.core.Problem;
 import jmetal.core.SolutionSet;
+import jmetal.metaheuristics.smpso.SMPSOE;
 import jmetal.operators.mutation.Mutation;
 import jmetal.operators.mutation.MutationFactory;
 import jmetal.problems.Kursawe;
@@ -30,7 +31,6 @@ import jmetal.problems.ProblemFactory;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
-import jmetal.util.evaluator.MultithreadedSolutionSetEvaluator;
 import jmetal.util.evaluator.SequentialSolutionSetEvaluator;
 import jmetal.util.evaluator.SolutionSetEvaluator;
 
@@ -88,12 +88,12 @@ public class SMPSORunner {
     }
 
     // 0 - use all the available cores
-    //SolutionSetEvaluator evaluator = new MultithreadedSolutionSetEvaluator(0, problem) ;
     SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator() ;
 
     algorithm = new SMPSOE();
     algorithm.setProblem(problem);
     ((SMPSOE)algorithm).setEvaluator(evaluator);
+
     // Algorithm parameters    
     algorithm.setInputParameter("swarmSize", 100);
     algorithm.setInputParameter("archiveSize", 100);
