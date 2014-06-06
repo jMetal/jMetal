@@ -64,8 +64,7 @@ public class MOEAD_DRA_SettingsTest {
     double pm = (Double)mutation.getParameter("probability") ;
     double dim = (Double)mutation.getParameter("distributionIndex") ;
     String dataDirectory = (String) algorithm.getInputParameter("dataDirectory");
-    System.out.println(dataDirectory);
-    //File experimentDirectory = new File(dataDirectory) ;
+
     String experimentDirectoryName = this.getClass().getClassLoader().getResource(dataDirectory).getPath();
 
     int populationSize =  ((Integer)algorithm.getInputParameter("populationSize")).intValue() ;
@@ -101,8 +100,7 @@ public class MOEAD_DRA_SettingsTest {
     double pm = (Double)mutation.getParameter("probability") ;
     double dim = (Double)mutation.getParameter("distributionIndex") ;
     String dataDirectory = (String) algorithm.getInputParameter("dataDirectory");
-    System.out.println(dataDirectory);
-    //File experimentDirectory = new File(dataDirectory) ;
+
     String experimentDirectoryName = this.getClass().getClassLoader().getResource(dataDirectory).getPath();
 
     int populationSize =  ((Integer)algorithm.getInputParameter("populationSize")).intValue() ;

@@ -66,8 +66,7 @@ public class cMOEAD_SettingsTest {
     double pm = (Double)mutation.getParameter("probability") ;
     double dim = (Double)mutation.getParameter("distributionIndex") ;
     String dataDirectory = (String) algorithm.getInputParameter("dataDirectory");
-    System.out.println(dataDirectory);
-    //File experimentDirectory = new File(dataDirectory) ;
+
     String experimentDirectoryName = ClassLoader.getSystemResource(dataDirectory).getPath();
 
     DifferentialEvolutionCrossover crossover = (DifferentialEvolutionCrossover)algorithm.getOperator("crossover") ;
@@ -99,8 +98,7 @@ public class cMOEAD_SettingsTest {
     double pm = (Double)mutation.getParameter("probability") ;
     double dim = (Double)mutation.getParameter("distributionIndex") ;
     String dataDirectory = (String) algorithm.getInputParameter("dataDirectory");
-    System.out.println(dataDirectory);
-    //File experimentDirectory = new File(dataDirectory) ;
+
     String experimentDirectoryName = ClassLoader.getSystemResource(dataDirectory).getPath();
 
     DifferentialEvolutionCrossover crossover = (DifferentialEvolutionCrossover)algorithm.getOperator("crossover") ;

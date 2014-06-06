@@ -35,11 +35,9 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Created by antonio on 17/03/14.
+ * Created by Antonio J. Nebro on 17/03/14.
  */
 public class AdaptiveRandomNeigborhoodTest {
-  //private SolutionSet solutionSet_ ;
-  //private ArrayList<ArrayList<Integer>> list_ ;
   private int numberOfRandomNeighbours_ ;
 
   AdaptiveRandomNeighborhood adaptiveRandomNeighborhood_ ;

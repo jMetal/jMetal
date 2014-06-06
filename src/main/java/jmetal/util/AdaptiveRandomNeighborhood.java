@@ -32,20 +32,13 @@ import java.util.Comparator;
  */
 public class AdaptiveRandomNeighborhood {
   private SolutionSet solutionSet_;
-
-  //private ArrayList<ArrayList<Solution>> solutionList_ ;
   private ArrayList<ArrayList<Integer>> list_;
 
   private int numberOfRandomNeighbours_;
 
-  /**
-   * Constructor.
-   * Defines a neighborhood of a given size.
-   */
   public AdaptiveRandomNeighborhood(SolutionSet solutionSet, int numberOfRandomNeighbours) {
     solutionSet_ = solutionSet;
     numberOfRandomNeighbours_ = numberOfRandomNeighbours;
-    //problem_ = solutionSet_.get(0).getProblem() ;
 
     list_ = new ArrayList<ArrayList<Integer>>(solutionSet_.size());
 
@@ -54,18 +47,14 @@ public class AdaptiveRandomNeighborhood {
       list_.get(i).add(i);
     }
 
-    //Configuration.logger_.info("list: " + list_) ;
     for (int i = 0; i < solutionSet_.size(); i++) {
-      //list_.get(i).add(i);
       for (int j = 0; j < numberOfRandomNeighbours_; j++) {
         int random = PseudoRandom.randInt(0, solutionSet_.size() - 1);
-        //Configuration.logger_.info("i: " + i + " random: " + random + " listb: " + list_.get(random)) ;
         if (!list_.get(random).contains((Integer) i)) {
           list_.get(random).add(i);
         }
       }
     }
-    Configuration.logger_.info("L: " + list_);
   }
 
   public ArrayList<Integer> getNeighbors(int i) throws JMException {
