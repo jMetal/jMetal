@@ -1,4 +1,4 @@
-//  NSGAIITest.java
+//  ParallelNSGAIITest.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -22,7 +22,7 @@ package test.metaheuristics.nsgaII;
 
 import jmetal.core.Algorithm;
 import jmetal.core.SolutionSet;
-import jmetal.experiments.settings.NSGAII_Settings;
+import jmetal.experiments.settings.ParallelNSGAII_Settings;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -32,12 +32,12 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by Antonio J. Nebro on 02/06/14.
  */
-public class NSGAIITest {
+public class ParallelNSGAIITest {
   Algorithm algorithm_ ;
 
   @Test
   public void testNumberOfReturnedSolutionsInEasyProblem() throws IOException, ClassNotFoundException {
-    algorithm_ = new NSGAII_Settings("Kursawe").configure() ;
+    algorithm_ = new ParallelNSGAII_Settings("Kursawe").configure() ;
 
     SolutionSet solutionSet = algorithm_.execute() ;
     /*

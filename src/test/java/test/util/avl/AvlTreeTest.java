@@ -15,9 +15,8 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * Created with IntelliJ IDEA.
- * User: antelverde
+ * User: Antonio J. Nebro
  * Date: 08/07/13
- * Time: 16:46
  * To change this template use File | Settings | File Templates.
  */
 public class AvlTreeTest {
@@ -659,7 +658,6 @@ public class AvlTreeTest {
     assertEquals("testDeletingDeepLeafNode", 3, avlTree_.getTop().getHeight());
 
     avlTree_.delete(22);
-    //node = avlTree_.search(8) ;
     assertEquals("testDeletingDeepLeafNode", 12, (int)avlTree_.getTop().getItem());
     assertEquals("testDeletingDeepLeafNode", avlTree_.search(8), avlTree_.getTop().getLeft());
     assertEquals("testDeletingDeepLeafNode", avlTree_.search(20), avlTree_.getTop().getRight());
@@ -696,13 +694,6 @@ public class AvlTreeTest {
     assertEquals("testDeletingTopNode", 3, avlTree_.getTop().getHeight());
 
     avlTree_.delete(20);
-    System.out.println(": " + avlTree_.toString());
     assertEquals("testDeletingTopNode", " | 12 | 8 | 4 | 10 | 22 | 14 | 24", avlTree_.toString());
-
-    /*
-    assertEquals("testDeletingDeepLeafNode", 12, (int)avlTree_.getTop().getItem());
-    assertEquals("testDeletingDeepLeafNode", avlTree_.search(8), avlTree_.getTop().getLeft());
-    assertEquals("testDeletingDeepLeafNode", avlTree_.search(20), avlTree_.getTop().getRight());
-    */
   }
 }

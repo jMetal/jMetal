@@ -97,12 +97,14 @@ public class SteadyStateNSGAIIRunner {
       indicators = new QualityIndicator(problem, args[1]);
     } else {
       problem = new Kursawe("Real", 3);
-      //problem = new Kursawe("BinaryReal", 3);
-      //problem = new Water("Real");
-      //problem = new ZDT3("ArrayReal", 30);
-      //problem = new ConstrEx("Real");
-      //problem = new DTLZ1("Real");
-      //problem = new OKA2("Real") ;
+      /*
+        Examples:
+        problem = new Water("Real");
+        problem = new ZDT3("ArrayReal", 30);
+        problem = new ConstrEx("Real");
+        problem = new DTLZ1("Real");
+        problem = new OKA2("Real")
+      */
     }
 
     SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator() ;

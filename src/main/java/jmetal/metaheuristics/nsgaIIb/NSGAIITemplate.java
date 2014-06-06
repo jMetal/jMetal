@@ -76,17 +76,14 @@ public abstract class NSGAIITemplate extends Algorithm {
     selectionOperator_ = operators_.get("selection");
   }
 
-  protected SolutionSet createInitialPopulation(int populationSize) throws ClassNotFoundException, JMException {
-    SolutionSet population ;
-    population = new SolutionSet(populationSize);
+  protected void createInitialPopulation() throws ClassNotFoundException, JMException {
+    population_ = new SolutionSet(populationSize_);
 
     Solution newSolution;
-    for (int i = 0; i < populationSize; i++) {
+    for (int i = 0; i < populationSize_; i++) {
       newSolution = new Solution(problem_);
-      population.add(newSolution);
+      population_.add(newSolution);
     }
-
-    return population ;
   }
 
   protected void evaluatePopulation(SolutionSet population) throws JMException {

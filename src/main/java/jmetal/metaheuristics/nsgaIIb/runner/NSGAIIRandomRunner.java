@@ -28,7 +28,6 @@ import jmetal.core.SolutionSet;
 import jmetal.metaheuristics.nsgaII.NSGAIIRandom;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.Kursawe;
-import jmetal.problems.LZ09.LZ09_F3;
 import jmetal.problems.ProblemFactory;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Configuration;
@@ -105,14 +104,17 @@ public class NSGAIIRandomRunner {
     }
     else {
       problem = new Kursawe("Real", 3);
-      //problem = new Kursawe("BinaryReal", 3);
-      //problem = new Water("Real");
-      //problem = new ZDT1("ArrayReal", 100);
-      //problem = new ConstrEx("Real");
-      //problem = new DTLZ1("Real");
-      //problem = new OKA2("Real") ;
+      /*
+        Examples:
+        problem = new Kursawe("BinaryReal", 3);
+        problem = new Water("Real");
+        problem = new ZDT3("ArrayReal", 30);
+        problem = new ConstrEx("Real");
+        problem = new DTLZ1("Real");
+        problem = new OKA2("Real")
+      */
     }
-    problem = new LZ09_F3("Real");
+
     algorithm = new NSGAIIRandom();
     algorithm.setProblem(problem);
     //algorithm = new ssNSGAIIAdaptive(problem);

@@ -58,7 +58,6 @@ public class AdaptiveRandomNeigborhoodTest {
     adaptiveRandomNeighborhood_ = new AdaptiveRandomNeighborhood(new SolutionSet(), numberOfRandomNeighbours_) ;
     ArrayList<ArrayList<Integer>> list = adaptiveRandomNeighborhood_.getNeighborhood() ;
     assertEquals("AdaptiveRandomNeigborhoodTest.testEmptySolutionSet", 0, list.size()) ;
-    //assertEquals("AdaptiveRandomNeigborhoodTest.testEmptySolutionSet", 2, adaptiveRandomNeighborhood_.getNumberOfRandomNeighbours()) ;
   }
 
   @Test

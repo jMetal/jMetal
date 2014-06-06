@@ -73,7 +73,7 @@ public class NSGAIIRunner {
     SecurityException,
     IOException,
     ClassNotFoundException {
-    
+
     Problem problem;
     Algorithm algorithm;
     Operator crossover;
@@ -97,23 +97,20 @@ public class NSGAIIRunner {
       indicators = new QualityIndicator(problem, args[1]);
     } else {
       problem = new Kursawe("Real", 3);
-      //problem = new Kursawe("BinaryReal", 3);
-      //problem = new Water("Real");
-      //problem = new ZDT3("ArrayReal", 30);
-      //problem = new ConstrEx("Real");
-      //problem = new DTLZ1("Real");
-      //problem = new OKA2("Real") ;
+      /*
+        Examples:
+        problem = new Water("Real");
+        problem = new ZDT3("ArrayReal", 30);
+        problem = new ConstrEx("Real");
+        problem = new DTLZ1("Real");
+        problem = new OKA2("Real")
+      */
     }
 
-    //Injector injector = Guice.createInjector(new ExecutorModule()) ;
-    //Executor executor = injector.getInstance(Executor.class) ;
-
-    //Injector injector = Guice.createInjector();
-    //algorithm = injector.getInstance(NSGAII.class);
     SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator() ;
     algorithm = new NSGAII(evaluator);
     algorithm.setProblem(problem);
-    
+
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", 100);
     algorithm.setInputParameter("maxEvaluations", 25000);
@@ -156,7 +153,7 @@ public class NSGAIIRunner {
 
     SolutionSetOutput.printObjectivesToFile(fileContext, population);
     logger_.info("Objectives values have been written to file FUN");
-    
+
     if (indicators != null) {
       logger_.info("Quality indicators");
       logger_.info("Hypervolume: " + indicators.getHypervolume(population));

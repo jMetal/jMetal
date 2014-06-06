@@ -11,10 +11,9 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * Created with IntelliJ IDEA.
- * User: antelverde
+ * User: Antonio J. Nebro
  * Date: 09/07/13
  * Time: 15:29
- * To change this template use File | Settings | File Templates.
  */
 public class AvlNodeTest {
     private AvlNode<Integer> node_;

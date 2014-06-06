@@ -85,7 +85,7 @@ public class NSGAIIAdaptive extends NSGAIITemplate {
       Configuration.logger_.info("Contribution: " + contribution_[i]);
     }
 
-    population_ = createInitialPopulation(populationSize_);
+    createInitialPopulation();
     evaluatePopulation(population_);
 
 

@@ -39,7 +39,7 @@ import java.util.Properties;
 /**
  * Settings class of algorithm NSGA-II (binary encoding)
  */
-public class NSGAIIBinary_Settings extends Settings {
+public class NSGAIIBinaryReal_Settings extends Settings {
   private int populationSize_;
   private int maxEvaluations_;
 
@@ -49,12 +49,12 @@ public class NSGAIIBinary_Settings extends Settings {
   /**
    * Constructor
    *
-   * @throws JMException
+   * @throws jmetal.util.JMException
    */
-  public NSGAIIBinary_Settings(String problem) throws JMException {
+  public NSGAIIBinaryReal_Settings(String problem) throws JMException {
     super(problem);
 
-    Object[] problemParams = {"Binary"};
+    Object[] problemParams = {"BinaryReal"};
     problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
 
     // Default experiments.settings

@@ -48,7 +48,7 @@ public class NSGAIIRandom extends NSGAIITemplate {
     }
 
     readParameterSettings();
-    population_ = createInitialPopulation(populationSize_);
+    createInitialPopulation();
     evaluatePopulation(population_);
 
 

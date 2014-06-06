@@ -52,7 +52,7 @@ public class NSGAII extends NSGAIITemplate {
    */
   public SolutionSet execute() throws JMException, ClassNotFoundException {
     readParameterSettings();
-    population_ = createInitialPopulation(populationSize_);
+    createInitialPopulation();
     evaluatePopulation(population_);
 
     // Main loop
