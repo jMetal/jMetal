@@ -18,12 +18,13 @@
 // 
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-package jmetal.metaheuristics.gde3;
+package jmetal.metaheuristics.gde3.runner;
 
 import jmetal.core.Algorithm;
 import jmetal.core.Operator;
 import jmetal.core.Problem;
 import jmetal.core.SolutionSet;
+import jmetal.metaheuristics.gde3.GDE3;
 import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.Kursawe;
@@ -42,14 +43,14 @@ import java.util.logging.Logger;
 /**
  * Class for configuring and running the GDE3 algorithm
  */
-public class GDE3Main {
-  public static Logger logger_;      
-  public static FileHandler fileHandler_; 
+public class GDE3Runner {
+  public static Logger logger_;
+  public static FileHandler fileHandler_;
 
   /**
    * @param args Command line arguments.
-   * @throws JMException
-   * @throws IOException
+   * @throws jmetal.util.JMException
+   * @throws java.io.IOException
    * @throws SecurityException Usage: three choices
    *                           - jmetal.metaheuristics.nsgaII.NSGAII_main
    *                           - jmetal.metaheuristics.nsgaII.NSGAII_main problemName
@@ -86,7 +87,9 @@ public class GDE3Main {
       //problem = new OKA2("Real") ;
     }
 
-    algorithm = new GDE3();
+    SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator() ;
+
+    algorithm = new GDE3(evaluator);
     algorithm.setProblem(problem);
 
     // Algorithm parameters

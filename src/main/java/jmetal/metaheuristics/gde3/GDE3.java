@@ -21,12 +21,16 @@
 
 package jmetal.metaheuristics.gde3;
 
-import jmetal.core.*;
+import jmetal.core.Algorithm;
+import jmetal.core.Operator;
+import jmetal.core.Solution;
+import jmetal.core.SolutionSet;
 import jmetal.util.Distance;
 import jmetal.util.JMException;
 import jmetal.util.Ranking;
 import jmetal.util.comparator.CrowdingComparator;
 import jmetal.util.comparator.DominanceComparator;
+import jmetal.util.evaluator.SolutionSetEvaluator;
 
 import java.util.Comparator;
 
@@ -35,31 +39,25 @@ import java.util.Comparator;
  */
 public class GDE3 extends Algorithm {
 
-  /**
-   *
-   */
   private static final long serialVersionUID = -8007862618252202475L;
 
-  /**
-   * Constructor
-   *
-   * @param problem Problem to solve
-   */
-  public GDE3() {
+  SolutionSetEvaluator evaluator_ ;
+
+  public GDE3(SolutionSetEvaluator evaluator) {
     super();
-  } // GDE3
+    evaluator_ = evaluator ;
+  }
 
   /**
    * Runs of the GDE3 algorithm.
    *
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
    * as a result of the algorithm execution
-   * @throws JMException
+   * @throws jmetal.util.JMException
    */
   public SolutionSet execute() throws JMException, ClassNotFoundException {
     int populationSize;
     int maxIterations;
-    int evaluations;
     int iterations;
 
     SolutionSet population;
@@ -85,7 +83,6 @@ public class GDE3 extends Algorithm {
 
     //Initialize the variables
     population = new SolutionSet(populationSize);
-    evaluations = 0;
     iterations = 0;
 
     // Create the initial solutionSet
@@ -94,7 +91,6 @@ public class GDE3 extends Algorithm {
       newSolution = new Solution(problem_);
       problem_.evaluate(newSolution);
       problem_.evaluateConstraints(newSolution);
-      evaluations++;
       population.add(newSolution);
     }       
 
@@ -102,6 +98,7 @@ public class GDE3 extends Algorithm {
     while (iterations < maxIterations) {
       // Create the offSpring solutionSet      
       offspringPopulation = new SolutionSet(populationSize * 2);
+      SolutionSet tmpSolutionSet = new SolutionSet(populationSize) ;
 
       for (int i = 0; i < populationSize; i++) {
         // Obtain parents. Two parameters are required: the population and the 
@@ -113,11 +110,14 @@ public class GDE3 extends Algorithm {
         //            array of parents
         child = (Solution) crossoverOperator.execute(new Object[] {population.get(i), parent});
 
-        problem_.evaluate(child);
-        problem_.evaluateConstraints(child);
-        evaluations++;
+        tmpSolutionSet.add(child);
+      }
+      evaluator_.evaluate(tmpSolutionSet, problem_) ;
 
+
+      for (int i = 0; i < populationSize; i++) {
         // Dominance test
+        Solution child = tmpSolutionSet.get(i) ;
         int result;
         result = dominance.compare(population.get(i), child);
         if (result == -1) { 

@@ -20,8 +20,10 @@
 
 package jmetal.metaheuristics.smpso;
 
-import jmetal.core.*;
-import jmetal.qualityIndicator.Hypervolume;
+import jmetal.core.Algorithm;
+import jmetal.core.Operator;
+import jmetal.core.Solution;
+import jmetal.core.SolutionSet;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Distance;
 import jmetal.util.JMException;
@@ -79,10 +81,6 @@ public class SMPSOE extends Algorithm {
   private Distance distance_;
   private Operator polynomialMutation_;
 
-  private int numberOfThreads_;
-  private double trueHypervolume_;
-  private Hypervolume hy_;
-  private SolutionSet trueFront_;
   private double deltaMax_[];
   private double deltaMin_[];
 

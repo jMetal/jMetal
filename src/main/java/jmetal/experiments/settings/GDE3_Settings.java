@@ -29,6 +29,8 @@ import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.ProblemFactory;
 import jmetal.util.JMException;
+import jmetal.util.evaluator.SequentialSolutionSetEvaluator;
+import jmetal.util.evaluator.SolutionSetEvaluator;
 
 import java.util.HashMap;
 import java.util.Properties;
@@ -41,6 +43,8 @@ public class GDE3_Settings extends Settings {
   private double f_;
   private int populationSize_;
   private int maxIterations_;
+  private SolutionSetEvaluator evaluator_ ;
+
 
   /**
    * Constructor
@@ -58,6 +62,8 @@ public class GDE3_Settings extends Settings {
     f_ = 0.5;
     populationSize_ = 100;
     maxIterations_ = 250;
+
+    evaluator_ = new SequentialSolutionSetEvaluator() ;
   }
 
   /**
@@ -74,7 +80,7 @@ public class GDE3_Settings extends Settings {
     // Creating the problem
     Object[] problemParams = {"Real"};
     problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
-    algorithm = new GDE3();
+    algorithm = new GDE3(evaluator_);
     algorithm.setProblem(problem_);
 
     // Algorithm parameters
