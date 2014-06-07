@@ -64,11 +64,11 @@ public class NSGAII_SettingsTest {
     Algorithm algorithm = NSGAIISettings.configure() ;
     Problem problem = new Fonseca("Real") ;
     SBXCrossover crossover = (SBXCrossover)algorithm.getOperator("crossover") ;
-    double pc = (Double)crossover.getParameter("probability") ;
-    double dic = (Double)crossover.getParameter("distributionIndex") ;
+    double pc = crossover.getCrossoverProbability() ;
+    double dic = crossover.getDistributionIndex() ;
     PolynomialMutation mutation = (PolynomialMutation)algorithm.getOperator("mutation") ;
-    double pm = (Double)mutation.getParameter("probability") ;
-    double dim = (Double)mutation.getParameter("distributionIndex") ;
+    double pm = mutation.getMutationProbability() ;
+    double dim = mutation.getDistributionIndex() ;
 
     assertEquals("NSGAII_SettingsTest", 100, ((Integer)algorithm.getInputParameter("populationSize")).intValue());
     assertEquals("NSGAII_SettingsTest", 25000, ((Integer)algorithm.getInputParameter("maxEvaluations")).intValue());
@@ -87,11 +87,11 @@ public class NSGAII_SettingsTest {
     Algorithm algorithm = NSGAIISettings.configure(configuration_) ;
     Problem problem = new Fonseca("Real") ;
     SBXCrossover crossover = (SBXCrossover)algorithm.getOperator("crossover") ;
-    double pc = (Double)crossover.getParameter("probability") ;
-    double dic = (Double)crossover.getParameter("distributionIndex") ;
+    double pc = crossover.getCrossoverProbability() ;
+    double dic = crossover.getDistributionIndex() ;
     PolynomialMutation mutation = (PolynomialMutation)algorithm.getOperator("mutation") ;
-    double pm = (Double)mutation.getParameter("probability") ;
-    double dim = (Double)mutation.getParameter("distributionIndex") ;
+    double pm = mutation.getMutationProbability() ;
+    double dim = mutation.getDistributionIndex() ;
 
     assertEquals("NSGAII_SettingsTest", 100, ((Integer)algorithm.getInputParameter("populationSize")).intValue());
     assertEquals("NSGAII_SettingsTest", 25000, ((Integer)algorithm.getInputParameter("maxEvaluations")).intValue());

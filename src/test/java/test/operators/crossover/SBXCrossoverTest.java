@@ -20,9 +20,7 @@
 
 package test.operators.crossover;
 
-import jmetal.core.Operator;
 import jmetal.core.Problem;
-import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.crossover.SBXCrossover;
 import jmetal.problems.Kursawe;
 import jmetal.util.JMException;
@@ -30,30 +28,21 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.HashMap;
-
 import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Antonio J. Nebro on 21/04/14.
  */
 public class SBXCrossoverTest {
-  Operator crossover_ ;
+  SBXCrossover crossover_ ;
   Problem problem_ ;
-  HashMap parameters_ ;
 
   static final double DELTA = 0.0000000000001 ;
 
   @Before
   public void setUp() throws JMException {
     problem_ = new Kursawe("Real", 3) ;
-
-    parameters_ = new HashMap() ;
-    try {
-      crossover_ = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters_);
-    } catch (JMException e) {
-      e.printStackTrace();
-    }
+    crossover_ = new SBXCrossover.Builder().build() ;
   }
 
   @After
@@ -65,38 +54,26 @@ public class SBXCrossoverTest {
   @Test
   public void defaultParametersTest() {
     assertEquals("SBXCrossoverTest.testDefaultParameters",
-            20.0, ((SBXCrossover)crossover_).getDistributionIndex(), DELTA) ;
+      20.0, crossover_.getDistributionIndex(), DELTA) ;
     assertEquals("SBXCrossoverTest.testDefaultParameters",
-            0.9, ((SBXCrossover)crossover_).getCrossoverProbability(), DELTA) ;
+      0.9, crossover_.getCrossoverProbability(), DELTA) ;
   }
 
   @Test
   public void setCrossoverProbabilityTest() {
-    parameters_.put("probability", 1.0) ;
-
-    try {
-      crossover_ = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters_);
-    } catch (JMException e) {
-      e.printStackTrace();
-    }
+    crossover_ = new SBXCrossover.Builder().probability(1.0).build() ;
 
     assertEquals("SBXCrossoverTest.setCrossoverProbabilityTest",
-            1.0,
-            ((SBXCrossover)crossover_).getCrossoverProbability(), DELTA) ;
+      1.0,
+      crossover_.getCrossoverProbability(), DELTA) ;
   }
 
   @Test
   public void setMutationDistributionIndex() {
-    parameters_.put("distributionIndex", 5.0) ;
-
-    try {
-      crossover_ = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters_);
-    } catch (JMException e) {
-      e.printStackTrace();
-    }
+    crossover_ = new SBXCrossover.Builder().distributionIndex(5.0).build() ;
 
     assertEquals("SBXCrossoverTest.setCrossoverDistributionIndex",
-            5.0,
-            ((SBXCrossover)crossover_).getDistributionIndex(), DELTA) ;
+      5.0,
+      crossover_.getDistributionIndex(), DELTA) ;
   }
 }

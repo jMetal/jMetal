@@ -49,9 +49,11 @@ public class SBXCrossover extends Crossover {
    */
   private static final double EPS = 1.0e-14;
 
-  private static final double ETA_C_DEFAULT_ = 20.0;
-  private double distributionIndex_ = ETA_C_DEFAULT_;
-  private double crossoverProbability_ = 0.9;
+  private static final double ETA_C_DEFAULT = 20.0;
+  private static final double DEFAULT_PROBABILITY = 0.9 ;
+
+  private double distributionIndex_ = ETA_C_DEFAULT;
+  private double crossoverProbability_ = DEFAULT_PROBABILITY;
 
   /**
    * Valid solution types to apply this operator
@@ -246,6 +248,8 @@ public class SBXCrossover extends Crossover {
     private double crossoverProbability_ ;
 
     public Builder() {
+      distributionIndex_ = ETA_C_DEFAULT ;
+      crossoverProbability_ = DEFAULT_PROBABILITY ;
     }
 
     public Builder distributionIndex(double distributionIndex) {

@@ -25,17 +25,16 @@ import jmetal.core.Algorithm;
 import jmetal.experiments.Settings;
 import jmetal.metaheuristics.nsgaII.NSGAII;
 import jmetal.operators.crossover.Crossover;
-import jmetal.operators.crossover.CrossoverFactory;
+import jmetal.operators.crossover.SBXCrossover;
 import jmetal.operators.mutation.Mutation;
-import jmetal.operators.mutation.MutationFactory;
+import jmetal.operators.mutation.PolynomialMutation;
+import jmetal.operators.selection.BinaryTournament2;
 import jmetal.operators.selection.Selection;
-import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.ProblemFactory;
 import jmetal.util.JMException;
 import jmetal.util.evaluator.SequentialSolutionSetEvaluator;
 import jmetal.util.evaluator.SolutionSetEvaluator;
 
-import java.util.HashMap;
 import java.util.Properties;
 
 /**
@@ -93,6 +92,21 @@ public class NSGAII_Settings extends Settings {
     algorithm.setInputParameter("populationSize", populationSize_);
     algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
 
+    // Crossover an Mutation for Real codification
+    crossover = new SBXCrossover.Builder()
+      .distributionIndex(crossoverDistributionIndex_)
+      .probability(crossoverProbability_)
+      .build() ;
+
+    mutation = new PolynomialMutation.Builder()
+      .distributionIndex(mutationDistributionIndex_)
+      .probability(mutationProbability_)
+      .build();
+
+    // Selection Operator
+    selection = new BinaryTournament2.Builder()
+      .build();
+     /*
     // Mutation and Crossover for Real codification
     HashMap<String, Object> parameters = new HashMap<String, Object>();
     parameters.put("probability", crossoverProbability_);
@@ -107,7 +121,7 @@ public class NSGAII_Settings extends Settings {
     // Selection Operator
     parameters = null;
     selection = SelectionFactory.getSelectionOperator("BinaryTournament2", parameters);
-
+      */
     // Add the operators to the algorithm
     algorithm.addOperator("crossover", crossover);
     algorithm.addOperator("mutation", mutation);

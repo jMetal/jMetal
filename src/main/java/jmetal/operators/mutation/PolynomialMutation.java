@@ -40,6 +40,7 @@ import java.util.List;
 public class PolynomialMutation extends Mutation {
   private static final double ETA_M_DEFAULT_ = 20.0;
   private double distributionIndex_ = ETA_M_DEFAULT_;
+
   /**
    * Valid solution types to apply this operator
    */
@@ -149,6 +150,7 @@ public class PolynomialMutation extends Mutation {
     private double mutationProbability_ ;
 
     public Builder() {
+      distributionIndex_ = ETA_M_DEFAULT_ ;
     }
 
     public Builder distributionIndex(double distributionIndex) {

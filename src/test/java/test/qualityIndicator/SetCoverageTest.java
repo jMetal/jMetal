@@ -26,7 +26,6 @@ import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
 import jmetal.problems.Kursawe;
 import jmetal.qualityIndicator.SetCoverage;
-import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import org.junit.After;
 import org.junit.Before;
@@ -126,8 +125,6 @@ public class SetCoverageTest {
       solution.setObjective(1, solutionSetSize_ - 1 - i);
       solutionSet1_.add(solution);
     }
-
-    Configuration.logger_.info("SIze of set 2 " + solutionSet2_.size());
 
     // The second solution set is empty. Try the tests
     assertEquals(1.0, new SetCoverage().setCoverage(solutionSet1_, solutionSet2_), EPSILON) ;
