@@ -38,7 +38,7 @@ import java.util.List;
  * This class allows to apply a SBX crossover operator using two parent
  * solutions.
  */
-public class SBXCrossover extends Crossover {
+public class SBXCrossover2 extends Crossover {
   /**
    *
    */
@@ -66,7 +66,7 @@ public class SBXCrossover extends Crossover {
    * Create a new SBX crossover operator whit a default
    * index given by <code>DEFAULT_INDEX_CROSSOVER</code>
    */
-  public SBXCrossover(HashMap<String, Object> parameters) {
+  public SBXCrossover2(HashMap<String, Object> parameters) {
     super(parameters);
 
     if (parameters.get("probability") != null) {
@@ -112,7 +112,7 @@ public class SBXCrossover extends Crossover {
         valueX1 = x1.getValue(i);
         valueX2 = x2.getValue(i);
         if (PseudoRandom.randDouble() <= 0.5) {
-          if (java.lang.Math.abs(valueX1 - valueX2) > EPS) {
+          if (Math.abs(valueX1 - valueX2) > EPS) {
 
             if (valueX1 < valueX2) {
               y1 = valueX1;
@@ -120,29 +120,29 @@ public class SBXCrossover extends Crossover {
             } else {
               y1 = valueX2;
               y2 = valueX1;
-            } // if                       
+            } // if
 
             yL = x1.getLowerBound(i);
             yu = x1.getUpperBound(i);
             rand = PseudoRandom.randDouble();
             beta = 1.0 + (2.0 * (y1 - yL) / (y2 - y1));
-            alpha = 2.0 - java.lang.Math.pow(beta, -(distributionIndex_ + 1.0));
+            alpha = 2.0 - Math.pow(beta, -(distributionIndex_ + 1.0));
 
             if (rand <= (1.0 / alpha)) {
-              betaq = java.lang.Math.pow((rand * alpha), (1.0 / (distributionIndex_ + 1.0)));
+              betaq = Math.pow((rand * alpha), (1.0 / (distributionIndex_ + 1.0)));
             } else {
-              betaq = java.lang.Math
+              betaq = Math
                 .pow((1.0 / (2.0 - rand * alpha)), (1.0 / (distributionIndex_ + 1.0)));
             } // if
 
             c1 = 0.5 * ((y1 + y2) - betaq * (y2 - y1));
             beta = 1.0 + (2.0 * (yu - y2) / (y2 - y1));
-            alpha = 2.0 - java.lang.Math.pow(beta, -(distributionIndex_ + 1.0));
+            alpha = 2.0 - Math.pow(beta, -(distributionIndex_ + 1.0));
 
             if (rand <= (1.0 / alpha)) {
-              betaq = java.lang.Math.pow((rand * alpha), (1.0 / (distributionIndex_ + 1.0)));
+              betaq = Math.pow((rand * alpha), (1.0 / (distributionIndex_ + 1.0)));
             } else {
-              betaq = java.lang.Math
+              betaq = Math
                 .pow((1.0 / (2.0 - rand * alpha)), (1.0 / (distributionIndex_ + 1.0)));
             } // if
 
@@ -198,7 +198,7 @@ public class SBXCrossover extends Crossover {
     if (parents.length != 2) {
       Configuration.logger_.severe("SBXCrossover.execute: operator needs two " +
         "parents");
-      Class cls = java.lang.String.class;
+      Class cls = String.class;
       String name = cls.getName();
       throw new JMException("Exception in " + name + ".execute()");
     }
@@ -208,7 +208,7 @@ public class SBXCrossover extends Crossover {
       Configuration.logger_.severe("SBXCrossover.execute: the solutions " +
         "type " + parents[0].getType() + " is not allowed with this operator");
 
-      Class<String> cls = java.lang.String.class;
+      Class<String> cls = String.class;
       String name = cls.getName();
       throw new JMException("Exception in " + name + ".execute()");
     }
