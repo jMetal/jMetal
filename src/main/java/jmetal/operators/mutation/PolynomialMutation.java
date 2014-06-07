@@ -61,6 +61,21 @@ public class PolynomialMutation extends Mutation {
     }
   }
 
+  private PolynomialMutation(Builder builder) {
+    super (new HashMap<String, Object>()) ;
+
+    mutationProbability_ = builder.mutationProbability_ ;
+    distributionIndex_ = builder.distributionIndex_ ;
+  }
+  public double getMutationProbability() {
+    return mutationProbability_;
+  }
+
+  public double getDistributionIndex() {
+    return distributionIndex_;
+  }
+
+
   /**
    * Perform the mutation operation
    *
@@ -126,11 +141,30 @@ public class PolynomialMutation extends Mutation {
     return solution;
   }
 
-  public double getMutationProbability() {
-    return mutationProbability_;
-  }
+  /**
+   * Builder class
+   */
+  public static class Builder {
+    private double distributionIndex_ ;
+    private double mutationProbability_ ;
 
-  public double getDistributionIndex() {
-    return distributionIndex_;
+    public Builder() {
+    }
+
+    public Builder distributionIndex(double distributionIndex) {
+      distributionIndex_ = distributionIndex ;
+
+      return this ;
+    }
+
+    public Builder probability(double probability) {
+      mutationProbability_ = probability ;
+
+      return this ;
+    }
+
+    public PolynomialMutation build() {
+      return new PolynomialMutation(this) ;
+    }
   }
 }

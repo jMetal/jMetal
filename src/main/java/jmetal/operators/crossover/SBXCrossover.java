@@ -60,12 +60,12 @@ public class SBXCrossover extends Crossover {
     Arrays.asList(RealSolutionType.class,
       ArrayRealSolutionType.class);
 
-
   /**
    * Constructor
    * Create a new SBX crossover operator whit a default
    * index given by <code>DEFAULT_INDEX_CROSSOVER</code>
    */
+  @Deprecated
   public SBXCrossover(HashMap<String, Object> parameters) {
     super(parameters);
 
@@ -76,6 +76,25 @@ public class SBXCrossover extends Crossover {
       distributionIndex_ = (Double) parameters.get("distributionIndex");
     }
   }
+
+  /**
+   * Constructor using the Builder pattern
+   * @param builder
+   */
+  private SBXCrossover(Builder builder) {
+     super(new HashMap<String, Object>()) ;
+
+    crossoverProbability_ = builder.crossoverProbability_ ;
+    distributionIndex_ = builder.distributionIndex_ ;
+  }
+
+  public double getCrossoverProbability() {
+    return crossoverProbability_;
+  }
+  public double getDistributionIndex() {
+    return distributionIndex_;
+  }
+
 
   /**
    * Perform the crossover operation.
@@ -214,17 +233,35 @@ public class SBXCrossover extends Crossover {
     }
 
     Solution[] offSpring;
-    offSpring = doCrossover(crossoverProbability_,
-      parents[0],
-      parents[1]);
+    offSpring = doCrossover(crossoverProbability_, parents[0], parents[1]);
+
     return offSpring;
   }
 
-  public double getCrossoverProbability() {
-    return crossoverProbability_;
-  }
+  /**
+   * Builder class
+   */
+  public static class Builder {
+    private double distributionIndex_ ;
+    private double crossoverProbability_ ;
 
-  public double getDistributionIndex() {
-    return distributionIndex_;
+    public Builder() {
+    }
+
+    public Builder distributionIndex(double distributionIndex) {
+      distributionIndex_ = distributionIndex ;
+
+      return this ;
+    }
+
+    public Builder probability(double probability) {
+      crossoverProbability_ = probability ;
+
+      return this ;
+    }
+
+    public SBXCrossover build() {
+      return new SBXCrossover(this) ;
+    }
   }
 }

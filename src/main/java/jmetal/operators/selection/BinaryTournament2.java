@@ -48,7 +48,7 @@ public class BinaryTournament2 extends Selection {
   /**
    * a_ stores a permutation of the solutions in the solutionSet used
    */
-  private int a_[];
+  private int permutation_[];
 
   /**
    * index_ stores the actual index for selection
@@ -65,6 +65,13 @@ public class BinaryTournament2 extends Selection {
     dominance_ = new DominanceComparator();
   }
 
+  private BinaryTournament2(Builder builder) {
+    super(new HashMap<String, Object>()) ;
+
+    dominance_ = new DominanceComparator();
+  }
+
+
   /**
    * Performs the operation
    *
@@ -75,12 +82,12 @@ public class BinaryTournament2 extends Selection {
     SolutionSet population = (SolutionSet) object;
     if (index_ == 0) {
       //Create the permutation
-      a_ = (new jmetal.util.PermutationUtility()).intPermutation(population.size());
+      permutation_ = (new jmetal.util.PermutationUtility()).intPermutation(population.size());
     }
 
     Solution solution1, solution2;
-    solution1 = population.get(a_[index_]);
-    solution2 = population.get(a_[index_ + 1]);
+    solution1 = population.get(permutation_[index_]);
+    solution2 = population.get(permutation_[index_ + 1]);
 
     index_ = (index_ + 2) % population.size();
 
@@ -99,6 +106,19 @@ public class BinaryTournament2 extends Selection {
       } else {
         return solution2;
       }
+    }
+  }
+
+  /**
+   * Builder class
+   */
+  public static class Builder {
+
+    public Builder() {
+    }
+
+    public BinaryTournament2 build() {
+      return new BinaryTournament2(this) ;
     }
   }
 }

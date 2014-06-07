@@ -25,9 +25,9 @@ import jmetal.core.Operator;
 import jmetal.core.Problem;
 import jmetal.core.SolutionSet;
 import jmetal.metaheuristics.nsgaII.NSGAII;
-import jmetal.operators.crossover.CrossoverFactory;
-import jmetal.operators.mutation.MutationFactory;
-import jmetal.operators.selection.SelectionFactory;
+import jmetal.operators.crossover.SBXCrossover;
+import jmetal.operators.mutation.PolynomialMutation;
+import jmetal.operators.selection.BinaryTournament2;
 import jmetal.problems.Kursawe;
 import jmetal.problems.ProblemFactory;
 import jmetal.qualityIndicator.QualityIndicator;
@@ -40,7 +40,6 @@ import jmetal.util.fileOutput.FileOutputContext;
 import jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
@@ -115,20 +114,20 @@ public class NSGAIIRunner {
     algorithm.setInputParameter("populationSize", 100);
     algorithm.setInputParameter("maxEvaluations", 25000);
 
-    // Mutation and Crossover for Real codification 
-    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
-    crossoverParameters.put("probability", 0.9);
-    crossoverParameters.put("distributionIndex", 20.0);
-    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", crossoverParameters);
+    // Crossover and mutation for Real codification
+    crossover = new SBXCrossover.Builder()
+      .distributionIndex(20.0)
+      .probability(0.9)
+      .build() ;
 
-    HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
-    mutationParameters.put("probability", 1.0 / problem.getNumberOfVariables());
-    mutationParameters.put("distributionIndex", 20.0);
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
+    mutation = new PolynomialMutation.Builder()
+      .distributionIndex(20.0)
+      .probability(1.0/problem.getNumberOfVariables())
+      .build();
 
     // Selection Operator 
-    HashMap<String, Object> selectionParameters = new HashMap<String, Object>() ;
-    selection = SelectionFactory.getSelectionOperator("BinaryTournament2", selectionParameters);
+    selection = new BinaryTournament2.Builder()
+      .build();
 
     // Add the operators to the algorithm
     algorithm.addOperator("crossover", crossover);
