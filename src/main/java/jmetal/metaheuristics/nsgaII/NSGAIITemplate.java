@@ -20,11 +20,7 @@
 
 package jmetal.metaheuristics.nsgaII;
 
-import com.google.inject.Inject;
-import jmetal.core.Algorithm;
-import jmetal.core.Operator;
-import jmetal.core.Solution;
-import jmetal.core.SolutionSet;
+import jmetal.core.*;
 import jmetal.util.Distance;
 import jmetal.util.JMException;
 import jmetal.util.Ranking;
@@ -42,8 +38,6 @@ import jmetal.util.evaluator.SolutionSetEvaluator;
  */
 
 public abstract class NSGAIITemplate extends Algorithm {
-
-  @Inject
   protected SolutionSetEvaluator evaluator_ ;
 
   protected int populationSize_;
@@ -53,13 +47,13 @@ public abstract class NSGAIITemplate extends Algorithm {
   protected SolutionSet population_;
   protected SolutionSet offspringPopulation_;
 
-
   protected Operator mutationOperator_;
   protected Operator crossoverOperator_;
   protected Operator selectionOperator_;
 
   private Distance distance_ ;
 
+  @Deprecated
   public NSGAIITemplate(SolutionSetEvaluator evaluator) {
 	  super();
     evaluations_ = 0 ;
@@ -67,6 +61,20 @@ public abstract class NSGAIITemplate extends Algorithm {
     evaluator_ = evaluator ;
   }
 
+  protected NSGAIITemplate(Builder builder) {
+    super() ;
+
+    evaluator_ = builder.evaluator_ ;
+    populationSize_ = builder.populationSize_ ;
+    maxEvaluations_ = builder.maxEvaluations_ ;
+    mutationOperator_ = builder.mutationOperator_ ;
+    crossoverOperator_ = builder.crossoverOperator_ ;
+    selectionOperator_ = builder.selectionOperator_ ;
+    evaluations_ = 0 ;
+    distance_ = new Distance();
+  }
+
+  @Deprecated
   void readParameterSettings() {
     populationSize_ = ((Integer) getInputParameter("populationSize")).intValue();
     maxEvaluations_ = ((Integer) getInputParameter("maxEvaluations")).intValue();
@@ -142,5 +150,83 @@ public abstract class NSGAIITemplate extends Algorithm {
 
   protected void tearDown() {
     evaluator_.shutdown(); 
+  }
+
+  public Operator getCrossoverOperator() {
+    return crossoverOperator_ ;
+  }
+
+  public Operator getMutationOperator() {
+    return mutationOperator_ ;
+  }
+
+  public Operator getSelectionOperator() {
+    return selectionOperator_ ;
+  }
+
+  public int getPopulationSize() {
+    return populationSize_ ;
+  }
+
+  public int getMaxEvaluations() {
+    return maxEvaluations_ ;
+  }
+
+  public static class Builder {
+    protected SolutionSetEvaluator evaluator_ ;
+    protected Problem problem_ ;
+
+    protected int populationSize_;
+    protected  int maxEvaluations_;
+
+    protected Operator mutationOperator_;
+    protected Operator crossoverOperator_;
+    protected Operator selectionOperator_;
+
+    public Builder(Problem problem, SolutionSetEvaluator evaluator) {
+      evaluator_ = evaluator ;
+      problem_ = problem ;
+    }
+
+    public Builder populationSize(int populationSize) {
+      populationSize_ = populationSize ;
+
+      return this ;
+    }
+
+    public Builder maxEvaluations(int maxEvaluations) {
+      maxEvaluations_ = maxEvaluations ;
+
+      return this ;
+    }
+
+    public Builder evaluator(SolutionSetEvaluator evaluator) {
+      evaluator_ = evaluator ;
+
+      return this ;
+    }
+
+    public Builder crossover(Operator mutation) {
+      crossoverOperator_ = mutation ;
+
+      return this ;
+    }
+
+    public Builder mutation(Operator crossover) {
+      mutationOperator_ = crossover ;
+
+      return this ;
+    }
+
+    public Builder selection(Operator selection) {
+      selectionOperator_ = selection ;
+
+      return this ;
+    }
+
+    public NSGAIITemplate build() {
+      return new NSGAII(this) ;
+    }
+
   }
 } 

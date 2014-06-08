@@ -21,14 +21,13 @@
 
 package test.experiments.settings;
 
-import jmetal.core.Algorithm;
 import jmetal.core.Problem;
 import jmetal.experiments.Settings;
 import jmetal.experiments.settings.NSGAII_Settings;
+import jmetal.metaheuristics.nsgaII.NSGAII;
 import jmetal.operators.crossover.SBXCrossover;
 import jmetal.operators.mutation.PolynomialMutation;
 import jmetal.problems.Fonseca;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -61,17 +60,17 @@ public class NSGAII_SettingsTest {
   public void testConfigure() throws Exception {
     double epsilon = 0.000000000000001 ;
     Settings NSGAIISettings = new NSGAII_Settings("Fonseca");
-    Algorithm algorithm = NSGAIISettings.configure() ;
+    NSGAII algorithm = (NSGAII) NSGAIISettings.configure() ;
     Problem problem = new Fonseca("Real") ;
-    SBXCrossover crossover = (SBXCrossover)algorithm.getOperator("crossover") ;
+    SBXCrossover crossover = (SBXCrossover) algorithm.getCrossoverOperator() ;
     double pc = crossover.getCrossoverProbability() ;
     double dic = crossover.getDistributionIndex() ;
-    PolynomialMutation mutation = (PolynomialMutation)algorithm.getOperator("mutation") ;
+    PolynomialMutation mutation = (PolynomialMutation)algorithm.getMutationOperator() ;
     double pm = mutation.getMutationProbability() ;
     double dim = mutation.getDistributionIndex() ;
 
-    assertEquals("NSGAII_SettingsTest", 100, ((Integer)algorithm.getInputParameter("populationSize")).intValue());
-    assertEquals("NSGAII_SettingsTest", 25000, ((Integer)algorithm.getInputParameter("maxEvaluations")).intValue());
+    assertEquals("NSGAII_SettingsTest", 100, algorithm.getPopulationSize());
+    assertEquals("NSGAII_SettingsTest", 25000, algorithm.getMaxEvaluations());
 
     assertEquals("NSGAII_SettingsTest", 0.9, pc, epsilon);
     assertEquals("NSGAII_SettingsTest", 20.0, dic, epsilon);
@@ -84,17 +83,17 @@ public class NSGAII_SettingsTest {
   public void testConfigure2() throws Exception {
     double epsilon = 0.000000000000001 ;
     Settings NSGAIISettings = new NSGAII_Settings("Fonseca");
-    Algorithm algorithm = NSGAIISettings.configure(configuration_) ;
+    NSGAII algorithm = (NSGAII)NSGAIISettings.configure(configuration_) ;
     Problem problem = new Fonseca("Real") ;
-    SBXCrossover crossover = (SBXCrossover)algorithm.getOperator("crossover") ;
+    SBXCrossover crossover = (SBXCrossover) algorithm.getCrossoverOperator() ;
     double pc = crossover.getCrossoverProbability() ;
     double dic = crossover.getDistributionIndex() ;
-    PolynomialMutation mutation = (PolynomialMutation)algorithm.getOperator("mutation") ;
+    PolynomialMutation mutation = (PolynomialMutation)algorithm.getMutationOperator() ;
     double pm = mutation.getMutationProbability() ;
     double dim = mutation.getDistributionIndex() ;
 
-    assertEquals("NSGAII_SettingsTest", 100, ((Integer)algorithm.getInputParameter("populationSize")).intValue());
-    assertEquals("NSGAII_SettingsTest", 25000, ((Integer)algorithm.getInputParameter("maxEvaluations")).intValue());
+    assertEquals("NSGAII_SettingsTest", 100, algorithm.getPopulationSize());
+    assertEquals("NSGAII_SettingsTest", 25000, algorithm.getMaxEvaluations());
 
     assertEquals("NSGAII_SettingsTest", 0.9, pc, epsilon);
     assertEquals("NSGAII_SettingsTest", 20.0, dic, epsilon);

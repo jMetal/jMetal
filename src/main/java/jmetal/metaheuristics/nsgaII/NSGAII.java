@@ -39,6 +39,16 @@ import jmetal.util.evaluator.SolutionSetEvaluator;
 public class NSGAII extends NSGAIITemplate {
   private static final long serialVersionUID = 5815971727148859507L;
 
+  public NSGAII(Builder builder) {
+    super(builder) ;
+    problem_ = builder.problem_ ;
+    maxEvaluations_ = builder.maxEvaluations_ ;
+    crossoverOperator_ = builder.crossoverOperator_ ;
+    mutationOperator_ = builder.mutationOperator_ ;
+    selectionOperator_ = builder.selectionOperator_ ;
+    populationSize_ = builder.populationSize_ ;
+  }
+
   public NSGAII(SolutionSetEvaluator evaluator) {
 	  super(evaluator);
   }
@@ -51,7 +61,7 @@ public class NSGAII extends NSGAIITemplate {
    * @throws jmetal.util.JMException
    */
   public SolutionSet execute() throws JMException, ClassNotFoundException {
-    readParameterSettings();
+    //readParameterSettings();
     createInitialPopulation();
     evaluatePopulation(population_);
 
@@ -94,4 +104,14 @@ public class NSGAII extends NSGAIITemplate {
 
     return getNonDominatedSolutions() ;
   }
+  
+  /*
+  private class Builder extends jmetal.metaheuristics.nsgaII.NSGAIITemplate.Builder {
+    public Builder(Problem problem, SolutionSetEvaluator evaluator) {
+      super(problem, evaluator) ;
+    }
+    
+    
+  }
+  */
 } 

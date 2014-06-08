@@ -3,6 +3,7 @@ package jmetal.util.fileOutput;
 import jmetal.core.SolutionSet;
 
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
@@ -35,5 +36,47 @@ public class SolutionSetOutput {
       bufferedWriter.newLine();
     }
     bufferedWriter.close();
+  }
+
+  public static class Printer {
+    FileOutputContext varFileContext_ ;
+    FileOutputContext funFileContext_ ;
+    private String varFileName_ = "VAR" ;
+    private String funFileName_ = "FUN" ;
+    String separator_ ="\t" ;
+    SolutionSet solutionSet_ ;
+
+    public Printer(SolutionSet solutionSet) throws FileNotFoundException {
+      varFileContext_ = new DefaultFileOutputContext(varFileName_) ;
+      funFileContext_ = new DefaultFileOutputContext(funFileName_) ;
+      varFileContext_.separator_ = separator_ ;
+      funFileContext_.separator_ = separator_ ;
+      solutionSet_ = solutionSet ;
+    }
+
+    public Printer varFileOutputContext(FileOutputContext fileContext) {
+      varFileContext_ = fileContext ;
+
+      return this ;
+    }
+
+    public Printer funFileOutputContext(FileOutputContext fileContext) {
+      funFileContext_ = fileContext ;
+
+      return this ;
+    }
+
+    public Printer separator(String separator) {
+      separator_ = separator ;
+      varFileContext_.separator_ = separator_ ;
+      funFileContext_.separator_ = separator_ ;
+
+      return this ;
+    }
+
+    public void print() throws IOException {
+      printObjectivesToFile(funFileContext_, solutionSet_);
+      printVariablesToFile(varFileContext_, solutionSet_);
+    }
   }
 }

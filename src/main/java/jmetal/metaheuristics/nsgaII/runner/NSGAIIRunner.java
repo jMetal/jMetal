@@ -33,10 +33,10 @@ import jmetal.problems.ProblemFactory;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
+import jmetal.util.RunningTime;
 import jmetal.util.evaluator.SequentialSolutionSetEvaluator;
 import jmetal.util.evaluator.SolutionSetEvaluator;
 import jmetal.util.fileOutput.DefaultFileOutputContext;
-import jmetal.util.fileOutput.FileOutputContext;
 import jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
@@ -107,12 +107,6 @@ public class NSGAIIRunner {
     }
 
     SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator() ;
-    algorithm = new NSGAII(evaluator);
-    algorithm.setProblem(problem);
-
-    // Algorithm parameters
-    algorithm.setInputParameter("populationSize", 100);
-    algorithm.setInputParameter("maxEvaluations", 25000);
 
     // Crossover and mutation for Real codification
     crossover = new SBXCrossover.Builder()
@@ -125,33 +119,40 @@ public class NSGAIIRunner {
       .probability(1.0/problem.getNumberOfVariables())
       .build();
 
-    // Selection Operator 
     selection = new BinaryTournament2.Builder()
       .build();
 
-    // Add the operators to the algorithm
-    algorithm.addOperator("crossover", crossover);
-    algorithm.addOperator("mutation", mutation);
-    algorithm.addOperator("selection", selection);
+    algorithm = new NSGAII.Builder(problem, evaluator)
+      .crossover(crossover)
+      .mutation(mutation)
+      .selection(selection)
+      .maxEvaluations(25000)
+      .populationSize(100)
+      .build() ;
 
-    // Execute the Algorithm
-    long initTime = System.currentTimeMillis();
-    SolutionSet population = algorithm.execute();
-    long estimatedTime = System.currentTimeMillis() - initTime;
-    logger_.info("Total execution time: " + estimatedTime + "ms");
+    RunningTime timer = new RunningTime(algorithm) ;
+    SolutionSet population = timer.getSolutionSet() ;
+    long computingTime = timer.getComputingTime() ;
 
-    // Result messages
-    FileOutputContext fileContext = new DefaultFileOutputContext("VAR.tsv") ;
+    /*FileOutputContext fileContext ;
+
+    fileContext = new DefaultFileOutputContext("VAR.tsv") ;
     fileContext.setSeparator("\t");
-
-    logger_.info("Variables values have been writen to file VAR.tsv");
     SolutionSetOutput.printVariablesToFile(fileContext, population) ;
 
     fileContext = new DefaultFileOutputContext("FUN.tsv");
     fileContext.setSeparator("\t");
+    SolutionSetOutput.printObjectivesToFile(fileContext, population);*/
 
-    SolutionSetOutput.printObjectivesToFile(fileContext, population);
+    new SolutionSetOutput.Printer(population)
+      .separator("\t")
+      .varFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+      .funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+      .print();
+
+    logger_.info("Total execution time: " + computingTime + "ms");
     logger_.info("Objectives values have been written to file FUN.tsv");
+    logger_.info("Variables values have been written to file VAR.tsv");
 
     if (indicators != null) {
       logger_.info("Quality indicators");

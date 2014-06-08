@@ -206,7 +206,6 @@ public class SBXCrossover extends Crossover {
     return offSpring;
   }
 
-
   /**
    * Executes the operation
    *
