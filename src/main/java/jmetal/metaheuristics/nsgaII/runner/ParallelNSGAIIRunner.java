@@ -31,12 +31,12 @@ import jmetal.operators.selection.BinaryTournament2;
 import jmetal.problems.Kursawe;
 import jmetal.problems.ProblemFactory;
 import jmetal.qualityIndicator.QualityIndicator;
+import jmetal.util.AlgorithmRunner;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.evaluator.MultithreadedSolutionSetEvaluator;
 import jmetal.util.evaluator.SolutionSetEvaluator;
 import jmetal.util.fileOutput.DefaultFileOutputContext;
-import jmetal.util.fileOutput.FileOutputContext;
 import jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
@@ -129,24 +129,21 @@ public class ParallelNSGAIIRunner {
       .populationSize(100)
       .build() ;
 
-    // Execute the Algorithm
-    long initTime = System.currentTimeMillis();
-    SolutionSet population = algorithm.execute();
-    long estimatedTime = System.currentTimeMillis() - initTime;
-    logger_.info("Total execution time: " + estimatedTime + "ms");
+    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+      .execute() ;
 
-    // Result messages
-    FileOutputContext fileContext = new DefaultFileOutputContext("VAR.tsv") ;
-    fileContext.setSeparator("\t");
+    SolutionSet population = algorithmRunner.getSolutionSet() ;
+    long computingTime = algorithmRunner.getComputingTime() ;
 
-    logger_.info("Variables values have been writen to file VAR.tsv");
-    SolutionSetOutput.printVariablesToFile(fileContext, population) ;
+    new SolutionSetOutput.Printer(population)
+      .separator("\t")
+      .varFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+      .funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+      .print();
 
-    fileContext = new DefaultFileOutputContext("FUN.tsv");
-    fileContext.setSeparator("\t");
-
-    SolutionSetOutput.printObjectivesToFile(fileContext, population);
-    logger_.info("Objectives values have been written to file FUN");
+    logger_.info("Total execution time: " + computingTime + "ms");
+    logger_.info("Objectives values have been written to file FUN.tsv");
+    logger_.info("Variables values have been written to file VAR.tsv");
     
     if (indicators != null) {
       logger_.info("Quality indicators");

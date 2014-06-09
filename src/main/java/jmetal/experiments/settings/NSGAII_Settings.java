@@ -70,7 +70,6 @@ public class NSGAII_Settings extends Settings {
     evaluator_ = new SequentialSolutionSetEvaluator() ;
   }
 
-
   /**
    * Configure NSGAII with default parameter experiments.settings
    *

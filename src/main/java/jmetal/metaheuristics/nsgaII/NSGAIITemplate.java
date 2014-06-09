@@ -183,18 +183,18 @@ public abstract class NSGAIITemplate extends Algorithm {
     protected Operator crossoverOperator_;
     protected Operator selectionOperator_;
 
-    private String currentNSGAIIVariant_ ;
+    //private String currentNSGAIIVariant_ ;
 
     public Builder(Problem problem, SolutionSetEvaluator evaluator) {
       evaluator_ = evaluator ;
       problem_ = problem ;
     }
 
-    public Builder(Problem problem, SolutionSetEvaluator evaluator, String variant) {
-      evaluator_ = evaluator ;
-      problem_ = problem ;
-      currentNSGAIIVariant_ = variant ;
-    }
+    //public Builder(Problem problem, SolutionSetEvaluator evaluator, String variant) {
+    //  evaluator_ = evaluator ;
+    //  problem_ = problem ;
+    //  currentNSGAIIVariant_ = variant ;
+    //}
 
     public Builder populationSize(int populationSize) {
       populationSize_ = populationSize ;
@@ -233,6 +233,7 @@ public abstract class NSGAIITemplate extends Algorithm {
     }
 
     public NSGAIITemplate build() {
+      /*
       if ("NSGAII".equals(currentNSGAIIVariant_)) {
         return new NSGAII(this);
       } else if ("SteadyStateNSGAII".equals(currentNSGAIIVariant_)) {
@@ -240,6 +241,8 @@ public abstract class NSGAIITemplate extends Algorithm {
       } else {
         return null ;
       }
+      */
+      return new NSGAII(this) ;
     }
 
   }

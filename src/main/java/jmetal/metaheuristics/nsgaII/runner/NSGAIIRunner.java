@@ -118,7 +118,7 @@ public class NSGAIIRunner {
     selection = new BinaryTournament2.Builder()
       .build();
 
-    algorithm = new NSGAII.Builder(problem, new SequentialSolutionSetEvaluator(), "NSGAII")
+    algorithm = new NSGAII.Builder(problem, new SequentialSolutionSetEvaluator())
 //    algorithm = new SteadyStateNSGAII.Builder(problem, new SequentialSolutionSetEvaluator(), "SteadyStateNSGAII")
       .crossover(crossover)
       .mutation(mutation)
