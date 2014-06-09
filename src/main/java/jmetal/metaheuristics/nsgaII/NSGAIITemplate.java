@@ -1,4 +1,4 @@
-//  NSGAII.java
+//  NSGAIITemplate.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -183,9 +183,17 @@ public abstract class NSGAIITemplate extends Algorithm {
     protected Operator crossoverOperator_;
     protected Operator selectionOperator_;
 
+    private String currentNSGAIIVariant_ ;
+
     public Builder(Problem problem, SolutionSetEvaluator evaluator) {
       evaluator_ = evaluator ;
       problem_ = problem ;
+    }
+
+    public Builder(Problem problem, SolutionSetEvaluator evaluator, String variant) {
+      evaluator_ = evaluator ;
+      problem_ = problem ;
+      currentNSGAIIVariant_ = variant ;
     }
 
     public Builder populationSize(int populationSize) {
@@ -225,7 +233,13 @@ public abstract class NSGAIITemplate extends Algorithm {
     }
 
     public NSGAIITemplate build() {
-      return new NSGAII(this) ;
+      if ("NSGAII".equals(currentNSGAIIVariant_)) {
+        return new NSGAII(this);
+      } else if ("SteadyStateNSGAII".equals(currentNSGAIIVariant_)) {
+        return new SteadyStateNSGAII(this) ;
+      } else {
+        return null ;
+      }
     }
 
   }

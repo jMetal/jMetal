@@ -30,22 +30,54 @@ import java.io.IOException;
 /**
  * Created by Antonio J. Nebro on 08/06/14.
  */
-public class RunningTime {
+public class AlgorithmRunner {
   private SolutionSet solutionSet_ ;
   private long computingTime_ ;
 
-  public RunningTime(Algorithm algorithm) throws IOException, ClassNotFoundException {
+  private AlgorithmRunner(Executor execute) {
+    solutionSet_ = execute.solutionSet_ ;
+    computingTime_ = execute.computingTime_ ;
+  }
+
+  public SolutionSet getSolutionSet() {
+    return solutionSet_;
+  }
+
+  public long getComputingTime() {
+    return computingTime_ ;
+  }
+  /*
+  public RunAlgorithm(Algorithm algorithm) throws IOException, ClassNotFoundException {
     long initTime = System.currentTimeMillis();
     solutionSet_ = algorithm.execute() ;
     computingTime_ = System.currentTimeMillis() - initTime ;
   }
 
   public long getComputingTime() {
-     return computingTime_ ;
+    return computingTime_ ;
   }
 
   public SolutionSet getSolutionSet() {
     return solutionSet_ ;
   }
 
+  */
+  public static class Executor {
+    Algorithm algorithm_ ;
+    long computingTime_ ;
+    SolutionSet solutionSet_ ;
+
+    public Executor(Algorithm algorithm) {
+      algorithm_ = algorithm ;
+    }
+
+    public AlgorithmRunner execute() throws IOException, ClassNotFoundException {
+      long initTime = System.currentTimeMillis();
+      solutionSet_ = algorithm_.execute() ;
+      computingTime_ = System.currentTimeMillis() - initTime ;
+
+      return new AlgorithmRunner(this) ;
+    }
+  }
 }
+

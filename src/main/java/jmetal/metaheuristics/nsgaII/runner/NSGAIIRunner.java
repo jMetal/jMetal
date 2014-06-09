@@ -31,11 +31,10 @@ import jmetal.operators.selection.BinaryTournament2;
 import jmetal.problems.Kursawe;
 import jmetal.problems.ProblemFactory;
 import jmetal.qualityIndicator.QualityIndicator;
+import jmetal.util.AlgorithmRunner;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
-import jmetal.util.RunningTime;
 import jmetal.util.evaluator.SequentialSolutionSetEvaluator;
-import jmetal.util.evaluator.SolutionSetEvaluator;
 import jmetal.util.fileOutput.DefaultFileOutputContext;
 import jmetal.util.fileOutput.SolutionSetOutput;
 
@@ -63,9 +62,9 @@ public class NSGAIIRunner {
    * @throws jmetal.util.JMException
    * @throws java.io.IOException
    * @throws SecurityException Usage: three options
-   *                           - jmetal.metaheuristics.nsgaII.NSGAII_main
-   *                           - jmetal.metaheuristics.nsgaII.NSGAII_main problemName
-   *                           - jmetal.metaheuristics.nsgaII.NSGAII_main problemName paretoFrontFile
+   *                           - jmetal.metaheuristics.nsgaII.NSGAIIRunner
+   *                           - jmetal.metaheuristics.nsgaII.NSGAIIRunner problemName
+   *                           - jmetal.metaheuristics.nsgaII.NSGAIIRunner problemName paretoFrontFile
    */
   public static void main(String[] args) throws
     JMException,
@@ -106,9 +105,6 @@ public class NSGAIIRunner {
       */
     }
 
-    SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator() ;
-
-    // Crossover and mutation for Real codification
     crossover = new SBXCrossover.Builder()
       .distributionIndex(20.0)
       .probability(0.9)
@@ -122,7 +118,8 @@ public class NSGAIIRunner {
     selection = new BinaryTournament2.Builder()
       .build();
 
-    algorithm = new NSGAII.Builder(problem, evaluator)
+    algorithm = new NSGAII.Builder(problem, new SequentialSolutionSetEvaluator(), "NSGAII")
+//    algorithm = new SteadyStateNSGAII.Builder(problem, new SequentialSolutionSetEvaluator(), "SteadyStateNSGAII")
       .crossover(crossover)
       .mutation(mutation)
       .selection(selection)
@@ -130,19 +127,11 @@ public class NSGAIIRunner {
       .populationSize(100)
       .build() ;
 
-    RunningTime timer = new RunningTime(algorithm) ;
-    SolutionSet population = timer.getSolutionSet() ;
-    long computingTime = timer.getComputingTime() ;
+    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+      .execute() ;
 
-    /*FileOutputContext fileContext ;
-
-    fileContext = new DefaultFileOutputContext("VAR.tsv") ;
-    fileContext.setSeparator("\t");
-    SolutionSetOutput.printVariablesToFile(fileContext, population) ;
-
-    fileContext = new DefaultFileOutputContext("FUN.tsv");
-    fileContext.setSeparator("\t");
-    SolutionSetOutput.printObjectivesToFile(fileContext, population);*/
+    SolutionSet population = algorithmRunner.getSolutionSet() ;
+    long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)
       .separator("\t")

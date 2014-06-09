@@ -38,6 +38,17 @@ public class SteadyStateNSGAII extends NSGAIITemplate {
     super(evaluator);
   }
 
+  public SteadyStateNSGAII(Builder builder) {
+    super(builder) ;
+    problem_ = builder.problem_ ;
+    maxEvaluations_ = builder.maxEvaluations_ ;
+    crossoverOperator_ = builder.crossoverOperator_ ;
+    mutationOperator_ = builder.mutationOperator_ ;
+    selectionOperator_ = builder.selectionOperator_ ;
+    populationSize_ = builder.populationSize_ ;
+  }
+
+
   /**
    * Runs the ssNSGA-II algorithm.
    *
@@ -46,7 +57,7 @@ public class SteadyStateNSGAII extends NSGAIITemplate {
    * @throws jmetal.util.JMException
    */
   public SolutionSet execute() throws JMException, ClassNotFoundException {
-    readParameterSettings();
+    //readParameterSettings();
     createInitialPopulation();
     evaluatePopulation(population_);
 
