@@ -132,7 +132,7 @@ public class NSGAII_Settings extends Settings {
       .selection(selection)
       .maxEvaluations(25000)
       .populationSize(100)
-      .build() ;
+      .build("NSGAII") ;
 
     return algorithm;
   }

@@ -24,7 +24,7 @@ import jmetal.core.Algorithm;
 import jmetal.core.Operator;
 import jmetal.core.Problem;
 import jmetal.core.SolutionSet;
-import jmetal.metaheuristics.nsgaII.NSGAII;
+import jmetal.metaheuristics.nsgaII.NSGAIITemplate;
 import jmetal.operators.crossover.SBXCrossover;
 import jmetal.operators.mutation.PolynomialMutation;
 import jmetal.operators.selection.BinaryTournament2;
@@ -105,6 +105,13 @@ public class NSGAIIRunner {
       */
     }
 
+    /**
+     * Choices:
+     * - "NSGAII"
+     * - "SteadyStateNSGAII"
+     */
+    String nsgaIIVersion = "SteadyStateNSGAII" ;
+
     crossover = new SBXCrossover.Builder()
       .distributionIndex(20.0)
       .probability(0.9)
@@ -118,14 +125,13 @@ public class NSGAIIRunner {
     selection = new BinaryTournament2.Builder()
       .build();
 
-    algorithm = new NSGAII.Builder(problem, new SequentialSolutionSetEvaluator())
-//    algorithm = new SteadyStateNSGAII.Builder(problem, new SequentialSolutionSetEvaluator(), "SteadyStateNSGAII")
+    algorithm = new NSGAIITemplate.Builder(problem, new SequentialSolutionSetEvaluator())
       .crossover(crossover)
       .mutation(mutation)
       .selection(selection)
       .maxEvaluations(25000)
       .populationSize(100)
-      .build() ;
+      .build(nsgaIIVersion) ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
       .execute() ;

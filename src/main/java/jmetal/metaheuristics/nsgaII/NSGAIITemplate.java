@@ -55,7 +55,7 @@ public abstract class NSGAIITemplate extends Algorithm {
 
   @Deprecated
   public NSGAIITemplate(SolutionSetEvaluator evaluator) {
-	  super();
+    super();
     evaluations_ = 0 ;
     distance_ = new Distance();
     evaluator_ = evaluator ;
@@ -149,7 +149,7 @@ public abstract class NSGAIITemplate extends Algorithm {
   }
 
   protected void tearDown() {
-    evaluator_.shutdown(); 
+    evaluator_.shutdown();
   }
 
   public Operator getCrossoverOperator() {
@@ -232,17 +232,17 @@ public abstract class NSGAIITemplate extends Algorithm {
       return this ;
     }
 
-    public NSGAIITemplate build() {
-      /*
-      if ("NSGAII".equals(currentNSGAIIVariant_)) {
-        return new NSGAII(this);
-      } else if ("SteadyStateNSGAII".equals(currentNSGAIIVariant_)) {
-        return new SteadyStateNSGAII(this) ;
+    public NSGAIITemplate build(String NSGAIIVariant) {
+      NSGAIITemplate algorithm = null ;
+      if ("NSGAII".equals(NSGAIIVariant)) {
+        algorithm = new NSGAII(this);
+      } else if ("SteadyStateNSGAII".equals(NSGAIIVariant)) {
+        algorithm =  new SteadyStateNSGAII(this) ;
       } else {
-        return null ;
+        throw new JMException(NSGAIIVariant + " variant unknown") ;
       }
-      */
-      return new NSGAII(this) ;
+
+      return algorithm ;
     }
 
   }
