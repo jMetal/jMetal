@@ -21,10 +21,7 @@
 
 package jmetal.metaheuristics.gde3;
 
-import jmetal.core.Algorithm;
-import jmetal.core.Operator;
-import jmetal.core.Solution;
-import jmetal.core.SolutionSet;
+import jmetal.core.*;
 import jmetal.util.Distance;
 import jmetal.util.JMException;
 import jmetal.util.Ranking;
@@ -41,11 +38,36 @@ public class GDE3 extends Algorithm {
 
   private static final long serialVersionUID = -8007862618252202475L;
 
-  SolutionSetEvaluator evaluator_ ;
+  protected SolutionSetEvaluator evaluator_ ;
+
+  protected int populationSize_;
+  protected int maxIterations_;
+  protected int iterations_;
+
+  protected SolutionSet population_;
+  protected SolutionSet offspringPopulation_;
+
+  protected Operator crossoverOperator_;
+  protected Operator selectionOperator_;
+
+  protected Comparator dominance_;
+
+  protected Distance distance_ ;
 
   public GDE3(SolutionSetEvaluator evaluator) {
     super();
     evaluator_ = evaluator ;
+    distance_ = new Distance();
+    dominance_ = new DominanceComparator();
+    iterations_ = 0 ;
+  }
+
+  public GDE3(Builder builder) {
+    problem_ = builder.problem_ ;
+    maxIterations_ = builder.maxIterations_ ;
+    crossoverOperator_ = builder.crossoverOperator_ ;
+    selectionOperator_ = builder.selectionOperator_ ;
+    populationSize_ = builder.populationSize_ ;
   }
 
   /**
@@ -56,131 +78,190 @@ public class GDE3 extends Algorithm {
    * @throws jmetal.util.JMException
    */
   public SolutionSet execute() throws JMException, ClassNotFoundException {
-    int populationSize;
-    int maxIterations;
-    int iterations;
-
-    SolutionSet population;
-    SolutionSet offspringPopulation;
-
-    Distance distance;
-    Comparator dominance;
-
-    Operator selectionOperator;
-    Operator crossoverOperator;
-
-    distance = new Distance();
-    dominance = new DominanceComparator();
-
-    Solution parent[];
-
-    //Read the parameters
-    populationSize = ((Integer) this.getInputParameter("populationSize")).intValue();
-    maxIterations = ((Integer) this.getInputParameter("maxIterations")).intValue();
-
-    selectionOperator = operators_.get("selection");
-    crossoverOperator = operators_.get("crossover");
-
-    //Initialize the variables
-    population = new SolutionSet(populationSize);
-    iterations = 0;
-
-    // Create the initial solutionSet
-    Solution newSolution;
-    for (int i = 0; i < populationSize; i++) {
-      newSolution = new Solution(problem_);
-      problem_.evaluate(newSolution);
-      problem_.evaluateConstraints(newSolution);
-      population.add(newSolution);
-    }       
+    readParameterSettings();
+    createInitialPopulation();
+    evaluatePopulation(population_);
 
     // Generations ...
-    while (iterations < maxIterations) {
+    while (!stoppingCondition()) {
+      System.out.println("Itertaions " + iterations_) ;
       // Create the offSpring solutionSet      
-      offspringPopulation = new SolutionSet(populationSize * 2);
-      SolutionSet tmpSolutionSet = new SolutionSet(populationSize) ;
+      offspringPopulation_ = new SolutionSet(populationSize_ * 2);
+      SolutionSet tmpSolutionSet = new SolutionSet(populationSize_) ;
 
-      for (int i = 0; i < populationSize; i++) {
+      for (int i = 0; i < populationSize_; i++) {
         // Obtain parents. Two parameters are required: the population and the 
         //                 index of the current individual
-        parent = (Solution[]) selectionOperator.execute(new Object[] {population, i});
+        Solution[] parent = (Solution[]) selectionOperator_.execute(new Object[] {population_, i});
 
         Solution child;
         // Crossover. Two parameters are required: the current individual and the 
         //            array of parents
-        child = (Solution) crossoverOperator.execute(new Object[] {population.get(i), parent});
+        child = (Solution) crossoverOperator_.execute(new Object[] {population_.get(i), parent});
 
         tmpSolutionSet.add(child);
       }
-      evaluator_.evaluate(tmpSolutionSet, problem_) ;
+      evaluatePopulation(tmpSolutionSet);
 
-
-      for (int i = 0; i < populationSize; i++) {
+      for (int i = 0; i < populationSize_; i++) {
         // Dominance test
         Solution child = tmpSolutionSet.get(i) ;
         int result;
-        result = dominance.compare(population.get(i), child);
+        result = dominance_.compare(population_.get(i), child);
         if (result == -1) { 
           // Solution i dominates child
-          offspringPopulation.add(population.get(i));
+          offspringPopulation_.add(population_.get(i));
         } 
         else if (result == 1) { 
           // child dominates
-          offspringPopulation.add(child);
+          offspringPopulation_.add(child);
         } else { 
           // the two solutions are non-dominated
-          offspringPopulation.add(child);
-          offspringPopulation.add(population.get(i));
+          offspringPopulation_.add(child);
+          offspringPopulation_.add(population_.get(i));
         }
-      }          
+      }
 
       // Ranking the offspring population
-      Ranking ranking = new Ranking(offspringPopulation);
+      Ranking ranking = new Ranking(offspringPopulation_);
 
-      int remain = populationSize;
-      int index = 0;
-      SolutionSet front = null;
-      population.clear();
-
-      // Obtain the next front
-      front = ranking.getSubfront(index);
-
-      while ((remain > 0) && (remain >= front.size())) {
-        //Assign crowding distance to individuals
-        distance.crowdingDistanceAssignment(front, problem_.getNumberOfObjectives());
-        //Add the individuals of this front
-        for (int k = 0; k < front.size(); k++) {
-          population.add(front.get(k));
+      population_.clear();
+      int rankingIndex = 0 ;
+      while (populationIsNotFull()) {
+        if (subfrontFillsIntoThePopulation(ranking, rankingIndex)) {
+          addRankedSolutionsToPopulation(ranking, rankingIndex);
+          rankingIndex ++ ;
+        } else {
+          computeCrowdingDistance(ranking, rankingIndex) ;
+          addLastRankedSolutions(ranking, rankingIndex);
         }
+      }
 
-        //Decrement remain
-        remain = remain - front.size();
+      iterations_ ++ ;
+    }
 
-        //Obtain the next front
-        index++;
-        if (remain > 0) {
-          front = ranking.getSubfront(index);
-        }        
-      } 
+    tearDown();
 
-      // remain is less than front(index).size, insert only the best one
-      if (remain > 0) {  // front contains individuals to insert                        
-        while (front.size() > remain) {
-          distance.crowdingDistanceAssignment(front, problem_.getNumberOfObjectives());
-          front.remove(front.indexWorst(new CrowdingComparator()));
-        }
-        for (int k = 0; k < front.size(); k++) {
-          population.add(front.get(k));
-        }
+    return getNonDominatedSolutions() ;
+  }
 
-        remain = 0;
-      }                    
+  @Deprecated
+  void readParameterSettings() {
+    populationSize_ = ((Integer) this.getInputParameter("populationSize")).intValue();
+    maxIterations_ = ((Integer) this.getInputParameter("maxIterations")).intValue();
 
-      iterations++;
-    } 
+    selectionOperator_ = operators_.get("selection");
+    crossoverOperator_ = operators_.get("crossover");
+  }
 
-    // Return the first non-dominated front
-    Ranking ranking = new Ranking(population);
-    return ranking.getSubfront(0);
-  } 
+  protected void createInitialPopulation() throws ClassNotFoundException, JMException {
+    population_ = new SolutionSet(populationSize_);
+
+    Solution newSolution;
+    for (int i = 0; i < populationSize_; i++) {
+      newSolution = new Solution(problem_);
+      population_.add(newSolution);
+    }
+  }
+
+  protected void evaluatePopulation(SolutionSet population) throws JMException {
+    evaluator_.evaluate(population, problem_) ;
+  }
+
+  protected boolean stoppingCondition() {
+    return iterations_ == maxIterations_ ;
+  }
+
+  protected void addRankedSolutionsToPopulation(Ranking ranking, int rank) throws JMException {
+    SolutionSet front ;
+
+    front = ranking.getSubfront(rank);
+
+    for (int i = 0 ; i < front.size(); i++) {
+      population_.add(front.get(i));
+    }
+  }
+
+  protected void computeCrowdingDistance(Ranking ranking, int rank) throws JMException {
+    SolutionSet currentRankedFront = ranking.getSubfront(rank) ;
+    distance_.crowdingDistanceAssignment(currentRankedFront, problem_.getNumberOfObjectives());
+  }
+
+  protected void addLastRankedSolutions(Ranking ranking, int rank) throws JMException {
+    SolutionSet currentRankedFront = ranking.getSubfront(rank) ;
+
+    currentRankedFront.sort(new CrowdingComparator());
+
+    int i = 0 ;
+    while (population_.size() < populationSize_) {
+      population_.add(currentRankedFront.get(i)) ;
+      i++ ;
+    }
+  }
+
+  protected boolean populationIsNotFull() {
+    return population_.size() < populationSize_ ;
+  }
+
+  protected boolean subfrontFillsIntoThePopulation(Ranking ranking, int rank) {
+    return ranking.getSubfront(rank).size() < (populationSize_ - population_.size()) ;
+  }
+
+  protected SolutionSet getNonDominatedSolutions() throws JMException {
+    return new Ranking(population_).getSubfront(0);
+  }
+
+  protected void tearDown() {
+    evaluator_.shutdown();
+  }
+
+  public static class Builder {
+    protected SolutionSetEvaluator evaluator_ ;
+    protected Problem problem_ ;
+
+    protected int populationSize_;
+    protected  int maxIterations_;
+
+    protected Operator crossoverOperator_;
+    protected Operator selectionOperator_;
+
+    public Builder(Problem problem, SolutionSetEvaluator evaluator) {
+      evaluator_ = evaluator ;
+      problem_ = problem ;
+    }
+
+    public Builder populationSize(int populationSize) {
+      populationSize_ = populationSize ;
+
+      return this ;
+    }
+
+    public Builder maxIterations(int maxIterations) {
+      maxIterations_ = maxIterations ;
+
+      return this ;
+    }
+
+    public Builder evaluator(SolutionSetEvaluator evaluator) {
+      evaluator_ = evaluator ;
+
+      return this ;
+    }
+
+    public Builder crossover(Operator mutation) {
+      crossoverOperator_ = mutation ;
+
+      return this ;
+    }
+
+    public Builder selection(Operator selection) {
+      selectionOperator_ = selection ;
+
+      return this ;
+    }
+
+    public GDE3 build() {
+      return new GDE3(this) ;
+    }
+  }
 } 

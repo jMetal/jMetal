@@ -35,6 +35,7 @@ import jmetal.util.AlgorithmRunner;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.evaluator.SequentialSolutionSetEvaluator;
+import jmetal.util.evaluator.SolutionSetEvaluator;
 import jmetal.util.fileOutput.DefaultFileOutputContext;
 import jmetal.util.fileOutput.SolutionSetOutput;
 
@@ -105,12 +106,19 @@ public class NSGAIIRunner {
       */
     }
 
-    /**
-     * Choices:
+    /*
+     * Alternatives:
      * - "NSGAII"
      * - "SteadyStateNSGAII"
      */
-    String nsgaIIVersion = "SteadyStateNSGAII" ;
+    String nsgaIIVersion = "NSGAII" ;
+
+    /*
+     * Alternatives:
+     * - evaluator = new SequentialSolutionSetEvaluator() // NSGAII
+     * - evaluator = new new MultithreadedSolutionSetEvaluator(threads, problem) // parallel NSGAII
+     */
+    SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator() ;
 
     crossover = new SBXCrossover.Builder()
       .distributionIndex(20.0)
@@ -125,7 +133,7 @@ public class NSGAIIRunner {
     selection = new BinaryTournament2.Builder()
       .build();
 
-    algorithm = new NSGAIITemplate.Builder(problem, new SequentialSolutionSetEvaluator())
+    algorithm = new NSGAIITemplate.Builder(problem, evaluator)
       .crossover(crossover)
       .mutation(mutation)
       .selection(selection)

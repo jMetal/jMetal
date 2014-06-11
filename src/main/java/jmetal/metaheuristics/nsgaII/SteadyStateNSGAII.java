@@ -87,7 +87,8 @@ public class SteadyStateNSGAII extends NSGAIITemplate {
 
       evaluations_++;
 
-      Ranking ranking = rankPopulation() ;
+      //Ranking ranking = rankPopulation() ;
+      Ranking ranking = new Ranking(population_.union(offspringPopulation_));
 
       population_.clear();
       int rankingIndex = 0 ;

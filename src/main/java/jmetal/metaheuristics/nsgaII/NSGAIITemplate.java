@@ -96,7 +96,6 @@ public abstract class NSGAIITemplate extends Algorithm {
 
   protected void evaluatePopulation(SolutionSet population) throws JMException {
     evaluator_.evaluate(population, problem_) ;
-    evaluations_ += population.size() ;
   }
 
   protected boolean stoppingCondition() {
@@ -214,14 +213,14 @@ public abstract class NSGAIITemplate extends Algorithm {
       return this ;
     }
 
-    public Builder crossover(Operator mutation) {
-      crossoverOperator_ = mutation ;
+    public Builder crossover(Operator crossover) {
+      crossoverOperator_ = crossover ;
 
       return this ;
     }
 
-    public Builder mutation(Operator crossover) {
-      mutationOperator_ = crossover ;
+    public Builder mutation(Operator mutation) {
+      mutationOperator_ = mutation ;
 
       return this ;
     }
@@ -244,6 +243,5 @@ public abstract class NSGAIITemplate extends Algorithm {
 
       return algorithm ;
     }
-
   }
 } 

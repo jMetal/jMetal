@@ -85,7 +85,9 @@ public class NSGAII extends NSGAIITemplate {
       }
 
       evaluatePopulation(offspringPopulation_);
-      Ranking ranking = rankPopulation() ;
+      evaluations_ += offspringPopulation_.size() ;
+
+      Ranking ranking = new Ranking(population_.union(offspringPopulation_));
 
       population_.clear();
       int rankingIndex = 0 ;
@@ -104,14 +106,4 @@ public class NSGAII extends NSGAIITemplate {
 
     return getNonDominatedSolutions() ;
   }
-  
-  /*
-  private class Builder extends jmetal.metaheuristics.nsgaII.NSGAIITemplate.Builder {
-    public Builder(Problem problem, SolutionSetEvaluator evaluator) {
-      super(problem, evaluator) ;
-    }
-    
-    
-  }
-  */
 } 
