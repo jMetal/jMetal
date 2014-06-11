@@ -1,4 +1,4 @@
-//  SPEA2_main.java
+//  CellDERunner
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -18,16 +18,14 @@
 // 
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package jmetal.runner;
 
 import jmetal.core.Algorithm;
 import jmetal.core.Operator;
 import jmetal.core.Problem;
 import jmetal.core.SolutionSet;
-import jmetal.metaheuristics.spea2.SPEA2;
+import jmetal.metaheuristics.cellde.CellDE;
 import jmetal.operators.crossover.CrossoverFactory;
-import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.Kursawe;
 import jmetal.problems.ProblemFactory;
@@ -40,35 +38,31 @@ import java.util.HashMap;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
-/**
- * Class for configuring and running the SPEA2 algorithm
- */
-public class SPEA2_main {
+public class CellDERunner {
   public static Logger logger_;      
   public static FileHandler fileHandler_; 
 
   /**
-   * @param args Command line arguments. The first (optional) argument specifies
-   *             the problem to solve.
+   * @param args Command line arguments.
    * @throws JMException
    * @throws IOException
-   * @throws SecurityException Usage: three options
-   *                           - jmetal.runner.SPEA2_main
-   *                           - jmetal.runner.SPEA2_main problemName
-   *                           - jmetal.runner.SPEA2_main problemName ParetoFrontFile
+   * @throws SecurityException Usage: three choices
+   *                           - jmetal.metaheuristics.nsgaII.NSGAII_main
+   *                           - jmetal.metaheuristics.nsgaII.NSGAII_main problemName
+   *                           - jmetal.metaheuristics.nsgaII.NSGAII_main problemName paretoFrontFile
    */
-  public static void main(String[] args) throws JMException, IOException, ClassNotFoundException {
+  public static void main(String[] args) throws
+    JMException, SecurityException, IOException, ClassNotFoundException {
     Problem problem;
     Algorithm algorithm;
-    Operator crossover;
-    Operator mutation;
     Operator selection;
+    Operator crossover;
 
     QualityIndicator indicators;
 
     // Logger object and file to store log messages
     logger_ = Configuration.logger_;
-    fileHandler_ = new FileHandler("SPEA2.log");
+    fileHandler_ = new FileHandler("MOCell_main.log");
     logger_.addHandler(fileHandler_);
 
     indicators = null;
@@ -79,51 +73,46 @@ public class SPEA2_main {
       Object[] params = {"Real"};
       problem = (new ProblemFactory()).getProblem(args[0], params);
       indicators = new QualityIndicator(problem, args[1]);
-    } else {
+    } else { 
       problem = new Kursawe("Real", 3);
+      //problem = new Kursawe("BinaryReal", 3);
       //problem = new Water("Real");
-      //problem = new ZDT1("ArrayReal", 1000);
-      //problem = new ZDT4("BinaryReal");
+      //problem = new ZDT4("ArrayReal");
       //problem = new WFG1("Real");
       //problem = new DTLZ1("Real");
       //problem = new OKA2("Real") ;
-    }
+    } // else
 
-    algorithm = new SPEA2();
+    algorithm = new CellDE();
     algorithm.setProblem(problem);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", 100);
     algorithm.setInputParameter("archiveSize", 100);
     algorithm.setInputParameter("maxEvaluations", 25000);
+    algorithm.setInputParameter("archiveFeedBack", 20);
 
-    // Mutation and Crossover for Real codification 
+    // Crossover operator 
     HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
-    crossoverParameters.put("probability", 0.9);
-    crossoverParameters.put("distributionIndex", 20.0);
-    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", crossoverParameters);
-
-    HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
-    mutationParameters.put("probability", 1.0 / problem.getNumberOfVariables());
-    mutationParameters.put("distributionIndex", 20.0);
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
-
-    // Selection operator 
-    HashMap<String, Object> selectionParameters = null; // FIXME: why we are passing null?
-    selection = SelectionFactory.getSelectionOperator("BinaryTournament", selectionParameters);
+    crossoverParameters.put("CR", 0.5);
+    crossoverParameters.put("F", 0.5);
+    crossover =
+      CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", crossoverParameters);
 
     // Add the operators to the algorithm
+    HashMap<String, Object> selectionParameters = null; // FIXME why we are passing null?
+    selection = SelectionFactory.getSelectionOperator("BinaryTournament", selectionParameters);
+
     algorithm.addOperator("crossover", crossover);
-    algorithm.addOperator("mutation", mutation);
     algorithm.addOperator("selection", selection);
 
-    // Execute the algorithm
+    // Execute the Algorithm 
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;
+    Configuration.logger_.info("Total execution time: " + estimatedTime);
 
-    // Result messages 
-    logger_.info("Total execution time: " + estimatedTime + "ms");
+    // Log messages 
     logger_.info("Objectives values have been writen to file FUN");
     population.printObjectivesToFile("FUN");
     logger_.info("Variables values have been writen to file VAR");
@@ -135,7 +124,6 @@ public class SPEA2_main {
       logger_.info("GD         : " + indicators.getGD(population));
       logger_.info("IGD        : " + indicators.getIGD(population));
       logger_.info("Spread     : " + indicators.getSpread(population));
-      logger_.info("Epsilon    : " + indicators.getEpsilon(population));
     }
   }
 }

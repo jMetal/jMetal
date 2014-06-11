@@ -1,9 +1,10 @@
-//  pgGA_main.java
+//  GARunner.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
+//       Juan J. Durillo <durillo@lcc.uma.es>
 //
-//  Copyright (c) 2013 Antonio J. Nebro
+//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -24,24 +25,24 @@ import jmetal.core.Algorithm;
 import jmetal.core.Operator;
 import jmetal.core.Problem;
 import jmetal.core.SolutionSet;
-import jmetal.metaheuristics.singleObjective.geneticAlgorithm.pgGA;
+import jmetal.metaheuristics.singleObjective.geneticAlgorithm.gGA;
 import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.SelectionFactory;
-import jmetal.problems.singleObjective.Griewank;
+import jmetal.problems.singleObjective.OneMax;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
-import jmetal.util.parallel.MultithreadedEvaluator;
-import jmetal.util.parallel.SynchronousParallelTaskExecutor;
 
 import java.io.IOException;
 import java.util.HashMap;
 
 /**
- * This class runs a multithreaded single-objective generational
- * genetic algorithm (GA).
+ * This class runs a single-objective genetic algorithm (GA). The GA can be
+ * a steady-state GA (class ssGA), a generational GA (class gGA), a synchronous
+ * cGA (class scGA) or an asynchronous cGA (class acGA). The OneMax
+ * problem is used to test the algorithms.
  */
-public class pgGA_main {
+public class GARunner {
 
   public static void main(String[] args) throws JMException, ClassNotFoundException, IOException {
     Problem problem;
@@ -50,30 +51,44 @@ public class pgGA_main {
     Operator mutation;
     Operator selection;
 
-    int threads = 4; // 0 - use all the available cores
-    SynchronousParallelTaskExecutor parallelEvaluator = new MultithreadedEvaluator(threads);
+    int bits = 512;
+    problem = new OneMax("Binary", bits);
 
     //problem = new Sphere("Real", 10) ;
-    problem = new Griewank("Real", 10);
+    //problem = new Easom("Real") ;
+    //problem = new Griewank("Real", 10) ;
 
-    algorithm = new pgGA(); // Generational GA
+    algorithm = new gGA(); // Generational GA
     algorithm.setProblem(problem);
-    ((pgGA)algorithm).seteEvaluator(parallelEvaluator);
+    
+    //algorithm = new ssGA(problem); // Steady-state GA
+    //algorithm = new scGA(problem) ; // Synchronous cGA
+    //algorithm = new acGA(problem) ;   // Asynchronous cGA
     
     /* Algorithm parameters*/
     algorithm.setInputParameter("populationSize", 100);
-    algorithm.setInputParameter("maxEvaluations", 2500000);
+    algorithm.setInputParameter("maxEvaluations", 25000);
+    /*
+    // Mutation and Crossover for Real codification 
+    parameters = new HashMap() ;
+    parameters.put("probability", 0.9) ;
+    parameters.put("distributionIndex", 20.0) ;
+    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters);                   
 
-    // Mutation and Crossover for Real codification
+    parameters = new HashMap() ;
+    parameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
+    parameters.put("distributionIndex", 20.0) ;
+    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);                    
+    */
+
+    // Mutation and Crossover for Binary codification 
     HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
     crossoverParameters.put("probability", 0.9);
-    crossoverParameters.put("distributionIndex", 20.0);
-    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", crossoverParameters);
+    crossover = CrossoverFactory.getCrossoverOperator("SinglePointCrossover", crossoverParameters);
 
     HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
-    mutationParameters.put("probability", 1.0 / problem.getNumberOfVariables());
-    mutationParameters.put("distributionIndex", 20.0);
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
+    mutationParameters.put("probability", 1.0 / bits);
+    mutation = MutationFactory.getMutationOperator("BitFlipMutation", mutationParameters);                    
     
     /* Selection Operator */
     HashMap<String, Object> selectionParameters = null; // FIXME: why we are passing null?

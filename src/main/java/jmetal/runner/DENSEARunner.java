@@ -1,4 +1,4 @@
-//  DENSEA_main.java
+//  DENSEARunner.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -41,7 +41,7 @@ import java.util.logging.Logger;
 /**
  * Class for configuring and running the DENSEA algorithm
  */
-public class DENSEA_main {
+public class DENSEARunner {
   public static Logger logger_;     
   public static FileHandler fileHandler_; 
 

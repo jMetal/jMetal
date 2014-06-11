@@ -1,10 +1,9 @@
-//  PSO_main.java
+//  StandardPSO2007Runner.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
 //
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
+//  Copyright (c) 2014 Antonio J. Nebro
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -24,63 +23,54 @@ package jmetal.runner.singleObjective;
 import jmetal.core.Algorithm;
 import jmetal.core.Problem;
 import jmetal.core.SolutionSet;
-import jmetal.metaheuristics.singleObjective.particleSwarmOptimization.PSO;
-import jmetal.operators.mutation.Mutation;
-import jmetal.operators.mutation.MutationFactory;
-import jmetal.problems.singleObjective.Griewank;
-import jmetal.problems.singleObjective.Sphere;
+import jmetal.metaheuristics.singleObjective.particleSwarmOptimization.StandardPSO2007;
+import jmetal.problems.singleObjective.CEC2005Problem;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
 /**
  * Class for configuring and running a single-objective PSO algorithm
  */
-public class PSO_main {
+public class StandardPSO2007Runner {
   public static Logger logger_;      // Logger object
   public static FileHandler fileHandler_; // FileHandler object
 
   /**
    * @param args Command line arguments. The first (optional) argument specifies
    *             the problem to solve.
-   * @throws JMException
-   * @throws IOException
+   * @throws jmetal.util.JMException
+   * @throws java.io.IOException
    * @throws SecurityException
    */
   public static void main(String[] args)
     throws JMException, IOException, ClassNotFoundException {
-    Problem problem;
-    Algorithm algorithm;
-    Mutation mutation;
+    Problem problem;  // The problem to solve
+    Algorithm algorithm;  // The algorithm to use
 
     // Logger object and file to store log messages
     logger_ = Configuration.logger_;
     fileHandler_ = new FileHandler("PSO_main.log");
     logger_.addHandler(fileHandler_);
 
-    problem = new Griewank("Real", 10);
-    problem = new Sphere("Real", 20);
+    //problem = new Rosenbrock("Real", 10) ;
+    //problem = new Sphere("Real", 20) ;
     //problem = new Easom("Real") ;
+    //problem = new Griewank("Real", 10) ;
 
-    //problem = new Rosenbrock("Real", 10);
+    //problem = new Sphere("Real", 20);
+    problem = new CEC2005Problem("Real", 5, 10);
 
-    algorithm = new PSO();
+    algorithm = new StandardPSO2007();
     algorithm.setProblem(problem);
-
     // Algorithm parameters
-    algorithm.setInputParameter("swarmSize", 50);
-    algorithm.setInputParameter("maxIterations", 5000);
-
-    HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
-    mutationParameters.put("probability", 1.0 / problem.getNumberOfVariables());
-    mutationParameters.put("distributionIndex", 20.0);
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
-
-    algorithm.addOperator("mutation", mutation);
+    algorithm
+      .setInputParameter("swarmSize", 10 + (int) (2 * Math.sqrt(problem.getNumberOfVariables())));
+    algorithm.setInputParameter("maxIterations", 80000);
+    algorithm.setInputParameter("numberOfParticlesToInform", 3);
 
     // Execute the Algorithm 
     long initTime = System.currentTimeMillis();

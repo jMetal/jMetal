@@ -1,4 +1,4 @@
-//  TSPGA_main.java
+//  TSPGARunner.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -40,7 +40,7 @@ import java.util.HashMap;
  * is used to test the algorithms. The data files accepted as in input are from
  * TSPLIB.
  */
-public class TSPGA_main {
+public class TSPGARunner {
 
   public static void main(String[] args) throws Exception {
     Problem problem;

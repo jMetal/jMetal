@@ -1,4 +1,4 @@
-//  SMPSOhv_main.java
+//  PSORunner.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -19,17 +19,16 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package jmetal.runner;
+package jmetal.runner.singleObjective;
 
 import jmetal.core.Algorithm;
 import jmetal.core.Problem;
 import jmetal.core.SolutionSet;
-import jmetal.metaheuristics.smpso.SMPSOhv;
+import jmetal.metaheuristics.singleObjective.particleSwarmOptimization.PSO;
 import jmetal.operators.mutation.Mutation;
 import jmetal.operators.mutation.MutationFactory;
-import jmetal.problems.ProblemFactory;
-import jmetal.problems.ZDT.ZDT4;
-import jmetal.qualityIndicator.QualityIndicator;
+import jmetal.problems.singleObjective.Griewank;
+import jmetal.problems.singleObjective.Sphere;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
@@ -39,64 +38,42 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
 /**
- * This class executes the SMPSOhv algorithm described in:
- * Antonio J. Nebro, Juan José Durillo, Carlos Artemio Coello Coello:
- * Analysis of leader selection strategies in a multi-objective Particle Swarm Optimizer.
- * IEEE Congress on Evolutionary Computation 2013: 3153-3160
+ * Class for configuring and running a single-objective PSO algorithm
  */
-public class SMPSOhv_main {
-  public static Logger logger_;      
-  public static FileHandler fileHandler_; 
+public class PSORunner {
+  public static Logger logger_;      // Logger object
+  public static FileHandler fileHandler_; // FileHandler object
 
   /**
    * @param args Command line arguments. The first (optional) argument specifies
    *             the problem to solve.
-   * @throws jmetal.util.JMException
-   * @throws java.io.IOException
-   * @throws SecurityException       Usage: three options
-   *                                 - jmetal.runner.SMPSOhv_main
-   *                                 - jmetal.runner.SMPSOhv_main problemName
-   *                                 - jmetal.runner.SMPSOhv_main problemName ParetoFrontFile
+   * @throws JMException
+   * @throws IOException
+   * @throws SecurityException
    */
-  public static void main(String[] args) throws JMException, IOException, ClassNotFoundException {
+  public static void main(String[] args)
+    throws JMException, IOException, ClassNotFoundException {
     Problem problem;
     Algorithm algorithm;
     Mutation mutation;
 
-    QualityIndicator indicators;
-
     // Logger object and file to store log messages
     logger_ = Configuration.logger_;
-    fileHandler_ = new FileHandler("SMPSO_main.log");
+    fileHandler_ = new FileHandler("PSO_main.log");
     logger_.addHandler(fileHandler_);
 
-    indicators = null;
-    if (args.length == 1) {
-      Object[] params = {"Real"};
-      problem = (new ProblemFactory()).getProblem(args[0], params);
-    } else if (args.length == 2) {
-      Object[] params = {"Real"};
-      problem = (new ProblemFactory()).getProblem(args[0], params);
-      indicators = new QualityIndicator(problem, args[1]);
-    } else { 
-      //problem = new Kursawe("Real", 3); 
-      //problem = new Water("Real");
-      //problem = new ZDT1("ArrayReal", 1000);
-      //problem = new ZDT4("BinaryReal");
-      //problem = new WFG1("Real");
-      //problem = new DTLZ1("Real");
-      //problem = new OKA2("Real") ;
-      //problem = new DTLZ1("Real",7,5);
-      problem = new ZDT4("Real");
-    }
+    problem = new Griewank("Real", 10);
+    problem = new Sphere("Real", 20);
+    //problem = new Easom("Real") ;
 
-    algorithm = new SMPSOhv();
+    //problem = new Rosenbrock("Real", 10);
+
+    algorithm = new PSO();
     algorithm.setProblem(problem);
 
     // Algorithm parameters
-    algorithm.setInputParameter("swarmSize", 100);
-    algorithm.setInputParameter("archiveSize", 100);
-    algorithm.setInputParameter("maxIterations", 250);
+    algorithm.setInputParameter("swarmSize", 50);
+    algorithm.setInputParameter("maxIterations", 5000);
 
     HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
     mutationParameters.put("probability", 1.0 / problem.getNumberOfVariables());
@@ -116,14 +93,5 @@ public class SMPSOhv_main {
     population.printObjectivesToFile("FUN");
     logger_.info("Variables values have been writen to file VAR");
     population.printVariablesToFile("VAR");
-
-    if (indicators != null) {
-      logger_.info("Quality indicators");
-      logger_.info("Hypervolume: " + indicators.getHypervolume(population));
-      logger_.info("GD         : " + indicators.getGD(population));
-      logger_.info("IGD        : " + indicators.getIGD(population));
-      logger_.info("Spread     : " + indicators.getSpread(population));
-      logger_.info("Epsilon    : " + indicators.getEpsilon(population));
-    }
   }
 }

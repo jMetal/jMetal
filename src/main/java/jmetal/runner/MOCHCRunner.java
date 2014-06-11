@@ -1,4 +1,4 @@
-//  MOCHC_main.java
+//  MOCHCRunner.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -43,7 +43,7 @@ import java.util.HashMap;
  * GECCO '07: Proceedings of the 9th annual conference on Genetic and
  * evolutionary computation. London, England. July 2007.
  */
-public class MOCHC_main {
+public class MOCHCRunner {
 
   public static void main(String[] args) throws IOException, JMException, ClassNotFoundException {
     Problem problem = new ZDT5("Binary");

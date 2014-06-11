@@ -1,4 +1,4 @@
-//  RandomSearch_main.java
+//  SPEA2Runner.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -22,9 +22,13 @@
 package jmetal.runner;
 
 import jmetal.core.Algorithm;
+import jmetal.core.Operator;
 import jmetal.core.Problem;
 import jmetal.core.SolutionSet;
-import jmetal.metaheuristics.randomSearch.RandomSearch;
+import jmetal.metaheuristics.spea2.SPEA2;
+import jmetal.operators.crossover.CrossoverFactory;
+import jmetal.operators.mutation.MutationFactory;
+import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.Kursawe;
 import jmetal.problems.ProblemFactory;
 import jmetal.qualityIndicator.QualityIndicator;
@@ -32,34 +36,39 @@ import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
 /**
- * Class for configuring and running the RandomSearch algorithm
+ * Class for configuring and running the SPEA2 algorithm
  */
-public class RandomSearch_main {
+public class SPEA2Runner {
   public static Logger logger_;      
   public static FileHandler fileHandler_; 
 
   /**
-   * @param args Command line arguments.
+   * @param args Command line arguments. The first (optional) argument specifies
+   *             the problem to solve.
    * @throws JMException
    * @throws IOException
    * @throws SecurityException Usage: three options
-   *                           - jmetal.runner.RandomSearch_main
-   *                           - jmetal.runner.RandomSearch_main problemName
+   *                           - jmetal.runner.SPEA2_main
+   *                           - jmetal.runner.SPEA2_main problemName
+   *                           - jmetal.runner.SPEA2_main problemName ParetoFrontFile
    */
-  public static void main(String[] args) throws
-    JMException, SecurityException, IOException, ClassNotFoundException {
+  public static void main(String[] args) throws JMException, IOException, ClassNotFoundException {
     Problem problem;
     Algorithm algorithm;
+    Operator crossover;
+    Operator mutation;
+    Operator selection;
 
     QualityIndicator indicators;
 
     // Logger object and file to store log messages
     logger_ = Configuration.logger_;
-    fileHandler_ = new FileHandler("RandomSearch_main.log");
+    fileHandler_ = new FileHandler("SPEA2.log");
     logger_.addHandler(fileHandler_);
 
     indicators = null;
@@ -80,13 +89,35 @@ public class RandomSearch_main {
       //problem = new OKA2("Real") ;
     }
 
-    algorithm = new RandomSearch();
+    algorithm = new SPEA2();
     algorithm.setProblem(problem);
 
     // Algorithm parameters
+    algorithm.setInputParameter("populationSize", 100);
+    algorithm.setInputParameter("archiveSize", 100);
     algorithm.setInputParameter("maxEvaluations", 25000);
 
-    // Execute the Algorithm
+    // Mutation and Crossover for Real codification 
+    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
+    crossoverParameters.put("probability", 0.9);
+    crossoverParameters.put("distributionIndex", 20.0);
+    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", crossoverParameters);
+
+    HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
+    mutationParameters.put("probability", 1.0 / problem.getNumberOfVariables());
+    mutationParameters.put("distributionIndex", 20.0);
+    mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
+
+    // Selection operator 
+    HashMap<String, Object> selectionParameters = null; // FIXME: why we are passing null?
+    selection = SelectionFactory.getSelectionOperator("BinaryTournament", selectionParameters);
+
+    // Add the operators to the algorithm
+    algorithm.addOperator("crossover", crossover);
+    algorithm.addOperator("mutation", mutation);
+    algorithm.addOperator("selection", selection);
+
+    // Execute the algorithm
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;

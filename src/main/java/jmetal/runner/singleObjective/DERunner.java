@@ -1,4 +1,4 @@
-//  GA_main.java
+//  DERunner.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -18,18 +18,16 @@
 // 
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package jmetal.runner.singleObjective;
 
 import jmetal.core.Algorithm;
 import jmetal.core.Operator;
 import jmetal.core.Problem;
 import jmetal.core.SolutionSet;
-import jmetal.metaheuristics.singleObjective.geneticAlgorithm.gGA;
+import jmetal.metaheuristics.singleObjective.differentialEvolution.DE;
 import jmetal.operators.crossover.CrossoverFactory;
-import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.SelectionFactory;
-import jmetal.problems.singleObjective.OneMax;
+import jmetal.problems.singleObjective.CEC2005Problem;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
@@ -37,66 +35,51 @@ import java.io.IOException;
 import java.util.HashMap;
 
 /**
- * This class runs a single-objective genetic algorithm (GA). The GA can be
- * a steady-state GA (class ssGA), a generational GA (class gGA), a synchronous
- * cGA (class scGA) or an asynchronous cGA (class acGA). The OneMax
- * problem is used to test the algorithms.
+ * This class runs a single-objective DE algorithm.
  */
-public class GA_main {
+public class DERunner {
 
   public static void main(String[] args) throws JMException, ClassNotFoundException, IOException {
     Problem problem;
     Algorithm algorithm;
     Operator crossover;
-    Operator mutation;
     Operator selection;
 
-    int bits = 512;
-    problem = new OneMax("Binary", bits);
+    //int bits ; // Length of bit string in the OneMax problem
 
-    //problem = new Sphere("Real", 10) ;
+    //bits = 512 ;
+    //problem = new OneMax(bits);
+
+    //problem = new Sphere("Real", 20) ;
+    //problem = new Easom("Real") ;
+    //problem = new Griewank("Real", 10) ;
+    problem = new CEC2005Problem("Real", 5, 10);
+
+    //problem = new Sphere("Real", 20) ;
     //problem = new Easom("Real") ;
     //problem = new Griewank("Real", 10) ;
 
-    algorithm = new gGA(); // Generational GA
+    algorithm = new DE();   // Asynchronous cGA
     algorithm.setProblem(problem);
-    
-    //algorithm = new ssGA(problem); // Steady-state GA
-    //algorithm = new scGA(problem) ; // Synchronous cGA
-    //algorithm = new acGA(problem) ;   // Asynchronous cGA
     
     /* Algorithm parameters*/
     algorithm.setInputParameter("populationSize", 100);
-    algorithm.setInputParameter("maxEvaluations", 25000);
-    /*
-    // Mutation and Crossover for Real codification 
-    parameters = new HashMap() ;
-    parameters.put("probability", 0.9) ;
-    parameters.put("distributionIndex", 20.0) ;
-    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters);                   
+    algorithm.setInputParameter("maxEvaluations", 1000000);
 
-    parameters = new HashMap() ;
-    parameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
-    parameters.put("distributionIndex", 20.0) ;
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);                    
-    */
-
-    // Mutation and Crossover for Binary codification 
+    // Crossover operator 
     HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
-    crossoverParameters.put("probability", 0.9);
-    crossover = CrossoverFactory.getCrossoverOperator("SinglePointCrossover", crossoverParameters);
+    crossoverParameters.put("CR", 0.5);
+    crossoverParameters.put("F", 0.5);
+    crossoverParameters.put("DE_VARIANT", "rand/1/bin");
+    crossover =
+      CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", crossoverParameters);
 
-    HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
-    mutationParameters.put("probability", 1.0 / bits);
-    mutation = MutationFactory.getMutationOperator("BitFlipMutation", mutationParameters);                    
-    
-    /* Selection Operator */
+    // Add the operators to the algorithm
     HashMap<String, Object> selectionParameters = null; // FIXME: why we are passing null?
-    selection = SelectionFactory.getSelectionOperator("BinaryTournament", selectionParameters);
-    
-    /* Add the operators to the algorithm*/
+    selection =
+      SelectionFactory.getSelectionOperator("DifferentialEvolutionSelection", selectionParameters);
+
     algorithm.addOperator("crossover", crossover);
-    algorithm.addOperator("mutation", mutation);
     algorithm.addOperator("selection", selection);
  
     /* Execute the Algorithm */

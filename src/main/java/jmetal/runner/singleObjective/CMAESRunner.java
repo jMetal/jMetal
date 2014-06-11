@@ -1,4 +1,4 @@
-//  CMAES_main.java
+//  CMAESRunner.java
 //
 //  Author:
 //       Esteban López-Camacho <esteban@lcc.uma.es>
@@ -32,7 +32,7 @@ import java.io.IOException;
 /**
  * This class runs a single-objective CMA-ES algorithm.
  */
-public class CMAES_main {
+public class CMAESRunner {
 
   public static void main(String[] args) throws JMException, ClassNotFoundException, IOException {
     int numberOfVariables = 20;

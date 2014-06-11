@@ -1,4 +1,4 @@
-//  PESA2_main.java
+//  PESA2Runner.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -41,7 +41,7 @@ import java.util.logging.Logger;
 /**
  * Class for configuring and running the PESA2 algorithm
  */
-public class PESA2_main {
+public class PESA2Runner {
   public static Logger logger_;      
   public static FileHandler fileHandler_; 
 

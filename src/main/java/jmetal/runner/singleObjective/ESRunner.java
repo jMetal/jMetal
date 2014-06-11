@@ -1,4 +1,4 @@
-//  DE_main.java
+//  ESRunner.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -24,10 +24,9 @@ import jmetal.core.Algorithm;
 import jmetal.core.Operator;
 import jmetal.core.Problem;
 import jmetal.core.SolutionSet;
-import jmetal.metaheuristics.singleObjective.differentialEvolution.DE;
-import jmetal.operators.crossover.CrossoverFactory;
-import jmetal.operators.selection.SelectionFactory;
-import jmetal.problems.singleObjective.CEC2005Problem;
+import jmetal.metaheuristics.singleObjective.evolutionStrategy.ElitistES;
+import jmetal.operators.mutation.MutationFactory;
+import jmetal.problems.singleObjective.OneMax;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
@@ -35,52 +34,43 @@ import java.io.IOException;
 import java.util.HashMap;
 
 /**
- * This class runs a single-objective DE algorithm.
+ * This class runs a single-objective Evolution Strategy (ES). The ES can be
+ * a (mu+lambda) ES (class ElitistES) or a (mu,lambda) ES (class NonElitistGA).
+ * The OneMax problem is used to test the algorithms.
  */
-public class DE_main {
+public class ESRunner {
 
   public static void main(String[] args) throws JMException, ClassNotFoundException, IOException {
     Problem problem;
     Algorithm algorithm;
-    Operator crossover;
-    Operator selection;
+    Operator mutation;
 
-    //int bits ; // Length of bit string in the OneMax problem
+    int bits; // Length of bit string in the OneMax problem
 
-    //bits = 512 ;
-    //problem = new OneMax(bits);
+    bits = 512;
+    problem = new OneMax("Binary", bits);
 
-    //problem = new Sphere("Real", 20) ;
-    //problem = new Easom("Real") ;
-    //problem = new Griewank("Real", 10) ;
-    problem = new CEC2005Problem("Real", 5, 10);
+    int mu;
+    int lambda;
 
-    //problem = new Sphere("Real", 20) ;
-    //problem = new Easom("Real") ;
-    //problem = new Griewank("Real", 10) ;
+    // Requirement: lambda must be divisible by mu
+    mu = 1;
+    lambda = 10;
 
-    algorithm = new DE();   // Asynchronous cGA
+    algorithm = new ElitistES(mu, lambda);
     algorithm.setProblem(problem);
+    //algorithm = new NonElitistES(problem, mu, lambda);
     
-    /* Algorithm parameters*/
-    algorithm.setInputParameter("populationSize", 100);
-    algorithm.setInputParameter("maxEvaluations", 1000000);
+    /* Algorithm params*/
+    algorithm.setInputParameter("maxEvaluations", 20000);
+    
+    /* Mutation and Crossover for Real codification */
+    /* Mutation for Real codification */
+    HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
+    mutationParameters.put("probability", 1.0 / bits);
+    mutation = MutationFactory.getMutationOperator("BitFlipMutation", mutationParameters);
 
-    // Crossover operator 
-    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
-    crossoverParameters.put("CR", 0.5);
-    crossoverParameters.put("F", 0.5);
-    crossoverParameters.put("DE_VARIANT", "rand/1/bin");
-    crossover =
-      CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", crossoverParameters);
-
-    // Add the operators to the algorithm
-    HashMap<String, Object> selectionParameters = null; // FIXME: why we are passing null?
-    selection =
-      SelectionFactory.getSelectionOperator("DifferentialEvolutionSelection", selectionParameters);
-
-    algorithm.addOperator("crossover", crossover);
-    algorithm.addOperator("selection", selection);
+    algorithm.addOperator("mutation", mutation);
  
     /* Execute the Algorithm */
     long initTime = System.currentTimeMillis();
