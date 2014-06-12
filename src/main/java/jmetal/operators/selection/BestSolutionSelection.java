@@ -47,7 +47,7 @@ public class BestSolutionSelection extends Selection {
     comparator_ = null;
 
     Object obj = parameters.get("comparator");
-    if (obj != null && obj instanceof Comparator<?>) {
+    if (obj instanceof Comparator<?>) {
       comparator_ = (Comparator<Solution>) obj;
     }
   }

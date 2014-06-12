@@ -51,25 +51,10 @@ import java.util.List;
  * - current-to-rand/1/exp (current-to-best/1/exp)
  */
 public class DifferentialEvolutionCrossover extends Crossover {
-  /**
-   * DEFAULT_CR defines a default CR (crossover operation control) value
-   */
+
   private static final double DEFAULT_CR = 0.5;
-
-  /**
-   * DEFAULT_F defines the default F (Scaling factor for mutation) value
-   */
   private static final double DEFAULT_F = 0.5;
-
-  /**
-   * DEFAULT_K defines a default K value used in variants current-to-rand/1
-   * and current-to-best/1
-   */
   private static final double DEFAULT_K = 0.5;
-
-  /**
-   * DEFAULT_VARIANT defines the default DE variant
-   */
 
   private static final String DEFAULT_DE_VARIANT = "rand/1/bin";
 
@@ -80,35 +65,45 @@ public class DifferentialEvolutionCrossover extends Crossover {
     Arrays.asList(RealSolutionType.class,
       ArrayRealSolutionType.class);
 
-  private double CR_;
-  private double F_;
-  private double K_;
+  private double cr_;
+  private double f_;
+  private double k_;
   // DE variant (rand/1/bin, rand/1/exp, etc.)
-  private String DE_Variant_;
+  private String differentialEvolutionVariant_;
 
   /**
    * Constructor
    */
+  @Deprecated
   public DifferentialEvolutionCrossover(HashMap<String, Object> parameters) {
     super(parameters);
 
-    CR_ = DEFAULT_CR;
-    F_ = DEFAULT_F;
-    K_ = DEFAULT_K;
-    DE_Variant_ = DEFAULT_DE_VARIANT;
+    cr_ = DEFAULT_CR;
+    f_ = DEFAULT_F;
+    k_ = DEFAULT_K;
+    differentialEvolutionVariant_ = DEFAULT_DE_VARIANT;
 
     if (parameters.get("CR") != null) {
-      CR_ = (Double) parameters.get("CR");
+      cr_ = (Double) parameters.get("CR");
     }
     if (parameters.get("F") != null) {
-      F_ = (Double) parameters.get("F");
+      f_ = (Double) parameters.get("F");
     }
     if (parameters.get("K") != null) {
-      K_ = (Double) parameters.get("K");
+      k_ = (Double) parameters.get("K");
     }
     if (parameters.get("DE_VARIANT") != null) {
-      DE_Variant_ = (String) parameters.get("DE_VARIANT");
+      differentialEvolutionVariant_ = (String) parameters.get("DE_VARIANT");
     }
+  }
+
+  public DifferentialEvolutionCrossover(Builder builder) {
+    super(new HashMap<String, Object>()) ;
+
+    cr_ = builder.cr_ ;
+    f_ = builder.f_ ;
+    k_ = builder.k_ ;
+    differentialEvolutionVariant_ = builder.differentialEvolutionVariant_ ;
   }
 
   /**
@@ -154,12 +149,12 @@ public class DifferentialEvolutionCrossover extends Crossover {
     jrand = PseudoRandom.randInt(0, numberOfVariables - 1);
 
     // STEP 4. Checking the DE variant
-    if ((DE_Variant_.compareTo("rand/1/bin") == 0) ||
-      (DE_Variant_.compareTo("best/1/bin") == 0)) {
+    if (("rand/1/bin".equals(differentialEvolutionVariant_)) ||
+      "best/1/bin".equals(differentialEvolutionVariant_)) {
       for (int j = 0; j < numberOfVariables; j++) {
-        if (PseudoRandom.randDouble(0, 1) < CR_ || j == jrand) {
+        if (PseudoRandom.randDouble(0, 1) < cr_ || j == jrand) {
           double value;
-          value = xParent2.getValue(j) + F_ * (xParent0.getValue(j) -
+          value = xParent2.getValue(j) + f_ * (xParent0.getValue(j) -
             xParent1.getValue(j));
 
           if (value < xChild.getLowerBound(j)) {
@@ -175,12 +170,12 @@ public class DifferentialEvolutionCrossover extends Crossover {
           xChild.setValue(j, value);
         }
       }
-    } else if ((DE_Variant_.compareTo("rand/1/exp") == 0) ||
-      (DE_Variant_.compareTo("best/1/exp") == 0)) {
+    } else if ("rand/1/exp".equals(differentialEvolutionVariant_) ||
+      "best/1/exp".equals(differentialEvolutionVariant_)) {
       for (int j = 0; j < numberOfVariables; j++) {
-        if (PseudoRandom.randDouble(0, 1) < CR_ || j == jrand) {
+        if (PseudoRandom.randDouble(0, 1) < cr_ || j == jrand) {
           double value;
-          value = xParent2.getValue(j) + F_ * (xParent0.getValue(j) -
+          value = xParent2.getValue(j) + f_ * (xParent0.getValue(j) -
             xParent1.getValue(j));
 
           if (value < xChild.getLowerBound(j)) {
@@ -192,19 +187,19 @@ public class DifferentialEvolutionCrossover extends Crossover {
 
           xChild.setValue(j, value);
         } else {
-          CR_ = 0.0;
+          cr_ = 0.0;
           double value;
           value = xCurrent.getValue(j);
           xChild.setValue(j, value);
         }
       }
-    } else if ((DE_Variant_.compareTo("current-to-rand/1") == 0) ||
-      (DE_Variant_.compareTo("current-to-best/1") == 0)) {
+    } else if ("current-to-rand/1".equals(differentialEvolutionVariant_) ||
+      "current-to-best/1".equals(differentialEvolutionVariant_)) {
       for (int j = 0; j < numberOfVariables; j++) {
         double value;
-        value = xCurrent.getValue(j) + K_ * (xParent2.getValue(j) -
+        value = xCurrent.getValue(j) + k_ * (xParent2.getValue(j) -
           xCurrent.getValue(j)) +
-          F_ * (xParent0.getValue(j) - xParent1.getValue(j));
+          f_ * (xParent0.getValue(j) - xParent1.getValue(j));
 
         if (value < xChild.getLowerBound(j)) {
           value = xChild.getLowerBound(j);
@@ -215,14 +210,14 @@ public class DifferentialEvolutionCrossover extends Crossover {
 
         xChild.setValue(j, value);
       }
-    } else if ((DE_Variant_.compareTo("current-to-rand/1/bin") == 0) ||
-      (DE_Variant_.compareTo("current-to-best/1/bin") == 0)) {
+    } else if ("current-to-rand/1/bin".equals(differentialEvolutionVariant_) ||
+      "current-to-best/1/bin".equals(differentialEvolutionVariant_)) {
       for (int j = 0; j < numberOfVariables; j++) {
-        if (PseudoRandom.randDouble(0, 1) < CR_ || j == jrand) {
+        if (PseudoRandom.randDouble(0, 1) < cr_ || j == jrand) {
           double value;
-          value = xCurrent.getValue(j) + K_ * (xParent2.getValue(j) -
+          value = xCurrent.getValue(j) + k_ * (xParent2.getValue(j) -
             xCurrent.getValue(j)) +
-            F_ * (xParent0.getValue(j) - xParent1.getValue(j));
+            f_ * (xParent0.getValue(j) - xParent1.getValue(j));
 
           if (value < xChild.getLowerBound(j)) {
             value = xChild.getLowerBound(j);
@@ -238,14 +233,14 @@ public class DifferentialEvolutionCrossover extends Crossover {
           xChild.setValue(j, value);
         }
       }
-    } else if ((DE_Variant_.compareTo("current-to-rand/1/exp") == 0) ||
-      (DE_Variant_.compareTo("current-to-best/1/exp") == 0)) {
+    } else if ("current-to-rand/1/exp".equals(differentialEvolutionVariant_) ||
+      "current-to-best/1/exp".equals(differentialEvolutionVariant_)) {
       for (int j = 0; j < numberOfVariables; j++) {
-        if (PseudoRandom.randDouble(0, 1) < CR_ || j == jrand) {
+        if (PseudoRandom.randDouble(0, 1) < cr_ || j == jrand) {
           double value;
-          value = xCurrent.getValue(j) + K_ * (xParent2.getValue(j) -
+          value = xCurrent.getValue(j) + k_ * (xParent2.getValue(j) -
             xCurrent.getValue(j)) +
-            F_ * (xParent0.getValue(j) - xParent1.getValue(j));
+            f_ * (xParent0.getValue(j) - xParent1.getValue(j));
 
           if (value < xChild.getLowerBound(j)) {
             value = xChild.getLowerBound(j);
@@ -256,7 +251,7 @@ public class DifferentialEvolutionCrossover extends Crossover {
 
           xChild.setValue(j, value);
         } else {
-          CR_ = 0.0;
+          cr_ = 0.0;
           double value;
           value = xCurrent.getValue(j);
           xChild.setValue(j, value);
@@ -264,11 +259,56 @@ public class DifferentialEvolutionCrossover extends Crossover {
       }
     } else {
       Configuration.logger_.severe("DifferentialEvolutionCrossover.execute: " +
-        " unknown DE variant (" + DE_Variant_ + ")");
+        " unknown DE variant (" + differentialEvolutionVariant_ + ")");
       Class<String> cls = java.lang.String.class;
       String name = cls.getName();
       throw new JMException("Exception in " + name + ".execute()");
     } // else
     return child;
+  }
+
+  /**
+   * Builder class
+   */
+  public static class Builder {
+    private double cr_;
+    private double f_;
+    private double k_;
+    // DE variant (rand/1/bin, rand/1/exp, etc.)
+    private String differentialEvolutionVariant_;
+
+    public Builder() {
+      cr_ = DEFAULT_CR ;
+      f_ = DEFAULT_F ;
+      k_ = DEFAULT_K ;
+      differentialEvolutionVariant_ = DEFAULT_DE_VARIANT ;
+    }
+
+    public Builder cr(double cr) {
+      cr_ = cr ;
+
+      return this ;
+    }
+
+    public Builder f(double f) {
+      f_ = f ;
+
+      return this ;
+    }
+
+    public Builder k(double k) {
+      k_ = k ;
+
+      return this ;
+    }
+
+    public Builder variant(String variant) {
+      differentialEvolutionVariant_ = variant ;
+
+      return this ;
+    }
+    public DifferentialEvolutionCrossover build() {
+      return new DifferentialEvolutionCrossover(this) ;
+    }
   }
 }

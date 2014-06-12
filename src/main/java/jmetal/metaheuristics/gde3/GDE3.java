@@ -108,14 +108,14 @@ public class GDE3 extends Algorithm {
         Solution child = tmpSolutionSet.get(i) ;
         int result;
         result = dominance_.compare(population_.get(i), child);
-        if (result == -1) { 
+        if (result == -1) {
           // Solution i dominates child
           offspringPopulation_.add(population_.get(i));
-        } 
-        else if (result == 1) { 
+        }
+        else if (result == 1) {
           // child dominates
           offspringPopulation_.add(child);
-        } else { 
+        } else {
           // the two solutions are non-dominated
           offspringPopulation_.add(child);
           offspringPopulation_.add(population_.get(i));
@@ -215,6 +215,9 @@ public class GDE3 extends Algorithm {
     evaluator_.shutdown();
   }
 
+  /**
+   * Builder inner static class
+   */
   public static class Builder {
     protected SolutionSetEvaluator evaluator_ ;
     protected Problem problem_ ;
@@ -248,8 +251,8 @@ public class GDE3 extends Algorithm {
       return this ;
     }
 
-    public Builder crossover(Operator mutation) {
-      crossoverOperator_ = mutation ;
+    public Builder crossover(Operator crossover) {
+      crossoverOperator_ = crossover ;
 
       return this ;
     }

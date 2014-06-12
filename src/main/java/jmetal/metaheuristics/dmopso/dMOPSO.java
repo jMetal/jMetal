@@ -6,7 +6,6 @@
 package jmetal.metaheuristics.dmopso;
 
 import jmetal.core.Algorithm;
-import jmetal.core.Problem;
 import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
 import jmetal.qualityIndicator.Hypervolume;
@@ -154,7 +153,7 @@ public class dMOPSO extends Algorithm {
     dataDirectory_ = getInputParameter("dataDirectory").toString();
 
     String funcType = ((String) getInputParameter("functionType"));
-    if (funcType != null && funcType != "") {
+    if ("".equals(funcType)) {
       functionType_ = funcType;
     }
 
@@ -180,7 +179,6 @@ public class dMOPSO extends Algorithm {
 
   // Adaptive inertia 
   private double inertiaWeight(int iter, int miter, double wma, double wmin) {
-    //return - (((wma-wmin)*(double)iter)/(double)miter);
     return wma;
   }
 
@@ -223,7 +221,7 @@ public class dMOPSO extends Algorithm {
    * @throws JMException
    */
   private void computeSpeed(int i) throws JMException {
-    double r1, r2, W, C1, C2;
+    double r1, r2, C1, C2;
     double wmax, wmin;
 
     XReal particle = new XReal(particles_.get(i));
@@ -234,7 +232,6 @@ public class dMOPSO extends Algorithm {
     r2 = PseudoRandom.randDouble(r2Min_, r2Max_);
     C1 = PseudoRandom.randDouble(c1Min_, c1Max_);
     C2 = PseudoRandom.randDouble(c2Min_, c2Max_);
-    W = PseudoRandom.randDouble(weightMin_, weightMax_);
 
     wmax = weightMax_;
     wmin = weightMin_;
