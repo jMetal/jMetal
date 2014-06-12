@@ -255,13 +255,21 @@ public class SBXCrossover extends Crossover {
     }
 
     public Builder distributionIndex(double distributionIndex) {
-      distributionIndex_ = distributionIndex ;
+      if (distributionIndex < 0) {
+        throw new JMException("Distribution index invalid: " + distributionIndex) ;
+      } else {
+        distributionIndex_ = distributionIndex;
+      }
 
       return this ;
     }
 
     public Builder probability(double probability) {
-      crossoverProbability_ = probability ;
+      if ((probability < 0) || (probability > 1.0)) {
+        throw new JMException("Probability value invalid: " + probability) ;
+      } else {
+        crossoverProbability_ = probability;
+      }
 
       return this ;
     }
