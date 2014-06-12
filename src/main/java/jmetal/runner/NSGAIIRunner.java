@@ -116,7 +116,7 @@ public class NSGAIIRunner {
     /*
      * Alternatives:
      * - evaluator = new SequentialSolutionSetEvaluator() // NSGAII
-     * - evaluator = new new MultithreadedSolutionSetEvaluator(threads, problem) // parallel NSGAII
+     * - evaluator = new MultithreadedSolutionSetEvaluator(threads, problem) // parallel NSGAII
      */
     SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator() ;
 

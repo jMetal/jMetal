@@ -25,18 +25,20 @@ import jmetal.core.Operator;
 import jmetal.core.Problem;
 import jmetal.core.SolutionSet;
 import jmetal.metaheuristics.gde3.GDE3;
-import jmetal.operators.crossover.CrossoverFactory;
-import jmetal.operators.selection.SelectionFactory;
+import jmetal.operators.crossover.DifferentialEvolutionCrossover;
+import jmetal.operators.selection.DifferentialEvolutionSelection;
 import jmetal.problems.Kursawe;
 import jmetal.problems.ProblemFactory;
 import jmetal.qualityIndicator.QualityIndicator;
+import jmetal.util.AlgorithmRunner;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
-import jmetal.util.evaluator.SequentialSolutionSetEvaluator;
+import jmetal.util.evaluator.MultithreadedSolutionSetEvaluator;
 import jmetal.util.evaluator.SolutionSetEvaluator;
+import jmetal.util.fileOutput.DefaultFileOutputContext;
+import jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
@@ -87,41 +89,43 @@ public class GDE3Runner {
       //problem = new OKA2("Real") ;
     }
 
-    SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator() ;
+     /*
+     * Alternatives:
+     * - evaluator = new SequentialSolutionSetEvaluator()
+     * - evaluator = new MultithreadedSolutionSetEvaluator(threads, problem)
+     */
+    SolutionSetEvaluator evaluator = new MultithreadedSolutionSetEvaluator(8, problem);
 
-    algorithm = new GDE3(evaluator);
-    algorithm.setProblem(problem);
+    crossover = new DifferentialEvolutionCrossover.Builder()
+      .cr(0.5)
+      .f(0.5)
+      .build() ;
 
-    // Algorithm parameters
-    algorithm.setInputParameter("populationSize", 100);
-    algorithm.setInputParameter("maxIterations", 250);
+    selection = new DifferentialEvolutionSelection.Builder()
+      .build();
 
-    // Crossover operator 
-    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
-    crossoverParameters.put("CR", 0.5);
-    crossoverParameters.put("F", 0.5);
-    crossover =
-      CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", crossoverParameters);
+    algorithm = new GDE3.Builder(problem, evaluator)
+      .crossover(crossover)
+      .selection(selection)
+      .maxIterations(250)
+      .populationSize(100)
+      .build() ;
 
-    // Add the operators to the algorithm
-    HashMap<String, Object> selectionParameters = null; // FIXME: why we are passing null?
-    selection =
-      SelectionFactory.getSelectionOperator("DifferentialEvolutionSelection", selectionParameters);
+    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+      .execute() ;
 
-    algorithm.addOperator("crossover", crossover);
-    algorithm.addOperator("selection", selection);
+    SolutionSet population = algorithmRunner.getSolutionSet() ;
+    long computingTime = algorithmRunner.getComputingTime() ;
 
-    // Execute the Algorithm 
-    long initTime = System.currentTimeMillis();
-    SolutionSet population = algorithm.execute();
-    long estimatedTime = System.currentTimeMillis() - initTime;
+    new SolutionSetOutput.Printer(population)
+      .separator("\t")
+      .varFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+      .funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+      .print();
 
-    // Result messages 
-    logger_.info("Total execution time: " + estimatedTime + "ms");
-    logger_.info("Variables values have been writen to file VAR");
-    population.printVariablesToFile("VAR");
-    logger_.info("Objectives values have been writen to file FUN");
-    population.printObjectivesToFile("FUN");
+    logger_.info("Total execution time: " + computingTime + "ms");
+    logger_.info("Objectives values have been written to file FUN.tsv");
+    logger_.info("Variables values have been written to file VAR.tsv");
 
     if (indicators != null) {
       logger_.info("Quality indicators");

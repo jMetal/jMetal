@@ -42,9 +42,14 @@ public class DifferentialEvolutionSelection extends Selection {
   /**
    * Constructor
    */
+  @Deprecated
   DifferentialEvolutionSelection(HashMap<String, Object> parameters) {
     super(parameters);
-  } // Constructor
+  }
+
+  DifferentialEvolutionSelection(Builder builder) {
+    super(new HashMap<String, Object>()) ;
+  }
 
   /**
    * Executes the operation
@@ -81,5 +86,18 @@ public class DifferentialEvolutionSelection extends Selection {
     parents[2] = population.get(r3);
 
     return parents;
+  }
+
+  /**
+   * Builder class
+   */
+  public static class Builder {
+
+    public Builder() {
+    }
+
+    public DifferentialEvolutionSelection build() {
+      return new DifferentialEvolutionSelection(this) ;
+    }
   }
 }

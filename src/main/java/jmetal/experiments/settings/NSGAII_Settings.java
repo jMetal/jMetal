@@ -82,15 +82,6 @@ public class NSGAII_Settings extends Settings {
     Crossover crossover;
     Mutation mutation;
 
-    // Creating the algorithm.
-    //algorithm = new NSGAII(evaluator_);
-    //algorithm.setProblem(problem_);
-    //algorithm = new ssNSGAII(problem_) ;
-
-    // Algorithm parameters
-    //algorithm.setInputParameter("populationSize", populationSize_);
-    //algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
-
     // Crossover an Mutation for Real codification
     crossover = new SBXCrossover.Builder()
       .distributionIndex(crossoverDistributionIndex_)
@@ -105,26 +96,6 @@ public class NSGAII_Settings extends Settings {
     // Selection Operator
     selection = new BinaryTournament2.Builder()
       .build();
-     /*
-    // Mutation and Crossover for Real codification
-    HashMap<String, Object> parameters = new HashMap<String, Object>();
-    parameters.put("probability", crossoverProbability_);
-    parameters.put("distributionIndex", crossoverDistributionIndex_);
-    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters);
-
-    parameters = new HashMap<String, Object>();
-    parameters.put("probability", mutationProbability_);
-    parameters.put("distributionIndex", mutationDistributionIndex_);
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);
-
-    // Selection Operator
-    parameters = null;
-    selection = SelectionFactory.getSelectionOperator("BinaryTournament2", parameters);
-      */
-    // Add the operators to the algorithm
-    //algorithm.addOperator("crossover", crossover);
-    //algorithm.addOperator("mutation", mutation);
-    //algorithm.addOperator("selection", selection);
 
     algorithm = new NSGAII.Builder(problem_, evaluator_)
       .crossover(crossover)

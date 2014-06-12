@@ -54,6 +54,7 @@ public class GDE3 extends Algorithm {
 
   protected Distance distance_ ;
 
+  @Deprecated
   public GDE3(SolutionSetEvaluator evaluator) {
     super();
     evaluator_ = evaluator ;
@@ -63,11 +64,16 @@ public class GDE3 extends Algorithm {
   }
 
   public GDE3(Builder builder) {
+    super() ;
     problem_ = builder.problem_ ;
     maxIterations_ = builder.maxIterations_ ;
     crossoverOperator_ = builder.crossoverOperator_ ;
     selectionOperator_ = builder.selectionOperator_ ;
     populationSize_ = builder.populationSize_ ;
+    evaluator_ = builder.evaluator_ ;
+
+    distance_ = new Distance();
+    dominance_ = new DominanceComparator();
   }
 
   /**
@@ -78,14 +84,14 @@ public class GDE3 extends Algorithm {
    * @throws jmetal.util.JMException
    */
   public SolutionSet execute() throws JMException, ClassNotFoundException {
-    readParameterSettings();
+    //readParameterSettings();
     createInitialPopulation();
     evaluatePopulation(population_);
 
     // Generations ...
     while (!stoppingCondition()) {
-      System.out.println("Itertaions " + iterations_) ;
-      // Create the offSpring solutionSet      
+
+      // Create the offSpring solutionSet
       offspringPopulation_ = new SolutionSet(populationSize_ * 2);
       SolutionSet tmpSolutionSet = new SolutionSet(populationSize_) ;
 

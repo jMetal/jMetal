@@ -176,24 +176,16 @@ public abstract class NSGAIITemplate extends Algorithm {
     protected Problem problem_ ;
 
     protected int populationSize_;
-    protected  int maxEvaluations_;
+    protected int maxEvaluations_;
 
     protected Operator mutationOperator_;
     protected Operator crossoverOperator_;
     protected Operator selectionOperator_;
 
-    //private String currentNSGAIIVariant_ ;
-
     public Builder(Problem problem, SolutionSetEvaluator evaluator) {
       evaluator_ = evaluator ;
       problem_ = problem ;
     }
-
-    //public Builder(Problem problem, SolutionSetEvaluator evaluator, String variant) {
-    //  evaluator_ = evaluator ;
-    //  problem_ = problem ;
-    //  currentNSGAIIVariant_ = variant ;
-    //}
 
     public Builder populationSize(int populationSize) {
       populationSize_ = populationSize ;
@@ -203,12 +195,6 @@ public abstract class NSGAIITemplate extends Algorithm {
 
     public Builder maxEvaluations(int maxEvaluations) {
       maxEvaluations_ = maxEvaluations ;
-
-      return this ;
-    }
-
-    public Builder evaluator(SolutionSetEvaluator evaluator) {
-      evaluator_ = evaluator ;
 
       return this ;
     }
