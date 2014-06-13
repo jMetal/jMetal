@@ -45,7 +45,7 @@
 //		dated March 8, 2005.
 //
 
-package jmetal.problems.singleObjective.cec2005Competition.originalCode ;
+package jmetal.problems.singleObjective.cec2005Competition.originalCode;
 
 import jmetal.util.JMException;
 

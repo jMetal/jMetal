@@ -34,32 +34,33 @@ import jmetal.util.NonDominatedSolutionList;
 public class RandomSearch extends Algorithm {
 
   /**
-<<<<<<< HEAD
-=======
-   * 
+   * <<<<<<< HEAD
+   * =======
    */
   private static final long serialVersionUID = 7957970222128947424L;
 
   /**
->>>>>>> master
-  * Constructor
-  * @param problem Problem to solve
-  */
-  public RandomSearch(Problem problem){
-    super (problem) ;
+   * >>>>>>> master
+   * Constructor
+   *
+   * @param problem Problem to solve
+   */
+  public RandomSearch() {
+    super();
   } // RandomSearch
 
   /**
-  * Runs the RandomSearch algorithm.
-  * @return a <code>SolutionSet</code> that is a set of solutions
-  * as a result of the algorithm execution
+   * Runs the RandomSearch algorithm.
+   *
+   * @return a <code>SolutionSet</code> that is a set of solutions
+   * as a result of the algorithm execution
    * @throws JMException
-  */
+   */
   public SolutionSet execute() throws JMException, ClassNotFoundException {
-    int maxEvaluations ;
-    int evaluations    ;
+    int maxEvaluations;
+    int evaluations;
 
-    maxEvaluations    = ((Integer)getInputParameter("maxEvaluations")).intValue();
+    maxEvaluations = ((Integer) getInputParameter("maxEvaluations")).intValue();
 
     //Initialize the variables
     evaluations = 0;

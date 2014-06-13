@@ -46,49 +46,53 @@ public class Int extends Variable {
    * Constructor
    */
   public Int() {
-    lowerBound_ = java.lang.Integer.MIN_VALUE ;
-    upperBound_ = java.lang.Integer.MAX_VALUE ;
-    value_      = 0                           ;
+    lowerBound_ = java.lang.Integer.MIN_VALUE;
+    upperBound_ = java.lang.Integer.MAX_VALUE;
+    value_ = 0;
   }
 
   /**
    * Constructor
+   *
    * @param lowerBound Variable lower bound
    * @param upperBound Variable upper bound
    */
-  public Int(int lowerBound, int upperBound){
+  public Int(int lowerBound, int upperBound) {
     lowerBound_ = lowerBound;
     upperBound_ = upperBound;
-    value_ = PseudoRandom.randInt(lowerBound, upperBound) ;
+    value_ = PseudoRandom.randInt(lowerBound, upperBound);
   }
 
   /**
    * Constructor
-   * @param value Value of the encodings.variable
+   *
+   * @param value      Value of the encodings.variable
    * @param lowerBound Variable lower bound
    * @param upperBound Variable upper bound
    */
   public Int(int value, int lowerBound, int upperBound) {
     super();
 
-    value_      = value      ;
-    lowerBound_ = lowerBound ;
-    upperBound_ = upperBound ;
+    value_ = value;
+    lowerBound_ = lowerBound;
+    upperBound_ = upperBound;
   }
 
   /**
    * Copy constructor.
+   *
    * @param variable Variable to be copied.
    * @throws JMException
    */
-  public Int(Variable variable) throws JMException{
-    lowerBound_ = (int)variable.getLowerBound();
-    upperBound_ = (int)variable.getUpperBound();
-    value_ = (int)variable.getValue();
+  public Int(Variable variable) throws JMException {
+    lowerBound_ = (int) variable.getLowerBound();
+    upperBound_ = (int) variable.getUpperBound();
+    value_ = (int) variable.getValue();
   }
 
   /**
    * Returns the value of the encodings.variable.
+   *
    * @return the value.
    */
   public double getValue() {
@@ -97,27 +101,30 @@ public class Int extends Variable {
 
   /**
    * Assigns a value to the encodings.variable.
+   *
    * @param value The value.
    */
   public void setValue(double value) {
-    value_ = (int)value;
+    value_ = (int) value;
   }
 
   /**
    * Creates an exact copy of the <code>Int</code> object.
+   *
    * @return the copy.
    */
-  public Variable deepCopy(){
+  public Variable deepCopy() {
     try {
       return new Int(this);
     } catch (JMException e) {
       Configuration.logger_.log(Level.SEVERE, "Int.deepCopy.execute: JMException", e);
-      return null ;
+      return null;
     }
   }
 
   /**
    * Returns the lower bound of the encodings.variable.
+   *
    * @return the lower bound.
    */
   public double getLowerBound() {
@@ -125,7 +132,17 @@ public class Int extends Variable {
   }
 
   /**
+   * Sets the lower bound of the encodings.variable.
+   *
+   * @param lowerBound The lower bound value.
+   */
+  public void setLowerBound(double lowerBound) {
+    lowerBound_ = (int) lowerBound;
+  } // setLowerBound
+
+  /**
    * Returns the upper bound of the encodings.variable.
+   *
    * @return the upper bound.
    */
   public double getUpperBound() {
@@ -133,26 +150,20 @@ public class Int extends Variable {
   }
 
   /**
-   * Sets the lower bound of the encodings.variable.
-   * @param lowerBound The lower bound value.
-   */
-  public void setLowerBound(double lowerBound)  {
-    lowerBound_ = (int)lowerBound;
-  } // setLowerBound
-
-  /**
    * Sets the upper bound of the encodings.variable.
+   *
    * @param upperBound The new upper bound value.
    */
   public void setUpperBound(double upperBound) {
-    upperBound_ = (int)upperBound;
+    upperBound_ = (int) upperBound;
   }
 
   /**
    * Returns a string representing the object
+   *
    * @return The string
    */
-  public String toString(){
-    return value_+"";
+  public String toString() {
+    return value_ + "";
   }
 }

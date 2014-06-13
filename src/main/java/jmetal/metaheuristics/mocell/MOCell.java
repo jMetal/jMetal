@@ -27,65 +27,68 @@ import jmetal.util.JMException;
 import jmetal.util.Neighborhood;
 import jmetal.util.Ranking;
 import jmetal.util.archive.CrowdingArchive;
-import jmetal.util.comparators.CrowdingComparator;
-import jmetal.util.comparators.DominanceComparator;
+import jmetal.util.comparator.CrowdingComparator;
+import jmetal.util.comparator.DominanceComparator;
 
 import java.util.Comparator;
 
-/** 
+/**
  * This class represents an asynchronous version of MOCell algorithm, combining
- * aMOCell2 and aMOCell3. It is the aMOCell4 variant described in: 
- *    A.J. Nebro, J.J. Durillo, F. Luna, B. Dorronsoro, E. Alba 
- *   "Design Issues in a Multiobjective Cellular Genetic Algorithm." 
- *   Evolutionary Multi-Criterion Optimization. 4th International Conference, 
- *   EMO 2007. Sendai/Matsushima, Japan, March 2007.
+ * aMOCell2 and aMOCell3. It is the aMOCell4 variant described in:
+ * A.J. Nebro, J.J. Durillo, F. Luna, B. Dorronsoro, E. Alba
+ * "Design Issues in a Multiobjective Cellular Genetic Algorithm."
+ * Evolutionary Multi-Criterion Optimization. 4th International Conference,
+ * EMO 2007. Sendai/Matsushima, Japan, March 2007.
  */
-public class MOCell extends Algorithm{
+public class MOCell extends Algorithm {
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = -2479285259392945976L;
 
-  public MOCell(Problem problem){
-    super (problem) ;
+  public MOCell() {
+    super();
   }
 
-  /** Execute the algorithm 
-   * @throws JMException */
+  /**
+   * Execute the algorithm
+   *
+   * @throws JMException
+   */
   public SolutionSet execute() throws JMException, ClassNotFoundException {
     //Init the parameters
     int populationSize, archiveSize, maxEvaluations, evaluations;
     Operator mutationOperator, crossoverOperator, selectionOperator;
     SolutionSet currentPopulation;
     CrowdingArchive archive;
-    SolutionSet [] neighbors;    
+    SolutionSet[] neighbors;
     Neighborhood neighborhood;
-    Comparator<Solution> dominance = new DominanceComparator();  
+    Comparator<Solution> dominance = new DominanceComparator();
     Comparator<Solution> crowdingComparator = new CrowdingComparator();
     Distance distance = new Distance();
 
     // Read the parameters
-    populationSize    = ((Integer)getInputParameter("populationSize")).intValue();
-    archiveSize       = ((Integer)getInputParameter("archiveSize")).intValue();
-    maxEvaluations    = ((Integer)getInputParameter("maxEvaluations")).intValue();                                
+    populationSize = ((Integer) getInputParameter("populationSize")).intValue();
+    archiveSize = ((Integer) getInputParameter("archiveSize")).intValue();
+    maxEvaluations = ((Integer) getInputParameter("maxEvaluations")).intValue();
 
     // Read the operators
-    mutationOperator  = operators_.get("mutation");
+    mutationOperator = operators_.get("mutation");
     crossoverOperator = operators_.get("crossover");
-    selectionOperator = operators_.get("selection");        
+    selectionOperator = operators_.get("selection");
 
     // Initialize the variables    
-    currentPopulation  = new SolutionSet(populationSize);        
-    archive            = new CrowdingArchive(archiveSize,problem_.getNumberOfObjectives());                
-    evaluations        = 0;                        
-    neighborhood       = new Neighborhood(populationSize);
-    neighbors          = new SolutionSet[populationSize];
+    currentPopulation = new SolutionSet(populationSize);
+    archive = new CrowdingArchive(archiveSize, problem_.getNumberOfObjectives());
+    evaluations = 0;
+    neighborhood = new Neighborhood(populationSize);
+    neighbors = new SolutionSet[populationSize];
 
     // Create the initial population
-    for (int i = 0; i < populationSize; i++){
+    for (int i = 0; i < populationSize; i++) {
       Solution individual = new Solution(problem_);
-      problem_.evaluate(individual);           
+      problem_.evaluate(individual);
       problem_.evaluateConstraints(individual);
       currentPopulation.add(individual);
       individual.setLocation(i);
@@ -93,27 +96,27 @@ public class MOCell extends Algorithm{
     }
 
     // Main loop
-    while (evaluations < maxEvaluations){                                 
-      for (int ind = 0; ind < currentPopulation.size(); ind++){
+    while (evaluations < maxEvaluations) {
+      for (int ind = 0; ind < currentPopulation.size(); ind++) {
         Solution individual = new Solution(currentPopulation.get(ind));
 
-        Solution [] parents = new Solution[2];
-        Solution [] offSpring;
+        Solution[] parents = new Solution[2];
+        Solution[] offSpring;
 
         //neighbors[ind] = neighborhood.getFourNeighbors(currentPopulation,ind);
-        neighbors[ind] = neighborhood.getEightNeighbors(currentPopulation,ind);                                                           
+        neighbors[ind] = neighborhood.getEightNeighbors(currentPopulation, ind);
         neighbors[ind].add(individual);
 
         // parents
-        parents[0] = (Solution)selectionOperator.execute(neighbors[ind]);
+        parents[0] = (Solution) selectionOperator.execute(neighbors[ind]);
         if (archive.size() > 0) {
-          parents[1] = (Solution)selectionOperator.execute(archive);
-        } else {                   
-          parents[1] = (Solution)selectionOperator.execute(neighbors[ind]);
+          parents[1] = (Solution) selectionOperator.execute(archive);
+        } else {
+          parents[1] = (Solution) selectionOperator.execute(neighbors[ind]);
         }
 
         // Create a new individual, using genetic operators mutation and crossover
-        offSpring = (Solution [])crossoverOperator.execute(parents);               
+        offSpring = (Solution[]) crossoverOperator.execute(parents);
         mutationOperator.execute(offSpring[0]);
 
         // Evaluate individual an his constraints
@@ -121,34 +124,34 @@ public class MOCell extends Algorithm{
         problem_.evaluateConstraints(offSpring[0]);
         evaluations++;
 
-        int flag = dominance.compare(individual,offSpring[0]);
+        int flag = dominance.compare(individual, offSpring[0]);
 
-        if (flag == 1) { //The new individual dominates
-          offSpring[0].setLocation(individual.getLocation());                                      
-          currentPopulation.replace(offSpring[0].getLocation(),offSpring[0]);
-          archive.add(new Solution(offSpring[0]));                   
-        } else if (flag == 0) { //The new individual is non-dominated               
-          neighbors[ind].add(offSpring[0]);               
+        if (flag == 1) {
+          offSpring[0].setLocation(individual.getLocation());
+          currentPopulation.replace(offSpring[0].getLocation(), offSpring[0]);
+          archive.add(new Solution(offSpring[0]));
+        } else if (flag == 0) {
+          neighbors[ind].add(offSpring[0]);
           offSpring[0].setLocation(-1);
           Ranking rank = new Ranking(neighbors[ind]);
           for (int j = 0; j < rank.getNumberOfSubfronts(); j++) {
             distance.crowdingDistanceAssignment(rank.getSubfront(j),
-                problem_.getNumberOfObjectives());
+              problem_.getNumberOfObjectives());
           }
           Solution worst = neighbors[ind].worst(crowdingComparator);
 
-          if (worst.getLocation() == -1) { //The worst is the offspring
+          if (worst.getLocation() == -1) {
             archive.add(new Solution(offSpring[0]));
           } else {
             offSpring[0].setLocation(worst.getLocation());
-            currentPopulation.replace(offSpring[0].getLocation(),offSpring[0]);
+            currentPopulation.replace(offSpring[0].getLocation(), offSpring[0]);
             archive.add(new Solution(offSpring[0]));
-          }                                          
+          }
         }
-      }                                 
-    }    
+      }
+    }
 
     return archive;
-  } // while       
-} // MOCell
+  }
+}
 

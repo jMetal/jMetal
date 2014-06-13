@@ -23,8 +23,8 @@ package jmetal.operators.selection;
 
 import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
+import jmetal.util.comparator.DominanceComparator;
 import jmetal.util.random.PseudoRandom;
-import jmetal.util.comparators.DominanceComparator;
 
 import java.util.Comparator;
 import java.util.HashMap;
@@ -48,10 +48,10 @@ public class BinaryTournament2 extends Selection {
   /**
    * a_ stores a permutation of the solutions in the solutionSet used
    */
-  private int a_[];
+  private int permutation_[];
 
   /**
-   *  index_ stores the actual index for selection
+   * index_ stores the actual index for selection
    */
   private int index_ = 0;
 
@@ -60,50 +60,65 @@ public class BinaryTournament2 extends Selection {
    * Creates a new instance of the Binary tournament operator (Deb's
    * NSGA-II implementation version)
    */
-  public BinaryTournament2(HashMap<String, Object> parameters)
-  {
-    super(parameters) ;
+  public BinaryTournament2(HashMap<String, Object> parameters) {
+    super(parameters);
     dominance_ = new DominanceComparator();
   }
 
+  private BinaryTournament2(Builder builder) {
+    super(new HashMap<String, Object>()) ;
+
+    dominance_ = new DominanceComparator();
+  }
+
+
   /**
    * Performs the operation
+   *
    * @param object Object representing a SolutionSet
    * @return the selected solution
    */
-  public Object execute(Object object)
-  {
-    SolutionSet population = (SolutionSet)object;
+  public Object execute(Object object) {
+    SolutionSet population = (SolutionSet) object;
     if (index_ == 0) {
       //Create the permutation
-      a_= (new jmetal.util.PermutationUtility()).intPermutation(population.size());
+      permutation_ = (new jmetal.util.PermutationUtility()).intPermutation(population.size());
     }
 
-    Solution solution1,solution2;
-    solution1 = population.get(a_[index_]);
-    solution2 = population.get(a_[index_+1]);
+    Solution solution1, solution2;
+    solution1 = population.get(permutation_[index_]);
+    solution2 = population.get(permutation_[index_ + 1]);
 
     index_ = (index_ + 2) % population.size();
 
-    int flag = dominance_.compare(solution1,solution2);
+    int flag = dominance_.compare(solution1, solution2);
     if (flag == -1) {
       return solution1;
-    }
-    else if (flag == 1) {
+    } else if (flag == 1) {
       return solution2;
-    }
-    else if (solution1.getCrowdingDistance() > solution2.getCrowdingDistance()) {
+    } else if (solution1.getCrowdingDistance() > solution2.getCrowdingDistance()) {
       return solution1;
-    }
-    else if (solution2.getCrowdingDistance() > solution1.getCrowdingDistance()) {
+    } else if (solution2.getCrowdingDistance() > solution1.getCrowdingDistance()) {
       return solution2;
-    }
-    else {
+    } else {
       if (PseudoRandom.randDouble() < 0.5) {
         return solution1;
       } else {
         return solution2;
       }
+    }
+  }
+
+  /**
+   * Builder class
+   */
+  public static class Builder {
+
+    public Builder() {
+    }
+
+    public BinaryTournament2 build() {
+      return new BinaryTournament2(this) ;
     }
   }
 }

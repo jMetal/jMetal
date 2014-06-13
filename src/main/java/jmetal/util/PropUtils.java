@@ -36,112 +36,100 @@ public abstract class PropUtils {
   static public final char LABEL_RIGHT_DELIMITER = '>';
   static public final char LABEL_LEFT_DELIMITER = '<';
 
-  static public Properties getPropertiesWithPrefix (Properties pro, String prefix) {
+  static public Properties getPropertiesWithPrefix(Properties pro, String prefix) {
     Enumeration<?> en;
     Properties aux = new Properties();
 
     en = pro.propertyNames();
 
-    for (;en.hasMoreElements();) {
+    for (; en.hasMoreElements(); ) {
       String nom = (String) en.nextElement();
       if (nom.startsWith(prefix)) {
-        aux.setProperty (nom.substring(prefix.length()), pro.getProperty(nom));
+        aux.setProperty(nom.substring(prefix.length()), pro.getProperty(nom));
       }
     }
 
     return aux;
   }
 
-  static public Properties putPrefixToProperties (String prefix, Properties pro) {
+  static public Properties putPrefixToProperties(String prefix, Properties pro) {
     Enumeration<?> en;
     Properties res = new Properties();
 
     en = pro.propertyNames();
 
-    for (; en.hasMoreElements();) {
+    for (; en.hasMoreElements(); ) {
       String nom = (String) en.nextElement();
 
-      res.setProperty (prefix+nom, pro.getProperty (nom));
+      res.setProperty(prefix + nom, pro.getProperty(nom));
     }
 
     return res;
   }
 
-  static public Properties substituteLabels (Properties base, Properties labels)
-  {
-    Properties res = new Properties ();
-    Properties aux;
-    Enumeration<?> en;
-    String key;
-    String value;
-
-    for (en = base.propertyNames();en.hasMoreElements();) {
-      key = (String)en.nextElement();
-
-      value = base.getProperty (key);
-
-      //value.trim();
-
-      if (isLabel(value))
-      {
-        /*
-				if (labels.getProperty(value) != null)
-				{
-					res.setProperty (key, labels.getProperty (value));
-				}
-         */
-        aux = getPropertiesWithPrefix (labels, value);
-        aux = putPrefixToProperties (key, aux);
-
-        res.putAll (aux);
-      }
-      else
-      {
-        res.setProperty (key, value);
-      }
-
-    }
-
-    return res;
-
-  }
-
-  static public Properties dereferenceProperties (Properties pro)
-  {
+  static public Properties substituteLabels(Properties base, Properties labels) {
     Properties res = new Properties();
     Properties aux;
     Enumeration<?> en;
     String key;
     String value;
 
-    for (en = pro.propertyNames();en.hasMoreElements();)
-    {
-      key = (String)en.nextElement();
+    for (en = base.propertyNames(); en.hasMoreElements(); ) {
+      key = (String) en.nextElement();
 
-      value = pro.getProperty (key);
+      value = base.getProperty(key);
 
       //value.trim();
 
-      if (isLabel(value))
-      {
-        String lab = value.substring(1,value.length()-1);
+      if (isLabel(value)) {
+        /*
+        if (labels.getProperty(value) != null)
+				{
+					res.setProperty (key, labels.getProperty (value));
+				}
+         */
+        aux = getPropertiesWithPrefix(labels, value);
+        aux = putPrefixToProperties(key, aux);
 
-        aux = getPropertiesWithPrefix (pro, lab);
-
-        if (aux.isEmpty())
-        {
-          res.setProperty(key, value);
-        }
-        else
-        {
-          aux = putPrefixToProperties (key, aux);
-        }
-
-        res.putAll (aux);
+        res.putAll(aux);
+      } else {
+        res.setProperty(key, value);
       }
-      else
-      {
-        res.setProperty (key, value);
+
+    }
+
+    return res;
+
+  }
+
+  static public Properties dereferenceProperties(Properties pro) {
+    Properties res = new Properties();
+    Properties aux;
+    Enumeration<?> en;
+    String key;
+    String value;
+
+    for (en = pro.propertyNames(); en.hasMoreElements(); ) {
+      key = (String) en.nextElement();
+
+      value = pro.getProperty(key);
+
+      //value.trim();
+
+      if (isLabel(value)) {
+        String lab = value.substring(1, value.length() - 1);
+
+        aux = getPropertiesWithPrefix(pro, lab);
+
+        if (aux.isEmpty()) {
+          res.setProperty(key, value);
+        } else {
+          aux = putPrefixToProperties(key, aux);
+        }
+
+        res.putAll(aux);
+      } else {
+        res.setProperty(key, value);
       }
 
     }
@@ -151,16 +139,14 @@ public abstract class PropUtils {
 
   }
 
-  static public boolean isLabel (String str)
-  {
-    return  (str.indexOf (LABEL_LEFT_DELIMITER)==0 &&
-            str.indexOf (LABEL_RIGHT_DELIMITER) == str.length()-1);
+  static public boolean isLabel(String str) {
+    return (str.indexOf(LABEL_LEFT_DELIMITER) == 0 &&
+      str.indexOf(LABEL_RIGHT_DELIMITER) == str.length() - 1);
   }
 
-  static public void main (String [] argv) throws Exception
-  {
+  static public void main(String[] argv) throws Exception {
     Properties base = new Properties();
-    InputStream isbase = new FileInputStream (argv[0]);
+    InputStream isbase = new FileInputStream(argv[0]);
     //InputStream isdelta = new FileInputStream (argv[1]);
 
     base.load(isbase);
@@ -186,13 +172,15 @@ public abstract class PropUtils {
   static public Properties setDefaultParameters(Properties properties, String algorithmName) {
 
     // Parameters and Results are duplicated because of a Concurrent Modification Exception
-    Properties parameters = PropUtils.getPropertiesWithPrefix(properties, algorithmName+".DEFAULT");
-    Properties results    = PropUtils.getPropertiesWithPrefix(properties, algorithmName+".DEFAULT");
+    Properties parameters =
+      PropUtils.getPropertiesWithPrefix(properties, algorithmName + ".DEFAULT");
+    Properties results = PropUtils.getPropertiesWithPrefix(properties, algorithmName + ".DEFAULT");
 
     for (Object o : parameters.keySet()) {
       String parameter = parameters.getProperty((String) o);
 
-      Properties subParameters = PropUtils.getPropertiesWithPrefix(properties, parameter + ".DEFAULT");
+      Properties subParameters =
+        PropUtils.getPropertiesWithPrefix(properties, parameter + ".DEFAULT");
 
       if (subParameters != null) {
         PropUtils.putPrefixToProperties(parameter, subParameters);

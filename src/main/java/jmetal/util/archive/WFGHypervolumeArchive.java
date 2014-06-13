@@ -26,9 +26,9 @@ import jmetal.qualityIndicator.fastHypervolume.wfg.Point;
 import jmetal.qualityIndicator.fastHypervolume.wfg.WFGHV;
 import jmetal.qualityIndicator.util.MetricsUtil;
 import jmetal.util.Distance;
-import jmetal.util.comparators.CrowdingDistanceComparator;
-import jmetal.util.comparators.DominanceComparator;
-import jmetal.util.comparators.EqualSolutions;
+import jmetal.util.comparator.CrowdingDistanceComparator;
+import jmetal.util.comparator.DominanceComparator;
+import jmetal.util.comparator.EqualSolutions;
 
 import java.util.Comparator;
 
@@ -37,138 +37,140 @@ import java.util.Comparator;
  * defined in NSGA-II).
  */
 public class WFGHypervolumeArchive extends Archive {
-  
+
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = 2607976470731454148L;
 
-  /** 
+  /**
    * Stores the maximum size of the archive.
    */
   private int maxSize_;
-  
+
   /**
    * stores the number of the objectives.
    */
-  private int objectives_;    
-  
+  private int objectives_;
+
   /**
    * Stores a <code>Comparator</code> for dominance checking.
    */
   private Comparator<Solution> dominance_;
-  
+
   /**
    * Stores a <code>Comparator</code> for equality checking (in the objective
    * space).
    */
-  private Comparator<Solution> equals_; 
-  
+  private Comparator<Solution> equals_;
+
   /**
    * Stores a <code>Distance</code> object, for distances utilities
    */
-  private Distance distance_; 
-      
-  private MetricsUtil utils_ ;
-  
-  private double      offset_ ;
-  private Comparator<Solution> crowdingDistance_; 
+  private Distance distance_;
+
+  private MetricsUtil utils_;
+
+  private double offset_;
+  private Comparator<Solution> crowdingDistance_;
   private WFGHV wfg = null;
 
   /**
-   * Constructor. 
-   * @param maxSize The maximum size of the archive.
+   * Constructor.
+   *
+   * @param maxSize            The maximum size of the archive.
    * @param numberOfObjectives The number of objectives.
    */
   public WFGHypervolumeArchive(int maxSize, int numberOfObjectives) {
     super(maxSize);
-    maxSize_          = maxSize;
-    objectives_       = numberOfObjectives;        
-    dominance_        = new DominanceComparator();
-    equals_           = new EqualSolutions();
-    distance_         = new Distance();
-    utils_            = new MetricsUtil() ;
-    offset_           = 100 ;
+    maxSize_ = maxSize;
+    objectives_ = numberOfObjectives;
+    dominance_ = new DominanceComparator();
+    equals_ = new EqualSolutions();
+    distance_ = new Distance();
+    utils_ = new MetricsUtil();
+    offset_ = 100;
     crowdingDistance_ = new CrowdingDistanceComparator();
 
   } // CrowdingArchive
-    
-  
+
+
   /**
    * Adds a <code>Solution</code> to the archive. If the <code>Solution</code>
-   * is dominated by any member of the archive, then it is discarded. If the 
+   * is dominated by any member of the archive, then it is discarded. If the
    * <code>Solution</code> dominates some members of the archive, these are
    * removed. If the archive is full and the <code>Solution</code> has to be
    * inserted, the solutions are sorted by crowding distance and the one having
    * the minimum crowding distance value.
+   *
    * @param solution The <code>Solution</code>
-   * @return true if the <code>Solution</code> has been inserted, false 
+   * @return true if the <code>Solution</code> has been inserted, false
    * otherwise.
    */
-  public boolean add(Solution solution){
+  public boolean add(Solution solution) {
     int flag = 0;
     int i = 0;
     Solution aux; //Store an solution temporally
 
-    while (i < solutionsList_.size()){
-      aux = solutionsList_.get(i);            
-            
-      flag = dominance_.compare(solution,aux);
+    while (i < solutionsList_.size()) {
+      aux = solutionsList_.get(i);
+
+      flag = dominance_.compare(solution, aux);
       if (flag == 1) {               // The solution to add is dominated
         return false;                // Discard the new solution
       } else if (flag == -1) {       // A solution in the archive is dominated
         solutionsList_.remove(i);    // Remove it from the population            
       } else {
-          if (equals_.compare(aux,solution)==0) { // There is an equal solution 
-                                                  // in the population
-            return false; // Discard the new solution
-          }  // if
-          i++;
+        if (equals_.compare(aux, solution) == 0) { // There is an equal solution
+          // in the population
+          return false; // Discard the new solution
+        }  // if
+        i++;
       }
     }
     // Insert the solution into the archive
-    solutionsList_.add(solution);        
+    solutionsList_.add(solution);
     if (size() > maxSize_) { // The archive is full
-        
+
       // computing the reference point
-      double [] vector = new double[objectives_];
+      double[] vector = new double[objectives_];
       for (int o = 0; o < objectives_; o++) {
-          vector[0] = this.get(0).getObjective(o);
+        vector[0] = this.get(0).getObjective(o);
       }
       for (int j = 1; j < this.size(); j++) {
-         for (int o = 0; o < objectives_; o++) {
-             if (this.get(j).getObjective(o) > vector[o]) {
-                 vector[o] = 1.0;//this.get(j).getObjective(o);
-             }
-         }
+        for (int o = 0; o < objectives_; o++) {
+          if (this.get(j).getObjective(o) > vector[o]) {
+            vector[o] = 1.0;//this.get(j).getObjective(o);
+          }
+        }
       }
       Point p = new Point(vector);
-      wfg = new WFGHV(this.objectives_,this.size(),p);
+      wfg = new WFGHV(this.objectives_, this.size(), p);
       //remove(indexWorst(crowdingDistance_));
-      
+
       remove(wfg.getLessContributorHV(this));
     }
     return true;
   } // add
-  
-     
+
+
   public void computeHVContribution() {
-      // computing the reference point
-      double [] vector = new double[objectives_];
+    // computing the reference point
+    double[] vector = new double[objectives_];
+    for (int o = 0; o < objectives_; o++) {
+      vector[0] = this.get(0).getObjective(o);
+    }
+    for (int j = 1; j < this.size(); j++) {
       for (int o = 0; o < objectives_; o++) {
-          vector[0] = this.get(0).getObjective(o);
+        if (this.get(j).getObjective(o) > vector[o]) {
+          vector[o] = 1.0;//this.get(j).getObjective(o);
+        }
       }
-      for (int j = 1; j < this.size(); j++) {
-         for (int o = 0; o < objectives_; o++) {
-             if (this.get(j).getObjective(o) > vector[o]) {
-                 vector[o] = 1.0;//this.get(j).getObjective(o);
-             }
-         }
-      }
-      Point p = new Point(vector);
-      wfg = new WFGHV(this.objectives_,this.size(),p);
-      //remove(indexWorst(crowdingDistance_));
-      wfg.getLessContributorHV(this);
+    }
+    Point p = new Point(vector);
+    wfg = new WFGHV(this.objectives_, this.size(), p);
+    //remove(indexWorst(crowdingDistance_));
+    wfg.getLessContributorHV(this);
   }
   /**
    * This method forces to compute the contribution of each solution (required for PAEShv)
@@ -207,12 +209,12 @@ public class WFGHypervolumeArchive extends Archive {
 	    }	  
   } // computeHVContribution
   */
-  
-  
+
+
   /**
    * This method returns the location (integer position) of a solution in the archive.
    * For that, the equals_ comparator is used
-   * 
+   *
    */
   /*
   public int getLocation(Solution solution) {
@@ -227,5 +229,5 @@ public class WFGHypervolumeArchive extends Archive {
 	  return location;
   }  
   */
-  
+
 } // HypervolumeArchive

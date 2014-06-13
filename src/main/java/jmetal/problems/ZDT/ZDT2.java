@@ -30,101 +30,103 @@ import jmetal.util.JMException;
 import jmetal.util.wrapper.XReal;
 
 /**
- *  Class representing problem ZDT2
+ * Class representing problem ZDT2
  */
-public class ZDT2 extends Problem{
+public class ZDT2 extends Problem {
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = 469083313731522351L;
 
-  /** 
+  /**
    * Constructor.
    * Creates a default instance of  problem ZDT2 (30 decision variables)
-   * @param solutionType The solution type must "Real", "BinaryReal, and "ArrayReal". 
+   *
+   * @param solutionType The solution type must "Real", "BinaryReal, and "ArrayReal".
    */
   public ZDT2(String solutionType) throws ClassNotFoundException, JMException {
     this(solutionType, 30); // 30 variables by default
   } // ZDT2
 
 
-  /** 
+  /**
    * Constructor.
    * Creates a new ZDT2 problem instance.
+   *
    * @param numberOfVariables Number of variables
-   * @param solutionType The solution type must "Real" or "BinaryReal".
+   * @param solutionType      The solution type must "Real" or "BinaryReal".
    */
   public ZDT2(String solutionType, Integer numberOfVariables) throws JMException {
-    numberOfVariables_  = numberOfVariables;
-    numberOfObjectives_ =  2;
-    numberOfConstraints_=  0;
-    problemName_        = "ZDT2";
+    numberOfVariables_ = numberOfVariables;
+    numberOfObjectives_ = 2;
+    numberOfConstraints_ = 0;
+    problemName_ = "ZDT2";
 
     upperLimit_ = new double[numberOfVariables_];
     lowerLimit_ = new double[numberOfVariables_];
 
-    for (int var = 0; var < numberOfVariables_; var++){
+    for (int var = 0; var < numberOfVariables_; var++) {
       lowerLimit_[var] = 0.0;
       upperLimit_[var] = 1.0;
     }
 
     if (solutionType.compareTo("BinaryReal") == 0) {
       solutionType_ = new BinaryRealSolutionType(this);
-    }
-    else if (solutionType.compareTo("Real") == 0) {
+    } else if (solutionType.compareTo("Real") == 0) {
       solutionType_ = new RealSolutionType(this);
-    }
-    else if (solutionType.compareTo("ArrayReal") == 0) {
+    } else if (solutionType.compareTo("ArrayReal") == 0) {
       solutionType_ = new ArrayRealSolutionType(this);
-    }
-    else {
-      throw new JMException("Error: solution type " + solutionType + " invalid") ;
+    } else {
+      throw new JMException("Error: solution type " + solutionType + " invalid");
     }
   }
 
-  /** 
-   * Evaluates a solution 
+  /**
+   * Evaluates a solution
+   *
    * @param solution The solution to evaluate
-   * @throws JMException 
-   */    
+   * @throws JMException
+   */
   public void evaluate(Solution solution) throws JMException {
-    XReal x = new XReal(solution) ;
+    XReal x = new XReal(solution);
 
-    double [] fx = new double[numberOfObjectives_] ;
-    fx[0]        = x.getValue(0)     ;
-    double g    = this.evalG(x)                 ;
-    double h    = this.evalH(fx[0],g)              ;
-    fx[1]        = h * g                           ;
+    double[] fx = new double[numberOfObjectives_];
+    fx[0] = x.getValue(0);
+    double g = this.evalG(x);
+    double h = this.evalH(fx[0], g);
+    fx[1] = h * g;
 
-    solution.setObjective(0,fx[0]);
-    solution.setObjective(1,fx[1]);
+    solution.setObjective(0, fx[0]);
+    solution.setObjective(1, fx[1]);
   }
 
   /**
    * Returns the value of the ZDT2 function G.
-   * @param  x Solution
-   * @throws JMException 
-   */  
+   *
+   * @param x Solution
+   * @throws JMException
+   */
   private double evalG(XReal x) throws JMException {
-    double g = 0.0;        
-    for (int i = 1; i < x.getNumberOfDecisionVariables();i++) {
+    double g = 0.0;
+    for (int i = 1; i < x.getNumberOfDecisionVariables(); i++) {
       g += x.getValue(i);
     }
-    double constant = (9.0 / (numberOfVariables_-1));
+    double constant = (9.0 / (numberOfVariables_ - 1));
     g = constant * g;
     g = g + 1.0;
-    return g;        
+    return g;
   }
 
   /**
    * Returns the value of the ZDT2 function H.
+   *
    * @param f First argument of the function H.
    * @param g Second argument of the function H.
    */
   public double evalH(double f, double g) {
     double h = 0.0;
-    h = 1.0 - java.lang.Math.pow(f/g,2.0);
-    return h;        
+    h = 1.0 - java.lang.Math.pow(f / g, 2.0);
+    return h;
   }
 }

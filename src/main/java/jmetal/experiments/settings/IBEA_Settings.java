@@ -25,70 +25,68 @@ import jmetal.core.Algorithm;
 import jmetal.core.Operator;
 import jmetal.experiments.Settings;
 import jmetal.metaheuristics.ibea.IBEA;
-import jmetal.operators.crossover.Crossover;
 import jmetal.operators.crossover.CrossoverFactory;
-import jmetal.operators.mutation.Mutation;
 import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.BinaryTournament;
-import jmetal.operators.selection.Selection;
 import jmetal.problems.ProblemFactory;
-import jmetal.util.Configuration;
 import jmetal.util.JMException;
-import jmetal.util.comparators.FitnessComparator;
+import jmetal.util.comparator.FitnessComparator;
 
 import java.util.HashMap;
 import java.util.Properties;
-import java.util.logging.Level;
 
 /**
  * Settings class of algorithm IBEA
  */
 public class IBEA_Settings extends Settings {
 
-  private int populationSize_   ;
-  private int maxEvaluations_   ;
-  private int archiveSize_      ;
+  private int populationSize_;
+  private int maxEvaluations_;
+  private int archiveSize_;
 
-  private double mutationProbability_   ;
-  private double crossoverProbability_  ;
+  private double mutationProbability_;
+  private double crossoverProbability_;
 
-  private double crossoverDistributionIndex_ ;
-  private double mutationDistributionIndex_  ;
+  private double crossoverDistributionIndex_;
+  private double mutationDistributionIndex_;
 
   /**
    * Constructor
-   * @throws JMException 
+   *
+   * @throws JMException
    */
   public IBEA_Settings(String problemName) throws JMException {
-    super(problemName) ;
+    super(problemName);
 
-    Object [] problemParams = {"Real"};
-      problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
+    Object[] problemParams = {"Real"};
+    problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
 
     // Default experiments.settings
-    populationSize_ = 100   ;
-    maxEvaluations_ = 25000 ;
-    archiveSize_    = 100 ;
+    populationSize_ = 100;
+    maxEvaluations_ = 25000;
+    archiveSize_ = 100;
 
-    mutationProbability_  = 1.0/problem_.getNumberOfVariables() ;
-    crossoverProbability_ = 0.9 ;
+    mutationProbability_ = 1.0 / problem_.getNumberOfVariables();
+    crossoverProbability_ = 0.9;
 
-    crossoverDistributionIndex_ = 20.0  ;
-    mutationDistributionIndex_  = 20.0  ;
-  } 
+    crossoverDistributionIndex_ = 20.0;
+    mutationDistributionIndex_ = 20.0;
+  }
 
   /**
    * Configure IBEA with user-defined parameter experiments.settings
+   *
    * @return A IBEA algorithm object
    * @throws jmetal.util.JMException
    */
   public Algorithm configure() throws JMException {
-    Algorithm algorithm ;
-    Operator  selection ;
-    Operator  crossover ;
-    Operator  mutation  ;
+    Algorithm algorithm;
+    Operator selection;
+    Operator crossover;
+    Operator mutation;
 
-    algorithm = new IBEA(problem_) ;
+    algorithm = new IBEA();
+    algorithm.setProblem(problem_);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", populationSize_);
@@ -96,45 +94,53 @@ public class IBEA_Settings extends Settings {
     algorithm.setInputParameter("archiveSize", archiveSize_);
 
     // Mutation and Crossover for Real codification 
-    HashMap<String, Object> parameters = new HashMap<String, Object>() ;
-    parameters.put("probability", crossoverProbability_) ;
-    parameters.put("distributionIndex", crossoverDistributionIndex_) ;
-    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters);                   
+    HashMap<String, Object> parameters = new HashMap<String, Object>();
+    parameters.put("probability", crossoverProbability_);
+    parameters.put("distributionIndex", crossoverDistributionIndex_);
+    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters);
 
-    parameters = new HashMap<String, Object>() ;
-    parameters.put("probability", mutationProbability_) ;
-    parameters.put("distributionIndex", mutationDistributionIndex_) ;
+    parameters = new HashMap<String, Object>();
+    parameters.put("probability", mutationProbability_);
+    parameters.put("distributionIndex", mutationDistributionIndex_);
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);                    
 
     /* Selection Operator */
-    parameters = new HashMap<String, Object>() ; 
-    parameters.put("comparator", new FitnessComparator()) ;
+    parameters = new HashMap<String, Object>();
+    parameters.put("comparator", new FitnessComparator());
     selection = new BinaryTournament(parameters);
 
     // Add the operators to the algorithm
-    algorithm.addOperator("crossover",crossover);
-    algorithm.addOperator("mutation",mutation);
-    algorithm.addOperator("selection",selection);
+    algorithm.addOperator("crossover", crossover);
+    algorithm.addOperator("mutation", mutation);
+    algorithm.addOperator("selection", selection);
 
-    return algorithm ;
-  } 
+    return algorithm;
+  }
 
   /**
    * Configure IBEA with user-defined parameter experiments.settings
+   *
    * @return An IBEA algorithm object
    */
   @Override
   public Algorithm configure(Properties configuration) throws JMException {
-    populationSize_ = Integer.parseInt(configuration.getProperty("populationSize",String.valueOf(populationSize_)));
-    maxEvaluations_  = Integer.parseInt(configuration.getProperty("maxEvaluations",String.valueOf(maxEvaluations_)));
-    archiveSize_  = Integer.parseInt(configuration.getProperty("archiveSize",String.valueOf(archiveSize_)));
+    populationSize_ = Integer
+      .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize_)));
+    maxEvaluations_ = Integer
+      .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations_)));
+    archiveSize_ =
+      Integer.parseInt(configuration.getProperty("archiveSize", String.valueOf(archiveSize_)));
 
-    crossoverProbability_ = Double.parseDouble(configuration.getProperty("crossoverProbability",String.valueOf(crossoverProbability_)));
-    crossoverDistributionIndex_ = Double.parseDouble(configuration.getProperty("crossoverDistributionIndex",String.valueOf(crossoverDistributionIndex_)));
+    crossoverProbability_ = Double.parseDouble(
+      configuration.getProperty("crossoverProbability", String.valueOf(crossoverProbability_)));
+    crossoverDistributionIndex_ = Double.parseDouble(configuration
+      .getProperty("crossoverDistributionIndex", String.valueOf(crossoverDistributionIndex_)));
 
-    mutationProbability_ = Double.parseDouble(configuration.getProperty("mutationProbability",String.valueOf(mutationProbability_)));
-    mutationDistributionIndex_ = Double.parseDouble(configuration.getProperty("mutationDistributionIndex",String.valueOf(mutationDistributionIndex_)));
+    mutationProbability_ = Double.parseDouble(
+      configuration.getProperty("mutationProbability", String.valueOf(mutationProbability_)));
+    mutationDistributionIndex_ = Double.parseDouble(configuration
+      .getProperty("mutationDistributionIndex", String.valueOf(mutationDistributionIndex_)));
 
-    return configure() ;
+    return configure();
   }
 } 

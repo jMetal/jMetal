@@ -27,11 +27,11 @@ import jmetal.encodings.variable.Permutation;
 import jmetal.util.JMException;
 
 /**
- *  @author Juan J. Durillo
- *  @version 1.0
- *  This class implements the mQAP problem.
- *  Please notice that this class is also valid for the case m = 1 (mono-objective
- *  version of the problem)
+ * @author Juan J. Durillo
+ * @version 1.0
+ *          This class implements the mQAP problem.
+ *          Please notice that this class is also valid for the case m = 1 (mono-objective
+ *          version of the problem)
  */
 public class mQAP extends Problem {
 
@@ -40,25 +40,24 @@ public class mQAP extends Problem {
    */
   private static final long serialVersionUID = 5585099487667493237L;
 
-  int [][] a_matrix;
-  int [][][] b_matrixs;
+  int[][] a_matrix;
+  int[][][] b_matrixs;
 
   public mQAP(String solutionType) throws JMException {
-    this(solutionType, "KC10-2fl-2rl.dat") ;
+    this(solutionType, "KC10-2fl-2rl.dat");
   }
 
   /**
    * Creates a new instance of problem mQAP.
-   * @param fileName: name of the file containing the instance  
    */
   public mQAP(String solutionType, String fileName) throws JMException {
 
     ReadInstance ri = new ReadInstance(fileName);
     ri.loadInstance(); // necessary step (because I say it :-))
-    numberOfVariables_  =   1; // the permutation
-    numberOfObjectives_ =   ri.getNumberOfObjectives();
-    numberOfConstraints_=   0;
-    problemName_        =   "mQAP";
+    numberOfVariables_ = 1; // the permutation
+    numberOfObjectives_ = ri.getNumberOfObjectives();
+    numberOfConstraints_ = 0;
+    problemName_ = "mQAP";
     a_matrix = ri.get_a_Matrix();
     b_matrixs = ri.get_b_Matrixs();
 
@@ -68,7 +67,7 @@ public class mQAP extends Problem {
     // Establishes upper and lower limits for the variables
     for (int var = 0; var < numberOfVariables_; var++) {
       lowerLimit_[var] = 0.0;
-      upperLimit_[var] = ri.getNumberOfFacilities()-1;
+      upperLimit_[var] = ri.getNumberOfFacilities() - 1;
     }
 
     // Establishes the length of every encodings.variable
@@ -80,13 +79,13 @@ public class mQAP extends Problem {
     if (solutionType.compareTo("Permutation") == 0) {
       solutionType_ = new PermutationSolutionType(this);
     } else {
-      throw new JMException("Error: solution type " + solutionType + " invalid") ;
+      throw new JMException("Error: solution type " + solutionType + " invalid");
     }
   }
 
   // evaluation of the problem
   public void evaluate(Solution solution) throws JMException {
-    int [] permutation = ((Permutation)solution.getDecisionVariables()[0]).getVector();
+    int[] permutation = ((Permutation) solution.getDecisionVariables()[0]).getVector();
     for (int k = 0; k < numberOfObjectives_; k++) {
       double aux = 0.0;
       for (int i = 0; i < a_matrix.length; i++) {

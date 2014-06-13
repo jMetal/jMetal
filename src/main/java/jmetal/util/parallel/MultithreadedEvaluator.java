@@ -28,110 +28,124 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Vector;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 import java.util.logging.Level;
 
 /**
  * @author Antonio J. Nebro
- * Class for evaluating solutions in parallel using threads
+ *         Class for evaluating solutions in parallel using threads
  */
-public class MultithreadedEvaluator extends SynchronousParallelRunner {
-  private Problem problem_ ;
-  private Collection<EvaluationTask> taskList_ ;
+public class MultithreadedEvaluator implements SynchronousParallelTaskExecutor {
+  private Problem problem_;
+  private Collection<EvaluationTask> taskList_;
+  private int numberOfThreads_ ;
+  private ExecutorService executor_;
 
   /**
    * Constructor
-   * @param threads 
+   *
+   * @param threads Number of requested threads. A value of 0 implicates to request the maximum
+   *                number of available threads in the system.
    */
   public MultithreadedEvaluator(int threads) {
-    super(threads) ;
+    numberOfThreads_ = threads;
+    if (threads == 0) {
+      numberOfThreads_ = Runtime.getRuntime().availableProcessors();
+    } else if (threads < 0) {
+      Configuration.logger_.severe("MultithreadedEvaluator: the number of threads" +
+        " cannot be negative number " + threads);
+    } else {
+      numberOfThreads_ = threads;
+    }
+    Configuration.logger_.info("THREADS: " + numberOfThreads_);
   }
 
   /**
    * Constructor
+   *
    * @param problem problem to solve
    */
-  public void startParallelRunner(Object problem) {
-    problem_ = (Problem)problem ;
+  public void start(Object problem) {
+    problem_ = (Problem) problem;
 
-    executor_ = Executors.newFixedThreadPool(numberOfThreads_) ;
-    System.out.println("Cores: "+ numberOfThreads_) ;
-    taskList_ = null ; 
+    executor_ = Executors.newFixedThreadPool(numberOfThreads_);
+    Configuration.logger_.info("Cores: " + numberOfThreads_);
+    taskList_ = null;
   }
 
   /**
    * Adds a solution to be evaluated to a list of tasks
    */
-  public void addTaskForExecution(Object[] taskParameters) {
-    Solution solution = (Solution)taskParameters[0] ;
+  public void addTask(Object[] taskParameters) {
+    Solution solution = (Solution) taskParameters[0];
     if (taskList_ == null) {
       taskList_ = new ArrayList<EvaluationTask>();
     }
 
-    taskList_.add(new EvaluationTask(problem_, solution)) ;			
+    taskList_.add(new EvaluationTask(problem_, solution));
   }
 
   /**
    * Evaluates a list of solutions
+   *
    * @return A list with the evaluated solutions
    */
   public Object parallelExecution() {
-    List<Future<Object>> future = null ;
+    List<Future<Object>> future = null;
     try {
       future = executor_.invokeAll(taskList_);
     } catch (InterruptedException e1) {
       Configuration.logger_.log(Level.SEVERE, "Error", e1);
     }
-    List<Object> solutionList = new Vector<Object>() ;
+    List<Object> solutionList = new Vector<Object>();
 
-    for(Future<Object> result : future){
-      Object solution = null ;
+    for (Future<Object> result : future) {
+      Object solution = null;
       try {
         solution = result.get();
-        solutionList.add(solution) ;
+        solutionList.add(solution);
       } catch (InterruptedException e) {
         Configuration.logger_.log(Level.SEVERE, "Error", e);
       } catch (ExecutionException e) {
         Configuration.logger_.log(Level.SEVERE, "Error", e);
       }
     }
-    taskList_ = null ;
-    return solutionList ;
+    taskList_ = null;
+    return solutionList;
   }
 
   /**
    * Shutdown the executor
    */
-  public void stopEvaluator() {
-    executor_.shutdown() ;
+  public void stop() {
+    executor_.shutdown();
   }
 
   /**
    * @author Antonio J. Nebro
-   * Private class representing tasks to evaluate solutions.
+   *         Private class representing tasks to evaluate solutions.
    */
 
-  private class EvaluationTask extends ParallelTask {
-    private Problem problem_ ;
-    private Solution solution_ ;
+  private class EvaluationTask implements Callable<Object> {
+    private Problem problem_;
+    private Solution solution_;
 
     /**
      * Constructor
-     * @param problem Problem to solve
+     *
+     * @param problem  Problem to solve
      * @param solution Solution to evaluate
      */
-    public EvaluationTask(Problem problem,  Solution solution) {
-      problem_ = problem ;
-      solution_ = solution ;
+    public EvaluationTask(Problem problem, Solution solution) {
+      problem_ = problem;
+      solution_ = solution;
     }
 
     public Solution call() throws Exception {
-      problem_.evaluate(solution_) ;
-      problem_.evaluateConstraints(solution_) ;
+      problem_.evaluate(solution_);
+      problem_.evaluateConstraints(solution_);
 
-      return solution_ ;
+      return solution_;
     }
   }
 }

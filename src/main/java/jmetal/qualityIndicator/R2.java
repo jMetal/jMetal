@@ -34,14 +34,13 @@ import java.util.logging.Level;
 public class R2 {
 
   public jmetal.qualityIndicator.util.MetricsUtil utils_;
-  double [][] matrix_ = null;
-  double [][] lambda_ = null;
-  int    nObj_         = 0;
+  double[][] matrix_ = null;
+  double[][] lambda_ = null;
+  int nObj_ = 0;
 
   /**
-   * Constructor
-   * Creates a new instance of the R2 indicator for a problem with two objectives
-   * and 100 lambda vectors
+   * Constructor Creates a new instance of the R2 indicator for a problem with
+   * two objectives and 100 lambda vectors
    */
   public R2() {
     utils_ = new jmetal.qualityIndicator.util.MetricsUtil();
@@ -59,9 +58,8 @@ public class R2 {
   }
 
   /**
-   * Constructor
-   * Creates a new instance of the R2 indicator for a problem with two objectives
-   * and N lambda vectors
+   * Constructor Creates a new instance of the R2 indicator for a problem with
+   * two objectives and N lambda vectors
    */
   public R2(int nVectors) {
     utils_ = new jmetal.qualityIndicator.util.MetricsUtil();
@@ -76,13 +74,11 @@ public class R2 {
       lambda_[n][0] = a;
       lambda_[n][1] = 1 - a;
     }
-  } 
-
+  }
 
   /**
-   * Constructor
-   * Creates a new instance of the R2 indicator for nDimensiosn
-   * It loads the weight vectors from the file fileName
+   * Constructor Creates a new instance of the R2 indicator for nDimensiosn It
+   * loads the weight vectors from the file fileName
    */
   public R2(int nObj, String file) {
     utils_ = new jmetal.qualityIndicator.util.MetricsUtil();
@@ -109,7 +105,7 @@ public class R2 {
         StringTokenizer st = new StringTokenizer(aux);
         j = 0;
         numberOfObjectives = st.countTokens();
-        double [] vector = new double[nObj];
+        double[] vector = new double[nObj];
         while (st.hasMoreTokens()) {
           double value = new Double(st.nextToken());
           vector[j++] = value;
@@ -131,44 +127,61 @@ public class R2 {
           "initUniformWeight: failed when reading for file: " + file,
           e);
     }
+
+    double[][] approximationFront = qualityIndicator.utils_.readFront(args[0]);
+    double[][] paretoFront = qualityIndicator.utils_.readFront(args[1]);
+
+    // Obtain delta value
+    double value = qualityIndicator.r2(approximationFront, paretoFront);
+
+    Configuration.logger_.info(""+value);
+    Configuration.logger_.info(""+qualityIndicator.R2Without(approximationFront,
+      paretoFront, 1));
+    Configuration.logger_.info(""+qualityIndicator.R2Without(approximationFront,
+      paretoFront, 15));
+    Configuration.logger_.info(""+qualityIndicator.R2Without(approximationFront,
+      paretoFront, 25));
+    Configuration.logger_.info(""+qualityIndicator.R2Without(approximationFront,
+      paretoFront, 75));
+
   }
 
   /**
    * Returns the R2 indicator value of a given front
    */
-  private double R2Withouth(double [][] approximation,double [][] paretoFront, int index)  {
+  private double R2Without(double[][] approximation, double[][] paretoFront,
+    int index) {
 
     /**
      * Stores the maximum values of true Pareto front.
      */
-    double [] maximumValue ;
+    double[] maximumValue;
 
     /**
      * Stores the minimum values of the true Pareto front.
      */
-    double [] minimumValue ;
+    double[] minimumValue;
 
     /**
      * Stores the normalized front.
      */
-    double [][] normalizedApproximation ;
+    double[][] normalizedApproximation;
 
     /**
      * Stores the normalized true Pareto front.
      */
-    double [][] normalizedParetoFront ;
+    double[][] normalizedParetoFront;
 
     // STEP 1. Obtain the maximum and minimum values of the Pareto front
     maximumValue = utils_.getMaximumValues(paretoFront, nObj_);
     minimumValue = utils_.getMinimumValues(paretoFront, nObj_);
 
     // STEP 2. Get the normalized front and true Pareto fronts
-    normalizedApproximation       = utils_.getNormalizedFront(approximation,
-        maximumValue,
-        minimumValue);
+
+    normalizedApproximation = utils_.getNormalizedFront(approximation,
+        maximumValue, minimumValue);
     normalizedParetoFront = utils_.getNormalizedFront(paretoFront,
-        maximumValue,
-        minimumValue);
+        maximumValue, minimumValue);
 
     // STEP 3. compute all the matrix of tchebicheff values if it is null
     matrix_ = new double[approximation.length][lambda_.length];
@@ -176,11 +189,11 @@ public class R2 {
       for (int j = 0; j < lambda_.length; j++) {
         matrix_[i][j] = lambda_[j][0] * Math.abs(normalizedApproximation[i][0]);
         for (int n = 1; n < nObj_; n++) {
-          matrix_[i][j] = Math.max(matrix_[i][j], lambda_[j][n] * Math.abs(normalizedApproximation[i][n]));
+          matrix_[i][j] = Math.max(matrix_[i][j],
+              lambda_[j][n] * Math.abs(normalizedApproximation[i][n]));
         }
       }
     }
-
 
     // STEP45. Compute the R2 value withouth the point
     double sumWithout = 0.0;
@@ -192,7 +205,7 @@ public class R2 {
         tmp = matrix_[1][i];
       }
       for (int j = 0; j < approximation.length; j++) {
-        if ( j != index) {
+        if (j != index) {
           tmp = Math.min(tmp, matrix_[j][i]);
         }
       }
@@ -206,13 +219,12 @@ public class R2 {
   /**
    * Returns the element contributing the most to the R2 indicator
    */
-  public int getBest(double [][] approximation,double [][] paretoFront)
-  {
-    int     index_best = -1;
-    double  value = Double.NEGATIVE_INFINITY;
+  public int getBest(double[][] approximation, double[][] paretoFront) {
+    int index_best = -1;
+    double value = Double.NEGATIVE_INFINITY;
 
     for (int i = 0; i < approximation.length; i++) {
-      double aux = this.R2Withouth(approximation, paretoFront, i);
+      double aux = this.R2Without(approximation, paretoFront, i);
       if (aux > value) {
         index_best = i;
         value = aux;
@@ -225,12 +237,12 @@ public class R2 {
   /**
    * Returns the element contributing the less to the R2
    */
-  public int getWorst(double [][] approximation,double [][] paretoFront)  {
-    int     index_worst = -1;
-    double  value = Double.POSITIVE_INFINITY;
+  public int getWorst(double[][] approximation, double[][] paretoFront) {
+    int index_worst = -1;
+    double value = Double.POSITIVE_INFINITY;
 
     for (int i = 0; i < approximation.length; i++) {
-      double aux = this.R2Withouth(approximation, paretoFront, i);
+      double aux = this.R2Without(approximation, paretoFront, i);
       if (aux < value) {
         index_worst = i;
         value = aux;
@@ -240,13 +252,12 @@ public class R2 {
     return index_worst;
   }
 
-
   /**
    * Returns the element contributing the most to the R2
    */
-  public int getBest(SolutionSet set)  {
-    double [][] approximationFront = set.writeObjectivesToMatrix();
-    double [][] trueFront          = set.writeObjectivesToMatrix();
+  public int getBest(SolutionSet set) {
+    double[][] approximationFront = set.writeObjectivesToMatrix();
+    double[][] trueFront = set.writeObjectivesToMatrix();
 
     return this.getBest(approximationFront, trueFront);
   }
@@ -255,8 +266,8 @@ public class R2 {
    * Returns the element contributing the less to the R2
    */
   public int getWorst(SolutionSet set) {
-    double [][] approximationFront = set.writeObjectivesToMatrix();
-    double [][] trueFront          = set.writeObjectivesToMatrix();
+    double[][] approximationFront = set.writeObjectivesToMatrix();
+    double[][] trueFront = set.writeObjectivesToMatrix();
 
     return this.getWorst(approximationFront, trueFront);
   }
@@ -264,38 +275,32 @@ public class R2 {
   /**
    * Returns the element contributing the most to the R2 indicator
    */
-  public int []
-      getNBest(double [][] approximation,double [][] paretoFront, int N)
-  {
-    int  []    index_bests = new int[approximation.length];
-    double [] values       = new double[approximation.length];
-
+  public int[] getNBest(double[][] approximation, double[][] paretoFront, int N) {
+    int[] index_bests = new int[approximation.length];
+    double[] values = new double[approximation.length];
 
     for (int i = 0; i < approximation.length; i++) {
-      values[i]      = this.R2Withouth(approximation, paretoFront, i);
+      values[i] = this.R2Without(approximation, paretoFront, i);
       index_bests[i] = i;
-    } // for
-
+    }
 
     // sorting the values and index_bests
-    for (int i  = 0; i < approximation.length; i++) {
+    for (int i = 0; i < approximation.length; i++) {
       for (int j = i; j < approximation.length; j++) {
         if (values[j] < values[i]) {
           double aux = values[j];
-          values[j]  = values[i];
-          values[i]  = aux;
+          values[j] = values[i];
+          values[i] = aux;
 
           int aux_index = index_bests[j];
-          index_bests[j]   = index_bests[i];
-          index_bests[i]   = aux_index;
+          index_bests[j] = index_bests[i];
+          index_bests[i] = aux_index;
         }
       }
     }
 
-    int [] res = new int[N];
-    for (int i = 0; i< N; i++) {
-      res[i] = index_bests[i];
-    }
+    int[] res = new int[N];
+    System.arraycopy(index_bests, 0, res, 0, N);
 
     return res;
   }
@@ -303,40 +308,37 @@ public class R2 {
   /**
    * Returns the indexes of the N best solutions according to this indicator
    */
-  public int [] getNBest(SolutionSet set, int N) {
-    double [][] approximationFront = set.writeObjectivesToMatrix();
-    double [][] trueFront          = set.writeObjectivesToMatrix();
+  public int[] getNBest(SolutionSet set, int N) {
+    double[][] approximationFront = set.writeObjectivesToMatrix();
+    double[][] trueFront = set.writeObjectivesToMatrix();
 
-    return this.getNBest(approximationFront,trueFront,N);
+    return this.getNBest(approximationFront, trueFront, N);
   }
 
   /**
    * Returns the R2 indicator value of a given front
-   * @param front The front 
-   * @param trueParetoFront The true Pareto front
-   * @param numberOfObjectives The number of objectives
-   * @param lambda A vector containing the lambda vectors for R2
+   *
    */
   public double r2(double [][] approximation,double [][] paretoFront) {
     /**
      * Stores the maximum values of true pareto front.
      */
-    double [] maximumValue ;
+    double[] maximumValue;
 
     /**
      * Stores the minimum values of the true pareto front.
      */
-    double [] minimumValue ;
+    double[] minimumValue;
 
     /**
      * Stores the normalized front.
      */
-    double [][] normalizedApproximation ;
+    double[][] normalizedApproximation;
 
     /**
      * Stores the normalized true Pareto front.
      */
-    double [][] normalizedParetoFront ;
+    double[][] normalizedParetoFront;
 
     // STEP 1. Obtain the maximum and minimum values of the Pareto front
     maximumValue = utils_.getMaximumValues(paretoFront, nObj_);
@@ -356,7 +358,8 @@ public class R2 {
       for (int j = 0; j < lambda_.length; j++) {
         matrix_[i][j] = lambda_[j][0] * Math.abs(normalizedApproximation[i][0]);
         for (int n = 1; n < nObj_; n++) {
-          matrix_[i][j] = Math.max(matrix_[i][j], lambda_[j][n] * Math.abs(normalizedApproximation[i][n]));
+          matrix_[i][j] = Math.max(matrix_[i][j],
+              lambda_[j][n] * Math.abs(normalizedApproximation[i][n]));
         }
       }
     }
@@ -376,14 +379,12 @@ public class R2 {
   }
 
   /**
-   * Returns the R2 indicator of a given population, using as a reference
-   * point 0, 0. Normalization is using taking into account the population itself
-   * @param set
-   * @return
+   * Returns the R2 indicator of a given population, using as a reference point
+   * 0, 0. Normalization is using taking into account the population itself
    */
-  public double R2(SolutionSet set) {
-    double [][] approximationFront = set.writeObjectivesToMatrix();
-    double [][] trueFront          = set.writeObjectivesToMatrix();
+  public double r2(SolutionSet set) {
+    double[][] approximationFront = set.writeObjectivesToMatrix();
+    double[][] trueFront = set.writeObjectivesToMatrix();
 
     return this.r2(approximationFront, trueFront);
   }
@@ -438,6 +439,5 @@ public class R2 {
     System.out.println(qualityIndicator.R2Withouth(approximationFront,paretoFront,15));
     System.out.println(qualityIndicator.R2Withouth(approximationFront,paretoFront,25));
     System.out.println(qualityIndicator.R2Withouth(approximationFront,paretoFront,75));
-
   }
 }

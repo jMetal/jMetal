@@ -19,23 +19,26 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package jmetal.qualityIndicator ;
+package jmetal.qualityIndicator;
 
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
 /**
- * This class implements the unary epsilon additive indicator as proposed in
- * E. Zitzler, E. Thiele, L. Laummanns, M., Fonseca, C., and Grunert da Fonseca.
- * V (2003): Performance Assessment of Multiobjective Optimizers: An Analysis and
+ * This class implements the unary epsilon additive indicator as proposed in E.
+ * Zitzler, E. Thiele, L. Laummanns, M., Fonseca, C., and Grunert da Fonseca. V
+ * (2003): Performance Assessment of Multiobjective Optimizers: An Analysis and
  * Review. The code is the a Java version of the original metric implementation
- * by Eckart Zitzler.
- * It can be used also as a command line program just by typing
- * $java jmetal.qualityIndicator.Epsilon <solutionFrontFile> <trueFrontFile> <getNumberOfObjectives>
+ * by Eckart Zitzler. It can be used also as a command line program just by
+ * typing $java jmetal.qualityIndicator.Epsilon <solutionFrontFile>
+ * <trueFrontFile> <getNumberOfObjectives>
  */
 
 public class Epsilon {
 
+  /* stores a reference to qualityIndicatorUtils */
+  public jmetal.qualityIndicator.util.MetricsUtil utils_ =
+    new jmetal.qualityIndicator.util.MetricsUtil();
   /* stores the number of objectives */
   private int  dim_   ;
   /* obj_[i]=0 means objective i is to be minimized. This code always assume the minimization of all the objectives
@@ -51,14 +54,15 @@ public class Epsilon {
 
   /**
    * Returns the epsilon indicator.
+   *
    * @param b True Pareto front
    * @param a Solution front
    * @return the value of the epsilon indicator
    * @throws JMException
    */
-  public double epsilon(double [][] b, double [][] a, int dim) throws JMException {
-    int  i, j, k;
-    double  eps, eps_j = 0.0, eps_k=0.0, eps_temp;
+  public double epsilon(double[][] b, double[][] a, int dim) throws JMException {
+    int i, j, k;
+    double eps, eps_j = 0.0, eps_k = 0.0, eps_temp;
 
     dim_ = dim ;
     setParameters() ;
@@ -96,22 +100,19 @@ public class Epsilon {
           }
           if (k == 0) {
             eps_k = eps_temp;
-          }
-          else if (eps_k < eps_temp) {
+          } else if (eps_k < eps_temp) {
             eps_k = eps_temp;
           }
         }
         if (j == 0) {
           eps_j = eps_k;
-        }
-        else if (eps_j > eps_k) {
+        } else if (eps_j > eps_k) {
           eps_j = eps_k;
         }
       }
       if (i == 0) {
         eps = eps_j;
-      }
-      else if (eps < eps_j) {
+      } else if (eps < eps_j) {
         eps = eps_j;
       }
     }
@@ -129,7 +130,6 @@ public class Epsilon {
     }
     method_ = 0;
   }
-
 
   /**
    * Returns the additive-epsilon value of the paretoFront. This method call to the
@@ -157,4 +157,3 @@ public class Epsilon {
     Configuration.logger_.info(""+indicatorvalue);
   }
 }
-

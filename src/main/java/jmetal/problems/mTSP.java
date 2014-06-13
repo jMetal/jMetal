@@ -32,7 +32,7 @@ import java.util.logging.Level;
 
 /**
  * Class representing a multi-objective TSP (Traveling Salesman Problem) problem.
- * This class is tested with two objectives and the KROA150 and KROB150 
+ * This class is tested with two objectives and the KROA150 and KROB150
  * instances of TSPLIB
  */
 public class mTSP extends Problem {
@@ -41,61 +41,62 @@ public class mTSP extends Problem {
    *
    */
   private static final long serialVersionUID = 3869748855198680149L;
-  public int         numberOfCities_ ;
-  public double [][] distanceMatrix_ ;
-  public double [][] costMatrix_;
+  public int numberOfCities_;
+  public double[][] distanceMatrix_;
+  public double[][] costMatrix_;
 
   /**
    * Creates a new mTSP problem instance. It accepts data files from TSPLIB
    */
   public mTSP(String solutionType,
-              String file_distances,
-              String file_cost) throws Exception {
-    numberOfVariables_  = 1;
+    String file_distances,
+    String file_cost) throws Exception {
+    numberOfVariables_ = 1;
     numberOfObjectives_ = 2;
-    numberOfConstraints_= 0;
-    problemName_        = "mTSP";
+    numberOfConstraints_ = 0;
+    problemName_ = "mTSP";
 
-    length_       = new int[numberOfVariables_];
+    length_ = new int[numberOfVariables_];
 
-    distanceMatrix_ = readProblem(file_distances) ;
-    costMatrix_     = readProblem(file_cost);
-    System.out.println(numberOfCities_) ;
-    length_      [0] = numberOfCities_ ;
+    distanceMatrix_ = readProblem(file_distances);
+    costMatrix_ = readProblem(file_cost);
+    Configuration.logger_.info(""+numberOfCities_);
+    length_[0] = numberOfCities_;
 
     if (solutionType.compareTo("Permutation") == 0) {
       solutionType_ = new PermutationSolutionType(this);
     } else {
-      throw new JMException("Error: solution type " + solutionType + " invalid") ;
+      throw new JMException("Error: solution type " + solutionType + " invalid");
     }
   }
 
   /**
-   * Evaluates a solution 
+   * Evaluates a solution
+   *
    * @param solution The solution to evaluate
    */
   public void evaluate(Solution solution) {
-    double fitness1   ;
-    double fitness2   ;
+    double fitness1;
+    double fitness2;
 
-    fitness1   = 0.0 ;
-    fitness2   = 0.0 ;
+    fitness1 = 0.0;
+    fitness2 = 0.0;
 
     for (int i = 0; i < (numberOfCities_ - 1); i++) {
-      int x ;
-      int y ;
+      int x;
+      int y;
 
-      x = ((Permutation)solution.getDecisionVariables()[0]).getVector()[i] ;
-      y = ((Permutation)solution.getDecisionVariables()[0]).getVector()[i+1] ;
-      fitness1 += distanceMatrix_[x][y] ;
+      x = ((Permutation) solution.getDecisionVariables()[0]).getVector()[i];
+      y = ((Permutation) solution.getDecisionVariables()[0]).getVector()[i + 1];
+      fitness1 += distanceMatrix_[x][y];
       fitness2 += costMatrix_[x][y];
     }
-    int firstCity ;
-    int lastCity  ;
+    int firstCity;
+    int lastCity;
 
-    firstCity = ((Permutation)solution.getDecisionVariables()[0]).getVector()[0] ;
-    lastCity  = ((Permutation)solution.getDecisionVariables()[0]).getVector()[numberOfCities_ - 1] ;
-    fitness1 += distanceMatrix_[firstCity][lastCity] ;
+    firstCity = ((Permutation) solution.getDecisionVariables()[0]).getVector()[0];
+    lastCity = ((Permutation) solution.getDecisionVariables()[0]).getVector()[numberOfCities_ - 1];
+    fitness1 += distanceMatrix_[firstCity][lastCity];
     fitness2 += costMatrix_[firstCity][lastCity];
 
     solution.setObjective(0, fitness1);
@@ -103,20 +104,21 @@ public class mTSP extends Problem {
   }
 
 
-  public double [][] readProblem(String file) throws
-          Exception {
-    double [][] matrix = null;
+  public double[][] readProblem(String file) throws
+    Exception {
+    double[][] matrix = null;
     Reader inputFile = new BufferedReader(
-            new InputStreamReader(
-                    new FileInputStream(file)));
+      new InputStreamReader(
+        new FileInputStream(file))
+    );
 
     StreamTokenizer token = new StreamTokenizer(inputFile);
     try {
-      boolean found ;
-      found = false ;
+      boolean found;
+      found = false;
 
       token.nextToken();
-      while(!found) {
+      while (!found) {
         if ((token.sval != null) && ((token.sval.compareTo("DIMENSION") == 0))) {
           found = true;
         } else {
@@ -124,19 +126,19 @@ public class mTSP extends Problem {
         }
       }
 
-      token.nextToken() ;
-      token.nextToken() ;
+      token.nextToken();
+      token.nextToken();
 
-      numberOfCities_ =  (int)token.nval ;
+      numberOfCities_ = (int) token.nval;
 
-      matrix = new double[numberOfCities_][numberOfCities_] ;
+      matrix = new double[numberOfCities_][numberOfCities_];
 
       // Find the string SECTION  
-      found = false ;
+      found = false;
       token.nextToken();
-      while(!found) {
+      while (!found) {
         if ((token.sval != null) &&
-                ((token.sval.compareTo("SECTION") == 0))) {
+          ((token.sval.compareTo("SECTION") == 0))) {
           found = true;
         } else {
           token.nextToken();
@@ -144,32 +146,33 @@ public class mTSP extends Problem {
       }
 
       // Read the data
-      double [] c = new double[2*numberOfCities_] ;
+      double[] c = new double[2 * numberOfCities_];
 
       for (int i = 0; i < numberOfCities_; i++) {
-        token.nextToken() ;
-        int j = (int)token.nval ;
+        token.nextToken();
+        int j = (int) token.nval;
 
-        token.nextToken() ;
-        c[2*(j-1)] = token.nval ;
-        token.nextToken() ;
-        c[2*(j-1)+1] = token.nval ;
+        token.nextToken();
+        c[2 * (j - 1)] = token.nval;
+        token.nextToken();
+        c[2 * (j - 1) + 1] = token.nval;
       }
 
-      double dist ;
+      double dist;
       for (int k = 0; k < numberOfCities_; k++) {
         matrix[k][k] = 0;
         for (int j = k + 1; j < numberOfCities_; j++) {
-          dist = Math.sqrt(Math.pow((c[k*2]-c[j*2]),2.0) +
-                  Math.pow((c[k*2+1]-c[j*2+1]), 2));
-          dist = (int)(dist + .5);
+          dist = Math.sqrt(Math.pow((c[k * 2] - c[j * 2]), 2.0) +
+            Math.pow((c[k * 2 + 1] - c[j * 2 + 1]), 2));
+          dist = (int) (dist + .5);
           matrix[k][j] = dist;
           matrix[j][k] = dist;
         }
       }
     } catch (Exception e) {
-      Configuration.logger_.log(Level.SEVERE, "mTSP.readProblem(): error when reading data file", e);
-      throw new Exception ("mTSP.readProblem(): error when reading data file "+e);
+      Configuration.logger_
+        .log(Level.SEVERE, "mTSP.readProblem(): error when reading data file", e);
+      throw new Exception("mTSP.readProblem(): error when reading data file " + e);
     }
     return matrix;
   }

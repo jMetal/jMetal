@@ -25,12 +25,11 @@ import jmetal.qualityIndicator.Hypervolume;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Distance;
 import jmetal.util.JMException;
-import jmetal.util.random.PseudoRandom;
 import jmetal.util.archive.CrowdingArchive;
-import jmetal.util.comparators.CrowdingDistanceComparator;
-import jmetal.util.comparators.DominanceComparator;
-import jmetal.util.parallel.SynchronousParallelRunner;
-
+import jmetal.util.comparator.CrowdingDistanceComparator;
+import jmetal.util.comparator.DominanceComparator;
+import jmetal.util.parallel.SynchronousParallelTaskExecutor;
+import jmetal.util.random.PseudoRandom;
 import jmetal.util.wrapper.XReal;
 
 import java.io.IOException;
@@ -41,17 +40,36 @@ import java.util.logging.Logger;
 /**
  * This class implements the SMPSO algorithm described in:
  * A.J. Nebro, J.J. Durillo, J. Garcia-Nieto, C.A. Coello Coello, F. Luna and E. Alba
- * "SMPSO: A New PSO-based Metaheuristic for Multi-objective Optimization". 
- * IEEE Symposium on Computational Intelligence in Multicriteria Decision-Making 
+ * "SMPSO: A New PSO-based Metaheuristic for Multi-objective Optimization".
+ * IEEE Symposium on Computational Intelligence in Multicriteria Decision-Making
  * (MCDM 2009), pp: 66-73. March 2009
  */
+
+@Deprecated
 public class pSMPSO extends Algorithm {
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = 6433458914602768519L;
-
+  QualityIndicator indicators_; // QualityIndicator object
+  /**
+   * ParallelEvaluator object
+   */
+  SynchronousParallelTaskExecutor parallelEvaluator_;
+  double r1Max_;
+  double r1Min_;
+  double r2Max_;
+  double r2Min_;
+  double C1Max_;
+  double C1Min_;
+  double C2Max_;
+  double C2Min_;
+  double WMax_;
+  double WMin_;
+  double ChVel1_;
+  double ChVel2_;
+  boolean success_;
   /**
    * Stores the number of particles_ used
    */
@@ -100,47 +118,24 @@ public class pSMPSO extends Algorithm {
    * Stores a operator for non uniform mutations
    */
   private Operator polynomialMutation_;
-
-  QualityIndicator indicators_; // QualityIndicator object
-
-  /**
-   * ParallelEvaluator object
-   */
-  SynchronousParallelRunner parallelEvaluator_ ;
-
   /**
    * Number of threads to be executed in parallel
    */
   private int numberOfThreads_;
-
-  double r1Max_;
-  double r1Min_;
-  double r2Max_;
-  double r2Min_;
-  double C1Max_;
-  double C1Min_;
-  double C2Max_;
-  double C2Min_;
-  double WMax_;
-  double WMin_;
-  double ChVel1_;
-  double ChVel2_;
-
   private double trueHypervolume_;
   private Hypervolume hy_;
   private SolutionSet trueFront_;
-
   private double deltaMax_[];
   private double deltaMin_[];
-  boolean success_;
 
 
-  /** 
+  /**
    * Constructor
+   *
    * @param problem Problem to solve
    */
-  public pSMPSO(Problem problem, SynchronousParallelRunner evaluator) {
-    super(problem) ;
+  public pSMPSO() {
+    super();
 
     r1Max_ = 1.0;
     r1Min_ = 0.0;
@@ -155,10 +150,13 @@ public class pSMPSO extends Algorithm {
     ChVel1_ = -1;
     ChVel2_ = -1;
 
-    parallelEvaluator_ = evaluator ;
+    
   } // Constructor
 
-
+  public void setEvaluator(SynchronousParallelTaskExecutor evaluator) {
+	  parallelEvaluator_ = evaluator;  
+  }
+  
   /**
    * Initialize all parameter of the algorithm
    */
@@ -169,11 +167,11 @@ public class pSMPSO extends Algorithm {
 
     indicators_ = (QualityIndicator) getInputParameter("indicators");
 
-    polynomialMutation_ = operators_.get("mutation") ; 
+    polynomialMutation_ = operators_.get("mutation");
 
-    parallelEvaluator_.startParallelRunner(problem_); ;
+    parallelEvaluator_.start(problem_);
 
-    iteration_ = 1 ;
+    iteration_ = 1;
 
     success_ = false;
 
@@ -181,7 +179,7 @@ public class pSMPSO extends Algorithm {
     best_ = new Solution[swarmSize_];
     leaders_ = new CrowdingArchive(archiveSize_, problem_.getNumberOfObjectives());
 
-    // Create comparators for dominance and crowding distance
+    // Create comparator for dominance and crowding distance
     dominance_ = new DominanceComparator();
     crowdingDistanceComparator_ = new CrowdingDistanceComparator();
     distance_ = new Distance();
@@ -194,7 +192,7 @@ public class pSMPSO extends Algorithm {
     deltaMin_ = new double[problem_.getNumberOfVariables()];
     for (int i = 0; i < problem_.getNumberOfVariables(); i++) {
       deltaMax_[i] = (problem_.getUpperLimit(i) -
-          problem_.getLowerLimit(i)) / 2.0;
+        problem_.getLowerLimit(i)) / 2.0;
       deltaMin_[i] = -deltaMax_[i];
     } // for
   } // initParams 
@@ -218,8 +216,8 @@ public class pSMPSO extends Algorithm {
 
   // velocity bounds
   private double velocityConstriction(double v, double[] deltaMax,
-      double[] deltaMin, int variableIndex,
-      int particleIndex) throws IOException {
+    double[] deltaMin, int variableIndex,
+    int particleIndex) throws IOException {
 
 
     double result;
@@ -242,7 +240,8 @@ public class pSMPSO extends Algorithm {
 
   /**
    * Update the speed of each particle
-   * @throws JMException 
+   *
+   * @throws JMException
    */
   private void computeSpeed(int iter, int miter) throws JMException, IOException {
     double r1, r2, W, C1, C2;
@@ -250,8 +249,8 @@ public class pSMPSO extends Algorithm {
     XReal bestGlobal;
 
     for (int i = 0; i < swarmSize_; i++) {
-      XReal particle = new XReal(particles_.get(i)) ;
-      XReal bestParticle = new XReal(best_[i]) ;
+      XReal particle = new XReal(particles_.get(i));
+      XReal bestParticle = new XReal(best_[i]);
 
       //Select a global best_ for calculate the speed of particle i, bestGlobal
       Solution one, two;
@@ -279,27 +278,29 @@ public class pSMPSO extends Algorithm {
         //Computing the velocity of this particle 
         speed_[i][var] = velocityConstriction(constrictionCoefficient(C1, C2) *
             (inertiaWeight(iter, miter, wmax, wmin) *
-                speed_[i][var] +
-                C1 * r1 * (bestParticle.getValue(var) -
-                    particle.getValue(var)) +
-                    C2 * r2 * (bestGlobal.getValue(var) -
-                        particle.getValue(var))), deltaMax_, //[var],
-                        deltaMin_, //[var], 
-                        var,
-                        i);
+              speed_[i][var] +
+              C1 * r1 * (bestParticle.getValue(var) -
+                particle.getValue(var)) +
+              C2 * r2 * (bestGlobal.getValue(var) -
+                particle.getValue(var))), deltaMax_, //[var],
+          deltaMin_, //[var],
+          var,
+          i
+        );
       }
     }
   } // computeSpeed
 
   /**
    * Update the position of each particle
-   * @throws JMException 
+   *
+   * @throws JMException
    */
   private void computeNewPositions() throws JMException {
     for (int i = 0; i < swarmSize_; i++) {
-      XReal particle = new XReal(particles_.get(i)) ;
+      XReal particle = new XReal(particles_.get(i));
       for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
-        particle.setValue(var, particle.getValue(var) +  speed_[i][var]) ;
+        particle.setValue(var, particle.getValue(var) + speed_[i][var]);
 
         if (particle.getValue(var) < problem_.getLowerLimit(var)) {
           particle.setValue(var, problem_.getLowerLimit(var));
@@ -315,21 +316,23 @@ public class pSMPSO extends Algorithm {
 
   /**
    * Apply a mutation operator to some particles in the swarm
-   * @throws JMException 
+   *
+   * @throws JMException
    */
   private void mopsoMutation(int actualIteration, int totalIterations) throws JMException {
     for (int i = 0; i < particles_.size(); i++) {
-      if ( (i % 6) == 0) {
+      if ((i % 6) == 0) {
         polynomialMutation_.execute(particles_.get(i));
       }
     }
   } // mopsoMutation
 
-  /**   
+  /**
    * Runs of the SMPSO algorithm.
+   *
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
-   * as a result of the algorithm execution  
-   * @throws JMException 
+   * as a result of the algorithm execution
+   * @throws JMException
    */
   public SolutionSet execute() throws JMException, ClassNotFoundException, IOException {
     initParams();
@@ -338,10 +341,10 @@ public class pSMPSO extends Algorithm {
     for (int i = 0; i < swarmSize_; i++) {
       Solution particle = new Solution(problem_);
       particles_.add(particle);
-      parallelEvaluator_.addTaskForExecution(new Object[]{particle}); ;
+      parallelEvaluator_.addTask(new Object[] {particle});
     }
 
-    parallelEvaluator_.parallelExecution() ;
+    parallelEvaluator_.parallelExecution();
 
     //-> Step2. Initialize the speed_ of each particle to 0
     for (int i = 0; i < swarmSize_; i++) {
@@ -383,10 +386,11 @@ public class pSMPSO extends Algorithm {
 
       for (int i = 0; i < particles_.size(); i++) {
         Solution particle = particles_.get(i);
-        parallelEvaluator_.addTaskForExecution(new Object[]{particle}); ;
+        parallelEvaluator_.addTask(new Object[] {particle});
       }
 
-      parallelEvaluator_.parallelExecution() ;
+      parallelEvaluator_.parallelExecution();
+
       //Actualize the archive          
       for (int i = 0; i < particles_.size(); i++) {
         Solution particle = new Solution(particles_.get(i));
@@ -404,24 +408,24 @@ public class pSMPSO extends Algorithm {
 
       //Assign crowding distance to the leaders_
       distance_.crowdingDistanceAssignment(leaders_,
-                       problem_.getNumberOfObjectives());
+        problem_.getNumberOfObjectives());
       iteration_++;
-      
+
       if ((iteration_ % 1) == 0) {
-        leaders_.printObjectivesToFile("FUN"+iteration_) ;
-        leaders_.printVariablesToFile("VAR"+iteration_) ;
+        leaders_.printObjectivesToFile("FUN" + iteration_);
+        leaders_.printVariablesToFile("VAR" + iteration_);
       }
 
     }
 
-    parallelEvaluator_.stopEvaluator() ;
+    parallelEvaluator_.stop();
     return this.leaders_;
-  } // execute
+  }
 
-  /** 
+  /**
    * Gets the leaders of the SMPSO algorithm
    */
   public SolutionSet getLeader() {
     return leaders_;
   }  // getLeader   
-} // SMPSO
+}

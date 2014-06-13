@@ -35,13 +35,14 @@ import jmetal.util.wrapper.XReal;
 public class ZDT6 extends Problem {
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = 7195659093659262118L;
 
   /**
    * Creates a default instance of problem ZDT6 (10 decision variables)
-   * @param solutionType The solution type must "Real", "BinaryReal, and "ArrayReal". 
+   *
+   * @param solutionType The solution type must "Real", "BinaryReal, and "ArrayReal".
    */
   public ZDT6(String solutionType) throws ClassNotFoundException, JMException {
     this(solutionType, 10); // 10 variables by default
@@ -49,14 +50,15 @@ public class ZDT6 extends Problem {
 
   /**
    * Creates a instance of problem ZDT6
+   *
    * @param numberOfVariables Number of variables
-   * @param solutionType The solution type must "Real", "BinaryReal, and "ArrayReal". 
+   * @param solutionType      The solution type must "Real", "BinaryReal, and "ArrayReal".
    */
   public ZDT6(String solutionType, Integer numberOfVariables) throws JMException {
-    numberOfVariables_  = numberOfVariables;
+    numberOfVariables_ = numberOfVariables;
     numberOfObjectives_ = 2;
-    numberOfConstraints_= 0;
-    problemName_        = "ZDT6";
+    numberOfConstraints_ = 0;
+    problemName_ = "ZDT6";
 
     lowerLimit_ = new double[numberOfVariables_];
     upperLimit_ = new double[numberOfVariables_];
@@ -68,60 +70,60 @@ public class ZDT6 extends Problem {
 
     if (solutionType.compareTo("BinaryReal") == 0) {
       solutionType_ = new BinaryRealSolutionType(this);
-    }
-    else if (solutionType.compareTo("Real") == 0) {
+    } else if (solutionType.compareTo("Real") == 0) {
       solutionType_ = new RealSolutionType(this);
-    }
-    else if (solutionType.compareTo("ArrayReal") == 0) {
+    } else if (solutionType.compareTo("ArrayReal") == 0) {
       solutionType_ = new ArrayRealSolutionType(this);
-    }
-    else {
-      throw new JMException("Error: solution type " + solutionType + " invalid") ;
+    } else {
+      throw new JMException("Error: solution type " + solutionType + " invalid");
     }
   }
 
-  /** 
-   * Evaluates a solution 
+  /**
+   * Evaluates a solution
+   *
    * @param solution The solution to evaluate
-   * @throws JMException 
-   */    
+   * @throws JMException
+   */
   public void evaluate(Solution solution) throws JMException {
-    XReal x = new XReal(solution) ;
+    XReal x = new XReal(solution);
 
-    double x1   = x.getValue(0)       ;
-    double [] f = new double[numberOfObjectives_]   ;
-    f[0]        = 1.0 - Math.exp((-4.0)*x1) * Math.pow(Math.sin(6.0*Math.PI*x1),6.0);
-    double g    = this.evalG(x)                   ;
-    double h    = this.evalH(f[0],g)                ;
-    f[1]        = h * g                             ;
+    double x1 = x.getValue(0);
+    double[] f = new double[numberOfObjectives_];
+    f[0] = 1.0 - Math.exp((-4.0) * x1) * Math.pow(Math.sin(6.0 * Math.PI * x1), 6.0);
+    double g = this.evalG(x);
+    double h = this.evalH(f[0], g);
+    f[1] = h * g;
 
-    solution.setObjective(0,f[0]);
-    solution.setObjective(1,f[1]);    
+    solution.setObjective(0, f[0]);
+    solution.setObjective(1, f[1]);
   }
 
   /**
    * Returns the value of the ZDT6 function G.
-   * @param  x Solution
-   * @throws JMException 
+   *
+   * @param x Solution
+   * @throws JMException
    */
-  public double evalG(XReal x) throws JMException{
+  public double evalG(XReal x) throws JMException {
     double g = 0.0;
     for (int var = 1; var < this.numberOfVariables_; var++) {
       g += x.getValue(var);
     }
     g = g / (numberOfVariables_ - 1);
-    g = java.lang.Math.pow(g,0.25);
+    g = java.lang.Math.pow(g, 0.25);
     g = 9.0 * g;
-    g = 1.0 + g;        
+    g = 1.0 + g;
     return g;
   }
 
   /**
    * Returns the value of the ZDT6 function H.
+   *
    * @param f First argument of the function H.
    * @param g Second argument of the function H.
    */
-  public double evalH(double f, double g){
-    return 1.0 - Math.pow((f/g),2.0);
+  public double evalH(double f, double g) {
+    return 1.0 - Math.pow((f / g), 2.0);
   }
 }

@@ -28,40 +28,43 @@ import jmetal.encodings.variable.Int;
 import jmetal.encodings.variable.Real;
 
 /**
- * Class representing  a solution type including two variables: an integer 
+ * Class representing  a solution type including two variables: an integer
  * and a real.
  */
 public class IntRealSolutionType extends SolutionType {
-	private final int intVariables_ ;
-	private final int realVariables_ ;
+  private final int intVariables_;
+  private final int realVariables_;
 
-	/**
-	 * Constructor
-	 * @param problem  Problem to solve
-	 * @param intVariables Number of integer variables
-	 * @param realVariables Number of real variables
-	 */
-	public IntRealSolutionType(Problem problem, int intVariables, int realVariables) {
-		super(problem) ;
-		intVariables_ = intVariables ;
-		realVariables_ = realVariables ;
-	} // Constructor
+  /**
+   * Constructor
+   *
+   * @param problem       Problem to solve
+   * @param intVariables  Number of integer variables
+   * @param realVariables Number of real variables
+   */
+  public IntRealSolutionType(Problem problem, int intVariables, int realVariables) {
+    super(problem);
+    intVariables_ = intVariables;
+    realVariables_ = realVariables;
+  } // Constructor
 
-	/**
-	 * Creates the variables of the solution
-	 * @throws ClassNotFoundException
-	 */
-	public Variable[] createVariables() throws ClassNotFoundException {
-		Variable [] variables = new Variable[getProblem().getNumberOfVariables()];
+  /**
+   * Creates the variables of the solution
+   *
+   * @throws ClassNotFoundException
+   */
+  public Variable[] createVariables() throws ClassNotFoundException {
+    Variable[] variables = new Variable[getProblem().getNumberOfVariables()];
 
-		for (int var = 0; var < intVariables_; var++) {
-      variables[var] = new Int((int) getProblem().getLowerLimit(var), (int) getProblem().getUpperLimit(var));
+    for (int var = 0; var < intVariables_; var++) {
+      variables[var] =
+        new Int((int) getProblem().getLowerLimit(var), (int) getProblem().getUpperLimit(var));
     }
-		
-		for (int var = intVariables_; var < (intVariables_ + realVariables_); var++) {
+
+    for (int var = intVariables_; var < (intVariables_ + realVariables_); var++) {
       variables[var] = new Real(getProblem().getLowerLimit(var), getProblem().getUpperLimit(var));
     }
 
-		return variables ;
-	}
+    return variables;
+  }
 }

@@ -1,4 +1,4 @@
-package jmetal.experiments.util ;
+package jmetal.experiments.util;
 
 import jmetal.experiments.Experiment;
 import jmetal.qualityIndicator.util.MetricsUtil;
@@ -14,16 +14,16 @@ import java.util.logging.Level;
  */
 
 public class ReferenceParetoFronts implements IExperimentOutput {
-  public Experiment experiment_ ;
+  public Experiment experiment_;
 
   public ReferenceParetoFronts(Experiment experiment) {
-    experiment_ = experiment ;
+    experiment_ = experiment;
   }
 
   @Override
   public void generate() {
     for (int i = 0; i < experiment_.getProblemList().length; i++) {
-       generateReferenceFronts(i);
+      generateReferenceFronts(i);
     }
   }
 
@@ -39,19 +39,21 @@ public class ReferenceParetoFronts implements IExperimentOutput {
 
     if (!rfDirectory.exists()) {                          // Si no existe el directorio
       boolean result = new File(referenceFrontDirectory).mkdirs();        // Lo creamos
-      System.out.println("Creating " + referenceFrontDirectory);
+      Configuration.logger_.info("Creating " + referenceFrontDirectory);
     }
 
     //frontPath_[problemIndex] = referenceFrontDirectory + "/" + problemList_[problemIndex] + ".rf";
-    String referenceParetoFront = referenceFrontDirectory + "/" + experiment_.getProblemList()[problemIndex] + ".pf";
+    String referenceParetoFront =
+      referenceFrontDirectory + "/" + experiment_.getProblemList()[problemIndex] + ".pf";
     //String referenceParetoSet = referenceFrontDirectory + "/" + problemList_[problemIndex] + ".ps";
 
     MetricsUtil metricsUtils = new MetricsUtil();
     NonDominatedSolutionList solutionSet = new NonDominatedSolutionList();
     for (String anAlgorithmNameList_ : experiment_.getAlgorithmNameList()) {
 
-      String problemDirectory = experiment_.getExperimentBaseDirectory() + "/data/" + anAlgorithmNameList_ +
-              "/" + experiment_.getProblemList()[problemIndex];
+      String problemDirectory =
+        experiment_.getExperimentBaseDirectory() + "/data/" + anAlgorithmNameList_ +
+          "/" + experiment_.getProblemList()[problemIndex];
 
       for (int numRun = 0; numRun < experiment_.getIndependentRuns(); numRun++) {
 

@@ -48,7 +48,8 @@ public class PMXCrossover extends Crossover {
   /**
    * Valid solution types to apply this operator
    */
-  private static final List<Class<PermutationSolutionType>> VALID_TYPES = Arrays.asList(PermutationSolutionType.class);
+  private static final List<Class<PermutationSolutionType>> VALID_TYPES =
+    Arrays.asList(PermutationSolutionType.class);
 
   private Double crossoverProbability_ = null;
 
@@ -73,8 +74,8 @@ public class PMXCrossover extends Crossover {
    * @throws JMException
    */
   public Solution[] doCrossover(double probability,
-                                Solution parent1,
-                                Solution parent2) {
+    Solution parent1,
+    Solution parent2) {
 
     Solution[] offspring = new Solution[2];
 
@@ -162,27 +163,27 @@ public class PMXCrossover extends Crossover {
     Double crossoverProbability = null;
 
     if (!(VALID_TYPES.contains(parents[0].getType().getClass()) &&
-            VALID_TYPES.contains(parents[1].getType().getClass()))) {
+      VALID_TYPES.contains(parents[1].getType().getClass()))) {
 
       Configuration.logger_.severe("PMCCrossover.execute: the solutions " +
-              "are not of the right type. The type should be 'Permutation', but " +
-              parents[0].getType() + " and " +
-              parents[1].getType() + " are obtained");
+        "are not of the right type. The type should be 'Permutation', but " +
+        parents[0].getType() + " and " +
+        parents[1].getType() + " are obtained");
     }
 
     crossoverProbability = (Double) getParameter("probability");
 
     if (parents.length < 2) {
       Configuration.logger_.severe("PMXCrossover.execute: operator needs two " +
-              "parents");
+        "parents");
       Class<String> cls = java.lang.String.class;
       String name = cls.getName();
       throw new JMException("Exception in " + name + ".execute()");
     }
 
-    Solution[] offspring = doCrossover(crossoverProbability.doubleValue(),
-            parents[0],
-            parents[1]);
+    Solution[] offspring = doCrossover(crossoverProbability,
+      parents[0],
+      parents[1]);
 
     return offspring;
   }

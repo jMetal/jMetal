@@ -22,38 +22,39 @@
 package jmetal.core;
 
 /**
- * Abstract class representing solution types, which define the types of the 
- * variables constituting a solution 
+ * Abstract class representing solution types, which define the types of the
+ * variables constituting a solution
  */
-public abstract class SolutionType {	
+public abstract class SolutionType {
 
-  private final Problem problem_ ;
-
-  // Getter
-  public Problem getProblem() {
-    return problem_  ;
-  }
+  private final Problem problem_;
 
   /**
    * Constructor
+   *
    * @param problem The problem to solve
    */
   public SolutionType(Problem problem) {
-    problem_ = problem ;
+    problem_ = problem;
+  }
+
+  public Problem getProblem() {
+    return problem_;
   }
 
   /**
    * Abstract method to create the variables of the solution
    */
-  public abstract Variable[] createVariables() throws ClassNotFoundException ;
+  public abstract Variable[] createVariables() throws ClassNotFoundException;
 
   /**
    * Copies the decision variables
+   *
    * @param vars
    * @return An array of variables
    */
   public Variable[] copyVariables(Variable[] vars) {
-    Variable[] variables ;
+    Variable[] variables;
 
     variables = new Variable[vars.length];
 
@@ -61,6 +62,6 @@ public abstract class SolutionType {
       variables[var] = vars[var].deepCopy();
     }
 
-    return variables ;
+    return variables;
   }
 }

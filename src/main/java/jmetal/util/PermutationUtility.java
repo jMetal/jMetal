@@ -31,9 +31,9 @@ public class PermutationUtility {
   /**
    * Returns a permutation vector between the 0 and (length - 1)
    */
-  public int [] intPermutation(int length){
-    int [] aux    = new int[length];
-    int [] result = new int[length];
+  public int[] intPermutation(int length) {
+    int[] aux = new int[length];
+    int[] result = new int[length];
 
     // First, create an array from 0 to length - 1. 
     // Also is needed to create an random array of size length

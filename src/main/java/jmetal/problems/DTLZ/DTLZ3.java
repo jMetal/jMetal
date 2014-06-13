@@ -31,16 +31,17 @@ import jmetal.util.JMException;
 /**
  * Class representing problem DTLZ3
  */
-public class DTLZ3 extends Problem{
+public class DTLZ3 extends Problem {
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = 8831165539071271912L;
 
   /**
    * Creates a default DTLZ3 problem (12 variables and 3 objectives)
-   * @param solutionType The solution type must "Real" or "BinaryReal". 
+   *
+   * @param solutionType The solution type must "Real" or "BinaryReal".
    */
   public DTLZ3(String solutionType) throws ClassNotFoundException, JMException {
     this(solutionType, 12, 3);
@@ -48,21 +49,22 @@ public class DTLZ3 extends Problem{
 
   /**
    * Creates a new DTLZ3 problem instance
-   * @param numberOfVariables Number of variables
+   *
+   * @param numberOfVariables  Number of variables
    * @param numberOfObjectives Number of objective functions
-   * @param solutionType The solution type must "Real" or "BinaryReal". 
+   * @param solutionType       The solution type must "Real" or "BinaryReal".
    */
-  public DTLZ3(String  solutionType,
-      Integer numberOfVariables,
-      Integer numberOfObjectives) throws JMException {
-    numberOfVariables_   = numberOfVariables;
-    numberOfObjectives_  = numberOfObjectives;
+  public DTLZ3(String solutionType,
+    Integer numberOfVariables,
+    Integer numberOfObjectives) throws JMException {
+    numberOfVariables_ = numberOfVariables;
+    numberOfObjectives_ = numberOfObjectives;
     numberOfConstraints_ = 0;
-    problemName_         = "DTLZ3";
+    problemName_ = "DTLZ3";
 
     lowerLimit_ = new double[numberOfVariables_];
-    upperLimit_ = new double[numberOfVariables_];        
-    for (int var = 0; var < numberOfVariables_; var++){
+    upperLimit_ = new double[numberOfVariables_];
+    for (int var = 0; var < numberOfVariables_; var++) {
       lowerLimit_[var] = 0.0;
       upperLimit_[var] = 1.0;
     }
@@ -72,20 +74,21 @@ public class DTLZ3 extends Problem{
     } else if (solutionType.compareTo("Real") == 0) {
       solutionType_ = new RealSolutionType(this);
     } else {
-      throw new JMException("Error: solution type " + solutionType + " invalid") ;
+      throw new JMException("Error: solution type " + solutionType + " invalid");
     }
   }
 
-  /** 
-   * Evaluates a solution 
+  /**
+   * Evaluates a solution
+   *
    * @param solution The solution to evaluate
-   * @throws JMException 
-   */      
+   * @throws JMException
+   */
   public void evaluate(Solution solution) throws JMException {
-    Variable[] gen  = solution.getDecisionVariables();
+    Variable[] gen = solution.getDecisionVariables();
 
-    double [] x = new double[numberOfVariables_];
-    double [] f = new double[numberOfObjectives_];
+    double[] x = new double[numberOfVariables_];
+    double[] f = new double[numberOfObjectives_];
     int k = numberOfVariables_ - numberOfObjectives_ + 1;
 
     for (int i = 0; i < numberOfVariables_; i++) {
@@ -102,13 +105,13 @@ public class DTLZ3 extends Problem{
       f[i] = 1.0 + g;
     }
 
-    for (int i = 0; i < numberOfObjectives_; i++){
+    for (int i = 0; i < numberOfObjectives_; i++) {
       for (int j = 0; j < numberOfObjectives_ - (i + 1); j++) {
         f[i] *= java.lang.Math.cos(x[j] * 0.5 * java.lang.Math.PI);
       }
-      if (i != 0){
+      if (i != 0) {
         int aux = numberOfObjectives_ - (i + 1);
-        f[i] *= java.lang.Math.sin(x[aux]*0.5*java.lang.Math.PI);
+        f[i] *= java.lang.Math.sin(x[aux] * 0.5 * java.lang.Math.PI);
       }
     }
 

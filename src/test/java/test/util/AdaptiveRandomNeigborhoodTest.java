@@ -1,3 +1,23 @@
+//  AdaptiveRandomNeigborhoodTest.java
+//
+//  Author:
+//       Antonio J. Nebro <antonio@lcc.uma.es>
+//
+//  Copyright (c) 2014 Antonio J. Nebro
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU Lesser General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU Lesser General Public License for more details.
+//
+//  You should have received a copy of the GNU Lesser General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 package test.util ;
 
 import jmetal.core.Problem;
@@ -15,11 +35,9 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Created by antonio on 17/03/14.
+ * Created by Antonio J. Nebro on 17/03/14.
  */
 public class AdaptiveRandomNeigborhoodTest {
-  //private SolutionSet solutionSet_ ;
-  //private ArrayList<ArrayList<Integer>> list_ ;
   private int numberOfRandomNeighbours_ ;
 
   AdaptiveRandomNeighborhood adaptiveRandomNeighborhood_ ;
@@ -38,7 +56,6 @@ public class AdaptiveRandomNeigborhoodTest {
     adaptiveRandomNeighborhood_ = new AdaptiveRandomNeighborhood(new SolutionSet(), numberOfRandomNeighbours_) ;
     ArrayList<ArrayList<Integer>> list = adaptiveRandomNeighborhood_.getNeighborhood() ;
     assertEquals("AdaptiveRandomNeigborhoodTest.testEmptySolutionSet", 0, list.size()) ;
-    //assertEquals("AdaptiveRandomNeigborhoodTest.testEmptySolutionSet", 2, adaptiveRandomNeighborhood_.getNumberOfRandomNeighbours()) ;
   }
 
   @Test
@@ -48,7 +65,7 @@ public class AdaptiveRandomNeigborhoodTest {
   }
 
   @Test
-  public void testSolutionSetWithOneElement() {
+  public void testSolutionSetWithOneElement() throws JMException {
     SolutionSet solutionSet = new SolutionSet(1) ;
     Solution solution = new Solution(1) ;
     solution.setObjective(0, 1.0);
@@ -59,7 +76,7 @@ public class AdaptiveRandomNeigborhoodTest {
   }
 
   @Test
-  public void testSolutionSetWithThreeElements() {
+  public void testSolutionSetWithThreeElements() throws JMException {
     SolutionSet solutionSet = new SolutionSet(3) ;
     Solution solution = new Solution(1) ;
     solution.setObjective(0, 1.0);
@@ -79,7 +96,7 @@ public class AdaptiveRandomNeigborhoodTest {
   }
 
   @Test
-  public void testRecomputeNeighboursWithSolutionSetWithThreeElements() {
+  public void testRecomputeNeighboursWithSolutionSetWithThreeElements() throws JMException {
     SolutionSet solutionSet = new SolutionSet(3) ;
     Solution solution = new Solution(1) ;
     solution.setObjective(0, 1.0);

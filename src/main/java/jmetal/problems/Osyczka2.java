@@ -31,7 +31,7 @@ import jmetal.util.JMException;
 /**
  * Class representing problem Oyczka2
  */
-public class Osyczka2 extends Problem{
+public class Osyczka2 extends Problem {
   /**
    *
    */
@@ -40,13 +40,14 @@ public class Osyczka2 extends Problem{
   /**
    * Constructor.
    * Creates a default instance of the Osyczka2 problem.
-   * @param solutionType The solution type must "Real" or "BinaryReal". 
+   *
+   * @param solutionType The solution type must "Real" or "BinaryReal".
    */
   public Osyczka2(String solutionType) throws JMException {
-    numberOfVariables_  = 6;
+    numberOfVariables_ = 6;
     numberOfObjectives_ = 2;
-    numberOfConstraints_= 6;
-    problemName_        = "Osyczka2";
+    numberOfConstraints_ = 6;
+    problemName_ = "Osyczka2";
 
     lowerLimit_ = new double[numberOfVariables_];
     upperLimit_ = new double[numberOfVariables_];
@@ -71,49 +72,51 @@ public class Osyczka2 extends Problem{
     } else if (solutionType.compareTo("Real") == 0) {
       solutionType_ = new RealSolutionType(this);
     } else {
-      throw new JMException("Error: solution type " + solutionType + " invalid") ;
+      throw new JMException("Error: solution type " + solutionType + " invalid");
     }
   }
 
   /**
-   * Evaluates a solution 
+   * Evaluates a solution
+   *
    * @param solution The solution to evaluate
    * @throws JMException
    */
   public void evaluate(Solution solution) throws JMException {
-    Variable [] decisionVariables  = solution.getDecisionVariables();
+    Variable[] decisionVariables = solution.getDecisionVariables();
 
-    double [] f = new double[numberOfObjectives_];
+    double[] f = new double[numberOfObjectives_];
 
-    double x1,x2,x3,x4,x5,x6;
+    double x1, x2, x3, x4, x5, x6;
     x1 = decisionVariables[0].getValue();
     x2 = decisionVariables[1].getValue();
     x3 = decisionVariables[2].getValue();
     x4 = decisionVariables[3].getValue();
     x5 = decisionVariables[4].getValue();
     x6 = decisionVariables[5].getValue();
-    f[0] = - (25.0*(x1-2.0)*(x1-2.0) +
-            (x2-2.0)*(x2-2.0) +
-            (x3-1.0)*(x3-1.0) +
-            (x4-4.0)*(x4-4.0)+
-            (x5-1.0)*(x5-1.0));
+    f[0] = -(25.0 * (x1 - 2.0) * (x1 - 2.0) +
+      (x2 - 2.0) * (x2 - 2.0) +
+      (x3 - 1.0) * (x3 - 1.0) +
+      (x4 - 4.0) * (x4 - 4.0) +
+      (x5 - 1.0) * (x5 - 1.0));
 
-    f[1] = x1*x1 + x2*x2 + x3*x3 + x4*x4 + x5*x5 + x6*x6;
+    f[1] = x1 * x1 + x2 * x2 + x3 * x3 + x4 * x4 + x5 * x5 + x6 * x6;
 
-    solution.setObjective(0,f[0]);
-    solution.setObjective(1,f[1]);
+    solution.setObjective(0, f[0]);
+    solution.setObjective(1, f[1]);
   }
 
   /**
-   * Evaluates the constraint overhead of a solution 
+   * Evaluates the constraint overhead of a solution
+   *
    * @param solution The solution
    * @throws JMException
    */
   public void evaluateConstraints(Solution solution) throws JMException {
-    double [] constraint = new double[this.getNumberOfConstraints()];
+    double[] constraint = new double[this.getNumberOfConstraints()];
     Variable[] decisionVariables = solution.getDecisionVariables();
 
-    double x1,x2,x3,x4,x5,x6;
+    double x1, x2, x3, x4, x5, x6;
     x1 = decisionVariables[0].getValue();
     x2 = decisionVariables[1].getValue();
     x3 = decisionVariables[2].getValue();
@@ -121,12 +124,12 @@ public class Osyczka2 extends Problem{
     x5 = decisionVariables[4].getValue();
     x6 = decisionVariables[5].getValue();
 
-    constraint[0] = (x1 + x2)/2.0 - 1.0;
-    constraint[1] = (6.0 - x1 - x2)/6.0;
-    constraint[2] = (2.0 - x2 + x1)/2.0;
-    constraint[3] = (2.0 - x1 + 3.0*x2)/2.0;
-    constraint[4] = (4.0 - (x3-3.0)*(x3-3.0) - x4)/4.0;
-    constraint[5] = ((x5-3.0)*(x5-3.0) +x6 - 4.0)/4.0;
+    constraint[0] = (x1 + x2) / 2.0 - 1.0;
+    constraint[1] = (6.0 - x1 - x2) / 6.0;
+    constraint[2] = (2.0 - x2 + x1) / 2.0;
+    constraint[3] = (2.0 - x1 + 3.0 * x2) / 2.0;
+    constraint[4] = (4.0 - (x3 - 3.0) * (x3 - 3.0) - x4) / 4.0;
+    constraint[5] = ((x5 - 3.0) * (x5 - 3.0) + x6 - 4.0) / 4.0;
 
     double total = 0.0;
     int number = 0;

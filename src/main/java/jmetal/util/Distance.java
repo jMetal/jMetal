@@ -23,7 +23,7 @@ package jmetal.util;
 
 import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
-import jmetal.util.comparators.ObjectiveComparator;
+import jmetal.util.comparator.ObjectiveComparator;
 import jmetal.util.wrapper.XReal;
 
 import java.util.logging.Level;
@@ -44,21 +44,22 @@ public class Distance {
   /**
    * Returns a matrix with distances between solutions in a
    * <code>SolutionSet</code>.
+   *
    * @param solutionSet The <code>SolutionSet</code>.
    * @return a matrix with distances.
    */
-  public double [][] distanceMatrix(SolutionSet solutionSet) {
+  public double[][] distanceMatrix(SolutionSet solutionSet) {
     Solution solutionI, solutionJ;
 
     //The matrix of distances
-    double [][] distance = new double [solutionSet.size()][solutionSet.size()];
+    double[][] distance = new double[solutionSet.size()][solutionSet.size()];
     //-> Calculate the distances
-    for (int i = 0; i < solutionSet.size(); i++){
+    for (int i = 0; i < solutionSet.size(); i++) {
       distance[i][i] = 0.0;
       solutionI = solutionSet.get(i);
-      for (int j = i + 1; j < solutionSet.size(); j++){
+      for (int j = i + 1; j < solutionSet.size(); j++) {
         solutionJ = solutionSet.get(j);
-        distance[i][j] = this.distanceBetweenObjectives(solutionI,solutionJ);
+        distance[i][j] = this.distanceBetweenObjectives(solutionI, solutionJ);
         distance[j][i] = distance[i][j];
       }
     }
@@ -67,21 +68,23 @@ public class Distance {
     return distance;
   }
 
-  /** Returns the minimum distance from a <code>Solution</code> to a
+  /**
+   * Returns the minimum distance from a <code>Solution</code> to a
    * <code>SolutionSet according to the objective values</code>.
-   * @param solution The <code>Solution</code>.
+   *
+   * @param solution    The <code>Solution</code>.
    * @param solutionSet The <code>SolutionSet</code>.
    * @return The minimum distance between solution and the set.
    * @throws JMException
    */
-  public double distanceToSolutionSetInObjectiveSpace(Solution    solution,
-                                                      SolutionSet solutionSet) throws JMException{
+  public double distanceToSolutionSetInObjectiveSpace(Solution solution,
+    SolutionSet solutionSet) throws JMException {
     //At start point the distance is the max
     double distance = Double.MAX_VALUE;
 
     // found the min distance respect to population
-    for (int i = 0; i < solutionSet.size();i++){
-      double aux = this.distanceBetweenObjectives(solution,solutionSet.get(i));
+    for (int i = 0; i < solutionSet.size(); i++) {
+      double aux = this.distanceBetweenObjectives(solution, solutionSet.get(i));
       if (aux < distance) {
         distance = aux;
       }
@@ -91,21 +94,23 @@ public class Distance {
     return distance;
   }
 
-  /** Returns the minimum distance from a <code>Solution</code> to a 
+  /**
+   * Returns the minimum distance from a <code>Solution</code> to a
    * <code>SolutionSet according to the encodings.variable values</code>.
-   * @param solution The <code>Solution</code>.
+   *
+   * @param solution    The <code>Solution</code>.
    * @param solutionSet The <code>SolutionSet</code>.
    * @return The minimum distance between solution and the set.
    * @throws JMException
    */
-  public double distanceToSolutionSetInSolutionSpace(Solution    solution,
-                                                     SolutionSet solutionSet) throws JMException{
+  public double distanceToSolutionSetInSolutionSpace(Solution solution,
+    SolutionSet solutionSet) throws JMException {
     //At start point the distance is the max
     double distance = Double.MAX_VALUE;
 
     // found the min distance respect to population
-    for (int i = 0; i < solutionSet.size();i++){
-      double aux = this.distanceBetweenSolutions(solution,solutionSet.get(i));
+    for (int i = 0; i < solutionSet.size(); i++) {
+      double aux = this.distanceBetweenSolutions(solution, solutionSet.get(i));
       if (aux < distance) {
         distance = aux;
       }
@@ -115,39 +120,43 @@ public class Distance {
     return distance;
   }
 
-  /** Returns the distance between two solutions in the search space.
-   *  @param solutionI The first <code>Solution</code>.
-   *  @param solutionJ The second <code>Solution</code>.
-   *  @return the distance between solutions.
+  /**
+   * Returns the distance between two solutions in the search space.
+   *
+   * @param solutionI The first <code>Solution</code>.
+   * @param solutionJ The second <code>Solution</code>.
+   * @return the distance between solutions.
    * @throws JMException
    */
   public double distanceBetweenSolutions(Solution solutionI, Solution solutionJ)
-          throws JMException{
+    throws JMException {
     double distance = 0.0;
-    XReal solI = new XReal(solutionI) ;
-    XReal solJ = new XReal(solutionJ) ;
+    XReal solI = new XReal(solutionI);
+    XReal solJ = new XReal(solutionJ);
     double diff;
     // Calculate the Euclidean distance
-    for (int i = 0; i < solI.getNumberOfDecisionVariables(); i++){
+    for (int i = 0; i < solI.getNumberOfDecisionVariables(); i++) {
       diff = solI.getValue(i) - solJ.getValue(i);
-      distance += Math.pow(diff,2.0);
+      distance += Math.pow(diff, 2.0);
     }
     // Return the euclidean distance
     return Math.sqrt(distance);
   }
 
-  /** Returns the distance between two solutions in objective space.
-   *  @param solutionI The first <code>Solution</code>.
-   *  @param solutionJ The second <code>Solution</code>.
-   *  @return the distance between solutions in objective space.
+  /**
+   * Returns the distance between two solutions in objective space.
+   *
+   * @param solutionI The first <code>Solution</code>.
+   * @param solutionJ The second <code>Solution</code>.
+   * @return the distance between solutions in objective space.
    */
-  public double distanceBetweenObjectives(Solution solutionI, Solution solutionJ){
+  public double distanceBetweenObjectives(Solution solutionI, Solution solutionJ) {
     double diff;
     double distance = 0.0;
     // Calculate the euclidean distance
-    for (int nObj = 0; nObj < solutionI.getNumberOfObjectives();nObj++){
+    for (int nObj = 0; nObj < solutionI.getNumberOfObjectives(); nObj++) {
       diff = solutionI.getObjective(nObj) - solutionJ.getObjective(nObj);
-      distance += Math.pow(diff,2.0);
+      distance += Math.pow(diff, 2.0);
     }
 
     //Return the euclidean distance
@@ -156,35 +165,39 @@ public class Distance {
 
   /**
    * Return the index of the nearest solution in the solution set to a given solution
+   *
    * @param solution
    * @param solutionSet
-   * @return  The index of the nearest solution; -1 if the solutionSet is empty
+   * @return The index of the nearest solution; -1 if the solutionSet is empty
    */
   public int indexToNearestSolutionInSolutionSpace(Solution solution, SolutionSet solutionSet) {
-    int index = -1 ;
-    double minimumDistance = Double.MAX_VALUE ;
+    int index = -1;
+    double minimumDistance = Double.MAX_VALUE;
     try {
-      for (int i = 0 ; i < solutionSet.size(); i++) {
+      for (int i = 0; i < solutionSet.size(); i++) {
         double distance = 0;
         distance = distanceBetweenSolutions(solution, solutionSet.get(i));
 
         if (distance < minimumDistance) {
-          minimumDistance = distance ;
-          index = i ;
+          minimumDistance = distance;
+          index = i;
         }
       }
     } catch (Exception e) {
       Configuration.logger_.log(Level.SEVERE, "Error", e);
     }
-    return index ;
+    return index;
   }
 
-  /** Assigns crowding distances to all solutions in a <code>SolutionSet</code>.
+  /**
+   * Assigns crowding distances to all solutions in a <code>SolutionSet</code>.
+   *
    * @param solutionSet The <code>SolutionSet</code>.
-   * @param nObjs Number of objectives.
+   * @param nObjs       Number of objectives.
+   * @throws JMException 
    */
 
-  public void crowdingDistanceAssignment(SolutionSet solutionSet, int nObjs) {
+  public void crowdingDistanceAssignment(SolutionSet solutionSet, int nObjs) throws JMException {
     int size = solutionSet.size();
 
     if (size == 0) {
@@ -204,7 +217,7 @@ public class Distance {
 
     //Use a new SolutionSet to avoid altering the original solutionSet
     SolutionSet front = new SolutionSet(size);
-    for (int i = 0; i < size; i++){
+    for (int i = 0; i < size; i++) {
       front.add(solutionSet.get(i));
     }
 
@@ -216,18 +229,18 @@ public class Distance {
     double objetiveMinn;
     double distance;
 
-    for (int i = 0; i<nObjs; i++) {
+    for (int i = 0; i < nObjs; i++) {
       // Sort the population by Obj n            
       front.sort(new ObjectiveComparator(i));
       objetiveMinn = front.get(0).getObjective(i);
-      objetiveMaxn = front.get(front.size()-1).getObjective(i);
+      objetiveMaxn = front.get(front.size() - 1).getObjective(i);
 
       //Set de crowding distance            
       front.get(0).setCrowdingDistance(Double.POSITIVE_INFINITY);
-      front.get(size-1).setCrowdingDistance(Double.POSITIVE_INFINITY);
+      front.get(size - 1).setCrowdingDistance(Double.POSITIVE_INFINITY);
 
-      for (int j = 1; j < size-1; j++) {
-        distance = front.get(j+1).getObjective(i) - front.get(j-1).getObjective(i);
+      for (int j = 1; j < size - 1; j++) {
+        distance = front.get(j + 1).getObjective(i) - front.get(j - 1).getObjective(i);
         distance = distance / (objetiveMaxn - objetiveMinn);
         distance += front.get(j).getCrowdingDistance();
         front.get(j).setCrowdingDistance(distance);

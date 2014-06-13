@@ -22,10 +22,12 @@ package test.experiments.settings;
 
 import jmetal.core.Algorithm;
 import jmetal.core.Problem;
+import jmetal.core.SolutionSet;
 import jmetal.experiments.Settings;
 import jmetal.experiments.settings.SMPSO_Settings;
 import jmetal.operators.mutation.PolynomialMutation;
 import jmetal.problems.Fonseca;
+import jmetal.util.JMException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -40,7 +42,7 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Created with IntelliJ IDEA.
- * User: antelverde
+ * User: Antonio J. Nebro
  * Date: 27/06/13
  * Time: 07:48
  * To change this template use File | Settings | File Templates.
@@ -92,4 +94,22 @@ public class SMPSO_SettingsTest {
     assertEquals("SMPSO_SettingsTest", 1.0/problem.getNumberOfVariables(), pm, epsilon);
     assertEquals("SMPSO_SettingsTest", 20.0, dim, epsilon);
   }
+  
+  @Test
+  public void testExecuteSMPSO() throws JMException, ClassNotFoundException, IOException {
+    Settings smpsoSettings = new SMPSO_Settings("Fonseca");
+    Algorithm algorithm = smpsoSettings.configure() ;
+    
+    SolutionSet solutionSet = algorithm.execute() ;
+    assertEquals("testExecuteSMPSO", 100, solutionSet.size());        
+  }  
+  /*
+  @Test
+  public void testExecuteSMPSOWithConfigurationFile() throws JMException, ClassNotFoundException, IOException {
+    Settings smpsoSettings = new SMPSO_Settings("Fonseca");
+    Algorithm algorithm = smpsoSettings.configure(configuration_) ;
+    
+    SolutionSet solutionSet = algorithm.execute() ;
+    assertEquals("testExecuteSMPSO", 100, solutionSet.size());        
+  }  */
 }

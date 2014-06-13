@@ -23,19 +23,19 @@ public class NonUniformMutationOffspring extends Offspring {
   public Operator mutation_;
   private Operator selection_;
 
-  private double mutationProbatility_ ;
-  private double perturbation_ ;
-  private int maxIterations_ ;
+  private double mutationProbatility_;
+  private double perturbation_;
+  private int maxIterations_;
 
   public NonUniformMutationOffspring(double mutationProbability,
-      double perturbation,
-      int maxIterations
-      ) throws JMException {     
-    HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
-    mutationParameters.put("probability", mutationProbatility_ = mutationProbability) ;
-    mutationParameters.put("perturbation", perturbation_ = perturbation) ;
-    mutationParameters.put("maxIterations", maxIterations_ = maxIterations) ;
-    mutation_ = MutationFactory.getMutationOperator("NonUniformMutation", mutationParameters);                    
+    double perturbation,
+    int maxIterations
+  ) throws JMException {
+    HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
+    mutationParameters.put("probability", mutationProbatility_ = mutationProbability);
+    mutationParameters.put("perturbation", perturbation_ = perturbation);
+    mutationParameters.put("maxIterations", maxIterations_ = maxIterations);
+    mutation_ = MutationFactory.getMutationOperator("NonUniformMutation", mutationParameters);
     selection_ = SelectionFactory.getSelectionOperator("BinaryTournament", null);
     id_ = "NonUniformMutation";
   }
@@ -51,13 +51,13 @@ public class NonUniformMutationOffspring extends Offspring {
   }
 
   public String configuration() {
-    String result = "-----\n" ;
-    result += "Operator: " + id_ + "\n" ;
-    result += "Probability: " + mutationProbatility_ + "\n" ;
-    result += "MaxIterations: " + maxIterations_ + "\n" ;
-    result += "Perturbation: " + perturbation_ ;
+    String result = "-----\n";
+    result += "Operator: " + id_ + "\n";
+    result += "Probability: " + mutationProbatility_ + "\n";
+    result += "MaxIterations: " + maxIterations_ + "\n";
+    result += "Perturbation: " + perturbation_;
 
-    return result ;
+    return result;
   }
 } // PolynomialOffspringGenerator
 

@@ -38,20 +38,20 @@ public class XRealTest {
 
   @Test
   public void testConstructor() {
-    assertEquals("XRealTest.testConstructor", RealSolutionType.class, xreal_.type_.getClass()) ;
+    assertEquals("XRealTest.testConstructor", RealSolutionType.class, xreal_.getType_().getClass()) ;
   }
 
   @Test
   public void testCopyConstructor() {
     XReal xreal2 = new XReal(xreal_) ;
-    assertEquals("XRealTest.testCopyConstructor", xreal_.type_.getClass(), xreal2.type_.getClass()) ;
+    assertEquals("XRealTest.testCopyConstructor", xreal_.getType_().getClass(), xreal2.getType_().getClass()) ;
     assertEquals("XRealTest.testCopyConstructor", xreal_.size(), xreal2.size()) ;
   }
 
   @Test
   public void testCopyConstructor2() {
     XReal xreal2 = new XReal(solution_) ;
-    assertEquals("XRealTest.testCopyConstructor", xreal_.type_.getClass(), xreal2.type_.getClass()) ;
+    assertEquals("XRealTest.testCopyConstructor", xreal_.getType_().getClass(), xreal2.getType_().getClass()) ;
     assertEquals("XRealTest.testCopyConstructor", xreal_.size(), xreal2.size()) ;
   }
 

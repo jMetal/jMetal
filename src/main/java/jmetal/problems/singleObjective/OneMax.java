@@ -34,60 +34,63 @@ import jmetal.util.JMException;
 public class OneMax extends Problem {
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = -8546255672894127575L;
 
   /**
    * Creates a new OneZeroMax problem instance
+   *
    * @param solutionType Solution type
    * @throws ClassNotFoundException
    */
   public OneMax(String solutionType) throws ClassNotFoundException, JMException {
-    this(solutionType, 512) ;
+    this(solutionType, 512);
   }
 
   /**
    * Creates a new OneMax problem instance
+   *
    * @param numberOfBits Length of the problem
    */
   public OneMax(String solutionType, Integer numberOfBits) throws JMException {
-    numberOfVariables_  = 1;
+    numberOfVariables_ = 1;
     numberOfObjectives_ = 1;
-    numberOfConstraints_= 0;
-    problemName_        = "ONEMAX";
+    numberOfConstraints_ = 0;
+    problemName_ = "ONEMAX";
 
-    solutionType_ = new BinarySolutionType(this) ;
+    solutionType_ = new BinarySolutionType(this);
 
-    length_       = new int[numberOfVariables_];
-    length_      [0] = numberOfBits ;
+    length_ = new int[numberOfVariables_];
+    length_[0] = numberOfBits;
 
     if (solutionType.compareTo("Binary") == 0) {
       solutionType_ = new BinarySolutionType(this);
     } else {
-      throw new JMException("Error: solution type " + solutionType + " invalid") ;
+      throw new JMException("Error: solution type " + solutionType + " invalid");
     }
   }
 
-  /** 
-   * Evaluates a solution 
+  /**
+   * Evaluates a solution
+   *
    * @param solution The solution to evaluate
-   */      
+   */
   public void evaluate(Solution solution) {
-    Binary variable ;
-    int    counter  ;
+    Binary variable;
+    int counter;
 
-    variable = ((Binary)solution.getDecisionVariables()[0]) ;
+    variable = ((Binary) solution.getDecisionVariables()[0]);
 
-    counter = 0 ;
+    counter = 0;
 
-    for (int i = 0; i < variable.getNumberOfBits() ; i++) {
+    for (int i = 0; i < variable.getNumberOfBits(); i++) {
       if (variable.getBits().get(i)) {
         counter++;
       }
     }
 
     // OneMax is a maximization problem: multiply by -1 to minimize
-    solution.setObjective(0, -1.0*counter);            
+    solution.setObjective(0, -1.0 * counter);
   }
 }

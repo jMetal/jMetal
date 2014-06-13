@@ -30,6 +30,7 @@ import jmetal.problems.ProblemFactory;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -60,19 +61,21 @@ public class SMPSOhv_Settings extends Settings{
     archiveSize_               = 100 ;
     mutationDistributionIndex_ = 20.0 ;
     mutationProbability_       = 1.0/problem_.getNumberOfVariables() ;
-  } 
+  }
 
   /**
    * Configure SMPSPhv with user-defined parameter experiments.settings
+   *
    * @return A SMPSOhv algorithm object
    * @throws jmetal.util.JMException
    */
-  public Algorithm configure() throws JMException {
-    Algorithm algorithm ;
-    Mutation  mutation ;
+  public Algorithm configure() throws JMException, FileNotFoundException {
+    Algorithm algorithm;
+    Mutation mutation;
 
     // Creating the problem
-    algorithm = new SMPSOhv(problem_) ;
+    algorithm = new SMPSOhv() ;
+    algorithm.setProblem(problem_);
 
     // Algorithm parameters
     algorithm.setInputParameter("swarmSize", swarmSize_);
@@ -82,15 +85,21 @@ public class SMPSOhv_Settings extends Settings{
     HashMap<String, Object> parameters = new HashMap<String, Object>() ;
     parameters.put("probability", mutationProbability_) ;
     parameters.put("distributionIndex", mutationDistributionIndex_) ;
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);                    
+    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);
 
-    algorithm.addOperator("mutation",mutation);
+    HashMap<String, Object> parameters = new HashMap<String, Object>();
+    parameters.put("probability", mutationProbability_);
+    parameters.put("distributionIndex", mutationDistributionIndex_);
+    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);
+
+    algorithm.addOperator("mutation", mutation);
 
     return algorithm ;
   }
 
   /**
    * Configure SMPSO with user-defined parameter experiments.settings
+   *
    * @return A SMPSO algorithm object
    */
   @Override

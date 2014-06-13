@@ -20,9 +20,7 @@
 
 package test.operators.mutation;
 
-import jmetal.core.Operator;
 import jmetal.core.Problem;
-import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.mutation.PolynomialMutation;
 import jmetal.problems.Kursawe;
 import jmetal.util.JMException;
@@ -30,18 +28,14 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.HashMap;
-
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 /**
  * Created by Antonio J. Nebro on 21/04/14.
  */
 public class PolynomialMutationTest {
-  Operator mutation_ ;
+  PolynomialMutation mutation_ ;
   Problem problem_ ;
-  HashMap parameters_ ;
 
   static final double DELTA = 0.0000000000001 ;
 
@@ -49,12 +43,7 @@ public class PolynomialMutationTest {
   public void setUp() throws JMException {
     problem_ = new Kursawe("Real", 3) ;
 
-    parameters_ = new HashMap() ;
-    try {
-      mutation_ = MutationFactory.getMutationOperator("PolynomialMutation", parameters_);
-    } catch (JMException e) {
-      e.printStackTrace();
-    }
+    mutation_ = new PolynomialMutation.Builder().probability(1.0/problem_.getNumberOfVariables()).build() ;
   }
 
   @After
@@ -65,39 +54,21 @@ public class PolynomialMutationTest {
 
   @Test
   public void defaultParametersTest() {
-    assertEquals("PolynomialMutationTest.testDefaultParameters",
-            20.0, ((PolynomialMutation)mutation_).getDistributionIndex(), DELTA) ;
-    assertNull("PolynomialMutationTest.testDefaultParameters",
-            mutation_.getParameter("probability"));
+    assertEquals(20.0, mutation_.getDistributionIndex(), DELTA) ;
+    assertEquals(1.0/problem_.getNumberOfVariables(), mutation_.getMutationProbability(), DELTA) ;
   }
 
   @Test
   public void setMutationProbabilityTest() {
-    parameters_.put("probability", 1.0/problem_.getNumberOfVariables()) ;
+    mutation_ = new PolynomialMutation.Builder().probability(0.02).build() ;
 
-    try {
-      mutation_ = MutationFactory.getMutationOperator("PolynomialMutation", parameters_);
-    } catch (JMException e) {
-      e.printStackTrace();
-    }
-
-    assertEquals("PolynomialMutationTest.setMutationProbabilityTest",
-            1.0/problem_.getNumberOfVariables(),
-            ((PolynomialMutation)mutation_).getMutationProbability(), DELTA) ;
+    assertEquals(0.02, mutation_.getMutationProbability(), DELTA) ;
   }
 
   @Test
   public void setMutationDistributionIndex() {
-    parameters_.put("distributionIndex", 5.0) ;
+    mutation_ = new PolynomialMutation.Builder().distributionIndex(5.0).build() ;
 
-    try {
-      mutation_ = MutationFactory.getMutationOperator("PolynomialMutation", parameters_);
-    } catch (JMException e) {
-      e.printStackTrace();
-    }
-
-    assertEquals("PolynomialMutationTest.setMutationDistributionIndex",
-            5.0,
-            ((PolynomialMutation)mutation_).getDistributionIndex(), DELTA) ;
+    assertEquals(5.0, mutation_.getDistributionIndex(), DELTA) ;
   }
 }

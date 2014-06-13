@@ -28,6 +28,8 @@ import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.ProblemFactory;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
+import jmetal.util.evaluator.SequentialSolutionSetEvaluator;
+import jmetal.util.evaluator.SolutionSetEvaluator;
 import jmetal.util.offspring.DifferentialEvolutionOffspring;
 import jmetal.util.offspring.Offspring;
 import jmetal.util.offspring.PolynomialMutationOffspring;
@@ -56,6 +58,7 @@ public class NSGAIIRandom_Settings extends Settings {
 
   /**
    * Constructor
+   *
    * @throws jmetal.util.JMException
    */
   public NSGAIIRandom_Settings(String problem) throws JMException {
@@ -74,21 +77,25 @@ public class NSGAIIRandom_Settings extends Settings {
     cr_                          = 1.0 ;
     f_                           = 0.5 ;
   } 
-  
+
   /**
    * Configure NSGAII with user-defined parameter settings
+   *
    * @return A NSGAII algorithm object
    * @throws jmetal.util.JMException
    */
   public Algorithm configure() throws JMException {
-    Algorithm algorithm ;
-    Selection  selection ;
-    
-    algorithm = new NSGAIIRandom(problem_) ;
-    
+    Algorithm algorithm;
+    Selection selection;
+
+    SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator() ;
+
+    algorithm = new NSGAIIRandom(evaluator);
+    algorithm.setProblem(problem_);
+
     // Algorithm parameters
-    algorithm.setInputParameter("populationSize",populationSize_);
-    algorithm.setInputParameter("maxEvaluations",maxEvaluations_);
+    algorithm.setInputParameter("populationSize", populationSize_);
+    algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
 
     Offspring[] getOffspring = new Offspring[3];
 
@@ -96,14 +103,15 @@ public class NSGAIIRandom_Settings extends Settings {
 
     getOffspring[1] = new SBXCrossoverOffspring(crossoverProbability_, crossoverDistributionIndex_);
 
-    getOffspring[2] = new PolynomialMutationOffspring(mutationProbability_, mutationDistributionIndex_);
+    getOffspring[2] =
+      new PolynomialMutationOffspring(mutationProbability_, mutationDistributionIndex_);
 
     algorithm.setInputParameter("offspringsCreators", getOffspring);
 
     // Selection Operator 
 
-    HashMap<String, Object> parameters = null ;
-    selection = SelectionFactory.getSelectionOperator("BinaryTournament2", parameters) ;     
+    HashMap<String, Object> parameters = null;
+    selection = SelectionFactory.getSelectionOperator("BinaryTournament2", parameters);
 
     // Add the operators to the algorithm
     algorithm.addOperator("selection",selection);
@@ -113,6 +121,7 @@ public class NSGAIIRandom_Settings extends Settings {
 
   /**
    * Configure NSGAIIRandom with user-defined parameter experiments.settings
+   *
    * @return A NSGAIIRandom algorithm object
    */
   @Override

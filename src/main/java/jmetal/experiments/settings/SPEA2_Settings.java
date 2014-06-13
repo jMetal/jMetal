@@ -25,25 +25,19 @@ import jmetal.core.Algorithm;
 import jmetal.core.Operator;
 import jmetal.experiments.Settings;
 import jmetal.metaheuristics.spea2.SPEA2;
-import jmetal.operators.crossover.Crossover;
 import jmetal.operators.crossover.CrossoverFactory;
-import jmetal.operators.mutation.Mutation;
 import jmetal.operators.mutation.MutationFactory;
-import jmetal.operators.selection.Selection;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.ProblemFactory;
-import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
 import java.util.HashMap;
 import java.util.Properties;
-import java.util.logging.Level;
 
 /**
  * Settings class of algorithm SPEA2
  */
 public class SPEA2_Settings extends Settings {
-
   private int populationSize_           ;
   private int archiveSize_              ;
   private int maxEvaluations_           ;
@@ -73,17 +67,19 @@ public class SPEA2_Settings extends Settings {
 
   /**
    * Configure SPEA2 with default parameter experiments.settings
+   *
    * @return an algorithm object
    * @throws jmetal.util.JMException
    */
   public Algorithm configure() throws JMException {
-    Algorithm algorithm ;
-    Operator  crossover ;         // Crossover operator
-    Operator  mutation  ;         // Mutation operator
-    Operator  selection ;         // Selection operator
+    Algorithm algorithm;
+    Operator crossover;         // Crossover operator
+    Operator mutation;         // Mutation operator
+    Operator selection;         // Selection operator
 
     // Creating the problem
-    algorithm = new SPEA2(problem_) ;
+    algorithm = new SPEA2();
+    algorithm.setProblem(problem_);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", populationSize_);
@@ -111,10 +107,11 @@ public class SPEA2_Settings extends Settings {
     algorithm.addOperator("selection",selection);
 
     return algorithm ;
-  } 
+  }
 
   /**
    * Configure SPEA2 with user-defined parameter experiments.settings
+   *
    * @return A SPEA2 algorithm object
    */
   @Override

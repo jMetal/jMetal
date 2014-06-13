@@ -49,71 +49,73 @@ public class SMSEMOA_Settings extends Settings {
   private double crossoverDistributionIndex_ ;
   private double mutationDistributionIndex_  ;
   private double offset_                     ;
-  
+
   /**
    * Constructor
-   * @throws JMException 
+   * @throws JMException
    */
   public SMSEMOA_Settings(String problem) throws JMException {
     super(problem) ;
-    
-    Object [] problemParams = {"Real"};
-	    problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
 
-	    populationSize_             = 100   ; 
+    Object [] problemParams = {"Real"};
+    problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
+
+    populationSize_             = 100   ;
     maxEvaluations_             = 25000 ;
     mutationProbability_        = 1.0/problem_.getNumberOfVariables() ;
     crossoverProbability_       = 0.9   ;
     crossoverDistributionIndex_ = 20.0  ;
     mutationDistributionIndex_  = 20.0  ;
     offset_                     = 100.0 ;
-  } 
+  }
 
-  
   /**
    * Configure SMSEMOA with user-defined parameter experiments.settings
+   *
    * @return A SMSEMOA algorithm object
    * @throws jmetal.util.JMException
    */
   public Algorithm configure() throws JMException {
-    Algorithm algorithm ;
-    Selection  selection ;
-    Crossover  crossover ;
-    Mutation   mutation  ;
+    Algorithm algorithm;
+    Selection selection;
+    Crossover crossover;
+    Mutation mutation;
 
     // Creating the algorithm. 
-    algorithm = new SMSEMOA(problem_) ;
-    
+    algorithm = new SMSEMOA();
+    algorithm.setProblem(problem_);
+
     // Algorithm parameters
-    algorithm.setInputParameter("populationSize",populationSize_);
-    algorithm.setInputParameter("maxEvaluations",maxEvaluations_);
+    algorithm.setInputParameter("populationSize", populationSize_);
+    algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
     algorithm.setInputParameter("offset", offset_);
 
     // Mutation and Crossover for Real codification 
-    HashMap<String, Object> parameters = new HashMap<String, Object>() ;
-    parameters.put("probability", crossoverProbability_) ;
-    parameters.put("distributionIndex", crossoverDistributionIndex_) ;
-    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters);                   
+    HashMap<String, Object> parameters = new HashMap<String, Object>();
+    parameters.put("probability", crossoverProbability_);
+    parameters.put("distributionIndex", crossoverDistributionIndex_);
+    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters);
 
-    parameters = new HashMap<String, Object>() ;
-    parameters.put("probability", mutationProbability_) ;
-    parameters.put("distributionIndex", mutationDistributionIndex_) ;
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);                    
+    parameters = new HashMap<String, Object>();
+    parameters.put("probability", mutationProbability_);
+    parameters.put("distributionIndex", mutationDistributionIndex_);
+    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);
 
-		// Selection Operator
-    parameters = null ;
-	selection = SelectionFactory.getSelectionOperator("RandomSelection", parameters);
+    // Selection Operator
+    parameters = null;
+    selection = SelectionFactory.getSelectionOperator("RandomSelection", parameters);
 
     // Add the operators to the algorithm
     algorithm.addOperator("crossover",crossover);
     algorithm.addOperator("mutation",mutation);
     algorithm.addOperator("selection",selection);
-   
+
     return algorithm ;
-  } 
+  }
 
   /**
    * Configure SMSEMOA with user-defined parameter experiments.settings
+   *
    * @return A SMSEMOA algorithm object
    */
   @Override

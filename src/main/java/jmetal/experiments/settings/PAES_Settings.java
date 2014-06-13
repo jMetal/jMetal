@@ -37,12 +37,13 @@ import java.util.logging.Level;
 /**
  * Settings class of algorithm PAES
  */
-public class PAES_Settings extends Settings{
-  private int maxEvaluations_ ;
-  private int archiveSize_    ;
-  private int biSections_     ;
-  private double mutationProbability_ ;
-  private double mutationDistributionIndex_;
+public class PAES_Settings extends Settings {
+
+  public int maxEvaluations_;
+  public int archiveSize_;
+  public int biSections_;
+  public double mutationProbability_;
+  public double mutationDistributionIndex_;
 
   /**
    * Constructor
@@ -60,30 +61,32 @@ public class PAES_Settings extends Settings{
     biSections_     = 5     ;
     mutationProbability_ = 1.0/problem_.getNumberOfVariables() ;
     mutationDistributionIndex_ = 20.0 ;
-  } 
+  }
 
   /**
    * Configure the MOCell algorithm with default parameter experiments.settings
+   *
    * @return an algorithm object
    * @throws jmetal.util.JMException
    */
   public Algorithm configure() throws JMException {
-    Algorithm algorithm ;
-    Mutation  mutation   ;
+    Algorithm algorithm;
+    Mutation mutation;
 
     // Creating the problem
-    algorithm = new PAES(problem_) ;
+    algorithm = new PAES();
+    algorithm.setProblem(problem_);
 
     // Algorithm parameters
     algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
     algorithm.setInputParameter("biSections", biSections_);
-    algorithm.setInputParameter("archiveSize",archiveSize_ );
+    algorithm.setInputParameter("archiveSize", archiveSize_);
 
     // Mutation (Real variables)
-    HashMap<String, Object> parameters = new HashMap<String, Object>() ;
-    parameters.put("probability", mutationProbability_) ;
-    parameters.put("distributionIndex", mutationDistributionIndex_) ;
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);                    
+    HashMap<String, Object> parameters = new HashMap<String, Object>();
+    parameters.put("probability", mutationProbability_);
+    parameters.put("distributionIndex", mutationDistributionIndex_);
+    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);
 
     // Add the operators to the algorithm
     algorithm.addOperator("mutation", mutation);
@@ -93,6 +96,7 @@ public class PAES_Settings extends Settings{
 
   /**
    * Configure PAES with user-defined parameter experiments.settings
+   *
    * @return A PAES algorithm object
    */
   @Override
@@ -101,8 +105,10 @@ public class PAES_Settings extends Settings{
     maxEvaluations_  = Integer.parseInt(configuration.getProperty("maxEvaluations",String.valueOf(maxEvaluations_)));
     biSections_  = Integer.parseInt(configuration.getProperty("biSections",String.valueOf(biSections_)));
 
-    mutationProbability_ = Double.parseDouble(configuration.getProperty("mutationProbability",String.valueOf(mutationProbability_)));
-    mutationDistributionIndex_ = Double.parseDouble(configuration.getProperty("mutationDistributionIndex",String.valueOf(mutationDistributionIndex_)));
+    mutationProbability_ = Double.parseDouble(
+      configuration.getProperty("mutationProbability", String.valueOf(mutationProbability_)));
+    mutationDistributionIndex_ = Double.parseDouble(configuration
+      .getProperty("mutationDistributionIndex", String.valueOf(mutationDistributionIndex_)));
 
     return configure() ;
   }

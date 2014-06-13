@@ -82,7 +82,7 @@ public class pMOEAD_Settings extends Settings {
     // of CS & EE, University of Essex, 02/2009.
     // http://dces.essex.ac.uk/staff/qzhang/MOEAcompetition/CEC09final/code/ZhangMOEADcode/moead0305.rar
 
-    dataDirectory_ = "MOEAD_Weights" ;
+    dataDirectory_ = "MOEAD_Weights";
 
     numberOfThreads_ = 4; 
   } 
@@ -99,7 +99,8 @@ public class pMOEAD_Settings extends Settings {
     Operator mutation;
 
     // Creating the problem
-    algorithm = new pMOEAD(problem_);
+    algorithm = new pMOEAD();
+    algorithm.setProblem(problem_);
 
     // Algorithm parameters
     algorithm.setInputParameter("numberOfThreads", numberOfThreads_);
@@ -114,6 +115,7 @@ public class pMOEAD_Settings extends Settings {
     HashMap<String, Object> parameters = new HashMap<String, Object>() ;
     parameters.put("CR", cr_);
     parameters.put("F", f_);
+
     crossover = CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", parameters);
 
     // Mutation operator
@@ -130,6 +132,7 @@ public class pMOEAD_Settings extends Settings {
 
   /**
    * Configure pMOEAD with user-defined parameter experiments.settings
+   *
    * @return A pMOEAD algorithm object
    */
   @Override
@@ -138,6 +141,7 @@ public class pMOEAD_Settings extends Settings {
     maxEvaluations_  = Integer.parseInt(configuration.getProperty("maxEvaluations",String.valueOf(maxEvaluations_)));
     numberOfThreads_  = Integer.parseInt(configuration.getProperty("numberOfThreads",String.valueOf(numberOfThreads_)));
     dataDirectory_  = configuration.getProperty("dataDirectory", dataDirectory_);
+
     delta_ = Double.parseDouble(configuration.getProperty("delta", String.valueOf(delta_)));
     t_ = Integer.parseInt(configuration.getProperty("T", String.valueOf(t_)));
     nr_ = Integer.parseInt(configuration.getProperty("nr", String.valueOf(nr_)));

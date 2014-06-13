@@ -24,6 +24,7 @@ package jmetal.operators.selection;
 import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
 import jmetal.util.random.PseudoRandom;
+
 import java.util.HashMap;
 
 /**
@@ -38,24 +39,25 @@ public class RandomSelection extends Selection {
   private static final long serialVersionUID = -3975079865177120226L;
 
   public RandomSelection(HashMap<String, Object> parameters) {
-    super(parameters) ;
+    super(parameters);
   }
 
   /**
    * Performs the operation
+   *
    * @param object Object representing a SolutionSet.
    * @return an object representing an array with the selected parents
    */
   public Object execute(Object object) {
-    SolutionSet population = (SolutionSet)object;
+    SolutionSet population = (SolutionSet) object;
     int pos1, pos2;
-    pos1 = PseudoRandom.randInt(0,population.size()-1);
-    pos2 = PseudoRandom.randInt(0,population.size()-1);
-    while ((pos1 == pos2) && (population.size()>1)) {
-      pos2 = PseudoRandom.randInt(0,population.size()-1);
+    pos1 = PseudoRandom.randInt(0, population.size() - 1);
+    pos2 = PseudoRandom.randInt(0, population.size() - 1);
+    while ((pos1 == pos2) && (population.size() > 1)) {
+      pos2 = PseudoRandom.randInt(0, population.size() - 1);
     }
 
-    Solution [] parents = new Solution[2];
+    Solution[] parents = new Solution[2];
     parents[0] = population.get(pos1);
     parents[1] = population.get(pos2);
 

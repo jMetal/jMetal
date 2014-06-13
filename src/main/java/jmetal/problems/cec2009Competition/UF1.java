@@ -34,13 +34,14 @@ import jmetal.util.JMException;
 public class UF1 extends Problem {
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = -4289653406660498995L;
 
-  /** 
+  /**
    * Constructor.
    * Creates a default instance of problem CEC2009_UF1 (30 decision variables)
+   *
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
   public UF1(String solutionType) throws ClassNotFoundException, JMException {
@@ -49,21 +50,22 @@ public class UF1 extends Problem {
 
   /**
    * Creates a new instance of problem CEC2009_UF1.
+   *
    * @param numberOfVariables Number of variables.
-   * @param solutionType The solution type must "Real" or "BinaryReal".
+   * @param solutionType      The solution type must "Real" or "BinaryReal".
    */
   public UF1(String solutionType, Integer numberOfVariables) throws JMException {
-    numberOfVariables_  = numberOfVariables;
-    numberOfObjectives_ =  2;
-    numberOfConstraints_=  0;
-    problemName_        = "CEC2009_UF1";
+    numberOfVariables_ = numberOfVariables;
+    numberOfObjectives_ = 2;
+    numberOfConstraints_ = 0;
+    problemName_ = "CEC2009_UF1";
 
     upperLimit_ = new double[numberOfVariables_];
     lowerLimit_ = new double[numberOfVariables_];
 
-    lowerLimit_[0] = 0.0 ;
-    upperLimit_[0] = 1.0 ;
-    for (int var = 1; var < numberOfVariables_; var++){
+    lowerLimit_[0] = 0.0;
+    upperLimit_[0] = 1.0;
+    for (int var = 1; var < numberOfVariables_; var++) {
       lowerLimit_[var] = -1.0;
       upperLimit_[var] = 1.0;
     }
@@ -73,41 +75,42 @@ public class UF1 extends Problem {
     } else if (solutionType.compareTo("Real") == 0) {
       solutionType_ = new RealSolutionType(this);
     } else {
-      throw new JMException("Error: solution type " + solutionType + " invalid") ;
+      throw new JMException("Error: solution type " + solutionType + " invalid");
     }
   }
 
-  /** 
+  /**
    * Evaluates a solution.
+   *
    * @param solution The solution to evaluate.
-   * @throws JMException 
+   * @throws JMException
    */
   public void evaluate(Solution solution) throws JMException {
-    Variable[] decisionVariables  = solution.getDecisionVariables();
+    Variable[] decisionVariables = solution.getDecisionVariables();
 
-    double [] x = new double[numberOfVariables_] ;
+    double[] x = new double[numberOfVariables_];
     for (int i = 0; i < numberOfVariables_; i++) {
       x[i] = decisionVariables[i].getValue();
     }
 
     int count1, count2;
     double sum1, sum2, yj;
-    sum1   = sum2   = 0.0;
+    sum1 = sum2 = 0.0;
     count1 = count2 = 0;
 
-    for (int j = 2 ; j <= numberOfVariables_; j++) {
-      yj = x[j-1] - Math.sin(6.0*Math.PI*x[0] + j*Math.PI/numberOfVariables_);
+    for (int j = 2; j <= numberOfVariables_; j++) {
+      yj = x[j - 1] - Math.sin(6.0 * Math.PI * x[0] + j * Math.PI / numberOfVariables_);
       yj = yj * yj;
-      if(j % 2 == 0) {
+      if (j % 2 == 0) {
         sum2 += yj;
         count2++;
       } else {
         sum1 += yj;
         count1++;
-      }      
+      }
     }
 
-    solution.setObjective(0, x[0] + 2.0 * sum1 / (double)count1);
-    solution.setObjective(1, 1.0 - Math.sqrt(x[0]) + 2.0 * sum2 / (double)count2);
+    solution.setObjective(0, x[0] + 2.0 * sum1 / (double) count1);
+    solution.setObjective(1, 1.0 - Math.sqrt(x[0]) + 2.0 * sum2 / (double) count2);
   }
 }

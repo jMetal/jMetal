@@ -32,46 +32,35 @@ import java.util.Comparator;
  */
 public class AdaptiveRandomNeighborhood {
   private SolutionSet solutionSet_;
-
-  //private ArrayList<ArrayList<Solution>> solutionList_ ;
   private ArrayList<ArrayList<Integer>> list_;
 
   private int numberOfRandomNeighbours_;
 
-  /**
-   * Constructor.
-   * Defines a neighborhood of a given size.
-   */
   public AdaptiveRandomNeighborhood(SolutionSet solutionSet, int numberOfRandomNeighbours) {
     solutionSet_ = solutionSet;
     numberOfRandomNeighbours_ = numberOfRandomNeighbours;
-    //problem_ = solutionSet_.get(0).getProblem() ;
 
     list_ = new ArrayList<ArrayList<Integer>>(solutionSet_.size());
 
     for (int i = 0; i < solutionSet_.size(); i++) {
       list_.add(new ArrayList<Integer>());
-      list_.get(i).add(i) ;
+      list_.get(i).add(i);
     }
 
-    //System.out.println("list: " + list_) ;
     for (int i = 0; i < solutionSet_.size(); i++) {
-      //list_.get(i).add(i);
       for (int j = 0; j < numberOfRandomNeighbours_; j++) {
         int random = PseudoRandom.randInt(0, solutionSet_.size() - 1);
-        //System.out.println("i: " + i + " random: " + random + " listb: " + list_.get(random)) ;
         if (!list_.get(random).contains((Integer) i)) {
           list_.get(random).add(i);
         }
       }
     }
-    System.out.println("L: " + list_) ;
   }
 
   public ArrayList<Integer> getNeighbors(int i) throws JMException {
     if (i > list_.size()) {
-      String message = "Error in AdaptiveRandomNeighborhood.getNeighbors"  ;
-      message += "the parameter " + i + " is less than " + list_.size() ;
+      String message = "Error in AdaptiveRandomNeighborhood.getNeighbors";
+      message += "the parameter " + i + " is less than " + list_.size();
       throw new JMException(message);
     }
 
@@ -82,7 +71,7 @@ public class AdaptiveRandomNeighborhood {
     return numberOfRandomNeighbours_;
   }
 
-  public SolutionSet getBestFitnessSolutionInNeighborhood(Comparator comparator) {
+  public SolutionSet getBestFitnessSolutionInNeighborhood(Comparator comparator) throws JMException {
     SolutionSet result = new SolutionSet();
     for (int i = 0; i < list_.size(); i++) {
       Solution bestSolution = solutionSet_.get(list_.get(i).get(0));
@@ -112,7 +101,7 @@ public class AdaptiveRandomNeighborhood {
     for (int i = 0; i < solutionSet_.size(); i++) {
       for (int j = 0; j < numberOfRandomNeighbours_; j++) {
         int random = PseudoRandom.randInt(0, solutionSet_.size() - 1);
-        if (!list_.get(random).contains((Integer)i)) {
+        if (!list_.get(random).contains((Integer) i)) {
           list_.get(random).add(i);
         }
       }

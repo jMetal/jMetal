@@ -8,8 +8,8 @@ public class FileUtils {
     FileOutputStream fos;
     try {
       fos = new FileOutputStream(fileName, true);
-      OutputStreamWriter osw = new OutputStreamWriter(fos)    ;
-      BufferedWriter bw      = new BufferedWriter(osw)        ;
+      OutputStreamWriter osw = new OutputStreamWriter(fos);
+      BufferedWriter bw = new BufferedWriter(osw);
 
       bw.write(object.toString());
       bw.newLine();
@@ -25,8 +25,8 @@ public class FileUtils {
     FileOutputStream fos;
     try {
       fos = new FileOutputStream(fileName, false);
-      OutputStreamWriter osw = new OutputStreamWriter(fos)    ;
-      BufferedWriter bw      = new BufferedWriter(osw)        ;
+      OutputStreamWriter osw = new OutputStreamWriter(fos);
+      BufferedWriter bw = new BufferedWriter(osw);
 
       bw.close();
     } catch (FileNotFoundException e) {

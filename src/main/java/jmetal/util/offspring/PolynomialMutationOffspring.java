@@ -11,7 +11,6 @@ package jmetal.util.offspring;
 import jmetal.core.Operator;
 import jmetal.core.Solution;
 import jmetal.operators.mutation.MutationFactory;
-import jmetal.operators.selection.SelectionFactory;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
@@ -22,16 +21,16 @@ public class PolynomialMutationOffspring extends Offspring {
 
   private Operator mutation_;
 
-  private double mutationProbability_ ;
-  private double distributionIndex_ ;
+  private double mutationProbability_;
+  private double distributionIndex_;
 
   public PolynomialMutationOffspring(double mutationProbability,
-      double distributionIndexForMutation
-      ) throws JMException {     
-    HashMap<String, Object> mutationParameters = new HashMap<String, Object>() ;
-    mutationParameters.put("probability", mutationProbability_= mutationProbability) ;
-    mutationParameters.put("distributionIndex", distributionIndex_= distributionIndexForMutation) ;
-    mutation_ = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);                    
+    double distributionIndexForMutation
+  ) throws JMException {
+    HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
+    mutationParameters.put("probability", mutationProbability_ = mutationProbability);
+    mutationParameters.put("distributionIndex", distributionIndex_ = distributionIndexForMutation);
+    mutation_ = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
 
     id_ = "PolynomialMutation";
   }
@@ -47,12 +46,12 @@ public class PolynomialMutationOffspring extends Offspring {
   }
 
   public String configuration() {
-    String result = "-----\n" ;
-    result += "Operator: " + id_ + "\n" ;
-    result += "Probability: " + mutationProbability_ + "\n" ;
-    result += "DistributionIndex: " + distributionIndex_ ;
+    String result = "-----\n";
+    result += "Operator: " + id_ + "\n";
+    result += "Probability: " + mutationProbability_ + "\n";
+    result += "DistributionIndex: " + distributionIndex_;
 
-    return result ;
+    return result;
   }
 }
 

@@ -25,14 +25,14 @@ import jmetal.core.SolutionSet;
 /**
  * This class represents the super class for archive objects.
  */
-public class Archive extends SolutionSet{
+public class Archive extends SolutionSet {
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = -84460522040441282L;
 
-  public Archive (int size) {
+  public Archive(int size) {
     super(size);
   }
 } // Archive

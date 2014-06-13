@@ -20,22 +20,23 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 package jmetal.qualityIndicator;
+
 import jmetal.util.JMException;
 
 import java.util.Arrays;
 
 /**
  * This class implements the generalized spread metric for two or more dimensions.
- * It can be used also as command line program just by typing. 
+ * It can be used also as command line program just by typing.
  * $ java jmetal.qualityIndicator.GeneralizedSpread <solutionFrontFile> <trueFrontFile> <getNumberOfObjectives>
  * Reference: A. Zhou, Y. Jin, Q. Zhang, B. Sendhoff, and E. Tsang
- *           Combining model-based and genetics-based offspring generation for 
- *           multi-objective optimization using a convergence criterion, 
- *           2006 IEEE Congress on Evolutionary Computation, 2006, pp. 3234-3241.
+ * Combining model-based and genetics-based offspring generation for
+ * multi-objective optimization using a convergence criterion,
+ * 2006 IEEE Congress on Evolutionary Computation, 2006, pp. 3234-3241.
  */
 public class GeneralizedSpread {
 
-  public static jmetal.qualityIndicator.util.MetricsUtil utils_; 
+  public static jmetal.qualityIndicator.util.MetricsUtil utils_;
 
   /**
    * Constructor
@@ -43,7 +44,7 @@ public class GeneralizedSpread {
    */
   public GeneralizedSpread() {
     utils_ = new jmetal.qualityIndicator.util.MetricsUtil();
-  } 
+  }
 
   /**
    *  Calculates the generalized spread metric. Given the 
@@ -76,8 +77,8 @@ public class GeneralizedSpread {
 
     /**
      * Stores the normalized true Pareto front.
-     */ 
-    double [][] normalizedParetoFront;
+     */
+    double[][] normalizedParetoFront;
 
     // STEP 1. Obtain the maximum and minimum values of the Pareto front
     maximumValue = utils_.getMaximumValues(paretoTrueFront,numberOfObjectives);
@@ -93,7 +94,7 @@ public class GeneralizedSpread {
         minimumValue);
 
     // STEP 3. Find extremal values
-    double [][] extremValues = new double[numberOfObjectives][numberOfObjectives];
+    double[][] extremValues = new double[numberOfObjectives][numberOfObjectives];
     for (int i = 0; i < numberOfObjectives; i++) {
       Arrays.sort(normalizedParetoFront,new jmetal.qualityIndicator.util.ValueComparator(i));
       System.arraycopy(normalizedParetoFront[normalizedParetoFront.length - 1], 0, extremValues[i], 0, numberOfObjectives);
@@ -102,12 +103,11 @@ public class GeneralizedSpread {
     int numberOfPoints     = normalizedFront.length;
     int numberOfTruePoints = normalizedParetoFront.length;
 
-
     // STEP 4. Sorts the normalized front
-    Arrays.sort(normalizedFront,new jmetal.qualityIndicator.util.LexicoGraphicalComparator());
+    Arrays.sort(normalizedFront, new jmetal.qualityIndicator.util.LexicoGraphicalComparator());
 
     // STEP 5. Calculate the metric value. The value is 1.0 by default
-    if (utils_.distance(normalizedFront[0],normalizedFront[normalizedFront.length-1])==0.0) {
+    if (utils_.distance(normalizedFront[0], normalizedFront[normalizedFront.length - 1]) == 0.0) {
       return 1.0;
     } else {
 
@@ -164,6 +164,6 @@ public class GeneralizedSpread {
         trueFront,
         new Integer(args[2]));
 
-    System.out.println(value);  
+    System.out.println(value);
   }
 }

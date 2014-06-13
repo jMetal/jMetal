@@ -37,8 +37,8 @@ public class IntRealProblem extends Problem {
    *
    */
   private static final long serialVersionUID = -3553215776619374111L;
-  int intVariables_  ;
-  int realVariables_ ;
+  int intVariables_;
+  int realVariables_;
 
   /**
    * Constructor.
@@ -51,56 +51,59 @@ public class IntRealProblem extends Problem {
   /**
    * Constructor.
    * Creates a new instance of the IntRealProblem problem.
-   * @param intVariables Number of integer variables of the problem 
-   * @param realVariables Number of real variables of the problem 
+   *
+   * @param intVariables  Number of integer variables of the problem
+   * @param realVariables Number of real variables of the problem
    */
-  public IntRealProblem(String solutionType, int intVariables, int realVariables) throws JMException {
-    intVariables_  = intVariables  ;
-    realVariables_ = realVariables ;
+  public IntRealProblem(String solutionType, int intVariables, int realVariables)
+    throws JMException {
+    intVariables_ = intVariables;
+    realVariables_ = realVariables;
 
-    numberOfVariables_   = intVariables_ + realVariables_ ;
-    numberOfObjectives_  = 2                              ;
-    numberOfConstraints_ = 0                              ;
-    problemName_         = "IntRealProblem"               ;
+    numberOfVariables_ = intVariables_ + realVariables_;
+    numberOfObjectives_ = 2;
+    numberOfConstraints_ = 0;
+    problemName_ = "IntRealProblem";
 
-    upperLimit_ = new double[numberOfVariables_] ;
-    lowerLimit_ = new double[numberOfVariables_] ;
+    upperLimit_ = new double[numberOfVariables_];
+    lowerLimit_ = new double[numberOfVariables_];
 
     for (int i = 0; i < intVariables; i++) {
-      lowerLimit_[i] = -5 ;
-      upperLimit_[i] =  5 ;
+      lowerLimit_[i] = -5;
+      upperLimit_[i] = 5;
     }
 
     for (int i = intVariables; i < (intVariables + realVariables); i++) {
-      lowerLimit_[i] = -5.0 ;
-      upperLimit_[i] =  5.0  ;
+      lowerLimit_[i] = -5.0;
+      upperLimit_[i] = 5.0;
     }
 
     if (solutionType.compareTo("IntReal") == 0) {
       solutionType_ = new IntRealSolutionType(this, intVariables, realVariables);
     } else {
-      throw new JMException("Error: solution type " + solutionType + " invalid") ;
+      throw new JMException("Error: solution type " + solutionType + " invalid");
     }
   }
 
   /**
-   * Evaluates a solution 
+   * Evaluates a solution
+   *
    * @param solution The solution to evaluate
    * @throws JMException
    */
   public void evaluate(Solution solution) throws JMException {
     Variable[] variable = solution.getDecisionVariables();
 
-    double [] fx = new double[2] ;
+    double[] fx = new double[2];
 
-    fx[0] = 0.0 ;
-    for (int var = 0; var < intVariables_ ; var++) {
-      fx[0] += (int)variable[var].getValue() ;
+    fx[0] = 0.0;
+    for (int var = 0; var < intVariables_; var++) {
+      fx[0] += (int) variable[var].getValue();
     }
 
-    fx[1] = 0.0 ;
-    for (int var = intVariables_; var < numberOfVariables_ ; var++) {
-      fx[1] += variable[var].getValue() ;
+    fx[1] = 0.0;
+    for (int var = intVariables_; var < numberOfVariables_; var++) {
+      fx[1] += variable[var].getValue();
     }
 
     solution.setObjective(0, fx[0]);

@@ -23,8 +23,8 @@ package jmetal.util;
 
 import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
-import jmetal.util.comparators.DominanceComparator;
-import jmetal.util.comparators.OverallConstraintViolationComparator;
+import jmetal.util.comparator.DominanceComparator;
+import jmetal.util.comparator.OverallConstraintViolationComparator;
 
 import java.util.Comparator;
 import java.util.Iterator;
@@ -33,51 +33,51 @@ import java.util.List;
 
 /**
  * This class implements some facilities for ranking solutions.
- * Given a <code>SolutionSet</code> object, their solutions are ranked 
- * according to scheme proposed in NSGA-II; as a result, a set of subsets 
- * are obtained. The subsets are numbered starting from 0 (in NSGA-II, the 
- * numbering starts from 1); thus, subset 0 contains the non-dominated 
+ * Given a <code>SolutionSet</code> object, their solutions are ranked
+ * according to scheme proposed in NSGA-II; as a result, a set of subsets
+ * are obtained. The subsets are numbered starting from 0 (in NSGA-II, the
+ * numbering starts from 1); thus, subset 0 contains the non-dominated
  * solutions, subset 1 contains the non-dominated solutions after removing those
  * belonging to subset 0, and so on.
  */
 public class Ranking {
 
   /**
-   * The <code>SolutionSet</code> to rank
-   */
-  private SolutionSet   solutionSet_ ;
-
-  /**
-   * An array containing all the fronts found during the search
-   */
-  private SolutionSet[] ranking_  ;
-
-  /**
    * stores a <code>Comparator</code> for dominance checking
    */
   private static final Comparator<Solution> dominance_ = new DominanceComparator();
-
   /**
    * stores a <code>Comparator</code> for Overal Constraint Violation Comparator
    * checking
    */
-  private static final Comparator<Solution> constraint_ = new OverallConstraintViolationComparator();
+  private static final Comparator<Solution> constraint_ =
+    new OverallConstraintViolationComparator();
+  /**
+   * The <code>SolutionSet</code> to rank
+   */
+  private SolutionSet solutionSet_;
+  /**
+   * An array containing all the fronts found during the search
+   */
+  private SolutionSet[] ranking_;
 
   /**
    * Constructor.
+   *
    * @param solutionSet The <code>SolutionSet</code> to be ranked.
+   * @throws JMException 
    */
-  public Ranking(SolutionSet solutionSet) {
-    solutionSet_ = solutionSet ;
+  public Ranking(SolutionSet solutionSet) throws JMException {
+    solutionSet_ = solutionSet;
 
     // dominateMe[i] contains the number of solutions dominating i        
-    int [] dominateMe = new int[solutionSet_.size()];
+    int[] dominateMe = new int[solutionSet_.size()];
 
     // iDominate[k] contains the list of solutions dominated by k
-    List<Integer> [] iDominate = new List[solutionSet_.size()];
+    List<Integer>[] iDominate = new List[solutionSet_.size()];
 
     // front[i] contains the list of individuals belonging to the front i
-    List<Integer> [] front = new List[solutionSet_.size()+1];
+    List<Integer>[] front = new List[solutionSet_.size() + 1];
 
     // flagDominate is an auxiliar encodings.variable
     int flagDominate;
@@ -95,12 +95,12 @@ public class Ranking {
       iDominate[p] = new LinkedList<Integer>();
       dominateMe[p] = 0;
     }
-    for (int p = 0; p < (solutionSet_.size()-1); p++) {
+    for (int p = 0; p < (solutionSet_.size() - 1); p++) {
       // For all q individuals , calculate if p dominates q or vice versa
-      for (int q = p+1; q < solutionSet_.size(); q++) {
-        flagDominate =constraint_.compare(solutionSet.get(p),solutionSet.get(q));
+      for (int q = p + 1; q < solutionSet_.size(); q++) {
+        flagDominate = constraint_.compare(solutionSet.get(p), solutionSet.get(q));
         if (flagDominate == 0) {
-          flagDominate =dominance_.compare(solutionSet.get(p),solutionSet.get(q));
+          flagDominate = dominance_.compare(solutionSet.get(p), solutionSet.get(q));
         }
         if (flagDominate == -1) {
           iDominate[p].add(q);
@@ -121,16 +121,16 @@ public class Ranking {
 
     //Obtain the rest of fronts
     int i = 0;
-    Iterator<Integer> it1, it2 ; // Iterators
-    while (front[i].size()!= 0) {
+    Iterator<Integer> it1, it2; // Iterators
+    while (front[i].size() != 0) {
       i++;
-      it1 = front[i-1].iterator();
+      it1 = front[i - 1].iterator();
       while (it1.hasNext()) {
         it2 = iDominate[it1.next()].iterator();
         while (it2.hasNext()) {
           int index = it2.next();
           dominateMe[index]--;
-          if (dominateMe[index]==0) {
+          if (dominateMe[index] == 0) {
             front[i].add(index);
             solutionSet_.get(index).setRank(i);
           }
@@ -151,7 +151,8 @@ public class Ranking {
   }
 
   /**
-   * Returns a <code>SolutionSet</code> containing the solutions of a given rank. 
+   * Returns a <code>SolutionSet</code> containing the solutions of a given rank.
+   *
    * @param rank The rank
    * @return Object representing the <code>SolutionSet</code>.
    */
@@ -159,9 +160,6 @@ public class Ranking {
     return ranking_[rank];
   }
 
-  /**
-   * Returns the total number of subFronts founds.
-   */
   public int getNumberOfSubfronts() {
     return ranking_.length;
   }

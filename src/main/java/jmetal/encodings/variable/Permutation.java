@@ -36,41 +36,33 @@ public class Permutation extends Variable {
   /**
    * Stores a permutation of <code>int</code> values
    */
-  private int [] vector_;
-
-  public int[] getVector() {
-    return vector_ ;
-  }
-
-
+  private int[] vector_;
   /**
    * Stores the length of the permutation
    */
   private int size_;
 
-  public int getSize() {
-    return size_ ;
-  }
 
   /**
    * Constructor
    */
   public Permutation() {
-    size_   = 0;
+    size_ = 0;
     vector_ = null;
   }
 
   /**
    * Constructor
+   *
    * @param size Length of the permutation
-   * This constructor has been contributed by Madan Sathe
+   *             This constructor has been contributed by Madan Sathe
    */
   public Permutation(int size) {
-    size_   = size;
+    size_ = size;
     vector_ = new int[size_];
 
     java.util.ArrayList<Integer> randomSequence = new
-            java.util.ArrayList<Integer>(size_);
+      java.util.ArrayList<Integer>(size_);
 
     for (int i = 0; i < size_; i++) {
       randomSequence.add(i);
@@ -85,17 +77,27 @@ public class Permutation extends Variable {
 
   /**
    * Copy Constructor
+   *
    * @param permutation The permutation to copy
    */
   public Permutation(Permutation permutation) {
-    size_   = permutation.size_;
+    size_ = permutation.size_;
     vector_ = new int[size_];
 
     System.arraycopy(permutation.vector_, 0, vector_, 0, size_);
   }
 
+  public int[] getVector() {
+    return vector_;
+  }
+
+  public int getSize() {
+    return size_;
+  }
+
   /**
    * Create an exact copy of the <code>Permutation</code> object.
+   *
    * @return An exact copy of the object.
    */
   public Variable deepCopy() {
@@ -104,24 +106,26 @@ public class Permutation extends Variable {
 
   /**
    * Returns the length of the permutation.
+   *
    * @return The length
    */
-  public int getLength(){
+  public int getLength() {
     return size_;
   } //getNumberOfBits
 
   /**
    * Returns a string representing the object
+   *
    * @return The string
    */
-  public String toString(){
-    String string ;
+  public String toString() {
+    String string;
 
-    string = "" ;
-    for (int i = 0; i < size_ ; i ++) {
+    string = "";
+    for (int i = 0; i < size_; i++) {
       string += vector_[i] + " ";
     }
 
-    return string ;
+    return string;
   }
 }

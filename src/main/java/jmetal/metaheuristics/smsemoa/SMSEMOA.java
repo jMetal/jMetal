@@ -27,7 +27,7 @@ import jmetal.qualityIndicator.util.MetricsUtil;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.Ranking;
-import jmetal.util.comparators.CrowdingDistanceComparator;
+import jmetal.util.comparator.CrowdingDistanceComparator;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -35,14 +35,14 @@ import java.util.logging.Level;
 
 /**
  * This class implements the SMS-EMOA algorithm, as described in
- *
+ * <p/>
  * Michael Emmerich, Nicola Beume, and Boris Naujoks.
  * An EMO algorithm using the hypervolume measure as selection criterion.
  * In C. A. Coello Coello et al., Eds., Proc. Evolutionary Multi-Criterion Optimization,
  * 3rd Int'l Conf. (EMO 2005), LNCS 3410, pp. 62-76. Springer, Berlin, 2005.
- *
+ * <p/>
  * and
- * 
+ * <p/>
  * Boris Naujoks, Nicola Beume, and Michael Emmerich.
  * Multi-objective optimisation using S-metric selection: Application to
  * three-dimensional solution spaces. In B. McKay et al., Eds., Proc. of the 2005
@@ -51,32 +51,23 @@ import java.util.logging.Level;
  */
 public class SMSEMOA extends Algorithm {
 
-  /**
-<<<<<<< HEAD
-=======
-   * 
-   */
   private static final long serialVersionUID = -5932329422133559836L;
 
   /**
->>>>>>> master
    * stores the problem  to solve
    */
   private MetricsUtil utils_;
-  private Hypervolume hv_;
+  private Hypervolume hypervolume_;
 
-  /**
-   * Constructor
-   * @param problem Problem to solve
-   */
-  public SMSEMOA(Problem problem) {
-    super(problem) ;
+  public SMSEMOA() {
+    super();
     this.utils_ = new jmetal.qualityIndicator.util.MetricsUtil();
-    this.hv_ = new Hypervolume();
+    this.hypervolume_ = new Hypervolume();
   } // SMSEMOA
 
   /**
    * Runs the SMS-EMOA algorithm.
+   *
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
    * as a result of the algorithm execution
    * @throws JMException
@@ -87,8 +78,8 @@ public class SMSEMOA extends Algorithm {
     int evaluations;
     double offset = 100.0;
 
-    QualityIndicator indicators; // QualityIndicator object
-    int requiredEvaluations; // Use in the example of use of the indicators object (see below)
+    QualityIndicator indicators;
+    int requiredEvaluations;
 
     SolutionSet population;
     SolutionSet offspringPopulation;
@@ -178,10 +169,13 @@ public class SMSEMOA extends Algorithm {
         double[][] frontValues = lastFront.writeObjectivesToMatrix();
         int numberOfObjectives = problem_.getNumberOfObjectives();
         // STEP 1. Obtain the maximum and minimum values of the Pareto front
-        double[] maximumValues = utils_.getMaximumValues(union.writeObjectivesToMatrix(), numberOfObjectives);
-        double[] minimumValues = utils_.getMinimumValues(union.writeObjectivesToMatrix(), numberOfObjectives);
+        double[] maximumValues =
+          utils_.getMaximumValues(union.writeObjectivesToMatrix(), numberOfObjectives);
+        double[] minimumValues =
+          utils_.getMinimumValues(union.writeObjectivesToMatrix(), numberOfObjectives);
         // STEP 2. Get the normalized front
-        double[][] normalizedFront = utils_.getNormalizedFront(frontValues, maximumValues, minimumValues);
+        double[][] normalizedFront =
+          utils_.getNormalizedFront(frontValues, maximumValues, minimumValues);
         // compute offsets for reference point in normalized space
         double[] offsets = new double[maximumValues.length];
         for (int i = 0; i < maximumValues.length; i++) {
@@ -228,23 +222,24 @@ public class SMSEMOA extends Algorithm {
         double HV = indicators.getHypervolume(population);
         if (HV >= (0.98 * indicators.getTrueParetoFrontHypervolume())) {
           requiredEvaluations = evaluations;
-        } // if
-      } // if
-    } // while
+        }
+      }
+    }
 
     // Return as output parameter the required evaluations
     setOutputParameter("evaluations", requiredEvaluations);
-    
+
     // Return the first non-dominated front
     Ranking ranking = new Ranking(population);
-    ranking.getSubfront(0).printFeasibleFUN("FUN") ;
+    ranking.getSubfront(0).printFeasibleFUN("FUN");
     return ranking.getSubfront(0);
-  } // execute
+  }
 
   /**
    * Calculates how much hypervolume each point dominates exclusively. The points
    * have to be transformed beforehand, to accommodate the assumptions of Zitzler's
    * hypervolume code.
+   *
    * @param front transformed objective values
    * @return HV contributions
    */
@@ -253,14 +248,15 @@ public class SMSEMOA extends Algorithm {
     double[] contributions = new double[front.length];
     double[][] frontSubset = new double[front.length - 1][front[0].length];
     LinkedList<double[]> frontCopy = new LinkedList<double[]>();
-      Collections.addAll(frontCopy, front);
+    Collections.addAll(frontCopy, front);
     double[][] totalFront = frontCopy.toArray(frontSubset);
-    double totalVolume = hv_.calculateHypervolume(totalFront, totalFront.length, numberOfObjectives);
+    double totalVolume =
+      hypervolume_.calculateHypervolume(totalFront, totalFront.length, numberOfObjectives);
     for (int i = 0; i < front.length; i++) {
       double[] evaluatedPoint = frontCopy.remove(i);
       frontSubset = frontCopy.toArray(frontSubset);
       // STEP4. The hypervolume (control is passed to java version of Zitzler code)
-      double hv = hv_.calculateHypervolume(frontSubset, frontSubset.length, numberOfObjectives);
+      double hv = hypervolume_.calculateHypervolume(frontSubset, frontSubset.length, numberOfObjectives);
       double contribution = totalVolume - hv;
       contributions[i] = contribution;
       // put point back
@@ -268,4 +264,4 @@ public class SMSEMOA extends Algorithm {
     }
     return contributions;
   }
-} // SMSEMOA
+}

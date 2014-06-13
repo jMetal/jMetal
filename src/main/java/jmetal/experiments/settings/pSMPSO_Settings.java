@@ -29,7 +29,7 @@ import jmetal.problems.ProblemFactory;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.parallel.MultithreadedEvaluator;
-import jmetal.util.parallel.SynchronousParallelRunner;
+import jmetal.util.parallel.SynchronousParallelTaskExecutor;
 
 import java.util.HashMap;
 import java.util.Properties;
@@ -64,18 +64,19 @@ public class pSMPSO_Settings extends Settings{
     mutationProbability_       = 1.0/problem_.getNumberOfVariables() ;
     // 0 - number of available cores
     numberOfThreads_           = 8 ; 
-  } 
+  }
 
   /**
    * Configure SMPSO with user-defined parameter experiments.settings
+   *
    * @return A SMPSO algorithm object
    * @throws jmetal.util.JMException
    */
   public Algorithm configure() throws JMException {
-    Algorithm algorithm ;
-    Mutation  mutation ;
+    Algorithm algorithm;
+    Mutation mutation;
 
-    SynchronousParallelRunner parallelEvaluator = new MultithreadedEvaluator(numberOfThreads_) ;
+    SynchronousParallelTaskExecutor parallelEvaluator = new MultithreadedEvaluator(numberOfThreads_);
 
     algorithm = new pSMPSO(problem_, parallelEvaluator) ;
 
@@ -89,13 +90,17 @@ public class pSMPSO_Settings extends Settings{
     parameters.put("distributionIndex", mutationDistributionIndex_) ;
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);                    
 
-    algorithm.addOperator("mutation",mutation);
+    HashMap<String, Object> parameters = new HashMap<String, Object>();
+    parameters.put("probability", mutationProbability_);
+    parameters.put("distributionIndex", mutationDistributionIndex_);
+    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);
 
     return algorithm ;
   } 
 
   /**
    * Configure pSMPSO with user-defined parameter experiments.settings
+   *
    * @return A pSMPSO algorithm object
    */
   @Override

@@ -20,7 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-package jmetal.experiments.util ;
+package jmetal.experiments.util;
 
 import jmetal.experiments.Experiment;
 import jmetal.util.Configuration;
@@ -35,10 +35,10 @@ import java.util.logging.Level;
  * Created by Antonio J. Nebro on 20/02/14.
  */
 public class FriedmanTables implements IExperimentOutput {
-  Experiment experiment_ ;
+  private Experiment experiment_;
 
   public FriedmanTables(Experiment experiment) {
-    experiment_ = experiment ;
+    experiment_ = experiment;
   }
 
   @Override
@@ -47,8 +47,8 @@ public class FriedmanTables implements IExperimentOutput {
       executeTest(indicator);
     }
   }
-  
-  private void executeTest(String indic){
+
+  private void executeTest(String indic) {
     Vector algorithms;
     Vector datasets;
     Vector data;
@@ -67,7 +67,7 @@ public class FriedmanTables implements IExperimentOutput {
     Vector porVisitar;
     double Rj[];
     double friedman;
-    double sumatoria=0;
+    double sumatoria = 0;
     double termino1, termino2;
 
     String indicator_ = indic;
@@ -75,31 +75,31 @@ public class FriedmanTables implements IExperimentOutput {
     /*Read the result file*/
 
     String outDir = experiment_.getExperimentBaseDirectory() + "/latex";
-    String outFile = outDir +"/FriedmanTest"+indicator_+".tex";
+    String outFile = outDir + "/FriedmanTest" + indicator_ + ".tex";
 
     String Output = "";
     Output = Output + ("\\documentclass{article}\n" +
-            "\\usepackage{graphicx}\n" +
-            "\\title{Results}\n" +
-            "\\author{}\n" +
-            "\\date{\\today}\n" +
-            "\\begin{document}\n" +
-            "\\oddsidemargin 0in \\topmargin 0in" +
-            "\\maketitle\n" +
-            "\\section{Tables of Friedman Tests}");
+      "\\usepackage{graphicx}\n" +
+      "\\title{Results}\n" +
+      "\\author{}\n" +
+      "\\date{\\today}\n" +
+      "\\begin{document}\n" +
+      "\\oddsidemargin 0in \\topmargin 0in" +
+      "\\maketitle\n" +
+      "\\section{Tables of Friedman Tests}");
 
     algorithms = new Vector();
     datasets = new Vector();
     data = new Vector();
 
-    for(int alg = 0; alg<experiment_.getAlgorithmNameList().length; alg++){
-      algorithms.add(new String(experiment_.getAlgorithmNameList()[alg]));
+    for (int alg = 0; alg < experiment_.getAlgorithmNameList().length; alg++) {
+      algorithms.add(experiment_.getAlgorithmNameList()[alg]);
       data.add(new Vector());
       String rutaAlg = experiment_.getExperimentBaseDirectory() + "/data/"
-              + experiment_.getAlgorithmNameList()[alg] + "/";
+        + experiment_.getAlgorithmNameList()[alg] + "/";
 
-      for(int prob = 0; prob<experiment_.getProblemList().length; prob++){
-        if(alg == 0){
+      for (int prob = 0; prob < experiment_.getProblemList().length; prob++) {
+        if (alg == 0) {
           datasets.add(experiment_.getProblemList()[prob]);
         }
 
@@ -122,13 +122,12 @@ public class FriedmanTables implements IExperimentOutput {
           }
 
           fis.close();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
           Configuration.logger_.log(Level.SEVERE, "Error", e);
           throw new RuntimeException();
         }
 
-        lineas = new StringTokenizer (string,"\n\r");
+        lineas = new StringTokenizer(string, "\n\r");
 
         double valor = 0.0;
         int n = 0;
@@ -138,10 +137,10 @@ public class FriedmanTables implements IExperimentOutput {
           valor = valor + Double.parseDouble(linea);
           n++;
         }
-        if(n!=0){
-          ((Vector)data.elementAt(alg)).add(new Double(valor/n));
-        }else{
-          ((Vector)data.elementAt(alg)).add(new Double(valor));
+        if (n != 0) {
+          ((Vector) data.elementAt(alg)).add(new Double(valor / n));
+        } else {
+          ((Vector) data.elementAt(alg)).add(new Double(valor));
         }
       }
     }
@@ -149,18 +148,17 @@ public class FriedmanTables implements IExperimentOutput {
     /*Compute the average performance per algorithm for each data set*/
     mean = new double[datasets.size()][algorithms.size()];
 
-    for (j=0; j<algorithms.size(); j++) {
-      for (i=0; i<datasets.size(); i++) {
-        mean[i][j] = ((Double)((Vector)data.elementAt(j)).elementAt(i)).doubleValue();
+    for (j = 0; j < algorithms.size(); j++) {
+      for (i = 0; i < datasets.size(); i++) {
+        mean[i][j] = (Double) ((Vector) data.elementAt(j)).elementAt(i);
       }
     }
 
-
     /*We use the pareja structure to compute and order rankings*/
     order = new Pair[datasets.size()][algorithms.size()];
-    for (i=0; i<datasets.size(); i++) {
-      for (j=0; j<algorithms.size(); j++){
-        order[i][j] = new Pair(j,mean[i][j]);
+    for (i = 0; i < datasets.size(); i++) {
+      for (j = 0; j < algorithms.size(); j++) {
+        order[i][j] = new Pair(j, mean[i][j]);
       }
       Arrays.sort(order[i]);
     }
@@ -168,85 +166,92 @@ public class FriedmanTables implements IExperimentOutput {
     /*building of the rankings table per algorithms and data sets*/
     rank = new Pair[datasets.size()][algorithms.size()];
     position = 0;
-    for (i=0; i<datasets.size(); i++) {
-      for (j=0; j<algorithms.size(); j++){
+    for (i = 0; i < datasets.size(); i++) {
+      for (j = 0; j < algorithms.size(); j++) {
         found = false;
-        for (k=0; k<algorithms.size() && !found; k++) {
-          if (order[i][k].indice == j) {
+        for (k = 0; k < algorithms.size() && !found; k++) {
+          if (order[i][k].index_ == j) {
             found = true;
-            position = k+1;
+            position = k + 1;
           }
         }
-        rank[i][j] = new Pair(position,order[i][position-1].valor);
+        rank[i][j] = new Pair(position, order[i][position - 1].value_);
       }
     }
 
     /*In the case of having the same performance, the rankings are equal*/
-    for (i=0; i<datasets.size(); i++) {
+    for (i = 0; i < datasets.size(); i++) {
       visto = new boolean[algorithms.size()];
-      porVisitar= new Vector();
+      porVisitar = new Vector();
 
-      Arrays.fill(visto,false);
-      for (j=0; j<algorithms.size(); j++) {
+      Arrays.fill(visto, false);
+      for (j = 0; j < algorithms.size(); j++) {
         porVisitar.removeAllElements();
-        sum = rank[i][j].indice;
+        sum = rank[i][j].index_;
         visto[j] = true;
         ig = 1;
-        for (k=j+1;k<algorithms.size();k++) {
-          if (rank[i][j].valor == rank[i][k].valor && !visto[k]) {
-            sum += rank[i][k].indice;
+        for (k = j + 1; k < algorithms.size(); k++) {
+          if (rank[i][j].value_ == rank[i][k].value_ && !visto[k]) {
+            sum += rank[i][k].index_;
             ig++;
             porVisitar.add(new Integer(k));
             visto[k] = true;
           }
         }
-        sum /= (double)ig;
-        rank[i][j].indice = sum;
-        for (k=0; k<porVisitar.size(); k++) {
-          rank[i][((Integer)porVisitar.elementAt(k)).intValue()].indice = sum;
+        sum /= (double) ig;
+        rank[i][j].index_ = sum;
+        for (k = 0; k < porVisitar.size(); k++) {
+          rank[i][((Integer) porVisitar.elementAt(k))].index_ = sum;
         }
       }
     }
 
     /*compute the average ranking for each algorithm*/
     Rj = new double[algorithms.size()];
-    for (i=0; i<algorithms.size(); i++){
+    for (i = 0; i < algorithms.size(); i++) {
       Rj[i] = 0;
-      for (j=0; j<datasets.size(); j++) {
-        Rj[i] += rank[j][i].indice / ((double)datasets.size());
+      for (j = 0; j < datasets.size(); j++) {
+        Rj[i] += rank[j][i].index_ / ((double) datasets.size());
       }
     }
 
     /*Print the average ranking per algorithm*/
-    Output = Output + "\n"+("\\begin{table}[!htp]\n" +
-            "\\centering\n" +
-            "\\caption{Average Rankings of the algorithms\n}"+// for "+ experiment_.problemList_[prob] +" problem\n}" +
-            "\\begin{tabular}{c|c}\n" +
-            "Algorithm&Ranking\\\\\n\\hline");
+    Output = Output + "\n" + ("\\begin{table}[!htp]\n" +
+      "\\centering\n" +
+      "\\caption{Average Rankings of the algorithms\n}" +
+      // for "+ experiment_.problemList_[prob] +" problem\n}" +
+      "\\begin{tabular}{c|c}\n" +
+      "Algorithm&Ranking\\\\\n\\hline");
 
-    for (i=0; i<algorithms.size();i++) {
-      Output = Output + "\n" + (String)algorithms.elementAt(i)+"&"+Rj[i]+"\\\\";
+    for (i = 0; i < algorithms.size(); i++) {
+      Output = Output + "\n" + (String) algorithms.elementAt(i) + "&" + Rj[i] + "\\\\";
     }
 
     Output = Output + "\n" +
-            "\\end{tabular}\n" +
-            "\\end{table}"; 
+      "\\end{tabular}\n" +
+      "\\end{table}";
 
     /*Compute the Friedman statistic*/
-    termino1 = (12*(double)datasets.size())/((double)algorithms.size()*((double)algorithms.size()+1));
-    termino2 = (double)algorithms.size()*((double)algorithms.size()+1)*((double)algorithms.size()+1)/(4.0);
-    for (i=0; i<algorithms.size();i++) {
-      sumatoria += Rj[i]*Rj[i];
+    termino1 =
+      (12 * (double) datasets.size()) / ((double) algorithms.size() * ((double) algorithms.size()
+        + 1));
+    termino2 =
+      (double) algorithms.size() * ((double) algorithms.size() + 1) * ((double) algorithms.size()
+        + 1) / (4.0);
+    for (i = 0; i < algorithms.size(); i++) {
+      sumatoria += Rj[i] * Rj[i];
     }
     friedman = (sumatoria - termino2) * termino1;
 
-    Output = Output + "\n" + "\n\nFriedman statistic considering reduction performance (distributed according to chi-square with "+(algorithms.size()-1)+" degrees of freedom: "+friedman+").\n\n";
+    Output = Output + "\n"
+      + "\n\nFriedman statistic considering reduction performance (distributed according to chi-square with "
+      + (algorithms.size() - 1) + " degrees of freedom: " + friedman + ").\n\n";
 
     Output = Output + "\n" + "\\end{document}";
     try {
       File latexOutput;
       latexOutput = new File(outDir);
-      if(!latexOutput.exists()){
+      if (!latexOutput.exists()) {
         latexOutput.mkdirs();
       }
       FileOutputStream f = new FileOutputStream(outFile);
@@ -258,29 +263,27 @@ public class FriedmanTables implements IExperimentOutput {
       f.close();
     } catch (IOException e) {
       Configuration.logger_.log(Level.SEVERE, "Error", e);
-      throw new RuntimeException() ;
+      throw new RuntimeException();
     }
   }
 
   private class Pair implements Comparable {
 
-    public double indice;
-    public double valor;
+    public double index_;
+    public double value_;
 
     public Pair() {
     }
 
     public Pair(double i, double v) {
-      indice = i;
-      valor = v;
+      index_ = i;
+      value_ = v;
     }
 
-    public int compareTo (Object o1) {
-      if (Math.abs(this.valor) > Math.abs(((Pair)o1).valor)){
-        //return -1;
+    public int compareTo(Object o1) {
+      if (Math.abs(this.value_) > Math.abs(((Pair) o1).value_)) {
         return 1;
-      } else if (Math.abs(this.valor) < Math.abs(((Pair)o1).valor)){
-        //return 1;
+      } else if (Math.abs(this.value_) < Math.abs(((Pair) o1).value_)) {
         return -1;
       } else {
         return 0;

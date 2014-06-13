@@ -24,9 +24,9 @@ package jmetal.metaheuristics.moead;
 import jmetal.core.*;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
+import jmetal.util.comparator.IConstraintViolationComparator;
+import jmetal.util.comparator.ViolationThresholdComparator;
 import jmetal.util.random.PseudoRandom;
-import jmetal.util.comparators.IConstraintViolationComparator;
-import jmetal.util.comparators.ViolationThresholdComparator;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -42,15 +42,9 @@ import java.util.logging.Level;
 public class cMOEAD extends Algorithm {
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = 6039874453533436343L;
-
-  private int populationSize_;
-  /**
-   * Stores the population
-   */
-  private SolutionSet population_;
   /**
    * Z vector (ideal point)
    */
@@ -58,7 +52,7 @@ public class cMOEAD extends Algorithm {
   /**
    * Lambda vectors
    */
-  //Vector<Vector<Double>> lambda_ ; 
+  //Vector<Vector<Double>> lambda_ ;
   double[][] lambda_;
   /**
    * T: neighbour size
@@ -84,20 +78,24 @@ public class cMOEAD extends Algorithm {
    */
   Operator crossover_;
   Operator mutation_;
-
   String dataDirectory_;
-
-  /** 
+  /**
    * Use this encodings.variable as comparator for the constraints
    */
   IConstraintViolationComparator comparator = new ViolationThresholdComparator();
+  private int populationSize_;
+  /**
+   * Stores the population
+   */
+  private SolutionSet population_;
 
-  /** 
+  /**
    * Constructor
+   *
    * @param problem Problem to solve
    */
-  public cMOEAD(Problem problem) {
-    super (problem) ;
+  public cMOEAD() {
+    super();
 
     functionType_ = "_TCHE1";
 
@@ -107,17 +105,17 @@ public class cMOEAD extends Algorithm {
     int maxEvaluations;
 
     evaluations_ = 0;
-    maxEvaluations = ((Integer) this.getInputParameter("maxEvaluations")).intValue();
-    populationSize_ = ((Integer) this.getInputParameter("populationSize")).intValue();
+    maxEvaluations = (Integer) this.getInputParameter("maxEvaluations");
+    populationSize_ = (Integer) this.getInputParameter("populationSize");
     dataDirectory_ = this.getInputParameter("dataDirectory").toString();
-    System.out.println("POPSIZE: "+ populationSize_) ;
+    Configuration.logger_.info("POPSIZE: " + populationSize_);
 
     population_ = new SolutionSet(populationSize_);
     indArray_ = new Solution[problem_.getNumberOfObjectives()];
 
-    T_ = ((Integer) this.getInputParameter("T")).intValue();
-    nr_ = ((Integer) this.getInputParameter("nr")).intValue();
-    delta_ = ((Double) this.getInputParameter("delta")).doubleValue();
+    T_ = (Integer) this.getInputParameter("T");
+    nr_ = (Integer) this.getInputParameter("nr");
+    delta_ = (Double) this.getInputParameter("delta");
 
     /*
     T_ = 20;
@@ -135,20 +133,18 @@ public class cMOEAD extends Algorithm {
     //lambda_ = new Vector(problem_.getNumberOfObjectives()) ;
     lambda_ = new double[populationSize_][problem_.getNumberOfObjectives()];
 
-    crossover_ = operators_.get("crossover"); // default: DE crossover
-    mutation_ = operators_.get("mutation");  // default: polynomial mutation
+    crossover_ = operators_.get("crossover");
+    mutation_ = operators_.get("mutation");
 
     // STEP 1. Initialization
     // STEP 1.1. Compute euclidean distances between weight vectors and find T
     initUniformWeight();
-    //for (int i = 0; i < 300; i++)
-    // 	System.out.println(lambda_[i][0] + " " + lambda_[i][1]) ;
 
     initNeighborhood();
 
     // STEP 1.2. Initialize population
     initPopulation();
-    ((ViolationThresholdComparator)this.comparator).updateThreshold(this.population_);
+    ((ViolationThresholdComparator) this.comparator).updateThreshold(this.population_);
 
     // STEP 1.3. Initialize z_
     initIdealPoint();
@@ -165,11 +161,12 @@ public class cMOEAD extends Algorithm {
         double rnd = PseudoRandom.randDouble();
 
         // STEP 2.1. Mating selection based on probability
-        if (rnd < delta_) // if (rnd < realb)    
-        {
-          type = 1;   // neighborhood
+        if (rnd < delta_) {
+          // neighborhood
+          type = 1;
         } else {
-          type = 2;   // whole population
+          // whole population
+          type = 2;
         }
         Vector<Integer> p = new Vector<Integer>();
         matingSelection(p, n, 2, type);
@@ -183,13 +180,13 @@ public class cMOEAD extends Algorithm {
         parents[2] = population_.get(n);
 
         // Apply DE crossover 
-        child = (Solution) crossover_.execute(new Object[]{population_.get(n), parents});
+        child = (Solution) crossover_.execute(new Object[] {population_.get(n), parents});
 
         // Apply mutation
         mutation_.execute(child);
 
         // Evaluation
-        problem_.evaluate(child);  
+        problem_.evaluate(child);
         problem_.evaluateConstraints(child);
 
         evaluations_++;
@@ -202,7 +199,7 @@ public class cMOEAD extends Algorithm {
         // STEP 2.5. Update of solutions
         updateProblem(child, n, type);
       } // for 
-      ((ViolationThresholdComparator)this.comparator).updateThreshold(this.population_);
+      ((ViolationThresholdComparator) this.comparator).updateThreshold(this.population_);
     } while (evaluations_ < maxEvaluations);
 
     return population_;
@@ -218,12 +215,12 @@ public class cMOEAD extends Algorithm {
         double a = 1.0 * n / (populationSize_ - 1);
         lambda_[n][0] = a;
         lambda_[n][1] = 1 - a;
-      } // for
-    } // if
+      }
+    }
     else {
       String dataFileName;
       dataFileName = "W" + problem_.getNumberOfObjectives() + "D_" +
-          populationSize_ + ".dat";
+        populationSize_ + ".dat";
 
       try {
         // Open the file
@@ -241,9 +238,8 @@ public class cMOEAD extends Algorithm {
 
           numberOfObjectives = st.countTokens();
           while (st.hasMoreTokens()) {
-            double value = (new Double(st.nextToken())).doubleValue();
+            double value = new Double(st.nextToken());
             lambda_[i][j] = value;
-            //System.out.println("lambda["+i+","+j+"] = " + value) ;
             j++;
           }
           aux = br.readLine();
@@ -252,16 +248,15 @@ public class cMOEAD extends Algorithm {
         br.close();
       } catch (Exception e) {
         Configuration.logger_.log(
-                Level.SEVERE,
-                "initUniformWeight: failed when reading for file: " + dataDirectory_ + "/" + dataFileName,
-                e);
+          Level.SEVERE,
+          "initUniformWeight: failed when reading for file: " + dataDirectory_ + "/" + dataFileName,
+          e);
       }
-    } // else
+    }
+  }
 
-    //System.exit(0) ;
-  } // initUniformWeight
   /**
-   * 
+   *
    */
   public void initNeighborhood() {
     double[] x = new double[populationSize_];
@@ -271,21 +266,18 @@ public class cMOEAD extends Algorithm {
       // calculate the distances based on weight vectors
       for (int j = 0; j < populationSize_; j++) {
         x[j] = Utils.distVector(lambda_[i], lambda_[j]);
-        //x[j] = dist_vector(population[i].namda,population[j].namda);
         idx[j] = j;
-        //System.out.println("x["+j+"]: "+x[j]+ ". idx["+j+"]: "+idx[j]) ;
-      } // for
+      }
 
       // find 'niche' nearest neighboring subproblems
       Utils.minFastSort(x, idx, populationSize_, T_);
-      //minfastsort(x,idx,population.size(),niche);
 
       System.arraycopy(idx, 0, neighborhood_[i], 0, T_);
-    } // for
-  } // initNeighborhood
+    }
+  }
 
   /**
-   * 
+   *
    */
   public void initPopulation() throws JMException, ClassNotFoundException {
     for (int i = 0; i < populationSize_; i++) {
@@ -294,12 +286,12 @@ public class cMOEAD extends Algorithm {
       problem_.evaluate(newSolution);
       problem_.evaluateConstraints(newSolution);
       evaluations_++;
-      population_.add(newSolution) ;
-    } // for
-  } // initPopulation
+      population_.add(newSolution);
+    }
+  }
 
   /**
-   * 
+   *
    */
   void initIdealPoint() throws JMException, ClassNotFoundException {
     for (int i = 0; i < problem_.getNumberOfObjectives(); i++) {
@@ -308,15 +300,15 @@ public class cMOEAD extends Algorithm {
       problem_.evaluate(indArray_[i]);
       problem_.evaluateConstraints(indArray_[i]);
       evaluations_++;
-    } // for
+    }
 
     for (int i = 0; i < populationSize_; i++) {
       updateReference(population_.get(i));
-    } // for
-  } // initIdealPoint
+    }
+  }
 
   /**
-   * 
+   *
    */
   public void matingSelection(Vector<Integer> list, int cid, int size, int type) {
     // list : the set of the indexes of selected mating parents
@@ -338,22 +330,21 @@ public class cMOEAD extends Algorithm {
       }
       boolean flag = true;
       for (Integer aList : list) {
-        if (aList == p) // p is in the list
-        {
+
+        if (aList == p) {
+          // p is in the list
           flag = false;
           break;
         }
       }
 
-      //if (flag) list.push_back(p);
       if (flag) {
         list.addElement(p);
       }
     }
-  } // matingSelection
+  }
 
   /**
-   * 
    * @param individual
    */
   void updateReference(Solution individual) {
@@ -364,7 +355,7 @@ public class cMOEAD extends Algorithm {
         indArray_[n] = individual;
       }
     }
-  } // updateReference
+  }
 
   /**
    * @param individual
@@ -394,7 +385,8 @@ public class cMOEAD extends Algorithm {
       if (type == 1) {
         k = neighborhood_[id][perm[i]];
       } else {
-        k = perm[i];      // calculate the values of objective function regarding the current subproblem
+        k =
+          perm[i];
       }
       double f1, f2;
 
@@ -407,18 +399,15 @@ public class cMOEAD extends Algorithm {
         int flag = comparator.compare(population_.get(k), individual);
         if (flag == 1) {
           population_.replace(k, new Solution(individual));
-        }
-        else if (flag == 0) {
+        } else if (flag == 0) {
           if (f2 < f1) {
             population_.replace(k, new Solution(individual));
-            //population[k].indiv = indiv;
             time++;
           }
         }
-      } else {            
+      } else {
         if (f2 < f1) {
           population_.replace(k, new Solution(individual));
-          //population[k].indiv = indiv;
           time++;
         }
       }
@@ -427,13 +416,13 @@ public class cMOEAD extends Algorithm {
         return;
       }
     }
-  } // updateProblem
+  }
 
   double fitnessFunction(Solution individual, double[] lambda) throws JMException {
     double fitness;
     fitness = 0.0;
 
-    if (functionType_.equals("_TCHE1")) {
+    if ("_TCHE1".equals(functionType_)) {
       double maxFun = -1.0e+30;
 
       for (int n = 0; n < problem_.getNumberOfObjectives(); n++) {
@@ -448,14 +437,13 @@ public class cMOEAD extends Algorithm {
         if (feval > maxFun) {
           maxFun = feval;
         }
-      } // for
+      }
 
       fitness = maxFun;
-    } // if
+    }
     else {
-      throw new JMException("cMOEAD.fitnessFunction: unknown type " + functionType_) ;
+      throw new JMException("cMOEAD.fitnessFunction: unknown type " + functionType_);
     }
     return fitness;
-  } // fitnessEvaluation    
-
+  }
 }

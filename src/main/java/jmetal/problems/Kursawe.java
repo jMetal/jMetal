@@ -42,7 +42,8 @@ public class Kursawe extends Problem {
   /**
    * Constructor.
    * Creates a default instance of the Kursawe problem.
-   * @param solutionType The solution type must "Real", "BinaryReal, and "ArrayReal". 
+   *
+   * @param solutionType The solution type must "Real", "BinaryReal, and "ArrayReal".
    */
   public Kursawe(String solutionType) throws ClassNotFoundException, JMException {
     this(solutionType, 3);
@@ -51,21 +52,22 @@ public class Kursawe extends Problem {
   /**
    * Constructor.
    * Creates a new instance of the Kursawe problem.
-   * @param numberOfVariables Number of variables of the problem 
-   * @param solutionType The solution type must "Real", "BinaryReal, and "ArrayReal". 
+   *
+   * @param numberOfVariables Number of variables of the problem
+   * @param solutionType      The solution type must "Real", "BinaryReal, and "ArrayReal".
    */
   public Kursawe(String solutionType, Integer numberOfVariables) throws JMException {
-    numberOfVariables_   = numberOfVariables;
-    numberOfObjectives_  = 2                            ;
-    numberOfConstraints_ = 0                            ;
-    problemName_         = "Kursawe"                    ;
+    numberOfVariables_ = numberOfVariables;
+    numberOfObjectives_ = 2;
+    numberOfConstraints_ = 0;
+    problemName_ = "Kursawe";
 
-    upperLimit_ = new double[numberOfVariables_] ;
-    lowerLimit_ = new double[numberOfVariables_] ;
+    upperLimit_ = new double[numberOfVariables_];
+    lowerLimit_ = new double[numberOfVariables_];
 
     for (int i = 0; i < numberOfVariables_; i++) {
-      lowerLimit_[i] = -5.0 ;
-      upperLimit_[i] = 5.0  ;
+      lowerLimit_[i] = -5.0;
+      upperLimit_[i] = 5.0;
     } // for
 
     if (solutionType.compareTo("BinaryReal") == 0) {
@@ -75,38 +77,39 @@ public class Kursawe extends Problem {
     } else if (solutionType.compareTo("ArrayReal") == 0) {
       solutionType_ = new ArrayRealSolutionType(this);
     } else {
-      throw new JMException("Error: solution type " + solutionType + " invalid") ;
+      throw new JMException("Error: solution type " + solutionType + " invalid");
     }
   }
 
   /**
-   * Evaluates a solution 
+   * Evaluates a solution
+   *
    * @param solution The solution to evaluate
    * @throws JMException
    */
   public void evaluate(Solution solution) throws JMException {
-    XReal vars = new XReal(solution) ;
+    XReal vars = new XReal(solution);
 
-    double aux, xi, xj           ; // auxiliary variables
-    double [] fx = new double[2] ; // function values     
-    double [] x = new double[numberOfVariables_] ;
-    for (int i = 0 ; i < numberOfVariables_; i++) {
+    double aux, xi, xj; // auxiliary variables
+    double[] fx = new double[2]; // function values
+    double[] x = new double[numberOfVariables_];
+    for (int i = 0; i < numberOfVariables_; i++) {
       x[i] = vars.getValue(i);
     }
 
-    fx[0] = 0.0 ;
+    fx[0] = 0.0;
     for (int var = 0; var < numberOfVariables_ - 1; var++) {
-      xi = x[var] *  x[var];
-      xj = x[var+1] * x[var+1] ;
+      xi = x[var] * x[var];
+      xj = x[var + 1] * x[var + 1];
       aux = (-0.2) * Math.sqrt(xi + xj);
       fx[0] += (-10.0) * Math.exp(aux);
     }
 
     fx[1] = 0.0;
 
-    for (int var = 0; var < numberOfVariables_ ; var++) {
+    for (int var = 0; var < numberOfVariables_; var++) {
       fx[1] += Math.pow(Math.abs(x[var]), 0.8) +
-              5.0 * Math.sin(Math.pow(x[var], 3.0));
+        5.0 * Math.sin(Math.pow(x[var], 3.0));
     }
 
     solution.setObjective(0, fx[0]);

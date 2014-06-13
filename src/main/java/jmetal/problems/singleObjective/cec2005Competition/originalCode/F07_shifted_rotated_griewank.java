@@ -44,7 +44,7 @@
 //		Revised according to the Matlab reference code and the PDF document
 //		dated March 8, 2005.
 //
-package jmetal.problems.singleObjective.cec2005Competition.originalCode ;
+package jmetal.problems.singleObjective.cec2005Competition.originalCode;
 
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
@@ -53,8 +53,10 @@ public class F07_shifted_rotated_griewank extends TestFunc {
 
   // Fixed (class) parameters
   static final public String FUNCTION_NAME = "Shifted Rotated Griewank's Function without Bounds";
-  static final public String DEFAULT_FILE_DATA = "" + Configuration.cec2005SupportDataDirectory +"/griewank_func_data.txt";
-  static final public String DEFAULT_FILE_MX_PREFIX = "" + Configuration.cec2005SupportDataDirectory +"/griewank_M_D";
+  static final public String DEFAULT_FILE_DATA =
+    "" + Configuration.cec2005SupportDataDirectory + "/griewank_func_data.txt";
+  static final public String DEFAULT_FILE_MX_PREFIX =
+    "" + Configuration.cec2005SupportDataDirectory + "/griewank_M_D";
   static final public String DEFAULT_FILE_MX_SUFFIX = ".txt";
 
   // Shifted global optimum
@@ -67,10 +69,13 @@ public class F07_shifted_rotated_griewank extends TestFunc {
   private double[] m_zM;
 
   // Constructors
-  public F07_shifted_rotated_griewank (int dimension, double bias) throws JMException {
-    this(dimension, bias, DEFAULT_FILE_DATA, DEFAULT_FILE_MX_PREFIX + dimension + DEFAULT_FILE_MX_SUFFIX);
+  public F07_shifted_rotated_griewank(int dimension, double bias) throws JMException {
+    this(dimension, bias, DEFAULT_FILE_DATA,
+      DEFAULT_FILE_MX_PREFIX + dimension + DEFAULT_FILE_MX_SUFFIX);
   }
-  public F07_shifted_rotated_griewank (int dimension, double bias, String file_data, String file_m) throws JMException {
+
+  public F07_shifted_rotated_griewank(int dimension, double bias, String file_data, String file_m)
+    throws JMException {
     super(dimension, bias, FUNCTION_NAME);
 
     // Note: dimension starts from 0

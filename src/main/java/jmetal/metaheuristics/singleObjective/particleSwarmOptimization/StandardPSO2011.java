@@ -26,7 +26,7 @@ import jmetal.util.AdaptiveRandomNeighborhood;
 import jmetal.util.Configuration;
 import jmetal.util.Distance;
 import jmetal.util.JMException;
-import jmetal.util.comparators.ObjectiveComparator;
+import jmetal.util.comparator.ObjectiveComparator;
 import jmetal.util.random.PseudoRandom;
 import jmetal.util.wrapper.XReal;
 
@@ -39,53 +39,51 @@ import java.util.logging.Level;
  */
 public class StandardPSO2011 extends Algorithm {
 
+  int evaluations_;
+  Comparator comparator_;
+  Operator findBestSolution_;
   private SolutionSet swarm_;
   private int swarmSize_;
   private int maxIterations_;
   private int iteration_;
-  private int numberOfParticlesToInform_ ; // Referred a K in the SPSO document
+  private int numberOfParticlesToInform_; // Referred a K in the SPSO document
   private Solution[] localBest_;
   private Solution[] neighborhoodBest_;
   private double[][] speed_;
-  private AdaptiveRandomNeighborhood neighborhood_ ;
-
-  int evaluations_ ;
-
-  Comparator  comparator_  ;
-
-  Operator findBestSolution_ ;
-
+  private AdaptiveRandomNeighborhood neighborhood_;
   private double W_;
   private double C_;
-  private double ChVel_ ;
-
-  public double getW() {
-    return W_ ;
-  }
-  public double getC() {
-    return C_ ;
-  }
+  private double ChVel_;
 
   /**
    * Constructor
+   *
    * @param problem Problem to solve
    */
-  public StandardPSO2011(Problem problem) {
-    super(problem) ;
+  public StandardPSO2011() {
+    super();
 
-    W_ = 1.0/(2.0 * Math.log(2)) ; //0.721;
-    C_ = 1.0/2.0 + Math.log(2) ; //1.193;
-    ChVel_ = -0.5 ;
+    W_ = 1.0 / (2.0 * Math.log(2)); //0.721;
+    C_ = 1.0 / 2.0 + Math.log(2); //1.193;
+    ChVel_ = -0.5;
 
-    comparator_ = new ObjectiveComparator(0) ; // Single objective comparator
-    HashMap  parameters ; // Operator parameters
+    comparator_ = new ObjectiveComparator(0); // Single objective comparator
+    HashMap parameters; // Operator parameters
 
-    parameters = new HashMap() ;
-    parameters.put("comparator", comparator_) ;
-    findBestSolution_ = new BestSolutionSelection(parameters) ;
+    parameters = new HashMap();
+    parameters.put("comparator", comparator_);
+    findBestSolution_ = new BestSolutionSelection(parameters);
 
-    evaluations_ = 0 ;
+    evaluations_ = 0;
   } // Constructor
+
+  public double getW() {
+    return W_;
+  }
+
+  public double getC() {
+    return C_;
+  }
 
   /**
    * Initialize all parameter of the algorithm
@@ -93,9 +91,10 @@ public class StandardPSO2011 extends Algorithm {
   public void initParams() {
     swarmSize_ = ((Integer) getInputParameter("swarmSize")).intValue();
     maxIterations_ = ((Integer) getInputParameter("maxIterations")).intValue();
-    numberOfParticlesToInform_ = ((Integer) getInputParameter("numberOfParticlesToInform")).intValue() ;
+    numberOfParticlesToInform_ =
+      ((Integer) getInputParameter("numberOfParticlesToInform")).intValue();
 
-    iteration_ = 0 ;
+    iteration_ = 0;
 
     swarm_ = new SolutionSet(swarmSize_);
     localBest_ = new Solution[swarmSize_];
@@ -106,34 +105,36 @@ public class StandardPSO2011 extends Algorithm {
   } // initParams
 
   private Solution getNeighborBest(int i) {
-    Solution bestLocalBestSolution = null ;
+    Solution bestLocalBestSolution = null;
 
     try {
       for (int index : neighborhood_.getNeighbors(i)) {
-        if ((bestLocalBestSolution == null) || (bestLocalBestSolution.getObjective(0) > localBest_[index].getObjective(0))) {
-          bestLocalBestSolution = localBest_[index] ;
+        if ((bestLocalBestSolution == null) || (bestLocalBestSolution.getObjective(0)
+          > localBest_[index].getObjective(0))) {
+          bestLocalBestSolution = localBest_[index];
         }
       }
     } catch (JMException e) {
       Configuration.logger_.log(Level.SEVERE, "Error", e);
     }
 
-    return bestLocalBestSolution ;
+    return bestLocalBestSolution;
   }
 
   private void computeSpeed() throws ClassNotFoundException, JMException {
     for (int i = 0; i < swarmSize_; i++) {
-      XReal particle = new XReal(swarm_.get(i)) ;
-      XReal localBest = new XReal(localBest_[i]) ;
-      XReal neighborhoodBest = new XReal(neighborhoodBest_[i]) ;
-      XReal gravityCenter = new XReal(new Solution(problem_)) ;
-      XReal randomParticle = new XReal (new Solution(swarm_.get(i))) ;
+      XReal particle = new XReal(swarm_.get(i));
+      XReal localBest = new XReal(localBest_[i]);
+      XReal neighborhoodBest = new XReal(neighborhoodBest_[i]);
+      XReal gravityCenter = new XReal(new Solution(problem_));
+      XReal randomParticle = new XReal(new Solution(swarm_.get(i)));
 
       if (localBest_[i] != neighborhoodBest_[i]) {
         for (int var = 0; var < particle.size(); var++) {
           double G;
           G = particle.getValue(var) +
-                  C_ * (localBest.getValue(var) + neighborhoodBest.getValue(var) - 2 * particle.getValue(var)) / 3.0;
+            C_ * (localBest.getValue(var) + neighborhoodBest.getValue(var) - 2 * particle
+              .getValue(var)) / 3.0;
 
           gravityCenter.setValue(var, G);
         }
@@ -141,23 +142,25 @@ public class StandardPSO2011 extends Algorithm {
         for (int var = 0; var < particle.size(); var++) {
           double G;
           G = particle.getValue(var) +
-                  C_ * (localBest.getValue(var) - particle.getValue(var)) / 2.0;
+            C_ * (localBest.getValue(var) - particle.getValue(var)) / 2.0;
 
           gravityCenter.setValue(var, G);
         }
       }
 
       double radius = 0;
-      radius = new Distance().distanceBetweenSolutions(gravityCenter.getSolution(), particle.getSolution());
+      radius = new Distance()
+        .distanceBetweenSolutions(gravityCenter.getSolution(), particle.getSolution());
 
-      double [] random = PseudoRandom.randSphere(problem_.getNumberOfVariables()) ;
+      double[] random = PseudoRandom.randSphere(problem_.getNumberOfVariables());
 
       for (int var = 0; var < particle.size(); var++) {
-        randomParticle.setValue(var, gravityCenter.getValue(var) + radius*random[var]) ;
+        randomParticle.setValue(var, gravityCenter.getValue(var) + radius * random[var]);
       }
 
       for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
-        speed_[i][var] = W_*speed_[i][var] + randomParticle.getValue(var) - particle.getValue(var);
+        speed_[i][var] =
+          W_ * speed_[i][var] + randomParticle.getValue(var) - particle.getValue(var);
       }
     }
 
@@ -165,13 +168,14 @@ public class StandardPSO2011 extends Algorithm {
 
   /**
    * Update the position of each particle
+   *
    * @throws jmetal.util.JMException
    */
   private void computeNewPositions() throws JMException {
     for (int i = 0; i < swarmSize_; i++) {
-      XReal particle = new XReal(swarm_.get(i)) ;
+      XReal particle = new XReal(swarm_.get(i));
       for (int var = 0; var < particle.size(); var++) {
-        particle.setValue(var, particle.getValue(var) +  speed_[i][var]) ;
+        particle.setValue(var, particle.getValue(var) + speed_[i][var]);
 
         if (particle.getValue(var) < problem_.getLowerLimit(var)) {
           particle.setValue(var, problem_.getLowerLimit(var));
@@ -188,6 +192,7 @@ public class StandardPSO2011 extends Algorithm {
 
   /**
    * Runs of the SMPSO algorithm.
+   *
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
    * as a result of the algorithm execution
    * @throws jmetal.util.JMException
@@ -199,23 +204,23 @@ public class StandardPSO2011 extends Algorithm {
     for (int i = 0; i < swarmSize_; i++) {
       Solution particle = new Solution(problem_);
       problem_.evaluate(particle);
-      evaluations_ ++ ;
+      evaluations_++;
       swarm_.add(particle);
     }
 
-    neighborhood_ = new AdaptiveRandomNeighborhood(swarm_, numberOfParticlesToInform_) ;
+    neighborhood_ = new AdaptiveRandomNeighborhood(swarm_, numberOfParticlesToInform_);
 
-    System.out.println("SwarmSize: " + swarmSize_) ;
-    System.out.println("Swarm size: " + swarm_.size()) ;
-    System.out.println("list size: " + neighborhood_.getNeighborhood().size()) ;
+    Configuration.logger_.info("SwarmSize: " + swarmSize_);
+    Configuration.logger_.info("Swarm size: " + swarm_.size());
+    Configuration.logger_.info("list size: " + neighborhood_.getNeighborhood().size());
 
     // Step2. Initialize the speed_ of each particle
     for (int i = 0; i < swarmSize_; i++) {
-      XReal particle = new XReal(swarm_.get(i))  ;
+      XReal particle = new XReal(swarm_.get(i));
       for (int j = 0; j < problem_.getNumberOfVariables(); j++) {
         speed_[i][j] = (PseudoRandom.randDouble(
-                particle.getLowerBound(j) - particle.getValue(0),
-                particle.getUpperBound(j) - particle.getValue(0))) ;
+          particle.getLowerBound(j) - particle.getValue(0),
+          particle.getUpperBound(j) - particle.getValue(0)));
       }
     }
 
@@ -226,27 +231,27 @@ public class StandardPSO2011 extends Algorithm {
     }
 
     for (int i = 0; i < swarm_.size(); i++) {
-      neighborhoodBest_[i] = getNeighborBest(i) ;
+      neighborhoodBest_[i] = getNeighborBest(i);
     }
 
-    //System.out.println("neighborhood_i " + neighborhood_.getNeighbors(0) );
+    //Configuration.logger_.info("neighborhood_i " + neighborhood_.getNeighbors(0) );
     //for (int s :  neighborhood_.getNeighbors(0)) {
-    //  System.out.println(s + ": " + localBest_[s].getObjective(0)) ;
+    //  Configuration.logger_.info(s + ": " + localBest_[s].getObjective(0)) ;
     //}
 
-    //System.out.println("localBest_i " + localBest_[0].getObjective(0) );
-    //System.out.println("neighborhoodBest_i " + getNeighborBest(0).getObjective(0) );
+    //Configuration.logger_.info("localBest_i " + localBest_[0].getObjective(0) );
+    //Configuration.logger_.info("neighborhoodBest_i " + getNeighborBest(0).getObjective(0) );
 
-    //System.out.println("Swarm: " + swarm_) ;
+    //Configuration.logger_.info("Swarm: " + swarm_) ;
     swarm_.printObjectives();
-    Double b = swarm_.best(comparator_).getObjective(0) ;
-    //System.out.println("Best: " + b) ;
+    Double b = swarm_.best(comparator_).getObjective(0);
+    //Configuration.logger_.info("Best: " + b) ;
 
 
-    double bestFoundFitness = Double.MAX_VALUE ;
+    double bestFoundFitness = Double.MAX_VALUE;
     while (iteration_ < maxIterations_) {
       //Compute the speed
-      computeSpeed() ;
+      computeSpeed();
 
       //Compute the new positions for the swarm
       computeNewPositions();
@@ -255,7 +260,7 @@ public class StandardPSO2011 extends Algorithm {
       for (int i = 0; i < swarm_.size(); i++) {
         Solution particle = swarm_.get(i);
         problem_.evaluate(particle);
-        evaluations_ ++ ;
+        evaluations_++;
       }
 
       //Update the memory of the particles
@@ -266,28 +271,28 @@ public class StandardPSO2011 extends Algorithm {
         }
       }
       for (int i = 0; i < swarm_.size(); i++) {
-        neighborhoodBest_[i] = getNeighborBest(i) ;
+        neighborhoodBest_[i] = getNeighborBest(i);
       }
 
       iteration_++;
 
-      Double bestCurrentFitness = swarm_.best(comparator_).getObjective(0) ;
-      System.out.println("Best: " + bestCurrentFitness) ;
+      Double bestCurrentFitness = swarm_.best(comparator_).getObjective(0);
+      Configuration.logger_.info("Best: " + bestCurrentFitness);
 
       if (bestCurrentFitness == bestFoundFitness) {
-        System.out.println("Recomputing") ;
+        Configuration.logger_.info("Recomputing");
         neighborhood_.recompute();
       }
 
       if (bestCurrentFitness < bestFoundFitness) {
-        bestFoundFitness = bestCurrentFitness ;
+        bestFoundFitness = bestCurrentFitness;
       }
     }
 
     // Return a population with the best individual
-    SolutionSet resultPopulation = new SolutionSet(1) ;
-    resultPopulation.add(swarm_.get((Integer)findBestSolution_.execute(swarm_))) ;
+    SolutionSet resultPopulation = new SolutionSet(1);
+    resultPopulation.add(swarm_.get((Integer) findBestSolution_.execute(swarm_)));
 
-    return resultPopulation ;
+    return resultPopulation;
   }
 }

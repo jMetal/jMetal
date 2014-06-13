@@ -27,14 +27,14 @@ public class SBXCrossoverOffspring extends Offspring {
   private Operator selection_;
 
   public SBXCrossoverOffspring(double crossoverProbability,
-      double distributionIndexForCrossover) throws JMException {
+    double distributionIndexForCrossover) throws JMException {
     crossoverProbability_ = crossoverProbability;
     distributionIndexForCrossover_ = distributionIndexForCrossover;
 
     // Crossover operator
-    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
-    crossoverParameters.put("probability", crossoverProbability_) ;
-    crossoverParameters.put("distributionIndex", distributionIndexForCrossover_) ;
+    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
+    crossoverParameters.put("probability", crossoverProbability_);
+    crossoverParameters.put("distributionIndex", distributionIndexForCrossover_);
 
     crossover_ = CrossoverFactory.getCrossoverOperator("SBXCrossover", crossoverParameters);
     selection_ = SelectionFactory.getSelectionOperator("BinaryTournament", null);
@@ -62,15 +62,15 @@ public class SBXCrossoverOffspring extends Offspring {
   } // getOffpring
 
   /**
-   * 
+   *
    */
   public Solution getOffspring(Solution[] parentSolutions) {
     Solution[] parents = new Solution[2];
     Solution offSpring = null;
 
     try {
-      parents[0] = parentSolutions[0] ;
-      parents[1] = parentSolutions[1] ;
+      parents[0] = parentSolutions[0];
+      parents[1] = parentSolutions[1];
 
       Solution[] children = (Solution[]) crossover_.execute(parents);
       offSpring = children[0];
@@ -91,9 +91,9 @@ public class SBXCrossoverOffspring extends Offspring {
       parents[0] = (Solution) selection_.execute(solutionSet);
 
       if (archive.size() > 0) {
-        parents[1] = (Solution)selection_.execute(archive);
+        parents[1] = (Solution) selection_.execute(archive);
       } else {
-        parents[1] = (Solution)selection_.execute(solutionSet);
+        parents[1] = (Solution) selection_.execute(solutionSet);
       }
 
       Solution[] children = (Solution[]) crossover_.execute(parents);
@@ -108,12 +108,12 @@ public class SBXCrossoverOffspring extends Offspring {
   } // getOffpring
 
   public String configuration() {
-    String result = "-----\n" ;
-    result += "Operator: " + id_ + "\n" ;
-    result += "Probability: " + crossoverProbability_ + "\n" ;
-    result += "DistributionIndex: " + distributionIndexForCrossover_ ;
+    String result = "-----\n";
+    result += "Operator: " + id_ + "\n";
+    result += "Probability: " + crossoverProbability_ + "\n";
+    result += "DistributionIndex: " + distributionIndexForCrossover_;
 
-    return result ;
+    return result;
   }
 } // DifferentialEvolutionOffspring
 

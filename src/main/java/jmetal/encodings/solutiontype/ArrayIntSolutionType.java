@@ -27,40 +27,42 @@ import jmetal.core.Variable;
 import jmetal.encodings.variable.ArrayInt;
 
 /**
-* Class representing the solution type of solutions composed of an ArrayInt 
-* encodings.variable
-*/
+ * Class representing the solution type of solutions composed of an ArrayInt
+ * encodings.variable
+ */
 public class ArrayIntSolutionType extends SolutionType {
 
-	/**
-	 * Constructor
-	 * @param problem Problem being solved
-	 */
-	public ArrayIntSolutionType(Problem problem) {
-		super(problem) ;
-	}
-	
-	/**
-	 * Creates the variables of the solution
-	 */
-	public Variable[] createVariables() {
-		Variable [] variables = new Variable[1];
-		
+  /**
+   * Constructor
+   *
+   * @param problem Problem being solved
+   */
+  public ArrayIntSolutionType(Problem problem) {
+    super(problem);
+  }
+
+  /**
+   * Creates the variables of the solution
+   */
+  public Variable[] createVariables() {
+    Variable[] variables = new Variable[1];
+
     variables[0] = new ArrayInt(getProblem().getNumberOfVariables(), getProblem());
-    return variables ;
-	}
-	
-	/**
-	 * Copy the variables
-	 * @param vars Variables to copy
-	 * @return An array of variables
-	 */
-	public Variable[] copyVariables(Variable[] vars) {
-		Variable[] variables ;
-		
-		variables = new Variable[1];
-	  variables[0] = vars[0].deepCopy();
-		
-		return variables ;
-	}
+    return variables;
+  }
+
+  /**
+   * Copy the variables
+   *
+   * @param vars Variables to copy
+   * @return An array of variables
+   */
+  public Variable[] copyVariables(Variable[] vars) {
+    Variable[] variables;
+
+    variables = new Variable[1];
+    variables[0] = vars[0].deepCopy();
+
+    return variables;
+  }
 }

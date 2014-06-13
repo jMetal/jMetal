@@ -27,6 +27,7 @@
 package jmetal.qualityIndicator.fastHypervolume.wfg;
 
 import jmetal.core.SolutionSet;
+import jmetal.util.Configuration;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -42,80 +43,79 @@ import java.util.*;
  * To change this template use File | Settings | File Templates.
  */
 public class Front {
-  private int numberOfPoints_ ;
-  private int dimension_ ;
-  public Point[] points_ ;
-  private boolean maximizing_ ;
-  public int nPoints_ ;
-
-  private Comparator<Point> pointComparator ;
+  public Point[] points_;
+  public int nPoints_;
+  private int numberOfPoints_;
+  private int dimension_;
+  private boolean maximizing_;
+  private Comparator<Point> pointComparator;
 
   public Front() {
-    maximizing_ = true ;
-    pointComparator = new PointComparator(maximizing_) ;
+    maximizing_ = true;
+    pointComparator = new PointComparator(maximizing_);
   }
 
-  public Front (int numberOfPoints, int dimension, SolutionSet solutionSet) {
-    maximizing_ = true ;
-    pointComparator = new PointComparator(maximizing_) ;
-    numberOfPoints_ = numberOfPoints ;
-    dimension_ = dimension  ;
-    nPoints_ = numberOfPoints_ ;
+  public Front(int numberOfPoints, int dimension, SolutionSet solutionSet) {
+    maximizing_ = true;
+    pointComparator = new PointComparator(maximizing_);
+    numberOfPoints_ = numberOfPoints;
+    dimension_ = dimension;
+    nPoints_ = numberOfPoints_;
 
-    points_ = new Point[numberOfPoints_] ;
-    for (int i = 0 ; i < numberOfPoints_; i++) {
-      double [] p = new double[dimension] ;
-      for (int j = 0 ; j < dimension; j++) {
-        p[j] = solutionSet.get(i).getObjective(j) ;
+    points_ = new Point[numberOfPoints_];
+    for (int i = 0; i < numberOfPoints_; i++) {
+      double[] p = new double[dimension];
+      for (int j = 0; j < dimension; j++) {
+        p[j] = solutionSet.get(i).getObjective(j);
       }
-      points_[i] = new Point(p) ;
+      points_[i] = new Point(p);
     }
   }
 
-  public Front (int numberOfPoints, int dimension) {
-    maximizing_ = true ;
-    pointComparator = new PointComparator(maximizing_) ;
-    numberOfPoints_ = numberOfPoints ;
-    dimension_ = dimension  ;
-    nPoints_ = numberOfPoints_ ;
+  public Front(int numberOfPoints, int dimension) {
+    maximizing_ = true;
+    pointComparator = new PointComparator(maximizing_);
+    numberOfPoints_ = numberOfPoints;
+    dimension_ = dimension;
+    nPoints_ = numberOfPoints_;
 
-    points_ = new Point[numberOfPoints_] ;
-    for (int i = 0 ; i < numberOfPoints_; i++) {
-      double [] p = new double[dimension] ;
-      for (int j = 0 ; j < dimension; j++) {
-        p[j] = 0.0 ;
+    points_ = new Point[numberOfPoints_];
+    for (int i = 0; i < numberOfPoints_; i++) {
+      double[] p = new double[dimension];
+      for (int j = 0; j < dimension; j++) {
+        p[j] = 0.0;
       }
-      points_[i] = new Point(p) ;
+      points_[i] = new Point(p);
     }
   }
 
   public Front(int numberOfPoints, int dimension, List<double[]> listOfPoints) {
-    maximizing_ = true ;
-    pointComparator = new PointComparator(maximizing_) ;
-    numberOfPoints_ = numberOfPoints ;
-    dimension_ = dimension  ;
+    maximizing_ = true;
+    pointComparator = new PointComparator(maximizing_);
+    numberOfPoints_ = numberOfPoints;
+    dimension_ = dimension;
 
-    points_ = new Point[numberOfPoints_] ;
-    for (int i = 0 ; i < numberOfPoints_; i++) {
-      points_[i] = new Point(listOfPoints.get(i)) ;
+    points_ = new Point[numberOfPoints_];
+    for (int i = 0; i < numberOfPoints_; i++) {
+      points_[i] = new Point(listOfPoints.get(i));
     }
   }
 
 
   public void readFront(String fileName) throws IOException {
-    FileInputStream fis   = new FileInputStream(fileName)  ;
-    InputStreamReader isr = new InputStreamReader(fis)    ;
-    BufferedReader br      = new BufferedReader(isr)      ;
+    FileInputStream fis = new FileInputStream(fileName);
+    InputStreamReader isr = new InputStreamReader(fis);
+    BufferedReader br = new BufferedReader(isr);
 
-    List<double []> list = new ArrayList<double []>();
+    List<double[]> list = new ArrayList<double[]>();
     int numberOfObjectives = 0;
     String aux = br.readLine();
-    while (aux!= null) {
+    while (aux != null) {
       StringTokenizer st = new StringTokenizer(aux);
       int i = 0;
       numberOfObjectives = st.countTokens();
 
-      double [] vector = new double[st.countTokens()];
+      double[] vector = new double[st.countTokens()];
       while (st.hasMoreTokens()) {
         double value = new Double(st.nextToken());
         vector[i] = value;
@@ -125,12 +125,12 @@ public class Front {
       aux = br.readLine();
     }
     br.close();
-    numberOfPoints_ = list.size() ;
-    dimension_ = numberOfObjectives ;
-    points_ = new Point[numberOfPoints_] ;
-    nPoints_ = numberOfPoints_ ;
-    for (int i = 0 ; i < numberOfPoints_; i++) {
-      points_[i] = new Point(list.get(i)) ;
+    numberOfPoints_ = list.size();
+    dimension_ = numberOfObjectives;
+    points_ = new Point[numberOfPoints_];
+    nPoints_ = numberOfPoints_;
+    for (int i = 0; i < numberOfPoints_; i++) {
+      points_[i] = new Point(list.get(i));
     }
   }
 
@@ -138,7 +138,7 @@ public class Front {
   public void loadFront(SolutionSet solutionSet, int notLoadingIndex) {
 
     if (notLoadingIndex >= 0 && notLoadingIndex < solutionSet.size()) {
-      numberOfPoints_ = solutionSet.size()-1;
+      numberOfPoints_ = solutionSet.size() - 1;
     } else {
       numberOfPoints_ = solutionSet.size();
     }
@@ -151,7 +151,7 @@ public class Front {
     int index = 0;
     for (int i = 0; i < solutionSet.size(); i++) {
       if (i != notLoadingIndex) {
-        double [] vector = new double[dimension_];
+        double[] vector = new double[dimension_];
         for (int j = 0; j < dimension_; j++) {
           vector[j] = solutionSet.get(i).getObjective(j);
         }
@@ -161,16 +161,16 @@ public class Front {
   }
 
   public void printFront() {
-    System.out.println("Objectives:       " + dimension_) ;
-    System.out.println("Number of points: " + numberOfPoints_) ;
+    Configuration.logger_.info("Objectives:       " + dimension_);
+    Configuration.logger_.info("Number of points: " + numberOfPoints_);
 
     for (Point point : points_) {
-      System.out.println(point) ;
+      Configuration.logger_.info(""+point);
     }
   }
 
   public int getNumberOfObjectives() {
-    return dimension_ ;
+    return dimension_;
   }
 
   public int getNumberOfPoints() {
@@ -178,21 +178,21 @@ public class Front {
   }
 
   public Point getPoint(int index) {
-    return points_[index] ;
+    return points_[index];
   }
 
   public Point[] getPoints() {
-    return points_ ;
+    return points_;
   }
 
   public void setToMazimize() {
-    maximizing_ = true ;
-    pointComparator = new PointComparator(maximizing_) ;
+    maximizing_ = true;
+    pointComparator = new PointComparator(maximizing_);
   }
 
   public void setToMinimize() {
-    maximizing_ = false ;
-    pointComparator = new PointComparator(maximizing_) ;
+    maximizing_ = false;
+    pointComparator = new PointComparator(maximizing_);
   }
 
   public void sort() {
@@ -200,25 +200,23 @@ public class Front {
   }
 
   public Point getReferencePoint() {
-    Point referencePoint = new Point(dimension_) ;
+    Point referencePoint = new Point(dimension_);
 
-    double [] maxObjectives = new double[numberOfPoints_] ;
+    double[] maxObjectives = new double[numberOfPoints_];
     for (int i = 0; i < numberOfPoints_; i++) {
       maxObjectives[i] = 0;
     }
 
-    for (int i = 0; i < points_.length; i++) {
+    for (Point aPoints_ : points_) {
       for (int j = 0; j < dimension_; j++) {
-        if (maxObjectives[j] < points_[i].objectives_[j]) {
-          maxObjectives[j] = points_[i].objectives_[j];
+        if (maxObjectives[j] < aPoints_.objectives_[j]) {
+          maxObjectives[j] = aPoints_.objectives_[j];
         }
       }
     }
 
-    for (int i = 0; i < dimension_; i++) {
-      referencePoint.objectives_[i] = maxObjectives[i];
-    }
+    System.arraycopy(maxObjectives, 0, referencePoint.objectives_, 0, dimension_);
 
-    return referencePoint ;
+    return referencePoint;
   }
 }

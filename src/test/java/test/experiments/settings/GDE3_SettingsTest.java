@@ -20,12 +20,11 @@
 
 package test.experiments.settings;
 
-import jmetal.core.Algorithm;
 import jmetal.experiments.Settings;
 import jmetal.experiments.settings.GDE3_Settings;
+import jmetal.metaheuristics.gde3.GDE3;
 import jmetal.operators.crossover.DifferentialEvolutionCrossover;
 import jmetal.util.JMException;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -57,36 +56,32 @@ public class GDE3_SettingsTest {
   @Test
   public void test() throws JMException {
     double epsilon = 0.000000000000001;
-    Settings GDE3Settings = new GDE3_Settings("Fonseca");
-    Algorithm algorithm = GDE3Settings.configure();
-    //Problem problem = new Fonseca("Real");
+    GDE3_Settings GDE3Settings = new GDE3_Settings("Fonseca");
+    GDE3 algorithm = (GDE3) GDE3Settings.configure();
 
-    DifferentialEvolutionCrossover crossover = (DifferentialEvolutionCrossover)algorithm.getOperator("crossover") ;
-    double CR = (Double)crossover.getParameter("CR") ;
-    double F = (Double)crossover.getParameter("F") ;
+    DifferentialEvolutionCrossover crossover =
+      (DifferentialEvolutionCrossover) algorithm.getCrossoverOperator();
 
-    Assert.assertEquals("GDE3_SettingsTest", 100, ((Integer)algorithm.getInputParameter("populationSize")).intValue());
-    Assert.assertEquals("GDE3_SettingsTest", 250, ((Integer)algorithm.getInputParameter("maxIterations")).intValue());
+    Assert.assertEquals("GDE3_SettingsTest", 100, algorithm.getPopulationSize());
+    Assert.assertEquals("GDE3_SettingsTest", 250, algorithm.getMaxIterations());
 
-    Assert.assertEquals("GDE3_SettingsTest", 0.5, CR, epsilon);
-    Assert.assertEquals("GDE3_SettingsTest", 0.5, F, epsilon);
+    Assert.assertEquals("GDE3_SettingsTest", 0.5, crossover.getCr(), epsilon);
+    Assert.assertEquals("GDE3_SettingsTest", 0.5, crossover.getF(), epsilon);
   }
 
   @Test
   public void test2() throws JMException {
     double epsilon = 0.000000000000001;
     Settings GDE3Settings = new GDE3_Settings("Fonseca");
-    Algorithm algorithm = GDE3Settings.configure(configuration_);
-    //Problem problem = new Fonseca("Real");
+    GDE3 algorithm = (GDE3) GDE3Settings.configure(configuration_);
 
-    DifferentialEvolutionCrossover crossover = (DifferentialEvolutionCrossover)algorithm.getOperator("crossover") ;
-    double CR = (Double)crossover.getParameter("CR") ;
-    double F = (Double)crossover.getParameter("F") ;
+    DifferentialEvolutionCrossover crossover =
+      (DifferentialEvolutionCrossover) algorithm.getCrossoverOperator();
 
-    Assert.assertEquals("GDE3_SettingsTest", 100, ((Integer)algorithm.getInputParameter("populationSize")).intValue());
-    Assert.assertEquals("GDE3_SettingsTest", 250, ((Integer)algorithm.getInputParameter("maxIterations")).intValue());
+    Assert.assertEquals("GDE3_SettingsTest", 100, algorithm.getPopulationSize());
+    Assert.assertEquals("GDE3_SettingsTest", 250, algorithm.getMaxIterations());
 
-    Assert.assertEquals("GDE3_SettingsTest", 0.5, CR, epsilon);
-    Assert.assertEquals("GDE3_SettingsTest", 0.5, F, epsilon);
+    Assert.assertEquals("GDE3_SettingsTest", 0.5, crossover.getCr(), epsilon);
+    Assert.assertEquals("GDE3_SettingsTest", 0.5, crossover.getF(), epsilon);
   }
 }

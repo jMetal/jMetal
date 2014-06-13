@@ -44,7 +44,7 @@
 //		Revised according to the Matlab reference code and the PDF document
 //		dated March 8, 2005.
 //
-package jmetal.problems.singleObjective.cec2005Competition.originalCode ;
+package jmetal.problems.singleObjective.cec2005Competition.originalCode;
 
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
@@ -53,8 +53,10 @@ public class F03_shifted_rotated_high_cond_elliptic extends TestFunc {
 
   // Fixed (class) parameters
   static final public String FUNCTION_NAME = "Shifted Rotated High Conditioned Elliptic Function";
-  static final public String DEFAULT_FILE_DATA = "" + Configuration.cec2005SupportDataDirectory +"/high_cond_elliptic_rot_data.txt";
-  static final public String DEFAULT_FILE_MX_PREFIX = "" + Configuration.cec2005SupportDataDirectory +"/Elliptic_M_D";
+  static final public String DEFAULT_FILE_DATA =
+    "" + Configuration.cec2005SupportDataDirectory + "/high_cond_elliptic_rot_data.txt";
+  static final public String DEFAULT_FILE_MX_PREFIX =
+    "" + Configuration.cec2005SupportDataDirectory + "/Elliptic_M_D";
   static final public String DEFAULT_FILE_MX_SUFFIX = ".txt";
 
   // Shifted global optimum
@@ -66,13 +68,16 @@ public class F03_shifted_rotated_high_cond_elliptic extends TestFunc {
   private double[] m_z;
   private double[] m_zM;
 
-  private	double constant;
+  private double constant;
 
   // Constructors
-  public F03_shifted_rotated_high_cond_elliptic (int dimension, double bias) throws JMException {
-    this(dimension, bias, DEFAULT_FILE_DATA, DEFAULT_FILE_MX_PREFIX + dimension + DEFAULT_FILE_MX_SUFFIX);
+  public F03_shifted_rotated_high_cond_elliptic(int dimension, double bias) throws JMException {
+    this(dimension, bias, DEFAULT_FILE_DATA,
+      DEFAULT_FILE_MX_PREFIX + dimension + DEFAULT_FILE_MX_SUFFIX);
   }
-  public F03_shifted_rotated_high_cond_elliptic (int dimension, double bias, String file_data, String file_m) throws JMException {
+
+  public F03_shifted_rotated_high_cond_elliptic(int dimension, double bias, String file_data,
+    String file_m) throws JMException {
     super(dimension, bias, FUNCTION_NAME);
 
     // Note: dimension starts from 0
@@ -87,7 +92,7 @@ public class F03_shifted_rotated_high_cond_elliptic extends TestFunc {
     // Load the matrix
     Benchmark.loadMatrixFromFile(file_m, m_dimension, m_dimension, m_matrix);
 
-    constant = Math.pow(1.0e6, 1.0/(m_dimension-1.0));
+    constant = Math.pow(1.0e6, 1.0 / (m_dimension - 1.0));
   }
 
   // Function body
@@ -99,7 +104,7 @@ public class F03_shifted_rotated_high_cond_elliptic extends TestFunc {
 
     double sum = 0.0;
 
-    for (int i = 0 ; i < m_dimension ; i ++) {
+    for (int i = 0; i < m_dimension; i++) {
       sum += Math.pow(constant, i) * m_zM[i] * m_zM[i];
     }
 

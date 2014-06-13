@@ -34,7 +34,7 @@ import jmetal.util.JMException;
 public class ZDT5 extends Problem {
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = 6980764091779887017L;
 
@@ -46,16 +46,17 @@ public class ZDT5 extends Problem {
     this(solutionType, 11); // 11 variables by default
   } // ZDT5
 
-  /** 
+  /**
    * Creates a instance of problem ZDT5
+   *
    * @param numberOfVariables Number of variables.
-   * This problem allows only "Binary" representations.
+   *                          This problem allows only "Binary" representations.
    */
   public ZDT5(String solutionType, Integer numberOfVariables) throws JMException {
-    numberOfVariables_  = numberOfVariables;
+    numberOfVariables_ = numberOfVariables;
     numberOfObjectives_ = 2;
-    numberOfConstraints_= 0;
-    problemName_        = "ZDT5";    
+    numberOfConstraints_ = 0;
+    problemName_ = "ZDT5";
 
     length_ = new int[numberOfVariables_];
     length_[0] = 30;
@@ -66,34 +67,36 @@ public class ZDT5 extends Problem {
     if (solutionType.compareTo("Binary") == 0) {
       solutionType_ = new BinarySolutionType(this);
     } else {
-      throw new JMException("Error: solution type " + solutionType + " invalid") ;
+      throw new JMException("Error: solution type " + solutionType + " invalid");
     }
   }
 
-  /** 
-   * Evaluates a solution 
+  /**
+   * Evaluates a solution
+   *
    * @param solution The solution to evaluate
-   */    
-  public void evaluate(Solution solution) {        
-    double [] f = new double[numberOfObjectives_] ; 
-    f[0]        = 1 + u((Binary)solution.getDecisionVariables()[0]);
-    double g    = evalG(solution.getDecisionVariables())                 ;
-    double h    = evalH(f[0],g)              ;
-    f[1]        = h * g                           ;   
+   */
+  public void evaluate(Solution solution) {
+    double[] f = new double[numberOfObjectives_];
+    f[0] = 1 + u((Binary) solution.getDecisionVariables()[0]);
+    double g = evalG(solution.getDecisionVariables());
+    double h = evalH(f[0], g);
+    f[1] = h * g;
 
-    solution.setObjective(0,f[0]);
-    solution.setObjective(1,f[1]);
+    solution.setObjective(0, f[0]);
+    solution.setObjective(1, f[1]);
   }
 
   /**
    * Returns the value of the ZDT5 function G.
-   * @param decisionVariables The decision variables of the solution to 
-   * evaluate.
+   *
+   * @param decisionVariables The decision variables of the solution to
+   *                          evaluate.
    */
   public double evalG(Variable[] decisionVariables) {
     double res = 0.0;
     for (int var = 1; var < numberOfVariables_; var++) {
-      res += evalV(u((Binary)decisionVariables[var]));
+      res += evalV(u((Binary) decisionVariables[var]));
     }
 
     return res;
@@ -101,6 +104,7 @@ public class ZDT5 extends Problem {
 
   /**
    * Returns the value of the ZDT5 function V.
+   *
    * @param value The parameter of V function.
    */
   public double evalV(double value) {
@@ -108,11 +112,12 @@ public class ZDT5 extends Problem {
       return 2.0 + value;
     } else {
       return 1.0;
-    }    
+    }
   }
 
   /**
    * Returns the value of the ZDT5 function H.
+   *
    * @param f First argument of the function H.
    * @param g Second argument of the function H.
    */
@@ -122,6 +127,7 @@ public class ZDT5 extends Problem {
 
   /**
    * Returns the u value defined in ZDT5 for a encodings.variable.
+   *
    * @param variable The binary encodings.variable
    */
   private double u(Binary variable) {

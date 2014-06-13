@@ -40,7 +40,8 @@ public class StandardPSO2007Test {
   @Before
   public void setUp() throws Exception {
     problem_ = new Sphere("Real", 30) ;
-    standardPSO_ = new StandardPSO2007(problem_) ;
+    standardPSO_ = new StandardPSO2007() ;
+    standardPSO_.setProblem(problem_);
     standardPSO_.setInputParameter("swarmSize",40);
     standardPSO_.setInputParameter("maxIterations",5000);
     standardPSO_.setInputParameter("numberOfParticlesToInform",3);
@@ -69,7 +70,8 @@ public class StandardPSO2007Test {
 
   @Test
   public void neighborTest() {
-    StandardPSO2007 newPSO = new StandardPSO2007(problem_) ;
+    StandardPSO2007 newPSO = new StandardPSO2007() ;
+    standardPSO_.setProblem(problem_);
     standardPSO_.setInputParameter("swarmSize",10);
     standardPSO_.setInputParameter("numberOfParticlesToInform",3);
   }

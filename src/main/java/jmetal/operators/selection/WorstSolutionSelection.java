@@ -28,13 +28,13 @@ import java.util.Comparator;
 import java.util.HashMap;
 
 /**
- * This class implements a selection operator used for selecting the worst 
+ * This class implements a selection operator used for selecting the worst
  * solution in a SolutionSet according to a given comparator
  */
 public class WorstSolutionSelection extends Selection {
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = 1456768976790614200L;
 
@@ -43,9 +43,9 @@ public class WorstSolutionSelection extends Selection {
 
   @SuppressWarnings("unchecked")
   public WorstSolutionSelection(HashMap<String, Object> parameters) {
-    super(parameters) ;
+    super(parameters);
 
-    comparator_ = (Comparator<Solution>)parameters.get("comparator") ;
+    comparator_ = (Comparator<Solution>) parameters.get("comparator");
   }
 
   /**
@@ -55,18 +55,19 @@ public class WorstSolutionSelection extends Selection {
 
   /**
    * Performs the operation
+   *
    * @param object Object representing a SolutionSet.
    * @return the best solution found
    */
   public Object execute(Object object) {
-    SolutionSet solutionSet = (SolutionSet)object;
+    SolutionSet solutionSet = (SolutionSet) object;
 
     if (solutionSet.size() == 0) {
       return null;
     }
-    int worstSolution ;
+    int worstSolution;
 
-    worstSolution = 0 ;
+    worstSolution = 0;
 
     for (int i = 1; i < solutionSet.size(); i++) {
       if (comparator_.compare(solutionSet.get(i), solutionSet.get(worstSolution)) > 0) {
@@ -74,6 +75,6 @@ public class WorstSolutionSelection extends Selection {
       }
     }
 
-    return worstSolution ;    
+    return worstSolution;
   }
 }

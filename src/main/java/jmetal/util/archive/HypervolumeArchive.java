@@ -23,9 +23,9 @@ package jmetal.util.archive;
 import jmetal.core.Solution;
 import jmetal.qualityIndicator.util.MetricsUtil;
 import jmetal.util.Distance;
-import jmetal.util.comparators.CrowdingDistanceComparator;
-import jmetal.util.comparators.DominanceComparator;
-import jmetal.util.comparators.EqualSolutions;
+import jmetal.util.comparator.CrowdingDistanceComparator;
+import jmetal.util.comparator.DominanceComparator;
+import jmetal.util.comparator.EqualSolutions;
 
 import java.util.Comparator;
 
@@ -36,11 +36,11 @@ import java.util.Comparator;
 public class HypervolumeArchive extends Archive {
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = 3084983453913397884L;
 
-  /** 
+  /**
    * Stores the maximum size of the archive.
    */
   private int maxSize_;
@@ -48,7 +48,7 @@ public class HypervolumeArchive extends Archive {
   /**
    * stores the number of the objectives.
    */
-  private int objectives_;    
+  private int objectives_;
 
   /**
    * Stores a <code>Comparator</code> for dominance checking.
@@ -59,61 +59,63 @@ public class HypervolumeArchive extends Archive {
    * Stores a <code>Comparator</code> for equality checking (in the objective
    * space).
    */
-  private Comparator<Solution> equals_; 
+  private Comparator<Solution> equals_;
 
   /**
    * Stores a <code>Distance</code> object, for distances utilities
    */
-  private Distance distance_;       
-  private MetricsUtil utils_ ;
+  private Distance distance_;
+  private MetricsUtil utils_;
 
-  private double      offset_ ;
-  private Comparator crowdingDistance_; 
+  private double offset_;
+  private Comparator crowdingDistance_;
 
   /**
-   * Constructor. 
-   * @param maxSize The maximum size of the archive.
+   * Constructor.
+   *
+   * @param maxSize            The maximum size of the archive.
    * @param numberOfObjectives The number of objectives.
    */
   public HypervolumeArchive(int maxSize, int numberOfObjectives) {
     super(maxSize);
-    maxSize_          = maxSize;
-    objectives_       = numberOfObjectives;        
-    dominance_        = new DominanceComparator();
-    equals_           = new EqualSolutions();
-    distance_         = new Distance();
-    utils_            = new MetricsUtil() ;
-    offset_           = 100 ;
+    maxSize_ = maxSize;
+    objectives_ = numberOfObjectives;
+    dominance_ = new DominanceComparator();
+    equals_ = new EqualSolutions();
+    distance_ = new Distance();
+    utils_ = new MetricsUtil();
+    offset_ = 100;
     crowdingDistance_ = new CrowdingDistanceComparator();
   } // CrowdingArchive
 
 
   /**
    * Adds a <code>Solution</code> to the archive. If the <code>Solution</code>
-   * is dominated by any member of the archive, then it is discarded. If the 
+   * is dominated by any member of the archive, then it is discarded. If the
    * <code>Solution</code> dominates some members of the archive, these are
    * removed. If the archive is full and the <code>Solution</code> has to be
    * inserted, the solutions are sorted by crowding distance and the one having
    * the minimum crowding distance value.
+   *
    * @param solution The <code>Solution</code>
-   * @return true if the <code>Solution</code> has been inserted, false 
+   * @return true if the <code>Solution</code> has been inserted, false
    * otherwise.
    */
-  public boolean add(Solution solution){
+  public boolean add(Solution solution) {
     int flag = 0;
     int i = 0;
     Solution aux; //Store an solution temporally
 
-    while (i < solutionsList_.size()){
-      aux = solutionsList_.get(i);            
+    while (i < solutionsList_.size()) {
+      aux = solutionsList_.get(i);
 
-      flag = dominance_.compare(solution,aux);
+      flag = dominance_.compare(solution, aux);
       if (flag == 1) {               // The solution to add is dominated
         return false;                // Discard the new solution
       } else if (flag == -1) {       // A solution in the archive is dominated
         solutionsList_.remove(i);    // Remove it from the population            
       } else {
-        if (equals_.compare(aux,solution)==0) { // There is an equal solution 
+        if (equals_.compare(aux, solution) == 0) { // There is an equal solution
           // in the population
           return false; // Discard the new solution
         }  // if
@@ -121,15 +123,18 @@ public class HypervolumeArchive extends Archive {
       }
     }
     // Insert the solution into the archive
-    solutionsList_.add(solution);        
+    solutionsList_.add(solution);
     if (size() > maxSize_) { // The archive is full
       double[][] frontValues = this.writeObjectivesToMatrix();
       int numberOfObjectives = objectives_;
       // STEP 1. Obtain the maximum and minimum values of the Pareto front
-      double[] maximumValues = utils_.getMaximumValues(this.writeObjectivesToMatrix(), numberOfObjectives);
-      double[] minimumValues = utils_.getMinimumValues(this.writeObjectivesToMatrix(), numberOfObjectives);
+      double[] maximumValues =
+        utils_.getMaximumValues(this.writeObjectivesToMatrix(), numberOfObjectives);
+      double[] minimumValues =
+        utils_.getMinimumValues(this.writeObjectivesToMatrix(), numberOfObjectives);
       // STEP 2. Get the normalized front
-      double[][] normalizedFront = utils_.getNormalizedFront(frontValues, maximumValues, minimumValues);
+      double[][] normalizedFront =
+        utils_.getNormalizedFront(frontValues, maximumValues, minimumValues);
       // compute offsets for reference point in normalized space
       double[] offsets = new double[maximumValues.length];
       for (i = 0; i < maximumValues.length; i++) {
@@ -155,7 +160,7 @@ public class HypervolumeArchive extends Archive {
       this.sort(new CrowdingDistanceComparator());
 
       //remove(indexWorst(crowdingDistance_));
-      remove(size()-1);
+      remove(size() - 1);
     }
     return true;
   } // add
@@ -169,10 +174,13 @@ public class HypervolumeArchive extends Archive {
       double[][] frontValues = this.writeObjectivesToMatrix();
       int numberOfObjectives = objectives_;
       // STEP 1. Obtain the maximum and minimum values of the Pareto front
-      double[] maximumValues = utils_.getMaximumValues(this.writeObjectivesToMatrix(), numberOfObjectives);
-      double[] minimumValues = utils_.getMinimumValues(this.writeObjectivesToMatrix(), numberOfObjectives);
+      double[] maximumValues =
+        utils_.getMaximumValues(this.writeObjectivesToMatrix(), numberOfObjectives);
+      double[] minimumValues =
+        utils_.getMinimumValues(this.writeObjectivesToMatrix(), numberOfObjectives);
       // STEP 2. Get the normalized front
-      double[][] normalizedFront = utils_.getNormalizedFront(frontValues, maximumValues, minimumValues);
+      double[][] normalizedFront =
+        utils_.getNormalizedFront(frontValues, maximumValues, minimumValues);
       // compute offsets for reference point in normalized space
       double[] offsets = new double[maximumValues.length];
       for (int i = 0; i < maximumValues.length; i++) {
@@ -193,21 +201,20 @@ public class HypervolumeArchive extends Archive {
       for (int i = 0; i < contributions.length; i++) {
         // contribution values are used analogously to crowding distance
         this.get(i).setCrowdingDistance(contributions[i]);
-      }	     	    	      
-    }	  
+      }
+    }
   } // computeHVContribution
 
 
   /**
    * This method returns the location (integer position) of a solution in the archive.
    * For that, the equals_ comparator is used
-   * 
    */
   public int getLocation(Solution solution) {
     int location = -1;
     int index = 0;
-    while ((index < size()) && (location!=-1) ) {
-      if (equals_.compare(solution, get(index))==0) {
+    while ((index < size()) && (location != -1)) {
+      if (equals_.compare(solution, get(index)) == 0) {
         location = index;
       }
       index++;

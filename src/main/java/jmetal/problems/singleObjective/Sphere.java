@@ -33,53 +33,53 @@ import jmetal.util.JMException;
  */
 public class Sphere extends Problem {
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = 6623348682217370725L;
 
-  /** 
+  /**
    * Constructor
    * Creates a default instance of the Sphere problem
-   * @param numberOfVariables Number of variables of the problem 
-   * @param solutionType The solution type must "Real" or "BinaryReal". 
-   * @throws JMException 
+   *
+   * @param numberOfVariables Number of variables of the problem
+   * @param solutionType      The solution type must "Real" or "BinaryReal".
+   * @throws JMException
    */
   public Sphere(String solutionType, Integer numberOfVariables) throws JMException {
-    numberOfVariables_   = numberOfVariables ;
-    numberOfObjectives_  = 1;
+    numberOfVariables_ = numberOfVariables;
+    numberOfObjectives_ = 1;
     numberOfConstraints_ = 0;
-    problemName_         = "Sphere";
+    problemName_ = "Sphere";
 
     upperLimit_ = new double[numberOfVariables_];
     lowerLimit_ = new double[numberOfVariables_];
-    for (int var = 0; var < numberOfVariables_; var++){
+    for (int var = 0; var < numberOfVariables_; var++) {
       lowerLimit_[var] = -5.12;
       upperLimit_[var] = 5.12;
     }
 
     if (solutionType.compareTo("BinaryReal") == 0) {
       solutionType_ = new BinaryRealSolutionType(this);
-    }
-    else if (solutionType.compareTo("Real") == 0) {
+    } else if (solutionType.compareTo("Real") == 0) {
       solutionType_ = new RealSolutionType(this);
-    }
-    else {
-      throw new JMException("Error: solution type " + solutionType + " invalid") ;
+    } else {
+      throw new JMException("Error: solution type " + solutionType + " invalid");
     }
   }
 
-  /** 
-   * Evaluates a solution 
+  /**
+   * Evaluates a solution
+   *
    * @param solution The solution to evaluate
-   * @throws JMException 
-   */        
+   * @throws JMException
+   */
   public void evaluate(Solution solution) throws JMException {
-    Variable[] decisionVariables  = solution.getDecisionVariables();
+    Variable[] decisionVariables = solution.getDecisionVariables();
 
     double sum = 0.0;
-    double value ;
+    double value;
     for (int var = 0; var < numberOfVariables_; var++) {
-      value = decisionVariables[var].getValue() ;
+      value = decisionVariables[var].getValue();
       sum += value * value;
     }
     solution.setObjective(0, sum);

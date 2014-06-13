@@ -34,25 +34,26 @@ import jmetal.util.JMException;
 
 public class Griewank extends Problem {
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = 1531198336732615275L;
 
-  /** 
+  /**
    * Constructor
    * Creates a default instance of the Griewank problem
-   * @param numberOfVariables Number of variables of the problem 
-   * @param solutionType The solution type must "Real" or "BinaryReal". 
+   *
+   * @param numberOfVariables Number of variables of the problem
+   * @param solutionType      The solution type must "Real" or "BinaryReal".
    */
   public Griewank(String solutionType, Integer numberOfVariables) throws JMException {
-    numberOfVariables_   = numberOfVariables;
-    numberOfObjectives_  = 1;
+    numberOfVariables_ = numberOfVariables;
+    numberOfObjectives_ = 1;
     numberOfConstraints_ = 0;
-    problemName_         = "Sphere";
+    problemName_ = "Sphere";
 
     upperLimit_ = new double[numberOfVariables_];
     lowerLimit_ = new double[numberOfVariables_];
-    for (int var = 0; var < numberOfVariables_; var++){
+    for (int var = 0; var < numberOfVariables_; var++) {
       lowerLimit_[var] = -600.0;
       upperLimit_[var] = 600.0;
     }
@@ -62,28 +63,29 @@ public class Griewank extends Problem {
     } else if (solutionType.compareTo("Real") == 0) {
       solutionType_ = new RealSolutionType(this);
     } else {
-      throw new JMException("Error: solution type " + solutionType + " invalid") ;
+      throw new JMException("Error: solution type " + solutionType + " invalid");
     }
   }
 
-  /** 
-   * Evaluates a solution 
+  /**
+   * Evaluates a solution
+   *
    * @param solution The solution to evaluate
-   * @throws JMException 
-   */        
+   * @throws JMException
+   */
   public void evaluate(Solution solution) throws JMException {
-    Variable[] decisionVariables  = solution.getDecisionVariables();
+    Variable[] decisionVariables = solution.getDecisionVariables();
 
-    double sum  = 0.0    ;
-    double mult = 1.0    ;
-    double d    = 4000.0 ;
+    double sum = 0.0;
+    double mult = 1.0;
+    double d = 4000.0;
     for (int var = 0; var < numberOfVariables_; var++) {
-      sum += decisionVariables[var].getValue() * 
-          decisionVariables[var].getValue() ;    
-      mult *= Math.cos(decisionVariables[var].getValue()/Math.sqrt(var+1)) ;    
-    }        
+      sum += decisionVariables[var].getValue() *
+        decisionVariables[var].getValue();
+      mult *= Math.cos(decisionVariables[var].getValue() / Math.sqrt(var + 1));
+    }
 
-    solution.setObjective(0, 1.0/d * sum - mult + 1.0) ;
+    solution.setObjective(0, 1.0 / d * sum - mult + 1.0);
   }
 }
 

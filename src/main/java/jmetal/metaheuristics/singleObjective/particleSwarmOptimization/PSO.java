@@ -23,9 +23,10 @@ package jmetal.metaheuristics.singleObjective.particleSwarmOptimization;
 
 import jmetal.core.*;
 import jmetal.operators.selection.BestSolutionSelection;
+import jmetal.util.Configuration;
 import jmetal.util.JMException;
+import jmetal.util.comparator.ObjectiveComparator;
 import jmetal.util.random.PseudoRandom;
-import jmetal.util.comparators.ObjectiveComparator;
 import jmetal.util.wrapper.XReal;
 
 import java.io.IOException;
@@ -40,11 +41,29 @@ import java.util.logging.Logger;
 public class PSO extends Algorithm {
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = -2657053204274107750L;
-
-    /**
+  int evaluations_;
+  /**
+   * Comparator object
+   */
+  Comparator<Solution> comparator_;
+  Operator findBestSolution_;
+  double r1Max_;
+  double r1Min_;
+  double r2Max_;
+  double r2Min_;
+  double C1Max_;
+  double C1Min_;
+  double C2Max_;
+  double C2Min_;
+  double WMax_;
+  double WMin_;
+  double ChVel1_;
+  double ChVel2_;
+  boolean success_;
+  /**
    * Stores the number of particles_ used
    */
   private int particlesSize_;
@@ -76,35 +95,17 @@ public class PSO extends Algorithm {
    * Stores a operator for non uniform mutations
    */
   private Operator polynomialMutation_;
+  private SolutionSet trueFront_;
 
-  int evaluations_ ;
-  
+  private double deltaMax_[];
+  private double deltaMin_[];
   /**
-   * Comparator object
-   */
-  Comparator<Solution> comparator_  ;
-  
-  Operator findBestSolution_ ;
-  
-  double r1Max_;
-  double r1Min_;
-  double r2Max_;
-  double r2Min_;
-  double C1Max_;
-  double C1Min_;
-  double C2Max_;
-  double C2Min_;
-  double WMax_;
-  double WMin_;
-  double ChVel1_;
-  double ChVel2_;
-
-  /** 
    * Constructor
+   *
    * @param problem Problem to solve
    */
-  public PSO(Problem problem) {
-    super(problem) ;
+  public PSO() {
+    super();
 
     r1Max_ = 1.0;
     r1Min_ = 0.0;
@@ -118,32 +119,25 @@ public class PSO extends Algorithm {
     WMin_ = 0.1;
     ChVel1_ = 1.0;
     ChVel2_ = 1.0;
-    
-    comparator_ = new ObjectiveComparator(0) ; // Single objective comparator
-    HashMap<String, Object> selectionParameters = new HashMap<String, Object>() ;
-    selectionParameters.put("comparator", comparator_) ;
-    findBestSolution_ = new BestSolutionSelection(selectionParameters) ;
 
-    evaluations_ = 0 ;
+    comparator_ = new ObjectiveComparator(0); // Single objective comparator
+    HashMap<String, Object> selectionParameters = new HashMap<String, Object>();
+    selectionParameters.put("comparator", comparator_);
+    findBestSolution_ = new BestSolutionSelection(selectionParameters);
+
+    evaluations_ = 0;
   } // Constructor
-
-  private SolutionSet trueFront_;
-
-  private double deltaMax_[];
-  private double deltaMin_[];
-  boolean success_;
-
 
   /**
    * Initialize all parameter of the algorithm
    */
   public void initParams() {
-    particlesSize_ = ((Integer) getInputParameter("swarmSize")).intValue();
-    maxIterations_ = ((Integer) getInputParameter("maxIterations")).intValue();
+    particlesSize_ = (Integer) getInputParameter("swarmSize");
+    maxIterations_ = (Integer) getInputParameter("maxIterations");
 
-    polynomialMutation_ = operators_.get("mutation") ; 
+    polynomialMutation_ = operators_.get("mutation");
 
-    iteration_ = 0 ;
+    iteration_ = 0;
 
     success_ = false;
 
@@ -166,7 +160,7 @@ public class PSO extends Algorithm {
   // Adaptive inertia 
   private double inertiaWeight(int iter, int miter, double wmax, double wmin) {
     //return wmax; // - (((wmax-wmin)*(double)iter)/(double)miter);
-    return wmax - (((wmax-wmin)*(double)iter)/(double)miter);
+    return wmax - (((wmax - wmin) * (double) iter) / (double) miter);
   } // inertiaWeight
 
   // constriction coefficient (M. Clerc)
@@ -183,13 +177,13 @@ public class PSO extends Algorithm {
 
   // velocity bounds
   private double velocityConstriction(double v, double[] deltaMax,
-                                      double[] deltaMin, int variableIndex,
-                                      int particleIndex) throws IOException {
+    double[] deltaMin, int variableIndex,
+    int particleIndex) throws IOException {
 
-  	return v; 
-  	/*
+    return v;
+    /*
 
-    //System.out.println("v: " + v + "\tdmax: " + dmax + "\tdmin: " + dmin) ;
+    //Configuration.logger_.info("v: " + v + "\tdmax: " + dmax + "\tdmin: " + dmin) ;
     double result;
 
     double dmax = deltaMax[variableIndex];
@@ -211,20 +205,21 @@ public class PSO extends Algorithm {
 
   /**
    * Update the speed of each particle
-   * @throws JMException 
+   *
+   * @throws JMException
    */
   private void computeSpeed(int iter, int miter) throws JMException, IOException {
-    double r1, r2 ;
+    double r1, r2;
     //double W ;
     double C1, C2;
     double wmax, wmin, deltaMax, deltaMin;
     XReal bestGlobal;
 
-  	bestGlobal = new XReal(globalBest_) ;
+    bestGlobal = new XReal(globalBest_);
 
     for (int i = 0; i < particlesSize_; i++) {
-    	XReal particle = new XReal(particles_.get(i)) ;
-    	XReal bestParticle = new XReal(localBest_[i]) ;
+      XReal particle = new XReal(particles_.get(i));
+      XReal bestParticle = new XReal(localBest_[i]);
 
       //int bestIndividual = (Integer)findBestSolution_.execute(particles_) ;
 
@@ -244,10 +239,10 @@ public class PSO extends Algorithm {
       WMin_ = 0.9;
       ChVel1_ = 1.0;
       ChVel2_ = 1.0;
-      
-      C1 = 2.5 ;
-      C2 = 1.5 ;
-      
+
+      C1 = 2.5;
+      C2 = 1.5;
+
       wmax = WMax_;
       wmin = WMin_;
 /*
@@ -264,30 +259,31 @@ public class PSO extends Algorithm {
           i);
       }
 */
-      C1 = 1.5 ;
-      C2 = 1.5 ;
-      double W = 0.9 ;
+      C1 = 1.5;
+      C2 = 1.5;
+      double W = 0.9;
       for (int var = 0; var < particle.size(); var++) {
         //Computing the velocity of this particle 
         speed_[i][var] = inertiaWeight(iter, miter, wmax, wmin) * speed_[i][var] +
           C1 * r1 * (bestParticle.getValue(var) - particle.getValue(var)) +
-          C2 * r2 * (bestGlobal.getValue(var) - particle.getValue(var)) ;
+          C2 * r2 * (bestGlobal.getValue(var) - particle.getValue(var));
       }
     }
   } // computeSpeed
 
   /**
    * Update the position of each particle
-   * @throws JMException 
+   *
+   * @throws JMException
    */
   private void computeNewPositions() throws JMException {
     for (int i = 0; i < particlesSize_; i++) {
-    	//Variable[] particle = particles_.get(i).getDecisionVariables();
-    	XReal particle = new XReal(particles_.get(i)) ;
+      //Variable[] particle = particles_.get(i).getDecisionVariables();
+      XReal particle = new XReal(particles_.get(i));
       //particle.move(speed_[i]);
       for (int var = 0; var < particle.size(); var++) {
-      	particle.setValue(var, particle.getValue(var) +  speed_[i][var]) ;
-      	
+        particle.setValue(var, particle.getValue(var) + speed_[i][var]);
+
         if (particle.getValue(var) < problem_.getLowerLimit(var)) {
           particle.setValue(var, problem_.getLowerLimit(var));
           speed_[i][var] = speed_[i][var] * ChVel1_; //    
@@ -296,39 +292,41 @@ public class PSO extends Algorithm {
           particle.setValue(var, problem_.getUpperLimit(var));
           speed_[i][var] = speed_[i][var] * ChVel2_; //   
         }
-        
+
       }
     }
   } // computeNewPositions
 
   /**
    * Apply a mutation operator to some particles in the swarm
-   * @throws JMException 
+   *
+   * @throws JMException
    */
   private void mopsoMutation(int actualIteration, int totalIterations) throws JMException {
     for (int i = 0; i < particles_.size(); i++) {
-      if ( (i % 6) == 0) {
+      if ((i % 6) == 0) {
         polynomialMutation_.execute(particles_.get(i));
       }
     }
   } // mopsoMutation
 
-  /**   
+  /**
    * Runs of the SMPSO algorithm.
+   *
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
-   * as a result of the algorithm execution  
-   * @throws JMException 
+   * as a result of the algorithm execution
+   * @throws JMException
    */
   public SolutionSet execute() throws JMException, ClassNotFoundException {
     initParams();
 
     success_ = false;
-    globalBest_ =  null ;
+    globalBest_ = null;
     //->Step 1 (and 3) Create the initial population and evaluate
     for (int i = 0; i < particlesSize_; i++) {
       Solution particle = new Solution(problem_);
       problem_.evaluate(particle);
-      evaluations_ ++ ;
+      evaluations_++;
       particles_.add(particle);
       if ((globalBest_ == null) || (particle.getObjective(0) < globalBest_.getObjective(0))) {
         globalBest_ = new Solution(particle);
@@ -350,7 +348,7 @@ public class PSO extends Algorithm {
 
     //-> Step 7. Iterations ..        
     while (iteration_ < maxIterations_) {
-      int bestIndividual = (Integer)findBestSolution_.execute(particles_) ;
+      int bestIndividual = (Integer) findBestSolution_.execute(particles_);
       try {
         //Compute the speed_
         computeSpeed(iteration_, maxIterations_);
@@ -368,31 +366,31 @@ public class PSO extends Algorithm {
       for (int i = 0; i < particles_.size(); i++) {
         Solution particle = particles_.get(i);
         problem_.evaluate(particle);
-        evaluations_ ++ ;
+        evaluations_++;
       }
 
       //Actualize the memory of this particle
       for (int i = 0; i < particles_.size(); i++) {
         //int flag = comparator_.compare(particles_.get(i), localBest_[i]);
         //if (flag < 0) { // the new particle is best_ than the older remember        
-      	if ((particles_.get(i).getObjective(0) < localBest_[i].getObjective(0))) {
+        if ((particles_.get(i).getObjective(0) < localBest_[i].getObjective(0))) {
           Solution particle = new Solution(particles_.get(i));
           localBest_[i] = particle;
         } // if
-      	if ((particles_.get(i).getObjective(0) < globalBest_.getObjective(0))) {
+        if ((particles_.get(i).getObjective(0) < globalBest_.getObjective(0))) {
           Solution particle = new Solution(particles_.get(i));
           globalBest_ = particle;
         } // if
-        Double bestCurrentFitness = particles_.best(comparator_).getObjective(0) ;
-        System.out.println("Best: " + bestCurrentFitness) ;
+        Double bestCurrentFitness = particles_.best(comparator_).getObjective(0);
+        Configuration.logger_.info("Best: " + bestCurrentFitness);
       }
       iteration_++;
     }
-    
+
     // Return a population with the best individual
-    SolutionSet resultPopulation = new SolutionSet(1) ;
-    resultPopulation.add(particles_.get((Integer)findBestSolution_.execute(particles_))) ;
-    
-    return resultPopulation ;
+    SolutionSet resultPopulation = new SolutionSet(1);
+    resultPopulation.add(particles_.get((Integer) findBestSolution_.execute(particles_)));
+
+    return resultPopulation;
   } // execute
 } // PSO
