@@ -23,10 +23,12 @@ package test.metaheuristics.nsgaII;
 import jmetal.core.Algorithm;
 import jmetal.core.SolutionSet;
 import jmetal.experiments.settings.NSGAII_Settings;
+import jmetal.metaheuristics.nsgaII.NSGAII;
 import org.junit.Test;
 
 import java.io.IOException;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -44,7 +46,9 @@ public class NSGAIITest {
     Rationale: the default problem is Kursawe, and usually NSGA-II; configured with standard
     settings return 100 solutions
      */
+    int defaultMaxEvaluations = 25000 ;
     assertTrue(solutionSet.size() >= 98) ;
+    assertEquals(defaultMaxEvaluations, ((NSGAII)algorithm_).getEvaluations());
   }
 
 }

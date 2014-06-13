@@ -82,7 +82,6 @@ public class NSGAII_Settings extends Settings {
     Crossover crossover;
     Mutation mutation;
 
-    // Crossover an Mutation for Real codification
     crossover = new SBXCrossover.Builder()
       .distributionIndex(crossoverDistributionIndex_)
       .probability(crossoverProbability_)
@@ -93,7 +92,6 @@ public class NSGAII_Settings extends Settings {
       .probability(mutationProbability_)
       .build();
 
-    // Selection Operator
     selection = new BinaryTournament2.Builder()
       .build();
 

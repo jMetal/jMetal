@@ -33,7 +33,7 @@ import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.AlgorithmRunner;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
-import jmetal.util.evaluator.MultithreadedSolutionSetEvaluator;
+import jmetal.util.evaluator.SequentialSolutionSetEvaluator;
 import jmetal.util.evaluator.SolutionSetEvaluator;
 import jmetal.util.fileOutput.DefaultFileOutputContext;
 import jmetal.util.fileOutput.SolutionSetOutput;
@@ -94,7 +94,7 @@ public class GDE3Runner {
      * - evaluator = new SequentialSolutionSetEvaluator()
      * - evaluator = new MultithreadedSolutionSetEvaluator(threads, problem)
      */
-    SolutionSetEvaluator evaluator = new MultithreadedSolutionSetEvaluator(8, problem);
+    SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator();
 
     crossover = new DifferentialEvolutionCrossover.Builder()
       .cr(0.5)

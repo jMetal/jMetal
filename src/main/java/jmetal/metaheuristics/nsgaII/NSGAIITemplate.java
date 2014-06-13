@@ -171,6 +171,8 @@ public abstract class NSGAIITemplate extends Algorithm {
     return maxEvaluations_ ;
   }
 
+  public int getEvaluations () { return evaluations_ ;}
+
   public static class Builder {
     protected SolutionSetEvaluator evaluator_ ;
     protected Problem problem_ ;

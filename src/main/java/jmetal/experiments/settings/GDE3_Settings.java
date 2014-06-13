@@ -89,7 +89,7 @@ public class GDE3_Settings extends Settings {
       .crossover(crossover)
       .selection(selection)
       .maxIterations(maxIterations_)
-      .populationSize(maxIterations_)
+      .populationSize(populationSize_)
       .build() ;
 
 

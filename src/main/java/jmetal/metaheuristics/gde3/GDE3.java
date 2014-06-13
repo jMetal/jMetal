@@ -151,6 +151,22 @@ public class GDE3 extends Algorithm {
     return getNonDominatedSolutions() ;
   }
 
+  public Operator getCrossoverOperator() {
+    return crossoverOperator_ ;
+  }
+
+  public Operator getSelectionOperator() {
+    return selectionOperator_ ;
+  }
+
+  public int getPopulationSize() {
+    return populationSize_ ;
+  }
+
+  public int getMaxIterations() {
+    return maxIterations_ ;
+  }
+
   @Deprecated
   void readParameterSettings() {
     populationSize_ = ((Integer) this.getInputParameter("populationSize")).intValue();

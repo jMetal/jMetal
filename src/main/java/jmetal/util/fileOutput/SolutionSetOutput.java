@@ -47,8 +47,8 @@ public class SolutionSetOutput {
     SolutionSet solutionSet_ ;
 
     public Printer(SolutionSet solutionSet) throws FileNotFoundException {
-      varFileContext_ = null ; //new DefaultFileOutputContext(varFileName_) ;
-      funFileContext_ = null ; //new DefaultFileOutputContext(funFileName_) ;
+      varFileContext_ = new DefaultFileOutputContext(varFileName_) ;
+      funFileContext_ = new DefaultFileOutputContext(funFileName_) ;
       varFileContext_.separator_ = separator_ ;
       funFileContext_.separator_ = separator_ ;
       solutionSet_ = solutionSet ;
