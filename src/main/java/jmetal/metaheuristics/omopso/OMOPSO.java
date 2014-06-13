@@ -157,7 +157,7 @@ public class OMOPSO extends Algorithm {
 
     // Create the speed_ vector
     speed_ = new double[particlesSize_][problem_.getNumberOfVariables()];
-  } // initParams
+  } // initialization
 
 
   /**

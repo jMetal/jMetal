@@ -35,4 +35,4 @@ public class Archive extends SolutionSet {
   public Archive(int size) {
     super(size);
   }
-} // Archive
+}

@@ -102,7 +102,7 @@ public class StandardPSO2011 extends Algorithm {
 
     // Create the speed_ vector
     speed_ = new double[swarmSize_][problem_.getNumberOfVariables()];
-  } // initParams
+  } // initialization
 
   private Solution getNeighborBest(int i) {
     Solution bestLocalBestSolution = null;

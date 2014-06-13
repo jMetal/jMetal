@@ -155,7 +155,7 @@ public class PSO extends Algorithm {
         problem_.getLowerLimit(i)) / 2.0;
       deltaMin_[i] = -deltaMax_[i];
     } // for
-  } // initParams 
+  } // initialization
 
   // Adaptive inertia 
   private double inertiaWeight(int iter, int miter, double wmax, double wmin) {

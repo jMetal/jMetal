@@ -24,25 +24,36 @@ package jmetal.runner;
 import jmetal.core.Algorithm;
 import jmetal.core.Problem;
 import jmetal.core.SolutionSet;
-import jmetal.metaheuristics.smpso.SMPSOhv;
+import jmetal.metaheuristics.smpso.SMPSOE;
 import jmetal.operators.mutation.Mutation;
-import jmetal.operators.mutation.MutationFactory;
+import jmetal.operators.mutation.PolynomialMutation;
+import jmetal.problems.Kursawe;
 import jmetal.problems.ProblemFactory;
-import jmetal.problems.ZDT.ZDT4;
 import jmetal.qualityIndicator.QualityIndicator;
+import jmetal.util.AlgorithmRunner;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
+import jmetal.util.archive.Archive;
+import jmetal.util.archive.CrowdingArchive;
+import jmetal.util.evaluator.SequentialSolutionSetEvaluator;
+import jmetal.util.evaluator.SolutionSetEvaluator;
+import jmetal.util.fileOutput.DefaultFileOutputContext;
+import jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
 /**
- * This class executes the SMPSOhv algorithm described in:
- * Antonio J. Nebro, Juan José Durillo, Carlos Artemio Coello Coello:
- * Analysis of leader selection strategies in a multi-objective Particle Swarm Optimizer.
- * IEEE Congress on Evolutionary Computation 2013: 3153-3160
+ * This class executes:
+ * - The SMPSO algorithm described in:
+ *   Antonio J. Nebro, Juan José Durillo, Carlos Artemio Coello Coello:
+ *   Analysis of leader selection strategies in a multi-objective Particle Swarm Optimizer.
+ *   IEEE Congress on Evolutionary Computation 2013: 3153-3160
+ * - The SMPSOhv algorithm described in:
+ *   Antonio J. Nebro, Juan José Durillo, Carlos Artemio Coello Coello:
+ *   Analysis of leader selection strategies in a multi-objective Particle Swarm Optimizer.
+ *   IEEE Congress on Evolutionary Computation 2013: 3153-3160
  */
 public class SMPSOhvRunner {
   public static Logger logger_;      
@@ -54,9 +65,9 @@ public class SMPSOhvRunner {
    * @throws jmetal.util.JMException
    * @throws java.io.IOException
    * @throws SecurityException       Usage: three options
-   *                                 - jmetal.runner.SMPSOhv_main
-   *                                 - jmetal.runner.SMPSOhv_main problemName
-   *                                 - jmetal.runner.SMPSOhv_main problemName ParetoFrontFile
+   *                                 - jmetal.runner.SMPSORunner
+   *                                 - jmetal.runner.SMPSORunner problemName
+   *                                 - jmetal.runner.SMPSORunner problemName ParetoFrontFile
    */
   public static void main(String[] args) throws JMException, IOException, ClassNotFoundException {
     Problem problem;
@@ -65,7 +76,6 @@ public class SMPSOhvRunner {
 
     QualityIndicator indicators;
 
-    // Logger object and file to store log messages
     logger_ = Configuration.logger_;
     fileHandler_ = new FileHandler("SMPSO_main.log");
     logger_.addHandler(fileHandler_);
@@ -78,44 +88,61 @@ public class SMPSOhvRunner {
       Object[] params = {"Real"};
       problem = (new ProblemFactory()).getProblem(args[0], params);
       indicators = new QualityIndicator(problem, args[1]);
-    } else { 
-      //problem = new Kursawe("Real", 3); 
-      //problem = new Water("Real");
-      //problem = new ZDT1("ArrayReal", 1000);
-      //problem = new ZDT4("BinaryReal");
-      //problem = new WFG1("Real");
-      //problem = new DTLZ1("Real");
-      //problem = new OKA2("Real") ;
-      //problem = new DTLZ1("Real",7,5);
-      problem = new ZDT4("Real");
+    } else {
+      problem = new Kursawe("Real", 3);
+      /*
+        Examples:
+        problem = new Water("Real");
+        problem = new ZDT3("ArrayReal", 30);
+        problem = new ConstrEx("Real");
+        problem = new DTLZ1("Real");
+        problem = new OKA2("Real")
+      */
     }
 
-    algorithm = new SMPSOhv();
-    algorithm.setProblem(problem);
+    /*
+     * Alternatives:
+     * - evaluator = new SequentialSolutionSetEvaluator() // SMPSO
+     * - evaluator = new MultithreadedSolutionSetEvaluator(threads, problem) // parallel SMPSO
+     */
+    SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator();
 
-    // Algorithm parameters
-    algorithm.setInputParameter("swarmSize", 100);
-    algorithm.setInputParameter("archiveSize", 100);
-    algorithm.setInputParameter("maxIterations", 250);
+    /*
+     * Alternatives:
+     * - archive = new CrowdingArchive(100, problem.getNumberOfObjectives()) ; // SMPSO
+     * - archive = new FastHypervolumeArchive(100, problem.getNumberOfObjectives()); // SMPSOhv
+     */
+    Archive archive = new CrowdingArchive(100, problem.getNumberOfObjectives()) ;
 
-    HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
-    mutationParameters.put("probability", 1.0 / problem.getNumberOfVariables());
-    mutationParameters.put("distributionIndex", 20.0);
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
+    mutation = new PolynomialMutation.Builder()
+      .distributionIndex(20.0)
+      .probability(1.0 / problem.getNumberOfVariables())
+      .build();
+
+    algorithm = new SMPSOE.Builder(problem, archive, evaluator)
+      .mutation(mutation)
+      .maxIterations(250)
+      .swarmSize(100)
+      .archiveSize(100)
+      .build();
 
     algorithm.addOperator("mutation", mutation);
 
-    // Execute the Algorithm 
-    long initTime = System.currentTimeMillis();
-    SolutionSet population = algorithm.execute();
-    long estimatedTime = System.currentTimeMillis() - initTime;
+    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+      .execute();
 
-    // Result messages 
-    logger_.info("Total execution time: " + estimatedTime + "ms");
-    logger_.info("Objectives values have been writen to file FUN");
-    population.printObjectivesToFile("FUN");
-    logger_.info("Variables values have been writen to file VAR");
-    population.printVariablesToFile("VAR");
+    SolutionSet population = algorithmRunner.getSolutionSet();
+    long computingTime = algorithmRunner.getComputingTime();
+
+    new SolutionSetOutput.Printer(population)
+      .separator("\t")
+      .varFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+      .funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+      .print();
+
+    logger_.info("Total execution time: " + computingTime + "ms");
+    logger_.info("Objectives values have been written to file FUN.tsv");
+    logger_.info("Variables values have been written to file VAR.tsv");
 
     if (indicators != null) {
       logger_.info("Quality indicators");

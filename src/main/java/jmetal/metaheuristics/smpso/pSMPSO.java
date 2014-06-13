@@ -195,7 +195,7 @@ public class pSMPSO extends Algorithm {
         problem_.getLowerLimit(i)) / 2.0;
       deltaMin_[i] = -deltaMax_[i];
     } // for
-  } // initParams 
+  } // initialization
 
   // Adaptive inertia 
   private double inertiaWeight(int iter, int miter, double wma, double wmin) {

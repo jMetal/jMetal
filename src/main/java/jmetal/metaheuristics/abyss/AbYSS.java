@@ -56,7 +56,7 @@ public class AbYSS extends Algorithm {
   /**
    * Stores the number of subranges in which each encodings.variable is divided. Used in
    * the diversification method. By default it takes the value 4 (see the method
-   * <code>initParams</code>).
+   * <code>initialization</code>).
    */
   int numberOfSubranges_;
 
