@@ -22,7 +22,6 @@
 package jmetal.operators.mutation;
 
 import jmetal.core.Solution;
-import jmetal.core.SolutionType;
 import jmetal.encodings.solutiontype.ArrayRealSolutionType;
 import jmetal.encodings.solutiontype.RealSolutionType;
 import jmetal.util.Configuration;
@@ -30,9 +29,7 @@ import jmetal.util.JMException;
 import jmetal.util.random.PseudoRandom;
 import jmetal.util.wrapper.XReal;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * This class implements a polynomial mutation operator.
@@ -41,19 +38,19 @@ public class PolynomialMutation extends Mutation {
   private static final double ETA_M_DEFAULT_ = 20.0;
   private double distributionIndex_ = ETA_M_DEFAULT_;
 
-  /**
-   * Valid solution types to apply this operator
-   */
-  private static final List<Class<? extends SolutionType>> VALID_TYPES =
-    Arrays.asList(RealSolutionType.class, ArrayRealSolutionType.class);
   private double mutationProbability_ = 0.0;
 
   /**
    * Constructor
    * Creates a new instance of the polynomial mutation operator
    */
+  @Deprecated
   public PolynomialMutation(HashMap<String, Object> parameters) {
     super(parameters);
+
+    addValidSolutionType(RealSolutionType.class);
+    addValidSolutionType(ArrayRealSolutionType.class);
+
     if (parameters.get("probability") != null) {
       mutationProbability_ = (Double) parameters.get("probability");
     }
@@ -63,11 +60,13 @@ public class PolynomialMutation extends Mutation {
   }
 
   private PolynomialMutation(Builder builder) {
-    super (new HashMap<String, Object>()) ;
+    addValidSolutionType(RealSolutionType.class);
+    addValidSolutionType(ArrayRealSolutionType.class);
 
     mutationProbability_ = builder.mutationProbability_ ;
     distributionIndex_ = builder.distributionIndex_ ;
   }
+
   public double getMutationProbability() {
     return mutationProbability_;
   }
@@ -75,7 +74,6 @@ public class PolynomialMutation extends Mutation {
   public double getDistributionIndex() {
     return distributionIndex_;
   }
-
 
   /**
    * Perform the mutation operation
@@ -129,7 +127,7 @@ public class PolynomialMutation extends Mutation {
   public Object execute(Object object) throws JMException {
     Solution solution = (Solution) object;
 
-    if (!VALID_TYPES.contains(solution.getType().getClass())) {
+    if (!solutionTypeIsValid(solution)) {
       Configuration.logger_.severe("PolynomialMutation.execute: the solution " +
         "type " + solution.getType() + " is not allowed with this operator");
 

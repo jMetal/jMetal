@@ -123,8 +123,6 @@ public class SMPSO extends Algorithm {
   private double deltaMin_[];
   /**
    * Constructor
-   *
-   * @param problem Problem to solve
    */
   public SMPSO() {
     super();
@@ -171,7 +169,6 @@ public class SMPSO extends Algorithm {
   /**
    * Constructor
    *
-   * @param problem Problem to solve
    */
   public SMPSO(String trueParetoFront) throws FileNotFoundException {
     super();

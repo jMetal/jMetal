@@ -48,6 +48,7 @@ public abstract class Operator implements Serializable {
   @Deprecated
   public Operator(Map<String, Object> parameters) {
     parameters_ = parameters;
+    validSolutionTypes_ = new ArrayList<>() ;
   }
 
   public Operator() {

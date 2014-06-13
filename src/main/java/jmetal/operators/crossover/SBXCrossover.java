@@ -22,7 +22,6 @@
 package jmetal.operators.crossover;
 
 import jmetal.core.Solution;
-import jmetal.core.SolutionType;
 import jmetal.encodings.solutiontype.ArrayRealSolutionType;
 import jmetal.encodings.solutiontype.RealSolutionType;
 import jmetal.util.Configuration;
@@ -30,9 +29,7 @@ import jmetal.util.JMException;
 import jmetal.util.random.PseudoRandom;
 import jmetal.util.wrapper.XReal;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * This class allows to apply a SBX crossover operator using two parent
@@ -56,13 +53,6 @@ public class SBXCrossover extends Crossover {
   private double crossoverProbability_ = DEFAULT_PROBABILITY;
 
   /**
-   * Valid solution types to apply this operator
-   */
-  private static final List<Class<? extends SolutionType>> VALID_TYPES = Arrays.asList(
-    RealSolutionType.class,
-    ArrayRealSolutionType.class);
-
-  /**
    * Constructor
    * Create a new SBX crossover operator whit a default
    * index given by <code>DEFAULT_INDEX_CROSSOVER</code>
@@ -70,6 +60,9 @@ public class SBXCrossover extends Crossover {
   @Deprecated
   public SBXCrossover(HashMap<String, Object> parameters) {
     super(parameters);
+
+    addValidSolutionType(RealSolutionType.class);
+    addValidSolutionType(ArrayRealSolutionType.class);
 
     if (parameters.get("probability") != null) {
       crossoverProbability_ = (Double) parameters.get("probability");
