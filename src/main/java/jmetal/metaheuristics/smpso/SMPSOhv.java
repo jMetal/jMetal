@@ -118,8 +118,6 @@ public class SMPSOhv extends Algorithm {
   private double deltaMin_[];
   /**
    * Constructor
-   *
-   * @param problem Problem to solve
    */
   public SMPSOhv() {
     super();

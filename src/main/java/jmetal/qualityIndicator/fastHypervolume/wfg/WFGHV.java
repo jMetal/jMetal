@@ -167,7 +167,7 @@ public class WFGHV {
     if (currentDimension_ == 2) {
       volume = get2DHV(front);
     } else {
-      volume = 0.0 ;
+      volume = 0.0;
 
       currentDimension_--;
       for (int i = front.nPoints_ - 1; i >= 0; i--) {
@@ -213,7 +213,8 @@ public class WFGHV {
         (front.getPoint(i).getObjectives()[1] - front.getPoint(i - 1).getObjectives()[1]));
 
     }
-    return hv ;
+
+    return hv;
   }
 
   public double getInclusiveHV(Point p) {
@@ -305,6 +306,7 @@ public class WFGHV {
     // ASSUMING MINIMIZATION
 
     // domination could be checked in either order
+
     for (int i = currentDimension_ - 1; i >= 0; i--) {
       if (p.objectives_[i] < q.objectives_[i]) {
         for (int j = i - 1; j >= 0; j--) {
@@ -327,37 +329,5 @@ public class WFGHV {
 
   public void sort(Front front) {
     Arrays.sort(front.points_, 0, front.nPoints_, pointComparator_);
-  }
-
-  public static void main(String args[]) throws IOException, JMException {
-    Front front = new Front() ;
-
-    if (args.length == 0) {
-      throw new JMException("Usage: WFGHV front [reference point]") ;
-    }
-
-    if (args.length > 0) {
-      front.readFront(args[0]);
-    }
-
-    int dimensions = front.getNumberOfObjectives() ;
-    Point referencePoint ;
-    double [] points = new double[dimensions] ;
-
-    if (args.length == (dimensions + 1)) {
-       for (int i = 1; i <= dimensions; i++) {
-         points[i - 1] = Double.parseDouble(args[i]);
-       }
-    } else {
-      for (int i = 1; i <= dimensions; i++) {
-        points[i - 1] = 0.0;
-      }
-    }
-
-    referencePoint = new Point(points) ;
-
-    WFGHV wfghv = new WFGHV(referencePoint.getNumberOfObjectives(), front.getNumberOfPoints(), referencePoint) ;
-    Configuration.logger_.info("Using reference point: " + referencePoint) ;
-    Configuration.logger_.info("Hypervolume value: " + wfghv.get2DHV(front));
   }
 }

@@ -17,6 +17,10 @@ import jmetal.operators.selection.SelectionFactory;
 import jmetal.util.JMException;
 import jmetal.util.random.PseudoRandom;
 
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class DifferentialEvolutionOffspring extends Offspring {
   private double cr_ ;
   private double f_  ;

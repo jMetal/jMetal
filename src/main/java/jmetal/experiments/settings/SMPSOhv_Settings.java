@@ -27,13 +27,10 @@ import jmetal.metaheuristics.smpso.SMPSOhv;
 import jmetal.operators.mutation.Mutation;
 import jmetal.operators.mutation.MutationFactory;
 import jmetal.problems.ProblemFactory;
-import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
-import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Properties;
-import java.util.logging.Level;
 
 /**
  * Settings class of algorithm SMPSOhv
@@ -69,7 +66,7 @@ public class SMPSOhv_Settings extends Settings{
    * @return A SMPSOhv algorithm object
    * @throws jmetal.util.JMException
    */
-  public Algorithm configure() throws JMException, FileNotFoundException {
+  public Algorithm configure() throws JMException {
     Algorithm algorithm;
     Mutation mutation;
 
@@ -87,7 +84,7 @@ public class SMPSOhv_Settings extends Settings{
     parameters.put("distributionIndex", mutationDistributionIndex_) ;
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);
 
-    HashMap<String, Object> parameters = new HashMap<String, Object>();
+    parameters = new HashMap<String, Object>();
     parameters.put("probability", mutationProbability_);
     parameters.put("distributionIndex", mutationDistributionIndex_);
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);

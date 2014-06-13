@@ -74,7 +74,7 @@ public class R2 {
       lambda_[n][0] = a;
       lambda_[n][1] = 1 - a;
     }
-  }
+  } // R2
 
   /**
    * Constructor Creates a new instance of the R2 indicator for nDimensiosn It
@@ -122,10 +122,37 @@ public class R2 {
         lambda_[index++] = aList;
       }
     } catch (Exception e) {
-      Configuration.logger_.log(
-          Level.SEVERE,
-          "initUniformWeight: failed when reading for file: " + file,
-          e);
+      Configuration.logger_.log(Level.SEVERE,
+        "initUniformWeight: failed when reading for file: " + file, e);
+    }
+  }
+
+  /**
+   * This class can be call from the command line. At least three parameters are
+   * required: 1) the name of the file containing the front, 2) the number of
+   * objectives 2) a file containing the reference point / the Optimal Pareto
+   * front for normalizing 3) the file containing the weight vector
+   *
+   * @throws JMException
+   */
+  public static void main(String args[]) throws JMException {
+    if (args.length < 3) {
+      throw new JMException(
+        "Error using R2. Usage: \n java jmetal.qualityIndicator.Hypervolume "
+          + "<SolutionFrontFile> " + "<TrueFrontFile> "
+          + "<getNumberOfObjectives>");
+    }
+
+    // Create a new instance of the metric
+    R2 qualityIndicator;
+    // Read the front from the files
+    int nObj = new Integer(args[2]);
+
+    if (nObj == 2 && args.length == 3) {
+      qualityIndicator = new R2();
+
+    } else {
+      qualityIndicator = new R2(nObj, args[3]);
     }
 
     double[][] approximationFront = qualityIndicator.utils_.readFront(args[0]);
@@ -177,11 +204,10 @@ public class R2 {
     minimumValue = utils_.getMinimumValues(paretoFront, nObj_);
 
     // STEP 2. Get the normalized front and true Pareto fronts
-
     normalizedApproximation = utils_.getNormalizedFront(approximation,
-        maximumValue, minimumValue);
+      maximumValue, minimumValue);
     normalizedParetoFront = utils_.getNormalizedFront(paretoFront,
-        maximumValue, minimumValue);
+      maximumValue, minimumValue);
 
     // STEP 3. compute all the matrix of tchebicheff values if it is null
     matrix_ = new double[approximation.length][lambda_.length];
@@ -190,7 +216,7 @@ public class R2 {
         matrix_[i][j] = lambda_[j][0] * Math.abs(normalizedApproximation[i][0]);
         for (int n = 1; n < nObj_; n++) {
           matrix_[i][j] = Math.max(matrix_[i][j],
-              lambda_[j][n] * Math.abs(normalizedApproximation[i][n]));
+            lambda_[j][n] * Math.abs(normalizedApproximation[i][n]));
         }
       }
     }
@@ -319,7 +345,7 @@ public class R2 {
    * Returns the R2 indicator value of a given front
    *
    */
-  public double r2(double [][] approximation,double [][] paretoFront) {
+  public double r2(double[][] approximation, double[][] paretoFront) {
     /**
      * Stores the maximum values of true pareto front.
      */
@@ -345,12 +371,10 @@ public class R2 {
     minimumValue = utils_.getMinimumValues(paretoFront, nObj_);
 
     // STEP 2. Get the normalized front and true Pareto fronts
-    normalizedApproximation       = utils_.getNormalizedFront(approximation,
-        maximumValue,
-        minimumValue);
+    normalizedApproximation = utils_.getNormalizedFront(approximation,
+      maximumValue, minimumValue);
     normalizedParetoFront = utils_.getNormalizedFront(paretoFront,
-        maximumValue,
-        minimumValue);
+      maximumValue, minimumValue);
 
     // STEP 3. compute all the matrix of tchebicheff values if it is null
     matrix_ = new double[approximation.length][lambda_.length];
@@ -359,7 +383,7 @@ public class R2 {
         matrix_[i][j] = lambda_[j][0] * Math.abs(normalizedApproximation[i][0]);
         for (int n = 1; n < nObj_; n++) {
           matrix_[i][j] = Math.max(matrix_[i][j],
-              lambda_[j][n] * Math.abs(normalizedApproximation[i][n]));
+            lambda_[j][n] * Math.abs(normalizedApproximation[i][n]));
         }
       }
     }
@@ -392,52 +416,9 @@ public class R2 {
   /**
    * Returns the R2 indicator value of a given front
    */
-  public double
-  R2Without(SolutionSet set, int index) {
-    double [][] approximationFront = set.writeObjectivesToMatrix();
-    double [][] trueFront          = set.writeObjectivesToMatrix();
+  public double R2Without(SolutionSet set, int index) {
+    double[][] approximationFront = set.writeObjectivesToMatrix();
+    double[][] trueFront = set.writeObjectivesToMatrix();
     return this.r2(approximationFront, trueFront);
-  }
-
-  /**
-   * This class can be call from the command line. At least three parameters 
-   * are required:
-   * 1) the name of the file containing the front,  
-   * 2) the number of objectives
-   * 2) a file containing the reference point / the Optimal Pareto front for normalizing
-   * 3) the file containing the weight vector
-   * @throws JMException
-   */
-  public static void main(String args[]) throws JMException {
-    if (args.length < 3) {
-      throw new JMException("Error using R2. Usage: \n java jmetal.qualityIndicator.Hypervolume " +
-          "<SolutionFrontFile> " +
-          "<TrueFrontFile> " + "<getNumberOfObjectives>");
-    }
-
-    //Create a new instance of the metric
-    R2 qualityIndicator;
-    //Read the front from the files
-    int nObj                            = new Integer(args[2]);
-
-    if (nObj==2 && args.length==3) {
-      qualityIndicator = new R2();
-
-    } else {
-      qualityIndicator = new R2(nObj,args[3]);
-    }
-
-    double [][] approximationFront      = qualityIndicator.utils_.readFront(args[0]);
-    double [][] paretoFront             = qualityIndicator.utils_.readFront(args[1]);
-
-    //Obtain delta value
-    double value = qualityIndicator.r2(approximationFront,paretoFront);
-
-    System.out.println(value);
-
-    System.out.println(qualityIndicator.R2Withouth(approximationFront,paretoFront,1));
-    System.out.println(qualityIndicator.R2Withouth(approximationFront,paretoFront,15));
-    System.out.println(qualityIndicator.R2Withouth(approximationFront,paretoFront,25));
-    System.out.println(qualityIndicator.R2Withouth(approximationFront,paretoFront,75));
   }
 }

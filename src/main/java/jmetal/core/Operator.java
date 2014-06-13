@@ -34,9 +34,9 @@ import java.util.Map;
  */
 public abstract class Operator implements Serializable {
 
-  private List<Class<? extends SolutionType>> validSolutionTypes_ ;
-
   private static final long serialVersionUID = -8976295845748676798L;
+
+  private List<Class<? extends SolutionType>> validSolutionTypes_ ;
 
   /**
    * Stores the current operator parameters. It is defined as a Map of pairs 

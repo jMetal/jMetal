@@ -40,17 +40,45 @@ public class Epsilon {
   public jmetal.qualityIndicator.util.MetricsUtil utils_ =
     new jmetal.qualityIndicator.util.MetricsUtil();
   /* stores the number of objectives */
-  private int  dim_   ;
-  /* obj_[i]=0 means objective i is to be minimized. This code always assume the minimization of all the objectives
+  int dim_;
+  /*
+   * obj_[i]=0 means objective i is to be minimized. This code always assume the
+   * minimization of all the objectives
    */
-  private int  [] obj_    ;     
-  /* method_ = 0 means apply additive epsilon and method_ = 1 means multiplicative
-   * epsilon. This code always apply additive epsilon
+  int[] obj_; /* obj_[i] = 0 means objective i is to be minimized */
+  /*
+   * method_ = 0 means apply additive epsilon and method_ = 1 means
+   * multiplicative epsilon. This code always apply additive epsilon
    */
-  private int method_;
-  /* stores a reference to  qualityIndicatorUtils */
-  public jmetal.qualityIndicator.util.MetricsUtil utils_ =
-      new jmetal.qualityIndicator.util.MetricsUtil();
+  int method_;
+
+  /**
+   * Returns the additive-epsilon value of the paretoFront. This method call to
+   * the calculate epsilon-indicator one
+   *
+   * @throws JMException
+   * @throws NumberFormatException
+   */
+  public static void main(String[] args) throws NumberFormatException,
+    JMException {
+    double ind_value;
+
+    if (args.length < 2) {
+      throw new JMException(
+        "Error using Epsilon. Type: \n java AdditiveEpsilon " + "<FrontFile>"
+          + "<TrueFrontFile> + <getNumberOfObjectives>"
+      );
+    }
+
+    Epsilon qualityIndicator = new Epsilon();
+    double[][] solutionFront = qualityIndicator.utils_.readFront(args[0]);
+    double[][] trueFront = qualityIndicator.utils_.readFront(args[1]);
+
+    ind_value = qualityIndicator.epsilon(trueFront, solutionFront, new Integer(
+      args[2]));
+
+    Configuration.logger_.info(""+ind_value);
+  }
 
   /**
    * Returns the epsilon indicator.
@@ -64,8 +92,8 @@ public class Epsilon {
     int i, j, k;
     double eps, eps_j = 0.0, eps_k = 0.0, eps_temp;
 
-    dim_ = dim ;
-    setParameters() ;
+    dim_ = dim;
+    set_params();
 
     if (method_ == 0) {
       eps = Double.MIN_VALUE;
@@ -77,26 +105,24 @@ public class Epsilon {
       for (j = 0; j < b.length; j++) {
         for (k = 0; k < dim_; k++) {
           switch (method_) {
-          case 0:
-            if (obj_[k] == 0) {
-              eps_temp = b[j][k] - a[i][k];
-            } else {
-              eps_temp = a[i][k] - b[j][k];
-            }
-            break;
-          default:
-            if ( (a[i][k] < 0 && b[j][k] > 0) ||
-                (a[i][k] > 0 && b[j][k] < 0) ||
-                (a[i][k] == 0 || b[j][k] == 0)) {
-              throw new JMException("Error in data file");
-            }
-            if (obj_[k] == 0) {
-              eps_temp = b[j][k] / a[i][k];
-            }
-            else {
-              eps_temp = a[i][k] / b[j][k];
-            }
-            break;
+            case 0:
+              if (obj_[k] == 0) {
+                eps_temp = b[j][k] - a[i][k];
+              } else {
+                eps_temp = a[i][k] - b[j][k];
+              }
+              break;
+            default:
+              if ((a[i][k] < 0 && b[j][k] > 0) || (a[i][k] > 0 && b[j][k] < 0)
+                || (a[i][k] == 0 || b[j][k] == 0)) {
+                throw new JMException("Error in data file");
+              }
+              if (obj_[k] == 0) {
+                eps_temp = b[j][k] / a[i][k];
+              } else {
+                eps_temp = a[i][k] / b[j][k];
+              }
+              break;
           }
           if (k == 0) {
             eps_k = eps_temp;
@@ -120,40 +146,14 @@ public class Epsilon {
   }
 
   /**
-   * Established the default parameters
+   * Established the params by default
    */
-  void  setParameters() {
-    int  i;
+  void set_params() {
+    int i;
     obj_ = new int[dim_];
     for (i = 0; i < dim_; i++) {
       obj_[i] = 0;
     }
     method_ = 0;
-  }
-
-  /**
-   * Returns the additive-epsilon value of the paretoFront. This method call to the
-   * calculate epsilon-indicator one
-   * @throws JMException
-   * @throws NumberFormatException
-   */
-  public static void main(String [] args) throws NumberFormatException, JMException {
-    double indicatorvalue;
-
-    if (args.length < 2) {
-      throw new JMException("Error using Epsilon. Type: \n java AdditiveEpsilon " +
-          "<FrontFile>" +
-          "<TrueFrontFile> + <getNumberOfObjectives>");
-    }
-
-    Epsilon qualityIndicator = new Epsilon();
-    double [][] solutionFront = qualityIndicator.utils_.readFront(args[0]);
-    double [][] trueFront     = qualityIndicator.utils_.readFront(args[1]);
-
-    indicatorvalue = qualityIndicator.epsilon(trueFront,
-        solutionFront,
-        new Integer(args[2]));
-
-    Configuration.logger_.info(""+indicatorvalue);
   }
 }
