@@ -1,10 +1,9 @@
-//  SMPSO.java
+//  pSMPSO.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
 //
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
+//  Copyright (c) 2013 Antonio J. Nebro
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -22,22 +21,20 @@
 package jmetal.metaheuristics.smpso;
 
 import jmetal.core.*;
-import jmetal.qualityIndicator.Hypervolume;
 import jmetal.qualityIndicator.QualityIndicator;
+import jmetal.qualityIndicator.fastHypervolume.FastHypervolumeArchive;
 import jmetal.util.Distance;
 import jmetal.util.JMException;
+import jmetal.util.archive.Archive;
 import jmetal.util.archive.CrowdingArchive;
 import jmetal.util.comparator.CrowdingDistanceComparator;
 import jmetal.util.comparator.DominanceComparator;
+import jmetal.util.evaluator.SolutionSetEvaluator;
 import jmetal.util.random.PseudoRandom;
 import jmetal.util.wrapper.XReal;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Comparator;
-import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * This class implements the SMPSO algorithm described in:
@@ -46,15 +43,12 @@ import java.util.logging.Logger;
  * IEEE Symposium on Computational Intelligence in Multicriteria Decision-Making
  * (MCDM 2009), pp: 66-73. March 2009
  */
-
-@Deprecated
 public class SMPSO extends Algorithm {
+  SolutionSetEvaluator evaluator_ ;
 
-  /**
-   *
-   */
-  private static final long serialVersionUID = 3008407962396502302L;
-  QualityIndicator indicators_; // QualityIndicator object
+  private static final long serialVersionUID = 6433458914602768519L;
+  QualityIndicator indicators_;
+
   double r1Max_;
   double r1Min_;
   double r2Max_;
@@ -67,65 +61,55 @@ public class SMPSO extends Algorithm {
   double weightMin_;
   double changeVelocity1_;
   double changeVelocity2_;
-  boolean success_;
-  /**
-   * Stores the number of particles_ used
-   */
+
   private int swarmSize_;
-  /**
-   * Stores the maximum size for the archive
-   */
   private int archiveSize_;
-  /**
-   * Stores the maximum number of iteration_
-   */
   private int maxIterations_;
-  /**
-   * Stores the current number of iteration_
-   */
-  private int iteration_;
-  /**
-   * Stores the particles
-   */
-  private SolutionSet particles_;
-  /**
-   * Stores the best_ solutions founds so far for each particles
-   */
+  private int iterations_;
+  private SolutionSet swarm_;
   private Solution[] best_;
-  /**
-   * Stores the leaders_
-   */
-  private CrowdingArchive leaders_;
-  /**
-   * Stores the speed_ of each particle
-   */
+
+  private Archive leaders_;
   private double[][] speed_;
-  /**
-   * Stores a comparator for checking dominance
-   */
   private Comparator<Solution> dominance_;
-  /**
-   * Stores a comparator for crowding checking
-   */
   private Comparator<Solution> crowdingDistanceComparator_;
-  /**
-   * Stores a <code>Distance</code> object
-   */
-  private Distance distance_;
-  /**
-   * Stores a operator for non uniform mutations
-   */
-  private Operator polynomialMutation_;
-  private double trueHypervolume_;
-  private Hypervolume hy_;
-  private SolutionSet trueFront_;
+
+  private Distance distance_ ;
+  private Operator mutation_ ;
+
   private double deltaMax_[];
   private double deltaMin_[];
-  /**
-   * Constructor
-   */
+
+
+  public SMPSO(Builder builder) {
+    super() ;
+
+    problem_ = builder.problem_ ;
+    swarmSize_ = builder.swarmSize_ ;
+    archiveSize_ = builder.archiveSize_ ;
+    leaders_ = builder.leaders_ ;
+    mutation_ = builder.mutationOperator_ ;
+    maxIterations_ = builder.maxIterations_ ;
+    evaluator_ = builder.evaluator_ ;
+
+    r1Max_ = builder.r1Max_ ;
+    r1Min_ = builder.r1Min_ ;
+    r2Max_ = builder.r2Max_ ;
+    r2Min_ = builder.r2Min_ ;
+    c1Max_ = builder.c1Max_ ;
+    c1Min_ = builder.c1Min_ ;
+    c2Max_ = builder.c2Max_ ;
+    c2Min_ = builder.c2Min_ ;
+    weightMax_ = builder.weightMax_ ;
+    weightMin_ = builder.weightMin_ ;
+    changeVelocity1_ = builder.changeVelocity1_;
+    changeVelocity2_ = builder.changeVelocity2_;
+  }
+
+  @Deprecated
   public SMPSO() {
     super();
+
     r1Max_ = 1.0;
     r1Min_ = 0.0;
     r2Max_ = 1.0;
@@ -138,97 +122,120 @@ public class SMPSO extends Algorithm {
     weightMin_ = 0.1;
     changeVelocity1_ = -1;
     changeVelocity2_ = -1;
-  } // Constructor
-  public SMPSO(
-    Vector<Double> variables,
-    String trueParetoFront) throws FileNotFoundException {
-    super();
 
-    r1Max_ = variables.get(0);
-    r1Min_ = variables.get(1);
-    r2Max_ = variables.get(2);
-    r2Min_ = variables.get(3);
-    c1Max_ = variables.get(4);
-    c1Min_ = variables.get(5);
-    c2Max_ = variables.get(6);
-    c2Min_ = variables.get(7);
-    weightMax_ = variables.get(8);
-    weightMin_ = variables.get(9);
-    changeVelocity1_ = variables.get(10);
-    changeVelocity2_ = variables.get(11);
+  }
 
-    // I LEAVE IT UNCOMMENTED. IT IS GOING TO CRASH THE FIRST TIME!
-    hy_ = new Hypervolume();
-    jmetal.qualityIndicator.util.MetricsUtil mu = new jmetal.qualityIndicator.util.MetricsUtil();
-    trueFront_ = mu.readNonDominatedSolutionSet(trueParetoFront);
-    trueHypervolume_ = hy_.hypervolume(trueFront_.writeObjectivesToMatrix(),
-      trueFront_.writeObjectivesToMatrix(),
-     problem_.getNumberOfObjectives());
-  } 
-
-  /**
-   * Constructor
-   *
+  /*
+   * Getters
    */
-  public SMPSO(String trueParetoFront) throws FileNotFoundException {
-    super();
-    hy_ = new Hypervolume();
- // I LEAVE IT UNCOMMENTED. IT IS GOING TO CRASH THE FIRST TIME!
-    jmetal.qualityIndicator.util.MetricsUtil mu = new jmetal.qualityIndicator.util.MetricsUtil();
-    trueFront_ = mu.readNonDominatedSolutionSet(trueParetoFront);
-    trueHypervolume_ = hy_.hypervolume(trueFront_.writeObjectivesToMatrix(),
-      trueFront_.writeObjectivesToMatrix(),
-      problem_.getNumberOfObjectives());
+  public void setEvaluator(SolutionSetEvaluator evaluator) {
+    evaluator_ = evaluator;
+  }
 
-    // Default configuration
-    r1Max_ = 1.0;
-    r1Min_ = 0.0;
-    r2Max_ = 1.0;
-    r2Min_ = 0.0;
-    c1Max_ = 2.5;
-    c1Min_ = 1.5;
-    c2Max_ = 2.5;
-    c2Min_ = 1.5;
-    weightMax_ = 0.1;
-    weightMin_ = 0.1;
-    changeVelocity1_ = -1;
-    changeVelocity2_ = -1;
+  public int getSwarmSize() {
+    return swarmSize_ ;
+  }
+
+  public int getArchiveSize() {
+    return archiveSize_ ;
+  }
+
+  public int getMaxIterations() {
+    return maxIterations_ ;
+  }
+
+  public double getR1Max() {
+    return r1Max_ ;
+  }
+
+  public double getR1Min() {
+    return r1Min_ ;
+  }
+
+  public double getR2Max() {
+    return r2Max_ ;
+  }
+
+  public double getR2Min() {
+    return r2Min_ ;
+  }
+
+  public double getC1Max() {
+    return c1Max_ ;
+  }
+
+  public double getC1Min() {
+    return c1Min_ ;
+  }
+
+  public double getC2Max() {
+    return c2Max_ ;
+  }
+
+  public double getC2Min() {
+    return c2Min_ ;
+  }
+
+  public Operator getMutation() {
+    return mutation_ ;
+  }
+
+  public double getWeightMax() {
+    return weightMax_ ;
+  }
+  public double getWeightMin() {
+    return weightMin_ ;
+  }
+
+  public double getChangeVelocity1() {
+    return changeVelocity1_ ;
+  }
+
+  public double getChangeVelocity2() {
+    return changeVelocity2_ ;
   }
 
   /**
-   * Initialize all parameter of the algorithm
+   * Runs of the SMPSO algorithm.
+   *
+   * @return a <code>SolutionSet</code> that is a set of non dominated solutions
+   * as a result of the algorithm execution
+   * @throws jmetal.util.JMException
    */
-  public void initParams() {
-    swarmSize_ = ((Integer) getInputParameter("swarmSize")).intValue();
-    archiveSize_ = ((Integer) getInputParameter("archiveSize")).intValue();
-    maxIterations_ = ((Integer) getInputParameter("maxIterations")).intValue();
-    c1Min_ = ((Double) getInputParameter("c1Min")).doubleValue();
-    c1Max_ = ((Double) getInputParameter("c1Max")).doubleValue();
-    c2Min_ = ((Double) getInputParameter("c2Min")).doubleValue();
-    c2Max_ = ((Double) getInputParameter("c2Max")).doubleValue();
-    weightMax_ = ((Double) getInputParameter("weightMax")).doubleValue();
-    weightMin_ = ((Double) getInputParameter("weightMin")).doubleValue();
-    changeVelocity1_ = ((Double) getInputParameter("changeVelocity1")).doubleValue();
-    changeVelocity2_ = ((Double) getInputParameter("changeVelocity2")).doubleValue();
+  public SolutionSet execute() throws JMException, ClassNotFoundException, IOException {
+    initialization();
+    createInitialSwarm() ;
+    evaluateSwarm();
+    initializeLeaders() ;
+    initializeParticlesMemory() ;
+    updateLeadersDensityEstimator() ;
 
-    indicators_ = (QualityIndicator) getInputParameter("indicators");
+    while (!stoppingCondition()) {
+      computeSpeed(iterations_, maxIterations_);
+      computeNewPositions();
+      perturbation();
+      evaluateSwarm();
+      updateLeaders() ;
+      updateParticleMemory() ;
+      updateLeadersDensityEstimator() ;
+      iterations_++ ;
+    }
 
-    polynomialMutation_ = operators_.get("mutation");
+    tearDown() ;
+    return paretoFrontApproximation() ;
+  }
 
-    iteration_ = 0;
+  public void initialization() {
+    // The initial swarm evaluation is iteration 0
+    iterations_ = 1;
 
-    success_ = false;
-
-    particles_ = new SolutionSet(swarmSize_);
+    swarm_ = new SolutionSet(swarmSize_);
     best_ = new Solution[swarmSize_];
-    leaders_ = new CrowdingArchive(archiveSize_, problem_.getNumberOfObjectives());
 
-    // Create comparator for dominance and crowding distance
     dominance_ = new DominanceComparator();
     crowdingDistanceComparator_ = new CrowdingDistanceComparator();
     distance_ = new Distance();
 
-    // Create the speed_ vector
     speed_ = new double[swarmSize_][problem_.getNumberOfVariables()];
 
     deltaMax_ = new double[problem_.getNumberOfVariables()];
@@ -237,30 +244,170 @@ public class SMPSO extends Algorithm {
       deltaMax_[i] = (problem_.getUpperLimit(i) -
         problem_.getLowerLimit(i)) / 2.0;
       deltaMin_[i] = -deltaMax_[i];
-    } 
-  }  
+    }
 
-  // Adaptive inertia 
+    for (int i = 0; i < swarmSize_; i++) {
+      for (int j = 0; j < problem_.getNumberOfVariables(); j++) {
+        speed_[i][j] = 0.0;
+      }
+    }
+  }
+
+  protected void createInitialSwarm() throws ClassNotFoundException, JMException {
+    swarm_ = new SolutionSet(swarmSize_);
+
+    Solution newSolution;
+    for (int i = 0; i < swarmSize_; i++) {
+      newSolution = new Solution(problem_);
+      swarm_.add(newSolution);
+    }
+  }
+
+  protected void evaluateSwarm() throws JMException {
+    evaluator_.evaluate(swarm_, problem_);
+  }
+
+  protected void initializeLeaders() {
+    for (int i = 0; i < swarm_.size(); i++) {
+      Solution particle = new Solution(swarm_.get(i));
+      leaders_.add(particle);
+    }
+  }
+
+  protected void initializeParticlesMemory() {
+    for (int i = 0; i < swarm_.size(); i++) {
+      Solution particle = new Solution(swarm_.get(i));
+      best_[i] = particle;
+    }
+  }
+
+  protected void updateLeadersDensityEstimator() {
+    if (leaders_ instanceof CrowdingArchive) {
+      distance_.crowdingDistanceAssignment(leaders_, problem_.getNumberOfObjectives());
+    } else if (leaders_ instanceof FastHypervolumeArchive) {
+      ((FastHypervolumeArchive)leaders_).computeHVContribution();
+    } else {
+      throw new JMException("Invalid archive type") ;
+    }
+  }
+
+  protected boolean stoppingCondition() {
+    return iterations_ == maxIterations_ ;
+  }
+
+  protected void computeSpeed(int iter, int miter) throws JMException, IOException {
+    double r1, r2, c1, c2;
+    double wmax, wmin ;
+    XReal bestGlobal;
+
+    for (int i = 0; i < swarmSize_; i++) {
+      XReal particle = new XReal(swarm_.get(i));
+      XReal bestParticle = new XReal(best_[i]);
+
+      bestGlobal = selectGlobalBest() ;
+
+      r1 = PseudoRandom.randDouble(r1Min_, r1Max_);
+      r2 = PseudoRandom.randDouble(r2Min_, r2Max_);
+      c1 = PseudoRandom.randDouble(c1Min_, c1Max_);
+      c2 = PseudoRandom.randDouble(c2Min_, c2Max_);
+      wmax = weightMax_;
+      wmin = weightMin_;
+
+      for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
+        speed_[i][var] = velocityConstriction(constrictionCoefficient(c1, c2) *
+          (inertiaWeight(iter, miter, wmax, wmin) *
+            speed_[i][var] +
+            c1 * r1 * (bestParticle.getValue(var) -
+              particle.getValue(var)) +
+            c2 * r2 * (bestGlobal.getValue(var) -
+              particle.getValue(var))), deltaMax_, deltaMin_, var);
+      }
+    }
+  }
+
+  protected void computeNewPositions() {
+    for (int i = 0; i < swarmSize_; i++) {
+      XReal particle = new XReal(swarm_.get(i));
+      for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
+        particle.setValue(var, particle.getValue(var) + speed_[i][var]);
+
+        if (particle.getValue(var) < problem_.getLowerLimit(var)) {
+          particle.setValue(var, problem_.getLowerLimit(var));
+          speed_[i][var] = speed_[i][var] * changeVelocity1_;
+        }
+        if (particle.getValue(var) > problem_.getUpperLimit(var)) {
+          particle.setValue(var, problem_.getUpperLimit(var));
+          speed_[i][var] = speed_[i][var] * changeVelocity2_;
+        }
+      }
+    }
+  }
+
+  protected void perturbation() {
+    for (int i = 0; i < swarm_.size(); i++) {
+      if ((i % 6) == 0) {
+        mutation_.execute(swarm_.get(i));
+      }
+    }
+  }
+
+  protected XReal selectGlobalBest() {
+    Solution one, two;
+    XReal bestGlobal ;
+    int pos1 = PseudoRandom.randInt(0, leaders_.size() - 1);
+    int pos2 = PseudoRandom.randInt(0, leaders_.size() - 1);
+    one = leaders_.get(pos1);
+    two = leaders_.get(pos2);
+
+    if (crowdingDistanceComparator_.compare(one, two) < 1) {
+      bestGlobal = new XReal(one);
+    } else {
+      bestGlobal = new XReal(two);
+    }
+
+    return bestGlobal ;
+  }
+
+  protected void updateLeaders() {
+    for (int i = 0; i < swarm_.size(); i++) {
+      Solution particle = new Solution(swarm_.get(i));
+      leaders_.add(particle);
+    }
+  }
+
+  protected void updateParticleMemory() {
+    for (int i = 0; i < swarm_.size(); i++) {
+      int flag = dominance_.compare(swarm_.get(i), best_[i]);
+      if (flag != 1) {
+        Solution particle = new Solution(swarm_.get(i));
+        best_[i] = particle;
+      }
+    }
+  }
+
+  protected SolutionSet paretoFrontApproximation() {
+    return this.leaders_;
+  }
+
   private double inertiaWeight(int iter, int miter, double wma, double wmin) {
- // - (((wma-wmin)*(double)iter)/(double)miter);
-    return wma; 
-  } 
+    //Alternative: return - (((wma-wmin)*(double)iter)/(double)miter);
+    return wma;
+  }
 
-  // constriction coefficient (M. Clerc)
   private double constrictionCoefficient(double c1, double c2) {
     double rho = c1 + c2;
-    //rho = 1.0 ;
     if (rho <= 4) {
       return 1.0;
     } else {
       return 2 / (2 - rho - Math.sqrt(Math.pow(rho, 2.0) - 4.0 * rho));
     }
-  } 
+  }
 
-  // velocity bounds
-  private double velocityConstriction(double v, double[] deltaMax,
-    double[] deltaMin, int variableIndex,
-    int particleIndex) throws IOException {
+  private double velocityConstriction(
+    double v,
+    double[] deltaMax,
+    double[] deltaMin,
+    int variableIndex) throws IOException {
 
     double result;
 
@@ -278,183 +425,161 @@ public class SMPSO extends Algorithm {
     }
 
     return result;
-  } 
-
-  /**
-   * Update the speed of each particle
-   *
-   * @throws JMException
-   */
-  private void computeSpeed(int iter, int miter) throws JMException, IOException {
-    double r1, r2, W, C1, C2;
-    double wmax, wmin, deltaMax, deltaMin;
-    XReal bestGlobal;
-
-    for (int i = 0; i < swarmSize_; i++) {
-      XReal particle = new XReal(particles_.get(i));
-      XReal bestParticle = new XReal(best_[i]);
-
-      //Select a global best_ for calculate the speed of particle i, bestGlobal
-      Solution one, two;
-      int pos1 = PseudoRandom.randInt(0, leaders_.size() - 1);
-      int pos2 = PseudoRandom.randInt(0, leaders_.size() - 1);
-      one = leaders_.get(pos1);
-      two = leaders_.get(pos2);
-
-      if (crowdingDistanceComparator_.compare(one, two) < 1) {
-        bestGlobal = new XReal(one);
-      } else {
-        bestGlobal = new XReal(two);
-      }
-      r1 = PseudoRandom.randDouble(r1Min_, r1Max_);
-      r2 = PseudoRandom.randDouble(r2Min_, r2Max_);
-      C1 = PseudoRandom.randDouble(c1Min_, c1Max_);
-      C2 = PseudoRandom.randDouble(c2Min_, c2Max_);
-      W = PseudoRandom.randDouble(weightMin_, weightMax_);
-      //
-      wmax = weightMax_;
-      wmin = weightMin_;
-
-      for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
-        //Computing the velocity of this particle 
-        speed_[i][var] = velocityConstriction(constrictionCoefficient(C1, C2) *
-            (inertiaWeight(iter, miter, wmax, wmin) *
-              speed_[i][var] +
-              C1 * r1 * (bestParticle.getValue(var) -
-                particle.getValue(var)) +
-              C2 * r2 * (bestGlobal.getValue(var) -
-                particle.getValue(var))), deltaMax_, deltaMin_, var, i);
-      }
-    }
-  } 
-
-  /**
-   * Update the position of each particle
-   *
-   * @throws JMException
-   */
-  private void computeNewPositions() throws JMException {
-    for (int i = 0; i < swarmSize_; i++) {
-      XReal particle = new XReal(particles_.get(i));
-      for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
-        particle.setValue(var, particle.getValue(var) + speed_[i][var]);
-
-        if (particle.getValue(var) < problem_.getLowerLimit(var)) {
-          particle.setValue(var, problem_.getLowerLimit(var));
-          speed_[i][var] = speed_[i][var] * changeVelocity1_; //    
-        }
-        if (particle.getValue(var) > problem_.getUpperLimit(var)) {
-          particle.setValue(var, problem_.getUpperLimit(var));
-          speed_[i][var] = speed_[i][var] * changeVelocity2_; //   
-        }
-      }
-    }
   }
 
-  /**
-   * Apply a mutation operator to some particles in the swarm
-   *
-   * @throws JMException
+  protected void tearDown() {
+    evaluator_.shutdown();
+  }
+
+  /*
+   * Builder class
    */
-  private void mopsoMutation(int actualIteration, int totalIterations) throws JMException {
-    for (int i = 0; i < particles_.size(); i++) {
-      if ((i % 6) == 0) {
-        polynomialMutation_.execute(particles_.get(i));
-      }
-    }
-  } 
+  public static class Builder {
+    protected SolutionSetEvaluator evaluator_ ;
+    protected Problem problem_ ;
+    protected Archive leaders_ ;
 
-  /**
-   * Runs of the SMPSO algorithm.
-   *
-   * @return a <code>SolutionSet</code> that is a set of non dominated solutions
-   * as a result of the algorithm execution
-   * @throws JMException
-   */
-  public SolutionSet execute() throws JMException, ClassNotFoundException {
-    initParams();
+    protected int swarmSize_;
+    protected int maxIterations_;
+    protected int archiveSize_ ;
 
-    success_ = false;
-    //->Step 1 (and 3) Create the initial population and evaluate
-    for (int i = 0; i < swarmSize_; i++) {
-      Solution particle = new Solution(problem_);
-      problem_.evaluate(particle);
-      problem_.evaluateConstraints(particle);
-      particles_.add(particle);
-    }
+    protected Operator mutationOperator_;
 
-    //-> Step2. Initialize the speed_ of each particle to 0
-    for (int i = 0; i < swarmSize_; i++) {
-      for (int j = 0; j < problem_.getNumberOfVariables(); j++) {
-        speed_[i][j] = 0.0;
-      }
-    }
+    private double c1Max_;
+    private double c1Min_;
+    private double c2Max_;
+    private double c2Min_;
+    private double r1Max_;
+    private double r1Min_;
+    private double r2Max_;
+    private double r2Min_;
+    private double weightMax_;
+    private double weightMin_;
+    private double changeVelocity1_;
+    private double changeVelocity2_;
 
-    // Step4 and 5   
-    for (int i = 0; i < particles_.size(); i++) {
-      Solution particle = new Solution(particles_.get(i));
-      leaders_.add(particle);
-    }
 
-    //-> Step 6. Initialize the memory of each particle
-    for (int i = 0; i < particles_.size(); i++) {
-      Solution particle = new Solution(particles_.get(i));
-      best_[i] = particle;
-    }
+    public Builder(Problem problem, Archive leaders, SolutionSetEvaluator evaluator) {
+      evaluator_ = evaluator ;
+      problem_ = problem ;
+      leaders_ = leaders ;
 
-    //Crowding the leaders_
-    distance_.crowdingDistanceAssignment(leaders_, problem_.getNumberOfObjectives());
+      swarmSize_ = 100 ;
+      maxIterations_ = 25000 ;
+      archiveSize_ = 100 ;
 
-    //-> Step 7. Iterations ..        
-    while (iteration_ < maxIterations_) {
-      try {
-        //Compute the speed_
-        computeSpeed(iteration_, maxIterations_);
-      } catch (IOException ex) {
-        Logger.getLogger(SMPSO.class.getName()).log(Level.SEVERE, null, ex);
-      }
-
-      //Compute the new positions for the particles_            
-      computeNewPositions();
-
-      //Mutate the particles_          
-      mopsoMutation(iteration_, maxIterations_);
-
-      //Evaluate the new particles_ in new positions
-      for (int i = 0; i < particles_.size(); i++) {
-        Solution particle = particles_.get(i);
-        problem_.evaluate(particle);
-        problem_.evaluateConstraints(particle);
-      }
-
-      //Actualize the archive          
-      for (int i = 0; i < particles_.size(); i++) {
-        Solution particle = new Solution(particles_.get(i));
-        leaders_.add(particle);
-      }
-
-      //Actualize the memory of this particle
-      for (int i = 0; i < particles_.size(); i++) {
-        int flag = dominance_.compare(particles_.get(i), best_[i]);
-        if (flag != 1) {         
-          Solution particle = new Solution(particles_.get(i));
-          best_[i] = particle;
-        }
-      }
-
-      //Assign crowding distance to the leaders_
-      distance_.crowdingDistanceAssignment(leaders_,
-        problem_.getNumberOfObjectives());
-      iteration_++;
+      r1Max_ = 1.0;
+      r1Min_ = 0.0;
+      r2Max_ = 1.0;
+      r2Min_ = 0.0;
+      c1Max_ = 2.5;
+      c1Min_ = 1.5;
+      c2Max_ = 2.5;
+      c2Min_ = 1.5;
+      weightMax_ = 0.1;
+      weightMin_ = 0.1;
+      changeVelocity1_ = -1;
+      changeVelocity2_ = -1;
     }
 
-    return this.leaders_;
-  } 
+    public Builder swarmSize(int swarmSize) {
+      swarmSize_ = swarmSize ;
 
-  /**
-   * Gets the leaders of the SMPSO algorithm
-   */
-  public SolutionSet getLeader() {
-    return leaders_;
-  }   
+      return this ;
+    }
+
+    public Builder maxIterations(int maxIterations) {
+      maxIterations_ = maxIterations ;
+
+      return this ;
+    }
+
+    public Builder mutation(Operator mutation) {
+      mutationOperator_ = mutation ;
+
+      return this ;
+    }
+
+    public Builder archiveSize(int archiveSize) {
+      archiveSize_ = archiveSize ;
+
+      return this ;
+    }
+
+    public Builder c1Max(double c1Max) {
+      c1Max_ = c1Max ;
+
+      return this ;
+    }
+
+    public Builder c1Min(double c1Min) {
+      c1Min_ = c1Min ;
+
+      return this ;
+    }
+
+    public Builder c2Max(double c2Max) {
+      c2Max_ = c2Max ;
+
+      return this ;
+    }
+
+    public Builder c2Min(double c2Min) {
+      c2Min_ = c2Min ;
+
+      return this ;
+    }
+
+    public Builder r1Max(double r1Max) {
+      r1Max_ = r1Max ;
+
+      return this ;
+    }
+
+    public Builder r1Min(double r1Min) {
+      r1Min_ = r1Min ;
+
+      return this ;
+    }
+
+    public Builder r2Max(double r2Max) {
+      r2Max_ = r2Max ;
+
+      return this ;
+    }
+
+    public Builder r2Min(double r2Min) {
+      r2Min_ = r2Min ;
+
+      return this ;
+    }
+
+    public Builder weightMax(double weightMax) {
+      weightMax_ = weightMax ;
+
+      return this ;
+    }
+
+    public Builder weightMin(double weightMin) {
+      weightMin_ = weightMin ;
+
+      return this ;
+    }
+
+    public Builder changeVelocity1(double changeVelocity1) {
+      changeVelocity1_ = changeVelocity1 ;
+
+      return this ;
+    }
+
+    public Builder changeVelocity2(double changeVelocity2) {
+      changeVelocity2_ = changeVelocity2 ;
+
+      return this ;
+    }
+
+    public SMPSO build() {
+      return new SMPSO(this) ;
+    }
+  }
 }

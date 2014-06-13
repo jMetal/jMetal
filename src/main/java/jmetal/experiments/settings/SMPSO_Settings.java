@@ -23,7 +23,7 @@ package jmetal.experiments.settings;
 
 import jmetal.core.Algorithm;
 import jmetal.experiments.Settings;
-import jmetal.metaheuristics.smpso.SMPSOE;
+import jmetal.metaheuristics.smpso.SMPSO;
 import jmetal.operators.mutation.Mutation;
 import jmetal.operators.mutation.PolynomialMutation;
 import jmetal.problems.ProblemFactory;
@@ -106,7 +106,7 @@ public class SMPSO_Settings extends Settings {
       .probability(1.0 / problem_.getNumberOfVariables())
       .build();
 
-    algorithm = new SMPSOE.Builder(problem_, archive, evaluator_)
+    algorithm = new SMPSO.Builder(problem_, archive, evaluator_)
       .mutation(mutation)
       .maxIterations(maxIterations_)
       .swarmSize(swarmSize_)
@@ -145,13 +145,15 @@ public class SMPSO_Settings extends Settings {
     c1Min_ = Double.parseDouble(configuration.getProperty("c1Min", String.valueOf(c1Min_)));
     c1Max_ = Double.parseDouble(configuration.getProperty("c1Max", String.valueOf(c1Max_)));
     c2Min_ = Double.parseDouble(configuration.getProperty("c2Min", String.valueOf(c2Min_)));
-    c2Min_ = Double.parseDouble(configuration.getProperty("c2Max", String.valueOf(c2Max_)));
+    c2Max_ = Double.parseDouble(configuration.getProperty("c2Max", String.valueOf(c2Max_)));
     r1Min_ = Double.parseDouble(configuration.getProperty("r1Min", String.valueOf(r1Min_)));
     r1Max_ = Double.parseDouble(configuration.getProperty("r1Max", String.valueOf(r1Max_)));
     r2Min_ = Double.parseDouble(configuration.getProperty("r2Min", String.valueOf(r2Min_)));
-    r2Min_ = Double.parseDouble(configuration.getProperty("r2Max", String.valueOf(r2Max_)));
+    r2Max_ = Double.parseDouble(configuration.getProperty("r2Max", String.valueOf(r2Max_)));
     weightMin_ = Double.parseDouble(configuration.getProperty("weightMin", String.valueOf(weightMin_)));
     weightMax_ = Double.parseDouble(configuration.getProperty("weightMax", String.valueOf(weightMax_)));
+    changeVelocity1_ = Double.parseDouble(configuration.getProperty("changeVelocity1", String.valueOf(changeVelocity1_)));
+    changeVelocity2_ = Double.parseDouble(configuration.getProperty("changeVelocity2", String.valueOf(changeVelocity2_)));
 
     return configure() ;
   }

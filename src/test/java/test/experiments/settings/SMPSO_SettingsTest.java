@@ -20,20 +20,23 @@
 
 package test.experiments.settings;
 
-import jmetal.core.Algorithm;
+import jmetal.core.Operator;
 import jmetal.core.Problem;
 import jmetal.core.SolutionSet;
 import jmetal.experiments.Settings;
 import jmetal.experiments.settings.SMPSO_Settings;
+import jmetal.metaheuristics.smpso.SMPSO;
 import jmetal.operators.mutation.PolynomialMutation;
 import jmetal.problems.Fonseca;
-import jmetal.util.JMException;
-
+import jmetal.qualityIndicator.fastHypervolume.FastHypervolumeArchive;
+import jmetal.util.archive.Archive;
+import jmetal.util.evaluator.MultithreadedSolutionSetEvaluator;
+import jmetal.util.evaluator.SequentialSolutionSetEvaluator;
+import jmetal.util.evaluator.SolutionSetEvaluator;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Properties;
@@ -51,7 +54,7 @@ public class SMPSO_SettingsTest {
   Properties configuration_ ;
 
   @Before
-  public void init() throws FileNotFoundException, IOException {
+  public void init() throws IOException {
     configuration_ = new Properties();
     InputStreamReader isr = new InputStreamReader(new FileInputStream(ClassLoader.getSystemResource("SMPSO.conf").getPath()));
     configuration_.load(isr);
@@ -61,48 +64,127 @@ public class SMPSO_SettingsTest {
   public void testConfigure() throws Exception {
     double epsilon = 0.000000000000001 ;
     Settings smpsoSettings = new SMPSO_Settings("Fonseca");
-    Algorithm algorithm = smpsoSettings.configure() ;
+    SMPSO algorithm = (SMPSO)smpsoSettings.configure() ;
     Problem problem = new Fonseca("Real") ;
 
-    PolynomialMutation mutation = (PolynomialMutation)algorithm.getOperator("mutation") ;
-    double pm = (Double)mutation.getParameter("probability") ;
-    double dim = (Double)mutation.getParameter("distributionIndex") ;
+    PolynomialMutation mutation = (PolynomialMutation)algorithm.getMutation() ;
 
-    assertEquals("SMPSO_SettingsTest", 100, ((Integer)algorithm.getInputParameter("swarmSize")).intValue());
-    assertEquals("SMPSO_SettingsTest", 250, ((Integer)algorithm.getInputParameter("maxIterations")).intValue());
-    assertEquals("SMPSO_SettingsTest", 100, ((Integer)algorithm.getInputParameter("archiveSize")).intValue());
+    assertEquals(100, algorithm.getSwarmSize());
+    assertEquals(250, algorithm.getMaxIterations());
+    assertEquals(100, algorithm.getArchiveSize());
 
-    assertEquals("SMPSO_SettingsTest", 1.0/problem.getNumberOfVariables(), pm, epsilon);
-    assertEquals("SMPSO_SettingsTest", 20.0, dim, epsilon);
+    assertEquals(2.5, algorithm.getC1Max(), epsilon);
+    assertEquals(1.5, algorithm.getC1Min(), epsilon);
+    assertEquals(2.5, algorithm.getC2Max(), epsilon);
+    assertEquals(1.5, algorithm.getC2Min(), epsilon);
+    assertEquals(1.0, algorithm.getR1Max(), epsilon);
+    assertEquals(0.0, algorithm.getR1Min(), epsilon);
+    assertEquals(1.0, algorithm.getR2Max(), epsilon);
+    assertEquals(0.0, algorithm.getR2Min(), epsilon);
+
+    assertEquals(0.1, algorithm.getWeightMax(), epsilon);
+    assertEquals(0.1, algorithm.getWeightMin(), epsilon);
+
+    assertEquals(-1, algorithm.getChangeVelocity1(), epsilon);
+    assertEquals(-1, algorithm.getChangeVelocity2(), epsilon);
+
+    assertEquals(1.0/problem.getNumberOfVariables(), mutation.getMutationProbability(), epsilon);
+    assertEquals(20.0, mutation.getDistributionIndex(), epsilon);
   }
 
   @Test
   public void testConfigure2() throws Exception {
     double epsilon = 0.000000000000001 ;
     Settings smpsoSettings = new SMPSO_Settings("Fonseca");
-    Algorithm algorithm = smpsoSettings.configure(configuration_) ;
+    SMPSO algorithm = (SMPSO)smpsoSettings.configure(configuration_) ;
     Problem problem = new Fonseca("Real") ;
 
-    PolynomialMutation mutation = (PolynomialMutation)algorithm.getOperator("mutation") ;
-    double pm = (Double)mutation.getParameter("probability") ;
-    double dim = (Double)mutation.getParameter("distributionIndex") ;
+    PolynomialMutation mutation = (PolynomialMutation)algorithm.getMutation() ;
 
-    assertEquals("SMPSO_SettingsTest", 100, ((Integer)algorithm.getInputParameter("swarmSize")).intValue());
-    assertEquals("SMPSO_SettingsTest", 250, ((Integer)algorithm.getInputParameter("maxIterations")).intValue());
-    assertEquals("SMPSO_SettingsTest", 100, ((Integer)algorithm.getInputParameter("archiveSize")).intValue());
+    assertEquals(100, algorithm.getSwarmSize());
+    assertEquals(250, algorithm.getMaxIterations());
+    assertEquals(100, algorithm.getArchiveSize());
 
-    assertEquals("SMPSO_SettingsTest", 1.0/problem.getNumberOfVariables(), pm, epsilon);
-    assertEquals("SMPSO_SettingsTest", 20.0, dim, epsilon);
+    assertEquals(2.5, algorithm.getC1Max(), epsilon);
+    assertEquals(1.5, algorithm.getC1Min(), epsilon);
+    assertEquals(2.5, algorithm.getC2Max(), epsilon);
+    assertEquals(1.5, algorithm.getC2Min(), epsilon);
+    assertEquals(1.0, algorithm.getR1Max(), epsilon);
+    assertEquals(0.0, algorithm.getR1Min(), epsilon);
+    assertEquals(1.0, algorithm.getR2Max(), epsilon);
+    assertEquals(0.0, algorithm.getR2Min(), epsilon);
+
+    assertEquals(0.1, algorithm.getWeightMax(), epsilon);
+    assertEquals(0.1, algorithm.getWeightMin(), epsilon);
+
+    assertEquals(-1, algorithm.getChangeVelocity1(), epsilon);
+    assertEquals(-1, algorithm.getChangeVelocity2(), epsilon);
   }
-  
+
+
   @Test
-  public void testExecuteSMPSO() throws JMException, ClassNotFoundException, IOException {
+  public void testExecuteSMPSO() throws ClassNotFoundException, IOException {
     Settings smpsoSettings = new SMPSO_Settings("Fonseca");
-    Algorithm algorithm = smpsoSettings.configure() ;
-    
+    SMPSO algorithm = (SMPSO)smpsoSettings.configure() ;
+
     SolutionSet solutionSet = algorithm.execute() ;
-    assertEquals("testExecuteSMPSO", 100, solutionSet.size());        
-  }  
+    assertEquals(100, solutionSet.size());
+  }
+
+  @Test
+  public void testExecuteSMPSOWithConfigurationFile() throws ClassNotFoundException, IOException {
+    Settings smpsoSettings = new SMPSO_Settings("Fonseca");
+    SMPSO algorithm = (SMPSO)smpsoSettings.configure(configuration_) ;
+
+    SolutionSet solutionSet = algorithm.execute() ;
+    assertEquals(100, solutionSet.size());
+  }
+
+  @Test
+  public void testExecuteSMPSOhv() throws ClassNotFoundException, IOException {
+    Problem problem = new Fonseca("Real") ;
+    Archive archive = new FastHypervolumeArchive(100, problem.getNumberOfObjectives()) ;
+    SolutionSetEvaluator
+      evaluator = new SequentialSolutionSetEvaluator();
+
+    Operator mutation = new PolynomialMutation.Builder()
+      .distributionIndex(20.0)
+      .probability(1.0 / problem.getNumberOfVariables())
+      .build();
+
+    SMPSO algorithm = new SMPSO.Builder(problem, archive, evaluator)
+      .mutation(mutation)
+      .maxIterations(250)
+      .swarmSize(100)
+      .archiveSize(100)
+      .build();
+
+    SolutionSet solutionSet = algorithm.execute() ;
+    assertEquals(100, solutionSet.size());
+  }
+
+  @Test
+  public void testExecuteParallelSMPSO() throws ClassNotFoundException, IOException {
+    Problem problem = new Fonseca("Real") ;
+    Archive archive = new FastHypervolumeArchive(100, problem.getNumberOfObjectives()) ;
+    SolutionSetEvaluator evaluator = new MultithreadedSolutionSetEvaluator(6, problem);
+
+    Operator mutation = new PolynomialMutation.Builder()
+      .distributionIndex(20.0)
+      .probability(1.0 / problem.getNumberOfVariables())
+      .build();
+
+    SMPSO algorithm = new SMPSO.Builder(problem, archive, evaluator)
+      .mutation(mutation)
+      .maxIterations(250)
+      .swarmSize(100)
+      .archiveSize(100)
+      .build();
+
+    SolutionSet solutionSet = algorithm.execute() ;
+    assertEquals(100, solutionSet.size());
+  }
+
   /*
   @Test
   public void testExecuteSMPSOWithConfigurationFile() throws JMException, ClassNotFoundException, IOException {

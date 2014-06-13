@@ -1,10 +1,9 @@
-//  SMPSOhvRunner.java
+//  SMPSORunner.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
 //
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
+//  Copyright (c) 2014 Antonio J. Nebro
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,7 @@ package jmetal.runner;
 import jmetal.core.Algorithm;
 import jmetal.core.Problem;
 import jmetal.core.SolutionSet;
-import jmetal.metaheuristics.smpso.SMPSOE;
+import jmetal.metaheuristics.smpso.SMPSO;
 import jmetal.operators.mutation.Mutation;
 import jmetal.operators.mutation.PolynomialMutation;
 import jmetal.problems.Kursawe;
@@ -55,7 +54,7 @@ import java.util.logging.Logger;
  *   Analysis of leader selection strategies in a multi-objective Particle Swarm Optimizer.
  *   IEEE Congress on Evolutionary Computation 2013: 3153-3160
  */
-public class SMPSOhvRunner {
+public class SMPSORunner {
   public static Logger logger_;      
   public static FileHandler fileHandler_; 
 
@@ -119,7 +118,7 @@ public class SMPSOhvRunner {
       .probability(1.0 / problem.getNumberOfVariables())
       .build();
 
-    algorithm = new SMPSOE.Builder(problem, archive, evaluator)
+    algorithm = new SMPSO.Builder(problem, archive, evaluator)
       .mutation(mutation)
       .maxIterations(250)
       .swarmSize(100)
