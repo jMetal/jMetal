@@ -24,6 +24,9 @@ package jmetal.core;
 import jmetal.util.JMException;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,9 +34,8 @@ import java.util.Map;
  */
 public abstract class Operator implements Serializable {
 
-  /**
-   *
-   */
+  private List<Class<? extends SolutionType>> validSolutionTypes_ ;
+
   private static final long serialVersionUID = -8976295845748676798L;
 
   /**
@@ -43,11 +45,14 @@ public abstract class Operator implements Serializable {
    */
   protected final Map<String, Object> parameters_;
 
-  /**
-   * Constructor.
-   */
+  @Deprecated
   public Operator(Map<String, Object> parameters) {
     parameters_ = parameters;
+  }
+
+  public Operator() {
+    validSolutionTypes_ = new ArrayList<>() ;
+    parameters_ = new HashMap<>() ;
   }
 
   /**
@@ -80,5 +85,46 @@ public abstract class Operator implements Serializable {
    */
   public Object getParameter(String name) {
     return parameters_.get(name);
+  }
+
+  /**
+   * Add a new valid solution type
+   * @param newSolutionType
+   */
+  public void addValidSolutionType(Class newSolutionType) {
+    validSolutionTypes_.add(newSolutionType) ;
+  }
+
+  /**
+   * Test for solutions having a solution type to which the operator is applicable
+   * @param solution Solution to the checked
+   * @return True if the solution type of the solution is valid
+   */
+  public boolean solutionTypeIsValid(Solution solution) {
+    boolean result ;
+    if (validSolutionTypes_.contains(solution.getType().getClass())) {
+      result = true ;
+    }
+    else {
+      result = false ;
+    }
+
+    return result ;
+  }
+
+  /**
+   * Test for solutions having a solution type to which the operator is applicable
+   * @param solutions Array of solution to the checked
+   * @return True if the solution type of all the solutions in the array is valid
+   */
+  public boolean solutionTypeIsValid(Solution[] solutions) {
+    boolean result = true; // true by default
+    for (Solution solution : solutions) {
+      if(!validSolutionTypes_.contains(solution.getType().getClass())) {
+        result = false ;
+      }
+    }
+
+    return result ;
   }
 } 

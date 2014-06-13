@@ -58,9 +58,9 @@ public class SBXCrossover extends Crossover {
   /**
    * Valid solution types to apply this operator
    */
-  private static final List<Class<? extends SolutionType>> VALID_TYPES =
-    Arrays.asList(RealSolutionType.class,
-      ArrayRealSolutionType.class);
+  private static final List<Class<? extends SolutionType>> VALID_TYPES = Arrays.asList(
+    RealSolutionType.class,
+    ArrayRealSolutionType.class);
 
   /**
    * Constructor
@@ -84,7 +84,8 @@ public class SBXCrossover extends Crossover {
    * @param builder
    */
   private SBXCrossover(Builder builder) {
-     super(new HashMap<String, Object>()) ;
+    addValidSolutionType(RealSolutionType.class);
+    addValidSolutionType(ArrayRealSolutionType.class);
 
     crossoverProbability_ = builder.crossoverProbability_ ;
     distributionIndex_ = builder.distributionIndex_ ;
@@ -226,8 +227,7 @@ public class SBXCrossover extends Crossover {
       throw new JMException("Exception in " + name + ".execute()");
     }
 
-    if (!(VALID_TYPES.contains(parents[0].getType().getClass()) &&
-      VALID_TYPES.contains(parents[1].getType().getClass()))) {
+    if (!solutionTypeIsValid(parents)) {
       Configuration.logger_.severe("SBXCrossover.execute: the solutions " +
         "type " + parents[0].getType() + " is not allowed with this operator");
 

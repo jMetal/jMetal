@@ -72,13 +72,13 @@ public class DifferentialEvolutionSelection extends Selection {
     }
 
     do {
-      r1 = (int) (PseudoRandom.randInt(0, population.size() - 1));
+      r1 = PseudoRandom.randInt(0, population.size() - 1);
     } while (r1 == index);
     do {
-      r2 = (int) (PseudoRandom.randInt(0, population.size() - 1));
+      r2 = PseudoRandom.randInt(0, population.size() - 1);
     } while (r2 == index || r2 == r1);
     do {
-      r3 = (int) (PseudoRandom.randInt(0, population.size() - 1));
+      r3 = PseudoRandom.randInt(0, population.size() - 1);
     } while (r3 == index || r3 == r1 || r3 == r2);
 
     parents[0] = population.get(r1);

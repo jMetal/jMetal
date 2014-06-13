@@ -54,28 +54,21 @@ public class PolynomialMutationTest {
 
   @Test
   public void defaultParametersTest() {
-    assertEquals("PolynomialMutationTest.testDefaultParameters",
-      20.0, mutation_.getDistributionIndex(), DELTA) ;
-    assertEquals("PolynomialMutationTest.testDefaultParameters",
-      1.0/problem_.getNumberOfVariables(), mutation_.getMutationProbability(), DELTA) ;
+    assertEquals(20.0, mutation_.getDistributionIndex(), DELTA) ;
+    assertEquals(1.0/problem_.getNumberOfVariables(), mutation_.getMutationProbability(), DELTA) ;
   }
 
   @Test
   public void setMutationProbabilityTest() {
     mutation_ = new PolynomialMutation.Builder().probability(0.02).build() ;
 
-    assertEquals("PolynomialMutationTest.setMutationProbabilityTest",
-      0.02,
-      mutation_.getMutationProbability(), DELTA) ;
+    assertEquals(0.02, mutation_.getMutationProbability(), DELTA) ;
   }
 
   @Test
   public void setMutationDistributionIndex() {
     mutation_ = new PolynomialMutation.Builder().distributionIndex(5.0).build() ;
 
-
-    assertEquals("PolynomialMutationTest.setMutationDistributionIndex",
-      5.0,
-      mutation_.getDistributionIndex(), DELTA) ;
+    assertEquals(5.0, mutation_.getDistributionIndex(), DELTA) ;
   }
 }

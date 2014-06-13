@@ -35,7 +35,12 @@ public abstract class Crossover extends Operator {
    */
   private static final long serialVersionUID = 4720992679275654728L;
 
+  @Deprecated
   public Crossover(HashMap<String, Object> parameters) {
     super(parameters);
+  }
+
+  public Crossover() {
+    super() ;
   }
 }
