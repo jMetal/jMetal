@@ -84,19 +84,6 @@ public class SMPSOE extends Algorithm {
   public SMPSOE(Builder builder) {
     super() ;
 
-    r1Max_ = 1.0;
-    r1Min_ = 0.0;
-    r2Max_ = 1.0;
-    r2Min_ = 0.0;
-    c1Max_ = 2.5;
-    c1Min_ = 1.5;
-    c2Max_ = 2.5;
-    c2Min_ = 1.5;
-    weightMax_ = 0.1;
-    weightMin_ = 0.1;
-    changeVelocity1_ = -1;
-    changeVelocity2_ = -1;
-
     problem_ = builder.problem_ ;
     swarmSize_ = builder.swarmSize_ ;
     archiveSize_ = builder.archiveSize_ ;
@@ -104,6 +91,19 @@ public class SMPSOE extends Algorithm {
     mutation_ = builder.mutationOperator_ ;
     maxIterations_ = builder.maxIterations_ ;
     evaluator_ = builder.evaluator_ ;
+
+    r1Max_ = builder.r1Max_ ;
+    r1Min_ = builder.r1Min_ ;
+    r2Max_ = builder.r2Max_ ;
+    r2Min_ = builder.r2Min_ ;
+    c1Max_ = builder.c1Max_ ;
+    c1Min_ = builder.c1Min_ ;
+    c2Max_ = builder.c2Max_ ;
+    c2Min_ = builder.c2Min_ ;
+    weightMax_ = builder.weightMax_ ;
+    weightMin_ = builder.weightMin_ ;
+    changeVelocity1_ = builder.changeVelocity1_;
+    changeVelocity2_ = builder.changeVelocity2_;
   }
 
   @Deprecated
@@ -125,6 +125,9 @@ public class SMPSOE extends Algorithm {
 
   }
 
+  /*
+   * Getters
+   */
   public void setEvaluator(SolutionSetEvaluator evaluator) {
     evaluator_ = evaluator;
   }
@@ -139,6 +142,38 @@ public class SMPSOE extends Algorithm {
 
   public int getMaxIterations() {
     return maxIterations_ ;
+  }
+
+  public double getR1Max() {
+    return r1Max_ ;
+  }
+
+  public double getR1Min() {
+    return r1Min_ ;
+  }
+
+  public double getR2Max() {
+    return r2Max_ ;
+  }
+
+  public double getR2Min() {
+    return r2Min_ ;
+  }
+
+  public double getC1Max() {
+    return c1Max_ ;
+  }
+
+  public double getC1Min() {
+    return c1Min_ ;
+  }
+
+  public double getC2Max() {
+    return c2Max_ ;
+  }
+
+  public double getC2Min() {
+    return c2Min_ ;
   }
 
   /**
@@ -377,6 +412,9 @@ public class SMPSOE extends Algorithm {
     evaluator_.shutdown();
   }
 
+  /*
+   * Builder class
+   */
   public static class Builder {
     protected SolutionSetEvaluator evaluator_ ;
     protected Problem problem_ ;
@@ -388,10 +426,41 @@ public class SMPSOE extends Algorithm {
 
     protected Operator mutationOperator_;
 
+    private double c1Max_;
+    private double c1Min_;
+    private double c2Max_;
+    private double c2Min_;
+    private double r1Max_;
+    private double r1Min_;
+    private double r2Max_;
+    private double r2Min_;
+    private double weightMax_;
+    private double weightMin_;
+    private double changeVelocity1_;
+    private double changeVelocity2_;
+
+
     public Builder(Problem problem, Archive leaders, SolutionSetEvaluator evaluator) {
       evaluator_ = evaluator ;
       problem_ = problem ;
       leaders_ = leaders ;
+
+      swarmSize_ = 100 ;
+      maxIterations_ = 25000 ;
+      archiveSize_ = 100 ;
+
+      r1Max_ = 1.0;
+      r1Min_ = 0.0;
+      r2Max_ = 1.0;
+      r2Min_ = 0.0;
+      c1Max_ = 2.5;
+      c1Min_ = 1.5;
+      c2Max_ = 2.5;
+      c2Min_ = 1.5;
+      weightMax_ = 0.1;
+      weightMin_ = 0.1;
+      changeVelocity1_ = -1;
+      changeVelocity2_ = -1;
     }
 
     public Builder swarmSize(int swarmSize) {
@@ -414,6 +483,78 @@ public class SMPSOE extends Algorithm {
 
     public Builder archiveSize(int archiveSize) {
       archiveSize_ = archiveSize ;
+
+      return this ;
+    }
+
+    public Builder c1Max(double c1Max) {
+      c1Max_ = c1Max ;
+
+      return this ;
+    }
+
+    public Builder c1Min(double c1Min) {
+      c1Min_ = c1Min ;
+
+      return this ;
+    }
+
+    public Builder c2Max(double c2Max) {
+      c2Max_ = c2Max ;
+
+      return this ;
+    }
+
+    public Builder c2Min(double c2Min) {
+      c2Min_ = c2Min ;
+
+      return this ;
+    }
+
+    public Builder r1Max(double r1Max) {
+      r1Max_ = r1Max ;
+
+      return this ;
+    }
+
+    public Builder r1Min(double r1Min) {
+      r1Min_ = r1Min ;
+
+      return this ;
+    }
+
+    public Builder r2Max(double r2Max) {
+      r2Max_ = r2Max ;
+
+      return this ;
+    }
+
+    public Builder r2Min(double r2Min) {
+      r2Min_ = r2Min ;
+
+      return this ;
+    }
+
+    public Builder weightMax(double weightMax) {
+      weightMax_ = weightMax ;
+
+      return this ;
+    }
+
+    public Builder weightMin(double weightMin) {
+      weightMin_ = weightMin ;
+
+      return this ;
+    }
+
+    public Builder changeVelocity1(double changeVelocity1) {
+      changeVelocity1_ = changeVelocity1 ;
+
+      return this ;
+    }
+
+    public Builder changeVelocity2(double changeVelocity2) {
+      changeVelocity2_ = changeVelocity2 ;
 
       return this ;
     }

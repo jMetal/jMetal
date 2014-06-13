@@ -126,8 +126,6 @@ public class SMPSOhvRunner {
       .archiveSize(100)
       .build();
 
-    algorithm.addOperator("mutation", mutation);
-
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
       .execute();
 
