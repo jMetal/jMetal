@@ -1,10 +1,9 @@
-//  GDE3_main.java
+//  GDE3Runner.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
 //
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
+//  Copyright (c) 2014 Antonio J. Nebro
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -54,9 +53,9 @@ public class GDE3Runner {
    * @throws jmetal.util.JMException
    * @throws java.io.IOException
    * @throws SecurityException Usage: three choices
-   *                           - jmetal.metaheuristics.nsgaII.NSGAII_main
-   *                           - jmetal.metaheuristics.nsgaII.NSGAII_main problemName
-   *                           - jmetal.metaheuristics.nsgaII.NSGAII_main problemName paretoFrontFile
+   *                           - jmetal.runner.GDE3Runner
+   *                           - jmetal.runner.GDE3Runner problemName
+   *                           - jmetal.runner.GDE3Runner problemName paretoFrontFile
    */
   public static void main(String[] args)
     throws JMException, SecurityException, IOException, ClassNotFoundException {

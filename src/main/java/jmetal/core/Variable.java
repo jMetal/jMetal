@@ -80,7 +80,7 @@ public abstract class Variable implements Serializable {
     Configuration.logger_.severe("Class " + name + " does not implement "
       + "method setValue");
     throw new JMException("Exception in " + name + ".setValue()");
-  } // setValue
+  }
 
   /**
    * Gets the lower bound value of a encodings.variable. As not all objects
