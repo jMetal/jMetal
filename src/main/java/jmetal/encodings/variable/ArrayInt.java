@@ -196,8 +196,8 @@ public class ArrayInt extends Variable {
       );
       throw new JMetalException(
         jmetal.encodings.variable.ArrayInt.class + ": index value (" + index + ") invalid");
-    } // else
-  } // setValue
+    }
+  }
 
 
   /**

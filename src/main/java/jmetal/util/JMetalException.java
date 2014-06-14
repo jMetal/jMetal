@@ -1,4 +1,4 @@
-//  JMException.java
+//  JMetalException.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>

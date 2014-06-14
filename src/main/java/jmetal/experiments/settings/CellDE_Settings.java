@@ -58,6 +58,7 @@ public class CellDE_Settings extends Settings {
       problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
     } catch (JMetalException e) {
       Configuration.logger_.log(Level.SEVERE, "Unable to get problem", e);
+      throw new JMetalException(e);
     }
 
     // Default experiments.settings

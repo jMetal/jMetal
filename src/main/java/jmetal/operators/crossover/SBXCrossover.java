@@ -138,7 +138,7 @@ public class SBXCrossover extends Crossover {
             } else {
               y1 = valueX2;
               y2 = valueX1;
-            } // if                       
+            }
 
             yL = x1.getLowerBound(i);
             yu = x1.getUpperBound(i);
@@ -151,7 +151,7 @@ public class SBXCrossover extends Crossover {
             } else {
               betaq = java.lang.Math
                 .pow((1.0 / (2.0 - rand * alpha)), (1.0 / (distributionIndex_ + 1.0)));
-            } // if
+            }
 
             c1 = 0.5 * ((y1 + y2) - betaq * (y2 - y1));
             beta = 1.0 + (2.0 * (yu - y2) / (y2 - y1));
@@ -162,7 +162,7 @@ public class SBXCrossover extends Crossover {
             } else {
               betaq = java.lang.Math
                 .pow((1.0 / (2.0 - rand * alpha)), (1.0 / (distributionIndex_ + 1.0)));
-            } // if
+            }
 
             c2 = 0.5 * ((y1 + y2) + betaq * (y2 - y1));
 

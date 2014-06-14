@@ -4,20 +4,78 @@
 (http://jmetal.sourceforge.net).
 
 The current jMetal development version is hosted in this repository; this way, interested users can take a look to
-the new incoming features in advance. If you want to make some contribution, please feel free to clone the project
-and submit a pull request.
+the new incoming features in advance.
 
 Suggestions and comments are welcome.
 
-### Incoming features
+After eight years since the first release of jMetal, we have decided it's time to make a deep redesign of the
+software. Some of the ideas we are elaborating are:
+1. Maven is used as the tool for development, testing, packaging and deployment.
+2. The encoding takes into account the recommendations provided in “Clean code: A Handbook of Agile Software Craftsmanship" (Robert C. Martin)
+3. The Fluent Interface (http://martinfowler.com/bliki/FluentInterface.html) is applied intensively.
+4. We will incorporate progressively unit tests to all the clases.
 
-- We are using Maven since now on.
-- SonarQube is used to improve the code quality.
-- The multithreaded support (package: jmetal.util.parallel) has been rewritten. TO BE TESTED.
-- The Experiment class (package: jmetal.experiments) has been refactored and now the configuration of any experiment
-can be set by using properties files. TO BE TESTED.
-- New algorithms: StandardPSO2007 and StandardPSO2011 (package: jmetal.metaheuristics.singleObjctive.particleSwarmOptimization).
-- New problems: CEC 2005 Competition test suite (class: jmetal.problems.singleObjective.CEC2005Problem). TO BE TESTED.
-- New test package to apply unit testing (a lot of work to do here).
+## Clean code
+After applying clean code, the main code of NSGA-II is now as follows:
+```
+   public class NSGAII extends NSGAIITemplate {
+
+     /**
+      * Runs the NSGA-II algorithm.
+      *
+      * @return a <code>SolutionSet</code> that is a set of non dominated solutions
+      * as a result of the algorithm execution
+      * @throws jmetal.util.JMetalException
+      */
+     public SolutionSet execute() throws JMetalException, ClassNotFoundException {
+       //readParameterSettings();
+       createInitialPopulation();
+       evaluatePopulation(population_);
+
+       // Main loop
+       while (!stoppingCondition()) {
+         offspringPopulation_ = new SolutionSet(populationSize_);
+         for (int i = 0; i < (populationSize_ / 2); i++) {
+           if (!stoppingCondition()) {
+             Solution[] parents = new Solution[2];
+             parents[0] = (Solution) selectionOperator_.execute(population_);
+             parents[1] = (Solution) selectionOperator_.execute(population_);
+
+             Solution[] offSpring = (Solution[]) crossoverOperator_.execute(parents);
+
+             mutationOperator_.execute(offSpring[0]);
+             mutationOperator_.execute(offSpring[1]);
+
+             offspringPopulation_.add(offSpring[0]);
+             offspringPopulation_.add(offSpring[1]);
+           }
+         }
+
+         evaluatePopulation(offspringPopulation_);
+         evaluations_ += offspringPopulation_.size() ;
+
+         Ranking ranking = new Ranking(population_.union(offspringPopulation_));
+
+         population_.clear();
+         int rankingIndex = 0 ;
+         while (populationIsNotFull()) {
+           if (subfrontFillsIntoThePopulation(ranking, rankingIndex)) {
+             addRankedSolutionsToPopulation(ranking, rankingIndex);
+             rankingIndex ++ ;
+           } else {
+             computeCrowdingDistance(ranking, rankingIndex) ;
+             addLastRankedSolutions(ranking, rankingIndex);
+           }
+         }
+       }
+
+       tearDown() ;
+
+       return getNonDominatedSolutions() ;
+     }
+   }
+```
+
+
 
 

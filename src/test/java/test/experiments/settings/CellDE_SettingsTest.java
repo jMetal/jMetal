@@ -55,7 +55,7 @@ public class CellDE_SettingsTest  {
   }
 
   @Test
-  public void testSettings() throws JMetalException {
+  public void settingsTest() throws JMetalException {
     double epsilon = 0.000000000000001 ;
     Settings cellDESettings = new CellDE_Settings("Fonseca");
     Algorithm algorithm = cellDESettings.configure() ;
@@ -74,7 +74,7 @@ public class CellDE_SettingsTest  {
   }
 
   @Test
-  public void testSettings2() throws JMetalException {
+  public void settingsFromConfigurationFileTest() throws JMetalException {
     double epsilon = 0.000000000000001 ;
     Settings cellDESettings = new CellDE_Settings("Fonseca");
     Algorithm algorithm = cellDESettings.configure(configuration_) ;
@@ -90,5 +90,12 @@ public class CellDE_SettingsTest  {
 
     assertEquals("CellDE_SettingsTest", 0.5, CR, epsilon);
     assertEquals("CellDE_SettingsTest", 0.5, F, epsilon);
+  }
+
+  @Test (expected = JMetalException.class)
+  public void problemNameInvalidTest() throws JMetalException {
+    double epsilon = 0.000000000000001 ;
+    Settings cellDESettings = new CellDE_Settings("Anyproblem");
+    Algorithm algorithm = cellDESettings.configure() ;
   }
 }
