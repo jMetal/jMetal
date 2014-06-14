@@ -15,7 +15,7 @@ software. Some of the ideas we are elaborating are:
 3. The Fluent Interface (http://martinfowler.com/bliki/FluentInterface.html) is applied intensively.
 4. We will incorporate progressively unit tests to all the clases.
 
-## Clean code
+### Clean code
 After applying clean code, the main code of NSGA-II is now as follows:
 ``` java
    public class NSGAII extends NSGAIITemplate {
@@ -73,7 +73,7 @@ After applying clean code, the main code of NSGA-II is now as follows:
      }
    }
 ```
-# Fluent interface
+### Fluent interface
 We apply the Fluent Interface to the creation of operators, the configuration of algorithms, and
 the reporting of output information. As an example, the configure and run NSGA-II the `NSGAIIRunner`
 program looks like this code:
