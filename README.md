@@ -12,7 +12,8 @@ After eight years since the first release of jMetal, we have decided it's time t
 software. Some of the ideas we are elaborating are:
 * Maven is used as the tool for development, testing, packaging and deployment.
 * The encoding takes into account the recommendations provided in “Clean code: A Handbook of Agile Software Craftsmanship" (Robert C. Martin)
-* The Fluent Interface (http://martinfowler.com/bliki/FluentInterface.html) is applied intensively.
+* The Fluent Interface (http://martinfowler.com/bliki/FluentInterface.html) is applied to configure and execute
+the algorithms.
 * We will incorporate progressively unit tests to all the clases.
 
 ### Clean code
