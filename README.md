@@ -10,10 +10,10 @@ Suggestions and comments are welcome.
 
 After eight years since the first release of jMetal, we have decided it's time to make a deep redesign of the
 software. Some of the ideas we are elaborating are:
-1. Maven is used as the tool for development, testing, packaging and deployment.
-2. The encoding takes into account the recommendations provided in “Clean code: A Handbook of Agile Software Craftsmanship" (Robert C. Martin)
-3. The Fluent Interface (http://martinfowler.com/bliki/FluentInterface.html) is applied intensively.
-4. We will incorporate progressively unit tests to all the clases.
+* Maven is used as the tool for development, testing, packaging and deployment.
+* The encoding takes into account the recommendations provided in “Clean code: A Handbook of Agile Software Craftsmanship" (Robert C. Martin)
+* The Fluent Interface (http://martinfowler.com/bliki/FluentInterface.html) is applied intensively.
+* We will incorporate progressively unit tests to all the clases.
 
 ### Clean code
 After applying clean code, the main code of NSGA-II is now as follows:
