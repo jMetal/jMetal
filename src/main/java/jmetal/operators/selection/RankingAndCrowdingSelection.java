@@ -26,7 +26,7 @@ import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
 import jmetal.util.Configuration;
 import jmetal.util.Distance;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.Ranking;
 import jmetal.util.comparator.CrowdingComparator;
 
@@ -83,9 +83,9 @@ public class RankingAndCrowdingSelection extends Selection {
    *
    * @param object Object representing a SolutionSet.
    * @return an object representing a <code>SolutionSet<code> with the selected parents
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public Object execute(Object object) throws JMException {
+  public Object execute(Object object) throws JMetalException {
     SolutionSet population = (SolutionSet) object;
     int populationSize = (Integer) parameters_.get("populationSize");
     SolutionSet result = new SolutionSet(populationSize);

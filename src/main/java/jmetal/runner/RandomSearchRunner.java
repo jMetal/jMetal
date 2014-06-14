@@ -29,7 +29,7 @@ import jmetal.problems.Kursawe;
 import jmetal.problems.ProblemFactory;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.io.IOException;
 import java.util.logging.FileHandler;
@@ -44,14 +44,14 @@ public class RandomSearchRunner {
 
   /**
    * @param args Command line arguments.
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    * @throws IOException
    * @throws SecurityException Usage: three options
    *                           - jmetal.runner.RandomSearch_main
    *                           - jmetal.runner.RandomSearch_main problemName
    */
   public static void main(String[] args) throws
-    JMException, SecurityException, IOException, ClassNotFoundException {
+    JMetalException, SecurityException, IOException, ClassNotFoundException {
     Problem problem;
     Algorithm algorithm;
 

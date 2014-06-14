@@ -22,7 +22,7 @@ package jmetal.experiments;
 
 import jmetal.experiments.util.*;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.parallel.MultithreadedAlgorithmExecutor;
 
 import java.io.*;
@@ -320,7 +320,7 @@ public class Experiment {
     checkIfExperimentDirectoryExists();
   }
 
-  public void runExperiment() throws JMException, IOException {
+  public void runExperiment() throws JMetalException, IOException {
     Configuration.logger_.info("Experiment: Name: " + experimentName_);
     Configuration.logger_.info("Experiment: creating " + numberOfExecutionThreads_ + " threads");
     Configuration.logger_.info("Experiment: Number of algorithms: " + algorithmNameList_.length);

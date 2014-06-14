@@ -21,7 +21,7 @@
 
 package jmetal.experiments.util;
 
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.io.IOException;
 
@@ -31,5 +31,5 @@ import java.io.IOException;
  * Interface for all the outputs of an experiment
  */
 public interface IExperimentOutput {
-  public void generate() throws JMException, IOException;
+  public void generate() throws JMetalException, IOException;
 }

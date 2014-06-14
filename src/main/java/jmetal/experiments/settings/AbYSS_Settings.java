@@ -29,7 +29,7 @@ import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.localSearch.MutationLocalSearch;
 import jmetal.operators.mutation.MutationFactory;
 import jmetal.problems.ProblemFactory;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.util.HashMap;
 import java.util.Properties;
@@ -54,7 +54,7 @@ public class AbYSS_Settings extends Settings {
    *
    * @param problemName Problem to solve
    */
-  public AbYSS_Settings(String problemName) throws JMException {
+  public AbYSS_Settings(String problemName) throws JMetalException {
     super(problemName);
 
     Object[] problemParams = {"Real"};
@@ -76,9 +76,9 @@ public class AbYSS_Settings extends Settings {
    * Configure the AbYSS algorithm with default parameter experiments.settings
    *
    * @return an algorithm object
-   * @throws jmetal.util.JMException
+   * @throws jmetal.util.JMetalException
    */
-  public Algorithm configure() throws JMException {
+  public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
     Operator crossover;
     Operator mutation;
@@ -124,7 +124,7 @@ public class AbYSS_Settings extends Settings {
    * @return An AbYSS algorithm object
    */
   @Override
-  public Algorithm configure(Properties configuration) throws JMException {
+  public Algorithm configure(Properties configuration) throws JMetalException {
     // Algorithm parameters
     populationSize_ = Integer
       .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize_)));

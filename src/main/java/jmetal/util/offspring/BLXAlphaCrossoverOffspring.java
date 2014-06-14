@@ -13,7 +13,7 @@ import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
 import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.selection.SelectionFactory;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -29,7 +29,7 @@ public class BLXAlphaCrossoverOffspring extends Offspring {
 
   private BLXAlphaCrossoverOffspring(
     double crossoverProbability,
-    double alpha) throws JMException {
+    double alpha) throws JMetalException {
     crossoverProbability_ = crossoverProbability;
     alpha_ = alpha;
 
@@ -55,7 +55,7 @@ public class BLXAlphaCrossoverOffspring extends Offspring {
       Solution[] children = (Solution[]) crossover_.execute(parents);
       offSpring = children[0];
       //Create a new solution, using DE
-    } catch (JMException ex) {
+    } catch (JMetalException ex) {
       Logger.getLogger(BLXAlphaCrossoverOffspring.class.getName()).log(Level.SEVERE, null, ex);
     }
     return offSpring;
@@ -78,7 +78,7 @@ public class BLXAlphaCrossoverOffspring extends Offspring {
       Solution[] children = (Solution[]) crossover_.execute(parents);
       offSpring = children[0];
       //Create a new solution, using DE
-    } catch (JMException ex) {
+    } catch (JMetalException ex) {
       Logger.getLogger(BLXAlphaCrossoverOffspring.class.getName()).log(Level.SEVERE, null, ex);
     }
     return offSpring;

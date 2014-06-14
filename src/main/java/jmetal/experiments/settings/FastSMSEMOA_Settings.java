@@ -30,7 +30,7 @@ import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.Selection;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.ProblemFactory;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.util.HashMap;
 import java.util.Properties;
@@ -50,9 +50,9 @@ public class FastSMSEMOA_Settings extends Settings {
   /**
    * Constructor
    *
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public FastSMSEMOA_Settings(String problem) throws JMException {
+  public FastSMSEMOA_Settings(String problem) throws JMetalException {
     super(problem);
 
     Object[] problemParams = {"Real"};
@@ -72,9 +72,9 @@ public class FastSMSEMOA_Settings extends Settings {
    * Configure FastSMSEMOA with user-defined parameter experiments.settings
    *
    * @return A FastSMSEMOA algorithm object
-   * @throws jmetal.util.JMException
+   * @throws jmetal.util.JMetalException
    */
-  public Algorithm configure() throws JMException {
+  public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
     Selection selection;
     Crossover crossover;
@@ -118,7 +118,7 @@ public class FastSMSEMOA_Settings extends Settings {
    * @return A FastSMSEMOA algorithm object
    */
   @Override
-  public Algorithm configure(Properties configuration) throws JMException {
+  public Algorithm configure(Properties configuration) throws JMetalException {
     populationSize_ = Integer
       .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize_)));
     maxEvaluations_ = Integer

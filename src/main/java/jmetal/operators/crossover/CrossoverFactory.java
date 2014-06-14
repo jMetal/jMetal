@@ -22,7 +22,7 @@
 package jmetal.operators.crossover;
 
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.util.HashMap;
 
@@ -38,7 +38,7 @@ public class CrossoverFactory {
    * @return The operator
    */
   public static Crossover getCrossoverOperator(String name, HashMap<String, Object> parameters)
-    throws JMException {
+    throws JMetalException {
     if ("SBXCrossover".equalsIgnoreCase(name)) {
       return new SBXCrossover(parameters);
     } else if ("SinglePointCrossover".equalsIgnoreCase(name)) {
@@ -56,7 +56,7 @@ public class CrossoverFactory {
     } else {
       Configuration.logger_.severe("CrossoverFactory.getCrossoverOperator. " +
         "Operator '" + name + "' not found ");
-      throw new JMException("Exception in " + name + ".getCrossoverOperator()");
+      throw new JMetalException("Exception in " + name + ".getCrossoverOperator()");
     }
   }
 }

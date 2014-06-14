@@ -22,10 +22,9 @@
 package jmetal.metaheuristics.randomSearch;
 
 import jmetal.core.Algorithm;
-import jmetal.core.Problem;
 import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.NonDominatedSolutionList;
 
 /**
@@ -54,9 +53,9 @@ public class RandomSearch extends Algorithm {
    *
    * @return a <code>SolutionSet</code> that is a set of solutions
    * as a result of the algorithm execution
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public SolutionSet execute() throws JMException, ClassNotFoundException {
+  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     int maxEvaluations;
     int evaluations;
 

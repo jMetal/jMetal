@@ -22,7 +22,7 @@
 package jmetal.qualityIndicator;
 
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 /**
  * This class implements the inverted generational distance metric.
@@ -53,11 +53,11 @@ public class InvertedGenerationalDistance {
    * 1) the name of the file containing the front, and 2) the name of the file
    * containig the true Pareto front
    *
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public static void main(String args[]) throws JMException {
+  public static void main(String args[]) throws JMetalException {
     if (args.length < 2) {
-      throw new JMException("InvertedGenerationalDistance::Main: Usage: java " +
+      throw new JMetalException("InvertedGenerationalDistance::Main: Usage: java " +
         "InvertedGenerationalDistance <FrontFile> " +
         "<TrueFrontFile>  <getNumberOfObjectives>");
     }

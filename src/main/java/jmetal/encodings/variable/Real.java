@@ -23,7 +23,7 @@ package jmetal.encodings.variable;
 
 import jmetal.core.Variable;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.random.PseudoRandom;
 
 import java.util.logging.Level;
@@ -90,9 +90,9 @@ public class Real extends Variable {
    * Copy constructor.
    *
    * @param variable The encodings.variable to copy.
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public Real(Variable variable) throws JMException {
+  public Real(Variable variable) throws JMetalException {
     lowerBound_ = variable.getLowerBound();
     upperBound_ = variable.getUpperBound();
     value_ = variable.getValue();
@@ -124,7 +124,7 @@ public class Real extends Variable {
   public Variable deepCopy() {
     try {
       return new Real(this);
-    } catch (JMException e) {
+    } catch (JMetalException e) {
       Configuration.logger_.log(Level.SEVERE, "Real.deepCopy.execute: JMException", e);
       return null;
     }

@@ -47,7 +47,7 @@
 package jmetal.problems.singleObjective.cec2005Competition.originalCode;
 
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 public class F14_shifted_rotated_expanded_scaffer extends TestFunc {
 
@@ -69,13 +69,13 @@ public class F14_shifted_rotated_expanded_scaffer extends TestFunc {
   private double[] m_zM;
 
   // Constructors
-  public F14_shifted_rotated_expanded_scaffer(int dimension, double bias) throws JMException {
+  public F14_shifted_rotated_expanded_scaffer(int dimension, double bias) throws JMetalException {
     this(dimension, bias, DEFAULT_FILE_DATA,
       DEFAULT_FILE_MX_PREFIX + dimension + DEFAULT_FILE_MX_SUFFIX);
   }
 
   public F14_shifted_rotated_expanded_scaffer(int dimension, double bias, String file_data,
-    String file_m) throws JMException {
+    String file_m) throws JMetalException {
     super(dimension, bias, FUNCTION_NAME);
 
     // Note: dimension starts from 0

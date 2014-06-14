@@ -23,7 +23,7 @@ package jmetal.qualityIndicator;
 
 import jmetal.core.Problem;
 import jmetal.core.SolutionSet;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 /**
  * QualityIndicator class
@@ -115,9 +115,9 @@ public class QualityIndicator {
    *
    * @param solutionSet Solution set
    * @return The value of the hypervolume indicator
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public double getEpsilon(SolutionSet solutionSet) throws JMException {
+  public double getEpsilon(SolutionSet solutionSet) throws JMetalException {
     return new Epsilon().epsilon(solutionSet.writeObjectivesToMatrix(),
       trueParetoFront_.writeObjectivesToMatrix(),
       problem_.getNumberOfObjectives());

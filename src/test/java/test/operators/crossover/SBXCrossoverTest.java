@@ -24,7 +24,7 @@ import jmetal.core.Problem;
 import jmetal.core.Solution;
 import jmetal.operators.crossover.SBXCrossover;
 import jmetal.problems.Kursawe;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,7 +42,7 @@ public class SBXCrossoverTest {
   static final double DELTA = 0.0000000000001 ;
 
   @Before
-  public void setUp() throws JMException {
+  public void setUp() throws JMetalException {
     problem_ = new Kursawe("Real", 3) ;
     crossover_ = new SBXCrossover.Builder().build() ;
   }
@@ -68,7 +68,7 @@ public class SBXCrossoverTest {
     assertEquals(1.0, crossover_.getCrossoverProbability(), DELTA) ;
   }
 
-  @Test (expected = JMException.class)
+  @Test (expected = JMetalException.class)
   public void setInvalidCrossoverProbabilityTest() {
     crossover_ = new SBXCrossover.Builder()
       .probability(-2.5)
@@ -84,7 +84,7 @@ public class SBXCrossoverTest {
     assertEquals(5.0, crossover_.getDistributionIndex(), DELTA) ;
   }
 
-  @Test (expected = JMException.class)
+  @Test (expected = JMetalException.class)
   public void setInvalidCrossoverDistributionIndex() {
     crossover_ = new SBXCrossover.Builder()
       .distributionIndex(-1.25)

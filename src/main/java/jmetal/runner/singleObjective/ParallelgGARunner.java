@@ -30,7 +30,7 @@ import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.singleObjective.Griewank;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.parallel.MultithreadedEvaluator;
 import jmetal.util.parallel.SynchronousParallelTaskExecutor;
 
@@ -43,7 +43,7 @@ import java.util.HashMap;
  */
 public class ParallelgGARunner {
 
-  public static void main(String[] args) throws JMException, ClassNotFoundException, IOException {
+  public static void main(String[] args) throws JMetalException, ClassNotFoundException, IOException {
     Problem problem;
     Algorithm algorithm;
     Operator crossover;

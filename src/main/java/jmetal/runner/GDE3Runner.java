@@ -31,7 +31,7 @@ import jmetal.problems.ProblemFactory;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.AlgorithmRunner;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.evaluator.SequentialSolutionSetEvaluator;
 import jmetal.util.evaluator.SolutionSetEvaluator;
 import jmetal.util.fileOutput.DefaultFileOutputContext;
@@ -50,7 +50,7 @@ public class GDE3Runner {
 
   /**
    * @param args Command line arguments.
-   * @throws jmetal.util.JMException
+   * @throws jmetal.util.JMetalException
    * @throws java.io.IOException
    * @throws SecurityException Usage: three choices
    *                           - jmetal.runner.GDE3Runner
@@ -58,7 +58,7 @@ public class GDE3Runner {
    *                           - jmetal.runner.GDE3Runner problemName paretoFrontFile
    */
   public static void main(String[] args)
-    throws JMException, SecurityException, IOException, ClassNotFoundException {
+    throws JMetalException, SecurityException, IOException, ClassNotFoundException {
     Problem problem;
     Algorithm algorithm;
     Operator selection;

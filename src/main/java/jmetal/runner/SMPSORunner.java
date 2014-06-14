@@ -31,7 +31,7 @@ import jmetal.problems.ProblemFactory;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.AlgorithmRunner;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.archive.Archive;
 import jmetal.util.archive.CrowdingArchive;
 import jmetal.util.evaluator.SequentialSolutionSetEvaluator;
@@ -61,14 +61,14 @@ public class SMPSORunner {
   /**
    * @param args Command line arguments. The first (optional) argument specifies
    *             the problem to solve.
-   * @throws jmetal.util.JMException
+   * @throws jmetal.util.JMetalException
    * @throws java.io.IOException
    * @throws SecurityException       Usage: three options
    *                                 - jmetal.runner.SMPSORunner
    *                                 - jmetal.runner.SMPSORunner problemName
    *                                 - jmetal.runner.SMPSORunner problemName ParetoFrontFile
    */
-  public static void main(String[] args) throws JMException, IOException, ClassNotFoundException {
+  public static void main(String[] args) throws JMetalException, IOException, ClassNotFoundException {
     Problem problem;
     Algorithm algorithm;
     Mutation mutation;

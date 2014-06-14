@@ -14,7 +14,7 @@ import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
 import jmetal.operators.crossover.DifferentialEvolutionCrossover;
 import jmetal.operators.selection.SelectionFactory;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.random.PseudoRandom;
 
 import java.util.HashMap;
@@ -49,7 +49,7 @@ public class DifferentialEvolutionOffspring extends Offspring {
       HashMap<String, Object> selectionParameters = null; // FIXME: why we are passing null?
       selection_ = SelectionFactory
         .getSelectionOperator("DifferentialEvolutionSelection", selectionParameters);
-    } catch (JMException ex) {
+    } catch (JMetalException ex) {
       Logger.getLogger(DifferentialEvolutionOffspring.class.getName()).log(Level.SEVERE, null, ex);
     }
     id_ = "DE";
@@ -73,7 +73,7 @@ public class DifferentialEvolutionOffspring extends Offspring {
       parents[2] = solutionSet.get(index);
 
       offSpring = (Solution) crossover_.execute(new Object[] {solutionSet.get(index), parents});
-    } catch (JMException ex) {
+    } catch (JMetalException ex) {
       Logger.getLogger(DifferentialEvolutionOffspring.class.getName()).log(Level.SEVERE, null, ex);
     }
 
@@ -94,7 +94,7 @@ public class DifferentialEvolutionOffspring extends Offspring {
       parents[2] = currentSolution;
 
       offspring = (Solution) crossover_.execute(new Object[] {currentSolution, parents});
-    } catch (JMException ex) {
+    } catch (JMetalException ex) {
       Logger.getLogger(DifferentialEvolutionOffspring.class.getName()).log(Level.SEVERE, null, ex);
     }
 

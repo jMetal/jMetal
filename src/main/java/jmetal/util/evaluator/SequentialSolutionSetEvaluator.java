@@ -27,7 +27,7 @@ import java.util.logging.Level;
 import jmetal.core.Problem;
 import jmetal.core.SolutionSet;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 /**
  * Created by Antonio J. Nebro on 30/05/14.
@@ -39,15 +39,15 @@ public class SequentialSolutionSetEvaluator implements SolutionSetEvaluator {
 
 
   @Override
-  public SolutionSet evaluate(SolutionSet solutionSet, Problem problem) throws JMException {
+  public SolutionSet evaluate(SolutionSet solutionSet, Problem problem) throws JMetalException {
     try {
       for (int i = 0 ; i < solutionSet.size(); i++) {
         problem.evaluate(solutionSet.get(i)) ;
         problem.evaluateConstraints(solutionSet.get(i)) ;
       }
-    } catch (JMException e) {
+    } catch (JMetalException e) {
       Configuration.logger_.log(Level.SEVERE, "Error evaluating solution", e);
-      throw new JMException("Error in SequentialSolutionSetEvaluatior.evaluate()") ;
+      throw new JMetalException("Error in SequentialSolutionSetEvaluatior.evaluate()") ;
     }
 
     return solutionSet;

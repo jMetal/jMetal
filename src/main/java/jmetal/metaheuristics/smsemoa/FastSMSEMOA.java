@@ -26,7 +26,7 @@ import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.qualityIndicator.fastHypervolume.FastHypervolume;
 import jmetal.qualityIndicator.util.MetricsUtil;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.Ranking;
 import jmetal.util.comparator.CrowdingDistanceComparator;
 
@@ -70,9 +70,9 @@ public class FastSMSEMOA extends Algorithm {
    *
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
    * as a result of the algorithm execution
-   * @throws jmetal.util.JMException
+   * @throws jmetal.util.JMetalException
    */
-  public SolutionSet execute() throws JMException, ClassNotFoundException {
+  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     int populationSize;
     int maxEvaluations;
     int evaluations;

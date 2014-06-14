@@ -14,7 +14,7 @@ import jmetal.core.SolutionSet;
 import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.SelectionFactory;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -33,7 +33,7 @@ public class SBXCrossoverAndPolynomialMutationOffspring extends Offspring {
   private SBXCrossoverAndPolynomialMutationOffspring(double mutationProbability,
     double crossoverProbability,
     double distributionIndexForMutation,
-    double distributionIndexForCrossover) throws JMException {
+    double distributionIndexForCrossover) throws JMetalException {
     mutationProbability_ = mutationProbability;
     crossoverProbability_ = crossoverProbability;
     distributionIndexForMutation_ = distributionIndexForMutation;
@@ -69,7 +69,7 @@ public class SBXCrossoverAndPolynomialMutationOffspring extends Offspring {
       offSpring = children[0];
       mutation_.execute(offSpring);
 
-    } catch (JMException ex) {
+    } catch (JMetalException ex) {
       Logger.getLogger(SBXCrossoverAndPolynomialMutationOffspring.class.getName())
         .log(Level.SEVERE, null, ex);
     }
@@ -94,7 +94,7 @@ public class SBXCrossoverAndPolynomialMutationOffspring extends Offspring {
       offSpring = children[0];
       mutation_.execute(offSpring);
       //Create a new solution, using DE
-    } catch (JMException ex) {
+    } catch (JMetalException ex) {
       Logger.getLogger(SBXCrossoverAndPolynomialMutationOffspring.class.getName())
         .log(Level.SEVERE, null, ex);
     }

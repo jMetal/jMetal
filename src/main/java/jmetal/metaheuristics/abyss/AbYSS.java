@@ -24,7 +24,7 @@ package jmetal.metaheuristics.abyss;
 import jmetal.core.*;
 import jmetal.operators.localSearch.LocalSearch;
 import jmetal.util.Distance;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.Spea2Fitness;
 import jmetal.util.archive.CrowdingArchive;
 import jmetal.util.comparator.CrowdingDistanceComparator;
@@ -202,10 +202,10 @@ public class AbYSS extends Algorithm {
    * Returns a <code>Solution</code> using the diversification generation method
    * described in the scatter search template.
    *
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    * @throws ClassNotFoundException
    */
-  public Solution diversificationGeneration() throws JMException, ClassNotFoundException {
+  public Solution diversificationGeneration() throws JMetalException, ClassNotFoundException {
     Solution solution;
     solution = new Solution(problem_);
     XReal wrapperSolution = new XReal(solution);
@@ -251,9 +251,9 @@ public class AbYSS extends Algorithm {
    * @param build if true, indicates that the reference has to be build for the
    *              first time; if false, indicates that the reference set has to be
    *              updated with new solutions
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public void referenceSetUpdate(boolean build) throws JMException {
+  public void referenceSetUpdate(boolean build) throws JMetalException {
     if (build) { // Build a new reference set
       // STEP 1. Select the p best individuals of P, where p is refSet1Size_. 
       //         Selection Criterium: Spea2Fitness
@@ -348,9 +348,9 @@ public class AbYSS extends Algorithm {
    * @param solution The <code>Solution</code>
    * @return true if the <code>Solution</code> has been inserted, false
    * otherwise.
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public boolean refSet2Test(Solution solution) throws JMException {
+  public boolean refSet2Test(Solution solution) throws JMetalException {
     if (refSet2_.size() < refSet2Size_) {
       solution.setDistanceToSolutionSet(
         distance_.distanceToSolutionSetInSolutionSpace(solution, refSet1_));
@@ -401,9 +401,9 @@ public class AbYSS extends Algorithm {
    * @param solution The <code>Solution</code>
    * @return true if the <code>Solution</code> has been inserted, false
    * otherwise.
-   * @throws JMException 
+   * @throws jmetal.util.JMetalException
    */
-  public boolean refSet1Test(Solution solution) throws JMException {
+  public boolean refSet1Test(Solution solution) throws JMetalException {
     boolean dominated = false;
     int flag;
     int i = 0;
@@ -441,9 +441,9 @@ public class AbYSS extends Algorithm {
    * template
    *
    * @return Number of solutions created by the method
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public int subSetGeneration() throws JMException {
+  public int subSetGeneration() throws JMetalException {
     Solution[] parents = new Solution[2];
     Solution[] offSpring;
 
@@ -501,9 +501,9 @@ public class AbYSS extends Algorithm {
    *
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
    * as a result of the algorithm execution
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public SolutionSet execute() throws JMException, ClassNotFoundException {
+  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     // STEP 1. Initialize parameters
     initParam();
 

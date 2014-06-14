@@ -25,7 +25,7 @@ import jmetal.core.Solution;
 import jmetal.encodings.solutiontype.PermutationSolutionType;
 import jmetal.encodings.variable.Permutation;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.random.PseudoRandom;
 
 import java.util.Arrays;
@@ -71,11 +71,11 @@ public class TwoPointsCrossover extends Crossover {
    * @param parent1     The first parent
    * @param parent2     The second parent
    * @return Two offspring solutions
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
   public Solution[] doCrossover(double probability,
     Solution parent1,
-    Solution parent2) throws JMException {
+    Solution parent2) throws JMetalException {
 
     Solution[] offspring = new Solution[2];
 
@@ -157,7 +157,7 @@ public class TwoPointsCrossover extends Crossover {
         parent1.getDecisionVariables()[0].getVariableType());
       Class<String> cls = java.lang.String.class;
       String name = cls.getName();
-      throw new JMException("Exception in " + name + ".doCrossover()");
+      throw new JMetalException("Exception in " + name + ".doCrossover()");
     }
 
     return offspring;
@@ -168,9 +168,9 @@ public class TwoPointsCrossover extends Crossover {
    *
    * @param object An object containing an array of two solutions
    * @return An object containing an array with the offSprings
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public Object execute(Object object) throws JMException {
+  public Object execute(Object object) throws JMetalException {
     Solution[] parents = (Solution[]) object;
     if (!(VALID_TYPES.contains(parents[0].getType().getClass()) &&
       VALID_TYPES.contains(parents[1].getType().getClass()))) {
@@ -186,7 +186,7 @@ public class TwoPointsCrossover extends Crossover {
         "parents");
       Class<String> cls = java.lang.String.class;
       String name = cls.getName();
-      throw new JMException("Exception in " + name + ".execute()");
+      throw new JMetalException("Exception in " + name + ".execute()");
     }
 
     Solution[] offspring = doCrossover(crossoverProbability_,

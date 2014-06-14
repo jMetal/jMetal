@@ -27,12 +27,10 @@ import jmetal.metaheuristics.paes.PAES;
 import jmetal.operators.mutation.Mutation;
 import jmetal.operators.mutation.MutationFactory;
 import jmetal.problems.ProblemFactory;
-import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.util.HashMap;
 import java.util.Properties;
-import java.util.logging.Level;
 
 /**
  * Settings class of algorithm PAES
@@ -47,9 +45,9 @@ public class PAES_Settings extends Settings {
 
   /**
    * Constructor
-   * @throws JMException 
+   * @throws jmetal.util.JMetalException
    */
-  public PAES_Settings(String problem) throws JMException {
+  public PAES_Settings(String problem) throws JMetalException {
     super(problem) ;
 
     Object [] problemParams = {"Real"};
@@ -67,9 +65,9 @@ public class PAES_Settings extends Settings {
    * Configure the MOCell algorithm with default parameter experiments.settings
    *
    * @return an algorithm object
-   * @throws jmetal.util.JMException
+   * @throws jmetal.util.JMetalException
    */
-  public Algorithm configure() throws JMException {
+  public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
     Mutation mutation;
 
@@ -100,7 +98,7 @@ public class PAES_Settings extends Settings {
    * @return A PAES algorithm object
    */
   @Override
-  public Algorithm configure(Properties configuration) throws JMException {
+  public Algorithm configure(Properties configuration) throws JMetalException {
     archiveSize_ = Integer.parseInt(configuration.getProperty("archiveSize",String.valueOf(archiveSize_)));
     maxEvaluations_  = Integer.parseInt(configuration.getProperty("maxEvaluations",String.valueOf(maxEvaluations_)));
     biSections_  = Integer.parseInt(configuration.getProperty("biSections",String.valueOf(biSections_)));

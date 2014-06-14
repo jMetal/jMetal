@@ -4,7 +4,7 @@ import jmetal.core.Problem;
 import jmetal.core.Solution;
 import jmetal.encodings.solutiontype.RealSolutionType;
 import jmetal.problems.Kursawe;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.wrapper.XReal;
 
 import org.junit.After;
@@ -22,7 +22,7 @@ public class XRealTest {
   int problemVariables_ ;
 
   @Before
-  public void setUp() throws ClassNotFoundException, JMException {
+  public void setUp() throws ClassNotFoundException, JMetalException {
     Problem problem ;
     problemVariables_ = 5 ;
 

@@ -47,7 +47,7 @@
 package jmetal.problems.singleObjective.cec2005Competition.originalCode;
 
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 public class F16_rotated_hybrid_composition_1 extends TestFunc {
 
@@ -91,13 +91,13 @@ public class F16_rotated_hybrid_composition_1 extends TestFunc {
   private double[][] m_zM;
 
   // Constructors
-  public F16_rotated_hybrid_composition_1(int dimension, double bias) throws JMException {
+  public F16_rotated_hybrid_composition_1(int dimension, double bias) throws JMetalException {
     this(dimension, bias, DEFAULT_FILE_DATA,
       DEFAULT_FILE_MX_PREFIX + dimension + DEFAULT_FILE_MX_SUFFIX);
   }
 
   public F16_rotated_hybrid_composition_1(int dimension, double bias, String file_data,
-    String file_m) throws JMException {
+    String file_m) throws JMetalException {
     super(dimension, bias, FUNCTION_NAME);
 
     // Note: dimension starts from 0
@@ -141,7 +141,7 @@ public class F16_rotated_hybrid_composition_1 extends TestFunc {
   }
 
   // Function body
-  public double f(double[] x) throws JMException {
+  public double f(double[] x) throws JMetalException {
 
     double result = 0.0;
 
@@ -154,7 +154,7 @@ public class F16_rotated_hybrid_composition_1 extends TestFunc {
 
 
   private class MyHCJob extends HCJob {
-    public double basic_func(int func_no, double[] x) throws JMException {
+    public double basic_func(int func_no, double[] x) throws JMetalException {
       double result = 0.0;
       switch (func_no) {
         case 0:
@@ -178,7 +178,7 @@ public class F16_rotated_hybrid_composition_1 extends TestFunc {
           result = Benchmark.sphere(x);
           break;
         default:
-          throw new JMException("func_no is out of range.");
+          throw new JMetalException("func_no is out of range.");
       }
       return (result);
     }

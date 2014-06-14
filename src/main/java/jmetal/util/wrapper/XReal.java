@@ -29,7 +29,7 @@ import jmetal.encodings.solutiontype.BinaryRealSolutionType;
 import jmetal.encodings.solutiontype.RealSolutionType;
 import jmetal.encodings.variable.ArrayReal;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 /**
  * Wrapper for accessing real-coded solutions
@@ -53,9 +53,9 @@ public class XReal {
    *
    * @param index Index of the encodings.variable
    * @return The value of the encodings.variable
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public double getValue(int index) throws JMException {
+  public double getValue(int index) throws JMetalException {
     if ((getType_().getClass() == RealSolutionType.class) ||
       (getType_().getClass() == BinaryRealSolutionType.class)) {
       return solution_.getDecisionVariables()[index].getValue();
@@ -75,9 +75,9 @@ public class XReal {
    *
    * @param index Index of the encodings.variable
    * @param value Value to be assigned
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public void setValue(int index, double value) throws JMException {
+  public void setValue(int index, double value) throws JMetalException {
     if (getType_().getClass() == RealSolutionType.class) {
       solution_.getDecisionVariables()[index].setValue(value);
     } else if (getType_().getClass() == ArrayRealSolutionType.class) {
@@ -95,9 +95,9 @@ public class XReal {
    *
    * @param index Index of the encodings.variable
    * @return The lower bound of the encodings.variable
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public double getLowerBound(int index) throws JMException {
+  public double getLowerBound(int index) throws JMetalException {
     if ((getType_().getClass() == RealSolutionType.class) ||
       (getType_().getClass() == BinaryRealSolutionType.class)) {
       return solution_.getDecisionVariables()[index].getLowerBound();
@@ -118,9 +118,9 @@ public class XReal {
    *
    * @param index Index of the encodings.variable
    * @return The upper bound of the encodings.variable
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public double getUpperBound(int index) throws JMException {
+  public double getUpperBound(int index) throws JMetalException {
     if ((getType_().getClass() == RealSolutionType.class) ||
       (getType_().getClass() == BinaryRealSolutionType.class)) {
       return solution_.getDecisionVariables()[index].getUpperBound();

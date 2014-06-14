@@ -47,7 +47,7 @@
 package jmetal.problems.singleObjective.cec2005Competition.originalCode;
 
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 public class F08_shifted_rotated_ackley_global_opt_bound extends TestFunc {
 
@@ -71,13 +71,13 @@ public class F08_shifted_rotated_ackley_global_opt_bound extends TestFunc {
 
   // Constructors
   public F08_shifted_rotated_ackley_global_opt_bound(int dimension, double bias)
-    throws JMException {
+    throws JMetalException {
     this(dimension, bias, DEFAULT_FILE_DATA,
       DEFAULT_FILE_MX_PREFIX + dimension + DEFAULT_FILE_MX_SUFFIX);
   }
 
   public F08_shifted_rotated_ackley_global_opt_bound(int dimension, double bias, String file_data,
-    String file_m) throws JMException {
+    String file_m) throws JMetalException {
     super(dimension, bias, FUNCTION_NAME);
 
     // Note: dimension starts from 0

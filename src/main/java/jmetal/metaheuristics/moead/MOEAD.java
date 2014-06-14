@@ -23,7 +23,7 @@ package jmetal.metaheuristics.moead;
 
 import jmetal.core.*;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.random.PseudoRandom;
 
 import java.io.BufferedReader;
@@ -89,7 +89,7 @@ public class MOEAD extends Algorithm {
     functionType_ = "_TCHE1";
   } 
 
-  public SolutionSet execute() throws JMException, ClassNotFoundException {
+  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     int maxEvaluations;
 
     evaluations_ = 0;
@@ -260,7 +260,7 @@ public class MOEAD extends Algorithm {
   /**
    *
    */
-  public void initPopulation() throws JMException, ClassNotFoundException {
+  public void initPopulation() throws JMetalException, ClassNotFoundException {
     for (int i = 0; i < populationSize_; i++) {
       Solution newSolution = new Solution(problem_);
 
@@ -273,7 +273,7 @@ public class MOEAD extends Algorithm {
   /**
    *
    */
-  void initIdealPoint() throws JMException, ClassNotFoundException {
+  void initIdealPoint() throws JMetalException, ClassNotFoundException {
     for (int i = 0; i < problem_.getNumberOfObjectives(); i++) {
       z_[i] = 1.0e+30;
       indArray_[i] = new Solution(problem_);
@@ -339,7 +339,7 @@ public class MOEAD extends Algorithm {
    * @param id
    * @param type
    */
-  void updateProblem(Solution individual, int id, int type) throws JMException {
+  void updateProblem(Solution individual, int id, int type) throws JMetalException {
     // individual: child solution
     // id:   the id of current subproblem
     // type: update solutions in - neighborhood (1) or whole population (otherwise)
@@ -380,7 +380,7 @@ public class MOEAD extends Algorithm {
     }
   }
 
-  double fitnessFunction(Solution individual, double[] lambda) throws JMException {
+  double fitnessFunction(Solution individual, double[] lambda) throws JMetalException {
     double fitness;
     fitness = 0.0;
 
@@ -404,7 +404,7 @@ public class MOEAD extends Algorithm {
       fitness = maxFun;
     }
     else {
-      throw new JMException(" MOEAD.fitnessFunction: unknown type " + functionType_);
+      throw new JMetalException(" MOEAD.fitnessFunction: unknown type " + functionType_);
     }
     return fitness;
   }

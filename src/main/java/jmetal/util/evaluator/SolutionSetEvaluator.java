@@ -24,9 +24,10 @@ package jmetal.util.evaluator;
 
 import jmetal.core.Problem;
 import jmetal.core.SolutionSet;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import com.google.inject.*;
+
 /**
  * Created by Antonio J. Nebro on 30/05/14.
  */
@@ -34,6 +35,6 @@ import com.google.inject.*;
 @ImplementedBy(SequentialSolutionSetEvaluator.class)
 public interface SolutionSetEvaluator {
   //public void startup(Object parameters) ;
-  public SolutionSet evaluate(SolutionSet solutionSet, Problem problem) throws JMException ;
+  public SolutionSet evaluate(SolutionSet solutionSet, Problem problem) throws JMetalException;
   public void shutdown() ;
 }

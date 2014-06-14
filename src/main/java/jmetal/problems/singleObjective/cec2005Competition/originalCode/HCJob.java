@@ -47,7 +47,7 @@
 
 package jmetal.problems.singleObjective.cec2005Competition.originalCode;
 
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 public abstract class HCJob {
 
@@ -81,5 +81,5 @@ public abstract class HCJob {
     // This class is just a place holder.
   }
 
-  public abstract double basic_func(int func_no, double[] x) throws JMException;
+  public abstract double basic_func(int func_no, double[] x) throws JMetalException;
 }

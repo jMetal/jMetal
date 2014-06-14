@@ -25,7 +25,7 @@ import jmetal.operators.selection.BestSolutionSelection;
 import jmetal.util.AdaptiveRandomNeighborhood;
 import jmetal.util.Configuration;
 import jmetal.util.Distance;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.comparator.ObjectiveComparator;
 import jmetal.util.random.PseudoRandom;
 import jmetal.util.wrapper.XReal;
@@ -114,14 +114,14 @@ public class StandardPSO2011 extends Algorithm {
           bestLocalBestSolution = localBest_[index];
         }
       }
-    } catch (JMException e) {
+    } catch (JMetalException e) {
       Configuration.logger_.log(Level.SEVERE, "Error", e);
     }
 
     return bestLocalBestSolution;
   }
 
-  private void computeSpeed() throws ClassNotFoundException, JMException {
+  private void computeSpeed() throws ClassNotFoundException, JMetalException {
     for (int i = 0; i < swarmSize_; i++) {
       XReal particle = new XReal(swarm_.get(i));
       XReal localBest = new XReal(localBest_[i]);
@@ -169,9 +169,9 @@ public class StandardPSO2011 extends Algorithm {
   /**
    * Update the position of each particle
    *
-   * @throws jmetal.util.JMException
+   * @throws jmetal.util.JMetalException
    */
-  private void computeNewPositions() throws JMException {
+  private void computeNewPositions() throws JMetalException {
     for (int i = 0; i < swarmSize_; i++) {
       XReal particle = new XReal(swarm_.get(i));
       for (int var = 0; var < particle.size(); var++) {
@@ -195,9 +195,9 @@ public class StandardPSO2011 extends Algorithm {
    *
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
    * as a result of the algorithm execution
-   * @throws jmetal.util.JMException
+   * @throws jmetal.util.JMetalException
    */
-  public SolutionSet execute() throws JMException, ClassNotFoundException {
+  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     initParams();
 
     // Step 1 Create the initial population and evaluate

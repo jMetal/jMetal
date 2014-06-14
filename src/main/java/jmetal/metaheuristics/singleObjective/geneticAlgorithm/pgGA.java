@@ -22,7 +22,7 @@ package jmetal.metaheuristics.singleObjective.geneticAlgorithm;
 
 import jmetal.core.*;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.comparator.ObjectiveComparator;
 import jmetal.util.parallel.SynchronousParallelTaskExecutor;
 
@@ -60,9 +60,9 @@ public class pgGA extends Algorithm {
    *
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
    * as a result of the algorithm execution
-   * @throws jmetal.util.JMException
+   * @throws jmetal.util.JMetalException
    */
-  public SolutionSet execute() throws JMException, ClassNotFoundException {
+  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     int populationSize;
     int maxEvaluations;
     int evaluations;

@@ -24,7 +24,7 @@ import jmetal.core.Problem;
 import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
 import jmetal.problems.Kursawe;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -68,10 +68,10 @@ public class SolutionSetTest {
 
   /**
    * Test: Adding an element to a full solution set must return a false value because it is not added
-   * @throws JMException 
+   * @throws jmetal.util.JMetalException
    */
-  @Test (expected = JMException.class)
-  public void testAddOneElementToAFullSolutionSet() throws JMException {
+  @Test (expected = JMetalException.class)
+  public void testAddOneElementToAFullSolutionSet() throws JMetalException {
     for (int i = 0 ; i < maxSize_ ; i++) {
       solutionSet_.add(new Solution());
     }
@@ -97,7 +97,7 @@ public class SolutionSetTest {
   }
 
   @Test
-  public void testEquals() throws JMException, ClassNotFoundException {
+  public void testEquals() throws JMetalException, ClassNotFoundException {
     Problem problem = new Kursawe("Real", 3) ;
     SolutionSet solutionSet1 = new SolutionSet(10) ;
     SolutionSet solutionSet2 = new SolutionSet(10) ;
@@ -122,7 +122,7 @@ public class SolutionSetTest {
   }
 
   @Test
-  public void isEmptyTest() throws JMException {
+  public void isEmptyTest() throws JMetalException {
     assertTrue(solutionSet_.isEmtpy()) ;
 
     solutionSet_.add(new Solution()) ;

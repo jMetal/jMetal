@@ -26,7 +26,7 @@ import jmetal.core.Solution;
 import jmetal.encodings.solutiontype.ArrayRealSolutionType;
 import jmetal.encodings.solutiontype.BinaryRealSolutionType;
 import jmetal.encodings.solutiontype.RealSolutionType;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.wrapper.XReal;
 
 /**
@@ -45,7 +45,7 @@ public class Kursawe extends Problem {
    *
    * @param solutionType The solution type must "Real", "BinaryReal, and "ArrayReal".
    */
-  public Kursawe(String solutionType) throws ClassNotFoundException, JMException {
+  public Kursawe(String solutionType) throws ClassNotFoundException, JMetalException {
     this(solutionType, 3);
   } // Kursawe
 
@@ -56,7 +56,7 @@ public class Kursawe extends Problem {
    * @param numberOfVariables Number of variables of the problem
    * @param solutionType      The solution type must "Real", "BinaryReal, and "ArrayReal".
    */
-  public Kursawe(String solutionType, Integer numberOfVariables) throws JMException {
+  public Kursawe(String solutionType, Integer numberOfVariables) throws JMetalException {
     numberOfVariables_ = numberOfVariables;
     numberOfObjectives_ = 2;
     numberOfConstraints_ = 0;
@@ -77,7 +77,7 @@ public class Kursawe extends Problem {
     } else if (solutionType.compareTo("ArrayReal") == 0) {
       solutionType_ = new ArrayRealSolutionType(this);
     } else {
-      throw new JMException("Error: solution type " + solutionType + " invalid");
+      throw new JMetalException("Error: solution type " + solutionType + " invalid");
     }
   }
 
@@ -85,9 +85,9 @@ public class Kursawe extends Problem {
    * Evaluates a solution
    *
    * @param solution The solution to evaluate
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public void evaluate(Solution solution) throws JMException {
+  public void evaluate(Solution solution) throws JMetalException {
     XReal vars = new XReal(solution);
 
     double aux, xi, xj; // auxiliary variables

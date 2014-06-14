@@ -26,7 +26,7 @@ import jmetal.core.Solution;
 import jmetal.core.Variable;
 import jmetal.encodings.solutiontype.BinaryRealSolutionType;
 import jmetal.encodings.solutiontype.RealSolutionType;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 /**
  * Class representing problem Schaffer
@@ -45,7 +45,7 @@ public class Schaffer extends Problem {
    *
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
-  public Schaffer(String solutionType) throws JMException {
+  public Schaffer(String solutionType) throws JMetalException {
     numberOfVariables_ = 1;
     numberOfObjectives_ = 2;
     numberOfConstraints_ = 0;
@@ -61,7 +61,7 @@ public class Schaffer extends Problem {
     } else if (solutionType.compareTo("Real") == 0) {
       solutionType_ = new RealSolutionType(this);
     } else {
-      throw new JMException("Error: solution type " + solutionType + " invalid") ;
+      throw new JMetalException("Error: solution type " + solutionType + " invalid") ;
     }
   }
 
@@ -70,9 +70,9 @@ public class Schaffer extends Problem {
    * Evaluates a solution
    *
    * @param solution The solution to evaluate
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public void evaluate(Solution solution) throws JMException {
+  public void evaluate(Solution solution) throws JMetalException {
     Variable[] variable = solution.getDecisionVariables();
 
     double[] f = new double[numberOfObjectives_];

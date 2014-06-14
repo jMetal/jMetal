@@ -29,7 +29,7 @@ import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.ProblemFactory;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.evaluator.SequentialSolutionSetEvaluator;
 import jmetal.util.evaluator.SolutionSetEvaluator;
 
@@ -49,9 +49,9 @@ public class NSGAIIBinaryReal_Settings extends Settings {
   /**
    * Constructor
    *
-   * @throws jmetal.util.JMException
+   * @throws jmetal.util.JMetalException
    */
-  public NSGAIIBinaryReal_Settings(String problem) throws JMException {
+  public NSGAIIBinaryReal_Settings(String problem) throws JMetalException {
     super(problem);
 
     Object[] problemParams = {"BinaryReal"};
@@ -69,9 +69,9 @@ public class NSGAIIBinaryReal_Settings extends Settings {
    * Configure NSGAII with user-defined parameter experiments.settings
    *
    * @return A NSGAII algorithm object
-   * @throws jmetal.util.JMException
+   * @throws jmetal.util.JMetalException
    */
-  public Algorithm configure() throws JMException {
+  public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
     Operator selection;
     Operator crossover;
@@ -118,7 +118,7 @@ public class NSGAIIBinaryReal_Settings extends Settings {
    * @return A NSGAII algorithm object
    */
   @Override
-  public Algorithm configure(Properties configuration) throws JMException {
+  public Algorithm configure(Properties configuration) throws JMetalException {
     populationSize_ = Integer
       .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize_)));
     maxEvaluations_ = Integer

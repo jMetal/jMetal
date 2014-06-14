@@ -23,7 +23,7 @@ package jmetal.problems;
 
 import jmetal.core.Problem;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.lang.reflect.Constructor;
 import java.util.logging.Level;
@@ -38,9 +38,9 @@ public class ProblemFactory {
    * @param name   Name of the problem
    * @param params Parameters characterizing the problem
    * @return The object representing the problem
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public Problem getProblem(String name, Object[] params) throws JMException {
+  public Problem getProblem(String name, Object[] params) throws JMetalException {
     // Params are the arguments
     // The number of argument must correspond with the problem constructor params
 
@@ -87,7 +87,7 @@ public class ProblemFactory {
           "Please, check the problem names in jmetal/problems",
         e
       );
-      throw new JMException("Exception in " + name + ".getProblem()");
+      throw new JMetalException("Exception in " + name + ".getProblem()");
     }
   }
 }

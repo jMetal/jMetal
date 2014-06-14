@@ -23,7 +23,7 @@ package test.metaheuristics.nsgaII;
 import jmetal.core.SolutionSet;
 import jmetal.metaheuristics.nsgaII.NSGAIITemplate;
 import jmetal.problems.Kursawe;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.evaluator.SequentialSolutionSetEvaluator;
 import jmetal.util.evaluator.SolutionSetEvaluator;
 import org.junit.After;
@@ -92,7 +92,7 @@ public class NSGAIITemplateTest extends NSGAIITemplate {
   }
 
 
-  @Override public SolutionSet execute() throws JMException, ClassNotFoundException, IOException {
+  @Override public SolutionSet execute() throws JMetalException, ClassNotFoundException, IOException {
     return null;
   }
 }

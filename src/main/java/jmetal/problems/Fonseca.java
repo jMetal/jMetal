@@ -26,7 +26,7 @@ import jmetal.core.Solution;
 import jmetal.encodings.solutiontype.ArrayRealSolutionType;
 import jmetal.encodings.solutiontype.BinaryRealSolutionType;
 import jmetal.encodings.solutiontype.RealSolutionType;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.wrapper.XReal;
 
 /**
@@ -46,7 +46,7 @@ public class Fonseca extends Problem {
    * @param solutionType The solution type must "Real", "BinaryReal,
    *                     ArrayReal, or ArrayRealC".
    */
-  public Fonseca(String solutionType) throws JMException {
+  public Fonseca(String solutionType) throws JMetalException {
     numberOfVariables_ = 3;
     numberOfObjectives_ = 2;
     numberOfConstraints_ = 0;
@@ -66,7 +66,7 @@ public class Fonseca extends Problem {
     } else if (solutionType.compareTo("ArrayReal") == 0) {
       solutionType_ = new ArrayRealSolutionType(this);
     } else {
-      throw new JMException("Error: solution type " + solutionType + " invalid");
+      throw new JMetalException("Error: solution type " + solutionType + " invalid");
     }
   }
 
@@ -74,9 +74,9 @@ public class Fonseca extends Problem {
    * Evaluates a solution
    *
    * @param solution The solution to evaluate
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public void evaluate(Solution solution) throws JMException {
+  public void evaluate(Solution solution) throws JMetalException {
     XReal x = new XReal(solution);
 
     double[] f = new double[numberOfObjectives_];

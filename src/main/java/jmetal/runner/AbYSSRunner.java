@@ -32,7 +32,7 @@ import jmetal.problems.ProblemFactory;
 import jmetal.problems.ZDT.ZDT4;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -54,7 +54,7 @@ public class AbYSSRunner {
 
   /**
    * @param args Command line arguments.
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    * @throws IOException
    * @throws SecurityException Usage: three choices
    *                           - jmetal.metaheuristics.nsgaII.NSGAII_main
@@ -62,7 +62,7 @@ public class AbYSSRunner {
    *                           - jmetal.metaheuristics.nsgaII.NSGAII_main problemName paretoFrontFile
    */
   public static void main(String[] args) throws
-    JMException, SecurityException, IOException, ClassNotFoundException {
+    JMetalException, SecurityException, IOException, ClassNotFoundException {
     Problem problem;
     Algorithm algorithm;
     Operator crossover;

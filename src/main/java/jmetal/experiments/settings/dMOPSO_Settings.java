@@ -25,7 +25,7 @@ import jmetal.core.Algorithm;
 import jmetal.experiments.Settings;
 import jmetal.metaheuristics.dmopso.dMOPSO;
 import jmetal.problems.ProblemFactory;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.util.Properties;
 
@@ -42,9 +42,9 @@ public class dMOPSO_Settings extends Settings {
   /**
    * Constructor
    *
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public dMOPSO_Settings(String problem) throws JMException {
+  public dMOPSO_Settings(String problem) throws JMetalException {
     super(problem);
 
     Object[] problemParams = {"Real"};
@@ -69,9 +69,9 @@ public class dMOPSO_Settings extends Settings {
    * Configure the algorithm with the specified parameter experiments.settings
    *
    * @return an algorithm object
-   * @throws jmetal.util.JMException
+   * @throws jmetal.util.JMetalException
    */
-  public Algorithm configure() throws JMException {
+  public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
 
     // Creating the problem
@@ -94,7 +94,7 @@ public class dMOPSO_Settings extends Settings {
    * @return A dMOPSO algorithm object
    */
   @Override
-  public Algorithm configure(Properties configuration) throws JMException {
+  public Algorithm configure(Properties configuration) throws JMetalException {
     swarmSize_ =
       Integer.parseInt(configuration.getProperty("swarmSize", String.valueOf(swarmSize_)));
     maxIterations_ =

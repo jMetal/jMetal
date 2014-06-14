@@ -31,7 +31,7 @@ import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.BinaryTournament;
 import jmetal.problems.ZDT.ZDT5;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -45,7 +45,7 @@ public class DENSEARunner {
   public static Logger logger_;     
   public static FileHandler fileHandler_; 
 
-  public static void main(String[] args) throws JMException, IOException, ClassNotFoundException {
+  public static void main(String[] args) throws JMetalException, IOException, ClassNotFoundException {
     Problem problem;
     Algorithm algorithm;
     Operator crossover;

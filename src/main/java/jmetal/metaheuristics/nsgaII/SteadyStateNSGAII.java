@@ -23,7 +23,7 @@ package jmetal.metaheuristics.nsgaII;
 
 import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.Ranking;
 import jmetal.util.evaluator.SolutionSetEvaluator;
 
@@ -54,9 +54,9 @@ public class SteadyStateNSGAII extends NSGAIITemplate {
    *
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
    * as a result of the algorithm execution
-   * @throws jmetal.util.JMException
+   * @throws jmetal.util.JMetalException
    */
-  public SolutionSet execute() throws JMException, ClassNotFoundException {
+  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     //readParameterSettings();
     createInitialPopulation();
     evaluatePopulation(population_);

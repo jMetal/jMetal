@@ -33,7 +33,7 @@ import jmetal.problems.Kursawe;
 import jmetal.problems.ProblemFactory;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.comparator.FitnessComparator;
 
 import java.io.IOException;
@@ -50,14 +50,14 @@ public class IBEARunner {
 
   /**
    * @param args Command line arguments.
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    * @throws IOException
    * @throws SecurityException Usage: three choices
    *                           - jmetal.metaheuristics.nsgaII.NSGAII_main
    *                           - jmetal.metaheuristics.nsgaII.NSGAII_main problemName
    *                           - jmetal.metaheuristics.nsgaII.NSGAII_main problemName paretoFrontFile
    */
-  public static void main(String[] args) throws JMException, IOException, ClassNotFoundException {
+  public static void main(String[] args) throws JMetalException, IOException, ClassNotFoundException {
     Problem problem;
     Algorithm algorithm;
     Operator crossover;

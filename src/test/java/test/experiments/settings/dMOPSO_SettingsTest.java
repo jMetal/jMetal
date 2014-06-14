@@ -24,7 +24,7 @@ package test.experiments.settings;
 import jmetal.core.Algorithm;
 import jmetal.experiments.Settings;
 import jmetal.experiments.settings.dMOPSO_Settings;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -52,7 +52,7 @@ public class dMOPSO_SettingsTest {
   }
 
   @Test
-  public void test() throws JMException {
+  public void test() throws JMetalException {
     double epsilon = 0.000000000000001;
     Settings dMOPSOSettings = new dMOPSO_Settings("Fonseca");
     Algorithm algorithm = dMOPSOSettings.configure();
@@ -72,7 +72,7 @@ public class dMOPSO_SettingsTest {
   }
 
   @Test
-  public void test2() throws JMException {
+  public void test2() throws JMetalException {
     //double epsilon = 0.000000000000001;
     Settings dMOPSOSettings = new dMOPSO_Settings("Fonseca");
     Algorithm algorithm = dMOPSOSettings.configure(configuration_);

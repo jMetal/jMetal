@@ -22,7 +22,7 @@
 package jmetal.experiments;
 
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.lang.reflect.Constructor;
 import java.util.logging.Level;
@@ -37,10 +37,10 @@ public class SettingsFactory {
    * @param algorithmName Name of the algorithm
    * @param params        Parameters
    * @return The experiments.settings object
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
   public Settings getSettingsObject(String algorithmName, Object[] params)
-    throws JMException {
+    throws JMetalException {
     String base = "jmetal.experiments.settings." + algorithmName + "_Settings";
     try {
       Class problemClass = Class.forName(base);
@@ -58,7 +58,7 @@ public class SettingsFactory {
       Configuration.logger_.log(Level.SEVERE, "SettingsFactory.getSettingsObject: " +
         "Settings '" + base + "' does not exist. " +
         "Please, check the algorithm name in jmetal/metaheuristics", e);
-      throw new JMException("Exception in " + base + ".getSettingsObject()");
+      throw new JMetalException("Exception in " + base + ".getSettingsObject()");
     }
   }
 }

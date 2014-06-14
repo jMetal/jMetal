@@ -28,7 +28,7 @@ import jmetal.encodings.solutiontype.BinarySolutionType;
 import jmetal.encodings.variable.Binary;
 import jmetal.encodings.variable.BinaryReal;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.random.PseudoRandom;
 
 import java.util.Arrays;
@@ -77,11 +77,11 @@ public class HUXCrossover extends Crossover {
    * @param parent1     The first parent
    * @param parent2     The second parent
    * @return An array containing the two offsprings
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
   public Solution[] doCrossover(double probability,
     Solution parent1,
-    Solution parent2) throws JMException {
+    Solution parent2) throws JMetalException {
     Solution[] offSpring = new Solution[2];
     offSpring[0] = new Solution(parent1);
     offSpring[1] = new Solution(parent2);
@@ -116,7 +116,7 @@ public class HUXCrossover extends Crossover {
         e1);
       Class<String> cls = java.lang.String.class;
       String name = cls.getName();
-      throw new JMException("Exception in " + name + ".doCrossover()");
+      throw new JMetalException("Exception in " + name + ".doCrossover()");
     }
     return offSpring;
   }
@@ -128,7 +128,7 @@ public class HUXCrossover extends Crossover {
    * @param object An object containing an array of two solutions
    * @return An object containing the offSprings
    */
-  public Object execute(Object object) throws JMException {
+  public Object execute(Object object) throws JMetalException {
     Solution[] parents = (Solution[]) object;
 
     if (parents.length < 2) {
@@ -136,7 +136,7 @@ public class HUXCrossover extends Crossover {
         "parents");
       Class<String> cls = java.lang.String.class;
       String name = cls.getName();
-      throw new JMException("Exception in " + name + ".execute()");
+      throw new JMetalException("Exception in " + name + ".execute()");
     }
 
     if (!(VALID_TYPES.contains(parents[0].getType().getClass()) &&
@@ -150,7 +150,7 @@ public class HUXCrossover extends Crossover {
 
       Class<String> cls = java.lang.String.class;
       String name = cls.getName();
-      throw new JMException("Exception in " + name + ".execute()");
+      throw new JMetalException("Exception in " + name + ".execute()");
 
     }
 

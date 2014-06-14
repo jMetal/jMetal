@@ -29,7 +29,7 @@ import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.BinaryTournament;
 import jmetal.problems.ProblemFactory;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.comparator.FitnessComparator;
 
 import java.util.HashMap;
@@ -53,9 +53,9 @@ public class IBEA_Settings extends Settings {
   /**
    * Constructor
    *
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public IBEA_Settings(String problemName) throws JMException {
+  public IBEA_Settings(String problemName) throws JMetalException {
     super(problemName);
 
     Object[] problemParams = {"Real"};
@@ -77,9 +77,9 @@ public class IBEA_Settings extends Settings {
    * Configure IBEA with user-defined parameter experiments.settings
    *
    * @return A IBEA algorithm object
-   * @throws jmetal.util.JMException
+   * @throws jmetal.util.JMetalException
    */
-  public Algorithm configure() throws JMException {
+  public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
     Operator selection;
     Operator crossover;
@@ -123,7 +123,7 @@ public class IBEA_Settings extends Settings {
    * @return An IBEA algorithm object
    */
   @Override
-  public Algorithm configure(Properties configuration) throws JMException {
+  public Algorithm configure(Properties configuration) throws JMetalException {
     populationSize_ = Integer
       .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize_)));
     maxEvaluations_ = Integer

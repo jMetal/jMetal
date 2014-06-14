@@ -48,13 +48,13 @@ public class ExtractParetoFront {
     loadInstance();
   }
 
-  public static void main(String[] args) throws JMException, NumberFormatException, IOException {
+  public static void main(String[] args) throws JMetalException, NumberFormatException, IOException {
     if (args.length != 2) {
       Configuration.logger_.info("Wrong number of arguments: ");
       Configuration.logger_.info("Sintaxt: java ExtractParetoFront <file> <dimensions>");
       Configuration.logger_.info("\t<file> is a file containing points");
       Configuration.logger_.info("\t<dimensions> represents the number of dimensions of the problem");
-      throw new JMException("");
+      throw new JMetalException("");
     }
 
     ExtractParetoFront epf = new ExtractParetoFront(args[0], new Integer(args[1]));

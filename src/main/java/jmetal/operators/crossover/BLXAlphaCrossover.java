@@ -25,7 +25,7 @@ import jmetal.core.SolutionType;
 import jmetal.encodings.solutiontype.ArrayRealSolutionType;
 import jmetal.encodings.solutiontype.RealSolutionType;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.random.PseudoRandom;
 import jmetal.util.wrapper.XReal;
 
@@ -83,7 +83,7 @@ public class BLXAlphaCrossover extends Crossover {
    */
   public Solution[] doCrossover(double probability,
     Solution parent1,
-    Solution parent2) throws JMException {
+    Solution parent2) throws JMetalException {
 
     Solution[] offSpring = new Solution[2];
 
@@ -167,7 +167,7 @@ public class BLXAlphaCrossover extends Crossover {
    * @param object An object containing an array of two parents
    * @return An object containing the offSprings
    */
-  public Object execute(Object object) throws JMException {
+  public Object execute(Object object) throws JMetalException {
     Solution[] parents = (Solution[]) object;
 
     if (parents.length != 2) {
@@ -175,7 +175,7 @@ public class BLXAlphaCrossover extends Crossover {
         "parents");
       Class<String> cls = java.lang.String.class;
       String name = cls.getName();
-      throw new JMException("Exception in " + name + ".execute()");
+      throw new JMetalException("Exception in " + name + ".execute()");
     } // if
 
     if (!(VALID_TYPES.contains(parents[0].getType().getClass()) &&
@@ -185,7 +185,7 @@ public class BLXAlphaCrossover extends Crossover {
 
       Class<String> cls = java.lang.String.class;
       String name = cls.getName();
-      throw new JMException("Exception in " + name + ".execute()");
+      throw new JMetalException("Exception in " + name + ".execute()");
     } // if 
 
     Solution[] offSpring;

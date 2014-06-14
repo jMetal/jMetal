@@ -25,7 +25,7 @@ import jmetal.core.Problem;
 import jmetal.core.Solution;
 import jmetal.core.Variable;
 import jmetal.encodings.solutiontype.IntRealSolutionType;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 /**
  * Class representing a problem having N integer and M real variables.
@@ -44,7 +44,7 @@ public class IntRealProblem extends Problem {
    * Constructor.
    * Creates a default instance of the IntRealProblem problem.
    */
-  public IntRealProblem(String solutionType) throws ClassNotFoundException, JMException {
+  public IntRealProblem(String solutionType) throws ClassNotFoundException, JMetalException {
     this(solutionType, 3, 3);
   } // IntRealProblem
 
@@ -56,7 +56,7 @@ public class IntRealProblem extends Problem {
    * @param realVariables Number of real variables of the problem
    */
   public IntRealProblem(String solutionType, int intVariables, int realVariables)
-    throws JMException {
+    throws JMetalException {
     intVariables_ = intVariables;
     realVariables_ = realVariables;
 
@@ -81,7 +81,7 @@ public class IntRealProblem extends Problem {
     if (solutionType.compareTo("IntReal") == 0) {
       solutionType_ = new IntRealSolutionType(this, intVariables, realVariables);
     } else {
-      throw new JMException("Error: solution type " + solutionType + " invalid");
+      throw new JMetalException("Error: solution type " + solutionType + " invalid");
     }
   }
 
@@ -89,9 +89,9 @@ public class IntRealProblem extends Problem {
    * Evaluates a solution
    *
    * @param solution The solution to evaluate
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public void evaluate(Solution solution) throws JMException {
+  public void evaluate(Solution solution) throws JMetalException {
     Variable[] variable = solution.getDecisionVariables();
 
     double[] fx = new double[2];

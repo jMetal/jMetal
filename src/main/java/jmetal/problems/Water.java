@@ -25,7 +25,7 @@ import jmetal.core.Problem;
 import jmetal.core.Solution;
 import jmetal.encodings.solutiontype.BinaryRealSolutionType;
 import jmetal.encodings.solutiontype.RealSolutionType;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 /**
  * Class representing problem Water
@@ -46,7 +46,7 @@ public class Water extends Problem {
    *
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
-  public Water(String solutionType) throws JMException {
+  public Water(String solutionType) throws JMetalException {
     numberOfVariables_ = 3;
     numberOfObjectives_ = 5;
     numberOfConstraints_ = 7;
@@ -66,7 +66,7 @@ public class Water extends Problem {
     } else if (solutionType.compareTo("Real") == 0) {
       solutionType_ = new RealSolutionType(this);
     } else {
-      throw new JMException("Error: solution type " + solutionType + " invalid");
+      throw new JMetalException("Error: solution type " + solutionType + " invalid");
     }
   }
 
@@ -74,9 +74,9 @@ public class Water extends Problem {
    * Evaluates a solution
    *
    * @param solution The solution to evaluate
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public void evaluate(Solution solution) throws JMException {
+  public void evaluate(Solution solution) throws JMetalException {
     double[] x = new double[3]; // 3 decision variables
     double[] f = new double[5]; // 5 functions
     x[0] = solution.getDecisionVariables()[0].getValue();
@@ -105,9 +105,9 @@ public class Water extends Problem {
    * Evaluates the constraint overhead of a solution
    *
    * @param solution The solution
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public void evaluateConstraints(Solution solution) throws JMException {
+  public void evaluateConstraints(Solution solution) throws JMetalException {
     double[] constraint = new double[7]; // 7 constraints
     double[] x = new double[3]; // 3 objectives
 

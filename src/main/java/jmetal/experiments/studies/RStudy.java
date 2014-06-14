@@ -22,7 +22,7 @@ package jmetal.experiments.studies;
 
 import jmetal.experiments.Experiment;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.io.IOException;
 
@@ -61,10 +61,10 @@ public class RStudy extends Experiment {
    * Main method
    *
    * @param args
-   * @throws jmetal.util.JMException
+   * @throws jmetal.util.JMetalException
    * @throws java.io.IOException
    */
-  public static void main(String[] args) throws JMException, IOException {
+  public static void main(String[] args) throws JMetalException, IOException {
     RStudy exp = new RStudy();
 
     Configuration.logger_.info("START");

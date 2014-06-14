@@ -23,7 +23,7 @@ package jmetal.metaheuristics.mochc;
 
 import jmetal.core.*;
 import jmetal.encodings.variable.Binary;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.archive.CrowdingArchive;
 import jmetal.util.comparator.CrowdingComparator;
 
@@ -102,7 +102,7 @@ public class MOCHC extends Algorithm {
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
    * as a result of the algorithm execution
    */
-  public SolutionSet execute() throws JMException, ClassNotFoundException {
+  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     int iterations;
     int populationSize;
     int convergenceValue;

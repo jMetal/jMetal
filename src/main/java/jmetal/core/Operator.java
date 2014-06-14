@@ -21,7 +21,7 @@
 
 package jmetal.core;
 
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -66,7 +66,7 @@ public abstract class Operator implements Serializable {
    *               while a mutation operator receives a <code>Solution</code>.
    * @return An object reference. The returned value depends on the operator.
    */
-  public abstract Object execute(Object object) throws JMException;
+  public abstract Object execute(Object object) throws JMetalException;
 
   /**
    * Sets a new <code>Object</code> parameter to the operator.

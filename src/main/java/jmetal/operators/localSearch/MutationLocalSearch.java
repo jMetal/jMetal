@@ -26,7 +26,7 @@ import jmetal.core.Problem;
 import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
 import jmetal.operators.mutation.Mutation;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.comparator.DominanceComparator;
 import jmetal.util.comparator.OverallConstraintViolationComparator;
 
@@ -101,9 +101,9 @@ public class MutationLocalSearch extends LocalSearch {
    *
    * @param object Object representing a solution
    * @return An object containing the new improved solution
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public Object execute(Object object) throws JMException {
+  public Object execute(Object object) throws JMetalException {
     int i = 0;
     int best = 0;
     evaluations_ = 0;

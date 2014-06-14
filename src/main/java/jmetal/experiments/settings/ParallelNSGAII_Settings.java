@@ -30,7 +30,7 @@ import jmetal.operators.mutation.PolynomialMutation;
 import jmetal.operators.selection.BinaryTournament2;
 import jmetal.operators.selection.Selection;
 import jmetal.problems.ProblemFactory;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.evaluator.MultithreadedSolutionSetEvaluator;
 import jmetal.util.evaluator.SolutionSetEvaluator;
 
@@ -51,7 +51,7 @@ public class ParallelNSGAII_Settings extends Settings {
   /**
    * Constructor
    */
-  public ParallelNSGAII_Settings(String problem) throws JMException {
+  public ParallelNSGAII_Settings(String problem) throws JMetalException {
     super(problem);
 
     Object[] problemParams = {"Real"};
@@ -73,9 +73,9 @@ public class ParallelNSGAII_Settings extends Settings {
    * Configure ParallelNSGAII with user-defined parameter experiments.settings
    *
    * @return A NSGAII algorithm object
-   * @throws jmetal.util.JMException
+   * @throws jmetal.util.JMetalException
    */
-  public Algorithm configure() throws JMException {
+  public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
     Selection selection;
     Crossover crossover;
@@ -113,7 +113,7 @@ public class ParallelNSGAII_Settings extends Settings {
    * @return A NSGAII algorithm object
    */
   @Override
-  public Algorithm configure(Properties configuration) throws JMException {
+  public Algorithm configure(Properties configuration) throws JMetalException {
     numberOfThreads_ = Integer
       .parseInt(configuration.getProperty("numberOfThreads", String.valueOf(numberOfThreads_)));
 

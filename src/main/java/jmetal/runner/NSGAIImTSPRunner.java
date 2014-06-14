@@ -50,7 +50,7 @@ public class NSGAIImTSPRunner {
 
   /**
    * @param args Command line arguments.
-   * @throws jmetal.util.JMException
+   * @throws jmetal.util.JMetalException
    * @throws java.io.IOException
    * @throws SecurityException Usage:
    *                           - jmetal.metaheuristics.nsgaII.NSGAII_mTSP_main

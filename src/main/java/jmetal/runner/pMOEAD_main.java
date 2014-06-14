@@ -32,7 +32,7 @@ import jmetal.problems.Kursawe;
 import jmetal.problems.ProblemFactory;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -53,7 +53,7 @@ public class pMOEAD_main {
   /**
    * @param args Command line arguments. The first (optional) argument specifies
    *             the problem to solve.
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    * @throws IOException
    * @throws SecurityException Usage: three options
    *                           - jmetal.runner.MOEAD_main
@@ -61,7 +61,7 @@ public class pMOEAD_main {
    *                           - jmetal.runner.MOEAD_main problemName ParetoFrontFile
    */
   public static void main(String[] args)
-    throws JMException, SecurityException, IOException, ClassNotFoundException {
+    throws JMetalException, SecurityException, IOException, ClassNotFoundException {
     Problem problem;
     Algorithm algorithm;
     Operator crossover;

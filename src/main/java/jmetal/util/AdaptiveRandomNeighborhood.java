@@ -57,11 +57,11 @@ public class AdaptiveRandomNeighborhood {
     }
   }
 
-  public ArrayList<Integer> getNeighbors(int i) throws JMException {
+  public ArrayList<Integer> getNeighbors(int i) throws JMetalException {
     if (i > list_.size()) {
       String message = "Error in AdaptiveRandomNeighborhood.getNeighbors";
       message += "the parameter " + i + " is less than " + list_.size();
-      throw new JMException(message);
+      throw new JMetalException(message);
     }
 
     return list_.get(i);
@@ -71,7 +71,8 @@ public class AdaptiveRandomNeighborhood {
     return numberOfRandomNeighbours_;
   }
 
-  public SolutionSet getBestFitnessSolutionInNeighborhood(Comparator comparator) throws JMException {
+  public SolutionSet getBestFitnessSolutionInNeighborhood(Comparator comparator) throws
+    JMetalException {
     SolutionSet result = new SolutionSet();
     for (int i = 0; i < list_.size(); i++) {
       Solution bestSolution = solutionSet_.get(list_.get(i).get(0));

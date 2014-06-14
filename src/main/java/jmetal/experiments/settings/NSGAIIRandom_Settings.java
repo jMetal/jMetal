@@ -26,8 +26,7 @@ import jmetal.metaheuristics.nsgaII.NSGAIIRandom;
 import jmetal.operators.selection.Selection;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.ProblemFactory;
-import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.evaluator.SequentialSolutionSetEvaluator;
 import jmetal.util.evaluator.SolutionSetEvaluator;
 import jmetal.util.offspring.DifferentialEvolutionOffspring;
@@ -37,7 +36,6 @@ import jmetal.util.offspring.SBXCrossoverOffspring;
 
 import java.util.HashMap;
 import java.util.Properties;
-import java.util.logging.Level;
 
 /**
  * Settings class of algorithm NSGAIIRandom
@@ -59,9 +57,9 @@ public class NSGAIIRandom_Settings extends Settings {
   /**
    * Constructor
    *
-   * @throws jmetal.util.JMException
+   * @throws jmetal.util.JMetalException
    */
-  public NSGAIIRandom_Settings(String problem) throws JMException {
+  public NSGAIIRandom_Settings(String problem) throws JMetalException {
     super(problem) ;
     
     Object [] problemParams = {"Real"};
@@ -82,9 +80,9 @@ public class NSGAIIRandom_Settings extends Settings {
    * Configure NSGAII with user-defined parameter settings
    *
    * @return A NSGAII algorithm object
-   * @throws jmetal.util.JMException
+   * @throws jmetal.util.JMetalException
    */
-  public Algorithm configure() throws JMException {
+  public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
     Selection selection;
 
@@ -125,7 +123,7 @@ public class NSGAIIRandom_Settings extends Settings {
    * @return A NSGAIIRandom algorithm object
    */
   @Override
-  public Algorithm configure(Properties configuration) throws JMException {
+  public Algorithm configure(Properties configuration) throws JMetalException {
     populationSize_ = Integer.parseInt(configuration.getProperty("populationSize",String.valueOf(populationSize_)));
     maxEvaluations_  = Integer.parseInt(configuration.getProperty("maxEvaluations",String.valueOf(maxEvaluations_)));
 

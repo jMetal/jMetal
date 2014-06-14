@@ -26,7 +26,7 @@ import jmetal.core.SolutionSet;
 import jmetal.metaheuristics.singleObjective.particleSwarmOptimization.StandardPSO2011;
 import jmetal.problems.singleObjective.CEC2005Problem;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.io.IOException;
 import java.util.logging.FileHandler;
@@ -42,12 +42,12 @@ public class StandardPSO2011_main {
   /**
    * @param args Command line arguments. The first (optional) argument specifies
    *             the problem to solve.
-   * @throws jmetal.util.JMException
+   * @throws jmetal.util.JMetalException
    * @throws java.io.IOException
    * @throws SecurityException
    */
   public static void main(String[] args)
-    throws JMException, IOException, ClassNotFoundException {
+    throws JMetalException, IOException, ClassNotFoundException {
     Problem problem;  // The problem to solve
     Algorithm algorithm;  // The algorithm to use
 

@@ -21,14 +21,12 @@
 
 package jmetal.core;
 
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-
-import com.google.inject.Inject;
 
 /**
  * This class implements a generic template for the algorithms developed in
@@ -75,7 +73,7 @@ public abstract class Algorithm implements Serializable {
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
    * as a result of the algorithm execution
    */
-  public abstract SolutionSet execute() throws JMException,
+  public abstract SolutionSet execute() throws JMetalException,
     ClassNotFoundException, IOException;
 
   /**

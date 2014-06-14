@@ -47,7 +47,7 @@
 package jmetal.problems.singleObjective.cec2005Competition.originalCode;
 
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 public class F12_schwefel extends TestFunc {
 
@@ -67,11 +67,11 @@ public class F12_schwefel extends TestFunc {
   private double[] m_B;
 
   // Constructors
-  public F12_schwefel(int dimension, double bias) throws JMException {
+  public F12_schwefel(int dimension, double bias) throws JMetalException {
     this(dimension, bias, DEFAULT_FILE_DATA);
   }
 
-  public F12_schwefel(int dimension, double bias, String file_data) throws JMException {
+  public F12_schwefel(int dimension, double bias, String file_data) throws JMetalException {
     super(dimension, bias, FUNCTION_NAME);
 
     // Note: dimension starts from 0

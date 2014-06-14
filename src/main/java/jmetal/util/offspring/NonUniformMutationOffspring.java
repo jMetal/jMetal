@@ -13,7 +13,7 @@ import jmetal.core.Solution;
 import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -30,7 +30,7 @@ public class NonUniformMutationOffspring extends Offspring {
   public NonUniformMutationOffspring(double mutationProbability,
     double perturbation,
     int maxIterations
-  ) throws JMException {
+  ) throws JMetalException {
     HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
     mutationParameters.put("probability", mutationProbatility_ = mutationProbability);
     mutationParameters.put("perturbation", perturbation_ = perturbation);
@@ -44,7 +44,7 @@ public class NonUniformMutationOffspring extends Offspring {
     Solution res = new Solution(solution);
     try {
       mutation_.execute(res);
-    } catch (JMException e) {
+    } catch (JMetalException e) {
       Configuration.logger_.log(Level.SEVERE, "Error", e);
     }
     return res;

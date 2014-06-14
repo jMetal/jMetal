@@ -26,7 +26,7 @@ import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
 import jmetal.problems.Kursawe;
 import jmetal.qualityIndicator.SetCoverage;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -46,7 +46,7 @@ public class SetCoverageTest {
 
 
   @Before
-  public void startup() throws JMException {
+  public void startup() throws JMetalException {
     problem_ = new Kursawe("Real", 3) ;
     solutionSetSize_ = 4 ;
     solutionSet1_ = new SolutionSet(solutionSetSize_) ;
@@ -59,7 +59,7 @@ public class SetCoverageTest {
   }
 
   @Test
-  public void fullCoverageTest() throws ClassNotFoundException, JMException {
+  public void fullCoverageTest() throws ClassNotFoundException, JMetalException {
     // Creating set (0,N-1), (1,N-2), (2, N-3), ... , (N-1, 0)
     Solution solution ;
     for (int i = 0 ; i< solutionSetSize_; i++) {
@@ -81,7 +81,7 @@ public class SetCoverageTest {
   }
 
   @Test
-  public void nonDominatedSetsCoverageTest() throws ClassNotFoundException, JMException {
+  public void nonDominatedSetsCoverageTest() throws ClassNotFoundException, JMetalException {
     // Creating set (0,N-1), (1,N-2), (2, N-3), ... , (N-1, 0)
     Solution solution ;
     for (int i = 0 ; i< solutionSetSize_; i++) {
@@ -116,7 +116,7 @@ public class SetCoverageTest {
   }
 
   @Test
-  public void coverageWhenASetIsEmpty() throws ClassNotFoundException, JMException {
+  public void coverageWhenASetIsEmpty() throws ClassNotFoundException, JMetalException {
     // Creating set (0,N-1), (1,N-2), (2, N-3), ... , (N-1, 0)
     Solution solution ;
     for (int i = 0 ; i< solutionSetSize_; i++) {
@@ -132,7 +132,7 @@ public class SetCoverageTest {
   }
 
   @Test
-  public void transformArraysToSolutionSetTest() throws JMException {
+  public void transformArraysToSolutionSetTest() throws JMetalException {
     // Creating set (0,N-1), (1,N-2), (2, N-3), ... , (N-1, 0)
     double[][] arrayContainingFront = new double[solutionSetSize_][2];
     for (int i = 0; i < solutionSetSize_; i++) {
@@ -149,7 +149,7 @@ public class SetCoverageTest {
 
 
   @After
-  public void teardown() throws JMException {
+  public void teardown() throws JMetalException {
     problem_ = null ;
     solutionSet1_ = null ;
     solutionSet2_ = null ;

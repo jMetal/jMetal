@@ -27,7 +27,7 @@ import jmetal.encodings.solutiontype.ArrayIntSolutionType;
 import jmetal.encodings.solutiontype.IntSolutionType;
 import jmetal.encodings.variable.ArrayInt;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 /**
  * Wrapper class for accessing integer-coded solutions
@@ -51,9 +51,9 @@ public class XInt {
    *
    * @param index Index of the encodings.variable
    * @return The value of the encodings.variable
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public int getValue(int index) throws JMException {
+  public int getValue(int index) throws JMetalException {
     if (type_.getClass() == IntSolutionType.class) {
       return (int) solution_.getDecisionVariables()[index].getValue();
     } else if (type_.getClass() == ArrayIntSolutionType.class) {
@@ -70,9 +70,9 @@ public class XInt {
    *
    * @param index Index of the encodings.variable
    * @param value Value to be assigned
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public void setValue(int index, int value) throws JMException {
+  public void setValue(int index, int value) throws JMetalException {
     if (type_.getClass() == IntSolutionType.class) {
       solution_.getDecisionVariables()[index].setValue(value);
     } else if (type_.getClass() == ArrayIntSolutionType.class) {
@@ -88,9 +88,9 @@ public class XInt {
    *
    * @param index Index of the encodings.variable
    * @return The lower bound of the encodings.variable
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public int getLowerBound(int index) throws JMException {
+  public int getLowerBound(int index) throws JMetalException {
     if (type_.getClass() == IntSolutionType.class) {
       return (int) solution_.getDecisionVariables()[index].getLowerBound();
     } else if (type_.getClass() == ArrayIntSolutionType.class) {
@@ -107,9 +107,9 @@ public class XInt {
    *
    * @param index Index of the encodings.variable
    * @return The upper bound of the encodings.variable
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public int getUpperBound(int index) throws JMException {
+  public int getUpperBound(int index) throws JMetalException {
     if (type_.getClass() == IntSolutionType.class) {
       return (int) solution_.getDecisionVariables()[index].getUpperBound();
     } else if (type_.getClass() == ArrayIntSolutionType.class) {

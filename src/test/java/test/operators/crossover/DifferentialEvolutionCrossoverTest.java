@@ -24,7 +24,7 @@ import jmetal.core.Problem;
 import jmetal.core.Solution;
 import jmetal.operators.crossover.DifferentialEvolutionCrossover;
 import jmetal.problems.Kursawe;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,7 +43,7 @@ public class DifferentialEvolutionCrossoverTest {
   static final double DELTA = 0.0000000000001 ;
 
   @Before
-  public void setUp() throws JMException {
+  public void setUp() throws JMetalException {
     problem_ = new Kursawe("Real", 3) ;
     crossover_ = new DifferentialEvolutionCrossover.Builder().build() ;
   }
@@ -72,7 +72,7 @@ public class DifferentialEvolutionCrossoverTest {
     assertEquals(0.1, crossover_.getCr(), DELTA) ;
   }
 
-  @Test (expected = JMException.class)
+  @Test (expected = JMetalException.class)
   public void setInvalidCrTest() {
     crossover_ = new DifferentialEvolutionCrossover.Builder().cr(2.0).build() ;
   }
@@ -86,7 +86,7 @@ public class DifferentialEvolutionCrossoverTest {
     assertEquals(0.75, crossover_.getF(), DELTA) ;
   }
 
-  @Test (expected = JMException.class)
+  @Test (expected = JMetalException.class)
   public void setInvalidFTest() {
     crossover_ = new DifferentialEvolutionCrossover.Builder()
       .f(-15)
@@ -102,7 +102,7 @@ public class DifferentialEvolutionCrossoverTest {
     assertEquals(0.63, crossover_.getK(), DELTA) ;
   }
 
-  @Test (expected = JMException.class)
+  @Test (expected = JMetalException.class)
   public void setInvalidKTest() {
     crossover_ = new DifferentialEvolutionCrossover.Builder()
       .k(-32)
@@ -118,7 +118,7 @@ public class DifferentialEvolutionCrossoverTest {
     assertTrue("current-to-rand/1/bin".equals(crossover_.getVariant())) ;
   }
 
-  @Test (expected = JMException.class)
+  @Test (expected = JMetalException.class)
   public void setWrongVariantTest() throws ClassNotFoundException {
     crossover_ = new DifferentialEvolutionCrossover.Builder().variant("current-to-rand").build() ;
   }

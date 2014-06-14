@@ -24,7 +24,7 @@ package jmetal.metaheuristics.singleObjective.particleSwarmOptimization;
 import jmetal.core.*;
 import jmetal.operators.selection.BestSolutionSelection;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.comparator.ObjectiveComparator;
 import jmetal.util.random.PseudoRandom;
 import jmetal.util.wrapper.XReal;
@@ -206,9 +206,9 @@ public class PSO extends Algorithm {
   /**
    * Update the speed of each particle
    *
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  private void computeSpeed(int iter, int miter) throws JMException, IOException {
+  private void computeSpeed(int iter, int miter) throws JMetalException, IOException {
     double r1, r2;
     //double W ;
     double C1, C2;
@@ -274,9 +274,9 @@ public class PSO extends Algorithm {
   /**
    * Update the position of each particle
    *
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  private void computeNewPositions() throws JMException {
+  private void computeNewPositions() throws JMetalException {
     for (int i = 0; i < particlesSize_; i++) {
       //Variable[] particle = particles_.get(i).getDecisionVariables();
       XReal particle = new XReal(particles_.get(i));
@@ -300,9 +300,9 @@ public class PSO extends Algorithm {
   /**
    * Apply a mutation operator to some particles in the swarm
    *
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  private void mopsoMutation(int actualIteration, int totalIterations) throws JMException {
+  private void mopsoMutation(int actualIteration, int totalIterations) throws JMetalException {
     for (int i = 0; i < particles_.size(); i++) {
       if ((i % 6) == 0) {
         polynomialMutation_.execute(particles_.get(i));
@@ -315,9 +315,9 @@ public class PSO extends Algorithm {
    *
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
    * as a result of the algorithm execution
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public SolutionSet execute() throws JMException, ClassNotFoundException {
+  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     initParams();
 
     success_ = false;

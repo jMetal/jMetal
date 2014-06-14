@@ -26,7 +26,7 @@ import jmetal.core.SolutionType;
 import jmetal.encodings.solutiontype.ArrayRealSolutionType;
 import jmetal.encodings.solutiontype.RealSolutionType;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.random.PseudoRandom;
 import jmetal.util.wrapper.XReal;
 
@@ -76,9 +76,9 @@ public class UniformMutation extends Mutation {
    *
    * @param probability Mutation probability
    * @param solution    The solution to mutate
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public void doMutation(double probability, Solution solution) throws JMException {
+  public void doMutation(double probability, Solution solution) throws JMetalException {
     XReal x = new XReal(solution);
 
     for (int var = 0; var < solution.getDecisionVariables().length; var++) {
@@ -103,9 +103,9 @@ public class UniformMutation extends Mutation {
    * Executes the operation
    *
    * @param object An object containing the solution to mutate
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public Object execute(Object object) throws JMException {
+  public Object execute(Object object) throws JMetalException {
     Solution solution = (Solution) object;
 
     if (!VALID_TYPES.contains(solution.getType().getClass())) {
@@ -115,7 +115,7 @@ public class UniformMutation extends Mutation {
 
       Class<String> cls = java.lang.String.class;
       String name = cls.getName();
-      throw new JMException("Exception in " + name + ".execute()");
+      throw new JMetalException("Exception in " + name + ".execute()");
     }
 
     doMutation(mutationProbability_, solution);

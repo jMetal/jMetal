@@ -13,7 +13,7 @@ import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
 import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.selection.SelectionFactory;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -27,7 +27,7 @@ public class SBXCrossoverOffspring extends Offspring {
   private Operator selection_;
 
   public SBXCrossoverOffspring(double crossoverProbability,
-    double distributionIndexForCrossover) throws JMException {
+    double distributionIndexForCrossover) throws JMetalException {
     crossoverProbability_ = crossoverProbability;
     distributionIndexForCrossover_ = distributionIndexForCrossover;
 
@@ -54,7 +54,7 @@ public class SBXCrossoverOffspring extends Offspring {
       offSpring = children[0];
       //mutation_.execute(offSpring);
       //Create a new solution, using DE
-    } catch (JMException ex) {
+    } catch (JMetalException ex) {
       Logger.getLogger(SBXCrossoverOffspring.class.getName()).log(Level.SEVERE, null, ex);
     }
     return offSpring;
@@ -76,7 +76,7 @@ public class SBXCrossoverOffspring extends Offspring {
       offSpring = children[0];
       //mutation_.execute(offSpring);
       //Create a new solution, using DE
-    } catch (JMException ex) {
+    } catch (JMetalException ex) {
       Logger.getLogger(SBXCrossoverOffspring.class.getName()).log(Level.SEVERE, null, ex);
     }
     return offSpring;
@@ -100,7 +100,7 @@ public class SBXCrossoverOffspring extends Offspring {
       offSpring = children[0];
       //mutation_.execute(offSpring);
       //Create a new solution, using DE
-    } catch (JMException ex) {
+    } catch (JMetalException ex) {
       Logger.getLogger(SBXCrossoverOffspring.class.getName()).log(Level.SEVERE, null, ex);
     }
     return offSpring;

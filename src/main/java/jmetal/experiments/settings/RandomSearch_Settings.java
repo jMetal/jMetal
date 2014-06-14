@@ -25,11 +25,9 @@ import jmetal.core.Algorithm;
 import jmetal.experiments.Settings;
 import jmetal.metaheuristics.randomSearch.RandomSearch;
 import jmetal.problems.ProblemFactory;
-import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.util.Properties;
-import java.util.logging.Level;
 
 /**
  * Settings class of algorithm RandomSearch
@@ -42,9 +40,9 @@ public class RandomSearch_Settings extends Settings {
    * Constructor
    *
    * @param problem Problem to solve
-   * @throws JMException 
+   * @throws jmetal.util.JMetalException
    */
-  public RandomSearch_Settings(String problem) throws JMException {
+  public RandomSearch_Settings(String problem) throws JMetalException {
     super(problem);
 
     Object [] problemParams = {"Real"};
@@ -55,9 +53,9 @@ public class RandomSearch_Settings extends Settings {
    * Configure the random search algorithm with default parameter experiments.settings
    *
    * @return an algorithm object
-   * @throws jmetal.util.JMException
+   * @throws jmetal.util.JMetalException
    */
-  public Algorithm configure() throws JMException {
+  public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
 
     // Creating the problem
@@ -76,7 +74,7 @@ public class RandomSearch_Settings extends Settings {
    * @return A SMPSO algorithm object
    */
   @Override
-  public Algorithm configure(Properties configuration) throws JMException {
+  public Algorithm configure(Properties configuration) throws JMetalException {
     maxEvaluations_  = Integer.parseInt(configuration.getProperty("maxEvaluations",String.valueOf(maxEvaluations_)));
 
     return configure() ;

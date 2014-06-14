@@ -25,7 +25,7 @@ import jmetal.core.Solution;
 import jmetal.encodings.solutiontype.PermutationSolutionType;
 import jmetal.encodings.variable.Permutation;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.random.PseudoRandom;
 
 import java.util.Arrays;
@@ -71,7 +71,7 @@ public class PMXCrossover extends Crossover {
    * @param parent1     The first parent
    * @param parent2     The second parent
    * @return An array containig the two offsprings
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
   public Solution[] doCrossover(double probability,
     Solution parent1,
@@ -156,9 +156,9 @@ public class PMXCrossover extends Crossover {
    * Executes the operation
    *
    * @param object An object containing an array of two solutions
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public Object execute(Object object) throws JMException {
+  public Object execute(Object object) throws JMetalException {
     Solution[] parents = (Solution[]) object;
     Double crossoverProbability = null;
 
@@ -178,7 +178,7 @@ public class PMXCrossover extends Crossover {
         "parents");
       Class<String> cls = java.lang.String.class;
       String name = cls.getName();
-      throw new JMException("Exception in " + name + ".execute()");
+      throw new JMetalException("Exception in " + name + ".execute()");
     }
 
     Solution[] offspring = doCrossover(crossoverProbability,

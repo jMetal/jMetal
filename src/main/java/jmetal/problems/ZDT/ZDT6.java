@@ -26,7 +26,7 @@ import jmetal.core.Solution;
 import jmetal.encodings.solutiontype.ArrayRealSolutionType;
 import jmetal.encodings.solutiontype.BinaryRealSolutionType;
 import jmetal.encodings.solutiontype.RealSolutionType;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.wrapper.XReal;
 
 /**
@@ -44,7 +44,7 @@ public class ZDT6 extends Problem {
    *
    * @param solutionType The solution type must "Real", "BinaryReal, and "ArrayReal".
    */
-  public ZDT6(String solutionType) throws ClassNotFoundException, JMException {
+  public ZDT6(String solutionType) throws ClassNotFoundException, JMetalException {
     this(solutionType, 10); // 10 variables by default
   } // ZDT6
 
@@ -54,7 +54,7 @@ public class ZDT6 extends Problem {
    * @param numberOfVariables Number of variables
    * @param solutionType      The solution type must "Real", "BinaryReal, and "ArrayReal".
    */
-  public ZDT6(String solutionType, Integer numberOfVariables) throws JMException {
+  public ZDT6(String solutionType, Integer numberOfVariables) throws JMetalException {
     numberOfVariables_ = numberOfVariables;
     numberOfObjectives_ = 2;
     numberOfConstraints_ = 0;
@@ -75,7 +75,7 @@ public class ZDT6 extends Problem {
     } else if (solutionType.compareTo("ArrayReal") == 0) {
       solutionType_ = new ArrayRealSolutionType(this);
     } else {
-      throw new JMException("Error: solution type " + solutionType + " invalid");
+      throw new JMetalException("Error: solution type " + solutionType + " invalid");
     }
   }
 
@@ -83,9 +83,9 @@ public class ZDT6 extends Problem {
    * Evaluates a solution
    *
    * @param solution The solution to evaluate
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public void evaluate(Solution solution) throws JMException {
+  public void evaluate(Solution solution) throws JMetalException {
     XReal x = new XReal(solution);
 
     double x1 = x.getValue(0);
@@ -103,9 +103,9 @@ public class ZDT6 extends Problem {
    * Returns the value of the ZDT6 function G.
    *
    * @param x Solution
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public double evalG(XReal x) throws JMException {
+  public double evalG(XReal x) throws JMetalException {
     double g = 0.0;
     for (int var = 1; var < this.numberOfVariables_; var++) {
       g += x.getValue(var);

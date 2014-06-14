@@ -22,7 +22,7 @@
 package jmetal.encodings.variable;
 
 import jmetal.core.Variable;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.util.BitSet;
 
@@ -143,7 +143,7 @@ public class BinaryReal extends Binary {
    * Contributor: jl hippolyte
    */
   @Override
-  public void setValue(double value) throws JMException {
+  public void setValue(double value) throws JMetalException {
     if (numberOfBits_ <= 24 && lowerBound_ >= 0) {
       BitSet bitSet;
       if (value <= lowerBound_) {
@@ -180,10 +180,10 @@ public class BinaryReal extends Binary {
 
     } else {
       if (lowerBound_ < 0) {
-        throw new JMException("Unsupported lowerbound: " + lowerBound_ + " > 0");
+        throw new JMetalException("Unsupported lowerbound: " + lowerBound_ + " > 0");
       }
       if (numberOfBits_ >= 24) {
-        throw new JMException("Unsupported bit string length"
+        throw new JMetalException("Unsupported bit string length"
           + numberOfBits_ + " is > 24 bits");
       }
     }

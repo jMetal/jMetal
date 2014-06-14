@@ -47,7 +47,7 @@
 package jmetal.problems.singleObjective.cec2005Competition.originalCode;
 
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 public class F04_shifted_schwefel_noise extends TestFunc {
 
@@ -64,12 +64,12 @@ public class F04_shifted_schwefel_noise extends TestFunc {
   private double[] m_z;
 
   // Constructors
-  public F04_shifted_schwefel_noise(int dimension, double bias) throws JMException {
+  public F04_shifted_schwefel_noise(int dimension, double bias) throws JMetalException {
     this(dimension, bias, DEFAULT_FILE_DATA);
   }
 
   public F04_shifted_schwefel_noise(int dimension, double bias, String file_data)
-    throws JMException {
+    throws JMetalException {
     super(dimension, bias, FUNCTION_NAME);
 
     // Note: dimension starts from 0

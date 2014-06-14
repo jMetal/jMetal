@@ -24,7 +24,7 @@ import jmetal.core.Problem;
 import jmetal.core.Solution;
 import jmetal.encodings.solutiontype.BinaryRealSolutionType;
 import jmetal.encodings.solutiontype.RealSolutionType;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.wrapper.XReal;
 
 /**
@@ -50,7 +50,7 @@ public class FourBarTruss extends Problem {
    *
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
-  public FourBarTruss(String solutionType) throws JMException {
+  public FourBarTruss(String solutionType) throws JMetalException {
     numberOfVariables_ = 4;
     numberOfObjectives_ = 2;
     numberOfConstraints_ = 0;
@@ -72,7 +72,7 @@ public class FourBarTruss extends Problem {
     } else if (solutionType.compareTo("Real") == 0) {
       solutionType_ = new RealSolutionType(this);
     } else {
-      throw new JMException("Error: solution type " + solutionType + " invalid");
+      throw new JMetalException("Error: solution type " + solutionType + " invalid");
     }
   }
 
@@ -80,9 +80,9 @@ public class FourBarTruss extends Problem {
    * Evaluates a solution
    *
    * @param solution The solution to evaluate
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public void evaluate(Solution solution) throws JMException {
+  public void evaluate(Solution solution) throws JMetalException {
     XReal vars = new XReal(solution);
 
     double[] fx = new double[2]; // function values

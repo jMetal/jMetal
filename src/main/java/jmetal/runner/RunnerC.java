@@ -28,7 +28,7 @@ import jmetal.experiments.Settings;
 import jmetal.experiments.SettingsFactory;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.fileOutput.DefaultFileOutputContext;
 import jmetal.util.fileOutput.FileOutputContext;
 import jmetal.util.fileOutput.SolutionSetOutput;
@@ -50,7 +50,7 @@ public class RunnerC {
 
   /**
    * @param args Command line arguments.
-   * @throws jmetal.util.JMException
+   * @throws jmetal.util.JMetalException
    * @throws java.io.IOException
    * @throws SecurityException       Usage: three options
    *                                 - jmetal.experiments.Main algorithmName
@@ -59,7 +59,7 @@ public class RunnerC {
    * @throws ClassNotFoundException
    */
   public static void main(String[] args) throws
-    JMException, SecurityException, IOException,
+    JMetalException, SecurityException, IOException,
     IllegalArgumentException, IllegalAccessException,
     ClassNotFoundException {
     Algorithm algorithm;

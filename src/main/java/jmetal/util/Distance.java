@@ -75,10 +75,10 @@ public class Distance {
    * @param solution    The <code>Solution</code>.
    * @param solutionSet The <code>SolutionSet</code>.
    * @return The minimum distance between solution and the set.
-   * @throws JMException
+   * @throws JMetalException
    */
   public double distanceToSolutionSetInObjectiveSpace(Solution solution,
-    SolutionSet solutionSet) throws JMException {
+    SolutionSet solutionSet) throws JMetalException {
     //At start point the distance is the max
     double distance = Double.MAX_VALUE;
 
@@ -101,10 +101,10 @@ public class Distance {
    * @param solution    The <code>Solution</code>.
    * @param solutionSet The <code>SolutionSet</code>.
    * @return The minimum distance between solution and the set.
-   * @throws JMException
+   * @throws JMetalException
    */
   public double distanceToSolutionSetInSolutionSpace(Solution solution,
-    SolutionSet solutionSet) throws JMException {
+    SolutionSet solutionSet) throws JMetalException {
     //At start point the distance is the max
     double distance = Double.MAX_VALUE;
 
@@ -126,10 +126,10 @@ public class Distance {
    * @param solutionI The first <code>Solution</code>.
    * @param solutionJ The second <code>Solution</code>.
    * @return the distance between solutions.
-   * @throws JMException
+   * @throws JMetalException
    */
   public double distanceBetweenSolutions(Solution solutionI, Solution solutionJ)
-    throws JMException {
+    throws JMetalException {
     double distance = 0.0;
     XReal solI = new XReal(solutionI);
     XReal solJ = new XReal(solutionJ);
@@ -194,10 +194,11 @@ public class Distance {
    *
    * @param solutionSet The <code>SolutionSet</code>.
    * @param nObjs       Number of objectives.
-   * @throws JMException 
+   * @throws JMetalException
    */
 
-  public void crowdingDistanceAssignment(SolutionSet solutionSet, int nObjs) throws JMException {
+  public void crowdingDistanceAssignment(SolutionSet solutionSet, int nObjs) throws
+    JMetalException {
     int size = solutionSet.size();
 
     if (size == 0) {

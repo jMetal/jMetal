@@ -22,7 +22,7 @@ package jmetal.metaheuristics.nsgaII;
 
 import jmetal.core.*;
 import jmetal.util.Distance;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.Ranking;
 import jmetal.util.comparator.CrowdingComparator;
 import jmetal.util.evaluator.SolutionSetEvaluator;
@@ -84,7 +84,7 @@ public abstract class NSGAIITemplate extends Algorithm {
     selectionOperator_ = operators_.get("selection");
   }
 
-  protected void createInitialPopulation() throws ClassNotFoundException, JMException {
+  protected void createInitialPopulation() throws ClassNotFoundException, JMetalException {
     population_ = new SolutionSet(populationSize_);
 
     Solution newSolution;
@@ -94,7 +94,7 @@ public abstract class NSGAIITemplate extends Algorithm {
     }
   }
 
-  protected void evaluatePopulation(SolutionSet population) throws JMException {
+  protected void evaluatePopulation(SolutionSet population) throws JMetalException {
     evaluator_.evaluate(population, problem_) ;
   }
 
@@ -102,13 +102,13 @@ public abstract class NSGAIITemplate extends Algorithm {
     return evaluations_ == maxEvaluations_ ;
   }
 
-  protected Ranking rankPopulation() throws JMException {
+  protected Ranking rankPopulation() throws JMetalException {
     SolutionSet union = population_.union(offspringPopulation_);
 
     return new Ranking(union) ;
   }
 
-  protected void addRankedSolutionsToPopulation(Ranking ranking, int rank) throws JMException {
+  protected void addRankedSolutionsToPopulation(Ranking ranking, int rank) throws JMetalException {
     SolutionSet front ;
 
     front = ranking.getSubfront(rank);
@@ -118,12 +118,12 @@ public abstract class NSGAIITemplate extends Algorithm {
     }
   }
 
-  protected void computeCrowdingDistance(Ranking ranking, int rank) throws JMException {
+  protected void computeCrowdingDistance(Ranking ranking, int rank) throws JMetalException {
     SolutionSet currentRankedFront = ranking.getSubfront(rank) ;
     distance_.crowdingDistanceAssignment(currentRankedFront, problem_.getNumberOfObjectives());
   }
 
-  protected void addLastRankedSolutions(Ranking ranking, int rank) throws JMException {
+  protected void addLastRankedSolutions(Ranking ranking, int rank) throws JMetalException {
     SolutionSet currentRankedFront = ranking.getSubfront(rank) ;
 
     currentRankedFront.sort(new CrowdingComparator());
@@ -143,7 +143,7 @@ public abstract class NSGAIITemplate extends Algorithm {
     return ranking.getSubfront(rank).size() < (populationSize_ - population_.size()) ;
   }
 
-  protected SolutionSet getNonDominatedSolutions() throws JMException {
+  protected SolutionSet getNonDominatedSolutions() throws JMetalException {
     return new Ranking(population_).getSubfront(0);
   }
 
@@ -226,7 +226,7 @@ public abstract class NSGAIITemplate extends Algorithm {
       } else if ("SteadyStateNSGAII".equals(NSGAIIVariant)) {
         algorithm =  new SteadyStateNSGAII(this) ;
       } else {
-        throw new JMException(NSGAIIVariant + " variant unknown") ;
+        throw new JMetalException(NSGAIIVariant + " variant unknown") ;
       }
 
       return algorithm ;

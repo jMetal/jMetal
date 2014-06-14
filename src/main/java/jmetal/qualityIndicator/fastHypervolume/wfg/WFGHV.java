@@ -30,7 +30,7 @@ package jmetal.qualityIndicator.fastHypervolume.wfg;
 import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -102,11 +102,11 @@ public class WFGHV {
     }
   }
 
-  public static void main(String args[]) throws IOException, JMException {
+  public static void main(String args[]) throws IOException, JMetalException {
     Front front = new Front();
 
     if (args.length == 0) {
-      throw new JMException("Usage: WFGHV front [reference point]");
+      throw new JMetalException("Usage: WFGHV front [reference point]");
     }
 
     if (args.length > 0) {

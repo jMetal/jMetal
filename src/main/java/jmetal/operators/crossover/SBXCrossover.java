@@ -25,7 +25,7 @@ import jmetal.core.Solution;
 import jmetal.encodings.solutiontype.ArrayRealSolutionType;
 import jmetal.encodings.solutiontype.RealSolutionType;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.random.PseudoRandom;
 import jmetal.util.wrapper.XReal;
 
@@ -105,7 +105,7 @@ public class SBXCrossover extends Crossover {
    */
   public Solution[] doCrossover(double probability,
     Solution parent1,
-    Solution parent2) throws JMException {
+    Solution parent2) throws JMetalException {
 
     Solution[] offSpring = new Solution[2];
 
@@ -209,7 +209,7 @@ public class SBXCrossover extends Crossover {
    * @param object An object containing an array of two parents
    * @return An object containing the offSprings
    */
-  public Object execute(Object object) throws JMException {
+  public Object execute(Object object) throws JMetalException {
     Solution[] parents = (Solution[]) object;
 
     if (parents.length != 2) {
@@ -217,7 +217,7 @@ public class SBXCrossover extends Crossover {
         "parents");
       Class cls = java.lang.String.class;
       String name = cls.getName();
-      throw new JMException("Exception in " + name + ".execute()");
+      throw new JMetalException("Exception in " + name + ".execute()");
     }
 
     if (!solutionTypeIsValid(parents)) {
@@ -226,7 +226,7 @@ public class SBXCrossover extends Crossover {
 
       Class<String> cls = java.lang.String.class;
       String name = cls.getName();
-      throw new JMException("Exception in " + name + ".execute()");
+      throw new JMetalException("Exception in " + name + ".execute()");
     }
 
     Solution[] offSpring;
@@ -249,7 +249,7 @@ public class SBXCrossover extends Crossover {
 
     public Builder distributionIndex(double distributionIndex) {
       if (distributionIndex < 0) {
-        throw new JMException("Distribution index invalid: " + distributionIndex) ;
+        throw new JMetalException("Distribution index invalid: " + distributionIndex) ;
       } else {
         distributionIndex_ = distributionIndex;
       }
@@ -259,7 +259,7 @@ public class SBXCrossover extends Crossover {
 
     public Builder probability(double probability) {
       if ((probability < 0) || (probability > 1.0)) {
-        throw new JMException("Probability value invalid: " + probability) ;
+        throw new JMetalException("Probability value invalid: " + probability) ;
       } else {
         crossoverProbability_ = probability;
       }

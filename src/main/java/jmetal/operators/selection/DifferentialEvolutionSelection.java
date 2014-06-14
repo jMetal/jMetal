@@ -23,7 +23,7 @@ package jmetal.operators.selection;
 
 import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.random.PseudoRandom;
 
 import java.util.HashMap;
@@ -58,7 +58,7 @@ public class DifferentialEvolutionSelection extends Selection {
    *               of the current individual
    * @return An object containing the three selected parents
    */
-  public Object execute(Object object) throws JMException {
+  public Object execute(Object object) throws JMetalException {
     Object[] parameters = (Object[]) object;
     SolutionSet population = (SolutionSet) parameters[0];
     int index = (Integer) parameters[1];
@@ -67,7 +67,7 @@ public class DifferentialEvolutionSelection extends Selection {
     int r1, r2, r3;
 
     if (population.size() < 4) {
-      throw new JMException(
+      throw new JMetalException(
         "DifferentialEvolutionSelection: the population has less than four solutions");
     }
 

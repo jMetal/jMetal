@@ -12,7 +12,7 @@ import jmetal.core.Operator;
 import jmetal.core.Solution;
 import jmetal.operators.mutation.MutationFactory;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -26,7 +26,7 @@ public class PolynomialMutationOffspring extends Offspring {
 
   public PolynomialMutationOffspring(double mutationProbability,
     double distributionIndexForMutation
-  ) throws JMException {
+  ) throws JMetalException {
     HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
     mutationParameters.put("probability", mutationProbability_ = mutationProbability);
     mutationParameters.put("distributionIndex", distributionIndex_ = distributionIndexForMutation);
@@ -39,7 +39,7 @@ public class PolynomialMutationOffspring extends Offspring {
     Solution res = new Solution(solution);
     try {
       mutation_.execute(res);
-    } catch (JMException e) {
+    } catch (JMetalException e) {
       Configuration.logger_.log(Level.SEVERE, "Error", e);
     }
     return res;

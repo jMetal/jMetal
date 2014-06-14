@@ -22,7 +22,7 @@
 package jmetal.core;
 
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.io.Serializable;
 
@@ -57,13 +57,13 @@ public abstract class Variable implements Serializable {
    * considered a fatal error by default, and the program is terminated. Those
    * classes requiring this method must redefine it.
    */
-  public double getValue() throws JMException {
+  public double getValue() throws JMetalException {
     Class<String> cls = java.lang.String.class;
 
     String name = cls.getName();
     Configuration.logger_.severe("Class " + name + " does not implement "
       + "method getValue");
-    throw new JMException("Exception in " + name + ".getValue()");
+    throw new JMetalException("Exception in " + name + ".getValue()");
   }
 
   /**
@@ -73,13 +73,13 @@ public abstract class Variable implements Serializable {
    * considered a fatal error by default, and the program is terminated. Those
    * classes requiring this method must redefine it.
    */
-  public void setValue(double value) throws JMException {
+  public void setValue(double value) throws JMetalException {
     Class<String> cls = java.lang.String.class;
 
     String name = cls.getName();
     Configuration.logger_.severe("Class " + name + " does not implement "
       + "method setValue");
-    throw new JMException("Exception in " + name + ".setValue()");
+    throw new JMetalException("Exception in " + name + ".setValue()");
   }
 
   /**
@@ -88,13 +88,13 @@ public abstract class Variable implements Serializable {
    * to this method is considered a fatal error by default, and the program is
    * terminated. Those classes requiring this method must redefine it.
    */
-  public double getLowerBound() throws JMException {
+  public double getLowerBound() throws JMetalException {
     Class<String> cls = java.lang.String.class;
 
     String name = cls.getName();
     Configuration.logger_.severe("Class " + name
       + " does not implement method getLowerBound()");
-    throw new JMException("Exception in " + name + ".getLowerBound()");
+    throw new JMetalException("Exception in " + name + ".getLowerBound()");
   }
 
   /**
@@ -103,13 +103,13 @@ public abstract class Variable implements Serializable {
    * method is considered a fatal error by default and the program is
    * terminated. Those classes requiring this method must to redefine it.
    */
-  public void setLowerBound(double lowerBound) throws JMException {
+  public void setLowerBound(double lowerBound) throws JMetalException {
     Class<String> cls = java.lang.String.class;
 
     String name = cls.getName();
     Configuration.logger_.severe("Class " + name
       + " does not implement method setLowerBound()");
-    throw new JMException("Exception in " + name + ".setLowerBound()");
+    throw new JMetalException("Exception in " + name + ".setLowerBound()");
   }
 
   /**
@@ -118,13 +118,13 @@ public abstract class Variable implements Serializable {
    * call to this method is considered a fatal error by default, and the program
    * is terminated. Those classes requiring this method must redefine it.
    */
-  public double getUpperBound() throws JMException {
+  public double getUpperBound() throws JMetalException {
     Class<String> cls = java.lang.String.class;
 
     String name = cls.getName();
     Configuration.logger_.severe("Class " + name
       + " does not implement method getUpperBound()");
-    throw new JMException("Exception in " + name + ".getUpperBound()");
+    throw new JMetalException("Exception in " + name + ".getUpperBound()");
   }
 
   /**
@@ -133,13 +133,13 @@ public abstract class Variable implements Serializable {
    * method is considered a fatal error by default, and the program is
    * terminated. Those classes requiring this method must redefine it.
    */
-  public void setUpperBound(double upperBound) throws JMException {
+  public void setUpperBound(double upperBound) throws JMetalException {
     Class<String> cls = java.lang.String.class;
 
     String name = cls.getName();
     Configuration.logger_.severe("Class " + name
       + " does not implement method setUpperBound()");
-    throw new JMException("Exception in " + name + ".setUpperBound()");
+    throw new JMetalException("Exception in " + name + ".setUpperBound()");
   }
 
   /**

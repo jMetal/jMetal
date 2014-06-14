@@ -25,7 +25,7 @@ import jmetal.core.Solution;
 import jmetal.encodings.solutiontype.ArrayRealSolutionType;
 import jmetal.encodings.solutiontype.RealSolutionType;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.random.PseudoRandom;
 import jmetal.util.wrapper.XReal;
 
@@ -80,9 +80,9 @@ public class PolynomialMutation extends Mutation {
    *
    * @param probability Mutation probability
    * @param solution    The solution to mutate
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public void doMutation(double probability, Solution solution) throws JMException {
+  public void doMutation(double probability, Solution solution) throws JMetalException {
     double rnd, delta1, delta2, mut_pow, deltaq;
     double y, yl, yu, val, xy;
     XReal x = new XReal(solution);
@@ -122,9 +122,9 @@ public class PolynomialMutation extends Mutation {
    *
    * @param object An object containing a solution
    * @return An object containing the mutated solution
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public Object execute(Object object) throws JMException {
+  public Object execute(Object object) throws JMetalException {
     Solution solution = (Solution) object;
 
     if (!solutionTypeIsValid(solution)) {
@@ -133,7 +133,7 @@ public class PolynomialMutation extends Mutation {
 
       Class cls = java.lang.String.class;
       String name = cls.getName();
-      throw new JMException("Exception in " + name + ".execute()");
+      throw new JMetalException("Exception in " + name + ".execute()");
     }
 
     doMutation(mutationProbability_, solution);

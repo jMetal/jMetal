@@ -65,9 +65,9 @@ public class Ranking {
    * Constructor.
    *
    * @param solutionSet The <code>SolutionSet</code> to be ranked.
-   * @throws JMException 
+   * @throws JMetalException
    */
-  public Ranking(SolutionSet solutionSet) throws JMException {
+  public Ranking(SolutionSet solutionSet) throws JMetalException {
     solutionSet_ = solutionSet;
 
     // dominateMe[i] contains the number of solutions dominating i        

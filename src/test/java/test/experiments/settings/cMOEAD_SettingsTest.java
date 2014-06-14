@@ -27,7 +27,7 @@ import jmetal.experiments.settings.cMOEAD_Settings;
 import jmetal.operators.crossover.DifferentialEvolutionCrossover;
 import jmetal.operators.mutation.PolynomialMutation;
 import jmetal.problems.Fonseca;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -57,7 +57,7 @@ public class cMOEAD_SettingsTest {
   }
 
   @Test
-  public void testSettings() throws JMException {
+  public void testSettings() throws JMetalException {
     double epsilon = 0.000000000000001 ;
     Settings cMOEADSettings = new cMOEAD_Settings("Fonseca");
     Algorithm algorithm = cMOEADSettings.configure() ;
@@ -89,7 +89,7 @@ public class cMOEAD_SettingsTest {
   }
 
   @Test
-  public void testSettings2() throws JMException {
+  public void testSettings2() throws JMetalException {
     double epsilon = 0.000000000000001 ;
     Settings cMOEADSettings = new cMOEAD_Settings("Fonseca");
     Algorithm algorithm = cMOEADSettings.configure(configuration_) ;

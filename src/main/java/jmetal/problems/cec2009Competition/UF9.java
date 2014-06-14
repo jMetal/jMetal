@@ -26,7 +26,7 @@ import jmetal.core.Solution;
 import jmetal.core.Variable;
 import jmetal.encodings.solutiontype.BinaryRealSolutionType;
 import jmetal.encodings.solutiontype.RealSolutionType;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 /**
  * Class representing problem CEC2009_UF9
@@ -44,7 +44,7 @@ public class UF9 extends Problem {
    *
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
-  public UF9(String solutionType) throws ClassNotFoundException, JMException {
+  public UF9(String solutionType) throws ClassNotFoundException, JMetalException {
     this(solutionType, 30, 0.1); // 30 variables by default, epsilon = 0.1
   }
 
@@ -54,7 +54,8 @@ public class UF9 extends Problem {
    * @param numberOfVariables Number of variables.
    * @param solutionType      The solution type must "Real" or "BinaryReal".
    */
-  public UF9(String solutionType, Integer numberOfVariables, double epsilon) throws JMException {
+  public UF9(String solutionType, Integer numberOfVariables, double epsilon) throws
+    JMetalException {
     numberOfVariables_ = numberOfVariables;
     numberOfObjectives_ = 3;
     numberOfConstraints_ = 0;
@@ -80,7 +81,7 @@ public class UF9 extends Problem {
     } else if (solutionType.compareTo("Real") == 0) {
       solutionType_ = new RealSolutionType(this);
     } else {
-      throw new JMException("Error: solution type " + solutionType + " invalid");
+      throw new JMetalException("Error: solution type " + solutionType + " invalid");
     }
   }
 
@@ -88,9 +89,9 @@ public class UF9 extends Problem {
    * Evaluates a solution.
    *
    * @param solution The solution to evaluate.
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public void evaluate(Solution solution) throws JMException {
+  public void evaluate(Solution solution) throws JMetalException {
     Variable[] decisionVariables = solution.getDecisionVariables();
 
     double[] x = new double[numberOfVariables_];

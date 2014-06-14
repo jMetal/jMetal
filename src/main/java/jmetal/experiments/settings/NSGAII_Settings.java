@@ -31,7 +31,7 @@ import jmetal.operators.mutation.PolynomialMutation;
 import jmetal.operators.selection.BinaryTournament2;
 import jmetal.operators.selection.Selection;
 import jmetal.problems.ProblemFactory;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.evaluator.SequentialSolutionSetEvaluator;
 import jmetal.util.evaluator.SolutionSetEvaluator;
 
@@ -52,9 +52,9 @@ public class NSGAII_Settings extends Settings {
   /**
    * Constructor
    *
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public NSGAII_Settings(String problem) throws JMException {
+  public NSGAII_Settings(String problem) throws JMetalException {
     super(problem);
 
     Object[] problemParams = {"Real"};
@@ -74,9 +74,9 @@ public class NSGAII_Settings extends Settings {
    * Configure NSGAII with default parameter experiments.settings
    *
    * @return A NSGAII algorithm object
-   * @throws jmetal.util.JMException
+   * @throws jmetal.util.JMetalException
    */
-  public Algorithm configure() throws JMException {
+  public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
     Selection selection;
     Crossover crossover;
@@ -112,7 +112,7 @@ public class NSGAII_Settings extends Settings {
    * @return A NSGAII algorithm object
    */
   @Override
-  public Algorithm configure(Properties configuration) throws JMException {
+  public Algorithm configure(Properties configuration) throws JMetalException {
     populationSize_ = Integer
       .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize_)));
     maxEvaluations_ = Integer

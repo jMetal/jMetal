@@ -24,7 +24,7 @@ package jmetal.metaheuristics.fastPGA;
 import jmetal.core.*;
 import jmetal.util.Distance;
 import jmetal.util.FPGAFitness;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.Ranking;
 import jmetal.util.comparator.FPGAFitnessComparator;
 
@@ -53,9 +53,9 @@ public class FastPGA extends Algorithm {
    *
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
    * as a result of the algorithm execution
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public SolutionSet execute() throws JMException, ClassNotFoundException {
+  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     int maxPopSize, populationSize, offSpringSize,
       evaluations, maxEvaluations, initialPopulationSize;
     SolutionSet solutionSet, offSpringSolutionSet, candidateSolutionSet = null;

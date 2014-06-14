@@ -31,7 +31,7 @@ import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.singleObjective.OneMax;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -44,7 +44,7 @@ import java.util.HashMap;
  */
 public class GARunner {
 
-  public static void main(String[] args) throws JMException, ClassNotFoundException, IOException {
+  public static void main(String[] args) throws JMetalException, ClassNotFoundException, IOException {
     Problem problem;
     Algorithm algorithm;
     Operator crossover;

@@ -22,7 +22,7 @@
 package jmetal.qualityIndicator;
 
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.util.Arrays;
 
@@ -54,11 +54,11 @@ public class Spread {
    * 2) the name of the file containig the true Pareto front
    * 3) the number of objectives
    *
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public static void main(String args[]) throws JMException {
+  public static void main(String args[]) throws JMetalException {
     if (args.length < 2) {
-      throw new JMException("Spread::Main: Error using Spread. Usage: \n java " +
+      throw new JMetalException("Spread::Main: Error using Spread. Usage: \n java " +
         "Spread <FrontFile> <TrueFrontFile>  " +
         "<getNumberOfObjectives>");
     }

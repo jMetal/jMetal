@@ -22,7 +22,7 @@
 package jmetal.operators.mutation;
 
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.util.HashMap;
 
@@ -36,10 +36,10 @@ public class MutationFactory {
    *
    * @param name of the operator
    * @return the operator
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
   public static Mutation getMutationOperator(String name, HashMap<String, Object> parameters)
-    throws JMException {
+    throws JMetalException {
 
     if ("PolynomialMutation".equalsIgnoreCase(name)) {
       return new PolynomialMutation(parameters);
@@ -55,7 +55,7 @@ public class MutationFactory {
       Configuration.logger_.severe("Operator '" + name + "' not found ");
       Class<String> cls = java.lang.String.class;
       String name2 = cls.getName();
-      throw new JMException("Exception in " + name2 + ".getMutationOperator()");
+      throw new JMetalException("Exception in " + name2 + ".getMutationOperator()");
     }
   }
 }

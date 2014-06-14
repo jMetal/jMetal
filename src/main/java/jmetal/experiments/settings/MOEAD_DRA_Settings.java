@@ -28,7 +28,7 @@ import jmetal.metaheuristics.moead.MOEAD_DRA;
 import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.mutation.MutationFactory;
 import jmetal.problems.ProblemFactory;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.util.HashMap;
 import java.util.Properties;
@@ -55,9 +55,9 @@ public class MOEAD_DRA_Settings extends Settings {
   /**
    * Constructor
    *
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public MOEAD_DRA_Settings(String problem) throws JMException {
+  public MOEAD_DRA_Settings(String problem) throws JMetalException {
     super(problem);
 
     Object[] problemParams = {"Real"};
@@ -91,9 +91,9 @@ public class MOEAD_DRA_Settings extends Settings {
    * Configure the algorithm with the specified parameter experiments.settings
    *
    * @return an algorithm object
-   * @throws jmetal.util.JMException
+   * @throws jmetal.util.JMetalException
    */
-  public Algorithm configure() throws JMException {
+  public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
     Operator crossover;
     Operator mutation;
@@ -136,7 +136,7 @@ public class MOEAD_DRA_Settings extends Settings {
    * @return A MOEAD_DRA algorithm object
    */
   @Override
-  public Algorithm configure(Properties configuration) throws JMException {
+  public Algorithm configure(Properties configuration) throws JMetalException {
     populationSize_ = Integer
       .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize_)));
     maxEvaluations_ = Integer

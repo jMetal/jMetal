@@ -23,7 +23,7 @@ package jmetal.metaheuristics.singleObjective.evolutionStrategy;
 
 import jmetal.core.*;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.comparator.ObjectiveComparator;
 
 import java.util.Comparator;
@@ -58,9 +58,9 @@ public class ElitistES extends Algorithm {
   /**
    * Execute the ElitistES algorithm
    *
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public SolutionSet execute() throws JMException, ClassNotFoundException {
+  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     int maxEvaluations;
     int evaluations;
 

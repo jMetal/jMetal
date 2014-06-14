@@ -29,9 +29,7 @@ import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.singleObjective.OneMax;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
-import jmetal.util.evaluator.SequentialSolutionSetEvaluator;
-import jmetal.util.evaluator.SolutionSetEvaluator;
+import jmetal.util.JMetalException;
 import jmetal.util.fileOutput.DefaultFileOutputContext;
 import jmetal.util.fileOutput.FileOutputContext;
 import jmetal.util.fileOutput.SolutionSetOutput;
@@ -47,7 +45,7 @@ import java.util.HashMap;
  */
 public class GeneticAlgorithmRunner {
 
-  public static void main(String[] args) throws JMException, ClassNotFoundException, IOException {
+  public static void main(String[] args) throws JMetalException, ClassNotFoundException, IOException {
     Problem problem;
     Algorithm algorithm;
     Operator crossover;

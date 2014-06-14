@@ -5,7 +5,7 @@ import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
 import jmetal.util.Configuration;
 import jmetal.util.Distance;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.Ranking;
 import jmetal.util.comparator.CrowdingComparator;
 import jmetal.util.comparator.DominanceComparator;
@@ -35,7 +35,7 @@ public class NSGAIIAdaptive extends NSGAIITemplate {
     super(evaluator);
   }
 
-  public SolutionSet execute() throws JMException, ClassNotFoundException {
+  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     // FIXME: those variables are necessary? because they only store value, we don't do anything with it
     double contrDE = 0;
     double contrSBX = 0;

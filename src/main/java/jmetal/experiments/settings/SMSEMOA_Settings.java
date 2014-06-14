@@ -31,12 +31,10 @@ import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.Selection;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.ProblemFactory;
-import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.util.HashMap;
 import java.util.Properties;
-import java.util.logging.Level;
 
 /**
  * Settings class of algorithm SMSEMOA
@@ -52,9 +50,9 @@ public class SMSEMOA_Settings extends Settings {
 
   /**
    * Constructor
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public SMSEMOA_Settings(String problem) throws JMException {
+  public SMSEMOA_Settings(String problem) throws JMetalException {
     super(problem) ;
 
     Object [] problemParams = {"Real"};
@@ -73,9 +71,9 @@ public class SMSEMOA_Settings extends Settings {
    * Configure SMSEMOA with user-defined parameter experiments.settings
    *
    * @return A SMSEMOA algorithm object
-   * @throws jmetal.util.JMException
+   * @throws jmetal.util.JMetalException
    */
-  public Algorithm configure() throws JMException {
+  public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
     Selection selection;
     Crossover crossover;
@@ -119,7 +117,7 @@ public class SMSEMOA_Settings extends Settings {
    * @return A SMSEMOA algorithm object
    */
   @Override
-  public Algorithm configure(Properties configuration) throws JMException {
+  public Algorithm configure(Properties configuration) throws JMetalException {
     populationSize_ = Integer.parseInt(configuration.getProperty("populationSize",String.valueOf(populationSize_)));
     maxEvaluations_  = Integer.parseInt(configuration.getProperty("maxEvaluations",String.valueOf(maxEvaluations_)));
     offset_ = Double.parseDouble(configuration.getProperty("offset",String.valueOf(offset_)));

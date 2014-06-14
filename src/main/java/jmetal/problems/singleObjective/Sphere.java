@@ -26,7 +26,7 @@ import jmetal.core.Solution;
 import jmetal.core.Variable;
 import jmetal.encodings.solutiontype.BinaryRealSolutionType;
 import jmetal.encodings.solutiontype.RealSolutionType;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 /**
  * Class representing a Sphere problem.
@@ -43,9 +43,9 @@ public class Sphere extends Problem {
    *
    * @param numberOfVariables Number of variables of the problem
    * @param solutionType      The solution type must "Real" or "BinaryReal".
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public Sphere(String solutionType, Integer numberOfVariables) throws JMException {
+  public Sphere(String solutionType, Integer numberOfVariables) throws JMetalException {
     numberOfVariables_ = numberOfVariables;
     numberOfObjectives_ = 1;
     numberOfConstraints_ = 0;
@@ -63,7 +63,7 @@ public class Sphere extends Problem {
     } else if (solutionType.compareTo("Real") == 0) {
       solutionType_ = new RealSolutionType(this);
     } else {
-      throw new JMException("Error: solution type " + solutionType + " invalid");
+      throw new JMetalException("Error: solution type " + solutionType + " invalid");
     }
   }
 
@@ -71,9 +71,9 @@ public class Sphere extends Problem {
    * Evaluates a solution
    *
    * @param solution The solution to evaluate
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public void evaluate(Solution solution) throws JMException {
+  public void evaluate(Solution solution) throws JMetalException {
     Variable[] decisionVariables = solution.getDecisionVariables();
 
     double sum = 0.0;

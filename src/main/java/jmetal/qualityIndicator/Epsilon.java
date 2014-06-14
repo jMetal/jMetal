@@ -22,7 +22,7 @@
 package jmetal.qualityIndicator;
 
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 /**
  * This class implements the unary epsilon additive indicator as proposed in E.
@@ -56,15 +56,15 @@ public class Epsilon {
    * Returns the additive-epsilon value of the paretoFront. This method call to
    * the calculate epsilon-indicator one
    *
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    * @throws NumberFormatException
    */
   public static void main(String[] args) throws NumberFormatException,
-    JMException {
+    JMetalException {
     double ind_value;
 
     if (args.length < 2) {
-      throw new JMException(
+      throw new JMetalException(
         "Error using Epsilon. Type: \n java AdditiveEpsilon " + "<FrontFile>"
           + "<TrueFrontFile> + <getNumberOfObjectives>"
       );
@@ -86,9 +86,9 @@ public class Epsilon {
    * @param b True Pareto front
    * @param a Solution front
    * @return the value of the epsilon indicator
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public double epsilon(double[][] b, double[][] a, int dim) throws JMException {
+  public double epsilon(double[][] b, double[][] a, int dim) throws JMetalException {
     int i, j, k;
     double eps, eps_j = 0.0, eps_k = 0.0, eps_temp;
 
@@ -115,7 +115,7 @@ public class Epsilon {
             default:
               if ((a[i][k] < 0 && b[j][k] > 0) || (a[i][k] > 0 && b[j][k] < 0)
                 || (a[i][k] == 0 || b[j][k] == 0)) {
-                throw new JMException("Error in data file");
+                throw new JMetalException("Error in data file");
               }
               if (obj_[k] == 0) {
                 eps_temp = b[j][k] / a[i][k];

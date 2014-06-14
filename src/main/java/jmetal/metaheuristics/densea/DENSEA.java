@@ -22,7 +22,7 @@ package jmetal.metaheuristics.densea;
 
 import jmetal.core.*;
 import jmetal.util.Distance;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.Ranking;
 import jmetal.util.comparator.CrowdingComparator;
 import jmetal.util.comparator.EqualSolutions;
@@ -60,7 +60,7 @@ public class DENSEA extends Algorithm {
   }
 
   /* Execute the algorithm */
-  public SolutionSet execute() throws JMException, ClassNotFoundException {
+  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     int populationSize, maxEvaluations, evaluations;
     SolutionSet population;
     Operator mutationOperator, crossoverOperator, selectionOperator;

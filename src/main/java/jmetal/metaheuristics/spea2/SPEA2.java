@@ -22,7 +22,7 @@
 package jmetal.metaheuristics.spea2;
 
 import jmetal.core.*;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.Ranking;
 import jmetal.util.Spea2Fitness;
 
@@ -55,9 +55,9 @@ public class SPEA2 extends Algorithm {
    *
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
    * as a result of the algorithm execution
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public SolutionSet execute() throws JMException, ClassNotFoundException {
+  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     int populationSize, archiveSize, maxEvaluations, evaluations;
     Operator crossoverOperator, mutationOperator, selectionOperator;
     SolutionSet solutionSet, archive, offSpringSolutionSet;

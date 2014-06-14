@@ -26,7 +26,7 @@ import jmetal.core.Solution;
 import jmetal.core.Variable;
 import jmetal.encodings.solutiontype.BinaryRealSolutionType;
 import jmetal.encodings.solutiontype.RealSolutionType;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 /**
  * Class representing problem OKA1
@@ -44,7 +44,7 @@ public class OKA1 extends Problem {
    *
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
-  public OKA1(String solutionType) throws JMException {
+  public OKA1(String solutionType) throws JMetalException {
     numberOfVariables_ = 2;
     numberOfObjectives_ = 2;
     numberOfConstraints_ = 0;
@@ -63,7 +63,7 @@ public class OKA1 extends Problem {
     } else if (solutionType.compareTo("Real") == 0) {
       solutionType_ = new RealSolutionType(this);
     } else {
-      throw new JMException("Error: solution type " + solutionType + " invalid");
+      throw new JMetalException("Error: solution type " + solutionType + " invalid");
     }
   }
 
@@ -71,9 +71,9 @@ public class OKA1 extends Problem {
    * Evaluates a solution
    *
    * @param solution The solution to evaluate
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public void evaluate(Solution solution) throws JMException {
+  public void evaluate(Solution solution) throws JMetalException {
     Variable[] decisionVariables = solution.getDecisionVariables();
 
     double[] fx = new double[numberOfObjectives_];

@@ -22,7 +22,7 @@
 package jmetal.core;
 
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.io.*;
 import java.util.*;
@@ -72,12 +72,12 @@ public class SolutionSet implements Serializable {
    * @return True If the <code>Solution</code> has been inserted, false
    * otherwise.
    */
-  public boolean add(Solution solution) throws JMException {
+  public boolean add(Solution solution) throws JMetalException {
     if (solutionsList_.size() == capacity_) {
       Configuration.logger_.severe("The population is full");
       Configuration.logger_.severe("Capacity is : " + capacity_);
       Configuration.logger_.severe("\t Size is: " + this.size());
-        throw new JMException("The population is full. Capacity is : " + capacity_ + "") ;
+        throw new JMetalException("The population is full. Capacity is : " + capacity_ + "") ;
     }
 
     solutionsList_.add(solution);
@@ -407,7 +407,7 @@ public class SolutionSet implements Serializable {
    * @param solutionSet SolutionSet to join with the current solutionSet.
    * @return The result of the union operation.
    */
-  public SolutionSet union(SolutionSet solutionSet) throws JMException {
+  public SolutionSet union(SolutionSet solutionSet) throws JMetalException {
     // Check the correct size. In development
     int newSize = this.size() + solutionSet.size();
     if (newSize < capacity_) {

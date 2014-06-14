@@ -29,7 +29,7 @@ import jmetal.encodings.solutiontype.IntSolutionType;
 import jmetal.encodings.variable.Binary;
 import jmetal.encodings.variable.BinaryReal;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.random.PseudoRandom;
 
 import java.util.Arrays;
@@ -74,9 +74,9 @@ public class BitFlipMutation extends Mutation {
    *
    * @param probability Mutation probability
    * @param solution    The solution to mutate
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public void doMutation(double probability, Solution solution) throws JMException {
+  public void doMutation(double probability, Solution solution) throws JMetalException {
     try {
       if ((solution.getType().getClass() == BinarySolutionType.class) ||
         (solution.getType().getClass() == BinaryRealSolutionType.class)) {
@@ -112,7 +112,7 @@ public class BitFlipMutation extends Mutation {
       );
       Class<String> cls = java.lang.String.class;
       String name = cls.getName();
-      throw new JMException("Exception in " + name + ".doMutation()");
+      throw new JMetalException("Exception in " + name + ".doMutation()");
     }
   }
 
@@ -121,9 +121,9 @@ public class BitFlipMutation extends Mutation {
    *
    * @param object An object containing a solution to mutate
    * @return An object containing the mutated solution
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public Object execute(Object object) throws JMException {
+  public Object execute(Object object) throws JMetalException {
     Solution solution = (Solution) object;
 
     if (!VALID_TYPES.contains(solution.getType().getClass())) {
@@ -133,7 +133,7 @@ public class BitFlipMutation extends Mutation {
 
       Class<String> cls = java.lang.String.class;
       String name = cls.getName();
-      throw new JMException("Exception in " + name + ".execute()");
+      throw new JMetalException("Exception in " + name + ".execute()");
     }
 
     doMutation(mutationProbability_, solution);

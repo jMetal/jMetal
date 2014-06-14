@@ -32,7 +32,7 @@ import jmetal.operators.selection.Selection;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.ProblemFactory;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.evaluator.SequentialSolutionSetEvaluator;
 import jmetal.util.evaluator.SolutionSetEvaluator;
 
@@ -52,7 +52,7 @@ public class NSGAIIPermutation_Settings extends Settings {
 
   /**
    * Constructor
-   * @throws JMException 
+   * @throws jmetal.util.JMetalException
    */
 
   public NSGAIIPermutation_Settings(String problem) {
@@ -61,7 +61,7 @@ public class NSGAIIPermutation_Settings extends Settings {
     Object[] problemParams = {"Permutation"};
     try {
       problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
-    } catch (JMException e) {
+    } catch (JMetalException e) {
       Configuration.logger_.log(Level.SEVERE, "Unable to get problem", e);
     }
 
@@ -77,9 +77,9 @@ public class NSGAIIPermutation_Settings extends Settings {
    * Configure NSGAII with user-defined parameter experiments.settings
    *
    * @return A NSGAII algorithm object
-   * @throws jmetal.util.JMException
+   * @throws jmetal.util.JMetalException
    */
-  public Algorithm configure() throws JMException {
+  public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
     Operator selection;
     Operator crossover;
@@ -123,7 +123,7 @@ public class NSGAIIPermutation_Settings extends Settings {
    * @return A NSGAII algorithm object
    */
   @Override
-  public Algorithm configure(Properties configuration) throws JMException {
+  public Algorithm configure(Properties configuration) throws JMetalException {
     Algorithm algorithm;
     Selection selection;
     Crossover crossover;

@@ -23,7 +23,7 @@ package jmetal.metaheuristics.moead;
 
 import jmetal.core.*;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.random.PseudoRandom;
 
 import java.io.BufferedReader;
@@ -205,7 +205,7 @@ public class pMOEAD extends Algorithm implements Runnable {
           // Evaluation
           parentThread_.problem_.evaluate(child);
 
-        } catch (JMException ex) {
+        } catch (JMetalException ex) {
           Logger.getLogger(pMOEAD.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -219,7 +219,7 @@ public class pMOEAD extends Algorithm implements Runnable {
         // STEP 2.5. Update of solutions
         try {
           updateOfSolutions(child, n, type);
-        } catch (JMException e) {
+        } catch (JMetalException e) {
           Configuration.logger_.log(Level.SEVERE, "Error", e);
         }
       }
@@ -229,7 +229,7 @@ public class pMOEAD extends Algorithm implements Runnable {
     Configuration.logger_.info("Time thread " + id_ + ": " + estimatedTime);
   }
 
-  public SolutionSet execute() throws JMException, ClassNotFoundException {
+  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     parentThread_ = this;
 
     evaluations_ = 0;
@@ -358,7 +358,7 @@ public class pMOEAD extends Algorithm implements Runnable {
   /**
    *
    */
-  public void initPopulation() throws JMException, ClassNotFoundException {
+  public void initPopulation() throws JMetalException, ClassNotFoundException {
     for (int i = 0; i < populationSize_; i++) {
       Solution newSolution = new Solution(problem_);
 
@@ -371,7 +371,7 @@ public class pMOEAD extends Algorithm implements Runnable {
   /**
    *
    */
-  void initIdealPoint() throws JMException, ClassNotFoundException {
+  void initIdealPoint() throws JMetalException, ClassNotFoundException {
     for (int i = 0; i < problem_.getNumberOfObjectives(); i++) {
       z_[i] = 1.0e+30;
       indArray_[i] = new Solution(problem_);
@@ -437,7 +437,7 @@ public class pMOEAD extends Algorithm implements Runnable {
    * @param id
    * @param type
    */
-  void updateOfSolutions(Solution individual, int id, int type) throws JMException {
+  void updateOfSolutions(Solution individual, int id, int type) throws JMetalException {
     // individual: child solution
     // id:   the id of current subproblem
     // type: update solutions in - neighborhood (1) or whole population (otherwise)
@@ -480,7 +480,7 @@ public class pMOEAD extends Algorithm implements Runnable {
     }
   }
 
-  double fitnessFunction(Solution individual, double[] lambda) throws JMException {
+  double fitnessFunction(Solution individual, double[] lambda) throws JMetalException {
     double fitness;
     fitness = 0.0;
 
@@ -503,7 +503,7 @@ public class pMOEAD extends Algorithm implements Runnable {
 
       fitness = maxFun;
     } else {
-      throw new JMException("pMOEAD.fitnessFunction: unknown type " + functionType_);
+      throw new JMetalException("pMOEAD.fitnessFunction: unknown type " + functionType_);
     }
     return fitness;
   }

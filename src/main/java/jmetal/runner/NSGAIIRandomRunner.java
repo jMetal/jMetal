@@ -31,7 +31,7 @@ import jmetal.problems.Kursawe;
 import jmetal.problems.ProblemFactory;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.evaluator.SequentialSolutionSetEvaluator;
 import jmetal.util.evaluator.SolutionSetEvaluator;
 import jmetal.util.offspring.DifferentialEvolutionOffspring;
@@ -67,7 +67,7 @@ public class NSGAIIRandomRunner {
 
   /**
    * @param args Command line arguments.
-   * @throws jmetal.util.JMException
+   * @throws jmetal.util.JMetalException
    * @throws java.io.IOException
    * @throws SecurityException Usage: three options
    *                           - jmetal.metaheuristics.nsgaII.NSGAII_main
@@ -75,7 +75,7 @@ public class NSGAIIRandomRunner {
    *                           - jmetal.metaheuristics.nsgaII.NSGAII_main problemName paretoFrontFile
    */
   public static void main(String[] args) throws
-    JMException,
+    JMetalException,
     SecurityException,
     IOException,
     ClassNotFoundException {

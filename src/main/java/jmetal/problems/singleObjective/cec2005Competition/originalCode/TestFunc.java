@@ -46,7 +46,7 @@
 
 package jmetal.problems.singleObjective.cec2005Competition.originalCode;
 
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 public abstract class TestFunc {
 
@@ -67,7 +67,7 @@ public abstract class TestFunc {
   }
 
   // Function body to be defined in the child classes
-  public abstract double f(double[] x) throws JMException;
+  public abstract double f(double[] x) throws JMetalException;
 
   // Property functions common for all child classes
   public int dimension() {

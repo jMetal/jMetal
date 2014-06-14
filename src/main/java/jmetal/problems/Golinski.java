@@ -25,7 +25,7 @@ import jmetal.core.Problem;
 import jmetal.core.Solution;
 import jmetal.encodings.solutiontype.BinaryRealSolutionType;
 import jmetal.encodings.solutiontype.RealSolutionType;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 /**
  * Class representing problem Golinski.
@@ -47,7 +47,7 @@ public class Golinski extends Problem {
    *
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
-  public Golinski(String solutionType) throws JMException {
+  public Golinski(String solutionType) throws JMetalException {
     numberOfVariables_ = 7;
     numberOfObjectives_ = 2;
     numberOfConstraints_ = 11;
@@ -65,7 +65,7 @@ public class Golinski extends Problem {
     } else if (solutionType.compareTo("Real") == 0) {
       solutionType_ = new RealSolutionType(this);
     } else {
-      throw new JMException("Error: solution type " + solutionType + " invalid");
+      throw new JMetalException("Error: solution type " + solutionType + " invalid");
     }
   }
 
@@ -73,9 +73,9 @@ public class Golinski extends Problem {
    * Evaluates a solution.
    *
    * @param solution The solution to evaluate.
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public void evaluate(Solution solution) throws JMException {
+  public void evaluate(Solution solution) throws JMetalException {
     double x1, x2, x3, x4, x5, x6, x7;
     x1 = solution.getDecisionVariables()[0].getValue();
     x2 = solution.getDecisionVariables()[1].getValue();
@@ -100,9 +100,9 @@ public class Golinski extends Problem {
    * Evaluates the constraint overhead of a solution
    *
    * @param solution The solution
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public void evaluateConstraints(Solution solution) throws JMException {
+  public void evaluateConstraints(Solution solution) throws JMetalException {
     double[] constraint = new double[numberOfConstraints_];
     double x1, x2, x3, x4, x5, x6, x7;
 

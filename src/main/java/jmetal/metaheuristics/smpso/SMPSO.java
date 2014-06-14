@@ -24,7 +24,7 @@ import jmetal.core.*;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.qualityIndicator.fastHypervolume.FastHypervolumeArchive;
 import jmetal.util.Distance;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.archive.Archive;
 import jmetal.util.archive.CrowdingArchive;
 import jmetal.util.comparator.CrowdingDistanceComparator;
@@ -200,9 +200,9 @@ public class SMPSO extends Algorithm {
    *
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
    * as a result of the algorithm execution
-   * @throws jmetal.util.JMException
+   * @throws jmetal.util.JMetalException
    */
-  public SolutionSet execute() throws JMException, ClassNotFoundException, IOException {
+  public SolutionSet execute() throws JMetalException, ClassNotFoundException, IOException {
     initialization();
     createInitialSwarm() ;
     evaluateSwarm();
@@ -253,7 +253,7 @@ public class SMPSO extends Algorithm {
     }
   }
 
-  protected void createInitialSwarm() throws ClassNotFoundException, JMException {
+  protected void createInitialSwarm() throws ClassNotFoundException, JMetalException {
     swarm_ = new SolutionSet(swarmSize_);
 
     Solution newSolution;
@@ -263,7 +263,7 @@ public class SMPSO extends Algorithm {
     }
   }
 
-  protected void evaluateSwarm() throws JMException {
+  protected void evaluateSwarm() throws JMetalException {
     evaluator_.evaluate(swarm_, problem_);
   }
 
@@ -287,7 +287,7 @@ public class SMPSO extends Algorithm {
     } else if (leaders_ instanceof FastHypervolumeArchive) {
       ((FastHypervolumeArchive)leaders_).computeHVContribution();
     } else {
-      throw new JMException("Invalid archive type") ;
+      throw new JMetalException("Invalid archive type") ;
     }
   }
 
@@ -295,7 +295,7 @@ public class SMPSO extends Algorithm {
     return iterations_ == maxIterations_ ;
   }
 
-  protected void computeSpeed(int iter, int miter) throws JMException, IOException {
+  protected void computeSpeed(int iter, int miter) throws JMetalException, IOException {
     double r1, r2, c1, c2;
     double wmax, wmin ;
     XReal bestGlobal;

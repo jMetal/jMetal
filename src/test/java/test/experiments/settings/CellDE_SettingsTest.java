@@ -24,7 +24,7 @@ import jmetal.core.Algorithm;
 import jmetal.experiments.Settings;
 import jmetal.experiments.settings.CellDE_Settings;
 import jmetal.operators.crossover.DifferentialEvolutionCrossover;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -55,7 +55,7 @@ public class CellDE_SettingsTest  {
   }
 
   @Test
-  public void testSettings() throws JMException {
+  public void testSettings() throws JMetalException {
     double epsilon = 0.000000000000001 ;
     Settings cellDESettings = new CellDE_Settings("Fonseca");
     Algorithm algorithm = cellDESettings.configure() ;
@@ -74,7 +74,7 @@ public class CellDE_SettingsTest  {
   }
 
   @Test
-  public void testSettings2() throws JMException {
+  public void testSettings2() throws JMetalException {
     double epsilon = 0.000000000000001 ;
     Settings cellDESettings = new CellDE_Settings("Fonseca");
     Algorithm algorithm = cellDESettings.configure(configuration_) ;

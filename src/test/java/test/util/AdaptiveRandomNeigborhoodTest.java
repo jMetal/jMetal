@@ -25,7 +25,7 @@ import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
 import jmetal.problems.singleObjective.Sphere;
 import jmetal.util.AdaptiveRandomNeighborhood;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -65,7 +65,7 @@ public class AdaptiveRandomNeigborhoodTest {
   }
 
   @Test
-  public void testSolutionSetWithOneElement() throws JMException {
+  public void testSolutionSetWithOneElement() throws JMetalException {
     SolutionSet solutionSet = new SolutionSet(1) ;
     Solution solution = new Solution(1) ;
     solution.setObjective(0, 1.0);
@@ -76,7 +76,7 @@ public class AdaptiveRandomNeigborhoodTest {
   }
 
   @Test
-  public void testSolutionSetWithThreeElements() throws JMException {
+  public void testSolutionSetWithThreeElements() throws JMetalException {
     SolutionSet solutionSet = new SolutionSet(3) ;
     Solution solution = new Solution(1) ;
     solution.setObjective(0, 1.0);
@@ -96,7 +96,7 @@ public class AdaptiveRandomNeigborhoodTest {
   }
 
   @Test
-  public void testRecomputeNeighboursWithSolutionSetWithThreeElements() throws JMException {
+  public void testRecomputeNeighboursWithSolutionSetWithThreeElements() throws JMetalException {
     SolutionSet solutionSet = new SolutionSet(3) ;
     Solution solution = new Solution(1) ;
     solution.setObjective(0, 1.0);
@@ -116,8 +116,8 @@ public class AdaptiveRandomNeigborhoodTest {
     assertEquals("AdaptiveRandomNeigborhoodTest.testRecomputeNeighboursWithSolutionSetWithThreeElements", 2, (int)(list.get(2).get(0)));
   }
 
-  @Test(expected=JMException.class)
-  public void testCatchExceptionWhenRequestingAnNonExistingNeighbor() throws JMException{
+  @Test(expected=JMetalException.class)
+  public void testCatchExceptionWhenRequestingAnNonExistingNeighbor() throws JMetalException {
     SolutionSet solutionSet = new SolutionSet(3) ;
     Solution solution = new Solution(1) ;
     solution.setObjective(0, 1.0);
@@ -130,7 +130,7 @@ public class AdaptiveRandomNeigborhoodTest {
   }
 
   @Test
-  public void testUsingPopulationOf100Individuals() throws ClassNotFoundException, JMException {
+  public void testUsingPopulationOf100Individuals() throws ClassNotFoundException, JMetalException {
     int solutionSetSize = 100 ;
     Problem problem = new Sphere("Real", 10) ;
     SolutionSet solutionSet = new SolutionSet(solutionSetSize) ;

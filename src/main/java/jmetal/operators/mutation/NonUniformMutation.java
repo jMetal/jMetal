@@ -26,7 +26,7 @@ import jmetal.core.SolutionType;
 import jmetal.encodings.solutiontype.ArrayRealSolutionType;
 import jmetal.encodings.solutiontype.RealSolutionType;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.random.PseudoRandom;
 import jmetal.util.wrapper.XReal;
 
@@ -90,9 +90,9 @@ public class NonUniformMutation extends Mutation {
    *
    * @param probability Mutation probability
    * @param solution    The solution to mutate
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public void doMutation(double probability, Solution solution) throws JMException {
+  public void doMutation(double probability, Solution solution) throws JMetalException {
     XReal x = new XReal(solution);
     for (int var = 0; var < solution.getDecisionVariables().length; var++) {
       if (PseudoRandom.randDouble() < probability) {
@@ -140,9 +140,9 @@ public class NonUniformMutation extends Mutation {
    *
    * @param object An object containing a solution
    * @return An object containing the mutated solution
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public Object execute(Object object) throws JMException {
+  public Object execute(Object object) throws JMetalException {
     Solution solution = (Solution) object;
 
     if (!VALID_TYPES.contains(solution.getType().getClass())) {
@@ -151,7 +151,7 @@ public class NonUniformMutation extends Mutation {
 
       Class<String> cls = java.lang.String.class;
       String name = cls.getName();
-      throw new JMException("Exception in " + name + ".execute()");
+      throw new JMetalException("Exception in " + name + ".execute()");
     } // if  
 
     if (getParameter("currentIteration") != null) {

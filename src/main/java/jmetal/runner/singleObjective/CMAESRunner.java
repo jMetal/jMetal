@@ -25,7 +25,7 @@ import jmetal.core.SolutionSet;
 import jmetal.metaheuristics.singleObjective.cmaes.CMAES;
 import jmetal.problems.singleObjective.Rosenbrock;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.io.IOException;
 
@@ -34,7 +34,7 @@ import java.io.IOException;
  */
 public class CMAESRunner {
 
-  public static void main(String[] args) throws JMException, ClassNotFoundException, IOException {
+  public static void main(String[] args) throws JMetalException, ClassNotFoundException, IOException {
     int numberOfVariables = 20;
     int populationSize = 10;
     int maxEvaluations = 1000000;

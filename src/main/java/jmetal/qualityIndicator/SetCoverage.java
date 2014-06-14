@@ -25,7 +25,7 @@ import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
 import jmetal.qualityIndicator.util.MetricsUtil;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.comparator.DominanceComparator;
 
 import java.util.Comparator;
@@ -70,9 +70,9 @@ public class SetCoverage {
    * @param file1
    * @param file2
    * @return The value of the set coverage
-   * @throws JMException 
+   * @throws jmetal.util.JMetalException
    */
-  public double setCoverage(String file1, String file2) throws JMException {
+  public double setCoverage(String file1, String file2) throws JMetalException {
     MetricsUtil utils = new MetricsUtil();
     double[][]front1 = utils.readFront(file1) ;
     double[][]front2 = utils.readFront(file2) ;
@@ -98,7 +98,7 @@ public class SetCoverage {
     return result ;
   }
 
-  public SolutionSet transformArraysToSolutionSet(double[][] array) throws JMException {
+  public SolutionSet transformArraysToSolutionSet(double[][] array) throws JMetalException {
     int solutionSetSize = array.length ;
     int numberOfObjectives = array[0].length ;
     SolutionSet solutionSet = new SolutionSet(solutionSetSize) ;
@@ -115,9 +115,9 @@ public class SetCoverage {
     return solutionSet ;
   }
 
-  public static void main(String args[]) throws JMException {
+  public static void main(String args[]) throws JMetalException {
     if (args.length < 2) {
-      throw new JMException(
+      throw new JMetalException(
         "Error using Hypervolume. Usage: \n java jmetal.qualityIndicator.SetCoverage " +
           "<SolutionFrontFile1> " +
           "<SolutionFrontFile2> " + "<getNumberOfObjectives>");

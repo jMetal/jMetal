@@ -28,7 +28,7 @@ import jmetal.encodings.solutiontype.BinaryRealSolutionType;
 import jmetal.encodings.solutiontype.RealSolutionType;
 import jmetal.problems.singleObjective.cec2005Competition.originalCode.Benchmark;
 import jmetal.problems.singleObjective.cec2005Competition.originalCode.TestFunc;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 /**
  * Class representing a Sphere problem.
@@ -43,7 +43,7 @@ public class CEC2005Problem extends Problem {
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
   public CEC2005Problem(String solutionType, int problemID, int numberOfVariables)
-    throws JMException {
+    throws JMetalException {
     numberOfVariables_ = numberOfVariables;
     numberOfObjectives_ = 1;
     numberOfConstraints_ = 0;
@@ -106,7 +106,7 @@ public class CEC2005Problem extends Problem {
         llimit = 1;
         break;
       default:
-        throw new JMException("Invalid problem value");
+        throw new JMetalException("Invalid problem value");
     }
 
     for (int var = 0; var < numberOfVariables_; var++) {
@@ -119,7 +119,7 @@ public class CEC2005Problem extends Problem {
     } else if (solutionType.compareTo("Real") == 0) {
       solutionType_ = new RealSolutionType(this);
     } else {
-      throw new JMException("Error: solution type " + solutionType + " invalid");
+      throw new JMetalException("Error: solution type " + solutionType + " invalid");
     }
   }
 
@@ -127,9 +127,9 @@ public class CEC2005Problem extends Problem {
    * Evaluates a solution
    *
    * @param solution The solution to evaluate
-   * @throws jmetal.util.JMException
+   * @throws jmetal.util.JMetalException
    */
-  public void evaluate(Solution solution) throws JMException {
+  public void evaluate(Solution solution) throws JMetalException {
     Variable[] decisionVariables = solution.getDecisionVariables();
     double[] x = new double[decisionVariables.length];
 

@@ -22,7 +22,7 @@ package jmetal.qualityIndicator;
 
 import jmetal.core.SolutionSet;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -133,11 +133,11 @@ public class R2 {
    * objectives 2) a file containing the reference point / the Optimal Pareto
    * front for normalizing 3) the file containing the weight vector
    *
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public static void main(String args[]) throws JMException {
+  public static void main(String args[]) throws JMetalException {
     if (args.length < 3) {
-      throw new JMException(
+      throw new JMetalException(
         "Error using R2. Usage: \n java jmetal.qualityIndicator.Hypervolume "
           + "<SolutionFrontFile> " + "<TrueFrontFile> "
           + "<getNumberOfObjectives>");

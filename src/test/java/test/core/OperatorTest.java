@@ -30,7 +30,7 @@ import jmetal.problems.Water;
 import jmetal.problems.ZDT.ZDT1;
 import jmetal.problems.ZDT.ZDT5;
 import jmetal.problems.singleObjective.OneMax;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -47,7 +47,7 @@ public class OperatorTest {
   @Before
   public void startup() throws ClassNotFoundException {
     operator_ = new Operator() {
-      @Override public Object execute(Object object) throws JMException {
+      @Override public Object execute(Object object) throws JMetalException {
         return null;
       }
     } ;

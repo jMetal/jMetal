@@ -23,7 +23,7 @@ package jmetal.metaheuristics.cellde;
 
 import jmetal.core.*;
 import jmetal.util.Distance;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.Neighborhood;
 import jmetal.util.Ranking;
 import jmetal.util.comparator.CrowdingComparator;
@@ -62,10 +62,10 @@ public class CellDE extends Algorithm {
    *
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
    * as a result of the algorithm execution
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    * @throws ClassNotFoundException
    */
-  public SolutionSet execute() throws JMException, ClassNotFoundException {
+  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     int populationSize, archiveSize, maxEvaluations, evaluations, feedBack;
     Operator crossoverOperator, selectionOperator;
     SolutionSet currentSolutionSet;

@@ -21,7 +21,7 @@
 
 package jmetal.qualityIndicator;
 
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.util.Arrays;
 
@@ -142,11 +142,11 @@ public class GeneralizedSpread {
    * 1) the name of the file containing the front,  
    * 2) the name of the file containig the true Pareto front
    * 3) the number of objectives
-   * @throws JMException 
+   * @throws jmetal.util.JMetalException
    */
-  public static void main(String args[]) throws JMException {
+  public static void main(String args[]) throws JMetalException {
     if (args.length < 3) {
-      throw new JMException("Error using GeneralizedSpread. " +
+      throw new JMetalException("Error using GeneralizedSpread. " +
           "Usage: \n java GeneralizedSpread" +
           " <SolutionFrontFile> " +
           " <TrueFrontFile> + <getNumberOfObjectives>") ;

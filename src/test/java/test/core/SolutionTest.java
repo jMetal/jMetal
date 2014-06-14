@@ -24,7 +24,7 @@ package test.core;
 import jmetal.core.Problem;
 import jmetal.core.Solution;
 import jmetal.problems.Kursawe;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -38,7 +38,7 @@ import static junit.framework.Assert.assertFalse;
 public class SolutionTest {
 
   @Test
-  public void setDecisionVariablesTest() throws JMException, ClassNotFoundException {
+  public void setDecisionVariablesTest() throws JMetalException, ClassNotFoundException {
     Problem problem = new Kursawe("Real", 3) ;
     Solution solution1 = new Solution(problem) ;
     Solution solution2 = new Solution(problem) ;

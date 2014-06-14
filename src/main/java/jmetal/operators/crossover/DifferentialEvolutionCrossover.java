@@ -26,7 +26,7 @@ import jmetal.core.SolutionType;
 import jmetal.encodings.solutiontype.ArrayRealSolutionType;
 import jmetal.encodings.solutiontype.RealSolutionType;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.random.PseudoRandom;
 import jmetal.util.wrapper.XReal;
 
@@ -126,7 +126,7 @@ public class DifferentialEvolutionCrossover extends Crossover {
    * @param object An object containing an array of three parents
    * @return An object containing the offSprings
    */
-  public Object execute(Object object) throws JMException {
+  public Object execute(Object object) throws JMetalException {
     Object[] parameters = (Object[]) object;
     Solution current = (Solution) parameters[0];
     Solution[] parent = (Solution[]) parameters[1];
@@ -146,7 +146,7 @@ public class DifferentialEvolutionCrossover extends Crossover {
 
       Class<String> cls = java.lang.String.class;
       String name = cls.getName();
-      throw new JMException("Exception in " + name + ".execute()");
+      throw new JMetalException("Exception in " + name + ".execute()");
     }
 
     int jrand;
@@ -276,7 +276,7 @@ public class DifferentialEvolutionCrossover extends Crossover {
         " unknown DE variant (" + variant_ + ")");
       Class<String> cls = java.lang.String.class;
       String name = cls.getName();
-      throw new JMException("Exception in " + name + ".execute()");
+      throw new JMetalException("Exception in " + name + ".execute()");
     }
     return child;
   }
@@ -319,7 +319,7 @@ public class DifferentialEvolutionCrossover extends Crossover {
 
     public Builder cr(double cr) {
       if ((cr < 0) || (cr > 1.0)) {
-        throw new JMException("Invalid CR value: " + cr ) ;
+        throw new JMetalException("Invalid CR value: " + cr ) ;
       } else {
         cr_ = cr ;
       }
@@ -329,7 +329,7 @@ public class DifferentialEvolutionCrossover extends Crossover {
 
     public Builder f(double f) {
       if ((f < 0) || (f > 1.0)) {
-        throw new JMException("Invalid F value: " + f) ;
+        throw new JMetalException("Invalid F value: " + f) ;
       } else {
         f_ = f;
       }
@@ -339,7 +339,7 @@ public class DifferentialEvolutionCrossover extends Crossover {
 
     public Builder k(double k) {
       if ((k < 0) || (k > 1.0)) {
-        throw new JMException("Invalid K value: " + k) ;
+        throw new JMetalException("Invalid K value: " + k) ;
       } else {
         k_ = k;
       }
@@ -352,7 +352,7 @@ public class DifferentialEvolutionCrossover extends Crossover {
       if (validVariants.contains(variant)) {
         variant_ = variant ;
       } else {
-        throw new JMException("Invalid DE variant: " + variant) ;
+        throw new JMetalException("Invalid DE variant: " + variant) ;
       }
 
       return this ;

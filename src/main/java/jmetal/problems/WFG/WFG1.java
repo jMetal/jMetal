@@ -24,7 +24,7 @@ package jmetal.problems.WFG;
 import jmetal.core.Solution;
 import jmetal.core.Variable;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.util.logging.Level;
 
@@ -52,7 +52,7 @@ public class WFG1 extends WFG {
    *
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
-  public WFG1(String solutionType) throws ClassNotFoundException, JMException {
+  public WFG1(String solutionType) throws ClassNotFoundException, JMetalException {
     this(solutionType, 2, 4, 2);
   }
 
@@ -65,7 +65,7 @@ public class WFG1 extends WFG {
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
   public WFG1(String solutionType, Integer k, Integer l, Integer M)
-    throws ClassNotFoundException, JMException {
+    throws ClassNotFoundException, JMetalException {
     super(solutionType, k, l, M);
     problemName_ = "WFG1";
 
@@ -94,7 +94,7 @@ public class WFG1 extends WFG {
     y = t2(y, k_);
     try {
       y = t3(y);
-    } catch (JMException e) {
+    } catch (JMetalException e) {
       Configuration.logger_.log(Level.SEVERE, "Error", e);
     }
     y = t4(y, k_, M_);
@@ -144,9 +144,9 @@ public class WFG1 extends WFG {
   /**
    * WFG1 t3 transformation
    *
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public float[] t3(float[] z) throws JMException {
+  public float[] t3(float[] z) throws JMetalException {
     float[] result = new float[z.length];
 
     for (int i = 0; i < z.length; i++) {
@@ -189,9 +189,9 @@ public class WFG1 extends WFG {
    * Evaluates a solution
    *
    * @param solution The solution to evaluate
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public final void evaluate(Solution solution) throws JMException {
+  public final void evaluate(Solution solution) throws JMetalException {
     float[] variables = new float[getNumberOfVariables()];
     Variable[] dv = solution.getDecisionVariables();
 

@@ -28,7 +28,7 @@ import jmetal.experiments.Settings;
 import jmetal.experiments.SettingsFactory;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.fileOutput.DefaultFileOutputContext;
 import jmetal.util.fileOutput.FileOutputContext;
 import jmetal.util.fileOutput.SolutionSetOutput;
@@ -48,7 +48,7 @@ public class Runner {
 
   /**
    * @param args Command line arguments.
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    * @throws IOException
    * @throws SecurityException      Usage: three options
    *                                - jmetal.experiments.Main algorithmName
@@ -58,7 +58,7 @@ public class Runner {
    */
 
   public static void main(String[] args) throws
-    JMException, SecurityException, IOException,
+    JMetalException, SecurityException, IOException,
     IllegalArgumentException, IllegalAccessException,
     ClassNotFoundException {
     Algorithm algorithm;
@@ -82,7 +82,7 @@ public class Runner {
         "a) jmetal.experiments.Main algorithmName \n" +
         "b) jmetal.experiments.Main algorithmName problemName\n" +
         "c) jmetal.experiments.Main algorithmName problemName paretoFrontFile");
-      throw new JMException("Sintax error when invoking the program");
+      throw new JMetalException("Sintax error when invoking the program");
     } else if (args.length == 1) {
       algorithmName = args[0];
       Object[] settingsParams = {problemName};

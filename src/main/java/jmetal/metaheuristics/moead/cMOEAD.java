@@ -23,7 +23,7 @@ package jmetal.metaheuristics.moead;
 
 import jmetal.core.*;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.comparator.IConstraintViolationComparator;
 import jmetal.util.comparator.ViolationThresholdComparator;
 import jmetal.util.random.PseudoRandom;
@@ -101,7 +101,7 @@ public class cMOEAD extends Algorithm {
 
   } // DMOEA
 
-  public SolutionSet execute() throws JMException, ClassNotFoundException {
+  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     int maxEvaluations;
 
     evaluations_ = 0;
@@ -279,7 +279,7 @@ public class cMOEAD extends Algorithm {
   /**
    *
    */
-  public void initPopulation() throws JMException, ClassNotFoundException {
+  public void initPopulation() throws JMetalException, ClassNotFoundException {
     for (int i = 0; i < populationSize_; i++) {
       Solution newSolution = new Solution(problem_);
 
@@ -293,7 +293,7 @@ public class cMOEAD extends Algorithm {
   /**
    *
    */
-  void initIdealPoint() throws JMException, ClassNotFoundException {
+  void initIdealPoint() throws JMetalException, ClassNotFoundException {
     for (int i = 0; i < problem_.getNumberOfObjectives(); i++) {
       z_[i] = 1.0e+30;
       indArray_[i] = new Solution(problem_);
@@ -362,7 +362,7 @@ public class cMOEAD extends Algorithm {
    * @param id
    * @param type
    */
-  void updateProblem(Solution individual, int id, int type) throws JMException {
+  void updateProblem(Solution individual, int id, int type) throws JMetalException {
     // indiv: child solution
     // id:   the id of current subproblem
     // type: update solutions in - neighborhood (1) or whole population (otherwise)
@@ -418,7 +418,7 @@ public class cMOEAD extends Algorithm {
     }
   }
 
-  double fitnessFunction(Solution individual, double[] lambda) throws JMException {
+  double fitnessFunction(Solution individual, double[] lambda) throws JMetalException {
     double fitness;
     fitness = 0.0;
 
@@ -442,7 +442,7 @@ public class cMOEAD extends Algorithm {
       fitness = maxFun;
     }
     else {
-      throw new JMException("cMOEAD.fitnessFunction: unknown type " + functionType_);
+      throw new JMetalException("cMOEAD.fitnessFunction: unknown type " + functionType_);
     }
     return fitness;
   }

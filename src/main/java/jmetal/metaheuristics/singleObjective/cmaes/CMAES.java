@@ -22,7 +22,7 @@ package jmetal.metaheuristics.singleObjective.cmaes;
 
 import jmetal.core.*;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.comparator.ObjectiveComparator;
 import jmetal.util.random.PseudoRandom;
 
@@ -207,7 +207,7 @@ public class CMAES extends Algorithm {
     arx = new double[lambda][N];
   }
 
-  private SolutionSet samplePopulation() throws JMException, ClassNotFoundException {
+  private SolutionSet samplePopulation() throws JMetalException, ClassNotFoundException {
 
     int N = problem_.getNumberOfVariables();
     double[] artmp = new double[N];
@@ -233,7 +233,7 @@ public class CMAES extends Algorithm {
   }
 
   private SolutionSet genoPhenoTransformation(double[][] popx)
-    throws JMException, ClassNotFoundException {
+    throws JMetalException, ClassNotFoundException {
 
     SolutionSet population_ = new SolutionSet(populationSize);
     for (int i = 0; i < populationSize; i++) {
@@ -247,7 +247,7 @@ public class CMAES extends Algorithm {
 
   }
 
-  private boolean isFeasible(Solution solution) throws JMException {
+  private boolean isFeasible(Solution solution) throws JMetalException {
 
     boolean res = true;
     Variable[] x = solution.getDecisionVariables();
@@ -262,7 +262,7 @@ public class CMAES extends Algorithm {
 
   }
 
-  private Solution resampleSingle(int iNk) throws JMException, ClassNotFoundException {
+  private Solution resampleSingle(int iNk) throws JMetalException, ClassNotFoundException {
     for (int i = 0; i < problem_.getNumberOfVariables(); i++) {
       if (arx[iNk][i] > problem_.getUpperLimit(i)) {
         arx[iNk][i] = problem_.getUpperLimit(i);
@@ -274,7 +274,7 @@ public class CMAES extends Algorithm {
     return genoPhenoTransformation(arx[iNk]);
   }
 
-  private Solution genoPhenoTransformation(double[] x) throws JMException, ClassNotFoundException {
+  private Solution genoPhenoTransformation(double[] x) throws JMetalException, ClassNotFoundException {
 
     Solution solution = new Solution(problem_);
     for (int i = 0; i < problem_.getNumberOfVariables(); i++) {
@@ -293,7 +293,7 @@ public class CMAES extends Algorithm {
 
   } // storeBest
 
-  private void updateDistribution() throws JMException {
+  private void updateDistribution() throws JMetalException {
 
     int N = problem_.getNumberOfVariables();
     int lambda = populationSize;
@@ -435,7 +435,7 @@ public class CMAES extends Algorithm {
     }
   }
 
-  public SolutionSet execute() throws JMException, ClassNotFoundException {
+  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
 
     //Read the parameters
     populationSize = (Integer) getInputParameter("populationSize");

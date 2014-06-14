@@ -23,7 +23,7 @@ package jmetal.metaheuristics.mocell;
 
 import jmetal.core.*;
 import jmetal.util.Distance;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.Neighborhood;
 import jmetal.util.Ranking;
 import jmetal.util.archive.CrowdingArchive;
@@ -54,9 +54,9 @@ public class MOCell extends Algorithm {
   /**
    * Execute the algorithm
    *
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public SolutionSet execute() throws JMException, ClassNotFoundException {
+  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     //Init the parameters
     int populationSize, archiveSize, maxEvaluations, evaluations;
     Operator mutationOperator, crossoverOperator, selectionOperator;

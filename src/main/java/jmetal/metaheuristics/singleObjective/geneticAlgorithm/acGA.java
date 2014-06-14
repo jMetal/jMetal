@@ -24,7 +24,7 @@ package jmetal.metaheuristics.singleObjective.geneticAlgorithm;
 import jmetal.core.*;
 import jmetal.operators.selection.BestSolutionSelection;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.Neighborhood;
 import jmetal.util.comparator.ObjectiveComparator;
 
@@ -60,9 +60,9 @@ public class acGA extends Algorithm {
    * Runs of the acGA algorithm.
    *
    * @return a <code>SolutionSet</code> that contains the best found solution
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public SolutionSet execute() throws JMException, ClassNotFoundException {
+  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     int populationSize, maxEvaluations, evaluations;
     Operator mutationOperator;
     Operator crossoverOperator;

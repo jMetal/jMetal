@@ -24,7 +24,7 @@ import jmetal.experiments.Settings;
 import jmetal.experiments.settings.GDE3_Settings;
 import jmetal.metaheuristics.gde3.GDE3;
 import jmetal.operators.crossover.DifferentialEvolutionCrossover;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -54,7 +54,7 @@ public class GDE3_SettingsTest {
   }
 
   @Test
-  public void test() throws JMException {
+  public void test() throws JMetalException {
     double epsilon = 0.000000000000001;
     GDE3_Settings GDE3Settings = new GDE3_Settings("Fonseca");
     GDE3 algorithm = (GDE3) GDE3Settings.configure();
@@ -70,7 +70,7 @@ public class GDE3_SettingsTest {
   }
 
   @Test
-  public void test2() throws JMException {
+  public void test2() throws JMetalException {
     double epsilon = 0.000000000000001;
     Settings GDE3Settings = new GDE3_Settings("Fonseca");
     GDE3 algorithm = (GDE3) GDE3Settings.configure(configuration_);

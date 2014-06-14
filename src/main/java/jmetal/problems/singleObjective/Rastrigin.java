@@ -25,7 +25,7 @@ import jmetal.core.Solution;
 import jmetal.core.Variable;
 import jmetal.encodings.solutiontype.BinaryRealSolutionType;
 import jmetal.encodings.solutiontype.RealSolutionType;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 public class Rastrigin extends Problem {
 
@@ -42,7 +42,7 @@ public class Rastrigin extends Problem {
    * @param solutionType      The solution type must "Real" or "BinaryReal".
    */
   public Rastrigin(String solutionType, Integer numberOfVariables)
-    throws ClassNotFoundException, JMException {
+    throws ClassNotFoundException, JMetalException {
     numberOfVariables_ = numberOfVariables;
     numberOfObjectives_ = 1;
     numberOfConstraints_ = 0;
@@ -60,7 +60,7 @@ public class Rastrigin extends Problem {
     } else if (solutionType.compareTo("Real") == 0) {
       solutionType_ = new RealSolutionType(this);
     } else {
-      throw new JMException("Error: solution type " + solutionType + " invalid");
+      throw new JMetalException("Error: solution type " + solutionType + " invalid");
     }
   } // Rastrigin
 
@@ -68,9 +68,9 @@ public class Rastrigin extends Problem {
    * Evaluates a solution
    *
    * @param solution The solution to evaluate
-   * @throws jmetal.util.JMException
+   * @throws jmetal.util.JMetalException
    */
-  public void evaluate(Solution solution) throws JMException {
+  public void evaluate(Solution solution) throws JMetalException {
     Variable[] decisionVariables = solution.getDecisionVariables();
 
     double result = 0.0;

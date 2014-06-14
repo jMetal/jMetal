@@ -28,7 +28,7 @@ import jmetal.operators.mutation.Mutation;
 import jmetal.operators.mutation.NonUniformMutation;
 import jmetal.operators.mutation.UniformMutation;
 import jmetal.problems.ProblemFactory;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.util.HashMap;
 import java.util.Properties;
@@ -45,9 +45,9 @@ public class OMOPSO_Settings extends Settings{
 
   /**
    * Constructor
-   * @throws JMException 
+   * @throws jmetal.util.JMetalException
    */
-  public OMOPSO_Settings(String problem) throws JMException {
+  public OMOPSO_Settings(String problem) throws JMetalException {
     super(problem) ;
     
     Object [] problemParams = {"Real"};
@@ -65,9 +65,9 @@ public class OMOPSO_Settings extends Settings{
    * Configure OMOPSO with user-defined parameter experiments.settings
    *
    * @return A OMOPSO algorithm object
-   * @throws jmetal.util.JMException
+   * @throws jmetal.util.JMetalException
    */
-  public Algorithm configure() throws JMException {
+  public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
     Mutation uniformMutation;
     Mutation nonUniformMutation;
@@ -106,7 +106,7 @@ public class OMOPSO_Settings extends Settings{
    * @return A dMOPSO algorithm object
    */
   @Override
-  public Algorithm configure(Properties configuration) throws JMException {
+  public Algorithm configure(Properties configuration) throws JMetalException {
     swarmSize_ = Integer.parseInt(configuration.getProperty("swarmSize",String.valueOf(swarmSize_)));
     maxIterations_  = Integer.parseInt(configuration.getProperty("maxIterations",String.valueOf(maxIterations_)));
     archiveSize_ = Integer.parseInt(configuration.getProperty("archiveSize", String.valueOf(archiveSize_)));

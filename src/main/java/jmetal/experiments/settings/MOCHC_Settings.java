@@ -29,7 +29,7 @@ import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.ProblemFactory;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.util.HashMap;
 import java.util.Properties;
@@ -51,7 +51,7 @@ public class MOCHC_Settings extends Settings {
   private double crossoverProbability_;
   private double mutationProbability_;
 
-  public MOCHC_Settings(String problemName) throws JMException {
+  public MOCHC_Settings(String problemName) throws JMetalException {
     super(problemName);
 
     Object[] problemParams = {"Binary"};
@@ -72,9 +72,9 @@ public class MOCHC_Settings extends Settings {
    * Configure MOCHC with user-defined parameter experiments.settings
    *
    * @return A MOCHC algorithm object
-   * @throws jmetal.util.JMException
+   * @throws jmetal.util.JMetalException
    */
-  public Algorithm configure() throws JMException {
+  public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
     Operator crossover;
     Operator mutation;
@@ -124,7 +124,7 @@ public class MOCHC_Settings extends Settings {
    * @return A MOCHC algorithm object
    */
   @Override
-  public Algorithm configure(Properties configuration) throws JMException {
+  public Algorithm configure(Properties configuration) throws JMetalException {
     populationSize_ = Integer
       .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize_)));
     maxEvaluations_ = Integer

@@ -22,7 +22,7 @@
 package jmetal.qualityIndicator;
 
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 /**
  * This class implements the generational distance indicator. It can be used also
@@ -54,11 +54,11 @@ public class GenerationalDistance {
    * 1) the name of the file containing the front, and 2) the name of the file
    * containig the true Pareto front
    *
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public static void main(String args[]) throws JMException {
+  public static void main(String args[]) throws JMetalException {
     if (args.length < 2) {
-      throw new JMException("GenerationalDistance::Main: Usage: java " +
+      throw new JMetalException("GenerationalDistance::Main: Usage: java " +
         "GenerationalDistance <FrontFile> " +
         "<TrueFrontFile>  <getNumberOfObjectives>");
     } // if

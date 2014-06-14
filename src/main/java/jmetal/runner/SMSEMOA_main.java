@@ -40,7 +40,7 @@ import jmetal.problems.Kursawe;
 import jmetal.problems.ProblemFactory;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -58,7 +58,7 @@ public class SMSEMOA_main {
 
   /**
    * @param args Command line arguments.
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    * @throws IOException
    * @throws SecurityException Usage: three options
    *                           - jmetal.runner.SMSEMOA_main
@@ -66,7 +66,7 @@ public class SMSEMOA_main {
    *                           - jmetal.runner.SMSEMOA_main problemName paretoFrontFile
    */
   public static void main(String[] args) throws
-    JMException,
+    JMetalException,
     SecurityException,
     IOException,
     ClassNotFoundException {

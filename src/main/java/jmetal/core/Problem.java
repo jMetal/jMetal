@@ -22,11 +22,12 @@
 package jmetal.core;
 
 import jmetal.problems.ZDT.ZDT4;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.io.Serializable;
 import java.util.Arrays;
 import com.google.inject.*;
+
 /**
  * Abstract class representing a multiobjective optimization problem
  */
@@ -154,7 +155,7 @@ public abstract class Problem implements Serializable {
    *
    * @param solution The <code>Solution</code> to evaluate.
    */
-  public abstract void evaluate(Solution solution) throws JMException;
+  public abstract void evaluate(Solution solution) throws JMetalException;
 
   /**
    * Gets the number of side constraints in the problem.
@@ -171,7 +172,7 @@ public abstract class Problem implements Serializable {
    *
    * @param solution The <code>Solution</code> to evaluate.
    */
-  public void evaluateConstraints(Solution solution) throws JMException {
+  public void evaluateConstraints(Solution solution) throws JMetalException {
     // The default behavior is to do nothing. Only constrained problems have to
     // re-define this method
   }

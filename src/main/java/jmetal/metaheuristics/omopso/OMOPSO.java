@@ -24,7 +24,7 @@ package jmetal.metaheuristics.omopso;
 import jmetal.core.*;
 import jmetal.operators.mutation.Mutation;
 import jmetal.util.Distance;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.NonDominatedSolutionList;
 import jmetal.util.archive.CrowdingArchive;
 import jmetal.util.comparator.CrowdingDistanceComparator;
@@ -163,9 +163,9 @@ public class OMOPSO extends Algorithm {
   /**
    * Update the spped of each particle
    *
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  private void computeSpeed() throws JMException {
+  private void computeSpeed() throws JMetalException {
     double r1, r2, W, C1, C2;
     Variable[] bestGlobal;
 
@@ -209,9 +209,9 @@ public class OMOPSO extends Algorithm {
   /**
    * Update the position of each particle
    *
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  private void computeNewPositions() throws JMException {
+  private void computeNewPositions() throws JMetalException {
     for (int i = 0; i < particlesSize_; i++) {
       Variable[] particle = particles_.get(i).getDecisionVariables();
       //particle.move(speed_[i]);
@@ -233,9 +233,9 @@ public class OMOPSO extends Algorithm {
   /**
    * Apply a mutation operator to all particles in the swarm
    *
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  private void mopsoMutation(int actualIteration, int totalIterations) throws JMException {
+  private void mopsoMutation(int actualIteration, int totalIterations) throws JMetalException {
     //There are three groups of particles_, the ones that are mutated with
     //a non-uniform mutation operator, the ones that are mutated with a 
     //uniform mutation and the one that no are mutated
@@ -258,9 +258,9 @@ public class OMOPSO extends Algorithm {
    *
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
    * as a result of the algorithm execution
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public SolutionSet execute() throws JMException, ClassNotFoundException {
+  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     initParams();
 
     //->Step 1 (and 3) Create the initial population and evaluate

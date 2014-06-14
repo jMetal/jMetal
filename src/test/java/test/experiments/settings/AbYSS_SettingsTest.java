@@ -28,7 +28,7 @@ import jmetal.operators.crossover.SBXCrossover;
 import jmetal.operators.localSearch.MutationLocalSearch;
 import jmetal.operators.mutation.PolynomialMutation;
 import jmetal.problems.Fonseca;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -59,7 +59,7 @@ public class AbYSS_SettingsTest {
   }
 
   @Test
-  public void testSettings() throws JMException {
+  public void testSettings() throws JMetalException {
     double epsilon = 0.000000000000001 ;
     Settings abyssSettings = new AbYSS_Settings("Fonseca");
     Algorithm algorithm = abyssSettings.configure() ;
@@ -88,7 +88,7 @@ public class AbYSS_SettingsTest {
   }
 
   @Test
-  public void testSettings2() throws JMException {
+  public void testSettings2() throws JMetalException {
     double epsilon = 0.000000000000001 ;
     Settings abyssSettings = new AbYSS_Settings("Fonseca");
     Algorithm algorithm = abyssSettings.configure(configuration_) ;

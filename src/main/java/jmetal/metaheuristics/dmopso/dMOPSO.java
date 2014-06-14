@@ -11,7 +11,7 @@ import jmetal.core.SolutionSet;
 import jmetal.qualityIndicator.Hypervolume;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.random.PseudoRandom;
 import jmetal.util.wrapper.XReal;
 
@@ -218,9 +218,9 @@ public class dMOPSO extends Algorithm {
   /**
    * Update the speed of each particle
    *
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  private void computeSpeed(int i) throws JMException {
+  private void computeSpeed(int i) throws JMetalException {
     double r1, r2, C1, C2;
     double wmax, wmin;
 
@@ -254,9 +254,9 @@ public class dMOPSO extends Algorithm {
   /**
    * Update the position of each particle
    *
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  private void computeNewPositions(int i) throws JMException {
+  private void computeNewPositions(int i) throws JMetalException {
     XReal particle = new XReal(particles_.get(i));
     for (int var = 0; var < particle.size(); var++) {
       particle.setValue(var, particle.getValue(var) + speed_[i][var]);
@@ -268,9 +268,9 @@ public class dMOPSO extends Algorithm {
    *
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
    * as a result of the algorithm execution
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public SolutionSet execute() throws JMException, ClassNotFoundException {
+  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     //->Step 1.1 Initialize parameters (iteration_ = 0)
     initParams();
 
@@ -363,7 +363,7 @@ public class dMOPSO extends Algorithm {
     }
   }
 
-  private void repairBounds(int part) throws JMException {
+  private void repairBounds(int part) throws JMetalException {
     XReal particle = new XReal(particles_.get(part));
 
     for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
@@ -378,7 +378,7 @@ public class dMOPSO extends Algorithm {
     }
   }
 
-  private void resetParticle(int i) throws JMException {
+  private void resetParticle(int i) throws JMetalException {
     XReal particle = new XReal(particles_.get(i));
     double mean, sigma, N;
 
@@ -400,7 +400,7 @@ public class dMOPSO extends Algorithm {
     }
   } 
 
-  private void updateParticle(int i) throws JMException {
+  private void updateParticle(int i) throws JMetalException {
     computeSpeed(i);
     computeNewPositions(i);
   }
@@ -456,7 +456,7 @@ public class dMOPSO extends Algorithm {
   }
 
 
-  private void initIdealPoint() throws JMException, ClassNotFoundException {
+  private void initIdealPoint() throws JMetalException, ClassNotFoundException {
     for (int i = 0; i < problem_.getNumberOfObjectives(); i++) {
       z_[i] = 1.0e+30;
       indArray_[i] = new Solution(problem_);
@@ -478,7 +478,7 @@ public class dMOPSO extends Algorithm {
     }
   }
 
-  private void updateGlobalBest() throws JMException {
+  private void updateGlobalBest() throws JMetalException {
 
     double gBestFitness;
 
@@ -496,7 +496,7 @@ public class dMOPSO extends Algorithm {
     }
   }
 
-  private void updateLocalBest(int part) throws JMException {
+  private void updateLocalBest(int part) throws JMetalException {
 
     double f1, f2;
     Solution indiv = new Solution(particles_.get(part));
@@ -513,7 +513,7 @@ public class dMOPSO extends Algorithm {
   }
 
 
-  private double fitnessFunction(Solution sol, double[] lambda) throws JMException {
+  private double fitnessFunction(Solution sol, double[] lambda) throws JMetalException {
     double fitness = 0.0;
 
     if ("_TCHE".equals(functionType_)) {
@@ -564,7 +564,7 @@ public class dMOPSO extends Algorithm {
       fitness = (d1 + theta * d2);
 
     } else {
-      throw new JMException("dMOPSO.fitnessFunction: unknown type " + functionType_);
+      throw new JMetalException("dMOPSO.fitnessFunction: unknown type " + functionType_);
     }
     return fitness;
   }

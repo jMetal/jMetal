@@ -24,7 +24,7 @@ import jmetal.core.Solution;
 import jmetal.encodings.solutiontype.ArrayRealAndBinarySolutionType;
 import jmetal.encodings.variable.Binary;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.random.PseudoRandom;
 import jmetal.util.wrapper.XReal;
 
@@ -82,7 +82,7 @@ public class SBXSinglePointCrossover extends Crossover {
   public Solution[] doCrossover(Double realProbability,
     Double binaryProbability,
     Solution parent1,
-    Solution parent2) throws JMException {
+    Solution parent2) throws JMetalException {
 
     Solution[] offSpring = new Solution[2];
 
@@ -199,7 +199,7 @@ public class SBXSinglePointCrossover extends Crossover {
   }
 
   @Override
-  public Object execute(Object object) throws JMException {
+  public Object execute(Object object) throws JMetalException {
     Solution[] parents = (Solution[]) object;
 
     if (parents.length != 2) {
@@ -207,7 +207,7 @@ public class SBXSinglePointCrossover extends Crossover {
         "needs two parents");
       Class<String> cls = java.lang.String.class;
       String name = cls.getName();
-      throw new JMException("Exception in " + name + ".execute()");
+      throw new JMetalException("Exception in " + name + ".execute()");
     }
 
     if (!(VALID_TYPES.contains(parents[0].getType().getClass()) &&
@@ -217,7 +217,7 @@ public class SBXSinglePointCrossover extends Crossover {
 
       Class<String> cls = java.lang.String.class;
       String name = cls.getName();
-      throw new JMException("Exception in " + name + ".execute()");
+      throw new JMetalException("Exception in " + name + ".execute()");
     } // if
     Solution[] offSpring;
     offSpring = doCrossover(realCrossoverProbability_,

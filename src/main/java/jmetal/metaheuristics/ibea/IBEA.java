@@ -21,7 +21,7 @@
 package jmetal.metaheuristics.ibea;
 
 import jmetal.core.*;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.Ranking;
 import jmetal.util.comparator.DominanceComparator;
 
@@ -112,7 +112,7 @@ public class IBEA extends Algorithm {
    */
   public void computeIndicatorValuesHD(SolutionSet solutionSet,
     double[] maximumValues,
-    double[] minimumValues) throws JMException {
+    double[] minimumValues) throws JMetalException {
     SolutionSet A, B;
     // Initialize the structures
     indicatorValues_ = new ArrayList<List<Double>>();
@@ -166,7 +166,7 @@ public class IBEA extends Algorithm {
   /**
    * Calculate the fitness for the entire population.
    */
-  public void calculateFitness(SolutionSet solutionSet) throws JMException {
+  public void calculateFitness(SolutionSet solutionSet) throws JMetalException {
     // Obtains the lower and upper bounds of the population
     double[] maximumValues = new double[problem_.getNumberOfObjectives()];
     double[] minimumValues = new double[problem_.getNumberOfObjectives()];
@@ -236,9 +236,9 @@ public class IBEA extends Algorithm {
    *
    * @return aSolutionSet that is a set of non dominated solutions
    * as a result of the algorithm execution
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public SolutionSet execute() throws JMException, ClassNotFoundException {
+  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     int populationSize, archiveSize, maxEvaluations, evaluations;
     Operator crossoverOperator, mutationOperator, selectionOperator;
     SolutionSet solutionSet, archive, offSpringSolutionSet;

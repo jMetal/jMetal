@@ -114,9 +114,9 @@ public class Spea2Fitness {
    * using for this de enviromentalSelection truncation
    *
    * @param size The number of elements to get.
-   * @throws JMException 
+   * @throws JMetalException
    */
-  public SolutionSet environmentalSelection(int size) throws JMException {
+  public SolutionSet environmentalSelection(int size) throws JMetalException {
 
     if (solutionSet_.size() < size) {
       size = solutionSet_.size();

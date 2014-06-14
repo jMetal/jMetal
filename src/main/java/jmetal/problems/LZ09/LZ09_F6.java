@@ -26,7 +26,7 @@ import jmetal.core.Solution;
 import jmetal.core.Variable;
 import jmetal.encodings.solutiontype.BinaryRealSolutionType;
 import jmetal.encodings.solutiontype.RealSolutionType;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.util.Vector;
 
@@ -45,7 +45,7 @@ public class LZ09_F6 extends Problem {
    *
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
-  public LZ09_F6(String solutionType) throws ClassNotFoundException, JMException {
+  public LZ09_F6(String solutionType) throws ClassNotFoundException, JMetalException {
     this(solutionType, 31, 1, 32);
   } // LZ09_F6
 
@@ -57,7 +57,7 @@ public class LZ09_F6 extends Problem {
   public LZ09_F6(String solutionType,
     Integer ptype,
     Integer dtype,
-    Integer ltype) throws JMException {
+    Integer ltype) throws JMetalException {
     numberOfVariables_ = 10;
     numberOfObjectives_ = 3;
     numberOfConstraints_ = 0;
@@ -82,7 +82,7 @@ public class LZ09_F6 extends Problem {
     } else if (solutionType.compareTo("Real") == 0) {
       solutionType_ = new RealSolutionType(this);
     } else {
-      throw new JMException("Error: solution type " + solutionType + " invalid");
+      throw new JMetalException("Error: solution type " + solutionType + " invalid");
     }
   }
 
@@ -90,9 +90,9 @@ public class LZ09_F6 extends Problem {
    * Evaluates a solution
    *
    * @param solution The solution to evaluate
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public void evaluate(Solution solution) throws JMException {
+  public void evaluate(Solution solution) throws JMetalException {
     Variable[] gen = solution.getDecisionVariables();
 
     Vector<Double> x = new Vector<Double>(numberOfVariables_);

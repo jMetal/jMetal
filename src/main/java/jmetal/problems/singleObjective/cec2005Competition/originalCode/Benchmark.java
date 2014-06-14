@@ -48,7 +48,7 @@
 package jmetal.problems.singleObjective.cec2005Competition.originalCode;
 
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -120,11 +120,11 @@ public class Benchmark {
   // Constructors
   //	Load the data common to all test functions.
   //	Get ready for creating test function instances.
-  public Benchmark() throws JMException {
+  public Benchmark() throws JMetalException {
     this(DEFAULT_FILE_BIAS);
   }
 
-  public Benchmark(String file_bias) throws JMException {
+  public Benchmark(String file_bias) throws JMetalException {
     m_biases = new double[NUM_TEST_FUNC];
     m_iSqrt = new double[MAX_SUPPORT_DIM];
 
@@ -138,7 +138,7 @@ public class Benchmark {
   // Entry point
   //	If the Benchmark class is executed as a stand-alone application,
   //	its job is to run the test on all the test functions.
-  static public void main(String args[]) throws JMException {
+  static public void main(String args[]) throws JMetalException {
     Benchmark theBenchmark = new Benchmark();
     theBenchmark.runTest(0);
   }
@@ -378,7 +378,7 @@ public class Benchmark {
   }
 
   // Hybrid composition
-  static public double hybrid_composition(double[] x, HCJob job) throws JMException {
+  static public double hybrid_composition(double[] x, HCJob job) throws JMetalException {
 
     int num_func = job.num_func;
     int num_dim = job.num_dim;
@@ -482,7 +482,7 @@ public class Benchmark {
   // Utility functions for loading data from the given text file
   //
   static public void loadTestDataFromFile(String file, int num_test_points, int test_dimension,
-    double[][] x, double[] f) throws JMException {
+    double[][] x, double[] f) throws JMetalException {
     try {
       Configuration.logger_.info("File bias: " + file);
 
@@ -492,19 +492,19 @@ public class Benchmark {
       brSrc.close();
     } catch (Exception e) {
       Configuration.logger_.log(Level.SEVERE, "Error in Benchmark.java", e);
-      throw new JMException("Error in Benchmark.java");
+      throw new JMetalException("Error in Benchmark.java");
     }
   }
 
   static public void loadRowVectorFromFile(String file, int columns, double[] row)
-    throws JMException {
+    throws JMetalException {
     try {
       BufferedReader brSrc = new BufferedReader(new FileReader(file));
       loadRowVector(brSrc, columns, row);
       brSrc.close();
     } catch (Exception e) {
       Configuration.logger_.log(Level.SEVERE, "Error in Benchmark.java", e);
-      throw new JMException("Error in Benchmark.java");
+      throw new JMetalException("Error in Benchmark.java");
     }
   }
 
@@ -519,14 +519,14 @@ public class Benchmark {
   }
 
   static public void loadColumnVectorFromFile(String file, int rows, double[] column)
-    throws JMException {
+    throws JMetalException {
     try {
       BufferedReader brSrc = new BufferedReader(new FileReader(file));
       loadColumnVector(brSrc, rows, column);
       brSrc.close();
     } catch (Exception e) {
       Configuration.logger_.log(Level.SEVERE, "Error in Benchmark.java", e);
-      throw new JMException("Error in Benchmark.java");
+      throw new JMetalException("Error in Benchmark.java");
     }
   }
 
@@ -541,7 +541,7 @@ public class Benchmark {
   }
 
   static public void loadNMatrixFromFile(String file, int N, int rows, int columns,
-    double[][][] matrix) throws JMException {
+    double[][][] matrix) throws JMetalException {
     try {
       BufferedReader brSrc = new BufferedReader(new FileReader(file));
       for (int i = 0; i < N; i++) {
@@ -550,19 +550,19 @@ public class Benchmark {
       brSrc.close();
     } catch (Exception e) {
       Configuration.logger_.log(Level.SEVERE, "Error in Benchmark.java", e);
-      throw new JMException("Error in Benchmark.java");
+      throw new JMetalException("Error in Benchmark.java");
     }
   }
 
   static public void loadMatrixFromFile(String file, int rows, int columns, double[][] matrix)
-    throws JMException {
+    throws JMetalException {
     try {
       BufferedReader brSrc = new BufferedReader(new FileReader(file));
       loadMatrix(brSrc, rows, columns, matrix);
       brSrc.close();
     } catch (Exception e) {
       Configuration.logger_.log(Level.SEVERE, "Error in Benchmark.java", e);
-      throw new JMException("Error in Benchmark.java");
+      throw new JMetalException("Error in Benchmark.java");
     }
   }
 
@@ -576,7 +576,7 @@ public class Benchmark {
   //
   // Use this function to manufacture new test function objects
   //
-  public TestFunc testFunctionFactory(int func_num, int dimension) throws JMException {
+  public TestFunc testFunctionFactory(int func_num, int dimension) throws JMetalException {
     TestFunc returnFunc = null;
     try {
       returnFunc = (TestFunc)
@@ -590,7 +590,7 @@ public class Benchmark {
           );
     } catch (Exception e) {
       Configuration.logger_.log(Level.SEVERE, "Error in Benchmark.java", e);
-      throw new JMException("Error in Benchmark.java");
+      throw new JMetalException("Error in Benchmark.java");
     }
     return (returnFunc);
   }
@@ -599,17 +599,17 @@ public class Benchmark {
   //	< 0:	Error!
   //	= 0:	On all the functions
   //	> 0:	On the specified test function
-  public void runTest() throws JMException {
+  public void runTest() throws JMetalException {
     runTest(0);
   }
 
-  public void runTest(int func_num) throws JMException {
+  public void runTest(int func_num) throws JMetalException {
     if (func_num == 0) {
       for (int i = 1; i <= NUM_TEST_FUNC; i++) {
         runTest(i);
       }
     } else if ((func_num < 0) || (func_num > NUM_TEST_FUNC)) {
-      throw new JMException("The specified func_num is out of range.");
+      throw new JMetalException("The specified func_num is out of range.");
     } else {
       // Run the test function against the check points
       int num_test_points = 10;

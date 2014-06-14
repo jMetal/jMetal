@@ -24,7 +24,7 @@ package jmetal.encodings.variable;
 import jmetal.core.Problem;
 import jmetal.core.Variable;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.random.PseudoRandom;
 
 
@@ -167,7 +167,7 @@ public class ArrayInt extends Variable {
    * @param index Index of value to be returned
    * @return the value in position index
    */
-  public int getValue(int index) throws JMException {
+  public int getValue(int index) throws JMetalException {
     if ((index >= 0) && (index < size_)) {
       return array_[index];
     } else {
@@ -175,7 +175,7 @@ public class ArrayInt extends Variable {
         jmetal.encodings.variable.ArrayInt.class + ".getValue(): index value (" + index
           + ") invalid"
       );
-      throw new JMException(
+      throw new JMetalException(
         jmetal.encodings.variable.ArrayInt.class + ": index value (" + index + ") invalid");
     }
   }
@@ -186,7 +186,7 @@ public class ArrayInt extends Variable {
    * @param index Index of value to be returned
    * @param value The value to be set in position index
    */
-  public void setValue(int index, int value) throws JMException {
+  public void setValue(int index, int value) throws JMetalException {
     if ((index >= 0) && (index < size_)) {
       array_[index] = value;
     } else {
@@ -194,7 +194,7 @@ public class ArrayInt extends Variable {
         jmetal.encodings.variable.ArrayInt.class + ".setValue(): index value (" + index
           + ") invalid"
       );
-      throw new JMException(
+      throw new JMetalException(
         jmetal.encodings.variable.ArrayInt.class + ": index value (" + index + ") invalid");
     } // else
   } // setValue
@@ -206,7 +206,7 @@ public class ArrayInt extends Variable {
    * @param index The index of the value
    * @return the lower bound
    */
-  public double getLowerBound(int index) throws JMException {
+  public double getLowerBound(int index) throws JMetalException {
     if ((index >= 0) && (index < size_)) {
       return lowerBounds_[index];
     } else {
@@ -214,7 +214,7 @@ public class ArrayInt extends Variable {
         jmetal.encodings.variable.ArrayInt.class + ".getLowerBound(): index value (" + index
           + ") invalid"
       );
-      throw new JMException(
+      throw new JMetalException(
         jmetal.encodings.variable.ArrayInt.class + ".getLowerBound: index value (" + index
           + ") invalid"
       );
@@ -227,7 +227,7 @@ public class ArrayInt extends Variable {
    * @param index The index of the value
    * @return the upper bound
    */
-  public double getUpperBound(int index) throws JMException {
+  public double getUpperBound(int index) throws JMetalException {
     if ((index >= 0) && (index < size_)) {
       return upperBounds_[index];
     } else {
@@ -235,7 +235,7 @@ public class ArrayInt extends Variable {
         jmetal.encodings.variable.ArrayInt.class + ".getUpperBound(): index value (" + index
           + ") invalid"
       );
-      throw new JMException(
+      throw new JMetalException(
         jmetal.encodings.variable.ArrayInt.class + ".getUpperBound: index value (" + index
           + ") invalid"
       );

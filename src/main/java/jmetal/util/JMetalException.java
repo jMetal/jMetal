@@ -28,17 +28,17 @@ import java.util.logging.Level;
 /**
  * jMetal exception class
  */
-public class JMException extends RuntimeException implements Serializable {
+public class JMetalException extends RuntimeException implements Serializable {
 
   /**
    *
    */
   private static final long serialVersionUID = 4288481737365385068L;
 
-  public JMException(String message) {
+  public JMetalException(String message) {
     super(message);
   }
-  public JMException(Exception e) {
+  public JMetalException(Exception e) {
     Configuration.logger_.log(Level.SEVERE, "Error", e);
   }
 }

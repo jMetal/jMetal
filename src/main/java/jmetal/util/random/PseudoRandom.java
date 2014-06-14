@@ -22,7 +22,7 @@
 package jmetal.util.random;
 
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
@@ -208,12 +208,12 @@ public class PseudoRandom {
   }
 
 
-  public static void main(String[] args) throws JMException {
+  public static void main(String[] args) throws JMetalException {
     int numberOfPoints;
     String fileName;
 
     if (args.length != 2) {
-      throw new JMException("Usage: PseudoRandom numberOfPoints outputFileName");
+      throw new JMetalException("Usage: PseudoRandom numberOfPoints outputFileName");
     }
     numberOfPoints = Integer.valueOf(args[0]);
     fileName = args[1];

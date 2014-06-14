@@ -29,7 +29,7 @@ import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.ProblemFactory;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.util.HashMap;
 import java.util.Properties;
@@ -48,9 +48,9 @@ public class SPEA2_Settings extends Settings {
 
   /**
    * Constructor
-   * @throws JMException 
+   * @throws jmetal.util.JMetalException
    */
-  public SPEA2_Settings(String problem) throws JMException {
+  public SPEA2_Settings(String problem) throws JMetalException {
     super(problem) ;
 
     Object [] problemParams = {"Real"};
@@ -69,9 +69,9 @@ public class SPEA2_Settings extends Settings {
    * Configure SPEA2 with default parameter experiments.settings
    *
    * @return an algorithm object
-   * @throws jmetal.util.JMException
+   * @throws jmetal.util.JMetalException
    */
-  public Algorithm configure() throws JMException {
+  public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
     Operator crossover;         // Crossover operator
     Operator mutation;         // Mutation operator
@@ -115,7 +115,7 @@ public class SPEA2_Settings extends Settings {
    * @return A SPEA2 algorithm object
    */
   @Override
-  public Algorithm configure(Properties configuration) throws JMException {
+  public Algorithm configure(Properties configuration) throws JMetalException {
     populationSize_ = Integer.parseInt(configuration.getProperty("populationSize",String.valueOf(populationSize_)));
     maxEvaluations_  = Integer.parseInt(configuration.getProperty("maxEvaluations",String.valueOf(maxEvaluations_)));
     archiveSize_  = Integer.parseInt(configuration.getProperty("archiveSize",String.valueOf(archiveSize_)));

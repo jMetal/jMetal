@@ -32,7 +32,7 @@ import jmetal.operators.crossover.Crossover;
 import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.mutation.Mutation;
 import jmetal.operators.mutation.MutationFactory;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -56,7 +56,7 @@ public abstract class Settings {
    * Constructor
    */
 
-  public Settings(String problemName) throws JMException {
+  public Settings(String problemName) throws JMetalException {
     problemName_ = problemName;
   }
 
@@ -64,9 +64,9 @@ public abstract class Settings {
    * Default configure method
    *
    * @return An algorithm with the default configuration
-   * @throws jmetal.util.JMException
+   * @throws jmetal.util.JMetalException
    */
-  abstract public Algorithm configure() throws JMException;
+  abstract public Algorithm configure() throws JMetalException;
 
   /**
    * Configure method based on reading a properties file
@@ -74,7 +74,7 @@ public abstract class Settings {
    * @param configuration Properties file
    * @return A algorithm with a the configuration contained in the properties file
    */
-  public Algorithm configure(Properties configuration) throws JMException {
+  public Algorithm configure(Properties configuration) throws JMetalException {
     return null;
   }
 
@@ -83,12 +83,12 @@ public abstract class Settings {
    *
    * @param settings
    * @return A problem with the experiments.settings indicated as argument
-   * @throws jmetal.util.JMException
+   * @throws jmetal.util.JMetalException
    * @throws ClassNotFoundException
    */
 
   public final Algorithm configure(HashMap settings)
-    throws JMException, IllegalArgumentException, IllegalAccessException, ClassNotFoundException {
+    throws JMetalException, IllegalArgumentException, IllegalAccessException, ClassNotFoundException {
     if (settings != null) {
       Field[] fields = this.getClass().getFields();
       for (int i = 0; i < fields.length; i++) {

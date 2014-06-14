@@ -26,7 +26,7 @@ import jmetal.core.Solution;
 import jmetal.core.Variable;
 import jmetal.encodings.solutiontype.BinaryRealSolutionType;
 import jmetal.encodings.solutiontype.RealSolutionType;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 /**
  * Class representing problem Poloni. This problem has two objectives to be
@@ -46,7 +46,7 @@ public class Poloni extends Problem {
    *
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
-  public Poloni(String solutionType) throws JMException {
+  public Poloni(String solutionType) throws JMetalException {
     numberOfVariables_ = 2;
     numberOfObjectives_ = 2;
     numberOfConstraints_ = 0;
@@ -64,7 +64,7 @@ public class Poloni extends Problem {
     } else if (solutionType.compareTo("Real") == 0) {
       solutionType_ = new RealSolutionType(this);
     } else {
-      throw new JMException("Error: solution type " + solutionType + " invalid");
+      throw new JMetalException("Error: solution type " + solutionType + " invalid");
     }
   }
 
@@ -72,9 +72,9 @@ public class Poloni extends Problem {
    * Evaluates a solution
    *
    * @param solution The solution to evaluate
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public void evaluate(Solution solution) throws JMException {
+  public void evaluate(Solution solution) throws JMetalException {
     final double A1 = 0.5 * Math.sin(1.0) - 2 * Math.cos(1.0) +
       Math.sin(2.0) - 1.5 * Math.cos(2.0); //!< Constant A1
     final double A2 = 1.5 * Math.sin(1.0) - Math.cos(1.0) +

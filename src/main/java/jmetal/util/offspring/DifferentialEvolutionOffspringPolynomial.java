@@ -14,7 +14,7 @@ import jmetal.core.SolutionSet;
 import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -31,7 +31,7 @@ public class DifferentialEvolutionOffspringPolynomial extends Offspring {
 
   private DifferentialEvolutionOffspringPolynomial(double mutationProbability,
     double distributionIndexForMutation
-  ) throws JMException {
+  ) throws JMetalException {
     mutationProbability_ = mutationProbability;
     distributionIndexForMutation_ = distributionIndexForMutation;
 
@@ -55,7 +55,7 @@ public class DifferentialEvolutionOffspringPolynomial extends Offspring {
 
       mutation_.execute(offSpring);
       //Create a new solution, using DE
-    } catch (JMException ex) {
+    } catch (JMetalException ex) {
       Logger.getLogger(DifferentialEvolutionOffspringPolynomial.class.getName())
         .log(Level.SEVERE, null, ex);
     }
@@ -82,7 +82,7 @@ public class DifferentialEvolutionOffspringPolynomial extends Offspring {
 
       mutation_.execute(offSpring);
       //Create a new solution, using DE
-    } catch (JMException ex) {
+    } catch (JMetalException ex) {
       Logger.getLogger(DifferentialEvolutionOffspringPolynomial.class.getName())
         .log(Level.SEVERE, null, ex);
     }
@@ -94,7 +94,7 @@ public class DifferentialEvolutionOffspringPolynomial extends Offspring {
     Solution res = new Solution(solution);
     try {
       mutation_.execute(res);
-    } catch (JMException e) {
+    } catch (JMetalException e) {
       Configuration.logger_.log(Level.SEVERE, "Error", e);
     }
     return res;

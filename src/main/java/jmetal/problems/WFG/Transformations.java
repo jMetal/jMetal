@@ -22,7 +22,7 @@
 package jmetal.problems.WFG;
 
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 /**
  * Class implementing the basics transformations for WFG
@@ -37,16 +37,16 @@ public class Transformations {
   /**
    * b_poly transformation
    *
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public float b_poly(float y, float alpha) throws JMException {
+  public float b_poly(float y, float alpha) throws JMetalException {
     if (!(alpha > 0)) {
 
       Configuration.logger_.severe("WFG.Transformations.b_poly: Param alpha " +
         "must be > 0");
       Class<String> cls = java.lang.String.class;
       String name = cls.getName();
-      throw new JMException("Exception in " + name + ".b_poly()");
+      throw new JMetalException("Exception in " + name + ".b_poly()");
     }
 
     return correct_to_01((float) StrictMath.pow(y, alpha));

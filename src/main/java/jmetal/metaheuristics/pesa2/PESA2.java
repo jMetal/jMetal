@@ -23,7 +23,7 @@ package jmetal.metaheuristics.pesa2;
 
 import jmetal.core.*;
 import jmetal.operators.selection.PESA2Selection;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.archive.AdaptiveGridArchive;
 
 import java.util.HashMap;
@@ -51,9 +51,9 @@ public class PESA2 extends Algorithm {
    *
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
    * as a result of the algorithm execution
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public SolutionSet execute() throws JMException, ClassNotFoundException {
+  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     int archiveSize, bisections, maxEvaluations, evaluations, populationSize;
     AdaptiveGridArchive archive;
     SolutionSet solutionSet;

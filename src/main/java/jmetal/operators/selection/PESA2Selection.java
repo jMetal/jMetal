@@ -23,7 +23,7 @@ package jmetal.operators.selection;
 
 import jmetal.core.Solution;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.archive.AdaptiveGridArchive;
 import jmetal.util.random.PseudoRandom;
 
@@ -51,9 +51,9 @@ public class PESA2Selection extends Selection {
    * @param object Object representing a SolutionSet. This solution set
    *               must be an instancen <code>AdaptiveGridArchive</code>
    * @return the selected solution
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public Object execute(Object object) throws JMException {
+  public Object execute(Object object) throws JMetalException {
     try {
       AdaptiveGridArchive archive = (AdaptiveGridArchive) object;
       int selected;
@@ -97,7 +97,7 @@ public class PESA2Selection extends Selection {
       );
       Class<String> cls = java.lang.String.class;
       String name = cls.getName();
-      throw new JMException("Exception in " + name + ".execute()");
+      throw new JMetalException("Exception in " + name + ".execute()");
     }
   }
 }

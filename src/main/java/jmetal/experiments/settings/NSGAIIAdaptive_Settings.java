@@ -26,7 +26,7 @@ import jmetal.metaheuristics.nsgaII.NSGAIIAdaptive;
 import jmetal.operators.selection.Selection;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.ProblemFactory;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.evaluator.SequentialSolutionSetEvaluator;
 import jmetal.util.evaluator.SolutionSetEvaluator;
 import jmetal.util.offspring.DifferentialEvolutionOffspring;
@@ -57,9 +57,9 @@ public class NSGAIIAdaptive_Settings extends Settings {
   /**
    * Constructor
    *
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public NSGAIIAdaptive_Settings(String problem) throws JMException {
+  public NSGAIIAdaptive_Settings(String problem) throws JMetalException {
     super(problem);
 
     Object[] problemParams = {"Real"};
@@ -80,9 +80,9 @@ public class NSGAIIAdaptive_Settings extends Settings {
    * Configure NSGAIIAdaptive with user-defined parameter settings
    *
    * @return A NSGAIIAdaptive algorithm object
-   * @throws jmetal.util.JMException
+   * @throws jmetal.util.JMetalException
    */
-  public Algorithm configure() throws JMException {
+  public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
     Selection selection;
 
@@ -123,7 +123,7 @@ public class NSGAIIAdaptive_Settings extends Settings {
    * @return A NSGAIIAdaptive algorithm object
    */
   @Override
-  public Algorithm configure(Properties configuration) throws JMException {
+  public Algorithm configure(Properties configuration) throws JMetalException {
     populationSize_ = Integer
       .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize_)));
     maxEvaluations_ = Integer

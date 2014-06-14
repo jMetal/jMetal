@@ -24,7 +24,7 @@ import jmetal.core.Problem;
 import jmetal.core.SolutionType;
 import jmetal.encodings.solutiontype.BinarySolutionType;
 import jmetal.problems.ZDT.ZDT5;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import org.junit.Test;
 
@@ -36,7 +36,7 @@ import static org.junit.Assert.assertEquals;
 public class SolutionTypeTest {
 
   @Test
-  public void getProblemTest() throws JMException {
+  public void getProblemTest() throws JMetalException {
     Problem problem = new ZDT5("Binary", 10) ;
 
     SolutionType solutionType = new BinarySolutionType(problem) ;

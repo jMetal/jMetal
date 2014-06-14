@@ -47,7 +47,7 @@
 package jmetal.problems.singleObjective.cec2005Competition.originalCode;
 
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 public class F03_shifted_rotated_high_cond_elliptic extends TestFunc {
 
@@ -71,13 +71,13 @@ public class F03_shifted_rotated_high_cond_elliptic extends TestFunc {
   private double constant;
 
   // Constructors
-  public F03_shifted_rotated_high_cond_elliptic(int dimension, double bias) throws JMException {
+  public F03_shifted_rotated_high_cond_elliptic(int dimension, double bias) throws JMetalException {
     this(dimension, bias, DEFAULT_FILE_DATA,
       DEFAULT_FILE_MX_PREFIX + dimension + DEFAULT_FILE_MX_SUFFIX);
   }
 
   public F03_shifted_rotated_high_cond_elliptic(int dimension, double bias, String file_data,
-    String file_m) throws JMException {
+    String file_m) throws JMetalException {
     super(dimension, bias, FUNCTION_NAME);
 
     // Note: dimension starts from 0

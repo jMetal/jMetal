@@ -22,7 +22,7 @@
 package jmetal.qualityIndicator;
 
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.util.logging.Level;
 
@@ -55,11 +55,11 @@ public class Hypervolume {
    * 2) the name of the file containig the true Pareto front
    * 3) the number of objectives
    *
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public static void main(String args[]) throws JMException {
+  public static void main(String args[]) throws JMetalException {
     if (args.length < 2) {
-      throw new JMException(
+      throw new JMetalException(
         "Error using Hypervolume. Usage: \n java jmetal.qualityIndicator.Hypervolume " +
           "<SolutionFrontFile> " +
           "<TrueFrontFile> " + "<getNumberOfObjectives>");

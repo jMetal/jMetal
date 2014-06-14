@@ -22,7 +22,7 @@
 package jmetal.metaheuristics.paes;
 
 import jmetal.core.*;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.archive.AdaptiveGridArchive;
 import jmetal.util.comparator.DominanceComparator;
 
@@ -82,9 +82,9 @@ public class PAES extends Algorithm {
    *
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
    * as a result of the algorithm execution
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public SolutionSet execute() throws JMException, ClassNotFoundException {
+  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     int bisections, archiveSize, maxEvaluations, evaluations;
     AdaptiveGridArchive archive;
     Operator mutationOperator;

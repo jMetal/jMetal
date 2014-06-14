@@ -23,7 +23,7 @@ package jmetal.metaheuristics.gde3;
 
 import jmetal.core.*;
 import jmetal.util.Distance;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.Ranking;
 import jmetal.util.comparator.CrowdingComparator;
 import jmetal.util.comparator.DominanceComparator;
@@ -81,9 +81,9 @@ public class GDE3 extends Algorithm {
    *
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
    * as a result of the algorithm execution
-   * @throws jmetal.util.JMException
+   * @throws jmetal.util.JMetalException
    */
-  public SolutionSet execute() throws JMException, ClassNotFoundException {
+  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     //readParameterSettings();
     createInitialPopulation();
     evaluatePopulation(population_);
@@ -176,7 +176,7 @@ public class GDE3 extends Algorithm {
     crossoverOperator_ = operators_.get("crossover");
   }
 
-  protected void createInitialPopulation() throws ClassNotFoundException, JMException {
+  protected void createInitialPopulation() throws ClassNotFoundException, JMetalException {
     population_ = new SolutionSet(populationSize_);
 
     Solution newSolution;
@@ -186,7 +186,7 @@ public class GDE3 extends Algorithm {
     }
   }
 
-  protected void evaluatePopulation(SolutionSet population) throws JMException {
+  protected void evaluatePopulation(SolutionSet population) throws JMetalException {
     evaluator_.evaluate(population, problem_) ;
   }
 
@@ -194,7 +194,7 @@ public class GDE3 extends Algorithm {
     return iterations_ == maxIterations_ ;
   }
 
-  protected void addRankedSolutionsToPopulation(Ranking ranking, int rank) throws JMException {
+  protected void addRankedSolutionsToPopulation(Ranking ranking, int rank) throws JMetalException {
     SolutionSet front ;
 
     front = ranking.getSubfront(rank);
@@ -204,12 +204,12 @@ public class GDE3 extends Algorithm {
     }
   }
 
-  protected void computeCrowdingDistance(Ranking ranking, int rank) throws JMException {
+  protected void computeCrowdingDistance(Ranking ranking, int rank) throws JMetalException {
     SolutionSet currentRankedFront = ranking.getSubfront(rank) ;
     distance_.crowdingDistanceAssignment(currentRankedFront, problem_.getNumberOfObjectives());
   }
 
-  protected void addLastRankedSolutions(Ranking ranking, int rank) throws JMException {
+  protected void addLastRankedSolutions(Ranking ranking, int rank) throws JMetalException {
     SolutionSet currentRankedFront = ranking.getSubfront(rank) ;
 
     currentRankedFront.sort(new CrowdingComparator());
@@ -229,7 +229,7 @@ public class GDE3 extends Algorithm {
     return ranking.getSubfront(rank).size() < (populationSize_ - population_.size()) ;
   }
 
-  protected SolutionSet getNonDominatedSolutions() throws JMException {
+  protected SolutionSet getNonDominatedSolutions() throws JMetalException {
     return new Ranking(population_).getSubfront(0);
   }
 

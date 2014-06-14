@@ -22,7 +22,7 @@
 package jmetal.operators.selection;
 
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.util.HashMap;
 
@@ -36,10 +36,10 @@ public class SelectionFactory {
    *
    * @param name of the operator
    * @return the operator
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
   public static Selection getSelectionOperator(String name, HashMap<String, Object> parameters)
-    throws JMException {
+    throws JMetalException {
     if ("BinaryTournament".equalsIgnoreCase(name)) {
       return new BinaryTournament(parameters);
     } else if ("BinaryTournament2".equalsIgnoreCase(name)) {
@@ -54,7 +54,7 @@ public class SelectionFactory {
       return new DifferentialEvolutionSelection(parameters);
     } else {
       Configuration.logger_.severe("Operator '" + name + "' not found ");
-      throw new JMException("Exception in " + name + ".getSelectionOperator()");
+      throw new JMetalException("Exception in " + name + ".getSelectionOperator()");
     }
   }
 }

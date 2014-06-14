@@ -3,7 +3,7 @@ package jmetal.metaheuristics.nsgaII;
 import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.Ranking;
 import jmetal.util.evaluator.SolutionSetEvaluator;
 import jmetal.util.offspring.Offspring;
@@ -23,7 +23,7 @@ public class NSGAIIRandom extends NSGAIITemplate {
     super(evaluator);
   }
 
-  public SolutionSet execute() throws JMException, ClassNotFoundException {
+  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     double contrReal[] = new double[3];
     contrReal[0] = contrReal[1] = contrReal[2] = 0;
 

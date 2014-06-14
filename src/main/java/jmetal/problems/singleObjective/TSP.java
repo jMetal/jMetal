@@ -26,7 +26,7 @@ import jmetal.core.Solution;
 import jmetal.encodings.solutiontype.PermutationSolutionType;
 import jmetal.encodings.variable.Permutation;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.io.*;
 import java.util.logging.Level;
@@ -66,9 +66,9 @@ public class TSP extends Problem {
       if (solutionType.compareTo("Permutation") == 0) {
         solutionType_ = new PermutationSolutionType(this);
       } else {
-        throw new JMException("Solution type invalid");
+        throw new JMetalException("Solution type invalid");
       }
-    } catch (JMException e) {
+    } catch (JMetalException e) {
       Configuration.logger_.log(Level.SEVERE, "Error", e);
     }
     readProblem(filename);

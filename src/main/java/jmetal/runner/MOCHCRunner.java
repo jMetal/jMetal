@@ -31,7 +31,7 @@ import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.ZDT.ZDT5;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -45,7 +45,7 @@ import java.util.HashMap;
  */
 public class MOCHCRunner {
 
-  public static void main(String[] args) throws IOException, JMException, ClassNotFoundException {
+  public static void main(String[] args) throws IOException, JMetalException, ClassNotFoundException {
     Problem problem = new ZDT5("Binary");
 
     Algorithm algorithm = null;

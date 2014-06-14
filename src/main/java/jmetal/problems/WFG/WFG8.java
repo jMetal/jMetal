@@ -23,7 +23,7 @@ package jmetal.problems.WFG;
 
 import jmetal.core.Solution;
 import jmetal.core.Variable;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 /**
  * Creates a default WFG8 problem with
@@ -46,7 +46,7 @@ public class WFG8 extends WFG {
    *
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
-  public WFG8(String solutionType) throws ClassNotFoundException, JMException {
+  public WFG8(String solutionType) throws ClassNotFoundException, JMetalException {
     this(solutionType, 2, 4, 2);
   } // WFG8
 
@@ -59,7 +59,7 @@ public class WFG8 extends WFG {
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
   public WFG8(String solutionType, Integer k, Integer l, Integer M)
-    throws ClassNotFoundException, JMException {
+    throws ClassNotFoundException, JMetalException {
     super(solutionType, k, l, M);
     problemName_ = "WFG8";
 
@@ -173,9 +173,9 @@ public class WFG8 extends WFG {
    * Evaluates a solution
    *
    * @param solution The solution to evaluate
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public final void evaluate(Solution solution) throws JMException {
+  public final void evaluate(Solution solution) throws JMetalException {
     float[] variables = new float[getNumberOfVariables()];
     Variable[] dv = solution.getDecisionVariables();
 

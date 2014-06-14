@@ -31,7 +31,7 @@ import jmetal.problems.Kursawe;
 import jmetal.problems.ProblemFactory;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.evaluator.MultithreadedSolutionSetEvaluator;
 import jmetal.util.evaluator.SolutionSetEvaluator;
 
@@ -49,7 +49,7 @@ public class ParallelGDE3Runner {
 
   /**
    * @param args Command line arguments.
-   * @throws jmetal.util.JMException
+   * @throws jmetal.util.JMetalException
    * @throws java.io.IOException
    * @throws SecurityException Usage: three choices
    *                           - jmetal.metaheuristics.nsgaII.NSGAII_main
@@ -57,7 +57,7 @@ public class ParallelGDE3Runner {
    *                           - jmetal.metaheuristics.nsgaII.NSGAII_main problemName paretoFrontFile
    */
   public static void main(String[] args)
-    throws JMException, SecurityException, IOException, ClassNotFoundException {
+    throws JMetalException, SecurityException, IOException, ClassNotFoundException {
     Problem problem;
     Algorithm algorithm;
     Operator selection;

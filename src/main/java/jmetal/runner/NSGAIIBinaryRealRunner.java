@@ -26,7 +26,7 @@ import jmetal.core.SolutionSet;
 import jmetal.experiments.settings.NSGAIIBinaryReal_Settings;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.fileOutput.DefaultFileOutputContext;
 import jmetal.util.fileOutput.FileOutputContext;
 import jmetal.util.fileOutput.SolutionSetOutput;
@@ -53,7 +53,7 @@ public class NSGAIIBinaryRealRunner {
 
   /**
    * @param args Command line arguments.
-   * @throws jmetal.util.JMException
+   * @throws jmetal.util.JMetalException
    * @throws java.io.IOException
    * @throws SecurityException Usage: three options
    *                           - jmetal.metaheuristics.nsgaII.NSGAII_main
@@ -61,7 +61,7 @@ public class NSGAIIBinaryRealRunner {
    *                           - jmetal.metaheuristics.nsgaII.NSGAII_main problemName paretoFrontFile
    */
   public static void main(String[] args) throws
-    JMException,
+    JMetalException,
     SecurityException,
     IOException,
     ClassNotFoundException {

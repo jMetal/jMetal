@@ -24,7 +24,7 @@ import jmetal.core.Solution;
 import jmetal.encodings.solutiontype.ArrayRealAndBinarySolutionType;
 import jmetal.encodings.variable.Binary;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.random.PseudoRandom;
 import jmetal.util.wrapper.XReal;
 
@@ -60,7 +60,7 @@ public class PolynomialBitFlipMutation extends Mutation {
   }
 
   @Override
-  public Object execute(Object object) throws JMException {
+  public Object execute(Object object) throws JMetalException {
     Solution solution = (Solution) object;
 
     if (!VALID_TYPES.contains(solution.getType().getClass())) {
@@ -69,7 +69,7 @@ public class PolynomialBitFlipMutation extends Mutation {
 
       Class<String> cls = java.lang.String.class;
       String name = cls.getName();
-      throw new JMException("Exception in " + name + ".execute()");
+      throw new JMetalException("Exception in " + name + ".execute()");
     }
 
     doMutation(realMutationProbability_, binaryMutationProbability_, solution);
@@ -82,10 +82,10 @@ public class PolynomialBitFlipMutation extends Mutation {
    * @param realProbability
    * @param binaryProbability
    * @param solution
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
   public void doMutation(Double realProbability, Double binaryProbability, Solution solution)
-    throws JMException {
+    throws JMetalException {
     double rnd, delta1, delta2, mut_pow, deltaq;
     double y, yl, yu, val, xy;
 

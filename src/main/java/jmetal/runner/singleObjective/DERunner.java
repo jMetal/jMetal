@@ -29,7 +29,7 @@ import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.singleObjective.CEC2005Problem;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -39,7 +39,7 @@ import java.util.HashMap;
  */
 public class DERunner {
 
-  public static void main(String[] args) throws JMException, ClassNotFoundException, IOException {
+  public static void main(String[] args) throws JMetalException, ClassNotFoundException, IOException {
     Problem problem;
     Algorithm algorithm;
     Operator crossover;

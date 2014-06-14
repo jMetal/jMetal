@@ -25,7 +25,7 @@ import jmetal.core.Problem;
 import jmetal.core.Solution;
 import jmetal.encodings.solutiontype.BinarySolutionType;
 import jmetal.encodings.variable.Binary;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 /**
  * Class representing problem OneMax. The problem consist of maximizing the
@@ -44,7 +44,7 @@ public class OneMax extends Problem {
    * @param solutionType Solution type
    * @throws ClassNotFoundException
    */
-  public OneMax(String solutionType) throws ClassNotFoundException, JMException {
+  public OneMax(String solutionType) throws ClassNotFoundException, JMetalException {
     this(solutionType, 512);
   }
 
@@ -53,7 +53,7 @@ public class OneMax extends Problem {
    *
    * @param numberOfBits Length of the problem
    */
-  public OneMax(String solutionType, Integer numberOfBits) throws JMException {
+  public OneMax(String solutionType, Integer numberOfBits) throws JMetalException {
     numberOfVariables_ = 1;
     numberOfObjectives_ = 1;
     numberOfConstraints_ = 0;
@@ -67,7 +67,7 @@ public class OneMax extends Problem {
     if (solutionType.compareTo("Binary") == 0) {
       solutionType_ = new BinarySolutionType(this);
     } else {
-      throw new JMException("Error: solution type " + solutionType + " invalid");
+      throw new JMetalException("Error: solution type " + solutionType + " invalid");
     }
   }
 

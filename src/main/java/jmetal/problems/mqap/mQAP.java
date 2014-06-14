@@ -24,7 +24,7 @@ import jmetal.core.Problem;
 import jmetal.core.Solution;
 import jmetal.encodings.solutiontype.PermutationSolutionType;
 import jmetal.encodings.variable.Permutation;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 
 /**
  * @author Juan J. Durillo
@@ -43,14 +43,14 @@ public class mQAP extends Problem {
   int[][] a_matrix;
   int[][][] b_matrixs;
 
-  public mQAP(String solutionType) throws JMException {
+  public mQAP(String solutionType) throws JMetalException {
     this(solutionType, "KC10-2fl-2rl.dat");
   }
 
   /**
    * Creates a new instance of problem mQAP.
    */
-  public mQAP(String solutionType, String fileName) throws JMException {
+  public mQAP(String solutionType, String fileName) throws JMetalException {
 
     ReadInstance ri = new ReadInstance(fileName);
     ri.loadInstance(); // necessary step (because I say it :-))
@@ -79,12 +79,12 @@ public class mQAP extends Problem {
     if (solutionType.compareTo("Permutation") == 0) {
       solutionType_ = new PermutationSolutionType(this);
     } else {
-      throw new JMException("Error: solution type " + solutionType + " invalid");
+      throw new JMetalException("Error: solution type " + solutionType + " invalid");
     }
   }
 
   // evaluation of the problem
-  public void evaluate(Solution solution) throws JMException {
+  public void evaluate(Solution solution) throws JMetalException {
     int[] permutation = ((Permutation) solution.getDecisionVariables()[0]).getVector();
     for (int k = 0; k < numberOfObjectives_; k++) {
       double aux = 0.0;

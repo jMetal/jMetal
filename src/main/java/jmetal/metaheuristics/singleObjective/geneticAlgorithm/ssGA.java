@@ -24,7 +24,7 @@ package jmetal.metaheuristics.singleObjective.geneticAlgorithm;
 import jmetal.core.*;
 import jmetal.operators.selection.WorstSolutionSelection;
 import jmetal.util.Configuration;
-import jmetal.util.JMException;
+import jmetal.util.JMetalException;
 import jmetal.util.comparator.ObjectiveComparator;
 
 import java.util.Comparator;
@@ -53,9 +53,9 @@ public class ssGA extends Algorithm {
   /**
    * Execute the SSGA algorithm
    *
-   * @throws JMException
+   * @throws jmetal.util.JMetalException
    */
-  public SolutionSet execute() throws JMException, ClassNotFoundException {
+  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     int populationSize;
     int maxEvaluations;
     int evaluations;
