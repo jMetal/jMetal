@@ -129,7 +129,7 @@ public class XInt {
     if (type_.getClass() == IntSolutionType.class) {
       return solution_.getDecisionVariables().length;
     } else if (type_.getClass() == ArrayIntSolutionType.class) {
-      return ((ArrayInt) (solution_.getDecisionVariables()[0])).getLength();
+      return ((ArrayInt) (solution_.getDecisionVariables()[0])).length();
     } else {
       Configuration.logger_.severe("jmetal.util.wrapper.XInt.size, solution type " +
         type_ + "+ invalid");

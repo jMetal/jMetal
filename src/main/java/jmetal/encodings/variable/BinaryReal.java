@@ -31,43 +31,17 @@ import java.util.BitSet;
  * a binary string
  */
 public class BinaryReal extends Binary {
-  /**
-   * Defines the default number of bits used for binary coded variables.
-   */
-  public static final int DEFAULT_PRECISION = 30;
-  /**
-   *
-   */
   private static final long serialVersionUID = 7465120044544948197L;
-  /**
-   * Stores the real value of the encodings.variable
-   */
+
+  public static final int DEFAULT_PRECISION = 30;
   private double value_;
-
-  /**
-   * Stores the lower limit for the encodings.variable
-   */
   private double lowerBound_;
-
-  /**
-   * Stores the upper limit for the encodings.variable
-   */
   private double upperBound_;
 
-  /**
-   * Constructor.
-   */
   public BinaryReal() {
     super();
   }
 
-  /**
-   * Constructor
-   *
-   * @param numberOfBits Length of the binary string.
-   * @param lowerBound   The lower limit for the encodings.variable
-   * @param upperBound   The upper limit for the encodings.variable.
-   */
   public BinaryReal(int numberOfBits, double lowerBound, double upperBound) {
     super(numberOfBits);
     lowerBound_ = lowerBound;
@@ -76,12 +50,6 @@ public class BinaryReal extends Binary {
     decode();
   }
 
-  /**
-   * @param bits       BitSet
-   * @param nbBits     Number of bits
-   * @param lowerBound Lower bound
-   * @param upperBound Upper bound
-   */
   public BinaryReal(BitSet bits, int nbBits, double lowerBound, double upperBound) {
     super(nbBits);
     setBits(bits);
@@ -91,11 +59,6 @@ public class BinaryReal extends Binary {
     decode();
   }
 
-  /**
-   * Copy constructor
-   *
-   * @param variable The encodings.variable to copy
-   */
   public BinaryReal(BinaryReal variable) {
     super(variable);
 
@@ -105,13 +68,6 @@ public class BinaryReal extends Binary {
     value_ = variable.value_;
   }
 
-
-  /**
-   * Decodes the real value encoded in the binary string represented
-   * by the <code>BinaryReal</code> object. The decoded value is stores in the
-   * <code>value_</code> field and can be accessed by the method
-   * <code>getValue</code>.
-   */
   public void decode() {
     double value = 0.0;
     for (int i = 0; i < numberOfBits_; i++) {
@@ -125,23 +81,10 @@ public class BinaryReal extends Binary {
     value_ += lowerBound_;
   }
 
-  /**
-   * Returns the double value of the encodings.variable.
-   *
-   * @return the double value.
-   */
   public double getValue() {
     return value_;
   }
 
-  /**
-   * This implementation is efficient for binary string of length up to 24
-   * bits, and for positive intervals.
-   *
-   * @see jmetal.core.Variable#setValue(double)
-   * <p/>
-   * Contributor: jl hippolyte
-   */
   @Override
   public void setValue(double value) throws JMetalException {
     if (numberOfBits_ <= 24 && lowerBound_ >= 0) {
@@ -189,56 +132,26 @@ public class BinaryReal extends Binary {
     }
   }
 
-  /**
-   * Creates an exact copy of a <code>BinaryReal</code> object.
-   *
-   * @return The copy of the object
-   */
   public Variable deepCopy() {
     return new BinaryReal(this);
   }
 
-  /**
-   * Returns the lower bound of the encodings.variable.
-   *
-   * @return the lower bound.
-   */
   public double getLowerBound() {
     return lowerBound_;
   }
 
-  /**
-   * Sets the lower bound of the encodings.variable.
-   *
-   * @param lowerBound the lower bound.
-   */
   public void setLowerBound(double lowerBound) {
     lowerBound_ = lowerBound;
   }
 
-  /**
-   * Returns the upper bound of the encodings.variable.
-   *
-   * @return the upper bound.
-   */
   public double getUpperBound() {
     return upperBound_;
   }
 
-  /**
-   * Sets the upper bound of the encodings.variable.
-   *
-   * @param upperBound the upper bound.
-   */
   public void setUpperBound(double upperBound) {
     upperBound_ = upperBound;
   }
 
-  /**
-   * Returns a string representing the object.
-   *
-   * @return the string.
-   */
   @Override
   public String toString() {
     return value_ + "";

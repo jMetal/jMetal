@@ -30,97 +30,44 @@ import java.util.logging.Level;
 
 
 /**
- * This class implements a Real value decision encodings.variable
+ * This class implements a Real value decision variable
  */
 public class Real extends Variable {
 
-  /**
-   *
-   */
   private static final long serialVersionUID = -227984897558565037L;
-
-  /**
-   * Stores the value of the real encodings.variable
-   */
   private double value_;
-
-  /**
-   * Stores the lower bound of the real encodings.variable
-   */
   private double lowerBound_;
-
-  /**
-   * Stores the upper bound of the real encodings.variable
-   */
   private double upperBound_;
 
-  /**
-   * Constructor
-   */
   public Real() {
   }
 
-
-  /**
-   * Constructor
-   *
-   * @param lowerBound Lower limit for the encodings.variable
-   * @param upperBound Upper limit for the encodings.variable
-   */
   public Real(double lowerBound, double upperBound) {
     lowerBound_ = lowerBound;
     upperBound_ = upperBound;
     value_ = PseudoRandom.randDouble() * (upperBound - lowerBound) + lowerBound;
   }
 
-  /**
-   * Constructor
-   *
-   * @param lowerBound Lower limit for the encodings.variable
-   * @param upperBound Upper limit for the encodings.variable
-   * @param value      Value of the variable
-   */
   public Real(double value, double lowerBound, double upperBound) {
     lowerBound_ = lowerBound;
     upperBound_ = upperBound;
     value_ = value;
   }
 
-  /**
-   * Copy constructor.
-   *
-   * @param variable The encodings.variable to copy.
-   * @throws jmetal.util.JMetalException
-   */
   public Real(Variable variable) throws JMetalException {
     lowerBound_ = variable.getLowerBound();
     upperBound_ = variable.getUpperBound();
     value_ = variable.getValue();
   }
 
-  /**
-   * Gets the value of the <code>Real</code> encodings.variable.
-   *
-   * @return the value.
-   */
   public double getValue() {
     return value_;
-  } // getValue
+  } 
 
-  /**
-   * Sets the value of the encodings.variable.
-   *
-   * @param value The value.
-   */
   public void setValue(double value) {
     value_ = value;
-  } // setValue
+  } 
 
-  /**
-   * Returns a exact copy of the <code>Real</code> encodings.variable
-   *
-   * @return the copy
-   */
   public Variable deepCopy() {
     try {
       return new Real(this);
@@ -130,47 +77,22 @@ public class Real extends Variable {
     }
   }
 
-  /**
-   * Gets the lower bound of the encodings.variable.
-   *
-   * @return the lower bound.
-   */
   public double getLowerBound() {
     return lowerBound_;
   }
 
-  /**
-   * Sets the lower bound of the encodings.variable.
-   *
-   * @param lowerBound The lower bound.
-   */
   public void setLowerBound(double lowerBound) {
     lowerBound_ = lowerBound;
   }
 
-  /**
-   * Gets the upper bound of the encodings.variable.
-   *
-   * @return the upper bound.
-   */
   public double getUpperBound() {
     return upperBound_;
   }
 
-  /**
-   * Sets the upper bound of the encodings.variable.
-   *
-   * @param upperBound The upper bound.
-   */
   public void setUpperBound(double upperBound) {
     upperBound_ = upperBound;
   }
 
-  /**
-   * Returns a string representing the object
-   *
-   * @return the string
-   */
   public String toString() {
     return value_ + "";
   }

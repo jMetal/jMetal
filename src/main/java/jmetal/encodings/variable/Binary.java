@@ -32,32 +32,14 @@ import java.util.BitSet;
  * or real variables).
  */
 public class Binary extends Variable {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = -3553927010701150789L;
-  /**
-   * Store the length of the binary string
-   */
+
   protected int numberOfBits_;
-  /**
-   * Stores the bits constituting the binary string. It is
-   * implemented using a BitSet object
-   */
   private BitSet bits_;
 
-  /**
-   * Default constructor.
-   */
   public Binary() {
   }
 
-  /**
-   * Constructor
-   *
-   * @param numberOfBits Length of the bit string
-   */
   public Binary(int numberOfBits) {
     numberOfBits_ = numberOfBits;
 
@@ -71,11 +53,6 @@ public class Binary extends Variable {
     }
   }
 
-  /**
-   * Copy constructor.
-   *
-   * @param variable The Binary encodings.variable to copy.
-   */
   public Binary(Binary variable) {
     numberOfBits_ = variable.numberOfBits_;
 
@@ -93,50 +70,22 @@ public class Binary extends Variable {
     bits_ = bits;
   }
 
-  /**
-   * Creates an exact copy of a Binary object
-   *
-   * @return An exact copy of the object.
-   */
   public Variable deepCopy() {
     return new Binary(this);
   }
 
-  /**
-   * Returns the length of the binary string.
-   *
-   * @return The length
-   */
   public int getNumberOfBits() {
     return numberOfBits_;
   }
 
-  /**
-   * Returns the value of the ith bit.
-   *
-   * @param bit The bit to retrieve
-   * @return The ith bit
-   */
   public boolean getIth(int bit) {
     return bits_.get(bit);
   }
 
-  /**
-   * Sets the value of the ith bit.
-   *
-   * @param bit The bit to set
-   */
   public void setIth(int bit, boolean value) {
     bits_.set(bit, value);
   }
 
-
-  /**
-   * Obtain the hamming distance between two binary strings
-   *
-   * @param other The binary string to compare
-   * @return The hamming distance
-   */
   public int hammingDistance(Binary other) {
     int distance = 0;
     int i = 0;
@@ -149,9 +98,6 @@ public class Binary extends Variable {
     return distance;
   }
 
-  /**
-   *
-   */
   public String toString() {
     String result;
 

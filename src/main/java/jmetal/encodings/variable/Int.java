@@ -29,47 +29,27 @@ import jmetal.util.random.PseudoRandom;
 import java.util.logging.Level;
 
 /**
- * This class implements an integer decision encodings.variable
+ * This class implements an integer decision variable
  */
 public class Int extends Variable {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = -220713455225959427L;
 
-  private int value_;       //Stores the value of the encodings.variable
-  private int lowerBound_;  //Stores the lower limit of the encodings.variable
-  private int upperBound_;  //Stores the upper limit of the encodings.variable
+  private int value_;      
+  private int lowerBound_;  
+  private int upperBound_;  
 
-  /**
-   * Constructor
-   */
   public Int() {
     lowerBound_ = java.lang.Integer.MIN_VALUE;
     upperBound_ = java.lang.Integer.MAX_VALUE;
     value_ = 0;
   }
 
-  /**
-   * Constructor
-   *
-   * @param lowerBound Variable lower bound
-   * @param upperBound Variable upper bound
-   */
   public Int(int lowerBound, int upperBound) {
     lowerBound_ = lowerBound;
     upperBound_ = upperBound;
     value_ = PseudoRandom.randInt(lowerBound, upperBound);
   }
 
-  /**
-   * Constructor
-   *
-   * @param value      Value of the encodings.variable
-   * @param lowerBound Variable lower bound
-   * @param upperBound Variable upper bound
-   */
   public Int(int value, int lowerBound, int upperBound) {
     super();
 
@@ -78,41 +58,20 @@ public class Int extends Variable {
     upperBound_ = upperBound;
   }
 
-  /**
-   * Copy constructor.
-   *
-   * @param variable Variable to be copied.
-   * @throws jmetal.util.JMetalException
-   */
   public Int(Variable variable) throws JMetalException {
     lowerBound_ = (int) variable.getLowerBound();
     upperBound_ = (int) variable.getUpperBound();
     value_ = (int) variable.getValue();
   }
 
-  /**
-   * Returns the value of the encodings.variable.
-   *
-   * @return the value.
-   */
   public double getValue() {
     return value_;
   }
 
-  /**
-   * Assigns a value to the encodings.variable.
-   *
-   * @param value The value.
-   */
   public void setValue(double value) {
     value_ = (int) value;
   }
 
-  /**
-   * Creates an exact copy of the <code>Int</code> object.
-   *
-   * @return the copy.
-   */
   public Variable deepCopy() {
     try {
       return new Int(this);
@@ -122,47 +81,22 @@ public class Int extends Variable {
     }
   }
 
-  /**
-   * Returns the lower bound of the encodings.variable.
-   *
-   * @return the lower bound.
-   */
   public double getLowerBound() {
     return lowerBound_;
   }
 
-  /**
-   * Sets the lower bound of the encodings.variable.
-   *
-   * @param lowerBound The lower bound value.
-   */
   public void setLowerBound(double lowerBound) {
     lowerBound_ = (int) lowerBound;
-  } // setLowerBound
+  } 
 
-  /**
-   * Returns the upper bound of the encodings.variable.
-   *
-   * @return the upper bound.
-   */
   public double getUpperBound() {
     return upperBound_;
   }
 
-  /**
-   * Sets the upper bound of the encodings.variable.
-   *
-   * @param upperBound The new upper bound value.
-   */
   public void setUpperBound(double upperBound) {
     upperBound_ = (int) upperBound;
   }
-
-  /**
-   * Returns a string representing the object
-   *
-   * @return The string
-   */
+  
   public String toString() {
     return value_ + "";
   }

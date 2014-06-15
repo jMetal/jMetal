@@ -23,7 +23,6 @@ package jmetal.encodings.variable;
 
 import jmetal.core.Problem;
 import jmetal.core.Variable;
-import jmetal.util.Configuration;
 import jmetal.util.JMetalException;
 import jmetal.util.random.PseudoRandom;
 
@@ -33,39 +32,18 @@ import jmetal.util.random.PseudoRandom;
  * The real values of the array have their own bounds.
  */
 public class ArrayReal extends Variable {
-  /**
-   *
-   */
   private static final long serialVersionUID = -731434436787291959L;
 
-  /**
-   * Problem using the type
-   */
   private Problem problem_;
-
-  /**
-   * Stores an array of real values
-   */
   private double[] array_;
-  /**
-   * Stores the length of the array
-   */
   private int size_;
 
-  /**
-   * Constructor
-   */
   public ArrayReal() {
     problem_ = null;
     size_ = 0;
     array_ = null;
   }
 
-  /**
-   * Constructor
-   *
-   * @param size Size of the array
-   */
   public ArrayReal(int size, Problem problem) {
     problem_ = problem;
     size_ = size;
@@ -78,11 +56,6 @@ public class ArrayReal extends Variable {
     }
   }
 
-  /**
-   * Copy Constructor
-   *
-   * @param arrayReal The arrayReal to copy
-   */
   private ArrayReal(ArrayReal arrayReal) {
     problem_ = arrayReal.problem_;
     size_ = arrayReal.size_;
@@ -100,29 +73,14 @@ public class ArrayReal extends Variable {
     return new ArrayReal(this);
   }
 
-  /**
-   * Returns the length of the arrayReal.
-   *
-   * @return The length
-   */
-  public int getLength() {
+  public int length() {
     return size_;
   }
 
-  /**
-   * getValue
-   *
-   * @param index Index of value to be returned
-   * @return the value in position index
-   */
   public double getValue(int index) throws JMetalException {
     if ((index >= 0) && (index < size_)) {
       return array_[index];
     } else {
-      Configuration.logger_.severe(
-        jmetal.encodings.variable.ArrayReal.class + ".getValue(): index value (" + index
-          + ") invalid"
-      );
       throw new JMetalException(
         jmetal.encodings.variable.ArrayReal.class + ".ArrayReal: index value (" + index
           + ") invalid"
@@ -130,39 +88,19 @@ public class ArrayReal extends Variable {
     }
   }
 
-  /**
-   * setValue
-   *
-   * @param index Index of value to be returned
-   * @param value The value to be set in position index
-   */
   public void setValue(int index, double value) throws JMetalException {
     if ((index >= 0) && (index < size_)) {
       array_[index] = value;
     } else {
-      Configuration.logger_.severe(
-        jmetal.encodings.variable.ArrayReal.class + ".setValue(): index value (" + index
-          + ") invalid"
-      );
       throw new JMetalException(
         jmetal.encodings.variable.ArrayReal.class + ": index value (" + index + ") invalid");
     }
   }
 
-  /**
-   * Get the lower bound of a value
-   *
-   * @param index The index of the value
-   * @return the lower bound
-   */
   public double getLowerBound(int index) throws JMetalException {
     if ((index >= 0) && (index < size_)) {
       return problem_.getLowerLimit(index);
     } else {
-      Configuration.logger_.severe(
-        jmetal.encodings.variable.ArrayReal.class + ".getLowerBound(): index value (" + index
-          + ") invalid"
-      );
       throw new JMetalException(
         jmetal.encodings.variable.ArrayReal.class + ".getLowerBound: index value (" + index
           + ") invalid"

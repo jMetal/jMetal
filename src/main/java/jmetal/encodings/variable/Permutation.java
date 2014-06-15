@@ -23,46 +23,28 @@ package jmetal.encodings.variable;
 
 import jmetal.core.Variable;
 
+import java.util.ArrayList;
+
 /**
  * Class implementing a permutation of integer decision encodings.variable
  */
 public class Permutation extends Variable {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = 2657470069340722041L;
 
-  /**
-   * Stores a permutation of <code>int</code> values
-   */
   private int[] vector_;
-  /**
-   * Stores the length of the permutation
-   */
+
   private int size_;
 
-
-  /**
-   * Constructor
-   */
   public Permutation() {
     size_ = 0;
     vector_ = null;
   }
 
-  /**
-   * Constructor
-   *
-   * @param size Length of the permutation
-   *             This constructor has been contributed by Madan Sathe
-   */
   public Permutation(int size) {
     size_ = size;
     vector_ = new int[size_];
 
-    java.util.ArrayList<Integer> randomSequence = new
-      java.util.ArrayList<Integer>(size_);
+    ArrayList<Integer> randomSequence = new ArrayList<>(size_);
 
     for (int i = 0; i < size_; i++) {
       randomSequence.add(i);
@@ -75,11 +57,6 @@ public class Permutation extends Variable {
     }
   }
 
-  /**
-   * Copy Constructor
-   *
-   * @param permutation The permutation to copy
-   */
   public Permutation(Permutation permutation) {
     size_ = permutation.size_;
     vector_ = new int[size_];
@@ -95,29 +72,15 @@ public class Permutation extends Variable {
     return size_;
   }
 
-  /**
-   * Create an exact copy of the <code>Permutation</code> object.
-   *
-   * @return An exact copy of the object.
-   */
+
   public Variable deepCopy() {
     return new Permutation(this);
-  } //deepCopy
+  }
 
-  /**
-   * Returns the length of the permutation.
-   *
-   * @return The length
-   */
   public int getLength() {
     return size_;
-  } //getNumberOfBits
+  }
 
-  /**
-   * Returns a string representing the object
-   *
-   * @return The string
-   */
   public String toString() {
     String string;
 

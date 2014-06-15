@@ -144,7 +144,7 @@ public class XReal {
       (getType_().getClass() == BinaryRealSolutionType.class)) {
       return solution_.getDecisionVariables().length;
     } else if (getType_().getClass() == ArrayRealSolutionType.class) {
-      return ((ArrayReal) (solution_.getDecisionVariables()[0])).getLength();
+      return ((ArrayReal) (solution_.getDecisionVariables()[0])).length();
     } else {
       Configuration.logger_.severe("jmetal.util.wrapper.XReal.size, solution type " +
         getType_() + "+ invalid");

@@ -99,7 +99,7 @@ public class cMOEAD extends Algorithm {
 
     functionType_ = "_TCHE1";
 
-  } // DMOEA
+  }
 
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     int maxEvaluations;
