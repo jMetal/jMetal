@@ -60,9 +60,9 @@ public class XReal {
       (getType_().getClass() == BinaryRealSolutionType.class)) {
       return solution_.getDecisionVariables()[index].getValue();
     } else if (getType_().getClass() == ArrayRealSolutionType.class) {
-      return ((ArrayReal) (solution_.getDecisionVariables()[0])).gerArray()[index];
+      return ((ArrayReal) (solution_.getDecisionVariables()[0])).getArray()[index];
     } else if (getType_().getClass() == ArrayRealAndBinarySolutionType.class) {
-      return ((ArrayReal) (solution_.getDecisionVariables()[0])).gerArray()[index];
+      return ((ArrayReal) (solution_.getDecisionVariables()[0])).getArray()[index];
     } else {
       Configuration.logger_.severe("jmetal.util.wrapper.XReal.getValue, solution type " +
         getType_() + "+ invalid");
@@ -81,9 +81,9 @@ public class XReal {
     if (getType_().getClass() == RealSolutionType.class) {
       solution_.getDecisionVariables()[index].setValue(value);
     } else if (getType_().getClass() == ArrayRealSolutionType.class) {
-      ((ArrayReal) (solution_.getDecisionVariables()[0])).gerArray()[index] = value;
+      ((ArrayReal) (solution_.getDecisionVariables()[0])).getArray()[index] = value;
     } else if (getType_().getClass() == ArrayRealAndBinarySolutionType.class) {
-      ((ArrayReal) (solution_.getDecisionVariables()[0])).gerArray()[index] = value;
+      ((ArrayReal) (solution_.getDecisionVariables()[0])).getArray()[index] = value;
     } else {
       Configuration.logger_.severe("jmetal.util.wrapper.XReal.setValue, solution type " +
         getType_() + "+ invalid");

@@ -91,7 +91,7 @@ public class ArrayReal extends Variable {
     System.arraycopy(arrayReal.array_, 0, array_, 0, size_);
   }
 
-  public double[] gerArray() {
+  public double[] getArray() {
     return array_;
   }
 
@@ -170,20 +170,10 @@ public class ArrayReal extends Variable {
     }
   }
 
-  /**
-   * Get the upper bound of a value
-   *
-   * @param index The index of the value
-   * @return the upper bound
-   */
   public double getUpperBound(int index) throws JMetalException {
     if ((index >= 0) && (index < size_)) {
       return problem_.getUpperLimit(index);
     } else {
-      Configuration.logger_.severe(
-        jmetal.encodings.variable.ArrayReal.class + ".getUpperBound(): index value (" + index
-          + ") invalid"
-      );
       throw new JMetalException(
         jmetal.encodings.variable.ArrayReal.class + ".getUpperBound: index value (" + index
           + ") invalid"
@@ -191,11 +181,6 @@ public class ArrayReal extends Variable {
     }
   }
 
-  /**
-   * Returns a string representing the object
-   *
-   * @return The string
-   */
   public String toString() {
     String string;
 
