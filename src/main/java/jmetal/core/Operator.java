@@ -74,6 +74,7 @@ public abstract class Operator implements Serializable {
    * @param name  The parameter name.
    * @param value Object representing the parameter.
    */
+  @Deprecated
   public void setParameter(String name, Object value) {
     parameters_.put(name, value);
   }
@@ -84,6 +85,7 @@ public abstract class Operator implements Serializable {
    * @param name The parameter name.
    * @return the parameter.
    */
+  @Deprecated
   public Object getParameter(String name) {
     return parameters_.get(name);
   }

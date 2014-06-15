@@ -71,7 +71,6 @@ public class BinaryTournament2 extends Selection {
     dominance_ = new DominanceComparator();
   }
 
-
   /**
    * Performs the operation
    *

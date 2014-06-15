@@ -14,10 +14,10 @@ software. Some of the ideas we are elaborating are:
 * The encoding takes into account the recommendations provided in “Clean code: A Handbook of Agile Software Craftsmanship" (Robert C. Martin)
 * The Fluent Interface (http://martinfowler.com/bliki/FluentInterface.html) is applied to configure and execute
 the algorithms.
-* We will incorporate progressively unit tests to all the clases.
+* We will incorporate progressively unit tests to all the classes.
 
 ### Clean code
-After applying clean code, the main code of NSGA-II is now as follows:
+After applying clean coding, the `NSGAII.java" program currently looks like this:
 ``` java
    public class NSGAII extends NSGAIITemplate {
 
@@ -74,10 +74,16 @@ After applying clean code, the main code of NSGA-II is now as follows:
      }
    }
 ```
+
+The list of metaheuristics that have been redesigned using clean coding is:
+* NSGA-II
+* GDE3
+* SMPSO
+
 ### Fluent interface
 We apply the Fluent Interface to the creation of operators, the configuration of algorithms, and
-the reporting of output information. As an example, the configure and run NSGA-II the `NSGAIIRunner`
-program looks like this code:
+the reporting of output information. As an example, the `NSGAIIRunner` program to configure and run
+NSGA-II looks like this code:
 
 ``` java
 
@@ -198,5 +204,8 @@ public class NSGAIIRunner {
 }
 ```
 
-
+The list of operators adapted to use the fluent interface is:
+* Crossover: `SBXCrossover`, `DifferentialEvolutionCrossover`
+* Mutation: `PolynomialMutation`
+* Selection: `BinaryTournament2`, `DifferentialEvolutionSelection`
 
