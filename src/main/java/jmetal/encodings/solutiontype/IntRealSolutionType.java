@@ -46,7 +46,7 @@ public class IntRealSolutionType extends SolutionType {
     super(problem);
     intVariables_ = intVariables;
     realVariables_ = realVariables;
-  } // Constructor
+  } 
 
   /**
    * Creates the variables of the solution

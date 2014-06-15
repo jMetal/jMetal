@@ -68,6 +68,6 @@ public class ArrayRealAndBinarySolutionType extends SolutionType {
     variables[0] = new ArrayReal(numberOfRealVariables_, getProblem());
     variables[1] = new Binary(binaryStringLength_);
     return variables;
-  } // createVariables
-} // ArrayRealAndBinarySolutionType
+  }
+}
 

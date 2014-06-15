@@ -39,7 +39,7 @@ public class BinaryRealSolutionType extends SolutionType {
    */
   public BinaryRealSolutionType(Problem problem) {
     super(problem);
-  } // Constructor
+  }
 
   /**
    * Creates the variables of the solution

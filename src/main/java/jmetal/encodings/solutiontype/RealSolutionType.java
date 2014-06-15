@@ -38,7 +38,7 @@ public class RealSolutionType extends SolutionType {
    */
   public RealSolutionType(Problem problem) {
     super(problem);
-  } // Constructor
+  } 
 
   /**
    * Creates the variables of the solution

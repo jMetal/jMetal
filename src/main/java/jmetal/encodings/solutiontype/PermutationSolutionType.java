@@ -39,7 +39,7 @@ public class PermutationSolutionType extends SolutionType {
    */
   public PermutationSolutionType(Problem problem) {
     super(problem);
-  } // PermutationSolution
+  }
 
   /**
    * Creates the variables of the solution
@@ -52,5 +52,5 @@ public class PermutationSolutionType extends SolutionType {
     }
 
     return variables;
-  } // createVariables
-} // PermutationSolutionType
+  } 
+} 

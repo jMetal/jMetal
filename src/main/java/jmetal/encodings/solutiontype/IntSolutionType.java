@@ -38,7 +38,7 @@ public class IntSolutionType extends SolutionType {
    */
   public IntSolutionType(Problem problem) {
     super(problem);
-  } // Constructor
+  }
 
   /**
    * Creates the variables of the solution
