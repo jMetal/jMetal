@@ -29,10 +29,6 @@ import java.util.HashMap;
  * This class represents the super class of all the crossover operators
  */
 public abstract class Crossover extends Operator {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = 4720992679275654728L;
 
   @Deprecated

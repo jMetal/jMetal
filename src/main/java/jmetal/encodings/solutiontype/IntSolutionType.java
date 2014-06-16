@@ -22,6 +22,7 @@
 package jmetal.encodings.solutiontype;
 
 import jmetal.core.Problem;
+import jmetal.core.Solution;
 import jmetal.core.SolutionType;
 import jmetal.core.Variable;
 import jmetal.encodings.variable.Int;
@@ -29,7 +30,7 @@ import jmetal.encodings.variable.Int;
 /**
  * Class representing the solution type of solutions composed of Int variables
  */
-public class IntSolutionType extends SolutionType {
+public class IntSolutionType extends SolutionType implements IntSolution {
 
   /**
    * Constructor
@@ -52,5 +53,10 @@ public class IntSolutionType extends SolutionType {
     }
 
     return variables;
+  }
+  
+  @Override
+  public int getIntValue(Solution solution, int index) {
+    return (int)solution.getDecisionVariables()[index].getValue() ;
   }
 }

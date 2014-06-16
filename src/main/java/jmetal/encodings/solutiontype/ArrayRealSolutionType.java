@@ -22,6 +22,7 @@
 package jmetal.encodings.solutiontype;
 
 import jmetal.core.Problem;
+import jmetal.core.Solution;
 import jmetal.core.SolutionType;
 import jmetal.core.Variable;
 import jmetal.encodings.variable.ArrayReal;
@@ -64,5 +65,9 @@ public class ArrayRealSolutionType extends SolutionType {
     variables[0] = vars[0].deepCopy();
 
     return variables;
+  }
+  
+  public double getReal(Solution solution, int index) {
+    return ((ArrayReal) (solution.getDecisionVariables()[0])).getArray()[index] ;
   }
 }

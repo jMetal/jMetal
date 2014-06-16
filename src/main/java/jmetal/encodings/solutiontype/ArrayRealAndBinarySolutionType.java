@@ -22,6 +22,7 @@
 package jmetal.encodings.solutiontype;
 
 import jmetal.core.Problem;
+import jmetal.core.Solution;
 import jmetal.core.SolutionType;
 import jmetal.core.Variable;
 import jmetal.encodings.variable.ArrayReal;
@@ -37,7 +38,7 @@ import jmetal.encodings.variable.Binary;
  * - The upperLimit_ and lowerLimit_ arrays must have the length indicated
  * by numberOfVariables_.
  */
-public class ArrayRealAndBinarySolutionType extends SolutionType {
+public class ArrayRealAndBinarySolutionType extends SolutionType implements RealSolution {
 
   private final int binaryStringLength_;
   private final int numberOfRealVariables_;
@@ -68,6 +69,11 @@ public class ArrayRealAndBinarySolutionType extends SolutionType {
     variables[0] = new ArrayReal(numberOfRealVariables_, getProblem());
     variables[1] = new Binary(binaryStringLength_);
     return variables;
+  }
+
+  @Override
+  public double getRealValue(Solution solution, int index) {
+    return ((ArrayReal) (solution.getDecisionVariables()[0])).getArray()[index];
   }
 }
 

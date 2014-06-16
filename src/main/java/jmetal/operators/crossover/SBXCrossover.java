@@ -36,9 +36,6 @@ import java.util.HashMap;
  * solutions.
  */
 public class SBXCrossover extends Crossover {
-  /**
-   *
-   */
   private static final long serialVersionUID = -880076874462438998L;
 
   /**
@@ -248,6 +245,7 @@ public class SBXCrossover extends Crossover {
     }
 
     public Builder distributionIndex(double distributionIndex) {
+      //Validate.isTrue()
       if (distributionIndex < 0) {
         throw new JMetalException("Distribution index invalid: " + distributionIndex) ;
       } else {

@@ -22,15 +22,17 @@
 package jmetal.encodings.solutiontype;
 
 import jmetal.core.Problem;
+import jmetal.core.Solution;
 import jmetal.core.SolutionType;
 import jmetal.core.Variable;
 import jmetal.encodings.variable.ArrayInt;
+import jmetal.encodings.variable.ArrayReal;
 
 /**
  * Class representing the solution type of solutions composed of an ArrayInt
  * encodings.variable
  */
-public class ArrayIntSolutionType extends SolutionType {
+public class ArrayIntSolutionType extends SolutionType implements IntSolution{
 
   /**
    * Constructor
@@ -64,5 +66,10 @@ public class ArrayIntSolutionType extends SolutionType {
     variables[0] = vars[0].deepCopy();
 
     return variables;
+  }
+
+  @Override
+  public int getIntValue(Solution solution, int index) {
+    return (int)((ArrayReal) (solution.getDecisionVariables()[0])).getArray()[index] ;
   }
 }

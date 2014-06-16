@@ -22,6 +22,7 @@
 package jmetal.encodings.solutiontype;
 
 import jmetal.core.Problem;
+import jmetal.core.Solution;
 import jmetal.core.SolutionType;
 import jmetal.core.Variable;
 import jmetal.encodings.variable.Real;
@@ -29,7 +30,7 @@ import jmetal.encodings.variable.Real;
 /**
  * Class representing a solution type composed of real variables
  */
-public class RealSolutionType extends SolutionType {
+public class RealSolutionType extends SolutionType implements RealSolution{
 
   /**
    * Constructor
@@ -52,5 +53,10 @@ public class RealSolutionType extends SolutionType {
     }
 
     return variables;
+  }
+  
+  @Override
+  public double getRealValue(Solution solution, int index) {
+    return solution.getDecisionVariables()[index].getValue() ;
   }
 }

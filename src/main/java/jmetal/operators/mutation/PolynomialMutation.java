@@ -40,10 +40,6 @@ public class PolynomialMutation extends Mutation {
 
   private double mutationProbability_ = 0.0;
 
-  /**
-   * Constructor
-   * Creates a new instance of the polynomial mutation operator
-   */
   @Deprecated
   public PolynomialMutation(HashMap<String, Object> parameters) {
     super(parameters);
@@ -83,7 +79,7 @@ public class PolynomialMutation extends Mutation {
    * @throws jmetal.util.JMetalException
    */
   public void doMutation(double probability, Solution solution) throws JMetalException {
-    double rnd, delta1, delta2, mut_pow, deltaq;
+    double rnd, delta1, delta2, mutPow, deltaq;
     double y, yl, yu, val, xy;
     XReal x = new XReal(solution);
     for (int var = 0; var < solution.numberOfVariables(); var++) {
@@ -94,16 +90,16 @@ public class PolynomialMutation extends Mutation {
         delta1 = (y - yl) / (yu - yl);
         delta2 = (yu - y) / (yu - yl);
         rnd = PseudoRandom.randDouble();
-        mut_pow = 1.0 / (distributionIndex_ + 1.0);
+        mutPow = 1.0 / (distributionIndex_ + 1.0);
         if (rnd <= 0.5) {
           xy = 1.0 - delta1;
           val = 2.0 * rnd + (1.0 - 2.0 * rnd) * (Math.pow(xy, (distributionIndex_ + 1.0)));
-          deltaq = java.lang.Math.pow(val, mut_pow) - 1.0;
+          deltaq = java.lang.Math.pow(val, mutPow) - 1.0;
         } else {
           xy = 1.0 - delta2;
           val = 2.0 * (1.0 - rnd) + 2.0 * (rnd - 0.5) * (java.lang.Math
             .pow(xy, (distributionIndex_ + 1.0)));
-          deltaq = 1.0 - (java.lang.Math.pow(val, mut_pow));
+          deltaq = 1.0 - (java.lang.Math.pow(val, mutPow));
         }
         y = y + deltaq * (yu - yl);
         if (y < yl) {

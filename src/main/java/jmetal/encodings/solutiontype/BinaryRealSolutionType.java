@@ -22,6 +22,7 @@
 package jmetal.encodings.solutiontype;
 
 import jmetal.core.Problem;
+import jmetal.core.Solution;
 import jmetal.core.SolutionType;
 import jmetal.core.Variable;
 import jmetal.encodings.variable.BinaryReal;
@@ -30,7 +31,7 @@ import jmetal.encodings.variable.BinaryReal;
  * Class representing the solution type of solutions composed of BinaryReal
  * variables
  */
-public class BinaryRealSolutionType extends SolutionType {
+public class BinaryRealSolutionType extends SolutionType implements RealSolution {
 
   /**
    * Constructor
@@ -60,5 +61,10 @@ public class BinaryRealSolutionType extends SolutionType {
         getProblem().getUpperLimit(var));
     }
     return variables;
+  }
+
+  @Override
+  public double getRealValue(Solution solution, int index) {
+    return solution.getDecisionVariables()[index].getValue() ;
   }
 }
