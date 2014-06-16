@@ -10,7 +10,7 @@ Organizers:
 		epnsugan@ntu.edu.sg
 		http:www.ntu.edu.sg/home/EPNSugan
 
-Java version of the test functions
+Java version of the org.uma.test functions
 
 Matlab reference code
 	http:www.ntu.edu.sg/home/EPNSugan
@@ -39,11 +39,11 @@ Version 0.91
 	Benchmark.java
 		The main class for the whole Benchmark
 	TestFunc.java
-		The parent class for the actual test functions
+		The parent class for the actual org.uma.test functions
 	HCJob.java
 		The storage class for hybrid composition functions
 	F??_*.java
-		The test function class for each test function
+		The org.uma.test function class for each org.uma.test function
 	00-tests.txt
 		The computational results obtained by the Java version on the check points
 
@@ -56,8 +56,8 @@ Version 0.91
 3. Typical Usage
 	// Create a Benchmark object
 	Benchmark theBenchmark = new Benchmark();
-	// Use the factory function call to create a test function object
-	//		test function 3 with 50 dimension
+	// Use the factory function call to create a org.uma.test function object
+	//		org.uma.test function 3 with 50 dimension
 	//		the object class is "TestFunc"
 	TestFunc aTestFunc = theBenchmark.testFunctionFactory(3, 50);
 	// Invoke the function with x

@@ -21,7 +21,7 @@ test_data_func25.mat
 % Variables:x25, line1-line10
 % Corresponding Function Values: f25, line11-line20
 
-***Notice, for function 4,17,24,25, since they have noise, please set noise to 0 (e.g setting 0.0*N(0,1)) before test.
+***Notice, for function 4,17,24,25, since they have noise, please set noise to 0 (e.g setting 0.0*N(0,1)) before org.uma.test.
 
 fbias_data.txt
 
