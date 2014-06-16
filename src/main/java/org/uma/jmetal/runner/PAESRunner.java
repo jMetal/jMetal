@@ -41,7 +41,7 @@ import java.util.logging.Logger;
 /**
  * Class for configuring and running the PAES algorithm
  */
-public class PAES_main {
+public class PAESRunner {
   public static Logger logger_;      
   public static FileHandler fileHandler_; 
 

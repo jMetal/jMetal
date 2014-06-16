@@ -43,7 +43,7 @@ import java.util.logging.Logger;
 /**
  * Class for configuring and running the FastPGA algorithm
  */
-public class FastPGA_main {
+public class FastPGARunner {
   public static Logger logger_;      
   public static FileHandler fileHandler_; 
 

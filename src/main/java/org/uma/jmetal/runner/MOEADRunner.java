@@ -1,4 +1,4 @@
-//  SolutionSet.Java
+//  MOEAD_main.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -25,10 +25,9 @@ import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristics.mocell.MOCell;
+import org.uma.jmetal.metaheuristics.moead.MOEAD;
 import org.uma.jmetal.operators.crossover.CrossoverFactory;
 import org.uma.jmetal.operators.mutation.MutationFactory;
-import org.uma.jmetal.operators.selection.SelectionFactory;
 import org.uma.jmetal.problems.Kursawe;
 import org.uma.jmetal.problems.ProblemFactory;
 import org.uma.jmetal.qualityIndicator.QualityIndicator;
@@ -41,13 +40,13 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
 /**
- * * This class executes the algorithms described in
- * A.J. Nebro, J.J. Durillo, F. Luna, B. Dorronsoro, E. Alba
- * "Design Issues in a Multiobjective Cellular Genetic Algorithm."
- * Evolutionary Multi-Criterion Optimization. 4th International Conference,
- * EMO 2007. Sendai/Matsushima, Japan, March 2007.
+ * This class executes the algorithm described in:
+ * H. Li and Q. Zhang,
+ * "Multiobjective Optimization Problems with Complicated Pareto Sets,  MOEA/D
+ * and NSGA-II". IEEE Trans on Evolutionary Computation, vol. 12,  no 2,
+ * pp 284-302, April/2009.
  */
-public class MOCell_main {
+public class MOEADRunner {
   public static Logger logger_;      
   public static FileHandler fileHandler_; 
 
@@ -56,10 +55,11 @@ public class MOCell_main {
    *             the problem to solve.
    * @throws org.uma.jmetal.util.JMetalException
    * @throws IOException
-   * @throws SecurityException Usage: three options
-   *                           - org.uma.jmetal.runner.MOCell_main
-   *                           - org.uma.jmetal.runner.MOCell_main problemName
-   *                           - org.uma.jmetal.runner.MOCell_main problemName ParetoFrontFile
+   * @throws SecurityException      Usage: three options
+   *                                - org.uma.jmetal.runner.MOEAD_main
+   *                                - org.uma.jmetal.runner.MOEAD_main problemName
+   *                                - org.uma.jmetal.runner.MOEAD_main problemName ParetoFrontFile
+   * @throws ClassNotFoundException
    */
   public static void main(String[] args)
     throws JMetalException, SecurityException, IOException, ClassNotFoundException {
@@ -67,13 +67,12 @@ public class MOCell_main {
     Algorithm algorithm;
     Operator crossover;
     Operator mutation;
-    Operator selection;
 
     QualityIndicator indicators;
 
     // Logger object and file to store log messages
     logger_ = Configuration.logger_;
-    fileHandler_ = new FileHandler("MOCell_main.log");
+    fileHandler_ = new FileHandler("MOEAD.log");
     logger_.addHandler(fileHandler_);
 
     indicators = null;
@@ -84,50 +83,55 @@ public class MOCell_main {
       Object[] params = {"Real"};
       problem = (new ProblemFactory()).getProblem(args[0], params);
       indicators = new QualityIndicator(problem, args[1]);
-    } else {
+    } else { 
       problem = new Kursawe("Real", 3);
+      //problem = new Kursawe("BinaryReal", 3);
       //problem = new Water("Real");
-      //problem = new ZDT1("ArrayReal", 1000);
-      //problem = new ZDT4("BinaryReal");
-      //problem = new WFG1("Real");
+      //problem = new ZDT1("ArrayReal", 100);
+      //problem = new ConstrEx("Real");
       //problem = new DTLZ1("Real");
       //problem = new OKA2("Real") ;
-    }
-
-    //algorithm = new sMOCell1(problem_) ;
-    //algorithm = new sMOCell2(problem_) ;
-    //algorithm = new aMOCell1(problem_) ;
-    //algorithm = new aMOCell2(problem_) ;
-    //algorithm = new aMOCell3(problem_) ;
-    algorithm = new MOCell();
+    } 
+    
+    algorithm = new MOEAD();
     algorithm.setProblem(problem);
+    //algorithm = new MOEAD_DRA(problem);
 
     // Algorithm parameters
-    algorithm.setInputParameter("populationSize", 100);
-    algorithm.setInputParameter("archiveSize", 100);
-    algorithm.setInputParameter("maxEvaluations", 25000);
-    algorithm.setInputParameter("feedBack", 20);
+    algorithm.setInputParameter("populationSize", 300);
+    algorithm.setInputParameter("maxEvaluations", 150000);
 
-    // Mutation and Crossover for Real codification 
+    // Directory with the files containing the weight vectors used in 
+    // Q. Zhang,  W. Liu,  and H Li, The Performance of a New Version of MOEA/D 
+    // on CEC09 Unconstrained MOP Test Instances Working Report CES-491, School 
+    // of CS & EE, University of Essex, 02/2009.
+    // http://dces.essex.ac.uk/staff/qzhang/MOEAcompetition/CEC09final/code/ZhangMOEADcode/moead0305.rar
+    algorithm.setInputParameter("dataDirectory", "MOEAD_Weight");
+
+    // used by MOEAD_DRA
+    algorithm.setInputParameter("finalSize", 300);
+
+    algorithm.setInputParameter("T", 20);
+    algorithm.setInputParameter("delta", 0.9);
+    algorithm.setInputParameter("nr", 2);
+
+    // Crossover operator 
     HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
-    crossoverParameters.put("probability", 0.9);
-    crossoverParameters.put("distributionIndex", 20.0);
-    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", crossoverParameters);
+    crossoverParameters.put("CR", 1.0);
+    crossoverParameters.put("F", 0.5);
+    crossover =
+      CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", crossoverParameters);
 
+    // Mutation operator
     HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
     mutationParameters.put("probability", 1.0 / problem.getNumberOfVariables());
     mutationParameters.put("distributionIndex", 20.0);
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
 
-    // Selection Operator 
-    HashMap<String, Object> selectionParameters = null; // FIXME: why we are passing null?
-    selection = SelectionFactory.getSelectionOperator("BinaryTournament", selectionParameters);
-
-    // Add the operators to the algorithm
     algorithm.addOperator("crossover", crossover);
     algorithm.addOperator("mutation", mutation);
-    algorithm.addOperator("selection", selection);
 
+    // Execute the Algorithm
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;
@@ -142,10 +146,10 @@ public class MOCell_main {
     if (indicators != null) {
       logger_.info("Quality indicators");
       logger_.info("Hypervolume: " + indicators.getHypervolume(population));
+      logger_.info("EPSILON    : " + indicators.getEpsilon(population));
       logger_.info("GD         : " + indicators.getGD(population));
       logger_.info("IGD        : " + indicators.getIGD(population));
       logger_.info("Spread     : " + indicators.getSpread(population));
-      logger_.info("Epsilon    : " + indicators.getEpsilon(population));
     }
   }
 }
