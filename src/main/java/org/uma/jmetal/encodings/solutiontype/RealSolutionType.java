@@ -30,7 +30,7 @@ import org.uma.jmetal.encodings.variable.Real;
 /**
  * Class representing a solution type composed of real variables
  */
-public class RealSolutionType extends SolutionType implements RealSolution{
+public class RealSolutionType extends SolutionType implements RealSolution {
 
   /**
    * Constructor
@@ -58,5 +58,23 @@ public class RealSolutionType extends SolutionType implements RealSolution{
   @Override
   public double getRealValue(Solution solution, int index) {
     return solution.getDecisionVariables()[index].getValue() ;
+  }
+
+  @Override
+  public void setRealValue(Solution solution, int index, double value) {
+    solution.getDecisionVariables()[index].setValue(value);
+  }
+
+  @Override
+  public int getNumberOfVariables(Solution solution_) {
+    return solution_.getDecisionVariables().length ;
+  }
+
+  @Override public double getRealUpperBound(Solution solution, int index) {
+    return solution.getDecisionVariables()[index].getUpperBound() ;
+  }
+
+  @Override public double getRealLowerBound(Solution solution, int index) {
+    return solution.getDecisionVariables()[index].getLowerBound() ;
   }
 }

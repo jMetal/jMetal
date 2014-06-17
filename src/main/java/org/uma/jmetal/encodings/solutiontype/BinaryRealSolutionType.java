@@ -26,6 +26,7 @@ import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionType;
 import org.uma.jmetal.core.Variable;
 import org.uma.jmetal.encodings.variable.BinaryReal;
+import org.uma.jmetal.util.JMetalException;
 
 /**
  * Class representing the solution type of solutions composed of BinaryReal
@@ -66,5 +67,22 @@ public class BinaryRealSolutionType extends SolutionType implements RealSolution
   @Override
   public double getRealValue(Solution solution, int index) {
     return solution.getDecisionVariables()[index].getValue() ;
+  }
+
+  @Override
+  public void setRealValue(Solution solution, int index, double value) {
+    throw new JMetalException("Cannot assing a real value to a BinaryRealSolutionType solution") ;
+  }
+
+  @Override public int getNumberOfVariables(Solution solution_) {
+    return solution_.getDecisionVariables().length ;
+  }
+
+  @Override public double getRealUpperBound(Solution solution, int index) {
+    return solution.getDecisionVariables()[index].getUpperBound() ;
+  }
+
+  @Override public double getRealLowerBound(Solution solution, int index) {
+    return solution.getDecisionVariables()[index].getLowerBound() ;
   }
 }

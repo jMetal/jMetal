@@ -22,7 +22,6 @@
 package org.uma.jmetal.operators.mutation;
 
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.core.SolutionType;
 import org.uma.jmetal.encodings.solutiontype.ArrayRealSolutionType;
 import org.uma.jmetal.encodings.solutiontype.RealSolutionType;
 import org.uma.jmetal.util.Configuration;
@@ -30,36 +29,18 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
 import org.uma.jmetal.util.wrapper.XReal;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * This class implements a uniform mutation operator.
  */
 public class UniformMutation extends Mutation {
-  /**
-   *
-   */
   private static final long serialVersionUID = -2304129118963396274L;
 
-  /**
-   * Valid solution types to apply this operator
-   */
-  private static final List<Class<? extends SolutionType>> VALID_TYPES =
-    Arrays.asList(RealSolutionType.class,
-      ArrayRealSolutionType.class);
-  /**
-   * Stores the value used in a uniform mutation operator
-   */
   private Double perturbation_;
-
   private Double mutationProbability_ = null;
 
-  /**
-   * Constructor
-   * Creates a new uniform mutation operator instance
-   */
+  @Deprecated
   public UniformMutation(HashMap<String, Object> parameters) {
     super(parameters);
 
@@ -69,6 +50,17 @@ public class UniformMutation extends Mutation {
     if (parameters.get("perturbation") != null) {
       perturbation_ = (Double) parameters.get("perturbation");
     }
+
+    addValidSolutionType(RealSolutionType.class);
+    addValidSolutionType(ArrayRealSolutionType.class);
+  }
+
+  private UniformMutation(Builder builder) {
+    addValidSolutionType(RealSolutionType.class);
+    addValidSolutionType(ArrayRealSolutionType.class);
+
+    mutationProbability_ = builder.mutationProbability_ ;
+    perturbation_ = builder.perturbation_ ;
   }
 
   /**
@@ -108,7 +100,7 @@ public class UniformMutation extends Mutation {
   public Object execute(Object object) throws JMetalException {
     Solution solution = (Solution) object;
 
-    if (!VALID_TYPES.contains(solution.getType().getClass())) {
+    if (!solutionTypeIsValid(solution)) {
       Configuration.logger_.severe("UniformMutation.execute: the solution " +
         "is not of the right type. The type should be 'Real', but " +
         solution.getType() + " is obtained");
@@ -121,5 +113,22 @@ public class UniformMutation extends Mutation {
     doMutation(mutationProbability_, solution);
 
     return solution;
+  }
+
+  /**
+   * Builder class
+   */
+  public static class Builder {
+    private double perturbation_ ;
+    private double mutationProbability_ ;
+
+    public Builder(double perturbation, double probability) {
+      perturbation_ = perturbation ;
+      mutationProbability_ = probability ;
+    }
+
+    public UniformMutation build() {
+      return new UniformMutation(this) ;
+    }
   }
 }

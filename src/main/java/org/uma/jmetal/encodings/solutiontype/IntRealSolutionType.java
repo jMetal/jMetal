@@ -32,7 +32,7 @@ import org.uma.jmetal.encodings.variable.Real;
  * Class representing  a solution type including two variables: an integer
  * and a real.
  */
-public class IntRealSolutionType extends SolutionType implements IntSolution, RealSolution{
+public class IntRealSolutionType extends SolutionType implements IntSolution, RealSolution {
   private final int intVariables_;
   private final int realVariables_;
 
@@ -47,7 +47,7 @@ public class IntRealSolutionType extends SolutionType implements IntSolution, Re
     super(problem);
     intVariables_ = intVariables;
     realVariables_ = realVariables;
-  } 
+  }
 
   /**
    * Creates the variables of the solution
@@ -73,9 +73,25 @@ public class IntRealSolutionType extends SolutionType implements IntSolution, Re
   public int getIntValue(Solution solution, int index) {
     return (int)solution.getDecisionVariables()[index].getValue();
   }
-  
+
   @Override
   public double getRealValue(Solution solution, int index) {
-    return solution.getDecisionVariables()[index].getValue();
+    return solution.getDecisionVariables()[index+intVariables_].getValue();
+  }
+
+  @Override public void setRealValue(Solution solution, int index, double value) {
+    solution.getDecisionVariables()[index+intVariables_].setValue(value) ;
+  }
+
+  @Override public int getNumberOfVariables(Solution solution_) {
+    return realVariables_ ;
+  }
+
+  @Override public double getRealUpperBound(Solution solution, int index) {
+    return solution.getDecisionVariables()[index+intVariables_].getUpperBound();
+  }
+
+  @Override public double getRealLowerBound(Solution solution, int index) {
+    return solution.getDecisionVariables()[index+intVariables_].getLowerBound();
   }
 }

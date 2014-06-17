@@ -22,7 +22,6 @@
 package org.uma.jmetal.operators.mutation;
 
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.core.SolutionType;
 import org.uma.jmetal.encodings.solutiontype.ArrayRealSolutionType;
 import org.uma.jmetal.encodings.solutiontype.RealSolutionType;
 import org.uma.jmetal.util.Configuration;
@@ -30,48 +29,20 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
 import org.uma.jmetal.util.wrapper.XReal;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * This class implements a non-uniform mutation operator.
  */
 public class NonUniformMutation extends Mutation {
-  /**
-   *
-   */
   private static final long serialVersionUID = -2440053123382478633L;
 
-  /**
-   * Valid solution types to apply this operator
-   */
-  private static final List<Class<? extends SolutionType>> VALID_TYPES =
-    Arrays.asList(RealSolutionType.class,
-      ArrayRealSolutionType.class);
-  /**
-   * perturbation_ stores the perturbation value used in the Non Uniform
-   * mutation operator
-   */
-  private Double perturbation_ = null;
+  private Double perturbation_ ;
+  private Integer maxIterations_ ;
+  private Integer currentIteration_ ;
+  private Double mutationProbability_ ;
 
-  /**
-   * maxIterations_ stores the maximun number of iterations.
-   */
-  private Integer maxIterations_ = null;
 
-  /**
-   * currentIteration_ stores the iteration in which the operator is going to be
-   * applied
-   */
-  private Integer currentIteration_ = null;
-
-  private Double mutationProbability_ = null;
-
-  /**
-   * Constructor
-   * Creates a new instance of the non uniform mutation
-   */
   public NonUniformMutation(HashMap<String, Object> parameters) {
     super(parameters);
     if (parameters.get("probability") != null) {
@@ -83,6 +54,9 @@ public class NonUniformMutation extends Mutation {
     if (parameters.get("maxIterations") != null) {
       maxIterations_ = (Integer) parameters.get("maxIterations");
     }
+
+    addValidSolutionType(RealSolutionType.class);
+    addValidSolutionType(ArrayRealSolutionType.class);
   }
 
   /**
@@ -145,7 +119,7 @@ public class NonUniformMutation extends Mutation {
   public Object execute(Object object) throws JMetalException {
     Solution solution = (Solution) object;
 
-    if (!VALID_TYPES.contains(solution.getType().getClass())) {
+    if (!solutionTypeIsValid(solution)) {
       Configuration.logger_.severe("NonUniformMutation.execute: the solution " +
         solution.getType() + "is not of the right type");
 

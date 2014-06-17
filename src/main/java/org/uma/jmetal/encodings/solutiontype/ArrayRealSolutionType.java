@@ -31,7 +31,7 @@ import org.uma.jmetal.encodings.variable.ArrayReal;
  * Class representing the solution type of solutions composed of an ArrayReal
  * encodings.variable
  */
-public class ArrayRealSolutionType extends SolutionType {
+public class ArrayRealSolutionType extends SolutionType implements RealSolution {
 
   /**
    * Constructor
@@ -66,8 +66,25 @@ public class ArrayRealSolutionType extends SolutionType {
 
     return variables;
   }
-  
-  public double getReal(Solution solution, int index) {
-    return ((ArrayReal) (solution.getDecisionVariables()[0])).getArray()[index] ;
+
+
+  @Override public double getRealValue(Solution solution, int index) {
+    return ((ArrayReal)(solution.getDecisionVariables()[0])).getArray()[index] ;
+  }
+
+  @Override public void setRealValue(Solution solution, int index, double value) {
+    ((ArrayReal) (solution.getDecisionVariables()[0])).getArray()[index] = value ;
+  }
+
+  @Override public int getNumberOfVariables(Solution solution) {
+    return ((ArrayReal) (solution.getDecisionVariables()[0])).length();
+  }
+
+  @Override public double getRealUpperBound(Solution solution, int index) {
+    return ((ArrayReal) (solution.getDecisionVariables()[0])).getUpperBound(index);
+  }
+
+  @Override public double getRealLowerBound(Solution solution, int index) {
+    return ((ArrayReal) (solution.getDecisionVariables()[0])).getLowerBound(index);
   }
 }

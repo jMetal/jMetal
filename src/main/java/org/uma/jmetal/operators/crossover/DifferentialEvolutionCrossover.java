@@ -22,7 +22,6 @@
 package org.uma.jmetal.operators.crossover;
 
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.core.SolutionType;
 import org.uma.jmetal.encodings.solutiontype.ArrayRealSolutionType;
 import org.uma.jmetal.encodings.solutiontype.RealSolutionType;
 import org.uma.jmetal.util.Configuration;
@@ -32,7 +31,6 @@ import org.uma.jmetal.util.wrapper.XReal;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Vector;
 
 /**
@@ -72,13 +70,6 @@ public class DifferentialEvolutionCrossover extends Crossover {
     "current-to-best/1/exp"
   } ;
 
-  /**
-   * Valid solution types to apply this operator
-   */
-  private static final List<Class<? extends SolutionType>> VALID_TYPES =
-    Arrays.asList(RealSolutionType.class,
-      ArrayRealSolutionType.class);
-
   private double cr_;
   private double f_;
   private double k_;
@@ -109,6 +100,9 @@ public class DifferentialEvolutionCrossover extends Crossover {
     if (parameters.get("DE_VARIANT") != null) {
       variant_ = (String) parameters.get("DE_VARIANT");
     }
+
+    addValidSolutionType(RealSolutionType.class);
+    addValidSolutionType(ArrayRealSolutionType.class);
   }
 
   public DifferentialEvolutionCrossover(Builder builder) {
@@ -118,6 +112,9 @@ public class DifferentialEvolutionCrossover extends Crossover {
     f_ = builder.f_ ;
     k_ = builder.k_ ;
     variant_ = builder.variant_;
+
+    addValidSolutionType(RealSolutionType.class);
+    addValidSolutionType(ArrayRealSolutionType.class);
   }
 
   /**
@@ -133,10 +130,7 @@ public class DifferentialEvolutionCrossover extends Crossover {
 
     Solution child;
 
-    if (!(VALID_TYPES.contains(parent[0].getType().getClass()) &&
-      VALID_TYPES.contains(parent[1].getType().getClass()) &&
-      VALID_TYPES.contains(parent[2].getType().getClass()))) {
-
+    if (!solutionTypeIsValid(parent)) {
       Configuration.logger_.severe("DifferentialEvolutionCrossover.execute: " +
         " the solutions " +
         "are not of the right type. The type should be 'Real' or 'ArrayReal', but " +

@@ -21,7 +21,6 @@
 package org.uma.jmetal.operators.crossover;
 
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.core.SolutionType;
 import org.uma.jmetal.encodings.solutiontype.ArrayRealSolutionType;
 import org.uma.jmetal.encodings.solutiontype.RealSolutionType;
 import org.uma.jmetal.util.Configuration;
@@ -29,39 +28,20 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
 import org.uma.jmetal.util.wrapper.XReal;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * This class allows to apply a SBX crossover operator using two parent
  * solutions.
  */
 public class BLXAlphaCrossover extends Crossover {
-  /**
-   *
-   */
   private static final long serialVersionUID = -7738534841007212922L;
 
-  /**
-   * EPS defines the minimum difference allowed between real values
-   */
   private static final double DEFAULT_ALPHA = 0.5;
-
   private double alpha_ = DEFAULT_ALPHA;
-  /**
-   * Valid solution types to apply this operator
-   */
-  private static final List<Class<? extends SolutionType>> VALID_TYPES =
-    Arrays.asList(RealSolutionType.class,
-      ArrayRealSolutionType.class);
+
   private Double crossoverProbability_ = null;
 
-  /**
-   * Constructor
-   * Create a new SBX crossover operator whit a default
-   * index given by <code>DEFAULT_INDEX_CROSSOVER</code>
-   */
   public BLXAlphaCrossover(HashMap<String, Object> parameters) {
     super(parameters);
 
@@ -71,6 +51,9 @@ public class BLXAlphaCrossover extends Crossover {
     if (parameters.get("alpha") != null) {
       alpha_ = (Double) parameters.get("alpha");
     }
+
+    addValidSolutionType(RealSolutionType.class);
+    addValidSolutionType(ArrayRealSolutionType.class);
   }
 
   /**
@@ -178,8 +161,7 @@ public class BLXAlphaCrossover extends Crossover {
       throw new JMetalException("Exception in " + name + ".execute()");
     } // if
 
-    if (!(VALID_TYPES.contains(parents[0].getType().getClass()) &&
-      VALID_TYPES.contains(parents[1].getType().getClass()))) {
+    if (!solutionTypeIsValid(parents)) {
       Configuration.logger_.severe("BLXAlphaCrossover.execute: the solutions " +
         "type " + parents[0].getType() + " is not allowed with this operator");
 
