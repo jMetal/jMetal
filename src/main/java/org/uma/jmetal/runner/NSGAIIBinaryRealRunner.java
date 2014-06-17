@@ -23,7 +23,7 @@ package org.uma.jmetal.runner;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.experiments.settings.NSGAIIBinaryReal_Settings;
+import org.uma.jmetal.experiment.settings.NSGAIIBinaryReal_Settings;
 import org.uma.jmetal.qualityIndicator.QualityIndicator;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
@@ -56,9 +56,9 @@ public class NSGAIIBinaryRealRunner {
    * @throws org.uma.jmetal.util.JMetalException
    * @throws java.io.IOException
    * @throws SecurityException Usage: three options
-   *                           - org.uma.jmetal.metaheuristics.nsgaII.NSGAII_main
-   *                           - org.uma.jmetal.metaheuristics.nsgaII.NSGAII_main problemName
-   *                           - org.uma.jmetal.metaheuristics.nsgaII.NSGAII_main problemName paretoFrontFile
+   *                           - org.uma.jmetal.metaheuristic.nsgaII.NSGAII_main
+   *                           - org.uma.jmetal.metaheuristic.nsgaII.NSGAII_main problemName
+   *                           - org.uma.jmetal.metaheuristic.nsgaII.NSGAII_main problemName paretoFrontFile
    */
   public static void main(String[] args) throws
     JMetalException,

@@ -24,10 +24,10 @@ import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristics.singleObjective.differentialEvolution.DE;
-import org.uma.jmetal.operators.crossover.CrossoverFactory;
-import org.uma.jmetal.operators.selection.SelectionFactory;
-import org.uma.jmetal.problems.singleObjective.CEC2005Problem;
+import org.uma.jmetal.metaheuristic.singleObjective.differentialEvolution.DE;
+import org.uma.jmetal.operator.crossover.CrossoverFactory;
+import org.uma.jmetal.operator.selection.SelectionFactory;
+import org.uma.jmetal.problem.singleObjective.CEC2005Problem;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 
@@ -74,7 +74,7 @@ public class DERunner {
     crossover =
       CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", crossoverParameters);
 
-    // Add the operators to the algorithm
+    // Add the operator to the algorithm
     HashMap<String, Object> selectionParameters = null; // FIXME: why we are passing null?
     selection =
       SelectionFactory.getSelectionOperator("DifferentialEvolutionSelection", selectionParameters);

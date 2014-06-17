@@ -22,10 +22,10 @@ package org.uma.test.experiments.settings;
 
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Problem;
-import org.uma.jmetal.experiments.Settings;
-import org.uma.jmetal.experiments.settings.PAES_Settings;
-import org.uma.jmetal.operators.mutation.PolynomialMutation;
-import org.uma.jmetal.problems.Fonseca;
+import org.uma.jmetal.experiment.Settings;
+import org.uma.jmetal.experiment.settings.PAES_Settings;
+import org.uma.jmetal.operator.mutation.PolynomialMutation;
+import org.uma.jmetal.problem.Fonseca;
 
 import org.junit.Before;
 import org.junit.Test;

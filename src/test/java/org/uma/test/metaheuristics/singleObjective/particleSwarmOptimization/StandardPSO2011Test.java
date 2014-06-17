@@ -21,8 +21,8 @@
 package org.uma.test.metaheuristics.singleObjective.particleSwarmOptimization;
 
 import org.uma.jmetal.core.Problem;
-import org.uma.jmetal.metaheuristics.singleObjective.particleSwarmOptimization.StandardPSO2011;
-import org.uma.jmetal.problems.Fonseca;
+import org.uma.jmetal.metaheuristic.singleObjective.particleSwarmOptimization.StandardPSO2011;
+import org.uma.jmetal.problem.Fonseca;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

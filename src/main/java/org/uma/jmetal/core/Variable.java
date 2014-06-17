@@ -50,7 +50,7 @@ public abstract class Variable implements Serializable {
   public abstract Variable deepCopy();
 
   /**
-   * Gets the double value representing the encodings.variable. It is used in
+   * Gets the double value representing the encoding.variable. It is used in
    * subclasses of <code>Variable</code> (i.e. <code>Real</code> and
    * <code>Int</code>). As not all objects belonging to a subclass of
    * <code>Variable</code> have a double value, a call to this method it is
@@ -67,7 +67,7 @@ public abstract class Variable implements Serializable {
   }
 
   /**
-   * Sets a double value to a encodings.variable in subclasses of
+   * Sets a double value to a encoding.variable in subclasses of
    * <code>Variable</code>. As not all objects belonging to a subclass of
    * <code>Variable</code> have a double value, a call to this method it is
    * considered a fatal error by default, and the program is terminated. Those
@@ -83,7 +83,7 @@ public abstract class Variable implements Serializable {
   }
 
   /**
-   * Gets the lower bound value of a encodings.variable. As not all objects
+   * Gets the lower bound value of a encoding.variable. As not all objects
    * belonging to a subclass of <code>Variable</code> have a lower bound, a call
    * to this method is considered a fatal error by default, and the program is
    * terminated. Those classes requiring this method must redefine it.
@@ -98,7 +98,7 @@ public abstract class Variable implements Serializable {
   }
 
   /**
-   * Sets the lower bound for a encodings.variable. As not all objects belonging
+   * Sets the lower bound for a encoding.variable. As not all objects belonging
    * to a subclass of <code>Variable</code> have a lower bound, a call to this
    * method is considered a fatal error by default and the program is
    * terminated. Those classes requiring this method must to redefine it.
@@ -113,7 +113,7 @@ public abstract class Variable implements Serializable {
   }
 
   /**
-   * Gets the upper bound value of a encodings.variable. As not all objects
+   * Gets the upper bound value of a encoding.variable. As not all objects
    * belonging to a subclass of <code>Variable</code> have an upper bound, a
    * call to this method is considered a fatal error by default, and the program
    * is terminated. Those classes requiring this method must redefine it.
@@ -128,7 +128,7 @@ public abstract class Variable implements Serializable {
   }
 
   /**
-   * Sets the upper bound for a encodings.variable. As not all objects belonging
+   * Sets the upper bound for a encoding.variable. As not all objects belonging
    * to a subclass of <code>Variable</code> have an upper bound, a call to this
    * method is considered a fatal error by default, and the program is
    * terminated. Those classes requiring this method must redefine it.
@@ -143,10 +143,10 @@ public abstract class Variable implements Serializable {
   }
 
   /**
-   * Gets the type of the encodings.variable. The types are defined in class
+   * Gets the type of the encoding.variable. The types are defined in class
    * Problem.
    *
-   * @return The type of the encodings.variable
+   * @return The type of the encoding.variable
    */
 
   public Class<? extends Variable> getVariableType() {

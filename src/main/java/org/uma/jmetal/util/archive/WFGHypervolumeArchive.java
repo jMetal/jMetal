@@ -191,7 +191,7 @@ public class WFGHypervolumeArchive extends Archive {
 	        offsets[i] = offset_ / (maximumValues[i] - minimumValues[i]);
 	      }
 	      // STEP 3. Inverse the pareto front. This is needed because the original
-	      //metric by Zitzler is for maximization problems
+	      //metric by Zitzler is for maximization problem
 	      double[][] invertedFront = utils_.invertedFront(normalizedFront);
 	      // shift away from origin, so that boundary points also get a contribution > 0
 	      for (double[] point : invertedFront) {

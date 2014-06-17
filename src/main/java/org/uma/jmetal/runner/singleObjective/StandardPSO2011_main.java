@@ -23,8 +23,8 @@ package org.uma.jmetal.runner.singleObjective;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristics.singleObjective.particleSwarmOptimization.StandardPSO2011;
-import org.uma.jmetal.problems.singleObjective.CEC2005Problem;
+import org.uma.jmetal.metaheuristic.singleObjective.particleSwarmOptimization.StandardPSO2011;
+import org.uma.jmetal.problem.singleObjective.CEC2005Problem;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 

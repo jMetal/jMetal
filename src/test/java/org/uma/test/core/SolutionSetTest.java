@@ -23,7 +23,7 @@ package org.uma.test.core;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.problems.Kursawe;
+import org.uma.jmetal.problem.Kursawe;
 import org.uma.jmetal.util.JMetalException;
 import org.junit.After;
 import org.junit.Before;

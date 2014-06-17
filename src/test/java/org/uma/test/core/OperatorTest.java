@@ -23,13 +23,13 @@ package org.uma.test.core;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.encodings.solutiontype.BinarySolutionType;
-import org.uma.jmetal.encodings.solutiontype.IntSolutionType;
-import org.uma.jmetal.encodings.solutiontype.RealSolutionType;
-import org.uma.jmetal.problems.Water;
-import org.uma.jmetal.problems.ZDT.ZDT1;
-import org.uma.jmetal.problems.ZDT.ZDT5;
-import org.uma.jmetal.problems.singleObjective.OneMax;
+import org.uma.jmetal.encoding.solution.BinarySolution;
+import org.uma.jmetal.encoding.solution.IntSolution;
+import org.uma.jmetal.encoding.solution.RealSolution;
+import org.uma.jmetal.problem.Water;
+import org.uma.jmetal.problem.ZDT.ZDT1;
+import org.uma.jmetal.problem.ZDT.ZDT5;
+import org.uma.jmetal.problem.singleObjective.OneMax;
 import org.uma.jmetal.util.JMetalException;
 import org.junit.Before;
 import org.junit.Test;
@@ -66,7 +66,7 @@ public class OperatorTest {
 
   @Test
   public void addingOneValidTypeTest() throws ClassNotFoundException {
-    operator_.addValidSolutionType(RealSolutionType.class);
+    operator_.addValidSolutionType(RealSolution.class);
 
     assertTrue(operator_.solutionTypeIsValid(new Solution(new ZDT1("Real")))) ;
     assertFalse(operator_.solutionTypeIsValid(new Solution(new OneMax("Binary")))) ;
@@ -77,9 +77,9 @@ public class OperatorTest {
 
   @Test
   public void validatingArrayOfSolutionsTest() throws Exception {
-    operator_.addValidSolutionType(RealSolutionType.class);
-    operator_.addValidSolutionType(BinarySolutionType.class);
-    operator_.addValidSolutionType(IntSolutionType.class);
+    operator_.addValidSolutionType(RealSolution.class);
+    operator_.addValidSolutionType(BinarySolution.class);
+    operator_.addValidSolutionType(IntSolution.class);
 
     Solution[] solutions = {
       new Solution(new ZDT1("Real")),
@@ -91,9 +91,9 @@ public class OperatorTest {
 
   @Test
   public void validatingArrayWithInvalidSolutionTypeTest() throws Exception {
-    operator_.addValidSolutionType(RealSolutionType.class);
-    operator_.addValidSolutionType(BinarySolutionType.class);
-    operator_.addValidSolutionType(IntSolutionType.class);
+    operator_.addValidSolutionType(RealSolution.class);
+    operator_.addValidSolutionType(BinarySolution.class);
+    operator_.addValidSolutionType(IntSolution.class);
 
     Solution[] solutions = {
       new Solution(new ZDT1("Real")),

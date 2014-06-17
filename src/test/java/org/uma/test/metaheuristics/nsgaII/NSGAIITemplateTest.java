@@ -21,8 +21,8 @@
 package org.uma.test.metaheuristics.nsgaII;
 
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristics.nsgaII.NSGAIITemplate;
-import org.uma.jmetal.problems.Kursawe;
+import org.uma.jmetal.metaheuristic.nsgaII.NSGAIITemplate;
+import org.uma.jmetal.problem.Kursawe;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.evaluator.SequentialSolutionSetEvaluator;
 import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;

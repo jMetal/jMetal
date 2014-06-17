@@ -22,11 +22,11 @@ package org.uma.test.experiments.settings;
 
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Problem;
-import org.uma.jmetal.experiments.Settings;
-import org.uma.jmetal.experiments.settings.NSGAIIBinary_Settings;
-import org.uma.jmetal.operators.crossover.SinglePointCrossover;
-import org.uma.jmetal.operators.mutation.BitFlipMutation;
-import org.uma.jmetal.problems.ZDT.ZDT5;
+import org.uma.jmetal.experiment.Settings;
+import org.uma.jmetal.experiment.settings.NSGAIIBinary_Settings;
+import org.uma.jmetal.operator.crossover.SinglePointCrossover;
+import org.uma.jmetal.operator.mutation.BitFlipMutation;
+import org.uma.jmetal.problem.ZDT.ZDT5;
 
 import org.junit.Before;
 import org.junit.Test;

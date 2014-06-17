@@ -25,10 +25,10 @@ import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristics.paes.PAES;
-import org.uma.jmetal.operators.mutation.MutationFactory;
-import org.uma.jmetal.problems.Kursawe;
-import org.uma.jmetal.problems.ProblemFactory;
+import org.uma.jmetal.metaheuristic.paes.PAES;
+import org.uma.jmetal.operator.mutation.MutationFactory;
+import org.uma.jmetal.problem.Kursawe;
+import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.qualityIndicator.QualityIndicator;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
@@ -100,7 +100,7 @@ public class PAESRunner {
     mutationParameters.put("distributionIndex", 20.0);
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
 
-    // Add the operators to the algorithm
+    // Add the operator to the algorithm
     algorithm.addOperator("mutation", mutation);
 
     // Execute the Algorithm 

@@ -21,9 +21,9 @@
 package org.uma.test.experiments.settings;
 
 import org.uma.jmetal.core.Algorithm;
-import org.uma.jmetal.experiments.Settings;
-import org.uma.jmetal.experiments.settings.CellDE_Settings;
-import org.uma.jmetal.operators.crossover.DifferentialEvolutionCrossover;
+import org.uma.jmetal.experiment.Settings;
+import org.uma.jmetal.experiment.settings.CellDE_Settings;
+import org.uma.jmetal.operator.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.util.JMetalException;
 
 import org.junit.Before;

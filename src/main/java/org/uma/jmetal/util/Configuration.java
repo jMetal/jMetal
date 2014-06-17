@@ -41,5 +41,5 @@ public class Configuration implements Serializable {
   public static String cec2005SupportDataDirectory =
     "/Users/antelverde/Softw/jMetal/jMetalMV/cec2005CompetitionResources/supportData";
   public static String cec2005Package =
-    "org.uma.jmetal.problems.singleObjective.cec2005Competition.originalCode";
+    "org.uma.jmetal.problem.singleObjective.cec2005Competition.originalCode";
 }

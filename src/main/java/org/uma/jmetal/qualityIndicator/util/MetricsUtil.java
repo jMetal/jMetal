@@ -227,7 +227,7 @@ public class MetricsUtil {
 
   /**
    * This method receives a normalized pareto front and return the inverted one.
-   * This operation needed for minimization problems
+   * This operation needed for minimization problem
    *
    * @param front The pareto front to inverse
    * @return The inverted pareto front
@@ -480,7 +480,7 @@ public class MetricsUtil {
     }
 
     //Inverse all the fronts front. This is needed because the original
-    //metric by Zitzler is for maximization problems
+    //metric by Zitzler is for maximization problem
 
     double[][][] invertedFront = new double[populations.length + 1][][];
     for (int i = 0; i < invertedFront.length; i++) {
@@ -598,7 +598,7 @@ public class MetricsUtil {
     }
 
     //Inverse all the fronts front. This is needed because the original
-    //metric by Zitzler is for maximization problems
+    //metric by Zitzler is for maximization problem
 
     double[][][] invertedFront = new double[populations.length + 1][][];
     for (int i = 0; i < invertedFront.length; i++) {

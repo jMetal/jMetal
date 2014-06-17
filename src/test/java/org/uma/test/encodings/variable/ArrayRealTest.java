@@ -1,8 +1,8 @@
 package org.uma.test.encodings.variable;
 
 import org.uma.jmetal.core.Problem;
-import org.uma.jmetal.encodings.variable.ArrayReal;
-import org.uma.jmetal.problems.Fonseca;
+import org.uma.jmetal.encoding.variable.ArrayReal;
+import org.uma.jmetal.problem.Fonseca;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

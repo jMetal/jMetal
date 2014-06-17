@@ -24,12 +24,12 @@ import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristics.abyss.AbYSS;
-import org.uma.jmetal.operators.crossover.CrossoverFactory;
-import org.uma.jmetal.operators.localSearch.MutationLocalSearch;
-import org.uma.jmetal.operators.mutation.MutationFactory;
-import org.uma.jmetal.problems.ProblemFactory;
-import org.uma.jmetal.problems.ZDT.ZDT4;
+import org.uma.jmetal.metaheuristic.abyss.AbYSS;
+import org.uma.jmetal.operator.crossover.CrossoverFactory;
+import org.uma.jmetal.operator.localSearch.MutationLocalSearch;
+import org.uma.jmetal.operator.mutation.MutationFactory;
+import org.uma.jmetal.problem.ProblemFactory;
+import org.uma.jmetal.problem.ZDT.ZDT4;
 import org.uma.jmetal.qualityIndicator.QualityIndicator;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
@@ -41,7 +41,7 @@ import java.util.logging.Logger;
 
 /**
  * This class is the main program used to configure and run AbYSS, a
- * multiobjective scatter search metaheuristics, which is described in:
+ * multiobjective scatter search metaheuristic, which is described in:
  * A.J. Nebro, F. Luna, E. Alba, B. Dorronsoro, J.J. Durillo, A. Beham
  * "AbYSS: Adapting Scatter Search to Multiobjective Optimization."
  * IEEE Transactions on Evolutionary Computation. Vol. 12,
@@ -57,9 +57,9 @@ public class AbYSSRunner {
    * @throws org.uma.jmetal.util.JMetalException
    * @throws IOException
    * @throws SecurityException Usage: three choices
-   *                           - org.uma.jmetal.metaheuristics.nsgaII.NSGAII_main
-   *                           - org.uma.jmetal.metaheuristics.nsgaII.NSGAII_main problemName
-   *                           - org.uma.jmetal.metaheuristics.nsgaII.NSGAII_main problemName paretoFrontFile
+   *                           - org.uma.jmetal.metaheuristic.nsgaII.NSGAII_main
+   *                           - org.uma.jmetal.metaheuristic.nsgaII.NSGAII_main problemName
+   *                           - org.uma.jmetal.metaheuristic.nsgaII.NSGAII_main problemName paretoFrontFile
    */
   public static void main(String[] args) throws
     JMetalException, SecurityException, IOException, ClassNotFoundException {
@@ -125,7 +125,7 @@ public class AbYSSRunner {
     parametersLocalSearch.put("mutation", mutation);
     improvementOperator = new MutationLocalSearch(parametersLocalSearch);
 
-    // STEP 6. Add the operators to the algorithm
+    // STEP 6. Add the operator to the algorithm
     algorithm.addOperator("crossover", crossover);
     algorithm.addOperator("improvement", improvementOperator);
 

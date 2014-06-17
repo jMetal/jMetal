@@ -22,12 +22,12 @@ package org.uma.test.experiments.settings;
 
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Problem;
-import org.uma.jmetal.experiments.Settings;
-import org.uma.jmetal.experiments.settings.AbYSS_Settings;
-import org.uma.jmetal.operators.crossover.SBXCrossover;
-import org.uma.jmetal.operators.localSearch.MutationLocalSearch;
-import org.uma.jmetal.operators.mutation.PolynomialMutation;
-import org.uma.jmetal.problems.Fonseca;
+import org.uma.jmetal.experiment.Settings;
+import org.uma.jmetal.experiment.settings.AbYSS_Settings;
+import org.uma.jmetal.operator.crossover.SBXCrossover;
+import org.uma.jmetal.operator.localSearch.MutationLocalSearch;
+import org.uma.jmetal.operator.mutation.PolynomialMutation;
+import org.uma.jmetal.problem.Fonseca;
 import org.uma.jmetal.util.JMetalException;
 
 import org.junit.Before;

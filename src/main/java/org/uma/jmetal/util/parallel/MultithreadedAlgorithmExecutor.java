@@ -23,9 +23,9 @@ package org.uma.jmetal.util.parallel;
 
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.experiments.Experiment;
-import org.uma.jmetal.experiments.Settings;
-import org.uma.jmetal.experiments.SettingsFactory;
+import org.uma.jmetal.experiment.Experiment;
+import org.uma.jmetal.experiment.Settings;
+import org.uma.jmetal.experiment.SettingsFactory;
 import org.uma.jmetal.util.Configuration;
 
 import java.io.File;

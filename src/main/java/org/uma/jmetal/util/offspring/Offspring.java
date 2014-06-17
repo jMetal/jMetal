@@ -13,7 +13,7 @@ package org.uma.jmetal.util.offspring;
 
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.operators.selection.Selection;
+import org.uma.jmetal.operator.selection.Selection;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

@@ -31,7 +31,7 @@ import java.util.Map;
 /**
  * This class implements a generic template for the algorithms developed in
  * jMetal. Every algorithm must have a mapping between the parameters and and
- * their names, and another mapping between the operators and their names. The
+ * their names, and another mapping between the operator and their names. The
  * class declares an abstract method called <code>execute</code>, which defines
  * the behavior of the algorithm.
  */

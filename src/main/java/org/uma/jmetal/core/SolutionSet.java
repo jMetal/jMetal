@@ -256,7 +256,7 @@ public class SolutionSet implements Serializable {
   }
 
   /**
-   * Writes the decision encodings.variable values of the <code>Solution</code>
+   * Writes the decision encoding.variable values of the <code>Solution</code>
    * solutions objects into the set in a file.
    *
    * @param path The output file name
@@ -343,7 +343,7 @@ public class SolutionSet implements Serializable {
   }
 
   /**
-   * Write the encodings.variable values of feasible solutions into a file
+   * Write the encoding.variable values of feasible solutions into a file
    *
    * @param path File name
    */

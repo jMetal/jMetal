@@ -25,11 +25,11 @@ import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristics.singleObjective.geneticAlgorithm.gGA;
-import org.uma.jmetal.operators.crossover.CrossoverFactory;
-import org.uma.jmetal.operators.mutation.MutationFactory;
-import org.uma.jmetal.operators.selection.SelectionFactory;
-import org.uma.jmetal.problems.singleObjective.OneMax;
+import org.uma.jmetal.metaheuristic.singleObjective.geneticAlgorithm.gGA;
+import org.uma.jmetal.operator.crossover.CrossoverFactory;
+import org.uma.jmetal.operator.mutation.MutationFactory;
+import org.uma.jmetal.operator.selection.SelectionFactory;
+import org.uma.jmetal.problem.singleObjective.OneMax;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 
@@ -94,7 +94,7 @@ public class GARunner {
     HashMap<String, Object> selectionParameters = null; // FIXME: why we are passing null?
     selection = SelectionFactory.getSelectionOperator("BinaryTournament", selectionParameters);
     
-    /* Add the operators to the algorithm*/
+    /* Add the operator to the algorithm*/
     algorithm.addOperator("crossover", crossover);
     algorithm.addOperator("mutation", mutation);
     algorithm.addOperator("selection", selection);

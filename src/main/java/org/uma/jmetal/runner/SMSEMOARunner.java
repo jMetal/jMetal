@@ -32,12 +32,12 @@ import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristics.smsemoa.FastSMSEMOA;
-import org.uma.jmetal.operators.crossover.CrossoverFactory;
-import org.uma.jmetal.operators.mutation.MutationFactory;
-import org.uma.jmetal.operators.selection.SelectionFactory;
-import org.uma.jmetal.problems.Kursawe;
-import org.uma.jmetal.problems.ProblemFactory;
+import org.uma.jmetal.metaheuristic.smsemoa.FastSMSEMOA;
+import org.uma.jmetal.operator.crossover.CrossoverFactory;
+import org.uma.jmetal.operator.mutation.MutationFactory;
+import org.uma.jmetal.operator.selection.SelectionFactory;
+import org.uma.jmetal.problem.Kursawe;
+import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.qualityIndicator.QualityIndicator;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
@@ -125,7 +125,7 @@ public class SMSEMOARunner {
     HashMap<String, Object> selectionParameters = null; // FIXME: why we are passing null?
     selection = SelectionFactory.getSelectionOperator("RandomSelection", selectionParameters);
 
-    // Add the operators to the algorithm
+    // Add the operator to the algorithm
     algorithm.addOperator("crossover", crossover);
     algorithm.addOperator("mutation", mutation);
     algorithm.addOperator("selection", selection);

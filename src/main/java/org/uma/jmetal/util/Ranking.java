@@ -79,7 +79,7 @@ public class Ranking {
     // front[i] contains the list of individuals belonging to the front i
     List<Integer>[] front = new List[solutionSet_.size() + 1];
 
-    // flagDominate is an auxiliar encodings.variable
+    // flagDominate is an auxiliar encoding.variable
     int flagDominate;
 
     // Initialize the fronts 

@@ -26,15 +26,11 @@ import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.util.JMetalException;
 
-import com.google.inject.*;
-
 /**
  * Created by Antonio J. Nebro on 30/05/14.
  */
 
-@ImplementedBy(SequentialSolutionSetEvaluator.class)
 public interface SolutionSetEvaluator {
-  //public void startup(Object parameters) ;
   public SolutionSet evaluate(SolutionSet solutionSet, Problem problem) throws JMetalException;
   public void shutdown() ;
 }

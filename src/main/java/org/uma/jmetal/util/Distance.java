@@ -96,7 +96,7 @@ public class Distance {
 
   /**
    * Returns the minimum distance from a <code>Solution</code> to a
-   * <code>SolutionSet according to the encodings.variable values</code>.
+   * <code>SolutionSet according to the encoding.variable values</code>.
    *
    * @param solution    The <code>Solution</code>.
    * @param solutionSet The <code>SolutionSet</code>.

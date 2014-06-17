@@ -21,7 +21,7 @@
 
 package org.uma.jmetal.core;
 
-import org.uma.jmetal.problems.ZDT.ZDT4;
+import org.uma.jmetal.problem.ZDT.ZDT4;
 import org.uma.jmetal.util.JMetalException;
 
 import java.io.Serializable;
@@ -70,12 +70,12 @@ public abstract class Problem implements Serializable {
   protected SolutionType solutionType_;
 
   /**
-   * Stores the lower bound values for each encodings.variable (only if needed)
+   * Stores the lower bound values for each encoding.variable (only if needed)
    */
   protected double[] lowerLimit_;
 
   /**
-   * Stores the upper bound values for each encodings.variable (only if needed)
+   * Stores the upper bound values for each encoding.variable (only if needed)
    */
   protected double[] upperLimit_;
 
@@ -86,7 +86,7 @@ public abstract class Problem implements Serializable {
   protected int[] precision_;
 
   /**
-   * Stores the length of each encodings.variable when applicable (e.g., Binary
+   * Stores the length of each encoding.variable when applicable (e.g., Binary
    * and Permutation variables)
    */
   protected int[] length_;
@@ -131,9 +131,9 @@ public abstract class Problem implements Serializable {
   }
 
   /**
-   * Gets the lower bound of the ith encodings.variable of the problem.
+   * Gets the lower bound of the ith encoding.variable of the problem.
    *
-   * @param i The index of the encodings.variable.
+   * @param i The index of the encoding.variable.
    * @return The lower bound.
    */
   public double getLowerLimit(int i) {
@@ -141,9 +141,9 @@ public abstract class Problem implements Serializable {
   }
 
   /**
-   * Gets the upper bound of the ith encodings.variable of the problem.
+   * Gets the upper bound of the ith encoding.variable of the problem.
    *
-   * @param i The index of the encodings.variable.
+   * @param i The index of the encoding.variable.
    * @return The upper bound.
    */
   public double getUpperLimit(int i) {
@@ -173,7 +173,7 @@ public abstract class Problem implements Serializable {
    * @param solution The <code>Solution</code> to evaluate.
    */
   public void evaluateConstraints(Solution solution) throws JMetalException {
-    // The default behavior is to do nothing. Only constrained problems have to
+    // The default behavior is to do nothing. Only constrained problem have to
     // re-define this method
   }
 
@@ -208,9 +208,9 @@ public abstract class Problem implements Serializable {
   }
 
   /**
-   * Returns the length of the encodings.variable.
+   * Returns the length of the encoding.variable.
    *
-   * @return the encodings.variable length.
+   * @return the encoding.variable length.
    */
   public int getLength(int var) {
     if (length_ == null) {

@@ -25,11 +25,11 @@ import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristics.mochc.MOCHC;
-import org.uma.jmetal.operators.crossover.CrossoverFactory;
-import org.uma.jmetal.operators.mutation.MutationFactory;
-import org.uma.jmetal.operators.selection.SelectionFactory;
-import org.uma.jmetal.problems.ZDT.ZDT5;
+import org.uma.jmetal.metaheuristic.mochc.MOCHC;
+import org.uma.jmetal.operator.crossover.CrossoverFactory;
+import org.uma.jmetal.operator.mutation.MutationFactory;
+import org.uma.jmetal.operator.selection.SelectionFactory;
+import org.uma.jmetal.problem.ZDT.ZDT5;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 

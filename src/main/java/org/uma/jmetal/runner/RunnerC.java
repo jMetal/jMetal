@@ -24,8 +24,8 @@ package org.uma.jmetal.runner;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.experiments.Settings;
-import org.uma.jmetal.experiments.SettingsFactory;
+import org.uma.jmetal.experiment.Settings;
+import org.uma.jmetal.experiment.SettingsFactory;
 import org.uma.jmetal.qualityIndicator.QualityIndicator;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
@@ -53,9 +53,9 @@ public class RunnerC {
    * @throws org.uma.jmetal.util.JMetalException
    * @throws java.io.IOException
    * @throws SecurityException       Usage: three options
-   *                                 - org.uma.jmetal.experiments.Main algorithmName
-   *                                 - org.uma.jmetal.experiments.Main algorithmName problemName
-   *                                 - org.uma.jmetal.experiments.Main algorithmName problemName paretoFrontFile
+   *                                 - org.uma.jmetal.experiment.Main algorithmName
+   *                                 - org.uma.jmetal.experiment.Main algorithmName problemName
+   *                                 - org.uma.jmetal.experiment.Main algorithmName problemName paretoFrontFile
    * @throws ClassNotFoundException
    */
   public static void main(String[] args) throws
@@ -83,9 +83,9 @@ public class RunnerC {
 
     if (args.length == 0) {
       logger_.log(Level.SEVERE, "Sintax error. Usage:");
-      logger_.log(Level.SEVERE, "a) org.uma.jmetal.experiments.Main configurationFile ");
-      logger_.log(Level.SEVERE, "b) org.uma.jmetal.experiments.Main configurationFile problemName");
-      logger_.log(Level.SEVERE, "c) org.uma.jmetal.experiments.Main configurationFile problemName paretoFrontFile");
+      logger_.log(Level.SEVERE, "a) org.uma.jmetal.experiment.Main configurationFile ");
+      logger_.log(Level.SEVERE, "b) org.uma.jmetal.experiment.Main configurationFile problemName");
+      logger_.log(Level.SEVERE, "c) org.uma.jmetal.experiment.Main configurationFile problemName paretoFrontFile");
       throw new RuntimeException("Sintax error when invoking the program");
     } else if (args.length == 1) {
       inputStreamReader = new InputStreamReader(new FileInputStream(args[0]));

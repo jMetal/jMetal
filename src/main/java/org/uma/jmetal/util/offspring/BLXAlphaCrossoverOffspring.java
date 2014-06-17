@@ -11,8 +11,8 @@ package org.uma.jmetal.util.offspring;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.operators.crossover.CrossoverFactory;
-import org.uma.jmetal.operators.selection.SelectionFactory;
+import org.uma.jmetal.operator.crossover.CrossoverFactory;
+import org.uma.jmetal.operator.selection.SelectionFactory;
 import org.uma.jmetal.util.JMetalException;
 
 import java.util.HashMap;

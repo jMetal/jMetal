@@ -2,9 +2,8 @@
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
 //
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
+//  Copyright (c) 2014 Antonio J. Nebro
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -23,7 +22,7 @@ package org.uma.jmetal.util.wrapper;
 
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionType;
-import org.uma.jmetal.encodings.solutiontype.RealSolution;
+import org.uma.jmetal.encoding.solution.RealSolutionType;
 import org.uma.jmetal.util.JMetalException;
 
 /**
@@ -34,8 +33,12 @@ public class XReal {
   private SolutionType type_;
 
   public XReal(Solution solution) {
-    type_ = solution.getType();
-    solution_ = solution;
+    if (solution.getType() instanceof RealSolutionType) {
+      type_ = solution.getType();
+      solution_ = solution;
+    } else {
+      throw new JMetalException("The solution type of the solution is invalid: " + solution.getType()) ;
+    }
   }
 
   public XReal(XReal solution) {
@@ -44,23 +47,23 @@ public class XReal {
   }
 
   public double getValue(int index) {
-    return ((RealSolution)type_).getRealValue(solution_, index) ;
+    return ((RealSolutionType)type_).getRealValue(solution_, index) ;
   }
 
   public void setValue(int index, double value) {
-    ((RealSolution)type_).setRealValue(solution_, index, value);
+    ((RealSolutionType)type_).setRealValue(solution_, index, value);
   }
 
   public int getNumberOfDecisionVariables() {
-    return ((RealSolution)type_).getNumberOfVariables(solution_) ;
+    return ((RealSolutionType)type_).getNumberOfVariables(solution_) ;
   }
 
   public double getUpperBound(int index) {
-    return ((RealSolution)type_).getRealUpperBound(solution_,index) ;
+    return ((RealSolutionType)type_).getRealUpperBound(solution_,index) ;
   }
 
   public double getLowerBound(int index) {
-    return ((RealSolution)type_).getRealLowerBound(solution_,index) ;
+    return ((RealSolutionType)type_).getRealLowerBound(solution_,index) ;
   }
 
   public int size() {
@@ -71,16 +74,12 @@ public class XReal {
     return solution_;
   }
 
-  //public SolutionType getType_() {
-  //  return type_;
-  //}
-
   /*
    * Static methods
    */
   public static double getValue(Solution solution, int index) {
-    if (solution.getType() instanceof RealSolution) {
-      return ((RealSolution) solution.getType()).getRealValue(solution, index);
+    if (solution.getType() instanceof RealSolutionType) {
+      return ((RealSolutionType) solution.getType()).getRealValue(solution, index);
     } else {
       throw new JMetalException(
         "The solution type of the solution is invalid: " + solution.getType());

@@ -22,8 +22,8 @@ package org.uma.test.metaheuristics.nsgaII;
 
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.experiments.settings.NSGAII_Settings;
-import org.uma.jmetal.metaheuristics.nsgaII.NSGAII;
+import org.uma.jmetal.experiment.settings.NSGAII_Settings;
+import org.uma.jmetal.metaheuristic.nsgaII.NSGAII;
 import org.junit.Test;
 
 import java.io.IOException;

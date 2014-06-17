@@ -24,11 +24,11 @@ import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristics.cellde.CellDE;
-import org.uma.jmetal.operators.crossover.CrossoverFactory;
-import org.uma.jmetal.operators.selection.SelectionFactory;
-import org.uma.jmetal.problems.Kursawe;
-import org.uma.jmetal.problems.ProblemFactory;
+import org.uma.jmetal.metaheuristic.cellde.CellDE;
+import org.uma.jmetal.operator.crossover.CrossoverFactory;
+import org.uma.jmetal.operator.selection.SelectionFactory;
+import org.uma.jmetal.problem.Kursawe;
+import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.qualityIndicator.QualityIndicator;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
@@ -47,9 +47,9 @@ public class CellDERunner {
    * @throws org.uma.jmetal.util.JMetalException
    * @throws IOException
    * @throws SecurityException Usage: three choices
-   *                           - org.uma.jmetal.metaheuristics.nsgaII.NSGAII_main
-   *                           - org.uma.jmetal.metaheuristics.nsgaII.NSGAII_main problemName
-   *                           - org.uma.jmetal.metaheuristics.nsgaII.NSGAII_main problemName paretoFrontFile
+   *                           - org.uma.jmetal.metaheuristic.nsgaII.NSGAII_main
+   *                           - org.uma.jmetal.metaheuristic.nsgaII.NSGAII_main problemName
+   *                           - org.uma.jmetal.metaheuristic.nsgaII.NSGAII_main problemName paretoFrontFile
    */
   public static void main(String[] args) throws
     JMetalException, SecurityException, IOException, ClassNotFoundException {
@@ -99,7 +99,7 @@ public class CellDERunner {
     crossover =
       CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", crossoverParameters);
 
-    // Add the operators to the algorithm
+    // Add the operator to the algorithm
     HashMap<String, Object> selectionParameters = null; // FIXME why we are passing null?
     selection = SelectionFactory.getSelectionOperator("BinaryTournament", selectionParameters);
 

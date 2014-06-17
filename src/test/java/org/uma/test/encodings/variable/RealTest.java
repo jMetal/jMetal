@@ -1,6 +1,6 @@
 package org.uma.test.encodings.variable;
 
-import org.uma.jmetal.encodings.variable.Real;
+import org.uma.jmetal.encoding.variable.Real;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

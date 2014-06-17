@@ -266,7 +266,7 @@ public class Hypervolume {
     double[][] normalizedFront;
 
     /**
-     * Stores the inverted front. Needed for minimization problems
+     * Stores the inverted front. Needed for minimization problem
      */
     double[][] invertedFront;
 
@@ -280,7 +280,7 @@ public class Hypervolume {
       minimumValues);
 
     // STEP 3. Inverse the pareto front. This is needed because of the original
-    //metric by Zitzler is for maximization problems
+    //metric by Zitzler is for maximization problem
     invertedFront = utils_.invertedFront(normalizedFront);
 
     // STEP4. The hypervolumen (control is passed to java version of Zitzler code)

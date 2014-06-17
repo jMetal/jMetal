@@ -22,8 +22,8 @@
 package org.uma.test.experiments.settings;
 
 import org.uma.jmetal.core.Algorithm;
-import org.uma.jmetal.experiments.Settings;
-import org.uma.jmetal.experiments.settings.dMOPSO_Settings;
+import org.uma.jmetal.experiment.Settings;
+import org.uma.jmetal.experiment.settings.dMOPSO_Settings;
 import org.uma.jmetal.util.JMetalException;
 
 import org.junit.Assert;

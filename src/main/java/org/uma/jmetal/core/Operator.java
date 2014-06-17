@@ -57,7 +57,7 @@ public abstract class Operator implements Serializable {
   }
 
   /**
-   * Abstract method that must be defined by all the operators. When invoked,
+   * Abstract method that must be defined by all the operator. When invoked,
    * this method executes the operator represented by the current object.
    *
    * @param object This parameter inherits from Object to allow different kinds of

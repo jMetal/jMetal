@@ -20,7 +20,7 @@
 
 package org.uma.test.encodings.variable;
 
-import org.uma.jmetal.encodings.variable.Int;
+import org.uma.jmetal.encoding.variable.Int;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

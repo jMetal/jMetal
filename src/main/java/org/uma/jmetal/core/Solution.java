@@ -23,8 +23,8 @@
 
 package org.uma.jmetal.core;
 
-import org.uma.jmetal.encodings.variable.Binary;
-import org.uma.jmetal.encodings.variable.BinaryReal;
+import org.uma.jmetal.encoding.variable.Binary;
+import org.uma.jmetal.encoding.variable.BinaryReal;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -47,7 +47,7 @@ public class Solution implements Serializable {
    */
   private Problem problem_;
   /**
-   * Stores the type of the encodings.variable
+   * Stores the type of the encoding.variable
    */
   private SolutionType type_;
   /**
@@ -60,7 +60,7 @@ public class Solution implements Serializable {
   private int numberOfObjectives_;
 
   /**
-   * Stores the so called fitness value. Used in some metaheuristics
+   * Stores the so called fitness value. Used in some metaheuristic
    */
   private double fitness_;
 
@@ -275,7 +275,7 @@ public class Solution implements Serializable {
 
   /**
    * Gets the fitness of the solution. Returns the value of stored in the
-   * encodings.variable <code>fitness_</code>. <b> REQUIRE </b>: This method has
+   * encoding.variable <code>fitness_</code>. <b> REQUIRE </b>: This method has
    * to be invoked after calling <code>setFitness()</code>.
    *
    * @return the fitness.
@@ -478,18 +478,18 @@ public class Solution implements Serializable {
   }
 
   /**
-   * Gets the type of the encodings.variable
+   * Gets the type of the encoding.variable
    *
-   * @return the type of the encodings.variable
+   * @return the type of the encoding.variable
    */
   public SolutionType getType() {
     return type_;
   }
 
   /**
-   * Sets the type of the encodings.variable.
+   * Sets the type of the encoding.variable.
    *
-   * @param type The type of the encodings.variable.
+   * @param type The type of the encoding.variable.
    */
   public void setType(SolutionType type) {
     type_ = type;

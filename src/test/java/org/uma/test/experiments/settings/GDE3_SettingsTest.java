@@ -20,10 +20,10 @@
 
 package org.uma.test.experiments.settings;
 
-import org.uma.jmetal.experiments.Settings;
-import org.uma.jmetal.experiments.settings.GDE3_Settings;
-import org.uma.jmetal.metaheuristics.gde3.GDE3;
-import org.uma.jmetal.operators.crossover.DifferentialEvolutionCrossover;
+import org.uma.jmetal.experiment.Settings;
+import org.uma.jmetal.experiment.settings.GDE3_Settings;
+import org.uma.jmetal.metaheuristic.gde3.GDE3;
+import org.uma.jmetal.operator.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.util.JMetalException;
 import org.junit.Assert;
 import org.junit.Before;

@@ -22,11 +22,11 @@ package org.uma.test.experiments.settings;
 
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Problem;
-import org.uma.jmetal.experiments.Settings;
-import org.uma.jmetal.experiments.settings.OMOPSO_Settings;
-import org.uma.jmetal.operators.mutation.NonUniformMutation;
-import org.uma.jmetal.operators.mutation.UniformMutation;
-import org.uma.jmetal.problems.Fonseca;
+import org.uma.jmetal.experiment.Settings;
+import org.uma.jmetal.experiment.settings.OMOPSO_Settings;
+import org.uma.jmetal.operator.mutation.NonUniformMutation;
+import org.uma.jmetal.operator.mutation.UniformMutation;
+import org.uma.jmetal.problem.Fonseca;
 
 import org.junit.Assert;
 import org.junit.Before;

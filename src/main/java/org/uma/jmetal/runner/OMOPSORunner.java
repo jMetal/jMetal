@@ -24,12 +24,12 @@ package org.uma.jmetal.runner;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristics.omopso.OMOPSO;
-import org.uma.jmetal.operators.mutation.Mutation;
-import org.uma.jmetal.operators.mutation.NonUniformMutation;
-import org.uma.jmetal.operators.mutation.UniformMutation;
-import org.uma.jmetal.problems.Kursawe;
-import org.uma.jmetal.problems.ProblemFactory;
+import org.uma.jmetal.metaheuristic.omopso.OMOPSO;
+import org.uma.jmetal.operator.mutation.Mutation;
+import org.uma.jmetal.operator.mutation.NonUniformMutation;
+import org.uma.jmetal.operator.mutation.UniformMutation;
+import org.uma.jmetal.problem.Kursawe;
+import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.qualityIndicator.QualityIndicator;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
@@ -109,7 +109,7 @@ public class OMOPSORunner {
     nonUniMutationParameters.put("maxIterations", maxIterations);
     nonUniformMutation = new NonUniformMutation(nonUniMutationParameters);
 
-    // Add the operators to the algorithm
+    // Add the operator to the algorithm
     algorithm.addOperator("uniformMutation", uniformMutation);
     algorithm.addOperator("nonUniformMutation", nonUniformMutation);
 

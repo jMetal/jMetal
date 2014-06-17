@@ -22,8 +22,8 @@ package org.uma.jmetal.runner.singleObjective;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristics.singleObjective.cmaes.CMAES;
-import org.uma.jmetal.problems.singleObjective.Rosenbrock;
+import org.uma.jmetal.metaheuristic.singleObjective.cmaes.CMAES;
+import org.uma.jmetal.problem.singleObjective.Rosenbrock;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 

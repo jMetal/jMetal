@@ -25,11 +25,11 @@ import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristics.nsgaII.NSGAII;
-import org.uma.jmetal.operators.crossover.CrossoverFactory;
-import org.uma.jmetal.operators.mutation.MutationFactory;
-import org.uma.jmetal.operators.selection.SelectionFactory;
-import org.uma.jmetal.problems.mTSP;
+import org.uma.jmetal.metaheuristic.nsgaII.NSGAII;
+import org.uma.jmetal.operator.crossover.CrossoverFactory;
+import org.uma.jmetal.operator.mutation.MutationFactory;
+import org.uma.jmetal.operator.selection.SelectionFactory;
+import org.uma.jmetal.problem.mTSP;
 import org.uma.jmetal.qualityIndicator.QualityIndicator;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.evaluator.SequentialSolutionSetEvaluator;
@@ -40,7 +40,7 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
 /**
- * Class to configure and execute the NSGA-II algorithm. The experiments.settings are aimed
+ * Class to configure and execute the NSGA-II algorithm. The experiment.settings are aimed
  * at solving the mTSP problem.
  */
 
@@ -53,7 +53,7 @@ public class NSGAIImTSPRunner {
    * @throws org.uma.jmetal.util.JMetalException
    * @throws java.io.IOException
    * @throws SecurityException Usage:
-   *                           - org.uma.jmetal.metaheuristics.nsgaII.NSGAII_mTSP_main
+   *                           - org.uma.jmetal.metaheuristic.nsgaII.NSGAII_mTSP_main
    */
   public static void main(String[] args) throws Exception {
     Problem problem; 
@@ -96,7 +96,7 @@ public class NSGAIImTSPRunner {
     HashMap<String, Object> selectionParameters = new HashMap<String, Object>() ;
     selection = SelectionFactory.getSelectionOperator("BinaryTournament", selectionParameters);
 
-    // Add the operators to the algorithm
+    // Add the operator to the algorithm
     algorithm.addOperator("crossover", crossover);
     algorithm.addOperator("mutation", mutation);
     algorithm.addOperator("selection", selection);

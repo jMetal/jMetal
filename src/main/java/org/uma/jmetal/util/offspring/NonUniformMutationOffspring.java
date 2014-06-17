@@ -10,8 +10,8 @@ package org.uma.jmetal.util.offspring;
 
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.operators.mutation.MutationFactory;
-import org.uma.jmetal.operators.selection.SelectionFactory;
+import org.uma.jmetal.operator.mutation.MutationFactory;
+import org.uma.jmetal.operator.selection.SelectionFactory;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 

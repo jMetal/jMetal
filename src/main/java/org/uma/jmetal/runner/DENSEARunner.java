@@ -25,11 +25,11 @@ import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristics.densea.DENSEA;
-import org.uma.jmetal.operators.crossover.CrossoverFactory;
-import org.uma.jmetal.operators.mutation.MutationFactory;
-import org.uma.jmetal.operators.selection.BinaryTournament;
-import org.uma.jmetal.problems.ZDT.ZDT5;
+import org.uma.jmetal.metaheuristic.densea.DENSEA;
+import org.uma.jmetal.operator.crossover.CrossoverFactory;
+import org.uma.jmetal.operator.mutation.MutationFactory;
+import org.uma.jmetal.operator.selection.BinaryTournament;
+import org.uma.jmetal.problem.ZDT.ZDT5;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 
@@ -80,7 +80,7 @@ public class DENSEARunner {
     HashMap<String, Object> selectionParameters = null; // FIXME: why we are passing null?
     selection = new BinaryTournament(selectionParameters);
 
-    // Add the operators to the algorithm
+    // Add the operator to the algorithm
     algorithm.addOperator("crossover", crossover);
     algorithm.addOperator("mutation", mutation);
     algorithm.addOperator("selection", selection);

@@ -22,7 +22,7 @@ package org.uma.test.metaheuristics.nsgaII;
 
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.experiments.settings.ParallelNSGAII_Settings;
+import org.uma.jmetal.experiment.settings.ParallelNSGAII_Settings;
 import org.junit.Test;
 
 import java.io.IOException;
