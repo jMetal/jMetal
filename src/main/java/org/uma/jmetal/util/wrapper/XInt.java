@@ -23,10 +23,7 @@ package org.uma.jmetal.util.wrapper;
 
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionType;
-import org.uma.jmetal.encoding.solution.ArrayIntSolution;
-import org.uma.jmetal.encoding.solution.IntSolution;
-import org.uma.jmetal.encoding.variable.ArrayInt;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.encoding.solution.IntSolutionType;
 import org.uma.jmetal.util.JMetalException;
 
 /**
@@ -46,13 +43,47 @@ public class XInt {
     solution_ = solution.solution_;
   }
 
-  /**
-   * Gets value of a encoding.variable
-   *
-   * @param index Index of the encoding.variable
-   * @return The value of the encoding.variable
-   * @throws org.uma.jmetal.util.JMetalException
+  public double getValue(int index) {
+    return ((IntSolutionType)type_).getIntValue(solution_, index) ;
+  }
+
+  public void setValue(int index, int value) {
+    ((IntSolutionType)type_).setIntValue(solution_, index, value);
+  }
+
+  public int getNumberOfDecisionVariables() {
+    return ((IntSolutionType)type_).getNumberOfIntVariables(solution_) ;
+  }
+
+  public double getUpperBound(int index) {
+    return ((IntSolutionType)type_).getIntUpperBound(solution_,index) ;
+  }
+
+  public double getLowerBound(int index) {
+    return ((IntSolutionType)type_).getIntLowerBound(solution_,index) ;
+  }
+
+  public int size() {
+    return getNumberOfDecisionVariables();
+  }
+
+  public Solution getSolution() {
+    return solution_;
+  }
+
+  /*
+   * Static methods
    */
+  public static double getValue(Solution solution, int index) {
+    if (solution.getType() instanceof IntSolutionType) {
+      return ((IntSolutionType) solution.getType()).getIntValue(solution, index);
+    } else {
+      throw new JMetalException(
+        "The solution type of the solution is invalid: " + solution.getType());
+    }
+  }
+  
+ /*
   public int getValue(int index) throws JMetalException {
     if (type_.getClass() == IntSolution.class) {
       return (int) solution_.getDecisionVariables()[index].getValue();
@@ -65,13 +96,6 @@ public class XInt {
     return 0;
   }
 
-  /**
-   * Sets the value of a encoding.variable
-   *
-   * @param index Index of the encoding.variable
-   * @param value Value to be assigned
-   * @throws org.uma.jmetal.util.JMetalException
-   */
   public void setValue(int index, int value) throws JMetalException {
     if (type_.getClass() == IntSolution.class) {
       solution_.getDecisionVariables()[index].setValue(value);
@@ -83,13 +107,7 @@ public class XInt {
     }
   }
 
-  /**
-   * Gets the lower bound of a encoding.variable
-   *
-   * @param index Index of the encoding.variable
-   * @return The lower bound of the encoding.variable
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+ 
   public int getLowerBound(int index) throws JMetalException {
     if (type_.getClass() == IntSolution.class) {
       return (int) solution_.getDecisionVariables()[index].getLowerBound();
@@ -102,13 +120,7 @@ public class XInt {
     return 0;
   }
 
-  /**
-   * Gets the upper bound of a encoding.variable
-   *
-   * @param index Index of the encoding.variable
-   * @return The upper bound of the encoding.variable
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  
   public int getUpperBound(int index) throws JMetalException {
     if (type_.getClass() == IntSolution.class) {
       return (int) solution_.getDecisionVariables()[index].getUpperBound();
@@ -122,9 +134,7 @@ public class XInt {
     return 0;
   }
 
-  /**
-   * Returns the number of variables of the solution
-   */
+  
   public int getNumberOfDecisionVariables() {
     if (type_.getClass() == IntSolution.class) {
       return solution_.getDecisionVariables().length;
@@ -136,15 +146,5 @@ public class XInt {
     }
     return 0;
   }
-
-  /**
-   * Returns the number of variables of the solution
-   */
-  public int size() {
-    return getNumberOfDecisionVariables();
-  }
-
-  public Solution getSolution() {
-    return solution_;
-  }
+  */
 }

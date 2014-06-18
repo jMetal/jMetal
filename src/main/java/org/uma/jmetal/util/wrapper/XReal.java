@@ -55,7 +55,7 @@ public class XReal {
   }
 
   public int getNumberOfDecisionVariables() {
-    return ((RealSolutionType)type_).getNumberOfVariables(solution_) ;
+    return ((RealSolutionType)type_).getNumberOfRealVariables(solution_) ;
   }
 
   public double getUpperBound(int index) {

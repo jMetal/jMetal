@@ -81,7 +81,7 @@ public class ArrayRealAndBinarySolution extends SolutionType implements RealSolu
     ((ArrayReal) (solution.getDecisionVariables()[0])).getArray()[index] = value ;
   }
 
-  @Override public int getNumberOfVariables(Solution solution_) {
+  @Override public int getNumberOfRealVariables(Solution solution_) {
     return numberOfRealVariables_ ;
   }
 

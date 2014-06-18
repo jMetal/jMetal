@@ -63,7 +63,7 @@ public class NSGAIIPermutation_SettingsTest {
 
     assertEquals("NSGAIIPermutation_SettingsTest", 0.9, pc, epsilon);
 
-    assertEquals("NSGAIIPermutation_SettingsTest", 1.0/problem.getNumberOfVariables(), pm, epsilon);
+    assertEquals("NSGAIIPermutation_SettingsTest", 1.0/problem.getNumberOfRealVariables(), pm, epsilon);
     */
   }
 }

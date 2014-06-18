@@ -26,7 +26,6 @@ import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionType;
 import org.uma.jmetal.core.Variable;
 import org.uma.jmetal.encoding.variable.ArrayInt;
-import org.uma.jmetal.encoding.variable.ArrayReal;
 
 /**
  * Class representing the solution type of solutions composed of an ArrayInt
@@ -70,6 +69,22 @@ public class ArrayIntSolution extends SolutionType implements IntSolutionType {
 
   @Override
   public int getIntValue(Solution solution, int index) {
-    return (int)((ArrayReal) (solution.getDecisionVariables()[0])).getArray()[index] ;
+    return ((ArrayInt) (solution.getDecisionVariables()[0])).getArray()[index] ;
+  }
+
+  @Override public void setIntValue(Solution solution, int index, int value) {
+    ((ArrayInt) (solution.getDecisionVariables()[0])).getArray()[index]=value ;
+  }
+
+  @Override public int getNumberOfIntVariables(Solution solution) {
+    return ((ArrayInt) (solution.getDecisionVariables()[0])).getArray().length ;
+  }
+
+  @Override public double getIntUpperBound(Solution solution, int index) {
+    return ((ArrayInt) (solution.getDecisionVariables()[0])).getLowerBound(index) ;
+  }
+
+  @Override public double getIntLowerBound(Solution solution, int index) {
+    return ((ArrayInt) (solution.getDecisionVariables()[0])).getLowerBound(index) ;
   }
 }

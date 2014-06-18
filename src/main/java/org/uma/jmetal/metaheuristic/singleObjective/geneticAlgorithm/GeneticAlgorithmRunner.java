@@ -79,7 +79,7 @@ public class GeneticAlgorithmRunner {
     crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters);                   
 
     parameters = new HashMap() ;
-    parameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
+    parameters.put("probability", 1.0/problem.getNumberOfRealVariables()) ;
     parameters.put("distributionIndex", 20.0) ;
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);                    
     */

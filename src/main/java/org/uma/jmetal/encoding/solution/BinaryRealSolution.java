@@ -74,7 +74,7 @@ public class BinaryRealSolution extends SolutionType implements RealSolutionType
     throw new JMetalException("Cannot assing a real value to a BinaryRealSolutionType solution") ;
   }
 
-  @Override public int getNumberOfVariables(Solution solution_) {
+  @Override public int getNumberOfRealVariables(Solution solution_) {
     return solution_.getDecisionVariables().length ;
   }
 

@@ -66,7 +66,7 @@ public class RealSolution extends SolutionType implements RealSolutionType {
   }
 
   @Override
-  public int getNumberOfVariables(Solution solution_) {
+  public int getNumberOfRealVariables(Solution solution_) {
     return solution_.getDecisionVariables().length ;
   }
 

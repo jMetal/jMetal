@@ -76,7 +76,7 @@ public class ArrayRealSolution extends SolutionType implements RealSolutionType 
     ((ArrayReal) (solution.getDecisionVariables()[0])).getArray()[index] = value ;
   }
 
-  @Override public int getNumberOfVariables(Solution solution) {
+  @Override public int getNumberOfRealVariables(Solution solution) {
     return ((ArrayReal) (solution.getDecisionVariables()[0])).length();
   }
 

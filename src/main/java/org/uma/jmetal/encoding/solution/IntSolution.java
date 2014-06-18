@@ -59,4 +59,20 @@ public class IntSolution extends SolutionType implements IntSolutionType {
   public int getIntValue(Solution solution, int index) {
     return (int)solution.getDecisionVariables()[index].getValue() ;
   }
+
+  @Override public void setIntValue(Solution solution, int index, int value) {
+    solution.getDecisionVariables()[index].setValue(value) ;
+  }
+
+  @Override public int getNumberOfIntVariables(Solution solution) {
+    return solution.getDecisionVariables().length ;
+  }
+
+  @Override public double getIntUpperBound(Solution solution, int index) {
+    return solution.getDecisionVariables()[index].getUpperBound() ;
+  }
+
+  @Override public double getIntLowerBound(Solution solution, int index) {
+    return solution.getDecisionVariables()[index].getLowerBound() ;
+  }
 }
