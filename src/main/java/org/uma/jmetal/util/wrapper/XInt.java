@@ -23,7 +23,7 @@ package org.uma.jmetal.util.wrapper;
 
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionType;
-import org.uma.jmetal.encoding.solution.IntSolutionType;
+import org.uma.jmetal.encoding.solutiontype.IntSolutionTypeTemplate;
 import org.uma.jmetal.util.JMetalException;
 
 /**
@@ -44,23 +44,23 @@ public class XInt {
   }
 
   public double getValue(int index) {
-    return ((IntSolutionType)type_).getIntValue(solution_, index) ;
+    return ((IntSolutionTypeTemplate)type_).getIntValue(solution_, index) ;
   }
 
   public void setValue(int index, int value) {
-    ((IntSolutionType)type_).setIntValue(solution_, index, value);
+    ((IntSolutionTypeTemplate)type_).setIntValue(solution_, index, value);
   }
 
   public int getNumberOfDecisionVariables() {
-    return ((IntSolutionType)type_).getNumberOfIntVariables(solution_) ;
+    return ((IntSolutionTypeTemplate)type_).getNumberOfIntVariables(solution_) ;
   }
 
   public double getUpperBound(int index) {
-    return ((IntSolutionType)type_).getIntUpperBound(solution_,index) ;
+    return ((IntSolutionTypeTemplate)type_).getIntUpperBound(solution_, index) ;
   }
 
   public double getLowerBound(int index) {
-    return ((IntSolutionType)type_).getIntLowerBound(solution_,index) ;
+    return ((IntSolutionTypeTemplate)type_).getIntLowerBound(solution_, index) ;
   }
 
   public int size() {
@@ -75,11 +75,47 @@ public class XInt {
    * Static methods
    */
   public static double getValue(Solution solution, int index) {
-    if (solution.getType() instanceof IntSolutionType) {
-      return ((IntSolutionType) solution.getType()).getIntValue(solution, index);
+    if (solution.getType() instanceof IntSolutionTypeTemplate) {
+      return ((IntSolutionTypeTemplate) solution.getType()).getIntValue(solution, index);
     } else {
       throw new JMetalException(
-        "The solution type of the solution is invalid: " + solution.getType());
+        "The solutiontype type of the solutiontype is invalid: " + solution.getType());
+    }
+  }
+
+  public static void setValue(Solution solution, int index, int value) {
+    if (solution.getType() instanceof IntSolutionTypeTemplate) {
+      ((IntSolutionTypeTemplate) solution.getType()).setIntValue(solution, index, value);
+    } else {
+      throw new JMetalException(
+        "The solutiontype type of the solutiontype is invalid: " + solution.getType());
+    }
+  }
+
+  public static double getNumberOfDecisionVariables(Solution solution) {
+    if (solution.getType() instanceof IntSolutionTypeTemplate) {
+      return ((IntSolutionTypeTemplate) solution.getType()).getNumberOfIntVariables(solution) ;
+    } else {
+      throw new JMetalException(
+        "The solutiontype type of the solutiontype is invalid: " + solution.getType());
+    }
+  }
+
+  public static double getUpperBound(Solution solution, int index) {
+    if (solution.getType() instanceof IntSolutionTypeTemplate) {
+      return ((IntSolutionTypeTemplate) solution.getType()).getIntUpperBound(solution, index);
+    } else {
+      throw new JMetalException(
+        "The solutiontype type of the solutiontype is invalid: " + solution.getType());
+    }
+  }
+
+  public static double getLowerBound(Solution solution, int index) {
+    if (solution.getType() instanceof IntSolutionTypeTemplate) {
+      return ((IntSolutionTypeTemplate) solution.getType()).getIntLowerBound(solution, index);
+    } else {
+      throw new JMetalException(
+        "The solutiontype type of the solutiontype is invalid: " + solution.getType());
     }
   }
   
@@ -90,7 +126,7 @@ public class XInt {
     } else if (type_.getClass() == ArrayIntSolution.class) {
       return ((ArrayInt) (solution_.getDecisionVariables()[0])).getArray()[index];
     } else {
-      Configuration.logger_.severe("org.uma.jmetal.util.wrapper.XInt.getValue, solution type " +
+      Configuration.logger_.severe("org.uma.jmetal.util.wrapper.XInt.getValue, solutiontype type " +
         type_ + "+ invalid");
     }
     return 0;
@@ -102,7 +138,7 @@ public class XInt {
     } else if (type_.getClass() == ArrayIntSolution.class) {
       ((ArrayInt) (solution_.getDecisionVariables()[0])).getArray()[index] = value;
     } else {
-      Configuration.logger_.severe("org.uma.jmetal.util.wrapper.XInt.setValue, solution type " +
+      Configuration.logger_.severe("org.uma.jmetal.util.wrapper.XInt.setValue, solutiontype type " +
         type_ + "+ invalid");
     }
   }
@@ -114,7 +150,7 @@ public class XInt {
     } else if (type_.getClass() == ArrayIntSolution.class) {
       return (int) ((ArrayInt) (solution_.getDecisionVariables()[0])).getLowerBound(index);
     } else {
-      Configuration.logger_.severe("org.uma.jmetal.util.wrapper.XInt.getLowerBound, solution type " +
+      Configuration.logger_.severe("org.uma.jmetal.util.wrapper.XInt.getLowerBound, solutiontype type " +
         type_ + "+ invalid");
     }
     return 0;
@@ -127,7 +163,7 @@ public class XInt {
     } else if (type_.getClass() == ArrayIntSolution.class) {
       return (int) ((ArrayInt) (solution_.getDecisionVariables()[0])).getUpperBound(index);
     } else {
-      Configuration.logger_.severe("org.uma.jmetal.util.wrapper.XInt.getUpperBound, solution type " +
+      Configuration.logger_.severe("org.uma.jmetal.util.wrapper.XInt.getUpperBound, solutiontype type " +
         type_ + "+ invalid");
     }
 
@@ -141,7 +177,7 @@ public class XInt {
     } else if (type_.getClass() == ArrayIntSolution.class) {
       return ((ArrayInt) (solution_.getDecisionVariables()[0])).length();
     } else {
-      Configuration.logger_.severe("org.uma.jmetal.util.wrapper.XInt.size, solution type " +
+      Configuration.logger_.severe("org.uma.jmetal.util.wrapper.XInt.size, solutiontype type " +
         type_ + "+ invalid");
     }
     return 0;

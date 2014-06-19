@@ -55,7 +55,7 @@ public class SolutionSetTest {
   }
 
   /**
-   * Test: Check that adding a new solution to an empty solution set leads this one to have 1 element
+   * Test: Check that adding a new solutiontype to an empty solutiontype set leads this one to have 1 element
    * @throws Exception
    */
   @Test
@@ -67,7 +67,7 @@ public class SolutionSetTest {
   }
 
   /**
-   * Test: Adding an element to a full solution set must return a false value because it is not added
+   * Test: Adding an element to a full solutiontype set must return a false value because it is not added
    * @throws org.uma.jmetal.util.JMetalException
    */
   @Test (expected = JMetalException.class)
@@ -108,7 +108,7 @@ public class SolutionSetTest {
       solution = new Solution(problem) ;
       problem.evaluate(solution);
       solutionSet1.add(solution) ;
-      //solutionSet3.add(new Solution(solution)) ;
+      //solutionSet3.add(new Solution(solutiontype)) ;
     }
 
     solutionSet2.add(new Solution(problem)) ;

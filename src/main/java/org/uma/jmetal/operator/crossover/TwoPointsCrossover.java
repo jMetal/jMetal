@@ -22,7 +22,7 @@
 package org.uma.jmetal.operator.crossover;
 
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.encoding.solution.PermutationSolution;
+import org.uma.jmetal.encoding.solutiontype.PermutationSolutionType;
 import org.uma.jmetal.encoding.variable.Permutation;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
@@ -45,10 +45,10 @@ public class TwoPointsCrossover extends Crossover {
   private static final long serialVersionUID = 5639984540815130543L;
 
   /**
-   * Valid solution types to apply this operator
+   * Valid solutiontype types to apply this operator
    */
-  private static final List<Class<PermutationSolution>> VALID_TYPES =
-    Arrays.asList(PermutationSolution.class);
+  private static final List<Class<PermutationSolutionType>> VALID_TYPES =
+    Arrays.asList(PermutationSolutionType.class);
 
   private Double crossoverProbability_ = null;
 
@@ -82,7 +82,7 @@ public class TwoPointsCrossover extends Crossover {
     offspring[0] = new Solution(parent1);
     offspring[1] = new Solution(parent2);
 
-    if (parent1.getType().getClass() == PermutationSolution.class) {
+    if (parent1.getType().getClass() == PermutationSolutionType.class) {
       if (PseudoRandom.randDouble() < probability) {
         int crosspoint1;
         int crosspoint2;

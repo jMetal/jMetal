@@ -116,7 +116,7 @@ public class FastHypervolume {
   }
 
   /**
-   * Computes the HV of a solution set.
+   * Computes the HV of a solutiontype set.
    * REQUIRES: The problem is bi-objective
    * REQUIRES: The archive is ordered in descending order by the second objective
    *
@@ -172,11 +172,11 @@ public class FastHypervolume {
   }
 
   /**
-   * Computes the HV contribution of a solution in a solution set.
-   * REQUIRES: the solution belongs to the solution set
-   * REQUIRES: the HV of the solution set is computed beforehand and its value is passed as third parameter
+   * Computes the HV contribution of a solutiontype in a solutiontype set.
+   * REQUIRES: the solutiontype belongs to the solutiontype set
+   * REQUIRES: the HV of the solutiontype set is computed beforehand and its value is passed as third parameter
    *
-   * @return The hv contribution of the solution
+   * @return The hv contribution of the solutiontype
    */
   public double computeSolutionHVContribution(SolutionSet solutionSet, int solutionIndex,
     double solutionSetHV) {

@@ -54,7 +54,7 @@ public class BLXAlphaCrossoverOffspring extends Offspring {
 
       Solution[] children = (Solution[]) crossover_.execute(parents);
       offSpring = children[0];
-      //Create a new solution, using DE
+      //Create a new solutiontype, using DE
     } catch (JMetalException ex) {
       Logger.getLogger(BLXAlphaCrossoverOffspring.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -77,7 +77,7 @@ public class BLXAlphaCrossoverOffspring extends Offspring {
 
       Solution[] children = (Solution[]) crossover_.execute(parents);
       offSpring = children[0];
-      //Create a new solution, using DE
+      //Create a new solutiontype, using DE
     } catch (JMetalException ex) {
       Logger.getLogger(BLXAlphaCrossoverOffspring.class.getName()).log(Level.SEVERE, null, ex);
     }

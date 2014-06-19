@@ -23,9 +23,9 @@ package org.uma.jmetal.operator.crossover;
 
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionType;
-import org.uma.jmetal.encoding.solution.BinaryRealSolution;
-import org.uma.jmetal.encoding.solution.BinarySolution;
-import org.uma.jmetal.encoding.solution.IntSolution;
+import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.BinarySolutionType;
+import org.uma.jmetal.encoding.solutiontype.IntSolutionType;
 import org.uma.jmetal.encoding.variable.Binary;
 import org.uma.jmetal.encoding.variable.BinaryReal;
 import org.uma.jmetal.util.Configuration;
@@ -48,12 +48,12 @@ public class SinglePointCrossover extends Crossover {
   private static final long serialVersionUID = 2375915160877386980L;
 
   /**
-   * Valid solution types to apply this operator
+   * Valid solutiontype types to apply this operator
    */
   private static final List<Class<? extends SolutionType>> VALID_TYPES =
-      Arrays.asList(BinarySolution.class,
-          BinaryRealSolution.class,
-          IntSolution.class);
+      Arrays.asList(BinarySolutionType.class,
+          BinaryRealSolutionType.class,
+          IntSolutionType.class);
 
   private Double crossoverProbability_ = null;
 
@@ -85,8 +85,8 @@ public class SinglePointCrossover extends Crossover {
     offSpring[1] = new Solution(parent2);
     try {
       if (PseudoRandom.randDouble() < probability) {
-        if ((parent1.getType().getClass() == BinarySolution.class) ||
-            (parent1.getType().getClass() == BinaryRealSolution.class)) {
+        if ((parent1.getType().getClass() == BinarySolutionType.class) ||
+            (parent1.getType().getClass() == BinaryRealSolutionType.class)) {
           // 1. Compute the total number of bits
           int totalNumberOfBits = 0;
           for (int i = 0; i < parent1.getDecisionVariables().length; i++) {
@@ -142,7 +142,7 @@ public class SinglePointCrossover extends Crossover {
           }
 
           //7. Decode the results
-          if (parent1.getType().getClass() == BinaryRealSolution.class) {
+          if (parent1.getType().getClass() == BinaryRealSolutionType.class) {
             for (int i = 0; i < offSpring[0].getDecisionVariables().length; i++) {
               ((BinaryReal) offSpring[0].getDecisionVariables()[i]).decode();
               ((BinaryReal) offSpring[1].getDecisionVariables()[i]).decode();

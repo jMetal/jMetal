@@ -46,7 +46,7 @@ public class SequentialSolutionSetEvaluator implements SolutionSetEvaluator {
         problem.evaluateConstraints(solutionSet.get(i)) ;
       }
     } catch (JMetalException e) {
-      Configuration.logger_.log(Level.SEVERE, "Error evaluating solution", e);
+      Configuration.logger_.log(Level.SEVERE, "Error evaluating solutiontype", e);
       throw new JMetalException("Error in SequentialSolutionSetEvaluatior.evaluate()") ;
     }
 

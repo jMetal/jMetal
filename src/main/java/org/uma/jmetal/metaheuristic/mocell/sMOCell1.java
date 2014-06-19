@@ -121,7 +121,7 @@ public class sMOCell1 extends Algorithm {
         parents[0] = (Solution) selectionOperator.execute(neighbors[ind]);
         parents[1] = (Solution) selectionOperator.execute(neighbors[ind]);
 
-        //Create a new solution, using genetic operator mutation and crossover
+        //Create a new solutiontype, using genetic operator mutation and crossover
         offSpring = (Solution[]) crossoverOperator.execute(parents);
         mutationOperator.execute(offSpring[0]);
 

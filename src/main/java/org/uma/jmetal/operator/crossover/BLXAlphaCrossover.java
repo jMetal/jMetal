@@ -21,8 +21,8 @@
 package org.uma.jmetal.operator.crossover;
 
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.encoding.solution.ArrayRealSolution;
-import org.uma.jmetal.encoding.solution.RealSolution;
+import org.uma.jmetal.encoding.solutiontype.ArrayRealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
@@ -52,8 +52,8 @@ public class BLXAlphaCrossover extends Crossover {
       alpha_ = (Double) parameters.get("alpha");
     }
 
-    addValidSolutionType(RealSolution.class);
-    addValidSolutionType(ArrayRealSolution.class);
+    addValidSolutionType(RealSolutionType.class);
+    addValidSolutionType(ArrayRealSolutionType.class);
   }
 
   /**

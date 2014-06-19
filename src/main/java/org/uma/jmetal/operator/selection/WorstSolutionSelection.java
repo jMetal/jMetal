@@ -29,7 +29,7 @@ import java.util.HashMap;
 
 /**
  * This class implements a selection operator used for selecting the worst
- * solution in a SolutionSet according to a given comparator
+ * solutiontype in a SolutionSet according to a given comparator
  */
 public class WorstSolutionSelection extends Selection {
 
@@ -57,7 +57,7 @@ public class WorstSolutionSelection extends Selection {
    * Performs the operation
    *
    * @param object Object representing a SolutionSet.
-   * @return the best solution found
+   * @return the best solutiontype found
    */
   public Object execute(Object object) {
     SolutionSet solutionSet = (SolutionSet) object;

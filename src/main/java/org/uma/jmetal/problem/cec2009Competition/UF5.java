@@ -24,8 +24,8 @@ package org.uma.jmetal.problem.cec2009Competition;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.Variable;
-import org.uma.jmetal.encoding.solution.BinaryRealSolution;
-import org.uma.jmetal.encoding.solution.RealSolution;
+import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
 import org.uma.jmetal.util.JMetalException;
 
 /**
@@ -43,7 +43,7 @@ public class UF5 extends Problem {
    * Constructor.
    * Creates a default instance of problem CEC2009_UF5 (30 decision variables)
    *
-   * @param solutionType The solution type must "Real" or "BinaryReal".
+   * @param solutionType The solutiontype type must "Real" or "BinaryReal".
    */
   public UF5(String solutionType) throws ClassNotFoundException, JMetalException {
     this(solutionType, 30, 10, 0.1); // 30 variables, N =10, epsilon = 0.1
@@ -53,7 +53,7 @@ public class UF5 extends Problem {
    * Creates a new instance of problem CEC2009_UF5.
    *
    * @param numberOfVariables Number of variables.
-   * @param solutionType      The solution type must "Real" or "BinaryReal".
+   * @param solutionType      The solutiontype type must "Real" or "BinaryReal".
    */
   public UF5(String solutionType, Integer numberOfVariables, int N, double epsilon)
     throws JMetalException {
@@ -76,18 +76,18 @@ public class UF5 extends Problem {
     }
 
     if (solutionType.compareTo("BinaryReal") == 0) {
-      solutionType_ = new BinaryRealSolution(this);
+      solutionType_ = new BinaryRealSolutionType(this);
     } else if (solutionType.compareTo("Real") == 0) {
-      solutionType_ = new RealSolution(this);
+      solutionType_ = new RealSolutionType(this);
     } else {
-      throw new JMetalException("Error: solution type " + solutionType + " invalid");
+      throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }
   }
 
   /**
-   * Evaluates a solution.
+   * Evaluates a solutiontype.
    *
-   * @param solution The solution to evaluate.
+   * @param solution The solutiontype to evaluate.
    * @throws org.uma.jmetal.util.JMetalException
    */
   public void evaluate(Solution solution) throws JMetalException {

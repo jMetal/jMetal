@@ -172,7 +172,7 @@ public class Spea2Fitness {
         if (dn.get(0).getDistance() < minDistance) {
           toRemove = i;
           minDistance = dn.get(0).getDistance();
-          //i y toRemove have the same distance to the first solution
+          //i y toRemove have the same distance to the first solutiontype
         } else if (dn.get(0).getDistance() == minDistance) {
           int k = 0;
           while ((dn.get(k).getDistance() ==

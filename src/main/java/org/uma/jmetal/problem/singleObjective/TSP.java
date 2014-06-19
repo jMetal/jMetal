@@ -23,7 +23,7 @@ package org.uma.jmetal.problem.singleObjective;
 
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.encoding.solution.PermutationSolution;
+import org.uma.jmetal.encoding.solutiontype.PermutationSolutionType;
 import org.uma.jmetal.encoding.variable.Permutation;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
@@ -58,13 +58,13 @@ public class TSP extends Problem {
     numberOfConstraints_ = 0;
     problemName_ = "TSP";
 
-    solutionType_ = new PermutationSolution(this);
+    solutionType_ = new PermutationSolutionType(this);
 
     length_ = new int[numberOfVariables_];
 
     try {
       if (solutionType.compareTo("Permutation") == 0) {
-        solutionType_ = new PermutationSolution(this);
+        solutionType_ = new PermutationSolutionType(this);
       } else {
         throw new JMetalException("Solution type invalid");
       }
@@ -78,9 +78,9 @@ public class TSP extends Problem {
   }
 
   /**
-   * Evaluates a solution
+   * Evaluates a solutiontype
    *
-   * @param solution The solution to evaluate
+   * @param solution The solutiontype to evaluate
    */
   public void evaluate(Solution solution) {
     double fitness;

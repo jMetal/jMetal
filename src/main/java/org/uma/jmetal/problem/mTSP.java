@@ -22,7 +22,7 @@ package org.uma.jmetal.problem;
 
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.encoding.solution.PermutationSolution;
+import org.uma.jmetal.encoding.solutiontype.PermutationSolutionType;
 import org.uma.jmetal.encoding.variable.Permutation;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
@@ -64,16 +64,16 @@ public class mTSP extends Problem {
     length_[0] = numberOfCities_;
 
     if (solutionType.compareTo("Permutation") == 0) {
-      solutionType_ = new PermutationSolution(this);
+      solutionType_ = new PermutationSolutionType(this);
     } else {
-      throw new JMetalException("Error: solution type " + solutionType + " invalid");
+      throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }
   }
 
   /**
-   * Evaluates a solution
+   * Evaluates a solutiontype
    *
-   * @param solution The solution to evaluate
+   * @param solution The solutiontype to evaluate
    */
   public void evaluate(Solution solution) {
     double fitness1;

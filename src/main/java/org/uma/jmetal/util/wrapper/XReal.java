@@ -22,7 +22,7 @@ package org.uma.jmetal.util.wrapper;
 
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionType;
-import org.uma.jmetal.encoding.solution.RealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.RealSolutionTypeTemplate;
 import org.uma.jmetal.util.JMetalException;
 
 /**
@@ -33,11 +33,11 @@ public class XReal {
   private SolutionType type_;
 
   public XReal(Solution solution) {
-    if (solution.getType() instanceof RealSolutionType) {
+    if (solution.getType() instanceof RealSolutionTypeTemplate) {
       type_ = solution.getType();
       solution_ = solution;
     } else {
-      throw new JMetalException("The solution type of the solution is invalid: " + solution.getType()) ;
+      throw new JMetalException("The solutiontype type of the solutiontype is invalid: " + solution.getType()) ;
     }
   }
 
@@ -47,23 +47,23 @@ public class XReal {
   }
 
   public double getValue(int index) {
-    return ((RealSolutionType)type_).getRealValue(solution_, index) ;
+    return ((RealSolutionTypeTemplate)type_).getRealValue(solution_, index) ;
   }
 
   public void setValue(int index, double value) {
-    ((RealSolutionType)type_).setRealValue(solution_, index, value);
+    ((RealSolutionTypeTemplate)type_).setRealValue(solution_, index, value);
   }
 
   public int getNumberOfDecisionVariables() {
-    return ((RealSolutionType)type_).getNumberOfRealVariables(solution_) ;
+    return ((RealSolutionTypeTemplate)type_).getNumberOfRealVariables(solution_) ;
   }
 
   public double getUpperBound(int index) {
-    return ((RealSolutionType)type_).getRealUpperBound(solution_,index) ;
+    return ((RealSolutionTypeTemplate)type_).getRealUpperBound(solution_,index) ;
   }
 
   public double getLowerBound(int index) {
-    return ((RealSolutionType)type_).getRealLowerBound(solution_,index) ;
+    return ((RealSolutionTypeTemplate)type_).getRealLowerBound(solution_,index) ;
   }
 
   public int size() {
@@ -78,11 +78,47 @@ public class XReal {
    * Static methods
    */
   public static double getValue(Solution solution, int index) {
-    if (solution.getType() instanceof RealSolutionType) {
-      return ((RealSolutionType) solution.getType()).getRealValue(solution, index);
+    if (solution.getType() instanceof RealSolutionTypeTemplate) {
+      return ((RealSolutionTypeTemplate) solution.getType()).getRealValue(solution, index);
     } else {
       throw new JMetalException(
-        "The solution type of the solution is invalid: " + solution.getType());
+        "The solutiontype type of the solutiontype is invalid: " + solution.getType());
+    }
+  }
+
+  public static void setValue(Solution solution, int index, double value) {
+    if (solution.getType() instanceof RealSolutionTypeTemplate) {
+      ((RealSolutionTypeTemplate) solution.getType()).setRealValue(solution, index, value);
+    } else {
+      throw new JMetalException(
+        "The solutiontype type of the solutiontype is invalid: " + solution.getType());
+    }
+  }
+
+  public static double getNumberOfDecisionVariables(Solution solution) {
+    if (solution.getType() instanceof RealSolutionTypeTemplate) {
+      return ((RealSolutionTypeTemplate) solution.getType()).getNumberOfRealVariables(solution) ;
+    } else {
+      throw new JMetalException(
+        "The solutiontype type of the solutiontype is invalid: " + solution.getType());
+    }
+  }
+
+  public static double getUpperBound(Solution solution, int index) {
+    if (solution.getType() instanceof RealSolutionTypeTemplate) {
+      return ((RealSolutionTypeTemplate) solution.getType()).getRealUpperBound(solution, index);
+    } else {
+      throw new JMetalException(
+        "The solutiontype type of the solutiontype is invalid: " + solution.getType());
+    }
+  }
+
+  public static double getLowerBound(Solution solution, int index) {
+    if (solution.getType() instanceof RealSolutionTypeTemplate) {
+      return ((RealSolutionTypeTemplate) solution.getType()).getRealLowerBound(solution, index);
+    } else {
+      throw new JMetalException(
+        "The solutiontype type of the solutiontype is invalid: " + solution.getType());
     }
   }
 }

@@ -24,7 +24,7 @@ package org.uma.jmetal.problem;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.Variable;
-import org.uma.jmetal.encoding.solution.IntRealSolution;
+import org.uma.jmetal.encoding.solutiontype.IntRealSolutionType;
 import org.uma.jmetal.util.JMetalException;
 
 /**
@@ -79,16 +79,16 @@ public class IntRealProblem extends Problem {
     }
 
     if (solutionType.compareTo("IntReal") == 0) {
-      solutionType_ = new IntRealSolution(this, intVariables, realVariables);
+      solutionType_ = new IntRealSolutionType(this, intVariables, realVariables);
     } else {
-      throw new JMetalException("Error: solution type " + solutionType + " invalid");
+      throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }
   }
 
   /**
-   * Evaluates a solution
+   * Evaluates a solutiontype
    *
-   * @param solution The solution to evaluate
+   * @param solution The solutiontype to evaluate
    * @throws org.uma.jmetal.util.JMetalException
    */
   public void evaluate(Solution solution) throws JMetalException {

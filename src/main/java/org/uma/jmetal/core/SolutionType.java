@@ -22,8 +22,8 @@
 package org.uma.jmetal.core;
 
 /**
- * Abstract class representing solution types, which define the types of the
- * variables constituting a solution
+ * Abstract class representing solutiontype types, which define the types of the
+ * variables constituting a solutiontype
  */
 public abstract class SolutionType {
 
@@ -43,7 +43,7 @@ public abstract class SolutionType {
   }
 
   /**
-   * Abstract method to create the variables of the solution
+   * Abstract method to create the variables of the solutiontype
    */
   public abstract Variable[] createVariables() throws ClassNotFoundException;
 

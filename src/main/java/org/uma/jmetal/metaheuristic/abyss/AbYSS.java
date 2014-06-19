@@ -69,12 +69,12 @@ public class AbYSS extends Algorithm {
   int[][] reverseFrequency_;
 
   /**
-   * Stores the initial solution set
+   * Stores the initial solutiontype set
    */
   private SolutionSet solutionSet_;
 
   /**
-   * Stores the external solution archive
+   * Stores the external solutiontype archive
    */
   private CrowdingArchive archive_;
 
@@ -95,7 +95,7 @@ public class AbYSS extends Algorithm {
   private SolutionSet subSet_;
 
   /**
-   * Maximum number of solution allowed for the initial solution set
+   * Maximum number of solutiontype allowed for the initial solutiontype set
    */
   private int solutionSetSize_;
 
@@ -409,7 +409,7 @@ public class AbYSS extends Algorithm {
     int i = 0;
     while (i < refSet1_.size()) {
       flag = dominance_.compare(solution, refSet1_.get(i));
-      if (flag == -1) { //This is: solution dominates 
+      if (flag == -1) { //This is: solutiontype dominates
         refSet1_.remove(i);
       } else if (flag == 1) {
         dominated = true;

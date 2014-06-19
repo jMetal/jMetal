@@ -22,8 +22,8 @@
 package org.uma.jmetal.operator.crossover;
 
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.encoding.solution.ArrayRealSolution;
-import org.uma.jmetal.encoding.solution.RealSolution;
+import org.uma.jmetal.encoding.solutiontype.ArrayRealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
@@ -101,8 +101,8 @@ public class DifferentialEvolutionCrossover extends Crossover {
       variant_ = (String) parameters.get("DE_VARIANT");
     }
 
-    addValidSolutionType(RealSolution.class);
-    addValidSolutionType(ArrayRealSolution.class);
+    addValidSolutionType(RealSolutionType.class);
+    addValidSolutionType(ArrayRealSolutionType.class);
   }
 
   public DifferentialEvolutionCrossover(Builder builder) {
@@ -113,8 +113,8 @@ public class DifferentialEvolutionCrossover extends Crossover {
     k_ = builder.k_ ;
     variant_ = builder.variant_;
 
-    addValidSolutionType(RealSolution.class);
-    addValidSolutionType(ArrayRealSolution.class);
+    addValidSolutionType(RealSolutionType.class);
+    addValidSolutionType(ArrayRealSolutionType.class);
   }
 
   /**

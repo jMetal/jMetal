@@ -22,8 +22,8 @@
 package org.uma.jmetal.problem.WFG;
 
 import org.uma.jmetal.core.Problem;
-import org.uma.jmetal.encoding.solution.BinaryRealSolution;
-import org.uma.jmetal.encoding.solution.RealSolution;
+import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
 import org.uma.jmetal.util.JMetalException;
 
 import java.util.Random;
@@ -63,7 +63,7 @@ public abstract class WFG extends Problem {
    * @param k            position-related parameters
    * @param l            distance-related parameters
    * @param M            Number of objectives
-   * @param solutionType The solution type must "Real" or "BinaryReal".
+   * @param solutionType The solutiontype type must "Real" or "BinaryReal".
    */
   public WFG(String solutionType, Integer k, Integer l, Integer M) throws JMetalException {
     this.k_ = k;
@@ -81,11 +81,11 @@ public abstract class WFG extends Problem {
     }
 
     if (solutionType.compareTo("BinaryReal") == 0) {
-      solutionType_ = new BinaryRealSolution(this);
+      solutionType_ = new BinaryRealSolutionType(this);
     } else if (solutionType.compareTo("Real") == 0) {
-      solutionType_ = new RealSolution(this);
+      solutionType_ = new RealSolutionType(this);
     } else {
-      throw new JMetalException("Error: solution type " + solutionType + " invalid");
+      throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }
   }
 
@@ -155,9 +155,9 @@ public abstract class WFG extends Problem {
   }
 
   /**
-   * Evaluates a solution
+   * Evaluates a solutiontype
    *
-   * @param variables The solution to evaluate
+   * @param variables The solutiontype to evaluate
    * @return a double [] with the evaluation results
    */
   abstract public float[] evaluate(float[] variables);

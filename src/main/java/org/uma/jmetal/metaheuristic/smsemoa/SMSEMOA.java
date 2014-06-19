@@ -45,7 +45,7 @@ import java.util.logging.Level;
  * <p/>
  * Boris Naujoks, Nicola Beume, and Michael Emmerich.
  * Multi-objective optimisation using S-metric selection: Application to
- * three-dimensional solution spaces. In B. McKay et al., Eds., Proc. of the 2005
+ * three-dimensional solutiontype spaces. In B. McKay et al., Eds., Proc. of the 2005
  * Congress on Evolutionary Computation (CEC 2005), Edinburgh, Band 2, pp. 1282-1289.
  * IEEE Press, Piscataway NJ, 2005.
  */

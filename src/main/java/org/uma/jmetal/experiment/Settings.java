@@ -24,10 +24,10 @@ package org.uma.jmetal.experiment;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
-import org.uma.jmetal.encoding.solution.ArrayRealSolution;
-import org.uma.jmetal.encoding.solution.BinaryRealSolution;
-import org.uma.jmetal.encoding.solution.BinarySolution;
-import org.uma.jmetal.encoding.solution.RealSolution;
+import org.uma.jmetal.encoding.solutiontype.ArrayRealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.BinarySolutionType;
+import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
 import org.uma.jmetal.operator.crossover.Crossover;
 import org.uma.jmetal.operator.crossover.CrossoverFactory;
 import org.uma.jmetal.operator.mutation.Mutation;
@@ -107,11 +107,11 @@ public abstract class Settings {
             if (settings.containsKey(fields[i].getName())) {
               if ("mutationProbability_".equals(fields[i].getName()) &&
                 value == null) {
-                if ((RealSolution.class == problem_.getSolutionType().getClass()) ||
-                  (ArrayRealSolution.class == problem_.getSolutionType().getClass())) {
+                if ((RealSolutionType.class == problem_.getSolutionType().getClass()) ||
+                  (ArrayRealSolutionType.class == problem_.getSolutionType().getClass())) {
                   value = 1.0 / problem_.getNumberOfVariables();
-                } else if (BinarySolution.class == problem_.getSolutionType().getClass() ||
-                    BinaryRealSolution.class == problem_.getSolutionType().getClass()) {
+                } else if (BinarySolutionType.class == problem_.getSolutionType().getClass() ||
+                    BinaryRealSolutionType.class == problem_.getSolutionType().getClass()) {
                   int length = problem_.getNumberOfBits();
                   value = 1.0 / length;
                 } else {

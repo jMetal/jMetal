@@ -84,7 +84,7 @@ public class PSO extends Algorithm {
    */
   private Solution[] localBest_;
   /**
-   * Stores the global best solution found
+   * Stores the global best solutiontype found
    */
   private Solution globalBest_;
   /**

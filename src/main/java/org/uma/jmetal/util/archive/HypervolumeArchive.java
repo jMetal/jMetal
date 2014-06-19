@@ -104,25 +104,25 @@ public class HypervolumeArchive extends Archive {
   public boolean add(Solution solution) {
     int flag = 0;
     int i = 0;
-    Solution aux; //Store an solution temporally
+    Solution aux; //Store an solutiontype temporally
 
     while (i < solutionsList_.size()) {
       aux = solutionsList_.get(i);
 
       flag = dominance_.compare(solution, aux);
-      if (flag == 1) {               // The solution to add is dominated
-        return false;                // Discard the new solution
-      } else if (flag == -1) {       // A solution in the archive is dominated
+      if (flag == 1) {               // The solutiontype to add is dominated
+        return false;                // Discard the new solutiontype
+      } else if (flag == -1) {       // A solutiontype in the archive is dominated
         solutionsList_.remove(i);    // Remove it from the population            
       } else {
-        if (equals_.compare(aux, solution) == 0) { // There is an equal solution
+        if (equals_.compare(aux, solution) == 0) { // There is an equal solutiontype
           // in the population
-          return false; // Discard the new solution
+          return false; // Discard the new solutiontype
         }  // if
         i++;
       }
     }
-    // Insert the solution into the archive
+    // Insert the solutiontype into the archive
     solutionsList_.add(solution);
     if (size() > maxSize_) { // The archive is full
       double[][] frontValues = this.writeObjectivesToMatrix();
@@ -167,7 +167,7 @@ public class HypervolumeArchive extends Archive {
 
 
   /**
-   * This method forces to compute the contribution of each solution (required for PAEShv)
+   * This method forces to compute the contribution of each solutiontype (required for PAEShv)
    */
   public void actualiseHVContribution() {
     if (size() > 2) { // The contribution can be updated
@@ -207,7 +207,7 @@ public class HypervolumeArchive extends Archive {
 
 
   /**
-   * This method returns the location (integer position) of a solution in the archive.
+   * This method returns the location (integer position) of a solutiontype in the archive.
    * For that, the equals_ comparator is used
    */
   public int getLocation(Solution solution) {

@@ -22,8 +22,8 @@
 package org.uma.jmetal.operator.mutation;
 
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.encoding.solution.ArrayRealSolution;
-import org.uma.jmetal.encoding.solution.RealSolution;
+import org.uma.jmetal.encoding.solutiontype.ArrayRealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
@@ -44,8 +44,8 @@ public class PolynomialMutation extends Mutation {
   public PolynomialMutation(HashMap<String, Object> parameters) {
     super(parameters);
 
-    addValidSolutionType(RealSolution.class);
-    addValidSolutionType(ArrayRealSolution.class);
+    addValidSolutionType(RealSolutionType.class);
+    addValidSolutionType(ArrayRealSolutionType.class);
 
     if (parameters.get("probability") != null) {
       mutationProbability_ = (Double) parameters.get("probability");
@@ -56,8 +56,8 @@ public class PolynomialMutation extends Mutation {
   }
 
   private PolynomialMutation(Builder builder) {
-    addValidSolutionType(RealSolution.class);
-    addValidSolutionType(ArrayRealSolution.class);
+    addValidSolutionType(RealSolutionType.class);
+    addValidSolutionType(ArrayRealSolutionType.class);
 
     mutationProbability_ = builder.mutationProbability_ ;
     distributionIndex_ = builder.distributionIndex_ ;
@@ -75,7 +75,7 @@ public class PolynomialMutation extends Mutation {
    * Perform the mutation operation
    *
    * @param probability Mutation probability
-   * @param solution    The solution to mutate
+   * @param solution    The solutiontype to mutate
    * @throws org.uma.jmetal.util.JMetalException
    */
   public void doMutation(double probability, Solution solution) throws JMetalException {
@@ -116,15 +116,15 @@ public class PolynomialMutation extends Mutation {
   /**
    * Executes the operation
    *
-   * @param object An object containing a solution
-   * @return An object containing the mutated solution
+   * @param object An object containing a solutiontype
+   * @return An object containing the mutated solutiontype
    * @throws org.uma.jmetal.util.JMetalException
    */
   public Object execute(Object object) throws JMetalException {
     Solution solution = (Solution) object;
 
     if (!solutionTypeIsValid(solution)) {
-      Configuration.logger_.severe("PolynomialMutation.execute: the solution " +
+      Configuration.logger_.severe("PolynomialMutation.execute: the solutiontype " +
         "type " + solution.getType() + " is not allowed with this operator");
 
       Class cls = java.lang.String.class;

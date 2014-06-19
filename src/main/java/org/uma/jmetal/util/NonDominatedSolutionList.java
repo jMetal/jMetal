@@ -65,12 +65,12 @@ public class NonDominatedSolutionList extends SolutionSet {
   }
 
   /**
-   * Inserts a solution in the list
+   * Inserts a solutiontype in the list
    *
-   * @param solution The solution to be inserted.
-   * @return true if the operation success, and false if the solution is
+   * @param solution The solutiontype to be inserted.
+   * @return true if the operation success, and false if the solutiontype is
    * dominated or if an identical individual exists.
-   * The decision variables can be null if the solution is read from a file; in
+   * The decision variables can be null if the solutiontype is read from a file; in
    * that case, the domination tests are omitted
    */
   public boolean add(Solution solution) {
@@ -85,21 +85,21 @@ public class NonDominatedSolutionList extends SolutionSet {
         int flag = dominance_.compare(solution, listIndividual);
 
         if (flag == -1) {
-          // A solution in the list is dominated by the new one
+          // A solutiontype in the list is dominated by the new one
           iterator.remove();
         } else if (flag == 0) {
           // Non-dominated solutions
-          //flag = equal_.compare(solution,listIndividual);
+          //flag = equal_.compare(solutiontype,listIndividual);
           //if (flag == 0) {
-          //	return false;   // The new solution is in the list  
+          //	return false;   // The new solutiontype is in the list
           //}
         } else if (flag == 1) {
-          // The new solution is dominated
+          // The new solutiontype is dominated
           return false;
         }
       }
 
-      //At this point, the solution is inserted into the list
+      //At this point, the solutiontype is inserted into the list
       solutionsList_.add(solution);
 
       return true;

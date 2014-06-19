@@ -113,10 +113,10 @@ public class ExtractParetoFront {
       int flag = compare(point, auxPoint);
 
       if (flag == -1) {
-        // A solution in the list is dominated by the new one
+        // A solutiontype in the list is dominated by the new one
         iterator.remove();
       } else if (flag == 1) {
-        // The solution is dominated
+        // The solutiontype is dominated
         return;
       }
     }

@@ -43,7 +43,7 @@ public class IBEA extends Algorithm {
   private static final long serialVersionUID = -1889165434725718813L;
   /**
    * Stores the value of the indicator between each pair of solutions into
-   * the solution set
+   * the solutiontype set
    */
   private List<List<Double>> indicatorValues_;
 

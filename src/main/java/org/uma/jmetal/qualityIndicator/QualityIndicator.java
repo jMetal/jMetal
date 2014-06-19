@@ -51,7 +51,7 @@ public class QualityIndicator {
   }
 
   /**
-   * Returns the hypervolume of solution set
+   * Returns the hypervolume of solutiontype set
    *
    * @param solutionSet Solution set
    * @return The value of the hypervolume indicator
@@ -73,7 +73,7 @@ public class QualityIndicator {
   }
 
   /**
-   * Returns the inverted generational distance of solution set
+   * Returns the inverted generational distance of solutiontype set
    *
    * @param solutionSet Solution set
    * @return The value of the hypervolume indicator
@@ -86,7 +86,7 @@ public class QualityIndicator {
   }
 
   /**
-   * Returns the generational distance of solution set
+   * Returns the generational distance of solutiontype set
    *
    * @param solutionSet Solution set
    * @return The value of the hypervolume indicator
@@ -99,7 +99,7 @@ public class QualityIndicator {
   }
 
   /**
-   * Returns the spread of solution set
+   * Returns the spread of solutiontype set
    *
    * @param solutionSet Solution set
    * @return The value of the hypervolume indicator
@@ -111,7 +111,7 @@ public class QualityIndicator {
   }
 
   /**
-   * Returns the epsilon indicator of solution set
+   * Returns the epsilon indicator of solutiontype set
    *
    * @param solutionSet Solution set
    * @return The value of the hypervolume indicator

@@ -93,10 +93,10 @@ public class SPEA2DensityArchive extends Archive {
     while (i < solutionsList_.size()) {
       aux = solutionsList_.get(i);
       flag = dominance_.compare(solution, aux);
-      if (flag == 1) {                // The solution to add is dominated
-        return false;                 // Discard the new solution
-      } else if (flag == -1) {        // A solution in the archive is dominated
-        solutionsList_.remove(i);     // Remove the dominated solution            
+      if (flag == 1) {                // The solutiontype to add is dominated
+        return false;                 // Discard the new solutiontype
+      } else if (flag == -1) {        // A solutiontype in the archive is dominated
+        solutionsList_.remove(i);     // Remove the dominated solutiontype
       } else {
         if (equals_.compare(aux, solution) == 0) {
           return false;
@@ -104,7 +104,7 @@ public class SPEA2DensityArchive extends Archive {
         i++;
       }
     }
-    // Insert the solution in the archive
+    // Insert the solutiontype in the archive
     solutionsList_.add(solution);
 
     if (size() > maxSize_) { // The archive is full

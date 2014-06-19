@@ -22,8 +22,8 @@
 package org.uma.jmetal.operator.mutation;
 
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.encoding.solution.ArrayRealSolution;
-import org.uma.jmetal.encoding.solution.RealSolution;
+import org.uma.jmetal.encoding.solutiontype.ArrayRealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
@@ -51,13 +51,13 @@ public class UniformMutation extends Mutation {
       perturbation_ = (Double) parameters.get("perturbation");
     }
 
-    addValidSolutionType(RealSolution.class);
-    addValidSolutionType(ArrayRealSolution.class);
+    addValidSolutionType(RealSolutionType.class);
+    addValidSolutionType(ArrayRealSolutionType.class);
   }
 
   private UniformMutation(Builder builder) {
-    addValidSolutionType(RealSolution.class);
-    addValidSolutionType(ArrayRealSolution.class);
+    addValidSolutionType(RealSolutionType.class);
+    addValidSolutionType(ArrayRealSolutionType.class);
 
     mutationProbability_ = builder.mutationProbability_ ;
     perturbation_ = builder.perturbation_ ;
@@ -67,7 +67,7 @@ public class UniformMutation extends Mutation {
    * Performs the operation
    *
    * @param probability Mutation probability
-   * @param solution    The solution to mutate
+   * @param solution    The solutiontype to mutate
    * @throws org.uma.jmetal.util.JMetalException
    */
   public void doMutation(double probability, Solution solution) throws JMetalException {
@@ -94,14 +94,14 @@ public class UniformMutation extends Mutation {
   /**
    * Executes the operation
    *
-   * @param object An object containing the solution to mutate
+   * @param object An object containing the solutiontype to mutate
    * @throws org.uma.jmetal.util.JMetalException
    */
   public Object execute(Object object) throws JMetalException {
     Solution solution = (Solution) object;
 
     if (!solutionTypeIsValid(solution)) {
-      Configuration.logger_.severe("UniformMutation.execute: the solution " +
+      Configuration.logger_.severe("UniformMutation.execute: the solutiontype " +
         "is not of the right type. The type should be 'Real', but " +
         solution.getType() + " is obtained");
 

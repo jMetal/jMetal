@@ -21,7 +21,7 @@
 package org.uma.jmetal.operator.mutation;
 
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.encoding.solution.ArrayRealAndBinarySolution;
+import org.uma.jmetal.encoding.solutiontype.ArrayRealAndBinarySolutionType;
 import org.uma.jmetal.encoding.variable.Binary;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
@@ -36,10 +36,10 @@ public class PolynomialBitFlipMutation extends Mutation {
   private static final double ETA_M_DEFAULT_ = 20.0;
   private double distributionIndex_ = ETA_M_DEFAULT_;
   /**
-   * Valid solution types to apply this operator
+   * Valid solutiontype types to apply this operator
    */
-  private static final List<Class<ArrayRealAndBinarySolution>> VALID_TYPES =
-    Arrays.asList(ArrayRealAndBinarySolution.class);
+  private static final List<Class<ArrayRealAndBinarySolutionType>> VALID_TYPES =
+    Arrays.asList(ArrayRealAndBinarySolutionType.class);
   private Double realMutationProbability_ = null;
   private Double binaryMutationProbability_ = null;
 
@@ -64,7 +64,7 @@ public class PolynomialBitFlipMutation extends Mutation {
     Solution solution = (Solution) object;
 
     if (!VALID_TYPES.contains(solution.getType().getClass())) {
-      Configuration.logger_.severe("PolynomialBitFlipMutation.execute: the solution " +
+      Configuration.logger_.severe("PolynomialBitFlipMutation.execute: the solutiontype " +
         "type " + solution.getType() + " is not allowed with this operator");
 
       Class<String> cls = java.lang.String.class;

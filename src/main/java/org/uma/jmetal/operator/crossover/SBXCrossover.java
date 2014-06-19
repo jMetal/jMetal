@@ -22,8 +22,8 @@
 package org.uma.jmetal.operator.crossover;
 
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.encoding.solution.ArrayRealSolution;
-import org.uma.jmetal.encoding.solution.RealSolution;
+import org.uma.jmetal.encoding.solutiontype.ArrayRealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
@@ -58,8 +58,8 @@ public class SBXCrossover extends Crossover {
   public SBXCrossover(HashMap<String, Object> parameters) {
     super(parameters);
 
-    addValidSolutionType(RealSolution.class);
-    addValidSolutionType(ArrayRealSolution.class);
+    addValidSolutionType(RealSolutionType.class);
+    addValidSolutionType(ArrayRealSolutionType.class);
 
     if (parameters.get("probability") != null) {
       crossoverProbability_ = (Double) parameters.get("probability");
@@ -74,8 +74,8 @@ public class SBXCrossover extends Crossover {
    * @param builder
    */
   private SBXCrossover(Builder builder) {
-    addValidSolutionType(RealSolution.class);
-    addValidSolutionType(ArrayRealSolution.class);
+    addValidSolutionType(RealSolutionType.class);
+    addValidSolutionType(ArrayRealSolutionType.class);
 
     crossoverProbability_ = builder.crossoverProbability_ ;
     distributionIndex_ = builder.distributionIndex_ ;

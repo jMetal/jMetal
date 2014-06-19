@@ -21,7 +21,7 @@
 package org.uma.jmetal.operator.crossover;
 
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.encoding.solution.ArrayRealAndBinarySolution;
+import org.uma.jmetal.encoding.solutiontype.ArrayRealAndBinarySolutionType;
 import org.uma.jmetal.encoding.variable.Binary;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
@@ -46,10 +46,10 @@ public class SBXSinglePointCrossover extends Crossover {
   private static final double ETA_C_DEFAULT_ = 20.0;
   private double distributionIndex_ = ETA_C_DEFAULT_;
   /**
-   * Valid solution types to apply this operator
+   * Valid solutiontype types to apply this operator
    */
-  private static final List<Class<ArrayRealAndBinarySolution>> VALID_TYPES =
-    Arrays.asList(ArrayRealAndBinarySolution.class);
+  private static final List<Class<ArrayRealAndBinarySolutionType>> VALID_TYPES =
+    Arrays.asList(ArrayRealAndBinarySolutionType.class);
   private Double realCrossoverProbability_ = null;
   private Double binaryCrossoverProbability_ = null;
 

@@ -174,7 +174,7 @@ public class AdaptiveGrid {
   /**
    * Updates the grid limits and the grid content adding a new
    * <code>Solution</code>.
-   * If the solution falls out of the grid bounds, the limits and content of the
+   * If the solutiontype falls out of the grid bounds, the limits and content of the
    * grid must be re-calculated.
    *
    * @param solution    <code>Solution</code> considered to update the grid.
@@ -214,7 +214,7 @@ public class AdaptiveGrid {
   }
 
   /**
-   * Calculates the hypercube of a solution.
+   * Calculates the hypercube of a solutiontype.
    *
    * @param solution The <code>Solution</code>.
    */

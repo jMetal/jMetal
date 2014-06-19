@@ -23,9 +23,9 @@ package org.uma.jmetal.problem.ZDT;
 
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.encoding.solution.ArrayRealSolution;
-import org.uma.jmetal.encoding.solution.BinaryRealSolution;
-import org.uma.jmetal.encoding.solution.RealSolution;
+import org.uma.jmetal.encoding.solutiontype.ArrayRealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.wrapper.XReal;
 
@@ -43,7 +43,7 @@ public class ZDT1 extends Problem {
    * Constructor.
    * Creates a default instance of problem ZDT1 (30 decision variables)
    *
-   * @param solutionType The solution type must "Real", "BinaryReal, and "ArrayReal".
+   * @param solutionType The solutiontype type must "Real", "BinaryReal, and "ArrayReal".
    *                     ArrayReal, or ArrayRealC".
    */
   public ZDT1(String solutionType) throws ClassNotFoundException, JMetalException {
@@ -54,7 +54,7 @@ public class ZDT1 extends Problem {
    * Creates a new instance of problem ZDT1.
    *
    * @param numberOfVariables Number of variables.
-   * @param solutionType      The solution type must "Real", "BinaryReal, and "ArrayReal".
+   * @param solutionType      The solutiontype type must "Real", "BinaryReal, and "ArrayReal".
    */
   public ZDT1(String solutionType, Integer numberOfVariables) throws JMetalException {
     numberOfVariables_ = numberOfVariables;
@@ -72,20 +72,20 @@ public class ZDT1 extends Problem {
     }
 
     if (solutionType.compareTo("BinaryReal") == 0) {
-      solutionType_ = new BinaryRealSolution(this);
+      solutionType_ = new BinaryRealSolutionType(this);
     } else if (solutionType.compareTo("Real") == 0) {
-      solutionType_ = new RealSolution(this);
+      solutionType_ = new RealSolutionType(this);
     } else if (solutionType.compareTo("ArrayReal") == 0) {
-      solutionType_ = new ArrayRealSolution(this);
+      solutionType_ = new ArrayRealSolutionType(this);
     } else {
-      throw new JMetalException("Error: solution type " + solutionType + " invalid");
+      throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }
   }
 
   /**
-   * Evaluates a solution.
+   * Evaluates a solutiontype.
    *
-   * @param solution The solution to evaluate.
+   * @param solution The solutiontype to evaluate.
    * @throws org.uma.jmetal.util.JMetalException
    */
   public void evaluate(Solution solution) throws JMetalException {

@@ -22,8 +22,8 @@ package org.uma.jmetal.problem;
 
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.encoding.solution.BinaryRealSolution;
-import org.uma.jmetal.encoding.solution.RealSolution;
+import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.wrapper.XReal;
 
@@ -48,7 +48,7 @@ public class FourBarTruss extends Problem {
    * Constructor
    * Creates a default instance of the FourBarTruss problem
    *
-   * @param solutionType The solution type must "Real" or "BinaryReal".
+   * @param solutionType The solutiontype type must "Real" or "BinaryReal".
    */
   public FourBarTruss(String solutionType) throws JMetalException {
     numberOfVariables_ = 4;
@@ -68,18 +68,18 @@ public class FourBarTruss extends Problem {
     upperLimit_[3] = upperLimit_[0];
 
     if (solutionType.compareTo("BinaryReal") == 0) {
-      solutionType_ = new BinaryRealSolution(this);
+      solutionType_ = new BinaryRealSolutionType(this);
     } else if (solutionType.compareTo("Real") == 0) {
-      solutionType_ = new RealSolution(this);
+      solutionType_ = new RealSolutionType(this);
     } else {
-      throw new JMetalException("Error: solution type " + solutionType + " invalid");
+      throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }
   }
 
   /**
-   * Evaluates a solution
+   * Evaluates a solutiontype
    *
-   * @param solution The solution to evaluate
+   * @param solution The solutiontype to evaluate
    * @throws org.uma.jmetal.util.JMetalException
    */
   public void evaluate(Solution solution) throws JMetalException {

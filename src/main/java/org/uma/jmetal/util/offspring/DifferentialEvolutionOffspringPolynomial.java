@@ -54,7 +54,7 @@ public class DifferentialEvolutionOffspringPolynomial extends Offspring {
 
 
       mutation_.execute(offSpring);
-      //Create a new solution, using DE
+      //Create a new solutiontype, using DE
     } catch (JMetalException ex) {
       Logger.getLogger(DifferentialEvolutionOffspringPolynomial.class.getName())
         .log(Level.SEVERE, null, ex);
@@ -81,7 +81,7 @@ public class DifferentialEvolutionOffspringPolynomial extends Offspring {
 
 
       mutation_.execute(offSpring);
-      //Create a new solution, using DE
+      //Create a new solutiontype, using DE
     } catch (JMetalException ex) {
       Logger.getLogger(DifferentialEvolutionOffspringPolynomial.class.getName())
         .log(Level.SEVERE, null, ex);

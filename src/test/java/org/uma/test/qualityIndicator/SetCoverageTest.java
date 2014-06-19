@@ -104,7 +104,7 @@ public class SetCoverageTest {
     Configuration.logger_.info("Set2");
     solutionSet2_.printObjectives();
     */
-    // Modifying a solution to make it non-dominated with respect to solutionset 1
+    // Modifying a solutiontype to make it non-dominated with respect to solutionset 1
     solutionSet2_.get(0).setObjective(0, -1.0);
     solutionSet2_.get(0).setObjective(1, solutionSetSize_-1.2);
     /*
@@ -126,7 +126,7 @@ public class SetCoverageTest {
       solutionSet1_.add(solution);
     }
 
-    // The second solution set is empty. Try the tests
+    // The second solutiontype set is empty. Try the tests
     assertEquals(1.0, new SetCoverage().setCoverage(solutionSet1_, solutionSet2_), EPSILON) ;
     assertEquals(0.0, new SetCoverage().setCoverage(solutionSet2_, solutionSet1_), EPSILON) ;
   }

@@ -103,7 +103,7 @@ public class PAES extends Algorithm {
     archive = new AdaptiveGridArchive(archiveSize, bisections, problem_.getNumberOfObjectives());
     dominance = new DominanceComparator();
 
-    //-> Create the initial solution and evaluate it and his constraints
+    //-> Create the initial solutiontype and evaluate it and his constraints
     Solution solution = new Solution(problem_);
     problem_.evaluate(solution);
     problem_.evaluateConstraints(solution);
@@ -126,7 +126,7 @@ public class PAES extends Algorithm {
       // Check dominance
       int flag = dominance.compare(solution, mutatedIndividual);
 
-      if (flag == 1) { //If mutate solution dominate                  
+      if (flag == 1) { //If mutate solutiontype dominate
         solution = new Solution(mutatedIndividual);
         archive.add(mutatedIndividual);
       } else if (flag == 0) { //If none dominate the other                               

@@ -78,7 +78,7 @@ public class DominanceComparator implements Comparator<Solution> {
 
     int flag; //stores the result of the comparison
 
-    // Test to determine whether at least a solution violates some constraint
+    // Test to determine whether at least a solutiontype violates some constraint
     if (violationConstraintComparator_.needToCompare(solution1, solution2)) {
       return violationConstraintComparator_.compare(solution1, solution2);
     }

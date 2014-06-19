@@ -52,7 +52,7 @@ public class scGA extends Algorithm {
   /**
    * Runs of the scGA algorithm.
    *
-   * @return a <code>SolutionSet</code> that contains the best found solution
+   * @return a <code>SolutionSet</code> that contains the best found solutiontype
    * @throws org.uma.jmetal.util.JMetalException
    */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
@@ -113,7 +113,7 @@ public class scGA extends Algorithm {
         parents[0] = (Solution) selectionOperator.execute(neighbors[ind]);
         parents[1] = (Solution) selectionOperator.execute(neighbors[ind]);
 
-        //Create a new solution, using genetic operator mutation and crossover
+        //Create a new solutiontype, using genetic operator mutation and crossover
         if (crossoverOperator != null) {
           offSpring = (Solution[]) crossoverOperator.execute(parents);
         } else {

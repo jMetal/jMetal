@@ -60,7 +60,7 @@ public class MOEAD extends Algorithm {
    */
   double delta_;
   /**
-   * nr: maximal number of solutions replaced by each child solution
+   * nr: maximal number of solutions replaced by each child solutiontype
    */
   int nr_;
   Solution[] indArray_;
@@ -340,7 +340,7 @@ public class MOEAD extends Algorithm {
    * @param type
    */
   void updateProblem(Solution individual, int id, int type) throws JMetalException {
-    // individual: child solution
+    // individual: child solutiontype
     // id:   the id of current subproblem
     // type: update solutions in - neighborhood (1) or whole population (otherwise)
     int size;

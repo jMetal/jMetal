@@ -22,7 +22,7 @@ package org.uma.jmetal.problem.mqap;
 
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.encoding.solution.PermutationSolution;
+import org.uma.jmetal.encoding.solutiontype.PermutationSolutionType;
 import org.uma.jmetal.encoding.variable.Permutation;
 import org.uma.jmetal.util.JMetalException;
 
@@ -77,9 +77,9 @@ public class mQAP extends Problem {
     }
 
     if (solutionType.compareTo("Permutation") == 0) {
-      solutionType_ = new PermutationSolution(this);
+      solutionType_ = new PermutationSolutionType(this);
     } else {
-      throw new JMetalException("Error: solution type " + solutionType + " invalid");
+      throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }
   }
 

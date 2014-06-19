@@ -27,7 +27,7 @@ package org.uma.jmetal.util;
  * <code>reference_</code> and <code>distance_</code>.
  * <code>reference_</code> indicates one <code>Solution</code> in a
  * <code>SolutionSet</code> and <code>distance_</code> represents the distance_
- * to this solution.
+ * to this solutiontype.
  */
 public class DistanceNode {
 

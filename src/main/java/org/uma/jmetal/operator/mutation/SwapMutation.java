@@ -22,7 +22,7 @@
 package org.uma.jmetal.operator.mutation;
 
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.encoding.solution.PermutationSolution;
+import org.uma.jmetal.encoding.solutiontype.PermutationSolutionType;
 import org.uma.jmetal.encoding.variable.Permutation;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
@@ -33,7 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * This class implements a swap mutation. The solution type of the solution
+ * This class implements a swap mutation. The solutiontype type of the solutiontype
  * must be Permutation.
  */
 public class SwapMutation extends Mutation {
@@ -43,10 +43,10 @@ public class SwapMutation extends Mutation {
   private static final long serialVersionUID = -3982393451733347035L;
 
   /**
-   * Valid solution types to apply this operator
+   * Valid solutiontype types to apply this operator
    */
-  private static final List<Class<PermutationSolution>> VALID_TYPES =
-    Arrays.asList(PermutationSolution.class);
+  private static final List<Class<PermutationSolutionType>> VALID_TYPES =
+    Arrays.asList(PermutationSolutionType.class);
 
   private Double mutationProbability_ = null;
 
@@ -65,13 +65,13 @@ public class SwapMutation extends Mutation {
    * Performs the operation
    *
    * @param probability Mutation probability
-   * @param solution    The solution to mutate
+   * @param solution    The solutiontype to mutate
    * @throws org.uma.jmetal.util.JMetalException
    */
   public void doMutation(double probability, Solution solution) throws JMetalException {
     int permutation[];
     int permutationLength;
-    if (solution.getType().getClass() == PermutationSolution.class) {
+    if (solution.getType().getClass() == PermutationSolutionType.class) {
 
       permutationLength = ((Permutation) solution.getDecisionVariables()[0]).getLength();
       permutation = ((Permutation) solution.getDecisionVariables()[0]).getVector();
@@ -108,15 +108,15 @@ public class SwapMutation extends Mutation {
   /**
    * Executes the operation
    *
-   * @param object An object containing the solution to mutate
-   * @return an object containing the mutated solution
+   * @param object An object containing the solutiontype to mutate
+   * @return an object containing the mutated solutiontype
    * @throws org.uma.jmetal.util.JMetalException
    */
   public Object execute(Object object) throws JMetalException {
     Solution solution = (Solution) object;
 
     if (!VALID_TYPES.contains(solution.getType().getClass())) {
-      Configuration.logger_.severe("SwapMutation.execute: the solution " +
+      Configuration.logger_.severe("SwapMutation.execute: the solutiontype " +
         "is not of the right type. The type should be 'Binary', " +
         "'BinaryReal' or 'Int', but " + solution.getType() + " is obtained");
 

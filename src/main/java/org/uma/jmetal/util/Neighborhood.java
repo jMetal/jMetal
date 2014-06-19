@@ -36,9 +36,9 @@ public class Neighborhood {
 
   /**
    * Stores the neighborhood.
-   * structure_ [i] represents a neighborhood for a solution.
+   * structure_ [i] represents a neighborhood for a solutiontype.
    * structure_ [i][j] represents a neighborhood with a ratio.
-   * structure_ [i][j][k] represents a neighbor of a solution.
+   * structure_ [i][j][k] represents a neighbor of a solutiontype.
    */
   private int[][][] structure_;
 

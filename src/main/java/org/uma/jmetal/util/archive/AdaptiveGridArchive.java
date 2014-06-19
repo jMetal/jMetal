@@ -98,12 +98,12 @@ public class AdaptiveGridArchive extends Archive {
         } // else
       } // if
       else if (flag == 1) { // An Individual into the file dominates the
-        // solution to insert
-        return false; // The solution will not be inserted
+        // solutiontype to insert
+        return false; // The solutiontype will not be inserted
       } // else if
     } // while
 
-    // At this point, the solution may be inserted
+    // At this point, the solutiontype may be inserted
     if (size() == 0) { //The archive is empty
       solutionsList_.add(solution);
       grid_.updateGrid(this);
@@ -113,20 +113,20 @@ public class AdaptiveGridArchive extends Archive {
     if (size() < maxSize_) { //The archive is not full
       grid_.updateGrid(solution, this); // Update the grid if applicable
       int location;
-      location = grid_.location(solution); // Get the location of the solution
+      location = grid_.location(solution); // Get the location of the solutiontype
       grid_.addSolution(location); // Increment the density of the hypercube
-      solutionsList_.add(solution); // Add the solution to the list
+      solutionsList_.add(solution); // Add the solutiontype to the list
       return true;
     } // if
 
-    // At this point, the solution has to be inserted and the archive is full
+    // At this point, the solutiontype has to be inserted and the archive is full
     grid_.updateGrid(solution, this);
     int location = grid_.location(solution);
-    if (location == grid_.getMostPopulated()) { // The solution is in the
+    if (location == grid_.getMostPopulated()) { // The solutiontype is in the
       // most populated hypercube
       return false; // Not inserted
     } else {
-      // Remove an solution from most populated area
+      // Remove an solutiontype from most populated area
       iterator = solutionsList_.iterator();
       boolean removed = false;
       while (iterator.hasNext()) {
@@ -139,8 +139,8 @@ public class AdaptiveGridArchive extends Archive {
           } // if
         } // if
       } // while
-      // A solution from most populated hypercube has been removed,
-      // insert now the solution
+      // A solutiontype from most populated hypercube has been removed,
+      // insert now the solutiontype
       grid_.addSolution(location);
       solutionsList_.add(solution);
     } // else

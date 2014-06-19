@@ -106,7 +106,7 @@ public class AbYSSRunner {
     algorithm.setInputParameter("maxEvaluations", 25000);
 
     // STEP 4. Specify and configure the crossover operator, used in the
-    //         solution combination method of the scatter search
+    //         solutiontype combination method of the scatter search
     HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
     crossoverParameters.put("probability", 0.9);
     crossoverParameters.put("distributionIndex", 20.0);

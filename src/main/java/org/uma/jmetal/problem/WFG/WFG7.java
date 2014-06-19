@@ -38,7 +38,7 @@ public class WFG7 extends WFG {
    * 4 distance-related parameters,
    * and 2 objectives
    *
-   * @param solutionType The solution type must "Real" or "BinaryReal".
+   * @param solutionType The solutiontype type must "Real" or "BinaryReal".
    */
   public WFG7(String solutionType) throws ClassNotFoundException, JMetalException {
     this(solutionType, 2, 4, 2);
@@ -50,7 +50,7 @@ public class WFG7 extends WFG {
    * @param k            Number of position parameters
    * @param l            Number of distance parameters
    * @param M            Number of objective functions
-   * @param solutionType The solution type must "Real" or "BinaryReal".
+   * @param solutionType The solutiontype type must "Real" or "BinaryReal".
    */
   public WFG7(String solutionType, Integer k, Integer l, Integer M)
     throws ClassNotFoundException, JMetalException {
@@ -69,9 +69,9 @@ public class WFG7 extends WFG {
   }
 
   /**
-   * Evaluates a solution
+   * Evaluates a solutiontype
    *
-   * @param z The solution to evaluate
+   * @param z The solutiontype to evaluate
    * @return double [] with the evaluation results
    */
   public float[] evaluate(float[] z) {
@@ -163,9 +163,9 @@ public class WFG7 extends WFG {
   }
 
   /**
-   * Evaluates a solution
+   * Evaluates a solutiontype
    *
-   * @param solution The solution to evaluate
+   * @param solution The solutiontype to evaluate
    * @throws org.uma.jmetal.util.JMetalException
    */
   public final void evaluate(Solution solution) throws JMetalException {

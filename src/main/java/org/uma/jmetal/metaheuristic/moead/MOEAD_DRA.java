@@ -65,7 +65,7 @@ public class MOEAD_DRA extends Algorithm {
    */
   double delta_;
   /**
-   * nr: maximal number of solutions replaced by each child solution
+   * nr: maximal number of solutions replaced by each child solutiontype
    */
   int nr_;
   Solution[] indArray_;
@@ -417,7 +417,7 @@ public class MOEAD_DRA extends Algorithm {
    * @param type
    */
   void updateProblem(Solution individual, int id, int type) throws JMetalException {
-    // individual: child solution
+    // individual: child solutiontype
     // id:   the id of current subproblem
     // type: update solutions in - neighborhood (1) or whole population (otherwise)
     int size;
@@ -488,7 +488,7 @@ public class MOEAD_DRA extends Algorithm {
 
   /**
    * @param n: The number of solutions to return
-   * @return A solution set containing those elements
+   * @return A solutiontype set containing those elements
    * @author Juanjo Durililo
    * This method selects N solutions from a set M, where N <= M
    * using the same method proposed by Qingfu Zhang, W. Liu, and Hui Li in
@@ -501,8 +501,8 @@ public class MOEAD_DRA extends Algorithm {
    * compute 100 even distributed weights and used them. The result is the same
    * <p/>
    * In case of more than two objectives the procedure is:
-   * 1- Select a solution at random
-   * 2- Select the solution from the population which have maximum distance to
+   * 1- Select a solutiontype at random
+   * 2- Select the solutiontype from the population which have maximum distance to
    * it (whithout considering the already included)
    */
   SolutionSet finalSelection(int n) throws JMetalException {
@@ -515,7 +515,7 @@ public class MOEAD_DRA extends Algorithm {
         internLambda[i][1] = 1 - a;
       }
 
-      // we have now the weights, now select the best solution for each of them
+      // we have now the weights, now select the best solutiontype for each of them
       for (int i = 0; i < n; i++) {
         Solution currentBest = population_.get(0);
         int index = 0;
@@ -524,7 +524,7 @@ public class MOEAD_DRA extends Algorithm {
           // we are looking the best for the weight i
           double aux = fitnessFunction(population_.get(j), internLambda[i]);
           if (aux < value) {
-            // solution in position j is better!
+            // solutiontype in position j is better!
             value = aux;
             currentBest = population_.get(j);
           }

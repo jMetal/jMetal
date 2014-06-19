@@ -118,7 +118,7 @@ public class CellDE extends Algorithm {
         parents[1] = (Solution) selectionOperator.execute(neighbors[ind]);
         parents[2] = individual;
 
-        //Create a new solution, using genetic operator mutation and crossover
+        //Create a new solutiontype, using genetic operator mutation and crossover
         offSpring = (Solution) crossoverOperator.execute(new Object[] {individual, parents});
 
         //->Evaluate offspring and constraints

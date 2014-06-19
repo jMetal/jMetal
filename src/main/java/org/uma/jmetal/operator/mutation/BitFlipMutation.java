@@ -23,9 +23,9 @@ package org.uma.jmetal.operator.mutation;
 
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionType;
-import org.uma.jmetal.encoding.solution.BinaryRealSolution;
-import org.uma.jmetal.encoding.solution.BinarySolution;
-import org.uma.jmetal.encoding.solution.IntSolution;
+import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.BinarySolutionType;
+import org.uma.jmetal.encoding.solutiontype.IntSolutionType;
 import org.uma.jmetal.encoding.variable.Binary;
 import org.uma.jmetal.encoding.variable.BinaryReal;
 import org.uma.jmetal.util.Configuration;
@@ -40,7 +40,7 @@ import java.util.logging.Level;
 /**
  * This class implements a bit flip mutation operator.
  * NOTE: the operator is applied to binary or integer solutions, considering the
- * whole solution as a single encoding.variable.
+ * whole solutiontype as a single encoding.variable.
  */
 public class BitFlipMutation extends Mutation {
   /**
@@ -49,12 +49,12 @@ public class BitFlipMutation extends Mutation {
   private static final long serialVersionUID = -3349165791496573889L;
 
   /**
-   * Valid solution types to apply this operator
+   * Valid solutiontype types to apply this operator
    */
   private static final List<Class<? extends SolutionType>> VALID_TYPES =
-    Arrays.asList(BinarySolution.class,
-      BinaryRealSolution.class,
-      IntSolution.class);
+    Arrays.asList(BinarySolutionType.class,
+      BinaryRealSolutionType.class,
+      IntSolutionType.class);
 
   private Double mutationProbability_ = null;
 
@@ -73,13 +73,13 @@ public class BitFlipMutation extends Mutation {
    * Perform the mutation operation
    *
    * @param probability Mutation probability
-   * @param solution    The solution to mutate
+   * @param solution    The solutiontype to mutate
    * @throws org.uma.jmetal.util.JMetalException
    */
   public void doMutation(double probability, Solution solution) throws JMetalException {
     try {
-      if ((solution.getType().getClass() == BinarySolution.class) ||
-        (solution.getType().getClass() == BinaryRealSolution.class)) {
+      if ((solution.getType().getClass() == BinarySolutionType.class) ||
+        (solution.getType().getClass() == BinaryRealSolutionType.class)) {
         for (int i = 0; i < solution.getDecisionVariables().length; i++) {
           for (int j = 0;
                j < ((Binary) solution.getDecisionVariables()[i]).getNumberOfBits(); j++) {
@@ -89,7 +89,7 @@ public class BitFlipMutation extends Mutation {
           }
         }
 
-        if (solution.getType().getClass() == BinaryRealSolution.class) {
+        if (solution.getType().getClass() == BinaryRealSolutionType.class) {
         for (int i = 0; i < solution.getDecisionVariables().length; i++) {
           ((BinaryReal) solution.getDecisionVariables()[i]).decode();
         }
@@ -119,15 +119,15 @@ public class BitFlipMutation extends Mutation {
   /**
    * Executes the operation
    *
-   * @param object An object containing a solution to mutate
-   * @return An object containing the mutated solution
+   * @param object An object containing a solutiontype to mutate
+   * @return An object containing the mutated solutiontype
    * @throws org.uma.jmetal.util.JMetalException
    */
   public Object execute(Object object) throws JMetalException {
     Solution solution = (Solution) object;
 
     if (!VALID_TYPES.contains(solution.getType().getClass())) {
-      Configuration.logger_.severe("BitFlipMutation.execute: the solution " +
+      Configuration.logger_.severe("BitFlipMutation.execute: the solutiontype " +
         "is not of the right type. The type should be 'Binary', " +
         "'BinaryReal' or 'Int', but " + solution.getType() + " is obtained");
 

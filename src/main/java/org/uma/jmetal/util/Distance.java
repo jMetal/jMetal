@@ -74,7 +74,7 @@ public class Distance {
    *
    * @param solution    The <code>Solution</code>.
    * @param solutionSet The <code>SolutionSet</code>.
-   * @return The minimum distance between solution and the set.
+   * @return The minimum distance between solutiontype and the set.
    * @throws JMetalException
    */
   public double distanceToSolutionSetInObjectiveSpace(Solution solution,
@@ -100,7 +100,7 @@ public class Distance {
    *
    * @param solution    The <code>Solution</code>.
    * @param solutionSet The <code>SolutionSet</code>.
-   * @return The minimum distance between solution and the set.
+   * @return The minimum distance between solutiontype and the set.
    * @throws JMetalException
    */
   public double distanceToSolutionSetInSolutionSpace(Solution solution,
@@ -164,11 +164,11 @@ public class Distance {
   }
 
   /**
-   * Return the index of the nearest solution in the solution set to a given solution
+   * Return the index of the nearest solutiontype in the solutiontype set to a given solutiontype
    *
    * @param solution
    * @param solutionSet
-   * @return The index of the nearest solution; -1 if the solutionSet is empty
+   * @return The index of the nearest solutiontype; -1 if the solutionSet is empty
    */
   public int indexToNearestSolutionInSolutionSpace(Solution solution, SolutionSet solutionSet) {
     int index = -1;

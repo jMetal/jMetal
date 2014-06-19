@@ -121,11 +121,11 @@ public class aMOCell2 extends Algorithm {
           parents[1] = (Solution) selectionOperator.execute(neighbors[ind]);
         }
 
-        //Create a new solution, using genetic operator mutation and crossover
+        //Create a new solutiontype, using genetic operator mutation and crossover
         offSpring = (Solution[]) crossoverOperator.execute(parents);
         mutationOperator.execute(offSpring[0]);
 
-        //->Evaluate solution and constraints
+        //->Evaluate solutiontype and constraints
         problem_.evaluate(offSpring[0]);
         problem_.evaluateConstraints(offSpring[0]);
         evaluations++;

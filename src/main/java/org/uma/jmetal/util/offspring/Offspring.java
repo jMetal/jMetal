@@ -35,7 +35,7 @@ public class Offspring {
 
 
   /**
-   * Return on offspring from a solution set, indicating the selection operator
+   * Return on offspring from a solutiontype set, indicating the selection operator
    *
    */
   public Solution getOffspring(SolutionSet solutionSet, int numberOfParents, int index,
@@ -46,7 +46,7 @@ public class Offspring {
 
 
   /**
-   * Return on offspring from a solution set
+   * Return on offspring from a solutiontype set
    *
    * @param solutionSet
    * @return the offspring
@@ -57,7 +57,7 @@ public class Offspring {
   }
 
   /**
-   * Return on offspring from a solution set and a given solution
+   * Return on offspring from a solutiontype set and a given solutiontype
    *
    * @param solutionSet
    * @param solution
@@ -69,7 +69,7 @@ public class Offspring {
   }
 
   /**
-   * Return on offspring from a solution set and a given solution
+   * Return on offspring from a solutiontype set and a given solutiontype
    *
    * @param solutionSet
    * @param solution
@@ -82,7 +82,7 @@ public class Offspring {
 
 
   /**
-   * Return on offspring from two solution sets
+   * Return on offspring from two solutiontype sets
    *
    */
   public Solution getOffspring(SolutionSet solutionSet1, SolutionSet archive2) {
@@ -96,7 +96,7 @@ public class Offspring {
   }
 
   /**
-   * Return on offspring from a solution set and the index of the current individual
+   * Return on offspring from a solutiontype set and the index of the current individual
    *
    * @return the offspring
    */

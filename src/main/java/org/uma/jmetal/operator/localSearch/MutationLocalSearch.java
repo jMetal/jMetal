@@ -99,8 +99,8 @@ public class MutationLocalSearch extends LocalSearch {
    * operator. The archive to store the non-dominated solutions is also in the
    * parameter list.
    *
-   * @param object Object representing a solution
-   * @return An object containing the new improved solution
+   * @param object Object representing a solutiontype
+   * @return An object containing the new improved solutiontype
    * @throws org.uma.jmetal.util.JMetalException
    */
   public Object execute(Object object) throws JMetalException {

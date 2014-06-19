@@ -23,8 +23,8 @@ package org.uma.jmetal.operator.crossover;
 
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionType;
-import org.uma.jmetal.encoding.solution.BinaryRealSolution;
-import org.uma.jmetal.encoding.solution.BinarySolution;
+import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.BinarySolutionType;
 import org.uma.jmetal.encoding.variable.Binary;
 import org.uma.jmetal.encoding.variable.BinaryReal;
 import org.uma.jmetal.util.Configuration;
@@ -50,11 +50,11 @@ public class HUXCrossover extends Crossover {
   private static final long serialVersionUID = -5600218276088232241L;
 
   /**
-   * Valid solution types to apply this operator
+   * Valid solutiontype types to apply this operator
    */
   private static final List<Class<? extends SolutionType>> VALID_TYPES =
-    Arrays.asList(BinarySolution.class,
-      BinaryRealSolution.class);
+    Arrays.asList(BinarySolutionType.class,
+      BinaryRealSolutionType.class);
 
   private Double probability_ = null;
 
@@ -103,7 +103,7 @@ public class HUXCrossover extends Crossover {
           }
         }
         //7. Decode the results
-        if (parent1.getType().getClass() == BinaryRealSolution.class) {
+        if (parent1.getType().getClass() == BinaryRealSolutionType.class) {
         for (int i = 0; i < offSpring[0].getDecisionVariables().length; i++) {
           ((BinaryReal) offSpring[0].getDecisionVariables()[i]).decode();
           ((BinaryReal) offSpring[1].getDecisionVariables()[i]).decode();

@@ -24,7 +24,7 @@ package org.uma.jmetal.problem.ZDT;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.Variable;
-import org.uma.jmetal.encoding.solution.BinarySolution;
+import org.uma.jmetal.encoding.solutiontype.BinarySolutionType;
 import org.uma.jmetal.encoding.variable.Binary;
 import org.uma.jmetal.util.JMetalException;
 
@@ -65,16 +65,16 @@ public class ZDT5 extends Problem {
     }
 
     if (solutionType.compareTo("Binary") == 0) {
-      solutionType_ = new BinarySolution(this);
+      solutionType_ = new BinarySolutionType(this);
     } else {
-      throw new JMetalException("Error: solution type " + solutionType + " invalid");
+      throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }
   }
 
   /**
-   * Evaluates a solution
+   * Evaluates a solutiontype
    *
-   * @param solution The solution to evaluate
+   * @param solution The solutiontype to evaluate
    */
   public void evaluate(Solution solution) {
     double[] f = new double[numberOfObjectives_];
@@ -90,7 +90,7 @@ public class ZDT5 extends Problem {
   /**
    * Returns the value of the ZDT5 function G.
    *
-   * @param decisionVariables The decision variables of the solution to
+   * @param decisionVariables The decision variables of the solutiontype to
    *                          evaluate.
    */
   public double evalG(Variable[] decisionVariables) {

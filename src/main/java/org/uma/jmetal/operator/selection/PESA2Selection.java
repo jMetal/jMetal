@@ -48,9 +48,9 @@ public class PESA2Selection extends Selection {
   /**
    * Performs the operation
    *
-   * @param object Object representing a SolutionSet. This solution set
+   * @param object Object representing a SolutionSet. This solutiontype set
    *               must be an instancen <code>AdaptiveGridArchive</code>
-   * @return the selected solution
+   * @return the selected solutiontype
    * @throws org.uma.jmetal.util.JMetalException
    */
   public Object execute(Object object) throws JMetalException {

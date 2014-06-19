@@ -22,7 +22,7 @@ package org.uma.jmetal.problem;
 
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.encoding.solution.BinarySolution;
+import org.uma.jmetal.encoding.solutiontype.BinarySolutionType;
 import org.uma.jmetal.encoding.variable.Binary;
 import org.uma.jmetal.util.JMetalException;
 
@@ -59,22 +59,22 @@ public class OneZeroMax extends Problem {
     numberOfConstraints_ = 0;
     problemName_ = "OneZeroMax";
 
-    solutionType_ = new BinarySolution(this);
+    solutionType_ = new BinarySolutionType(this);
 
     length_ = new int[numberOfVariables_];
     length_[0] = numberOfBits;
 
     if (solutionType.compareTo("Binary") == 0) {
-      solutionType_ = new BinarySolution(this);
+      solutionType_ = new BinarySolutionType(this);
     } else {
-      throw new JMetalException("Error: solution type " + solutionType + " invalid");
+      throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }
   }
 
   /**
-   * Evaluates a solution
+   * Evaluates a solutiontype
    *
-   * @param solution The solution to evaluate
+   * @param solution The solutiontype to evaluate
    */
   public void evaluate(Solution solution) {
     Binary variable;

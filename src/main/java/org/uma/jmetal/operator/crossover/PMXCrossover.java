@@ -22,7 +22,7 @@
 package org.uma.jmetal.operator.crossover;
 
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.encoding.solution.PermutationSolution;
+import org.uma.jmetal.encoding.solutiontype.PermutationSolutionType;
 import org.uma.jmetal.encoding.variable.Permutation;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
@@ -46,10 +46,10 @@ public class PMXCrossover extends Crossover {
   private static final long serialVersionUID = -4059314233890056350L;
 
   /**
-   * Valid solution types to apply this operator
+   * Valid solutiontype types to apply this operator
    */
-  private static final List<Class<PermutationSolution>> VALID_TYPES =
-    Arrays.asList(PermutationSolution.class);
+  private static final List<Class<PermutationSolutionType>> VALID_TYPES =
+    Arrays.asList(PermutationSolutionType.class);
 
   private Double crossoverProbability_ = null;
 

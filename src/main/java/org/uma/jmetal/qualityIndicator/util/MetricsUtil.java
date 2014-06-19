@@ -254,7 +254,7 @@ public class MetricsUtil {
    * Reads a set of non dominated solutions from a file
    *
    * @param path The path of the file containing the data
-   * @return A solution set
+   * @return A solutiontype set
    */
   public SolutionSet readSolutionSet(String path) {
     try {
@@ -294,7 +294,7 @@ public class MetricsUtil {
    * Reads a set of non dominated solutions from a file
    *
    * @param path The path of the file containing the data
-   * @return A solution set
+   * @return A solutiontype set
    */
   public SolutionSet readNonDominatedSolutionSet(String path) {
     try {
@@ -331,7 +331,7 @@ public class MetricsUtil {
 
   /**
    * Reads a set of non dominated solutions from a file
-   * and store it in a existing non dominated solution set
+   * and store it in a existing non dominated solutiontype set
    *
    */
   public void readNonDominatedSolutionSet(String path, NonDominatedSolutionList solutionSet) {

@@ -74,7 +74,7 @@ public class MultithreadedEvaluator implements SynchronousParallelTaskExecutor {
   }
 
   /**
-   * Adds a solution to be evaluated to a list of tasks
+   * Adds a solutiontype to be evaluated to a list of tasks
    */
   public void addTask(Object[] taskParameters) {
     Solution solution = (Solution) taskParameters[0];

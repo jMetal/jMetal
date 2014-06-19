@@ -88,7 +88,7 @@ public class FastPGA extends Algorithm {
     populationSize = initialPopulationSize;
     offSpringSize = maxPopSize;
 
-    //Build a solution set randomly
+    //Build a solutiontype set randomly
     solutionSet = new SolutionSet(populationSize);
     for (int i = 0; i < populationSize; i++) {
       Solution solution = new Solution(problem_);

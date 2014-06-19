@@ -22,7 +22,7 @@ package org.uma.test.core;
 
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionType;
-import org.uma.jmetal.encoding.solution.BinarySolution;
+import org.uma.jmetal.encoding.solutiontype.BinarySolutionType;
 import org.uma.jmetal.problem.ZDT.ZDT5;
 import org.uma.jmetal.util.JMetalException;
 
@@ -39,7 +39,7 @@ public class SolutionTypeTest {
   public void getProblemTest() throws JMetalException {
     Problem problem = new ZDT5("Binary", 10) ;
 
-    SolutionType solutionType = new BinarySolution(problem) ;
+    SolutionType solutionType = new BinarySolutionType(problem) ;
     assertEquals(problem, solutionType.getProblem()) ;
   }
 }

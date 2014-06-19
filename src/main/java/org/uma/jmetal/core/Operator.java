@@ -91,7 +91,7 @@ public abstract class Operator implements Serializable {
   }
 
   /**
-   * Add a new valid solution type
+   * Add a new valid solutiontype type
    * @param newSolutionType
    */
   public void addValidSolutionType(Class newSolutionType) {
@@ -99,9 +99,9 @@ public abstract class Operator implements Serializable {
   }
 
   /**
-   * Test for solutions having a solution type to which the operator is applicable
+   * Test for solutions having a solutiontype type to which the operator is applicable
    * @param solution Solution to the checked
-   * @return True if the solution type of the solution is valid
+   * @return True if the solutiontype type of the solutiontype is valid
    */
   public boolean solutionTypeIsValid(Solution solution) {
     boolean result ;
@@ -116,9 +116,9 @@ public abstract class Operator implements Serializable {
   }
 
   /**
-   * Test for solutions having a solution type to which the operator is applicable
-   * @param solutions Array of solution to the checked
-   * @return True if the solution type of all the solutions in the array is valid
+   * Test for solutions having a solutiontype type to which the operator is applicable
+   * @param solutions Array of solutiontype to the checked
+   * @return True if the solutiontype type of all the solutions in the array is valid
    */
   public boolean solutionTypeIsValid(Solution[] solutions) {
     boolean result = true; // true by default

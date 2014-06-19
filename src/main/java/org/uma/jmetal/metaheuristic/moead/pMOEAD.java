@@ -68,7 +68,7 @@ public class pMOEAD extends Algorithm implements Runnable {
    */
   double delta_;
   /**
-   * nr: maximal number of solutions replaced by each child solution
+   * nr: maximal number of solutions replaced by each child solutiontype
    */
   int nr_;
   Solution[] indArray_;
@@ -438,7 +438,7 @@ public class pMOEAD extends Algorithm implements Runnable {
    * @param type
    */
   void updateOfSolutions(Solution individual, int id, int type) throws JMetalException {
-    // individual: child solution
+    // individual: child solutiontype
     // id:   the id of current subproblem
     // type: update solutions in - neighborhood (1) or whole population (otherwise)
     int size;

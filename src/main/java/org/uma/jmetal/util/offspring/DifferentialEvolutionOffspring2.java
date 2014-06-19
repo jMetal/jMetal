@@ -4,7 +4,7 @@
  * @author Antonio J. Nebro
  * @version 1.0
  *
- * This class returns a solution after applying DE
+ * This class returns a solutiontype after applying DE
  */
 
 package org.uma.jmetal.util.offspring;

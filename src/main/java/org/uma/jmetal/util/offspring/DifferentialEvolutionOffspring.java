@@ -4,7 +4,7 @@
  * @author Antonio J. Nebro
  * @version 1.0
  *
- * This class returns a solution after applying DE
+ * This class returns a solutiontype after applying DE
  */
 
 package org.uma.jmetal.util.offspring;
@@ -77,7 +77,7 @@ public class DifferentialEvolutionOffspring extends Offspring {
       Logger.getLogger(DifferentialEvolutionOffspring.class.getName()).log(Level.SEVERE, null, ex);
     }
 
-    //Create a new solution, using DE
+    //Create a new solutiontype, using DE
     return offSpring ;
   }
 
@@ -98,7 +98,7 @@ public class DifferentialEvolutionOffspring extends Offspring {
       Logger.getLogger(DifferentialEvolutionOffspring.class.getName()).log(Level.SEVERE, null, ex);
     }
 
-    //Create a new solution, using DE
+    //Create a new solutiontype, using DE
     return offspring;
   } // getOffpring
 

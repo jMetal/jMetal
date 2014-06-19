@@ -86,7 +86,7 @@ public class PESA2 extends Algorithm {
       solutionSet.add(solution);
     }               
 
-    // Incorporate non-dominated solution to the archive
+    // Incorporate non-dominated solutiontype to the archive
     for (int i = 0; i < solutionSet.size(); i++) {
       archive.add(solutionSet.get(i)); // Only non dominated are accepted by 
       // the archive
