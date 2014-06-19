@@ -92,4 +92,24 @@ public class RealSolutionTypeTest {
       assertEquals(vars[i].getValue(), solutionType_.getRealValue(solution_, i), EPSILON);
     }
   }
+
+  @Test (expected = ArrayIndexOutOfBoundsException.class)
+  public void testAccessingOutOfBoundsVariable() throws Exception {
+    solutionType_.getRealValue(solution_, 5) ;
+  }
+
+  @Test (expected = ArrayIndexOutOfBoundsException.class)
+  public void testWritingOutOfBoundsVariable() throws Exception {
+    solutionType_.setRealValue(solution_, 5, 1.0) ;
+  }
+
+  @Test (expected = ArrayIndexOutOfBoundsException.class)
+  public void testAccessingNegativeIndexVariable() throws Exception {
+    solutionType_.getRealValue(solution_, -1) ;
+  }
+
+  @Test (expected = ArrayIndexOutOfBoundsException.class)
+  public void testWritingNegativeIndexVariable() throws Exception {
+    solutionType_.setRealValue(solution_, -1, 4.0) ;
+  }
 }

@@ -7,7 +7,13 @@
     <groupId>org.uma.jmetal</groupId>
     <artifactId>jmetal</artifactId>
     <version>5.0-SNAPSHOT</version>
-
+    <licenses>
+        <license>
+            <name>GNU Lesser General Public License</name>
+            <url>http://www.gnu.org/licenses/lgpl.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
     <distributionManagement>
         <snapshotRepository>
             <id>snapshots</id>
