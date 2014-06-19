@@ -33,6 +33,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
+import java.util.logging.Level;
 
 public class ExtractParetoFrontAndDecisionVariables {
 
@@ -54,10 +55,11 @@ public class ExtractParetoFrontAndDecisionVariables {
     }
   }
 
-  /*
-   */
-  public ExtractParetoFrontAndDecisionVariables(String FUNFileName,
-    String VARFileName, int dimensions, int numberOfDecisionVariables) {
+  public ExtractParetoFrontAndDecisionVariables(
+    String FUNFileName,
+    String VARFileName,
+    int dimensions,
+    int numberOfDecisionVariables) {
     FUNFileName_ = FUNFileName;
     VARFileName_ = VARFileName;
     dimensions_ = dimensions;
@@ -72,10 +74,10 @@ public class ExtractParetoFrontAndDecisionVariables {
 
     try {
       // read the objetives values
-      File archivo = new File(FUNFileName_);
+      File archive = new File(FUNFileName_);
       FileReader fr = null;
       BufferedReader br = null;
-      fr = new FileReader(archivo);
+      fr = new FileReader(archive);
       br = new BufferedReader(fr);
 
       // read the corresponding decision variable
@@ -88,7 +90,8 @@ public class ExtractParetoFrontAndDecisionVariables {
       // File reading
       String line;
       int lineCnt = 0;
-      line = br.readLine(); // reading the first line (special case)
+      // reading the first line (special case)
+      line = br.readLine();
 
       String lineDecicionVarible = dcbr.readLine();
 
@@ -115,14 +118,16 @@ public class ExtractParetoFrontAndDecisionVariables {
           lineDecicionVarible = dcbr.readLine();
           lineCnt++;
         } catch (NumberFormatException e) {
-          System.err.println("Number in a wrong format in line "
-            + lineCnt);
+          Configuration.logger_.log(
+            Level.SEVERE, "Number in a wrong format in line "
+              + lineCnt);
           System.err.println(line);
           line = br.readLine();
           lineCnt++;
         } catch (NoSuchElementException e2) {
-          System.err.println("Line " + lineCnt
-            + " does not have the right number of objectives");
+          Configuration.logger_.log(
+            Level.SEVERE,"Line " + lineCnt
+              + " does not have the right number of objectives");
           System.err.println(line);
           line = br.readLine();
           lineCnt++;
@@ -131,11 +136,13 @@ public class ExtractParetoFrontAndDecisionVariables {
       br.close();
       dcbr.close();
     } catch (FileNotFoundException e3) {
-      System.err.println("The file " + FUNFileName_
-        + " has not been found in your file system");
+      Configuration.logger_.log(
+        Level.SEVERE,"The file " + FUNFileName_
+          + " has not been found in your file system");
     } catch (IOException e3) {
-      System.err.println("The file " + FUNFileName_
-        + " has not been found in your file system");
+      Configuration.logger_.log(
+        Level.SEVERE,"The file " + FUNFileName_
+          + " has not been found in your file system");
     }
   }
 
@@ -146,8 +153,7 @@ public class ExtractParetoFrontAndDecisionVariables {
       Point auxPoint = iterator.next();
       int flag = compare(point, auxPoint);
 
-      if (flag == -1) { // A solution in the list is dominated by the new
-        // one
+      if (flag == -1) { // A solution in the list is dominated by the new one
         iterator.remove();
 
       } else if (flag == 1) { // The solution is dominated
@@ -166,14 +172,14 @@ public class ExtractParetoFrontAndDecisionVariables {
       if (one.vector_[i] > two.vector_[i])
         flag2 = 1;
     }
-
-    if (flag1 > flag2) // one dominates
+    // one dominates
+    if (flag1 > flag2)
       return -1;
-
-    if (flag2 > flag1) // two dominates
+    // two dominates
+    if (flag2 > flag1)
       return 1;
-
-    return 0; // both are non dominated
+    // both are non dominated
+    return 0;
   }
 
   public void writeParetoFront() {
@@ -206,7 +212,7 @@ public class ExtractParetoFrontAndDecisionVariables {
         bwDC.newLine();
       }
 
-/* Close the file */
+      /* Close the file */
       bwObj.close();
       bwDC.close();
     } catch (IOException e) {
@@ -216,18 +222,13 @@ public class ExtractParetoFrontAndDecisionVariables {
 
   public static void main(String[] args) {
     if (args.length != 4) {
-      System.out.println("Wrong number of arguments: ");
-      System.out
-        .println("Sintex: java ExtractParetoFront <FUNfile> <VARfile> <dimensions> <numberOfDecicionVariables>");
-      System.out
-        .println("\t<FUNfile> is a file containing all objective values");
-      System.out
-        .println("\t<VARfile> is a file containing all corresponding decision variable values");
-      System.out
-        .println("\t<dimensions> represents the number of dimensions of the problem");
-      System.out
-        .println("\t<numberOfDecicionVariables> represents the number of decision varibales of the problem");
-      System.exit(-1);
+      Configuration.logger_.info("Wrong number of arguments: ");
+      Configuration.logger_.info("Sintex: java ExtractParetoFront <FUNfile> <VARfile> <dimensions> <numberOfDecicionVariables>");
+      Configuration.logger_.info("\t<FUNfile> is a file containing all objective values");
+      Configuration.logger_.info("\t<VARfile> is a file containing all corresponding decision variable values");
+      Configuration.logger_.info("\t<dimensions> represents the number of dimensions of the problem");
+      Configuration.logger_.info("\t<numberOfDecicionVariables> represents the number of decision varibales of the problem");
+      throw new JMetalException("");
     }
 
     ExtractParetoFrontAndDecisionVariables epf = new ExtractParetoFrontAndDecisionVariables(

@@ -67,10 +67,10 @@ public class ExtractParetoFront {
    * @throws IOException 
    */
   public void loadInstance() throws IOException {
-    File archivo = new File(fileName_);
+    File archive = new File(fileName_);
     FileReader fr = null;
     BufferedReader br = null;
-    fr = new FileReader(archivo);
+    fr = new FileReader(archive);
     br = new BufferedReader(fr);
 
     // File reading
@@ -90,13 +90,13 @@ public class ExtractParetoFront {
         lineCnt++;
       } catch (NumberFormatException e) {
         Configuration.logger_.log(
-            Level.WARNING,
+            Level.SEVERE,
             "Number in a wrong format in line " + lineCnt + "\n" + line, e);
         line = br.readLine();
         lineCnt++;
       } catch (NoSuchElementException e2) {
         Configuration.logger_.log(
-            Level.WARNING,
+            Level.SEVERE,
             "Line " + lineCnt + " does not have the right number of objectives\n" + line, e2);
         line = br.readLine();
         lineCnt++;
