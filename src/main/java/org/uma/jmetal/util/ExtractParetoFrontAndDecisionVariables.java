@@ -73,7 +73,7 @@ public class ExtractParetoFrontAndDecisionVariables {
   public void loadInstance() {
 
     try {
-      // read the objetives values
+      // read the objectives values
       File archive = new File(FUNFileName_);
       FileReader fr = null;
       BufferedReader br = null;
@@ -93,14 +93,14 @@ public class ExtractParetoFrontAndDecisionVariables {
       // reading the first line (special case)
       line = br.readLine();
 
-      String lineDecicionVarible = dcbr.readLine();
+      String lineDecisionVariable = dcbr.readLine();
 
       while (line != null) {
         double objectiveValues[] = new double[dimensions_];
         double decisionVariables[] = new double[numberOfDecisionVariables_];
 
         StringTokenizer stobj = new StringTokenizer(line);
-        StringTokenizer stdec = new StringTokenizer(lineDecicionVarible);
+        StringTokenizer stdec = new StringTokenizer(lineDecisionVariable);
         try {
           for (int i = 0; i < dimensions_; i++) {
             objectiveValues[i] = new Double(stobj.nextToken());
@@ -115,7 +115,7 @@ public class ExtractParetoFrontAndDecisionVariables {
           add(auxPoint);
 
           line = br.readLine();
-          lineDecicionVarible = dcbr.readLine();
+          lineDecisionVariable = dcbr.readLine();
           lineCnt++;
         } catch (NumberFormatException e) {
           Configuration.logger_.log(
@@ -126,7 +126,7 @@ public class ExtractParetoFrontAndDecisionVariables {
           lineCnt++;
         } catch (NoSuchElementException e2) {
           Configuration.logger_.log(
-            Level.SEVERE,"Line " + lineCnt
+            Level.SEVERE, "Line " + lineCnt
               + " does not have the right number of objectives");
           System.err.println(line);
           line = br.readLine();
@@ -137,11 +137,11 @@ public class ExtractParetoFrontAndDecisionVariables {
       dcbr.close();
     } catch (FileNotFoundException e3) {
       Configuration.logger_.log(
-        Level.SEVERE,"The file " + FUNFileName_
+        Level.SEVERE, "The file " + FUNFileName_
           + " has not been found in your file system");
     } catch (IOException e3) {
       Configuration.logger_.log(
-        Level.SEVERE,"The file " + FUNFileName_
+        Level.SEVERE, "The file " + FUNFileName_
           + " has not been found in your file system");
     }
   }
@@ -184,12 +184,12 @@ public class ExtractParetoFrontAndDecisionVariables {
 
   public void writeParetoFront() {
     try {
-/* Open the objective output file */
+      // Open the objective output file
       FileOutputStream fosObj = new FileOutputStream(FUNFileName_ + ".pf");
       OutputStreamWriter oswObj = new OutputStreamWriter(fosObj);
       BufferedWriter bwObj = new BufferedWriter(oswObj);
 
-/* Open the decision variables output file */
+      // Open the decision variables output file
       FileOutputStream fosDC = new FileOutputStream(VARFileName_ + ".pf");
       OutputStreamWriter oswDC = new OutputStreamWriter(fosDC);
       BufferedWriter bwDC = new BufferedWriter(oswDC);
@@ -212,7 +212,7 @@ public class ExtractParetoFrontAndDecisionVariables {
         bwDC.newLine();
       }
 
-      /* Close the file */
+      // Close the files
       bwObj.close();
       bwDC.close();
     } catch (IOException e) {
@@ -223,11 +223,15 @@ public class ExtractParetoFrontAndDecisionVariables {
   public static void main(String[] args) {
     if (args.length != 4) {
       Configuration.logger_.info("Wrong number of arguments: ");
-      Configuration.logger_.info("Sintex: java ExtractParetoFront <FUNfile> <VARfile> <dimensions> <numberOfDecicionVariables>");
+      Configuration.logger_.info(
+        "Sintex: java ExtractParetoFront <FUNfile> <VARfile> <dimensions> <numberOfDecicionVariables>");
       Configuration.logger_.info("\t<FUNfile> is a file containing all objective values");
-      Configuration.logger_.info("\t<VARfile> is a file containing all corresponding decision variable values");
-      Configuration.logger_.info("\t<dimensions> represents the number of dimensions of the problem");
-      Configuration.logger_.info("\t<numberOfDecicionVariables> represents the number of decision varibales of the problem");
+      Configuration.logger_.info(
+        "\t<VARfile> is a file containing all corresponding decision variable values");
+      Configuration.logger_.info(
+        "\t<dimensions> represents the number of dimensions of the problem");
+      Configuration.logger_.info(
+        "\t<numberOfDecicionVariables> represents the number of decision varibales of the problem");
       throw new JMetalException("");
     }
 
