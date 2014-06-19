@@ -43,7 +43,7 @@ public class ExtractParetoFrontAndDecisionVariables {
   int dimensions_;
   int numberOfDecisionVariables_;
 
-  List<Point> points_ = new LinkedList<Point>();
+  List<Point> points_ = new LinkedList<>();
 
   private class Point {
     double[] vector_;
@@ -153,10 +153,12 @@ public class ExtractParetoFrontAndDecisionVariables {
       Point auxPoint = iterator.next();
       int flag = compare(point, auxPoint);
 
-      if (flag == -1) { // A solution in the list is dominated by the new one
+      // A solution in the list is dominated by the new one
+      if (flag == -1) {
         iterator.remove();
 
-      } else if (flag == 1) { // The solution is dominated
+      // The solution is dominated
+      } else if (flag == 1) {
         return;
       }
     }
