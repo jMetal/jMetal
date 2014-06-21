@@ -4,7 +4,7 @@
 
     <groupId>org.uma.jmetal</groupId>
     <artifactId>jmetal</artifactId>
-    <version>5.0</version>
+    <version>5.1-SNAPSHOT</version>
     <licenses>
         <license>
             <name>GNU Lesser General Public License</name>
