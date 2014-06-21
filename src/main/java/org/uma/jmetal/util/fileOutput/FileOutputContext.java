@@ -1,6 +1,7 @@
 package org.uma.jmetal.util.fileOutput;
 
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 
 /**
  * Created by Antonio J. Nebro on 31/05/14.
@@ -8,18 +9,14 @@ import java.io.BufferedWriter;
 public abstract class FileOutputContext {
   protected static final String DEFAULT_SEPARATOR = " " ;
 
-  protected BufferedWriter bufferedWriter_ ;
-
+  protected String fileName_ ;
   protected String separator_ ;
 
   public FileOutputContext() {
-    bufferedWriter_ = null ;
     separator_ = DEFAULT_SEPARATOR;
   }
 
-  public BufferedWriter getFileWriter() {
-    return bufferedWriter_ ;
-  }
+  public abstract BufferedWriter getFileWriter() throws FileNotFoundException;
 
   public String getSeparator() {
     return separator_;

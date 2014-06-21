@@ -9,12 +9,16 @@ import java.io.OutputStreamWriter;
  * Created by Antonio J. Nebro on 31/05/14.
  */
 public class DefaultFileOutputContext extends FileOutputContext {
-
-  public DefaultFileOutputContext(String fileName) throws FileNotFoundException {
-    FileOutputStream outputStream = new FileOutputStream(fileName);
-    OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream);
-    bufferedWriter_ = new BufferedWriter(outputStreamWriter) ;
+  public DefaultFileOutputContext(String fileName) {
+    fileName_ = fileName ;
   }
 
+  @Override
+  public BufferedWriter getFileWriter() throws FileNotFoundException {
+    FileOutputStream outputStream = new FileOutputStream(fileName_);
+    OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream);
+    BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter) ;
 
+    return bufferedWriter;
+  }
 }

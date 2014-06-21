@@ -242,6 +242,7 @@ public class SolutionSet implements Serializable {
    *
    * @param path The output file name
    */
+  @Deprecated
   public void printObjectivesToFile(String path) throws IOException {
     /* Open the file */
     FileOutputStream fos = new FileOutputStream(path);
@@ -261,6 +262,7 @@ public class SolutionSet implements Serializable {
    *
    * @param path The output file name
    */
+  @Deprecated
   public void printVariablesToFile(String path) throws IOException {
     FileOutputStream fos = new FileOutputStream(path);
     OutputStreamWriter osw = new OutputStreamWriter(fos);
@@ -323,6 +325,7 @@ public class SolutionSet implements Serializable {
    *
    * @param path File name
    */
+  @Deprecated
   public void printFeasibleFUN(String path) {
     try {
       FileOutputStream fos = new FileOutputStream(path);
@@ -347,6 +350,7 @@ public class SolutionSet implements Serializable {
    *
    * @param path File name
    */
+  @Deprecated
   public void printFeasibleVAR(String path) {
     try {
       FileOutputStream fos = new FileOutputStream(path);
@@ -377,7 +381,7 @@ public class SolutionSet implements Serializable {
    */
   public void clear() {
     solutionsList_.clear();
-  } // clear
+  }
 
   /**
    * Deletes the <code>Solution</code> at position i in the set.
@@ -387,9 +391,9 @@ public class SolutionSet implements Serializable {
   public void remove(int i) {
     if (i > solutionsList_.size() - 1) {
       Configuration.logger_.log(Level.SEVERE, "Size is: " + this.size());
-    } // if
+    }
     solutionsList_.remove(i);
-  } // remove
+  }
 
   /**
    * Returns an <code>Iterator</code> to access to the solutiontype set list.
@@ -446,6 +450,7 @@ public class SolutionSet implements Serializable {
    *
    * @return A matrix containing the objectives
    */
+  @Deprecated
   public double[][] writeObjectivesToMatrix() {
     if (isEmtpy()) {
       return new double[0][0];
@@ -472,5 +477,21 @@ public class SolutionSet implements Serializable {
 
   public void setCapacity(int capacity) {
     capacity_ = capacity;
+  }
+
+  public List<Solution> getSolutionsList() {
+    return solutionsList_ ;
+  }
+
+  public SolutionSet getFeasibleSolutions() {
+    SolutionSet feasibleSolutions = new SolutionSet() ;
+
+    for (Solution solution : solutionsList_) {
+       if (solution.getOverallConstraintViolation() == 0) {
+         feasibleSolutions.add(new Solution((solution))) ;
+       }
+    }
+
+    return feasibleSolutions ;
   }
 }

@@ -226,7 +226,7 @@ public class ExtractParetoFrontAndDecisionVariables {
     if (args.length != 4) {
       Configuration.logger_.info("Wrong number of arguments: ");
       Configuration.logger_.info(
-        "Sintex: java ExtractParetoFront <FUNfile> <VARfile> <dimensions> <numberOfDecicionVariables>");
+        "Syntax: java ExtractParetoFront <FUNfile> <VARfile> <dimensions> <numberOfDecisionVariables>");
       Configuration.logger_.info("\t<FUNfile> is a file containing all objective values");
       Configuration.logger_.info(
         "\t<VARfile> is a file containing all corresponding decision variable values");
