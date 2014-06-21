@@ -4,7 +4,7 @@
 
     <groupId>org.uma.jmetal</groupId>
     <artifactId>jmetal</artifactId>
-    <version>5.0-Beta-1-SNAPSHOT</version>
+    <version>5.0-Beta-1</version>
     <licenses>
         <license>
             <name>GNU Lesser General Public License</name>
@@ -26,7 +26,8 @@
         <connection>scm:git://git@github.com:jMetal/jMetal.git</connection>
         <developerConnection>scm:git:https://github.com/jMetal/jMetal.git</developerConnection>
         <url>https://github.com/jMetal/jMetal.git</url>
-    </scm>
+      <tag>jmetal-5.0-Beta-1</tag>
+  </scm>
 
     <distributionManagement>
         <snapshotRepository>
