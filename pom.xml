@@ -14,6 +14,16 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
+
+    <developers>
+        <developer>
+            <name>Antonio J. Nebro</name>
+            <email>antonio@lcc.uma.es</email>
+            <organization>University of Malaga</organization>
+            <organizationUrl>http://www.uma.es</organizationUrl>
+        </developer>
+    </developers>
+
     <distributionManagement>
         <snapshotRepository>
             <id>snapshots</id>
