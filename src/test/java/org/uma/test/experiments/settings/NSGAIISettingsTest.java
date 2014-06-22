@@ -61,6 +61,7 @@ public class NSGAIISettingsTest {
     Settings NSGAIISettings = new org.uma.jmetal.experiment.settings.NSGAIISettings("Fonseca");
     NSGAII algorithm = (NSGAII) NSGAIISettings.configure() ;
     Problem problem = new Fonseca("Real") ;
+
     SBXCrossover crossover = (SBXCrossover) algorithm.getCrossoverOperator() ;
     double pc = crossover.getCrossoverProbability() ;
     double dic = crossover.getDistributionIndex() ;
@@ -84,6 +85,7 @@ public class NSGAIISettingsTest {
     Settings NSGAIISettings = new org.uma.jmetal.experiment.settings.NSGAIISettings("Fonseca");
     NSGAII algorithm = (NSGAII)NSGAIISettings.configure(configuration_) ;
     Problem problem = new Fonseca("Real") ;
+
     SBXCrossover crossover = (SBXCrossover) algorithm.getCrossoverOperator() ;
     double pc = crossover.getCrossoverProbability() ;
     double dic = crossover.getDistributionIndex() ;

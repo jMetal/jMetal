@@ -43,7 +43,7 @@ public class BitFlipMutationTest {
 
   @Before
   public void setUp() throws JMetalException {
-    problem_ = new Kursawe("Real", 3) ;
+    problem_ = new Kursawe("BinaryReal", 3) ;
 
     mutation_ = new BitFlipMutation.Builder().
       probability(1.0 / problem_.getNumberOfVariables())

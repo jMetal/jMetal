@@ -24,11 +24,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.experiment.Settings;
-import org.uma.jmetal.experiment.settings.NSGAIIBinarySettings;
+import org.uma.jmetal.experiment.settings.NSGAIIBinaryRealSettings;
 import org.uma.jmetal.metaheuristic.nsgaII.NSGAII;
 import org.uma.jmetal.operator.crossover.SinglePointCrossover;
 import org.uma.jmetal.operator.mutation.BitFlipMutation;
-import org.uma.jmetal.problem.ZDT.ZDT5;
+import org.uma.jmetal.problem.ZDT.ZDT1;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -45,7 +45,7 @@ import static org.junit.Assert.assertEquals;
  * Time: 19:41
  * To change this template use File | Settings | File Templates.
  */
-public class NSGAIIBinarySettingsTest {
+public class NSGAIIBinaryRealSettingsTest {
   Properties configuration_ ;
 
   @Before
@@ -58,38 +58,38 @@ public class NSGAIIBinarySettingsTest {
   @Test
   public void testConfigure() throws Exception {
     double epsilon = 0.000000000000001 ;
-    Settings nsgaIISettings = new NSGAIIBinarySettings("ZDT5");
+    Settings nsgaIISettings = new NSGAIIBinaryRealSettings("ZDT1");
     NSGAII algorithm = (NSGAII)nsgaIISettings.configure() ;
-    Problem problem = new ZDT5("Binary") ;
+    Problem problem = new ZDT1("BinaryReal") ;
 
     SinglePointCrossover crossover =  (SinglePointCrossover) algorithm.getCrossoverOperator() ;
     double pc = crossover.getCrossoverProbability() ;
     BitFlipMutation mutation = (BitFlipMutation)algorithm.getMutationOperator() ;
     double pm = mutation.getMutationProbability() ;
 
-    assertEquals("NSGAIIBinary_SettingsTest", 100, algorithm.getPopulationSize());
-    assertEquals("NSGAIIBinary_SettingsTest", 25000, algorithm.getMaxEvaluations()) ;
+    assertEquals(100, algorithm.getPopulationSize());
+    assertEquals(25000, algorithm.getMaxEvaluations()) ;
 
-    assertEquals("NSGAIIBinary_SettingsTest", 0.9, pc, epsilon);
-    assertEquals("NSGAIIBinary_SettingsTest", 1.0/problem.getNumberOfBits(), pm, epsilon);
+    assertEquals(0.9, pc, epsilon);
+    assertEquals(1.0/problem.getNumberOfBits(), pm, epsilon);
   }
 
   @Test
   public void testConfigure2() throws Exception {
     double epsilon = 0.000000000000001 ;
-    Settings nsgaIISettings = new NSGAIIBinarySettings("ZDT5");
+    Settings nsgaIISettings = new NSGAIIBinaryRealSettings("ZDT1");
     NSGAII algorithm = (NSGAII)nsgaIISettings.configure(configuration_) ;
-    Problem problem = new ZDT5("Binary") ;
+    Problem problem = new ZDT1("BinaryReal") ;
 
     SinglePointCrossover crossover =  (SinglePointCrossover) algorithm.getCrossoverOperator() ;
     double pc = crossover.getCrossoverProbability() ;
     BitFlipMutation mutation = (BitFlipMutation)algorithm.getMutationOperator() ;
     double pm = mutation.getMutationProbability() ;
 
-    assertEquals("NSGAIIBinary_SettingsTest", 100, algorithm.getPopulationSize());
-    assertEquals("NSGAIIBinary_SettingsTest", 25000, algorithm.getMaxEvaluations()) ;
+    assertEquals(100, algorithm.getPopulationSize());
+    assertEquals(25000, algorithm.getMaxEvaluations()) ;
 
-    assertEquals("NSGAIIBinary_SettingsTest", 0.9, pc, epsilon);
-    assertEquals("NSGAIIBinary_SettingsTest", 1.0/problem.getNumberOfBits(), pm, epsilon);
+    assertEquals(0.9, pc, epsilon);
+    assertEquals(1.0/problem.getNumberOfBits(), pm, epsilon);
   }
 }
