@@ -63,7 +63,6 @@ public class BoxPlots implements IExperimentOutput {
           experiment_.getIndicatorList()[indicator] +
           ".Boxplot.eps\", horizontal=FALSE, onefile=FALSE, height=8, width=12, pointsize=10)" +
           "\n");
-        //os.write("resultDirectory<-\"../data/" + experimentName_ +"\"" + "\n");
         os.write("resultDirectory<-\"../data/" + "\"" + "\n");
         os.write("qIndicator <- function(indicator, problem)" + "\n");
         os.write("{" + "\n");
@@ -81,12 +80,12 @@ public class BoxPlots implements IExperimentOutput {
           os.write(experiment_.getAlgorithmNameList()[i] + "<-scan(" + "file" + experiment_
             .getAlgorithmNameList()[i] + ")" + "\n");
           os.write("\n");
-        } // for
+        }
 
         os.write("algs<-c(");
         for (int i = 0; i < experiment_.getAlgorithmNameList().length - 1; i++) {
           os.write("\"" + experiment_.getAlgorithmNameList()[i] + "\",");
-        } // for
+        }
         os.write(
           "\"" + experiment_.getAlgorithmNameList()[experiment_.getAlgorithmNameList().length - 1]
             + "\")" + "\n"
@@ -95,7 +94,7 @@ public class BoxPlots implements IExperimentOutput {
         os.write("boxplot(");
         for (int i = 0; i < experiment_.getAlgorithmNameList().length; i++) {
           os.write(experiment_.getAlgorithmNameList()[i] + ",");
-        } // for
+        }
         if (experiment_.getBoxplotNotch()) {
           os.write("names=algs, notch = TRUE)" + "\n");
         } else {

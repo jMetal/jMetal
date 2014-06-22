@@ -1,10 +1,9 @@
-//  RandomSearchRunner.java
+//  DMOPSORunner.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
 //
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
+//  Copyright (c) 2014 Antonio J. Nebro, Juan J. Durillo
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -15,18 +14,18 @@
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU Lesser General Public License for more details.
-// 
+//
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.runner;
+package org.uma.jmetal.runner.multiObjective;
 
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristic.randomSearch.RandomSearch;
-import org.uma.jmetal.problem.Kursawe;
+import org.uma.jmetal.metaheuristic.dmopso.dMOPSO;
 import org.uma.jmetal.problem.ProblemFactory;
+import org.uma.jmetal.problem.ZDT.ZDT1;
 import org.uma.jmetal.qualityIndicator.QualityIndicator;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
@@ -35,31 +34,28 @@ import java.io.IOException;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
-/**
- * Class for configuring and running the RandomSearch algorithm
- */
-public class RandomSearchRunner {
+public class DMOPSORunner {
   public static Logger logger_;      
   public static FileHandler fileHandler_; 
 
   /**
-   * @param args Command line arguments.
+   * @param args Command line arguments. The first (optional) argument specifies
+   *             the problem to solve.
    * @throws org.uma.jmetal.util.JMetalException
    * @throws IOException
    * @throws SecurityException Usage: three options
-   *                           - org.uma.jmetal.runner.RandomSearch_main
-   *                           - org.uma.jmetal.runner.RandomSearch_main problemName
+   *                           - org.uma.jmetal.runner.MOCell_main
+   *                           - org.uma.jmetal.runner.MOCell_main problemName
+   *                           - org.uma.jmetal.runner.MOCell_main problemName ParetoFrontFile
    */
-  public static void main(String[] args) throws
-    JMetalException, SecurityException, IOException, ClassNotFoundException {
+  public static void main(String[] args) throws JMetalException, IOException, ClassNotFoundException {
     Problem problem;
     Algorithm algorithm;
-
     QualityIndicator indicators;
 
     // Logger object and file to store log messages
     logger_ = Configuration.logger_;
-    fileHandler_ = new FileHandler("RandomSearch_main.log");
+    fileHandler_ = new FileHandler("dMOPSO_main.log");
     logger_.addHandler(fileHandler_);
 
     indicators = null;
@@ -70,23 +66,30 @@ public class RandomSearchRunner {
       Object[] params = {"Real"};
       problem = (new ProblemFactory()).getProblem(args[0], params);
       indicators = new QualityIndicator(problem, args[1]);
-    } else {
-      problem = new Kursawe("Real", 3);
+    } else { 
+      //problem = new Kursawe("Real", 3);
+      //problem = new Fonseca("Real");
       //problem = new Water("Real");
       //problem = new ZDT1("ArrayReal", 1000);
-      //problem = new ZDT4("BinaryReal");
+      problem = new ZDT1("Real");
+      //problem = new ZDT2("Real");
       //problem = new WFG1("Real");
       //problem = new DTLZ1("Real");
       //problem = new OKA2("Real") ;
+      //problem = new LZ09_F1("Real");
     }
 
-    algorithm = new RandomSearch();
+    algorithm = new dMOPSO();
     algorithm.setProblem(problem);
 
     // Algorithm parameters
-    algorithm.setInputParameter("maxEvaluations", 25000);
+    algorithm.setInputParameter("swarmSize", 100);
+    algorithm.setInputParameter("maxAge", 2);
+    algorithm.setInputParameter("maxIterations", 250);
+    algorithm.setInputParameter("functionType", "_TCHE");
+    algorithm.setInputParameter("dataDirectory", "MOEAD_Weight");
 
-    // Execute the Algorithm
+    // Execute the Algorithm 
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;

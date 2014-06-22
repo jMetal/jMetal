@@ -1,10 +1,9 @@
-//  SolutionSet.Java
+//  SMSEMOA_main.java
 //
 //  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
+//       Simon Wessing
 //
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
+//  Copyright (c) 2011 Simon Wessing
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -18,14 +17,22 @@
 // 
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-package org.uma.jmetal.runner;
+/**
+ * SMSEMOA_main.java
+ *
+ * @author Simon Wessing
+ * @version 1.0
+ *   This implementation of SMS-EMOA makes use of a QualityIndicator object
+ *   to obtained the convergence speed of the algorithm.
+ *
+ */
+package org.uma.jmetal.runner.multiObjective;
 
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristic.mocell.MOCell;
+import org.uma.jmetal.metaheuristic.smsemoa.FastSMSEMOA;
 import org.uma.jmetal.operator.crossover.CrossoverFactory;
 import org.uma.jmetal.operator.mutation.MutationFactory;
 import org.uma.jmetal.operator.selection.SelectionFactory;
@@ -41,28 +48,28 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
 /**
- * * This class executes the algorithms described in
- * A.J. Nebro, J.J. Durillo, F. Luna, B. Dorronsoro, E. Alba
- * "Design Issues in a Multiobjective Cellular Genetic Algorithm."
- * Evolutionary Multi-Criterion Optimization. 4th International Conference,
- * EMO 2007. Sendai/Matsushima, Japan, March 2007.
+ * Class for configuring and running the SMS-EMOA algorithm. This
+ * implementation of SMS-EMOA makes use of a QualityIndicator object
+ * to obtained the convergence speed of the algorithm.
  */
-public class MOCellRunner {
-  public static Logger logger_;
-  public static FileHandler fileHandler_;
+public class SMSEMOARunner {
+  public static Logger logger_;      
+  public static FileHandler fileHandler_; 
 
   /**
-   * @param args Command line arguments. The first (optional) argument specifies
-   *             the problem to solve.
+   * @param args Command line arguments.
    * @throws org.uma.jmetal.util.JMetalException
-   * @throws java.io.IOException
+   * @throws IOException
    * @throws SecurityException Usage: three options
-   *                           - org.uma.jmetal.runner.MOCell_main
-   *                           - org.uma.jmetal.runner.MOCell_main problemName
-   *                           - org.uma.jmetal.runner.MOCell_main problemName ParetoFrontFile
+   *                           - org.uma.jmetal.runner.SMSEMOA_main
+   *                           - org.uma.jmetal.runner.SMSEMOA_main problemName
+   *                           - org.uma.jmetal.runner.SMSEMOA_main problemName paretoFrontFile
    */
-  public static void main(String[] args)
-    throws JMetalException, SecurityException, IOException, ClassNotFoundException {
+  public static void main(String[] args) throws
+    JMetalException,
+    SecurityException,
+    IOException,
+    ClassNotFoundException {
     Problem problem;
     Algorithm algorithm;
     Operator crossover;
@@ -73,7 +80,7 @@ public class MOCellRunner {
 
     // Logger object and file to store log messages
     logger_ = Configuration.logger_;
-    fileHandler_ = new FileHandler("MOCell_main.log");
+    fileHandler_ = new FileHandler("SMSEMOA_main.log");
     logger_.addHandler(fileHandler_);
 
     indicators = null;
@@ -86,27 +93,22 @@ public class MOCellRunner {
       indicators = new QualityIndicator(problem, args[1]);
     } else {
       problem = new Kursawe("Real", 3);
+      //problem = new Kursawe("BinaryReal", 3);
       //problem = new Water("Real");
-      //problem = new ZDT1("ArrayReal", 1000);
-      //problem = new ZDT4("BinaryReal");
-      //problem = new WFG1("Real");
+      //problem = new ZDT1("ArrayReal", 100);
+      //problem = new ConstrEx("Real");
       //problem = new DTLZ1("Real");
       //problem = new OKA2("Real") ;
     }
 
-    //algorithm = new sMOCell1(problem_) ;
-    //algorithm = new sMOCell2(problem_) ;
-    //algorithm = new aMOCell1(problem_) ;
-    //algorithm = new aMOCell2(problem_) ;
-    //algorithm = new aMOCell3(problem_) ;
-    algorithm = new MOCell();
+    //algorithm = new SMSEMOA(problem);
+    algorithm = new FastSMSEMOA();
     algorithm.setProblem(problem);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", 100);
-    algorithm.setInputParameter("archiveSize", 100);
     algorithm.setInputParameter("maxEvaluations", 25000);
-    algorithm.setInputParameter("feedBack", 20);
+    algorithm.setInputParameter("offset", 10.0);
 
     // Mutation and Crossover for Real codification 
     HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
@@ -119,25 +121,29 @@ public class MOCellRunner {
     mutationParameters.put("distributionIndex", 20.0);
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
 
-    // Selection Operator 
+    // Selection Operator
     HashMap<String, Object> selectionParameters = null; // FIXME: why we are passing null?
-    selection = SelectionFactory.getSelectionOperator("BinaryTournament", selectionParameters);
+    selection = SelectionFactory.getSelectionOperator("RandomSelection", selectionParameters);
 
     // Add the operator to the algorithm
     algorithm.addOperator("crossover", crossover);
     algorithm.addOperator("mutation", mutation);
     algorithm.addOperator("selection", selection);
 
+    // Add the indicator object to the algorithm
+    algorithm.setInputParameter("indicators", indicators);
+
+    // Execute the Algorithm
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;
 
-    // Result messages 
+    // Result messages
     logger_.info("Total execution time: " + estimatedTime + "ms");
-    logger_.info("Objectives values have been writen to file FUN");
-    population.printObjectivesToFile("FUN");
-    logger_.info("Variables values have been writen to file VAR");
+    logger_.info("Variables values have been written to file VAR");
     population.printVariablesToFile("VAR");
+    logger_.info("Objectives values have been written to file FUN");
+    population.printObjectivesToFile("FUN");
 
     if (indicators != null) {
       logger_.info("Quality indicators");
@@ -146,6 +152,9 @@ public class MOCellRunner {
       logger_.info("IGD        : " + indicators.getIGD(population));
       logger_.info("Spread     : " + indicators.getSpread(population));
       logger_.info("Epsilon    : " + indicators.getEpsilon(population));
+
+      int evaluations = (Integer) algorithm.getOutputParameter("evaluations");
+      logger_.info("Speed      : " + evaluations + " evaluations");
     }
   }
 }

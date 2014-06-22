@@ -151,7 +151,7 @@ public class WilcoxonTestTables implements IExperimentOutput {
               "  }" + "\n" +
               "  else if (i < j) {" + "\n" +
               "    if (wilcox.org.uma.test(data1, data2)$p.value <= 0.05) {" + "\n" +
-              "      if (median(data1) <= median(data2)) {" + "\n" +
+              "      if (median_(data1) <= median_(data2)) {" + "\n" +
               "        write(\"$\\\\blacktriangle$\", \"" + texFile + "\", append=TRUE)" + "\n" +
               "      }" + "\n" +
               "      else {" + "\n" +
@@ -184,7 +184,7 @@ public class WilcoxonTestTables implements IExperimentOutput {
               "  }" + "\n" +
               "  else if (i < j) {" + "\n" +
               "    if (wilcox.org.uma.test(data1, data2)$p.value <= 0.05) {" + "\n" +
-              "      if (median(data1) >= median(data2)) {" + "\n" +
+              "      if (median_(data1) >= median_(data2)) {" + "\n" +
               "        write(\"$\\\\blacktriangle$\", \"" + texFile + "\", append=TRUE)" + "\n" +
               "      }" + "\n" +
               "      else {" + "\n" +

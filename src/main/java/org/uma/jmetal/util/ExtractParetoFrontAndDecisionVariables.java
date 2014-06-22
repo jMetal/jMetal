@@ -119,16 +119,14 @@ public class ExtractParetoFrontAndDecisionVariables {
           lineCnt++;
         } catch (NumberFormatException e) {
           Configuration.logger_.log(
-            Level.SEVERE, "Number in a wrong format in line "
-              + lineCnt);
-          System.err.println(line);
+            Level.SEVERE,
+            "Number in a wrong format in line " + lineCnt + "\n" + line, e);
           line = br.readLine();
           lineCnt++;
         } catch (NoSuchElementException e2) {
           Configuration.logger_.log(
-            Level.SEVERE, "Line " + lineCnt
-              + " does not have the right number of objectives");
-          System.err.println(line);
+            Level.SEVERE,
+            "Line " + lineCnt + " does not have the right number of objectives\n" + line, e2);
           line = br.readLine();
           lineCnt++;
         }
@@ -138,11 +136,11 @@ public class ExtractParetoFrontAndDecisionVariables {
     } catch (FileNotFoundException e3) {
       Configuration.logger_.log(
         Level.SEVERE, "The file " + FUNFileName_
-          + " has not been found in your file system");
+          + " has not been found in your file system", e3);
     } catch (IOException e3) {
       Configuration.logger_.log(
         Level.SEVERE, "The file " + FUNFileName_
-          + " has not been found in your file system");
+          + " has not been found in your file system", e3);
     }
   }
 

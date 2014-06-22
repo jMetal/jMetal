@@ -1,4 +1,4 @@
-//  NSGAIIRunner.java
+//  GDE3Runner.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -17,17 +17,15 @@
 // 
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-package org.uma.jmetal.runner;
+package org.uma.jmetal.runner.multiObjective;
 
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristic.nsgaII.NSGAIITemplate;
-import org.uma.jmetal.operator.crossover.SBXCrossover;
-import org.uma.jmetal.operator.mutation.PolynomialMutation;
-import org.uma.jmetal.operator.selection.BinaryTournament2;
+import org.uma.jmetal.metaheuristic.gde3.GDE3;
+import org.uma.jmetal.operator.crossover.DifferentialEvolutionCrossover;
+import org.uma.jmetal.operator.selection.DifferentialEvolutionSelection;
 import org.uma.jmetal.problem.Kursawe;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.qualityIndicator.QualityIndicator;
@@ -44,46 +42,33 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
 /**
- * Class to configure and execute the NSGA-II algorithm.
- * <p/>
- * Besides the classic NSGA-II, a steady-state version (ssNSGAII) is also
- * included (See: J.J. Durillo, A.J. Nebro, F. Luna and E. Alba
- * "On the Effect of the Steady-State Selection Scheme in
- * Multi-Objective Genetic Algorithms"
- * 5th International Conference, EMO 2009, pp: 183-197.
- * April 2009)
+ * Class for configuring and running the GDE3 algorithm
  */
-
-public class NSGAIIRunner {
-  private static Logger logger_;
-  private static FileHandler fileHandler_;
+public class GDE3Runner {
+  public static Logger logger_;
+  public static FileHandler fileHandler_;
 
   /**
    * @param args Command line arguments.
    * @throws org.uma.jmetal.util.JMetalException
    * @throws java.io.IOException
-   * @throws SecurityException Usage: three options
-   *                           - org.uma.jmetal.metaheuristic.nsgaII.NSGAIIRunner
-   *                           - org.uma.jmetal.metaheuristic.nsgaII.NSGAIIRunner problemName
-   *                           - org.uma.jmetal.metaheuristic.nsgaII.NSGAIIRunner problemName paretoFrontFile
+   * @throws SecurityException Usage: three choices
+   *                           - org.uma.jmetal.runner.multiObjective.GDE3Runner
+   *                           - org.uma.jmetal.runner.multiObjective.GDE3Runner problemName
+   *                           - org.uma.jmetal.runner.multiObjective.GDE3Runner problemName paretoFrontFile
    */
-  public static void main(String[] args) throws
-    JMetalException,
-    SecurityException,
-    IOException,
-    ClassNotFoundException {
-
+  public static void main(String[] args)
+    throws JMetalException, SecurityException, IOException, ClassNotFoundException {
     Problem problem;
     Algorithm algorithm;
-    Operator crossover;
-    Operator mutation;
     Operator selection;
+    Operator crossover;
 
     QualityIndicator indicators;
 
     // Logger object and file to store log messages
     logger_ = Configuration.logger_;
-    fileHandler_ = new FileHandler("NSGAII_main.log");
+    fileHandler_ = new FileHandler("GDE3_main.log");
     logger_.addHandler(fileHandler_);
 
     indicators = null;
@@ -96,50 +81,34 @@ public class NSGAIIRunner {
       indicators = new QualityIndicator(problem, args[1]);
     } else {
       problem = new Kursawe("Real", 3);
-      /*
-        Examples:
-        problem = new Water("Real");
-        problem = new ZDT3("ArrayReal", 30);
-        problem = new ConstrEx("Real");
-        problem = new DTLZ1("Real");
-        problem = new OKA2("Real")
-      */
+      //problem = new Water("Real");
+      //problem = new ZDT1("ArrayReal", 100);
+      //problem = new ConstrEx("Real");
+      //problem = new DTLZ1("Real");
+      //problem = new OKA2("Real") ;
     }
 
-    /*
+     /*
      * Alternatives:
-     * - "NSGAII"
-     * - "SteadyStateNSGAII"
+     * - evaluator = new SequentialSolutionSetEvaluator()
+     * - evaluator = new MultithreadedSolutionSetEvaluator(threads, problem)
      */
-    String nsgaIIVersion = "NSGAII" ;
+    SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator();
 
-    /*
-     * Alternatives:
-     * - evaluator = new SequentialSolutionSetEvaluator() // NSGAII
-     * - evaluator = new MultithreadedSolutionSetEvaluator(threads, problem) // parallel NSGAII
-     */
-    SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator() ;
-
-    crossover = new SBXCrossover.Builder()
-      .distributionIndex(20.0)
-      .probability(0.9)
+    crossover = new DifferentialEvolutionCrossover.Builder()
+      .cr(0.5)
+      .f(0.5)
       .build() ;
 
-    mutation = new PolynomialMutation.Builder()
-      .distributionIndex(20.0)
-      .probability(1.0/problem.getNumberOfVariables())
+    selection = new DifferentialEvolutionSelection.Builder()
       .build();
 
-    selection = new BinaryTournament2.Builder()
-      .build();
-
-    algorithm = new NSGAIITemplate.Builder(problem, evaluator)
+    algorithm = new GDE3.Builder(problem, evaluator)
       .crossover(crossover)
-      .mutation(mutation)
       .selection(selection)
-      .maxEvaluations(25000)
+      .maxIterations(250)
       .populationSize(100)
-      .build(nsgaIIVersion) ;
+      .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
       .execute() ;

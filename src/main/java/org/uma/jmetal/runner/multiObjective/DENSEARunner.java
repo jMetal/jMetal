@@ -1,4 +1,4 @@
-//  PESA2Runner.java
+//  DENSEARunner.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -19,17 +19,17 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.runner;
+package org.uma.jmetal.runner.multiObjective;
 
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristic.pesa2.PESA2;
+import org.uma.jmetal.metaheuristic.densea.DENSEA;
 import org.uma.jmetal.operator.crossover.CrossoverFactory;
 import org.uma.jmetal.operator.mutation.MutationFactory;
-import org.uma.jmetal.problem.Kursawe;
-import org.uma.jmetal.problem.ProblemFactory;
+import org.uma.jmetal.operator.selection.BinaryTournament;
+import org.uma.jmetal.problem.ZDT.ZDT5;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 
@@ -39,80 +39,63 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
 /**
- * Class for configuring and running the PESA2 algorithm
+ * Class for configuring and running the DENSEA algorithm
  */
-public class PESA2Runner {
-  public static Logger logger_;      
+public class DENSEARunner {
+  public static Logger logger_;     
   public static FileHandler fileHandler_; 
 
-  /**
-   * @param args Command line arguments. The first (optional) argument specifies
-   *             the problem to solve.
-   * @throws org.uma.jmetal.util.JMetalException
-   * @throws IOException
-   * @throws SecurityException Usage: three options
-   *                           - org.uma.jmetal.runner.PESA2_main
-   *                           - org.uma.jmetal.runner.PESA2_main problemName
-   */
   public static void main(String[] args) throws JMetalException, IOException, ClassNotFoundException {
     Problem problem;
     Algorithm algorithm;
     Operator crossover;
     Operator mutation;
+    Operator selection;
 
     // Logger object and file to store log messages
     logger_ = Configuration.logger_;
-    fileHandler_ = new FileHandler("PESA2_main.log");
+    fileHandler_ = new FileHandler("Densea.log");
     logger_.addHandler(fileHandler_);
 
-    if (args.length == 1) {
-      Object[] params = {"Real"};
-      problem = (new ProblemFactory()).getProblem(args[0], params);
-    } else {
-      problem = new Kursawe("Real", 3);
-      //problem = new Water("Real");
-      //problem = new ZDT1("ArrayReal", 1000);
-      //problem = new ZDT4("BinaryReal");
-      //problem = new WFG1("Real");
-      //problem = new DTLZ1("Real");
-      //problem = new OKA2("Real") ;
-    }
+    problem = new ZDT5("Binary");
 
-    algorithm = new PESA2();
+    algorithm = new DENSEA();
     algorithm.setProblem(problem);
 
-    // Algorithm parameters 
-    algorithm.setInputParameter("populationSize", 10);
-    algorithm.setInputParameter("archiveSize", 100);
-    algorithm.setInputParameter("bisections", 5);
+    // Algorithm parameters
+    algorithm.setInputParameter("populationSize", 100);
     algorithm.setInputParameter("maxEvaluations", 25000);
 
-    // Mutation and Crossover for Real codification 
+    // Mutation and Crossover Binary codification 
     HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
     crossoverParameters.put("probability", 0.9);
-    crossoverParameters.put("distributionIndex", 20.0);
-    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", crossoverParameters);
+    crossover = CrossoverFactory.getCrossoverOperator("SinglePointCrossover", crossoverParameters);
+    crossover.setParameter("probability", 0.9);
 
     HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
-    mutationParameters.put("probability", 1.0 / problem.getNumberOfVariables());
-    mutationParameters.put("distributionIndex", 20.0);
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
+    mutationParameters.put("probability", 1.0 / 149);
+    mutation = MutationFactory.getMutationOperator("BitFlipMutation", mutationParameters);
+
+    // Selection Operator 
+    HashMap<String, Object> selectionParameters = null; // FIXME: why we are passing null?
+    selection = new BinaryTournament(selectionParameters);
 
     // Add the operator to the algorithm
     algorithm.addOperator("crossover", crossover);
     algorithm.addOperator("mutation", mutation);
+    algorithm.addOperator("selection", selection);
 
     // Execute the Algorithm
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;
-    Configuration.logger_.info("Total execution time: " + estimatedTime);
+    Configuration.logger_.info("Total time of execution: " + estimatedTime);
 
-    // Result messages 
-    logger_.info("Total execution time: " + estimatedTime);
+    // Log messages 
     logger_.info("Objectives values have been writen to file FUN");
     population.printObjectivesToFile("FUN");
     logger_.info("Variables values have been writen to file VAR");
     population.printVariablesToFile("VAR");
   }
 }
+

@@ -36,10 +36,10 @@ public class LatexTables implements IExperimentOutput {
   private Experiment experiment_;
 
   private Vector[][][] data_;
-  double[][][] mean;
-  double[][][] median;
-  double[][][] stdDeviation;
-  double[][][] iqr;
+  double[][][] mean_;
+  double[][][] median_;
+  double[][][] stdDeviation_;
+  double[][][] iqr_;
   /**
    * Constructor
    *
@@ -57,46 +57,42 @@ public class LatexTables implements IExperimentOutput {
 
     readIndicatorData();
 
-    //double[][][] mean;
-    //double[][][] median;
-    //double[][][] stdDeviation;
-    //double[][][] iqr;
     double[][][] max;
     double[][][] min;
     int[][][] numberOfValues;
 
     Map<String, Double> statValues = new HashMap<String, Double>();
 
-    statValues.put("mean", 0.0);
-    statValues.put("median", 0.0);
-    statValues.put("stdDeviation", 0.0);
-    statValues.put("iqr", 0.0);
+    statValues.put("mean_", 0.0);
+    statValues.put("median_", 0.0);
+    statValues.put("stdDeviation_", 0.0);
+    statValues.put("iqr_", 0.0);
     statValues.put("max", 0.0);
     statValues.put("min", 0.0);
 
-    mean = new double[experiment_.getIndicatorList().length][][];
-    median = new double[experiment_.getIndicatorList().length][][];
-    stdDeviation = new double[experiment_.getIndicatorList().length][][];
-    iqr = new double[experiment_.getIndicatorList().length][][];
+    mean_ = new double[experiment_.getIndicatorList().length][][];
+    median_ = new double[experiment_.getIndicatorList().length][][];
+    stdDeviation_ = new double[experiment_.getIndicatorList().length][][];
+    iqr_ = new double[experiment_.getIndicatorList().length][][];
     min = new double[experiment_.getIndicatorList().length][][];
     max = new double[experiment_.getIndicatorList().length][][];
     numberOfValues = new int[experiment_.getIndicatorList().length][][];
 
     for (int indicator = 0; indicator < experiment_.getIndicatorList().length; indicator++) {
       // A data_ vector per problem
-      mean[indicator] = new double[experiment_.getProblemList().length][];
-      median[indicator] = new double[experiment_.getProblemList().length][];
-      stdDeviation[indicator] = new double[experiment_.getProblemList().length][];
-      iqr[indicator] = new double[experiment_.getProblemList().length][];
+      mean_[indicator] = new double[experiment_.getProblemList().length][];
+      median_[indicator] = new double[experiment_.getProblemList().length][];
+      stdDeviation_[indicator] = new double[experiment_.getProblemList().length][];
+      iqr_[indicator] = new double[experiment_.getProblemList().length][];
       min[indicator] = new double[experiment_.getProblemList().length][];
       max[indicator] = new double[experiment_.getProblemList().length][];
       numberOfValues[indicator] = new int[experiment_.getProblemList().length][];
 
       for (int problem = 0; problem < experiment_.getProblemList().length; problem++) {
-        mean[indicator][problem] = new double[experiment_.getAlgorithmNameList().length];
-        median[indicator][problem] = new double[experiment_.getAlgorithmNameList().length];
-        stdDeviation[indicator][problem] = new double[experiment_.getAlgorithmNameList().length];
-        iqr[indicator][problem] = new double[experiment_.getAlgorithmNameList().length];
+        mean_[indicator][problem] = new double[experiment_.getAlgorithmNameList().length];
+        median_[indicator][problem] = new double[experiment_.getAlgorithmNameList().length];
+        stdDeviation_[indicator][problem] = new double[experiment_.getAlgorithmNameList().length];
+        iqr_[indicator][problem] = new double[experiment_.getAlgorithmNameList().length];
         min[indicator][problem] = new double[experiment_.getAlgorithmNameList().length];
         max[indicator][problem] = new double[experiment_.getAlgorithmNameList().length];
         numberOfValues[indicator][problem] = new int[experiment_.getAlgorithmNameList().length];
@@ -112,10 +108,10 @@ public class LatexTables implements IExperimentOutput {
 
           calculateStatistics(data_[indicator][problem][algorithm], statValues);
 
-          mean[indicator][problem][algorithm] = statValues.get("mean");
-          median[indicator][problem][algorithm] = statValues.get("median");
-          stdDeviation[indicator][problem][algorithm] = statValues.get("stdDeviation");
-          iqr[indicator][problem][algorithm] = statValues.get("iqr");
+          mean_[indicator][problem][algorithm] = statValues.get("mean_");
+          median_[indicator][problem][algorithm] = statValues.get("median_");
+          stdDeviation_[indicator][problem][algorithm] = statValues.get("stdDeviation_");
+          iqr_[indicator][problem][algorithm] = statValues.get("iqr_");
           min[indicator][problem][algorithm] = statValues.get("min");
           max[indicator][problem][algorithm] = statValues.get("max");
           numberOfValues[indicator][problem][algorithm] =
@@ -135,8 +131,8 @@ public class LatexTables implements IExperimentOutput {
     try {
       printHeaderLatexCommands(latexFile);
       for (int i = 0; i < experiment_.getIndicatorList().length; i++) {
-        printMeanStdDev(latexFile, i, mean, stdDeviation);
-        printMedianIQR(latexFile, i, median, iqr);
+        printMeanStdDev(latexFile, i, mean_, stdDeviation_);
+        printMedianIQR(latexFile, i, median_, iqr_);
       }
       printEndLatexCommands(latexFile);
     } catch (IOException e) {
@@ -184,27 +180,18 @@ public class LatexTables implements IExperimentOutput {
         stdDeviation = Math.sqrt(sqsum / vector.size() - mean * mean);
       }
 
-      // Median
-      /*
-      if (vector.size() % 2 != 0) {
-        median = (Double) vector.elementAt(vector.size() / 2);
-      } else {
-        median = ((Double) vector.elementAt(vector.size() / 2 - 1) +
-          (Double) vector.elementAt(vector.size() / 2)) / 2.0;
-      }
-      */
-      values.put("mean", mean);
-      values.put("median", Statistics.calculateMedian(vector, 0, vector.size() - 1));
-      values.put("iqr", Statistics.calculateIQR(vector));
-      values.put("stdDeviation", stdDeviation);
+      values.put("mean_", mean);
+      values.put("median_", Statistics.calculateMedian(vector, 0, vector.size() - 1));
+      values.put("iqr_", Statistics.calculateIQR(vector));
+      values.put("stdDeviation_", stdDeviation);
       values.put("min", min);
       values.put("max", max);
     }
     else {
-      values.put("mean", Double.NaN);
-      values.put("median", Double.NaN);
-      values.put("iqr", Double.NaN);
-      values.put("stdDeviation", Double.NaN);
+      values.put("mean_", Double.NaN);
+      values.put("median_", Double.NaN);
+      values.put("iqr_", Double.NaN);
+      values.put("stdDeviation_", Double.NaN);
       values.put("min", Double.NaN);
       values.put("max", Double.NaN);
     }
@@ -243,7 +230,7 @@ public class LatexTables implements IExperimentOutput {
       "\\caption{" + experiment_.getIndicatorList()[indicator] + ". Mean and standard deviation}"
         + "\n"
     );
-    os.write("\\label{table:mean." + experiment_.getIndicatorList()[indicator] + "}" + "\n");
+    os.write("\\label{table:mean_." + experiment_.getIndicatorList()[indicator] + "}" + "\n");
     os.write("\\centering" + "\n");
     os.write("\\begin{scriptsize}" + "\n");
     os.write("\\begin{tabular}{l");
@@ -362,7 +349,7 @@ public class LatexTables implements IExperimentOutput {
     os.write("\\" + "\n");
     os.write("\\begin{table}" + "\n");
     os.write("\\caption{" + experiment_.getIndicatorList()[indicator] + ". Median and IQR}" + "\n");
-    os.write("\\label{table:median." + experiment_.getIndicatorList()[indicator] + "}" + "\n");
+    os.write("\\label{table:median_." + experiment_.getIndicatorList()[indicator] + "}" + "\n");
     os.write("\\begin{scriptsize}" + "\n");
     os.write("\\centering" + "\n");
     os.write("\\begin{tabular}{l");

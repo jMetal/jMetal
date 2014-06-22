@@ -1,10 +1,9 @@
-//  NSGAIIAdaptive_main.java
+//  NSGAIIRunner.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
 //
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
+//  Copyright (c) 2014 Antonio J. Nebro
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -19,39 +18,33 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.runner;
+package org.uma.jmetal.runner.multiObjective;
 
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristic.nsgaII.NSGAIIAdaptive;
-import org.uma.jmetal.operator.selection.SelectionFactory;
+import org.uma.jmetal.metaheuristic.nsgaII.NSGAIITemplate;
+import org.uma.jmetal.operator.crossover.SBXCrossover;
+import org.uma.jmetal.operator.mutation.PolynomialMutation;
+import org.uma.jmetal.operator.selection.BinaryTournament2;
 import org.uma.jmetal.problem.Kursawe;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.qualityIndicator.QualityIndicator;
+import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.evaluator.SequentialSolutionSetEvaluator;
 import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
-import org.uma.jmetal.util.offspring.DifferentialEvolutionOffspring;
-import org.uma.jmetal.util.offspring.Offspring;
-import org.uma.jmetal.util.offspring.PolynomialMutationOffspring;
-import org.uma.jmetal.util.offspring.SBXCrossoverOffspring;
+import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
+import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
 /**
- * Class implementing the NSGA-II algorithm.
- * This implementation of NSGA-II makes use of a QualityIndicator object
- * to obtained the convergence speed of the algorithm. This version is used
- * in the paper:
- * A.J. Nebro, J.J. Durillo, C.A. Coello Coello, F. Luna, E. Alba
- * "A Study of Convergence Speed in Multi-Objective Metaheuristics."
- * To be presented in: PPSN'08. Dortmund. September 2008.
+ * Class to configure and execute the NSGA-II algorithm.
  * <p/>
  * Besides the classic NSGA-II, a steady-state version (ssNSGAII) is also
  * included (See: J.J. Durillo, A.J. Nebro, F. Luna and E. Alba
@@ -61,31 +54,30 @@ import java.util.logging.Logger;
  * April 2009)
  */
 
-public class NSGAIIAdaptiveRunner {
-  public static Logger logger_;      
-  public static FileHandler fileHandler_; 
+public class NSGAIIRunner {
+  private static Logger logger_;
+  private static FileHandler fileHandler_;
 
   /**
    * @param args Command line arguments.
    * @throws org.uma.jmetal.util.JMetalException
    * @throws java.io.IOException
    * @throws SecurityException Usage: three options
-   *                           - org.uma.jmetal.metaheuristic.nsgaII.NSGAII_main
-   *                           - org.uma.jmetal.metaheuristic.nsgaII.NSGAII_main problemName
-   *                           - org.uma.jmetal.metaheuristic.nsgaII.NSGAII_main problemName paretoFrontFile
+   *                           - org.uma.jmetal.metaheuristic.nsgaII.NSGAIIRunner
+   *                           - org.uma.jmetal.metaheuristic.nsgaII.NSGAIIRunner problemName
+   *                           - org.uma.jmetal.metaheuristic.nsgaII.NSGAIIRunner problemName paretoFrontFile
    */
   public static void main(String[] args) throws
     JMetalException,
     SecurityException,
     IOException,
     ClassNotFoundException {
+
     Problem problem;
     Algorithm algorithm;
     Operator crossover;
     Operator mutation;
     Operator selection;
-
-    HashMap parameters;
 
     QualityIndicator indicators;
 
@@ -98,17 +90,14 @@ public class NSGAIIAdaptiveRunner {
     if (args.length == 1) {
       Object[] params = {"Real"};
       problem = (new ProblemFactory()).getProblem(args[0], params);
-    }
-    else if (args.length == 2) {
+    } else if (args.length == 2) {
       Object[] params = {"Real"};
       problem = (new ProblemFactory()).getProblem(args[0], params);
       indicators = new QualityIndicator(problem, args[1]);
-    }
-    else {
+    } else {
       problem = new Kursawe("Real", 3);
       /*
         Examples:
-        problem = new Kursawe("BinaryReal", 3);
         problem = new Water("Real");
         problem = new ZDT3("ArrayReal", 30);
         problem = new ConstrEx("Real");
@@ -117,44 +106,56 @@ public class NSGAIIAdaptiveRunner {
       */
     }
 
+    /*
+     * Alternatives:
+     * - "NSGAII"
+     * - "SteadyStateNSGAII"
+     */
+    String nsgaIIVersion = "NSGAII" ;
+
+    /*
+     * Alternatives:
+     * - evaluator = new SequentialSolutionSetEvaluator() // NSGAII
+     * - evaluator = new MultithreadedSolutionSetEvaluator(threads, problem) // parallel NSGAII
+     */
     SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator() ;
-    algorithm = new NSGAIIAdaptive(evaluator);
-    algorithm.setProblem(problem);
 
-    // Algorithm parameters
-    algorithm.setInputParameter("populationSize", 100);
-    algorithm.setInputParameter("maxEvaluations", 150000);
+    crossover = new SBXCrossover.Builder()
+      .distributionIndex(20.0)
+      .probability(0.9)
+      .build() ;
 
-    // Selection Operator 
-    HashMap<String, Object> selectionParameters = null;
-    selection = SelectionFactory.getSelectionOperator("BinaryTournament2", selectionParameters);
+    mutation = new PolynomialMutation.Builder()
+      .distributionIndex(20.0)
+      .probability(1.0/problem.getNumberOfVariables())
+      .build();
 
-    // Add the operator to the algorithm
-    algorithm.addOperator("selection", selection);
+    selection = new BinaryTournament2.Builder()
+      .build();
 
-    // Add the indicator object to the algorithm
-    algorithm.setInputParameter("indicators", indicators);
+    algorithm = new NSGAIITemplate.Builder(problem, evaluator)
+      .crossover(crossover)
+      .mutation(mutation)
+      .selection(selection)
+      .maxEvaluations(25000)
+      .populationSize(100)
+      .build(nsgaIIVersion) ;
 
-    Offspring[] getOffspring = new Offspring[3];
+    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+      .execute() ;
 
-    double CR, F;
-    getOffspring[0] = new DifferentialEvolutionOffspring(CR = 1.0, F = 0.5);
-    getOffspring[1] = new SBXCrossoverOffspring(1.0, 20);
-    getOffspring[2] = new PolynomialMutationOffspring(1.0 / problem.getNumberOfVariables(), 20);
-    
-    algorithm.setInputParameter("offspringsCreators", getOffspring);
+    SolutionSet population = algorithmRunner.getSolutionSet() ;
+    long computingTime = algorithmRunner.getComputingTime() ;
 
-    // Execute the Algorithm
-    long initTime = System.currentTimeMillis();
-    SolutionSet population = algorithm.execute();
-    long estimatedTime = System.currentTimeMillis() - initTime;
+    new SolutionSetOutput.Printer(population)
+      .separator("\t")
+      .varFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+      .funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+      .print();
 
-    // Result messages 
-    logger_.info("Total execution time: " + estimatedTime + "ms");
-    logger_.info("Variables values have been writen to file VAR");
-    population.printVariablesToFile("VAR");
-    logger_.info("Objectives values have been writen to file FUN");
-    population.printObjectivesToFile("FUN");
+    logger_.info("Total execution time: " + computingTime + "ms");
+    logger_.info("Objectives values have been written to file FUN.tsv");
+    logger_.info("Variables values have been written to file VAR.tsv");
 
     if (indicators != null) {
       logger_.info("Quality indicators");
@@ -163,6 +164,6 @@ public class NSGAIIAdaptiveRunner {
       logger_.info("IGD        : " + indicators.getIGD(population));
       logger_.info("Spread     : " + indicators.getSpread(population));
       logger_.info("Epsilon    : " + indicators.getEpsilon(population));
-    } 
-  } 
-} 
+    }
+  }
+}

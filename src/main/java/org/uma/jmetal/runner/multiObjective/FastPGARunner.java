@@ -1,4 +1,4 @@
-//  GDE3_main.java
+//  FastPGA_main.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -18,22 +18,22 @@
 // 
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-package org.uma.jmetal.runner;
+package org.uma.jmetal.runner.multiObjective;
 
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristic.gde3.GDE3;
+import org.uma.jmetal.metaheuristic.fastPGA.FastPGA;
 import org.uma.jmetal.operator.crossover.CrossoverFactory;
-import org.uma.jmetal.operator.selection.SelectionFactory;
+import org.uma.jmetal.operator.mutation.MutationFactory;
+import org.uma.jmetal.operator.selection.BinaryTournament;
 import org.uma.jmetal.problem.Kursawe;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.qualityIndicator.QualityIndicator;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.evaluator.MultithreadedSolutionSetEvaluator;
-import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
+import org.uma.jmetal.util.comparator.FPGAFitnessComparator;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -41,33 +41,29 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
 /**
- * Class for configuring and running the GDE3 algorithm
+ * Class for configuring and running the FastPGA algorithm
  */
-public class ParallelGDE3Runner {
-  public static Logger logger_;
-  public static FileHandler fileHandler_;
+public class FastPGARunner {
+  public static Logger logger_;      
+  public static FileHandler fileHandler_; 
 
   /**
-   * @param args Command line arguments.
+   * @param args Command line arguments. The first (optional) argument specifies
+   *             the problem to solve.
    * @throws org.uma.jmetal.util.JMetalException
-   * @throws java.io.IOException
-   * @throws SecurityException Usage: three choices
-   *                           - org.uma.jmetal.metaheuristic.nsgaII.NSGAII_main
-   *                           - org.uma.jmetal.metaheuristic.nsgaII.NSGAII_main problemName
-   *                           - org.uma.jmetal.metaheuristic.nsgaII.NSGAII_main problemName paretoFrontFile
    */
-  public static void main(String[] args)
-    throws JMetalException, SecurityException, IOException, ClassNotFoundException {
+  public static void main(String[] args) throws JMetalException, IOException, ClassNotFoundException {
     Problem problem;
     Algorithm algorithm;
-    Operator selection;
     Operator crossover;
+    Operator mutation;
+    Operator selection;
 
     QualityIndicator indicators;
 
     // Logger object and file to store log messages
     logger_ = Configuration.logger_;
-    fileHandler_ = new FileHandler("GDE3_main.log");
+    fileHandler_ = new FileHandler("FastPGA_main.log");
     logger_.addHandler(fileHandler_);
 
     indicators = null;
@@ -80,6 +76,7 @@ public class ParallelGDE3Runner {
       indicators = new QualityIndicator(problem, args[1]);
     } else {
       problem = new Kursawe("Real", 3);
+      //problem = new Kursawe("BinaryReal", 3);
       //problem = new Water("Real");
       //problem = new ZDT1("ArrayReal", 100);
       //problem = new ConstrEx("Real");
@@ -87,31 +84,46 @@ public class ParallelGDE3Runner {
       //problem = new OKA2("Real") ;
     }
 
-    SolutionSetEvaluator evaluator = new MultithreadedSolutionSetEvaluator(0, problem) ;
-
-    algorithm = new GDE3(evaluator);
+    algorithm = new FastPGA();
     algorithm.setProblem(problem);
 
-    // Algorithm parameters
-    algorithm.setInputParameter("populationSize", 100);
-    algorithm.setInputParameter("maxIterations", 250);
+    algorithm.setInputParameter("maxPopSize", 100);
+    algorithm.setInputParameter("initialPopulationSize", 100);
+    algorithm.setInputParameter("maxEvaluations", 25000);
+    algorithm.setInputParameter("a", 20.0);
+    algorithm.setInputParameter("b", 1.0);
+    algorithm.setInputParameter("c", 20.0);
+    algorithm.setInputParameter("d", 0.0);
 
-    // Crossover operator 
+    // Parameter "termination"
+    // If the preferred stopping criterium is PPR based, termination must 
+    // be set to 0; otherwise, if the algorithm is intended to iterate until 
+    // a give number of evaluations is carried out, termination must be set to 
+    // that number
+    algorithm.setInputParameter("termination", 1);
+
+    // Mutation and Crossover for Real codification 
     HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
-    crossoverParameters.put("CR", 0.5);
-    crossoverParameters.put("F", 0.5);
-    crossover =
-      CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", crossoverParameters);
+    crossoverParameters.put("probability", 0.9);
+    crossoverParameters.put("distributionIndex", 20.0);
+    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", crossoverParameters);
+    //crossover.setParameter("probability",0.9);                   
+    //crossover.setParameter("distributionIndex",20.0);
 
-    // Add the operator to the algorithm
-    HashMap<String, Object> selectionParameters = null; // FIXME: why we are passing null?
-    selection =
-      SelectionFactory.getSelectionOperator("DifferentialEvolutionSelection", selectionParameters);
+    HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
+    mutationParameters.put("probability", 1.0 / problem.getNumberOfVariables());
+    mutationParameters.put("distributionIndex", 20.0);
+    mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
+    // Mutation and Crossover for Binary codification
+
+    HashMap<String, Object> selectionParameters = new HashMap<String, Object>();
+    selectionParameters.put("comparator", new FPGAFitnessComparator());
+    selection = new BinaryTournament(selectionParameters);
 
     algorithm.addOperator("crossover", crossover);
+    algorithm.addOperator("mutation", mutation);
     algorithm.addOperator("selection", selection);
 
-    // Execute the Algorithm 
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;
@@ -130,6 +142,9 @@ public class ParallelGDE3Runner {
       logger_.info("IGD        : " + indicators.getIGD(population));
       logger_.info("Spread     : " + indicators.getSpread(population));
       logger_.info("Epsilon    : " + indicators.getEpsilon(population));
+
+      int evaluations = ((Integer) algorithm.getOutputParameter("evaluations")).intValue();
+      logger_.info("Speed      : " + evaluations + " evaluations");
     }
   }
 }

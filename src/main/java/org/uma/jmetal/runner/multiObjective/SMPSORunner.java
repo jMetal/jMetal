@@ -1,4 +1,4 @@
-//  GDE3Runner.java
+//  SMPSORunner.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -17,21 +17,23 @@
 // 
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-package org.uma.jmetal.runner;
+
+package org.uma.jmetal.runner.multiObjective;
 
 import org.uma.jmetal.core.Algorithm;
-import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristic.gde3.GDE3;
-import org.uma.jmetal.operator.crossover.DifferentialEvolutionCrossover;
-import org.uma.jmetal.operator.selection.DifferentialEvolutionSelection;
+import org.uma.jmetal.metaheuristic.smpso.SMPSO;
+import org.uma.jmetal.operator.mutation.Mutation;
+import org.uma.jmetal.operator.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.Kursawe;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.qualityIndicator.QualityIndicator;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.archive.Archive;
+import org.uma.jmetal.util.archive.CrowdingArchive;
 import org.uma.jmetal.util.evaluator.SequentialSolutionSetEvaluator;
 import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
 import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
@@ -42,33 +44,39 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
 /**
- * Class for configuring and running the GDE3 algorithm
+ * This class executes:
+ * - The SMPSO algorithm described in:
+ *   Antonio J. Nebro, Juan José Durillo, Carlos Artemio Coello Coello:
+ *   Analysis of leader selection strategies in a multi-objective Particle Swarm Optimizer.
+ *   IEEE Congress on Evolutionary Computation 2013: 3153-3160
+ * - The SMPSOhv algorithm described in:
+ *   Antonio J. Nebro, Juan José Durillo, Carlos Artemio Coello Coello:
+ *   Analysis of leader selection strategies in a multi-objective Particle Swarm Optimizer.
+ *   IEEE Congress on Evolutionary Computation 2013: 3153-3160
  */
-public class GDE3Runner {
-  public static Logger logger_;
-  public static FileHandler fileHandler_;
+public class SMPSORunner {
+  public static Logger logger_;      
+  public static FileHandler fileHandler_; 
 
   /**
-   * @param args Command line arguments.
+   * @param args Command line arguments. The first (optional) argument specifies
+   *             the problem to solve.
    * @throws org.uma.jmetal.util.JMetalException
    * @throws java.io.IOException
-   * @throws SecurityException Usage: three choices
-   *                           - org.uma.jmetal.runner.GDE3Runner
-   *                           - org.uma.jmetal.runner.GDE3Runner problemName
-   *                           - org.uma.jmetal.runner.GDE3Runner problemName paretoFrontFile
+   * @throws SecurityException       Usage: three options
+   *                                 - org.uma.jmetal.runner.multiObjective.SMPSORunner
+   *                                 - org.uma.jmetal.runner.multiObjective.SMPSORunner problemName
+   *                                 - org.uma.jmetal.runner.multiObjective.SMPSORunner problemName ParetoFrontFile
    */
-  public static void main(String[] args)
-    throws JMetalException, SecurityException, IOException, ClassNotFoundException {
+  public static void main(String[] args) throws JMetalException, IOException, ClassNotFoundException {
     Problem problem;
     Algorithm algorithm;
-    Operator selection;
-    Operator crossover;
+    Mutation mutation;
 
     QualityIndicator indicators;
 
-    // Logger object and file to store log messages
     logger_ = Configuration.logger_;
-    fileHandler_ = new FileHandler("GDE3_main.log");
+    fileHandler_ = new FileHandler("SMPSO_main.log");
     logger_.addHandler(fileHandler_);
 
     indicators = null;
@@ -81,40 +89,47 @@ public class GDE3Runner {
       indicators = new QualityIndicator(problem, args[1]);
     } else {
       problem = new Kursawe("Real", 3);
-      //problem = new Water("Real");
-      //problem = new ZDT1("ArrayReal", 100);
-      //problem = new ConstrEx("Real");
-      //problem = new DTLZ1("Real");
-      //problem = new OKA2("Real") ;
+      /*
+        Examples:
+        problem = new Water("Real");
+        problem = new ZDT3("ArrayReal", 30);
+        problem = new ConstrEx("Real");
+        problem = new DTLZ1("Real");
+        problem = new OKA2("Real")
+      */
     }
 
-     /*
+    /*
      * Alternatives:
-     * - evaluator = new SequentialSolutionSetEvaluator()
-     * - evaluator = new MultithreadedSolutionSetEvaluator(threads, problem)
+     * - evaluator = new SequentialSolutionSetEvaluator() // SMPSO
+     * - evaluator = new MultithreadedSolutionSetEvaluator(threads, problem) // parallel SMPSO
      */
     SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator();
 
-    crossover = new DifferentialEvolutionCrossover.Builder()
-      .cr(0.5)
-      .f(0.5)
-      .build() ;
+    /*
+     * Alternatives:
+     * - archive = new CrowdingArchive(100, problem.getNumberOfObjectives()) ; // SMPSO
+     * - archive = new FastHypervolumeArchive(100, problem.getNumberOfObjectives()); // SMPSOhv
+     */
+    Archive archive = new CrowdingArchive(100, problem.getNumberOfObjectives()) ;
 
-    selection = new DifferentialEvolutionSelection.Builder()
+    mutation = new PolynomialMutation.Builder()
+      .distributionIndex(20.0)
+      .probability(1.0 / problem.getNumberOfVariables())
       .build();
 
-    algorithm = new GDE3.Builder(problem, evaluator)
-      .crossover(crossover)
-      .selection(selection)
+    algorithm = new SMPSO.Builder(problem, archive, evaluator)
+      .mutation(mutation)
       .maxIterations(250)
-      .populationSize(100)
-      .build() ;
+      .swarmSize(100)
+      .archiveSize(100)
+      .build();
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-      .execute() ;
+      .execute();
 
-    SolutionSet population = algorithmRunner.getSolutionSet() ;
-    long computingTime = algorithmRunner.getComputingTime() ;
+    SolutionSet population = algorithmRunner.getSolutionSet();
+    long computingTime = algorithmRunner.getComputingTime();
 
     new SolutionSetOutput.Printer(population)
       .separator("\t")

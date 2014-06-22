@@ -37,15 +37,13 @@ public class ReferenceParetoFronts implements IExperimentOutput {
 
     rfDirectory = new File(referenceFrontDirectory);
 
-    if (!rfDirectory.exists()) {                          // Si no existe el directorio
-      boolean result = new File(referenceFrontDirectory).mkdirs();        // Lo creamos
+    if (!rfDirectory.exists()) {
+      boolean result = new File(referenceFrontDirectory).mkdirs();
       Configuration.logger_.info("Creating " + referenceFrontDirectory);
     }
 
-    //frontPath_[problemIndex] = referenceFrontDirectory + "/" + problemList_[problemIndex] + ".rf";
     String referenceParetoFront =
       referenceFrontDirectory + "/" + experiment_.getProblemList()[problemIndex] + ".pf";
-    //String referenceParetoSet = referenceFrontDirectory + "/" + problemList_[problemIndex] + ".ps";
 
     MetricsUtil metricsUtils = new MetricsUtil();
     NonDominatedSolutionList solutionSet = new NonDominatedSolutionList();
@@ -62,14 +60,12 @@ public class ReferenceParetoFronts implements IExperimentOutput {
         String solutionFrontFile = outputParetoFrontFilePath;
 
         metricsUtils.readNonDominatedSolutionSet(solutionFrontFile, solutionSet);
-      } // for
-    } // for
-    //solutionSet.printObjectivesToFile(frontPath_[problemIndex]);
+      }
+    }
     try {
       solutionSet.printObjectivesToFile(referenceParetoFront);
     } catch (IOException e) {
       Configuration.logger_.log(Level.SEVERE, "Error", e);
     }
-    //solutionSet.printVariablesToFile(referenceParetoSet);
-  } // generateReferenceFronts
+  }
 }

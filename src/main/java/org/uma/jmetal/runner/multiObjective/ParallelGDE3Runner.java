@@ -1,4 +1,4 @@
-//  NSGAIIAdaptive_main.java
+//  GDE3_main.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -18,26 +18,22 @@
 // 
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-package org.uma.jmetal.runner;
+package org.uma.jmetal.runner.multiObjective;
 
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristic.nsgaII.NSGAIIRandom;
+import org.uma.jmetal.metaheuristic.gde3.GDE3;
+import org.uma.jmetal.operator.crossover.CrossoverFactory;
 import org.uma.jmetal.operator.selection.SelectionFactory;
 import org.uma.jmetal.problem.Kursawe;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.qualityIndicator.QualityIndicator;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.evaluator.SequentialSolutionSetEvaluator;
+import org.uma.jmetal.util.evaluator.MultithreadedSolutionSetEvaluator;
 import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
-import org.uma.jmetal.util.offspring.DifferentialEvolutionOffspring;
-import org.uma.jmetal.util.offspring.Offspring;
-import org.uma.jmetal.util.offspring.PolynomialMutationOffspring;
-import org.uma.jmetal.util.offspring.SBXCrossoverOffspring;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -45,108 +41,77 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
 /**
- * Class implementing the NSGA-II algorithm.
- * This implementation of NSGA-II makes use of a QualityIndicator object
- * to obtained the convergence speed of the algorithm. This version is used
- * in the paper:
- * A.J. Nebro, J.J. Durillo, C.A. Coello Coello, F. Luna, E. Alba
- * "A Study of Convergence Speed in Multi-Objective Metaheuristics."
- * To be presented in: PPSN'08. Dortmund. September 2008.
- * <p/>
- * Besides the classic NSGA-II, a steady-state version (ssNSGAII) is also
- * included (See: J.J. Durillo, A.J. Nebro, F. Luna and E. Alba
- * "On the Effect of the Steady-State Selection Scheme in
- * Multi-Objective Genetic Algorithms"
- * 5th International Conference, EMO 2009, pp: 183-197.
- * April 2009)
+ * Class for configuring and running the GDE3 algorithm
  */
-
-public class NSGAIIRandomRunner {
-  public static Logger logger_;      
-  public static FileHandler fileHandler_; 
+public class ParallelGDE3Runner {
+  public static Logger logger_;
+  public static FileHandler fileHandler_;
 
   /**
    * @param args Command line arguments.
    * @throws org.uma.jmetal.util.JMetalException
    * @throws java.io.IOException
-   * @throws SecurityException Usage: three options
+   * @throws SecurityException Usage: three choices
    *                           - org.uma.jmetal.metaheuristic.nsgaII.NSGAII_main
    *                           - org.uma.jmetal.metaheuristic.nsgaII.NSGAII_main problemName
    *                           - org.uma.jmetal.metaheuristic.nsgaII.NSGAII_main problemName paretoFrontFile
    */
-  public static void main(String[] args) throws
-    JMetalException,
-    SecurityException,
-    IOException,
-    ClassNotFoundException {
+  public static void main(String[] args)
+    throws JMetalException, SecurityException, IOException, ClassNotFoundException {
     Problem problem;
     Algorithm algorithm;
-    Operator crossover;
-    Operator mutation;
     Operator selection;
-
-    HashMap parameters;
+    Operator crossover;
 
     QualityIndicator indicators;
 
     // Logger object and file to store log messages
     logger_ = Configuration.logger_;
-    fileHandler_ = new FileHandler("NSGAII_main.log");
+    fileHandler_ = new FileHandler("GDE3_main.log");
     logger_.addHandler(fileHandler_);
 
     indicators = null;
     if (args.length == 1) {
       Object[] params = {"Real"};
       problem = (new ProblemFactory()).getProblem(args[0], params);
-    }
-    else if (args.length == 2) {
+    } else if (args.length == 2) {
       Object[] params = {"Real"};
       problem = (new ProblemFactory()).getProblem(args[0], params);
       indicators = new QualityIndicator(problem, args[1]);
-    }
-    else {
+    } else {
       problem = new Kursawe("Real", 3);
-      /*
-        Examples:
-        problem = new Kursawe("BinaryReal", 3);
-        problem = new Water("Real");
-        problem = new ZDT3("ArrayReal", 30);
-        problem = new ConstrEx("Real");
-        problem = new DTLZ1("Real");
-        problem = new OKA2("Real")
-      */
+      //problem = new Water("Real");
+      //problem = new ZDT1("ArrayReal", 100);
+      //problem = new ConstrEx("Real");
+      //problem = new DTLZ1("Real");
+      //problem = new OKA2("Real") ;
     }
 
-    SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator() ;
+    SolutionSetEvaluator evaluator = new MultithreadedSolutionSetEvaluator(0, problem) ;
 
-    algorithm = new NSGAIIRandom(evaluator);
+    algorithm = new GDE3(evaluator);
     algorithm.setProblem(problem);
-    //algorithm = new ssNSGAIIAdaptive(problem);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", 100);
-    algorithm.setInputParameter("maxEvaluations", 150000);
+    algorithm.setInputParameter("maxIterations", 250);
 
-    // Selection Operator 
-    HashMap<String, Object> selectionParameters = null;
-    selection = SelectionFactory.getSelectionOperator("BinaryTournament2", selectionParameters);
+    // Crossover operator 
+    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
+    crossoverParameters.put("CR", 0.5);
+    crossoverParameters.put("F", 0.5);
+    crossover =
+      CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", crossoverParameters);
 
     // Add the operator to the algorithm
+    HashMap<String, Object> selectionParameters = null; // FIXME: why we are passing null?
+    selection =
+      SelectionFactory.getSelectionOperator("DifferentialEvolutionSelection", selectionParameters);
+
+    algorithm.addOperator("crossover", crossover);
     algorithm.addOperator("selection", selection);
 
-    // Add the indicator object to the algorithm
-    algorithm.setInputParameter("indicators", indicators);
-
-    Offspring[] getOffspring = new Offspring[3];
-
-    double CR, F;
-    getOffspring[0] = new DifferentialEvolutionOffspring(CR = 1.0, F = 0.5);
-    getOffspring[1] = new SBXCrossoverOffspring(1.0, 20);
-    getOffspring[2] = new PolynomialMutationOffspring(1.0 / problem.getNumberOfVariables(), 20);
-    
-    algorithm.setInputParameter("offspringsCreators", getOffspring);
-
-    // Execute the Algorithm
+    // Execute the Algorithm 
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;
@@ -165,6 +130,6 @@ public class NSGAIIRandomRunner {
       logger_.info("IGD        : " + indicators.getIGD(population));
       logger_.info("Spread     : " + indicators.getSpread(population));
       logger_.info("Epsilon    : " + indicators.getEpsilon(population));
-    } 
-  } 
-} 
+    }
+  }
+}
