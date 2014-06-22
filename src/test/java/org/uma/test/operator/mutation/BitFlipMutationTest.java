@@ -25,7 +25,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.operator.mutation.PolynomialMutation;
+import org.uma.jmetal.operator.mutation.BitFlipMutation;
 import org.uma.jmetal.problem.Kursawe;
 import org.uma.jmetal.util.JMetalException;
 
@@ -35,8 +35,8 @@ import static org.junit.Assert.assertNotNull;
 /**
  * Created by Antonio J. Nebro on 21/04/14.
  */
-public class PolynomialMutationTest {
-  PolynomialMutation mutation_ ;
+public class BitFlipMutationTest {
+  BitFlipMutation mutation_ ;
   Problem problem_ ;
 
   static final double DELTA = 0.0000000000001 ;
@@ -45,7 +45,9 @@ public class PolynomialMutationTest {
   public void setUp() throws JMetalException {
     problem_ = new Kursawe("Real", 3) ;
 
-    mutation_ = new PolynomialMutation.Builder().probability(1.0/problem_.getNumberOfVariables()).build() ;
+    mutation_ = new BitFlipMutation.Builder().
+      probability(1.0 / problem_.getNumberOfVariables())
+      .build() ;
   }
 
   @After
@@ -56,31 +58,21 @@ public class PolynomialMutationTest {
 
   @Test
   public void defaultParametersTest() {
-    assertEquals(20.0, mutation_.getDistributionIndex(), DELTA) ;
     assertEquals(1.0/problem_.getNumberOfVariables(), mutation_.getMutationProbability(), DELTA) ;
   }
 
   @Test
   public void setMutationProbabilityTest() {
-    mutation_ = new PolynomialMutation.Builder()
-      .probability(0.02)
-      .build() ;
+    mutation_ = new BitFlipMutation
+      .Builder()
+      .probability(0.02).build() ;
 
     assertEquals(0.02, mutation_.getMutationProbability(), DELTA) ;
   }
 
   @Test
-  public void setMutationDistributionIndex() {
-    mutation_ = new PolynomialMutation.Builder()
-      .distributionIndex(5.0)
-      .build() ;
-
-    assertEquals(5.0, mutation_.getDistributionIndex(), DELTA) ;
-  }
-
-  @Test
   public void operatorExecutionTest() throws ClassNotFoundException {
-    mutation_ = new PolynomialMutation.Builder()
+    mutation_ = new BitFlipMutation.Builder()
       .probability(0.9)
       .build();
 
