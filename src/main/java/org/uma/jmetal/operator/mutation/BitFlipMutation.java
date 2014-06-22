@@ -22,7 +22,6 @@
 package org.uma.jmetal.operator.mutation;
 
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.core.SolutionType;
 import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.BinarySolutionType;
 import org.uma.jmetal.encoding.solutiontype.IntSolutionType;
@@ -32,9 +31,7 @@ import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.logging.Level;
 
 /**
@@ -43,30 +40,33 @@ import java.util.logging.Level;
  * whole solutiontype as a single encoding.variable.
  */
 public class BitFlipMutation extends Mutation {
-  /**
-   *
-   */
   private static final long serialVersionUID = -3349165791496573889L;
 
-  /**
-   * Valid solutiontype types to apply this operator
-   */
-  private static final List<Class<? extends SolutionType>> VALID_TYPES =
-    Arrays.asList(BinarySolutionType.class,
-      BinaryRealSolutionType.class,
-      IntSolutionType.class);
-
-  private Double mutationProbability_ = null;
+  private double mutationProbability_ = 0;
 
   /**
    * Constructor
    * Creates a new instance of the Bit Flip mutation operator
+   * @deprecated
    */
+  @Deprecated
   public BitFlipMutation(HashMap<String, Object> parameters) {
     super(parameters);
     if (parameters.get("probability") != null) {
       mutationProbability_ = (Double) parameters.get("probability");
     }
+  }
+
+  private BitFlipMutation(Builder builder) {
+    addValidSolutionType(BinarySolutionType.class);
+    addValidSolutionType(BinaryRealSolutionType.class);
+    addValidSolutionType(IntSolutionType.class);
+
+    mutationProbability_ = builder.mutationProbability_ ;
+  }
+
+  public double getMutationProbability() {
+    return mutationProbability_;
   }
 
   /**
@@ -126,7 +126,7 @@ public class BitFlipMutation extends Mutation {
   public Object execute(Object object) throws JMetalException {
     Solution solution = (Solution) object;
 
-    if (!VALID_TYPES.contains(solution.getType().getClass())) {
+    if (!solutionTypeIsValid(solution)) {
       Configuration.logger_.severe("BitFlipMutation.execute: the solutiontype " +
         "is not of the right type. The type should be 'Binary', " +
         "'BinaryReal' or 'Int', but " + solution.getType() + " is obtained");
@@ -138,5 +138,25 @@ public class BitFlipMutation extends Mutation {
 
     doMutation(mutationProbability_, solution);
     return solution;
+  }
+
+  /**
+   * Builder class
+   */
+  public static class Builder {
+    private double mutationProbability_ = 0.0 ;
+
+    public Builder() {
+    }
+
+    public Builder probability(double probability) {
+      mutationProbability_ = probability ;
+
+      return this ;
+    }
+
+    public BitFlipMutation build() {
+      return new BitFlipMutation(this) ;
+    }
   }
 }

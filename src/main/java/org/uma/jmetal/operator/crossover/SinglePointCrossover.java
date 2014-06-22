@@ -22,7 +22,6 @@
 package org.uma.jmetal.operator.crossover;
 
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.core.SolutionType;
 import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.BinarySolutionType;
 import org.uma.jmetal.encoding.solutiontype.IntSolutionType;
@@ -32,9 +31,7 @@ import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.logging.Level;
 
 /**
@@ -42,30 +39,27 @@ import java.util.logging.Level;
  * solutions.
  */
 public class SinglePointCrossover extends Crossover {
-  /**
-   *
-   */
   private static final long serialVersionUID = 2375915160877386980L;
 
-  /**
-   * Valid solutiontype types to apply this operator
-   */
-  private static final List<Class<? extends SolutionType>> VALID_TYPES =
-      Arrays.asList(BinarySolutionType.class,
-          BinaryRealSolutionType.class,
-          IntSolutionType.class);
+  private double crossoverProbability_ = 0;
 
-  private Double crossoverProbability_ = null;
-
-  /**
-   * Constructor
-   * Creates a new instance of the single point crossover operator
-   */
   public SinglePointCrossover(HashMap<String, Object> parameters) {
     super(parameters);
     if (parameters.get("probability") != null) {
       crossoverProbability_ = (Double) parameters.get("probability");
     }
+  }
+
+  private SinglePointCrossover(Builder builder) {
+    addValidSolutionType(BinarySolutionType.class);
+    addValidSolutionType(BinaryRealSolutionType.class);
+    addValidSolutionType(IntSolutionType.class);
+
+    crossoverProbability_ = builder.crossoverProbability_ ;
+  }
+
+  public double getCrossoverProbability() {
+    return crossoverProbability_ ;
   }
 
   /**
@@ -77,9 +71,7 @@ public class SinglePointCrossover extends Crossover {
    * @return An array containig the two offsprings
    * @throws org.uma.jmetal.util.JMetalException
    */
-  public Solution[] doCrossover(double probability,
-      Solution parent1,
-      Solution parent2) throws JMetalException {
+  public Solution[] doCrossover(double probability, Solution parent1, Solution parent2) throws JMetalException {
     Solution[] offSpring = new Solution[2];
     offSpring[0] = new Solution(parent1);
     offSpring[1] = new Solution(parent2);
@@ -181,9 +173,17 @@ public class SinglePointCrossover extends Crossover {
   public Object execute(Object object) throws JMetalException {
     Solution[] parents = (Solution[]) object;
 
-    if (!(VALID_TYPES.contains(parents[0].getType().getClass()) &&
-        VALID_TYPES.contains(parents[1].getType().getClass()))) {
+    if (parents.length < 2) {
+      Configuration.logger_.log(Level.SEVERE,
+        "SinglePointCrossover.execute: operator " +
+          "needs two parents"
+      );
+      Class<String> cls = java.lang.String.class;
+      String name = cls.getName();
+      throw new JMetalException("Exception in " + name + ".execute()");
+    }
 
+    if (!solutionTypeIsValid(parents)) {
       Configuration.logger_.log(Level.SEVERE,
           "SinglePointCrossover.execute: the solutions " +
               "are not of the right type. The type should be 'Binary' or 'Int', but " +
@@ -196,26 +196,40 @@ public class SinglePointCrossover extends Crossover {
       throw new JMetalException("Exception in " + name + ".execute()");
     }
 
-    if (parents.length < 2) {
-      Configuration.logger_.log(Level.SEVERE,
-          "SinglePointCrossover.execute: operator " +
-              "needs two parents"
-          );
-      Class<String> cls = java.lang.String.class;
-      String name = cls.getName();
-      throw new JMetalException("Exception in " + name + ".execute()");
-    }
-
     Solution[] offSpring;
-    offSpring = doCrossover(crossoverProbability_,
-        parents[0],
-        parents[1]);
+    offSpring = doCrossover(crossoverProbability_, parents[0], parents[1]);
 
     // Update the offSpring solutions
-    for (Solution anOffSpring : offSpring) {
-      anOffSpring.setCrowdingDistance(0.0);
-      anOffSpring.setRank(0);
+    for (Solution solution : offSpring) {
+      solution.setCrowdingDistance(0.0);
+      solution.setRank(0);
     }
+
     return offSpring;
+  }
+
+  /**
+   * Builder class
+   */
+  public static class Builder {
+    private double crossoverProbability_ ;
+
+    public Builder() {
+      crossoverProbability_ = 0 ;
+    }
+
+    public Builder probability(double probability) {
+      if ((probability < 0) || (probability > 1.0)) {
+        throw new JMetalException("Probability value invalid: " + probability) ;
+      } else {
+        crossoverProbability_ = probability;
+      }
+
+      return this ;
+    }
+
+    public SinglePointCrossover build() {
+      return new SinglePointCrossover(this) ;
+    }
   }
 }

@@ -33,10 +33,6 @@ import java.util.Arrays;
  * Class representing a solutiontype for a problem.
  */
 public class Solution implements Serializable {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = 7093303373342354904L;
   /**
    * Stores the objectives values of the solutiontype.

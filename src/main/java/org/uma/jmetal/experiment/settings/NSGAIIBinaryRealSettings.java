@@ -25,15 +25,14 @@ import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.experiment.Settings;
 import org.uma.jmetal.metaheuristic.nsgaII.NSGAII;
-import org.uma.jmetal.operator.crossover.CrossoverFactory;
-import org.uma.jmetal.operator.mutation.MutationFactory;
-import org.uma.jmetal.operator.selection.SelectionFactory;
+import org.uma.jmetal.operator.crossover.SinglePointCrossover;
+import org.uma.jmetal.operator.mutation.BitFlipMutation;
+import org.uma.jmetal.operator.selection.BinaryTournament2;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.evaluator.SequentialSolutionSetEvaluator;
 import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
 
-import java.util.HashMap;
 import java.util.Properties;
 
 /**
@@ -45,6 +44,7 @@ public class NSGAIIBinaryRealSettings extends Settings {
 
   private double mutationProbability_;
   private double crossoverProbability_;
+  private SolutionSetEvaluator evaluator_ ;
 
   /**
    * Constructor
@@ -63,6 +63,8 @@ public class NSGAIIBinaryRealSettings extends Settings {
 
     mutationProbability_ = 1.0 / problem_.getNumberOfBits();
     crossoverProbability_ = 0.9;
+
+    evaluator_ = new SequentialSolutionSetEvaluator() ;
   }
 
   /**
@@ -77,37 +79,24 @@ public class NSGAIIBinaryRealSettings extends Settings {
     Operator crossover;
     Operator mutation;
 
-    HashMap<String, Object> parameters = new HashMap<String, Object>();
+    crossover = new SinglePointCrossover.Builder()
+      .probability(crossoverProbability_)
+      .build() ;
 
-    SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator() ;
+    mutation = new BitFlipMutation.Builder()
+      .probability(mutationProbability_)
+      .build();
 
-    // Creating the algorithm.
-    algorithm = new NSGAII(evaluator);
-    algorithm.setProblem(problem_);
-    
+    selection = new BinaryTournament2.Builder()
+      .build();
 
-    // Algorithm parameters
-    algorithm.setInputParameter("populationSize", populationSize_);
-    algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
-
-
-    // Mutation and Crossover Binary codification
-    parameters = new HashMap<String, Object>();
-    parameters.put("probability", crossoverProbability_);
-    crossover = CrossoverFactory.getCrossoverOperator("SinglePointCrossover", parameters);
-
-    parameters = new HashMap<String, Object>();
-    parameters.put("probability", mutationProbability_);
-    mutation = MutationFactory.getMutationOperator("BitFlipMutation", parameters);
-
-    // Selection Operator 
-    parameters = null;
-    selection = SelectionFactory.getSelectionOperator("BinaryTournament2", parameters);
-
-    // Add the operator to the algorithm
-    algorithm.addOperator("crossover", crossover);
-    algorithm.addOperator("mutation", mutation);
-    algorithm.addOperator("selection", selection);
+    algorithm = new NSGAII.Builder(problem_, evaluator_)
+      .crossover(crossover)
+      .mutation(mutation)
+      .selection(selection)
+      .maxEvaluations(25000)
+      .populationSize(100)
+      .build("NSGAII") ;
 
     return algorithm;
   }
