@@ -5,6 +5,11 @@
     <groupId>org.uma.jmetal</groupId>
     <artifactId>jmetal</artifactId>
     <version>5.0-Beta-3-SNAPSHOT</version>
+
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>Java framework for multi-objective optimization with metaheuristics</description>
+    <url>http://jmetal.sourceforge.net</url>
+
     <licenses>
         <license>
             <name>GNU Lesser General Public License</name>
@@ -58,6 +63,34 @@
                     <!-- or whatever version you use -->
                     <source>1.7</source>
                     <target>1.7</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <additionalparam>-Xdoclint:none</additionalparam>
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>

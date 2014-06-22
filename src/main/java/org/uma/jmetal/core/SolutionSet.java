@@ -241,6 +241,7 @@ public class SolutionSet implements Serializable {
    * into the set in a file.
    *
    * @param path The output file name
+   * @Deprecated
    */
   @Deprecated
   public void printObjectivesToFile(String path) throws IOException {
@@ -261,6 +262,7 @@ public class SolutionSet implements Serializable {
    * solutions objects into the set in a file.
    *
    * @param path The output file name
+   * @Deprecated
    */
   @Deprecated
   public void printVariablesToFile(String path) throws IOException {
@@ -324,6 +326,7 @@ public class SolutionSet implements Serializable {
    * Write the function values of feasible solutions into a file
    *
    * @param path File name
+   * @Deprecated
    */
   @Deprecated
   public void printFeasibleFUN(String path) {
@@ -349,6 +352,7 @@ public class SolutionSet implements Serializable {
    * Write the encoding.variable values of feasible solutions into a file
    *
    * @param path File name
+   * @Deprecated
    */
   @Deprecated
   public void printFeasibleVAR(String path) {

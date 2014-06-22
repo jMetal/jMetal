@@ -23,7 +23,7 @@ package org.uma.test.experiments.settings;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.experiment.Settings;
-import org.uma.jmetal.experiment.settings.MOCHC_Settings;
+import org.uma.jmetal.experiment.settings.MOCHCSettings;
 import org.uma.jmetal.operator.crossover.HUXCrossover;
 import org.uma.jmetal.operator.mutation.BitFlipMutation;
 import org.uma.jmetal.problem.ZDT.ZDT5;
@@ -59,7 +59,7 @@ public class MOCHC_SettingsTest {
   @Test
   public void testConfigure() throws Exception {
     double epsilon = 0.000000000000001 ;
-    Settings mochcSettings = new MOCHC_Settings("ZDT5");
+    Settings mochcSettings = new MOCHCSettings("ZDT5");
     Algorithm algorithm = mochcSettings.configure() ;
     Problem problem = new ZDT5("Binary") ;
 
@@ -85,7 +85,7 @@ public class MOCHC_SettingsTest {
   @Test
   public void testConfigure2() throws Exception {
     double epsilon = 0.000000000000001 ;
-    Settings mochcSettings = new MOCHC_Settings("ZDT5");
+    Settings mochcSettings = new MOCHCSettings("ZDT5");
     Algorithm algorithm = mochcSettings.configure(configuration_) ;
     Problem problem = new ZDT5("Binary") ;
 

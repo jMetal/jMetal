@@ -23,7 +23,7 @@ package org.uma.jmetal.runner;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.experiment.settings.NSGAIIBinaryReal_Settings;
+import org.uma.jmetal.experiment.settings.NSGAIIBinaryRealSettings;
 import org.uma.jmetal.qualityIndicator.QualityIndicator;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
@@ -87,7 +87,7 @@ public class NSGAIIBinaryRealRunner {
       problemName = "Kursawe" ;
     }
 
-    algorithm = new NSGAIIBinaryReal_Settings(problemName).configure() ;
+    algorithm = new NSGAIIBinaryRealSettings(problemName).configure() ;
 
     // Execute the Algorithm
     long initTime = System.currentTimeMillis();

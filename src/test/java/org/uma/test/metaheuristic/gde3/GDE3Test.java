@@ -22,7 +22,7 @@ package org.uma.test.metaheuristic.gde3;
 
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.experiment.settings.GDE3_Settings;
+import org.uma.jmetal.experiment.settings.GDE3Settings;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -37,7 +37,7 @@ public class GDE3Test {
 
     @Test
     public void testNumberOfReturnedSolutionsInEasyProblem() throws IOException, ClassNotFoundException {
-      algorithm_ = new GDE3_Settings("Kursawe").configure() ;
+      algorithm_ = new GDE3Settings("Kursawe").configure() ;
 
       SolutionSet solutionSet = algorithm_.execute() ;
     /*

@@ -87,8 +87,7 @@ public class DENSEA extends Algorithm {
       problem_.evaluateConstraints(newIndividual);
       evaluations++;
       population.add(newIndividual);
-    } //for       
-    //<-
+    }
 
     Ranking r;
 
@@ -120,8 +119,7 @@ public class DENSEA extends Algorithm {
 
 
       population.sort(new CrowdingComparator());
-      //deleteDuplicates(population);
-      //deleteDuplicates(P3);
+
       SolutionSet auxiliar = new SolutionSet(populationSize);
       for (int i = 0; i < (populationSize / 2); i++) {
         auxiliar.add(population.get(i));

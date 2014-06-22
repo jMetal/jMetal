@@ -141,7 +141,6 @@ public class dMOPSO extends Algorithm {
 
   }
 
-
   /**
    * Initialize all parameter of the algorithm
    */

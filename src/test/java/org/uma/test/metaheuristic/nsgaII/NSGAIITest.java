@@ -22,7 +22,7 @@ package org.uma.test.metaheuristic.nsgaII;
 
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.experiment.settings.NSGAII_Settings;
+import org.uma.jmetal.experiment.settings.NSGAIISettings;
 import org.uma.jmetal.metaheuristic.nsgaII.NSGAII;
 import org.junit.Test;
 
@@ -39,7 +39,7 @@ public class NSGAIITest {
 
   @Test
   public void testNumberOfReturnedSolutionsInEasyProblem() throws IOException, ClassNotFoundException {
-    algorithm_ = new NSGAII_Settings("Kursawe").configure() ;
+    algorithm_ = new NSGAIISettings("Kursawe").configure() ;
 
     SolutionSet solutionSet = algorithm_.execute() ;
     /*

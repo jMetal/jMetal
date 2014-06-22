@@ -117,7 +117,7 @@ public class Runner {
 
     FileOutputContext fileContext = new DefaultFileOutputContext("VAR.tsv") ;
     fileContext.setSeparator("\t");
-    logger_.info("Variables values have been writen to file VAR.tsv");
+    logger_.info("Variables values have been written to file VAR.tsv");
     SolutionSetOutput.printVariablesToFile(fileContext, population) ;
 
     fileContext = new DefaultFileOutputContext("FUN.tsv");

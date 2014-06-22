@@ -171,5 +171,5 @@ public class FastPGA extends Algorithm {
 
     Ranking ranking = new Ranking(solutionSet);
     return ranking.getSubfront(0);
-  } // execute
-} // FastPGA
+  }
+}

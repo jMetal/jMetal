@@ -149,8 +149,6 @@ public class AbYSS extends Algorithm {
 
   /**
    * Constructor.
-   *
-   * @param problem Problem to solve
    */
   public AbYSS() {
     solutionSet_ = null;

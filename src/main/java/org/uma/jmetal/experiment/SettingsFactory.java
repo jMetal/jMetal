@@ -41,7 +41,7 @@ public class SettingsFactory {
    */
   public Settings getSettingsObject(String algorithmName, Object[] params)
     throws JMetalException {
-    String base = "org.uma.jmetal.experiment.settings." + algorithmName + "_Settings";
+    String base = "org.uma.jmetal.experiment.settings." + algorithmName + "Settings";
     try {
       Class problemClass = Class.forName(base);
       Constructor[] constructors = problemClass.getConstructors();

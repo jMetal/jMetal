@@ -42,20 +42,10 @@ import java.util.Comparator;
  * PPSN'08. Dortmund. September 2008.
  */
 public class CellDE extends Algorithm {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = 8699667515096532262L;
 
-  /**
-   * Constructor
-   *
-   * @param problem Problem to solve
-   */
   public CellDE() {
-  } // CellDE
-
+  }
 
   /**
    * Runs of the CellDE algorithm.
@@ -130,11 +120,10 @@ public class CellDE extends Algorithm {
 
         if (flag == 1) { //The offSpring dominates
           offSpring.setLocation(individual.getLocation());
-          //currentSolutionSet.reemplace(offSpring[0].getLocation(),offSpring[0]);
           currentSolutionSet.replace(ind, new Solution(offSpring));
-          //newSolutionSet.add(offSpring);
           archive.add(new Solution(offSpring));
-        } else if (flag == 0) { //Both two are non-dominates
+        } else if (flag == 0) {
+          //Both two are non-dominates
           neighbors[ind].add(offSpring);
           Ranking rank = new Ranking(neighbors[ind]);
           for (int j = 0; j < rank.getNumberOfSubfronts(); j++) {
@@ -150,12 +139,9 @@ public class CellDE extends Algorithm {
 
           if (!deleteMutant) {
             offSpring.setLocation(individual.getLocation());
-            //currentSolutionSet.reemplace(offSpring[0].getLocation(),offSpring[0]);
-            //newSolutionSet.add(offSpring);
             currentSolutionSet.replace(offSpring.getLocation(), offSpring);
             archive.add(new Solution(offSpring));
           } else {
-            //newSolutionSet.add(new Solution(currentSolutionSet.get(ind)));
             archive.add(new Solution(offSpring));
           }
         }
