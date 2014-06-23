@@ -25,11 +25,10 @@ import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.experiment.Settings;
 import org.uma.jmetal.metaheuristic.paes.PAES;
 import org.uma.jmetal.operator.mutation.Mutation;
-import org.uma.jmetal.operator.mutation.MutationFactory;
+import org.uma.jmetal.operator.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.util.JMetalException;
 
-import java.util.HashMap;
 import java.util.Properties;
 
 /**
@@ -62,7 +61,7 @@ public class PAESSettings extends Settings {
   }
 
   /**
-   * Configure the MOCell algorithm with default parameter experiment.settings
+   * Configure the PAES algorithm with default parameter experiment.settings
    *
    * @return an algorithm object
    * @throws org.uma.jmetal.util.JMetalException
@@ -71,23 +70,17 @@ public class PAESSettings extends Settings {
     Algorithm algorithm;
     Mutation mutation;
 
-    // Creating the problem
-    algorithm = new PAES();
-    algorithm.setProblem(problem_);
+    mutation = new PolynomialMutation.Builder()
+      .distributionIndex(20.0)
+      .probability(1.0/problem_.getNumberOfVariables())
+      .build();
 
-    // Algorithm parameters
-    algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
-    algorithm.setInputParameter("biSections", biSections_);
-    algorithm.setInputParameter("archiveSize", archiveSize_);
-
-    // Mutation (Real variables)
-    HashMap<String, Object> parameters = new HashMap<String, Object>();
-    parameters.put("probability", mutationProbability_);
-    parameters.put("distributionIndex", mutationDistributionIndex_);
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);
-
-    // Add the operator to the algorithm
-    algorithm.addOperator("mutation", mutation);
+    algorithm = new PAES.Builder(problem_)
+      .mutation(mutation)
+      .maxEvaluations(25000)
+      .archiveSize(100)
+      .biSections(5)
+      .build() ;
 
     return algorithm ;
   } 

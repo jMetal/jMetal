@@ -26,15 +26,17 @@ import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.metaheuristic.paes.PAES;
-import org.uma.jmetal.operator.mutation.MutationFactory;
+import org.uma.jmetal.operator.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.Kursawe;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.qualityIndicator.QualityIndicator;
+import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
+import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
@@ -77,44 +79,44 @@ public class PAESRunner {
       indicators = new QualityIndicator(problem, args[1]);
     } else {
       problem = new Kursawe("ArrayReal", 3);
+      /*
+       * Examples:
       //problem = new Fonseca("Real"); 
       //problem = new Kursawe("BinaryReal",3);
       //problem = new Water("Real");
       //problem = new ZDT4("Real", 1000);
       //problem = new WFG1("Real");
       //problem = new DTLZ1("Real");
-      //problem = new OKA2("Real") ;
+      */
     }
 
-    algorithm = new PAES();
-    algorithm.setProblem(problem);
+    mutation = new PolynomialMutation.Builder()
+      .distributionIndex(20.0)
+      .probability(1.0/problem.getNumberOfVariables())
+      .build();
 
-    // Algorithm parameters
-    algorithm.setInputParameter("archiveSize", 100);
-    algorithm.setInputParameter("biSections", 5);
-    algorithm.setInputParameter("maxEvaluations", 25000);
+    algorithm = new PAES.Builder(problem)
+      .mutation(mutation)
+      .maxEvaluations(25000)
+      .archiveSize(100)
+      .biSections(5)
+      .build() ;
 
-    // Mutation (Real variables)
-    HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
-    mutationParameters.put("probability", 1.0 / problem.getNumberOfVariables());
-    mutationParameters.put("distributionIndex", 20.0);
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
+    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+      .execute() ;
 
-    // Add the operator to the algorithm
-    algorithm.addOperator("mutation", mutation);
+    SolutionSet population = algorithmRunner.getSolutionSet() ;
+    long computingTime = algorithmRunner.getComputingTime() ;
 
-    // Execute the Algorithm 
-    long initTime = System.currentTimeMillis();
-    SolutionSet population = algorithm.execute();
-    long estimatedTime = System.currentTimeMillis() - initTime;
+    new SolutionSetOutput.Printer(population)
+      .separator("\t")
+      .varFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+      .funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+      .print();
 
-    // Result messages 
-    // STEP 8. Print the results
-    logger_.info("Total execution time: " + estimatedTime + "ms");
-    logger_.info("Variables values have been writen to file VAR");
-    population.printVariablesToFile("VAR");
-    logger_.info("Objectives values have been writen to file FUN");
-    population.printObjectivesToFile("FUN");
+    logger_.info("Total execution time: " + computingTime + "ms");
+    logger_.info("Objectives values have been written to file FUN.tsv");
+    logger_.info("Variables values have been written to file VAR.tsv");
 
     if (indicators != null) {
       logger_.info("Quality indicators");

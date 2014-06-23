@@ -1,4 +1,4 @@
-//  PAES_SettingsTest.java
+//  PAESSettingsTest.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -20,15 +20,14 @@
 
 package org.uma.test.experiments.settings;
 
-import org.uma.jmetal.core.Algorithm;
+import org.junit.Before;
+import org.junit.Test;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.experiment.Settings;
 import org.uma.jmetal.experiment.settings.PAESSettings;
+import org.uma.jmetal.metaheuristic.paes.PAES;
 import org.uma.jmetal.operator.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.Fonseca;
-
-import org.junit.Before;
-import org.junit.Test;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -40,7 +39,7 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Created with IntelliJ IDEA.
- * User: antelverde
+ * User: Antonio J. Nebro
  * Date: 27/06/13
  * Time: 07:36
  * To change this template use File | Settings | File Templates.
@@ -59,35 +58,35 @@ public class PAESSettingsTest {
   public void testConfigure() throws Exception {
     double epsilon = 0.000000000000001 ;
     Settings paesSettings = new PAESSettings("Fonseca");
-    Algorithm algorithm = paesSettings.configure() ;
+    PAES algorithm = (PAES)paesSettings.configure() ;
     Problem problem = new Fonseca("Real") ;
 
-    PolynomialMutation mutation = (PolynomialMutation)algorithm.getOperator("mutation") ;
-    double pm = (Double)mutation.getParameter("probability") ;
-    double dim = (Double)mutation.getParameter("distributionIndex") ;
+    PolynomialMutation mutation = (PolynomialMutation)algorithm.getMutationOperator() ;
+    double pm = mutation.getMutationProbability() ;
+    double dim = mutation.getDistributionIndex() ;
 
-    assertEquals("PAES_SettingsTest", 100, ((Integer)algorithm.getInputParameter("archiveSize")).intValue());
-    assertEquals("PAES_SettingsTest", 25000, ((Integer)algorithm.getInputParameter("maxEvaluations")).intValue());
+    assertEquals("PAES_SettingsTest", 100, algorithm.getArchiveSize());
+    assertEquals("PAES_SettingsTest", 25000, algorithm.getMaxEvaluations());
     assertEquals("PAES_SettingsTest", 1.0/problem.getNumberOfVariables(), pm, epsilon);
     assertEquals("PAES_SettingsTest", 20.0, dim, epsilon);
-    assertEquals("PAES_SettingsTest", 5, ((Integer)algorithm.getInputParameter("biSections")).intValue());
+    assertEquals("PAES_SettingsTest", 5, algorithm.getBiSections());
   }
 
   @Test
   public void testConfigure2() throws Exception {
     double epsilon = 0.000000000000001 ;
     Settings paesSettings = new PAESSettings("Fonseca");
-    Algorithm algorithm = paesSettings.configure(configuration_) ;
+    PAES algorithm = (PAES)paesSettings.configure(configuration_) ;
     Problem problem = new Fonseca("Real") ;
 
-    PolynomialMutation mutation = (PolynomialMutation)algorithm.getOperator("mutation") ;
-    double pm = (Double)mutation.getParameter("probability") ;
-    double dim = (Double)mutation.getParameter("distributionIndex") ;
+    PolynomialMutation mutation = (PolynomialMutation)algorithm.getMutationOperator() ;
+    double pm = mutation.getMutationProbability() ;
+    double dim = mutation.getDistributionIndex() ;
 
-    assertEquals("PAES_SettingsTest", 100, ((Integer)algorithm.getInputParameter("archiveSize")).intValue());
-    assertEquals("PAES_SettingsTest", 25000, ((Integer)algorithm.getInputParameter("maxEvaluations")).intValue());
+    assertEquals("PAES_SettingsTest", 100, algorithm.getArchiveSize());
+    assertEquals("PAES_SettingsTest", 25000, algorithm.getMaxEvaluations());
     assertEquals("PAES_SettingsTest", 1.0/problem.getNumberOfVariables(), pm, epsilon);
     assertEquals("PAES_SettingsTest", 20.0, dim, epsilon);
-    assertEquals("PAES_SettingsTest", 5, ((Integer)algorithm.getInputParameter("biSections")).intValue());
+    assertEquals("PAES_SettingsTest", 5, algorithm.getBiSections());
   }
 }
