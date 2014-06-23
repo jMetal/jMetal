@@ -24,7 +24,6 @@ package org.uma.jmetal.operator.crossover;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.encoding.solutiontype.ArrayRealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
-import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
 import org.uma.jmetal.util.wrapper.XReal;
@@ -210,20 +209,13 @@ public class SBXCrossover extends Crossover {
     Solution[] parents = (Solution[]) object;
 
     if (parents.length != 2) {
-      Configuration.logger_.severe("SBXCrossover.execute: operator needs two " +
+      throw new JMetalException("SBXCrossover.execute: operator needs two " +
         "parents");
-      Class cls = java.lang.String.class;
-      String name = cls.getName();
-      throw new JMetalException("Exception in " + name + ".execute()");
     }
 
     if (!solutionTypeIsValid(parents)) {
-      Configuration.logger_.severe("SBXCrossover.execute: the solutions " +
+      throw new JMetalException("SBXCrossover.execute: the solutions " +
         "type " + parents[0].getType() + " is not allowed with this operator");
-
-      Class<String> cls = java.lang.String.class;
-      String name = cls.getName();
-      throw new JMetalException("Exception in " + name + ".execute()");
     }
 
     Solution[] offSpring;

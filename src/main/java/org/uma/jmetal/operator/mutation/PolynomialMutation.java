@@ -24,7 +24,6 @@ package org.uma.jmetal.operator.mutation;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.encoding.solutiontype.ArrayRealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
-import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
 import org.uma.jmetal.util.wrapper.XReal;
@@ -124,12 +123,8 @@ public class PolynomialMutation extends Mutation {
     Solution solution = (Solution) object;
 
     if (!solutionTypeIsValid(solution)) {
-      Configuration.logger_.severe("PolynomialMutation.execute: the solutiontype " +
+      throw new JMetalException("PolynomialMutation.execute: the solutiontype " +
         "type " + solution.getType() + " is not allowed with this operator");
-
-      Class cls = java.lang.String.class;
-      String name = cls.getName();
-      throw new JMetalException("Exception in " + name + ".execute()");
     }
 
     doMutation(mutationProbability_, solution);

@@ -106,10 +106,7 @@ public class BitFlipMutation extends Mutation {
       }
     } catch (ClassCastException e1) {
       Configuration.logger_.log(Level.SEVERE,
-        "BitFlipMutation.doMutation: " +
-          "ClassCastException error" + e1.getMessage(),
-        e1
-      );
+        "BitFlipMutation.doMutation: ClassCastException error" + e1.getMessage(), e1);
       Class<String> cls = java.lang.String.class;
       String name = cls.getName();
       throw new JMetalException("Exception in " + name + ".doMutation()");
@@ -127,13 +124,9 @@ public class BitFlipMutation extends Mutation {
     Solution solution = (Solution) object;
 
     if (!solutionTypeIsValid(solution)) {
-      Configuration.logger_.severe("BitFlipMutation.execute: the solutiontype " +
+      throw new JMetalException("BitFlipMutation.execute: the solutiontype " +
         "is not of the right type. The type should be 'Binary', " +
         "'BinaryReal' or 'Int', but " + solution.getType() + " is obtained");
-
-      Class<String> cls = java.lang.String.class;
-      String name = cls.getName();
-      throw new JMetalException("Exception in " + name + ".execute()");
     }
 
     doMutation(mutationProbability_, solution);

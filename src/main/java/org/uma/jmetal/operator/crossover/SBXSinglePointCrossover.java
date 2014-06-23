@@ -23,7 +23,6 @@ package org.uma.jmetal.operator.crossover;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.encoding.solutiontype.ArrayRealAndBinarySolutionType;
 import org.uma.jmetal.encoding.variable.Binary;
-import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
 import org.uma.jmetal.util.wrapper.XReal;
@@ -203,22 +202,16 @@ public class SBXSinglePointCrossover extends Crossover {
     Solution[] parents = (Solution[]) object;
 
     if (parents.length != 2) {
-      Configuration.logger_.severe("SBXSinglePointCrossover.execute: operator " +
+      throw new JMetalException("SBXSinglePointCrossover.execute: operator " +
         "needs two parents");
-      Class<String> cls = java.lang.String.class;
-      String name = cls.getName();
-      throw new JMetalException("Exception in " + name + ".execute()");
     }
 
     if (!(VALID_TYPES.contains(parents[0].getType().getClass()) &&
       VALID_TYPES.contains(parents[1].getType().getClass()))) {
-      Configuration.logger_.severe("SBXSinglePointCrossover.execute: the solutions " +
+      throw new JMetalException("SBXSinglePointCrossover.execute: the solutions " +
         "type " + parents[0].getType() + " is not allowed with this operator");
+    }
 
-      Class<String> cls = java.lang.String.class;
-      String name = cls.getName();
-      throw new JMetalException("Exception in " + name + ".execute()");
-    } // if
     Solution[] offSpring;
     offSpring = doCrossover(realCrossoverProbability_,
       binaryCrossoverProbability_, parents[0], parents[1]);

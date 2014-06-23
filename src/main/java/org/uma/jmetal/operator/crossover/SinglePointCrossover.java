@@ -174,26 +174,14 @@ public class SinglePointCrossover extends Crossover {
     Solution[] parents = (Solution[]) object;
 
     if (parents.length < 2) {
-      Configuration.logger_.log(Level.SEVERE,
-        "SinglePointCrossover.execute: operator " +
-          "needs two parents"
-      );
-      Class<String> cls = java.lang.String.class;
-      String name = cls.getName();
-      throw new JMetalException("Exception in " + name + ".execute()");
+      throw new JMetalException("SinglePointCrossover.execute: operator needs two parents");
     }
 
     if (!solutionTypeIsValid(parents)) {
-      Configuration.logger_.log(Level.SEVERE,
-          "SinglePointCrossover.execute: the solutions " +
-              "are not of the right type. The type should be 'Binary' or 'Int', but " +
-              parents[0].getType() + " and " +
-              parents[1].getType() + " are obtained"
-          );
-
-      Class<String> cls = java.lang.String.class;
-      String name = cls.getName();
-      throw new JMetalException("Exception in " + name + ".execute()");
+      throw new JMetalException("SinglePointCrossover.execute: the solutions " +
+        "are not of the right type. The type should be 'Binary' or 'Int', but " +
+        parents[0].getType() + " and " +
+        parents[1].getType() + " are obtained");
     }
 
     Solution[] offSpring;

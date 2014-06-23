@@ -131,16 +131,12 @@ public class DifferentialEvolutionCrossover extends Crossover {
     Solution child;
 
     if (!solutionTypeIsValid(parent)) {
-      Configuration.logger_.severe("DifferentialEvolutionCrossover.execute: " +
+      throw new JMetalException("DifferentialEvolutionCrossover.execute: " +
         " the solutions " +
         "are not of the right type. The type should be 'Real' or 'ArrayReal', but " +
         parent[0].getType() + " and " +
         parent[1].getType() + " and " +
         parent[2].getType() + " are obtained");
-
-      Class<String> cls = java.lang.String.class;
-      String name = cls.getName();
-      throw new JMetalException("Exception in " + name + ".execute()");
     }
 
     int jrand;
