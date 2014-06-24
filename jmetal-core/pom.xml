@@ -3,9 +3,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.uma.jmetal</groupId>
-    <artifactId>jmetal</artifactId>
+    <artifactId>jmetal-core</artifactId>
     <version>5.0-Beta-3-SNAPSHOT</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
+    
+    <parent>
+      <groupId>org.uma.jmetal</groupId>
+      <artifactId>jmetal</artifactId>
+      <version>5.0-Beta-3-SNAPSHOT</version>
+     </parent>
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Java framework for multi-objective optimization with metaheuristics</description>
@@ -32,8 +38,8 @@
         <connection>scm:git://git@github.com:jMetal/jMetal.git</connection>
         <developerConnection>scm:git:https://github.com/jMetal/jMetal.git</developerConnection>
         <url>https://github.com/jMetal/jMetal.git</url>
-        <tag>HEAD</tag>
-    </scm>
+      <tag>HEAD</tag>
+  </scm>
 
     <distributionManagement>
         <snapshotRepository>
@@ -41,11 +47,6 @@
             <url>http://localhost:8080/repository/snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
-
-    <modules>
-        <module>jmetal-core</module>
-        <module>jmetal-exec</module>
-    </modules>
 
     <build>
         <plugins>
@@ -66,7 +67,6 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
                 <configuration>
-                    <!-- or whatever version you use -->
                     <source>1.7</source>
                     <target>1.7</target>
                     <encoding>UTF-8</encoding>
