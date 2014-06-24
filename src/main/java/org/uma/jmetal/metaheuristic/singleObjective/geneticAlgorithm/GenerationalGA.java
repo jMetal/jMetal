@@ -20,15 +20,16 @@
 
 package org.uma.jmetal.metaheuristic.singleObjective.geneticAlgorithm;
 
-import org.uma.jmetal.core.*;
+import org.uma.jmetal.core.Algorithm;
+import org.uma.jmetal.core.Operator;
+import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
 
 import java.util.Comparator;
-
-import com.google.inject.Inject;
 
 /**
  * Class implementing a generational genetic algorithm
@@ -37,14 +38,11 @@ public class GenerationalGA extends Algorithm {
 
   private static final long serialVersionUID = -8566068150403243344L;
 
-  @Inject
   SolutionSetEvaluator evaluator_  ;
 
   /**
    * Constructor
    * Create a new GGA instance.
-   *
-   * @param problem Problem to solve.
    */
   public GenerationalGA() {
     super();
