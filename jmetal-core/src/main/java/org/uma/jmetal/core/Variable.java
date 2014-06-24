@@ -36,10 +36,6 @@ import java.io.Serializable;
  * a fatal error.
  */
 public abstract class Variable implements Serializable {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = 8958332113562350950L;
 
   /**

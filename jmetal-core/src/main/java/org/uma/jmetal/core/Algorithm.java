@@ -36,8 +36,8 @@ import java.util.Map;
  * the behavior of the algorithm.
  */
 public abstract class Algorithm implements Serializable {
-
   private static final long serialVersionUID = -5414794431994226777L;
+
   protected Problem problem_;
   protected Map<String, Operator> operators_ = null;
   protected Map<String, Object> inputParameters_ = null;
