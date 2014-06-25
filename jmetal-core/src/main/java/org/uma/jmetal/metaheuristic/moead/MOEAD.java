@@ -50,7 +50,7 @@ public class MOEAD extends Algorithm {
   /**
    * T: neighbour size
    */
-  int T_;
+  int t_;
   /**
    * Neighborhood
    */
@@ -72,17 +72,10 @@ public class MOEAD extends Algorithm {
   Operator crossover_;
   Operator mutation_;
   String dataDirectory_;
-  private int populationSize_;
-  /**
-   * Stores the population
-   */
-  private SolutionSet population_;
 
-  /**
-   * Constructor
-   *
-   * @param problem Problem to solve
-   */
+  private SolutionSet population_;
+  private int populationSize_;
+
   public MOEAD() {
     super();
 
@@ -101,16 +94,16 @@ public class MOEAD extends Algorithm {
     population_ = new SolutionSet(populationSize_);
     indArray_ = new Solution[problem_.getNumberOfObjectives()];
 
-    T_ = (Integer) this.getInputParameter("T");
+    t_ = (Integer) this.getInputParameter("T");
     nr_ = (Integer) this.getInputParameter("nr");
     delta_ = (Double) this.getInputParameter("delta");
 
     /*
-    T_ = (int) (0.1 * populationSize_);
+    t_ = (int) (0.1 * populationSize_);
     delta_ = 0.9;
     nr_ = (int) (0.01 * populationSize_);
      */
-    neighborhood_ = new int[populationSize_][T_];
+    neighborhood_ = new int[populationSize_][t_];
 
     z_ = new double[problem_.getNumberOfObjectives()];
     lambda_ = new double[populationSize_][problem_.getNumberOfObjectives()];
@@ -121,7 +114,6 @@ public class MOEAD extends Algorithm {
     // STEP 1. Initialization
     // STEP 1.1. Compute euclidean distances between weight vectors and find T
     initUniformWeight();
-    //for (int i = 0; i < 300; i++)
 
     initNeighborhood();
 
@@ -138,7 +130,7 @@ public class MOEAD extends Algorithm {
 
       for (int i = 0; i < populationSize_; i++) {
         int n = permutation[i];
-        //int n = i ; // or int n = i;
+
         int type;
         double rnd = PseudoRandom.randDouble();
 
@@ -195,8 +187,7 @@ public class MOEAD extends Algorithm {
         lambda_[n][0] = a;
         lambda_[n][1] = 1 - a;
       }
-    }
-    else {
+    } else {
       String dataFileName;
       dataFileName = "W" + problem_.getNumberOfObjectives() + "D_" +
           populationSize_ + ".dat";
@@ -251,9 +242,9 @@ public class MOEAD extends Algorithm {
       }
 
       // find 'niche' nearest neighboring subproblems
-      Utils.minFastSort(x, idx, populationSize_, T_);
+      Utils.minFastSort(x, idx, populationSize_, t_);
 
-      System.arraycopy(idx, 0, neighborhood_[i], 0, T_);
+      System.arraycopy(idx, 0, neighborhood_[i], 0, t_);
     }
   }
 

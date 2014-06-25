@@ -118,12 +118,12 @@ public class cMOEAD extends Algorithm {
     delta_ = (Double) this.getInputParameter("delta");
 
     /*
-    T_ = 20;
+    t_ = 20;
     delta_ = 0.9;
     nr_ = 2;
      */
     /*
-    T_ = (int) (0.1 * populationSize_);
+    t_ = (int) (0.1 * populationSize_);
     delta_ = 0.9;
     nr_ = (int) (0.01 * populationSize_);
      */

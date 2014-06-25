@@ -28,11 +28,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.StringTokenizer;
+import java.util.*;
 import java.util.logging.Level;
 
 public class ExtractParetoFrontAndDecisionVariables {
@@ -50,8 +46,8 @@ public class ExtractParetoFrontAndDecisionVariables {
     double[] decisionVector_;
 
     public Point(double[] vector, double[] decisionVector) {
-      vector_ = vector;
-      decisionVector_ = decisionVector;
+      vector_ = Arrays.copyOf(vector, vector.length);
+      decisionVector_ = Arrays.copyOf(decisionVector, decisionVector.length);
     }
   }
 
@@ -216,7 +212,8 @@ public class ExtractParetoFrontAndDecisionVariables {
       bwObj.close();
       bwDC.close();
     } catch (IOException e) {
-      e.printStackTrace();
+      Configuration.logger_.log(
+        Level.SEVERE, "Error in method writeParetoFront()", e);
     }
   }
 
