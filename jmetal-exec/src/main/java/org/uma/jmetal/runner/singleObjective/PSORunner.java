@@ -24,7 +24,7 @@ package org.uma.jmetal.runner.singleObjective;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristic.singleObjective.particleSwarmOptimization.PSO;
+import org.uma.jmetal.metaheuristic.singleobjective.particleswarmoptimization.PSO;
 import org.uma.jmetal.operator.mutation.Mutation;
 import org.uma.jmetal.operator.mutation.MutationFactory;
 import org.uma.jmetal.problem.singleObjective.Griewank;

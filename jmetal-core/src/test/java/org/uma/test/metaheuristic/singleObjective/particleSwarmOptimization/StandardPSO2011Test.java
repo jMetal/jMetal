@@ -18,10 +18,10 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.test.metaheuristic.singleObjective.particleSwarmOptimization;
+package org.uma.test.metaheuristic.singleObjective.particleswarmoptimization;
 
 import org.uma.jmetal.core.Problem;
-import org.uma.jmetal.metaheuristic.singleObjective.particleSwarmOptimization.StandardPSO2011;
+import org.uma.jmetal.metaheuristic.singleobjective.particleswarmoptimization.StandardPSO2011;
 import org.uma.jmetal.problem.Fonseca;
 import org.junit.After;
 import org.junit.Before;

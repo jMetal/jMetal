@@ -18,7 +18,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.metaheuristic.singleObjective.cmaes;
+package org.uma.jmetal.metaheuristic.singleobjective.cmaes;
 
 import org.uma.jmetal.core.*;
 import org.uma.jmetal.util.Configuration;

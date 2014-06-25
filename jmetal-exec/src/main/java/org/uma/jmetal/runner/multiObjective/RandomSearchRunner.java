@@ -24,7 +24,7 @@ package org.uma.jmetal.runner.multiObjective;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristic.randomSearch.RandomSearch;
+import org.uma.jmetal.metaheuristic.randomsearch.RandomSearch;
 import org.uma.jmetal.problem.Kursawe;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.qualityIndicator.QualityIndicator;

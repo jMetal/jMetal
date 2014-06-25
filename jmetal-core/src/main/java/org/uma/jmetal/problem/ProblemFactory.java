@@ -46,7 +46,7 @@ public class ProblemFactory {
 
     String base = "org.uma.jmetal.problem.";
     if ("TSP".equals(name) || "OneMax".equals(name)) {
-      base += "singleObjective.";
+      base += "singleobjective.";
     } else if ("mQAP".equals(name)) {
       base += "mqap.";
     } else if ("Qom".equalsIgnoreCase(name)) {
