@@ -28,7 +28,7 @@ import org.uma.jmetal.core.Variable;
 import org.uma.jmetal.encoding.variable.Real;
 
 /**
- * Class representing a solutiontype type composed of real variables
+ * Class representing a solution type type composed of real variables
  */
 public class RealSolutionType extends SolutionType implements RealSolutionTypeTemplate {
 

@@ -21,11 +21,13 @@
 
 package org.uma.jmetal.core;
 
+import java.io.Serializable;
+
 /**
  * Abstract class representing solutiontype types, which define the types of the
  * variables constituting a solutiontype
  */
-public abstract class SolutionType {
+public abstract class SolutionType implements Serializable {
 
   private final Problem problem_;
 
