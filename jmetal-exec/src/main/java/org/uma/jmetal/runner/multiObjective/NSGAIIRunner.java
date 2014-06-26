@@ -24,7 +24,7 @@ import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristic.nsgaII.NSGAIITemplate;
+import org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAIITemplate;
 import org.uma.jmetal.operator.crossover.SBXCrossover;
 import org.uma.jmetal.operator.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.selection.BinaryTournament2;
@@ -63,9 +63,9 @@ public class NSGAIIRunner {
    * @throws org.uma.jmetal.util.JMetalException
    * @throws java.io.IOException
    * @throws SecurityException Usage: three options
-   *                           - org.uma.jmetal.metaheuristic.nsgaII.NSGAIIRunner
-   *                           - org.uma.jmetal.metaheuristic.nsgaII.NSGAIIRunner problemName
-   *                           - org.uma.jmetal.metaheuristic.nsgaII.NSGAIIRunner problemName paretoFrontFile
+   *                           - org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAIIRunner
+   *                           - org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAIIRunner problemName
+   *                           - org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAIIRunner problemName paretoFrontFile
    */
   public static void main(String[] args) throws
     JMetalException,

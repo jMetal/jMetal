@@ -24,7 +24,7 @@ import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristic.gde3.GDE3;
+import org.uma.jmetal.metaheuristic.multiobjective.gde3.GDE3;
 import org.uma.jmetal.operator.crossover.CrossoverFactory;
 import org.uma.jmetal.operator.selection.SelectionFactory;
 import org.uma.jmetal.problem.Kursawe;
@@ -52,9 +52,9 @@ public class ParallelGDE3Runner {
    * @throws org.uma.jmetal.util.JMetalException
    * @throws java.io.IOException
    * @throws SecurityException Usage: three choices
-   *                           - org.uma.jmetal.metaheuristic.nsgaII.NSGAII_main
-   *                           - org.uma.jmetal.metaheuristic.nsgaII.NSGAII_main problemName
-   *                           - org.uma.jmetal.metaheuristic.nsgaII.NSGAII_main problemName paretoFrontFile
+   *                           - org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII_main
+   *                           - org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII_main problemName
+   *                           - org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII_main problemName paretoFrontFile
    */
   public static void main(String[] args)
     throws JMetalException, SecurityException, IOException, ClassNotFoundException {

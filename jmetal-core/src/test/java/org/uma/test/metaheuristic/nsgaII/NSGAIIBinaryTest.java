@@ -24,7 +24,7 @@ import org.junit.Test;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.experiment.settings.NSGAIIBinarySettings;
-import org.uma.jmetal.metaheuristic.nsgaII.NSGAII;
+import org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII;
 
 import java.io.IOException;
 

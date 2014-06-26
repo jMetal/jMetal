@@ -24,7 +24,7 @@ package org.uma.jmetal.runner.multiObjective;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristic.omopso.OMOPSO;
+import org.uma.jmetal.metaheuristic.multiobjective.omopso.OMOPSO;
 import org.uma.jmetal.operator.mutation.Mutation;
 import org.uma.jmetal.operator.mutation.NonUniformMutation;
 import org.uma.jmetal.operator.mutation.UniformMutation;

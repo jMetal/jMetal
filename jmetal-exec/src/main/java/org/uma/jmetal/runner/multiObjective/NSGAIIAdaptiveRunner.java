@@ -25,7 +25,7 @@ import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristic.nsgaII.NSGAIIAdaptive;
+import org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAIIAdaptive;
 import org.uma.jmetal.operator.selection.SelectionFactory;
 import org.uma.jmetal.problem.Kursawe;
 import org.uma.jmetal.problem.ProblemFactory;
@@ -70,9 +70,9 @@ public class NSGAIIAdaptiveRunner {
    * @throws org.uma.jmetal.util.JMetalException
    * @throws java.io.IOException
    * @throws SecurityException Usage: three options
-   *                           - org.uma.jmetal.metaheuristic.nsgaII.NSGAII_main
-   *                           - org.uma.jmetal.metaheuristic.nsgaII.NSGAII_main problemName
-   *                           - org.uma.jmetal.metaheuristic.nsgaII.NSGAII_main problemName paretoFrontFile
+   *                           - org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII_main
+   *                           - org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII_main problemName
+   *                           - org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII_main problemName paretoFrontFile
    */
   public static void main(String[] args) throws
     JMetalException,

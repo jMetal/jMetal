@@ -23,7 +23,7 @@ package org.uma.jmetal.experiment.settings;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.experiment.Settings;
-import org.uma.jmetal.metaheuristic.nsgaII.NSGAII;
+import org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII;
 import org.uma.jmetal.operator.crossover.Crossover;
 import org.uma.jmetal.operator.crossover.CrossoverFactory;
 import org.uma.jmetal.operator.mutation.Mutation;

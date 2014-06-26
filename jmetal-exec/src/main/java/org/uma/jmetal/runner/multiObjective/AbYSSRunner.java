@@ -24,7 +24,7 @@ import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristic.abyss.AbYSS;
+import org.uma.jmetal.metaheuristic.multiobjective.abyss.AbYSS;
 import org.uma.jmetal.operator.crossover.CrossoverFactory;
 import org.uma.jmetal.operator.localSearch.MutationLocalSearch;
 import org.uma.jmetal.operator.mutation.MutationFactory;
@@ -57,9 +57,9 @@ public class AbYSSRunner {
    * @throws org.uma.jmetal.util.JMetalException
    * @throws IOException
    * @throws SecurityException Usage: three choices
-   *                           - org.uma.jmetal.metaheuristic.nsgaII.NSGAII_main
-   *                           - org.uma.jmetal.metaheuristic.nsgaII.NSGAII_main problemName
-   *                           - org.uma.jmetal.metaheuristic.nsgaII.NSGAII_main problemName paretoFrontFile
+   *                           - org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII_main
+   *                           - org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII_main problemName
+   *                           - org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII_main problemName paretoFrontFile
    */
   public static void main(String[] args) throws
     JMetalException, SecurityException, IOException, ClassNotFoundException {

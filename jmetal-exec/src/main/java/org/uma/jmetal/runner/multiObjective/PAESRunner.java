@@ -25,7 +25,7 @@ import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristic.paes.PAES;
+import org.uma.jmetal.metaheuristic.multiobjective.paes.PAES;
 import org.uma.jmetal.operator.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.Kursawe;
 import org.uma.jmetal.problem.ProblemFactory;

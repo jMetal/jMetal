@@ -23,7 +23,7 @@ package org.uma.jmetal.runner.multiObjective;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristic.dmopso.dMOPSO;
+import org.uma.jmetal.metaheuristic.multiobjective.dmopso.dMOPSO;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.problem.ZDT.ZDT1;
 import org.uma.jmetal.qualityIndicator.QualityIndicator;

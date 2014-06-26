@@ -22,7 +22,7 @@ package org.uma.jmetal.experiment.settings;
 
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.experiment.Settings;
-import org.uma.jmetal.metaheuristic.nsgaII.NSGAIIAdaptive;
+import org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAIIAdaptive;
 import org.uma.jmetal.operator.selection.Selection;
 import org.uma.jmetal.operator.selection.SelectionFactory;
 import org.uma.jmetal.problem.ProblemFactory;

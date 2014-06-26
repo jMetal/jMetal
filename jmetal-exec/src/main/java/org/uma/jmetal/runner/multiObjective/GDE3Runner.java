@@ -23,7 +23,7 @@ import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristic.gde3.GDE3;
+import org.uma.jmetal.metaheuristic.multiobjective.gde3.GDE3;
 import org.uma.jmetal.operator.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.selection.DifferentialEvolutionSelection;
 import org.uma.jmetal.problem.Kursawe;

@@ -27,7 +27,7 @@ import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.experiment.Settings;
 import org.uma.jmetal.experiment.settings.SMPSOSettings;
-import org.uma.jmetal.metaheuristic.smpso.SMPSO;
+import org.uma.jmetal.metaheuristic.multiobjective.smpso.SMPSO;
 import org.uma.jmetal.operator.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.Fonseca;
 import org.uma.jmetal.qualityIndicator.fastHypervolume.FastHypervolumeArchive;

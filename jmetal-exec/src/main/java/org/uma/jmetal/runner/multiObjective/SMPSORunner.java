@@ -23,7 +23,7 @@ package org.uma.jmetal.runner.multiObjective;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristic.smpso.SMPSO;
+import org.uma.jmetal.metaheuristic.multiobjective.smpso.SMPSO;
 import org.uma.jmetal.operator.mutation.Mutation;
 import org.uma.jmetal.operator.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.Kursawe;

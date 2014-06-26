@@ -25,7 +25,7 @@ import org.junit.Test;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.experiment.Settings;
 import org.uma.jmetal.experiment.settings.NSGAIIBinarySettings;
-import org.uma.jmetal.metaheuristic.nsgaII.NSGAII;
+import org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII;
 import org.uma.jmetal.operator.crossover.SinglePointCrossover;
 import org.uma.jmetal.operator.mutation.BitFlipMutation;
 import org.uma.jmetal.problem.ZDT.ZDT5;

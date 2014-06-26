@@ -23,7 +23,7 @@ package org.uma.jmetal.experiment.settings;
 
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.experiment.Settings;
-import org.uma.jmetal.metaheuristic.paes.PAES;
+import org.uma.jmetal.metaheuristic.multiobjective.paes.PAES;
 import org.uma.jmetal.operator.mutation.Mutation;
 import org.uma.jmetal.operator.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.ProblemFactory;
