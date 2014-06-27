@@ -40,19 +40,19 @@ import java.util.logging.Level;
  * the type of the solutions must be Binary or BinaryReal
  */
 public class HUXCrossover extends Crossover {
- private static final long serialVersionUID = -5600218276088232241L;
+  private static final long serialVersionUID = -5600218276088232241L;
 
-  private double probability_ = 1.0;
+  private double probability = 1.0;
 
-@Deprecated
+  @Deprecated
   public HUXCrossover(HashMap<String, Object> parameters) {
     super(parameters);
 
-  addValidSolutionType(BinarySolutionType.class);
-  addValidSolutionType(BinaryRealSolutionType.class);
+    addValidSolutionType(BinarySolutionType.class);
+    addValidSolutionType(BinaryRealSolutionType.class);
 
     if (parameters.get("probability") != null) {
-      probability_ = (Double) parameters.get("probability");
+      probability = (Double) parameters.get("probability");
     }
   }
 
@@ -60,9 +60,12 @@ public class HUXCrossover extends Crossover {
     addValidSolutionType(BinarySolutionType.class);
     addValidSolutionType(BinaryRealSolutionType.class);
 
-    probability_ = builder.crossoverProbability_ ;
+    probability = builder.crossoverProbability_ ;
   }
 
+  public double getCrossoverProbability() {
+    return this.probability;
+  }
   /**
    * Perform the crossover operation
    *
@@ -97,10 +100,10 @@ public class HUXCrossover extends Crossover {
         }
         //7. Decode the results
         if (parent1.getType().getClass() == BinaryRealSolutionType.class) {
-        for (int i = 0; i < offSpring[0].getDecisionVariables().length; i++) {
-          ((BinaryReal) offSpring[0].getDecisionVariables()[i]).decode();
-          ((BinaryReal) offSpring[1].getDecisionVariables()[i]).decode();
-        }
+          for (int i = 0; i < offSpring[0].getDecisionVariables().length; i++) {
+            ((BinaryReal) offSpring[0].getDecisionVariables()[i]).decode();
+            ((BinaryReal) offSpring[1].getDecisionVariables()[i]).decode();
+          }
         }
       }
     } catch (ClassCastException e1) {
@@ -136,7 +139,7 @@ public class HUXCrossover extends Crossover {
         parents[1].getType() + " are obtained");
     }
 
-    Solution[] offSpring = doCrossover(probability_, parents[0], parents[1]);
+    Solution[] offSpring = doCrossover(probability, parents[0], parents[1]);
 
     for (Solution solution : offSpring) {
       solution.setCrowdingDistance(0.0);
