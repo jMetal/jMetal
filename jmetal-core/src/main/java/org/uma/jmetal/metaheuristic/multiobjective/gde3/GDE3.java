@@ -86,7 +86,7 @@ public class GDE3 extends Algorithm {
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     //readParameterSettings();
     createInitialPopulation();
-    evaluatePopulation(population_);
+    population_ = evaluatePopulation(population_);
 
     // Generations ...
     while (!stoppingCondition()) {
@@ -107,7 +107,7 @@ public class GDE3 extends Algorithm {
 
         tmpSolutionSet.add(child);
       }
-      evaluatePopulation(tmpSolutionSet);
+      tmpSolutionSet = evaluatePopulation(tmpSolutionSet);
 
       for (int i = 0; i < populationSize_; i++) {
         // Dominance org.uma.test
@@ -186,8 +186,8 @@ public class GDE3 extends Algorithm {
     }
   }
 
-  protected void evaluatePopulation(SolutionSet population) throws JMetalException {
-    evaluator_.evaluate(population, problem_) ;
+  protected SolutionSet evaluatePopulation(SolutionSet population) throws JMetalException {
+    return evaluator_.evaluate(population, problem_) ;
   }
 
   protected boolean stoppingCondition() {

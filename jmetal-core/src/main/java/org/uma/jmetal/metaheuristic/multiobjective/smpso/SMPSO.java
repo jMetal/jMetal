@@ -264,7 +264,7 @@ public class SMPSO extends Algorithm {
   }
 
   protected void evaluateSwarm() throws JMetalException {
-    evaluator_.evaluate(swarm_, problem_);
+    swarm_ = evaluator_.evaluate(swarm_, problem_);
   }
 
   protected void initializeLeaders() {
