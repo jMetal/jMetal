@@ -63,7 +63,8 @@ public class NSGAII extends NSGAIITemplate {
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     //readParameterSettings();
     createInitialPopulation();
-    evaluatePopulation(population_);
+    population_ = evaluatePopulation(population_);
+
     evaluations_ += population_.size();
 
     // Main loop
@@ -85,7 +86,7 @@ public class NSGAII extends NSGAIITemplate {
         }
       }
 
-      evaluatePopulation(offspringPopulation_);
+      offspringPopulation_ = evaluatePopulation(offspringPopulation_);
       evaluations_ += offspringPopulation_.size() ;
 
       Ranking ranking = new Ranking(population_.union(offspringPopulation_));

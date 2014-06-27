@@ -94,8 +94,8 @@ public abstract class NSGAIITemplate extends Algorithm {
     }
   }
 
-  protected void evaluatePopulation(SolutionSet population) throws JMetalException {
-    evaluator_.evaluate(population, problem_) ;
+  protected SolutionSet evaluatePopulation(SolutionSet population) throws JMetalException {
+    return evaluator_.evaluate(population, problem_) ;
   }
 
   protected boolean stoppingCondition() {

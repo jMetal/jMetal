@@ -59,7 +59,7 @@ public class SteadyStateNSGAII extends NSGAIITemplate {
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     //readParameterSettings();
     createInitialPopulation();
-    evaluatePopulation(population_);
+    population_ = evaluatePopulation(population_);
 
     // Generations ...
     while (!stoppingCondition()) {

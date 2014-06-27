@@ -199,11 +199,6 @@ public class Solution implements Serializable {
     location_ = solution.getLocation();
   }
 
-  public static Solution getNewSolution(Problem problem)
-    throws ClassNotFoundException {
-    return new Solution(problem);
-  }
-
   /**
    * Gets the distance from the solutiontype to a <code>SolutionSet</code>. <b>
    * REQUIRE </b>: this method has to be invoked after calling
