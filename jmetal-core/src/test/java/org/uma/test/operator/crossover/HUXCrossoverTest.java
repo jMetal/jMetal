@@ -71,6 +71,16 @@ public class HUXCrossoverTest {
       .build() ;
   }
 
+  @Test (expected = JMetalException.class)
+  public void invalidNumberOfArgumentsTest() throws ClassNotFoundException {
+    crossover = new HUXCrossover.Builder()
+      .probability(0.9)
+      .build();
+
+    Solution[] parents = {new Solution(new ZDT5("Binary"))};
+
+    crossover.execute(parents);
+  }
 
   @Test
   public void operatorExecutionTest() throws ClassNotFoundException {

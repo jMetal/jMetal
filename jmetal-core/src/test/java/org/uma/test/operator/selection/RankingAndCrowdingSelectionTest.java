@@ -1,4 +1,4 @@
-//  BinaryTournament2Test.java
+//  RankingAndCrowdingSelectionTest.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -21,8 +21,9 @@
 package org.uma.test.operator.selection;
 
 /**
- * Created by antelverde on 15/06/14.
+ * Created by Antonio J. Nebro on 27/06/14.
  */
+
 //FIXME: to be implemented
-public class BinaryTournament2Test {
+public class RankingAndCrowdingSelectionTest {
 }

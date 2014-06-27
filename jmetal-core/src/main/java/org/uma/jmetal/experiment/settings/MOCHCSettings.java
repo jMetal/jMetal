@@ -22,16 +22,18 @@
 package org.uma.jmetal.experiment.settings;
 
 import org.uma.jmetal.core.Algorithm;
-import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.experiment.Settings;
 import org.uma.jmetal.metaheuristic.multiobjective.mochc.MOCHC;
-import org.uma.jmetal.operator.crossover.CrossoverFactory;
-import org.uma.jmetal.operator.mutation.MutationFactory;
-import org.uma.jmetal.operator.selection.SelectionFactory;
+import org.uma.jmetal.operator.crossover.Crossover;
+import org.uma.jmetal.operator.crossover.HUXCrossover;
+import org.uma.jmetal.operator.mutation.BitFlipMutation;
+import org.uma.jmetal.operator.mutation.Mutation;
+import org.uma.jmetal.operator.selection.RandomSelection;
+import org.uma.jmetal.operator.selection.RankingAndCrowdingSelection;
+import org.uma.jmetal.operator.selection.Selection;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.util.JMetalException;
 
-import java.util.HashMap;
 import java.util.Properties;
 
 /**
@@ -42,14 +44,14 @@ import java.util.Properties;
  * To change this template use File | Settings | File Templates.
  */
 public class MOCHCSettings extends Settings {
-  private int populationSize_;
-  private int maxEvaluations_;
+  private int populationSize;
+  private int maxEvaluations;
 
-  private double initialConvergenceCount_;
-  private double preservedPopulation_;
-  private int convergenceValue_;
-  private double crossoverProbability_;
-  private double mutationProbability_;
+  private double initialConvergenceCount;
+  private double preservedPopulation;
+  private int convergenceValue;
+  private double crossoverProbability;
+  private double mutationProbability;
 
   public MOCHCSettings(String problemName) throws JMetalException {
     super(problemName);
@@ -58,14 +60,14 @@ public class MOCHCSettings extends Settings {
     problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
 
     // Default experiment.settings
-    populationSize_ = 100;
-    maxEvaluations_ = 25000;
-    initialConvergenceCount_ = 0.25;
-    preservedPopulation_ = 0.05;
-    convergenceValue_ = 3;
+    populationSize = 100;
+    maxEvaluations = 25000;
+    initialConvergenceCount = 0.25;
+    preservedPopulation = 0.05;
+    convergenceValue = 3;
 
-    crossoverProbability_ = 1.0;
-    mutationProbability_ = 0.35;
+    crossoverProbability = 1.0;
+    mutationProbability = 0.35;
   }
 
   /**
@@ -75,47 +77,40 @@ public class MOCHCSettings extends Settings {
    * @throws org.uma.jmetal.util.JMetalException
    */
   public Algorithm configure() throws JMetalException {
-    Algorithm algorithm;
-    Operator crossover;
-    Operator mutation;
-    Operator parentsSelection;
-    Operator newGenerationSelection;
+    Crossover crossoverOperator;
+    Mutation mutationOperator;
+    Selection parentsSelection;
+    Selection newGenerationSelection;
+    Algorithm algorithm ;
 
-    // Creating the problem
-    algorithm = new MOCHC();
-    algorithm.setProblem(problem_);
+    crossoverOperator = new HUXCrossover.Builder()
+      .probability(1.0)
+      .build() ;
 
-    // Algorithm parameters
-    algorithm.setInputParameter("initialConvergenceCount", initialConvergenceCount_);
-    algorithm.setInputParameter("preservedPopulation", preservedPopulation_);
-    algorithm.setInputParameter("convergenceValue", convergenceValue_);
-    algorithm.setInputParameter("populationSize", populationSize_);
-    algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
+    parentsSelection = new RandomSelection.Builder()
+      .build() ;
 
-    // Crossover operator
-    HashMap<String, Object> parameters = new HashMap<String, Object>();
-    parameters.put("probability", crossoverProbability_);
-    crossover = CrossoverFactory.getCrossoverOperator("HUXCrossover", parameters);
+    newGenerationSelection = new RankingAndCrowdingSelection.Builder(problem_)
+      .populationSize(100)
+      .build() ;
 
-    parameters = null;
-    parentsSelection = SelectionFactory.getSelectionOperator("RandomSelection", parameters);
+    mutationOperator = new BitFlipMutation.Builder()
+      .probability(0.35)
+      .build() ;
 
-    parameters = new HashMap<String, Object>();
-    parameters.put("problem", problem_);
-    newGenerationSelection =
-      SelectionFactory.getSelectionOperator("RankingAndCrowdingSelection", parameters);
+    algorithm = new MOCHC.Builder(problem_)
+      .initialConvergenceCount(0.25)
+      .preservedPopulation(0.05)
+      .populationSize(100)
+      .maxEvaluations(25000)
+      .convergenceValue(3)
+      .crossover(crossoverOperator)
+      .newGenerationSelection(newGenerationSelection)
+      .cataclysmicMutation(mutationOperator)
+      .parentSelection(parentsSelection)
+      .build() ;
 
-    // Mutation operator
-    parameters = new HashMap<String, Object>();
-    parameters.put("probability", mutationProbability_);
-    mutation = MutationFactory.getMutationOperator("BitFlipMutation", parameters);
-
-    algorithm.addOperator("crossover", crossover);
-    algorithm.addOperator("cataclysmicMutation", mutation);
-    algorithm.addOperator("parentSelection", parentsSelection);
-    algorithm.addOperator("newGenerationSelection", newGenerationSelection);
-
-    return algorithm;
+    return algorithm ;
   }
 
   /**
@@ -125,21 +120,21 @@ public class MOCHCSettings extends Settings {
    */
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {
-    populationSize_ = Integer
-      .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize_)));
-    maxEvaluations_ = Integer
-      .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations_)));
-    initialConvergenceCount_ = Double.parseDouble(configuration
-      .getProperty("initialConvergenceCount", String.valueOf(initialConvergenceCount_)));
-    preservedPopulation_ = Double.parseDouble(
-      configuration.getProperty("preservedPopulation", String.valueOf(preservedPopulation_)));
-    convergenceValue_ = Integer
-      .parseInt(configuration.getProperty("convergenceValue", String.valueOf(convergenceValue_)));
+    populationSize = Integer
+      .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize)));
+    maxEvaluations = Integer
+      .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations)));
+    initialConvergenceCount = Double.parseDouble(configuration
+      .getProperty("initialConvergenceCount", String.valueOf(initialConvergenceCount)));
+    preservedPopulation = Double.parseDouble(
+      configuration.getProperty("preservedPopulation", String.valueOf(preservedPopulation)));
+    convergenceValue = Integer
+      .parseInt(configuration.getProperty("convergenceValue", String.valueOf(convergenceValue)));
 
-    crossoverProbability_ = Double.parseDouble(
-      configuration.getProperty("crossoverProbability", String.valueOf(crossoverProbability_)));
-    mutationProbability_ = Double.parseDouble(
-      configuration.getProperty("mutationProbability", String.valueOf(mutationProbability_)));
+    crossoverProbability = Double.parseDouble(
+      configuration.getProperty("crossoverProbability", String.valueOf(crossoverProbability)));
+    mutationProbability = Double.parseDouble(
+      configuration.getProperty("mutationProbability", String.valueOf(mutationProbability)));
 
     return configure();
   }

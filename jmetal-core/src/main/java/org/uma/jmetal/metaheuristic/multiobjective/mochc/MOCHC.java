@@ -72,6 +72,46 @@ public class MOCHC extends Algorithm {
     this.parentSelection = builder.parentSelection ;
   }
 
+  public Problem getProblem() {
+    return problem_ ;
+  }
+
+  public int getPopulationSize() {
+    return populationSize ;
+  }
+
+  public int getMaxEvaluation() {
+    return maxEvaluations ;
+  }
+
+  public double getInitialConvergenceCount() {
+    return initialConvergenceCount ;
+  }
+
+  public int getConvergenceValue() {
+    return convergenceValue ;
+  }
+
+  public Crossover getCrossover() {
+    return crossover ;
+  }
+
+  public Mutation getCataclysmicMutation() {
+    return cataclysmicMutation ;
+  }
+
+  public Selection getParentSelection() {
+    return parentSelection ;
+  }
+
+  public Selection getNewGenerationSelection() {
+    return newGenerationSelection ;
+  }
+
+  public double getPreservedPopulation() {
+    return preservedPopulation ;
+  }
+
   /**
    * Compares two solutionSets to determine if both are equals
    *
@@ -115,7 +155,7 @@ public class MOCHC extends Algorithm {
     }
 
     return distance;
-  } // hammingDistance 
+  }
 
   /**
    * Runs of the MOCHC algorithm.

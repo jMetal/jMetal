@@ -18,7 +18,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.test.metaheuristic.singleObjective.particleswarmoptimization;
+package org.uma.test.metaheuristic.singleobjective.particleswarmoptimization;
 
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.metaheuristic.singleobjective.particleswarmoptimization.StandardPSO2011;
@@ -34,42 +34,42 @@ import static org.junit.Assert.assertEquals;
  */
 public class StandardPSO2011Test {
 
-  StandardPSO2011 standardPSO_ ;
-  Problem problem_ ;
+  StandardPSO2011 standardPSO;
+  Problem problem;
 
   @Before
   public void setUp() throws Exception {
-    problem_ = new Fonseca("Real") ;
-    standardPSO_ = new StandardPSO2011() ;
-    standardPSO_.setProblem(problem_);
-    standardPSO_.setInputParameter("swarmSize",40);
-    standardPSO_.setInputParameter("maxIterations",5000);
-    standardPSO_.setInputParameter("numberOfParticlesToInform",3);
-    standardPSO_.initParams();
+    problem = new Fonseca("Real") ;
+    standardPSO = new StandardPSO2011() ;
+    standardPSO.setProblem(problem);
+    standardPSO.setInputParameter("swarmSize", 40);
+    standardPSO.setInputParameter("maxIterations", 5000);
+    standardPSO.setInputParameter("numberOfParticlesToInform", 3);
+    standardPSO.initParams();
   }
 
   @Test
   public void initParamsTest() {
-    assertEquals("StandardPSO2011Test.initParamsTest", 40, ((Integer) standardPSO_.getInputParameter("swarmSize")).intValue());
-    assertEquals("StandardPSO2011Test.initParamsTest", 5000, ((Integer) standardPSO_.getInputParameter("maxIterations")).intValue());
-    assertEquals("StandardPSO2011Test.initParamsTest", 3, ((Integer) standardPSO_.getInputParameter("numberOfParticlesToInform")).intValue());
+    assertEquals("StandardPSO2011Test.initParamsTest", 40, ((Integer) standardPSO.getInputParameter("swarmSize")).intValue());
+    assertEquals("StandardPSO2011Test.initParamsTest", 5000, ((Integer) standardPSO.getInputParameter("maxIterations")).intValue());
+    assertEquals("StandardPSO2011Test.initParamsTest", 3, ((Integer) standardPSO.getInputParameter("numberOfParticlesToInform")).intValue());
   }
 
 /*  @Test
   public void neighbourhoodMethodTest() {
     int [] neighbours;
-    neighbours = standardPSO_.getNeighbourhood(0) ;
+    neighbours = standardPSO.getNeighbourhood(0) ;
 
     assertEquals("StandardPSO2011Test.neighbourhoodMethodTest", 39, neighbours[0]) ;
     assertEquals("StandardPSO2011Test.neighbourhoodMethodTest", 0, neighbours[1]) ;
     assertEquals("StandardPSO2011Test.neighbourhoodMethodTest", 1, neighbours[2]) ;
 
-    neighbours = standardPSO_.getNeighbourhood(1) ;
+    neighbours = standardPSO.getNeighbourhood(1) ;
     assertEquals("StandardPSO2011Test.neighbourhoodMethodTest", 0, neighbours[0]) ;
     assertEquals("StandardPSO2011Test.neighbourhoodMethodTest", 1, neighbours[1]) ;
     assertEquals("StandardPSO2011Test.neighbourhoodMethodTest", 2, neighbours[2]) ;
 
-    neighbours = standardPSO_.getNeighbourhood(39) ;
+    neighbours = standardPSO.getNeighbourhood(39) ;
     assertEquals("StandardPSO2011Test.neighbourhoodMethodTest", 38, neighbours[0]) ;
     assertEquals("StandardPSO2011Test.neighbourhoodMethodTest", 39, neighbours[1]) ;
     assertEquals("StandardPSO2011Test.neighbourhoodMethodTest", 0, neighbours[2]) ;
@@ -83,7 +83,7 @@ public class StandardPSO2011Test {
 
   @After
   public void tearDown() throws Exception {
-    problem_ = null;
-    standardPSO_ = null ;
+    problem = null;
+    standardPSO = null ;
   }
 }

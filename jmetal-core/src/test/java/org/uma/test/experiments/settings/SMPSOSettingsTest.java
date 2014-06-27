@@ -189,7 +189,7 @@ public class SMPSOSettingsTest {
   @Test
   public void testExecuteSMPSOWithConfigurationFile() throws JMException, ClassNotFoundException, IOException {
     Settings smpsoSettings = new SMPSO_Settings("Fonseca");
-    Algorithm algorithm = smpsoSettings.configure(configuration_) ;
+    Algorithm algorithm = smpsoSettings.configure(configuration) ;
     
     SolutionSet solutionSet = algorithm.execute() ;
     assertEquals("testExecuteSMPSO", 100, solutionSet.size());        

@@ -1,4 +1,4 @@
-//  NSGAIITest.java
+//  MOCHCTest.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -18,37 +18,32 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.test.metaheuristic.nsgaII;
+package org.uma.test.metaheuristic.mochc;
 
 import org.junit.Test;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.experiment.settings.NSGAIIBinaryRealSettings;
-import org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII;
+import org.uma.jmetal.experiment.settings.MOCHCSettings;
 
 import java.io.IOException;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Created by Antonio J. Nebro on 02/06/14.
+ * Created by Antonio J. Nebro on 27/06/14.
  */
-public class NSGAIIBinaryRealTest {
-  Algorithm algorithm_ ;
+public class MOCHCTest {
+  Algorithm algorithm ;
 
   @Test
   public void testNumberOfReturnedSolutionsInEasyProblem() throws IOException, ClassNotFoundException {
-    algorithm_ = new NSGAIIBinaryRealSettings("Kursawe").configure() ;
+    algorithm = new MOCHCSettings("ZDT5").configure() ;
 
-    SolutionSet solutionSet = algorithm_.execute() ;
+    SolutionSet solutionSet = algorithm.execute() ;
     /*
-    Rationale: the default problem is Kursawe, and usually NSGA-II; configured with standard
-    settings return 100 solutions
+      Rationale: the default problem is ZDT4, and usually MOCHC; configured with standard
+      settings should return more than 20 solutions
      */
-    int defaultMaxEvaluations = 25000 ;
-    assertTrue(solutionSet.size() >= 98) ;
-    assertEquals(defaultMaxEvaluations, ((NSGAII)algorithm_).getEvaluations());
+    assertTrue(solutionSet.size() >= 20) ;
   }
-
 }

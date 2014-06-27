@@ -84,6 +84,7 @@ public class MOCHCRunner {
 
     algorithm = new MOCHC.Builder(problem)
       .initialConvergenceCount(0.25)
+      .convergenceValue(3)
       .preservedPopulation(0.05)
       .populationSize(100)
       .maxEvaluations(25000)

@@ -18,7 +18,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.test.metaheuristic.singleObjective.particleswarmoptimization;
+package org.uma.test.metaheuristic.singleobjective.particleswarmoptimization;
 
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.metaheuristic.singleobjective.particleswarmoptimization.StandardPSO2007;
@@ -35,13 +35,13 @@ import static org.junit.Assert.assertEquals;
 public class StandardPSO2007Test {
 
   StandardPSO2007 standardPSO_ ;
-  Problem problem_ ;
+  Problem problem;
 
   @Before
   public void setUp() throws Exception {
-    problem_ = new Sphere("Real", 30) ;
+    problem = new Sphere("Real", 30) ;
     standardPSO_ = new StandardPSO2007() ;
-    standardPSO_.setProblem(problem_);
+    standardPSO_.setProblem(problem);
     standardPSO_.setInputParameter("swarmSize",40);
     standardPSO_.setInputParameter("maxIterations",5000);
     standardPSO_.setInputParameter("numberOfParticlesToInform",3);
@@ -64,21 +64,23 @@ public class StandardPSO2007Test {
 
   @Test
   public void defaultSwarmSizeTest() {
-    assertEquals("StandardPSO2007Test.defaultSwarmSizeTest", 20, 2 * (int)(2*Math.sqrt(problem_.getNumberOfVariables())));
+    assertEquals("StandardPSO2007Test.defaultSwarmSizeTest", 20, 2 * (int)(2*Math.sqrt(
+      problem.getNumberOfVariables())));
   }
 
 
   @Test
   public void neighborTest() {
+    //FIXME: to complete
     StandardPSO2007 newPSO = new StandardPSO2007() ;
-    standardPSO_.setProblem(problem_);
-    standardPSO_.setInputParameter("swarmSize",10);
-    standardPSO_.setInputParameter("numberOfParticlesToInform",3);
+    newPSO.setProblem(problem);
+    newPSO.setInputParameter("swarmSize",10);
+    newPSO.setInputParameter("numberOfParticlesToInform",3);
   }
 
   @After
   public void tearDown() throws Exception {
-    problem_ = null;
+    problem = null;
     standardPSO_ = null ;
   }
 }
