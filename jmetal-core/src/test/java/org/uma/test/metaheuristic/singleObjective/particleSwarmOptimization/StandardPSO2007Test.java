@@ -34,32 +34,32 @@ import static org.junit.Assert.assertEquals;
  */
 public class StandardPSO2007Test {
 
-  StandardPSO2007 standardPSO_ ;
+  StandardPSO2007 standardPSO;
   Problem problem;
 
   @Before
   public void setUp() throws Exception {
     problem = new Sphere("Real", 30) ;
-    standardPSO_ = new StandardPSO2007() ;
-    standardPSO_.setProblem(problem);
-    standardPSO_.setInputParameter("swarmSize",40);
-    standardPSO_.setInputParameter("maxIterations",5000);
-    standardPSO_.setInputParameter("numberOfParticlesToInform",3);
-    standardPSO_.initParams();
+    standardPSO = new StandardPSO2007() ;
+    standardPSO.setProblem(problem);
+    standardPSO.setInputParameter("swarmSize", 40);
+    standardPSO.setInputParameter("maxIterations", 5000);
+    standardPSO.setInputParameter("numberOfParticlesToInform", 3);
+    standardPSO.initParams();
   }
 
   @Test
   public void initParamsTest() {
-    assertEquals("StandardPSO2007Test.initParamsTest", 40, ((Integer) standardPSO_.getInputParameter("swarmSize")).intValue());
-    assertEquals("StandardPSO2007Test.initParamsTest", 5000, ((Integer) standardPSO_.getInputParameter("maxIterations")).intValue());
-    assertEquals("StandardPSO2007Test.initParamsTest", 3, ((Integer) standardPSO_.getInputParameter("numberOfParticlesToInform")).intValue());
+    assertEquals("StandardPSO2007Test.initParamsTest", 40, ((Integer) standardPSO.getInputParameter("swarmSize")).intValue());
+    assertEquals("StandardPSO2007Test.initParamsTest", 5000, ((Integer) standardPSO.getInputParameter("maxIterations")).intValue());
+    assertEquals("StandardPSO2007Test.initParamsTest", 3, ((Integer) standardPSO.getInputParameter("numberOfParticlesToInform")).intValue());
   }
 
   @Test
   public void valuesOfWAndCTest() {
     double offset = 0.001 ;
-    assertEquals("StandardPSO2007Test.valuesOfWAndCTest", 1.193, standardPSO_.getC(), offset);
-    assertEquals("StandardPSO2007Test.valuesOfWAndCTest", 0.721, standardPSO_.getW(), offset);
+    assertEquals("StandardPSO2007Test.valuesOfWAndCTest", 1.193, standardPSO.getC(), offset);
+    assertEquals("StandardPSO2007Test.valuesOfWAndCTest", 0.721, standardPSO.getW(), offset);
   }
 
   @Test
@@ -81,6 +81,6 @@ public class StandardPSO2007Test {
   @After
   public void tearDown() throws Exception {
     problem = null;
-    standardPSO_ = null ;
+    standardPSO = null ;
   }
 }

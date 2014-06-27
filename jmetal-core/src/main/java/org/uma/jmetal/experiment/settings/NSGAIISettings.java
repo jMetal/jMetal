@@ -42,12 +42,12 @@ import java.util.Properties;
  */
 public class NSGAIISettings extends Settings {
   private int populationSize_;
-  private int maxEvaluations_;
-  private double mutationProbability_;
-  private double crossoverProbability_;
-  private double mutationDistributionIndex_;
-  private double crossoverDistributionIndex_;
-  private SolutionSetEvaluator evaluator_ ;
+  private int maxEvaluations;
+  private double mutationProbability;
+  private double crossoverProbability;
+  private double mutationDistributionIndex;
+  private double crossoverDistributionIndex;
+  private SolutionSetEvaluator evaluator;
 
   /**
    * Constructor
@@ -62,12 +62,12 @@ public class NSGAIISettings extends Settings {
 
     // Default experiment.settings
     populationSize_ = 100;
-    maxEvaluations_ = 25000;
-    mutationProbability_ = 1.0 / problem_.getNumberOfVariables();
-    crossoverProbability_ = 0.9;
-    mutationDistributionIndex_ = 20.0;
-    crossoverDistributionIndex_ = 20.0;
-    evaluator_ = new SequentialSolutionSetEvaluator() ;
+    maxEvaluations = 25000;
+    mutationProbability = 1.0 / problem_.getNumberOfVariables();
+    crossoverProbability = 0.9;
+    mutationDistributionIndex = 20.0;
+    crossoverDistributionIndex = 20.0;
+    evaluator = new SequentialSolutionSetEvaluator() ;
   }
 
   /**
@@ -83,24 +83,24 @@ public class NSGAIISettings extends Settings {
     Mutation mutation;
 
     crossover = new SBXCrossover.Builder()
-      .distributionIndex(crossoverDistributionIndex_)
-      .probability(crossoverProbability_)
+      .distributionIndex(crossoverDistributionIndex)
+      .probability(crossoverProbability)
       .build() ;
 
     mutation = new PolynomialMutation.Builder()
-      .distributionIndex(mutationDistributionIndex_)
-      .probability(mutationProbability_)
+      .distributionIndex(mutationDistributionIndex)
+      .probability(mutationProbability)
       .build();
 
     selection = new BinaryTournament2.Builder()
       .build();
 
-    algorithm = new NSGAII.Builder(problem_, evaluator_)
+    algorithm = new NSGAII.Builder(problem_, evaluator)
       .crossover(crossover)
       .mutation(mutation)
       .selection(selection)
-      .maxEvaluations(25000)
-      .populationSize(100)
+      .maxEvaluations(maxEvaluations)
+      .populationSize(populationSize_)
       .build("NSGAII") ;
 
     return algorithm;
@@ -115,18 +115,18 @@ public class NSGAIISettings extends Settings {
   public Algorithm configure(Properties configuration) throws JMetalException {
     populationSize_ = Integer
       .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize_)));
-    maxEvaluations_ = Integer
-      .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations_)));
+    maxEvaluations = Integer
+      .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations)));
 
-    crossoverProbability_ = Double.parseDouble(
-      configuration.getProperty("crossoverProbability", String.valueOf(crossoverProbability_)));
-    crossoverDistributionIndex_ = Double.parseDouble(configuration
-      .getProperty("crossoverDistributionIndex", String.valueOf(crossoverDistributionIndex_)));
+    crossoverProbability = Double.parseDouble(
+      configuration.getProperty("crossoverProbability", String.valueOf(crossoverProbability)));
+    crossoverDistributionIndex = Double.parseDouble(configuration
+      .getProperty("crossoverDistributionIndex", String.valueOf(crossoverDistributionIndex)));
 
-    mutationProbability_ = Double.parseDouble(
-      configuration.getProperty("mutationProbability", String.valueOf(mutationProbability_)));
-    mutationDistributionIndex_ = Double.parseDouble(configuration
-      .getProperty("mutationDistributionIndex", String.valueOf(mutationDistributionIndex_)));
+    mutationProbability = Double.parseDouble(
+      configuration.getProperty("mutationProbability", String.valueOf(mutationProbability)));
+    mutationDistributionIndex = Double.parseDouble(configuration
+      .getProperty("mutationDistributionIndex", String.valueOf(mutationDistributionIndex)));
 
     return configure();
   }

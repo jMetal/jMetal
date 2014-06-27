@@ -64,6 +64,7 @@ public class NSGAII extends NSGAIITemplate {
     //readParameterSettings();
     createInitialPopulation();
     evaluatePopulation(population_);
+    evaluations_ += population_.size();
 
     // Main loop
     while (!stoppingCondition()) {
@@ -100,7 +101,7 @@ public class NSGAII extends NSGAIITemplate {
           addLastRankedSolutions(ranking, rankingIndex);
         }
       }
-    }    
+    }
 
     tearDown() ;
 

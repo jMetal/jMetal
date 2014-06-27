@@ -99,7 +99,7 @@ public abstract class NSGAIITemplate extends Algorithm {
   }
 
   protected boolean stoppingCondition() {
-    return evaluations_ == maxEvaluations_ ;
+    return evaluations_ >= maxEvaluations_ ;
   }
 
   protected Ranking rankPopulation() throws JMetalException {
