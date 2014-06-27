@@ -32,14 +32,15 @@ import java.util.HashMap;
  * random parents
  */
 public class RandomSelection extends Selection {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = -3975079865177120226L;
 
+  @Deprecated
   public RandomSelection(HashMap<String, Object> parameters) {
     super(parameters);
+  }
+
+  private RandomSelection(Builder builder) {
+    super(new HashMap<String, Object>()) ;
   }
 
   /**
@@ -49,6 +50,7 @@ public class RandomSelection extends Selection {
    * @return an object representing an array with the selected parents
    */
   public Object execute(Object object) {
+    //FIXME: checking arguments missing
     SolutionSet population = (SolutionSet) object;
     int pos1, pos2;
     pos1 = PseudoRandom.randInt(0, population.size() - 1);
@@ -62,5 +64,15 @@ public class RandomSelection extends Selection {
     parents[1] = population.get(pos2);
 
     return parents;
+  }
+
+  /*
+   * Builder
+   */
+  static public class Builder {
+
+     public RandomSelection build() {
+       return new RandomSelection(this) ;
+     }
   }
 }

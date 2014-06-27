@@ -60,6 +60,7 @@ public class BinaryTournament2 extends Selection {
    * Creates a new instance of the Binary tournament operator (Deb's
    * NSGA-II implementation version)
    */
+  @Deprecated
   public BinaryTournament2(HashMap<String, Object> parameters) {
     super(parameters);
     dominance_ = new DominanceComparator();

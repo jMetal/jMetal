@@ -22,7 +22,6 @@
 package org.uma.jmetal.operator.crossover;
 
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.core.SolutionType;
 import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.BinarySolutionType;
 import org.uma.jmetal.encoding.variable.Binary;
@@ -31,9 +30,7 @@ import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.logging.Level;
 
 /**
@@ -43,31 +40,27 @@ import java.util.logging.Level;
  * the type of the solutions must be Binary or BinaryReal
  */
 public class HUXCrossover extends Crossover {
+ private static final long serialVersionUID = -5600218276088232241L;
 
-  /**
-   *
-   */
-  private static final long serialVersionUID = -5600218276088232241L;
+  private double probability_ = 1.0;
 
-  /**
-   * Valid solutiontype types to apply this operator
-   */
-  private static final List<Class<? extends SolutionType>> VALID_TYPES =
-    Arrays.asList(BinarySolutionType.class,
-      BinaryRealSolutionType.class);
-
-  private Double probability_ = null;
-
-  /**
-   * Constructor
-   * Create a new instance of the HUX crossover operator.
-   */
+@Deprecated
   public HUXCrossover(HashMap<String, Object> parameters) {
     super(parameters);
+
+  addValidSolutionType(BinarySolutionType.class);
+  addValidSolutionType(BinaryRealSolutionType.class);
 
     if (parameters.get("probability") != null) {
       probability_ = (Double) parameters.get("probability");
     }
+  }
+
+  private HUXCrossover(Builder builder) {
+    addValidSolutionType(BinarySolutionType.class);
+    addValidSolutionType(BinaryRealSolutionType.class);
+
+    probability_ = builder.crossoverProbability_ ;
   }
 
   /**
@@ -132,37 +125,49 @@ public class HUXCrossover extends Crossover {
     Solution[] parents = (Solution[]) object;
 
     if (parents.length < 2) {
-      Configuration.logger_.severe("HUXCrossover.execute: operator needs two " +
-        "parents");
-      Class<String> cls = java.lang.String.class;
-      String name = cls.getName();
-      throw new JMetalException("Exception in " + name + ".execute()");
+      throw new JMetalException("HUXCrossover.execute: operator needs two parents");
     }
 
-    if (!(VALID_TYPES.contains(parents[0].getType().getClass()) &&
-      VALID_TYPES.contains(parents[1].getType().getClass()))) {
-
-      Configuration.logger_.severe("HUXCrossover.execute: the solutions " +
+    if (!solutionTypeIsValid(parents)) {
+      throw new JMetalException("HUXCrossover.execute: the solutions " +
         "are not of the right type. The type should be 'Binary' of " +
         "'BinaryReal', but " +
         parents[0].getType() + " and " +
         parents[1].getType() + " are obtained");
-
-      Class<String> cls = java.lang.String.class;
-      String name = cls.getName();
-      throw new JMetalException("Exception in " + name + ".execute()");
-
     }
 
-    Solution[] offSpring = doCrossover(probability_,
-      parents[0],
-      parents[1]);
+    Solution[] offSpring = doCrossover(probability_, parents[0], parents[1]);
 
-    for (Solution anOffSpring : offSpring) {
-      anOffSpring.setCrowdingDistance(0.0);
-      anOffSpring.setRank(0);
+    for (Solution solution : offSpring) {
+      solution.setCrowdingDistance(0.0);
+      solution.setRank(0);
     }
 
     return offSpring;
+  }
+
+  /**
+   * Builder class
+   */
+  public static class Builder {
+    private double crossoverProbability_ ;
+
+    public Builder() {
+      crossoverProbability_ = 1.0 ;
+    }
+
+    public Builder probability(double probability) {
+      if ((probability < 0) || (probability > 1.0)) {
+        throw new JMetalException("Probability value invalid: " + probability) ;
+      } else {
+        crossoverProbability_ = probability;
+      }
+
+      return this ;
+    }
+
+    public HUXCrossover build() {
+      return new HUXCrossover(this) ;
+    }
   }
 }

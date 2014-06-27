@@ -36,46 +36,43 @@ import java.util.HashMap;
 /**
  * This class implements a selection for selecting a number of solutions from
  * a solutionSet. The solutions are taken by mean of its ranking and
- * crowding ditance values.
+ * crowding distance values.
  * NOTE: if you use the default constructor, the problem has to be passed as
  * a parameter before invoking the execute() method -- see lines 67 - 74
  */
 public class RankingAndCrowdingSelection extends Selection {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = 3650068556668255844L;
-  /**
-   * stores a <code>Comparator</code> for crowding comparator checking.
-   */
-  private static final Comparator<Solution> crowdingComparator_ =
-    new CrowdingComparator();
-  /**
-   * stores a <code>Distance</code> object for distance utilities.
-   */
-  private static final Distance distance_ = new Distance();
-  /**
-   * stores the problem to solve
-   */
-  private Problem problem_ = null;
 
-  /**
-   * Constructor
-   */
+  private static final Comparator<Solution> crowdingComparator = new CrowdingComparator();
+  private static final Distance distance = new Distance();
+  private Problem problem = null;
+  private int populationSize = 0 ;
+
+  @Deprecated
   public RankingAndCrowdingSelection(HashMap<String, Object> parameters) {
     super(parameters);
 
     if (parameters.get("problem") != null) {
-      problem_ = (Problem) parameters.get("problem");
+      problem = (Problem) parameters.get("problem");
     }
 
-    if (problem_ == null) {
+    if (parameters.get("populationSize") != null) {
+      populationSize = (Integer) parameters.get("populationSize");
+    }
+
+    if (problem == null) {
       Configuration.logger_.severe("RankingAndCrowdingSelection.execute: " +
         "problem not specified");
       Class cls = java.lang.String.class;
       String name = cls.getName();
     }
+  }
+
+  private RankingAndCrowdingSelection(Builder builder) {
+    super(new HashMap<String, Object>()) ;
+
+    problem = builder.problem ;
+    populationSize = builder.populationSize ;
   }
 
   /**
@@ -87,7 +84,7 @@ public class RankingAndCrowdingSelection extends Selection {
    */
   public Object execute(Object object) throws JMetalException {
     SolutionSet population = (SolutionSet) object;
-    int populationSize = (Integer) parameters_.get("populationSize");
+    //int populationSize = (Integer) parameters_.get("populationSize");
     SolutionSet result = new SolutionSet(populationSize);
 
     // Ranking the union
@@ -103,11 +100,11 @@ public class RankingAndCrowdingSelection extends Selection {
 
     while ((remain > 0) && (remain >= front.size())) {
       //Assign crowding distance to individuals
-      distance_.crowdingDistanceAssignment(front, problem_.getNumberOfObjectives());
+      distance.crowdingDistanceAssignment(front, problem.getNumberOfObjectives());
       //Add the individuals of this front
       for (int k = 0; k < front.size(); k++) {
         result.add(front.get(k));
-      } // for
+      }
 
       //Decrement remain
       remain = remain - front.size();
@@ -121,8 +118,8 @@ public class RankingAndCrowdingSelection extends Selection {
 
     //remain is less than front(index).size, insert only the best one
     if (remain > 0) {
-      distance_.crowdingDistanceAssignment(front, problem_.getNumberOfObjectives());
-      front.sort(crowdingComparator_);
+      distance.crowdingDistanceAssignment(front, problem.getNumberOfObjectives());
+      front.sort(crowdingComparator);
       for (int k = 0; k < remain; k++) {
         result.add(front.get(k));
       }
@@ -131,5 +128,28 @@ public class RankingAndCrowdingSelection extends Selection {
     }
 
     return result;
+  }
+
+  /*
+   * Builder class
+   */
+  public static class Builder {
+    Problem problem ;
+    int populationSize ;
+
+    public Builder(Problem problem) {
+      this.problem = problem ;
+      this.populationSize = 0 ;
+    }
+
+    public Builder populationSize(int populationSize) {
+      this.populationSize = populationSize ;
+
+       return this ;
+    }
+
+    public RankingAndCrowdingSelection build() {
+      return new RankingAndCrowdingSelection(this) ;
+    }
   }
 }

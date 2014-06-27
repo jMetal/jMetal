@@ -22,19 +22,26 @@
 package org.uma.jmetal.runner.multiObjective;
 
 import org.uma.jmetal.core.Algorithm;
-import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.metaheuristic.multiobjective.mochc.MOCHC;
-import org.uma.jmetal.operator.crossover.CrossoverFactory;
-import org.uma.jmetal.operator.mutation.MutationFactory;
-import org.uma.jmetal.operator.selection.SelectionFactory;
+import org.uma.jmetal.operator.crossover.Crossover;
+import org.uma.jmetal.operator.crossover.HUXCrossover;
+import org.uma.jmetal.operator.mutation.BitFlipMutation;
+import org.uma.jmetal.operator.mutation.Mutation;
+import org.uma.jmetal.operator.selection.RandomSelection;
+import org.uma.jmetal.operator.selection.RankingAndCrowdingSelection;
+import org.uma.jmetal.operator.selection.Selection;
 import org.uma.jmetal.problem.ZDT.ZDT5;
+import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
+import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
 
 /**
  * This class executes the algorithm described in:
@@ -44,57 +51,62 @@ import java.util.HashMap;
  * evolutionary computation. London, England. July 2007.
  */
 public class MOCHCRunner {
+  private static Logger logger_;
+  private static FileHandler fileHandler_;
 
   public static void main(String[] args) throws IOException, JMetalException, ClassNotFoundException {
+    Crossover crossoverOperator;
+    Mutation mutationOperator;
+    Selection parentsSelection;
+    Selection newGenerationSelection;
+    Algorithm algorithm ;
+
+    logger_ = Configuration.logger_;
+    fileHandler_ = new FileHandler("NSGAII_main.log");
+    logger_.addHandler(fileHandler_);
+
     Problem problem = new ZDT5("Binary");
 
-    Algorithm algorithm = null;
-    algorithm = new MOCHC();
-    algorithm.setProblem(problem);
+    crossoverOperator = new HUXCrossover.Builder()
+      .probability(1.0)
+      .build() ;
 
-    algorithm.setInputParameter("initialConvergenceCount", 0.25);
-    algorithm.setInputParameter("preservedPopulation", 0.05);
-    algorithm.setInputParameter("convergenceValue", 3);
-    algorithm.setInputParameter("populationSize", 100);
-    algorithm.setInputParameter("maxEvaluations", 25000);
+    parentsSelection = new RandomSelection.Builder()
+      .build() ;
 
-    Operator crossoverOperator;
-    Operator mutationOperator;
-    Operator parentsSelection;
-    Operator newGenerationSelection;
+    newGenerationSelection = new RankingAndCrowdingSelection.Builder(problem)
+      .populationSize(100)
+      .build() ;
 
-    // Crossover operator
-    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
-    crossoverParameters.put("probability", 1.0);
-    crossoverOperator = CrossoverFactory.getCrossoverOperator("HUXCrossover", crossoverParameters);
+    mutationOperator = new BitFlipMutation.Builder()
+      .probability(0.35)
+      .build() ;
 
-    HashMap<String, Object> selectionParameters = null; // FIXME: why we are passing null?
-    parentsSelection =
-      SelectionFactory.getSelectionOperator("RandomSelection", selectionParameters);
+    algorithm = new MOCHC.Builder(problem)
+      .initialConvergenceCount(0.25)
+      .preservedPopulation(0.05)
+      .populationSize(100)
+      .maxEvaluations(25000)
+      .crossover(crossoverOperator)
+      .newGenerationSelection(newGenerationSelection)
+      .cataclysmicMutation(mutationOperator)
+      .parentSelection(parentsSelection)
+      .build() ;
 
-    HashMap<String, Object> newSelectionParameters = new HashMap<String, Object>();
-    newSelectionParameters.put("problem", problem);
-    newGenerationSelection =
-      SelectionFactory.getSelectionOperator("RankingAndCrowdingSelection", newSelectionParameters);
+    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+      .execute() ;
 
-    // Mutation operator
-    HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
-    mutationParameters.put("probability", 0.35);
-    mutationOperator = MutationFactory.getMutationOperator("BitFlipMutation", mutationParameters);
+    SolutionSet population = algorithmRunner.getSolutionSet() ;
+    long computingTime = algorithmRunner.getComputingTime() ;
 
-    algorithm.addOperator("crossover", crossoverOperator);
-    algorithm.addOperator("cataclysmicMutation", mutationOperator);
-    algorithm.addOperator("parentSelection", parentsSelection);
-    algorithm.addOperator("newGenerationSelection", newGenerationSelection);
+    new SolutionSetOutput.Printer(population)
+      .separator("\t")
+      .varFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+      .funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+      .print();
 
-    // Execute the Algorithm
-    long initTime = System.currentTimeMillis();
-    SolutionSet population = algorithm.execute();
-    long estimatedTime = System.currentTimeMillis() - initTime;
-    Configuration.logger_.info("Total execution time: " + estimatedTime);
-
-    // Print results
-    population.printVariablesToFile("VAR");
-    population.printObjectivesToFile("FUN");
+    logger_.info("Total execution time: " + computingTime + "ms");
+    logger_.info("Objectives values have been written to file FUN.tsv");
+    logger_.info("Variables values have been written to file VAR.tsv");
   }
 }

@@ -23,9 +23,13 @@ package org.uma.jmetal.metaheuristic.multiobjective.mochc;
 
 import org.uma.jmetal.core.*;
 import org.uma.jmetal.encoding.variable.Binary;
+import org.uma.jmetal.operator.crossover.Crossover;
+import org.uma.jmetal.operator.mutation.Mutation;
+import org.uma.jmetal.operator.selection.Selection;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.archive.CrowdingArchive;
 import org.uma.jmetal.util.comparator.CrowdingComparator;
+import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
 
 import java.util.Comparator;
 
@@ -37,18 +41,35 @@ import java.util.Comparator;
  * evolutionary computation. London, England. July 2007.
  */
 public class MOCHC extends Algorithm {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = -2880293437154543456L;
 
-  /**
-   * Constructor
-   * Creates a new instance of MOCHC
-   */
+  int populationSize ;
+  int maxEvaluations ;
+  int convergenceValue ;
+  double preservedPopulation ;
+  double initialConvergenceCount ;
+  Crossover crossover ;
+  Mutation cataclysmicMutation ;
+  Selection newGenerationSelection ;
+  Selection parentSelection ;
+
+  @Deprecated
   public MOCHC() {
     super();
+  }
+
+  private MOCHC(Builder builder) {
+    super() ;
+    this.problem_ = builder.problem ;
+    this.populationSize = builder.populationSize ;
+    this.maxEvaluations = builder.maxEvaluations ;
+    this.convergenceValue = builder.convergenceValue ;
+    this.preservedPopulation = builder.preservedPopulation ;
+    this.initialConvergenceCount = builder.initialConvergenceCount ;
+    this.crossover = builder.crossover ;
+    this.cataclysmicMutation = builder.cataclysmicMutation ;
+    this.newGenerationSelection = builder.newGenerationSelection ;
+    this.parentSelection = builder.parentSelection ;
   }
 
   /**
@@ -104,24 +125,29 @@ public class MOCHC extends Algorithm {
    */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     int iterations;
+    /*
     int populationSize;
     int convergenceValue;
     int maxEvaluations;
+    */
     int minimumDistance;
     int evaluations;
 
     Comparator crowdingComparator = new CrowdingComparator();
-
+     /*
     Operator crossover;
     Operator parentSelection;
     Operator newGenerationSelection;
     Operator cataclysmicMutation;
 
     double preservedPopulation;
+
     double initialConvergenceCount;
+    */
     boolean condition = false;
     SolutionSet solutionSet, offspringPopulation, newPopulation;
 
+    /*
     // Read parameters
     initialConvergenceCount =
       (Double) getInputParameter("initialConvergenceCount");
@@ -139,7 +165,7 @@ public class MOCHC extends Algorithm {
     cataclysmicMutation = (Operator) getOperator("cataclysmicMutation");
     parentSelection = (Operator) getOperator("parentSelection");
     newGenerationSelection = (Operator) getOperator("newGenerationSelection");
-
+     */
     iterations = 0;
     evaluations = 0;
 
@@ -218,5 +244,86 @@ public class MOCHC extends Algorithm {
     }
 
     return archive;
+  }
+
+  /*
+   * Builder
+   */
+  static public class Builder {
+    Problem problem ;
+    SolutionSetEvaluator evaluator ;
+    int populationSize ;
+    int maxEvaluations ;
+    int convergenceValue ;
+    double preservedPopulation ;
+    double initialConvergenceCount ;
+    Crossover crossover ;
+    Mutation cataclysmicMutation;
+    Selection parentSelection ;
+    Selection newGenerationSelection ;
+
+    public Builder(Problem problem) {
+      this.problem = problem ;
+    }
+
+    public Builder populationSize(int populationSize) {
+      this.populationSize = populationSize ;
+
+      return this ;
+    }
+
+    public Builder maxEvaluations(int maxEvaluations) {
+      this.maxEvaluations = maxEvaluations ;
+
+      return this ;
+    }
+
+    public Builder convergenceValue(int convergenceValue) {
+      this.convergenceValue = convergenceValue ;
+
+      return this ;
+    }
+
+    public Builder initialConvergenceCount(double initialConvergenceCount) {
+      this.initialConvergenceCount = initialConvergenceCount ;
+
+      return this ;
+    }
+
+    public Builder preservedPopulation(double preservedPopulation) {
+      this.preservedPopulation = preservedPopulation ;
+
+      return this ;
+    }
+
+    public Builder crossover(Crossover crossover) {
+      this.crossover = crossover ;
+
+      return this ;
+    }
+
+    public Builder cataclysmicMutation(Mutation cataclysmicMutation) {
+      this.cataclysmicMutation = cataclysmicMutation ;
+
+      return this ;
+    }
+
+    public Builder parentSelection(Selection parentSelection) {
+      this.parentSelection = parentSelection ;
+
+      return this ;
+    }
+
+    public Builder newGenerationSelection(Selection newGenerationSelection) {
+      this.newGenerationSelection = newGenerationSelection ;
+
+      return this ;
+    }
+
+    public MOCHC build() {
+      MOCHC algorithm =  new MOCHC(this) ;
+
+      return algorithm ;
+    }
   }
 }
