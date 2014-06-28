@@ -18,7 +18,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.runner.multiObjective;
+package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Problem;
@@ -64,9 +64,9 @@ public class SMPSORunner {
    * @throws org.uma.jmetal.util.JMetalException
    * @throws java.io.IOException
    * @throws SecurityException       Usage: three options
-   *                                 - org.uma.jmetal.runner.multiObjective.SMPSORunner
-   *                                 - org.uma.jmetal.runner.multiObjective.SMPSORunner problemName
-   *                                 - org.uma.jmetal.runner.multiObjective.SMPSORunner problemName ParetoFrontFile
+   *                                 - org.uma.jmetal.runner.multiobjective.SMPSORunner
+   *                                 - org.uma.jmetal.runner.multiobjective.SMPSORunner problemName
+   *                                 - org.uma.jmetal.runner.multiobjective.SMPSORunner problemName ParetoFrontFile
    */
   public static void main(String[] args) throws JMetalException, IOException, ClassNotFoundException {
     Problem problem;

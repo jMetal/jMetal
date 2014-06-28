@@ -52,7 +52,7 @@ public class cMOEAD extends Algorithm {
   /**
    * Lambda vectors
    */
-  //Vector<Vector<Double>> lambda_ ;
+  //Vector<Vector<Double>> lambda ;
   double[][] lambda_;
   /**
    * T: neighbour size
@@ -92,7 +92,6 @@ public class cMOEAD extends Algorithm {
   /**
    * Constructor
    *
-   * @param problem Problem to solve
    */
   public cMOEAD() {
     super();
@@ -118,19 +117,19 @@ public class cMOEAD extends Algorithm {
     delta_ = (Double) this.getInputParameter("delta");
 
     /*
-    t_ = 20;
-    delta_ = 0.9;
-    nr_ = 2;
+    neighborSize = 20;
+    neighborhoodSelectionProbability = 0.9;
+    maximumNumberOfReplacedSolutions = 2;
      */
     /*
-    t_ = (int) (0.1 * populationSize_);
-    delta_ = 0.9;
-    nr_ = (int) (0.01 * populationSize_);
+    neighborSize = (int) (0.1 * populationSize_);
+    neighborhoodSelectionProbability = 0.9;
+    maximumNumberOfReplacedSolutions = (int) (0.01 * populationSize_);
      */
     neighborhood_ = new int[populationSize_][T_];
 
     z_ = new double[problem_.getNumberOfObjectives()];
-    //lambda_ = new Vector(problem_.getNumberOfObjectives()) ;
+    //lambda = new Vector(problem_.getNumberOfObjectives()) ;
     lambda_ = new double[populationSize_][problem_.getNumberOfObjectives()];
 
     crossover_ = operators_.get("crossover");
@@ -146,7 +145,7 @@ public class cMOEAD extends Algorithm {
     initPopulation();
     ((ViolationThresholdComparator) this.comparator).updateThreshold(this.population_);
 
-    // STEP 1.3. Initialize z_
+    // STEP 1.3. Initialize idealPoint
     initIdealPoint();
 
     // STEP 2. Update
@@ -193,7 +192,7 @@ public class cMOEAD extends Algorithm {
 
         // STEP 2.3. Repair. Not necessary
 
-        // STEP 2.4. Update z_
+        // STEP 2.4. Update idealPoint
         updateReference(child);
 
         // STEP 2.5. Update of solutions

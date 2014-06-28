@@ -104,14 +104,14 @@ public class MOEADSettings extends Settings {
     algorithm.setInputParameter("populationSize", populationSize_);
     algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
     algorithm.setInputParameter("dataDirectory", dataDirectory_);
-    algorithm.setInputParameter("T", t_);
+    algorithm.setInputParameter("t", t_);
     algorithm.setInputParameter("delta", delta_);
     algorithm.setInputParameter("nr", nr_);
 
     // Crossover operator 
     HashMap<String, Object> parameters = new HashMap<String, Object>();
-    parameters.put("CR", cr_);
-    parameters.put("F", f_);
+    parameters.put("cr", cr_);
+    parameters.put("f", f_);
     crossover = CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", parameters);
 
     // Mutation operator
@@ -142,8 +142,8 @@ public class MOEADSettings extends Settings {
     t_ = Integer.parseInt(configuration.getProperty("T", String.valueOf(t_)));
     nr_ = Integer.parseInt(configuration.getProperty("nr", String.valueOf(nr_)));
 
-    cr_ = Double.parseDouble(configuration.getProperty("CR", String.valueOf(cr_)));
-    f_ = Double.parseDouble(configuration.getProperty("F", String.valueOf(f_)));
+    cr_ = Double.parseDouble(configuration.getProperty("cr", String.valueOf(cr_)));
+    f_ = Double.parseDouble(configuration.getProperty("f", String.valueOf(f_)));
 
     mutationProbability_ = Double.parseDouble(
       configuration.getProperty("mutationProbability", String.valueOf(mutationProbability_)));

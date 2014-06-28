@@ -19,7 +19,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.runner.multiObjective;
+package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
@@ -47,8 +47,8 @@ import java.util.logging.Logger;
  * pp 284-302, April/2009.
  */
 public class MOEADRunner {
-  public static Logger logger_;      
-  public static FileHandler fileHandler_; 
+  public static Logger logger_;
+  public static FileHandler fileHandler_;
 
   /**
    * @param args Command line arguments. The first (optional) argument specifies
@@ -83,7 +83,7 @@ public class MOEADRunner {
       Object[] params = {"Real"};
       problem = (new ProblemFactory()).getProblem(args[0], params);
       indicators = new QualityIndicator(problem, args[1]);
-    } else { 
+    } else {
       problem = new Kursawe("Real", 3);
       //problem = new Kursawe("BinaryReal", 3);
       //problem = new Water("Real");
@@ -91,8 +91,8 @@ public class MOEADRunner {
       //problem = new ConstrEx("Real");
       //problem = new DTLZ1("Real");
       //problem = new OKA2("Real") ;
-    } 
-    
+    }
+
     algorithm = new MOEAD();
     algorithm.setProblem(problem);
     //algorithm = new MOEAD_DRA(problem);

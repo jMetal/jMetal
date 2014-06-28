@@ -26,7 +26,7 @@
  *   to obtained the convergence speed of the algorithm.
  *
  */
-package org.uma.jmetal.runner.multiObjective;
+package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;

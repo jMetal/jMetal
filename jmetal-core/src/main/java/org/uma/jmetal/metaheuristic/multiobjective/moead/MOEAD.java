@@ -34,82 +34,70 @@ import java.util.Vector;
 import java.util.logging.Level;
 
 public class MOEAD extends Algorithm {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = -8602634334286344579L;
-  /**
-   * Z vector (ideal point)
-   */
-  double[] z_;
-  /**
-   * Lambda vectors
-   */
-  double[][] lambda_;
-  /**
-   * T: neighbour size
-   */
-  int t_;
-  /**
-   * Neighborhood
-   */
-  int[][] neighborhood_;
-  /**
-   * delta: probability that parent solutions are selected from neighbourhood
-   */
-  double delta_;
-  /**
-   * nr: maximal number of solutions replaced by each child solutiontype
-   */
-  int nr_;
-  Solution[] indArray_;
-  String functionType_;
-  int evaluations_;
-  /**
-   * Operators
-   */
-  Operator crossover_;
-  Operator mutation_;
-  String dataDirectory_;
 
-  private SolutionSet population_;
-  private int populationSize_;
+  /** Z vector in Zhang & Li paper */
+  private double[] idealPoint;
+  /** Lambda vectors */
+  private double[][] lambda;
+  /** T in Zhang & Li paper */
+  private int neighborSize;
+  private int[][] neighborhood;
+  /** Delta inin Zhang & Li paper */
+  private double neighborhoodSelectionProbability;
+  /** nr in Zhang & Li paper */
+  private int maximumNumberOfReplacedSolutions;
 
+  private Solution[] indArray_;
+  private String functionType;
+
+  private Operator crossover;
+  private Operator mutation;
+  private String dataDirectory;
+
+  private SolutionSet population;
+  private int populationSize;
+
+  private int evaluations_;
+  private int maxEvaluations;
+
+  @Deprecated
   public MOEAD() {
     super();
 
-    functionType_ = "_TCHE1";
-  } 
+    functionType = "_TCHE1";
+  }
+
+  private MOEAD(Builder build) {
+    evaluations_ = 0 ;
+  }
 
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
-    int maxEvaluations;
-
     evaluations_ = 0;
     maxEvaluations = (Integer) this.getInputParameter("maxEvaluations");
-    populationSize_ = (Integer) this.getInputParameter("populationSize");
-    dataDirectory_ = this.getInputParameter("dataDirectory").toString();
-    Configuration.logger_.info("POPSIZE: " + populationSize_);
+    populationSize = (Integer) this.getInputParameter("populationSize");
+    dataDirectory = this.getInputParameter("dataDirectory").toString();
+    Configuration.logger_.info("POPSIZE: " + populationSize);
 
-    population_ = new SolutionSet(populationSize_);
+    population = new SolutionSet(populationSize);
     indArray_ = new Solution[problem_.getNumberOfObjectives()];
 
-    t_ = (Integer) this.getInputParameter("T");
-    nr_ = (Integer) this.getInputParameter("nr");
-    delta_ = (Double) this.getInputParameter("delta");
+    neighborSize = (Integer) this.getInputParameter("t");
+    maximumNumberOfReplacedSolutions = (Integer) this.getInputParameter("nr");
+    neighborhoodSelectionProbability = (Double) this.getInputParameter("delta");
 
     /*
-    t_ = (int) (0.1 * populationSize_);
-    delta_ = 0.9;
-    nr_ = (int) (0.01 * populationSize_);
+    neighborSize = (int) (0.1 * populationSize);
+    neighborhoodSelectionProbability = 0.9;
+    maximumNumberOfReplacedSolutions = (int) (0.01 * populationSize);
      */
-    neighborhood_ = new int[populationSize_][t_];
+    neighborhood = new int[populationSize][neighborSize];
 
-    z_ = new double[problem_.getNumberOfObjectives()];
-    lambda_ = new double[populationSize_][problem_.getNumberOfObjectives()];
+    idealPoint = new double[problem_.getNumberOfObjectives()];
+    lambda = new double[populationSize][problem_.getNumberOfObjectives()];
 
-    crossover_ = operators_.get("crossover");
-    mutation_ = operators_.get("mutation");
+    crossover = operators_.get("crossover");
+    mutation = operators_.get("mutation");
 
     // STEP 1. Initialization
     // STEP 1.1. Compute euclidean distances between weight vectors and find T
@@ -120,22 +108,22 @@ public class MOEAD extends Algorithm {
     // STEP 1.2. Initialize population
     initPopulation();
 
-    // STEP 1.3. Initialize z_
+    // STEP 1.3. Initialize idealPoint
     initIdealPoint();
 
     // STEP 2. Update
     do {
-      int[] permutation = new int[populationSize_];
-      Utils.randomPermutation(permutation, populationSize_);
+      int[] permutation = new int[populationSize];
+      Utils.randomPermutation(permutation, populationSize);
 
-      for (int i = 0; i < populationSize_; i++) {
+      for (int i = 0; i < populationSize; i++) {
         int n = permutation[i];
 
         int type;
         double rnd = PseudoRandom.randDouble();
 
         // STEP 2.1. Mating selection based on probability
-        if (rnd < delta_)
+        if (rnd < neighborhoodSelectionProbability)
         {
           type = 1;
         } else {
@@ -148,15 +136,15 @@ public class MOEAD extends Algorithm {
         Solution child;
         Solution[] parents = new Solution[3];
 
-        parents[0] = population_.get(p.get(0));
-        parents[1] = population_.get(p.get(1));
-        parents[2] = population_.get(n);
+        parents[0] = population.get(p.get(0));
+        parents[1] = population.get(p.get(1));
+        parents[2] = population.get(n);
 
         // Apply DE crossover 
-        child = (Solution) crossover_.execute(new Object[] {population_.get(n), parents});
+        child = (Solution) crossover.execute(new Object[] {population.get(n), parents});
 
         // Apply mutation
-        mutation_.execute(child);
+        mutation.execute(child);
 
         // Evaluation
         problem_.evaluate(child);
@@ -165,7 +153,7 @@ public class MOEAD extends Algorithm {
 
         // STEP 2.3. Repair. Not necessary
 
-        // STEP 2.4. Update z_
+        // STEP 2.4. Update idealPoint
         updateReference(child);
 
         // STEP 2.5. Update of solutions
@@ -173,7 +161,7 @@ public class MOEAD extends Algorithm {
       }
     } while (evaluations_ < maxEvaluations);
 
-    return population_;
+    return population;
   }
 
 
@@ -181,22 +169,22 @@ public class MOEAD extends Algorithm {
    * initUniformWeight
    */
   public void initUniformWeight() {
-    if ((problem_.getNumberOfObjectives() == 2) && (populationSize_ <= 300)) {
-      for (int n = 0; n < populationSize_; n++) {
-        double a = 1.0 * n / (populationSize_ - 1);
-        lambda_[n][0] = a;
-        lambda_[n][1] = 1 - a;
+    if ((problem_.getNumberOfObjectives() == 2) && (populationSize <= 300)) {
+      for (int n = 0; n < populationSize; n++) {
+        double a = 1.0 * n / (populationSize - 1);
+        lambda[n][0] = a;
+        lambda[n][1] = 1 - a;
       }
     } else {
       String dataFileName;
       dataFileName = "W" + problem_.getNumberOfObjectives() + "D_" +
-          populationSize_ + ".dat";
+        populationSize + ".dat";
 
       try {
         // Open the file from the resources directory
         FileInputStream fis =
             new FileInputStream(
-                this.getClass().getClassLoader().getResource(dataDirectory_ + "/" + dataFileName)
+                this.getClass().getClassLoader().getResource(dataDirectory + "/" + dataFileName)
                 .getPath());
         InputStreamReader isr = new InputStreamReader(fis);
         BufferedReader br = new BufferedReader(isr);
@@ -211,7 +199,7 @@ public class MOEAD extends Algorithm {
           numberOfObjectives = st.countTokens();
           while (st.hasMoreTokens()) {
             double value = new Double(st.nextToken());
-            lambda_[i][j] = value;
+            lambda[i][j] = value;
             j++;
           }
           aux = br.readLine();
@@ -221,7 +209,7 @@ public class MOEAD extends Algorithm {
       } catch (Exception e) {
         Configuration.logger_.log(
             Level.SEVERE,
-            "initUniformWeight: failed when reading for file: " + dataDirectory_ + "/" + dataFileName,
+            "initUniformWeight: failed when reading for file: " + dataDirectory + "/" + dataFileName,
             e);
       }
     }
@@ -231,20 +219,20 @@ public class MOEAD extends Algorithm {
    *
    */
   public void initNeighborhood() {
-    double[] x = new double[populationSize_];
-    int[] idx = new int[populationSize_];
+    double[] x = new double[populationSize];
+    int[] idx = new int[populationSize];
 
-    for (int i = 0; i < populationSize_; i++) {
+    for (int i = 0; i < populationSize; i++) {
       // calculate the distances based on weight vectors
-      for (int j = 0; j < populationSize_; j++) {
-        x[j] = Utils.distVector(lambda_[i], lambda_[j]);
+      for (int j = 0; j < populationSize; j++) {
+        x[j] = Utils.distVector(lambda[i], lambda[j]);
         idx[j] = j;
       }
 
       // find 'niche' nearest neighboring subproblems
-      Utils.minFastSort(x, idx, populationSize_, t_);
+      Utils.minFastSort(x, idx, populationSize, neighborSize);
 
-      System.arraycopy(idx, 0, neighborhood_[i], 0, t_);
+      System.arraycopy(idx, 0, neighborhood[i], 0, neighborSize);
     }
   }
 
@@ -252,12 +240,12 @@ public class MOEAD extends Algorithm {
    *
    */
   public void initPopulation() throws JMetalException, ClassNotFoundException {
-    for (int i = 0; i < populationSize_; i++) {
+    for (int i = 0; i < populationSize; i++) {
       Solution newSolution = new Solution(problem_);
 
       problem_.evaluate(newSolution);
       evaluations_++;
-      population_.add(newSolution);
+      population.add(newSolution);
     }
   }
 
@@ -266,14 +254,14 @@ public class MOEAD extends Algorithm {
    */
   void initIdealPoint() throws JMetalException, ClassNotFoundException {
     for (int i = 0; i < problem_.getNumberOfObjectives(); i++) {
-      z_[i] = 1.0e+30;
+      idealPoint[i] = 1.0e+30;
       indArray_[i] = new Solution(problem_);
       problem_.evaluate(indArray_[i]);
       evaluations_++;
     }
 
-    for (int i = 0; i < populationSize_; i++) {
-      updateReference(population_.get(i));
+    for (int i = 0; i < populationSize; i++) {
+      updateReference(population.get(i));
     }
   }
 
@@ -289,13 +277,13 @@ public class MOEAD extends Algorithm {
     int r;
     int p;
 
-    ss = neighborhood_[cid].length;
+    ss = neighborhood[cid].length;
     while (list.size() < size) {
       if (type == 1) {
         r = PseudoRandom.randInt(0, ss - 1);
-        p = neighborhood_[cid][r];
+        p = neighborhood[cid][r];
       } else {
-        p = PseudoRandom.randInt(0, populationSize_ - 1);
+        p = PseudoRandom.randInt(0, populationSize - 1);
       }
       boolean flag = true;
       for (Integer aList : list) {
@@ -317,8 +305,8 @@ public class MOEAD extends Algorithm {
    */
   void updateReference(Solution individual) {
     for (int n = 0; n < problem_.getNumberOfObjectives(); n++) {
-      if (individual.getObjective(n) < z_[n]) {
-        z_[n] = individual.getObjective(n);
+      if (individual.getObjective(n) < idealPoint[n]) {
+        idealPoint[n] = individual.getObjective(n);
 
         indArray_[n] = individual;
       }
@@ -340,9 +328,9 @@ public class MOEAD extends Algorithm {
     time = 0;
 
     if (type == 1) {
-      size = neighborhood_[id].length;
+      size = neighborhood[id].length;
     } else {
-      size = population_.size();
+      size = population.size();
     }
     int[] perm = new int[size];
 
@@ -351,21 +339,21 @@ public class MOEAD extends Algorithm {
     for (int i = 0; i < size; i++) {
       int k;
       if (type == 1) {
-        k = neighborhood_[id][perm[i]];
+        k = neighborhood[id][perm[i]];
       } else {
         k = perm[i];
       }
       double f1, f2;
 
-      f1 = fitnessFunction(population_.get(k), lambda_[k]);
-      f2 = fitnessFunction(individual, lambda_[k]);
+      f1 = fitnessFunction(population.get(k), lambda[k]);
+      f2 = fitnessFunction(individual, lambda[k]);
 
       if (f2 < f1) {
-        population_.replace(k, new Solution(individual));
+        population.replace(k, new Solution(individual));
         time++;
       }
       // the maximal number of solutions updated is not allowed to exceed 'limit'
-      if (time >= nr_) {
+      if (time >= maximumNumberOfReplacedSolutions) {
         return;
       }
     }
@@ -373,13 +361,12 @@ public class MOEAD extends Algorithm {
 
   double fitnessFunction(Solution individual, double[] lambda) throws JMetalException {
     double fitness;
-    fitness = 0.0;
 
-    if ("_TCHE1".equals(functionType_)) {
+    if ("_TCHE1".equals(functionType)) {
       double maxFun = -1.0e+30;
 
       for (int n = 0; n < problem_.getNumberOfObjectives(); n++) {
-        double diff = Math.abs(individual.getObjective(n) - z_[n]);
+        double diff = Math.abs(individual.getObjective(n) - idealPoint[n]);
 
         double feval;
         if (lambda[n] == 0) {
@@ -395,9 +382,51 @@ public class MOEAD extends Algorithm {
       fitness = maxFun;
     }
     else {
-      throw new JMetalException(" MOEAD.fitnessFunction: unknown type " + functionType_);
+      throw new JMetalException(" MOEAD.fitnessFunction: unknown type " + functionType);
     }
     return fitness;
+  }
+
+  /** Builder class */
+  public static class Builder {
+    private int neighborSize;
+    private double neighborhoodSelectionProbability;
+    private int maximumNumberOfReplacedSolutions;
+    private String functionType ;
+    private Operator crossover ;
+    private Operator mutation ;
+
+    public Builder() {
+      functionType = "_TCHE1";
+    }
+
+    public Builder neighborSize(int neighborSize) {
+      this.neighborSize = neighborSize ;
+
+      return this ;
+    }
+
+    public Builder neighborhoodSelectionProbability(int neighborhoodSelectionProbability) {
+      this.neighborhoodSelectionProbability = neighborhoodSelectionProbability ;
+
+      return this ;
+    }
+
+    public Builder functionType(String functionType) {
+      this.functionType = functionType ;
+
+      return this ;
+    }
+
+    public Builder maximumNumberOfReplacedSolutions(int maximumNumberOfReplacedSolutions) {
+      this.maximumNumberOfReplacedSolutions = maximumNumberOfReplacedSolutions ;
+
+      return this ;
+    }
+
+    public MOEAD build() {
+      return new MOEAD(this) ;
+    }
   }
 }
 

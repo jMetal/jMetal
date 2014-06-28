@@ -92,7 +92,6 @@ public class MOEAD_DRA extends Algorithm {
   /**
    * Constructor
    *
-   * @param problem Problem to solve
    */
   public MOEAD_DRA() {
     super();
@@ -138,7 +137,7 @@ public class MOEAD_DRA extends Algorithm {
     // STEP 1.2. Initialize population
     initPopulation();
 
-    // STEP 1.3. Initialize z_
+    // STEP 1.3. Initialize idealPoint
     initIdealPoint();
 
     int gen = 0;
@@ -185,7 +184,7 @@ public class MOEAD_DRA extends Algorithm {
 
         // STEP 2.3. Repair. Not necessary
 
-        // STEP 2.4. Update z_
+        // STEP 2.4. Update idealPoint
         updateReference(child);
 
         // STEP 2.5. Update of solutions

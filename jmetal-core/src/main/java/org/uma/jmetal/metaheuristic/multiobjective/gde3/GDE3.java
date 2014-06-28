@@ -238,7 +238,7 @@ public class GDE3 extends Algorithm {
   }
 
   /**
-   * Builder inner static class
+   * Builder class
    */
   public static class Builder {
     protected SolutionSetEvaluator evaluator_ ;

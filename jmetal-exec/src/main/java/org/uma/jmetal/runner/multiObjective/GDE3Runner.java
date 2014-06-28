@@ -17,7 +17,7 @@
 // 
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-package org.uma.jmetal.runner.multiObjective;
+package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
@@ -53,9 +53,9 @@ public class GDE3Runner {
    * @throws org.uma.jmetal.util.JMetalException
    * @throws java.io.IOException
    * @throws SecurityException Usage: three choices
-   *                           - org.uma.jmetal.runner.multiObjective.GDE3Runner
-   *                           - org.uma.jmetal.runner.multiObjective.GDE3Runner problemName
-   *                           - org.uma.jmetal.runner.multiObjective.GDE3Runner problemName paretoFrontFile
+   *                           - org.uma.jmetal.runner.multiobjective.GDE3Runner
+   *                           - org.uma.jmetal.runner.multiobjective.GDE3Runner problemName
+   *                           - org.uma.jmetal.runner.multiobjective.GDE3Runner problemName paretoFrontFile
    */
   public static void main(String[] args)
     throws JMetalException, SecurityException, IOException, ClassNotFoundException {
