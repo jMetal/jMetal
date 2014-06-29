@@ -37,13 +37,13 @@ public class PAESTest {
 
     @Test
     public void testNumberOfReturnedSolutionsInEasyProblem() throws IOException, ClassNotFoundException {
-      algorithm = new PAESSettings("Kursawe").configure() ;
+      algorithm = new PAESSettings("Fonseca").configure() ;
 
       SolutionSet solutionSet = algorithm.execute() ;
     /*
-      Rationale: the default problem is Kursawe, and usually PAES; configured with standard
+      Rationale: the default problem is Fonseca, and usually PAES; configured with standard
       settings should return 100 solutions
      */
-      assertTrue(solutionSet.size() >= 98) ;
+      assertTrue(solutionSet.size() >= 90) ;
     }
 }

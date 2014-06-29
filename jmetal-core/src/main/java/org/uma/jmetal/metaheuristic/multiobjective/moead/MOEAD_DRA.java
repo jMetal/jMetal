@@ -215,7 +215,7 @@ public class MOEAD_DRA extends Algorithm {
 
 
   /**
-   * initUniformWeight
+   * initializeUniformWeight
    */
   public void initUniformWeight() {
     if ((problem_.getNumberOfObjectives() == 2) && (populationSize_ <= 100)) {
@@ -255,7 +255,7 @@ public class MOEAD_DRA extends Algorithm {
       } catch (Exception e) {
         Configuration.logger_.log(
           Level.SEVERE,
-          "initUniformWeight: failed when reading for file: " + dataDirectory_ + "/" + dataFileName,
+          "initializeUniformWeight: failed when reading for file: " + dataDirectory_ + "/" + dataFileName,
           e);
       }
     }

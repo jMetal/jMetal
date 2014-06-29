@@ -22,6 +22,7 @@
 package org.uma.jmetal.metaheuristic.multiobjective.moead;
 
 import org.uma.jmetal.core.*;
+import org.uma.jmetal.operator.mutation.Mutation;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
@@ -36,6 +37,8 @@ import java.util.logging.Level;
 public class MOEAD extends Algorithm {
   private static final long serialVersionUID = -8602634334286344579L;
 
+  private enum NeighborType {NEIGHBOR, POPULATION} ;
+
   /** Z vector in Zhang & Li paper */
   private double[] idealPoint;
   /** Lambda vectors */
@@ -43,12 +46,12 @@ public class MOEAD extends Algorithm {
   /** T in Zhang & Li paper */
   private int neighborSize;
   private int[][] neighborhood;
-  /** Delta inin Zhang & Li paper */
+  /** Delta in Zhang & Li paper */
   private double neighborhoodSelectionProbability;
   /** nr in Zhang & Li paper */
   private int maximumNumberOfReplacedSolutions;
 
-  private Solution[] indArray_;
+  private Solution[] indArray;
   private String functionType;
 
   private Operator crossover;
@@ -68,107 +71,122 @@ public class MOEAD extends Algorithm {
     functionType = "_TCHE1";
   }
 
-  private MOEAD(Builder build) {
-    evaluations_ = 0 ;
+  private MOEAD(Builder builder) {
+    super() ;
+
+    problem_ = builder.problem ;
+    populationSize = builder.populationSize ;
+    maxEvaluations = builder.maxEvaluations ;
+    crossover = builder.crossover ;
+    mutation = builder.mutation ;
+    functionType = builder.functionType ;
+    neighborhoodSelectionProbability = builder.neighborhoodSelectionProbability ;
+    maximumNumberOfReplacedSolutions = builder.maximumNumberOfReplacedSolutions ;
+    dataDirectory = builder.dataDirectory ;
+    neighborSize = builder.neighborSize ;
+
+    population = new SolutionSet(populationSize);
+    indArray = new Solution[problem_.getNumberOfObjectives()];
+    neighborhood = new int[populationSize][neighborSize];
+    idealPoint = new double[problem_.getNumberOfObjectives()];
+    lambda = new double[populationSize][problem_.getNumberOfObjectives()];
+  }
+
+  public int getNeighborSize() {
+    return neighborSize;
+  }
+
+  public int getMaxEvaluations() {
+    return maxEvaluations;
+  }
+
+  public int getPopulationSize() {
+    return populationSize;
+  }
+
+  public String getDataDirectory() {
+    return dataDirectory;
+  }
+
+  public Operator getMutation() {
+    return mutation;
+  }
+
+  public Operator getCrossover() {
+    return crossover;
+  }
+
+  public String getFunctionType() {
+    return functionType;
+  }
+
+  public int getMaximumNumberOfReplacedSolutions() {
+    return maximumNumberOfReplacedSolutions;
+  }
+
+  public double getNeighborhoodSelectionProbability() {
+    return neighborhoodSelectionProbability;
   }
 
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
-    evaluations_ = 0;
-    maxEvaluations = (Integer) this.getInputParameter("maxEvaluations");
-    populationSize = (Integer) this.getInputParameter("populationSize");
-    dataDirectory = this.getInputParameter("dataDirectory").toString();
-    Configuration.logger_.info("POPSIZE: " + populationSize);
+    evaluations_ = 0 ;
 
-    population = new SolutionSet(populationSize);
-    indArray_ = new Solution[problem_.getNumberOfObjectives()];
+    initializeUniformWeight();
+    initializeNeighborhood();
+    initializePopulation();
+    initializeIdealPoint();
 
-    neighborSize = (Integer) this.getInputParameter("t");
-    maximumNumberOfReplacedSolutions = (Integer) this.getInputParameter("nr");
-    neighborhoodSelectionProbability = (Double) this.getInputParameter("delta");
-
-    /*
-    neighborSize = (int) (0.1 * populationSize);
-    neighborhoodSelectionProbability = 0.9;
-    maximumNumberOfReplacedSolutions = (int) (0.01 * populationSize);
-     */
-    neighborhood = new int[populationSize][neighborSize];
-
-    idealPoint = new double[problem_.getNumberOfObjectives()];
-    lambda = new double[populationSize][problem_.getNumberOfObjectives()];
-
-    crossover = operators_.get("crossover");
-    mutation = operators_.get("mutation");
-
-    // STEP 1. Initialization
-    // STEP 1.1. Compute euclidean distances between weight vectors and find T
-    initUniformWeight();
-
-    initNeighborhood();
-
-    // STEP 1.2. Initialize population
-    initPopulation();
-
-    // STEP 1.3. Initialize idealPoint
-    initIdealPoint();
-
-    // STEP 2. Update
+    /* Main loop */
     do {
       int[] permutation = new int[populationSize];
       Utils.randomPermutation(permutation, populationSize);
 
       for (int i = 0; i < populationSize; i++) {
-        int n = permutation[i];
+        int subProblemId = permutation[i];
 
-        int type;
-        double rnd = PseudoRandom.randDouble();
+        NeighborType neighborType = chooseNeighborType() ;
+        Solution[] parents = parentSelection(subProblemId, neighborType) ;
+        Solution child = (Solution) crossover.execute(new Object[] {population.get(subProblemId), parents});
 
-        // STEP 2.1. Mating selection based on probability
-        if (rnd < neighborhoodSelectionProbability)
-        {
-          type = 1;
-        } else {
-          type = 2;
-        }
-        Vector<Integer> p = new Vector<Integer>();
-        matingSelection(p, n, 2, type);
-
-        // STEP 2.2. Reproduction
-        Solution child;
-        Solution[] parents = new Solution[3];
-
-        parents[0] = population.get(p.get(0));
-        parents[1] = population.get(p.get(1));
-        parents[2] = population.get(n);
-
-        // Apply DE crossover 
-        child = (Solution) crossover.execute(new Object[] {population.get(n), parents});
-
-        // Apply mutation
         mutation.execute(child);
-
-        // Evaluation
         problem_.evaluate(child);
 
         evaluations_++;
 
-        // STEP 2.3. Repair. Not necessary
-
-        // STEP 2.4. Update idealPoint
-        updateReference(child);
-
-        // STEP 2.5. Update of solutions
-        updateProblem(child, n, type);
+        updateIdealPoint(child);
+        updateNeighborhood(child, subProblemId, neighborType);
       }
     } while (evaluations_ < maxEvaluations);
 
     return population;
   }
 
+  public NeighborType chooseNeighborType() {
+    double rnd = PseudoRandom.randDouble();
+    NeighborType neighborType ;
 
-  /**
-   * initUniformWeight
-   */
-  public void initUniformWeight() {
+    if (rnd < neighborhoodSelectionProbability) {
+      neighborType = NeighborType.NEIGHBOR;
+    } else {
+      neighborType = NeighborType.POPULATION;
+    }
+    return neighborType ;
+  }
+
+  public Solution[] parentSelection(int subProblemId, NeighborType neighborType) {
+    Vector<Integer> matingPool = new Vector<Integer>();
+    matingSelection(matingPool, subProblemId, neighborType);
+
+    Solution[] parents = new Solution[3];
+
+    parents[0] = population.get(matingPool.get(0));
+    parents[1] = population.get(matingPool.get(1));
+    parents[2] = population.get(subProblemId);
+
+    return parents ;
+  }
+
+  public void initializeUniformWeight() {
     if ((problem_.getNumberOfObjectives() == 2) && (populationSize <= 300)) {
       for (int n = 0; n < populationSize; n++) {
         double a = 1.0 * n / (populationSize - 1);
@@ -183,9 +201,9 @@ public class MOEAD extends Algorithm {
       try {
         // Open the file from the resources directory
         FileInputStream fis =
-            new FileInputStream(
-                this.getClass().getClassLoader().getResource(dataDirectory + "/" + dataFileName)
-                .getPath());
+          new FileInputStream(
+            this.getClass().getClassLoader().getResource(dataDirectory + "/" + dataFileName)
+              .getPath());
         InputStreamReader isr = new InputStreamReader(fis);
         BufferedReader br = new BufferedReader(isr);
 
@@ -208,17 +226,14 @@ public class MOEAD extends Algorithm {
         br.close();
       } catch (Exception e) {
         Configuration.logger_.log(
-            Level.SEVERE,
-            "initUniformWeight: failed when reading for file: " + dataDirectory + "/" + dataFileName,
-            e);
+          Level.SEVERE,
+          "initializeUniformWeight: failed when reading for file: " + dataDirectory + "/" + dataFileName,
+          e);
       }
     }
   }
 
-  /**
-   *
-   */
-  public void initNeighborhood() {
+  public void initializeNeighborhood() {
     double[] x = new double[populationSize];
     int[] idx = new int[populationSize];
 
@@ -236,10 +251,7 @@ public class MOEAD extends Algorithm {
     }
   }
 
-  /**
-   *
-   */
-  public void initPopulation() throws JMetalException, ClassNotFoundException {
+  public void initializePopulation() throws JMetalException, ClassNotFoundException {
     for (int i = 0; i < populationSize; i++) {
       Solution newSolution = new Solution(problem_);
 
@@ -249,53 +261,53 @@ public class MOEAD extends Algorithm {
     }
   }
 
-  /**
-   *
-   */
-  void initIdealPoint() throws JMetalException, ClassNotFoundException {
+  void initializeIdealPoint() throws JMetalException, ClassNotFoundException {
     for (int i = 0; i < problem_.getNumberOfObjectives(); i++) {
       idealPoint[i] = 1.0e+30;
-      indArray_[i] = new Solution(problem_);
-      problem_.evaluate(indArray_[i]);
+      indArray[i] = new Solution(problem_);
+      problem_.evaluate(indArray[i]);
       evaluations_++;
     }
 
     for (int i = 0; i < populationSize; i++) {
-      updateReference(population.get(i));
+      updateIdealPoint(population.get(i));
     }
   }
 
   /**
    *
+   * @param listOfSolutions
+   * @param subProblemId
+   * @param neighbourType
    */
-  public void matingSelection(Vector<Integer> list, int cid, int size, int type) {
+  public void matingSelection(Vector<Integer> listOfSolutions, int subProblemId, NeighborType neighbourType) {
     // list : the set of the indexes of selected mating parents
-    // cid  : the id of current subproblem
-    // size : the number of selected mating parents
+    // subProblemId  : the id of current subproblem
+    // numberOfSolutionsToSelect : the number of selected mating parents
     // type : 1 - neighborhood; otherwise - whole population
-    int ss;
-    int r;
-    int p;
+    int neighbourSize;
+    int selectedSolution;
+    int numberOfSolutionsToSelect = 2 ;
 
-    ss = neighborhood[cid].length;
-    while (list.size() < size) {
-      if (type == 1) {
-        r = PseudoRandom.randInt(0, ss - 1);
-        p = neighborhood[cid][r];
+    neighbourSize = neighborhood[subProblemId].length;
+    while (listOfSolutions.size() < numberOfSolutionsToSelect) {
+      int random;
+      if (neighbourType == NeighborType.NEIGHBOR) {
+        random = PseudoRandom.randInt(0, neighbourSize - 1);
+        selectedSolution = neighborhood[subProblemId][random];
       } else {
-        p = PseudoRandom.randInt(0, populationSize - 1);
+        selectedSolution = PseudoRandom.randInt(0, populationSize - 1);
       }
       boolean flag = true;
-      for (Integer aList : list) {
-        if (aList == p)
-        {
+      for (Integer individualId : listOfSolutions) {
+        if (individualId == selectedSolution) {
           flag = false;
           break;
         }
       }
 
       if (flag) {
-        list.addElement(p);
+        listOfSolutions.addElement(selectedSolution);
       }
     }
   }
@@ -303,32 +315,29 @@ public class MOEAD extends Algorithm {
   /**
    * @param individual
    */
-  void updateReference(Solution individual) {
+  void updateIdealPoint(Solution individual) {
     for (int n = 0; n < problem_.getNumberOfObjectives(); n++) {
       if (individual.getObjective(n) < idealPoint[n]) {
         idealPoint[n] = individual.getObjective(n);
 
-        indArray_[n] = individual;
+        indArray[n] = individual;
       }
     }
   }
 
   /**
    * @param individual
-   * @param id
-   * @param type
+   * @param subProblemId
+   * @param neighborType
    */
-  void updateProblem(Solution individual, int id, int type) throws JMetalException {
-    // individual: child solutiontype
-    // id:   the id of current subproblem
-    // type: update solutions in - neighborhood (1) or whole population (otherwise)
+  void updateNeighborhood(Solution individual, int subProblemId, NeighborType neighborType) throws JMetalException {
     int size;
     int time;
 
     time = 0;
 
-    if (type == 1) {
-      size = neighborhood[id].length;
+    if (neighborType == NeighborType.NEIGHBOR) {
+      size = neighborhood[subProblemId].length;
     } else {
       size = population.size();
     }
@@ -338,8 +347,8 @@ public class MOEAD extends Algorithm {
 
     for (int i = 0; i < size; i++) {
       int k;
-      if (type == 1) {
-        k = neighborhood[id][perm[i]];
+      if (neighborType == NeighborType.NEIGHBOR) {
+        k = neighborhood[subProblemId][perm[i]];
       } else {
         k = perm[i];
       }
@@ -352,7 +361,7 @@ public class MOEAD extends Algorithm {
         population.replace(k, new Solution(individual));
         time++;
       }
-      // the maximal number of solutions updated is not allowed to exceed 'limit'
+
       if (time >= maximumNumberOfReplacedSolutions) {
         return;
       }
@@ -389,15 +398,32 @@ public class MOEAD extends Algorithm {
 
   /** Builder class */
   public static class Builder {
+    private Problem problem ;
+    private int populationSize ;
+    private int maxEvaluations ;
     private int neighborSize;
     private double neighborhoodSelectionProbability;
     private int maximumNumberOfReplacedSolutions;
     private String functionType ;
     private Operator crossover ;
     private Operator mutation ;
+    private String dataDirectory ;
 
-    public Builder() {
+    public Builder(Problem problem) {
+      this.problem = problem ;
       functionType = "_TCHE1";
+    }
+
+    public Builder populationSize(int populationSize) {
+      this.populationSize = populationSize;
+
+      return this;
+    }
+
+    public Builder maxEvaluations(int maxEvaluations) {
+      this.maxEvaluations = maxEvaluations;
+
+      return this;
     }
 
     public Builder neighborSize(int neighborSize) {
@@ -406,7 +432,7 @@ public class MOEAD extends Algorithm {
       return this ;
     }
 
-    public Builder neighborhoodSelectionProbability(int neighborhoodSelectionProbability) {
+    public Builder neighborhoodSelectionProbability(double neighborhoodSelectionProbability) {
       this.neighborhoodSelectionProbability = neighborhoodSelectionProbability ;
 
       return this ;
@@ -424,9 +450,28 @@ public class MOEAD extends Algorithm {
       return this ;
     }
 
+    public Builder crossover(Operator crossover) {
+      this.crossover = crossover ;
+
+      return this ;
+    }
+
+    public Builder mutation(Mutation mutation) {
+      this.mutation = mutation ;
+
+      return this ;
+    }
+
+    public Builder dataDirectory(String dataDirectory) {
+      this.dataDirectory = dataDirectory ;
+
+      return this ;
+    }
+
     public MOEAD build() {
       return new MOEAD(this) ;
     }
   }
+
 }
 

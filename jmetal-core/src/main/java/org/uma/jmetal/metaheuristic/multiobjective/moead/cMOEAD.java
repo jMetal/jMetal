@@ -206,7 +206,7 @@ public class cMOEAD extends Algorithm {
 
 
   /**
-   * initUniformWeight
+   * initializeUniformWeight
    */
   public void initUniformWeight() {
     if ((problem_.getNumberOfObjectives() == 2) && (populationSize_ <= 300)) {
@@ -248,7 +248,7 @@ public class cMOEAD extends Algorithm {
       } catch (Exception e) {
         Configuration.logger_.log(
           Level.SEVERE,
-          "initUniformWeight: failed when reading for file: " + dataDirectory_ + "/" + dataFileName,
+          "initializeUniformWeight: failed when reading for file: " + dataDirectory_ + "/" + dataFileName,
           e);
       }
     }

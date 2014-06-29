@@ -123,7 +123,7 @@ public class R2 {
       }
     } catch (Exception e) {
       Configuration.logger_.log(Level.SEVERE,
-        "initUniformWeight: failed when reading for file: " + file, e);
+        "initializeUniformWeight: failed when reading for file: " + file, e);
     }
   }
 

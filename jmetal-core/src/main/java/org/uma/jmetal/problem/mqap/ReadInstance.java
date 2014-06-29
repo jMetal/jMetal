@@ -274,7 +274,7 @@ public class ReadInstance {
           } catch (Exception e) {
             Configuration.logger_.log(
                 Level.SEVERE,
-                "initUniformWeight: failed when reading for file containing the weight",
+                "initializeUniformWeight: failed when reading for file containing the weight",
                 e);
           }
         } else {

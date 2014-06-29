@@ -349,7 +349,7 @@ public class pMOEAD extends Algorithm implements Runnable {
       } catch (Exception e) {
         Configuration.logger_.log(
           Level.SEVERE,
-          "initUniformWeight: fail when reading for file: " + dataDirectory_ + "/" + dataFileName,
+          "initializeUniformWeight: fail when reading for file: " + dataDirectory_ + "/" + dataFileName,
           e);
       }
     }

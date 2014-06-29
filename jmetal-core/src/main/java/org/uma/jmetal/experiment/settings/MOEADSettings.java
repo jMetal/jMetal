@@ -22,58 +22,54 @@
 package org.uma.jmetal.experiment.settings;
 
 import org.uma.jmetal.core.Algorithm;
-import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.experiment.Settings;
 import org.uma.jmetal.metaheuristic.multiobjective.moead.MOEAD;
-import org.uma.jmetal.operator.crossover.CrossoverFactory;
-import org.uma.jmetal.operator.mutation.MutationFactory;
+import org.uma.jmetal.operator.crossover.Crossover;
+import org.uma.jmetal.operator.crossover.DifferentialEvolutionCrossover;
+import org.uma.jmetal.operator.mutation.Mutation;
+import org.uma.jmetal.operator.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.util.JMetalException;
 
-import java.util.HashMap;
 import java.util.Properties;
 
 /**
  * Settings class of algorithm MOEA/D
  */
 public class MOEADSettings extends Settings {
-  private double cr_;
-  private double f_;
-  private int populationSize_;
-  private int maxEvaluations_;
+  private double cr;
+  private double f;
+  private int populationSize;
+  private int maxEvaluations;
 
-  private double mutationProbability_;
-  private double mutationDistributionIndex_;
+  private double mutationProbability;
+  private double mutationDistributionIndex;
 
-  private String dataDirectory_;
+  private String dataDirectory;
 
-  private int t_;
-  private double delta_;
-  private int nr_;
+  private int neighborSize;
+  private double neighborhoodSelectionProbability;
+  private int maximumNumberOfReplacedSolutions;
 
-  /**
-   * Constructor
-   *
-   * @throws org.uma.jmetal.util.JMetalException
-   */
-  public MOEADSettings(String problem) throws JMetalException {
+  /** Constructor */
+  public MOEADSettings(String problem) {
     super(problem);
 
     Object[] problemParams = {"Real"};
     problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
 
     // Default experiment.settings
-    cr_ = 1.0;
-    f_ = 0.5;
-    populationSize_ = 300;
-    maxEvaluations_ = 150000;
+    cr = 1.0;
+    f = 0.5;
+    populationSize = 300;
+    maxEvaluations = 150000;
 
-    mutationProbability_ = 1.0 / problem_.getNumberOfVariables();
-    mutationDistributionIndex_ = 20;
+    mutationProbability = 1.0 / problem_.getNumberOfVariables();
+    mutationDistributionIndex = 20;
 
-    t_ = 20;
-    delta_ = 0.9;
-    nr_ = 2;
+    neighborSize = 20;
+    neighborhoodSelectionProbability = 0.9;
+    maximumNumberOfReplacedSolutions = 2;
 
     // Directory with the files containing the weight vectors used in 
     // Q. Zhang,  W. Liu,  and H Li, The Performance of a New Version of MOEA/D 
@@ -81,74 +77,69 @@ public class MOEADSettings extends Settings {
     // of CS & EE, University of Essex, 02/2009.
     // http://dces.essex.ac.uk/staff/qzhang/MOEAcompetition/CEC09final/code/ZhangMOEADcode/moead0305.rar
 
-    dataDirectory_ = "MOEAD_Weights";
+    dataDirectory = "MOEAD_Weights";
   }
 
   /**
    * Configure the algorithm with the specified parameter experiment.settings
    *
    * @return an algorithm object
-   * @throws org.uma.jmetal.util.JMetalException
    */
-  public Algorithm configure() throws JMetalException {
+  public Algorithm configure() {
     Algorithm algorithm;
-    Operator crossover;
-    Operator mutation;
+    Crossover crossover;
+    Mutation mutation;
+    crossover = new DifferentialEvolutionCrossover.Builder()
+      .cr(1.0)
+      .f(0.5)
+      .build() ;
 
-    // Creating the problem
-    algorithm = new MOEAD();
-    algorithm.setProblem(problem_);
-    
+    mutation = new PolynomialMutation.Builder()
+      .distributionIndex(20.0)
+      .probability(1.0/problem_.getNumberOfVariables())
+      .build();
 
-    // Algorithm parameters
-    algorithm.setInputParameter("populationSize", populationSize_);
-    algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
-    algorithm.setInputParameter("dataDirectory", dataDirectory_);
-    algorithm.setInputParameter("t", t_);
-    algorithm.setInputParameter("delta", delta_);
-    algorithm.setInputParameter("nr", nr_);
-
-    // Crossover operator 
-    HashMap<String, Object> parameters = new HashMap<String, Object>();
-    parameters.put("cr", cr_);
-    parameters.put("f", f_);
-    crossover = CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", parameters);
-
-    // Mutation operator
-    parameters = new HashMap<String, Object>();
-    parameters.put("probability", mutationProbability_);
-    parameters.put("distributionIndex", mutationDistributionIndex_);
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);
-
-    algorithm.addOperator("crossover", crossover);
-    algorithm.addOperator("mutation", mutation);
+    algorithm = new MOEAD.Builder(problem_)
+      .populationSize(300)
+      .maxEvaluations(150000)
+      .neighborhoodSelectionProbability(0.9)
+      .maximumNumberOfReplacedSolutions(2)
+      .neighborSize(20)
+      .crossover(crossover)
+      .mutation(mutation)
+      .dataDirectory("MOEAD_Weights")
+      .build() ;
 
     return algorithm;
   }
 
   /**
-   * Configure MOEAD with user-defined parameter experiment.settings
+   * Configure MOEAD with user-defined parameter settings
    *
    * @return A MOEAD algorithm object
    */
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {
-    populationSize_ = Integer
-      .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize_)));
-    maxEvaluations_ = Integer
-      .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations_)));
-    dataDirectory_ = configuration.getProperty("dataDirectory", dataDirectory_);
-    delta_ = Double.parseDouble(configuration.getProperty("delta", String.valueOf(delta_)));
-    t_ = Integer.parseInt(configuration.getProperty("T", String.valueOf(t_)));
-    nr_ = Integer.parseInt(configuration.getProperty("nr", String.valueOf(nr_)));
+    populationSize = Integer
+      .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize)));
+    maxEvaluations = Integer
+      .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations)));
+    dataDirectory = configuration.getProperty("dataDirectory", dataDirectory);
+    neighborhoodSelectionProbability =
+      Double.parseDouble(configuration.getProperty("neighborhoodSelectionProbability", String.valueOf(
+      neighborhoodSelectionProbability)));
+    neighborSize = Integer.parseInt(configuration.getProperty("neighborSize", String.valueOf(neighborSize)));
+    maximumNumberOfReplacedSolutions =
+      Integer.parseInt(configuration.getProperty("maximumNumberOfReplacedSolutions",
+        String.valueOf(maximumNumberOfReplacedSolutions)));
 
-    cr_ = Double.parseDouble(configuration.getProperty("cr", String.valueOf(cr_)));
-    f_ = Double.parseDouble(configuration.getProperty("f", String.valueOf(f_)));
+    cr = Double.parseDouble(configuration.getProperty("cr", String.valueOf(cr)));
+    f = Double.parseDouble(configuration.getProperty("f", String.valueOf(f)));
 
-    mutationProbability_ = Double.parseDouble(
-      configuration.getProperty("mutationProbability", String.valueOf(mutationProbability_)));
-    mutationDistributionIndex_ = Double.parseDouble(configuration
-      .getProperty("mutationDistributionIndex", String.valueOf(mutationDistributionIndex_)));
+    mutationProbability = Double.parseDouble(
+      configuration.getProperty("mutationProbability", String.valueOf(mutationProbability)));
+    mutationDistributionIndex = Double.parseDouble(configuration
+      .getProperty("mutationDistributionIndex", String.valueOf(mutationDistributionIndex)));
 
     return configure();
   }
