@@ -55,8 +55,6 @@ public class IBEA extends Algorithm {
   /**
    * Constructor.
    * Create a new IBEA instance
-   *
-   * @param problem Problem to solve
    */
   public IBEA() {
     super();

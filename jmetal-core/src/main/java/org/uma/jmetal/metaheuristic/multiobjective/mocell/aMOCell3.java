@@ -56,7 +56,7 @@ public class aMOCell3 extends Algorithm {
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     int populationSize, archiveSize, maxEvaluations, evaluations, feedBack;
     Operator mutationOperator, crossoverOperator, selectionOperator;
-    SolutionSet currentPopulation;
+    SolutionSet population;
     CrowdingArchive archive;
     SolutionSet[] neighbors;
     Neighborhood neighborhood;
@@ -77,7 +77,7 @@ public class aMOCell3 extends Algorithm {
 
     //Initialize the variables
     //Initialize the population and the archive
-    currentPopulation = new SolutionSet(populationSize);
+    population = new SolutionSet(populationSize);
     archive = new CrowdingArchive(archiveSize, problem_.getNumberOfObjectives());
     evaluations = 0;
     neighborhood = new Neighborhood(populationSize);
@@ -91,20 +91,20 @@ public class aMOCell3 extends Algorithm {
       Solution individual = new Solution(problem_);
       problem_.evaluate(individual);
       problem_.evaluateConstraints(individual);
-      currentPopulation.add(individual);
+      population.add(individual);
       individual.setLocation(i);
       evaluations++;
     }
 
     while (evaluations < maxEvaluations) {
-      for (int ind = 0; ind < currentPopulation.size(); ind++) {
-        Solution individual = new Solution(currentPopulation.get(ind));
+      for (int ind = 0; ind < population.size(); ind++) {
+        Solution individual = new Solution(population.get(ind));
 
         Solution[] parents = new Solution[2];
         Solution[] offSpring;
 
         //neighbors[ind] = neighborhood.getFourNeighbors(currentPopulation,ind);
-        neighbors[ind] = neighborhood.getEightNeighbors(currentPopulation, ind);
+        neighbors[ind] = neighborhood.getEightNeighbors(population, ind);
         neighbors[ind].add(individual);
 
         //parents
@@ -125,7 +125,7 @@ public class aMOCell3 extends Algorithm {
 
         if (flag == 1) {
           offSpring[0].setLocation(individual.getLocation());
-          currentPopulation.replace(offSpring[0].getLocation(), offSpring[0]);
+          population.replace(offSpring[0].getLocation(), offSpring[0]);
           archive.add(new Solution(offSpring[0]));
         } else if (flag == 0) {
           neighbors[ind].add(offSpring[0]);
@@ -141,7 +141,7 @@ public class aMOCell3 extends Algorithm {
             archive.add(new Solution(offSpring[0]));
           } else {
             offSpring[0].setLocation(worst.getLocation());
-            currentPopulation.replace(offSpring[0].getLocation(), offSpring[0]);
+            population.replace(offSpring[0].getLocation(), offSpring[0]);
             archive.add(new Solution(offSpring[0]));
           }
         }
@@ -151,12 +151,12 @@ public class aMOCell3 extends Algorithm {
       distance.crowdingDistanceAssignment(archive, problem_.getNumberOfObjectives());
       for (int j = 0; j < feedBack; j++) {
         if (archive.size() > j) {
-          int r = PseudoRandom.randInt(0, currentPopulation.size() - 1);
+          int r = PseudoRandom.randInt(0, population.size() - 1);
 
-          if (r < currentPopulation.size()) {
+          if (r < population.size()) {
             Solution individual = archive.get(j);
             individual.setLocation(r);
-            currentPopulation.replace(r, new Solution(individual));
+            population.replace(r, new Solution(individual));
           }
         }
       }

@@ -45,7 +45,7 @@ public class MutationLocalSearch extends LocalSearch {
    */
   private static final long serialVersionUID = 6152832404856574555L;
   /**
-   * Stores the number of evaluations_ carried out
+   * Stores the number of evaluations carried out
    */
   int evaluations_;
   /**

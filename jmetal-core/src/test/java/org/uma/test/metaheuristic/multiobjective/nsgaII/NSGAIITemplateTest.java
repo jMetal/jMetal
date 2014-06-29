@@ -56,34 +56,34 @@ public class NSGAIITemplateTest extends NSGAIITemplate {
 
   @Test
   public void createInitialPopulationTest() throws ClassNotFoundException {
-    algorithm.populationSize_ = 100;
+    algorithm.populationSize = 100;
 
     algorithm.createInitialPopulation();
-    assertEquals(100, algorithm.population_.size()) ;
+    assertEquals(100, algorithm.population.size()) ;
   }
 
   @Test
   public void stoppingConditionTest() {
-    algorithm.evaluations_ = 125 ;
-    algorithm.maxEvaluations_ = 125 ;
+    algorithm.evaluations = 125 ;
+    algorithm.maxEvaluations = 125 ;
 
     assertTrue(algorithm.stoppingCondition());
 
-    algorithm.evaluations_ = 124 ;
+    algorithm.evaluations = 124 ;
     assertFalse(algorithm.stoppingCondition());
 
-    algorithm.evaluations_ = 126 ;
+    algorithm.evaluations = 126 ;
     assertTrue(algorithm.stoppingCondition());
   }
 
   @Test
   public void populationIsNotFullTest() throws ClassNotFoundException {
-    algorithm.populationSize_ = 25 ;
+    algorithm.populationSize = 25 ;
     algorithm.createInitialPopulation() ;
 
     assertFalse(algorithm.populationIsNotFull()) ;
 
-    algorithm.population_ = new SolutionSet(20) ;
+    algorithm.population = new SolutionSet(20) ;
     assertTrue(algorithm.populationIsNotFull()) ;
   }
 

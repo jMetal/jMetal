@@ -122,9 +122,9 @@ public class cMOEAD extends Algorithm {
     maximumNumberOfReplacedSolutions = 2;
      */
     /*
-    neighborSize = (int) (0.1 * populationSize_);
+    neighborSize = (int) (0.1 * populationSize);
     neighborhoodSelectionProbability = 0.9;
-    maximumNumberOfReplacedSolutions = (int) (0.01 * populationSize_);
+    maximumNumberOfReplacedSolutions = (int) (0.01 * populationSize);
      */
     neighborhood_ = new int[populationSize_][T_];
 

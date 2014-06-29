@@ -101,8 +101,6 @@ public class pMOEAD extends Algorithm implements Runnable {
 
   /**
    * Constructor
-   *
-   * @param problem Problem to solve
    */
   public pMOEAD() {
     super();
@@ -115,8 +113,6 @@ public class pMOEAD extends Algorithm implements Runnable {
 
   /**
    * Constructor
-   *
-   * @param problem Problem to solve
    */
 
   public pMOEAD(pMOEAD parentThread, int id, int numberOfThreads) {

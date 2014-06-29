@@ -45,8 +45,6 @@ public class sMOCell2 extends Algorithm {
 
   /**
    * Constructor
-   *
-   * @param problem Problem to solve
    */
   public sMOCell2() {
     super();
@@ -62,7 +60,7 @@ public class sMOCell2 extends Algorithm {
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     int populationSize, archiveSize, maxEvaluations, evaluations, feedBack;
     Operator mutationOperator, crossoverOperator, selectionOperator;
-    SolutionSet currentSolutionSet, newSolutionSet;
+    SolutionSet population, newSolutionSet;
     CrowdingArchive archive;
     SolutionSet[] neighbors;
     Neighborhood neighborhood;
@@ -81,7 +79,7 @@ public class sMOCell2 extends Algorithm {
     selectionOperator = operators_.get("selection");
 
     //Initialize the variables    
-    currentSolutionSet = new SolutionSet(populationSize);
+    population = new SolutionSet(populationSize);
     newSolutionSet = new SolutionSet(populationSize);
     archive = new CrowdingArchive(archiveSize, problem_.getNumberOfObjectives());
     evaluations = 0;
@@ -93,7 +91,7 @@ public class sMOCell2 extends Algorithm {
       Solution solution = new Solution(problem_);
       problem_.evaluate(solution);
       problem_.evaluateConstraints(solution);
-      currentSolutionSet.add(solution);
+      population.add(solution);
       solution.setLocation(i);
       evaluations++;
     }
@@ -102,14 +100,14 @@ public class sMOCell2 extends Algorithm {
 
     while (evaluations < maxEvaluations) {
       newSolutionSet = new SolutionSet(populationSize);
-      for (int ind = 0; ind < currentSolutionSet.size(); ind++) {
-        Solution individual = new Solution(currentSolutionSet.get(ind));
+      for (int ind = 0; ind < population.size(); ind++) {
+        Solution individual = new Solution(population.get(ind));
 
         Solution[] parents = new Solution[2];
         Solution[] offSpring;
 
         //neighbors[ind] = neighborhood.getFourNeighbors(currentSolutionSet,ind);
-        neighbors[ind] = neighborhood.getEightNeighbors(currentSolutionSet, ind);
+        neighbors[ind] = neighborhood.getEightNeighbors(population, ind);
         neighbors[ind].add(individual);
 
         //parents
@@ -133,7 +131,7 @@ public class sMOCell2 extends Algorithm {
         int flag = dominance.compare(individual, offSpring[0]);
 
         if (flag == -1) {
-          newSolutionSet.add(new Solution(currentSolutionSet.get(ind)));
+          newSolutionSet.add(new Solution(population.get(ind)));
         }
 
         if (flag == 1) {
@@ -159,12 +157,12 @@ public class sMOCell2 extends Algorithm {
             newSolutionSet.add(offSpring[0]);
             archive.add(new Solution(offSpring[0]));
           } else {
-            newSolutionSet.add(new Solution(currentSolutionSet.get(ind)));
+            newSolutionSet.add(new Solution(population.get(ind)));
             archive.add(new Solution(offSpring[0]));
           }
         }
       }
-      currentSolutionSet = newSolutionSet;
+      population = newSolutionSet;
     }
     return archive;
   }

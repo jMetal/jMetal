@@ -41,11 +41,11 @@ public class SteadyStateNSGAII extends NSGAIITemplate {
   public SteadyStateNSGAII(Builder builder) {
     super(builder) ;
     problem_ = builder.problem_ ;
-    maxEvaluations_ = builder.maxEvaluations_ ;
-    crossoverOperator_ = builder.crossoverOperator_ ;
-    mutationOperator_ = builder.mutationOperator_ ;
-    selectionOperator_ = builder.selectionOperator_ ;
-    populationSize_ = builder.populationSize_ ;
+    maxEvaluations = builder.maxEvaluations_ ;
+    crossoverOperator = builder.crossoverOperator_ ;
+    mutationOperator = builder.mutationOperator_ ;
+    selectionOperator = builder.selectionOperator_ ;
+    populationSize = builder.populationSize_ ;
   }
 
 
@@ -59,38 +59,38 @@ public class SteadyStateNSGAII extends NSGAIITemplate {
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     //readParameterSettings();
     createInitialPopulation();
-    population_ = evaluatePopulation(population_);
+    population = evaluatePopulation(population);
 
     // Generations ...
     while (!stoppingCondition()) {
 
       // Create the offSpring solutionSet      
-      offspringPopulation_ = new SolutionSet(1);
+      offspringPopulation = new SolutionSet(1);
       Solution[] parents = new Solution[2];
 
       //obtain parents
-      parents[0] = (Solution) selectionOperator_.execute(population_);
-      parents[1] = (Solution) selectionOperator_.execute(population_);
+      parents[0] = (Solution) selectionOperator.execute(population);
+      parents[1] = (Solution) selectionOperator.execute(population);
 
       // crossover
-      Solution[] offSpring = (Solution[]) crossoverOperator_.execute(parents);
+      Solution[] offSpring = (Solution[]) crossoverOperator.execute(parents);
 
       // mutation
-      mutationOperator_.execute(offSpring[0]);
+      mutationOperator.execute(offSpring[0]);
 
       // evaluation
       problem_.evaluate(offSpring[0]);
       problem_.evaluateConstraints(offSpring[0]);
 
       // insert child into the offspring population
-      offspringPopulation_.add(offSpring[0]);
+      offspringPopulation.add(offSpring[0]);
 
-      evaluations_++;
+      evaluations++;
 
       //Ranking ranking = rankPopulation() ;
-      Ranking ranking = new Ranking(population_.union(offspringPopulation_));
+      Ranking ranking = new Ranking(population.union(offspringPopulation));
 
-      population_.clear();
+      population.clear();
       int rankingIndex = 0 ;
       while (populationIsNotFull()) {
         if (subfrontFillsIntoThePopulation(ranking, rankingIndex)) {

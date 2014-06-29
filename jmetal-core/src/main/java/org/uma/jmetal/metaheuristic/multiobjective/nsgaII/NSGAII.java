@@ -42,11 +42,11 @@ public class NSGAII extends NSGAIITemplate {
   public NSGAII(Builder builder) {
     super(builder) ;
     problem_ = builder.problem_ ;
-    maxEvaluations_ = builder.maxEvaluations_ ;
-    crossoverOperator_ = builder.crossoverOperator_ ;
-    mutationOperator_ = builder.mutationOperator_ ;
-    selectionOperator_ = builder.selectionOperator_ ;
-    populationSize_ = builder.populationSize_ ;
+    maxEvaluations = builder.maxEvaluations_ ;
+    crossoverOperator = builder.crossoverOperator_ ;
+    mutationOperator = builder.mutationOperator_ ;
+    selectionOperator = builder.selectionOperator_ ;
+    populationSize = builder.populationSize_ ;
   }
 
   public NSGAII(SolutionSetEvaluator evaluator) {
@@ -63,35 +63,35 @@ public class NSGAII extends NSGAIITemplate {
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     //readParameterSettings();
     createInitialPopulation();
-    population_ = evaluatePopulation(population_);
+    population = evaluatePopulation(population);
 
-    evaluations_ += population_.size();
+    evaluations += population.size();
 
     // Main loop
     while (!stoppingCondition()) {
-      offspringPopulation_ = new SolutionSet(populationSize_);
-      for (int i = 0; i < (populationSize_ / 2); i++) {
+      offspringPopulation = new SolutionSet(populationSize);
+      for (int i = 0; i < (populationSize / 2); i++) {
         if (!stoppingCondition()) {
           Solution[] parents = new Solution[2];
-          parents[0] = (Solution) selectionOperator_.execute(population_);
-          parents[1] = (Solution) selectionOperator_.execute(population_);
+          parents[0] = (Solution) selectionOperator.execute(population);
+          parents[1] = (Solution) selectionOperator.execute(population);
 
-          Solution[] offSpring = (Solution[]) crossoverOperator_.execute(parents);
+          Solution[] offSpring = (Solution[]) crossoverOperator.execute(parents);
 
-          mutationOperator_.execute(offSpring[0]);
-          mutationOperator_.execute(offSpring[1]);
+          mutationOperator.execute(offSpring[0]);
+          mutationOperator.execute(offSpring[1]);
 
-          offspringPopulation_.add(offSpring[0]);
-          offspringPopulation_.add(offSpring[1]);
+          offspringPopulation.add(offSpring[0]);
+          offspringPopulation.add(offSpring[1]);
         }
       }
 
-      offspringPopulation_ = evaluatePopulation(offspringPopulation_);
-      evaluations_ += offspringPopulation_.size() ;
+      offspringPopulation = evaluatePopulation(offspringPopulation);
+      evaluations += offspringPopulation.size() ;
 
-      Ranking ranking = new Ranking(population_.union(offspringPopulation_));
+      Ranking ranking = new Ranking(population.union(offspringPopulation));
 
-      population_.clear();
+      population.clear();
       int rankingIndex = 0 ;
       while (populationIsNotFull()) {
         if (subfrontFillsIntoThePopulation(ranking, rankingIndex)) {

@@ -36,9 +36,9 @@ public class NSGAIIRandom extends NSGAIITemplate {
     contribution_ = new double[N_O];
     contributionCounter_ = new int[N_O];
 
-    contribution_[0] = (double) (populationSize_ / (double) N_O) / (double) populationSize_;
+    contribution_[0] = (double) (populationSize / (double) N_O) / (double) populationSize;
     for (int i = 1; i < N_O; i++) {
-      contribution_[i] = (double) (populationSize_ / (double) N_O) / (double) populationSize_
+      contribution_[i] = (double) (populationSize / (double) N_O) / (double) populationSize
         + (double) contribution_[i - 1];
     }
 
@@ -49,22 +49,22 @@ public class NSGAIIRandom extends NSGAIITemplate {
 
     readParameterSettings();
     createInitialPopulation();
-    evaluatePopulation(population_);
+    evaluatePopulation(population);
 
 
-    for (int i = 0; i < populationSize_; i++) {
-      population_.get(i).setLocation(i);
+    for (int i = 0; i < populationSize; i++) {
+      population.get(i).setLocation(i);
     }
 
     while (!stoppingCondition()) {
 
       // Create the offSpring solutionSet      
-      offspringPopulation_ = new SolutionSet(populationSize_);
+      offspringPopulation = new SolutionSet(populationSize);
       Solution[] parents = new Solution[2];
-      for (int i = 0; i < populationSize_; i++) {
+      for (int i = 0; i < populationSize; i++) {
         if (!stoppingCondition()) {
           Solution individual =
-            new Solution(population_.get(PseudoRandom.randInt(0, populationSize_ - 1)));
+            new Solution(population.get(PseudoRandom.randInt(0, populationSize - 1)));
 
           int selected = 0;
           boolean found = false;
@@ -74,9 +74,9 @@ public class NSGAIIRandom extends NSGAIITemplate {
 
             if (!found && (rnd <= contribution_[selected])) {
               if ("DE".equals(getOffspring[selected].id())) {
-                offSpring = getOffspring[selected].getOffspring(population_, i);
+                offSpring = getOffspring[selected].getOffspring(population, i);
               } else if ("SBXCrossover".equals(getOffspring[selected].id())) {
-                offSpring = getOffspring[selected].getOffspring(population_);
+                offSpring = getOffspring[selected].getOffspring(population);
               } else if ("PolynomialMutation".equals(getOffspring[selected].id())) {
                 offSpring =
                   ((PolynomialMutationOffspring) getOffspring[selected]).getOffspring(individual);
@@ -90,14 +90,14 @@ public class NSGAIIRandom extends NSGAIITemplate {
           }
 
           problem_.evaluate(offSpring);
-          offspringPopulation_.add(offSpring);
-          evaluations_ += 1;
+          offspringPopulation.add(offSpring);
+          evaluations += 1;
         }
       }
 
       Ranking ranking = rankPopulation() ;
 
-      population_.clear();
+      population.clear();
       int rankingIndex = 0 ;
       while (populationIsNotFull()) {
         if (subfrontFillsIntoThePopulation(ranking, rankingIndex)) {

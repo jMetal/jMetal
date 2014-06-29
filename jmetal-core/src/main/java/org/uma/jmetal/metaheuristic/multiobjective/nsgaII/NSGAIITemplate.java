@@ -38,72 +38,73 @@ import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
  */
 
 public abstract class NSGAIITemplate extends Algorithm {
-  protected SolutionSetEvaluator evaluator_ ;
+  protected SolutionSetEvaluator evaluator ;
 
-  protected int populationSize_;
-  protected int maxEvaluations_;
-  protected int evaluations_;
+  protected int populationSize;
+  protected int maxEvaluations;
+  protected int evaluations;
 
-  protected SolutionSet population_;
-  protected SolutionSet offspringPopulation_;
+  protected SolutionSet population;
+  protected SolutionSet offspringPopulation;
 
-  protected Operator mutationOperator_;
-  protected Operator crossoverOperator_;
-  protected Operator selectionOperator_;
+  protected Operator mutationOperator;
+  protected Operator crossoverOperator;
+  protected Operator selectionOperator;
 
-  private Distance distance_ ;
+  private Distance distance;
 
   @Deprecated
   public NSGAIITemplate(SolutionSetEvaluator evaluator) {
     super();
-    evaluations_ = 0 ;
-    distance_ = new Distance();
-    evaluator_ = evaluator ;
+    evaluations = 0 ;
+    distance = new Distance();
+    this.evaluator = evaluator ;
   }
 
   protected NSGAIITemplate(Builder builder) {
     super() ;
 
-    evaluator_ = builder.evaluator_ ;
-    populationSize_ = builder.populationSize_ ;
-    maxEvaluations_ = builder.maxEvaluations_ ;
-    mutationOperator_ = builder.mutationOperator_ ;
-    crossoverOperator_ = builder.crossoverOperator_ ;
-    selectionOperator_ = builder.selectionOperator_ ;
-    evaluations_ = 0 ;
-    distance_ = new Distance();
+    evaluator = builder.evaluator ;
+    populationSize = builder.populationSize_ ;
+    maxEvaluations = builder.maxEvaluations_ ;
+    mutationOperator = builder.mutationOperator_ ;
+    crossoverOperator = builder.crossoverOperator_ ;
+    selectionOperator = builder.selectionOperator_ ;
+    distance = new Distance();
+
+    evaluations = 0 ;
   }
 
   @Deprecated
   void readParameterSettings() {
-    populationSize_ = ((Integer) getInputParameter("populationSize")).intValue();
-    maxEvaluations_ = ((Integer) getInputParameter("maxEvaluations")).intValue();
+    populationSize = ((Integer) getInputParameter("populationSize")).intValue();
+    maxEvaluations = ((Integer) getInputParameter("maxEvaluations")).intValue();
 
-    mutationOperator_ = operators_.get("mutation");
-    crossoverOperator_ = operators_.get("crossover");
-    selectionOperator_ = operators_.get("selection");
+    mutationOperator = operators_.get("mutation");
+    crossoverOperator = operators_.get("crossover");
+    selectionOperator = operators_.get("selection");
   }
 
   protected void createInitialPopulation() throws ClassNotFoundException, JMetalException {
-    population_ = new SolutionSet(populationSize_);
+    population = new SolutionSet(populationSize);
 
     Solution newSolution;
-    for (int i = 0; i < populationSize_; i++) {
+    for (int i = 0; i < populationSize; i++) {
       newSolution = new Solution(problem_);
-      population_.add(newSolution);
+      population.add(newSolution);
     }
   }
 
   protected SolutionSet evaluatePopulation(SolutionSet population) throws JMetalException {
-    return evaluator_.evaluate(population, problem_) ;
+    return evaluator.evaluate(population, problem_) ;
   }
 
   protected boolean stoppingCondition() {
-    return evaluations_ >= maxEvaluations_ ;
+    return evaluations >= maxEvaluations;
   }
 
   protected Ranking rankPopulation() throws JMetalException {
-    SolutionSet union = population_.union(offspringPopulation_);
+    SolutionSet union = population.union(offspringPopulation);
 
     return new Ranking(union) ;
   }
@@ -114,13 +115,13 @@ public abstract class NSGAIITemplate extends Algorithm {
     front = ranking.getSubfront(rank);
 
     for (int i = 0 ; i < front.size(); i++) {
-      population_.add(front.get(i));
+      population.add(front.get(i));
     }
   }
 
   protected void computeCrowdingDistance(Ranking ranking, int rank) throws JMetalException {
     SolutionSet currentRankedFront = ranking.getSubfront(rank) ;
-    distance_.crowdingDistanceAssignment(currentRankedFront, problem_.getNumberOfObjectives());
+    distance.crowdingDistanceAssignment(currentRankedFront, problem_.getNumberOfObjectives());
   }
 
   protected void addLastRankedSolutions(Ranking ranking, int rank) throws JMetalException {
@@ -129,52 +130,52 @@ public abstract class NSGAIITemplate extends Algorithm {
     currentRankedFront.sort(new CrowdingComparator());
 
     int i = 0 ;
-    while (population_.size() < populationSize_) {
-      population_.add(currentRankedFront.get(i)) ;
+    while (population.size() < populationSize) {
+      population.add(currentRankedFront.get(i)) ;
       i++ ;
     }
   }
 
   protected boolean populationIsNotFull() {
-    return population_.size() < populationSize_ ;
+    return population.size() < populationSize;
   }
 
   protected boolean subfrontFillsIntoThePopulation(Ranking ranking, int rank) {
-    return ranking.getSubfront(rank).size() < (populationSize_ - population_.size()) ;
+    return ranking.getSubfront(rank).size() < (populationSize - population.size()) ;
   }
 
   protected SolutionSet getNonDominatedSolutions() throws JMetalException {
-    return new Ranking(population_).getSubfront(0);
+    return new Ranking(population).getSubfront(0);
   }
 
   protected void tearDown() {
-    evaluator_.shutdown();
+    evaluator.shutdown();
   }
 
   public Operator getCrossoverOperator() {
-    return crossoverOperator_ ;
+    return crossoverOperator;
   }
 
   public Operator getMutationOperator() {
-    return mutationOperator_ ;
+    return mutationOperator;
   }
 
   public Operator getSelectionOperator() {
-    return selectionOperator_ ;
+    return selectionOperator;
   }
 
   public int getPopulationSize() {
-    return populationSize_ ;
+    return populationSize;
   }
 
   public int getMaxEvaluations() {
-    return maxEvaluations_ ;
+    return maxEvaluations;
   }
 
-  public int getEvaluations () { return evaluations_ ;}
+  public int getEvaluations () { return evaluations;}
 
   public static class Builder {
-    protected SolutionSetEvaluator evaluator_ ;
+    protected SolutionSetEvaluator evaluator ;
     protected Problem problem_ ;
 
     protected int populationSize_;
@@ -185,7 +186,7 @@ public abstract class NSGAIITemplate extends Algorithm {
     protected Operator selectionOperator_;
 
     public Builder(Problem problem, SolutionSetEvaluator evaluator) {
-      evaluator_ = evaluator ;
+      this.evaluator = evaluator ;
       problem_ = problem ;
     }
 
