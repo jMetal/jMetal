@@ -60,7 +60,7 @@ public class NSGAIIPermutationSettings extends Settings {
 
     Object[] problemParams = {"Permutation"};
     try {
-      problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
+      problem_ = (new ProblemFactory()).getProblem(problemName, problemParams);
     } catch (JMetalException e) {
       Configuration.logger_.log(Level.SEVERE, "Unable to get problem", e);
     }

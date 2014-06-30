@@ -51,7 +51,7 @@ public class OMOPSOSettings extends Settings{
     super(problem) ;
     
     Object [] problemParams = {"Real"};
-	    problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
+	    problem_ = (new ProblemFactory()).getProblem(problemName, problemParams);
 
 	    // Default experiment.settings
     swarmSize_         = 100 ;

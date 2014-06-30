@@ -20,17 +20,16 @@
 
 package org.uma.test.experiments.settings;
 
-import org.uma.jmetal.core.Algorithm;
-import org.uma.jmetal.core.Problem;
-import org.uma.jmetal.experiment.Settings;
-import org.uma.jmetal.experiment.settings.MOCellSettings;
-import org.uma.jmetal.operator.crossover.SBXCrossover;
-import org.uma.jmetal.operator.mutation.PolynomialMutation;
-import org.uma.jmetal.problem.Fonseca;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.uma.jmetal.core.Problem;
+import org.uma.jmetal.experiment.Settings;
+import org.uma.jmetal.experiment.settings.MOCellSettings;
+import org.uma.jmetal.metaheuristic.multiobjective.mocell.MOCellTemplate;
+import org.uma.jmetal.operator.crossover.SBXCrossover;
+import org.uma.jmetal.operator.mutation.PolynomialMutation;
+import org.uma.jmetal.problem.Fonseca;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -59,51 +58,55 @@ public class MOCellSettingsTest {
   public void testConfigure() throws Exception {
     double epsilon = 0.000000000000001 ;
     Settings mocellSettings = new MOCellSettings("Fonseca");
-    Algorithm algorithm = mocellSettings.configure() ;
+    MOCellTemplate algorithm = (MOCellTemplate)mocellSettings.configure() ;
+
     Problem problem = new Fonseca("Real") ;
-    SBXCrossover crossover = (SBXCrossover)algorithm.getOperator("crossover") ;
-    double pc = (Double)crossover.getParameter("probability") ;
-    double dic = (Double)crossover.getParameter("distributionIndex") ;
-    //MutationLocalSearch improvement = (MutationLocalSearch)algorithm.getOperator("improvement") ;
-    PolynomialMutation mutation = (PolynomialMutation)algorithm.getOperator("mutation") ;
-    double pm = (Double)mutation.getParameter("probability") ;
-    double dim = (Double)mutation.getParameter("distributionIndex") ;
 
-    Assert.assertEquals("MOCell_SettingsTest", 100, ((Integer)algorithm.getInputParameter("populationSize")).intValue());
-    Assert.assertEquals("MOCell_SettingsTest", 25000, ((Integer)algorithm.getInputParameter("maxEvaluations")).intValue());
-    Assert.assertEquals("MOCell_SettingsTest", 100, ((Integer)algorithm.getInputParameter("archiveSize")).intValue());
-    Assert.assertEquals("MOCell_SettingsTest", 20, ((Integer)algorithm.getInputParameter("feedback")).intValue());
+    SBXCrossover crossover = (SBXCrossover)algorithm.getCrossoverOperator() ;
+    double pc = crossover.getCrossoverProbability() ;
+    double dic = crossover.getDistributionIndex() ;
 
-    Assert.assertEquals("MOCell_SettingsTest", 0.9, pc, epsilon);
-    Assert.assertEquals("MOCell_SettingsTest", 20.0, dic, epsilon);
+    PolynomialMutation mutation = (PolynomialMutation)algorithm.getMutationOperator() ;
+    double pm = mutation.getMutationProbability() ;
+    double dim = mutation.getDistributionIndex() ;
 
-    Assert.assertEquals("MOCell_SettingsTest", 1.0/problem.getNumberOfVariables(), pm, epsilon);
-    Assert.assertEquals("MOCell_SettingsTest", 20.0, dim, epsilon);
+    Assert.assertEquals(100, algorithm.getPopulationSize());
+    Assert.assertEquals(25000, algorithm.getMaxEvaluations());
+    Assert.assertEquals(100,algorithm.getArchiveSize());
+    Assert.assertEquals(20, algorithm.getNumberOfFeedbackSolutionsFromArchive());
+
+    Assert.assertEquals(0.9, pc, epsilon);
+    Assert.assertEquals(20.0, dic, epsilon);
+
+    Assert.assertEquals(1.0/problem.getNumberOfVariables(), pm, epsilon);
+    Assert.assertEquals(20.0, dim, epsilon);
   }
 
   @Test
   public void testConfigure2() throws Exception {
     double epsilon = 0.000000000000001 ;
     Settings mocellSettings = new MOCellSettings("Fonseca");
-    Algorithm algorithm = mocellSettings.configure(configuration_) ;
+    MOCellTemplate algorithm = (MOCellTemplate)mocellSettings.configure() ;
+
     Problem problem = new Fonseca("Real") ;
-    SBXCrossover crossover = (SBXCrossover)algorithm.getOperator("crossover") ;
-    double pc = (Double)crossover.getParameter("probability") ;
-    double dic = (Double)crossover.getParameter("distributionIndex") ;
-    //MutationLocalSearch improvement = (MutationLocalSearch)algorithm.getOperator("improvement") ;
-    PolynomialMutation mutation = (PolynomialMutation)algorithm.getOperator("mutation") ;
-    double pm = (Double)mutation.getParameter("probability") ;
-    double dim = (Double)mutation.getParameter("distributionIndex") ;
 
-    Assert.assertEquals("MOCell_SettingsTest", 100, ((Integer)algorithm.getInputParameter("populationSize")).intValue());
-    Assert.assertEquals("MOCell_SettingsTest", 25000, ((Integer)algorithm.getInputParameter("maxEvaluations")).intValue());
-    Assert.assertEquals("MOCell_SettingsTest", 100, ((Integer)algorithm.getInputParameter("archiveSize")).intValue());
-    Assert.assertEquals("MOCell_SettingsTest", 20, ((Integer)algorithm.getInputParameter("feedback")).intValue());
+    SBXCrossover crossover = (SBXCrossover)algorithm.getCrossoverOperator() ;
+    double pc = crossover.getCrossoverProbability() ;
+    double dic = crossover.getDistributionIndex() ;
 
-    Assert.assertEquals("MOCell_SettingsTest", 0.9, pc, epsilon);
-    Assert.assertEquals("MOCell_SettingsTest", 20.0, dic, epsilon);
+    PolynomialMutation mutation = (PolynomialMutation)algorithm.getMutationOperator() ;
+    double pm = mutation.getMutationProbability() ;
+    double dim = mutation.getDistributionIndex() ;
 
-    Assert.assertEquals("MOCell_SettingsTest", 1.0/problem.getNumberOfVariables(), pm, epsilon);
-    Assert.assertEquals("MOCell_SettingsTest", 20.0, dim, epsilon);
+    Assert.assertEquals(100, algorithm.getPopulationSize());
+    Assert.assertEquals(25000, algorithm.getMaxEvaluations());
+    Assert.assertEquals(100,algorithm.getArchiveSize());
+    Assert.assertEquals(20, algorithm.getNumberOfFeedbackSolutionsFromArchive());
+
+    Assert.assertEquals(0.9, pc, epsilon);
+    Assert.assertEquals(20.0, dic, epsilon);
+
+    Assert.assertEquals(1.0/problem.getNumberOfVariables(), pm, epsilon);
+    Assert.assertEquals(20.0, dim, epsilon);
   }
 }

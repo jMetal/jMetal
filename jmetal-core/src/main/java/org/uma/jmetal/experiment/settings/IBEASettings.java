@@ -59,7 +59,7 @@ public class IBEASettings extends Settings {
     super(problemName);
 
     Object[] problemParams = {"Real"};
-    problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
+    problem_ = (new ProblemFactory()).getProblem(this.problemName, problemParams);
 
     // Default experiment.settings
     populationSize_ = 100;

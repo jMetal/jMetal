@@ -27,7 +27,6 @@ import org.uma.jmetal.util.Distance;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.Neighborhood;
 import org.uma.jmetal.util.Ranking;
-import org.uma.jmetal.util.random.PseudoRandom;
 
 /**
  * This class represents the asynchronous version of the MOCell algorithm
@@ -42,7 +41,7 @@ public class AsyncMOCell1 extends MOCellTemplate {
   /**
    * Runs of the aMOCell1 algorithm.
    *
-   * @return a <code>SolutionSet</code> that is a set of non dominated solutions
+   * @return a SolutionSet that is a set of non dominated solutions
    * as a result of the algorithm execution
    * @throws org.uma.jmetal.util.JMetalException
    */
@@ -105,18 +104,7 @@ public class AsyncMOCell1 extends MOCellTemplate {
         }
       }
 
-      //Stores a portion of the archive into the population
-      Distance.crowdingDistance(archive);
-      for (int j = 0; j < numberOfFeedbackSolutionsFromArchive; j++) {
-        if (archive.size() > j) {
-          int r = PseudoRandom.randInt(0, population.size() - 1);
-          if (r < population.size()) {
-            Solution individual = archive.get(j);
-            individual.setLocation(r);
-            population.replace(r, new Solution(individual));
-          }
-        }
-      }
+      archiveFeedback();
     }
     return archive;
   }

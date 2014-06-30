@@ -57,7 +57,7 @@ public class MOCHCSettings extends Settings {
     super(problemName);
 
     Object[] problemParams = {"Binary"};
-    problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
+    problem_ = (new ProblemFactory()).getProblem(this.problemName, problemParams);
 
     // Default experiment.settings
     populationSize = 100;

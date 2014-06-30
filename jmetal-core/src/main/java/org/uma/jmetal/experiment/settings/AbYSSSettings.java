@@ -58,7 +58,7 @@ public class AbYSSSettings extends Settings {
     super(problemName);
 
     Object[] problemParams = {"Real"};
-    problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
+    problem_ = (new ProblemFactory()).getProblem(this.problemName, problemParams);
 
     populationSize_ = 20;
     maxEvaluations_ = 25000;

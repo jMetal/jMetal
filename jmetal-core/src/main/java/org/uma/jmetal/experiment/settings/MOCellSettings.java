@@ -1,10 +1,9 @@
-//  MOCell_Settings.java 
+//  MOCellSettings.java
 //
 //  Authors:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
 //
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
+//  Copyright (c) 2014 Antonio J. Nebro
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -24,17 +23,16 @@ package org.uma.jmetal.experiment.settings;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.experiment.Settings;
-import org.uma.jmetal.metaheuristic.multiobjective.mocell.MOCell;
+import org.uma.jmetal.metaheuristic.multiobjective.mocell.MOCellTemplate;
 import org.uma.jmetal.operator.crossover.Crossover;
-import org.uma.jmetal.operator.crossover.CrossoverFactory;
+import org.uma.jmetal.operator.crossover.SBXCrossover;
 import org.uma.jmetal.operator.mutation.Mutation;
-import org.uma.jmetal.operator.mutation.MutationFactory;
-import org.uma.jmetal.operator.selection.SelectionFactory;
+import org.uma.jmetal.operator.mutation.PolynomialMutation;
+import org.uma.jmetal.operator.selection.BinaryTournament;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 
-import java.util.HashMap;
 import java.util.Properties;
 import java.util.logging.Level;
 
@@ -43,14 +41,15 @@ import java.util.logging.Level;
  */
 public class MOCellSettings extends Settings {
 
-  private int populationSize_;
-  private int maxEvaluations_;
-  private int archiveSize_;
-  private int feedback_;
-  private double mutationProbability_;
-  private double crossoverProbability_;
-  private double crossoverDistributionIndex_;
-  private double mutationDistributionIndex_;
+  private int populationSize;
+  private int maxEvaluations;
+  private int archiveSize;
+  private int numberOfFeedbackSolutionsFromArchive;
+  private double mutationProbability;
+  private double crossoverProbability;
+  private double crossoverDistributionIndex;
+  private double mutationDistributionIndex;
+  private String mocellVariant ;
 
   /**
    * Constructor
@@ -60,21 +59,23 @@ public class MOCellSettings extends Settings {
 
     Object[] problemParams = {"Real"};
     try {
-      problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
+      problem_ = (new ProblemFactory()).getProblem(this.problemName, problemParams);
     } catch (JMetalException e) {
       Configuration.logger_.log(Level.SEVERE, "Unable to get problem", e);
     }
 
     // Default experiment.settings
-    populationSize_ = 100;
-    maxEvaluations_ = 25000;
-    archiveSize_ = 100;
-    feedback_ = 20;
-    mutationProbability_ = 1.0 / problem_.getNumberOfVariables();
-    crossoverProbability_ = 0.9;
-    crossoverDistributionIndex_ = 20.0;
-    mutationDistributionIndex_ = 20.0;
-  } // MOCell_Settings
+    populationSize = 100;
+    maxEvaluations = 25000;
+    archiveSize = 100;
+    numberOfFeedbackSolutionsFromArchive = 20;
+    mutationProbability = 1.0 / problem_.getNumberOfVariables();
+    crossoverProbability = 0.9;
+    crossoverDistributionIndex = 20.0;
+    mutationDistributionIndex = 20.0;
+
+    mocellVariant = "AsyncMOCell1" ;
+  }
 
   /**
    * Configure the MOCell algorithm with default parameter experiment.settings
@@ -95,38 +96,32 @@ public class MOCellSettings extends Settings {
     //algorithm = new aMOCell1(problem_) ;
     //algorithm = new aMOCell2(problem_) ;
     //algorithm = new aMOCell3(problem_) ;
-    algorithm = new MOCell();
-    algorithm.setProblem(problem_);
 
-    // Algorithm parameters
-    algorithm.setInputParameter("populationSize", populationSize_);
-    algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
-    algorithm.setInputParameter("archiveSize", archiveSize_);
-    algorithm.setInputParameter("feedback", feedback_);
+    crossover = new SBXCrossover.Builder()
+      .probability(crossoverProbability)
+      .distributionIndex(crossoverDistributionIndex)
+      .build();
 
+    mutation = new PolynomialMutation.Builder()
+      .probability(mutationProbability)
+      .distributionIndex(mutationDistributionIndex)
+      .build();
 
-    // Mutation and Crossover for Real codification 
-    HashMap<String, Object> parameters = new HashMap<String, Object>();
-    parameters.put("probability", crossoverProbability_);
-    parameters.put("distributionIndex", crossoverDistributionIndex_);
-    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters);
+    selection = new BinaryTournament.Builder()
+      .build();
 
-    parameters = new HashMap<String, Object>();
-    parameters.put("probability", mutationProbability_);
-    parameters.put("distributionIndex", mutationDistributionIndex_);
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);
-
-    // Selection Operator 
-    parameters = null;
-    selection = SelectionFactory.getSelectionOperator("BinaryTournament", parameters);
-
-    // Add the operator to the algorithm
-    algorithm.addOperator("crossover", crossover);
-    algorithm.addOperator("mutation", mutation);
-    algorithm.addOperator("selection", selection);
+    algorithm = new MOCellTemplate.Builder(problem_)
+      .populationSize(populationSize)
+      .archiveSize(archiveSize)
+      .maxEvaluations(maxEvaluations)
+      .numberOfFeedbackSolutionsFromArchive(numberOfFeedbackSolutionsFromArchive)
+      .crossover(crossover)
+      .mutation(mutation)
+      .selection(selection)
+      .build("AsyncMOCell1");
 
     return algorithm;
-  } // configure
+  }
 
   /**
    * Configure MOCell with user-defined parameter experiment.settings
@@ -135,23 +130,24 @@ public class MOCellSettings extends Settings {
    */
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {
-    populationSize_ = Integer
-      .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize_)));
-    maxEvaluations_ = Integer
-      .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations_)));
-    archiveSize_ =
-      Integer.parseInt(configuration.getProperty("archiveSize", String.valueOf(archiveSize_)));
-    feedback_ = Integer.parseInt(configuration.getProperty("feedback", String.valueOf(feedback_)));
+    populationSize = Integer
+      .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize)));
+    maxEvaluations = Integer
+      .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations)));
+    archiveSize =
+      Integer.parseInt(configuration.getProperty("archiveSize", String.valueOf(archiveSize)));
+    numberOfFeedbackSolutionsFromArchive = Integer.parseInt(configuration.getProperty("feedback", String.valueOf(
+      numberOfFeedbackSolutionsFromArchive)));
 
-    crossoverProbability_ = Double.parseDouble(
-      configuration.getProperty("crossoverProbability", String.valueOf(crossoverProbability_)));
-    crossoverDistributionIndex_ = Double.parseDouble(configuration
-      .getProperty("crossoverDistributionIndex", String.valueOf(crossoverDistributionIndex_)));
+    crossoverProbability = Double.parseDouble(
+      configuration.getProperty("crossoverProbability", String.valueOf(crossoverProbability)));
+    crossoverDistributionIndex = Double.parseDouble(configuration
+      .getProperty("crossoverDistributionIndex", String.valueOf(crossoverDistributionIndex)));
 
-    mutationProbability_ = Double.parseDouble(
-      configuration.getProperty("mutationProbability", String.valueOf(mutationProbability_)));
-    mutationDistributionIndex_ = Double.parseDouble(configuration
-      .getProperty("mutationDistributionIndex", String.valueOf(mutationDistributionIndex_)));
+    mutationProbability = Double.parseDouble(
+      configuration.getProperty("mutationProbability", String.valueOf(mutationProbability)));
+    mutationDistributionIndex = Double.parseDouble(configuration
+      .getProperty("mutationDistributionIndex", String.valueOf(mutationDistributionIndex)));
 
     return configure();
   }

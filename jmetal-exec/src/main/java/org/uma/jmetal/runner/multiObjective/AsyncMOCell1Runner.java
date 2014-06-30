@@ -1,10 +1,9 @@
-//  SolutionSet.Java
+//  AsyncMOCell1Runner.Java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
 //
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
+//  Copyright (c) 2014 Antonio J. Nebro
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -49,7 +48,7 @@ import java.util.logging.Logger;
  * Evolutionary Multi-Criterion Optimization. 4th International Conference,
  * EMO 2007. Sendai/Matsushima, Japan, March 2007.
  */
-public class MOCellRunner {
+public class AsyncMOCell1Runner {
   public static Logger logger_;
   public static FileHandler fileHandler_;
 
@@ -117,7 +116,7 @@ public class MOCellRunner {
       .crossover(crossover)
       .mutation(mutation)
       .selection(selection)
-      .build("");
+      .build("AsyncMOCell1");
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
       .execute();

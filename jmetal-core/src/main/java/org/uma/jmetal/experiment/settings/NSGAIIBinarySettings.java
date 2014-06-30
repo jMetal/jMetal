@@ -55,7 +55,7 @@ public class NSGAIIBinarySettings extends Settings {
     super(problem);
 
     Object[] problemParams = {"Binary"};
-    problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
+    problem_ = (new ProblemFactory()).getProblem(problemName, problemParams);
 
     // Default experiment.settings
     populationSize_ = 100;

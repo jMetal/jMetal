@@ -43,7 +43,7 @@ import java.util.Properties;
  */
 public abstract class Settings {
   protected Problem problem_;
-  protected String problemName_;
+  protected String problemName;
   protected String paretoFrontFile_;
 
   /**
@@ -57,7 +57,7 @@ public abstract class Settings {
    */
 
   public Settings(String problemName) throws JMetalException {
-    problemName_ = problemName;
+    this.problemName = problemName;
   }
 
   /**

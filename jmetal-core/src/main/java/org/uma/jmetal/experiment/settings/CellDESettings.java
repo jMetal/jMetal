@@ -55,7 +55,7 @@ public class CellDESettings extends Settings {
 
     Object[] problemParams = {"Real"};
     try {
-      problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
+      problem_ = (new ProblemFactory()).getProblem(this.problemName, problemParams);
     } catch (JMetalException e) {
       Configuration.logger_.log(Level.SEVERE, "Unable to get problem", e);
       throw new JMetalException(e);
@@ -84,7 +84,7 @@ public class CellDESettings extends Settings {
 
     // Creating the problem
     Object[] problemParams = {"Real"};
-    problem_ = (new ProblemFactory()).getProblem(problemName_, problemParams);
+    problem_ = (new ProblemFactory()).getProblem(problemName, problemParams);
     algorithm = new CellDE();
     algorithm.setProblem(problem_);
 

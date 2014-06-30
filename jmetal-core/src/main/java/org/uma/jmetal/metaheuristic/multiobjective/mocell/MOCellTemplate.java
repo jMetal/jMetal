@@ -1,12 +1,14 @@
 package org.uma.jmetal.metaheuristic.multiobjective.mocell;
 
 import org.uma.jmetal.core.*;
+import org.uma.jmetal.util.Distance;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.Neighborhood;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.CrowdingArchive;
 import org.uma.jmetal.util.comparator.CrowdingComparator;
 import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.random.PseudoRandom;
 
 import java.util.Comparator;
 
@@ -99,6 +101,20 @@ public abstract class MOCellTemplate extends Algorithm {
       problem_.evaluateConstraints(population.get(i));
     }
     return population ;
+  }
+
+  protected void archiveFeedback() {
+    Distance.crowdingDistance(archive);
+    for (int j = 0; j < numberOfFeedbackSolutionsFromArchive; j++) {
+      if (archive.size() > j) {
+        int r = PseudoRandom.randInt(0, population.size() - 1);
+        if (r < population.size()) {
+          Solution individual = archive.get(j);
+          individual.setLocation(r);
+          population.replace(r, new Solution(individual));
+        }
+      }
+    }
   }
 
   public static class Builder {
