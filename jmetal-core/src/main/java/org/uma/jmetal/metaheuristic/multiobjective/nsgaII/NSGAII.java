@@ -41,12 +41,14 @@ public class NSGAII extends NSGAIITemplate {
 
   public NSGAII(Builder builder) {
     super(builder) ;
+    /*
     problem_ = builder.problem_ ;
     maxEvaluations = builder.maxEvaluations_ ;
     crossoverOperator = builder.crossoverOperator_ ;
     mutationOperator = builder.mutationOperator_ ;
     selectionOperator = builder.selectionOperator_ ;
     populationSize = builder.populationSize_ ;
+    */
   }
 
   public NSGAII(SolutionSetEvaluator evaluator) {
@@ -61,7 +63,6 @@ public class NSGAII extends NSGAIITemplate {
    * @throws org.uma.jmetal.util.JMetalException
    */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
-    //readParameterSettings();
     createInitialPopulation();
     population = evaluatePopulation(population);
 

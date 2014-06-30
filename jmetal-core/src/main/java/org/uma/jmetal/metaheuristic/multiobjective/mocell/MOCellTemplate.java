@@ -2,17 +2,23 @@ package org.uma.jmetal.metaheuristic.multiobjective.mocell;
 
 import org.uma.jmetal.core.*;
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
+import org.uma.jmetal.util.Neighborhood;
+import org.uma.jmetal.util.archive.Archive;
+import org.uma.jmetal.util.archive.CrowdingArchive;
+import org.uma.jmetal.util.comparator.CrowdingComparator;
+import org.uma.jmetal.util.comparator.DominanceComparator;
+
+import java.util.Comparator;
 
 /**
- * Created by antelverde on 29/06/14.
+ * Created by Antonio J. Nebro on 29/06/14.
  */
 public abstract class MOCellTemplate extends Algorithm {
-  protected SolutionSetEvaluator evaluator ;
-
   protected int populationSize;
   protected int maxEvaluations;
   protected int evaluations;
+  protected int archiveSize ;
+  protected int numberOfFeedbackSolutionsFromArchive ;
 
   protected SolutionSet population;
   protected SolutionSet offspringPopulation;
@@ -21,16 +27,59 @@ public abstract class MOCellTemplate extends Algorithm {
   protected Operator crossoverOperator;
   protected Operator selectionOperator;
 
+  protected Archive archive;
+  protected SolutionSet[] neighbors;
+  protected Neighborhood neighborhood;
+
+  protected Comparator dominanceComparator ;
+  protected Comparator densityEstimatorComparator ;
+
   protected MOCellTemplate(Builder builder) {
     super() ;
 
-    evaluator = builder.evaluator_ ;
-    populationSize = builder.populationSize_ ;
-    maxEvaluations = builder.maxEvaluations_ ;
-    mutationOperator = builder.mutationOperator_ ;
-    crossoverOperator = builder.crossoverOperator_ ;
-    selectionOperator = builder.selectionOperator_ ;
-    evaluations = 0 ;
+    problem_ = builder.problem ;
+
+    populationSize = builder.populationSize ;
+    maxEvaluations = builder.maxEvaluations ;
+    archiveSize = builder.archiveSize ;
+    numberOfFeedbackSolutionsFromArchive = builder.numberOfFeedbackSolutionsFromArchive ;
+
+    mutationOperator = builder.mutationOperator ;
+    crossoverOperator = builder.crossoverOperator ;
+    selectionOperator = builder.selectionOperator ;
+
+    dominanceComparator = builder.dominanceComparator ;
+    densityEstimatorComparator = builder.densityEstimatorComparator ;
+
+    archive = builder.archive ;
+  }
+
+  public int getPopulationSize() {
+    return populationSize;
+  }
+
+  public int getMaxEvaluations() {
+    return maxEvaluations;
+  }
+
+  public int getArchiveSize() {
+    return archiveSize;
+  }
+
+  public int getNumberOfFeedbackSolutionsFromArchive() {
+    return numberOfFeedbackSolutionsFromArchive;
+  }
+
+  public Operator getMutationOperator() {
+    return mutationOperator;
+  }
+
+  public Operator getCrossoverOperator() {
+    return crossoverOperator;
+  }
+
+  public Operator getSelectionOperator() {
+    return selectionOperator;
   }
 
   protected void createInitialPopulation() throws ClassNotFoundException, JMetalException {
@@ -53,53 +102,75 @@ public abstract class MOCellTemplate extends Algorithm {
   }
 
   public static class Builder {
-    protected SolutionSetEvaluator evaluator_ ;
-    protected Problem problem_ ;
+    protected Problem problem ;
 
-    protected int populationSize_;
-    protected int maxEvaluations_;
+    protected int populationSize;
+    protected int maxEvaluations;
+    protected int archiveSize ;
+    protected int numberOfFeedbackSolutionsFromArchive ;
 
-    protected Operator mutationOperator_;
-    protected Operator crossoverOperator_;
-    protected Operator selectionOperator_;
+    protected Operator mutationOperator;
+    protected Operator crossoverOperator;
+    protected Operator selectionOperator;
 
-    public Builder(Problem problem, SolutionSetEvaluator evaluator) {
-      evaluator_ = evaluator ;
-      problem_ = problem ;
+    protected Comparator dominanceComparator ;
+    protected Comparator densityEstimatorComparator ;
+
+    protected Archive archive ;
+
+    public Builder(Problem problem) {
+      this.problem = problem ;
+      dominanceComparator = new DominanceComparator() ;
+      densityEstimatorComparator = new CrowdingComparator();
+
+      archiveSize = 100 ;
+      archive = new CrowdingArchive(archiveSize, problem.getNumberOfObjectives());
     }
 
     public Builder populationSize(int populationSize) {
-      populationSize_ = populationSize ;
+      this.populationSize = populationSize ;
 
       return this ;
     }
 
     public Builder maxEvaluations(int maxEvaluations) {
-      maxEvaluations_ = maxEvaluations ;
+      this.maxEvaluations = maxEvaluations ;
+
+      return this ;
+    }
+
+    public Builder archiveSize(int archiveSize) {
+      this.archiveSize = archiveSize ;
+// QUE PASA CON EL ARCHIVO??
+      return this ;
+    }
+
+    public Builder numberOfFeedbackSolutionsFromArchive(int numberOfFeedbackSolutionsFromArchive) {
+      this.numberOfFeedbackSolutionsFromArchive = numberOfFeedbackSolutionsFromArchive ;
 
       return this ;
     }
 
     public Builder crossover(Operator crossover) {
-      crossoverOperator_ = crossover ;
+      crossoverOperator = crossover ;
 
       return this ;
     }
 
     public Builder mutation(Operator mutation) {
-      mutationOperator_ = mutation ;
+      mutationOperator = mutation ;
 
       return this ;
     }
 
     public Builder selection(Operator selection) {
-      selectionOperator_ = selection ;
+      selectionOperator = selection ;
 
       return this ;
     }
 
     public MOCellTemplate build(String mocellVariant) {
-      MOCellTemplate algorithm = null ;
+      MOCellTemplate algorithm = new AsyncMOCell1(this) ;
       /*
       if ("NSGAII".equals(NSGAIIVariant)) {
         algorithm = new NSGAII(this);

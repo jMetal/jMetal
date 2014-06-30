@@ -49,7 +49,7 @@ public class BinaryTournament extends Selection {
    * Constructor
    * Creates a new Binary tournament operator using a BinaryTournamentComparator
    */
-  @SuppressWarnings({"unchecked"})
+  @Deprecated
   public BinaryTournament(HashMap<String, Object> parameters) {
     super(parameters);
     if ((parameters != null) && (parameters.get("comparator") != null)) {
@@ -57,6 +57,12 @@ public class BinaryTournament extends Selection {
     } else {
       comparator_ = new DominanceComparator();
     }
+  }
+
+  private BinaryTournament(Builder builder) {
+    super(new HashMap<String, Object>()) ;
+
+    comparator_ = new DominanceComparator();
   }
 
   /**
@@ -88,6 +94,24 @@ public class BinaryTournament extends Selection {
       } else {
         return solution2;
       }
+    }
+  }
+
+  public static class Builder {
+    Comparator comparator ;
+
+    public Builder() {
+      comparator = new DominanceComparator() ;
+    }
+
+    public Builder comparator(Comparator comparator) {
+      this.comparator = comparator ;
+
+      return this ;
+    }
+
+    public BinaryTournament build() {
+      return new BinaryTournament(this) ;
     }
   }
 }

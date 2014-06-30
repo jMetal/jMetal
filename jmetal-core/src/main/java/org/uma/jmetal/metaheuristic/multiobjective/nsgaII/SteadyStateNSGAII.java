@@ -40,12 +40,14 @@ public class SteadyStateNSGAII extends NSGAIITemplate {
 
   public SteadyStateNSGAII(Builder builder) {
     super(builder) ;
+    /*
     problem_ = builder.problem_ ;
     maxEvaluations = builder.maxEvaluations_ ;
     crossoverOperator = builder.crossoverOperator_ ;
     mutationOperator = builder.mutationOperator_ ;
     selectionOperator = builder.selectionOperator_ ;
     populationSize = builder.populationSize_ ;
+    */
   }
 
 

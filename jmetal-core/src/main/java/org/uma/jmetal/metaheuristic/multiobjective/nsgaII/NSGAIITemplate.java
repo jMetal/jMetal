@@ -64,6 +64,7 @@ public abstract class NSGAIITemplate extends Algorithm {
   protected NSGAIITemplate(Builder builder) {
     super() ;
 
+    problem_ = builder.problem_ ;
     evaluator = builder.evaluator ;
     populationSize = builder.populationSize_ ;
     maxEvaluations = builder.maxEvaluations_ ;
@@ -121,7 +122,7 @@ public abstract class NSGAIITemplate extends Algorithm {
 
   protected void computeCrowdingDistance(Ranking ranking, int rank) throws JMetalException {
     SolutionSet currentRankedFront = ranking.getSubfront(rank) ;
-    distance.crowdingDistanceAssignment(currentRankedFront, problem_.getNumberOfObjectives());
+    distance.crowdingDistanceAssignment(currentRankedFront);
   }
 
   protected void addLastRankedSolutions(Ranking ranking, int rank) throws JMetalException {

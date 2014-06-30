@@ -542,8 +542,7 @@ public class AbYSS extends Algorithm {
         refSet2_.clear();
 
         // Sort the archive and insert the best solutions
-        distance_.crowdingDistanceAssignment(archive_,
-          problem_.getNumberOfObjectives());
+        distance_.crowdingDistanceAssignment(archive_);
         archive_.sort(crowdingDistance_);
 
         int insert = solutionSetSize_ / 2;

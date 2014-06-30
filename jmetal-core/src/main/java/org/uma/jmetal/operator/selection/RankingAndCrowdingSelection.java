@@ -100,7 +100,7 @@ public class RankingAndCrowdingSelection extends Selection {
 
     while ((remain > 0) && (remain >= front.size())) {
       //Assign crowding distance to individuals
-      distance.crowdingDistanceAssignment(front, problem.getNumberOfObjectives());
+      distance.crowdingDistanceAssignment(front);
       //Add the individuals of this front
       for (int k = 0; k < front.size(); k++) {
         result.add(front.get(k));
@@ -118,7 +118,7 @@ public class RankingAndCrowdingSelection extends Selection {
 
     //remain is less than front(index).size, insert only the best one
     if (remain > 0) {
-      distance.crowdingDistanceAssignment(front, problem.getNumberOfObjectives());
+      distance.crowdingDistanceAssignment(front);
       front.sort(crowdingComparator);
       for (int k = 0; k < remain; k++) {
         result.add(front.get(k));

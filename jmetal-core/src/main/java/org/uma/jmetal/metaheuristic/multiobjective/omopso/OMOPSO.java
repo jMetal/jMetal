@@ -294,7 +294,7 @@ public class OMOPSO extends Algorithm {
     }
 
     //Crowding the leaders_
-    distance_.crowdingDistanceAssignment(leaders_, problem_.getNumberOfObjectives());
+    distance_.crowdingDistanceAssignment(leaders_);
 
     //-> Step 7. Iterations ..        
     while (iteration_ < maxIterations_) {
@@ -333,8 +333,7 @@ public class OMOPSO extends Algorithm {
       }
 
       //Crowding the leaders_
-      distance_.crowdingDistanceAssignment(leaders_,
-        problem_.getNumberOfObjectives());
+      distance_.crowdingDistanceAssignment(leaders_);
       iteration_++;
     }
 

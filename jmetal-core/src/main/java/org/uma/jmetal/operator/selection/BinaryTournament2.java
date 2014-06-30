@@ -76,7 +76,7 @@ public class BinaryTournament2 extends Selection {
    * Performs the operation
    *
    * @param object Object representing a SolutionSet
-   * @return the selected solutiontype
+   * @return the selected solution
    */
   public Object execute(Object object) {
     SolutionSet population = (SolutionSet) object;
@@ -109,9 +109,7 @@ public class BinaryTournament2 extends Selection {
     }
   }
 
-  /**
-   * Builder class
-   */
+  /** Builder class */
   public static class Builder {
 
     public Builder() {

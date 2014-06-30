@@ -143,7 +143,7 @@ public class sMOCell2 extends Algorithm {
           Ranking rank = new Ranking(neighbors[ind]);
           for (int j = 0; j < rank.getNumberOfSubfronts(); j++) {
             distance
-              .crowdingDistanceAssignment(rank.getSubfront(j), problem_.getNumberOfObjectives());
+              .crowdingDistanceAssignment(rank.getSubfront(j));
           }
           boolean deleteMutant = true;
 

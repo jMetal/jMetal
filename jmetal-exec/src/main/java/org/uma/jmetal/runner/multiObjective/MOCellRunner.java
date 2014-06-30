@@ -25,18 +25,20 @@ import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristic.multiobjective.mocell.MOCell;
-import org.uma.jmetal.operator.crossover.CrossoverFactory;
-import org.uma.jmetal.operator.mutation.MutationFactory;
-import org.uma.jmetal.operator.selection.SelectionFactory;
+import org.uma.jmetal.metaheuristic.multiobjective.mocell.AsyncMOCell1;
+import org.uma.jmetal.operator.crossover.SBXCrossover;
+import org.uma.jmetal.operator.mutation.PolynomialMutation;
+import org.uma.jmetal.operator.selection.BinaryTournament;
 import org.uma.jmetal.problem.Kursawe;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.qualityIndicator.QualityIndicator;
+import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
+import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
@@ -94,50 +96,44 @@ public class MOCellRunner {
       //problem = new OKA2("Real") ;
     }
 
-    //algorithm = new sMOCell1(problem_) ;
-    //algorithm = new sMOCell2(problem_) ;
-    //algorithm = new aMOCell1(problem_) ;
-    //algorithm = new aMOCell2(problem_) ;
-    //algorithm = new aMOCell3(problem_) ;
-    algorithm = new MOCell();
-    algorithm.setProblem(problem);
+    crossover = new SBXCrossover.Builder()
+      .probability(0.9)
+      .distributionIndex(20.0)
+      .build();
 
-    // Algorithm parameters
-    algorithm.setInputParameter("populationSize", 100);
-    algorithm.setInputParameter("archiveSize", 100);
-    algorithm.setInputParameter("maxEvaluations", 25000);
-    algorithm.setInputParameter("feedBack", 20);
+    mutation = new PolynomialMutation.Builder()
+      .probability(1.0 / problem.getNumberOfVariables())
+      .distributionIndex(20.0)
+      .build();
 
-    // Mutation and Crossover for Real codification 
-    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
-    crossoverParameters.put("probability", 0.9);
-    crossoverParameters.put("distributionIndex", 20.0);
-    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", crossoverParameters);
+    selection = new BinaryTournament.Builder()
+      .build();
 
-    HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
-    mutationParameters.put("probability", 1.0 / problem.getNumberOfVariables());
-    mutationParameters.put("distributionIndex", 20.0);
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
+    algorithm = new AsyncMOCell1.Builder(problem)
+      .populationSize(100)
+      .archiveSize(100)
+      .maxEvaluations(25000)
+      .numberOfFeedbackSolutionsFromArchive(20)
+      .crossover(crossover)
+      .mutation(mutation)
+      .selection(selection)
+      .build("");
 
-    // Selection Operator 
-    HashMap<String, Object> selectionParameters = null; // FIXME: why we are passing null?
-    selection = SelectionFactory.getSelectionOperator("BinaryTournament", selectionParameters);
+    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+      .execute();
 
-    // Add the operator to the algorithm
-    algorithm.addOperator("crossover", crossover);
-    algorithm.addOperator("mutation", mutation);
-    algorithm.addOperator("selection", selection);
+    SolutionSet population = algorithmRunner.getSolutionSet();
+    long computingTime = algorithmRunner.getComputingTime();
 
-    long initTime = System.currentTimeMillis();
-    SolutionSet population = algorithm.execute();
-    long estimatedTime = System.currentTimeMillis() - initTime;
+    new SolutionSetOutput.Printer(population)
+      .separator("\t")
+      .varFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+      .funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+      .print();
 
-    // Result messages 
-    logger_.info("Total execution time: " + estimatedTime + "ms");
-    logger_.info("Objectives values have been writen to file FUN");
-    population.printObjectivesToFile("FUN");
-    logger_.info("Variables values have been writen to file VAR");
-    population.printVariablesToFile("VAR");
+    logger_.info("Total execution time: " + computingTime + "ms");
+    logger_.info("Objectives values have been written to file FUN.tsv");
+    logger_.info("Variables values have been written to file VAR.tsv");
 
     if (indicators != null) {
       logger_.info("Quality indicators");

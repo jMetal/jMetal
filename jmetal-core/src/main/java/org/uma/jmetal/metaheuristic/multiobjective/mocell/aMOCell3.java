@@ -38,6 +38,14 @@ import java.util.Comparator;
  * based on aMOCell1 but replacing the worst neighbor.
  */
 public class aMOCell3 extends Algorithm {
+  int evaluations ;
+  int maxEvaluations ;
+  int populationSize ;
+  int archiveSize ;
+  Operator mutationOperator ;
+  Operator crossoverOperator ;
+  Operator selectionOperator ;
+
 
   /**
    *
@@ -54,8 +62,7 @@ public class aMOCell3 extends Algorithm {
    * @throws org.uma.jmetal.util.JMetalException
    */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
-    int populationSize, archiveSize, maxEvaluations, evaluations, feedBack;
-    Operator mutationOperator, crossoverOperator, selectionOperator;
+    int feedBack;
     SolutionSet population;
     CrowdingArchive archive;
     SolutionSet[] neighbors;
@@ -133,7 +140,7 @@ public class aMOCell3 extends Algorithm {
           Ranking rank = new Ranking(neighbors[ind]);
           for (int j = 0; j < rank.getNumberOfSubfronts(); j++) {
             distance
-              .crowdingDistanceAssignment(rank.getSubfront(j), problem_.getNumberOfObjectives());
+              .crowdingDistanceAssignment(rank.getSubfront(j));
           }
           Solution worst = neighbors[ind].worst(crowdingComparator);
 
@@ -148,7 +155,7 @@ public class aMOCell3 extends Algorithm {
       }
 
       //Store a portion of the archive into the population
-      distance.crowdingDistanceAssignment(archive, problem_.getNumberOfObjectives());
+      distance.crowdingDistanceAssignment(archive);
       for (int j = 0; j < feedBack; j++) {
         if (archive.size() > j) {
           int r = PseudoRandom.randInt(0, population.size() - 1);

@@ -137,8 +137,7 @@ public class aMOCell2 extends Algorithm {
           neighbors[ind].add(offSpring[0]);
           Ranking rank = new Ranking(neighbors[ind]);
           for (int j = 0; j < rank.getNumberOfSubfronts(); j++) {
-            distance
-              .crowdingDistanceAssignment(rank.getSubfront(j), problem_.getNumberOfObjectives());
+            distance.crowdingDistanceAssignment(rank.getSubfront(j));
           }
 
           boolean deleteMutant = true;

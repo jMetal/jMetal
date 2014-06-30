@@ -128,7 +128,7 @@ public class FastPGA extends Algorithm {
 
       // Rank
       Ranking ranking = new Ranking(candidateSolutionSet);
-      distance.crowdingDistanceAssignment(ranking.getSubfront(0), problem_.getNumberOfObjectives());
+      distance.crowdingDistanceAssignment(ranking.getSubfront(0));
       FPGAFitness fitness = new FPGAFitness(candidateSolutionSet, problem_);
       fitness.fitnessAssign();
 

@@ -142,8 +142,7 @@ public class sMOCell1 extends Algorithm {
           neighbors[ind].add(offSpring[0]);
           Ranking rank = new Ranking(neighbors[ind]);
           for (int j = 0; j < rank.getNumberOfSubfronts(); j++) {
-            distance
-              .crowdingDistanceAssignment(rank.getSubfront(j), problem_.getNumberOfObjectives());
+            distance.crowdingDistanceAssignment(rank.getSubfront(j));
           }
 
           boolean deleteMutant = true;
@@ -163,7 +162,7 @@ public class sMOCell1 extends Algorithm {
         }
       }
       //Store a portion of the archive into the population
-      distance.crowdingDistanceAssignment(archive, problem_.getNumberOfObjectives());
+      distance.crowdingDistanceAssignment(archive);
       for (int j = 0; j < feedBack; j++) {
         if (archive.size() > j) {
           int r = PseudoRandom.randInt(0, population.size() - 1);

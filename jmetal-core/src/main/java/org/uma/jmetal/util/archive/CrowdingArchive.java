@@ -119,16 +119,16 @@ public class CrowdingArchive extends Archive {
         if (equals_.compare(aux, solution) == 0) { // There is an equal solutiontype
           // in the population
           return false; // Discard the new solutiontype
-        }  // if
+        }
         i++;
       }
     }
     // Insert the solutiontype into the archive
     solutionsList_.add(solution);
     if (size() > maxSize_) { // The archive is full
-      distance_.crowdingDistanceAssignment(this, objectives_);
+      distance_.crowdingDistanceAssignment(this);
       remove(indexWorst(crowdingDistance_));
     }
     return true;
-  } // add
-} // CrowdingArchive
+  }
+}

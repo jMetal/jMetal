@@ -206,7 +206,7 @@ public class GDE3 extends Algorithm {
 
   protected void computeCrowdingDistance(Ranking ranking, int rank) throws JMetalException {
     SolutionSet currentRankedFront = ranking.getSubfront(rank) ;
-    distance_.crowdingDistanceAssignment(currentRankedFront, problem_.getNumberOfObjectives());
+    distance_.crowdingDistanceAssignment(currentRankedFront);
   }
 
   protected void addLastRankedSolutions(Ranking ranking, int rank) throws JMetalException {

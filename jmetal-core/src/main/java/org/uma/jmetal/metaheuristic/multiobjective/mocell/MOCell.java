@@ -135,8 +135,7 @@ public class MOCell extends Algorithm {
           offSpring[0].setLocation(-1);
           Ranking rank = new Ranking(neighbors[ind]);
           for (int j = 0; j < rank.getNumberOfSubfronts(); j++) {
-            distance.crowdingDistanceAssignment(rank.getSubfront(j),
-              problem_.getNumberOfObjectives());
+            distance.crowdingDistanceAssignment(rank.getSubfront(j));
           }
           Solution worst = neighbors[ind].worst(crowdingComparator);
 

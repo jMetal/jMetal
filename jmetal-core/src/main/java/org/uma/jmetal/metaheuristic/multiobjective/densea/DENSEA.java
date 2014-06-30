@@ -113,7 +113,7 @@ public class DENSEA extends Algorithm {
 
       r = new Ranking(P3);
       for (int i = 0; i < r.getNumberOfSubfronts(); i++) {
-        distance.crowdingDistanceAssignment(r.getSubfront(i), problem_.getNumberOfObjectives());
+        distance.crowdingDistanceAssignment(r.getSubfront(i));
       }
       P3.sort(new CrowdingComparator());
 
@@ -133,7 +133,7 @@ public class DENSEA extends Algorithm {
 
       r = new Ranking(population);
       for (int i = 0; i < r.getNumberOfSubfronts(); i++) {
-        distance.crowdingDistanceAssignment(r.getSubfront(i), problem_.getNumberOfObjectives());
+        distance.crowdingDistanceAssignment(r.getSubfront(i));
       }
     }
     r = new Ranking(population);

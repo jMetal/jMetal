@@ -151,7 +151,7 @@ public class NSGAIIAdaptive extends NSGAIITemplate {
 
       while ((remain > 0) && (remain >= front.size())) {
         //Assign crowding distance to individuals
-        distance.crowdingDistanceAssignment(front, problem_.getNumberOfObjectives());
+        distance.crowdingDistanceAssignment(front);
         //Add the individuals of this front
         for (int k = 0; k < front.size(); k++) {
           population_.add(front.get(k));
@@ -169,7 +169,7 @@ public class NSGAIIAdaptive extends NSGAIITemplate {
 
       // Remain is less than front(index).size, insert only the best one
       if (remain > 0) {  // front contains individuals to insert
-        distance.crowdingDistanceAssignment(front, problem_.getNumberOfObjectives());
+        distance.crowdingDistanceAssignment(front);
         front.sort(new CrowdingComparator());
         for (int k = 0; k < remain; k++) {
           population_.add(front.get(k));

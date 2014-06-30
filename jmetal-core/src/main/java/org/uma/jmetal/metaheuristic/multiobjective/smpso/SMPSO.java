@@ -283,7 +283,7 @@ public class SMPSO extends Algorithm {
 
   protected void updateLeadersDensityEstimator() {
     if (leaders_ instanceof CrowdingArchive) {
-      distance_.crowdingDistanceAssignment(leaders_, problem_.getNumberOfObjectives());
+      distance_.crowdingDistanceAssignment(leaders_);
     } else if (leaders_ instanceof FastHypervolumeArchive) {
       ((FastHypervolumeArchive)leaders_).computeHVContribution();
     } else {
