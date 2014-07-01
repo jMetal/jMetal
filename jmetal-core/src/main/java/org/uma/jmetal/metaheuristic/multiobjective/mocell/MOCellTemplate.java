@@ -161,7 +161,7 @@ public abstract class MOCellTemplate extends Algorithm {
 
     public Builder archiveSize(int archiveSize) {
       this.archiveSize = archiveSize ;
-// QUE PASA CON EL ARCHIVO??
+      // QUE PASA CON EL ARCHIVO??
       return this ;
     }
 
@@ -194,18 +194,9 @@ public abstract class MOCellTemplate extends Algorithm {
       switch (mocellVariant) {
         case "AsyncMOCell1": algorithm = new AsyncMOCell1(this) ; break ;
         case "AsyncMOCell2": algorithm = new AsyncMOCell2(this) ; break ;
+        case "AsyncMOCell3": algorithm = new AsyncMOCell3(this) ; break ;
+        case "AsyncMOCell4": algorithm = new AsyncMOCell4(this) ; break ;
       }
-      /*
-      if ("NSGAII".equals(NSGAIIVariant)) {
-        algorithm = new NSGAII(this);
-      } else if ("SteadyStateNSGAII".equals(NSGAIIVariant)) {
-        algorithm =  new SteadyStateNSGAII(this) ;
-      } else {
-        throw new JMetalException(NSGAIIVariant + " variant unknown") ;
-      }
-
-*/
-
       return algorithm ;
     }
   }

@@ -1,4 +1,4 @@
-//  AsyncMOCell2.java (Formerly: aMOCell2.java)
+//  AsyncMOCell4 (Formerly: aMOCell4.java)
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -24,46 +24,44 @@ package org.uma.jmetal.metaheuristic.multiobjective.mocell;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.util.Distance;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.Neighborhood;
 import org.uma.jmetal.util.Ranking;
+import org.uma.jmetal.util.archive.CrowdingArchive;
 
 /**
- * This class represents an asynchronous version of the MOCell algorithm, which
- * applies an archive feedback through parent selection.
+ * This class represents an asynchronous version of MOCell algorithm, combining
+ * AsyncMOCell2 and AsybcMOCell3. It is the aMOCell4 variant described in:
+ * A.J. Nebro, J.J. Durillo, F. Luna, B. Dorronsoro, E. Alba
+ * "Design Issues in a Multiobjective Cellular Genetic Algorithm."
+ * Evolutionary Multi-Criterion Optimization. 4th International Conference,
+ * EMO 2007. Sendai/Matsushima, Japan, March 2007.
  */
-public class AsyncMOCell2 extends MOCellTemplate {
+public class AsyncMOCell4 extends MOCellTemplate {
 
   /**
    *
    */
-  private static final long serialVersionUID = 6036292773938388363L;
+  private static final long serialVersionUID = -2479285259392945976L;
 
-
-  /**
-   * Constructor
-   */
-  public AsyncMOCell2(Builder builder) {
+  public AsyncMOCell4(Builder builder) {
     super(builder);
   }
 
-
   /**
-   * Runs of the AsyncMOCell2 algorithm.
+   * Execute the algorithm
    *
-   * @return a SolutionSet that is a set of non dominated solutions
-   * as a result of the algorithm execution
    * @throws org.uma.jmetal.util.JMetalException
    */
-  public SolutionSet execute() throws ClassNotFoundException {
+  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     population = new SolutionSet(populationSize);
+    archive = new CrowdingArchive(archiveSize, problem_.getNumberOfObjectives());
     neighborhood = new Neighborhood(populationSize);
     neighbors = new SolutionSet[populationSize];
 
     evaluations = 0;
 
     createInitialPopulation();
-    population = evaluatePopulation(population) ;
-    evaluations += population.size() ;
 
     while (!stoppingCondition()) {
       for (int ind = 0; ind < population.size(); ind++) {
@@ -97,38 +95,24 @@ public class AsyncMOCell2 extends MOCellTemplate {
           archive.add(new Solution(offSpring[0]));
         } else if (flag == 0) {
           neighbors[ind].add(offSpring[0]);
+          offSpring[0].setLocation(-1);
           Ranking rank = new Ranking(neighbors[ind]);
           for (int j = 0; j < rank.getNumberOfSubfronts(); j++) {
             Distance.crowdingDistance(rank.getSubfront(j));
           }
+          Solution worst = neighbors[ind].worst(densityEstimatorComparator);
 
-          /*
-          boolean deleteMutant = true;
-
-          int compareResult = densityEstimatorComparator.compare(individual, offSpring[0]);
-          if (compareResult == 1) {
-            deleteMutant = false;
-          }
-
-          if (!deleteMutant) {
-            offSpring[0].setLocation(individual.getLocation());
-            population.replace(offSpring[0].getLocation(), offSpring[0]);
+          if (worst.getLocation() == -1) {
             archive.add(new Solution(offSpring[0]));
           } else {
-            archive.add(new Solution(offSpring[0]));
-          }
-          */
-          int compareResult = densityEstimatorComparator.compare(individual, offSpring[0]);
-          if (compareResult == 1) {
-            offSpring[0].setLocation(individual.getLocation());
+            offSpring[0].setLocation(worst.getLocation());
             population.replace(offSpring[0].getLocation(), offSpring[0]);
-            archive.add(new Solution(offSpring[0]));
-          } else {
             archive.add(new Solution(offSpring[0]));
           }
         }
       }
     }
+
     return archive;
   }
 }

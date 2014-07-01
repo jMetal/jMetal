@@ -1,4 +1,4 @@
-//  AsyncMOCell1.java
+//  AsyncMOCell1.java  (formerly: aMOCell1.java)
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -39,7 +39,7 @@ public class AsyncMOCell1 extends MOCellTemplate {
   }
 
   /**
-   * Runs of the aMOCell1 algorithm.
+   * Runs of the AsyncMOCell1 algorithm.
    *
    * @return a SolutionSet that is a set of non dominated solutions
    * as a result of the algorithm execution
