@@ -78,7 +78,7 @@ public class MOCellSettings extends Settings {
   }
 
   /**
-   * Configure the MOCell algorithm with default parameter experiment.settings
+   * Configure the MOCell algorithm with default parameter settings
    *
    * @return an algorithm object
    * @throws org.uma.jmetal.util.JMetalException
@@ -96,6 +96,7 @@ public class MOCellSettings extends Settings {
     //algorithm = new aMOCell1(problem_) ;
     //algorithm = new aMOCell2(problem_) ;
     //algorithm = new aMOCell3(problem_) ;
+    //algorithm = new aMOCell4(problem_) ;
 
     crossover = new SBXCrossover.Builder()
       .probability(crossoverProbability)
@@ -118,13 +119,13 @@ public class MOCellSettings extends Settings {
       .crossover(crossover)
       .mutation(mutation)
       .selection(selection)
-      .build("AsyncMOCell1");
+      .build(mocellVariant);
 
     return algorithm;
   }
 
   /**
-   * Configure MOCell with user-defined parameter experiment.settings
+   * Configure MOCell with user-defined parameter settings
    *
    * @return A MOCell algorithm object
    */
@@ -148,6 +149,8 @@ public class MOCellSettings extends Settings {
       configuration.getProperty("mutationProbability", String.valueOf(mutationProbability)));
     mutationDistributionIndex = Double.parseDouble(configuration
       .getProperty("mutationDistributionIndex", String.valueOf(mutationDistributionIndex)));
+
+    mocellVariant = configuration.getProperty("MOCellVariant", mocellVariant) ;
 
     return configure();
   }

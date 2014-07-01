@@ -196,6 +196,10 @@ public abstract class MOCellTemplate extends Algorithm {
         case "AsyncMOCell2": algorithm = new AsyncMOCell2(this) ; break ;
         case "AsyncMOCell3": algorithm = new AsyncMOCell3(this) ; break ;
         case "AsyncMOCell4": algorithm = new AsyncMOCell4(this) ; break ;
+        case "SyncMOCell1": algorithm = new SyncMOCell1(this) ; break ;
+        case "SyncMOCell2": algorithm = new SyncMOCell2(this) ; break ;
+        default:
+          throw new JMetalException("MOCell variant unknown: " + mocellVariant) ;
       }
       return algorithm ;
     }
