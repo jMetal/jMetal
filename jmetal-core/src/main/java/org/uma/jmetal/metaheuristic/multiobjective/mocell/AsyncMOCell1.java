@@ -49,13 +49,14 @@ public class AsyncMOCell1 extends MOCellTemplate {
     population = new SolutionSet(populationSize);
     neighborhood = new Neighborhood(populationSize);
     neighbors = new SolutionSet[populationSize];
+
     evaluations = 0;
 
     createInitialPopulation();
     population = evaluatePopulation(population) ;
     evaluations += population.size() ;
 
-    while (evaluations < maxEvaluations) {
+    while (!stoppingCondition()) {
       for (int ind = 0; ind < population.size(); ind++) {
         Solution individual = new Solution(population.get(ind));
 
@@ -87,7 +88,7 @@ public class AsyncMOCell1 extends MOCellTemplate {
           for (int j = 0; j < rank.getNumberOfSubfronts(); j++) {
             Distance.crowdingDistance(rank.getSubfront(j)) ;
           }
-
+           /*
           boolean deleteMutant = true;
           int compareResult = densityEstimatorComparator.compare(individual, offSpring[0]);
           if (compareResult == 1) {
@@ -95,6 +96,16 @@ public class AsyncMOCell1 extends MOCellTemplate {
           }
 
           if (!deleteMutant) {
+            offSpring[0].setLocation(individual.getLocation());
+            population.replace(offSpring[0].getLocation(), offSpring[0]);
+            archive.add(new Solution(offSpring[0]));
+          } else {
+            archive.add(new Solution(offSpring[0]));
+          }
+          */
+
+          int compareResult = densityEstimatorComparator.compare(individual, offSpring[0]);
+          if (compareResult == 1) {
             offSpring[0].setLocation(individual.getLocation());
             population.replace(offSpring[0].getLocation(), offSpring[0]);
             archive.add(new Solution(offSpring[0]));

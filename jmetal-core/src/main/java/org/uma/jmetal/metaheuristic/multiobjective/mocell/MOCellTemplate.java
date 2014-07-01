@@ -103,6 +103,10 @@ public abstract class MOCellTemplate extends Algorithm {
     return population ;
   }
 
+  protected boolean stoppingCondition() {
+    return evaluations < maxEvaluations ;
+  }
+
   protected void archiveFeedback() {
     Distance.crowdingDistance(archive);
     for (int j = 0; j < numberOfFeedbackSolutionsFromArchive; j++) {
@@ -186,7 +190,11 @@ public abstract class MOCellTemplate extends Algorithm {
     }
 
     public MOCellTemplate build(String mocellVariant) {
-      MOCellTemplate algorithm = new AsyncMOCell1(this) ;
+      MOCellTemplate algorithm = null ;
+      switch (mocellVariant) {
+        case "AsyncMOCell1": algorithm = new AsyncMOCell1(this) ; break ;
+        case "AsyncMOCell2": algorithm = new AsyncMOCell2(this) ; break ;
+      }
       /*
       if ("NSGAII".equals(NSGAIIVariant)) {
         algorithm = new NSGAII(this);
