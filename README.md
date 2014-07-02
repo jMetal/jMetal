@@ -81,6 +81,7 @@ The list of metaheuristics that have been redesigned using clean coding is:
 * SMPSO
 * PAES
 * MOCHC
+* MOCell
 
 ### Fluent interface
 We apply the Fluent Interface to the creation of operators, the configuration of algorithms, and
