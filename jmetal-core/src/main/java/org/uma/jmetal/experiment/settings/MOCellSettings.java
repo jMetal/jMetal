@@ -90,14 +90,6 @@ public class MOCellSettings extends Settings {
     Mutation mutation;
     Operator selection;
 
-    // Selecting the algorithm: there are six MOCell variants
-    //algorithm = new sMOCell1(problem_) ;
-    //algorithm = new sMOCell2(problem_) ;
-    //algorithm = new aMOCell1(problem_) ;
-    //algorithm = new aMOCell2(problem_) ;
-    //algorithm = new aMOCell3(problem_) ;
-    //algorithm = new aMOCell4(problem_) ;
-
     crossover = new SBXCrossover.Builder()
       .probability(crossoverProbability)
       .distributionIndex(crossoverDistributionIndex)
@@ -111,6 +103,14 @@ public class MOCellSettings extends Settings {
     selection = new BinaryTournament.Builder()
       .build();
 
+    // Selecting the algorithm: there are six MOCell variants
+    //algorithm = new sMOCell1(problem_) ;
+    //algorithm = new sMOCell2(problem_) ;
+    //algorithm = new aMOCell1(problem_) ;
+    //algorithm = new aMOCell2(problem_) ;
+    //algorithm = new aMOCell3(problem_) ;
+    //algorithm = new aMOCell4(problem_) ;
+
     algorithm = new MOCellTemplate.Builder(problem_)
       .populationSize(populationSize)
       .archiveSize(archiveSize)
@@ -122,6 +122,12 @@ public class MOCellSettings extends Settings {
       .build(mocellVariant);
 
     return algorithm;
+  }
+
+  public Algorithm configure(String mocellVariant) {
+    this.mocellVariant = mocellVariant ;
+
+    return configure() ;
   }
 
   /**

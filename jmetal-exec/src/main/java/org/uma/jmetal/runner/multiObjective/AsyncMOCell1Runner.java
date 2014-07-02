@@ -24,7 +24,7 @@ import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristic.multiobjective.mocell.AsyncMOCell1;
+import org.uma.jmetal.metaheuristic.multiobjective.mocell.MOCellTemplate;
 import org.uma.jmetal.operator.crossover.SBXCrossover;
 import org.uma.jmetal.operator.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.selection.BinaryTournament;
@@ -108,7 +108,7 @@ public class AsyncMOCell1Runner {
     selection = new BinaryTournament.Builder()
       .build();
 
-    algorithm = new AsyncMOCell1.Builder(problem)
+    algorithm = new MOCellTemplate.Builder(problem)
       .populationSize(100)
       .archiveSize(100)
       .maxEvaluations(25000)

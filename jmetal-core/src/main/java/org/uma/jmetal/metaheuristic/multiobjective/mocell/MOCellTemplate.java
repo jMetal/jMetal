@@ -1,3 +1,24 @@
+//  MOCellTemplate
+//
+//  Author:
+//       Antonio J. Nebro <antonio@lcc.uma.es>
+//       Juan J. Durillo <durillo@lcc.uma.es>
+//
+//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU Lesser General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU Lesser General Public License for more details.
+//
+//  You should have received a copy of the GNU Lesser General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 package org.uma.jmetal.metaheuristic.multiobjective.mocell;
 
 import org.uma.jmetal.core.*;
@@ -104,7 +125,7 @@ public abstract class MOCellTemplate extends Algorithm {
   }
 
   protected boolean stoppingCondition() {
-    return evaluations < maxEvaluations ;
+    return evaluations >= maxEvaluations ;
   }
 
   protected void archiveFeedback() {
@@ -161,7 +182,7 @@ public abstract class MOCellTemplate extends Algorithm {
 
     public Builder archiveSize(int archiveSize) {
       this.archiveSize = archiveSize ;
-      // QUE PASA CON EL ARCHIVO??
+      //FIXME: Do we have to modify the archive?????
       return this ;
     }
 
@@ -190,7 +211,7 @@ public abstract class MOCellTemplate extends Algorithm {
     }
 
     public MOCellTemplate build(String mocellVariant) {
-      MOCellTemplate algorithm = null ;
+      MOCellTemplate algorithm ;
       switch (mocellVariant) {
         case "AsyncMOCell1": algorithm = new AsyncMOCell1(this) ; break ;
         case "AsyncMOCell2": algorithm = new AsyncMOCell2(this) ; break ;
