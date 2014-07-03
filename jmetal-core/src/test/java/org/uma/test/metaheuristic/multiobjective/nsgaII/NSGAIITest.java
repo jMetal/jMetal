@@ -18,13 +18,13 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.test.metaheuristic.nsgaII;
+package org.uma.test.metaheuristic.multiobjective.nsgaII;
 
+import org.junit.Test;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.experiment.settings.NSGAIISettings;
 import org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII;
-import org.junit.Test;
 
 import java.io.IOException;
 
@@ -38,7 +38,7 @@ public class NSGAIITest {
   Algorithm algorithm;
 
   @Test
-  public void testNumberOfReturnedSolutionsInEasyProblem() throws IOException, ClassNotFoundException {
+  public void numberOfReturnedSolutionsInEasyProblemTest() throws IOException, ClassNotFoundException {
     algorithm = new NSGAIISettings("Kursawe").configure() ;
 
     SolutionSet solutionSet = algorithm.execute() ;
@@ -50,5 +50,4 @@ public class NSGAIITest {
     assertTrue(solutionSet.size() >= 98) ;
     assertEquals(defaultMaxEvaluations, ((NSGAII) algorithm).getEvaluations());
   }
-
 }

@@ -97,6 +97,8 @@ public abstract class NSGAIITemplate extends Algorithm {
   }
 
   protected SolutionSet evaluatePopulation(SolutionSet population) throws JMetalException {
+    evaluations += population.size() ;
+
     return evaluator.evaluate(population, problem_) ;
   }
 
@@ -147,6 +149,20 @@ public abstract class NSGAIITemplate extends Algorithm {
 
   protected SolutionSet getNonDominatedSolutions() throws JMetalException {
     return new Ranking(population).getSubfront(0);
+  }
+
+  protected void crowdingDistanceSelection(Ranking ranking) {
+    population.clear();
+    int rankingIndex = 0;
+    while (populationIsNotFull()) {
+      if (subfrontFillsIntoThePopulation(ranking, rankingIndex)) {
+        addRankedSolutionsToPopulation(ranking, rankingIndex);
+        rankingIndex++;
+      } else {
+        computeCrowdingDistance(ranking, rankingIndex);
+        addLastRankedSolutions(ranking, rankingIndex);
+      }
+    }
   }
 
   protected void tearDown() {
