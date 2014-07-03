@@ -69,7 +69,7 @@ public class ArrayInt extends Variable {
     }
   }
 
-  public ArrayInt(int size, double[] lowerBounds, double[] upperBounds) {
+  public ArrayInt(int size, int[] lowerBounds, int[] upperBounds) {
     size_ = size;
     array_ = new int[size_];
 
@@ -128,7 +128,7 @@ public class ArrayInt extends Variable {
     }
   }
 
-  public double getLowerBound(int index) throws JMetalException {
+  public int getLowerBound(int index) throws JMetalException {
     if ((index >= 0) && (index < size_)) {
       return lowerBounds_[index];
     } else {
@@ -139,7 +139,7 @@ public class ArrayInt extends Variable {
     }
   }
 
-  public double getUpperBound(int index) throws JMetalException {
+  public int getUpperBound(int index) throws JMetalException {
     if ((index >= 0) && (index < size_)) {
       return upperBounds_[index];
     } else {

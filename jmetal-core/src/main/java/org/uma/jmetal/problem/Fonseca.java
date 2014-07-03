@@ -57,7 +57,7 @@ public class Fonseca extends Problem {
     for (int var = 0; var < numberOfVariables_; var++) {
       lowerLimit_[var] = -4.0;
       upperLimit_[var] = 4.0;
-    } // for
+    }
 
     if (solutionType.compareTo("BinaryReal") == 0) {
       solutionType_ = new BinaryRealSolutionType(this);

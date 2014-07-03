@@ -78,12 +78,12 @@ public class IntRealSolutionType extends SolutionType implements IntSolutionType
     solution.getDecisionVariables()[index].setValue(value);
   }
 
-  @Override public double getIntUpperBound(Solution solution, int index) {
-    return solution.getDecisionVariables()[index].getUpperBound();
+  @Override public int getIntUpperBound(Solution solution, int index) {
+    return (int)solution.getDecisionVariables()[index].getUpperBound();
   }
 
-  @Override public double getIntLowerBound(Solution solution, int index) {
-    return solution.getDecisionVariables()[index].getLowerBound();
+  @Override public int getIntLowerBound(Solution solution, int index) {
+    return (int)solution.getDecisionVariables()[index].getLowerBound();
   }
 
   @Override public int getNumberOfIntVariables(Solution solution) {

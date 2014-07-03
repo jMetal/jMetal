@@ -80,11 +80,11 @@ public class ArrayIntSolutionType extends SolutionType implements IntSolutionTyp
     return ((ArrayInt) (solution.getDecisionVariables()[0])).getArray().length ;
   }
 
-  @Override public double getIntUpperBound(Solution solution, int index) {
+  @Override public int getIntUpperBound(Solution solution, int index) {
     return ((ArrayInt) (solution.getDecisionVariables()[0])).getLowerBound(index) ;
   }
 
-  @Override public double getIntLowerBound(Solution solution, int index) {
+  @Override public int getIntLowerBound(Solution solution, int index) {
     return ((ArrayInt) (solution.getDecisionVariables()[0])).getLowerBound(index) ;
   }
 }

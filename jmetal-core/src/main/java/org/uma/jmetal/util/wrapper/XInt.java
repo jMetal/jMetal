@@ -74,7 +74,7 @@ public class XInt {
   /*
    * Static methods
    */
-  public static double getValue(Solution solution, int index) {
+  public static int getValue(Solution solution, int index) {
     if (solution.getType() instanceof IntSolutionTypeTemplate) {
       return ((IntSolutionTypeTemplate) solution.getType()).getIntValue(solution, index);
     } else {
@@ -92,7 +92,7 @@ public class XInt {
     }
   }
 
-  public static double getNumberOfDecisionVariables(Solution solution) {
+  public static int getNumberOfDecisionVariables(Solution solution) {
     if (solution.getType() instanceof IntSolutionTypeTemplate) {
       return ((IntSolutionTypeTemplate) solution.getType()).getNumberOfIntVariables(solution) ;
     } else {
@@ -101,7 +101,7 @@ public class XInt {
     }
   }
 
-  public static double getUpperBound(Solution solution, int index) {
+  public static int getUpperBound(Solution solution, int index) {
     if (solution.getType() instanceof IntSolutionTypeTemplate) {
       return ((IntSolutionTypeTemplate) solution.getType()).getIntUpperBound(solution, index);
     } else {
@@ -110,7 +110,7 @@ public class XInt {
     }
   }
 
-  public static double getLowerBound(Solution solution, int index) {
+  public static int getLowerBound(Solution solution, int index) {
     if (solution.getType() instanceof IntSolutionTypeTemplate) {
       return ((IntSolutionTypeTemplate) solution.getType()).getIntLowerBound(solution, index);
     } else {
