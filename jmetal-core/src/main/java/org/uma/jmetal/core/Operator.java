@@ -101,7 +101,7 @@ public abstract class Operator implements Serializable {
   /**
    * Test for solutions having a solutiontype type to which the operator is applicable
    * @param solution Solution to the checked
-   * @return True if the solutiontype type of the solutiontype is valid
+   * @return True if the solutiontype type of the solution is valid
    */
   public boolean solutionTypeIsValid(Solution solution) {
     boolean result ;

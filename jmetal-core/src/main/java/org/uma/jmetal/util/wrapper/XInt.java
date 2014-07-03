@@ -55,11 +55,11 @@ public class XInt {
     return ((IntSolutionTypeTemplate)type_).getNumberOfIntVariables(solution_) ;
   }
 
-  public double getUpperBound(int index) {
+  public int getUpperBound(int index) {
     return ((IntSolutionTypeTemplate)type_).getIntUpperBound(solution_, index) ;
   }
 
-  public double getLowerBound(int index) {
+  public int getLowerBound(int index) {
     return ((IntSolutionTypeTemplate)type_).getIntLowerBound(solution_, index) ;
   }
 
@@ -79,7 +79,7 @@ public class XInt {
       return ((IntSolutionTypeTemplate) solution.getType()).getIntValue(solution, index);
     } else {
       throw new JMetalException(
-        "The solutiontype type of the solutiontype is invalid: " + solution.getType());
+        "The solutiontype type of the solution is invalid: " + solution.getType());
     }
   }
 
@@ -88,7 +88,7 @@ public class XInt {
       ((IntSolutionTypeTemplate) solution.getType()).setIntValue(solution, index, value);
     } else {
       throw new JMetalException(
-        "The solutiontype type of the solutiontype is invalid: " + solution.getType());
+        "The solutiontype type of the solution is invalid: " + solution.getType());
     }
   }
 
@@ -97,7 +97,7 @@ public class XInt {
       return ((IntSolutionTypeTemplate) solution.getType()).getNumberOfIntVariables(solution) ;
     } else {
       throw new JMetalException(
-        "The solutiontype type of the solutiontype is invalid: " + solution.getType());
+        "The solutiontype type of the solution is invalid: " + solution.getType());
     }
   }
 
@@ -106,7 +106,7 @@ public class XInt {
       return ((IntSolutionTypeTemplate) solution.getType()).getIntUpperBound(solution, index);
     } else {
       throw new JMetalException(
-        "The solutiontype type of the solutiontype is invalid: " + solution.getType());
+        "The solutiontype type of the solution is invalid: " + solution.getType());
     }
   }
 
@@ -115,7 +115,7 @@ public class XInt {
       return ((IntSolutionTypeTemplate) solution.getType()).getIntLowerBound(solution, index);
     } else {
       throw new JMetalException(
-        "The solutiontype type of the solutiontype is invalid: " + solution.getType());
+        "The solutiontype type of the solution is invalid: " + solution.getType());
     }
   }
   

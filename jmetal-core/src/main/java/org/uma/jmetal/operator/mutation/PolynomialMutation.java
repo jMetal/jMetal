@@ -22,10 +22,14 @@
 package org.uma.jmetal.operator.mutation;
 
 import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.core.SolutionType;
+import org.uma.jmetal.encoding.solutiontype.ArrayIntSolutionType;
 import org.uma.jmetal.encoding.solutiontype.ArrayRealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.IntSolutionType;
 import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
+import org.uma.jmetal.util.wrapper.XInt;
 import org.uma.jmetal.util.wrapper.XReal;
 
 import java.util.HashMap;
@@ -58,8 +62,11 @@ public class PolynomialMutation extends Mutation {
     addValidSolutionType(RealSolutionType.class);
     addValidSolutionType(ArrayRealSolutionType.class);
 
-    mutationProbability_ = builder.mutationProbability_ ;
-    distributionIndex_ = builder.distributionIndex_ ;
+    addValidSolutionType(IntSolutionType.class);
+    addValidSolutionType(ArrayIntSolutionType.class);
+
+    mutationProbability_ = builder.mutationProbability_;
+    distributionIndex_ = builder.distributionIndex_;
   }
 
   public double getMutationProbability() {
@@ -71,13 +78,34 @@ public class PolynomialMutation extends Mutation {
   }
 
   /**
+   * Executes the operation
+   */
+  public Object execute(Object object) throws JMetalException {
+    Solution solution = (Solution) object;
+
+    if (!solutionTypeIsValid(solution)) {
+      throw new JMetalException("PolynomialMutation.execute: the solutiontype " +
+        "type " + solution.getType() + " is not allowed with this operator");
+    }
+
+    doMutation(mutationProbability_, solution);
+    return solution;
+  }
+
+  /**
    * Perform the mutation operation
-   *
-   * @param probability Mutation probability
-   * @param solution    The solutiontype to mutate
-   * @throws org.uma.jmetal.util.JMetalException
    */
   public void doMutation(double probability, Solution solution) throws JMetalException {
+    SolutionType type = solution.getType();
+    if ((type instanceof RealSolutionType) || (type instanceof ArrayRealSolutionType)) {
+      doRealMutation(probability, solution);
+    } else {
+      // Integer solution set
+      doIntegerMutation(probability, solution) ;
+    }
+  }
+
+  private void doRealMutation(double probability, Solution solution) {
     double rnd, delta1, delta2, mutPow, deltaq;
     double y, yl, yu, val, xy;
     XReal x = new XReal(solution);
@@ -96,8 +124,8 @@ public class PolynomialMutation extends Mutation {
           deltaq = java.lang.Math.pow(val, mutPow) - 1.0;
         } else {
           xy = 1.0 - delta2;
-          val = 2.0 * (1.0 - rnd) + 2.0 * (rnd - 0.5) * (java.lang.Math
-            .pow(xy, (distributionIndex_ + 1.0)));
+          val =
+            2.0 * (1.0 - rnd) + 2.0 * (rnd - 0.5) * (Math.pow(xy, (distributionIndex_ + 1.0)));
           deltaq = 1.0 - (java.lang.Math.pow(val, mutPow));
         }
         y = y + deltaq * (yu - yl);
@@ -112,28 +140,42 @@ public class PolynomialMutation extends Mutation {
     }
   }
 
-  /**
-   * Executes the operation
-   *
-   * @param object An object containing a solutiontype
-   * @return An object containing the mutated solutiontype
-   * @throws org.uma.jmetal.util.JMetalException
-   */
-  public Object execute(Object object) throws JMetalException {
-    Solution solution = (Solution) object;
-
-    if (!solutionTypeIsValid(solution)) {
-      throw new JMetalException("PolynomialMutation.execute: the solutiontype " +
-        "type " + solution.getType() + " is not allowed with this operator");
+  private void doIntegerMutation(double probability, Solution solution) {
+    double rnd, delta1, delta2, mutPow, deltaq;
+    double y, yl, yu, val, xy;
+    XInt x = new XInt(solution);
+    for (int var = 0; var < solution.numberOfVariables(); var++) {
+      if (PseudoRandom.randDouble() <= probability) {
+        y = x.getValue(var);
+        yl = x.getLowerBound(var);
+        yu = x.getUpperBound(var);
+        delta1 = (y - yl) / (yu - yl);
+        delta2 = (yu - y) / (yu - yl);
+        rnd = PseudoRandom.randDouble();
+        mutPow = 1.0 / (distributionIndex_ + 1.0);
+        if (rnd <= 0.5) {
+          xy = 1.0 - delta1;
+          val = 2.0 * rnd + (1.0 - 2.0 * rnd) * (Math.pow(xy, (distributionIndex_ + 1.0)));
+          deltaq = java.lang.Math.pow(val, mutPow) - 1.0;
+        } else {
+          xy = 1.0 - delta2;
+          val =
+            2.0 * (1.0 - rnd) + 2.0 * (rnd - 0.5) * (Math.pow(xy, (distributionIndex_ + 1.0)));
+          deltaq = 1.0 - (java.lang.Math.pow(val, mutPow));
+        }
+        y = y + deltaq * (yu - yl);
+        if (y < yl) {
+          y = yl;
+        }
+        if (y > yu) {
+          y = yu;
+        }
+        x.setValue(var, (int)y);
+      }
     }
-
-    doMutation(mutationProbability_, solution);
-    return solution;
   }
 
-  /**
-   * Builder class
-   */
+  /** Builder class */
   public static class Builder {
     private double distributionIndex_ ;
     private double mutationProbability_ ;

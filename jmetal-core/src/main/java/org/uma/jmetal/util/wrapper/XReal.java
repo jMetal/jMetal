@@ -37,7 +37,7 @@ public class XReal {
       type_ = solution.getType();
       solution_ = solution;
     } else {
-      throw new JMetalException("The solutiontype type of the solutiontype is invalid: " + solution.getType()) ;
+      throw new JMetalException("The solutiontype type of the solution is invalid: " + solution.getType()) ;
     }
   }
 
@@ -95,7 +95,7 @@ public class XReal {
     }
   }
 
-  public static double getNumberOfDecisionVariables(Solution solution) {
+  public static int getNumberOfDecisionVariables(Solution solution) {
     if (solution.getType() instanceof RealSolutionTypeTemplate) {
       return ((RealSolutionTypeTemplate) solution.getType()).getNumberOfRealVariables(solution) ;
     } else {

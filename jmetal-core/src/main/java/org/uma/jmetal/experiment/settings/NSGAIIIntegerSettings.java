@@ -24,12 +24,12 @@ import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.experiment.Settings;
 import org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII;
 import org.uma.jmetal.operator.crossover.Crossover;
-import org.uma.jmetal.operator.crossover.SBXCrossover;
+import org.uma.jmetal.operator.crossover.NullCrossover;
 import org.uma.jmetal.operator.mutation.Mutation;
 import org.uma.jmetal.operator.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.selection.BinaryTournament2;
 import org.uma.jmetal.operator.selection.Selection;
-import org.uma.jmetal.problem.ProblemFactory;
+import org.uma.jmetal.problem.NMMin;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.evaluator.SequentialSolutionSetEvaluator;
 import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
@@ -53,11 +53,12 @@ public class NSGAIIIntegerSettings extends Settings {
    *
    * @throws org.uma.jmetal.util.JMetalException
    */
-  public NSGAIIIntegerSettings(String problem) throws JMetalException {
+  public NSGAIIIntegerSettings(String problem) throws JMetalException, ClassNotFoundException {
     super(problem);
 
-    Object[] problemParams = {"Integer"};
-    problem_ = (new ProblemFactory()).getProblem(problemName, problemParams);
+    //Object[] problemParams = {"Integer"};
+    //problem_ = (new ProblemFactory()).getProblem(problemName, problemParams);
+    problem_ = new NMMin("Integer") ;
 
     // Default experiment.settings
     populationSize_ = 100;
@@ -81,9 +82,7 @@ public class NSGAIIIntegerSettings extends Settings {
     Crossover crossover;
     Mutation mutation;
 
-    crossover = new SBXCrossover.Builder()
-      .distributionIndex(crossoverDistributionIndex)
-      .probability(crossoverProbability)
+    crossover = new NullCrossover.Builder()
       .build() ;
 
     mutation = new PolynomialMutation.Builder()
