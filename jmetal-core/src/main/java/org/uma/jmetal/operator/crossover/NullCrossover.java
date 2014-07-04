@@ -29,9 +29,17 @@ public class NullCrossover extends Crossover {
   }
 
 
-  /** Executes the operation */
+  /** Execute method */
   public Object execute(Object object) throws JMetalException {
+    if (null == object) {
+      throw new JMetalException("Passed null as parameter") ;
+    }
+
     Solution[] parents = (Solution[]) object;
+
+    if (parents.length != 2) {
+      throw new JMetalException("Two parents are required instead of: " + parents.length) ;
+    }
 
     Solution[] offspring = new Solution[parents.length]  ;
     for (int i = 0 ; i < parents.length; i++) {

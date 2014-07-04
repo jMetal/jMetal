@@ -43,8 +43,8 @@ public class SolutionComparator implements Comparator<Solution> {
   /**
    * Compares two solutions.
    *
-   * @param o1 Object representing the first solutiontype.
-   * @param o2 Object representing the second solutiontype.
+   * @param o1 Object representing the first solution.
+   * @param o2 Object representing the second solution.
    * @return 0, if both solutions are equals with a certain dissimilarity, -1
    * otherwise.
    */
