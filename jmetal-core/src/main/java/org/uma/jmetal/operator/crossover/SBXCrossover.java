@@ -334,7 +334,6 @@ public class SBXCrossover extends Crossover {
     }
 
     public Builder distributionIndex(double distributionIndex) {
-      //Validate.isTrue()
       if (distributionIndex < 0) {
         throw new JMetalException("Distribution index invalid: " + distributionIndex) ;
       } else {

@@ -198,7 +198,7 @@
             <dependency>
                 <groupId>org.uma.jmetal</groupId>
                 <artifactId>jmetal-core</artifactId>
-                <version>5.0-Beta-5-SNAPSHOT</version>
+                <version>5.0-Beta-6-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>junit</groupId>
