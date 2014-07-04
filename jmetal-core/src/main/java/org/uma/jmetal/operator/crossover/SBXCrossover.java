@@ -41,9 +41,7 @@ import java.util.HashMap;
 public class SBXCrossover extends Crossover {
   private static final long serialVersionUID = -880076874462438998L;
 
-  /**
-   * EPS defines the minimum difference allowed between real values
-   */
+  /** EPS defines the minimum difference allowed between real values */
   private static final double EPS = 1.0e-14;
 
   private static final double ETA_C_DEFAULT = 20.0;
@@ -72,10 +70,7 @@ public class SBXCrossover extends Crossover {
     }
   }
 
-  /**
-   * Constructor using the Builder pattern
-   * @param builder
-   */
+  /** Constructor */
   private SBXCrossover(Builder builder) {
     addValidSolutionType(RealSolutionType.class);
     addValidSolutionType(ArrayRealSolutionType.class);
@@ -115,6 +110,7 @@ public class SBXCrossover extends Crossover {
     return offSpring;
   }
 
+  /** doCrossover method */
   public Solution[] doCrossover(double probability, Solution parent1, Solution parent2) throws JMetalException {
     SolutionType type = parent1.getType();
     if ((type instanceof RealSolutionType) || (type instanceof ArrayRealSolutionType)) {
@@ -225,7 +221,7 @@ public class SBXCrossover extends Crossover {
     return offSpring;
   }
 
-  /** Crossover operation (real encoding) */
+  /** Crossover operation (integer encoding) */
   public Solution[] doIntegerCrossover(double probability,
     Solution parent1,
     Solution parent2) throws JMetalException {

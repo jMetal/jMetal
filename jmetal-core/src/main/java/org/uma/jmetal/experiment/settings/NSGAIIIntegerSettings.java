@@ -36,9 +36,7 @@ import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
 
 import java.util.Properties;
 
-/**
- * Settings class of algorithm NSGA-II (integer encoding)
- */
+/** Settings class of algorithm NSGA-II (integer encoding) */
 public class NSGAIIIntegerSettings extends Settings {
   private int populationSize_;
   private int maxEvaluations;
@@ -48,11 +46,7 @@ public class NSGAIIIntegerSettings extends Settings {
   private double crossoverDistributionIndex;
   private SolutionSetEvaluator evaluator;
 
-  /**
-   * Constructor
-   *
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Constructor */
   public NSGAIIIntegerSettings(String problem) throws JMetalException, ClassNotFoundException {
     super(problem);
 
@@ -70,12 +64,7 @@ public class NSGAIIIntegerSettings extends Settings {
     evaluator = new SequentialSolutionSetEvaluator() ;
   }
 
-  /**
-   * Configure NSGAII with default settings
-   *
-   * @return A NSGAII algorithm object
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Configure method */
   public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
     Selection selection;
@@ -106,11 +95,7 @@ public class NSGAIIIntegerSettings extends Settings {
     return algorithm;
   }
 
-  /**
-   * Configure NSGAII with user-defined parameter experiment.settings
-   *
-   * @return A NSGAII algorithm object
-   */
+  /** Configure method from configuration file */
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {
     populationSize_ = Integer
