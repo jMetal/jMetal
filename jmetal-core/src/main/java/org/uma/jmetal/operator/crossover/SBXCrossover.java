@@ -22,10 +22,14 @@
 package org.uma.jmetal.operator.crossover;
 
 import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.core.SolutionType;
+import org.uma.jmetal.encoding.solutiontype.ArrayIntSolutionType;
 import org.uma.jmetal.encoding.solutiontype.ArrayRealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.IntSolutionType;
 import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
+import org.uma.jmetal.util.wrapper.XInt;
 import org.uma.jmetal.util.wrapper.XReal;
 
 import java.util.HashMap;
@@ -76,13 +80,14 @@ public class SBXCrossover extends Crossover {
     addValidSolutionType(RealSolutionType.class);
     addValidSolutionType(ArrayRealSolutionType.class);
 
+    addValidSolutionType(IntSolutionType.class);
+    addValidSolutionType(ArrayIntSolutionType.class);
+
     crossoverProbability_ = builder.crossoverProbability_ ;
     distributionIndex_ = builder.distributionIndex_ ;
   }
 
-  /*
-   * Getters
-   */
+  /** Getters */
   public double getCrossoverProbability() {
     return crossoverProbability_;
   }
@@ -90,16 +95,37 @@ public class SBXCrossover extends Crossover {
     return distributionIndex_;
   }
 
+  /** Execute method */
+  public Object execute(Object object) throws JMetalException {
+    Solution[] parents = (Solution[]) object;
 
-  /**
-   * Perform the crossover operation.
-   *
-   * @param probability Crossover probability
-   * @param parent1     The first parent
-   * @param parent2     The second parent
-   * @return An array containing the two offsprings
-   */
-  public Solution[] doCrossover(double probability,
+    if (parents.length != 2) {
+      throw new JMetalException("SBXCrossover.execute: operator needs two " +
+        "parents");
+    }
+
+    if (!solutionTypeIsValid(parents)) {
+      throw new JMetalException("SBXCrossover.execute: the solutions " +
+        "type " + parents[0].getType() + " is not allowed with this operator");
+    }
+
+    Solution[] offSpring;
+    offSpring = doCrossover(crossoverProbability_, parents[0], parents[1]);
+
+    return offSpring;
+  }
+
+  public Solution[] doCrossover(double probability, Solution parent1, Solution parent2) throws JMetalException {
+    SolutionType type = parent1.getType();
+    if ((type instanceof RealSolutionType) || (type instanceof ArrayRealSolutionType)) {
+      return doRealCrossover(probability, parent1, parent2);
+    } else {
+      return doIntegerCrossover(probability, parent1, parent2) ;
+    }
+  }
+
+  /** Crossover operation (real encoding) */
+  public Solution[] doRealCrossover(double probability,
     Solution parent1,
     Solution parent2) throws JMetalException {
 
@@ -199,34 +225,109 @@ public class SBXCrossover extends Crossover {
     return offSpring;
   }
 
-  /**
-   * Executes the operation
-   *
-   * @param object An object containing an array of two parents
-   * @return An object containing the offSprings
-   */
-  public Object execute(Object object) throws JMetalException {
-    Solution[] parents = (Solution[]) object;
+  /** Crossover operation (real encoding) */
+  public Solution[] doIntegerCrossover(double probability,
+    Solution parent1,
+    Solution parent2) throws JMetalException {
 
-    if (parents.length != 2) {
-      throw new JMetalException("SBXCrossover.execute: operator needs two " +
-        "parents");
+    Solution[] offSpring = new Solution[2];
+
+    offSpring[0] = new Solution(parent1);
+    offSpring[1] = new Solution(parent2);
+
+    int i;
+    double rand;
+    double y1, y2, yL, yu;
+    double c1, c2;
+    double alpha, beta, betaq;
+    double valueX1, valueX2;
+    XInt x1 = new XInt(parent1);
+    XInt x2 = new XInt(parent2);
+    XInt offs1 = new XInt(offSpring[0]);
+    XInt offs2 = new XInt(offSpring[1]);
+
+    int numberOfVariables = x1.getNumberOfDecisionVariables();
+
+    if (PseudoRandom.randDouble() <= probability) {
+      for (i = 0; i < numberOfVariables; i++) {
+        valueX1 = x1.getValue(i);
+        valueX2 = x2.getValue(i);
+        if (PseudoRandom.randDouble() <= 0.5) {
+          if (java.lang.Math.abs(valueX1 - valueX2) > EPS) {
+
+            if (valueX1 < valueX2) {
+              y1 = valueX1;
+              y2 = valueX2;
+            } else {
+              y1 = valueX2;
+              y2 = valueX1;
+            }
+
+            yL = x1.getLowerBound(i);
+            yu = x1.getUpperBound(i);
+            rand = PseudoRandom.randDouble();
+            beta = 1.0 + (2.0 * (y1 - yL) / (y2 - y1));
+            alpha = 2.0 - java.lang.Math.pow(beta, -(distributionIndex_ + 1.0));
+
+            if (rand <= (1.0 / alpha)) {
+              betaq = java.lang.Math.pow((rand * alpha), (1.0 / (distributionIndex_ + 1.0)));
+            } else {
+              betaq = java.lang.Math
+                .pow((1.0 / (2.0 - rand * alpha)), (1.0 / (distributionIndex_ + 1.0)));
+            }
+
+            c1 = 0.5 * ((y1 + y2) - betaq * (y2 - y1));
+            beta = 1.0 + (2.0 * (yu - y2) / (y2 - y1));
+            alpha = 2.0 - java.lang.Math.pow(beta, -(distributionIndex_ + 1.0));
+
+            if (rand <= (1.0 / alpha)) {
+              betaq = java.lang.Math.pow((rand * alpha), (1.0 / (distributionIndex_ + 1.0)));
+            } else {
+              betaq = java.lang.Math
+                .pow((1.0 / (2.0 - rand * alpha)), (1.0 / (distributionIndex_ + 1.0)));
+            }
+
+            c2 = 0.5 * ((y1 + y2) + betaq * (y2 - y1));
+
+            if (c1 < yL) {
+              c1 = yL;
+            }
+
+            if (c2 < yL) {
+              c2 = yL;
+            }
+
+            if (c1 > yu) {
+              c1 = yu;
+            }
+
+            if (c2 > yu) {
+              c2 = yu;
+            }
+
+            if (PseudoRandom.randDouble() <= 0.5) {
+              offs1.setValue(i, (int)c2);
+              offs2.setValue(i, (int)c1);
+            } else {
+              offs1.setValue(i, (int)c1);
+              offs2.setValue(i, (int)c2);
+            }
+          } else {
+            offs1.setValue(i, (int)valueX1);
+            offs2.setValue(i, (int)valueX2);
+          }
+        } else {
+          offs1.setValue(i, (int)valueX2);
+          offs2.setValue(i, (int)valueX1);
+        }
+      }
     }
-
-    if (!solutionTypeIsValid(parents)) {
-      throw new JMetalException("SBXCrossover.execute: the solutions " +
-        "type " + parents[0].getType() + " is not allowed with this operator");
-    }
-
-    Solution[] offSpring;
-    offSpring = doCrossover(crossoverProbability_, parents[0], parents[1]);
 
     return offSpring;
   }
 
-  /**
-   * Builder class
-   */
+
+  /** Builder class */
   public static class Builder {
     private double distributionIndex_ ;
     private double crossoverProbability_ ;

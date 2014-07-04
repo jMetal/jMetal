@@ -24,7 +24,7 @@ import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.experiment.Settings;
 import org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII;
 import org.uma.jmetal.operator.crossover.Crossover;
-import org.uma.jmetal.operator.crossover.NullCrossover;
+import org.uma.jmetal.operator.crossover.SBXCrossover;
 import org.uma.jmetal.operator.mutation.Mutation;
 import org.uma.jmetal.operator.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.selection.BinaryTournament2;
@@ -62,7 +62,7 @@ public class NSGAIIIntegerSettings extends Settings {
 
     // Default experiment.settings
     populationSize_ = 100;
-    maxEvaluations = 25000;
+    maxEvaluations = 250000;
     mutationProbability = 1.0 / problem_.getNumberOfVariables();
     crossoverProbability = 0.9;
     mutationDistributionIndex = 20.0;
@@ -71,7 +71,7 @@ public class NSGAIIIntegerSettings extends Settings {
   }
 
   /**
-   * Configure NSGAII with default parameter settings
+   * Configure NSGAII with default settings
    *
    * @return A NSGAII algorithm object
    * @throws org.uma.jmetal.util.JMetalException
@@ -82,7 +82,9 @@ public class NSGAIIIntegerSettings extends Settings {
     Crossover crossover;
     Mutation mutation;
 
-    crossover = new NullCrossover.Builder()
+    crossover = new SBXCrossover.Builder()
+      .distributionIndex(crossoverDistributionIndex)
+      .probability(crossoverProbability)
       .build() ;
 
     mutation = new PolynomialMutation.Builder()

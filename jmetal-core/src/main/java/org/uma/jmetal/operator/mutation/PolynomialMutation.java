@@ -77,9 +77,7 @@ public class PolynomialMutation extends Mutation {
     return distributionIndex_;
   }
 
-  /**
-   * Executes the operation
-   */
+  /** Execute method */
   public Object execute(Object object) throws JMetalException {
     Solution solution = (Solution) object;
 
@@ -100,7 +98,6 @@ public class PolynomialMutation extends Mutation {
     if ((type instanceof RealSolutionType) || (type instanceof ArrayRealSolutionType)) {
       doRealMutation(probability, solution);
     } else {
-      // Integer solution set
       doIntegerMutation(probability, solution) ;
     }
   }
