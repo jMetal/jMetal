@@ -1,4 +1,4 @@
-//  NullCrossoverTest.java
+//  NullMutationTest.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -18,14 +18,14 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.test.operator.crossover;
+package org.uma.test.operator.mutation;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.operator.crossover.NullCrossover;
+import org.uma.jmetal.operator.mutation.NullMutation;
 import org.uma.jmetal.problem.Kursawe;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.comparator.SolutionComparator;
@@ -35,53 +35,46 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by Antonio J. Nebro on 21/04/14.
  */
-public class NullCrossoverTest {
-  NullCrossover crossover;
-  Problem problem;
+public class NullMutationTest {
+  NullMutation mutation ;
+  Problem problem ;
 
   static final double DELTA = 0.0000000000001 ;
 
   @Before
   public void setUp() throws JMetalException {
-    problem = new Kursawe("Real", 3) ;
-    crossover = new NullCrossover.Builder()
+    problem = new Kursawe("BinaryReal", 3) ;
+
+    mutation = new NullMutation.Builder()
       .build() ;
   }
 
   @After
   public void tearDown() throws Exception {
-    crossover = null ;
+    mutation = null ;
     problem = null ;
   }
 
   @Test
   public void executeWithCorrectParameters() throws ClassNotFoundException {
-    Solution[] parent = {new Solution(problem), new Solution(problem)};
+    Solution solution = new Solution(problem);
 
-    Solution[] child = (Solution[]) crossover.execute(parent) ;
+    Solution mutatedSolution = (Solution)mutation.execute(solution) ;
 
     SolutionComparator comparator = new SolutionComparator() ;
 
-    assertEquals(0.0, comparator.compare(parent[0], child[0]), DELTA);
-    assertEquals(0.0, comparator.compare(parent[1], child[1]), DELTA);
-  }
-
-  @Test (expected = JMetalException.class)
-  public void wrongNumberOfParametersTest() throws ClassNotFoundException {
-    Solution[] parent = {new Solution(problem)};
-
-    crossover.execute(parent) ;
+    assertEquals(0.0, comparator.compare(solution, mutatedSolution), DELTA);
   }
 
   @Test (expected = JMetalException.class)
   public void wrongParameterClassTest() throws ClassNotFoundException {
-    Solution parent = new Solution(problem) ;
+    Solution[] parent = {new Solution(problem), new Solution(problem)};
 
-    crossover.execute(parent) ;
+    mutation.execute(parent) ;
   }
 
-    @Test (expected = JMetalException.class)
+  @Test (expected = JMetalException.class)
   public void nullParameterTest() throws ClassNotFoundException {
-    crossover.execute(null) ;
+    mutation.execute(null) ;
   }
 }

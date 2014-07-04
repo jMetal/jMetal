@@ -1,4 +1,4 @@
-//  NullCrossover.java
+//  NullMutation.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -18,46 +18,36 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.operator.crossover;
+package org.uma.jmetal.operator.mutation;
 
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.util.JMetalException;
 
-/** This class is intended to perform no crossover */
-public class NullCrossover extends Crossover {
-  private NullCrossover(Builder builder) {
+/** This class is intended to perform no mutation */
+public class NullMutation extends Mutation {
+  private NullMutation(Builder builder) {
   }
 
   /** Execute method */
   public Object execute(Object object) throws JMetalException {
     if (null == object) {
       throw new JMetalException("Passed null as parameter") ;
-    } else if (!(object instanceof Solution[])) {
+    } else if (! (object instanceof Solution)) {
       throw new JMetalException("Invalid class") ;
     }
 
-    Solution[] parents = (Solution[]) object;
+    Solution solution = (Solution) object;
 
-    if (parents.length != 2) {
-      throw new JMetalException("Two parents are required instead of: " + parents.length) ;
-    }
-
-    Solution[] offspring = new Solution[parents.length]  ;
-    for (int i = 0 ; i < parents.length; i++) {
-      offspring[i] = new Solution(parents[i]) ;
-    }
-
-    return offspring;
+    return solution;
   }
 
   /** Builder class */
   public static class Builder {
-
     public Builder() {
     }
 
-    public NullCrossover build() {
-      return new NullCrossover(this) ;
+    public NullMutation build() {
+      return new NullMutation(this) ;
     }
   }
 }
