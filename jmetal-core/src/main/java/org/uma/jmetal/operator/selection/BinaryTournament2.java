@@ -34,16 +34,9 @@ import java.util.HashMap;
  * in Deb's NSGA-II implementation
  */
 public class BinaryTournament2 extends Selection {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = -6853195126789856216L;
 
-  /**
-   * dominance_ store the <code>Comparator</code> for check dominance_
-   */
-  private Comparator<Solution> dominance_;
+  private Comparator<Solution> dominance;
 
   /**
    * a_ stores a permutation of the solutions in the solutionSet used
@@ -63,25 +56,19 @@ public class BinaryTournament2 extends Selection {
   @Deprecated
   public BinaryTournament2(HashMap<String, Object> parameters) {
     super(parameters);
-    dominance_ = new DominanceComparator();
+    dominance = new DominanceComparator();
   }
 
   private BinaryTournament2(Builder builder) {
     super(new HashMap<String, Object>()) ;
 
-    dominance_ = new DominanceComparator();
+    dominance = new DominanceComparator();
   }
 
-  /**
-   * Performs the operation
-   *
-   * @param object Object representing a SolutionSet
-   * @return the selected solution
-   */
+  /** execute method */
   public Object execute(Object object) {
     SolutionSet population = (SolutionSet) object;
     if (index_ == 0) {
-      //Create the permutation
       permutation_ = (new org.uma.jmetal.util.PermutationUtility()).intPermutation(population.size());
     }
 
@@ -91,7 +78,7 @@ public class BinaryTournament2 extends Selection {
 
     index_ = (index_ + 2) % population.size();
 
-    int flag = dominance_.compare(solution1, solution2);
+    int flag = dominance.compare(solution1, solution2);
     if (flag == -1) {
       return solution1;
     } else if (flag == 1) {

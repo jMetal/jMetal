@@ -56,7 +56,7 @@ public class NullMutationTest {
   }
 
   @Test
-  public void executeWithCorrectParameters() throws ClassNotFoundException {
+  public void executeWithCorrectParametersTest() throws ClassNotFoundException {
     Solution solution = new Solution(problem);
 
     Solution mutatedSolution = (Solution)mutation.execute(solution) ;

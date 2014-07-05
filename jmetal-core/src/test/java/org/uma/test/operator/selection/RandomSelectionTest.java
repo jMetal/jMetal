@@ -20,8 +20,82 @@
 
 package org.uma.test.operator.selection;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.core.SolutionSet;
+import org.uma.jmetal.operator.selection.RandomSelection;
+import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.comparator.SolutionComparator;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+
 /**
  * Created by Antonio J. Nebro on 27/06/14.
  */
 public class RandomSelectionTest {
+  static final int POPULATION_SIZE = 20 ;
+  RandomSelection selection ;
+  SolutionSet solutionSet ;
+
+  @Before
+  public void startup() {
+    selection = new RandomSelection.Builder()
+            .build() ;
+
+    solutionSet = new SolutionSet(POPULATION_SIZE) ;
+    for (int i = 0 ; i < POPULATION_SIZE; i++) {
+      solutionSet.add(new Solution()) ;
+    }
+  }
+
+  @Test
+  public void executeWithCorrectParametersTest() throws ClassNotFoundException {
+    Solution[] solution ;
+    solution = (Solution[])selection.execute(solutionSet) ;
+    assertNotEquals(solution[0], solution[1]);
+  }
+
+  @Test
+  public void executeWithCorrectPopulationSizeTwoTest() throws ClassNotFoundException {
+    Solution[] solution ;
+    solutionSet = new SolutionSet(2) ;
+    solutionSet.add(new Solution()) ;
+    solutionSet.add(new Solution()) ;
+    solution = (Solution[])selection.execute(solutionSet) ;
+    assertNotEquals(solution[0], solution[1]);
+  }
+
+  @Test (expected = JMetalException.class)
+  public void executeWithSolutionSetSizeZeroTest() throws ClassNotFoundException {
+    solutionSet = new SolutionSet(0) ;
+    selection.execute(solutionSet) ;
+  }
+
+  @Test (expected = JMetalException.class)
+  public void executeWithSolutionSetSizeOneTest() throws ClassNotFoundException {
+    solutionSet = new SolutionSet(1) ;
+    solutionSet.add(new Solution()) ;
+    selection.execute(solutionSet) ;
+  }
+
+  @Test (expected = JMetalException.class)
+  public void wrongParameterClassTest() throws ClassNotFoundException {
+    Solution[] parent = {new Solution(), new Solution()};
+
+    selection.execute(parent) ;
+  }
+
+  @Test (expected = JMetalException.class)
+  public void nullParameterTest() throws ClassNotFoundException {
+    selection.execute(null) ;
+  }
+
+  @After
+  public void tearDown() {
+    selection = null ;
+    solutionSet = null ;
+  }
 }

@@ -72,7 +72,7 @@ public class BestSolutionSelection extends Selection {
       if (comparator_.compare(solutionSet.get(i), solutionSet.get(bestSolution)) < 0) {
         bestSolution = i;
       }
-    } // for
+    }
 
     return bestSolution;
   }

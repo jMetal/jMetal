@@ -29,26 +29,12 @@ import org.uma.jmetal.util.random.PseudoRandom;
 import java.util.Comparator;
 import java.util.HashMap;
 
-/**
- * This class implements an binary tournament selection operator
- */
 public class BinaryTournament extends Selection {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = 1727470902640158437L;
 
-  /**
-   * Stores the <code>Comparator</code> used to compare two
-   * solutions
-   */
   private Comparator<Solution> comparator_;
 
-  /**
-   * Constructor
-   * Creates a new Binary tournament operator using a BinaryTournamentComparator
-   */
+  /** Constructor */
   @Deprecated
   public BinaryTournament(HashMap<String, Object> parameters) {
     super(parameters);
@@ -59,18 +45,14 @@ public class BinaryTournament extends Selection {
     }
   }
 
+  /** Constructor */
   private BinaryTournament(Builder builder) {
     super(new HashMap<String, Object>()) ;
 
     comparator_ = new DominanceComparator();
   }
 
-  /**
-   * Performs the operation
-   *
-   * @param object Object representing a SolutionSet
-   * @return the selected solutiontype
-   */
+  /** execute method */
   public Object execute(Object object) {
     SolutionSet solutionSet = (SolutionSet) object;
     Solution solution1, solution2;

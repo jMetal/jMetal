@@ -23,8 +23,10 @@ package org.uma.jmetal.operator.selection;
 
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
 
+import javax.management.JMException;
 import java.util.HashMap;
 
 /**
@@ -43,15 +45,20 @@ public class RandomSelection extends Selection {
     super(new HashMap<String, Object>()) ;
   }
 
-  /**
-   * Performs the operation
-   *
-   * @param object Object representing a SolutionSet.
-   * @return an object representing an array with the selected parents
-   */
+  /** execute method */
   public Object execute(Object object) {
-    //FIXME: checking arguments missing
+    if (null == object) {
+      throw new JMetalException("Parameter is null") ;
+    } else if (!(object instanceof SolutionSet)) {
+      throw new JMetalException("Invalid parameter class") ;
+    } else if (((SolutionSet)object).size() == 0) {
+      throw new JMetalException("Solution set size is 0") ;
+    } else if (((SolutionSet)object).size() == 1) {
+      throw new JMetalException("Solution set size is 1") ;
+    }
+
     SolutionSet population = (SolutionSet) object;
+
     int pos1, pos2;
     pos1 = PseudoRandom.randInt(0, population.size() - 1);
     pos2 = PseudoRandom.randInt(0, population.size() - 1);
@@ -66,13 +73,11 @@ public class RandomSelection extends Selection {
     return parents;
   }
 
-  /*
-   * Builder
-   */
+  /** Builder class*/
   static public class Builder {
 
-     public RandomSelection build() {
-       return new RandomSelection(this) ;
-     }
+    public RandomSelection build() {
+      return new RandomSelection(this) ;
+    }
   }
 }

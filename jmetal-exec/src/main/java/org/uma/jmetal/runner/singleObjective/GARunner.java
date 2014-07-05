@@ -25,7 +25,6 @@ import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristic.singleobjective.geneticalgorithm.gGA;
 import org.uma.jmetal.operator.crossover.CrossoverFactory;
 import org.uma.jmetal.operator.mutation.MutationFactory;
 import org.uma.jmetal.operator.selection.SelectionFactory;
@@ -39,7 +38,7 @@ import java.util.HashMap;
 /**
  * This class runs a single-objective genetic algorithm (GA). The GA can be
  * a steady-state GA (class ssGA), a generational GA (class gGA), a synchronous
- * cGA (class scGA) or an asynchronous cGA (class acGA). The OneMax
+ * cGA (class SynchronousCellularGA) or an asynchronous cGA (class AsynchronousCellularGA). The OneMax
  * problem is used to org.uma.test the algorithms.
  */
 public class GARunner {
@@ -62,8 +61,8 @@ public class GARunner {
     algorithm.setProblem(problem);
     
     //algorithm = new ssGA(problem); // Steady-state GA
-    //algorithm = new scGA(problem) ; // Synchronous cGA
-    //algorithm = new acGA(problem) ;   // Asynchronous cGA
+    //algorithm = new SynchronousCellularGA(problem) ; // Synchronous cGA
+    //algorithm = new AsynchronousCellularGA(problem) ;   // Asynchronous cGA
     
     /* Algorithm parameters*/
     algorithm.setInputParameter("populationSize", 100);

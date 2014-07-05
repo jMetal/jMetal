@@ -34,34 +34,17 @@ import java.util.HashMap;
 /**
  * Class implementing an asynchronous cellular genetic algorithm
  */
-public class acGA extends Algorithm {
-
-  /**
-   *
-   */
+public class AsynchronousCellularGA extends Algorithm {
   private static final long serialVersionUID = -3128274013412638310L;
 
-  /**
-   * Stores the problem to solve
-   */
   private Problem problem_;
 
-  /**
-   * Constructor
-   *
-   * @param problem Problem to solve
-   */
-  public acGA() {
+  /** Constructor */
+  public AsynchronousCellularGA() {
     super();
-  } // sMOCell1
+  }
 
-
-  /**
-   * Runs of the acGA algorithm.
-   *
-   * @return a <code>SolutionSet</code> that contains the best found solutiontype
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** execute method */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     int populationSize, maxEvaluations, evaluations;
     Operator mutationOperator;
@@ -73,7 +56,7 @@ public class acGA extends Algorithm {
     Neighborhood neighborhood;
 
     Comparator<Solution> comparator;
-    comparator = new ObjectiveComparator(0); // Single objective comparator
+    comparator = new ObjectiveComparator(0);
 
     Operator findBestSolution;
 
@@ -142,9 +125,9 @@ public class acGA extends Algorithm {
           int bestSolution = (Integer) findBestSolution.execute(population);
           Configuration.logger_.info("Evals: " + evaluations + "\t Fitness: " +
             population.get(bestSolution).getObjective(0));
-        } // if
-      } // for                     
-    } // while
+        }
+      }
+    }
 
     Solution bestSolution = population.best(comparator);
     SolutionSet resultPopulation = new SolutionSet(1);
@@ -152,6 +135,6 @@ public class acGA extends Algorithm {
 
     Configuration.logger_.info("Evaluations: " + evaluations);
     return resultPopulation;
-  } // execute        
-} // acGA
+  }
+}
 
