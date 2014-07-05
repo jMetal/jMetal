@@ -21,13 +21,13 @@
 
 package org.uma.jmetal.experiment.settings;
 
+import java.util.Properties;
+
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.experiment.Settings;
-import org.uma.jmetal.metaheuristic.randomsearch.RandomSearch;
+import org.uma.jmetal.metaheuristic.multiobjective.randomSearch.RandomSearch;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.util.JMetalException;
-
-import java.util.Properties;
 
 /**
  * Settings class of algorithm RandomSearch

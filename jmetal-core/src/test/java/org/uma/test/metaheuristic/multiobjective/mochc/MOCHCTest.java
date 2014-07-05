@@ -18,7 +18,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.test.metaheuristic.mochc;
+package org.uma.test.metaheuristic.multiobjective.mochc;
 
 import org.junit.Test;
 import org.uma.jmetal.core.Algorithm;

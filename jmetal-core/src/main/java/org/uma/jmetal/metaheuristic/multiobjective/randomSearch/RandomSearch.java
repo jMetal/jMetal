@@ -19,7 +19,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.metaheuristic.randomsearch;
+package org.uma.jmetal.metaheuristic.multiobjective.randomSearch;
 
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Solution;
@@ -31,22 +31,12 @@ import org.uma.jmetal.util.NonDominatedSolutionList;
  * This class implements a simple random search algorithm.
  */
 public class RandomSearch extends Algorithm {
-
-  /**
-   * <<<<<<< HEAD
-   * =======
-   */
   private static final long serialVersionUID = 7957970222128947424L;
 
-  /**
-   * >>>>>>> master
-   * Constructor
-   *
-   * @param problem Problem to solve
-   */
+  /** Constructor */
   public RandomSearch() {
     super();
-  } // RandomSearch
+  } 
 
   /**
    * Runs the RandomSearch algorithm.
@@ -77,5 +67,5 @@ public class RandomSearch extends Algorithm {
     } //for
 
     return ndl;
-  } // execute
-} // RandomSearch
+  } 
+} 
