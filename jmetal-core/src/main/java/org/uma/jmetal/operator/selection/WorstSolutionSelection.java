@@ -23,58 +23,66 @@ package org.uma.jmetal.operator.selection;
 
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
+import org.uma.jmetal.operator.selection.BestSolutionSelection.Builder;
+import org.uma.jmetal.util.JMetalException;
 
 import java.util.Comparator;
 import java.util.HashMap;
 
 /**
  * This class implements a selection operator used for selecting the worst
- * solutiontype in a SolutionSet according to a given comparator
+ * solution in a SolutionSet according to a given comparator
  */
 public class WorstSolutionSelection extends Selection {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = 1456768976790614200L;
 
-  // Comparator
-  private Comparator<Solution> comparator_;
+  private Comparator<Solution> comparator;
 
-  @SuppressWarnings("unchecked")
+  @Deprecated
   public WorstSolutionSelection(HashMap<String, Object> parameters) {
     super(parameters);
 
-    comparator_ = (Comparator<Solution>) parameters.get("comparator");
+    comparator = (Comparator<Solution>) parameters.get("comparator");
   }
 
-  /**
-   * Constructor
-   * @param comparator
-   */
-
-  /**
-   * Performs the operation
-   *
-   * @param object Object representing a SolutionSet.
-   * @return the best solutiontype found
-   */
+  /** Constructor */
+  private WorstSolutionSelection(Builder builder) {
+  	super(new HashMap<String, Object>()) ;
+  	this.comparator = builder.comparator ;
+  }
+  
+  /** execute() method */
   public Object execute(Object object) {
+  	if (null == object) {
+  		throw new JMetalException("Null parameter") ;
+  	} else if (!(object instanceof SolutionSet)) {
+  		throw new JMetalException("Invalid parameter class") ;
+  	} else if (((SolutionSet)object).size() == 0) {
+  		throw new JMetalException("Solution set size is zero") ;
+  	}
+  	
     SolutionSet solutionSet = (SolutionSet) object;
-
-    if (solutionSet.size() == 0) {
-      return null;
-    }
-    int worstSolution;
-
-    worstSolution = 0;
+    int worstSolution = 0;
 
     for (int i = 1; i < solutionSet.size(); i++) {
-      if (comparator_.compare(solutionSet.get(i), solutionSet.get(worstSolution)) > 0) {
+      if (comparator.compare(solutionSet.get(i), solutionSet.get(worstSolution)) > 0) {
         worstSolution = i;
       }
     }
 
     return worstSolution;
+  }
+  
+  /** Builder class */
+  public class Builder {
+    private Comparator<Solution> comparator;
+
+	  Builder(final Comparator<Solution> comparator) {
+	  	this.comparator = comparator ;
+	  }
+	  
+	  public WorstSolutionSelection build() {
+	  	 return new WorstSolutionSelection(this) ;
+	  }
   }
 }

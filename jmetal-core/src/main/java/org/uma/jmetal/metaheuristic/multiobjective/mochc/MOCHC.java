@@ -165,47 +165,15 @@ public class MOCHC extends Algorithm {
    */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     int iterations;
-    /*
-    int populationSize;
-    int convergenceValue;
-    int maxEvaluations;
-    */
+
     int minimumDistance;
     int evaluations;
 
     Comparator crowdingComparator = new CrowdingComparator();
-     /*
-    Operator crossover;
-    Operator parentSelection;
-    Operator newGenerationSelection;
-    Operator cataclysmicMutation;
 
-    double preservedPopulation;
-
-    double initialConvergenceCount;
-    */
     boolean condition = false;
     SolutionSet solutionSet, offspringPopulation, newPopulation;
 
-    /*
-    // Read parameters
-    initialConvergenceCount =
-      (Double) getInputParameter("initialConvergenceCount");
-    preservedPopulation =
-      (Double) getInputParameter("preservedPopulation");
-    convergenceValue =
-      (Integer) getInputParameter("convergenceValue");
-    populationSize =
-      (Integer) getInputParameter("populationSize");
-    maxEvaluations =
-      (Integer) getInputParameter("maxEvaluations");
-
-    // Read operator
-    crossover = (Operator) getOperator("crossover");
-    cataclysmicMutation = (Operator) getOperator("cataclysmicMutation");
-    parentSelection = (Operator) getOperator("parentSelection");
-    newGenerationSelection = (Operator) getOperator("newGenerationSelection");
-     */
     iterations = 0;
     evaluations = 0;
 
@@ -286,9 +254,7 @@ public class MOCHC extends Algorithm {
     return archive;
   }
 
-  /*
-   * Builder
-   */
+  /** Builder class */
   static public class Builder {
     Problem problem ;
     SolutionSetEvaluator evaluator ;

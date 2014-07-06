@@ -23,6 +23,8 @@ package org.uma.jmetal.operator.selection;
 
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
+import org.uma.jmetal.operator.selection.BinaryTournament.Builder;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.random.PseudoRandom;
 
@@ -36,17 +38,15 @@ import java.util.HashMap;
 public class BinaryTournament2 extends Selection {
   private static final long serialVersionUID = -6853195126789856216L;
 
-  private Comparator<Solution> dominance;
+  private Comparator<Solution> comparator;
 
-  /**
-   * a_ stores a permutation of the solutions in the solutionSet used
-   */
-  private int permutation_[];
+  /** Stores a permutation of the solutions in the SolutionSet */
+  private int permutation[];
 
   /**
    * index_ stores the actual index for selection
    */
-  private int index_ = 0;
+  private int index = 0;
 
   /**
    * Constructor
@@ -56,29 +56,39 @@ public class BinaryTournament2 extends Selection {
   @Deprecated
   public BinaryTournament2(HashMap<String, Object> parameters) {
     super(parameters);
-    dominance = new DominanceComparator();
+    comparator = new DominanceComparator();
   }
 
   private BinaryTournament2(Builder builder) {
     super(new HashMap<String, Object>()) ;
 
-    dominance = new DominanceComparator();
+    comparator = builder.comparator ;
   }
 
-  /** execute method */
+  /** execute() method */
   public Object execute(Object object) {
+    if (null == object) {
+      throw new JMetalException("Parameter is null") ;
+    } else if (!(object instanceof SolutionSet)) {
+      throw new JMetalException("Invalid parameter class") ;
+    } else if (((SolutionSet)object).size() == 0) {
+      throw new JMetalException("Solution set size is 0") ;
+    } else if (((SolutionSet)object).size() == 1) {
+      throw new JMetalException("Solution set size is 1") ;
+    }
+  	
     SolutionSet population = (SolutionSet) object;
-    if (index_ == 0) {
-      permutation_ = (new org.uma.jmetal.util.PermutationUtility()).intPermutation(population.size());
+    if (index == 0) {
+      permutation = (new org.uma.jmetal.util.PermutationUtility()).intPermutation(population.size());
     }
 
     Solution solution1, solution2;
-    solution1 = population.get(permutation_[index_]);
-    solution2 = population.get(permutation_[index_ + 1]);
+    solution1 = population.get(permutation[index]);
+    solution2 = population.get(permutation[index + 1]);
 
-    index_ = (index_ + 2) % population.size();
+    index = (index + 2) % population.size();
 
-    int flag = dominance.compare(solution1, solution2);
+    int flag = comparator.compare(solution1, solution2);
     if (flag == -1) {
       return solution1;
     } else if (flag == 1) {
@@ -98,8 +108,16 @@ public class BinaryTournament2 extends Selection {
 
   /** Builder class */
   public static class Builder {
+    Comparator<Solution> comparator ;
 
     public Builder() {
+      comparator = new DominanceComparator() ;
+    }
+
+    public Builder comparator(Comparator<Solution> comparator) {
+      this.comparator = comparator ;
+
+      return this ;
     }
 
     public BinaryTournament2 build() {

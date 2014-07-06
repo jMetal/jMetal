@@ -68,6 +68,7 @@ public class RankingAndCrowdingSelection extends Selection {
     }
   }
 
+  /** Constructor */
   private RankingAndCrowdingSelection(Builder builder) {
     super(new HashMap<String, Object>()) ;
 
@@ -75,13 +76,7 @@ public class RankingAndCrowdingSelection extends Selection {
     populationSize = builder.populationSize ;
   }
 
-  /**
-   * Performs the operation
-   *
-   * @param object Object representing a SolutionSet.
-   * @return an object representing a <code>SolutionSet<code> with the selected parents
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** execute() method */
   public Object execute(Object object) throws JMetalException {
     SolutionSet population = (SolutionSet) object;
     //int populationSize = (Integer) parameters_.get("populationSize");
@@ -130,9 +125,7 @@ public class RankingAndCrowdingSelection extends Selection {
     return result;
   }
 
-  /*
-   * Builder class
-   */
+  /** Builder class */
   public static class Builder {
     Problem problem ;
     int populationSize ;

@@ -23,6 +23,7 @@ package org.uma.jmetal.operator.selection;
 
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.random.PseudoRandom;
 
@@ -32,16 +33,16 @@ import java.util.HashMap;
 public class BinaryTournament extends Selection {
   private static final long serialVersionUID = 1727470902640158437L;
 
-  private Comparator<Solution> comparator_;
+  private Comparator<Solution> comparator;
 
   /** Constructor */
   @Deprecated
   public BinaryTournament(HashMap<String, Object> parameters) {
     super(parameters);
     if ((parameters != null) && (parameters.get("comparator") != null)) {
-      comparator_ = (Comparator<Solution>) parameters.get("comparator");
+      comparator = (Comparator<Solution>) parameters.get("comparator");
     } else {
-      comparator_ = new DominanceComparator();
+      comparator = new DominanceComparator();
     }
   }
 
@@ -49,11 +50,21 @@ public class BinaryTournament extends Selection {
   private BinaryTournament(Builder builder) {
     super(new HashMap<String, Object>()) ;
 
-    comparator_ = new DominanceComparator();
+    comparator = builder.comparator ;
   }
 
   /** execute method */
   public Object execute(Object object) {
+    if (null == object) {
+      throw new JMetalException("Parameter is null") ;
+    } else if (!(object instanceof SolutionSet)) {
+      throw new JMetalException("Invalid parameter class") ;
+    } else if (((SolutionSet)object).size() == 0) {
+      throw new JMetalException("Solution set size is 0") ;
+    } else if (((SolutionSet)object).size() == 1) {
+      throw new JMetalException("Solution set size is 1") ;
+    }
+    
     SolutionSet solutionSet = (SolutionSet) object;
     Solution solution1, solution2;
     solution1 = solutionSet.get(PseudoRandom.randInt(0, solutionSet.size() - 1));
@@ -65,7 +76,7 @@ public class BinaryTournament extends Selection {
       }
     }
 
-    int flag = comparator_.compare(solution1, solution2);
+    int flag = comparator.compare(solution1, solution2);
     if (flag == -1) {
       return solution1;
     } else if (flag == 1) {
@@ -79,14 +90,15 @@ public class BinaryTournament extends Selection {
     }
   }
 
+  /** Builder class */
   public static class Builder {
-    Comparator comparator ;
+    Comparator<Solution> comparator ;
 
     public Builder() {
       comparator = new DominanceComparator() ;
     }
 
-    public Builder comparator(Comparator comparator) {
+    public Builder comparator(Comparator<Solution> comparator) {
       this.comparator = comparator ;
 
       return this ;

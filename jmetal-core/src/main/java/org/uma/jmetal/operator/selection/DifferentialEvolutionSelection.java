@@ -47,18 +47,25 @@ public class DifferentialEvolutionSelection extends Selection {
     super(parameters);
   }
 
+  /** Constructor */
   DifferentialEvolutionSelection(Builder builder) {
     super(new HashMap<String, Object>()) ;
   }
 
-  /**
-   * Executes the operation
-   *
-   * @param object An object containing the population and the position (index)
-   *               of the current individual
-   * @return An object containing the three selected parents
-   */
+  /** execute() method  */
   public Object execute(Object object) throws JMetalException {
+    if (null == object) {
+      throw new JMetalException("Parameter is null") ;
+    } else if (!(object instanceof Object[])) {
+      throw new JMetalException("Invalid parameter class") ;
+    } else if (((Object[])object).length != 2) {
+      throw new JMetalException("An array of size 2 is required") ;
+    } else if (!(((Object[])object)[0] instanceof SolutionSet)) {
+      throw new JMetalException("Parameter 0 must be of class SolutionSet") ;
+    } else if (!(((Object[])object)[1] instanceof Integer)) {
+      throw new JMetalException("Parameter 0 must be of class Integer") ;
+    }
+    
     Object[] parameters = (Object[]) object;
     SolutionSet population = (SolutionSet) parameters[0];
     int index = (Integer) parameters[1];
@@ -88,9 +95,7 @@ public class DifferentialEvolutionSelection extends Selection {
     return parents;
   }
 
-  /**
-   * Builder class
-   */
+  /** Builder class */
   public static class Builder {
 
     public Builder() {

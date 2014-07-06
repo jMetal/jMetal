@@ -45,7 +45,7 @@ public class RandomSelection extends Selection {
     super(new HashMap<String, Object>()) ;
   }
 
-  /** execute method */
+  /** execute() method */
   public Object execute(Object object) {
     if (null == object) {
       throw new JMetalException("Parameter is null") ;

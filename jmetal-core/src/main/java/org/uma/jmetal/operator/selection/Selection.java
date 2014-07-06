@@ -29,10 +29,6 @@ import java.util.HashMap;
  * This class represents the super class of all the selection operator
  */
 public abstract class Selection extends Operator {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = 6981472547330074954L;
 
   public Selection(HashMap<String, Object> parameters) {
