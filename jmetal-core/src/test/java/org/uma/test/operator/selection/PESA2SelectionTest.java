@@ -20,68 +20,50 @@
 
 package org.uma.test.operator.selection;
 
-import static org.junit.Assert.*;
-
-import java.util.Arrays;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.operator.selection.BinaryTournament;
-import org.uma.jmetal.operator.selection.BinaryTournament2;
-import org.uma.jmetal.operator.selection.RandomSelection;
+import org.uma.jmetal.operator.selection.PESA2Selection;
+import org.uma.jmetal.problem.Kursawe;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.archive.AdaptiveGridArchive;
+
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by Antonio J. Nebro on 15/06/14.
  */
-public class BinaryTournamentTest {
+public class PESA2SelectionTest {
 	static final int POPULATION_SIZE = 20 ;
-	BinaryTournament selection ;
-	SolutionSet solutionSet ;
+	PESA2Selection selection ;
+  AdaptiveGridArchive archive ;
+  Problem problem ;
 
 	@Before
-	public void startup() {
-		selection = new BinaryTournament.Builder()
+	public void startup() throws ClassNotFoundException {
+		selection = new PESA2Selection.Builder()
 		.build() ;
 
-		solutionSet = new SolutionSet(POPULATION_SIZE) ;
+    problem = new Kursawe("Real") ;
+
+		archive = new AdaptiveGridArchive(100, 5, problem.getNumberOfObjectives()) ;
 		for (int i = 0 ; i < POPULATION_SIZE; i++) {
-			solutionSet.add(new Solution()) ;
+      Solution solution = new Solution(problem) ;
+      problem.evaluate(solution);
+			archive.add(solution) ;
 		}
 	}
 
 	@Test
-	public void executeWithCorrectParametersTest() throws ClassNotFoundException {
-		assertNotNull((Solution)selection.execute(solutionSet));
+	public void executeWithCorrectParametersTest()  {
+		assertNotNull(selection.execute(archive));
 	}
 
-	@Test
-	public void executeWithCorrectPopulationSizeOneTest() throws ClassNotFoundException {
-		solutionSet = new SolutionSet(1) ;
-    Solution solution = new Solution() ;
-		solutionSet.add(solution) ;
-		assertEquals(solution, selection.execute(solutionSet));
-	}
-
-	@Test (expected = JMetalException.class)
-	public void executeWithPopulationSizeZeroTest() throws ClassNotFoundException {
-		solutionSet = new SolutionSet(0) ;
-		selection.execute(solutionSet) ;
-	}
-
-	@Test
-	public void executeWithSolutionSetSizeTwoTest() throws ClassNotFoundException {
-		solutionSet = new SolutionSet(2) ;
-		solutionSet.add(new Solution()) ;
-		solutionSet.add(new Solution()) ;
-		assertNotNull(selection.execute(solutionSet));
-	}
-	
   @Test (expected = JMetalException.class)
-  public void wrongParameterClassTest() throws ClassNotFoundException {
+  public void wrongParameterClassTest()  {
     selection.execute(new Integer(4)) ;
   }
 
@@ -89,10 +71,11 @@ public class BinaryTournamentTest {
   public void nullParameterTest() throws ClassNotFoundException {
     selection.execute(null) ;
   }
-  
+
 	@After
 	public void tearDown() {
 		selection = null ;
-		solutionSet = null ;
+		archive = null ;
+    problem = null ;
 	}
 }

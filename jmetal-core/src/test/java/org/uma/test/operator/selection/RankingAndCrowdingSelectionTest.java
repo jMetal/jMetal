@@ -29,6 +29,7 @@ import org.uma.jmetal.operator.selection.BinaryTournament2;
 import org.uma.jmetal.operator.selection.RankingAndCrowdingSelection;
 import org.uma.jmetal.util.JMetalException;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 /**
@@ -54,6 +55,13 @@ public class RankingAndCrowdingSelectionTest {
   @Test
   public void executeWithCorrectParametersTest()  {
     assertNotNull(selection.execute(solutionSet));
+  }
+
+  @Test
+  public void executeWithDifferentParameterTest()  {
+    selection = new RankingAndCrowdingSelection.Builder(20)
+            .build() ;
+    assertEquals(20, ((SolutionSet)selection.execute(solutionSet)).size());
   }
 
   @Test (expected = JMetalException.class)

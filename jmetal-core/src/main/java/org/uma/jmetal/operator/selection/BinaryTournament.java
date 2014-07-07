@@ -61,10 +61,8 @@ public class BinaryTournament extends Selection {
       throw new JMetalException("Invalid parameter class") ;
     } else if (((SolutionSet)object).size() == 0) {
       throw new JMetalException("Solution set size is 0") ;
-    } else if (((SolutionSet)object).size() == 1) {
-      throw new JMetalException("Solution set size is 1") ;
     }
-    
+
     SolutionSet solutionSet = (SolutionSet) object;
     Solution solution1, solution2;
     solution1 = solutionSet.get(PseudoRandom.randInt(0, solutionSet.size() - 1));
