@@ -24,6 +24,7 @@ package org.uma.jmetal.operator.selection;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.comparator.ObjectiveComparator;
 
 import java.util.Comparator;
 import java.util.HashMap;
@@ -52,6 +53,7 @@ public class BestSolutionSelection extends Selection {
   /** Constructor */
   private BestSolutionSelection(Builder builder) {
   	super(new HashMap<String, Object>()) ;
+  	
   	this.comparator = builder.comparator ;
   }
 
@@ -78,10 +80,10 @@ public class BestSolutionSelection extends Selection {
   }
   
   /** Builder class */
-  public class Builder {
+  public static class Builder {
     private Comparator<Solution> comparator;
-
-	  Builder(final Comparator<Solution> comparator) {
+    
+    public Builder(Comparator<Solution> comparator) {
 	  	this.comparator = comparator ;
 	  }
 	  

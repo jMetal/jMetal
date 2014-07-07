@@ -63,6 +63,7 @@ public class GDE3 extends Algorithm {
     iterations_ = 0 ;
   }
 
+  /** Constructor */
   public GDE3(Builder builder) {
     super() ;
     problem_ = builder.problem_ ;
@@ -76,13 +77,7 @@ public class GDE3 extends Algorithm {
     dominance_ = new DominanceComparator();
   }
 
-  /**
-   * Runs of the GDE3 algorithm.
-   *
-   * @return a <code>SolutionSet</code> that is a set of non dominated solutions
-   * as a result of the algorithm execution
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** execute() method  */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     //readParameterSettings();
     createInitialPopulation();
@@ -237,9 +232,7 @@ public class GDE3 extends Algorithm {
     evaluator_.shutdown();
   }
 
-  /**
-   * Builder class
-   */
+  /** Builder class */
   public static class Builder {
     protected SolutionSetEvaluator evaluator_ ;
     protected Problem problem_ ;

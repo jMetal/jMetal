@@ -76,6 +76,8 @@ public class DifferentialEvolutionSelection extends Selection {
     if (population.size() < 4) {
       throw new JMetalException(
         "DifferentialEvolutionSelection: the population has less than four solutions");
+    } else if (index < 0) {
+      throw new JMetalException("The index is negative") ;
     }
 
     do {

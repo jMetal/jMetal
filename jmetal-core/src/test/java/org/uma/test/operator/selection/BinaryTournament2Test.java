@@ -58,14 +58,14 @@ public class BinaryTournament2Test {
 	}
 
 	@Test (expected = JMetalException.class)
-	public void executeWithCorrectPopulationSizeOneTest() throws ClassNotFoundException {
+	public void executeWithPopulationSizeOneTest() throws ClassNotFoundException {
 		solutionSet = new SolutionSet(1) ;
 		solutionSet.add(new Solution()) ;
 		selection.execute(solutionSet) ;
 	}
 
 	@Test (expected = JMetalException.class)
-	public void executeWithCorrectPopulationSizeZeroTest() throws ClassNotFoundException {
+	public void executeWithPopulationSizeZeroTest() throws ClassNotFoundException {
 		solutionSet = new SolutionSet(0) ;
 		selection.execute(solutionSet) ;
 	}

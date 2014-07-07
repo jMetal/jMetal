@@ -48,6 +48,7 @@ public class WorstSolutionSelection extends Selection {
   /** Constructor */
   private WorstSolutionSelection(Builder builder) {
   	super(new HashMap<String, Object>()) ;
+
   	this.comparator = builder.comparator ;
   }
   
@@ -74,10 +75,10 @@ public class WorstSolutionSelection extends Selection {
   }
   
   /** Builder class */
-  public class Builder {
+  public static class Builder {
     private Comparator<Solution> comparator;
 
-	  Builder(final Comparator<Solution> comparator) {
+	  public Builder(final Comparator<Solution> comparator) {
 	  	this.comparator = comparator ;
 	  }
 	  
