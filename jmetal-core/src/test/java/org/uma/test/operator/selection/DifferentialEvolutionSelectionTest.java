@@ -65,6 +65,20 @@ public class DifferentialEvolutionSelectionTest {
     assertNotEquals(selected[1], selected[2]);
   }
 
+  @Test
+  public void theSelectedIndividualsMustBeDifferentWithPopulationSizeFourTest() throws ClassNotFoundException {
+    solutionSet = new SolutionSet(4) ;
+    solutionSet.add(new Solution()) ;
+    solutionSet.add(new Solution()) ;
+    solutionSet.add(new Solution()) ;
+    solutionSet.add(new Solution()) ;
+
+    Solution[] selected = (Solution[])selection.execute(new Object[]{solutionSet, 1});
+    assertNotEquals(selected[0], selected[1]);
+    assertNotEquals(selected[0], selected[2]);
+    assertNotEquals(selected[1], selected[2]);
+  }
+
   @Test (expected = JMetalException.class)
   public void executeWithPopulationSizeZeroTest() throws ClassNotFoundException {
     solutionSet = new SolutionSet(0) ;
@@ -92,7 +106,7 @@ public class DifferentialEvolutionSelectionTest {
   public void executeWithNegativeIndex() throws ClassNotFoundException {
     selection.execute(new Object[]{solutionSet, -5}) ;
   }
-  
+
   @Test (expected = JMetalException.class)
   public void wrongParameterClassTest() throws ClassNotFoundException {
     selection.execute(new Integer(4)) ;

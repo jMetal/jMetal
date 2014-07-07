@@ -84,26 +84,26 @@ public class MOCHCSettings extends Settings {
     Algorithm algorithm ;
 
     crossoverOperator = new HUXCrossover.Builder()
-      .probability(1.0)
+      .probability(crossoverProbability)
       .build() ;
 
     parentsSelection = new RandomSelection.Builder()
       .build() ;
 
     newGenerationSelection = new RankingAndCrowdingSelection.Builder(problem_)
-      .populationSize(100)
+      .solutionsToSelect(populationSize)
       .build() ;
 
     mutationOperator = new BitFlipMutation.Builder()
-      .probability(0.35)
+      .probability(mutationProbability)
       .build() ;
 
     algorithm = new MOCHC.Builder(problem_)
-      .initialConvergenceCount(0.25)
-      .preservedPopulation(0.05)
-      .populationSize(100)
-      .maxEvaluations(25000)
-      .convergenceValue(3)
+      .initialConvergenceCount(initialConvergenceCount)
+      .preservedPopulation(preservedPopulation)
+      .populationSize(populationSize)
+      .maxEvaluations(maxEvaluations)
+      .convergenceValue(convergenceValue)
       .crossover(crossoverOperator)
       .newGenerationSelection(newGenerationSelection)
       .cataclysmicMutation(mutationOperator)

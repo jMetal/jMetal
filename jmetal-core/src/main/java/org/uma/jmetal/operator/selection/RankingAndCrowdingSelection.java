@@ -37,8 +37,6 @@ import java.util.HashMap;
  * This class implements a selection for selecting a number of solutions from
  * a solutionSet. The solutions are taken by mean of its ranking and
  * crowding distance values.
- * NOTE: if you use the default constructor, the problem has to be passed as
- * a parameter before invoking the execute() method -- see lines 67 - 74
  */
 public class RankingAndCrowdingSelection extends Selection {
   private static final long serialVersionUID = 3650068556668255844L;
@@ -46,7 +44,7 @@ public class RankingAndCrowdingSelection extends Selection {
   private static final Comparator<Solution> crowdingComparator = new CrowdingComparator();
   private static final Distance distance = new Distance();
   private Problem problem = null;
-  private int populationSize = 0 ;
+  private int solutionsToSelect = 0 ;
 
   @Deprecated
   public RankingAndCrowdingSelection(HashMap<String, Object> parameters) {
@@ -56,13 +54,13 @@ public class RankingAndCrowdingSelection extends Selection {
       problem = (Problem) parameters.get("problem");
     }
 
-    if (parameters.get("populationSize") != null) {
-      populationSize = (Integer) parameters.get("populationSize");
+    if (parameters.get("solutionsToSelect") != null) {
+      solutionsToSelect = (Integer) parameters.get("solutionsToSelect");
     }
 
     if (problem == null) {
       Configuration.logger_.severe("RankingAndCrowdingSelection.execute: " +
-        "problem not specified");
+              "problem not specified");
       Class cls = java.lang.String.class;
       String name = cls.getName();
     }
@@ -73,41 +71,43 @@ public class RankingAndCrowdingSelection extends Selection {
     super(new HashMap<String, Object>()) ;
 
     problem = builder.problem ;
-    populationSize = builder.populationSize ;
+    solutionsToSelect = builder.solutionsToSelect ;
   }
 
   /** execute() method */
   public Object execute(Object object) throws JMetalException {
-    SolutionSet population = (SolutionSet) object;
-    //int populationSize = (Integer) parameters_.get("populationSize");
-    SolutionSet result = new SolutionSet(populationSize);
+    if (null == object) {
+      throw new JMetalException("Parameter is null") ;
+    } else if (!(object instanceof SolutionSet)) {
+      throw new JMetalException("Invalid parameter class") ;
+    }  else if (((SolutionSet) object).size() < solutionsToSelect) {
+      throw new JMetalException("The population size ("+((SolutionSet) object).size()+") is smaller than" +
+              "the solutions to selected ("+solutionsToSelect+")")  ;
+    }
 
-    // Ranking the union
+    SolutionSet population = (SolutionSet) object;
+    SolutionSet resultPopulation = new SolutionSet(solutionsToSelect);
+
     Ranking ranking = new Ranking(population);
 
-    int remain = populationSize;
-    int index = 0;
-    SolutionSet front = null;
+    int remain = solutionsToSelect;
+    SolutionSet front ;
     population.clear();
 
-    // Obtain the next front
-    front = ranking.getSubfront(index);
+    int rankingIndex = 0;
+    front = ranking.getSubfront(rankingIndex);
 
     while ((remain > 0) && (remain >= front.size())) {
-      //Assign crowding distance to individuals
       distance.crowdingDistanceAssignment(front);
       //Add the individuals of this front
-      for (int k = 0; k < front.size(); k++) {
-        result.add(front.get(k));
+      for (int i = 0; i < front.size(); i++) {
+        resultPopulation.add(front.get(i));
       }
-
-      //Decrement remain
       remain = remain - front.size();
 
-      //Obtain the next front
-      index++;
+      rankingIndex++;
       if (remain > 0) {
-        front = ranking.getSubfront(index);
+        front = ranking.getSubfront(rankingIndex);
       }
     }
 
@@ -116,29 +116,27 @@ public class RankingAndCrowdingSelection extends Selection {
       distance.crowdingDistanceAssignment(front);
       front.sort(crowdingComparator);
       for (int k = 0; k < remain; k++) {
-        result.add(front.get(k));
+        resultPopulation.add(front.get(k));
       }
-
-      remain = 0;
     }
 
-    return result;
+    return resultPopulation;
   }
 
   /** Builder class */
   public static class Builder {
     Problem problem ;
-    int populationSize ;
+    int solutionsToSelect ;
 
     public Builder(Problem problem) {
       this.problem = problem ;
-      this.populationSize = 0 ;
+      this.solutionsToSelect = 0 ;
     }
 
-    public Builder populationSize(int populationSize) {
-      this.populationSize = populationSize ;
+    public Builder solutionsToSelect(int solutionsToSelect) {
+      this.solutionsToSelect = solutionsToSelect ;
 
-       return this ;
+      return this ;
     }
 
     public RankingAndCrowdingSelection build() {

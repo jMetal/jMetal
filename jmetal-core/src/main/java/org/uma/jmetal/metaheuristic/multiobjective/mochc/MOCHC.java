@@ -137,7 +137,7 @@ public class MOCHC extends Algorithm {
       }
     }
     return true;
-  } // equals
+  }
 
   /**
    * Calculate the hamming distance between two solutions
@@ -212,7 +212,7 @@ public class MOCHC extends Algorithm {
         }
       }
       SolutionSet union = solutionSet.union(offspringPopulation);
-      newGenerationSelection.setParameter("populationSize", populationSize);
+      //newGenerationSelection.setParameter("populationSize", populationSize);
       newPopulation = (SolutionSet) newGenerationSelection.execute(union);
 
       if (solutionSetsAreEquals(solutionSet, newPopulation)) {
