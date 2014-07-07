@@ -53,25 +53,25 @@ public class BinaryTournament2Test {
 	}
 
 	@Test
-	public void executeWithCorrectParametersTest() throws ClassNotFoundException {
+	public void executeWithCorrectParametersTest() {
 		assertNotNull((Solution)selection.execute(solutionSet));
 	}
 
 	@Test (expected = JMetalException.class)
-	public void executeWithPopulationSizeOneTest() throws ClassNotFoundException {
+	public void executeWithPopulationSizeOneTest() {
 		solutionSet = new SolutionSet(1) ;
 		solutionSet.add(new Solution()) ;
 		selection.execute(solutionSet) ;
 	}
 
 	@Test (expected = JMetalException.class)
-	public void executeWithPopulationSizeZeroTest() throws ClassNotFoundException {
+	public void executeWithPopulationSizeZeroTest() {
 		solutionSet = new SolutionSet(0) ;
 		selection.execute(solutionSet) ;
 	}
 
 	@Test
-	public void executeWithSolutionSetSizeTwoTest() throws ClassNotFoundException {
+	public void executeWithSolutionSetSizeTwoTest() {
 		solutionSet = new SolutionSet(2) ;
 		solutionSet.add(new Solution()) ;
 		solutionSet.add(new Solution()) ;
@@ -79,18 +79,18 @@ public class BinaryTournament2Test {
 	}
 	
   @Test (expected = JMetalException.class)
-  public void wrongParameterClassTest() throws ClassNotFoundException {
+  public void wrongParameterClassTest() {
     selection.execute(new Integer(4)) ;
   }
 
   @Test (expected = JMetalException.class)
-  public void nullParameterTest() throws ClassNotFoundException {
+  public void nullParameterTest() {
     selection.execute(null) ;
   }
   
   /* FIXME: pending to test
   @Test 
-  public void theResultIsAPermutationTest() throws ClassNotFoundException {
+  public void theResultIsAPermutationTest() {
   	SolutionSet selectedSolutions = new SolutionSet(POPULATION_SIZE) ;
   	for (int i = 0; i < POPULATION_SIZE; i++) {
   		selectedSolutions.add((Solution)selection.execute(solutionSet)) ;

@@ -52,13 +52,13 @@ public class DifferentialEvolutionSelectionTest {
   }
 
   @Test
-  public void executeWithCorrectParametersTest() throws ClassNotFoundException {
+  public void executeWithCorrectParametersTest() {
     Solution[] selected = (Solution[])selection.execute(new Object[]{solutionSet, 1});
     assertEquals(3, selected.length);
   }
 
   @Test
-  public void theSelectedIndividualsMustBeDifferentTest() throws ClassNotFoundException {
+  public void theSelectedIndividualsMustBeDifferentTest() {
     Solution[] selected = (Solution[])selection.execute(new Object[]{solutionSet, 1});
     assertNotEquals(selected[0], selected[1]);
     assertNotEquals(selected[0], selected[2]);
@@ -66,7 +66,7 @@ public class DifferentialEvolutionSelectionTest {
   }
 
   @Test
-  public void theSelectedIndividualsMustBeDifferentWithPopulationSizeFourTest() throws ClassNotFoundException {
+  public void theSelectedIndividualsMustBeDifferentWithPopulationSizeFourTest() {
     solutionSet = new SolutionSet(4) ;
     solutionSet.add(new Solution()) ;
     solutionSet.add(new Solution()) ;
@@ -80,13 +80,13 @@ public class DifferentialEvolutionSelectionTest {
   }
 
   @Test (expected = JMetalException.class)
-  public void executeWithPopulationSizeZeroTest() throws ClassNotFoundException {
+  public void executeWithPopulationSizeZeroTest() {
     solutionSet = new SolutionSet(0) ;
     selection.execute(solutionSet) ;
   }
 
   @Test (expected = JMetalException.class)
-  public void executeWithSolutionSetSizeTwoTest() throws ClassNotFoundException {
+  public void executeWithSolutionSetSizeTwoTest() {
     solutionSet = new SolutionSet(2) ;
     solutionSet.add(new Solution()) ;
     solutionSet.add(new Solution()) ;
@@ -94,7 +94,7 @@ public class DifferentialEvolutionSelectionTest {
   }
 
   @Test (expected = JMetalException.class)
-  public void executeWithSolutionSetSizeThreeTest() throws ClassNotFoundException {
+  public void executeWithSolutionSetSizeThreeTest() {
     solutionSet = new SolutionSet(3) ;
     solutionSet.add(new Solution()) ;
     solutionSet.add(new Solution()) ;
@@ -103,17 +103,17 @@ public class DifferentialEvolutionSelectionTest {
   }
 
   @Test (expected = JMetalException.class)
-  public void executeWithNegativeIndex() throws ClassNotFoundException {
+  public void executeWithNegativeIndex() {
     selection.execute(new Object[]{solutionSet, -5}) ;
   }
 
   @Test (expected = JMetalException.class)
-  public void wrongParameterClassTest() throws ClassNotFoundException {
+  public void wrongParameterClassTest() {
     selection.execute(new Integer(4)) ;
   }
 
   @Test (expected = JMetalException.class)
-  public void nullParameterTest() throws ClassNotFoundException {
+  public void nullParameterTest() {
     selection.execute(null) ;
   }
 

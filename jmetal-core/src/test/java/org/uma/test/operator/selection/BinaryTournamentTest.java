@@ -54,12 +54,12 @@ public class BinaryTournamentTest {
 	}
 
 	@Test
-	public void executeWithCorrectParametersTest() throws ClassNotFoundException {
+	public void executeWithCorrectParametersTest() {
 		assertNotNull((Solution)selection.execute(solutionSet));
 	}
 
 	@Test
-	public void executeWithCorrectPopulationSizeOneTest() throws ClassNotFoundException {
+	public void executeWithCorrectPopulationSizeOneTest() {
 		solutionSet = new SolutionSet(1) ;
     Solution solution = new Solution() ;
 		solutionSet.add(solution) ;
@@ -67,13 +67,13 @@ public class BinaryTournamentTest {
 	}
 
 	@Test (expected = JMetalException.class)
-	public void executeWithPopulationSizeZeroTest() throws ClassNotFoundException {
+	public void executeWithPopulationSizeZeroTest() {
 		solutionSet = new SolutionSet(0) ;
 		selection.execute(solutionSet) ;
 	}
 
 	@Test
-	public void executeWithSolutionSetSizeTwoTest() throws ClassNotFoundException {
+	public void executeWithSolutionSetSizeTwoTest() {
 		solutionSet = new SolutionSet(2) ;
 		solutionSet.add(new Solution()) ;
 		solutionSet.add(new Solution()) ;
@@ -81,12 +81,12 @@ public class BinaryTournamentTest {
 	}
 	
   @Test (expected = JMetalException.class)
-  public void wrongParameterClassTest() throws ClassNotFoundException {
+  public void wrongParameterClassTest() {
     selection.execute(new Integer(4)) ;
   }
 
   @Test (expected = JMetalException.class)
-  public void nullParameterTest() throws ClassNotFoundException {
+  public void nullParameterTest() {
     selection.execute(null) ;
   }
   

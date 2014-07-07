@@ -52,14 +52,14 @@ public class RandomSelectionTest {
   }
 
   @Test
-  public void executeWithCorrectParametersTest() throws ClassNotFoundException {
+  public void executeWithCorrectParametersTest() {
     Solution[] solution ;
     solution = (Solution[])selection.execute(solutionSet) ;
     assertNotEquals(solution[0], solution[1]);
   }
 
   @Test
-  public void executeWithCorrectPopulationSizeTwoTest() throws ClassNotFoundException {
+  public void executeWithCorrectPopulationSizeTwoTest() {
     Solution[] solution ;
     solutionSet = new SolutionSet(2) ;
     solutionSet.add(new Solution()) ;
@@ -69,27 +69,27 @@ public class RandomSelectionTest {
   }
 
   @Test (expected = JMetalException.class)
-  public void executeWithSolutionSetSizeZeroTest() throws ClassNotFoundException {
+  public void executeWithSolutionSetSizeZeroTest() {
     solutionSet = new SolutionSet(0) ;
     selection.execute(solutionSet) ;
   }
 
   @Test (expected = JMetalException.class)
-  public void executeWithSolutionSetSizeOneTest() throws ClassNotFoundException {
+  public void executeWithSolutionSetSizeOneTest() {
     solutionSet = new SolutionSet(1) ;
     solutionSet.add(new Solution()) ;
     selection.execute(solutionSet) ;
   }
 
   @Test (expected = JMetalException.class)
-  public void wrongParameterClassTest() throws ClassNotFoundException {
+  public void wrongParameterClassTest() {
     Solution[] parent = {new Solution(), new Solution()};
 
     selection.execute(parent) ;
   }
 
   @Test (expected = JMetalException.class)
-  public void nullParameterTest() throws ClassNotFoundException {
+  public void nullParameterTest() {
     selection.execute(null) ;
   }
 

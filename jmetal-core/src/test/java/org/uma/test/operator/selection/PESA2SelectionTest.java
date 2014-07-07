@@ -68,7 +68,7 @@ public class PESA2SelectionTest {
   }
 
   @Test (expected = JMetalException.class)
-  public void nullParameterTest() throws ClassNotFoundException {
+  public void nullParameterTest() {
     selection.execute(null) ;
   }
 

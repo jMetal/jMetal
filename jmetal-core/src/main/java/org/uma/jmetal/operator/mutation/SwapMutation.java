@@ -24,50 +24,42 @@ package org.uma.jmetal.operator.mutation;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.encoding.solutiontype.PermutationSolutionType;
 import org.uma.jmetal.encoding.variable.Permutation;
+import org.uma.jmetal.experiment.studies.jMetalStudy;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
-/**
- * This class implements a swap mutation. The solutiontype type of the solutiontype
- * must be Permutation.
- */
+/** This class implements a swap mutation over a permutation encoded solution */
 public class SwapMutation extends Mutation {
-  /**
-   *
-   */
   private static final long serialVersionUID = -3982393451733347035L;
 
-  /**
-   * Valid solutiontype types to apply this operator
-   */
-  private static final List<Class<PermutationSolutionType>> VALID_TYPES =
-    Arrays.asList(PermutationSolutionType.class);
+  private double mutationProbability = 0.0 ;
 
-  private Double mutationProbability_ = null;
-
-  /**
-   * Constructor
-   */
+  @Deprecated
   public SwapMutation(HashMap<String, Object> parameters) {
     super(parameters);
 
     if (parameters.get("probability") != null) {
-      mutationProbability_ = (Double) parameters.get("probability");
+      mutationProbability = (double) parameters.get("probability");
     }
+
+    addValidSolutionType(PermutationSolutionType.class);
   }
 
-  /**
-   * Performs the operation
-   *
-   * @param probability Mutation probability
-   * @param solution    The solutiontype to mutate
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Constructor */
+  private SwapMutation(Builder builder) {
+    addValidSolutionType(PermutationSolutionType.class);
+
+    mutationProbability = builder.mutationProbability ;
+  }
+
+  public double getMutationProbability() {
+    return mutationProbability;
+  }
+
+  /** Execute method */
   public void doMutation(double probability, Solution solution) throws JMetalException {
     int permutation[];
     int permutationLength;
@@ -105,28 +97,41 @@ public class SwapMutation extends Mutation {
     }
   }
 
-  /**
-   * Executes the operation
-   *
-   * @param object An object containing the solutiontype to mutate
-   * @return an object containing the mutated solutiontype
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Execute method */
   public Object execute(Object object) throws JMetalException {
-    Solution solution = (Solution) object;
-
-    if (!VALID_TYPES.contains(solution.getType().getClass())) {
-      Configuration.logger_.severe("SwapMutation.execute: the solutiontype " +
-        "is not of the right type. The type should be 'Binary', " +
-        "'BinaryReal' or 'Int', but " + solution.getType() + " is obtained");
-
-      Class<String> cls = java.lang.String.class;
-      String name = cls.getName();
-      throw new JMetalException("Exception in " + name + ".execute()");
+    if (null == object) {
+      throw new JMetalException("Null parameter") ;
+    } else if (!(object instanceof Solution)) {
+      throw new JMetalException("Invalid parameter class") ;
     }
 
+    Solution solution = (Solution) object;
 
-    this.doMutation(mutationProbability_, solution);
+    if (!solutionTypeIsValid(solution)) {
+      throw new JMetalException("SwapMutation.execute: the solution " +
+              "type " + solution.getType() + " is not allowed with this operator");
+    }
+
+    this.doMutation(mutationProbability, solution);
     return solution;
+  }
+
+  /** Builder class */
+  public static class Builder {
+    private double distributionIndex_ ;
+    private double mutationProbability ;
+
+    public Builder() {
+    }
+
+    public Builder probability(double probability) {
+      mutationProbability = probability ;
+
+      return this ;
+    }
+
+    public SwapMutation build() {
+      return new SwapMutation(this) ;
+    }
   }
 }

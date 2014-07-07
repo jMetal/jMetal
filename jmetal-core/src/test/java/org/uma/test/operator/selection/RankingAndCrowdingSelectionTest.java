@@ -25,7 +25,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.operator.selection.BinaryTournament2;
 import org.uma.jmetal.operator.selection.RankingAndCrowdingSelection;
 import org.uma.jmetal.util.JMetalException;
 

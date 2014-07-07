@@ -39,9 +39,9 @@ import java.util.HashMap;
  */
 public class PolynomialMutation extends Mutation {
   private static final double ETA_M_DEFAULT_ = 20.0;
-  private double distributionIndex_ = ETA_M_DEFAULT_;
+  private double distributionIndex = ETA_M_DEFAULT_;
 
-  private double mutationProbability_ = 0.0;
+  private double mutationProbability = 0.0;
 
   @Deprecated
   public PolynomialMutation(HashMap<String, Object> parameters) {
@@ -51,10 +51,10 @@ public class PolynomialMutation extends Mutation {
     addValidSolutionType(ArrayRealSolutionType.class);
 
     if (parameters.get("probability") != null) {
-      mutationProbability_ = (Double) parameters.get("probability");
+      mutationProbability = (Double) parameters.get("probability");
     }
     if (parameters.get("distributionIndex") != null) {
-      distributionIndex_ = (Double) parameters.get("distributionIndex");
+      distributionIndex = (Double) parameters.get("distributionIndex");
     }
   }
 
@@ -65,16 +65,16 @@ public class PolynomialMutation extends Mutation {
     addValidSolutionType(IntSolutionType.class);
     addValidSolutionType(ArrayIntSolutionType.class);
 
-    mutationProbability_ = builder.mutationProbability_;
-    distributionIndex_ = builder.distributionIndex_;
+    mutationProbability = builder.mutationProbability;
+    distributionIndex = builder.distributionIndex;
   }
 
   public double getMutationProbability() {
-    return mutationProbability_;
+    return mutationProbability;
   }
 
   public double getDistributionIndex() {
-    return distributionIndex_;
+    return distributionIndex;
   }
 
   /** Execute method */
@@ -86,7 +86,7 @@ public class PolynomialMutation extends Mutation {
         "type " + solution.getType() + " is not allowed with this operator");
     }
 
-    doMutation(mutationProbability_, solution);
+    doMutation(mutationProbability, solution);
     return solution;
   }
 
@@ -114,15 +114,15 @@ public class PolynomialMutation extends Mutation {
         delta1 = (y - yl) / (yu - yl);
         delta2 = (yu - y) / (yu - yl);
         rnd = PseudoRandom.randDouble();
-        mutPow = 1.0 / (distributionIndex_ + 1.0);
+        mutPow = 1.0 / (distributionIndex + 1.0);
         if (rnd <= 0.5) {
           xy = 1.0 - delta1;
-          val = 2.0 * rnd + (1.0 - 2.0 * rnd) * (Math.pow(xy, (distributionIndex_ + 1.0)));
+          val = 2.0 * rnd + (1.0 - 2.0 * rnd) * (Math.pow(xy, (distributionIndex + 1.0)));
           deltaq = java.lang.Math.pow(val, mutPow) - 1.0;
         } else {
           xy = 1.0 - delta2;
           val =
-            2.0 * (1.0 - rnd) + 2.0 * (rnd - 0.5) * (Math.pow(xy, (distributionIndex_ + 1.0)));
+            2.0 * (1.0 - rnd) + 2.0 * (rnd - 0.5) * (Math.pow(xy, (distributionIndex + 1.0)));
           deltaq = 1.0 - (java.lang.Math.pow(val, mutPow));
         }
         y = y + deltaq * (yu - yl);
@@ -149,15 +149,15 @@ public class PolynomialMutation extends Mutation {
         delta1 = (y - yl) / (yu - yl);
         delta2 = (yu - y) / (yu - yl);
         rnd = PseudoRandom.randDouble();
-        mutPow = 1.0 / (distributionIndex_ + 1.0);
+        mutPow = 1.0 / (distributionIndex + 1.0);
         if (rnd <= 0.5) {
           xy = 1.0 - delta1;
-          val = 2.0 * rnd + (1.0 - 2.0 * rnd) * (Math.pow(xy, (distributionIndex_ + 1.0)));
+          val = 2.0 * rnd + (1.0 - 2.0 * rnd) * (Math.pow(xy, (distributionIndex + 1.0)));
           deltaq = java.lang.Math.pow(val, mutPow) - 1.0;
         } else {
           xy = 1.0 - delta2;
           val =
-            2.0 * (1.0 - rnd) + 2.0 * (rnd - 0.5) * (Math.pow(xy, (distributionIndex_ + 1.0)));
+            2.0 * (1.0 - rnd) + 2.0 * (rnd - 0.5) * (Math.pow(xy, (distributionIndex + 1.0)));
           deltaq = 1.0 - (java.lang.Math.pow(val, mutPow));
         }
         y = y + deltaq * (yu - yl);
@@ -174,21 +174,21 @@ public class PolynomialMutation extends Mutation {
 
   /** Builder class */
   public static class Builder {
-    private double distributionIndex_ ;
-    private double mutationProbability_ ;
+    private double distributionIndex;
+    private double mutationProbability;
 
     public Builder() {
-      distributionIndex_ = ETA_M_DEFAULT_ ;
+      distributionIndex = ETA_M_DEFAULT_ ;
     }
 
     public Builder distributionIndex(double distributionIndex) {
-      distributionIndex_ = distributionIndex ;
+      this.distributionIndex = distributionIndex ;
 
       return this ;
     }
 
     public Builder probability(double probability) {
-      mutationProbability_ = probability ;
+      mutationProbability = probability ;
 
       return this ;
     }
