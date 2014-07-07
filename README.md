@@ -29,49 +29,37 @@ After applying clean coding, the `NSGAII.java" program currently looks like this
       * @throws jmetal.util.JMetalException
       */
      public SolutionSet execute() throws JMetalException, ClassNotFoundException {
-       createInitialPopulation();
-       evaluatePopulation(population_);
+     createInitialPopulation();
+     population = evaluatePopulation(population);
 
-       while (!stoppingCondition()) {
-         offspringPopulation_ = new SolutionSet(populationSize_);
-         for (int i = 0; i < (populationSize_ / 2); i++) {
-           if (!stoppingCondition()) {
-             Solution[] parents = new Solution[2];
-             parents[0] = (Solution) selectionOperator_.execute(population_);
-             parents[1] = (Solution) selectionOperator_.execute(population_);
+     // Main loop
+     while (!stoppingCondition()) {
+       offspringPopulation = new SolutionSet(populationSize);
+       for (int i = 0; i < (populationSize / 2); i++) {
+         if (!stoppingCondition()) {
+           Solution[] parents = new Solution[2];
+           parents[0] = (Solution) selectionOperator.execute(population);
+           parents[1] = (Solution) selectionOperator.execute(population);
 
-             Solution[] offSpring = (Solution[]) crossoverOperator_.execute(parents);
+           Solution[] offSpring = (Solution[]) crossoverOperator.execute(parents);
 
-             mutationOperator_.execute(offSpring[0]);
-             mutationOperator_.execute(offSpring[1]);
+           mutationOperator.execute(offSpring[0]);
+           mutationOperator.execute(offSpring[1]);
 
-             offspringPopulation_.add(offSpring[0]);
-             offspringPopulation_.add(offSpring[1]);
-           }
-         }
-
-         evaluatePopulation(offspringPopulation_);
-         evaluations_ += offspringPopulation_.size() ;
-
-         Ranking ranking = new Ranking(population_.union(offspringPopulation_));
-
-         population_.clear();
-         int rankingIndex = 0 ;
-         while (populationIsNotFull()) {
-           if (subfrontFillsIntoThePopulation(ranking, rankingIndex)) {
-             addRankedSolutionsToPopulation(ranking, rankingIndex);
-             rankingIndex ++ ;
-           } else {
-             computeCrowdingDistance(ranking, rankingIndex) ;
-             addLastRankedSolutions(ranking, rankingIndex);
-           }
+           offspringPopulation.add(offSpring[0]);
+           offspringPopulation.add(offSpring[1]);
          }
        }
 
-       tearDown() ;
+       offspringPopulation = evaluatePopulation(offspringPopulation);
 
-       return getNonDominatedSolutions() ;
+       Ranking ranking = new Ranking(population.union(offspringPopulation));
+       crowdingDistanceSelection(ranking);
      }
+
+     tearDown() ;
+
+     return getNonDominatedSolutions() ;
    }
 ```
 
