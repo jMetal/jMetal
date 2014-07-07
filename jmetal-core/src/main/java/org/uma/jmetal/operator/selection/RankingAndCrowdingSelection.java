@@ -41,9 +41,10 @@ import java.util.HashMap;
 public class RankingAndCrowdingSelection extends Selection {
   private static final long serialVersionUID = 3650068556668255844L;
 
-  private static final Comparator<Solution> crowdingComparator = new CrowdingComparator();
-  private static final Distance distance = new Distance();
+  private Comparator<Solution> crowdingComparator = new CrowdingComparator();
+  private Distance distance = new Distance();
   private Problem problem = null;
+
   private int solutionsToSelect = 0 ;
 
   @Deprecated
@@ -70,8 +71,11 @@ public class RankingAndCrowdingSelection extends Selection {
   private RankingAndCrowdingSelection(Builder builder) {
     super(new HashMap<String, Object>()) ;
 
-    problem = builder.problem ;
     solutionsToSelect = builder.solutionsToSelect ;
+  }
+
+  public int getSolutionsToSelect() {
+    return solutionsToSelect;
   }
 
   /** execute() method */
@@ -125,18 +129,10 @@ public class RankingAndCrowdingSelection extends Selection {
 
   /** Builder class */
   public static class Builder {
-    Problem problem ;
     int solutionsToSelect ;
 
-    public Builder(Problem problem) {
-      this.problem = problem ;
-      this.solutionsToSelect = 0 ;
-    }
-
-    public Builder solutionsToSelect(int solutionsToSelect) {
+    public Builder(int solutionsToSelect) {
       this.solutionsToSelect = solutionsToSelect ;
-
-      return this ;
     }
 
     public RankingAndCrowdingSelection build() {

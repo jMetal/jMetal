@@ -74,8 +74,7 @@ public class MOCHCRunner {
     parentsSelection = new RandomSelection.Builder()
       .build() ;
 
-    newGenerationSelection = new RankingAndCrowdingSelection.Builder(problem)
-      .solutionsToSelect(100)
+    newGenerationSelection = new RankingAndCrowdingSelection.Builder(100)
       .build() ;
 
     mutationOperator = new BitFlipMutation.Builder()

@@ -20,10 +20,68 @@
 
 package org.uma.test.operator.selection;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.core.SolutionSet;
+import org.uma.jmetal.operator.selection.BinaryTournament2;
+import org.uma.jmetal.operator.selection.RankingAndCrowdingSelection;
+import org.uma.jmetal.util.JMetalException;
+
+import static org.junit.Assert.assertNotNull;
+
 /**
  * Created by Antonio J. Nebro on 27/06/14.
  */
 
-//FIXME: to be implemented
 public class RankingAndCrowdingSelectionTest {
+  static final int POPULATION_SIZE = 20 ;
+  RankingAndCrowdingSelection selection ;
+  SolutionSet solutionSet ;
+
+  @Before
+  public void startup() {
+    selection = new RankingAndCrowdingSelection.Builder(POPULATION_SIZE)
+            .build() ;
+
+    solutionSet = new SolutionSet(POPULATION_SIZE) ;
+    for (int i = 0 ; i < POPULATION_SIZE; i++) {
+      solutionSet.add(new Solution()) ;
+    }
+  }
+
+  @Test
+  public void executeWithCorrectParametersTest()  {
+    assertNotNull(selection.execute(solutionSet));
+  }
+
+  @Test (expected = JMetalException.class)
+  public void executeWithIncorrectParameterValueTest() {
+    selection = new RankingAndCrowdingSelection.Builder(50)
+            .build() ;
+
+    selection.execute(solutionSet) ;
+  }
+
+  @Test (expected = JMetalException.class)
+  public void wrongParameterClassTest() {
+    selection.execute(new Integer(4)) ;
+  }
+
+  @Test (expected = JMetalException.class)
+  public void nullParameterTest()  {
+    selection.execute(null) ;
+  }
+
+  @Test
+  public void rankingAndCrowdingWorksOkTest()  {
+  //FIXME: to be implemented
+  }
+
+  @After
+  public void tearDown() {
+    selection = null ;
+    solutionSet = null ;
+  }
 }

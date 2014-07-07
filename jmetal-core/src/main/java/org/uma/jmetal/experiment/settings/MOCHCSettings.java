@@ -90,8 +90,7 @@ public class MOCHCSettings extends Settings {
     parentsSelection = new RandomSelection.Builder()
       .build() ;
 
-    newGenerationSelection = new RankingAndCrowdingSelection.Builder(problem_)
-      .solutionsToSelect(populationSize)
+    newGenerationSelection = new RankingAndCrowdingSelection.Builder(populationSize)
       .build() ;
 
     mutationOperator = new BitFlipMutation.Builder()
