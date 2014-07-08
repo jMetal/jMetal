@@ -24,8 +24,6 @@ package org.uma.jmetal.operator.mutation;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.encoding.solutiontype.PermutationSolutionType;
 import org.uma.jmetal.encoding.variable.Permutation;
-import org.uma.jmetal.experiment.studies.jMetalStudy;
-import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
 
@@ -88,12 +86,7 @@ public class SwapMutation extends Mutation {
         permutation[pos2] = temp;
       }
     } else {
-      Configuration.logger_.severe("SwapMutation.doMutation: invalid type. " +
-        "" + solution.getDecisionVariables()[0].getVariableType());
-
-      Class<String> cls = java.lang.String.class;
-      String name = cls.getName();
-      throw new JMetalException("Exception in " + name + ".doMutation()");
+      /* Other encodings here in the future */
     }
   }
 
@@ -118,7 +111,6 @@ public class SwapMutation extends Mutation {
 
   /** Builder class */
   public static class Builder {
-    private double distributionIndex_ ;
     private double mutationProbability ;
 
     public Builder() {

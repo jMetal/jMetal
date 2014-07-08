@@ -66,8 +66,6 @@ public class NSGAII extends NSGAIITemplate {
     createInitialPopulation();
     population = evaluatePopulation(population);
 
-    //evaluations += population.size();
-
     // Main loop
     while (!stoppingCondition()) {
       offspringPopulation = new SolutionSet(populationSize);
@@ -88,23 +86,9 @@ public class NSGAII extends NSGAIITemplate {
       }
 
       offspringPopulation = evaluatePopulation(offspringPopulation);
-      //evaluations += offspringPopulation.size() ;
 
       Ranking ranking = new Ranking(population.union(offspringPopulation));
       crowdingDistanceSelection(ranking);
-      /*
-      population.clear();
-      int rankingIndex = 0 ;
-      while (populationIsNotFull()) {
-        if (subfrontFillsIntoThePopulation(ranking, rankingIndex)) {
-          addRankedSolutionsToPopulation(ranking, rankingIndex);
-          rankingIndex ++ ;
-        } else {
-          computeCrowdingDistance(ranking, rankingIndex) ;
-          addLastRankedSolutions(ranking, rankingIndex);
-        }
-      }
-      */
     }
 
     tearDown() ;

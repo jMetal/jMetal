@@ -37,53 +37,43 @@ public class BLXAlphaCrossover extends Crossover {
   private static final long serialVersionUID = -7738534841007212922L;
 
   private static final double DEFAULT_ALPHA = 0.5;
-  private double alpha_ = DEFAULT_ALPHA;
+  private double alpha = DEFAULT_ALPHA;
 
-  private double crossoverProbability_ ;
+  private double crossoverProbability;
 
   @Deprecated
   public BLXAlphaCrossover(HashMap<String, Object> parameters) {
     super(parameters);
 
     if (parameters.get("probability") != null) {
-      crossoverProbability_ = (Double) parameters.get("probability");
+      crossoverProbability = (Double) parameters.get("probability");
     }
     if (parameters.get("alpha") != null) {
-      alpha_ = (Double) parameters.get("alpha");
+      alpha = (Double) parameters.get("alpha");
     }
 
     addValidSolutionType(RealSolutionType.class);
     addValidSolutionType(ArrayRealSolutionType.class);
   }
 
-  /**
-   * Constructor using the Builder pattern
-   * @param builder
-   */
+  /** Constructor */
   private BLXAlphaCrossover(Builder builder) {
     addValidSolutionType(RealSolutionType.class);
     addValidSolutionType(ArrayRealSolutionType.class);
 
-    crossoverProbability_ = builder.crossoverProbability_ ;
-    alpha_ = builder.alpha_ ;
+    crossoverProbability = builder.crossoverProbability;
+    alpha = builder.alpha;
   }
 
   public double getCrossoverProbability() {
-    return crossoverProbability_ ;
+    return crossoverProbability;
   }
 
   public double getAlpha() {
-    return alpha_ ;
+    return alpha;
   }
 
-  /**
-   * Perform the crossover operation.
-   *
-   * @param probability Crossover probability
-   * @param parent1     The first parent
-   * @param parent2     The second parent
-   * @return An array containing the two offsprings
-   */
+  /** Perform the crossover operation */
   public Solution[] doCrossover(double probability,
     Solution parent1,
     Solution parent2) throws JMetalException {
@@ -133,8 +123,8 @@ public class BLXAlphaCrossover extends Crossover {
         double minRange;
         double maxRange;
 
-        minRange = min - range * alpha_;
-        maxRange = max + range * alpha_;
+        minRange = min - range * alpha;
+        maxRange = max + range * alpha;
 
         random = PseudoRandom.randDouble();
         valueY1 = minRange + random * (maxRange - minRange);
@@ -164,12 +154,7 @@ public class BLXAlphaCrossover extends Crossover {
   }
 
 
-  /**
-   * Executes the operation
-   *
-   * @param object An object containing an array of two parents
-   * @return An object containing the offSprings
-   */
+  /** execute() method */
   public Object execute(Object object) throws JMetalException {
     Solution[] parents = (Solution[]) object;
 
@@ -183,37 +168,35 @@ public class BLXAlphaCrossover extends Crossover {
     }
 
     Solution[] offSpring;
-    offSpring = doCrossover(crossoverProbability_,
+    offSpring = doCrossover(crossoverProbability,
       parents[0],
       parents[1]);
 
     return offSpring;
   }
 
-  /**
-   * Builder class
-   */
+  /** Builder class */
   public static class Builder {
-    private double alpha_ ;
-    private double crossoverProbability_ ;
+    private double alpha;
+    private double crossoverProbability;
 
     public Builder() {
-      alpha_ = DEFAULT_ALPHA ;
-      crossoverProbability_ = 0.9 ;
+      alpha = DEFAULT_ALPHA ;
+      crossoverProbability = 0.9 ;
     }
 
     public Builder probability(double probability) {
       if ((probability < 0) || (probability > 1.0)) {
         throw new JMetalException("Probability value invalid: " + probability) ;
       } else {
-        crossoverProbability_ = probability;
+        crossoverProbability = probability;
       }
 
       return this ;
     }
 
     public Builder alpha(double alpha) {
-        alpha_ = alpha;
+        this.alpha = alpha;
 
       return this ;
     }
