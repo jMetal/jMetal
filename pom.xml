@@ -4,7 +4,7 @@
 
     <groupId>org.uma.jmetal</groupId>
     <artifactId>jmetal</artifactId>
-    <version>5.0-Beta-15-SNAPSHOT</version>
+    <version>5.0-Beta-15</version>
     <packaging>pom</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -32,7 +32,7 @@
         <connection>scm:git://git@github.com:jMetal/jMetal.git</connection>
         <developerConnection>scm:git:https://github.com/jMetal/jMetal.git</developerConnection>
         <url>https://github.com/jMetal/jMetal.git</url>
-        <tag>jmetal-5.0-Beta-12</tag>
+        <tag>jmetal-5.0-Beta-15</tag>
     </scm>
 
     <distributionManagement>
@@ -202,7 +202,7 @@
             <dependency>
                 <groupId>org.uma.jmetal</groupId>
                 <artifactId>jmetal-core</artifactId>
-                <version>5.0-Beta-15-SNAPSHOT</version>
+                <version>5.0-Beta-15</version>
             </dependency>
             <dependency>
                 <groupId>junit</groupId>
