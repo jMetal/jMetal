@@ -38,8 +38,8 @@ import java.util.HashMap;
  * This class implements a polynomial mutation operator.
  */
 public class PolynomialMutation extends Mutation {
-  private static final double ETA_M_DEFAULT_ = 20.0;
-  private double distributionIndex = ETA_M_DEFAULT_;
+  private static final double ETA_M_DEFAULT = 20.0;
+  private double distributionIndex = ETA_M_DEFAULT;
 
   private double mutationProbability = 0.0;
 
@@ -77,8 +77,14 @@ public class PolynomialMutation extends Mutation {
     return distributionIndex;
   }
 
-  /** Execute method */
+  /** execute() method */
   public Object execute(Object object) throws JMetalException {
+    if (null == object) {
+      throw new JMetalException("Null parameter") ;
+    } else if (!(object instanceof Solution)) {
+      throw new JMetalException("Invalid parameter class") ;
+    }
+
     Solution solution = (Solution) object;
 
     if (!solutionTypeIsValid(solution)) {
@@ -90,9 +96,7 @@ public class PolynomialMutation extends Mutation {
     return solution;
   }
 
-  /**
-   * Perform the mutation operation
-   */
+  /** Perform the mutation operation */
   public void doMutation(double probability, Solution solution) throws JMetalException {
     SolutionType type = solution.getType();
     if ((type instanceof RealSolutionType) || (type instanceof ArrayRealSolutionType)) {
@@ -178,7 +182,7 @@ public class PolynomialMutation extends Mutation {
     private double mutationProbability;
 
     public Builder() {
-      distributionIndex = ETA_M_DEFAULT_ ;
+      distributionIndex = ETA_M_DEFAULT;
     }
 
     public Builder distributionIndex(double distributionIndex) {

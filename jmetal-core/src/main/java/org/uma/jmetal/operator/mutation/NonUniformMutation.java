@@ -24,7 +24,6 @@ package org.uma.jmetal.operator.mutation;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.encoding.solutiontype.ArrayRealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
-import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
 import org.uma.jmetal.util.wrapper.XReal;
@@ -37,26 +36,88 @@ import java.util.HashMap;
 public class NonUniformMutation extends Mutation {
   private static final long serialVersionUID = -2440053123382478633L;
 
-  private Double perturbation_ ;
-  private Integer maxIterations_ ;
-  private Integer currentIteration_ ;
-  private Double mutationProbability_ ;
+  private double perturbation;
+  private int maxIterations;
+  private double mutationProbability;
 
+  private int currentIteration;
 
+  @Deprecated
   public NonUniformMutation(HashMap<String, Object> parameters) {
     super(parameters);
     if (parameters.get("probability") != null) {
-      mutationProbability_ = (Double) parameters.get("probability");
+      mutationProbability = (Double) parameters.get("probability");
     }
     if (parameters.get("perturbation") != null) {
-      perturbation_ = (Double) parameters.get("perturbation");
+      perturbation = (Double) parameters.get("perturbation");
     }
     if (parameters.get("maxIterations") != null) {
-      maxIterations_ = (Integer) parameters.get("maxIterations");
+      maxIterations = (Integer) parameters.get("maxIterations");
     }
 
     addValidSolutionType(RealSolutionType.class);
     addValidSolutionType(ArrayRealSolutionType.class);
+  }
+
+  /** Constructor */
+  private NonUniformMutation(Builder builder) {
+    super(new HashMap<String, Object>()) ;
+
+    addValidSolutionType(RealSolutionType.class);
+    addValidSolutionType(ArrayRealSolutionType.class);
+
+    mutationProbability = builder.mutationProbability ;
+    perturbation = builder.perturbation ;
+    maxIterations = builder.maxIterations ;
+  }
+
+  public double getPerturbation() {
+    return perturbation;
+  }
+
+  public int getMaxIterations() {
+    return maxIterations;
+  }
+
+  public double getMutationProbability() {
+    return mutationProbability;
+  }
+
+  public int getCurrentIteration() {
+    return currentIteration;
+  }
+
+  public void setCurrentIteration(int currentIteration) {
+    if (currentIteration < 0) {
+      throw new JMetalException("Iteration number cannot be a negative value: " + currentIteration) ;
+    }
+
+    this.currentIteration = currentIteration;
+  }
+
+  /** execute() method */
+  public Object execute(Object object) throws JMetalException {
+    if (null == object) {
+      throw new JMetalException("Null parameter") ;
+    } else if (!(object instanceof Solution)) {
+      throw new JMetalException("Invalid parameter class") ;
+    }
+
+    Solution solution = (Solution) object;
+
+    if (!solutionTypeIsValid(solution)) {
+      throw new JMetalException("NonUniformMutation.execute: the solution " +
+        "type " + solution.getType() + " is not allowed with this operator");
+    }
+
+
+    if (getParameter("currentIteration") != null) {
+      currentIteration = (Integer) getParameter("currentIteration");
+    }
+
+    doMutation(mutationProbability, solution);
+
+    return solution;
   }
 
   /**
@@ -75,11 +136,11 @@ public class NonUniformMutation extends Mutation {
 
         if (rand <= 0.5) {
           tmp = delta(x.getUpperBound(var) - x.getValue(var),
-            perturbation_);
+            perturbation);
           tmp += x.getValue(var);
         } else {
           tmp = delta(x.getLowerBound(var) - x.getValue(var),
-            perturbation_);
+            perturbation);
           tmp += x.getValue(var);
         }
 
@@ -100,8 +161,8 @@ public class NonUniformMutation extends Mutation {
   private double delta(double y, double bMutationParameter) {
     double rand = PseudoRandom.randDouble();
     int it, maxIt;
-    it = currentIteration_;
-    maxIt = maxIterations_;
+    it = currentIteration;
+    maxIt = maxIterations;
 
     return (y * (1.0 -
       Math.pow(rand,
@@ -109,31 +170,20 @@ public class NonUniformMutation extends Mutation {
       )));
   }
 
-  /**
-   * Executes the operation
-   *
-   * @param object An object containing a solutiontype
-   * @return An object containing the mutated solutiontype
-   * @throws org.uma.jmetal.util.JMetalException
-   */
-  public Object execute(Object object) throws JMetalException {
-    Solution solution = (Solution) object;
+  /** Builder class */
+  static public class Builder {
+    private Double perturbation ;
+    private Integer maxIterations ;
+    private Double mutationProbability ;
 
-    if (!solutionTypeIsValid(solution)) {
-      Configuration.logger_.severe("NonUniformMutation.execute: the solutiontype " +
-        solution.getType() + "is not of the right type");
-
-      Class<String> cls = java.lang.String.class;
-      String name = cls.getName();
-      throw new JMetalException("Exception in " + name + ".execute()");
-    } // if  
-
-    if (getParameter("currentIteration") != null) {
-      currentIteration_ = (Integer) getParameter("currentIteration");
+    public Builder(double perturbation, double probability, int maxIterations) {
+      this.perturbation = perturbation ;
+      mutationProbability = probability ;
+      this.maxIterations = maxIterations ;
     }
 
-    doMutation(mutationProbability_, solution);
-
-    return solution;
+    public NonUniformMutation build() {
+      return new NonUniformMutation(this) ;
+    }
   }
 }

@@ -46,6 +46,7 @@ public class PolynomialBitFlipMutation extends Mutation {
   /**
    * Constructor
    */
+  @Deprecated
   public PolynomialBitFlipMutation(HashMap<String, Object> parameters) {
     super(parameters);
     if (parameters.get("realMutationProbability") != null) {

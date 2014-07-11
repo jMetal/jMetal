@@ -57,7 +57,7 @@ public class SwapMutation extends Mutation {
     return mutationProbability;
   }
 
-  /** Execute method */
+  /** Perform mutation */
   public void doMutation(double probability, Solution solution) throws JMetalException {
     int permutation[];
     int permutationLength;
@@ -90,7 +90,7 @@ public class SwapMutation extends Mutation {
     }
   }
 
-  /** Execute method */
+  /** execute() method */
   public Object execute(Object object) throws JMetalException {
     if (null == object) {
       throw new JMetalException("Null parameter") ;

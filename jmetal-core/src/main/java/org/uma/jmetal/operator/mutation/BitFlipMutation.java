@@ -42,7 +42,7 @@ import java.util.logging.Level;
 public class BitFlipMutation extends Mutation {
   private static final long serialVersionUID = -3349165791496573889L;
 
-  private double mutationProbability_ = 0;
+  private double mutationProbability = 0;
 
   /**
    * Constructor
@@ -53,20 +53,21 @@ public class BitFlipMutation extends Mutation {
   public BitFlipMutation(HashMap<String, Object> parameters) {
     super(parameters);
     if (parameters.get("probability") != null) {
-      mutationProbability_ = (Double) parameters.get("probability");
+      mutationProbability = (Double) parameters.get("probability");
     }
   }
 
+  /** Constructor */
   private BitFlipMutation(Builder builder) {
     addValidSolutionType(BinarySolutionType.class);
     addValidSolutionType(BinaryRealSolutionType.class);
     addValidSolutionType(IntSolutionType.class);
 
-    mutationProbability_ = builder.mutationProbability_ ;
+    mutationProbability = builder.mutationProbability;
   }
 
   public double getMutationProbability() {
-    return mutationProbability_;
+    return mutationProbability;
   }
 
   /**
@@ -90,9 +91,9 @@ public class BitFlipMutation extends Mutation {
         }
 
         if (solution.getType().getClass() == BinaryRealSolutionType.class) {
-        for (int i = 0; i < solution.getDecisionVariables().length; i++) {
-          ((BinaryReal) solution.getDecisionVariables()[i]).decode();
-        }
+          for (int i = 0; i < solution.getDecisionVariables().length; i++) {
+            ((BinaryReal) solution.getDecisionVariables()[i]).decode();
+          }
         }
       } else {
         for (int i = 0; i < solution.getDecisionVariables().length; i++) {
@@ -113,14 +114,14 @@ public class BitFlipMutation extends Mutation {
     }
   }
 
-  /**
-   * Executes the operation
-   *
-   * @param object An object containing a solutiontype to mutate
-   * @return An object containing the mutated solutiontype
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** execute() method */
   public Object execute(Object object) throws JMetalException {
+    if (null == object) {
+      throw new JMetalException("Null parameter") ;
+    } else if (!(object instanceof Solution)) {
+      throw new JMetalException("Invalid parameter class") ;
+    }
+
     Solution solution = (Solution) object;
 
     if (!solutionTypeIsValid(solution)) {
@@ -129,21 +130,23 @@ public class BitFlipMutation extends Mutation {
         "'BinaryReal' or 'Int', but " + solution.getType() + " is obtained");
     }
 
-    doMutation(mutationProbability_, solution);
+    doMutation(mutationProbability, solution);
     return solution;
   }
 
-  /**
-   * Builder class
-   */
+  /** Builder class */
   public static class Builder {
-    private double mutationProbability_ = 0.0 ;
+    private double mutationProbability = 0.0 ;
 
     public Builder() {
     }
 
+    public Builder(double probability) {
+      mutationProbability = probability ;
+    }
+
     public Builder probability(double probability) {
-      mutationProbability_ = probability ;
+      mutationProbability = probability ;
 
       return this ;
     }

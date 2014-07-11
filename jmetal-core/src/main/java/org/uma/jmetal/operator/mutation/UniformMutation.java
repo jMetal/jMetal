@@ -24,7 +24,6 @@ package org.uma.jmetal.operator.mutation;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.encoding.solutiontype.ArrayRealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
-import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
 import org.uma.jmetal.util.wrapper.XReal;
@@ -37,46 +36,54 @@ import java.util.HashMap;
 public class UniformMutation extends Mutation {
   private static final long serialVersionUID = -2304129118963396274L;
 
-  private Double perturbation_;
-  private Double mutationProbability_ = null;
+  private Double perturbation;
+  private Double mutationProbability = null;
 
   @Deprecated
   public UniformMutation(HashMap<String, Object> parameters) {
     super(parameters);
 
     if (parameters.get("probability") != null) {
-      mutationProbability_ = (Double) parameters.get("probability");
+      mutationProbability = (Double) parameters.get("probability");
     }
     if (parameters.get("perturbation") != null) {
-      perturbation_ = (Double) parameters.get("perturbation");
+      perturbation = (Double) parameters.get("perturbation");
     }
 
     addValidSolutionType(RealSolutionType.class);
     addValidSolutionType(ArrayRealSolutionType.class);
   }
 
+  /** Constructor */
   private UniformMutation(Builder builder) {
     addValidSolutionType(RealSolutionType.class);
     addValidSolutionType(ArrayRealSolutionType.class);
 
-    mutationProbability_ = builder.mutationProbability_ ;
-    perturbation_ = builder.perturbation_ ;
+    mutationProbability = builder.mutationProbability ;
+    perturbation = builder.perturbation ;
+  }
+
+  public Double getPerturbation() {
+    return perturbation;
+  }
+
+  public Double getMutationProbability() {
+    return mutationProbability;
   }
 
   /**
-   * Performs the operation
+   * Perform the operation
    *
    * @param probability Mutation probability
    * @param solution    The solutiontype to mutate
-   * @throws org.uma.jmetal.util.JMetalException
    */
-  public void doMutation(double probability, Solution solution) throws JMetalException {
+  public void doMutation(double probability, Solution solution)  {
     XReal x = new XReal(solution);
 
     for (int var = 0; var < solution.getDecisionVariables().length; var++) {
       if (PseudoRandom.randDouble() < probability) {
         double rand = PseudoRandom.randDouble();
-        double tmp = (rand - 0.5) * perturbation_;
+        double tmp = (rand - 0.5) * perturbation;
 
         tmp += x.getValue(var);
 
@@ -91,40 +98,34 @@ public class UniformMutation extends Mutation {
     }
   }
 
-  /**
-   * Executes the operation
-   *
-   * @param object An object containing the solutiontype to mutate
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** execute() method */
   public Object execute(Object object) throws JMetalException {
+    if (null == object) {
+      throw new JMetalException("Null parameter") ;
+    } else if (!(object instanceof Solution)) {
+      throw new JMetalException("Invalid parameter class") ;
+    }
+
     Solution solution = (Solution) object;
 
     if (!solutionTypeIsValid(solution)) {
-      Configuration.logger_.severe("UniformMutation.execute: the solutiontype " +
-        "is not of the right type. The type should be 'Real', but " +
-        solution.getType() + " is obtained");
-
-      Class<String> cls = java.lang.String.class;
-      String name = cls.getName();
-      throw new JMetalException("Exception in " + name + ".execute()");
+      throw new JMetalException("UniformMutation.execute: the solution " +
+        "type " + solution.getType() + " is not allowed with this operator");
     }
 
-    doMutation(mutationProbability_, solution);
+    doMutation(mutationProbability, solution);
 
     return solution;
   }
 
-  /**
-   * Builder class
-   */
+  /** Builder class */
   public static class Builder {
-    private double perturbation_ ;
-    private double mutationProbability_ ;
+    private double perturbation ;
+    private double mutationProbability ;
 
     public Builder(double perturbation, double probability) {
-      perturbation_ = perturbation ;
-      mutationProbability_ = probability ;
+      this.perturbation = perturbation ;
+      mutationProbability = probability ;
     }
 
     public UniformMutation build() {

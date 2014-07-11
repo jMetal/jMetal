@@ -126,8 +126,6 @@ public class OMOPSO extends Algorithm {
 
   /**
    * Constructor
-   *
-   * @param problem Problem to solve
    */
   public OMOPSO() {
     super();
@@ -347,4 +345,4 @@ public class OMOPSO extends Algorithm {
   public SolutionSet getLeader() {
     return leaders_;
   }  // getLeader 
-} // OMOPSO
+}

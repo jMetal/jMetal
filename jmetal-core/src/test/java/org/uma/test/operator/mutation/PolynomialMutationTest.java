@@ -36,55 +36,66 @@ import static org.junit.Assert.assertNotNull;
  * Created by Antonio J. Nebro on 21/04/14.
  */
 public class PolynomialMutationTest {
-  PolynomialMutation mutation_ ;
-  Problem problem_ ;
+  PolynomialMutation mutation;
+  Problem problem;
 
   static final double DELTA = 0.0000000000001 ;
 
   @Before
   public void setUp() throws JMetalException {
-    problem_ = new Kursawe("Real", 3) ;
+    problem = new Kursawe("Real", 3) ;
 
-    mutation_ = new PolynomialMutation.Builder().probability(1.0/problem_.getNumberOfVariables()).build() ;
+    mutation = new PolynomialMutation.Builder().probability(1.0/ problem.getNumberOfVariables()).build() ;
   }
 
   @After
   public void tearDown() throws Exception {
-    mutation_ = null ;
-    problem_ = null ;
+    mutation = null ;
+    problem = null ;
   }
 
   @Test
   public void defaultParametersTest() {
-    assertEquals(20.0, mutation_.getDistributionIndex(), DELTA) ;
-    assertEquals(1.0/problem_.getNumberOfVariables(), mutation_.getMutationProbability(), DELTA) ;
+    assertEquals(20.0, mutation.getDistributionIndex(), DELTA) ;
+    assertEquals(1.0/ problem.getNumberOfVariables(), mutation.getMutationProbability(), DELTA) ;
   }
 
   @Test
   public void setMutationProbabilityTest() {
-    mutation_ = new PolynomialMutation.Builder()
+    mutation = new PolynomialMutation.Builder()
       .probability(0.02)
       .build() ;
 
-    assertEquals(0.02, mutation_.getMutationProbability(), DELTA) ;
+    assertEquals(0.02, mutation.getMutationProbability(), DELTA) ;
   }
 
   @Test
   public void setMutationDistributionIndex() {
-    mutation_ = new PolynomialMutation.Builder()
+    mutation = new PolynomialMutation.Builder()
       .distributionIndex(5.0)
       .build() ;
 
-    assertEquals(5.0, mutation_.getDistributionIndex(), DELTA) ;
+    assertEquals(5.0, mutation.getDistributionIndex(), DELTA) ;
+  }
+
+
+  @Test (expected = JMetalException.class)
+  public void wrongParameterClassTest() {
+    mutation.execute(new Integer(4)) ;
+  }
+
+  @Test (expected = JMetalException.class)
+  public void nullParameterTest() {
+    mutation.execute(null) ;
   }
 
   @Test
   public void operatorExecutionTest() throws ClassNotFoundException {
-    mutation_ = new PolynomialMutation.Builder()
+    mutation = new PolynomialMutation.Builder()
       .probability(0.9)
       .build();
 
-    Object result = mutation_.execute(new Solution(problem_));
+    Object result = mutation.execute(new Solution(problem));
     assertNotNull(result);
   }
 }
