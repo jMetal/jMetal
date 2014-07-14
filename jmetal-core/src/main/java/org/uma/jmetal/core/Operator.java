@@ -36,29 +36,29 @@ public abstract class Operator implements Serializable {
 
   private static final long serialVersionUID = -8976295845748676798L;
 
-  private List<Class<? extends SolutionType>> validSolutionTypes_ ;
+  private List<Class<? extends SolutionType>> validSolutionTypes;
 
   /**
    * Stores the current operator parameters. It is defined as a Map of pairs 
    * (<code>String</code>, <code>Object</code>), and it allows objects to be
    * accessed by their names, which are specified by the string.
    */
+  @Deprecated
   protected final Map<String, Object> parameters_;
 
   @Deprecated
   public Operator(Map<String, Object> parameters) {
     parameters_ = parameters;
-    validSolutionTypes_ = new ArrayList<>() ;
+    validSolutionTypes = new ArrayList<>() ;
   }
 
   public Operator() {
-    validSolutionTypes_ = new ArrayList<>() ;
+    validSolutionTypes = new ArrayList<>() ;
     parameters_ = new HashMap<>() ;
   }
 
   /**
-   * Abstract method that must be defined by all the operator. When invoked,
-   * this method executes the operator represented by the current object.
+   * Execute the operator.
    *
    * @param object This parameter inherits from Object to allow different kinds of
    *               parameters for each operator. For example, a selection operator
@@ -95,7 +95,7 @@ public abstract class Operator implements Serializable {
    * @param newSolutionType
    */
   public void addValidSolutionType(Class newSolutionType) {
-    validSolutionTypes_.add(newSolutionType) ;
+    validSolutionTypes.add(newSolutionType) ;
   }
 
   /**
@@ -105,7 +105,7 @@ public abstract class Operator implements Serializable {
    */
   public boolean solutionTypeIsValid(Solution solution) {
     boolean result ;
-    if (validSolutionTypes_.contains(solution.getType().getClass())) {
+    if (validSolutionTypes.contains(solution.getType().getClass())) {
       result = true ;
     }
     else {
@@ -116,14 +116,14 @@ public abstract class Operator implements Serializable {
   }
 
   /**
-   * Test for solutions having a solutiontype type to which the operator is applicable
-   * @param solutions Array of solutiontype to the checked
-   * @return True if the solutiontype type of all the solutions in the array is valid
+   * Test for solutions having a solution type to which the operator is applicable
+   * @param solutions Array of solution to the be checked
+   * @return True if the solution type of all the solutions in the array is valid
    */
   public boolean solutionTypeIsValid(Solution[] solutions) {
     boolean result = true; // true by default
     for (Solution solution : solutions) {
-      if(!validSolutionTypes_.contains(solution.getType().getClass())) {
+      if(!validSolutionTypes.contains(solution.getType().getClass())) {
         result = false ;
       }
     }

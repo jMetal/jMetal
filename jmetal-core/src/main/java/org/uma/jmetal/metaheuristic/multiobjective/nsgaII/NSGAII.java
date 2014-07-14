@@ -42,12 +42,12 @@ public class NSGAII extends NSGAIITemplate {
   public NSGAII(Builder builder) {
     super(builder) ;
     /*
-    problem_ = builder.problem_ ;
-    maxEvaluations = builder.maxEvaluations_ ;
-    crossoverOperator = builder.crossoverOperator_ ;
-    mutationOperator = builder.mutationOperator_ ;
-    selectionOperator = builder.selectionOperator_ ;
-    populationSize = builder.populationSize_ ;
+    problem = builder.problem ;
+    maxEvaluations = builder.maxEvaluations ;
+    crossoverOperator = builder.crossoverOperator ;
+    mutationOperator = builder.mutationOperator ;
+    selectionOperator = builder.selectionOperator ;
+    populationSize = builder.populationSize ;
     */
   }
 

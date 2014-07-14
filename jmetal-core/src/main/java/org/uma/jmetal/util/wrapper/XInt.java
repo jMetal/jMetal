@@ -71,9 +71,7 @@ public class XInt {
     return solution_;
   }
 
-  /*
-   * Static methods
-   */
+  /* Static methods */
   public static int getValue(Solution solution, int index) {
     if (solution.getType() instanceof IntSolutionTypeTemplate) {
       return ((IntSolutionTypeTemplate) solution.getType()).getIntValue(solution, index);
@@ -118,69 +116,4 @@ public class XInt {
         "The solutiontype type of the solution is invalid: " + solution.getType());
     }
   }
-  
- /*
-  public int getValue(int index) throws JMetalException {
-    if (type_.getClass() == IntSolution.class) {
-      return (int) solution_.getDecisionVariables()[index].getValue();
-    } else if (type_.getClass() == ArrayIntSolution.class) {
-      return ((ArrayInt) (solution_.getDecisionVariables()[0])).getArray()[index];
-    } else {
-      Configuration.logger_.severe("org.uma.jmetal.util.wrapper.XInt.getValue, solutiontype type " +
-        type_ + "+ invalid");
-    }
-    return 0;
-  }
-
-  public void setValue(int index, int value) throws JMetalException {
-    if (type_.getClass() == IntSolution.class) {
-      solution_.getDecisionVariables()[index].setValue(value);
-    } else if (type_.getClass() == ArrayIntSolution.class) {
-      ((ArrayInt) (solution_.getDecisionVariables()[0])).getArray()[index] = value;
-    } else {
-      Configuration.logger_.severe("org.uma.jmetal.util.wrapper.XInt.setValue, solutiontype type " +
-        type_ + "+ invalid");
-    }
-  }
-
- 
-  public int getLowerBound(int index) throws JMetalException {
-    if (type_.getClass() == IntSolution.class) {
-      return (int) solution_.getDecisionVariables()[index].getLowerBound();
-    } else if (type_.getClass() == ArrayIntSolution.class) {
-      return (int) ((ArrayInt) (solution_.getDecisionVariables()[0])).getLowerBound(index);
-    } else {
-      Configuration.logger_.severe("org.uma.jmetal.util.wrapper.XInt.getLowerBound, solutiontype type " +
-        type_ + "+ invalid");
-    }
-    return 0;
-  }
-
-  
-  public int getUpperBound(int index) throws JMetalException {
-    if (type_.getClass() == IntSolution.class) {
-      return (int) solution_.getDecisionVariables()[index].getUpperBound();
-    } else if (type_.getClass() == ArrayIntSolution.class) {
-      return (int) ((ArrayInt) (solution_.getDecisionVariables()[0])).getUpperBound(index);
-    } else {
-      Configuration.logger_.severe("org.uma.jmetal.util.wrapper.XInt.getUpperBound, solutiontype type " +
-        type_ + "+ invalid");
-    }
-
-    return 0;
-  }
-
-  
-  public int getNumberOfDecisionVariables() {
-    if (type_.getClass() == IntSolution.class) {
-      return solution_.getDecisionVariables().length;
-    } else if (type_.getClass() == ArrayIntSolution.class) {
-      return ((ArrayInt) (solution_.getDecisionVariables()[0])).length();
-    } else {
-      Configuration.logger_.severe("org.uma.jmetal.util.wrapper.XInt.size, solutiontype type " +
-        type_ + "+ invalid");
-    }
-    return 0;
-  }
-  */
 }

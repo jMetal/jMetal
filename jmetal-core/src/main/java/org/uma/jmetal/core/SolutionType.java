@@ -29,32 +29,21 @@ import java.io.Serializable;
  */
 public abstract class SolutionType implements Serializable {
 
-  private final Problem problem_;
+  private final Problem problem;
 
-  /**
-   * Constructor
-   *
-   * @param problem The problem to solve
-   */
+  /** Constructor */
   public SolutionType(Problem problem) {
-    problem_ = problem;
+    this.problem = problem;
   }
 
   public Problem getProblem() {
-    return problem_;
+    return problem;
   }
 
-  /**
-   * Abstract method to create the variables of the solutiontype
-   */
+  /** Abstract method to create the variables of the solution type */
   public abstract Variable[] createVariables() throws ClassNotFoundException;
 
-  /**
-   * Copies the decision variables
-   *
-   * @param vars
-   * @return An array of variables
-   */
+  /** Copy the decision variables */
   public Variable[] copyVariables(Variable[] vars) {
     Variable[] variables;
 

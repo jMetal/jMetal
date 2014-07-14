@@ -27,23 +27,15 @@ import org.uma.jmetal.core.SolutionType;
 import org.uma.jmetal.core.Variable;
 import org.uma.jmetal.encoding.variable.Real;
 
-/**
- * Class representing a solution type type composed of real variables
- */
+/** Class representing a solution type type composed of real variables */
 public class RealSolutionType extends SolutionType implements RealSolutionTypeTemplate {
 
-  /**
-   * Constructor
-   *
-   * @param problem Problem to solve
-   */
+  /** Constructor */
   public RealSolutionType(Problem problem) {
     super(problem);
-  } 
+  }
 
-  /**
-   * Creates the variables of the solutiontype
-   */
+  /** Create the variables of the solution type */
   public Variable[] createVariables() {
     Variable[] variables = new Variable[getProblem().getNumberOfVariables()];
 
@@ -55,7 +47,7 @@ public class RealSolutionType extends SolutionType implements RealSolutionTypeTe
 
     return variables;
   }
-  
+
   @Override
   public double getRealValue(Solution solution, int index) {
     return solution.getDecisionVariables()[index].getValue() ;

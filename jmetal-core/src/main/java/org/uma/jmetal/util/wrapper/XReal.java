@@ -37,7 +37,7 @@ public class XReal {
       type_ = solution.getType();
       solution_ = solution;
     } else {
-      throw new JMetalException("The solutiontype type of the solution is invalid: " + solution.getType()) ;
+      throw new JMetalException("The solution type of the solution is invalid: " + solution.getType()) ;
     }
   }
 
@@ -74,9 +74,7 @@ public class XReal {
     return solution_;
   }
 
-  /*
-   * Static methods
-   */
+  /* Static methods */
   public static double getValue(Solution solution, int index) {
     if (solution.getType() instanceof RealSolutionTypeTemplate) {
       return ((RealSolutionTypeTemplate) solution.getType()).getRealValue(solution, index);

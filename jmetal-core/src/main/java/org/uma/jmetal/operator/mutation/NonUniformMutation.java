@@ -155,9 +155,7 @@ public class NonUniformMutation extends Mutation {
   }
 
 
-  /**
-   * Calculates the delta value used in NonUniform mutation operator
-   */
+  /** Calculates the delta value used in NonUniform mutation operator */
   private double delta(double y, double bMutationParameter) {
     double rand = PseudoRandom.randDouble();
     int it, maxIt;

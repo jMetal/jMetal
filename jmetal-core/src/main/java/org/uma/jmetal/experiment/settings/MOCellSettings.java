@@ -104,12 +104,12 @@ public class MOCellSettings extends Settings {
       .build();
 
     // Selecting the algorithm: there are six MOCell variants
-    //algorithm = new sMOCell1(problem_) ;
-    //algorithm = new sMOCell2(problem_) ;
-    //algorithm = new aMOCell1(problem_) ;
-    //algorithm = new aMOCell2(problem_) ;
-    //algorithm = new aMOCell3(problem_) ;
-    //algorithm = new aMOCell4(problem_) ;
+    //algorithm = new sMOCell1(problem) ;
+    //algorithm = new sMOCell2(problem) ;
+    //algorithm = new aMOCell1(problem) ;
+    //algorithm = new aMOCell2(problem) ;
+    //algorithm = new aMOCell3(problem) ;
+    //algorithm = new aMOCell4(problem) ;
 
     algorithm = new MOCellTemplate.Builder(problem_)
       .populationSize(populationSize)

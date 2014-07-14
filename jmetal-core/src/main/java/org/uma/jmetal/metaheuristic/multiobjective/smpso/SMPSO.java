@@ -122,12 +122,9 @@ public class SMPSO extends Algorithm {
     weightMin_ = 0.1;
     changeVelocity1_ = -1;
     changeVelocity2_ = -1;
-
   }
 
-  /*
-   * Getters
-   */
+  /* Getters/Setters */
   public void setEvaluator(SolutionSetEvaluator evaluator) {
     evaluator_ = evaluator;
   }
@@ -200,7 +197,6 @@ public class SMPSO extends Algorithm {
    *
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
    * as a result of the algorithm execution
-   * @throws org.uma.jmetal.util.JMetalException
    */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException, IOException {
     initialization();
@@ -431,9 +427,7 @@ public class SMPSO extends Algorithm {
     evaluator_.shutdown();
   }
 
-  /*
-   * Builder class
-   */
+  /** Builder class */
   public static class Builder {
     protected SolutionSetEvaluator evaluator_ ;
     protected Problem problem_ ;

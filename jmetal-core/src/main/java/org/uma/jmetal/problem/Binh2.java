@@ -27,13 +27,8 @@ import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.wrapper.XReal;
 
-/**
- * Class representing problem Binh2
- */
+/** Class representing problem Binh2 */
 public class Binh2 extends Problem {
-  /**
-   *
-   */
   private static final long serialVersionUID = 8733721399158738615L;
 
   /**
@@ -65,7 +60,7 @@ public class Binh2 extends Problem {
   }
 
   /**
-   * Evaluates a solutiontype
+   * Evaluates a solution
    *
    * @param solution The solutiontype to evaluate
    * @throws org.uma.jmetal.util.JMetalException
@@ -87,7 +82,7 @@ public class Binh2 extends Problem {
   }
 
   /**
-   * Evaluates the constraint overhead of a solutiontype
+   * Evaluates the constraint overhead of a solution
    *
    * @param solution The solutiontype
    * @throws org.uma.jmetal.util.JMetalException

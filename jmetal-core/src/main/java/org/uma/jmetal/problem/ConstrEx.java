@@ -28,13 +28,8 @@ import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
 import org.uma.jmetal.util.JMetalException;
 
-/**
- * Class representing problem Constr_Ex
- */
+/** Class representing problem Constr_Ex */
 public class ConstrEx extends Problem {
-  /**
-   *
-   */
   private static final long serialVersionUID = 1790825694174189801L;
 
   /**

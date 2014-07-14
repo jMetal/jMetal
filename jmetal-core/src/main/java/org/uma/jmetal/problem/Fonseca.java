@@ -33,17 +33,13 @@ import org.uma.jmetal.util.wrapper.XReal;
  * Class representing problem Fonseca
  */
 public class Fonseca extends Problem {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = -5170038987171863224L;
 
   /**
    * Constructor
    * Creates a default instance of the Fonseca problem
    *
-   * @param solutionType The solutiontype type must "Real", "BinaryReal,
+   * @param solutionType The solution type must "Real", "BinaryReal,
    *                     ArrayReal, or ArrayRealC".
    */
   public Fonseca(String solutionType) throws JMetalException {

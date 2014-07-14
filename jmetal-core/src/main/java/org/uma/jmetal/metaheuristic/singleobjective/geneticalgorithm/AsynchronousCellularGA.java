@@ -114,7 +114,7 @@ public class AsynchronousCellularGA extends Algorithm {
 
         //->Evaluate offspring and constraints
         problem_.evaluate(offSpring[0]);
-        //problem_.evaluateConstraints(offSpring[0]);
+        //problem.evaluateConstraints(offSpring[0]);
         evaluations++;
 
         if (comparator.compare(individual, offSpring[0]) > 0) {

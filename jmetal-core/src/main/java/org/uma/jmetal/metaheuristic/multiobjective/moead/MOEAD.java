@@ -264,8 +264,8 @@ public class MOEAD extends Algorithm {
   void initializeIdealPoint() throws JMetalException, ClassNotFoundException {
     for (int i = 0; i < problem_.getNumberOfObjectives(); i++) {
       idealPoint[i] = 1.0e+30;
-      //indArray[i] = new Solution(problem_);
-      //problem_.evaluate(indArray[i]);
+      //indArray[i] = new Solution(problem);
+      //problem.evaluate(indArray[i]);
       evaluations_++;
     }
 

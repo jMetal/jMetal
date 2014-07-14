@@ -129,7 +129,7 @@ public class cMOEAD extends Algorithm {
     neighborhood_ = new int[populationSize_][T_];
 
     z_ = new double[problem_.getNumberOfObjectives()];
-    //lambda = new Vector(problem_.getNumberOfObjectives()) ;
+    //lambda = new Vector(problem.getNumberOfObjectives()) ;
     lambda_ = new double[populationSize_][problem_.getNumberOfObjectives()];
 
     crossover_ = operators_.get("crossover");

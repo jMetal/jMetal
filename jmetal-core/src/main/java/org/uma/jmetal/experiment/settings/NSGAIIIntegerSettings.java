@@ -51,7 +51,7 @@ public class NSGAIIIntegerSettings extends Settings {
     super(problem);
 
     //Object[] problemParams = {"Integer"};
-    //problem_ = (new ProblemFactory()).getProblem(problemName, problemParams);
+    //problem = (new ProblemFactory()).getProblem(problemName, problemParams);
     problem_ = new NMMin("Integer") ;
 
     // Default experiment.settings

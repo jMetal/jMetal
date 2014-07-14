@@ -64,13 +64,13 @@ public abstract class NSGAIITemplate extends Algorithm {
   protected NSGAIITemplate(Builder builder) {
     super() ;
 
-    problem_ = builder.problem_ ;
+    problem_ = builder.problem;
     evaluator = builder.evaluator ;
-    populationSize = builder.populationSize_ ;
-    maxEvaluations = builder.maxEvaluations_ ;
-    mutationOperator = builder.mutationOperator_ ;
-    crossoverOperator = builder.crossoverOperator_ ;
-    selectionOperator = builder.selectionOperator_ ;
+    populationSize = builder.populationSize;
+    maxEvaluations = builder.maxEvaluations;
+    mutationOperator = builder.mutationOperator;
+    crossoverOperator = builder.crossoverOperator;
+    selectionOperator = builder.selectionOperator;
     distance = new Distance();
 
     evaluations = 0 ;
@@ -193,46 +193,46 @@ public abstract class NSGAIITemplate extends Algorithm {
 
   public static class Builder {
     protected SolutionSetEvaluator evaluator ;
-    protected Problem problem_ ;
+    protected Problem problem;
 
-    protected int populationSize_;
-    protected int maxEvaluations_;
+    protected int populationSize;
+    protected int maxEvaluations;
 
-    protected Operator mutationOperator_;
-    protected Operator crossoverOperator_;
-    protected Operator selectionOperator_;
+    protected Operator mutationOperator;
+    protected Operator crossoverOperator;
+    protected Operator selectionOperator;
 
     public Builder(Problem problem, SolutionSetEvaluator evaluator) {
       this.evaluator = evaluator ;
-      problem_ = problem ;
+      this.problem = problem ;
     }
 
     public Builder populationSize(int populationSize) {
-      populationSize_ = populationSize ;
+      this.populationSize = populationSize ;
 
       return this ;
     }
 
     public Builder maxEvaluations(int maxEvaluations) {
-      maxEvaluations_ = maxEvaluations ;
+      this.maxEvaluations = maxEvaluations ;
 
       return this ;
     }
 
     public Builder crossover(Operator crossover) {
-      crossoverOperator_ = crossover ;
+      crossoverOperator = crossover ;
 
       return this ;
     }
 
     public Builder mutation(Operator mutation) {
-      mutationOperator_ = mutation ;
+      mutationOperator = mutation ;
 
       return this ;
     }
 
     public Builder selection(Operator selection) {
-      selectionOperator_ = selection ;
+      selectionOperator = selection ;
 
       return this ;
     }

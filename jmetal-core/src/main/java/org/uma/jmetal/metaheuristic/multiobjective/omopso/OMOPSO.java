@@ -22,7 +22,8 @@
 package org.uma.jmetal.metaheuristic.multiobjective.omopso;
 
 import org.uma.jmetal.core.*;
-import org.uma.jmetal.operator.mutation.Mutation;
+import org.uma.jmetal.operator.mutation.NonUniformMutation;
+import org.uma.jmetal.operator.mutation.UniformMutation;
 import org.uma.jmetal.util.Distance;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.NonDominatedSolutionList;
@@ -34,90 +35,38 @@ import org.uma.jmetal.util.random.PseudoRandom;
 
 import java.util.Comparator;
 
-/**
- * This class representing an asynchronous version of OMOPSO algorithm
- */
+/** Class implementing the  OMOPSO algorithm */
 public class OMOPSO extends Algorithm {
 
-  /**
-   *
-   */
   private static final long serialVersionUID = -4920101693175195923L;
 
-  /**
-   * Stores the number of particles_ used
-   */
-  private int particlesSize_;
+  private int swarmSize;
+  private int archiveSize;
+  private int maxIterations;
+  private int currentIteration;
 
   /**
-   * Stores the maximum size for the archive
-   */
-  private int archiveSize_;
-
-  /**
-   * Stores the maximum number of iteration_
-   */
-  private int maxIterations_;
-
-  /**
-   * Stores the current number of iteration_
-   */
-  private int iteration_;
-
-  /**
-   * Stores the perturbation used by the non-uniform mutation
+   * Perturbation used by the non-uniform mutation
    */
   private double perturbation_;
 
-  /**
-   * Stores the particles
-   */
-  private SolutionSet particles_;
+  private SolutionSet swarm;
+  private Solution[] localBest;
+  private CrowdingArchive leaderArchive;
+  private NonDominatedSolutionList epsilonArchive;
 
-  /**
-   * Stores the best_ solutions founds so far for each particles
-   */
-  private Solution[] best_;
+  private double[][] speed;
 
-  /**
-   * Stores the leaders_
-   */
-  private CrowdingArchive leaders_;
-
-  /**
-   * Stores the epsilon-archive
-   */
-  private NonDominatedSolutionList eArchive_;
-
-  /**
-   * Stores the speed_ of each particle
-   */
-  private double[][] speed_;
-
-  /**
-   * Stores a comparator for checking dominance
-   */
-  private Comparator<Solution> dominance_;
-
-  /**
-   * Stores a comparator for crowding checking
-   */
-  private Comparator<Solution> crowdingDistanceComparator_;
+  private Comparator<Solution> dominanceComparator;
+  private Comparator<Solution> crowdingDistanceComparator;
 
   /**
    * Stores a <code>Distance</code> object
    */
   private Distance distance_;
 
-  /**
-   * Stores a operator for uniform mutations
-   */
-  private Operator uniformMutation_;
-
-  /**
-   * Stores a operator for non uniform mutations
-   */
-  private Operator nonUniformMutation_;
+  private UniformMutation uniformMutation;
+  private NonUniformMutation nonUniformMutation;
 
   /**
    * eta_ value
@@ -127,58 +76,149 @@ public class OMOPSO extends Algorithm {
   /**
    * Constructor
    */
+  @Deprecated
   public OMOPSO() {
     super();
-  } // OMOPSO
+  }
 
-  /**
-   * Initialize all parameter of the algorithm
-   */
-  public void initParams() {
-    particlesSize_ = ((Integer) getInputParameter("swarmSize")).intValue();
-    archiveSize_ = ((Integer) getInputParameter("archiveSize")).intValue();
-    maxIterations_ = ((Integer) getInputParameter("maxIterations")).intValue();
+  /** Constructor */
+  private OMOPSO(Builder builder) {
+    swarmSize = builder.swarmSize ;
+    maxIterations = builder.maxIterations ;
+    archiveSize = builder.archiveSize ;
 
+    uniformMutation = builder.uniformMutation ;
+    nonUniformMutation = builder.nonUniformMutation ;
 
-    particles_ = new SolutionSet(particlesSize_);
-    best_ = new Solution[particlesSize_];
-    leaders_ = new CrowdingArchive(archiveSize_, problem_.getNumberOfObjectives());
-    eArchive_ = new NonDominatedSolutionList(new EpsilonDominanceComparator(eta_));
+    swarm = new SolutionSet(swarmSize);
+    localBest = new Solution[swarmSize];
+    leaderArchive = new CrowdingArchive(archiveSize, problem_.getNumberOfObjectives());
+    epsilonArchive = new NonDominatedSolutionList(new EpsilonDominanceComparator(eta_));
 
-    uniformMutation_ = (Mutation) operators_.get("uniformMutation");
-    nonUniformMutation_ = (Mutation) operators_.get("nonUniformMutation");
-
-    // Create the dominator for equadless and dominance
-    dominance_ = new DominanceComparator();
-    crowdingDistanceComparator_ = new CrowdingDistanceComparator();
+    dominanceComparator = new DominanceComparator();
+    crowdingDistanceComparator = new CrowdingDistanceComparator();
     distance_ = new Distance();
 
-    // Create the speed_ vector
-    speed_ = new double[particlesSize_][problem_.getNumberOfVariables()];
-  } // initialization
+    speed = new double[swarmSize][problem_.getNumberOfVariables()];
+  }
 
+  /* getters/setters */
 
-  /**
-   * Update the spped of each particle
-   *
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  public int getArchiveSize() {
+    return archiveSize;
+  }
+
+  public int getSwarmSize() {
+    return swarmSize;
+  }
+
+  public int getMaxIterations() {
+    return maxIterations;
+  }
+
+  public UniformMutation getUniformMutation() {
+    return uniformMutation;
+  }
+
+  public NonUniformMutation getNonUniformMutation() {
+    return nonUniformMutation;
+  }
+
+  /** execute() method */
+  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
+
+    //->Step 1 (and 3) Create the initial population and evaluate
+    for (int i = 0; i < swarmSize; i++) {
+      Solution particle = new Solution(problem_);
+      problem_.evaluate(particle);
+      problem_.evaluateConstraints(particle);
+      swarm.add(particle);
+    }
+
+    //-> Step2. Initialize the speed of each particle to 0
+    for (int i = 0; i < swarmSize; i++) {
+      for (int j = 0; j < problem_.getNumberOfVariables(); j++) {
+        speed[i][j] = 0.0;
+      }
+    }
+
+    // Step4 and 5
+    for (int i = 0; i < swarm.size(); i++) {
+      Solution particle = new Solution(swarm.get(i));
+      if (leaderArchive.add(particle)) {
+        epsilonArchive.add(new Solution(particle));
+      }
+    }
+
+    //-> Step 6. Initialice the memory of each particle
+    for (int i = 0; i < swarm.size(); i++) {
+      Solution particle = new Solution(swarm.get(i));
+      localBest[i] = particle;
+    }
+
+    //Crowding the leaderArchive
+    distance_.crowdingDistanceAssignment(leaderArchive);
+
+    //-> Step 7. Iterations ..
+    while (currentIteration < maxIterations) {
+      //Compute the speed
+      computeSpeed();
+
+      //Compute the new positions for the swarm
+      computeNewPositions();
+
+      //Mutate the swarm
+      mopsoMutation(currentIteration);
+
+      //Evaluate the new swarm in new positions
+      for (int i = 0; i < swarm.size(); i++) {
+        Solution particle = swarm.get(i);
+        problem_.evaluate(particle);
+        problem_.evaluateConstraints(particle);
+      }
+
+      //Actualize the archive
+      for (int i = 0; i < swarm.size(); i++) {
+        Solution particle = new Solution(swarm.get(i));
+        if (leaderArchive.add(particle)) {
+          epsilonArchive.add(new Solution(particle));
+        }
+      }
+
+      //Actualize the memory of this particle
+      for (int i = 0; i < swarm.size(); i++) {
+        int flag = dominanceComparator.compare(swarm.get(i), localBest[i]);
+        if (flag != 1) {
+          Solution particle = new Solution(swarm.get(i));
+          localBest[i] = particle;
+        }
+      }
+
+      //Crowding the leaderArchive
+      distance_.crowdingDistanceAssignment(leaderArchive);
+      currentIteration++;
+    }
+
+    return this.leaderArchive;
+  }
+
+  /** Update the speed of each particle */
   private void computeSpeed() throws JMetalException {
     double r1, r2, W, C1, C2;
     Variable[] bestGlobal;
 
-    for (int i = 0; i < particlesSize_; i++) {
-      Variable[] particle = particles_.get(i).getDecisionVariables();
-      Variable[] bestParticle = best_[i].getDecisionVariables();
+    for (int i = 0; i < swarmSize; i++) {
+      Variable[] particle = swarm.get(i).getDecisionVariables();
+      Variable[] bestParticle = localBest[i].getDecisionVariables();
 
-      //Select a global best_ for calculate the speed of particle i, bestGlobal
+      //Select a global localBest for calculate the speed of particle i, bestGlobal
       Solution one, two;
-      int pos1 = PseudoRandom.randInt(0, leaders_.size() - 1);
-      int pos2 = PseudoRandom.randInt(0, leaders_.size() - 1);
-      one = leaders_.get(pos1);
-      two = leaders_.get(pos2);
+      int pos1 = PseudoRandom.randInt(0, leaderArchive.size() - 1);
+      int pos2 = PseudoRandom.randInt(0, leaderArchive.size() - 1);
+      one = leaderArchive.get(pos1);
+      two = leaderArchive.get(pos2);
 
-      if (crowdingDistanceComparator_.compare(one, two) < 1) {
+      if (crowdingDistanceComparator.compare(one, two) < 1) {
         bestGlobal = one.getDecisionVariables();
       } else {
         bestGlobal = two.getDecisionVariables();
@@ -194,155 +234,89 @@ public class OMOPSO extends Algorithm {
 
       for (int var = 0; var < particle.length; var++) {
         //Computing the velocity of this particle
-        speed_[i][var] = W * speed_[i][var] +
+        speed[i][var] = W * speed[i][var] +
           C1 * r1 * (bestParticle[var].getValue() -
             particle[var].getValue()) +
           C2 * r2 * (bestGlobal[var].getValue() -
             particle[var].getValue());
       }
-
     }
-  } // computeSpeed
+  }
 
-  /**
-   * Update the position of each particle
-   *
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Update the position of each particle */
   private void computeNewPositions() throws JMetalException {
-    for (int i = 0; i < particlesSize_; i++) {
-      Variable[] particle = particles_.get(i).getDecisionVariables();
-      //particle.move(speed_[i]);
+    for (int i = 0; i < swarmSize; i++) {
+      Variable[] particle = swarm.get(i).getDecisionVariables();
       for (int var = 0; var < particle.length; var++) {
-        particle[var].setValue(particle[var].getValue() + speed_[i][var]);
+        particle[var].setValue(particle[var].getValue() + speed[i][var]);
         if (particle[var].getValue() < problem_.getLowerLimit(var)) {
           particle[var].setValue(problem_.getLowerLimit(var));
-          speed_[i][var] = speed_[i][var] * -1.0;
+          speed[i][var] = speed[i][var] * -1.0;
         }
         if (particle[var].getValue() > problem_.getUpperLimit(var)) {
           particle[var].setValue(problem_.getUpperLimit(var));
-          speed_[i][var] = speed_[i][var] * -1.0;
+          speed[i][var] = speed[i][var] * -1.0;
         }
       }
     }
-  } // computeNewPositions
+  }
 
+  /**  Apply a mutation operator to all particles in the swarm (perturbation) */
+  private void mopsoMutation(int actualIteration)  {
+    nonUniformMutation.setCurrentIteration(actualIteration);
 
-  /**
-   * Apply a mutation operator to all particles in the swarm
-   *
-   * @throws org.uma.jmetal.util.JMetalException
-   */
-  private void mopsoMutation(int actualIteration, int totalIterations) throws JMetalException {
-    //There are three groups of particles_, the ones that are mutated with
-    //a non-uniform mutation operator, the ones that are mutated with a 
-    //uniform mutation and the one that no are mutated
-    nonUniformMutation_.setParameter("currentIteration", actualIteration);
-    //*/
-
-    for (int i = 0; i < particles_.size(); i++) {
+    for (int i = 0; i < swarm.size(); i++) {
       if (i % 3 == 0) {
-        nonUniformMutation_.execute(particles_.get(i));
+        nonUniformMutation.execute(swarm.get(i));
       } else if (i % 3 == 1) {
-        uniformMutation_.execute(particles_.get(i));
+        uniformMutation.execute(swarm.get(i));
       } else {
       }
     }
   }
 
+  /** Buider class */
+  public static class Builder{
+    private int swarmSize = 100 ;
+    private int archiveSize = 100 ;
+    private int maxIterations = 25000 ;
 
-  /**
-   * Runs of the OMOPSO algorithm.
-   *
-   * @return a <code>SolutionSet</code> that is a set of non dominated solutions
-   * as a result of the algorithm execution
-   * @throws org.uma.jmetal.util.JMetalException
-   */
-  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
-    initParams();
+    private UniformMutation uniformMutation ;
+    private NonUniformMutation nonUniformMutation ;
 
-    //->Step 1 (and 3) Create the initial population and evaluate
-    for (int i = 0; i < particlesSize_; i++) {
-      Solution particle = new Solution(problem_);
-      problem_.evaluate(particle);
-      problem_.evaluateConstraints(particle);
-      particles_.add(particle);
+    public Builder swarmSize(int swarmSize) {
+      this.swarmSize = swarmSize ;
+
+      return this ;
     }
 
-    //-> Step2. Initialize the speed_ of each particle to 0
-    for (int i = 0; i < particlesSize_; i++) {
-      for (int j = 0; j < problem_.getNumberOfVariables(); j++) {
-        speed_[i][j] = 0.0;
-      }
+    public Builder archiveSize(int archiveSize) {
+      this.archiveSize = archiveSize ;
+
+      return this ;
+    }
+
+    public Builder maxIterations(int maxIterations) {
+      this.maxIterations = maxIterations ;
+
+      return this ;
+    }
+
+    public Builder uniformMutation(UniformMutation uniformMutation) {
+      this.uniformMutation = uniformMutation ;
+
+      return this ;
+    }
+
+    public Builder nonUniformMutation(NonUniformMutation nonUniformMutation) {
+      this.nonUniformMutation = nonUniformMutation ;
+
+      return this ;
     }
 
 
-    // Step4 and 5   
-    for (int i = 0; i < particles_.size(); i++) {
-      Solution particle = new Solution(particles_.get(i));
-      if (leaders_.add(particle)) {
-        eArchive_.add(new Solution(particle));
-      }
+    public OMOPSO build() {
+      return new OMOPSO(this) ;
     }
-
-    //-> Step 6. Initialice the memory of each particle
-    for (int i = 0; i < particles_.size(); i++) {
-      Solution particle = new Solution(particles_.get(i));
-      best_[i] = particle;
-    }
-
-    //Crowding the leaders_
-    distance_.crowdingDistanceAssignment(leaders_);
-
-    //-> Step 7. Iterations ..        
-    while (iteration_ < maxIterations_) {
-      //Compute the speed_        
-      computeSpeed();
-
-      //Compute the new positions for the particles_            
-      computeNewPositions();
-
-      //Mutate the particles_          
-      mopsoMutation(iteration_, maxIterations_);
-
-      //Evaluate the new particles_ in new positions
-      for (int i = 0; i < particles_.size(); i++) {
-        Solution particle = particles_.get(i);
-        problem_.evaluate(particle);
-        problem_.evaluateConstraints(particle);
-      }
-
-      //Actualize the archive          
-      for (int i = 0; i < particles_.size(); i++) {
-        Solution particle = new Solution(particles_.get(i));
-        if (leaders_.add(particle)) {
-          eArchive_.add(new Solution(particle));
-        }
-      }
-
-      //Actualize the memory of this particle
-      for (int i = 0; i < particles_.size(); i++) {
-        int flag = dominance_.compare(particles_.get(i), best_[i]);
-        if (flag != 1) { // the new particle is best_ than the older remeber        
-          Solution particle = new Solution(particles_.get(i));
-          //this.best_.reemplace(i,particle);
-          best_[i] = particle;
-        }
-      }
-
-      //Crowding the leaders_
-      distance_.crowdingDistanceAssignment(leaders_);
-      iteration_++;
-    }
-
-    return this.leaders_;
-    //return eArchive_;
-  } // execute
-
-  /**
-   * Gets the leaders of the OMOPSO algorithm
-   */
-  public SolutionSet getLeader() {
-    return leaders_;
-  }  // getLeader 
+  }
 }
