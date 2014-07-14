@@ -70,6 +70,7 @@ The list of metaheuristics that have been redesigned using clean coding is:
 * PAES
 * MOCHC
 * MOCell
+* OMOPSO
 
 ### Fluent interface
 We apply the Fluent Interface to the creation of operators, the configuration of algorithms, and
@@ -197,6 +198,6 @@ public class NSGAIIRunner {
 
 The list of operators adapted to use the fluent interface is:
 * Crossover: `SBXCrossover`, `DifferentialEvolutionCrossover`, `BLXAlphaCrossover`, `SinglePointCrossover`
-* Mutation: `PolynomialMutation`, `BitFlipMutation`
+* Mutation: `PolynomialMutation`, `BitFlipMutation`, `UniformMutation`, `NonUniformMutation`
 * Selection: `BinaryTournament2`, `DifferentialEvolutionSelection`, `RandomSelection`, `RankingAndCrowdingSelection`
 
