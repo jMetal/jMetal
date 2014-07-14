@@ -1,4 +1,4 @@
-//  SMPSO_Settings.java 
+//  SMPSOSettings.java 
 //
 //  Authors:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -39,26 +39,26 @@ import java.util.Properties;
  */
 
 public class SMPSOSettings extends Settings {
-  private int swarmSize_;
-  private int maxIterations_;
-  private int archiveSize_;
-  private double mutationDistributionIndex_;
-  private double mutationProbability_;
+  private int swarmSize;
+  private int maxIterations;
+  private int archiveSize;
+  private double mutationDistributionIndex;
+  private double mutationProbability;
 
-  private double c1Max_;
-  private double c1Min_;
-  private double c2Max_;
-  private double c2Min_;
-  private double r1Max_;
-  private double r1Min_;
-  private double r2Max_;
-  private double r2Min_;
-  private double weightMax_;
-  private double weightMin_;
-  private double changeVelocity1_;
-  private double changeVelocity2_;
+  private double c1Max;
+  private double c1Min;
+  private double c2Max;
+  private double c2Min;
+  private double r1Max;
+  private double r1Min;
+  private double r2Max;
+  private double r2Min;
+  private double weightMax;
+  private double weightMin;
+  private double changeVelocity1;
+  private double changeVelocity2;
 
-  private SolutionSetEvaluator evaluator_ ;
+  private SolutionSetEvaluator evaluator ;
 
 
   public SMPSOSettings(String problem) {
@@ -68,26 +68,26 @@ public class SMPSOSettings extends Settings {
     problem_ = (new ProblemFactory()).getProblem(problemName, problemParams);
 
     // Default experiment.settings
-    swarmSize_ = 100;
-    maxIterations_ = 250;
-    archiveSize_ = 100;
-    mutationDistributionIndex_ = 20.0;
-    mutationProbability_ = 1.0 / problem_.getNumberOfVariables();
+    swarmSize = 100;
+    maxIterations = 250;
+    archiveSize = 100;
+    mutationDistributionIndex = 20.0;
+    mutationProbability = 1.0 / problem_.getNumberOfVariables();
 
-    evaluator_ = new SequentialSolutionSetEvaluator() ;
+    evaluator = new SequentialSolutionSetEvaluator() ;
 
-    c1Max_ = 2.5;
-    c1Min_ = 1.5;
-    c2Max_ = 2.5;
-    c2Min_ = 1.5;
-    r1Max_ = 1.0;
-    r1Min_ = 0.0;
-    r2Max_ = 1.0;
-    r2Min_ = 0.0;
-    weightMax_ = 0.1;
-    weightMin_ = 0.1;
-    changeVelocity1_ = -1;
-    changeVelocity2_ = -1;
+    c1Max = 2.5;
+    c1Min = 1.5;
+    c2Max = 2.5;
+    c2Min = 1.5;
+    r1Max = 1.0;
+    r1Min = 0.0;
+    r2Max = 1.0;
+    r2Min = 0.0;
+    weightMax = 0.1;
+    weightMin = 0.1;
+    changeVelocity1 = -1;
+    changeVelocity2 = -1;
   }
 
   /**
@@ -106,23 +106,23 @@ public class SMPSOSettings extends Settings {
       .probability(1.0 / problem_.getNumberOfVariables())
       .build();
 
-    algorithm = new SMPSO.Builder(problem_, archive, evaluator_)
+    algorithm = new SMPSO.Builder(problem_, archive, evaluator)
       .mutation(mutation)
-      .maxIterations(maxIterations_)
-      .swarmSize(swarmSize_)
-      .archiveSize(archiveSize_)
-      .c1Max(c1Max_)
-      .c1Min(c1Min_)
-      .c2Max(c2Max_)
-      .c2Min(c2Min_)
-      .r1Max(r1Max_)
-      .r1Min(r1Min_)
-      .r2Max(r2Max_)
-      .r2Min(r2Min_)
-      .weightMax(weightMax_)
-      .weightMin(weightMin_)
-      .changeVelocity1(changeVelocity1_)
-      .changeVelocity2(changeVelocity2_)
+      .maxIterations(maxIterations)
+      .swarmSize(swarmSize)
+      .archiveSize(archiveSize)
+      .c1Max(c1Max)
+      .c1Min(c1Min)
+      .c2Max(c2Max)
+      .c2Min(c2Min)
+      .r1Max(r1Max)
+      .r1Min(r1Min)
+      .r2Max(r2Max)
+      .r2Min(r2Min)
+      .weightMax(weightMax)
+      .weightMin(weightMin)
+      .changeVelocity1(changeVelocity1)
+      .changeVelocity2(changeVelocity2)
       .build();
 
     return algorithm ;
@@ -135,25 +135,25 @@ public class SMPSOSettings extends Settings {
    */
   @Override
   public Algorithm configure(Properties configuration) {
-    swarmSize_ =
-      Integer.parseInt(configuration.getProperty("swarmSize", String.valueOf(swarmSize_)));
-    maxIterations_ =
-      Integer.parseInt(configuration.getProperty("maxIterations", String.valueOf(maxIterations_)));
-    archiveSize_ =
-      Integer.parseInt(configuration.getProperty("archiveSize", String.valueOf(archiveSize_)));
+    swarmSize =
+      Integer.parseInt(configuration.getProperty("swarmSize", String.valueOf(swarmSize)));
+    maxIterations =
+      Integer.parseInt(configuration.getProperty("maxIterations", String.valueOf(maxIterations)));
+    archiveSize =
+      Integer.parseInt(configuration.getProperty("archiveSize", String.valueOf(archiveSize)));
 
-    c1Min_ = Double.parseDouble(configuration.getProperty("c1Min", String.valueOf(c1Min_)));
-    c1Max_ = Double.parseDouble(configuration.getProperty("c1Max", String.valueOf(c1Max_)));
-    c2Min_ = Double.parseDouble(configuration.getProperty("c2Min", String.valueOf(c2Min_)));
-    c2Max_ = Double.parseDouble(configuration.getProperty("c2Max", String.valueOf(c2Max_)));
-    r1Min_ = Double.parseDouble(configuration.getProperty("r1Min", String.valueOf(r1Min_)));
-    r1Max_ = Double.parseDouble(configuration.getProperty("r1Max", String.valueOf(r1Max_)));
-    r2Min_ = Double.parseDouble(configuration.getProperty("r2Min", String.valueOf(r2Min_)));
-    r2Max_ = Double.parseDouble(configuration.getProperty("r2Max", String.valueOf(r2Max_)));
-    weightMin_ = Double.parseDouble(configuration.getProperty("weightMin", String.valueOf(weightMin_)));
-    weightMax_ = Double.parseDouble(configuration.getProperty("weightMax", String.valueOf(weightMax_)));
-    changeVelocity1_ = Double.parseDouble(configuration.getProperty("changeVelocity1", String.valueOf(changeVelocity1_)));
-    changeVelocity2_ = Double.parseDouble(configuration.getProperty("changeVelocity2", String.valueOf(changeVelocity2_)));
+    c1Min = Double.parseDouble(configuration.getProperty("c1Min", String.valueOf(c1Min)));
+    c1Max = Double.parseDouble(configuration.getProperty("c1Max", String.valueOf(c1Max)));
+    c2Min = Double.parseDouble(configuration.getProperty("c2Min", String.valueOf(c2Min)));
+    c2Max = Double.parseDouble(configuration.getProperty("c2Max", String.valueOf(c2Max)));
+    r1Min = Double.parseDouble(configuration.getProperty("r1Min", String.valueOf(r1Min)));
+    r1Max = Double.parseDouble(configuration.getProperty("r1Max", String.valueOf(r1Max)));
+    r2Min = Double.parseDouble(configuration.getProperty("r2Min", String.valueOf(r2Min)));
+    r2Max = Double.parseDouble(configuration.getProperty("r2Max", String.valueOf(r2Max)));
+    weightMin = Double.parseDouble(configuration.getProperty("weightMin", String.valueOf(weightMin)));
+    weightMax = Double.parseDouble(configuration.getProperty("weightMax", String.valueOf(weightMax)));
+    changeVelocity1 = Double.parseDouble(configuration.getProperty("changeVelocity1", String.valueOf(changeVelocity1)));
+    changeVelocity2 = Double.parseDouble(configuration.getProperty("changeVelocity2", String.valueOf(changeVelocity2)));
 
     return configure() ;
   }

@@ -94,7 +94,7 @@ public class StandardPSO2007 extends Algorithm {
     numberOfParticlesToInform_ =
       (Integer) getInputParameter("numberOfParticlesToInform");
 
-    //Configuration.logger_.info("Swarm size: " + swarmSize_) ;
+    //Configuration.logger_.info("Swarm size: " + swarmSize) ;
 
     iteration_ = 0;
 

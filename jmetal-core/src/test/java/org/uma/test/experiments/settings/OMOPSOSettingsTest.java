@@ -20,17 +20,16 @@
 
 package org.uma.test.experiments.settings;
 
-import org.uma.jmetal.core.Algorithm;
-import org.uma.jmetal.core.Problem;
-import org.uma.jmetal.experiment.Settings;
-import org.uma.jmetal.experiment.settings.OMOPSOSettings;
-import org.uma.jmetal.operator.mutation.NonUniformMutation;
-import org.uma.jmetal.operator.mutation.UniformMutation;
-import org.uma.jmetal.problem.Fonseca;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.uma.jmetal.core.Problem;
+import org.uma.jmetal.experiment.Settings;
+import org.uma.jmetal.experiment.settings.OMOPSOSettings;
+import org.uma.jmetal.metaheuristic.multiobjective.omopso.OMOPSO;
+import org.uma.jmetal.operator.mutation.NonUniformMutation;
+import org.uma.jmetal.operator.mutation.UniformMutation;
+import org.uma.jmetal.problem.Fonseca;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -59,37 +58,37 @@ public class OMOPSOSettingsTest {
   public void testConfigure() throws Exception {
     double epsilon = 0.000000000000001 ;
     Settings omopsoSettings = new OMOPSOSettings("Fonseca");
-    Algorithm algorithm = omopsoSettings.configure() ;
+    OMOPSO algorithm = (OMOPSO)omopsoSettings.configure() ;
     Problem problem = new Fonseca("Real");
 
-    UniformMutation uniformMutation = (UniformMutation)algorithm.getOperator("uniformMutation")  ;
-    NonUniformMutation nonUniformMutation = (NonUniformMutation)algorithm.getOperator("nonUniformMutation")  ;
+    UniformMutation uniformMutation = algorithm.getUniformMutation() ;
+    NonUniformMutation nonUniformMutation = algorithm.getNonUniformMutation() ;
 
-    Assert.assertEquals("OMOPSO_SettingsTest", 100, ((Integer)algorithm.getInputParameter("swarmSize")).intValue());
-    Assert.assertEquals("OMOPSO_SettingsTest", 250, ((Integer)algorithm.getInputParameter("maxIterations")).intValue());
-    Assert.assertEquals("OMOPSO_SettingsTest", 100, ((Integer)algorithm.getInputParameter("archiveSize")).intValue());
+    Assert.assertEquals(100, algorithm.getSwarmSize());
+    Assert.assertEquals(250, algorithm.getMaxIterations());
+    Assert.assertEquals(100, algorithm.getArchiveSize());
 
-    Assert.assertEquals("OMOPSO_SettingsTest", 1.0/problem.getNumberOfVariables(), (Double)uniformMutation.getParameter("probability") , epsilon);
-    Assert.assertEquals("OMOPSO_SettingsTest", 0.5, (Double)uniformMutation.getParameter("perturbation") , epsilon);
-    Assert.assertEquals("OMOPSO_SettingsTest", 250, ((Integer)nonUniformMutation.getParameter("maxIterations")).intValue());
+    Assert.assertEquals(1.0/problem.getNumberOfVariables(), uniformMutation.getMutationProbability() , epsilon);
+    Assert.assertEquals(0.5, uniformMutation.getPerturbation() , epsilon);
+    Assert.assertEquals(250, nonUniformMutation.getMaxIterations());
   }
 
   @Test
   public void testConfigure2() throws Exception {
     double epsilon = 0.000000000000001 ;
     Settings omopsoSettings = new OMOPSOSettings("Fonseca");
-    Algorithm algorithm = omopsoSettings.configure(configuration_) ;
+    OMOPSO algorithm = (OMOPSO)omopsoSettings.configure(configuration_) ;
     Problem problem = new Fonseca("Real");
 
-    UniformMutation uniformMutation = (UniformMutation)algorithm.getOperator("uniformMutation")  ;
-    NonUniformMutation nonUniformMutation = (NonUniformMutation)algorithm.getOperator("nonUniformMutation")  ;
+    UniformMutation uniformMutation = algorithm.getUniformMutation() ;
+    NonUniformMutation nonUniformMutation = algorithm.getNonUniformMutation() ;
 
-    Assert.assertEquals("OMOPSO_SettingsTest", 100, ((Integer)algorithm.getInputParameter("swarmSize")).intValue());
-    Assert.assertEquals("OMOPSO_SettingsTest", 250, ((Integer)algorithm.getInputParameter("maxIterations")).intValue());
-    Assert.assertEquals("OMOPSO_SettingsTest", 100, ((Integer)algorithm.getInputParameter("archiveSize")).intValue());
+    Assert.assertEquals(100, algorithm.getSwarmSize());
+    Assert.assertEquals(250, algorithm.getMaxIterations());
+    Assert.assertEquals(100, algorithm.getArchiveSize());
 
-    Assert.assertEquals("OMOPSO_SettingsTest", 1.0/problem.getNumberOfVariables(), (Double)uniformMutation.getParameter("probability") , epsilon);
-    Assert.assertEquals("OMOPSO_SettingsTest", 0.5, (Double)uniformMutation.getParameter("perturbation") , epsilon);
-    Assert.assertEquals("OMOPSO_SettingsTest", 250, ((Integer)nonUniformMutation.getParameter("maxIterations")).intValue());
+    Assert.assertEquals(1.0/problem.getNumberOfVariables(), uniformMutation.getMutationProbability() , epsilon);
+    Assert.assertEquals(0.5, uniformMutation.getPerturbation() , epsilon);
+    Assert.assertEquals(250, nonUniformMutation.getMaxIterations());
   }
 }

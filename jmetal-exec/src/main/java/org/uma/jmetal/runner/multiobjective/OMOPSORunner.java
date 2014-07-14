@@ -31,11 +31,15 @@ import org.uma.jmetal.operator.mutation.UniformMutation;
 import org.uma.jmetal.problem.Kursawe;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.qualityIndicator.QualityIndicator;
+import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.evaluator.SequentialSolutionSetEvaluator;
+import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
+import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
+import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
@@ -86,44 +90,42 @@ public class OMOPSORunner {
       //problem = new OKA2("Real") ;
     }
 
-    algorithm = new OMOPSO();
-    algorithm.setProblem(problem);
+        /*
+     * Alternatives:
+     * - evaluator = new SequentialSolutionSetEvaluator() // SMPSO
+     * - evaluator = new MultithreadedSolutionSetEvaluator(threads, problem) // parallel SMPSO
+     */
+    SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator();
 
-    Integer maxIterations = 250;
-    Double perturbationIndex = 0.5;
-    Double mutationProbability = 1.0 / problem.getNumberOfVariables();
+    uniformMutation = new UniformMutation.Builder(0.5, 1.0/problem.getNumberOfVariables())
+      .build() ;
 
-    // Algorithm parameters
-    algorithm.setInputParameter("swarmSize", 100);
-    algorithm.setInputParameter("archiveSize", 100);
-    algorithm.setInputParameter("maxIterations", maxIterations);
+    nonUniformMutation = new NonUniformMutation.Builder(0.5, 1.0/problem.getNumberOfVariables(), 250)
+      .build() ;
 
-    HashMap<String, Object> uniMutationParameters = new HashMap<String, Object>();
-    uniMutationParameters.put("probability", mutationProbability);
-    uniMutationParameters.put("perturbation", perturbationIndex);
-    uniformMutation = new UniformMutation(uniMutationParameters);
+    algorithm = new OMOPSO.Builder(problem, evaluator)
+      .swarmSize(100)
+      .archiveSize(100)
+      .maxIterations(250)
+      .uniformMutation(uniformMutation)
+      .nonUniformMutation(nonUniformMutation)
+      .build() ;
 
-    HashMap<String, Object> nonUniMutationParameters = new HashMap<String, Object>();
-    nonUniMutationParameters.put("probability", mutationProbability);
-    nonUniMutationParameters.put("perturbation", perturbationIndex);
-    nonUniMutationParameters.put("maxIterations", maxIterations);
-    nonUniformMutation = new NonUniformMutation(nonUniMutationParameters);
+    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+      .execute();
 
-    // Add the operator to the algorithm
-    algorithm.addOperator("uniformMutation", uniformMutation);
-    algorithm.addOperator("nonUniformMutation", nonUniformMutation);
+    SolutionSet population = algorithmRunner.getSolutionSet();
+    long computingTime = algorithmRunner.getComputingTime();
 
-    // Execute the Algorithm 
-    long initTime = System.currentTimeMillis();
-    SolutionSet population = algorithm.execute();
-    long estimatedTime = System.currentTimeMillis() - initTime;
+    new SolutionSetOutput.Printer(population)
+      .separator("\t")
+      .varFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+      .funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+      .print();
 
-    // Print the results
-    logger_.info("Total execution time: " + estimatedTime + "ms");
-    logger_.info("Variables values have been writen to file VAR");
-    population.printVariablesToFile("VAR");
-    logger_.info("Objectives values have been writen to file FUN");
-    population.printObjectivesToFile("FUN");
+    logger_.info("Total execution time: " + computingTime + "ms");
+    logger_.info("Objectives values have been written to file FUN.tsv");
+    logger_.info("Variables values have been written to file VAR.tsv");
 
     if (indicators != null) {
       logger_.info("Quality indicators");

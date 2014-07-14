@@ -22,6 +22,7 @@
 package org.uma.jmetal.metaheuristic.multiobjective.omopso;
 
 import org.uma.jmetal.core.*;
+import org.uma.jmetal.operator.mutation.Mutation;
 import org.uma.jmetal.operator.mutation.NonUniformMutation;
 import org.uma.jmetal.operator.mutation.UniformMutation;
 import org.uma.jmetal.util.Distance;
@@ -31,14 +32,16 @@ import org.uma.jmetal.util.archive.CrowdingArchive;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.EpsilonDominanceComparator;
+import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
 import org.uma.jmetal.util.random.PseudoRandom;
 
 import java.util.Comparator;
 
 /** Class implementing the  OMOPSO algorithm */
 public class OMOPSO extends Algorithm {
-
   private static final long serialVersionUID = -4920101693175195923L;
+
+  SolutionSetEvaluator evaluator;
 
   private int swarmSize;
   private int archiveSize;
@@ -83,6 +86,9 @@ public class OMOPSO extends Algorithm {
 
   /** Constructor */
   private OMOPSO(Builder builder) {
+    evaluator = builder.evaluator ;
+    problem_ = builder.problem ;
+
     swarmSize = builder.swarmSize ;
     maxIterations = builder.maxIterations ;
     archiveSize = builder.archiveSize ;
@@ -126,80 +132,75 @@ public class OMOPSO extends Algorithm {
 
   /** execute() method */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
+    createInitialSwarm();
+    evaluateSwarm();
+    initializeSpeed() ;
+    updateEpsilonArchive() ;
+    initializeParticleMemory() ;
 
-    //->Step 1 (and 3) Create the initial population and evaluate
-    for (int i = 0; i < swarmSize; i++) {
-      Solution particle = new Solution(problem_);
-      problem_.evaluate(particle);
-      problem_.evaluateConstraints(particle);
-      swarm.add(particle);
+    distance_.crowdingDistanceAssignment(leaderArchive);
+
+    while (currentIteration < maxIterations) {
+      computeSpeed();
+      computeNewPositions();
+      mopsoMutation(currentIteration);
+      evaluateSwarm();
+      updateEpsilonArchive();
+      updateParticleMemory() ;
+
+      distance_.crowdingDistanceAssignment(leaderArchive);
+      currentIteration++;
     }
 
-    //-> Step2. Initialize the speed of each particle to 0
+    return this.leaderArchive;
+  }
+
+  protected void createInitialSwarm() throws ClassNotFoundException, JMetalException {
+    swarm = new SolutionSet(swarmSize);
+
+    Solution newSolution;
+    for (int i = 0; i < swarmSize; i++) {
+      newSolution = new Solution(problem_);
+      swarm.add(newSolution);
+    }
+  }
+
+  protected void evaluateSwarm() throws JMetalException {
+    swarm = evaluator.evaluate(swarm, problem_);
+  }
+
+  protected void initializeSpeed() {
     for (int i = 0; i < swarmSize; i++) {
       for (int j = 0; j < problem_.getNumberOfVariables(); j++) {
         speed[i][j] = 0.0;
       }
     }
+  }
 
-    // Step4 and 5
+  protected void updateEpsilonArchive() {
     for (int i = 0; i < swarm.size(); i++) {
       Solution particle = new Solution(swarm.get(i));
       if (leaderArchive.add(particle)) {
         epsilonArchive.add(new Solution(particle));
       }
     }
+  }
 
-    //-> Step 6. Initialice the memory of each particle
+  protected void initializeParticleMemory()  {
     for (int i = 0; i < swarm.size(); i++) {
       Solution particle = new Solution(swarm.get(i));
       localBest[i] = particle;
     }
+  }
 
-    //Crowding the leaderArchive
-    distance_.crowdingDistanceAssignment(leaderArchive);
-
-    //-> Step 7. Iterations ..
-    while (currentIteration < maxIterations) {
-      //Compute the speed
-      computeSpeed();
-
-      //Compute the new positions for the swarm
-      computeNewPositions();
-
-      //Mutate the swarm
-      mopsoMutation(currentIteration);
-
-      //Evaluate the new swarm in new positions
-      for (int i = 0; i < swarm.size(); i++) {
-        Solution particle = swarm.get(i);
-        problem_.evaluate(particle);
-        problem_.evaluateConstraints(particle);
-      }
-
-      //Actualize the archive
-      for (int i = 0; i < swarm.size(); i++) {
+  protected void updateParticleMemory() {
+    for (int i = 0; i < swarm.size(); i++) {
+      int flag = dominanceComparator.compare(swarm.get(i), localBest[i]);
+      if (flag != 1) {
         Solution particle = new Solution(swarm.get(i));
-        if (leaderArchive.add(particle)) {
-          epsilonArchive.add(new Solution(particle));
-        }
+        localBest[i] = particle;
       }
-
-      //Actualize the memory of this particle
-      for (int i = 0; i < swarm.size(); i++) {
-        int flag = dominanceComparator.compare(swarm.get(i), localBest[i]);
-        if (flag != 1) {
-          Solution particle = new Solution(swarm.get(i));
-          localBest[i] = particle;
-        }
-      }
-
-      //Crowding the leaderArchive
-      distance_.crowdingDistanceAssignment(leaderArchive);
-      currentIteration++;
     }
-
-    return this.leaderArchive;
   }
 
   /** Update the speed of each particle */
@@ -277,12 +278,21 @@ public class OMOPSO extends Algorithm {
 
   /** Buider class */
   public static class Builder{
+    protected SolutionSetEvaluator evaluator;
+
+    protected Problem problem;
+
     private int swarmSize = 100 ;
     private int archiveSize = 100 ;
     private int maxIterations = 25000 ;
 
     private UniformMutation uniformMutation ;
     private NonUniformMutation nonUniformMutation ;
+
+    public Builder(Problem problem, SolutionSetEvaluator evaluator) {
+      this.evaluator = evaluator ;
+      this.problem = problem ;
+    }
 
     public Builder swarmSize(int swarmSize) {
       this.swarmSize = swarmSize ;
@@ -302,14 +312,14 @@ public class OMOPSO extends Algorithm {
       return this ;
     }
 
-    public Builder uniformMutation(UniformMutation uniformMutation) {
-      this.uniformMutation = uniformMutation ;
+    public Builder uniformMutation(Mutation uniformMutation) {
+      this.uniformMutation = (UniformMutation)uniformMutation ;
 
       return this ;
     }
 
-    public Builder nonUniformMutation(NonUniformMutation nonUniformMutation) {
-      this.nonUniformMutation = nonUniformMutation ;
+    public Builder nonUniformMutation(Mutation nonUniformMutation) {
+      this.nonUniformMutation = (NonUniformMutation)nonUniformMutation ;
 
       return this ;
     }

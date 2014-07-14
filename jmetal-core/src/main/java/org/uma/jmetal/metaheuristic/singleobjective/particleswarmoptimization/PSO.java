@@ -360,7 +360,7 @@ public class PSO extends Algorithm {
       computeNewPositions();
 
       //Mutate the particles_          
-      //mopsoMutation(iteration_, maxIterations_);
+      //mopsoMutation(iteration_, maxIterations);
 
       //Evaluate the new particles_ in new positions
       for (int i = 0; i < particles_.size(); i++) {

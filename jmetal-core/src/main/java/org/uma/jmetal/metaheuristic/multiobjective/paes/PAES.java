@@ -85,7 +85,7 @@ public class PAES extends Algorithm {
 
     //Read the params
     //biSections_ = (Integer) this.getInputParameter("biSections");
-    //archiveSize_ = (Integer) this.getInputParameter("archiveSize");
+    //archiveSize = (Integer) this.getInputParameter("archiveSize");
     //maxEvaluations = (Integer) this.getInputParameter("maxEvaluations");
 
     //Read the operator

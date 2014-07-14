@@ -90,21 +90,21 @@ public class MOEADSettings extends Settings {
     Crossover crossover;
     Mutation mutation;
     crossover = new DifferentialEvolutionCrossover.Builder()
-      .cr(1.0)
-      .f(0.5)
+      .cr(cr)
+      .f(f)
       .build() ;
 
     mutation = new PolynomialMutation.Builder()
-      .distributionIndex(20.0)
-      .probability(1.0/problem_.getNumberOfVariables())
+      .distributionIndex(mutationDistributionIndex)
+      .probability(mutationProbability)
       .build();
 
     algorithm = new MOEAD.Builder(problem_)
-      .populationSize(300)
-      .maxEvaluations(150000)
-      .neighborhoodSelectionProbability(0.9)
-      .maximumNumberOfReplacedSolutions(2)
-      .neighborSize(20)
+      .populationSize(populationSize)
+      .maxEvaluations(maxEvaluations)
+      .neighborhoodSelectionProbability(neighborhoodSelectionProbability)
+      .maximumNumberOfReplacedSolutions(maximumNumberOfReplacedSolutions)
+      .neighborSize(neighborSize)
       .crossover(crossover)
       .mutation(mutation)
       .dataDirectory("MOEAD_Weights")
