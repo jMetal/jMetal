@@ -48,11 +48,6 @@ public class OMOPSO extends Algorithm {
   private int maxIterations;
   private int currentIteration;
 
-  /**
-   * Perturbation used by the non-uniform mutation
-   */
-  private double perturbation_;
-
   private SolutionSet swarm;
   private Solution[] localBest;
   private CrowdingArchive leaderArchive;
@@ -63,18 +58,14 @@ public class OMOPSO extends Algorithm {
   private Comparator<Solution> dominanceComparator;
   private Comparator<Solution> crowdingDistanceComparator;
 
-  /**
-   * Stores a <code>Distance</code> object
-   */
-  private Distance distance_;
 
   private UniformMutation uniformMutation;
   private NonUniformMutation nonUniformMutation;
 
   /**
-   * eta_ value
+   * eta value
    */
-  private double eta_ = 0.0075;
+  private double eta = 0.0075;
 
   /**
    * Constructor
@@ -99,17 +90,15 @@ public class OMOPSO extends Algorithm {
     swarm = new SolutionSet(swarmSize);
     localBest = new Solution[swarmSize];
     leaderArchive = new CrowdingArchive(archiveSize, problem_.getNumberOfObjectives());
-    epsilonArchive = new NonDominatedSolutionList(new EpsilonDominanceComparator(eta_));
+    epsilonArchive = new NonDominatedSolutionList(new EpsilonDominanceComparator(eta));
 
     dominanceComparator = new DominanceComparator();
     crowdingDistanceComparator = new CrowdingDistanceComparator();
-    distance_ = new Distance();
 
     speed = new double[swarmSize][problem_.getNumberOfVariables()];
   }
 
   /* getters/setters */
-
   public int getArchiveSize() {
     return archiveSize;
   }
@@ -138,7 +127,7 @@ public class OMOPSO extends Algorithm {
     updateEpsilonArchive() ;
     initializeParticleMemory() ;
 
-    distance_.crowdingDistanceAssignment(leaderArchive);
+    Distance.crowdingDistance(leaderArchive);
 
     while (currentIteration < maxIterations) {
       computeSpeed();
@@ -148,9 +137,11 @@ public class OMOPSO extends Algorithm {
       updateEpsilonArchive();
       updateParticleMemory() ;
 
-      distance_.crowdingDistanceAssignment(leaderArchive);
+      Distance.crowdingDistance(leaderArchive);
       currentIteration++;
     }
+
+    tearDown();
 
     return this.leaderArchive;
   }
@@ -274,6 +265,10 @@ public class OMOPSO extends Algorithm {
       } else {
       }
     }
+  }
+
+  protected void tearDown() {
+    evaluator.shutdown();
   }
 
   /** Buider class */

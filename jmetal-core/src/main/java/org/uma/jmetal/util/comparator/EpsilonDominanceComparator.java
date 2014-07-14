@@ -25,21 +25,9 @@ import org.uma.jmetal.core.Solution;
 
 import java.util.Comparator;
 
-/**
- * This class implements a <code>Comparator</code> (a method for comparing
- * <code>Solution</code> objects) based on epsilon dominance.
- */
 public class EpsilonDominanceComparator implements Comparator<Solution> {
 
-  /**
-   * stores a comparator for check the OverallConstraintComparator
-   */
-  private static final Comparator<Solution> overallConstraintViolationComparator_ =
-    new OverallConstraintViolationComparator();
-  /**
-   * Stores the value of eta, needed for epsilon-dominance.
-   */
-  private double eta_;
+  private double eta;
 
   /**
    * Constructor.
@@ -47,7 +35,7 @@ public class EpsilonDominanceComparator implements Comparator<Solution> {
    * @param eta Value for epsilon-dominance.
    */
   public EpsilonDominanceComparator(double eta) {
-    eta_ = eta;
+    this.eta = eta;
   }
 
   /**
@@ -91,9 +79,9 @@ public class EpsilonDominanceComparator implements Comparator<Solution> {
       value2 = solution2.getObjective(i);
 
       //Objective implements comparable!!!
-      if (value1 / (1 + eta_) < value2) {
+      if (value1 / (1 + eta) < value2) {
         flag = -1;
-      } else if (value1 / (1 + eta_) > value2) {
+      } else if (value1 / (1 + eta) > value2) {
         flag = 1;
       } else {
         flag = 0;
