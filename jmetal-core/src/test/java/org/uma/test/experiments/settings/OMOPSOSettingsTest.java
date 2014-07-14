@@ -24,18 +24,24 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.core.Problem;
+import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.experiment.Settings;
 import org.uma.jmetal.experiment.settings.OMOPSOSettings;
 import org.uma.jmetal.metaheuristic.multiobjective.omopso.OMOPSO;
 import org.uma.jmetal.operator.mutation.NonUniformMutation;
 import org.uma.jmetal.operator.mutation.UniformMutation;
 import org.uma.jmetal.problem.Fonseca;
+import org.uma.jmetal.problem.ZDT.ZDT6;
+import org.uma.jmetal.util.evaluator.MultithreadedSolutionSetEvaluator;
+import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Properties;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created with IntelliJ IDEA.
@@ -90,5 +96,41 @@ public class OMOPSOSettingsTest {
     Assert.assertEquals(1.0/problem.getNumberOfVariables(), uniformMutation.getMutationProbability() , epsilon);
     Assert.assertEquals(0.5, uniformMutation.getPerturbation() , epsilon);
     Assert.assertEquals(250, nonUniformMutation.getMaxIterations());
+  }
+
+  @Test
+  public void testExecuteOMOPSO() throws ClassNotFoundException, IOException {
+    Settings omopsoSettings = new OMOPSOSettings("ZDT6");
+    OMOPSO algorithm = (OMOPSO)omopsoSettings.configure() ;
+
+    SolutionSet solutionSet = algorithm.execute() ;
+    assertEquals(100, solutionSet.size());
+  }
+
+  @Test
+  public void testExecuteParallelOMOPSO() throws ClassNotFoundException, IOException {
+    Problem problem = new ZDT6("Real") ;
+    SolutionSetEvaluator evaluator = new MultithreadedSolutionSetEvaluator(8, problem);
+
+    OMOPSO algorithm;
+    UniformMutation uniformMutation;
+    NonUniformMutation nonUniformMutation;
+
+    uniformMutation = new UniformMutation.Builder(0.5, 1.0/problem.getNumberOfVariables())
+      .build() ;
+
+    nonUniformMutation = new NonUniformMutation.Builder(0.5, 1.0/problem.getNumberOfVariables(), 250)
+      .build() ;
+
+    algorithm = new OMOPSO.Builder(problem, evaluator)
+      .swarmSize(100)
+      .archiveSize(100)
+      .maxIterations(250)
+      .uniformMutation(uniformMutation)
+      .nonUniformMutation(nonUniformMutation)
+      .build() ;
+
+    SolutionSet solutionSet = algorithm.execute() ;
+    assertEquals(100, solutionSet.size());
   }
 }

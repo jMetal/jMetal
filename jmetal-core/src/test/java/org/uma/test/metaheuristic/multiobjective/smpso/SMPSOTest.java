@@ -1,4 +1,4 @@
-//  OMOPSOTest.java
+//  SMPSOTest.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -18,30 +18,30 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.test.metaheuristic.multiobjective.omopso;
+package org.uma.test.metaheuristic.multiobjective.smpso;
 
 import org.junit.Test;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.experiment.settings.OMOPSOSettings;
+import org.uma.jmetal.experiment.settings.SMPSOSettings;
 
 import java.io.IOException;
 
 import static org.junit.Assert.assertTrue;
 
 /**
- * Created by Antonio J. Nebro on 30/06/14.
+ * Created by Antonio J. Nebro on 14/07/14.
  */
-public class OMOPSOTest {
+public class SMPSOTest {
   Algorithm algorithm;
 
   @Test
   public void testNumberOfReturnedSolutionsInEasyProblem() throws IOException, ClassNotFoundException {
-    algorithm = new OMOPSOSettings("ZDT1").configure() ;
+    algorithm = new SMPSOSettings("ZDT1").configure() ;
 
     SolutionSet solutionSet = algorithm.execute() ;
     /*
-    Rationale: the default problem is ZDT1, and usually OMOPSO, configured with standard
+    Rationale: the default problem is ZDT4, and usually SMPSO, configured with standard
     settings, should return 100 solutions
      */
     int defaultMaxEvaluations = 25000 ;
