@@ -175,7 +175,7 @@ public abstract class Settings {
         }
       }
 
-      paretoFrontFile_ = (String) settings.get("paretoFrontFileList_");
+      paretoFrontFile_ = (String) settings.get("paretoFrontFileList");
     }
 
     return configure();

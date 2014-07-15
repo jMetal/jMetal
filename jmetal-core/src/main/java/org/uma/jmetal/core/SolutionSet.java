@@ -39,17 +39,17 @@ public class SolutionSet implements Serializable {
   private static final long serialVersionUID = -8200105946946452804L;
 
   /**
-   * Stores a list of <code>solutiontype</code> objects.
+   * Stores a list of <code>solution</code> objects.
    */
   protected final List<Solution> solutionsList_;
 
   /**
-   * Maximum size of the solutiontype set
+   * Maximum size of the solution set
    */
   private int capacity_ = 0;
 
   /**
-   * Constructor. Creates an unbounded solutiontype set.
+   * Constructor. Creates an unbounded solution set.
    */
   public SolutionSet() {
     solutionsList_ = new ArrayList<Solution>();
@@ -66,7 +66,7 @@ public class SolutionSet implements Serializable {
   } // SolutionSet
 
   /**
-   * Inserts a new solutiontype into the SolutionSet.
+   * Inserts a new solution into the SolutionSet.
    *
    * @param solution The <code>Solution</code> to store
    * @return True If the <code>Solution</code> has been inserted, false
@@ -90,9 +90,9 @@ public class SolutionSet implements Serializable {
   }
 
   /**
-   * Returns the ith solutiontype in the set.
+   * Returns the ith solution in the set.
    *
-   * @param i Position of the solutiontype to obtain.
+   * @param i Position of the solution to obtain.
    * @return The <code>Solution</code> at the position i.
    * @throws IndexOutOfBoundsException Exception
    */
@@ -104,9 +104,9 @@ public class SolutionSet implements Serializable {
   }
 
   /**
-   * Returns the maximum capacity of the solutiontype set
+   * Returns the maximum capacity of the solution set
    *
-   * @return The maximum capacity of the solutiontype set
+   * @return The maximum capacity of the solution set
    */
   public int getMaxSize() {
     return capacity_;
@@ -230,7 +230,7 @@ public class SolutionSet implements Serializable {
   } 
 
   /**
-   * @return true if the solutiontype set if empty
+   * @return true if the solution set if empty
    */
   public boolean isEmtpy() {
     return (solutionsList_.isEmpty());
@@ -283,7 +283,7 @@ public class SolutionSet implements Serializable {
   }
 
   /**
-   * Compares two solutiontype sets
+   * Compares two solution sets
    *
    * @param object Solution set to compare with
    * @return true or false depending on the result of the comparison
@@ -390,7 +390,7 @@ public class SolutionSet implements Serializable {
   /**
    * Deletes the <code>Solution</code> at position i in the set.
    *
-   * @param i The position of the solutiontype to remove.
+   * @param i The position of the solution to remove.
    */
   public void remove(int i) {
     if (i > solutionsList_.size() - 1) {
@@ -400,7 +400,7 @@ public class SolutionSet implements Serializable {
   }
 
   /**
-   * Returns an <code>Iterator</code> to access to the solutiontype set list.
+   * Returns an <code>Iterator</code> to access to the solution set list.
    *
    * @return the <code>Iterator</code>.
    */
@@ -410,7 +410,7 @@ public class SolutionSet implements Serializable {
 
   /**
    * Returns a new <code>SolutionSet</code> which is the result of the union
-   * between the current solutiontype set and the one passed as a parameter.
+   * between the current solution set and the one passed as a parameter.
    *
    * @param solutionSet SolutionSet to join with the current solutionSet.
    * @return The result of the union operation.
@@ -436,10 +436,10 @@ public class SolutionSet implements Serializable {
   }
 
   /**
-   * Replaces a solutiontype by a new one
+   * Replaces a solution by a new one
    *
-   * @param position The position of the solutiontype to replace
-   * @param solution The new solutiontype
+   * @param position The position of the solution to replace
+   * @param solution The new solution
    */
   public void replace(int position, Solution solution) {
     if (position > this.solutionsList_.size()) {
@@ -450,7 +450,7 @@ public class SolutionSet implements Serializable {
   }
 
   /**
-   * Copies the objectives of the solutiontype set to a matrix
+   * Copies the objectives of the solution set to a matrix
    *
    * @return A matrix containing the objectives
    */

@@ -34,38 +34,38 @@ import org.uma.jmetal.util.random.PseudoRandom;
 public class ArrayReal extends Variable {
   private static final long serialVersionUID = -731434436787291959L;
 
-  private Problem problem_;
-  private double[] array_;
-  private int size_;
+  private Problem problem;
+  private double[] array;
+  private int size;
 
   public ArrayReal() {
-    problem_ = null;
-    size_ = 0;
-    array_ = null;
+    problem = null;
+    size = 0;
+    array = null;
   }
 
   public ArrayReal(int size, Problem problem) {
-    problem_ = problem;
-    size_ = size;
-    array_ = new double[size_];
+    this.problem = problem;
+    this.size = size;
+    array = new double[this.size];
 
-    for (int i = 0; i < size_; i++) {
-      array_[i] = PseudoRandom.randDouble() * (problem_.getUpperLimit(i) -
-        problem_.getLowerLimit(i)) +
-        problem_.getLowerLimit(i);
+    for (int i = 0; i < this.size; i++) {
+      array[i] = PseudoRandom.randDouble() * (this.problem.getUpperLimit(i) -
+        this.problem.getLowerLimit(i)) +
+        this.problem.getLowerLimit(i);
     }
   }
 
   private ArrayReal(ArrayReal arrayReal) {
-    problem_ = arrayReal.problem_;
-    size_ = arrayReal.size_;
-    array_ = new double[size_];
+    problem = arrayReal.problem;
+    size = arrayReal.size;
+    array = new double[size];
 
-    System.arraycopy(arrayReal.array_, 0, array_, 0, size_);
+    System.arraycopy(arrayReal.array, 0, array, 0, size);
   }
 
   public double[] getArray() {
-    return array_;
+    return array;
   }
 
   @Override
@@ -74,12 +74,12 @@ public class ArrayReal extends Variable {
   }
 
   public int length() {
-    return size_;
+    return size;
   }
 
   public double getValue(int index) throws JMetalException {
-    if ((index >= 0) && (index < size_)) {
-      return array_[index];
+    if ((index >= 0) && (index < size)) {
+      return array[index];
     } else {
       throw new JMetalException(
         org.uma.jmetal.encoding.variable.ArrayReal.class + ".ArrayReal: index value (" + index
@@ -89,8 +89,8 @@ public class ArrayReal extends Variable {
   }
 
   public void setValue(int index, double value) throws JMetalException {
-    if ((index >= 0) && (index < size_)) {
-      array_[index] = value;
+    if ((index >= 0) && (index < size)) {
+      array[index] = value;
     } else {
       throw new JMetalException(
         org.uma.jmetal.encoding.variable.ArrayReal.class + ": index value (" + index + ") invalid");
@@ -98,8 +98,8 @@ public class ArrayReal extends Variable {
   }
 
   public double getLowerBound(int index) throws JMetalException {
-    if ((index >= 0) && (index < size_)) {
-      return problem_.getLowerLimit(index);
+    if ((index >= 0) && (index < size)) {
+      return problem.getLowerLimit(index);
     } else {
       throw new JMetalException(
         org.uma.jmetal.encoding.variable.ArrayReal.class + ".getLowerBound: index value (" + index
@@ -109,8 +109,8 @@ public class ArrayReal extends Variable {
   }
 
   public double getUpperBound(int index) throws JMetalException {
-    if ((index >= 0) && (index < size_)) {
-      return problem_.getUpperLimit(index);
+    if ((index >= 0) && (index < size)) {
+      return problem.getUpperLimit(index);
     } else {
       throw new JMetalException(
         org.uma.jmetal.encoding.variable.ArrayReal.class + ".getUpperBound: index value (" + index
@@ -123,11 +123,22 @@ public class ArrayReal extends Variable {
     String string;
 
     string = "";
-    for (int i = 0; i < (size_ - 1); i++) {
-      string += array_[i] + " ";
+    for (int i = 0; i < (size - 1); i++) {
+      string += array[i] + " ";
     }
 
-    string += array_[size_ - 1];
+    string += array[size - 1];
     return string;
+  }
+
+  @Override
+  public int hashCode() {
+    int hash = 0 ;
+
+    for (int i = 0 ; i < array.length; i++) {
+       hash += (i + 1)*array[i] ;
+    }
+
+    return hash ;
   }
 }

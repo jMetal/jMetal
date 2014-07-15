@@ -33,72 +33,73 @@ import org.uma.jmetal.util.random.PseudoRandom;
  */
 public class ArrayInt extends Variable {
   private static final long serialVersionUID = 2165010259190501390L;
-  private Problem problem_;
-  private int[] array_;
-  private int size_;
-  private int[] lowerBounds_;
-  private int[] upperBounds_;
+
+  private Problem problem;
+  private int[] array;
+  private int size;
+  private int[] lowerBounds;
+  private int[] upperBounds;
 
   public ArrayInt() {
-    lowerBounds_ = null;
-    upperBounds_ = null;
-    size_ = 0;
-    array_ = null;
-    problem_ = null;
+    lowerBounds = null;
+    upperBounds = null;
+    size = 0;
+    array = null;
+    problem = null;
   }
 
   public ArrayInt(int size) {
-    size_ = size;
-    array_ = new int[size_];
+    this.size = size;
+    array = new int[this.size];
 
-    lowerBounds_ = new int[size_];
-    upperBounds_ = new int[size_];
+    lowerBounds = new int[this.size];
+    upperBounds = new int[this.size];
   }
 
   public ArrayInt(int size, Problem problem) {
-    problem_ = problem;
-    size_ = size;
-    array_ = new int[size_];
-    lowerBounds_ = new int[size_];
-    upperBounds_ = new int[size_];
+    this.problem = problem;
+    this.size = size;
+    array = new int[this.size];
+    lowerBounds = new int[this.size];
+    upperBounds = new int[this.size];
 
-    for (int i = 0; i < size_; i++) {
-      lowerBounds_[i] = (int) problem_.getLowerLimit(i);
-      upperBounds_[i] = (int) problem_.getUpperLimit(i);
-      array_[i] = PseudoRandom.randInt(lowerBounds_[i], upperBounds_[i]);
+    for (int i = 0; i < this.size; i++) {
+      lowerBounds[i] = (int) this.problem.getLowerLimit(i);
+      upperBounds[i] = (int) this.problem.getUpperLimit(i);
+      array[i] = PseudoRandom.randInt(lowerBounds[i], upperBounds[i]);
     }
   }
 
   public ArrayInt(int size, int[] lowerBounds, int[] upperBounds) {
-    size_ = size;
-    array_ = new int[size_];
+    this.size = size;
+    array = new int[this.size];
 
-    lowerBounds_ = new int[size_];
-    upperBounds_ = new int[size_];
+    this.lowerBounds = new int[this.size];
+    this.upperBounds = new int[this.size];
 
-    for (int i = 0; i < size_; i++) {
-      lowerBounds_[i] = (int) lowerBounds[i];
-      upperBounds_[i] = (int) upperBounds[i];
-      array_[i] = PseudoRandom.randInt(lowerBounds_[i], upperBounds_[i]);
+    for (int i = 0; i < this.size; i++) {
+      this.lowerBounds[i] = (int) lowerBounds[i];
+      this.upperBounds[i] = (int) upperBounds[i];
+      array[i] = PseudoRandom.randInt(this.lowerBounds[i], this.upperBounds[i]);
     }
   }
 
   private ArrayInt(ArrayInt arrayInt) {
-    size_ = arrayInt.size_;
-    array_ = new int[size_];
+    size = arrayInt.size;
+    array = new int[size];
 
-    lowerBounds_ = new int[size_];
-    upperBounds_ = new int[size_];
+    lowerBounds = new int[size];
+    upperBounds = new int[size];
 
-    for (int i = 0; i < size_; i++) {
-      array_[i] = arrayInt.array_[i];
-      lowerBounds_[i] = arrayInt.lowerBounds_[i];
-      upperBounds_[i] = arrayInt.upperBounds_[i];
+    for (int i = 0; i < size; i++) {
+      array[i] = arrayInt.array[i];
+      lowerBounds[i] = arrayInt.lowerBounds[i];
+      upperBounds[i] = arrayInt.upperBounds[i];
     }
   }
 
   public int[] getArray() {
-    return array_;
+    return array;
   }
 
   @Override
@@ -107,12 +108,12 @@ public class ArrayInt extends Variable {
   }
 
   public int length() {
-    return size_;
+    return size;
   } 
 
   public int getValue(int index) throws JMetalException {
-    if ((index >= 0) && (index < size_)) {
-      return array_[index];
+    if ((index >= 0) && (index < size)) {
+      return array[index];
     } else {
       throw new JMetalException(
         org.uma.jmetal.encoding.variable.ArrayInt.class + ": index value (" + index + ") invalid");
@@ -120,8 +121,8 @@ public class ArrayInt extends Variable {
   }
 
   public void setValue(int index, int value) throws JMetalException {
-    if ((index >= 0) && (index < size_)) {
-      array_[index] = value;
+    if ((index >= 0) && (index < size)) {
+      array[index] = value;
     } else {
       throw new JMetalException(
         org.uma.jmetal.encoding.variable.ArrayInt.class + ": index value (" + index + ") invalid");
@@ -129,8 +130,8 @@ public class ArrayInt extends Variable {
   }
 
   public int getLowerBound(int index) throws JMetalException {
-    if ((index >= 0) && (index < size_)) {
-      return lowerBounds_[index];
+    if ((index >= 0) && (index < size)) {
+      return lowerBounds[index];
     } else {
       throw new JMetalException(
         org.uma.jmetal.encoding.variable.ArrayInt.class + ".getLowerBound: index value (" + index
@@ -140,8 +141,8 @@ public class ArrayInt extends Variable {
   }
 
   public int getUpperBound(int index) throws JMetalException {
-    if ((index >= 0) && (index < size_)) {
-      return upperBounds_[index];
+    if ((index >= 0) && (index < size)) {
+      return upperBounds[index];
     } else {
       throw new JMetalException(
         org.uma.jmetal.encoding.variable.ArrayInt.class + ".getUpperBound: index value (" + index
@@ -154,10 +155,21 @@ public class ArrayInt extends Variable {
     String string;
 
     string = "";
-    for (int i = 0; i < size_; i++) {
-      string += array_[i] + " ";
+    for (int i = 0; i < size; i++) {
+      string += array[i] + " ";
     }
 
     return string;
+  }
+
+  @Override
+  public int hashCode() {
+    int hash = 0 ;
+
+    for (int i = 0 ; i < array.length; i++) {
+      hash += (i + 1)*array[i] ;
+    }
+
+    return hash ;
   }
 }

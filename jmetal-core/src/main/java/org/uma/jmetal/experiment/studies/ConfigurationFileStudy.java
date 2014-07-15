@@ -34,14 +34,14 @@ import java.io.IOException;
 public class ConfigurationFileStudy extends Experiment {
 
   public ConfigurationFileStudy() {
-    experimentName_ = "ConfigurationFileStudy";
-    independentRuns_ = 0;
-    algorithmNameList_ = null;
-    problemList_ = null;
-    paretoFrontFileList_ = null;
-    indicatorList_ = null;
-    experimentBaseDirectory_ = null;
-    paretoFrontDirectory_ = null;
+    experimentName = "ConfigurationFileStudy";
+    independentRuns = 0;
+    algorithmNameList = null;
+    problemList = null;
+    paretoFrontFileList = null;
+    indicatorList = null;
+    experimentBaseDirectory = null;
+    paretoFrontDirectory = null;
     numberOfExecutionThreads_ = 1;
 
     generateReferenceParetoFronts_ = false;

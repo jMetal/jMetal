@@ -34,14 +34,14 @@ import java.io.IOException;
 public class jMetalStudy extends Experiment {
 
   public jMetalStudy() {
-    experimentName_ = "jMetalStudy";
-    independentRuns_ = 30;
-    algorithmNameList_ = new String[] {"NSGAII", "SMPSO", "GDE3"};
-    problemList_ = new String[] {"ZDT1", "ZDT2", "ZDT3", "ZDT4", "ZDT6"};
-    paretoFrontFileList_ = new String[] {"ZDT1.pf", "ZDT2.pf", "ZDT3.pf", "ZDT4.pf", "ZDT6.pf"};
-    indicatorList_ = new String[] {"HV", "SPREAD", "EPSILON"};
-    experimentBaseDirectory_ = "/Users/antelverde/Softw/pruebas/org.uma.jmetal/" + experimentName_;
-    paretoFrontDirectory_ = "/Users/antelverde/Softw/pruebas/data/paretoFronts";
+    experimentName = "jMetalStudy";
+    independentRuns = 30;
+    algorithmNameList = new String[] {"NSGAII", "SMPSO", "GDE3"};
+    problemList = new String[] {"ZDT1", "ZDT2", "ZDT3", "ZDT4", "ZDT6"};
+    paretoFrontFileList = new String[] {"ZDT1.pf", "ZDT2.pf", "ZDT3.pf", "ZDT4.pf", "ZDT6.pf"};
+    indicatorList = new String[] {"HV", "SPREAD", "EPSILON"};
+    experimentBaseDirectory = "/Users/antelverde/Softw/pruebas/org.uma.jmetal/" + experimentName;
+    paretoFrontDirectory = "/Users/antelverde/Softw/pruebas/data/paretoFronts";
     numberOfExecutionThreads_ = 6;
 
     generateReferenceParetoFronts_ = false;

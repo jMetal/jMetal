@@ -34,14 +34,14 @@ import java.io.IOException;
 public class RStudy extends Experiment {
 
   public RStudy() {
-    experimentName_ = "bridgeMedium";
-    independentRuns_ = 30;
-    algorithmNameList_ = new String[] {"NSGAII", "MOCell", "MOEAD"};
-    problemList_ = new String[] {"EBEs"};
-    paretoFrontFileList_ = new String[] {"EBEs.pf"};
-    indicatorList_ = new String[] {"HV", "SPREAD", "EPSILON"};
-    experimentBaseDirectory_ = "/home/antonio/Investigacion/Puentes/puenteMediano/puenteMediano";
-    paretoFrontDirectory_ = "/Users/antelverde/Softw/pruebas/data/paretoFronts";
+    experimentName = "bridgeMedium";
+    independentRuns = 30;
+    algorithmNameList = new String[] {"NSGAII", "MOCell", "MOEAD"};
+    problemList = new String[] {"EBEs"};
+    paretoFrontFileList = new String[] {"EBEs.pf"};
+    indicatorList = new String[] {"HV", "SPREAD", "EPSILON"};
+    experimentBaseDirectory = "/home/antonio/Investigacion/Puentes/puenteMediano/puenteMediano";
+    paretoFrontDirectory = "/Users/antelverde/Softw/pruebas/data/paretoFronts";
     numberOfExecutionThreads_ = 6;
 
     generateReferenceParetoFronts_ = false;

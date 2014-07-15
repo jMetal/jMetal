@@ -34,42 +34,42 @@ import java.util.logging.Level;
 public class Int extends Variable {
   private static final long serialVersionUID = -220713455225959427L;
 
-  private int value_;      
-  private int lowerBound_;  
-  private int upperBound_;  
+  private int value;
+  private int lowerBound;
+  private int upperBound;
 
   public Int() {
-    lowerBound_ = java.lang.Integer.MIN_VALUE;
-    upperBound_ = java.lang.Integer.MAX_VALUE;
-    value_ = 0;
+    lowerBound = java.lang.Integer.MIN_VALUE;
+    upperBound = java.lang.Integer.MAX_VALUE;
+    value = 0;
   }
 
   public Int(int lowerBound, int upperBound) {
-    lowerBound_ = lowerBound;
-    upperBound_ = upperBound;
-    value_ = PseudoRandom.randInt(lowerBound, upperBound);
+    this.lowerBound = lowerBound;
+    this.upperBound = upperBound;
+    value = PseudoRandom.randInt(lowerBound, upperBound);
   }
 
   public Int(int value, int lowerBound, int upperBound) {
     super();
 
-    value_ = value;
-    lowerBound_ = lowerBound;
-    upperBound_ = upperBound;
+    this.value = value;
+    this.lowerBound = lowerBound;
+    this.upperBound = upperBound;
   }
 
   public Int(Variable variable) throws JMetalException {
-    lowerBound_ = (int) variable.getLowerBound();
-    upperBound_ = (int) variable.getUpperBound();
-    value_ = (int) variable.getValue();
+    lowerBound = (int) variable.getLowerBound();
+    upperBound = (int) variable.getUpperBound();
+    value = (int) variable.getValue();
   }
 
   public double getValue() {
-    return value_;
+    return value;
   }
 
   public void setValue(double value) {
-    value_ = (int) value;
+    this.value = (int) value;
   }
 
   public Variable deepCopy() {
@@ -82,22 +82,29 @@ public class Int extends Variable {
   }
 
   public double getLowerBound() {
-    return lowerBound_;
+    return lowerBound;
   }
 
   public void setLowerBound(double lowerBound) {
-    lowerBound_ = (int) lowerBound;
+    this.lowerBound = (int) lowerBound;
   } 
 
   public double getUpperBound() {
-    return upperBound_;
+    return upperBound;
   }
 
   public void setUpperBound(double upperBound) {
-    upperBound_ = (int) upperBound;
+    this.upperBound = (int) upperBound;
   }
   
   public String toString() {
-    return value_ + "";
+    return value + "";
+  }
+
+  @Override
+  public int hashCode() {
+    int hash = value * 13 ;
+
+    return hash ;
   }
 }

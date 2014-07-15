@@ -34,9 +34,9 @@ public class BinaryReal extends Binary {
   private static final long serialVersionUID = 7465120044544948197L;
 
   public static final int DEFAULT_PRECISION = 30;
-  private double value_;
-  private double lowerBound_;
-  private double upperBound_;
+  private double value;
+  private double lowerBound;
+  private double upperBound;
 
   public BinaryReal() {
     super();
@@ -44,8 +44,8 @@ public class BinaryReal extends Binary {
 
   public BinaryReal(int numberOfBits, double lowerBound, double upperBound) {
     super(numberOfBits);
-    lowerBound_ = lowerBound;
-    upperBound_ = upperBound;
+    this.lowerBound = lowerBound;
+    this.upperBound = upperBound;
 
     decode();
   }
@@ -53,8 +53,8 @@ public class BinaryReal extends Binary {
   public BinaryReal(BitSet bits, int nbBits, double lowerBound, double upperBound) {
     super(nbBits);
     setBits(bits);
-    lowerBound_ = lowerBound;
-    upperBound_ = upperBound;
+    this.lowerBound = lowerBound;
+    this.upperBound = upperBound;
     
     decode();
   }
@@ -62,52 +62,52 @@ public class BinaryReal extends Binary {
   public BinaryReal(BinaryReal variable) {
     super(variable);
 
-    lowerBound_ = variable.lowerBound_;
-    upperBound_ = variable.upperBound_;
+    lowerBound = variable.lowerBound;
+    upperBound = variable.upperBound;
 
-    value_ = variable.value_;
+    value = variable.value;
   }
 
   public void decode() {
     double value = 0.0;
-    for (int i = 0; i < numberOfBits_; i++) {
+    for (int i = 0; i < numberOfBits; i++) {
       if (getBits().get(i)) {
         value += Math.pow(2.0, i);
       }
     }
 
-    value_ = value * (upperBound_ - lowerBound_) /
-      (Math.pow(2.0, numberOfBits_) - 1.0);
-    value_ += lowerBound_;
+    this.value = value * (upperBound - lowerBound) /
+      (Math.pow(2.0, numberOfBits) - 1.0);
+    this.value += lowerBound;
   }
 
   public double getValue() {
-    return value_;
+    return value;
   }
 
   @Override
   public void setValue(double value) throws JMetalException {
-    if (numberOfBits_ <= 24 && lowerBound_ >= 0) {
+    if (numberOfBits <= 24 && lowerBound >= 0) {
       BitSet bitSet;
-      if (value <= lowerBound_) {
-        bitSet = new BitSet(numberOfBits_);
+      if (value <= lowerBound) {
+        bitSet = new BitSet(numberOfBits);
         bitSet.clear();
-      } else if (value >= upperBound_) {
-        bitSet = new BitSet(numberOfBits_);
-        bitSet.set(0, numberOfBits_);
+      } else if (value >= upperBound) {
+        bitSet = new BitSet(numberOfBits);
+        bitSet.set(0, numberOfBits);
       } else {
-        bitSet = new BitSet(numberOfBits_);
+        bitSet = new BitSet(numberOfBits);
         bitSet.clear();
         // value is the integerToCode-th possible value, what is integerToCode?
         int integerToCode = 0;
-        double tmp = lowerBound_;
-        double path = (upperBound_ - lowerBound_) / (Math.pow(2.0, numberOfBits_) - 1);
+        double tmp = lowerBound;
+        double path = (upperBound - lowerBound) / (Math.pow(2.0, numberOfBits) - 1);
         while (tmp < value) {
           tmp += path;
           integerToCode++;
         }
         int remain = integerToCode;
-        for (int i = numberOfBits_ - 1; i >= 0; i--) {
+        for (int i = numberOfBits - 1; i >= 0; i--) {
           int ithPowerOf2 = (int) Math.pow(2, i);
 
           if (ithPowerOf2 <= remain) {
@@ -122,12 +122,12 @@ public class BinaryReal extends Binary {
       this.decode();
 
     } else {
-      if (lowerBound_ < 0) {
-        throw new JMetalException("Unsupported lowerbound: " + lowerBound_ + " > 0");
+      if (lowerBound < 0) {
+        throw new JMetalException("Unsupported lowerbound: " + lowerBound + " > 0");
       }
-      if (numberOfBits_ >= 24) {
+      if (numberOfBits >= 24) {
         throw new JMetalException("Unsupported bit string length"
-          + numberOfBits_ + " is > 24 bits");
+          + numberOfBits + " is > 24 bits");
       }
     }
   }
@@ -137,23 +137,35 @@ public class BinaryReal extends Binary {
   }
 
   public double getLowerBound() {
-    return lowerBound_;
+    return lowerBound;
   }
 
   public void setLowerBound(double lowerBound) {
-    lowerBound_ = lowerBound;
+    this.lowerBound = lowerBound;
   }
 
   public double getUpperBound() {
-    return upperBound_;
+    return upperBound;
   }
 
   public void setUpperBound(double upperBound) {
-    upperBound_ = upperBound;
+    this.upperBound = upperBound;
   }
 
   @Override
   public String toString() {
-    return value_ + "";
+    return value + "";
+  }
+
+  @Override
+  public int hashCode() {
+    int hash ;
+    if (upperBound > 10) {
+      hash = (int) Math.round(value);
+    } else {
+      hash = (int) Math.round(value) * 17 ;
+    }
+
+    return hash ;
   }
 }

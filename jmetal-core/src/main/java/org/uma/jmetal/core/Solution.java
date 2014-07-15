@@ -30,105 +30,105 @@ import java.io.Serializable;
 import java.util.Arrays;
 
 /**
- * Class representing a solutiontype for a problem.
+ * Class representing a solution for a problem.
  */
 public class Solution implements Serializable {
   private static final long serialVersionUID = 7093303373342354904L;
   /**
-   * Stores the objectives values of the solutiontype.
+   * Stores the objectives values of the solution.
    */
-  private final double[] objective_;
+  private final double[] objective;
   /**
    * Stores the problem
    */
-  private Problem problem_;
+  private Problem problem;
   /**
    * Stores the type of the encoding.variable
    */
-  private SolutionType type_;
+  private SolutionType type;
   /**
-   * Stores the decision variables of the solutiontype.
+   * Stores the decision variables of the solution.
    */
-  private Variable[] variable_;
+  private Variable[] variable;
   /**
-   * Stores the number of objective values of the solutiontype
+   * Stores the number of objective values of the solution
    */
-  private int numberOfObjectives_;
+  private int numberOfObjectives;
 
   /**
    * Stores the so called fitness value. Used in some metaheuristic
    */
-  private double fitness_;
+  private double fitness;
 
   /**
    * Used in algorithm AbYSS, this field is intended to be used to know when a
    * <code>Solution</code> is marked.
    */
-  private boolean marked_;
+  private boolean marked;
 
   /**
-   * Stores the so called rank of the solutiontype. Used in NSGA-II
+   * Stores the so called rank of the solution. Used in NSGA-II
    */
-  private int rank_;
+  private int rank;
 
   /**
-   * Stores the overall constraint violation of the solutiontype.
+   * Stores the overall constraint violation of the solution.
    */
-  private double overallConstraintViolation_;
+  private double overallConstraintViolation;
 
   /**
-   * Stores the number of constraints violated by the solutiontype.
+   * Stores the number of constraints violated by the solution.
    */
-  private int numberOfViolatedConstraints_;
+  private int numberOfViolatedConstraints;
 
   /**
-   * This field is intended to be used to know the location of a solutiontype into a
+   * This field is intended to be used to know the location of a solution into a
    * <code>SolutionSet</code>. Used in MOCell
    */
-  private int location_;
+  private int location;
 
   /**
    * Stores the distance to his k-nearest neighbor into a
    * <code>SolutionSet</code>. Used in SPEA2.
    */
-  private double kDistance_;
+  private double kDistance;
 
   /**
-   * Stores the crowding distance of the the solutiontype in a
+   * Stores the crowding distance of the the solution in a
    * <code>SolutionSet</code>. Used in NSGA-II.
    */
-  private double crowdingDistance_;
+  private double crowdingDistance;
 
   /**
-   * Stores the distance between this solutiontype and a <code>SolutionSet</code>.
+   * Stores the distance between this solution and a <code>SolutionSet</code>.
    * Used in AbySS.
    */
-  private double distanceToSolutionSet_;
+  private double distanceToSolutionSet;
 
   /**
    * Constructor.
    */
   public Solution() {
-    problem_ = null;
-    marked_ = false;
-    overallConstraintViolation_ = 0.0;
-    numberOfViolatedConstraints_ = 0;
-    type_ = null;
-    variable_ = null;
-    objective_ = null;
+    problem = null;
+    marked = false;
+    overallConstraintViolation = 0.0;
+    numberOfViolatedConstraints = 0;
+    type = null;
+    variable = null;
+    objective = null;
   }
 
   /**
    * Constructor
    *
-   * @param numberOfObjectives Number of objectives of the solutiontype
+   * @param numberOfObjectives Number of objectives of the solution
    *                           <p/>
    *                           This constructor is used mainly to read objective values from a
    *                           file to variables of a SolutionSet to apply quality indicators
    */
   public Solution(int numberOfObjectives) {
-    numberOfObjectives_ = numberOfObjectives;
-    objective_ = new double[numberOfObjectives];
+    this.numberOfObjectives = numberOfObjectives;
+    objective = new double[numberOfObjectives];
   }
 
   /**
@@ -138,18 +138,18 @@ public class Solution implements Serializable {
    * @throws ClassNotFoundException
    */
   public Solution(Problem problem) throws ClassNotFoundException {
-    problem_ = problem;
-    type_ = problem.getSolutionType();
-    numberOfObjectives_ = problem.getNumberOfObjectives();
-    objective_ = new double[numberOfObjectives_];
+    this.problem = problem;
+    type = problem.getSolutionType();
+    numberOfObjectives = problem.getNumberOfObjectives();
+    objective = new double[numberOfObjectives];
 
     // Setting initial values
-    fitness_ = 0.0;
-    kDistance_ = 0.0;
-    crowdingDistance_ = 0.0;
-    distanceToSolutionSet_ = Double.POSITIVE_INFINITY;
+    fitness = 0.0;
+    kDistance = 0.0;
+    crowdingDistance = 0.0;
+    distanceToSolutionSet = Double.POSITIVE_INFINITY;
 
-    variable_ = type_.createVariables();
+    variable = type.createVariables();
   }
 
   /**
@@ -158,18 +158,18 @@ public class Solution implements Serializable {
    * @param problem The problem to solve
    */
   public Solution(Problem problem, Variable[] variables) {
-    problem_ = problem;
-    type_ = problem.getSolutionType();
-    numberOfObjectives_ = problem.getNumberOfObjectives();
-    objective_ = new double[numberOfObjectives_];
+    this.problem = problem;
+    type = problem.getSolutionType();
+    numberOfObjectives = problem.getNumberOfObjectives();
+    objective = new double[numberOfObjectives];
 
     // Setting initial values
-    fitness_ = 0.0;
-    kDistance_ = 0.0;
-    crowdingDistance_ = 0.0;
-    distanceToSolutionSet_ = Double.POSITIVE_INFINITY;
+    fitness = 0.0;
+    kDistance = 0.0;
+    crowdingDistance = 0.0;
+    distanceToSolutionSet = Double.POSITIVE_INFINITY;
 
-    variable_ = Arrays.copyOf(variables, variables.length);
+    variable = Arrays.copyOf(variables, variables.length);
   }
 
   /**
@@ -178,111 +178,111 @@ public class Solution implements Serializable {
    * @param solution Solution to copy.
    */
   public Solution(Solution solution) {
-    problem_ = solution.problem_;
-    type_ = solution.type_;
+    problem = solution.problem;
+    type = solution.type;
 
-    numberOfObjectives_ = solution.getNumberOfObjectives();
-    objective_ = new double[numberOfObjectives_];
-    for (int i = 0; i < objective_.length; i++) {
-      objective_[i] = solution.getObjective(i);
+    numberOfObjectives = solution.getNumberOfObjectives();
+    objective = new double[numberOfObjectives];
+    for (int i = 0; i < objective.length; i++) {
+      objective[i] = solution.getObjective(i);
     }
 
-    variable_ = type_.copyVariables(solution.variable_);
-    overallConstraintViolation_ = solution.getOverallConstraintViolation();
-    numberOfViolatedConstraints_ = solution.getNumberOfViolatedConstraint();
-    distanceToSolutionSet_ = solution.getDistanceToSolutionSet();
-    crowdingDistance_ = solution.getCrowdingDistance();
-    kDistance_ = solution.getKDistance();
-    fitness_ = solution.getFitness();
-    marked_ = solution.isMarked();
-    rank_ = solution.getRank();
-    location_ = solution.getLocation();
+    variable = type.copyVariables(solution.variable);
+    overallConstraintViolation = solution.getOverallConstraintViolation();
+    numberOfViolatedConstraints = solution.getNumberOfViolatedConstraint();
+    distanceToSolutionSet = solution.getDistanceToSolutionSet();
+    crowdingDistance = solution.getCrowdingDistance();
+    kDistance = solution.getKDistance();
+    fitness = solution.getFitness();
+    marked = solution.isMarked();
+    rank = solution.getRank();
+    location = solution.getLocation();
   }
 
   /**
-   * Gets the distance from the solutiontype to a <code>SolutionSet</code>. <b>
+   * Gets the distance from the solution to a <code>SolutionSet</code>. <b>
    * REQUIRE </b>: this method has to be invoked after calling
    * <code>setDistanceToPopulation</code>.
    *
    * @return the distance to a specific solutionSet.
    */
   public double getDistanceToSolutionSet() {
-    return distanceToSolutionSet_;
+    return distanceToSolutionSet;
   }
 
   /**
-   * Sets the distance between this solutiontype and a <code>SolutionSet</code>. The
-   * value is stored in <code>distanceToSolutionSet_</code>.
+   * Sets the distance between this solution and a <code>SolutionSet</code>. The
+   * value is stored in <code>distanceToSolutionSet</code>.
    *
    * @param distance The distance to a solutionSet.
    */
   public void setDistanceToSolutionSet(double distance) {
-    distanceToSolutionSet_ = distance;
+    distanceToSolutionSet = distance;
   }
 
   /**
-   * Gets the distance from the solutiontype to his k-nearest nighbor in a
+   * Gets the distance from the solution to his k-nearest nighbor in a
    * <code>SolutionSet</code>. Returns the value stored in
-   * <code>kDistance_</code>. <b> REQUIRE </b>: this method has to be invoked
+   * <code>kDistance</code>. <b> REQUIRE </b>: this method has to be invoked
    * after calling <code>setKDistance</code>.
    *
    * @return the distance to k-nearest neighbor.
    */
   double getKDistance() {
-    return kDistance_;
+    return kDistance;
   }
 
   /**
-   * Sets the distance between the solutiontype and its k-nearest neighbor in a
-   * <code>SolutionSet</code>. The value is stored in <code>kDistance_</code>.
+   * Sets the distance between the solution and its k-nearest neighbor in a
+   * <code>SolutionSet</code>. The value is stored in <code>kDistance</code>.
    *
    * @param distance The distance to the k-nearest neighbor.
    */
   public void setKDistance(double distance) {
-    kDistance_ = distance;
+    kDistance = distance;
   }
 
   /**
-   * Gets the crowding distance of the solutiontype into a <code>SolutionSet</code>.
-   * Returns the value stored in <code>crowdingDistance_</code>. <b> REQUIRE
+   * Gets the crowding distance of the solution into a <code>SolutionSet</code>.
+   * Returns the value stored in <code>crowdingDistance</code>. <b> REQUIRE
    * </b>: this method has to be invoked after calling
    * <code>setCrowdingDistance</code>.
    *
-   * @return the distance crowding distance of the solutiontype.
+   * @return the distance crowding distance of the solution.
    */
   public double getCrowdingDistance() {
-    return crowdingDistance_;
+    return crowdingDistance;
   }
 
   /**
-   * Sets the crowding distance of a solutiontype in a <code>SolutionSet</code>. The
-   * value is stored in <code>crowdingDistance_</code>.
+   * Sets the crowding distance of a solution in a <code>SolutionSet</code>. The
+   * value is stored in <code>crowdingDistance</code>.
    *
-   * @param distance The crowding distance of the solutiontype.
+   * @param distance The crowding distance of the solution.
    */
   public void setCrowdingDistance(double distance) {
-    crowdingDistance_ = distance;
+    crowdingDistance = distance;
   }
 
   /**
-   * Gets the fitness of the solutiontype. Returns the value of stored in the
-   * encoding.variable <code>fitness_</code>. <b> REQUIRE </b>: This method has
+   * Gets the fitness of the solution. Returns the value of stored in the
+   * encoding.variable <code>fitness</code>. <b> REQUIRE </b>: This method has
    * to be invoked after calling <code>setFitness()</code>.
    *
    * @return the fitness.
    */
   public double getFitness() {
-    return fitness_;
+    return fitness;
   }
 
   /**
-   * Sets the fitness of a solutiontype. The value is stored in
-   * <code>fitness_</code>.
+   * Sets the fitness of a solution. The value is stored in
+   * <code>fitness</code>.
    *
-   * @param fitness The fitness of the solutiontype.
+   * @param fitness The fitness of the solution.
    */
   public void setFitness(double fitness) {
-    fitness_ = fitness;
+    this.fitness = fitness;
   }
 
   /**
@@ -292,7 +292,7 @@ public class Solution implements Serializable {
    * @param value The value to be stored.
    */
   public void setObjective(int i, double value) {
-    objective_[i] = value;
+    objective[i] = value;
   }
 
   /**
@@ -301,7 +301,7 @@ public class Solution implements Serializable {
    * @param i The value of the objective.
    */
   public double getObjective(int i) {
-    return objective_[i];
+    return objective[i];
   }
 
   /**
@@ -310,162 +310,162 @@ public class Solution implements Serializable {
    * @return The number of objectives.
    */
   public int getNumberOfObjectives() {
-    if (objective_ == null) {
+    if (objective == null) {
       return 0;
     } else {
-      return numberOfObjectives_;
+      return numberOfObjectives;
     }
   }
 
   /**
-   * Returns the number of decision variables of the solutiontype.
+   * Returns the number of decision variables of the solution.
    *
    * @return The number of decision variables.
    */
   public int numberOfVariables() {
-    return problem_.getNumberOfVariables();
+    return problem.getNumberOfVariables();
   }
 
   /**
-   * Returns a string representing the solutiontype.
+   * Returns a string representing the solution.
    *
    * @return The string.
    */
   public String toString() {
     String aux = "";
-    for (int i = 0; i < this.numberOfObjectives_; i++) {
+    for (int i = 0; i < this.numberOfObjectives; i++) {
       aux = aux + this.getObjective(i) + " ";
     }
     return aux;
   }
 
   /**
-   * Returns the decision variables of the solutiontype.
+   * Returns the decision variables of the solution.
    *
    * @return the <code>DecisionVariables</code> object representing the decision
-   * variables of the solutiontype.
+   * variables of the solution.
    */
   public Variable[] getDecisionVariables() {
-    return variable_;
+    return variable;
   }
 
   /**
-   * Sets the decision variables for the solutiontype.
+   * Sets the decision variables for the solution.
    *
    * @param variables The <code>DecisionVariables</code> object representing the
-   *                  decision variables of the solutiontype.
+   *                  decision variables of the solution.
    */
   public void setDecisionVariables(Variable[] variables) {
-    variable_ = new Variable[variables.length];
-    System.arraycopy(variables, 0, variable_, 0, variables.length);
+    variable = new Variable[variables.length];
+    System.arraycopy(variables, 0, variable, 0, variables.length);
   }
 
   public Problem getProblem() {
-    return problem_;
+    return problem;
   }
 
   /**
-   * Indicates if the solutiontype is marked.
+   * Indicates if the solution is marked.
    *
    * @return true if the method <code>marked</code> has been called and, after
    * that, the method <code>unmarked</code> hasn't been called. False in
    * other case.
    */
   public boolean isMarked() {
-    return this.marked_;
+    return this.marked;
   }
 
   /**
-   * Establishes the solutiontype as marked.
+   * Establishes the solution as marked.
    */
   public void marked() {
-    this.marked_ = true;
+    this.marked = true;
   }
 
   /**
-   * Established the solutiontype as unmarked.
+   * Established the solution as unmarked.
    */
   public void unMarked() {
-    this.marked_ = false;
+    this.marked = false;
   }
 
   /**
-   * Gets the rank of the solutiontype. <b> REQUIRE </b>: This method has to be
+   * Gets the rank of the solution. <b> REQUIRE </b>: This method has to be
    * invoked after calling <code>setRank()</code>.
    *
-   * @return the rank of the solutiontype.
+   * @return the rank of the solution.
    */
   public int getRank() {
-    return this.rank_;
+    return this.rank;
   }
 
   /**
-   * Sets the rank of a solutiontype.
+   * Sets the rank of a solution.
    *
-   * @param value The rank of the solutiontype.
+   * @param value The rank of the solution.
    */
   public void setRank(int value) {
-    this.rank_ = value;
+    this.rank = value;
   }
 
   /**
-   * Gets the overall constraint violated by the solutiontype. <b> REQUIRE </b>:
+   * Gets the overall constraint violated by the solution. <b> REQUIRE </b>:
    * This method has to be invoked after calling
    * <code>overallConstraintViolation</code>.
    *
-   * @return the overall constraint violation by the solutiontype.
+   * @return the overall constraint violation by the solution.
    */
   public double getOverallConstraintViolation() {
-    return this.overallConstraintViolation_;
+    return this.overallConstraintViolation;
   }
 
   /**
-   * Sets the overall constraints violated by the solutiontype.
+   * Sets the overall constraints violated by the solution.
    *
-   * @param value The overall constraints violated by the solutiontype.
+   * @param value The overall constraints violated by the solution.
    */
   public void setOverallConstraintViolation(double value) {
-    this.overallConstraintViolation_ = value;
+    this.overallConstraintViolation = value;
   }
 
   /**
-   * Gets the number of constraint violated by the solutiontype. <b> REQUIRE </b>:
+   * Gets the number of constraint violated by the solution. <b> REQUIRE </b>:
    * This method has to be invoked after calling
    * <code>setNumberOfViolatedConstraint</code>.
    *
-   * @return the number of constraints violated by the solutiontype.
+   * @return the number of constraints violated by the solution.
    */
   public int getNumberOfViolatedConstraint() {
-    return this.numberOfViolatedConstraints_;
+    return this.numberOfViolatedConstraints;
   }
 
   /**
-   * Sets the number of constraints violated by the solutiontype.
+   * Sets the number of constraints violated by the solution.
    *
-   * @param value The number of constraints violated by the solutiontype.
+   * @param value The number of constraints violated by the solution.
    */
   public void setNumberOfViolatedConstraint(int value) {
-    this.numberOfViolatedConstraints_ = value;
+    this.numberOfViolatedConstraints = value;
   }
 
   /**
-   * Gets the location of this solutiontype in a <code>SolutionSet</code>. <b>
+   * Gets the location of this solution in a <code>SolutionSet</code>. <b>
    * REQUIRE </b>: This method has to be invoked after calling
    * <code>setLocation</code>.
    *
-   * @return the location of the solutiontype into a solutionSet
+   * @return the location of the solution into a solutionSet
    */
   public int getLocation() {
-    return this.location_;
+    return this.location;
   }
 
   /**
-   * Sets the location of the solutiontype into a solutionSet.
+   * Sets the location of the solution into a solutionSet.
    *
-   * @param location The location of the solutiontype.
+   * @param location The location of the solution.
    */
   public void setLocation(int location) {
-    this.location_ = location;
+    this.location = location;
   }
 
   /**
@@ -474,7 +474,7 @@ public class Solution implements Serializable {
    * @return the type of the encoding.variable
    */
   public SolutionType getType() {
-    return type_;
+    return type;
   }
 
   /**
@@ -483,11 +483,11 @@ public class Solution implements Serializable {
    * @param type The type of the encoding.variable.
    */
   public void setType(SolutionType type) {
-    type_ = type;
+    this.type = type;
   }
 
   /**
-   * Returns the aggregative value of the solutiontype
+   * Returns the aggregative value of the solution
    *
    * @return The aggregative value.
    */
@@ -509,14 +509,29 @@ public class Solution implements Serializable {
   public int getNumberOfBits() {
     int bits = 0;
 
-    for (Variable aVariable_ : variable_) {
-      if ((aVariable_.getVariableType() == Binary.class)
-        || (aVariable_.getVariableType() == BinaryReal.class)) {
+    for (Variable variable : this.variable) {
+      if ((variable.getVariableType() == Binary.class)
+        || (variable.getVariableType() == BinaryReal.class)) {
 
-        bits += ((Binary) (aVariable_)).getNumberOfBits();
+        bits += ((Binary) (variable)).getNumberOfBits();
       }
     }
 
     return bits;
   }
+                    /*
+  @Override
+  public int hashCode(){
+    int hashCode ;
+    int objectives = 0 ;
+    int variables = 0 ;
+
+    for (double v : this.objective) {
+       objectives += Math.round(v) ;
+    }
+
+    hashCode = numberOfObjectives * numberOfVariables() + numberOfViolatedConstraints ;
+    return hashCode ;
+  }
+  */
 }

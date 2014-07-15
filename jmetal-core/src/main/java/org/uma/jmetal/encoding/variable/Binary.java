@@ -34,40 +34,40 @@ import java.util.BitSet;
 public class Binary extends Variable {
   private static final long serialVersionUID = -3553927010701150789L;
 
-  protected int numberOfBits_;
-  private BitSet bits_;
+  protected int numberOfBits;
+  private BitSet bits;
 
   public Binary() {
   }
 
   public Binary(int numberOfBits) {
-    numberOfBits_ = numberOfBits;
+    this.numberOfBits = numberOfBits;
 
-    bits_ = new BitSet(numberOfBits_);
-    for (int i = 0; i < numberOfBits_; i++) {
+    bits = new BitSet(this.numberOfBits);
+    for (int i = 0; i < this.numberOfBits; i++) {
       if (PseudoRandom.randDouble() < 0.5) {
-        bits_.set(i, true);
+        bits.set(i, true);
       } else {
-        bits_.set(i, false);
+        bits.set(i, false);
       }
     }
   }
 
   public Binary(Binary variable) {
-    numberOfBits_ = variable.numberOfBits_;
+    numberOfBits = variable.numberOfBits;
 
-    bits_ = new BitSet(numberOfBits_);
-    for (int i = 0; i < numberOfBits_; i++) {
-      bits_.set(i, variable.bits_.get(i));
+    bits = new BitSet(numberOfBits);
+    for (int i = 0; i < numberOfBits; i++) {
+      bits.set(i, variable.bits.get(i));
     }
   }
 
   public BitSet getBits() {
-    return bits_;
+    return bits;
   }
 
   public void setBits(BitSet bits) {
-    bits_ = bits;
+    this.bits = bits;
   }
 
   public Variable deepCopy() {
@@ -75,22 +75,22 @@ public class Binary extends Variable {
   }
 
   public int getNumberOfBits() {
-    return numberOfBits_;
+    return numberOfBits;
   }
 
   public boolean getIth(int bit) {
-    return bits_.get(bit);
+    return bits.get(bit);
   }
 
   public void setIth(int bit, boolean value) {
-    bits_.set(bit, value);
+    bits.set(bit, value);
   }
 
   public int hammingDistance(Binary other) {
     int distance = 0;
     int i = 0;
-    while (i < bits_.size()) {
-      if (bits_.get(i) != other.bits_.get(i)) {
+    while (i < bits.size()) {
+      if (bits.get(i) != other.bits.get(i)) {
         distance++;
       }
       i++;
@@ -102,8 +102,8 @@ public class Binary extends Variable {
     String result;
 
     result = "";
-    for (int i = 0; i < numberOfBits_; i++) {
-      if (bits_.get(i)) {
+    for (int i = 0; i < numberOfBits; i++) {
+      if (bits.get(i)) {
         result = result + "1";
       } else {
         result = result + "0";
@@ -111,5 +111,18 @@ public class Binary extends Variable {
     }
 
     return result;
+  }
+
+  @Override
+  public int hashCode() {
+    int hash = numberOfBits ;
+
+    for (int i = 0; i < numberOfBits; i++) {
+      if (bits.get(0)==true) {
+        hash += i ;
+      }
+    }
+
+    return hash ;
   }
 }

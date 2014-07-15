@@ -31,45 +31,45 @@ import java.util.ArrayList;
 public class Permutation extends Variable {
   private static final long serialVersionUID = 2657470069340722041L;
 
-  private int[] vector_;
+  private int[] vector;
 
-  private int size_;
+  private int size;
 
   public Permutation() {
-    size_ = 0;
-    vector_ = null;
+    size = 0;
+    vector = null;
   }
 
   public Permutation(int size) {
-    size_ = size;
-    vector_ = new int[size_];
+    this.size = size;
+    vector = new int[this.size];
 
-    ArrayList<Integer> randomSequence = new ArrayList<>(size_);
+    ArrayList<Integer> randomSequence = new ArrayList<>(this.size);
 
-    for (int i = 0; i < size_; i++) {
+    for (int i = 0; i < this.size; i++) {
       randomSequence.add(i);
     }
 
     java.util.Collections.shuffle(randomSequence);
 
     for (int j = 0; j < randomSequence.size(); j++) {
-      vector_[j] = randomSequence.get(j);
+      vector[j] = randomSequence.get(j);
     }
   }
 
   public Permutation(Permutation permutation) {
-    size_ = permutation.size_;
-    vector_ = new int[size_];
+    size = permutation.size;
+    vector = new int[size];
 
-    System.arraycopy(permutation.vector_, 0, vector_, 0, size_);
+    System.arraycopy(permutation.vector, 0, vector, 0, size);
   }
 
   public int[] getVector() {
-    return vector_;
+    return vector;
   }
 
   public int getSize() {
-    return size_;
+    return size;
   }
 
 
@@ -78,17 +78,27 @@ public class Permutation extends Variable {
   }
 
   public int getLength() {
-    return size_;
+    return size;
   }
 
   public String toString() {
     String string;
 
     string = "";
-    for (int i = 0; i < size_; i++) {
-      string += vector_[i] + " ";
+    for (int i = 0; i < size; i++) {
+      string += vector[i] + " ";
     }
 
     return string;
+  }
+
+  @Override
+  public int hashCode() {
+    int hash = 0 ;
+    for (int v : vector) {
+       hash += v ;
+    }
+
+    return hash ;
   }
 }

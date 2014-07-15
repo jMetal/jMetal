@@ -36,31 +36,31 @@ import java.util.logging.Level;
  * Class for configuring and running experiment
  */
 public class Experiment {
-  protected String experimentName_;
+  protected String experimentName;
   //List of the names of the algorithms to be executed
-  protected String[] algorithmNameList_;
+  protected String[] algorithmNameList;
   //List of problem to be solved
-  protected String[] problemList_;
-  protected String[] paretoFrontFileList_;
+  protected String[] problemList;
+  protected String[] paretoFrontFileList;
   // List of the quality indicators to be applied
-  protected String[] indicatorList_;
+  protected String[] indicatorList;
   //Directory to store the results
-  protected String experimentBaseDirectory_;
+  protected String experimentBaseDirectory;
 
   //List of the files containing the pareto fronts corresponding 
-  //to the problem in problemList_
+  //to the problem in problemList
   //Directory to store the latex files
-  protected String latexDirectory_;
+  protected String latexDirectory;
   //Directory containing the Pareto front files
-  protected String paretoFrontDirectory_;
+  protected String paretoFrontDirectory;
   //Name of the file containing the output Pareto front
-  protected String outputParetoFrontFile_;
+  protected String outputParetoFrontFile;
   //Name of the file containing the output Pareto set
-  protected String outputParetoSetFile_;
+  protected String outputParetoSetFile;
   //Number of independent runs per algorithm
-  protected int independentRuns_;
+  protected int independentRuns;
   //Parameter experiment.settings of each algorithm
-  protected Settings[] algorithmSettings_;
+  protected Settings[] algorithmSettings;
   //To indicate whether an indicator is to be minimized. Hard-coded
   // in the constructor
   protected HashMap<String, Boolean> indicatorMinimize_;
@@ -86,21 +86,21 @@ public class Experiment {
   public Experiment() {
     problemsSettings_ = null;
 
-    algorithmNameList_ = null;
-    problemList_ = null;
-    paretoFrontFileList_ = null;
-    indicatorList_ = null;
+    algorithmNameList = null;
+    problemList = null;
+    paretoFrontFileList = null;
+    indicatorList = null;
 
-    experimentBaseDirectory_ = "";
-    paretoFrontDirectory_ = "";
-    latexDirectory_ = "latex";
+    experimentBaseDirectory = "";
+    paretoFrontDirectory = "";
+    latexDirectory = "latex";
 
-    outputParetoFrontFile_ = "FUN";
-    outputParetoSetFile_ = "VAR";
+    outputParetoFrontFile = "FUN";
+    outputParetoSetFile = "VAR";
 
-    algorithmSettings_ = null;
+    algorithmSettings = null;
 
-    independentRuns_ = 0;
+    independentRuns = 0;
     numberOfExecutionThreads_ = 1;
 
     runTheAlgorithms_ = false;
@@ -121,109 +121,109 @@ public class Experiment {
   }
 
   public String getExperimentName() {
-    return experimentName_;
+    return experimentName;
   }
 
   public void setExperimentName(String value) {
-    experimentName_ = configuration_.getProperty("experimentName", value);
+    experimentName = configuration_.getProperty("experimentName", value);
   }
 
   public String[] getAlgorithmNameList() {
-    return algorithmNameList_;
+    return algorithmNameList;
   }
 
   public void setAlgorithmNameList(String[] values) {
     if (configuration_.getProperty("algorithmNameList") == null) {
-      algorithmNameList_ = Arrays.copyOf(values, values.length);
+      algorithmNameList = Arrays.copyOf(values, values.length);
 
     } else {
-      algorithmNameList_ = configuration_.getProperty("algorithmNameList").split(",");
+      algorithmNameList = configuration_.getProperty("algorithmNameList").split(",");
     }
   }
 
   public String[] getProblemList() {
-    return problemList_;
+    return problemList;
   }
 
   public void setProblemList(String[] values) {
     if (configuration_.getProperty("problemList") == null) {
-      problemList_ = Arrays.copyOf(values, values.length);
+      problemList = Arrays.copyOf(values, values.length);
     } else {
-      problemList_ = configuration_.getProperty("problemList").split(",");
+      problemList = configuration_.getProperty("problemList").split(",");
     }
   }
 
   public String[] getParetoFrontFileList() {
-    return paretoFrontFileList_;
+    return paretoFrontFileList;
   }
 
   public void setParetoFrontFileList(String[] values) {
     if (configuration_.getProperty("paretoFrontFileList") == null) {
-      paretoFrontFileList_ = Arrays.copyOf(values, values.length);
+      paretoFrontFileList = Arrays.copyOf(values, values.length);
     } else {
-      paretoFrontFileList_ = configuration_.getProperty("paretoFrontFileList").split(",");
+      paretoFrontFileList = configuration_.getProperty("paretoFrontFileList").split(",");
     }
   }
 
   public String[] getIndicatorList() {
-    return indicatorList_;
+    return indicatorList;
   }
 
   public void setIndicatorList(String[] values) {
     if (configuration_.getProperty("indicatorList") == null) {
-      indicatorList_ = Arrays.copyOf(values, values.length);
+      indicatorList = Arrays.copyOf(values, values.length);
     } else {
-      indicatorList_ = configuration_.getProperty("indicatorList").split(",");
+      indicatorList = configuration_.getProperty("indicatorList").split(",");
     }
   }
 
   public String getExperimentBaseDirectory() {
-    return experimentBaseDirectory_;
+    return experimentBaseDirectory;
   }
 
   public void setExperimentBaseDirectory(String directory) {
-    experimentBaseDirectory_ = configuration_.getProperty("experimentBaseDirectory", directory);
+    experimentBaseDirectory = configuration_.getProperty("experimentBaseDirectory", directory);
   }
 
   public void setExperimentBaseDirector(String directory) {
-    experimentBaseDirectory_ = directory;
+    experimentBaseDirectory = directory;
   }
 
   public String getLatexDirectory() {
-    return latexDirectory_;
+    return latexDirectory;
   }
 
   public void setLatexDirectory(String directory) {
-    latexDirectory_ = directory;
+    latexDirectory = directory;
   }
 
   public String getParetoFrontDirectory() {
-    return paretoFrontDirectory_;
+    return paretoFrontDirectory;
   }
 
   public void setParetoFrontDirectory(String directory) {
-    paretoFrontDirectory_ = configuration_.getProperty("paretoFrontDirectory", directory);
+    paretoFrontDirectory = configuration_.getProperty("paretoFrontDirectory", directory);
   }
 
   public String getOutputParetoFrontFile() {
-    return outputParetoFrontFile_;
+    return outputParetoFrontFile;
   }
 
   public String getOutputParetoSetFile() {
-    return outputParetoSetFile_;
+    return outputParetoSetFile;
   }
 
   public int getIndependentRuns() {
-    return independentRuns_;
+    return independentRuns;
   }
 
   public void setIndependentRuns(int value) {
-    independentRuns_ =
+    independentRuns =
         Integer.parseInt(configuration_.getProperty("independentRuns", Integer.toString(value)));
   }
 
   public Settings[] getAlgorithmSettings() {
-    return algorithmSettings_;
+    return algorithmSettings;
   }
 
   public HashMap<String, Boolean> indicatorMinimize() {
@@ -297,14 +297,14 @@ public class Experiment {
   public void initExperiment(String[] args) {
     testForConfigurationFile(args);
 
-    setExperimentName(experimentName_);
-    setIndependentRuns(independentRuns_);
-    setAlgorithmNameList(algorithmNameList_);
-    setProblemList(problemList_);
-    setParetoFrontFileList(paretoFrontFileList_);
-    setIndicatorList(indicatorList_);
-    setExperimentBaseDirectory(experimentBaseDirectory_);
-    setParetoFrontDirectory(paretoFrontDirectory_);
+    setExperimentName(experimentName);
+    setIndependentRuns(independentRuns);
+    setAlgorithmNameList(algorithmNameList);
+    setProblemList(problemList);
+    setParetoFrontFileList(paretoFrontFileList);
+    setIndicatorList(indicatorList);
+    setExperimentBaseDirectory(experimentBaseDirectory);
+    setParetoFrontDirectory(paretoFrontDirectory);
     setNumberOfExecutionThreads(numberOfExecutionThreads_);
     setGenerateQualityIndicators(generateQualityIndicators_);
     setGenerateReferenceParetoFronts(generateReferenceParetoFronts_);
@@ -314,22 +314,22 @@ public class Experiment {
     setBoxplotNotch(boxplotNotch_);
     setUseConfigurationFilesForAlgorithms(useConfigurationFilesForAlgorithms_);
 
-    int numberOfAlgorithms = algorithmNameList_.length;
-    algorithmSettings_ = new Settings[numberOfAlgorithms];
+    int numberOfAlgorithms = algorithmNameList.length;
+    algorithmSettings = new Settings[numberOfAlgorithms];
 
     checkIfExperimentDirectoryExists();
   }
 
   public void runExperiment() throws JMetalException, IOException {
-    Configuration.logger_.info("Experiment: Name: " + experimentName_);
+    Configuration.logger_.info("Experiment: Name: " + experimentName);
     Configuration.logger_.info("Experiment: creating " + numberOfExecutionThreads_ + " threads");
-    Configuration.logger_.info("Experiment: Number of algorithms: " + algorithmNameList_.length);
-    for (String s : algorithmNameList_) {
+    Configuration.logger_.info("Experiment: Number of algorithms: " + algorithmNameList.length);
+    for (String s : algorithmNameList) {
       Configuration.logger_.info("  - " + s);
     }
-    Configuration.logger_.info("Experiment: Number of problem: " + problemList_.length);
-    Configuration.logger_.info("Experiment: runs: " + independentRuns_);
-    Configuration.logger_.info("Experiment: Experiment directory: " + experimentBaseDirectory_);
+    Configuration.logger_.info("Experiment: Number of problem: " + problemList.length);
+    Configuration.logger_.info("Experiment: runs: " + independentRuns);
+    Configuration.logger_.info("Experiment: Experiment directory: " + experimentBaseDirectory);
     Configuration.logger_.info(
         "Experiment: Use config files for algorithms: " + useConfigurationFilesForAlgorithms_);
     Configuration.logger_.info("Experiment: Generate reference Pareto fronts: " + generateReferenceParetoFronts_);
@@ -347,9 +347,9 @@ public class Experiment {
           new MultithreadedAlgorithmExecutor(numberOfExecutionThreads_);
       parallelRunner.start(this);
 
-      for (String algorithm : algorithmNameList_) {
-        for (String problem : problemList_) {
-          for (int i = 0; i < independentRuns_; i++) {
+      for (String algorithm : algorithmNameList) {
+        for (String problem : problemList) {
+          for (int i = 0; i < independentRuns; i++) {
             Configuration.logger_.info(
                 "Adding task. Algorithm:  " + algorithm + " Problem: " + problem + " Run: " + i);
             parallelRunner.addTask(new Object[] {algorithm, problem, i});
@@ -396,7 +396,7 @@ public class Experiment {
   private void checkIfExperimentDirectoryExists() {
     File experimentDirectory;
 
-    experimentDirectory = new File(experimentBaseDirectory_);
+    experimentDirectory = new File(experimentBaseDirectory);
     if (experimentDirectory.exists()) {
       Configuration.logger_.info("Experiment directory exists");
       if (experimentDirectory.isDirectory()) {
@@ -405,10 +405,10 @@ public class Experiment {
         Configuration.logger_.info("Experiment directory is not a directory. Deleting file and creating directory");
       }
       experimentDirectory.delete();
-      new File(experimentBaseDirectory_).mkdirs();
+      new File(experimentBaseDirectory).mkdirs();
     } else {
       Configuration.logger_.info("Experiment directory does NOT exist. Creating");
-      new File(experimentBaseDirectory_).mkdirs();
+      new File(experimentBaseDirectory).mkdirs();
     }
   }
 
@@ -470,30 +470,30 @@ public class Experiment {
 
   public String toString() {
     String result = null;
-    result = "ExperimentName   : " + experimentName_ + "\n";
-    result += "Independent runs: " + independentRuns_ + "\n";
+    result = "ExperimentName   : " + experimentName + "\n";
+    result += "Independent runs: " + independentRuns + "\n";
     result += "Number of threads: " + numberOfExecutionThreads_ + "\n";
     result += "Algorithm list  : ";
-    for (String s : algorithmNameList_) {
+    for (String s : algorithmNameList) {
       result += s + ",";
     }
     result += "\n";
     result += "Problem list  : ";
-    for (String s : problemList_) {
+    for (String s : problemList) {
       result += s + ",";
     }
     result += "\n";
 
-    if (paretoFrontFileList_ != null) {
+    if (paretoFrontFileList != null) {
       result += "Pareto front file list  : ";
-      for (String s : paretoFrontFileList_) {
+      for (String s : paretoFrontFileList) {
         result += s + ",";
       }
       result += "\n";
     }
 
-    result += "Experiment base directory: " + experimentBaseDirectory_ + "\n";
-    result += "Pareto front directory: " + paretoFrontDirectory_ + "\n";
+    result += "Experiment base directory: " + experimentBaseDirectory + "\n";
+    result += "Pareto front directory: " + paretoFrontDirectory + "\n";
     result += "Generate reference Pareto fronts: " + generateReferenceParetoFronts_ + "\n";
     result += "Generate quality Indicators: " + generateQualityIndicators_ + "\n";
     result += "Generate Latex tables: " + generateLatexTables_ + "\n";

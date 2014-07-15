@@ -33,39 +33,39 @@ import java.util.logging.Level;
  * This class implements a Real value decision variable
  */
 public class Real extends Variable {
-
   private static final long serialVersionUID = -227984897558565037L;
-  private double value_;
-  private double lowerBound_;
-  private double upperBound_;
+
+  private double value;
+  private double lowerBound;
+  private double upperBound;
 
   public Real() {
   }
 
   public Real(double lowerBound, double upperBound) {
-    lowerBound_ = lowerBound;
-    upperBound_ = upperBound;
-    value_ = PseudoRandom.randDouble() * (upperBound - lowerBound) + lowerBound;
+    this.lowerBound = lowerBound;
+    this.upperBound = upperBound;
+    value = PseudoRandom.randDouble() * (upperBound - lowerBound) + lowerBound;
   }
 
   public Real(double value, double lowerBound, double upperBound) {
-    lowerBound_ = lowerBound;
-    upperBound_ = upperBound;
-    value_ = value;
+    this.lowerBound = lowerBound;
+    this.upperBound = upperBound;
+    this.value = value;
   }
 
   public Real(Variable variable) throws JMetalException {
-    lowerBound_ = variable.getLowerBound();
-    upperBound_ = variable.getUpperBound();
-    value_ = variable.getValue();
+    lowerBound = variable.getLowerBound();
+    upperBound = variable.getUpperBound();
+    value = variable.getValue();
   }
 
   public double getValue() {
-    return value_;
+    return value;
   } 
 
   public void setValue(double value) {
-    value_ = value;
+    this.value = value;
   } 
 
   public Variable deepCopy() {
@@ -78,22 +78,34 @@ public class Real extends Variable {
   }
 
   public double getLowerBound() {
-    return lowerBound_;
+    return lowerBound;
   }
 
   public void setLowerBound(double lowerBound) {
-    lowerBound_ = lowerBound;
+    this.lowerBound = lowerBound;
   }
 
   public double getUpperBound() {
-    return upperBound_;
+    return upperBound;
   }
 
   public void setUpperBound(double upperBound) {
-    upperBound_ = upperBound;
+    this.upperBound = upperBound;
   }
 
   public String toString() {
-    return value_ + "";
+    return value + "";
+  }
+
+  @Override
+  public int hashCode() {
+     int hash ;
+    if (upperBound > 10) {
+      hash = (int) Math.round(value);
+    } else {
+      hash = (int) Math.round(value) * 17 ;
+    }
+
+    return hash ;
   }
 }
