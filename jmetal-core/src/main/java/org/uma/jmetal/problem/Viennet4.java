@@ -44,22 +44,22 @@ public class Viennet4 extends Problem {
    * @param solutionType The solutiontype type must "Real" or "BinaryReal".
    */
   public Viennet4(String solutionType) throws JMetalException {
-    numberOfVariables_ = 2;
-    numberOfObjectives_ = 3;
-    numberOfConstraints_ = 3;
-    problemName_ = "Viennet4";
+    numberOfVariables = 2;
+    numberOfObjectives = 3;
+    numberOfConstraints = 3;
+    problemName = "Viennet4";
 
-    upperLimit_ = new double[numberOfVariables_];
-    lowerLimit_ = new double[numberOfVariables_];
-    for (int var = 0; var < numberOfVariables_; var++) {
-      lowerLimit_[var] = -4.0;
-      upperLimit_[var] = 4.0;
+    upperLimit = new double[numberOfVariables];
+    lowerLimit = new double[numberOfVariables];
+    for (int var = 0; var < numberOfVariables; var++) {
+      lowerLimit[var] = -4.0;
+      upperLimit[var] = 4.0;
     }
 
     if (solutionType.compareTo("BinaryReal") == 0) {
-      solutionType_ = new BinaryRealSolutionType(this);
+      this.solutionType = new BinaryRealSolutionType(this);
     } else if (solutionType.compareTo("Real") == 0) {
-      solutionType_ = new RealSolutionType(this);
+      this.solutionType = new RealSolutionType(this);
     } else {
       throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }
@@ -73,10 +73,10 @@ public class Viennet4 extends Problem {
    * @throws org.uma.jmetal.util.JMetalException
    */
   public void evaluate(Solution solution) throws JMetalException {
-    double[] x = new double[numberOfVariables_];
-    double[] f = new double[numberOfObjectives_];
+    double[] x = new double[numberOfVariables];
+    double[] f = new double[numberOfObjectives];
 
-    for (int i = 0; i < numberOfVariables_; i++) {
+    for (int i = 0; i < numberOfVariables; i++) {
       x[i] = solution.getDecisionVariables()[i].getValue();
     }
 
@@ -90,7 +90,7 @@ public class Viennet4 extends Problem {
       (x[0] - x[1] + 1.0) * (x[0] - x[1] + 1.0) / 27.0 + 15.0;
 
 
-    for (int i = 0; i < numberOfObjectives_; i++) {
+    for (int i = 0; i < numberOfObjectives; i++) {
       solution.setObjective(i, f[i]);
     }
   }
@@ -103,7 +103,7 @@ public class Viennet4 extends Problem {
    * @throws org.uma.jmetal.util.JMetalException
    */
   public void evaluateConstraints(Solution solution) throws JMetalException {
-    double[] constraint = new double[numberOfConstraints_];
+    double[] constraint = new double[numberOfConstraints];
 
     double x1 = solution.getDecisionVariables()[0].getValue();
     double x2 = solution.getDecisionVariables()[1].getValue();
@@ -114,7 +114,7 @@ public class Viennet4 extends Problem {
 
     int number = 0;
     double total = 0.0;
-    for (int i = 0; i < numberOfConstraints_; i++) {
+    for (int i = 0; i < numberOfConstraints; i++) {
       if (constraint[i] < 0.0) {
         number++;
         total += constraint[i];

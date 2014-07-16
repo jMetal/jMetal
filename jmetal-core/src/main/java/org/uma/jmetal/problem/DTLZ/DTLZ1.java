@@ -56,22 +56,22 @@ public class DTLZ1 extends Problem {
   public DTLZ1(String solutionType,
     Integer numberOfVariables,
     Integer numberOfObjectives) throws JMetalException {
-    numberOfVariables_ = numberOfVariables;
-    numberOfObjectives_ = numberOfObjectives;
-    numberOfConstraints_ = 0;
-    problemName_ = "DTLZ1";
+    this.numberOfVariables = numberOfVariables;
+    this.numberOfObjectives = numberOfObjectives;
+    numberOfConstraints = 0;
+    problemName = "DTLZ1";
 
-    lowerLimit_ = new double[numberOfVariables_];
-    upperLimit_ = new double[numberOfVariables_];
+    lowerLimit = new double[this.numberOfVariables];
+    upperLimit = new double[this.numberOfVariables];
     for (int var = 0; var < numberOfVariables; var++) {
-      lowerLimit_[var] = 0.0;
-      upperLimit_[var] = 1.0;
+      lowerLimit[var] = 0.0;
+      upperLimit[var] = 1.0;
     }
 
     if (solutionType.compareTo("BinaryReal") == 0) {
-      solutionType_ = new BinaryRealSolutionType(this);
+      this.solutionType = new BinaryRealSolutionType(this);
     } else if (solutionType.compareTo("Real") == 0) {
-      solutionType_ = new RealSolutionType(this);
+      this.solutionType = new RealSolutionType(this);
     } else {
       throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }
@@ -86,35 +86,35 @@ public class DTLZ1 extends Problem {
   public void evaluate(Solution solution) throws JMetalException {
     Variable[] gen = solution.getDecisionVariables();
 
-    double[] x = new double[numberOfVariables_];
-    double[] f = new double[numberOfObjectives_];
-    int k = numberOfVariables_ - numberOfObjectives_ + 1;
+    double[] x = new double[numberOfVariables];
+    double[] f = new double[numberOfObjectives];
+    int k = numberOfVariables - numberOfObjectives + 1;
 
-    for (int i = 0; i < numberOfVariables_; i++) {
+    for (int i = 0; i < numberOfVariables; i++) {
       x[i] = gen[i].getValue();
     }
 
     double g = 0.0;
-    for (int i = numberOfVariables_ - k; i < numberOfVariables_; i++) {
+    for (int i = numberOfVariables - k; i < numberOfVariables; i++) {
       g += (x[i] - 0.5) * (x[i] - 0.5) - Math.cos(20.0 * Math.PI * (x[i] - 0.5));
     }
 
     g = 100 * (k + g);
-    for (int i = 0; i < numberOfObjectives_; i++) {
+    for (int i = 0; i < numberOfObjectives; i++) {
       f[i] = (1.0 + g) * 0.5;
     }
 
-    for (int i = 0; i < numberOfObjectives_; i++) {
-      for (int j = 0; j < numberOfObjectives_ - (i + 1); j++) {
+    for (int i = 0; i < numberOfObjectives; i++) {
+      for (int j = 0; j < numberOfObjectives - (i + 1); j++) {
         f[i] *= x[j];
       }
       if (i != 0) {
-        int aux = numberOfObjectives_ - (i + 1);
+        int aux = numberOfObjectives - (i + 1);
         f[i] *= 1 - x[aux];
       }
     }
 
-    for (int i = 0; i < numberOfObjectives_; i++) {
+    for (int i = 0; i < numberOfObjectives; i++) {
       solution.setObjective(i, f[i]);
     }
   }

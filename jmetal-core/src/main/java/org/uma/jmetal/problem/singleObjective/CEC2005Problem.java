@@ -44,16 +44,16 @@ public class CEC2005Problem extends Problem {
    */
   public CEC2005Problem(String solutionType, int problemID, int numberOfVariables)
     throws JMetalException {
-    numberOfVariables_ = numberOfVariables;
-    numberOfObjectives_ = 1;
-    numberOfConstraints_ = 0;
-    problemName_ = "CEC2005";
+    this.numberOfVariables = numberOfVariables;
+    numberOfObjectives = 1;
+    numberOfConstraints = 0;
+    problemName = "CEC2005";
 
     Benchmark cec2005ProblemFactory = new Benchmark();
     testFunction_ = cec2005ProblemFactory.testFunctionFactory(problemID, numberOfVariables);
 
-    upperLimit_ = new double[numberOfVariables_];
-    lowerLimit_ = new double[numberOfVariables_];
+    upperLimit = new double[this.numberOfVariables];
+    lowerLimit = new double[this.numberOfVariables];
 
     double ulimit = 0;
     double llimit = 0;
@@ -109,15 +109,15 @@ public class CEC2005Problem extends Problem {
         throw new JMetalException("Invalid problem value");
     }
 
-    for (int var = 0; var < numberOfVariables_; var++) {
-      lowerLimit_[var] = llimit;
-      upperLimit_[var] = ulimit;
+    for (int var = 0; var < this.numberOfVariables; var++) {
+      lowerLimit[var] = llimit;
+      upperLimit[var] = ulimit;
     }
 
     if (solutionType.compareTo("BinaryReal") == 0) {
-      solutionType_ = new BinaryRealSolutionType(this);
+      this.solutionType = new BinaryRealSolutionType(this);
     } else if (solutionType.compareTo("Real") == 0) {
-      solutionType_ = new RealSolutionType(this);
+      this.solutionType = new RealSolutionType(this);
     } else {
       throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }

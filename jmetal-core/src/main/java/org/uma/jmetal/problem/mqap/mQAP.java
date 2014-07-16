@@ -54,30 +54,30 @@ public class mQAP extends Problem {
 
     ReadInstance ri = new ReadInstance(fileName);
     ri.loadInstance(); // necessary step (because I say it :-))
-    numberOfVariables_ = 1; // the permutation
-    numberOfObjectives_ = ri.getNumberOfObjectives();
-    numberOfConstraints_ = 0;
-    problemName_ = "mQAP";
+    numberOfVariables = 1; // the permutation
+    numberOfObjectives = ri.getNumberOfObjectives();
+    numberOfConstraints = 0;
+    problemName = "mQAP";
     a_matrix = ri.get_a_Matrix();
     b_matrixs = ri.get_b_Matrixs();
 
-    upperLimit_ = new double[numberOfVariables_];
-    lowerLimit_ = new double[numberOfVariables_];
+    upperLimit = new double[numberOfVariables];
+    lowerLimit = new double[numberOfVariables];
 
     // Establishes upper and lower limits for the variables
-    for (int var = 0; var < numberOfVariables_; var++) {
-      lowerLimit_[var] = 0.0;
-      upperLimit_[var] = ri.getNumberOfFacilities() - 1;
+    for (int var = 0; var < numberOfVariables; var++) {
+      lowerLimit[var] = 0.0;
+      upperLimit[var] = ri.getNumberOfFacilities() - 1;
     }
 
     // Establishes the length of every encoding.variable
-    length_ = new int[numberOfVariables_];
-    for (int var = 0; var < numberOfVariables_; var++) {
-      length_[var] = ri.getNumberOfFacilities();
+    length = new int[numberOfVariables];
+    for (int var = 0; var < numberOfVariables; var++) {
+      length[var] = ri.getNumberOfFacilities();
     }
 
     if (solutionType.compareTo("Permutation") == 0) {
-      solutionType_ = new PermutationSolutionType(this);
+      this.solutionType = new PermutationSolutionType(this);
     } else {
       throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }
@@ -86,7 +86,7 @@ public class mQAP extends Problem {
   // evaluation of the problem
   public void evaluate(Solution solution) throws JMetalException {
     int[] permutation = ((Permutation) solution.getDecisionVariables()[0]).getVector();
-    for (int k = 0; k < numberOfObjectives_; k++) {
+    for (int k = 0; k < numberOfObjectives; k++) {
       double aux = 0.0;
       for (int i = 0; i < a_matrix.length; i++) {
         for (int j = 0; j < a_matrix[i].length; j++) {

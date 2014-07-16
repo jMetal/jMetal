@@ -69,21 +69,21 @@ public abstract class WFG extends Problem {
     this.k_ = k;
     this.l_ = l;
     this.M_ = M;
-    numberOfVariables_ = this.k_ + this.l_;
-    numberOfObjectives_ = this.M_;
-    numberOfConstraints_ = 0;
+    numberOfVariables = this.k_ + this.l_;
+    numberOfObjectives = this.M_;
+    numberOfConstraints = 0;
 
-    lowerLimit_ = new double[numberOfVariables_];
-    upperLimit_ = new double[numberOfVariables_];
-    for (int var = 0; var < numberOfVariables_; var++) {
-      lowerLimit_[var] = 0;
-      upperLimit_[var] = 2 * (var + 1);
+    lowerLimit = new double[numberOfVariables];
+    upperLimit = new double[numberOfVariables];
+    for (int var = 0; var < numberOfVariables; var++) {
+      lowerLimit[var] = 0;
+      upperLimit[var] = 2 * (var + 1);
     }
 
     if (solutionType.compareTo("BinaryReal") == 0) {
-      solutionType_ = new BinaryRealSolutionType(this);
+      this.solutionType = new BinaryRealSolutionType(this);
     } else if (solutionType.compareTo("Real") == 0) {
-      solutionType_ = new RealSolutionType(this);
+      this.solutionType = new RealSolutionType(this);
     } else {
       throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }

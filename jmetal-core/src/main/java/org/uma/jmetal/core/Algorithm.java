@@ -61,7 +61,7 @@ public abstract class Algorithm implements Serializable {
 
   public Operator getOperator(String name) {
     return operators_.get(name);
-  } // getOperator
+  }
 
   public void setInputParameter(String name, Object object) {
     if (inputParameters_ == null) {
@@ -72,7 +72,7 @@ public abstract class Algorithm implements Serializable {
 
   public Object getInputParameter(String name) {
     return inputParameters_.get(name);
-  } // getInputParameter
+  }
 
   public void setOutputParameter(String name, Object object) {
     if (outPutParameters_ == null) {

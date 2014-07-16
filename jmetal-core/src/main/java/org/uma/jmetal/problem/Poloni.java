@@ -47,22 +47,22 @@ public class Poloni extends Problem {
    * @param solutionType The solutiontype type must "Real" or "BinaryReal".
    */
   public Poloni(String solutionType) throws JMetalException {
-    numberOfVariables_ = 2;
-    numberOfObjectives_ = 2;
-    numberOfConstraints_ = 0;
-    problemName_ = "Poloni";
+    numberOfVariables = 2;
+    numberOfObjectives = 2;
+    numberOfConstraints = 0;
+    problemName = "Poloni";
 
-    lowerLimit_ = new double[numberOfVariables_];
-    upperLimit_ = new double[numberOfVariables_];
-    for (int var = 0; var < numberOfVariables_; var++) {
-      lowerLimit_[var] = -1 * Math.PI;
-      upperLimit_[var] = Math.PI;
+    lowerLimit = new double[numberOfVariables];
+    upperLimit = new double[numberOfVariables];
+    for (int var = 0; var < numberOfVariables; var++) {
+      lowerLimit[var] = -1 * Math.PI;
+      upperLimit[var] = Math.PI;
     }
 
     if (solutionType.compareTo("BinaryReal") == 0) {
-      solutionType_ = new BinaryRealSolutionType(this);
+      this.solutionType = new BinaryRealSolutionType(this);
     } else if (solutionType.compareTo("Real") == 0) {
-      solutionType_ = new RealSolutionType(this);
+      this.solutionType = new RealSolutionType(this);
     } else {
       throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }
@@ -82,8 +82,8 @@ public class Poloni extends Problem {
 
     Variable[] decisionVariables = solution.getDecisionVariables();
 
-    double[] x = new double[numberOfVariables_];
-    double[] f = new double[numberOfObjectives_];
+    double[] x = new double[numberOfVariables];
+    double[] f = new double[numberOfObjectives];
 
     x[0] = decisionVariables[0].getValue();
     x[1] = decisionVariables[1].getValue();

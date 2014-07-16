@@ -61,27 +61,27 @@ public class ZDT4 extends Problem {
    * @param solutionType      The solutiontype type must "Real", "BinaryReal, and "ArrayReal".
    */
   public ZDT4(String solutionType, Integer numberOfVariables) throws JMetalException {
-    numberOfVariables_ = numberOfVariables;
-    numberOfObjectives_ = 2;
-    numberOfConstraints_ = 0;
-    problemName_ = "ZDT4";
+    this.numberOfVariables = numberOfVariables;
+    numberOfObjectives = 2;
+    numberOfConstraints = 0;
+    problemName = "ZDT4";
 
-    upperLimit_ = new double[numberOfVariables_];
-    lowerLimit_ = new double[numberOfVariables_];
+    upperLimit = new double[this.numberOfVariables];
+    lowerLimit = new double[this.numberOfVariables];
 
-    lowerLimit_[0] = 0.0;
-    upperLimit_[0] = 1.0;
-    for (int var = 1; var < numberOfVariables_; var++) {
-      lowerLimit_[var] = -5.0;
-      upperLimit_[var] = 5.0;
+    lowerLimit[0] = 0.0;
+    upperLimit[0] = 1.0;
+    for (int var = 1; var < this.numberOfVariables; var++) {
+      lowerLimit[var] = -5.0;
+      upperLimit[var] = 5.0;
     }
 
     if (solutionType.compareTo("BinaryReal") == 0) {
-      solutionType_ = new BinaryRealSolutionType(this);
+      this.solutionType = new BinaryRealSolutionType(this);
     } else if (solutionType.compareTo("Real") == 0) {
-      solutionType_ = new RealSolutionType(this);
+      this.solutionType = new RealSolutionType(this);
     } else if (solutionType.compareTo("ArrayReal") == 0) {
-      solutionType_ = new ArrayRealSolutionType(this);
+      this.solutionType = new ArrayRealSolutionType(this);
     } else {
       throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }
@@ -96,7 +96,7 @@ public class ZDT4 extends Problem {
   public void evaluate(Solution solution) throws JMetalException {
     XReal x = new XReal(solution);
 
-    double[] f = new double[numberOfObjectives_];
+    double[] f = new double[numberOfObjectives];
     f[0] = x.getValue(0);
     double g = this.evalG(x);
     double h = this.evalH(f[0], g);
@@ -114,12 +114,12 @@ public class ZDT4 extends Problem {
    */
   public double evalG(XReal x) throws JMetalException {
     double g = 0.0;
-    for (int var = 1; var < numberOfVariables_; var++) {
+    for (int var = 1; var < numberOfVariables; var++) {
       g += Math.pow(x.getValue(var), 2.0) +
         -10.0 * Math.cos(4.0 * Math.PI * x.getValue(var));
     }
 
-    double constante = 1.0 + 10.0 * (numberOfVariables_ - 1);
+    double constante = 1.0 + 10.0 * (numberOfVariables - 1);
     return g + constante;
   }
 

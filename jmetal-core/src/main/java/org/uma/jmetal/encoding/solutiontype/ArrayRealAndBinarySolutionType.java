@@ -32,11 +32,11 @@ import org.uma.jmetal.encoding.variable.Binary;
  * Class representing the solutiontype type of solutions composed of array of reals
  * and a binary string.
  * ASSUMPTIONs:
- * - The numberOfVariables_ field in class Problem must contain the number
+ * - The numberOfVariables field in class Problem must contain the number
  * of real variables. This field is used to apply real operator (e.g.,
  * mutation probability)
- * - The upperLimit_ and lowerLimit_ arrays must have the length indicated
- * by numberOfVariables_.
+ * - The upperLimit and lowerLimit arrays must have the length indicated
+ * by numberOfVariables.
  */
 public class ArrayRealAndBinarySolutionType extends SolutionType implements RealSolutionTypeTemplate {
 

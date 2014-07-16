@@ -44,20 +44,20 @@ public class NMMin extends Problem {
   public NMMin(String solutionType, int numberOfVariables, int N, int M, int lowerBound, int upperBound) throws JMetalException {
     valueN = N ;
     valueM = M ;
-    this.numberOfVariables_ = numberOfVariables;
-    numberOfObjectives_ = 2;
-    numberOfConstraints_ = 0;
-    problemName_ = "NMMin";
+    this.numberOfVariables = numberOfVariables;
+    numberOfObjectives = 2;
+    numberOfConstraints = 0;
+    problemName = "NMMin";
 
-    lowerLimit_ = new double[numberOfVariables_];
-    upperLimit_ = new double[numberOfVariables_];
-    for (int var = 0; var < numberOfVariables_; var++) {
-      lowerLimit_[var] = lowerBound;
-      upperLimit_[var] = upperBound;
+    lowerLimit = new double[this.numberOfVariables];
+    upperLimit = new double[this.numberOfVariables];
+    for (int var = 0; var < this.numberOfVariables; var++) {
+      lowerLimit[var] = lowerBound;
+      upperLimit[var] = upperBound;
     }
 
     if (solutionType.compareTo("Integer") == 0) {
-      solutionType_ = new IntSolutionType(this);
+      this.solutionType = new IntSolutionType(this);
     } else {
       throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }

@@ -33,48 +33,48 @@ public abstract class Problem implements Serializable {
   private static final long serialVersionUID = 7027317068597003106L;
 
   private static final int DEFAULT_PRECISION = 16;
-  protected int numberOfVariables_;
-  protected int numberOfObjectives_;
-  protected int numberOfConstraints_;
-  protected String problemName_;
-  protected SolutionType solutionType_;
-  protected double[] lowerLimit_;
-  protected double[] upperLimit_;
-  protected int[] precision_;
-  protected int[] length_;
+  protected int numberOfVariables;
+  protected int numberOfObjectives;
+  protected int numberOfConstraints;
+  protected String problemName;
+  protected SolutionType solutionType;
+  protected double[] lowerLimit;
+  protected double[] upperLimit;
+  protected int[] precision;
+  protected int[] length;
 
   public Problem() {
-    solutionType_ = null;
+    solutionType = null;
   }
 
   public Problem(SolutionType solutionType) {
-    solutionType_ = solutionType;
+    this.solutionType = solutionType;
   }
 
   public int getNumberOfVariables() {
-    return numberOfVariables_;
+    return numberOfVariables;
   }
 
   public void setNumberOfVariables(int numberOfVariables) {
-    numberOfVariables_ = numberOfVariables;
+    this.numberOfVariables = numberOfVariables;
   }
 
   public int getNumberOfObjectives() {
-    return numberOfObjectives_;
+    return numberOfObjectives;
   }
 
   public double getLowerLimit(int i) {
-    return lowerLimit_[i];
+    return lowerLimit[i];
   }
 
   public double getUpperLimit(int i) {
-    return upperLimit_[i];
+    return upperLimit[i];
   }
 
   public abstract void evaluate(Solution solution) throws JMetalException;
 
   public int getNumberOfConstraints() {
-    return numberOfConstraints_;
+    return numberOfConstraints;
   }
 
   public void evaluateConstraints(Solution solution) throws JMetalException {
@@ -83,39 +83,39 @@ public abstract class Problem implements Serializable {
   }
 
   public int getPrecision(int var) {
-    return precision_[var];
+    return precision[var];
   }
 
   public int[] getPrecision() {
-    return precision_;
+    return precision;
   }
 
   public void setPrecision(int[] precision) {
-    precision_ = Arrays.copyOf(precision, precision.length);
+    this.precision = Arrays.copyOf(precision, precision.length);
   }
 
   public int getLength(int var) {
-    if (length_ == null) {
+    if (length == null) {
       return DEFAULT_PRECISION;
     }
-    return length_[var];
+    return length[var];
   }
 
   public SolutionType getSolutionType() {
-    return solutionType_;
+    return solutionType;
   }
 
   public void setSolutionType(SolutionType type) {
-    solutionType_ = type;
+    solutionType = type;
   } 
 
   public String getName() {
-    return problemName_;
+    return problemName;
   }
 
   public int getNumberOfBits() {
     int result = 0;
-    for (int var = 0; var < numberOfVariables_; var++) {
+    for (int var = 0; var < numberOfVariables; var++) {
       result += getLength(var);
     }
     return result;

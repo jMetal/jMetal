@@ -54,18 +54,18 @@ public class OneZeroMax extends Problem {
    * @param numberOfBits Length of the problem
    */
   public OneZeroMax(String solutionType, Integer numberOfBits) throws JMetalException {
-    numberOfVariables_ = 1;
-    numberOfObjectives_ = 2;
-    numberOfConstraints_ = 0;
-    problemName_ = "OneZeroMax";
+    numberOfVariables = 1;
+    numberOfObjectives = 2;
+    numberOfConstraints = 0;
+    problemName = "OneZeroMax";
 
-    solutionType_ = new BinarySolutionType(this);
+    this.solutionType = new BinarySolutionType(this);
 
-    length_ = new int[numberOfVariables_];
-    length_[0] = numberOfBits;
+    length = new int[numberOfVariables];
+    length[0] = numberOfBits;
 
     if (solutionType.compareTo("Binary") == 0) {
-      solutionType_ = new BinarySolutionType(this);
+      this.solutionType = new BinarySolutionType(this);
     } else {
       throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }

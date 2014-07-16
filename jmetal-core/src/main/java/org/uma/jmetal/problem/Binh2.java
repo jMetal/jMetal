@@ -38,22 +38,22 @@ public class Binh2 extends Problem {
    * @param solutionType The solutiontype type must "Real" or "BinaryReal".
    */
   public Binh2(String solutionType) throws JMetalException {
-    numberOfVariables_ = 2;
-    numberOfObjectives_ = 2;
-    numberOfConstraints_ = 2;
-    problemName_ = "Binh2";
+    numberOfVariables = 2;
+    numberOfObjectives = 2;
+    numberOfConstraints = 2;
+    problemName = "Binh2";
 
-    lowerLimit_ = new double[numberOfVariables_];
-    upperLimit_ = new double[numberOfVariables_];
-    lowerLimit_[0] = 0.0;
-    lowerLimit_[1] = 0.0;
-    upperLimit_[0] = 5.0;
-    upperLimit_[1] = 3.0;
+    lowerLimit = new double[numberOfVariables];
+    upperLimit = new double[numberOfVariables];
+    lowerLimit[0] = 0.0;
+    lowerLimit[1] = 0.0;
+    upperLimit[0] = 5.0;
+    upperLimit[1] = 3.0;
 
     if (solutionType.compareTo("BinaryReal") == 0) {
-      solutionType_ = new BinaryRealSolutionType(this);
+      this.solutionType = new BinaryRealSolutionType(this);
     } else if (solutionType.compareTo("Real") == 0) {
-      solutionType_ = new RealSolutionType(this);
+      this.solutionType = new RealSolutionType(this);
     } else {
       throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }
@@ -69,8 +69,8 @@ public class Binh2 extends Problem {
     XReal vars = new XReal(solution);
 
     double[] fx = new double[2];
-    double[] x = new double[numberOfVariables_];
-    for (int i = 0; i < numberOfVariables_; i++) {
+    double[] x = new double[numberOfVariables];
+    for (int i = 0; i < numberOfVariables; i++) {
       x[i] = vars.getValue(i);
     }
 

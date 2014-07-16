@@ -51,20 +51,20 @@ public class mTSP extends Problem {
   public mTSP(String solutionType,
     String file_distances,
     String file_cost) throws Exception {
-    numberOfVariables_ = 1;
-    numberOfObjectives_ = 2;
-    numberOfConstraints_ = 0;
-    problemName_ = "mTSP";
+    numberOfVariables = 1;
+    numberOfObjectives = 2;
+    numberOfConstraints = 0;
+    problemName = "mTSP";
 
-    length_ = new int[numberOfVariables_];
+    length = new int[numberOfVariables];
 
     distanceMatrix_ = readProblem(file_distances);
     costMatrix_ = readProblem(file_cost);
     Configuration.logger_.info(""+numberOfCities_);
-    length_[0] = numberOfCities_;
+    length[0] = numberOfCities_;
 
     if (solutionType.compareTo("Permutation") == 0) {
-      solutionType_ = new PermutationSolutionType(this);
+      this.solutionType = new PermutationSolutionType(this);
     } else {
       throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }

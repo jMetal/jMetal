@@ -39,22 +39,22 @@ public class ConstrEx extends Problem {
    * @param solutionType The solutiontype type must "Real" or "BinaryReal".
    */
   public ConstrEx(String solutionType) throws JMetalException {
-    numberOfVariables_ = 2;
-    numberOfObjectives_ = 2;
-    numberOfConstraints_ = 2;
-    problemName_ = "Constr_Ex";
+    numberOfVariables = 2;
+    numberOfObjectives = 2;
+    numberOfConstraints = 2;
+    problemName = "Constr_Ex";
 
-    lowerLimit_ = new double[numberOfVariables_];
-    upperLimit_ = new double[numberOfVariables_];
-    lowerLimit_[0] = 0.1;
-    lowerLimit_[1] = 0.0;
-    upperLimit_[0] = 1.0;
-    upperLimit_[1] = 5.0;
+    lowerLimit = new double[numberOfVariables];
+    upperLimit = new double[numberOfVariables];
+    lowerLimit[0] = 0.1;
+    lowerLimit[1] = 0.0;
+    upperLimit[0] = 1.0;
+    upperLimit[1] = 5.0;
 
     if (solutionType.compareTo("BinaryReal") == 0) {
-      solutionType_ = new BinaryRealSolutionType(this);
+      this.solutionType = new BinaryRealSolutionType(this);
     } else if (solutionType.compareTo("Real") == 0) {
-      solutionType_ = new RealSolutionType(this);
+      this.solutionType = new RealSolutionType(this);
     } else {
       throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }
@@ -69,7 +69,7 @@ public class ConstrEx extends Problem {
   public void evaluate(Solution solution) throws JMetalException {
     Variable[] variable = solution.getDecisionVariables();
 
-    double[] f = new double[numberOfObjectives_];
+    double[] f = new double[numberOfObjectives];
     f[0] = variable[0].getValue();
     f[1] = (1.0 + variable[1].getValue()) / variable[0].getValue();
 

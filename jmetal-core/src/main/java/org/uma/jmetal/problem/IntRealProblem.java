@@ -60,26 +60,26 @@ public class IntRealProblem extends Problem {
     intVariables_ = intVariables;
     realVariables_ = realVariables;
 
-    numberOfVariables_ = intVariables_ + realVariables_;
-    numberOfObjectives_ = 2;
-    numberOfConstraints_ = 0;
-    problemName_ = "IntRealProblem";
+    numberOfVariables = intVariables_ + realVariables_;
+    numberOfObjectives = 2;
+    numberOfConstraints = 0;
+    problemName = "IntRealProblem";
 
-    upperLimit_ = new double[numberOfVariables_];
-    lowerLimit_ = new double[numberOfVariables_];
+    upperLimit = new double[numberOfVariables];
+    lowerLimit = new double[numberOfVariables];
 
     for (int i = 0; i < intVariables; i++) {
-      lowerLimit_[i] = -5;
-      upperLimit_[i] = 5;
+      lowerLimit[i] = -5;
+      upperLimit[i] = 5;
     }
 
     for (int i = intVariables; i < (intVariables + realVariables); i++) {
-      lowerLimit_[i] = -5.0;
-      upperLimit_[i] = 5.0;
+      lowerLimit[i] = -5.0;
+      upperLimit[i] = 5.0;
     }
 
     if (solutionType.compareTo("IntReal") == 0) {
-      solutionType_ = new IntRealSolutionType(this, intVariables, realVariables);
+      this.solutionType = new IntRealSolutionType(this, intVariables, realVariables);
     } else {
       throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }
@@ -102,7 +102,7 @@ public class IntRealProblem extends Problem {
     }
 
     fx[1] = 0.0;
-    for (int var = intVariables_; var < numberOfVariables_; var++) {
+    for (int var = intVariables_; var < numberOfVariables; var++) {
       fx[1] += variable[var].getValue();
     }
 

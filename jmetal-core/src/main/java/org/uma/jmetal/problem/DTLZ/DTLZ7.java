@@ -57,22 +57,22 @@ public class DTLZ7 extends Problem {
   public DTLZ7(String solutionType,
     Integer numberOfVariables,
     Integer numberOfObjectives) throws JMetalException {
-    numberOfVariables_ = numberOfVariables;
-    numberOfObjectives_ = numberOfObjectives;
-    numberOfConstraints_ = 0;
-    problemName_ = "DTLZ7";
+    this.numberOfVariables = numberOfVariables;
+    this.numberOfObjectives = numberOfObjectives;
+    numberOfConstraints = 0;
+    problemName = "DTLZ7";
 
-    lowerLimit_ = new double[numberOfVariables_];
-    upperLimit_ = new double[numberOfVariables_];
-    for (int var = 0; var < numberOfVariables_; var++) {
-      lowerLimit_[var] = 0.0;
-      upperLimit_[var] = 1.0;
+    lowerLimit = new double[this.numberOfVariables];
+    upperLimit = new double[this.numberOfVariables];
+    for (int var = 0; var < this.numberOfVariables; var++) {
+      lowerLimit[var] = 0.0;
+      upperLimit[var] = 1.0;
     }
 
     if (solutionType.compareTo("BinaryReal") == 0) {
-      solutionType_ = new BinaryRealSolutionType(this);
+      this.solutionType = new BinaryRealSolutionType(this);
     } else if (solutionType.compareTo("Real") == 0) {
-      solutionType_ = new RealSolutionType(this);
+      this.solutionType = new RealSolutionType(this);
     } else {
       throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }
@@ -87,37 +87,37 @@ public class DTLZ7 extends Problem {
   public void evaluate(Solution solution) throws JMetalException {
     Variable[] gen = solution.getDecisionVariables();
 
-    double[] x = new double[numberOfVariables_];
-    double[] f = new double[numberOfObjectives_];
-    int k = numberOfVariables_ - numberOfObjectives_ + 1;
+    double[] x = new double[numberOfVariables];
+    double[] f = new double[numberOfObjectives];
+    int k = numberOfVariables - numberOfObjectives + 1;
 
-    for (int i = 0; i < numberOfVariables_; i++) {
+    for (int i = 0; i < numberOfVariables; i++) {
       x[i] = gen[i].getValue();
     }
 
     //Calculate g
     double g = 0.0;
-    for (int i = this.numberOfVariables_ - k; i < numberOfVariables_; i++) {
+    for (int i = this.numberOfVariables - k; i < numberOfVariables; i++) {
       g += x[i];
     }
 
     g = 1 + (9.0 * g) / k;
 
     // Calculate the value of f1,f2,f3,...,fM-1 (take acount of vectors start at 0)
-    System.arraycopy(x, 0, f, 0, numberOfObjectives_ - 1);
+    System.arraycopy(x, 0, f, 0, numberOfObjectives - 1);
 
     // Calculate fM
     double h = 0.0;
-    for (int i = 0; i < numberOfObjectives_ - 1; i++) {
+    for (int i = 0; i < numberOfObjectives - 1; i++) {
       h += (f[i] / (1.0 + g)) * (1 + Math.sin(3.0 * Math.PI * f[i]));
     }
 
-    h = numberOfObjectives_ - h;
+    h = numberOfObjectives - h;
 
-    f[numberOfObjectives_ - 1] = (1 + g) * h;
+    f[numberOfObjectives - 1] = (1 + g) * h;
 
     // Setting up the value of the objetives
-    for (int i = 0; i < numberOfObjectives_; i++) {
+    for (int i = 0; i < numberOfObjectives; i++) {
       solution.setObjective(i, f[i]);
     }
   }

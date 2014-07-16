@@ -57,25 +57,25 @@ public class Kursawe extends Problem {
    * @param solutionType      The solutiontype type must "Real", "BinaryReal, and "ArrayReal".
    */
   public Kursawe(String solutionType, Integer numberOfVariables) throws JMetalException {
-    numberOfVariables_ = numberOfVariables;
-    numberOfObjectives_ = 2;
-    numberOfConstraints_ = 0;
-    problemName_ = "Kursawe";
+    this.numberOfVariables = numberOfVariables;
+    numberOfObjectives = 2;
+    numberOfConstraints = 0;
+    problemName = "Kursawe";
 
-    upperLimit_ = new double[numberOfVariables_];
-    lowerLimit_ = new double[numberOfVariables_];
+    upperLimit = new double[this.numberOfVariables];
+    lowerLimit = new double[this.numberOfVariables];
 
-    for (int i = 0; i < numberOfVariables_; i++) {
-      lowerLimit_[i] = -5.0;
-      upperLimit_[i] = 5.0;
+    for (int i = 0; i < this.numberOfVariables; i++) {
+      lowerLimit[i] = -5.0;
+      upperLimit[i] = 5.0;
     } // for
 
     if (solutionType.compareTo("BinaryReal") == 0) {
-      solutionType_ = new BinaryRealSolutionType(this);
+      this.solutionType = new BinaryRealSolutionType(this);
     } else if (solutionType.compareTo("Real") == 0) {
-      solutionType_ = new RealSolutionType(this);
+      this.solutionType = new RealSolutionType(this);
     } else if (solutionType.compareTo("ArrayReal") == 0) {
-      solutionType_ = new ArrayRealSolutionType(this);
+      this.solutionType = new ArrayRealSolutionType(this);
     } else {
       throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }
@@ -92,13 +92,13 @@ public class Kursawe extends Problem {
 
     double aux, xi, xj; // auxiliary variables
     double[] fx = new double[2]; // function values
-    double[] x = new double[numberOfVariables_];
-    for (int i = 0; i < numberOfVariables_; i++) {
+    double[] x = new double[numberOfVariables];
+    for (int i = 0; i < numberOfVariables; i++) {
       x[i] = vars.getValue(i);
     }
 
     fx[0] = 0.0;
-    for (int var = 0; var < numberOfVariables_ - 1; var++) {
+    for (int var = 0; var < numberOfVariables - 1; var++) {
       xi = x[var] * x[var];
       xj = x[var + 1] * x[var + 1];
       aux = (-0.2) * Math.sqrt(xi + xj);
@@ -107,7 +107,7 @@ public class Kursawe extends Problem {
 
     fx[1] = 0.0;
 
-    for (int var = 0; var < numberOfVariables_; var++) {
+    for (int var = 0; var < numberOfVariables; var++) {
       fx[1] += Math.pow(Math.abs(x[var]), 0.8) +
         5.0 * Math.sin(Math.pow(x[var], 3.0));
     }

@@ -44,22 +44,22 @@ public class Viennet3 extends Problem {
    * @param solutionType The solutiontype type must "Real" or "BinaryReal".
    */
   public Viennet3(String solutionType) throws JMetalException {
-    numberOfVariables_ = 2;
-    numberOfObjectives_ = 3;
-    numberOfConstraints_ = 0;
-    problemName_ = "Viennet3";
+    numberOfVariables = 2;
+    numberOfObjectives = 3;
+    numberOfConstraints = 0;
+    problemName = "Viennet3";
 
-    upperLimit_ = new double[numberOfVariables_];
-    lowerLimit_ = new double[numberOfVariables_];
-    for (int var = 0; var < numberOfVariables_; var++) {
-      lowerLimit_[var] = -3.0;
-      upperLimit_[var] = 3.0;
+    upperLimit = new double[numberOfVariables];
+    lowerLimit = new double[numberOfVariables];
+    for (int var = 0; var < numberOfVariables; var++) {
+      lowerLimit[var] = -3.0;
+      upperLimit[var] = 3.0;
     } // for
 
     if (solutionType.compareTo("BinaryReal") == 0) {
-      solutionType_ = new BinaryRealSolutionType(this);
+      this.solutionType = new BinaryRealSolutionType(this);
     } else if (solutionType.compareTo("Real") == 0) {
-      solutionType_ = new RealSolutionType(this);
+      this.solutionType = new RealSolutionType(this);
     } else {
       throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }
@@ -73,10 +73,10 @@ public class Viennet3 extends Problem {
    * @throws org.uma.jmetal.util.JMetalException
    */
   public void evaluate(Solution solution) throws JMetalException {
-    double[] x = new double[numberOfVariables_];
-    double[] f = new double[numberOfObjectives_];
+    double[] x = new double[numberOfVariables];
+    double[] f = new double[numberOfObjectives];
 
-    for (int i = 0; i < numberOfVariables_; i++) {
+    for (int i = 0; i < numberOfVariables; i++) {
       x[i] = solution.getDecisionVariables()[i].getValue();
     }
 
@@ -91,7 +91,7 @@ public class Viennet3 extends Problem {
     f[2] = 1.0 / (x[0] * x[0] + x[1] * x[1] + 1) - 1.1 *
       Math.exp(-(x[0] * x[0]) - (x[1] * x[1]));
 
-    for (int i = 0; i < numberOfObjectives_; i++) {
+    for (int i = 0; i < numberOfObjectives; i++) {
       solution.setObjective(i, f[i]);
     }
   }

@@ -48,22 +48,22 @@ public class Golinski extends Problem {
    * @param solutionType The solutiontype type must "Real" or "BinaryReal".
    */
   public Golinski(String solutionType) throws JMetalException {
-    numberOfVariables_ = 7;
-    numberOfObjectives_ = 2;
-    numberOfConstraints_ = 11;
-    problemName_ = "Golinski";
+    numberOfVariables = 7;
+    numberOfObjectives = 2;
+    numberOfConstraints = 11;
+    problemName = "Golinski";
 
-    upperLimit_ = new double[numberOfVariables_];
-    lowerLimit_ = new double[numberOfVariables_];
-    for (int var = 0; var < numberOfVariables_; var++) {
-      lowerLimit_[var] = LOWERLIMIT[var];
-      upperLimit_[var] = UPPERLIMIT[var];
+    upperLimit = new double[numberOfVariables];
+    lowerLimit = new double[numberOfVariables];
+    for (int var = 0; var < numberOfVariables; var++) {
+      lowerLimit[var] = LOWERLIMIT[var];
+      upperLimit[var] = UPPERLIMIT[var];
     }
 
     if (solutionType.compareTo("BinaryReal") == 0) {
-      solutionType_ = new BinaryRealSolutionType(this);
+      this.solutionType = new BinaryRealSolutionType(this);
     } else if (solutionType.compareTo("Real") == 0) {
-      solutionType_ = new RealSolutionType(this);
+      this.solutionType = new RealSolutionType(this);
     } else {
       throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }
@@ -103,7 +103,7 @@ public class Golinski extends Problem {
    * @throws org.uma.jmetal.util.JMetalException
    */
   public void evaluateConstraints(Solution solution) throws JMetalException {
-    double[] constraint = new double[numberOfConstraints_];
+    double[] constraint = new double[numberOfConstraints];
     double x1, x2, x3, x4, x5, x6, x7;
 
     x1 = solution.getDecisionVariables()[0].getValue();
@@ -134,7 +134,7 @@ public class Golinski extends Problem {
 
     double total = 0.0;
     int number = 0;
-    for (int i = 0; i < numberOfConstraints_; i++) {
+    for (int i = 0; i < numberOfConstraints; i++) {
       if (constraint[i] < 0.0) {
         total += constraint[i];
         number++;

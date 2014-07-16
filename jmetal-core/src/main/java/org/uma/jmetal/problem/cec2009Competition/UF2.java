@@ -55,25 +55,25 @@ public class UF2 extends Problem {
    * @param solutionType      The solutiontype type must "Real" or "BinaryReal".
    */
   public UF2(String solutionType, Integer numberOfVariables) throws JMetalException {
-    numberOfVariables_ = numberOfVariables;
-    numberOfObjectives_ = 2;
-    numberOfConstraints_ = 0;
-    problemName_ = "CEC2009_UF2";
+    this.numberOfVariables = numberOfVariables;
+    numberOfObjectives = 2;
+    numberOfConstraints = 0;
+    problemName = "CEC2009_UF2";
 
-    upperLimit_ = new double[numberOfVariables_];
-    lowerLimit_ = new double[numberOfVariables_];
+    upperLimit = new double[this.numberOfVariables];
+    lowerLimit = new double[this.numberOfVariables];
 
-    lowerLimit_[0] = 0.0;
-    upperLimit_[0] = 1.0;
-    for (int var = 1; var < numberOfVariables_; var++) {
-      lowerLimit_[var] = -1.0;
-      upperLimit_[var] = 1.0;
+    lowerLimit[0] = 0.0;
+    upperLimit[0] = 1.0;
+    for (int var = 1; var < this.numberOfVariables; var++) {
+      lowerLimit[var] = -1.0;
+      upperLimit[var] = 1.0;
     }
 
     if (solutionType.compareTo("BinaryReal") == 0) {
-      solutionType_ = new BinaryRealSolutionType(this);
+      this.solutionType = new BinaryRealSolutionType(this);
     } else if (solutionType.compareTo("Real") == 0) {
-      solutionType_ = new RealSolutionType(this);
+      this.solutionType = new RealSolutionType(this);
     } else {
       throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }
@@ -88,8 +88,8 @@ public class UF2 extends Problem {
   public void evaluate(Solution solution) throws JMetalException {
     Variable[] decisionVariables = solution.getDecisionVariables();
 
-    double[] x = new double[numberOfVariables_];
-    for (int i = 0; i < numberOfVariables_; i++) {
+    double[] x = new double[numberOfVariables];
+    for (int i = 0; i < numberOfVariables; i++) {
       x[i] = decisionVariables[i].getValue();
     }
 
@@ -98,21 +98,21 @@ public class UF2 extends Problem {
     sum1 = sum2 = 0.0;
     count1 = count2 = 0;
 
-    for (int j = 2; j <= numberOfVariables_; j++) {
+    for (int j = 2; j <= numberOfVariables; j++) {
       if (j % 2 == 0) {
         yj = x[j - 1] -
-          (0.3 * x[0] * x[0] * Math.cos(24 * Math.PI * x[0] + 4 * j * Math.PI / numberOfVariables_)
+          (0.3 * x[0] * x[0] * Math.cos(24 * Math.PI * x[0] + 4 * j * Math.PI / numberOfVariables)
             + 0.6 * x[0]) *
-            Math.sin(6.0 * Math.PI * x[0] + j * Math.PI / numberOfVariables_);
+            Math.sin(6.0 * Math.PI * x[0] + j * Math.PI / numberOfVariables);
 
 
         sum2 += yj * yj;
         count2++;
       } else {
         yj = x[j - 1] -
-          (0.3 * x[0] * x[0] * Math.cos(24 * Math.PI * x[0] + 4 * j * Math.PI / numberOfVariables_)
+          (0.3 * x[0] * x[0] * Math.cos(24 * Math.PI * x[0] + 4 * j * Math.PI / numberOfVariables)
             + 0.6 * x[0]) *
-            Math.cos(6.0 * Math.PI * x[0] + j * Math.PI / numberOfVariables_);
+            Math.cos(6.0 * Math.PI * x[0] + j * Math.PI / numberOfVariables);
         sum1 += yj * yj;
         count1++;
       }

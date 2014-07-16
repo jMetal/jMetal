@@ -63,7 +63,7 @@ public class WFG2 extends WFG {
   public WFG2(String solutionType, Integer k, Integer l, Integer M)
     throws ClassNotFoundException, JMetalException {
     super(solutionType, k, l, M);
-    problemName_ = "WFG2";
+    problemName = "WFG2";
 
     S_ = new int[M_];
     for (int i = 0; i < M_; i++) {

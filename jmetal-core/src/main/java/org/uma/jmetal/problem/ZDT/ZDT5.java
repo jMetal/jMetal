@@ -53,19 +53,19 @@ public class ZDT5 extends Problem {
    *                          This problem allows only "Binary" representations.
    */
   public ZDT5(String solutionType, Integer numberOfVariables) throws JMetalException {
-    numberOfVariables_ = numberOfVariables;
-    numberOfObjectives_ = 2;
-    numberOfConstraints_ = 0;
-    problemName_ = "ZDT5";
+    this.numberOfVariables = numberOfVariables;
+    numberOfObjectives = 2;
+    numberOfConstraints = 0;
+    problemName = "ZDT5";
 
-    length_ = new int[numberOfVariables_];
-    length_[0] = 30;
-    for (int var = 1; var < numberOfVariables_; var++) {
-      length_[var] = 5;
+    length = new int[this.numberOfVariables];
+    length[0] = 30;
+    for (int var = 1; var < this.numberOfVariables; var++) {
+      length[var] = 5;
     }
 
     if (solutionType.compareTo("Binary") == 0) {
-      solutionType_ = new BinarySolutionType(this);
+      this.solutionType = new BinarySolutionType(this);
     } else {
       throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }
@@ -77,7 +77,7 @@ public class ZDT5 extends Problem {
    * @param solution The solutiontype to evaluate
    */
   public void evaluate(Solution solution) {
-    double[] f = new double[numberOfObjectives_];
+    double[] f = new double[numberOfObjectives];
     f[0] = 1 + u((Binary) solution.getDecisionVariables()[0]);
     double g = evalG(solution.getDecisionVariables());
     double h = evalH(f[0], g);
@@ -95,7 +95,7 @@ public class ZDT5 extends Problem {
    */
   public double evalG(Variable[] decisionVariables) {
     double res = 0.0;
-    for (int var = 1; var < numberOfVariables_; var++) {
+    for (int var = 1; var < numberOfVariables; var++) {
       res += evalV(u((Binary) decisionVariables[var]));
     }
 

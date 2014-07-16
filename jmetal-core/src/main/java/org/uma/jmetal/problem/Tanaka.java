@@ -45,22 +45,22 @@ public class Tanaka extends Problem {
    * @param solutionType The solutiontype type must "Real" or "BinaryReal".
    */
   public Tanaka(String solutionType) throws JMetalException {
-    numberOfVariables_ = 2;
-    numberOfObjectives_ = 2;
-    numberOfConstraints_ = 2;
-    problemName_ = "Tanaka";
+    numberOfVariables = 2;
+    numberOfObjectives = 2;
+    numberOfConstraints = 2;
+    problemName = "Tanaka";
 
-    upperLimit_ = new double[numberOfVariables_];
-    lowerLimit_ = new double[numberOfVariables_];
-    for (int var = 0; var < numberOfVariables_; var++) {
-      lowerLimit_[var] = 10e-5;
-      upperLimit_[var] = Math.PI;
+    upperLimit = new double[numberOfVariables];
+    lowerLimit = new double[numberOfVariables];
+    for (int var = 0; var < numberOfVariables; var++) {
+      lowerLimit[var] = 10e-5;
+      upperLimit[var] = Math.PI;
     }
 
     if (solutionType.compareTo("BinaryReal") == 0) {
-      solutionType_ = new BinaryRealSolutionType(this);
+      this.solutionType = new BinaryRealSolutionType(this);
     } else if (solutionType.compareTo("Real") == 0) {
-      solutionType_ = new RealSolutionType(this);
+      this.solutionType = new RealSolutionType(this);
     } else {
       throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }
@@ -75,7 +75,7 @@ public class Tanaka extends Problem {
   public void evaluate(Solution solution) throws JMetalException {
     Variable[] variable = solution.getDecisionVariables();
 
-    double[] f = new double[numberOfObjectives_];
+    double[] f = new double[numberOfObjectives];
     f[0] = variable[0].getValue();
     f[1] = variable[1].getValue();
 

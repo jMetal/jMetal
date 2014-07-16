@@ -54,18 +54,18 @@ public class OneMax extends Problem {
    * @param numberOfBits Length of the problem
    */
   public OneMax(String solutionType, Integer numberOfBits) throws JMetalException {
-    numberOfVariables_ = 1;
-    numberOfObjectives_ = 1;
-    numberOfConstraints_ = 0;
-    problemName_ = "ONEMAX";
+    numberOfVariables = 1;
+    numberOfObjectives = 1;
+    numberOfConstraints = 0;
+    problemName = "ONEMAX";
 
-    solutionType_ = new BinarySolutionType(this);
+    this.solutionType = new BinarySolutionType(this);
 
-    length_ = new int[numberOfVariables_];
-    length_[0] = numberOfBits;
+    length = new int[numberOfVariables];
+    length[0] = numberOfBits;
 
     if (solutionType.compareTo("Binary") == 0) {
-      solutionType_ = new BinarySolutionType(this);
+      this.solutionType = new BinarySolutionType(this);
     } else {
       throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }

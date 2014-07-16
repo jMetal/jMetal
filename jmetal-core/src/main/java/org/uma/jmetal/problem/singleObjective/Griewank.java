@@ -46,22 +46,22 @@ public class Griewank extends Problem {
    * @param solutionType      The solutiontype type must "Real" or "BinaryReal".
    */
   public Griewank(String solutionType, Integer numberOfVariables) throws JMetalException {
-    numberOfVariables_ = numberOfVariables;
-    numberOfObjectives_ = 1;
-    numberOfConstraints_ = 0;
-    problemName_ = "Sphere";
+    this.numberOfVariables = numberOfVariables;
+    numberOfObjectives = 1;
+    numberOfConstraints = 0;
+    problemName = "Sphere";
 
-    upperLimit_ = new double[numberOfVariables_];
-    lowerLimit_ = new double[numberOfVariables_];
-    for (int var = 0; var < numberOfVariables_; var++) {
-      lowerLimit_[var] = -600.0;
-      upperLimit_[var] = 600.0;
+    upperLimit = new double[this.numberOfVariables];
+    lowerLimit = new double[this.numberOfVariables];
+    for (int var = 0; var < this.numberOfVariables; var++) {
+      lowerLimit[var] = -600.0;
+      upperLimit[var] = 600.0;
     }
 
     if (solutionType.compareTo("BinaryReal") == 0) {
-      solutionType_ = new BinaryRealSolutionType(this);
+      this.solutionType = new BinaryRealSolutionType(this);
     } else if (solutionType.compareTo("Real") == 0) {
-      solutionType_ = new RealSolutionType(this);
+      this.solutionType = new RealSolutionType(this);
     } else {
       throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }
@@ -79,7 +79,7 @@ public class Griewank extends Problem {
     double sum = 0.0;
     double mult = 1.0;
     double d = 4000.0;
-    for (int var = 0; var < numberOfVariables_; var++) {
+    for (int var = 0; var < numberOfVariables; var++) {
       sum += decisionVariables[var].getValue() *
         decisionVariables[var].getValue();
       mult *= Math.cos(decisionVariables[var].getValue() / Math.sqrt(var + 1));

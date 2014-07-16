@@ -46,22 +46,22 @@ public class Sphere extends Problem {
    * @throws org.uma.jmetal.util.JMetalException
    */
   public Sphere(String solutionType, Integer numberOfVariables) throws JMetalException {
-    numberOfVariables_ = numberOfVariables;
-    numberOfObjectives_ = 1;
-    numberOfConstraints_ = 0;
-    problemName_ = "Sphere";
+    this.numberOfVariables = numberOfVariables;
+    numberOfObjectives = 1;
+    numberOfConstraints = 0;
+    problemName = "Sphere";
 
-    upperLimit_ = new double[numberOfVariables_];
-    lowerLimit_ = new double[numberOfVariables_];
-    for (int var = 0; var < numberOfVariables_; var++) {
-      lowerLimit_[var] = -5.12;
-      upperLimit_[var] = 5.12;
+    upperLimit = new double[this.numberOfVariables];
+    lowerLimit = new double[this.numberOfVariables];
+    for (int var = 0; var < this.numberOfVariables; var++) {
+      lowerLimit[var] = -5.12;
+      upperLimit[var] = 5.12;
     }
 
     if (solutionType.compareTo("BinaryReal") == 0) {
-      solutionType_ = new BinaryRealSolutionType(this);
+      this.solutionType = new BinaryRealSolutionType(this);
     } else if (solutionType.compareTo("Real") == 0) {
-      solutionType_ = new RealSolutionType(this);
+      this.solutionType = new RealSolutionType(this);
     } else {
       throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }
@@ -78,7 +78,7 @@ public class Sphere extends Problem {
 
     double sum = 0.0;
     double value;
-    for (int var = 0; var < numberOfVariables_; var++) {
+    for (int var = 0; var < numberOfVariables; var++) {
       value = decisionVariables[var].getValue();
       sum += value * value;
     }

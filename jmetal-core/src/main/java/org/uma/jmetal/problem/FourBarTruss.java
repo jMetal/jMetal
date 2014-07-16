@@ -51,26 +51,26 @@ public class FourBarTruss extends Problem {
    * @param solutionType The solutiontype type must "Real" or "BinaryReal".
    */
   public FourBarTruss(String solutionType) throws JMetalException {
-    numberOfVariables_ = 4;
-    numberOfObjectives_ = 2;
-    numberOfConstraints_ = 0;
-    problemName_ = "FourBarTruss";
+    numberOfVariables = 4;
+    numberOfObjectives = 2;
+    numberOfConstraints = 0;
+    problemName = "FourBarTruss";
 
-    lowerLimit_ = new double[numberOfVariables_];
-    upperLimit_ = new double[numberOfVariables_];
-    lowerLimit_[0] = f_ / sigma_;
-    lowerLimit_[1] = Math.sqrt(2.0) * (f_ / sigma_);
-    lowerLimit_[2] = lowerLimit_[1];
-    lowerLimit_[3] = lowerLimit_[0];
-    upperLimit_[0] = 3 * (f_ / sigma_);
-    upperLimit_[1] = upperLimit_[0];
-    upperLimit_[2] = upperLimit_[0];
-    upperLimit_[3] = upperLimit_[0];
+    lowerLimit = new double[numberOfVariables];
+    upperLimit = new double[numberOfVariables];
+    lowerLimit[0] = f_ / sigma_;
+    lowerLimit[1] = Math.sqrt(2.0) * (f_ / sigma_);
+    lowerLimit[2] = lowerLimit[1];
+    lowerLimit[3] = lowerLimit[0];
+    upperLimit[0] = 3 * (f_ / sigma_);
+    upperLimit[1] = upperLimit[0];
+    upperLimit[2] = upperLimit[0];
+    upperLimit[3] = upperLimit[0];
 
     if (solutionType.compareTo("BinaryReal") == 0) {
-      solutionType_ = new BinaryRealSolutionType(this);
+      this.solutionType = new BinaryRealSolutionType(this);
     } else if (solutionType.compareTo("Real") == 0) {
-      solutionType_ = new RealSolutionType(this);
+      this.solutionType = new RealSolutionType(this);
     } else {
       throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }
@@ -86,8 +86,8 @@ public class FourBarTruss extends Problem {
     XReal vars = new XReal(solution);
 
     double[] fx = new double[2]; // function values
-    double[] x = new double[numberOfVariables_];
-    for (int i = 0; i < numberOfVariables_; i++) {
+    double[] x = new double[numberOfVariables];
+    for (int i = 0; i < numberOfVariables; i++) {
       x[i] = vars.getValue(i);
     }
 

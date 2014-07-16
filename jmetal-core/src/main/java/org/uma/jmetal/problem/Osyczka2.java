@@ -44,33 +44,33 @@ public class Osyczka2 extends Problem {
    * @param solutionType The solutiontype type must "Real" or "BinaryReal".
    */
   public Osyczka2(String solutionType) throws JMetalException {
-    numberOfVariables_ = 6;
-    numberOfObjectives_ = 2;
-    numberOfConstraints_ = 6;
-    problemName_ = "Osyczka2";
+    numberOfVariables = 6;
+    numberOfObjectives = 2;
+    numberOfConstraints = 6;
+    problemName = "Osyczka2";
 
-    lowerLimit_ = new double[numberOfVariables_];
-    upperLimit_ = new double[numberOfVariables_];
+    lowerLimit = new double[numberOfVariables];
+    upperLimit = new double[numberOfVariables];
     //Fill lower and upper limits
-    lowerLimit_[0] = 0.0;
-    lowerLimit_[1] = 0.0;
-    lowerLimit_[2] = 1.0;
-    lowerLimit_[3] = 0.0;
-    lowerLimit_[4] = 1.0;
-    lowerLimit_[5] = 0.0;
+    lowerLimit[0] = 0.0;
+    lowerLimit[1] = 0.0;
+    lowerLimit[2] = 1.0;
+    lowerLimit[3] = 0.0;
+    lowerLimit[4] = 1.0;
+    lowerLimit[5] = 0.0;
 
-    upperLimit_[0] = 10.0;
-    upperLimit_[1] = 10.0;
-    upperLimit_[2] = 5.0;
-    upperLimit_[3] = 6.0;
-    upperLimit_[4] = 5.0;
-    upperLimit_[5] = 10.0;
+    upperLimit[0] = 10.0;
+    upperLimit[1] = 10.0;
+    upperLimit[2] = 5.0;
+    upperLimit[3] = 6.0;
+    upperLimit[4] = 5.0;
+    upperLimit[5] = 10.0;
     //
 
     if (solutionType.compareTo("BinaryReal") == 0) {
-      solutionType_ = new BinaryRealSolutionType(this);
+      this.solutionType = new BinaryRealSolutionType(this);
     } else if (solutionType.compareTo("Real") == 0) {
-      solutionType_ = new RealSolutionType(this);
+      this.solutionType = new RealSolutionType(this);
     } else {
       throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }
@@ -85,7 +85,7 @@ public class Osyczka2 extends Problem {
   public void evaluate(Solution solution) throws JMetalException {
     Variable[] decisionVariables = solution.getDecisionVariables();
 
-    double[] f = new double[numberOfObjectives_];
+    double[] f = new double[numberOfObjectives];
 
     double x1, x2, x3, x4, x5, x6;
     x1 = decisionVariables[0].getValue();

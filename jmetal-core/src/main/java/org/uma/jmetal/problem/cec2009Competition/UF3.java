@@ -55,24 +55,24 @@ public class UF3 extends Problem {
    * @param solutionType      The solutiontype type must "Real" or "BinaryReal".
    */
   public UF3(String solutionType, Integer numberOfVariables) throws JMetalException {
-    numberOfVariables_ = numberOfVariables;
-    numberOfObjectives_ = 2;
-    numberOfConstraints_ = 0;
-    problemName_ = "CEC2009_UF3";
+    this.numberOfVariables = numberOfVariables;
+    numberOfObjectives = 2;
+    numberOfConstraints = 0;
+    problemName = "CEC2009_UF3";
 
-    upperLimit_ = new double[numberOfVariables_];
-    lowerLimit_ = new double[numberOfVariables_];
+    upperLimit = new double[this.numberOfVariables];
+    lowerLimit = new double[this.numberOfVariables];
 
     // Establishes upper and lower limits for the variables
-    for (int var = 0; var < numberOfVariables_; var++) {
-      lowerLimit_[var] = 0.0;
-      upperLimit_[var] = 1.0;
+    for (int var = 0; var < this.numberOfVariables; var++) {
+      lowerLimit[var] = 0.0;
+      upperLimit[var] = 1.0;
     }
 
     if (solutionType.compareTo("BinaryReal") == 0) {
-      solutionType_ = new BinaryRealSolutionType(this);
+      this.solutionType = new BinaryRealSolutionType(this);
     } else if (solutionType.compareTo("Real") == 0) {
-      solutionType_ = new RealSolutionType(this);
+      this.solutionType = new RealSolutionType(this);
     } else {
       throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }
@@ -87,8 +87,8 @@ public class UF3 extends Problem {
   public void evaluate(Solution solution) throws JMetalException {
     Variable[] decisionVariables = solution.getDecisionVariables();
 
-    double[] x = new double[numberOfVariables_];
-    for (int i = 0; i < numberOfVariables_; i++) {
+    double[] x = new double[numberOfVariables];
+    for (int i = 0; i < numberOfVariables; i++) {
       x[i] = decisionVariables[i].getValue();
     }
 
@@ -99,8 +99,8 @@ public class UF3 extends Problem {
     prod1 = prod2 = 1.0;
 
 
-    for (int j = 2; j <= numberOfVariables_; j++) {
-      yj = x[j - 1] - Math.pow(x[0], 0.5 * (1.0 + 3.0 * (j - 2.0) / (numberOfVariables_ - 2.0)));
+    for (int j = 2; j <= numberOfVariables; j++) {
+      yj = x[j - 1] - Math.pow(x[0], 0.5 * (1.0 + 3.0 * (j - 2.0) / (numberOfVariables - 2.0)));
       pj = Math.cos(20.0 * yj * Math.PI / Math.sqrt(j));
       if (j % 2 == 0) {
         sum2 += yj * yj;

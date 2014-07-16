@@ -58,28 +58,28 @@ public class LZ09_F3 extends Problem {
     Integer ptype,
     Integer dtype,
     Integer ltype) throws JMetalException {
-    numberOfVariables_ = 30;
-    numberOfObjectives_ = 2;
-    numberOfConstraints_ = 0;
-    problemName_ = "LZ09_F3";
+    numberOfVariables = 30;
+    numberOfObjectives = 2;
+    numberOfConstraints = 0;
+    problemName = "LZ09_F3";
 
-    LZ09_ = new LZ09(numberOfVariables_,
-      numberOfObjectives_,
+    LZ09_ = new LZ09(numberOfVariables,
+      numberOfObjectives,
       ptype,
       dtype,
       ltype);
 
-    lowerLimit_ = new double[numberOfVariables_];
-    upperLimit_ = new double[numberOfVariables_];
-    for (int var = 0; var < numberOfVariables_; var++) {
-      lowerLimit_[var] = 0.0;
-      upperLimit_[var] = 1.0;
+    lowerLimit = new double[numberOfVariables];
+    upperLimit = new double[numberOfVariables];
+    for (int var = 0; var < numberOfVariables; var++) {
+      lowerLimit[var] = 0.0;
+      upperLimit[var] = 1.0;
     }
 
     if (solutionType.compareTo("BinaryReal") == 0) {
-      solutionType_ = new BinaryRealSolutionType(this);
+      this.solutionType = new BinaryRealSolutionType(this);
     } else if (solutionType.compareTo("Real") == 0) {
-      solutionType_ = new RealSolutionType(this);
+      this.solutionType = new RealSolutionType(this);
     } else {
       throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }
@@ -94,17 +94,17 @@ public class LZ09_F3 extends Problem {
   public void evaluate(Solution solution) throws JMetalException {
     Variable[] gen = solution.getDecisionVariables();
 
-    Vector<Double> x = new Vector<Double>(numberOfVariables_);
-    Vector<Double> y = new Vector<Double>(numberOfObjectives_);
+    Vector<Double> x = new Vector<Double>(numberOfVariables);
+    Vector<Double> y = new Vector<Double>(numberOfObjectives);
 
-    for (int i = 0; i < numberOfVariables_; i++) {
+    for (int i = 0; i < numberOfVariables; i++) {
       x.addElement(gen[i].getValue());
       y.addElement(0.0);
     } // for
 
     LZ09_.objective(x, y);
 
-    for (int i = 0; i < numberOfObjectives_; i++) {
+    for (int i = 0; i < numberOfObjectives; i++) {
       solution.setObjective(i, y.get(i));
     }
   }

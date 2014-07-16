@@ -58,25 +58,25 @@ public class ZDT2 extends Problem {
    * @param solutionType      The solutiontype type must "Real" or "BinaryReal".
    */
   public ZDT2(String solutionType, Integer numberOfVariables) throws JMetalException {
-    numberOfVariables_ = numberOfVariables;
-    numberOfObjectives_ = 2;
-    numberOfConstraints_ = 0;
-    problemName_ = "ZDT2";
+    this.numberOfVariables = numberOfVariables;
+    numberOfObjectives = 2;
+    numberOfConstraints = 0;
+    problemName = "ZDT2";
 
-    upperLimit_ = new double[numberOfVariables_];
-    lowerLimit_ = new double[numberOfVariables_];
+    upperLimit = new double[this.numberOfVariables];
+    lowerLimit = new double[this.numberOfVariables];
 
-    for (int var = 0; var < numberOfVariables_; var++) {
-      lowerLimit_[var] = 0.0;
-      upperLimit_[var] = 1.0;
+    for (int var = 0; var < this.numberOfVariables; var++) {
+      lowerLimit[var] = 0.0;
+      upperLimit[var] = 1.0;
     }
 
     if (solutionType.compareTo("BinaryReal") == 0) {
-      solutionType_ = new BinaryRealSolutionType(this);
+      this.solutionType = new BinaryRealSolutionType(this);
     } else if (solutionType.compareTo("Real") == 0) {
-      solutionType_ = new RealSolutionType(this);
+      this.solutionType = new RealSolutionType(this);
     } else if (solutionType.compareTo("ArrayReal") == 0) {
-      solutionType_ = new ArrayRealSolutionType(this);
+      this.solutionType = new ArrayRealSolutionType(this);
     } else {
       throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }
@@ -91,7 +91,7 @@ public class ZDT2 extends Problem {
   public void evaluate(Solution solution) throws JMetalException {
     XReal x = new XReal(solution);
 
-    double[] fx = new double[numberOfObjectives_];
+    double[] fx = new double[numberOfObjectives];
     fx[0] = x.getValue(0);
     double g = this.evalG(x);
     double h = this.evalH(fx[0], g);
@@ -112,7 +112,7 @@ public class ZDT2 extends Problem {
     for (int i = 1; i < x.getNumberOfDecisionVariables(); i++) {
       g += x.getValue(i);
     }
-    double constant = (9.0 / (numberOfVariables_ - 1));
+    double constant = (9.0 / (numberOfVariables - 1));
     g = constant * g;
     g = g + 1.0;
     return g;

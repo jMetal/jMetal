@@ -53,18 +53,18 @@ public class TSP extends Problem {
    * @param filename The file containing the definition of the problem
    */
   public TSP(String solutionType, String filename) throws Exception {
-    numberOfVariables_ = 1;
-    numberOfObjectives_ = 1;
-    numberOfConstraints_ = 0;
-    problemName_ = "TSP";
+    numberOfVariables = 1;
+    numberOfObjectives = 1;
+    numberOfConstraints = 0;
+    problemName = "TSP";
 
-    solutionType_ = new PermutationSolutionType(this);
+    this.solutionType = new PermutationSolutionType(this);
 
-    length_ = new int[numberOfVariables_];
+    length = new int[numberOfVariables];
 
     try {
       if (solutionType.compareTo("Permutation") == 0) {
-        solutionType_ = new PermutationSolutionType(this);
+        this.solutionType = new PermutationSolutionType(this);
       } else {
         throw new JMetalException("Solution type invalid");
       }
@@ -74,7 +74,7 @@ public class TSP extends Problem {
     readProblem(filename);
 
     Configuration.logger_.info(""+numberOfCities_);
-    length_[0] = numberOfCities_;
+    length[0] = numberOfCities_;
   }
 
   /**

@@ -43,22 +43,22 @@ public class Rosenbrock extends Problem {
    */
   public Rosenbrock(String solutionType, Integer numberOfVariables)
     throws ClassNotFoundException, JMetalException {
-    numberOfVariables_ = numberOfVariables;
-    numberOfObjectives_ = 1;
-    numberOfConstraints_ = 0;
-    problemName_ = "Rastrigin";
+    this.numberOfVariables = numberOfVariables;
+    numberOfObjectives = 1;
+    numberOfConstraints = 0;
+    problemName = "Rastrigin";
 
-    upperLimit_ = new double[numberOfVariables_];
-    lowerLimit_ = new double[numberOfVariables_];
-    for (int var = 0; var < numberOfVariables_; var++) {
-      lowerLimit_[var] = -5.12;
-      upperLimit_[var] = 5.12;
+    upperLimit = new double[this.numberOfVariables];
+    lowerLimit = new double[this.numberOfVariables];
+    for (int var = 0; var < this.numberOfVariables; var++) {
+      lowerLimit[var] = -5.12;
+      upperLimit[var] = 5.12;
     }
 
     if (solutionType.compareTo("BinaryReal") == 0) {
-      solutionType_ = new BinaryRealSolutionType(this);
+      this.solutionType = new BinaryRealSolutionType(this);
     } else if (solutionType.compareTo("Real") == 0) {
-      solutionType_ = new RealSolutionType(this);
+      this.solutionType = new RealSolutionType(this);
     } else {
       throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }
@@ -74,13 +74,13 @@ public class Rosenbrock extends Problem {
     Variable[] decisionVariables = solution.getDecisionVariables();
 
     double sum = 0.0;
-    double[] x = new double[numberOfVariables_];
+    double[] x = new double[numberOfVariables];
 
-    for (int i = 0; i < numberOfVariables_; i++) {
+    for (int i = 0; i < numberOfVariables; i++) {
       x[i] = decisionVariables[i].getValue();
     }
 
-    for (int i = 0; i < numberOfVariables_ - 1; i++) {
+    for (int i = 0; i < numberOfVariables - 1; i++) {
       //sum += 100.0 * (x[i+1]-x[i]*x[i])*(x[i+1]-x[i]*x[i]) +(x[i]-1)*(x[i]-1) ;
       double temp1 = (x[i] * x[i]) - x[i + 1];
       double temp2 = x[i] - 1.0;

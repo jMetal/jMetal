@@ -47,24 +47,24 @@ public class Water extends Problem {
    * @param solutionType The solutiontype type must "Real" or "BinaryReal".
    */
   public Water(String solutionType) throws JMetalException {
-    numberOfVariables_ = 3;
-    numberOfObjectives_ = 5;
-    numberOfConstraints_ = 7;
-    problemName_ = "Water";
+    numberOfVariables = 3;
+    numberOfObjectives = 5;
+    numberOfConstraints = 7;
+    problemName = "Water";
 
-    upperLimit_ = new double[numberOfVariables_];
-    lowerLimit_ = new double[numberOfVariables_];
-    upperLimit_ = new double[numberOfVariables_];
-    lowerLimit_ = new double[numberOfVariables_];
-    for (int var = 0; var < numberOfVariables_; var++) {
-      lowerLimit_[var] = LOWERLIMIT[var];
-      upperLimit_[var] = UPPERLIMIT[var];
+    upperLimit = new double[numberOfVariables];
+    lowerLimit = new double[numberOfVariables];
+    upperLimit = new double[numberOfVariables];
+    lowerLimit = new double[numberOfVariables];
+    for (int var = 0; var < numberOfVariables; var++) {
+      lowerLimit[var] = LOWERLIMIT[var];
+      upperLimit[var] = UPPERLIMIT[var];
     } // for
 
     if (solutionType.compareTo("BinaryReal") == 0) {
-      solutionType_ = new BinaryRealSolutionType(this);
+      this.solutionType = new BinaryRealSolutionType(this);
     } else if (solutionType.compareTo("Real") == 0) {
-      solutionType_ = new RealSolutionType(this);
+      this.solutionType = new RealSolutionType(this);
     } else {
       throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }
@@ -125,7 +125,7 @@ public class Water extends Problem {
 
     double total = 0.0;
     int number = 0;
-    for (int i = 0; i < numberOfConstraints_; i++) {
+    for (int i = 0; i < numberOfConstraints; i++) {
       if (constraint[i] < 0.0) {
         total += constraint[i];
         number++;

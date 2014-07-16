@@ -155,7 +155,7 @@ public class FastHypervolume {
 
       if (numberOfObjectives_ == 2) {
         //updateReferencePoint(solutionSet);
-        //solutionSet.sort(new ObjectiveComparator(numberOfObjectives_-1, true));
+        //solutionSet.sort(new ObjectiveComparator(numberOfObjectives-1, true));
         contributions[i] = solutionSetHV - get2DHV(solutionSet);
       } else {
         Front front = new Front(solutionSet.size(), numberOfObjectives_, solutionSet);
@@ -187,7 +187,7 @@ public class FastHypervolume {
 
     if (numberOfObjectives_ == 2) {
       //updateReferencePoint(solutionSet);
-      //solutionSet.sort(new ObjectiveComparator(numberOfObjectives_-1, true));
+      //solutionSet.sort(new ObjectiveComparator(numberOfObjectives-1, true));
       contribution = solutionSetHV - get2DHV(solutionSet);
     } else {
       Front front = new Front(solutionSet.size(), numberOfObjectives_, solutionSet);

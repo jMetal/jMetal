@@ -55,27 +55,27 @@ public class UF8 extends Problem {
    * @param solutionType      The solutiontype type must "Real" or "BinaryReal".
    */
   public UF8(String solutionType, Integer numberOfVariables) throws JMetalException {
-    numberOfVariables_ = numberOfVariables;
-    numberOfObjectives_ = 3;
-    numberOfConstraints_ = 0;
-    problemName_ = "CEC2009_UF8";
+    this.numberOfVariables = numberOfVariables;
+    numberOfObjectives = 3;
+    numberOfConstraints = 0;
+    problemName = "CEC2009_UF8";
 
-    upperLimit_ = new double[numberOfVariables_];
-    lowerLimit_ = new double[numberOfVariables_];
+    upperLimit = new double[this.numberOfVariables];
+    lowerLimit = new double[this.numberOfVariables];
 
-    lowerLimit_[0] = 0.0;
-    upperLimit_[0] = 1.0;
-    lowerLimit_[1] = 0.0;
-    upperLimit_[1] = 1.0;
-    for (int var = 2; var < numberOfVariables_; var++) {
-      lowerLimit_[var] = -2.0;
-      upperLimit_[var] = 2.0;
+    lowerLimit[0] = 0.0;
+    upperLimit[0] = 1.0;
+    lowerLimit[1] = 0.0;
+    upperLimit[1] = 1.0;
+    for (int var = 2; var < this.numberOfVariables; var++) {
+      lowerLimit[var] = -2.0;
+      upperLimit[var] = 2.0;
     }
 
     if (solutionType.compareTo("BinaryReal") == 0) {
-      solutionType_ = new BinaryRealSolutionType(this);
+      this.solutionType = new BinaryRealSolutionType(this);
     } else if (solutionType.compareTo("Real") == 0) {
-      solutionType_ = new RealSolutionType(this);
+      this.solutionType = new RealSolutionType(this);
     } else {
       throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }
@@ -90,8 +90,8 @@ public class UF8 extends Problem {
   public void evaluate(Solution solution) throws JMetalException {
     Variable[] decisionVariables = solution.getDecisionVariables();
 
-    double[] x = new double[numberOfVariables_];
-    for (int i = 0; i < numberOfVariables_; i++) {
+    double[] x = new double[numberOfVariables];
+    for (int i = 0; i < numberOfVariables; i++) {
       x[i] = decisionVariables[i].getValue();
     }
 
@@ -100,9 +100,9 @@ public class UF8 extends Problem {
     sum1 = sum2 = sum3 = 0.0;
     count1 = count2 = count3 = 0;
 
-    for (int j = 3; j <= numberOfVariables_; j++) {
+    for (int j = 3; j <= numberOfVariables; j++) {
       yj =
-        x[j - 1] - 2.0 * x[1] * Math.sin(2.0 * Math.PI * x[0] + j * Math.PI / numberOfVariables_);
+        x[j - 1] - 2.0 * x[1] * Math.sin(2.0 * Math.PI * x[0] + j * Math.PI / numberOfVariables);
       if (j % 3 == 1) {
         sum1 += yj * yj;
         count1++;

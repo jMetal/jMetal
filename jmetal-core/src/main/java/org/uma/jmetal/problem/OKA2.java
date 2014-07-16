@@ -45,25 +45,25 @@ public class OKA2 extends Problem {
    * @param solutionType The solutiontype type must "Real" or "BinaryReal".
    */
   public OKA2(String solutionType) throws JMetalException {
-    numberOfVariables_ = 3;
-    numberOfObjectives_ = 2;
-    numberOfConstraints_ = 0;
-    problemName_ = "OKA2";
+    numberOfVariables = 3;
+    numberOfObjectives = 2;
+    numberOfConstraints = 0;
+    problemName = "OKA2";
 
-    upperLimit_ = new double[numberOfVariables_];
-    lowerLimit_ = new double[numberOfVariables_];
+    upperLimit = new double[numberOfVariables];
+    lowerLimit = new double[numberOfVariables];
 
-    lowerLimit_[0] = -Math.PI;
-    upperLimit_[0] = Math.PI;
-    for (int i = 1; i < numberOfVariables_; i++) {
-      lowerLimit_[i] = -5.0;
-      upperLimit_[i] = 5.0;
+    lowerLimit[0] = -Math.PI;
+    upperLimit[0] = Math.PI;
+    for (int i = 1; i < numberOfVariables; i++) {
+      lowerLimit[i] = -5.0;
+      upperLimit[i] = 5.0;
     }
 
     if (solutionType.compareTo("BinaryReal") == 0) {
-      solutionType_ = new BinaryRealSolutionType(this);
+      this.solutionType = new BinaryRealSolutionType(this);
     } else if (solutionType.compareTo("Real") == 0) {
-      solutionType_ = new RealSolutionType(this);
+      this.solutionType = new RealSolutionType(this);
     } else {
       throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }
@@ -78,10 +78,10 @@ public class OKA2 extends Problem {
   public void evaluate(Solution solution) throws JMetalException {
     Variable[] decisionVariables = solution.getDecisionVariables();
 
-    double[] fx = new double[numberOfObjectives_];
-    double[] x = new double[numberOfVariables_];
+    double[] fx = new double[numberOfObjectives];
+    double[] x = new double[numberOfVariables];
 
-    for (int i = 0; i < numberOfVariables_; i++) {
+    for (int i = 0; i < numberOfVariables; i++) {
       x[i] = decisionVariables[i].getValue();
     }
 
