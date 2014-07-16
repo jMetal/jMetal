@@ -128,7 +128,7 @@ public class WFGHV {
     }
 
     referencePoint = new Point(points);
-    Configuration.logger_.info("Using reference point: " + referencePoint);
+    Configuration.logger.info("Using reference point: " + referencePoint);
 
     WFGHV wfghv =
       new WFGHV(referencePoint.getNumberOfObjectives(), front.getNumberOfPoints(), referencePoint);

@@ -54,7 +54,7 @@ public class DMOPSORunner {
     QualityIndicator indicators;
 
     // Logger object and file to store log messages
-    logger_ = Configuration.logger_;
+    logger_ = Configuration.logger;
     fileHandler_ = new FileHandler("dMOPSO_main.log");
     logger_.addHandler(fileHandler_);
 

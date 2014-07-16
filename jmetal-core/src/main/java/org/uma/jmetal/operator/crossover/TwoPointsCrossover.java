@@ -152,7 +152,7 @@ public class TwoPointsCrossover extends Crossover {
         }
       }
     } else {
-      Configuration.logger_.severe("TwoPointsCrossover.doCrossover: invalid " +
+      Configuration.logger.severe("TwoPointsCrossover.doCrossover: invalid " +
         "type" +
         parent1.getDecisionVariables()[0].getVariableType());
       Class<String> cls = java.lang.String.class;
@@ -175,14 +175,14 @@ public class TwoPointsCrossover extends Crossover {
     if (!(VALID_TYPES.contains(parents[0].getType().getClass()) &&
       VALID_TYPES.contains(parents[1].getType().getClass()))) {
 
-      Configuration.logger_.severe("TwoPointsCrossover.execute: the solutions " +
+      Configuration.logger.severe("TwoPointsCrossover.execute: the solutions " +
         "are not of the right type. The type should be 'Permutation', but " +
         parents[0].getType() + " and " +
         parents[1].getType() + " are obtained");
     }
 
     if (parents.length < 2) {
-      Configuration.logger_.severe("TwoPointsCrossover.execute: operator needs two " +
+      Configuration.logger.severe("TwoPointsCrossover.execute: operator needs two " +
         "parents");
       Class<String> cls = java.lang.String.class;
       String name = cls.getName();

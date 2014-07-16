@@ -77,7 +77,7 @@ public class Epsilon {
     ind_value = qualityIndicator.epsilon(trueFront, solutionFront, new Integer(
       args[2]));
 
-    Configuration.logger_.info(""+ind_value);
+    Configuration.logger.info(""+ind_value);
   }
 
   /**

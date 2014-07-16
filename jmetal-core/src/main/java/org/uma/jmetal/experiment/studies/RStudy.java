@@ -67,11 +67,11 @@ public class RStudy extends Experiment {
   public static void main(String[] args) throws JMetalException, IOException {
     RStudy exp = new RStudy();
 
-    Configuration.logger_.info("START");
+    Configuration.logger.info("START");
 
     exp.initExperiment(args);
 
-    Configuration.logger_.info(""+exp);
+    Configuration.logger.info(""+exp);
 
     exp.runExperiment();
   } 

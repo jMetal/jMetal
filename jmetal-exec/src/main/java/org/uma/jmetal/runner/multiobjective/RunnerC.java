@@ -66,7 +66,7 @@ public class RunnerC {
 
     QualityIndicator indicators;
 
-    logger_ = Configuration.logger_;
+    logger_ = Configuration.logger;
     fileHandler_ = new FileHandler("jMetal.log");
     logger_.addHandler(fileHandler_);
 

@@ -142,13 +142,13 @@ public class pMOEAD extends Algorithm implements Runnable {
     maxEvaluations_ = parentThread_.maxEvaluations_ / parentThread_.numberOfThreads_;
 
     try {
-      //Configuration.logger_.info("en espera: " + barrier_.getNumberWaiting()) ;
+      //Configuration.logger.info("en espera: " + barrier_.getNumberWaiting()) ;
       barrier_.await();
-      //Configuration.logger_.info("Running: " + id_ ) ;
+      //Configuration.logger.info("Running: " + id_ ) ;
     } catch (InterruptedException e) {
-      Configuration.logger_.log(Level.SEVERE, "Error", e);
+      Configuration.logger.log(Level.SEVERE, "Error", e);
     } catch (BrokenBarrierException e) {
-      Configuration.logger_.log(Level.SEVERE, "Error", e);
+      Configuration.logger.log(Level.SEVERE, "Error", e);
     }
 
     int first;
@@ -161,7 +161,7 @@ public class pMOEAD extends Algorithm implements Runnable {
       last = first + partitions - 1;
     }
 
-    Configuration.logger_.info("Id: " + id_ + "  Partitions: " + partitions +
+    Configuration.logger.info("Id: " + id_ + "  Partitions: " + partitions +
       " First: " + first + " Last: " + last);
 
     do {
@@ -216,13 +216,13 @@ public class pMOEAD extends Algorithm implements Runnable {
         try {
           updateOfSolutions(child, n, type);
         } catch (JMetalException e) {
-          Configuration.logger_.log(Level.SEVERE, "Error", e);
+          Configuration.logger.log(Level.SEVERE, "Error", e);
         }
       }
     } while (evaluations_ < maxEvaluations_);
 
     long estimatedTime = System.currentTimeMillis() - parentThread_.initTime_;
-    Configuration.logger_.info("Time thread " + id_ + ": " + estimatedTime);
+    Configuration.logger.info("Time thread " + id_ + ": " + estimatedTime);
   }
 
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
@@ -343,7 +343,7 @@ public class pMOEAD extends Algorithm implements Runnable {
         }
         br.close();
       } catch (Exception e) {
-        Configuration.logger_.log(
+        Configuration.logger.log(
           Level.SEVERE,
           "initializeUniformWeight: fail when reading for file: " + dataDirectory_ + "/" + dataFileName,
           e);

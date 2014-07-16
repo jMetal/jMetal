@@ -43,8 +43,8 @@ public class NSGAIIRandom extends NSGAIITemplate {
     }
 
     for (int i = 0; i < N_O; i++) {
-      Configuration.logger_.info(getOffspring[i].configuration());
-      Configuration.logger_.info("Contribution: " + contribution_[i]);
+      Configuration.logger.info(getOffspring[i].configuration());
+      Configuration.logger.info("Contribution: " + contribution_[i]);
     }
 
     readParameterSettings();
@@ -81,7 +81,7 @@ public class NSGAIIRandom extends NSGAIITemplate {
                 offSpring =
                   ((PolynomialMutationOffspring) getOffspring[selected]).getOffspring(individual);
               } else {
-                Configuration.logger_.info("Error in NSGAIITRandom. Operator " + offSpring + " does not exist");
+                Configuration.logger.info("Error in NSGAIITRandom. Operator " + offSpring + " does not exist");
               }
 
               offSpring.setFitness((int) selected);

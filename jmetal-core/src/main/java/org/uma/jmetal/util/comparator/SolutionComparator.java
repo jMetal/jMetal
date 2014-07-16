@@ -65,7 +65,7 @@ public class SolutionComparator implements Comparator<Solution> {
         return 0;
       }
     } catch (JMetalException e) {
-      Configuration.logger_.log(Level.SEVERE, "SolutionComparator.compare: JMException ", e);
+      Configuration.logger.log(Level.SEVERE, "SolutionComparator.compare: JMException ", e);
     }
 
     return -1;

@@ -35,21 +35,17 @@ import java.util.HashMap;
 import java.util.Properties;
 import java.util.logging.Level;
 
-/**
- * Settings class of algorithm CellDE
- */
+/** Settings class of algorithm CellDE */
 public class CellDESettings extends Settings {
-  private double cr_;
-  private double f_;
+  private double cr;
+  private double f;
 
-  private int populationSize_;
-  private int archiveSize_;
-  private int maxEvaluations_;
-  private int archiveFeedback_;
+  private int populationSize;
+  private int archiveSize;
+  private int maxEvaluations;
+  private int archiveFeedback;
 
-  /**
-   * Constructor
-   */
+  /** Constructor */
   public CellDESettings(String problemName) {
     super(problemName);
 
@@ -57,26 +53,21 @@ public class CellDESettings extends Settings {
     try {
       problem_ = (new ProblemFactory()).getProblem(this.problemName, problemParams);
     } catch (JMetalException e) {
-      Configuration.logger_.log(Level.SEVERE, "Unable to get problem", e);
+      Configuration.logger.log(Level.SEVERE, "Unable to get problem", e);
       throw new JMetalException(e);
     }
 
     // Default experiment.settings
-    cr_ = 0.5;
-    f_ = 0.5;
+    cr = 0.5;
+    f = 0.5;
 
-    populationSize_ = 100;
-    archiveSize_ = 100;
-    maxEvaluations_ = 25000;
-    archiveFeedback_ = 20;
+    populationSize = 100;
+    archiveSize = 100;
+    maxEvaluations = 25000;
+    archiveFeedback = 20;
   }
 
-  /**
-   * Configure the algorithm with the specified parameter experiment.settings
-   *
-   * @return an algorithm object
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** configure() method */
   public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
     Operator selection;
@@ -89,15 +80,15 @@ public class CellDESettings extends Settings {
     algorithm.setProblem(problem_);
 
     // Algorithm parameters
-    algorithm.setInputParameter("populationSize", populationSize_);
-    algorithm.setInputParameter("archiveSize", archiveSize_);
-    algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
-    algorithm.setInputParameter("archiveFeedBack", archiveFeedback_);
+    algorithm.setInputParameter("populationSize", populationSize);
+    algorithm.setInputParameter("archiveSize", archiveSize);
+    algorithm.setInputParameter("maxEvaluations", maxEvaluations);
+    algorithm.setInputParameter("archiveFeedBack", archiveFeedback);
 
     // Crossover operator 
     HashMap<String, Object> parameters = new HashMap<String, Object>();
-    parameters.put("CR", cr_);
-    parameters.put("F", f_);
+    parameters.put("CR", cr);
+    parameters.put("F", f);
     crossover = CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", parameters);
 
     // Add the operator to the algorithm
@@ -110,24 +101,20 @@ public class CellDESettings extends Settings {
     return algorithm;
   }
 
-  /**
-   * Configure CellDE with user-defined parameter experiment.settings
-   *
-   * @return A CellDE algorithm object
-   */
+  /** configure() method using a properties file */
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {
-    populationSize_ = Integer
-      .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize_)));
-    maxEvaluations_ = Integer
-      .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations_)));
-    archiveSize_ =
-      Integer.parseInt(configuration.getProperty("archiveSize", String.valueOf(archiveSize_)));
-    archiveFeedback_ = Integer
-      .parseInt(configuration.getProperty("archiveFeedback", String.valueOf(archiveFeedback_)));
+    populationSize = Integer
+      .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize)));
+    maxEvaluations = Integer
+      .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations)));
+    archiveSize =
+      Integer.parseInt(configuration.getProperty("archiveSize", String.valueOf(archiveSize)));
+    archiveFeedback = Integer
+      .parseInt(configuration.getProperty("archiveFeedback", String.valueOf(archiveFeedback)));
 
-    cr_ = Double.parseDouble(configuration.getProperty("CR", String.valueOf(cr_)));
-    f_ = Double.parseDouble(configuration.getProperty("F", String.valueOf(f_)));
+    cr = Double.parseDouble(configuration.getProperty("CR", String.valueOf(cr)));
+    f = Double.parseDouble(configuration.getProperty("F", String.valueOf(f)));
 
     return configure();
   }

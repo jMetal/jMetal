@@ -39,7 +39,7 @@ public class ReferenceParetoFronts implements IExperimentOutput {
 
     if (!rfDirectory.exists()) {
       boolean result = new File(referenceFrontDirectory).mkdirs();
-      Configuration.logger_.info("Creating " + referenceFrontDirectory);
+      Configuration.logger.info("Creating " + referenceFrontDirectory);
     }
 
     String referenceParetoFront =
@@ -65,7 +65,7 @@ public class ReferenceParetoFronts implements IExperimentOutput {
     try {
       solutionSet.printObjectivesToFile(referenceParetoFront);
     } catch (IOException e) {
-      Configuration.logger_.log(Level.SEVERE, "Error", e);
+      Configuration.logger.log(Level.SEVERE, "Error", e);
     }
   }
 }

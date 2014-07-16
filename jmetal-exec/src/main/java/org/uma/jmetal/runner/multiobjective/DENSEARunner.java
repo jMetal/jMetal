@@ -53,7 +53,7 @@ public class DENSEARunner {
     Operator selection;
 
     // Logger object and file to store log messages
-    logger_ = Configuration.logger_;
+    logger_ = Configuration.logger;
     fileHandler_ = new FileHandler("Densea.log");
     logger_.addHandler(fileHandler_);
 
@@ -89,7 +89,7 @@ public class DENSEARunner {
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;
-    Configuration.logger_.info("Total time of execution: " + estimatedTime);
+    Configuration.logger.info("Total time of execution: " + estimatedTime);
 
     // Log messages 
     logger_.info("Objectives values have been writen to file FUN");

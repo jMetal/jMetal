@@ -50,18 +50,18 @@ public class MultithreadedAlgorithmExecutor implements SynchronousParallelTaskEx
     if (threads == 0) {
       numberOfThreads_ = Runtime.getRuntime().availableProcessors();
     } else if (threads < 0) {
-      Configuration.logger_.severe("MultithreadedAlgorithmRunner: the number of threads" +
+      Configuration.logger.severe("MultithreadedAlgorithmRunner: the number of threads" +
         " cannot be negative number " + threads);
     } else {
       numberOfThreads_ = threads;
     }
-    Configuration.logger_.info("THREADS: " + numberOfThreads_);
+    Configuration.logger.info("THREADS: " + numberOfThreads_);
   }
 
   public void start(Object experiment) {
     experiment_ = (Experiment) experiment;
     executor_ = Executors.newFixedThreadPool(numberOfThreads_);
-    Configuration.logger_.info("Cores: " + numberOfThreads_);
+    Configuration.logger.info("Cores: " + numberOfThreads_);
     taskList_ = null;
   }
 
@@ -81,7 +81,7 @@ public class MultithreadedAlgorithmExecutor implements SynchronousParallelTaskEx
     try {
       future = executor_.invokeAll(taskList_);
     } catch (InterruptedException e1) {
-      Configuration.logger_.log(Level.SEVERE, "Error", e1);
+      Configuration.logger.log(Level.SEVERE, "Error", e1);
     }
     List<Object> resultList = new Vector<Object>();
 
@@ -91,9 +91,9 @@ public class MultithreadedAlgorithmExecutor implements SynchronousParallelTaskEx
         returnValue = result.get();
         resultList.add(returnValue);
       } catch (InterruptedException e) {
-        Configuration.logger_.log(Level.SEVERE, "Error", e);
+        Configuration.logger.log(Level.SEVERE, "Error", e);
       } catch (ExecutionException e) {
-        Configuration.logger_.log(Level.SEVERE, "Error", e);
+        Configuration.logger.log(Level.SEVERE, "Error", e);
       }
     }
     taskList_ = null;
@@ -142,7 +142,7 @@ public class MultithreadedAlgorithmExecutor implements SynchronousParallelTaskEx
         algorithm = settings.configure();
       }
 
-      Configuration.logger_.info(
+      Configuration.logger.info(
         " Running algorithm: " + algorithmName_ + ", problem: " + problemName_ + ", run: " + id_);
 
       SolutionSet resultFront = algorithm.execute();
@@ -156,7 +156,7 @@ public class MultithreadedAlgorithmExecutor implements SynchronousParallelTaskEx
       experimentDirectory = new File(directory);
       if (!experimentDirectory.exists()) {
         boolean result = new File(directory).mkdirs();
-        Configuration.logger_.info("Creating " + directory);
+        Configuration.logger.info("Creating " + directory);
       }
 
       resultFront.printObjectivesToFile(

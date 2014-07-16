@@ -75,7 +75,7 @@ public class SMPSORunner {
 
     QualityIndicator indicators;
 
-    logger_ = Configuration.logger_;
+    logger_ = Configuration.logger;
     fileHandler_ = new FileHandler("SMPSO_main.log");
     logger_.addHandler(fileHandler_);
 

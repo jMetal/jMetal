@@ -63,7 +63,7 @@ public class Runner {
     ClassNotFoundException {
     Algorithm algorithm;
 
-    logger_ = Configuration.logger_;
+    logger_ = Configuration.logger;
     fileHandler_ = new FileHandler("jMetal.log");
     logger_.addHandler(fileHandler_);
 

@@ -61,7 +61,7 @@ public class PESA2Runner {
     Operator mutation;
 
     // Logger object and file to store log messages
-    logger_ = Configuration.logger_;
+    logger_ = Configuration.logger;
     fileHandler_ = new FileHandler("PESA2_main.log");
     logger_.addHandler(fileHandler_);
 
@@ -106,7 +106,7 @@ public class PESA2Runner {
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;
-    Configuration.logger_.info("Total execution time: " + estimatedTime);
+    Configuration.logger.info("Total execution time: " + estimatedTime);
 
     // Result messages 
     logger_.info("Total execution time: " + estimatedTime);

@@ -95,7 +95,7 @@ public class DifferentialEvolutionOffspringPolynomial extends Offspring {
     try {
       mutation_.execute(res);
     } catch (JMetalException e) {
-      Configuration.logger_.log(Level.SEVERE, "Error", e);
+      Configuration.logger.log(Level.SEVERE, "Error", e);
     }
     return res;
 

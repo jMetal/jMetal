@@ -184,7 +184,7 @@ public class Distance {
         }
       }
     } catch (Exception e) {
-      Configuration.logger_.log(Level.SEVERE, "Error", e);
+      Configuration.logger.log(Level.SEVERE, "Error", e);
     }
     return index;
   }

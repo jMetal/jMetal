@@ -45,16 +45,16 @@ public class BoxPlots implements IExperimentOutput {
   public void generate() {
     String rDirectory = "R";
     rDirectory = experiment_.getExperimentBaseDirectory() + "/" + rDirectory;
-    Configuration.logger_.info("R    : " + rDirectory);
+    Configuration.logger.info("R    : " + rDirectory);
     File rOutput;
     rOutput = new File(rDirectory);
     if (!rOutput.exists()) {
       new File(rDirectory).mkdirs();
-      Configuration.logger_.info("Creating " + rDirectory + " directory");
+      Configuration.logger.info("Creating " + rDirectory + " directory");
     }
 
     for (int indicator = 0; indicator < experiment_.getIndicatorList().length; indicator++) {
-      Configuration.logger_.info("Indicator: " + experiment_.getIndicatorList()[indicator]);
+      Configuration.logger.info("Indicator: " + experiment_.getIndicatorList()[indicator]);
       String rFile = rDirectory + "/" + experiment_.getIndicatorList()[indicator] + ".Boxplot.R";
 
       try {
@@ -118,7 +118,7 @@ public class BoxPlots implements IExperimentOutput {
 
         os.close();
       } catch (IOException e) {
-        Configuration.logger_.log(Level.SEVERE, "Error", e);
+        Configuration.logger.log(Level.SEVERE, "Error", e);
       }
     }
   }

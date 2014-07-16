@@ -97,7 +97,7 @@ public class PESA2Selection extends Selection {
     }
     return archive.get((base + cnt) % archive.size());
 /*		} catch (ClassCastException e) {
-			Configuration.logger_.log(Level.SEVERE,
+			Configuration.logger.log(Level.SEVERE,
 					"PESA2Selection.execute: ClassCastException. " +
 							"Found" + object.getClass() + "Expected: AdaptativeGridArchive",
 							e

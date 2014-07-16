@@ -84,7 +84,7 @@ public class ElitistES extends Algorithm {
     // Read the operator
     mutationOperator = this.operators_.get("mutation");
 
-    Configuration.logger_.info("(" + mu_ + " + " + lambda_ + ")ES");
+    Configuration.logger.info("(" + mu_ + " + " + lambda_ + ")ES");
 
     // Create the parent population of mu solutions
     Solution newIndividual;
@@ -124,7 +124,7 @@ public class ElitistES extends Algorithm {
         population.add(offspringPopulation.get(i));
       }
 
-      Configuration.logger_.info("Evaluation: " + evaluations + " Fitness: " +
+      Configuration.logger.info("Evaluation: " + evaluations + " Fitness: " +
         population.get(0).getObjective(0));
 
       // STEP 6. Delete the mu+lambda population

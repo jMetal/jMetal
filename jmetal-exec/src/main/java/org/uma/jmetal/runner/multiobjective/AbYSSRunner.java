@@ -72,7 +72,7 @@ public class AbYSSRunner {
     QualityIndicator indicators;
 
     // Logger object and file to store log messages
-    logger_ = Configuration.logger_;
+    logger_ = Configuration.logger;
     fileHandler_ = new FileHandler("AbYSS.log");
     logger_.addHandler(fileHandler_);
 

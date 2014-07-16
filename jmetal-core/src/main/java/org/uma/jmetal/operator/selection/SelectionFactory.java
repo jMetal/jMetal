@@ -53,7 +53,7 @@ public class SelectionFactory {
     } else if ("DifferentialEvolutionSelection".equalsIgnoreCase(name)) {
       return new DifferentialEvolutionSelection(parameters);
     } else {
-      Configuration.logger_.severe("Operator '" + name + "' not found ");
+      Configuration.logger.severe("Operator '" + name + "' not found ");
       throw new JMetalException("Exception in " + name + ".getSelectionOperator()");
     }
   }

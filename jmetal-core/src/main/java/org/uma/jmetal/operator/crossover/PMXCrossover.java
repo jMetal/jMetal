@@ -165,7 +165,7 @@ public class PMXCrossover extends Crossover {
     if (!(VALID_TYPES.contains(parents[0].getType().getClass()) &&
       VALID_TYPES.contains(parents[1].getType().getClass()))) {
 
-      Configuration.logger_.severe("PMCCrossover.execute: the solutions " +
+      Configuration.logger.severe("PMCCrossover.execute: the solutions " +
         "are not of the right type. The type should be 'Permutation', but " +
         parents[0].getType() + " and " +
         parents[1].getType() + " are obtained");
@@ -174,7 +174,7 @@ public class PMXCrossover extends Crossover {
     crossoverProbability = (Double) getParameter("probability");
 
     if (parents.length < 2) {
-      Configuration.logger_.severe("PMXCrossover.execute: operator needs two " +
+      Configuration.logger.severe("PMXCrossover.execute: operator needs two " +
         "parents");
       Class<String> cls = java.lang.String.class;
       String name = cls.getName();

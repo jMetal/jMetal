@@ -60,7 +60,7 @@ public class QualityIndicatorTables implements IExperimentOutput {
         paretoFront[i] =
             experiment_.getParetoFrontDirectory() + "/" + experiment_.getParetoFrontFileList()[i];
       }
-      Configuration.logger_.info("Pareto front " + i + ": " + paretoFront[i]);
+      Configuration.logger.info("Pareto front " + i + ": " + paretoFront[i]);
     }
 
     if (experiment_.getIndicatorList().length > 0) {
@@ -78,7 +78,7 @@ public class QualityIndicatorTables implements IExperimentOutput {
           String problemDirectory = algorithmDirectory + experiment_.getProblemList()[problemIndex];
 
           for (String indicator : experiment_.getIndicatorList()) {
-            Configuration.logger_.info("Experiment - Quality indicator: " + indicator);
+            Configuration.logger.info("Experiment - Quality indicator: " + indicator);
 
             resetFile(problemDirectory + "/" + indicator);
 
@@ -150,21 +150,21 @@ public class QualityIndicatorTables implements IExperimentOutput {
   private void resetFile(String file) {
     File f = new File(file);
     if (f.exists()) {
-      Configuration.logger_.info("File " + file + " exist.");
+      Configuration.logger.info("File " + file + " exist.");
 
       if (f.isDirectory()) {
-        Configuration.logger_.info("File " + file + " is a directory. Deleting directory.");
+        Configuration.logger.info("File " + file + " is a directory. Deleting directory.");
         if (f.delete()) {
-          Configuration.logger_.info("Directory successfully deleted.");
+          Configuration.logger.info("Directory successfully deleted.");
         } else {
-          Configuration.logger_.info("Error deleting directory.");
+          Configuration.logger.info("Error deleting directory.");
         }
       } else {
-        Configuration.logger_.info("File " + file + " is a file. Deleting file.");
+        Configuration.logger.info("File " + file + " is a file. Deleting file.");
         if (f.delete()) {
-          Configuration.logger_.info("File succesfully deleted.");
+          Configuration.logger.info("File succesfully deleted.");
         } else {
-          Configuration.logger_.info("Error deleting file.");
+          Configuration.logger.info("Error deleting file.");
         }
       }
     } else {

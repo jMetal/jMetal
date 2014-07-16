@@ -42,7 +42,7 @@ public class Transformations {
   public float b_poly(float y, float alpha) throws JMetalException {
     if (!(alpha > 0)) {
 
-      Configuration.logger_.severe("WFG.Transformations.b_poly: Param alpha " +
+      Configuration.logger.severe("WFG.Transformations.b_poly: Param alpha " +
         "must be > 0");
       Class<String> cls = java.lang.String.class;
       String name = cls.getName();

@@ -55,7 +55,7 @@ public class SettingsFactory {
       Settings algorithmSettings = (Settings) constructors[i].newInstance(params);
       return algorithmSettings;
     } catch (Exception e) {
-      Configuration.logger_.log(Level.SEVERE, "SettingsFactory.getSettingsObject: " +
+      Configuration.logger.log(Level.SEVERE, "SettingsFactory.getSettingsObject: " +
         "Settings '" + base + "' does not exist. " +
         "Please, check the algorithm name in org.uma.jmetal/metaheuristic", e);
       throw new JMetalException("Exception in " + base + ".getSettingsObject()");

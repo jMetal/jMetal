@@ -75,7 +75,7 @@ public class Hypervolume {
     //Obtain delta value
     double value = qualityIndicator.hypervolume(solutionFront, trueFront, new Integer(args[2]));
 
-    Configuration.logger_.info(""+value);
+    Configuration.logger.info(""+value);
   }
 
   /*
@@ -144,7 +144,7 @@ public class Hypervolume {
     double minValue, value;
 
     if (noPoints < 1) {
-      Configuration.logger_.log(Level.SEVERE, "run-time error");
+      Configuration.logger.log(Level.SEVERE, "run-time error");
     }
 
     minValue = front[0][objective];
@@ -192,7 +192,7 @@ public class Hypervolume {
       //noNondominatedPoints = front.length;
       if (noObjectives < 3) {
         if (nonDominatedPoints < 1) {
-          Configuration.logger_.log(Level.SEVERE, "run-time error");
+          Configuration.logger.log(Level.SEVERE, "run-time error");
         }
 
         tempVolume = front[0][0];

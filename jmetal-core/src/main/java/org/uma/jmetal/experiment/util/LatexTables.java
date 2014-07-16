@@ -53,7 +53,7 @@ public class LatexTables implements IExperimentOutput {
   public void generate() {
     experiment_.setLatexDirectory(
       experiment_.getExperimentBaseDirectory() + "/" + experiment_.getLatexDirectory());
-    Configuration.logger_.info("latex directory: " + experiment_.getLatexDirectory());
+    Configuration.logger.info("latex directory: " + experiment_.getLatexDirectory());
 
     readIndicatorData();
 
@@ -124,7 +124,7 @@ public class LatexTables implements IExperimentOutput {
     latexOutput = new File(experiment_.getLatexDirectory());
     if (!latexOutput.exists()) {
       boolean result = new File(experiment_.getLatexDirectory()).mkdirs();
-      Configuration.logger_.info("Creating " + experiment_.getLatexDirectory() + " directory");
+      Configuration.logger.info("Creating " + experiment_.getLatexDirectory() + " directory");
     }
     String latexFile =
       experiment_.getLatexDirectory() + "/" + experiment_.getExperimentName() + ".tex";
@@ -136,7 +136,7 @@ public class LatexTables implements IExperimentOutput {
       }
       printEndLatexCommands(latexFile);
     } catch (IOException e) {
-      Configuration.logger_.log(Level.SEVERE, "Error", e);
+      Configuration.logger.log(Level.SEVERE, "Error", e);
     }
   }
 
@@ -483,11 +483,11 @@ public class LatexTables implements IExperimentOutput {
           try {
             fis = new FileInputStream(directory);
           } catch (FileNotFoundException e) {
-            Configuration.logger_.log(Level.SEVERE, "Error", e);
+            Configuration.logger.log(Level.SEVERE, "Error", e);
           }
           InputStreamReader isr = new InputStreamReader(fis);
           BufferedReader br = new BufferedReader(isr);
-          //Configuration.logger_.info(directory);
+          //Configuration.logger.info(directory);
           String aux = null;
           try {
             aux = br.readLine();
@@ -496,7 +496,7 @@ public class LatexTables implements IExperimentOutput {
               aux = br.readLine();
             }
           } catch (IOException e) {
-            Configuration.logger_.log(Level.SEVERE, "Error", e);
+            Configuration.logger.log(Level.SEVERE, "Error", e);
           }
         }
       }

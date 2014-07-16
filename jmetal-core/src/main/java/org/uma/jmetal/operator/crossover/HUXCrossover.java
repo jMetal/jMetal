@@ -107,7 +107,7 @@ public class HUXCrossover extends Crossover {
         }
       }
     } catch (ClassCastException e1) {
-      Configuration.logger_.log(Level.SEVERE,
+      Configuration.logger.log(Level.SEVERE,
         "HUXCrossover.doCrossover: Cannot perfom " + "SinglePointCrossover ",
         e1);
       Class<String> cls = java.lang.String.class;

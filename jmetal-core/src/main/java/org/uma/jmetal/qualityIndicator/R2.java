@@ -122,7 +122,7 @@ public class R2 {
         lambda_[index++] = aList;
       }
     } catch (Exception e) {
-      Configuration.logger_.log(Level.SEVERE,
+      Configuration.logger.log(Level.SEVERE,
         "initializeUniformWeight: failed when reading for file: " + file, e);
     }
   }
@@ -161,14 +161,14 @@ public class R2 {
     // Obtain delta value
     double value = qualityIndicator.r2(approximationFront, paretoFront);
 
-    Configuration.logger_.info(""+value);
-    Configuration.logger_.info(""+qualityIndicator.R2Without(approximationFront,
+    Configuration.logger.info(""+value);
+    Configuration.logger.info(""+qualityIndicator.R2Without(approximationFront,
       paretoFront, 1));
-    Configuration.logger_.info(""+qualityIndicator.R2Without(approximationFront,
+    Configuration.logger.info(""+qualityIndicator.R2Without(approximationFront,
       paretoFront, 15));
-    Configuration.logger_.info(""+qualityIndicator.R2Without(approximationFront,
+    Configuration.logger.info(""+qualityIndicator.R2Without(approximationFront,
       paretoFront, 25));
-    Configuration.logger_.info(""+qualityIndicator.R2Without(approximationFront,
+    Configuration.logger.info(""+qualityIndicator.R2Without(approximationFront,
       paretoFront, 75));
 
   }

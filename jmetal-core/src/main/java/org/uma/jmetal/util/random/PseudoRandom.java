@@ -232,7 +232,7 @@ public class PseudoRandom {
 
       bw.close();
     } catch (IOException e) {
-      Configuration.logger_.log(Level.SEVERE, "Error acceding to the file", e);
+      Configuration.logger.log(Level.SEVERE, "Error acceding to the file", e);
     }
 
   }

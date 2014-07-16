@@ -78,7 +78,7 @@ public class MetricsUtil {
       return front;
 
     } catch (Exception e) {
-      Configuration.logger_.log(
+      Configuration.logger.log(
         Level.SEVERE,
         "readFront() crashed reading for file: " + path,
         e);
@@ -282,7 +282,7 @@ public class MetricsUtil {
       br.close();
       return solutionSet;
     } catch (Exception e) {
-      Configuration.logger_.log(
+      Configuration.logger.log(
         Level.SEVERE,
         "org.uma.jmetal.qualityIndicator.util.readNonDominatedSolutionSet: " + path,
         e);
@@ -321,7 +321,7 @@ public class MetricsUtil {
       br.close();
       return solutionSet;
     } catch (Exception e) {
-      Configuration.logger_.log(
+      Configuration.logger.log(
         Level.SEVERE,
         "org.uma.jmetal.qualityIndicator.util.readNonDominatedSolutionSet: " + path,
         e);
@@ -357,7 +357,7 @@ public class MetricsUtil {
       }
       br.close();
     } catch (Exception e) {
-      Configuration.logger_.log(
+      Configuration.logger.log(
         Level.SEVERE,
         "org.uma.jmetal.qualityIndicator.util.readNonDominatedSolutionSet: " + path,
         e);
@@ -420,7 +420,7 @@ public class MetricsUtil {
         contributions[i] = 0;
       }
       for (int i = 0; i < populations.length; i++) {
-        Configuration.logger_.info(""+contributions[i]);
+        Configuration.logger.info(""+contributions[i]);
       }
       return contributions;
     }
@@ -521,8 +521,8 @@ public class MetricsUtil {
               aux[index++] = invertedFront[0][j];
             }
           }
-          //Configuration.logger_.info(hypervolume.calculateHypervolume(invertedFront[0], invertedFront[0].length, getNumberOfObjectives));
-          //Configuration.logger_.info(hypervolume.calculateHypervolume(aux, aux.length, getNumberOfObjectives));
+          //Configuration.logger.info(hypervolume.calculateHypervolume(invertedFront[0], invertedFront[0].length, getNumberOfObjectives));
+          //Configuration.logger.info(hypervolume.calculateHypervolume(aux, aux.length, getNumberOfObjectives));
 
           contribution[i] = hypervolume
             .calculateHypervolume(invertedFront[0], invertedFront[0].length, numberOfObjectives) -

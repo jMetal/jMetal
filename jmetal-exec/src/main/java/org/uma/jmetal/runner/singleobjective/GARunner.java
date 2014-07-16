@@ -103,12 +103,12 @@ public class GARunner {
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;
-    Configuration.logger_.info("Total execution time: " + estimatedTime);
+    Configuration.logger.info("Total execution time: " + estimatedTime);
 
     /* Log messages */
-    Configuration.logger_.info("Objectives values have been writen to file FUN");
+    Configuration.logger.info("Objectives values have been writen to file FUN");
     population.printObjectivesToFile("FUN");
-    Configuration.logger_.info("Variables values have been writen to file VAR");
+    Configuration.logger.info("Variables values have been writen to file VAR");
     population.printVariablesToFile("VAR");
   }
 }

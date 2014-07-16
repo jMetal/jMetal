@@ -161,11 +161,11 @@ public class Front {
   }
 
   public void printFront() {
-    Configuration.logger_.info("Objectives:       " + dimension_);
-    Configuration.logger_.info("Number of points: " + numberOfPoints_);
+    Configuration.logger.info("Objectives:       " + dimension_);
+    Configuration.logger.info("Number of points: " + numberOfPoints_);
 
     for (Point point : points_) {
-      Configuration.logger_.info(""+point);
+      Configuration.logger.info(""+point);
     }
   }
 

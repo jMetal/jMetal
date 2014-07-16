@@ -61,7 +61,7 @@ public class CellDERunner {
     QualityIndicator indicators;
 
     // Logger object and file to store log messages
-    logger_ = Configuration.logger_;
+    logger_ = Configuration.logger;
     fileHandler_ = new FileHandler("MOCell_main.log");
     logger_.addHandler(fileHandler_);
 
@@ -110,7 +110,7 @@ public class CellDERunner {
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;
-    Configuration.logger_.info("Total execution time: " + estimatedTime);
+    Configuration.logger.info("Total execution time: " + estimatedTime);
 
     // Log messages 
     logger_.info("Objectives values have been writen to file FUN");

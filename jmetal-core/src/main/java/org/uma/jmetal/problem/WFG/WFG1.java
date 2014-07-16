@@ -95,7 +95,7 @@ public class WFG1 extends WFG {
     try {
       y = t3(y);
     } catch (JMetalException e) {
-      Configuration.logger_.log(Level.SEVERE, "Error", e);
+      Configuration.logger.log(Level.SEVERE, "Error", e);
     }
     y = t4(y, k_, M_);
 

@@ -409,7 +409,7 @@ public class CMAES extends Algorithm {
 
       for (int i = 0; i < N; i++) {
         if (diagD[i] < 0) { // numerical problem?
-          Configuration.logger_.log(Level.SEVERE,
+          Configuration.logger.log(Level.SEVERE,
             "org.uma.jmetal.metaheuristic.cmaes.CMAES.updateDistribution(): WARNING - an eigenvalue has become negative.");
           counteval = maxEvaluations;
         }
@@ -465,7 +465,7 @@ public class CMAES extends Algorithm {
       }
 
       storeBest(comparator);
-      Configuration.logger_.info(counteval + ": " + bestSolutionEver);
+      Configuration.logger.info(counteval + ": " + bestSolutionEver);
       updateDistribution();
 
     }

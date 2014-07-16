@@ -39,6 +39,6 @@ public class JMetalException extends RuntimeException implements Serializable {
     super(message);
   }
   public JMetalException(Exception e) {
-    Configuration.logger_.log(Level.SEVERE, "Error", e);
+    Configuration.logger.log(Level.SEVERE, "Error", e);
   }
 }

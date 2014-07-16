@@ -73,7 +73,7 @@ public class Spread {
     // STEP 3. Obtain the metric value
     double value = qualityIndicator.spread(solutionFront, trueFront, 2);
 
-    Configuration.logger_.info("" + value);
+    Configuration.logger.info("" + value);
   }
 
   /**

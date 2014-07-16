@@ -73,7 +73,7 @@ public class pMOEADRunner {
     String dataDirectory = "";
 
     // Logger object and file to store log messages
-    logger_ = Configuration.logger_;
+    logger_ = Configuration.logger;
     fileHandler_ = new FileHandler("pMOEAD.log");
     logger_.addHandler(fileHandler_);
 

@@ -144,7 +144,7 @@ public class GenerationalGA extends Algorithm {
     SolutionSet resultPopulation = new SolutionSet(1);
     resultPopulation.add(population.get(0));
 
-    Configuration.logger_.info("Evaluations: " + evaluations);
+    Configuration.logger.info("Evaluations: " + evaluations);
     return resultPopulation;
   } 
 } 

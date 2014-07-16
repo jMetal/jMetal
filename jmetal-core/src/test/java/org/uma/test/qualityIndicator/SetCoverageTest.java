@@ -99,16 +99,16 @@ public class SetCoverageTest {
     }
 
     /*
-    Configuration.logger_.info("Set1");
+    Configuration.logger.info("Set1");
     solutionSet1_.printObjectives();
-    Configuration.logger_.info("Set2");
+    Configuration.logger.info("Set2");
     solutionSet2_.printObjectives();
     */
     // Modifying a solutiontype to make it non-dominated with respect to solutionset 1
     solutionSet2_.get(0).setObjective(0, -1.0);
     solutionSet2_.get(0).setObjective(1, solutionSetSize_-1.2);
     /*
-    Configuration.logger_.info("Set22222");
+    Configuration.logger.info("Set22222");
     solutionSet2_.printObjectives();
     */
     assertNotEquals(1.0, new SetCoverage().setCoverage(solutionSet2_, solutionSet1_), EPSILON) ;

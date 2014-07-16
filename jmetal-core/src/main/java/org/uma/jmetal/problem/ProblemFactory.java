@@ -83,7 +83,7 @@ public class ProblemFactory {
       // constructors[i] is the selected one constructor
       return (Problem)constructors[i].newInstance(params);
     } catch(Exception e) {
-      Configuration.logger_.log(
+      Configuration.logger.log(
         Level.SEVERE,
         "ProblemFactory.getProblem: " + "Problem '" + name + "' does not exist. " +
           "Please, check the problem names in org.uma.jmetal/problem",

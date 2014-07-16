@@ -50,10 +50,10 @@ public class ExtractParetoFront {
 
   public static void main(String[] args) throws JMetalException, NumberFormatException, IOException {
     if (args.length != 2) {
-      Configuration.logger_.info("Wrong number of arguments: ");
-      Configuration.logger_.info("Syntax: java ExtractParetoFront <file> <dimensions>");
-      Configuration.logger_.info("\t<file> is a file containing points");
-      Configuration.logger_.info("\t<dimensions> represents the number of dimensions of the problem");
+      Configuration.logger.info("Wrong number of arguments: ");
+      Configuration.logger.info("Syntax: java ExtractParetoFront <file> <dimensions>");
+      Configuration.logger.info("\t<file> is a file containing points");
+      Configuration.logger.info("\t<dimensions> represents the number of dimensions of the problem");
       throw new JMetalException("");
     }
 
@@ -89,13 +89,13 @@ public class ExtractParetoFront {
         line = br.readLine();
         lineCnt++;
       } catch (NumberFormatException e) {
-        Configuration.logger_.log(
+        Configuration.logger.log(
             Level.SEVERE,
             "Number in a wrong format in line " + lineCnt + "\n" + line, e);
         line = br.readLine();
         lineCnt++;
       } catch (NoSuchElementException e2) {
-        Configuration.logger_.log(
+        Configuration.logger.log(
             Level.SEVERE,
             "Line " + lineCnt + " does not have the right number of objectives\n" + line, e2);
         line = br.readLine();
@@ -168,7 +168,7 @@ public class ExtractParetoFront {
       // Close the file
       bw.close();
     } catch (IOException e) {
-      Configuration.logger_.log(Level.SEVERE, "Error", e);
+      Configuration.logger.log(Level.SEVERE, "Error", e);
     }
   }
 

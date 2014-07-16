@@ -84,12 +84,12 @@ public class TSPGARunner {
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;
-    Configuration.logger_.info("Total time of execution: " + estimatedTime);
+    Configuration.logger.info("Total time of execution: " + estimatedTime);
 
     /* Log messages */
-    Configuration.logger_.info("Objectives values have been writen to file FUN");
+    Configuration.logger.info("Objectives values have been writen to file FUN");
     population.printObjectivesToFile("FUN");
-    Configuration.logger_.info("Variables values have been writen to file VAR");
+    Configuration.logger.info("Variables values have been writen to file VAR");
     population.printVariablesToFile("VAR");
   }
 }

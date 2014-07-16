@@ -180,11 +180,11 @@ public class SetCoverageTables implements IExperimentOutput {
   private void createOutputDirectory() {
     outputDirectoryName_ = "R";
     outputDirectoryName_ = experiment_.getExperimentBaseDirectory() + "/" + outputDirectoryName_;
-    Configuration.logger_.info("R    : " + outputDirectoryName_);
+    Configuration.logger.info("R    : " + outputDirectoryName_);
     outputDirectory_ = new File(outputDirectoryName_);
     if (!outputDirectory_.exists()) {
       new File(outputDirectoryName_).mkdirs();
-      Configuration.logger_.info("Creating " + outputDirectoryName_ + " directory");
+      Configuration.logger.info("Creating " + outputDirectoryName_ + " directory");
     }
   }
 }

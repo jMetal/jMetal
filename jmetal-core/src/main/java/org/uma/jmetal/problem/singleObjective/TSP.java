@@ -69,11 +69,11 @@ public class TSP extends Problem {
         throw new JMetalException("Solution type invalid");
       }
     } catch (JMetalException e) {
-      Configuration.logger_.log(Level.SEVERE, "Error", e);
+      Configuration.logger.log(Level.SEVERE, "Error", e);
     }
     readProblem(filename);
 
-    Configuration.logger_.info(""+numberOfCities_);
+    Configuration.logger.info(""+numberOfCities_);
     length[0] = numberOfCities_;
   }
 
@@ -172,7 +172,7 @@ public class TSP extends Problem {
         }
       }
     } catch (Exception e) {
-      Configuration.logger_.log(Level.SEVERE, "TSP.readProblem(): error when reading data file", e);
+      Configuration.logger.log(Level.SEVERE, "TSP.readProblem(): error when reading data file", e);
       throw new Exception("TSP.readProblem(): error when reading data file " + e);
     }
   }

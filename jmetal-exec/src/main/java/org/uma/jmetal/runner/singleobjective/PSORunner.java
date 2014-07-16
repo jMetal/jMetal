@@ -58,7 +58,7 @@ public class PSORunner {
     Mutation mutation;
 
     // Logger object and file to store log messages
-    logger_ = Configuration.logger_;
+    logger_ = Configuration.logger;
     fileHandler_ = new FileHandler("PSO_main.log");
     logger_.addHandler(fileHandler_);
 

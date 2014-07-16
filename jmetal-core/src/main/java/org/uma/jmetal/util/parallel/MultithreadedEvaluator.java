@@ -52,12 +52,12 @@ public class MultithreadedEvaluator implements SynchronousParallelTaskExecutor {
     if (threads == 0) {
       numberOfThreads_ = Runtime.getRuntime().availableProcessors();
     } else if (threads < 0) {
-      Configuration.logger_.severe("MultithreadedEvaluator: the number of threads" +
+      Configuration.logger.severe("MultithreadedEvaluator: the number of threads" +
         " cannot be negative number " + threads);
     } else {
       numberOfThreads_ = threads;
     }
-    Configuration.logger_.info("THREADS: " + numberOfThreads_);
+    Configuration.logger.info("THREADS: " + numberOfThreads_);
   }
 
   /**
@@ -69,7 +69,7 @@ public class MultithreadedEvaluator implements SynchronousParallelTaskExecutor {
     problem_ = (Problem) problem;
 
     executor_ = Executors.newFixedThreadPool(numberOfThreads_);
-    Configuration.logger_.info("Cores: " + numberOfThreads_);
+    Configuration.logger.info("Cores: " + numberOfThreads_);
     taskList_ = null;
   }
 
@@ -95,7 +95,7 @@ public class MultithreadedEvaluator implements SynchronousParallelTaskExecutor {
     try {
       future = executor_.invokeAll(taskList_);
     } catch (InterruptedException e1) {
-      Configuration.logger_.log(Level.SEVERE, "Error", e1);
+      Configuration.logger.log(Level.SEVERE, "Error", e1);
     }
     List<Object> solutionList = new Vector<Object>();
 
@@ -105,9 +105,9 @@ public class MultithreadedEvaluator implements SynchronousParallelTaskExecutor {
         solution = result.get();
         solutionList.add(solution);
       } catch (InterruptedException e) {
-        Configuration.logger_.log(Level.SEVERE, "Error", e);
+        Configuration.logger.log(Level.SEVERE, "Error", e);
       } catch (ExecutionException e) {
-        Configuration.logger_.log(Level.SEVERE, "Error", e);
+        Configuration.logger.log(Level.SEVERE, "Error", e);
       }
     }
     taskList_ = null;

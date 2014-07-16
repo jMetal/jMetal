@@ -84,7 +84,7 @@ public class ReadInstance {
               facilities_ = new Integer(aux);
               newLine += aux + " ";
             } catch (NumberFormatException ne) {
-              Configuration.logger_.log(Level.WARNING, "Number Format Exception", ne);
+              Configuration.logger.log(Level.WARNING, "Number Format Exception", ne);
               newLine += aux + " ";
               continue;
             }
@@ -98,7 +98,7 @@ public class ReadInstance {
               objectives_ = new Integer(aux);
               newLine += "1 ";
             } catch (NumberFormatException ne) {
-              Configuration.logger_.log(Level.WARNING, "NumberFormatException", ne);
+              Configuration.logger.log(Level.WARNING, "NumberFormatException", ne);
               newLine += aux + " ";
               continue;
             }
@@ -272,7 +272,7 @@ public class ReadInstance {
             }
             br.close();
           } catch (Exception e) {
-            Configuration.logger_.log(
+            Configuration.logger.log(
                 Level.SEVERE,
                 "initializeUniformWeight: failed when reading for file containing the weight",
                 e);

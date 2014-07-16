@@ -52,7 +52,7 @@ public class MutationFactory {
     } else if ("SwapMutation".equalsIgnoreCase(name)) {
       return new SwapMutation(parameters);
     } else {
-      Configuration.logger_.severe("Operator '" + name + "' not found ");
+      Configuration.logger.severe("Operator '" + name + "' not found ");
       Class<String> cls = java.lang.String.class;
       String name2 = cls.getName();
       throw new JMetalException("Exception in " + name2 + ".getMutationOperator()");

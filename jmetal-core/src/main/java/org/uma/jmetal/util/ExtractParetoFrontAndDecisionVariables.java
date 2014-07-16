@@ -114,13 +114,13 @@ public class ExtractParetoFrontAndDecisionVariables {
           lineDecisionVariable = dcbr.readLine();
           lineCnt++;
         } catch (NumberFormatException e) {
-          Configuration.logger_.log(
+          Configuration.logger.log(
             Level.SEVERE,
             "Number in a wrong format in line " + lineCnt + "\n" + line, e);
           line = br.readLine();
           lineCnt++;
         } catch (NoSuchElementException e2) {
-          Configuration.logger_.log(
+          Configuration.logger.log(
             Level.SEVERE,
             "Line " + lineCnt + " does not have the right number of objectives\n" + line, e2);
           line = br.readLine();
@@ -130,11 +130,11 @@ public class ExtractParetoFrontAndDecisionVariables {
       br.close();
       dcbr.close();
     } catch (FileNotFoundException e3) {
-      Configuration.logger_.log(
+      Configuration.logger.log(
         Level.SEVERE, "The file " + FUNFileName_
           + " has not been found in your file system", e3);
     } catch (IOException e3) {
-      Configuration.logger_.log(
+      Configuration.logger.log(
         Level.SEVERE, "The file " + FUNFileName_
           + " has not been found in your file system", e3);
     }
@@ -212,22 +212,22 @@ public class ExtractParetoFrontAndDecisionVariables {
       bwObj.close();
       bwDC.close();
     } catch (IOException e) {
-      Configuration.logger_.log(
+      Configuration.logger.log(
         Level.SEVERE, "Error in method writeParetoFront()", e);
     }
   }
 
   public static void main(String[] args) {
     if (args.length != 4) {
-      Configuration.logger_.info("Wrong number of arguments: ");
-      Configuration.logger_.info(
+      Configuration.logger.info("Wrong number of arguments: ");
+      Configuration.logger.info(
         "Syntax: java ExtractParetoFront <FUNfile> <VARfile> <dimensions> <numberOfDecisionVariables>");
-      Configuration.logger_.info("\t<FUNfile> is a file containing all objective values");
-      Configuration.logger_.info(
+      Configuration.logger.info("\t<FUNfile> is a file containing all objective values");
+      Configuration.logger.info(
         "\t<VARfile> is a file containing all corresponding decision variable values");
-      Configuration.logger_.info(
+      Configuration.logger.info(
         "\t<dimensions> represents the number of dimensions of the problem");
-      Configuration.logger_.info(
+      Configuration.logger.info(
         "\t<numberOfDecicionVariables> represents the number of decision varibales of the problem");
       throw new JMetalException("");
     }

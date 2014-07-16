@@ -54,7 +54,7 @@ public class CrossoverFactory {
     } else if ("BLXAlphaCrossover".equalsIgnoreCase(name)) {
       return new BLXAlphaCrossover(parameters);
     } else {
-      Configuration.logger_.severe("CrossoverFactory.getCrossoverOperator. " +
+      Configuration.logger.severe("CrossoverFactory.getCrossoverOperator. " +
         "Operator '" + name + "' not found ");
       throw new JMetalException("Exception in " + name + ".getCrossoverOperator()");
     }

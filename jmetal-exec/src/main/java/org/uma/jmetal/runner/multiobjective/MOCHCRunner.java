@@ -61,7 +61,7 @@ public class MOCHCRunner {
     Selection newGenerationSelection;
     Algorithm algorithm ;
 
-    logger_ = Configuration.logger_;
+    logger_ = Configuration.logger;
     fileHandler_ = new FileHandler("MOCHCRunner.log");
     logger_.addHandler(fileHandler_);
 

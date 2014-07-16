@@ -245,7 +245,7 @@ public class dMOPSO extends Algorithm {
             C2 * r2 * (bestGlobal.getValue(var) -
               particle.getValue(var))), deltaMax_, deltaMin_, var, i);
       } catch (IOException e) {
-        Configuration.logger_.log(Level.SEVERE, "Error", e);
+        Configuration.logger.log(Level.SEVERE, "Error", e);
       }
     }
   }
@@ -446,7 +446,7 @@ public class dMOPSO extends Algorithm {
         }
         br.close();
       } catch (Exception e) {
-        Configuration.logger_.log(
+        Configuration.logger.log(
           Level.SEVERE,
           "initializeUniformWeight: failed when reading for file: " + dataDirectory_ + "/" + dataFileName,
           e);

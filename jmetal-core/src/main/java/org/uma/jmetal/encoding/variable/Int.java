@@ -76,7 +76,7 @@ public class Int extends Variable {
     try {
       return new Int(this);
     } catch (JMetalException e) {
-      Configuration.logger_.log(Level.SEVERE, "Int.deepCopy.execute: JMException", e);
+      Configuration.logger.log(Level.SEVERE, "Int.deepCopy.execute: JMException", e);
       return null;
     }
   }

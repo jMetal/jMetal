@@ -74,7 +74,7 @@ public class MOEADRunner {
     QualityIndicator indicators;
 
     // Logger object and file to store log messages
-    logger_ = Configuration.logger_;
+    logger_ = Configuration.logger;
     fileHandler_ = new FileHandler("MOEAD.log");
     logger_.addHandler(fileHandler_);
 
@@ -188,19 +188,19 @@ public class MOEADRunner {
     long estimatedTime = System.currentTimeMillis() - initTime;
 
     // Result messages 
-    logger_.info("Total execution time: " + estimatedTime + "ms");
-    logger_.info("Objectives values have been writen to file FUN");
+    logger.info("Total execution time: " + estimatedTime + "ms");
+    logger.info("Objectives values have been writen to file FUN");
     population.printObjectivesToFile("FUN");
-    logger_.info("Variables values have been writen to file VAR");
+    logger.info("Variables values have been writen to file VAR");
     population.printVariablesToFile("VAR");
 
     if (indicators != null) {
-      logger_.info("Quality indicators");
-      logger_.info("Hypervolume: " + indicators.getHypervolume(population));
-      logger_.info("EPSILON    : " + indicators.getEpsilon(population));
-      logger_.info("GD         : " + indicators.getGD(population));
-      logger_.info("IGD        : " + indicators.getIGD(population));
-      logger_.info("Spread     : " + indicators.getSpread(population));
+      logger.info("Quality indicators");
+      logger.info("Hypervolume: " + indicators.getHypervolume(population));
+      logger.info("EPSILON    : " + indicators.getEpsilon(population));
+      logger.info("GD         : " + indicators.getGD(population));
+      logger.info("IGD        : " + indicators.getIGD(population));
+      logger.info("Spread     : " + indicators.getSpread(population));
     }
     */
 

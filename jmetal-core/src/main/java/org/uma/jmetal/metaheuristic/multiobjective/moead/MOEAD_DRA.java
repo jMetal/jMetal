@@ -201,9 +201,9 @@ public class MOEAD_DRA extends Algorithm {
     int final_size = populationSize_;
     try {
       final_size = (Integer) (getInputParameter("finalSize"));
-      Configuration.logger_.info("FINAL SIZE: " + final_size);
+      Configuration.logger.info("FINAL SIZE: " + final_size);
     } catch (Exception e) { // if there is an exception indicate it!
-      Configuration.logger_.log(Level.SEVERE,
+      Configuration.logger.log(Level.SEVERE,
         "The final size parameter has been ignored. The number of solutions is " + population_
           .size(),
         e);
@@ -253,7 +253,7 @@ public class MOEAD_DRA extends Algorithm {
         }
         br.close();
       } catch (Exception e) {
-        Configuration.logger_.log(
+        Configuration.logger.log(
           Level.SEVERE,
           "initializeUniformWeight: failed when reading for file: " + dataDirectory_ + "/" + dataFileName,
           e);

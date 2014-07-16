@@ -123,7 +123,7 @@ public class SetCoverage {
           "<SolutionFrontFile2> " + "<getNumberOfObjectives>");
     } else {
        double result = new SetCoverage().setCoverage(args[0], args[1]) ;
-      Configuration.logger_.info("Set coverage: " + result) ;
+      Configuration.logger.info("Set coverage: " + result) ;
     }
   }
 }

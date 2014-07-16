@@ -60,7 +60,7 @@ public class mTSP extends Problem {
 
     distanceMatrix_ = readProblem(file_distances);
     costMatrix_ = readProblem(file_cost);
-    Configuration.logger_.info(""+numberOfCities_);
+    Configuration.logger.info(""+numberOfCities_);
     length[0] = numberOfCities_;
 
     if (solutionType.compareTo("Permutation") == 0) {
@@ -170,7 +170,7 @@ public class mTSP extends Problem {
         }
       }
     } catch (Exception e) {
-      Configuration.logger_
+      Configuration.logger
         .log(Level.SEVERE, "mTSP.readProblem(): error when reading data file", e);
       throw new Exception("mTSP.readProblem(): error when reading data file " + e);
     }

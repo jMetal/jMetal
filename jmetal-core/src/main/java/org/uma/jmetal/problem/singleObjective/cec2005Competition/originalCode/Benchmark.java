@@ -484,14 +484,14 @@ public class Benchmark {
   static public void loadTestDataFromFile(String file, int num_test_points, int test_dimension,
     double[][] x, double[] f) throws JMetalException {
     try {
-      Configuration.logger_.info("File bias: " + file);
+      Configuration.logger.info("File bias: " + file);
 
       BufferedReader brSrc = new BufferedReader(new FileReader(file));
       loadMatrix(brSrc, num_test_points, test_dimension, x);
       loadColumnVector(brSrc, num_test_points, f);
       brSrc.close();
     } catch (Exception e) {
-      Configuration.logger_.log(Level.SEVERE, "Error in Benchmark.java", e);
+      Configuration.logger.log(Level.SEVERE, "Error in Benchmark.java", e);
       throw new JMetalException("Error in Benchmark.java");
     }
   }
@@ -503,7 +503,7 @@ public class Benchmark {
       loadRowVector(brSrc, columns, row);
       brSrc.close();
     } catch (Exception e) {
-      Configuration.logger_.log(Level.SEVERE, "Error in Benchmark.java", e);
+      Configuration.logger.log(Level.SEVERE, "Error in Benchmark.java", e);
       throw new JMetalException("Error in Benchmark.java");
     }
   }
@@ -525,7 +525,7 @@ public class Benchmark {
       loadColumnVector(brSrc, rows, column);
       brSrc.close();
     } catch (Exception e) {
-      Configuration.logger_.log(Level.SEVERE, "Error in Benchmark.java", e);
+      Configuration.logger.log(Level.SEVERE, "Error in Benchmark.java", e);
       throw new JMetalException("Error in Benchmark.java");
     }
   }
@@ -549,7 +549,7 @@ public class Benchmark {
       }
       brSrc.close();
     } catch (Exception e) {
-      Configuration.logger_.log(Level.SEVERE, "Error in Benchmark.java", e);
+      Configuration.logger.log(Level.SEVERE, "Error in Benchmark.java", e);
       throw new JMetalException("Error in Benchmark.java");
     }
   }
@@ -561,7 +561,7 @@ public class Benchmark {
       loadMatrix(brSrc, rows, columns, matrix);
       brSrc.close();
     } catch (Exception e) {
-      Configuration.logger_.log(Level.SEVERE, "Error in Benchmark.java", e);
+      Configuration.logger.log(Level.SEVERE, "Error in Benchmark.java", e);
       throw new JMetalException("Error in Benchmark.java");
     }
   }
@@ -589,7 +589,7 @@ public class Benchmark {
             }
           );
     } catch (Exception e) {
-      Configuration.logger_.log(Level.SEVERE, "Error in Benchmark.java", e);
+      Configuration.logger.log(Level.SEVERE, "Error in Benchmark.java", e);
       throw new JMetalException("Error in Benchmark.java");
     }
     return (returnFunc);
@@ -623,9 +623,9 @@ public class Benchmark {
       // Create the org.uma.test function object
       TestFunc aFunc = testFunctionFactory(func_num, test_dimension);
 
-      Configuration.logger_.info("Run tests on function " + func_num +
+      Configuration.logger.info("Run tests on function " + func_num +
         " (" + aFunc.name() + "):");
-      Configuration.logger_.info("  " +
+      Configuration.logger.info("  " +
         num_test_points + " " +
         aFunc.dimension() + "-dimension check points");
 
@@ -637,22 +637,22 @@ public class Benchmark {
         double result = aFunc.f(test_x[i]);
         double diff = result - test_f[i];
         double ratio = Math.abs(diff / test_f[i]);
-        Configuration.logger_.info("    " +
+        Configuration.logger.info("    " +
           numberFormatter.format(result) +
           " - " +
           numberFormatter.format(test_f[i]) +
           " = " +
           numberFormatter.format(diff));
-        Configuration.logger_.info("    " + "    " +
+        Configuration.logger.info("    " + "    " +
           "Difference ratio = " + numberFormatter.format(ratio));
         if (ratio != 0.0) {
           if (ratio <= 1e-12) {
-            Configuration.logger_.info(" (<= 1E-12)");
+            Configuration.logger.info(" (<= 1E-12)");
           } else {
-            Configuration.logger_.info(" (> 1E-12) *****");
+            Configuration.logger.info(" (> 1E-12) *****");
           }
         } else {
-          Configuration.logger_.info("");
+          Configuration.logger.info("");
         }
       }
     }

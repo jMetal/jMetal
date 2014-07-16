@@ -15,9 +15,9 @@ public class FileUtils {
       bw.newLine();
       bw.close();
     } catch (FileNotFoundException e) {
-      Configuration.logger_.log(Level.SEVERE, "Error", e);
+      Configuration.logger.log(Level.SEVERE, "Error", e);
     } catch (IOException e) {
-      Configuration.logger_.log(Level.SEVERE, "Error", e);
+      Configuration.logger.log(Level.SEVERE, "Error", e);
     }
   }
 
@@ -30,9 +30,9 @@ public class FileUtils {
 
       bw.close();
     } catch (FileNotFoundException e) {
-      Configuration.logger_.log(Level.SEVERE, "Error", e);
+      Configuration.logger.log(Level.SEVERE, "Error", e);
     } catch (IOException e) {
-      Configuration.logger_.log(Level.SEVERE, "Error", e);
+      Configuration.logger.log(Level.SEVERE, "Error", e);
     }
   }
 }

@@ -115,7 +115,7 @@ public class StandardPSO2011 extends Algorithm {
         }
       }
     } catch (JMetalException e) {
-      Configuration.logger_.log(Level.SEVERE, "Error", e);
+      Configuration.logger.log(Level.SEVERE, "Error", e);
     }
 
     return bestLocalBestSolution;
@@ -210,9 +210,9 @@ public class StandardPSO2011 extends Algorithm {
 
     neighborhood_ = new AdaptiveRandomNeighborhood(swarm_, numberOfParticlesToInform_);
 
-    Configuration.logger_.info("SwarmSize: " + swarmSize_);
-    Configuration.logger_.info("Swarm size: " + swarm_.size());
-    Configuration.logger_.info("list size: " + neighborhood_.getNeighborhood().size());
+    Configuration.logger.info("SwarmSize: " + swarmSize_);
+    Configuration.logger.info("Swarm size: " + swarm_.size());
+    Configuration.logger.info("list size: " + neighborhood_.getNeighborhood().size());
 
     // Step2. Initialize the speed_ of each particle
     for (int i = 0; i < swarmSize_; i++) {
@@ -234,18 +234,18 @@ public class StandardPSO2011 extends Algorithm {
       neighborhoodBest_[i] = getNeighborBest(i);
     }
 
-    //Configuration.logger_.info("neighborhood_i " + neighborhood_.getNeighbors(0) );
+    //Configuration.logger.info("neighborhood_i " + neighborhood_.getNeighbors(0) );
     //for (int s :  neighborhood_.getNeighbors(0)) {
-    //  Configuration.logger_.info(s + ": " + localBest_[s].getObjective(0)) ;
+    //  Configuration.logger.info(s + ": " + localBest_[s].getObjective(0)) ;
     //}
 
-    //Configuration.logger_.info("localBest_i " + localBest_[0].getObjective(0) );
-    //Configuration.logger_.info("neighborhoodBest_i " + getNeighborBest(0).getObjective(0) );
+    //Configuration.logger.info("localBest_i " + localBest_[0].getObjective(0) );
+    //Configuration.logger.info("neighborhoodBest_i " + getNeighborBest(0).getObjective(0) );
 
-    //Configuration.logger_.info("Swarm: " + swarm_) ;
+    //Configuration.logger.info("Swarm: " + swarm_) ;
     swarm_.printObjectives();
     Double b = swarm_.best(comparator_).getObjective(0);
-    //Configuration.logger_.info("Best: " + b) ;
+    //Configuration.logger.info("Best: " + b) ;
 
 
     double bestFoundFitness = Double.MAX_VALUE;
@@ -277,10 +277,10 @@ public class StandardPSO2011 extends Algorithm {
       iteration_++;
 
       Double bestCurrentFitness = swarm_.best(comparator_).getObjective(0);
-      Configuration.logger_.info("Best: " + bestCurrentFitness);
+      Configuration.logger.info("Best: " + bestCurrentFitness);
 
       if (bestCurrentFitness == bestFoundFitness) {
-        Configuration.logger_.info("Recomputing");
+        Configuration.logger.info("Recomputing");
         neighborhood_.recompute();
       }
 

@@ -39,12 +39,12 @@ abstract public class AsynchronousParallelTaskExecutor {
     if (threads == 0) {
       numberOfThreads_ = Runtime.getRuntime().availableProcessors();
     } else if (threads < 0) {
-      Configuration.logger_.severe("SynchronousParallelRunner: the number of threads" +
+      Configuration.logger.severe("SynchronousParallelRunner: the number of threads" +
         " cannot be negative number " + threads);
     } else {
       numberOfThreads_ = threads;
     }
-    Configuration.logger_.info("THREADS: " + numberOfThreads_);
+    Configuration.logger.info("THREADS: " + numberOfThreads_);
   }
 
   abstract public void startParallelRunner(Object configuration);

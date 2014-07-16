@@ -183,7 +183,7 @@ public class PSO extends Algorithm {
     return v;
     /*
 
-    //Configuration.logger_.info("v: " + v + "\tdmax: " + dmax + "\tdmin: " + dmin) ;
+    //Configuration.logger.info("v: " + v + "\tdmax: " + dmax + "\tdmin: " + dmin) ;
     double result;
 
     double dmax = deltaMax[variableIndex];
@@ -382,7 +382,7 @@ public class PSO extends Algorithm {
           globalBest_ = particle;
         } // if
         Double bestCurrentFitness = particles_.best(comparator_).getObjective(0);
-        Configuration.logger_.info("Best: " + bestCurrentFitness);
+        Configuration.logger.info("Best: " + bestCurrentFitness);
       }
       iteration_++;
     }

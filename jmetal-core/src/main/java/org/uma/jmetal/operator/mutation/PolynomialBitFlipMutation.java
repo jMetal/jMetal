@@ -65,7 +65,7 @@ public class PolynomialBitFlipMutation extends Mutation {
     Solution solution = (Solution) object;
 
     if (!VALID_TYPES.contains(solution.getType().getClass())) {
-      Configuration.logger_.severe("PolynomialBitFlipMutation.execute: the solutiontype " +
+      Configuration.logger.severe("PolynomialBitFlipMutation.execute: the solutiontype " +
         "type " + solution.getType() + " is not allowed with this operator");
 
       Class<String> cls = java.lang.String.class;

@@ -321,25 +321,25 @@ public class Experiment {
   }
 
   public void runExperiment() throws JMetalException, IOException {
-    Configuration.logger_.info("Experiment: Name: " + experimentName);
-    Configuration.logger_.info("Experiment: creating " + numberOfExecutionThreads_ + " threads");
-    Configuration.logger_.info("Experiment: Number of algorithms: " + algorithmNameList.length);
+    Configuration.logger.info("Experiment: Name: " + experimentName);
+    Configuration.logger.info("Experiment: creating " + numberOfExecutionThreads_ + " threads");
+    Configuration.logger.info("Experiment: Number of algorithms: " + algorithmNameList.length);
     for (String s : algorithmNameList) {
-      Configuration.logger_.info("  - " + s);
+      Configuration.logger.info("  - " + s);
     }
-    Configuration.logger_.info("Experiment: Number of problem: " + problemList.length);
-    Configuration.logger_.info("Experiment: runs: " + independentRuns);
-    Configuration.logger_.info("Experiment: Experiment directory: " + experimentBaseDirectory);
-    Configuration.logger_.info(
+    Configuration.logger.info("Experiment: Number of problem: " + problemList.length);
+    Configuration.logger.info("Experiment: runs: " + independentRuns);
+    Configuration.logger.info("Experiment: Experiment directory: " + experimentBaseDirectory);
+    Configuration.logger.info(
         "Experiment: Use config files for algorithms: " + useConfigurationFilesForAlgorithms_);
-    Configuration.logger_.info("Experiment: Generate reference Pareto fronts: " + generateReferenceParetoFronts_);
-    Configuration.logger_.info("Experiment: Generate Latex tables: " + generateLatexTables_);
-    Configuration.logger_.info("Experiment: Generate Friedman tables: " + generateFriedmanTables_);
-    Configuration.logger_.info("Experiment: Generate boxplots: " + generateBoxplots_);
+    Configuration.logger.info("Experiment: Generate reference Pareto fronts: " + generateReferenceParetoFronts_);
+    Configuration.logger.info("Experiment: Generate Latex tables: " + generateLatexTables_);
+    Configuration.logger.info("Experiment: Generate Friedman tables: " + generateFriedmanTables_);
+    Configuration.logger.info("Experiment: Generate boxplots: " + generateBoxplots_);
     if (generateBoxplots_) {
-      Configuration.logger_.info("Experiment: Boxplots Rows: " + boxplotRows_);
-      Configuration.logger_.info("Experiment: Boxplots Columns: " + boxplotColumns_);
-      Configuration.logger_.info("Experiment: Boxplots Notch: " + boxplotNotch_);
+      Configuration.logger.info("Experiment: Boxplots Rows: " + boxplotRows_);
+      Configuration.logger.info("Experiment: Boxplots Columns: " + boxplotColumns_);
+      Configuration.logger.info("Experiment: Boxplots Notch: " + boxplotNotch_);
     }
 
     if (runTheAlgorithms_) {
@@ -350,7 +350,7 @@ public class Experiment {
       for (String algorithm : algorithmNameList) {
         for (String problem : problemList) {
           for (int i = 0; i < independentRuns; i++) {
-            Configuration.logger_.info(
+            Configuration.logger.info(
                 "Adding task. Algorithm:  " + algorithm + " Problem: " + problem + " Run: " + i);
             parallelRunner.addTask(new Object[] {algorithm, problem, i});
           }
@@ -398,16 +398,16 @@ public class Experiment {
 
     experimentDirectory = new File(experimentBaseDirectory);
     if (experimentDirectory.exists()) {
-      Configuration.logger_.info("Experiment directory exists");
+      Configuration.logger.info("Experiment directory exists");
       if (experimentDirectory.isDirectory()) {
-        Configuration.logger_.info("Experiment directory is a directory");
+        Configuration.logger.info("Experiment directory is a directory");
       } else {
-        Configuration.logger_.info("Experiment directory is not a directory. Deleting file and creating directory");
+        Configuration.logger.info("Experiment directory is not a directory. Deleting file and creating directory");
       }
       experimentDirectory.delete();
       new File(experimentBaseDirectory).mkdirs();
     } else {
-      Configuration.logger_.info("Experiment directory does NOT exist. Creating");
+      Configuration.logger.info("Experiment directory does NOT exist. Creating");
       new File(experimentBaseDirectory).mkdirs();
     }
   }
@@ -421,21 +421,21 @@ public class Experiment {
     if (args.length == 1) {
       configuration_ = new Properties();
 
-      Configuration.logger_.info("ARGS[0]: " + args[0]);
+      Configuration.logger.info("ARGS[0]: " + args[0]);
       try {
         propertiesFile_ = new InputStreamReader(new FileInputStream(args[0]));
         configuration_.load(propertiesFile_);
       } catch (FileNotFoundException e) {
-        Configuration.logger_.log(Level.SEVERE, "File not found", e);
+        Configuration.logger.log(Level.SEVERE, "File not found", e);
         propertiesFile_ = null;
       }  catch (IOException e) {
-        Configuration.logger_.log(Level.SEVERE, "Error reading properties file", e);
+        Configuration.logger.log(Level.SEVERE, "Error reading properties file", e);
       }
 
       if (propertiesFile_ == null) {
-        Configuration.logger_.log(Level.INFO, "Properties file " + args[0] + " doesn't exist");
+        Configuration.logger.log(Level.INFO, "Properties file " + args[0] + " doesn't exist");
       } else {
-        Configuration.logger_.log(Level.INFO, "Properties file loaded");
+        Configuration.logger.log(Level.INFO, "Properties file loaded");
       }
     }
   }

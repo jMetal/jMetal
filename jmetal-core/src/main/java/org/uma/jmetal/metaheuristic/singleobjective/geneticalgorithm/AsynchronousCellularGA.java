@@ -123,7 +123,7 @@ public class AsynchronousCellularGA extends Algorithm {
 
         if ((evaluations % 1000) == 0) {
           int bestSolution = (Integer) findBestSolution.execute(population);
-          Configuration.logger_.info("Evals: " + evaluations + "\t Fitness: " +
+          Configuration.logger.info("Evals: " + evaluations + "\t Fitness: " +
             population.get(bestSolution).getObjective(0));
         }
       }
@@ -133,7 +133,7 @@ public class AsynchronousCellularGA extends Algorithm {
     SolutionSet resultPopulation = new SolutionSet(1);
     resultPopulation.add(bestSolution);
 
-    Configuration.logger_.info("Evaluations: " + evaluations);
+    Configuration.logger.info("Evaluations: " + evaluations);
     return resultPopulation;
   }
 }

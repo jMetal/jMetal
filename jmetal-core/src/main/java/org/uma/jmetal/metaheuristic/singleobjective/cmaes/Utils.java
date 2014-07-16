@@ -285,7 +285,7 @@ public class Utils {
           && Math.abs(cc - C[i > j ? i : j][i > j ? j : i]) > 1e-9) { /* quite large */
           s = " " + i + " " + j + " " + cc + " " + C[i > j ? i : j][i > j ? j : i] + " " + (cc - C[
             i > j ? i : j][i > j ? j : i]);
-          Configuration.logger_.log(Level.SEVERE,
+          Configuration.logger.log(Level.SEVERE,
             "org.uma.jmetal.metaheuristic.cmaes.Utils.checkEigenSystem(): WARNING - imprecise result detected "
               + s
           );
@@ -293,7 +293,7 @@ public class Utils {
         }
         if (Math.abs(dd - (i == j ? 1 : 0)) > 1e-10) {
           s = i + " " + j + " " + dd;
-          Configuration.logger_.log(Level.SEVERE,
+          Configuration.logger.log(Level.SEVERE,
             "org.uma.jmetal.metaheuristic.cmaes.Utils.checkEigenSystem(): WARNING - imprecise result detected (Q not orthog.) "
               + s);
           ++res;

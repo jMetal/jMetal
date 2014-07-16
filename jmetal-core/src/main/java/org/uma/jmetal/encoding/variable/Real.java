@@ -72,7 +72,7 @@ public class Real extends Variable {
 		try {
 			return new Real(this);
 		} catch (JMetalException e) {
-			Configuration.logger_.log(Level.SEVERE, "Real.deepCopy.execute: JMException", e);
+			Configuration.logger.log(Level.SEVERE, "Real.deepCopy.execute: JMException", e);
 			return null;
 		}
 	}

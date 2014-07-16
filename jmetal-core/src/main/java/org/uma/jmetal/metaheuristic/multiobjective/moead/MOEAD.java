@@ -225,7 +225,7 @@ public class MOEAD extends Algorithm {
         }
         br.close();
       } catch (Exception e) {
-        Configuration.logger_.log(
+        Configuration.logger.log(
           Level.SEVERE,
           "initializeUniformWeight: failed when reading for file: " + dataDirectory + "/" + dataFileName,
           e);

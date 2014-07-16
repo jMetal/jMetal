@@ -262,7 +262,7 @@ public class DifferentialEvolutionCrossover extends Crossover {
         }
       }
     } else {
-      Configuration.logger_.severe("DifferentialEvolutionCrossover.execute: " +
+      Configuration.logger.severe("DifferentialEvolutionCrossover.execute: " +
         " unknown DE variant (" + variant_ + ")");
       Class<String> cls = java.lang.String.class;
       String name = cls.getName();

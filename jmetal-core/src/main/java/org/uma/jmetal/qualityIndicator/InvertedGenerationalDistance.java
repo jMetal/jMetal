@@ -75,7 +75,7 @@ public class InvertedGenerationalDistance {
       trueFront,
       new Integer(args[2]));
 
-    Configuration.logger_.info(""+value);
+    Configuration.logger.info(""+value);
   }
 
   /**

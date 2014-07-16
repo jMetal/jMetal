@@ -130,7 +130,7 @@ public class SMSEMOA extends Algorithm {
           Solution parent = (Solution) selected;
           selectedParents.add(parent);
         } catch (ClassCastException e) {
-          Configuration.logger_.log(Level.WARNING, "Class cast exception", e);
+          Configuration.logger.log(Level.WARNING, "Class cast exception", e);
           parents = (Solution[]) selected;
           Collections.addAll(selectedParents, parents);
         }

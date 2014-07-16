@@ -106,7 +106,7 @@ public class BitFlipMutation extends Mutation {
         }
       }
     } catch (ClassCastException e1) {
-      Configuration.logger_.log(Level.SEVERE,
+      Configuration.logger.log(Level.SEVERE,
         "BitFlipMutation.doMutation: ClassCastException error" + e1.getMessage(), e1);
       Class<String> cls = java.lang.String.class;
       String name = cls.getName();

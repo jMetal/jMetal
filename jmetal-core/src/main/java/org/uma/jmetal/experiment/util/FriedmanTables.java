@@ -123,7 +123,7 @@ public class FriedmanTables implements IExperimentOutput {
 
           fis.close();
         } catch (IOException e) {
-          Configuration.logger_.log(Level.SEVERE, "Error", e);
+          Configuration.logger.log(Level.SEVERE, "Error", e);
           throw new RuntimeException();
         }
 
@@ -262,7 +262,7 @@ public class FriedmanTables implements IExperimentOutput {
       fis.close();
       f.close();
     } catch (IOException e) {
-      Configuration.logger_.log(Level.SEVERE, "Error", e);
+      Configuration.logger.log(Level.SEVERE, "Error", e);
       throw new RuntimeException();
     }
   }

@@ -86,7 +86,7 @@ public class NonElitistES extends Algorithm {
     // Read the operator
     mutationOperator = this.operators_.get("mutation");
 
-    Configuration.logger_.info("(" + mu_ + " , " + lambda_ + ")ES");
+    Configuration.logger.info("(" + mu_ + " , " + lambda_ + ")ES");
 
     // Create the parent population of mu solutions
     Solution newIndividual;
@@ -97,7 +97,7 @@ public class NonElitistES extends Algorithm {
     bestIndividual = new Solution(newIndividual);
 
     for (int i = 1; i < mu_; i++) {
-      Configuration.logger_.info(""+i);
+      Configuration.logger.info(""+i);
       newIndividual = new Solution(problem_);
       problem_.evaluate(newIndividual);
       evaluations++;
@@ -137,7 +137,7 @@ public class NonElitistES extends Algorithm {
         population.add(offspringPopulation.get(i));
       }
 
-      Configuration.logger_.info("Evaluation: " + evaluations +
+      Configuration.logger.info("Evaluation: " + evaluations +
         " Current best fitness: " + population.get(0).getObjective(0) +
         " Global best fitness: " + bestIndividual.getObjective(0));
 
