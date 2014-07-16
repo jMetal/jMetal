@@ -32,38 +32,24 @@ import java.util.logging.Level;
  * Class representing a SolutionSet (a set of solutions)
  */
 public class SolutionSet implements Serializable {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = -8200105946946452804L;
-
-  /**
-   * Stores a list of <code>solution</code> objects.
-   */
   protected final List<Solution> solutionsList;
+  private int maximumSize ;
 
-  /**
-   * Maximum size of the solution set
-   */
-  private int capacity = 0;
-
-  /**
-   * Constructor. Creates an unbounded solution set.
-   */
+  /** Constructor */
   public SolutionSet() {
     solutionsList = new ArrayList<Solution>();
   }
 
   /**
-   * Creates a empty solutionSet with a maximum capacity.
+   * Creates a empty solutionSet with a maximum maximumSize.
    *
    * @param maximumSize Maximum size.
    */
   public SolutionSet(int maximumSize) {
     solutionsList = new ArrayList<Solution>();
-    capacity = maximumSize;
-  } // SolutionSet
+    this.maximumSize = maximumSize;
+  }
 
   /**
    * Inserts a new solution into the SolutionSet.
@@ -73,11 +59,11 @@ public class SolutionSet implements Serializable {
    * otherwise.
    */
   public boolean add(Solution solution) throws JMetalException {
-    if (solutionsList.size() == capacity) {
+    if (solutionsList.size() == maximumSize) {
       Configuration.logger_.severe("The population is full");
-      Configuration.logger_.severe("Capacity is : " + capacity);
+      Configuration.logger_.severe("Capacity is : " + maximumSize);
       Configuration.logger_.severe("\t Size is: " + this.size());
-        throw new JMetalException("The population is full. Capacity is : " + capacity + "") ;
+        throw new JMetalException("The population is full. Capacity is : " + maximumSize + "") ;
     }
 
     solutionsList.add(solution);
@@ -104,12 +90,12 @@ public class SolutionSet implements Serializable {
   }
 
   /**
-   * Returns the maximum capacity of the solution set
+   * Returns the maximum maximumSize of the solution set
    *
-   * @return The maximum capacity of the solution set
+   * @return The maximum maximumSize of the solution set
    */
   public int getMaxSize() {
-    return capacity;
+    return maximumSize;
   } 
 
   /**
@@ -288,6 +274,8 @@ public class SolutionSet implements Serializable {
    * @param object Solution set to compare with
    * @return true or false depending on the result of the comparison
    */
+  // FIXME: to do
+  /*
   @Override
   public boolean equals(Object object) {
     boolean result;
@@ -321,6 +309,7 @@ public class SolutionSet implements Serializable {
     }
     return result;
   }
+  */
 
   /**
    * Write the function values of feasible solutions into a file
@@ -418,8 +407,8 @@ public class SolutionSet implements Serializable {
   public SolutionSet union(SolutionSet solutionSet) throws JMetalException {
     // Check the correct size. In development
     int newSize = this.size() + solutionSet.size();
-    if (newSize < capacity) {
-      newSize = capacity;
+    if (newSize < maximumSize) {
+      newSize = maximumSize;
     }
 
     // Create a new population
@@ -475,12 +464,12 @@ public class SolutionSet implements Serializable {
     }
   }
 
-  public int getCapacity() {
-    return capacity;
+  public int getMaximumSize() {
+    return maximumSize;
   }
 
-  public void setCapacity(int capacity) {
-    this.capacity = capacity;
+  public void setMaximumSize(int maximumSize) {
+    this.maximumSize = maximumSize;
   }
 
   public List<Solution> getSolutionsList() {

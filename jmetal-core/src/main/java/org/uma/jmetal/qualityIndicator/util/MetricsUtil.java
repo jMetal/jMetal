@@ -275,7 +275,7 @@ public class MetricsUtil {
           solution.setObjective(i, value);
           i++;
         }
-        solutionSet.setCapacity(solutionSet.getCapacity() + 1);
+        solutionSet.setMaximumSize(solutionSet.getMaximumSize() + 1);
         solutionSet.add(solution);
         aux = br.readLine();
       }
