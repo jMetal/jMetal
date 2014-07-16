@@ -33,79 +33,108 @@ import java.util.logging.Level;
  * This class implements a Real value decision variable
  */
 public class Real extends Variable {
-  private static final long serialVersionUID = -227984897558565037L;
+	private static final long serialVersionUID = -227984897558565037L;
 
-  private double value;
-  private double lowerBound;
-  private double upperBound;
+	private double value;
+	private double lowerBound;
+	private double upperBound;
 
-  public Real() {
-  }
+	public Real() {
+	}
 
-  public Real(double lowerBound, double upperBound) {
-    this.lowerBound = lowerBound;
-    this.upperBound = upperBound;
-    value = PseudoRandom.randDouble() * (upperBound - lowerBound) + lowerBound;
-  }
+	public Real(double lowerBound, double upperBound) {
+		this.lowerBound = lowerBound;
+		this.upperBound = upperBound;
+		value = PseudoRandom.randDouble() * (upperBound - lowerBound) + lowerBound;
+	}
 
-  public Real(double value, double lowerBound, double upperBound) {
-    this.lowerBound = lowerBound;
-    this.upperBound = upperBound;
-    this.value = value;
-  }
+	public Real(double value, double lowerBound, double upperBound) {
+		this.lowerBound = lowerBound;
+		this.upperBound = upperBound;
+		this.value = value;
+	}
 
-  public Real(Variable variable) throws JMetalException {
-    lowerBound = variable.getLowerBound();
-    upperBound = variable.getUpperBound();
-    value = variable.getValue();
-  }
+	public Real(Variable variable) throws JMetalException {
+		lowerBound = variable.getLowerBound();
+		upperBound = variable.getUpperBound();
+		value = variable.getValue();
+	}
 
-  public double getValue() {
-    return value;
-  } 
+	public double getValue() {
+		return value;
+	}
 
-  public void setValue(double value) {
-    this.value = value;
-  } 
+	public void setValue(double value) {
+		this.value = value;
+	}
 
-  public Variable deepCopy() {
-    try {
-      return new Real(this);
-    } catch (JMetalException e) {
-      Configuration.logger_.log(Level.SEVERE, "Real.deepCopy.execute: JMException", e);
-      return null;
-    }
-  }
+	public Variable deepCopy() {
+		try {
+			return new Real(this);
+		} catch (JMetalException e) {
+			Configuration.logger_.log(Level.SEVERE, "Real.deepCopy.execute: JMException", e);
+			return null;
+		}
+	}
 
-  public double getLowerBound() {
-    return lowerBound;
-  }
+	public double getLowerBound() {
+		return lowerBound;
+	}
 
-  public void setLowerBound(double lowerBound) {
-    this.lowerBound = lowerBound;
-  }
+	public void setLowerBound(double lowerBound) {
+		this.lowerBound = lowerBound;
+	}
 
-  public double getUpperBound() {
-    return upperBound;
-  }
+	public double getUpperBound() {
+		return upperBound;
+	}
 
-  public void setUpperBound(double upperBound) {
-    this.upperBound = upperBound;
-  }
+	public void setUpperBound(double upperBound) {
+		this.upperBound = upperBound;
+	}
 
-  public String toString() {
-    return value + "";
-  }
+	public String toString() {
+		return value + "";
+	}
 
-  @Override
-  public int hashCode() {
-     int hash ;
-    if (upperBound > 10) {
-      hash = (int) Math.round(value);
-    } else {
-      hash = (int) Math.round(value) * 17 ;
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		long temp;
+		temp = Double.doubleToLongBits(lowerBound);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(upperBound);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(value);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		return result;
+	}
 
-    return hash ;
-  }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof Real)) {
+			return false;
+		}
+		Real other = (Real) obj;
+		if (Double.doubleToLongBits(lowerBound) != Double
+				.doubleToLongBits(other.lowerBound)) {
+			return false;
+		}
+		if (Double.doubleToLongBits(upperBound) != Double
+				.doubleToLongBits(other.upperBound)) {
+			return false;
+		}
+		if (Double.doubleToLongBits(value) != Double.doubleToLongBits(other.value)) {
+			return false;
+		}
+		return true;
+	}
+
 }

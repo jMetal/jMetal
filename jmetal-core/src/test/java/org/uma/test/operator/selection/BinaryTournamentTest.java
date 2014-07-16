@@ -20,19 +20,18 @@
 
 package org.uma.test.operator.selection;
 
-import static org.junit.Assert.*;
-
-import java.util.Arrays;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.operator.selection.BinaryTournament;
-import org.uma.jmetal.operator.selection.BinaryTournament2;
-import org.uma.jmetal.operator.selection.RandomSelection;
+import org.uma.jmetal.problem.Kursawe;
 import org.uma.jmetal.util.JMetalException;
+
+import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by Antonio J. Nebro on 15/06/14.
@@ -41,21 +40,23 @@ public class BinaryTournamentTest {
 	static final int POPULATION_SIZE = 20 ;
 	BinaryTournament selection ;
 	SolutionSet solutionSet ;
+  Problem problem ;
 
 	@Before
-	public void startup() {
+	public void startup() throws ClassNotFoundException {
+    problem = new Kursawe("Real", 5) ;
 		selection = new BinaryTournament.Builder()
 		.build() ;
 
 		solutionSet = new SolutionSet(POPULATION_SIZE) ;
 		for (int i = 0 ; i < POPULATION_SIZE; i++) {
-			solutionSet.add(new Solution()) ;
+			solutionSet.add(new Solution(problem)) ;
 		}
 	}
 
 	@Test
 	public void executeWithCorrectParametersTest() {
-		assertNotNull((Solution)selection.execute(solutionSet));
+		assertNotNull(selection.execute(solutionSet));
 	}
 
 	@Test
@@ -73,13 +74,13 @@ public class BinaryTournamentTest {
 	}
 
 	@Test
-	public void executeWithSolutionSetSizeTwoTest() {
+	public void executeWithSolutionSetSizeTwoTest() throws ClassNotFoundException {
 		solutionSet = new SolutionSet(2) ;
-		solutionSet.add(new Solution()) ;
-		solutionSet.add(new Solution()) ;
+		solutionSet.add(new Solution(problem)) ;
+		solutionSet.add(new Solution(problem)) ;
 		assertNotNull(selection.execute(solutionSet));
 	}
-	
+
   @Test (expected = JMetalException.class)
   public void wrongParameterClassTest() {
     selection.execute(new Integer(4)) ;
@@ -89,10 +90,11 @@ public class BinaryTournamentTest {
   public void nullParameterTest() {
     selection.execute(null) ;
   }
-  
+
 	@After
 	public void tearDown() {
 		selection = null ;
 		solutionSet = null ;
+    problem = null ;
 	}
 }

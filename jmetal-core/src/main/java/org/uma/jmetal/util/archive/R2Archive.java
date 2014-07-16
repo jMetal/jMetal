@@ -44,25 +44,25 @@ public class R2Archive extends Archive {
   /**
    * Stores the maximum size of the archive.
    */
-  private int maxSize_;
+  private int maxSize;
 
   /**
    * stores the number of the objectives.
    */
-  private int objectives_;
+  private int objectives;
 
   /**
    * Stores a <code>Comparator</code> for dominance checking.
    */
-  private Comparator<Solution> dominance_;
+  private Comparator<Solution> dominance;
 
   /**
    * Stores a <code>Comparator</code> for equality checking (in the objective
    * space).
    */
-  private Comparator<Solution> equals_;
-  private Comparator<Solution> crowdingDistance_;
-  private R2 r2Indicator_;
+  private Comparator<Solution> equals;
+  private Comparator<Solution> crowdingDistance;
+  private R2 r2Indicator;
 
   /**
    * Constructor. Creates an R2Archive for a problem of 2 objectives
@@ -71,14 +71,13 @@ public class R2Archive extends Archive {
    */
   public R2Archive(int maxSize) {
     super(maxSize);
-    maxSize_ = maxSize;
-    objectives_ = 2;        // hardcoded
-    dominance_ = new DominanceComparator();
-    equals_ = new EqualSolutions();
-    crowdingDistance_ = new CrowdingDistanceComparator();
-    r2Indicator_ = new R2();
-
-  } // CrowdingArchive
+    this.maxSize = maxSize;
+    objectives = 2;        // hardcoded
+    dominance = new DominanceComparator();
+    equals = new EqualSolutions();
+    crowdingDistance = new CrowdingDistanceComparator();
+    r2Indicator = new R2();
+  }
 
 
 
@@ -90,12 +89,12 @@ public class R2Archive extends Archive {
    */
   public R2Archive(int maxSize, int numberOfObjectives, String file) {
     super(maxSize);
-    maxSize_ = maxSize;
-    objectives_ = numberOfObjectives;
-    dominance_ = new DominanceComparator();
-    equals_ = new EqualSolutions();
-    crowdingDistance_ = new CrowdingDistanceComparator();
-    r2Indicator_ = new R2(numberOfObjectives, file);
+    this.maxSize = maxSize;
+    objectives = numberOfObjectives;
+    dominance = new DominanceComparator();
+    equals = new EqualSolutions();
+    crowdingDistance = new CrowdingDistanceComparator();
+    r2Indicator = new R2(numberOfObjectives, file);
 
   } // CrowdingArchive
 
@@ -117,16 +116,16 @@ public class R2Archive extends Archive {
     int i = 0;
     Solution aux; //Store an solutiontype temporally
 
-    while (i < solutionsList_.size()) {
-      aux = solutionsList_.get(i);
+    while (i < solutionsList.size()) {
+      aux = solutionsList.get(i);
 
-      flag = dominance_.compare(solution, aux);
+      flag = dominance.compare(solution, aux);
       if (flag == 1) {               // The solutiontype to add is dominated
         return false;                // Discard the new solutiontype
       } else if (flag == -1) {       // A solutiontype in the archive is dominated
-        solutionsList_.remove(i);    // Remove it from the population            
+        solutionsList.remove(i);    // Remove it from the population
       } else {
-        if (equals_.compare(aux, solution) == 0) { // There is an equal solutiontype
+        if (equals.compare(aux, solution) == 0) { // There is an equal solutiontype
           // in the population
           return false; // Discard the new solutiontype
         }  // if
@@ -134,10 +133,10 @@ public class R2Archive extends Archive {
       }
     }
     // Insert the solutiontype into the archive
-    solutionsList_.add(solution);
-    if (size() > maxSize_) { // The archive is full
+    solutionsList.add(solution);
+    if (size() > maxSize) { // The archive is full
       // Removing the one contributing the less
-      int indexWorst = this.r2Indicator_.getWorst(this);
+      int indexWorst = this.r2Indicator.getWorst(this);
       remove(indexWorst);
     }
     return true;
@@ -153,8 +152,8 @@ public class R2Archive extends Archive {
     int index1, index2;
     index1 = PseudoRandom.randInt(0, size() - 1);
     index2 = PseudoRandom.randInt(0, size() - 1);
-    double aux1 = this.r2Indicator_.R2Without(this, index1);
-    double aux2 = this.r2Indicator_.R2Without(this, index2);
+    double aux1 = this.r2Indicator.R2Without(this, index1);
+    double aux2 = this.r2Indicator.R2Without(this, index2);
 
     if (aux1 > aux2) { // means that index1 contributed less than index2
       return this.get(index1);
@@ -162,7 +161,4 @@ public class R2Archive extends Archive {
       return this.get(index2);
     }
   }
-
-
-
-} // R2Archive
+}

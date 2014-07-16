@@ -64,6 +64,7 @@ public class BinaryTournament extends Selection {
     }
 
     SolutionSet solutionSet = (SolutionSet) object;
+
     Solution solution1, solution2;
     solution1 = solutionSet.get(PseudoRandom.randInt(0, solutionSet.size() - 1));
     solution2 = solutionSet.get(PseudoRandom.randInt(0, solutionSet.size() - 1));

@@ -317,6 +317,10 @@ public class Solution implements Serializable {
     }
   }
 
+  public double[] getObjectives() {
+    return objective ;
+  }
+
   /**
    * Returns the number of decision variables of the solution.
    *
@@ -324,19 +328,6 @@ public class Solution implements Serializable {
    */
   public int numberOfVariables() {
     return problem.getNumberOfVariables();
-  }
-
-  /**
-   * Returns a string representing the solution.
-   *
-   * @return The string.
-   */
-  public String toString() {
-    String aux = "";
-    for (int i = 0; i < this.numberOfObjectives; i++) {
-      aux = aux + this.getObjective(i) + " ";
-    }
-    return aux;
   }
 
   /**
@@ -519,19 +510,100 @@ public class Solution implements Serializable {
 
     return bits;
   }
-                    /*
+   /*
   @Override
-  public int hashCode(){
-    int hashCode ;
-    int objectives = 0 ;
-    int variables = 0 ;
+  public boolean equals(final Object object){
 
-    for (double v : this.objective) {
-       objectives += Math.round(v) ;
+    if (this == object) {
+      return true ;
+    } else if (!(object instanceof Solution)) {
+      return false ;
     }
 
-    hashCode = numberOfObjectives * numberOfVariables() + numberOfViolatedConstraints ;
-    return hashCode ;
+    Solution solution = (Solution)object ;
+    if (solution.numberOfVariables() != numberOfVariables()) {
+      return false ;
+    } else if (solution.numberOfObjectives != numberOfObjectives) {
+      return false ;
+    } else if (solution.numberOfViolatedConstraints != numberOfViolatedConstraints) {
+      return  false ;
+    }
+
+    for (int i = 0 ; i < numberOfObjectives; i++) {
+      if (solution.getObjective(i) != getObjective(i)) {
+        return false ;
+      }
+    }
+
+    for (int i = 0 ; i < numberOfVariables(); i++) {
+      if (!solution.getDecisionVariables()[i].equals(getDecisionVariables()[i])) {
+        return false ;
+      }
+    }
+
+    return true ;
   }
   */
+
+  /**
+   * Returns a string representing the solution.
+   *
+   * @return The string.
+   */
+  @Override public String toString() {
+    return "Solution{" +
+      "objective=" + Arrays.toString(objective) +
+      ", type=" + type +
+      ", variable=" + Arrays.toString(variable) +
+      ", numberOfObjectives=" + numberOfObjectives +
+      ", numberOfViolatedConstraints=" + numberOfViolatedConstraints +
+      '}';
+  }
+
+  @Override
+  public int hashCode() {
+	  final int prime = 31;
+	  int result = 1;
+	  result = prime * result + numberOfObjectives;
+	  result = prime * result + numberOfViolatedConstraints;
+	  result = prime * result + Arrays.hashCode(objective);
+	  result = prime * result + ((type == null) ? 0 : type.hashCode());
+	  result = prime * result + Arrays.hashCode(variable);
+	  return result;
+  }
+
+	@Override
+  public boolean equals(Object obj) {
+	  if (this == obj) {
+		  return true;
+	  }
+	  if (obj == null) {
+		  return false;
+	  }
+	  if (!(obj instanceof Solution)) {
+		  return false;
+	  }
+	  Solution other = (Solution) obj;
+	  if (numberOfObjectives != other.numberOfObjectives) {
+		  return false;
+	  }
+	  if (numberOfViolatedConstraints != other.numberOfViolatedConstraints) {
+		  return false;
+	  }
+	  if (!Arrays.equals(objective, other.objective)) {
+		  return false;
+	  }
+	  if (type == null) {
+		  if (other.type != null) {
+			  return false;
+		  }
+	  } else if (!type.equals(other.type)) {
+		  return false;
+	  }
+	  if (!Arrays.equals(variable, other.variable)) {
+		  return false;
+	  }
+	  return true;
+  }
+
 }

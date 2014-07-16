@@ -23,9 +23,11 @@ package org.uma.test.operator.selection;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.operator.selection.RankingAndCrowdingSelection;
+import org.uma.jmetal.problem.ZDT.ZDT1;
 import org.uma.jmetal.util.JMetalException;
 
 import static org.junit.Assert.assertEquals;
@@ -39,15 +41,17 @@ public class RankingAndCrowdingSelectionTest {
   static final int POPULATION_SIZE = 20 ;
   RankingAndCrowdingSelection selection ;
   SolutionSet solutionSet ;
+  Problem problem ;
 
   @Before
-  public void startup() {
+  public void startup() throws ClassNotFoundException {
+    problem = new ZDT1("Real") ;
     selection = new RankingAndCrowdingSelection.Builder(POPULATION_SIZE)
             .build() ;
 
     solutionSet = new SolutionSet(POPULATION_SIZE) ;
     for (int i = 0 ; i < POPULATION_SIZE; i++) {
-      solutionSet.add(new Solution()) ;
+      solutionSet.add(new Solution(problem)) ;
     }
   }
 

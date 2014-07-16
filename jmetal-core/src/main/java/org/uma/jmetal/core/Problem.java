@@ -107,7 +107,7 @@ public abstract class Problem implements Serializable {
 
   public void setSolutionType(SolutionType type) {
     solutionType_ = type;
-  } // setSolutionType
+  } 
 
   public String getName() {
     return problemName_;

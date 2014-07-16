@@ -82,16 +82,16 @@ public class NonDominatedSolutionList2 extends SolutionSet {
    * that case, the domination tests are omitted
    */
   public boolean add(Solution solution) {
-    if (solutionsList_.size() == 0) {
+    if (solutionsList.size() == 0) {
       Solution s = new Solution(solution.getNumberOfObjectives());
       for (int i = 0; i < s.getNumberOfObjectives(); i++) {
         s.setObjective(i, solution.getObjective(i));
       }
-      solutionsList_.add(s);
+      solutionsList.add(s);
       solutionCounter_ = 1;
       return true;
     } else {
-      Iterator<Solution> iterator = solutionsList_.iterator();
+      Iterator<Solution> iterator = solutionsList.iterator();
 
       while (iterator.hasNext()) {
         Solution listIndividual = iterator.next();
@@ -115,7 +115,7 @@ public class NonDominatedSolutionList2 extends SolutionSet {
       for (int i = 0; i < s.getNumberOfObjectives(); i++) {
         s.setObjective(i, solution.getObjective(i));
       }
-      solutionsList_.add(s);
+      solutionsList.add(s);
 
       return true;
     }

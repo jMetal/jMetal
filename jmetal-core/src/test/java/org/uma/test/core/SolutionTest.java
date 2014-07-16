@@ -23,31 +23,127 @@ package org.uma.test.core;
 
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.problem.IntRealProblem;
 import org.uma.jmetal.problem.Kursawe;
+import org.uma.jmetal.problem.singleObjective.OneMax;
 import org.uma.jmetal.util.JMetalException;
 import org.junit.Test;
 
 import java.util.Arrays;
 
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 
 /**
  * Created by Antonio J. Nebro on 10/05/14.
  */
 public class SolutionTest {
+  Problem problemReal = new Kursawe("Real", 3) ;
+  Problem problemIntReal = new IntRealProblem("IntReal", 4, 3) ;
+  Problem problemBinary = new OneMax("Binary", 256) ;
 
   @Test
-  public void setDecisionVariablesTest() throws JMetalException, ClassNotFoundException {
-    Problem problem = new Kursawe("Real", 3) ;
-    Solution solution1 = new Solution(problem) ;
-    Solution solution2 = new Solution(problem) ;
+  public void setup() {
+  }
+
+  @Test
+  public void comparingVariablesWithIdenticalVariableValues() throws ClassNotFoundException {
+    Solution solution1 = new Solution(problemReal) ;
+    Solution solution2 = new Solution(problemReal) ;
 
     assertFalse(Arrays.equals(solution1.getDecisionVariables(), solution2.getDecisionVariables())) ;
 
     solution2.setDecisionVariables(solution1.getDecisionVariables()) ;
-    //assertArrayEquals(solution1.getDecisionVariables(), solution2.getDecisionVariables()) ;
     assertTrue(Arrays.equals(solution1.getDecisionVariables(), solution2.getDecisionVariables())) ;
 
+    solution1 = new Solution(problemIntReal) ;
+    solution2 = new Solution(problemIntReal) ;
+
+    assertFalse(Arrays.equals(solution1.getDecisionVariables(), solution2.getDecisionVariables())) ;
+
+    solution2.setDecisionVariables(solution1.getDecisionVariables()) ;
+    assertTrue(Arrays.equals(solution1.getDecisionVariables(), solution2.getDecisionVariables())) ;
+
+    solution1 = new Solution(problemBinary) ;
+    solution2 = new Solution(problemBinary) ;
+
+    assertFalse(Arrays.equals(solution1.getDecisionVariables(), solution2.getDecisionVariables())) ;
+
+    solution2.setDecisionVariables(solution1.getDecisionVariables()) ;
+    assertTrue(Arrays.equals(solution1.getDecisionVariables(), solution2.getDecisionVariables())) ;
+  }
+
+  @Test
+  public void comparingVariablesWithIdenticalFunctionValues() throws JMetalException, ClassNotFoundException {
+    Solution solution1 = new Solution(problemReal) ;
+    Solution solution2 = new Solution(problemReal) ;
+
+    problemReal.evaluate(solution1);
+    problemReal.evaluate(solution2);
+    assertFalse(Arrays.equals(solution1.getObjectives(), solution2.getObjectives())) ;
+
+    solution2 = new Solution(solution1) ;
+    assertTrue(Arrays.equals(solution1.getObjectives(), solution2.getObjectives())) ;
+
+    solution1 = new Solution(problemIntReal) ;
+    solution2 = new Solution(problemIntReal) ;
+
+    problemIntReal.evaluate(solution1);
+    problemIntReal.evaluate(solution2);
+
+    assertFalse(Arrays.equals(solution1.getDecisionVariables(), solution2.getDecisionVariables())) ;
+
+    solution2 = new Solution(solution1) ;
+    assertTrue(Arrays.equals(solution1.getDecisionVariables(), solution2.getDecisionVariables())) ;
+
+     
+    solution1 = new Solution(problemBinary) ;
+    solution2 = new Solution(problemBinary) ;
+
+    problemBinary.evaluate(solution1);
+    problemBinary.evaluate(solution2);
+
+    assertFalse(Arrays.equals(solution1.getDecisionVariables(), solution2.getDecisionVariables())) ;
+
+    solution2 = new Solution(solution1) ;
+    assertTrue(Arrays.equals(solution1.getDecisionVariables(), solution2.getDecisionVariables())) ;
+    
+  }
+
+  @Test
+  public void comparingEqualSolutions() throws JMetalException, ClassNotFoundException {
+    Solution solution1 = new Solution(problemReal) ;
+    Solution solution2 = new Solution(problemReal) ;
+
+    problemReal.evaluate(solution1);
+    problemReal.evaluate(solution2);
+    assertNotEquals(solution1, solution2) ;
+
+    solution2 = new Solution(solution1) ;
+    assertEquals(solution1, solution2);
+
+    solution1 = new Solution(problemIntReal) ;
+    solution2 = new Solution(problemIntReal) ;
+
+    problemIntReal.evaluate(solution1);
+    problemIntReal.evaluate(solution2);
+
+    assertNotEquals(solution1, solution2) ;
+
+    solution2 = new Solution(solution1) ;
+    assertEquals(solution1, solution2);
+
+    solution1 = new Solution(problemBinary) ;
+    solution2 = new Solution(problemBinary) ;
+
+    problemBinary.evaluate(solution1);
+    problemBinary.evaluate(solution2);
+
+    assertNotEquals(solution1, solution2) ;
+
+    solution2 = new Solution(solution1) ;
+    assertEquals(solution1, solution2);
   }
 }

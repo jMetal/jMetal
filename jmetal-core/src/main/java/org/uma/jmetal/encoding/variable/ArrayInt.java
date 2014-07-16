@@ -21,6 +21,8 @@
 
 package org.uma.jmetal.encoding.variable;
 
+import java.util.Arrays;
+
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Variable;
 import org.uma.jmetal.util.JMetalException;
@@ -162,14 +164,49 @@ public class ArrayInt extends Variable {
     return string;
   }
 
-  @Override
+	@Override
   public int hashCode() {
-    int hash = 0 ;
+	  final int prime = 31;
+	  int result = 1;
+	  result = prime * result + Arrays.hashCode(array);
+	  result = prime * result + Arrays.hashCode(lowerBounds);
+	  result = prime * result + ((problem == null) ? 0 : problem.hashCode());
+	  result = prime * result + size;
+	  result = prime * result + Arrays.hashCode(upperBounds);
+	  return result;
+  }
 
-    for (int i = 0 ; i < array.length; i++) {
-      hash += (i + 1)*array[i] ;
-    }
-
-    return hash ;
+	@Override
+  public boolean equals(Object obj) {
+	  if (this == obj) {
+		  return true;
+	  }
+	  if (obj == null) {
+		  return false;
+	  }
+	  if (!(obj instanceof ArrayInt)) {
+		  return false;
+	  }
+	  ArrayInt other = (ArrayInt) obj;
+	  if (!Arrays.equals(array, other.array)) {
+		  return false;
+	  }
+	  if (!Arrays.equals(lowerBounds, other.lowerBounds)) {
+		  return false;
+	  }
+	  if (problem == null) {
+		  if (other.problem != null) {
+			  return false;
+		  }
+	  } else if (!problem.equals(other.problem)) {
+		  return false;
+	  }
+	  if (size != other.size) {
+		  return false;
+	  }
+	  if (!Arrays.equals(upperBounds, other.upperBounds)) {
+		  return false;
+	  }
+	  return true;
   }
 }

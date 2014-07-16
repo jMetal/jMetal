@@ -22,15 +22,15 @@ package org.uma.test.operator.selection;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.operator.selection.BinaryTournament;
 import org.uma.jmetal.operator.selection.DifferentialEvolutionSelection;
+import org.uma.jmetal.problem.Kursawe;
 import org.uma.jmetal.util.JMetalException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by Antonio J. Nebro on 07/07/14.
@@ -39,15 +39,17 @@ public class DifferentialEvolutionSelectionTest {
   static final int POPULATION_SIZE = 20 ;
   DifferentialEvolutionSelection selection ;
   SolutionSet solutionSet ;
+  Problem problem ;
 
   @Before
-  public void startup() {
+  public void startup() throws ClassNotFoundException {
+    problem = new Kursawe("Real", 5) ;
     selection = new DifferentialEvolutionSelection.Builder()
             .build() ;
 
     solutionSet = new SolutionSet(POPULATION_SIZE) ;
     for (int i = 0 ; i < POPULATION_SIZE; i++) {
-      solutionSet.add(new Solution()) ;
+      solutionSet.add(new Solution(problem)) ;
     }
   }
 
@@ -66,12 +68,13 @@ public class DifferentialEvolutionSelectionTest {
   }
 
   @Test
-  public void theSelectedIndividualsMustBeDifferentWithPopulationSizeFourTest() {
+  public void theSelectedIndividualsMustBeDifferentWithPopulationSizeFourTest()
+    throws ClassNotFoundException {
     solutionSet = new SolutionSet(4) ;
-    solutionSet.add(new Solution()) ;
-    solutionSet.add(new Solution()) ;
-    solutionSet.add(new Solution()) ;
-    solutionSet.add(new Solution()) ;
+    solutionSet.add(new Solution(problem)) ;
+    solutionSet.add(new Solution(problem)) ;
+    solutionSet.add(new Solution(problem)) ;
+    solutionSet.add(new Solution(problem)) ;
 
     Solution[] selected = (Solution[])selection.execute(new Object[]{solutionSet, 1});
     assertNotEquals(selected[0], selected[1]);
@@ -86,10 +89,10 @@ public class DifferentialEvolutionSelectionTest {
   }
 
   @Test (expected = JMetalException.class)
-  public void executeWithSolutionSetSizeTwoTest() {
+  public void executeWithSolutionSetSizeTwoTest() throws ClassNotFoundException {
     solutionSet = new SolutionSet(2) ;
-    solutionSet.add(new Solution()) ;
-    solutionSet.add(new Solution()) ;
+    solutionSet.add(new Solution(problem)) ;
+    solutionSet.add(new Solution(problem)) ;
     selection.execute(solutionSet);
   }
 

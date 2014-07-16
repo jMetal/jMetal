@@ -23,13 +23,13 @@ package org.uma.test.operator.selection;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.operator.selection.RandomSelection;
+import org.uma.jmetal.problem.ZDT.ZDT1;
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.comparator.SolutionComparator;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 /**
@@ -39,15 +39,17 @@ public class RandomSelectionTest {
   static final int POPULATION_SIZE = 20 ;
   RandomSelection selection ;
   SolutionSet solutionSet ;
+  Problem problem ;
 
   @Before
-  public void startup() {
+  public void startup() throws ClassNotFoundException {
+    problem = new ZDT1("Real") ;
     selection = new RandomSelection.Builder()
             .build() ;
 
     solutionSet = new SolutionSet(POPULATION_SIZE) ;
     for (int i = 0 ; i < POPULATION_SIZE; i++) {
-      solutionSet.add(new Solution()) ;
+      solutionSet.add(new Solution(problem)) ;
     }
   }
 
@@ -59,11 +61,11 @@ public class RandomSelectionTest {
   }
 
   @Test
-  public void executeWithCorrectPopulationSizeTwoTest() {
+  public void executeWithCorrectPopulationSizeTwoTest() throws ClassNotFoundException {
     Solution[] solution ;
     solutionSet = new SolutionSet(2) ;
-    solutionSet.add(new Solution()) ;
-    solutionSet.add(new Solution()) ;
+    solutionSet.add(new Solution(problem)) ;
+    solutionSet.add(new Solution(problem)) ;
     solution = (Solution[])selection.execute(solutionSet) ;
     assertNotEquals(solution[0], solution[1]);
   }
@@ -75,15 +77,15 @@ public class RandomSelectionTest {
   }
 
   @Test (expected = JMetalException.class)
-  public void executeWithSolutionSetSizeOneTest() {
+  public void executeWithSolutionSetSizeOneTest() throws ClassNotFoundException {
     solutionSet = new SolutionSet(1) ;
-    solutionSet.add(new Solution()) ;
+    solutionSet.add(new Solution(problem)) ;
     selection.execute(solutionSet) ;
   }
 
   @Test (expected = JMetalException.class)
-  public void wrongParameterClassTest() {
-    Solution[] parent = {new Solution(), new Solution()};
+  public void wrongParameterClassTest() throws ClassNotFoundException {
+    Solution[] parent = {new Solution(problem), new Solution(problem)};
 
     selection.execute(parent) ;
   }

@@ -34,6 +34,7 @@ public class BinaryReal extends Binary {
   private static final long serialVersionUID = 7465120044544948197L;
 
   public static final int DEFAULT_PRECISION = 30;
+  
   private double value;
   private double lowerBound;
   private double upperBound;
@@ -157,15 +158,41 @@ public class BinaryReal extends Binary {
     return value + "";
   }
 
-  @Override
+	@Override
   public int hashCode() {
-    int hash ;
-    if (upperBound > 10) {
-      hash = (int) Math.round(value);
-    } else {
-      hash = (int) Math.round(value) * 17 ;
-    }
-
-    return hash ;
+	  final int prime = 31;
+	  int result = super.hashCode();
+	  long temp;
+	  temp = Double.doubleToLongBits(lowerBound);
+	  result = prime * result + (int) (temp ^ (temp >>> 32));
+	  temp = Double.doubleToLongBits(upperBound);
+	  result = prime * result + (int) (temp ^ (temp >>> 32));
+	  temp = Double.doubleToLongBits(value);
+	  result = prime * result + (int) (temp ^ (temp >>> 32));
+	  return result;
   }
+
+	@Override
+  public boolean equals(Object obj) {
+	  if (this == obj) {
+		  return true;
+	  }
+	  if (obj == null) {
+		  return false;
+	  }
+	  if (!(obj instanceof BinaryReal)) {
+		  return false;
+	  }
+	  BinaryReal other = (BinaryReal) obj;
+	  if (lowerBound != other.lowerBound) {
+		  return false;
+	  }
+	  if (upperBound != other.upperBound) {
+		  return false;
+	  }
+	  if (value != other.value) {
+		  return false;
+	  }
+	  return true;
+	}
 }

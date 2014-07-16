@@ -41,18 +41,18 @@ public class SolutionSet implements Serializable {
   /**
    * Stores a list of <code>solution</code> objects.
    */
-  protected final List<Solution> solutionsList_;
+  protected final List<Solution> solutionsList;
 
   /**
    * Maximum size of the solution set
    */
-  private int capacity_ = 0;
+  private int capacity = 0;
 
   /**
    * Constructor. Creates an unbounded solution set.
    */
   public SolutionSet() {
-    solutionsList_ = new ArrayList<Solution>();
+    solutionsList = new ArrayList<Solution>();
   }
 
   /**
@@ -61,8 +61,8 @@ public class SolutionSet implements Serializable {
    * @param maximumSize Maximum size.
    */
   public SolutionSet(int maximumSize) {
-    solutionsList_ = new ArrayList<Solution>();
-    capacity_ = maximumSize;
+    solutionsList = new ArrayList<Solution>();
+    capacity = maximumSize;
   } // SolutionSet
 
   /**
@@ -73,19 +73,19 @@ public class SolutionSet implements Serializable {
    * otherwise.
    */
   public boolean add(Solution solution) throws JMetalException {
-    if (solutionsList_.size() == capacity_) {
+    if (solutionsList.size() == capacity) {
       Configuration.logger_.severe("The population is full");
-      Configuration.logger_.severe("Capacity is : " + capacity_);
+      Configuration.logger_.severe("Capacity is : " + capacity);
       Configuration.logger_.severe("\t Size is: " + this.size());
-        throw new JMetalException("The population is full. Capacity is : " + capacity_ + "") ;
+        throw new JMetalException("The population is full. Capacity is : " + capacity + "") ;
     }
 
-    solutionsList_.add(solution);
+    solutionsList.add(solution);
     return true;
   }
 
   public boolean add(int index, Solution solution) {
-    solutionsList_.add(index, solution);
+    solutionsList.add(index, solution);
     return true;
   }
 
@@ -97,10 +97,10 @@ public class SolutionSet implements Serializable {
    * @throws IndexOutOfBoundsException Exception
    */
   public Solution get(int i) {
-    if (i >= solutionsList_.size()) {
+    if (i >= solutionsList.size()) {
       throw new IndexOutOfBoundsException("Index out of Bound " + i);
     }
-    return solutionsList_.get(i);
+    return solutionsList.get(i);
   }
 
   /**
@@ -109,7 +109,7 @@ public class SolutionSet implements Serializable {
    * @return The maximum capacity of the solution set
    */
   public int getMaxSize() {
-    return capacity_;
+    return capacity;
   } 
 
   /**
@@ -123,7 +123,7 @@ public class SolutionSet implements Serializable {
       Configuration.logger_.severe("No criterium for comparing exist");
       return;
     }
-    Collections.sort(solutionsList_, comparator);
+    Collections.sort(solutionsList, comparator);
   }
 
   /**
@@ -137,15 +137,15 @@ public class SolutionSet implements Serializable {
    */
 
   int indexBest(Comparator<Solution> comparator) {
-    if ((solutionsList_ == null) || (this.solutionsList_.isEmpty())) {
+    if ((solutionsList == null) || (this.solutionsList.isEmpty())) {
       return -1;
     }
 
     int index = 0;
-    Solution bestKnown = solutionsList_.get(0), candidateSolution;
+    Solution bestKnown = solutionsList.get(0), candidateSolution;
     int flag;
-    for (int i = 1; i < solutionsList_.size(); i++) {
-      candidateSolution = solutionsList_.get(i);
+    for (int i = 1; i < solutionsList.size(); i++) {
+      candidateSolution = solutionsList.get(i);
       flag = comparator.compare(bestKnown, candidateSolution);
       if (flag == +1) {
         index = i;
@@ -170,7 +170,7 @@ public class SolutionSet implements Serializable {
     if (indexBest < 0) {
       return null;
     } else {
-      return solutionsList_.get(indexBest);
+      return solutionsList.get(indexBest);
     }
   }
 
@@ -184,15 +184,15 @@ public class SolutionSet implements Serializable {
    * <code>-1<code> if the SolutionSet is empty
    */
   public int indexWorst(Comparator<Solution> comparator) {
-    if ((solutionsList_ == null) || (this.solutionsList_.isEmpty())) {
+    if ((solutionsList == null) || (this.solutionsList.isEmpty())) {
       return -1;
     }
 
     int index = 0;
-    Solution worstKnown = solutionsList_.get(0), candidateSolution;
+    Solution worstKnown = solutionsList.get(0), candidateSolution;
     int flag;
-    for (int i = 1; i < solutionsList_.size(); i++) {
-      candidateSolution = solutionsList_.get(i);
+    for (int i = 1; i < solutionsList.size(); i++) {
+      candidateSolution = solutionsList.get(i);
       flag = comparator.compare(worstKnown, candidateSolution);
       if (flag == -1) {
         index = i;
@@ -216,7 +216,7 @@ public class SolutionSet implements Serializable {
     if (index < 0) {
       return null;
     } else {
-      return solutionsList_.get(index);
+      return solutionsList.get(index);
     }
   }
 
@@ -226,14 +226,14 @@ public class SolutionSet implements Serializable {
    * @return The size of the SolutionSet.
    */
   public int size() {
-    return solutionsList_.size();
+    return solutionsList.size();
   } 
 
   /**
    * @return true if the solution set if empty
    */
   public boolean isEmtpy() {
-    return (solutionsList_.isEmpty());
+    return (solutionsList.isEmpty());
   }
 
   /**
@@ -250,7 +250,7 @@ public class SolutionSet implements Serializable {
     OutputStreamWriter osw = new OutputStreamWriter(fos);
     BufferedWriter bw = new BufferedWriter(osw);
 
-    for (Solution solution : solutionsList_) {
+    for (Solution solution : solutionsList) {
       bw.write(solution.toString());
       bw.newLine();
     }
@@ -271,8 +271,8 @@ public class SolutionSet implements Serializable {
     BufferedWriter bw = new BufferedWriter(osw);
 
     if (!isEmtpy()) {
-      int numberOfVariables = solutionsList_.get(0).getDecisionVariables().length;
-      for (Solution solution : solutionsList_) {
+      int numberOfVariables = solutionsList.get(0).getDecisionVariables().length;
+      for (Solution solution : solutionsList) {
         for (int j = 0; j < numberOfVariables; j++) {
           bw.write(solution.getDecisionVariables()[j].toString() + " ");
         }
@@ -335,7 +335,7 @@ public class SolutionSet implements Serializable {
       OutputStreamWriter osw = new OutputStreamWriter(fos);
       BufferedWriter bw = new BufferedWriter(osw);
 
-      for (Solution aSolutionsList : solutionsList_) {
+      for (Solution aSolutionsList : solutionsList) {
         if (aSolutionsList.getOverallConstraintViolation() == 0.0) {
           bw.write(aSolutionsList.toString());
           bw.newLine();
@@ -362,8 +362,8 @@ public class SolutionSet implements Serializable {
       BufferedWriter bw = new BufferedWriter(osw);
 
       if (!isEmtpy()) {
-        int numberOfVariables = solutionsList_.get(0).getDecisionVariables().length;
-        for (Solution aSolutionsList : solutionsList_) {
+        int numberOfVariables = solutionsList.get(0).getDecisionVariables().length;
+        for (Solution aSolutionsList : solutionsList) {
           if (aSolutionsList.getOverallConstraintViolation() == 0.0) {
             for (int j = 0; j < numberOfVariables; j++) {
               bw.write(aSolutionsList.getDecisionVariables()[j].toString()
@@ -384,7 +384,7 @@ public class SolutionSet implements Serializable {
    * Empties the SolutionSet
    */
   public void clear() {
-    solutionsList_.clear();
+    solutionsList.clear();
   }
 
   /**
@@ -393,10 +393,10 @@ public class SolutionSet implements Serializable {
    * @param i The position of the solution to remove.
    */
   public void remove(int i) {
-    if (i > solutionsList_.size() - 1) {
+    if (i > solutionsList.size() - 1) {
       Configuration.logger_.log(Level.SEVERE, "Size is: " + this.size());
     }
-    solutionsList_.remove(i);
+    solutionsList.remove(i);
   }
 
   /**
@@ -405,7 +405,7 @@ public class SolutionSet implements Serializable {
    * @return the <code>Iterator</code>.
    */
   public Iterator<Solution> iterator() {
-    return solutionsList_.iterator();
+    return solutionsList.iterator();
   } 
 
   /**
@@ -418,8 +418,8 @@ public class SolutionSet implements Serializable {
   public SolutionSet union(SolutionSet solutionSet) throws JMetalException {
     // Check the correct size. In development
     int newSize = this.size() + solutionSet.size();
-    if (newSize < capacity_) {
-      newSize = capacity_;
+    if (newSize < capacity) {
+      newSize = capacity;
     }
 
     // Create a new population
@@ -442,11 +442,11 @@ public class SolutionSet implements Serializable {
    * @param solution The new solution
    */
   public void replace(int position, Solution solution) {
-    if (position > this.solutionsList_.size()) {
-      solutionsList_.add(solution);
+    if (position > this.solutionsList.size()) {
+      solutionsList.add(solution);
     }
-    solutionsList_.remove(position);
-    solutionsList_.add(position, solution);
+    solutionsList.remove(position);
+    solutionsList.add(position, solution);
   }
 
   /**
@@ -470,27 +470,27 @@ public class SolutionSet implements Serializable {
   }
 
   public void printObjectives() {
-    for (Solution solution : solutionsList_) {
+    for (Solution solution : solutionsList) {
       Configuration.logger_.log(Level.INFO, "" + solution);
     }
   }
 
   public int getCapacity() {
-    return capacity_;
+    return capacity;
   }
 
   public void setCapacity(int capacity) {
-    capacity_ = capacity;
+    this.capacity = capacity;
   }
 
   public List<Solution> getSolutionsList() {
-    return solutionsList_ ;
+    return solutionsList;
   }
 
   public SolutionSet getFeasibleSolutions() {
     SolutionSet feasibleSolutions = new SolutionSet() ;
 
-    for (Solution solution : solutionsList_) {
+    for (Solution solution : solutionsList) {
        if (solution.getOverallConstraintViolation() == 0) {
          feasibleSolutions.add(new Solution((solution))) ;
        }

@@ -157,12 +157,7 @@ public class MOCHC extends Algorithm {
     return distance;
   }
 
-  /**
-   * Runs of the MOCHC algorithm.
-   *
-   * @return a <code>SolutionSet</code> that is a set of non dominated solutions
-   * as a result of the algorithm execution
-   */
+  /** execute() method */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     int iterations;
 

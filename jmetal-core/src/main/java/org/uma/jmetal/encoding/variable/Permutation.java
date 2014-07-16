@@ -24,6 +24,7 @@ package org.uma.jmetal.encoding.variable;
 import org.uma.jmetal.core.Variable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Class implementing a permutation of integer decision encoding.variable
@@ -92,13 +93,33 @@ public class Permutation extends Variable {
     return string;
   }
 
-  @Override
+	@Override
   public int hashCode() {
-    int hash = 0 ;
-    for (int v : vector) {
-       hash += v ;
-    }
+	  final int prime = 31;
+	  int result = 1;
+	  result = prime * result + size;
+	  result = prime * result + Arrays.hashCode(vector);
+	  return result;
+  }
 
-    return hash ;
+	@Override
+  public boolean equals(Object obj) {
+	  if (this == obj) {
+		  return true;
+	  }
+	  if (obj == null) {
+		  return false;
+	  }
+	  if (!(obj instanceof Permutation)) {
+		  return false;
+	  }
+	  Permutation other = (Permutation) obj;
+	  if (size != other.size) {
+		  return false;
+	  }
+	  if (!Arrays.equals(vector, other.vector)) {
+		  return false;
+	  }
+	  return true;
   }
 }

@@ -113,16 +113,38 @@ public class Binary extends Variable {
     return result;
   }
 
-  @Override
+	@Override
   public int hashCode() {
-    int hash = numberOfBits ;
+	  final int prime = 31;
+	  int result = 1;
+	  result = prime * result + ((bits == null) ? 0 : bits.hashCode());
+	  result = prime * result + numberOfBits;
+	  return result;
+  }
 
-    for (int i = 0; i < numberOfBits; i++) {
-      if (bits.get(0)==true) {
-        hash += i ;
-      }
-    }
-
-    return hash ;
+	@Override
+  public boolean equals(Object obj) {
+	  if (this == obj) {
+		  return true;
+	  }
+	  if (obj == null) {
+		  return false;
+	  }
+	  if (!(obj instanceof Binary)) {
+		  return false;
+	  }
+	  
+	  Binary other = (Binary) obj;
+	  if (bits == null) {
+		  if (other.bits != null) {
+			  return false;
+		  }
+	  } else if (!bits.equals(other.bits)) {
+		  return false;
+	  }
+	  if (numberOfBits != other.numberOfBits) {
+		  return false;
+	  }
+	  return true;
   }
 }

@@ -32,26 +32,11 @@ import java.util.Iterator;
  * This class implements an archive based on an adaptive grid used in PAES
  */
 public class AdaptiveGridArchive extends Archive {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = -1265707693992803196L;
 
-  /**
-   * Stores the adaptive grid
-   */
-  private AdaptiveGrid grid_;
-
-  /**
-   * Stores the maximum size of the archive
-   */
-  private int maxSize_;
-
-  /**
-   * Stores a <code>Comparator</code> for dominance checking
-   */
-  private Comparator<Solution> dominance_;
+  private AdaptiveGrid grid;
+  private int maxSize;
+  private Comparator<Solution> dominanceComparator;
 
   /**
    * Constructor.
@@ -63,10 +48,10 @@ public class AdaptiveGridArchive extends Archive {
    */
   public AdaptiveGridArchive(int maxSize, int bisections, int objectives) {
     super(maxSize);
-    maxSize_ = maxSize;
-    dominance_ = new DominanceComparator();
-    grid_ = new AdaptiveGrid(bisections, objectives);
-  } // AdaptiveGridArchive
+    this.maxSize = maxSize;
+    dominanceComparator = new DominanceComparator();
+    grid = new AdaptiveGrid(bisections, objectives);
+  }
 
   /**
    * Adds a <code>Solution</code> to the archive. If the <code>Solution</code>
@@ -82,77 +67,72 @@ public class AdaptiveGridArchive extends Archive {
    */
   public boolean add(Solution solution) {
     //Iterator of individuals over the list
-    Iterator<Solution> iterator = solutionsList_.iterator();
+    Iterator<Solution> iterator = solutionsList.iterator();
 
     while (iterator.hasNext()) {
       Solution element = iterator.next();
-      int flag = dominance_.compare(solution, element);
+      int flag = dominanceComparator.compare(solution, element);
       if (flag == -1) { // The Individual to insert dominates other
         // individuals in  the archive
         iterator.remove(); //Delete it from the archive
-        int location = grid_.location(element);
-        if (grid_.getLocationDensity(location) > 1) {//The hypercube contains
-          grid_.removeSolution(location);            //more than one individual
+        int location = grid.location(element);
+        if (grid.getLocationDensity(location) > 1) {//The hypercube contains
+          grid.removeSolution(location);            //more than one individual
         } else {
-          grid_.updateGrid(this);
-        } // else
-      } // if
+          grid.updateGrid(this);
+        }
+      }
       else if (flag == 1) { // An Individual into the file dominates the
         // solutiontype to insert
         return false; // The solutiontype will not be inserted
-      } // else if
-    } // while
+      }
+    }
 
     // At this point, the solutiontype may be inserted
     if (size() == 0) { //The archive is empty
-      solutionsList_.add(solution);
-      grid_.updateGrid(this);
+      solutionsList.add(solution);
+      grid.updateGrid(this);
       return true;
-    } //
+    }
 
-    if (size() < maxSize_) { //The archive is not full
-      grid_.updateGrid(solution, this); // Update the grid if applicable
+    if (size() < maxSize) { //The archive is not full
+      grid.updateGrid(solution, this); // Update the grid if applicable
       int location;
-      location = grid_.location(solution); // Get the location of the solutiontype
-      grid_.addSolution(location); // Increment the density of the hypercube
-      solutionsList_.add(solution); // Add the solutiontype to the list
+      location = grid.location(solution); // Get the location of the solutiontype
+      grid.addSolution(location); // Increment the density of the hypercube
+      solutionsList.add(solution); // Add the solutiontype to the list
       return true;
-    } // if
+    }
 
     // At this point, the solutiontype has to be inserted and the archive is full
-    grid_.updateGrid(solution, this);
-    int location = grid_.location(solution);
-    if (location == grid_.getMostPopulated()) { // The solutiontype is in the
+    grid.updateGrid(solution, this);
+    int location = grid.location(solution);
+    if (location == grid.getMostPopulated()) { // The solutiontype is in the
       // most populated hypercube
       return false; // Not inserted
     } else {
       // Remove an solutiontype from most populated area
-      iterator = solutionsList_.iterator();
+      iterator = solutionsList.iterator();
       boolean removed = false;
       while (iterator.hasNext()) {
         if (!removed) {
           Solution element = iterator.next();
-          int location2 = grid_.location(element);
-          if (location2 == grid_.getMostPopulated()) {
+          int location2 = grid.location(element);
+          if (location2 == grid.getMostPopulated()) {
             iterator.remove();
-            grid_.removeSolution(location2);
-          } // if
-        } // if
-      } // while
-      // A solutiontype from most populated hypercube has been removed,
-      // insert now the solutiontype
-      grid_.addSolution(location);
-      solutionsList_.add(solution);
-    } // else
+            grid.removeSolution(location2);
+          }
+        }
+      }
+      // A solution from most populated hypercube has been removed,
+      // insert now the solution
+      grid.addSolution(location);
+      solutionsList.add(solution);
+    }
     return true;
-  } // add
+  }
 
-  /**
-   * Returns the AdaptativeGrid used
-   *
-   * @return the AdaptativeGrid
-   */
   public AdaptiveGrid getGrid() {
-    return grid_;
-  } // AdaptativeGrid
-} // AdaptativeGridArchive
+    return grid;
+  }
+}

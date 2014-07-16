@@ -34,26 +34,21 @@ import java.util.Comparator;
  * defined in SPEA2).
  */
 public class StrengthRawFitnessArchive extends Archive {
-
-
   private static final long serialVersionUID = 7432108704079114025L;
-  private int maxSize_;
 
-  private Comparator<Solution> dominance_;
-  private Comparator<Solution> fitnessComparator_;
-  private Comparator<Solution> equals_;
+  private int maxSize;
 
-  /**
-   * Constructor.
-   *
-   * @param maxSize The maximum size of the archive.
-   */
+  private Comparator<Solution> dominanceComparator;
+  private Comparator<Solution> fitnessComparator;
+  private Comparator<Solution> equalsComparator;
+
+  /** Constructor */
   public StrengthRawFitnessArchive(int maxSize) {
     super(maxSize);
-    maxSize_ = maxSize;
-    dominance_ = new DominanceComparator();
-    equals_ = new EqualSolutions();
-    fitnessComparator_ = new FitnessComparator();
+    this.maxSize = maxSize;
+    dominanceComparator = new DominanceComparator();
+    equalsComparator = new EqualSolutions();
+    fitnessComparator = new FitnessComparator();
   }
 
   /**
@@ -72,27 +67,25 @@ public class StrengthRawFitnessArchive extends Archive {
     int flag = 0;
     int i = 0;
     Solution aux;
-    while (i < solutionsList_.size()) {
-      aux = solutionsList_.get(i);
-      flag = dominance_.compare(solution, aux);
+    while (i < solutionsList.size()) {
+      aux = solutionsList.get(i);
+      flag = dominanceComparator.compare(solution, aux);
       if (flag == 1) {                // The solutiontype to add is dominated
         return false;                 // Discard the new solutiontype
       } else if (flag == -1) {        // A solutiontype in the archive is dominated
-        solutionsList_.remove(i);     // Remove the dominated solutiontype
+        solutionsList.remove(i);     // Remove the dominated solutiontype
       } else {
-        if (equals_.compare(aux, solution) == 0) {
+        if (equalsComparator.compare(aux, solution) == 0) {
           return false;
         }
         i++;
       }
     }
-    // Insert the solutiontype in the archive
-    solutionsList_.add(solution);
+    solutionsList.add(solution);
 
-    if (size() > maxSize_) {
+    if (size() > maxSize) {
       (new Spea2Fitness(this)).fitnessAssign();
-      //Remove the last
-      remove(indexWorst(fitnessComparator_));
+      remove(indexWorst(fitnessComparator));
     }
     return true;
   }

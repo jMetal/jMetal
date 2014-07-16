@@ -35,60 +35,29 @@ import java.util.Comparator;
  * defined in NSGA-II).
  */
 public class CrowdingArchive extends Archive {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = 4668820487667645467L;
 
-  /**
-   * Stores the maximum size of the archive.
-   */
-  private int maxSize_;
-
-  /**
-   * stores the number of the objectives.
-   */
-  private int objectives_;
-
-  /**
-   * Stores a <code>Comparator</code> for dominance checking.
-   */
-  private Comparator<Solution> dominance_;
-
-  /**
-   * Stores a <code>Comparator</code> for equality checking (in the objective
-   * space).
-   */
-  private Comparator<Solution> equals_;
-
-  /**
-   * Stores a <code>Comparator</code> for checking crowding distances.
-   */
-  private Comparator<Solution> crowdingDistance_;
+  private int maxSize;
+  private int objectives;
+  private Comparator<Solution> dominanceComparator;
+  private Comparator<Solution> equalsComparator;
+  private Comparator<Solution> crowdingDistanceComparator;
 
   /**
    * Stores a <code>Distance</code> object, for distances utilities
    */
   private Distance distance_;
 
-  /**
-   * Constructor.
-   *
-   * @param maxSize            The maximum size of the archive.
-   * @param numberOfObjectives The number of objectives.
-   */
+  /** Constructor */
   public CrowdingArchive(int maxSize, int numberOfObjectives) {
     super(maxSize);
-    maxSize_ = maxSize;
-    objectives_ = numberOfObjectives;
-    dominance_ = new DominanceComparator();
-    equals_ = new EqualSolutions();
-    crowdingDistance_ = new CrowdingDistanceComparator();
+    this.maxSize = maxSize;
+    objectives = numberOfObjectives;
+    dominanceComparator = new DominanceComparator();
+    equalsComparator = new EqualSolutions();
+    crowdingDistanceComparator = new CrowdingDistanceComparator();
     distance_ = new Distance();
-
-  } // CrowdingArchive
-
+  }
 
   /**
    * Adds a <code>Solution</code> to the archive. If the <code>Solution</code>
@@ -104,30 +73,29 @@ public class CrowdingArchive extends Archive {
    * @throws org.uma.jmetal.util.JMetalException
    */
   public boolean add(Solution solution) throws JMetalException {
-    int flag = 0;
+    int flag ;
     int i = 0;
-    Solution aux; //Store an solutiontype temporally
-    while (i < solutionsList_.size()) {
-      aux = solutionsList_.get(i);
+    Solution aux;
+    while (i < solutionsList.size()) {
+      aux = solutionsList.get(i);
 
-      flag = dominance_.compare(solution, aux);
+      flag = dominanceComparator.compare(solution, aux);
       if (flag == 1) {               // The solutiontype to add is dominated
         return false;                // Discard the new solutiontype
       } else if (flag == -1) {       // A solutiontype in the archive is dominated
-        solutionsList_.remove(i);    // Remove it from the population            
+        solutionsList.remove(i);    // Remove it from the population
       } else {
-        if (equals_.compare(aux, solution) == 0) { // There is an equal solutiontype
+        if (equalsComparator.compare(aux, solution) == 0) { // There is an equal solutiontype
           // in the population
           return false; // Discard the new solutiontype
         }
         i++;
       }
     }
-    // Insert the solutiontype into the archive
-    solutionsList_.add(solution);
-    if (size() > maxSize_) { // The archive is full
-      distance_.crowdingDistanceAssignment(this);
-      remove(indexWorst(crowdingDistance_));
+    solutionsList.add(solution);
+    if (size() > maxSize) { // The archive is full
+      Distance.crowdingDistance(this);
+      remove(indexWorst(crowdingDistanceComparator));
     }
     return true;
   }

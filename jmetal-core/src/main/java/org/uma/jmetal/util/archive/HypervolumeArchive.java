@@ -22,7 +22,6 @@ package org.uma.jmetal.util.archive;
 
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.qualityIndicator.util.MetricsUtil;
-import org.uma.jmetal.util.Distance;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.EqualSolutions;
@@ -30,41 +29,15 @@ import org.uma.jmetal.util.comparator.EqualSolutions;
 import java.util.Comparator;
 
 /**
- * This class implements a bounded archive based on crowding distances (as
- * defined in NSGA-II).
+ * This class implements a bounded archive based on the Hypervolume quality indicator).
  */
 public class HypervolumeArchive extends Archive {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = 3084983453913397884L;
+  private int maxSize;
+  private int numberOfObjectives;
+  private Comparator<Solution> dominanceComparator;
+  private Comparator<Solution> equalsComparator;
 
-  /**
-   * Stores the maximum size of the archive.
-   */
-  private int maxSize_;
-
-  /**
-   * stores the number of the objectives.
-   */
-  private int objectives_;
-
-  /**
-   * Stores a <code>Comparator</code> for dominance checking.
-   */
-  private Comparator<Solution> dominance_;
-
-  /**
-   * Stores a <code>Comparator</code> for equality checking (in the objective
-   * space).
-   */
-  private Comparator<Solution> equals_;
-
-  /**
-   * Stores a <code>Distance</code> object, for distances utilities
-   */
-  private Distance distance_;
   private MetricsUtil utils_;
 
   private double offset_;
@@ -74,15 +47,14 @@ public class HypervolumeArchive extends Archive {
    * Constructor.
    *
    * @param maxSize            The maximum size of the archive.
-   * @param numberOfObjectives The number of objectives.
+   * @param numberOfObjectives The number of numberOfObjectives.
    */
   public HypervolumeArchive(int maxSize, int numberOfObjectives) {
     super(maxSize);
-    maxSize_ = maxSize;
-    objectives_ = numberOfObjectives;
-    dominance_ = new DominanceComparator();
-    equals_ = new EqualSolutions();
-    distance_ = new Distance();
+    this.maxSize = maxSize;
+    this.numberOfObjectives = numberOfObjectives;
+    dominanceComparator = new DominanceComparator();
+    equalsComparator = new EqualSolutions();
     utils_ = new MetricsUtil();
     offset_ = 100;
     crowdingDistance_ = new CrowdingDistanceComparator();
@@ -102,31 +74,31 @@ public class HypervolumeArchive extends Archive {
    * otherwise.
    */
   public boolean add(Solution solution) {
-    int flag = 0;
+    int flag ;
     int i = 0;
     Solution aux; //Store an solutiontype temporally
 
-    while (i < solutionsList_.size()) {
-      aux = solutionsList_.get(i);
+    while (i < solutionsList.size()) {
+      aux = solutionsList.get(i);
 
-      flag = dominance_.compare(solution, aux);
+      flag = dominanceComparator.compare(solution, aux);
       if (flag == 1) {               // The solutiontype to add is dominated
         return false;                // Discard the new solutiontype
       } else if (flag == -1) {       // A solutiontype in the archive is dominated
-        solutionsList_.remove(i);    // Remove it from the population            
+        solutionsList.remove(i);    // Remove it from the population
       } else {
-        if (equals_.compare(aux, solution) == 0) { // There is an equal solutiontype
+        if (equalsComparator.compare(aux, solution) == 0) { // There is an equal solutiontype
           // in the population
           return false; // Discard the new solutiontype
-        }  // if
+        }
         i++;
       }
     }
-    // Insert the solutiontype into the archive
-    solutionsList_.add(solution);
-    if (size() > maxSize_) { // The archive is full
+    // Insert the solution into the archive
+    solutionsList.add(solution);
+    if (size() > maxSize) { // The archive is full
       double[][] frontValues = this.writeObjectivesToMatrix();
-      int numberOfObjectives = objectives_;
+      int numberOfObjectives = this.numberOfObjectives;
       // STEP 1. Obtain the maximum and minimum values of the Pareto front
       double[] maximumValues =
         utils_.getMaximumValues(this.writeObjectivesToMatrix(), numberOfObjectives);
@@ -151,7 +123,7 @@ public class HypervolumeArchive extends Archive {
       }
 
       // calculate contributions and sort
-      double[] contributions = utils_.hvContributions(objectives_, invertedFront);
+      double[] contributions = utils_.hvContributions(this.numberOfObjectives, invertedFront);
       for (i = 0; i < contributions.length; i++) {
         // contribution values are used analogously to crowding distance
         this.get(i).setCrowdingDistance(contributions[i]);
@@ -159,7 +131,6 @@ public class HypervolumeArchive extends Archive {
 
       this.sort(new CrowdingDistanceComparator());
 
-      //remove(indexWorst(crowdingDistance_));
       remove(size() - 1);
     }
     return true;
@@ -167,12 +138,12 @@ public class HypervolumeArchive extends Archive {
 
 
   /**
-   * This method forces to compute the contribution of each solutiontype (required for PAEShv)
+   * This method forces to compute the contribution of each solution
    */
   public void actualiseHVContribution() {
     if (size() > 2) { // The contribution can be updated
       double[][] frontValues = this.writeObjectivesToMatrix();
-      int numberOfObjectives = objectives_;
+      int numberOfObjectives = this.numberOfObjectives;
       // STEP 1. Obtain the maximum and minimum values of the Pareto front
       double[] maximumValues =
         utils_.getMaximumValues(this.writeObjectivesToMatrix(), numberOfObjectives);
@@ -197,7 +168,7 @@ public class HypervolumeArchive extends Archive {
       }
 
       // calculate contributions and sort
-      double[] contributions = utils_.hvContributions(objectives_, invertedFront);
+      double[] contributions = utils_.hvContributions(this.numberOfObjectives, invertedFront);
       for (int i = 0; i < contributions.length; i++) {
         // contribution values are used analogously to crowding distance
         this.get(i).setCrowdingDistance(contributions[i]);
@@ -207,14 +178,14 @@ public class HypervolumeArchive extends Archive {
 
 
   /**
-   * This method returns the location (integer position) of a solutiontype in the archive.
-   * For that, the equals_ comparator is used
+   * This method returns the location (integer position) of a solution in the archive.
+   * For that, the equalsComparator comparator is used
    */
   public int getLocation(Solution solution) {
     int location = -1;
     int index = 0;
     while ((index < size()) && (location != -1)) {
-      if (equals_.compare(solution, get(index)) == 0) {
+      if (equalsComparator.compare(solution, get(index)) == 0) {
         location = index;
       }
       index++;
@@ -222,4 +193,4 @@ public class HypervolumeArchive extends Archive {
     return location;
   }
 
-} // HypervolumeArchive
+}

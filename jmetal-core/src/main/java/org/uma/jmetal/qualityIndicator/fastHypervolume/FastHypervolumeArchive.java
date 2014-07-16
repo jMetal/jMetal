@@ -94,14 +94,14 @@ public class FastHypervolumeArchive extends Archive {
     int i = 0;
     Solution aux; //Store an solutiontype temporally
 
-    while (i < solutionsList_.size()) {
-      aux = solutionsList_.get(i);
+    while (i < solutionsList.size()) {
+      aux = solutionsList.get(i);
 
       flag = dominance_.compare(solution, aux);
       if (flag == 1) {               // The solutiontype to add is dominated
         return false;                // Discard the new solutiontype
       } else if (flag == -1) {       // A solutiontype in the archive is dominated
-        solutionsList_.remove(i);    // Remove it from the population            
+        solutionsList.remove(i);    // Remove it from the population
       } else {
         if (equals_.compare(aux, solution) == 0) { // There is an equal solutiontype
           // in the population
@@ -111,7 +111,7 @@ public class FastHypervolumeArchive extends Archive {
       }
     }
     // Insert the solutiontype into the archive
-    solutionsList_.add(solution);
+    solutionsList.add(solution);
     if (size() > maxSize_) { // The archive is full
       computeHVContribution();
 

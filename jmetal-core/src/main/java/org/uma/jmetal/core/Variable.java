@@ -1,4 +1,4 @@
-//  SolutionType.java
+//  Variable.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -148,4 +148,6 @@ public abstract class Variable implements Serializable {
   public Class<? extends Variable> getVariableType() {
     return this.getClass();
   }
+  
+  
 }

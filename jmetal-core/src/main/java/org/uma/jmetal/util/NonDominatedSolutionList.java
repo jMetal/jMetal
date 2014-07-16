@@ -74,11 +74,11 @@ public class NonDominatedSolutionList extends SolutionSet {
    * that case, the domination tests are omitted
    */
   public boolean add(Solution solution) {
-    if (solutionsList_.size() == 0) {
-      solutionsList_.add(solution);
+    if (solutionsList.size() == 0) {
+      solutionsList.add(solution);
       return true;
     } else {
-      Iterator<Solution> iterator = solutionsList_.iterator();
+      Iterator<Solution> iterator = solutionsList.iterator();
 
       while (iterator.hasNext()) {
         Solution listIndividual = iterator.next();
@@ -100,7 +100,7 @@ public class NonDominatedSolutionList extends SolutionSet {
       }
 
       //At this point, the solutiontype is inserted into the list
-      solutionsList_.add(solution);
+      solutionsList.add(solution);
 
       return true;
     }
