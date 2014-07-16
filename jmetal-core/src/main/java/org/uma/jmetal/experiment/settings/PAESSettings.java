@@ -50,13 +50,13 @@ public class PAESSettings extends Settings {
     super(problem) ;
 
     Object [] problemParams = {"Real"};
-    problem_ = (new ProblemFactory()).getProblem(problemName, problemParams);
+    this.problem = (new ProblemFactory()).getProblem(problemName, problemParams);
 
     // Default experiment.settings
     maxEvaluations_ = 25000 ;
     archiveSize_    = 100   ;
     biSections_     = 5     ;
-    mutationProbability_ = 1.0/problem_.getNumberOfVariables() ;
+    mutationProbability_ = 1.0/ this.problem.getNumberOfVariables() ;
     mutationDistributionIndex_ = 20.0 ;
   }
 
@@ -72,10 +72,10 @@ public class PAESSettings extends Settings {
 
     mutation = new PolynomialMutation.Builder()
       .distributionIndex(20.0)
-      .probability(1.0/problem_.getNumberOfVariables())
+      .probability(1.0/ problem.getNumberOfVariables())
       .build();
 
-    algorithm = new PAES.Builder(problem_)
+    algorithm = new PAES.Builder(problem)
       .mutation(mutation)
       .maxEvaluations(25000)
       .archiveSize(100)

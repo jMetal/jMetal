@@ -46,7 +46,7 @@ public class RandomSearchSettings extends Settings {
     super(problem);
 
     Object [] problemParams = {"Real"};
-    problem_ = (new ProblemFactory()).getProblem(problemName, problemParams);
+    this.problem = (new ProblemFactory()).getProblem(problemName, problemParams);
   } 
 
   /**
@@ -60,7 +60,7 @@ public class RandomSearchSettings extends Settings {
 
     // Creating the problem
     algorithm = new RandomSearch();
-    algorithm.setProblem(problem_);
+    algorithm.setProblem(problem);
 
     // Algorithm parameters
     algorithm.setInputParameter("maxEvaluations", maxEvaluations_);

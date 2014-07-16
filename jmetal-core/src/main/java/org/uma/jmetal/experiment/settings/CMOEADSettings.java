@@ -57,7 +57,7 @@ public class CMOEADSettings extends Settings {
 
     Object[] problemParams = {"Real"};
     try {
-      problem_ = (new ProblemFactory()).getProblem(problemName, problemParams);
+      this.problem = (new ProblemFactory()).getProblem(problemName, problemParams);
     } catch (JMetalException e) {
       Configuration.logger.log(Level.SEVERE, "Unable to get problem", e);
     }
@@ -72,7 +72,7 @@ public class CMOEADSettings extends Settings {
     delta_ = 0.9;
     nr_ = 2;
 
-    mutationProbability_ = 1.0 / problem_.getNumberOfVariables();
+    mutationProbability_ = 1.0 / this.problem.getNumberOfVariables();
     mutationDistributionIndex_ = 20;
 
     // Directory with the files containing the weight vectors used in 
@@ -96,7 +96,7 @@ public class CMOEADSettings extends Settings {
     Operator mutation;
 
     algorithm = new cMOEAD();
-    algorithm.setProblem(problem_);
+    algorithm.setProblem(problem);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", populationSize_);

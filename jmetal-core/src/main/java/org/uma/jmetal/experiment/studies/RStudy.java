@@ -42,19 +42,19 @@ public class RStudy extends Experiment {
     indicatorList = new String[] {"HV", "SPREAD", "EPSILON"};
     experimentBaseDirectory = "/home/antonio/Investigacion/Puentes/puenteMediano/puenteMediano";
     paretoFrontDirectory = "/Users/antelverde/Softw/pruebas/data/paretoFronts";
-    numberOfExecutionThreads_ = 6;
+    numberOfExecutionThreads = 6;
 
-    generateReferenceParetoFronts_ = false;
-    runTheAlgorithms_ = false;
-    generateBoxplots_ = false;
-    boxplotRows_ = 2;
-    boxplotColumns_ = 2;
-    boxplotNotch_ = true;
-    generateFriedmanTables_ = false;
-    generateLatexTables_ = false;
-    generateWilcoxonTables_ = false;
-    generateSetCoverageTables_ = true;
-    generateQualityIndicators_ = false;
+    generateReferenceParetoFronts = false;
+    runTheAlgorithms = false;
+    generateBoxplots = false;
+    boxplotRows = 2;
+    boxplotColumns = 2;
+    boxplotNotch = true;
+    generateFriedmanTables = false;
+    generateLatexTables = false;
+    generateWilcoxonTables = false;
+    generateSetCoverageTables = true;
+    generateQualityIndicators = false;
   }
 
   /**

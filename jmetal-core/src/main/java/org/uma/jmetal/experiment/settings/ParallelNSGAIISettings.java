@@ -55,12 +55,12 @@ public class ParallelNSGAIISettings extends Settings {
     super(problem);
 
     Object[] problemParams = {"Real"};
-    problem_ = (new ProblemFactory()).getProblem(problemName, problemParams);
+    this.problem = (new ProblemFactory()).getProblem(problemName, problemParams);
 
     // Default experiment.settings
     populationSize_ = 100;
     maxEvaluations_ = 25000;
-    mutationProbability_ = 1.0 / problem_.getNumberOfVariables();
+    mutationProbability_ = 1.0 / this.problem.getNumberOfVariables();
     crossoverProbability_ = 0.9;
     mutationDistributionIndex_ = 20.0;
     crossoverDistributionIndex_ = 20.0;
@@ -81,7 +81,8 @@ public class ParallelNSGAIISettings extends Settings {
     Crossover crossover;
     Mutation mutation;
 
-    SolutionSetEvaluator evaluator = new MultithreadedSolutionSetEvaluator(numberOfThreads_, problem_) ;
+    SolutionSetEvaluator evaluator = new MultithreadedSolutionSetEvaluator(numberOfThreads_,
+      problem) ;
 
     crossover = new SBXCrossover.Builder()
       .distributionIndex(crossoverDistributionIndex_)
@@ -96,7 +97,7 @@ public class ParallelNSGAIISettings extends Settings {
     selection = new BinaryTournament2.Builder()
       .build();
 
-    algorithm = new NSGAII.Builder(problem_, evaluator)
+    algorithm = new NSGAII.Builder(problem, evaluator)
       .crossover(crossover)
       .mutation(mutation)
       .selection(selection)
@@ -117,7 +118,8 @@ public class ParallelNSGAIISettings extends Settings {
     numberOfThreads_ = Integer
       .parseInt(configuration.getProperty("numberOfThreads", String.valueOf(numberOfThreads_)));
 
-    SolutionSetEvaluator evaluator = new MultithreadedSolutionSetEvaluator(numberOfThreads_, problem_) ;
+    SolutionSetEvaluator evaluator = new MultithreadedSolutionSetEvaluator(numberOfThreads_,
+      problem) ;
 
     // Algorithm parameters
     populationSize_ = Integer

@@ -42,51 +42,36 @@ import java.util.Properties;
  * Class representing Settings objects.
  */
 public abstract class Settings {
-  protected Problem problem_;
+  protected Problem problem;
   protected String problemName;
-  protected String paretoFrontFile_;
+  protected String paretoFrontFile;
 
-  /**
-   * Constructor
-   */
+  /** Constructor */
   public Settings() {
   }
 
-  /**
-   * Constructor
-   */
-
+  /** Constructor */
   public Settings(String problemName) throws JMetalException {
     this.problemName = problemName;
   }
 
-  /**
-   * Default configure method
-   *
-   * @return An algorithm with the default configuration
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** configure() method */
   abstract public Algorithm configure() throws JMetalException;
 
-  /**
-   * Configure method based on reading a properties file
-   *
-   * @param configuration Properties file
-   * @return A algorithm with a the configuration contained in the properties file
-   */
+  /** configure() method based on reading a properties file */
   public Algorithm configure(Properties configuration) throws JMetalException {
     return null;
   }
 
   /**
-   * Configure method. Change the default configuration
+   * Configure() method. Change the default configuration
    *
    * @param settings
    * @return A problem with the experiment.settings indicated as argument
    * @throws org.uma.jmetal.util.JMetalException
    * @throws ClassNotFoundException
    */
-
+  // FIXME: to be revised
   public final Algorithm configure(HashMap settings)
     throws JMetalException, IllegalArgumentException, IllegalAccessException, ClassNotFoundException {
     if (settings != null) {
@@ -107,17 +92,17 @@ public abstract class Settings {
             if (settings.containsKey(fields[i].getName())) {
               if ("mutationProbability_".equals(fields[i].getName()) &&
                 value == null) {
-                if ((RealSolutionType.class == problem_.getSolutionType().getClass()) ||
-                  (ArrayRealSolutionType.class == problem_.getSolutionType().getClass())) {
-                  value = 1.0 / problem_.getNumberOfVariables();
-                } else if (BinarySolutionType.class == problem_.getSolutionType().getClass() ||
-                    BinaryRealSolutionType.class == problem_.getSolutionType().getClass()) {
-                  int length = problem_.getNumberOfBits();
+                if ((RealSolutionType.class == problem.getSolutionType().getClass()) ||
+                  (ArrayRealSolutionType.class == problem.getSolutionType().getClass())) {
+                  value = 1.0 / problem.getNumberOfVariables();
+                } else if (BinarySolutionType.class == problem.getSolutionType().getClass() ||
+                  BinaryRealSolutionType.class == problem.getSolutionType().getClass()) {
+                  int length = problem.getNumberOfBits();
                   value = 1.0 / length;
                 } else {
                   int length = 0;
-                  for (int j = 0; j < problem_.getNumberOfVariables(); j++) {
-                    length += problem_.getLength(j);
+                  for (int j = 0; j < problem.getNumberOfVariables(); j++) {
+                    length += problem.getLength(j);
                   }
                   value = 1.0 / length;
                 }
@@ -175,25 +160,10 @@ public abstract class Settings {
         }
       }
 
-      paretoFrontFile_ = (String) settings.get("paretoFrontFileList");
+      paretoFrontFile = (String) settings.get("paretoFrontFileList");
     }
 
     return configure();
   }
 
-  /**
-   * Returns the problem
-   */
-  Problem getProblem() {
-    return problem_;
-  }
-
-  /**
-   * Changes the problem to solve
-   *
-   * @param problem
-   */
-  void setProblem(Problem problem) {
-    problem_ = problem;
-  }
 }

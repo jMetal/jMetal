@@ -37,54 +37,163 @@ import java.util.logging.Level;
  */
 public class Experiment {
   protected String experimentName;
-  //List of the names of the algorithms to be executed
   protected String[] algorithmNameList;
-  //List of problem to be solved
   protected String[] problemList;
   protected String[] paretoFrontFileList;
-  // List of the quality indicators to be applied
   protected String[] indicatorList;
-  //Directory to store the results
   protected String experimentBaseDirectory;
 
-  //List of the files containing the pareto fronts corresponding 
-  //to the problem in problemList
-  //Directory to store the latex files
   protected String latexDirectory;
-  //Directory containing the Pareto front files
   protected String paretoFrontDirectory;
-  //Name of the file containing the output Pareto front
-  protected String outputParetoFrontFile;
-  //Name of the file containing the output Pareto set
-  protected String outputParetoSetFile;
-  //Number of independent runs per algorithm
+  protected String outputParetoFrontFileName;
+  protected String outputParetoSetFileName;
   protected int independentRuns;
-  //Parameter experiment.settings of each algorithm
+
   protected Settings[] algorithmSettings;
   //To indicate whether an indicator is to be minimized. Hard-coded
   // in the constructor
-  protected HashMap<String, Boolean> indicatorMinimize_;
-  protected boolean runTheAlgorithms_;
-  protected boolean generateReferenceParetoFronts_;
-  protected boolean generateQualityIndicators_;
-  protected boolean generateLatexTables_;
-  protected boolean generateBoxplots_;
-  protected boolean generateWilcoxonTables_;
-  protected boolean generateFriedmanTables_;
-  protected boolean generateSetCoverageTables_;
-  protected boolean useConfigurationFilesForAlgorithms_;
-  protected int boxplotRows_;
-  protected int boxplotColumns_;
-  protected boolean boxplotNotch_;
-  protected int numberOfExecutionThreads_;
-  protected Properties[] problemsSettings_;
-  //Map used to send experiment parameters to threads
-  HashMap<String, Object> map_;
-  Properties configuration_ = new Properties();
-  InputStreamReader propertiesFile_ = null;
+  protected HashMap<String, Boolean> indicatorMinimize;
 
+  protected boolean runTheAlgorithms;
+  protected boolean generateReferenceParetoFronts;
+  protected boolean generateQualityIndicators;
+  protected boolean generateLatexTables;
+  protected boolean generateBoxplots;
+  protected boolean generateWilcoxonTables;
+  protected boolean generateFriedmanTables;
+  protected boolean generateSetCoverageTables;
+  protected boolean useConfigurationFilesForAlgorithms;
+  protected int boxplotRows;
+  protected int boxplotColumns;
+  protected boolean boxplotNotch;
+  protected int numberOfExecutionThreads;
+
+  protected Properties[] problemsSettings;
+
+  Properties configuration = new Properties();
+  InputStreamReader propertiesFile = null;
+
+  ///////////////////////////////////
+  private Experiment(Builder builder) {
+    this.experimentName = builder.experimentName ;
+    this.generateReferenceParetoFronts = builder.generateReferenceParetoFronts ;
+    this.generateQualityIndicators = builder.generateQualityIndicators;
+    this.generateLatexTables = builder.generateLatexTables;
+    this.generateBoxplots = builder.generateBoxplots;
+
+    this.boxplotRows = builder.boxplotRows ;
+    this.boxplotColumns = builder.boxplotColumns ;
+    this.boxplotNotch = builder.boxplotNotch ;
+
+    this.generateWilcoxonTables = builder.generateWilcoxonTables;
+    this.generateFriedmanTables = builder.generateFriedmanTables;
+    this.generateSetCoverageTables = builder.generateSetCoverageTables;
+
+    this.runTheAlgorithms = builder.runTheAlgorithms ;
+    this.numberOfExecutionThreads = builder.numberOfExecutionThreads ;
+  }
+
+  public static class Builder {
+    private final String experimentName ;
+    private boolean generateReferenceParetoFronts ;
+    private boolean generateQualityIndicators;
+    private boolean generateLatexTables;
+    private boolean generateBoxplots;
+    private boolean generateWilcoxonTables;
+    private boolean generateFriedmanTables;
+    private boolean generateSetCoverageTables;
+    private int boxplotRows;
+    private int boxplotColumns;
+    private boolean boxplotNotch;
+    private boolean runTheAlgorithms;
+    private int numberOfExecutionThreads ;
+
+    public Builder(String experimentName) {
+      this.experimentName = experimentName ;
+
+      generateReferenceParetoFronts = false;
+      generateQualityIndicators = false;
+      generateLatexTables = false;
+      generateBoxplots = false;
+      generateWilcoxonTables = false;
+      generateFriedmanTables = false;
+      generateSetCoverageTables = false;
+      boxplotRows = 0 ;
+      boxplotColumns = 0 ;
+      boxplotNotch= false ;
+      runTheAlgorithms = false ;
+      numberOfExecutionThreads = 1 ;
+    }
+
+    public Builder generateReferenceParetoFronts() {
+      this.generateReferenceParetoFronts = true ;
+
+      return this ;
+    }
+
+    public Builder generateQualityIndicators() {
+      this.generateQualityIndicators = true ;
+
+      return this ;
+    }
+
+    public Builder generateLatexTables() {
+      this.generateLatexTables = true ;
+
+      return this ;
+    }
+
+    public Builder generateBoxplots(int rows, int columns, boolean notch) {
+      this.generateBoxplots = true ;
+      this.boxplotRows = rows ;
+      this.boxplotColumns = columns ;
+      this.boxplotNotch = notch ;
+
+      return this ;
+    }
+
+    public Builder generateWilcoxonTables(boolean generateWilcoxonTables) {
+      this.generateWilcoxonTables = generateWilcoxonTables ;
+
+      return this ;
+    }
+
+    public Builder generateFriedmanTables(boolean generateFriedmanTables) {
+      this.generateFriedmanTables = generateFriedmanTables ;
+
+      return this ;
+    }
+
+    public Builder generateSetCoverageTables(boolean generateSetCoverageTables) {
+      this.generateSetCoverageTables = generateSetCoverageTables ;
+
+      return this ;
+    }
+
+    public Builder runTheAlgorithms(int numberOfExecutionThreads) {
+      this.runTheAlgorithms = true ;
+      this.numberOfExecutionThreads = numberOfExecutionThreads ;
+
+      return this ;
+    }
+
+    public Experiment build() {
+      return new Experiment(this) ;
+    }
+  }
+
+
+  public void execute() {
+
+  }
+
+
+  ///////////////////////////////////
+
+
+  @Deprecated
   public Experiment() {
-    problemsSettings_ = null;
+    problemsSettings = null;
 
     algorithmNameList = null;
     problemList = null;
@@ -95,29 +204,29 @@ public class Experiment {
     paretoFrontDirectory = "";
     latexDirectory = "latex";
 
-    outputParetoFrontFile = "FUN";
-    outputParetoSetFile = "VAR";
+    outputParetoFrontFileName = "FUN";
+    outputParetoSetFileName = "VAR";
 
     algorithmSettings = null;
 
     independentRuns = 0;
-    numberOfExecutionThreads_ = 1;
+    numberOfExecutionThreads = 1;
 
-    runTheAlgorithms_ = false;
-    generateReferenceParetoFronts_ = false;
-    generateQualityIndicators_ = false;
-    generateLatexTables_ = false;
-    generateBoxplots_ = false;
-    generateWilcoxonTables_ = false;
-    generateFriedmanTables_ = false;
-    useConfigurationFilesForAlgorithms_ = false;
+    runTheAlgorithms = false;
+    generateReferenceParetoFronts = false;
+    generateQualityIndicators = false;
+    generateLatexTables = false;
+    generateBoxplots = false;
+    generateWilcoxonTables = false;
+    generateFriedmanTables = false;
+    useConfigurationFilesForAlgorithms = false;
 
-    indicatorMinimize_ = new HashMap<String, Boolean>();
-    indicatorMinimize_.put("HV", false);
-    indicatorMinimize_.put("EPSILON", true);
-    indicatorMinimize_.put("SPREAD", true);
-    indicatorMinimize_.put("GD", true);
-    indicatorMinimize_.put("IGD", true);
+    indicatorMinimize = new HashMap<String, Boolean>();
+    indicatorMinimize.put("HV", false);
+    indicatorMinimize.put("EPSILON", true);
+    indicatorMinimize.put("SPREAD", true);
+    indicatorMinimize.put("GD", true);
+    indicatorMinimize.put("IGD", true);
   }
 
   public String getExperimentName() {
@@ -125,7 +234,7 @@ public class Experiment {
   }
 
   public void setExperimentName(String value) {
-    experimentName = configuration_.getProperty("experimentName", value);
+    experimentName = configuration.getProperty("experimentName", value);
   }
 
   public String[] getAlgorithmNameList() {
@@ -133,11 +242,11 @@ public class Experiment {
   }
 
   public void setAlgorithmNameList(String[] values) {
-    if (configuration_.getProperty("algorithmNameList") == null) {
+    if (configuration.getProperty("algorithmNameList") == null) {
       algorithmNameList = Arrays.copyOf(values, values.length);
 
     } else {
-      algorithmNameList = configuration_.getProperty("algorithmNameList").split(",");
+      algorithmNameList = configuration.getProperty("algorithmNameList").split(",");
     }
   }
 
@@ -146,10 +255,10 @@ public class Experiment {
   }
 
   public void setProblemList(String[] values) {
-    if (configuration_.getProperty("problemList") == null) {
+    if (configuration.getProperty("problemList") == null) {
       problemList = Arrays.copyOf(values, values.length);
     } else {
-      problemList = configuration_.getProperty("problemList").split(",");
+      problemList = configuration.getProperty("problemList").split(",");
     }
   }
 
@@ -158,10 +267,10 @@ public class Experiment {
   }
 
   public void setParetoFrontFileList(String[] values) {
-    if (configuration_.getProperty("paretoFrontFileList") == null) {
+    if (configuration.getProperty("paretoFrontFileList") == null) {
       paretoFrontFileList = Arrays.copyOf(values, values.length);
     } else {
-      paretoFrontFileList = configuration_.getProperty("paretoFrontFileList").split(",");
+      paretoFrontFileList = configuration.getProperty("paretoFrontFileList").split(",");
     }
   }
 
@@ -170,10 +279,10 @@ public class Experiment {
   }
 
   public void setIndicatorList(String[] values) {
-    if (configuration_.getProperty("indicatorList") == null) {
+    if (configuration.getProperty("indicatorList") == null) {
       indicatorList = Arrays.copyOf(values, values.length);
     } else {
-      indicatorList = configuration_.getProperty("indicatorList").split(",");
+      indicatorList = configuration.getProperty("indicatorList").split(",");
     }
   }
 
@@ -182,7 +291,7 @@ public class Experiment {
   }
 
   public void setExperimentBaseDirectory(String directory) {
-    experimentBaseDirectory = configuration_.getProperty("experimentBaseDirectory", directory);
+    experimentBaseDirectory = configuration.getProperty("experimentBaseDirectory", directory);
   }
 
   public void setExperimentBaseDirector(String directory) {
@@ -202,15 +311,15 @@ public class Experiment {
   }
 
   public void setParetoFrontDirectory(String directory) {
-    paretoFrontDirectory = configuration_.getProperty("paretoFrontDirectory", directory);
+    paretoFrontDirectory = configuration.getProperty("paretoFrontDirectory", directory);
   }
 
-  public String getOutputParetoFrontFile() {
-    return outputParetoFrontFile;
+  public String getOutputParetoFrontFileName() {
+    return outputParetoFrontFileName;
   }
 
-  public String getOutputParetoSetFile() {
-    return outputParetoSetFile;
+  public String getOutputParetoSetFileName() {
+    return outputParetoSetFileName;
   }
 
   public int getIndependentRuns() {
@@ -219,7 +328,7 @@ public class Experiment {
 
   public void setIndependentRuns(int value) {
     independentRuns =
-        Integer.parseInt(configuration_.getProperty("independentRuns", Integer.toString(value)));
+      Integer.parseInt(configuration.getProperty("independentRuns", Integer.toString(value)));
   }
 
   public Settings[] getAlgorithmSettings() {
@@ -227,71 +336,71 @@ public class Experiment {
   }
 
   public HashMap<String, Boolean> indicatorMinimize() {
-    return indicatorMinimize_;
+    return indicatorMinimize;
   }
 
   public boolean runTheAlgorithms() {
-    return runTheAlgorithms_;
+    return runTheAlgorithms;
   }
 
   public boolean generateReferenceParetoFronts() {
-    return generateReferenceParetoFronts_;
+    return generateReferenceParetoFronts;
   }
 
   public boolean generateQualityIndicators() {
-    return generateQualityIndicators_;
+    return generateQualityIndicators;
   }
 
   public boolean generateLatexTables() {
-    return generateLatexTables_;
+    return generateLatexTables;
   }
 
   public boolean generateBoxplots() {
-    return generateBoxplots_;
+    return generateBoxplots;
   }
 
   public boolean generateWilcoxonTables() {
-    return generateWilcoxonTables_;
+    return generateWilcoxonTables;
   }
 
   public boolean generateFriedmanTables() {
-    return generateFriedmanTables_;
+    return generateFriedmanTables;
   }
 
   public boolean generateSetCoverageTables() {
-    return generateFriedmanTables_;
+    return generateFriedmanTables;
   }
 
 
   public boolean useConfigurationFilesForAlgorithms() {
-    return useConfigurationFilesForAlgorithms_;
+    return useConfigurationFilesForAlgorithms;
   }
 
   public int getBoxplotRows() {
-    return boxplotRows_;
+    return boxplotRows;
   }
 
   public void setBoxplotRows(int value) {
-    boxplotRows_ =
-        Integer.parseInt(configuration_.getProperty("boxplotsRows", Integer.toString(value)));
+    boxplotRows =
+      Integer.parseInt(configuration.getProperty("boxplotsRows", Integer.toString(value)));
   }
 
   public int getBoxplotColumns() {
-    return boxplotColumns_;
+    return boxplotColumns;
   }
 
   public void setBoxplotColumns(int value) {
-    boxplotColumns_ =
-        Integer.parseInt(configuration_.getProperty("boxplotsColumns", Integer.toString(value)));
+    boxplotColumns =
+      Integer.parseInt(configuration.getProperty("boxplotsColumns", Integer.toString(value)));
   }
 
   public boolean getBoxplotNotch() {
-    return boxplotNotch_;
+    return boxplotNotch;
   }
 
   public void setBoxplotNotch(boolean value) {
-    boxplotNotch_ =
-        Boolean.parseBoolean(configuration_.getProperty("boxplotsNotch", Boolean.toString(value)));
+    boxplotNotch =
+      Boolean.parseBoolean(configuration.getProperty("boxplotsNotch", Boolean.toString(value)));
   }
 
   public void initExperiment(String[] args) {
@@ -305,14 +414,14 @@ public class Experiment {
     setIndicatorList(indicatorList);
     setExperimentBaseDirectory(experimentBaseDirectory);
     setParetoFrontDirectory(paretoFrontDirectory);
-    setNumberOfExecutionThreads(numberOfExecutionThreads_);
-    setGenerateQualityIndicators(generateQualityIndicators_);
-    setGenerateReferenceParetoFronts(generateReferenceParetoFronts_);
-    setRunTheAlgorithms(runTheAlgorithms_);
-    setBoxplotRows(boxplotRows_);
-    setBoxplotColumns(boxplotColumns_);
-    setBoxplotNotch(boxplotNotch_);
-    setUseConfigurationFilesForAlgorithms(useConfigurationFilesForAlgorithms_);
+    setNumberOfExecutionThreads(numberOfExecutionThreads);
+    setGenerateQualityIndicators(generateQualityIndicators);
+    setGenerateReferenceParetoFronts(generateReferenceParetoFronts);
+    setRunTheAlgorithms(runTheAlgorithms);
+    setBoxplotRows(boxplotRows);
+    setBoxplotColumns(boxplotColumns);
+    setBoxplotNotch(boxplotNotch);
+    setUseConfigurationFilesForAlgorithms(useConfigurationFilesForAlgorithms);
 
     int numberOfAlgorithms = algorithmNameList.length;
     algorithmSettings = new Settings[numberOfAlgorithms];
@@ -322,7 +431,7 @@ public class Experiment {
 
   public void runExperiment() throws JMetalException, IOException {
     Configuration.logger.info("Experiment: Name: " + experimentName);
-    Configuration.logger.info("Experiment: creating " + numberOfExecutionThreads_ + " threads");
+    Configuration.logger.info("Experiment: creating " + numberOfExecutionThreads + " threads");
     Configuration.logger.info("Experiment: Number of algorithms: " + algorithmNameList.length);
     for (String s : algorithmNameList) {
       Configuration.logger.info("  - " + s);
@@ -331,27 +440,27 @@ public class Experiment {
     Configuration.logger.info("Experiment: runs: " + independentRuns);
     Configuration.logger.info("Experiment: Experiment directory: " + experimentBaseDirectory);
     Configuration.logger.info(
-        "Experiment: Use config files for algorithms: " + useConfigurationFilesForAlgorithms_);
-    Configuration.logger.info("Experiment: Generate reference Pareto fronts: " + generateReferenceParetoFronts_);
-    Configuration.logger.info("Experiment: Generate Latex tables: " + generateLatexTables_);
-    Configuration.logger.info("Experiment: Generate Friedman tables: " + generateFriedmanTables_);
-    Configuration.logger.info("Experiment: Generate boxplots: " + generateBoxplots_);
-    if (generateBoxplots_) {
-      Configuration.logger.info("Experiment: Boxplots Rows: " + boxplotRows_);
-      Configuration.logger.info("Experiment: Boxplots Columns: " + boxplotColumns_);
-      Configuration.logger.info("Experiment: Boxplots Notch: " + boxplotNotch_);
+      "Experiment: Use config files for algorithms: " + useConfigurationFilesForAlgorithms);
+    Configuration.logger.info("Experiment: Generate reference Pareto fronts: " + generateReferenceParetoFronts);
+    Configuration.logger.info("Experiment: Generate Latex tables: " + generateLatexTables);
+    Configuration.logger.info("Experiment: Generate Friedman tables: " + generateFriedmanTables);
+    Configuration.logger.info("Experiment: Generate boxplots: " + generateBoxplots);
+    if (generateBoxplots) {
+      Configuration.logger.info("Experiment: Boxplots Rows: " + boxplotRows);
+      Configuration.logger.info("Experiment: Boxplots Columns: " + boxplotColumns);
+      Configuration.logger.info("Experiment: Boxplots Notch: " + boxplotNotch);
     }
 
-    if (runTheAlgorithms_) {
+    if (runTheAlgorithms) {
       MultithreadedAlgorithmExecutor parallelRunner =
-          new MultithreadedAlgorithmExecutor(numberOfExecutionThreads_);
+        new MultithreadedAlgorithmExecutor(numberOfExecutionThreads);
       parallelRunner.start(this);
 
       for (String algorithm : algorithmNameList) {
         for (String problem : problemList) {
           for (int i = 0; i < independentRuns; i++) {
             Configuration.logger.info(
-                "Adding task. Algorithm:  " + algorithm + " Problem: " + problem + " Run: " + i);
+              "Adding task. Algorithm:  " + algorithm + " Problem: " + problem + " Run: " + i);
             parallelRunner.addTask(new Object[] {algorithm, problem, i});
           }
         }
@@ -361,31 +470,31 @@ public class Experiment {
       parallelRunner.stop();
     }
 
-    if (generateReferenceParetoFronts_) {
+    if (generateReferenceParetoFronts) {
       new ReferenceParetoFronts(this).generate();
     }
 
-    if (generateQualityIndicators_) {
+    if (generateQualityIndicators) {
       new QualityIndicatorTables(this).generate();
     }
 
-    if (generateLatexTables_) {
+    if (generateLatexTables) {
       new LatexTables(this).generate();
     }
 
-    if (generateWilcoxonTables_) {
+    if (generateWilcoxonTables) {
       new WilcoxonTestTables(this).generate();
     }
 
-    if (generateBoxplots_) {
+    if (generateBoxplots) {
       new BoxPlots(this).generate();
     }
 
-    if (generateFriedmanTables_) {
+    if (generateFriedmanTables) {
       new FriedmanTables(this).generate();
     }
 
-    if (generateSetCoverageTables_) {
+    if (generateSetCoverageTables) {
       new SetCoverageTables(this).generate();
     }
   }
@@ -419,20 +528,20 @@ public class Experiment {
    */
   public void testForConfigurationFile(String[] args) {
     if (args.length == 1) {
-      configuration_ = new Properties();
+      configuration = new Properties();
 
       Configuration.logger.info("ARGS[0]: " + args[0]);
       try {
-        propertiesFile_ = new InputStreamReader(new FileInputStream(args[0]));
-        configuration_.load(propertiesFile_);
+        propertiesFile = new InputStreamReader(new FileInputStream(args[0]));
+        configuration.load(propertiesFile);
       } catch (FileNotFoundException e) {
         Configuration.logger.log(Level.SEVERE, "File not found", e);
-        propertiesFile_ = null;
+        propertiesFile = null;
       }  catch (IOException e) {
         Configuration.logger.log(Level.SEVERE, "Error reading properties file", e);
       }
 
-      if (propertiesFile_ == null) {
+      if (propertiesFile == null) {
         Configuration.logger.log(Level.INFO, "Properties file " + args[0] + " doesn't exist");
       } else {
         Configuration.logger.log(Level.INFO, "Properties file loaded");
@@ -441,38 +550,39 @@ public class Experiment {
   }
 
   public void setNumberOfExecutionThreads(int value) {
-    numberOfExecutionThreads_ = Integer
-        .parseInt(configuration_.getProperty("numberOfExecutionThreads", Integer.toString(value)));
+    numberOfExecutionThreads = Integer
+      .parseInt(configuration.getProperty("numberOfExecutionThreads", Integer.toString(value)));
   }
 
   public void setGenerateReferenceParetoFronts(boolean value) {
-    generateReferenceParetoFronts_ =
-        Boolean.parseBoolean(
-            configuration_.getProperty("generateReferenceParetoFronts", Boolean.toString(value)));
+    generateReferenceParetoFronts =
+      Boolean.parseBoolean(
+        configuration.getProperty("generateReferenceParetoFronts", Boolean.toString(value)));
   }
 
   public void setRunTheAlgorithms(boolean value) {
-    runTheAlgorithms_ =
-        Boolean.parseBoolean(configuration_.getProperty("runTheAlgorithms", Boolean.toString(value)));
+    runTheAlgorithms =
+      Boolean.parseBoolean(
+        configuration.getProperty("runTheAlgorithms", Boolean.toString(value)));
   }
 
   public void setGenerateQualityIndicators(boolean value) {
-    generateQualityIndicators_ =
-        Boolean.parseBoolean(
-            configuration_.getProperty("generateQualityIndicators", Boolean.toString(value)));
+    generateQualityIndicators =
+      Boolean.parseBoolean(
+        configuration.getProperty("generateQualityIndicators", Boolean.toString(value)));
   }
 
   public void setUseConfigurationFilesForAlgorithms(boolean value) {
-    useConfigurationFilesForAlgorithms_ =
-        Boolean.parseBoolean(
-            configuration_.getProperty("useConfigurationFilesForAlgorithms", Boolean.toString(value)));
+    useConfigurationFilesForAlgorithms =
+      Boolean.parseBoolean(
+        configuration.getProperty("useConfigurationFilesForAlgorithms", Boolean.toString(value)));
   }
 
   public String toString() {
     String result = null;
     result = "ExperimentName   : " + experimentName + "\n";
     result += "Independent runs: " + independentRuns + "\n";
-    result += "Number of threads: " + numberOfExecutionThreads_ + "\n";
+    result += "Number of threads: " + numberOfExecutionThreads + "\n";
     result += "Algorithm list  : ";
     for (String s : algorithmNameList) {
       result += s + ",";
@@ -494,14 +604,14 @@ public class Experiment {
 
     result += "Experiment base directory: " + experimentBaseDirectory + "\n";
     result += "Pareto front directory: " + paretoFrontDirectory + "\n";
-    result += "Generate reference Pareto fronts: " + generateReferenceParetoFronts_ + "\n";
-    result += "Generate quality Indicators: " + generateQualityIndicators_ + "\n";
-    result += "Generate Latex tables: " + generateLatexTables_ + "\n";
-    result += "Generate Friedman tables: " + generateFriedmanTables_ + "\n";
-    result += "Generate boxplots: " + generateBoxplots_ + "\n";
-    result += "Generate Wilcoxon tables: " + generateWilcoxonTables_ + "\n";
-    result += "Run the algorithms: " + runTheAlgorithms_ + "\n";
-    result += "Use config files for algorithms: " + useConfigurationFilesForAlgorithms_ + "\n";
+    result += "Generate reference Pareto fronts: " + generateReferenceParetoFronts + "\n";
+    result += "Generate quality Indicators: " + generateQualityIndicators + "\n";
+    result += "Generate Latex tables: " + generateLatexTables + "\n";
+    result += "Generate Friedman tables: " + generateFriedmanTables + "\n";
+    result += "Generate boxplots: " + generateBoxplots + "\n";
+    result += "Generate Wilcoxon tables: " + generateWilcoxonTables + "\n";
+    result += "Run the algorithms: " + runTheAlgorithms + "\n";
+    result += "Use config files for algorithms: " + useConfigurationFilesForAlgorithms + "\n";
 
     return result;
   }

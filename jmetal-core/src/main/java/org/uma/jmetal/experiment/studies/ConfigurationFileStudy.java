@@ -42,18 +42,18 @@ public class ConfigurationFileStudy extends Experiment {
     indicatorList = null;
     experimentBaseDirectory = null;
     paretoFrontDirectory = null;
-    numberOfExecutionThreads_ = 1;
+    numberOfExecutionThreads = 1;
 
-    generateReferenceParetoFronts_ = false;
-    runTheAlgorithms_ = false;
-    generateBoxplots_ = false;
-    boxplotRows_ = 0;
-    boxplotColumns_ = 0;
-    boxplotNotch_ = false;
-    generateFriedmanTables_ = false;
-    generateLatexTables_ = false;
-    generateWilcoxonTables_ = false;
-    generateQualityIndicators_ = false;
+    generateReferenceParetoFronts = false;
+    runTheAlgorithms = false;
+    generateBoxplots = false;
+    boxplotRows = 0;
+    boxplotColumns = 0;
+    boxplotNotch = false;
+    generateFriedmanTables = false;
+    generateLatexTables = false;
+    generateWilcoxonTables = false;
+    generateQualityIndicators = false;
   }
 
 

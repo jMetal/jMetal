@@ -57,7 +57,7 @@ public class MOCHCSettings extends Settings {
     super(problemName);
 
     Object[] problemParams = {"Binary"};
-    problem_ = (new ProblemFactory()).getProblem(this.problemName, problemParams);
+    problem = (new ProblemFactory()).getProblem(this.problemName, problemParams);
 
     // Default experiment.settings
     populationSize = 100;
@@ -97,7 +97,7 @@ public class MOCHCSettings extends Settings {
       .probability(mutationProbability)
       .build() ;
 
-    algorithm = new MOCHC.Builder(problem_)
+    algorithm = new MOCHC.Builder(problem)
       .initialConvergenceCount(initialConvergenceCount)
       .preservedPopulation(preservedPopulation)
       .populationSize(populationSize)

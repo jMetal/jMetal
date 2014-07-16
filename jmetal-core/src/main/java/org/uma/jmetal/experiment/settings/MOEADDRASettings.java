@@ -61,7 +61,7 @@ public class MOEADDRASettings extends Settings {
     super(problem);
 
     Object[] problemParams = {"Real"};
-    problem_ = (new ProblemFactory()).getProblem(problemName, problemParams);
+    this.problem = (new ProblemFactory()).getProblem(problemName, problemParams);
 
     // Default experiment.settings
     cr_ = 1.0;
@@ -71,7 +71,7 @@ public class MOEADDRASettings extends Settings {
 
     finalSize_ = 300;
 
-    mutationProbability_ = 1.0 / problem_.getNumberOfVariables();
+    mutationProbability_ = 1.0 / this.problem.getNumberOfVariables();
     mutationDistributionIndex_ = 20;
 
     t_ = (int) (0.1 * populationSize_);
@@ -100,7 +100,7 @@ public class MOEADDRASettings extends Settings {
 
     // Creating the problem
     algorithm = new MOEAD_DRA();
-    algorithm.setProblem(problem_);
+    algorithm.setProblem(problem);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", populationSize_);

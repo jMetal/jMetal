@@ -57,7 +57,7 @@ public class ParallelMOEADSettings extends Settings {
     super(problem);
 
     Object[] problemParams = {"Real"};
-    problem_ = (new ProblemFactory()).getProblem(problemName, problemParams);
+    this.problem = (new ProblemFactory()).getProblem(problemName, problemParams);
 
     // Default experiment.settings
     cr_ = 1.0;
@@ -65,7 +65,7 @@ public class ParallelMOEADSettings extends Settings {
     populationSize_ = 600;
     maxEvaluations_ = 150000;
 
-    mutationProbability_ = 1.0 / problem_.getNumberOfVariables();
+    mutationProbability_ = 1.0 / this.problem.getNumberOfVariables();
     mutationDistributionIndex_ = 20;
 
     t_ = 60;
@@ -96,7 +96,7 @@ public class ParallelMOEADSettings extends Settings {
 
     // Creating the problem
     algorithm = new pMOEAD();
-    algorithm.setProblem(problem_);
+    algorithm.setProblem(problem);
 
     // Algorithm parameters
     algorithm.setInputParameter("numberOfThreads", numberOfThreads_);

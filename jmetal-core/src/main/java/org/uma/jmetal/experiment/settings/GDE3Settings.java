@@ -56,7 +56,7 @@ public class GDE3Settings extends Settings {
     super(problemName);
 
     Object[] problemParams = {"Real"};
-    problem_ = (new ProblemFactory()).getProblem(this.problemName, problemParams);
+    problem = (new ProblemFactory()).getProblem(this.problemName, problemParams);
 
     // Default experiment.settings
     cr_ = 0.5;
@@ -85,7 +85,7 @@ public class GDE3Settings extends Settings {
     selection = new DifferentialEvolutionSelection.Builder()
       .build();
 
-    algorithm = new GDE3.Builder(problem_, evaluator_)
+    algorithm = new GDE3.Builder(problem, evaluator_)
       .crossover(crossover)
       .selection(selection)
       .maxIterations(maxIterations_)

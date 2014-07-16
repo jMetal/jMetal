@@ -48,7 +48,7 @@ public class DMOPSOSettings extends Settings {
     super(problem);
 
     Object[] problemParams = {"Real"};
-    problem_ = (new ProblemFactory()).getProblem(problemName, problemParams);
+    this.problem = (new ProblemFactory()).getProblem(problemName, problemParams);
 
     // Default experiment.settings
     swarmSize_ = 100;
@@ -76,7 +76,7 @@ public class DMOPSOSettings extends Settings {
 
     // Creating the problem
     algorithm = new dMOPSO();
-    algorithm.setProblem(problem_);
+    algorithm.setProblem(problem);
 
     // Algorithm parameters
     algorithm.setInputParameter("swarmSize", swarmSize_);

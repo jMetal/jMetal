@@ -50,7 +50,7 @@ public class OMOPSOSettings extends Settings{
     super(problem) ;
 
     Object [] problemParams = {"Real"};
-    problem_ = (new ProblemFactory()).getProblem(problemName, problemParams);
+    this.problem = (new ProblemFactory()).getProblem(problemName, problemParams);
 
     evaluator = new SequentialSolutionSetEvaluator() ;
 
@@ -59,7 +59,7 @@ public class OMOPSOSettings extends Settings{
     maxIterations = 250 ;
     archiveSize = 100 ;
     perturbationIndex = 0.5 ;
-    mutationProbability = 1.0/problem_.getNumberOfVariables() ;
+    mutationProbability = 1.0/ this.problem.getNumberOfVariables() ;
   }
 
   /**
@@ -79,7 +79,7 @@ public class OMOPSOSettings extends Settings{
     nonUniformMutation = new NonUniformMutation.Builder(perturbationIndex, mutationProbability, maxIterations)
       .build() ;
 
-    algorithm = new OMOPSO.Builder(problem_, evaluator)
+    algorithm = new OMOPSO.Builder(problem, evaluator)
       .swarmSize(swarmSize)
       .archiveSize(archiveSize)
       .maxIterations(maxIterations)

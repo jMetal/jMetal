@@ -63,12 +63,12 @@ public class NSGAIIAdaptiveSettings extends Settings {
     super(problem);
 
     Object[] problemParams = {"Real"};
-    problem_ = (new ProblemFactory()).getProblem(problemName, problemParams);
+    this.problem = (new ProblemFactory()).getProblem(problemName, problemParams);
 
     // Default settings
     populationSize_ = 100;
     maxEvaluations_ = 150000;
-    mutationProbability_ = 1.0 / problem_.getNumberOfVariables();
+    mutationProbability_ = 1.0 / this.problem.getNumberOfVariables();
     crossoverProbability_ = 0.9;
     mutationDistributionIndex_ = 20;
     crossoverDistributionIndex_ = 20;
@@ -91,7 +91,7 @@ public class NSGAIIAdaptiveSettings extends Settings {
     SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator() ;
 
     algorithm = new NSGAIIAdaptive(evaluator);
-    algorithm.setProblem(problem_);
+    algorithm.setProblem(problem);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", populationSize_);

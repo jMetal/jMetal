@@ -65,14 +65,14 @@ public class SMPSOSettings extends Settings {
     super(problem);
 
     Object[] problemParams = {"Real"};
-    problem_ = (new ProblemFactory()).getProblem(problemName, problemParams);
+    this.problem = (new ProblemFactory()).getProblem(problemName, problemParams);
 
     // Default experiment.settings
     swarmSize = 100;
     maxIterations = 250;
     archiveSize = 100;
     mutationDistributionIndex = 20.0;
-    mutationProbability = 1.0 / problem_.getNumberOfVariables();
+    mutationProbability = 1.0 / this.problem.getNumberOfVariables();
 
     evaluator = new SequentialSolutionSetEvaluator() ;
 
@@ -99,14 +99,14 @@ public class SMPSOSettings extends Settings {
     Algorithm algorithm;
     Mutation mutation;
 
-    Archive archive = new CrowdingArchive(100, problem_.getNumberOfObjectives()) ;
+    Archive archive = new CrowdingArchive(100, problem.getNumberOfObjectives()) ;
 
     mutation = new PolynomialMutation.Builder()
       .distributionIndex(20.0)
-      .probability(1.0 / problem_.getNumberOfVariables())
+      .probability(1.0 / problem.getNumberOfVariables())
       .build();
 
-    algorithm = new SMPSO.Builder(problem_, archive, evaluator)
+    algorithm = new SMPSO.Builder(problem, archive, evaluator)
       .mutation(mutation)
       .maxIterations(maxIterations)
       .swarmSize(swarmSize)

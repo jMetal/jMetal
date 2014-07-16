@@ -59,14 +59,14 @@ public class IBEASettings extends Settings {
     super(problemName);
 
     Object[] problemParams = {"Real"};
-    problem_ = (new ProblemFactory()).getProblem(this.problemName, problemParams);
+    problem = (new ProblemFactory()).getProblem(this.problemName, problemParams);
 
     // Default experiment.settings
     populationSize_ = 100;
     maxEvaluations_ = 25000;
     archiveSize_ = 100;
 
-    mutationProbability_ = 1.0 / problem_.getNumberOfVariables();
+    mutationProbability_ = 1.0 / problem.getNumberOfVariables();
     crossoverProbability_ = 0.9;
 
     crossoverDistributionIndex_ = 20.0;
@@ -86,7 +86,7 @@ public class IBEASettings extends Settings {
     Operator mutation;
 
     algorithm = new IBEA();
-    algorithm.setProblem(problem_);
+    algorithm.setProblem(problem);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", populationSize_);

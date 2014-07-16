@@ -32,7 +32,7 @@ import java.util.logging.Level;
  */
 public class SettingsFactory {
   /**
-   * Creates a experiment.settings object
+   * Creates a Settings object
    *
    * @param algorithmName Name of the algorithm
    * @param params        Parameters

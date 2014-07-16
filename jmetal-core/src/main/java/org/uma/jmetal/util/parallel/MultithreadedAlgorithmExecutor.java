@@ -160,9 +160,9 @@ public class MultithreadedAlgorithmExecutor implements SynchronousParallelTaskEx
       }
 
       resultFront.printObjectivesToFile(
-        directory + "/" + experiment_.getOutputParetoFrontFile() + "." + id_);
+        directory + "/" + experiment_.getOutputParetoFrontFileName() + "." + id_);
       resultFront
-        .printVariablesToFile(directory + "/" + experiment_.getOutputParetoSetFile() + "." + id_);
+        .printVariablesToFile(directory + "/" + experiment_.getOutputParetoSetFileName() + "." + id_);
 
       return id_;
     }

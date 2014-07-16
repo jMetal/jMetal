@@ -52,14 +52,14 @@ public class AbYSSSettings extends Settings {
     super(problemName);
 
     Object[] problemParams = {"Real"};
-    problem_ = (new ProblemFactory()).getProblem(this.problemName, problemParams);
+    problem = (new ProblemFactory()).getProblem(this.problemName, problemParams);
 
     populationSize = 20;
     maxEvaluations = 25000;
     archiveSize = 100;
     refSet1Size = 10;
     refSet2Size = 10;
-    mutationProbability = 1.0 / problem_.getNumberOfVariables();
+    mutationProbability = 1.0 / problem.getNumberOfVariables();
     crossoverProbability = 1.0;
     crossoverDistributionIndex = 20.0;
     mutationDistributionIndex = 20.0;
@@ -76,7 +76,7 @@ public class AbYSSSettings extends Settings {
 
     // Creating the problem
     algorithm = new AbYSS();
-    algorithm.setProblem(problem_);
+    algorithm.setProblem(problem);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", populationSize);
@@ -97,7 +97,7 @@ public class AbYSSSettings extends Settings {
 
     parameters = new HashMap<String, Object>();
     parameters.put("improvementRounds", improvementRounds);
-    parameters.put("problem", problem_);
+    parameters.put("problem", problem);
     parameters.put("mutation", mutation);
     improvement = new MutationLocalSearch(parameters);
 

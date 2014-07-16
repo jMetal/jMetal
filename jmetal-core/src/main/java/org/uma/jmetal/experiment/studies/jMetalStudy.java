@@ -42,19 +42,19 @@ public class jMetalStudy extends Experiment {
     indicatorList = new String[] {"HV", "SPREAD", "EPSILON"};
     experimentBaseDirectory = "/Users/antelverde/Softw/pruebas/org.uma.jmetal/" + experimentName;
     paretoFrontDirectory = "/Users/antelverde/Softw/pruebas/data/paretoFronts";
-    numberOfExecutionThreads_ = 6;
+    numberOfExecutionThreads = 6;
 
-    generateReferenceParetoFronts_ = false;
-    runTheAlgorithms_ = true;
-    generateBoxplots_ = true;
-    boxplotRows_ = 2;
-    boxplotColumns_ = 2;
-    boxplotNotch_ = true;
-    generateFriedmanTables_ = true;
-    generateLatexTables_ = true;
-    generateWilcoxonTables_ = true;
-    generateSetCoverageTables_ = true;
-    generateQualityIndicators_ = true;
+    generateReferenceParetoFronts = false;
+    runTheAlgorithms = true;
+    generateBoxplots = true;
+    boxplotRows = 2;
+    boxplotColumns = 2;
+    boxplotNotch = true;
+    generateFriedmanTables = true;
+    generateLatexTables = true;
+    generateWilcoxonTables = true;
+    generateSetCoverageTables = true;
+    generateQualityIndicators = true;
   }
 
   /**

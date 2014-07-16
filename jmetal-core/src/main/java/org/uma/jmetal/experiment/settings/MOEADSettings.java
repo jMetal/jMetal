@@ -56,7 +56,7 @@ public class MOEADSettings extends Settings {
     super(problem);
 
     Object[] problemParams = {"Real"};
-    problem_ = (new ProblemFactory()).getProblem(problemName, problemParams);
+    this.problem = (new ProblemFactory()).getProblem(problemName, problemParams);
 
     // Default experiment.settings
     cr = 1.0;
@@ -64,7 +64,7 @@ public class MOEADSettings extends Settings {
     populationSize = 300;
     maxEvaluations = 150000;
 
-    mutationProbability = 1.0 / problem_.getNumberOfVariables();
+    mutationProbability = 1.0 / this.problem.getNumberOfVariables();
     mutationDistributionIndex = 20;
 
     neighborSize = 20;
@@ -99,7 +99,7 @@ public class MOEADSettings extends Settings {
       .probability(mutationProbability)
       .build();
 
-    algorithm = new MOEAD.Builder(problem_)
+    algorithm = new MOEAD.Builder(problem)
       .populationSize(populationSize)
       .maxEvaluations(maxEvaluations)
       .neighborhoodSelectionProbability(neighborhoodSelectionProbability)

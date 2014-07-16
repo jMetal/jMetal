@@ -55,13 +55,13 @@ public class NSGAIIBinarySettings extends Settings {
     super(problem);
 
     Object[] problemParams = {"Binary"};
-    problem_ = (new ProblemFactory()).getProblem(problemName, problemParams);
+    this.problem = (new ProblemFactory()).getProblem(problemName, problemParams);
 
     // Default experiment.settings
     populationSize_ = 100;
     maxEvaluations_ = 25000;
 
-    mutationProbability_ = 1.0 / problem_.getNumberOfBits();
+    mutationProbability_ = 1.0 / this.problem.getNumberOfBits();
     crossoverProbability_ = 0.9;
 
     evaluator_ = new SequentialSolutionSetEvaluator() ;
@@ -90,7 +90,7 @@ public class NSGAIIBinarySettings extends Settings {
     selection = new BinaryTournament2.Builder()
       .build();
 
-    algorithm = new NSGAII.Builder(problem_, evaluator_)
+    algorithm = new NSGAII.Builder(problem, evaluator_)
       .crossover(crossover)
       .mutation(mutation)
       .selection(selection)

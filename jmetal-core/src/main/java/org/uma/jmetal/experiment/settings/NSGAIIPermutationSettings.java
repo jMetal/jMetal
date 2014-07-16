@@ -60,7 +60,7 @@ public class NSGAIIPermutationSettings extends Settings {
 
     Object[] problemParams = {"Permutation"};
     try {
-      problem_ = (new ProblemFactory()).getProblem(problemName, problemParams);
+      this.problem = (new ProblemFactory()).getProblem(problemName, problemParams);
     } catch (JMetalException e) {
       Configuration.logger.log(Level.SEVERE, "Unable to get problem", e);
     }
@@ -69,7 +69,7 @@ public class NSGAIIPermutationSettings extends Settings {
     populationSize_ = 100;
     maxEvaluations_ = 25000;
 
-    mutationProbability_ = 1.0 / problem_.getNumberOfVariables();
+    mutationProbability_ = 1.0 / this.problem.getNumberOfVariables();
     crossoverProbability_ = 0.9;
   }
 
@@ -89,7 +89,7 @@ public class NSGAIIPermutationSettings extends Settings {
 
     // Creating the algorithm.
     algorithm = new NSGAII(evaluator);
-    algorithm.setProblem(problem_);
+    algorithm.setProblem(problem);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", populationSize_);
@@ -133,7 +133,7 @@ public class NSGAIIPermutationSettings extends Settings {
 
     // Creating the algorithm.
     algorithm = new NSGAII(evaluator);
-    algorithm.setProblem(problem_);
+    algorithm.setProblem(problem);
 
     // Algorithm parameters
     populationSize_ = Integer

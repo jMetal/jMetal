@@ -219,7 +219,7 @@ public class FriedmanTables implements IExperimentOutput {
     Output = Output + "\n" + ("\\begin{table}[!htp]\n" +
       "\\centering\n" +
       "\\caption{Average Rankings of the algorithms\n}" +
-      // for "+ experiment_.problemList[prob] +" problem\n}" +
+      // for "+ experiment.problemList[prob] +" problem\n}" +
       "\\begin{tabular}{c|c}\n" +
       "Algorithm&Ranking\\\\\n\\hline");
 

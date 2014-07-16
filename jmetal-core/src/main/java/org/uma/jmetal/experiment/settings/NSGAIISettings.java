@@ -58,12 +58,12 @@ public class NSGAIISettings extends Settings {
     super(problem);
 
     Object[] problemParams = {"Real"};
-    problem_ = (new ProblemFactory()).getProblem(problemName, problemParams);
+    this.problem = (new ProblemFactory()).getProblem(problemName, problemParams);
 
     // Default experiment.settings
     populationSize_ = 100;
     maxEvaluations = 25000;
-    mutationProbability = 1.0 / problem_.getNumberOfVariables();
+    mutationProbability = 1.0 / this.problem.getNumberOfVariables();
     crossoverProbability = 0.9;
     mutationDistributionIndex = 20.0;
     crossoverDistributionIndex = 20.0;
@@ -95,7 +95,7 @@ public class NSGAIISettings extends Settings {
     selection = new BinaryTournament2.Builder()
       .build();
 
-    algorithm = new NSGAII.Builder(problem_, evaluator)
+    algorithm = new NSGAII.Builder(problem, evaluator)
       .crossover(crossover)
       .mutation(mutation)
       .selection(selection)

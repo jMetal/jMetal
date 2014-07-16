@@ -52,12 +52,12 @@ public class NSGAIIIntegerSettings extends Settings {
 
     //Object[] problemParams = {"Integer"};
     //problem = (new ProblemFactory()).getProblem(problemName, problemParams);
-    problem_ = new NMMin("Integer") ;
+    this.problem = new NMMin("Integer") ;
 
     // Default experiment.settings
     populationSize_ = 100;
     maxEvaluations = 250000;
-    mutationProbability = 1.0 / problem_.getNumberOfVariables();
+    mutationProbability = 1.0 / this.problem.getNumberOfVariables();
     crossoverProbability = 0.9;
     mutationDistributionIndex = 20.0;
     crossoverDistributionIndex = 20.0;
@@ -84,7 +84,7 @@ public class NSGAIIIntegerSettings extends Settings {
     selection = new BinaryTournament2.Builder()
       .build();
 
-    algorithm = new NSGAII.Builder(problem_, evaluator)
+    algorithm = new NSGAII.Builder(problem, evaluator)
       .crossover(crossover)
       .mutation(mutation)
       .selection(selection)

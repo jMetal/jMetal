@@ -59,7 +59,7 @@ public class MOCellSettings extends Settings {
 
     Object[] problemParams = {"Real"};
     try {
-      problem_ = (new ProblemFactory()).getProblem(this.problemName, problemParams);
+      problem = (new ProblemFactory()).getProblem(this.problemName, problemParams);
     } catch (JMetalException e) {
       Configuration.logger.log(Level.SEVERE, "Unable to get problem", e);
     }
@@ -69,7 +69,7 @@ public class MOCellSettings extends Settings {
     maxEvaluations = 25000;
     archiveSize = 100;
     numberOfFeedbackSolutionsFromArchive = 20;
-    mutationProbability = 1.0 / problem_.getNumberOfVariables();
+    mutationProbability = 1.0 / problem.getNumberOfVariables();
     crossoverProbability = 0.9;
     crossoverDistributionIndex = 20.0;
     mutationDistributionIndex = 20.0;
@@ -111,7 +111,7 @@ public class MOCellSettings extends Settings {
     //algorithm = new aMOCell3(problem) ;
     //algorithm = new aMOCell4(problem) ;
 
-    algorithm = new MOCellTemplate.Builder(problem_)
+    algorithm = new MOCellTemplate.Builder(problem)
       .populationSize(populationSize)
       .archiveSize(archiveSize)
       .maxEvaluations(maxEvaluations)

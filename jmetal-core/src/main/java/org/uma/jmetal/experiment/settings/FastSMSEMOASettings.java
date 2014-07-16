@@ -56,11 +56,11 @@ public class FastSMSEMOASettings extends Settings {
     super(problem);
 
     Object[] problemParams = {"Real"};
-    problem_ = (new ProblemFactory()).getProblem(problemName, problemParams);
+    this.problem = (new ProblemFactory()).getProblem(problemName, problemParams);
 
     populationSize_ = 100;
     maxEvaluations_ = 25000;
-    mutationProbability_ = 1.0 / problem_.getNumberOfVariables();
+    mutationProbability_ = 1.0 / this.problem.getNumberOfVariables();
     crossoverProbability_ = 0.9;
     crossoverDistributionIndex_ = 20.0;
     mutationDistributionIndex_ = 20.0;
@@ -82,7 +82,7 @@ public class FastSMSEMOASettings extends Settings {
 
     // Creating the algorithm. 
     algorithm = new FastSMSEMOA();
-    algorithm.setProblem(problem_);
+    algorithm.setProblem(problem);
 
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", populationSize_);
