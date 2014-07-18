@@ -169,8 +169,8 @@ public class ExperimentData {
 			return this ;
 		}
 		
-		public Builder independentRuns(String independentRuns) {
-			this.independentRuns = Integer.parseInt(independentRuns) ;
+		public Builder independentRuns(int independentRuns) {
+			this.independentRuns = independentRuns ;
 
 			return this ;
 		}
