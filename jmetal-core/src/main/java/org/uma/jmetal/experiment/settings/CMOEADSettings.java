@@ -38,16 +38,16 @@ import java.util.logging.Level;
  * Settings class of algorithm cMOEA/D
  */
 public class CMOEADSettings extends Settings {
-  public String dataDirectory_;
-  private double cr_;
-  private double f_;
-  private int populationSize_;
-  private int maxEvaluations_;
-  private double mutationProbability_;
-  private double mutationDistributionIndex_;
-  private int t_;
-  private double delta_;
-  private int nr_;
+  public String dataDirectory;
+  private double cr;
+  private double f;
+  private int populationSize;
+  private int maxEvaluations;
+  private double mutationProbability;
+  private double mutationDistributionIndex;
+  private int t;
+  private double delta;
+  private int nr;
 
   /**
    * Constructor
@@ -63,17 +63,17 @@ public class CMOEADSettings extends Settings {
     }
 
     // Default experiment.settings
-    cr_ = 1.0;
-    f_ = 0.5;
-    populationSize_ = 300;
-    maxEvaluations_ = 150000;
+    cr = 1.0;
+    f = 0.5;
+    populationSize = 300;
+    maxEvaluations = 150000;
 
-    t_ = 20;
-    delta_ = 0.9;
-    nr_ = 2;
+    t = 20;
+    delta = 0.9;
+    nr = 2;
 
-    mutationProbability_ = 1.0 / this.problem.getNumberOfVariables();
-    mutationDistributionIndex_ = 20;
+    mutationProbability = 1.0 / this.problem.getNumberOfVariables();
+    mutationDistributionIndex = 20;
 
     // Directory with the files containing the weight vectors used in 
     // Q. Zhang,  W. Liu,  and H Li, The Performance of a New Version of MOEA/D 
@@ -81,7 +81,7 @@ public class CMOEADSettings extends Settings {
     // of CS & EE, University of Essex, 02/2009.
     // http://dces.essex.ac.uk/staff/qzhang/MOEAcompetition/CEC09final/code/ZhangMOEADcode/moead0305.rar
 
-    dataDirectory_ = "MOEAD_Weights";
+    dataDirectory = "MOEAD_Weights";
   }
 
   /**
@@ -99,23 +99,23 @@ public class CMOEADSettings extends Settings {
     algorithm.setProblem(problem);
 
     // Algorithm parameters
-    algorithm.setInputParameter("populationSize", populationSize_);
-    algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
-    algorithm.setInputParameter("dataDirectory", dataDirectory_);
-    algorithm.setInputParameter("T", t_);
-    algorithm.setInputParameter("delta", delta_);
-    algorithm.setInputParameter("nr", nr_);
+    algorithm.setInputParameter("populationSize", populationSize);
+    algorithm.setInputParameter("maxEvaluations", maxEvaluations);
+    algorithm.setInputParameter("dataDirectory", dataDirectory);
+    algorithm.setInputParameter("T", t);
+    algorithm.setInputParameter("delta", delta);
+    algorithm.setInputParameter("nr", nr);
 
     // Crossover operator 
     HashMap<String, Object> parameters = new HashMap<String, Object>();
-    parameters.put("CR", cr_);
-    parameters.put("F", f_);
+    parameters.put("CR", cr);
+    parameters.put("F", f);
     crossover = CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", parameters);
 
     // Mutation operator
     parameters = new HashMap<String, Object>();
-    parameters.put("probability", mutationProbability_);
-    parameters.put("distributionIndex", mutationDistributionIndex_);
+    parameters.put("probability", mutationProbability);
+    parameters.put("distributionIndex", mutationDistributionIndex);
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);
 
     algorithm.addOperator("crossover", crossover);
@@ -131,22 +131,22 @@ public class CMOEADSettings extends Settings {
    */
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {
-    populationSize_ = Integer
-      .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize_)));
-    maxEvaluations_ = Integer
-      .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations_)));
-    dataDirectory_ = configuration.getProperty("dataDirectory", dataDirectory_);
-    delta_ = Double.parseDouble(configuration.getProperty("delta", String.valueOf(delta_)));
-    t_ = Integer.parseInt(configuration.getProperty("T", String.valueOf(t_)));
-    nr_ = Integer.parseInt(configuration.getProperty("nr", String.valueOf(nr_)));
+    populationSize = Integer
+      .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize)));
+    maxEvaluations = Integer
+      .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations)));
+    dataDirectory = configuration.getProperty("dataDirectory", dataDirectory);
+    delta = Double.parseDouble(configuration.getProperty("delta", String.valueOf(delta)));
+    t = Integer.parseInt(configuration.getProperty("T", String.valueOf(t)));
+    nr = Integer.parseInt(configuration.getProperty("nr", String.valueOf(nr)));
 
-    cr_ = Double.parseDouble(configuration.getProperty("CR", String.valueOf(cr_)));
-    f_ = Double.parseDouble(configuration.getProperty("F", String.valueOf(f_)));
+    cr = Double.parseDouble(configuration.getProperty("CR", String.valueOf(cr)));
+    f = Double.parseDouble(configuration.getProperty("F", String.valueOf(f)));
 
-    mutationProbability_ = Double.parseDouble(
-      configuration.getProperty("mutationProbability", String.valueOf(mutationProbability_)));
-    mutationDistributionIndex_ = Double.parseDouble(configuration
-      .getProperty("mutationDistributionIndex", String.valueOf(mutationDistributionIndex_)));
+    mutationProbability = Double.parseDouble(
+      configuration.getProperty("mutationProbability", String.valueOf(mutationProbability)));
+    mutationDistributionIndex = Double.parseDouble(configuration
+      .getProperty("mutationDistributionIndex", String.valueOf(mutationDistributionIndex)));
 
     return configure();
   }

@@ -22,32 +22,26 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DifferentialEvolutionOffspring extends Offspring {
-  private double cr_ ;
-  private double f_  ;
+  private double cr;
+  private double f;
 
-  private Operator crossover_ ;
-  private Operator selection_ ;
-  private Operator mutation_;
+  private Operator crossover;
+  private Operator selection;
 
-  /**
-   * Constructor
-   *
-   * @param CR
-   * @param F
-   */
+  /** Constructor */
   public DifferentialEvolutionOffspring(double CR, double F)  {
-    cr_ = CR ;
-    f_  = F  ;
+    cr = CR ;
+    f = F  ;
     try {
       // Crossover operator
       HashMap<String, Object> crossoverParameters = new HashMap<String, Object>() ;
-      crossoverParameters.put("CR", cr_) ;
-      crossoverParameters.put("F", f_) ;      
-      crossover_ = new DifferentialEvolutionCrossover(crossoverParameters) ;
+      crossoverParameters.put("CR", cr) ;
+      crossoverParameters.put("F", f) ;
+      crossover = new DifferentialEvolutionCrossover(crossoverParameters) ;
 
       // Selecion operator
       HashMap<String, Object> selectionParameters = null; // FIXME: why we are passing null?
-      selection_ = SelectionFactory
+      selection = SelectionFactory
         .getSelectionOperator("DifferentialEvolutionSelection", selectionParameters);
     } catch (JMetalException ex) {
       Logger.getLogger(DifferentialEvolutionOffspring.class.getName()).log(Level.SEVERE, null, ex);
@@ -72,7 +66,7 @@ public class DifferentialEvolutionOffspring extends Offspring {
       parents[1] = solutionSet.get(r2);
       parents[2] = solutionSet.get(index);
 
-      offSpring = (Solution) crossover_.execute(new Object[] {solutionSet.get(index), parents});
+      offSpring = (Solution) crossover.execute(new Object[] {solutionSet.get(index), parents});
     } catch (JMetalException ex) {
       Logger.getLogger(DifferentialEvolutionOffspring.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -93,20 +87,20 @@ public class DifferentialEvolutionOffspring extends Offspring {
       parents[1] = parentSolutions[1];
       parents[2] = currentSolution;
 
-      offspring = (Solution) crossover_.execute(new Object[] {currentSolution, parents});
+      offspring = (Solution) crossover.execute(new Object[] {currentSolution, parents});
     } catch (JMetalException ex) {
       Logger.getLogger(DifferentialEvolutionOffspring.class.getName()).log(Level.SEVERE, null, ex);
     }
 
     //Create a new solutiontype, using DE
     return offspring;
-  } // getOffpring
+  }
 
   public String configuration() {
     String result = "-----\n" ;
     result += "Operator: " + id_ + "\n" ;
-    result += "CR: " + cr_ + "\n" ;
-    result += "F: " + f_ ;
+    result += "CR: " + cr + "\n" ;
+    result += "F: " + f;
 
     return result;
   }

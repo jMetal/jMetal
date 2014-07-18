@@ -39,19 +39,13 @@ import java.util.Properties;
  * Settings class of algorithm GDE3
  */
 public class GDE3Settings extends Settings {
-  private double cr_;
-  private double f_;
-  private int populationSize_;
-  private int maxIterations_;
-  private SolutionSetEvaluator evaluator_ ;
-  private Crossover crossover_ ;
-  private Selection selection_ ;
+  private double cr;
+  private double f;
+  private int populationSize;
+  private int maxIterations;
+  private SolutionSetEvaluator evaluator;
 
-  /**
-   * Constructor
-   *
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Constructor */
   public GDE3Settings(String problemName) throws JMetalException {
     super(problemName);
 
@@ -59,57 +53,49 @@ public class GDE3Settings extends Settings {
     problem = (new ProblemFactory()).getProblem(this.problemName, problemParams);
 
     // Default experiment.settings
-    cr_ = 0.5;
-    f_ = 0.5;
-    populationSize_ = 100;
-    maxIterations_ = 250;
+    cr = 0.5;
+    f = 0.5;
+    populationSize = 100;
+    maxIterations = 250;
 
-    evaluator_ = new SequentialSolutionSetEvaluator() ;
+    evaluator = new SequentialSolutionSetEvaluator() ;
   }
 
-  /**
-   * Configure the algorithm with the specified parameter experiment.settings
-   *
-   * @return an algorithm object
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** configure() method */
+  @Override
   public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
     Selection selection;
     Crossover crossover;
     crossover = new DifferentialEvolutionCrossover.Builder()
-      .cr(cr_)
-      .f(f_)
+      .cr(cr)
+      .f(f)
       .build() ;
 
     selection = new DifferentialEvolutionSelection.Builder()
       .build();
 
-    algorithm = new GDE3.Builder(problem, evaluator_)
+    algorithm = new GDE3.Builder(problem, evaluator)
       .crossover(crossover)
       .selection(selection)
-      .maxIterations(maxIterations_)
-      .populationSize(populationSize_)
+      .maxIterations(maxIterations)
+      .populationSize(populationSize)
       .build() ;
 
 
     return algorithm ;
   }
 
-  /**
-   * Configure GDE3 with user-defined parameter experiment.settings
-   *
-   * @return A GDE3 algorithm object
-   */
+  /** configure() method using a properties file */
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {
-    populationSize_ = Integer
-      .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize_)));
-    maxIterations_ =
-      Integer.parseInt(configuration.getProperty("maxIterations", String.valueOf(maxIterations_)));
+    populationSize = Integer
+      .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize)));
+    maxIterations =
+      Integer.parseInt(configuration.getProperty("maxIterations", String.valueOf(maxIterations)));
 
-    cr_ = Double.parseDouble(configuration.getProperty("CR", String.valueOf(cr_)));
-    f_ = Double.parseDouble(configuration.getProperty("F", String.valueOf(f_)));
+    cr = Double.parseDouble(configuration.getProperty("CR", String.valueOf(cr)));
+    f = Double.parseDouble(configuration.getProperty("F", String.valueOf(f)));
 
     return configure();
   }

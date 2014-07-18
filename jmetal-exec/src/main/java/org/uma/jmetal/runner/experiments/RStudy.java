@@ -18,7 +18,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.experiment.studies;
+package org.uma.jmetal.runner.experiments;
 
 import org.uma.jmetal.experiment.Experiment;
 import org.uma.jmetal.util.Configuration;

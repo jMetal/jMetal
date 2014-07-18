@@ -95,15 +95,12 @@ public class PSO extends Algorithm {
    * Stores a operator for non uniform mutations
    */
   private Operator polynomialMutation_;
-  private SolutionSet trueFront_;
 
   private double deltaMax_[];
   private double deltaMin_[];
-  /**
-   * Constructor
-   *
-   * @param problem Problem to solve
-   */
+
+  /** Constructor */
+
   public PSO() {
     super();
 
@@ -126,7 +123,7 @@ public class PSO extends Algorithm {
     findBestSolution_ = new BestSolutionSelection(selectionParameters);
 
     evaluations_ = 0;
-  } // Constructor
+  }
 
   /**
    * Initialize all parameter of the algorithm
@@ -154,14 +151,14 @@ public class PSO extends Algorithm {
       deltaMax_[i] = (problem_.getUpperLimit(i) -
         problem_.getLowerLimit(i)) / 2.0;
       deltaMin_[i] = -deltaMax_[i];
-    } // for
-  } // initialization
+    }
+  }
 
   // Adaptive inertia 
   private double inertiaWeight(int iter, int miter, double wmax, double wmin) {
     //return wmax; // - (((wmax-wmin)*(double)iter)/(double)miter);
     return wmax - (((wmax - wmin) * (double) iter) / (double) miter);
-  } // inertiaWeight
+  }
 
   // constriction coefficient (M. Clerc)
   private double constrictionCoefficient(double c1, double c2) {
@@ -172,7 +169,7 @@ public class PSO extends Algorithm {
     } else {
       return 2 / Math.abs((2 - rho - Math.sqrt(Math.pow(rho, 2.0) - 4.0 * rho)));
     }
-  } // constrictionCoefficient
+  }
 
 
   // velocity bounds
@@ -221,7 +218,7 @@ public class PSO extends Algorithm {
       XReal particle = new XReal(particles_.get(i));
       XReal bestParticle = new XReal(localBest_[i]);
 
-      //int bestIndividual = (Integer)findBestSolution_.execute(particles_) ;
+      //int bestIndividual = (Integer)findBestSolution.execute(particles_) ;
 
       C1Max_ = 2.5;
       C1Min_ = 1.5;
@@ -269,7 +266,7 @@ public class PSO extends Algorithm {
           C2 * r2 * (bestGlobal.getValue(var) - particle.getValue(var));
       }
     }
-  } // computeSpeed
+  }
 
   /**
    * Update the position of each particle
@@ -308,7 +305,7 @@ public class PSO extends Algorithm {
         polynomialMutation_.execute(particles_.get(i));
       }
     }
-  } // mopsoMutation
+  }
 
   /**
    * Runs of the SMPSO algorithm.
@@ -371,7 +368,7 @@ public class PSO extends Algorithm {
 
       //Actualize the memory of this particle
       for (int i = 0; i < particles_.size(); i++) {
-        //int flag = comparator_.compare(particles_.get(i), localBest_[i]);
+        //int flag = comparator.compare(particles_.get(i), localBest_[i]);
         //if (flag < 0) { // the new particle is best_ than the older remember        
         if ((particles_.get(i).getObjective(0) < localBest_[i].getObjective(0))) {
           Solution particle = new Solution(particles_.get(i));
@@ -392,5 +389,5 @@ public class PSO extends Algorithm {
     resultPopulation.add(particles_.get((Integer) findBestSolution_.execute(particles_)));
 
     return resultPopulation;
-  } // execute
-} // PSO
+  }
+}

@@ -34,11 +34,11 @@ import java.util.Comparator;
 public class PAES extends Algorithm {
   private static final long serialVersionUID = 264140016408197977L;
 
-  private int archiveSize_;
-  private int maxEvaluations_;
-  private int biSections_ ;
+  private int archiveSize;
+  private int maxEvaluations;
+  private int biSections;
 
-  private Operator mutationOperator_;
+  private Operator mutationOperator;
 
   @Deprecated
   public PAES() {
@@ -49,51 +49,36 @@ public class PAES extends Algorithm {
     super();
 
     problem_ = builder.problem_ ;
-    archiveSize_  = builder.archiveSize_ ;
-    maxEvaluations_ = builder.maxEvaluations_ ;
-    biSections_ = builder.biSections_ ;
-    mutationOperator_ = builder.mutationOperator_ ;
+    archiveSize = builder.archiveSize_ ;
+    maxEvaluations = builder.maxEvaluations_ ;
+    biSections = builder.biSections_ ;
+    mutationOperator = builder.mutationOperator_ ;
   }
 
   public int getArchiveSize() {
-    return archiveSize_ ;
+    return archiveSize;
   }
 
   public int getMaxEvaluations() {
-    return maxEvaluations_ ;
+    return maxEvaluations;
   }
 
   public int getBiSections() {
-    return biSections_ ;
+    return biSections;
   }
 
   public Operator getMutationOperator() {
-    return mutationOperator_ ;
+    return mutationOperator;
   }
 
-  /**
-   * Runs of the Paes algorithm.
-   *
-   * @return a <code>SolutionSet</code> that is a set of non dominated solutions
-   * as a result of the algorithm execution
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** execute() method */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     int evaluations;
     AdaptiveGridArchive archive;
     Comparator<Solution> dominance;
 
-    //Read the params
-    //biSections_ = (Integer) this.getInputParameter("biSections");
-    //archiveSize = (Integer) this.getInputParameter("archiveSize");
-    //maxEvaluations = (Integer) this.getInputParameter("maxEvaluations");
-
-    //Read the operator
-    //mutationOperator = this.operators_.get("mutation");
-
-    //Initialize the variables                
     evaluations = 0;
-    archive = new AdaptiveGridArchive(archiveSize_, biSections_, problem_.getNumberOfObjectives());
+    archive = new AdaptiveGridArchive(archiveSize, biSections, problem_.getNumberOfObjectives());
     dominance = new DominanceComparator();
 
     //-> Create the initial solutiontype and evaluate it and his constraints
@@ -107,16 +92,13 @@ public class PAES extends Algorithm {
 
     //Iterations....
     do {
-      // Create the mutate one
       Solution mutatedIndividual = new Solution(solution);
-      mutationOperator_.execute(mutatedIndividual);
+      mutationOperator.execute(mutatedIndividual);
 
       problem_.evaluate(mutatedIndividual);
       problem_.evaluateConstraints(mutatedIndividual);
       evaluations++;
-      //<-
 
-      // Check dominance
       int flag = dominance.compare(solution, mutatedIndividual);
 
       if (flag == 1) { //If mutate solutiontype dominate
@@ -127,7 +109,7 @@ public class PAES extends Algorithm {
           solution = test(solution, mutatedIndividual, archive);
         }
       }
-    } while (evaluations < maxEvaluations_);
+    } while (evaluations < maxEvaluations);
 
     return archive;
   }
