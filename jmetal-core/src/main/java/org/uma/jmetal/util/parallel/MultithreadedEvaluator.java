@@ -36,10 +36,10 @@ import java.util.logging.Level;
  *         Class for evaluating solutions in parallel using threads
  */
 public class MultithreadedEvaluator implements SynchronousParallelTaskExecutor {
-  private Problem problem_;
-  private Collection<EvaluationTask> taskList_;
-  private int numberOfThreads_ ;
-  private ExecutorService executor_;
+  private Problem problem;
+  private Collection<EvaluationTask> taskList;
+  private int numberOfThreads;
+  private ExecutorService executor;
 
   /**
    * Constructor
@@ -48,16 +48,16 @@ public class MultithreadedEvaluator implements SynchronousParallelTaskExecutor {
    *                number of available threads in the system.
    */
   public MultithreadedEvaluator(int threads) {
-    numberOfThreads_ = threads;
+    numberOfThreads = threads;
     if (threads == 0) {
-      numberOfThreads_ = Runtime.getRuntime().availableProcessors();
+      numberOfThreads = Runtime.getRuntime().availableProcessors();
     } else if (threads < 0) {
       Configuration.logger.severe("MultithreadedEvaluator: the number of threads" +
         " cannot be negative number " + threads);
     } else {
-      numberOfThreads_ = threads;
+      numberOfThreads = threads;
     }
-    Configuration.logger.info("THREADS: " + numberOfThreads_);
+    Configuration.logger.info("THREADS: " + numberOfThreads);
   }
 
   /**
@@ -66,11 +66,11 @@ public class MultithreadedEvaluator implements SynchronousParallelTaskExecutor {
    * @param problem problem to solve
    */
   public void start(Object problem) {
-    problem_ = (Problem) problem;
+    this.problem = (Problem) problem;
 
-    executor_ = Executors.newFixedThreadPool(numberOfThreads_);
-    Configuration.logger.info("Cores: " + numberOfThreads_);
-    taskList_ = null;
+    executor = Executors.newFixedThreadPool(numberOfThreads);
+    Configuration.logger.info("Cores: " + numberOfThreads);
+    taskList = null;
   }
 
   /**
@@ -78,11 +78,11 @@ public class MultithreadedEvaluator implements SynchronousParallelTaskExecutor {
    */
   public void addTask(Object[] taskParameters) {
     Solution solution = (Solution) taskParameters[0];
-    if (taskList_ == null) {
-      taskList_ = new ArrayList<EvaluationTask>();
+    if (taskList == null) {
+      taskList = new ArrayList<EvaluationTask>();
     }
 
-    taskList_.add(new EvaluationTask(problem_, solution));
+    taskList.add(new EvaluationTask(problem, solution));
   }
 
   /**
@@ -93,7 +93,7 @@ public class MultithreadedEvaluator implements SynchronousParallelTaskExecutor {
   public Object parallelExecution() {
     List<Future<Object>> future = null;
     try {
-      future = executor_.invokeAll(taskList_);
+      future = executor.invokeAll(taskList);
     } catch (InterruptedException e1) {
       Configuration.logger.log(Level.SEVERE, "Error", e1);
     }
@@ -110,7 +110,7 @@ public class MultithreadedEvaluator implements SynchronousParallelTaskExecutor {
         Configuration.logger.log(Level.SEVERE, "Error", e);
       }
     }
-    taskList_ = null;
+    taskList = null;
     return solutionList;
   }
 
@@ -118,7 +118,7 @@ public class MultithreadedEvaluator implements SynchronousParallelTaskExecutor {
    * Shutdown the executor
    */
   public void stop() {
-    executor_.shutdown();
+    executor.shutdown();
   }
 
   /**
@@ -127,8 +127,8 @@ public class MultithreadedEvaluator implements SynchronousParallelTaskExecutor {
    */
 
   private class EvaluationTask implements Callable<Object> {
-    private Problem problem_;
-    private Solution solution_;
+    private Problem problem;
+    private Solution solution;
 
     /**
      * Constructor
@@ -137,15 +137,15 @@ public class MultithreadedEvaluator implements SynchronousParallelTaskExecutor {
      * @param solution Solution to evaluate
      */
     public EvaluationTask(Problem problem, Solution solution) {
-      problem_ = problem;
-      solution_ = solution;
+      this.problem = problem;
+      this.solution = solution;
     }
 
     public Solution call() throws Exception {
-      problem_.evaluate(solution_);
-      problem_.evaluateConstraints(solution_);
+      problem.evaluate(solution);
+      problem.evaluateConstraints(solution);
 
-      return solution_;
+      return solution;
     }
   }
 }

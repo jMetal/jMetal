@@ -9,20 +9,20 @@ import java.io.FileNotFoundException;
 public abstract class FileOutputContext {
   protected static final String DEFAULT_SEPARATOR = " " ;
 
-  protected String fileName_ ;
-  protected String separator_ ;
+  protected String fileName;
+  protected String separator;
 
   public FileOutputContext() {
-    separator_ = DEFAULT_SEPARATOR;
+    separator = DEFAULT_SEPARATOR;
   }
 
   public abstract BufferedWriter getFileWriter() throws FileNotFoundException;
 
   public String getSeparator() {
-    return separator_;
+    return separator;
   }
 
   public void setSeparator(String separator) {
-    separator_ = separator;
+    this.separator = separator;
   }
 }

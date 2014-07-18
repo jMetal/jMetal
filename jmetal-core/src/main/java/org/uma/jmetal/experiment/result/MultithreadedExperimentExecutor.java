@@ -1,4 +1,4 @@
-//  MultithreadedAlgorithmExecutor.java
+//  MultithreadedExperimentExecutor.java
 //
 //  Authors:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -19,14 +19,15 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-package org.uma.jmetal.util.parallel;
+package org.uma.jmetal.experiment.result;
 
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.experiment.Experiment;
+import org.uma.jmetal.experiment.ExperimentData;
 import org.uma.jmetal.experiment.Settings;
 import org.uma.jmetal.experiment.SettingsFactory;
 import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.parallel.SynchronousParallelTaskExecutor;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -36,50 +37,52 @@ import java.util.concurrent.*;
 import java.util.logging.Level;
 
 /**
- * Created by Antonio J. Nebro on 09/02/14.
+ * Created by Antonio J. Nebro on 18/07/14.
  * Class for executing independent runs of algorithms
  */
-public class MultithreadedAlgorithmExecutor implements SynchronousParallelTaskExecutor {
-  private Collection<EvaluationTask> taskList_;
-  private Experiment experiment_;
-  private int numberOfThreads_ ;
-  private ExecutorService executor_;
+public class MultithreadedExperimentExecutor implements SynchronousParallelTaskExecutor {
+  private Collection<EvaluationTask> taskList;
+  private ExperimentExecution experimentExecution;
+  private int numberOfThreads;
+  private ExecutorService executor;
 
-  public MultithreadedAlgorithmExecutor(int threads) {
-    numberOfThreads_ = threads;
+  /** Constructor */
+  public MultithreadedExperimentExecutor(int threads) {
+    numberOfThreads = threads;
     if (threads == 0) {
-      numberOfThreads_ = Runtime.getRuntime().availableProcessors();
+      numberOfThreads = Runtime.getRuntime().availableProcessors();
     } else if (threads < 0) {
-      Configuration.logger.severe("MultithreadedAlgorithmRunner: the number of threads" +
+      Configuration.logger.severe("MultithreadedExperimentExecutor: the number of threads" +
         " cannot be negative number " + threads);
     } else {
-      numberOfThreads_ = threads;
+      numberOfThreads = threads;
     }
-    Configuration.logger.info("THREADS: " + numberOfThreads_);
+    Configuration.logger.info("THREADS: " + numberOfThreads);
   }
 
-  public void start(Object experiment) {
-    experiment_ = (Experiment) experiment;
-    executor_ = Executors.newFixedThreadPool(numberOfThreads_);
-    Configuration.logger.info("Cores: " + numberOfThreads_);
-    taskList_ = null;
+  public void start(Object object) {
+    experimentExecution = (ExperimentExecution)object ;
+    executor = Executors.newFixedThreadPool(numberOfThreads);
+    Configuration.logger.info("Cores: " + numberOfThreads);
+    taskList = null;
   }
 
   public void addTask(Object[] taskParameters) {
-    if (taskList_ == null) {
-      taskList_ = new ArrayList<EvaluationTask>();
+    if (taskList == null) {
+      taskList = new ArrayList<EvaluationTask>();
     }
 
     String algorithm = (String) taskParameters[0];
     String problem = (String) taskParameters[1];
     Integer id = (Integer) taskParameters[2];
-    taskList_.add(new EvaluationTask(algorithm, problem, id));
+    ExperimentData experimentData = (ExperimentData) taskParameters[3] ;
+    taskList.add(new EvaluationTask(algorithm, problem, id, experimentData));
   }
 
   public Object parallelExecution() {
     List<Future<Object>> future = null;
     try {
-      future = executor_.invokeAll(taskList_);
+      future = executor.invokeAll(taskList);
     } catch (InterruptedException e1) {
       Configuration.logger.log(Level.SEVERE, "Error", e1);
     }
@@ -96,54 +99,52 @@ public class MultithreadedAlgorithmExecutor implements SynchronousParallelTaskEx
         Configuration.logger.log(Level.SEVERE, "Error", e);
       }
     }
-    taskList_ = null;
+    taskList = null;
     return null;
   }
 
   public void stop() {
-    executor_.shutdown();
+    executor.shutdown();
   }
 
-
+  /** Class defining the tasks to be computed in parallel */
   private class EvaluationTask implements Callable<Object> {
-    private String problemName_;
-    private String algorithmName_;
-    private int id_;
+    private String problemName;
+    private String algorithmName;
+    private int id;
+    private ExperimentData experimentData ;
 
-    /**
-     * Constructor
-     *
-     * @param problem Problem to solve
-     */
-    public EvaluationTask(String algorithm, String problem, int id) {
-      problemName_ = problem;
-      algorithmName_ = algorithm;
-      id_ = id;
+    /** Constructor */
+    public EvaluationTask(String algorithm, String problem, int id, ExperimentData experimentData) {
+      problemName = problem;
+      algorithmName = algorithm;
+      this.id = id;
+      this.experimentData = experimentData ;
     }
 
     public Integer call() throws Exception {
       Algorithm algorithm;
-      Object[] settingsParams = {problemName_};
+      Object[] settingsParams = {problemName};
       Settings settings;
 
-      if (experiment_.useConfigurationFilesForAlgorithms()) {
+      if (experimentExecution.useAlgorithmConfigurationFiles()) {
         Properties configuration = new Properties();
         InputStreamReader isr =
-          new InputStreamReader(new FileInputStream(algorithmName_ + ".conf"));
+          new InputStreamReader(new FileInputStream(algorithmName + ".conf"));
         configuration.load(isr);
 
-        String algorithmName = configuration.getProperty("algorithm", algorithmName_);
+        String algorithmName = configuration.getProperty("algorithm", this.algorithmName);
 
         settings = (new SettingsFactory()).getSettingsObject(algorithmName, settingsParams);
         algorithm = settings.configure(configuration);
         isr.close();
       } else {
-        settings = (new SettingsFactory()).getSettingsObject(algorithmName_, settingsParams);
+        settings = (new SettingsFactory()).getSettingsObject(algorithmName, settingsParams);
         algorithm = settings.configure();
       }
 
       Configuration.logger.info(
-        " Running algorithm: " + algorithmName_ + ", problem: " + problemName_ + ", run: " + id_);
+        " Running algorithm: " + algorithmName + ", problem: " + problemName + ", run: " + id);
 
       SolutionSet resultFront = algorithm.execute();
 
@@ -151,7 +152,7 @@ public class MultithreadedAlgorithmExecutor implements SynchronousParallelTaskEx
       String directory;
 
       directory =
-        experiment_.getExperimentBaseDirectory() + "/data/" + algorithmName_ + "/" + problemName_;
+        experimentData.getExperimentBaseDirectory() + "/data/" + algorithmName + "/" + problemName;
 
       experimentDirectory = new File(directory);
       if (!experimentDirectory.exists()) {
@@ -160,12 +161,11 @@ public class MultithreadedAlgorithmExecutor implements SynchronousParallelTaskEx
       }
 
       resultFront.printObjectivesToFile(
-        directory + "/" + experiment_.getOutputParetoFrontFileName() + "." + id_);
+        directory + "/" + experimentExecution.getParetoFrontFileName() + "." + id);
       resultFront
-        .printVariablesToFile(directory + "/" + experiment_.getOutputParetoSetFileName() + "." + id_);
+        .printVariablesToFile(directory + "/" + experimentExecution.getParetoSetFileName() + "." + id);
 
-      return id_;
+      return id;
     }
   }
-
 }

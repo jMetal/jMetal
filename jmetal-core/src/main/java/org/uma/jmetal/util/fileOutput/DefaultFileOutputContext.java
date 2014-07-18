@@ -10,12 +10,12 @@ import java.io.OutputStreamWriter;
  */
 public class DefaultFileOutputContext extends FileOutputContext {
   public DefaultFileOutputContext(String fileName) {
-    fileName_ = fileName ;
+    this.fileName = fileName ;
   }
 
   @Override
   public BufferedWriter getFileWriter() throws FileNotFoundException {
-    FileOutputStream outputStream = new FileOutputStream(fileName_);
+    FileOutputStream outputStream = new FileOutputStream(fileName);
     OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream);
     BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter) ;
 

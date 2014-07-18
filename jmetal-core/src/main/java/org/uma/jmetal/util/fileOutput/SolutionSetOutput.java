@@ -32,52 +32,52 @@ import java.io.IOException;
 public class SolutionSetOutput {
 
   public static class Printer {
-    FileOutputContext varFileContext_;
-    FileOutputContext funFileContext_;
-    private String varFileName_ = "VAR";
-    private String funFileName_ = "FUN";
-    String separator_ = "\t";
-    SolutionSet solutionSet_;
-    boolean selectFeasibleSolutions_;
+    FileOutputContext varFileContext;
+    FileOutputContext funFileContext;
+    private String varFileName = "VAR";
+    private String funFileName = "FUN";
+    String separator = "\t";
+    SolutionSet solutionSet;
+    boolean selectFeasibleSolutions;
 
     public Printer(SolutionSet solutionSet) throws FileNotFoundException {
-      varFileContext_ = new DefaultFileOutputContext(varFileName_);
-      funFileContext_ = new DefaultFileOutputContext(funFileName_);
-      varFileContext_.separator_ = separator_;
-      funFileContext_.separator_ = separator_;
-      solutionSet_ = solutionSet;
-      selectFeasibleSolutions_ = false;
+      varFileContext = new DefaultFileOutputContext(varFileName);
+      funFileContext = new DefaultFileOutputContext(funFileName);
+      varFileContext.separator = separator;
+      funFileContext.separator = separator;
+      this.solutionSet = solutionSet;
+      selectFeasibleSolutions = false;
     }
 
     public Printer varFileOutputContext(FileOutputContext fileContext) {
-      varFileContext_ = fileContext;
+      varFileContext = fileContext;
 
       return this;
     }
 
     public Printer funFileOutputContext(FileOutputContext fileContext) {
-      funFileContext_ = fileContext;
+      funFileContext = fileContext;
 
       return this;
     }
 
     public Printer selectFeasibleSolutions() {
-      solutionSet_ = solutionSet_.getFeasibleSolutions() ;
+      solutionSet = solutionSet.getFeasibleSolutions() ;
 
       return this;
     }
 
     public Printer separator(String separator) {
-      separator_ = separator;
-      varFileContext_.separator_ = separator_;
-      funFileContext_.separator_ = separator_;
+      this.separator = separator;
+      varFileContext.separator = this.separator;
+      funFileContext.separator = this.separator;
 
       return this;
     }
 
     public void print() throws IOException {
-      printObjectivesToFile(funFileContext_, solutionSet_);
-      printVariablesToFile(varFileContext_, solutionSet_);
+      printObjectivesToFile(funFileContext, solutionSet);
+      printVariablesToFile(varFileContext, solutionSet);
     }
   }
 
