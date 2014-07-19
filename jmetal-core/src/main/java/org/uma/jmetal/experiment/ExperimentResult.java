@@ -21,14 +21,10 @@
 
 package org.uma.jmetal.experiment;
 
-import org.uma.jmetal.util.JMetalException;
-
-import java.io.IOException;
-
 /**
  * Created by Antonio J. Nebro on 18/07/14.
  * Interface for all the results of an experiment
  */
 public interface ExperimentResult {
-  public void generate(ExperimentData experimentData) ;
+  public void generate() ;
 }

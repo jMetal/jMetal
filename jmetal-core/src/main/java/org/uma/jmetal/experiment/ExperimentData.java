@@ -45,7 +45,11 @@ public class ExperimentData {
 	/** Constructor */
 	private ExperimentData(Builder builder) {
 		experimentName = builder.experimentName ;
-	}
+    this.experimentBaseDirectory = builder.experimentBaseDirectory ;
+    this.algorithmNameList = builder.algorithmNameList ;
+    this.problemList = builder.problemList ;
+    this.independentRuns = builder.independentRuns ;
+  }
 
 	/* Getters */
 	public String getExperimentName() {
@@ -140,7 +144,7 @@ public class ExperimentData {
 		}
 
 		public Builder experimentBaseDirectory(String experimentBaseDirectory) {
-			this.experimentBaseDirectory = experimentBaseDirectory ;
+			this.experimentBaseDirectory = experimentBaseDirectory+"/"+experimentName ;
 
 			return this ;
 		}

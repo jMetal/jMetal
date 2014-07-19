@@ -1,8 +1,5 @@
 package org.uma.jmetal.experiment;
 
-import org.uma.jmetal.util.Configuration;
-
-import java.io.File;
 import java.util.Arrays;
 import java.util.LinkedList;
 
@@ -23,7 +20,7 @@ public class Experiment2 {
   /** Constructor */
   private Experiment2(Builder builder) {
   	experimentData = builder.experimentData ;
-  	getExperimentData() ;
+  	//getExperimentData() ;
     resultObjectList = builder.resultObjectList ;
 
   }
@@ -58,24 +55,11 @@ public class Experiment2 {
   	 independentRuns = experimentData.getIndependentRuns() ;
   }
 
-  /** Creates the experiment directory if it does not exist */
-  private void checkIfExperimentDirectoryExists() {
-    File experimentDirectory;
-
-    experimentDirectory = new File(experimentBaseDirectory);
-    if (experimentDirectory.exists()) {
-      Configuration.logger.info("Experiment directory exists");
-      if (experimentDirectory.isDirectory()) {
-        Configuration.logger.info("Experiment directory is a directory");
-      } else {
-        Configuration.logger.info("Experiment directory is not a directory. Deleting file and creating directory");
-      }
-      experimentDirectory.delete();
-      new File(experimentBaseDirectory).mkdirs();
-    } else {
-      Configuration.logger.info("Experiment directory does NOT exist. Creating");
-      new File(experimentBaseDirectory).mkdirs();
+  public void run() {
+    for (ExperimentResult result : resultObjectList) {
+      result.generate();
     }
   }
+
 }
   

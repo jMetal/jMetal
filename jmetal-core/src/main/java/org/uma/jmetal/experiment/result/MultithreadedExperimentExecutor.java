@@ -27,6 +27,7 @@ import org.uma.jmetal.experiment.ExperimentData;
 import org.uma.jmetal.experiment.Settings;
 import org.uma.jmetal.experiment.SettingsFactory;
 import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 import org.uma.jmetal.util.parallel.SynchronousParallelTaskExecutor;
 
 import java.io.File;
@@ -42,7 +43,7 @@ import java.util.logging.Level;
  */
 public class MultithreadedExperimentExecutor implements SynchronousParallelTaskExecutor {
   private Collection<EvaluationTask> taskList;
-  private ExperimentExecution experimentExecution;
+  private AlgorithmExecution experimentExecution;
   private int numberOfThreads;
   private ExecutorService executor;
 
@@ -61,7 +62,7 @@ public class MultithreadedExperimentExecutor implements SynchronousParallelTaskE
   }
 
   public void start(Object object) {
-    experimentExecution = (ExperimentExecution)object ;
+    experimentExecution = (AlgorithmExecution)object ;
     executor = Executors.newFixedThreadPool(numberOfThreads);
     Configuration.logger.info("Cores: " + numberOfThreads);
     taskList = null;
@@ -116,6 +117,8 @@ public class MultithreadedExperimentExecutor implements SynchronousParallelTaskE
 
     /** Constructor */
     public EvaluationTask(String algorithm, String problem, int id, ExperimentData experimentData) {
+      Configuration.logger.info(
+        " Task: " + algorithmName + ", problem: " + problemName + ", run: " + id);
       problemName = problem;
       algorithmName = algorithm;
       this.id = id;
@@ -129,8 +132,7 @@ public class MultithreadedExperimentExecutor implements SynchronousParallelTaskE
 
       if (experimentExecution.useAlgorithmConfigurationFiles()) {
         Properties configuration = new Properties();
-        InputStreamReader isr =
-          new InputStreamReader(new FileInputStream(algorithmName + ".conf"));
+        InputStreamReader isr =  new InputStreamReader(new FileInputStream(algorithmName + ".conf"));
         configuration.load(isr);
 
         String algorithmName = configuration.getProperty("algorithm", this.algorithmName);
@@ -160,10 +162,13 @@ public class MultithreadedExperimentExecutor implements SynchronousParallelTaskE
         Configuration.logger.info("Creating " + directory);
       }
 
-      resultFront.printObjectivesToFile(
-        directory + "/" + experimentExecution.getParetoFrontFileName() + "." + id);
-      resultFront
-        .printVariablesToFile(directory + "/" + experimentExecution.getParetoSetFileName() + "." + id);
+      SolutionSetOutput.printObjectivesToFile(resultFront, directory + "/" + experimentExecution.getParetoFrontFileName() + "." + id);
+      SolutionSetOutput.printVariablesToFile(resultFront,
+        directory + "/" + experimentExecution.getParetoSetFileName() + "." + id);
+      //resultFront.printObjectivesToFile(
+        //directory + "/" + experimentExecution.getParetoFrontFileName() + "." + id);
+      //resultFront
+        //.printVariablesToFile(directory + "/" + experimentExecution.getParetoSetFileName() + "." + id);
 
       return id;
     }
