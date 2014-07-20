@@ -35,4 +35,31 @@ public class FileUtils {
       Configuration.logger.log(Level.SEVERE, "Error", e);
     }
   }
+ /*
+ FIXME: To be implemented
+  static public SolutionSet readFunctionValuesFromFile(String fileName)
+    throws IOException {
+    File file = new File(fileName);
+    FileReader fileReader = new FileReader(file);
+    BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+    int numberOfObjecives ;
+    SolutionSet solutionSet ;
+
+    String line = bufferedReader.readLine();
+    if (line == null) {
+      solutionSet = new SolutionSet(0) ;
+    } else {
+      String[] values = line.split(" ") ;
+      numberOfObjecives = values.length ;
+
+      while (line != null) {
+
+      }
+    }
+
+
+    return solutionSet ;
+  }
+  */
 }

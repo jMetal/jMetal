@@ -17,10 +17,12 @@ import java.util.logging.Level;
  */
 public class ParetoFrontsGeneration implements ExperimentResult{
   private ExperimentData experimentData ;
+  private String referenceFrontDirectory ;
 
   /** Constructor */
   private ParetoFrontsGeneration(Builder builder) {
     this.experimentData = builder.experimentData ;
+    this.referenceFrontDirectory = experimentData.getExperimentBaseDirectory() + "/referenceFronts";
   }
 
   /** Builder class */
@@ -44,23 +46,10 @@ public class ParetoFrontsGeneration implements ExperimentResult{
   }
 
   private void generateReferenceFront(int problemIndex) {
-
-    File rfDirectory;
-    String referenceFrontDirectory = experimentData.getExperimentBaseDirectory() + "/referenceFronts";
-
-    rfDirectory = new File(referenceFrontDirectory);
-
-    if (!rfDirectory.exists()) {
-      boolean result = new File(referenceFrontDirectory).mkdirs();
-      if (!result) {
-        throw new JMetalException("Error creating reference Pareto front directory: " + referenceFrontDirectory) ;
-      } else {
-        Configuration.logger.info("Creating " + referenceFrontDirectory);
-      }
+    if (referenceFrontDirectoryDoesNotExist()) {
+      createReferenceFrontDirectory() ;
     }
 
-    String referenceParetoFrontFile =
-      referenceFrontDirectory + "/" + experimentData.getProblemList()[problemIndex] + ".pf";
 
     MetricsUtil metricsUtils = new MetricsUtil();
     NonDominatedSolutionList solutionSet = new NonDominatedSolutionList();
@@ -79,10 +68,42 @@ public class ParetoFrontsGeneration implements ExperimentResult{
         metricsUtils.readNonDominatedSolutionSet(solutionFrontFile, solutionSet);
       }
     }
+
+    String referenceParetoFrontFile = getParetoFrontFileName(problemIndex) ;
+
     try {
       SolutionSetOutput.printObjectivesToFile(solutionSet, referenceParetoFrontFile);
     } catch (IOException e) {
       Configuration.logger.log(Level.SEVERE, "Error", e);
     }
+  }
+
+
+  private boolean referenceFrontDirectoryDoesNotExist() {
+    boolean result ;
+    File directory = new File(referenceFrontDirectory) ;
+
+    if (directory.exists()) {
+      result = false;
+    } else {
+      result = true ;
+    }
+
+    return result ;
+  }
+
+  private void createReferenceFrontDirectory() {
+    boolean result = new File(referenceFrontDirectory).mkdirs();
+
+    if (!result) {
+      throw new JMetalException("Error creating reference front directory: " + referenceFrontDirectory) ;
+    }
+  }
+
+  private String getParetoFrontFileName(int problemIndex) {
+    String result ;
+    result = referenceFrontDirectory + "/" + experimentData.getProblemList()[problemIndex] + ".pf";
+
+    return result ;
   }
 }
