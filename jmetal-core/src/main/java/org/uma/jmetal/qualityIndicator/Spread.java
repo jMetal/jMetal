@@ -37,7 +37,7 @@ import java.util.Arrays;
  */
 public class Spread {
 
-  public static org.uma.jmetal.qualityIndicator.util.MetricsUtil utils_;//utils_ is used to access to
+  public static org.uma.jmetal.qualityIndicator.util.MetricsUtil utils_;//utils is used to access to
   //the MetricsUtil funcionalities
 
   /**

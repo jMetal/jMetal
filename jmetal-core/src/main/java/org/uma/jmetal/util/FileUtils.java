@@ -1,6 +1,9 @@
 package org.uma.jmetal.util;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 import java.util.logging.Level;
 
 public class FileUtils {
@@ -62,4 +65,45 @@ public class FileUtils {
     return solutionSet ;
   }
   */
+
+  public static double[][] readFrontIntoArray(String path) {
+    try {
+      // Open the file
+      FileInputStream inputStream = new FileInputStream(path);
+      InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+      BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+      List<double[]> list = new ArrayList<double[]>();
+      int numberOfObjectives = 0;
+      String aux = bufferedReader.readLine();
+      while (aux != null) {
+        StringTokenizer st = new StringTokenizer(aux);
+        int i = 0;
+        numberOfObjectives = st.countTokens();
+        double[] vector = new double[st.countTokens()];
+        while (st.hasMoreTokens()) {
+          double value = new Double(st.nextToken());
+          vector[i] = value;
+          i++;
+        }
+        list.add(vector);
+        aux = bufferedReader.readLine();
+      }
+
+      bufferedReader.close();
+
+      double[][] front = new double[list.size()][numberOfObjectives];
+      for (int i = 0; i < list.size(); i++) {
+        front[i] = list.get(i);
+      }
+      return front;
+
+    } catch (Exception e) {
+      Configuration.logger.log(
+        Level.SEVERE,
+        "readFront() crashed reading for file: " + path,
+        e);
+    }
+    return new double[0][0];
+  }
 }

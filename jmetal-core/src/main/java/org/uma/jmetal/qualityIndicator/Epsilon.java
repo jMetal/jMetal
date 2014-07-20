@@ -40,17 +40,17 @@ public class Epsilon {
   public org.uma.jmetal.qualityIndicator.util.MetricsUtil utils_ =
     new org.uma.jmetal.qualityIndicator.util.MetricsUtil();
   /* stores the number of objectives */
-  int dim_;
+  int dim;
   /*
-   * obj_[i]=0 means objective i is to be minimized. This code always assume the
+   * obj[i]=0 means objective i is to be minimized. This code always assume the
    * minimization of all the objectives
    */
-  int[] obj_; /* obj_[i] = 0 means objective i is to be minimized */
+  int[] obj; /* obj[i] = 0 means objective i is to be minimized */
   /*
-   * method_ = 0 means apply additive epsilon and method_ = 1 means
+   * method = 0 means apply additive epsilon and method = 1 means
    * multiplicative epsilon. This code always apply additive epsilon
    */
-  int method_;
+  int method;
 
   /**
    * Returns the additive-epsilon value of the paretoFront. This method call to
@@ -92,10 +92,10 @@ public class Epsilon {
     int i, j, k;
     double eps, eps_j = 0.0, eps_k = 0.0, eps_temp;
 
-    dim_ = dim;
+    this.dim = dim;
     set_params();
 
-    if (method_ == 0) {
+    if (method == 0) {
       eps = Double.MIN_VALUE;
     } else {
       eps = 0;
@@ -103,10 +103,10 @@ public class Epsilon {
 
     for (i = 0; i < a.length; i++) {
       for (j = 0; j < b.length; j++) {
-        for (k = 0; k < dim_; k++) {
-          switch (method_) {
+        for (k = 0; k < this.dim; k++) {
+          switch (method) {
             case 0:
-              if (obj_[k] == 0) {
+              if (obj[k] == 0) {
                 eps_temp = b[j][k] - a[i][k];
               } else {
                 eps_temp = a[i][k] - b[j][k];
@@ -117,7 +117,7 @@ public class Epsilon {
                 || (a[i][k] == 0 || b[j][k] == 0)) {
                 throw new JMetalException("Error in data file");
               }
-              if (obj_[k] == 0) {
+              if (obj[k] == 0) {
                 eps_temp = b[j][k] / a[i][k];
               } else {
                 eps_temp = a[i][k] / b[j][k];
@@ -150,10 +150,10 @@ public class Epsilon {
    */
   void set_params() {
     int i;
-    obj_ = new int[dim_];
-    for (i = 0; i < dim_; i++) {
-      obj_[i] = 0;
+    obj = new int[dim];
+    for (i = 0; i < dim; i++) {
+      obj[i] = 0;
     }
-    method_ = 0;
+    method = 0;
   }
 }

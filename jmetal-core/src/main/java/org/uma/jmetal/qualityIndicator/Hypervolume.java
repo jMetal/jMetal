@@ -39,14 +39,14 @@ import java.util.logging.Level;
  */
 public class Hypervolume {
 
-  public org.uma.jmetal.qualityIndicator.util.MetricsUtil utils_;
+  public org.uma.jmetal.qualityIndicator.util.MetricsUtil utils;
 
   /**
    * Constructor
    * Creates a new instance of MultiDelta
    */
   public Hypervolume() {
-    utils_ = new org.uma.jmetal.qualityIndicator.util.MetricsUtil();
+    utils = new org.uma.jmetal.qualityIndicator.util.MetricsUtil();
   }
 
   /**
@@ -69,8 +69,8 @@ public class Hypervolume {
     Hypervolume qualityIndicator = new Hypervolume();
 
     //Read the front from the files
-    double[][] solutionFront = qualityIndicator.utils_.readFront(args[0]);
-    double[][] trueFront = qualityIndicator.utils_.readFront(args[1]);
+    double[][] solutionFront = qualityIndicator.utils.readFront(args[0]);
+    double[][] trueFront = qualityIndicator.utils.readFront(args[1]);
 
     //Obtain delta value
     double value = qualityIndicator.hypervolume(solutionFront, trueFront, new Integer(args[2]));
@@ -271,17 +271,17 @@ public class Hypervolume {
     double[][] invertedFront;
 
     // STEP 1. Obtain the maximum and minimum values of the Pareto front
-    maximumValues = utils_.getMaximumValues(paretoTrueFront, numberOfObjectives);
-    minimumValues = utils_.getMinimumValues(paretoTrueFront, numberOfObjectives);
+    maximumValues = utils.getMaximumValues(paretoTrueFront, numberOfObjectives);
+    minimumValues = utils.getMinimumValues(paretoTrueFront, numberOfObjectives);
 
     // STEP 2. Get the normalized front
-    normalizedFront = utils_.getNormalizedFront(paretoFront,
+    normalizedFront = utils.getNormalizedFront(paretoFront,
       maximumValues,
       minimumValues);
 
     // STEP 3. Inverse the pareto front. This is needed because of the original
     //metric by Zitzler is for maximization problem
-    invertedFront = utils_.invertedFront(normalizedFront);
+    invertedFront = utils.invertedFront(normalizedFront);
 
     // STEP4. The hypervolumen (control is passed to java version of Zitzler code)
     return this.calculateHypervolume(invertedFront, invertedFront.length, numberOfObjectives);

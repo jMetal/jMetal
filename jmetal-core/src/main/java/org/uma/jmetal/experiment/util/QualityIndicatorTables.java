@@ -90,13 +90,13 @@ public class QualityIndicatorTables implements IExperimentOutput {
               String qualityIndicatorFile = problemDirectory;
               double value = 0;
 
-              double[][] trueFront = new Hypervolume().utils_.readFront(paretoFront[problemIndex]);
+              double[][] trueFront = new Hypervolume().utils.readFront(paretoFront[problemIndex]);
 
               if ("HV".equals(indicator)) {
 
                 Hypervolume indicators = new Hypervolume();
                 double[][] solutionFront =
-                    indicators.utils_.readFront(solutionFrontFile);
+                    indicators.utils.readFront(solutionFrontFile);
                 value = indicators.hypervolume(solutionFront, trueFront, trueFront[0].length);
 
                 qualityIndicatorFile = qualityIndicatorFile + "/HV";

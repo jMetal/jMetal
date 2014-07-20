@@ -1,13 +1,31 @@
+//  QualityIndicatorGeneration.java
+//
+//  Author:
+//       Antonio J. Nebro <antonio@lcc.uma.es>
+//
+//  Copyright (c) 2014 Antonio J. Nebro
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU Lesser General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU Lesser General Public License for more details.
+//
+//  You should have received a copy of the GNU Lesser General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/
+
 package org.uma.jmetal.experiment.result;
 
 import org.uma.jmetal.experiment.Experiment;
 import org.uma.jmetal.experiment.ExperimentData;
 import org.uma.jmetal.experiment.ExperimentResult;
-import org.uma.jmetal.qualityIndicator.Epsilon;
-import org.uma.jmetal.qualityIndicator.Hypervolume;
-import org.uma.jmetal.qualityIndicator.InvertedGenerationalDistance;
-import org.uma.jmetal.qualityIndicator.Spread;
+import org.uma.jmetal.qualityIndicator.*;
 import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.FileUtils;
 import org.uma.jmetal.util.JMetalException;
 
 import java.io.File;
@@ -51,7 +69,7 @@ public class QualityIndicatorGeneration implements ExperimentResult {
       /* Default pareto front files */
       paretoFrontFiles = new String[experimentData.getProblemList().length] ;
       for (int i = 0; i < experimentData.getProblemList().length; i++) {
-//        paretoFrontFiles[i] = paretoFrontDirectory+ "/" + experimentData.getProblemList()[i] + ".pf";
+        //        paretoFrontFiles[i] = paretoFrontDirectory+ "/" + experimentData.getProblemList()[i] + ".pf";
         paretoFrontFiles[i] =  experimentData.getProblemList()[i] + ".pf";
       }
 
@@ -118,43 +136,35 @@ public class QualityIndicatorGeneration implements ExperimentResult {
 
             String paretoFront = paretoFrontDirectory + "/" + paretoFrontFiles[problemIndex] ;
 
-            double[][] trueFront = new Hypervolume().utils_.readFront(paretoFront);
-            //double[][] trueFront = new Hypervolume().utils_.readFront(paretoFront[problemIndex]);
+            //double[][] trueFront = new Hypervolume().utils.readFront(paretoFront);
+            double[][] trueFront = FileUtils.readFrontIntoArray(paretoFront) ;
+            double[][] solutionFront = FileUtils.readFrontIntoArray(solutionFrontFile);
 
             if ("HV".equals(indicator)) {
-
-              Hypervolume indicators = new Hypervolume();
-              double[][] solutionFront =
-                indicators.utils_.readFront(solutionFrontFile);
-              value = indicators.hypervolume(solutionFront, trueFront, trueFront[0].length);
+              value = new Hypervolume().hypervolume(solutionFront, trueFront, trueFront[0].length);
 
               qualityIndicatorFile = qualityIndicatorFile + "/HV";
-            }
-            if ("SPREAD".equals(indicator)) {
-              Spread indicators = new Spread();
-              double[][] solutionFront =
-                indicators.utils_.readFront(solutionFrontFile);
-              value = indicators.spread(solutionFront, trueFront, trueFront[0].length);
+            } else if ("SPREAD".equals(indicator)) {
+              value = new Spread().spread(solutionFront, trueFront, trueFront[0].length);
 
               qualityIndicatorFile = qualityIndicatorFile + "/SPREAD";
-            }
-            if ("IGD".equals(indicator)) {
-              InvertedGenerationalDistance indicators = new InvertedGenerationalDistance();
-              double[][] solutionFront =
-                indicators.utils_.readFront(solutionFrontFile);
-              value = indicators
+            } else if ("GD".equals(indicator)) {
+              value = new GenerationalDistance().generationalDistance(solutionFront, trueFront, trueFront[0].length);
+
+              qualityIndicatorFile = qualityIndicatorFile + "/GD";
+            } else if ("IGD".equals(indicator)) {
+              value = new InvertedGenerationalDistance()
                 .invertedGenerationalDistance(solutionFront, trueFront, trueFront[0].length);
 
               qualityIndicatorFile = qualityIndicatorFile + "/IGD";
-            }
-            if ("EPSILON".equals(indicator)) {
-              Epsilon indicators = new Epsilon();
-              double[][] solutionFront =
-                indicators.utils_.readFront(solutionFrontFile);
-              value = indicators.epsilon(solutionFront, trueFront, trueFront[0].length);
+            } else if ("EPSILON".equals(indicator)) {
+              value = new Epsilon().epsilon(solutionFront, trueFront, trueFront[0].length);
 
               qualityIndicatorFile = qualityIndicatorFile + "/EPSILON";
+            } else {
+              throw new JMetalException("Indicator does not exist: " + indicator) ;
             }
+
 
             if (!qualityIndicatorFile.equals(problemDirectory)) {
               FileWriter os;

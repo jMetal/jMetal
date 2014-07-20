@@ -38,7 +38,7 @@ public class GenerationalDistance {
   //pow. This is the pow used for the
   //distances
   static final double pow_ = 2.0;
-  //utils_ is used to access to the MetricsUtil functionalities
+  //utils is used to access to the MetricsUtil functionalities
   public org.uma.jmetal.qualityIndicator.util.MetricsUtil utils_;
 
   /**

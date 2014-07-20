@@ -23,16 +23,15 @@ package org.uma.jmetal.qualityIndicator;
 
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.util.JMetalException;
 
 /**
  * QualityIndicator class
  */
 public class QualityIndicator {
-  public org.uma.jmetal.qualityIndicator.util.MetricsUtil utils_;
-  SolutionSet trueParetoFront_;
-  double trueParetoFrontHypervolume_;
-  Problem problem_;
+  public org.uma.jmetal.qualityIndicator.util.MetricsUtil utils;
+  SolutionSet trueParetoFront;
+  double trueParetoFrontHypervolume;
+  Problem problem;
 
   /**
    * Constructor
@@ -41,25 +40,25 @@ public class QualityIndicator {
    * @param paretoFrontFile Pareto front file
    */
   public QualityIndicator(Problem problem, String paretoFrontFile) {
-    problem_ = problem;
-    utils_ = new org.uma.jmetal.qualityIndicator.util.MetricsUtil();
-    trueParetoFront_ = utils_.readNonDominatedSolutionSet(paretoFrontFile);
-    trueParetoFrontHypervolume_ = new Hypervolume().hypervolume(
-      trueParetoFront_.writeObjectivesToMatrix(),
-      trueParetoFront_.writeObjectivesToMatrix(),
-      problem_.getNumberOfObjectives());
+    this.problem = problem;
+    utils = new org.uma.jmetal.qualityIndicator.util.MetricsUtil();
+    trueParetoFront = utils.readNonDominatedSolutionSet(paretoFrontFile);
+    trueParetoFrontHypervolume = new Hypervolume().hypervolume(
+      trueParetoFront.writeObjectivesToMatrix(),
+      trueParetoFront.writeObjectivesToMatrix(),
+      this.problem.getNumberOfObjectives());
   }
 
   /**
-   * Returns the hypervolume of solutiontype set
+   * Returns the hypervolume of solution set
    *
    * @param solutionSet Solution set
    * @return The value of the hypervolume indicator
    */
   public double getHypervolume(SolutionSet solutionSet) {
     return new Hypervolume().hypervolume(solutionSet.writeObjectivesToMatrix(),
-      trueParetoFront_.writeObjectivesToMatrix(),
-      problem_.getNumberOfObjectives());
+      trueParetoFront.writeObjectivesToMatrix(),
+      problem.getNumberOfObjectives());
   }
 
 
@@ -69,11 +68,11 @@ public class QualityIndicator {
    * @return The hypervolume of the true Pareto front
    */
   public double getTrueParetoFrontHypervolume() {
-    return trueParetoFrontHypervolume_;
+    return trueParetoFrontHypervolume;
   }
 
   /**
-   * Returns the inverted generational distance of solutiontype set
+   * Returns the inverted generational distance of solution set
    *
    * @param solutionSet Solution set
    * @return The value of the hypervolume indicator
@@ -81,12 +80,12 @@ public class QualityIndicator {
   public double getIGD(SolutionSet solutionSet) {
     return new InvertedGenerationalDistance().invertedGenerationalDistance(
       solutionSet.writeObjectivesToMatrix(),
-      trueParetoFront_.writeObjectivesToMatrix(),
-      problem_.getNumberOfObjectives());
+      trueParetoFront.writeObjectivesToMatrix(),
+      problem.getNumberOfObjectives());
   }
 
   /**
-   * Returns the generational distance of solutiontype set
+   * Returns the generational distance of solution set
    *
    * @param solutionSet Solution set
    * @return The value of the hypervolume indicator
@@ -94,32 +93,32 @@ public class QualityIndicator {
   public double getGD(SolutionSet solutionSet) {
     return new GenerationalDistance().generationalDistance(
       solutionSet.writeObjectivesToMatrix(),
-      trueParetoFront_.writeObjectivesToMatrix(),
-      problem_.getNumberOfObjectives());
+      trueParetoFront.writeObjectivesToMatrix(),
+      problem.getNumberOfObjectives());
   }
 
   /**
-   * Returns the spread of solutiontype set
+   * Returns the spread of solution set
    *
    * @param solutionSet Solution set
    * @return The value of the hypervolume indicator
    */
   public double getSpread(SolutionSet solutionSet) {
     return new Spread().spread(solutionSet.writeObjectivesToMatrix(),
-      trueParetoFront_.writeObjectivesToMatrix(),
-      problem_.getNumberOfObjectives());
+      trueParetoFront.writeObjectivesToMatrix(),
+      problem.getNumberOfObjectives());
   }
 
   /**
-   * Returns the epsilon indicator of solutiontype set
+   * Returns the epsilon indicator of solution set
    *
    * @param solutionSet Solution set
    * @return The value of the hypervolume indicator
    * @throws org.uma.jmetal.util.JMetalException
    */
-  public double getEpsilon(SolutionSet solutionSet) throws JMetalException {
+  public double getEpsilon(SolutionSet solutionSet) {
     return new Epsilon().epsilon(solutionSet.writeObjectivesToMatrix(),
-      trueParetoFront_.writeObjectivesToMatrix(),
-      problem_.getNumberOfObjectives());
+      trueParetoFront.writeObjectivesToMatrix(),
+      problem.getNumberOfObjectives());
   }
 }
