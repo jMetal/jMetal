@@ -22,7 +22,7 @@ package org.uma.jmetal.metaheuristic.multiobjective.smsemoa;
 
 import org.uma.jmetal.core.*;
 import org.uma.jmetal.qualityIndicator.Hypervolume;
-import org.uma.jmetal.qualityIndicator.QualityIndicator;
+import org.uma.jmetal.qualityIndicator.QualityIndicatorGetter;
 import org.uma.jmetal.qualityIndicator.util.MetricsUtil;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
@@ -78,7 +78,7 @@ public class SMSEMOA extends Algorithm {
     int evaluations;
     double offset = 100.0;
 
-    QualityIndicator indicators;
+    QualityIndicatorGetter indicators;
     int requiredEvaluations;
 
     SolutionSet population;
@@ -92,7 +92,7 @@ public class SMSEMOA extends Algorithm {
     //Read the parameters
     populationSize = ((Integer) getInputParameter("populationSize")).intValue();
     maxEvaluations = ((Integer) getInputParameter("maxEvaluations")).intValue();
-    indicators = (QualityIndicator) getInputParameter("indicators");
+    indicators = (QualityIndicatorGetter) getInputParameter("indicators");
     offset = (Double) getInputParameter("offset");
 
 

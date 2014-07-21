@@ -28,7 +28,6 @@ import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.FileUtils;
 import org.uma.jmetal.util.JMetalException;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
@@ -124,7 +123,7 @@ public class QualityIndicatorGeneration implements ExperimentResult {
         for (String indicator : qualityIndicatorList) {
           Configuration.logger.info("Experiment - Quality indicator: " + indicator);
 
-          resetFile(problemDirectory + "/" + indicator);
+          FileUtils.deleteFile(problemDirectory + "/" + indicator);
 
           for (int numRun = 0; numRun < experimentData.getIndependentRuns(); numRun++) {
 
@@ -136,12 +135,11 @@ public class QualityIndicatorGeneration implements ExperimentResult {
 
             String paretoFront = paretoFrontDirectory + "/" + paretoFrontFiles[problemIndex] ;
 
-            //double[][] trueFront = new Hypervolume().utils.readFront(paretoFront);
             double[][] trueFront = FileUtils.readFrontIntoArray(paretoFront) ;
             double[][] solutionFront = FileUtils.readFrontIntoArray(solutionFrontFile);
 
             if ("HV".equals(indicator)) {
-              value = new Hypervolume().hypervolume(solutionFront, trueFront, trueFront[0].length);
+              value = new Hypervolume().hypervolume(solutionFront, trueFront);
 
               qualityIndicatorFile = qualityIndicatorFile + "/HV";
             } else if ("SPREAD".equals(indicator)) {
@@ -179,33 +177,6 @@ public class QualityIndicatorGeneration implements ExperimentResult {
           }
         }
       }
-    }
-  }
-
-  /**
-   * @param file
-   */
-  private void resetFile(String file) {
-    File f = new File(file);
-    if (f.exists()) {
-      Configuration.logger.info("File " + file + " exist.");
-
-      if (f.isDirectory()) {
-        Configuration.logger.info("File " + file + " is a directory. Deleting directory.");
-        if (f.delete()) {
-          Configuration.logger.info("Directory successfully deleted.");
-        } else {
-          Configuration.logger.info("Error deleting directory.");
-        }
-      } else {
-        Configuration.logger.info("File " + file + " is a file. Deleting file.");
-        if (f.delete()) {
-          Configuration.logger.info("File succesfully deleted.");
-        } else {
-          Configuration.logger.info("Error deleting file.");
-        }
-      }
-    } else {
     }
   }
 }

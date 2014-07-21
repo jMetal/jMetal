@@ -30,7 +30,7 @@ import org.uma.jmetal.operator.crossover.CrossoverFactory;
 import org.uma.jmetal.operator.mutation.MutationFactory;
 import org.uma.jmetal.problem.Kursawe;
 import org.uma.jmetal.problem.ProblemFactory;
-import org.uma.jmetal.qualityIndicator.QualityIndicator;
+import org.uma.jmetal.qualityIndicator.QualityIndicatorGetter;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 
@@ -67,7 +67,7 @@ public class pMOEADRunner {
     Operator crossover;
     Operator mutation;
 
-    QualityIndicator indicators;
+    QualityIndicatorGetter indicators;
 
     int numberOfThreads = 1;
     String dataDirectory = "";
@@ -84,7 +84,7 @@ public class pMOEADRunner {
     } else if (args.length == 2) {
       Object[] params = {"Real"};
       problem = (new ProblemFactory()).getProblem(args[0], params);
-      indicators = new QualityIndicator(problem, args[1]);
+      indicators = new QualityIndicatorGetter(problem, args[1]);
     } else if (args.length == 3) {
       Object[] params = {"Real"};
       problem = (new ProblemFactory()).getProblem(args[0], params);

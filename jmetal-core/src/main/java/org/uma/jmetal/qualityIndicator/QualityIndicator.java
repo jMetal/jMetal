@@ -15,110 +15,16 @@
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU Lesser General Public License for more details.
-// 
+//
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 package org.uma.jmetal.qualityIndicator;
 
-import org.uma.jmetal.core.Problem;
-import org.uma.jmetal.core.SolutionSet;
-
 /**
- * QualityIndicator class
+ * Created by Antonio J. Nebro on 20/07/14.
  */
-public class QualityIndicator {
-  public org.uma.jmetal.qualityIndicator.util.MetricsUtil utils;
-  SolutionSet trueParetoFront;
-  double trueParetoFrontHypervolume;
-  Problem problem;
-
-  /**
-   * Constructor
-   *
-   * @param problem         The problem
-   * @param paretoFrontFile Pareto front file
-   */
-  public QualityIndicator(Problem problem, String paretoFrontFile) {
-    this.problem = problem;
-    utils = new org.uma.jmetal.qualityIndicator.util.MetricsUtil();
-    trueParetoFront = utils.readNonDominatedSolutionSet(paretoFrontFile);
-    trueParetoFrontHypervolume = new Hypervolume().hypervolume(
-      trueParetoFront.writeObjectivesToMatrix(),
-      trueParetoFront.writeObjectivesToMatrix(),
-      this.problem.getNumberOfObjectives());
-  }
-
-  /**
-   * Returns the hypervolume of solution set
-   *
-   * @param solutionSet Solution set
-   * @return The value of the hypervolume indicator
-   */
-  public double getHypervolume(SolutionSet solutionSet) {
-    return new Hypervolume().hypervolume(solutionSet.writeObjectivesToMatrix(),
-      trueParetoFront.writeObjectivesToMatrix(),
-      problem.getNumberOfObjectives());
-  }
-
-
-  /**
-   * Returns the hypervolume of the true Pareto front
-   *
-   * @return The hypervolume of the true Pareto front
-   */
-  public double getTrueParetoFrontHypervolume() {
-    return trueParetoFrontHypervolume;
-  }
-
-  /**
-   * Returns the inverted generational distance of solution set
-   *
-   * @param solutionSet Solution set
-   * @return The value of the hypervolume indicator
-   */
-  public double getIGD(SolutionSet solutionSet) {
-    return new InvertedGenerationalDistance().invertedGenerationalDistance(
-      solutionSet.writeObjectivesToMatrix(),
-      trueParetoFront.writeObjectivesToMatrix(),
-      problem.getNumberOfObjectives());
-  }
-
-  /**
-   * Returns the generational distance of solution set
-   *
-   * @param solutionSet Solution set
-   * @return The value of the hypervolume indicator
-   */
-  public double getGD(SolutionSet solutionSet) {
-    return new GenerationalDistance().generationalDistance(
-      solutionSet.writeObjectivesToMatrix(),
-      trueParetoFront.writeObjectivesToMatrix(),
-      problem.getNumberOfObjectives());
-  }
-
-  /**
-   * Returns the spread of solution set
-   *
-   * @param solutionSet Solution set
-   * @return The value of the hypervolume indicator
-   */
-  public double getSpread(SolutionSet solutionSet) {
-    return new Spread().spread(solutionSet.writeObjectivesToMatrix(),
-      trueParetoFront.writeObjectivesToMatrix(),
-      problem.getNumberOfObjectives());
-  }
-
-  /**
-   * Returns the epsilon indicator of solution set
-   *
-   * @param solutionSet Solution set
-   * @return The value of the hypervolume indicator
-   * @throws org.uma.jmetal.util.JMetalException
-   */
-  public double getEpsilon(SolutionSet solutionSet) {
-    return new Epsilon().epsilon(solutionSet.writeObjectivesToMatrix(),
-      trueParetoFront.writeObjectivesToMatrix(),
-      problem.getNumberOfObjectives());
-  }
+public interface QualityIndicator {
+  public double execute(double[][] paretoFrontApproximation, double[][] paretoTrueFront, int numberOfObjectives) ;
+  public String getName() ;
 }

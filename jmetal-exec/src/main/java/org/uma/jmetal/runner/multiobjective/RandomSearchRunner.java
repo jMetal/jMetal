@@ -31,7 +31,7 @@ import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.metaheuristic.multiobjective.randomSearch.RandomSearch;
 import org.uma.jmetal.problem.Kursawe;
 import org.uma.jmetal.problem.ProblemFactory;
-import org.uma.jmetal.qualityIndicator.QualityIndicator;
+import org.uma.jmetal.qualityIndicator.QualityIndicatorGetter;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 
@@ -55,7 +55,7 @@ public class RandomSearchRunner {
     Problem problem;
     Algorithm algorithm;
 
-    QualityIndicator indicators;
+    QualityIndicatorGetter indicators;
 
     // Logger object and file to store log messages
     logger_ = Configuration.logger;
@@ -69,7 +69,7 @@ public class RandomSearchRunner {
     } else if (args.length == 2) {
       Object[] params = {"Real"};
       problem = (new ProblemFactory()).getProblem(args[0], params);
-      indicators = new QualityIndicator(problem, args[1]);
+      indicators = new QualityIndicatorGetter(problem, args[1]);
     } else {
       problem = new Kursawe("Real", 3);
       //problem = new Water("Real");

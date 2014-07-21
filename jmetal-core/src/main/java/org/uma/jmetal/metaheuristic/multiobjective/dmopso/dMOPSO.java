@@ -9,7 +9,7 @@ import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.qualityIndicator.Hypervolume;
-import org.uma.jmetal.qualityIndicator.QualityIndicator;
+import org.uma.jmetal.qualityIndicator.QualityIndicatorGetter;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
@@ -41,7 +41,7 @@ public class dMOPSO extends Algorithm {
   //"_PBI";//"_TCHE";//"_AGG";
   String functionType_ = "_PBI";
   String dataDirectory_;
-  QualityIndicator indicators_;
+  QualityIndicatorGetter indicators_;
   double r1Max_;
   double r1Min_;
   double r2Max_;
@@ -136,8 +136,7 @@ public class dMOPSO extends Algorithm {
     org.uma.jmetal.qualityIndicator.util.MetricsUtil mu = new org.uma.jmetal.qualityIndicator.util.MetricsUtil();
     trueFront_ = mu.readNonDominatedSolutionSet(trueParetoFront);
     trueHypervolume_ = hy_.hypervolume(trueFront_.writeObjectivesToMatrix(),
-      trueFront_.writeObjectivesToMatrix(),
-      problem_.getNumberOfObjectives());
+      trueFront_.writeObjectivesToMatrix());
 
   }
 
@@ -148,7 +147,7 @@ public class dMOPSO extends Algorithm {
     swarmSize_ = (Integer) getInputParameter("swarmSize");
     maxIterations_ = (Integer) getInputParameter("maxIterations");
     maxAge_ = (Integer) getInputParameter("maxAge");
-    indicators_ = (QualityIndicator) getInputParameter("indicators");
+    indicators_ = (QualityIndicatorGetter) getInputParameter("indicators");
     dataDirectory_ = getInputParameter("dataDirectory").toString();
 
     String funcType = ((String) getInputParameter("functionType"));

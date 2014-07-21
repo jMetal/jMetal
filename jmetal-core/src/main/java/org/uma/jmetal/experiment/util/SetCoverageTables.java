@@ -39,54 +39,54 @@ import java.util.Vector;
  * This class allows to generate Latex tables with the results of applying the Wilcoxon Rank-Sum org.uma.test
  */
 public class SetCoverageTables implements IExperimentOutput {
-  private File outputDirectory_;
-  private String outputDirectoryName_;
-  private Experiment experiment_;
-  private FileWriter fileWriter_ ;
+  private File outputDirectory;
+  private String outputDirectoryName;
+  private Experiment experiment;
+  private FileWriter fileWriter;
 
 
   public SetCoverageTables(Experiment experiment) {
-    experiment_ = experiment;
-    outputDirectory_ = null;
-    outputDirectoryName_ = "";
-    fileWriter_ = null ;
+    this.experiment = experiment;
+    outputDirectory = null;
+    outputDirectoryName = "";
+    fileWriter = null ;
   }
 
   @Override
   public void generate() throws IOException, JMetalException {
     createOutputDirectory();
 
-    String outputTexFile = outputDirectoryName_ + "/" + "setCoverage.tex";
-    fileWriter_ = new FileWriter(outputTexFile, false) ;
+    String outputTexFile = outputDirectoryName + "/" + "setCoverage.tex";
+    fileWriter = new FileWriter(outputTexFile, false) ;
 
     generateLatexHeader() ;
-    for (String problem : experiment_.getProblemList()) {
+    for (String problem : experiment.getProblemList()) {
       generateTable(problem) ;
     }
     generateLatexTail() ;
 
-    fileWriter_.close();
+    fileWriter.close();
   }
 
   private void generateLatexHeader() throws IOException {
     //FileWriter os = new FileWriter(fileName, false);
-    fileWriter_.write("\\documentclass{article}" + "\n");
-    fileWriter_.write("\\title{" + experiment_.getExperimentName() + "}" + "\n");
-    fileWriter_.write("\\usepackage{colortbl}" + "\n");
-    fileWriter_.write("\\usepackage[table*]{xcolor}" + "\n");
-    fileWriter_.write("\\usepackage[margin=0.6in]{geometry}" + "\n");
-    fileWriter_.write("\\xdefinecolor{gray95}{gray}{0.65}" + "\n");
-    fileWriter_.write("\\xdefinecolor{gray25}{gray}{0.8}" + "\n");
-    fileWriter_.write("\\author{}" + "\n");
-    fileWriter_.write("\\begin{document}" + "\n");
-    fileWriter_.write("\\maketitle" + "\n");
-    fileWriter_.write("\\section{Tables}" + "\n");
+    fileWriter.write("\\documentclass{article}" + "\n");
+    fileWriter.write("\\title{" + experiment.getExperimentName() + "}" + "\n");
+    fileWriter.write("\\usepackage{colortbl}" + "\n");
+    fileWriter.write("\\usepackage[table*]{xcolor}" + "\n");
+    fileWriter.write("\\usepackage[margin=0.6in]{geometry}" + "\n");
+    fileWriter.write("\\xdefinecolor{gray95}{gray}{0.65}" + "\n");
+    fileWriter.write("\\xdefinecolor{gray25}{gray}{0.8}" + "\n");
+    fileWriter.write("\\author{}" + "\n");
+    fileWriter.write("\\begin{document}" + "\n");
+    fileWriter.write("\\maketitle" + "\n");
+    fileWriter.write("\\section{Tables}" + "\n");
   }
 
   private void generateTable(String problem) throws IOException, JMetalException {
     writeTableHeader(problem);
 
-    for (int i = 0 ; i < experiment_.getAlgorithmNameList().length; i++) {
+    for (int i = 0 ; i < experiment.getAlgorithmNameList().length; i++) {
       writeTableRow(i, problem) ;
     }
 
@@ -94,70 +94,70 @@ public class SetCoverageTables implements IExperimentOutput {
   }
 
   private void generateLatexTail() throws IOException {
-    fileWriter_.write("\\end{document}" + "\n");
+    fileWriter.write("\\end{document}" + "\n");
   }
 
   private void writeTableHeader(String problem) throws IOException {
-    fileWriter_.write("\n\n");
-    fileWriter_.write("\\begin{table}" + "\n");
-    fileWriter_.write("\\caption{" + problem + ". Set Coverage}" + "\n");
-    fileWriter_.write("\\label{table:setCoverage." + problem + "}" + "\n");
-    fileWriter_.write("\\centering" + "\n");
-    fileWriter_.write("\\begin{scriptsize}" + "\n");
-    fileWriter_.write("\\begin{tabular}{l");
+    fileWriter.write("\n\n");
+    fileWriter.write("\\begin{table}" + "\n");
+    fileWriter.write("\\caption{" + problem + ". Set Coverage}" + "\n");
+    fileWriter.write("\\label{table:setCoverage." + problem + "}" + "\n");
+    fileWriter.write("\\centering" + "\n");
+    fileWriter.write("\\begin{scriptsize}" + "\n");
+    fileWriter.write("\\begin{tabular}{l");
 
     // calculate the number of columns
-    for (int i = 0 ; i < experiment_.getAlgorithmNameList().length; i++) {
-      fileWriter_.write("l");
+    for (int i = 0 ; i < experiment.getAlgorithmNameList().length; i++) {
+      fileWriter.write("l");
     }
-    fileWriter_.write("}\n");
+    fileWriter.write("}\n");
 
     // write table head
-    for (int i = -1; i < experiment_.getAlgorithmNameList().length; i++) {
+    for (int i = -1; i < experiment.getAlgorithmNameList().length; i++) {
       if (i == -1) {
-        fileWriter_.write(" & ");
-      } else if (i == (experiment_.getAlgorithmNameList().length - 1)) {
-        fileWriter_.write(" " + experiment_.getAlgorithmNameList()[i] + "\\\\" + "\n");
+        fileWriter.write(" & ");
+      } else if (i == (experiment.getAlgorithmNameList().length - 1)) {
+        fileWriter.write(" " + experiment.getAlgorithmNameList()[i] + "\\\\" + "\n");
       } else {
-        fileWriter_.write("" + experiment_.getAlgorithmNameList()[i] + " & ");
+        fileWriter.write("" + experiment.getAlgorithmNameList()[i] + " & ");
       }
     }
-    fileWriter_.write("\\hline" + "\n");
+    fileWriter.write("\\hline" + "\n");
   }
 
   private void writeTableRow(int algorithmIndex, String problem) throws IOException,
     JMetalException {
-    fileWriter_.write("" + experiment_.getAlgorithmNameList()[algorithmIndex] + " & ");
-    for (int i = 0; i < experiment_.getAlgorithmNameList().length; i++) {
+    fileWriter.write("" + experiment.getAlgorithmNameList()[algorithmIndex] + " & ");
+    for (int i = 0; i < experiment.getAlgorithmNameList().length; i++) {
       if (i != algorithmIndex) {
         double setCoverageValueAB = calculateSetCoverage(
           problem,
-          experiment_.getAlgorithmNameList()[algorithmIndex],
-          experiment_.getAlgorithmNameList()[i]
+          experiment.getAlgorithmNameList()[algorithmIndex],
+          experiment.getAlgorithmNameList()[i]
         ) ;
 
         String setCoverageAB =  String.format(Locale.ENGLISH, "%.2f",
           setCoverageValueAB);
 
-        fileWriter_.write("" + setCoverageAB);
+        fileWriter.write("" + setCoverageAB);
         //String setCoverageBA =  String.format(Locale.ENGLISH, "%.2f",
         //  setCoverageValueBA);
-        //fileWriter_.write("("+setCoverageAB +", " + setCoverageBA + ")"+ " & ");
+        //fileWriter.write("("+setCoverageAB +", " + setCoverageBA + ")"+ " & ");
       } else
-        fileWriter_.write("--" );
-      if (i < (experiment_.getAlgorithmNameList().length-1)) {
-        fileWriter_.write("&") ;
+        fileWriter.write("--" );
+      if (i < (experiment.getAlgorithmNameList().length-1)) {
+        fileWriter.write("&") ;
       }
     }
 
-    fileWriter_.write("\\\\" );
+    fileWriter.write("\\\\");
   }
 
   private void writeTableTail() throws IOException {
-    fileWriter_.write("\\hline" + "\n");
-    fileWriter_.write("\\end{tabular}" + "\n");
-    fileWriter_.write("\\end{scriptsize}" + "\n");
-    fileWriter_.write("\\end{table}" + "\n");
+    fileWriter.write("\\hline" + "\n");
+    fileWriter.write("\\end{tabular}" + "\n");
+    fileWriter.write("\\end{scriptsize}" + "\n");
+    fileWriter.write("\\end{table}" + "\n");
   }
 
   private double calculateSetCoverage(String problem, String algorithmA, String algorithmB)
@@ -165,11 +165,11 @@ public class SetCoverageTables implements IExperimentOutput {
     double result = 5.5 ;
     SetCoverage setCoverageMetric = new SetCoverage() ;
 
-    Vector<Double> values  = new Vector<Double>(experiment_.getIndependentRuns()) ;
+    Vector<Double> values  = new Vector<Double>(experiment.getIndependentRuns()) ;
 
-    for (int i = 0; i < experiment_.getIndependentRuns(); i++) {
-      String front1 = experiment_.getExperimentBaseDirectory()+"/data/"+algorithmA+"/"+problem+"/FUN."+i ;
-      String front2 = experiment_.getExperimentBaseDirectory()+"/data/"+algorithmB+"/"+problem+"/FUN."+i ;
+    for (int i = 0; i < experiment.getIndependentRuns(); i++) {
+      String front1 = experiment.getExperimentBaseDirectory()+"/data/"+algorithmA+"/"+problem+"/FUN."+i ;
+      String front2 = experiment.getExperimentBaseDirectory()+"/data/"+algorithmB+"/"+problem+"/FUN."+i ;
       result = setCoverageMetric.setCoverage(front1, front2) ;
       values.add(i, result);
     }
@@ -178,13 +178,13 @@ public class SetCoverageTables implements IExperimentOutput {
   }
 
   private void createOutputDirectory() {
-    outputDirectoryName_ = "R";
-    outputDirectoryName_ = experiment_.getExperimentBaseDirectory() + "/" + outputDirectoryName_;
-    Configuration.logger.info("R    : " + outputDirectoryName_);
-    outputDirectory_ = new File(outputDirectoryName_);
-    if (!outputDirectory_.exists()) {
-      new File(outputDirectoryName_).mkdirs();
-      Configuration.logger.info("Creating " + outputDirectoryName_ + " directory");
+    outputDirectoryName = "R";
+    outputDirectoryName = experiment.getExperimentBaseDirectory() + "/" + outputDirectoryName;
+    Configuration.logger.info("R    : " + outputDirectoryName);
+    outputDirectory = new File(outputDirectoryName);
+    if (!outputDirectory.exists()) {
+      new File(outputDirectoryName).mkdirs();
+      Configuration.logger.info("Creating " + outputDirectoryName + " directory");
     }
   }
 }

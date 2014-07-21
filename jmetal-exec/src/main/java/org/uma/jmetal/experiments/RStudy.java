@@ -1,4 +1,4 @@
-//  ConfigurationFileStudy.java
+//  jMetalStudy.java
 //
 //  Authors:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -18,7 +18,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.runner.experiments;
+package org.uma.jmetal.experiments;
 
 import org.uma.jmetal.experiment.Experiment;
 import org.uma.jmetal.util.Configuration;
@@ -31,31 +31,31 @@ import java.io.IOException;
  * compared when solving the benchmarks, and the hypervolume,
  * spread and additive epsilon indicators are used for performance assessment.
  */
-public class ConfigurationFileStudy extends Experiment {
+public class RStudy extends Experiment {
 
-  public ConfigurationFileStudy() {
-    experimentName = "ConfigurationFileStudy";
-    independentRuns = 0;
-    algorithmNameList = null;
-    problemList = null;
-    paretoFrontFileList = null;
-    indicatorList = null;
-    experimentBaseDirectory = null;
-    paretoFrontDirectory = null;
-    numberOfExecutionThreads = 1;
+  public RStudy() {
+    experimentName = "bridgeMedium";
+    independentRuns = 30;
+    algorithmNameList = new String[] {"NSGAII", "MOCell", "MOEAD"};
+    problemList = new String[] {"EBEs"};
+    paretoFrontFileList = new String[] {"EBEs.pf"};
+    indicatorList = new String[] {"HV", "SPREAD", "EPSILON"};
+    experimentBaseDirectory = "/home/antonio/Investigacion/Puentes/puenteMediano/puenteMediano";
+    paretoFrontDirectory = "/Users/antelverde/Softw/pruebas/data/paretoFronts";
+    numberOfExecutionThreads = 6;
 
     generateReferenceParetoFronts = false;
     runTheAlgorithms = false;
     generateBoxplots = false;
-    boxplotRows = 0;
-    boxplotColumns = 0;
-    boxplotNotch = false;
+    boxplotRows = 2;
+    boxplotColumns = 2;
+    boxplotNotch = true;
     generateFriedmanTables = false;
     generateLatexTables = false;
     generateWilcoxonTables = false;
+    generateSetCoverageTables = true;
     generateQualityIndicators = false;
   }
-
 
   /**
    * Main method
@@ -65,7 +65,7 @@ public class ConfigurationFileStudy extends Experiment {
    * @throws java.io.IOException
    */
   public static void main(String[] args) throws JMetalException, IOException {
-    ConfigurationFileStudy exp = new ConfigurationFileStudy();
+    RStudy exp = new RStudy();
 
     Configuration.logger.info("START");
 
@@ -76,4 +76,5 @@ public class ConfigurationFileStudy extends Experiment {
     exp.runExperiment();
   } 
 } 
+
 

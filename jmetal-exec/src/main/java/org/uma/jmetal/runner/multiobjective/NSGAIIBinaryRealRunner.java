@@ -24,7 +24,7 @@ import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.experiment.settings.NSGAIIBinaryRealSettings;
-import org.uma.jmetal.qualityIndicator.QualityIndicator;
+import org.uma.jmetal.qualityIndicator.QualityIndicatorGetter;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
@@ -72,7 +72,7 @@ public class NSGAIIBinaryRealRunner {
     Operator mutation;
     Operator selection;
 
-    QualityIndicator indicators;
+    QualityIndicatorGetter indicators;
 
     HashMap<String, Object> parameters ;
 

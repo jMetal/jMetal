@@ -21,6 +21,7 @@
 
 package org.uma.jmetal.qualityIndicator;
 
+import org.uma.jmetal.qualityIndicator.util.MetricsUtil;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 
@@ -34,19 +35,18 @@ import org.uma.jmetal.util.JMetalException;
  * Technical Report TR-98-03, Dept. Elec. Comput. Eng., Air Force
  * Inst. Technol. (1998)
  */
-public class GenerationalDistance {
-  //pow. This is the pow used for the
-  //distances
-  static final double pow_ = 2.0;
-  //utils is used to access to the MetricsUtil functionalities
-  public org.uma.jmetal.qualityIndicator.util.MetricsUtil utils_;
+public class GenerationalDistance implements QualityIndicator {
+  private static final String NAME = "GD" ;
+
+  private static final double pow = 2.0;
+  private MetricsUtil utils;
 
   /**
    * Constructor.
    * Creates a new instance of the generational distance metric.
    */
   public GenerationalDistance() {
-    utils_ = new org.uma.jmetal.qualityIndicator.util.MetricsUtil();
+    utils = new MetricsUtil();
   }
 
   /**
@@ -67,8 +67,8 @@ public class GenerationalDistance {
     GenerationalDistance qualityIndicator = new GenerationalDistance();
 
     // STEP 2. Read the fronts from the files
-    double[][] solutionFront = qualityIndicator.utils_.readFront(args[0]);
-    double[][] trueFront = qualityIndicator.utils_.readFront(args[1]);
+    double[][] solutionFront = qualityIndicator.utils.readFront(args[0]);
+    double[][] trueFront = qualityIndicator.utils.readFront(args[1]);
 
     // STEP 3. Obtain the metric value
     double value = qualityIndicator.generationalDistance(
@@ -89,35 +89,20 @@ public class GenerationalDistance {
     double[][] trueParetoFront,
     int numberOfObjectives) {
 
-    /**
-     * Stores the maximum values of true pareto front.
-     */
     double[] maximumValue;
-
-    /**
-     * Stores the minimum values of the true pareto front.
-     */
     double[] minimumValue;
-
-    /**
-     * Stores the normalized front.
-     */
     double[][] normalizedFront;
-
-    /**
-     * Stores the normalized true Pareto front.
-     */
     double[][] normalizedParetoFront;
 
     // STEP 1. Obtain the maximum and minimum values of the Pareto front
-    maximumValue = utils_.getMaximumValues(trueParetoFront, numberOfObjectives);
-    minimumValue = utils_.getMinimumValues(trueParetoFront, numberOfObjectives);
+    maximumValue = utils.getMaximumValues(trueParetoFront, numberOfObjectives);
+    minimumValue = utils.getMinimumValues(trueParetoFront, numberOfObjectives);
 
     // STEP 2. Get the normalized front and true Pareto fronts
-    normalizedFront = utils_.getNormalizedFront(front,
+    normalizedFront = utils.getNormalizedFront(front,
       maximumValue,
       minimumValue);
-    normalizedParetoFront = utils_.getNormalizedFront(trueParetoFront,
+    normalizedParetoFront = utils.getNormalizedFront(trueParetoFront,
       maximumValue,
       minimumValue);
 
@@ -125,19 +110,28 @@ public class GenerationalDistance {
     // nearest point in the true Pareto front
     double sum = 0.0;
     for (int i = 0; i < front.length; i++) {
-      sum += Math.pow(utils_.distanceToClosedPoint(normalizedFront[i],
+      sum += Math.pow(utils.distanceToClosedPoint(normalizedFront[i],
           normalizedParetoFront),
-        pow_
+        pow
       );
     }
 
 
     // STEP 4. Obtain the sqrt of the sum
-    sum = Math.pow(sum, 1.0 / pow_);
+    sum = Math.pow(sum, 1.0 / pow);
 
     // STEP 5. Divide the sum by the maximum number of points of the front
     double generationalDistance = sum / normalizedFront.length;
 
     return generationalDistance;
+  }
+
+  @Override public double execute(double[][] paretoFrontApproximation, double[][] paretoTrueFront,
+    int numberOfObjectives) {
+    return generationalDistance(paretoFrontApproximation, paretoTrueFront, numberOfObjectives) ;
+  }
+
+  @Override public String getName() {
+    return NAME;
   }
 }

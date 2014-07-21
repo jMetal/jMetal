@@ -21,6 +21,7 @@
 package org.uma.jmetal.qualityIndicator;
 
 import org.uma.jmetal.core.SolutionSet;
+import org.uma.jmetal.qualityIndicator.util.MetricsUtil;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 
@@ -31,29 +32,30 @@ import java.util.LinkedList;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 
-public class R2 {
+public class R2 implements QualityIndicator {
+  private static final String NAME = "R2" ;
 
-  public org.uma.jmetal.qualityIndicator.util.MetricsUtil utils_;
-  double[][] matrix_ = null;
-  double[][] lambda_ = null;
-  int nObj_ = 0;
+  private MetricsUtil utils;
+  double[][] matrix = null;
+  double[][] lambda = null;
+  int nObj = 0;
 
   /**
    * Constructor Creates a new instance of the R2 indicator for a problem with
    * two objectives and 100 lambda vectors
    */
   public R2() {
-    utils_ = new org.uma.jmetal.qualityIndicator.util.MetricsUtil();
+    utils = new MetricsUtil();
 
     // by default it creates an R2 indicator for a two dimensions probllem and
     // uses only 100 weight vectors for the R2 computation
-    nObj_ = 2;
+    nObj = 2;
     // generating the weights
-    lambda_ = new double[100][2];
+    lambda = new double[100][2];
     for (int n = 0; n < 100; n++) {
       double a = 1.0 * n / (100 - 1);
-      lambda_[n][0] = a;
-      lambda_[n][1] = 1 - a;
+      lambda[n][0] = a;
+      lambda[n][1] = 1 - a;
     }
   }
 
@@ -62,17 +64,17 @@ public class R2 {
    * two objectives and N lambda vectors
    */
   public R2(int nVectors) {
-    utils_ = new org.uma.jmetal.qualityIndicator.util.MetricsUtil();
+    utils = new org.uma.jmetal.qualityIndicator.util.MetricsUtil();
 
     // by default it creates an R2 indicator for a two dimensions probllem and
     // uses only <code>nVectors</code> weight vectors for the R2 computation
-    nObj_ = 2;
+    nObj = 2;
     // generating the weights
-    lambda_ = new double[nVectors][2];
+    lambda = new double[nVectors][2];
     for (int n = 0; n < nVectors; n++) {
       double a = 1.0 * n / (nVectors - 1);
-      lambda_[n][0] = a;
-      lambda_[n][1] = 1 - a;
+      lambda[n][0] = a;
+      lambda[n][1] = 1 - a;
     }
   } // R2
 
@@ -81,12 +83,12 @@ public class R2 {
    * loads the weight vectors from the file fileName
    */
   public R2(int nObj, String file) {
-    utils_ = new org.uma.jmetal.qualityIndicator.util.MetricsUtil();
+    utils = new org.uma.jmetal.qualityIndicator.util.MetricsUtil();
     // A file is indicated, the weights are taken from there
 
     // by default it creates an R2 indicator for a two dimensions probllem and
     // uses only <code>nVectors</code> weight vectors for the R2 computation
-    nObj_ = nObj;
+    this.nObj = nObj;
     // generating the weights
 
     // reading weights
@@ -116,10 +118,10 @@ public class R2 {
       br.close();
 
       // convert the LinkedList into a vector
-      lambda_ = new double[list.size()][];
+      lambda = new double[list.size()][];
       int index = 0;
       for (double[] aList : list) {
-        lambda_[index++] = aList;
+        lambda[index++] = aList;
       }
     } catch (Exception e) {
       Configuration.logger.log(Level.SEVERE,
@@ -138,7 +140,7 @@ public class R2 {
   public static void main(String args[]) throws JMetalException {
     if (args.length < 3) {
       throw new JMetalException(
-        "Error using R2. Usage: \n java org.uma.jmetal.qualityIndicator.Hypervolume "
+        "Error using R2. Usage: \n java org.uma.jmetal.qualityIndicator.R2 "
           + "<SolutionFrontFile> " + "<TrueFrontFile> "
           + "<getNumberOfObjectives>");
     }
@@ -155,8 +157,8 @@ public class R2 {
       qualityIndicator = new R2(nObj, args[3]);
     }
 
-    double[][] approximationFront = qualityIndicator.utils_.readFront(args[0]);
-    double[][] paretoFront = qualityIndicator.utils_.readFront(args[1]);
+    double[][] approximationFront = qualityIndicator.utils.readFront(args[0]);
+    double[][] paretoFront = qualityIndicator.utils.readFront(args[1]);
 
     // Obtain delta value
     double value = qualityIndicator.r2(approximationFront, paretoFront);
@@ -200,46 +202,46 @@ public class R2 {
     double[][] normalizedParetoFront;
 
     // STEP 1. Obtain the maximum and minimum values of the Pareto front
-    maximumValue = utils_.getMaximumValues(paretoFront, nObj_);
-    minimumValue = utils_.getMinimumValues(paretoFront, nObj_);
+    maximumValue = utils.getMaximumValues(paretoFront, nObj);
+    minimumValue = utils.getMinimumValues(paretoFront, nObj);
 
     // STEP 2. Get the normalized front and true Pareto fronts
-    normalizedApproximation = utils_.getNormalizedFront(approximation,
+    normalizedApproximation = utils.getNormalizedFront(approximation,
       maximumValue, minimumValue);
-    normalizedParetoFront = utils_.getNormalizedFront(paretoFront,
+    normalizedParetoFront = utils.getNormalizedFront(paretoFront,
       maximumValue, minimumValue);
 
     // STEP 3. compute all the matrix of tchebicheff values if it is null
-    matrix_ = new double[approximation.length][lambda_.length];
+    matrix = new double[approximation.length][lambda.length];
     for (int i = 0; i < approximation.length; i++) {
-      for (int j = 0; j < lambda_.length; j++) {
-        matrix_[i][j] = lambda_[j][0] * Math.abs(normalizedApproximation[i][0]);
-        for (int n = 1; n < nObj_; n++) {
-          matrix_[i][j] = Math.max(matrix_[i][j],
-            lambda_[j][n] * Math.abs(normalizedApproximation[i][n]));
+      for (int j = 0; j < lambda.length; j++) {
+        matrix[i][j] = lambda[j][0] * Math.abs(normalizedApproximation[i][0]);
+        for (int n = 1; n < nObj; n++) {
+          matrix[i][j] = Math.max(matrix[i][j],
+            lambda[j][n] * Math.abs(normalizedApproximation[i][n]));
         }
       }
     }
 
     // STEP45. Compute the R2 value withouth the point
     double sumWithout = 0.0;
-    for (int i = 0; i < lambda_.length; i++) {
+    for (int i = 0; i < lambda.length; i++) {
       double tmp;
       if (index != 0) {
-        tmp = matrix_[0][i];
+        tmp = matrix[0][i];
       } else {
-        tmp = matrix_[1][i];
+        tmp = matrix[1][i];
       }
       for (int j = 0; j < approximation.length; j++) {
         if (j != index) {
-          tmp = Math.min(tmp, matrix_[j][i]);
+          tmp = Math.min(tmp, matrix[j][i]);
         }
       }
       sumWithout += tmp;
     }
 
     // STEP 5. Return the R2 value
-    return sumWithout / (double) lambda_.length;
+    return sumWithout / (double) lambda.length;
   }
 
   /**
@@ -367,39 +369,39 @@ public class R2 {
     double[][] normalizedParetoFront;
 
     // STEP 1. Obtain the maximum and minimum values of the Pareto front
-    maximumValue = utils_.getMaximumValues(paretoFront, nObj_);
-    minimumValue = utils_.getMinimumValues(paretoFront, nObj_);
+    maximumValue = utils.getMaximumValues(paretoFront, nObj);
+    minimumValue = utils.getMinimumValues(paretoFront, nObj);
 
     // STEP 2. Get the normalized front and true Pareto fronts
-    normalizedApproximation = utils_.getNormalizedFront(approximation,
+    normalizedApproximation = utils.getNormalizedFront(approximation,
       maximumValue, minimumValue);
-    normalizedParetoFront = utils_.getNormalizedFront(paretoFront,
+    normalizedParetoFront = utils.getNormalizedFront(paretoFront,
       maximumValue, minimumValue);
 
     // STEP 3. compute all the matrix of tchebicheff values if it is null
-    matrix_ = new double[approximation.length][lambda_.length];
+    matrix = new double[approximation.length][lambda.length];
     for (int i = 0; i < approximation.length; i++) {
-      for (int j = 0; j < lambda_.length; j++) {
-        matrix_[i][j] = lambda_[j][0] * Math.abs(normalizedApproximation[i][0]);
-        for (int n = 1; n < nObj_; n++) {
-          matrix_[i][j] = Math.max(matrix_[i][j],
-            lambda_[j][n] * Math.abs(normalizedApproximation[i][n]));
+      for (int j = 0; j < lambda.length; j++) {
+        matrix[i][j] = lambda[j][0] * Math.abs(normalizedApproximation[i][0]);
+        for (int n = 1; n < nObj; n++) {
+          matrix[i][j] = Math.max(matrix[i][j],
+            lambda[j][n] * Math.abs(normalizedApproximation[i][n]));
         }
       }
     }
 
     // STEP 4. The matrix is not null. Compute the R2 value
     double sum = 0.0;
-    for (int i = 0; i < lambda_.length; i++) {
-      double tmp = matrix_[0][i];
+    for (int i = 0; i < lambda.length; i++) {
+      double tmp = matrix[0][i];
       for (int j = 1; j < approximation.length; j++) {
-        tmp = Math.min(tmp, matrix_[j][i]);
+        tmp = Math.min(tmp, matrix[j][i]);
       }
       sum += tmp;
     }
 
     // STEP 5. Return the R2 value
-    return sum / (double) lambda_.length;
+    return sum / (double) lambda.length;
   }
 
   /**
@@ -420,5 +422,14 @@ public class R2 {
     double[][] approximationFront = set.writeObjectivesToMatrix();
     double[][] trueFront = set.writeObjectivesToMatrix();
     return this.r2(approximationFront, trueFront);
+  }
+
+  @Override public double execute(double[][] paretoFrontApproximation, double[][] paretoTrueFront,
+    int numberOfObjectives) {
+    return r2(paretoFrontApproximation, paretoTrueFront);
+  }
+
+  @Override public String getName() {
+    return NAME;
   }
 }

@@ -21,6 +21,7 @@
 
 package org.uma.jmetal.qualityIndicator;
 
+import org.uma.jmetal.qualityIndicator.util.MetricsUtil;
 import org.uma.jmetal.util.JMetalException;
 
 import java.util.Arrays;
@@ -34,16 +35,17 @@ import java.util.Arrays;
  * multi-objective optimization using a convergence criterion,
  * 2006 IEEE Congress on Evolutionary Computation, 2006, pp. 3234-3241.
  */
-public class GeneralizedSpread {
+public class GeneralizedSpread implements QualityIndicator {
+  private static final String NAME = "GSPREAD" ;
 
-  public static org.uma.jmetal.qualityIndicator.util.MetricsUtil utils_;
+  private static MetricsUtil utils;
 
   /**
    * Constructor
    * Creates a new instance of GeneralizedSpread
    */
   public GeneralizedSpread() {
-    utils_ = new org.uma.jmetal.qualityIndicator.util.MetricsUtil();
+    utils = new MetricsUtil();
   }
 
   /**
@@ -81,15 +83,15 @@ public class GeneralizedSpread {
     double[][] normalizedParetoFront;
 
     // STEP 1. Obtain the maximum and minimum values of the Pareto front
-    maximumValue = utils_.getMaximumValues(paretoTrueFront,numberOfObjectives);
-    minimumValue = utils_.getMinimumValues(paretoTrueFront,numberOfObjectives);
+    maximumValue = utils.getMaximumValues(paretoTrueFront,numberOfObjectives);
+    minimumValue = utils.getMinimumValues(paretoTrueFront,numberOfObjectives);
 
-    normalizedFront = utils_.getNormalizedFront(paretoFront,
+    normalizedFront = utils.getNormalizedFront(paretoFront,
         maximumValue,
         minimumValue);
 
     // STEP 2. Get the normalized front and true Pareto fronts
-    normalizedParetoFront = utils_.getNormalizedFront(paretoTrueFront,
+    normalizedParetoFront = utils.getNormalizedFront(paretoTrueFront,
         maximumValue,
         minimumValue);
 
@@ -107,7 +109,7 @@ public class GeneralizedSpread {
     Arrays.sort(normalizedFront, new org.uma.jmetal.qualityIndicator.util.LexicoGraphicalComparator());
 
     // STEP 5. Calculate the metric value. The value is 1.0 by default
-    if (utils_.distance(normalizedFront[0], normalizedFront[normalizedFront.length - 1]) == 0.0) {
+    if (utils.distance(normalizedFront[0], normalizedFront[normalizedFront.length - 1]) == 0.0) {
       return 1.0;
     } else {
 
@@ -115,7 +117,7 @@ public class GeneralizedSpread {
 
       // STEP 6. Calculate the mean distance between each point and its nearest neighbor
       for (double[] aNormalizedFront : normalizedFront) {
-        dmean += utils_.distanceToNearestPoint(aNormalizedFront, normalizedFront);
+        dmean += utils.distanceToNearestPoint(aNormalizedFront, normalizedFront);
       }
 
       dmean = dmean / (numberOfPoints);
@@ -123,13 +125,13 @@ public class GeneralizedSpread {
       // STEP 7. Calculate the distance to extremal values
       double dExtrems = 0.0;
       for (double[] extremValue : extremValues) {
-        dExtrems += utils_.distanceToClosedPoint(extremValue, normalizedFront);
+        dExtrems += utils.distanceToClosedPoint(extremValue, normalizedFront);
       }
 
       // STEP 8. Computing the value of the metric
       double mean = 0.0;
       for (double[] aNormalizedFront : normalizedFront) {
-        mean += Math.abs(utils_.distanceToNearestPoint(aNormalizedFront, normalizedFront) -
+        mean += Math.abs(utils.distanceToNearestPoint(aNormalizedFront, normalizedFront) -
             dmean);
       }
 
@@ -156,8 +158,8 @@ public class GeneralizedSpread {
     GeneralizedSpread qualityIndicator = new GeneralizedSpread();
 
     //Read the front from the files
-    double [][] solutionFront = utils_.readFront(args[0]);
-    double [][] trueFront     = utils_.readFront(args[1]);
+    double [][] solutionFront = utils.readFront(args[0]);
+    double [][] trueFront     = utils.readFront(args[1]);
 
     //Obtain delta value
     double value = qualityIndicator.generalizedSpread(solutionFront,
@@ -165,5 +167,14 @@ public class GeneralizedSpread {
         new Integer(args[2]));
 
     System.out.println(value);
+  }
+
+  @Override public double execute(double[][] paretoFrontApproximation, double[][] paretoTrueFront,
+    int numberOfObjectives) {
+    return 0;
+  }
+
+  @Override public String getName() {
+    return null;
   }
 }

@@ -38,7 +38,7 @@ import org.uma.jmetal.operator.mutation.MutationFactory;
 import org.uma.jmetal.operator.selection.SelectionFactory;
 import org.uma.jmetal.problem.Kursawe;
 import org.uma.jmetal.problem.ProblemFactory;
-import org.uma.jmetal.qualityIndicator.QualityIndicator;
+import org.uma.jmetal.qualityIndicator.QualityIndicatorGetter;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 
@@ -76,7 +76,7 @@ public class SMSEMOARunner {
     Operator mutation;
     Operator selection;
 
-    QualityIndicator indicators;
+    QualityIndicatorGetter indicators;
 
     // Logger object and file to store log messages
     logger_ = Configuration.logger;
@@ -90,7 +90,7 @@ public class SMSEMOARunner {
     } else if (args.length == 2) {
       Object[] params = {"Real"};
       problem = (new ProblemFactory()).getProblem(args[0], params);
-      indicators = new QualityIndicator(problem, args[1]);
+      indicators = new QualityIndicatorGetter(problem, args[1]);
     } else {
       problem = new Kursawe("Real", 3);
       //problem = new Kursawe("BinaryReal", 3);

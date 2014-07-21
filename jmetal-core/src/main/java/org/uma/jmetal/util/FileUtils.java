@@ -106,4 +106,27 @@ public class FileUtils {
     }
     return new double[0][0];
   }
+
+  public static void deleteFile(String file) {
+    File f = new File(file);
+    if (f.exists()) {
+      Configuration.logger.info("File " + file + " exist.");
+
+      if (f.isDirectory()) {
+        Configuration.logger.info("File " + file + " is a directory. Deleting directory.");
+        if (f.delete()) {
+          Configuration.logger.info("Directory successfully deleted.");
+        } else {
+          Configuration.logger.info("Error deleting directory.");
+        }
+      } else {
+        Configuration.logger.info("File " + file + " is a file. Deleting file.");
+        if (f.delete()) {
+          Configuration.logger.info("File successfully deleted.");
+        } else {
+          Configuration.logger.info("Error deleting file.");
+        }
+      }
+    }
+  }
 }

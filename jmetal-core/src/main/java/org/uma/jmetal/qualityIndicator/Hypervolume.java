@@ -21,8 +21,8 @@
 
 package org.uma.jmetal.qualityIndicator;
 
+import org.uma.jmetal.qualityIndicator.util.MetricsUtil;
 import org.uma.jmetal.util.Configuration;
-import org.uma.jmetal.util.JMetalException;
 
 import java.util.logging.Level;
 
@@ -37,16 +37,16 @@ import java.util.logging.Level;
  * IEEE Transactions on Evolutionary Computation, vol. 3, no. 4,
  * pp. 257-271, 1999.
  */
-public class Hypervolume {
-
-  public org.uma.jmetal.qualityIndicator.util.MetricsUtil utils;
+public class Hypervolume implements QualityIndicator {
+  private static final String NAME = "HV" ;
+  private MetricsUtil utils;
 
   /**
    * Constructor
    * Creates a new instance of MultiDelta
    */
   public Hypervolume() {
-    utils = new org.uma.jmetal.qualityIndicator.util.MetricsUtil();
+    utils = new MetricsUtil();
   }
 
   /**
@@ -57,26 +57,26 @@ public class Hypervolume {
    *
    * @throws org.uma.jmetal.util.JMetalException
    */
-  public static void main(String args[]) throws JMetalException {
-    if (args.length < 2) {
-      throw new JMetalException(
-        "Error using Hypervolume. Usage: \n java org.uma.jmetal.qualityIndicator.Hypervolume " +
-          "<SolutionFrontFile> " +
-          "<TrueFrontFile> " + "<getNumberOfObjectives>");
-    }
-
-    //Create a new instance of the metric
-    Hypervolume qualityIndicator = new Hypervolume();
-
-    //Read the front from the files
-    double[][] solutionFront = qualityIndicator.utils.readFront(args[0]);
-    double[][] trueFront = qualityIndicator.utils.readFront(args[1]);
-
-    //Obtain delta value
-    double value = qualityIndicator.hypervolume(solutionFront, trueFront, new Integer(args[2]));
-
-    Configuration.logger.info(""+value);
-  }
+//  public static void main(String args[]) throws JMetalException {
+//    if (args.length < 2) {
+//      throw new JMetalException(
+//        "Error using Hypervolume. Usage: \n java org.uma.jmetal.qualityIndicator.Hypervolume " +
+//          "<SolutionFrontFile> " +
+//          "<TrueFrontFile> " + "<getNumberOfObjectives>");
+//    }
+//
+//    //Create a new instance of the metric
+//    Hypervolume qualityIndicator = new Hypervolume();
+//
+//    //Read the front from the files
+//    double[][] solutionFront = qualityIndicator.utils.readFront(args[0]);
+//    double[][] trueFront = qualityIndicator.utils.readFront(args[1]);
+//
+//    //Obtain delta value
+//    double value = qualityIndicator.hypervolume(solutionFront, trueFront, new Integer(args[2]));
+//
+//    Configuration.logger.info(""+value);
+//  }
 
   /*
    returns true if 'point1' dominates 'points2' with respect to the
@@ -240,39 +240,23 @@ public class Hypervolume {
 
   /**
    * Returns the hypevolume value of the paretoFront. This method call to the
-   * calculate hipervolume one
+   * calculate hypervolume one
    *
    * @param paretoFront        The pareto front
-   * @param paretoTrueFront    The true pareto front
-   * @param numberOfObjectives Number of objectives of the pareto front
+   * @param trueParetoFront    The true pareto front
    */
-  public double hypervolume(double[][] paretoFront,
-    double[][] paretoTrueFront,
-    int numberOfObjectives) {
+  public double hypervolume(double[][] paretoFront, double[][] trueParetoFront) {
 
-    /**
-     * Stores the maximum values of true pareto front.
-     */
     double[] maximumValues;
-
-    /**
-     * Stores the minimum values of the true pareto front.
-     */
     double[] minimumValues;
-
-    /**
-     * Stores the normalized front.
-     */
     double[][] normalizedFront;
-
-    /**
-     * Stores the inverted front. Needed for minimization problem
-     */
     double[][] invertedFront;
 
+    int numberOfObjectives = paretoFront[0].length ;
+
     // STEP 1. Obtain the maximum and minimum values of the Pareto front
-    maximumValues = utils.getMaximumValues(paretoTrueFront, numberOfObjectives);
-    minimumValues = utils.getMinimumValues(paretoTrueFront, numberOfObjectives);
+    maximumValues = utils.getMaximumValues(trueParetoFront, numberOfObjectives);
+    minimumValues = utils.getMinimumValues(trueParetoFront, numberOfObjectives);
 
     // STEP 2. Get the normalized front
     normalizedFront = utils.getNormalizedFront(paretoFront,
@@ -283,7 +267,19 @@ public class Hypervolume {
     //metric by Zitzler is for maximization problem
     invertedFront = utils.invertedFront(normalizedFront);
 
-    // STEP4. The hypervolumen (control is passed to java version of Zitzler code)
+    // STEP4. The hypervolume (control is passed to java version of Zitzler code)
     return this.calculateHypervolume(invertedFront, invertedFront.length, numberOfObjectives);
+  }
+
+  @Override
+  public double execute(double[][] paretoFrontApproximation, double[][] paretoTrueFront,
+    int numberOfObjectives) {
+
+    return hypervolume(paretoFrontApproximation, paretoTrueFront) ;
+  }
+
+  @Override
+  public String getName() {
+    return NAME ;
   }
 }

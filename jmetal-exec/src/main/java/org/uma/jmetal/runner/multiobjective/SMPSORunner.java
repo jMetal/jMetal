@@ -28,7 +28,7 @@ import org.uma.jmetal.operator.mutation.Mutation;
 import org.uma.jmetal.operator.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.Kursawe;
 import org.uma.jmetal.problem.ProblemFactory;
-import org.uma.jmetal.qualityIndicator.QualityIndicator;
+import org.uma.jmetal.qualityIndicator.QualityIndicatorGetter;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
@@ -73,7 +73,7 @@ public class SMPSORunner {
     Algorithm algorithm;
     Mutation mutation;
 
-    QualityIndicator indicators;
+    QualityIndicatorGetter indicators;
 
     logger_ = Configuration.logger;
     fileHandler_ = new FileHandler("SMPSO_main.log");
@@ -86,7 +86,7 @@ public class SMPSORunner {
     } else if (args.length == 2) {
       Object[] params = {"Real"};
       problem = (new ProblemFactory()).getProblem(args[0], params);
-      indicators = new QualityIndicator(problem, args[1]);
+      indicators = new QualityIndicatorGetter(problem, args[1]);
     } else {
       problem = new Kursawe("Real", 3);
       /*

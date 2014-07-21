@@ -34,7 +34,7 @@ import java.util.Comparator;
  * Created by Antonio J. Nebro on 30/05/14.
  */
 public class SetCoverage {
-  private Comparator<Solution> dominance_;
+  private Comparator<Solution> dominance;
 
   /**
    * Calculates the set coverage of set1 over set2
@@ -53,7 +53,7 @@ public class SetCoverage {
         result = 1.0 ;
       }
     } else {
-      dominance_ = new DominanceComparator();
+      dominance = new DominanceComparator();
 
       for (int i = 0; i < set2.size(); i++) {
         if (solutionIsDominatedBySolutionSet(set2.get(i), set1)) {
@@ -89,7 +89,7 @@ public class SetCoverage {
     int i = 0 ;
 
     while (!result && (i < solutionSet.size())) {
-      if (dominance_.compare(solution, solutionSet.get(i)) == 1) {
+      if (dominance.compare(solution, solutionSet.get(i)) == 1) {
         result = true ;
       }
       i++ ;
@@ -120,7 +120,7 @@ public class SetCoverage {
       throw new JMetalException(
         "Error using Hypervolume. Usage: \n java org.uma.jmetal.qualityIndicator.SetCoverage " +
           "<SolutionFrontFile1> " +
-          "<SolutionFrontFile2> " + "<getNumberOfObjectives>");
+          "<SolutionFrontFile2> ");
     } else {
        double result = new SetCoverage().setCoverage(args[0], args[1]) ;
       Configuration.logger.info("Set coverage: " + result) ;

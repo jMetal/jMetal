@@ -26,7 +26,7 @@ import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.experiment.Settings;
 import org.uma.jmetal.experiment.SettingsFactory;
-import org.uma.jmetal.qualityIndicator.QualityIndicator;
+import org.uma.jmetal.qualityIndicator.QualityIndicatorGetter;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
@@ -67,7 +67,7 @@ public class Runner {
     fileHandler_ = new FileHandler("jMetal.log");
     logger_.addHandler(fileHandler_);
 
-    QualityIndicator indicators;
+    QualityIndicatorGetter indicators;
 
     Settings settings = null;
 
@@ -104,7 +104,7 @@ public class Runner {
 
     if (args.length == 3) {
       Problem p = algorithm.getProblem();
-      indicators = new QualityIndicator(p, paretoFrontFile);
+      indicators = new QualityIndicatorGetter(p, paretoFrontFile);
     }
 
     // Execute the Algorithm

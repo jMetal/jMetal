@@ -22,7 +22,7 @@ package org.uma.jmetal.metaheuristic.multiobjective.smsemoa;
 
 import org.uma.jmetal.core.*;
 import org.uma.jmetal.qualityIndicator.Hypervolume;
-import org.uma.jmetal.qualityIndicator.QualityIndicator;
+import org.uma.jmetal.qualityIndicator.QualityIndicatorGetter;
 import org.uma.jmetal.qualityIndicator.fastHypervolume.FastHypervolume;
 import org.uma.jmetal.qualityIndicator.util.MetricsUtil;
 import org.uma.jmetal.util.Configuration;
@@ -78,7 +78,7 @@ public class FastSMSEMOA extends Algorithm {
     int evaluations;
     double offset;
 
-    QualityIndicator indicators; // QualityIndicator object
+    QualityIndicatorGetter indicators; // QualityIndicator object
     int requiredEvaluations; // Use in the example of use of the indicators object (see below)
 
     FastHypervolume fastHypervolume;
@@ -94,7 +94,7 @@ public class FastSMSEMOA extends Algorithm {
     //Read the parameters
     populationSize = ((Integer) getInputParameter("populationSize")).intValue();
     maxEvaluations = ((Integer) getInputParameter("maxEvaluations")).intValue();
-    indicators = (QualityIndicator) getInputParameter("indicators");
+    indicators = (QualityIndicatorGetter) getInputParameter("indicators");
     offset = (Double) getInputParameter("offset");
 
 

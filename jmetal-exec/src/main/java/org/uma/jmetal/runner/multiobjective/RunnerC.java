@@ -26,7 +26,7 @@ import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.experiment.Settings;
 import org.uma.jmetal.experiment.SettingsFactory;
-import org.uma.jmetal.qualityIndicator.QualityIndicator;
+import org.uma.jmetal.qualityIndicator.QualityIndicatorGetter;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
@@ -64,7 +64,7 @@ public class RunnerC {
     ClassNotFoundException {
     Algorithm algorithm;
 
-    QualityIndicator indicators;
+    QualityIndicatorGetter indicators;
 
     logger_ = Configuration.logger;
     fileHandler_ = new FileHandler("jMetal.log");
@@ -118,7 +118,7 @@ public class RunnerC {
 
     if (args.length == 3) {
       Problem p = algorithm.getProblem();
-      indicators = new QualityIndicator(p, paretoFrontFile);
+      indicators = new QualityIndicatorGetter(p, paretoFrontFile);
     }
 
     // Execute the Algorithm

@@ -30,7 +30,7 @@ import org.uma.jmetal.operator.crossover.CrossoverFactory;
 import org.uma.jmetal.operator.mutation.MutationFactory;
 import org.uma.jmetal.operator.selection.SelectionFactory;
 import org.uma.jmetal.problem.mTSP;
-import org.uma.jmetal.qualityIndicator.QualityIndicator;
+import org.uma.jmetal.qualityIndicator.QualityIndicatorGetter;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.evaluator.SequentialSolutionSetEvaluator;
 import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
@@ -62,7 +62,7 @@ public class NSGAIImTSPRunner {
     Operator mutation; 
     Operator selection; 
 
-    QualityIndicator indicators; 
+    QualityIndicatorGetter indicators;
 
     // Logger object and file to store log messages
     logger_ = Configuration.logger;

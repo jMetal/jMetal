@@ -21,6 +21,7 @@
 
 package org.uma.jmetal.qualityIndicator;
 
+import org.uma.jmetal.qualityIndicator.util.MetricsUtil;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 
@@ -34,13 +35,11 @@ import org.uma.jmetal.util.JMetalException;
  * <trueFrontFile> <getNumberOfObjectives>
  */
 
-public class Epsilon {
+public class Epsilon implements QualityIndicator {
+  private static final String NAME = "EPSILON" ;
+  private MetricsUtil utils = new MetricsUtil();
 
-  /* stores a reference to qualityIndicatorUtils */
-  public org.uma.jmetal.qualityIndicator.util.MetricsUtil utils_ =
-    new org.uma.jmetal.qualityIndicator.util.MetricsUtil();
-  /* stores the number of objectives */
-  int dim;
+  int numberOfObjectives;
   /*
    * obj[i]=0 means objective i is to be minimized. This code always assume the
    * minimization of all the objectives
@@ -61,7 +60,7 @@ public class Epsilon {
    */
   public static void main(String[] args) throws NumberFormatException,
     JMetalException {
-    double ind_value;
+    double indValue;
 
     if (args.length < 2) {
       throw new JMetalException(
@@ -71,29 +70,29 @@ public class Epsilon {
     }
 
     Epsilon qualityIndicator = new Epsilon();
-    double[][] solutionFront = qualityIndicator.utils_.readFront(args[0]);
-    double[][] trueFront = qualityIndicator.utils_.readFront(args[1]);
+    double[][] solutionFront = qualityIndicator.utils.readFront(args[0]);
+    double[][] trueFront = qualityIndicator.utils.readFront(args[1]);
 
-    ind_value = qualityIndicator.epsilon(trueFront, solutionFront, new Integer(
+    indValue = qualityIndicator.epsilon(solutionFront, trueFront, new Integer(
       args[2]));
 
-    Configuration.logger.info(""+ind_value);
+    Configuration.logger.info(""+indValue);
   }
 
   /**
    * Returns the epsilon indicator.
    *
-   * @param b True Pareto front
    * @param a Solution front
+   * @param b True Pareto front
    * @return the value of the epsilon indicator
    * @throws org.uma.jmetal.util.JMetalException
    */
-  public double epsilon(double[][] b, double[][] a, int dim) throws JMetalException {
+  public double epsilon(double[][] a, double[][] b, int dim) throws JMetalException {
     int i, j, k;
-    double eps, eps_j = 0.0, eps_k = 0.0, eps_temp;
+    double eps, epsJ = 0.0, epsK = 0.0, epsTemp;
 
-    this.dim = dim;
-    set_params();
+    this.numberOfObjectives = dim;
+    setParams();
 
     if (method == 0) {
       eps = Double.MIN_VALUE;
@@ -103,13 +102,13 @@ public class Epsilon {
 
     for (i = 0; i < a.length; i++) {
       for (j = 0; j < b.length; j++) {
-        for (k = 0; k < this.dim; k++) {
+        for (k = 0; k < this.numberOfObjectives; k++) {
           switch (method) {
             case 0:
               if (obj[k] == 0) {
-                eps_temp = b[j][k] - a[i][k];
+                epsTemp = b[j][k] - a[i][k];
               } else {
-                eps_temp = a[i][k] - b[j][k];
+                epsTemp = a[i][k] - b[j][k];
               }
               break;
             default:
@@ -118,28 +117,28 @@ public class Epsilon {
                 throw new JMetalException("Error in data file");
               }
               if (obj[k] == 0) {
-                eps_temp = b[j][k] / a[i][k];
+                epsTemp = b[j][k] / a[i][k];
               } else {
-                eps_temp = a[i][k] / b[j][k];
+                epsTemp = a[i][k] / b[j][k];
               }
               break;
           }
           if (k == 0) {
-            eps_k = eps_temp;
-          } else if (eps_k < eps_temp) {
-            eps_k = eps_temp;
+            epsK = epsTemp;
+          } else if (epsK < epsTemp) {
+            epsK = epsTemp;
           }
         }
         if (j == 0) {
-          eps_j = eps_k;
-        } else if (eps_j > eps_k) {
-          eps_j = eps_k;
+          epsJ = epsK;
+        } else if (epsJ > epsK) {
+          epsJ = epsK;
         }
       }
       if (i == 0) {
-        eps = eps_j;
-      } else if (eps < eps_j) {
-        eps = eps_j;
+        eps = epsJ;
+      } else if (eps < epsJ) {
+        eps = epsJ;
       }
     }
     return eps;
@@ -148,12 +147,22 @@ public class Epsilon {
   /**
    * Established the params by default
    */
-  void set_params() {
+  void setParams() {
     int i;
-    obj = new int[dim];
-    for (i = 0; i < dim; i++) {
+    obj = new int[numberOfObjectives];
+    for (i = 0; i < numberOfObjectives; i++) {
       obj[i] = 0;
     }
     method = 0;
+  }
+
+  @Override public double execute(double[][] paretoFrontApproximation,
+    double[][] paretoTrueFront, int numberOfObjectives) {
+
+    return epsilon(paretoFrontApproximation, paretoTrueFront, numberOfObjectives) ;
+  }
+
+  @Override public String getName() {
+    return NAME ;
   }
 }

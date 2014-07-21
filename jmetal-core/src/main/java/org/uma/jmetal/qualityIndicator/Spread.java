@@ -21,6 +21,7 @@
 
 package org.uma.jmetal.qualityIndicator;
 
+import org.uma.jmetal.qualityIndicator.util.MetricsUtil;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 
@@ -35,18 +36,18 @@ import java.util.Arrays;
  * elitist multiobjective genetic algorithm: NSGA-II. IEEE Trans.
  * on Evol. Computation 6 (2002) 182-197
  */
-public class Spread {
+public class Spread implements QualityIndicator{
+  private static final String NAME = "SPREAD" ;
 
-  public static org.uma.jmetal.qualityIndicator.util.MetricsUtil utils_;//utils is used to access to
-  //the MetricsUtil funcionalities
+  private static MetricsUtil utils;
 
   /**
    * Constructor.
    * Creates a new instance of a Spread object
    */
   public Spread() {
-    utils_ = new org.uma.jmetal.qualityIndicator.util.MetricsUtil();
-  } // Delta
+    utils = new MetricsUtil();
+  }
 
   /**
    * This class can be invoqued from the command line. Three params are required:
@@ -67,8 +68,8 @@ public class Spread {
     Spread qualityIndicator = new Spread();
 
     // STEP 2. Read the fronts from the files
-    double[][] solutionFront = utils_.readFront(args[0]);
-    double[][] trueFront = utils_.readFront(args[1]);
+    double[][] solutionFront = utils.readFront(args[0]);
+    double[][] trueFront = utils.readFront(args[1]);
 
     // STEP 3. Obtain the metric value
     double value = qualityIndicator.spread(solutionFront, trueFront, 2);
@@ -109,14 +110,14 @@ public class Spread {
     double[][] normalizedParetoFront;
 
     // STEP 1. Obtain the maximum and minimum values of the Pareto front
-    maximumValue = utils_.getMaximumValues(trueParetoFront, numberOfObjectives);
-    minimumValue = utils_.getMinimumValues(trueParetoFront, numberOfObjectives);
+    maximumValue = utils.getMaximumValues(trueParetoFront, numberOfObjectives);
+    minimumValue = utils.getMinimumValues(trueParetoFront, numberOfObjectives);
 
     // STEP 2. Get the normalized front and true Pareto fronts
-    normalizedFront = utils_.getNormalizedFront(front,
+    normalizedFront = utils.getNormalizedFront(front,
       maximumValue,
       minimumValue);
-    normalizedParetoFront = utils_.getNormalizedFront(trueParetoFront,
+    normalizedParetoFront = utils.getNormalizedFront(trueParetoFront,
       maximumValue,
       minimumValue);
 
@@ -130,8 +131,8 @@ public class Spread {
 
     // STEP 4. Compute df and dl (See specifications in Deb's description of
     // the metric)
-    double df = utils_.distance(normalizedFront[0], normalizedParetoFront[0]);
-    double dl = utils_.distance(normalizedFront[normalizedFront.length - 1],
+    double df = utils.distance(normalizedFront[0], normalizedParetoFront[0]);
+    double dl = utils.distance(normalizedFront[normalizedFront.length - 1],
       normalizedParetoFront[normalizedParetoFront.length - 1]);
 
     double mean = 0.0;
@@ -140,7 +141,7 @@ public class Spread {
     // STEP 5. Calculate the mean of distances between points i and (i - 1).
     // (the points are in lexicografical order)
     for (int i = 0; i < (normalizedFront.length - 1); i++) {
-      mean += utils_.distance(normalizedFront[i], normalizedFront[i + 1]);
+      mean += utils.distance(normalizedFront[i], normalizedFront[i + 1]);
     }
 
     mean = mean / (double) (numberOfPoints - 1);
@@ -150,12 +151,21 @@ public class Spread {
     // description).
     if (numberOfPoints > 1) {
       for (int i = 0; i < (numberOfPoints - 1); i++) {
-        diversitySum += Math.abs(utils_.distance(normalizedFront[i],
+        diversitySum += Math.abs(utils.distance(normalizedFront[i],
           normalizedFront[i + 1]) - mean);
       }
       return diversitySum / (df + dl + (numberOfPoints - 1) * mean);
     } else {
       return 1.0;
     }
+  }
+
+  @Override public double execute(double[][] paretoFrontApproximation, double[][] trueParetoFront,
+    int numberOfObjectives) {
+    return spread(paretoFrontApproximation, trueParetoFront, numberOfObjectives);
+  }
+
+  @Override public String getName() {
+    return NAME;
   }
 }
