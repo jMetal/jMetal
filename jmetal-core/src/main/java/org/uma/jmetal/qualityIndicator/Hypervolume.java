@@ -49,35 +49,6 @@ public class Hypervolume implements QualityIndicator {
     utils = new MetricsUtil();
   }
 
-  /**
-   * This class can be invoqued from the command line. Three params are required:
-   * 1) the name of the file containing the front,
-   * 2) the name of the file containig the true Pareto front
-   * 3) the number of objectives
-   *
-   * @throws org.uma.jmetal.util.JMetalException
-   */
-//  public static void main(String args[]) throws JMetalException {
-//    if (args.length < 2) {
-//      throw new JMetalException(
-//        "Error using Hypervolume. Usage: \n java org.uma.jmetal.qualityIndicator.Hypervolume " +
-//          "<SolutionFrontFile> " +
-//          "<TrueFrontFile> " + "<getNumberOfObjectives>");
-//    }
-//
-//    //Create a new instance of the metric
-//    Hypervolume qualityIndicator = new Hypervolume();
-//
-//    //Read the front from the files
-//    double[][] solutionFront = qualityIndicator.utils.readFront(args[0]);
-//    double[][] trueFront = qualityIndicator.utils.readFront(args[1]);
-//
-//    //Obtain delta value
-//    double value = qualityIndicator.hypervolume(solutionFront, trueFront, new Integer(args[2]));
-//
-//    Configuration.logger.info(""+value);
-//  }
-
   /*
    returns true if 'point1' dominates 'points2' with respect to the
    to the first 'noObjectives' objectives
@@ -252,7 +223,7 @@ public class Hypervolume implements QualityIndicator {
     double[][] normalizedFront;
     double[][] invertedFront;
 
-    int numberOfObjectives = paretoFront[0].length ;
+    int numberOfObjectives = trueParetoFront[0].length ;
 
     // STEP 1. Obtain the maximum and minimum values of the Pareto front
     maximumValues = utils.getMaximumValues(trueParetoFront, numberOfObjectives);
@@ -272,8 +243,7 @@ public class Hypervolume implements QualityIndicator {
   }
 
   @Override
-  public double execute(double[][] paretoFrontApproximation, double[][] paretoTrueFront,
-    int numberOfObjectives) {
+  public double execute(double[][] paretoFrontApproximation, double[][] paretoTrueFront) {
 
     return hypervolume(paretoFrontApproximation, paretoTrueFront) ;
   }

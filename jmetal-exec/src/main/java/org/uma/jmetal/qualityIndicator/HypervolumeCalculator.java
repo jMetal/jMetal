@@ -30,5 +30,4 @@ public class HypervolumeCalculator {
 
     Configuration.logger.info(""+value);
   }
-
 }

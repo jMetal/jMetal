@@ -22,7 +22,6 @@
 package org.uma.jmetal.qualityIndicator;
 
 import org.uma.jmetal.qualityIndicator.util.MetricsUtil;
-import org.uma.jmetal.util.JMetalException;
 
 import java.util.Arrays;
 
@@ -55,32 +54,15 @@ public class GeneralizedSpread implements QualityIndicator {
    *  metric.
    *  @param paretoFront The pareto front.
    *  @param paretoTrueFront The true pareto front.
-   *  @param numberOfObjectives The number of objectives.
    *  @return the value of the generalized spread metric
    **/
-  public double generalizedSpread(double [][] paretoFront,
-      double [][] paretoTrueFront,                                         
-      int numberOfObjectives) {
-
-    /**
-     * Stores the maximum values of true pareto front.
-     */
+  public double generalizedSpread(double [][] paretoFront, double [][] paretoTrueFront) {
     double [] maximumValue;
-
-    /**
-     * Stores the minimum values of the true pareto front.
-     */
     double [] minimumValue;
-
-    /**
-     * Stores the normalized front.
-     */
     double [][] normalizedFront;
-
-    /**
-     * Stores the normalized true Pareto front.
-     */
     double[][] normalizedParetoFront;
+
+    int numberOfObjectives = paretoFront[0].length ;
 
     // STEP 1. Obtain the maximum and minimum values of the Pareto front
     maximumValue = utils.getMaximumValues(paretoTrueFront,numberOfObjectives);
@@ -139,39 +121,9 @@ public class GeneralizedSpread implements QualityIndicator {
     }
   }
 
-  /**
-   * This class can be invoked from the command line. Three params are required:
-   * 1) the name of the file containing the front,  
-   * 2) the name of the file containig the true Pareto front
-   * 3) the number of objectives
-   * @throws org.uma.jmetal.util.JMetalException
-   */
-  public static void main(String args[]) throws JMetalException {
-    if (args.length < 3) {
-      throw new JMetalException("Error using GeneralizedSpread. " +
-          "Usage: \n java GeneralizedSpread" +
-          " <SolutionFrontFile> " +
-          " <TrueFrontFile> + <getNumberOfObjectives>") ;
-    }
-
-    //Create a new instance of the metric
-    GeneralizedSpread qualityIndicator = new GeneralizedSpread();
-
-    //Read the front from the files
-    double [][] solutionFront = utils.readFront(args[0]);
-    double [][] trueFront     = utils.readFront(args[1]);
-
-    //Obtain delta value
-    double value = qualityIndicator.generalizedSpread(solutionFront,
-        trueFront,
-        new Integer(args[2]));
-
-    System.out.println(value);
-  }
-
-  @Override public double execute(double[][] paretoFrontApproximation, double[][] paretoTrueFront,
-    int numberOfObjectives) {
-    return 0;
+  @Override
+  public double execute(double[][] paretoFrontApproximation, double[][] paretoTrueFront) {
+    return generalizedSpread(paretoFrontApproximation, paretoTrueFront);
   }
 
   @Override public String getName() {

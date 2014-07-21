@@ -22,8 +22,6 @@
 package org.uma.jmetal.qualityIndicator;
 
 import org.uma.jmetal.qualityIndicator.util.MetricsUtil;
-import org.uma.jmetal.util.Configuration;
-import org.uma.jmetal.util.JMetalException;
 
 /**
  * This class implements the generational distance indicator. It can be used also
@@ -50,49 +48,18 @@ public class GenerationalDistance implements QualityIndicator {
   }
 
   /**
-   * This class can be invoqued from the command line. Two params are required:
-   * 1) the name of the file containing the front, and 2) the name of the file
-   * containig the true Pareto front
-   *
-   * @throws org.uma.jmetal.util.JMetalException
-   */
-  public static void main(String args[]) throws JMetalException {
-    if (args.length < 2) {
-      throw new JMetalException("GenerationalDistance::Main: Usage: java " +
-        "GenerationalDistance <FrontFile> " +
-        "<TrueFrontFile>  <getNumberOfObjectives>");
-    } // if
-
-    // STEP 1. Create an instance of Generational Distance
-    GenerationalDistance qualityIndicator = new GenerationalDistance();
-
-    // STEP 2. Read the fronts from the files
-    double[][] solutionFront = qualityIndicator.utils.readFront(args[0]);
-    double[][] trueFront = qualityIndicator.utils.readFront(args[1]);
-
-    // STEP 3. Obtain the metric value
-    double value = qualityIndicator.generationalDistance(
-      solutionFront,
-      trueFront,
-      new Integer(args[2]));
-
-    Configuration.logger.info(""+value);
-  }
-
-  /**
    * Returns the generational distance value for a given front
    *
    * @param front           The front
    * @param trueParetoFront The true pareto front
    */
-  public double generationalDistance(double[][] front,
-    double[][] trueParetoFront,
-    int numberOfObjectives) {
-
+  public double generationalDistance(double[][] front, double[][] trueParetoFront) {
     double[] maximumValue;
     double[] minimumValue;
     double[][] normalizedFront;
     double[][] normalizedParetoFront;
+
+    int numberOfObjectives = trueParetoFront[0].length ;
 
     // STEP 1. Obtain the maximum and minimum values of the Pareto front
     maximumValue = utils.getMaximumValues(trueParetoFront, numberOfObjectives);
@@ -126,9 +93,9 @@ public class GenerationalDistance implements QualityIndicator {
     return generationalDistance;
   }
 
-  @Override public double execute(double[][] paretoFrontApproximation, double[][] paretoTrueFront,
-    int numberOfObjectives) {
-    return generationalDistance(paretoFrontApproximation, paretoTrueFront, numberOfObjectives) ;
+  @Override
+  public double execute(double[][] paretoFrontApproximation, double[][] paretoTrueFront) {
+    return generationalDistance(paretoFrontApproximation, paretoTrueFront) ;
   }
 
   @Override public String getName() {

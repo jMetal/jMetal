@@ -22,8 +22,6 @@
 package org.uma.jmetal.qualityIndicator;
 
 import org.uma.jmetal.qualityIndicator.util.MetricsUtil;
-import org.uma.jmetal.util.Configuration;
-import org.uma.jmetal.util.JMetalException;
 
 import java.util.Arrays;
 
@@ -50,64 +48,20 @@ public class Spread implements QualityIndicator{
   }
 
   /**
-   * This class can be invoqued from the command line. Three params are required:
-   * 1) the name of the file containing the front,
-   * 2) the name of the file containig the true Pareto front
-   * 3) the number of objectives
-   *
-   * @throws org.uma.jmetal.util.JMetalException
-   */
-  public static void main(String args[]) throws JMetalException {
-    if (args.length < 2) {
-      throw new JMetalException("Spread::Main: Error using Spread. Usage: \n java " +
-        "Spread <FrontFile> <TrueFrontFile>  " +
-        "<getNumberOfObjectives>");
-    }
-
-    // STEP 1. Create a new instance of the metric
-    Spread qualityIndicator = new Spread();
-
-    // STEP 2. Read the fronts from the files
-    double[][] solutionFront = utils.readFront(args[0]);
-    double[][] trueFront = utils.readFront(args[1]);
-
-    // STEP 3. Obtain the metric value
-    double value = qualityIndicator.spread(solutionFront, trueFront, 2);
-
-    Configuration.logger.info("" + value);
-  }
-
-  /**
    * Calculates the Spread metric. Given the front, the true pareto front as
    * <code>double []</code>, and the number of objectives,
    * the method returns the value of the metric.
    *
    * @param front              The front.
    * @param trueParetoFront    The true pareto front.
-   * @param numberOfObjectives The number of objectives.
    */
-  public double spread(double[][] front,
-    double[][] trueParetoFront,
-    int numberOfObjectives) {
-    /**
-     * Stores the maximum values of true pareto front.
-     */
+  public double spread(double[][] front, double[][] trueParetoFront) {
     double[] maximumValue;
-
-    /**
-     * Stores the minimum values of the true pareto front.
-     */
     double[] minimumValue;
-
-    /**
-     * Stores the normalized front.
-     */
     double[][] normalizedFront;
-
-    /**
-     * Stores the normalized true Pareto front.
-     */
     double[][] normalizedParetoFront;
+
+    int numberOfObjectives = trueParetoFront[0].length ;
 
     // STEP 1. Obtain the maximum and minimum values of the Pareto front
     maximumValue = utils.getMaximumValues(trueParetoFront, numberOfObjectives);
@@ -160,9 +114,9 @@ public class Spread implements QualityIndicator{
     }
   }
 
-  @Override public double execute(double[][] paretoFrontApproximation, double[][] trueParetoFront,
-    int numberOfObjectives) {
-    return spread(paretoFrontApproximation, trueParetoFront, numberOfObjectives);
+  @Override
+  public double execute(double[][] paretoFrontApproximation, double[][] trueParetoFront) {
+    return spread(paretoFrontApproximation, trueParetoFront);
   }
 
   @Override public String getName() {

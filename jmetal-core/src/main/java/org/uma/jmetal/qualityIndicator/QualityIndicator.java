@@ -25,6 +25,6 @@ package org.uma.jmetal.qualityIndicator;
  * Created by Antonio J. Nebro on 20/07/14.
  */
 public interface QualityIndicator {
-  public double execute(double[][] paretoFrontApproximation, double[][] paretoTrueFront, int numberOfObjectives) ;
+  public double execute(double[][] paretoFrontApproximation, double[][] paretoTrueFront) ;
   public String getName() ;
 }

@@ -77,8 +77,7 @@ public class QualityIndicatorGetter {
   public double getIGD(SolutionSet solutionSet) {
     return new InvertedGenerationalDistance().invertedGenerationalDistance(
       solutionSet.writeObjectivesToMatrix(),
-      trueParetoFront.writeObjectivesToMatrix(),
-      problem.getNumberOfObjectives());
+      trueParetoFront.writeObjectivesToMatrix());
   }
 
   /**
@@ -90,8 +89,7 @@ public class QualityIndicatorGetter {
   public double getGD(SolutionSet solutionSet) {
     return new GenerationalDistance().generationalDistance(
       solutionSet.writeObjectivesToMatrix(),
-      trueParetoFront.writeObjectivesToMatrix(),
-      problem.getNumberOfObjectives());
+      trueParetoFront.writeObjectivesToMatrix());
   }
 
   /**
@@ -102,8 +100,7 @@ public class QualityIndicatorGetter {
    */
   public double getSpread(SolutionSet solutionSet) {
     return new Spread().spread(solutionSet.writeObjectivesToMatrix(),
-      trueParetoFront.writeObjectivesToMatrix(),
-      problem.getNumberOfObjectives());
+      trueParetoFront.writeObjectivesToMatrix());
   }
 
   /**
@@ -115,7 +112,6 @@ public class QualityIndicatorGetter {
    */
   public double getEpsilon(SolutionSet solutionSet) {
     return new Epsilon().epsilon(solutionSet.writeObjectivesToMatrix(),
-      trueParetoFront.writeObjectivesToMatrix(),
-      problem.getNumberOfObjectives());
+      trueParetoFront.writeObjectivesToMatrix());
   }
 }

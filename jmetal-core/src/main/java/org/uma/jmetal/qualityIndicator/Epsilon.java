@@ -22,7 +22,6 @@
 package org.uma.jmetal.qualityIndicator;
 
 import org.uma.jmetal.qualityIndicator.util.MetricsUtil;
-import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 
 /**
@@ -52,34 +51,6 @@ public class Epsilon implements QualityIndicator {
   int method;
 
   /**
-   * Returns the additive-epsilon value of the paretoFront. This method call to
-   * the calculate epsilon-indicator one
-   *
-   * @throws org.uma.jmetal.util.JMetalException
-   * @throws NumberFormatException
-   */
-  public static void main(String[] args) throws NumberFormatException,
-    JMetalException {
-    double indValue;
-
-    if (args.length < 2) {
-      throw new JMetalException(
-        "Error using Epsilon. Type: \n java AdditiveEpsilon " + "<FrontFile>"
-          + "<TrueFrontFile> + <getNumberOfObjectives>"
-      );
-    }
-
-    Epsilon qualityIndicator = new Epsilon();
-    double[][] solutionFront = qualityIndicator.utils.readFront(args[0]);
-    double[][] trueFront = qualityIndicator.utils.readFront(args[1]);
-
-    indValue = qualityIndicator.epsilon(solutionFront, trueFront, new Integer(
-      args[2]));
-
-    Configuration.logger.info(""+indValue);
-  }
-
-  /**
    * Returns the epsilon indicator.
    *
    * @param a Solution front
@@ -87,11 +58,11 @@ public class Epsilon implements QualityIndicator {
    * @return the value of the epsilon indicator
    * @throws org.uma.jmetal.util.JMetalException
    */
-  public double epsilon(double[][] a, double[][] b, int dim) throws JMetalException {
+  public double epsilon(double[][] a, double[][] b) throws JMetalException {
     int i, j, k;
     double eps, epsJ = 0.0, epsK = 0.0, epsTemp;
 
-    this.numberOfObjectives = dim;
+    this.numberOfObjectives = a[0].length;
     setParams();
 
     if (method == 0) {
@@ -156,10 +127,9 @@ public class Epsilon implements QualityIndicator {
     method = 0;
   }
 
-  @Override public double execute(double[][] paretoFrontApproximation,
-    double[][] paretoTrueFront, int numberOfObjectives) {
-
-    return epsilon(paretoFrontApproximation, paretoTrueFront, numberOfObjectives) ;
+  @Override
+  public double execute(double[][] paretoFrontApproximation, double[][] paretoTrueFront) {
+    return epsilon(paretoFrontApproximation, paretoTrueFront) ;
   }
 
   @Override public String getName() {

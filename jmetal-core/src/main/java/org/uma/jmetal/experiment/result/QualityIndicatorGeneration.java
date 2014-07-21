@@ -143,20 +143,20 @@ public class QualityIndicatorGeneration implements ExperimentResult {
 
               qualityIndicatorFile = qualityIndicatorFile + "/HV";
             } else if ("SPREAD".equals(indicator)) {
-              value = new Spread().spread(solutionFront, trueFront, trueFront[0].length);
+              value = new Spread().spread(solutionFront, trueFront);
 
               qualityIndicatorFile = qualityIndicatorFile + "/SPREAD";
             } else if ("GD".equals(indicator)) {
-              value = new GenerationalDistance().generationalDistance(solutionFront, trueFront, trueFront[0].length);
+              value = new GenerationalDistance().generationalDistance(solutionFront, trueFront);
 
               qualityIndicatorFile = qualityIndicatorFile + "/GD";
             } else if ("IGD".equals(indicator)) {
               value = new InvertedGenerationalDistance()
-                .invertedGenerationalDistance(solutionFront, trueFront, trueFront[0].length);
+                .invertedGenerationalDistance(solutionFront, trueFront);
 
               qualityIndicatorFile = qualityIndicatorFile + "/IGD";
             } else if ("EPSILON".equals(indicator)) {
-              value = new Epsilon().epsilon(solutionFront, trueFront, trueFront[0].length);
+              value = new Epsilon().epsilon(solutionFront, trueFront);
 
               qualityIndicatorFile = qualityIndicatorFile + "/EPSILON";
             } else {

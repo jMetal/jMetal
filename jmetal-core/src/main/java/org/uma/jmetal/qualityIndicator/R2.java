@@ -23,7 +23,6 @@ package org.uma.jmetal.qualityIndicator;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.qualityIndicator.util.MetricsUtil;
 import org.uma.jmetal.util.Configuration;
-import org.uma.jmetal.util.JMetalException;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -130,55 +129,9 @@ public class R2 implements QualityIndicator {
   }
 
   /**
-   * This class can be call from the command line. At least three parameters are
-   * required: 1) the name of the file containing the front, 2) the number of
-   * objectives 2) a file containing the reference point / the Optimal Pareto
-   * front for normalizing 3) the file containing the weight vector
-   *
-   * @throws org.uma.jmetal.util.JMetalException
-   */
-  public static void main(String args[]) throws JMetalException {
-    if (args.length < 3) {
-      throw new JMetalException(
-        "Error using R2. Usage: \n java org.uma.jmetal.qualityIndicator.R2 "
-          + "<SolutionFrontFile> " + "<TrueFrontFile> "
-          + "<getNumberOfObjectives>");
-    }
-
-    // Create a new instance of the metric
-    R2 qualityIndicator;
-    // Read the front from the files
-    int nObj = new Integer(args[2]);
-
-    if (nObj == 2 && args.length == 3) {
-      qualityIndicator = new R2();
-
-    } else {
-      qualityIndicator = new R2(nObj, args[3]);
-    }
-
-    double[][] approximationFront = qualityIndicator.utils.readFront(args[0]);
-    double[][] paretoFront = qualityIndicator.utils.readFront(args[1]);
-
-    // Obtain delta value
-    double value = qualityIndicator.r2(approximationFront, paretoFront);
-
-    Configuration.logger.info(""+value);
-    Configuration.logger.info(""+qualityIndicator.R2Without(approximationFront,
-      paretoFront, 1));
-    Configuration.logger.info(""+qualityIndicator.R2Without(approximationFront,
-      paretoFront, 15));
-    Configuration.logger.info(""+qualityIndicator.R2Without(approximationFront,
-      paretoFront, 25));
-    Configuration.logger.info(""+qualityIndicator.R2Without(approximationFront,
-      paretoFront, 75));
-
-  }
-
-  /**
    * Returns the R2 indicator value of a given front
    */
-  private double R2Without(double[][] approximation, double[][] paretoFront,
+  public double R2Without(double[][] approximation, double[][] paretoFront,
     int index) {
 
     /**
@@ -348,29 +301,16 @@ public class R2 implements QualityIndicator {
    *
    */
   public double r2(double[][] approximation, double[][] paretoFront) {
-    /**
-     * Stores the maximum values of true pareto front.
-     */
     double[] maximumValue;
-
-    /**
-     * Stores the minimum values of the true pareto front.
-     */
     double[] minimumValue;
-
-    /**
-     * Stores the normalized front.
-     */
     double[][] normalizedApproximation;
-
-    /**
-     * Stores the normalized true Pareto front.
-     */
     double[][] normalizedParetoFront;
 
+    int numberOfObjectives = approximation[0].length ;
+
     // STEP 1. Obtain the maximum and minimum values of the Pareto front
-    maximumValue = utils.getMaximumValues(paretoFront, nObj);
-    minimumValue = utils.getMinimumValues(paretoFront, nObj);
+    maximumValue = utils.getMaximumValues(paretoFront, numberOfObjectives);
+    minimumValue = utils.getMinimumValues(paretoFront, numberOfObjectives);
 
     // STEP 2. Get the normalized front and true Pareto fronts
     normalizedApproximation = utils.getNormalizedFront(approximation,
@@ -383,7 +323,7 @@ public class R2 implements QualityIndicator {
     for (int i = 0; i < approximation.length; i++) {
       for (int j = 0; j < lambda.length; j++) {
         matrix[i][j] = lambda[j][0] * Math.abs(normalizedApproximation[i][0]);
-        for (int n = 1; n < nObj; n++) {
+        for (int n = 1; n < numberOfObjectives; n++) {
           matrix[i][j] = Math.max(matrix[i][j],
             lambda[j][n] * Math.abs(normalizedApproximation[i][n]));
         }
@@ -424,8 +364,8 @@ public class R2 implements QualityIndicator {
     return this.r2(approximationFront, trueFront);
   }
 
-  @Override public double execute(double[][] paretoFrontApproximation, double[][] paretoTrueFront,
-    int numberOfObjectives) {
+  @Override
+  public double execute(double[][] paretoFrontApproximation, double[][] paretoTrueFront) {
     return r2(paretoFrontApproximation, paretoTrueFront);
   }
 
