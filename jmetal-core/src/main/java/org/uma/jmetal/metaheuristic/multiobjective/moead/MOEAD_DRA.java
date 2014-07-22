@@ -496,8 +496,8 @@ public class MOEAD_DRA extends Algorithm {
    * If N = 100, then the best solutions  attenting to the weights (0,1),
    * (1/99,98/99), ...,(98/99,1/99), (1,0) are selected.
    * <p/>
-   * Using this method result in 101 solutions instead of 100. We will just
-   * compute 100 even distributed weights and used them. The result is the same
+   * Using this method experimentoutput in 101 solutions instead of 100. We will just
+   * compute 100 even distributed weights and used them. The experimentoutput is the same
    * <p/>
    * In case of more than two objectives the procedure is:
    * 1- Select a solutiontype at random

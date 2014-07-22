@@ -37,7 +37,8 @@ import java.util.logging.Level;
 public class MOEAD extends Algorithm {
   private static final long serialVersionUID = -8602634334286344579L;
 
-  private enum NeighborType {NEIGHBOR, POPULATION} ;
+  private enum NeighborType {NEIGHBOR, POPULATION}
+
 
   /** Z vector in Zhang & Li paper */
   private double[] idealPoint;

@@ -43,61 +43,61 @@ import java.util.*;
  * To change this template use File | Settings | File Templates.
  */
 public class Front {
-  public Point[] points_;
-  public int nPoints_;
-  private int numberOfPoints_;
-  private int dimension_;
-  private boolean maximizing_;
+  public Point[] points;
+  public int nPoints;
+  private int numberOfPoints;
+  private int dimension;
+  private boolean maximizing;
   private Comparator<Point> pointComparator;
 
   public Front() {
-    maximizing_ = true;
-    pointComparator = new PointComparator(maximizing_);
+    maximizing = true;
+    pointComparator = new PointComparator(maximizing);
   }
 
   public Front(int numberOfPoints, int dimension, SolutionSet solutionSet) {
-    maximizing_ = true;
-    pointComparator = new PointComparator(maximizing_);
-    numberOfPoints_ = numberOfPoints;
-    dimension_ = dimension;
-    nPoints_ = numberOfPoints_;
+    maximizing = true;
+    pointComparator = new PointComparator(maximizing);
+    this.numberOfPoints = numberOfPoints;
+    this.dimension = dimension;
+    nPoints = this.numberOfPoints;
 
-    points_ = new Point[numberOfPoints_];
-    for (int i = 0; i < numberOfPoints_; i++) {
+    points = new Point[this.numberOfPoints];
+    for (int i = 0; i < this.numberOfPoints; i++) {
       double[] p = new double[dimension];
       for (int j = 0; j < dimension; j++) {
         p[j] = solutionSet.get(i).getObjective(j);
       }
-      points_[i] = new Point(p);
+      points[i] = new Point(p);
     }
   }
 
   public Front(int numberOfPoints, int dimension) {
-    maximizing_ = true;
-    pointComparator = new PointComparator(maximizing_);
-    numberOfPoints_ = numberOfPoints;
-    dimension_ = dimension;
-    nPoints_ = numberOfPoints_;
+    maximizing = true;
+    pointComparator = new PointComparator(maximizing);
+    this.numberOfPoints = numberOfPoints;
+    this.dimension = dimension;
+    nPoints = this.numberOfPoints;
 
-    points_ = new Point[numberOfPoints_];
-    for (int i = 0; i < numberOfPoints_; i++) {
+    points = new Point[this.numberOfPoints];
+    for (int i = 0; i < this.numberOfPoints; i++) {
       double[] p = new double[dimension];
       for (int j = 0; j < dimension; j++) {
         p[j] = 0.0;
       }
-      points_[i] = new Point(p);
+      points[i] = new Point(p);
     }
   }
 
   public Front(int numberOfPoints, int dimension, List<double[]> listOfPoints) {
-    maximizing_ = true;
-    pointComparator = new PointComparator(maximizing_);
-    numberOfPoints_ = numberOfPoints;
-    dimension_ = dimension;
+    maximizing = true;
+    pointComparator = new PointComparator(maximizing);
+    this.numberOfPoints = numberOfPoints;
+    this.dimension = dimension;
 
-    points_ = new Point[numberOfPoints_];
-    for (int i = 0; i < numberOfPoints_; i++) {
-      points_[i] = new Point(listOfPoints.get(i));
+    points = new Point[this.numberOfPoints];
+    for (int i = 0; i < this.numberOfPoints; i++) {
+      points[i] = new Point(listOfPoints.get(i));
     }
   }
 
@@ -125,12 +125,12 @@ public class Front {
       aux = br.readLine();
     }
     br.close();
-    numberOfPoints_ = list.size();
-    dimension_ = numberOfObjectives;
-    points_ = new Point[numberOfPoints_];
-    nPoints_ = numberOfPoints_;
-    for (int i = 0; i < numberOfPoints_; i++) {
-      points_[i] = new Point(list.get(i));
+    numberOfPoints = list.size();
+    dimension = numberOfObjectives;
+    points = new Point[numberOfPoints];
+    nPoints = numberOfPoints;
+    for (int i = 0; i < numberOfPoints; i++) {
+      points[i] = new Point(list.get(i));
     }
   }
 
@@ -138,84 +138,84 @@ public class Front {
   public void loadFront(SolutionSet solutionSet, int notLoadingIndex) {
 
     if (notLoadingIndex >= 0 && notLoadingIndex < solutionSet.size()) {
-      numberOfPoints_ = solutionSet.size() - 1;
+      numberOfPoints = solutionSet.size() - 1;
     } else {
-      numberOfPoints_ = solutionSet.size();
+      numberOfPoints = solutionSet.size();
     }
 
-    nPoints_ = numberOfPoints_;
-    dimension_ = solutionSet.get(0).getNumberOfObjectives();
+    nPoints = numberOfPoints;
+    dimension = solutionSet.get(0).getNumberOfObjectives();
 
-    points_ = new Point[numberOfPoints_];
+    points = new Point[numberOfPoints];
 
     int index = 0;
     for (int i = 0; i < solutionSet.size(); i++) {
       if (i != notLoadingIndex) {
-        double[] vector = new double[dimension_];
-        for (int j = 0; j < dimension_; j++) {
+        double[] vector = new double[dimension];
+        for (int j = 0; j < dimension; j++) {
           vector[j] = solutionSet.get(i).getObjective(j);
         }
-        points_[index++] = new Point(vector);
+        points[index++] = new Point(vector);
       }
     }
   }
 
   public void printFront() {
-    Configuration.logger.info("Objectives:       " + dimension_);
-    Configuration.logger.info("Number of points: " + numberOfPoints_);
+    Configuration.logger.info("Objectives:       " + dimension);
+    Configuration.logger.info("Number of points: " + numberOfPoints);
 
-    for (Point point : points_) {
+    for (Point point : points) {
       Configuration.logger.info(""+point);
     }
   }
 
   public int getNumberOfObjectives() {
-    return dimension_;
+    return dimension;
   }
 
   public int getNumberOfPoints() {
-    return numberOfPoints_;
+    return numberOfPoints;
   }
 
   public Point getPoint(int index) {
-    return points_[index];
+    return points[index];
   }
 
   public Point[] getPoints() {
-    return points_;
+    return points;
   }
 
   public void setToMazimize() {
-    maximizing_ = true;
-    pointComparator = new PointComparator(maximizing_);
+    maximizing = true;
+    pointComparator = new PointComparator(maximizing);
   }
 
   public void setToMinimize() {
-    maximizing_ = false;
-    pointComparator = new PointComparator(maximizing_);
+    maximizing = false;
+    pointComparator = new PointComparator(maximizing);
   }
 
   public void sort() {
-    Arrays.sort(points_, pointComparator);
+    Arrays.sort(points, pointComparator);
   }
 
   public Point getReferencePoint() {
-    Point referencePoint = new Point(dimension_);
+    Point referencePoint = new Point(dimension);
 
-    double[] maxObjectives = new double[numberOfPoints_];
-    for (int i = 0; i < numberOfPoints_; i++) {
+    double[] maxObjectives = new double[numberOfPoints];
+    for (int i = 0; i < numberOfPoints; i++) {
       maxObjectives[i] = 0;
     }
 
-    for (Point aPoints_ : points_) {
-      for (int j = 0; j < dimension_; j++) {
+    for (Point aPoints_ : points) {
+      for (int j = 0; j < dimension; j++) {
         if (maxObjectives[j] < aPoints_.objectives_[j]) {
           maxObjectives[j] = aPoints_.objectives_[j];
         }
       }
     }
 
-    System.arraycopy(maxObjectives, 0, referencePoint.objectives_, 0, dimension_);
+    System.arraycopy(maxObjectives, 0, referencePoint.objectives_, 0, dimension);
 
     return referencePoint;
   }

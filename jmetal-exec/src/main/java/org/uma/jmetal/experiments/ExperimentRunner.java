@@ -22,9 +22,10 @@ package org.uma.jmetal.experiments;
 
 import org.uma.jmetal.experiment.Experiment2;
 import org.uma.jmetal.experiment.ExperimentData;
-import org.uma.jmetal.experiment.result.AlgorithmExecution;
-import org.uma.jmetal.experiment.result.ParetoFrontsGeneration;
-import org.uma.jmetal.experiment.result.QualityIndicatorGeneration;
+import org.uma.jmetal.experiment.experimentoutput.AlgorithmExecution;
+import org.uma.jmetal.experiment.experimentoutput.ParetoFrontsGeneration;
+import org.uma.jmetal.experiment.experimentoutput.QualityIndicatorGeneration;
+import org.uma.jmetal.experiment.experimentoutput.SetCoverageTables;
 import org.uma.jmetal.util.JMetalException;
 
 import java.io.IOException;
@@ -33,7 +34,7 @@ public class ExperimentRunner {
   public static void main(String[] args) throws JMetalException, IOException {
     ExperimentData experimentData = new ExperimentData.Builder("Experiment2")
       .algorithmNameList(new String[]{"NSGAII", "SMPSO"})
-      .problemList(new String[]{"ZDT1", "ZDT2", "ZDT4"})
+      .problemList(new String[]{"ZDT1", "ZDT2", "ZDT3", "ZDT4"})
       .experimentBaseDirectory("/Users/antelverde/Softw/jMetal/jMetalGitHub/pruebas")
       .outputParetoFrontFileName("FUN")
       .outputParetoSetFileName("VAR")
@@ -52,14 +53,18 @@ public class ExperimentRunner {
 
     QualityIndicatorGeneration qualityIndicatorGeneration = new QualityIndicatorGeneration.Builder(experimentData)
       .paretoFrontDirectory("/Users/antelverde/Softw/pruebas/data/paretoFronts")
-      .paretoFrontFiles(new String[]{"ZDT1.pf","ZDT2.pf", "ZDT4.pf"})
+      .paretoFrontFiles(new String[]{"ZDT1.pf","ZDT2.pf", "ZDT3.pf", "ZDT4.pf"})
       .qualityIndicatorList(new String[]{"HV", "IGD", "EPSILON", "SPREAD", "GD"})
       .build() ;
 
+    SetCoverageTables setCoverageTables = new SetCoverageTables.Builder(experimentData)
+      .build() ;
+
     Experiment2 experiment = new Experiment2.Builder(experimentData)
-      .addResultObject(algorithmExecution)
-      .addResultObject(paretoFrontsGeneration)
-      .addResultObject(qualityIndicatorGeneration)
+      .addExperimentOutput(algorithmExecution)
+      .addExperimentOutput(paretoFrontsGeneration)
+      .addExperimentOutput(qualityIndicatorGeneration)
+      .addExperimentOutput(setCoverageTables)
       .build() ;
 
     experiment.run();

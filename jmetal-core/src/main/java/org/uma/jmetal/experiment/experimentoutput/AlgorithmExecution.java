@@ -19,10 +19,10 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-package org.uma.jmetal.experiment.result;
+package org.uma.jmetal.experiment.experimentoutput;
 
 import org.uma.jmetal.experiment.ExperimentData;
-import org.uma.jmetal.experiment.ExperimentResult;
+import org.uma.jmetal.experiment.ExperimentOutput;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 
@@ -31,7 +31,7 @@ import java.io.File;
 /**
  * Created by Antonio J. Nebro on 18/07/14.
  */
-public class AlgorithmExecution implements ExperimentResult {
+public class AlgorithmExecution implements ExperimentOutput {
 
   private MultithreadedExperimentExecutor parallelExecutor ;
   private String paretoSetFileName ;

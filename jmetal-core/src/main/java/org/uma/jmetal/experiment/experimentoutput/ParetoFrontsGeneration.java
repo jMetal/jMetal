@@ -18,10 +18,10 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/
 
-package org.uma.jmetal.experiment.result;
+package org.uma.jmetal.experiment.experimentoutput;
 
 import org.uma.jmetal.experiment.ExperimentData;
-import org.uma.jmetal.experiment.ExperimentResult;
+import org.uma.jmetal.experiment.ExperimentOutput;
 import org.uma.jmetal.qualityIndicator.util.MetricsUtil;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
@@ -35,7 +35,7 @@ import java.util.logging.Level;
 /**
  * Created by Antonio J. Nebro on 19/07/14.
  */
-public class ParetoFrontsGeneration implements ExperimentResult{
+public class ParetoFrontsGeneration implements ExperimentOutput {
   private ExperimentData experimentData ;
   private String referenceFrontDirectory ;
 
@@ -47,7 +47,7 @@ public class ParetoFrontsGeneration implements ExperimentResult{
 
   /** Builder class */
   public static class Builder {
-    private ExperimentData experimentData ;
+    private final ExperimentData experimentData ;
 
     public Builder(ExperimentData experimentData) {
       this.experimentData = experimentData ;

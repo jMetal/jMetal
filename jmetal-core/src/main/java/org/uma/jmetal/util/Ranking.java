@@ -34,7 +34,7 @@ import java.util.List;
 /**
  * This class implements some facilities for ranking solutions.
  * Given a <code>SolutionSet</code> object, their solutions are ranked
- * according to scheme proposed in NSGA-II; as a result, a set of subsets
+ * according to scheme proposed in NSGA-II; as a experimentoutput, a set of subsets
  * are obtained. The subsets are numbered starting from 0 (in NSGA-II, the
  * numbering starts from 1); thus, subset 0 contains the non-dominated
  * solutions, subset 1 contains the non-dominated solutions after removing those

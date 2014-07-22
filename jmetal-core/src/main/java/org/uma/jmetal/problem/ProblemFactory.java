@@ -50,7 +50,6 @@ public class ProblemFactory {
     } else if ("mQAP".equals(name)) {
       base += "mqap.";
     } else if ("Qom".equalsIgnoreCase(name)) {
-      ;
     } else if ("DTLZ".equalsIgnoreCase(name.substring(0, name.length() - 1))) {
       base += "DTLZ.";
     } else if ("WFG".equalsIgnoreCase(name.substring(0, name.length() - 1))) {

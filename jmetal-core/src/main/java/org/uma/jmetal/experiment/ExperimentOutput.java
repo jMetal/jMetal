@@ -1,4 +1,4 @@
-//  ExperimentResult.java
+//  ExperimentOutput.java
 //
 //  Authors:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -25,6 +25,6 @@ package org.uma.jmetal.experiment;
  * Created by Antonio J. Nebro on 18/07/14.
  * Interface for all the results of an experiment
  */
-public interface ExperimentResult {
+public interface ExperimentOutput {
   public void generate() ;
 }

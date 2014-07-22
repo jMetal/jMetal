@@ -72,7 +72,7 @@ public class FriedmanTables implements IExperimentOutput {
 
     String indicator_ = indic;
 
-    /*Read the result file*/
+    /*Read the experimentoutput file*/
 
     String outDir = experiment_.getExperimentBaseDirectory() + "/latex";
     String outFile = outDir + "/FriedmanTest" + indicator_ + ".tex";

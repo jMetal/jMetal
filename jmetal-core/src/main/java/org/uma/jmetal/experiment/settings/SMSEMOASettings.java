@@ -130,7 +130,7 @@ public class SMSEMOASettings extends Settings {
     mutationProbability = Double.parseDouble(configuration.getProperty("mutationProbability",String.valueOf(
       mutationProbability)));
     mutationDistributionIndex = Double.parseDouble(configuration.getProperty("mutationDistributionIndex",String.valueOf(
-      mutationDistributionIndex)));;
+      mutationDistributionIndex)));
 
     return configure() ;
   }

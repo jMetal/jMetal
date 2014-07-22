@@ -19,7 +19,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-package org.uma.jmetal.experiment.result;
+package org.uma.jmetal.experiment.experimentoutput;
 
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.SolutionSet;

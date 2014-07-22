@@ -31,7 +31,7 @@
 //		//		the object class is "TestFunc"
 //		TestFunc aTestFunc = theBenchmark.testFunctionFactory(3, 50);
 //		// Invoke the function with x
-//		double result = aTestFunc.f(x);
+//		double experimentoutput = aTestFunc.f(x);
 //
 // Version 0.90
 //		Currently, this version cannot handle any numbers of dimensions.

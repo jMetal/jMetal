@@ -181,22 +181,22 @@ public class PSO extends Algorithm {
     /*
 
     //Configuration.logger.info("v: " + v + "\tdmax: " + dmax + "\tdmin: " + dmin) ;
-    double result;
+    double experimentoutput;
 
     double dmax = deltaMax[variableIndex];
     double dmin = deltaMin[variableIndex];
 
-    result = v;
+    experimentoutput = v;
 
     if (v > dmax) {
-      result = dmax;
+      experimentoutput = dmax;
     }
 
     if (v < dmin) {
-      result = dmin;
+      experimentoutput = dmin;
     }
 
-    return result;
+    return experimentoutput;
     */
   } // velocityConstriction
 
@@ -311,7 +311,7 @@ public class PSO extends Algorithm {
    * Runs of the SMPSO algorithm.
    *
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
-   * as a result of the algorithm execution
+   * as a experimentoutput of the algorithm execution
    * @throws org.uma.jmetal.util.JMetalException
    */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {

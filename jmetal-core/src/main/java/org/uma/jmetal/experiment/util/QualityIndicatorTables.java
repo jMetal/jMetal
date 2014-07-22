@@ -30,7 +30,7 @@ import java.io.File;
 /**
  * Created by Antonio J. Nebro on 17/02/14.
  * <p/>
- * This class generates Latex tables with the values of quality indicators when applied to the result of an experiment
+ * This class generates Latex tables with the values of quality indicators when applied to the experimentoutput of an experiment
  */
 public class QualityIndicatorTables implements IExperimentOutput {
   Experiment experiment_;

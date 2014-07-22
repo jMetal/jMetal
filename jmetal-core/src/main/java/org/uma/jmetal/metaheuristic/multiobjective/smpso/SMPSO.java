@@ -195,7 +195,7 @@ public class SMPSO extends Algorithm {
    * Runs of the SMPSO algorithm.
    *
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
-   * as a result of the algorithm execution
+   * as a experimentoutput of the algorithm execution
    */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException, IOException {
     initialization();

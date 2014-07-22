@@ -47,7 +47,7 @@ public abstract class Algorithm implements Serializable {
    * Launches the execution of an specific algorithm.
    *
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
-   * as a result of the algorithm execution
+   * as a experimentoutput of the algorithm execution
    */
   public abstract SolutionSet execute() throws JMetalException,
     ClassNotFoundException, IOException;

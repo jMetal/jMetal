@@ -16,39 +16,39 @@ import static org.junit.Assert.assertTrue;
  * Time: 15:29
  */
 public class AvlNodeTest {
-    private AvlNode<Integer> node_;
+    private AvlNode<Integer> node;
 
     @Before
     public void setUp() throws Exception {
-        node_ = new AvlNode<Integer>(5);
+        node = new AvlNode<Integer>(5);
     }
 
     @After
     public void tearDown() throws Exception {
-        node_ = null;
+        node = null;
     }
 
     @Test
     public void testHasLeft() {
-        assertFalse("testHasLeft", node_.hasLeft());
+        assertFalse("testHasLeft", node.hasLeft());
         AvlNode<Integer> node2 = new AvlNode<Integer>(6);
-        node_.setLeft(node2);
-        assertTrue("testHasLeft", node_.hasLeft());
+        node.setLeft(node2);
+        assertTrue("testHasLeft", node.hasLeft());
     }
 
     @Test
     public void testHasRight() {
-        assertFalse("testHasRight", node_.hasRight());
+        assertFalse("testHasRight", node.hasRight());
         AvlNode<Integer> node2 = new AvlNode<Integer>(6);
-        node_.setRight(node2);
-        assertTrue("testHasRight", node_.hasRight());
+        node.setRight(node2);
+        assertTrue("testHasRight", node.hasRight());
     }
 
     @Test
     public void shouldSetHeight() {
         int expectedHeight = 1000213;
-        node_.setHeight(expectedHeight);
-        assertEquals("Height is different from expected.", expectedHeight, node_.getHeight());
+        node.setHeight(expectedHeight);
+        assertEquals("Height is different from expected.", expectedHeight, node.getHeight());
     }
 
     @Test

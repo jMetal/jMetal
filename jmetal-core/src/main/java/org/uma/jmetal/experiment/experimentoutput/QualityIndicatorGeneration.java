@@ -18,11 +18,11 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/
 
-package org.uma.jmetal.experiment.result;
+package org.uma.jmetal.experiment.experimentoutput;
 
 import org.uma.jmetal.experiment.Experiment;
 import org.uma.jmetal.experiment.ExperimentData;
-import org.uma.jmetal.experiment.ExperimentResult;
+import org.uma.jmetal.experiment.ExperimentOutput;
 import org.uma.jmetal.qualityIndicator.*;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.FileUtils;
@@ -37,7 +37,7 @@ import java.util.logging.Logger;
 /**
  * Created by Antonio J. Nebro on 20/07/14.
  */
-public class QualityIndicatorGeneration implements ExperimentResult {
+public class QualityIndicatorGeneration implements ExperimentOutput {
 
   private ExperimentData experimentData ;
   private String[] paretoFrontFiles ;

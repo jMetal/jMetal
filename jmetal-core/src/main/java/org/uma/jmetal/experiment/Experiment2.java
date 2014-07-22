@@ -13,7 +13,7 @@ public class Experiment2 {
   private String[] problemList;
   private String experimentBaseDirectory;
   private int independentRuns;
-  private LinkedList<ExperimentResult> resultObjectList ;
+  private LinkedList<ExperimentOutput> resultObjectList ;
   
   private ExperimentData experimentData ;
   
@@ -28,14 +28,14 @@ public class Experiment2 {
   /** Builder */
   public static class Builder {
   	private final ExperimentData experimentData ;
-    private LinkedList<ExperimentResult> resultObjectList ;
+    private LinkedList<ExperimentOutput> resultObjectList ;
 
     public Builder(ExperimentData experimentData) {
   		this.experimentData = experimentData ;
       this.resultObjectList = new LinkedList<>() ;
   	}
 
-    public Builder addResultObject(ExperimentResult experimentResult) {
+    public Builder addExperimentOutput(ExperimentOutput experimentResult) {
       resultObjectList.add(experimentResult) ;
 
       return this ;
@@ -56,7 +56,7 @@ public class Experiment2 {
   }
 
   public void run() {
-    for (ExperimentResult result : resultObjectList) {
+    for (ExperimentOutput result : resultObjectList) {
       result.generate();
     }
   }

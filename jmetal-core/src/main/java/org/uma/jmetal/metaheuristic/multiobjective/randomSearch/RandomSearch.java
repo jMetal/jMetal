@@ -42,7 +42,7 @@ public class RandomSearch extends Algorithm {
    * Runs the RandomSearch algorithm.
    *
    * @return a <code>SolutionSet</code> that is a set of solutions
-   * as a result of the algorithm execution
+   * as a experimentoutput of the algorithm execution
    * @throws org.uma.jmetal.util.JMetalException
    */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {

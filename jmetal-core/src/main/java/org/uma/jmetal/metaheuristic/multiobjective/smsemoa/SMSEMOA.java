@@ -69,7 +69,7 @@ public class SMSEMOA extends Algorithm {
    * Runs the SMS-EMOA algorithm.
    *
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
-   * as a result of the algorithm execution
+   * as a experimentoutput of the algorithm execution
    * @throws org.uma.jmetal.util.JMetalException
    */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {

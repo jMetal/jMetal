@@ -272,21 +272,21 @@ public class SolutionSet implements Serializable {
    * Compares two solution sets
    *
    * @param object Solution set to compare with
-   * @return true or false depending on the result of the comparison
+   * @return true or false depending on the experimentoutput of the comparison
    */
   // FIXME: to do
   /*
   @Override
   public boolean equals(Object object) {
-    boolean result;
+    boolean experimentoutput;
     if (object == null) {
-      result = false;
+      experimentoutput = false;
     } else if (object == this) {
-      result = true;
+      experimentoutput = true;
     } else if (!(object instanceof SolutionSet)) {
-      result = false;
+      experimentoutput = false;
     } else if (this.size() != ((SolutionSet) object).size()) {
-      result = false;
+      experimentoutput = false;
     } else {
       SolutionSet solutionSet = (SolutionSet) object;
 
@@ -305,9 +305,9 @@ public class SolutionSet implements Serializable {
           areEquals = false;
         }
       }
-      result = areEquals;
+      experimentoutput = areEquals;
     }
-    return result;
+    return experimentoutput;
   }
   */
 
@@ -398,11 +398,11 @@ public class SolutionSet implements Serializable {
   } 
 
   /**
-   * Returns a new <code>SolutionSet</code> which is the result of the union
+   * Returns a new <code>SolutionSet</code> which is the experimentoutput of the union
    * between the current solution set and the one passed as a parameter.
    *
    * @param solutionSet SolutionSet to join with the current solutionSet.
-   * @return The result of the union operation.
+   * @return The experimentoutput of the union operation.
    */
   public SolutionSet union(SolutionSet solutionSet) throws JMetalException {
     // Check the correct size. In development

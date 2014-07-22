@@ -170,7 +170,7 @@ public class WFGHV {
       volume = 0.0;
 
       currentDimension_--;
-      for (int i = front.nPoints_ - 1; i >= 0; i--) {
+      for (int i = front.nPoints - 1; i >= 0; i--) {
         volume += Math.abs(front.getPoint(i).objectives_[currentDimension_] -
           referencePoint_.objectives_[currentDimension_]) *
           this.getExclusiveHV(front, i);
@@ -191,7 +191,7 @@ public class WFGHV {
       volume = 0.0;
 
       currentDimension_--;
-      for (int i = front.nPoints_ - 1; i >= 0; i--) {
+      for (int i = front.nPoints - 1; i >= 0; i--) {
         volume += Math.abs(front.getPoint(i).objectives_[currentDimension_] -
           referencePoint_.objectives_[currentDimension_]) *
           this.getExclusiveHV(front, i);
@@ -208,7 +208,7 @@ public class WFGHV {
     hv = Math.abs((front.getPoint(0).getObjectives()[0] - referencePoint_.objectives_[0]) *
       (front.getPoint(0).getObjectives()[1] - referencePoint_.objectives_[1]));
 
-    for (int i = 1; i < front.nPoints_; i++) {
+    for (int i = 1; i < front.nPoints; i++) {
       hv += Math.abs((front.getPoint(i).getObjectives()[0] - referencePoint_.objectives_[0]) *
         (front.getPoint(i).getObjectives()[1] - front.getPoint(i - 1).getObjectives()[1]));
 
@@ -230,7 +230,7 @@ public class WFGHV {
     double volume;
 
     volume = getInclusiveHV(front.getPoint(point));
-    if (front.nPoints_ > point + 1) {
+    if (front.nPoints > point + 1) {
       makeDominatedBit(front, point);
       double v = getHV(fs_[currentDeep_ - 1]);
       volume -= v;
@@ -241,28 +241,28 @@ public class WFGHV {
   }
 
   public void makeDominatedBit(Front front, int p) {
-    int z = front.nPoints_ - 1 - p;
+    int z = front.nPoints - 1 - p;
 
     for (int i = 0; i < z; i++) {
       for (int j = 0; j < currentDimension_; j++) {
         fs_[currentDeep_].getPoint(i).objectives_[j] =
-          worse(front.points_[p].objectives_[j], front.points_[p + 1 + i].objectives_[j], false);
+          worse(front.points[p].objectives_[j], front.points[p + 1 + i].objectives_[j], false);
       }
     }
 
     Point t;
-    fs_[currentDeep_].nPoints_ = 1;
+    fs_[currentDeep_].nPoints = 1;
 
     for (int i = 1; i < z; i++) {
       int j = 0;
       boolean keep = true;
-      while (j < fs_[currentDeep_].nPoints_ && keep) {
-        switch (dominates2way(fs_[currentDeep_].points_[i], fs_[currentDeep_].points_[j])) {
+      while (j < fs_[currentDeep_].nPoints && keep) {
+        switch (dominates2way(fs_[currentDeep_].points[i], fs_[currentDeep_].points[j])) {
           case -1:
-            t = fs_[currentDeep_].points_[j];
-            fs_[currentDeep_].nPoints_--;
-            fs_[currentDeep_].points_[j] = fs_[currentDeep_].points_[fs_[currentDeep_].nPoints_];
-            fs_[currentDeep_].points_[fs_[currentDeep_].nPoints_] = t;
+            t = fs_[currentDeep_].points[j];
+            fs_[currentDeep_].nPoints--;
+            fs_[currentDeep_].points[j] = fs_[currentDeep_].points[fs_[currentDeep_].nPoints];
+            fs_[currentDeep_].points[fs_[currentDeep_].nPoints] = t;
             break;
           case 0:
             j++;
@@ -273,10 +273,10 @@ public class WFGHV {
         }
       }
       if (keep) {
-        t = fs_[currentDeep_].points_[fs_[currentDeep_].nPoints_];
-        fs_[currentDeep_].points_[fs_[currentDeep_].nPoints_] = fs_[currentDeep_].points_[i];
-        fs_[currentDeep_].points_[i] = t;
-        fs_[currentDeep_].nPoints_++;
+        t = fs_[currentDeep_].points[fs_[currentDeep_].nPoints];
+        fs_[currentDeep_].points[fs_[currentDeep_].nPoints] = fs_[currentDeep_].points[i];
+        fs_[currentDeep_].points[i] = t;
+        fs_[currentDeep_].nPoints++;
       }
     }
 
@@ -328,6 +328,6 @@ public class WFGHV {
   }
 
   public void sort(Front front) {
-    Arrays.sort(front.points_, 0, front.nPoints_, pointComparator_);
+    Arrays.sort(front.points, 0, front.nPoints, pointComparator_);
   }
 }

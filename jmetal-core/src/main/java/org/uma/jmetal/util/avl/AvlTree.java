@@ -33,18 +33,18 @@ import java.util.Comparator;
  */
 public class AvlTree<T> {
 
-  AvlNode<T> top_;
-  Comparator comparator_;
+  AvlNode<T> top;
+  Comparator comparator;
 
 
   /**
    * Constructor
    *
-   * @param comparator_
+   * @param comparator
    */
-  public AvlTree(Comparator comparator_) {
-    top_ = null;
-    this.comparator_ = comparator_;
+  public AvlTree(Comparator comparator) {
+    top = null;
+    this.comparator = comparator;
   }
 
 
@@ -81,8 +81,8 @@ public class AvlTree<T> {
     AvlNode<T> currentNode;
     AvlNode<T> result = null;
 
-    currentNode = top_;
-    if (top_ == null) {
+    currentNode = top;
+    if (top == null) {
       result = null;
     } else {
       boolean searchFinished;
@@ -146,7 +146,7 @@ public class AvlTree<T> {
 
   public void deleteLeafNode(AvlNode<T> node) {
     if (!node.hasParent()) {
-      top_ = null;
+      top = null;
     } else {
       if (node.getParent().getLeft() == node) {
         node.getParent().setLeft(null);
@@ -183,8 +183,8 @@ public class AvlTree<T> {
     AvlNode<T> currentNode;
     int result = 0;
 
-    currentNode = top_;
-    if (top_ == null) {
+    currentNode = top;
+    if (top == null) {
       result = 0;
     } else {
       int comparison;
@@ -263,10 +263,10 @@ public class AvlTree<T> {
    *
    * @param node1
    * @param node2
-   * @return The result of the comparison according to the comparators
+   * @return The experimentoutput of the comparison according to the comparators
    */
   public int compareNodes(AvlNode<T> node1, AvlNode<T> node2) {
-    return comparator_.compare(node1.getItem(), node2.getItem());
+    return comparator.compare(node1.getItem(), node2.getItem());
   }
 
   public void rebalance(AvlNode<T> node) {
@@ -380,21 +380,21 @@ public class AvlTree<T> {
   }
 
   public boolean AvlIsEmpty() {
-    return (top_ == null);
+    return (top == null);
   }
 
   public void insertTop(AvlNode<T> node) {
-    top_ = node;
+    top = node;
   }
 
 
   public AvlNode<T> getTop() {
-    return top_;
+    return top;
   }
 
   public void setTop(AvlNode<T> top) {
-    this.top_ = top;
-    this.top_.setParent(null);
+    this.top = top;
+    this.top.setParent(null);
   }
 
   public int height(AvlNode<T> node) {
@@ -411,7 +411,7 @@ public class AvlTree<T> {
   public String toString() {
     String result ;
 
-    result = inOrder(top_);
+    result = inOrder(top);
 
     return result;
   }
