@@ -29,8 +29,6 @@ import java.util.logging.Level;
 /**
  * This class implements the hypervolume indicator. The code is the a Java version
  * of the original metric implementation by Eckart Zitzler.
- * It can be used also as a command line program just by typing
- * $java org.uma.jmetal.qualityIndicator.Hypervolume <solutionFrontFile> <trueFrontFile> <numberOfOjbectives>
  * Reference: E. Zitzler and L. Thiele
  * Multiobjective Evolutionary Algorithms: A Comparative Case Study
  * and the Strength Pareto Approach,
@@ -168,9 +166,7 @@ public class Hypervolume implements QualityIndicator {
 
         tempVolume = front[0][0];
       } else {
-        tempVolume = calculateHypervolume(front,
-          nonDominatedPoints,
-          noObjectives - 1);
+        tempVolume = calculateHypervolume(front, nonDominatedPoints, noObjectives - 1);
       }
 
       tempDistance = surfaceUnchangedTo(front, n, noObjectives - 1);
@@ -182,8 +178,7 @@ public class Hypervolume implements QualityIndicator {
   }
 
   /* merge two fronts */
-  double[][] mergeFronts(double[][] front1, int sizeFront1,
-    double[][] front2, int sizeFront2, int noObjectives) {
+  double[][] mergeFronts(double[][] front1, int sizeFront1, double[][] front2, int sizeFront2, int noObjectives) {
     int i, j;
     int noPoints;
     double[][] frontPtr;

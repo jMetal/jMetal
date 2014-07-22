@@ -70,8 +70,8 @@ public class ParetoFrontsGeneration implements ExperimentResult{
       createReferenceFrontDirectory() ;
     }
 
-
     MetricsUtil metricsUtils = new MetricsUtil();
+
     NonDominatedSolutionList solutionSet = new NonDominatedSolutionList();
     for (String algorithmName : experimentData.getAlgorithmNameList()) {
 

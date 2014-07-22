@@ -38,7 +38,7 @@ import java.util.Properties;
 
 /** Settings class of algorithm NSGA-II (integer encoding) */
 public class NSGAIIIntegerSettings extends Settings {
-  private int populationSize_;
+  private int populationSize;
   private int maxEvaluations;
   private double mutationProbability;
   private double crossoverProbability;
@@ -50,12 +50,10 @@ public class NSGAIIIntegerSettings extends Settings {
   public NSGAIIIntegerSettings(String problem) throws JMetalException, ClassNotFoundException {
     super(problem);
 
-    //Object[] problemParams = {"Integer"};
-    //problem = (new ProblemFactory()).getProblem(problemName, problemParams);
     this.problem = new NMMin("Integer") ;
 
     // Default experiment.settings
-    populationSize_ = 100;
+    populationSize = 100;
     maxEvaluations = 250000;
     mutationProbability = 1.0 / this.problem.getNumberOfVariables();
     crossoverProbability = 0.9;
@@ -89,7 +87,7 @@ public class NSGAIIIntegerSettings extends Settings {
       .mutation(mutation)
       .selection(selection)
       .maxEvaluations(maxEvaluations)
-      .populationSize(populationSize_)
+      .populationSize(populationSize)
       .build("NSGAII") ;
 
     return algorithm;
@@ -98,8 +96,8 @@ public class NSGAIIIntegerSettings extends Settings {
   /** Configure method from configuration file */
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {
-    populationSize_ = Integer
-      .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize_)));
+    populationSize = Integer
+      .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize)));
     maxEvaluations = Integer
       .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations)));
 

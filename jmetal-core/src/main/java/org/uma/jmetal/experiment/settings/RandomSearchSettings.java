@@ -21,20 +21,20 @@
 
 package org.uma.jmetal.experiment.settings;
 
-import java.util.Properties;
-
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.experiment.Settings;
 import org.uma.jmetal.metaheuristic.multiobjective.randomSearch.RandomSearch;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.util.JMetalException;
 
+import java.util.Properties;
+
 /**
  * Settings class of algorithm RandomSearch
  */
 public class RandomSearchSettings extends Settings {
   // Default experiment.settings
-  private int maxEvaluations_ = 25000;
+  private int maxEvaluations = 25000;
 
   /**
    * Constructor
@@ -63,7 +63,7 @@ public class RandomSearchSettings extends Settings {
     algorithm.setProblem(problem);
 
     // Algorithm parameters
-    algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
+    algorithm.setInputParameter("maxEvaluations", maxEvaluations);
 
     return algorithm;
   } // Constructor
@@ -75,7 +75,8 @@ public class RandomSearchSettings extends Settings {
    */
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {
-    maxEvaluations_  = Integer.parseInt(configuration.getProperty("maxEvaluations",String.valueOf(maxEvaluations_)));
+    maxEvaluations = Integer.parseInt(configuration.getProperty("maxEvaluations",String.valueOf(
+      maxEvaluations)));
 
     return configure() ;
   }

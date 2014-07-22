@@ -41,7 +41,7 @@ import java.util.Properties;
  * Settings class of algorithm NSGA-II (real encoding)
  */
 public class NSGAIISettings extends Settings {
-  private int populationSize_;
+  private int populationSize;
   private int maxEvaluations;
   private double mutationProbability;
   private double crossoverProbability;
@@ -61,7 +61,7 @@ public class NSGAIISettings extends Settings {
     this.problem = (new ProblemFactory()).getProblem(problemName, problemParams);
 
     // Default experiment.settings
-    populationSize_ = 100;
+    populationSize = 100;
     maxEvaluations = 25000;
     mutationProbability = 1.0 / this.problem.getNumberOfVariables();
     crossoverProbability = 0.9;
@@ -100,7 +100,7 @@ public class NSGAIISettings extends Settings {
       .mutation(mutation)
       .selection(selection)
       .maxEvaluations(maxEvaluations)
-      .populationSize(populationSize_)
+      .populationSize(populationSize)
       .build("NSGAII") ;
 
     return algorithm;
@@ -113,8 +113,8 @@ public class NSGAIISettings extends Settings {
    */
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {
-    populationSize_ = Integer
-      .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize_)));
+    populationSize = Integer
+      .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize)));
     maxEvaluations = Integer
       .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations)));
 

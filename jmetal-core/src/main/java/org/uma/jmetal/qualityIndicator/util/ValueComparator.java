@@ -33,14 +33,14 @@ public class ValueComparator implements Comparator {
   /**
    * Stores the value of the index to compare
    */
-  private int index_;
+  private int index;
 
   /**
    * Constructor.
    * Creates a new instance of ValueComparator
    */
   public ValueComparator(int index) {
-    index_ = index;
+    this.index = index;
   }
 
   /**
@@ -55,9 +55,9 @@ public class ValueComparator implements Comparator {
     double[] pointOne = (double[]) o1;
     double[] pointTwo = (double[]) o2;
 
-    if (pointOne[index_] < pointTwo[index_]) {
+    if (pointOne[index] < pointTwo[index]) {
       return -1;
-    } else if (pointOne[index_] > pointTwo[index_]) {
+    } else if (pointOne[index] > pointTwo[index]) {
       return 1;
     } else {
       return 0;

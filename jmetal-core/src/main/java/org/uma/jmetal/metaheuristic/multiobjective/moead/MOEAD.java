@@ -61,7 +61,7 @@ public class MOEAD extends Algorithm {
   private SolutionSet population;
   private int populationSize;
 
-  private int evaluations_;
+  private int evaluations;
   private int maxEvaluations;
 
   @Deprecated
@@ -129,7 +129,7 @@ public class MOEAD extends Algorithm {
   }
 
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
-    evaluations_ = 0 ;
+    evaluations = 0 ;
 
     initializeUniformWeight();
     initializeNeighborhood();
@@ -151,12 +151,12 @@ public class MOEAD extends Algorithm {
         mutation.execute(child);
         problem_.evaluate(child);
 
-        evaluations_++;
+        evaluations++;
 
         updateIdealPoint(child);
         updateNeighborhood(child, subProblemId, neighborType);
       }
-    } while (evaluations_ < maxEvaluations);
+    } while (evaluations < maxEvaluations);
 
     return population;
   }
@@ -256,7 +256,7 @@ public class MOEAD extends Algorithm {
       Solution newSolution = new Solution(problem_);
 
       problem_.evaluate(newSolution);
-      evaluations_++;
+      evaluations++;
       population.add(newSolution);
     }
   }
@@ -266,7 +266,7 @@ public class MOEAD extends Algorithm {
       idealPoint[i] = 1.0e+30;
       //indArray[i] = new Solution(problem);
       //problem.evaluate(indArray[i]);
-      evaluations_++;
+      evaluations++;
     }
 
     for (int i = 0; i < populationSize; i++) {

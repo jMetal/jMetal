@@ -38,13 +38,13 @@ import java.util.Properties;
  * Settings class of algorithm SPEA2
  */
 public class SPEA2Settings extends Settings {
-  private int populationSize_           ;
-  private int archiveSize_              ;
-  private int maxEvaluations_           ;
-  private double mutationProbability_   ;
-  private double crossoverProbability_  ;
-  private double crossoverDistributionIndex_ ;
-  private double mutationDistributionIndex_  ;
+  private int populationSize;
+  private int archiveSize;
+  private int maxEvaluations;
+  private double mutationProbability;
+  private double crossoverProbability;
+  private double crossoverDistributionIndex;
+  private double mutationDistributionIndex;
 
   /**
    * Constructor
@@ -56,13 +56,13 @@ public class SPEA2Settings extends Settings {
     Object [] problemParams = {"Real"};
       this.problem = (new ProblemFactory()).getProblem(problemName, problemParams);
 
-    populationSize_           = 100   ;
-    archiveSize_              = 100   ;
-    maxEvaluations_           = 25000 ;
-    mutationProbability_   = 1.0/ this.problem.getNumberOfVariables() ;
-    crossoverProbability_  = 0.9   ;
-    crossoverDistributionIndex_ = 20.0  ;
-    mutationDistributionIndex_  = 20.0  ;
+    populationSize = 100   ;
+    archiveSize = 100   ;
+    maxEvaluations = 25000 ;
+    mutationProbability = 1.0/ this.problem.getNumberOfVariables() ;
+    crossoverProbability = 0.9   ;
+    crossoverDistributionIndex = 20.0  ;
+    mutationDistributionIndex = 20.0  ;
   } 
 
   /**
@@ -82,19 +82,19 @@ public class SPEA2Settings extends Settings {
     algorithm.setProblem(problem);
 
     // Algorithm parameters
-    algorithm.setInputParameter("populationSize", populationSize_);
-    algorithm.setInputParameter("archiveSize", archiveSize_);
-    algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
+    algorithm.setInputParameter("populationSize", populationSize);
+    algorithm.setInputParameter("archiveSize", archiveSize);
+    algorithm.setInputParameter("maxEvaluations", maxEvaluations);
 
     // Mutation and Crossover for Real codification 
     HashMap<String, Object> parameters = new HashMap<String, Object>() ;
-    parameters.put("probability", crossoverProbability_) ;
-    parameters.put("distributionIndex", crossoverDistributionIndex_) ;
+    parameters.put("probability", crossoverProbability) ;
+    parameters.put("distributionIndex", crossoverDistributionIndex) ;
     crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters);                   
 
     parameters = new HashMap<String, Object>() ;
-    parameters.put("probability", mutationProbability_) ;
-    parameters.put("distributionIndex", mutationDistributionIndex_) ;
+    parameters.put("probability", mutationProbability) ;
+    parameters.put("distributionIndex", mutationDistributionIndex) ;
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);                    
 
     // Selection operator 
@@ -116,13 +116,20 @@ public class SPEA2Settings extends Settings {
    */
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {
-    populationSize_ = Integer.parseInt(configuration.getProperty("populationSize",String.valueOf(populationSize_)));
-    maxEvaluations_  = Integer.parseInt(configuration.getProperty("maxEvaluations",String.valueOf(maxEvaluations_)));
-    archiveSize_  = Integer.parseInt(configuration.getProperty("archiveSize",String.valueOf(archiveSize_)));
-    crossoverProbability_ = Double.parseDouble(configuration.getProperty("crossoverProbability",String.valueOf(crossoverProbability_)));
-    crossoverDistributionIndex_ = Double.parseDouble(configuration.getProperty("crossoverDistributionIndex",String.valueOf(crossoverDistributionIndex_)));
-    mutationProbability_ = Double.parseDouble(configuration.getProperty("mutationProbability",String.valueOf(mutationProbability_)));
-    mutationDistributionIndex_ = Double.parseDouble(configuration.getProperty("mutationDistributionIndex",String.valueOf(mutationDistributionIndex_)));
+    populationSize = Integer.parseInt(configuration.getProperty("populationSize",String.valueOf(
+      populationSize)));
+    maxEvaluations = Integer.parseInt(configuration.getProperty("maxEvaluations",String.valueOf(
+      maxEvaluations)));
+    archiveSize = Integer.parseInt(configuration.getProperty("archiveSize",String.valueOf(
+      archiveSize)));
+    crossoverProbability = Double.parseDouble(configuration.getProperty("crossoverProbability",String.valueOf(
+      crossoverProbability)));
+    crossoverDistributionIndex = Double.parseDouble(configuration.getProperty("crossoverDistributionIndex",String.valueOf(
+      crossoverDistributionIndex)));
+    mutationProbability = Double.parseDouble(configuration.getProperty("mutationProbability",String.valueOf(
+      mutationProbability)));
+    mutationDistributionIndex = Double.parseDouble(configuration.getProperty("mutationDistributionIndex",String.valueOf(
+      mutationDistributionIndex)));
 
     return configure() ;
   }

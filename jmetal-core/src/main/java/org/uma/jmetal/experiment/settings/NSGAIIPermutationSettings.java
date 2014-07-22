@@ -44,16 +44,13 @@ import java.util.logging.Level;
  * Settings class of algorithm NSGA-II (permutation encoding)
  */
 public class NSGAIIPermutationSettings extends Settings {
-  public int populationSize_;
-  public int maxEvaluations_;
+  public int populationSize;
+  public int maxEvaluations;
 
-  public double mutationProbability_;
-  public double crossoverProbability_;
+  public double mutationProbability;
+  public double crossoverProbability;
 
-  /**
-   * Constructor
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Constructor */
 
   public NSGAIIPermutationSettings(String problem) {
     super(problem);
@@ -66,11 +63,11 @@ public class NSGAIIPermutationSettings extends Settings {
     }
 
     // Default experiment.settings
-    populationSize_ = 100;
-    maxEvaluations_ = 25000;
+    populationSize = 100;
+    maxEvaluations = 25000;
 
-    mutationProbability_ = 1.0 / this.problem.getNumberOfVariables();
-    crossoverProbability_ = 0.9;
+    mutationProbability = 1.0 / this.problem.getNumberOfVariables();
+    crossoverProbability = 0.9;
   }
 
   /**
@@ -92,17 +89,17 @@ public class NSGAIIPermutationSettings extends Settings {
     algorithm.setProblem(problem);
 
     // Algorithm parameters
-    algorithm.setInputParameter("populationSize", populationSize_);
-    algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
+    algorithm.setInputParameter("populationSize", populationSize);
+    algorithm.setInputParameter("maxEvaluations", maxEvaluations);
 
 
     // Mutation and Crossover Permutation codification
     HashMap<String, Object> parameters = new HashMap<String, Object>();
-    parameters.put("probability", crossoverProbability_);
+    parameters.put("probability", crossoverProbability);
     crossover = CrossoverFactory.getCrossoverOperator("PMXCrossover", parameters);
 
     parameters = new HashMap<String, Object>();
-    parameters.put("probability", mutationProbability_);
+    parameters.put("probability", mutationProbability);
     mutation = MutationFactory.getMutationOperator("SwapMutation", parameters);
 
     // Selection Operator 
@@ -136,25 +133,25 @@ public class NSGAIIPermutationSettings extends Settings {
     algorithm.setProblem(problem);
 
     // Algorithm parameters
-    populationSize_ = Integer
-      .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize_)));
-    maxEvaluations_ = Integer
-      .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations_)));
-    algorithm.setInputParameter("populationSize", populationSize_);
-    algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
+    populationSize = Integer
+      .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize)));
+    maxEvaluations = Integer
+      .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations)));
+    algorithm.setInputParameter("populationSize", populationSize);
+    algorithm.setInputParameter("maxEvaluations", maxEvaluations);
 
     // Mutation and Crossover for Real codification
-    crossoverProbability_ = Double.parseDouble(
-      configuration.getProperty("crossoverProbability", String.valueOf(crossoverProbability_)));
+    crossoverProbability = Double.parseDouble(
+      configuration.getProperty("crossoverProbability", String.valueOf(crossoverProbability)));
 
     HashMap<String, Object> parameters = new HashMap<String, Object>();
-    parameters.put("probability", crossoverProbability_);
+    parameters.put("probability", crossoverProbability);
     crossover = CrossoverFactory.getCrossoverOperator("PMXCrossover", parameters);
 
-    mutationProbability_ = Double.parseDouble(
-      configuration.getProperty("mutationProbability", String.valueOf(mutationProbability_)));
+    mutationProbability = Double.parseDouble(
+      configuration.getProperty("mutationProbability", String.valueOf(mutationProbability)));
     parameters = new HashMap<String, Object>();
-    parameters.put("probability", mutationProbability_);
+    parameters.put("probability", mutationProbability);
     mutation = MutationFactory.getMutationOperator("SwapMutation", parameters);
 
     // Selection Operator

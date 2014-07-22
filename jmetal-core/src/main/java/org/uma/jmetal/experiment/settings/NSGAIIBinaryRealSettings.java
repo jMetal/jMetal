@@ -39,12 +39,12 @@ import java.util.Properties;
  * Settings class of algorithm NSGA-II (binary encoding)
  */
 public class NSGAIIBinaryRealSettings extends Settings {
-  private int populationSize_;
-  private int maxEvaluations_;
+  private int populationSize;
+  private int maxEvaluations;
 
-  private double mutationProbability_;
-  private double crossoverProbability_;
-  private SolutionSetEvaluator evaluator_ ;
+  private double mutationProbability;
+  private double crossoverProbability;
+  private SolutionSetEvaluator evaluator;
 
   /**
    * Constructor
@@ -58,13 +58,13 @@ public class NSGAIIBinaryRealSettings extends Settings {
     this.problem = (new ProblemFactory()).getProblem(problemName, problemParams);
 
     // Default experiment.settings
-    populationSize_ = 100;
-    maxEvaluations_ = 25000;
+    populationSize = 100;
+    maxEvaluations = 25000;
 
-    mutationProbability_ = 1.0 / this.problem.getNumberOfBits();
-    crossoverProbability_ = 0.9;
+    mutationProbability = 1.0 / this.problem.getNumberOfBits();
+    crossoverProbability = 0.9;
 
-    evaluator_ = new SequentialSolutionSetEvaluator() ;
+    evaluator = new SequentialSolutionSetEvaluator() ;
   }
 
   /**
@@ -80,17 +80,17 @@ public class NSGAIIBinaryRealSettings extends Settings {
     Operator mutation;
 
     crossover = new SinglePointCrossover.Builder()
-      .probability(crossoverProbability_)
+      .probability(crossoverProbability)
       .build() ;
 
     mutation = new BitFlipMutation.Builder()
-      .probability(mutationProbability_)
+      .probability(mutationProbability)
       .build();
 
     selection = new BinaryTournament2.Builder()
       .build();
 
-    algorithm = new NSGAII.Builder(problem, evaluator_)
+    algorithm = new NSGAII.Builder(problem, evaluator)
       .crossover(crossover)
       .mutation(mutation)
       .selection(selection)
@@ -108,15 +108,15 @@ public class NSGAIIBinaryRealSettings extends Settings {
    */
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {
-    populationSize_ = Integer
-      .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize_)));
-    maxEvaluations_ = Integer
-      .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations_)));
+    populationSize = Integer
+      .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize)));
+    maxEvaluations = Integer
+      .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations)));
 
-    crossoverProbability_ = Double.parseDouble(
-      configuration.getProperty("crossoverProbability", String.valueOf(crossoverProbability_)));
-    mutationProbability_ = Double.parseDouble(
-      configuration.getProperty("mutationProbability", String.valueOf(mutationProbability_)));
+    crossoverProbability = Double.parseDouble(
+      configuration.getProperty("crossoverProbability", String.valueOf(crossoverProbability)));
+    mutationProbability = Double.parseDouble(
+      configuration.getProperty("mutationProbability", String.valueOf(mutationProbability)));
 
     return configure();
   }

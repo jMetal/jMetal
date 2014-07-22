@@ -40,13 +40,13 @@ import java.util.Properties;
  * Settings class of algorithm ParallelNSGAIISettings (real encoding)
  */
 public class ParallelNSGAIISettings extends Settings {
-  public int populationSize_;
-  public int maxEvaluations_;
-  public double mutationProbability_;
-  public double crossoverProbability_;
-  public double mutationDistributionIndex_;
-  public double crossoverDistributionIndex_;
-  public int numberOfThreads_;
+  public int populationSize;
+  public int maxEvaluations;
+  public double mutationProbability;
+  public double crossoverProbability;
+  public double mutationDistributionIndex;
+  public double crossoverDistributionIndex;
+  public int numberOfThreads;
 
   /**
    * Constructor
@@ -58,14 +58,14 @@ public class ParallelNSGAIISettings extends Settings {
     this.problem = (new ProblemFactory()).getProblem(problemName, problemParams);
 
     // Default experiment.settings
-    populationSize_ = 100;
-    maxEvaluations_ = 25000;
-    mutationProbability_ = 1.0 / this.problem.getNumberOfVariables();
-    crossoverProbability_ = 0.9;
-    mutationDistributionIndex_ = 20.0;
-    crossoverDistributionIndex_ = 20.0;
+    populationSize = 100;
+    maxEvaluations = 25000;
+    mutationProbability = 1.0 / this.problem.getNumberOfVariables();
+    crossoverProbability = 0.9;
+    mutationDistributionIndex = 20.0;
+    crossoverDistributionIndex = 20.0;
     // 0 - number of available cores
-    numberOfThreads_ = 2;
+    numberOfThreads = 2;
   }
 
 
@@ -81,17 +81,17 @@ public class ParallelNSGAIISettings extends Settings {
     Crossover crossover;
     Mutation mutation;
 
-    SolutionSetEvaluator evaluator = new MultithreadedSolutionSetEvaluator(numberOfThreads_,
+    SolutionSetEvaluator evaluator = new MultithreadedSolutionSetEvaluator(numberOfThreads,
       problem) ;
 
     crossover = new SBXCrossover.Builder()
-      .distributionIndex(crossoverDistributionIndex_)
-      .probability(crossoverProbability_)
+      .distributionIndex(crossoverDistributionIndex)
+      .probability(crossoverProbability)
       .build() ;
 
     mutation = new PolynomialMutation.Builder()
-      .distributionIndex(mutationDistributionIndex_)
-      .probability(mutationProbability_)
+      .distributionIndex(mutationDistributionIndex)
+      .probability(mutationProbability)
       .build();
 
     selection = new BinaryTournament2.Builder()
@@ -115,28 +115,28 @@ public class ParallelNSGAIISettings extends Settings {
    */
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {
-    numberOfThreads_ = Integer
-      .parseInt(configuration.getProperty("numberOfThreads", String.valueOf(numberOfThreads_)));
+    numberOfThreads = Integer
+      .parseInt(configuration.getProperty("numberOfThreads", String.valueOf(numberOfThreads)));
 
-    SolutionSetEvaluator evaluator = new MultithreadedSolutionSetEvaluator(numberOfThreads_,
+    SolutionSetEvaluator evaluator = new MultithreadedSolutionSetEvaluator(numberOfThreads,
       problem) ;
 
     // Algorithm parameters
-    populationSize_ = Integer
-      .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize_)));
-    maxEvaluations_ = Integer
-      .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations_)));
+    populationSize = Integer
+      .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize)));
+    maxEvaluations = Integer
+      .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations)));
 
     // Mutation and Crossover for Real codification
-    crossoverProbability_ = Double.parseDouble(
-      configuration.getProperty("crossoverProbability", String.valueOf(crossoverProbability_)));
-    crossoverDistributionIndex_ = Double.parseDouble(configuration
-      .getProperty("crossoverDistributionIndex", String.valueOf(crossoverDistributionIndex_)));
+    crossoverProbability = Double.parseDouble(
+      configuration.getProperty("crossoverProbability", String.valueOf(crossoverProbability)));
+    crossoverDistributionIndex = Double.parseDouble(configuration
+      .getProperty("crossoverDistributionIndex", String.valueOf(crossoverDistributionIndex)));
 
-    mutationProbability_ = Double.parseDouble(
-      configuration.getProperty("mutationProbability", String.valueOf(mutationProbability_)));
-    mutationDistributionIndex_ = Double.parseDouble(configuration
-      .getProperty("mutationDistributionIndex", String.valueOf(mutationDistributionIndex_)));
+    mutationProbability = Double.parseDouble(
+      configuration.getProperty("mutationProbability", String.valueOf(mutationProbability)));
+    mutationDistributionIndex = Double.parseDouble(configuration
+      .getProperty("mutationDistributionIndex", String.valueOf(mutationDistributionIndex)));
 
     return configure();
   }

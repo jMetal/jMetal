@@ -33,19 +33,12 @@ import java.util.Comparator;
  * FPGA algorithm
  */
 public class FPGAFitness {
-  /**
-   * stores a <code>Comparator</code> for dominance checking
-   */
-  private static final Comparator<Solution> dominance_ = new DominanceComparator();
+  private static final Comparator<Solution> dominanceComparator = new DominanceComparator();
   /**
    * Need the population to assign the fitness, this population may contain
    * solutions in the population and the archive
    */
-  private SolutionSet solutionSet_ = null;
-  /**
-   * problem to solve
-   */
-  private Problem problem_ = null;
+  private SolutionSet solutionSet = null;
 
   /**
    * Constructor.
@@ -55,42 +48,39 @@ public class FPGAFitness {
    * @param problem     The problem to solve
    */
   public FPGAFitness(SolutionSet solutionSet, Problem problem) {
-    solutionSet_ = solutionSet;
-    problem_ = problem;
-    for (int i = 0; i < solutionSet_.size(); i++) {
-      solutionSet_.get(i).setLocation(i);
+    this.solutionSet = solutionSet;
+    for (int i = 0; i < this.solutionSet.size(); i++) {
+      this.solutionSet.get(i).setLocation(i);
     }
   }
-
 
   /**
    * Assign FPGA fitness to the solutions. Similar to the SPEA2 fitness.
    */
   public void fitnessAssign() {
-    double[] strength = new double[solutionSet_.size()];
+    double[] strength = new double[solutionSet.size()];
 
-    for (int i = 0; i < solutionSet_.size(); i++) {
-      if (solutionSet_.get(i).getRank() == 0) {
-        solutionSet_.get(i).setFitness(solutionSet_.get(i).getCrowdingDistance());
+    for (int i = 0; i < solutionSet.size(); i++) {
+      if (solutionSet.get(i).getRank() == 0) {
+        solutionSet.get(i).setFitness(solutionSet.get(i).getCrowdingDistance());
       }
     }
 
     //Calculate the strength value
     // strength(i) = |{j | j <- SolutionSet and i dominate j}|
-    for (int i = 0; i < solutionSet_.size(); i++) {
-      for (int j = 0; j < solutionSet_.size(); j++) {
-        if (dominance_.compare(solutionSet_.get(i), solutionSet_.get(j)) == -1) {
+    for (int i = 0; i < solutionSet.size(); i++) {
+      for (int j = 0; j < solutionSet.size(); j++) {
+        if (dominanceComparator.compare(solutionSet.get(i), solutionSet.get(j)) == -1) {
           strength[i] += 1.0;
         }
       }
     }
 
-
     //Calculate the fitness
-    for (int i = 0; i < solutionSet_.size(); i++) {
+    for (int i = 0; i < solutionSet.size(); i++) {
       double fitness = 0.0;
-      for (int j = 0; j < solutionSet_.size(); j++) {
-        int flag = dominance_.compare(solutionSet_.get(i), solutionSet_.get(j));
+      for (int j = 0; j < solutionSet.size(); j++) {
+        int flag = dominanceComparator.compare(solutionSet.get(i), solutionSet.get(j));
         if (flag == -1) {
           fitness += strength[j];
         } else if (flag == 1) {

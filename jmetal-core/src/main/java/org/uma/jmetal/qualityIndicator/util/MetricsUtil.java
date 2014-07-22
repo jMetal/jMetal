@@ -537,8 +537,6 @@ public class MetricsUtil {
     return contribution;
   }
 
-
-
   /**
    * Calculates the hv contribution of different populations.
    * Receives an array of populations and computes the contribution to HV of the

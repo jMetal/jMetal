@@ -31,50 +31,38 @@ import java.io.IOException;
  * Created by Antonio J. Nebro on 08/06/14.
  */
 public class AlgorithmRunner {
-  private SolutionSet solutionSet_ ;
-  private long computingTime_ ;
+  private SolutionSet solutionSet;
+  private long computingTime;
 
+  /** Constructor */
   private AlgorithmRunner(Executor execute) {
-    solutionSet_ = execute.solutionSet_ ;
-    computingTime_ = execute.computingTime_ ;
+    solutionSet = execute.solutionSet;
+    computingTime = execute.computingTime;
   }
 
+  /* Getters */
   public SolutionSet getSolutionSet() {
-    return solutionSet_;
+    return solutionSet;
   }
 
   public long getComputingTime() {
-    return computingTime_ ;
-  }
-  /*
-  public RunAlgorithm(Algorithm algorithm) throws IOException, ClassNotFoundException {
-    long initTime = System.currentTimeMillis();
-    solutionSet_ = algorithm.execute() ;
-    computingTime_ = System.currentTimeMillis() - initTime ;
+    return computingTime;
   }
 
-  public long getComputingTime() {
-    return computingTime_ ;
-  }
-
-  public SolutionSet getSolutionSet() {
-    return solutionSet_ ;
-  }
-
-  */
+  /** Executor class */
   public static class Executor {
-    Algorithm algorithm_ ;
-    long computingTime_ ;
-    SolutionSet solutionSet_ ;
+    Algorithm algorithm;
+    long computingTime;
+    SolutionSet solutionSet;
 
     public Executor(Algorithm algorithm) {
-      algorithm_ = algorithm ;
+      this.algorithm = algorithm ;
     }
 
     public AlgorithmRunner execute() throws IOException, ClassNotFoundException {
       long initTime = System.currentTimeMillis();
-      solutionSet_ = algorithm_.execute() ;
-      computingTime_ = System.currentTimeMillis() - initTime ;
+      solutionSet = algorithm.execute() ;
+      computingTime = System.currentTimeMillis() - initTime ;
 
       return new AlgorithmRunner(this) ;
     }

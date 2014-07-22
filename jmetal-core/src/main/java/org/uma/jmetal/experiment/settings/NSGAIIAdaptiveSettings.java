@@ -45,14 +45,14 @@ import java.util.Properties;
  * DOI: http://dx.doi.org/10.1007/978-3-642-40643-0_28
  */
 public class NSGAIIAdaptiveSettings extends Settings {
-  private int populationSize_;
-  private int maxEvaluations_;
-  private double mutationProbability_;
-  private double crossoverProbability_;
-  private double mutationDistributionIndex_;
-  private double crossoverDistributionIndex_;
-  private double cr_;
-  private double f_;
+  private int populationSize;
+  private int maxEvaluations;
+  private double mutationProbability;
+  private double crossoverProbability;
+  private double mutationDistributionIndex;
+  private double crossoverDistributionIndex;
+  private double cr;
+  private double f;
 
   /**
    * Constructor
@@ -66,14 +66,14 @@ public class NSGAIIAdaptiveSettings extends Settings {
     this.problem = (new ProblemFactory()).getProblem(problemName, problemParams);
 
     // Default settings
-    populationSize_ = 100;
-    maxEvaluations_ = 150000;
-    mutationProbability_ = 1.0 / this.problem.getNumberOfVariables();
-    crossoverProbability_ = 0.9;
-    mutationDistributionIndex_ = 20;
-    crossoverDistributionIndex_ = 20;
-    cr_ = 1.0;
-    f_ = 0.5;
+    populationSize = 100;
+    maxEvaluations = 150000;
+    mutationProbability = 1.0 / this.problem.getNumberOfVariables();
+    crossoverProbability = 0.9;
+    mutationDistributionIndex = 20;
+    crossoverDistributionIndex = 20;
+    cr = 1.0;
+    f = 0.5;
   }
 
   /**
@@ -94,16 +94,16 @@ public class NSGAIIAdaptiveSettings extends Settings {
     algorithm.setProblem(problem);
 
     // Algorithm parameters
-    algorithm.setInputParameter("populationSize", populationSize_);
-    algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
+    algorithm.setInputParameter("populationSize", populationSize);
+    algorithm.setInputParameter("maxEvaluations", maxEvaluations);
 
     Offspring[] getOffspring = new Offspring[3];
-    getOffspring[0] = new DifferentialEvolutionOffspring(cr_, f_);
+    getOffspring[0] = new DifferentialEvolutionOffspring(cr, f);
 
-    getOffspring[1] = new SBXCrossoverOffspring(crossoverProbability_, crossoverDistributionIndex_);
+    getOffspring[1] = new SBXCrossoverOffspring(crossoverProbability, crossoverDistributionIndex);
 
     getOffspring[2] =
-      new PolynomialMutationOffspring(mutationProbability_, mutationDistributionIndex_);
+      new PolynomialMutationOffspring(mutationProbability, mutationDistributionIndex);
 
     algorithm.setInputParameter("offspringsCreators", getOffspring);
 
@@ -124,21 +124,21 @@ public class NSGAIIAdaptiveSettings extends Settings {
    */
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {
-    populationSize_ = Integer
-      .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize_)));
-    maxEvaluations_ = Integer
-      .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations_)));
+    populationSize = Integer
+      .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize)));
+    maxEvaluations = Integer
+      .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations)));
 
-    crossoverProbability_ = Double.parseDouble(
-      configuration.getProperty("crossoverProbability", String.valueOf(crossoverProbability_)));
-    crossoverDistributionIndex_ = Double.parseDouble(configuration
-      .getProperty("crossoverDistributionIndex", String.valueOf(crossoverDistributionIndex_)));
-    mutationProbability_ = Double.parseDouble(
-      configuration.getProperty("mutationProbability", String.valueOf(mutationProbability_)));
-    mutationDistributionIndex_ = Double.parseDouble(configuration
-      .getProperty("mutationDistributionIndex", String.valueOf(mutationDistributionIndex_)));
-    cr_ = Double.parseDouble(configuration.getProperty("CR", String.valueOf(cr_)));
-    f_ = Double.parseDouble(configuration.getProperty("F", String.valueOf(f_)));
+    crossoverProbability = Double.parseDouble(
+      configuration.getProperty("crossoverProbability", String.valueOf(crossoverProbability)));
+    crossoverDistributionIndex = Double.parseDouble(configuration
+      .getProperty("crossoverDistributionIndex", String.valueOf(crossoverDistributionIndex)));
+    mutationProbability = Double.parseDouble(
+      configuration.getProperty("mutationProbability", String.valueOf(mutationProbability)));
+    mutationDistributionIndex = Double.parseDouble(configuration
+      .getProperty("mutationDistributionIndex", String.valueOf(mutationDistributionIndex)));
+    cr = Double.parseDouble(configuration.getProperty("CR", String.valueOf(cr)));
+    f = Double.parseDouble(configuration.getProperty("F", String.valueOf(f)));
 
     return configure();
   }

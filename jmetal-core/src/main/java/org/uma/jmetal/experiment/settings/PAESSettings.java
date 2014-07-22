@@ -35,12 +35,11 @@ import java.util.Properties;
  * Settings class of algorithm PAES
  */
 public class PAESSettings extends Settings {
-
-  public int maxEvaluations_;
-  public int archiveSize_;
-  public int biSections_;
-  public double mutationProbability_;
-  public double mutationDistributionIndex_;
+  public int maxEvaluations;
+  public int archiveSize;
+  public int biSections;
+  public double mutationProbability;
+  public double mutationDistributionIndex;
 
   /**
    * Constructor
@@ -53,11 +52,11 @@ public class PAESSettings extends Settings {
     this.problem = (new ProblemFactory()).getProblem(problemName, problemParams);
 
     // Default experiment.settings
-    maxEvaluations_ = 25000 ;
-    archiveSize_    = 100   ;
-    biSections_     = 5     ;
-    mutationProbability_ = 1.0/ this.problem.getNumberOfVariables() ;
-    mutationDistributionIndex_ = 20.0 ;
+    maxEvaluations = 25000 ;
+    archiveSize = 100   ;
+    biSections = 5     ;
+    mutationProbability = 1.0/ this.problem.getNumberOfVariables() ;
+    mutationDistributionIndex = 20.0 ;
   }
 
   /**
@@ -92,14 +91,16 @@ public class PAESSettings extends Settings {
    */
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {
-    archiveSize_ = Integer.parseInt(configuration.getProperty("archiveSize",String.valueOf(archiveSize_)));
-    maxEvaluations_  = Integer.parseInt(configuration.getProperty("maxEvaluations",String.valueOf(maxEvaluations_)));
-    biSections_  = Integer.parseInt(configuration.getProperty("biSections",String.valueOf(biSections_)));
+    archiveSize = Integer.parseInt(configuration.getProperty("archiveSize",String.valueOf(
+      archiveSize)));
+    maxEvaluations = Integer.parseInt(configuration.getProperty("maxEvaluations",String.valueOf(
+      maxEvaluations)));
+    biSections = Integer.parseInt(configuration.getProperty("biSections",String.valueOf(biSections)));
 
-    mutationProbability_ = Double.parseDouble(
-      configuration.getProperty("mutationProbability", String.valueOf(mutationProbability_)));
-    mutationDistributionIndex_ = Double.parseDouble(configuration
-      .getProperty("mutationDistributionIndex", String.valueOf(mutationDistributionIndex_)));
+    mutationProbability = Double.parseDouble(
+      configuration.getProperty("mutationProbability", String.valueOf(mutationProbability)));
+    mutationDistributionIndex = Double.parseDouble(configuration
+      .getProperty("mutationDistributionIndex", String.valueOf(mutationDistributionIndex)));
 
     return configure() ;
   }

@@ -33,11 +33,11 @@ import java.util.Properties;
  * Settings class of algorithm dMOPSO
  */
 public class DMOPSOSettings extends Settings {
-  private String dataDirectory_;
-  private int swarmSize_;
-  private int maxIterations_;
-  private int maxAge_;
-  private String functionType_;
+  private String dataDirectory;
+  private int swarmSize;
+  private int maxIterations;
+  private int maxAge;
+  private String functionType;
 
   /**
    * Constructor
@@ -51,10 +51,10 @@ public class DMOPSOSettings extends Settings {
     this.problem = (new ProblemFactory()).getProblem(problemName, problemParams);
 
     // Default experiment.settings
-    swarmSize_ = 100;
-    maxIterations_ = 250;
-    maxAge_ = 2;
-    functionType_ = "_TCHE";  // _TCHE, _PBI, _AGG
+    swarmSize = 100;
+    maxIterations = 250;
+    maxAge = 2;
+    functionType = "_TCHE";  // _TCHE, _PBI, _AGG
 
     // Directory with the files containing the weight vectors used in 
     // Q. Zhang,  W. Liu,  and H Li, The Performance of a New Version of MOEA/D 
@@ -62,7 +62,7 @@ public class DMOPSOSettings extends Settings {
     // of CS & EE, University of Essex, 02/2009.
     // http://dces.essex.ac.uk/staff/qzhang/MOEAcompetition/CEC09final/code/ZhangMOEADcode/moead0305.rar
 
-    dataDirectory_ = "MOEAD_Weights";
+    dataDirectory = "MOEAD_Weights";
   } // dMOPSO_Settings
 
   /**
@@ -79,11 +79,11 @@ public class DMOPSOSettings extends Settings {
     algorithm.setProblem(problem);
 
     // Algorithm parameters
-    algorithm.setInputParameter("swarmSize", swarmSize_);
-    algorithm.setInputParameter("maxIterations", maxIterations_);
-    algorithm.setInputParameter("maxAge", maxAge_);
-    algorithm.setInputParameter("functionType", functionType_);
-    algorithm.setInputParameter("dataDirectory", dataDirectory_);
+    algorithm.setInputParameter("swarmSize", swarmSize);
+    algorithm.setInputParameter("maxIterations", maxIterations);
+    algorithm.setInputParameter("maxAge", maxAge);
+    algorithm.setInputParameter("functionType", functionType);
+    algorithm.setInputParameter("dataDirectory", dataDirectory);
 
     return algorithm;
   }
@@ -95,13 +95,13 @@ public class DMOPSOSettings extends Settings {
    */
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {
-    swarmSize_ =
-      Integer.parseInt(configuration.getProperty("swarmSize", String.valueOf(swarmSize_)));
-    maxIterations_ =
-      Integer.parseInt(configuration.getProperty("maxIterations", String.valueOf(maxIterations_)));
-    dataDirectory_ = configuration.getProperty("dataDirectory", dataDirectory_);
-    maxAge_ = Integer.parseInt(configuration.getProperty("maxAge", String.valueOf(maxAge_)));
-    functionType_ = configuration.getProperty("functionType", String.valueOf(functionType_));
+    swarmSize =
+      Integer.parseInt(configuration.getProperty("swarmSize", String.valueOf(swarmSize)));
+    maxIterations =
+      Integer.parseInt(configuration.getProperty("maxIterations", String.valueOf(maxIterations)));
+    dataDirectory = configuration.getProperty("dataDirectory", dataDirectory);
+    maxAge = Integer.parseInt(configuration.getProperty("maxAge", String.valueOf(maxAge)));
+    functionType = configuration.getProperty("functionType", String.valueOf(functionType));
 
     return configure();
   }

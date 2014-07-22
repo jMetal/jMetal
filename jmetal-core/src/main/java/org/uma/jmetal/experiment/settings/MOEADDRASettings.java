@@ -37,20 +37,20 @@ import java.util.Properties;
  * Settings class of algorithm MOEA/D-DRA
  */
 public class MOEADDRASettings extends Settings {
-  private double cr_;
-  private double f_;
-  private int populationSize_;
-  private int maxEvaluations_;
-  private int finalSize_;
+  private double cr;
+  private double f;
+  private int populationSize;
+  private int maxEvaluations;
+  private int finalSize;
 
-  private double mutationProbability_;
-  private double mutationDistributionIndex_;
+  private double mutationProbability;
+  private double mutationDistributionIndex;
 
-  private int t_;
-  private double delta_;
-  private int nr_;
+  private int t;
+  private double delta;
+  private int nr;
 
-  private String dataDirectory_;
+  private String dataDirectory;
 
   /**
    * Constructor
@@ -64,19 +64,19 @@ public class MOEADDRASettings extends Settings {
     this.problem = (new ProblemFactory()).getProblem(problemName, problemParams);
 
     // Default experiment.settings
-    cr_ = 1.0;
-    f_ = 0.5;
-    populationSize_ = 600;
-    maxEvaluations_ = 300000;
+    cr = 1.0;
+    f = 0.5;
+    populationSize = 600;
+    maxEvaluations = 300000;
 
-    finalSize_ = 300;
+    finalSize = 300;
 
-    mutationProbability_ = 1.0 / this.problem.getNumberOfVariables();
-    mutationDistributionIndex_ = 20;
+    mutationProbability = 1.0 / this.problem.getNumberOfVariables();
+    mutationDistributionIndex = 20;
 
-    t_ = (int) (0.1 * populationSize_);
-    delta_ = 0.9;
-    nr_ = (int) (0.01 * populationSize_);
+    t = (int) (0.1 * populationSize);
+    delta = 0.9;
+    nr = (int) (0.01 * populationSize);
 
     // Directory with the files containing the weight vectors used in 
     // Q. Zhang,  W. Liu,  and H Li, The Performance of a New Version of MOEA/D 
@@ -84,7 +84,7 @@ public class MOEADDRASettings extends Settings {
     // of CS & EE, University of Essex, 02/2009.
     // http://dces.essex.ac.uk/staff/qzhang/MOEAcompetition/CEC09final/code/ZhangMOEADcode/moead0305.rar
 
-    dataDirectory_ = "MOEAD_Weights";
+    dataDirectory = "MOEAD_Weights";
   }
 
   /**
@@ -103,25 +103,25 @@ public class MOEADDRASettings extends Settings {
     algorithm.setProblem(problem);
 
     // Algorithm parameters
-    algorithm.setInputParameter("populationSize", populationSize_);
-    algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
-    algorithm.setInputParameter("dataDirectory", dataDirectory_);
-    algorithm.setInputParameter("finalSize", finalSize_);
+    algorithm.setInputParameter("populationSize", populationSize);
+    algorithm.setInputParameter("maxEvaluations", maxEvaluations);
+    algorithm.setInputParameter("dataDirectory", dataDirectory);
+    algorithm.setInputParameter("finalSize", finalSize);
 
-    algorithm.setInputParameter("T", t_);
-    algorithm.setInputParameter("delta", delta_);
-    algorithm.setInputParameter("nr", nr_);
+    algorithm.setInputParameter("T", t);
+    algorithm.setInputParameter("delta", delta);
+    algorithm.setInputParameter("nr", nr);
 
     // Crossover operator 
     HashMap<String, Object> parameters = new HashMap<String, Object>();
-    parameters.put("CR", cr_);
-    parameters.put("F", f_);
+    parameters.put("CR", cr);
+    parameters.put("F", f);
     crossover = CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", parameters);
 
     // Mutation operator
     parameters = new HashMap<String, Object>();
-    parameters.put("probability", mutationProbability_);
-    parameters.put("distributionIndex", mutationDistributionIndex_);
+    parameters.put("probability", mutationProbability);
+    parameters.put("distributionIndex", mutationDistributionIndex);
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);
 
     algorithm.addOperator("crossover", crossover);
@@ -137,26 +137,26 @@ public class MOEADDRASettings extends Settings {
    */
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {
-    populationSize_ = Integer
-      .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize_)));
-    maxEvaluations_ = Integer
-      .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations_)));
-    finalSize_ =
-      Integer.parseInt(configuration.getProperty("finalSize", String.valueOf(finalSize_)));
-    dataDirectory_ = configuration.getProperty("dataDirectory", dataDirectory_);
-    delta_ = Double.parseDouble(configuration.getProperty("delta", String.valueOf(delta_)));
-    t_ = Integer.parseInt(configuration.getProperty("T", String.valueOf(t_)));
-    nr_ = Integer.parseInt(configuration.getProperty("nr", String.valueOf(nr_)));
+    populationSize = Integer
+      .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize)));
+    maxEvaluations = Integer
+      .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations)));
+    finalSize =
+      Integer.parseInt(configuration.getProperty("finalSize", String.valueOf(finalSize)));
+    dataDirectory = configuration.getProperty("dataDirectory", dataDirectory);
+    delta = Double.parseDouble(configuration.getProperty("delta", String.valueOf(delta)));
+    t = Integer.parseInt(configuration.getProperty("T", String.valueOf(t)));
+    nr = Integer.parseInt(configuration.getProperty("nr", String.valueOf(nr)));
 
     // Crossover operator
-    cr_ = Double.parseDouble(configuration.getProperty("CR", String.valueOf(cr_)));
-    f_ = Double.parseDouble(configuration.getProperty("F", String.valueOf(f_)));
+    cr = Double.parseDouble(configuration.getProperty("CR", String.valueOf(cr)));
+    f = Double.parseDouble(configuration.getProperty("F", String.valueOf(f)));
 
     // Mutation parameters
-    mutationProbability_ = Double.parseDouble(
-      configuration.getProperty("mutationProbability", String.valueOf(mutationProbability_)));
-    mutationDistributionIndex_ = Double.parseDouble(configuration
-      .getProperty("mutationDistributionIndex", String.valueOf(mutationDistributionIndex_)));
+    mutationProbability = Double.parseDouble(
+      configuration.getProperty("mutationProbability", String.valueOf(mutationProbability)));
+    mutationDistributionIndex = Double.parseDouble(configuration
+      .getProperty("mutationDistributionIndex", String.valueOf(mutationDistributionIndex)));
 
     return configure();
   }

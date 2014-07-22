@@ -24,9 +24,9 @@ package org.uma.jmetal.util;
 /**
  * This is an auxiliar class for calculating the SPEA2 environmental selection.
  * Each instance of DistanceNode contains two parameter called
- * <code>reference_</code> and <code>distance_</code>.
- * <code>reference_</code> indicates one <code>Solution</code> in a
- * <code>SolutionSet</code> and <code>distance_</code> represents the distance_
+ * <code>reference</code> and <code>distance</code>.
+ * <code>reference</code> indicates one <code>Solution</code> in a
+ * <code>SolutionSet</code> and <code>distance</code> represents the distance
  * to this solutiontype.
  */
 public class DistanceNode {
@@ -35,13 +35,13 @@ public class DistanceNode {
    * Indicates the position of a <code>Solution</code> in a
    * <code>SolutionSet</code>.
    */
-  private int reference_;
+  private int reference;
 
   /**
    * Indicates the distance to the <code>Solution</code> represented by
-   * <code>reference_</code>.
+   * <code>reference</code>.
    */
-  private double distance_;
+  private double distance;
 
   /**
    * Constructor.
@@ -50,8 +50,8 @@ public class DistanceNode {
    * @param reference The position of the <code>Solution</code>.
    */
   public DistanceNode(double distance, int reference) {
-    distance_ = distance;
-    reference_ = reference;
+    this.distance = distance;
+    this.reference = reference;
   }
 
   /**
@@ -60,7 +60,7 @@ public class DistanceNode {
    * @param reference The reference
    */
   public void setReferece(int reference) {
-    reference_ = reference;
+    this.reference = reference;
   }
 
   /**
@@ -69,7 +69,7 @@ public class DistanceNode {
    * @return the distance
    */
   public double getDistance() {
-    return distance_;
+    return distance;
   }
 
   /**
@@ -78,7 +78,7 @@ public class DistanceNode {
    * @param distance The distance
    */
   public void setDistance(double distance) {
-    distance_ = distance;
+    this.distance = distance;
   }
 
   /**
@@ -87,6 +87,6 @@ public class DistanceNode {
    * @return the reference
    */
   public int getReference() {
-    return reference_;
+    return reference;
   }
 }

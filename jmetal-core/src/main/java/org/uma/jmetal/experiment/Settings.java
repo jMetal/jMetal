@@ -90,7 +90,7 @@ public abstract class Settings {
             Double value = (Double) settings.get(fields[i].getName());
 
             if (settings.containsKey(fields[i].getName())) {
-              if ("mutationProbability_".equals(fields[i].getName()) &&
+              if ("mutationProbability".equals(fields[i].getName()) &&
                 value == null) {
                 if ((RealSolutionType.class == problem.getSolutionType().getClass()) ||
                   (ArrayRealSolutionType.class == problem.getSolutionType().getClass())) {
