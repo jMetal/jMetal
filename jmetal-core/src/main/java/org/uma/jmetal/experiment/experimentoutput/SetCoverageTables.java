@@ -54,8 +54,8 @@ public class SetCoverageTables implements ExperimentOutput {
       return this ;
     }
 
-    public Builder outputFileName(String outputDirectory) {
-      this.outputDirectory = outputDirectory ;
+    public Builder outputFileName(String outputFileName) {
+      this.outputFile = outputFileName ;
 
       return this ;
     }

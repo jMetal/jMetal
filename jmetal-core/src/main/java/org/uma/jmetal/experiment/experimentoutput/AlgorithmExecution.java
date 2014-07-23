@@ -87,6 +87,7 @@ public class AlgorithmExecution implements ExperimentOutput {
 
     public Builder numberOfThreads(int numberOfThreads) {
       this.numberOfThreads = numberOfThreads ;
+      parallelExecutor = new MultithreadedExperimentExecutor(numberOfThreads) ;
 
       return this ;
     }

@@ -22,10 +22,7 @@ package org.uma.jmetal.experiments;
 
 import org.uma.jmetal.experiment.Experiment2;
 import org.uma.jmetal.experiment.ExperimentData;
-import org.uma.jmetal.experiment.experimentoutput.AlgorithmExecution;
-import org.uma.jmetal.experiment.experimentoutput.ParetoFrontsGeneration;
-import org.uma.jmetal.experiment.experimentoutput.QualityIndicatorGeneration;
-import org.uma.jmetal.experiment.experimentoutput.SetCoverageTables;
+import org.uma.jmetal.experiment.experimentoutput.*;
 import org.uma.jmetal.util.JMetalException;
 
 import java.io.IOException;
@@ -33,12 +30,12 @@ import java.io.IOException;
 public class ExperimentRunner {
   public static void main(String[] args) throws JMetalException, IOException {
     ExperimentData experimentData = new ExperimentData.Builder("Experiment2")
-      .algorithmNameList(new String[]{"NSGAII", "SMPSO"})
+      .algorithmNameList(new String[]{"NSGAII", "SMPSO", "MOCell"})
       .problemList(new String[]{"ZDT1", "ZDT2", "ZDT3", "ZDT4"})
       .experimentBaseDirectory("/Users/antelverde/Softw/jMetal/jMetalGitHub/pruebas")
       .outputParetoFrontFileName("FUN")
       .outputParetoSetFileName("VAR")
-      .independentRuns(2)
+      .independentRuns(20)
       .build() ;
 
     AlgorithmExecution algorithmExecution = new AlgorithmExecution.Builder(experimentData)
@@ -51,13 +48,20 @@ public class ExperimentRunner {
     ParetoFrontsGeneration paretoFrontsGeneration = new ParetoFrontsGeneration.Builder(experimentData)
       .build() ;
 
+    String[] indicatorList = new String[]{"HV", "IGD", "EPSILON", "SPREAD", "GD"} ;
     QualityIndicatorGeneration qualityIndicatorGeneration = new QualityIndicatorGeneration.Builder(experimentData)
       .paretoFrontDirectory("/Users/antelverde/Softw/pruebas/data/paretoFronts")
       .paretoFrontFiles(new String[]{"ZDT1.pf","ZDT2.pf", "ZDT3.pf", "ZDT4.pf"})
-      .qualityIndicatorList(new String[]{"HV", "IGD", "EPSILON", "SPREAD", "GD"})
+      .qualityIndicatorList(indicatorList)
       .build() ;
 
     SetCoverageTables setCoverageTables = new SetCoverageTables.Builder(experimentData)
+      .build() ;
+
+    BoxplotGeneration boxplotGeneration = new BoxplotGeneration.Builder(experimentData)
+      .indicatorList(indicatorList)
+      .numberOfRows(2)
+      .numberOfColumns(2)
       .build() ;
 
     Experiment2 experiment = new Experiment2.Builder(experimentData)
@@ -65,6 +69,7 @@ public class ExperimentRunner {
       .addExperimentOutput(paretoFrontsGeneration)
       .addExperimentOutput(qualityIndicatorGeneration)
       .addExperimentOutput(setCoverageTables)
+      .addExperimentOutput(boxplotGeneration)
       .build() ;
 
     experiment.run();

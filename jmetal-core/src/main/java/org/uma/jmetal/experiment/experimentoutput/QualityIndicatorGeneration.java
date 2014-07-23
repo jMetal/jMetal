@@ -68,7 +68,6 @@ public class QualityIndicatorGeneration implements ExperimentOutput {
       /* Default pareto front files */
       paretoFrontFiles = new String[experimentData.getProblemList().length] ;
       for (int i = 0; i < experimentData.getProblemList().length; i++) {
-        //        paretoFrontFiles[i] = paretoFrontDirectory+ "/" + experimentData.getProblemList()[i] + ".pf";
         paretoFrontFiles[i] =  experimentData.getProblemList()[i] + ".pf";
       }
 
