@@ -42,7 +42,7 @@ public class ExperimentRunner {
       .numberOfThreads(8)
       .paretoSetFileName("VAR")
       .paretoFrontFileName("FUN")
-      //.useAlgorithmConfigurationFiles()
+        //.useAlgorithmConfigurationFiles()
       .build() ;
 
     ParetoFrontsGeneration paretoFrontsGeneration = new ParetoFrontsGeneration.Builder(experimentData)
@@ -69,14 +69,27 @@ public class ExperimentRunner {
         .indicatorList(indicatorList)
         .build() ;
 
+    QualityIndicatorLatexTableGeneration qualityIndicatorLatexTableGeneration =
+      new QualityIndicatorLatexTableGeneration.Builder(experimentData)
+        .indicatorList(indicatorList)
+        .build() ;
+
+    FriedmanTableGeneration friedmanTableGeneration = new FriedmanTableGeneration.Builder(experimentData)
+      .indicatorList(indicatorList)
+      .build() ;
+
+
     Experiment2 experiment = new Experiment2.Builder(experimentData)
       //.addExperimentOutput(algorithmExecution)
       //.addExperimentOutput(paretoFrontsGeneration)
       //.addExperimentOutput(qualityIndicatorGeneration)
       //.addExperimentOutput(setCoverageTables)
       //.addExperimentOutput(boxplotGeneration)
-      .addExperimentOutput(wilcoxonTestTableGeneration)
+      //.addExperimentOutput(wilcoxonTestTableGeneration)
+      //.addExperimentOutput(qualityIndicatorLatexTableGeneration)
+      .addExperimentOutput(friedmanTableGeneration)
       .build() ;
+
 
     experiment.run();
   }
