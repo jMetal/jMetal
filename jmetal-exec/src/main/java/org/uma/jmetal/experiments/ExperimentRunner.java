@@ -20,7 +20,7 @@
 
 package org.uma.jmetal.experiments;
 
-import org.uma.jmetal.experiment.Experiment2;
+import org.uma.jmetal.experiment.Experiment;
 import org.uma.jmetal.experiment.ExperimentData;
 import org.uma.jmetal.experiment.experimentoutput.*;
 import org.uma.jmetal.util.JMetalException;
@@ -79,14 +79,14 @@ public class ExperimentRunner {
       .build() ;
 
 
-    Experiment2 experiment = new Experiment2.Builder(experimentData)
-      //.addExperimentOutput(algorithmExecution)
-      //.addExperimentOutput(paretoFrontsGeneration)
-      //.addExperimentOutput(qualityIndicatorGeneration)
-      //.addExperimentOutput(setCoverageTables)
-      //.addExperimentOutput(boxplotGeneration)
-      //.addExperimentOutput(wilcoxonTestTableGeneration)
-      //.addExperimentOutput(qualityIndicatorLatexTableGeneration)
+    Experiment experiment = new Experiment.Builder(experimentData)
+      .addExperimentOutput(algorithmExecution)
+      .addExperimentOutput(paretoFrontsGeneration)
+      .addExperimentOutput(qualityIndicatorGeneration)
+      .addExperimentOutput(setCoverageTables)
+      .addExperimentOutput(boxplotGeneration)
+      .addExperimentOutput(wilcoxonTestTableGeneration)
+      .addExperimentOutput(qualityIndicatorLatexTableGeneration)
       .addExperimentOutput(friedmanTableGeneration)
       .build() ;
 
