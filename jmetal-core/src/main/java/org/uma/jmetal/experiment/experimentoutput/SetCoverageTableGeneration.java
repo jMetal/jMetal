@@ -15,7 +15,7 @@ import java.util.Vector;
 /**
  * Created by Antonio J. Nebro on 22/07/14.
  */
-public class SetCoverageTables implements ExperimentOutput {
+public class SetCoverageTableGeneration implements ExperimentOutput {
 
   private ExperimentData experimentData ;
   private String outputDirectory ;
@@ -23,7 +23,7 @@ public class SetCoverageTables implements ExperimentOutput {
   private String outputFile ;
 
   /** Constructor */
-  private SetCoverageTables(Builder builder) throws IOException {
+  private SetCoverageTableGeneration(Builder builder) throws IOException {
     this.experimentData = builder.experimentData ;
     this.outputDirectory = builder.outputDirectory ;
     this.outputFile = builder.outputFile ;
@@ -60,8 +60,8 @@ public class SetCoverageTables implements ExperimentOutput {
       return this ;
     }
 
-    public SetCoverageTables build() throws IOException {
-      return new SetCoverageTables(this) ;
+    public SetCoverageTableGeneration build() throws IOException {
+      return new SetCoverageTableGeneration(this) ;
     }
   }
 

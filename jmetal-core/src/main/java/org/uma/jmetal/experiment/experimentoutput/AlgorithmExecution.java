@@ -23,6 +23,7 @@ package org.uma.jmetal.experiment.experimentoutput;
 
 import org.uma.jmetal.experiment.ExperimentData;
 import org.uma.jmetal.experiment.ExperimentOutput;
+import org.uma.jmetal.experiment.util.MultithreadedExperimentExecutor;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 

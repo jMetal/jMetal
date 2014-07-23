@@ -55,7 +55,7 @@ public class ExperimentRunner {
       .qualityIndicatorList(indicatorList)
       .build() ;
 
-    SetCoverageTables setCoverageTables = new SetCoverageTables.Builder(experimentData)
+    SetCoverageTableGeneration setCoverageTables = new SetCoverageTableGeneration.Builder(experimentData)
       .build() ;
 
     BoxplotGeneration boxplotGeneration = new BoxplotGeneration.Builder(experimentData)
@@ -64,12 +64,18 @@ public class ExperimentRunner {
       .numberOfColumns(2)
       .build() ;
 
+    WilcoxonTestTableGeneration wilcoxonTestTableGeneration =
+      new WilcoxonTestTableGeneration.Builder(experimentData)
+        .indicatorList(indicatorList)
+        .build() ;
+
     Experiment2 experiment = new Experiment2.Builder(experimentData)
-      .addExperimentOutput(algorithmExecution)
-      .addExperimentOutput(paretoFrontsGeneration)
-      .addExperimentOutput(qualityIndicatorGeneration)
-      .addExperimentOutput(setCoverageTables)
-      .addExperimentOutput(boxplotGeneration)
+      //.addExperimentOutput(algorithmExecution)
+      //.addExperimentOutput(paretoFrontsGeneration)
+      //.addExperimentOutput(qualityIndicatorGeneration)
+      //.addExperimentOutput(setCoverageTables)
+      //.addExperimentOutput(boxplotGeneration)
+      .addExperimentOutput(wilcoxonTestTableGeneration)
       .build() ;
 
     experiment.run();

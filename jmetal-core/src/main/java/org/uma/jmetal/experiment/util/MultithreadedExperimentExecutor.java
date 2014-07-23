@@ -19,13 +19,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-package org.uma.jmetal.experiment.experimentoutput;
+package org.uma.jmetal.experiment.util;
 
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.experiment.ExperimentData;
 import org.uma.jmetal.experiment.Settings;
 import org.uma.jmetal.experiment.SettingsFactory;
+import org.uma.jmetal.experiment.experimentoutput.AlgorithmExecution;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 import org.uma.jmetal.util.parallel.SynchronousParallelTaskExecutor;

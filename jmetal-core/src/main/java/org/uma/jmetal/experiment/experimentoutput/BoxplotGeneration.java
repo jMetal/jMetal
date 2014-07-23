@@ -17,7 +17,7 @@ public class BoxplotGeneration implements ExperimentOutput {
   private ExperimentData experimentData ;
   private String[] indicatorList ;
   private String outputDirectory ;
-  private boolean indludeNotch;
+  private boolean includeNotch;
   private int numberOfRows ;
   private int numberOfColumns ;
 
@@ -26,11 +26,9 @@ public class BoxplotGeneration implements ExperimentOutput {
     experimentData = builder.experimentData ;
     indicatorList = builder.indicatorList ;
     outputDirectory = builder.outputDirectory ;
-    indludeNotch = builder.notch ;
+    includeNotch = builder.notch ;
     numberOfRows = builder.numberOfRows ;
     numberOfColumns = builder.numberOfColumns ;
-
-    System.out.println("output directory: " + outputDirectory) ;
 
     if (outputDirectoryDoesNotExist()) {
       createOutputDirectory() ;
@@ -134,7 +132,7 @@ public class BoxplotGeneration implements ExperimentOutput {
         for (int i = 0; i < experimentData.getAlgorithmNameList().length; i++) {
           os.write(experimentData.getAlgorithmNameList()[i] + ",");
         }
-        if (indludeNotch) {
+        if (includeNotch) {
           os.write("names=algs, notch = TRUE)" + "\n");
         } else {
           os.write("names=algs, notch = FALSE)" + "\n");
