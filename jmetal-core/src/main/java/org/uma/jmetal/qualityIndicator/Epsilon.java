@@ -53,16 +53,16 @@ public class Epsilon implements QualityIndicator {
   /**
    * Returns the epsilon indicator.
    *
-   * @param a Solution front
-   * @param b True Pareto front
+   * @param front Solution front
+   * @param referenceFront True Pareto front
    * @return the value of the epsilon indicator
    * @throws org.uma.jmetal.util.JMetalException
    */
-  public double epsilon(double[][] a, double[][] b) throws JMetalException {
+  public double epsilon(double[][] front, double[][] referenceFront) throws JMetalException {
     int i, j, k;
     double eps, epsJ = 0.0, epsK = 0.0, epsTemp;
 
-    this.numberOfObjectives = a[0].length;
+    this.numberOfObjectives = front[0].length;
     setParams();
 
     if (method == 0) {
@@ -71,26 +71,27 @@ public class Epsilon implements QualityIndicator {
       eps = 0;
     }
 
-    for (i = 0; i < a.length; i++) {
-      for (j = 0; j < b.length; j++) {
+    for (i = 0; i < referenceFront.length; i++) {
+      for (j = 0; j < front.length; j++) {
         for (k = 0; k < this.numberOfObjectives; k++) {
           switch (method) {
             case 0:
               if (obj[k] == 0) {
-                epsTemp = b[j][k] - a[i][k];
+                epsTemp = front[j][k] - referenceFront[i][k];
               } else {
-                epsTemp = a[i][k] - b[j][k];
+                epsTemp = referenceFront[i][k] - front[j][k];
               }
               break;
             default:
-              if ((a[i][k] < 0 && b[j][k] > 0) || (a[i][k] > 0 && b[j][k] < 0)
-                || (a[i][k] == 0 || b[j][k] == 0)) {
+              if ((referenceFront[i][k] < 0 && front[j][k] > 0) ||
+                (referenceFront[i][k] > 0 && front[j][k] < 0)
+                || (referenceFront[i][k] == 0 || front[j][k] == 0)) {
                 throw new JMetalException("Error in data file");
               }
               if (obj[k] == 0) {
-                epsTemp = b[j][k] / a[i][k];
+                epsTemp = front[j][k] / referenceFront[i][k];
               } else {
-                epsTemp = a[i][k] / b[j][k];
+                epsTemp = referenceFront[i][k] / front[j][k];
               }
               break;
           }

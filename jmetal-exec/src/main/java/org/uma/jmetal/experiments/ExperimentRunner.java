@@ -30,12 +30,12 @@ import java.io.IOException;
 public class ExperimentRunner {
   public static void main(String[] args) throws JMetalException, IOException {
     ExperimentData experimentData = new ExperimentData.Builder("Experiment2")
-      .algorithmNameList(new String[]{"NSGAII", "SMPSO", "MOCell"})
-      .problemList(new String[]{"ZDT1", "ZDT2", "ZDT3", "ZDT4"})
+      .algorithmNameList(new String[]{"NSGAII", "SMPSO", "MOCell", "GDE3"})
+      .problemList(new String[]{"ZDT1", "ZDT2", "ZDT3", "ZDT4", "ZDT6"})
       .experimentBaseDirectory("/Users/antelverde/Softw/jMetal/jMetalGitHub/pruebas")
       .outputParetoFrontFileName("FUN")
       .outputParetoSetFileName("VAR")
-      .independentRuns(20)
+      .independentRuns(30)
       .build() ;
 
     AlgorithmExecution algorithmExecution = new AlgorithmExecution.Builder(experimentData)
@@ -51,7 +51,7 @@ public class ExperimentRunner {
     String[] indicatorList = new String[]{"HV", "IGD", "EPSILON", "SPREAD", "GD"} ;
     QualityIndicatorGeneration qualityIndicatorGeneration = new QualityIndicatorGeneration.Builder(experimentData)
       .paretoFrontDirectory("/Users/antelverde/Softw/pruebas/data/paretoFronts")
-      .paretoFrontFiles(new String[]{"ZDT1.pf","ZDT2.pf", "ZDT3.pf", "ZDT4.pf"})
+      .paretoFrontFiles(new String[]{"ZDT1.pf","ZDT2.pf", "ZDT3.pf", "ZDT4.pf", "ZDT6.pf"})
       .qualityIndicatorList(indicatorList)
       .build() ;
 
@@ -80,16 +80,15 @@ public class ExperimentRunner {
 
 
     Experiment experiment = new Experiment.Builder(experimentData)
-      .addExperimentOutput(algorithmExecution)
-      .addExperimentOutput(paretoFrontsGeneration)
+      //.addExperimentOutput(algorithmExecution)
+      //.addExperimentOutput(paretoFrontsGeneration)
       .addExperimentOutput(qualityIndicatorGeneration)
       .addExperimentOutput(setCoverageTables)
       .addExperimentOutput(boxplotGeneration)
-      .addExperimentOutput(wilcoxonTestTableGeneration)
+      //.addExperimentOutput(wilcoxonTestTableGeneration)
       .addExperimentOutput(qualityIndicatorLatexTableGeneration)
-      .addExperimentOutput(friedmanTableGeneration)
+      //.addExperimentOutput(friedmanTableGeneration)
       .build() ;
-
 
     experiment.run();
   }
