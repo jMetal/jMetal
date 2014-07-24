@@ -35,20 +35,39 @@ import org.uma.jmetal.util.JMetalException;
  */
 
 public class Epsilon implements QualityIndicator {
-  private static final String NAME = "EPSILON" ;
+  //public static enum Type {ADDITIVE, MULTIPLICATIVE} ;
+
+  private static String NAME ;
   private MetricsUtil utils = new MetricsUtil();
 
-  int numberOfObjectives;
-  /*
-   * obj[i]=0 means objective i is to be minimized. This code always assume the
-   * minimization of all the objectives
-   */
-  int[] obj; /* obj[i] = 0 means objective i is to be minimized */
   /*
    * method = 0 means apply additive epsilon and method = 1 means
-   * multiplicative epsilon. This code always apply additive epsilon
+   * multiplicative epsilon. The implementation assumes always minimization of objectives
    */
-  int method;
+  //Type method;
+
+  /** Constructor */
+  public Epsilon() {
+    //method = Type.ADDITIVE ;
+    NAME = "EPSILON" ;
+  }
+
+  /** Constructor */
+/*
+  public Epsilon(Type method) {
+    // TODO: check paramter values
+    //if ((method != 0) && (method != 1)) {
+    //  throw new JMetalException("Invalid Epsilon variant: must be 0 (additive) or 1" +
+    //    "multiplicative. Received: " + method) ;
+    //}
+    this.method = method ;
+    if (method == Type.ADDITIVE) {
+      NAME = "EPSILON" ;
+    } else {
+      NAME = "MEPSILON" ;
+    }
+  }
+*/
 
   /**
    * Returns the epsilon indicator.
@@ -62,39 +81,14 @@ public class Epsilon implements QualityIndicator {
     int i, j, k;
     double eps, epsJ = 0.0, epsK = 0.0, epsTemp;
 
-    this.numberOfObjectives = front[0].length;
-    setParams();
+    int numberOfObjectives = front[0].length;
 
-    if (method == 0) {
-      eps = Double.MIN_VALUE;
-    } else {
-      eps = 0;
-    }
+    eps = Double.MIN_VALUE;
 
     for (i = 0; i < referenceFront.length; i++) {
       for (j = 0; j < front.length; j++) {
-        for (k = 0; k < this.numberOfObjectives; k++) {
-          switch (method) {
-            case 0:
-              if (obj[k] == 0) {
-                epsTemp = front[j][k] - referenceFront[i][k];
-              } else {
-                epsTemp = referenceFront[i][k] - front[j][k];
-              }
-              break;
-            default:
-              if ((referenceFront[i][k] < 0 && front[j][k] > 0) ||
-                (referenceFront[i][k] > 0 && front[j][k] < 0)
-                || (referenceFront[i][k] == 0 || front[j][k] == 0)) {
-                throw new JMetalException("Error in data file");
-              }
-              if (obj[k] == 0) {
-                epsTemp = front[j][k] / referenceFront[i][k];
-              } else {
-                epsTemp = referenceFront[i][k] / front[j][k];
-              }
-              break;
-          }
+        for (k = 0; k < numberOfObjectives; k++) {
+          epsTemp = front[j][k] - referenceFront[i][k];
           if (k == 0) {
             epsK = epsTemp;
           } else if (epsK < epsTemp) {
@@ -114,18 +108,6 @@ public class Epsilon implements QualityIndicator {
       }
     }
     return eps;
-  }
-
-  /**
-   * Established the params by default
-   */
-  void setParams() {
-    int i;
-    obj = new int[numberOfObjectives];
-    for (i = 0; i < numberOfObjectives; i++) {
-      obj[i] = 0;
-    }
-    method = 0;
   }
 
   @Override

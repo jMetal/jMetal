@@ -32,12 +32,8 @@ public class ExperimentData {
 	private String experimentName;
 	private String[] algorithmNameList;
 	private String[] problemList;
-	//private String[] paretoFrontFileList;
-	//private String[] indicatorList;
 	private String experimentBaseDirectory;
 
-	//private String latexDirectory;
-	//private String paretoFrontDirectory;
 	private String outputParetoFrontFileName;
 	private String outputParetoSetFileName;
 	private int independentRuns;
@@ -48,7 +44,6 @@ public class ExperimentData {
     this.experimentBaseDirectory = builder.experimentBaseDirectory ;
     this.algorithmNameList = builder.algorithmNameList ;
     this.problemList = builder.problemList ;
-
     this.independentRuns = builder.independentRuns ;
     this.outputParetoFrontFileName = builder.outputParetoFrontFileName ;
     this.outputParetoSetFileName = builder.outputParetoSetFileName ;
@@ -67,25 +62,9 @@ public class ExperimentData {
 		return problemList;
 	}
 
-//	public String[] getParetoFrontFileList() {
-//		return paretoFrontFileList;
-//	}
-
-	//public String[] getIndicatorList() {
-	//	return indicatorList;
-	//}
-
 	public String getExperimentBaseDirectory() {
 		return experimentBaseDirectory;
 	}
-
-//	public String getLatexDirectory() {
-//		return latexDirectory;
-//	}
-
-	//public String getParetoFrontDirectory() {
-	//	return paretoFrontDirectory;
-	//}
 
 	public String getOutputParetoFrontFileName() {
 		return outputParetoFrontFileName;
@@ -104,12 +83,7 @@ public class ExperimentData {
 		private final String experimentName ;
 		private String[] algorithmNameList;
 		private String[] problemList;
-//		private String[] paretoFrontFileList;
-//		private String[] indicatorList;
 		private String experimentBaseDirectory;
-
-//		private String latexDirectory;
-//		private String paretoFrontDirectory;
 		private String outputParetoFrontFileName;
 		private String outputParetoSetFileName;
 		private int independentRuns;
@@ -132,38 +106,12 @@ public class ExperimentData {
 			return this ;
 		}
 
-//		public Builder paretoFrontFileList(String[] paretoFrontFileList) {
-//			this.paretoFrontFileList = new String[paretoFrontFileList.length] ;
-//			this.paretoFrontFileList = Arrays.copyOf(paretoFrontFileList, paretoFrontFileList.length) ;
-//
-//			return this ;
-//		}
-//
-//		public Builder indicatorList(String[] indicatorList) {
-//			this.indicatorList = new String[indicatorList.length] ;
-//			this.indicatorList = Arrays.copyOf(indicatorList, indicatorList.length) ;
-//
-//			return this ;
-//		}
-
 		public Builder experimentBaseDirectory(String experimentBaseDirectory) {
 			this.experimentBaseDirectory = experimentBaseDirectory+"/"+experimentName ;
 
 			return this ;
 		}
-		
-//		public Builder paretoFrontDirectory(String paretoFrontDirectory) {
-//			this.paretoFrontDirectory = paretoFrontDirectory ;
-//
-//			return this ;
-//		}
-//
-//		public Builder latexDirectory(String latexDirectory) {
-//			this.latexDirectory = latexDirectory ;
-//
-//			return this ;
-//		}
-//
+
 		public Builder outputParetoFrontFileName(String outputParetoFrontFileName) {
 			this.outputParetoFrontFileName = outputParetoFrontFileName ;
 

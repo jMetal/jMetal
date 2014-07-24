@@ -41,10 +41,9 @@ import java.util.logging.Logger;
 /**
  * Class for running algorithms
  */
-
 public class Runner {
-  private static Logger logger_;
-  private static FileHandler fileHandler_;
+  private static Logger logger;
+  private static FileHandler fileHandler;
 
   /**
    * @param args Command line arguments.
@@ -63,9 +62,9 @@ public class Runner {
     ClassNotFoundException {
     Algorithm algorithm;
 
-    logger_ = Configuration.logger;
-    fileHandler_ = new FileHandler("jMetal.log");
-    logger_.addHandler(fileHandler_);
+    logger = Configuration.logger;
+    fileHandler = new FileHandler("jMetal.log");
+    logger.addHandler(fileHandler);
 
     QualityIndicatorGetter indicators;
 
@@ -78,7 +77,7 @@ public class Runner {
     indicators = null;
 
     if (args.length == 0) {
-      logger_.log(Level.SEVERE, "Sintax error. Usage:\n" +
+      logger.log(Level.SEVERE, "Sintax error. Usage:\n" +
         "a) org.uma.jmetal.experiment.Main algorithmName \n" +
         "b) org.uma.jmetal.experiment.Main algorithmName problemName\n" +
         "c) org.uma.jmetal.experiment.Main algorithmName problemName paretoFrontFile");
@@ -113,25 +112,25 @@ public class Runner {
     long estimatedTime = System.currentTimeMillis() - initTime;
 
     // Result messages
-    logger_.info("Total execution time: " + estimatedTime + "ms");
+    logger.info("Total execution time: " + estimatedTime + "ms");
 
     FileOutputContext fileContext = new DefaultFileOutputContext("VAR.tsv") ;
     fileContext.setSeparator("\t");
-    logger_.info("Variables values have been written to file VAR.tsv");
+    logger.info("Variables values have been written to file VAR.tsv");
     SolutionSetOutput.printVariablesToFile(fileContext, population) ;
 
     fileContext = new DefaultFileOutputContext("FUN.tsv");
     fileContext.setSeparator("\t");
     SolutionSetOutput.printObjectivesToFile(fileContext, population);
-    logger_.info("Objectives values have been written to file FUN");
+    logger.info("Objectives values have been written to file FUN");
 
     if (indicators != null) {
-      logger_.info("Quality indicators");
-      logger_.info("Hypervolume: " + indicators.getHypervolume(population));
-      logger_.info("GD         : " + indicators.getGD(population));
-      logger_.info("IGD        : " + indicators.getIGD(population));
-      logger_.info("Spread     : " + indicators.getSpread(population));
-      logger_.info("Epsilon    : " + indicators.getEpsilon(population));
+      logger.info("Quality indicators");
+      logger.info("Hypervolume: " + indicators.getHypervolume(population));
+      logger.info("GD         : " + indicators.getGD(population));
+      logger.info("IGD        : " + indicators.getIGD(population));
+      logger.info("Spread     : " + indicators.getSpread(population));
+      logger.info("Epsilon    : " + indicators.getEpsilon(population));
     }
   }
 }

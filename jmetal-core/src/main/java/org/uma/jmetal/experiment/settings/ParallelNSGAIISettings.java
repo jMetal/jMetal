@@ -36,9 +36,7 @@ import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
 
 import java.util.Properties;
 
-/**
- * Settings class of algorithm ParallelNSGAIISettings (real encoding)
- */
+/** Settings class of algorithm ParallelNSGAIISettings (real encoding) */
 public class ParallelNSGAIISettings extends Settings {
   public int populationSize;
   public int maxEvaluations;
@@ -48,16 +46,14 @@ public class ParallelNSGAIISettings extends Settings {
   public double crossoverDistributionIndex;
   public int numberOfThreads;
 
-  /**
-   * Constructor
-   */
+  /** Constructor */
   public ParallelNSGAIISettings(String problem) throws JMetalException {
     super(problem);
 
     Object[] problemParams = {"Real"};
     this.problem = (new ProblemFactory()).getProblem(problemName, problemParams);
 
-    // Default experiment.settings
+    /* Default settings */
     populationSize = 100;
     maxEvaluations = 25000;
     mutationProbability = 1.0 / this.problem.getNumberOfVariables();
@@ -69,12 +65,7 @@ public class ParallelNSGAIISettings extends Settings {
   }
 
 
-  /**
-   * Configure ParallelNSGAII with user-defined parameter experiment.settings
-   *
-   * @return A NSGAII algorithm object
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Configure ParallelNSGAII with user-defined parameter settings */
   public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
     Selection selection;
@@ -108,18 +99,11 @@ public class ParallelNSGAIISettings extends Settings {
     return algorithm;
   }
 
-  /**
-   * Configure NSGAIISettings with user-defined parameter experiment.settings
-   *
-   * @return A NSGAII algorithm object
-   */
+  /** Configure NSGAIISettings from a properties file */
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {
     numberOfThreads = Integer
       .parseInt(configuration.getProperty("numberOfThreads", String.valueOf(numberOfThreads)));
-
-    SolutionSetEvaluator evaluator = new MultithreadedSolutionSetEvaluator(numberOfThreads,
-      problem) ;
 
     // Algorithm parameters
     populationSize = Integer

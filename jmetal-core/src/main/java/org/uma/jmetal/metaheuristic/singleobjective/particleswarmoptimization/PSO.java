@@ -48,79 +48,56 @@ public class PSO extends Algorithm {
   /**
    * Comparator object
    */
-  Comparator<Solution> comparator_;
-  Operator findBestSolution_;
-  double r1Max_;
-  double r1Min_;
-  double r2Max_;
-  double r2Min_;
-  double C1Max_;
-  double C1Min_;
-  double C2Max_;
-  double C2Min_;
-  double WMax_;
-  double WMin_;
-  double ChVel1_;
-  double ChVel2_;
-  boolean success_;
-  /**
-   * Stores the number of particles_ used
-   */
-  private int particlesSize_;
-  /**
-   * Stores the maximum number of iteration_
-   */
-  private int maxIterations_;
-  /**
-   * Stores the current number of iteration_
-   */
-  private int iteration_;
-  /**
-   * Stores the particles
-   */
-  private SolutionSet particles_;
-  /**
-   * Stores the local best solutions found so far for each particles
-   */
-  private Solution[] localBest_;
-  /**
-   * Stores the global best solutiontype found
-   */
-  private Solution globalBest_;
-  /**
-   * Stores the speed_ of each particle
-   */
-  private double[][] speed_;
-  /**
-   * Stores a operator for non uniform mutations
-   */
-  private Operator polynomialMutation_;
+  Comparator<Solution> comparator;
+  Operator findBestSolution;
+  double r1Max;
+  double r1Min;
+  double r2Max;
+  double r2Min;
+  double C1Max;
+  double C1Min;
+  double C2Max;
+  double C2Min;
+  double WMax;
+  double WMin;
+  double ChVel1;
+  double ChVel2;
+  boolean success;
 
-  private double deltaMax_[];
-  private double deltaMin_[];
+  private int swarmSize;
+  private int maxIterations;
+  private int iteration;
+  private SolutionSet swarm;
+  private Solution[] localBest;
+  private Solution globalBest;
+  private double[][] speed;
+  private Operator polynomialMutation;
+
+  private double deltaMax[];
+  private double deltaMin[];
 
   /** Constructor */
 
   public PSO() {
     super();
 
-    r1Max_ = 1.0;
-    r1Min_ = 0.0;
-    r2Max_ = 1.0;
-    r2Min_ = 0.0;
-    C1Max_ = 1.5;
-    C1Min_ = 1.5;
-    C2Max_ = 1.5;
-    C2Min_ = 1.5;
-    WMax_ = 0.9;
-    WMin_ = 0.1;
-    ChVel1_ = 1.0;
-    ChVel2_ = 1.0;
+    r1Max = 1.0;
+    r1Min = 0.0;
+    r2Max = 1.0;
+    r2Min = 0.0;
+    C1Max = 1.5;
+    C1Min = 1.5;
+    C2Max = 1.5;
+    C2Min = 1.5;
+    WMax = 0.9;
+    WMin = 0.1;
+    ChVel1 = 1.0;
+    ChVel2 = 1.0;
 
-    comparator_ = new ObjectiveComparator(0); // Single objective comparator
+    comparator = new ObjectiveComparator(0); // Single objective comparator
     HashMap<String, Object> selectionParameters = new HashMap<String, Object>();
-    selectionParameters.put("comparator", comparator_);
-    findBestSolution_ = new BestSolutionSelection(selectionParameters);
+    selectionParameters.put("comparator", comparator);
+    findBestSolution = new BestSolutionSelection(selectionParameters);
 
     evaluations_ = 0;
   }
@@ -129,28 +106,28 @@ public class PSO extends Algorithm {
    * Initialize all parameter of the algorithm
    */
   public void initParams() {
-    particlesSize_ = (Integer) getInputParameter("swarmSize");
-    maxIterations_ = (Integer) getInputParameter("maxIterations");
+    swarmSize = (Integer) getInputParameter("swarmSize");
+    maxIterations = (Integer) getInputParameter("maxIterations");
 
-    polynomialMutation_ = operators_.get("mutation");
+    polynomialMutation = operators_.get("mutation");
 
-    iteration_ = 0;
+    iteration = 0;
 
-    success_ = false;
+    success = false;
 
-    particles_ = new SolutionSet(particlesSize_);
-    localBest_ = new Solution[particlesSize_];
+    swarm = new SolutionSet(swarmSize);
+    localBest = new Solution[swarmSize];
 
-    // Create the speed_ vector
-    speed_ = new double[particlesSize_][problem_.getNumberOfVariables()];
+    // Create the speed vector
+    speed = new double[swarmSize][problem_.getNumberOfVariables()];
 
 
-    deltaMax_ = new double[problem_.getNumberOfVariables()];
-    deltaMin_ = new double[problem_.getNumberOfVariables()];
+    deltaMax = new double[problem_.getNumberOfVariables()];
+    deltaMin = new double[problem_.getNumberOfVariables()];
     for (int i = 0; i < problem_.getNumberOfVariables(); i++) {
-      deltaMax_[i] = (problem_.getUpperLimit(i) -
+      deltaMax[i] = (problem_.getUpperLimit(i) -
         problem_.getLowerLimit(i)) / 2.0;
-      deltaMin_[i] = -deltaMax_[i];
+      deltaMin[i] = -deltaMax[i];
     }
   }
 
@@ -178,27 +155,7 @@ public class PSO extends Algorithm {
     int particleIndex) throws IOException {
 
     return v;
-    /*
-
-    //Configuration.logger.info("v: " + v + "\tdmax: " + dmax + "\tdmin: " + dmin) ;
-    double experimentoutput;
-
-    double dmax = deltaMax[variableIndex];
-    double dmin = deltaMin[variableIndex];
-
-    experimentoutput = v;
-
-    if (v > dmax) {
-      experimentoutput = dmax;
-    }
-
-    if (v < dmin) {
-      experimentoutput = dmin;
-    }
-
-    return experimentoutput;
-    */
-  } // velocityConstriction
+  }
 
   /**
    * Update the speed of each particle
@@ -212,56 +169,41 @@ public class PSO extends Algorithm {
     double wmax, wmin, deltaMax, deltaMin;
     XReal bestGlobal;
 
-    bestGlobal = new XReal(globalBest_);
+    bestGlobal = new XReal(globalBest);
 
-    for (int i = 0; i < particlesSize_; i++) {
-      XReal particle = new XReal(particles_.get(i));
-      XReal bestParticle = new XReal(localBest_[i]);
+    for (int i = 0; i < swarmSize; i++) {
+      XReal particle = new XReal(swarm.get(i));
+      XReal bestParticle = new XReal(localBest[i]);
 
-      //int bestIndividual = (Integer)findBestSolution.execute(particles_) ;
+      C1Max = 2.5;
+      C1Min = 1.5;
+      C2Max = 2.5;
+      C2Min = 1.5;
 
-      C1Max_ = 2.5;
-      C1Min_ = 1.5;
-      C2Max_ = 2.5;
-      C2Min_ = 1.5;
-
-      r1 = PseudoRandom.randDouble(r1Min_, r1Max_);
-      r2 = PseudoRandom.randDouble(r2Min_, r2Max_);
-      C1 = PseudoRandom.randDouble(C1Min_, C1Max_);
-      C2 = PseudoRandom.randDouble(C2Min_, C2Max_);
-      //W =  PseudoRandom.randDouble(WMin_, WMax_);
+      r1 = PseudoRandom.randDouble(r1Min, r1Max);
+      r2 = PseudoRandom.randDouble(r2Min, r2Max);
+      C1 = PseudoRandom.randDouble(C1Min, C1Max);
+      C2 = PseudoRandom.randDouble(C2Min, C2Max);
+      //W =  PseudoRandom.randDouble(WMin, WMax);
       //
 
-      WMax_ = 0.9;
-      WMin_ = 0.9;
-      ChVel1_ = 1.0;
-      ChVel2_ = 1.0;
+      WMax = 0.9;
+      WMin = 0.9;
+      ChVel1 = 1.0;
+      ChVel2 = 1.0;
 
       C1 = 2.5;
       C2 = 1.5;
 
-      wmax = WMax_;
-      wmin = WMin_;
-/*
-      for (int var = 0; var < particle.size(); var++) {
-        //Computing the velocity of this particle 
-        speed_[i][var] = velocityConstriction(constrictionCoefficient(C1, C2) *
-          (inertiaWeight(iter, miter, wmax, wmin) *
-          speed_[i][var] +
-          C1 * r1 * (bestParticle.getValue(var) - particle.getValue(var)) +
-          C2 * r2 * (bestGlobal.getValue(var) -
-          particle.getValue(var))), deltaMax_,
-          deltaMin_, //[var], 
-          var,
-          i);
-      }
-*/
+      wmax = WMax;
+      wmin = WMin;
+
       C1 = 1.5;
       C2 = 1.5;
       double W = 0.9;
       for (int var = 0; var < particle.size(); var++) {
         //Computing the velocity of this particle 
-        speed_[i][var] = inertiaWeight(iter, miter, wmax, wmin) * speed_[i][var] +
+        speed[i][var] = inertiaWeight(iter, miter, wmax, wmin) * speed[i][var] +
           C1 * r1 * (bestParticle.getValue(var) - particle.getValue(var)) +
           C2 * r2 * (bestGlobal.getValue(var) - particle.getValue(var));
       }
@@ -274,25 +216,25 @@ public class PSO extends Algorithm {
    * @throws org.uma.jmetal.util.JMetalException
    */
   private void computeNewPositions() throws JMetalException {
-    for (int i = 0; i < particlesSize_; i++) {
-      //Variable[] particle = particles_.get(i).getDecisionVariables();
-      XReal particle = new XReal(particles_.get(i));
-      //particle.move(speed_[i]);
+    for (int i = 0; i < swarmSize; i++) {
+      //Variable[] particle = swarm.get(i).getDecisionVariables();
+      XReal particle = new XReal(swarm.get(i));
+      //particle.move(speed[i]);
       for (int var = 0; var < particle.size(); var++) {
-        particle.setValue(var, particle.getValue(var) + speed_[i][var]);
+        particle.setValue(var, particle.getValue(var) + speed[i][var]);
 
         if (particle.getValue(var) < problem_.getLowerLimit(var)) {
           particle.setValue(var, problem_.getLowerLimit(var));
-          speed_[i][var] = speed_[i][var] * ChVel1_; //    
+          speed[i][var] = speed[i][var] * ChVel1; //
         }
         if (particle.getValue(var) > problem_.getUpperLimit(var)) {
           particle.setValue(var, problem_.getUpperLimit(var));
-          speed_[i][var] = speed_[i][var] * ChVel2_; //   
+          speed[i][var] = speed[i][var] * ChVel2; //
         }
 
       }
     }
-  } // computeNewPositions
+  }
 
   /**
    * Apply a mutation operator to some particles in the swarm
@@ -300,9 +242,9 @@ public class PSO extends Algorithm {
    * @throws org.uma.jmetal.util.JMetalException
    */
   private void mopsoMutation(int actualIteration, int totalIterations) throws JMetalException {
-    for (int i = 0; i < particles_.size(); i++) {
+    for (int i = 0; i < swarm.size(); i++) {
       if ((i % 6) == 0) {
-        polynomialMutation_.execute(particles_.get(i));
+        polynomialMutation.execute(swarm.get(i));
       }
     }
   }
@@ -317,76 +259,76 @@ public class PSO extends Algorithm {
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     initParams();
 
-    success_ = false;
-    globalBest_ = null;
+    success = false;
+    globalBest = null;
     //->Step 1 (and 3) Create the initial population and evaluate
-    for (int i = 0; i < particlesSize_; i++) {
+    for (int i = 0; i < swarmSize; i++) {
       Solution particle = new Solution(problem_);
       problem_.evaluate(particle);
       evaluations_++;
-      particles_.add(particle);
-      if ((globalBest_ == null) || (particle.getObjective(0) < globalBest_.getObjective(0))) {
-        globalBest_ = new Solution(particle);
+      swarm.add(particle);
+      if ((globalBest == null) || (particle.getObjective(0) < globalBest.getObjective(0))) {
+        globalBest = new Solution(particle);
       }
     }
 
-    //-> Step2. Initialize the speed_ of each particle to 0
-    for (int i = 0; i < particlesSize_; i++) {
+    //-> Step2. Initialize the speed of each particle to 0
+    for (int i = 0; i < swarmSize; i++) {
       for (int j = 0; j < problem_.getNumberOfVariables(); j++) {
-        speed_[i][j] = 0.0;
+        speed[i][j] = 0.0;
       }
     }
 
     //-> Step 6. Initialize the memory of each particle
-    for (int i = 0; i < particles_.size(); i++) {
-      Solution particle = new Solution(particles_.get(i));
-      localBest_[i] = particle;
+    for (int i = 0; i < swarm.size(); i++) {
+      Solution particle = new Solution(swarm.get(i));
+      localBest[i] = particle;
     }
 
     //-> Step 7. Iterations ..        
-    while (iteration_ < maxIterations_) {
-      int bestIndividual = (Integer) findBestSolution_.execute(particles_);
+    while (iteration < maxIterations) {
+      int bestIndividual = (Integer) findBestSolution.execute(swarm);
       try {
-        //Compute the speed_
-        computeSpeed(iteration_, maxIterations_);
+        //Compute the speed
+        computeSpeed(iteration, maxIterations);
       } catch (IOException ex) {
         Logger.getLogger(PSO.class.getName()).log(Level.SEVERE, null, ex);
       }
 
-      //Compute the new positions for the particles_            
+      //Compute the new positions for the swarm
       computeNewPositions();
 
-      //Mutate the particles_          
-      //mopsoMutation(iteration_, maxIterations);
+      //Mutate the swarm
+      //mopsoMutation(iteration, maxIterations);
 
-      //Evaluate the new particles_ in new positions
-      for (int i = 0; i < particles_.size(); i++) {
-        Solution particle = particles_.get(i);
+      //Evaluate the new swarm in new positions
+      for (int i = 0; i < swarm.size(); i++) {
+        Solution particle = swarm.get(i);
         problem_.evaluate(particle);
         evaluations_++;
       }
 
       //Actualize the memory of this particle
-      for (int i = 0; i < particles_.size(); i++) {
-        //int flag = comparator.compare(particles_.get(i), localBest_[i]);
+      for (int i = 0; i < swarm.size(); i++) {
+        //int flag = comparator.compare(swarm.get(i), localBest[i]);
         //if (flag < 0) { // the new particle is best_ than the older remember        
-        if ((particles_.get(i).getObjective(0) < localBest_[i].getObjective(0))) {
-          Solution particle = new Solution(particles_.get(i));
-          localBest_[i] = particle;
+        if ((swarm.get(i).getObjective(0) < localBest[i].getObjective(0))) {
+          Solution particle = new Solution(swarm.get(i));
+          localBest[i] = particle;
         } // if
-        if ((particles_.get(i).getObjective(0) < globalBest_.getObjective(0))) {
-          Solution particle = new Solution(particles_.get(i));
-          globalBest_ = particle;
+        if ((swarm.get(i).getObjective(0) < globalBest.getObjective(0))) {
+          Solution particle = new Solution(swarm.get(i));
+          globalBest = particle;
         } // if
-        Double bestCurrentFitness = particles_.best(comparator_).getObjective(0);
+        Double bestCurrentFitness = swarm.best(comparator).getObjective(0);
         Configuration.logger.info("Best: " + bestCurrentFitness);
       }
-      iteration_++;
+      iteration++;
     }
 
     // Return a population with the best individual
     SolutionSet resultPopulation = new SolutionSet(1);
-    resultPopulation.add(particles_.get((Integer) findBestSolution_.execute(particles_)));
+    resultPopulation.add(swarm.get((Integer) findBestSolution.execute(swarm)));
 
     return resultPopulation;
   }

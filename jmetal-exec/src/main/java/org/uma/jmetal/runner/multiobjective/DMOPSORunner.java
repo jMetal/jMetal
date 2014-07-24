@@ -23,7 +23,7 @@ package org.uma.jmetal.runner.multiobjective;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristic.multiobjective.dmopso.dMOPSO;
+import org.uma.jmetal.metaheuristic.multiobjective.dmopso.DMOPSO;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.problem.ZDT.ZDT1;
 import org.uma.jmetal.qualityIndicator.QualityIndicatorGetter;
@@ -79,7 +79,7 @@ public class DMOPSORunner {
       //problem = new LZ09_F1("Real");
     }
 
-    algorithm = new dMOPSO();
+    algorithm = new DMOPSO();
     algorithm.setProblem(problem);
 
     // Algorithm parameters

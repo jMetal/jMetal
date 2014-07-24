@@ -133,7 +133,11 @@ public class MultithreadedExperimentExecutor implements SynchronousParallelTaskE
 
       if (experimentExecution.useAlgorithmConfigurationFiles()) {
         Properties configuration = new Properties();
-        InputStreamReader isr =  new InputStreamReader(new FileInputStream(algorithmName + ".conf"));
+        //InputStreamReader isr =  new InputStreamReader(new FileInputStream(algorithmName + ".conf"));
+        InputStreamReader isr =
+          new InputStreamReader(
+            new FileInputStream(ClassLoader.getSystemResource(algorithmName + ".conf").getPath()));
+
         configuration.load(isr);
 
         String algorithmName = configuration.getProperty("algorithm", this.algorithmName);
@@ -166,10 +170,6 @@ public class MultithreadedExperimentExecutor implements SynchronousParallelTaskE
       SolutionSetOutput.printObjectivesToFile(resultFront, directory + "/" + experimentExecution.getParetoFrontFileName() + "." + id);
       SolutionSetOutput.printVariablesToFile(resultFront,
         directory + "/" + experimentExecution.getParetoSetFileName() + "." + id);
-      //resultFront.printObjectivesToFile(
-        //directory + "/" + experimentExecution.getParetoFrontFileName() + "." + id);
-      //resultFront
-        //.printVariablesToFile(directory + "/" + experimentExecution.getParetoSetFileName() + "." + id);
 
       return id;
     }

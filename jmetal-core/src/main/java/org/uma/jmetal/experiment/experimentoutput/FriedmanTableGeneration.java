@@ -65,7 +65,6 @@ public class FriedmanTableGeneration implements ExperimentOutput {
     }
   }
 
-
   private boolean outputDirectoryDoesNotExist() {
     boolean result;
 
@@ -100,7 +99,6 @@ public class FriedmanTableGeneration implements ExperimentOutput {
     String string = "";
     StringTokenizer lines;
     String linea;
-    int i, j, k;
     int position;
     double mean[][];
     Pair order[][];
@@ -118,7 +116,6 @@ public class FriedmanTableGeneration implements ExperimentOutput {
     String indicator = indic;
 
 
-    //String outDir = experimentData.getExperimentBaseDirectory() + "/latex";
     String outFile = outputDirectory + "/FriedmanTest" + indicator + ".tex";
 
     String Output = "";
@@ -192,16 +189,16 @@ public class FriedmanTableGeneration implements ExperimentOutput {
     /*Compute the average performance per algorithm for each data set*/
     mean = new double[datasets.size()][algorithms.size()];
 
-    for (j = 0; j < algorithms.size(); j++) {
-      for (i = 0; i < datasets.size(); i++) {
+    for (int j = 0; j < algorithms.size(); j++) {
+      for (int i = 0; i < datasets.size(); i++) {
         mean[i][j] = (Double) ((Vector) data.elementAt(j)).elementAt(i);
       }
     }
 
-    /*We use the pareja structure to compute and order rankings*/
+    /*We use the Pair structure to compute and order rankings*/
     order = new Pair[datasets.size()][algorithms.size()];
-    for (i = 0; i < datasets.size(); i++) {
-      for (j = 0; j < algorithms.size(); j++) {
+    for (int i = 0; i < datasets.size(); i++) {
+      for (int j = 0; j < algorithms.size(); j++) {
         order[i][j] = new Pair(j, mean[i][j]);
       }
       Arrays.sort(order[i]);
@@ -210,52 +207,52 @@ public class FriedmanTableGeneration implements ExperimentOutput {
     /*building of the rankings table per algorithms and data sets*/
     rank = new Pair[datasets.size()][algorithms.size()];
     position = 0;
-    for (i = 0; i < datasets.size(); i++) {
-      for (j = 0; j < algorithms.size(); j++) {
+    for (int i = 0; i < datasets.size(); i++) {
+      for (int j = 0; j < algorithms.size(); j++) {
         found = false;
-        for (k = 0; k < algorithms.size() && !found; k++) {
-          if (order[i][k].index_ == j) {
+        for (int k = 0; k < algorithms.size() && !found; k++) {
+          if (order[i][k].index == j) {
             found = true;
             position = k + 1;
           }
         }
-        rank[i][j] = new Pair(position, order[i][position - 1].value_);
+        rank[i][j] = new Pair(position, order[i][position - 1].value);
       }
     }
 
     /*In the case of having the same performance, the rankings are equal*/
-    for (i = 0; i < datasets.size(); i++) {
+    for (int i = 0; i < datasets.size(); i++) {
       visto = new boolean[algorithms.size()];
       pendingToVisit = new Vector();
 
       Arrays.fill(visto, false);
-      for (j = 0; j < algorithms.size(); j++) {
+      for (int j = 0; j < algorithms.size(); j++) {
         pendingToVisit.removeAllElements();
-        sum = rank[i][j].index_;
+        sum = rank[i][j].index;
         visto[j] = true;
         ig = 1;
-        for (k = j + 1; k < algorithms.size(); k++) {
-          if (rank[i][j].value_ == rank[i][k].value_ && !visto[k]) {
-            sum += rank[i][k].index_;
+        for (int k = j + 1; k < algorithms.size(); k++) {
+          if (rank[i][j].value == rank[i][k].value && !visto[k]) {
+            sum += rank[i][k].index;
             ig++;
             pendingToVisit.add(new Integer(k));
             visto[k] = true;
           }
         }
         sum /= (double) ig;
-        rank[i][j].index_ = sum;
-        for (k = 0; k < pendingToVisit.size(); k++) {
-          rank[i][((Integer) pendingToVisit.elementAt(k))].index_ = sum;
+        rank[i][j].index = sum;
+        for (int k = 0; k < pendingToVisit.size(); k++) {
+          rank[i][((Integer) pendingToVisit.elementAt(k))].index = sum;
         }
       }
     }
 
     /*compute the average ranking for each algorithm*/
     Rj = new double[algorithms.size()];
-    for (i = 0; i < algorithms.size(); i++) {
+    for (int i = 0; i < algorithms.size(); i++) {
       Rj[i] = 0;
-      for (j = 0; j < datasets.size(); j++) {
-        Rj[i] += rank[j][i].index_ / ((double) datasets.size());
+      for (int j = 0; j < datasets.size(); j++) {
+        Rj[i] += rank[j][i].index / ((double) datasets.size());
       }
     }
 
@@ -267,7 +264,7 @@ public class FriedmanTableGeneration implements ExperimentOutput {
       "\\begin{tabular}{c|c}\n" +
       "Algorithm&Ranking\\\\\n\\hline");
 
-    for (i = 0; i < algorithms.size(); i++) {
+    for (int i = 0; i < algorithms.size(); i++) {
       Output = Output + "\n" + (String) algorithms.elementAt(i) + "&" + Rj[i] + "\\\\";
     }
 
@@ -282,7 +279,7 @@ public class FriedmanTableGeneration implements ExperimentOutput {
     termino2 =
       (double) algorithms.size() * ((double) algorithms.size() + 1) * ((double) algorithms.size()
         + 1) / (4.0);
-    for (i = 0; i < algorithms.size(); i++) {
+    for (int i = 0; i < algorithms.size(); i++) {
       sumatoria += Rj[i] * Rj[i];
     }
     friedman = (sumatoria - termino2) * termino1;
@@ -313,21 +310,18 @@ public class FriedmanTableGeneration implements ExperimentOutput {
 
   private class Pair implements Comparable {
 
-    public double index_;
-    public double value_;
-
-    public Pair() {
-    }
+    public double index;
+    public double value;
 
     public Pair(double i, double v) {
-      index_ = i;
-      value_ = v;
+      index = i;
+      value = v;
     }
 
     public int compareTo(Object o1) {
-      if (Math.abs(this.value_) > Math.abs(((Pair) o1).value_)) {
+      if (Math.abs(this.value) > Math.abs(((Pair) o1).value)) {
         return 1;
-      } else if (Math.abs(this.value_) < Math.abs(((Pair) o1).value_)) {
+      } else if (Math.abs(this.value) < Math.abs(((Pair) o1).value)) {
         return -1;
       } else {
         return 0;

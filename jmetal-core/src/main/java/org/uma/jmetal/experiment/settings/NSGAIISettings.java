@@ -37,9 +37,7 @@ import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
 
 import java.util.Properties;
 
-/**
- * Settings class of algorithm NSGA-II (real encoding)
- */
+/** Settings class of algorithm NSGA-II (real encoding) */
 public class NSGAIISettings extends Settings {
   private int populationSize;
   private int maxEvaluations;
@@ -49,18 +47,14 @@ public class NSGAIISettings extends Settings {
   private double crossoverDistributionIndex;
   private SolutionSetEvaluator evaluator;
 
-  /**
-   * Constructor
-   *
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Constructor */
   public NSGAIISettings(String problem) throws JMetalException {
     super(problem);
 
     Object[] problemParams = {"Real"};
     this.problem = (new ProblemFactory()).getProblem(problemName, problemParams);
 
-    // Default experiment.settings
+    /* Default settings */
     populationSize = 100;
     maxEvaluations = 25000;
     mutationProbability = 1.0 / this.problem.getNumberOfVariables();
@@ -70,12 +64,7 @@ public class NSGAIISettings extends Settings {
     evaluator = new SequentialSolutionSetEvaluator() ;
   }
 
-  /**
-   * Configure NSGAII with default parameter experiment.settings
-   *
-   * @return A NSGAII algorithm object
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Configure NSGAII with default parameter settings */
   public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
     Selection selection;
@@ -106,11 +95,7 @@ public class NSGAIISettings extends Settings {
     return algorithm;
   }
 
-  /**
-   * Configure NSGAII with user-defined parameter experiment.settings
-   *
-   * @return A NSGAII algorithm object
-   */
+  /** Configure NSGAII from a properties file */
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {
     populationSize = Integer

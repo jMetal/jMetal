@@ -23,7 +23,7 @@ package org.uma.jmetal.experiment.settings;
 
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.experiment.Settings;
-import org.uma.jmetal.metaheuristic.multiobjective.dmopso.dMOPSO;
+import org.uma.jmetal.metaheuristic.multiobjective.dmopso.DMOPSO;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.util.JMetalException;
 
@@ -63,7 +63,7 @@ public class DMOPSOSettings extends Settings {
     // http://dces.essex.ac.uk/staff/qzhang/MOEAcompetition/CEC09final/code/ZhangMOEADcode/moead0305.rar
 
     dataDirectory = "MOEAD_Weights";
-  } // dMOPSO_Settings
+  }
 
   /**
    * Configure the algorithm with the specified parameter experiment.settings
@@ -75,7 +75,7 @@ public class DMOPSOSettings extends Settings {
     Algorithm algorithm;
 
     // Creating the problem
-    algorithm = new dMOPSO();
+    algorithm = new DMOPSO();
     algorithm.setProblem(problem);
 
     // Algorithm parameters
