@@ -29,11 +29,11 @@ import java.io.IOException;
  * The class defines a jMetal experiment with the following features
  * - Algorithms: NSGA-II, SMPSO, MOCell, GDE3
  * - The ZDT suite is solved
- * - The reference Pareto fronts are given
+ * - The reference Pareto fronts are unknown
  */
-public class ZDTExperimentRunner {
+public class ZDTExperiment2Runner {
   public static void main(String[] args) throws JMetalException, IOException {
-    ExperimentData experimentData = new ExperimentData.Builder("ZDTExperiment")
+    ExperimentData experimentData = new ExperimentData.Builder("ZDTExperiment2")
       .algorithmNameList(new String[]{"NSGAII", "SMPSO", "MOCell", "GDE3"})
       .problemList(new String[]{"ZDT1", "ZDT2", "ZDT3", "ZDT4", "ZDT6"})
       .experimentBaseDirectory("/Users/antelverde/Softw/jMetal/jMetalGitHub/pruebas")
@@ -49,11 +49,11 @@ public class ZDTExperimentRunner {
       .useAlgorithmConfigurationFiles()
       .build() ;
 
-    String[] paretoFrontFilesList = new String[]{"ZDT1.pf","ZDT2.pf", "ZDT3.pf", "ZDT4.pf", "ZDT6.pf"} ;
+    ParetoFrontsGeneration paretoFrontsGeneration = new ParetoFrontsGeneration.Builder(experimentData)
+      .build() ;
+
     String[] indicatorList = new String[]{"HV", "IGD", "EPSILON", "SPREAD", "GD"} ;
     QualityIndicatorGeneration qualityIndicatorGeneration = new QualityIndicatorGeneration.Builder(experimentData)
-      .paretoFrontDirectory("/Users/antelverde/Softw/pruebas/data/paretoFronts")
-      .paretoFrontFiles(paretoFrontFilesList)
       .qualityIndicatorList(indicatorList)
       .build() ;
 
@@ -64,7 +64,6 @@ public class ZDTExperimentRunner {
       .indicatorList(indicatorList)
       .numberOfRows(3)
       .numberOfColumns(2)
-      .includeNotch()
       .build() ;
 
     WilcoxonTestTableGeneration wilcoxonTestTableGeneration =
@@ -83,6 +82,7 @@ public class ZDTExperimentRunner {
 
     Experiment experiment = new Experiment.Builder(experimentData)
       .addExperimentOutput(algorithmExecution)
+      .addExperimentOutput(paretoFrontsGeneration)
       .addExperimentOutput(qualityIndicatorGeneration)
       .addExperimentOutput(setCoverageTables)
       .addExperimentOutput(boxplotGeneration)

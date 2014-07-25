@@ -43,10 +43,10 @@ public class ExperimentRunner {
       .useAlgorithmConfigurationFiles()
       .build() ;
 
-    String[] paretoFrontFilesList = new String[]{"ZDT1.pf","ZDT2.pf", "ZDT3.pf", "ZDT4.pf", "ZDT6.pf"} ;
     ParetoFrontsGeneration paretoFrontsGeneration = new ParetoFrontsGeneration.Builder(experimentData)
       .build() ;
 
+    String[] paretoFrontFilesList = new String[]{"ZDT1.pf","ZDT2.pf", "ZDT3.pf", "ZDT4.pf", "ZDT6.pf"} ;
     String[] indicatorList = new String[]{"HV", "IGD", "EPSILON", "SPREAD", "GD"} ;
     QualityIndicatorGeneration qualityIndicatorGeneration = new QualityIndicatorGeneration.Builder(experimentData)
       .paretoFrontDirectory("/Users/antelverde/Softw/pruebas/data/paretoFronts")
