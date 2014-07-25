@@ -27,13 +27,13 @@ import java.io.IOException;
 
 public class ExperimentRunner {
   public static void main(String[] args) throws JMetalException, IOException {
-    ExperimentData experimentData = new ExperimentData.Builder("Experiment2")
+    ExperimentData experimentData = new ExperimentData.Builder("Experiment")
       .algorithmNameList(new String[]{"NSGAII", "SMPSO", "MOCell", "GDE3"})
       .problemList(new String[]{"ZDT1", "ZDT2", "ZDT3", "ZDT4", "ZDT6"})
       .experimentBaseDirectory("/Users/antelverde/Softw/jMetal/jMetalGitHub/pruebas")
       .outputParetoFrontFileName("FUN")
       .outputParetoSetFileName("VAR")
-      .independentRuns(8)
+      .independentRuns(4)
       .build() ;
 
     AlgorithmExecution algorithmExecution = new AlgorithmExecution.Builder(experimentData)
@@ -43,13 +43,14 @@ public class ExperimentRunner {
       .useAlgorithmConfigurationFiles()
       .build() ;
 
+    String[] paretoFrontFilesList = new String[]{"ZDT1.pf","ZDT2.pf", "ZDT3.pf", "ZDT4.pf", "ZDT6.pf"} ;
     ParetoFrontsGeneration paretoFrontsGeneration = new ParetoFrontsGeneration.Builder(experimentData)
       .build() ;
 
     String[] indicatorList = new String[]{"HV", "IGD", "EPSILON", "SPREAD", "GD"} ;
     QualityIndicatorGeneration qualityIndicatorGeneration = new QualityIndicatorGeneration.Builder(experimentData)
       .paretoFrontDirectory("/Users/antelverde/Softw/pruebas/data/paretoFronts")
-      .paretoFrontFiles(new String[]{"ZDT1.pf","ZDT2.pf", "ZDT3.pf", "ZDT4.pf", "ZDT6.pf"})
+      .paretoFrontFiles(paretoFrontFilesList)
       .qualityIndicatorList(indicatorList)
       .build() ;
 
@@ -58,7 +59,7 @@ public class ExperimentRunner {
 
     BoxplotGeneration boxplotGeneration = new BoxplotGeneration.Builder(experimentData)
       .indicatorList(indicatorList)
-      .numberOfRows(2)
+      .numberOfRows(3)
       .numberOfColumns(2)
       .build() ;
 

@@ -82,7 +82,7 @@ public class QualityIndicatorGeneration implements ExperimentOutput {
 
     public Builder paretoFrontFiles(String[] paretoFrontFiles) {
       if (paretoFrontFiles.length != experimentData.getProblemList().length) {
-        System.out.println("problme list lenght: "+ experimentData.getProblemList().length) ;
+        System.out.println("problem list length: "+ experimentData.getProblemList().length) ;
         System.out.println(experimentData.getProblemList()[0]);
         System.out.println(experimentData.getProblemList()[1]);
         throw new JMetalException("Wrong number of pareto front file names: "

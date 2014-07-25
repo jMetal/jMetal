@@ -30,7 +30,7 @@ import org.uma.jmetal.util.JMetalException;
 import java.util.Properties;
 
 /**
- * Settings class of algorithm dMOPSO
+ * Settings class of algorithm DMOPSO
  */
 public class DMOPSOSettings extends Settings {
   private String dataDirectory;
@@ -89,9 +89,9 @@ public class DMOPSOSettings extends Settings {
   }
 
   /**
-   * Configure dMOPSO with user-defined parameter experiment.settings
+   * Configure DMOPSO with user-defined parameter experiment.settings
    *
-   * @return A dMOPSO algorithm object
+   * @return A DMOPSO algorithm object
    */
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {

@@ -1,5 +1,5 @@
 /**
- * dMOPSO.java
+ * DMOPSO.java
  *
  * @version 1.0
  */
@@ -78,8 +78,8 @@ public class DMOPSO extends Algorithm {
   }
 
   public DMOPSO(
-    Vector<Double> variables,
-    String trueParetoFront) throws FileNotFoundException {
+          Vector<Double> variables,
+          String trueParetoFront) throws FileNotFoundException {
     super();
 
     r1Max = variables.get(0);
@@ -226,7 +226,7 @@ public class DMOPSO extends Algorithm {
   } 
 
   /**
-   * Runs of the dMOPSO algorithm.
+   * Runs of the DMOPSO algorithm.
    *
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
    * as a experimentoutput of the algorithm execution
@@ -526,7 +526,7 @@ public class DMOPSO extends Algorithm {
       fitness = (d1 + theta * d2);
 
     } else {
-      throw new JMetalException("dMOPSO.fitnessFunction: unknown type " + functionType);
+      throw new JMetalException("DMOPSO.fitnessFunction: unknown type " + functionType);
     }
     return fitness;
   }

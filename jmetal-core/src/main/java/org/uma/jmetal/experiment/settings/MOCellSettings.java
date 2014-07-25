@@ -74,7 +74,7 @@ public class MOCellSettings extends Settings {
     crossoverDistributionIndex = 20.0;
     mutationDistributionIndex = 20.0;
 
-    mocellVariant = "AsyncMOCell1" ;
+    mocellVariant = "AsyncMOCell2" ;
   }
 
   /**
