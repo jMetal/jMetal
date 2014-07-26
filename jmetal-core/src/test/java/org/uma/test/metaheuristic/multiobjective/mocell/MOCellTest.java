@@ -37,11 +37,11 @@ public class MOCellTest {
 
   @Test
   public void testNumberOfReturnedSolutionsInEasyProblemWithAsyncMOCell1() throws IOException, ClassNotFoundException {
-    algorithm = new MOCellSettings("Kursawe").configure("AsyncMOCell1") ;
+    algorithm = new MOCellSettings("ZDT2").configure("AsyncMOCell1") ;
 
     SolutionSet solutionSet = algorithm.execute() ;
     /*
-    Rationale: the default problem is Kursawe, and usually AsyncMOCell1, configured with standard
+    Rationale: the default problem is ZDT2, and usually AsyncMOCell1, configured with standard
     settings, should return 100 solutions
      */
     int defaultMaxEvaluations = 25000 ;
@@ -51,11 +51,11 @@ public class MOCellTest {
 
   @Test
   public void testNumberOfReturnedSolutionsInEasyProblemWithAsyncMOCell2() throws IOException, ClassNotFoundException {
-    algorithm = new MOCellSettings("Kursawe").configure("AsyncMOCell2") ;
+    algorithm = new MOCellSettings("ZDT1").configure("AsyncMOCell2") ;
 
     SolutionSet solutionSet = algorithm.execute() ;
     /*
-    Rationale: the default problem is Kursawe, and usually AsyncMOCell2, configured with standard
+    Rationale: the default problem is ZDT1, and usually AsyncMOCell2, configured with standard
     settings, should return 100 solutions
      */
     int defaultMaxEvaluations = 25000 ;
@@ -65,11 +65,11 @@ public class MOCellTest {
 
   @Test
   public void testNumberOfReturnedSolutionsInEasyProblemWithAsyncMOCell3() throws IOException, ClassNotFoundException {
-    algorithm = new MOCellSettings("Kursawe").configure("AsyncMOCell3") ;
+    algorithm = new MOCellSettings("ZDT2").configure("AsyncMOCell3") ;
 
     SolutionSet solutionSet = algorithm.execute() ;
     /*
-    Rationale: the default problem is Kursawe, and usually AsyncMOCell3, configured with standard
+    Rationale: the default problem is ZDT1, and usually AsyncMOCell3, configured with standard
     settings, should return 100 solutions
      */
     int defaultMaxEvaluations = 25000 ;
@@ -79,11 +79,11 @@ public class MOCellTest {
 
   @Test
   public void testNumberOfReturnedSolutionsInEasyProblemWithAsyncMOCell4() throws IOException, ClassNotFoundException {
-    algorithm = new MOCellSettings("Kursawe").configure("AsyncMOCell4") ;
+    algorithm = new MOCellSettings("ZDT4").configure("AsyncMOCell4") ;
 
     SolutionSet solutionSet = algorithm.execute() ;
     /*
-    Rationale: the default problem is Kursawe, and usually AsyncMOCell4, configured with standard
+    Rationale: the default problem is ZDT1, and usually AsyncMOCell4, configured with standard
     settings, should return 100 solutions
      */
     int defaultMaxEvaluations = 25000 ;
@@ -93,11 +93,11 @@ public class MOCellTest {
 
   @Test
   public void testNumberOfReturnedSolutionsInEasyProblemWithSyncMOCell1() throws IOException, ClassNotFoundException {
-    algorithm = new MOCellSettings("Kursawe").configure("SyncMOCell1") ;
+    algorithm = new MOCellSettings("Fonseca").configure("SyncMOCell1") ;
 
     SolutionSet solutionSet = algorithm.execute() ;
     /*
-    Rationale: the default problem is Kursawe, and usually SyncMOCell1, configured with standard
+    Rationale: the default problem is Fonseca, and usually SyncMOCell1, configured with standard
     settings, should return 100 solutions
      */
     int defaultMaxEvaluations = 25000 ;
@@ -106,11 +106,11 @@ public class MOCellTest {
   }
 
   public void testNumberOfReturnedSolutionsInEasyProblemWithSyncMOCell2() throws IOException, ClassNotFoundException {
-    algorithm = new MOCellSettings("Kursawe").configure("SyncMOCell2") ;
+    algorithm = new MOCellSettings("ZDT2").configure("SyncMOCell2") ;
 
     SolutionSet solutionSet = algorithm.execute() ;
     /*
-    Rationale: the default problem is Kursawe, and usually SyncMOCell2, configured with standard
+    Rationale: the default problem is ZDT2, and usually SyncMOCell2, configured with standard
     settings, should return 100 solutions
      */
     int defaultMaxEvaluations = 25000 ;

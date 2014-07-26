@@ -41,21 +41,23 @@ import org.uma.jmetal.util.random.PseudoRandom;
 public class SyncMOCell1 extends MOCellTemplate {
   private static final long serialVersionUID = -5671233949239815443L;
 
+  /** Constructor */
   public SyncMOCell1(Builder builder) {
     super(builder);
   }
 
+  /** execute() method */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     SolutionSet newSolutionSet;
 
-    population = new SolutionSet(populationSize);
+   // population = new SolutionSet(populationSize);
     archive = new CrowdingArchive(archiveSize, problem_.getNumberOfObjectives());
     neighborhood = new Neighborhood(populationSize);
     neighbors = new SolutionSet[populationSize];
 
-    evaluations = 0;
-
     createInitialPopulation();
+    population = evaluatePopulation(population) ;
+    evaluations = population.size() ;
 
     while (evaluations < maxEvaluations) {
       newSolutionSet = new SolutionSet(populationSize);
@@ -74,7 +76,6 @@ public class SyncMOCell1 extends MOCellTemplate {
         offSpring = (Solution[]) crossoverOperator.execute(parents);
         mutationOperator.execute(offSpring[0]);
 
-        //->Evaluate offspring and constraints
         problem_.evaluate(offSpring[0]);
         problem_.evaluateConstraints(offSpring[0]);
         evaluations++;
@@ -83,9 +84,7 @@ public class SyncMOCell1 extends MOCellTemplate {
 
         if (flag == -1) {
           newSolutionSet.add(new Solution(population.get(ind)));
-        }
-
-        if (flag == 1) {
+        } else if (flag == 1) {
           offSpring[0].setLocation(individual.getLocation());
           newSolutionSet.add(offSpring[0]);
           archive.add(new Solution(offSpring[0]));
@@ -127,6 +126,7 @@ public class SyncMOCell1 extends MOCellTemplate {
 
       population = newSolutionSet;
     }
+
     return archive;
   }
 }

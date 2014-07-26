@@ -34,37 +34,24 @@ import org.uma.jmetal.util.archive.CrowdingArchive;
  * applies an archive feedback through parent selection.
  */
 public class SyncMOCell2 extends MOCellTemplate {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = -2245599709758873327L;
 
-  /**
-   * Constructor
-   */
+  /** Constructor */
   public SyncMOCell2(Builder builder) {
     super(builder);
   }
 
-  /**
-   * Runs of the sMOCell2 algorithm.
-   *
-   * @return a <code>SolutionSet</code> that is a set of non dominated solutions
-   * as a experimentoutput of the algorithm execution
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** execute() method */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     SolutionSet newSolutionSet;
 
-    population = new SolutionSet(populationSize);
     archive = new CrowdingArchive(archiveSize, problem_.getNumberOfObjectives());
     neighborhood = new Neighborhood(populationSize);
     neighbors = new SolutionSet[populationSize];
 
-    evaluations = 0;
-
     createInitialPopulation();
+    population = evaluatePopulation(population) ;
+    evaluations = population.size() ;
 
     while (!stoppingCondition()) {
       newSolutionSet = new SolutionSet(populationSize);
@@ -95,9 +82,7 @@ public class SyncMOCell2 extends MOCellTemplate {
 
         if (flag == -1) {
           newSolutionSet.add(new Solution(population.get(ind)));
-        }
-
-        if (flag == 1) {
+        } else if (flag == 1) {
           offSpring[0].setLocation(individual.getLocation());
           newSolutionSet.add(offSpring[0]);
           archive.add(new Solution(offSpring[0]));

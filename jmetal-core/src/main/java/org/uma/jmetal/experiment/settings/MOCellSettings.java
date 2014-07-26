@@ -74,7 +74,7 @@ public class MOCellSettings extends Settings {
     crossoverDistributionIndex = 20.0;
     mutationDistributionIndex = 20.0;
 
-    mocellVariant = "AsyncMOCell2" ;
+    mocellVariant = "SyncMOCell1" ;
   }
 
   /**
@@ -103,14 +103,6 @@ public class MOCellSettings extends Settings {
     selection = new BinaryTournament.Builder()
       .build();
 
-    // Selecting the algorithm: there are six MOCell variants
-    //algorithm = new sMOCell1(problem) ;
-    //algorithm = new sMOCell2(problem) ;
-    //algorithm = new aMOCell1(problem) ;
-    //algorithm = new aMOCell2(problem) ;
-    //algorithm = new aMOCell3(problem) ;
-    //algorithm = new aMOCell4(problem) ;
-
     algorithm = new MOCellTemplate.Builder(problem)
       .populationSize(populationSize)
       .archiveSize(archiveSize)
@@ -126,7 +118,7 @@ public class MOCellSettings extends Settings {
 
   public Algorithm configure(String mocellVariant) {
     this.mocellVariant = mocellVariant ;
-
+    //FIXME: need to test that the values are valid
     return configure() ;
   }
 
@@ -156,7 +148,7 @@ public class MOCellSettings extends Settings {
     mutationDistributionIndex = Double.parseDouble(configuration
       .getProperty("mutationDistributionIndex", String.valueOf(mutationDistributionIndex)));
 
-    mocellVariant = configuration.getProperty("MOCellVariant", mocellVariant) ;
+    mocellVariant = configuration.getProperty("mocellVariant", mocellVariant) ;
 
     return configure();
   }

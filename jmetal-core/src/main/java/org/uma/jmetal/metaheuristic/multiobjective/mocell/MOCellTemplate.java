@@ -26,7 +26,6 @@ import org.uma.jmetal.util.Distance;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.Neighborhood;
 import org.uma.jmetal.util.archive.Archive;
-import org.uma.jmetal.util.archive.CrowdingArchive;
 import org.uma.jmetal.util.comparator.CrowdingComparator;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.random.PseudoRandom;
@@ -37,6 +36,7 @@ import java.util.Comparator;
  * Created by Antonio J. Nebro on 29/06/14.
  */
 public abstract class MOCellTemplate extends Algorithm {
+  private static final int DEFAULT_ARCHIVE_SIZE = 100 ;
   protected int populationSize;
   protected int maxEvaluations;
   protected int evaluations;
@@ -159,13 +159,14 @@ public abstract class MOCellTemplate extends Algorithm {
 
     protected Archive archive ;
 
+    /** Builder class */
     public Builder(Problem problem) {
       this.problem = problem ;
       dominanceComparator = new DominanceComparator() ;
       densityEstimatorComparator = new CrowdingComparator();
 
-      archiveSize = 100 ;
-      archive = new CrowdingArchive(archiveSize, problem.getNumberOfObjectives());
+      archiveSize = DEFAULT_ARCHIVE_SIZE ;
+      numberOfFeedbackSolutionsFromArchive = 0 ;
     }
 
     public Builder populationSize(int populationSize) {
@@ -182,7 +183,7 @@ public abstract class MOCellTemplate extends Algorithm {
 
     public Builder archiveSize(int archiveSize) {
       this.archiveSize = archiveSize ;
-      //FIXME: Do we have to modify the archive?????
+
       return this ;
     }
 

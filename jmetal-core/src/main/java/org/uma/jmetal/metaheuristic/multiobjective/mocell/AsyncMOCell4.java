@@ -38,30 +38,22 @@ import org.uma.jmetal.util.archive.CrowdingArchive;
  * EMO 2007. Sendai/Matsushima, Japan, March 2007.
  */
 public class AsyncMOCell4 extends MOCellTemplate {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = -2479285259392945976L;
 
+  /** Constructor */
   public AsyncMOCell4(Builder builder) {
     super(builder);
   }
 
-  /**
-   * Execute the algorithm
-   *
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** execute() method */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
-    population = new SolutionSet(populationSize);
     archive = new CrowdingArchive(archiveSize, problem_.getNumberOfObjectives());
     neighborhood = new Neighborhood(populationSize);
     neighbors = new SolutionSet[populationSize];
 
-    evaluations = 0;
-
     createInitialPopulation();
+    population = evaluatePopulation(population) ;
+    evaluations = population.size() ;
 
     while (!stoppingCondition()) {
       for (int ind = 0; ind < population.size(); ind++) {

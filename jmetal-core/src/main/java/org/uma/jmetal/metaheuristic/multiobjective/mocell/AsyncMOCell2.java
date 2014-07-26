@@ -26,44 +26,29 @@ import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.util.Distance;
 import org.uma.jmetal.util.Neighborhood;
 import org.uma.jmetal.util.Ranking;
+import org.uma.jmetal.util.archive.CrowdingArchive;
 
 /**
  * This class represents an asynchronous version of the MOCell algorithm, which
  * applies an archive feedback through parent selection.
  */
 public class AsyncMOCell2 extends MOCellTemplate {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = 6036292773938388363L;
 
-
-  /**
-   * Constructor
-   */
+  /** Constructor */
   public AsyncMOCell2(Builder builder) {
     super(builder);
   }
 
-
-  /**
-   * Runs of the AsyncMOCell2 algorithm.
-   *
-   * @return a SolutionSet that is a set of non dominated solutions
-   * as a experimentoutput of the algorithm execution
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** execute() method */
   public SolutionSet execute() throws ClassNotFoundException {
-    population = new SolutionSet(populationSize);
     neighborhood = new Neighborhood(populationSize);
     neighbors = new SolutionSet[populationSize];
-
-    evaluations = 0;
+    archive = new CrowdingArchive(archiveSize, problem_.getNumberOfObjectives());
 
     createInitialPopulation();
     population = evaluatePopulation(population) ;
-    evaluations += population.size() ;
+    evaluations = population.size() ;
 
     while (!stoppingCondition()) {
       for (int ind = 0; ind < population.size(); ind++) {
@@ -102,22 +87,6 @@ public class AsyncMOCell2 extends MOCellTemplate {
             Distance.crowdingDistance(rank.getSubfront(j));
           }
 
-          /*
-          boolean deleteMutant = true;
-
-          int compareResult = densityEstimatorComparator.compare(individual, offSpring[0]);
-          if (compareResult == 1) {
-            deleteMutant = false;
-          }
-
-          if (!deleteMutant) {
-            offSpring[0].setLocation(individual.getLocation());
-            population.replace(offSpring[0].getLocation(), offSpring[0]);
-            archive.add(new Solution(offSpring[0]));
-          } else {
-            archive.add(new Solution(offSpring[0]));
-          }
-          */
           int compareResult = densityEstimatorComparator.compare(individual, offSpring[0]);
           if (compareResult == 1) {
             offSpring[0].setLocation(individual.getLocation());

@@ -36,20 +36,21 @@ import org.uma.jmetal.util.archive.CrowdingArchive;
 public class AsyncMOCell3 extends MOCellTemplate {
   private static final long serialVersionUID = 7923330703025056895L;
 
+  /** Constructor */
   public AsyncMOCell3(Builder builder) {
     super(builder);
   }
 
-
+  /** execute() method */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
-    population = new SolutionSet(populationSize);
     archive = new CrowdingArchive(archiveSize, problem_.getNumberOfObjectives());
     neighborhood = new Neighborhood(populationSize);
     neighbors = new SolutionSet[populationSize];
 
-    evaluations = 0;
-
     createInitialPopulation();
+    population = evaluatePopulation(population) ;
+    evaluations = population.size() ;
+
     while (!stoppingCondition()) {
       for (int ind = 0; ind < population.size(); ind++) {
         Solution individual = new Solution(population.get(ind));
