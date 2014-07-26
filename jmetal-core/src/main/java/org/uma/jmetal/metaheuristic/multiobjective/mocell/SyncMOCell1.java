@@ -104,11 +104,10 @@ public class SyncMOCell1 extends MOCellTemplate {
           if (!deleteMutant) {
             offSpring[0].setLocation(individual.getLocation());
             newSolutionSet.add(offSpring[0]);
-            archive.add(new Solution(offSpring[0]));
           } else {
             newSolutionSet.add(new Solution(population.get(ind)));
-            archive.add(new Solution(offSpring[0]));
           }
+          archive.add(new Solution(offSpring[0]));
         }
       }
 

@@ -92,9 +92,8 @@ public class AsyncMOCell2 extends MOCellTemplate {
             offSpring[0].setLocation(individual.getLocation());
             population.replace(offSpring[0].getLocation(), offSpring[0]);
             archive.add(new Solution(offSpring[0]));
-          } else {
-            archive.add(new Solution(offSpring[0]));
           }
+          archive.add(new Solution(offSpring[0]));
         }
       }
     }
