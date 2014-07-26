@@ -1,4 +1,4 @@
-//  ExperimentRunner.java
+//  ZDTExperiment2Runner.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -26,7 +26,7 @@ import org.uma.jmetal.util.JMetalException;
 import java.io.IOException;
 
 /**
- * The class defines a jMetal experiment with the following features
+ * This class defines a jMetal experiment with the following features
  * - Algorithms: NSGA-II, SMPSO, MOCell, GDE3
  * - The ZDT suite is solved
  * - The reference Pareto fronts are given

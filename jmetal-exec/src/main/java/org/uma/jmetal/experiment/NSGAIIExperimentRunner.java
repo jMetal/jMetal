@@ -1,3 +1,23 @@
+//  NSGAIIExperimentRunner.java
+//
+//  Author:
+//       Antonio J. Nebro <antonio@lcc.uma.es>
+//
+//  Copyright (c) 2014 Antonio J. Nebro
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU Lesser General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU Lesser General Public License for more details.
+//
+//  You should have received a copy of the GNU Lesser General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 package org.uma.jmetal.experiment;
 
 import org.uma.jmetal.experiment.experimentoutput.*;
@@ -6,7 +26,13 @@ import org.uma.jmetal.util.JMetalException;
 import java.io.IOException;
 
 /**
- * Created by Antonio J. Nebro on 24/07/14.
+ * The class defines a jMetal experiment with the following features
+ * - Algorithms: four variants of NSGA-II (each of them having a different crossover probability
+ * - The ZDT suite is solved
+ * - The reference Pareto fronts are unknown and have to be computed
+ * - The algorithm variant settings are read from properties files by using this method in the
+ *   AlgorithmExecution object:
+ *       .useAlgorithmConfigurationFiles()
  */
 public class NSGAIIExperimentRunner {
   public static void main(String[] args) throws JMetalException, IOException {
