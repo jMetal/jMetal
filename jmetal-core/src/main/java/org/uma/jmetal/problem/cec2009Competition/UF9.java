@@ -32,27 +32,25 @@ import org.uma.jmetal.util.JMetalException;
  * Class representing problem CEC2009_UF9
  */
 public class UF9 extends Problem {
-  /**
-   *
-   */
   private static final long serialVersionUID = -4553566469157782591L;
-  double epsilon_;
+
+  double epsilon;
 
   /**
    * Constructor.
    * Creates a default instance of problem CEC2009_UF9 (30 decision variables)
    *
-   * @param solutionType The solutiontype type must "Real" or "BinaryReal".
+   * @param solutionType The solution type must "Real" or "BinaryReal".
    */
   public UF9(String solutionType) throws ClassNotFoundException, JMetalException {
-    this(solutionType, 30, 0.1); // 30 variables by default, epsilon = 0.1
+    this(solutionType, 30, 0.1);
   }
 
   /**
    * Creates a new instance of problem CEC2009_UF9.
    *
    * @param numberOfVariables Number of variables.
-   * @param solutionType      The solutiontype type must "Real" or "BinaryReal".
+   * @param solutionType      The solution type must "Real" or "BinaryReal".
    */
   public UF9(String solutionType, Integer numberOfVariables, double epsilon) throws
     JMetalException {
@@ -61,7 +59,7 @@ public class UF9 extends Problem {
     numberOfConstraints = 0;
     problemName = "CEC2009_UF9";
 
-    epsilon_ = epsilon;
+    this.epsilon = epsilon;
 
     upperLimit = new double[this.numberOfVariables];
     lowerLimit = new double[this.numberOfVariables];
@@ -85,12 +83,7 @@ public class UF9 extends Problem {
     }
   }
 
-  /**
-   * Evaluates a solutiontype.
-   *
-   * @param solution The solutiontype to evaluate.
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Execute() method */
   public void evaluate(Solution solution) throws JMetalException {
     Variable[] decisionVariables = solution.getDecisionVariables();
 
@@ -119,7 +112,7 @@ public class UF9 extends Problem {
       }
     }
 
-    yj = (1.0 + epsilon_) * (1.0 - 4.0 * (2.0 * x[0] - 1.0) * (2.0 * x[0] - 1.0));
+    yj = (1.0 + epsilon) * (1.0 - 4.0 * (2.0 * x[0] - 1.0) * (2.0 * x[0] - 1.0));
     if (yj < 0.0) {
       yj = 0.0;
     }

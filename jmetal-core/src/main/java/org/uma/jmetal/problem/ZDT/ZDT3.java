@@ -33,11 +33,6 @@ import org.uma.jmetal.util.wrapper.XReal;
  * Class representing problem ZDT3
  */
 public class ZDT3 extends Problem {
-
-
-  /**
-   *
-   */
   private static final long serialVersionUID = -773138580076559651L;
 
   /**
@@ -83,13 +78,7 @@ public class ZDT3 extends Problem {
     }
   }
 
-
-  /**
-   * Evaluates a solutiontype
-   *
-   * @param solution The solutiontype to evaluate
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Evaluate() method */
   public void evaluate(Solution solution) throws JMetalException {
     XReal x = new XReal(solution);
 

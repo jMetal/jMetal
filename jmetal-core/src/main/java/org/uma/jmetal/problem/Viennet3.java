@@ -31,17 +31,13 @@ import org.uma.jmetal.util.JMetalException;
  * Class representing problem Viennet3
  */
 public class Viennet3 extends Problem {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = -1045562049962940126L;
 
   /**
    * Constructor.
    * Creates a default instance of the Viennet3 problem.
    *
-   * @param solutionType The solutiontype type must "Real" or "BinaryReal".
+   * @param solutionType The solution type must "Real" or "BinaryReal".
    */
   public Viennet3(String solutionType) throws JMetalException {
     numberOfVariables = 2;
@@ -65,13 +61,7 @@ public class Viennet3 extends Problem {
     }
   }
 
-
-  /**
-   * Evaluates a solutiontype.
-   *
-   * @param solution The solutiontype to evaluate.
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Evaluate() method */
   public void evaluate(Solution solution) throws JMetalException {
     double[] x = new double[numberOfVariables];
     double[] f = new double[numberOfObjectives];

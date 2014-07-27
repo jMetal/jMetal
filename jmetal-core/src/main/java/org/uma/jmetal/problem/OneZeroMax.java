@@ -31,17 +31,12 @@ import org.uma.jmetal.util.JMetalException;
  * number of '1's and '0's in a binary string.
  */
 public class OneZeroMax extends Problem {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = 2580449794690931406L;
 
   /**
    * Creates a new OneZeroMax problem instance
    *
    * @param solutionType Solution type
-   * @throws ClassNotFoundException
    */
   public OneZeroMax(String solutionType) throws ClassNotFoundException, JMetalException {
     this(solutionType, 512);
@@ -71,11 +66,7 @@ public class OneZeroMax extends Problem {
     }
   }
 
-  /**
-   * Evaluates a solutiontype
-   *
-   * @param solution The solutiontype to evaluate
-   */
+  /** Evaluate() method */
   public void evaluate(Solution solution) {
     Binary variable;
     int counterOnes;

@@ -43,7 +43,7 @@ public class Srinivas extends Problem {
    * Constructor.
    * Creates a default instance of the Srinivas problem
    *
-   * @param solutionType The solutiontype type must "Real" or "BinaryReal".
+   * @param solutionType The solution type must "Real" or "BinaryReal".
    */
   public Srinivas(String solutionType) throws JMetalException {
     numberOfVariables = 2;
@@ -67,12 +67,7 @@ public class Srinivas extends Problem {
     }
   }
 
-  /**
-   * Evaluates a solutiontype
-   *
-   * @param solution The solutiontype to evaluate
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Evaluate() method */
   public void evaluate(Solution solution) throws JMetalException {
     Variable[] variable = solution.getDecisionVariables();
 

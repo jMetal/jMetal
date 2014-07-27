@@ -32,12 +32,7 @@ import org.uma.jmetal.util.JMetalException;
  * Class representing problem Schaffer
  */
 public class Schaffer extends Problem {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = -2366503015218789989L;
-
 
   /**
    * Constructor.
@@ -65,13 +60,7 @@ public class Schaffer extends Problem {
     }
   }
 
-
-  /**
-   * Evaluates a solutiontype
-   *
-   * @param solution The solutiontype to evaluate
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Evaluate() method */
   public void evaluate(Solution solution) throws JMetalException {
     Variable[] variable = solution.getDecisionVariables();
 

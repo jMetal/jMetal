@@ -28,10 +28,6 @@ import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
 import org.uma.jmetal.util.JMetalException;
 
 public class Rastrigin extends Problem {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = -6521581306133870406L;
 
   /**
@@ -62,14 +58,9 @@ public class Rastrigin extends Problem {
     } else {
       throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
     }
-  } // Rastrigin
+  }
 
-  /**
-   * Evaluates a solutiontype
-   *
-   * @param solution The solutiontype to evaluate
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Evaluate() method */
   public void evaluate(Solution solution) throws JMetalException {
     Variable[] decisionVariables = solution.getDecisionVariables();
 

@@ -32,9 +32,6 @@ import org.uma.jmetal.util.JMetalException;
  * Class representing problem Oyczka2
  */
 public class Osyczka2 extends Problem {
-  /**
-   *
-   */
   private static final long serialVersionUID = 5547671401217847034L;
 
   /**
@@ -106,12 +103,7 @@ public class Osyczka2 extends Problem {
     solution.setObjective(1, f[1]);
   }
 
-  /**
-   * Evaluates the constraint overhead of a solutiontype
-   *
-   * @param solution The solutiontype
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Evaluate() method */
   public void evaluateConstraints(Solution solution) throws JMetalException {
     double[] constraint = new double[this.getNumberOfConstraints()];
     Variable[] decisionVariables = solution.getDecisionVariables();

@@ -68,12 +68,7 @@ public class WFG7 extends WFG {
     }
   }
 
-  /**
-   * Evaluates a solutiontype
-   *
-   * @param z The solutiontype to evaluate
-   * @return double [] with the evaluation results
-   */
+  /** Evaluate() method */
   public float[] evaluate(float[] z) {
     float[] y;
 

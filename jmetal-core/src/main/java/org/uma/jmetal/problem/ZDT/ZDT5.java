@@ -32,10 +32,6 @@ import org.uma.jmetal.util.JMetalException;
  * Class representing problem ZDT5
  */
 public class ZDT5 extends Problem {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = 6980764091779887017L;
 
   /**
@@ -71,11 +67,7 @@ public class ZDT5 extends Problem {
     }
   }
 
-  /**
-   * Evaluates a solutiontype
-   *
-   * @param solution The solutiontype to evaluate
-   */
+  /** Evaluate() method */
   public void evaluate(Solution solution) {
     double[] f = new double[numberOfObjectives];
     f[0] = 1 + u((Binary) solution.getDecisionVariables()[0]);

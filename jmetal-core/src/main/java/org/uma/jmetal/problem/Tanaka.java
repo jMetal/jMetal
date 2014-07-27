@@ -42,7 +42,7 @@ public class Tanaka extends Problem {
    * Constructor.
    * Creates a default instance of the problem Tanaka
    *
-   * @param solutionType The solutiontype type must "Real" or "BinaryReal".
+   * @param solutionType The solution type must "Real" or "BinaryReal".
    */
   public Tanaka(String solutionType) throws JMetalException {
     numberOfVariables = 2;
@@ -83,13 +83,7 @@ public class Tanaka extends Problem {
     solution.setObjective(1, f[1]);
   }
 
-
-  /**
-   * Evaluates the constraint overhead of a solutiontype
-   *
-   * @param solution The solutiontype
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Evaluate() method */
   public void evaluateConstraints(Solution solution) throws JMetalException {
     double[] constraint = new double[this.getNumberOfConstraints()];
 

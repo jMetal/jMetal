@@ -32,13 +32,10 @@ import org.uma.jmetal.util.JMetalException;
  * This is not a true problem; it is only intended as an example
  */
 public class IntRealProblem extends Problem {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = -3553215776619374111L;
-  int intVariables_;
-  int realVariables_;
+
+  int intVariables;
+  int realVariables;
 
   /**
    * Constructor.
@@ -46,7 +43,7 @@ public class IntRealProblem extends Problem {
    */
   public IntRealProblem(String solutionType) throws ClassNotFoundException, JMetalException {
     this(solutionType, 3, 3);
-  } // IntRealProblem
+  }
 
   /**
    * Constructor.
@@ -57,10 +54,10 @@ public class IntRealProblem extends Problem {
    */
   public IntRealProblem(String solutionType, int intVariables, int realVariables)
     throws JMetalException {
-    intVariables_ = intVariables;
-    realVariables_ = realVariables;
+    this.intVariables = intVariables;
+    this.realVariables = realVariables;
 
-    numberOfVariables = intVariables_ + realVariables_;
+    numberOfVariables = this.intVariables + this.realVariables;
     numberOfObjectives = 2;
     numberOfConstraints = 0;
     problemName = "IntRealProblem";
@@ -81,28 +78,23 @@ public class IntRealProblem extends Problem {
     if (solutionType.compareTo("IntReal") == 0) {
       this.solutionType = new IntRealSolutionType(this, intVariables, realVariables);
     } else {
-      throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
+      throw new JMetalException("Error: solution type " + solutionType + " invalid");
     }
   }
 
-  /**
-   * Evaluates a solutiontype
-   *
-   * @param solution The solutiontype to evaluate
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Evaluate() method */
   public void evaluate(Solution solution) throws JMetalException {
     Variable[] variable = solution.getDecisionVariables();
 
     double[] fx = new double[2];
 
     fx[0] = 0.0;
-    for (int var = 0; var < intVariables_; var++) {
+    for (int var = 0; var < intVariables; var++) {
       fx[0] += (int) variable[var].getValue();
     }
 
     fx[1] = 0.0;
-    for (int var = intVariables_; var < numberOfVariables; var++) {
+    for (int var = intVariables; var < numberOfVariables; var++) {
       fx[1] += variable[var].getValue();
     }
 

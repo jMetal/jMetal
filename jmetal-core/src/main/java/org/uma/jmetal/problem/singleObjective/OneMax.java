@@ -32,10 +32,6 @@ import org.uma.jmetal.util.JMetalException;
  * number of '1's in a binary string.
  */
 public class OneMax extends Problem {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = -8546255672894127575L;
 
   /**
@@ -71,11 +67,7 @@ public class OneMax extends Problem {
     }
   }
 
-  /**
-   * Evaluates a solutiontype
-   *
-   * @param solution The solutiontype to evaluate
-   */
+  /** Evaluate() method */
   public void evaluate(Solution solution) {
     Binary variable;
     int counter;

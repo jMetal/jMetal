@@ -39,8 +39,7 @@ public class Fonseca extends Problem {
    * Constructor
    * Creates a default instance of the Fonseca problem
    *
-   * @param solutionType The solution type must "Real", "BinaryReal,
-   *                     ArrayReal, or ArrayRealC".
+   * @param solutionType The solution type must "Real", "BinaryReal or ArrayReal".
    */
   public Fonseca(String solutionType) throws JMetalException {
     numberOfVariables = 3;
@@ -66,12 +65,7 @@ public class Fonseca extends Problem {
     }
   }
 
-  /**
-   * Evaluates a solutiontype
-   *
-   * @param solution The solutiontype to evaluate
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Evaluate() method */
   public void evaluate(Solution solution) throws JMetalException {
     XReal x = new XReal(solution);
 

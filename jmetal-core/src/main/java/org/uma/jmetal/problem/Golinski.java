@@ -96,12 +96,7 @@ public class Golinski extends Problem {
     solution.setObjective(1, f2);
   }
 
-  /**
-   * Evaluates the constraint overhead of a solutiontype
-   *
-   * @param solution The solutiontype
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Evaluate() method */
   public void evaluateConstraints(Solution solution) throws JMetalException {
     double[] constraint = new double[numberOfConstraints];
     double x1, x2, x3, x4, x5, x6, x7;

@@ -37,10 +37,6 @@ import java.util.Random;
  * Proceedings, volume 3410 of Lecture Notes in Computer Science
  */
 public abstract class WFG extends Problem {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = 2252390688690699199L;
 
   /**

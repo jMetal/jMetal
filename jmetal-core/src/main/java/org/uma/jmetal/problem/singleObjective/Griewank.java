@@ -31,11 +31,7 @@ import org.uma.jmetal.util.JMetalException;
 /**
  * Class representing problem Griewank
  */
-
 public class Griewank extends Problem {
-  /**
-   *
-   */
   private static final long serialVersionUID = 1531198336732615275L;
 
   /**
@@ -43,7 +39,7 @@ public class Griewank extends Problem {
    * Creates a default instance of the Griewank problem
    *
    * @param numberOfVariables Number of variables of the problem
-   * @param solutionType      The solutiontype type must "Real" or "BinaryReal".
+   * @param solutionType      The solution type must "Real" or "BinaryReal".
    */
   public Griewank(String solutionType, Integer numberOfVariables) throws JMetalException {
     this.numberOfVariables = numberOfVariables;
@@ -67,12 +63,7 @@ public class Griewank extends Problem {
     }
   }
 
-  /**
-   * Evaluates a solutiontype
-   *
-   * @param solution The solutiontype to evaluate
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Evaluate() method */
   public void evaluate(Solution solution) throws JMetalException {
     Variable[] decisionVariables = solution.getDecisionVariables();
 

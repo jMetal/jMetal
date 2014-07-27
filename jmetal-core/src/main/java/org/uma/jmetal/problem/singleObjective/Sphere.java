@@ -32,9 +32,6 @@ import org.uma.jmetal.util.JMetalException;
  * Class representing a Sphere problem.
  */
 public class Sphere extends Problem {
-  /**
-   *
-   */
   private static final long serialVersionUID = 6623348682217370725L;
 
   /**
@@ -67,12 +64,7 @@ public class Sphere extends Problem {
     }
   }
 
-  /**
-   * Evaluates a solutiontype
-   *
-   * @param solution The solutiontype to evaluate
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Evaluate() method */
   public void evaluate(Solution solution) throws JMetalException {
     Variable[] decisionVariables = solution.getDecisionVariables();
 

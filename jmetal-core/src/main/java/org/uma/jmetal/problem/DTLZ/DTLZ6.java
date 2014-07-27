@@ -32,20 +32,16 @@ import org.uma.jmetal.util.JMetalException;
  * Class representing problem DTLZ6
  */
 public class DTLZ6 extends Problem {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = -6129675039815081872L;
 
   /**
    * Creates a default DTLZ6 problem instance (12 variables and 3 objectives)
    *
-   * @param solutionType The solutiontype type must "Real" or "BinaryReal".
+   * @param solutionType The solution type must "Real" or "BinaryReal".
    */
   public DTLZ6(String solutionType) throws ClassNotFoundException, JMetalException {
     this(solutionType, 12, 3);
-  } // DTLZ6
+  }
 
   /**
    * Creates a new DTLZ6 problem instance
@@ -78,12 +74,7 @@ public class DTLZ6 extends Problem {
     }
   }
 
-  /**
-   * Evaluates a solutiontype
-   *
-   * @param solution The solutiontype to evaluate
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Evaluate() method */
   public void evaluate(Solution solution) throws JMetalException {
     Variable[] gen = solution.getDecisionVariables();
 

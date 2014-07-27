@@ -32,27 +32,23 @@ import org.uma.jmetal.util.JMetalException;
  * Class representing problem CEC2009_UF4
  */
 public class UF4 extends Problem {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = 6959393546490623328L;
 
   /**
    * Constructor.
    * Creates a default instance of problem CEC2009_UF4 (30 decision variables)
    *
-   * @param solutionType The solutiontype type must "Real" or "BinaryReal".
+   * @param solutionType The solution type must "Real" or "BinaryReal".
    */
   public UF4(String solutionType) throws ClassNotFoundException, JMetalException {
-    this(solutionType, 30); // 30 variables by default
-  } // CEC2009_UF1
+    this(solutionType, 30);
+  }
 
   /**
    * Creates a new instance of problem CEC2009_UF4.
    *
    * @param numberOfVariables Number of variables.
-   * @param solutionType      The solutiontype type must "Real" or "BinaryReal".
+   * @param solutionType      The solution type must "Real" or "BinaryReal".
    */
   public UF4(String solutionType, Integer numberOfVariables) throws JMetalException {
     this.numberOfVariables = numberOfVariables;
@@ -79,12 +75,7 @@ public class UF4 extends Problem {
     }
   }
 
-  /**
-   * Evaluates a solutiontype.
-   *
-   * @param solution The solutiontype to evaluate.
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Evaluate() method */
   public void evaluate(Solution solution) throws JMetalException {
     Variable[] decisionVariables = solution.getDecisionVariables();
 

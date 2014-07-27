@@ -36,14 +36,11 @@ import java.util.logging.Level;
  * instances of TSPLIB
  */
 public class mTSP extends Problem {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = 3869748855198680149L;
-  public int numberOfCities_;
-  public double[][] distanceMatrix_;
-  public double[][] costMatrix_;
+
+  public int numberOfCities;
+  public double[][] distanceMatrix;
+  public double[][] costMatrix;
 
   /**
    * Creates a new mTSP problem instance. It accepts data files from TSPLIB
@@ -58,10 +55,10 @@ public class mTSP extends Problem {
 
     length = new int[numberOfVariables];
 
-    distanceMatrix_ = readProblem(file_distances);
-    costMatrix_ = readProblem(file_cost);
-    Configuration.logger.info(""+numberOfCities_);
-    length[0] = numberOfCities_;
+    distanceMatrix = readProblem(file_distances);
+    costMatrix = readProblem(file_cost);
+    Configuration.logger.info(""+ numberOfCities);
+    length[0] = numberOfCities;
 
     if (solutionType.compareTo("Permutation") == 0) {
       this.solutionType = new PermutationSolutionType(this);
@@ -70,11 +67,7 @@ public class mTSP extends Problem {
     }
   }
 
-  /**
-   * Evaluates a solutiontype
-   *
-   * @param solution The solutiontype to evaluate
-   */
+  /** Evaluate() method */
   public void evaluate(Solution solution) {
     double fitness1;
     double fitness2;
@@ -82,22 +75,22 @@ public class mTSP extends Problem {
     fitness1 = 0.0;
     fitness2 = 0.0;
 
-    for (int i = 0; i < (numberOfCities_ - 1); i++) {
+    for (int i = 0; i < (numberOfCities - 1); i++) {
       int x;
       int y;
 
       x = ((Permutation) solution.getDecisionVariables()[0]).getVector()[i];
       y = ((Permutation) solution.getDecisionVariables()[0]).getVector()[i + 1];
-      fitness1 += distanceMatrix_[x][y];
-      fitness2 += costMatrix_[x][y];
+      fitness1 += distanceMatrix[x][y];
+      fitness2 += costMatrix[x][y];
     }
     int firstCity;
     int lastCity;
 
     firstCity = ((Permutation) solution.getDecisionVariables()[0]).getVector()[0];
-    lastCity = ((Permutation) solution.getDecisionVariables()[0]).getVector()[numberOfCities_ - 1];
-    fitness1 += distanceMatrix_[firstCity][lastCity];
-    fitness2 += costMatrix_[firstCity][lastCity];
+    lastCity = ((Permutation) solution.getDecisionVariables()[0]).getVector()[numberOfCities - 1];
+    fitness1 += distanceMatrix[firstCity][lastCity];
+    fitness2 += costMatrix[firstCity][lastCity];
 
     solution.setObjective(0, fitness1);
     solution.setObjective(1, fitness2);
@@ -129,9 +122,9 @@ public class mTSP extends Problem {
       token.nextToken();
       token.nextToken();
 
-      numberOfCities_ = (int) token.nval;
+      numberOfCities = (int) token.nval;
 
-      matrix = new double[numberOfCities_][numberOfCities_];
+      matrix = new double[numberOfCities][numberOfCities];
 
       // Find the string SECTION  
       found = false;
@@ -146,9 +139,9 @@ public class mTSP extends Problem {
       }
 
       // Read the data
-      double[] c = new double[2 * numberOfCities_];
+      double[] c = new double[2 * numberOfCities];
 
-      for (int i = 0; i < numberOfCities_; i++) {
+      for (int i = 0; i < numberOfCities; i++) {
         token.nextToken();
         int j = (int) token.nval;
 
@@ -159,9 +152,9 @@ public class mTSP extends Problem {
       }
 
       double dist;
-      for (int k = 0; k < numberOfCities_; k++) {
+      for (int k = 0; k < numberOfCities; k++) {
         matrix[k][k] = 0;
-        for (int j = k + 1; j < numberOfCities_; j++) {
+        for (int j = k + 1; j < numberOfCities; j++) {
           dist = Math.sqrt(Math.pow((c[k * 2] - c[j * 2]), 2.0) +
             Math.pow((c[k * 2 + 1] - c[j * 2 + 1]), 2));
           dist = (int) (dist + .5);

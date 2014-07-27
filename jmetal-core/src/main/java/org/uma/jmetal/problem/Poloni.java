@@ -34,10 +34,6 @@ import org.uma.jmetal.util.JMetalException;
  * be applied.
  */
 public class Poloni extends Problem {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = -530548126202625574L;
 
   /**
@@ -68,12 +64,7 @@ public class Poloni extends Problem {
     }
   }
 
-  /**
-   * Evaluates a solutiontype
-   *
-   * @param solution The solutiontype to evaluate
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Evaluate() method */
   public void evaluate(Solution solution) throws JMetalException {
     final double A1 = 0.5 * Math.sin(1.0) - 2 * Math.cos(1.0) +
       Math.sin(2.0) - 1.5 * Math.cos(2.0); //!< Constant A1

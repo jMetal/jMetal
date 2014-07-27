@@ -34,12 +34,11 @@ import java.util.logging.Logger;
  *          This class provides some functionalities for reading mQAP from file
  */
 public class ReadInstance {
-
-  private String fileName_;
-  private int [][]   a_matrix;   
-  private int [][][] b_matrixs;  
-  private int facilities_ = -1;          
-  private int objectives_ = -1;
+  private String fileName;
+  private int [][] matrixA;
+  private int [][][] matricesB;
+  private int facilities = -1;
+  private int objectives = -1;
 
   private String singleObjectiveFirstLine_ = "";
 
@@ -49,7 +48,7 @@ public class ReadInstance {
    * Creates a new ReadInstance for the mQAP problem
    */
   public ReadInstance(String name) {
-    fileName_ = name;
+    fileName = name;
   }
 
   /**
@@ -58,7 +57,7 @@ public class ReadInstance {
    */
   public void loadInstance() {
     try {
-      File archivo = new File(fileName_);
+      File archivo = new File(fileName);
       FileReader fr = null;
       BufferedReader br = null;
       fr = new FileReader(archivo);
@@ -81,28 +80,28 @@ public class ReadInstance {
           do {
             try {
               aux = st.nextToken();
-              facilities_ = new Integer(aux);
+              facilities = new Integer(aux);
               newLine += aux + " ";
             } catch (NumberFormatException ne) {
               Configuration.logger.log(Level.WARNING, "Number Format Exception", ne);
               newLine += aux + " ";
               continue;
             }
-          } while (facilities_ < 0);
+          } while (facilities < 0);
         } else if (newToken.toUpperCase().contains("OBJECTIVES")) {
           newLine += newToken + " ";
           String aux = "";
           do {
             try {
               aux = st.nextToken();
-              objectives_ = new Integer(aux);
+              objectives = new Integer(aux);
               newLine += "1 ";
             } catch (NumberFormatException ne) {
               Configuration.logger.log(Level.WARNING, "NumberFormatException", ne);
               newLine += aux + " ";
               continue;
             }
-          } while (objectives_ < 0);       
+          } while (objectives < 0);
         } else {
           newLine += newToken + " "; 
         }         
@@ -111,38 +110,38 @@ public class ReadInstance {
       singleObjectiveFirstLine_ = newLine;
 
       // reading A matrix (discarding empty lines on the way)
-      a_matrix = new int[facilities_][facilities_];
+      matrixA = new int[facilities][facilities];
       line = br.readLine();
       while (line.isEmpty()) {
         line = br.readLine();
       }
 
-      for (int i = 0; i < facilities_; i++) {
+      for (int i = 0; i < facilities; i++) {
         st = new StringTokenizer(line);
-        for (int j = 0; j < facilities_; j++) {
-          a_matrix[i][j] = new Integer(st.nextToken());
+        for (int j = 0; j < facilities; j++) {
+          matrixA[i][j] = new Integer(st.nextToken());
         }
         line = br.readLine();
       }
 
       // reading B matrixes (discarding empty lines on the way)
-      b_matrixs = new int[objectives_][facilities_][facilities_];
-      for (int k = 0; k < objectives_; k++) {
+      matricesB = new int[objectives][facilities][facilities];
+      for (int k = 0; k < objectives; k++) {
         while (line.isEmpty()) {
           line = br.readLine();
         }
-        for (int i = 0; i < facilities_; i++) {
+        for (int i = 0; i < facilities; i++) {
           st = new StringTokenizer(line);
-          for (int j = 0; j < facilities_; j++) {
-            b_matrixs[k][i][j] = new Integer(st.nextToken());
+          for (int j = 0; j < facilities; j++) {
+            matricesB[k][i][j] = new Integer(st.nextToken());
           }
           line = br.readLine();
         }
       }
 
       // comprobation
-      for (int i = 0; i < facilities_; i++) {
-        for (int j = 0; j < facilities_; j++) {
+      for (int i = 0; i < facilities; i++) {
+        for (int j = 0; j < facilities; j++) {
         }
       }
       // at this point the instances has been read
@@ -163,8 +162,8 @@ public class ReadInstance {
    * and write all the information to file
    */
   public void createSingleObjectiveInstance(int[] weights) {
-    // safe comprobation: is the number of weights == objectives_?
-    if (weights.length != objectives_) {
+    // safe comprobation: is the number of weights == objectives?
+    if (weights.length != objectives) {
       Logger.getLogger(ReadInstance.class.getName()).log(Level.SEVERE,
           "The number of weights and number of objectives don't match");
     }
@@ -172,25 +171,25 @@ public class ReadInstance {
     // generating the intance
     try {
       String name = "";
-      for (int k = 0; k < objectives_; k++) {
+      for (int k = 0; k < objectives; k++) {
         name += "_" + weights[k];
       }
       System.out.println(name);
-      System.out.println(fileName_+name);
-      FileOutputStream fos   = new FileOutputStream(fileName_+name)     ;
+      System.out.println(fileName +name);
+      FileOutputStream fos   = new FileOutputStream(fileName +name)     ;
       OutputStreamWriter osw = new OutputStreamWriter(fos)    ;
       BufferedWriter bw      = new BufferedWriter(osw)        ;
 
-      bw.write(facilities_ + "");
+      bw.write(facilities + "");
       bw.newLine();
       bw.newLine();
 
       // writting matrix_a
       String line;
-      for (int i = 0; i < facilities_; i++) {
+      for (int i = 0; i < facilities; i++) {
         line = "";
-        for (int j = 0; j < facilities_; j++) {
-          line += a_matrix[i][j] + " ";
+        for (int j = 0; j < facilities; j++) {
+          line += matrixA[i][j] + " ";
         }
         bw.write(line);
         bw.newLine();
@@ -198,12 +197,12 @@ public class ReadInstance {
       bw.newLine();
 
       // writting aggregate veresion of matrix_b
-      for (int i = 0; i < facilities_; i++) {
+      for (int i = 0; i < facilities; i++) {
         line = "";
-        for (int j = 0; j < facilities_; j++) {
+        for (int j = 0; j < facilities; j++) {
           int aggregateValue = 0;
-          for (int k = 0; k < objectives_; k++) {
-            aggregateValue += weights[k] * b_matrixs[k][i][j];
+          for (int k = 0; k < objectives; k++) {
+            aggregateValue += weights[k] * matricesB[k][i][j];
           }
           line += aggregateValue + " ";
         }
@@ -223,19 +222,19 @@ public class ReadInstance {
   }
 
   int [][] get_a_Matrix() {
-    return a_matrix;
+    return matrixA;
   }
 
   int [][][] get_b_Matrixs() {
-    return b_matrixs;
+    return matricesB;
   }
 
   int getNumberOfObjectives() {
-    return objectives_;
+    return objectives;
   }
 
   int getNumberOfFacilities() {
-    return facilities_;
+    return facilities;
   }
 
   public static void main(String [] args) {

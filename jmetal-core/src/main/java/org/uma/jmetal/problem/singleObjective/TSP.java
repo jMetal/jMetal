@@ -35,13 +35,10 @@ import java.util.logging.Level;
  * Class representing a TSP (Traveling Salesman Problem) problem.
  */
 public class TSP extends Problem {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = 7271160768259648914L;
-  public int numberOfCities_;
-  public double[][] distanceMatrix_;
+
+  public int numberOfCities;
+  public double[][] distanceMatrix;
 
   public TSP(String solutionType) throws Exception {
     this(solutionType, "eil101.tsp");
@@ -73,39 +70,34 @@ public class TSP extends Problem {
     }
     readProblem(filename);
 
-    Configuration.logger.info(""+numberOfCities_);
-    length[0] = numberOfCities_;
+    Configuration.logger.info(""+ numberOfCities);
+    length[0] = numberOfCities;
   }
 
-  /**
-   * Evaluates a solutiontype
-   *
-   * @param solution The solutiontype to evaluate
-   */
+  /** Evaluate() method */
   public void evaluate(Solution solution) {
     double fitness;
 
     fitness = 0.0;
 
-    for (int i = 0; i < (numberOfCities_ - 1); i++) {
+    for (int i = 0; i < (numberOfCities - 1); i++) {
       int x;
       int y;
 
       x = ((Permutation) solution.getDecisionVariables()[0]).getVector()[i];
       y = ((Permutation) solution.getDecisionVariables()[0]).getVector()[i + 1];
 
-      fitness += distanceMatrix_[x][y];
+      fitness += distanceMatrix[x][y];
     }
     int firstCity;
     int lastCity;
 
     firstCity = ((Permutation) solution.getDecisionVariables()[0]).getVector()[0];
-    lastCity = ((Permutation) solution.getDecisionVariables()[0]).getVector()[numberOfCities_ - 1];
-    fitness += distanceMatrix_[firstCity][lastCity];
+    lastCity = ((Permutation) solution.getDecisionVariables()[0]).getVector()[numberOfCities - 1];
+    fitness += distanceMatrix[firstCity][lastCity];
 
     solution.setObjective(0, fitness);
   }
-
 
   public void readProblem(String fileName) throws
     Exception {
@@ -131,9 +123,9 @@ public class TSP extends Problem {
       token.nextToken();
       token.nextToken();
 
-      numberOfCities_ = (int) token.nval;
+      numberOfCities = (int) token.nval;
 
-      distanceMatrix_ = new double[numberOfCities_][numberOfCities_];
+      distanceMatrix = new double[numberOfCities][numberOfCities];
 
       // Find the string SECTION  
       found = false;
@@ -148,9 +140,9 @@ public class TSP extends Problem {
       }
 
       // Read the data
-      double[] c = new double[2 * numberOfCities_];
+      double[] c = new double[2 * numberOfCities];
 
-      for (int i = 0; i < numberOfCities_; i++) {
+      for (int i = 0; i < numberOfCities; i++) {
         token.nextToken();
         int j = (int) token.nval;
 
@@ -158,17 +150,17 @@ public class TSP extends Problem {
         c[2 * (j - 1)] = token.nval;
         token.nextToken();
         c[2 * (j - 1) + 1] = token.nval;
-      } // for
+      }
 
       double dist;
-      for (int k = 0; k < numberOfCities_; k++) {
-        distanceMatrix_[k][k] = 0;
-        for (int j = k + 1; j < numberOfCities_; j++) {
+      for (int k = 0; k < numberOfCities; k++) {
+        distanceMatrix[k][k] = 0;
+        for (int j = k + 1; j < numberOfCities; j++) {
           dist = Math.sqrt(Math.pow((c[k * 2] - c[j * 2]), 2.0) +
             Math.pow((c[k * 2 + 1] - c[j * 2 + 1]), 2));
           dist = (int) (dist + .5);
-          distanceMatrix_[k][j] = dist;
-          distanceMatrix_[j][k] = dist;
+          distanceMatrix[k][j] = dist;
+          distanceMatrix[j][k] = dist;
         }
       }
     } catch (Exception e) {

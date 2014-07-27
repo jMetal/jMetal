@@ -37,10 +37,6 @@ import java.util.logging.Level;
  * Proceedings, volume 3410 of Lecture Notes in Computer Science
  */
 public class WFG1 extends WFG {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = 3828260878519078349L;
 
   /**
@@ -80,12 +76,7 @@ public class WFG1 extends WFG {
     }
   }
 
-  /**
-   * Evaluates a solutiontype
-   *
-   * @param z The solutiontype to evaluate
-   * @return a double [] with the evaluation results
-   */
+  /** Evaluate() method */
   public float[] evaluate(float[] z) {
     float[] y;
 

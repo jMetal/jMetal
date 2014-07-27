@@ -34,10 +34,6 @@ import org.uma.jmetal.util.JMetalException;
  * Proceedings, volume 3410 of Lecture Notes in Computer Science
  */
 public class WFG4 extends WFG {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = -5316522577489186702L;
 
   /**
@@ -46,7 +42,7 @@ public class WFG4 extends WFG {
    * 4 distance-related parameter and
    * 2 objectives
    *
-   * @param solutionType The solutiontype type must "Real" or "BinaryReal".
+   * @param solutionType The solution type must "Real" or "BinaryReal".
    */
   public WFG4(String solutionType) throws ClassNotFoundException, JMetalException {
     this(solutionType, 2, 4, 2);
@@ -76,12 +72,7 @@ public class WFG4 extends WFG {
     }
   }
 
-  /**
-   * Evaluates a solutiontype
-   *
-   * @param z The solutiontype to evaluate
-   * @return double [] with the evaluation results
-   */
+  /** Evaluate() method */
   public float[] evaluate(float[] z) {
     float[] y;
 

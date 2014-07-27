@@ -31,9 +31,6 @@ import org.uma.jmetal.util.wrapper.XReal;
  * Class representing problem FourBarTruss
  */
 public class FourBarTruss extends Problem {
-  /**
-   *
-   */
   private static final long serialVersionUID = -9117986919170703133L;
   // 10kN
   double f_ = 10;
@@ -76,12 +73,7 @@ public class FourBarTruss extends Problem {
     }
   }
 
-  /**
-   * Evaluates a solutiontype
-   *
-   * @param solution The solutiontype to evaluate
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Evaluate() method */
   public void evaluate(Solution solution) throws JMetalException {
     XReal vars = new XReal(solution);
 

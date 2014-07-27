@@ -32,28 +32,26 @@ import org.uma.jmetal.util.JMetalException;
  * Class representing problem CEC2009_UF5
  */
 public class UF6 extends Problem {
-  /**
-   *
-   */
   private static final long serialVersionUID = 3661663536722022383L;
-  int N_;
-  double epsilon_;
+
+  int n;
+  double epsilon;
 
   /**
    * Constructor.
    * Creates a default instance of problem CEC2009_UF6 (30 decision variables)
    *
-   * @param solutionType The solutiontype type must "Real" or "BinaryReal".
+   * @param solutionType The solution type must "Real" or "BinaryReal".
    */
   public UF6(String solutionType) throws ClassNotFoundException, JMetalException {
-    this(solutionType, 30, 2, 0.1); // 30 variables, N =10, epsilon = 0.1
+    this(solutionType, 30, 2, 0.1);
   }
 
   /**
    * Creates a new instance of problem CEC2009_UF6.
    *
    * @param numberOfVariables Number of variables.
-   * @param solutionType      The solutiontype type must "Real" or "BinaryReal".
+   * @param solutionType      The solution type must "Real" or "BinaryReal".
    */
   public UF6(String solutionType, Integer numberOfVariables, int N, double epsilon)
     throws JMetalException {
@@ -62,8 +60,8 @@ public class UF6 extends Problem {
     numberOfConstraints = 0;
     problemName = "CEC2009_UF6";
 
-    N_ = N;
-    epsilon_ = epsilon;
+    n = N;
+    this.epsilon = epsilon;
 
     upperLimit = new double[this.numberOfVariables];
     lowerLimit = new double[this.numberOfVariables];
@@ -84,12 +82,7 @@ public class UF6 extends Problem {
     }
   }
 
-  /**
-   * Evaluates a solutiontype.
-   *
-   * @param solution The solutiontype to evaluate.
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Execute() method */
   public void evaluate(Solution solution) throws JMetalException {
     Variable[] decisionVariables = solution.getDecisionVariables();
 
@@ -118,7 +111,7 @@ public class UF6 extends Problem {
         count1++;
       }
     }
-    hj = 2.0 * (0.5 / N_ + epsilon_) * Math.sin(2.0 * N_ * Math.PI * x[0]);
+    hj = 2.0 * (0.5 / n + epsilon) * Math.sin(2.0 * n * Math.PI * x[0]);
     if (hj < 0.0) {
       hj = 0.0;
     }

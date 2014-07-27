@@ -63,7 +63,7 @@ public class NMMin extends Problem {
     }
   }
 
-  /** Evaluate method */
+  /** Evaluate() method */
   public void evaluate(Solution solution) {
     int approximationToN;
     int approximationToM ;

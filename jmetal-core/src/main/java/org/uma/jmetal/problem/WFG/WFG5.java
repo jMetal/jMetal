@@ -34,9 +34,6 @@ import org.uma.jmetal.util.JMetalException;
  * Proceedings, volume 3410 of Lecture Notes in Computer Science
  */
 public class WFG5 extends WFG {
-  /**
-   *
-   */
   private static final long serialVersionUID = 6842970670089738194L;
 
   /**
@@ -75,12 +72,7 @@ public class WFG5 extends WFG {
     }
   }
 
-  /**
-   * Evaluates a solutiontype
-   *
-   * @param z The solutiontype to evaluate
-   * @return double [] with the evaluation results
-   */
+  /** Evaluate() method */
   public float[] evaluate(float[] z) {
     float[] y;
 

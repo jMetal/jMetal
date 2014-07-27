@@ -51,23 +51,17 @@ public class ProblemFactory {
       base += "mqap.";
     } else if ("Qom".equalsIgnoreCase(name)) {
     } else if ("DTLZ".equalsIgnoreCase(name.substring(0, name.length() - 1))) {
-      base += "DTLZ.";
+      base += "dtlz.";
     } else if ("WFG".equalsIgnoreCase(name.substring(0, name.length() - 1))) {
-      base += "WFG.";
+      base += "wfg.";
     } else if ("UF".equalsIgnoreCase(name.substring(0, name.length() - 1))) {
-      base += "cec2009Competition.";
+      base += "cec2009competition.";
     } else if ("UF".equalsIgnoreCase(name.substring(0, name.length() - 2))) {
-      base += "cec2009Competition.";
+      base += "cec2009competition.";
     } else if ("ZDT".equalsIgnoreCase(name.substring(0, name.length() - 1))) {
-      base += "ZDT.";
-    } else if ("ZZJ07".equalsIgnoreCase(name.substring(0, name.length() - 3))) {
-      base += "ZZJ07.";
+      base += "zdt.";
     } else if ("LZ09".equalsIgnoreCase(name.substring(0, name.length() - 3))) {
-      base += "LZ09.";
-    } else if ("ZZJ07".equalsIgnoreCase(name.substring(0, name.length() - 4))) {
-      base += "ZZJ07.";
-    } else if ("LZ06".equalsIgnoreCase(name.substring(0, name.length() - 3))) {
-      base += "LZ06.";
+      base += "lz09.";
     }
 
     try {

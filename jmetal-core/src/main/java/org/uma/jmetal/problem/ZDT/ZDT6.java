@@ -33,16 +33,12 @@ import org.uma.jmetal.util.wrapper.XReal;
  * Class representing problem ZDT6
  */
 public class ZDT6 extends Problem {
-
-  /**
-   *
-   */
-  private static final long serialVersionUID = 7195659093659262118L;
+ private static final long serialVersionUID = 7195659093659262118L;
 
   /**
    * Creates a default instance of problem ZDT6 (10 decision variables)
    *
-   * @param solutionType The solutiontype type must "Real", "BinaryReal, and "ArrayReal".
+   * @param solutionType The solution type must "Real", "BinaryReal, and "ArrayReal".
    */
   public ZDT6(String solutionType) throws ClassNotFoundException, JMetalException {
     this(solutionType, 10); // 10 variables by default
@@ -79,12 +75,7 @@ public class ZDT6 extends Problem {
     }
   }
 
-  /**
-   * Evaluates a solutiontype
-   *
-   * @param solution The solutiontype to evaluate
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Evaluate() method */
   public void evaluate(Solution solution) throws JMetalException {
     XReal x = new XReal(solution);
 

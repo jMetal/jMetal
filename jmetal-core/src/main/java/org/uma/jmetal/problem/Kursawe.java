@@ -33,10 +33,6 @@ import org.uma.jmetal.util.wrapper.XReal;
  * Class representing problem Kursawe
  */
 public class Kursawe extends Problem {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = -5505939545760890022L;
 
   /**
@@ -81,12 +77,7 @@ public class Kursawe extends Problem {
     }
   }
 
-  /**
-   * Evaluates a solutiontype
-   *
-   * @param solution The solutiontype to evaluate
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Evaluate() method */
   public void evaluate(Solution solution) throws JMetalException {
     XReal vars = new XReal(solution);
 

@@ -34,14 +34,10 @@ import org.uma.jmetal.util.JMetalException;
  *          version of the problem)
  */
 public class mQAP extends Problem {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = 5585099487667493237L;
 
-  int[][] a_matrix;
-  int[][][] b_matrixs;
+  int[][] matrixA;
+  int[][][] matricesB;
 
   public mQAP(String solutionType) throws JMetalException {
     this(solutionType, "KC10-2fl-2rl.dat");
@@ -53,13 +49,13 @@ public class mQAP extends Problem {
   public mQAP(String solutionType, String fileName) throws JMetalException {
 
     ReadInstance ri = new ReadInstance(fileName);
-    ri.loadInstance(); // necessary step (because I say it :-))
-    numberOfVariables = 1; // the permutation
+    ri.loadInstance();
+    numberOfVariables = 1;
     numberOfObjectives = ri.getNumberOfObjectives();
     numberOfConstraints = 0;
     problemName = "mQAP";
-    a_matrix = ri.get_a_Matrix();
-    b_matrixs = ri.get_b_Matrixs();
+    matrixA = ri.get_a_Matrix();
+    matricesB = ri.get_b_Matrixs();
 
     upperLimit = new double[numberOfVariables];
     lowerLimit = new double[numberOfVariables];
@@ -83,14 +79,14 @@ public class mQAP extends Problem {
     }
   }
 
-  // evaluation of the problem
+  /** Evaluate() method */
   public void evaluate(Solution solution) throws JMetalException {
     int[] permutation = ((Permutation) solution.getDecisionVariables()[0]).getVector();
     for (int k = 0; k < numberOfObjectives; k++) {
       double aux = 0.0;
-      for (int i = 0; i < a_matrix.length; i++) {
-        for (int j = 0; j < a_matrix[i].length; j++) {
-          aux += a_matrix[i][j] * b_matrixs[k][permutation[i]][permutation[j]];
+      for (int i = 0; i < matrixA.length; i++) {
+        for (int j = 0; j < matrixA[i].length; j++) {
+          aux += matrixA[i][j] * matricesB[k][permutation[i]][permutation[j]];
         }
       }
       solution.setObjective(k, aux);

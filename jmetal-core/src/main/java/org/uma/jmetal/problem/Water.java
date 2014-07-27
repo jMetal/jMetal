@@ -31,20 +31,17 @@ import org.uma.jmetal.util.JMetalException;
  * Class representing problem Water
  */
 public class Water extends Problem {
+  private static final long serialVersionUID = -3540685430646123468L;
 
   // defining the lower and upper limits
   public static final double[] LOWERLIMIT = {0.01, 0.01, 0.01};
   public static final double[] UPPERLIMIT = {0.45, 0.10, 0.10};
-  /**
-   *
-   */
-  private static final long serialVersionUID = -3540685430646123468L;
 
   /**
    * Constructor.
    * Creates a default instance of the Water problem.
    *
-   * @param solutionType The solutiontype type must "Real" or "BinaryReal".
+   * @param solutionType The solution type must "Real" or "BinaryReal".
    */
   public Water(String solutionType) throws JMetalException {
     numberOfVariables = 3;
@@ -71,9 +68,9 @@ public class Water extends Problem {
   }
 
   /**
-   * Evaluates a solutiontype
+   * Evaluates a solution
    *
-   * @param solution The solutiontype to evaluate
+   * @param solution The solution to evaluate
    * @throws org.uma.jmetal.util.JMetalException
    */
   public void evaluate(Solution solution) throws JMetalException {
@@ -101,12 +98,7 @@ public class Water extends Problem {
     solution.setObjective(4, f[4]);
   }
 
-  /**
-   * Evaluates the constraint overhead of a solutiontype
-   *
-   * @param solution The solutiontype
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Evaluate() method */
   public void evaluateConstraints(Solution solution) throws JMetalException {
     double[] constraint = new double[7]; // 7 constraints
     double[] x = new double[3]; // 3 objectives

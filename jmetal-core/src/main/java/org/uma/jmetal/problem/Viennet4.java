@@ -31,17 +31,13 @@ import org.uma.jmetal.util.JMetalException;
  * Class representing problem Viennet4
  */
 public class Viennet4 extends Problem {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = -8264999884031176005L;
 
   /**
    * Constructor.
    * Creates a default instance of the Viennet4 problem.
    *
-   * @param solutionType The solutiontype type must "Real" or "BinaryReal".
+   * @param solutionType The solution type must "Real" or "BinaryReal".
    */
   public Viennet4(String solutionType) throws JMetalException {
     numberOfVariables = 2;
@@ -61,15 +57,15 @@ public class Viennet4 extends Problem {
     } else if (solutionType.compareTo("Real") == 0) {
       this.solutionType = new RealSolutionType(this);
     } else {
-      throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
+      throw new JMetalException("Error: solution type " + solutionType + " invalid");
     }
   }
 
 
   /**
-   * Evaluates a solutiontype
+   * Evaluates a solution
    *
-   * @param solution The solutiontype to evaluate
+   * @param solution The solution to evaluate
    * @throws org.uma.jmetal.util.JMetalException
    */
   public void evaluate(Solution solution) throws JMetalException {
@@ -96,12 +92,7 @@ public class Viennet4 extends Problem {
   }
 
 
-  /**
-   * Evaluates the constraint overhead of a solutiontype
-   *
-   * @param solution The solutiontype
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Evaluate() method */
   public void evaluateConstraints(Solution solution) throws JMetalException {
     double[] constraint = new double[numberOfConstraints];
 

@@ -32,26 +32,23 @@ import org.uma.jmetal.util.JMetalException;
  * Class representing problem DTLZ1
  */
 public class DTLZ1 extends Problem {
-  /**
-   *
-   */
   private static final long serialVersionUID = -3716448671122961793L;
 
   /**
    * Creates a default DTLZ1 problem (7 variables and 3 objectives)
    *
-   * @param solutionType The solutiontype type must "Real" or "BinaryReal".
+   * @param solutionType The solution type must "Real" or "BinaryReal".
    */
   public DTLZ1(String solutionType) throws ClassNotFoundException, JMetalException {
     this(solutionType, 7, 3);
-  } // DTLZ1   
+  }
 
   /**
    * Creates a DTLZ1 problem instance
    *
    * @param numberOfVariables  Number of variables
    * @param numberOfObjectives Number of objective functions
-   * @param solutionType       The solutiontype type must "Real" or "BinaryReal".
+   * @param solutionType       The solution type must "Real" or "BinaryReal".
    */
   public DTLZ1(String solutionType,
     Integer numberOfVariables,
@@ -73,16 +70,11 @@ public class DTLZ1 extends Problem {
     } else if (solutionType.compareTo("Real") == 0) {
       this.solutionType = new RealSolutionType(this);
     } else {
-      throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
+      throw new JMetalException("Error: solution type " + solutionType + " invalid");
     }
   }
 
-  /**
-   * Evaluates a solutiontype
-   *
-   * @param solution The solutiontype to evaluate
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Evaluate() method */
   public void evaluate(Solution solution) throws JMetalException {
     Variable[] gen = solution.getDecisionVariables();
 

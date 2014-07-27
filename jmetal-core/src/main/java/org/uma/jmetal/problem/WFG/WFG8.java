@@ -32,10 +32,6 @@ import org.uma.jmetal.util.JMetalException;
  * and 2 objectives
  */
 public class WFG8 extends WFG {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = 8622398802349268980L;
 
   /**
@@ -74,12 +70,7 @@ public class WFG8 extends WFG {
     }
   }
 
-  /**
-   * Evaluates a solutiontype
-   *
-   * @param z The solutiontype to evaluate
-   * @return double [] with the evaluation results
-   */
+  /** Evaluate() method */
   public float[] evaluate(float[] z) {
     float[] y;
 

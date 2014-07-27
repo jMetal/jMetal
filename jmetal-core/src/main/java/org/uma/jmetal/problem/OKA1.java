@@ -32,17 +32,13 @@ import org.uma.jmetal.util.JMetalException;
  * Class representing problem OKA1
  */
 public class OKA1 extends Problem {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = 7565696056543602357L;
 
   /**
    * Constructor.
    * Creates a new instance of the OKA2 problem.
    *
-   * @param solutionType The solutiontype type must "Real" or "BinaryReal".
+   * @param solutionType The solution type type must "Real" or "BinaryReal".
    */
   public OKA1(String solutionType) throws JMetalException {
     numberOfVariables = 2;
@@ -67,12 +63,7 @@ public class OKA1 extends Problem {
     }
   }
 
-  /**
-   * Evaluates a solutiontype
-   *
-   * @param solution The solutiontype to evaluate
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Evaluate() method */
   public void evaluate(Solution solution) throws JMetalException {
     Variable[] decisionVariables = solution.getDecisionVariables();
 

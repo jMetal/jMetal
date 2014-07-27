@@ -36,7 +36,7 @@ public class ConstrEx extends Problem {
    * Constructor
    * Creates a default instance of the Constr_Ex problem
    *
-   * @param solutionType The solutiontype type must "Real" or "BinaryReal".
+   * @param solutionType The solution type type must "Real" or "BinaryReal".
    */
   public ConstrEx(String solutionType) throws JMetalException {
     numberOfVariables = 2;
@@ -60,12 +60,7 @@ public class ConstrEx extends Problem {
     }
   }
 
-  /**
-   * Evaluates a solutiontype
-   *
-   * @param solution The solutiontype to evaluate
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Evaluate() method */
   public void evaluate(Solution solution) throws JMetalException {
     Variable[] variable = solution.getDecisionVariables();
 

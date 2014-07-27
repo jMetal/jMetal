@@ -28,10 +28,6 @@ import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
 import org.uma.jmetal.util.JMetalException;
 
 public class Rosenbrock extends Problem {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = -4545223899906374214L;
 
   /**
@@ -39,7 +35,7 @@ public class Rosenbrock extends Problem {
    * Creates a default instance of the Rosenbrock problem
    *
    * @param numberOfVariables Number of variables of the problem
-   * @param solutionType      The solutiontype type must "Real" or "BinaryReal".
+   * @param solutionType      The solution type must "Real" or "BinaryReal".
    */
   public Rosenbrock(String solutionType, Integer numberOfVariables)
     throws ClassNotFoundException, JMetalException {
@@ -64,12 +60,7 @@ public class Rosenbrock extends Problem {
     }
   }
 
-  /**
-   * Evaluates a solutiontype
-   *
-   * @param solution The solutiontype to evaluate
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Evaluate() method */
   public void evaluate(Solution solution) throws JMetalException {
     Variable[] decisionVariables = solution.getDecisionVariables();
 
