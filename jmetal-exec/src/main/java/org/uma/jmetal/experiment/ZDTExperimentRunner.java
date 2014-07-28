@@ -28,7 +28,7 @@ import java.io.IOException;
 /**
  * This class defines a jMetal experiment with the following features
  * - Algorithms: NSGA-II, SMPSO, MOCell, GDE3
- * - The ZDT suite is solved
+ * - The zdt suite is solved
  * - The reference Pareto fronts are given
  */
 public class ZDTExperimentRunner {

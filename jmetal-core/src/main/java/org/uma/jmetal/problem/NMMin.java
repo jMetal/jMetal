@@ -41,9 +41,9 @@ public class NMMin extends Problem {
   }
 
   /** Constructor */
-  public NMMin(String solutionType, int numberOfVariables, int N, int M, int lowerBound, int upperBound) throws JMetalException {
-    valueN = N ;
-    valueM = M ;
+  public NMMin(String solutionType, int numberOfVariables, int n, int m, int lowerBound, int upperBound) throws JMetalException {
+    valueN = n ;
+    valueM = m ;
     this.numberOfVariables = numberOfVariables;
     numberOfObjectives = 2;
     numberOfConstraints = 0;

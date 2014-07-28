@@ -19,10 +19,10 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.problem.WFG;
+package org.uma.jmetal.problem.wfg;
 
 /**
- * Class implementing shape functions for WFG benchmark
+ * Class implementing shape functions for wfg benchmark
  * Reference: Simon Huband, Luigi Barone, Lyndon While, Phil Hingston
  * A Scalable Multi-objective Test Problem Toolkit.
  * Evolutionary Multi-Criterion Optimization:

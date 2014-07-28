@@ -31,18 +31,12 @@ import org.uma.jmetal.encoding.variable.Int;
  */
 public class IntSolutionType extends SolutionType implements IntSolutionTypeTemplate {
 
-  /**
-   * Constructor
-   *
-   * @param problem Problem to solve
-   */
+  /** Constructor */
   public IntSolutionType(Problem problem) {
     super(problem);
   }
 
-  /**
-   * Creates the variables of the solutiontype
-   */
+  /** Creates the variables of the solution type */
   public Variable[] createVariables() {
     Variable[] variables = new Variable[getProblem().getNumberOfVariables()];
 

@@ -28,7 +28,7 @@ import java.io.IOException;
 /**
  * The class defines a jMetal experiment with the following features
  * - Algorithms: four variants of NSGA-II (each of them having a different crossover probability
- * - The ZDT suite is solved
+ * - The zdt suite is solved
  * - The reference Pareto fronts are unknown and have to be computed
  * - The algorithm variant settings are read from properties files by using this method in the
  *   AlgorithmExecution object:

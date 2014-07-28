@@ -34,18 +34,12 @@ import org.uma.jmetal.util.JMetalException;
  */
 public class BinaryRealSolutionType extends SolutionType implements RealSolutionTypeTemplate {
 
-  /**
-   * Constructor
-   *
-   * @param problem Problem to solve
-   */
+  /** Constructor */
   public BinaryRealSolutionType(Problem problem) {
     super(problem);
   }
 
-  /**
-   * Creates the variables of the solutiontype
-   */
+  /** Creates the variables of the solution type */
   public Variable[] createVariables() {
     Variable[] variables = new Variable[getProblem().getNumberOfVariables()];
 

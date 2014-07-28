@@ -19,12 +19,12 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.problem.LZ09;
+package org.uma.jmetal.problem.lz09;
 
 import java.util.Vector;
 
 /**
- * Base class to implement the problem of the LZ09 benchmark, which is
+ * Base class to implement the problem of the lz09 benchmark, which is
  * defined in:
  * H. Li and Q. Zhang. Multiobjective optimization problem with complicated
  * pareto sets, MOEA/D and NSGA-II. IEEE Transactions on Evolutionary

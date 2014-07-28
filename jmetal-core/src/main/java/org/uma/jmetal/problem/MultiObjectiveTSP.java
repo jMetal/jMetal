@@ -35,7 +35,7 @@ import java.util.logging.Level;
  * This class is tested with two objectives and the KROA150 and KROB150
  * instances of TSPLIB
  */
-public class mTSP extends Problem {
+public class MultiObjectiveTSP extends Problem {
   private static final long serialVersionUID = 3869748855198680149L;
 
   public int numberOfCities;
@@ -43,11 +43,11 @@ public class mTSP extends Problem {
   public double[][] costMatrix;
 
   /**
-   * Creates a new mTSP problem instance. It accepts data files from TSPLIB
+   * Creates a new multiobjective TSP problem instance. It accepts data files from TSPLIB
    */
-  public mTSP(String solutionType,
-    String file_distances,
-    String file_cost) throws Exception {
+  public MultiObjectiveTSP(String solutionType,
+    String fileDistances,
+    String fileCost) throws Exception {
     numberOfVariables = 1;
     numberOfObjectives = 2;
     numberOfConstraints = 0;
@@ -55,8 +55,8 @@ public class mTSP extends Problem {
 
     length = new int[numberOfVariables];
 
-    distanceMatrix = readProblem(file_distances);
-    costMatrix = readProblem(file_cost);
+    distanceMatrix = readProblem(fileDistances);
+    costMatrix = readProblem(fileCost);
     Configuration.logger.info(""+ numberOfCities);
     length[0] = numberOfCities;
 

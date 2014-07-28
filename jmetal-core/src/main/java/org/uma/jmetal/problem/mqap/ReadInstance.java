@@ -124,7 +124,7 @@ public class ReadInstance {
         line = br.readLine();
       }
 
-      // reading B matrixes (discarding empty lines on the way)
+      // reading B matrices (discarding empty lines on the way)
       matricesB = new int[objectives][facilities][facilities];
       for (int k = 0; k < objectives; k++) {
         while (line.isEmpty()) {
@@ -139,12 +139,10 @@ public class ReadInstance {
         }
       }
 
-      // comprobation
       for (int i = 0; i < facilities; i++) {
         for (int j = 0; j < facilities; j++) {
         }
       }
-      // at this point the instances has been read
       br.close();
     } catch (FileNotFoundException ex) {
       Logger.getLogger(ReadInstance.class.getName())
@@ -221,11 +219,11 @@ public class ReadInstance {
     }
   }
 
-  int [][] get_a_Matrix() {
+  int [][] getMatrixA() {
     return matrixA;
   }
 
-  int [][][] get_b_Matrixs() {
+  int [][][] getMatricesB() {
     return matricesB;
   }
 

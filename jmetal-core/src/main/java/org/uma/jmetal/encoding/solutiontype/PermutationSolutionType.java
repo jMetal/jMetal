@@ -32,18 +32,12 @@ import org.uma.jmetal.encoding.variable.Permutation;
  */
 public class PermutationSolutionType extends SolutionType {
 
-  /**
-   * Constructor
-   *
-   * @param problem Problem to solve
-   */
+  /** Constructor */
   public PermutationSolutionType(Problem problem) {
     super(problem);
   }
 
-  /**
-   * Creates the variables of the solutiontype
-   */
+  /** Creates the variables of the solution type */
   public Variable[] createVariables() {
     Variable[] variables = new Variable[getProblem().getNumberOfVariables()];
 

@@ -34,23 +34,14 @@ import java.util.logging.Level;
  * This class implements the CMA-ES algorithm
  */
 public class CMAES extends Algorithm {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = -1341901419653809198L;
 
-  /**
-   * Stores the population size
-   */
   private int populationSize;
 
   private int counteval;
   private int maxEvaluations;
 
   private double sigma;
-
-  //private double axisratio;
 
   private double[] xmean;
   private double[] xold;
@@ -91,13 +82,11 @@ public class CMAES extends Algorithm {
 
   /**
    * Constructor
-   *
-   * @param problem Problem to solve
    */
   public CMAES() {
     long seed = System.currentTimeMillis();
     rand = new Random(seed);
-  } // Constructor
+  }
 
   private void init() throws ClassNotFoundException {
 
@@ -114,7 +103,6 @@ public class CMAES extends Algorithm {
 
     // coordinate wise standard deviation (step size)
     sigma = 0.3;
-    //sigma = 1;
 
     /* Strategy parameter setting: Selection */
 
@@ -235,15 +223,15 @@ public class CMAES extends Algorithm {
   private SolutionSet genoPhenoTransformation(double[][] popx)
     throws JMetalException, ClassNotFoundException {
 
-    SolutionSet population_ = new SolutionSet(populationSize);
+    SolutionSet population = new SolutionSet(populationSize);
     for (int i = 0; i < populationSize; i++) {
       Solution solution = new Solution(problem_);
       for (int j = 0; j < problem_.getNumberOfVariables(); j++) {
         solution.getDecisionVariables()[j].setValue(popx[i][j]);
       }
-      population_.add(solution);
+      population.add(solution);
     }
-    return population_;
+    return population;
 
   }
 
@@ -282,7 +270,7 @@ public class CMAES extends Algorithm {
     }
     return solution;
 
-  } // genoPhenoTransformation
+  }
 
   private void storeBest(Comparator<Solution> comparator) {
     Solution bestInPopulation = new Solution(population_.best(comparator));
@@ -291,7 +279,7 @@ public class CMAES extends Algorithm {
       bestSolutionEver = bestInPopulation;
     }
 
-  } // storeBest
+  }
 
   private void updateDistribution() throws JMetalException {
 
@@ -300,7 +288,6 @@ public class CMAES extends Algorithm {
 
     double[] arfitness = new double[lambda];
     int[] arindex = new int[lambda];
-
 
     /* Sort by fitness and compute weighted mean into xmean */
 
@@ -387,7 +374,7 @@ public class CMAES extends Algorithm {
 
     /* Decomposition of C into B*diag(D.^2)*B' (diagonalization) */
 
-    if (counteval - eigeneval > lambda / (c1 + cmu) / N / 10) { // to achieve O(N^2)
+    if (counteval - eigeneval > lambda / (c1 + cmu) / N / 10) {
 
       eigeneval = counteval;
 
@@ -403,7 +390,7 @@ public class CMAES extends Algorithm {
       Utils.tred2(N, B, diagD, offdiag);
       Utils.tql2(N, diagD, offdiag, B);
 
-      if (Utils.checkEigenSystem(N, C, diagD, B) > 0) { // for debugging
+      if (Utils.checkEigenSystem(N, C, diagD, B) > 0) {
         counteval = maxEvaluations;
       }
 
@@ -418,7 +405,6 @@ public class CMAES extends Algorithm {
 
       double[][] artmp2 = new double[N][N];
       for (int i = 0; i < N; i++) {
-        //double value = (xmean[i] - xold[i]) / sigma;
         for (int j = 0; j < N; j++) {
           artmp2[i][j] = B[i][j] * (1 / diagD[j]);
         }
@@ -448,12 +434,8 @@ public class CMAES extends Algorithm {
 
     init();
 
-    //  // iteration loop
     while (counteval < maxEvaluations) {
-
-      // --- core iteration step ---
-      population_ = samplePopulation(); // get a new population of solutions
-
+      population_ = samplePopulation();
       for (int i = 0; i < populationSize; i++) {
         if (!isFeasible(population_.get(i))) {
           population_.replace(i, resampleSingle(i));
@@ -461,13 +443,11 @@ public class CMAES extends Algorithm {
         problem_.evaluate(population_.get(i));
 
         counteval += populationSize;
-
       }
 
       storeBest(comparator);
       Configuration.logger.info(counteval + ": " + bestSolutionEver);
       updateDistribution();
-
     }
 
     SolutionSet resultPopulation = new SolutionSet(1);

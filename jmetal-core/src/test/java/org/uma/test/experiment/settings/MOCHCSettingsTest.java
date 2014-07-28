@@ -29,7 +29,7 @@ import org.uma.jmetal.experiment.settings.MOCHCSettings;
 import org.uma.jmetal.metaheuristic.multiobjective.mochc.MOCHC;
 import org.uma.jmetal.operator.crossover.HUXCrossover;
 import org.uma.jmetal.operator.mutation.BitFlipMutation;
-import org.uma.jmetal.problem.ZDT.ZDT5;
+import org.uma.jmetal.problem.zdt.ZDT5;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

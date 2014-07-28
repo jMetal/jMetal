@@ -126,7 +126,8 @@ public class GeneralizedSpread implements QualityIndicator {
     return generalizedSpread(paretoFrontApproximation, paretoTrueFront);
   }
 
-  @Override public String getName() {
+  @Override
+  public String getName() {
     return null;
   }
 }

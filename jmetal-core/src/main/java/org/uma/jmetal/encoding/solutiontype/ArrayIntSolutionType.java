@@ -28,23 +28,17 @@ import org.uma.jmetal.core.Variable;
 import org.uma.jmetal.encoding.variable.ArrayInt;
 
 /**
- * Class representing the solutiontype type of solutions composed of an ArrayInt
+ * Class representing the solution type of solutions composed of an ArrayInt
  * encoding.variable
  */
 public class ArrayIntSolutionType extends SolutionType implements IntSolutionTypeTemplate {
 
-  /**
-   * Constructor
-   *
-   * @param problem Problem being solved
-   */
+  /** Constructor */
   public ArrayIntSolutionType(Problem problem) {
     super(problem);
   }
 
-  /**
-   * Creates the variables of the solutiontype
-   */
+  /** Creates the variables of the solution type */
   public Variable[] createVariables() {
     Variable[] variables = new Variable[1];
 

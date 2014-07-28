@@ -29,7 +29,7 @@ import org.uma.jmetal.operator.crossover.CrossoverFactory;
 import org.uma.jmetal.operator.localSearch.MutationLocalSearch;
 import org.uma.jmetal.operator.mutation.MutationFactory;
 import org.uma.jmetal.problem.ProblemFactory;
-import org.uma.jmetal.problem.ZDT.ZDT4;
+import org.uma.jmetal.problem.zdt.ZDT4;
 import org.uma.jmetal.qualityIndicator.QualityIndicatorGetter;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;

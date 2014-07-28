@@ -29,7 +29,7 @@ import org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII;
 import org.uma.jmetal.operator.crossover.CrossoverFactory;
 import org.uma.jmetal.operator.mutation.MutationFactory;
 import org.uma.jmetal.operator.selection.SelectionFactory;
-import org.uma.jmetal.problem.mTSP;
+import org.uma.jmetal.problem.MultiObjectiveTSP;
 import org.uma.jmetal.qualityIndicator.QualityIndicatorGetter;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.evaluator.SequentialSolutionSetEvaluator;
@@ -70,7 +70,7 @@ public class NSGAIImTSPRunner {
     logger_.addHandler(fileHandler_);
 
     indicators = null;
-    problem = new mTSP("Permutation", "kroA100.tsp", "kroB100.tsp");
+    problem = new MultiObjectiveTSP("Permutation", "kroA100.tsp", "kroB100.tsp");
 
     SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator();
     //SolutionSetEvaluator executor = new MultithreadedSolutionSetEvaluator(4, problem) ;

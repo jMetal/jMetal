@@ -201,36 +201,36 @@ public class R2 implements QualityIndicator {
    * Returns the element contributing the most to the R2 indicator
    */
   public int getBest(double[][] approximation, double[][] paretoFront) {
-    int index_best = -1;
+    int indexBest = -1;
     double value = Double.NEGATIVE_INFINITY;
 
     for (int i = 0; i < approximation.length; i++) {
       double aux = this.R2Without(approximation, paretoFront, i);
       if (aux > value) {
-        index_best = i;
+        indexBest = i;
         value = aux;
       }
     }
 
-    return index_best;
+    return indexBest;
   }
 
   /**
    * Returns the element contributing the less to the R2
    */
   public int getWorst(double[][] approximation, double[][] paretoFront) {
-    int index_worst = -1;
+    int indexWorst = -1;
     double value = Double.POSITIVE_INFINITY;
 
     for (int i = 0; i < approximation.length; i++) {
       double aux = this.R2Without(approximation, paretoFront, i);
       if (aux < value) {
-        index_worst = i;
+        indexWorst = i;
         value = aux;
       }
     }
 
-    return index_worst;
+    return indexWorst;
   }
 
   /**
@@ -257,12 +257,12 @@ public class R2 implements QualityIndicator {
    * Returns the element contributing the most to the R2 indicator
    */
   public int[] getNBest(double[][] approximation, double[][] paretoFront, int N) {
-    int[] index_bests = new int[approximation.length];
+    int[] indexBests = new int[approximation.length];
     double[] values = new double[approximation.length];
 
     for (int i = 0; i < approximation.length; i++) {
       values[i] = this.R2Without(approximation, paretoFront, i);
-      index_bests[i] = i;
+      indexBests[i] = i;
     }
 
     // sorting the values and index_bests
@@ -273,15 +273,15 @@ public class R2 implements QualityIndicator {
           values[j] = values[i];
           values[i] = aux;
 
-          int aux_index = index_bests[j];
-          index_bests[j] = index_bests[i];
-          index_bests[i] = aux_index;
+          int aux_index = indexBests[j];
+          indexBests[j] = indexBests[i];
+          indexBests[i] = aux_index;
         }
       }
     }
 
     int[] res = new int[N];
-    System.arraycopy(index_bests, 0, res, 0, N);
+    System.arraycopy(indexBests, 0, res, 0, N);
 
     return res;
   }
@@ -289,11 +289,11 @@ public class R2 implements QualityIndicator {
   /**
    * Returns the indexes of the N best solutions according to this indicator
    */
-  public int[] getNBest(SolutionSet set, int N) {
+  public int[] getNBest(SolutionSet set, int n) {
     double[][] approximationFront = set.writeObjectivesToMatrix();
     double[][] trueFront = set.writeObjectivesToMatrix();
 
-    return this.getNBest(approximationFront, trueFront, N);
+    return this.getNBest(approximationFront, trueFront, n);
   }
 
   /**

@@ -106,20 +106,19 @@ public class FriedmanTableGeneration implements ExperimentOutput {
     boolean found;
     int ig;
     double sum;
-    boolean visto[];
+    boolean alreadyExplored[];
     Vector pendingToVisit;
-    double Rj[];
+    double rj[];
     double friedman;
-    double sumatoria = 0;
-    double termino1, termino2;
+    double term1, term2;
 
     String indicator = indic;
 
 
     String outFile = outputDirectory + "/FriedmanTest" + indicator + ".tex";
 
-    String Output = "";
-    Output = Output + ("\\documentclass{article}\n" +
+    String output = "";
+    output = output + ("\\documentclass{article}\n" +
       "\\usepackage{graphicx}\n" +
       "\\title{Results}\n" +
       "\\author{}\n" +
@@ -222,21 +221,21 @@ public class FriedmanTableGeneration implements ExperimentOutput {
 
     /*In the case of having the same performance, the rankings are equal*/
     for (int i = 0; i < datasets.size(); i++) {
-      visto = new boolean[algorithms.size()];
+      alreadyExplored = new boolean[algorithms.size()];
       pendingToVisit = new Vector();
 
-      Arrays.fill(visto, false);
+      Arrays.fill(alreadyExplored, false);
       for (int j = 0; j < algorithms.size(); j++) {
         pendingToVisit.removeAllElements();
         sum = rank[i][j].index;
-        visto[j] = true;
+        alreadyExplored[j] = true;
         ig = 1;
         for (int k = j + 1; k < algorithms.size(); k++) {
-          if (rank[i][j].value == rank[i][k].value && !visto[k]) {
+          if (rank[i][j].value == rank[i][k].value && !alreadyExplored[k]) {
             sum += rank[i][k].index;
             ig++;
             pendingToVisit.add(new Integer(k));
-            visto[k] = true;
+            alreadyExplored[k] = true;
           }
         }
         sum /= (double) ig;
@@ -248,16 +247,16 @@ public class FriedmanTableGeneration implements ExperimentOutput {
     }
 
     /*compute the average ranking for each algorithm*/
-    Rj = new double[algorithms.size()];
+    rj = new double[algorithms.size()];
     for (int i = 0; i < algorithms.size(); i++) {
-      Rj[i] = 0;
+      rj[i] = 0;
       for (int j = 0; j < datasets.size(); j++) {
-        Rj[i] += rank[j][i].index / ((double) datasets.size());
+        rj[i] += rank[j][i].index / ((double) datasets.size());
       }
     }
 
     /*Print the average ranking per algorithm*/
-    Output = Output + "\n" + ("\\begin{table}[!htp]\n" +
+    output = output + "\n" + ("\\begin{table}[!htp]\n" +
       "\\centering\n" +
       "\\caption{Average Rankings of the algorithms\n}" +
       // for "+ experiment.problemList[prob] +" problem\n}" +
@@ -265,30 +264,31 @@ public class FriedmanTableGeneration implements ExperimentOutput {
       "Algorithm&Ranking\\\\\n\\hline");
 
     for (int i = 0; i < algorithms.size(); i++) {
-      Output = Output + "\n" + (String) algorithms.elementAt(i) + "&" + Rj[i] + "\\\\";
+      output = output + "\n" + (String) algorithms.elementAt(i) + "&" + rj[i] + "\\\\";
     }
 
-    Output = Output + "\n" +
+    output = output + "\n" +
       "\\end{tabular}\n" +
       "\\end{table}";
 
     /*Compute the Friedman statistic*/
-    termino1 =
+    term1 =
       (12 * (double) datasets.size()) / ((double) algorithms.size() * ((double) algorithms.size()
         + 1));
-    termino2 =
+    term2 =
       (double) algorithms.size() * ((double) algorithms.size() + 1) * ((double) algorithms.size()
         + 1) / (4.0);
+    sum = 0 ;
     for (int i = 0; i < algorithms.size(); i++) {
-      sumatoria += Rj[i] * Rj[i];
+      sum += rj[i] * rj[i];
     }
-    friedman = (sumatoria - termino2) * termino1;
+    friedman = (sum - term2) * term1;
 
-    Output = Output + "\n"
+    output = output + "\n"
       + "\n\nFriedman statistic considering reduction performance (distributed according to chi-square with "
       + (algorithms.size() - 1) + " degrees of freedom: " + friedman + ").\n\n";
 
-    Output = Output + "\n" + "\\end{document}";
+    output = output + "\n" + "\\end{document}";
     try {
       File latexOutput;
       latexOutput = new File(outputDirectory);
@@ -298,7 +298,7 @@ public class FriedmanTableGeneration implements ExperimentOutput {
       FileOutputStream f = new FileOutputStream(outFile);
       DataOutputStream fis = new DataOutputStream((OutputStream) f);
 
-      fis.writeBytes(Output);
+      fis.writeBytes(output);
 
       fis.close();
       f.close();

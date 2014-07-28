@@ -29,7 +29,7 @@ import org.uma.jmetal.encoding.variable.ArrayReal;
 import org.uma.jmetal.encoding.variable.Binary;
 
 /**
- * Class representing the solutiontype type of solutions composed of array of reals
+ * Class representing the solution type of solutions composed of array of reals
  * and a binary string.
  * ASSUMPTIONs:
  * - The numberOfVariables field in class Problem must contain the number
@@ -40,8 +40,8 @@ import org.uma.jmetal.encoding.variable.Binary;
  */
 public class ArrayRealAndBinarySolutionType extends SolutionType implements RealSolutionTypeTemplate {
 
-  private final int binaryStringLength_;
-  private final int numberOfRealVariables_;
+  private final int binaryStringLength;
+  private final int numberOfRealVariables;
 
   /**
    * Constructor
@@ -54,20 +54,16 @@ public class ArrayRealAndBinarySolutionType extends SolutionType implements Real
     int realVariables,
     int binaryStringLength) {
     super(problem);
-    binaryStringLength_ = binaryStringLength;
-    numberOfRealVariables_ = realVariables;
-  } // Constructor
+    this.binaryStringLength = binaryStringLength;
+    numberOfRealVariables = realVariables;
+  }
 
-  /**
-   * Creates the variables of the solutiontype
-   *
-   * @throws ClassNotFoundException
-   */
+  /** Creates the variables of the solution type */
   public Variable[] createVariables() throws ClassNotFoundException {
     Variable[] variables = new Variable[2];
 
-    variables[0] = new ArrayReal(numberOfRealVariables_, getProblem());
-    variables[1] = new Binary(binaryStringLength_);
+    variables[0] = new ArrayReal(numberOfRealVariables, getProblem());
+    variables[1] = new Binary(binaryStringLength);
     return variables;
   }
 
@@ -81,8 +77,8 @@ public class ArrayRealAndBinarySolutionType extends SolutionType implements Real
     ((ArrayReal) (solution.getDecisionVariables()[0])).getArray()[index] = value ;
   }
 
-  @Override public int getNumberOfRealVariables(Solution solution_) {
-    return numberOfRealVariables_ ;
+  @Override public int getNumberOfRealVariables(Solution solution) {
+    return numberOfRealVariables;
   }
 
   @Override public double getRealUpperBound(Solution solution, int index) {

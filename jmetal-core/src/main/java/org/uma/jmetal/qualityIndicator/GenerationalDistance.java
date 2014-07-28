@@ -98,7 +98,8 @@ public class GenerationalDistance implements QualityIndicator {
     return generationalDistance(paretoFrontApproximation, paretoTrueFront) ;
   }
 
-  @Override public String getName() {
+  @Override
+  public String getName() {
     return NAME;
   }
 }

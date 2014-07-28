@@ -49,11 +49,7 @@ public class IntRealSolutionType extends SolutionType implements IntSolutionType
     numberOfRealVariables_ = realVariables;
   }
 
-  /**
-   * Creates the variables of the solutiontype
-   *
-   * @throws ClassNotFoundException
-   */
+  /** Creates the variables of the solution type */
   public Variable[] createVariables() throws ClassNotFoundException {
     Variable[] variables = new Variable[getProblem().getNumberOfVariables()];
 

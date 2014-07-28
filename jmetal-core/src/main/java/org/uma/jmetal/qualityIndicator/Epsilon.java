@@ -21,7 +21,6 @@
 
 package org.uma.jmetal.qualityIndicator;
 
-import org.uma.jmetal.qualityIndicator.util.MetricsUtil;
 import org.uma.jmetal.util.JMetalException;
 
 /**
@@ -35,42 +34,15 @@ import org.uma.jmetal.util.JMetalException;
  */
 
 public class Epsilon implements QualityIndicator {
-  //public static enum Type {ADDITIVE, MULTIPLICATIVE} ;
-
   private static String NAME ;
-  private MetricsUtil utils = new MetricsUtil();
-
-  /*
-   * method = 0 means apply additive epsilon and method = 1 means
-   * multiplicative epsilon. The implementation assumes always minimization of objectives
-   */
-  //Type method;
 
   /** Constructor */
   public Epsilon() {
-    //method = Type.ADDITIVE ;
     NAME = "EPSILON" ;
   }
 
-  /** Constructor */
-/*
-  public Epsilon(Type method) {
-    // TODO: check paramter values
-    //if ((method != 0) && (method != 1)) {
-    //  throw new JMetalException("Invalid Epsilon variant: must be 0 (additive) or 1" +
-    //    "multiplicative. Received: " + method) ;
-    //}
-    this.method = method ;
-    if (method == Type.ADDITIVE) {
-      NAME = "EPSILON" ;
-    } else {
-      NAME = "MEPSILON" ;
-    }
-  }
-*/
-
   /**
-   * Returns the epsilon indicator.
+   * Returns the value of the epsilon indicator.
    *
    * @param front Solution front
    * @param referenceFront True Pareto front

@@ -47,20 +47,20 @@ public class ProblemFactory {
     String base = "org.uma.jmetal.problem.";
     if ("TSP".equals(name) || "OneMax".equals(name)) {
       base += "singleobjective.";
-    } else if ("mQAP".equals(name)) {
+    } else if ("MultiObjectiveQAP".equals(name)) {
       base += "mqap.";
     } else if ("Qom".equalsIgnoreCase(name)) {
-    } else if ("DTLZ".equalsIgnoreCase(name.substring(0, name.length() - 1))) {
+    } else if ("dtlz".equalsIgnoreCase(name.substring(0, name.length() - 1))) {
       base += "dtlz.";
-    } else if ("WFG".equalsIgnoreCase(name.substring(0, name.length() - 1))) {
+    } else if ("wfg".equalsIgnoreCase(name.substring(0, name.length() - 1))) {
       base += "wfg.";
     } else if ("UF".equalsIgnoreCase(name.substring(0, name.length() - 1))) {
       base += "cec2009competition.";
     } else if ("UF".equalsIgnoreCase(name.substring(0, name.length() - 2))) {
       base += "cec2009competition.";
-    } else if ("ZDT".equalsIgnoreCase(name.substring(0, name.length() - 1))) {
+    } else if ("zdt".equalsIgnoreCase(name.substring(0, name.length() - 1))) {
       base += "zdt.";
-    } else if ("LZ09".equalsIgnoreCase(name.substring(0, name.length() - 3))) {
+    } else if ("lz09".equalsIgnoreCase(name.substring(0, name.length() - 3))) {
       base += "lz09.";
     }
 

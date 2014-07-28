@@ -33,18 +33,12 @@ import org.uma.jmetal.encoding.variable.ArrayReal;
  */
 public class ArrayRealSolutionType extends SolutionType implements RealSolutionTypeTemplate {
 
-  /**
-   * Constructor
-   *
-   * @param problem Problem to solve
-   */
+  /** Constructor */
   public ArrayRealSolutionType(Problem problem) {
     super(problem);
   }
 
-  /**
-   * Creates the variables of the solutiontype
-   */
+  /** Creates the variables of the solution */
   public Variable[] createVariables() {
     Variable[] variables = new Variable[1];
 

@@ -29,7 +29,7 @@ import org.uma.jmetal.metaheuristic.multiobjective.densea.DENSEA;
 import org.uma.jmetal.operator.crossover.CrossoverFactory;
 import org.uma.jmetal.operator.mutation.MutationFactory;
 import org.uma.jmetal.operator.selection.BinaryTournament;
-import org.uma.jmetal.problem.ZDT.ZDT5;
+import org.uma.jmetal.problem.zdt.ZDT5;
 import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 

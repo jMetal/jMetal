@@ -30,7 +30,7 @@ import org.uma.jmetal.util.comparator.EqualSolutions;
 import java.util.Comparator;
 
 /**
- * This class implements a bounded archive based on the Hypervolume quality indicator (WFG implementation)
+ * This class implements a bounded archive based on the Hypervolume quality indicator (wfg implementation)
  */
 public class WFGHypervolumeArchive extends Archive {
   private static final long serialVersionUID = 2607976470731454148L;

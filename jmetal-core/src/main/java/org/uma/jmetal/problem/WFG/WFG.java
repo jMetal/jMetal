@@ -19,7 +19,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.problem.WFG;
+package org.uma.jmetal.problem.wfg;
 
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
@@ -29,7 +29,7 @@ import org.uma.jmetal.util.JMetalException;
 import java.util.Random;
 
 /**
- * Implements a reference abstract class for all WFG org.uma.test problem
+ * Implements a reference abstract class for all wfg org.uma.test problem
  * Reference: Simon Huband, Luigi Barone, Lyndon While, Phil Hingston
  * A Scalable Multi-objective Test Problem Toolkit.
  * Evolutionary Multi-Criterion Optimization:
@@ -54,7 +54,7 @@ public abstract class WFG extends Problem {
 
   /**
    * Constructor
-   * Creates a WFG problem
+   * Creates a wfg problem
    *
    * @param k            position-related parameters
    * @param l            distance-related parameters
@@ -86,7 +86,7 @@ public abstract class WFG extends Problem {
   }
 
   /**
-   * Gets the x vector (consulte WFG tooltik reference)
+   * Gets the x vector (consulte wfg tooltik reference)
    */
   public float[] calculate_x(float[] t) {
     float[] x = new float[M_];
@@ -101,7 +101,7 @@ public abstract class WFG extends Problem {
   }
 
   /**
-   * Normalizes a vector (consulte WFG toolkit reference)
+   * Normalizes a vector (consulte wfg toolkit reference)
    */
   public float[] normalise(float[] z) {
     float[] result = new float[z.length];

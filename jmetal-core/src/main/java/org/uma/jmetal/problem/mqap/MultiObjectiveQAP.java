@@ -33,20 +33,20 @@ import org.uma.jmetal.util.JMetalException;
  *          Please notice that this class is also valid for the case m = 1 (mono-objective
  *          version of the problem)
  */
-public class mQAP extends Problem {
+public class MultiObjectiveQAP extends Problem {
   private static final long serialVersionUID = 5585099487667493237L;
 
   int[][] matrixA;
   int[][][] matricesB;
 
-  public mQAP(String solutionType) throws JMetalException {
+  public MultiObjectiveQAP(String solutionType) throws JMetalException {
     this(solutionType, "KC10-2fl-2rl.dat");
   }
 
   /**
    * Creates a new instance of problem mQAP.
    */
-  public mQAP(String solutionType, String fileName) throws JMetalException {
+  public MultiObjectiveQAP(String solutionType, String fileName) throws JMetalException {
 
     ReadInstance ri = new ReadInstance(fileName);
     ri.loadInstance();
@@ -54,8 +54,8 @@ public class mQAP extends Problem {
     numberOfObjectives = ri.getNumberOfObjectives();
     numberOfConstraints = 0;
     problemName = "mQAP";
-    matrixA = ri.get_a_Matrix();
-    matricesB = ri.get_b_Matrixs();
+    matrixA = ri.getMatrixA();
+    matricesB = ri.getMatricesB();
 
     upperLimit = new double[numberOfVariables];
     lowerLimit = new double[numberOfVariables];

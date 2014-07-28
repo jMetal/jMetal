@@ -40,7 +40,7 @@ public class Poloni extends Problem {
    * Constructor.
    * Creates a default instance of the Poloni problem
    *
-   * @param solutionType The solutiontype type must "Real" or "BinaryReal".
+   * @param solutionType The solution type must "Real" or "BinaryReal".
    */
   public Poloni(String solutionType) throws JMetalException {
     numberOfVariables = 2;
@@ -66,9 +66,9 @@ public class Poloni extends Problem {
 
   /** Evaluate() method */
   public void evaluate(Solution solution) throws JMetalException {
-    final double A1 = 0.5 * Math.sin(1.0) - 2 * Math.cos(1.0) +
+    final double a1 = 0.5 * Math.sin(1.0) - 2 * Math.cos(1.0) +
       Math.sin(2.0) - 1.5 * Math.cos(2.0); //!< Constant A1
-    final double A2 = 1.5 * Math.sin(1.0) - Math.cos(1.0) +
+    final double a2 = 1.5 * Math.sin(1.0) - Math.cos(1.0) +
       2 * Math.sin(2.0) - 0.5 * Math.cos(2.0); //!< Constant A2
 
     Variable[] decisionVariables = solution.getDecisionVariables();
@@ -79,12 +79,12 @@ public class Poloni extends Problem {
     x[0] = decisionVariables[0].getValue();
     x[1] = decisionVariables[1].getValue();
 
-    double B1 = 0.5 * Math.sin(x[0]) - 2 * Math.cos(x[0]) + Math.sin(x[1]) -
+    double b1 = 0.5 * Math.sin(x[0]) - 2 * Math.cos(x[0]) + Math.sin(x[1]) -
       1.5 * Math.cos(x[1]);
-    double B2 = 1.5 * Math.sin(x[0]) - Math.cos(x[0]) + 2 * Math.sin(x[1]) -
+    double b2 = 1.5 * Math.sin(x[0]) - Math.cos(x[0]) + 2 * Math.sin(x[1]) -
       0.5 * Math.cos(x[1]);
 
-    f[0] = -(1 + Math.pow(A1 - B1, 2) + Math.pow(A2 - B2, 2));
+    f[0] = -(1 + Math.pow(a1 - b1, 2) + Math.pow(a2 - b2, 2));
     f[1] = -(Math.pow(x[0] + 3, 2) + Math.pow(x[1] + 1, 2));
 
     // The two objectives to be minimized. According to Max(f(x)) = -Min(f(-x)), 
