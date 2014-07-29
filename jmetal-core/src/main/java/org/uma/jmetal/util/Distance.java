@@ -184,7 +184,7 @@ public class Distance {
         }
       }
     } catch (Exception e) {
-      Configuration.logger.log(Level.SEVERE, "Error", e);
+      JMetalLogger.logger.log(Level.SEVERE, "Error", e);
     }
     return index;
   }

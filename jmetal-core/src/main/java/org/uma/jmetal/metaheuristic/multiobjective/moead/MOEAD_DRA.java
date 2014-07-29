@@ -22,7 +22,7 @@
 package org.uma.jmetal.metaheuristic.multiobjective.moead;
 
 import org.uma.jmetal.core.*;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.Distance;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
@@ -201,9 +201,9 @@ public class MOEAD_DRA extends Algorithm {
     int final_size = populationSize_;
     try {
       final_size = (Integer) (getInputParameter("finalSize"));
-      Configuration.logger.info("FINAL SIZE: " + final_size);
+      JMetalLogger.logger.info("FINAL SIZE: " + final_size);
     } catch (Exception e) { // if there is an exception indicate it!
-      Configuration.logger.log(Level.SEVERE,
+      JMetalLogger.logger.log(Level.SEVERE,
         "The final size parameter has been ignored. The number of solutions is " + population_
           .size(),
         e);
@@ -253,7 +253,7 @@ public class MOEAD_DRA extends Algorithm {
         }
         br.close();
       } catch (Exception e) {
-        Configuration.logger.log(
+        JMetalLogger.logger.log(
           Level.SEVERE,
           "initializeUniformWeight: failed when reading for file: " + dataDirectory_ + "/" + dataFileName,
           e);

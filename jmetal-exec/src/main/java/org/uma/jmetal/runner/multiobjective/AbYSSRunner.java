@@ -31,7 +31,6 @@ import org.uma.jmetal.operator.mutation.MutationFactory;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.problem.zdt.ZDT4;
 import org.uma.jmetal.qualityIndicator.QualityIndicatorGetter;
-import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 
 import java.io.IOException;
@@ -49,8 +48,8 @@ import java.util.logging.Logger;
  */
 
 public class AbYSSRunner {
-  public static Logger logger_;      
-  public static FileHandler fileHandler_; 
+  public static Logger LOGGER = Logger.getLogger(AbYSSRunner.class.getName());
+  public static FileHandler fileHandler;
 
   /**
    * @param args Command line arguments.
@@ -72,9 +71,8 @@ public class AbYSSRunner {
     QualityIndicatorGetter indicators;
 
     // Logger object and file to store log messages
-    logger_ = Configuration.logger;
-    fileHandler_ = new FileHandler("AbYSS.log");
-    logger_.addHandler(fileHandler_);
+    fileHandler = new FileHandler("AbYSS.log");
+    LOGGER.addHandler(fileHandler);
 
     indicators = null;
     if (args.length == 1) {
@@ -138,19 +136,19 @@ public class AbYSSRunner {
     estimatedTime = System.currentTimeMillis() - initTime;
 
     // STEP 8. Print the results
-    logger_.info("Total execution time: " + estimatedTime + "ms");
-    logger_.info("Variables values have been writen to file VAR");
+    LOGGER.info("Total execution time: " + estimatedTime + "ms");
+    LOGGER.info("Variables values have been writen to file VAR");
     population.printVariablesToFile("VAR");
-    logger_.info("Objectives values have been writen to file FUN");
+    LOGGER.info("Objectives values have been writen to file FUN");
     population.printObjectivesToFile("FUN");
 
     if (indicators != null) {
-      logger_.info("Quality indicators");
-      logger_.info("Hypervolume: " + indicators.getHypervolume(population));
-      logger_.info("GD         : " + indicators.getGD(population));
-      logger_.info("IGD        : " + indicators.getIGD(population));
-      logger_.info("Spread     : " + indicators.getSpread(population));
-      logger_.info("Epsilon    : " + indicators.getEpsilon(population));
+      LOGGER.info("Quality indicators");
+      LOGGER.info("Hypervolume: " + indicators.getHypervolume(population));
+      LOGGER.info("GD         : " + indicators.getGD(population));
+      LOGGER.info("IGD        : " + indicators.getIGD(population));
+      LOGGER.info("Spread     : " + indicators.getSpread(population));
+      LOGGER.info("Epsilon    : " + indicators.getEpsilon(population));
     }
   }
 }

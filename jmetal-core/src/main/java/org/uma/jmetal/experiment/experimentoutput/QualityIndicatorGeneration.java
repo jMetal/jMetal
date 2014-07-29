@@ -24,7 +24,7 @@ import org.uma.jmetal.experiment.Experiment;
 import org.uma.jmetal.experiment.ExperimentData;
 import org.uma.jmetal.experiment.ExperimentOutput;
 import org.uma.jmetal.qualityIndicator.*;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.FileUtils;
 import org.uma.jmetal.util.JMetalException;
 
@@ -32,7 +32,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Created by Antonio J. Nebro on 20/07/14.
@@ -120,7 +119,7 @@ public class QualityIndicatorGeneration implements ExperimentOutput {
         String problemDirectory = algorithmDirectory + experimentData.getProblemList()[problemIndex];
 
         for (String indicator : qualityIndicatorList) {
-          Configuration.logger.info("Experiment - Quality indicator: " + indicator);
+          JMetalLogger.logger.info("Experiment - Quality indicator: " + indicator);
 
           FileUtils.deleteFile(problemDirectory + "/" + indicator);
 
@@ -170,7 +169,7 @@ public class QualityIndicatorGeneration implements ExperimentOutput {
                 os.write("" + value + "\n");
                 os.close();
               } catch (IOException ex) {
-                Logger.getLogger(Experiment.class.getName()).log(Level.SEVERE, null, ex);
+                java.util.logging.Logger.getLogger(Experiment.class.getName()).log(Level.SEVERE, null, ex);
               }
             }
           }

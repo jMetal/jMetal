@@ -22,7 +22,7 @@
 package org.uma.jmetal.util.comparator;
 
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.Distance;
 import org.uma.jmetal.util.JMetalException;
 
@@ -65,7 +65,7 @@ public class SolutionComparator implements Comparator<Solution> {
         return 0;
       }
     } catch (JMetalException e) {
-      Configuration.logger.log(Level.SEVERE, "SolutionComparator.compare: JMException ", e);
+      JMetalLogger.logger.log(Level.SEVERE, "SolutionComparator.compare: JMException ", e);
     }
 
     return -1;

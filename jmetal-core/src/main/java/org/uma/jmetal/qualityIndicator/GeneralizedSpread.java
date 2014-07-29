@@ -128,6 +128,6 @@ public class GeneralizedSpread implements QualityIndicator {
 
   @Override
   public String getName() {
-    return null;
+    return NAME;
   }
 }

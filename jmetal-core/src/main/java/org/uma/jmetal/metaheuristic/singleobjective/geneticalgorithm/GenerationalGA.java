@@ -24,7 +24,7 @@ import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
@@ -144,7 +144,7 @@ public class GenerationalGA extends Algorithm {
     SolutionSet resultPopulation = new SolutionSet(1);
     resultPopulation.add(population.get(0));
 
-    Configuration.logger.info("Evaluations: " + evaluations);
+    JMetalLogger.logger.info("Evaluations: " + evaluations);
     return resultPopulation;
   } 
 } 

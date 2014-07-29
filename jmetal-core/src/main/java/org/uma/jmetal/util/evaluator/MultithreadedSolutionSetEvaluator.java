@@ -29,27 +29,27 @@ import org.uma.jmetal.util.parallel.MultithreadedEvaluator;
  * Created by Antonio J. Nebro on 30/05/14.
  */
 public class MultithreadedSolutionSetEvaluator implements SolutionSetEvaluator {
-  private MultithreadedEvaluator evaluator_ ;
-  private Problem problem_ ;
+  private MultithreadedEvaluator evaluator;
+  private Problem problem;
 
   public MultithreadedSolutionSetEvaluator(int numberOfThreads, Problem problem) {
-    evaluator_ = new MultithreadedEvaluator(numberOfThreads)  ;
-    problem_ = problem ;
-    evaluator_.start(problem) ;
+    evaluator = new MultithreadedEvaluator(numberOfThreads)  ;
+    this.problem = problem ;
+    evaluator.start(problem) ;
   }
 
   @Override
   public SolutionSet evaluate(SolutionSet solutionSet, Problem problem) {
     for (int i = 0 ; i < solutionSet.size(); i++) {
-      evaluator_.addTask(new Object[] {solutionSet.get(i)});
+      evaluator.addTask(new Object[] {solutionSet.get(i)});
     }
-    evaluator_.parallelExecution() ;
+    evaluator.parallelExecution() ;
 
     return solutionSet;
   }
 
   @Override public void shutdown() {
-    evaluator_.stop();
+    evaluator.stop();
   }
 
 }

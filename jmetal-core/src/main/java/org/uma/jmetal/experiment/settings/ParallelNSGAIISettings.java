@@ -38,13 +38,13 @@ import java.util.Properties;
 
 /** Settings class of algorithm ParallelNSGAIISettings (real encoding) */
 public class ParallelNSGAIISettings extends Settings {
-  public int populationSize;
-  public int maxEvaluations;
-  public double mutationProbability;
-  public double crossoverProbability;
-  public double mutationDistributionIndex;
-  public double crossoverDistributionIndex;
-  public int numberOfThreads;
+  private int populationSize;
+  private int maxEvaluations;
+  private double mutationProbability;
+  private double crossoverProbability;
+  private double mutationDistributionIndex;
+  private double crossoverDistributionIndex;
+  private int numberOfThreads;
 
   /** Constructor */
   public ParallelNSGAIISettings(String problem) throws JMetalException {
@@ -63,7 +63,6 @@ public class ParallelNSGAIISettings extends Settings {
     // 0 - number of available cores
     numberOfThreads = 2;
   }
-
 
   /** Configure ParallelNSGAII with user-defined parameter settings */
   public Algorithm configure() throws JMetalException {

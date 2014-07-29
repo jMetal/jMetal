@@ -24,7 +24,7 @@ package org.uma.jmetal.qualityIndicator;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.qualityIndicator.util.MetricsUtil;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 
@@ -123,7 +123,7 @@ public class SetCoverage {
           "<SolutionFrontFile2> ");
     } else {
        double result = new SetCoverage().setCoverage(args[0], args[1]) ;
-      Configuration.logger.info("Set coverage: " + result) ;
+      JMetalLogger.logger.info("Set coverage: " + result) ;
     }
   }
 }

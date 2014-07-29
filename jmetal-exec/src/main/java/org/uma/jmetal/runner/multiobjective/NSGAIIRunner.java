@@ -32,7 +32,7 @@ import org.uma.jmetal.problem.Kursawe;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.qualityIndicator.QualityIndicatorGetter;
 import org.uma.jmetal.util.AlgorithmRunner;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.evaluator.SequentialSolutionSetEvaluator;
 import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
@@ -41,7 +41,6 @@ import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
 import java.util.logging.FileHandler;
-import java.util.logging.Logger;
 
 /**
  * Class to configure and execute the NSGA-II algorithm.
@@ -55,8 +54,8 @@ import java.util.logging.Logger;
  */
 
 public class NSGAIIRunner {
-  private static Logger logger_;
-  private static FileHandler fileHandler_;
+  private static java.util.logging.Logger logger;
+  private static FileHandler fileHandler;
 
   /**
    * @param args Command line arguments.
@@ -82,9 +81,9 @@ public class NSGAIIRunner {
     QualityIndicatorGetter indicators;
 
     // Logger object and file to store log messages
-    logger_ = Configuration.logger;
-    fileHandler_ = new FileHandler("NSGAII_main.log");
-    logger_.addHandler(fileHandler_);
+    logger = JMetalLogger.logger;
+    fileHandler = new FileHandler("NSGAII_main.log");
+    logger.addHandler(fileHandler);
 
     indicators = null;
     if (args.length == 1) {
@@ -153,17 +152,17 @@ public class NSGAIIRunner {
       .funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
       .print();
 
-    logger_.info("Total execution time: " + computingTime + "ms");
-    logger_.info("Objectives values have been written to file FUN.tsv");
-    logger_.info("Variables values have been written to file VAR.tsv");
+    logger.info("Total execution time: " + computingTime + "ms");
+    logger.info("Objectives values have been written to file FUN.tsv");
+    logger.info("Variables values have been written to file VAR.tsv");
 
     if (indicators != null) {
-      logger_.info("Quality indicators");
-      logger_.info("Hypervolume: " + indicators.getHypervolume(population));
-      logger_.info("GD         : " + indicators.getGD(population));
-      logger_.info("IGD        : " + indicators.getIGD(population));
-      logger_.info("Spread     : " + indicators.getSpread(population));
-      logger_.info("Epsilon    : " + indicators.getEpsilon(population));
+      logger.info("Quality indicators");
+      logger.info("Hypervolume: " + indicators.getHypervolume(population));
+      logger.info("GD         : " + indicators.getGD(population));
+      logger.info("IGD        : " + indicators.getIGD(population));
+      logger.info("Spread     : " + indicators.getSpread(population));
+      logger.info("Epsilon    : " + indicators.getEpsilon(population));
     }
   }
 }

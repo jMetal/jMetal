@@ -21,7 +21,7 @@
 package org.uma.jmetal.metaheuristic.singleobjective.geneticalgorithm;
 
 import org.uma.jmetal.core.*;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.parallel.SynchronousParallelTaskExecutor;
@@ -154,7 +154,7 @@ public class pgGA extends Algorithm {
     SolutionSet resultPopulation = new SolutionSet(1);
     resultPopulation.add(population.get(0));
 
-    Configuration.logger.info("Evaluations: " + evaluations);
+    JMetalLogger.logger.info("Evaluations: " + evaluations);
     return resultPopulation;
   } // execute
 } // pgGA

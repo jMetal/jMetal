@@ -40,14 +40,6 @@ public class SteadyStateNSGAII extends NSGAIITemplate {
 
   public SteadyStateNSGAII(Builder builder) {
     super(builder) ;
-    /*
-    problem = builder.problem ;
-    maxEvaluations = builder.maxEvaluations ;
-    crossoverOperator = builder.crossoverOperator ;
-    mutationOperator = builder.mutationOperator ;
-    selectionOperator = builder.selectionOperator ;
-    populationSize = builder.populationSize ;
-    */
   }
 
 
@@ -59,7 +51,6 @@ public class SteadyStateNSGAII extends NSGAIITemplate {
    * @throws org.uma.jmetal.util.JMetalException
    */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
-    //readParameterSettings();
     createInitialPopulation();
     population = evaluatePopulation(population);
 

@@ -23,7 +23,7 @@ package org.uma.jmetal.operator.mutation;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.encoding.solutiontype.ArrayRealAndBinarySolutionType;
 import org.uma.jmetal.encoding.variable.Binary;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
 import org.uma.jmetal.util.wrapper.XReal;
@@ -65,7 +65,7 @@ public class PolynomialBitFlipMutation extends Mutation {
     Solution solution = (Solution) object;
 
     if (!VALID_TYPES.contains(solution.getType().getClass())) {
-      Configuration.logger.severe("PolynomialBitFlipMutation.execute: the solutiontype " +
+      JMetalLogger.logger.severe("PolynomialBitFlipMutation.execute: the solutiontype " +
         "type " + solution.getType() + " is not allowed with this operator");
 
       Class<String> cls = java.lang.String.class;

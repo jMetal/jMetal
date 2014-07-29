@@ -46,7 +46,7 @@ public class DifferentialEvolutionOffspring extends Offspring {
     } catch (JMetalException ex) {
       Logger.getLogger(DifferentialEvolutionOffspring.class.getName()).log(Level.SEVERE, null, ex);
     }
-    id_ = "DE";
+    id = "DE";
   }
 
   public Solution getOffspring(SolutionSet solutionSet, int index) {
@@ -75,9 +75,6 @@ public class DifferentialEvolutionOffspring extends Offspring {
     return offSpring ;
   }
 
-  /**
-   *
-   */
   public Solution getOffspring(Solution[] parentSolutions, Solution currentSolution) {
     Solution[] parents = new Solution[3];
     Solution offspring = null;
@@ -98,7 +95,7 @@ public class DifferentialEvolutionOffspring extends Offspring {
 
   public String configuration() {
     String result = "-----\n" ;
-    result += "Operator: " + id_ + "\n" ;
+    result += "Operator: " + id + "\n" ;
     result += "CR: " + cr + "\n" ;
     result += "F: " + f;
 

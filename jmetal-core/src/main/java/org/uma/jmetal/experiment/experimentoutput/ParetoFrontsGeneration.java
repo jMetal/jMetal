@@ -23,7 +23,7 @@ package org.uma.jmetal.experiment.experimentoutput;
 import org.uma.jmetal.experiment.ExperimentData;
 import org.uma.jmetal.experiment.ExperimentOutput;
 import org.uma.jmetal.qualityIndicator.util.MetricsUtil;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.NonDominatedSolutionList;
 import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
@@ -94,7 +94,7 @@ public class ParetoFrontsGeneration implements ExperimentOutput {
     try {
       SolutionSetOutput.printObjectivesToFile(solutionSet, referenceParetoFrontFile);
     } catch (IOException e) {
-      Configuration.logger.log(Level.SEVERE, "Error", e);
+      JMetalLogger.logger.log(Level.SEVERE, "Error", e);
     }
   }
 

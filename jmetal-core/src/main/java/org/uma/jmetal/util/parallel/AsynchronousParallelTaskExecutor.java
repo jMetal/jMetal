@@ -21,7 +21,7 @@
 
 package org.uma.jmetal.util.parallel;
 
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 
 import java.util.concurrent.ExecutorService;
 
@@ -30,21 +30,21 @@ import java.util.concurrent.ExecutorService;
  * Abstract class for running tasks in parallel using threads
  */
 abstract public class AsynchronousParallelTaskExecutor {
-  protected int numberOfThreads_;
-  protected ExecutorService executor_;
+  protected int numberOfThreads;
+  protected ExecutorService executor;
 
 
   public AsynchronousParallelTaskExecutor(int threads) {
-    numberOfThreads_ = threads;
+    numberOfThreads = threads;
     if (threads == 0) {
-      numberOfThreads_ = Runtime.getRuntime().availableProcessors();
+      numberOfThreads = Runtime.getRuntime().availableProcessors();
     } else if (threads < 0) {
-      Configuration.logger.severe("SynchronousParallelRunner: the number of threads" +
+      JMetalLogger.logger.severe("SynchronousParallelRunner: the number of threads" +
         " cannot be negative number " + threads);
     } else {
-      numberOfThreads_ = threads;
+      numberOfThreads = threads;
     }
-    Configuration.logger.info("THREADS: " + numberOfThreads_);
+    JMetalLogger.logger.info("THREADS: " + numberOfThreads);
   }
 
   abstract public void startParallelRunner(Object configuration);
@@ -57,6 +57,6 @@ abstract public class AsynchronousParallelTaskExecutor {
    * Shutdown the executor
    */
   public void stopEvaluator() {
-    executor_.shutdown();
+    executor.shutdown();
   }
 }

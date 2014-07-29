@@ -46,7 +46,7 @@
 //
 package org.uma.jmetal.problem.singleObjective.cec2005Competition.originalCode;
 
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 
 public class F23_noncontinuous_rotated_hybrid_composition_3 extends TestFunc {
@@ -54,9 +54,9 @@ public class F23_noncontinuous_rotated_hybrid_composition_3 extends TestFunc {
   // Fixed (class) parameters
   static final public String FUNCTION_NAME = "Non-Continuous Rotated Hybrid Composition Function 3";
   static final public String DEFAULT_FILE_DATA =
-    "" + Configuration.cec2005SupportDataDirectory + "/hybrid_func3_data.txt";
+    "" + JMetalLogger.cec2005SupportDataDirectory + "/hybrid_func3_data.txt";
   static final public String DEFAULT_FILE_MX_PREFIX =
-    "" + Configuration.cec2005SupportDataDirectory + "/hybrid_func3_M_D";
+    "" + JMetalLogger.cec2005SupportDataDirectory + "/hybrid_func3_M_D";
   static final public String DEFAULT_FILE_MX_SUFFIX = ".txt";
 
   // Number of functions

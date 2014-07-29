@@ -11,7 +11,7 @@ package org.uma.jmetal.util.offspring;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.operator.mutation.MutationFactory;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 
 import java.util.HashMap;
@@ -19,37 +19,37 @@ import java.util.logging.Level;
 
 public class PolynomialMutationOffspring extends Offspring {
 
-  private Operator mutation_;
+  private Operator mutation;
 
-  private double mutationProbability_;
-  private double distributionIndex_;
+  private double mutationProbability;
+  private double distributionIndex;
 
   public PolynomialMutationOffspring(double mutationProbability,
     double distributionIndexForMutation
   ) throws JMetalException {
     HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
-    mutationParameters.put("probability", mutationProbability_ = mutationProbability);
-    mutationParameters.put("distributionIndex", distributionIndex_ = distributionIndexForMutation);
-    mutation_ = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
+    mutationParameters.put("probability", this.mutationProbability = mutationProbability);
+    mutationParameters.put("distributionIndex", distributionIndex = distributionIndexForMutation);
+    mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
 
-    id_ = "PolynomialMutation";
+    id = "PolynomialMutation";
   }
 
   public Solution getOffspring(Solution solution) {
     Solution res = new Solution(solution);
     try {
-      mutation_.execute(res);
+      mutation.execute(res);
     } catch (JMetalException e) {
-      Configuration.logger.log(Level.SEVERE, "Error", e);
+      JMetalLogger.logger.log(Level.SEVERE, "Error", e);
     }
     return res;
   }
 
   public String configuration() {
     String result = "-----\n";
-    result += "Operator: " + id_ + "\n";
-    result += "Probability: " + mutationProbability_ + "\n";
-    result += "DistributionIndex: " + distributionIndex_;
+    result += "Operator: " + id + "\n";
+    result += "Probability: " + mutationProbability + "\n";
+    result += "DistributionIndex: " + distributionIndex;
 
     return result;
   }

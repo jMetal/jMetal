@@ -37,14 +37,13 @@ public class SMPSOTest {
 
   @Test
   public void testNumberOfReturnedSolutionsInEasyProblem() throws IOException, ClassNotFoundException {
-    algorithm = new SMPSOSettings("ZDT1").configure() ;
+    algorithm = new SMPSOSettings("ZDT4").configure() ;
 
     SolutionSet solutionSet = algorithm.execute() ;
     /*
     Rationale: the default problem is ZDT4, and usually SMPSO, configured with standard
     settings, should return 100 solutions
      */
-    int defaultMaxEvaluations = 25000 ;
     assertTrue(solutionSet.size() >= 98) ;
   }
 }

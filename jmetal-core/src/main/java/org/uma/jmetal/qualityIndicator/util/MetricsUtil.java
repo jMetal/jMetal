@@ -24,7 +24,7 @@ package org.uma.jmetal.qualityIndicator.util;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.qualityIndicator.Hypervolume;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.NonDominatedSolutionList;
 
@@ -78,7 +78,7 @@ public class MetricsUtil {
       return front;
 
     } catch (Exception e) {
-      Configuration.logger.log(
+      JMetalLogger.logger.log(
         Level.SEVERE,
         "readFront() crashed reading for file: " + path,
         e);
@@ -282,7 +282,7 @@ public class MetricsUtil {
       br.close();
       return solutionSet;
     } catch (Exception e) {
-      Configuration.logger.log(
+      JMetalLogger.logger.log(
         Level.SEVERE,
         "org.uma.jmetal.qualityIndicator.util.readNonDominatedSolutionSet: " + path,
         e);
@@ -321,7 +321,7 @@ public class MetricsUtil {
       br.close();
       return solutionSet;
     } catch (Exception e) {
-      Configuration.logger.log(
+      JMetalLogger.logger.log(
         Level.SEVERE,
         "org.uma.jmetal.qualityIndicator.util.readNonDominatedSolutionSet: " + path,
         e);
@@ -357,7 +357,7 @@ public class MetricsUtil {
       }
       br.close();
     } catch (Exception e) {
-      Configuration.logger.log(
+      JMetalLogger.logger.log(
         Level.SEVERE,
         "org.uma.jmetal.qualityIndicator.util.readNonDominatedSolutionSet: " + path,
         e);
@@ -420,7 +420,7 @@ public class MetricsUtil {
         contributions[i] = 0;
       }
       for (int i = 0; i < populations.length; i++) {
-        Configuration.logger.info(""+contributions[i]);
+        JMetalLogger.logger.info(""+contributions[i]);
       }
       return contributions;
     }

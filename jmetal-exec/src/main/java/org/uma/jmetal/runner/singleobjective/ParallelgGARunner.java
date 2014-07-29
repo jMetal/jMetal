@@ -29,7 +29,7 @@ import org.uma.jmetal.operator.crossover.CrossoverFactory;
 import org.uma.jmetal.operator.mutation.MutationFactory;
 import org.uma.jmetal.operator.selection.SelectionFactory;
 import org.uma.jmetal.problem.singleObjective.Griewank;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.parallel.MultithreadedEvaluator;
 import org.uma.jmetal.util.parallel.SynchronousParallelTaskExecutor;
@@ -88,12 +88,12 @@ public class ParallelgGARunner {
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;
-    Configuration.logger.info("Total execution time: " + estimatedTime);
+    JMetalLogger.logger.info("Total execution time: " + estimatedTime);
 
     /* Log messages */
-    Configuration.logger.info("Objectives values have been writen to file FUN");
+    JMetalLogger.logger.info("Objectives values have been writen to file FUN");
     population.printObjectivesToFile("FUN");
-    Configuration.logger.info("Variables values have been writen to file VAR");
+    JMetalLogger.logger.info("Variables values have been writen to file VAR");
     population.printVariablesToFile("VAR");
   }
 }

@@ -34,14 +34,13 @@ import org.uma.jmetal.operator.selection.RankingAndCrowdingSelection;
 import org.uma.jmetal.operator.selection.Selection;
 import org.uma.jmetal.problem.zdt.ZDT5;
 import org.uma.jmetal.util.AlgorithmRunner;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
 import java.util.logging.FileHandler;
-import java.util.logging.Logger;
 
 /**
  * This class executes the algorithm described in:
@@ -51,7 +50,7 @@ import java.util.logging.Logger;
  * evolutionary computation. London, England. July 2007.
  */
 public class MOCHCRunner {
-  private static Logger logger_;
+  private static java.util.logging.Logger logger_;
   private static FileHandler fileHandler_;
 
   public static void main(String[] args) throws IOException, JMetalException, ClassNotFoundException {
@@ -61,7 +60,7 @@ public class MOCHCRunner {
     Selection newGenerationSelection;
     Algorithm algorithm ;
 
-    logger_ = Configuration.logger;
+    logger_ = JMetalLogger.logger;
     fileHandler_ = new FileHandler("MOCHCRunner.log");
     logger_.addHandler(fileHandler_);
 

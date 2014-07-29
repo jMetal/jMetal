@@ -21,7 +21,7 @@
 
 package org.uma.jmetal.operator.selection;
 
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 
 import java.util.HashMap;
@@ -53,7 +53,7 @@ public class SelectionFactory {
     } else if ("DifferentialEvolutionSelection".equalsIgnoreCase(name)) {
       return new DifferentialEvolutionSelection(parameters);
     } else {
-      Configuration.logger.severe("Operator '" + name + "' not found ");
+      JMetalLogger.logger.severe("Operator '" + name + "' not found ");
       throw new JMetalException("Exception in " + name + ".getSelectionOperator()");
     }
   }

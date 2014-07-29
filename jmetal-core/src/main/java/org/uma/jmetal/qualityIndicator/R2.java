@@ -22,7 +22,7 @@ package org.uma.jmetal.qualityIndicator;
 
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.qualityIndicator.util.MetricsUtil;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -123,7 +123,7 @@ public class R2 implements QualityIndicator {
         lambda[index++] = aList;
       }
     } catch (Exception e) {
-      Configuration.logger.log(Level.SEVERE,
+      JMetalLogger.logger.log(Level.SEVERE,
         "initializeUniformWeight: failed when reading for file: " + file, e);
     }
   }

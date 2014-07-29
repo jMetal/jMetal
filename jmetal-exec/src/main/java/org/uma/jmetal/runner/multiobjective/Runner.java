@@ -27,7 +27,7 @@ import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.experiment.Settings;
 import org.uma.jmetal.experiment.SettingsFactory;
 import org.uma.jmetal.qualityIndicator.QualityIndicatorGetter;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileOutput.FileOutputContext;
@@ -36,13 +36,12 @@ import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 import java.io.IOException;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Class for running algorithms
  */
 public class Runner {
-  private static Logger logger;
+  private static java.util.logging.Logger logger;
   private static FileHandler fileHandler;
 
   /**
@@ -62,7 +61,7 @@ public class Runner {
     ClassNotFoundException {
     Algorithm algorithm;
 
-    logger = Configuration.logger;
+    logger = JMetalLogger.logger;
     fileHandler = new FileHandler("jMetal.log");
     logger.addHandler(fileHandler);
 

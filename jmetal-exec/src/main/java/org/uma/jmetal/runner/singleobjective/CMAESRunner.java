@@ -24,7 +24,7 @@ import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.metaheuristic.singleobjective.cmaes.CMAES;
 import org.uma.jmetal.problem.singleObjective.Rosenbrock;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 
 import java.io.IOException;
@@ -60,12 +60,12 @@ public class CMAESRunner {
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;
-    Configuration.logger.info("Total execution time: " + estimatedTime);
+    JMetalLogger.logger.info("Total execution time: " + estimatedTime);
 
     /* Log messages */
-    Configuration.logger.info("Objectives values have been written to file FUN");
+    JMetalLogger.logger.info("Objectives values have been written to file FUN");
     population.printObjectivesToFile("FUN");
-    Configuration.logger.info("Variables values have been written to file VAR");
+    JMetalLogger.logger.info("Variables values have been written to file VAR");
     population.printVariablesToFile("VAR");
   }
 }

@@ -22,7 +22,7 @@
 package org.uma.jmetal.metaheuristic.singleobjective.evolutionstrategy;
 
 import org.uma.jmetal.core.*;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 
@@ -84,7 +84,7 @@ public class ElitistES extends Algorithm {
     // Read the operator
     mutationOperator = this.operators_.get("mutation");
 
-    Configuration.logger.info("(" + mu_ + " + " + lambda_ + ")ES");
+    JMetalLogger.logger.info("(" + mu_ + " + " + lambda_ + ")ES");
 
     // Create the parent population of mu solutions
     Solution newIndividual;
@@ -124,7 +124,7 @@ public class ElitistES extends Algorithm {
         population.add(offspringPopulation.get(i));
       }
 
-      Configuration.logger.info("Evaluation: " + evaluations + " Fitness: " +
+      JMetalLogger.logger.info("Evaluation: " + evaluations + " Fitness: " +
         population.get(0).getObjective(0));
 
       // STEP 6. Delete the mu+lambda population

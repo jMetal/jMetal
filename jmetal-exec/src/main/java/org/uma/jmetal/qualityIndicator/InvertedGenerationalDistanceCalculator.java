@@ -1,7 +1,7 @@
 package org.uma.jmetal.qualityIndicator;
 
 import org.uma.jmetal.qualityIndicator.util.MetricsUtil;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 
 /**
@@ -26,6 +26,6 @@ public class InvertedGenerationalDistanceCalculator {
     // STEP 3. Obtain the metric value
     double value = qualityIndicator.invertedGenerationalDistance(solutionFront, trueFront);
 
-    Configuration.logger.info(""+value);
+    JMetalLogger.logger.info(""+value);
   }
 }

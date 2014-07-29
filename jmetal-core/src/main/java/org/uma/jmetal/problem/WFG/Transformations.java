@@ -21,7 +21,7 @@
 
 package org.uma.jmetal.problem.wfg;
 
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 
 /**
@@ -42,7 +42,7 @@ public class Transformations {
   public float b_poly(float y, float alpha) throws JMetalException {
     if (!(alpha > 0)) {
 
-      Configuration.logger.severe("wfg.Transformations.b_poly: Param alpha " +
+      JMetalLogger.logger.severe("wfg.Transformations.b_poly: Param alpha " +
         "must be > 0");
       Class<String> cls = java.lang.String.class;
       String name = cls.getName();

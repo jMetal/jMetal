@@ -22,7 +22,7 @@
 package org.uma.jmetal.qualityIndicator;
 
 import org.uma.jmetal.qualityIndicator.util.MetricsUtil;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 
 import java.util.logging.Level;
 
@@ -113,7 +113,7 @@ public class Hypervolume implements QualityIndicator {
     double minValue, value;
 
     if (noPoints < 1) {
-      Configuration.logger.log(Level.SEVERE, "run-time error");
+      JMetalLogger.logger.log(Level.SEVERE, "run-time error");
     }
 
     minValue = front[0][objective];
@@ -161,7 +161,7 @@ public class Hypervolume implements QualityIndicator {
       //noNondominatedPoints = front.length;
       if (noObjectives < 3) {
         if (nonDominatedPoints < 1) {
-          Configuration.logger.log(Level.SEVERE, "run-time error");
+          JMetalLogger.logger.log(Level.SEVERE, "run-time error");
         }
 
         tempVolume = front[0][0];

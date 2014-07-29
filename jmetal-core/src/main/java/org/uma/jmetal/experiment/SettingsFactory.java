@@ -21,7 +21,7 @@
 
 package org.uma.jmetal.experiment;
 
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 
 import java.lang.reflect.Constructor;
@@ -55,7 +55,7 @@ public class SettingsFactory {
       Settings algorithmSettings = (Settings) constructors[i].newInstance(params);
       return algorithmSettings;
     } catch (Exception e) {
-      Configuration.logger.log(Level.SEVERE, "SettingsFactory.getSettingsObject: " +
+      JMetalLogger.logger.log(Level.SEVERE, "SettingsFactory.getSettingsObject: " +
         "Settings '" + base + "' does not exist. " +
         "Please, check the algorithm name in org.uma.jmetal/metaheuristic", e);
       throw new JMetalException("Exception in " + base + ".getSettingsObject()");

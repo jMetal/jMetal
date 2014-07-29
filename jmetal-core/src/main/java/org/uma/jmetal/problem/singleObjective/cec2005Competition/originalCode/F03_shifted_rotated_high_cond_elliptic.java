@@ -46,7 +46,7 @@
 //
 package org.uma.jmetal.problem.singleObjective.cec2005Competition.originalCode;
 
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 
 public class F03_shifted_rotated_high_cond_elliptic extends TestFunc {
@@ -54,9 +54,9 @@ public class F03_shifted_rotated_high_cond_elliptic extends TestFunc {
   // Fixed (class) parameters
   static final public String FUNCTION_NAME = "Shifted Rotated High Conditioned Elliptic Function";
   static final public String DEFAULT_FILE_DATA =
-    "" + Configuration.cec2005SupportDataDirectory + "/high_cond_elliptic_rot_data.txt";
+    "" + JMetalLogger.cec2005SupportDataDirectory + "/high_cond_elliptic_rot_data.txt";
   static final public String DEFAULT_FILE_MX_PREFIX =
-    "" + Configuration.cec2005SupportDataDirectory + "/Elliptic_M_D";
+    "" + JMetalLogger.cec2005SupportDataDirectory + "/Elliptic_M_D";
   static final public String DEFAULT_FILE_MX_SUFFIX = ".txt";
 
   // Shifted global optimum

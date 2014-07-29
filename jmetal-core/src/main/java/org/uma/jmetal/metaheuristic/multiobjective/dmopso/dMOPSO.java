@@ -10,7 +10,7 @@ import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.qualityIndicator.Hypervolume;
 import org.uma.jmetal.qualityIndicator.QualityIndicatorGetter;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
 import org.uma.jmetal.util.wrapper.XReal;
@@ -208,7 +208,7 @@ public class DMOPSO extends Algorithm {
             C2 * r2 * (bestGlobal.getValue(var) -
               particle.getValue(var))), deltaMax, deltaMin, var, i);
       } catch (IOException e) {
-        Configuration.logger.log(Level.SEVERE, "Error", e);
+        JMetalLogger.logger.log(Level.SEVERE, "Error", e);
       }
     }
   }
@@ -409,7 +409,7 @@ public class DMOPSO extends Algorithm {
         }
         br.close();
       } catch (Exception e) {
-        Configuration.logger.log(
+        JMetalLogger.logger.log(
           Level.SEVERE,
           "initializeUniformWeight: failed when reading for file: " + dataDirectory + "/" + dataFileName,
           e);

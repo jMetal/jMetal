@@ -24,7 +24,7 @@ import org.uma.jmetal.core.*;
 import org.uma.jmetal.qualityIndicator.Hypervolume;
 import org.uma.jmetal.qualityIndicator.QualityIndicatorGetter;
 import org.uma.jmetal.qualityIndicator.util.MetricsUtil;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.Ranking;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
@@ -56,22 +56,17 @@ public class SMSEMOA extends Algorithm {
   /**
    * stores the problem  to solve
    */
-  private MetricsUtil utils_;
-  private Hypervolume hypervolume_;
+  private MetricsUtil utils;
+  private Hypervolume hypervolume;
 
+  /** Constructor */
   public SMSEMOA() {
     super();
-    this.utils_ = new org.uma.jmetal.qualityIndicator.util.MetricsUtil();
-    this.hypervolume_ = new Hypervolume();
-  } // SMSEMOA
+    this.utils = new org.uma.jmetal.qualityIndicator.util.MetricsUtil();
+    this.hypervolume = new Hypervolume();
+  }
 
-  /**
-   * Runs the SMS-EMOA algorithm.
-   *
-   * @return a <code>SolutionSet</code> that is a set of non dominated solutions
-   * as a experimentoutput of the algorithm execution
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Execute() method */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     int populationSize;
     int maxEvaluations;
@@ -95,7 +90,6 @@ public class SMSEMOA extends Algorithm {
     indicators = (QualityIndicatorGetter) getInputParameter("indicators");
     offset = (Double) getInputParameter("offset");
 
-
     //Initialize the variables
     population = new SolutionSet(populationSize);
     evaluations = 0;
@@ -115,7 +109,7 @@ public class SMSEMOA extends Algorithm {
       problem_.evaluateConstraints(newSolution);
       evaluations++;
       population.add(newSolution);
-    } //for
+    }
 
     // Generations ...
     while (evaluations < maxEvaluations) {
@@ -130,7 +124,7 @@ public class SMSEMOA extends Algorithm {
           Solution parent = (Solution) selected;
           selectedParents.add(parent);
         } catch (ClassCastException e) {
-          Configuration.logger.log(Level.WARNING, "Class cast exception", e);
+          JMetalLogger.logger.log(Level.WARNING, "Class cast exception", e);
           parents = (Solution[]) selected;
           Collections.addAll(selectedParents, parents);
         }
@@ -170,12 +164,12 @@ public class SMSEMOA extends Algorithm {
         int numberOfObjectives = problem_.getNumberOfObjectives();
         // STEP 1. Obtain the maximum and minimum values of the Pareto front
         double[] maximumValues =
-          utils_.getMaximumValues(union.writeObjectivesToMatrix(), numberOfObjectives);
+          utils.getMaximumValues(union.writeObjectivesToMatrix(), numberOfObjectives);
         double[] minimumValues =
-          utils_.getMinimumValues(union.writeObjectivesToMatrix(), numberOfObjectives);
+          utils.getMinimumValues(union.writeObjectivesToMatrix(), numberOfObjectives);
         // STEP 2. Get the normalized front
         double[][] normalizedFront =
-          utils_.getNormalizedFront(frontValues, maximumValues, minimumValues);
+          utils.getNormalizedFront(frontValues, maximumValues, minimumValues);
         // compute offsets for reference point in normalized space
         double[] offsets = new double[maximumValues.length];
         for (int i = 0; i < maximumValues.length; i++) {
@@ -183,7 +177,7 @@ public class SMSEMOA extends Algorithm {
         }
         // STEP 3. Inverse the pareto front. This is needed because the original
         //metric by Zitzler is for maximization problem
-        double[][] invertedFront = utils_.invertedFront(normalizedFront);
+        double[][] invertedFront = utils.invertedFront(normalizedFront);
         // shift away from origin, so that boundary points also get a contribution > 0
         for (double[] point : invertedFront) {
           for (int i = 0; i < point.length; i++) {
@@ -251,12 +245,12 @@ public class SMSEMOA extends Algorithm {
     Collections.addAll(frontCopy, front);
     double[][] totalFront = frontCopy.toArray(frontSubset);
     double totalVolume =
-      hypervolume_.calculateHypervolume(totalFront, totalFront.length, numberOfObjectives);
+      hypervolume.calculateHypervolume(totalFront, totalFront.length, numberOfObjectives);
     for (int i = 0; i < front.length; i++) {
       double[] evaluatedPoint = frontCopy.remove(i);
       frontSubset = frontCopy.toArray(frontSubset);
       // STEP4. The hypervolume (control is passed to java version of Zitzler code)
-      double hv = hypervolume_.calculateHypervolume(frontSubset, frontSubset.length, numberOfObjectives);
+      double hv = hypervolume.calculateHypervolume(frontSubset, frontSubset.length, numberOfObjectives);
       double contribution = totalVolume - hv;
       contributions[i] = contribution;
       // put point back

@@ -46,7 +46,7 @@
 //
 package org.uma.jmetal.problem.singleObjective.cec2005Competition.originalCode;
 
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 
 public class F15_hybrid_composition_1 extends TestFunc {
@@ -54,7 +54,7 @@ public class F15_hybrid_composition_1 extends TestFunc {
   // Fixed (class) parameters
   static final public String FUNCTION_NAME = "Hybrid Composition Function 1";
   static final public String DEFAULT_FILE_DATA =
-    "" + Configuration.cec2005SupportDataDirectory + "/hybrid_func1_data.txt";
+    "" + JMetalLogger.cec2005SupportDataDirectory + "/hybrid_func1_data.txt";
 
   // Number of functions
   static final public int NUM_FUNC = 10;

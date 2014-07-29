@@ -27,15 +27,14 @@ import org.uma.jmetal.metaheuristic.multiobjective.dmopso.DMOPSO;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.problem.zdt.ZDT1;
 import org.uma.jmetal.qualityIndicator.QualityIndicatorGetter;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 
 import java.io.IOException;
 import java.util.logging.FileHandler;
-import java.util.logging.Logger;
 
 public class DMOPSORunner {
-  public static Logger logger_;      
+  public static java.util.logging.Logger logger_;
   public static FileHandler fileHandler_; 
 
   /**
@@ -54,7 +53,7 @@ public class DMOPSORunner {
     QualityIndicatorGetter indicators;
 
     // Logger object and file to store log messages
-    logger_ = Configuration.logger;
+    logger_ = JMetalLogger.logger;
     fileHandler_ = new FileHandler("dMOPSO_main.log");
     logger_.addHandler(fileHandler_);
 

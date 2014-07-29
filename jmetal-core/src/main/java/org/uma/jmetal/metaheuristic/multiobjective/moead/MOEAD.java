@@ -23,7 +23,7 @@ package org.uma.jmetal.metaheuristic.multiobjective.moead;
 
 import org.uma.jmetal.core.*;
 import org.uma.jmetal.operator.mutation.Mutation;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
 
@@ -226,7 +226,7 @@ public class MOEAD extends Algorithm {
         }
         br.close();
       } catch (Exception e) {
-        Configuration.logger.log(
+        JMetalLogger.logger.log(
           Level.SEVERE,
           "initializeUniformWeight: failed when reading for file: " + dataDirectory + "/" + dataFileName,
           e);

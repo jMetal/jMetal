@@ -20,12 +20,11 @@
 
 package org.uma.jmetal.problem.mqap;
 
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 
 import java.io.*;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 /**
@@ -83,7 +82,7 @@ public class ReadInstance {
               facilities = new Integer(aux);
               newLine += aux + " ";
             } catch (NumberFormatException ne) {
-              Configuration.logger.log(Level.WARNING, "Number Format Exception", ne);
+              JMetalLogger.logger.log(Level.WARNING, "Number Format Exception", ne);
               newLine += aux + " ";
               continue;
             }
@@ -97,7 +96,7 @@ public class ReadInstance {
               objectives = new Integer(aux);
               newLine += "1 ";
             } catch (NumberFormatException ne) {
-              Configuration.logger.log(Level.WARNING, "NumberFormatException", ne);
+              JMetalLogger.logger.log(Level.WARNING, "NumberFormatException", ne);
               newLine += aux + " ";
               continue;
             }
@@ -145,10 +144,10 @@ public class ReadInstance {
       }
       br.close();
     } catch (FileNotFoundException ex) {
-      Logger.getLogger(ReadInstance.class.getName())
+      java.util.logging.Logger.getLogger(ReadInstance.class.getName())
       .log(Level.SEVERE, "The file doesn't exist", ex);
     } catch (IOException ex2) {
-      Logger.getLogger(ReadInstance.class.getName())
+      java.util.logging.Logger.getLogger(ReadInstance.class.getName())
       .log(Level.SEVERE, "Error reading from file", ex2);
     }
   } 
@@ -162,7 +161,7 @@ public class ReadInstance {
   public void createSingleObjectiveInstance(int[] weights) {
     // safe comprobation: is the number of weights == objectives?
     if (weights.length != objectives) {
-      Logger.getLogger(ReadInstance.class.getName()).log(Level.SEVERE,
+      java.util.logging.Logger.getLogger(ReadInstance.class.getName()).log(Level.SEVERE,
           "The number of weights and number of objectives don't match");
     }
 
@@ -211,10 +210,10 @@ public class ReadInstance {
       bw.close();
 
     } catch (FileNotFoundException ex) {
-      Logger.getLogger(ReadInstance.class.getName())
+      java.util.logging.Logger.getLogger(ReadInstance.class.getName())
       .log(Level.SEVERE, "The file cannot be created", ex);
     } catch (IOException ex1) {
-      Logger.getLogger(ReadInstance.class.getName())
+      java.util.logging.Logger.getLogger(ReadInstance.class.getName())
       .log(Level.SEVERE, "Error writting in the file", ex1);
     }
   }
@@ -243,7 +242,7 @@ public class ReadInstance {
       // second argument should indicate if we do want to generte the aggregatives
       if (args[1].toUpperCase().contains("Y")) {
         if (ri.getNumberOfObjectives() > 3) {
-          Logger.getLogger(ReadInstance.class.getName()).log(Level.SEVERE, "Aggregation approach with more than 2 objectives not implemented yet");
+          java.util.logging.Logger.getLogger(ReadInstance.class.getName()).log(Level.SEVERE, "Aggregation approach with more than 2 objectives not implemented yet");
         } else if (ri.getNumberOfObjectives() == 3) {                                       
           try {
             // Open the file
@@ -269,7 +268,7 @@ public class ReadInstance {
             }
             br.close();
           } catch (Exception e) {
-            Configuration.logger.log(
+            JMetalLogger.logger.log(
                 Level.SEVERE,
                 "initializeUniformWeight: failed when reading for file containing the weight",
                 e);

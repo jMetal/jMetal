@@ -2,7 +2,7 @@ package org.uma.jmetal.experiment.experimentoutput;
 
 import org.uma.jmetal.experiment.ExperimentData;
 import org.uma.jmetal.experiment.ExperimentOutput;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 
 import java.io.*;
@@ -163,7 +163,7 @@ public class FriedmanTableGeneration implements ExperimentOutput {
 
           fis.close();
         } catch (IOException e) {
-          Configuration.logger.log(Level.SEVERE, "Error", e);
+          JMetalLogger.logger.log(Level.SEVERE, "Error", e);
           throw new RuntimeException();
         }
 
@@ -303,7 +303,7 @@ public class FriedmanTableGeneration implements ExperimentOutput {
       fis.close();
       f.close();
     } catch (IOException e) {
-      Configuration.logger.log(Level.SEVERE, "Error", e);
+      JMetalLogger.logger.log(Level.SEVERE, "Error", e);
       throw new RuntimeException();
     }
   }

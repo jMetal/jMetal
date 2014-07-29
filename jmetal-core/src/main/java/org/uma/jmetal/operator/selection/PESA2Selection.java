@@ -22,13 +22,11 @@
 package org.uma.jmetal.operator.selection;
 
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.util.Configuration;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.archive.AdaptiveGridArchive;
 import org.uma.jmetal.util.random.PseudoRandom;
 
 import java.util.HashMap;
-import java.util.logging.Level;
 
 /**
  * This class implements a selection operator as the used in PESA-II

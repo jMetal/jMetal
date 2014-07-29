@@ -20,17 +20,17 @@ import java.util.logging.Logger;
 
 
 public class Offspring {
-  String id_;
+  String id;
 
   /**
    * Constructor
    */
   public Offspring() {
-    id_ = null;
+    id = null;
   }
 
   public String id() {
-    return id_;
+    return id;
   }
 
 

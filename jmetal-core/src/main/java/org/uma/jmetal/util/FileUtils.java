@@ -18,9 +18,9 @@ public class FileUtils {
       bw.newLine();
       bw.close();
     } catch (FileNotFoundException e) {
-      Configuration.logger.log(Level.SEVERE, "Error", e);
+      JMetalLogger.logger.log(Level.SEVERE, "Error", e);
     } catch (IOException e) {
-      Configuration.logger.log(Level.SEVERE, "Error", e);
+      JMetalLogger.logger.log(Level.SEVERE, "Error", e);
     }
   }
 
@@ -33,9 +33,9 @@ public class FileUtils {
 
       bw.close();
     } catch (FileNotFoundException e) {
-      Configuration.logger.log(Level.SEVERE, "Error", e);
+      JMetalLogger.logger.log(Level.SEVERE, "Error", e);
     } catch (IOException e) {
-      Configuration.logger.log(Level.SEVERE, "Error", e);
+      JMetalLogger.logger.log(Level.SEVERE, "Error", e);
     }
   }
  /*
@@ -99,7 +99,7 @@ public class FileUtils {
       return front;
 
     } catch (Exception e) {
-      Configuration.logger.log(
+      JMetalLogger.logger.log(
         Level.SEVERE,
         "readFront() crashed reading for file: " + path,
         e);
@@ -110,21 +110,21 @@ public class FileUtils {
   public static void deleteFile(String file) {
     File f = new File(file);
     if (f.exists()) {
-      Configuration.logger.info("File " + file + " exist.");
+      JMetalLogger.logger.info("File " + file + " exist.");
 
       if (f.isDirectory()) {
-        Configuration.logger.info("File " + file + " is a directory. Deleting directory.");
+        JMetalLogger.logger.info("File " + file + " is a directory. Deleting directory.");
         if (f.delete()) {
-          Configuration.logger.info("Directory successfully deleted.");
+          JMetalLogger.logger.info("Directory successfully deleted.");
         } else {
-          Configuration.logger.info("Error deleting directory.");
+          JMetalLogger.logger.info("Error deleting directory.");
         }
       } else {
-        Configuration.logger.info("File " + file + " is a file. Deleting file.");
+        JMetalLogger.logger.info("File " + file + " is a file. Deleting file.");
         if (f.delete()) {
-          Configuration.logger.info("File successfully deleted.");
+          JMetalLogger.logger.info("File successfully deleted.");
         } else {
-          Configuration.logger.info("Error deleting file.");
+          JMetalLogger.logger.info("Error deleting file.");
         }
       }
     }

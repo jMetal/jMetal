@@ -41,17 +41,17 @@ import static org.junit.Assert.assertFalse;
  */
 
 public class SolutionSetTest {
-  int maxSize_ = 10 ;
-  SolutionSet solutionSet_ ;
+  int maxSize = 10 ;
+  SolutionSet solutionSet;
 
   @Before
   public void setUp() throws Exception {
-    solutionSet_ = new SolutionSet(maxSize_) ;
+    solutionSet = new SolutionSet(maxSize) ;
   }
 
   @After
   public void tearDown() throws Exception {
-    solutionSet_ = null ;
+    solutionSet = null ;
   }
 
   /**
@@ -61,8 +61,8 @@ public class SolutionSetTest {
   @Test
   public void testAddOneElementToAnEmptySolutionSet() throws Exception {
     boolean result ;
-    result = solutionSet_.add(new Solution()) ;
-    assertEquals("SolutionSetTest", 1, solutionSet_.size()) ;
+    result = solutionSet.add(new Solution()) ;
+    assertEquals("SolutionSetTest", 1, solutionSet.size()) ;
     assertTrue("SolutionSetTest", result);
   }
 
@@ -72,11 +72,11 @@ public class SolutionSetTest {
    */
   @Test (expected = JMetalException.class)
   public void testAddOneElementToAFullSolutionSet() throws JMetalException {
-    for (int i = 0 ; i < maxSize_ ; i++) {
-      solutionSet_.add(new Solution());
+    for (int i = 0 ; i < maxSize; i++) {
+      solutionSet.add(new Solution());
     }
 
-    solutionSet_.add(new Solution()) ;
+    solutionSet.add(new Solution()) ;
   }
 
   /**
@@ -86,14 +86,14 @@ public class SolutionSetTest {
   @Test  (expected = IndexOutOfBoundsException.class)
   public void testGetElementOutOfBounds() throws Exception {
     for (int i = 0 ; i < 5 ; i++)
-      solutionSet_.add(new Solution()) ;
+      solutionSet.add(new Solution()) ;
 
-    Solution solution = solutionSet_.get(7) ;
+    Solution solution = solutionSet.get(7) ;
   }
 
   @Test
   public void testGetMaxSize() {
-    assertEquals("SolutionSetTest", 10, solutionSet_.getMaxSize());
+    assertEquals("SolutionSetTest", 10, solutionSet.getMaxSize());
   }
 
   @Test
@@ -108,7 +108,6 @@ public class SolutionSetTest {
       solution = new Solution(problem) ;
       problem.evaluate(solution);
       solutionSet1.add(solution) ;
-      //solutionSet3.add(new Solution(solutiontype)) ;
     }
 
     solutionSet2.add(new Solution(problem)) ;
@@ -117,15 +116,13 @@ public class SolutionSetTest {
     assertFalse(solutionSet1.equals(solution)) ;
     assertTrue(solutionSet1.equals(solutionSet1)) ;
     assertFalse(solutionSet1.equals(solutionSet2)) ;
-
-    //assertTrue(solutionSet1.equals(solutionSet3)) ;
   }
 
   @Test
   public void isEmptyTest() throws JMetalException {
-    assertTrue(solutionSet_.isEmtpy()) ;
+    assertTrue(solutionSet.isEmtpy()) ;
 
-    solutionSet_.add(new Solution()) ;
-    assertFalse(solutionSet_.isEmtpy()) ;
+    solutionSet.add(new Solution()) ;
+    assertFalse(solutionSet.isEmtpy()) ;
   }
 }

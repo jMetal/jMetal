@@ -23,7 +23,7 @@ package org.uma.jmetal.metaheuristic.singleobjective.particleswarmoptimization;
 import org.uma.jmetal.core.*;
 import org.uma.jmetal.operator.selection.BestSolutionSelection;
 import org.uma.jmetal.util.AdaptiveRandomNeighborhood;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.Distance;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
@@ -111,7 +111,7 @@ public class StandardPSO2011 extends Algorithm {
         }
       }
     } catch (JMetalException e) {
-      Configuration.logger.log(Level.SEVERE, "Error", e);
+      JMetalLogger.logger.log(Level.SEVERE, "Error", e);
     }
 
     return bestLocalBestSolution;
@@ -206,9 +206,9 @@ public class StandardPSO2011 extends Algorithm {
 
     neighborhood = new AdaptiveRandomNeighborhood(swarm, numberOfParticlesToInform);
 
-    Configuration.logger.info("SwarmSize: " + swarmSize);
-    Configuration.logger.info("Swarm size: " + swarm.size());
-    Configuration.logger.info("list size: " + neighborhood.getNeighborhood().size());
+    JMetalLogger.logger.info("SwarmSize: " + swarmSize);
+    JMetalLogger.logger.info("Swarm size: " + swarm.size());
+    JMetalLogger.logger.info("list size: " + neighborhood.getNeighborhood().size());
 
     // Step2. Initialize the speed_ of each particle
     for (int i = 0; i < swarmSize; i++) {
@@ -273,10 +273,10 @@ public class StandardPSO2011 extends Algorithm {
       iteration++;
 
       Double bestCurrentFitness = swarm.best(comparator).getObjective(0);
-      Configuration.logger.info("Best: " + bestCurrentFitness);
+      JMetalLogger.logger.info("Best: " + bestCurrentFitness);
 
       if (bestCurrentFitness == bestFoundFitness) {
-        Configuration.logger.info("Recomputing");
+        JMetalLogger.logger.info("Recomputing");
         neighborhood.recompute();
       }
 

@@ -1,7 +1,7 @@
 package org.uma.jmetal.qualityIndicator;
 
 import org.uma.jmetal.qualityIndicator.util.MetricsUtil;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 
 /**
@@ -28,6 +28,6 @@ public class HypervolumeCalculator {
     //Obtain delta value
     double value = qualityIndicator.hypervolume(solutionFront, trueFront);
 
-    Configuration.logger.info(""+value);
+    JMetalLogger.logger.info(""+value);
   }
 }

@@ -12,50 +12,49 @@ import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.operator.mutation.MutationFactory;
 import org.uma.jmetal.operator.selection.SelectionFactory;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 
 import java.util.HashMap;
 import java.util.logging.Level;
 
 public class NonUniformMutationOffspring extends Offspring {
+  public Operator mutation;
+  private Operator selection;
 
-  public Operator mutation_;
-  private Operator selection_;
-
-  private double mutationProbatility_;
-  private double perturbation_;
-  private int maxIterations_;
+  private double mutationProbability;
+  private double perturbation;
+  private int maxIterations;
 
   public NonUniformMutationOffspring(double mutationProbability,
     double perturbation,
     int maxIterations
   ) throws JMetalException {
     HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
-    mutationParameters.put("probability", mutationProbatility_ = mutationProbability);
-    mutationParameters.put("perturbation", perturbation_ = perturbation);
-    mutationParameters.put("maxIterations", maxIterations_ = maxIterations);
-    mutation_ = MutationFactory.getMutationOperator("NonUniformMutation", mutationParameters);
-    selection_ = SelectionFactory.getSelectionOperator("BinaryTournament", null);
-    id_ = "NonUniformMutation";
+    mutationParameters.put("probability", this.mutationProbability = mutationProbability);
+    mutationParameters.put("perturbation", this.perturbation = perturbation);
+    mutationParameters.put("maxIterations", this.maxIterations = maxIterations);
+    mutation = MutationFactory.getMutationOperator("NonUniformMutation", mutationParameters);
+    selection = SelectionFactory.getSelectionOperator("BinaryTournament", null);
+    id = "NonUniformMutation";
   }
 
   public Solution getOffspring(Solution solution) {
     Solution res = new Solution(solution);
     try {
-      mutation_.execute(res);
+      mutation.execute(res);
     } catch (JMetalException e) {
-      Configuration.logger.log(Level.SEVERE, "Error", e);
+      JMetalLogger.logger.log(Level.SEVERE, "Error", e);
     }
     return res;
   }
 
   public String configuration() {
     String result = "-----\n";
-    result += "Operator: " + id_ + "\n";
-    result += "Probability: " + mutationProbatility_ + "\n";
-    result += "MaxIterations: " + maxIterations_ + "\n";
-    result += "Perturbation: " + perturbation_;
+    result += "Operator: " + id + "\n";
+    result += "Probability: " + mutationProbability + "\n";
+    result += "MaxIterations: " + maxIterations + "\n";
+    result += "Perturbation: " + perturbation;
 
     return result;
   }

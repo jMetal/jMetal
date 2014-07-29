@@ -31,13 +31,12 @@ import org.uma.jmetal.operator.mutation.MutationFactory;
 import org.uma.jmetal.operator.selection.SelectionFactory;
 import org.uma.jmetal.problem.MultiObjectiveTSP;
 import org.uma.jmetal.qualityIndicator.QualityIndicatorGetter;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.evaluator.SequentialSolutionSetEvaluator;
 import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
 
 import java.util.HashMap;
 import java.util.logging.FileHandler;
-import java.util.logging.Logger;
 
 /**
  * Class to configure and execute the NSGA-II algorithm. The experiment.settings are aimed
@@ -45,7 +44,7 @@ import java.util.logging.Logger;
  */
 
 public class NSGAIImTSPRunner {
-  public static Logger logger_;
+  public static java.util.logging.Logger logger_;
   public static FileHandler fileHandler_; 
 
   /**
@@ -65,7 +64,7 @@ public class NSGAIImTSPRunner {
     QualityIndicatorGetter indicators;
 
     // Logger object and file to store log messages
-    logger_ = Configuration.logger;
+    logger_ = JMetalLogger.logger;
     fileHandler_ = new FileHandler("NSGAII_main.log");
     logger_.addHandler(fileHandler_);
 

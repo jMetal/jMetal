@@ -21,25 +21,25 @@ import java.util.logging.Logger;
 
 public class SBXCrossoverOffspring extends Offspring {
 
-  private double crossoverProbability_ = 0.9;
-  private double distributionIndexForCrossover_ = 20;
-  private Operator crossover_;
-  private Operator selection_;
+  private double crossoverProbability = 0.9;
+  private double distributionIndexForCrossover = 20;
+  private Operator crossover;
+  private Operator selection;
 
   public SBXCrossoverOffspring(double crossoverProbability,
     double distributionIndexForCrossover) throws JMetalException {
-    crossoverProbability_ = crossoverProbability;
-    distributionIndexForCrossover_ = distributionIndexForCrossover;
+    this.crossoverProbability = crossoverProbability;
+    this.distributionIndexForCrossover = distributionIndexForCrossover;
 
     // Crossover operator
     HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
-    crossoverParameters.put("probability", crossoverProbability_);
-    crossoverParameters.put("distributionIndex", distributionIndexForCrossover_);
+    crossoverParameters.put("probability", this.crossoverProbability);
+    crossoverParameters.put("distributionIndex", this.distributionIndexForCrossover);
 
-    crossover_ = CrossoverFactory.getCrossoverOperator("SBXCrossover", crossoverParameters);
-    selection_ = SelectionFactory.getSelectionOperator("BinaryTournament", null);
+    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", crossoverParameters);
+    selection = SelectionFactory.getSelectionOperator("BinaryTournament", null);
 
-    id_ = "SBXCrossover";
+    id = "SBXCrossover";
   }
 
   public Solution getOffspring(SolutionSet solutionSet) {
@@ -47,19 +47,17 @@ public class SBXCrossoverOffspring extends Offspring {
     Solution offSpring = null;
 
     try {
-      parents[0] = (Solution) selection_.execute(solutionSet);
-      parents[1] = (Solution) selection_.execute(solutionSet);
+      parents[0] = (Solution) selection.execute(solutionSet);
+      parents[1] = (Solution) selection.execute(solutionSet);
 
-      Solution[] children = (Solution[]) crossover_.execute(parents);
+      Solution[] children = (Solution[]) crossover.execute(parents);
       offSpring = children[0];
-      //mutation_.execute(offSpring);
       //Create a new solutiontype, using DE
     } catch (JMetalException ex) {
       Logger.getLogger(SBXCrossoverOffspring.class.getName()).log(Level.SEVERE, null, ex);
     }
     return offSpring;
-
-  } // getOffpring
+  }
 
   /**
    *
@@ -72,48 +70,44 @@ public class SBXCrossoverOffspring extends Offspring {
       parents[0] = parentSolutions[0];
       parents[1] = parentSolutions[1];
 
-      Solution[] children = (Solution[]) crossover_.execute(parents);
+      Solution[] children = (Solution[]) crossover.execute(parents);
       offSpring = children[0];
-      //mutation_.execute(offSpring);
       //Create a new solutiontype, using DE
     } catch (JMetalException ex) {
       Logger.getLogger(SBXCrossoverOffspring.class.getName()).log(Level.SEVERE, null, ex);
     }
     return offSpring;
-
-  } // getOffpring
+  }
 
   public Solution getOffspring(SolutionSet solutionSet, SolutionSet archive) {
     Solution[] parents = new Solution[2];
     Solution offSpring = null;
 
     try {
-      parents[0] = (Solution) selection_.execute(solutionSet);
+      parents[0] = (Solution) selection.execute(solutionSet);
 
       if (archive.size() > 0) {
-        parents[1] = (Solution) selection_.execute(archive);
+        parents[1] = (Solution) selection.execute(archive);
       } else {
-        parents[1] = (Solution) selection_.execute(solutionSet);
+        parents[1] = (Solution) selection.execute(solutionSet);
       }
 
-      Solution[] children = (Solution[]) crossover_.execute(parents);
+      Solution[] children = (Solution[]) crossover.execute(parents);
       offSpring = children[0];
-      //mutation_.execute(offSpring);
       //Create a new solutiontype, using DE
     } catch (JMetalException ex) {
       Logger.getLogger(SBXCrossoverOffspring.class.getName()).log(Level.SEVERE, null, ex);
     }
     return offSpring;
-
-  } // getOffpring
+  }
 
   public String configuration() {
     String result = "-----\n";
-    result += "Operator: " + id_ + "\n";
-    result += "Probability: " + crossoverProbability_ + "\n";
-    result += "DistributionIndex: " + distributionIndexForCrossover_;
+    result += "Operator: " + id + "\n";
+    result += "Probability: " + crossoverProbability + "\n";
+    result += "DistributionIndex: " + distributionIndexForCrossover;
 
     return result;
   }
-} // DifferentialEvolutionOffspring
+}
 

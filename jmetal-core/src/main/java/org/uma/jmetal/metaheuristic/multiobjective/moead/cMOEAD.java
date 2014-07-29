@@ -22,7 +22,7 @@ package org.uma.jmetal.metaheuristic.multiobjective.moead;
 
 
 import org.uma.jmetal.core.*;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.comparator.IConstraintViolationComparator;
 import org.uma.jmetal.util.comparator.ViolationThresholdComparator;
@@ -107,7 +107,7 @@ public class cMOEAD extends Algorithm {
     maxEvaluations = (Integer) this.getInputParameter("maxEvaluations");
     populationSize_ = (Integer) this.getInputParameter("populationSize");
     dataDirectory_ = this.getInputParameter("dataDirectory").toString();
-    Configuration.logger.info("POPSIZE: " + populationSize_);
+    JMetalLogger.logger.info("POPSIZE: " + populationSize_);
 
     population_ = new SolutionSet(populationSize_);
     indArray_ = new Solution[problem_.getNumberOfObjectives()];
@@ -246,7 +246,7 @@ public class cMOEAD extends Algorithm {
         }
         br.close();
       } catch (Exception e) {
-        Configuration.logger.log(
+        JMetalLogger.logger.log(
           Level.SEVERE,
           "initializeUniformWeight: failed when reading for file: " + dataDirectory_ + "/" + dataFileName,
           e);

@@ -1,7 +1,7 @@
 package org.uma.jmetal.qualityIndicator;
 
 import org.uma.jmetal.qualityIndicator.util.MetricsUtil;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 
 /**
@@ -44,14 +44,14 @@ public class R2Calculator {
     // Obtain delta value
     double value = qualityIndicator.r2(approximationFront, paretoFront);
 
-    Configuration.logger.info(""+value);
-    Configuration.logger.info(""+qualityIndicator.R2Without(approximationFront,
+    JMetalLogger.logger.info(""+value);
+    JMetalLogger.logger.info(""+qualityIndicator.R2Without(approximationFront,
       paretoFront, 1));
-    Configuration.logger.info(""+qualityIndicator.R2Without(approximationFront,
+    JMetalLogger.logger.info(""+qualityIndicator.R2Without(approximationFront,
       paretoFront, 15));
-    Configuration.logger.info(""+qualityIndicator.R2Without(approximationFront,
+    JMetalLogger.logger.info(""+qualityIndicator.R2Without(approximationFront,
       paretoFront, 25));
-    Configuration.logger.info(""+qualityIndicator.R2Without(approximationFront,
+    JMetalLogger.logger.info(""+qualityIndicator.R2Without(approximationFront,
       paretoFront, 75));
 
   }

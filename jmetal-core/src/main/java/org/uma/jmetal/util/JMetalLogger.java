@@ -1,10 +1,9 @@
-//  Configuration.java
+//  JMetalLogger.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
 //
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
+//  Copyright (c) 2014 Antonio J. Nebro
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -22,22 +21,14 @@
 package org.uma.jmetal.util;
 
 import java.io.Serializable;
-import java.util.logging.Logger;
 
 /**
- * This class contain types and constant definitions
+ * jMetal logger class
  */
-public class Configuration implements Serializable {
-
-  /**
-   *
-   */
+public class JMetalLogger implements Serializable {
   private static final long serialVersionUID = 891486004065726989L;
 
-  /**
-   * Logger object
-   */
-  public static Logger logger = Logger.getLogger("jMetal");
+  public static java.util.logging.Logger logger = java.util.logging.Logger.getLogger("jMetal");
   public static String cec2005SupportDataDirectory =
     "/Users/antelverde/Softw/jMetal/jMetalMV/cec2005CompetitionResources/supportData";
   public static String cec2005Package =

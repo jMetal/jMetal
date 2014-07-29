@@ -39,13 +39,12 @@ import org.uma.jmetal.operator.selection.SelectionFactory;
 import org.uma.jmetal.problem.Kursawe;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.qualityIndicator.QualityIndicatorGetter;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.logging.FileHandler;
-import java.util.logging.Logger;
 
 /**
  * Class for configuring and running the SMS-EMOA algorithm. This
@@ -53,7 +52,7 @@ import java.util.logging.Logger;
  * to obtained the convergence speed of the algorithm.
  */
 public class SMSEMOARunner {
-  public static Logger logger_;      
+  public static java.util.logging.Logger logger_;
   public static FileHandler fileHandler_; 
 
   /**
@@ -79,7 +78,7 @@ public class SMSEMOARunner {
     QualityIndicatorGetter indicators;
 
     // Logger object and file to store log messages
-    logger_ = Configuration.logger;
+    logger_ = JMetalLogger.logger;
     fileHandler_ = new FileHandler("SMSEMOA_main.log");
     logger_.addHandler(fileHandler_);
 

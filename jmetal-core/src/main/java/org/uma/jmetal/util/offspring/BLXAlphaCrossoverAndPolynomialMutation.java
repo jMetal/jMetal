@@ -22,38 +22,38 @@ import java.util.logging.Logger;
 
 public class BLXAlphaCrossoverAndPolynomialMutation extends Offspring {
 
-  private double mutationProbability_ = 0.0;
-  private double crossoverProbability_ = 0.9;
-  private double distributionIndexForMutation_ = 20;
-  private double alpha_ = 0.5;
-  private Operator crossover_;
-  private Operator mutation_;
-  private Operator selection_;
+  private double mutationProbability = 0.0;
+  private double crossoverProbability = 0.9;
+  private double distributionIndexForMutation = 20;
+  private double alpha = 0.5;
+  private Operator crossover;
+  private Operator mutation;
+  private Operator selection;
 
   private BLXAlphaCrossoverAndPolynomialMutation(double mutationProbability,
     double crossoverProbability,
     double distributionIndexForMutation,
     double alpha) throws JMetalException {
-    mutationProbability_ = mutationProbability;
-    crossoverProbability_ = crossoverProbability;
-    distributionIndexForMutation_ = distributionIndexForMutation;
-    alpha_ = alpha;
+    this.mutationProbability = mutationProbability;
+    this.crossoverProbability = crossoverProbability;
+    this.distributionIndexForMutation = distributionIndexForMutation;
+    this.alpha = alpha;
 
     // Crossover operator
     HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
-    crossoverParameters.put("probability", crossoverProbability_);
-    crossoverParameters.put("alpha", alpha_);
+    crossoverParameters.put("probability", this.crossoverProbability);
+    crossoverParameters.put("alpha", this.alpha);
 
-    crossover_ = CrossoverFactory.getCrossoverOperator("BLXAlphaCrossover", crossoverParameters);
+    crossover = CrossoverFactory.getCrossoverOperator("BLXAlphaCrossover", crossoverParameters);
 
     HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
-    mutationParameters.put("probability", mutationProbability_);
-    mutationParameters.put("distributionIndex", distributionIndexForMutation_);
+    mutationParameters.put("probability", this.mutationProbability);
+    mutationParameters.put("distributionIndex", this.distributionIndexForMutation);
 
-    mutation_ = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
-    selection_ = SelectionFactory.getSelectionOperator("BinaryTournament", null);
+    mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
+    selection = SelectionFactory.getSelectionOperator("BinaryTournament", null);
 
-    id_ = "BLXAlpha_Polynomial";
+    id = "BLXAlpha_Polynomial";
   }
 
   public Solution getOffspring(SolutionSet solutionSet) {
@@ -61,12 +61,12 @@ public class BLXAlphaCrossoverAndPolynomialMutation extends Offspring {
     Solution offSpring = null;
 
     try {
-      parents[0] = (Solution) selection_.execute(solutionSet);
-      parents[1] = (Solution) selection_.execute(solutionSet);
+      parents[0] = (Solution) selection.execute(solutionSet);
+      parents[1] = (Solution) selection.execute(solutionSet);
 
-      Solution[] children = (Solution[]) crossover_.execute(parents);
+      Solution[] children = (Solution[]) crossover.execute(parents);
       offSpring = children[0];
-      mutation_.execute(offSpring);
+      mutation.execute(offSpring);
       //Create a new solutiontype, using DE
     } catch (JMetalException ex) {
       Logger.getLogger(BLXAlphaCrossoverAndPolynomialMutation.class.getName())
@@ -80,17 +80,17 @@ public class BLXAlphaCrossoverAndPolynomialMutation extends Offspring {
     Solution offSpring = null;
 
     try {
-      parents[0] = (Solution) selection_.execute(solutionSet);
+      parents[0] = (Solution) selection.execute(solutionSet);
 
       if (archive.size() > 0) {
-        parents[1] = (Solution) selection_.execute(archive);
+        parents[1] = (Solution) selection.execute(archive);
       } else {
-        parents[1] = (Solution) selection_.execute(solutionSet);
+        parents[1] = (Solution) selection.execute(solutionSet);
       }
 
-      Solution[] children = (Solution[]) crossover_.execute(parents);
+      Solution[] children = (Solution[]) crossover.execute(parents);
       offSpring = children[0];
-      mutation_.execute(offSpring);
+      mutation.execute(offSpring);
       //Create a new solutiontype, using DE
     } catch (JMetalException ex) {
       Logger.getLogger(BLXAlphaCrossoverAndPolynomialMutation.class.getName())

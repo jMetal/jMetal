@@ -21,7 +21,7 @@
 package org.uma.test.qualityIndicator.fastHypervolume.wfg;
 
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.qualityIndicator.fastHypervolume.FastHypervolumeArchive;
+import org.uma.jmetal.qualityIndicator.fasthypervolume.FastHypervolumeArchive;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.junit.Before;
 import org.junit.Test;

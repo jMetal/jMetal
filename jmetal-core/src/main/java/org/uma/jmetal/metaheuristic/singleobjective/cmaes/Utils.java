@@ -22,7 +22,7 @@
 package org.uma.jmetal.metaheuristic.singleobjective.cmaes;
 
 
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 
 import java.util.logging.Level;
 
@@ -285,7 +285,7 @@ public class Utils {
           && Math.abs(cc - C[i > j ? i : j][i > j ? j : i]) > 1e-9) { /* quite large */
           s = " " + i + " " + j + " " + cc + " " + C[i > j ? i : j][i > j ? j : i] + " " + (cc - C[
             i > j ? i : j][i > j ? j : i]);
-          Configuration.logger.log(Level.SEVERE,
+          JMetalLogger.logger.log(Level.SEVERE,
             "org.uma.jmetal.metaheuristic.cmaes.Utils.checkEigenSystem(): WARNING - imprecise experimentoutput detected "
               + s
           );
@@ -293,7 +293,7 @@ public class Utils {
         }
         if (Math.abs(dd - (i == j ? 1 : 0)) > 1e-10) {
           s = i + " " + j + " " + dd;
-          Configuration.logger.log(Level.SEVERE,
+          JMetalLogger.logger.log(Level.SEVERE,
             "org.uma.jmetal.metaheuristic.cmaes.Utils.checkEigenSystem(): WARNING - imprecise experimentoutput detected (Q not orthog.) "
               + s);
           ++res;

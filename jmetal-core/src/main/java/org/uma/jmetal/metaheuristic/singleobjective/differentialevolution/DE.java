@@ -22,7 +22,7 @@
 package org.uma.jmetal.metaheuristic.singleobjective.differentialevolution;
 
 import org.uma.jmetal.core.*;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 
@@ -134,7 +134,7 @@ public class DE extends Algorithm {
     SolutionSet resultPopulation = new SolutionSet(1);
     resultPopulation.add(population.get(0));
 
-    Configuration.logger.log(Level.INFO, "Evaluations: " + evaluations);
+    JMetalLogger.logger.log(Level.INFO, "Evaluations: " + evaluations);
 
     return resultPopulation;
   }

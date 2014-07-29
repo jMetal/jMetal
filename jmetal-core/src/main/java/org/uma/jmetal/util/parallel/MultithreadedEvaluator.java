@@ -22,7 +22,7 @@ package org.uma.jmetal.util.parallel;
 
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -52,12 +52,12 @@ public class MultithreadedEvaluator implements SynchronousParallelTaskExecutor {
     if (threads == 0) {
       numberOfThreads = Runtime.getRuntime().availableProcessors();
     } else if (threads < 0) {
-      Configuration.logger.severe("MultithreadedEvaluator: the number of threads" +
+      JMetalLogger.logger.severe("MultithreadedEvaluator: the number of threads" +
         " cannot be negative number " + threads);
     } else {
       numberOfThreads = threads;
     }
-    Configuration.logger.info("THREADS: " + numberOfThreads);
+    JMetalLogger.logger.info("THREADS: " + numberOfThreads);
   }
 
   /**
@@ -69,7 +69,7 @@ public class MultithreadedEvaluator implements SynchronousParallelTaskExecutor {
     this.problem = (Problem) problem;
 
     executor = Executors.newFixedThreadPool(numberOfThreads);
-    Configuration.logger.info("Cores: " + numberOfThreads);
+    JMetalLogger.logger.info("Cores: " + numberOfThreads);
     taskList = null;
   }
 
@@ -95,7 +95,7 @@ public class MultithreadedEvaluator implements SynchronousParallelTaskExecutor {
     try {
       future = executor.invokeAll(taskList);
     } catch (InterruptedException e1) {
-      Configuration.logger.log(Level.SEVERE, "Error", e1);
+      JMetalLogger.logger.log(Level.SEVERE, "Error", e1);
     }
     List<Object> solutionList = new Vector<Object>();
 
@@ -105,9 +105,9 @@ public class MultithreadedEvaluator implements SynchronousParallelTaskExecutor {
         solution = result.get();
         solutionList.add(solution);
       } catch (InterruptedException e) {
-        Configuration.logger.log(Level.SEVERE, "Error", e);
+        JMetalLogger.logger.log(Level.SEVERE, "Error", e);
       } catch (ExecutionException e) {
-        Configuration.logger.log(Level.SEVERE, "Error", e);
+        JMetalLogger.logger.log(Level.SEVERE, "Error", e);
       }
     }
     taskList = null;

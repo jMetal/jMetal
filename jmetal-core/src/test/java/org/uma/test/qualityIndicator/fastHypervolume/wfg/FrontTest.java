@@ -20,7 +20,7 @@
 
 package org.uma.test.qualityIndicator.fastHypervolume.wfg;
 
-import org.uma.jmetal.qualityIndicator.fastHypervolume.wfg.Front;
+import org.uma.jmetal.qualityIndicator.fasthypervolume.wfg.Front;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -21,7 +21,7 @@
 
 package org.uma.jmetal.core;
 
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 
 import java.io.*;
@@ -60,9 +60,9 @@ public class SolutionSet implements Serializable {
    */
   public boolean add(Solution solution) throws JMetalException {
     if (solutionsList.size() == maximumSize) {
-      Configuration.logger.severe("The population is full");
-      Configuration.logger.severe("Capacity is : " + maximumSize);
-      Configuration.logger.severe("\t Size is: " + this.size());
+      JMetalLogger.logger.severe("The population is full");
+      JMetalLogger.logger.severe("Capacity is : " + maximumSize);
+      JMetalLogger.logger.severe("\t Size is: " + this.size());
         throw new JMetalException("The population is full. Capacity is : " + maximumSize + "") ;
     }
 
@@ -106,7 +106,7 @@ public class SolutionSet implements Serializable {
 
   public void sort(Comparator<Solution> comparator) {
     if (comparator == null) {
-      Configuration.logger.severe("No criterium for comparing exist");
+      JMetalLogger.logger.severe("No criterium for comparing exist");
       return;
     }
     Collections.sort(solutionsList, comparator);
@@ -332,7 +332,7 @@ public class SolutionSet implements Serializable {
       }
       bw.close();
     } catch (IOException e) {
-      Configuration.logger.log(Level.SEVERE, "Error generating the FUN file",
+      JMetalLogger.logger.log(Level.SEVERE, "Error generating the FUN file",
         e);
     }
   }
@@ -364,7 +364,7 @@ public class SolutionSet implements Serializable {
       }
       bw.close();
     } catch (IOException e) {
-      Configuration.logger.log(Level.SEVERE, "Error generating the VAR file",
+      JMetalLogger.logger.log(Level.SEVERE, "Error generating the VAR file",
         e);
     }
   }
@@ -383,7 +383,7 @@ public class SolutionSet implements Serializable {
    */
   public void remove(int i) {
     if (i > solutionsList.size() - 1) {
-      Configuration.logger.log(Level.SEVERE, "Size is: " + this.size());
+      JMetalLogger.logger.log(Level.SEVERE, "Size is: " + this.size());
     }
     solutionsList.remove(i);
   }
@@ -460,7 +460,7 @@ public class SolutionSet implements Serializable {
 
   public void printObjectives() {
     for (Solution solution : solutionsList) {
-      Configuration.logger.log(Level.INFO, "" + solution);
+      JMetalLogger.logger.log(Level.INFO, "" + solution);
     }
   }
 

@@ -21,7 +21,7 @@
 
 package org.uma.jmetal.operator.mutation;
 
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 
 import java.util.HashMap;
@@ -52,7 +52,7 @@ public class MutationFactory {
     } else if ("SwapMutation".equalsIgnoreCase(name)) {
       return new SwapMutation(parameters);
     } else {
-      Configuration.logger.severe("Operator '" + name + "' not found ");
+      JMetalLogger.logger.severe("Operator '" + name + "' not found ");
       Class<String> cls = java.lang.String.class;
       String name2 = cls.getName();
       throw new JMetalException("Exception in " + name2 + ".getMutationOperator()");

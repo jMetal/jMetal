@@ -24,7 +24,7 @@ package org.uma.jmetal.operator.crossover;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.encoding.solutiontype.PermutationSolutionType;
 import org.uma.jmetal.encoding.variable.Permutation;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
 
@@ -165,7 +165,7 @@ public class PMXCrossover extends Crossover {
     if (!(VALID_TYPES.contains(parents[0].getType().getClass()) &&
       VALID_TYPES.contains(parents[1].getType().getClass()))) {
 
-      Configuration.logger.severe("PMCCrossover.execute: the solutions " +
+      JMetalLogger.logger.severe("PMCCrossover.execute: the solutions " +
         "are not of the right type. The type should be 'Permutation', but " +
         parents[0].getType() + " and " +
         parents[1].getType() + " are obtained");
@@ -174,7 +174,7 @@ public class PMXCrossover extends Crossover {
     crossoverProbability = (Double) getParameter("probability");
 
     if (parents.length < 2) {
-      Configuration.logger.severe("PMXCrossover.execute: operator needs two " +
+      JMetalLogger.logger.severe("PMXCrossover.execute: operator needs two " +
         "parents");
       Class<String> cls = java.lang.String.class;
       String name = cls.getName();

@@ -21,7 +21,7 @@
 
 package org.uma.jmetal.core;
 
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 
 import java.io.Serializable;
@@ -57,7 +57,7 @@ public abstract class Variable implements Serializable {
     Class<String> cls = java.lang.String.class;
 
     String name = cls.getName();
-    Configuration.logger.severe("Class " + name + " does not implement "
+    JMetalLogger.logger.severe("Class " + name + " does not implement "
       + "method getValue");
     throw new JMetalException("Exception in " + name + ".getValue()");
   }
@@ -73,7 +73,7 @@ public abstract class Variable implements Serializable {
     Class<String> cls = java.lang.String.class;
 
     String name = cls.getName();
-    Configuration.logger.severe("Class " + name + " does not implement "
+    JMetalLogger.logger.severe("Class " + name + " does not implement "
       + "method setValue");
     throw new JMetalException("Exception in " + name + ".setValue()");
   }
@@ -88,7 +88,7 @@ public abstract class Variable implements Serializable {
     Class<String> cls = java.lang.String.class;
 
     String name = cls.getName();
-    Configuration.logger.severe("Class " + name
+    JMetalLogger.logger.severe("Class " + name
       + " does not implement method getLowerBound()");
     throw new JMetalException("Exception in " + name + ".getLowerBound()");
   }
@@ -103,7 +103,7 @@ public abstract class Variable implements Serializable {
     Class<String> cls = java.lang.String.class;
 
     String name = cls.getName();
-    Configuration.logger.severe("Class " + name
+    JMetalLogger.logger.severe("Class " + name
       + " does not implement method setLowerBound()");
     throw new JMetalException("Exception in " + name + ".setLowerBound()");
   }
@@ -118,7 +118,7 @@ public abstract class Variable implements Serializable {
     Class<String> cls = java.lang.String.class;
 
     String name = cls.getName();
-    Configuration.logger.severe("Class " + name
+    JMetalLogger.logger.severe("Class " + name
       + " does not implement method getUpperBound()");
     throw new JMetalException("Exception in " + name + ".getUpperBound()");
   }
@@ -133,7 +133,7 @@ public abstract class Variable implements Serializable {
     Class<String> cls = java.lang.String.class;
 
     String name = cls.getName();
-    Configuration.logger.severe("Class " + name
+    JMetalLogger.logger.severe("Class " + name
       + " does not implement method setUpperBound()");
     throw new JMetalException("Exception in " + name + ".setUpperBound()");
   }

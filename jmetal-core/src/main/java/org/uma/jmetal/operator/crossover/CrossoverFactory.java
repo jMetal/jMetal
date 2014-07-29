@@ -21,7 +21,7 @@
 
 package org.uma.jmetal.operator.crossover;
 
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 
 import java.util.HashMap;
@@ -54,7 +54,7 @@ public class CrossoverFactory {
     } else if ("BLXAlphaCrossover".equalsIgnoreCase(name)) {
       return new BLXAlphaCrossover(parameters);
     } else {
-      Configuration.logger.severe("CrossoverFactory.getCrossoverOperator. " +
+      JMetalLogger.logger.severe("CrossoverFactory.getCrossoverOperator. " +
         "Operator '" + name + "' not found ");
       throw new JMetalException("Exception in " + name + ".getCrossoverOperator()");
     }

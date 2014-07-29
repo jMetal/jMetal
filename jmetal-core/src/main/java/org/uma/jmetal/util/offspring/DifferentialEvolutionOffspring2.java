@@ -22,11 +22,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DifferentialEvolutionOffspring2 extends Offspring {
-  Operator mutation_;
-  private double cr_;
-  private double f_;
-  private Operator crossover_;
-  private Operator selection_;
+  private double cr;
+  private double f;
+  private Operator crossover;
+  private Operator selection;
 
   /**
    * Constructor
@@ -35,23 +34,23 @@ public class DifferentialEvolutionOffspring2 extends Offspring {
    * @param F
    */
   private DifferentialEvolutionOffspring2(double CR, double F) {
-    cr_ = CR;
-    f_ = F;
+    cr = CR;
+    f = F;
     try {
       // Crossover operator
       HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
-      crossoverParameters.put("CR", cr_);
-      crossoverParameters.put("F", f_);
-      crossover_ = new DifferentialEvolutionCrossover(crossoverParameters);
+      crossoverParameters.put("CR", cr);
+      crossoverParameters.put("F", f);
+      crossover = new DifferentialEvolutionCrossover(crossoverParameters);
 
       // Selecion operator
       HashMap<String, Object> selectionParameters = null; // FIXME: why we are passing null?
-      selection_ = SelectionFactory
+      selection = SelectionFactory
         .getSelectionOperator("DifferentialEvolutionSelection", selectionParameters);
     } catch (JMetalException ex) {
       Logger.getLogger(DifferentialEvolutionOffspring2.class.getName()).log(Level.SEVERE, null, ex);
     }
-    id_ = "DE2";
+    id = "DE2";
   }
 
   public Solution getOffspring(SolutionSet solutionSet, int index) {
@@ -71,7 +70,7 @@ public class DifferentialEvolutionOffspring2 extends Offspring {
       parents[1] = solutionSet.get(r2);
       parents[2] = solutionSet.get(index);
 
-      offSpring = (Solution) crossover_.execute(new Object[] {solutionSet.get(index), parents});
+      offSpring = (Solution) crossover.execute(new Object[] {solutionSet.get(index), parents});
     } catch (JMetalException ex) {
       Logger.getLogger(DifferentialEvolutionOffspring2.class.getName()).log(Level.SEVERE, null, ex);
     }

@@ -24,10 +24,10 @@
 //  This class is based on the code of the wfg group (http://www.wfg.csse.uwa.edu.au/hypervolume/)
 //  Copyright (C) 2010 Lyndon While, Lucas Bradstreet.
 
-package org.uma.jmetal.qualityIndicator.fastHypervolume.wfg;
+package org.uma.jmetal.qualityIndicator.fasthypervolume.wfg;
 
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -161,11 +161,11 @@ public class Front {
   }
 
   public void printFront() {
-    Configuration.logger.info("Objectives:       " + dimension);
-    Configuration.logger.info("Number of points: " + numberOfPoints);
+    JMetalLogger.logger.info("Objectives:       " + dimension);
+    JMetalLogger.logger.info("Number of points: " + numberOfPoints);
 
     for (Point point : points) {
-      Configuration.logger.info(""+point);
+      JMetalLogger.logger.info(""+point);
     }
   }
 

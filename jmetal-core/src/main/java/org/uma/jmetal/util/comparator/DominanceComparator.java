@@ -31,14 +31,12 @@ import java.util.Comparator;
  * dominance checking, as in NSGA-II.
  */
 public class DominanceComparator implements Comparator<Solution> {
-  IConstraintViolationComparator violationConstraintComparator_;
+  IConstraintViolationComparator constraintViolationComparator;
 
-  /**
-   * Constructor
-   */
+  /** Constructor */
   public DominanceComparator() {
-    violationConstraintComparator_ = new OverallConstraintViolationComparator();
-    //violationConstraintComparator_ = new NumberOfViolatedConstraintComparator(); 
+    constraintViolationComparator = new OverallConstraintViolationComparator();
+    //constraintViolationComparator = new NumberOfViolatedConstraintComparator();
   }
 
   /**
@@ -47,7 +45,7 @@ public class DominanceComparator implements Comparator<Solution> {
    * @param comparator
    */
   public DominanceComparator(IConstraintViolationComparator comparator) {
-    violationConstraintComparator_ = comparator;
+    constraintViolationComparator = comparator;
   }
 
   /**
@@ -76,11 +74,11 @@ public class DominanceComparator implements Comparator<Solution> {
     dominate1 = 0;
     dominate2 = 0;
 
-    int flag; //stores the experimentoutput of the comparison
+    int flag;
 
-    // Test to determine whether at least a solutiontype violates some constraint
-    if (violationConstraintComparator_.needToCompare(solution1, solution2)) {
-      return violationConstraintComparator_.compare(solution1, solution2);
+    // Test to determine whether at least a solution violates some constraint
+    if (constraintViolationComparator.needToCompare(solution1, solution2)) {
+      return constraintViolationComparator.compare(solution1, solution2);
     }
 
     // Equal number of violated constraints. Applying a dominance Test then
@@ -106,11 +104,26 @@ public class DominanceComparator implements Comparator<Solution> {
     }
 
     if (dominate1 == dominate2) {
-      return 0; //No one dominate the other
+      //No one dominate the other
+      return 0;
     }
     if (dominate1 == 1) {
-      return -1; // solution1 dominate
+      // solution1 dominate
+      return -1;
     }
-    return 1;    // solution2 dominate   
+    // solution2 dominate
+    return 1;
   }
+
+//  public static boolean firstSolutionDominates(int value) {
+//    return value == -1 ;
+//  }
+//
+//  public static boolean secondSolutionDominates(int value) {
+//    return value == 1 ;
+//  }
+//
+//  public static boolean bothSolutionsAreNonDominated (int value) {
+//    return value == 0 ;
+//  }
 }

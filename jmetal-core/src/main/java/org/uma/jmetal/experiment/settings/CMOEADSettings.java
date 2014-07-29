@@ -27,7 +27,7 @@ import org.uma.jmetal.metaheuristic.multiobjective.moead.cMOEAD;
 import org.uma.jmetal.operator.crossover.CrossoverFactory;
 import org.uma.jmetal.operator.mutation.MutationFactory;
 import org.uma.jmetal.problem.ProblemFactory;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 
 import java.util.HashMap;
@@ -59,7 +59,7 @@ public class CMOEADSettings extends Settings {
     try {
       this.problem = (new ProblemFactory()).getProblem(problemName, problemParams);
     } catch (JMetalException e) {
-      Configuration.logger.log(Level.SEVERE, "Unable to get problem", e);
+      JMetalLogger.logger.log(Level.SEVERE, "Unable to get problem", e);
     }
 
     // Default experiment.settings

@@ -46,7 +46,7 @@
 //
 package org.uma.jmetal.problem.singleObjective.cec2005Competition.originalCode;
 
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 
 public class F13_shifted_expanded_griewank_rosenbrock extends TestFunc {
@@ -55,7 +55,7 @@ public class F13_shifted_expanded_griewank_rosenbrock extends TestFunc {
   static final public String FUNCTION_NAME =
     "Shifted Expanded Griewank's plus Rosenbrock's Function";
   static final public String DEFAULT_FILE_DATA =
-    "" + Configuration.cec2005SupportDataDirectory + "/EF8F2_func_data.txt";
+    "" + JMetalLogger.cec2005SupportDataDirectory + "/EF8F2_func_data.txt";
 
   // Shifted global optimum
   private final double[] m_o;

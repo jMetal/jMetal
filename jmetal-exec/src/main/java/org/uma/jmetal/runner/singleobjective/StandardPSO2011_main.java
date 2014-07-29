@@ -25,18 +25,17 @@ import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.metaheuristic.singleobjective.particleswarmoptimization.StandardPSO2011;
 import org.uma.jmetal.problem.singleObjective.CEC2005Problem;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 
 import java.io.IOException;
 import java.util.logging.FileHandler;
-import java.util.logging.Logger;
 
 /**
  * Class for configuring and running a single-objective PSO algorithm
  */
 public class StandardPSO2011_main {
-  public static Logger logger_;      // Logger object
+  public static java.util.logging.Logger logger_;      // Logger object
   public static FileHandler fileHandler_; // FileHandler object
 
   /**
@@ -52,7 +51,7 @@ public class StandardPSO2011_main {
     Algorithm algorithm;  // The algorithm to use
 
     // Logger object and file to store log messages
-    logger_ = Configuration.logger;
+    logger_ = JMetalLogger.logger;
     fileHandler_ = new FileHandler("PSO_main.log");
     logger_.addHandler(fileHandler_);
 

@@ -22,7 +22,7 @@
 package org.uma.jmetal.problem;
 
 import org.uma.jmetal.core.Problem;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 
 import java.lang.reflect.Constructor;
@@ -76,7 +76,7 @@ public class ProblemFactory {
       // constructors[i] is the selected one constructor
       return (Problem)constructors[i].newInstance(params);
     } catch(Exception e) {
-      Configuration.logger.log(
+      JMetalLogger.logger.log(
         Level.SEVERE,
         "ProblemFactory.getProblem: " + "Problem '" + name + "' does not exist. " +
           "Please, check the problem names in org.uma.jmetal/problem",

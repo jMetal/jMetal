@@ -25,7 +25,7 @@ import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.encoding.solutiontype.PermutationSolutionType;
 import org.uma.jmetal.encoding.variable.Permutation;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 
 import java.io.*;
@@ -66,11 +66,11 @@ public class TSP extends Problem {
         throw new JMetalException("Solution type invalid");
       }
     } catch (JMetalException e) {
-      Configuration.logger.log(Level.SEVERE, "Error", e);
+      JMetalLogger.logger.log(Level.SEVERE, "Error", e);
     }
     readProblem(filename);
 
-    Configuration.logger.info(""+ numberOfCities);
+    JMetalLogger.logger.info(""+ numberOfCities);
     length[0] = numberOfCities;
   }
 
@@ -164,7 +164,7 @@ public class TSP extends Problem {
         }
       }
     } catch (Exception e) {
-      Configuration.logger.log(Level.SEVERE, "TSP.readProblem(): error when reading data file", e);
+      JMetalLogger.logger.log(Level.SEVERE, "TSP.readProblem(): error when reading data file", e);
       throw new Exception("TSP.readProblem(): error when reading data file " + e);
     }
   }

@@ -32,14 +32,13 @@ import org.uma.jmetal.problem.Kursawe;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.qualityIndicator.QualityIndicatorGetter;
 import org.uma.jmetal.util.AlgorithmRunner;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
 import java.util.logging.FileHandler;
-import java.util.logging.Logger;
 
 /**
  * * This class executes the algorithms described in
@@ -49,7 +48,7 @@ import java.util.logging.Logger;
  * EMO 2007. Sendai/Matsushima, Japan, March 2007.
  */
 public class AsyncMOCell1Runner {
-  public static Logger logger_;
+  public static java.util.logging.Logger logger_;
   public static FileHandler fileHandler_;
 
   /**
@@ -73,7 +72,7 @@ public class AsyncMOCell1Runner {
     QualityIndicatorGetter indicators;
 
     // Logger object and file to store log messages
-    logger_ = Configuration.logger;
+    logger_ = JMetalLogger.logger;
     fileHandler_ = new FileHandler("MOCell_main.log");
     logger_.addHandler(fileHandler_);
 

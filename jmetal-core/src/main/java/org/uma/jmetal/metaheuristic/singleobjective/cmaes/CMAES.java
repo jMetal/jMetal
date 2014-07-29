@@ -21,7 +21,7 @@
 package org.uma.jmetal.metaheuristic.singleobjective.cmaes;
 
 import org.uma.jmetal.core.*;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.random.PseudoRandom;
@@ -396,7 +396,7 @@ public class CMAES extends Algorithm {
 
       for (int i = 0; i < N; i++) {
         if (diagD[i] < 0) { // numerical problem?
-          Configuration.logger.log(Level.SEVERE,
+          JMetalLogger.logger.log(Level.SEVERE,
             "org.uma.jmetal.metaheuristic.cmaes.CMAES.updateDistribution(): WARNING - an eigenvalue has become negative.");
           counteval = maxEvaluations;
         }
@@ -446,7 +446,7 @@ public class CMAES extends Algorithm {
       }
 
       storeBest(comparator);
-      Configuration.logger.info(counteval + ": " + bestSolutionEver);
+      JMetalLogger.logger.info(counteval + ": " + bestSolutionEver);
       updateDistribution();
     }
 

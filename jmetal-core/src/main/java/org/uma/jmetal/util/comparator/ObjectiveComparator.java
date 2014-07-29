@@ -35,7 +35,7 @@ public class ObjectiveComparator implements Comparator<Solution> {
    * Stores the index of the objective to compare
    */
   private int nObj;
-  private boolean ascendingOrder_;
+  private boolean ascendingOrder;
 
   /**
    * Constructor.
@@ -44,12 +44,12 @@ public class ObjectiveComparator implements Comparator<Solution> {
    */
   public ObjectiveComparator(int nObj) {
     this.nObj = nObj;
-    ascendingOrder_ = true;
+    ascendingOrder = true;
   }
 
   public ObjectiveComparator(int nObj, boolean descendingOrder) {
     this.nObj = nObj;
-    ascendingOrder_ = !descendingOrder ;
+    ascendingOrder = !descendingOrder ;
   }
 
   /**
@@ -70,7 +70,7 @@ public class ObjectiveComparator implements Comparator<Solution> {
 
     double objetive1 = ((Solution) o1).getObjective(this.nObj);
     double objetive2 = ((Solution) o2).getObjective(this.nObj);
-    if (ascendingOrder_) {
+    if (ascendingOrder) {
       if (objetive1 < objetive2) {
         return -1;
       } else if (objetive1 > objetive2) {

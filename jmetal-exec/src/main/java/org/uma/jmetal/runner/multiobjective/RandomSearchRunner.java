@@ -23,7 +23,6 @@ package org.uma.jmetal.runner.multiobjective;
 
 import java.io.IOException;
 import java.util.logging.FileHandler;
-import java.util.logging.Logger;
 
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Problem;
@@ -32,14 +31,14 @@ import org.uma.jmetal.metaheuristic.multiobjective.randomSearch.RandomSearch;
 import org.uma.jmetal.problem.Kursawe;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.qualityIndicator.QualityIndicatorGetter;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 
 /**
  * Class for configuring and running the RandomSearch algorithm
  */
 public class RandomSearchRunner {
-  public static Logger logger_;      
+  public static java.util.logging.Logger logger_;
   public static FileHandler fileHandler_; 
 
   /**
@@ -58,7 +57,7 @@ public class RandomSearchRunner {
     QualityIndicatorGetter indicators;
 
     // Logger object and file to store log messages
-    logger_ = Configuration.logger;
+    logger_ = JMetalLogger.logger;
     fileHandler_ = new FileHandler("RandomSearch_main.log");
     logger_.addHandler(fileHandler_);
 

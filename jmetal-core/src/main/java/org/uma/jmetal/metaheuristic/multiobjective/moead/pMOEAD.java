@@ -22,7 +22,7 @@
 package org.uma.jmetal.metaheuristic.multiobjective.moead;
 
 import org.uma.jmetal.core.*;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
 
@@ -35,7 +35,6 @@ import java.util.Vector;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Class implementing the pMOEA/D algorithm
@@ -146,9 +145,9 @@ public class pMOEAD extends Algorithm implements Runnable {
       barrier_.await();
       //Configuration.logger.info("Running: " + id_ ) ;
     } catch (InterruptedException e) {
-      Configuration.logger.log(Level.SEVERE, "Error", e);
+      JMetalLogger.logger.log(Level.SEVERE, "Error", e);
     } catch (BrokenBarrierException e) {
-      Configuration.logger.log(Level.SEVERE, "Error", e);
+      JMetalLogger.logger.log(Level.SEVERE, "Error", e);
     }
 
     int first;
@@ -161,7 +160,7 @@ public class pMOEAD extends Algorithm implements Runnable {
       last = first + partitions - 1;
     }
 
-    Configuration.logger.info("Id: " + id_ + "  Partitions: " + partitions +
+    JMetalLogger.logger.info("Id: " + id_ + "  Partitions: " + partitions +
       " First: " + first + " Last: " + last);
 
     do {
@@ -202,7 +201,7 @@ public class pMOEAD extends Algorithm implements Runnable {
           parentThread_.problem_.evaluate(child);
 
         } catch (JMetalException ex) {
-          Logger.getLogger(pMOEAD.class.getName()).log(Level.SEVERE, null, ex);
+          java.util.logging.Logger.getLogger(pMOEAD.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         evaluations_++;
@@ -216,13 +215,13 @@ public class pMOEAD extends Algorithm implements Runnable {
         try {
           updateOfSolutions(child, n, type);
         } catch (JMetalException e) {
-          Configuration.logger.log(Level.SEVERE, "Error", e);
+          JMetalLogger.logger.log(Level.SEVERE, "Error", e);
         }
       }
     } while (evaluations_ < maxEvaluations_);
 
     long estimatedTime = System.currentTimeMillis() - parentThread_.initTime_;
-    Configuration.logger.info("Time thread " + id_ + ": " + estimatedTime);
+    JMetalLogger.logger.info("Time thread " + id_ + ": " + estimatedTime);
   }
 
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
@@ -276,7 +275,7 @@ public class pMOEAD extends Algorithm implements Runnable {
       try {
         thread_[i].join();
       } catch (InterruptedException ex) {
-        Logger.getLogger(pMOEAD.class.getName()).log(Level.SEVERE, null, ex);
+        java.util.logging.Logger.getLogger(pMOEAD.class.getName()).log(Level.SEVERE, null, ex);
       }
     }
 
@@ -343,7 +342,7 @@ public class pMOEAD extends Algorithm implements Runnable {
         }
         br.close();
       } catch (Exception e) {
-        Configuration.logger.log(
+        JMetalLogger.logger.log(
           Level.SEVERE,
           "initializeUniformWeight: fail when reading for file: " + dataDirectory_ + "/" + dataFileName,
           e);

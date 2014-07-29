@@ -33,14 +33,13 @@ import org.uma.jmetal.problem.Kursawe;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.qualityIndicator.QualityIndicatorGetter;
 import org.uma.jmetal.util.AlgorithmRunner;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
 import java.util.logging.FileHandler;
-import java.util.logging.Logger;
 
 /**
  * This class executes the algorithm described in:
@@ -50,7 +49,7 @@ import java.util.logging.Logger;
  * pp 284-302, April/2009.
  */
 public class MOEADRunner {
-  public static Logger logger_;
+  public static java.util.logging.Logger logger_;
   public static FileHandler fileHandler_;
 
   /**
@@ -74,7 +73,7 @@ public class MOEADRunner {
     QualityIndicatorGetter indicators;
 
     // Logger object and file to store log messages
-    logger_ = Configuration.logger;
+    logger_ = JMetalLogger.logger;
     fileHandler_ = new FileHandler("MOEAD.log");
     logger_.addHandler(fileHandler_);
 
@@ -188,19 +187,19 @@ public class MOEADRunner {
     long estimatedTime = System.currentTimeMillis() - initTime;
 
     // Result messages 
-    logger.info("Total execution time: " + estimatedTime + "ms");
-    logger.info("Objectives values have been writen to file FUN");
+    LOGGER.info("Total execution time: " + estimatedTime + "ms");
+    LOGGER.info("Objectives values have been writen to file FUN");
     population.printObjectivesToFile("FUN");
-    logger.info("Variables values have been writen to file VAR");
+    LOGGER.info("Variables values have been writen to file VAR");
     population.printVariablesToFile("VAR");
 
     if (indicators != null) {
-      logger.info("Quality indicators");
-      logger.info("Hypervolume: " + indicators.getHypervolume(population));
-      logger.info("EPSILON    : " + indicators.getEpsilon(population));
-      logger.info("GD         : " + indicators.getGD(population));
-      logger.info("IGD        : " + indicators.getIGD(population));
-      logger.info("Spread     : " + indicators.getSpread(population));
+      LOGGER.info("Quality indicators");
+      LOGGER.info("Hypervolume: " + indicators.getHypervolume(population));
+      LOGGER.info("EPSILON    : " + indicators.getEpsilon(population));
+      LOGGER.info("GD         : " + indicators.getGD(population));
+      LOGGER.info("IGD        : " + indicators.getIGD(population));
+      LOGGER.info("Spread     : " + indicators.getSpread(population));
     }
     */
 

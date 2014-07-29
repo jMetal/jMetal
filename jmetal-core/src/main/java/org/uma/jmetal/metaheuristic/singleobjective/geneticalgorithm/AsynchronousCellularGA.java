@@ -23,7 +23,7 @@ package org.uma.jmetal.metaheuristic.singleobjective.geneticalgorithm;
 
 import org.uma.jmetal.core.*;
 import org.uma.jmetal.operator.selection.BestSolutionSelection;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.Neighborhood;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
@@ -123,7 +123,7 @@ public class AsynchronousCellularGA extends Algorithm {
 
         if ((evaluations % 1000) == 0) {
           int bestSolution = (Integer) findBestSolution.execute(population);
-          Configuration.logger.info("Evals: " + evaluations + "\t Fitness: " +
+          JMetalLogger.logger.info("Evals: " + evaluations + "\t Fitness: " +
             population.get(bestSolution).getObjective(0));
         }
       }
@@ -133,7 +133,7 @@ public class AsynchronousCellularGA extends Algorithm {
     SolutionSet resultPopulation = new SolutionSet(1);
     resultPopulation.add(bestSolution);
 
-    Configuration.logger.info("Evaluations: " + evaluations);
+    JMetalLogger.logger.info("Evaluations: " + evaluations);
     return resultPopulation;
   }
 }

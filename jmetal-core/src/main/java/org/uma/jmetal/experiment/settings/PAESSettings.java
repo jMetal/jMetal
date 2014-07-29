@@ -35,16 +35,13 @@ import java.util.Properties;
  * Settings class of algorithm PAES
  */
 public class PAESSettings extends Settings {
-  public int maxEvaluations;
-  public int archiveSize;
-  public int biSections;
-  public double mutationProbability;
-  public double mutationDistributionIndex;
+  private int maxEvaluations;
+  private int archiveSize;
+  private int biSections;
+  private double mutationProbability;
+  private double mutationDistributionIndex;
 
-  /**
-   * Constructor
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Constructor */
   public PAESSettings(String problem) throws JMetalException {
     super(problem) ;
 

@@ -20,28 +20,26 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class BLXAlphaCrossoverOffspring extends Offspring {
-
-  Operator mutation_;
-  private double crossoverProbability_ = 0.9;
-  private double alpha_ = 0.5;
-  private Operator crossover_;
-  private Operator selection_;
+  private double crossoverProbability = 0.9;
+  private double alpha = 0.5;
+  private Operator crossover;
+  private Operator selection;
 
   private BLXAlphaCrossoverOffspring(
     double crossoverProbability,
     double alpha) throws JMetalException {
-    crossoverProbability_ = crossoverProbability;
-    alpha_ = alpha;
+    this.crossoverProbability = crossoverProbability;
+    this.alpha = alpha;
 
     // Crossover operator
     HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
-    crossoverParameters.put("probability", crossoverProbability_);
-    crossoverParameters.put("alpha", alpha_);
+    crossoverParameters.put("probability", this.crossoverProbability);
+    crossoverParameters.put("alpha", this.alpha);
 
-    crossover_ = CrossoverFactory.getCrossoverOperator("BLXAlphaCrossover", crossoverParameters);
-    selection_ = SelectionFactory.getSelectionOperator("BinaryTournament", null);
+    crossover = CrossoverFactory.getCrossoverOperator("BLXAlphaCrossover", crossoverParameters);
+    selection = SelectionFactory.getSelectionOperator("BinaryTournament", null);
 
-    id_ = "BLXAlphaCrossover";
+    id = "BLXAlphaCrossover";
   }
 
   public Solution getOffspring(SolutionSet solutionSet) {
@@ -49,49 +47,47 @@ public class BLXAlphaCrossoverOffspring extends Offspring {
     Solution offSpring = null;
 
     try {
-      parents[0] = (Solution) selection_.execute(solutionSet);
-      parents[1] = (Solution) selection_.execute(solutionSet);
+      parents[0] = (Solution) selection.execute(solutionSet);
+      parents[1] = (Solution) selection.execute(solutionSet);
 
-      Solution[] children = (Solution[]) crossover_.execute(parents);
+      Solution[] children = (Solution[]) crossover.execute(parents);
       offSpring = children[0];
       //Create a new solutiontype, using DE
     } catch (JMetalException ex) {
       Logger.getLogger(BLXAlphaCrossoverOffspring.class.getName()).log(Level.SEVERE, null, ex);
     }
     return offSpring;
-
-  } // getOffpring
+  }
 
   public Solution getOffspring(SolutionSet solutionSet, SolutionSet archive) {
     Solution[] parents = new Solution[2];
     Solution offSpring = null;
 
     try {
-      parents[0] = (Solution) selection_.execute(solutionSet);
+      parents[0] = (Solution) selection.execute(solutionSet);
 
       if (archive.size() > 0) {
-        parents[1] = (Solution) selection_.execute(archive);
+        parents[1] = (Solution) selection.execute(archive);
       } else {
-        parents[1] = (Solution) selection_.execute(solutionSet);
+        parents[1] = (Solution) selection.execute(solutionSet);
       }
 
-      Solution[] children = (Solution[]) crossover_.execute(parents);
+      Solution[] children = (Solution[]) crossover.execute(parents);
       offSpring = children[0];
       //Create a new solutiontype, using DE
     } catch (JMetalException ex) {
       Logger.getLogger(BLXAlphaCrossoverOffspring.class.getName()).log(Level.SEVERE, null, ex);
     }
     return offSpring;
-
-  } // getOffpring
+  }
 
   public String configuration() {
     String result = "-----\n";
-    result += "Operator: " + id_ + "\n";
-    result += "Probability: " + crossoverProbability_ + "\n";
-    result += "Alpha: " + alpha_;
+    result += "Operator: " + id + "\n";
+    result += "Probability: " + crossoverProbability + "\n";
+    result += "Alpha: " + alpha;
 
     return result;
   }
-} // BLXAlphaCrossoverOffspring
+}
 

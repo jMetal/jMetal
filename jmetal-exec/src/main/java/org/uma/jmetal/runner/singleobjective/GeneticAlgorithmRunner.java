@@ -18,17 +18,18 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.metaheuristic.singleobjective.geneticalgorithm;
+package org.uma.jmetal.runner.singleobjective;
 
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
+import org.uma.jmetal.metaheuristic.singleobjective.geneticalgorithm.GenerationalGA;
 import org.uma.jmetal.operator.crossover.CrossoverFactory;
 import org.uma.jmetal.operator.mutation.MutationFactory;
 import org.uma.jmetal.operator.selection.SelectionFactory;
 import org.uma.jmetal.problem.singleObjective.OneMax;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileOutput.FileOutputContext;
@@ -106,13 +107,13 @@ public class GeneticAlgorithmRunner {
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;
-    Configuration.logger.info("Total execution time: " + estimatedTime + "ms");
+    JMetalLogger.logger.info("Total execution time: " + estimatedTime + "ms");
 
     // Result messages
     FileOutputContext fileContext = new DefaultFileOutputContext("VAR.tsv") ;
     fileContext.setSeparator("\t");
 
-    Configuration.logger.info("Variables values have been writen to file VAR.tsv");
+    JMetalLogger.logger.info("Variables values have been writen to file VAR.tsv");
     SolutionSetOutput.printVariablesToFile(fileContext, population) ;
 
     fileContext = new DefaultFileOutputContext("FUN.tsv");

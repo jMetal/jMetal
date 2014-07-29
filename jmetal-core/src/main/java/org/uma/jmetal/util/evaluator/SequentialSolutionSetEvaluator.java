@@ -22,21 +22,17 @@
 
 package org.uma.jmetal.util.evaluator;
 
-import java.util.logging.Level;
-
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
+
+import java.util.logging.Level;
 
 /**
  * Created by Antonio J. Nebro on 30/05/14.
  */
 public class SequentialSolutionSetEvaluator implements SolutionSetEvaluator {
-//  @Override
-//    public void startup(Object parameters) {
-//  }
-
 
   @Override
   public SolutionSet evaluate(SolutionSet solutionSet, Problem problem) throws JMetalException {
@@ -46,7 +42,7 @@ public class SequentialSolutionSetEvaluator implements SolutionSetEvaluator {
         problem.evaluateConstraints(solutionSet.get(i)) ;
       }
     } catch (JMetalException e) {
-      Configuration.logger.log(Level.SEVERE, "Error evaluating solutiontype", e);
+      JMetalLogger.logger.log(Level.SEVERE, "Error evaluating solutiontype", e);
       throw new JMetalException("Error in SequentialSolutionSetEvaluatior.evaluate()") ;
     }
 

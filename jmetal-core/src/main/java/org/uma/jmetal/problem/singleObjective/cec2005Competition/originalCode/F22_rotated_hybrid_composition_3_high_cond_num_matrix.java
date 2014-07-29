@@ -46,7 +46,7 @@
 //
 package org.uma.jmetal.problem.singleObjective.cec2005Competition.originalCode;
 
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 
 public class F22_rotated_hybrid_composition_3_high_cond_num_matrix extends TestFunc {
@@ -55,9 +55,9 @@ public class F22_rotated_hybrid_composition_3_high_cond_num_matrix extends TestF
   static final public String FUNCTION_NAME =
     "Rotated Hybrid Composition Function 3 with High Condition Number Matrix";
   static final public String DEFAULT_FILE_DATA =
-    "" + Configuration.cec2005SupportDataDirectory + "/supportData/hybrid_func3_data.txt";
+    "" + JMetalLogger.cec2005SupportDataDirectory + "/supportData/hybrid_func3_data.txt";
   static final public String DEFAULT_FILE_MX_PREFIX =
-    "" + Configuration.cec2005SupportDataDirectory + "/supportData/hybrid_func3_HM_D";
+    "" + JMetalLogger.cec2005SupportDataDirectory + "/supportData/hybrid_func3_HM_D";
   static final public String DEFAULT_FILE_MX_SUFFIX = ".txt";
 
   // Number of functions

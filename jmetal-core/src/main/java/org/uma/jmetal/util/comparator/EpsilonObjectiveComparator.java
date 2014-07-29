@@ -35,12 +35,12 @@ public class EpsilonObjectiveComparator implements Comparator<Solution> {
   /**
    * Stores the objective index to compare
    */
-  private int objective_;
+  private int objective;
 
   /**
    * Stores the eta value for epsilon-dominance
    */
-  private double eta_;
+  private double eta;
 
   /**
    * Constructor.
@@ -49,8 +49,8 @@ public class EpsilonObjectiveComparator implements Comparator<Solution> {
    * @param eta  Value for epsilon-dominance.
    */
   public EpsilonObjectiveComparator(int nObj, double eta) {
-    objective_ = nObj;
-    eta_ = eta;
+    objective = nObj;
+    this.eta = eta;
   }
 
   /**
@@ -69,13 +69,13 @@ public class EpsilonObjectiveComparator implements Comparator<Solution> {
       return -1;
     }
 
-    double objective1 = ((Solution) o1).getObjective(objective_);
-    double objective2 = ((Solution) o2).getObjective(objective_);
+    double objective1 = ((Solution) o1).getObjective(objective);
+    double objective2 = ((Solution) o2).getObjective(objective);
 
     //Objective implements comparable!!!
-    if (objective1 / (1 + eta_) < objective2) {
+    if (objective1 / (1 + eta) < objective2) {
       return -1;
-    } else if (objective1 / (1 + eta_) > objective2) {
+    } else if (objective1 / (1 + eta) > objective2) {
       return 1;
     } else {
       return 0;

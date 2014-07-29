@@ -22,7 +22,7 @@
 package org.uma.jmetal.encoding.variable;
 
 import org.uma.jmetal.core.Variable;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
 
@@ -72,7 +72,7 @@ public class Real extends Variable {
 		try {
 			return new Real(this);
 		} catch (JMetalException e) {
-			Configuration.logger.log(Level.SEVERE, "Real.deepCopy.execute: JMException", e);
+			JMetalLogger.logger.log(Level.SEVERE, "Real.deepCopy.execute: JMException", e);
 			return null;
 		}
 	}

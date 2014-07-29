@@ -24,7 +24,7 @@ package org.uma.jmetal.operator.crossover;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.encoding.solutiontype.PermutationSolutionType;
 import org.uma.jmetal.encoding.variable.Permutation;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
 
@@ -38,19 +38,15 @@ import java.util.List;
  * NOTE: the type of the solutions must be Permutation..
  */
 public class TwoPointsCrossover extends Crossover {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = 5639984540815130543L;
 
   /**
-   * Valid solutiontype types to apply this operator
+   * Valid solution types to apply this operator
    */
   private static final List<Class<PermutationSolutionType>> VALID_TYPES =
     Arrays.asList(PermutationSolutionType.class);
 
-  private Double crossoverProbability_ = null;
+  private Double crossoverProbability = null;
 
   /**
    * Constructor
@@ -60,7 +56,7 @@ public class TwoPointsCrossover extends Crossover {
     super(parameters);
 
     if (parameters.get("probability") != null) {
-      crossoverProbability_ = (Double) parameters.get("probability");
+      crossoverProbability = (Double) parameters.get("probability");
     }
   }
 
@@ -152,7 +148,7 @@ public class TwoPointsCrossover extends Crossover {
         }
       }
     } else {
-      Configuration.logger.severe("TwoPointsCrossover.doCrossover: invalid " +
+      JMetalLogger.logger.severe("TwoPointsCrossover.doCrossover: invalid " +
         "type" +
         parent1.getDecisionVariables()[0].getVariableType());
       Class<String> cls = java.lang.String.class;
@@ -175,21 +171,21 @@ public class TwoPointsCrossover extends Crossover {
     if (!(VALID_TYPES.contains(parents[0].getType().getClass()) &&
       VALID_TYPES.contains(parents[1].getType().getClass()))) {
 
-      Configuration.logger.severe("TwoPointsCrossover.execute: the solutions " +
+      JMetalLogger.logger.severe("TwoPointsCrossover.execute: the solutions " +
         "are not of the right type. The type should be 'Permutation', but " +
         parents[0].getType() + " and " +
         parents[1].getType() + " are obtained");
     }
 
     if (parents.length < 2) {
-      Configuration.logger.severe("TwoPointsCrossover.execute: operator needs two " +
+      JMetalLogger.logger.severe("TwoPointsCrossover.execute: operator needs two " +
         "parents");
       Class<String> cls = java.lang.String.class;
       String name = cls.getName();
       throw new JMetalException("Exception in " + name + ".execute()");
     }
 
-    Solution[] offspring = doCrossover(crossoverProbability_,
+    Solution[] offspring = doCrossover(crossoverProbability,
       parents[0],
       parents[1]);
 

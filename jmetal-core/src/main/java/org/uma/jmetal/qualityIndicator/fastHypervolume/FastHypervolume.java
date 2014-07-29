@@ -20,12 +20,12 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-package org.uma.jmetal.qualityIndicator.fastHypervolume;
+package org.uma.jmetal.qualityIndicator.fasthypervolume;
 
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.qualityIndicator.fastHypervolume.wfg.Front;
-import org.uma.jmetal.qualityIndicator.fastHypervolume.wfg.WFGHV;
+import org.uma.jmetal.qualityIndicator.fasthypervolume.wfg.Front;
+import org.uma.jmetal.qualityIndicator.fasthypervolume.wfg.WFGHV;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 
 /**

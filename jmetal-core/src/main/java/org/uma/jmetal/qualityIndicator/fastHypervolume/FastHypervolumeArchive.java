@@ -18,7 +18,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.qualityIndicator.fastHypervolume;
+package org.uma.jmetal.qualityIndicator.fasthypervolume;
 
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.util.archive.Archive;

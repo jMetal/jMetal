@@ -25,7 +25,7 @@ import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.experiment.settings.NSGAIIBinaryRealSettings;
 import org.uma.jmetal.qualityIndicator.QualityIndicatorGetter;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileOutput.FileOutputContext;
@@ -34,7 +34,6 @@ import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.logging.FileHandler;
-import java.util.logging.Logger;
 
 /**
  * Class to configure and execute the NSGA-II algorithm.
@@ -48,7 +47,7 @@ import java.util.logging.Logger;
  */
 
 public class NSGAIIBinaryRealRunner {
-  private static Logger logger_;
+  private static java.util.logging.Logger logger_;
   private static FileHandler fileHandler_;
 
   /**
@@ -77,7 +76,7 @@ public class NSGAIIBinaryRealRunner {
     HashMap<String, Object> parameters ;
 
     // Logger object and file to store log messages
-    logger_ = Configuration.logger;
+    logger_ = JMetalLogger.logger;
     fileHandler_ = new FileHandler("NSGAII_main.log");
     logger_.addHandler(fileHandler_);
 

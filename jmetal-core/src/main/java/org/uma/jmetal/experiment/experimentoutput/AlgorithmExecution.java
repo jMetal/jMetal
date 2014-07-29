@@ -24,7 +24,7 @@ package org.uma.jmetal.experiment.experimentoutput;
 import org.uma.jmetal.experiment.ExperimentData;
 import org.uma.jmetal.experiment.ExperimentOutput;
 import org.uma.jmetal.experiment.util.MultithreadedExperimentExecutor;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 
 import java.io.File;
@@ -118,7 +118,7 @@ public class AlgorithmExecution implements ExperimentOutput {
 
   @Override
   public void generate() {
-    Configuration.logger.info("ExperimentExecution: Running algorithms");
+    JMetalLogger.logger.info("ExperimentExecution: Running algorithms");
     if (experimentDirectoryDoesNotExist()) {
        createExperimentDirectory() ;
     }
@@ -128,7 +128,7 @@ public class AlgorithmExecution implements ExperimentOutput {
     for (String algorithm : experimentData.getAlgorithmNameList()) {
       for (String problem : experimentData.getProblemList()) {
         for (int i = 0; i < experimentData.getIndependentRuns(); i++) {
-          Configuration.logger.info(
+          JMetalLogger.logger.info(
             "Adding task. Algorithm:  " + algorithm + " Problem: " + problem + " Run: " + i);
           parallelExecutor.addTask(new Object[] {algorithm, problem, i, experimentData});
         }

@@ -30,7 +30,7 @@ import org.uma.jmetal.problem.Kursawe;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.qualityIndicator.QualityIndicatorGetter;
 import org.uma.jmetal.util.AlgorithmRunner;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.CrowdingArchive;
@@ -41,7 +41,6 @@ import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
 import java.util.logging.FileHandler;
-import java.util.logging.Logger;
 
 /**
  * This class executes:
@@ -55,7 +54,7 @@ import java.util.logging.Logger;
  *   IEEE Congress on Evolutionary Computation 2013: 3153-3160
  */
 public class SMPSORunner {
-  public static Logger logger_;      
+  public static java.util.logging.Logger logger_;
   public static FileHandler fileHandler_; 
 
   /**
@@ -75,7 +74,7 @@ public class SMPSORunner {
 
     QualityIndicatorGetter indicators;
 
-    logger_ = Configuration.logger;
+    logger_ = JMetalLogger.logger;
     fileHandler_ = new FileHandler("SMPSO_main.log");
     logger_.addHandler(fileHandler_);
 

@@ -27,7 +27,7 @@ import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.experiment.Settings;
 import org.uma.jmetal.experiment.SettingsFactory;
 import org.uma.jmetal.qualityIndicator.QualityIndicatorGetter;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileOutput.FileOutputContext;
@@ -39,13 +39,12 @@ import java.io.InputStreamReader;
 import java.util.Properties;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Class for running algorithms reading the configuration from properties files
  */
 public class RunnerC {
-  private static Logger logger_;
+  private static java.util.logging.Logger logger_;
   private static FileHandler fileHandler_;
 
   /**
@@ -66,7 +65,7 @@ public class RunnerC {
 
     QualityIndicatorGetter indicators;
 
-    logger_ = Configuration.logger;
+    logger_ = JMetalLogger.logger;
     fileHandler_ = new FileHandler("jMetal.log");
     logger_.addHandler(fileHandler_);
 

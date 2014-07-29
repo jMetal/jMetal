@@ -79,7 +79,7 @@ public class RandomGenerator implements IRandomGenerator {
     advance_random();
     advance_random();
     jrand = 0;
-  } // warmup_random
+  }
 
   /* Create next batch of 55 random numbers */
   void advance_random() {
@@ -99,7 +99,7 @@ public class RandomGenerator implements IRandomGenerator {
       }
       oldrand[j1] = new_random;
     }
-  } //advance_ramdom
+  }
 
   /* Fetch a single random number between 0.0 and 1.0 */
   double randomperc() {
@@ -109,7 +109,7 @@ public class RandomGenerator implements IRandomGenerator {
       advance_random();
     }
     return ((double) oldrand[jrand]);
-  } //randomPerc
+  }
 
   /* Fetch a single integer between 0 and upperbound */
   synchronized public int nextInt(int upperBound) {
@@ -133,11 +133,11 @@ public class RandomGenerator implements IRandomGenerator {
       }
     }
     return (res);
-  } // rnd
+  }
 
   /* Fetch a single random real number between low and high including the */
   /* bounds */
   synchronized public double rndReal(double low, double high) {
     return (low + (high - low) * randomperc());
-  } //rndreal
-} // RandomGenerator
+  }
+}

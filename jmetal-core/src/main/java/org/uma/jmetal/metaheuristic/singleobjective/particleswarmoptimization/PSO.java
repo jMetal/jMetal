@@ -23,7 +23,7 @@ package org.uma.jmetal.metaheuristic.singleobjective.particleswarmoptimization;
 
 import org.uma.jmetal.core.*;
 import org.uma.jmetal.operator.selection.BestSolutionSelection;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.random.PseudoRandom;
@@ -33,7 +33,6 @@ import java.io.IOException;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Class implementing a single-objective PSO algorithm
@@ -292,7 +291,7 @@ public class PSO extends Algorithm {
         //Compute the speed
         computeSpeed(iteration, maxIterations);
       } catch (IOException ex) {
-        Logger.getLogger(PSO.class.getName()).log(Level.SEVERE, null, ex);
+        java.util.logging.Logger.getLogger(PSO.class.getName()).log(Level.SEVERE, null, ex);
       }
 
       //Compute the new positions for the swarm
@@ -321,7 +320,7 @@ public class PSO extends Algorithm {
           globalBest = particle;
         } // if
         Double bestCurrentFitness = swarm.best(comparator).getObjective(0);
-        Configuration.logger.info("Best: " + bestCurrentFitness);
+        JMetalLogger.logger.info("Best: " + bestCurrentFitness);
       }
       iteration++;
     }

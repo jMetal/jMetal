@@ -39,14 +39,14 @@ public class CrowdingArchive extends Archive {
 
   private int maxSize;
   private int objectives;
-  private Comparator<Solution> dominanceComparator;
+  private DominanceComparator dominanceComparator;
   private Comparator<Solution> equalsComparator;
   private Comparator<Solution> crowdingDistanceComparator;
 
   /**
    * Stores a <code>Distance</code> object, for distances utilities
    */
-  private Distance distance_;
+  private Distance distance;
 
   /** Constructor */
   public CrowdingArchive(int maxSize, int numberOfObjectives) {
@@ -56,7 +56,7 @@ public class CrowdingArchive extends Archive {
     dominanceComparator = new DominanceComparator();
     equalsComparator = new EqualSolutions();
     crowdingDistanceComparator = new CrowdingDistanceComparator();
-    distance_ = new Distance();
+    distance = new Distance();
   }
 
   /**
@@ -80,20 +80,19 @@ public class CrowdingArchive extends Archive {
       aux = solutionsList.get(i);
 
       flag = dominanceComparator.compare(solution, aux);
-      if (flag == 1) {               // The solutiontype to add is dominated
-        return false;                // Discard the new solutiontype
-      } else if (flag == -1) {       // A solutiontype in the archive is dominated
-        solutionsList.remove(i);    // Remove it from the population
+      if (flag == 1) {
+        return false;
+      } else if (flag == -1) {
+        solutionsList.remove(i);
       } else {
-        if (equalsComparator.compare(aux, solution) == 0) { // There is an equal solutiontype
-          // in the population
-          return false; // Discard the new solutiontype
+        if (equalsComparator.compare(aux, solution) == 0) {
+          return false;
         }
         i++;
       }
     }
     solutionsList.add(solution);
-    if (size() > maxSize) { // The archive is full
+    if (size() > maxSize) { // FIXME: check whether the removed solution is the inserted one
       Distance.crowdingDistance(this);
       remove(indexWorst(crowdingDistanceComparator));
     }

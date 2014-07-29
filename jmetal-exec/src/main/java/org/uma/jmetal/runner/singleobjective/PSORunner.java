@@ -29,19 +29,18 @@ import org.uma.jmetal.operator.mutation.Mutation;
 import org.uma.jmetal.operator.mutation.MutationFactory;
 import org.uma.jmetal.problem.singleObjective.Griewank;
 import org.uma.jmetal.problem.singleObjective.Sphere;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.logging.FileHandler;
-import java.util.logging.Logger;
 
 /**
  * Class for configuring and running a single-objective PSO algorithm
  */
 public class PSORunner {
-  public static Logger logger_;      // Logger object
+  public static java.util.logging.Logger logger_;      // Logger object
   public static FileHandler fileHandler_; // FileHandler object
 
   /**
@@ -58,7 +57,7 @@ public class PSORunner {
     Mutation mutation;
 
     // Logger object and file to store log messages
-    logger_ = Configuration.logger;
+    logger_ = JMetalLogger.logger;
     fileHandler_ = new FileHandler("PSO_main.log");
     logger_.addHandler(fileHandler_);
 

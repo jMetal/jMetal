@@ -31,7 +31,7 @@ import org.uma.jmetal.operator.mutation.MutationFactory;
 import org.uma.jmetal.operator.selection.Selection;
 import org.uma.jmetal.operator.selection.SelectionFactory;
 import org.uma.jmetal.problem.ProblemFactory;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.evaluator.SequentialSolutionSetEvaluator;
 import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
@@ -44,14 +44,13 @@ import java.util.logging.Level;
  * Settings class of algorithm NSGA-II (permutation encoding)
  */
 public class NSGAIIPermutationSettings extends Settings {
-  public int populationSize;
-  public int maxEvaluations;
+  private int populationSize;
+  private int maxEvaluations;
 
-  public double mutationProbability;
-  public double crossoverProbability;
+  private double mutationProbability;
+  private double crossoverProbability;
 
   /** Constructor */
-
   public NSGAIIPermutationSettings(String problem) {
     super(problem);
 
@@ -59,7 +58,7 @@ public class NSGAIIPermutationSettings extends Settings {
     try {
       this.problem = (new ProblemFactory()).getProblem(problemName, problemParams);
     } catch (JMetalException e) {
-      Configuration.logger.log(Level.SEVERE, "Unable to get problem", e);
+      JMetalLogger.logger.log(Level.SEVERE, "Unable to get problem", e);
     }
 
     // Default experiment.settings
@@ -91,7 +90,6 @@ public class NSGAIIPermutationSettings extends Settings {
     // Algorithm parameters
     algorithm.setInputParameter("populationSize", populationSize);
     algorithm.setInputParameter("maxEvaluations", maxEvaluations);
-
 
     // Mutation and Crossover Permutation codification
     HashMap<String, Object> parameters = new HashMap<String, Object>();

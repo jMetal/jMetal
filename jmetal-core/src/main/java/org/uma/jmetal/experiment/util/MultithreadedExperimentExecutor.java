@@ -27,7 +27,7 @@ import org.uma.jmetal.experiment.ExperimentData;
 import org.uma.jmetal.experiment.Settings;
 import org.uma.jmetal.experiment.SettingsFactory;
 import org.uma.jmetal.experiment.experimentoutput.AlgorithmExecution;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 import org.uma.jmetal.util.parallel.SynchronousParallelTaskExecutor;
 
@@ -54,18 +54,18 @@ public class MultithreadedExperimentExecutor implements SynchronousParallelTaskE
     if (threads == 0) {
       numberOfThreads = Runtime.getRuntime().availableProcessors();
     } else if (threads < 0) {
-      Configuration.logger.severe("MultithreadedExperimentExecutor: the number of threads" +
+      JMetalLogger.logger.severe("MultithreadedExperimentExecutor: the number of threads" +
         " cannot be negative number " + threads);
     } else {
       numberOfThreads = threads;
     }
-    Configuration.logger.info("THREADS: " + numberOfThreads);
+    JMetalLogger.logger.info("THREADS: " + numberOfThreads);
   }
 
   public void start(Object object) {
     experimentExecution = (AlgorithmExecution)object ;
     executor = Executors.newFixedThreadPool(numberOfThreads);
-    Configuration.logger.info("Cores: " + numberOfThreads);
+    JMetalLogger.logger.info("Cores: " + numberOfThreads);
     taskList = null;
   }
 
@@ -86,7 +86,7 @@ public class MultithreadedExperimentExecutor implements SynchronousParallelTaskE
     try {
       future = executor.invokeAll(taskList);
     } catch (InterruptedException e1) {
-      Configuration.logger.log(Level.SEVERE, "Error", e1);
+      JMetalLogger.logger.log(Level.SEVERE, "Error", e1);
     }
     List<Object> resultList = new Vector<Object>();
 
@@ -96,9 +96,9 @@ public class MultithreadedExperimentExecutor implements SynchronousParallelTaskE
         returnValue = result.get();
         resultList.add(returnValue);
       } catch (InterruptedException e) {
-        Configuration.logger.log(Level.SEVERE, "Error", e);
+        JMetalLogger.logger.log(Level.SEVERE, "Error", e);
       } catch (ExecutionException e) {
-        Configuration.logger.log(Level.SEVERE, "Error", e);
+        JMetalLogger.logger.log(Level.SEVERE, "Error", e);
       }
     }
     taskList = null;
@@ -118,7 +118,7 @@ public class MultithreadedExperimentExecutor implements SynchronousParallelTaskE
 
     /** Constructor */
     public EvaluationTask(String algorithm, String problem, int id, ExperimentData experimentData) {
-      Configuration.logger.info(
+      JMetalLogger.logger.info(
         " Task: " + algorithmName + ", problem: " + problemName + ", run: " + id);
       problemName = problem;
       algorithmName = algorithm;
@@ -150,7 +150,7 @@ public class MultithreadedExperimentExecutor implements SynchronousParallelTaskE
         algorithm = settings.configure();
       }
 
-      Configuration.logger.info(
+      JMetalLogger.logger.info(
         " Running algorithm: " + algorithmName + ", problem: " + problemName + ", run: " + id);
 
       SolutionSet resultFront = algorithm.execute();
@@ -164,7 +164,7 @@ public class MultithreadedExperimentExecutor implements SynchronousParallelTaskE
       experimentDirectory = new File(directory);
       if (!experimentDirectory.exists()) {
         boolean result = new File(directory).mkdirs();
-        Configuration.logger.info("Creating " + directory);
+        JMetalLogger.logger.info("Creating " + directory);
       }
 
       SolutionSetOutput.printObjectivesToFile(resultFront, directory + "/" + experimentExecution.getParetoFrontFileName() + "." + id);

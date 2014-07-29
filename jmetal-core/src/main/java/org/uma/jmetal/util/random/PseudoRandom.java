@@ -21,7 +21,7 @@
 
 package org.uma.jmetal.util.random;
 
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 
 import java.io.BufferedWriter;
@@ -38,22 +38,22 @@ public class PseudoRandom {
   /**
    * generator used to obtain the random values
    */
-  private static IRandomGenerator random_ = null;
-  private static RandomGenerator defaultGenerator_ = new RandomGenerator();
+  private static IRandomGenerator random = null;
+  private static RandomGenerator defaultGenerator = new RandomGenerator();
 
   /**
    * Constructor.
    * Creates a new instance of PseudoRandom.
    */
   private PseudoRandom() {
-    if (random_ == null) {
+    if (random == null) {
       //this.random = new java.util.Random((long)seed);
-      random_ = new RandomGenerator();
+      random = new RandomGenerator();
     }
   }
 
   public static void setRandomGenerator(IRandomGenerator generator) {
-    random_ = generator;
+    random = generator;
   }
 
   /**
@@ -62,10 +62,10 @@ public class PseudoRandom {
    * @return A random int value.
    */
   public static int randInt() {
-    if (random_ == null) {
-      random_ = defaultGenerator_;
+    if (random == null) {
+      random = defaultGenerator;
     }
-    return random_.nextInt(Integer.MAX_VALUE);
+    return random.nextInt(Integer.MAX_VALUE);
   }
 
   /**
@@ -73,10 +73,10 @@ public class PseudoRandom {
    * Returns A random double value.
    */
   public static double randDouble() {
-    if (random_ == null) {
-      random_ = defaultGenerator_;
+    if (random == null) {
+      random = defaultGenerator;
     }
-    return random_.nextDouble();
+    return random.nextDouble();
   }
 
   /**
@@ -88,10 +88,10 @@ public class PseudoRandom {
    *                 Return A pseudo random int value between minBound and maxBound.
    */
   public static int randInt(int minBound, int maxBound) {
-    if (random_ == null) {
-      random_ = defaultGenerator_;
+    if (random == null) {
+      random = defaultGenerator;
     }
-    return minBound + random_.nextInt(maxBound - minBound);
+    return minBound + random.nextInt(maxBound - minBound);
   }
 
   /**
@@ -103,10 +103,10 @@ public class PseudoRandom {
    * @return A pseudo random double value between minBound and maxBound
    */
   public static double randDouble(double minBound, double maxBound) {
-    if (random_ == null) {
-      random_ = defaultGenerator_;
+    if (random == null) {
+      random = defaultGenerator;
     }
-    return minBound + random_.nextDouble() * (maxBound - minBound);
+    return minBound + random.nextDouble() * (maxBound - minBound);
   }
 
   /**
@@ -232,7 +232,7 @@ public class PseudoRandom {
 
       bw.close();
     } catch (IOException e) {
-      Configuration.logger.log(Level.SEVERE, "Error acceding to the file", e);
+      JMetalLogger.logger.log(Level.SEVERE, "Error acceding to the file", e);
     }
 
   }

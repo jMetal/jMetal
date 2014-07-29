@@ -2,7 +2,7 @@ package org.uma.jmetal.metaheuristic.multiobjective.nsgaII;
 
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.Ranking;
 import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
@@ -11,11 +11,10 @@ import org.uma.jmetal.util.offspring.PolynomialMutationOffspring;
 import org.uma.jmetal.util.random.PseudoRandom;
 
 public class NSGAIIRandom extends NSGAIITemplate {
-
   private static final long serialVersionUID = -9113018415834859888L;
 
-  int[] contributionCounter_;
-  double[] contribution_;
+  int[] contributionCounter;
+  double[] contribution;
 
   double total = 0.0;
 
@@ -28,23 +27,23 @@ public class NSGAIIRandom extends NSGAIITemplate {
     contrReal[0] = contrReal[1] = contrReal[2] = 0;
 
     Offspring[] getOffspring;
-    int N_O; // number of offpring objects
+    int numberOfOffspringObjects;
 
     getOffspring = ((Offspring[]) getInputParameter("offspringsCreators"));
-    N_O = getOffspring.length;
+    numberOfOffspringObjects = getOffspring.length;
 
-    contribution_ = new double[N_O];
-    contributionCounter_ = new int[N_O];
+    contribution = new double[numberOfOffspringObjects];
+    contributionCounter = new int[numberOfOffspringObjects];
 
-    contribution_[0] = (double) (populationSize / (double) N_O) / (double) populationSize;
-    for (int i = 1; i < N_O; i++) {
-      contribution_[i] = (double) (populationSize / (double) N_O) / (double) populationSize
-        + (double) contribution_[i - 1];
+    contribution[0] = (double) (populationSize / (double) numberOfOffspringObjects) / (double) populationSize;
+    for (int i = 1; i < numberOfOffspringObjects; i++) {
+      contribution[i] = (double) (populationSize / (double) numberOfOffspringObjects) / (double) populationSize
+        + (double) contribution[i - 1];
     }
 
-    for (int i = 0; i < N_O; i++) {
-      Configuration.logger.info(getOffspring[i].configuration());
-      Configuration.logger.info("Contribution: " + contribution_[i]);
+    for (int i = 0; i < numberOfOffspringObjects; i++) {
+      JMetalLogger.logger.info(getOffspring[i].configuration());
+      JMetalLogger.logger.info("Contribution: " + contribution[i]);
     }
 
     readParameterSettings();
@@ -70,9 +69,9 @@ public class NSGAIIRandom extends NSGAIITemplate {
           boolean found = false;
           Solution offSpring = null;
           double rnd = PseudoRandom.randDouble();
-          for (selected = 0; selected < N_O; selected++) {
+          for (selected = 0; selected < numberOfOffspringObjects; selected++) {
 
-            if (!found && (rnd <= contribution_[selected])) {
+            if (!found && (rnd <= contribution[selected])) {
               if ("DE".equals(getOffspring[selected].id())) {
                 offSpring = getOffspring[selected].getOffspring(population, i);
               } else if ("SBXCrossover".equals(getOffspring[selected].id())) {
@@ -81,7 +80,7 @@ public class NSGAIIRandom extends NSGAIITemplate {
                 offSpring =
                   ((PolynomialMutationOffspring) getOffspring[selected]).getOffspring(individual);
               } else {
-                Configuration.logger.info("Error in NSGAIITRandom. Operator " + offSpring + " does not exist");
+                JMetalLogger.logger.info("Error in NSGAIITRandom. Operator " + offSpring + " does not exist");
               }
 
               offSpring.setFitness((int) selected);

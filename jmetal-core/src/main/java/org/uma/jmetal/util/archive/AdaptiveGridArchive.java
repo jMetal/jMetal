@@ -83,8 +83,8 @@ public class AdaptiveGridArchive extends Archive {
         }
       }
       else if (flag == 1) { // An Individual into the file dominates the
-        // solutiontype to insert
-        return false; // The solutiontype will not be inserted
+        // solution to insert
+        return false; // The solution will not be inserted
       }
     }
 

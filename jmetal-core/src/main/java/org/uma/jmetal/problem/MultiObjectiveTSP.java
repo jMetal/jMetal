@@ -24,7 +24,7 @@ import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.encoding.solutiontype.PermutationSolutionType;
 import org.uma.jmetal.encoding.variable.Permutation;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 
 import java.io.*;
@@ -57,7 +57,7 @@ public class MultiObjectiveTSP extends Problem {
 
     distanceMatrix = readProblem(fileDistances);
     costMatrix = readProblem(fileCost);
-    Configuration.logger.info(""+ numberOfCities);
+    JMetalLogger.logger.info(""+ numberOfCities);
     length[0] = numberOfCities;
 
     if (solutionType.compareTo("Permutation") == 0) {
@@ -163,7 +163,7 @@ public class MultiObjectiveTSP extends Problem {
         }
       }
     } catch (Exception e) {
-      Configuration.logger
+      JMetalLogger.logger
         .log(Level.SEVERE, "mTSP.readProblem(): error when reading data file", e);
       throw new Exception("mTSP.readProblem(): error when reading data file " + e);
     }

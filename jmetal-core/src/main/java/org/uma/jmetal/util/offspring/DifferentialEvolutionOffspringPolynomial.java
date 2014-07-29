@@ -13,36 +13,35 @@ import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.operator.mutation.MutationFactory;
 import org.uma.jmetal.operator.selection.SelectionFactory;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 
 import java.util.HashMap;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class DifferentialEvolutionOffspringPolynomial extends Offspring {
 
-  double crossoverProbability_ = 0.9;
-  double distributionIndexForCrossover_ = 20;
-  private double mutationProbability_ = 0.0;
-  private double distributionIndexForMutation_ = 20;
-  private Operator mutation_;
-  private Operator selection_;
+  double crossoverProbability = 0.9;
+  double distributionIndexForCrossover = 20;
+  private double mutationProbability = 0.0;
+  private double distributionIndexForMutation = 20;
+  private Operator mutation;
+  private Operator selection;
 
   private DifferentialEvolutionOffspringPolynomial(double mutationProbability,
     double distributionIndexForMutation
   ) throws JMetalException {
-    mutationProbability_ = mutationProbability;
-    distributionIndexForMutation_ = distributionIndexForMutation;
+    this.mutationProbability = mutationProbability;
+    this.distributionIndexForMutation = distributionIndexForMutation;
 
     HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
-    mutationParameters.put("probability", mutationProbability_);
-    mutationParameters.put("distributionIndex", distributionIndexForMutation_);
-    mutation_ = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
+    mutationParameters.put("probability", this.mutationProbability);
+    mutationParameters.put("distributionIndex", this.distributionIndexForMutation);
+    mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
 
-    selection_ = SelectionFactory.getSelectionOperator("BinaryTournament", null);
+    selection = SelectionFactory.getSelectionOperator("BinaryTournament", null);
 
-    id_ = "Polynomial";
+    id = "Polynomial";
   }
 
   public Solution getOffspring(SolutionSet solutionSet) {
@@ -50,18 +49,17 @@ public class DifferentialEvolutionOffspringPolynomial extends Offspring {
     Solution offSpring = null;
 
     try {
-      offSpring = new Solution((Solution) selection_.execute(solutionSet));
+      offSpring = new Solution((Solution) selection.execute(solutionSet));
 
 
-      mutation_.execute(offSpring);
+      mutation.execute(offSpring);
       //Create a new solutiontype, using DE
     } catch (JMetalException ex) {
-      Logger.getLogger(DifferentialEvolutionOffspringPolynomial.class.getName())
+      java.util.logging.Logger.getLogger(DifferentialEvolutionOffspringPolynomial.class.getName())
         .log(Level.SEVERE, null, ex);
     }
     return offSpring;
-
-  } // getOffspring
+  }
 
   public Solution getOffspring(SolutionSet solutionSet, SolutionSet archive) {
     Solution[] parents = null;
@@ -69,36 +67,34 @@ public class DifferentialEvolutionOffspringPolynomial extends Offspring {
 
     try {
       // FIXME: this will return an exception
-      parents[0] = (Solution) selection_.execute(solutionSet);
+      parents[0] = (Solution) selection.execute(solutionSet);
 
       if (archive.size() > 0) {
-        parents[1] = (Solution) selection_.execute(archive);
+        parents[1] = (Solution) selection.execute(archive);
       } else {
-        parents[1] = (Solution) selection_.execute(solutionSet);
+        parents[1] = (Solution) selection.execute(solutionSet);
       }
 
-      offSpring = new Solution(new Solution((Solution) selection_.execute(solutionSet)));
+      offSpring = new Solution(new Solution((Solution) selection.execute(solutionSet)));
 
 
-      mutation_.execute(offSpring);
+      mutation.execute(offSpring);
       //Create a new solutiontype, using DE
     } catch (JMetalException ex) {
-      Logger.getLogger(DifferentialEvolutionOffspringPolynomial.class.getName())
+      java.util.logging.Logger.getLogger(DifferentialEvolutionOffspringPolynomial.class.getName())
         .log(Level.SEVERE, null, ex);
     }
     return offSpring;
-
-  } // getOffpring
+  }
 
   public Solution getOffspring(Solution solution) {
     Solution res = new Solution(solution);
     try {
-      mutation_.execute(res);
+      mutation.execute(res);
     } catch (JMetalException e) {
-      Configuration.logger.log(Level.SEVERE, "Error", e);
+      JMetalLogger.logger.log(Level.SEVERE, "Error", e);
     }
     return res;
-
   }
 } 
 

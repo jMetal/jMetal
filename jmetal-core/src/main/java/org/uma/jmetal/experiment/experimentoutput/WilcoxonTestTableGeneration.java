@@ -2,7 +2,7 @@ package org.uma.jmetal.experiment.experimentoutput;
 
 import org.uma.jmetal.experiment.ExperimentData;
 import org.uma.jmetal.experiment.ExperimentOutput;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 
 import java.io.File;
@@ -61,7 +61,7 @@ public class WilcoxonTestTableGeneration implements ExperimentOutput {
   @Override public void generate() {
     try {
       for (int indicator = 0; indicator < indicatorList.length; indicator++) {
-        Configuration.logger.info("Indicator: " + indicatorList[indicator]);
+        JMetalLogger.logger.info("Indicator: " + indicatorList[indicator]);
         String rFile =
           outputDirectory + "/" + indicatorList[indicator] + ".Wilcoxon.R";
         String texFile =
@@ -362,7 +362,7 @@ public class WilcoxonTestTableGeneration implements ExperimentOutput {
         os.close();
       }
     } catch (IOException e) {
-      Configuration.logger.log(Level.SEVERE, "Error", e);
+      JMetalLogger.logger.log(Level.SEVERE, "Error", e);
     }
   }
 

@@ -3,7 +3,7 @@ package org.uma.jmetal.metaheuristic.multiobjective.nsgaII;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.Distance;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.Ranking;
@@ -17,19 +17,12 @@ import org.uma.jmetal.util.random.PseudoRandom;
 import java.util.Comparator;
 
 public class NSGAIIAdaptive extends NSGAIITemplate {
-
   private static final long serialVersionUID = 4290510927100994634L;
 
-  public int populationSize_;
-  public SolutionSet population_;
-  public SolutionSet offspringPopulation_;
-  public SolutionSet union_;
+  public SolutionSet union;
 
-  int maxEvaluations_;
-  int evaluations_;
-
-  int[] contributionCounter_;
-  double[] contribution_;
+  int[] contributionCounter;
+  double[] contribution;
 
   public NSGAIIAdaptive(SolutionSetEvaluator evaluator) {
     super(evaluator);
@@ -54,14 +47,14 @@ public class NSGAIIAdaptive extends NSGAIITemplate {
     Operator selectionOperator;
 
     //Read parameter values
-    populationSize_ = ((Integer) getInputParameter("populationSize")).intValue();
+    populationSize = ((Integer) getInputParameter("populationSize")).intValue();
     //CR_ = ((Double) getInputParameter("CR")).doubleValue();
     //F_ = ((Double) getInputParameter("F")).doubleValue();
-    maxEvaluations_ = ((Integer) getInputParameter("maxEvaluations")).intValue();
+    maxEvaluations = ((Integer) getInputParameter("maxEvaluations")).intValue();
 
     //Init the variables
-    population_ = new SolutionSet(populationSize_);
-    evaluations_ = 0;
+    population = new SolutionSet(populationSize);
+    evaluations = 0;
 
     selectionOperator = operators_.get("selection");
 
@@ -71,37 +64,37 @@ public class NSGAIIAdaptive extends NSGAIITemplate {
     getOffspring = ((Offspring[]) getInputParameter("offspringsCreators"));
     N_O = getOffspring.length;
 
-    contribution_ = new double[N_O];
-    contributionCounter_ = new int[N_O];
+    contribution = new double[N_O];
+    contributionCounter = new int[N_O];
 
-    contribution_[0] = (double) (populationSize_ / (double) N_O) / (double) populationSize_;
+    contribution[0] = (double) (populationSize / (double) N_O) / (double) populationSize;
     for (int i = 1; i < N_O; i++) {
-      contribution_[i] = (double) (populationSize_ / (double) N_O) / (double) populationSize_
-        + (double) contribution_[i - 1];
+      contribution[i] = (double) (populationSize / (double) N_O) / (double) populationSize
+        + (double) contribution[i - 1];
     }
 
     for (int i = 0; i < N_O; i++) {
-      Configuration.logger.info(getOffspring[i].configuration());
-      Configuration.logger.info("Contribution: " + contribution_[i]);
+      JMetalLogger.logger.info(getOffspring[i].configuration());
+      JMetalLogger.logger.info("Contribution: " + contribution[i]);
     }
 
     createInitialPopulation();
-    evaluatePopulation(population_);
+    evaluatePopulation(population);
 
 
-    for (int i = 0; i < populationSize_; i++) {
-      population_.get(i).setLocation(i);
+    for (int i = 0; i < populationSize; i++) {
+      population.get(i).setLocation(i);
     }
 
-    while (evaluations_ < maxEvaluations_) {
+    while (evaluations < maxEvaluations) {
 
       // Create the offSpring solutionSet
-      offspringPopulation_ = new SolutionSet(populationSize_);
+      offspringPopulation = new SolutionSet(populationSize);
       Solution[] parents = new Solution[2];
-      for (int i = 0; i < populationSize_; i++) {
-        if (evaluations_ < maxEvaluations_) {
+      for (int i = 0; i < populationSize; i++) {
+        if (evaluations < maxEvaluations) {
           Solution individual =
-            new Solution(population_.get(PseudoRandom.randInt(0, populationSize_ - 1)));
+            new Solution(population.get(PseudoRandom.randInt(0, populationSize - 1)));
 
           int selected = 0;
           boolean found = false;
@@ -109,19 +102,19 @@ public class NSGAIIAdaptive extends NSGAIITemplate {
           double rnd = PseudoRandom.randDouble();
           for (selected = 0; selected < N_O; selected++) {
 
-            if (!found && (rnd <= contribution_[selected])) {
+            if (!found && (rnd <= contribution[selected])) {
               if ("DE".equals(getOffspring[selected].id())) {
-                offSpring = getOffspring[selected].getOffspring(population_, i);
+                offSpring = getOffspring[selected].getOffspring(population, i);
                 contrDE++;
               } else if ("SBXCrossover".equals(getOffspring[selected].id())) {
-                offSpring = getOffspring[selected].getOffspring(population_);
+                offSpring = getOffspring[selected].getOffspring(population);
                 contrSBX++;
               } else if ("PolynomialMutation".equals(getOffspring[selected].id())) {
                 offSpring =
                   ((PolynomialMutationOffspring) getOffspring[selected]).getOffspring(individual);
                 contrPol++;
               } else {
-                Configuration.logger.info("Error in NSGAIIAdaptive. Operator " + offSpring + " does not exist");
+                JMetalLogger.logger.info("Error in NSGAIIAdaptive. Operator " + offSpring + " does not exist");
               }
 
               offSpring.setFitness((int) selected);
@@ -130,21 +123,21 @@ public class NSGAIIAdaptive extends NSGAIITemplate {
           }
 
           problem_.evaluate(offSpring);
-          offspringPopulation_.add(offSpring);
-          evaluations_ += 1;
+          offspringPopulation.add(offSpring);
+          evaluations += 1;
         }
       }
 
       // Create the solutionSet union of solutionSet and offSpring
-      union_ = ((SolutionSet) population_).union(offspringPopulation_);
+      union = ((SolutionSet) population).union(offspringPopulation);
 
       // Ranking the union
-      Ranking ranking = new Ranking(union_);
+      Ranking ranking = new Ranking(union);
 
-      int remain = populationSize_;
+      int remain = populationSize;
       int index = 0;
       SolutionSet front = null;
-      population_.clear();
+      population.clear();
 
       // Obtain the next front
       front = ranking.getSubfront(index);
@@ -154,7 +147,7 @@ public class NSGAIIAdaptive extends NSGAIITemplate {
         distance.crowdingDistanceAssignment(front);
         //Add the individuals of this front
         for (int k = 0; k < front.size(); k++) {
-          population_.add(front.get(k));
+          population.add(front.get(k));
         } // for
 
         //Decrement remain
@@ -172,7 +165,7 @@ public class NSGAIIAdaptive extends NSGAIITemplate {
         distance.crowdingDistanceAssignment(front);
         front.sort(new CrowdingComparator());
         for (int k = 0; k < remain; k++) {
-          population_.add(front.get(k));
+          population.add(front.get(k));
         }
 
         remain = 0;
@@ -182,49 +175,49 @@ public class NSGAIIAdaptive extends NSGAIITemplate {
       // CONTRIBUTION CALCULATING PHASE
       // First: reset contribution counter
       for (int i = 0; i < N_O; i++) {
-        contributionCounter_[i] = 0;
+        contributionCounter[i] = 0;
       }
 
       // Second: determine the contribution of each operator
-      for (int i = 0; i < population_.size(); i++) {
-        if ((int) population_.get(i).getFitness() != -1) {
-          contributionCounter_[(int) population_.get(i).getFitness()] += 1;
+      for (int i = 0; i < population.size(); i++) {
+        if ((int) population.get(i).getFitness() != -1) {
+          contributionCounter[(int) population.get(i).getFitness()] += 1;
         }
-        population_.get(i).setFitness(-1);
+        population.get(i).setFitness(-1);
       }
 
-      contrTotalDE += contributionCounter_[0];
-      contrTotalSBX += contributionCounter_[1];
-      contrTotalPol += contributionCounter_[2];
+      contrTotalDE += contributionCounter[0];
+      contrTotalSBX += contributionCounter[1];
+      contrTotalPol += contributionCounter[2];
 
       int minimumContribution = 2;
       int totalContributionCounter = 0;
 
       for (int i = 0; i < N_O; i++) {
-        if (contributionCounter_[i] < minimumContribution) {
-          contributionCounter_[i] = minimumContribution;
+        if (contributionCounter[i] < minimumContribution) {
+          contributionCounter[i] = minimumContribution;
         }
-        totalContributionCounter += contributionCounter_[i];
+        totalContributionCounter += contributionCounter[i];
       }
 
       if (totalContributionCounter == 0) {
         for (int i = 0; i < N_O; i++) {
-          contributionCounter_[i] = 10;
+          contributionCounter[i] = 10;
         }
       }
 
       // Third: calculating contribution
-      contribution_[0] = contributionCounter_[0] * 1.0
+      contribution[0] = contributionCounter[0] * 1.0
         / (double) totalContributionCounter;
       for (int i = 1; i < N_O; i++) {
-        contribution_[i] = contribution_[i - 1] + 1.0
-          * contributionCounter_[i]
+        contribution[i] = contribution[i - 1] + 1.0
+          * contributionCounter[i]
           / (double) totalContributionCounter;
       }
     }
 
     // Return the first non-dominated front
-    Ranking ranking = new Ranking(population_);
+    Ranking ranking = new Ranking(population);
     return ranking.getSubfront(0);
   }
 }

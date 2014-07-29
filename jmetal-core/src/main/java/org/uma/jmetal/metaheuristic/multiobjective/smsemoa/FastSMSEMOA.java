@@ -20,12 +20,13 @@
 
 package org.uma.jmetal.metaheuristic.multiobjective.smsemoa;
 
-import org.uma.jmetal.core.*;
-import org.uma.jmetal.qualityIndicator.Hypervolume;
+import org.uma.jmetal.core.Algorithm;
+import org.uma.jmetal.core.Operator;
+import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.qualityIndicator.QualityIndicatorGetter;
-import org.uma.jmetal.qualityIndicator.fastHypervolume.FastHypervolume;
-import org.uma.jmetal.qualityIndicator.util.MetricsUtil;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.qualityIndicator.fasthypervolume.FastHypervolume;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.Ranking;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
@@ -53,33 +54,21 @@ import java.util.logging.Level;
  * This algoritm is SMS-EMOA using the FastHypervolume class
  */
 public class FastSMSEMOA extends Algorithm {
-
   private static final long serialVersionUID = 2217597718629923190L;
-
-  private MetricsUtil utils_;
-  private Hypervolume hv_;
 
   public FastSMSEMOA() {
     super();
-    this.utils_ = new MetricsUtil();
-    this.hv_ = new Hypervolume();
-  } // FastSMSEMOA
+  }
 
-  /**
-   * Runs the FastSMSEMOA algorithm.
-   *
-   * @return a <code>SolutionSet</code> that is a set of non dominated solutions
-   * as a experimentoutput of the algorithm execution
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Execute() method */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     int populationSize;
     int maxEvaluations;
     int evaluations;
     double offset;
 
-    QualityIndicatorGetter indicators; // QualityIndicator object
-    int requiredEvaluations; // Use in the example of use of the indicators object (see below)
+    QualityIndicatorGetter indicators;
+    int requiredEvaluations;
 
     FastHypervolume fastHypervolume;
 
@@ -119,7 +108,7 @@ public class FastSMSEMOA extends Algorithm {
       problem_.evaluateConstraints(newSolution);
       evaluations++;
       population.add(newSolution);
-    } //for
+    }
 
     // Generations ...
     while (evaluations < maxEvaluations) {
@@ -134,7 +123,7 @@ public class FastSMSEMOA extends Algorithm {
           Solution parent = (Solution) selected;
           selectedParents.add(parent);
         } catch (ClassCastException e) {
-          Configuration.logger.log(Level.WARNING, "Class cast exception", e);
+          JMetalLogger.logger.log(Level.WARNING, "Class cast exception", e);
           parents = (Solution[]) selected;
           Collections.addAll(selectedParents, parents);
         }
@@ -170,7 +159,7 @@ public class FastSMSEMOA extends Algorithm {
 
       SolutionSet lastFront = ranking.getSubfront(ranking.getNumberOfSubfronts() - 1);
 
-      //FastHypervolume fastHypervolume = new FastHypervolume() ;
+      //FastHypervolume fasthypervolume = new FastHypervolume() ;
       fastHypervolume.computeHVContributions(lastFront);
       lastFront.sort(new CrowdingDistanceComparator());
 
@@ -185,17 +174,6 @@ public class FastSMSEMOA extends Algorithm {
       }
       for (int i = 0; i < lastFront.size() - 1; i++) {
         population.add(lastFront.get(i));
-      }
-
-      // This piece of code shows how to use the indicator object into the code
-      // of SMS-EMOA. In particular, it finds the number of evaluations required
-      // by the algorithm to obtain a Pareto front with a hypervolume higher
-      // than the hypervolume of the true Pareto front.
-      if (indicators != null && requiredEvaluations == 0) {
-        double HV = indicators.getHypervolume(population);
-        if (HV >= (0.98 * indicators.getTrueParetoFrontHypervolume())) {
-          requiredEvaluations = evaluations;
-        }
       }
     }
 

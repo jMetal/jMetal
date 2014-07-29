@@ -35,98 +35,98 @@ import java.util.Comparator;
  * This class implements the GDE3 algorithm.
  */
 public class GDE3 extends Algorithm {
-
   private static final long serialVersionUID = -8007862618252202475L;
 
-  protected SolutionSetEvaluator evaluator_ ;
+  protected SolutionSetEvaluator evaluator;
 
-  protected int populationSize_;
-  protected int maxIterations_;
-  protected int iterations_;
+  protected int populationSize;
+  protected int maxIterations;
+  protected int iterations;
 
-  protected SolutionSet population_;
-  protected SolutionSet offspringPopulation_;
+  protected SolutionSet population;
+  protected SolutionSet offspringPopulation;
 
-  protected Operator crossoverOperator_;
-  protected Operator selectionOperator_;
+  protected Operator crossoverOperator;
+  protected Operator selectionOperator;
 
-  protected Comparator dominance_;
+  protected Comparator dominanceComparator;
 
-  protected Distance distance_ ;
+  protected Distance distance;
 
+  /**
+   * @deprecated
+   */
   @Deprecated
   public GDE3(SolutionSetEvaluator evaluator) {
     super();
-    evaluator_ = evaluator ;
-    distance_ = new Distance();
-    dominance_ = new DominanceComparator();
-    iterations_ = 0 ;
+    this.evaluator = evaluator ;
+    distance = new Distance();
+    dominanceComparator = new DominanceComparator();
+    iterations = 0 ;
   }
 
   /** Constructor */
   public GDE3(Builder builder) {
     super() ;
-    problem_ = builder.problem_ ;
-    maxIterations_ = builder.maxIterations_ ;
-    crossoverOperator_ = builder.crossoverOperator_ ;
-    selectionOperator_ = builder.selectionOperator_ ;
-    populationSize_ = builder.populationSize_ ;
-    evaluator_ = builder.evaluator_ ;
+    problem_ = builder.problem;
+    maxIterations = builder.maxIterations;
+    crossoverOperator = builder.crossoverOperator;
+    selectionOperator = builder.selectionOperator;
+    populationSize = builder.populationSize;
+    evaluator = builder.evaluator;
 
-    distance_ = new Distance();
-    dominance_ = new DominanceComparator();
+    distance = new Distance();
+    dominanceComparator = new DominanceComparator();
   }
 
   /** execute() method  */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
-    //readParameterSettings();
     createInitialPopulation();
-    population_ = evaluatePopulation(population_);
+    population = evaluatePopulation(population);
 
     // Generations ...
     while (!stoppingCondition()) {
 
       // Create the offSpring solutionSet
-      offspringPopulation_ = new SolutionSet(populationSize_ * 2);
-      SolutionSet tmpSolutionSet = new SolutionSet(populationSize_) ;
+      offspringPopulation = new SolutionSet(populationSize * 2);
+      SolutionSet tmpSolutionSet = new SolutionSet(populationSize) ;
 
-      for (int i = 0; i < populationSize_; i++) {
+      for (int i = 0; i < populationSize; i++) {
         // Obtain parents. Two parameters are required: the population and the 
         //                 index of the current individual
-        Solution[] parent = (Solution[]) selectionOperator_.execute(new Object[] {population_, i});
+        Solution[] parent = (Solution[]) selectionOperator.execute(new Object[] {population, i});
 
         Solution child;
         // Crossover. Two parameters are required: the current individual and the 
         //            array of parents
-        child = (Solution) crossoverOperator_.execute(new Object[] {population_.get(i), parent});
+        child = (Solution) crossoverOperator.execute(new Object[] {population.get(i), parent});
 
         tmpSolutionSet.add(child);
       }
       tmpSolutionSet = evaluatePopulation(tmpSolutionSet);
 
-      for (int i = 0; i < populationSize_; i++) {
+      for (int i = 0; i < populationSize; i++) {
         // Dominance org.uma.test
         Solution child = tmpSolutionSet.get(i) ;
         int result;
-        result = dominance_.compare(population_.get(i), child);
+        result = dominanceComparator.compare(population.get(i), child);
         if (result == -1) {
           // Solution i dominates child
-          offspringPopulation_.add(population_.get(i));
-        }
-        else if (result == 1) {
+          offspringPopulation.add(population.get(i));
+        } else if (result == 1) {
           // child dominates
-          offspringPopulation_.add(child);
+          offspringPopulation.add(child);
         } else {
           // the two solutions are non-dominated
-          offspringPopulation_.add(child);
-          offspringPopulation_.add(population_.get(i));
+          offspringPopulation.add(child);
+          offspringPopulation.add(population.get(i));
         }
       }
 
       // Ranking the offspring population
-      Ranking ranking = new Ranking(offspringPopulation_);
+      Ranking ranking = new Ranking(offspringPopulation);
 
-      population_.clear();
+      population.clear();
       int rankingIndex = 0 ;
       while (populationIsNotFull()) {
         if (subfrontFillsIntoThePopulation(ranking, rankingIndex)) {
@@ -138,7 +138,7 @@ public class GDE3 extends Algorithm {
         }
       }
 
-      iterations_ ++ ;
+      iterations++ ;
     }
 
     tearDown();
@@ -147,46 +147,46 @@ public class GDE3 extends Algorithm {
   }
 
   public Operator getCrossoverOperator() {
-    return crossoverOperator_ ;
+    return crossoverOperator;
   }
 
   public Operator getSelectionOperator() {
-    return selectionOperator_ ;
+    return selectionOperator;
   }
 
   public int getPopulationSize() {
-    return populationSize_ ;
+    return populationSize;
   }
 
   public int getMaxIterations() {
-    return maxIterations_ ;
+    return maxIterations;
   }
 
   @Deprecated
   void readParameterSettings() {
-    populationSize_ = ((Integer) this.getInputParameter("populationSize")).intValue();
-    maxIterations_ = ((Integer) this.getInputParameter("maxIterations")).intValue();
+    populationSize = ((Integer) this.getInputParameter("populationSize")).intValue();
+    maxIterations = ((Integer) this.getInputParameter("maxIterations")).intValue();
 
-    selectionOperator_ = operators_.get("selection");
-    crossoverOperator_ = operators_.get("crossover");
+    selectionOperator = operators_.get("selection");
+    crossoverOperator = operators_.get("crossover");
   }
 
   protected void createInitialPopulation() throws ClassNotFoundException, JMetalException {
-    population_ = new SolutionSet(populationSize_);
+    population = new SolutionSet(populationSize);
 
     Solution newSolution;
-    for (int i = 0; i < populationSize_; i++) {
+    for (int i = 0; i < populationSize; i++) {
       newSolution = new Solution(problem_);
-      population_.add(newSolution);
+      population.add(newSolution);
     }
   }
 
   protected SolutionSet evaluatePopulation(SolutionSet population) throws JMetalException {
-    return evaluator_.evaluate(population, problem_) ;
+    return evaluator.evaluate(population, problem_) ;
   }
 
   protected boolean stoppingCondition() {
-    return iterations_ == maxIterations_ ;
+    return iterations == maxIterations;
   }
 
   protected void addRankedSolutionsToPopulation(Ranking ranking, int rank) throws JMetalException {
@@ -195,13 +195,13 @@ public class GDE3 extends Algorithm {
     front = ranking.getSubfront(rank);
 
     for (int i = 0 ; i < front.size(); i++) {
-      population_.add(front.get(i));
+      population.add(front.get(i));
     }
   }
 
   protected void computeCrowdingDistance(Ranking ranking, int rank) throws JMetalException {
     SolutionSet currentRankedFront = ranking.getSubfront(rank) ;
-    distance_.crowdingDistanceAssignment(currentRankedFront);
+    distance.crowdingDistanceAssignment(currentRankedFront);
   }
 
   protected void addLastRankedSolutions(Ranking ranking, int rank) throws JMetalException {
@@ -210,70 +210,70 @@ public class GDE3 extends Algorithm {
     currentRankedFront.sort(new CrowdingComparator());
 
     int i = 0 ;
-    while (population_.size() < populationSize_) {
-      population_.add(currentRankedFront.get(i)) ;
+    while (population.size() < populationSize) {
+      population.add(currentRankedFront.get(i)) ;
       i++ ;
     }
   }
 
   protected boolean populationIsNotFull() {
-    return population_.size() < populationSize_ ;
+    return population.size() < populationSize;
   }
 
   protected boolean subfrontFillsIntoThePopulation(Ranking ranking, int rank) {
-    return ranking.getSubfront(rank).size() < (populationSize_ - population_.size()) ;
+    return ranking.getSubfront(rank).size() < (populationSize - population.size()) ;
   }
 
   protected SolutionSet getNonDominatedSolutions() throws JMetalException {
-    return new Ranking(population_).getSubfront(0);
+    return new Ranking(population).getSubfront(0);
   }
 
   protected void tearDown() {
-    evaluator_.shutdown();
+    evaluator.shutdown();
   }
 
   /** Builder class */
   public static class Builder {
-    protected SolutionSetEvaluator evaluator_ ;
-    protected Problem problem_ ;
+    protected SolutionSetEvaluator evaluator;
+    protected Problem problem;
 
-    protected int populationSize_;
-    protected  int maxIterations_;
+    protected int populationSize;
+    protected  int maxIterations;
 
-    protected Operator crossoverOperator_;
-    protected Operator selectionOperator_;
+    protected Operator crossoverOperator;
+    protected Operator selectionOperator;
 
     public Builder(Problem problem, SolutionSetEvaluator evaluator) {
-      evaluator_ = evaluator ;
-      problem_ = problem ;
+      this.evaluator = evaluator ;
+      this.problem = problem ;
     }
 
     public Builder populationSize(int populationSize) {
-      populationSize_ = populationSize ;
+      this.populationSize = populationSize ;
 
       return this ;
     }
 
     public Builder maxIterations(int maxIterations) {
-      maxIterations_ = maxIterations ;
+      this.maxIterations = maxIterations ;
 
       return this ;
     }
 
     public Builder evaluator(SolutionSetEvaluator evaluator) {
-      evaluator_ = evaluator ;
+      this.evaluator = evaluator ;
 
       return this ;
     }
 
     public Builder crossover(Operator crossover) {
-      crossoverOperator_ = crossover ;
+      crossoverOperator = crossover ;
 
       return this ;
     }
 
     public Builder selection(Operator selection) {
-      selectionOperator_ = selection ;
+      selectionOperator = selection ;
 
       return this ;
     }

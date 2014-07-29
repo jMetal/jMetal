@@ -46,7 +46,7 @@
 //
 package org.uma.jmetal.problem.singleObjective.cec2005Competition.originalCode;
 
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 
 public class F08_shifted_rotated_ackley_global_opt_bound extends TestFunc {
@@ -55,9 +55,9 @@ public class F08_shifted_rotated_ackley_global_opt_bound extends TestFunc {
   static final public String FUNCTION_NAME =
     "Shifted Rotated Ackley's Function with Global Optimum on Bounds";
   static final public String DEFAULT_FILE_DATA =
-    "" + Configuration.cec2005SupportDataDirectory + "/ackley_func_data.txt";
+    "" + JMetalLogger.cec2005SupportDataDirectory + "/ackley_func_data.txt";
   static final public String DEFAULT_FILE_MX_PREFIX =
-    "" + Configuration.cec2005SupportDataDirectory + "/ackley_M_D";
+    "" + JMetalLogger.cec2005SupportDataDirectory + "/ackley_M_D";
   static final public String DEFAULT_FILE_MX_SUFFIX = ".txt";
 
   // Shifted global optimum

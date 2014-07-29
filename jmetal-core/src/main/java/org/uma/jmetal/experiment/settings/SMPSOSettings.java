@@ -90,20 +90,16 @@ public class SMPSOSettings extends Settings {
     changeVelocity2 = -1;
   }
 
-  /**
-   * Configure SMPSO with user-defined parameter experiment.settings
-   *
-   * @return A SMPSO algorithm object
-   */
+  /** Configure() method s*/
   public Algorithm configure() {
     Algorithm algorithm;
     Mutation mutation;
 
-    Archive archive = new CrowdingArchive(100, problem.getNumberOfObjectives()) ;
+    Archive archive = new CrowdingArchive(archiveSize, problem.getNumberOfObjectives()) ;
 
     mutation = new PolynomialMutation.Builder()
-      .distributionIndex(20.0)
-      .probability(1.0 / problem.getNumberOfVariables())
+      .distributionIndex(mutationDistributionIndex)
+      .probability(mutationProbability)
       .build();
 
     algorithm = new SMPSO.Builder(problem, archive, evaluator)
@@ -129,9 +125,7 @@ public class SMPSOSettings extends Settings {
   }
 
   /**
-   * Configure SMPSO with user-defined parameter experiment.settings
-   *
-   * @return A SMPSO algorithm object
+   * Configure SMPSO with user-defined parameter settings
    */
   @Override
   public Algorithm configure(Properties configuration) {

@@ -2,7 +2,7 @@ package org.uma.jmetal.experiment.experimentoutput;
 
 import org.uma.jmetal.experiment.ExperimentData;
 import org.uma.jmetal.experiment.ExperimentOutput;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.Statistics;
 
@@ -147,7 +147,7 @@ public class QualityIndicatorLatexTableGeneration implements ExperimentOutput {
       }
       printEndLatexCommands(latexFile);
     } catch (IOException e) {
-      Configuration.logger.log(Level.SEVERE, "Error", e);
+      JMetalLogger.logger.log(Level.SEVERE, "Error", e);
     }
   }
 
@@ -492,7 +492,7 @@ public class QualityIndicatorLatexTableGeneration implements ExperimentOutput {
           try {
             fis = new FileInputStream(directory);
           } catch (FileNotFoundException e) {
-            Configuration.logger.log(Level.SEVERE, "Error", e);
+            JMetalLogger.logger.log(Level.SEVERE, "Error", e);
           }
           InputStreamReader isr = new InputStreamReader(fis);
           BufferedReader br = new BufferedReader(isr);
@@ -505,7 +505,7 @@ public class QualityIndicatorLatexTableGeneration implements ExperimentOutput {
               aux = br.readLine();
             }
           } catch (IOException e) {
-            Configuration.logger.log(Level.SEVERE, "Error", e);
+            JMetalLogger.logger.log(Level.SEVERE, "Error", e);
           }
         }
       }

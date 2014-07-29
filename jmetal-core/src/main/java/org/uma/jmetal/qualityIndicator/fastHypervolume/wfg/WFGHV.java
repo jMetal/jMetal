@@ -25,11 +25,11 @@
 //  Copyright (C) 2010 Lyndon While, Lucas Bradstreet.
 
 
-package org.uma.jmetal.qualityIndicator.fastHypervolume.wfg;
+package org.uma.jmetal.qualityIndicator.fasthypervolume.wfg;
 
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 
 import java.io.IOException;
@@ -44,61 +44,61 @@ import java.util.Comparator;
  * To change this template use File | Settings | File Templates.
  */
 public class WFGHV {
-  final int OPT = 2;
-  Front[] fs_;
-  Point referencePoint_;
-  boolean maximizing_;
-  int currentDeep_;
-  int currentDimension_;
-  int maxNumberOfPoints_;
-  int maxNumberOfObjectives_;
-  Comparator<Point> pointComparator_;
+  static final int OPT = 2;
+  Front[] fs;
+  Point referencePoint;
+  boolean maximizing;
+  int currentDeep;
+  int currentDimension;
+  int maxNumberOfPoints;
+  int maxNumberOfObjectives;
+  Comparator<Point> pointComparator;
 
   public WFGHV(int dimension, int maxNumberOfPoints) {
-    referencePoint_ = null;
-    maximizing_ = false;
-    currentDeep_ = 0;
-    currentDimension_ = dimension;
-    maxNumberOfPoints_ = maxNumberOfPoints;
-    maxNumberOfObjectives_ = dimension;
-    pointComparator_ = new PointComparator(true);
+    referencePoint = null;
+    maximizing = false;
+    currentDeep = 0;
+    currentDimension = dimension;
+    this.maxNumberOfPoints = maxNumberOfPoints;
+    maxNumberOfObjectives = dimension;
+    pointComparator = new PointComparator(true);
 
-    int maxd = maxNumberOfPoints_ - (OPT / 2 + 1);
-    fs_ = new Front[maxd];
+    int maxd = this.maxNumberOfPoints - (OPT / 2 + 1);
+    fs = new Front[maxd];
     for (int i = 0; i < maxd; i++) {
-      fs_[i] = new Front(maxNumberOfPoints, dimension);
+      fs[i] = new Front(maxNumberOfPoints, dimension);
     }
   }
 
   public WFGHV(int dimension, int maxNumberOfPoints, Solution referencePoint) {
-    referencePoint_ = new Point(referencePoint);
-    maximizing_ = false;
-    currentDeep_ = 0;
-    currentDimension_ = dimension;
-    maxNumberOfPoints_ = maxNumberOfPoints;
-    maxNumberOfObjectives_ = dimension;
-    pointComparator_ = new PointComparator(true);
+    this.referencePoint = new Point(referencePoint);
+    maximizing = false;
+    currentDeep = 0;
+    currentDimension = dimension;
+    this.maxNumberOfPoints = maxNumberOfPoints;
+    maxNumberOfObjectives = dimension;
+    pointComparator = new PointComparator(true);
 
-    int maxd = maxNumberOfPoints_ - (OPT / 2 + 1);
-    fs_ = new Front[maxd];
+    int maxd = this.maxNumberOfPoints - (OPT / 2 + 1);
+    fs = new Front[maxd];
     for (int i = 0; i < maxd; i++) {
-      fs_[i] = new Front(maxNumberOfPoints, dimension);
+      fs[i] = new Front(maxNumberOfPoints, dimension);
     }
   }
 
   public WFGHV(int dimension, int maxNumberOfPoints, Point referencePoint) {
-    referencePoint_ = referencePoint;
-    maximizing_ = false;
-    currentDeep_ = 0;
-    currentDimension_ = dimension;
-    maxNumberOfPoints_ = maxNumberOfPoints;
-    maxNumberOfObjectives_ = dimension;
-    pointComparator_ = new PointComparator(true);
+    this.referencePoint = referencePoint;
+    maximizing = false;
+    currentDeep = 0;
+    currentDimension = dimension;
+    this.maxNumberOfPoints = maxNumberOfPoints;
+    maxNumberOfObjectives = dimension;
+    pointComparator = new PointComparator(true);
 
-    int maxd = maxNumberOfPoints_ - (OPT / 2 + 1);
-    fs_ = new Front[maxd];
+    int maxd = this.maxNumberOfPoints - (OPT / 2 + 1);
+    fs = new Front[maxd];
     for (int i = 0; i < maxd; i++) {
-      fs_[i] = new Front(maxNumberOfPoints, dimension);
+      fs[i] = new Front(maxNumberOfPoints, dimension);
     }
   }
 
@@ -128,7 +128,7 @@ public class WFGHV {
     }
 
     referencePoint = new Point(points);
-    Configuration.logger.info("Using reference point: " + referencePoint);
+    JMetalLogger.logger.info("Using reference point: " + referencePoint);
 
     WFGHV wfghv =
       new WFGHV(referencePoint.getNumberOfObjectives(), front.getNumberOfPoints(), referencePoint);
@@ -160,22 +160,22 @@ public class WFGHV {
   }
 
   public double getHV(Front front, Solution referencePoint) {
-    referencePoint_ = new Point(referencePoint);
+    this.referencePoint = new Point(referencePoint);
     double volume = 0.0;
     sort(front);
 
-    if (currentDimension_ == 2) {
+    if (currentDimension == 2) {
       volume = get2DHV(front);
     } else {
       volume = 0.0;
 
-      currentDimension_--;
+      currentDimension--;
       for (int i = front.nPoints - 1; i >= 0; i--) {
-        volume += Math.abs(front.getPoint(i).objectives_[currentDimension_] -
-          referencePoint_.objectives_[currentDimension_]) *
+        volume += Math.abs(front.getPoint(i).objectives_[currentDimension] -
+          this.referencePoint.objectives_[currentDimension]) *
           this.getExclusiveHV(front, i);
       }
-      currentDimension_++;
+      currentDimension++;
     }
 
     return volume;
@@ -185,18 +185,18 @@ public class WFGHV {
     double volume = 0.0;
     sort(front);
 
-    if (currentDimension_ == 2) {
+    if (currentDimension == 2) {
       volume = get2DHV(front);
     } else {
       volume = 0.0;
 
-      currentDimension_--;
+      currentDimension--;
       for (int i = front.nPoints - 1; i >= 0; i--) {
-        volume += Math.abs(front.getPoint(i).objectives_[currentDimension_] -
-          referencePoint_.objectives_[currentDimension_]) *
+        volume += Math.abs(front.getPoint(i).objectives_[currentDimension] -
+          referencePoint.objectives_[currentDimension]) *
           this.getExclusiveHV(front, i);
       }
-      currentDimension_++;
+      currentDimension++;
     }
 
     return volume;
@@ -205,11 +205,11 @@ public class WFGHV {
   public double get2DHV(Front front) {
     double hv = 0.0;
 
-    hv = Math.abs((front.getPoint(0).getObjectives()[0] - referencePoint_.objectives_[0]) *
-      (front.getPoint(0).getObjectives()[1] - referencePoint_.objectives_[1]));
+    hv = Math.abs((front.getPoint(0).getObjectives()[0] - referencePoint.objectives_[0]) *
+      (front.getPoint(0).getObjectives()[1] - referencePoint.objectives_[1]));
 
     for (int i = 1; i < front.nPoints; i++) {
-      hv += Math.abs((front.getPoint(i).getObjectives()[0] - referencePoint_.objectives_[0]) *
+      hv += Math.abs((front.getPoint(i).getObjectives()[0] - referencePoint.objectives_[0]) *
         (front.getPoint(i).getObjectives()[1] - front.getPoint(i - 1).getObjectives()[1]));
 
     }
@@ -219,8 +219,8 @@ public class WFGHV {
 
   public double getInclusiveHV(Point p) {
     double volume = 1;
-    for (int i = 0; i < currentDimension_; i++) {
-      volume *= Math.abs(p.objectives_[i] - referencePoint_.objectives_[i]);
+    for (int i = 0; i < currentDimension; i++) {
+      volume *= Math.abs(p.objectives_[i] - referencePoint.objectives_[i]);
     }
 
     return volume;
@@ -232,9 +232,9 @@ public class WFGHV {
     volume = getInclusiveHV(front.getPoint(point));
     if (front.nPoints > point + 1) {
       makeDominatedBit(front, point);
-      double v = getHV(fs_[currentDeep_ - 1]);
+      double v = getHV(fs[currentDeep - 1]);
       volume -= v;
-      currentDeep_--;
+      currentDeep--;
     }
 
     return volume;
@@ -244,25 +244,25 @@ public class WFGHV {
     int z = front.nPoints - 1 - p;
 
     for (int i = 0; i < z; i++) {
-      for (int j = 0; j < currentDimension_; j++) {
-        fs_[currentDeep_].getPoint(i).objectives_[j] =
+      for (int j = 0; j < currentDimension; j++) {
+        fs[currentDeep].getPoint(i).objectives_[j] =
           worse(front.points[p].objectives_[j], front.points[p + 1 + i].objectives_[j], false);
       }
     }
 
     Point t;
-    fs_[currentDeep_].nPoints = 1;
+    fs[currentDeep].nPoints = 1;
 
     for (int i = 1; i < z; i++) {
       int j = 0;
       boolean keep = true;
-      while (j < fs_[currentDeep_].nPoints && keep) {
-        switch (dominates2way(fs_[currentDeep_].points[i], fs_[currentDeep_].points[j])) {
+      while (j < fs[currentDeep].nPoints && keep) {
+        switch (dominates2way(fs[currentDeep].points[i], fs[currentDeep].points[j])) {
           case -1:
-            t = fs_[currentDeep_].points[j];
-            fs_[currentDeep_].nPoints--;
-            fs_[currentDeep_].points[j] = fs_[currentDeep_].points[fs_[currentDeep_].nPoints];
-            fs_[currentDeep_].points[fs_[currentDeep_].nPoints] = t;
+            t = fs[currentDeep].points[j];
+            fs[currentDeep].nPoints--;
+            fs[currentDeep].points[j] = fs[currentDeep].points[fs[currentDeep].nPoints];
+            fs[currentDeep].points[fs[currentDeep].nPoints] = t;
             break;
           case 0:
             j++;
@@ -273,14 +273,14 @@ public class WFGHV {
         }
       }
       if (keep) {
-        t = fs_[currentDeep_].points[fs_[currentDeep_].nPoints];
-        fs_[currentDeep_].points[fs_[currentDeep_].nPoints] = fs_[currentDeep_].points[i];
-        fs_[currentDeep_].points[i] = t;
-        fs_[currentDeep_].nPoints++;
+        t = fs[currentDeep].points[fs[currentDeep].nPoints];
+        fs[currentDeep].points[fs[currentDeep].nPoints] = fs[currentDeep].points[i];
+        fs[currentDeep].points[i] = t;
+        fs[currentDeep].nPoints++;
       }
     }
 
-    currentDeep_++;
+    currentDeep++;
   }
 
   private double worse(double x, double y, boolean maximizing) {
@@ -307,7 +307,7 @@ public class WFGHV {
 
     // domination could be checked in either order
 
-    for (int i = currentDimension_ - 1; i >= 0; i--) {
+    for (int i = currentDimension - 1; i >= 0; i--) {
       if (p.objectives_[i] < q.objectives_[i]) {
         for (int j = i - 1; j >= 0; j--) {
           if (q.objectives_[j] < p.objectives_[j]) {
@@ -328,6 +328,6 @@ public class WFGHV {
   }
 
   public void sort(Front front) {
-    Arrays.sort(front.points, 0, front.nPoints, pointComparator_);
+    Arrays.sort(front.points, 0, front.nPoints, pointComparator);
   }
 }

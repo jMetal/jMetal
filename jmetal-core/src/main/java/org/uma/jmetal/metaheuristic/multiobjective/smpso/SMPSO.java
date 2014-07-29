@@ -21,7 +21,7 @@
 package org.uma.jmetal.metaheuristic.multiobjective.smpso;
 
 import org.uma.jmetal.core.*;
-import org.uma.jmetal.qualityIndicator.fastHypervolume.FastHypervolumeArchive;
+import org.uma.jmetal.qualityIndicator.fasthypervolume.FastHypervolumeArchive;
 import org.uma.jmetal.util.Distance;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.archive.Archive;

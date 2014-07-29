@@ -26,7 +26,7 @@ import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.BinarySolutionType;
 import org.uma.jmetal.encoding.variable.Binary;
 import org.uma.jmetal.encoding.variable.BinaryReal;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
 
@@ -107,7 +107,7 @@ public class HUXCrossover extends Crossover {
         }
       }
     } catch (ClassCastException e1) {
-      Configuration.logger.log(Level.SEVERE,
+      JMetalLogger.logger.log(Level.SEVERE,
         "HUXCrossover.doCrossover: Cannot perfom " + "SinglePointCrossover ",
         e1);
       Class<String> cls = java.lang.String.class;

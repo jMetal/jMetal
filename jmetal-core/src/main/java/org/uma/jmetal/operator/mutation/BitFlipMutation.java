@@ -27,7 +27,7 @@ import org.uma.jmetal.encoding.solutiontype.BinarySolutionType;
 import org.uma.jmetal.encoding.solutiontype.IntSolutionType;
 import org.uma.jmetal.encoding.variable.Binary;
 import org.uma.jmetal.encoding.variable.BinaryReal;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
 
@@ -106,7 +106,7 @@ public class BitFlipMutation extends Mutation {
         }
       }
     } catch (ClassCastException e1) {
-      Configuration.logger.log(Level.SEVERE,
+      JMetalLogger.logger.log(Level.SEVERE,
         "BitFlipMutation.doMutation: ClassCastException error" + e1.getMessage(), e1);
       Class<String> cls = java.lang.String.class;
       String name = cls.getName();

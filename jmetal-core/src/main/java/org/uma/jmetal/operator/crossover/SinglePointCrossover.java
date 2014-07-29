@@ -27,7 +27,7 @@ import org.uma.jmetal.encoding.solutiontype.BinarySolutionType;
 import org.uma.jmetal.encoding.solutiontype.IntSolutionType;
 import org.uma.jmetal.encoding.variable.Binary;
 import org.uma.jmetal.encoding.variable.BinaryReal;
-import org.uma.jmetal.util.Configuration;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
 
@@ -43,6 +43,7 @@ public class SinglePointCrossover extends Crossover {
 
   private double crossoverProbability_ = 0;
 
+  @Deprecated
   public SinglePointCrossover(HashMap<String, Object> parameters) {
     super(parameters);
     if (parameters.get("probability") != null) {
@@ -153,7 +154,7 @@ public class SinglePointCrossover extends Crossover {
         }
       }
     } catch (ClassCastException e1) {
-      Configuration.logger.log(Level.SEVERE,
+      JMetalLogger.logger.log(Level.SEVERE,
           "SinglePointCrossover.doCrossover: Cannot perfom " + "SinglePointCrossover",
           e1);
       Class<String> cls = java.lang.String.class;

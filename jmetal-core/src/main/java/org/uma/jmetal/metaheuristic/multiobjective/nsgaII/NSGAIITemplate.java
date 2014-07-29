@@ -76,6 +76,7 @@ public abstract class NSGAIITemplate extends Algorithm {
     evaluations = 0 ;
   }
 
+  /** @deprecated */
   @Deprecated
   void readParameterSettings() {
     populationSize = ((Integer) getInputParameter("populationSize")).intValue();
@@ -189,7 +190,9 @@ public abstract class NSGAIITemplate extends Algorithm {
     return maxEvaluations;
   }
 
-  public int getEvaluations () { return evaluations;}
+  public int getEvaluations () {
+    return evaluations;
+  }
 
   public static class Builder {
     protected SolutionSetEvaluator evaluator ;
@@ -237,14 +240,14 @@ public abstract class NSGAIITemplate extends Algorithm {
       return this ;
     }
 
-    public NSGAIITemplate build(String NSGAIIVariant) {
-      NSGAIITemplate algorithm = null ;
-      if ("NSGAII".equals(NSGAIIVariant)) {
+    public NSGAIITemplate build(String nsgaIIvariant) {
+      NSGAIITemplate algorithm  ;
+      if ("NSGAII".equals(nsgaIIvariant)) {
         algorithm = new NSGAII(this);
-      } else if ("SteadyStateNSGAII".equals(NSGAIIVariant)) {
+      } else if ("SteadyStateNSGAII".equals(nsgaIIvariant)) {
         algorithm =  new SteadyStateNSGAII(this) ;
       } else {
-        throw new JMetalException(NSGAIIVariant + " variant unknown") ;
+        throw new JMetalException(nsgaIIvariant + " variant unknown") ;
       }
 
       return algorithm ;

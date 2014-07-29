@@ -34,12 +34,12 @@ public class FitnessAndCrowdingDistanceComparator implements Comparator<Solution
   /**
    * stores a comparator for check the fitness value of the solutions
    */
-  private static final Comparator<Solution> fitnessComparator_ =
+  private static final Comparator<Solution> fitnessComparator =
     new FitnessComparator();
   /**
    * stores a comparator for check the crowding distance
    */
-  private static final Comparator<Solution> crowdingDistanceComparator_ =
+  private static final Comparator<Solution> crowdingDistanceComparator =
     new CrowdingDistanceComparator();
 
   /**
@@ -53,11 +53,11 @@ public class FitnessAndCrowdingDistanceComparator implements Comparator<Solution
   @Override
   public int compare(Solution solution1, Solution solution2) {
 
-    int flag = fitnessComparator_.compare(solution1, solution2);
+    int flag = fitnessComparator.compare(solution1, solution2);
     if (flag != 0) {
       return flag;
     } else {
-      return crowdingDistanceComparator_.compare(solution1, solution2);
+      return crowdingDistanceComparator.compare(solution1, solution2);
     }
   }
 }
