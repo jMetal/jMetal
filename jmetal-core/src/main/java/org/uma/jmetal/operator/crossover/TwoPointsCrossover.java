@@ -22,15 +22,14 @@
 package org.uma.jmetal.operator.crossover;
 
 import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.encoding.solutiontype.IntSolutionType;
 import org.uma.jmetal.encoding.solutiontype.PermutationSolutionType;
 import org.uma.jmetal.encoding.variable.Permutation;
-import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.random.PseudoRandom;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * This class allows to apply a two points crossover operator using two parent
@@ -40,24 +39,28 @@ import java.util.List;
 public class TwoPointsCrossover extends Crossover {
   private static final long serialVersionUID = 5639984540815130543L;
 
-  /**
-   * Valid solution types to apply this operator
-   */
-  private static final List<Class<PermutationSolutionType>> VALID_TYPES =
-    Arrays.asList(PermutationSolutionType.class);
-
-  private Double crossoverProbability = null;
+  private double crossoverProbability ;
 
   /**
    * Constructor
    * Creates a new instance of the two point crossover operator
    */
+  @Deprecated
   public TwoPointsCrossover(HashMap<String, Object> parameters) {
     super(parameters);
+    addValidSolutionType(PermutationSolutionType.class);
+    addValidSolutionType(IntSolutionType.class);
 
     if (parameters.get("probability") != null) {
       crossoverProbability = (Double) parameters.get("probability");
     }
+  }
+  
+  private TwoPointsCrossover(Builder builder) {
+    addValidSolutionType(PermutationSolutionType.class);
+    addValidSolutionType(IntSolutionType.class);
+    
+    crossoverProbability = builder.crossoverProbability ;
   }
 
   /**
@@ -167,14 +170,17 @@ public class TwoPointsCrossover extends Crossover {
    * @throws org.uma.jmetal.util.JMetalException
    */
   public Object execute(Object object) throws JMetalException {
+    if (null == object) {
+      throw new JMetalException("Null parameter") ;
+    } else if (!(object instanceof Solution)) {
+      throw new JMetalException("Invalid parameter class") ;
+    }
+    
     Solution[] parents = (Solution[]) object;
-    if (!(VALID_TYPES.contains(parents[0].getType().getClass()) &&
-      VALID_TYPES.contains(parents[1].getType().getClass()))) {
-
-      JMetalLogger.logger.severe("TwoPointsCrossover.execute: the solutions " +
-        "are not of the right type. The type should be 'Permutation', but " +
-        parents[0].getType() + " and " +
-        parents[1].getType() + " are obtained");
+    
+    if (!solutionTypeIsValid(parents)) {
+      throw new JMetalException("PolynomialMutation.execute: the solutiontype " +
+        "type " + parents[0].getType() + " is not allowed with this operator");
     }
 
     if (parents.length < 2) {
@@ -190,5 +196,24 @@ public class TwoPointsCrossover extends Crossover {
       parents[1]);
 
     return offspring;
+  }
+  
+  /** Builder class */
+  public static class Builder {
+    private double crossoverProbability;
+
+    public Builder() {
+    	crossoverProbability = 0 ;
+    }
+
+    public Builder crossoverProbability(double crossoverProbability) {
+      this.crossoverProbability = crossoverProbability ;
+
+      return this ;
+    }
+
+    public TwoPointsCrossover build() {
+      return new TwoPointsCrossover(this) ;
+    }
   }
 }

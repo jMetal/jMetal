@@ -47,8 +47,8 @@ public class SBXCrossover extends Crossover {
   private static final double ETA_C_DEFAULT = 20.0;
   private static final double DEFAULT_PROBABILITY = 0.9 ;
 
-  private double distributionIndex_ = ETA_C_DEFAULT;
-  private double crossoverProbability_ = DEFAULT_PROBABILITY;
+  private double distributionIndex = ETA_C_DEFAULT;
+  private double crossoverProbability = DEFAULT_PROBABILITY;
 
   /**
    * Constructor
@@ -63,10 +63,10 @@ public class SBXCrossover extends Crossover {
     addValidSolutionType(ArrayRealSolutionType.class);
 
     if (parameters.get("probability") != null) {
-      crossoverProbability_ = (Double) parameters.get("probability");
+      crossoverProbability = (Double) parameters.get("probability");
     }
     if (parameters.get("distributionIndex") != null) {
-      distributionIndex_ = (Double) parameters.get("distributionIndex");
+      distributionIndex= (Double) parameters.get("distributionIndex");
     }
   }
 
@@ -78,16 +78,16 @@ public class SBXCrossover extends Crossover {
     addValidSolutionType(IntSolutionType.class);
     addValidSolutionType(ArrayIntSolutionType.class);
 
-    crossoverProbability_ = builder.crossoverProbability_ ;
-    distributionIndex_ = builder.distributionIndex_ ;
+    crossoverProbability = builder.crossoverProbability ;
+    distributionIndex = builder.distributionIndex ;
   }
 
   /** Getters */
   public double getCrossoverProbability() {
-    return crossoverProbability_;
+    return crossoverProbability;
   }
   public double getDistributionIndex() {
-    return distributionIndex_;
+    return distributionIndex;
   }
 
   /** Execute method */
@@ -105,7 +105,7 @@ public class SBXCrossover extends Crossover {
     }
 
     Solution[] offSpring;
-    offSpring = doCrossover(crossoverProbability_, parents[0], parents[1]);
+    offSpring = doCrossover(crossoverProbability, parents[0], parents[1]);
 
     return offSpring;
   }
@@ -162,24 +162,24 @@ public class SBXCrossover extends Crossover {
             yu = x1.getUpperBound(i);
             rand = PseudoRandom.randDouble();
             beta = 1.0 + (2.0 * (y1 - yL) / (y2 - y1));
-            alpha = 2.0 - java.lang.Math.pow(beta, -(distributionIndex_ + 1.0));
+            alpha = 2.0 - java.lang.Math.pow(beta, -(distributionIndex + 1.0));
 
             if (rand <= (1.0 / alpha)) {
-              betaq = java.lang.Math.pow((rand * alpha), (1.0 / (distributionIndex_ + 1.0)));
+              betaq = java.lang.Math.pow((rand * alpha), (1.0 / (distributionIndex + 1.0)));
             } else {
               betaq = java.lang.Math
-                .pow((1.0 / (2.0 - rand * alpha)), (1.0 / (distributionIndex_ + 1.0)));
+                .pow((1.0 / (2.0 - rand * alpha)), (1.0 / (distributionIndex + 1.0)));
             }
 
             c1 = 0.5 * ((y1 + y2) - betaq * (y2 - y1));
             beta = 1.0 + (2.0 * (yu - y2) / (y2 - y1));
-            alpha = 2.0 - java.lang.Math.pow(beta, -(distributionIndex_ + 1.0));
+            alpha = 2.0 - java.lang.Math.pow(beta, -(distributionIndex + 1.0));
 
             if (rand <= (1.0 / alpha)) {
-              betaq = java.lang.Math.pow((rand * alpha), (1.0 / (distributionIndex_ + 1.0)));
+              betaq = java.lang.Math.pow((rand * alpha), (1.0 / (distributionIndex + 1.0)));
             } else {
               betaq = java.lang.Math
-                .pow((1.0 / (2.0 - rand * alpha)), (1.0 / (distributionIndex_ + 1.0)));
+                .pow((1.0 / (2.0 - rand * alpha)), (1.0 / (distributionIndex + 1.0)));
             }
 
             c2 = 0.5 * ((y1 + y2) + betaq * (y2 - y1));
@@ -263,24 +263,24 @@ public class SBXCrossover extends Crossover {
             yu = x1.getUpperBound(i);
             rand = PseudoRandom.randDouble();
             beta = 1.0 + (2.0 * (y1 - yL) / (y2 - y1));
-            alpha = 2.0 - java.lang.Math.pow(beta, -(distributionIndex_ + 1.0));
+            alpha = 2.0 - java.lang.Math.pow(beta, -(distributionIndex + 1.0));
 
             if (rand <= (1.0 / alpha)) {
-              betaq = java.lang.Math.pow((rand * alpha), (1.0 / (distributionIndex_ + 1.0)));
+              betaq = java.lang.Math.pow((rand * alpha), (1.0 / (distributionIndex + 1.0)));
             } else {
               betaq = java.lang.Math
-                .pow((1.0 / (2.0 - rand * alpha)), (1.0 / (distributionIndex_ + 1.0)));
+                .pow((1.0 / (2.0 - rand * alpha)), (1.0 / (distributionIndex + 1.0)));
             }
 
             c1 = 0.5 * ((y1 + y2) - betaq * (y2 - y1));
             beta = 1.0 + (2.0 * (yu - y2) / (y2 - y1));
-            alpha = 2.0 - java.lang.Math.pow(beta, -(distributionIndex_ + 1.0));
+            alpha = 2.0 - java.lang.Math.pow(beta, -(distributionIndex + 1.0));
 
             if (rand <= (1.0 / alpha)) {
-              betaq = java.lang.Math.pow((rand * alpha), (1.0 / (distributionIndex_ + 1.0)));
+              betaq = java.lang.Math.pow((rand * alpha), (1.0 / (distributionIndex + 1.0)));
             } else {
               betaq = java.lang.Math
-                .pow((1.0 / (2.0 - rand * alpha)), (1.0 / (distributionIndex_ + 1.0)));
+                .pow((1.0 / (2.0 - rand * alpha)), (1.0 / (distributionIndex + 1.0)));
             }
 
             c2 = 0.5 * ((y1 + y2) + betaq * (y2 - y1));
@@ -325,19 +325,19 @@ public class SBXCrossover extends Crossover {
 
   /** Builder class */
   public static class Builder {
-    private double distributionIndex_ ;
-    private double crossoverProbability_ ;
+    private double distributionIndex ;
+    private double crossoverProbability ;
 
     public Builder() {
-      distributionIndex_ = ETA_C_DEFAULT ;
-      crossoverProbability_ = DEFAULT_PROBABILITY ;
+      distributionIndex = ETA_C_DEFAULT ;
+      crossoverProbability = DEFAULT_PROBABILITY ;
     }
 
     public Builder distributionIndex(double distributionIndex) {
       if (distributionIndex < 0) {
         throw new JMetalException("Distribution index invalid: " + distributionIndex) ;
       } else {
-        distributionIndex_ = distributionIndex;
+        distributionIndex = distributionIndex;
       }
 
       return this ;
@@ -347,7 +347,7 @@ public class SBXCrossover extends Crossover {
       if ((probability < 0) || (probability > 1.0)) {
         throw new JMetalException("Probability value invalid: " + probability) ;
       } else {
-        crossoverProbability_ = probability;
+        crossoverProbability = probability;
       }
 
       return this ;

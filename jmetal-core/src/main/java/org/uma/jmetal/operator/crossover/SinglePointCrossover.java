@@ -41,13 +41,13 @@ import java.util.logging.Level;
 public class SinglePointCrossover extends Crossover {
   private static final long serialVersionUID = 2375915160877386980L;
 
-  private double crossoverProbability_ = 0;
+  private double crossoverProbability = 0;
 
   @Deprecated
   public SinglePointCrossover(HashMap<String, Object> parameters) {
     super(parameters);
     if (parameters.get("probability") != null) {
-      crossoverProbability_ = (Double) parameters.get("probability");
+      crossoverProbability = (Double) parameters.get("probability");
     }
   }
 
@@ -56,11 +56,11 @@ public class SinglePointCrossover extends Crossover {
     addValidSolutionType(BinaryRealSolutionType.class);
     addValidSolutionType(IntSolutionType.class);
 
-    crossoverProbability_ = builder.crossoverProbability_ ;
+    crossoverProbability = builder.crossoverProbability;
   }
 
   public double getCrossoverProbability() {
-    return crossoverProbability_ ;
+    return crossoverProbability;
   }
 
   /**
@@ -186,7 +186,7 @@ public class SinglePointCrossover extends Crossover {
     }
 
     Solution[] offSpring;
-    offSpring = doCrossover(crossoverProbability_, parents[0], parents[1]);
+    offSpring = doCrossover(crossoverProbability, parents[0], parents[1]);
 
     // Update the offSpring solutions
     for (Solution solution : offSpring) {
@@ -197,21 +197,19 @@ public class SinglePointCrossover extends Crossover {
     return offSpring;
   }
 
-  /**
-   * Builder class
-   */
+  /** Builder class */
   public static class Builder {
-    private double crossoverProbability_ ;
+    private double crossoverProbability;
 
     public Builder() {
-      crossoverProbability_ = 0 ;
+      crossoverProbability = 0 ;
     }
 
     public Builder probability(double probability) {
       if ((probability < 0) || (probability > 1.0)) {
         throw new JMetalException("Probability value invalid: " + probability) ;
       } else {
-        crossoverProbability_ = probability;
+        crossoverProbability = probability;
       }
 
       return this ;
