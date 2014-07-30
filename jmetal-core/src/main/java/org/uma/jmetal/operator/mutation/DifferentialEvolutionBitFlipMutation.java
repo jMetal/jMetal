@@ -32,12 +32,8 @@ import org.uma.jmetal.util.wrapper.XReal;
 * ArrayRealAndBinarySolutionType objects. The mutation combines DE and bitflip mutation
 */
 public class DifferentialEvolutionBitFlipMutation extends Mutation {
-	public double CR_ = 0.5;
-
-	/**
-	 * F. Mutation
-	 */
-	public double F_ = 0.5;
+	public double cr = 0.5;
+	public double f = 0.5;
 
   /**
    * ARRAY_REAL_AND_BINARY_SOLUTION represents class jmetal.base.solutionType.ArrayRealAndBinarySolutionType
@@ -53,8 +49,8 @@ public class DifferentialEvolutionBitFlipMutation extends Mutation {
     } catch (ClassNotFoundException e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
-    } // catch
-  } // Constructor
+    } 
+  } 
 	
 	@Override
   public Object execute(Object object) {
@@ -85,12 +81,12 @@ public class DifferentialEvolutionBitFlipMutation extends Mutation {
 
 		Double CR = (Double)getParameter("CR");       
 		if (CR == null){
-      CR_ = CR ;
+      cr = CR ;
 		}
 
 		Double F = (Double)getParameter("F");       
 		if (F == null){
-      F_ = F;
+      f = F;
     }
 		
 		Double binaryProbability = (Double)getParameter("binaryProbability");       
@@ -122,9 +118,9 @@ public class DifferentialEvolutionBitFlipMutation extends Mutation {
 		if ((DE_Variant_.compareTo("rand/1/bin") == 0) || 
 				(DE_Variant_.compareTo("best/1/bin") == 0)) { 
 			for (int j=0; j < numberOfVariables; j++) {
-				if (PseudoRandom.randDouble(0, 1) < CR_ || j == jrand) {
+				if (PseudoRandom.randDouble(0, 1) < cr || j == jrand) {
 					double value ;
-					value = xParent2.getValue(j)  + F_ * (xParent0.getValue(j) -
+					value = xParent2.getValue(j)  + f * (xParent0.getValue(j) -
 							                                  xParent1.getValue(j)) ;
 					if (value < xChild.getLowerBound(j))
 						value =  xChild.getLowerBound(j) ;
@@ -151,22 +147,22 @@ public class DifferentialEvolutionBitFlipMutation extends Mutation {
 
 		for (int i = 0; i < binaryChild.getNumberOfBits(); i++) {
 			int chosen = PseudoRandom.randInt(0, 2) ;
-			  binaryChild.bits_.set(i, binaryParent[chosen].bits_.get(i)) ;
+			  binaryChild.getBits().set(i, binaryParent[chosen].getBits().get(i)) ;
 		}
 		
 		// Binary part: second, bitflip mutation is applied 
 		int countingOnes = 0 ;
 		for (int i = 0; i < binaryChild.getNumberOfBits(); i++) {
 			if (PseudoRandom.randDouble() < binaryProbability) 
-				binaryChild.bits_.flip(i) ;
-			if (binaryChild.bits_.get(i) == true)
+				binaryChild.getBits().flip(i) ;
+			if (binaryChild.getBits().get(i) == true)
 				countingOnes ++ ;
 		} 
 		// if the number of bits reach to zero, generate a '1's string
 	  if (countingOnes == 0) {		
 	  	System.out.println("Reached to 0 attributes") ;
 			for (int i = 0; i < binaryChild.getNumberOfBits(); i++) {
-				binaryChild.bits_.set(i, true) ;
+				binaryChild.getBits().set(i, true) ;
 			} 
 	  } 
 			

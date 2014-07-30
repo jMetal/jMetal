@@ -21,8 +21,13 @@
 package org.uma.jmetal.operator.mutation;
 
 import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.encoding.solutiontype.ArrayIntSolutionType;
 import org.uma.jmetal.encoding.solutiontype.ArrayRealAndBinarySolutionType;
+import org.uma.jmetal.encoding.solutiontype.ArrayRealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.IntSolutionType;
+import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
 import org.uma.jmetal.encoding.variable.Binary;
+import org.uma.jmetal.operator.mutation.PolynomialMutation.Builder;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
@@ -33,47 +38,36 @@ import java.util.HashMap;
 import java.util.List;
 
 public class PolynomialBitFlipMutation extends Mutation {
-  private static final double ETA_M_DEFAULT_ = 20.0;
-  private double distributionIndex_ = ETA_M_DEFAULT_;
-  /**
-   * Valid solutiontype types to apply this operator
-   */
-  private static final List<Class<ArrayRealAndBinarySolutionType>> VALID_TYPES =
-    Arrays.asList(ArrayRealAndBinarySolutionType.class);
-  private Double realMutationProbability_ = null;
-  private Double binaryMutationProbability_ = null;
+  private static final double ETA_M_DEFAULT = 20.0;
+  private double distributionIndex = ETA_M_DEFAULT;
 
-  /**
-   * Constructor
-   */
-  @Deprecated
-  public PolynomialBitFlipMutation(HashMap<String, Object> parameters) {
-    super(parameters);
-    if (parameters.get("realMutationProbability") != null) {
-      realMutationProbability_ = (Double) parameters.get("realMutationProbability");
-    }
-    if (parameters.get("binaryMutationProbability") != null) {
-      binaryMutationProbability_ = (Double) parameters.get("binaryMutationProbability");
-    }
-    if (parameters.get("distributionIndex") != null) {
-      distributionIndex_ = (Double) parameters.get("distributionIndex");
-    }
+  private double realMutationProbability = 0.0 ;
+  private double binaryMutationProbability = 0.0 ;
+
+  private PolynomialBitFlipMutation(Builder builder) {
+    addValidSolutionType(ArrayRealAndBinarySolutionType.class);
+
+    realMutationProbability = builder.realMutationProbability;
+    binaryMutationProbability = builder.binaryMutationProbability;
+    distributionIndex = builder.distributionIndex;
   }
-
+  
   @Override
   public Object execute(Object object) throws JMetalException {
-    Solution solution = (Solution) object;
-
-    if (!VALID_TYPES.contains(solution.getType().getClass())) {
-      JMetalLogger.logger.severe("PolynomialBitFlipMutation.execute: the solutiontype " +
-        "type " + solution.getType() + " is not allowed with this operator");
-
-      Class<String> cls = java.lang.String.class;
-      String name = cls.getName();
-      throw new JMetalException("Exception in " + name + ".execute()");
+    if (null == object) {
+      throw new JMetalException("Null parameter") ;
+    } else if (!(object instanceof Solution)) {
+      throw new JMetalException("Invalid parameter class") ;
     }
 
-    doMutation(realMutationProbability_, binaryMutationProbability_, solution);
+    Solution solution = (Solution) object;
+
+    if (!solutionTypeIsValid(solution)) {
+      throw new JMetalException("PolynomialMutation.execute: the solutiontype " +
+        "type " + solution.getType() + " is not allowed with this operator");
+    }
+
+    doMutation(realMutationProbability, binaryMutationProbability, solution);
     return solution;
   }
 
@@ -103,15 +97,15 @@ public class PolynomialBitFlipMutation extends Mutation {
         delta1 = (y - yl) / (yu - yl);
         delta2 = (yu - y) / (yu - yl);
         rnd = PseudoRandom.randDouble();
-        mut_pow = 1.0 / (distributionIndex_ + 1.0);
+        mut_pow = 1.0 / (distributionIndex + 1.0);
         if (rnd <= 0.5) {
           xy = 1.0 - delta1;
-          val = 2.0 * rnd + (1.0 - 2.0 * rnd) * (Math.pow(xy, (distributionIndex_ + 1.0)));
+          val = 2.0 * rnd + (1.0 - 2.0 * rnd) * (Math.pow(xy, (distributionIndex + 1.0)));
           deltaq = java.lang.Math.pow(val, mut_pow) - 1.0;
         } else {
           xy = 1.0 - delta2;
           val = 2.0 * (1.0 - rnd) + 2.0 * (rnd - 0.5) * (java.lang.Math
-            .pow(xy, (distributionIndex_ + 1.0)));
+            .pow(xy, (distributionIndex + 1.0)));
           deltaq = 1.0 - (java.lang.Math.pow(val, mut_pow));
         }
         y = y + deltaq * (yu - yl);
@@ -130,6 +124,39 @@ public class PolynomialBitFlipMutation extends Mutation {
       if (PseudoRandom.randDouble() < binaryProbability) {
         binaryVariable.getBits().flip(i);
       }
+    }
+  }
+  
+  /** Builder class */
+  public static class Builder {
+    private double distributionIndex;
+    private double realMutationProbability  ;
+    private double binaryMutationProbability ;
+    
+    public Builder() {
+      distributionIndex = ETA_M_DEFAULT;
+    }
+
+    public Builder distributionIndex(double distributionIndex) {
+      this.distributionIndex = distributionIndex ;
+
+      return this ;
+    }
+
+    public Builder realMutationProbability(double realMutationProbability) {
+    	this.realMutationProbability = realMutationProbability ;
+
+      return this ;
+    }
+    
+    public Builder binaryMutationProbability(double binaryMutationProbability) {
+    	this.binaryMutationProbability = binaryMutationProbability ;
+
+      return this ;
+    }
+
+    public PolynomialBitFlipMutation build() {
+      return new PolynomialBitFlipMutation(this) ;
     }
   }
 }
