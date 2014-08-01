@@ -121,7 +121,6 @@ public class SMPSORunner {
       .mutation(mutation)
       .maxIterations(250)
       .swarmSize(100)
-      .archiveSize(100)
       .build();
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
