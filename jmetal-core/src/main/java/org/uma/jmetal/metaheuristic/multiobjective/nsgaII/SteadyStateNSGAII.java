@@ -38,7 +38,8 @@ public class SteadyStateNSGAII extends NSGAIITemplate {
     super(evaluator);
   }
 
-  public SteadyStateNSGAII(Builder builder) {
+  /** Constructor */
+  protected SteadyStateNSGAII(Builder builder) {
     super(builder) ;
   }
 

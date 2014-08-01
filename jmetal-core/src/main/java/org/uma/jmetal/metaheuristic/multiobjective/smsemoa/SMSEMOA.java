@@ -20,18 +20,16 @@
 
 package org.uma.jmetal.metaheuristic.multiobjective.smsemoa;
 
-import org.uma.jmetal.core.*;
+import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.qualityIndicator.Hypervolume;
-import org.uma.jmetal.qualityIndicator.QualityIndicatorGetter;
 import org.uma.jmetal.qualityIndicator.util.MetricsUtil;
-import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.Ranking;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 
 import java.util.Collections;
 import java.util.LinkedList;
-import java.util.logging.Level;
 
 /**
  * This class implements the SMS-EMOA algorithm, as described in
@@ -49,105 +47,42 @@ import java.util.logging.Level;
  * Congress on Evolutionary Computation (CEC 2005), Edinburgh, Band 2, pp. 1282-1289.
  * IEEE Press, Piscataway NJ, 2005.
  */
-public class SMSEMOA extends Algorithm {
-
+public class SMSEMOA extends SMSEMOATemplate {
   private static final long serialVersionUID = -5932329422133559836L;
 
-  /**
-   * stores the problem  to solve
-   */
   private MetricsUtil utils;
   private Hypervolume hypervolume;
 
   /** Constructor */
-  public SMSEMOA() {
-    super();
+  protected SMSEMOA(Builder builder) {
+    super(builder);
+
     this.utils = new org.uma.jmetal.qualityIndicator.util.MetricsUtil();
     this.hypervolume = new Hypervolume();
   }
 
   /** Execute() method */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
-    int populationSize;
-    int maxEvaluations;
-    int evaluations;
-    double offset = 100.0;
-
-    QualityIndicatorGetter indicators;
-    int requiredEvaluations;
-
-    SolutionSet population;
-    SolutionSet offspringPopulation;
-    SolutionSet union;
-
-    Operator mutationOperator;
-    Operator crossoverOperator;
-    Operator selectionOperator;
-
-    //Read the parameters
-    populationSize = ((Integer) getInputParameter("populationSize")).intValue();
-    maxEvaluations = ((Integer) getInputParameter("maxEvaluations")).intValue();
-    indicators = (QualityIndicatorGetter) getInputParameter("indicators");
-    offset = (Double) getInputParameter("offset");
-
-    //Initialize the variables
-    population = new SolutionSet(populationSize);
-    evaluations = 0;
-
-    requiredEvaluations = 0;
-
-    //Read the operator
-    mutationOperator = operators_.get("mutation");
-    crossoverOperator = operators_.get("crossover");
-    selectionOperator = operators_.get("selection");
-
-    // Create the initial solutionSet
-    Solution newSolution;
-    for (int i = 0; i < populationSize; i++) {
-      newSolution = new Solution(problem_);
-      problem_.evaluate(newSolution);
-      problem_.evaluateConstraints(newSolution);
-      evaluations++;
-      population.add(newSolution);
-    }
+    createInitialPopulation();
+    population = evaluatePopulation(population) ;
 
     // Generations ...
     while (evaluations < maxEvaluations) {
-
-      // select parents
       offspringPopulation = new SolutionSet(populationSize);
-      LinkedList<Solution> selectedParents = new LinkedList<Solution>();
-      Solution[] parents = new Solution[0];
-      while (selectedParents.size() < 2) {
-        Object selected = selectionOperator.execute(population);
-        try {
-          Solution parent = (Solution) selected;
-          selectedParents.add(parent);
-        } catch (ClassCastException e) {
-          JMetalLogger.logger.log(Level.WARNING, "Class cast exception", e);
-          parents = (Solution[]) selected;
-          Collections.addAll(selectedParents, parents);
-        }
-      }
-      parents = selectedParents.toArray(parents);
 
-      // crossover
-      Solution[] offSpring = (Solution[]) crossoverOperator.execute(parents);
-
-      // mutation
+      Solution[] parents = (Solution[])selectionOperator.execute(population) ;
+      Solution[] offSpring = (Solution[]) crossoverOperator.execute(parents) ;
       mutationOperator.execute(offSpring[0]);
 
-      // evaluation
       problem_.evaluate(offSpring[0]);
       problem_.evaluateConstraints(offSpring[0]);
 
-      // insert child into the offspring population
       offspringPopulation.add(offSpring[0]);
 
       evaluations++;
 
       // Create the solutionSet union of solutionSet and offSpring
-      union = ((SolutionSet) population).union(offspringPopulation);
+      SolutionSet union = population.union(offspringPopulation);
 
       // Ranking the union (non-dominated sorting)
       Ranking ranking = new Ranking(union);
@@ -208,20 +143,8 @@ public class SMSEMOA extends Algorithm {
         population.add(lastFront.get(i));
       }
 
-      // This piece of code shows how to use the indicator object into the code
-      // of SMS-EMOA. In particular, it finds the number of evaluations required
-      // by the algorithm to obtain a Pareto front with a hypervolume higher
-      // than the hypervolume of the true Pareto front.
-      if (indicators != null && requiredEvaluations == 0) {
-        double HV = indicators.getHypervolume(population);
-        if (HV >= (0.98 * indicators.getTrueParetoFrontHypervolume())) {
-          requiredEvaluations = evaluations;
-        }
-      }
     }
 
-    // Return as output parameter the required evaluations
-    setOutputParameter("evaluations", requiredEvaluations);
 
     // Return the first non-dominated front
     Ranking ranking = new Ranking(population);

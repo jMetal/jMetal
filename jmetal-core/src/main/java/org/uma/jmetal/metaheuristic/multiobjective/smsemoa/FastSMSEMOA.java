@@ -20,20 +20,14 @@
 
 package org.uma.jmetal.metaheuristic.multiobjective.smsemoa;
 
-import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.qualityIndicator.QualityIndicatorGetter;
 import org.uma.jmetal.qualityIndicator.fasthypervolume.FastHypervolume;
-import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.Ranking;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
-
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.logging.Level;
 
 /**
  * This class implements the SMS-EMOA algorithm, as described in
@@ -53,11 +47,12 @@ import java.util.logging.Level;
  * <p/>
  * This algoritm is SMS-EMOA using the FastHypervolume class
  */
-public class FastSMSEMOA extends Algorithm {
+public class FastSMSEMOA extends SMSEMOATemplate {
   private static final long serialVersionUID = 2217597718629923190L;
 
-  public FastSMSEMOA() {
-    super();
+  /** Constructor */
+  protected FastSMSEMOA(Builder builder) {
+    super(builder);
   }
 
   /** Execute() method */
@@ -110,33 +105,13 @@ public class FastSMSEMOA extends Algorithm {
       population.add(newSolution);
     }
 
-    // Generations ...
     while (evaluations < maxEvaluations) {
-
-      // select parents
       offspringPopulation = new SolutionSet(populationSize);
-      LinkedList<Solution> selectedParents = new LinkedList<Solution>();
-      Solution[] parents = new Solution[0];
-      while (selectedParents.size() < 2) {
-        Object selected = selectionOperator.execute(population);
-        try {
-          Solution parent = (Solution) selected;
-          selectedParents.add(parent);
-        } catch (ClassCastException e) {
-          JMetalLogger.logger.log(Level.WARNING, "Class cast exception", e);
-          parents = (Solution[]) selected;
-          Collections.addAll(selectedParents, parents);
-        }
-      }
-      parents = selectedParents.toArray(parents);
 
-      // crossover
-      Solution[] offSpring = (Solution[]) crossoverOperator.execute(parents);
-
-      // mutation
+      Solution[] parents = (Solution[])selectionOperator.execute(population) ;
+      Solution[] offSpring = (Solution[]) crossoverOperator.execute(parents) ;
       mutationOperator.execute(offSpring[0]);
 
-      // evaluation
       problem_.evaluate(offSpring[0]);
       problem_.evaluateConstraints(offSpring[0]);
 

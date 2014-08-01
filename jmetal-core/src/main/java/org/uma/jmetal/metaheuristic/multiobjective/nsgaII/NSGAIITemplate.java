@@ -194,6 +194,7 @@ public abstract class NSGAIITemplate extends Algorithm {
     return evaluations;
   }
 
+  /** Builder class */
   public static class Builder {
     protected SolutionSetEvaluator evaluator ;
     protected Problem problem;

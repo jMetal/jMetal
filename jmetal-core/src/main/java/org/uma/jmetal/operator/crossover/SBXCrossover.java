@@ -82,15 +82,16 @@ public class SBXCrossover extends Crossover {
     distributionIndex = builder.distributionIndex ;
   }
 
-  /** Getters */
+  /* Getters */
   public double getCrossoverProbability() {
     return crossoverProbability;
   }
+
   public double getDistributionIndex() {
     return distributionIndex;
   }
 
-  /** Execute method */
+  /** Execute() method */
   public Object execute(Object object) throws JMetalException {
     Solution[] parents = (Solution[]) object;
 
@@ -337,7 +338,7 @@ public class SBXCrossover extends Crossover {
       if (distributionIndex < 0) {
         throw new JMetalException("Distribution index invalid: " + distributionIndex) ;
       } else {
-        distributionIndex = distributionIndex;
+        this.distributionIndex = distributionIndex;
       }
 
       return this ;

@@ -39,16 +39,8 @@ import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
 public class NSGAII extends NSGAIITemplate {
   private static final long serialVersionUID = 5815971727148859507L;
 
-  public NSGAII(Builder builder) {
+  protected NSGAII(Builder builder) {
     super(builder) ;
-    /*
-    problem = builder.problem ;
-    maxEvaluations = builder.maxEvaluations ;
-    crossoverOperator = builder.crossoverOperator ;
-    mutationOperator = builder.mutationOperator ;
-    selectionOperator = builder.selectionOperator ;
-    populationSize = builder.populationSize ;
-    */
   }
 
   public NSGAII(SolutionSetEvaluator evaluator) {
