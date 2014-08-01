@@ -66,8 +66,7 @@ public class SMSEMOA extends SMSEMOATemplate {
     createInitialPopulation();
     population = evaluatePopulation(population) ;
 
-    // Generations ...
-    while (evaluations < maxEvaluations) {
+    while (!stoppingCondition()) {
       offspringPopulation = new SolutionSet(populationSize);
 
       Solution[] parents = (Solution[])selectionOperator.execute(population) ;
@@ -145,11 +144,7 @@ public class SMSEMOA extends SMSEMOATemplate {
 
     }
 
-
-    // Return the first non-dominated front
-    Ranking ranking = new Ranking(population);
-    ranking.getSubfront(0).printFeasibleFUN("FUN");
-    return ranking.getSubfront(0);
+    return getNonDominatedSolutions(population) ;
   }
 
   /**

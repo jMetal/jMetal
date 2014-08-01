@@ -111,6 +111,6 @@ public class NSGAIIRandom extends NSGAIITemplate {
 
     tearDown() ;
 
-    return getNonDominatedSolutions() ;
+    return getNonDominatedSolutions(population) ;
   }
 }

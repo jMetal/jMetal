@@ -148,8 +148,8 @@ public abstract class NSGAIITemplate extends Algorithm {
     return ranking.getSubfront(rank).size() < (populationSize - population.size()) ;
   }
 
-  protected SolutionSet getNonDominatedSolutions() throws JMetalException {
-    return new Ranking(population).getSubfront(0);
+  protected SolutionSet getNonDominatedSolutions(SolutionSet solutionSet) throws JMetalException {
+    return new Ranking(solutionSet).getSubfront(0);
   }
 
   protected void crowdingDistanceSelection(Ranking ranking) {

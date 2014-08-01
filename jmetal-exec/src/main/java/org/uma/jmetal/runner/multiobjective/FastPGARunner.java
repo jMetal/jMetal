@@ -20,10 +20,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package org.uma.jmetal.runner.multiobjective;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.logging.FileHandler;
-
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
@@ -35,16 +31,20 @@ import org.uma.jmetal.operator.selection.BinaryTournament;
 import org.uma.jmetal.problem.Kursawe;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.qualityIndicator.QualityIndicatorGetter;
-import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.comparator.FPGAFitnessComparator;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.logging.FileHandler;
 
 /**
  * Class for configuring and running the FastPGA algorithm
  */
 public class FastPGARunner {
-  public static java.util.logging.Logger logger_;
-  public static FileHandler fileHandler_; 
+  public static java.util.logging.Logger logger;
+  public static FileHandler fileHandler;
 
   /**
    * @param args Command line arguments. The first (optional) argument specifies
@@ -61,9 +61,9 @@ public class FastPGARunner {
     QualityIndicatorGetter indicators;
 
     // Logger object and file to store log messages
-    logger_ = JMetalLogger.logger;
-    fileHandler_ = new FileHandler("FastPGA_main.log");
-    logger_.addHandler(fileHandler_);
+    logger = JMetalLogger.logger;
+    fileHandler = new FileHandler("FastPGA_main.log");
+    logger.addHandler(fileHandler);
 
     indicators = null;
     if (args.length == 1) {
@@ -128,22 +128,22 @@ public class FastPGARunner {
     long estimatedTime = System.currentTimeMillis() - initTime;
 
     // Result messages 
-    logger_.info("Total execution time: " + estimatedTime + "ms");
-    logger_.info("Variables values have been writen to file VAR");
+    logger.info("Total execution time: " + estimatedTime + "ms");
+    logger.info("Variables values have been writen to file VAR");
     population.printVariablesToFile("VAR");
-    logger_.info("Objectives values have been writen to file FUN");
+    logger.info("Objectives values have been writen to file FUN");
     population.printObjectivesToFile("FUN");
 
     if (indicators != null) {
-      logger_.info("Quality indicators");
-      logger_.info("Hypervolume: " + indicators.getHypervolume(population));
-      logger_.info("GD         : " + indicators.getGD(population));
-      logger_.info("IGD        : " + indicators.getIGD(population));
-      logger_.info("Spread     : " + indicators.getSpread(population));
-      logger_.info("Epsilon    : " + indicators.getEpsilon(population));
+      logger.info("Quality indicators");
+      logger.info("Hypervolume: " + indicators.getHypervolume(population));
+      logger.info("GD         : " + indicators.getGD(population));
+      logger.info("IGD        : " + indicators.getIGD(population));
+      logger.info("Spread     : " + indicators.getSpread(population));
+      logger.info("Epsilon    : " + indicators.getEpsilon(population));
 
       int evaluations = ((Integer) algorithm.getOutputParameter("evaluations")).intValue();
-      logger_.info("Speed      : " + evaluations + " evaluations");
+      logger.info("Speed      : " + evaluations + " evaluations");
     }
   }
 }

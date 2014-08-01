@@ -20,10 +20,8 @@
 
 package org.uma.jmetal.metaheuristic.multiobjective.smsemoa;
 
-import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.qualityIndicator.QualityIndicatorGetter;
 import org.uma.jmetal.qualityIndicator.fasthypervolume.FastHypervolume;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.Ranking;
@@ -57,55 +55,13 @@ public class FastSMSEMOA extends SMSEMOATemplate {
 
   /** Execute() method */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
-    int populationSize;
-    int maxEvaluations;
-    int evaluations;
-    double offset;
-
-    QualityIndicatorGetter indicators;
-    int requiredEvaluations;
-
     FastHypervolume fastHypervolume;
-
-    SolutionSet population;
-    SolutionSet offspringPopulation;
-    SolutionSet union;
-
-    Operator mutationOperator;
-    Operator crossoverOperator;
-    Operator selectionOperator;
-
-    //Read the parameters
-    populationSize = ((Integer) getInputParameter("populationSize")).intValue();
-    maxEvaluations = ((Integer) getInputParameter("maxEvaluations")).intValue();
-    indicators = (QualityIndicatorGetter) getInputParameter("indicators");
-    offset = (Double) getInputParameter("offset");
-
-
-    //Initialize the variables
-    population = new SolutionSet(populationSize);
-    evaluations = 0;
-
-    requiredEvaluations = 0;
-
     fastHypervolume = new FastHypervolume(offset);
 
-    //Read the operator
-    mutationOperator = operators_.get("mutation");
-    crossoverOperator = operators_.get("crossover");
-    selectionOperator = operators_.get("selection");
+    createInitialPopulation();
+    population = evaluatePopulation(population) ;
 
-    // Create the initial solutionSet
-    Solution newSolution;
-    for (int i = 0; i < populationSize; i++) {
-      newSolution = new Solution(problem_);
-      problem_.evaluate(newSolution);
-      problem_.evaluateConstraints(newSolution);
-      evaluations++;
-      population.add(newSolution);
-    }
-
-    while (evaluations < maxEvaluations) {
+    while (!stoppingCondition()) {
       offspringPopulation = new SolutionSet(populationSize);
 
       Solution[] parents = (Solution[])selectionOperator.execute(population) ;
@@ -120,8 +76,7 @@ public class FastSMSEMOA extends SMSEMOATemplate {
 
       evaluations++;
 
-      // Create the solutionSet union of solutionSet and offSpring
-      union = ((SolutionSet) population).union(offspringPopulation);
+      SolutionSet union = population.union(offspringPopulation);
 
       // Ranking the union (non-dominated sorting)
       Ranking ranking = new Ranking(union);
@@ -134,7 +89,6 @@ public class FastSMSEMOA extends SMSEMOATemplate {
 
       SolutionSet lastFront = ranking.getSubfront(ranking.getNumberOfSubfronts() - 1);
 
-      //FastHypervolume fasthypervolume = new FastHypervolume() ;
       fastHypervolume.computeHVContributions(lastFront);
       lastFront.sort(new CrowdingDistanceComparator());
 
@@ -152,12 +106,6 @@ public class FastSMSEMOA extends SMSEMOATemplate {
       }
     }
 
-    // Return as output parameter the required evaluations
-    setOutputParameter("evaluations", requiredEvaluations);
-
-    // Return the first non-dominated front
-    Ranking ranking = new Ranking(population);
-
-    return ranking.getSubfront(0);
+    return getNonDominatedSolutions(population) ;
   }
 }

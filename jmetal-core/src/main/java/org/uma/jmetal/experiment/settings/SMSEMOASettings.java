@@ -25,15 +25,14 @@ import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.experiment.Settings;
 import org.uma.jmetal.metaheuristic.multiobjective.smsemoa.SMSEMOA;
 import org.uma.jmetal.operator.crossover.Crossover;
-import org.uma.jmetal.operator.crossover.CrossoverFactory;
+import org.uma.jmetal.operator.crossover.SBXCrossover;
 import org.uma.jmetal.operator.mutation.Mutation;
-import org.uma.jmetal.operator.mutation.MutationFactory;
+import org.uma.jmetal.operator.mutation.PolynomialMutation;
+import org.uma.jmetal.operator.selection.RandomSelection;
 import org.uma.jmetal.operator.selection.Selection;
-import org.uma.jmetal.operator.selection.SelectionFactory;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.util.JMetalException;
 
-import java.util.HashMap;
 import java.util.Properties;
 
 /**
@@ -48,10 +47,7 @@ public class SMSEMOASettings extends Settings {
   private double mutationDistributionIndex;
   private double offset;
 
-  /**
-   * Constructor
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Constructor */
   public SMSEMOASettings(String problem) throws JMetalException {
     super(problem) ;
 
@@ -67,55 +63,39 @@ public class SMSEMOASettings extends Settings {
     offset = 100.0 ;
   }
 
-  /**
-   * Configure SMSEMOA with user-defined parameter experiment.settings
-   *
-   * @return A SMSEMOA algorithm object
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Configure SMSEMOA with default parameter settings */
   public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
     Selection selection;
     Crossover crossover;
     Mutation mutation;
 
-    // Creating the algorithm. 
-    algorithm = new SMSEMOA();
-    algorithm.setProblem(problem);
+    crossover = new SBXCrossover.Builder()
+      .distributionIndex(crossoverDistributionIndex)
+      .probability(crossoverProbability)
+      .build() ;
 
-    // Algorithm parameters
-    algorithm.setInputParameter("populationSize", populationSize);
-    algorithm.setInputParameter("maxEvaluations", maxEvaluations);
-    algorithm.setInputParameter("offset", offset);
+    mutation = new PolynomialMutation.Builder()
+      .distributionIndex(mutationDistributionIndex)
+      .probability(mutationProbability)
+      .build();
 
-    // Mutation and Crossover for Real codification 
-    HashMap<String, Object> parameters = new HashMap<String, Object>();
-    parameters.put("probability", crossoverProbability);
-    parameters.put("distributionIndex", crossoverDistributionIndex);
-    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters);
+    selection = new RandomSelection.Builder()
+      .build();
 
-    parameters = new HashMap<String, Object>();
-    parameters.put("probability", mutationProbability);
-    parameters.put("distributionIndex", mutationDistributionIndex);
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);
-
-    // Selection Operator
-    parameters = null;
-    selection = SelectionFactory.getSelectionOperator("RandomSelection", parameters);
-
-    // Add the operator to the algorithm
-    algorithm.addOperator("crossover",crossover);
-    algorithm.addOperator("mutation",mutation);
-    algorithm.addOperator("selection",selection);
+    algorithm = new SMSEMOA.Builder(problem)
+      .crossover(crossover)
+      .mutation(mutation)
+      .selection(selection)
+      .offset(offset)
+      .maxEvaluations(maxEvaluations)
+      .populationSize(populationSize)
+      .build("SMSEMOA") ;
 
     return algorithm ;
   }
 
-  /**
-   * Configure SMSEMOA with user-defined parameter experiment.settings
-   *
-   * @return A SMSEMOA algorithm object
-   */
+  /** Configure SMSEMOA from a properties file */
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {
     populationSize = Integer.parseInt(configuration.getProperty("populationSize",String.valueOf(

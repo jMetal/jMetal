@@ -32,7 +32,7 @@ import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristic.multiobjective.smsemoa.SMSEMOA;
+import org.uma.jmetal.metaheuristic.multiobjective.smsemoa.FastSMSEMOA;
 import org.uma.jmetal.operator.crossover.SBXCrossover;
 import org.uma.jmetal.operator.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.selection.RandomSelection;
@@ -53,14 +53,14 @@ import java.util.logging.FileHandler;
  * implementation of SMS-EMOA makes use of a QualityIndicator object
  * to obtained the convergence speed of the algorithm.
  */
-public class SMSEMOARunner {
+public class FastSMSEMOARunner {
   public static java.util.logging.Logger logger;
   public static FileHandler fileHandler;
 
   /**
    * @param args Command line arguments.
    * @throws org.uma.jmetal.util.JMetalException
-   * @throws IOException
+   * @throws java.io.IOException
    * @throws SecurityException Usage: three options
    *                           - org.uma.jmetal.runner.SMSEMOA_main
    *                           - org.uma.jmetal.runner.SMSEMOA_main problemName
@@ -89,7 +89,7 @@ public class SMSEMOARunner {
 
     // Logger object and file to store log messages
     logger = JMetalLogger.logger;
-    fileHandler = new FileHandler("SMSEMOARunner.log");
+    fileHandler = new FileHandler("FastSMSEMOARunner.log");
     logger.addHandler(fileHandler);
 
     indicators = null;
@@ -131,14 +131,14 @@ public class SMSEMOARunner {
     selection = new RandomSelection.Builder()
       .build();
 
-    algorithm = new SMSEMOA.Builder(problem)
+    algorithm = new FastSMSEMOA.Builder(problem)
       .crossover(crossover)
       .mutation(mutation)
       .selection(selection)
       .offset(offset)
       .maxEvaluations(maxEvaluations)
       .populationSize(populationSize)
-      .build("SMSEMOA") ;
+      .build("FastSMSEMOA") ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
       .execute() ;

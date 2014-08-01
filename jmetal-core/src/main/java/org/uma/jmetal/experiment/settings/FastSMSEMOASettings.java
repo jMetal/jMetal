@@ -24,19 +24,19 @@ import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.experiment.Settings;
 import org.uma.jmetal.metaheuristic.multiobjective.smsemoa.FastSMSEMOA;
 import org.uma.jmetal.operator.crossover.Crossover;
-import org.uma.jmetal.operator.crossover.CrossoverFactory;
+import org.uma.jmetal.operator.crossover.SBXCrossover;
 import org.uma.jmetal.operator.mutation.Mutation;
-import org.uma.jmetal.operator.mutation.MutationFactory;
+import org.uma.jmetal.operator.mutation.PolynomialMutation;
+import org.uma.jmetal.operator.selection.RandomSelection;
 import org.uma.jmetal.operator.selection.Selection;
-import org.uma.jmetal.operator.selection.SelectionFactory;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.util.JMetalException;
 
-import java.util.HashMap;
 import java.util.Properties;
 
 /**
- * Settings class of algorithm FastSMSEMOA. This algorithm is just SMS-EMOA but using the FastHypervolume class
+ * Settings class of algorithm FastSMSEMOA. This algorithm is just SMS-EMOA but using
+ * the FastHypervolume archive
  */
 public class FastSMSEMOASettings extends Settings {
   private int populationSize;
@@ -47,11 +47,7 @@ public class FastSMSEMOASettings extends Settings {
   private double mutationDistributionIndex;
   private double offset;
 
-  /**
-   * Constructor
-   *
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Constructor */
   public FastSMSEMOASettings(String problem) throws JMetalException {
     super(problem);
 
@@ -68,54 +64,40 @@ public class FastSMSEMOASettings extends Settings {
   }
 
 
-  /**
-   * Configure FastSMSEMOA with user-defined parameter experiment.settings
-   *
-   * @return A FastSMSEMOA algorithm object
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Configure FastSMSEMOA with default parameter settings */
   public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
     Selection selection;
     Crossover crossover;
     Mutation mutation;
 
-    // Creating the algorithm. 
-    algorithm = new FastSMSEMOA();
-    algorithm.setProblem(problem);
+    crossover = new SBXCrossover.Builder()
+      .distributionIndex(crossoverDistributionIndex)
+      .probability(crossoverProbability)
+      .build() ;
 
-    // Algorithm parameters
-    algorithm.setInputParameter("populationSize", populationSize);
-    algorithm.setInputParameter("maxEvaluations", maxEvaluations);
-    algorithm.setInputParameter("offset", offset);
+    mutation = new PolynomialMutation.Builder()
+      .distributionIndex(mutationDistributionIndex)
+      .probability(mutationProbability)
+      .build();
 
-    // Mutation and Crossover for Real codification 
-    HashMap<String, Object> parameters = new HashMap<String, Object>();
-    parameters.put("probability", crossoverProbability);
-    parameters.put("distributionIndex", crossoverDistributionIndex);
-    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters);
+    selection = new RandomSelection.Builder()
+      .build();
 
-    parameters = new HashMap<String, Object>();
-    parameters.put("probability", mutationProbability);
-    parameters.put("distributionIndex", mutationDistributionIndex);
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);
+    algorithm = new FastSMSEMOA.Builder(problem)
+      .crossover(crossover)
+      .mutation(mutation)
+      .selection(selection)
+      .offset(offset)
+      .maxEvaluations(maxEvaluations)
+      .populationSize(populationSize)
+      .build("FastSMSEMOA") ;
 
-    // Selection Operator
-    parameters = null;
-    selection = SelectionFactory.getSelectionOperator("RandomSelection", parameters);
-
-    // Add the operator to the algorithm
-    algorithm.addOperator("crossover", crossover);
-    algorithm.addOperator("mutation", mutation);
-    algorithm.addOperator("selection", selection);
-
-    return algorithm;
+    return algorithm ;
   }
 
   /**
-   * Configure FastSMSEMOA with user-defined parameter experiment.settings
-   *
-   * @return A FastSMSEMOA algorithm object
+   * Configure FastSMSEMOA from a properties file
    */
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {

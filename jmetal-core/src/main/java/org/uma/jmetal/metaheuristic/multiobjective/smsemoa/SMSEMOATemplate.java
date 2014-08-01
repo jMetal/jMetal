@@ -2,6 +2,7 @@ package org.uma.jmetal.metaheuristic.multiobjective.smsemoa;
 
 import org.uma.jmetal.core.*;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.Ranking;
 import org.uma.jmetal.util.evaluator.SequentialSolutionSetEvaluator;
 import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
 
@@ -55,6 +56,14 @@ public abstract class SMSEMOATemplate extends Algorithm {
     evaluations += population.size() ;
 
     return evaluator.evaluate(population, problem_) ;
+  }
+
+  protected boolean stoppingCondition() {
+    return evaluations >= maxEvaluations;
+  }
+
+  protected SolutionSet getNonDominatedSolutions(SolutionSet solutionSet) throws JMetalException {
+    return new Ranking(solutionSet).getSubfront(0);
   }
 
   /** Builder class */

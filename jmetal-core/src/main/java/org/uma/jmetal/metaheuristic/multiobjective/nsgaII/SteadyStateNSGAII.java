@@ -55,33 +55,24 @@ public class SteadyStateNSGAII extends NSGAIITemplate {
     createInitialPopulation();
     population = evaluatePopulation(population);
 
-    // Generations ...
     while (!stoppingCondition()) {
-
-      // Create the offSpring solutionSet      
       offspringPopulation = new SolutionSet(1);
       Solution[] parents = new Solution[2];
 
-      //obtain parents
       parents[0] = (Solution) selectionOperator.execute(population);
       parents[1] = (Solution) selectionOperator.execute(population);
 
-      // crossover
       Solution[] offSpring = (Solution[]) crossoverOperator.execute(parents);
 
-      // mutation
       mutationOperator.execute(offSpring[0]);
 
-      // evaluation
       problem_.evaluate(offSpring[0]);
       problem_.evaluateConstraints(offSpring[0]);
 
-      // insert child into the offspring population
       offspringPopulation.add(offSpring[0]);
 
       evaluations++;
 
-      //Ranking ranking = rankPopulation() ;
       Ranking ranking = new Ranking(population.union(offspringPopulation));
 
       population.clear();
@@ -99,6 +90,6 @@ public class SteadyStateNSGAII extends NSGAIITemplate {
 
     tearDown();
 
-    return getNonDominatedSolutions() ;
+    return getNonDominatedSolutions(population) ;
   } 
 } 

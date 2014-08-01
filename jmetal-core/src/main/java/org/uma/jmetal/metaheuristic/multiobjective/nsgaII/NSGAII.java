@@ -85,6 +85,6 @@ public class NSGAII extends NSGAIITemplate {
 
     tearDown() ;
 
-    return getNonDominatedSolutions() ;
+    return getNonDominatedSolutions(population) ;
   }
 } 
