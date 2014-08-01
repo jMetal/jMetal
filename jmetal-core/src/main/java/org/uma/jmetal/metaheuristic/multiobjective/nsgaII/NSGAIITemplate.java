@@ -170,6 +170,7 @@ public abstract class NSGAIITemplate extends Algorithm {
     evaluator.shutdown();
   }
 
+  /* Getters */
   public Operator getCrossoverOperator() {
     return crossoverOperator;
   }

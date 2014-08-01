@@ -46,13 +46,13 @@ import static org.junit.Assert.assertEquals;
  * To change this template use File | Settings | File Templates.
  */
 public class NSGAIISettingsTest {
-  Properties configuration_ ;
+  Properties configuration;
 
   @Before
   public void init() throws FileNotFoundException, IOException {
-    configuration_ = new Properties();
+    configuration = new Properties();
     InputStreamReader isr = new InputStreamReader(new FileInputStream(ClassLoader.getSystemResource("NSGAII.conf").getPath()));
-    configuration_.load(isr);
+    configuration.load(isr);
   }
 
   @Test
@@ -69,21 +69,21 @@ public class NSGAIISettingsTest {
     double pm = mutation.getMutationProbability() ;
     double dim = mutation.getDistributionIndex() ;
 
-    assertEquals("NSGAII_SettingsTest", 100, algorithm.getPopulationSize());
-    assertEquals("NSGAII_SettingsTest", 25000, algorithm.getMaxEvaluations());
+    assertEquals(100, algorithm.getPopulationSize());
+    assertEquals(25000, algorithm.getMaxEvaluations());
 
-    assertEquals("NSGAII_SettingsTest", 0.9, pc, epsilon);
-    assertEquals("NSGAII_SettingsTest", 20.0, dic, epsilon);
+    assertEquals(0.9, pc, epsilon);
+    assertEquals(20.0, dic, epsilon);
 
-    assertEquals("NSGAII_SettingsTest", 1.0/problem.getNumberOfVariables(), pm, epsilon);
-    assertEquals("NSGAII_SettingsTest", 20.0, dim, epsilon);
+    assertEquals(1.0/problem.getNumberOfVariables(), pm, epsilon);
+    assertEquals(20.0, dim, epsilon);
   }
 
   @Test
   public void testConfigure2() throws Exception {
     double epsilon = 0.000000000000001 ;
     Settings NSGAIISettings = new org.uma.jmetal.experiment.settings.NSGAIISettings("Fonseca");
-    NSGAII algorithm = (NSGAII)NSGAIISettings.configure(configuration_) ;
+    NSGAII algorithm = (NSGAII)NSGAIISettings.configure(configuration) ;
     Problem problem = new Fonseca("Real") ;
 
     SBXCrossover crossover = (SBXCrossover) algorithm.getCrossoverOperator() ;
@@ -93,13 +93,13 @@ public class NSGAIISettingsTest {
     double pm = mutation.getMutationProbability() ;
     double dim = mutation.getDistributionIndex() ;
 
-    assertEquals("NSGAII_SettingsTest", 100, algorithm.getPopulationSize());
-    assertEquals("NSGAII_SettingsTest", 25000, algorithm.getMaxEvaluations());
+    assertEquals(100, algorithm.getPopulationSize());
+    assertEquals(25000, algorithm.getMaxEvaluations());
 
-    assertEquals("NSGAII_SettingsTest", 0.9, pc, epsilon);
-    assertEquals("NSGAII_SettingsTest", 20.0, dic, epsilon);
+    assertEquals(0.9, pc, epsilon);
+    assertEquals(20.0, dic, epsilon);
 
-    assertEquals("NSGAII_SettingsTest", 1.0/problem.getNumberOfVariables(), pm, epsilon);
-    assertEquals("NSGAII_SettingsTest", 20.0, dim, epsilon);
+    assertEquals(1.0/problem.getNumberOfVariables(), pm, epsilon);
+    assertEquals(20.0, dim, epsilon);
   }
 }

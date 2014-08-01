@@ -66,6 +66,35 @@ public abstract class SMSEMOATemplate extends Algorithm {
     return new Ranking(solutionSet).getSubfront(0);
   }
 
+  /* Getters */
+  public Operator getCrossoverOperator() {
+    return crossoverOperator;
+  }
+
+  public Operator getMutationOperator() {
+    return mutationOperator;
+  }
+
+  public Operator getSelectionOperator() {
+    return selectionOperator;
+  }
+
+  public int getPopulationSize() {
+    return populationSize;
+  }
+
+  public int getMaxEvaluations() {
+    return maxEvaluations;
+  }
+
+  public double getOffset() {
+    return offset ;
+  }
+
+  public int getEvaluations () {
+    return evaluations;
+  }
+
   /** Builder class */
   public static class Builder {
     protected Problem problem;

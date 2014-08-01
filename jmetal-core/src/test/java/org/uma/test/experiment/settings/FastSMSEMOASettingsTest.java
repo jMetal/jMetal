@@ -20,23 +20,23 @@
 
 package org.uma.test.experiment.settings;
 
-import org.uma.jmetal.core.Algorithm;
+import org.junit.Before;
+import org.junit.Test;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.experiment.Settings;
 import org.uma.jmetal.experiment.settings.FastSMSEMOASettings;
+import org.uma.jmetal.metaheuristic.multiobjective.smsemoa.FastSMSEMOA;
 import org.uma.jmetal.operator.crossover.SBXCrossover;
 import org.uma.jmetal.operator.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.Fonseca;
-
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Properties;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created with IntelliJ IDEA.
@@ -46,60 +46,66 @@ import java.util.Properties;
  * To change this template use File | Settings | File Templates.
  */
 public class FastSMSEMOASettingsTest {
-  Properties configuration_ ;
+  Properties configuration;
 
   @Before
   public void init() throws FileNotFoundException, IOException {
-    configuration_ = new Properties();
+    configuration = new Properties();
     InputStreamReader isr = new InputStreamReader(new FileInputStream(ClassLoader.getSystemResource("FastSMSEMOA.conf").getPath()));
-    configuration_.load(isr);
+    configuration.load(isr);
   }
 
   @Test
   public void testConfigure() throws Exception {
     double epsilon = 0.000000000000001 ;
-    Settings smsemoaSettings = new FastSMSEMOASettings("Fonseca");
-    Algorithm algorithm = smsemoaSettings.configure() ;
+    Settings fastSMEEMOASettings = new FastSMSEMOASettings("Fonseca");
+    FastSMSEMOA algorithm = (FastSMSEMOA) fastSMEEMOASettings.configure() ;
     Problem problem = new Fonseca("Real") ;
-    SBXCrossover crossover = (SBXCrossover)algorithm.getOperator("crossover") ;
-    double pc = (Double)crossover.getParameter("probability") ;
-    double dic = (Double)crossover.getParameter("distributionIndex") ;
-    PolynomialMutation mutation = (PolynomialMutation)algorithm.getOperator("mutation") ;
-    double pm = (Double)mutation.getParameter("probability") ;
-    double dim = (Double)mutation.getParameter("distributionIndex") ;
 
-    Assert.assertEquals("SMSEMOA_SettingsTest", 100, ((Integer)algorithm.getInputParameter("populationSize")).intValue());
-    Assert.assertEquals("SMSEMOA_SettingsTest", 25000, ((Integer)algorithm.getInputParameter("maxEvaluations")).intValue());
+    SBXCrossover crossover = (SBXCrossover) algorithm.getCrossoverOperator() ;
+    double pc = crossover.getCrossoverProbability() ;
+    double dic = crossover.getDistributionIndex() ;
+    PolynomialMutation mutation = (PolynomialMutation)algorithm.getMutationOperator() ;
+    double pm = mutation.getMutationProbability() ;
+    double dim = mutation.getDistributionIndex() ;
+    double offset = algorithm.getOffset() ;
 
-    Assert.assertEquals("SMSEMOA_SettingsTest", 0.9, pc, epsilon);
-    Assert.assertEquals("SMSEMOA_SettingsTest", 20.0, dic, epsilon);
+    assertEquals(100, algorithm.getPopulationSize());
+    assertEquals(25000, algorithm.getMaxEvaluations());
 
-    Assert.assertEquals("SMSEMOA_SettingsTest", 1.0/problem.getNumberOfVariables(), pm, epsilon);
-    Assert.assertEquals("SMSEMOA_SettingsTest", 20.0, dim, epsilon);
-    Assert.assertEquals("SMSEMOA_SettingsTest", 100.0, ((Double)algorithm.getInputParameter("offset")).doubleValue(), epsilon);
+    assertEquals(0.9, pc, epsilon);
+    assertEquals(20.0, dic, epsilon);
+
+    assertEquals(1.0/problem.getNumberOfVariables(), pm, epsilon);
+    assertEquals(20.0, dim, epsilon);
+
+    assertEquals(100.0, offset, epsilon);
   }
 
   @Test
   public void testConfigure2() throws Exception {
     double epsilon = 0.000000000000001 ;
-    Settings smsemoaSettings = new FastSMSEMOASettings("Fonseca");
-    Algorithm algorithm = smsemoaSettings.configure(configuration_) ;
+    Settings fastSMEEMOASettings = new FastSMSEMOASettings("Fonseca");
+    FastSMSEMOA algorithm = (FastSMSEMOA) fastSMEEMOASettings.configure(configuration) ;
     Problem problem = new Fonseca("Real") ;
-    SBXCrossover crossover = (SBXCrossover)algorithm.getOperator("crossover") ;
-    double pc = (Double)crossover.getParameter("probability") ;
-    double dic = (Double)crossover.getParameter("distributionIndex") ;
-    PolynomialMutation mutation = (PolynomialMutation)algorithm.getOperator("mutation") ;
-    double pm = (Double)mutation.getParameter("probability") ;
-    double dim = (Double)mutation.getParameter("distributionIndex") ;
 
-    Assert.assertEquals("SMSEMOA_SettingsTest", 100, ((Integer)algorithm.getInputParameter("populationSize")).intValue());
-    Assert.assertEquals("SMSEMOA_SettingsTest", 25000, ((Integer)algorithm.getInputParameter("maxEvaluations")).intValue());
+    SBXCrossover crossover = (SBXCrossover) algorithm.getCrossoverOperator() ;
+    double pc = crossover.getCrossoverProbability() ;
+    double dic = crossover.getDistributionIndex() ;
+    PolynomialMutation mutation = (PolynomialMutation)algorithm.getMutationOperator() ;
+    double pm = mutation.getMutationProbability() ;
+    double dim = mutation.getDistributionIndex() ;
+    double offset = algorithm.getOffset() ;
 
-    Assert.assertEquals("SMSEMOA_SettingsTest", 0.9, pc, epsilon);
-    Assert.assertEquals("SMSEMOA_SettingsTest", 20.0, dic, epsilon);
+    assertEquals(100, algorithm.getPopulationSize());
+    assertEquals(25000, algorithm.getMaxEvaluations());
 
-    Assert.assertEquals("SMSEMOA_SettingsTest", 1.0/problem.getNumberOfVariables(), pm, epsilon);
-    Assert.assertEquals("SMSEMOA_SettingsTest", 20.0, dim, epsilon);
-    Assert.assertEquals("SMSEMOA_SettingsTest", 100.0, ((Double)algorithm.getInputParameter("offset")).doubleValue(), epsilon);
+    assertEquals(0.9, pc, epsilon);
+    assertEquals(20.0, dic, epsilon);
+
+    assertEquals(1.0 / problem.getNumberOfVariables(), pm, epsilon);
+    assertEquals(20.0, dim, epsilon);
+
+    assertEquals(100.0, offset, epsilon);
   }
 }

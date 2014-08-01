@@ -43,8 +43,8 @@ public class NSGAIIBinaryTest {
 
     SolutionSet solutionSet = algorithm.execute() ;
     /*
-    Rationale: the default problem is ZDT5, and usually NSGA-II; configured with standard
-    settings should return 100 solutions
+    Rationale: the default problem is ZDT5, and usually NSGA-II, configured with standard
+    settings, should return 100 solutions
      */
     int defaultMaxEvaluations = 25000 ;
     assertTrue(solutionSet.size() >= 98) ;

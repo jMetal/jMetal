@@ -18,13 +18,13 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.test.metaheuristic.multiobjective.nsgaII;
+package org.uma.test.metaheuristic.multiobjective.smsemoa;
 
 import org.junit.Test;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.experiment.settings.NSGAIISettings;
-import org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII;
+import org.uma.jmetal.experiment.settings.FastSMSEMOASettings;
+import org.uma.jmetal.metaheuristic.multiobjective.smsemoa.FastSMSEMOA;
 
 import java.io.IOException;
 
@@ -34,20 +34,20 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by Antonio J. Nebro on 02/06/14.
  */
-public class NSGAIITest {
+public class FastSMSEMOATest {
   Algorithm algorithm;
 
   @Test
   public void numberOfReturnedSolutionsInEasyProblemTest() throws IOException, ClassNotFoundException {
-    algorithm = new NSGAIISettings("Kursawe").configure() ;
+    algorithm = new FastSMSEMOASettings("Kursawe").configure() ;
 
     SolutionSet solutionSet = algorithm.execute() ;
     /*
-    Rationale: the default problem is Kursawe, and usually NSGA-II, configured with standard
+    Rationale: the default problem is Kursawe, and usually SMS-EMOA, configured with standard
     settings, should return 100 solutions
      */
     int defaultMaxEvaluations = 25000 ;
     assertTrue(solutionSet.size() >= 98) ;
-    assertEquals(defaultMaxEvaluations, ((NSGAII) algorithm).getEvaluations());
+    assertEquals(defaultMaxEvaluations, ((FastSMSEMOA) algorithm).getEvaluations());
   }
 }

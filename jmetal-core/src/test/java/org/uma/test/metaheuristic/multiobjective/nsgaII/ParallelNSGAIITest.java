@@ -41,8 +41,8 @@ public class ParallelNSGAIITest {
 
     SolutionSet solutionSet = algorithm.execute() ;
     /*
-    Rationale: the default problem is Kursawe, and usually NSGA-II; configured with standard
-    settings should return 100 solutions
+    Rationale: the default problem is Kursawe, and usually NSGA-II, configured with standard
+    settings, should return 100 solutions
      */
     assertTrue(solutionSet.size() >= 98) ;
   }
