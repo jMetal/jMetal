@@ -1,4 +1,4 @@
-//  NSGAIITest.java
+//  SMSEMOATest.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>

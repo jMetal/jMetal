@@ -1,4 +1,4 @@
-//  NSGAIITest.java
+//  FastSMSEMOATest.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
