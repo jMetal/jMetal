@@ -197,6 +197,8 @@ public abstract class MOEADTemplate extends Algorithm {
       MOEADTemplate algorithm  ;
       if ("MOEAD".equals(moeadVariant)) {
         algorithm = new MOEAD(this);
+      } else if ("ConstraintMOEAD".equals(moeadVariant)) {
+        algorithm = new ConstraintMOEAD(this) ;
       } else {
         throw new JMetalException(moeadVariant + " variant unknown") ;
       }

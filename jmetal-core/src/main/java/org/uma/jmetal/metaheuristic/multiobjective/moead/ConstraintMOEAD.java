@@ -1,10 +1,10 @@
-//  MOEAD.java
+//  ConstraintMOEAD.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
 //       Juan J. Durillo <durillo@lcc.uma.es>
 //
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
+//  Copyright (c) 2014 Antonio J. Nebro, Juan J. Durillo
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -15,7 +15,7 @@
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU Lesser General Public License for more details.
-// 
+//
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -23,23 +23,38 @@ package org.uma.jmetal.metaheuristic.multiobjective.moead;
 
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
+import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.comparator.IConstraintViolationComparator;
+import org.uma.jmetal.util.comparator.ViolationThresholdComparator;
 
-public class MOEAD extends MOEADTemplate {
-  private static final long serialVersionUID = -8602634334286344579L;
+import java.io.IOException;
+
+/**
+ * Created by Antonio J. Nebro on 02/08/14.
+ */
+public class ConstraintMOEAD extends MOEADTemplate {
+  private static final long serialVersionUID = 6039874453532436343L;
+
+  IConstraintViolationComparator comparator = new ViolationThresholdComparator();
 
   /** Constructor */
-  protected MOEAD(Builder builder) {
+  protected ConstraintMOEAD(Builder builder) {
     super(builder) ;
   }
 
   /** Execute() method */
-  public SolutionSet execute() throws ClassNotFoundException {
+  @Override
+  public SolutionSet execute()
+    throws JMetalException, ClassNotFoundException, IOException {
     evaluations = 0 ;
 
     initializeUniformWeight();
     initializeNeighborhood();
     initializePopulation();
     initializeIdealPoint();
+
+    ((ViolationThresholdComparator) this.comparator).updateThreshold(this.population);
+
 
     do {
       int[] permutation = new int[populationSize];
@@ -60,6 +75,7 @@ public class MOEAD extends MOEADTemplate {
         updateIdealPoint(child);
         updateNeighborhood(child, subProblemId, neighborType);
       }
+      ((ViolationThresholdComparator) this.comparator).updateThreshold(this.population);
     } while (evaluations < maxEvaluations);
 
     return population;
