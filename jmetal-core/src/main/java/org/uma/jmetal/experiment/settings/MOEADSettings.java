@@ -108,7 +108,7 @@ public class MOEADSettings extends Settings {
       .crossover(crossover)
       .mutation(mutation)
       .dataDirectory("MOEAD_Weights")
-      .build() ;
+      .build("MOEAD") ;
 
     return algorithm;
   }

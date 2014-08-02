@@ -114,7 +114,7 @@ public class MOEADRunner {
       .crossover(crossover)
       .mutation(mutation)
       .dataDirectory("MOEAD_Weights")
-      .build() ;
+      .build("MOEAD") ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
       .execute() ;
@@ -141,66 +141,4 @@ public class MOEADRunner {
       logger_.info("Epsilon    : " + indicators.getEpsilon(population));
     }
   }
-
-    /*
-    algorithm = new MOEAD();
-    algorithm.setProblem(problem);
-    //algorithm = new MOEAD_DRA(problem);
-
-    // Algorithm parameters
-    algorithm.setInputParameter("populationSize", 300);
-    algorithm.setInputParameter("maxEvaluations", 150000);
-
-    // Directory with the files containing the weight vectors used in 
-    // Q. Zhang,  W. Liu,  and H Li, The Performance of a New Version of MOEA/D 
-    // on CEC09 Unconstrained MOP Test Instances Working Report CES-491, School 
-    // of CS & EE, University of Essex, 02/2009.
-    // http://dces.essex.ac.uk/staff/qzhang/MOEAcompetition/CEC09final/code/ZhangMOEADcode/moead0305.rar
-    algorithm.setInputParameter("dataDirectory", "MOEAD_Weight");
-
-    // used by MOEAD_DRA
-    algorithm.setInputParameter("finalSize", 300);
-
-    algorithm.setInputParameter("T", 20);
-    algorithm.setInputParameter("delta", 0.9);
-    algorithm.setInputParameter("nr", 2);
-
-    // Crossover operator 
-    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
-    crossoverParameters.put("CR", 1.0);
-    crossoverParameters.put("F", 0.5);
-    crossover =
-      CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", crossoverParameters);
-
-    // Mutation operator
-    HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
-    mutationParameters.put("probability", 1.0 / problem.getNumberOfVariables());
-    mutationParameters.put("distributionIndex", 20.0);
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
-
-    algorithm.addOperator("crossover", crossover);
-    algorithm.addOperator("mutation", mutation);
-
-    // Execute the Algorithm
-    long initTime = System.currentTimeMillis();
-    SolutionSet population = algorithm.execute();
-    long estimatedTime = System.currentTimeMillis() - initTime;
-
-    // Result messages 
-    LOGGER.info("Total execution time: " + estimatedTime + "ms");
-    LOGGER.info("Objectives values have been writen to file FUN");
-    population.printObjectivesToFile("FUN");
-    LOGGER.info("Variables values have been writen to file VAR");
-    population.printVariablesToFile("VAR");
-
-    if (indicators != null) {
-      LOGGER.info("Quality indicators");
-      LOGGER.info("Hypervolume: " + indicators.getHypervolume(population));
-      LOGGER.info("EPSILON    : " + indicators.getEpsilon(population));
-      LOGGER.info("GD         : " + indicators.getGD(population));
-      LOGGER.info("IGD        : " + indicators.getIGD(population));
-      LOGGER.info("Spread     : " + indicators.getSpread(population));
-    }
-    */
-
 }
