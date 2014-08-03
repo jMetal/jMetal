@@ -1,4 +1,4 @@
-//  cMOEAD_SettingsTest.java
+//  ConstraintMOEADSettingsTest.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
