@@ -311,9 +311,6 @@ public abstract class MOEADTemplate extends Algorithm {
   void initializeIdealPoint() throws JMetalException, ClassNotFoundException {
     for (int i = 0; i < problem_.getNumberOfObjectives(); i++) {
       idealPoint[i] = 1.0e+30;
-      //indArray[i] = new Solution(problem);
-      //problem.evaluate(indArray[i]);
-      evaluations++;
     }
 
     for (int i = 0; i < populationSize; i++) {
@@ -324,10 +321,10 @@ public abstract class MOEADTemplate extends Algorithm {
   /**
    *
    * @param listOfSolutions
-   * @param subProblemId
+   * @param subproblemId
    * @param neighbourType
    */
-  public void matingSelection(Vector<Integer> listOfSolutions, int subProblemId, NeighborType neighbourType) {
+  public void matingSelection(Vector<Integer> listOfSolutions, int subproblemId, NeighborType neighbourType) {
     // list : the set of the indexes of selected mating parents
     // subProblemId  : the id of current subproblem
     // numberOfSolutionsToSelect : the number of selected mating parents
@@ -336,12 +333,12 @@ public abstract class MOEADTemplate extends Algorithm {
     int selectedSolution;
     int numberOfSolutionsToSelect = 2 ;
 
-    neighbourSize = neighborhood[subProblemId].length;
+    neighbourSize = neighborhood[subproblemId].length;
     while (listOfSolutions.size() < numberOfSolutionsToSelect) {
       int random;
       if (neighbourType == NeighborType.NEIGHBOR) {
         random = PseudoRandom.randInt(0, neighbourSize - 1);
-        selectedSolution = neighborhood[subProblemId][random];
+        selectedSolution = neighborhood[subproblemId][random];
       } else {
         selectedSolution = PseudoRandom.randInt(0, populationSize - 1);
       }

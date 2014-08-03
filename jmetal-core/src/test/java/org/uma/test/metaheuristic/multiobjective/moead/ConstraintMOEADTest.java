@@ -1,4 +1,4 @@
-//  MOEADTest.java
+//  ConstraintMOEADTest.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -23,7 +23,7 @@ package org.uma.test.metaheuristic.multiobjective.moead;
 import org.junit.Test;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.experiment.settings.MOEADSettings;
+import org.uma.jmetal.experiment.settings.ConstraintMOEADSettings;
 
 import java.io.IOException;
 
@@ -32,18 +32,30 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by Antonio J. Nebro on 12/06/14.
  */
-public class MOEADTest {
+public class ConstraintMOEADTest {
     Algorithm algorithm;
 
     @Test
     public void testNumberOfReturnedSolutionsInEasyProblem() throws IOException, ClassNotFoundException {
-      algorithm = new MOEADSettings("LZ09_F2").configure() ;
+      algorithm = new ConstraintMOEADSettings("LZ09_F2").configure() ;
 
       SolutionSet solutionSet = algorithm.execute() ;
     /*
-      Rationale: the default problem is LZ09_F2, and usually MOEAD, configured with standard
+      Rationale: the default problem is LZ09_F2, and usually ConstraintMOEAD, configured with standard
       settings, should return 300 solutions
      */
       assertTrue(solutionSet.size() >= 299) ;
     }
+
+  @Test
+  public void testNumberOfReturnedSolutionsInEasyConstrainedProblem() throws IOException, ClassNotFoundException {
+    algorithm = new ConstraintMOEADSettings("Srinivas").configure() ;
+
+    SolutionSet solutionSet = algorithm.execute() ;
+    /*
+      Rationale: the default problem is Srinivas, and usually ConstraintMOEAD, configured with standard
+      settings, should return 300 solutions
+     */
+    assertTrue(solutionSet.size() >= 299) ;
+  }
 }
