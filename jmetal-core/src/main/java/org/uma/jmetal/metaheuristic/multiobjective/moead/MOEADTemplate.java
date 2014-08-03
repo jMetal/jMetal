@@ -254,7 +254,7 @@ public abstract class MOEADTemplate extends Algorithm {
         InputStreamReader isr = new InputStreamReader(fis);
         BufferedReader br = new BufferedReader(isr);
 
-        int numberOfObjectives = 0;
+        int numberOfObjectives ;
         int i = 0;
         int j = 0;
         String aux = br.readLine();
@@ -366,8 +366,6 @@ public abstract class MOEADTemplate extends Algorithm {
     for (int n = 0; n < problem_.getNumberOfObjectives(); n++) {
       if (individual.getObjective(n) < idealPoint[n]) {
         idealPoint[n] = individual.getObjective(n);
-
-        //indArray[n] = individual;
       }
     }
   }
