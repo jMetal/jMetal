@@ -61,7 +61,6 @@ public class SMPSO extends Algorithm {
   double changeVelocity2;
 
   private int swarmSize;
-  private int archiveSize;
   private int maxIterations;
   private int iterations;
   private SolutionSet swarm;
@@ -84,7 +83,6 @@ public class SMPSO extends Algorithm {
 
     problem_ = builder.problem;
     swarmSize = builder.swarmSize;
-    archiveSize = builder.archiveSize;
     leaders = builder.leaders;
     mutation = builder.mutationOperator;
     maxIterations = builder.maxIterations;
@@ -129,10 +127,6 @@ public class SMPSO extends Algorithm {
 
   public int getSwarmSize() {
     return swarmSize;
-  }
-
-  public int getArchiveSize() {
-    return archiveSize;
   }
 
   public int getMaxIterations() {
@@ -459,7 +453,6 @@ public class SMPSO extends Algorithm {
 
       swarmSize = 100 ;
       maxIterations = 25000 ;
-      archiveSize = 100 ;
 
       r1Max = 1.0;
       r1Min = 0.0;
@@ -489,12 +482,6 @@ public class SMPSO extends Algorithm {
 
     public Builder mutation(Operator mutation) {
       mutationOperator = mutation ;
-
-      return this ;
-    }
-
-    public Builder archiveSize(int archiveSize) {
-      this.archiveSize = archiveSize ;
 
       return this ;
     }

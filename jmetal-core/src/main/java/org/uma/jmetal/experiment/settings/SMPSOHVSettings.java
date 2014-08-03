@@ -1,4 +1,4 @@
-//  SMPSOSettings.java 
+//  SMPSOHVSettings.java
 //
 //  Authors:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -27,18 +27,18 @@ import org.uma.jmetal.metaheuristic.multiobjective.smpso.SMPSO;
 import org.uma.jmetal.operator.mutation.Mutation;
 import org.uma.jmetal.operator.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.ProblemFactory;
+import org.uma.jmetal.qualityIndicator.fasthypervolume.FastHypervolumeArchive;
 import org.uma.jmetal.util.archive.Archive;
-import org.uma.jmetal.util.archive.CrowdingArchive;
 import org.uma.jmetal.util.evaluator.SequentialSolutionSetEvaluator;
 import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
 
 import java.util.Properties;
 
 /**
- * Settings class of algorithm SMPSO
+ * Settings class of algorithm SMPSOHV
  */
 
-public class SMPSOSettings extends Settings {
+public class SMPSOHVSettings extends Settings {
   private int swarmSize;
   private int maxIterations;
   private int archiveSize;
@@ -61,7 +61,7 @@ public class SMPSOSettings extends Settings {
   private SolutionSetEvaluator evaluator ;
 
 
-  public SMPSOSettings(String problem) {
+  public SMPSOHVSettings(String problem) {
     super(problem);
 
     Object[] problemParams = {"Real"};
@@ -95,7 +95,7 @@ public class SMPSOSettings extends Settings {
     Algorithm algorithm;
     Mutation mutation;
 
-    Archive archive = new CrowdingArchive(archiveSize, problem.getNumberOfObjectives()) ;
+    Archive archive = new FastHypervolumeArchive(archiveSize, problem.getNumberOfObjectives()) ;
 
     mutation = new PolynomialMutation.Builder()
       .distributionIndex(mutationDistributionIndex)
@@ -124,7 +124,7 @@ public class SMPSOSettings extends Settings {
   }
 
   /**
-   * Configure SMPSO with user-defined parameter settings
+   * Configure SMPSOHV with user-defined parameter settings
    */
   @Override
   public Algorithm configure(Properties configuration) {

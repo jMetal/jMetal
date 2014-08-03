@@ -71,7 +71,6 @@ public class SMPSOSettingsTest {
 
     assertEquals(100, algorithm.getSwarmSize());
     assertEquals(250, algorithm.getMaxIterations());
-    assertEquals(100, algorithm.getArchiveSize());
 
     assertEquals(2.5, algorithm.getC1Max(), epsilon);
     assertEquals(1.5, algorithm.getC1Min(), epsilon);
@@ -103,7 +102,6 @@ public class SMPSOSettingsTest {
 
     assertEquals(100, algorithm.getSwarmSize());
     assertEquals(250, algorithm.getMaxIterations());
-    assertEquals(100, algorithm.getArchiveSize());
 
     assertEquals(2.5, algorithm.getC1Max(), epsilon);
     assertEquals(1.5, algorithm.getC1Min(), epsilon);
@@ -156,7 +154,6 @@ public class SMPSOSettingsTest {
       .mutation(mutation)
       .maxIterations(250)
       .swarmSize(100)
-      .archiveSize(100)
       .build();
 
     SolutionSet solutionSet = algorithm.execute() ;
@@ -178,7 +175,6 @@ public class SMPSOSettingsTest {
       .mutation(mutation)
       .maxIterations(250)
       .swarmSize(100)
-      .archiveSize(100)
       .build();
 
     SolutionSet solutionSet = algorithm.execute() ;

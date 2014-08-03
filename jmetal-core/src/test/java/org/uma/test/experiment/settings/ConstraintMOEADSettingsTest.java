@@ -1,4 +1,4 @@
-//  MOEAD_SettingsTest.java
+//  cMOEAD_SettingsTest.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -25,11 +25,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.experiment.Settings;
-import org.uma.jmetal.experiment.settings.MOEADSettings;
-import org.uma.jmetal.metaheuristic.multiobjective.moead.MOEAD;
+import org.uma.jmetal.experiment.settings.ConstraintMOEADSettings;
+import org.uma.jmetal.metaheuristic.multiobjective.moead.ConstraintMOEAD;
 import org.uma.jmetal.operator.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.PolynomialMutation;
-import org.uma.jmetal.problem.Fonseca;
+import org.uma.jmetal.problem.Srinivas;
+import org.uma.jmetal.util.JMetalException;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -41,28 +42,29 @@ import static org.junit.Assert.assertNotNull;
 
 /**
  * Created with IntelliJ IDEA.
- * User: antelverde
- * Date: 26/06/13
- * Time: 07:48
+ * User: Antonio J. Nebro
+ * Date: 13/06/13
+ * Time: 22:43
  * To change this template use File | Settings | File Templates.
  */
-public class MOEADSettingsTest {
+public class ConstraintMOEADSettingsTest {
 
   Properties configuration;
 
   @Before
   public void init() throws FileNotFoundException, IOException {
     configuration = new Properties();
-    InputStreamReader isr = new InputStreamReader(new FileInputStream(ClassLoader.getSystemResource("MOEAD.conf").getPath()));
+    InputStreamReader isr = new InputStreamReader(
+      new FileInputStream(ClassLoader.getSystemResource("ConstraintMOEAD.conf").getPath()));
     configuration.load(isr);
   }
 
   @Test
-  public void testConfigure() throws Exception {
-    double epsilon = 0.000000000000001;
-    Settings MOEADSettings = new MOEADSettings("Fonseca");
-    MOEAD algorithm = (MOEAD)MOEADSettings.configure();
-    Problem problem = new Fonseca("Real");
+  public void testSettings() throws JMetalException {
+    double epsilon = 0.000000000000001 ;
+    Settings constraintMOEADSettings = new ConstraintMOEADSettings("Srinivas");
+    ConstraintMOEAD algorithm = (ConstraintMOEAD)constraintMOEADSettings.configure() ;
+    Problem problem = new Srinivas("Real") ;
 
     PolynomialMutation mutation = (PolynomialMutation) algorithm.getMutation() ;
     double pm = mutation.getMutationProbability() ;
@@ -91,11 +93,11 @@ public class MOEADSettingsTest {
   }
 
   @Test
-  public void testConfigure2() throws Exception {
-    double epsilon = 0.000000000000001;
-    Settings MOEADSettings = new MOEADSettings("Fonseca");
-    MOEAD algorithm = (MOEAD)MOEADSettings.configure(configuration);
-    Problem problem = new Fonseca("Real");
+  public void testSettings2() throws JMetalException {
+    double epsilon = 0.000000000000001 ;
+    Settings constraintMOEADSettings = new ConstraintMOEADSettings("Srinivas");
+    ConstraintMOEAD algorithm = (ConstraintMOEAD)constraintMOEADSettings.configure(configuration) ;
+    Problem problem = new Srinivas("Real") ;
 
     PolynomialMutation mutation = (PolynomialMutation) algorithm.getMutation() ;
     double pm = mutation.getMutationProbability() ;
