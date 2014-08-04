@@ -60,7 +60,7 @@ public class MOEAD extends MOEADTemplate {
         updateIdealPoint(child);
         updateNeighborhood(child, subProblemId, neighborType);
       }
-    } while (evaluations < maxEvaluations);
+    } while (!stoppingCondition());
 
     return population;
   }

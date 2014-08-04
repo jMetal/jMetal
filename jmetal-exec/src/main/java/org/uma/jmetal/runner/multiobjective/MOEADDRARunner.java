@@ -1,4 +1,4 @@
-//  MOEADRunner.java
+//  MOEADDRARunner.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -24,6 +24,7 @@ import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.metaheuristic.multiobjective.moead.MOEAD;
+import org.uma.jmetal.metaheuristic.multiobjective.moead.MOEADDRA;
 import org.uma.jmetal.operator.crossover.Crossover;
 import org.uma.jmetal.operator.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.Mutation;
@@ -47,7 +48,7 @@ import java.util.logging.FileHandler;
  * and NSGA-II". IEEE Trans on Evolutionary Computation, vol. 12,  no 2,
  * pp 284-302, April/2009.
  */
-public class MOEADRunner {
+public class MOEADDRARunner {
   public static java.util.logging.Logger logger_;
   public static FileHandler fileHandler_;
 
@@ -104,16 +105,17 @@ public class MOEADRunner {
       .probability(1.0/problem.getNumberOfVariables())
       .build();
 
-    algorithm = new MOEAD.Builder(problem)
-      .populationSize(300)
-      .maxEvaluations(150000)
+    algorithm = new MOEADDRA.Builder(problem)
+      .populationSize(600)
+      .maxEvaluations(300000)
       .neighborhoodSelectionProbability(0.9)
-      .maximumNumberOfReplacedSolutions(2)
-      .neighborSize(20)
+      .maximumNumberOfReplacedSolutions(6)
+      .neighborSize(60)
+      .resultPopulationSize(300)
       .crossover(crossover)
       .mutation(mutation)
       .dataDirectory("MOEAD_Weights")
-      .build("MOEAD") ;
+      .build("MOEADDRA") ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
       .execute() ;

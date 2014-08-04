@@ -22,6 +22,7 @@ package org.uma.jmetal.metaheuristic.multiobjective.moead;
 
 import org.uma.jmetal.core.*;
 import org.uma.jmetal.operator.mutation.Mutation;
+import org.uma.jmetal.util.Distance;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.random.PseudoRandom;
@@ -29,6 +30,8 @@ import org.uma.jmetal.util.random.PseudoRandom;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.StringTokenizer;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -60,10 +63,11 @@ public abstract class MOEADTemplate extends Algorithm {
 
   protected SolutionSet population;
   protected int populationSize;
+  protected int resultPopulationSize ;
 
   protected int evaluations;
   protected int maxEvaluations;
-
+  
   /** Constructor */
   protected MOEADTemplate (Builder builder) {
     problem_ = builder.problem ;
@@ -76,6 +80,7 @@ public abstract class MOEADTemplate extends Algorithm {
     maximumNumberOfReplacedSolutions = builder.maximumNumberOfReplacedSolutions ;
     dataDirectory = builder.dataDirectory ;
     neighborSize = builder.neighborSize ;
+    resultPopulationSize = builder.resultPopulationSize ;
 
     population = new SolutionSet(populationSize);
     indArray = new Solution[problem_.getNumberOfObjectives()];
@@ -97,6 +102,10 @@ public abstract class MOEADTemplate extends Algorithm {
     return populationSize;
   }
 
+  public int getResultPopulationSize() {
+    return resultPopulationSize;
+  }
+  
   public String getDataDirectory() {
     return dataDirectory;
   }
@@ -133,6 +142,7 @@ public abstract class MOEADTemplate extends Algorithm {
     private Operator crossover ;
     private Operator mutation ;
     private String dataDirectory ;
+    private int resultPopulationSize;
 
     public Builder(Problem problem) {
       this.problem = problem ;
@@ -141,6 +151,12 @@ public abstract class MOEADTemplate extends Algorithm {
 
     public Builder populationSize(int populationSize) {
       this.populationSize = populationSize;
+
+      return this;
+    }
+    
+    public Builder resultPopulationSize(int resultPopulationSize) {
+      this.resultPopulationSize = resultPopulationSize;
 
       return this;
     }
@@ -210,7 +226,11 @@ public abstract class MOEADTemplate extends Algorithm {
   }
 
   /* Class methods */
-  public NeighborType chooseNeighborType() {
+  protected boolean stoppingCondition() {
+    return evaluations >= maxEvaluations;
+  }
+  
+  protected NeighborType chooseNeighborType() {
     double rnd = PseudoRandom.randDouble();
     NeighborType neighborType ;
 
@@ -222,7 +242,7 @@ public abstract class MOEADTemplate extends Algorithm {
     return neighborType ;
   }
 
-  public Solution[] parentSelection(int subProblemId, NeighborType neighborType) {
+  protected Solution[] parentSelection(int subProblemId, NeighborType neighborType) {
     Vector<Integer> matingPool = new Vector<Integer>();
     matingSelection(matingPool, subProblemId, neighborType);
 
@@ -235,7 +255,7 @@ public abstract class MOEADTemplate extends Algorithm {
     return parents ;
   }
 
-  public void initializeUniformWeight() {
+  protected void initializeUniformWeight() {
     if ((problem_.getNumberOfObjectives() == 2) && (populationSize <= 300)) {
       for (int n = 0; n < populationSize; n++) {
         double a = 1.0 * n / (populationSize - 1);
@@ -282,7 +302,7 @@ public abstract class MOEADTemplate extends Algorithm {
     }
   }
 
-  public void initializeNeighborhood() {
+  protected void initializeNeighborhood() {
     double[] x = new double[populationSize];
     int[] idx = new int[populationSize];
 
@@ -300,7 +320,7 @@ public abstract class MOEADTemplate extends Algorithm {
     }
   }
 
-  public void initializePopulation() throws JMetalException, ClassNotFoundException {
+  protected void initializePopulation() throws JMetalException, ClassNotFoundException {
     for (int i = 0; i < populationSize; i++) {
       Solution newSolution = new Solution(problem_);
 
@@ -310,7 +330,7 @@ public abstract class MOEADTemplate extends Algorithm {
     }
   }
 
-  void initializeIdealPoint() throws JMetalException, ClassNotFoundException {
+  protected void initializeIdealPoint() throws JMetalException, ClassNotFoundException {
     for (int i = 0; i < problem_.getNumberOfObjectives(); i++) {
       idealPoint[i] = 1.0e+30;
     }
@@ -326,7 +346,7 @@ public abstract class MOEADTemplate extends Algorithm {
    * @param subproblemId
    * @param neighbourType
    */
-  public void matingSelection(Vector<Integer> listOfSolutions, int subproblemId, NeighborType neighbourType) {
+  protected void matingSelection(Vector<Integer> listOfSolutions, int subproblemId, NeighborType neighbourType) {
     // list : the set of the indexes of selected mating parents
     // subProblemId  : the id of current subproblem
     // numberOfSolutionsToSelect : the number of selected mating parents
@@ -437,5 +457,89 @@ public abstract class MOEADTemplate extends Algorithm {
       throw new JMetalException(" MOEAD.fitnessFunction: unknown type " + functionType);
     }
     return fitness;
+  }
+  
+  /**
+   * @author Juanjo Durillo
+   * This method selects N solutions from a set M, where N <= M
+   * using the same method proposed by Qingfu Zhang, W. Liu, and Hui Li in
+   * the paper describing MOEA/D-DRA (CEC 09 COMPTETITION)
+   * An example is giving in that paper for two objectives.
+   * If N = 100, then the best solutions  attending to the weights (0,1),
+   * (1/99,98/99), ...,(98/99,1/99), (1,0) are selected.
+   * In case of more than two objectives the procedure is:
+   * 1- Select a solution at random
+   * 2- Select the solution from the population which have maximum distance to
+   * it (without considering the one already included)
+   */
+  SolutionSet selectSpreadSolutions(Problem problem, SolutionSet solutionSet, int numberOfSolutions) {
+    if (solutionSet.size() < numberOfSolutions) {
+    	throw new JMetalException("The population size " + solutionSet.size() + 
+    			"is smaller than the size requested: " + numberOfSolutions) ;
+    }
+  	SolutionSet result = new SolutionSet(numberOfSolutions);
+    if (problem.getNumberOfObjectives() == 2) {
+      double[][] lambda = new double[numberOfSolutions][2];
+      for (int i = 0; i < numberOfSolutions; i++) {
+        double a = 1.0 * i / (numberOfSolutions - 1);
+        lambda[i][0] = a;
+        lambda[i][1] = 1 - a;
+      }
+
+      // we have now the weights, now select the best solution for each of them
+      for (int i = 0; i < numberOfSolutions; i++) {
+        Solution currentBest = solutionSet.get(0);
+        int index = 0;
+        double value = fitnessFunction(currentBest, lambda[i]);
+        for (int j = 1; j < numberOfSolutions; j++) {
+          // we are looking the best solution for the weight i
+          double aux = fitnessFunction(solutionSet.get(j), lambda[i]);
+          if (aux < value) {
+            // solution in position j is better!
+            value = aux;
+            currentBest = solutionSet.get(j);
+          }
+        }
+        result.add(new Solution(currentBest));
+      }
+
+    } else {
+      // general case (more than two objectives)
+      Distance distance = new Distance();
+      int randomIndex = PseudoRandom.randInt(0, solutionSet.size() - 1);
+
+      // create a list containing all the solutions but the selected one (only references to them)
+      List<Solution> candidate = new LinkedList<Solution>();
+      candidate.add(solutionSet.get(randomIndex));
+
+      for (int i = 0; i < solutionSet.size(); i++) {
+        if (i != randomIndex) {
+          candidate.add(solutionSet.get(i));
+        }
+      }
+
+      while (result.size() < numberOfSolutions) {
+        int index = 0;
+        // it should be a next! (n <= population size!)
+        Solution selected = candidate.get(0);
+        double distanceValue =
+          distance.distanceToSolutionSetInObjectiveSpace(selected, result);
+        int i = 1;
+        while (i < candidate.size()) {
+          Solution nextCandidate = candidate.get(i);
+          double aux = distanceValue =
+            distance.distanceToSolutionSetInObjectiveSpace(nextCandidate, result);
+          if (aux > distanceValue) {
+            distanceValue = aux;
+            index = i;
+          }
+          i++;
+        }
+
+        // add the selected to res and remove from candidate list
+        result.add(new Solution(candidate.remove(index)));
+      }
+    }
+    return result;
   }
 }

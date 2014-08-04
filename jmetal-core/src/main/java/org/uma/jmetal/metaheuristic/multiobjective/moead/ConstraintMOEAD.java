@@ -78,7 +78,7 @@ public class ConstraintMOEAD extends MOEADTemplate {
       }
 
       ((ViolationThresholdComparator) comparator).updateThreshold(population);
-    } while (evaluations < maxEvaluations);
+    } while (!stoppingCondition());
 
     return population;
   }

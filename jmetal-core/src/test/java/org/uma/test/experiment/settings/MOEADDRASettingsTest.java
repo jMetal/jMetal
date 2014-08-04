@@ -1,4 +1,4 @@
-//  MOEAD_DRA_SettingsTest.java
+//  MOEADDRA_SettingsTest.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -24,10 +24,11 @@ import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.experiment.Settings;
 import org.uma.jmetal.experiment.settings.MOEADDRASettings;
+import org.uma.jmetal.metaheuristic.multiobjective.moead.MOEADDRA;
 import org.uma.jmetal.operator.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.Fonseca;
-
+import org.uma.jmetal.problem.lz09.LZ09_F2;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,89 +40,85 @@ import static org.junit.Assert.assertNotNull;
 
 /**
  * Created with IntelliJ IDEA.
- * User: antelverde
+ * User: Antonio J. Nebro
  * Date: 21/06/13
  * Time: 07:48
- * To change this template use File | Settings | File Templates.
  */
 public class MOEADDRASettingsTest {
-  Properties configuration_ ;
+  Properties configuration ;
 
   @Before
   public void init() throws FileNotFoundException, IOException {
-    configuration_ = new Properties();
-    InputStreamReader isr = new InputStreamReader(new FileInputStream(ClassLoader.getSystemResource("MOEAD_DRA.conf").getPath()));
-    configuration_.load(isr);
+    configuration = new Properties();
+    InputStreamReader isr = new InputStreamReader(new FileInputStream(ClassLoader.getSystemResource("MOEADDRA.conf").getPath()));
+    configuration.load(isr);
   }
 
   @Test
   public void testConfigure() throws Exception {
     double epsilon = 0.000000000000001 ;
-    Settings MOEAD_DRASettings = new MOEADDRASettings("Fonseca");
-    Algorithm algorithm = MOEAD_DRASettings.configure() ;
-    Problem problem = new Fonseca("Real") ;
-    PolynomialMutation mutation = (PolynomialMutation)algorithm.getOperator("mutation") ;
-    double pm = (Double)mutation.getParameter("probability") ;
-    double dim = (Double)mutation.getParameter("distributionIndex") ;
-    String dataDirectory = (String) algorithm.getInputParameter("dataDirectory");
+    Settings moeadDraSettings = new MOEADDRASettings("LZ09_F2");
+    MOEADDRA algorithm = (MOEADDRA)moeadDraSettings.configure() ;
+    Problem problem = new LZ09_F2("Real") ;
+    
+    PolynomialMutation mutation = (PolynomialMutation) algorithm.getMutation() ;
+    double pm = mutation.getMutationProbability() ;
+    double dim = mutation.getDistributionIndex() ;
+    String dataDirectory = (String) algorithm.getDataDirectory();
+    String experimentDirectoryName = ClassLoader.getSystemResource(dataDirectory).getPath();
 
-    String experimentDirectoryName = this.getClass().getClassLoader().getResource(dataDirectory).getPath();
+    DifferentialEvolutionCrossover crossover =
+      (DifferentialEvolutionCrossover) algorithm.getCrossover();
+    double cr = crossover.getCr() ;
+    double f = crossover.getF() ;
 
-    int populationSize =  ((Integer)algorithm.getInputParameter("populationSize")).intValue() ;
+    Assert.assertEquals(600, algorithm.getPopulationSize());
+    Assert.assertEquals(300000, algorithm.getMaxEvaluations());
+    Assert.assertEquals(300, algorithm.getResultPopulationSize());
 
+    Assert.assertEquals(0.9, algorithm.getNeighborhoodSelectionProbability(), epsilon);
+    Assert.assertEquals(60, algorithm.getNeighborSize());
+    Assert.assertEquals(6, algorithm.getMaximumNumberOfReplacedSolutions());
 
-    DifferentialEvolutionCrossover crossover = (DifferentialEvolutionCrossover)algorithm.getOperator("crossover") ;
-    double CR = (Double)crossover.getParameter("CR") ;
-    double F = (Double)crossover.getParameter("F") ;
+    Assert.assertEquals(1.0, cr, epsilon);
+    Assert.assertEquals(0.5, f, epsilon);
+    Assert.assertEquals(20.0, dim, epsilon);
+    Assert.assertEquals(1.0 / problem.getNumberOfVariables(), pm, epsilon);
 
-    Assert.assertEquals("MOEAD_DRASettings", 600, populationSize);
-    Assert.assertEquals("MOEAD_DRASettings", 300000, ((Integer)algorithm.getInputParameter("maxEvaluations")).intValue());
-    Assert.assertEquals("MOEAD_DRASettings", 300, ((Integer)algorithm.getInputParameter("finalSize")).intValue());
-
-    Assert.assertEquals("MOEAD_DRASettings", 0.9, ((Double)algorithm.getInputParameter("delta")).doubleValue(), epsilon) ;
-    Assert.assertEquals("MOEAD_DRASettings", 60, ((Integer) algorithm.getInputParameter("T")).intValue());
-    Assert.assertEquals("MOEAD_DRASettings", 6,   ((Integer)algorithm.getInputParameter("nr")).intValue());
-
-    Assert.assertEquals("MOEAD_DRASettings", 1.0, CR, epsilon);
-    Assert.assertEquals("MOEAD_DRASettings", 0.5, F, epsilon);
-    Assert.assertEquals("MOEAD_DRASettings", 20.0, dim, epsilon);
-    Assert.assertEquals("MOEAD_DRASettings", 1.0/problem.getNumberOfVariables(), pm, epsilon);
-
-    assertNotNull("MOEAD_DRASettings", experimentDirectoryName);
+    assertNotNull(experimentDirectoryName);
   }
 
   @Test
   public void testConfigure2() throws Exception {
     double epsilon = 0.000000000000001 ;
-    Settings MOEAD_DRASettings = new MOEADDRASettings("Fonseca");
-    Algorithm algorithm = MOEAD_DRASettings.configure(configuration_) ;
-    Problem problem = new Fonseca("Real") ;
-    PolynomialMutation mutation = (PolynomialMutation)algorithm.getOperator("mutation") ;
-    double pm = (Double)mutation.getParameter("probability") ;
-    double dim = (Double)mutation.getParameter("distributionIndex") ;
-    String dataDirectory = (String) algorithm.getInputParameter("dataDirectory");
+    Settings moeadDraSettings = new MOEADDRASettings("LZ09_F2");
+    MOEADDRA algorithm = (MOEADDRA)moeadDraSettings.configure(configuration) ;
+    Problem problem = new LZ09_F2("Real") ;
+    
+    PolynomialMutation mutation = (PolynomialMutation) algorithm.getMutation() ;
+    double pm = mutation.getMutationProbability() ;
+    double dim = mutation.getDistributionIndex() ;
+    String dataDirectory = (String) algorithm.getDataDirectory();
+    String experimentDirectoryName = ClassLoader.getSystemResource(dataDirectory).getPath();
 
-    String experimentDirectoryName = this.getClass().getClassLoader().getResource(dataDirectory).getPath();
+    DifferentialEvolutionCrossover crossover =
+      (DifferentialEvolutionCrossover) algorithm.getCrossover();
+    double cr = crossover.getCr() ;
+    double f = crossover.getF() ;
 
-    int populationSize =  ((Integer)algorithm.getInputParameter("populationSize")).intValue() ;
+    Assert.assertEquals(600, algorithm.getPopulationSize());
+    Assert.assertEquals(300000, algorithm.getMaxEvaluations());
+    Assert.assertEquals(300, algorithm.getResultPopulationSize());
 
-    DifferentialEvolutionCrossover crossover = (DifferentialEvolutionCrossover)algorithm.getOperator("crossover") ;
-    double CR = (Double)crossover.getParameter("CR") ;
-    double F = (Double)crossover.getParameter("F") ;
+    Assert.assertEquals(0.9, algorithm.getNeighborhoodSelectionProbability(), epsilon);
+    Assert.assertEquals(60, algorithm.getNeighborSize());
+    Assert.assertEquals(6, algorithm.getMaximumNumberOfReplacedSolutions());
 
-    Assert.assertEquals("MOEAD_DRASettings", 600, populationSize);
-    Assert.assertEquals("MOEAD_DRASettings", 300000, ((Integer)algorithm.getInputParameter("maxEvaluations")).intValue());
-    Assert.assertEquals("MOEAD_DRASettings", 300, ((Integer)algorithm.getInputParameter("finalSize")).intValue());
+    Assert.assertEquals(1.0, cr, epsilon);
+    Assert.assertEquals(0.5, f, epsilon);
+    Assert.assertEquals(20.0, dim, epsilon);
+    Assert.assertEquals(1.0 / problem.getNumberOfVariables(), pm, epsilon);
 
-    Assert.assertEquals("MOEAD_DRASettings", 0.9, ((Double)algorithm.getInputParameter("delta")).doubleValue(), epsilon) ;
-    Assert.assertEquals("MOEAD_DRASettings", 60, ((Integer) algorithm.getInputParameter("T")).intValue());
-    Assert.assertEquals("MOEAD_DRASettings", 6,   ((Integer)algorithm.getInputParameter("nr")).intValue());
-
-    Assert.assertEquals("MOEAD_DRASettings", 1.0, CR, epsilon);
-    Assert.assertEquals("MOEAD_DRASettings", 0.5, F, epsilon);
-    Assert.assertEquals("MOEAD_DRASettings", 20.0, dim, epsilon);
-    Assert.assertEquals("MOEAD_DRASettings", 1.0/problem.getNumberOfVariables(), pm, epsilon);
-
-    assertNotNull("MOEAD_DRASettings", experimentDirectoryName);
+    assertNotNull(experimentDirectoryName);
   }
 }

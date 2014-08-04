@@ -86,9 +86,9 @@ public class MOEADDRA extends MOEADTemplate {
         utilityFunction();
       }
 
-    } while (evaluations < maxEvaluations);
+    } while (!stoppingCondition());
 
-    return population;
+    return selectSpreadSolutions(problem_, population, resultPopulationSize);
   }
   
   @Override

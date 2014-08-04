@@ -80,11 +80,7 @@ public class MOEADSettings extends Settings {
     dataDirectory = "MOEAD_Weights";
   }
 
-  /**
-   * Configure the algorithm with the specified parameter experiment.settings
-   *
-   * @return an algorithm object
-   */
+  /** Configure() method */
   public Algorithm configure() {
     Algorithm algorithm;
     Crossover crossover;
@@ -113,11 +109,7 @@ public class MOEADSettings extends Settings {
     return algorithm;
   }
 
-  /**
-   * Configure MOEAD with user-defined parameter settings
-   *
-   * @return A MOEAD algorithm object
-   */
+  /** Configure() method */
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {
     populationSize = Integer
