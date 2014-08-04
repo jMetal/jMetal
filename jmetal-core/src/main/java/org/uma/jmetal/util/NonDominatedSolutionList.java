@@ -32,45 +32,27 @@ import java.util.Iterator;
  * This class implements an unbound list of non-dominated solutions
  */
 public class NonDominatedSolutionList extends SolutionSet {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = 7994329981209043992L;
+  private Comparator<Solution> dominanceComparator = new DominanceComparator();
 
-  /**
-   * Stores a <code>Comparator</code> for dominance checking
-   */
-  private Comparator<Solution> dominance_ = new DominanceComparator();
-
-  /**
-   * Constructor.
-   * The objects of this class are lists of non-dominated solutions according to
-   * a Pareto dominance comparator.
-   */
+  /** Constructor */
   public NonDominatedSolutionList() {
     super();
   }
 
-  /**
-   * Constructor.
-   * This constructor creates a list of non-dominated individuals using a
-   * comparator object.
-   *
-   * @param dominance The comparator for dominance checking.
-   */
+  /** Constructor */
   public NonDominatedSolutionList(Comparator<Solution> dominance) {
     super();
-    dominance_ = dominance;
+    dominanceComparator = dominance;
   }
 
   /**
-   * Inserts a solutiontype in the list
+   * Inserts a solution in the list
    *
-   * @param solution The solutiontype to be inserted.
-   * @return true if the operation success, and false if the solutiontype is
+   * @param solution The solution to be inserted.
+   * @return true if the operation success, and false if the solution is
    * dominated or if an identical individual exists.
-   * The decision variables can be null if the solutiontype is read from a file; in
+   * The decision variables can be null if the solution is read from a file; in
    * that case, the domination tests are omitted
    */
   public boolean add(Solution solution) {
@@ -82,24 +64,20 @@ public class NonDominatedSolutionList extends SolutionSet {
 
       while (iterator.hasNext()) {
         Solution listIndividual = iterator.next();
-        int flag = dominance_.compare(solution, listIndividual);
+        int flag = dominanceComparator.compare(solution, listIndividual);
 
         if (flag == -1) {
-          // A solutiontype in the list is dominated by the new one
+          // A solution in the list is dominated by the new one
           iterator.remove();
         } else if (flag == 0) {
           // Non-dominated solutions
-          //flag = equal_.compare(solutiontype,listIndividual);
-          //if (flag == 0) {
-          //	return false;   // The new solutiontype is in the list
-          //}
         } else if (flag == 1) {
-          // The new solutiontype is dominated
+          // The new solution is dominated
           return false;
         }
       }
 
-      //At this point, the solutiontype is inserted into the list
+      //At this point, the solution is inserted into the list
       solutionsList.add(solution);
 
       return true;

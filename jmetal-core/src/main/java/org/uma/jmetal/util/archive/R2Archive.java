@@ -22,7 +22,7 @@
 package org.uma.jmetal.util.archive;
 
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.qualityIndicator.R2;
+import org.uma.jmetal.qualityindicator.R2;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.EqualSolutions;

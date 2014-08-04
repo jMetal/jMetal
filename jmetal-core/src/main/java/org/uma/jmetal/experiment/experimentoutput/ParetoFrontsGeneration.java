@@ -22,7 +22,7 @@ package org.uma.jmetal.experiment.experimentoutput;
 
 import org.uma.jmetal.experiment.ExperimentData;
 import org.uma.jmetal.experiment.ExperimentOutput;
-import org.uma.jmetal.qualityIndicator.util.MetricsUtil;
+import org.uma.jmetal.qualityindicator.util.MetricsUtil;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.NonDominatedSolutionList;

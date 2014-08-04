@@ -30,37 +30,37 @@ import org.uma.jmetal.util.JMetalException;
  * Wrapper class for accessing integer-coded solutions
  */
 public class XInt {
-  private Solution solution_;
-  private SolutionType type_;
+  private Solution solution;
+  private SolutionType type;
 
   public XInt(Solution solution) {
-    type_ = solution.getType();
-    solution_ = solution;
+    type = solution.getType();
+    this.solution = solution;
   }
 
   public XInt(XInt solution) {
-    type_ = solution.type_;
-    solution_ = solution.solution_;
+    type = solution.type;
+    this.solution = solution.solution;
   }
 
   public double getValue(int index) {
-    return ((IntSolutionTypeTemplate)type_).getIntValue(solution_, index) ;
+    return ((IntSolutionTypeTemplate) type).getIntValue(solution, index) ;
   }
 
   public void setValue(int index, int value) {
-    ((IntSolutionTypeTemplate)type_).setIntValue(solution_, index, value);
+    ((IntSolutionTypeTemplate) type).setIntValue(solution, index, value);
   }
 
   public int getNumberOfDecisionVariables() {
-    return ((IntSolutionTypeTemplate)type_).getNumberOfIntVariables(solution_) ;
+    return ((IntSolutionTypeTemplate) type).getNumberOfIntVariables(solution) ;
   }
 
   public int getUpperBound(int index) {
-    return ((IntSolutionTypeTemplate)type_).getIntUpperBound(solution_, index) ;
+    return ((IntSolutionTypeTemplate) type).getIntUpperBound(solution, index) ;
   }
 
   public int getLowerBound(int index) {
-    return ((IntSolutionTypeTemplate)type_).getIntLowerBound(solution_, index) ;
+    return ((IntSolutionTypeTemplate) type).getIntLowerBound(solution, index) ;
   }
 
   public int size() {
@@ -68,7 +68,7 @@ public class XInt {
   }
 
   public Solution getSolution() {
-    return solution_;
+    return solution;
   }
 
   /* Static methods */

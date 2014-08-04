@@ -21,7 +21,7 @@
 package org.uma.jmetal.util.archive;
 
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.qualityIndicator.util.MetricsUtil;
+import org.uma.jmetal.qualityindicator.util.MetricsUtil;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.EqualSolutions;
@@ -38,10 +38,9 @@ public class HypervolumeArchive extends Archive {
   private Comparator<Solution> dominanceComparator;
   private Comparator<Solution> equalsComparator;
 
-  private MetricsUtil utils_;
+  private MetricsUtil utils;
 
-  private double offset_;
-  private Comparator crowdingDistance_;
+  private double offset;
 
   /**
    * Constructor.
@@ -55,11 +54,9 @@ public class HypervolumeArchive extends Archive {
     this.numberOfObjectives = numberOfObjectives;
     dominanceComparator = new DominanceComparator();
     equalsComparator = new EqualSolutions();
-    utils_ = new MetricsUtil();
-    offset_ = 100;
-    crowdingDistance_ = new CrowdingDistanceComparator();
-  } // CrowdingArchive
-
+    utils = new MetricsUtil();
+    offset = 100;
+  } 
 
   /**
    * Adds a <code>Solution</code> to the archive. If the <code>Solution</code>
@@ -76,20 +73,19 @@ public class HypervolumeArchive extends Archive {
   public boolean add(Solution solution) {
     int flag ;
     int i = 0;
-    Solution aux; //Store an solutiontype temporally
+    Solution aux;
 
     while (i < solutionsList.size()) {
       aux = solutionsList.get(i);
 
       flag = dominanceComparator.compare(solution, aux);
-      if (flag == 1) {               // The solutiontype to add is dominated
-        return false;                // Discard the new solutiontype
-      } else if (flag == -1) {       // A solutiontype in the archive is dominated
-        solutionsList.remove(i);    // Remove it from the population
+      if (flag == 1) {
+        return false;
+      } else if (flag == -1) {
+        solutionsList.remove(i);
       } else {
-        if (equalsComparator.compare(aux, solution) == 0) { // There is an equal solutiontype
-          // in the population
-          return false; // Discard the new solutiontype
+        if (equalsComparator.compare(aux, solution) == 0) {
+          return false;
         }
         i++;
       }
@@ -101,20 +97,20 @@ public class HypervolumeArchive extends Archive {
       int numberOfObjectives = this.numberOfObjectives;
       // STEP 1. Obtain the maximum and minimum values of the Pareto front
       double[] maximumValues =
-        utils_.getMaximumValues(this.writeObjectivesToMatrix(), numberOfObjectives);
+        utils.getMaximumValues(this.writeObjectivesToMatrix(), numberOfObjectives);
       double[] minimumValues =
-        utils_.getMinimumValues(this.writeObjectivesToMatrix(), numberOfObjectives);
+        utils.getMinimumValues(this.writeObjectivesToMatrix(), numberOfObjectives);
       // STEP 2. Get the normalized front
       double[][] normalizedFront =
-        utils_.getNormalizedFront(frontValues, maximumValues, minimumValues);
+        utils.getNormalizedFront(frontValues, maximumValues, minimumValues);
       // compute offsets for reference point in normalized space
       double[] offsets = new double[maximumValues.length];
       for (i = 0; i < maximumValues.length; i++) {
-        offsets[i] = offset_ / (maximumValues[i] - minimumValues[i]);
+        offsets[i] = offset / (maximumValues[i] - minimumValues[i]);
       }
       // STEP 3. Inverse the pareto front. This is needed because the original
       //metric by Zitzler is for maximization problem
-      double[][] invertedFront = utils_.invertedFront(normalizedFront);
+      double[][] invertedFront = utils.invertedFront(normalizedFront);
       // shift away from origin, so that boundary points also get a contribution > 0
       for (double[] point : invertedFront) {
         for (i = 0; i < point.length; i++) {
@@ -123,7 +119,7 @@ public class HypervolumeArchive extends Archive {
       }
 
       // calculate contributions and sort
-      double[] contributions = utils_.hvContributions(this.numberOfObjectives, invertedFront);
+      double[] contributions = utils.hvContributions(this.numberOfObjectives, invertedFront);
       for (i = 0; i < contributions.length; i++) {
         // contribution values are used analogously to crowding distance
         this.get(i).setCrowdingDistance(contributions[i]);
@@ -134,7 +130,7 @@ public class HypervolumeArchive extends Archive {
       remove(size() - 1);
     }
     return true;
-  } // add
+  }
 
 
   /**
@@ -146,20 +142,20 @@ public class HypervolumeArchive extends Archive {
       int numberOfObjectives = this.numberOfObjectives;
       // STEP 1. Obtain the maximum and minimum values of the Pareto front
       double[] maximumValues =
-        utils_.getMaximumValues(this.writeObjectivesToMatrix(), numberOfObjectives);
+        utils.getMaximumValues(this.writeObjectivesToMatrix(), numberOfObjectives);
       double[] minimumValues =
-        utils_.getMinimumValues(this.writeObjectivesToMatrix(), numberOfObjectives);
+        utils.getMinimumValues(this.writeObjectivesToMatrix(), numberOfObjectives);
       // STEP 2. Get the normalized front
       double[][] normalizedFront =
-        utils_.getNormalizedFront(frontValues, maximumValues, minimumValues);
+        utils.getNormalizedFront(frontValues, maximumValues, minimumValues);
       // compute offsets for reference point in normalized space
       double[] offsets = new double[maximumValues.length];
       for (int i = 0; i < maximumValues.length; i++) {
-        offsets[i] = offset_ / (maximumValues[i] - minimumValues[i]);
+        offsets[i] = offset / (maximumValues[i] - minimumValues[i]);
       }
       // STEP 3. Inverse the pareto front. This is needed because the original
       //metric by Zitzler is for maximization problem
-      double[][] invertedFront = utils_.invertedFront(normalizedFront);
+      double[][] invertedFront = utils.invertedFront(normalizedFront);
       // shift away from origin, so that boundary points also get a contribution > 0
       for (double[] point : invertedFront) {
         for (int i = 0; i < point.length; i++) {
@@ -168,14 +164,13 @@ public class HypervolumeArchive extends Archive {
       }
 
       // calculate contributions and sort
-      double[] contributions = utils_.hvContributions(this.numberOfObjectives, invertedFront);
+      double[] contributions = utils.hvContributions(this.numberOfObjectives, invertedFront);
       for (int i = 0; i < contributions.length; i++) {
         // contribution values are used analogously to crowding distance
         this.get(i).setCrowdingDistance(contributions[i]);
       }
     }
-  } // computeHVContribution
-
+  }
 
   /**
    * This method returns the location (integer position) of a solution in the archive.
@@ -192,5 +187,4 @@ public class HypervolumeArchive extends Archive {
     }
     return location;
   }
-
 }

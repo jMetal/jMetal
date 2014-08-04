@@ -23,7 +23,7 @@ package org.uma.jmetal.experiment.experimentoutput;
 import org.uma.jmetal.experiment.Experiment;
 import org.uma.jmetal.experiment.ExperimentData;
 import org.uma.jmetal.experiment.ExperimentOutput;
-import org.uma.jmetal.qualityIndicator.*;
+import org.uma.jmetal.qualityindicator.*;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.FileUtils;
 import org.uma.jmetal.util.JMetalException;

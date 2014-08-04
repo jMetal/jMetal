@@ -56,16 +56,19 @@ public class HUXCrossover extends Crossover {
     }
   }
 
+  /** Constructor */
   private HUXCrossover(Builder builder) {
     addValidSolutionType(BinarySolutionType.class);
     addValidSolutionType(BinaryRealSolutionType.class);
 
-    probability = builder.crossoverProbability_ ;
+    probability = builder.crossoverProbability;
   }
 
+  /* Getter */
   public double getCrossoverProbability() {
     return this.probability;
   }
+
   /**
    * Perform the crossover operation
    *
@@ -76,8 +79,8 @@ public class HUXCrossover extends Crossover {
    * @throws org.uma.jmetal.util.JMetalException
    */
   public Solution[] doCrossover(double probability,
-    Solution parent1,
-    Solution parent2) throws JMetalException {
+                                Solution parent1,
+                                Solution parent2) throws JMetalException {
     Solution[] offSpring = new Solution[2];
     offSpring[0] = new Solution(parent1);
     offSpring[1] = new Solution(parent2);
@@ -88,13 +91,11 @@ public class HUXCrossover extends Crossover {
           Binary p2 = (Binary) parent2.getDecisionVariables()[var];
 
           for (int bit = 0; bit < p1.getNumberOfBits(); bit++) {
-            if (p1.getBits().get(bit) != p2.getBits().get(bit)) {
-              if (PseudoRandom.randDouble() < 0.5) {
-                ((Binary) offSpring[0].getDecisionVariables()[var])
-                  .getBits().set(bit, p2.getBits().get(bit));
-                ((Binary) offSpring[1].getDecisionVariables()[var])
-                  .getBits().set(bit, p1.getBits().get(bit));
-              }
+            if ((p1.getBits().get(bit) != p2.getBits().get(bit)) && (PseudoRandom.randDouble() < 0.5)) {
+              ((Binary) offSpring[0].getDecisionVariables()[var])
+                      .getBits().set(bit, p2.getBits().get(bit));
+              ((Binary) offSpring[1].getDecisionVariables()[var])
+                      .getBits().set(bit, p1.getBits().get(bit));
             }
           }
         }
@@ -108,15 +109,14 @@ public class HUXCrossover extends Crossover {
       }
     } catch (ClassCastException e1) {
       JMetalLogger.logger.log(Level.SEVERE,
-        "HUXCrossover.doCrossover: Cannot perfom " + "SinglePointCrossover ",
-        e1);
+              "HUXCrossover.doCrossover: Cannot perfom " + "SinglePointCrossover ",
+              e1);
       Class<String> cls = java.lang.String.class;
       String name = cls.getName();
       throw new JMetalException("Exception in " + name + ".doCrossover()");
     }
     return offSpring;
   }
-
 
   /**
    * Executes the operation
@@ -133,10 +133,10 @@ public class HUXCrossover extends Crossover {
 
     if (!solutionTypeIsValid(parents)) {
       throw new JMetalException("HUXCrossover.execute: the solutions " +
-        "are not of the right type. The type should be 'Binary' of " +
-        "'BinaryReal', but " +
-        parents[0].getType() + " and " +
-        parents[1].getType() + " are obtained");
+              "are not of the right type. The type should be 'Binary' of " +
+              "'BinaryReal', but " +
+              parents[0].getType() + " and " +
+              parents[1].getType() + " are obtained");
     }
 
     Solution[] offSpring = doCrossover(probability, parents[0], parents[1]);
@@ -149,21 +149,19 @@ public class HUXCrossover extends Crossover {
     return offSpring;
   }
 
-  /**
-   * Builder class
-   */
+  /** Builder class */
   public static class Builder {
-    private double crossoverProbability_ ;
+    private double crossoverProbability;
 
     public Builder() {
-      crossoverProbability_ = 1.0 ;
+      crossoverProbability = 1.0 ;
     }
 
     public Builder probability(double probability) {
       if ((probability < 0) || (probability > 1.0)) {
         throw new JMetalException("Probability value invalid: " + probability) ;
       } else {
-        crossoverProbability_ = probability;
+        crossoverProbability = probability;
       }
 
       return this ;

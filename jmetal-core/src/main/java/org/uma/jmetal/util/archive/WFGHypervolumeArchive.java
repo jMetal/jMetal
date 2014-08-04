@@ -22,8 +22,8 @@
 package org.uma.jmetal.util.archive;
 
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.qualityIndicator.fasthypervolume.wfg.Point;
-import org.uma.jmetal.qualityIndicator.fasthypervolume.wfg.WFGHV;
+import org.uma.jmetal.qualityindicator.fasthypervolume.wfg.Point;
+import org.uma.jmetal.qualityindicator.fasthypervolume.wfg.WFGHV;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.EqualSolutions;
 

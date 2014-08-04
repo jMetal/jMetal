@@ -8,10 +8,10 @@ import java.util.logging.Level;
 
 public class FileUtils {
   static public void appendObjectToFile(String fileName, Object object) {
-    FileOutputStream fos;
+    FileOutputStream fileOutputStream;
     try {
-      fos = new FileOutputStream(fileName, true);
-      OutputStreamWriter osw = new OutputStreamWriter(fos);
+      fileOutputStream = new FileOutputStream(fileName, true);
+      OutputStreamWriter osw = new OutputStreamWriter(fileOutputStream);
       BufferedWriter bw = new BufferedWriter(osw);
 
       bw.write(object.toString());
@@ -25,10 +25,10 @@ public class FileUtils {
   }
 
   static public void createEmtpyFile(String fileName) {
-    FileOutputStream fos;
+    FileOutputStream fileOutputStream;
     try {
-      fos = new FileOutputStream(fileName, false);
-      OutputStreamWriter osw = new OutputStreamWriter(fos);
+      fileOutputStream = new FileOutputStream(fileName, false);
+      OutputStreamWriter osw = new OutputStreamWriter(fileOutputStream);
       BufferedWriter bw = new BufferedWriter(osw);
 
       bw.close();
@@ -108,20 +108,20 @@ public class FileUtils {
   }
 
   public static void deleteFile(String file) {
-    File f = new File(file);
-    if (f.exists()) {
+    File file1 = new File(file);
+    if (file1.exists()) {
       JMetalLogger.logger.info("File " + file + " exist.");
 
-      if (f.isDirectory()) {
+      if (file1.isDirectory()) {
         JMetalLogger.logger.info("File " + file + " is a directory. Deleting directory.");
-        if (f.delete()) {
+        if (file1.delete()) {
           JMetalLogger.logger.info("Directory successfully deleted.");
         } else {
           JMetalLogger.logger.info("Error deleting directory.");
         }
       } else {
         JMetalLogger.logger.info("File " + file + " is a file. Deleting file.");
-        if (f.delete()) {
+        if (file1.delete()) {
           JMetalLogger.logger.info("File successfully deleted.");
         } else {
           JMetalLogger.logger.info("Error deleting file.");

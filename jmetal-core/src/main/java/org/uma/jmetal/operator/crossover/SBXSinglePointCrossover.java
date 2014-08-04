@@ -42,15 +42,15 @@ public class SBXSinglePointCrossover extends Crossover {
    */
   private static final double EPS = 1.0e-14;
 
-  private static final double ETA_C_DEFAULT_ = 20.0;
-  private double distributionIndex_ = ETA_C_DEFAULT_;
+  private static final double ETA_C_DEFAULT = 20.0;
+  private double distributionIndex_ = ETA_C_DEFAULT;
   /**
-   * Valid solutiontype types to apply this operator
+   * Valid solution types to apply this operator
    */
   private static final List<Class<ArrayRealAndBinarySolutionType>> VALID_TYPES =
     Arrays.asList(ArrayRealAndBinarySolutionType.class);
-  private Double realCrossoverProbability_ = null;
-  private Double binaryCrossoverProbability_ = null;
+  private Double realCrossoverProbability = null;
+  private Double binaryCrossoverProbability = null;
 
   /**
    * Constructor
@@ -59,16 +59,15 @@ public class SBXSinglePointCrossover extends Crossover {
     super(parameters);
 
     if (parameters.get("realCrossoverProbability") != null) {
-      realCrossoverProbability_ = (Double) parameters.get("realCrossoverProbability");
+      realCrossoverProbability = (Double) parameters.get("realCrossoverProbability");
     }
     if (parameters.get("binaryrossoverProbability") != null) {
-      binaryCrossoverProbability_ = (Double) parameters.get("binaryrossoverProbability");
+      binaryCrossoverProbability = (Double) parameters.get("binaryrossoverProbability");
     }
     if (parameters.get("distributionIndex") != null) {
       distributionIndex_ = (Double) parameters.get("distributionIndex");
     }
   }
-
 
   /**
    * Perform the crossover operation.
@@ -213,8 +212,8 @@ public class SBXSinglePointCrossover extends Crossover {
     }
 
     Solution[] offSpring;
-    offSpring = doCrossover(realCrossoverProbability_,
-      binaryCrossoverProbability_, parents[0], parents[1]);
+    offSpring = doCrossover(realCrossoverProbability,
+            binaryCrossoverProbability, parents[0], parents[1]);
 
     return offSpring;
   }

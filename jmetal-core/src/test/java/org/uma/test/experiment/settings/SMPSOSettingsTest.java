@@ -30,7 +30,7 @@ import org.uma.jmetal.experiment.settings.SMPSOSettings;
 import org.uma.jmetal.metaheuristic.multiobjective.smpso.SMPSO;
 import org.uma.jmetal.operator.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.Fonseca;
-import org.uma.jmetal.qualityIndicator.fasthypervolume.FastHypervolumeArchive;
+import org.uma.jmetal.qualityindicator.fasthypervolume.FastHypervolumeArchive;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.evaluator.MultithreadedSolutionSetEvaluator;
 import org.uma.jmetal.util.evaluator.SequentialSolutionSetEvaluator;

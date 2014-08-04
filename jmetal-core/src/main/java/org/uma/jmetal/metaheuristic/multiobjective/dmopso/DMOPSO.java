@@ -8,8 +8,8 @@ package org.uma.jmetal.metaheuristic.multiobjective.dmopso;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.qualityIndicator.Hypervolume;
-import org.uma.jmetal.qualityIndicator.QualityIndicatorGetter;
+import org.uma.jmetal.qualityindicator.Hypervolume;
+import org.uma.jmetal.qualityindicator.QualityIndicatorGetter;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
@@ -97,7 +97,7 @@ public class DMOPSO extends Algorithm {
 
     // THIS IS GOING TO CRASH
     hypervolume = new Hypervolume();
-    org.uma.jmetal.qualityIndicator.util.MetricsUtil mu = new org.uma.jmetal.qualityIndicator.util.MetricsUtil();
+    org.uma.jmetal.qualityindicator.util.MetricsUtil mu = new org.uma.jmetal.qualityindicator.util.MetricsUtil();
     trueFront = mu.readNonDominatedSolutionSet(trueParetoFront);
     trueHypervolume_ = hypervolume.hypervolume(trueFront.writeObjectivesToMatrix(),
       trueFront.writeObjectivesToMatrix());

@@ -48,11 +48,11 @@ public class PAES extends Algorithm {
   private PAES(Builder builder) {
     super();
 
-    problem = builder.problem_ ;
-    archiveSize = builder.archiveSize_ ;
-    maxEvaluations = builder.maxEvaluations_ ;
-    biSections = builder.biSections_ ;
-    mutationOperator = builder.mutationOperator_ ;
+    problem = builder.problem;
+    archiveSize = builder.archiveSize;
+    maxEvaluations = builder.maxEvaluations;
+    biSections = builder.biSections;
+    mutationOperator = builder.mutationOperator;
   }
 
   public int getArchiveSize() {
@@ -144,39 +144,40 @@ public class PAES extends Algorithm {
     return new Solution(solution);
   }
 
+  /** Builder class */
   public static class Builder {
-    protected Problem problem_ ;
+    protected Problem problem;
 
-    protected int archiveSize_;
-    protected int maxEvaluations_;
-    protected int biSections_ ;
+    protected int archiveSize;
+    protected int maxEvaluations;
+    protected int biSections;
 
-    protected Operator mutationOperator_;
+    protected Operator mutationOperator;
 
     public Builder(Problem problem) {
-      problem_ = problem ;
+      this.problem = problem ;
     }
 
     public Builder archiveSize(int archiveSize) {
-      archiveSize_ = archiveSize ;
+      this.archiveSize = archiveSize ;
 
       return this ;
     }
 
     public Builder maxEvaluations(int maxEvaluations) {
-      maxEvaluations_ = maxEvaluations ;
+      this.maxEvaluations = maxEvaluations ;
 
       return this ;
     }
 
     public Builder biSections(int biSections) {
-      biSections_ = biSections ;
+      this.biSections = biSections ;
 
       return this ;
     }
 
     public Builder mutation(Operator mutation) {
-      mutationOperator_ = mutation ;
+      mutationOperator = mutation ;
 
       return this ;
     }

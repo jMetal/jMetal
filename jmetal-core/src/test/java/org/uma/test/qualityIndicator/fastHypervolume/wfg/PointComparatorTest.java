@@ -20,8 +20,8 @@
 
 package org.uma.test.qualityIndicator.fastHypervolume.wfg;
 
-import org.uma.jmetal.qualityIndicator.fasthypervolume.wfg.Point;
-import org.uma.jmetal.qualityIndicator.fasthypervolume.wfg.PointComparator;
+import org.uma.jmetal.qualityindicator.fasthypervolume.wfg.Point;
+import org.uma.jmetal.qualityindicator.fasthypervolume.wfg.PointComparator;
 import org.junit.Before;
 import org.junit.Test;
 

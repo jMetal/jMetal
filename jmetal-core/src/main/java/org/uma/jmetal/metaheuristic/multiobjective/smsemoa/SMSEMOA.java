@@ -22,8 +22,8 @@ package org.uma.jmetal.metaheuristic.multiobjective.smsemoa;
 
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.qualityIndicator.Hypervolume;
-import org.uma.jmetal.qualityIndicator.util.MetricsUtil;
+import org.uma.jmetal.qualityindicator.Hypervolume;
+import org.uma.jmetal.qualityindicator.util.MetricsUtil;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.Ranking;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
@@ -57,7 +57,7 @@ public class SMSEMOA extends SMSEMOATemplate {
   protected SMSEMOA(Builder builder) {
     super(builder);
 
-    this.utils = new org.uma.jmetal.qualityIndicator.util.MetricsUtil();
+    this.utils = new org.uma.jmetal.qualityindicator.util.MetricsUtil();
     this.hypervolume = new Hypervolume();
   }
 

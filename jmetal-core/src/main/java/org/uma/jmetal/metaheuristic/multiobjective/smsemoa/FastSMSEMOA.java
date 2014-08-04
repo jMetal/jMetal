@@ -22,7 +22,7 @@ package org.uma.jmetal.metaheuristic.multiobjective.smsemoa;
 
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.qualityIndicator.fasthypervolume.FastHypervolume;
+import org.uma.jmetal.qualityindicator.fasthypervolume.FastHypervolume;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.Ranking;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
