@@ -76,8 +76,8 @@ public class ArrayInt extends Variable {
     this.size = size;
     array = new int[this.size];
 
-    this.lowerBounds = new int[this.size];
-    this.upperBounds = new int[this.size];
+    this.lowerBounds = Arrays.copyOf(lowerBounds, lowerBounds.length); 
+    this.upperBounds = Arrays.copyOf(upperBounds, upperBounds.length); 
 
     for (int i = 0; i < this.size; i++) {
       this.lowerBounds[i] = (int) lowerBounds[i];

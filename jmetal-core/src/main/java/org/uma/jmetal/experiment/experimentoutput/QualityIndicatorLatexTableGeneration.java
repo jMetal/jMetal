@@ -48,7 +48,7 @@ public class QualityIndicatorLatexTableGeneration implements ExperimentOutput {
     }
 
     public Builder indicatorList(String[] indicatorList) {
-      this.indicatorList = indicatorList ;
+      this.indicatorList = Arrays.copyOf(indicatorList, indicatorList.length) ;
 
       return this ;
     }

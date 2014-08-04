@@ -47,8 +47,7 @@ public class DifferentialEvolutionBitFlipMutation extends Mutation {
     try {
     	ARRAY_REAL_AND_BINARY_SOLUTION = Class.forName("jmetal.problems.bci5.ArrayRealAndBinarySolutionType") ;
     } catch (ClassNotFoundException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
+	    throw new JMetalException(e) ;
     } 
   } 
 	

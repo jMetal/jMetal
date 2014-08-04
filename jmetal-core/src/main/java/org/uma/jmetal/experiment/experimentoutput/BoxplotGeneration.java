@@ -8,6 +8,7 @@ import org.uma.jmetal.util.JMetalException;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.logging.Level;
 
 /**
@@ -54,7 +55,7 @@ public class BoxplotGeneration implements ExperimentOutput {
     }
 
     public Builder indicatorList(String[] indicatorList) {
-      this.indicatorList = indicatorList ;
+      this.indicatorList = Arrays.copyOf(indicatorList, indicatorList.length) ;
 
       return this ;
     }
