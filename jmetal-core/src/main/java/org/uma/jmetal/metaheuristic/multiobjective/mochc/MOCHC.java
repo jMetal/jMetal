@@ -58,6 +58,7 @@ public class MOCHC extends Algorithm {
     super();
   }
 
+  /** Constructor */
   private MOCHC(Builder builder) {
     super() ;
     this.problem_ = builder.problem ;
