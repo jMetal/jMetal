@@ -22,20 +22,15 @@
 package org.uma.jmetal.experiment.settings;
 
 import org.uma.jmetal.core.Algorithm;
-import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.experiment.Settings;
-import org.uma.jmetal.metaheuristic.multiobjective.moead.MOEAD;
-import org.uma.jmetal.metaheuristic.multiobjective.moead.MOEAD_DRA;
+import org.uma.jmetal.metaheuristic.multiobjective.moead.MOEADDRA;
 import org.uma.jmetal.operator.crossover.Crossover;
-import org.uma.jmetal.operator.crossover.CrossoverFactory;
 import org.uma.jmetal.operator.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.Mutation;
-import org.uma.jmetal.operator.mutation.MutationFactory;
 import org.uma.jmetal.operator.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.util.JMetalException;
 
-import java.util.HashMap;
 import java.util.Properties;
 
 /**
@@ -104,7 +99,7 @@ public class MOEADDRASettings extends Settings {
       .probability(mutationProbability)
       .build();
 
-    algorithm = new MOEAD.Builder(problem)
+    algorithm = new MOEADDRA.Builder(problem)
       .populationSize(populationSize)
       .maxEvaluations(maxEvaluations)
       .neighborhoodSelectionProbability(neighborhoodSelectionProbability)
