@@ -38,60 +38,59 @@ import java.util.Map;
 public abstract class Algorithm implements Serializable {
   private static final long serialVersionUID = -5414794431994226777L;
 
-  protected Problem problem_;
-  protected Map<String, Operator> operators_ = null;
-  protected Map<String, Object> inputParameters_ = null;
-  private Map<String, Object> outPutParameters_ = null;
+  protected Problem problem;
+  protected Map<String, Operator> operators = null;
+  protected Map<String, Object> inputParameters = null;
+  private Map<String, Object> outPutParameters = null;
 
   /**
    * Launches the execution of an specific algorithm.
    *
-   * @return a <code>SolutionSet</code> that is a set of non dominated solutions
-   * as a experimentoutput of the algorithm execution
+   * @return a <code>SolutionSet</code> 
    */
   public abstract SolutionSet execute() throws JMetalException,
     ClassNotFoundException, IOException;
 
   public void addOperator(String name, Operator operator) {
-    if (operators_ == null) {
-      operators_ = new HashMap<String, Operator>();
+    if (operators == null) {
+      operators = new HashMap<String, Operator>();
     }
-    operators_.put(name, operator);
+    operators.put(name, operator);
   }
 
   public Operator getOperator(String name) {
-    return operators_.get(name);
+    return operators.get(name);
   }
 
   public void setInputParameter(String name, Object object) {
-    if (inputParameters_ == null) {
-      inputParameters_ = new HashMap<String, Object>();
+    if (inputParameters == null) {
+      inputParameters = new HashMap<String, Object>();
     }
-    inputParameters_.put(name, object);
+    inputParameters.put(name, object);
   }
 
   public Object getInputParameter(String name) {
-    return inputParameters_.get(name);
+    return inputParameters.get(name);
   }
 
   public void setOutputParameter(String name, Object object) {
-    if (outPutParameters_ == null) {
-      outPutParameters_ = new HashMap<String, Object>();
+    if (outPutParameters == null) {
+      outPutParameters = new HashMap<String, Object>();
     }
-    outPutParameters_.put(name, object);
+    outPutParameters.put(name, object);
   }
   public Object getOutputParameter(String name) {
-    if (outPutParameters_ != null) {
-      return outPutParameters_.get(name);
+    if (outPutParameters != null) {
+      return outPutParameters.get(name);
     } else {
       return null;
     }
   }
 
   public Problem getProblem() {
-    return problem_;
+    return problem;
   }
   public void setProblem(Problem problem) {
-	  problem_ = problem;
+	  this.problem = problem;
   }
 }

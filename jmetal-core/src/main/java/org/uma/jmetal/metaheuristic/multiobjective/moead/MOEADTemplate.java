@@ -70,7 +70,7 @@ public abstract class MOEADTemplate extends Algorithm {
   
   /** Constructor */
   protected MOEADTemplate (Builder builder) {
-    problem_ = builder.problem ;
+    problem = builder.problem ;
     populationSize = builder.populationSize ;
     maxEvaluations = builder.maxEvaluations ;
     crossover = builder.crossover ;
@@ -83,10 +83,10 @@ public abstract class MOEADTemplate extends Algorithm {
     resultPopulationSize = builder.resultPopulationSize ;
 
     population = new SolutionSet(populationSize);
-    indArray = new Solution[problem_.getNumberOfObjectives()];
+    indArray = new Solution[problem.getNumberOfObjectives()];
     neighborhood = new int[populationSize][neighborSize];
-    idealPoint = new double[problem_.getNumberOfObjectives()];
-    lambda = new double[populationSize][problem_.getNumberOfObjectives()];
+    idealPoint = new double[problem.getNumberOfObjectives()];
+    lambda = new double[populationSize][problem.getNumberOfObjectives()];
   }
 
   /* Getters/Setters */
@@ -180,8 +180,11 @@ public abstract class MOEADTemplate extends Algorithm {
     }
 
     public Builder functionType(String functionType) {
+    	if (("_TCHE1".equals(functionType)) ||
+    			("_PBI".equals(functionType)) ||
+    			("_AGG".equals(functionType)))
       this.functionType = functionType ;
-
+    
       return this ;
     }
 
@@ -258,7 +261,7 @@ public abstract class MOEADTemplate extends Algorithm {
   }
 
   protected void initializeUniformWeight() {
-    if ((problem_.getNumberOfObjectives() == 2) && (populationSize <= 300)) {
+    if ((problem.getNumberOfObjectives() == 2) && (populationSize <= 300)) {
       for (int n = 0; n < populationSize; n++) {
         double a = 1.0 * n / (populationSize - 1);
         lambda[n][0] = a;
@@ -266,7 +269,7 @@ public abstract class MOEADTemplate extends Algorithm {
       }
     } else {
       String dataFileName;
-      dataFileName = "W" + problem_.getNumberOfObjectives() + "D_" +
+      dataFileName = "W" + problem.getNumberOfObjectives() + "D_" +
         populationSize + ".dat";
 
       try {
@@ -324,16 +327,16 @@ public abstract class MOEADTemplate extends Algorithm {
 
   protected void initializePopulation() throws JMetalException, ClassNotFoundException {
     for (int i = 0; i < populationSize; i++) {
-      Solution newSolution = new Solution(problem_);
+      Solution newSolution = new Solution(problem);
 
-      problem_.evaluate(newSolution);
+      problem.evaluate(newSolution);
       evaluations++;
       population.add(newSolution);
     }
   }
 
   protected void initializeIdealPoint() throws JMetalException, ClassNotFoundException {
-    for (int i = 0; i < problem_.getNumberOfObjectives(); i++) {
+    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
       idealPoint[i] = 1.0e+30;
     }
 
@@ -384,7 +387,7 @@ public abstract class MOEADTemplate extends Algorithm {
    * @param individual
    */
   void updateIdealPoint(Solution individual) {
-    for (int n = 0; n < problem_.getNumberOfObjectives(); n++) {
+    for (int n = 0; n < problem.getNumberOfObjectives(); n++) {
       if (individual.getObjective(n) < idealPoint[n]) {
         idealPoint[n] = individual.getObjective(n);
       }
@@ -440,7 +443,7 @@ public abstract class MOEADTemplate extends Algorithm {
     if ("_TCHE1".equals(functionType)) {
       double maxFun = -1.0e+30;
 
-      for (int n = 0; n < problem_.getNumberOfObjectives(); n++) {
+      for (int n = 0; n < problem.getNumberOfObjectives(); n++) {
         double diff = Math.abs(individual.getObjective(n) - idealPoint[n]);
 
         double feval;
@@ -457,7 +460,7 @@ public abstract class MOEADTemplate extends Algorithm {
       fitness = maxFun;
     } else if ("_AGG".equals(functionType)) {
       double sum = 0.0;
-      for (int n = 0; n < problem_.getNumberOfObjectives(); n++) {
+      for (int n = 0; n < problem.getNumberOfObjectives(); n++) {
         sum += (lambda[n]) * individual.getObjective(n);
       }
 
@@ -469,14 +472,14 @@ public abstract class MOEADTemplate extends Algorithm {
 
       d1 = d2 = nl = 0.0;
 
-      for (int i = 0; i < problem_.getNumberOfObjectives(); i++) {
+      for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
         d1 += (individual.getObjective(i) - idealPoint[i]) * lambda[i];
         nl += Math.pow(lambda[i], 2.0);
       }
       nl = Math.sqrt(nl);
       d1 = Math.abs(d1) / nl;
 
-      for (int i = 0; i < problem_.getNumberOfObjectives(); i++) {
+      for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
         d2 += Math.pow((individual.getObjective(i) - idealPoint[i]) - d1 * (lambda[i] / nl), 2.0);
       }
       d2 = Math.sqrt(d2);

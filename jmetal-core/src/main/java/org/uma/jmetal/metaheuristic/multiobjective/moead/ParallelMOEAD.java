@@ -53,7 +53,7 @@ public class ParallelMOEAD extends MOEADTemplate {
         Solution child = (Solution) crossover.execute(new Object[] {population.get(subProblemId), parents});
 
         mutation.execute(child);
-        problem_.evaluate(child);
+        problem.evaluate(child);
 
         evaluations++;
 

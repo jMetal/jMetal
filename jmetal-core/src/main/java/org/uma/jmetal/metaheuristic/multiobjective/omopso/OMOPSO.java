@@ -78,7 +78,7 @@ public class OMOPSO extends Algorithm {
   /** Constructor */
   private OMOPSO(Builder builder) {
     evaluator = builder.evaluator ;
-    problem_ = builder.problem ;
+    problem = builder.problem ;
 
     swarmSize = builder.swarmSize ;
     maxIterations = builder.maxIterations ;
@@ -89,13 +89,13 @@ public class OMOPSO extends Algorithm {
 
     swarm = new SolutionSet(swarmSize);
     localBest = new Solution[swarmSize];
-    leaderArchive = new CrowdingArchive(archiveSize, problem_.getNumberOfObjectives());
+    leaderArchive = new CrowdingArchive(archiveSize, problem.getNumberOfObjectives());
     epsilonArchive = new NonDominatedSolutionList(new EpsilonDominanceComparator(eta));
 
     dominanceComparator = new DominanceComparator();
     crowdingDistanceComparator = new CrowdingDistanceComparator();
 
-    speed = new double[swarmSize][problem_.getNumberOfVariables()];
+    speed = new double[swarmSize][problem.getNumberOfVariables()];
   }
 
   /* getters/setters */
@@ -151,18 +151,18 @@ public class OMOPSO extends Algorithm {
 
     Solution newSolution;
     for (int i = 0; i < swarmSize; i++) {
-      newSolution = new Solution(problem_);
+      newSolution = new Solution(problem);
       swarm.add(newSolution);
     }
   }
 
   protected void evaluateSwarm() throws JMetalException {
-    swarm = evaluator.evaluate(swarm, problem_);
+    swarm = evaluator.evaluate(swarm, problem);
   }
 
   protected void initializeSpeed() {
     for (int i = 0; i < swarmSize; i++) {
-      for (int j = 0; j < problem_.getNumberOfVariables(); j++) {
+      for (int j = 0; j < problem.getNumberOfVariables(); j++) {
         speed[i][j] = 0.0;
       }
     }
@@ -241,12 +241,12 @@ public class OMOPSO extends Algorithm {
       Variable[] particle = swarm.get(i).getDecisionVariables();
       for (int var = 0; var < particle.length; var++) {
         particle[var].setValue(particle[var].getValue() + speed[i][var]);
-        if (particle[var].getValue() < problem_.getLowerLimit(var)) {
-          particle[var].setValue(problem_.getLowerLimit(var));
+        if (particle[var].getValue() < problem.getLowerLimit(var)) {
+          particle[var].setValue(problem.getLowerLimit(var));
           speed[i][var] = speed[i][var] * -1.0;
         }
-        if (particle[var].getValue() > problem_.getUpperLimit(var)) {
-          particle[var].setValue(problem_.getUpperLimit(var));
+        if (particle[var].getValue() > problem.getUpperLimit(var)) {
+          particle[var].setValue(problem.getUpperLimit(var));
           speed[i][var] = speed[i][var] * -1.0;
         }
       }

@@ -42,19 +42,23 @@ public abstract class Operator implements Serializable {
    * Stores the current operator parameters. It is defined as a Map of pairs 
    * (<code>String</code>, <code>Object</code>), and it allows objects to be
    * accessed by their names, which are specified by the string.
+   * @deprecated
    */
   @Deprecated
-  protected final Map<String, Object> parameters_;
+  protected final Map<String, Object> parameters;
 
+  /**
+   * @deprecated
+   */
   @Deprecated
   public Operator(Map<String, Object> parameters) {
-    parameters_ = parameters;
+    this.parameters = parameters;
     validSolutionTypes = new ArrayList<>() ;
   }
 
   public Operator() {
     validSolutionTypes = new ArrayList<>() ;
-    parameters_ = new HashMap<>() ;
+    parameters = new HashMap<>() ;
   }
 
   /**
@@ -76,7 +80,7 @@ public abstract class Operator implements Serializable {
    */
   @Deprecated
   public void setParameter(String name, Object value) {
-    parameters_.put(name, value);
+    parameters.put(name, value);
   }
 
   /**
@@ -84,14 +88,15 @@ public abstract class Operator implements Serializable {
    *
    * @param name The parameter name.
    * @return the parameter.
+   * @deprecated
    */
   @Deprecated
   public Object getParameter(String name) {
-    return parameters_.get(name);
+    return parameters.get(name);
   }
 
   /**
-   * Add a new valid solutiontype type
+   * Add a new valid solution type
    * @param newSolutionType
    */
   public void addValidSolutionType(Class newSolutionType) {
@@ -99,9 +104,9 @@ public abstract class Operator implements Serializable {
   }
 
   /**
-   * Test for solutions having a solutiontype type to which the operator is applicable
+   * Test for solutions having a solution type to which the operator is applicable
    * @param solution Solution to the checked
-   * @return True if the solutiontype type of the solution is valid
+   * @return True if the solution type of the solution is valid
    */
   public boolean solutionTypeIsValid(Solution solution) {
     boolean result ;
@@ -121,7 +126,7 @@ public abstract class Operator implements Serializable {
    * @return True if the solution type of all the solutions in the array is valid
    */
   public boolean solutionTypeIsValid(Solution[] solutions) {
-    boolean result = true; // true by default
+    boolean result = true; 
     for (Solution solution : solutions) {
       if(!validSolutionTypes.contains(solution.getType().getClass())) {
         result = false ;

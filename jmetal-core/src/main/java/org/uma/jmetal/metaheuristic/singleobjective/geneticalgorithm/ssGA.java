@@ -74,15 +74,15 @@ public class ssGA extends Algorithm {
     evaluations = 0;
 
     // Read the operator
-    mutationOperator = this.operators_.get("mutation");
-    crossoverOperator = this.operators_.get("crossover");
-    selectionOperator = this.operators_.get("selection");
+    mutationOperator = this.operators.get("mutation");
+    crossoverOperator = this.operators.get("crossover");
+    selectionOperator = this.operators.get("selection");
 
     // Create the initial population
     Solution newIndividual;
     for (int i = 0; i < populationSize; i++) {
-      newIndividual = new Solution(problem_);
-      problem_.evaluate(newIndividual);
+      newIndividual = new Solution(problem);
+      problem.evaluate(newIndividual);
       evaluations++;
       population.add(newIndividual);
     }
@@ -102,7 +102,7 @@ public class ssGA extends Algorithm {
       mutationOperator.execute(offspring[0]);
 
       // Evaluation of the new individual
-      problem_.evaluate(offspring[0]);
+      problem.evaluate(offspring[0]);
 
       evaluations++;
 

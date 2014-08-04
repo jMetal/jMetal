@@ -59,9 +59,9 @@ public class RandomSearch extends Algorithm {
     // Create the initial solutionSet
     Solution newSolution;
     for (int i = 0; i < maxEvaluations; i++) {
-      newSolution = new Solution(problem_);
-      problem_.evaluate(newSolution);
-      problem_.evaluateConstraints(newSolution);
+      newSolution = new Solution(problem);
+      problem.evaluate(newSolution);
+      problem.evaluateConstraints(newSolution);
       evaluations++;
       ndl.add(newSolution);
     } //for

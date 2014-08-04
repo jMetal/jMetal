@@ -68,9 +68,9 @@ public class SPEA2 extends Algorithm {
     maxEvaluations = ((Integer) getInputParameter("maxEvaluations")).intValue();
 
     //Read the operator
-    crossoverOperator = operators_.get("crossover");
-    mutationOperator = operators_.get("mutation");
-    selectionOperator = operators_.get("selection");
+    crossoverOperator = operators.get("crossover");
+    mutationOperator = operators.get("mutation");
+    selectionOperator = operators.get("selection");
 
     //Initialize the variables
     solutionSet = new SolutionSet(populationSize);
@@ -80,9 +80,9 @@ public class SPEA2 extends Algorithm {
     //-> Create the initial solutionSet
     Solution newSolution;
     for (int i = 0; i < populationSize; i++) {
-      newSolution = new Solution(problem_);
-      problem_.evaluate(newSolution);
-      problem_.evaluateConstraints(newSolution);
+      newSolution = new Solution(problem);
+      problem.evaluate(newSolution);
+      problem.evaluateConstraints(newSolution);
       evaluations++;
       solutionSet.add(newSolution);
     }
@@ -110,8 +110,8 @@ public class SPEA2 extends Algorithm {
         //make the crossover 
         Solution[] offSpring = (Solution[]) crossoverOperator.execute(parents);
         mutationOperator.execute(offSpring[0]);
-        problem_.evaluate(offSpring[0]);
-        problem_.evaluateConstraints(offSpring[0]);
+        problem.evaluate(offSpring[0]);
+        problem.evaluateConstraints(offSpring[0]);
         offSpringSolutionSet.add(offSpring[0]);
         evaluations++;
       } 

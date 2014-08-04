@@ -60,28 +60,28 @@ public class PESA2 extends Algorithm {
     Operator crossover, mutation, selection;
 
     // Read parameters
-    populationSize = ((Integer) (inputParameters_.get("populationSize"))).intValue();
-    archiveSize = ((Integer) (inputParameters_.get("archiveSize"))).intValue();
-    bisections = ((Integer) (inputParameters_.get("bisections"))).intValue();
-    maxEvaluations = ((Integer) (inputParameters_.get("maxEvaluations"))).intValue();
+    populationSize = ((Integer) (inputParameters.get("populationSize"))).intValue();
+    archiveSize = ((Integer) (inputParameters.get("archiveSize"))).intValue();
+    bisections = ((Integer) (inputParameters.get("bisections"))).intValue();
+    maxEvaluations = ((Integer) (inputParameters.get("maxEvaluations"))).intValue();
 
     // Get the operator
-    crossover = operators_.get("crossover");
-    mutation = operators_.get("mutation");
+    crossover = operators.get("crossover");
+    mutation = operators.get("mutation");
 
     // Initialize the variables
     evaluations = 0;
     archive = new AdaptiveGridArchive(archiveSize, bisections,
-      problem_.getNumberOfObjectives());
+      problem.getNumberOfObjectives());
     solutionSet = new SolutionSet(populationSize);
     HashMap<String, Object> selectionParameters = null; // FIXME: why we are passing null?
     selection = new PESA2Selection(selectionParameters);
 
     //-> Create the initial individual and evaluate it and his constraints
     for (int i = 0; i < populationSize; i++) {
-      Solution solution = new Solution(problem_);
-      problem_.evaluate(solution);
-      problem_.evaluateConstraints(solution);
+      Solution solution = new Solution(problem);
+      problem.evaluate(solution);
+      problem.evaluateConstraints(solution);
       evaluations++;
       solutionSet.add(solution);
     }               
@@ -105,8 +105,8 @@ public class PESA2 extends Algorithm {
 
         Solution[] offSpring = (Solution[]) crossover.execute(parents);
         mutation.execute(offSpring[0]);
-        problem_.evaluate(offSpring[0]);
-        problem_.evaluateConstraints(offSpring[0]);
+        problem.evaluate(offSpring[0]);
+        problem.evaluateConstraints(offSpring[0]);
         evaluations++;
         solutionSet.add(offSpring[0]);
       }

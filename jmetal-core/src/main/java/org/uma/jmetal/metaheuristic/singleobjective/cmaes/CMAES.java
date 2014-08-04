@@ -93,7 +93,7 @@ public class CMAES extends Algorithm {
     /* User defined input parameters */
 
     // number of objective variables/problem dimension
-    int N = problem_.getNumberOfVariables();
+    int N = problem.getNumberOfVariables();
 
     // objective variables initial point
     xmean = new double[N];
@@ -197,7 +197,7 @@ public class CMAES extends Algorithm {
 
   private SolutionSet samplePopulation() throws JMetalException, ClassNotFoundException {
 
-    int N = problem_.getNumberOfVariables();
+    int N = problem.getNumberOfVariables();
     double[] artmp = new double[N];
     double sum;
 
@@ -225,8 +225,8 @@ public class CMAES extends Algorithm {
 
     SolutionSet population = new SolutionSet(populationSize);
     for (int i = 0; i < populationSize; i++) {
-      Solution solution = new Solution(problem_);
-      for (int j = 0; j < problem_.getNumberOfVariables(); j++) {
+      Solution solution = new Solution(problem);
+      for (int j = 0; j < problem.getNumberOfVariables(); j++) {
         solution.getDecisionVariables()[j].setValue(popx[i][j]);
       }
       population.add(solution);
@@ -240,9 +240,9 @@ public class CMAES extends Algorithm {
     boolean res = true;
     Variable[] x = solution.getDecisionVariables();
 
-    for (int i = 0; i < problem_.getNumberOfVariables(); i++) {
+    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
       double value = x[i].getValue();
-      if ((value < problem_.getLowerLimit(i)) || (value > problem_.getUpperLimit(i))) {
+      if ((value < problem.getLowerLimit(i)) || (value > problem.getUpperLimit(i))) {
         res = false;
       }
     }
@@ -251,11 +251,11 @@ public class CMAES extends Algorithm {
   }
 
   private Solution resampleSingle(int iNk) throws JMetalException, ClassNotFoundException {
-    for (int i = 0; i < problem_.getNumberOfVariables(); i++) {
-      if (arx[iNk][i] > problem_.getUpperLimit(i)) {
-        arx[iNk][i] = problem_.getUpperLimit(i);
-      } else if (arx[iNk][i] < problem_.getLowerLimit(i)) {
-        arx[iNk][i] = problem_.getLowerLimit(i);
+    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
+      if (arx[iNk][i] > problem.getUpperLimit(i)) {
+        arx[iNk][i] = problem.getUpperLimit(i);
+      } else if (arx[iNk][i] < problem.getLowerLimit(i)) {
+        arx[iNk][i] = problem.getLowerLimit(i);
       }
     }
 
@@ -264,8 +264,8 @@ public class CMAES extends Algorithm {
 
   private Solution genoPhenoTransformation(double[] x) throws JMetalException, ClassNotFoundException {
 
-    Solution solution = new Solution(problem_);
-    for (int i = 0; i < problem_.getNumberOfVariables(); i++) {
+    Solution solution = new Solution(problem);
+    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
       solution.getDecisionVariables()[i].setValue(x[i]);
     }
     return solution;
@@ -283,7 +283,7 @@ public class CMAES extends Algorithm {
 
   private void updateDistribution() throws JMetalException {
 
-    int N = problem_.getNumberOfVariables();
+    int N = problem.getNumberOfVariables();
     int lambda = populationSize;
 
     double[] arfitness = new double[lambda];
@@ -440,7 +440,7 @@ public class CMAES extends Algorithm {
         if (!isFeasible(population_.get(i))) {
           population_.replace(i, resampleSingle(i));
         }
-        problem_.evaluate(population_.get(i));
+        problem.evaluate(population_.get(i));
 
         counteval += populationSize;
       }

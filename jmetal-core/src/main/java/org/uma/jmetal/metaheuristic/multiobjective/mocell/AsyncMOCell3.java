@@ -43,7 +43,7 @@ public class AsyncMOCell3 extends MOCellTemplate {
 
   /** execute() method */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
-    archive = new CrowdingArchive(archiveSize, problem_.getNumberOfObjectives());
+    archive = new CrowdingArchive(archiveSize, problem.getNumberOfObjectives());
     neighborhood = new Neighborhood(populationSize);
     neighbors = new SolutionSet[populationSize];
 
@@ -68,8 +68,8 @@ public class AsyncMOCell3 extends MOCellTemplate {
         offSpring = (Solution[]) crossoverOperator.execute(parents);
         mutationOperator.execute(offSpring[0]);
 
-        problem_.evaluate(offSpring[0]);
-        problem_.evaluateConstraints(offSpring[0]);
+        problem.evaluate(offSpring[0]);
+        problem.evaluateConstraints(offSpring[0]);
         evaluations++;
 
         int flag = dominanceComparator.compare(individual, offSpring[0]);

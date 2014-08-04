@@ -68,8 +68,8 @@ public class ConstraintMOEAD extends MOEADTemplate {
         Solution child = (Solution) crossover.execute(new Object[] {population.get(subProblemId), parents});
 
         mutation.execute(child);
-        problem_.evaluate(child);
-        problem_.evaluateConstraints(child);
+        problem.evaluate(child);
+        problem.evaluateConstraints(child);
 
         evaluations++;
 
@@ -86,10 +86,10 @@ public class ConstraintMOEAD extends MOEADTemplate {
   @Override
   public void initializePopulation() throws JMetalException, ClassNotFoundException {
     for (int i = 0; i < populationSize; i++) {
-      Solution newSolution = new Solution(problem_);
+      Solution newSolution = new Solution(problem);
 
-      problem_.evaluate(newSolution);
-      problem_.evaluateConstraints(newSolution);
+      problem.evaluate(newSolution);
+      problem.evaluateConstraints(newSolution);
       evaluations++;
       population.add(newSolution);
     }

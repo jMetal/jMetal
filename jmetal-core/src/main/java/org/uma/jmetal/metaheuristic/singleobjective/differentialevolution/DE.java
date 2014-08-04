@@ -75,8 +75,8 @@ public class DE extends Algorithm {
     populationSize = ((Integer) this.getInputParameter("populationSize")).intValue();
     maxEvaluations = ((Integer) this.getInputParameter("maxEvaluations")).intValue();
 
-    selectionOperator = operators_.get("selection");
-    crossoverOperator = operators_.get("crossover");
+    selectionOperator = operators.get("selection");
+    crossoverOperator = operators.get("crossover");
 
     //Initialize the variables
     population = new SolutionSet(populationSize);
@@ -85,9 +85,9 @@ public class DE extends Algorithm {
     // Create the initial solutionSet
     Solution newSolution;
     for (int i = 0; i < populationSize; i++) {
-      newSolution = new Solution(problem_);
-      problem_.evaluate(newSolution);
-      problem_.evaluateConstraints(newSolution);
+      newSolution = new Solution(problem);
+      problem.evaluate(newSolution);
+      problem.evaluateConstraints(newSolution);
       evaluations++;
       population.add(newSolution);
     } //for
@@ -110,7 +110,7 @@ public class DE extends Algorithm {
         //            array of parents
         child = (Solution) crossoverOperator.execute(new Object[] {population.get(i), parent});
 
-        problem_.evaluate(child);
+        problem.evaluate(child);
 
         evaluations++;
 

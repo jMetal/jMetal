@@ -73,7 +73,7 @@ public class MOEADDRA extends MOEADTemplate {
         Solution child = (Solution) crossover.execute(new Object[] {population.get(subProblemId), parents});
 
         mutation.execute(child);
-        problem_.evaluate(child);
+        problem.evaluate(child);
 
         evaluations++;
 
@@ -88,16 +88,16 @@ public class MOEADDRA extends MOEADTemplate {
 
     } while (!stoppingCondition());
 
-    return selectSpreadSolutions(problem_, population, resultPopulationSize);
+    return selectSpreadSolutions(problem, population, resultPopulationSize);
   }
   
   @Override
   public void initializePopulation() throws JMetalException, ClassNotFoundException {
     for (int i = 0; i < populationSize; i++) {
-      Solution newSolution = new Solution(problem_);
+      Solution newSolution = new Solution(problem);
 
-      problem_.evaluate(newSolution);
-      problem_.evaluateConstraints(newSolution);
+      problem.evaluate(newSolution);
+      problem.evaluateConstraints(newSolution);
       evaluations++;
       population.add(newSolution);
       savedValues[i] = new Solution(newSolution);
@@ -125,12 +125,12 @@ public class MOEADDRA extends MOEADTemplate {
     List<Integer> selected = new ArrayList<Integer>();
     List<Integer> candidate = new ArrayList<Integer>();
 
-    for (int k = 0; k < problem_.getNumberOfObjectives(); k++) {
+    for (int k = 0; k < problem.getNumberOfObjectives(); k++) {
       // WARNING! HERE YOU HAVE TO USE THE WEIGHT PROVIDED BY QINGFU Et AL (NOT SORTED!!!!)
       selected.add(k);
     }
 
-    for (int n = problem_.getNumberOfObjectives(); n < populationSize; n++) {
+    for (int n = problem.getNumberOfObjectives(); n < populationSize; n++) {
       // set of unselected weights
       candidate.add(n);
     }

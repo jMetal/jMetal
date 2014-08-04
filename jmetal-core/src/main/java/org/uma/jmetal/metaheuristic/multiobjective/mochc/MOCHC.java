@@ -61,7 +61,7 @@ public class MOCHC extends Algorithm {
   /** Constructor */
   private MOCHC(Builder builder) {
     super() ;
-    this.problem_ = builder.problem ;
+    this.problem = builder.problem ;
     this.populationSize = builder.populationSize ;
     this.maxEvaluations = builder.maxEvaluations ;
     this.convergenceValue = builder.convergenceValue ;
@@ -74,7 +74,7 @@ public class MOCHC extends Algorithm {
   }
 
   public Problem getProblem() {
-    return problem_ ;
+    return problem;
   }
 
   public int getPopulationSize() {
@@ -149,7 +149,7 @@ public class MOCHC extends Algorithm {
    */
   public int hammingDistance(Solution solutionOne, Solution solutionTwo) {
     int distance = 0;
-    for (int i = 0; i < problem_.getNumberOfVariables(); i++) {
+    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
       distance +=
         ((Binary) solutionOne.getDecisionVariables()[i]).
           hammingDistance((Binary) solutionTwo.getDecisionVariables()[i]);
@@ -174,18 +174,18 @@ public class MOCHC extends Algorithm {
     evaluations = 0;
 
     //Calculate the maximum problem sizes
-    Solution aux = new Solution(problem_);
+    Solution aux = new Solution(problem);
     int size = 0;
-    for (int var = 0; var < problem_.getNumberOfVariables(); var++) {
+    for (int var = 0; var < problem.getNumberOfVariables(); var++) {
       size += ((Binary) aux.getDecisionVariables()[var]).getNumberOfBits();
     }
     minimumDistance = (int) Math.floor(initialConvergenceCount * size);
 
     solutionSet = new SolutionSet(populationSize);
     for (int i = 0; i < populationSize; i++) {
-      Solution solution = new Solution(problem_);
-      problem_.evaluate(solution);
-      problem_.evaluateConstraints(solution);
+      Solution solution = new Solution(problem);
+      problem.evaluate(solution);
+      problem.evaluateConstraints(solution);
       evaluations++;
       solutionSet.add(solution);
     }
@@ -198,10 +198,10 @@ public class MOCHC extends Algorithm {
         //Equality condition between solutions
         if (hammingDistance(parents[0], parents[1]) >= (minimumDistance)) {
           Solution[] offspring = (Solution[]) crossover.execute(parents);
-          problem_.evaluate(offspring[0]);
-          problem_.evaluateConstraints(offspring[0]);
-          problem_.evaluate(offspring[1]);
-          problem_.evaluateConstraints(offspring[1]);
+          problem.evaluate(offspring[0]);
+          problem.evaluateConstraints(offspring[0]);
+          problem.evaluate(offspring[1]);
+          problem.evaluateConstraints(offspring[1]);
           evaluations += 2;
           offspringPopulation.add(offspring[0]);
           offspringPopulation.add(offspring[1]);
@@ -227,8 +227,8 @@ public class MOCHC extends Algorithm {
         for (int i = preserve; i < populationSize; i++) {
           Solution solution = new Solution(solutionSet.get(i));
           cataclysmicMutation.execute(solution);
-          problem_.evaluate(solution);
-          problem_.evaluateConstraints(solution);
+          problem.evaluate(solution);
+          problem.evaluateConstraints(solution);
           newPopulation.add(solution);
         }
       }
@@ -242,7 +242,7 @@ public class MOCHC extends Algorithm {
 
 
     CrowdingArchive archive;
-    archive = new CrowdingArchive(populationSize, problem_.getNumberOfObjectives());
+    archive = new CrowdingArchive(populationSize, problem.getNumberOfObjectives());
     for (int i = 0; i < solutionSet.size(); i++) {
       archive.add(solutionSet.get(i));
     }

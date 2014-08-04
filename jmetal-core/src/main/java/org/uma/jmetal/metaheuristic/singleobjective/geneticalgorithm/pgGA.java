@@ -83,7 +83,7 @@ public class pgGA extends Algorithm {
     populationSize = (Integer) getInputParameter("populationSize");
     maxEvaluations = (Integer) getInputParameter("maxEvaluations");
 
-    parallelEvaluator_.start(problem_);
+    parallelEvaluator_.start(problem);
 
     //Initialize the variables
     population = new SolutionSet(populationSize);
@@ -92,14 +92,14 @@ public class pgGA extends Algorithm {
     evaluations = 0;
 
     //Read the operator
-    mutationOperator = operators_.get("mutation");
-    crossoverOperator = operators_.get("crossover");
-    selectionOperator = operators_.get("selection");
+    mutationOperator = operators.get("mutation");
+    crossoverOperator = operators.get("crossover");
+    selectionOperator = operators.get("selection");
 
     // Create the initial solutionSet
     Solution newSolution;
     for (int i = 0; i < populationSize; i++) {
-      newSolution = new Solution(problem_);
+      newSolution = new Solution(problem);
       parallelEvaluator_.addTask(new Object[] {newSolution});
     }
 

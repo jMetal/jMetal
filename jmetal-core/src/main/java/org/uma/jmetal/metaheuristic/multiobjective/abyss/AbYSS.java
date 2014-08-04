@@ -104,7 +104,7 @@ public class AbYSS extends Algorithm {
 
     //Initialize the variables
     solutionSet = new SolutionSet(solutionSetSize);
-    archive = new CrowdingArchive(archiveSize, problem_.getNumberOfObjectives());
+    archive = new CrowdingArchive(archiveSize, problem.getNumberOfObjectives());
     refSet1 = new SolutionSet(refSet1Size);
     refSet2 = new SolutionSet(refSet2Size);
     subSet = new SolutionSet(solutionSetSize * 1000);
@@ -117,14 +117,14 @@ public class AbYSS extends Algorithm {
     fitness = new FitnessComparator();
     crowdingDistance = new CrowdingDistanceComparator();
     distance = new Distance();
-    sumOfFrequencyValues = new int[problem_.getNumberOfVariables()];
-    sumOfReverseFrequencyValues = new int[problem_.getNumberOfVariables()];
-    frequency = new int[numberOfSubranges][problem_.getNumberOfVariables()];
-    reverseFrequency = new int[numberOfSubranges][problem_.getNumberOfVariables()];
+    sumOfFrequencyValues = new int[problem.getNumberOfVariables()];
+    sumOfReverseFrequencyValues = new int[problem.getNumberOfVariables()];
+    frequency = new int[numberOfSubranges][problem.getNumberOfVariables()];
+    reverseFrequency = new int[numberOfSubranges][problem.getNumberOfVariables()];
 
     //Read the operator of crossover and improvement
-    crossoverOperator = operators_.get("crossover");
-    improvementOperator = (LocalSearch) operators_.get("improvement");
+    crossoverOperator = operators.get("crossover");
+    improvementOperator = (LocalSearch) operators.get("improvement");
     improvementOperator.setParameter("archive", archive);
   } 
 
@@ -137,13 +137,13 @@ public class AbYSS extends Algorithm {
    */
   public Solution diversificationGeneration() throws JMetalException, ClassNotFoundException {
     Solution solution;
-    solution = new Solution(problem_);
+    solution = new Solution(problem);
     XReal wrapperSolution = new XReal(solution);
 
     double value;
     int range;
 
-    for (int i = 0; i < problem_.getNumberOfVariables(); i++) {
+    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
       sumOfReverseFrequencyValues[i] = 0;
       for (int j = 0; j < numberOfSubranges; j++) {
         reverseFrequency[j][i] = sumOfFrequencyValues[i] - frequency[j][i];
@@ -164,10 +164,10 @@ public class AbYSS extends Algorithm {
       frequency[range][i]++;
       sumOfFrequencyValues[i]++;
 
-      double low = problem_.getLowerLimit(i) + range * (problem_.getUpperLimit(i) -
-        problem_.getLowerLimit(i)) / numberOfSubranges;
-      double high = low + (problem_.getUpperLimit(i) -
-        problem_.getLowerLimit(i)) / numberOfSubranges;
+      double low = problem.getLowerLimit(i) + range * (problem.getUpperLimit(i) -
+        problem.getLowerLimit(i)) / numberOfSubranges;
+      double high = low + (problem.getUpperLimit(i) -
+        problem.getLowerLimit(i)) / numberOfSubranges;
       value = PseudoRandom.randDouble(low, high);
       wrapperSolution.setValue(i, value);
     }       
@@ -386,10 +386,10 @@ public class AbYSS extends Algorithm {
         parents[1] = refSet1.get(j);
         if (!parents[0].isMarked() || !parents[1].isMarked()) {
           offSpring = (Solution[]) crossoverOperator.execute(parents);
-          problem_.evaluate(offSpring[0]);
-          problem_.evaluate(offSpring[1]);
-          problem_.evaluateConstraints(offSpring[0]);
-          problem_.evaluateConstraints(offSpring[1]);
+          problem.evaluate(offSpring[0]);
+          problem.evaluate(offSpring[1]);
+          problem.evaluateConstraints(offSpring[0]);
+          problem.evaluateConstraints(offSpring[1]);
           evaluations += 2;
           if (evaluations < maxEvaluations) {
             subSet.add(offSpring[0]);
@@ -408,10 +408,10 @@ public class AbYSS extends Algorithm {
         parents[1] = refSet2.get(j);
         if (!parents[0].isMarked() || !parents[1].isMarked()) {
           offSpring = (Solution[]) crossoverOperator.execute(parents);
-          problem_.evaluateConstraints(offSpring[0]);
-          problem_.evaluateConstraints(offSpring[1]);
-          problem_.evaluate(offSpring[0]);
-          problem_.evaluate(offSpring[1]);
+          problem.evaluateConstraints(offSpring[0]);
+          problem.evaluateConstraints(offSpring[1]);
+          problem.evaluate(offSpring[0]);
+          problem.evaluate(offSpring[1]);
           evaluations += 2;
           if (evaluations < maxEvaluations) {
             subSet.add(offSpring[0]);
@@ -441,8 +441,8 @@ public class AbYSS extends Algorithm {
     Solution solution;
     for (int i = 0; i < solutionSetSize; i++) {
       solution = diversificationGeneration();
-      problem_.evaluate(solution);
-      problem_.evaluateConstraints(solution);
+      problem.evaluate(solution);
+      problem.evaluateConstraints(solution);
       evaluations++;
       solution = (Solution) improvementOperator.execute(solution);
       evaluations += improvementOperator.getEvaluations();
@@ -500,8 +500,8 @@ public class AbYSS extends Algorithm {
         // Create the rest of solutions randomly
         while (solutionSet.size() < solutionSetSize) {
           solution = diversificationGeneration();
-          problem_.evaluateConstraints(solution);
-          problem_.evaluate(solution);
+          problem.evaluateConstraints(solution);
+          problem.evaluate(solution);
           evaluations++;
           solution = (Solution) improvementOperator.execute(solution);
           evaluations += improvementOperator.getEvaluations();

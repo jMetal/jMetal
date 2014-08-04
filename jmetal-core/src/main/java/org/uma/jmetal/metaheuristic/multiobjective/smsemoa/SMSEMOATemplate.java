@@ -30,7 +30,7 @@ public abstract class SMSEMOATemplate extends Algorithm {
   protected SMSEMOATemplate(Builder builder) {
     super() ;
 
-    problem_ = builder.problem;
+    problem = builder.problem;
     populationSize = builder.populationSize;
     maxEvaluations = builder.maxEvaluations;
     mutationOperator = builder.mutationOperator;
@@ -47,7 +47,7 @@ public abstract class SMSEMOATemplate extends Algorithm {
 
     Solution newSolution;
     for (int i = 0; i < populationSize; i++) {
-      newSolution = new Solution(problem_);
+      newSolution = new Solution(problem);
       population.add(newSolution);
     }
   }
@@ -55,7 +55,7 @@ public abstract class SMSEMOATemplate extends Algorithm {
   protected SolutionSet evaluatePopulation(SolutionSet population) throws JMetalException {
     evaluations += population.size() ;
 
-    return evaluator.evaluate(population, problem_) ;
+    return evaluator.evaluate(population, problem) ;
   }
 
   protected boolean stoppingCondition() {

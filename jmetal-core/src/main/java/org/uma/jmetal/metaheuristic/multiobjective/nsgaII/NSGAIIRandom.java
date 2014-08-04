@@ -88,7 +88,7 @@ public class NSGAIIRandom extends NSGAIITemplate {
             }
           }
 
-          problem_.evaluate(offSpring);
+          problem.evaluate(offSpring);
           offspringPopulation.add(offSpring);
           evaluations += 1;
         }

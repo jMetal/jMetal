@@ -66,8 +66,8 @@ public class SteadyStateNSGAII extends NSGAIITemplate {
 
       mutationOperator.execute(offSpring[0]);
 
-      problem_.evaluate(offSpring[0]);
-      problem_.evaluateConstraints(offSpring[0]);
+      problem.evaluate(offSpring[0]);
+      problem.evaluateConstraints(offSpring[0]);
 
       offspringPopulation.add(offSpring[0]);
 

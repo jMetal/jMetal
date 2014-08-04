@@ -75,16 +75,16 @@ public class DENSEA extends Algorithm {
     evaluations = 0;
 
     //Read the operator
-    mutationOperator = this.operators_.get("mutation");
-    crossoverOperator = this.operators_.get("crossover");
-    selectionOperator = this.operators_.get("selection");
+    mutationOperator = this.operators.get("mutation");
+    crossoverOperator = this.operators.get("crossover");
+    selectionOperator = this.operators.get("selection");
 
     //-> Create the initial population
     Solution newIndividual;
     for (int i = 0; i < populationSize; i++) {
-      newIndividual = new Solution(problem_);
-      problem_.evaluate(newIndividual);
-      problem_.evaluateConstraints(newIndividual);
+      newIndividual = new Solution(problem);
+      problem.evaluate(newIndividual);
+      problem.evaluateConstraints(newIndividual);
       evaluations++;
       population.add(newIndividual);
     }
@@ -100,12 +100,12 @@ public class DENSEA extends Algorithm {
         parents[1] = (Solution) selectionOperator.execute(population);
         offSpring = (Solution[]) crossoverOperator.execute(parents);
         mutationOperator.execute(offSpring[0]);
-        problem_.evaluate(offSpring[0]);
-        problem_.evaluateConstraints(offSpring[0]);
+        problem.evaluate(offSpring[0]);
+        problem.evaluateConstraints(offSpring[0]);
         evaluations++;
         mutationOperator.execute(offSpring[1]);
-        problem_.evaluate(offSpring[1]);
-        problem_.evaluateConstraints(offSpring[1]);
+        problem.evaluate(offSpring[1]);
+        problem.evaluateConstraints(offSpring[1]);
         evaluations++;
         P3.add(offSpring[0]);
         P3.add(offSpring[1]);

@@ -73,9 +73,9 @@ public class FastPGA extends Algorithm {
     termination = (Integer) getInputParameter("termination");
 
     //Read the operator
-    crossover = (Operator) operators_.get("crossover");
-    mutation = (Operator) operators_.get("mutation");
-    selection = (Operator) operators_.get("selection");
+    crossover = (Operator) operators.get("crossover");
+    mutation = (Operator) operators.get("mutation");
+    selection = (Operator) operators.get("selection");
 
     //Read the params
     a = (Double) getInputParameter("a");
@@ -91,9 +91,9 @@ public class FastPGA extends Algorithm {
     //Build a solutiontype set randomly
     solutionSet = new SolutionSet(populationSize);
     for (int i = 0; i < populationSize; i++) {
-      Solution solution = new Solution(problem_);
-      problem_.evaluate(solution);
-      problem_.evaluateConstraints(solution);
+      Solution solution = new Solution(problem);
+      problem.evaluate(solution);
+      problem.evaluateConstraints(solution);
       evaluations++;
       solutionSet.add(solution);
     }
@@ -113,11 +113,11 @@ public class FastPGA extends Algorithm {
         offSprings = (Solution[]) crossover.execute(parents);
         mutation.execute(offSprings[0]);
         mutation.execute(offSprings[1]);
-        problem_.evaluate(offSprings[0]);
-        problem_.evaluateConstraints(offSprings[0]);
+        problem.evaluate(offSprings[0]);
+        problem.evaluateConstraints(offSprings[0]);
         evaluations++;
-        problem_.evaluate(offSprings[1]);
-        problem_.evaluateConstraints(offSprings[1]);
+        problem.evaluate(offSprings[1]);
+        problem.evaluateConstraints(offSprings[1]);
         evaluations++;
         offSpringSolutionSet.add(offSprings[0]);
         offSpringSolutionSet.add(offSprings[1]);
@@ -129,7 +129,7 @@ public class FastPGA extends Algorithm {
       // Rank
       Ranking ranking = new Ranking(candidateSolutionSet);
       distance.crowdingDistanceAssignment(ranking.getSubfront(0));
-      FPGAFitness fitness = new FPGAFitness(candidateSolutionSet, problem_);
+      FPGAFitness fitness = new FPGAFitness(candidateSolutionSet, problem);
       fitness.fitnessAssign();
 
       // Count the non-dominated solutions in candidateSolutionSet      

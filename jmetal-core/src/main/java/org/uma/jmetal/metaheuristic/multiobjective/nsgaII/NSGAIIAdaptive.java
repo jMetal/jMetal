@@ -56,7 +56,7 @@ public class NSGAIIAdaptive extends NSGAIITemplate {
     population = new SolutionSet(populationSize);
     evaluations = 0;
 
-    selectionOperator = operators_.get("selection");
+    selectionOperator = operators.get("selection");
 
     Offspring[] getOffspring;
     int N_O; // number of offpring objects
@@ -122,7 +122,7 @@ public class NSGAIIAdaptive extends NSGAIITemplate {
             }
           }
 
-          problem_.evaluate(offSpring);
+          problem.evaluate(offSpring);
           offspringPopulation.add(offSpring);
           evaluations += 1;
         }

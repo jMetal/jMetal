@@ -60,7 +60,7 @@ public abstract class MOCellTemplate extends Algorithm {
   protected MOCellTemplate(Builder builder) {
     super() ;
 
-    problem_ = builder.problem ;
+    problem = builder.problem ;
 
     populationSize = builder.populationSize ;
     maxEvaluations = builder.maxEvaluations ;
@@ -110,7 +110,7 @@ public abstract class MOCellTemplate extends Algorithm {
 
     Solution newSolution;
     for (int i = 0; i < populationSize; i++) {
-      newSolution = new Solution(problem_);
+      newSolution = new Solution(problem);
       newSolution.setLocation(i);
       population.add(newSolution);
     }
@@ -118,8 +118,8 @@ public abstract class MOCellTemplate extends Algorithm {
 
   protected SolutionSet evaluatePopulation(SolutionSet population) throws JMetalException {
     for (int i = 0; i < populationSize; i++) {
-      problem_.evaluate(population.get(i));
-      problem_.evaluateConstraints(population.get(i));
+      problem.evaluate(population.get(i));
+      problem.evaluateConstraints(population.get(i));
     }
     return population ;
   }

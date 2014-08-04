@@ -84,18 +84,18 @@ public class GenerationalGA extends Algorithm {
     evaluations = 0;
 
     // Read the operator
-    mutationOperator = this.operators_.get("mutation");
-    crossoverOperator = this.operators_.get("crossover");
-    selectionOperator = this.operators_.get("selection");
+    mutationOperator = this.operators.get("mutation");
+    crossoverOperator = this.operators.get("crossover");
+    selectionOperator = this.operators.get("selection");
 
     // Create the initial population
     Solution newIndividual;
     for (int i = 0; i < populationSize; i++) {
-      newIndividual = new Solution(problem_);
+      newIndividual = new Solution(problem);
       population.add(newIndividual);
     } 
     
-    evaluator_.evaluate(population, problem_) ;
+    evaluator_.evaluate(population, problem) ;
 
     evaluations += populationSize ;
 
@@ -128,7 +128,7 @@ public class GenerationalGA extends Algorithm {
         offspringPopulation.add(offspring[1]);
       } 
       
-      evaluator_.evaluate(offspringPopulation, problem_) ;
+      evaluator_.evaluate(offspringPopulation, problem) ;
       evaluations += offspringPopulation.size() ;
 
       // The offspring population becomes the new current population

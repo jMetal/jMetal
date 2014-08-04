@@ -129,10 +129,10 @@ public class IBEA extends Algorithm {
 
         double value = 0.0;
         if (flag == -1) {
-          value = -calcHypervolumeIndicator(A.get(0), B.get(0), problem_.getNumberOfObjectives(),
+          value = -calcHypervolumeIndicator(A.get(0), B.get(0), problem.getNumberOfObjectives(),
             maximumValues, minimumValues);
         } else {
-          value = calcHypervolumeIndicator(B.get(0), A.get(0), problem_.getNumberOfObjectives(),
+          value = calcHypervolumeIndicator(B.get(0), A.get(0), problem.getNumberOfObjectives(),
             maximumValues, minimumValues);
         }
 
@@ -166,16 +166,16 @@ public class IBEA extends Algorithm {
    */
   public void calculateFitness(SolutionSet solutionSet) throws JMetalException {
     // Obtains the lower and upper bounds of the population
-    double[] maximumValues = new double[problem_.getNumberOfObjectives()];
-    double[] minimumValues = new double[problem_.getNumberOfObjectives()];
+    double[] maximumValues = new double[problem.getNumberOfObjectives()];
+    double[] minimumValues = new double[problem.getNumberOfObjectives()];
 
-    for (int i = 0; i < problem_.getNumberOfObjectives(); i++) {
+    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
       maximumValues[i] = -Double.MAX_VALUE;
       minimumValues[i] = Double.MAX_VALUE;
     }
 
     for (int pos = 0; pos < solutionSet.size(); pos++) {
-      for (int obj = 0; obj < problem_.getNumberOfObjectives(); obj++) {
+      for (int obj = 0; obj < problem.getNumberOfObjectives(); obj++) {
         double value = solutionSet.get(pos).getObjective(obj);
         if (value > maximumValues[obj]) {
           maximumValues[obj] = value;
@@ -247,9 +247,9 @@ public class IBEA extends Algorithm {
     maxEvaluations = ((Integer) getInputParameter("maxEvaluations")).intValue();
 
     //Read the operator
-    crossoverOperator = operators_.get("crossover");
-    mutationOperator = operators_.get("mutation");
-    selectionOperator = operators_.get("selection");
+    crossoverOperator = operators.get("crossover");
+    mutationOperator = operators.get("mutation");
+    selectionOperator = operators.get("selection");
 
     //Initialize the variables
     solutionSet = new SolutionSet(populationSize);
@@ -259,9 +259,9 @@ public class IBEA extends Algorithm {
     //-> Create the initial solutionSet
     Solution newSolution;
     for (int i = 0; i < populationSize; i++) {
-      newSolution = new Solution(problem_);
-      problem_.evaluate(newSolution);
-      problem_.evaluateConstraints(newSolution);
+      newSolution = new Solution(problem);
+      problem.evaluate(newSolution);
+      problem.evaluateConstraints(newSolution);
       evaluations++;
       solutionSet.add(newSolution);
     }
@@ -292,8 +292,8 @@ public class IBEA extends Algorithm {
         //make the crossover
         Solution[] offSpring = (Solution[]) crossoverOperator.execute(parents);
         mutationOperator.execute(offSpring[0]);
-        problem_.evaluate(offSpring[0]);
-        problem_.evaluateConstraints(offSpring[0]);
+        problem.evaluate(offSpring[0]);
+        problem.evaluateConstraints(offSpring[0]);
         offSpringSolutionSet.add(offSpring[0]);
         evaluations++;
       }

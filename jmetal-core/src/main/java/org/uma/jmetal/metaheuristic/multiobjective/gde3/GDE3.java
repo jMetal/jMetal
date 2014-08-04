@@ -68,7 +68,7 @@ public class GDE3 extends Algorithm {
   /** Constructor */
   public GDE3(Builder builder) {
     super() ;
-    problem_ = builder.problem;
+    problem = builder.problem;
     maxIterations = builder.maxIterations;
     crossoverOperator = builder.crossoverOperator;
     selectionOperator = builder.selectionOperator;
@@ -167,8 +167,8 @@ public class GDE3 extends Algorithm {
     populationSize = ((Integer) this.getInputParameter("populationSize")).intValue();
     maxIterations = ((Integer) this.getInputParameter("maxIterations")).intValue();
 
-    selectionOperator = operators_.get("selection");
-    crossoverOperator = operators_.get("crossover");
+    selectionOperator = operators.get("selection");
+    crossoverOperator = operators.get("crossover");
   }
 
   protected void createInitialPopulation() throws ClassNotFoundException, JMetalException {
@@ -176,13 +176,13 @@ public class GDE3 extends Algorithm {
 
     Solution newSolution;
     for (int i = 0; i < populationSize; i++) {
-      newSolution = new Solution(problem_);
+      newSolution = new Solution(problem);
       population.add(newSolution);
     }
   }
 
   protected SolutionSet evaluatePopulation(SolutionSet population) throws JMetalException {
-    return evaluator.evaluate(population, problem_) ;
+    return evaluator.evaluate(population, problem) ;
   }
 
   protected boolean stoppingCondition() {

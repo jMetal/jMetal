@@ -64,7 +64,7 @@ public abstract class NSGAIITemplate extends Algorithm {
   protected NSGAIITemplate(Builder builder) {
     super() ;
 
-    problem_ = builder.problem;
+    problem = builder.problem;
     evaluator = builder.evaluator ;
     populationSize = builder.populationSize;
     maxEvaluations = builder.maxEvaluations;
@@ -82,9 +82,9 @@ public abstract class NSGAIITemplate extends Algorithm {
     populationSize = ((Integer) getInputParameter("populationSize")).intValue();
     maxEvaluations = ((Integer) getInputParameter("maxEvaluations")).intValue();
 
-    mutationOperator = operators_.get("mutation");
-    crossoverOperator = operators_.get("crossover");
-    selectionOperator = operators_.get("selection");
+    mutationOperator = operators.get("mutation");
+    crossoverOperator = operators.get("crossover");
+    selectionOperator = operators.get("selection");
   }
 
   protected void createInitialPopulation() throws ClassNotFoundException, JMetalException {
@@ -92,7 +92,7 @@ public abstract class NSGAIITemplate extends Algorithm {
 
     Solution newSolution;
     for (int i = 0; i < populationSize; i++) {
-      newSolution = new Solution(problem_);
+      newSolution = new Solution(problem);
       population.add(newSolution);
     }
   }
@@ -100,7 +100,7 @@ public abstract class NSGAIITemplate extends Algorithm {
   protected SolutionSet evaluatePopulation(SolutionSet population) throws JMetalException {
     evaluations += population.size() ;
 
-    return evaluator.evaluate(population, problem_) ;
+    return evaluator.evaluate(population, problem) ;
   }
 
   protected boolean stoppingCondition() {

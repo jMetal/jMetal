@@ -108,7 +108,7 @@ public class PSO extends Algorithm {
     swarmSize = (Integer) getInputParameter("swarmSize");
     maxIterations = (Integer) getInputParameter("maxIterations");
 
-    polynomialMutation = operators_.get("mutation");
+    polynomialMutation = operators.get("mutation");
 
     iteration = 0;
 
@@ -118,14 +118,14 @@ public class PSO extends Algorithm {
     localBest = new Solution[swarmSize];
 
     // Create the speed vector
-    speed = new double[swarmSize][problem_.getNumberOfVariables()];
+    speed = new double[swarmSize][problem.getNumberOfVariables()];
 
 
-    deltaMax = new double[problem_.getNumberOfVariables()];
-    deltaMin = new double[problem_.getNumberOfVariables()];
-    for (int i = 0; i < problem_.getNumberOfVariables(); i++) {
-      deltaMax[i] = (problem_.getUpperLimit(i) -
-        problem_.getLowerLimit(i)) / 2.0;
+    deltaMax = new double[problem.getNumberOfVariables()];
+    deltaMin = new double[problem.getNumberOfVariables()];
+    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
+      deltaMax[i] = (problem.getUpperLimit(i) -
+        problem.getLowerLimit(i)) / 2.0;
       deltaMin[i] = -deltaMax[i];
     }
   }
@@ -222,12 +222,12 @@ public class PSO extends Algorithm {
       for (int var = 0; var < particle.size(); var++) {
         particle.setValue(var, particle.getValue(var) + speed[i][var]);
 
-        if (particle.getValue(var) < problem_.getLowerLimit(var)) {
-          particle.setValue(var, problem_.getLowerLimit(var));
+        if (particle.getValue(var) < problem.getLowerLimit(var)) {
+          particle.setValue(var, problem.getLowerLimit(var));
           speed[i][var] = speed[i][var] * ChVel1; //
         }
-        if (particle.getValue(var) > problem_.getUpperLimit(var)) {
-          particle.setValue(var, problem_.getUpperLimit(var));
+        if (particle.getValue(var) > problem.getUpperLimit(var)) {
+          particle.setValue(var, problem.getUpperLimit(var));
           speed[i][var] = speed[i][var] * ChVel2; //
         }
 
@@ -262,8 +262,8 @@ public class PSO extends Algorithm {
     globalBest = null;
     //->Step 1 (and 3) Create the initial population and evaluate
     for (int i = 0; i < swarmSize; i++) {
-      Solution particle = new Solution(problem_);
-      problem_.evaluate(particle);
+      Solution particle = new Solution(problem);
+      problem.evaluate(particle);
       evaluations_++;
       swarm.add(particle);
       if ((globalBest == null) || (particle.getObjective(0) < globalBest.getObjective(0))) {
@@ -273,7 +273,7 @@ public class PSO extends Algorithm {
 
     //-> Step2. Initialize the speed of each particle to 0
     for (int i = 0; i < swarmSize; i++) {
-      for (int j = 0; j < problem_.getNumberOfVariables(); j++) {
+      for (int j = 0; j < problem.getNumberOfVariables(); j++) {
         speed[i][j] = 0.0;
       }
     }
@@ -303,7 +303,7 @@ public class PSO extends Algorithm {
       //Evaluate the new swarm in new positions
       for (int i = 0; i < swarm.size(); i++) {
         Solution particle = swarm.get(i);
-        problem_.evaluate(particle);
+        problem.evaluate(particle);
         evaluations_++;
       }
 

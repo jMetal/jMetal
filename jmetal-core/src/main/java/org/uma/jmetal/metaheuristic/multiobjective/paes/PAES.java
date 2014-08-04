@@ -48,7 +48,7 @@ public class PAES extends Algorithm {
   private PAES(Builder builder) {
     super();
 
-    problem_ = builder.problem_ ;
+    problem = builder.problem_ ;
     archiveSize = builder.archiveSize_ ;
     maxEvaluations = builder.maxEvaluations_ ;
     biSections = builder.biSections_ ;
@@ -78,13 +78,13 @@ public class PAES extends Algorithm {
     Comparator<Solution> dominance;
 
     evaluations = 0;
-    archive = new AdaptiveGridArchive(archiveSize, biSections, problem_.getNumberOfObjectives());
+    archive = new AdaptiveGridArchive(archiveSize, biSections, problem.getNumberOfObjectives());
     dominance = new DominanceComparator();
 
     //-> Create the initial solutiontype and evaluate it and his constraints
-    Solution solution = new Solution(problem_);
-    problem_.evaluate(solution);
-    problem_.evaluateConstraints(solution);
+    Solution solution = new Solution(problem);
+    problem.evaluate(solution);
+    problem.evaluateConstraints(solution);
     evaluations++;
 
     // Add it to the archive
@@ -95,8 +95,8 @@ public class PAES extends Algorithm {
       Solution mutatedIndividual = new Solution(solution);
       mutationOperator.execute(mutatedIndividual);
 
-      problem_.evaluate(mutatedIndividual);
-      problem_.evaluateConstraints(mutatedIndividual);
+      problem.evaluate(mutatedIndividual);
+      problem.evaluateConstraints(mutatedIndividual);
       evaluations++;
 
       int flag = dominance.compare(solution, mutatedIndividual);

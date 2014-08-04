@@ -65,9 +65,9 @@ public class SynchronousCellularGA extends Algorithm {
     maxEvaluations = (Integer) getInputParameter("maxEvaluations");
 
     //Read the operator
-    mutationOperator = operators_.get("mutation");
-    crossoverOperator = operators_.get("crossover");
-    selectionOperator = operators_.get("selection");
+    mutationOperator = operators.get("mutation");
+    crossoverOperator = operators.get("crossover");
+    selectionOperator = operators.get("selection");
 
     //Initialize the variables    
     evaluations = 0;
@@ -77,8 +77,8 @@ public class SynchronousCellularGA extends Algorithm {
     population = new SolutionSet(populationSize);
     //Create the initial population
     for (int i = 0; i < populationSize; i++) {
-      Solution solution = new Solution(problem_);
-      problem_.evaluate(solution);
+      Solution solution = new Solution(problem);
+      problem.evaluate(solution);
       population.add(solution);
       solution.setLocation(i);
       evaluations++;
@@ -110,7 +110,7 @@ public class SynchronousCellularGA extends Algorithm {
         mutationOperator.execute(offSpring[0]);
 
         //->Evaluate offspring and constraints
-        problem_.evaluate(offSpring[0]);
+        problem.evaluate(offSpring[0]);
         evaluations++;
 
         if (comparator.compare(individual, offSpring[0]) < 0) {

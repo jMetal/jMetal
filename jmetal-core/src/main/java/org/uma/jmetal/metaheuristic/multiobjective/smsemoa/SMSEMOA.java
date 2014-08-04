@@ -73,8 +73,8 @@ public class SMSEMOA extends SMSEMOATemplate {
       Solution[] offSpring = (Solution[]) crossoverOperator.execute(parents) ;
       mutationOperator.execute(offSpring[0]);
 
-      problem_.evaluate(offSpring[0]);
-      problem_.evaluateConstraints(offSpring[0]);
+      problem.evaluate(offSpring[0]);
+      problem.evaluateConstraints(offSpring[0]);
 
       offspringPopulation.add(offSpring[0]);
 
@@ -95,7 +95,7 @@ public class SMSEMOA extends SMSEMOATemplate {
       SolutionSet lastFront = ranking.getSubfront(ranking.getNumberOfSubfronts() - 1);
       if (lastFront.size() > 1) {
         double[][] frontValues = lastFront.writeObjectivesToMatrix();
-        int numberOfObjectives = problem_.getNumberOfObjectives();
+        int numberOfObjectives = problem.getNumberOfObjectives();
         // STEP 1. Obtain the maximum and minimum values of the Pareto front
         double[] maximumValues =
           utils.getMaximumValues(union.writeObjectivesToMatrix(), numberOfObjectives);
@@ -156,7 +156,7 @@ public class SMSEMOA extends SMSEMOATemplate {
    * @return HV contributions
    */
   private double[] hvContributions(double[][] front) {
-    int numberOfObjectives = problem_.getNumberOfObjectives();
+    int numberOfObjectives = problem.getNumberOfObjectives();
     double[] contributions = new double[front.length];
     double[][] frontSubset = new double[front.length - 1][front[0].length];
     LinkedList<double[]> frontCopy = new LinkedList<double[]>();

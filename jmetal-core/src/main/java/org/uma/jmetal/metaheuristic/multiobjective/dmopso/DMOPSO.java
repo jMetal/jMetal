@@ -127,14 +127,14 @@ public class DMOPSO extends Algorithm {
     shfGBest = new int[swarmSize];
 
     // Create the speed vector
-    speed = new double[swarmSize][problem_.getNumberOfVariables()];
+    speed = new double[swarmSize][problem.getNumberOfVariables()];
     age = new int[swarmSize];
 
-    deltaMax = new double[problem_.getNumberOfVariables()];
-    deltaMin = new double[problem_.getNumberOfVariables()];
-    for (int i = 0; i < problem_.getNumberOfVariables(); i++) {
-      deltaMax[i] = (problem_.getUpperLimit(i) -
-        problem_.getLowerLimit(i)) / 2.0;
+    deltaMax = new double[problem.getNumberOfVariables()];
+    deltaMin = new double[problem.getNumberOfVariables()];
+    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
+      deltaMax[i] = (problem.getUpperLimit(i) -
+        problem.getLowerLimit(i)) / 2.0;
       deltaMin[i] = -deltaMax[i];
     }
   }
@@ -238,22 +238,22 @@ public class DMOPSO extends Algorithm {
 
     //->Step 1.3 Generate a swarm of N random particles
     for (int i = 0; i < swarmSize; i++) {
-      Solution particle = new Solution(problem_);
-      problem_.evaluate(particle);
+      Solution particle = new Solution(problem);
+      problem.evaluate(particle);
       swarm.add(particle);
     }
 
     //-> Step 1.4 Initialize the speed and age of each particle to 0
     for (int i = 0; i < swarmSize; i++) {
-      for (int j = 0; j < problem_.getNumberOfVariables(); j++) {
+      for (int j = 0; j < problem.getNumberOfVariables(); j++) {
         speed[i][j] = 0.0;
       }
       age[i] = 0;
     }
 
-    indArray = new Solution[problem_.getNumberOfObjectives()];
-    z = new double[problem_.getNumberOfObjectives()];
-    lambda = new double[swarmSize][problem_.getNumberOfObjectives()];
+    indArray = new Solution[problem.getNumberOfObjectives()];
+    z = new double[problem.getNumberOfObjectives()];
+    lambda = new double[swarmSize][problem.getNumberOfObjectives()];
 
     //-> Step 1.2 Generate a well-distributed set of N weighted vectors
     initUniformWeight();
@@ -288,7 +288,7 @@ public class DMOPSO extends Algorithm {
         repairBounds(i);
 
         //-> Step 3.4 Evaluate the particle and update Z*
-        problem_.evaluate(swarm.get(i));
+        problem.evaluate(swarm.get(i));
         updateReference(swarm.get(i));
 
         //-> Step 3.5 Update the personal best
@@ -329,12 +329,12 @@ public class DMOPSO extends Algorithm {
     XReal particle = new XReal(swarm.get(part));
 
     for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
-      if (particle.getValue(var) < problem_.getLowerLimit(var)) {
-        particle.setValue(var, problem_.getLowerLimit(var));
+      if (particle.getValue(var) < problem.getLowerLimit(var)) {
+        particle.setValue(var, problem.getLowerLimit(var));
         speed[part][var] = speed[part][var] * changeVelocity1;
       }
-      if (particle.getValue(var) > problem_.getUpperLimit(var)) {
-        particle.setValue(var, problem_.getUpperLimit(var));
+      if (particle.getValue(var) > problem.getUpperLimit(var)) {
+        particle.setValue(var, problem.getUpperLimit(var));
         speed[part][var] = speed[part][var] * changeVelocity2;
       }
     }
@@ -371,7 +371,7 @@ public class DMOPSO extends Algorithm {
    * initializeUniformWeight
    */
   private void initUniformWeight() {
-    if ((problem_.getNumberOfObjectives() == 2) && (swarmSize < 300)) {
+    if ((problem.getNumberOfObjectives() == 2) && (swarmSize < 300)) {
       for (int n = 0; n < swarmSize; n++) {
         double a = 1.0 * n / (swarmSize - 1);
         lambda[n][0] = a;
@@ -379,7 +379,7 @@ public class DMOPSO extends Algorithm {
       }
     } else {
       String dataFileName;
-      dataFileName = "W" + problem_.getNumberOfObjectives() + "D_" +
+      dataFileName = "W" + problem.getNumberOfObjectives() + "D_" +
         swarmSize + ".dat";
 
       try {
@@ -419,10 +419,10 @@ public class DMOPSO extends Algorithm {
 
 
   private void initIdealPoint() throws JMetalException, ClassNotFoundException {
-    for (int i = 0; i < problem_.getNumberOfObjectives(); i++) {
+    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
       z[i] = 1.0e+30;
-      indArray[i] = new Solution(problem_);
-      problem_.evaluate(indArray[i]);
+      indArray[i] = new Solution(problem);
+      problem.evaluate(indArray[i]);
     }
 
     for (int i = 0; i < swarmSize; i++) {
@@ -431,7 +431,7 @@ public class DMOPSO extends Algorithm {
   }
 
   private void updateReference(Solution individual) {
-    for (int n = 0; n < problem_.getNumberOfObjectives(); n++) {
+    for (int n = 0; n < problem.getNumberOfObjectives(); n++) {
       if (individual.getObjective(n) < z[n]) {
         z[n] = individual.getObjective(n);
 
@@ -481,7 +481,7 @@ public class DMOPSO extends Algorithm {
     if ("_TCHE".equals(functionType)) {
       double maxFun = -1.0e+30;
 
-      for (int n = 0; n < problem_.getNumberOfObjectives(); n++) {
+      for (int n = 0; n < problem.getNumberOfObjectives(); n++) {
         double diff = Math.abs(sol.getObjective(n) - z[n]);
 
         double feval;
@@ -499,7 +499,7 @@ public class DMOPSO extends Algorithm {
 
     } else if ("_AGG".equals(functionType)) {
       double sum = 0.0;
-      for (int n = 0; n < problem_.getNumberOfObjectives(); n++) {
+      for (int n = 0; n < problem.getNumberOfObjectives(); n++) {
         sum += (lambda[n]) * sol.getObjective(n);
       }
 
@@ -511,14 +511,14 @@ public class DMOPSO extends Algorithm {
 
       d1 = d2 = nl = 0.0;
 
-      for (int i = 0; i < problem_.getNumberOfObjectives(); i++) {
+      for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
         d1 += (sol.getObjective(i) - z[i]) * lambda[i];
         nl += Math.pow(lambda[i], 2.0);
       }
       nl = Math.sqrt(nl);
       d1 = Math.abs(d1) / nl;
 
-      for (int i = 0; i < problem_.getNumberOfObjectives(); i++) {
+      for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
         d2 += Math.pow((sol.getObjective(i) - z[i]) - d1 * (lambda[i] / nl), 2.0);
       }
       d2 = Math.sqrt(d2);

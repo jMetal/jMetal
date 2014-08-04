@@ -82,15 +82,15 @@ public class ElitistES extends Algorithm {
     evaluations = 0;
 
     // Read the operator
-    mutationOperator = this.operators_.get("mutation");
+    mutationOperator = this.operators.get("mutation");
 
     JMetalLogger.logger.info("(" + mu_ + " + " + lambda_ + ")ES");
 
     // Create the parent population of mu solutions
     Solution newIndividual;
     for (int i = 0; i < mu_; i++) {
-      newIndividual = new Solution(problem_);
-      problem_.evaluate(newIndividual);
+      newIndividual = new Solution(problem);
+      problem.evaluate(newIndividual);
       evaluations++;
       population.add(newIndividual);
     }
@@ -104,7 +104,7 @@ public class ElitistES extends Algorithm {
         for (int j = 0; j < offsprings; j++) {
           Solution offspring = new Solution(population.get(i));
           mutationOperator.execute(offspring);
-          problem_.evaluate(offspring);
+          problem.evaluate(offspring);
           offspringPopulation.add(offspring);
           evaluations++;
         }

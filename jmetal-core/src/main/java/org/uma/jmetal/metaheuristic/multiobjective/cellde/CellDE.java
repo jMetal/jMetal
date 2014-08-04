@@ -74,8 +74,8 @@ public class CellDE extends Algorithm {
     feedBack = ((Integer) getInputParameter("feedBack")).intValue();
 
     //Read the operator
-    crossoverOperator = operators_.get("crossover");
-    selectionOperator = operators_.get("selection");
+    crossoverOperator = operators.get("crossover");
+    selectionOperator = operators.get("selection");
 
     //Initialize the variables    
     currentSolutionSet = new SolutionSet(populationSize);
@@ -86,9 +86,9 @@ public class CellDE extends Algorithm {
 
     //Create the initial population
     for (int i = 0; i < populationSize; i++) {
-      Solution solution = new Solution(problem_);
-      problem_.evaluate(solution);
-      problem_.evaluateConstraints(solution);
+      Solution solution = new Solution(problem);
+      problem.evaluate(solution);
+      problem.evaluateConstraints(solution);
       currentSolutionSet.add(solution);
       solution.setLocation(i);
       evaluations++;
@@ -112,8 +112,8 @@ public class CellDE extends Algorithm {
         offSpring = (Solution) crossoverOperator.execute(new Object[] {individual, parents});
 
         //->Evaluate offspring and constraints
-        problem_.evaluate(offSpring);
-        problem_.evaluateConstraints(offSpring);
+        problem.evaluate(offSpring);
+        problem.evaluateConstraints(offSpring);
         evaluations++;
 
         int flag = dominance.compare(individual, offSpring);

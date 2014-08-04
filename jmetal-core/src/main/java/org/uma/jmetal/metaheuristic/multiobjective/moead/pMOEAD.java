@@ -128,7 +128,7 @@ public class pMOEAD extends Algorithm implements Runnable {
 
   public void run() {
     neighborhood_ = parentThread_.neighborhood_;
-    problem_ = parentThread_.problem_;
+    problem = parentThread_.problem;
     lambda_ = parentThread_.lambda_;
     population_ = parentThread_.population_;
     z_ = parentThread_.z_;
@@ -198,7 +198,7 @@ public class pMOEAD extends Algorithm implements Runnable {
           parentThread_.mutation_.execute(child);
 
           // Evaluation
-          parentThread_.problem_.evaluate(child);
+          parentThread_.problem.evaluate(child);
 
         } catch (JMetalException ex) {
           java.util.logging.Logger.getLogger(pMOEAD.class.getName()).log(Level.SEVERE, null, ex);
@@ -238,7 +238,7 @@ public class pMOEAD extends Algorithm implements Runnable {
     barrier_ = new CyclicBarrier(numberOfThreads_);
 
     population_ = new SolutionSet(populationSize_);
-    indArray_ = new Solution[problem_.getNumberOfObjectives()];
+    indArray_ = new Solution[problem.getNumberOfObjectives()];
 
     T_ = (Integer) this.getInputParameter("T");
     nr_ = (Integer) this.getInputParameter("nr");
@@ -246,11 +246,11 @@ public class pMOEAD extends Algorithm implements Runnable {
 
     neighborhood_ = new int[populationSize_][T_];
 
-    z_ = new double[problem_.getNumberOfObjectives()];
-    lambda_ = new double[populationSize_][problem_.getNumberOfObjectives()];
+    z_ = new double[problem.getNumberOfObjectives()];
+    lambda_ = new double[populationSize_][problem.getNumberOfObjectives()];
 
-    crossover_ = operators_.get("crossover");
-    mutation_ = operators_.get("mutation");
+    crossover_ = operators.get("crossover");
+    mutation_ = operators.get("mutation");
 
     // STEP 1. Initialization
     // STEP 1.1. Compute euclidean distances between weight vectors and find T
@@ -307,7 +307,7 @@ public class pMOEAD extends Algorithm implements Runnable {
    * Initialize weights
    */
   public void initUniformWeight() {
-    if ((problem_.getNumberOfObjectives() == 2) && (populationSize_ < 300)) {
+    if ((problem.getNumberOfObjectives() == 2) && (populationSize_ < 300)) {
       for (int n = 0; n < populationSize_; n++) {
         double a = 1.0 * n / (populationSize_ - 1);
         lambda_[n][0] = a;
@@ -315,7 +315,7 @@ public class pMOEAD extends Algorithm implements Runnable {
       }
     } else {
       String dataFileName;
-      dataFileName = "W" + problem_.getNumberOfObjectives() + "D_" +
+      dataFileName = "W" + problem.getNumberOfObjectives() + "D_" +
         populationSize_ + ".dat";
 
       try {
@@ -355,9 +355,9 @@ public class pMOEAD extends Algorithm implements Runnable {
    */
   public void initPopulation() throws JMetalException, ClassNotFoundException {
     for (int i = 0; i < populationSize_; i++) {
-      Solution newSolution = new Solution(problem_);
+      Solution newSolution = new Solution(problem);
 
-      problem_.evaluate(newSolution);
+      problem.evaluate(newSolution);
       evaluations_++;
       population_.add(newSolution);
     }
@@ -367,10 +367,10 @@ public class pMOEAD extends Algorithm implements Runnable {
    *
    */
   void initIdealPoint() throws JMetalException, ClassNotFoundException {
-    for (int i = 0; i < problem_.getNumberOfObjectives(); i++) {
+    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
       z_[i] = 1.0e+30;
-      indArray_[i] = new Solution(problem_);
-      problem_.evaluate(indArray_[i]);
+      indArray_[i] = new Solution(problem);
+      problem.evaluate(indArray_[i]);
       evaluations_++;
     }
 
@@ -419,7 +419,7 @@ public class pMOEAD extends Algorithm implements Runnable {
    * @param individual
    */
   synchronized void updateReference(Solution individual) {
-    for (int n = 0; n < parentThread_.problem_.getNumberOfObjectives(); n++) {
+    for (int n = 0; n < parentThread_.problem.getNumberOfObjectives(); n++) {
       if (individual.getObjective(n) < z_[n]) {
         parentThread_.z_[n] = individual.getObjective(n);
         parentThread_.indArray_[n] = individual;
@@ -482,7 +482,7 @@ public class pMOEAD extends Algorithm implements Runnable {
     if ("_TCHE1".equals(parentThread_.functionType_)) {
       double maxFun = -1.0e+30;
 
-      for (int n = 0; n < parentThread_.problem_.getNumberOfObjectives(); n++) {
+      for (int n = 0; n < parentThread_.problem.getNumberOfObjectives(); n++) {
         double diff = Math.abs(individual.getObjective(n) - z_[n]);
 
         double feval;

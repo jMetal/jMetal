@@ -33,8 +33,8 @@ import org.uma.jmetal.encoding.variable.Real;
  */
 public class IntRealSolutionType extends SolutionType implements IntSolutionTypeTemplate,
   RealSolutionTypeTemplate {
-  private final int numberOfIntVariables_;
-  private final int numberOfRealVariables_;
+  private final int numberOfIntVariables;
+  private final int numberOfRealVariables;
 
   /**
    * Constructor
@@ -45,20 +45,20 @@ public class IntRealSolutionType extends SolutionType implements IntSolutionType
    */
   public IntRealSolutionType(Problem problem, int intVariables, int realVariables) {
     super(problem);
-    numberOfIntVariables_ = intVariables;
-    numberOfRealVariables_ = realVariables;
+    numberOfIntVariables = intVariables;
+    numberOfRealVariables = realVariables;
   }
 
   /** Creates the variables of the solution type */
   public Variable[] createVariables() throws ClassNotFoundException {
     Variable[] variables = new Variable[getProblem().getNumberOfVariables()];
 
-    for (int var = 0; var < numberOfIntVariables_; var++) {
+    for (int var = 0; var < numberOfIntVariables; var++) {
       variables[var] =
         new Int((int) getProblem().getLowerLimit(var), (int) getProblem().getUpperLimit(var));
     }
 
-    for (int var = numberOfIntVariables_; var < (numberOfIntVariables_ + numberOfRealVariables_); var++) {
+    for (int var = numberOfIntVariables; var < (numberOfIntVariables + numberOfRealVariables); var++) {
       variables[var] = new Real(getProblem().getLowerLimit(var), getProblem().getUpperLimit(var));
     }
 
@@ -83,27 +83,27 @@ public class IntRealSolutionType extends SolutionType implements IntSolutionType
   }
 
   @Override public int getNumberOfIntVariables(Solution solution) {
-    return numberOfIntVariables_;
+    return numberOfIntVariables;
   }
 
   @Override
   public double getRealValue(Solution solution, int index) {
-    return solution.getDecisionVariables()[index+ numberOfIntVariables_].getValue();
+    return solution.getDecisionVariables()[index+ numberOfIntVariables].getValue();
   }
 
   @Override public void setRealValue(Solution solution, int index, double value) {
-    solution.getDecisionVariables()[index+ numberOfIntVariables_].setValue(value) ;
+    solution.getDecisionVariables()[index+ numberOfIntVariables].setValue(value) ;
   }
 
   @Override public double getRealUpperBound(Solution solution, int index) {
-    return solution.getDecisionVariables()[index+ numberOfIntVariables_].getUpperBound();
+    return solution.getDecisionVariables()[index+ numberOfIntVariables].getUpperBound();
   }
 
   @Override public double getRealLowerBound(Solution solution, int index) {
-    return solution.getDecisionVariables()[index+ numberOfIntVariables_].getLowerBound();
+    return solution.getDecisionVariables()[index+ numberOfIntVariables].getLowerBound();
   }
 
   @Override public int getNumberOfRealVariables(Solution solution_) {
-    return numberOfRealVariables_;
+    return numberOfRealVariables;
   }
 }

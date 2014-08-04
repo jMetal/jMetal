@@ -97,7 +97,7 @@ public class StandardPSO2011 extends Algorithm {
     neighborhoodBest = new Solution[swarmSize];
 
     // Create the speed_ vector
-    speed_ = new double[swarmSize][problem_.getNumberOfVariables()];
+    speed_ = new double[swarmSize][problem.getNumberOfVariables()];
   } // initialization
 
   private Solution getNeighborBest(int i) {
@@ -122,7 +122,7 @@ public class StandardPSO2011 extends Algorithm {
       XReal particle = new XReal(swarm.get(i));
       XReal localBest = new XReal(this.localBest[i]);
       XReal neighborhoodBest = new XReal(this.neighborhoodBest[i]);
-      XReal gravityCenter = new XReal(new Solution(problem_));
+      XReal gravityCenter = new XReal(new Solution(problem));
       XReal randomParticle = new XReal(new Solution(swarm.get(i)));
 
       if (this.localBest[i] != this.neighborhoodBest[i]) {
@@ -148,7 +148,7 @@ public class StandardPSO2011 extends Algorithm {
       radius = new Distance()
         .distanceBetweenSolutions(gravityCenter.getSolution(), particle.getSolution());
 
-      double[] random = PseudoRandom.randSphere(problem_.getNumberOfVariables());
+      double[] random = PseudoRandom.randSphere(problem.getNumberOfVariables());
 
       for (int var = 0; var < particle.size(); var++) {
         randomParticle.setValue(var, gravityCenter.getValue(var) + radius * random[var]);
@@ -173,12 +173,12 @@ public class StandardPSO2011 extends Algorithm {
       for (int var = 0; var < particle.size(); var++) {
         particle.setValue(var, particle.getValue(var) + speed_[i][var]);
 
-        if (particle.getValue(var) < problem_.getLowerLimit(var)) {
-          particle.setValue(var, problem_.getLowerLimit(var));
+        if (particle.getValue(var) < problem.getLowerLimit(var)) {
+          particle.setValue(var, problem.getLowerLimit(var));
           speed_[i][var] = ChVel * speed_[i][var];
         }
-        if (particle.getValue(var) > problem_.getUpperLimit(var)) {
-          particle.setValue(var, problem_.getUpperLimit(var));
+        if (particle.getValue(var) > problem.getUpperLimit(var)) {
+          particle.setValue(var, problem.getUpperLimit(var));
           speed_[i][var] = ChVel * speed_[i][var];
         }
       }
@@ -198,8 +198,8 @@ public class StandardPSO2011 extends Algorithm {
 
     // Step 1 Create the initial population and evaluate
     for (int i = 0; i < swarmSize; i++) {
-      Solution particle = new Solution(problem_);
-      problem_.evaluate(particle);
+      Solution particle = new Solution(problem);
+      problem.evaluate(particle);
       evaluations++;
       swarm.add(particle);
     }
@@ -213,7 +213,7 @@ public class StandardPSO2011 extends Algorithm {
     // Step2. Initialize the speed_ of each particle
     for (int i = 0; i < swarmSize; i++) {
       XReal particle = new XReal(swarm.get(i));
-      for (int j = 0; j < problem_.getNumberOfVariables(); j++) {
+      for (int j = 0; j < problem.getNumberOfVariables(); j++) {
         speed_[i][j] = (PseudoRandom.randDouble(
           particle.getLowerBound(j) - particle.getValue(0),
           particle.getUpperBound(j) - particle.getValue(0)));
@@ -255,7 +255,7 @@ public class StandardPSO2011 extends Algorithm {
       //Evaluate the new swarm in new positions
       for (int i = 0; i < swarm.size(); i++) {
         Solution particle = swarm.get(i);
-        problem_.evaluate(particle);
+        problem.evaluate(particle);
         evaluations++;
       }
 

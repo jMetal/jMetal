@@ -69,9 +69,9 @@ public class AsynchronousCellularGA extends Algorithm {
     maxEvaluations = (Integer) getInputParameter("maxEvaluations");
 
     //Read the operator
-    mutationOperator = operators_.get("mutation");
-    crossoverOperator = operators_.get("crossover");
-    selectionOperator = operators_.get("selection");
+    mutationOperator = operators.get("mutation");
+    crossoverOperator = operators.get("crossover");
+    selectionOperator = operators.get("selection");
 
     //Initialize the variables    
     evaluations = 0;
