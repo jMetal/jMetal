@@ -103,4 +103,16 @@ public class SBXCrossoverTest {
     Object result = crossover.execute(parents);
     assertNotNull(result);
   }
+
+  @Test (expected = JMetalException.class)
+  public void wrongParameterClassTest() throws ClassNotFoundException {
+    Solution[] parent = {new Solution(problem), new Solution(problem), new Solution(problem)};
+
+    crossover.execute(parent) ;
+  }
+
+  @Test (expected = JMetalException.class)
+  public void nullParameterTest() throws ClassNotFoundException {
+    crossover.execute(null) ;
+  }
 }

@@ -93,6 +93,12 @@ public class SBXCrossover extends Crossover {
 
   /** Execute() method */
   public Object execute(Object object) throws JMetalException {
+    if (null == object) {
+      throw new JMetalException("Null parameter") ;
+    } else if (!(object instanceof Solution[])) {
+      throw new JMetalException("Invalid parameter class") ;
+    }
+
     Solution[] parents = (Solution[]) object;
 
     if (parents.length != 2) {

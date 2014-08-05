@@ -25,12 +25,18 @@ import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.operator.crossover.Crossover;
 import org.uma.jmetal.operator.crossover.SBXCrossover;
 import org.uma.jmetal.operator.localSearch.MutationLocalSearch;
+import org.uma.jmetal.operator.mutation.Mutation;
+import org.uma.jmetal.operator.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.Kursawe;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.archive.Archive;
+import org.uma.jmetal.util.archive.CrowdingArchive;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 
 /**
@@ -39,69 +45,61 @@ import static org.junit.Assert.assertNotNull;
 public class MutationLocalSearchTest {
   MutationLocalSearch localSearch;
   Problem problem;
-
+  Mutation mutation ;
+  Archive archive ;
   static final double DELTA = 0.0000000000001 ;
 
   @Before
   public void setUp() throws JMetalException {
     problem = new Kursawe("Real", 3) ;
-    localSearch = new SBXCrossover.Builder().build() ;
+    mutation = new PolynomialMutation.Builder()
+            .distributionIndex(20)
+            .probability(1.0/problem.getNumberOfVariables())
+            .build();
+
+    archive = new CrowdingArchive(100, problem.getNumberOfObjectives()) ;
+
+    localSearch = new MutationLocalSearch.Builder(problem)
+            .mutationOperator(mutation)
+            .improvementRounds(1)
+            .archive(archive)
+            .build() ;
   }
 
   @After
   public void tearDown() throws Exception {
-    crossover = null ;
     problem = null ;
+    mutation = null ;
+    archive = null ;
+    localSearch = null ;
   }
 
   @Test
   public void defaultParametersTest() {
-    assertEquals(20.0, crossover.getDistributionIndex(), DELTA) ;
-    assertEquals(0.9, crossover.getCrossoverProbability(), DELTA) ;
-  }
-
-  @Test
-  public void setCrossoverProbabilityTest() {
-    crossover = new SBXCrossover.Builder()
-      .probability(1.0)
-      .build() ;
-
-    assertEquals(1.0, crossover.getCrossoverProbability(), DELTA) ;
-  }
-
-  @Test (expected = JMetalException.class)
-  public void setInvalidCrossoverProbabilityTest() {
-    crossover = new SBXCrossover.Builder()
-      .probability(-2.5)
-      .build() ;
-  }
-
-  @Test
-  public void setCrossoverDistributionIndex() {
-    crossover = new SBXCrossover.Builder()
-      .distributionIndex(5.0)
-      .build() ;
-
-    assertEquals(5.0, crossover.getDistributionIndex(), DELTA) ;
-  }
-
-  @Test (expected = JMetalException.class)
-  public void setInvalidCrossoverDistributionIndex() {
-    crossover = new SBXCrossover.Builder()
-      .distributionIndex(-1.25)
-      .build() ;
+    assertEquals(mutation, localSearch.getMutationOperator()) ;
+    assertEquals(archive, localSearch.getArchive()) ;
+    assertEquals(1, localSearch.getImprovementRounds()) ;
   }
 
   @Test
   public void operatorExecutionTest() throws ClassNotFoundException {
-    crossover = new SBXCrossover.Builder()
-      .probability(0.9)
-      .distributionIndex(20)
-      .build();
+    Solution solution = new Solution(problem) ;
+    problem.evaluate(solution);
 
-    Solution[] parents = {new Solution(problem), new Solution(problem)};
-
-    Object result = crossover.execute(parents);
+    Solution result = (Solution) localSearch.execute(solution);
     assertNotNull(result);
+    //assertNotEquals(solution, result);
+  }
+
+  @Test (expected = JMetalException.class)
+  public void wrongParameterClassTest() throws ClassNotFoundException {
+    Solution[] parent = {new Solution(problem), new Solution(problem)};
+
+    localSearch.execute(parent) ;
+  }
+
+  @Test (expected = JMetalException.class)
+  public void nullParameterTest() throws ClassNotFoundException {
+    localSearch.execute(null) ;
   }
 }
