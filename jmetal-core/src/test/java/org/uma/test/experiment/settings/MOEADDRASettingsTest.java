@@ -20,15 +20,13 @@
 
 package org.uma.test.experiment.settings;
 
-import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.experiment.Settings;
 import org.uma.jmetal.experiment.settings.MOEADDRASettings;
 import org.uma.jmetal.metaheuristic.multiobjective.moead.MOEADDRA;
 import org.uma.jmetal.operator.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.PolynomialMutation;
-import org.uma.jmetal.problem.Fonseca;
-import org.uma.jmetal.problem.lz09.LZ09_F2;
+import org.uma.jmetal.problem.lz09.LZ09F2;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -57,9 +55,9 @@ public class MOEADDRASettingsTest {
   @Test
   public void testConfigure() throws Exception {
     double epsilon = 0.000000000000001 ;
-    Settings moeadDraSettings = new MOEADDRASettings("LZ09_F2");
+    Settings moeadDraSettings = new MOEADDRASettings("LZ09F2");
     MOEADDRA algorithm = (MOEADDRA)moeadDraSettings.configure() ;
-    Problem problem = new LZ09_F2("Real") ;
+    Problem problem = new LZ09F2("Real") ;
     
     PolynomialMutation mutation = (PolynomialMutation) algorithm.getMutation() ;
     double pm = mutation.getMutationProbability() ;
@@ -91,9 +89,9 @@ public class MOEADDRASettingsTest {
   @Test
   public void testConfigure2() throws Exception {
     double epsilon = 0.000000000000001 ;
-    Settings moeadDraSettings = new MOEADDRASettings("LZ09_F2");
+    Settings moeadDraSettings = new MOEADDRASettings("LZ09F2");
     MOEADDRA algorithm = (MOEADDRA)moeadDraSettings.configure(configuration) ;
-    Problem problem = new LZ09_F2("Real") ;
+    Problem problem = new LZ09F2("Real") ;
     
     PolynomialMutation mutation = (PolynomialMutation) algorithm.getMutation() ;
     double pm = mutation.getMutationProbability() ;

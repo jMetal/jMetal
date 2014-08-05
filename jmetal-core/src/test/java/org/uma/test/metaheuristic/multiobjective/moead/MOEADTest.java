@@ -37,11 +37,11 @@ public class MOEADTest {
 
     @Test
     public void testNumberOfReturnedSolutionsInEasyProblem() throws IOException, ClassNotFoundException {
-      algorithm = new MOEADSettings("LZ09_F2").configure() ;
+      algorithm = new MOEADSettings("LZ09F2").configure() ;
 
       SolutionSet solutionSet = algorithm.execute() ;
     /*
-      Rationale: the default problem is LZ09_F2, and usually MOEAD, configured with standard
+      Rationale: the default problem is LZ09F2, and usually MOEAD, configured with standard
       settings, should return 300 solutions
      */
       assertTrue(solutionSet.size() >= 299) ;

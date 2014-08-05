@@ -31,38 +31,38 @@ import org.uma.jmetal.util.JMetalException;
 import java.util.Vector;
 
 /**
- * Class representing problem LZ09_F7
+ * Class representing problem LZ09F7
  */
-public class LZ09_F7 extends Problem {
+public class LZ09F7 extends Problem {
   private static final long serialVersionUID = 5477277027254029099L;
 
   private LZ09 LZ09;
 
   /**
-   * Creates a default LZ09_F7 problem (10 variables and 2 objectives)
+   * Creates a default LZ09F7 problem (10 variables and 2 objectives)
    *
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
-  public LZ09_F7(String solutionType) throws ClassNotFoundException, JMetalException {
+  public LZ09F7(String solutionType) throws ClassNotFoundException, JMetalException {
     this(solutionType, 21, 3, 21);
   }
 
   /**
-   * Creates a LZ09_F7 problem instance
+   * Creates a LZ09F7 problem instance
    *
    * @param ptype        pType
    * @param dtype        dType
    * @param ltype        lType
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
-  public LZ09_F7(String solutionType,
-    Integer ptype,
-    Integer dtype,
-    Integer ltype) throws JMetalException {
+  public LZ09F7(String solutionType,
+                Integer ptype,
+                Integer dtype,
+                Integer ltype) throws JMetalException {
     numberOfVariables = 10;
     numberOfObjectives = 2;
     numberOfConstraints = 0;
-    problemName = "LZ09_F7";
+    problemName = "LZ09F7";
 
     LZ09 = new LZ09(numberOfVariables,
       numberOfObjectives,

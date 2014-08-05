@@ -1,4 +1,4 @@
-//  LZ09_F6.java
+//  LZ09_F2.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -31,35 +31,35 @@ import org.uma.jmetal.util.JMetalException;
 import java.util.Vector;
 
 /**
- * Class representing problem LZ09_F6
+ * Class representing problem LZ09F2
  */
-public class LZ09_F6 extends Problem {
-  private static final long serialVersionUID = -2149496516324432052L;
+public class LZ09F2 extends Problem {
+  private static final long serialVersionUID = 7111515393473519322L;
 
   private LZ09 LZ09;
 
   /**
-   * Creates a default LZ09_F6 problem (30 variables and 2 objectives)
+   * Creates a default LZ09F2 problem (30 variables and 3 objectives)
    *
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
-  public LZ09_F6(String solutionType) throws ClassNotFoundException, JMetalException {
-    this(solutionType, 31, 1, 32);
+  public LZ09F2(String solutionType) throws ClassNotFoundException, JMetalException {
+    this(solutionType, 21, 1, 22);
   }
 
   /**
-   * Creates a LZ09_F6 problem instance
+   * Creates a LZ09F2 problem instance
    *
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
-  public LZ09_F6(String solutionType,
-    Integer ptype,
-    Integer dtype,
-    Integer ltype) throws JMetalException {
-    numberOfVariables = 10;
-    numberOfObjectives = 3;
+  public LZ09F2(String solutionType,
+                Integer ptype,
+                Integer dtype,
+                Integer ltype) throws JMetalException {
+    numberOfVariables = 30;
+    numberOfObjectives = 2;
     numberOfConstraints = 0;
-    problemName = "LZ09_F6";
+    problemName = "LZ09F2";
 
     LZ09 = new LZ09(numberOfVariables,
       numberOfObjectives,
@@ -73,7 +73,6 @@ public class LZ09_F6 extends Problem {
       lowerLimit[var] = 0.0;
       upperLimit[var] = 1.0;
     }
-
 
     if (solutionType.compareTo("BinaryReal") == 0) {
       this.solutionType = new BinaryRealSolutionType(this);
@@ -94,7 +93,7 @@ public class LZ09_F6 extends Problem {
     for (int i = 0; i < numberOfVariables; i++) {
       x.addElement(gen[i].getValue());
       y.addElement(0.0);
-    }
+    } // for
 
     LZ09.objective(x, y);
 

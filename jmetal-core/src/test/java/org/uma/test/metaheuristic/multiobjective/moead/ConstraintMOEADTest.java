@@ -37,11 +37,11 @@ public class ConstraintMOEADTest {
 
     @Test
     public void testNumberOfReturnedSolutionsInEasyProblem() throws IOException, ClassNotFoundException {
-      algorithm = new ConstraintMOEADSettings("LZ09_F2").configure() ;
+      algorithm = new ConstraintMOEADSettings("LZ09F2").configure() ;
 
       SolutionSet solutionSet = algorithm.execute() ;
     /*
-      Rationale: the default problem is LZ09_F2, and usually ConstraintMOEAD, configured with standard
+      Rationale: the default problem is LZ09F2, and usually ConstraintMOEAD, configured with standard
       settings, should return 300 solutions
      */
       assertTrue(solutionSet.size() >= 299) ;

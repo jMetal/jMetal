@@ -1,4 +1,4 @@
-//  LZ09_F3.java
+//  LZ09_F4.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -31,35 +31,35 @@ import org.uma.jmetal.util.JMetalException;
 import java.util.Vector;
 
 /**
- * Class representing problem LZ09_F3
+ * Class representing problem LZ09F4
  */
-public class LZ09_F3 extends Problem {
-  private static final long serialVersionUID = 1857615002372087234L;
+public class LZ09F4 extends Problem {
+  private static final long serialVersionUID = 397654535693723207L;
 
   private LZ09 LZ09;
 
   /**
-   * Creates a default LZ09_F3 problem (30 variables and 2 objectives)
+   * Creates a default LZ09F4 problem (30 variables and 2 objectives)
    *
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
-  public LZ09_F3(String solutionType) throws ClassNotFoundException, JMetalException {
-    this(solutionType, 21, 1, 23);
+  public LZ09F4(String solutionType) throws ClassNotFoundException, JMetalException {
+    this(solutionType, 21, 1, 24);
   }
 
   /**
-   * Creates a LZ09_F3 problem instance
+   * Creates a LZ09F4 problem instance
    *
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
-  public LZ09_F3(String solutionType,
-    Integer ptype,
-    Integer dtype,
-    Integer ltype) throws JMetalException {
+  public LZ09F4(String solutionType,
+                Integer ptype,
+                Integer dtype,
+                Integer ltype) throws JMetalException {
     numberOfVariables = 30;
     numberOfObjectives = 2;
     numberOfConstraints = 0;
-    problemName = "LZ09_F3";
+    problemName = "LZ09F4";
 
     LZ09 = new LZ09(numberOfVariables,
       numberOfObjectives,
@@ -82,6 +82,7 @@ public class LZ09_F3 extends Problem {
       throw new JMetalException("Error: solution type " + solutionType + " invalid");
     }
   }
+
 
   /** Evaluate() method */
   public void evaluate(Solution solution) throws JMetalException {

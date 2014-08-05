@@ -38,11 +38,11 @@ public class MOEADDRATest {
 
 	@Test
 	public void testNumberOfReturnedSolutionsInEasyProblem() throws IOException, ClassNotFoundException {
-		algorithm = new MOEADDRASettings("LZ09_F2").configure() ;
+		algorithm = new MOEADDRASettings("LZ09F2").configure() ;
 
 		SolutionSet solutionSet = algorithm.execute() ;
 		/*
-      Rationale: the default problem is LZ09_F2, and usually MOEADDRA, configured with standard
+      Rationale: the default problem is LZ09F2, and usually MOEADDRA, configured with standard
       settings, should return 300 solutions
 		 */
 		assertTrue(solutionSet.size() >= 299) ;

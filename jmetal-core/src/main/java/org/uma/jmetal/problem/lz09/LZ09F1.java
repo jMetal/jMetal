@@ -1,4 +1,4 @@
-//  LZ09_F8.java
+//  LZ09_F1.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -31,35 +31,35 @@ import org.uma.jmetal.util.JMetalException;
 import java.util.Vector;
 
 /**
- * Class representing problem LZ09_F8
+ * Class representing problem LZ09F1
  */
-public class LZ09_F8 extends Problem {
-  private static final long serialVersionUID = 7885765236445893586L;
+public class LZ09F1 extends Problem {
+  private static final long serialVersionUID = 8764504064100559113L;
 
   private LZ09 LZ09;
 
   /**
-   * Creates a default LZ09_F8 problem (10 variables and 2 objectives)
+   * Creates a default LZ09F1 problem (30 variables and 2 objectives)
    *
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
-  public LZ09_F8(String solutionType) throws ClassNotFoundException, JMetalException {
-    this(solutionType, 21, 4, 21);
-  } // LZ09_F8
+  public LZ09F1(String solutionType) throws ClassNotFoundException, JMetalException {
+    this(solutionType, 21, 1, 21);
+  }
 
   /**
-   * Creates a LZ09_F8 problem instance
+   * Creates a LZ09F1 problem instance
    *
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
-  public LZ09_F8(String solutionType,
-    Integer ptype,
-    Integer dtype,
-    Integer ltype) throws JMetalException {
+  public LZ09F1(String solutionType,
+                Integer ptype,
+                Integer dtype,
+                Integer ltype) throws JMetalException {
     numberOfVariables = 10;
     numberOfObjectives = 2;
     numberOfConstraints = 0;
-    problemName = "LZ09_F8";
+    problemName = "LZ09F1";
 
     LZ09 = new LZ09(numberOfVariables,
       numberOfObjectives,
@@ -93,7 +93,7 @@ public class LZ09_F8 extends Problem {
     for (int i = 0; i < numberOfVariables; i++) {
       x.addElement(gen[i].getValue());
       y.addElement(0.0);
-    }
+    } // for
 
     LZ09.objective(x, y);
 
@@ -102,4 +102,3 @@ public class LZ09_F8 extends Problem {
     }
   }
 }
-

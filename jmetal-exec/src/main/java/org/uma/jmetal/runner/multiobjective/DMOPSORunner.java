@@ -75,7 +75,7 @@ public class DMOPSORunner {
       //problem = new WFG1("Real");
       //problem = new DTLZ1("Real");
       //problem = new OKA2("Real") ;
-      //problem = new LZ09_F1("Real");
+      //problem = new LZ09F1("Real");
     }
 
     algorithm = new DMOPSO();
