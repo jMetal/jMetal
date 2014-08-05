@@ -30,14 +30,14 @@ import java.util.HashMap;
  * Abstract class representing a generic local search operator
  */
 public abstract class LocalSearch extends Operator {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = -2211279064487607699L;
 
+  @Deprecated
   public LocalSearch(HashMap<String, Object> parameters) {
     super(parameters);
+  }
+
+  public LocalSearch() {
   }
 
   /**

@@ -27,6 +27,7 @@ import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.operator.mutation.Mutation;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.OverallConstraintViolationComparator;
 
@@ -39,35 +40,17 @@ import java.util.HashMap;
  * found during the search.
  */
 public class MutationLocalSearch extends LocalSearch {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = 6152832404856574555L;
-  /**
-   * Stores the number of evaluations carried out
-   */
-  int evaluations_;
-  /**
-   * Stores the problem to solve
-   */
-  private Problem problem_;
-  /**
-   * Stores a reference to the archive in which the non-dominated solutions are
-   * inserted
-   */
-  private SolutionSet archive_;
-  private int improvementRounds_;
-  /**
-   * Stores comparator for dealing with constraints and dominance checking,
-   * respectively.
-   */
-  private Comparator<Solution> constraintComparator_;
-  private Comparator<Solution> dominanceComparator_;
-  /**
-   * Stores the mutation operator
-   */
-  private Operator mutationOperator_;
+
+  private int evaluations;
+  private Problem problem;
+  private SolutionSet archive;
+  private int improvementRounds;
+
+  private Comparator<Solution> constraintComparator;
+  private Comparator<Solution> dominanceComparator;
+
+  private Operator mutationOperator;
 
   /**
    * Constructor.
@@ -75,22 +58,52 @@ public class MutationLocalSearch extends LocalSearch {
    *
    * @param parameters The parameters
    */
+  @Deprecated
   public MutationLocalSearch(HashMap<String, Object> parameters) {
     super(parameters);
     if (parameters.get("problem") != null) {
-      problem_ = (Problem) parameters.get("problem");
+      problem = (Problem) parameters.get("problem");
     }
     if (parameters.get("improvementRounds") != null) {
-      improvementRounds_ = (Integer) parameters.get("improvementRounds");
+      improvementRounds = (Integer) parameters.get("improvementRounds");
     }
     if (parameters.get("mutation") != null) {
-      mutationOperator_ = (Mutation) parameters.get("mutation");
+      mutationOperator = (Mutation) parameters.get("mutation");
     }
 
-    evaluations_ = 0;
-    archive_ = null;
-    dominanceComparator_ = new DominanceComparator();
-    constraintComparator_ = new OverallConstraintViolationComparator();
+    evaluations = 0;
+    archive = null;
+    dominanceComparator = new DominanceComparator();
+    constraintComparator = new OverallConstraintViolationComparator();
+  }
+
+  /** Constructor */
+  private MutationLocalSearch(Builder builder) {
+    problem = builder.problem ;
+    improvementRounds = builder.improvementRounds ;
+    mutationOperator = builder.mutationOperator ;
+    archive = builder.archive;
+
+    dominanceComparator = new DominanceComparator();
+    constraintComparator = new OverallConstraintViolationComparator();
+  }
+
+  /* Getters */
+
+  public Problem getProblem() {
+    return problem;
+  }
+
+  public SolutionSet getArchive() {
+    return archive;
+  }
+
+  public int getImprovementRounds() {
+    return improvementRounds;
+  }
+
+  public Operator getMutationOperator() {
+    return mutationOperator;
   }
 
   /**
@@ -104,13 +117,18 @@ public class MutationLocalSearch extends LocalSearch {
    * @throws org.uma.jmetal.util.JMetalException
    */
   public Object execute(Object object) throws JMetalException {
+    if (null == object) {
+      throw new JMetalException("Null parameter") ;
+    } else if (!(object instanceof Solution)) {
+      throw new JMetalException("Invalid parameter class") ;
+    }
+
     int i = 0;
     int best = 0;
-    evaluations_ = 0;
+    evaluations = 0;
     Solution solution = (Solution) object;
 
-    int rounds = improvementRounds_;
-    archive_ = (SolutionSet) getParameter("archive");
+    int rounds = improvementRounds;
 
     if (rounds <= 0) {
       return new Solution(solution);
@@ -119,26 +137,26 @@ public class MutationLocalSearch extends LocalSearch {
     do {
       i++;
       Solution mutatedSolution = new Solution(solution);
-      mutationOperator_.execute(mutatedSolution);
+      mutationOperator.execute(mutatedSolution);
 
       // Evaluate the getNumberOfConstraints
-      if (problem_.getNumberOfConstraints() > 0) {
-        problem_.evaluateConstraints(mutatedSolution);
-        best = constraintComparator_.compare(mutatedSolution, solution);
+      if (problem.getNumberOfConstraints() > 0) {
+        problem.evaluateConstraints(mutatedSolution);
+        best = constraintComparator.compare(mutatedSolution, solution);
         if (best == 0) {
           // none of then is better that the other one
-          problem_.evaluate(mutatedSolution);
-          evaluations_++;
-          best = dominanceComparator_.compare(mutatedSolution, solution);
+          problem.evaluate(mutatedSolution);
+          evaluations++;
+          best = dominanceComparator.compare(mutatedSolution, solution);
         } else if (best == -1) {
           // mutatedSolution is best
-          problem_.evaluate(mutatedSolution);
-          evaluations_++;
+          problem.evaluate(mutatedSolution);
+          evaluations++;
         }
       } else {
-        problem_.evaluate(mutatedSolution);
-        evaluations_++;
-        best = dominanceComparator_.compare(mutatedSolution, solution);
+        problem.evaluate(mutatedSolution);
+        evaluations++;
+        best = dominanceComparator.compare(mutatedSolution, solution);
       }
       if (best == -1) {
         // mutated is best
@@ -148,8 +166,8 @@ public class MutationLocalSearch extends LocalSearch {
 
       } else {
         // mutatedSolution and original are non-dominated
-        if (archive_ != null) {
-          archive_.add(mutatedSolution);
+        if (archive != null) {
+          archive.add(mutatedSolution);
         }
       }
     }
@@ -157,11 +175,44 @@ public class MutationLocalSearch extends LocalSearch {
     return new Solution(solution);
   }
 
-
   /**
-   * Returns the number of evaluations maded
+   * Returns the number of computed evaluations
    */
   public int getEvaluations() {
-    return evaluations_;
+    return evaluations;
+  }
+
+  /** Builder class */
+  public static class Builder {
+    private Problem problem;
+    private int improvementRounds;
+    private Operator mutationOperator;
+    private Archive archive ;
+
+    public Builder(Problem problem) {
+      this.problem = problem ;
+    }
+
+    public Builder improvementRounds(int improvementRounds) {
+      this.improvementRounds = improvementRounds ;
+
+      return this ;
+    }
+
+    public Builder mutationOperator(Operator mutationOperator) {
+      this.mutationOperator = mutationOperator ;
+
+      return this ;
+    }
+
+    public Builder archive(Archive archive) {
+      this.archive = archive ;
+
+      return this ;
+    }
+
+    public MutationLocalSearch build() {
+      return new MutationLocalSearch(this) ;
+    }
   }
 }
