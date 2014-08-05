@@ -29,11 +29,7 @@ import java.util.Comparator;
  * This class implements a <code>Comparator</code> for <code>Solution</code>
  */
 public class BinaryTournamentComparator implements Comparator<Solution> {
-
-  /**
-   * stores a dominance comparator
-   */
-  private static final Comparator<Solution> dominance_ = new DominanceComparator();
+  private static final Comparator<Solution> DOMINANCE_COMPARATOR = new DominanceComparator();
 
   /**
    * Compares two solutions.
@@ -47,7 +43,7 @@ public class BinaryTournamentComparator implements Comparator<Solution> {
    */
   @Override
   public int compare(Solution o1, Solution o2) {
-    int flag = dominance_.compare(o1, o2);
+    int flag = DOMINANCE_COMPARATOR.compare(o1, o2);
     if (flag != 0) {
       return flag;
     }

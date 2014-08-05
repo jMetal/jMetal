@@ -32,9 +32,9 @@ import java.util.Comparator;
 public class CrowdingComparator implements Comparator<Solution> {
 
   /**
-   * stores a comparator for check the rank of solutions
+   * stores a RANK_COMPARATOR for check the rank of solutions
    */
-  private static final Comparator<Solution> comparator = new RankComparator();
+  private static final Comparator<Solution> RANK_COMPARATOR = new RankComparator();
 
   /**
    * Compare two solutions.
@@ -52,12 +52,12 @@ public class CrowdingComparator implements Comparator<Solution> {
       return -1;
     }
 
-    int flagComparatorRank = comparator.compare(o1, o2);
+    int flagComparatorRank = RANK_COMPARATOR.compare(o1, o2);
     if (flagComparatorRank != 0) {
       return flagComparatorRank;
     }
     
-    /* His rank is equal, then distance crowding comparator */
+    /* His rank is equal, then distance crowding RANK_COMPARATOR */
     double distance1 = ((Solution) o1).getCrowdingDistance();
     double distance2 = ((Solution) o2).getCrowdingDistance();
     if (distance1 > distance2) {

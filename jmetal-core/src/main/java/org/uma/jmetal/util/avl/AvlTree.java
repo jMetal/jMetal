@@ -47,7 +47,6 @@ public class AvlTree<T> {
     this.comparator = comparator;
   }
 
-
   public void insert(T item) {
     AvlNode<T> node = new AvlNode<T>(item);
     insertAvlNode(node);
@@ -196,7 +195,7 @@ public class AvlTree<T> {
             currentNode = currentNode.getLeft();
           } else {
             notFound = false;
-            node.setClosestNode_(currentNode);
+            node.setClosestNode(currentNode);
             result = -1;
           }
         } else if (comparison > 0) {
@@ -204,12 +203,12 @@ public class AvlTree<T> {
             currentNode = currentNode.getRight();
           } else {
             notFound = false;
-            node.setClosestNode_(currentNode);
+            node.setClosestNode(currentNode);
             result = 1;
           }
         } else {
           notFound = false;
-          node.setClosestNode_(currentNode);
+          node.setClosestNode(currentNode);
           result = 0;
         }
       }

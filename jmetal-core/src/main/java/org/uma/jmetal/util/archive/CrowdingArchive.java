@@ -43,11 +43,6 @@ public class CrowdingArchive extends Archive {
   private Comparator<Solution> equalsComparator;
   private Comparator<Solution> crowdingDistanceComparator;
 
-  /**
-   * Stores a <code>Distance</code> object, for distances utilities
-   */
-  private Distance distance;
-
   /** Constructor */
   public CrowdingArchive(int maxSize, int numberOfObjectives) {
     super(maxSize);
@@ -56,7 +51,6 @@ public class CrowdingArchive extends Archive {
     dominanceComparator = new DominanceComparator();
     equalsComparator = new EqualSolutions();
     crowdingDistanceComparator = new CrowdingDistanceComparator();
-    distance = new Distance();
   }
 
   /**

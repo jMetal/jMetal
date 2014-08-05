@@ -30,8 +30,7 @@ import org.uma.jmetal.util.comparator.FitnessComparator;
 import java.util.Comparator;
 
 /**
- * This class implements a bounded archive based on strength raw fitness (as
- * defined in SPEA2).
+ * This class implements a bounded archive based on strength raw fitness (as defined in SPEA2).
  */
 public class SPEA2DensityArchive extends Archive {
   private static final long serialVersionUID = -2639011270346617749L;
@@ -69,10 +68,10 @@ public class SPEA2DensityArchive extends Archive {
     while (i < solutionsList.size()) {
       aux = solutionsList.get(i);
       flag = dominanceComparator.compare(solution, aux);
-      if (flag == 1) {                // The solutiontype to add is dominated
-        return false;                 // Discard the new solutiontype
-      } else if (flag == -1) {        // A solutiontype in the archive is dominated
-        solutionsList.remove(i);     // Remove the dominated solutiontype
+      if (flag == 1) {
+        return false;
+      } else if (flag == -1) {
+        solutionsList.remove(i);
       } else {
         if (equalsComparator.compare(aux, solution) == 0) {
           return false;

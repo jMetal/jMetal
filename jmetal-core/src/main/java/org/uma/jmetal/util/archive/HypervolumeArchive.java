@@ -132,7 +132,6 @@ public class HypervolumeArchive extends Archive {
     return true;
   }
 
-
   /**
    * This method forces to compute the contribution of each solution
    */

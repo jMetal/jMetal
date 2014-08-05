@@ -27,9 +27,7 @@ import org.uma.jmetal.core.SolutionSet;
 public class ViolationThresholdComparator
   implements IConstraintViolationComparator {
 
-
-  // threshold used for the comparations
-  private double threshold_ = 0.0;
+  private double threshold = 0.0;
 
   /**
    * Compares two solutions.
@@ -76,7 +74,7 @@ public class ViolationThresholdComparator
     overall2 = Math.abs(((Solution) o2).getNumberOfViolatedConstraint() *
       ((Solution) o2).getOverallConstraintViolation());
 
-    needToCompare = (overall1 > this.threshold_) || (overall2 > this.threshold_);
+    needToCompare = (overall1 > this.threshold) || (overall2 > this.threshold);
 
     return needToCompare;
   }
@@ -113,6 +111,6 @@ public class ViolationThresholdComparator
    * Updates the threshold value using the population
    */
   public void updateThreshold(SolutionSet set) {
-    threshold_ = feasibilityRatio(set) * meanOveralViolation(set);
+    threshold = feasibilityRatio(set) * meanOveralViolation(set);
   }
 }

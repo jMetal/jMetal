@@ -27,105 +27,104 @@ package org.uma.jmetal.util.avl;
  * User: Antonio J. Nebro
  * Date: 08/07/13
  * Time: 15:46
- * To change this template use File | Settings | File Templates.
  */
 public class AvlNode<T> {
-  private AvlNode<T> left_;
-  private AvlNode<T> right_;
-  private AvlNode<T> parent_;
+  private AvlNode<T> left;
+  private AvlNode<T> right;
+  private AvlNode<T> parent;
 
-  private int height_;
+  private int height;
 
-  private AvlNode<T> closestNode_;
+  private AvlNode<T> closestNode;
 
-  private T item_;
+  private T item;
 
 
   /**
    * Constructor
    *
-   * @param item_
+   * @param item
    */
-  public AvlNode(T item_) {
-    this.left_ = null;
-    this.right_ = null;
-    this.parent_ = null;
-    height_ = 0;
-    closestNode_ = null;
+  public AvlNode(T item) {
+    this.left = null;
+    this.right = null;
+    this.parent = null;
+    height = 0;
+    closestNode = null;
 
-    this.item_ = item_;
+    this.item = item;
   }
 
   public AvlNode<T> getLeft() {
-    return left_;
+    return left;
   }
 
   public void setLeft(AvlNode<T> left) {
-    this.left_ = left;
+    this.left = left;
   }
 
   public AvlNode<T> getParent() {
-    return parent_;
+    return parent;
   }
 
   public void setParent(AvlNode<T> parent) {
-    this.parent_ = parent;
+    this.parent = parent;
   }
 
   public AvlNode<T> getRight() {
-    return right_;
+    return right;
   }
 
   public void setRight(AvlNode<T> right) {
-    this.right_ = right;
+    this.right = right;
   }
 
   public T getItem() {
-    return item_;
+    return item;
   }
 
   public void setItem(T item) {
-    this.item_ = item;
+    this.item = item;
   }
 
   public int getHeight() {
-    return height_;
+    return height;
   }
 
   public void setHeight(int height) {
-    this.height_ = height;
+    this.height = height;
   }
 
   public void updateHeight() {
     if (!hasLeft() && !hasRight()) {
-      height_ = 0;
+      height = 0;
     } else if (!hasRight()) {
-      height_ = 1 + getLeft().getHeight();
+      height = 1 + getLeft().getHeight();
     } else if (!hasLeft()) {
-      height_ = 1 + getRight().getHeight();
+      height = 1 + getRight().getHeight();
     } else {
-      height_ = 1 + Math.max(getLeft().getHeight(), getRight().getHeight());
+      height = 1 + Math.max(getLeft().getHeight(), getRight().getHeight());
     }
   }
 
   public AvlNode<T> getClosestNode() {
-    return closestNode_;
+    return closestNode;
   }
 
-  public void setClosestNode_(AvlNode<T> closestNode) {
-    this.closestNode_ = closestNode;
+  public void setClosestNode(AvlNode<T> closestNode) {
+    this.closestNode = closestNode;
   }
 
   public boolean hasParent() {
-    return parent_ != null;
+    return parent != null;
   }
 
   public boolean hasLeft() {
-    return left_ != null;
+    return left != null;
   }
 
   public boolean hasRight() {
-    return right_ != null;
+    return right != null;
   }
 
   public boolean isLeaf() {

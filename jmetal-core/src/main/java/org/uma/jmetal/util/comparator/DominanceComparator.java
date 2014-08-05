@@ -36,7 +36,6 @@ public class DominanceComparator implements Comparator<Solution> {
   /** Constructor */
   public DominanceComparator() {
     constraintViolationComparator = new OverallConstraintViolationComparator();
-    //constraintViolationComparator = new NumberOfViolatedConstraintComparator();
   }
 
   /**

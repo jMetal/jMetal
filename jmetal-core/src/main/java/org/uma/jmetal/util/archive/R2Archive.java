@@ -79,8 +79,6 @@ public class R2Archive extends Archive {
     r2Indicator = new R2();
   }
 
-
-
   /**
    * Constructor.
    *
@@ -95,9 +93,7 @@ public class R2Archive extends Archive {
     equals = new EqualSolutions();
     crowdingDistance = new CrowdingDistanceComparator();
     r2Indicator = new R2(numberOfObjectives, file);
-
-  } // CrowdingArchive
-
+  }
 
   /**
    * Adds a <code>Solution</code> to the archive. If the <code>Solution</code>
@@ -114,25 +110,24 @@ public class R2Archive extends Archive {
   public boolean add(Solution solution) {
     int flag = 0;
     int i = 0;
-    Solution aux; //Store an solutiontype temporally
+    Solution aux;
 
     while (i < solutionsList.size()) {
       aux = solutionsList.get(i);
 
       flag = dominance.compare(solution, aux);
-      if (flag == 1) {               // The solutiontype to add is dominated
-        return false;                // Discard the new solutiontype
-      } else if (flag == -1) {       // A solutiontype in the archive is dominated
-        solutionsList.remove(i);    // Remove it from the population
+      if (flag == 1) {
+        return false;
+      } else if (flag == -1) {
+        solutionsList.remove(i);
       } else {
-        if (equals.compare(aux, solution) == 0) { // There is an equal solutiontype
-          // in the population
-          return false; // Discard the new solutiontype
-        }  // if
+        if (equals.compare(aux, solution) == 0) {
+          return false;
+        }
         i++;
       }
     }
-    // Insert the solutiontype into the archive
+    // Insert the solution into the archive
     solutionsList.add(solution);
     if (size() > maxSize) { // The archive is full
       // Removing the one contributing the less
@@ -140,12 +135,11 @@ public class R2Archive extends Archive {
       remove(indexWorst);
     }
     return true;
-  } // add
-
+  }
 
   /**
-   * Returns a solutiontype from the archive based on their contribution to the R2
-   * indicator. The solutiontype is chosen using a binary tournament.
+   * Returns a solution from the archive based on their contribution to the R2
+   * indicator. The solution is chosen using a binary tournament.
    */
   public Solution
   getSolution() {
@@ -155,7 +149,7 @@ public class R2Archive extends Archive {
     double aux1 = this.r2Indicator.R2Without(this, index1);
     double aux2 = this.r2Indicator.R2Without(this, index2);
 
-    if (aux1 > aux2) { // means that index1 contributed less than index2
+    if (aux1 > aux2) {
       return this.get(index1);
     } else {
       return this.get(index2);

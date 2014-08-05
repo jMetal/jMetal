@@ -107,7 +107,7 @@ public class AdaptiveGridArchive extends Archive {
     // At this point, the solutiontype has to be inserted and the archive is full
     grid.updateGrid(solution, this);
     int location = grid.location(solution);
-    if (location == grid.getMostPopulated()) { // The solutiontype is in the
+    if (location == grid.getMostPopulatedHypercube()) { // The solutiontype is in the
       // most populated hypercube
       return false; // Not inserted
     } else {
@@ -118,7 +118,7 @@ public class AdaptiveGridArchive extends Archive {
         if (!removed) {
           Solution element = iterator.next();
           int location2 = grid.location(element);
-          if (location2 == grid.getMostPopulated()) {
+          if (location2 == grid.getMostPopulatedHypercube()) {
             iterator.remove();
             grid.removeSolution(location2);
           }

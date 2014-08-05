@@ -30,41 +30,15 @@ import org.uma.jmetal.util.random.PseudoRandom;
  * algorithm PAES.
  */
 public class AdaptiveGrid {
-
-  /**
-   * Number of bi-divisions of the objective space
-   */
   private int bisections;
-
-  /**
-   * Objectives of the problem
-   */
-  private int objectives;
-
-  /**
-   * Number of solutions into a specific hypercube in the adaptative grid
-   */
+  private int numberOfObjectives;
   private int[] hypercubes;
 
-  /**
-   * Grid lower bounds
-   */
-  private double[] lowerLimits;
+  private double[] gridLowerLimits;
+  private double[] gridUpperLimits;
 
-  /**
-   * Grid upper bounds
-   */
-  private double[] upperLimits;
-
-  /**
-   * Size of hypercube for each dimension
-   */
   private double[] divisionSize;
-
-  /**
-   * Hypercube with maximum number of solutions
-   */
-  private int mostPopulated;
+  private int mostPopulatedHypercube;
 
   /**
    * Indicates when an hypercube has solutions
@@ -76,15 +50,15 @@ public class AdaptiveGrid {
    * Creates an instance of AdaptativeGrid.
    *
    * @param bisections Number of bi-divisions of the objective space.
-   * @param objetives  Number of objectives of the problem.
+   * @param objetives  Number of numberOfObjectives of the problem.
    */
   public AdaptiveGrid(int bisections, int objetives) {
     this.bisections = bisections;
-    objectives = objetives;
-    lowerLimits = new double[objectives];
-    upperLimits = new double[objectives];
-    divisionSize = new double[objectives];
-    hypercubes = new int[(int) Math.pow(2.0, this.bisections * objectives)];
+    numberOfObjectives = objetives;
+    gridLowerLimits = new double[numberOfObjectives];
+    gridUpperLimits = new double[numberOfObjectives];
+    divisionSize = new double[numberOfObjectives];
+    hypercubes = new int[(int) Math.pow(2.0, this.bisections * numberOfObjectives)];
 
     for (int i = 0; i < hypercubes.length; i++) {
       hypercubes[i] = 0;
@@ -99,23 +73,20 @@ public class AdaptiveGrid {
    * @param solutionSet The <code>SolutionSet</code> considered.
    */
   private void updateLimits(SolutionSet solutionSet) {
-    //Init the lower and upper limits 
-    for (int obj = 0; obj < objectives; obj++) {
-      //Set the lower limits to the max real
-      lowerLimits[obj] = Double.MAX_VALUE;
-      //Set the upper limits to the min real
-      upperLimits[obj] = Double.MIN_VALUE;
+    for (int obj = 0; obj < numberOfObjectives; obj++) {
+      gridLowerLimits[obj] = Double.MAX_VALUE;
+      gridUpperLimits[obj] = Double.MIN_VALUE;
     }
 
     //Find the max and min limits of objetives into the population
     for (int ind = 0; ind < solutionSet.size(); ind++) {
       Solution tmpIndividual = solutionSet.get(ind);
-      for (int obj = 0; obj < objectives; obj++) {
-        if (tmpIndividual.getObjective(obj) < lowerLimits[obj]) {
-          lowerLimits[obj] = tmpIndividual.getObjective(obj);
+      for (int obj = 0; obj < numberOfObjectives; obj++) {
+        if (tmpIndividual.getObjective(obj) < gridLowerLimits[obj]) {
+          gridLowerLimits[obj] = tmpIndividual.getObjective(obj);
         }
-        if (tmpIndividual.getObjective(obj) > upperLimits[obj]) {
-          upperLimits[obj] = tmpIndividual.getObjective(obj);
+        if (tmpIndividual.getObjective(obj) > gridUpperLimits[obj]) {
+          gridUpperLimits[obj] = tmpIndividual.getObjective(obj);
         }
       }
     }
@@ -130,14 +101,14 @@ public class AdaptiveGrid {
    */
   private void addSolutionSet(SolutionSet solutionSet) {
     //Calculate the location of all individuals and update the grid
-    mostPopulated = 0;
+    mostPopulatedHypercube = 0;
     int location;
 
     for (int ind = 0; ind < solutionSet.size(); ind++) {
       location = location(solutionSet.get(ind));
       hypercubes[location]++;
-      if (hypercubes[location] > hypercubes[mostPopulated]) {
-        mostPopulated = location;
+      if (hypercubes[location] > hypercubes[mostPopulatedHypercube]) {
+        mostPopulatedHypercube = location;
       }
     }
 
@@ -157,8 +128,8 @@ public class AdaptiveGrid {
     updateLimits(solutionSet);
 
     //Calculate the division size
-    for (int obj = 0; obj < objectives; obj++) {
-      divisionSize[obj] = upperLimits[obj] - lowerLimits[obj];
+    for (int obj = 0; obj < numberOfObjectives; obj++) {
+      divisionSize[obj] = gridUpperLimits[obj] - gridLowerLimits[obj];
     }
 
     //Clean the hypercubes
@@ -189,18 +160,18 @@ public class AdaptiveGrid {
       updateLimits(solutionSet);
 
       //Actualize the lower and upper limits whit the individual      
-      for (int obj = 0; obj < objectives; obj++) {
-        if (solution.getObjective(obj) < lowerLimits[obj]) {
-          lowerLimits[obj] = solution.getObjective(obj);
+      for (int obj = 0; obj < numberOfObjectives; obj++) {
+        if (solution.getObjective(obj) < gridLowerLimits[obj]) {
+          gridLowerLimits[obj] = solution.getObjective(obj);
         }
-        if (solution.getObjective(obj) > upperLimits[obj]) {
-          upperLimits[obj] = solution.getObjective(obj);
+        if (solution.getObjective(obj) > gridUpperLimits[obj]) {
+          gridUpperLimits[obj] = solution.getObjective(obj);
         }
       }
 
       //Calculate the division size
-      for (int obj = 0; obj < objectives; obj++) {
-        divisionSize[obj] = upperLimits[obj] - lowerLimits[obj];
+      for (int obj = 0; obj < numberOfObjectives; obj++) {
+        divisionSize[obj] = gridUpperLimits[obj] - gridLowerLimits[obj];
       }
 
       //Clean the hypercube
@@ -220,21 +191,21 @@ public class AdaptiveGrid {
    */
   public int location(Solution solution) {
     //Create a int [] to store the range of each objetive
-    int[] position = new int[objectives];
+    int[] position = new int[numberOfObjectives];
 
     //Calculate the position for each objetive
-    for (int obj = 0; obj < objectives; obj++) {
-      if ((solution.getObjective(obj) > upperLimits[obj])
-        || (solution.getObjective(obj) < lowerLimits[obj])) {
+    for (int obj = 0; obj < numberOfObjectives; obj++) {
+      if ((solution.getObjective(obj) > gridUpperLimits[obj])
+        || (solution.getObjective(obj) < gridLowerLimits[obj])) {
         return -1;
-      } else if (solution.getObjective(obj) == lowerLimits[obj]) {
+      } else if (solution.getObjective(obj) == gridLowerLimits[obj]) {
         position[obj] = 0;
-      } else if (solution.getObjective(obj) == upperLimits[obj]) {
+      } else if (solution.getObjective(obj) == gridUpperLimits[obj]) {
         position[obj] = ((int) Math.pow(2.0, bisections)) - 1;
       } else {
         double tmpSize = divisionSize[obj];
         double value = solution.getObjective(obj);
-        double account = lowerLimits[obj];
+        double account = gridLowerLimits[obj];
         int ranges = (int) Math.pow(2.0, bisections);
         for (int b = 0; b < bisections; b++) {
           tmpSize /= 2.0;
@@ -247,9 +218,9 @@ public class AdaptiveGrid {
       }
     }
 
-    //Calcualate the location into the hypercubes
+    //Calculate the location into the hypercubes
     int location = 0;
-    for (int obj = 0; obj < objectives; obj++) {
+    for (int obj = 0; obj < numberOfObjectives; obj++) {
       location += position[obj] * Math.pow(2.0, obj * bisections);
     }
     return location;
@@ -260,8 +231,8 @@ public class AdaptiveGrid {
    *
    * @return The hypercube with the maximum number of solutions.
    */
-  public int getMostPopulated() {
-    return mostPopulated;
+  public int getMostPopulatedHypercube() {
+    return mostPopulatedHypercube;
   }
 
   /**
@@ -284,10 +255,10 @@ public class AdaptiveGrid {
     hypercubes[location]--;
 
     //Update the most poblated hypercube
-    if (location == mostPopulated) {
+    if (location == mostPopulatedHypercube) {
       for (int i = 0; i < hypercubes.length; i++) {
-        if (hypercubes[i] > hypercubes[mostPopulated]) {
-          mostPopulated = i;
+        if (hypercubes[i] > hypercubes[mostPopulatedHypercube]) {
+          mostPopulatedHypercube = i;
         }
       }
     }
@@ -308,8 +279,8 @@ public class AdaptiveGrid {
     hypercubes[location]++;
 
     //Update the most poblated hypercube
-    if (hypercubes[location] > hypercubes[mostPopulated]) {
-      mostPopulated = location;
+    if (hypercubes[location] > hypercubes[mostPopulatedHypercube]) {
+      mostPopulatedHypercube = location;
     }
 
     //if hypercubes[location] becomes to one, then recalculate 
@@ -335,9 +306,9 @@ public class AdaptiveGrid {
    */
   public String toString() {
     String result = "Grid\n";
-    for (int obj = 0; obj < objectives; obj++) {
-      result += "Objective " + obj + " " + lowerLimits[obj] + " "
-        + upperLimits[obj] + "\n";
+    for (int obj = 0; obj < numberOfObjectives; obj++) {
+      result += "Objective " + obj + " " + gridLowerLimits[obj] + " "
+        + gridUpperLimits[obj] + "\n";
     }
     return result;
   }
@@ -381,8 +352,8 @@ public class AdaptiveGrid {
    */
   public int calculateOccupied() {
     int total = 0;
-    for (int aHypercubes_ : hypercubes) {
-      if (aHypercubes_ > 0) {
+    for (int hypercube : hypercubes) {
+      if (hypercube > 0) {
         total++;
       }
     }

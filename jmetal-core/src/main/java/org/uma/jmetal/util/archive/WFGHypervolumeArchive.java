@@ -78,22 +78,19 @@ public class WFGHypervolumeArchive extends Archive {
       aux = solutionsList.get(i);
 
       flag = dominanceComparator.compare(solution, aux);
-      if (flag == 1) {               // The solutiontype to add is dominated
-        return false;                // Discard the new solutiontype
-      } else if (flag == -1) {       // A solutiontype in the archive is dominated
-        solutionsList.remove(i);    // Remove it from the population
+      if (flag == 1) {
+        return false;
+      } else if (flag == -1) {
+        solutionsList.remove(i);
       } else {
-        if (equalsComparator.compare(aux, solution) == 0) { // There is an equal solutiontype
-          // in the population
-          return false; // Discard the new solutiontype
-        }  // if
+        if (equalsComparator.compare(aux, solution) == 0) {
+          return false;
+        }
         i++;
       }
     }
-    // Insert the solution into the archive
     solutionsList.add(solution);
-    if (size() > maxSize) { // The archive is full
-
+    if (size() > maxSize) {
       // computing the reference point
       double[] vector = new double[numberOfObjectives];
       for (int o = 0; o < numberOfObjectives; o++) {
@@ -102,13 +99,12 @@ public class WFGHypervolumeArchive extends Archive {
       for (int j = 1; j < this.size(); j++) {
         for (int o = 0; o < numberOfObjectives; o++) {
           if (this.get(j).getObjective(o) > vector[o]) {
-            vector[o] = 1.0;//this.get(j).getObjective(o);
+            vector[o] = 1.0;
           }
         }
       }
       Point p = new Point(vector);
       wfg = new WFGHV(this.numberOfObjectives, this.size(), p);
-      //remove(indexWorst(crowdingDistance_));
 
       remove(wfg.getLessContributorHV(this));
     }
@@ -117,7 +113,6 @@ public class WFGHypervolumeArchive extends Archive {
 
 
   public void computeHVContribution() {
-    // computing the reference point
     double[] vector = new double[numberOfObjectives];
     for (int o = 0; o < numberOfObjectives; o++) {
       vector[0] = this.get(0).getObjective(o);
@@ -125,7 +120,7 @@ public class WFGHypervolumeArchive extends Archive {
     for (int j = 1; j < this.size(); j++) {
       for (int o = 0; o < numberOfObjectives; o++) {
         if (this.get(j).getObjective(o) > vector[o]) {
-          vector[o] = 1.0;//this.get(j).getObjective(o);
+          vector[o] = 1.0;
         }
       }
     }
