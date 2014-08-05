@@ -22,11 +22,12 @@
 package org.uma.jmetal.metaheuristic.multiobjective.abyss;
 
 import org.uma.jmetal.core.*;
+import org.uma.jmetal.operator.crossover.Crossover;
 import org.uma.jmetal.operator.localSearch.LocalSearch;
 import org.uma.jmetal.util.Distance;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.Spea2Fitness;
-import org.uma.jmetal.util.archive.CrowdingArchive;
+import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.EqualSolutions;
@@ -47,23 +48,22 @@ import java.util.Comparator;
  * No. 4 (August 2008), pp. 439-457
  */
 public class AbYSS extends Algorithm {
-  private static final long serialVersionUID = 1682316167611498510L;
+  private static final long serialVersionUID = 1682316127611498510L;
 
-  int numberOfSubranges;
-  int[] sumOfFrequencyValues;
-  int[] sumOfReverseFrequencyValues;
-  int[][] frequency;
-  int[][] reverseFrequency;
+  private int numberOfSubranges;
+  private int[] sumOfFrequencyValues;
+  private int[] sumOfReverseFrequencyValues;
+  private int[][] frequency;
+  private int[][] reverseFrequency;
 
   private SolutionSet solutionSet;
-  private int solutionSetSize;
+  private int populationSize;
 
-  private CrowdingArchive archive;
+  private Archive archive;
   private int refSet1Size;
 
   private SolutionSet refSet1;
   private SolutionSet refSet2;
-  private int archiveSize;
   private int refSet2Size;
 
   private SolutionSet subSet;
@@ -82,35 +82,22 @@ public class AbYSS extends Algorithm {
   private Distance distance;
 
   /** Constructor */
-  public AbYSS() {
-    solutionSet = null;
-    archive = null;
-    refSet1 = null;
-    refSet2 = null;
-    subSet = null;
-  } 
+  public AbYSS(Builder builder) {
+    problem = builder.problem ;
+    populationSize = builder.populationSize ;
+    maxEvaluations = builder.maxEvaluations ;
+    refSet1Size = builder.refSet1Size ;
+    refSet2Size = builder.refSet2Size ;
+    archive = builder.archive ;
+    improvementOperator = builder.localSearch ;
+    crossoverOperator = builder.crossover ;
+    numberOfSubranges = builder.numberOfSubranges;
 
-  /**
-   * Reads the parameter from the parameter list using the
-   * <code>getInputParameter</code> method.
-   */
-  public void initParam() {
-    //Read the parameters
-    solutionSetSize = (Integer) getInputParameter("populationSize");
-    refSet1Size = (Integer) getInputParameter("refSet1Size");
-    refSet2Size = (Integer) getInputParameter("refSet2Size");
-    archiveSize = (Integer) getInputParameter("archiveSize");
-    maxEvaluations = (Integer) getInputParameter("maxEvaluations");
-
-    //Initialize the variables
-    solutionSet = new SolutionSet(solutionSetSize);
-    archive = new CrowdingArchive(archiveSize, problem.getNumberOfObjectives());
+    solutionSet = new SolutionSet(populationSize);
     refSet1 = new SolutionSet(refSet1Size);
     refSet2 = new SolutionSet(refSet2Size);
-    subSet = new SolutionSet(solutionSetSize * 1000);
+    subSet = new SolutionSet(populationSize * 1000);
     evaluations = 0;
-
-    numberOfSubranges = 4;
 
     dominance = new DominanceComparator();
     equal = new EqualSolutions();
@@ -121,12 +108,106 @@ public class AbYSS extends Algorithm {
     sumOfReverseFrequencyValues = new int[problem.getNumberOfVariables()];
     frequency = new int[numberOfSubranges][problem.getNumberOfVariables()];
     reverseFrequency = new int[numberOfSubranges][problem.getNumberOfVariables()];
+  }
 
-    //Read the operator of crossover and improvement
-    crossoverOperator = operators.get("crossover");
-    improvementOperator = (LocalSearch) operators.get("improvement");
-    improvementOperator.setParameter("archive", archive);
-  } 
+  /* Getters/setters */
+  public int getPopulationSize() {
+    return populationSize;
+  }
+
+  public int getRefSet1Size() {
+    return refSet1Size;
+  }
+
+  public int getRefSet2Size() {
+    return refSet2Size;
+  }
+
+  public int getMaxEvaluations() {
+    return maxEvaluations;
+  }
+
+  public int getNumberOfSubranges() {
+    return numberOfSubranges ;
+  }
+
+  public Archive getArchive() {
+    return archive;
+  }
+
+  public LocalSearch getImprovementOperator() {
+    return improvementOperator ;
+  }
+
+  /** Builder class */
+  public static class Builder {
+    private int maxEvaluations;
+    private int refSet1Size ;
+    private int refSet2Size ;
+    private int populationSize ;
+    private int numberOfSubranges ;
+    private Archive archive ;
+    private Problem problem ;
+    private Crossover crossover ;
+    private LocalSearch localSearch ;
+
+    public Builder(Problem problem) {
+      this.problem = problem ;
+      numberOfSubranges = 4 ;
+    }
+
+    public Builder maxEvaluations(int maxEvaluations) {
+      this.maxEvaluations = maxEvaluations ;
+
+      return this ;
+    }
+
+    public Builder populationSize(int populationSize) {
+      this.populationSize = populationSize ;
+
+      return this ;
+    }
+
+    public Builder refSet1Size(int refSet1Size) {
+      this.refSet1Size = refSet1Size ;
+
+      return this ;
+    }
+
+    public Builder refSet2Size(int refSet2Size) {
+      this.refSet2Size = refSet2Size ;
+
+      return this ;
+    }
+
+    public Builder numberOfSubranges(int numberOfSubranges) {
+      this.numberOfSubranges = numberOfSubranges ;
+
+      return this ;
+    }
+
+    public Builder archive(Archive archive) {
+      this.archive = archive ;
+
+      return this ;
+    }
+
+    public Builder crossover(Crossover crossover) {
+      this.crossover = crossover ;
+
+      return this ;
+    }
+
+    public Builder localSearch(LocalSearch localSearch) {
+      this.localSearch = localSearch ;
+
+      return this ;
+    }
+
+    public AbYSS build() {
+      return new AbYSS(this) ;
+    }
+  }
 
   /**
    * Returns a <code>Solution</code> using the diversification generation method
@@ -158,21 +239,21 @@ public class AbYSS extends Algorithm {
         while (value > reverseFrequency[range][i]) {
           value -= reverseFrequency[range][i];
           range++;
-        } 
-      }             
+        }
+      }
 
       frequency[range][i]++;
       sumOfFrequencyValues[i]++;
 
       double low = problem.getLowerLimit(i) + range * (problem.getUpperLimit(i) -
-        problem.getLowerLimit(i)) / numberOfSubranges;
+              problem.getLowerLimit(i)) / numberOfSubranges;
       double high = low + (problem.getUpperLimit(i) -
-        problem.getLowerLimit(i)) / numberOfSubranges;
+              problem.getLowerLimit(i)) / numberOfSubranges;
       value = PseudoRandom.randDouble(low, high);
       wrapperSolution.setValue(i, value);
-    }       
+    }
     return solution;
-  } 
+  }
 
 
   /**
@@ -204,7 +285,7 @@ public class AbYSS extends Algorithm {
       for (int i = 0; i < solutionSet.size(); i++) {
         individual = solutionSet.get(i);
         individual.setDistanceToSolutionSet(
-          distance.distanceToSolutionSetInSolutionSpace(individual, refSet1));
+                distance.distanceToSolutionSetInSolutionSpace(individual, refSet1));
       }
 
       int size = refSet2Size;
@@ -244,33 +325,33 @@ public class AbYSS extends Algorithm {
               double aux = distance.distanceBetweenSolutions(refSet2.get(j), refSet2.get(k));
               if (aux < refSet2.get(j).getDistanceToSolutionSet()) {
                 refSet2.get(j).setDistanceToSolutionSet(aux);
-              } 
-            } 
-          } 
-        }    
-      }                        
+              }
+            }
+          }
+        }
+      }
 
-    } else { 
+    } else {
       Solution individual;
       for (int i = 0; i < subSet.size(); i++) {
         individual = (Solution) improvementOperator.execute(subSet.get(i));
         evaluations += improvementOperator.getEvaluations();
 
-        if (refSet1Test(individual)) { 
+        if (refSet1Test(individual)) {
           for (int indSet2 = 0; indSet2 < refSet2.size(); indSet2++) {
             double aux = distance.distanceBetweenSolutions(individual,
-              refSet2.get(indSet2));
+                    refSet2.get(indSet2));
             if (aux < refSet2.get(indSet2).getDistanceToSolutionSet()) {
               refSet2.get(indSet2).setDistanceToSolutionSet(aux);
-            } 
-          }                     
+            }
+          }
         } else {
           refSet2Test(individual);
-        }  
+        }
       }
       subSet.clear();
     }
-  } 
+  }
 
   /**
    * Tries to update the reference set 2 with a <code>Solution</code>
@@ -283,7 +364,7 @@ public class AbYSS extends Algorithm {
   public boolean refSet2Test(Solution solution) throws JMetalException {
     if (refSet2.size() < refSet2Size) {
       solution.setDistanceToSolutionSet(
-        distance.distanceToSolutionSetInSolutionSpace(solution, refSet1));
+              distance.distanceToSolutionSetInSolutionSpace(solution, refSet1));
       double aux = distance.distanceToSolutionSetInSolutionSpace(solution, refSet2);
       if (aux < solution.getDistanceToSolutionSet()) {
         solution.setDistanceToSolutionSet(aux);
@@ -293,7 +374,7 @@ public class AbYSS extends Algorithm {
     }
 
     solution
-      .setDistanceToSolutionSet(distance.distanceToSolutionSetInSolutionSpace(solution, refSet1));
+            .setDistanceToSolutionSet(distance.distanceToSolutionSetInSolutionSpace(solution, refSet1));
     double aux = distance.distanceToSolutionSetInSolutionSpace(solution, refSet2);
     if (aux < solution.getDistanceToSolutionSet()) {
       solution.setDistanceToSolutionSet(aux);
@@ -348,10 +429,10 @@ public class AbYSS extends Algorithm {
         flag = equal.compare(solution, refSet1.get(i));
         if (flag == 0) {
           return true;
-        } 
+        }
         i++;
-      }  
-    } 
+      }
+    }
 
     if (!dominated) {
       solution.unMarked();
@@ -359,13 +440,13 @@ public class AbYSS extends Algorithm {
         refSet1.add(solution);
       } else {
         archive.add(solution);
-      } 
+      }
     } else {
       return false;
-    } 
+    }
     return true;
-  } 
-  
+  }
+
   /**
    * Implements the subset generation method described in the scatter search
    * template
@@ -434,12 +515,9 @@ public class AbYSS extends Algorithm {
    * @throws org.uma.jmetal.util.JMetalException
    */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
-    // STEP 1. Initialize parameters
-    initParam();
-
     // STEP 2. Build the initial solutionSet
     Solution solution;
-    for (int i = 0; i < solutionSetSize; i++) {
+    for (int i = 0; i < populationSize; i++) {
       solution = diversificationGeneration();
       problem.evaluate(solution);
       problem.evaluateConstraints(solution);
@@ -447,20 +525,20 @@ public class AbYSS extends Algorithm {
       solution = (Solution) improvementOperator.execute(solution);
       evaluations += improvementOperator.getEvaluations();
       solutionSet.add(solution);
-    } 
+    }
 
     // STEP 3. Main loop
     int newSolutions;
     while (evaluations < maxEvaluations) {
       referenceSetUpdate(true);
       newSolutions = subSetGeneration();
-      while (newSolutions > 0) {           
+      while (newSolutions > 0) {
         referenceSetUpdate(false);
         if (evaluations >= maxEvaluations) {
           return archive;
         }
         newSolutions = subSetGeneration();
-      } 
+      }
 
       // RE-START
       if (evaluations < maxEvaluations) {
@@ -481,13 +559,13 @@ public class AbYSS extends Algorithm {
         distance.crowdingDistanceAssignment(archive);
         archive.sort(crowdingDistance);
 
-        int insert = solutionSetSize / 2;
+        int insert = populationSize / 2;
         if (insert > archive.size()) {
           insert = archive.size();
         }
 
-        if (insert > (solutionSetSize - solutionSet.size())) {
-          insert = solutionSetSize - solutionSet.size();
+        if (insert > (populationSize - solutionSet.size())) {
+          insert = populationSize - solutionSet.size();
         }
 
         // Insert solutions 
@@ -498,7 +576,7 @@ public class AbYSS extends Algorithm {
         }
 
         // Create the rest of solutions randomly
-        while (solutionSet.size() < solutionSetSize) {
+        while (solutionSet.size() < populationSize) {
           solution = diversificationGeneration();
           problem.evaluateConstraints(solution);
           problem.evaluate(solution);
@@ -507,11 +585,11 @@ public class AbYSS extends Algorithm {
           evaluations += improvementOperator.getEvaluations();
           solution.unMarked();
           solutionSet.add(solution);
-        } 
-      }    
-    }       
+        }
+      }
+    }
 
     // STEP 4. Return the archive
     return archive;
-  } 
+  }
 } 

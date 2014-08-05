@@ -1,4 +1,4 @@
-//  AbYSS_SettingsTest.java
+//  AbYSS2SettingsTest.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -20,18 +20,15 @@
 
 package org.uma.test.experiment.settings;
 
-import org.uma.jmetal.core.Algorithm;
+import org.junit.Before;
+import org.junit.Test;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.experiment.Settings;
 import org.uma.jmetal.experiment.settings.AbYSSSettings;
-import org.uma.jmetal.operator.crossover.SBXCrossover;
+import org.uma.jmetal.metaheuristic.multiobjective.abyss.AbYSS;
 import org.uma.jmetal.operator.localSearch.MutationLocalSearch;
-import org.uma.jmetal.operator.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.Fonseca;
 import org.uma.jmetal.util.JMetalException;
-
-import org.junit.Before;
-import org.junit.Test;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -46,73 +43,46 @@ import static org.junit.Assert.assertEquals;
  * User: Antonio J. Nebro
  * Date: 12/06/13
  * Time: 07:48
- * To change this template use File | Settings | File Templates.
  */
 public class AbYSSSettingsTest {
-  Properties configuration_ ;
+  Properties configuration;
 
   @Before
   public void init() throws FileNotFoundException, IOException {
-    configuration_ = new Properties();
+    configuration = new Properties();
     InputStreamReader isr = new InputStreamReader(new FileInputStream(ClassLoader.getSystemResource("AbYSS.conf").getPath()));
-    configuration_.load(isr);
+    configuration.load(isr);
   }
 
   @Test
   public void testSettings() throws JMetalException {
     double epsilon = 0.000000000000001 ;
     Settings abyssSettings = new AbYSSSettings("Fonseca");
-    Algorithm algorithm = abyssSettings.configure() ;
+    AbYSS algorithm = (AbYSS)abyssSettings.configure() ;
     Problem problem = new Fonseca("Real") ;
-    SBXCrossover crossover = (SBXCrossover)algorithm.getOperator("crossover") ;
-    double pc = (Double)crossover.getParameter("probability") ;
-    double dic = (Double)crossover.getParameter("distributionIndex") ;
-    MutationLocalSearch improvement = (MutationLocalSearch)algorithm.getOperator("improvement") ;
-    int improvementRounds = (Integer)improvement.getParameter("improvementRounds") ;
-    PolynomialMutation mutation = (PolynomialMutation)improvement.getParameter("mutation") ;
-    double pm = (Double)mutation.getParameter("probability") ;
-    double dim = (Double)mutation.getParameter("distributionIndex") ;
 
-    assertEquals("AbYSS_SettingsTest", 20, ((Integer)algorithm.getInputParameter("populationSize")).intValue());
-    assertEquals("AbYSS_SettingsTest", 25000, ((Integer)algorithm.getInputParameter("maxEvaluations")).intValue());
-    assertEquals("AbYSS_SettingsTest", 10, ((Integer)algorithm.getInputParameter("refSet1Size")).intValue());
-    assertEquals("AbYSS_SettingsTest", 10, ((Integer)algorithm.getInputParameter("refSet2Size")).intValue());
-    assertEquals("AbYSS_SettingsTest", 100, ((Integer)algorithm.getInputParameter("archiveSize")).intValue());
-
-    assertEquals("AbYSS_SettingsTest", 1.0, pc, epsilon);
-    assertEquals("AbYSS_SettingsTest", 20.0, dic, epsilon);
-
-    assertEquals("AbYSS_SettingsTest", 1, improvementRounds);
-    assertEquals("AbYSS_SettingsTest", 20.0, dim, epsilon);
-    assertEquals("AbYSS_SettingsTest", 1.0/problem.getNumberOfVariables(), pm, epsilon);
+    assertEquals(20, algorithm.getPopulationSize());
+    assertEquals(25000, algorithm.getMaxEvaluations());
+    assertEquals(10, algorithm.getRefSet1Size());
+    assertEquals(10, algorithm.getRefSet2Size());
+    assertEquals(4, algorithm.getNumberOfSubranges());
+    assertEquals(100, algorithm.getArchive().getMaximumSize());
+    assertEquals(1, ((MutationLocalSearch)algorithm.getImprovementOperator()).getImprovementRounds());
   }
 
   @Test
   public void testSettings2() throws JMetalException {
     double epsilon = 0.000000000000001 ;
     Settings abyssSettings = new AbYSSSettings("Fonseca");
-    Algorithm algorithm = abyssSettings.configure(configuration_) ;
+    AbYSS algorithm = (AbYSS)abyssSettings.configure(configuration) ;
     Problem problem = new Fonseca("Real") ;
-    SBXCrossover crossover = (SBXCrossover)algorithm.getOperator("crossover") ;
-    double pc = (Double)crossover.getParameter("probability") ;
-    double dic = (Double)crossover.getParameter("distributionIndex") ;
-    MutationLocalSearch improvement = (MutationLocalSearch)algorithm.getOperator("improvement") ;
-    int improvementRounds = (Integer)improvement.getParameter("improvementRounds") ;
-    PolynomialMutation mutation = (PolynomialMutation)improvement.getParameter("mutation") ;
-    double pm = (Double)mutation.getParameter("probability") ;
-    double dim = (Double)mutation.getParameter("distributionIndex") ;
 
-    assertEquals("AbYSS_SettingsTest", 20, ((Integer)algorithm.getInputParameter("populationSize")).intValue());
-    assertEquals("AbYSS_SettingsTest", 25000, ((Integer)algorithm.getInputParameter("maxEvaluations")).intValue());
-    assertEquals("AbYSS_SettingsTest", 10, ((Integer)algorithm.getInputParameter("refSet1Size")).intValue());
-    assertEquals("AbYSS_SettingsTest", 10, ((Integer)algorithm.getInputParameter("refSet2Size")).intValue());
-    assertEquals("AbYSS_SettingsTest", 100, ((Integer)algorithm.getInputParameter("archiveSize")).intValue());
-
-    assertEquals("AbYSS_SettingsTest", 1.0, pc, epsilon);
-    assertEquals("AbYSS_SettingsTest", 20.0, dic, epsilon);
-
-    assertEquals("AbYSS_SettingsTest", 1, improvementRounds);
-    assertEquals("AbYSS_SettingsTest", 20.0, dim, epsilon);
-    assertEquals("AbYSS_SettingsTest", 1.0/problem.getNumberOfVariables(), pm, epsilon);
+    assertEquals(20, algorithm.getPopulationSize());
+    assertEquals(25000, algorithm.getMaxEvaluations());
+    assertEquals(10, algorithm.getRefSet1Size());
+    assertEquals(10, algorithm.getRefSet2Size());
+    assertEquals(4, algorithm.getNumberOfSubranges());
+    assertEquals(100, algorithm.getArchive().getMaximumSize());
+    assertEquals(1, ((MutationLocalSearch)algorithm.getImprovementOperator()).getImprovementRounds());
   }
 }

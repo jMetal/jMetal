@@ -89,7 +89,6 @@ public class MutationLocalSearch extends LocalSearch {
   }
 
   /* Getters */
-
   public Problem getProblem() {
     return problem;
   }
@@ -106,16 +105,7 @@ public class MutationLocalSearch extends LocalSearch {
     return mutationOperator;
   }
 
-  /**
-   * Executes the local search. The maximum number of iterations is given by
-   * the param "improvementRounds", which is in the parameter list of the
-   * operator. The archive to store the non-dominated solutions is also in the
-   * parameter list.
-   *
-   * @param object Object representing a solutiontype
-   * @return An object containing the new improved solutiontype
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Execute() method */
   public Object execute(Object object) throws JMetalException {
     if (null == object) {
       throw new JMetalException("Null parameter") ;

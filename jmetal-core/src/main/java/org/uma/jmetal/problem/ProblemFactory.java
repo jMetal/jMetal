@@ -60,7 +60,7 @@ public class ProblemFactory {
       base += "cec2009competition.";
     } else if ("zdt".equalsIgnoreCase(name.substring(0, name.length() - 1))) {
       base += "zdt.";
-    } else if ("lz09".equalsIgnoreCase(name.substring(0, name.length() - 3))) {
+    } else if ("lz09".equalsIgnoreCase(name.substring(0, name.length() - 2))) {
       base += "lz09.";
     }
 
