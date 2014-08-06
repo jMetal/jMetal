@@ -21,6 +21,7 @@
 
 package org.uma.jmetal.problem.lz09;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 /**
@@ -31,7 +32,6 @@ import java.util.Vector;
  * Computation, 12(2):284-302, April 2009.
  */
 public class LZ09 {
-
   int nvar;
   int nobj;
   int ltype;
@@ -46,61 +46,60 @@ public class LZ09 {
   }
 
   // control the PF shape
-  void alphaFunction(double alpha[], Vector<Double> x, int dim, int type) {
+  void alphaFunction(double alpha[], ArrayList<Double> x, int dim, int type) {
     if (dim == 2) {
       if (type == 21) {
-        alpha[0] = x.elementAt(0);
-        alpha[1] = 1 - Math.sqrt(x.elementAt(0));
+        alpha[0] = x.get(0);
+        alpha[1] = 1 - Math.sqrt(x.get(0));
       }
 
       if (type == 22) {
-        alpha[0] = x.elementAt(0);
-        alpha[1] = 1 - x.elementAt(0) * x.elementAt(0);
+        alpha[0] = x.get(0);
+        alpha[1] = 1 - x.get(0) * x.get(0);
       }
 
       if (type == 23) {
-        alpha[0] = x.elementAt(0);
+        alpha[0] = x.get(0);
         alpha[1] = 1 - Math.sqrt(alpha[0]) - alpha[0]
           * Math.sin(10 * alpha[0] * alpha[0] * Math.PI);
       }
 
       if (type == 24) {
-        alpha[0] = x.elementAt(0);
-        alpha[1] = 1 - x.elementAt(0) - 0.05 * Math.sin(4 * Math.PI * x.elementAt(0));
+        alpha[0] = x.get(0);
+        alpha[1] = 1 - x.get(0) - 0.05 * Math.sin(4 * Math.PI * x.get(0));
       }
     } else {
       if (type == 31) {
-        alpha[0] = Math.cos(x.elementAt(0) * Math.PI / 2) * Math.cos(x.elementAt(1) * Math.PI / 2);
-        alpha[1] = Math.cos(x.elementAt(0) * Math.PI / 2) * Math.sin(x.elementAt(1) * Math.PI / 2);
-        alpha[2] = Math.sin(x.elementAt(0) * Math.PI / 2);
+        alpha[1] = Math.cos(x.get(0) * Math.PI / 2) * Math.sin(x.get(1) * Math.PI / 2);
+        alpha[2] = Math.sin(x.get(0) * Math.PI / 2);
       }
 
       if (type == 32) {
-        alpha[0] = 1 - Math.cos(x.elementAt(0) * Math.PI / 2)
-          * Math.cos(x.elementAt(1) * Math.PI / 2);
-        alpha[1] = 1 - Math.cos(x.elementAt(0) * Math.PI / 2)
-          * Math.sin(x.elementAt(1) * Math.PI / 2);
-        alpha[2] = 1 - Math.sin(x.elementAt(0) * Math.PI / 2);
+        alpha[0] = 1 - Math.cos(x.get(0) * Math.PI / 2)
+          * Math.cos(x.get(1) * Math.PI / 2);
+        alpha[1] = 1 - Math.cos(x.get(0) * Math.PI / 2)
+          * Math.sin(x.get(1) * Math.PI / 2);
+        alpha[2] = 1 - Math.sin(x.get(0) * Math.PI / 2);
       }
 
       if (type == 33) {
-        alpha[0] = x.elementAt(0);
-        alpha[1] = x.elementAt(1);
+        alpha[0] = x.get(0);
+        alpha[1] = x.get(1);
         alpha[2] = 3
-          - (Math.sin(3 * Math.PI * x.elementAt(0)) + Math.sin(3 * Math.PI * x.elementAt(1))) - 2
-          * (x.elementAt(0) + x.elementAt(1));
+          - (Math.sin(3 * Math.PI * x.get(0)) + Math.sin(3 * Math.PI * x.get(1))) - 2
+          * (x.get(0) + x.get(1));
       }
 
       if (type == 34) {
-        alpha[0] = x.elementAt(0) * x.elementAt(1);
-        alpha[1] = x.elementAt(0) * (1 - x.elementAt(1));
-        alpha[2] = (1 - x.elementAt(0));
+        alpha[0] = x.get(0) * x.get(1);
+        alpha[1] = x.get(0) * (1 - x.get(1));
+        alpha[2] = (1 - x.get(0));
       }
     }
   }
 
   // control the distance
-  double betaFunction(Vector<Double> x, int type) {
+  double betaFunction(ArrayList<Double> x, int type) {
     double beta;
     beta = 0;
     int dim = x.size();
@@ -112,7 +111,7 @@ public class LZ09 {
     if (type == 1) {
       beta = 0;
       for (int i = 0; i < dim; i++) {
-        beta += x.elementAt(i) * x.elementAt(i);
+        beta += x.get(i) * x.get(i);
       }
       beta = 2.0 * beta / dim;
     }
@@ -120,7 +119,7 @@ public class LZ09 {
     if (type == 2) {
       beta = 0;
       for (int i = 0; i < dim; i++) {
-        beta += Math.sqrt(i + 1) * x.elementAt(i) * x.elementAt(i);
+        beta += Math.sqrt(i + 1) * x.get(i) * x.get(i);
       }
       beta = 2.0 * beta / dim;
     }
@@ -128,7 +127,7 @@ public class LZ09 {
     if (type == 3) {
       double sum = 0, xx;
       for (int i = 0; i < dim; i++) {
-        xx = 2 * x.elementAt(i);
+        xx = 2 * x.get(i);
         sum += (xx * xx - Math.cos(4 * Math.PI * xx) + 1);
       }
       beta = 2.0 * sum / dim;
@@ -137,7 +136,7 @@ public class LZ09 {
     if (type == 4) {
       double sum = 0, prod = 1, xx;
       for (int i = 0; i < dim; i++) {
-        xx = 2 * x.elementAt(i);
+        xx = 2 * x.get(i);
         sum += xx * xx;
         prod *= Math.cos(10 * Math.PI * xx / Math.sqrt(i + 1));
       }
@@ -217,7 +216,6 @@ public class LZ09 {
     return beta;
   }
 
-
   //	control the PS shapes of 3-D instances
   double psfunc3(double x, double t1, double t2, int dim, int type) {
     // type:  the type of curve 
@@ -242,21 +240,20 @@ public class LZ09 {
     return beta;
   }
 
-
-  void objective(Vector<Double> x_var, Vector<Double> y_obj) {
+  void objective(ArrayList<Double> xVar, ArrayList<Double> yObj) {
     // 2-objective case
     if (nobj == 2) {
       if (ltype == 21 || ltype == 22 || ltype == 23 || ltype == 24 || ltype == 26) {
         double g = 0, h = 0, a, b;
-        Vector<Double> aa = new Vector<Double>();
-        Vector<Double> bb = new Vector<Double>();
+        ArrayList<Double> aa = new ArrayList<Double>();
+        ArrayList<Double> bb = new ArrayList<Double>();
         for (int n = 1; n < nvar; n++) {
           if (n % 2 == 0) {
-            a = psfunc2(x_var.elementAt(n), x_var.elementAt(0), n, ltype, 1);  // linkage
-            aa.addElement(a);
+            a = psfunc2(xVar.get(n), xVar.get(0), n, ltype, 1);  // linkage
+            aa.add(a);
           } else {
-            b = psfunc2(x_var.elementAt(n), x_var.elementAt(0), n, ltype, 2);
-            bb.addElement(b);
+            b = psfunc2(xVar.get(n), xVar.get(0), n, ltype, 2);
+            bb.add(b);
           }
 
         }
@@ -264,9 +261,9 @@ public class LZ09 {
         h = betaFunction(bb, dtype);
 
         double alpha[] = new double[2];
-        alphaFunction(alpha, x_var, 2, ptype);  // shape function
-        y_obj.set(0, alpha[0] + h);
-        y_obj.set(1, alpha[1] + g);
+        alphaFunction(alpha, xVar, 2, ptype);  // shape function
+        yObj.set(0, alpha[0] + h);
+        yObj.set(1, alpha[1] + g);
         aa.clear();
         bb.clear();
       }
@@ -274,30 +271,30 @@ public class LZ09 {
       if (ltype == 25) {
         double g = 0, h = 0, a, b;
         double /*e = 0,*/ c;
-        Vector<Double> aa = new Vector<Double>();
-        Vector<Double> bb = new Vector<Double>();
+        ArrayList<Double> aa = new ArrayList<Double>();
+        ArrayList<Double> bb = new ArrayList<Double>();
         for (int n = 1; n < nvar; n++) {
           if (n % 3 == 0) {
-            a = psfunc2(x_var.elementAt(n), x_var.elementAt(0), n, ltype, 1);
-            aa.addElement(a);
+            a = psfunc2(xVar.get(n), xVar.get(0), n, ltype, 1);
+            aa.add(a);
           } else if (n % 3 == 1) {
-            b = psfunc2(x_var.elementAt(n), x_var.elementAt(0), n, ltype, 2);
-            bb.addElement(b);
+            b = psfunc2(xVar.get(n), xVar.get(0), n, ltype, 2);
+            bb.add(b);
           } else {
-            c = psfunc2(x_var.elementAt(n), x_var.elementAt(0), n, ltype, 3);
+            c = psfunc2(xVar.get(n), xVar.get(0), n, ltype, 3);
             if (n % 2 == 0) {
-              aa.addElement(c);
+              aa.add(c);
             } else {
-              bb.addElement(c);
+              bb.add(c);
             }
           }
         }
-        g = betaFunction(aa, dtype);          // distance function
+        g = betaFunction(aa, dtype);
         h = betaFunction(bb, dtype);
         double alpha[] = new double[2];
-        alphaFunction(alpha, x_var, 2, ptype);  // shape function
-        y_obj.set(0, alpha[0] + h);
-        y_obj.set(1, alpha[1] + g);
+        alphaFunction(alpha, xVar, 2, ptype);
+        yObj.set(0, alpha[0] + h);
+        yObj.set(1, alpha[1] + g);
         aa.clear();
         bb.clear();
       }
@@ -307,17 +304,17 @@ public class LZ09 {
     if (nobj == 3) {
       if (ltype == 31 || ltype == 32) {
         double g = 0, h = 0, e = 0, a;
-        Vector<Double> aa = new Vector<Double>();
-        Vector<Double> bb = new Vector<Double>();
-        Vector<Double> cc = new Vector<Double>();
+        ArrayList<Double> aa = new ArrayList<Double>();
+        ArrayList<Double> bb = new ArrayList<Double>();
+        ArrayList<Double> cc = new ArrayList<Double>();
         for (int n = 2; n < nvar; n++) {
-          a = psfunc3(x_var.elementAt(n), x_var.elementAt(0), x_var.elementAt(1), n, ltype);
+          a = psfunc3(xVar.get(n), xVar.get(0), xVar.get(1), n, ltype);
           if (n % 3 == 0) {
-            aa.addElement(a);
+            aa.add(a);
           } else if (n % 3 == 1) {
-            bb.addElement(a);
+            bb.add(a);
           } else {
-            cc.addElement(a);
+            cc.add(a);
           }
         }
 
@@ -326,10 +323,10 @@ public class LZ09 {
         e = betaFunction(cc, dtype);
 
         double alpha[] = new double[3];
-        alphaFunction(alpha, x_var, 3, ptype);
-        y_obj.set(0, alpha[0] + h);
-        y_obj.set(1, alpha[1] + g);
-        y_obj.set(2, alpha[2] + e);
+        alphaFunction(alpha, xVar, 3, ptype);
+        yObj.set(0, alpha[0] + h);
+        yObj.set(1, alpha[1] + g);
+        yObj.set(2, alpha[2] + e);
         aa.clear();
         bb.clear();
         cc.clear();

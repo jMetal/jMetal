@@ -28,6 +28,7 @@ import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
 import org.uma.jmetal.util.JMetalException;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 /**
@@ -48,9 +49,9 @@ public class LZ09F9 extends Problem {
   }
 
   /**
-   * Creates a DTLZ1 problem instance
+   * Creates a LZ09 problem instance
    *
-   * @param solutionType The solutiontype type must "Real" or "BinaryReal".
+   * @param solutionType The solution type must "Real" or "BinaryReal".
    */
   public LZ09F9(String solutionType,
                 Integer ptype,
@@ -87,12 +88,12 @@ public class LZ09F9 extends Problem {
   public void evaluate(Solution solution) throws JMetalException {
     Variable[] gen = solution.getDecisionVariables();
 
-    Vector<Double> x = new Vector<Double>(numberOfVariables);
-    Vector<Double> y = new Vector<Double>(numberOfObjectives);
+    ArrayList<Double> x = new ArrayList<Double>(numberOfVariables);
+    ArrayList<Double> y = new ArrayList<Double>(numberOfObjectives);
 
     for (int i = 0; i < numberOfVariables; i++) {
-      x.addElement(gen[i].getValue());
-      y.addElement(0.0);
+      x.add(gen[i].getValue());
+      y.add(0.0);
     }
 
     lz09.objective(x, y);

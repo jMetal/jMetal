@@ -28,7 +28,7 @@ import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
 import org.uma.jmetal.util.JMetalException;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  * Class representing problem LZ09F3
@@ -36,7 +36,7 @@ import java.util.Vector;
 public class LZ09F3 extends Problem {
   private static final long serialVersionUID = 1857615002372087234L;
 
-  private LZ09 LZ09;
+  private LZ09 lz09;
 
   /**
    * Creates a default LZ09F3 problem (30 variables and 2 objectives)
@@ -61,7 +61,7 @@ public class LZ09F3 extends Problem {
     numberOfConstraints = 0;
     problemName = "LZ09F3";
 
-    LZ09 = new LZ09(numberOfVariables,
+    lz09 = new LZ09(numberOfVariables,
       numberOfObjectives,
       ptype,
       dtype,
@@ -87,15 +87,15 @@ public class LZ09F3 extends Problem {
   public void evaluate(Solution solution) throws JMetalException {
     Variable[] gen = solution.getDecisionVariables();
 
-    Vector<Double> x = new Vector<Double>(numberOfVariables);
-    Vector<Double> y = new Vector<Double>(numberOfObjectives);
+    ArrayList<Double> x = new ArrayList<Double>(numberOfVariables);
+    ArrayList<Double> y = new ArrayList<Double>(numberOfObjectives);
 
     for (int i = 0; i < numberOfVariables; i++) {
-      x.addElement(gen[i].getValue());
-      y.addElement(0.0);
-    } // for
+      x.add(gen[i].getValue());
+      y.add(0.0);
+    }
 
-    LZ09.objective(x, y);
+    lz09.objective(x, y);
 
     for (int i = 0; i < numberOfObjectives; i++) {
       solution.setObjective(i, y.get(i));
