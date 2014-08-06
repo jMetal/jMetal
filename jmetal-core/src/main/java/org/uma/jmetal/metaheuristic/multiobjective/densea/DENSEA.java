@@ -33,10 +33,6 @@ import java.util.Comparator;
  * Class implementing the DENSEA algorithm.
  */
 public class DENSEA extends Algorithm {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = -2201287768907955178L;
 
   /* Create a new instance of DENSEA algorithm */
@@ -92,7 +88,7 @@ public class DENSEA extends Algorithm {
     Ranking r;
 
     while (evaluations < maxEvaluations) {
-      SolutionSet P3 = new SolutionSet(populationSize);
+      SolutionSet p3 = new SolutionSet(populationSize);
       for (int i = 0; i < populationSize / 2; i++) {
         Solution[] parents = new Solution[2];
         Solution[] offSpring;
@@ -107,15 +103,15 @@ public class DENSEA extends Algorithm {
         problem.evaluate(offSpring[1]);
         problem.evaluateConstraints(offSpring[1]);
         evaluations++;
-        P3.add(offSpring[0]);
-        P3.add(offSpring[1]);
+        p3.add(offSpring[0]);
+        p3.add(offSpring[1]);
       }
 
-      r = new Ranking(P3);
+      r = new Ranking(p3);
       for (int i = 0; i < r.getNumberOfSubfronts(); i++) {
         distance.crowdingDistanceAssignment(r.getSubfront(i));
       }
-      P3.sort(new CrowdingComparator());
+      p3.sort(new CrowdingComparator());
 
 
       population.sort(new CrowdingComparator());

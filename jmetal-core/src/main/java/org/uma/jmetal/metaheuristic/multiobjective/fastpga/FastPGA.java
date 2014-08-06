@@ -34,10 +34,6 @@ import java.util.Comparator;
  * This class implements the FPGA (Fast Pareto Genetic Algorithm).
  */
 public class FastPGA extends Algorithm {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = -1288400553889158174L;
 
   /*
@@ -46,7 +42,7 @@ public class FastPGA extends Algorithm {
    */
   public FastPGA() {
     super();
-  } // FastPGA
+  }
 
   /**
    * Runs of the FastPGA algorithm.
@@ -88,7 +84,7 @@ public class FastPGA extends Algorithm {
     populationSize = initialPopulationSize;
     offSpringSize = maxPopSize;
 
-    //Build a solutiontype set randomly
+    //Build a solution set randomly
     solutionSet = new SolutionSet(populationSize);
     for (int i = 0; i < populationSize; i++) {
       Solution solution = new Solution(problem);
@@ -146,7 +142,7 @@ public class FastPGA extends Algorithm {
         solutionSet.add(candidateSolutionSet.get(i));
       }
 
-      //Termination org.uma.test
+      //Termination
       if (termination == 0) {
         ranking = new Ranking(solutionSet);
         count = ranking.getSubfront(0).size();

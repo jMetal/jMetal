@@ -36,7 +36,7 @@ import java.util.Vector;
 public class LZ09F9 extends Problem {
   private static final long serialVersionUID = 3762600989114109415L;
 
-  private LZ09 LZ09;
+  private LZ09 lz09;
 
   /**
    * Creates a default LZ09F9 problem (30 variables and 2 objectives)
@@ -61,7 +61,7 @@ public class LZ09F9 extends Problem {
     numberOfConstraints = 0;
     problemName = "LZ09F9";
 
-    LZ09 = new LZ09(numberOfVariables,
+    lz09 = new LZ09(numberOfVariables,
       numberOfObjectives,
       ptype,
       dtype,
@@ -95,7 +95,7 @@ public class LZ09F9 extends Problem {
       y.addElement(0.0);
     }
 
-    LZ09.objective(x, y);
+    lz09.objective(x, y);
 
     for (int i = 0; i < numberOfObjectives; i++) {
       solution.setObjective(i, y.get(i));

@@ -146,6 +146,7 @@ public class GDE3 extends Algorithm {
     return getNonDominatedSolutions() ;
   }
 
+  /* Getters */
   public Operator getCrossoverOperator() {
     return crossoverOperator;
   }

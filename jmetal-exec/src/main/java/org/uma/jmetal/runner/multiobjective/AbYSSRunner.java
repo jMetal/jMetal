@@ -22,6 +22,7 @@ package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Problem;
+import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.metaheuristic.multiobjective.abyss.AbYSS;
 import org.uma.jmetal.operator.crossover.Crossover;
 import org.uma.jmetal.operator.crossover.SBXCrossover;
@@ -31,9 +32,12 @@ import org.uma.jmetal.operator.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.problem.zdt.ZDT4;
 import org.uma.jmetal.qualityindicator.QualityIndicatorGetter;
+import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.CrowdingArchive;
+import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
+import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
 import java.util.logging.FileHandler;
@@ -49,7 +53,7 @@ import java.util.logging.Logger;
  */
 
 public class AbYSSRunner {
-  public static Logger LOGGER = Logger.getLogger(AbYSSRunner.class.getName());
+  public static final Logger LOGGER = Logger.getLogger(AbYSSRunner.class.getName());
   public static FileHandler fileHandler;
 
   /**
@@ -66,21 +70,20 @@ public class AbYSSRunner {
     Problem problem ;
     int maxEvaluations;
     int populationSize ;
-     int refSet1Size ;
-     int refSet2Size ;
-     int archiveSize ;
-     Archive archive ;
-     int improvementRounds ;
-     int numberOfSubranges ;
+    int refSet1Size ;
+    int refSet2Size ;
+    int archiveSize ;
+    Archive archive ;
+    int improvementRounds ;
+    int numberOfSubranges ;
 
-     double mutationProbability;
-     double crossoverProbability;
-     double mutationDistributionIndex;
-     double crossoverDistributionIndex;
+    double mutationProbability;
+    double crossoverProbability;
+    double mutationDistributionIndex;
+    double crossoverDistributionIndex;
 
     QualityIndicatorGetter indicators;
 
-    // Logger object and file to store log messages
     fileHandler = new FileHandler("AbYSS.log");
     LOGGER.addHandler(fileHandler);
 
@@ -100,7 +103,7 @@ public class AbYSSRunner {
       //problem = new ConstrEx("Real");
       //problem = new DTLZ1("Real");
       //problem = new OKA2("Real") ;
-    } // else
+    } 
 
     Algorithm algorithm;
     Crossover crossover;
@@ -148,5 +151,30 @@ public class AbYSSRunner {
             .crossover(crossover)
             .localSearch(localSearch)
             .build() ;
+
+    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+            .execute() ;
+
+    SolutionSet population = algorithmRunner.getSolutionSet() ;
+    long computingTime = algorithmRunner.getComputingTime() ;
+
+    new SolutionSetOutput.Printer(population)
+            .separator("\t")
+            .varFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+            .funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+            .print();
+
+    LOGGER.info("Total execution time: " + computingTime + "ms");
+    LOGGER.info("Objectives values have been written to file FUN.tsv");
+    LOGGER.info("Variables values have been written to file VAR.tsv");
+
+    if (indicators != null) {
+      LOGGER.info("Quality indicators");
+      LOGGER.info("Hypervolume: " + indicators.getHypervolume(population));
+      LOGGER.info("GD         : " + indicators.getGD(population));
+      LOGGER.info("IGD        : " + indicators.getIGD(population));
+      LOGGER.info("Spread     : " + indicators.getSpread(population));
+      LOGGER.info("Epsilon    : " + indicators.getEpsilon(population));
+    }
   }
 }

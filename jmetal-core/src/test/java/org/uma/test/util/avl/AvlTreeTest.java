@@ -47,10 +47,10 @@ public class AvlTreeTest {
 
   @Test
   public void testAvlIsEmpty() throws Exception {
-    assertTrue("TestAvlIsEmpty", avlTree_.AvlIsEmpty()) ;
+    assertTrue("TestAvlIsEmpty", avlTree_.avlIsEmpty()) ;
 
     avlTree_.insertTop(new AvlNode(5));
-    assertFalse("TestAvlIsEmpty", avlTree_.AvlIsEmpty()) ;
+    assertFalse("TestAvlIsEmpty", avlTree_.avlIsEmpty()) ;
   }
 
   @Test

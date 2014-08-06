@@ -30,6 +30,8 @@ import org.uma.jmetal.util.JMetalException;
  * Wrapper class for accessing integer-coded solutions
  */
 public class XInt {
+  private static final String EXCEPTION_MESSAGE = "The solution type of the solution is invalid: " ;
+
   private Solution solution;
   private SolutionType type;
 
@@ -76,8 +78,7 @@ public class XInt {
     if (solution.getType() instanceof IntSolutionTypeTemplate) {
       return ((IntSolutionTypeTemplate) solution.getType()).getIntValue(solution, index);
     } else {
-      throw new JMetalException(
-        "The solutiontype type of the solution is invalid: " + solution.getType());
+      throw new JMetalException("The solution type of the solution is invalid: " + solution.getType()) ;
     }
   }
 
@@ -85,17 +86,14 @@ public class XInt {
     if (solution.getType() instanceof IntSolutionTypeTemplate) {
       ((IntSolutionTypeTemplate) solution.getType()).setIntValue(solution, index, value);
     } else {
-      throw new JMetalException(
-        "The solutiontype type of the solution is invalid: " + solution.getType());
-    }
+      throw new JMetalException("The solution type of the solution is invalid: " + solution.getType()) ;  }
   }
 
   public static int getNumberOfDecisionVariables(Solution solution) {
     if (solution.getType() instanceof IntSolutionTypeTemplate) {
       return ((IntSolutionTypeTemplate) solution.getType()).getNumberOfIntVariables(solution) ;
     } else {
-      throw new JMetalException(
-        "The solutiontype type of the solution is invalid: " + solution.getType());
+      throw new JMetalException("The solution type of the solution is invalid: " + solution.getType()) ;
     }
   }
 
@@ -103,8 +101,7 @@ public class XInt {
     if (solution.getType() instanceof IntSolutionTypeTemplate) {
       return ((IntSolutionTypeTemplate) solution.getType()).getIntUpperBound(solution, index);
     } else {
-      throw new JMetalException(
-        "The solutiontype type of the solution is invalid: " + solution.getType());
+      throw new JMetalException("The solution type of the solution is invalid: " + solution.getType()) ;
     }
   }
 
@@ -112,8 +109,7 @@ public class XInt {
     if (solution.getType() instanceof IntSolutionTypeTemplate) {
       return ((IntSolutionTypeTemplate) solution.getType()).getIntLowerBound(solution, index);
     } else {
-      throw new JMetalException(
-        "The solutiontype type of the solution is invalid: " + solution.getType());
+      throw new JMetalException("The solution type of the solution is invalid: " + solution.getType()) ;
     }
   }
 }

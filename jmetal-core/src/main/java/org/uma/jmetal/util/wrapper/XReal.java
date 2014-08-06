@@ -29,41 +29,42 @@ import org.uma.jmetal.util.JMetalException;
  * Wrapper for accessing real-coded solutions
  */
 public class XReal {
-  private Solution solution_;
-  private SolutionType type_;
+  private static final String EXCEPTION_MESSAGE = "The solution type of the solution is invalid: " ;
+  private Solution solution;
+  private SolutionType type;
 
   public XReal(Solution solution) {
     if (solution.getType() instanceof RealSolutionTypeTemplate) {
-      type_ = solution.getType();
-      solution_ = solution;
+      type = solution.getType();
+      this.solution = solution;
     } else {
       throw new JMetalException("The solution type of the solution is invalid: " + solution.getType()) ;
     }
   }
 
   public XReal(XReal solution) {
-    solution_ = solution.solution_;
-    type_ = solution.type_;
+    this.solution = solution.solution;
+    type = solution.type;
   }
 
   public double getValue(int index) {
-    return ((RealSolutionTypeTemplate)type_).getRealValue(solution_, index) ;
+    return ((RealSolutionTypeTemplate) type).getRealValue(solution, index) ;
   }
 
   public void setValue(int index, double value) {
-    ((RealSolutionTypeTemplate)type_).setRealValue(solution_, index, value);
+    ((RealSolutionTypeTemplate) type).setRealValue(solution, index, value);
   }
 
   public int getNumberOfDecisionVariables() {
-    return ((RealSolutionTypeTemplate)type_).getNumberOfRealVariables(solution_) ;
+    return ((RealSolutionTypeTemplate) type).getNumberOfRealVariables(solution) ;
   }
 
   public double getUpperBound(int index) {
-    return ((RealSolutionTypeTemplate)type_).getRealUpperBound(solution_,index) ;
+    return ((RealSolutionTypeTemplate) type).getRealUpperBound(solution,index) ;
   }
 
   public double getLowerBound(int index) {
-    return ((RealSolutionTypeTemplate)type_).getRealLowerBound(solution_,index) ;
+    return ((RealSolutionTypeTemplate) type).getRealLowerBound(solution,index) ;
   }
 
   public int size() {
@@ -71,7 +72,7 @@ public class XReal {
   }
 
   public Solution getSolution() {
-    return solution_;
+    return solution;
   }
 
   /* Static methods */
@@ -79,8 +80,7 @@ public class XReal {
     if (solution.getType() instanceof RealSolutionTypeTemplate) {
       return ((RealSolutionTypeTemplate) solution.getType()).getRealValue(solution, index);
     } else {
-      throw new JMetalException(
-        "The solutiontype type of the solutiontype is invalid: " + solution.getType());
+      throw new JMetalException(EXCEPTION_MESSAGE + solution.getType());
     }
   }
 
@@ -88,8 +88,7 @@ public class XReal {
     if (solution.getType() instanceof RealSolutionTypeTemplate) {
       ((RealSolutionTypeTemplate) solution.getType()).setRealValue(solution, index, value);
     } else {
-      throw new JMetalException(
-        "The solutiontype type of the solutiontype is invalid: " + solution.getType());
+      throw new JMetalException(EXCEPTION_MESSAGE + solution.getType());
     }
   }
 
@@ -97,8 +96,7 @@ public class XReal {
     if (solution.getType() instanceof RealSolutionTypeTemplate) {
       return ((RealSolutionTypeTemplate) solution.getType()).getNumberOfRealVariables(solution) ;
     } else {
-      throw new JMetalException(
-        "The solutiontype type of the solutiontype is invalid: " + solution.getType());
+      throw new JMetalException(EXCEPTION_MESSAGE + solution.getType());
     }
   }
 
@@ -106,8 +104,7 @@ public class XReal {
     if (solution.getType() instanceof RealSolutionTypeTemplate) {
       return ((RealSolutionTypeTemplate) solution.getType()).getRealUpperBound(solution, index);
     } else {
-      throw new JMetalException(
-        "The solutiontype type of the solutiontype is invalid: " + solution.getType());
+      throw new JMetalException(EXCEPTION_MESSAGE + solution.getType());
     }
   }
 
@@ -115,8 +112,7 @@ public class XReal {
     if (solution.getType() instanceof RealSolutionTypeTemplate) {
       return ((RealSolutionTypeTemplate) solution.getType()).getRealLowerBound(solution, index);
     } else {
-      throw new JMetalException(
-        "The solutiontype type of the solutiontype is invalid: " + solution.getType());
+      throw new JMetalException(EXCEPTION_MESSAGE + solution.getType());
     }
   }
 }

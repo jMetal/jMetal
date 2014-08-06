@@ -29,14 +29,6 @@ public class NSGAIIAdaptive extends NSGAIITemplate {
   }
 
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
-    // FIXME: those variables are necessary? because they only store value, we don't do anything with it
-    double contrDE = 0;
-    double contrSBX = 0;
-    double contrPol = 0;
-    double contrTotalDE = 0;
-    double contrTotalSBX = 0;
-    double contrTotalPol = 0;
-
     double contrReal[] = new double[3];
     contrReal[0] = contrReal[1] = contrReal[2] = 0;
 
@@ -59,21 +51,21 @@ public class NSGAIIAdaptive extends NSGAIITemplate {
     selectionOperator = operators.get("selection");
 
     Offspring[] getOffspring;
-    int N_O; // number of offpring objects
+    int numberOfOffspringObjects;
 
     getOffspring = ((Offspring[]) getInputParameter("offspringsCreators"));
-    N_O = getOffspring.length;
+    numberOfOffspringObjects = getOffspring.length;
 
-    contribution = new double[N_O];
-    contributionCounter = new int[N_O];
+    contribution = new double[numberOfOffspringObjects];
+    contributionCounter = new int[numberOfOffspringObjects];
 
-    contribution[0] = (double) (populationSize / (double) N_O) / (double) populationSize;
-    for (int i = 1; i < N_O; i++) {
-      contribution[i] = (double) (populationSize / (double) N_O) / (double) populationSize
+    contribution[0] = (double) (populationSize / (double) numberOfOffspringObjects) / (double) populationSize;
+    for (int i = 1; i < numberOfOffspringObjects; i++) {
+      contribution[i] = (double) (populationSize / (double) numberOfOffspringObjects) / (double) populationSize
         + (double) contribution[i - 1];
     }
 
-    for (int i = 0; i < N_O; i++) {
+    for (int i = 0; i < numberOfOffspringObjects; i++) {
       JMetalLogger.logger.info(getOffspring[i].configuration());
       JMetalLogger.logger.info("Contribution: " + contribution[i]);
     }
@@ -100,19 +92,16 @@ public class NSGAIIAdaptive extends NSGAIITemplate {
           boolean found = false;
           Solution offSpring = null;
           double rnd = PseudoRandom.randDouble();
-          for (selected = 0; selected < N_O; selected++) {
+          for (selected = 0; selected < numberOfOffspringObjects; selected++) {
 
             if (!found && (rnd <= contribution[selected])) {
               if ("DE".equals(getOffspring[selected].id())) {
                 offSpring = getOffspring[selected].getOffspring(population, i);
-                contrDE++;
               } else if ("SBXCrossover".equals(getOffspring[selected].id())) {
                 offSpring = getOffspring[selected].getOffspring(population);
-                contrSBX++;
               } else if ("PolynomialMutation".equals(getOffspring[selected].id())) {
                 offSpring =
                   ((PolynomialMutationOffspring) getOffspring[selected]).getOffspring(individual);
-                contrPol++;
               } else {
                 JMetalLogger.logger.info("Error in NSGAIIAdaptive. Operator " + offSpring + " does not exist");
               }
@@ -171,10 +160,9 @@ public class NSGAIIAdaptive extends NSGAIITemplate {
         remain = 0;
       }
 
-
       // CONTRIBUTION CALCULATING PHASE
       // First: reset contribution counter
-      for (int i = 0; i < N_O; i++) {
+      for (int i = 0; i < numberOfOffspringObjects; i++) {
         contributionCounter[i] = 0;
       }
 
@@ -186,14 +174,10 @@ public class NSGAIIAdaptive extends NSGAIITemplate {
         population.get(i).setFitness(-1);
       }
 
-      contrTotalDE += contributionCounter[0];
-      contrTotalSBX += contributionCounter[1];
-      contrTotalPol += contributionCounter[2];
-
       int minimumContribution = 2;
       int totalContributionCounter = 0;
 
-      for (int i = 0; i < N_O; i++) {
+      for (int i = 0; i < numberOfOffspringObjects; i++) {
         if (contributionCounter[i] < minimumContribution) {
           contributionCounter[i] = minimumContribution;
         }
@@ -201,7 +185,7 @@ public class NSGAIIAdaptive extends NSGAIITemplate {
       }
 
       if (totalContributionCounter == 0) {
-        for (int i = 0; i < N_O; i++) {
+        for (int i = 0; i < numberOfOffspringObjects; i++) {
           contributionCounter[i] = 10;
         }
       }
@@ -209,7 +193,7 @@ public class NSGAIIAdaptive extends NSGAIITemplate {
       // Third: calculating contribution
       contribution[0] = contributionCounter[0] * 1.0
         / (double) totalContributionCounter;
-      for (int i = 1; i < N_O; i++) {
+      for (int i = 1; i < numberOfOffspringObjects; i++) {
         contribution[i] = contribution[i - 1] + 1.0
           * contributionCounter[i]
           / (double) totalContributionCounter;

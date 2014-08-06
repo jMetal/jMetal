@@ -53,7 +53,7 @@ public class AvlTree<T> {
   }
 
   public void insertAvlNode(AvlNode<T> node) {
-    if (AvlIsEmpty()) {
+    if (avlIsEmpty()) {
       insertTop(node);
     } else {
       int result = searchClosestNode(node);
@@ -378,8 +378,8 @@ public class AvlTree<T> {
     return rightHeight - leftHeight;
   }
 
-  public boolean AvlIsEmpty() {
-    return (top == null);
+  public boolean avlIsEmpty() {
+    return top == null;
   }
 
   public void insertTop(AvlNode<T> node) {

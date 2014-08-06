@@ -49,18 +49,15 @@ public class UF5 extends Problem {
 
   /**
    * Creates a new instance of problem CEC2009_UF5.
-   *
-   * @param numberOfVariables Number of variables.
-   * @param solutionType      The solution type must "Real" or "BinaryReal".
    */
-  public UF5(String solutionType, Integer numberOfVariables, int N, double epsilon)
+  public UF5(String solutionType, Integer numberOfVariables, int n, double epsilon)
     throws JMetalException {
     this.numberOfVariables = numberOfVariables;
     numberOfObjectives = 2;
     numberOfConstraints = 0;
     problemName = "CEC2009_UF5";
 
-    n = N;
+    this.n = n;
     this.epsilon = epsilon;
 
     upperLimit = new double[this.numberOfVariables];

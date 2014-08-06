@@ -46,25 +46,25 @@ public class StandardPSO2011 extends Algorithm {
   private int swarmSize;
   private int maxIterations;
   private int iteration;
-  private int numberOfParticlesToInform; // Referred a K in the SPSO document
+  private int numberOfParticlesToInform;
   private Solution[] localBest;
   private Solution[] neighborhoodBest;
-  private double[][] speed_;
+  private double[][] speed;
   private AdaptiveRandomNeighborhood neighborhood;
-  private double W;
-  private double C;
-  private double ChVel;
+  private double weight;
+  private double c;
+  private double changeVelocity;
 
   /** Constructor */
   public StandardPSO2011() {
     super();
 
-    W = 1.0 / (2.0 * Math.log(2)); //0.721;
-    C = 1.0 / 2.0 + Math.log(2); //1.193;
-    ChVel = -0.5;
+    weight = 1.0 / (2.0 * Math.log(2)); //0.721;
+    c = 1.0 / 2.0 + Math.log(2); //1.193;
+    changeVelocity = -0.5;
 
-    comparator = new ObjectiveComparator(0); // Single objective comparator
-    HashMap parameters; // Operator parameters
+    comparator = new ObjectiveComparator(0);
+    HashMap parameters;
 
     parameters = new HashMap();
     parameters.put("comparator", comparator);
@@ -73,12 +73,12 @@ public class StandardPSO2011 extends Algorithm {
     evaluations = 0;
   }
 
-  public double getW() {
-    return W;
+  public double getWeight() {
+    return weight;
   }
 
   public double getC() {
-    return C;
+    return c;
   }
 
   /**
@@ -96,9 +96,8 @@ public class StandardPSO2011 extends Algorithm {
     localBest = new Solution[swarmSize];
     neighborhoodBest = new Solution[swarmSize];
 
-    // Create the speed_ vector
-    speed_ = new double[swarmSize][problem.getNumberOfVariables()];
-  } // initialization
+    speed = new double[swarmSize][problem.getNumberOfVariables()];
+  }
 
   private Solution getNeighborBest(int i) {
     Solution bestLocalBestSolution = null;
@@ -120,7 +119,7 @@ public class StandardPSO2011 extends Algorithm {
   private void computeSpeed() throws ClassNotFoundException, JMetalException {
     for (int i = 0; i < swarmSize; i++) {
       XReal particle = new XReal(swarm.get(i));
-      XReal localBest = new XReal(this.localBest[i]);
+      XReal lBest = new XReal(this.localBest[i]);
       XReal neighborhoodBest = new XReal(this.neighborhoodBest[i]);
       XReal gravityCenter = new XReal(new Solution(problem));
       XReal randomParticle = new XReal(new Solution(swarm.get(i)));
@@ -129,18 +128,17 @@ public class StandardPSO2011 extends Algorithm {
         for (int var = 0; var < particle.size(); var++) {
           double G;
           G = particle.getValue(var) +
-            C * (localBest.getValue(var) + neighborhoodBest.getValue(var) - 2 * particle
+            c * (lBest.getValue(var) + neighborhoodBest.getValue(var) - 2 * particle
               .getValue(var)) / 3.0;
 
           gravityCenter.setValue(var, G);
         }
       } else {
         for (int var = 0; var < particle.size(); var++) {
-          double G;
-          G = particle.getValue(var) +
-            C * (localBest.getValue(var) - particle.getValue(var)) / 2.0;
+          double g  = particle.getValue(var) +
+            c * (lBest.getValue(var) - particle.getValue(var)) / 2.0;
 
-          gravityCenter.setValue(var, G);
+          gravityCenter.setValue(var, g);
         }
       }
 
@@ -155,11 +153,10 @@ public class StandardPSO2011 extends Algorithm {
       }
 
       for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
-        speed_[i][var] =
-          W * speed_[i][var] + randomParticle.getValue(var) - particle.getValue(var);
+        speed[i][var] =
+          weight * speed[i][var] + randomParticle.getValue(var) - particle.getValue(var);
       }
     }
-
   }
 
   /**
@@ -171,20 +168,19 @@ public class StandardPSO2011 extends Algorithm {
     for (int i = 0; i < swarmSize; i++) {
       XReal particle = new XReal(swarm.get(i));
       for (int var = 0; var < particle.size(); var++) {
-        particle.setValue(var, particle.getValue(var) + speed_[i][var]);
+        particle.setValue(var, particle.getValue(var) + speed[i][var]);
 
         if (particle.getValue(var) < problem.getLowerLimit(var)) {
           particle.setValue(var, problem.getLowerLimit(var));
-          speed_[i][var] = ChVel * speed_[i][var];
+          speed[i][var] = changeVelocity * speed[i][var];
         }
         if (particle.getValue(var) > problem.getUpperLimit(var)) {
           particle.setValue(var, problem.getUpperLimit(var));
-          speed_[i][var] = ChVel * speed_[i][var];
+          speed[i][var] = changeVelocity * speed[i][var];
         }
       }
     }
   }
-
 
   /**
    * Runs of the SMPSO algorithm.
@@ -210,11 +206,11 @@ public class StandardPSO2011 extends Algorithm {
     JMetalLogger.logger.info("Swarm size: " + swarm.size());
     JMetalLogger.logger.info("list size: " + neighborhood.getNeighborhood().size());
 
-    // Step2. Initialize the speed_ of each particle
+    // Step2. Initialize the speed of each particle
     for (int i = 0; i < swarmSize; i++) {
       XReal particle = new XReal(swarm.get(i));
       for (int j = 0; j < problem.getNumberOfVariables(); j++) {
-        speed_[i][j] = (PseudoRandom.randDouble(
+        speed[i][j] = (PseudoRandom.randDouble(
           particle.getLowerBound(j) - particle.getValue(0),
           particle.getUpperBound(j) - particle.getValue(0)));
       }
@@ -230,19 +226,8 @@ public class StandardPSO2011 extends Algorithm {
       neighborhoodBest[i] = getNeighborBest(i);
     }
 
-    //Configuration.logger.info("neighborhood_i " + neighborhood.getNeighbors(0) );
-    //for (int s :  neighborhood.getNeighbors(0)) {
-    //  Configuration.logger.info(s + ": " + localBest[s].getObjective(0)) ;
-    //}
-
-    //Configuration.logger.info("localBest_i " + localBest[0].getObjective(0) );
-    //Configuration.logger.info("neighborhoodBest_i " + getNeighborBest(0).getObjective(0) );
-
-    //Configuration.logger.info("Swarm: " + swarm) ;
     swarm.printObjectives();
     Double b = swarm.best(comparator).getObjective(0);
-    //Configuration.logger.info("Best: " + b) ;
-
 
     double bestFoundFitness = Double.MAX_VALUE;
     while (iteration < maxIterations) {

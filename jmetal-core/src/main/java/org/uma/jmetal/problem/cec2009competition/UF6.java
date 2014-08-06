@@ -53,14 +53,14 @@ public class UF6 extends Problem {
    * @param numberOfVariables Number of variables.
    * @param solutionType      The solution type must "Real" or "BinaryReal".
    */
-  public UF6(String solutionType, Integer numberOfVariables, int N, double epsilon)
+  public UF6(String solutionType, Integer numberOfVariables, int n, double epsilon)
     throws JMetalException {
     this.numberOfVariables = numberOfVariables;
     numberOfObjectives = 2;
     numberOfConstraints = 0;
     problemName = "CEC2009_UF6";
 
-    n = N;
+    this.n = n;
     this.epsilon = epsilon;
 
     upperLimit = new double[this.numberOfVariables];
