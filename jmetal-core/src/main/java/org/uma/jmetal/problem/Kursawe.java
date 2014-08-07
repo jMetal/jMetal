@@ -27,7 +27,7 @@ import org.uma.jmetal.encoding.solutiontype.ArrayRealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.wrapper.XReal;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 
 /**
  * Class representing problem Kursawe
@@ -43,7 +43,7 @@ public class Kursawe extends Problem {
    */
   public Kursawe(String solutionType) throws ClassNotFoundException, JMetalException {
     this(solutionType, 3);
-  } // Kursawe
+  }
 
   /**
    * Constructor.
@@ -81,8 +81,8 @@ public class Kursawe extends Problem {
   public void evaluate(Solution solution) throws JMetalException {
     XReal vars = new XReal(solution);
 
-    double aux, xi, xj; // auxiliary variables
-    double[] fx = new double[2]; // function values
+    double aux, xi, xj;
+    double[] fx = new double[2];
     double[] x = new double[numberOfVariables];
     for (int i = 0; i < numberOfVariables; i++) {
       x[i] = vars.getValue(i);

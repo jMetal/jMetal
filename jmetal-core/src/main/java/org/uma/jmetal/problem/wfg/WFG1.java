@@ -65,14 +65,14 @@ public class WFG1 extends WFG {
     super(solutionType, k, l, M);
     problemName = "WFG1";
 
-    S_ = new int[M_];
-    for (int i = 0; i < M_; i++) {
-      S_[i] = 2 * (i + 1);
+    s = new int[m];
+    for (int i = 0; i < m; i++) {
+      s[i] = 2 * (i + 1);
     }
 
-    A_ = new int[M_ - 1];
-    for (int i = 0; i < M_ - 1; i++) {
-      A_[i] = 1;
+    a = new int[m - 1];
+    for (int i = 0; i < m - 1; i++) {
+      a[i] = 1;
     }
   }
 
@@ -81,23 +81,23 @@ public class WFG1 extends WFG {
     float[] y;
 
     y = normalise(z);
-    y = t1(y, k_);
-    y = t2(y, k_);
+    y = t1(y, k);
+    y = t2(y, k);
     try {
       y = t3(y);
     } catch (JMetalException e) {
       JMetalLogger.logger.log(Level.SEVERE, "Error", e);
     }
-    y = t4(y, k_, M_);
+    y = t4(y, k, m);
 
 
-    float[] result = new float[M_];
+    float[] result = new float[m];
     float[] x = calculate_x(y);
-    for (int m = 1; m <= M_ - 1; m++) {
-      result[m - 1] = D_ * x[M_ - 1] + S_[m - 1] * (new Shapes()).convex(x, m);
+    for (int m = 1; m <= this.m - 1; m++) {
+      result[m - 1] = d * x[this.m - 1] + s[m - 1] * (new Shapes()).convex(x, m);
     }
 
-    result[M_ - 1] = D_ * x[M_ - 1] + S_[M_ - 1] * (new Shapes()).mixed(x, 5, (float) 1.0);
+    result[m - 1] = d * x[m - 1] + s[m - 1] * (new Shapes()).mixed(x, 5, (float) 1.0);
 
     return result;
   }

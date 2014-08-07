@@ -44,12 +44,12 @@ public abstract class WFG extends Problem {
    */
   private final float epsilon = (float) 1e-7;
 
-  protected int k_; //Var for walking fish group
-  protected int M_;
-  protected int l_;
-  protected int[] A_;
-  protected int[] S_;
-  protected int D_ = 1;
+  protected int k;
+  protected int m;
+  protected int l;
+  protected int[] a;
+  protected int[] s;
+  protected int d = 1;
   protected Random random = new Random();
 
   /**
@@ -62,11 +62,11 @@ public abstract class WFG extends Problem {
    * @param solutionType The solutiontype type must "Real" or "BinaryReal".
    */
   public WFG(String solutionType, Integer k, Integer l, Integer M) throws JMetalException {
-    this.k_ = k;
-    this.l_ = l;
-    this.M_ = M;
-    numberOfVariables = this.k_ + this.l_;
-    numberOfObjectives = this.M_;
+    this.k = k;
+    this.l = l;
+    this.m = M;
+    numberOfVariables = this.k + this.l;
+    numberOfObjectives = this.m;
     numberOfConstraints = 0;
 
     lowerLimit = new double[numberOfVariables];
@@ -89,13 +89,13 @@ public abstract class WFG extends Problem {
    * Gets the x vector (consulte wfg tooltik reference)
    */
   public float[] calculate_x(float[] t) {
-    float[] x = new float[M_];
+    float[] x = new float[m];
 
-    for (int i = 0; i < M_ - 1; i++) {
-      x[i] = Math.max(t[M_ - 1], A_[i]) * (t[i] - (float) 0.5) + (float) 0.5;
+    for (int i = 0; i < m - 1; i++) {
+      x[i] = Math.max(t[m - 1], a[i]) * (t[i] - (float) 0.5) + (float) 0.5;
     }
 
-    x[M_ - 1] = t[M_ - 1];
+    x[m - 1] = t[m - 1];
 
     return x;
   }
@@ -114,7 +114,6 @@ public abstract class WFG extends Problem {
 
     return result;
   }
-
 
   /**
    */

@@ -31,22 +31,12 @@ import org.uma.jmetal.util.JMetalException;
  * Class representing problem Golinski.
  */
 public class Golinski extends Problem {
-
-
-  public static final double[] LOWERLIMIT = {2.6, 0.7, 17.0, 7.3, 7.3, 2.9, 5.0};
-  // defining lowerLimits and upperLimits for the problem
-  public static final double[] UPPERLIMIT = {3.6, 0.8, 28.0, 8.3, 8.3, 3.9, 5.5};
-  /**
-   *
-   */
   private static final long serialVersionUID = -92489834119695520L;
 
-  /**
-   * Constructor.
-   * Creates a defalut instance of the Golinski problem.
-   *
-   * @param solutionType The solutiontype type must "Real" or "BinaryReal".
-   */
+  public static final double[] LOWERLIMIT = {2.6, 0.7, 17.0, 7.3, 7.3, 2.9, 5.0};
+  public static final double[] UPPERLIMIT = {3.6, 0.8, 28.0, 8.3, 8.3, 3.9, 5.5};
+
+  /** Constructor */
   public Golinski(String solutionType) throws JMetalException {
     numberOfVariables = 7;
     numberOfObjectives = 2;
@@ -65,16 +55,11 @@ public class Golinski extends Problem {
     } else if (solutionType.compareTo("Real") == 0) {
       this.solutionType = new RealSolutionType(this);
     } else {
-      throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
+      throw new JMetalException("Error: solution type " + solutionType + " invalid");
     }
   }
 
-  /**
-   * Evaluates a solutiontype.
-   *
-   * @param solution The solutiontype to evaluate.
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Evaluate() method */
   public void evaluate(Solution solution) throws JMetalException {
     double x1, x2, x3, x4, x5, x6, x7;
     x1 = solution.getDecisionVariables()[0].getValue();
@@ -96,7 +81,7 @@ public class Golinski extends Problem {
     solution.setObjective(1, f2);
   }
 
-  /** Evaluate() method */
+  /** EvaluateConstraints() method */
   public void evaluateConstraints(Solution solution) throws JMetalException {
     double[] constraint = new double[numberOfConstraints];
     double x1, x2, x3, x4, x5, x6, x7;

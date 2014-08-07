@@ -61,14 +61,14 @@ public class WFG4 extends WFG {
     super(solutionType, k, l, M);
     problemName = "WFG4";
 
-    S_ = new int[M_];
-    for (int i = 0; i < M_; i++) {
-      S_[i] = 2 * (i + 1);
+    s = new int[m];
+    for (int i = 0; i < m; i++) {
+      s[i] = 2 * (i + 1);
     }
 
-    A_ = new int[M_ - 1];
-    for (int i = 0; i < M_ - 1; i++) {
-      A_[i] = 1;
+    a = new int[m - 1];
+    for (int i = 0; i < m - 1; i++) {
+      a[i] = 1;
     }
   }
 
@@ -77,13 +77,13 @@ public class WFG4 extends WFG {
     float[] y;
 
     y = normalise(z);
-    y = t1(y, k_);
-    y = t2(y, k_, M_);
+    y = t1(y, k);
+    y = t2(y, k, m);
 
-    float[] result = new float[M_];
+    float[] result = new float[m];
     float[] x = calculate_x(y);
-    for (int m = 1; m <= M_; m++) {
-      result[m - 1] = D_ * x[M_ - 1] + S_[m - 1] * (new Shapes()).concave(x, m);
+    for (int m = 1; m <= this.m; m++) {
+      result[m - 1] = d * x[this.m - 1] + s[m - 1] * (new Shapes()).concave(x, m);
     }
 
     return result;
@@ -133,9 +133,9 @@ public class WFG4 extends WFG {
   }
 
   /**
-   * Evaluates a solutiontype
+   * Evaluates a solution
    *
-   * @param solution The solutiontype to evaluate
+   * @param solution The solution to evaluate
    * @throws org.uma.jmetal.util.JMetalException
    */
   public final void evaluate(Solution solution) throws JMetalException {

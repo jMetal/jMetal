@@ -27,7 +27,7 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.random.PseudoRandom;
-import org.uma.jmetal.util.wrapper.XReal;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 
 import java.util.Comparator;
 import java.util.HashMap;

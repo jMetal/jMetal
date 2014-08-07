@@ -80,7 +80,7 @@ public class Srinivas extends Problem {
 
     solution.setObjective(0, f[0]);
     solution.setObjective(1, f[1]);
-  } // evaluate
+  }
 
 
   /**

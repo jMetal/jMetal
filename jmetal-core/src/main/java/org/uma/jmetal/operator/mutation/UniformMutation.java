@@ -26,7 +26,7 @@ import org.uma.jmetal.encoding.solutiontype.ArrayRealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
-import org.uma.jmetal.util.wrapper.XReal;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 
 import java.util.HashMap;
 

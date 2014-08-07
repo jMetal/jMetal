@@ -24,7 +24,7 @@ package org.uma.jmetal.util;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
-import org.uma.jmetal.util.wrapper.XReal;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 
 import java.util.logging.Level;
 

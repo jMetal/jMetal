@@ -21,21 +21,11 @@
 package org.uma.jmetal.operator.mutation;
 
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.encoding.solutiontype.ArrayIntSolutionType;
 import org.uma.jmetal.encoding.solutiontype.ArrayRealAndBinarySolutionType;
-import org.uma.jmetal.encoding.solutiontype.ArrayRealSolutionType;
-import org.uma.jmetal.encoding.solutiontype.IntSolutionType;
-import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
 import org.uma.jmetal.encoding.variable.Binary;
-import org.uma.jmetal.operator.mutation.PolynomialMutation.Builder;
-import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
-import org.uma.jmetal.util.wrapper.XReal;
-
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 
 public class PolynomialBitFlipMutation extends Mutation {
   private static final double ETA_M_DEFAULT = 20.0;

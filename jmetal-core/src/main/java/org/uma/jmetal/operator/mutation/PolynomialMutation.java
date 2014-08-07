@@ -29,8 +29,8 @@ import org.uma.jmetal.encoding.solutiontype.IntSolutionType;
 import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
-import org.uma.jmetal.util.wrapper.XInt;
-import org.uma.jmetal.util.wrapper.XReal;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XInt;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 
 import java.util.HashMap;
 

@@ -33,7 +33,7 @@ import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.EqualSolutions;
 import org.uma.jmetal.util.comparator.FitnessComparator;
 import org.uma.jmetal.util.random.PseudoRandom;
-import org.uma.jmetal.util.wrapper.XReal;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 
 import java.util.Comparator;
 

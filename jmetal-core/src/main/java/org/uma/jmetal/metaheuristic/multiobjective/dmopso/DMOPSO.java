@@ -13,7 +13,7 @@ import org.uma.jmetal.qualityindicator.QualityIndicatorGetter;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
-import org.uma.jmetal.util.wrapper.XReal;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 
 import java.io.*;
 import java.util.StringTokenizer;

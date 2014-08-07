@@ -42,7 +42,7 @@ public class ConstrEx extends Problem {
     numberOfVariables = 2;
     numberOfObjectives = 2;
     numberOfConstraints = 2;
-    problemName = "Constr_Ex";
+    problemName = "ConstrEx";
 
     lowerLimit = new double[numberOfVariables];
     upperLimit = new double[numberOfVariables];
@@ -56,7 +56,7 @@ public class ConstrEx extends Problem {
     } else if (solutionType.compareTo("Real") == 0) {
       this.solutionType = new RealSolutionType(this);
     } else {
-      throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
+      throw new JMetalException("Error: solution type " + solutionType + " invalid");
     }
   }
 
@@ -73,9 +73,9 @@ public class ConstrEx extends Problem {
   }
 
   /**
-   * Evaluates the constraint overhead of a solutiontype
+   * Evaluates the constraint overhead of a solution
    *
-   * @param solution The solutiontype
+   * @param solution The solution
    * @throws org.uma.jmetal.util.JMetalException
    */
   public void evaluateConstraints(Solution solution) throws JMetalException {

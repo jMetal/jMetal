@@ -25,7 +25,7 @@ import org.uma.jmetal.encoding.variable.Binary;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.random.PseudoRandom;
-import org.uma.jmetal.util.wrapper.XReal;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 
 /**
 * This class implements a mutation operator to be applied to 
