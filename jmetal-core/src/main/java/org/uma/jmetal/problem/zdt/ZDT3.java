@@ -39,19 +39,19 @@ public class ZDT3 extends Problem {
    * Constructor.
    * Creates default instance of problem ZDT3 (30 decision variables.
    *
-   * @param solutionType The solutiontype type must "Real", "BinaryReal, and "ArrayReal".
+   * @param solutionType The solution type must "Real", "BinaryReal, and "ArrayReal".
    */
   public ZDT3(String solutionType) throws ClassNotFoundException, JMetalException {
-    this(solutionType, 30); // 30 variables by default
-  } // ZDT3
-
+    // 30 variables by default
+    this(solutionType, 30);
+  }
 
   /**
    * Constructor.
    * Creates a instance of ZDT3 problem.
    *
    * @param numberOfVariables Number of variables.
-   * @param solutionType      The solutiontype type must "Real", "BinaryReal, and "ArrayReal".
+   * @param solutionType      The solution type must "Real", "BinaryReal, and "ArrayReal".
    */
   public ZDT3(String solutionType, Integer numberOfVariables) throws JMetalException {
     this.numberOfVariables = numberOfVariables;

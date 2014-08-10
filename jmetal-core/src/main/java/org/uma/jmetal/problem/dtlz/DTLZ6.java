@@ -26,6 +26,7 @@ import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.Variable;
 import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 import org.uma.jmetal.util.JMetalException;
 
 /**
@@ -63,7 +64,7 @@ public class DTLZ6 extends Problem {
     for (int var = 0; var < this.numberOfVariables; var++) {
       lowerLimit[var] = 0.0;
       upperLimit[var] = 1.0;
-    } //for
+    }
 
     if (solutionType.compareTo("BinaryReal") == 0) {
       this.solutionType = new BinaryRealSolutionType(this);
@@ -76,15 +77,13 @@ public class DTLZ6 extends Problem {
 
   /** Evaluate() method */
   public void evaluate(Solution solution) throws JMetalException {
-    Variable[] gen = solution.getDecisionVariables();
-
     double[] x = new double[numberOfVariables];
     double[] f = new double[numberOfObjectives];
     double[] theta = new double[numberOfObjectives - 1];
     int k = numberOfVariables - numberOfObjectives + 1;
 
     for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = gen[i].getValue();
+      x[i] = XReal.getValue(solution, i) ;
     }
 
     double g = 0.0;

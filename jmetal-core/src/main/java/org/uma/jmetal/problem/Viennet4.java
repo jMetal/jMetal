@@ -25,6 +25,7 @@ import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 import org.uma.jmetal.util.JMetalException;
 
 /**
@@ -73,7 +74,7 @@ public class Viennet4 extends Problem {
     double[] f = new double[numberOfObjectives];
 
     for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = solution.getDecisionVariables()[i].getValue();
+      x[i] = XReal.getValue(solution, i) ;
     }
 
     f[0] = (x[0] - 2.0) * (x[0] - 2.0) / 2.0 +
@@ -96,8 +97,8 @@ public class Viennet4 extends Problem {
   public void evaluateConstraints(Solution solution) throws JMetalException {
     double[] constraint = new double[numberOfConstraints];
 
-    double x1 = solution.getDecisionVariables()[0].getValue();
-    double x2 = solution.getDecisionVariables()[1].getValue();
+    double x1 = XReal.getValue(solution, 0) ;
+    double x2 = XReal.getValue(solution, 1) ;
 
     constraint[0] = -x2 - (4.0 * x1) + 4.0;
     constraint[1] = x1 + 1.0;

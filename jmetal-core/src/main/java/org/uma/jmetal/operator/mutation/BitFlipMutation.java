@@ -27,6 +27,7 @@ import org.uma.jmetal.encoding.solutiontype.BinarySolutionType;
 import org.uma.jmetal.encoding.solutiontype.IntSolutionType;
 import org.uma.jmetal.encoding.variable.Binary;
 import org.uma.jmetal.encoding.variable.BinaryReal;
+import org.uma.jmetal.encoding.variable.Int;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
@@ -99,9 +100,9 @@ public class BitFlipMutation extends Mutation {
         for (int i = 0; i < solution.getDecisionVariables().length; i++) {
           if (PseudoRandom.randDouble() < probability) {
             int value = PseudoRandom.randInt(
-              (int) solution.getDecisionVariables()[i].getLowerBound(),
-              (int) solution.getDecisionVariables()[i].getUpperBound());
-            solution.getDecisionVariables()[i].setValue(value);
+                    ((Int) solution.getDecisionVariables()[i]).getLowerBound(),
+                    ((Int) solution.getDecisionVariables()[i]).getUpperBound());
+            ((Int)solution.getDecisionVariables()[i]).setValue(value);
           }
         }
       }
@@ -125,7 +126,7 @@ public class BitFlipMutation extends Mutation {
     Solution solution = (Solution) object;
 
     if (!solutionTypeIsValid(solution)) {
-      throw new JMetalException("BitFlipMutation.execute: the solutiontype " +
+      throw new JMetalException("BitFlipMutation.execute: the solution type " +
         "is not of the right type. The type should be 'Binary', " +
         "'BinaryReal' or 'Int', but " + solution.getType() + " is obtained");
     }

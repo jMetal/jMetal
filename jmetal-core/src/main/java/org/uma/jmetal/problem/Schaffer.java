@@ -26,6 +26,7 @@ import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.Variable;
 import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 import org.uma.jmetal.util.JMetalException;
 
 /**
@@ -38,7 +39,7 @@ public class Schaffer extends Problem {
    * Constructor.
    * Creates a default instance of problem Schaffer
    *
-   * @param solutionType The solutiontype type must "Real" or "BinaryReal".
+   * @param solutionType The solution type must "Real" or "BinaryReal".
    */
   public Schaffer(String solutionType) throws JMetalException {
     numberOfVariables = 1;
@@ -56,19 +57,17 @@ public class Schaffer extends Problem {
     } else if (solutionType.compareTo("Real") == 0) {
       this.solutionType = new RealSolutionType(this);
     } else {
-      throw new JMetalException("Error: solutiontype type " + solutionType + " invalid") ;
+      throw new JMetalException("Error: solution type " + solutionType + " invalid") ;
     }
   }
 
   /** Evaluate() method */
   public void evaluate(Solution solution) throws JMetalException {
-    Variable[] variable = solution.getDecisionVariables();
-
     double[] f = new double[numberOfObjectives];
-    f[0] = variable[0].getValue() * variable[0].getValue();
+    double value = XReal.getValue(solution, 0) ;
+    f[0] = value * value;
 
-    f[1] = (variable[0].getValue() - 2.0) *
-        (variable[0].getValue() - 2.0);
+    f[1] = (value - 2.0) * (value - 2.0);
 
     solution.setObjective(0, f[0]);
     solution.setObjective(1, f[1]);

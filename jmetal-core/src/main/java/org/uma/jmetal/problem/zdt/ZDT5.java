@@ -39,8 +39,9 @@ public class ZDT5 extends Problem {
    * This problem allows only "Binary" representations.
    */
   public ZDT5(String solutionType) throws ClassNotFoundException, JMetalException {
-    this(solutionType, 11); // 11 variables by default
-  } // ZDT5
+    // 11 variables by default
+    this(solutionType, 11);
+  }
 
   /**
    * Creates a instance of problem ZDT5
@@ -63,7 +64,7 @@ public class ZDT5 extends Problem {
     if (solutionType.compareTo("Binary") == 0) {
       this.solutionType = new BinarySolutionType(this);
     } else {
-      throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
+      throw new JMetalException("Error: solution type " + solutionType + " invalid");
     }
   }
 

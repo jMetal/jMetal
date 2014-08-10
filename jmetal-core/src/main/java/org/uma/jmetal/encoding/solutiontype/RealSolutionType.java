@@ -28,7 +28,7 @@ import org.uma.jmetal.core.Variable;
 import org.uma.jmetal.encoding.variable.Real;
 
 /** Class representing a solution type type composed of real variables */
-public class RealSolutionType extends SolutionType implements RealSolutionTypeTemplate {
+public class RealSolutionType extends SolutionType implements GenericRealSolutionType {
 
   /** Constructor */
   public RealSolutionType(Problem problem) {
@@ -50,12 +50,12 @@ public class RealSolutionType extends SolutionType implements RealSolutionTypeTe
 
   @Override
   public double getRealValue(Solution solution, int index) {
-    return solution.getDecisionVariables()[index].getValue() ;
+    return ((Real)solution.getDecisionVariables()[index]).getValue() ;
   }
 
   @Override
   public void setRealValue(Solution solution, int index, double value) {
-    solution.getDecisionVariables()[index].setValue(value);
+    ((Real)solution.getDecisionVariables()[index]).setValue(value);
   }
 
   @Override
@@ -64,10 +64,10 @@ public class RealSolutionType extends SolutionType implements RealSolutionTypeTe
   }
 
   @Override public double getRealUpperBound(Solution solution, int index) {
-    return solution.getDecisionVariables()[index].getUpperBound() ;
+    return ((Real)solution.getDecisionVariables()[index]).getUpperBound() ;
   }
 
   @Override public double getRealLowerBound(Solution solution, int index) {
-    return solution.getDecisionVariables()[index].getLowerBound() ;
+    return ((Real)solution.getDecisionVariables()[index]).getLowerBound() ;
   }
 }

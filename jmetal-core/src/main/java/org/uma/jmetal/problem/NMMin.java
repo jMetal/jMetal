@@ -59,7 +59,7 @@ public class NMMin extends Problem {
     if (solutionType.compareTo("Integer") == 0) {
       this.solutionType = new IntSolutionType(this);
     } else {
-      throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
+      throw new JMetalException("Error: solution type " + solutionType + " invalid");
     }
   }
 

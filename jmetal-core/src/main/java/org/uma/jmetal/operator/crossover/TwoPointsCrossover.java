@@ -153,7 +153,7 @@ public class TwoPointsCrossover extends Crossover {
     } else {
       JMetalLogger.logger.severe("TwoPointsCrossover.doCrossover: invalid " +
         "type" +
-        parent1.getDecisionVariables()[0].getVariableType());
+        parent1.getType().getClass());
       Class<String> cls = java.lang.String.class;
       String name = cls.getName();
       throw new JMetalException("Exception in " + name + ".doCrossover()");

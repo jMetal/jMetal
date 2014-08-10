@@ -26,18 +26,14 @@ import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.Variable;
 import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 import org.uma.jmetal.util.JMetalException;
 
 /**
  * Class representing problem Srinivas
  */
 public class Srinivas extends Problem {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = 7618455041050464606L;
-
 
   /**
    * Constructor.
@@ -63,18 +59,16 @@ public class Srinivas extends Problem {
     } else if (solutionType.compareTo("Real") == 0) {
       this.solutionType = new RealSolutionType(this);
     } else {
-      throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
+      throw new JMetalException("Error: solution type " + solutionType + " invalid");
     }
   }
 
   /** Evaluate() method */
   public void evaluate(Solution solution) throws JMetalException {
-    Variable[] variable = solution.getDecisionVariables();
-
     double[] f = new double[numberOfObjectives];
 
-    double x1 = variable[0].getValue();
-    double x2 = variable[1].getValue();
+    double x1 = XReal.getValue(solution, 0) ;
+    double x2 = XReal.getValue(solution, 1) ;
     f[0] = 2.0 + (x1 - 2.0) * (x1 - 2.0) + (x2 - 1.0) * (x2 - 1.0);
     f[1] = 9.0 * x1 - (x2 - 1.0) * (x2 - 1.0);
 
@@ -90,12 +84,10 @@ public class Srinivas extends Problem {
    * @throws org.uma.jmetal.util.JMetalException
    */
   public void evaluateConstraints(Solution solution) throws JMetalException {
-    Variable[] variable = solution.getDecisionVariables();
-
     double[] constraint = new double[this.getNumberOfConstraints()];
 
-    double x1 = variable[0].getValue();
-    double x2 = variable[1].getValue();
+    double x1 = XReal.getValue(solution, 0) ;
+    double x2 = XReal.getValue(solution, 1) ;
 
     constraint[0] = 1.0 - (x1 * x1 + x2 * x2) / 225.0;
     constraint[1] = (3.0 * x2 - x1) / 10.0 - 1.0;

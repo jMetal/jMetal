@@ -25,6 +25,7 @@ import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 import org.uma.jmetal.util.JMetalException;
 
 /**
@@ -61,14 +62,15 @@ public class Golinski extends Problem {
 
   /** Evaluate() method */
   public void evaluate(Solution solution) throws JMetalException {
+    XReal sol = new XReal(solution) ;
     double x1, x2, x3, x4, x5, x6, x7;
-    x1 = solution.getDecisionVariables()[0].getValue();
-    x2 = solution.getDecisionVariables()[1].getValue();
-    x3 = solution.getDecisionVariables()[2].getValue();
-    x4 = solution.getDecisionVariables()[3].getValue();
-    x5 = solution.getDecisionVariables()[4].getValue();
-    x6 = solution.getDecisionVariables()[5].getValue();
-    x7 = solution.getDecisionVariables()[6].getValue();
+    x1 = sol.getValue(0);
+    x2 = sol.getValue(1);
+    x3 = sol.getValue(2);
+    x4 = sol.getValue(3);
+    x5 = sol.getValue(4);
+    x6 = sol.getValue(5);
+    x7 = sol.getValue(6);
 
     double f1 = 0.7854 * x1 * x2 * x2 * ((10 * x3 * x3) / 3.0 + 14.933 * x3 - 43.0934) -
       1.508 * x1 * (x6 * x6 + x7 * x7) + 7.477 * (x6 * x6 * x6 + x7 * x7 * x7) +
@@ -84,16 +86,15 @@ public class Golinski extends Problem {
   /** EvaluateConstraints() method */
   public void evaluateConstraints(Solution solution) throws JMetalException {
     double[] constraint = new double[numberOfConstraints];
+    XReal sol = new XReal(solution) ;
     double x1, x2, x3, x4, x5, x6, x7;
-
-    x1 = solution.getDecisionVariables()[0].getValue();
-    x2 = solution.getDecisionVariables()[1].getValue();
-    x3 = solution.getDecisionVariables()[2].getValue();
-    x4 = solution.getDecisionVariables()[3].getValue();
-    x5 = solution.getDecisionVariables()[4].getValue();
-    x6 = solution.getDecisionVariables()[5].getValue();
-    x7 = solution.getDecisionVariables()[6].getValue();
-
+    x1 = sol.getValue(0);
+    x2 = sol.getValue(1);
+    x3 = sol.getValue(2);
+    x4 = sol.getValue(3);
+    x5 = sol.getValue(4);
+    x6 = sol.getValue(5);
+    x7 = sol.getValue(6);
 
     constraint[0] = -((1.0 / (x1 * x2 * x2 * x3)) - (1.0 / 27.0));
     constraint[1] = -((1.0 / (x1 * x2 * x2 * x3 * x3)) - (1.0 / 397.5));

@@ -26,6 +26,7 @@ import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.Variable;
 import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 import org.uma.jmetal.util.JMetalException;
 
 /**
@@ -71,17 +72,15 @@ public class UF4 extends Problem {
     } else if (solutionType.compareTo("Real") == 0) {
       this.solutionType = new RealSolutionType(this);
     } else {
-      throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
+      throw new JMetalException("Error: solution type " + solutionType + " invalid");
     }
   }
 
   /** Evaluate() method */
   public void evaluate(Solution solution) throws JMetalException {
-    Variable[] decisionVariables = solution.getDecisionVariables();
-
     double[] x = new double[numberOfVariables];
     for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = decisionVariables[i].getValue();
+      x[i] = XReal.getValue(solution, i) ;
     }
 
     int count1, count2;

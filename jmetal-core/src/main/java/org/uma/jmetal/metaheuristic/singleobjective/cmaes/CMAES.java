@@ -21,6 +21,7 @@
 package org.uma.jmetal.metaheuristic.singleobjective.cmaes;
 
 import org.uma.jmetal.core.*;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
@@ -221,15 +222,15 @@ public class CMAES extends Algorithm {
   }
 
   private SolutionSet genoPhenoTransformation(double[][] popx)
-    throws JMetalException, ClassNotFoundException {
+          throws JMetalException, ClassNotFoundException {
 
     SolutionSet population = new SolutionSet(populationSize);
     for (int i = 0; i < populationSize; i++) {
-      Solution solution = new Solution(problem);
+      XReal solution = new XReal(new Solution(problem)) ;
       for (int j = 0; j < problem.getNumberOfVariables(); j++) {
-        solution.getDecisionVariables()[j].setValue(popx[i][j]);
+        solution.setValue(j, popx[i][j]);
       }
-      population.add(solution);
+      population.add(solution.getSolution());
     }
     return population;
 
@@ -238,10 +239,9 @@ public class CMAES extends Algorithm {
   private boolean isFeasible(Solution solution) throws JMetalException {
 
     boolean res = true;
-    Variable[] x = solution.getDecisionVariables();
-
+    XReal x = new XReal(solution) ;
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      double value = x[i].getValue();
+      double value = x.getValue(i);
       if ((value < problem.getLowerLimit(i)) || (value > problem.getUpperLimit(i))) {
         res = false;
       }
@@ -264,18 +264,18 @@ public class CMAES extends Algorithm {
 
   private Solution genoPhenoTransformation(double[] x) throws JMetalException, ClassNotFoundException {
 
-    Solution solution = new Solution(problem);
+    XReal solution = new XReal(new Solution(problem));
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      solution.getDecisionVariables()[i].setValue(x[i]);
+      solution.setValue(i, x[i]);
     }
-    return solution;
+    return solution.getSolution();
 
   }
 
   private void storeBest(Comparator<Solution> comparator) {
     Solution bestInPopulation = new Solution(population_.best(comparator));
     if ((bestSolutionEver == null) || (bestSolutionEver.getObjective(0) > bestInPopulation
-      .getObjective(0))) {
+            .getObjective(0))) {
       bestSolutionEver = bestInPopulation;
     }
 
@@ -322,8 +322,8 @@ public class CMAES extends Algorithm {
     // cumulation for sigma (ps)
     for (int i = 0; i < N; i++) {
       ps[i] = (1. - cs) * ps[i]
-        + Math.sqrt(cs * (2. - cs) * mueff)
-        * artmp[i];
+              + Math.sqrt(cs * (2. - cs) * mueff)
+              * artmp[i];
     }
 
     // calculate norm(ps)^2
@@ -335,12 +335,12 @@ public class CMAES extends Algorithm {
     // cumulation for covariance matrix (pc)
     int hsig = 0;
     if ((Math.sqrt(psxps) / Math.sqrt(1. - Math.pow(1. - cs, 2. * counteval / lambda)) / chiN)
-      < (1.4 + 2. / (N + 1.))) {
+            < (1.4 + 2. / (N + 1.))) {
       hsig = 1;
     }
     for (int i = 0; i < N; i++) {
       pc[i] = (1. - cc) * pc[i]
-        + hsig * Math.sqrt(cc * (2. - cc) * mueff) * (xmean[i] - xold[i]) / sigma;
+              + hsig * Math.sqrt(cc * (2. - cc) * mueff) * (xmean[i] - xold[i]) / sigma;
     }
 
 
@@ -349,20 +349,20 @@ public class CMAES extends Algorithm {
     for (int i = 0; i < N; i++) {
       for (int j = 0; j <= i; j++) {
         C[i][j] = (1 - c1 - cmu)
-          * C[i][j]
-          + c1
-          * (pc[i] * pc[j] + (1 - hsig) * cc
-          * (2. - cc) * C[i][j]);
+                * C[i][j]
+                + c1
+                * (pc[i] * pc[j] + (1 - hsig) * cc
+                * (2. - cc) * C[i][j]);
         for (int k = 0; k < mu; k++) {
           /*
            * additional rank mu
            * update
            */
           C[i][j] += cmu
-            * weights[k]
-            * (arx[arindex[k]][i] - xold[i])
-            * (arx[arindex[k]][j] - xold[j]) / sigma
-            / sigma;
+                  * weights[k]
+                  * (arx[arindex[k]][i] - xold[i])
+                  * (arx[arindex[k]][j] - xold[j]) / sigma
+                  / sigma;
         }
       }
     }
@@ -397,7 +397,7 @@ public class CMAES extends Algorithm {
       for (int i = 0; i < N; i++) {
         if (diagD[i] < 0) { // numerical problem?
           JMetalLogger.logger.log(Level.SEVERE,
-            "org.uma.jmetal.metaheuristic.cmaes.CMAES.updateDistribution(): WARNING - an eigenvalue has become negative.");
+                  "org.uma.jmetal.metaheuristic.cmaes.CMAES.updateDistribution(): WARNING - an eigenvalue has become negative.");
           counteval = maxEvaluations;
         }
         diagD[i] = Math.sqrt(diagD[i]);

@@ -50,7 +50,7 @@ public class Kursawe extends Problem {
    * Creates a new instance of the Kursawe problem.
    *
    * @param numberOfVariables Number of variables of the problem
-   * @param solutionType      The solutiontype type must "Real", "BinaryReal, and "ArrayReal".
+   * @param solutionType      The solution type must "Real", "BinaryReal, and "ArrayReal".
    */
   public Kursawe(String solutionType, Integer numberOfVariables) throws JMetalException {
     this.numberOfVariables = numberOfVariables;
@@ -73,7 +73,7 @@ public class Kursawe extends Problem {
     } else if (solutionType.compareTo("ArrayReal") == 0) {
       this.solutionType = new ArrayRealSolutionType(this);
     } else {
-      throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
+      throw new JMetalException("Error: solution type " + solutionType + " invalid");
     }
   }
 

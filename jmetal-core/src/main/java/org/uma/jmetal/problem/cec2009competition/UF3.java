@@ -26,6 +26,7 @@ import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.Variable;
 import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 import org.uma.jmetal.util.JMetalException;
 
 /**
@@ -54,12 +55,11 @@ public class UF3 extends Problem {
     this.numberOfVariables = numberOfVariables;
     numberOfObjectives = 2;
     numberOfConstraints = 0;
-    problemName = "CEC2009_UF3";
+    problemName = "UF3";
 
     upperLimit = new double[this.numberOfVariables];
     lowerLimit = new double[this.numberOfVariables];
 
-    // Establishes upper and lower limits for the variables
     for (int var = 0; var < this.numberOfVariables; var++) {
       lowerLimit[var] = 0.0;
       upperLimit[var] = 1.0;
@@ -76,11 +76,9 @@ public class UF3 extends Problem {
 
   /** Evaluate() method */
   public void evaluate(Solution solution) throws JMetalException {
-    Variable[] decisionVariables = solution.getDecisionVariables();
-
     double[] x = new double[numberOfVariables];
     for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = decisionVariables[i].getValue();
+      x[i] = XReal.getValue(solution, i) ;
     }
 
     int count1, count2;
@@ -88,7 +86,6 @@ public class UF3 extends Problem {
     sum1 = sum2 = 0.0;
     count1 = count2 = 0;
     prod1 = prod2 = 1.0;
-
 
     for (int j = 2; j <= numberOfVariables; j++) {
       yj = x[j - 1] - Math.pow(x[0], 0.5 * (1.0 + 3.0 * (j - 2.0) / (numberOfVariables - 2.0)));

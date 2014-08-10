@@ -25,6 +25,7 @@ import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.Variable;
 import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 import org.uma.jmetal.util.JMetalException;
 
 public class Rosenbrock extends Problem {
@@ -56,23 +57,22 @@ public class Rosenbrock extends Problem {
     } else if (solutionType.compareTo("Real") == 0) {
       this.solutionType = new RealSolutionType(this);
     } else {
-      throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
+      throw new JMetalException("Error: solution type " + solutionType + " invalid");
     }
   }
 
   /** Evaluate() method */
   public void evaluate(Solution solution) throws JMetalException {
-    Variable[] decisionVariables = solution.getDecisionVariables();
-
-    double sum = 0.0;
+    XReal sol = new XReal(solution) ;
     double[] x = new double[numberOfVariables];
 
     for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = decisionVariables[i].getValue();
+      x[i] = sol.getValue(i);
     }
 
+    double sum = 0.0;
+
     for (int i = 0; i < numberOfVariables - 1; i++) {
-      //sum += 100.0 * (x[i+1]-x[i]*x[i])*(x[i+1]-x[i]*x[i]) +(x[i]-1)*(x[i]-1) ;
       double temp1 = (x[i] * x[i]) - x[i + 1];
       double temp2 = x[i] - 1.0;
       sum += (100.0 * temp1 * temp1) + (temp2 * temp2);

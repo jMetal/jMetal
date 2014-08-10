@@ -33,7 +33,7 @@ import org.uma.jmetal.util.random.PseudoRandom;
  * Class implementing a decision variable representing an array of integers.
  * The integer values of the array have their own bounds.
  */
-public class ArrayInt extends Variable {
+public class ArrayInt implements Variable {
   private static final long serialVersionUID = 2165010259190501390L;
 
   private Problem problem;

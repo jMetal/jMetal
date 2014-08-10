@@ -88,7 +88,7 @@ public class PolynomialMutation extends Mutation {
     Solution solution = (Solution) object;
 
     if (!solutionTypeIsValid(solution)) {
-      throw new JMetalException("PolynomialMutation.execute: the solutiontype " +
+      throw new JMetalException("PolynomialMutation.execute: the solution " +
         "type " + solution.getType() + " is not allowed with this operator");
     }
 

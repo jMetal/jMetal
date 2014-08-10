@@ -32,7 +32,7 @@ import java.util.logging.Level;
 /**
  * This class implements a Real value decision variable
  */
-public class Real extends Variable {
+public class Real implements GenericRealVariable {
 	private static final long serialVersionUID = -227984897558565037L;
 
 	private double value;
@@ -54,7 +54,7 @@ public class Real extends Variable {
 		this.value = value;
 	}
 
-	public Real(Variable variable) throws JMetalException {
+	public Real(Real variable) throws JMetalException {
 		lowerBound = variable.getLowerBound();
 		upperBound = variable.getUpperBound();
 		value = variable.getValue();

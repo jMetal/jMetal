@@ -31,7 +31,7 @@ import org.uma.jmetal.encoding.variable.ArrayReal;
  * Class representing the solutiontype type of solutions composed of an ArrayReal
  * encoding.variable
  */
-public class ArrayRealSolutionType extends SolutionType implements RealSolutionTypeTemplate {
+public class ArrayRealSolutionType extends SolutionType implements GenericRealSolutionType {
 
   /** Constructor */
   public ArrayRealSolutionType(Problem problem) {

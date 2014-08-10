@@ -38,7 +38,7 @@ import org.uma.jmetal.encoding.variable.Binary;
  * - The upperLimit and lowerLimit arrays must have the length indicated
  * by numberOfVariables.
  */
-public class ArrayRealAndBinarySolutionType extends SolutionType implements RealSolutionTypeTemplate {
+public class ArrayRealAndBinarySolutionType extends SolutionType implements GenericRealSolutionType {
 
   private final int binaryStringLength;
   private final int numberOfRealVariables;

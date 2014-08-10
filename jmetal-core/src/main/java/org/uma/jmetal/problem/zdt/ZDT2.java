@@ -33,10 +33,6 @@ import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
  * Class representing problem ZDT2
  */
 public class ZDT2 extends Problem {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = 469083313731522351L;
 
   /**
@@ -46,16 +42,16 @@ public class ZDT2 extends Problem {
    * @param solutionType The solution type must "Real", "BinaryReal, and "ArrayReal".
    */
   public ZDT2(String solutionType) throws ClassNotFoundException, JMetalException {
-    this(solutionType, 30); // 30 variables by default
-  } // ZDT2
-
+    // 30 variables by default
+    this(solutionType, 30);
+  }
 
   /**
    * Constructor.
    * Creates a new ZDT2 problem instance.
    *
    * @param numberOfVariables Number of variables
-   * @param solutionType      The solutiontype type must "Real" or "BinaryReal".
+   * @param solutionType      The solution type must "Real" or "BinaryReal".
    */
   public ZDT2(String solutionType, Integer numberOfVariables) throws JMetalException {
     this.numberOfVariables = numberOfVariables;

@@ -26,6 +26,7 @@ import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.Variable;
 import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 import org.uma.jmetal.util.JMetalException;
 
 /** Class representing problem Constr_Ex */
@@ -34,7 +35,7 @@ public class ConstrEx extends Problem {
 
   /**
    * Constructor
-   * Creates a default instance of the Constr_Ex problem
+   * Creates a default instance of the ConstrEx problem
    *
    * @param solutionType The solution type type must "Real" or "BinaryReal".
    */
@@ -62,11 +63,11 @@ public class ConstrEx extends Problem {
 
   /** Evaluate() method */
   public void evaluate(Solution solution) throws JMetalException {
-    Variable[] variable = solution.getDecisionVariables();
+    XReal sol = new XReal(solution) ;
 
     double[] f = new double[numberOfObjectives];
-    f[0] = variable[0].getValue();
-    f[1] = (1.0 + variable[1].getValue()) / variable[0].getValue();
+    f[0] = sol.getValue(0);
+    f[1] = (1.0 + sol.getValue(1)) / sol.getValue(0);
 
     solution.setObjective(0, f[0]);
     solution.setObjective(1, f[1]);
@@ -79,11 +80,11 @@ public class ConstrEx extends Problem {
    * @throws org.uma.jmetal.util.JMetalException
    */
   public void evaluateConstraints(Solution solution) throws JMetalException {
+    XReal sol = new XReal(solution) ;
+    double x1 = sol.getValue(0);
+    double x2 = sol.getValue(1);
+
     double[] constraint = new double[this.getNumberOfConstraints()];
-
-    double x1 = solution.getDecisionVariables()[0].getValue();
-    double x2 = solution.getDecisionVariables()[1].getValue();
-
     constraint[0] = (x2 + 9 * x1 - 6.0);
     constraint[1] = (-x2 + 9 * x1 - 1.0);
 

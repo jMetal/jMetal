@@ -1,4 +1,4 @@
-//  RealSolutionTypeTemplate.java
+//  IntSolutionTypeTemplate.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -22,11 +22,11 @@ package org.uma.jmetal.encoding.solutiontype;
 
 import org.uma.jmetal.core.Solution;
 
-/** Template for solution types including a real encoding */
-public interface RealSolutionTypeTemplate {
-  public double getRealValue(Solution solution, int index) ;
-  public void setRealValue(Solution solution, int index, double value) ;
-  public int getNumberOfRealVariables(Solution solution_);
-  public double getRealUpperBound(Solution solution, int index) ;
-  public double getRealLowerBound(Solution solution, int index) ;
+/** Template for solution types including an integer encoding */
+public interface GenericIntSolutionType {
+  public int getIntValue(Solution solution, int index) ;
+  public void setIntValue(Solution solution, int index, int value) ;
+  public int getNumberOfIntVariables(Solution solution_);
+  public int getIntUpperBound(Solution solution, int index) ;
+  public int getIntLowerBound(Solution solution, int index) ;
 }

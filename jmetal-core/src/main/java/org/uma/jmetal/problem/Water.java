@@ -25,6 +25,7 @@ import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 import org.uma.jmetal.util.JMetalException;
 
 /**
@@ -33,7 +34,6 @@ import org.uma.jmetal.util.JMetalException;
 public class Water extends Problem {
   private static final long serialVersionUID = -3540685430646123468L;
 
-  // defining the lower and upper limits
   public static final double[] LOWERLIMIT = {0.01, 0.01, 0.01};
   public static final double[] UPPERLIMIT = {0.45, 0.10, 0.10};
 
@@ -56,29 +56,25 @@ public class Water extends Problem {
     for (int var = 0; var < numberOfVariables; var++) {
       lowerLimit[var] = LOWERLIMIT[var];
       upperLimit[var] = UPPERLIMIT[var];
-    } // for
+    }
 
     if (solutionType.compareTo("BinaryReal") == 0) {
       this.solutionType = new BinaryRealSolutionType(this);
     } else if (solutionType.compareTo("Real") == 0) {
       this.solutionType = new RealSolutionType(this);
     } else {
-      throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
+      throw new JMetalException("Error: solution type " + solutionType + " invalid");
     }
   }
 
-  /**
-   * Evaluates a solution
-   *
-   * @param solution The solution to evaluate
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Evaluate() method */
   public void evaluate(Solution solution) throws JMetalException {
-    double[] x = new double[3]; // 3 decision variables
-    double[] f = new double[5]; // 5 functions
-    x[0] = solution.getDecisionVariables()[0].getValue();
-    x[1] = solution.getDecisionVariables()[1].getValue();
-    x[2] = solution.getDecisionVariables()[2].getValue();
+    double[] x = new double[numberOfVariables];
+    double[] f = new double[numberOfObjectives];
+
+    for (int i = 0 ; i < numberOfVariables; i++) {
+      x[i]= XReal.getValue(solution, i) ;
+    }
 
     // First function
     f[0] = 106780.37 * (x[1] + x[2]) + 61704.67;
@@ -100,12 +96,12 @@ public class Water extends Problem {
 
   /** Evaluate() method */
   public void evaluateConstraints(Solution solution) throws JMetalException {
-    double[] constraint = new double[7]; // 7 constraints
-    double[] x = new double[3]; // 3 objectives
+    double[] constraint = new double[numberOfConstraints];
+    double[] x = new double[numberOfObjectives];
 
-    x[0] = solution.getDecisionVariables()[0].getValue();
-    x[1] = solution.getDecisionVariables()[1].getValue();
-    x[2] = solution.getDecisionVariables()[2].getValue();
+    for (int i = 0 ; i < numberOfVariables; i++) {
+      x[i]= XReal.getValue(solution, i) ;
+    }
 
     constraint[0] = 1 - (0.00139 / (x[0] * x[1]) + 4.94 * x[2] - 0.08);
     constraint[1] = 1 - (0.000306 / (x[0] * x[1]) + 1.082 * x[2] - 0.0986);

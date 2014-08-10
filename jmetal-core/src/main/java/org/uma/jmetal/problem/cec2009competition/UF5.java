@@ -26,6 +26,7 @@ import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.Variable;
 import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 import org.uma.jmetal.util.JMetalException;
 
 /**
@@ -48,7 +49,7 @@ public class UF5 extends Problem {
   }
 
   /**
-   * Creates a new instance of problem CEC2009_UF5.
+   * Creates a new instance of problem UF5.
    */
   public UF5(String solutionType, Integer numberOfVariables, int n, double epsilon)
     throws JMetalException {
@@ -81,11 +82,9 @@ public class UF5 extends Problem {
 
   /** Execute() method */
   public void evaluate(Solution solution) throws JMetalException {
-    Variable[] decisionVariables = solution.getDecisionVariables();
-
     double[] x = new double[numberOfVariables];
     for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = decisionVariables[i].getValue();
+      x[i] = XReal.getValue(solution, i) ;
     }
 
     int count1, count2;

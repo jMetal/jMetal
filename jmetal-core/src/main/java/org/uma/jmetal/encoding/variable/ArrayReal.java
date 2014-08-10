@@ -33,7 +33,7 @@ import org.uma.jmetal.util.random.PseudoRandom;
  * Class implementing a decision encoding.variable representing an array of real values.
  * The real values of the array have their own bounds.
  */
-public class ArrayReal extends Variable {
+public class ArrayReal implements Variable {
   private static final long serialVersionUID = -731434436787291959L;
 
   private Problem problem;

@@ -29,7 +29,7 @@ import org.uma.jmetal.encoding.variable.Int;
 /**
  * Class representing the solutiontype type of solutions composed of Int variables
  */
-public class IntSolutionType extends SolutionType implements IntSolutionTypeTemplate {
+public class IntSolutionType extends SolutionType implements GenericIntSolutionType {
 
   /** Constructor */
   public IntSolutionType(Problem problem) {
@@ -50,11 +50,11 @@ public class IntSolutionType extends SolutionType implements IntSolutionTypeTemp
   
   @Override
   public int getIntValue(Solution solution, int index) {
-    return (int)solution.getDecisionVariables()[index].getValue() ;
+    return ((Int)solution.getDecisionVariables()[index]).getValue() ;
   }
 
   @Override public void setIntValue(Solution solution, int index, int value) {
-    solution.getDecisionVariables()[index].setValue(value) ;
+    ((Int)solution.getDecisionVariables()[index]).setValue(value) ;
   }
 
   @Override public int getNumberOfIntVariables(Solution solution) {
@@ -62,10 +62,10 @@ public class IntSolutionType extends SolutionType implements IntSolutionTypeTemp
   }
 
   @Override public int getIntUpperBound(Solution solution, int index) {
-    return (int)solution.getDecisionVariables()[index].getUpperBound() ;
+    return ((Int)solution.getDecisionVariables()[index]).getUpperBound() ;
   }
 
   @Override public int getIntLowerBound(Solution solution, int index) {
-    return (int)solution.getDecisionVariables()[index].getLowerBound() ;
+    return ((Int)solution.getDecisionVariables()[index]).getLowerBound() ;
   }
 }

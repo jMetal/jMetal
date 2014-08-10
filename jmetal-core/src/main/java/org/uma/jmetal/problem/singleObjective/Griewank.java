@@ -26,6 +26,7 @@ import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.Variable;
 import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 import org.uma.jmetal.util.JMetalException;
 
 /**
@@ -59,21 +60,20 @@ public class Griewank extends Problem {
     } else if (solutionType.compareTo("Real") == 0) {
       this.solutionType = new RealSolutionType(this);
     } else {
-      throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
+      throw new JMetalException("Error: solution type " + solutionType + " invalid");
     }
   }
 
   /** Evaluate() method */
   public void evaluate(Solution solution) throws JMetalException {
-    Variable[] decisionVariables = solution.getDecisionVariables();
+    XReal sol = new XReal(solution) ;
 
     double sum = 0.0;
     double mult = 1.0;
     double d = 4000.0;
     for (int var = 0; var < numberOfVariables; var++) {
-      sum += decisionVariables[var].getValue() *
-        decisionVariables[var].getValue();
-      mult *= Math.cos(decisionVariables[var].getValue() / Math.sqrt(var + 1));
+      sum += sol.getValue(var) * sol.getValue(var);
+      mult *= Math.cos(sol.getValue(var) / Math.sqrt(var + 1));
     }
 
     solution.setObjective(0, 1.0 / d * sum - mult + 1.0);

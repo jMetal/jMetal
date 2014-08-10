@@ -29,7 +29,7 @@ import java.util.Arrays;
 /**
  * Class implementing a permutation of integer decision encoding.variable
  */
-public class Permutation extends Variable {
+public class Permutation implements Variable {
   private static final long serialVersionUID = 2657470069340722041L;
 
   private int[] vector;

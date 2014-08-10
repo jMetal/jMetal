@@ -30,7 +30,7 @@ import java.util.BitSet;
  * This class extends the Binary class to represent a Real encoding.variable encoded by
  * a binary string
  */
-public class BinaryReal extends Binary {
+public class BinaryReal extends Binary implements GenericRealVariable {
   private static final long serialVersionUID = 7465120044544948197L;
 
   public static final int DEFAULT_PRECISION = 30;
@@ -86,7 +86,6 @@ public class BinaryReal extends Binary {
     return value;
   }
 
-  @Override
   public void setValue(double value) throws JMetalException {
     if (numberOfBits <= 24 && lowerBound >= 0) {
       BitSet bitSet;

@@ -35,45 +35,44 @@ public class Transformations {
   private static final float epsilon = (float) 1.0e-10;
 
   /**
-   * b_poly transformation
+   * bPoly transformation
    *
    * @throws org.uma.jmetal.util.JMetalException
    */
-  public float b_poly(float y, float alpha) throws JMetalException {
+  public float bPoly(float y, float alpha) throws JMetalException {
     if (!(alpha > 0)) {
 
-      JMetalLogger.logger.severe("wfg.Transformations.b_poly: Param alpha " +
+      JMetalLogger.logger.severe("wfg.Transformations.bPoly: Param alpha " +
         "must be > 0");
       Class<String> cls = java.lang.String.class;
       String name = cls.getName();
-      throw new JMetalException("Exception in " + name + ".b_poly()");
+      throw new JMetalException("Exception in " + name + ".bPoly()");
     }
 
-    return correct_to_01((float) StrictMath.pow(y, alpha));
+    return correctTo01((float) StrictMath.pow(y, alpha));
   }
 
-
   /**
-   * b_flat transformation
+   * bFlat transformation
    */
-  public float b_flat(float y, float A, float B, float C) {
+  public float bFlat(float y, float A, float B, float C) {
     float tmp1 = Math.min((float) 0, (float) Math.floor(y - B)) * A * (B - y) / B;
     float tmp2 = Math.min((float) 0, (float) Math.floor(C - y)) * (1 - A) * (y - C) / (1 - C);
 
-    return correct_to_01(A + tmp1 - tmp2);
+    return correctTo01(A + tmp1 - tmp2);
   }
 
   /**
-   * s_linear transformation
+   * sLinear transformation
    */
-  public float s_linear(float y, float A) {
-    return correct_to_01(Math.abs(y - A) / (float) Math.abs(Math.floor(A - y) + A));
+  public float sLinear(float y, float A) {
+    return correctTo01(Math.abs(y - A) / (float) Math.abs(Math.floor(A - y) + A));
   }
 
   /**
-   * s_decept transformation
+   * sDecept transformation
    */
-  public float s_decept(float y, float A, float B, float C) {
+  public float sDecept(float y, float A, float B, float C) {
     float tmp, tmp1, tmp2;
 
     tmp1 = (float) Math.floor(y - A + B) * ((float) 1.0 - C + (A - B) / B) / (A - B);
@@ -83,13 +82,13 @@ public class Transformations {
 
     tmp = Math.abs(y - A) - B;
 
-    return correct_to_01((float) 1 + tmp * (tmp1 + tmp2 + (float) 1.0 / B));
+    return correctTo01((float) 1 + tmp * (tmp1 + tmp2 + (float) 1.0 / B));
   }
 
   /**
-   * s_multi transformation
+   * sMulti transformation
    */
-  public float s_multi(float y, int A, int B, float C) {
+  public float sMulti(float y, int A, int B, float C) {
     float tmp1, tmp2;
 
     tmp1 = ((float) 4.0 * A + (float) 2.0) *
@@ -99,26 +98,26 @@ public class Transformations {
       (float) StrictMath.pow(Math.abs(y - C) / ((float) 2.0 * ((float) Math.floor(C - y) + C))
         , (float) 2.0);
 
-    return correct_to_01(((float) 1.0 + (float) Math.cos(tmp1) + tmp2) / (B + (float) 2.0));
+    return correctTo01(((float) 1.0 + (float) Math.cos(tmp1) + tmp2) / (B + (float) 2.0));
   }
 
   /**
-   * r_sum transformation
+   * rSum transformation
    */
-  public float r_sum(float[] y, float[] w) {
+  public float rSum(float[] y, float[] w) {
     float tmp1 = (float) 0.0, tmp2 = (float) 0.0;
     for (int i = 0; i < y.length; i++) {
       tmp1 += y[i] * w[i];
       tmp2 += w[i];
     }
 
-    return correct_to_01(tmp1 / tmp2);
+    return correctTo01(tmp1 / tmp2);
   }
 
   /**
-   * r_nonsep transformation
+   * rNonsep transformation
    */
-  public float r_nonsep(float[] y, int A) {
+  public float rNonsep(float[] y, int A) {
     float tmp, denominator, numerator;
 
     tmp = (float) Math.ceil(A / (float) 2.0);
@@ -131,13 +130,13 @@ public class Transformations {
       }
     }
 
-    return correct_to_01(numerator / denominator);
+    return correctTo01(numerator / denominator);
   }
 
   /**
-   * b_param transformation
+   * bParam transformation
    */
-  public float b_param(float y, float u, float A, float B, float C) {
+  public float bParam(float y, float u, float A, float B, float C) {
     float result, v, exp;
 
     v = A - ((float) 1.0 - (float) 2.0 * u) *
@@ -145,12 +144,12 @@ public class Transformations {
     exp = B + (C - B) * v;
     result = (float) StrictMath.pow(y, exp);
 
-    return correct_to_01(result);
+    return correctTo01(result);
   }
 
   /**
    */
-  float correct_to_01(float a) {
+  float correctTo01(float a) {
     float min = (float) 0.0;
     float max = (float) 1.0;
     float min_epsilon = min - epsilon;

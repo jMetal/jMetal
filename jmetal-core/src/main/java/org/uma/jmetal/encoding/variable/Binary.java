@@ -31,7 +31,7 @@ import java.util.BitSet;
  * a base class other binary string based classes (e.g., binary coded integer
  * or real variables).
  */
-public class Binary extends Variable {
+public class Binary implements Variable {
   private static final long serialVersionUID = -3553927010701150789L;
 
   protected int numberOfBits;

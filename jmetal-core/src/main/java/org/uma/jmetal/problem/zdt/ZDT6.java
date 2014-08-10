@@ -41,8 +41,9 @@ public class ZDT6 extends Problem {
    * @param solutionType The solution type must "Real", "BinaryReal, and "ArrayReal".
    */
   public ZDT6(String solutionType) throws ClassNotFoundException, JMetalException {
-    this(solutionType, 10); // 10 variables by default
-  } // ZDT6
+    // 10 variables by default
+    this(solutionType, 10);
+  }
 
   /**
    * Creates a instance of problem ZDT6
@@ -71,7 +72,7 @@ public class ZDT6 extends Problem {
     } else if (solutionType.compareTo("ArrayReal") == 0) {
       this.solutionType = new ArrayRealSolutionType(this);
     } else {
-      throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
+      throw new JMetalException("Error: solution type " + solutionType + " invalid");
     }
   }
 

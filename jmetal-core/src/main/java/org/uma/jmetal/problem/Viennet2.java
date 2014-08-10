@@ -25,6 +25,7 @@ import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 import org.uma.jmetal.util.JMetalException;
 
 /**
@@ -50,7 +51,7 @@ public class Viennet2 extends Problem {
     for (int var = 0; var < numberOfVariables; var++) {
       lowerLimit[var] = -4.0;
       upperLimit[var] = 4.0;
-    } // for
+    }
 
     if (solutionType.compareTo("BinaryReal") == 0) {
       this.solutionType = new BinaryRealSolutionType(this);
@@ -67,7 +68,7 @@ public class Viennet2 extends Problem {
     double[] f = new double[numberOfObjectives];
 
     for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = solution.getDecisionVariables()[i].getValue();
+      x[i] = XReal.getValue(solution, i) ;
     }
 
     // First function

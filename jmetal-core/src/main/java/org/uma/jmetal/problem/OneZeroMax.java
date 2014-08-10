@@ -62,7 +62,7 @@ public class OneZeroMax extends Problem {
     if (solutionType.compareTo("Binary") == 0) {
       this.solutionType = new BinarySolutionType(this);
     } else {
-      throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
+      throw new JMetalException("Error: solution type " + solutionType + " invalid");
     }
   }
 

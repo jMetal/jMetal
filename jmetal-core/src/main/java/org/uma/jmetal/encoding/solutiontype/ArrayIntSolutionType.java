@@ -31,7 +31,7 @@ import org.uma.jmetal.encoding.variable.ArrayInt;
  * Class representing the solution type of solutions composed of an ArrayInt
  * encoding.variable
  */
-public class ArrayIntSolutionType extends SolutionType implements IntSolutionTypeTemplate {
+public class ArrayIntSolutionType extends SolutionType implements GenericIntSolutionType {
 
   /** Constructor */
   public ArrayIntSolutionType(Problem problem) {

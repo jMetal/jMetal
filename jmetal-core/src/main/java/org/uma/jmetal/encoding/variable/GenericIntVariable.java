@@ -1,4 +1,4 @@
-//  IntSolutionTypeTemplate.java
+//  IntVariable.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -18,15 +18,20 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.encoding.solutiontype;
+package org.uma.jmetal.encoding.variable;
 
-import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.core.Variable;
 
-/** Template for solution types including an integer encoding */
-public interface IntSolutionTypeTemplate {
-  public int getIntValue(Solution solution, int index) ;
-  public void setIntValue(Solution solution, int index, int value) ;
-  public int getNumberOfIntVariables(Solution solution_);
-  public int getIntUpperBound(Solution solution, int index) ;
-  public int getIntLowerBound(Solution solution, int index) ;
+/**
+ * Created by Antonio J. Nebro on 07/08/14.
+ *
+ * Interface representing integer encoded variables
+ */
+public interface GenericIntVariable extends Variable {
+  public abstract int getValue() ;
+  public abstract void setValue(int value) ;
+  public abstract int getLowerBound() ;
+  public abstract void setLowerBound(int lowerBound) ;
+  public abstract int getUpperBound() ;
+  public abstract void setUpperBound(int upperBound);
 }

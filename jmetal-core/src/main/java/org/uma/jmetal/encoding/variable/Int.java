@@ -31,7 +31,7 @@ import java.util.logging.Level;
 /**
  * This class implements an integer decision variable
  */
-public class Int extends Variable {
+public class Int implements GenericIntVariable {
   private static final long serialVersionUID = -220713455225959427L;
 
   private int value;
@@ -58,18 +58,18 @@ public class Int extends Variable {
     this.upperBound = upperBound;
   }
 
-  public Int(Variable variable) throws JMetalException {
-    lowerBound = (int) variable.getLowerBound();
-    upperBound = (int) variable.getUpperBound();
-    value = (int) variable.getValue();
+  public Int(Int variable) throws JMetalException {
+    lowerBound = variable.getLowerBound();
+    upperBound = variable.getUpperBound();
+    value = variable.getValue();
   }
 
-  public double getValue() {
+  public int getValue() {
     return value;
   }
 
-  public void setValue(double value) {
-    this.value = (int) value;
+  public void setValue(int value) {
+    this.value = value;
   }
 
   public Variable deepCopy() {
@@ -81,20 +81,20 @@ public class Int extends Variable {
     }
   }
 
-  public double getLowerBound() {
+  public int getLowerBound() {
     return lowerBound;
   }
 
-  public void setLowerBound(double lowerBound) {
-    this.lowerBound = (int) lowerBound;
+  public void setLowerBound(int lowerBound) {
+    this.lowerBound = lowerBound;
   } 
 
-  public double getUpperBound() {
+  public int getUpperBound() {
     return upperBound;
   }
 
-  public void setUpperBound(double upperBound) {
-    this.upperBound = (int) upperBound;
+  public void setUpperBound(int upperBound) {
+    this.upperBound = upperBound;
   }
   
   public String toString() {

@@ -22,7 +22,7 @@ package org.uma.jmetal.encoding.solutiontype.wrapper;
 
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionType;
-import org.uma.jmetal.encoding.solutiontype.RealSolutionTypeTemplate;
+import org.uma.jmetal.encoding.solutiontype.GenericRealSolutionType;
 import org.uma.jmetal.util.JMetalException;
 
 /**
@@ -34,7 +34,7 @@ public class XReal {
   private SolutionType type;
 
   public XReal(Solution solution) {
-    if (solution.getType() instanceof RealSolutionTypeTemplate) {
+    if (solution.getType() instanceof GenericRealSolutionType) {
       type = solution.getType();
       this.solution = solution;
     } else {
@@ -48,23 +48,23 @@ public class XReal {
   }
 
   public double getValue(int index) {
-    return ((RealSolutionTypeTemplate) type).getRealValue(solution, index) ;
+    return ((GenericRealSolutionType) type).getRealValue(solution, index) ;
   }
 
   public void setValue(int index, double value) {
-    ((RealSolutionTypeTemplate) type).setRealValue(solution, index, value);
+    ((GenericRealSolutionType) type).setRealValue(solution, index, value);
   }
 
   public int getNumberOfDecisionVariables() {
-    return ((RealSolutionTypeTemplate) type).getNumberOfRealVariables(solution) ;
+    return ((GenericRealSolutionType) type).getNumberOfRealVariables(solution) ;
   }
 
   public double getUpperBound(int index) {
-    return ((RealSolutionTypeTemplate) type).getRealUpperBound(solution,index) ;
+    return ((GenericRealSolutionType) type).getRealUpperBound(solution,index) ;
   }
 
   public double getLowerBound(int index) {
-    return ((RealSolutionTypeTemplate) type).getRealLowerBound(solution,index) ;
+    return ((GenericRealSolutionType) type).getRealLowerBound(solution,index) ;
   }
 
   public int size() {
@@ -77,40 +77,40 @@ public class XReal {
 
   /* Static methods */
   public static double getValue(Solution solution, int index) {
-    if (solution.getType() instanceof RealSolutionTypeTemplate) {
-      return ((RealSolutionTypeTemplate) solution.getType()).getRealValue(solution, index);
+    if (solution.getType() instanceof GenericRealSolutionType) {
+      return ((GenericRealSolutionType) solution.getType()).getRealValue(solution, index);
     } else {
       throw new JMetalException(EXCEPTION_MESSAGE + solution.getType());
     }
   }
 
   public static void setValue(Solution solution, int index, double value) {
-    if (solution.getType() instanceof RealSolutionTypeTemplate) {
-      ((RealSolutionTypeTemplate) solution.getType()).setRealValue(solution, index, value);
+    if (solution.getType() instanceof GenericRealSolutionType) {
+      ((GenericRealSolutionType) solution.getType()).setRealValue(solution, index, value);
     } else {
       throw new JMetalException(EXCEPTION_MESSAGE + solution.getType());
     }
   }
 
   public static int getNumberOfDecisionVariables(Solution solution) {
-    if (solution.getType() instanceof RealSolutionTypeTemplate) {
-      return ((RealSolutionTypeTemplate) solution.getType()).getNumberOfRealVariables(solution) ;
+    if (solution.getType() instanceof GenericRealSolutionType) {
+      return ((GenericRealSolutionType) solution.getType()).getNumberOfRealVariables(solution) ;
     } else {
       throw new JMetalException(EXCEPTION_MESSAGE + solution.getType());
     }
   }
 
   public static double getUpperBound(Solution solution, int index) {
-    if (solution.getType() instanceof RealSolutionTypeTemplate) {
-      return ((RealSolutionTypeTemplate) solution.getType()).getRealUpperBound(solution, index);
+    if (solution.getType() instanceof GenericRealSolutionType) {
+      return ((GenericRealSolutionType) solution.getType()).getRealUpperBound(solution, index);
     } else {
       throw new JMetalException(EXCEPTION_MESSAGE + solution.getType());
     }
   }
 
   public static double getLowerBound(Solution solution, int index) {
-    if (solution.getType() instanceof RealSolutionTypeTemplate) {
-      return ((RealSolutionTypeTemplate) solution.getType()).getRealLowerBound(solution, index);
+    if (solution.getType() instanceof GenericRealSolutionType) {
+      return ((GenericRealSolutionType) solution.getType()).getRealLowerBound(solution, index);
     } else {
       throw new JMetalException(EXCEPTION_MESSAGE + solution.getType());
     }

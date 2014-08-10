@@ -36,24 +36,25 @@ public class ZDT4 extends Problem {
   private static final long serialVersionUID = -8130678685721634674L;
 
   public ZDT4() throws JMetalException {
-	  this("Real",10);
+	  this("Real", 10);
   }
 
   /**
    * Constructor.
    * Creates a default instance of problem ZDT4 (10 decision variables)
    *
-   * @param solutionType The solutiontype type must "Real", "BinaryReal, and "ArrayReal".
+   * @param solutionType The solution type must "Real", "BinaryReal, and "ArrayReal".
    */
   public ZDT4(String solutionType) throws ClassNotFoundException, JMetalException {
-    this(solutionType, 10); // 10 variables by default
-  } // ZDT4
+    // 10 variables by default
+    this(solutionType, 10);
+  }
 
   /**
    * Creates a instance of problem ZDT4.
    *
    * @param numberOfVariables Number of variables.
-   * @param solutionType      The solutiontype type must "Real", "BinaryReal, and "ArrayReal".
+   * @param solutionType      The solution type must "Real", "BinaryReal, and "ArrayReal".
    */
   public ZDT4(String solutionType, Integer numberOfVariables) throws JMetalException {
     this.numberOfVariables = numberOfVariables;
@@ -109,8 +110,8 @@ public class ZDT4 extends Problem {
         -10.0 * Math.cos(4.0 * Math.PI * x.getValue(var));
     }
 
-    double constante = 1.0 + 10.0 * (numberOfVariables - 1);
-    return g + constante;
+    double constant = 1.0 + 10.0 * (numberOfVariables - 1);
+    return g + constant;
   }
 
   /**

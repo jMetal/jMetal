@@ -27,6 +27,7 @@ import org.uma.jmetal.encoding.solutiontype.BinarySolutionType;
 import org.uma.jmetal.encoding.solutiontype.IntSolutionType;
 import org.uma.jmetal.encoding.variable.Binary;
 import org.uma.jmetal.encoding.variable.BinaryReal;
+import org.uma.jmetal.encoding.variable.Int;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
@@ -146,10 +147,10 @@ public class SinglePointCrossover extends Crossover {
           int valueX1;
           int valueX2;
           for (int i = crossoverPoint; i < parent1.numberOfVariables(); i++) {
-            valueX1 = (int) parent1.getDecisionVariables()[i].getValue();
-            valueX2 = (int) parent2.getDecisionVariables()[i].getValue();
-            offSpring[0].getDecisionVariables()[i].setValue(valueX2);
-            offSpring[1].getDecisionVariables()[i].setValue(valueX1);
+            valueX1 = ((Int) parent1.getDecisionVariables()[i]).getValue();
+            valueX2 = ((Int) parent2.getDecisionVariables()[i]).getValue();
+            ((Int)offSpring[0].getDecisionVariables()[i]).setValue(valueX2);
+            ((Int)offSpring[1].getDecisionVariables()[i]).setValue(valueX1);
           }
         }
       }

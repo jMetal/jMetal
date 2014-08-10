@@ -26,6 +26,7 @@ import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.Variable;
 import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 import org.uma.jmetal.util.JMetalException;
 
 /**
@@ -60,24 +61,22 @@ public class Poloni extends Problem {
     } else if (solutionType.compareTo("Real") == 0) {
       this.solutionType = new RealSolutionType(this);
     } else {
-      throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
+      throw new JMetalException("Error: solution type " + solutionType + " invalid");
     }
   }
 
   /** Evaluate() method */
   public void evaluate(Solution solution) throws JMetalException {
     final double a1 = 0.5 * Math.sin(1.0) - 2 * Math.cos(1.0) +
-      Math.sin(2.0) - 1.5 * Math.cos(2.0); //!< Constant A1
+      Math.sin(2.0) - 1.5 * Math.cos(2.0);
     final double a2 = 1.5 * Math.sin(1.0) - Math.cos(1.0) +
-      2 * Math.sin(2.0) - 0.5 * Math.cos(2.0); //!< Constant A2
-
-    Variable[] decisionVariables = solution.getDecisionVariables();
+      2 * Math.sin(2.0) - 0.5 * Math.cos(2.0);
 
     double[] x = new double[numberOfVariables];
     double[] f = new double[numberOfObjectives];
 
-    x[0] = decisionVariables[0].getValue();
-    x[1] = decisionVariables[1].getValue();
+    x[0] = XReal.getValue(solution, 0) ;
+    x[1] = XReal.getValue(solution, 1) ;
 
     double b1 = 0.5 * Math.sin(x[0]) - 2 * Math.cos(x[0]) + Math.sin(x[1]) -
       1.5 * Math.cos(x[1]);

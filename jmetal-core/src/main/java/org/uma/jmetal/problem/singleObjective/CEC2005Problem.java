@@ -24,8 +24,10 @@ package org.uma.jmetal.problem.singleObjective;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.Variable;
+import org.uma.jmetal.encoding.solutiontype.ArrayRealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 import org.uma.jmetal.problem.singleObjective.cec2005Competition.originalCode.Benchmark;
 import org.uma.jmetal.problem.singleObjective.cec2005Competition.originalCode.TestFunc;
 import org.uma.jmetal.util.JMetalException;
@@ -34,14 +36,8 @@ import org.uma.jmetal.util.JMetalException;
  * Class representing a Sphere problem.
  */
 public class CEC2005Problem extends Problem {
-  TestFunc testFunction_;
-  /**
-   * Constructor
-   * Creates a default instance of the Sphere problem
-   *
-   * @param numberOfVariables Number of variables of the problem
-   * @param solutionType The solutiontype type must "Real" or "BinaryReal".
-   */
+  TestFunc testFunction;
+  /** Constructor */
   public CEC2005Problem(String solutionType, int problemID, int numberOfVariables)
     throws JMetalException {
     this.numberOfVariables = numberOfVariables;
@@ -50,7 +46,7 @@ public class CEC2005Problem extends Problem {
     problemName = "CEC2005";
 
     Benchmark cec2005ProblemFactory = new Benchmark();
-    testFunction_ = cec2005ProblemFactory.testFunctionFactory(problemID, numberOfVariables);
+    testFunction = cec2005ProblemFactory.testFunctionFactory(problemID, numberOfVariables);
 
     upperLimit = new double[this.numberOfVariables];
     lowerLimit = new double[this.numberOfVariables];
@@ -118,27 +114,23 @@ public class CEC2005Problem extends Problem {
       this.solutionType = new BinaryRealSolutionType(this);
     } else if (solutionType.compareTo("Real") == 0) {
       this.solutionType = new RealSolutionType(this);
+    } else if (solutionType.compareTo("ArrayReal") == 0) {
+      this.solutionType = new ArrayRealSolutionType(this);
     } else {
-      throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
+      throw new JMetalException("Error: solution type " + solutionType + " invalid");
     }
   }
 
-  /**
-   * Evaluates a solutiontype
-   *
-   * @param solution The solutiontype to evaluate
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Evaluate() method */
   public void evaluate(Solution solution) throws JMetalException {
-    Variable[] decisionVariables = solution.getDecisionVariables();
-    double[] x = new double[decisionVariables.length];
+    double[] x = new double[solution.getDecisionVariables().length];
 
-    for (int i = 0; i < decisionVariables.length; i++) {
-      x[i] = decisionVariables[i].getValue();
+    for (int i = 0; i < solution.getDecisionVariables().length; i++) {
+      x[i] = XReal.getValue(solution, i) ;
     }
 
     double result;
-    result = testFunction_.f(x);
+    result = testFunction.f(x);
 
     solution.setObjective(0, result);
   }

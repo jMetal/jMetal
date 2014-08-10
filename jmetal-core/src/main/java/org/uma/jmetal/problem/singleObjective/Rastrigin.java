@@ -25,6 +25,7 @@ import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.Variable;
 import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 import org.uma.jmetal.util.JMetalException;
 
 public class Rastrigin extends Problem {
@@ -62,17 +63,16 @@ public class Rastrigin extends Problem {
 
   /** Evaluate() method */
   public void evaluate(Solution solution) throws JMetalException {
-    Variable[] decisionVariables = solution.getDecisionVariables();
+    XReal sol = new XReal(solution) ;
+    double[] x = new double[numberOfVariables];
+
+    for (int i = 0; i < numberOfVariables; i++) {
+      x[i] = sol.getValue(i);
+    }
 
     double result = 0.0;
     double a = 10.0;
     double w = 2 * Math.PI;
-
-    double[] x = new double[numberOfVariables];
-
-    for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = decisionVariables[i].getValue();
-    }
 
     for (int i = 0; i < numberOfVariables; i++) {
       result += x[i] * x[i] - a * Math.cos(w * x[i]);

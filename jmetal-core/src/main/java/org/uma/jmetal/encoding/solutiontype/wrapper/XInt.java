@@ -23,7 +23,7 @@ package org.uma.jmetal.encoding.solutiontype.wrapper;
 
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionType;
-import org.uma.jmetal.encoding.solutiontype.IntSolutionTypeTemplate;
+import org.uma.jmetal.encoding.solutiontype.GenericIntSolutionType;
 import org.uma.jmetal.util.JMetalException;
 
 /**
@@ -46,23 +46,23 @@ public class XInt {
   }
 
   public double getValue(int index) {
-    return ((IntSolutionTypeTemplate) type).getIntValue(solution, index) ;
+    return ((GenericIntSolutionType) type).getIntValue(solution, index) ;
   }
 
   public void setValue(int index, int value) {
-    ((IntSolutionTypeTemplate) type).setIntValue(solution, index, value);
+    ((GenericIntSolutionType) type).setIntValue(solution, index, value);
   }
 
   public int getNumberOfDecisionVariables() {
-    return ((IntSolutionTypeTemplate) type).getNumberOfIntVariables(solution) ;
+    return ((GenericIntSolutionType) type).getNumberOfIntVariables(solution) ;
   }
 
   public int getUpperBound(int index) {
-    return ((IntSolutionTypeTemplate) type).getIntUpperBound(solution, index) ;
+    return ((GenericIntSolutionType) type).getIntUpperBound(solution, index) ;
   }
 
   public int getLowerBound(int index) {
-    return ((IntSolutionTypeTemplate) type).getIntLowerBound(solution, index) ;
+    return ((GenericIntSolutionType) type).getIntLowerBound(solution, index) ;
   }
 
   public int size() {
@@ -75,39 +75,39 @@ public class XInt {
 
   /* Static methods */
   public static int getValue(Solution solution, int index) {
-    if (solution.getType() instanceof IntSolutionTypeTemplate) {
-      return ((IntSolutionTypeTemplate) solution.getType()).getIntValue(solution, index);
+    if (solution.getType() instanceof GenericIntSolutionType) {
+      return ((GenericIntSolutionType) solution.getType()).getIntValue(solution, index);
     } else {
       throw new JMetalException("The solution type of the solution is invalid: " + solution.getType()) ;
     }
   }
 
   public static void setValue(Solution solution, int index, int value) {
-    if (solution.getType() instanceof IntSolutionTypeTemplate) {
-      ((IntSolutionTypeTemplate) solution.getType()).setIntValue(solution, index, value);
+    if (solution.getType() instanceof GenericIntSolutionType) {
+      ((GenericIntSolutionType) solution.getType()).setIntValue(solution, index, value);
     } else {
       throw new JMetalException("The solution type of the solution is invalid: " + solution.getType()) ;  }
   }
 
   public static int getNumberOfDecisionVariables(Solution solution) {
-    if (solution.getType() instanceof IntSolutionTypeTemplate) {
-      return ((IntSolutionTypeTemplate) solution.getType()).getNumberOfIntVariables(solution) ;
+    if (solution.getType() instanceof GenericIntSolutionType) {
+      return ((GenericIntSolutionType) solution.getType()).getNumberOfIntVariables(solution) ;
     } else {
       throw new JMetalException("The solution type of the solution is invalid: " + solution.getType()) ;
     }
   }
 
   public static int getUpperBound(Solution solution, int index) {
-    if (solution.getType() instanceof IntSolutionTypeTemplate) {
-      return ((IntSolutionTypeTemplate) solution.getType()).getIntUpperBound(solution, index);
+    if (solution.getType() instanceof GenericIntSolutionType) {
+      return ((GenericIntSolutionType) solution.getType()).getIntUpperBound(solution, index);
     } else {
       throw new JMetalException("The solution type of the solution is invalid: " + solution.getType()) ;
     }
   }
 
   public static int getLowerBound(Solution solution, int index) {
-    if (solution.getType() instanceof IntSolutionTypeTemplate) {
-      return ((IntSolutionTypeTemplate) solution.getType()).getIntLowerBound(solution, index);
+    if (solution.getType() instanceof GenericIntSolutionType) {
+      return ((GenericIntSolutionType) solution.getType()).getIntLowerBound(solution, index);
     } else {
       throw new JMetalException("The solution type of the solution is invalid: " + solution.getType()) ;
     }

@@ -22,6 +22,7 @@
 package org.uma.jmetal.metaheuristic.multiobjective.omopso;
 
 import org.uma.jmetal.core.*;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 import org.uma.jmetal.operator.mutation.Mutation;
 import org.uma.jmetal.operator.mutation.NonUniformMutation;
 import org.uma.jmetal.operator.mutation.UniformMutation;
@@ -197,11 +198,11 @@ public class OMOPSO extends Algorithm {
   /** Update the speed of each particle */
   private void computeSpeed() throws JMetalException {
     double r1, r2, W, C1, C2;
-    Variable[] bestGlobal;
+    XReal bestGlobal;
 
     for (int i = 0; i < swarmSize; i++) {
-      Variable[] particle = swarm.get(i).getDecisionVariables();
-      Variable[] bestParticle = localBest[i].getDecisionVariables();
+      XReal particle = new XReal(swarm.get(i)) ;
+      XReal bestParticle = new XReal(localBest[i]) ;
 
       //Select a global localBest for calculate the speed of particle i, bestGlobal
       Solution one, two;
@@ -211,9 +212,9 @@ public class OMOPSO extends Algorithm {
       two = leaderArchive.get(pos2);
 
       if (crowdingDistanceComparator.compare(one, two) < 1) {
-        bestGlobal = one.getDecisionVariables();
+        bestGlobal = new XReal(one) ;
       } else {
-        bestGlobal = two.getDecisionVariables();
+        bestGlobal = new XReal(two) ;
       }
 
       //Parameters for velocity equation
@@ -224,13 +225,10 @@ public class OMOPSO extends Algorithm {
       W = PseudoRandom.randDouble(0.1, 0.5);
       //
 
-      for (int var = 0; var < particle.length; var++) {
+      for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
         //Computing the velocity of this particle
-        speed[i][var] = W * speed[i][var] +
-          C1 * r1 * (bestParticle[var].getValue() -
-            particle[var].getValue()) +
-          C2 * r2 * (bestGlobal[var].getValue() -
-            particle[var].getValue());
+        speed[i][var] = W * speed[i][var] + C1 * r1 * (bestParticle.getValue(var) - particle.getValue(var)) +
+                C2 * r2 * (bestGlobal.getValue(var) - particle.getValue(var));
       }
     }
   }
@@ -238,15 +236,15 @@ public class OMOPSO extends Algorithm {
   /** Update the position of each particle */
   private void computeNewPositions() throws JMetalException {
     for (int i = 0; i < swarmSize; i++) {
-      Variable[] particle = swarm.get(i).getDecisionVariables();
-      for (int var = 0; var < particle.length; var++) {
-        particle[var].setValue(particle[var].getValue() + speed[i][var]);
-        if (particle[var].getValue() < problem.getLowerLimit(var)) {
-          particle[var].setValue(problem.getLowerLimit(var));
+      XReal particle = new XReal(swarm.get(i));
+      for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
+        particle.setValue(var, particle.getValue(var) + speed[i][var]);
+        if (particle.getValue(var) < problem.getLowerLimit(var)) {
+          particle.setValue(var, problem.getLowerLimit(var));
           speed[i][var] = speed[i][var] * -1.0;
         }
-        if (particle[var].getValue() > problem.getUpperLimit(var)) {
-          particle[var].setValue(problem.getUpperLimit(var));
+        if (particle.getValue(var) > problem.getUpperLimit(var)) {
+          particle.setValue(var, problem.getUpperLimit(var));
           speed[i][var] = speed[i][var] * -1.0;
         }
       }

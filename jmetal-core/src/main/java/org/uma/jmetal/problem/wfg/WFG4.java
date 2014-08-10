@@ -23,6 +23,7 @@ package org.uma.jmetal.problem.wfg;
 
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.Variable;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 import org.uma.jmetal.util.JMetalException;
 
 /**
@@ -54,7 +55,7 @@ public class WFG4 extends WFG {
    * @param k            Number of position parameters
    * @param l            Number of distance parameters
    * @param M            Number of objective functions
-   * @param solutionType The solutiontype type must "Real" or "BinaryReal".
+   * @param solutionType The solution type must "Real" or "BinaryReal".
    */
   public WFG4(String solutionType, Integer k, Integer l, Integer M)
     throws ClassNotFoundException, JMetalException {
@@ -96,7 +97,7 @@ public class WFG4 extends WFG {
     float[] result = new float[z.length];
 
     for (int i = 0; i < z.length; i++) {
-      result[i] = (new Transformations()).s_multi(z[i], 30, 10, (float) 0.35);
+      result[i] = (new Transformations()).sMulti(z[i], 30, 10, (float) 0.35);
     }
 
     return result;
@@ -119,7 +120,7 @@ public class WFG4 extends WFG {
       float[] subZ = subVector(z, head - 1, tail - 1);
       float[] subW = subVector(w, head - 1, tail - 1);
 
-      result[i - 1] = (new Transformations()).r_sum(subZ, subW);
+      result[i - 1] = (new Transformations()).rSum(subZ, subW);
     }
 
     int head = k + 1;
@@ -127,7 +128,7 @@ public class WFG4 extends WFG {
 
     float[] subZ = subVector(z, head - 1, tail - 1);
     float[] subW = subVector(w, head - 1, tail - 1);
-    result[M - 1] = (new Transformations()).r_sum(subZ, subW);
+    result[M - 1] = (new Transformations()).rSum(subZ, subW);
 
     return result;
   }
@@ -140,16 +141,21 @@ public class WFG4 extends WFG {
    */
   public final void evaluate(Solution solution) throws JMetalException {
     float[] variables = new float[this.getNumberOfVariables()];
-    Variable[] dv = solution.getDecisionVariables();
+    XReal sol = new XReal(solution) ;
+    double[] x = new double[numberOfVariables];
 
-    for (int i = 0; i < this.getNumberOfVariables(); i++) {
-      variables[i] = (float) dv[i].getValue();
+    for (int i = 0; i < numberOfVariables; i++) {
+      x[i] = sol.getValue(i);
     }
 
-    float[] sol = evaluate(variables);
+    for (int i = 0; i < getNumberOfVariables(); i++) {
+      variables[i] = (float) x[i] ;
+    }
 
-    for (int i = 0; i < sol.length; i++) {
-      solution.setObjective(i, sol[i]);
+    float[] sol2 = evaluate(variables);
+
+    for (int i = 0; i < sol2.length; i++) {
+      solution.setObjective(i, sol2[i]);
     }
   }
 }

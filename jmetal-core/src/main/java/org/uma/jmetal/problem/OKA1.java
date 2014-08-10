@@ -26,6 +26,7 @@ import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.Variable;
 import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 import org.uma.jmetal.util.JMetalException;
 
 /**
@@ -59,19 +60,18 @@ public class OKA1 extends Problem {
     } else if (solutionType.compareTo("Real") == 0) {
       this.solutionType = new RealSolutionType(this);
     } else {
-      throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
+      throw new JMetalException("Error: solution type " + solutionType + " invalid");
     }
   }
 
   /** Evaluate() method */
   public void evaluate(Solution solution) throws JMetalException {
-    Variable[] decisionVariables = solution.getDecisionVariables();
-
+    XReal sol = new XReal(solution) ;
     double[] fx = new double[numberOfObjectives];
     double[] x = new double[numberOfVariables];
 
     for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = decisionVariables[i].getValue();
+      x[i] = sol.getValue(i);
     }
 
     double x0 = Math.cos(Math.PI / 12.0) * x[0] - Math.sin(Math.PI / 12.0) * x[1];
@@ -79,7 +79,7 @@ public class OKA1 extends Problem {
 
     fx[0] = x0;
     fx[1] = Math.sqrt(2 * Math.PI) - Math.sqrt(Math.abs(x0)) +
-      2 * Math.pow(Math.abs(x1 - 3 * Math.cos(x0) - 3), 1.0 / 3.0);
+            2 * Math.pow(Math.abs(x1 - 3 * Math.cos(x0) - 3), 1.0 / 3.0);
 
     solution.setObjective(0, fx[0]);
     solution.setObjective(1, fx[1]);

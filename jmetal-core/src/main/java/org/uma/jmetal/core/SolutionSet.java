@@ -42,7 +42,7 @@ public class SolutionSet implements Serializable {
   }
 
   /**
-   * Creates a empty solutionSet with a maximum maximumSize.
+   * Creates a empty solutionSet with a maximum size.
    *
    * @param maximumSize Maximum size.
    */

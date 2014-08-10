@@ -55,7 +55,7 @@ public class Binh2 extends Problem {
     } else if (solutionType.compareTo("Real") == 0) {
       this.solutionType = new RealSolutionType(this);
     } else {
-      throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
+      throw new JMetalException("Error: solution type " + solutionType + " invalid");
     }
   }
 
@@ -79,14 +79,15 @@ public class Binh2 extends Problem {
   /**
    * Evaluates the constraint overhead of a solution
    *
-   * @param solution The solutiontype
+   * @param solution The solution
    * @throws org.uma.jmetal.util.JMetalException
    */
   public void evaluateConstraints(Solution solution) throws JMetalException {
     double[] constraint = new double[this.getNumberOfConstraints()];
 
-    double x0 = solution.getDecisionVariables()[0].getValue();
-    double x1 = solution.getDecisionVariables()[1].getValue();
+    XReal vars = new XReal(solution);
+    double x0 = vars.getValue(0) ;
+    double x1 = vars.getValue(1) ;
 
     constraint[0] = -1.0 * (x0 - 5) * (x0 - 5) - x1 * x1 + 25.0;
     constraint[1] = (x0 - 8) * (x0 - 8) + (x1 + 3) * (x1 + 3) - 7.7;

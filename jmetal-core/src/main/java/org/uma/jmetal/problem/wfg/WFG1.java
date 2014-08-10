@@ -23,6 +23,7 @@ package org.uma.jmetal.problem.wfg;
 
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.Variable;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 
@@ -58,7 +59,7 @@ public class WFG1 extends WFG {
    * @param k            Number of position parameters
    * @param l            Number of distance parameters
    * @param M            Number of objective functions
-   * @param solutionType The solutiontype type must "Real" or "BinaryReal".
+   * @param solutionType The solution type must "Real" or "BinaryReal".
    */
   public WFG1(String solutionType, Integer k, Integer l, Integer M)
     throws ClassNotFoundException, JMetalException {
@@ -76,7 +77,7 @@ public class WFG1 extends WFG {
     }
   }
 
-  /** Evaluate() method */
+  /** Evaluate */
   public float[] evaluate(float[] z) {
     float[] y;
 
@@ -111,7 +112,7 @@ public class WFG1 extends WFG {
     System.arraycopy(z, 0, result, 0, k);
 
     for (int i = k; i < z.length; i++) {
-      result[i] = (new Transformations()).s_linear(z[i], (float) 0.35);
+      result[i] = (new Transformations()).sLinear(z[i], (float) 0.35);
     }
 
     return result;
@@ -126,7 +127,7 @@ public class WFG1 extends WFG {
     System.arraycopy(z, 0, result, 0, k);
 
     for (int i = k; i < z.length; i++) {
-      result[i] = (new Transformations()).b_flat(z[i], (float) 0.8, (float) 0.75, (float) 0.85);
+      result[i] = (new Transformations()).bFlat(z[i], (float) 0.8, (float) 0.75, (float) 0.85);
     }
 
     return result;
@@ -141,7 +142,7 @@ public class WFG1 extends WFG {
     float[] result = new float[z.length];
 
     for (int i = 0; i < z.length; i++) {
-      result[i] = (new Transformations()).b_poly(z[i], (float) 0.02);
+      result[i] = (new Transformations()).bPoly(z[i], (float) 0.02);
     }
 
     return result;
@@ -164,30 +165,35 @@ public class WFG1 extends WFG {
       float[] subZ = subVector(z, head - 1, tail - 1);
       float[] subW = subVector(w, head - 1, tail - 1);
 
-      result[i - 1] = (new Transformations()).r_sum(subZ, subW);
+      result[i - 1] = (new Transformations()).rSum(subZ, subW);
     }
 
     int head = k + 1 - 1;
     int tail = z.length - 1;
     float[] subZ = subVector(z, head, tail);
     float[] subW = subVector(w, head, tail);
-    result[M - 1] = (new Transformations()).r_sum(subZ, subW);
+    result[M - 1] = (new Transformations()).rSum(subZ, subW);
 
     return result;
   }
 
   /**
-   * Evaluates a solutiontype
+   * Evaluates a solution
    *
-   * @param solution The solutiontype to evaluate
+   * @param solution The solution to evaluate
    * @throws org.uma.jmetal.util.JMetalException
    */
   public final void evaluate(Solution solution) throws JMetalException {
     float[] variables = new float[getNumberOfVariables()];
-    Variable[] dv = solution.getDecisionVariables();
+    XReal sol = new XReal(solution) ;
+    double[] x = new double[numberOfVariables];
+
+    for (int i = 0; i < numberOfVariables; i++) {
+      x[i] = sol.getValue(i);
+    }
 
     for (int i = 0; i < getNumberOfVariables(); i++) {
-      variables[i] = (float) dv[i].getValue();
+      variables[i] = (float) x[i] ;
     }
 
     float[] f = evaluate(variables);

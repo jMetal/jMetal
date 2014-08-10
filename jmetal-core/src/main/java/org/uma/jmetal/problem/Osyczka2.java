@@ -26,6 +26,7 @@ import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.Variable;
 import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 import org.uma.jmetal.util.JMetalException;
 
 /**
@@ -38,7 +39,7 @@ public class Osyczka2 extends Problem {
    * Constructor.
    * Creates a default instance of the Osyczka2 problem.
    *
-   * @param solutionType The solutiontype type must "Real" or "BinaryReal".
+   * @param solutionType The solution type must "Real" or "BinaryReal".
    */
   public Osyczka2(String solutionType) throws JMetalException {
     numberOfVariables = 6;
@@ -48,7 +49,7 @@ public class Osyczka2 extends Problem {
 
     lowerLimit = new double[numberOfVariables];
     upperLimit = new double[numberOfVariables];
-    //Fill lower and upper limits
+
     lowerLimit[0] = 0.0;
     lowerLimit[1] = 0.0;
     lowerLimit[2] = 1.0;
@@ -62,35 +63,34 @@ public class Osyczka2 extends Problem {
     upperLimit[3] = 6.0;
     upperLimit[4] = 5.0;
     upperLimit[5] = 10.0;
-    //
 
     if (solutionType.compareTo("BinaryReal") == 0) {
       this.solutionType = new BinaryRealSolutionType(this);
     } else if (solutionType.compareTo("Real") == 0) {
       this.solutionType = new RealSolutionType(this);
     } else {
-      throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
+      throw new JMetalException("Error: solution type " + solutionType + " invalid");
     }
   }
 
   /**
-   * Evaluates a solutiontype
+   * Evaluates a solution
    *
-   * @param solution The solutiontype to evaluate
+   * @param solution The solution to evaluate
    * @throws org.uma.jmetal.util.JMetalException
    */
   public void evaluate(Solution solution) throws JMetalException {
-    Variable[] decisionVariables = solution.getDecisionVariables();
-
+    XReal sol = new XReal(solution) ;
     double[] f = new double[numberOfObjectives];
 
     double x1, x2, x3, x4, x5, x6;
-    x1 = decisionVariables[0].getValue();
-    x2 = decisionVariables[1].getValue();
-    x3 = decisionVariables[2].getValue();
-    x4 = decisionVariables[3].getValue();
-    x5 = decisionVariables[4].getValue();
-    x6 = decisionVariables[5].getValue();
+    x1 = sol.getValue(0);
+    x2 = sol.getValue(1);
+    x3 = sol.getValue(2);
+    x4 = sol.getValue(3);
+    x5 = sol.getValue(4);
+    x6 = sol.getValue(5);
+
     f[0] = -(25.0 * (x1 - 2.0) * (x1 - 2.0) +
       (x2 - 2.0) * (x2 - 2.0) +
       (x3 - 1.0) * (x3 - 1.0) +
@@ -106,15 +106,15 @@ public class Osyczka2 extends Problem {
   /** Evaluate() method */
   public void evaluateConstraints(Solution solution) throws JMetalException {
     double[] constraint = new double[this.getNumberOfConstraints()];
-    Variable[] decisionVariables = solution.getDecisionVariables();
+    XReal sol = new XReal(solution) ;
 
     double x1, x2, x3, x4, x5, x6;
-    x1 = decisionVariables[0].getValue();
-    x2 = decisionVariables[1].getValue();
-    x3 = decisionVariables[2].getValue();
-    x4 = decisionVariables[3].getValue();
-    x5 = decisionVariables[4].getValue();
-    x6 = decisionVariables[5].getValue();
+    x1 = sol.getValue(0);
+    x2 = sol.getValue(1);
+    x3 = sol.getValue(2);
+    x4 = sol.getValue(3);
+    x5 = sol.getValue(4);
+    x6 = sol.getValue(5);
 
     constraint[0] = (x1 + x2) / 2.0 - 1.0;
     constraint[1] = (6.0 - x1 - x2) / 6.0;

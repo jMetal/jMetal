@@ -23,6 +23,8 @@
 
 package org.uma.jmetal.core;
 
+import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.BinarySolutionType;
 import org.uma.jmetal.encoding.variable.Binary;
 import org.uma.jmetal.encoding.variable.BinaryReal;
 
@@ -490,26 +492,6 @@ public class Solution implements Serializable {
     return value;
   }
 
-  /**
-   * Returns the number of bits of the chromosome in case of using a binary
-   * representation
-   *
-   * @return The number of bits if the case of binary variables, 0 otherwise
-   * This method had a bug which was fixed by Rafael Olaechea
-   */
-  public int getNumberOfBits() {
-    int bits = 0;
-
-    for (Variable variable : this.variable) {
-      if ((variable.getVariableType() == Binary.class)
-        || (variable.getVariableType() == BinaryReal.class)) {
-
-        bits += ((Binary) (variable)).getNumberOfBits();
-      }
-    }
-
-    return bits;
-  }
    /*
   @Override
   public boolean equals(final Object object){

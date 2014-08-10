@@ -26,16 +26,13 @@ import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.Variable;
 import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 import org.uma.jmetal.util.JMetalException;
 
 /**
  * Class representing problem Tanaka
  */
 public class Tanaka extends Problem {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = 6305140494344001015L;
 
   /**
@@ -62,33 +59,26 @@ public class Tanaka extends Problem {
     } else if (solutionType.compareTo("Real") == 0) {
       this.solutionType = new RealSolutionType(this);
     } else {
-      throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
+      throw new JMetalException("Error: solution type " + solutionType + " invalid");
     }
   }
 
-  /**
-   * Evaluates a solutiontype
-   *
-   * @param solution The solutiontype to evaluate
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Evaluate() method */
   public void evaluate(Solution solution) throws JMetalException {
-    Variable[] variable = solution.getDecisionVariables();
-
     double[] f = new double[numberOfObjectives];
-    f[0] = variable[0].getValue();
-    f[1] = variable[1].getValue();
+    f[0] = XReal.getValue(solution, 0) ;
+    f[1] = XReal.getValue(solution, 1) ;
 
     solution.setObjective(0, f[0]);
     solution.setObjective(1, f[1]);
   }
 
-  /** Evaluate() method */
+  /** EvaluateConstraints() method */
   public void evaluateConstraints(Solution solution) throws JMetalException {
     double[] constraint = new double[this.getNumberOfConstraints()];
 
-    double x1 = solution.getDecisionVariables()[0].getValue();
-    double x2 = solution.getDecisionVariables()[1].getValue();
+    double x1 = XReal.getValue(solution, 0) ;
+    double x2 = XReal.getValue(solution, 1) ;
 
     constraint[0] = (x1 * x1 + x2 * x2 - 1.0 - 0.1 * Math.cos(16.0 * Math.atan(x1 / x2)));
     constraint[1] = -2.0 * ((x1 - 0.5) * (x1 - 0.5) + (x2 - 0.5) * (x2 - 0.5) - 0.5);

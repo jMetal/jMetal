@@ -26,13 +26,14 @@ import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionType;
 import org.uma.jmetal.core.Variable;
 import org.uma.jmetal.encoding.variable.BinaryReal;
+import org.uma.jmetal.encoding.variable.GenericRealVariable;
 import org.uma.jmetal.util.JMetalException;
 
 /**
- * Class representing the solutiontype type of solutions composed of BinaryReal
+ * Class representing the solution type of solutions composed of BinaryReal
  * variables
  */
-public class BinaryRealSolutionType extends SolutionType implements RealSolutionTypeTemplate {
+public class BinaryRealSolutionType extends SolutionType implements GenericRealSolutionType {
 
   /** Constructor */
   public BinaryRealSolutionType(Problem problem) {
@@ -60,7 +61,7 @@ public class BinaryRealSolutionType extends SolutionType implements RealSolution
 
   @Override
   public double getRealValue(Solution solution, int index) {
-    return solution.getDecisionVariables()[index].getValue() ;
+    return ((GenericRealVariable)solution.getDecisionVariables()[index]).getValue() ;
   }
 
   @Override
@@ -68,15 +69,15 @@ public class BinaryRealSolutionType extends SolutionType implements RealSolution
     throw new JMetalException("Cannot assign a real value to a BinaryRealSolutionType solution type") ;
   }
 
-  @Override public int getNumberOfRealVariables(Solution solution_) {
-    return solution_.getDecisionVariables().length ;
+  @Override public int getNumberOfRealVariables(Solution solution) {
+    return solution.getDecisionVariables().length ;
   }
 
   @Override public double getRealUpperBound(Solution solution, int index) {
-    return solution.getDecisionVariables()[index].getUpperBound() ;
+    return ((GenericRealVariable)solution.getDecisionVariables()[index]).getUpperBound() ;
   }
 
   @Override public double getRealLowerBound(Solution solution, int index) {
-    return solution.getDecisionVariables()[index].getLowerBound() ;
+    return ((GenericRealVariable)solution.getDecisionVariables()[index]).getLowerBound() ;
   }
 }

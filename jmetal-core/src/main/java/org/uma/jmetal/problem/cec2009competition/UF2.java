@@ -26,6 +26,7 @@ import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.Variable;
 import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 import org.uma.jmetal.util.JMetalException;
 
 /**
@@ -54,7 +55,7 @@ public class UF2 extends Problem {
     this.numberOfVariables = numberOfVariables;
     numberOfObjectives = 2;
     numberOfConstraints = 0;
-    problemName = "CEC2009_UF2";
+    problemName = "UF2";
 
     upperLimit = new double[this.numberOfVariables];
     lowerLimit = new double[this.numberOfVariables];
@@ -77,11 +78,9 @@ public class UF2 extends Problem {
 
   /** Evaluate() method */
   public void evaluate(Solution solution) throws JMetalException {
-    Variable[] decisionVariables = solution.getDecisionVariables();
-
     double[] x = new double[numberOfVariables];
     for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = decisionVariables[i].getValue();
+      x[i] = XReal.getValue(solution, i) ;
     }
 
     int count1, count2;
@@ -92,18 +91,18 @@ public class UF2 extends Problem {
     for (int j = 2; j <= numberOfVariables; j++) {
       if (j % 2 == 0) {
         yj = x[j - 1] -
-          (0.3 * x[0] * x[0] * Math.cos(24 * Math.PI * x[0] + 4 * j * Math.PI / numberOfVariables)
-            + 0.6 * x[0]) *
-            Math.sin(6.0 * Math.PI * x[0] + j * Math.PI / numberOfVariables);
+                (0.3 * x[0] * x[0] * Math.cos(24 * Math.PI * x[0] + 4 * j * Math.PI / numberOfVariables)
+                        + 0.6 * x[0]) *
+                        Math.sin(6.0 * Math.PI * x[0] + j * Math.PI / numberOfVariables);
 
 
         sum2 += yj * yj;
         count2++;
       } else {
         yj = x[j - 1] -
-          (0.3 * x[0] * x[0] * Math.cos(24 * Math.PI * x[0] + 4 * j * Math.PI / numberOfVariables)
-            + 0.6 * x[0]) *
-            Math.cos(6.0 * Math.PI * x[0] + j * Math.PI / numberOfVariables);
+                (0.3 * x[0] * x[0] * Math.cos(24 * Math.PI * x[0] + 4 * j * Math.PI / numberOfVariables)
+                        + 0.6 * x[0]) *
+                        Math.cos(6.0 * Math.PI * x[0] + j * Math.PI / numberOfVariables);
         sum1 += yj * yj;
         count1++;
       }

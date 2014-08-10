@@ -63,7 +63,7 @@ public class MultiObjectiveTSP extends Problem {
     if (solutionType.compareTo("Permutation") == 0) {
       this.solutionType = new PermutationSolutionType(this);
     } else {
-      throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
+      throw new JMetalException("Error: solution type " + solutionType + " invalid");
     }
   }
 

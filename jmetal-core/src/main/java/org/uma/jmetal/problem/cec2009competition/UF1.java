@@ -26,17 +26,18 @@ import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.Variable;
 import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 import org.uma.jmetal.util.JMetalException;
 
 /**
- * Class representing problem CEC2009_UF1
+ * Class representing problem UF1
  */
 public class UF1 extends Problem {
   private static final long serialVersionUID = -4289653406660498995L;
 
   /**
    * Constructor.
-   * Creates a default instance of problem CEC2009_UF1 (30 decision variables)
+   * Creates a default instance of problem UF1 (30 decision variables)
    *
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
@@ -54,7 +55,7 @@ public class UF1 extends Problem {
     this.numberOfVariables = numberOfVariables;
     numberOfObjectives = 2;
     numberOfConstraints = 0;
-    problemName = "CEC2009_UF1";
+    problemName = "UF1";
 
     upperLimit = new double[this.numberOfVariables];
     lowerLimit = new double[this.numberOfVariables];
@@ -77,11 +78,9 @@ public class UF1 extends Problem {
 
   /** Evaluate() method */
   public void evaluate(Solution solution) throws JMetalException {
-    Variable[] decisionVariables = solution.getDecisionVariables();
-
     double[] x = new double[numberOfVariables];
     for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = decisionVariables[i].getValue();
+      x[i] = XReal.getValue(solution, i) ;
     }
 
     int count1, count2;

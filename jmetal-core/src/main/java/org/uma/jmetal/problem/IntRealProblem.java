@@ -25,6 +25,8 @@ import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.Variable;
 import org.uma.jmetal.encoding.solutiontype.IntRealSolutionType;
+import org.uma.jmetal.encoding.variable.Int;
+import org.uma.jmetal.encoding.variable.Real;
 import org.uma.jmetal.util.JMetalException;
 
 /**
@@ -37,10 +39,7 @@ public class IntRealProblem extends Problem {
   int intVariables;
   int realVariables;
 
-  /**
-   * Constructor.
-   * Creates a default instance of the IntRealProblem problem.
-   */
+  /** Constructor  */
   public IntRealProblem(String solutionType) throws ClassNotFoundException, JMetalException {
     this(solutionType, 3, 3);
   }
@@ -90,12 +89,12 @@ public class IntRealProblem extends Problem {
 
     fx[0] = 0.0;
     for (int var = 0; var < intVariables; var++) {
-      fx[0] += (int) variable[var].getValue();
+      fx[0] += ((Int) variable[var]).getValue();
     }
 
     fx[1] = 0.0;
     for (int var = intVariables; var < numberOfVariables; var++) {
-      fx[1] += variable[var].getValue();
+      fx[1] += ((Real)variable[var]).getValue();
     }
 
     solution.setObjective(0, fx[0]);
