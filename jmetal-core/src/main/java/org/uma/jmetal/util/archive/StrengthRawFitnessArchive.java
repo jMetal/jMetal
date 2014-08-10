@@ -22,7 +22,7 @@
 package org.uma.jmetal.util.archive;
 
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.util.Spea2Fitness;
+import org.uma.jmetal.metaheuristic.multiobjective.spea2.Spea2Fitness;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.EqualSolutions;
 import org.uma.jmetal.util.comparator.FitnessComparator;

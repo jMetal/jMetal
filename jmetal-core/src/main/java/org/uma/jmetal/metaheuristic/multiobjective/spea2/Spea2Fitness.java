@@ -19,10 +19,14 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.util;
+package org.uma.jmetal.metaheuristic.multiobjective.spea2;
 
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
+import org.uma.jmetal.util.Distance;
+import org.uma.jmetal.util.DistanceNode;
+import org.uma.jmetal.util.DistanceNodeComparator;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.FitnessComparator;
 
@@ -114,7 +118,7 @@ public class Spea2Fitness {
    * using for this de enviromentalSelection truncation
    *
    * @param size The number of elements to get.
-   * @throws JMetalException
+   * @throws org.uma.jmetal.util.JMetalException
    */
   public SolutionSet environmentalSelection(int size) throws JMetalException {
 

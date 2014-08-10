@@ -24,7 +24,6 @@ package org.uma.jmetal.metaheuristic.multiobjective.spea2;
 import org.uma.jmetal.core.*;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.Ranking;
-import org.uma.jmetal.util.Spea2Fitness;
 
 /**
  * This class representing the SPEA2 algorithm

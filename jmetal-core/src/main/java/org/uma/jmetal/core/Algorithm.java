@@ -51,6 +51,7 @@ public abstract class Algorithm implements Serializable {
   public abstract SolutionSet execute() throws JMetalException,
     ClassNotFoundException, IOException;
 
+  @Deprecated
   public void addOperator(String name, Operator operator) {
     if (operators == null) {
       operators = new HashMap<String, Operator>();
@@ -58,10 +59,12 @@ public abstract class Algorithm implements Serializable {
     operators.put(name, operator);
   }
 
+  @Deprecated
   public Operator getOperator(String name) {
     return operators.get(name);
   }
 
+  @Deprecated
   public void setInputParameter(String name, Object object) {
     if (inputParameters == null) {
       inputParameters = new HashMap<String, Object>();
@@ -69,16 +72,20 @@ public abstract class Algorithm implements Serializable {
     inputParameters.put(name, object);
   }
 
+  @Deprecated
   public Object getInputParameter(String name) {
     return inputParameters.get(name);
   }
 
+  @Deprecated
   public void setOutputParameter(String name, Object object) {
     if (outPutParameters == null) {
       outPutParameters = new HashMap<String, Object>();
     }
     outPutParameters.put(name, object);
   }
+
+  @Deprecated
   public Object getOutputParameter(String name) {
     if (outPutParameters != null) {
       return outPutParameters.get(name);

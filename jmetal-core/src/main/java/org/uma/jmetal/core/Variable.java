@@ -27,13 +27,7 @@ import org.uma.jmetal.util.JMetalException;
 import java.io.Serializable;
 
 /**
- * This abstract class is the base for defining new types of variables. Many
- * methods of <code>Variable</code> (<code>getValue</code>,
- * <code>setValue</code>,<code>
- * getLowerLimit</code>,<code>setLowerLimit</code>,<code>getUpperLimit</code>,
- * <code>setUpperLimit</code>) are not applicable to all the subclasses of
- * <code>Variable</code>. For this reason, they are defined by default as giving
- * a fatal error.
+ * This abstract class is the base for defining new types of variables.
  */
 public interface Variable {
   public abstract Variable deepCopy();

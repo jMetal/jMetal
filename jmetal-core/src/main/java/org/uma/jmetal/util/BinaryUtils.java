@@ -51,15 +51,3 @@ public class BinaryUtils {
     return bits ;
   }
 }
-/*
-    for (Variable variable : this.variable) {
-      if ((variable.getVariableType() == Binary.class)
-              || (variable.getVariableType() == BinaryReal.class)) {
-
-        bits += ((Binary) (variable)).getNumberOfBits();
-      }
-    }
-
-    return bits;
-  }
-*/

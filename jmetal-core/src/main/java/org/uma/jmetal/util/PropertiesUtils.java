@@ -31,7 +31,7 @@ import java.util.Properties;
  * This class provides some utilities for working with properties.
  * Thanks to Francisco Chicano.
  */
-public abstract class PropUtils {
+public abstract class PropertiesUtils {
 
   static public final char LABEL_RIGHT_DELIMITER = '>';
   static public final char LABEL_LEFT_DELIMITER = '<';
@@ -173,18 +173,18 @@ public abstract class PropUtils {
 
     // Parameters and Results are duplicated because of a Concurrent Modification Exception
     Properties parameters =
-      PropUtils.getPropertiesWithPrefix(properties, algorithmName + ".DEFAULT");
-    Properties results = PropUtils.getPropertiesWithPrefix(properties, algorithmName + ".DEFAULT");
+      PropertiesUtils.getPropertiesWithPrefix(properties, algorithmName + ".DEFAULT");
+    Properties results = PropertiesUtils.getPropertiesWithPrefix(properties, algorithmName + ".DEFAULT");
 
     for (Object o : parameters.keySet()) {
       String parameter = parameters.getProperty((String) o);
 
       Properties subParameters =
-        PropUtils.getPropertiesWithPrefix(properties, parameter + ".DEFAULT");
+        PropertiesUtils.getPropertiesWithPrefix(properties, parameter + ".DEFAULT");
 
       if (subParameters != null) {
-        PropUtils.putPrefixToProperties(parameter, subParameters);
-        results.putAll(PropUtils.putPrefixToProperties(parameter + ".", subParameters));
+        PropertiesUtils.putPrefixToProperties(parameter, subParameters);
+        results.putAll(PropertiesUtils.putPrefixToProperties(parameter + ".", subParameters));
       }
     }
     return results;
@@ -194,7 +194,7 @@ public abstract class PropUtils {
   static public Properties setDefaultParameters2(Properties properties, String algorithmName) {
 
     // Parameters and Results are duplicated because of a Concurrent Modification Exception
-    Properties parameters = PropUtils.getPropertiesWithPrefix(properties, algorithmName);
+    Properties parameters = PropertiesUtils.getPropertiesWithPrefix(properties, algorithmName);
 
     return parameters;
   } //

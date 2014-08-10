@@ -23,7 +23,6 @@ package org.uma.jmetal.metaheuristic.multiobjective.fastpga;
 
 import org.uma.jmetal.core.*;
 import org.uma.jmetal.util.Distance;
-import org.uma.jmetal.util.FPGAFitness;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.Ranking;
 import org.uma.jmetal.util.comparator.FPGAFitnessComparator;
