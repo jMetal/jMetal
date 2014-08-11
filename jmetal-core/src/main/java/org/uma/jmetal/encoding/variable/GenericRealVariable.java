@@ -1,4 +1,4 @@
-//  RealVariable.java
+//  GenericRealVariable.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>

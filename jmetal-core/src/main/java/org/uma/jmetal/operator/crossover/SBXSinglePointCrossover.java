@@ -32,9 +32,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class SBXSinglePointCrossover extends Crossover {
-  /**
-   *
-   */
   private static final long serialVersionUID = 5802652792685626443L;
 
   /**

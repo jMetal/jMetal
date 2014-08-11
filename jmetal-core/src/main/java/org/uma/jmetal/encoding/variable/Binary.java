@@ -70,7 +70,7 @@ public class Binary implements Variable {
     this.bits = bits;
   }
 
-  public Variable deepCopy() {
+  public Variable copy() {
     return new Binary(this);
   }
 

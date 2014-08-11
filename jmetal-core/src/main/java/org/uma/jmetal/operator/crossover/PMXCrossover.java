@@ -39,14 +39,10 @@ import java.util.List;
  * the type of those variables must be VariableType_.Permutation.
  */
 public class PMXCrossover extends Crossover {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = -4059314233890056350L;
 
   /**
-   * Valid solutiontype types to apply this operator
+   * Valid solution types to apply this operator
    */
   private static final List<Class<PermutationSolutionType>> VALID_TYPES =
     Arrays.asList(PermutationSolutionType.class);

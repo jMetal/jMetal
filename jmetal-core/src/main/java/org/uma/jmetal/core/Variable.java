@@ -30,5 +30,5 @@ import java.io.Serializable;
  * This abstract class is the base for defining new types of variables.
  */
 public interface Variable {
-  public abstract Variable deepCopy();
+  public abstract Variable copy();
 }

@@ -26,6 +26,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created with IntelliJ IDEA.
@@ -34,59 +36,73 @@ import static junit.framework.Assert.assertEquals;
  * Time: 17:13
  */
 public class IntTest extends Int {
-  Int integer_ ;
+  Int integer ;
 
   @Before
   public void setUp() throws  Exception {
-    integer_  = new Int(1, 2, 3) ;
+    integer  = new Int(1, 2, 3) ;
   }
 
   @After
   public void tearDown() throws Exception {
-    integer_ = null ;
+    integer = null ;
   }
 
   @Test
-  public void testGetValue() throws Exception {
-    assertEquals("IntTest", 1, (int)integer_.getValue()) ;
+  public void getValueTest() throws Exception {
+    assertEquals(1, (int)integer.getValue()) ;
   }
 
   @Test
-  public void testSetValue() throws Exception {
-     integer_.setValue(-235);
-     assertEquals("IntTest", -235, (int)integer_.getValue());
+  public void setValueTest() throws Exception {
+     integer.setValue(-235);
+     assertEquals(-235, (int)integer.getValue());
   }
 
   @Test
-  public void testDeepCopy() throws Exception {
-    Int integer = (Int)integer_.deepCopy() ;
-    assertEquals("IntTest", integer.toString(), integer_.toString());
+  public void copyTest() throws Exception {
+    Int number = (Int)integer.copy() ;
+    assertEquals(number.toString(), integer.toString());
   }
 
   @Test
-  public void testGetLowerBound() throws Exception {
-    assertEquals("IntTest", 2, (int)integer_.getLowerBound()) ;
+  public void getLowerBoundTest() throws Exception {
+    assertEquals(2, (int)integer.getLowerBound()) ;
   }
 
   @Test
-  public void testGetUpperBound() throws Exception {
-    assertEquals("IntTest", 3, (int)integer_.getUpperBound()) ;
+  public void getUpperBoundTest() throws Exception {
+    assertEquals(3, (int)integer.getUpperBound()) ;
   }
 
   @Test
-  public void testSetLowerBound() throws Exception {
-    integer_.setLowerBound(4);
-    assertEquals("IntTest", 4, (int)integer_.getLowerBound());
+  public void setLowerBoundTest() throws Exception {
+    integer.setLowerBound(4);
+    assertEquals(4, (int)integer.getLowerBound());
   }
 
   @Test
-  public void testSetUpperBound() throws Exception {
-    integer_.setUpperBound(25);
-    assertEquals("IntTest", 25, (int)integer_.getUpperBound());
+  public void setUpperBoundTest() throws Exception {
+    integer.setUpperBound(25);
+    assertEquals(25, (int)integer.getUpperBound());
+  }
+  
+  @Test
+  public void equalsTest() {
+  	Int int2 = new Int(integer) ;
+  	assertTrue(int2.equals(integer)) ;
+  }
+  
+  @Test
+  public void notEqualsTest() {
+  	Int int2 = new Int(2, 2, 3) ;
+  	assertFalse(int2.equals(integer)) ;
+  	int2 = new Int(1, 5, 9) ;
+  	assertFalse(int2.equals(integer)) ;
   }
 
   @Test
-  public void testToString() {
-    assertEquals("IntTest", "1", integer_.toString());
+  public void toStringTest() {
+    assertEquals("1", integer.toString());
   }
 }

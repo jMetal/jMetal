@@ -1,4 +1,4 @@
-//  IntVariable.java
+//  GenericIntVariable.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>

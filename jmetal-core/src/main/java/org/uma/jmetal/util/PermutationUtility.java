@@ -42,8 +42,7 @@ public class PermutationUtility {
       aux[i] = PseudoRandom.randInt(0, length - 1);
     }
 
-    // Sort the random array with effect in experimentoutput, and then we obtain a
-    // permutation array between 0 and length - 1
+    // Sort the random array to obtain a permutation array between 0 and length - 1
     for (int i = 0; i < length; i++) {
       for (int j = i + 1; j < length; j++) {
         if (aux[i] > aux[j]) {

@@ -118,12 +118,7 @@ public class HUXCrossover extends Crossover {
     return offSpring;
   }
 
-  /**
-   * Executes the operation
-   *
-   * @param object An object containing an array of two solutions
-   * @return An object containing the offSprings
-   */
+  /** Execute() method */
   public Object execute(Object object) throws JMetalException {
     Solution[] parents = (Solution[]) object;
 

@@ -74,7 +74,7 @@ public class Permutation implements Variable {
   }
 
 
-  public Variable deepCopy() {
+  public Variable copy() {
     return new Permutation(this);
   }
 

@@ -58,7 +58,7 @@ public class ArrayReal implements Variable {
     }
   }
 
-  private ArrayReal(ArrayReal arrayReal) {
+  public ArrayReal(ArrayReal arrayReal) {
     problem = arrayReal.problem;
     size = arrayReal.size;
     array = new double[size];
@@ -71,7 +71,7 @@ public class ArrayReal implements Variable {
   }
 
   @Override
-  public Variable deepCopy() {
+  public Variable copy() {
     return new ArrayReal(this);
   }
 

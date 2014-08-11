@@ -132,7 +132,7 @@ public class BinaryReal extends Binary implements GenericRealVariable {
     }
   }
 
-  public Variable deepCopy() {
+  public Variable copy() {
     return new BinaryReal(this);
   }
 

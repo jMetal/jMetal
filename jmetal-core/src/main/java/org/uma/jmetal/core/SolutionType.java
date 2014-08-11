@@ -49,7 +49,7 @@ public abstract class SolutionType implements Serializable {
     variables = new Variable[vars.length];
 
     for (int var = 0; var < vars.length; var++) {
-      variables[var] = vars[var].deepCopy();
+      variables[var] = vars[var].copy();
     }
 
     return variables;

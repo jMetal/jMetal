@@ -70,7 +70,7 @@ public class SinglePointCrossover extends Crossover {
    * @param probability Crossover probability
    * @param parent1     The first parent
    * @param parent2     The second parent
-   * @return An array containig the two offsprings
+   * @return An array containing the two offsprings
    * @throws org.uma.jmetal.util.JMetalException
    */
   public Solution[] doCrossover(double probability, Solution parent1, Solution parent2) throws JMetalException {
@@ -110,9 +110,9 @@ public class SinglePointCrossover extends Crossover {
           //5. Make the crossover into the gene;
           Binary offSpring1, offSpring2;
           offSpring1 =
-              (Binary) parent1.getDecisionVariables()[variable].deepCopy();
+              (Binary) parent1.getDecisionVariables()[variable].copy();
           offSpring2 =
-              (Binary) parent2.getDecisionVariables()[variable].deepCopy();
+              (Binary) parent2.getDecisionVariables()[variable].copy();
 
           for (int i = intoVariableCrossoverPoint;
               i < offSpring1.getNumberOfBits();
@@ -128,10 +128,10 @@ public class SinglePointCrossover extends Crossover {
           //6. Apply the crossover to the other variables
           for (int i = 0; i < variable; i++) {
             offSpring[0].getDecisionVariables()[i] =
-                parent2.getDecisionVariables()[i].deepCopy();
+                parent2.getDecisionVariables()[i].copy();
 
             offSpring[1].getDecisionVariables()[i] =
-                parent1.getDecisionVariables()[i].deepCopy();
+                parent1.getDecisionVariables()[i].copy();
 
           }
 

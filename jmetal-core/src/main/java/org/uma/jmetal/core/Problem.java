@@ -38,8 +38,12 @@ public abstract class Problem implements Serializable {
   protected int numberOfConstraints;
   protected String problemName;
   protected SolutionType solutionType;
+  
+  // Arrays used by number encodings (e.g., real, integer) 
   protected double[] lowerLimit;
   protected double[] upperLimit;
+  
+  // Arrays used by non number encodings (e.g., binary, permutation)
   protected int[] precision;
   protected int[] length;
 

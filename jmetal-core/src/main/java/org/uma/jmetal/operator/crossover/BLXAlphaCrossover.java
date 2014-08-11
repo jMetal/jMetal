@@ -153,8 +153,7 @@ public class BLXAlphaCrossover extends Crossover {
     return offSpring;
   }
 
-
-  /** execute() method */
+  /** Execute() method */
   public Object execute(Object object) throws JMetalException {
     Solution[] parents = (Solution[]) object;
 

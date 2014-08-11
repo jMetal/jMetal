@@ -25,6 +25,8 @@ import org.uma.jmetal.util.JMetalException;
 
 /** This class is intended to perform no crossover */
 public class NullCrossover extends Crossover {
+	
+	/** Constructor */
   private NullCrossover(Builder builder) {
   }
 

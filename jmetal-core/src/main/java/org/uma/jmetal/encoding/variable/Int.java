@@ -72,7 +72,7 @@ public class Int implements GenericIntVariable {
     this.value = value;
   }
 
-  public Variable deepCopy() {
+  public Variable copy() {
     try {
       return new Int(this);
     } catch (JMetalException e) {

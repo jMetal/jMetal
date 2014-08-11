@@ -46,21 +46,6 @@ public class ArrayIntSolutionType extends SolutionType implements GenericIntSolu
     return variables;
   }
 
-  /**
-   * Copy the variables
-   *
-   * @param vars Variables to copy
-   * @return An array of variables
-   */
-  public Variable[] copyVariables(Variable[] vars) {
-    Variable[] variables;
-
-    variables = new Variable[1];
-    variables[0] = vars[0].deepCopy();
-
-    return variables;
-  }
-
   @Override
   public int getIntValue(Solution solution, int index) {
     return ((ArrayInt) (solution.getDecisionVariables()[0])).getArray()[index] ;

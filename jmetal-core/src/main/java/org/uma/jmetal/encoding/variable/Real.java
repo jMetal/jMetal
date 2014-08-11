@@ -68,13 +68,8 @@ public class Real implements GenericRealVariable {
 		this.value = value;
 	}
 
-	public Variable deepCopy() {
-		try {
-			return new Real(this);
-		} catch (JMetalException e) {
-			JMetalLogger.logger.log(Level.SEVERE, "Real.deepCopy.execute: JMException", e);
-			return null;
-		}
+  public Variable copy() {
+    return new Real(this);
 	}
 
 	public double getLowerBound() {

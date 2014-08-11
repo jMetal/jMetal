@@ -105,7 +105,7 @@ public class ArrayInt implements Variable {
   }
 
   @Override
-  public Variable deepCopy() {
+  public Variable copy() {
     return new ArrayInt(this);
   }
 

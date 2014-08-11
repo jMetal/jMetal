@@ -46,22 +46,6 @@ public class ArrayRealSolutionType extends SolutionType implements GenericRealSo
     return variables;
   }
 
-  /**
-   * Copy the variables
-   *
-   * @param vars Variables
-   * @return An array of variables
-   */
-  public Variable[] copyVariables(Variable[] vars) {
-    Variable[] variables;
-
-    variables = new Variable[1];
-    variables[0] = vars[0].deepCopy();
-
-    return variables;
-  }
-
-
   @Override public double getRealValue(Solution solution, int index) {
     return ((ArrayReal)(solution.getDecisionVariables()[0])).getArray()[index] ;
   }

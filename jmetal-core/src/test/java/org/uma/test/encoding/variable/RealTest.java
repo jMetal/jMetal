@@ -28,47 +28,47 @@ public class RealTest extends Real{
   }
 
   @Test
-  public void testGetValue() throws Exception {
+  public void getValueTest() throws Exception {
     assertEquals("RealTest", 0.5, real_.getValue(), EPSILON) ;
   }
 
   @Test
-  public void testSetValue() throws Exception {
+  public void setValueTest() throws Exception {
      double oldValue = real_.getValue() ;
      real_.setValue(0.364);
      assertEquals("RealTest", 0.364, real_.getValue(), EPSILON);
   }
 
   @Test
-  public void testDeepCopy() throws Exception {
-    Real real = (Real)real_.deepCopy() ;
+  public void copyTest() throws Exception {
+    Real real = (Real)real_.copy() ;
     assertEquals("RealTest", real.toString(), real_.toString());
   }
 
   @Test
-  public void testGetLowerBound() throws Exception {
+  public void getLowerBoundTest() throws Exception {
     assertEquals("RealTest", -1.0, real_.getLowerBound(), EPSILON) ;
   }
 
   @Test
-  public void testGetUpperBound() throws Exception {
+  public void getUpperBoundTest() throws Exception {
     assertEquals("RealTest", 1.0, real_.getUpperBound(), EPSILON) ;
   }
 
   @Test
-  public void testSetLowerBound() throws Exception {
+  public void setLowerBoundTest() throws Exception {
     real_.setLowerBound(0.325);
     assertEquals("RealTest", 0.325, real_.getLowerBound(), EPSILON);
   }
 
   @Test
-  public void testSetUpperBound() throws Exception {
+  public void setUpperBoundTest() throws Exception {
     real_.setUpperBound(-254.0354);
     assertEquals("RealTest", -254.0354, real_.getUpperBound(), EPSILON);
   }
 
   @Test
-  public void testToString() {
+  public void toStringTest() {
     assertEquals("RealTest", "0.5", real_.toString());
   }
 }
