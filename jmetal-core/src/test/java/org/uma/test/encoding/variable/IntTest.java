@@ -36,73 +36,73 @@ import static org.junit.Assert.assertTrue;
  * Time: 17:13
  */
 public class IntTest extends Int {
-  Int integer ;
+  Int integerVariable ;
 
   @Before
   public void setUp() throws  Exception {
-    integer  = new Int(1, 2, 3) ;
+    integerVariable  = new Int(1, 2, 3) ;
   }
 
   @After
   public void tearDown() throws Exception {
-    integer = null ;
+    integerVariable = null ;
   }
 
   @Test
   public void getValueTest() throws Exception {
-    assertEquals(1, (int)integer.getValue()) ;
+    assertEquals(1, (int)integerVariable.getValue()) ;
   }
 
   @Test
   public void setValueTest() throws Exception {
-     integer.setValue(-235);
-     assertEquals(-235, (int)integer.getValue());
+     integerVariable.setValue(-235);
+     assertEquals(-235, (int)integerVariable.getValue());
   }
 
   @Test
   public void copyTest() throws Exception {
-    Int number = (Int)integer.copy() ;
-    assertEquals(number.toString(), integer.toString());
+    Int number = (Int)integerVariable.copy() ;
+    assertEquals(number.toString(), integerVariable.toString());
   }
 
   @Test
   public void getLowerBoundTest() throws Exception {
-    assertEquals(2, (int)integer.getLowerBound()) ;
+    assertEquals(2, (int)integerVariable.getLowerBound()) ;
   }
 
   @Test
   public void getUpperBoundTest() throws Exception {
-    assertEquals(3, (int)integer.getUpperBound()) ;
+    assertEquals(3, (int)integerVariable.getUpperBound()) ;
   }
 
   @Test
   public void setLowerBoundTest() throws Exception {
-    integer.setLowerBound(4);
-    assertEquals(4, (int)integer.getLowerBound());
+    integerVariable.setLowerBound(4);
+    assertEquals(4, (int)integerVariable.getLowerBound());
   }
 
   @Test
   public void setUpperBoundTest() throws Exception {
-    integer.setUpperBound(25);
-    assertEquals(25, (int)integer.getUpperBound());
+    integerVariable.setUpperBound(25);
+    assertEquals(25, (int)integerVariable.getUpperBound());
   }
   
   @Test
   public void equalsTest() {
-  	Int int2 = new Int(integer) ;
-  	assertTrue(int2.equals(integer)) ;
+  	Int int2 = new Int(integerVariable) ;
+  	assertTrue(int2.equals(integerVariable)) ;
   }
   
   @Test
   public void notEqualsTest() {
   	Int int2 = new Int(2, 2, 3) ;
-  	assertFalse(int2.equals(integer)) ;
+  	assertFalse(int2.equals(integerVariable)) ;
   	int2 = new Int(1, 5, 9) ;
-  	assertFalse(int2.equals(integer)) ;
+  	assertFalse(int2.equals(integerVariable)) ;
   }
 
   @Test
   public void toStringTest() {
-    assertEquals("1", integer.toString());
+    assertEquals("1", integerVariable.toString());
   }
 }

@@ -1,11 +1,14 @@
 package org.uma.test.encoding.variable;
 
+import org.uma.jmetal.encoding.variable.Int;
 import org.uma.jmetal.encoding.variable.Real;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,61 +17,75 @@ import static junit.framework.Assert.assertEquals;
  * Time: 17:13
  */
 public class RealTest extends Real{
-  Real real_ ;
+  Real realVariable ;
   static final double EPSILON = 0.00000000000001;
 
   @Before
   public void setUp() throws  Exception {
-    real_  = new Real(0.5, -1.0, 1.0) ;
+  	realVariable = new Real(0.5, -1.0, 1.0) ;
   }
 
   @After
   public void tearDown() throws Exception {
-    real_ = null ;
+  	realVariable = null ;
   }
 
   @Test
   public void getValueTest() throws Exception {
-    assertEquals("RealTest", 0.5, real_.getValue(), EPSILON) ;
+    assertEquals("RealTest", 0.5, realVariable.getValue(), EPSILON) ;
   }
 
   @Test
   public void setValueTest() throws Exception {
-     double oldValue = real_.getValue() ;
-     real_.setValue(0.364);
-     assertEquals("RealTest", 0.364, real_.getValue(), EPSILON);
+     double oldValue = realVariable.getValue() ;
+     realVariable.setValue(0.364);
+     assertEquals("RealTest", 0.364, realVariable.getValue(), EPSILON);
   }
 
   @Test
   public void copyTest() throws Exception {
-    Real real = (Real)real_.copy() ;
-    assertEquals("RealTest", real.toString(), real_.toString());
+    Real real = (Real)realVariable.copy() ;
+    assertEquals("RealTest", real.toString(), real.toString());
   }
 
   @Test
   public void getLowerBoundTest() throws Exception {
-    assertEquals("RealTest", -1.0, real_.getLowerBound(), EPSILON) ;
+    assertEquals("RealTest", -1.0, realVariable.getLowerBound(), EPSILON) ;
   }
 
   @Test
   public void getUpperBoundTest() throws Exception {
-    assertEquals("RealTest", 1.0, real_.getUpperBound(), EPSILON) ;
+    assertEquals("RealTest", 1.0, realVariable.getUpperBound(), EPSILON) ;
   }
 
   @Test
   public void setLowerBoundTest() throws Exception {
-    real_.setLowerBound(0.325);
-    assertEquals("RealTest", 0.325, real_.getLowerBound(), EPSILON);
+  	realVariable.setLowerBound(0.325);
+    assertEquals("RealTest", 0.325, realVariable.getLowerBound(), EPSILON);
   }
 
   @Test
   public void setUpperBoundTest() throws Exception {
-    real_.setUpperBound(-254.0354);
-    assertEquals("RealTest", -254.0354, real_.getUpperBound(), EPSILON);
+  	realVariable.setUpperBound(-254.0354);
+    assertEquals("RealTest", -254.0354, realVariable.getUpperBound(), EPSILON);
+  }
+  
+  @Test
+  public void equalsTest() {
+  	Real real2 = new Real(realVariable) ;
+  	assertTrue(real2.equals(realVariable)) ;
   }
 
   @Test
+  public void notEqualsTest() {
+  	Real real2 = new Real(2, 2, 3) ;
+  	assertFalse(real2.equals(realVariable)) ;
+  	real2 = new Real(1, 5, 9) ;
+  	assertFalse(real2.equals(realVariable)) ;
+  }
+  
+  @Test
   public void toStringTest() {
-    assertEquals("RealTest", "0.5", real_.toString());
+    assertEquals("RealTest", "0.5", realVariable.toString());
   }
 }
