@@ -40,6 +40,13 @@ public class ArrayRealTest {
 		arrayReal = null ;
 	}
 
+	@Test 
+	public void defaultConstructorTest() {
+		arrayReal = new ArrayReal() ;
+		
+		assertEquals(0, arrayReal.length()) ;
+	}
+	
 	@Test
 	public void testCopy() throws Exception {
 		ArrayReal array = new ArrayReal(arrayReal) ;

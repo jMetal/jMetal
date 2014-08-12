@@ -133,17 +133,16 @@ public class ArrayReal implements Variable {
     return string;
   }
 
-	@Override
+  @Override
   public int hashCode() {
 	  final int prime = 31;
 	  int result = 1;
 	  result = prime * result + Arrays.hashCode(array);
-	  result = prime * result + ((problem == null) ? 0 : problem.hashCode());
 	  result = prime * result + size;
 	  return result;
   }
 
-	@Override
+  @Override
   public boolean equals(Object obj) {
 	  if (this == obj) {
 		  return true;
@@ -156,13 +155,6 @@ public class ArrayReal implements Variable {
 	  }
 	  ArrayReal other = (ArrayReal) obj;
 	  if (!Arrays.equals(array, other.array)) {
-		  return false;
-	  }
-	  if (problem == null) {
-		  if (other.problem != null) {
-			  return false;
-		  }
-	  } else if (!problem.equals(other.problem)) {
 		  return false;
 	  }
 	  if (size != other.size) {

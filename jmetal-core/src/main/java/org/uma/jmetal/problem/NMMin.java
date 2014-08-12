@@ -22,6 +22,7 @@ package org.uma.jmetal.problem;
 
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.encoding.solutiontype.ArrayIntSolutionType;
 import org.uma.jmetal.encoding.solutiontype.IntSolutionType;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.encoding.solutiontype.wrapper.XInt;
@@ -58,6 +59,8 @@ public class NMMin extends Problem {
 
     if (solutionType.compareTo("Integer") == 0) {
       this.solutionType = new IntSolutionType(this);
+    } else if (solutionType.compareTo("ArrayInt") == 0) {
+      this.solutionType = new ArrayIntSolutionType(this);
     } else {
       throw new JMetalException("Error: solution type " + solutionType + " invalid");
     }

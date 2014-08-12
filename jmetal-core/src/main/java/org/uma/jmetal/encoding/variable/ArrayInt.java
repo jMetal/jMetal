@@ -39,12 +39,8 @@ public class ArrayInt implements Variable {
   private Problem problem;
   private int[] array;
   private int size;
-  private int[] lowerBounds;
-  private int[] upperBounds;
 
   public ArrayInt() {
-    lowerBounds = null;
-    upperBounds = null;
     size = 0;
     array = null;
     problem = null;
@@ -53,51 +49,23 @@ public class ArrayInt implements Variable {
   public ArrayInt(int size) {
     this.size = size;
     array = new int[this.size];
-
-    lowerBounds = new int[this.size];
-    upperBounds = new int[this.size];
   }
 
   public ArrayInt(int size, Problem problem) {
     this.problem = problem;
     this.size = size;
     array = new int[this.size];
-    lowerBounds = new int[this.size];
-    upperBounds = new int[this.size];
-
     for (int i = 0; i < this.size; i++) {
-      lowerBounds[i] = (int) this.problem.getLowerLimit(i);
-      upperBounds[i] = (int) this.problem.getUpperLimit(i);
-      array[i] = PseudoRandom.randInt(lowerBounds[i], upperBounds[i]);
+      array[i] = PseudoRandom.randInt((int)problem.getLowerLimit(i), (int)problem.getUpperLimit(i));
     }
   }
 
-  public ArrayInt(int size, int[] lowerBounds, int[] upperBounds) {
-    this.size = size;
-    array = new int[this.size];
-
-    this.lowerBounds = Arrays.copyOf(lowerBounds, lowerBounds.length); 
-    this.upperBounds = Arrays.copyOf(upperBounds, upperBounds.length); 
-
-    for (int i = 0; i < this.size; i++) {
-      this.lowerBounds[i] = (int) lowerBounds[i];
-      this.upperBounds[i] = (int) upperBounds[i];
-      array[i] = PseudoRandom.randInt(this.lowerBounds[i], this.upperBounds[i]);
-    }
-  }
-
-  private ArrayInt(ArrayInt arrayInt) {
+  public ArrayInt(ArrayInt arrayInt) {
+    problem = arrayInt.problem;
     size = arrayInt.size;
     array = new int[size];
 
-    lowerBounds = new int[size];
-    upperBounds = new int[size];
-
-    for (int i = 0; i < size; i++) {
-      array[i] = arrayInt.array[i];
-      lowerBounds[i] = arrayInt.lowerBounds[i];
-      upperBounds[i] = arrayInt.upperBounds[i];
-    }
+    System.arraycopy(arrayInt.array, 0, array, 0, size);
   }
 
   public int[] getArray() {
@@ -133,7 +101,7 @@ public class ArrayInt implements Variable {
 
   public int getLowerBound(int index) throws JMetalException {
     if ((index >= 0) && (index < size)) {
-      return lowerBounds[index];
+      return (int)problem.getLowerLimit(index);
     } else {
       throw new JMetalException(
         org.uma.jmetal.encoding.variable.ArrayInt.class + ".getLowerBound: index value (" + index
@@ -144,7 +112,7 @@ public class ArrayInt implements Variable {
 
   public int getUpperBound(int index) throws JMetalException {
     if ((index >= 0) && (index < size)) {
-      return upperBounds[index];
+      return (int)problem.getUpperLimit(index);
     } else {
       throw new JMetalException(
         org.uma.jmetal.encoding.variable.ArrayInt.class + ".getUpperBound: index value (" + index
@@ -157,26 +125,25 @@ public class ArrayInt implements Variable {
     String string;
 
     string = "";
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < (size - 1); i++) {
       string += array[i] + " ";
     }
+
+    string += array[size - 1];
 
     return string;
   }
 
-	@Override
+  @Override
   public int hashCode() {
 	  final int prime = 31;
 	  int result = 1;
 	  result = prime * result + Arrays.hashCode(array);
-	  result = prime * result + Arrays.hashCode(lowerBounds);
-	  result = prime * result + ((problem == null) ? 0 : problem.hashCode());
 	  result = prime * result + size;
-	  result = prime * result + Arrays.hashCode(upperBounds);
 	  return result;
   }
 
-	@Override
+  @Override
   public boolean equals(Object obj) {
 	  if (this == obj) {
 		  return true;
@@ -191,22 +158,9 @@ public class ArrayInt implements Variable {
 	  if (!Arrays.equals(array, other.array)) {
 		  return false;
 	  }
-	  if (!Arrays.equals(lowerBounds, other.lowerBounds)) {
-		  return false;
-	  }
-	  if (problem == null) {
-		  if (other.problem != null) {
-			  return false;
-		  }
-	  } else if (!problem.equals(other.problem)) {
-		  return false;
-	  }
 	  if (size != other.size) {
 		  return false;
 	  }
-	  if (!Arrays.equals(upperBounds, other.upperBounds)) {
-		  return false;
-	  }
 	  return true;
-  }
+  }	
 }
