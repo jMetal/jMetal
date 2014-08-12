@@ -28,7 +28,6 @@ import org.uma.jmetal.core.Variable;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
 
-
 /**
  * Class implementing a decision encoding.variable representing an array of real values.
  * The real values of the array have their own bounds.
