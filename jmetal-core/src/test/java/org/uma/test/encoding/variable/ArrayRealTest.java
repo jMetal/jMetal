@@ -1,3 +1,23 @@
+//  ArrayRealTest.java
+//
+//  Author:
+//       Antonio J. Nebro <antonio@lcc.uma.es>
+//
+//  Copyright (c) 2014 Antonio J. Nebro
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU Lesser General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU Lesser General Public License for more details.
+//
+//  You should have received a copy of the GNU Lesser General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 package org.uma.test.encoding.variable;
 
 import static org.junit.Assert.assertEquals;
@@ -7,6 +27,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.Arrays;
 
 import org.uma.jmetal.core.Problem;
+import org.uma.jmetal.encoding.variable.ArrayInt;
 import org.uma.jmetal.encoding.variable.ArrayReal;
 import org.uma.jmetal.problem.Fonseca;
 import org.uma.jmetal.problem.Kursawe;
@@ -25,129 +46,174 @@ import org.junit.Test;
  */
 public class ArrayRealTest {
 	static final double EPSILON = 0.0000000000001 ;
-	ArrayReal arrayReal ;
+	ArrayReal arrayRealVariable ;
 	Problem problem ;
 
 	@Before
 	public void setUp() throws Exception {
 		problem = new ZDT1("ArrayReal", 20) ;
-		arrayReal = new ArrayReal(problem.getNumberOfVariables(), problem) ;
+		arrayRealVariable = new ArrayReal(problem.getNumberOfVariables(), problem) ;
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		problem = null;
-		arrayReal = null ;
+		arrayRealVariable = null ;
 	}
 
 	@Test 
-	public void defaultConstructorTest() {
-		arrayReal = new ArrayReal() ;
-		
-		assertEquals(0, arrayReal.length()) ;
+	public void constructorTest1() {
+		arrayRealVariable = new ArrayReal() ;
+
+		assertEquals(0, arrayRealVariable.length()) ;
 	}
-	
+
+	@Test 
+	public void constructorTest2() {
+		arrayRealVariable = new ArrayReal(20) ;
+
+		assertEquals(20, arrayRealVariable.length()) ;
+		assertEquals(20, arrayRealVariable.getArray().length) ;
+	}
+
+	@Test 
+	public void constructorTest3() {
+		arrayRealVariable = new ArrayReal(4) ;
+		arrayRealVariable.setValue(0, 4) ;
+		arrayRealVariable.setValue(1, -2) ;
+		arrayRealVariable.setValue(2, 2) ;
+		arrayRealVariable.setValue(3, 0) ;
+
+		ArrayReal array2 = new ArrayReal(arrayRealVariable) ;
+
+		assertEquals(4, array2.length()) ;
+		assertTrue(Arrays.equals(array2.getArray(), arrayRealVariable.getArray())) ;
+	}
+
 	@Test
 	public void testCopy() throws Exception {
-		ArrayReal array = new ArrayReal(arrayReal) ;
-		assertTrue(Arrays.equals(array.getArray(), arrayReal.getArray())) ;
-		
-		array = (ArrayReal)arrayReal.copy() ;
-		assertTrue(Arrays.equals(array.getArray(), arrayReal.getArray())) ;
+		ArrayReal array = new ArrayReal(arrayRealVariable) ;
+		assertTrue(Arrays.equals(array.getArray(), arrayRealVariable.getArray())) ;
+
+		array = (ArrayReal)arrayRealVariable.copy() ;
+		assertTrue(Arrays.equals(array.getArray(), arrayRealVariable.getArray())) ;
 	}
 
 	@Test
 	public void testGetLength() throws Exception {
-		assertEquals(20, arrayReal.length()) ;
+		assertEquals(20, arrayRealVariable.length()) ;
 	}
 
 	@Test
 	public void testSetAndGetValue() throws Exception {
-		arrayReal.setValue(0, 4.5) ;
-		arrayReal.setValue(1, -2.3) ;
-		arrayReal.setValue(2, 2.323425) ;
-		arrayReal.setValue(3, 0) ;
-		arrayReal.setValue(arrayReal.length()-1, -123) ;
-		assertEquals(4.5, arrayReal.getValue(0), EPSILON) ;
-		assertEquals(-2.3, arrayReal.getValue(1), EPSILON) ;
-		assertEquals(2.323425, arrayReal.getValue(2), EPSILON) ;
-		assertEquals(0, arrayReal.getValue(3), EPSILON) ;
-		assertEquals(-123, arrayReal.getValue(arrayReal.length()-1), EPSILON) ;
+		arrayRealVariable.setValue(0, 4.5) ;
+		arrayRealVariable.setValue(1, -2.3) ;
+		arrayRealVariable.setValue(2, 2.323425) ;
+		arrayRealVariable.setValue(3, 0) ;
+		arrayRealVariable.setValue(arrayRealVariable.length()-1, -123) ;
+		assertEquals(4.5, arrayRealVariable.getValue(0), EPSILON) ;
+		assertEquals(-2.3, arrayRealVariable.getValue(1), EPSILON) ;
+		assertEquals(2.323425, arrayRealVariable.getValue(2), EPSILON) ;
+		assertEquals(0, arrayRealVariable.getValue(3), EPSILON) ;
+		assertEquals(-123, arrayRealVariable.getValue(arrayRealVariable.length()-1), EPSILON) ;
 	}
 
 	@Test
 	public void testGetLowerBound() throws Exception {
-		assertEquals(problem.getLowerLimit(0), arrayReal.getLowerBound(0), EPSILON) ;
-		assertEquals(problem.getLowerLimit(1), arrayReal.getLowerBound(1), EPSILON) ;
-		assertEquals(problem.getLowerLimit(arrayReal.length()-1), 
-				arrayReal.getLowerBound(arrayReal.length()-1), EPSILON) ;
+		assertEquals(problem.getLowerLimit(0), arrayRealVariable.getLowerBound(0), EPSILON) ;
+		assertEquals(problem.getLowerLimit(1), arrayRealVariable.getLowerBound(1), EPSILON) ;
+		assertEquals(problem.getLowerLimit(arrayRealVariable.length()-1), 
+				arrayRealVariable.getLowerBound(arrayRealVariable.length()-1), EPSILON) ;
 	}
 
 	@Test
 	public void testGetUpperBound() throws Exception {
-		assertEquals(problem.getUpperLimit(0), arrayReal.getUpperBound(0), EPSILON) ;
-		assertEquals(problem.getUpperLimit(1), arrayReal.getUpperBound(1), EPSILON) ;
-		assertEquals(problem.getUpperLimit(arrayReal.length()-1), 
-				arrayReal.getUpperBound(arrayReal.length()-1), EPSILON) ;
+		assertEquals(problem.getUpperLimit(0), arrayRealVariable.getUpperBound(0), EPSILON) ;
+		assertEquals(problem.getUpperLimit(1), arrayRealVariable.getUpperBound(1), EPSILON) ;
+		assertEquals(problem.getUpperLimit(arrayRealVariable.length()-1), 
+				arrayRealVariable.getUpperBound(arrayRealVariable.length()-1), EPSILON) ;
 	}
-	
+
 	@Test (expected = JMetalException.class)
 	public void outOfBoundAccesingTest1() {
 		double value ;
-		value = arrayReal.getValue(-1) ;
-		value = arrayReal.getValue(0) ;
+		value = arrayRealVariable.getValue(-1) ;
+		value = arrayRealVariable.getValue(0) ;
 	}
 
 	@Test (expected = JMetalException.class)
 	public void outOfBoundAccesingTest2() {
 		double value ;
-		value = arrayReal.getValue(arrayReal.length()) ;
+		value = arrayRealVariable.getValue(arrayRealVariable.length()) ;
 	}
 
 	@Test (expected = JMetalException.class)
 	public void outOfBoundAccesingTest3() {
 		double value ;
-		value = arrayReal.getLowerBound(-1) ;
+		value = arrayRealVariable.getLowerBound(-1) ;
 	}
-	
+
 	@Test (expected = JMetalException.class)
 	public void outOfBoundAccesingTest4() {
 		double value ;
-		value = arrayReal.getLowerBound(arrayReal.length()) ;
+		value = arrayRealVariable.getLowerBound(arrayRealVariable.length()) ;
 	}
 
 	@Test (expected = JMetalException.class)
 	public void outOfBoundAccesingTest5() {
 		double value ;
-		value = arrayReal.getUpperBound(-1) ;
+		value = arrayRealVariable.getUpperBound(-1) ;
 	}
-	
+
 	@Test (expected = JMetalException.class)
 	public void outOfBoundAccesingTest6() {
 		double value ;
-		value = arrayReal.getUpperBound(arrayReal.length()) ;
+		value = arrayRealVariable.getUpperBound(arrayRealVariable.length()) ;
 	}
-	
+
 	@Test
-	public void equalsTest() {
-		ArrayReal array = new ArrayReal(arrayReal) ;
-		assertTrue (array.equals(arrayReal)) ;
+	public void equalsTest1() {
+		ArrayReal array = new ArrayReal(arrayRealVariable) ;
+		assertTrue (array.equals(arrayRealVariable)) ;
 	}
-	
+
 	@Test
-	public void notEqualsTest() {
-		ArrayReal array = new ArrayReal(arrayReal) ;
-		array.setValue(0, -13234) ;
-		assertFalse(array.equals(arrayReal)) ;
+	public void equalsTest2() {
+		assertTrue (arrayRealVariable.equals(arrayRealVariable)) ;
 	}
-	
+
+	@Test
+	public void notEqualsTest1() {
+		assertFalse(arrayRealVariable.equals(null)) ;
+	}
+
+	@Test
+	public void notEqualsTest2() {
+		ArrayReal array = new ArrayReal(arrayRealVariable) ;
+		array.setValue(0, -13234.234) ;
+		assertFalse(array.equals(arrayRealVariable)) ;
+	}
+
+	@Test
+	public void notEqualsTest3() {
+		assertFalse(arrayRealVariable.equals(new ArrayReal())) ;
+	}
+
+	@Test
+	public void hashCodeTest() {
+		ArrayReal array = new ArrayReal(arrayRealVariable) ;
+		assertEquals(array.hashCode(), arrayRealVariable.hashCode()) ;
+		array.setValue(0, -13234.234) ;
+		assertFalse(array.hashCode() == arrayRealVariable.hashCode()) ;
+	}
+
 	@Test
 	public void testToString() throws Exception {
 		problem = new Kursawe("ArrayReal", 3) ;
-		arrayReal = new ArrayReal(problem.getNumberOfVariables(), problem) ;
-		arrayReal.setValue(0, 1.25) ;
-		arrayReal.setValue(1, 2.51) ;
-		arrayReal.setValue(2, 3.62) ;
-    assertEquals("1.25 2.51 3.62", arrayReal.toString()) ;
+		arrayRealVariable = new ArrayReal(problem.getNumberOfVariables(), problem) ;
+		arrayRealVariable.setValue(0, 1.25) ;
+		arrayRealVariable.setValue(1, 2.51) ;
+		arrayRealVariable.setValue(2, 3.62) ;
+		assertEquals("1.25 2.51 3.62", arrayRealVariable.toString()) ;
 	}
 }

@@ -22,7 +22,7 @@
 package org.uma.jmetal.util.archive;
 
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.util.AdaptiveGrid;
+import org.uma.jmetal.metaheuristic.multiobjective.paes.AdaptiveGrid;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 
 import java.util.Comparator;

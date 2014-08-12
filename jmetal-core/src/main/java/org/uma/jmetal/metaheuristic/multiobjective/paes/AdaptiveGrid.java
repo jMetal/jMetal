@@ -19,7 +19,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.util;
+package org.uma.jmetal.metaheuristic.multiobjective.paes;
 
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
@@ -64,7 +64,6 @@ public class AdaptiveGrid {
       hypercubes[i] = 0;
     }
   }
-
 
   /**
    * Updates the grid limits considering the solutions contained in a
@@ -145,7 +144,7 @@ public class AdaptiveGrid {
   /**
    * Updates the grid limits and the grid content adding a new
    * <code>Solution</code>.
-   * If the solutiontype falls out of the grid bounds, the limits and content of the
+   * If the solution falls out of the grid bounds, the limits and content of the
    * grid must be re-calculated.
    *
    * @param solution    <code>Solution</code> considered to update the grid.
@@ -185,15 +184,15 @@ public class AdaptiveGrid {
   }
 
   /**
-   * Calculates the hypercube of a solutiontype.
+   * Calculates the hypercube of a solution
    *
    * @param solution The <code>Solution</code>.
    */
   public int location(Solution solution) {
-    //Create a int [] to store the range of each objetive
+    //Create a int [] to store the range of each objective
     int[] position = new int[numberOfObjectives];
 
-    //Calculate the position for each objetive
+    //Calculate the position for each objective
     for (int obj = 0; obj < numberOfObjectives; obj++) {
       if ((solution.getObjective(obj) > gridUpperLimits[obj])
         || (solution.getObjective(obj) < gridLowerLimits[obj])) {
@@ -254,7 +253,7 @@ public class AdaptiveGrid {
     //Decrease the solutions in the location specified.
     hypercubes[location]--;
 
-    //Update the most poblated hypercube
+    //Update the most populated hypercube
     if (location == mostPopulatedHypercube) {
       for (int i = 0; i < hypercubes.length; i++) {
         if (hypercubes[i] > hypercubes[mostPopulatedHypercube]) {
@@ -263,7 +262,7 @@ public class AdaptiveGrid {
       }
     }
 
-    //If hypercubes[location] now becomes to zero, then update ocupped hypercubes
+    //If hypercubes[location] now becomes to zero, then update ocuppied hypercubes
     if (hypercubes[location] == 0) {
       this.calculateOccupied();
     }
@@ -300,7 +299,7 @@ public class AdaptiveGrid {
   }
 
   /**
-   * Retunrns a String representing the grid.
+   * Returns a String representing the grid.
    *
    * @return The String.
    */
@@ -321,9 +320,9 @@ public class AdaptiveGrid {
   public int rouletteWheel() {
     //Calculate the inverse sum
     double inverseSum = 0.0;
-    for (int aHypercubes_ : hypercubes) {
-      if (aHypercubes_ > 0) {
-        inverseSum += 1.0 / (double) aHypercubes_;
+    for (int hypercube : hypercubes) {
+      if (hypercube > 0) {
+        inverseSum += 1.0 / (double) hypercube;
       }
     }
 

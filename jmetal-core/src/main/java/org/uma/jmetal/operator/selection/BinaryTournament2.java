@@ -23,6 +23,7 @@ package org.uma.jmetal.operator.selection;
 
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
+import org.uma.jmetal.encoding.variable.Permutation;
 import org.uma.jmetal.operator.selection.BinaryTournament.Builder;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.comparator.DominanceComparator;
@@ -79,7 +80,7 @@ public class BinaryTournament2 extends Selection {
   	
     SolutionSet population = (SolutionSet) object;
     if (index == 0) {
-      permutation = (new org.uma.jmetal.util.PermutationUtility()).intPermutation(population.size());
+    	permutation = new Permutation(population.size()).getVector() ;
     }
 
     Solution solution1, solution2;

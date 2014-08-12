@@ -24,9 +24,11 @@ import org.uma.jmetal.encoding.variable.Int;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.uma.jmetal.encoding.variable.Real;
 
-import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -99,6 +101,14 @@ public class IntTest extends Int {
   	assertFalse(int2.equals(integerVariable)) ;
   	int2 = new Int(1, 5, 9) ;
   	assertFalse(int2.equals(integerVariable)) ;
+  }
+
+  @Test
+  public void hashCodeTest() {
+    Int real2 = new Int(integerVariable) ;
+    assertEquals(integerVariable.hashCode(), real2.hashCode()) ;
+    real2 = new Int(1, 5, 9) ;
+    assertNotEquals(integerVariable.hashCode(), real2.hashCode()) ;
   }
 
   @Test

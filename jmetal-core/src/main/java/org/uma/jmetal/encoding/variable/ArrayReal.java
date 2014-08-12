@@ -45,6 +45,11 @@ public class ArrayReal implements Variable {
     array = null;
   }
 
+  public ArrayReal(int size) {
+    this.size = size;
+    array = new double[this.size];
+  }
+  
   public ArrayReal(int size, Problem problem) {
     this.problem = problem;
     this.size = size;
@@ -154,9 +159,6 @@ public class ArrayReal implements Variable {
 	  }
 	  ArrayReal other = (ArrayReal) obj;
 	  if (!Arrays.equals(array, other.array)) {
-		  return false;
-	  }
-	  if (size != other.size) {
 		  return false;
 	  }
 	  return true;

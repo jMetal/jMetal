@@ -158,9 +158,6 @@ public class ArrayInt implements Variable {
 	  if (!Arrays.equals(array, other.array)) {
 		  return false;
 	  }
-	  if (size != other.size) {
-		  return false;
-	  }
 	  return true;
   }	
 }

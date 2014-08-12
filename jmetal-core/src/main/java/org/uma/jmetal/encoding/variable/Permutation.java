@@ -73,7 +73,6 @@ public class Permutation implements Variable {
     return size;
   }
 
-
   public Variable copy() {
     return new Permutation(this);
   }
