@@ -24,6 +24,7 @@ import org.uma.jmetal.encoding.variable.Int;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.uma.jmetal.encoding.variable.Permutation;
 import org.uma.jmetal.encoding.variable.Real;
 
 import static org.junit.Assert.assertEquals;
@@ -101,6 +102,30 @@ public class IntTest extends Int {
   	assertFalse(int2.equals(integerVariable)) ;
   	int2 = new Int(1, 5, 9) ;
   	assertFalse(int2.equals(integerVariable)) ;
+  }
+
+  @Test
+  public void comparisonToNullTest() {
+    assertFalse(integerVariable.equals(null)) ;
+  }
+
+  @Test
+  public void comparisonWithIncompatibleClassTest() {
+    assertFalse(integerVariable.equals(new Permutation(25))) ;
+  }
+
+  @Test
+  public void comparisonWithDifferentLowerBoundTest() {
+    Int int2 = new Int(integerVariable) ;
+    int2.setLowerBound(-123456);
+    assertFalse(integerVariable.equals(int2)) ;
+  }
+
+  @Test
+  public void comparisonWithDifferentUpperBoundTest() {
+    Int int2 = new Int(integerVariable) ;
+    int2.setUpperBound(+123456);
+    assertFalse(integerVariable.equals(int2)) ;
   }
 
   @Test

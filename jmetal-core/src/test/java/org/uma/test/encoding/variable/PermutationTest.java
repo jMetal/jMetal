@@ -24,15 +24,14 @@ import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.uma.jmetal.encoding.variable.ArrayInt;
 import org.uma.jmetal.encoding.variable.Int;
 import org.uma.jmetal.encoding.variable.Permutation;
 
 import java.util.Arrays;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
 
 /**
  * Created by Antonio J. Nebro on 12/08/14.
@@ -78,6 +77,27 @@ public class PermutationTest {
     Permutation permutation = (Permutation)permutationVariable.copy() ;
     assertTrue(permutationVariable.equals(permutation));
     assertEquals(permutationVariable.hashCode(), permutation.hashCode());
+  }
+
+  @Test
+  public void comparisonToNullTest() {
+    assertFalse(permutationVariable.equals(null)) ;
+  }
+
+  @Test
+  public void comparisonWithIncompatibleClassTest() {
+    assertFalse(permutationVariable.equals(new ArrayInt(25))) ;
+  }
+
+  @Test
+  public void comparisonWithItselfTest() {
+    assertTrue(permutationVariable.equals(permutationVariable)) ;
+  }
+
+  @Test
+  public void comparisonWithOtherVariableTest() {
+    Permutation permutation = new Permutation(10) ;
+    assertFalse(permutationVariable.equals(permutation)); ;
   }
 
   @After

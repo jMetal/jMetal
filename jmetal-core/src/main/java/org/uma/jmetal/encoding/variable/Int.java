@@ -73,12 +73,7 @@ public class Int implements GenericIntVariable {
   }
 
   public Variable copy() {
-    try {
-      return new Int(this);
-    } catch (JMetalException e) {
-      JMetalLogger.logger.log(Level.SEVERE, "Int.deepCopy.execute: JMException", e);
-      return null;
-    }
+    return new Int(this);
   }
 
   public int getLowerBound() {
@@ -87,7 +82,7 @@ public class Int implements GenericIntVariable {
 
   public void setLowerBound(int lowerBound) {
     this.lowerBound = lowerBound;
-  } 
+  }
 
   public int getUpperBound() {
     return upperBound;
@@ -96,42 +91,42 @@ public class Int implements GenericIntVariable {
   public void setUpperBound(int upperBound) {
     this.upperBound = upperBound;
   }
-  
+
   public String toString() {
     return value + "";
   }
 
-	@Override
+  @Override
   public int hashCode() {
-	  final int prime = 31;
-	  int result = 1;
-	  result = prime * result + lowerBound;
-	  result = prime * result + upperBound;
-	  result = prime * result + value;
-	  return result;
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + lowerBound;
+    result = prime * result + upperBound;
+    result = prime * result + value;
+    return result;
   }
 
-	@Override
+  @Override
   public boolean equals(Object obj) {
-	  if (this == obj) {
-		  return true;
-	  }
-	  if (obj == null) {
-		  return false;
-	  }
-	  if (!(obj instanceof Int)) {
-		  return false;
-	  }
-	  Int other = (Int) obj;
-	  if (lowerBound != other.lowerBound) {
-		  return false;
-	  }
-	  if (upperBound != other.upperBound) {
-		  return false;
-	  }
-	  if (value != other.value) {
-		  return false;
-	  }
-	  return true;
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (!(obj instanceof Int)) {
+      return false;
+    }
+    Int other = (Int) obj;
+    if (lowerBound != other.lowerBound) {
+      return false;
+    }
+    if (upperBound != other.upperBound) {
+      return false;
+    }
+    if (value != other.value) {
+      return false;
+    }
+    return true;
   }
 }
