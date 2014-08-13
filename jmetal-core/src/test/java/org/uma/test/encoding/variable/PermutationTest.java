@@ -25,7 +25,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.encoding.variable.ArrayInt;
-import org.uma.jmetal.encoding.variable.Int;
 import org.uma.jmetal.encoding.variable.Permutation;
 
 import java.util.Arrays;

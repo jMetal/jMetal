@@ -40,9 +40,7 @@ public class RealSolutionType extends SolutionType implements GenericRealSolutio
     Variable[] variables = new Variable[getProblem().getNumberOfVariables()];
 
     for (int var = 0; var < getProblem().getNumberOfVariables(); var++) {
-      variables[var] = new Real(
-        getProblem().getLowerLimit(var),
-        getProblem().getUpperLimit(var));
+      variables[var] = new Real(getProblem().getLowerLimit(var), getProblem().getUpperLimit(var));
     }
 
     return variables;

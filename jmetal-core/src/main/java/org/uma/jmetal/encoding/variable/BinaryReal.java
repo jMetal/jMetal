@@ -39,10 +39,6 @@ public class BinaryReal extends Binary implements GenericRealVariable {
   private double lowerBound;
   private double upperBound;
 
-  public BinaryReal() {
-    super();
-  }
-
   public BinaryReal(int numberOfBits, double lowerBound, double upperBound) {
     super(numberOfBits);
     this.lowerBound = lowerBound;

@@ -41,7 +41,7 @@ public class Int implements GenericIntVariable {
   public Int() {
     lowerBound = java.lang.Integer.MIN_VALUE;
     upperBound = java.lang.Integer.MAX_VALUE;
-    value = 0;
+    value = PseudoRandom.randInt(lowerBound, upperBound);
   }
 
   public Int(int lowerBound, int upperBound) {

@@ -28,7 +28,6 @@ import org.uma.jmetal.util.random.PseudoRandom;
 
 import java.util.logging.Level;
 
-
 /**
  * This class implements a Real value decision variable
  */
@@ -40,7 +39,9 @@ public class Real implements GenericRealVariable {
 	private double upperBound;
 
 	public Real() {
-	}
+    lowerBound = Double.MIN_VALUE;
+    upperBound = Double.MAX_VALUE;
+    value = PseudoRandom.randDouble(lowerBound, upperBound);	}
 
 	public Real(double lowerBound, double upperBound) {
 		this.lowerBound = lowerBound;

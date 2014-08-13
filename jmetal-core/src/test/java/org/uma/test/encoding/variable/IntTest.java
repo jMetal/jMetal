@@ -38,7 +38,7 @@ import static org.junit.Assert.assertTrue;
  * Date: 29/06/13
  * Time: 17:13
  */
-public class IntTest extends Int {
+public class IntTest {
   Int integerVariable ;
 
   @Before
@@ -70,12 +70,12 @@ public class IntTest extends Int {
 
   @Test
   public void getLowerBoundTest() throws Exception {
-    assertEquals(2, (int)integerVariable.getLowerBound()) ;
+    assertEquals(2, integerVariable.getLowerBound()) ;
   }
 
   @Test
   public void getUpperBoundTest() throws Exception {
-    assertEquals(3, (int)integerVariable.getUpperBound()) ;
+    assertEquals(3, integerVariable.getUpperBound()) ;
   }
 
   @Test

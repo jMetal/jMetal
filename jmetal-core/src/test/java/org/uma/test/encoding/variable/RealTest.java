@@ -38,7 +38,7 @@ import static org.junit.Assert.assertTrue;
  * Date: 29/06/13
  * Time: 17:13
  */
-public class RealTest extends Real{
+public class RealTest {
   Real realVariable ;
   static final double EPSILON = 0.00000000000001;
 

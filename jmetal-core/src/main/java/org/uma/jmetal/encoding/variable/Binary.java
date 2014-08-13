@@ -37,9 +37,6 @@ public class Binary implements Variable {
   protected int numberOfBits;
   private BitSet bits;
 
-  public Binary() {
-  }
-
   public Binary(int numberOfBits) {
     this.numberOfBits = numberOfBits;
 
@@ -98,6 +95,7 @@ public class Binary implements Variable {
     return distance;
   }
 
+  @Override
   public String toString() {
     String result;
 

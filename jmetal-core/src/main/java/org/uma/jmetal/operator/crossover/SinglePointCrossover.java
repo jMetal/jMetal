@@ -70,7 +70,7 @@ public class SinglePointCrossover extends Crossover {
    * @param probability Crossover probability
    * @param parent1     The first parent
    * @param parent2     The second parent
-   * @return An array containing the two offsprings
+   * @return An array containing the two offspring
    * @throws org.uma.jmetal.util.JMetalException
    */
   public Solution[] doCrossover(double probability, Solution parent1, Solution parent2) throws JMetalException {
@@ -81,6 +81,7 @@ public class SinglePointCrossover extends Crossover {
       if (PseudoRandom.randDouble() < probability) {
         if ((parent1.getType().getClass() == BinarySolutionType.class) ||
             (parent1.getType().getClass() == BinaryRealSolutionType.class)) {
+
           // 1. Compute the total number of bits
           int totalNumberOfBits = 0;
           for (int i = 0; i < parent1.getDecisionVariables().length; i++) {
@@ -93,30 +94,25 @@ public class SinglePointCrossover extends Crossover {
 
           // 3. Compute the encoding.variable containing the crossoverPoint bit
           int variable = 0;
-          int accountBits =
-              ((Binary) parent1.getDecisionVariables()[variable]).getNumberOfBits();
+          int accountBits =((Binary) parent1.getDecisionVariables()[variable]).getNumberOfBits();
 
           while (accountBits < (crossoverPoint + 1)) {
             variable++;
-            accountBits +=
-                ((Binary) parent1.getDecisionVariables()[variable]).getNumberOfBits();
+            accountBits += ((Binary) parent1.getDecisionVariables()[variable]).getNumberOfBits();
           }
 
           //4. Compute the bit into the selected encoding.variable
           int diff = accountBits - crossoverPoint;
-          int intoVariableCrossoverPoint =
-              ((Binary) parent1.getDecisionVariables()[variable]).getNumberOfBits() - diff;
+          int intoVariableCrossoverPoint = ((Binary) parent1.getDecisionVariables()[variable]).getNumberOfBits() - diff;
 
           //5. Make the crossover into the gene;
           Binary offSpring1, offSpring2;
-          offSpring1 =
-              (Binary) parent1.getDecisionVariables()[variable].copy();
-          offSpring2 =
-              (Binary) parent2.getDecisionVariables()[variable].copy();
+          offSpring1 = new Binary((Binary)parent1.getDecisionVariables()[variable]) ;
+              //(Binary) parent1.getDecisionVariables()[variable].copy();
+          offSpring2 = new Binary((Binary)parent2.getDecisionVariables()[variable]) ;
+              //(Binary) parent2.getDecisionVariables()[variable].copy();
 
-          for (int i = intoVariableCrossoverPoint;
-              i < offSpring1.getNumberOfBits();
-              i++) {
+          for (int i = intoVariableCrossoverPoint; i < offSpring1.getNumberOfBits(); i++) {
             boolean swap = offSpring1.getBits().get(i);
             offSpring1.getBits().set(i, offSpring2.getBits().get(i));
             offSpring2.getBits().set(i, swap);
@@ -127,12 +123,11 @@ public class SinglePointCrossover extends Crossover {
 
           //6. Apply the crossover to the other variables
           for (int i = 0; i < variable; i++) {
-            offSpring[0].getDecisionVariables()[i] =
-                parent2.getDecisionVariables()[i].copy();
+            offSpring[0].getDecisionVariables()[i] = new Binary((Binary)parent2.getDecisionVariables()[i]) ;
+                //parent2.getDecisionVariables()[i].copy();
 
-            offSpring[1].getDecisionVariables()[i] =
-                parent1.getDecisionVariables()[i].copy();
-
+            offSpring[1].getDecisionVariables()[i] = new Binary((Binary)parent1.getDecisionVariables()[i]) ;
+               // parent1.getDecisionVariables()[i].copy();
           }
 
           //7. Decode the results
@@ -165,16 +160,13 @@ public class SinglePointCrossover extends Crossover {
     return offSpring;
   }
 
-  /**
-   * Executes the operation
-   *
-   * @param object An object containing an array of two solutions
-   * @return An object containing an array with the offSprings
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Execute() method */
   public Object execute(Object object) throws JMetalException {
-    Solution[] parents = (Solution[]) object;
+    if (object == null) {
+      throw new JMetalException("SinglePointCrossover.execute: null argument");
+    }
 
+    Solution[] parents = (Solution[]) object;
     if (parents.length < 2) {
       throw new JMetalException("SinglePointCrossover.execute: operator needs two parents");
     }

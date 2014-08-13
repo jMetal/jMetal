@@ -39,8 +39,12 @@ public abstract class Algorithm implements Serializable {
   private static final long serialVersionUID = -5414794431994226777L;
 
   protected Problem problem;
+
+  @Deprecated
   protected Map<String, Operator> operators = null;
+  @Deprecated
   protected Map<String, Object> inputParameters = null;
+  @Deprecated
   private Map<String, Object> outPutParameters = null;
 
   /**

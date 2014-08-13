@@ -36,55 +36,60 @@ import static org.junit.Assert.assertNotNull;
  * Created by Antonio J. Nebro on 21/04/14.
  */
 public class SinglePointCrossoverTest {
-  SinglePointCrossover crossover_ ;
-  Problem problem_ ;
+  SinglePointCrossover crossover;
+  Problem problem;
 
   static final double DELTA = 0.0000000000001 ;
 
   @Before
   public void setUp() throws JMetalException {
-    problem_ = new ZDT5("Binary", 4) ;
-    crossover_ = new SinglePointCrossover.Builder()
-      .probability(0.9)
-      .build() ;
+    problem = new ZDT5("Binary", 4) ;
+    crossover = new SinglePointCrossover.Builder()
+            .probability(0.9)
+            .build() ;
   }
 
   @After
   public void tearDown() throws Exception {
-    crossover_ = null ;
-    problem_ = null ;
+    crossover = null ;
+    problem = null ;
   }
 
   @Test
   public void defaultParametersTest() {
-    assertEquals(0.9, crossover_.getCrossoverProbability(), DELTA) ;
+    assertEquals(0.9, crossover.getCrossoverProbability(), DELTA) ;
   }
 
   @Test
   public void setCrossoverProbabilityTest() {
-    crossover_ = new SinglePointCrossover.Builder()
-      .probability(1.0)
-      .build() ;
+    crossover = new SinglePointCrossover.Builder()
+            .probability(1.0)
+            .build() ;
 
-    assertEquals(1.0, crossover_.getCrossoverProbability(), DELTA) ;
+    assertEquals(1.0, crossover.getCrossoverProbability(), DELTA) ;
   }
 
   @Test (expected = JMetalException.class)
   public void setInvalidCrossoverProbabilityTest() {
-    crossover_ = new SinglePointCrossover.Builder()
-      .probability(-2.5)
-      .build() ;
+    crossover = new SinglePointCrossover.Builder()
+            .probability(-2.5)
+            .build() ;
+  }
+
+  @Test (expected = JMetalException.class)
+  public void passingNullParameterTest() {
+    crossover.execute(null) ;
   }
 
   @Test
   public void operatorExecutionTest() throws ClassNotFoundException {
-    crossover_ = new SinglePointCrossover.Builder()
-      .probability(0.9)
-      .build();
+    crossover = new SinglePointCrossover.Builder()
+            .probability(0.9)
+            .build();
 
-    Solution[] parents = {new Solution(problem_), new Solution(problem_)};
+    Solution[] parents = {new Solution(problem), new Solution(problem)};
 
-    Object result = crossover_.execute(parents);
+    Object result = crossover.execute(parents);
     assertNotNull(result);
   }
 }
