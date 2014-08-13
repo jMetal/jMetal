@@ -26,7 +26,11 @@ import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.experiment.Settings;
 import org.uma.jmetal.metaheuristic.multiobjective.spea2.SPEA2;
 import org.uma.jmetal.operator.crossover.CrossoverFactory;
+import org.uma.jmetal.operator.crossover.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationFactory;
+import org.uma.jmetal.operator.mutation.PolynomialMutation;
+import org.uma.jmetal.operator.selection.BinaryTournament;
+import org.uma.jmetal.operator.selection.BinaryTournament2;
 import org.uma.jmetal.operator.selection.SelectionFactory;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.util.JMetalException;
@@ -46,10 +50,7 @@ public class SPEA2Settings extends Settings {
   private double crossoverDistributionIndex;
   private double mutationDistributionIndex;
 
-  /**
-   * Constructor
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Constructor */
   public SPEA2Settings(String problem) throws JMetalException {
     super(problem) ;
 
@@ -65,52 +66,40 @@ public class SPEA2Settings extends Settings {
     mutationDistributionIndex = 20.0  ;
   } 
 
-  /**
-   * Configure SPEA2 with default parameter experiment.settings
-   *
-   * @return an algorithm object
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Configure() method */
   public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
-    Operator crossover;         // Crossover operator
-    Operator mutation;         // Mutation operator
-    Operator selection;         // Selection operator
+    Operator crossover;
+    Operator mutation;
+    Operator selection;
 
-    // Creating the problem
-    algorithm = new SPEA2();
-    algorithm.setProblem(problem);
+    crossover = new SBXCrossover.Builder()
+            .distributionIndex(crossoverDistributionIndex)
+            .probability(crossoverProbability)
+            .build() ;
 
-    // Algorithm parameters
-    algorithm.setInputParameter("populationSize", populationSize);
-    algorithm.setInputParameter("archiveSize", archiveSize);
-    algorithm.setInputParameter("maxEvaluations", maxEvaluations);
+    mutation = new PolynomialMutation.Builder()
+            .distributionIndex(mutationDistributionIndex)
+            .probability(mutationProbability)
+            .build();
 
-    // Mutation and Crossover for Real codification 
-    HashMap<String, Object> parameters = new HashMap<String, Object>() ;
-    parameters.put("probability", crossoverProbability) ;
-    parameters.put("distributionIndex", crossoverDistributionIndex) ;
-    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters);                   
+    selection = new BinaryTournament.Builder()
+            .build();
 
-    parameters = new HashMap<String, Object>() ;
-    parameters.put("probability", mutationProbability) ;
-    parameters.put("distributionIndex", mutationDistributionIndex) ;
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);                    
-
-    // Selection operator 
-    parameters = null ;
-    selection = SelectionFactory.getSelectionOperator("BinaryTournament", parameters) ;                           
-
-    // Add the operator to the algorithm
-    algorithm.addOperator("crossover",crossover);
-    algorithm.addOperator("mutation",mutation);
-    algorithm.addOperator("selection",selection);
+    algorithm = new SPEA2.Builder(problem)
+            .populationSize(populationSize)
+            .archiveSize(archiveSize)
+            .maxEvaluations(maxEvaluations)
+            .crossover(crossover)
+            .mutation(mutation)
+            .selection(selection)
+            .build() ;
 
     return algorithm ;
   }
 
   /**
-   * Configure SPEA2 with user-defined parameter experiment.settings
+   * Configure SPEA2 with user-defined parameter settings
    *
    * @return A SPEA2 algorithm object
    */

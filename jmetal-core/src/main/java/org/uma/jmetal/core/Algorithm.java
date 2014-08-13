@@ -52,8 +52,7 @@ public abstract class Algorithm implements Serializable {
    *
    * @return a <code>SolutionSet</code> 
    */
-  public abstract SolutionSet execute() throws JMetalException,
-    ClassNotFoundException, IOException;
+  public abstract SolutionSet execute() throws JMetalException, ClassNotFoundException, IOException;
 
   @Deprecated
   public void addOperator(String name, Operator operator) {

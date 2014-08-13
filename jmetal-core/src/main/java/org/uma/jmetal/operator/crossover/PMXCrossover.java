@@ -22,7 +22,7 @@
 package org.uma.jmetal.operator.crossover;
 
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.encoding.solutiontype.PermutationSolutionType;
+import org.uma.jmetal.encoding.solutiontype.*;
 import org.uma.jmetal.encoding.variable.Permutation;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
@@ -40,24 +40,26 @@ import java.util.List;
  */
 public class PMXCrossover extends Crossover {
   private static final long serialVersionUID = -4059314233890056350L;
+  private static final double DEFAULT_PROBABILITY = 0.9 ;
 
-  /**
-   * Valid solution types to apply this operator
-   */
-  private static final List<Class<PermutationSolutionType>> VALID_TYPES =
-    Arrays.asList(PermutationSolutionType.class);
+  private double crossoverProbability ;
 
-  private Double crossoverProbability_ = null;
-
-  /**
-   * Constructor
-   */
+  /** Constructor */
+  @Deprecated
   public PMXCrossover(HashMap<String, Object> parameters) {
     super(parameters);
+    addValidSolutionType(PermutationSolutionType.class);
 
     if (parameters.get("probability") != null) {
-      crossoverProbability_ = (Double) parameters.get("probability");
+      crossoverProbability = (Double) parameters.get("probability");
     }
+  }
+
+  /** Constructor */
+  private PMXCrossover(Builder builder) {
+    addValidSolutionType(PermutationSolutionType.class);
+
+    crossoverProbability = builder.crossoverProbability ;
   }
 
   /**
@@ -69,9 +71,7 @@ public class PMXCrossover extends Crossover {
    * @return An array containig the two offsprings
    * @throws org.uma.jmetal.util.JMetalException
    */
-  public Solution[] doCrossover(double probability,
-    Solution parent1,
-    Solution parent2) {
+  public Solution[] doCrossover(double probability, Solution parent1, Solution parent2) {
 
     Solution[] offspring = new Solution[2];
 
@@ -148,39 +148,51 @@ public class PMXCrossover extends Crossover {
     return offspring;
   }
 
-  /**
-   * Executes the operation
-   *
-   * @param object An object containing an array of two solutions
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Execute() method */
   public Object execute(Object object) throws JMetalException {
+    if (null == object) {
+      throw new JMetalException("Null parameter") ;
+    } else if (!(object instanceof Solution[])) {
+      throw new JMetalException("Invalid parameter class") ;
+    }
+
     Solution[] parents = (Solution[]) object;
-    Double crossoverProbability = null;
 
-    if (!(VALID_TYPES.contains(parents[0].getType().getClass()) &&
-      VALID_TYPES.contains(parents[1].getType().getClass()))) {
-
-      JMetalLogger.logger.severe("PMCCrossover.execute: the solutions " +
-        "are not of the right type. The type should be 'Permutation', but " +
-        parents[0].getType() + " and " +
-        parents[1].getType() + " are obtained");
+    if (parents.length != 2) {
+      throw new JMetalException("PMXCrossover.execute: operator needs two " +
+              "parents");
     }
 
-    crossoverProbability = (Double) getParameter("probability");
-
-    if (parents.length < 2) {
-      JMetalLogger.logger.severe("PMXCrossover.execute: operator needs two " +
-        "parents");
-      Class<String> cls = java.lang.String.class;
-      String name = cls.getName();
-      throw new JMetalException("Exception in " + name + ".execute()");
+    if (!solutionTypeIsValid(parents)) {
+      throw new JMetalException("PMXCrossover.execute: the solutions " +
+              "type " + parents[0].getType() + " is not allowed with this operator");
     }
 
-    Solution[] offspring = doCrossover(crossoverProbability,
-      parents[0],
-      parents[1]);
+    Solution[] offspring = doCrossover(crossoverProbability, parents[0], parents[1]);
 
     return offspring;
+  }
+
+  /** Builder class */
+  public static class Builder {
+    private double crossoverProbability ;
+
+    public Builder() {
+      crossoverProbability = DEFAULT_PROBABILITY ;
+    }
+
+    public Builder probability(double probability) {
+      if ((probability < 0) || (probability > 1.0)) {
+        throw new JMetalException("Probability value invalid: " + probability) ;
+      } else {
+        crossoverProbability = probability;
+      }
+
+      return this ;
+    }
+
+    public PMXCrossover build() {
+      return new PMXCrossover(this) ;
+    }
   }
 }

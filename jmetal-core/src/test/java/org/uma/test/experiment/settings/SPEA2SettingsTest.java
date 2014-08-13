@@ -23,6 +23,8 @@ package org.uma.test.experiment.settings;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.experiment.Settings;
+import org.uma.jmetal.experiment.settings.SPEA2Settings;
+import org.uma.jmetal.metaheuristic.multiobjective.spea2.SPEA2;
 import org.uma.jmetal.operator.crossover.SBXCrossover;
 import org.uma.jmetal.operator.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.Fonseca;
@@ -46,60 +48,64 @@ import static org.junit.Assert.assertEquals;
  * To change this template use File | Settings | File Templates.
  */
 public class SPEA2SettingsTest {
-  Properties configuration_ ;
+  Properties configuration ;
 
   @Before
   public void init() throws FileNotFoundException, IOException {
-    configuration_ = new Properties();
+    configuration = new Properties();
     InputStreamReader isr = new InputStreamReader(new FileInputStream(ClassLoader.getSystemResource("SPEA2.conf").getPath()));
-    configuration_.load(isr);
+    configuration.load(isr);
   }
 
   @Test
   public void testConfigure() throws Exception {
     double epsilon = 0.000000000000001 ;
-    Settings SPEA2Settings = new org.uma.jmetal.experiment.settings.SPEA2Settings("Fonseca");
-    Algorithm algorithm = SPEA2Settings.configure() ;
+    Settings spea2Settings = new SPEA2Settings("Fonseca");
+
+    SPEA2 algorithm = (SPEA2)spea2Settings.configure() ;
+
     Problem problem = new Fonseca("Real") ;
-    SBXCrossover crossover = (SBXCrossover)algorithm.getOperator("crossover") ;
-    double pc = (Double)crossover.getParameter("probability") ;
-    double dic = (Double)crossover.getParameter("distributionIndex") ;
-    PolynomialMutation mutation = (PolynomialMutation)algorithm.getOperator("mutation") ;
-    double pm = (Double)mutation.getParameter("probability") ;
-    double dim = (Double)mutation.getParameter("distributionIndex") ;
+    SBXCrossover crossover = (SBXCrossover) algorithm.getCrossoverOperator() ;
+    double pc = crossover.getCrossoverProbability() ;
+    double dic = crossover.getDistributionIndex() ;
+    PolynomialMutation mutation = (PolynomialMutation)algorithm.getMutationOperator() ;
+    double pm = mutation.getMutationProbability() ;
+    double dim = mutation.getDistributionIndex() ;
 
-    assertEquals("SPEA2_SettingsTest", 100, ((Integer)algorithm.getInputParameter("populationSize")).intValue());
-    assertEquals("SPEA2_SettingsTest", 25000, ((Integer)algorithm.getInputParameter("maxEvaluations")).intValue());
-    assertEquals("SPEA2_SettingsTest", 100, ((Integer)algorithm.getInputParameter("archiveSize")).intValue());
+    assertEquals(100, algorithm.getPopulationSize());
+    assertEquals(100, algorithm.getArchiveSize());
+    assertEquals(25000, algorithm.getMaxEvaluations());
 
-    assertEquals("SPEA2_SettingsTest", 0.9, pc, epsilon);
-    assertEquals("SPEA2_SettingsTest", 20.0, dic, epsilon);
+    assertEquals(0.9, pc, epsilon);
+    assertEquals(20.0, dic, epsilon);
 
-    assertEquals("SPEA2_SettingsTest", 1.0/problem.getNumberOfVariables(), pm, epsilon);
-    assertEquals("SPEA2_SettingsTest", 20.0, dim, epsilon);
+    assertEquals(1.0/problem.getNumberOfVariables(), pm, epsilon);
+    assertEquals(20.0, dim, epsilon);
   }
 
   @Test
   public void testConfigure2() throws Exception {
     double epsilon = 0.000000000000001 ;
-    Settings SPEA2Settings = new org.uma.jmetal.experiment.settings.SPEA2Settings("Fonseca");
-    Algorithm algorithm = SPEA2Settings.configure(configuration_) ;
+    Settings spea2Settings = new SPEA2Settings("Fonseca");
+
+    SPEA2 algorithm = (SPEA2)spea2Settings.configure(configuration) ;
+
     Problem problem = new Fonseca("Real") ;
-    SBXCrossover crossover = (SBXCrossover)algorithm.getOperator("crossover") ;
-    double pc = (Double)crossover.getParameter("probability") ;
-    double dic = (Double)crossover.getParameter("distributionIndex") ;
-    PolynomialMutation mutation = (PolynomialMutation)algorithm.getOperator("mutation") ;
-    double pm = (Double)mutation.getParameter("probability") ;
-    double dim = (Double)mutation.getParameter("distributionIndex") ;
+    SBXCrossover crossover = (SBXCrossover) algorithm.getCrossoverOperator() ;
+    double pc = crossover.getCrossoverProbability() ;
+    double dic = crossover.getDistributionIndex() ;
+    PolynomialMutation mutation = (PolynomialMutation)algorithm.getMutationOperator() ;
+    double pm = mutation.getMutationProbability() ;
+    double dim = mutation.getDistributionIndex() ;
 
-    assertEquals("SPEA2_SettingsTest", 100, ((Integer)algorithm.getInputParameter("populationSize")).intValue());
-    assertEquals("SPEA2_SettingsTest", 25000, ((Integer)algorithm.getInputParameter("maxEvaluations")).intValue());
-    assertEquals("SPEA2_SettingsTest", 100, ((Integer)algorithm.getInputParameter("archiveSize")).intValue());
+    assertEquals(100, algorithm.getPopulationSize());
+    assertEquals(100, algorithm.getArchiveSize());
+    assertEquals(25000, algorithm.getMaxEvaluations());
 
-    assertEquals("SPEA2_SettingsTest", 0.9, pc, epsilon);
-    assertEquals("SPEA2_SettingsTest", 20.0, dic, epsilon);
+    assertEquals(0.9, pc, epsilon);
+    assertEquals(20.0, dic, epsilon);
 
-    assertEquals("SPEA2_SettingsTest", 1.0/problem.getNumberOfVariables(), pm, epsilon);
-    assertEquals("SPEA2_SettingsTest", 20.0, dim, epsilon);
+    assertEquals(1.0/problem.getNumberOfVariables(), pm, epsilon);
+    assertEquals(20.0, dim, epsilon);
   }
 }

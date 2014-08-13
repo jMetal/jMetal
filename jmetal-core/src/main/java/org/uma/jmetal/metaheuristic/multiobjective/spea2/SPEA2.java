@@ -22,54 +22,78 @@
 package org.uma.jmetal.metaheuristic.multiobjective.spea2;
 
 import org.uma.jmetal.core.*;
+import org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII;
+import org.uma.jmetal.metaheuristic.multiobjective.nsgaII.SteadyStateNSGAII;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.Ranking;
+import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
 
 /**
  * This class representing the SPEA2 algorithm
  */
 public class SPEA2 extends Algorithm {
-
-  /**
-   * Defines the number of tournaments for creating the mating pool
-   */
-  public static final int TOURNAMENTS_ROUNDS = 1;
-  /**
-   *
-   */
   private static final long serialVersionUID = -6552554169817006100L;
 
-  /**
-   * Constructor.
-   * Create a new SPEA2 instance
-   *
-   * @param problem Problem to solve
-   */
+  private static final int TOURNAMENTS_ROUNDS = 1;
+
+  private int populationSize ;
+  private int archiveSize ;
+  private int maxEvaluations;
+
+  protected Operator mutationOperator;
+  protected Operator crossoverOperator;
+  protected Operator selectionOperator;
+
+  /** Constructor  */
+  @Deprecated
   public SPEA2() {
     super();
-  } // Spea2
+  }
 
-  /**
-   * Runs of the Spea2 algorithm.
-   *
-   * @return a <code>SolutionSet</code> that is a set of non dominated solutions
-   * as a experimentoutput of the algorithm execution
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Constructor */
+  private SPEA2(Builder builder) {
+    problem = builder.problem;
+
+    populationSize = builder.populationSize;
+    archiveSize = builder.archiveSize;
+    maxEvaluations = builder.maxEvaluations;
+    mutationOperator = builder.mutationOperator;
+    crossoverOperator = builder.crossoverOperator;
+    selectionOperator = builder.selectionOperator;
+  }
+
+  /* Getters */
+
+  public int getPopulationSize() {
+    return populationSize;
+  }
+
+  public int getArchiveSize() {
+    return archiveSize;
+  }
+
+  public int getMaxEvaluations() {
+    return maxEvaluations;
+  }
+
+  public Operator getMutationOperator() {
+    return mutationOperator;
+  }
+
+  public Operator getCrossoverOperator() {
+    return crossoverOperator;
+  }
+
+  public Operator getSelectionOperator() {
+    return selectionOperator;
+  }
+
+  /** Execute() method */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
-    int populationSize, archiveSize, maxEvaluations, evaluations;
-    Operator crossoverOperator, mutationOperator, selectionOperator;
-    SolutionSet solutionSet, archive, offSpringSolutionSet;
-
-    //Read the params
-    populationSize = ((Integer) getInputParameter("populationSize")).intValue();
-    archiveSize = ((Integer) getInputParameter("archiveSize")).intValue();
-    maxEvaluations = ((Integer) getInputParameter("maxEvaluations")).intValue();
-
-    //Read the operator
-    crossoverOperator = operators.get("crossover");
-    mutationOperator = operators.get("mutation");
-    selectionOperator = operators.get("selection");
+    SolutionSet solutionSet ;
+    SolutionSet archive ;
+    SolutionSet offSpringSolutionSet;
+    int evaluations;
 
     //Initialize the variables
     solutionSet = new SolutionSet(populationSize);
@@ -99,12 +123,12 @@ public class SPEA2 extends Algorithm {
         do {
           j++;
           parents[0] = (Solution) selectionOperator.execute(archive);
-        } while (j < SPEA2.TOURNAMENTS_ROUNDS);                    
+        } while (j < SPEA2.TOURNAMENTS_ROUNDS);
         int k = 0;
         do {
           k++;
           parents[1] = (Solution) selectionOperator.execute(archive);
-        } while (k < SPEA2.TOURNAMENTS_ROUNDS); 
+        } while (k < SPEA2.TOURNAMENTS_ROUNDS);
 
         //make the crossover 
         Solution[] offSpring = (Solution[]) crossoverOperator.execute(parents);
@@ -113,12 +137,70 @@ public class SPEA2 extends Algorithm {
         problem.evaluateConstraints(offSpring[0]);
         offSpringSolutionSet.add(offSpring[0]);
         evaluations++;
-      } 
+      }
       // End Create a offSpring solutionSet
       solutionSet = offSpringSolutionSet;
-    } 
+    }
 
     Ranking ranking = new Ranking(archive);
     return ranking.getSubfront(0);
-  }   
+  }
+
+  /** Builder class */
+  public static class Builder {
+    private Problem problem;
+
+    private int populationSize;
+    private int archiveSize;
+
+    private int maxEvaluations;
+
+    private Operator mutationOperator;
+    private Operator crossoverOperator;
+    private Operator selectionOperator;
+
+    public Builder(Problem problem) {
+      this.problem = problem ;
+    }
+
+    public Builder populationSize(int populationSize) {
+      this.populationSize = populationSize ;
+
+      return this ;
+    }
+
+    public Builder archiveSize(int archiveSize) {
+      this.archiveSize = archiveSize ;
+
+      return this ;
+    }
+
+    public Builder maxEvaluations(int maxEvaluations) {
+      this.maxEvaluations = maxEvaluations ;
+
+      return this ;
+    }
+
+    public Builder crossover(Operator crossover) {
+      crossoverOperator = crossover ;
+
+      return this ;
+    }
+
+    public Builder mutation(Operator mutation) {
+      mutationOperator = mutation ;
+
+      return this ;
+    }
+
+    public Builder selection(Operator selection) {
+      selectionOperator = selection ;
+
+      return this ;
+    }
+
+    public SPEA2 build() {
+      return new SPEA2(this) ;
+    }
+  }
 } 

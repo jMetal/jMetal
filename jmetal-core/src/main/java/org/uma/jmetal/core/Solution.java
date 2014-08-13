@@ -58,7 +58,7 @@ public class Solution implements Serializable {
   private int numberOfObjectives;
 
   /**
-   * Stores the so called fitness value. Used in some metaheuristic
+   * Stores the so called fitness value. Used in some metaheuristics
    */
   private double fitness;
 
@@ -491,41 +491,6 @@ public class Solution implements Serializable {
     }
     return value;
   }
-
-   /*
-  @Override
-  public boolean equals(final Object object){
-
-    if (this == object) {
-      return true ;
-    } else if (!(object instanceof Solution)) {
-      return false ;
-    }
-
-    Solution solution = (Solution)object ;
-    if (solution.numberOfVariables() != numberOfVariables()) {
-      return false ;
-    } else if (solution.numberOfObjectives != numberOfObjectives) {
-      return false ;
-    } else if (solution.numberOfViolatedConstraints != numberOfViolatedConstraints) {
-      return  false ;
-    }
-
-    for (int i = 0 ; i < numberOfObjectives; i++) {
-      if (solution.getObjective(i) != getObjective(i)) {
-        return false ;
-      }
-    }
-
-    for (int i = 0 ; i < numberOfVariables(); i++) {
-      if (!solution.getDecisionVariables()[i].equals(getDecisionVariables()[i])) {
-        return false ;
-      }
-    }
-
-    return true ;
-  }
-  */
 
   /**
    * Returns a string representing the solution.

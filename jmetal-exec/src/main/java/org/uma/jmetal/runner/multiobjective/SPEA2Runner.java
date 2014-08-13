@@ -25,15 +25,22 @@ import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
+import org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAIITemplate;
 import org.uma.jmetal.metaheuristic.multiobjective.spea2.SPEA2;
 import org.uma.jmetal.operator.crossover.CrossoverFactory;
+import org.uma.jmetal.operator.crossover.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationFactory;
+import org.uma.jmetal.operator.mutation.PolynomialMutation;
+import org.uma.jmetal.operator.selection.BinaryTournament2;
 import org.uma.jmetal.operator.selection.SelectionFactory;
 import org.uma.jmetal.problem.Kursawe;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.qualityindicator.QualityIndicatorGetter;
+import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
+import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -43,8 +50,8 @@ import java.util.logging.FileHandler;
  * Class for configuring and running the SPEA2 algorithm
  */
 public class SPEA2Runner {
-  public static java.util.logging.Logger logger_;
-  public static FileHandler fileHandler_; 
+  private static java.util.logging.Logger logger;
+  private static FileHandler fileHandler;
 
   /**
    * @param args Command line arguments. The first (optional) argument specifies
@@ -66,9 +73,9 @@ public class SPEA2Runner {
     QualityIndicatorGetter indicators;
 
     // Logger object and file to store log messages
-    logger_ = JMetalLogger.logger;
-    fileHandler_ = new FileHandler("SPEA2.log");
-    logger_.addHandler(fileHandler_);
+    logger = JMetalLogger.logger;
+    fileHandler = new FileHandler("SPEA2.log");
+    logger.addHandler(fileHandler);
 
     indicators = null;
     if (args.length == 1) {
@@ -88,53 +95,51 @@ public class SPEA2Runner {
       //problem = new OKA2("Real") ;
     }
 
-    algorithm = new SPEA2();
-    algorithm.setProblem(problem);
+    crossover = new SBXCrossover.Builder()
+            .distributionIndex(20.0)
+            .probability(0.9)
+            .build() ;
 
-    // Algorithm parameters
-    algorithm.setInputParameter("populationSize", 100);
-    algorithm.setInputParameter("archiveSize", 100);
-    algorithm.setInputParameter("maxEvaluations", 25000);
+    mutation = new PolynomialMutation.Builder()
+            .distributionIndex(20.0)
+            .probability(1.0/problem.getNumberOfVariables())
+            .build();
 
-    // Mutation and Crossover for Real codification 
-    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
-    crossoverParameters.put("probability", 0.9);
-    crossoverParameters.put("distributionIndex", 20.0);
-    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", crossoverParameters);
+    selection = new BinaryTournament2.Builder()
+            .build();
 
-    HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
-    mutationParameters.put("probability", 1.0 / problem.getNumberOfVariables());
-    mutationParameters.put("distributionIndex", 20.0);
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
+    algorithm = new SPEA2.Builder(problem)
+            .crossover(crossover)
+            .mutation(mutation)
+            .selection(selection)
+            .maxEvaluations(25000)
+            .populationSize(100)
+            .archiveSize(100)
+            .build() ;
 
-    // Selection operator 
-    HashMap<String, Object> selectionParameters = null; // FIXME: why we are passing null?
-    selection = SelectionFactory.getSelectionOperator("BinaryTournament", selectionParameters);
+    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+            .execute() ;
 
-    // Add the operator to the algorithm
-    algorithm.addOperator("crossover", crossover);
-    algorithm.addOperator("mutation", mutation);
-    algorithm.addOperator("selection", selection);
+    SolutionSet population = algorithmRunner.getSolutionSet() ;
+    long computingTime = algorithmRunner.getComputingTime() ;
 
-    // Execute the algorithm
-    long initTime = System.currentTimeMillis();
-    SolutionSet population = algorithm.execute();
-    long estimatedTime = System.currentTimeMillis() - initTime;
+    new SolutionSetOutput.Printer(population)
+            .separator("\t")
+            .varFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+            .funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+            .print();
 
-    // Result messages 
-    logger_.info("Total execution time: " + estimatedTime + "ms");
-    logger_.info("Objectives values have been writen to file FUN");
-    population.printObjectivesToFile("FUN");
-    logger_.info("Variables values have been writen to file VAR");
-    population.printVariablesToFile("VAR");
+    logger.info("Total execution time: " + computingTime + "ms");
+    logger.info("Objectives values have been written to file FUN.tsv");
+    logger.info("Variables values have been written to file VAR.tsv");
 
     if (indicators != null) {
-      logger_.info("Quality indicators");
-      logger_.info("Hypervolume: " + indicators.getHypervolume(population));
-      logger_.info("GD         : " + indicators.getGD(population));
-      logger_.info("IGD        : " + indicators.getIGD(population));
-      logger_.info("Spread     : " + indicators.getSpread(population));
-      logger_.info("Epsilon    : " + indicators.getEpsilon(population));
+      logger.info("Quality indicators");
+      logger.info("Hypervolume: " + indicators.getHypervolume(population));
+      logger.info("GD         : " + indicators.getGD(population));
+      logger.info("IGD        : " + indicators.getIGD(population));
+      logger.info("Spread     : " + indicators.getSpread(population));
+      logger.info("Epsilon    : " + indicators.getEpsilon(population));
     }
   }
 }

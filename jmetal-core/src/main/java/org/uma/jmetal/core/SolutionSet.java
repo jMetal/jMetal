@@ -269,49 +269,6 @@ public class SolutionSet implements Serializable {
   }
 
   /**
-   * Compares two solution sets
-   *
-   * @param object Solution set to compare with
-   * @return true or false depending on the experimentoutput of the comparison
-   */
-  // FIXME: to do
-  /*
-  @Override
-  public boolean equals(Object object) {
-    boolean experimentoutput;
-    if (object == null) {
-      experimentoutput = false;
-    } else if (object == this) {
-      experimentoutput = true;
-    } else if (!(object instanceof SolutionSet)) {
-      experimentoutput = false;
-    } else if (this.size() != ((SolutionSet) object).size()) {
-      experimentoutput = false;
-    } else {
-      SolutionSet solutionSet = (SolutionSet) object;
-
-      boolean areEquals = true;
-      int i = 0;
-      while (areEquals && (i < solutionSet.size())) {
-        int j = 0;
-        boolean found = false;
-        while (!found && (j < this.size())) {
-          if (solutionSet.get(i).equals(this.get(j))) {
-            found = true;
-          }
-          j++;
-        }
-        if (!found) {
-          areEquals = false;
-        }
-      }
-      experimentoutput = areEquals;
-    }
-    return experimentoutput;
-  }
-  */
-
-  /**
    * Write the function values of feasible solutions into a file
    *
    * @param path File name
