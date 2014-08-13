@@ -49,7 +49,7 @@ public class ZDT6 extends Problem {
    * Creates a instance of problem ZDT6
    *
    * @param numberOfVariables Number of variables
-   * @param solutionType      The solutiontype type must "Real", "BinaryReal, and "ArrayReal".
+   * @param solutionType      The solution type must "Real", "BinaryReal, and "ArrayReal".
    */
   public ZDT6(String solutionType, Integer numberOfVariables) throws JMetalException {
     this.numberOfVariables = numberOfVariables;

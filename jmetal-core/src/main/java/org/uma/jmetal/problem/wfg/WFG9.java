@@ -6,7 +6,6 @@
 package org.uma.jmetal.problem.wfg;
 
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.core.Variable;
 import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 import org.uma.jmetal.util.JMetalException;
 
@@ -30,19 +29,19 @@ public class WFG9 extends WFG {
    */
   public WFG9(String solutionType) throws ClassNotFoundException, JMetalException {
     this(solutionType, 2, 4, 2);
-  } // WFG9
+  }
 
   /**
    * Creates a WFG9 problem instance
    *
    * @param k            Number of position variables
    * @param l            Number of distance variables
-   * @param M            Number of objective functions
+   * @param m            Number of objective functions
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
-  public WFG9(String solutionType, Integer k, Integer l, Integer M)
+  public WFG9(String solutionType, Integer k, Integer l, Integer m)
     throws ClassNotFoundException, JMetalException {
-    super(solutionType, k, l, M);
+    super(solutionType, k, l, m);
     problemName = "WFG9";
 
     s = new int[m];
@@ -66,7 +65,7 @@ public class WFG9 extends WFG {
     y = t3(y, k, m);
 
     float[] result = new float[m];
-    float[] x = calculate_x(y);
+    float[] x = calculateX(y);
     for (int m = 1; m <= this.m; m++) {
       result[m - 1] = d * x[this.m - 1] + s[m - 1] * (new Shapes()).concave(x, m);
     }

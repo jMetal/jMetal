@@ -59,7 +59,7 @@ public abstract class WFG extends Problem {
    * @param k            position-related parameters
    * @param l            distance-related parameters
    * @param M            Number of objectives
-   * @param solutionType The solutiontype type must "Real" or "BinaryReal".
+   * @param solutionType The solution type must "Real" or "BinaryReal".
    */
   public WFG(String solutionType, Integer k, Integer l, Integer M) throws JMetalException {
     this.k = k;
@@ -86,9 +86,9 @@ public abstract class WFG extends Problem {
   }
 
   /**
-   * Gets the x vector (consulte wfg tooltik reference)
+   * Gets the x vector
    */
-  public float[] calculate_x(float[] t) {
+  public float[] calculateX(float[] t) {
     float[] x = new float[m];
 
     for (int i = 0; i < m - 1; i++) {
@@ -109,7 +109,7 @@ public abstract class WFG extends Problem {
     for (int i = 0; i < z.length; i++) {
       float bound = (float) 2.0 * (i + 1);
       result[i] = z[i] / bound;
-      result[i] = correct_to_01(result[i]);
+      result[i] = correctTo01(result[i]);
     }
 
     return result;
@@ -117,16 +117,16 @@ public abstract class WFG extends Problem {
 
   /**
    */
-  public float correct_to_01(float a) {
+  public float correctTo01(float a) {
     float min = (float) 0.0;
     float max = (float) 1.0;
 
-    float min_epsilon = min - epsilon;
-    float max_epsilon = max + epsilon;
+    float minEpsilon = min - epsilon;
+    float maxEpsilon = max + epsilon;
 
-    if ((a <= min && a >= min_epsilon) || (a >= min && a <= min_epsilon)) {
+    if ((a <= min && a >= minEpsilon) || (a >= min && a <= minEpsilon)) {
       return min;
-    } else if ((a >= max && a <= max_epsilon) || (a <= max && a >= max_epsilon)) {
+    } else if ((a >= max && a <= maxEpsilon) || (a <= max && a >= maxEpsilon)) {
       return max;
     } else {
       return a;
@@ -150,9 +150,9 @@ public abstract class WFG extends Problem {
   }
 
   /**
-   * Evaluates a solutiontype
+   * Evaluates a solution
    *
-   * @param variables The solutiontype to evaluate
+   * @param variables The solution to evaluate
    * @return a double [] with the evaluation results
    */
   abstract public float[] evaluate(float[] variables);

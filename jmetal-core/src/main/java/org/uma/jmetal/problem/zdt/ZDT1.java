@@ -103,7 +103,7 @@ public class ZDT1 extends Problem {
     for (int i = 1; i < x.getNumberOfDecisionVariables(); i++) {
       g += x.getValue(i);
     }
-    double constant = (9.0 / (numberOfVariables - 1));
+    double constant = 9.0 / (numberOfVariables - 1);
     g = constant * g;
     g = g + 1.0;
     return g;
@@ -116,7 +116,7 @@ public class ZDT1 extends Problem {
    * @param g Second argument of the function H.
    */
   public double evalH(double f, double g) {
-    double h = 0.0;
+    double h ;
     h = 1.0 - java.lang.Math.sqrt(f / g);
     return h;
   }

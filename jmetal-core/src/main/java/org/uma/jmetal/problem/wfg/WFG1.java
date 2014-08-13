@@ -22,7 +22,6 @@
 package org.uma.jmetal.problem.wfg;
 
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.core.Variable;
 import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
@@ -58,12 +57,12 @@ public class WFG1 extends WFG {
    *
    * @param k            Number of position parameters
    * @param l            Number of distance parameters
-   * @param M            Number of objective functions
+   * @param m            Number of objective functions
    * @param solutionType The solution type must "Real" or "BinaryReal".
    */
-  public WFG1(String solutionType, Integer k, Integer l, Integer M)
+  public WFG1(String solutionType, Integer k, Integer l, Integer m)
     throws ClassNotFoundException, JMetalException {
-    super(solutionType, k, l, M);
+    super(solutionType, k, l, m);
     problemName = "WFG1";
 
     s = new int[m];
@@ -93,7 +92,7 @@ public class WFG1 extends WFG {
 
 
     float[] result = new float[m];
-    float[] x = calculate_x(y);
+    float[] x = calculateX(y);
     for (int m = 1; m <= this.m - 1; m++) {
       result[m - 1] = d * x[this.m - 1] + s[m - 1] * (new Shapes()).convex(x, m);
     }

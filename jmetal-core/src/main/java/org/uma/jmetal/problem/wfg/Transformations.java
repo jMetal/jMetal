@@ -32,7 +32,7 @@ public class Transformations {
   /**
    * Stores a default epsilon value
    */
-  private static final float epsilon = (float) 1.0e-10;
+  private static final float EPSILON = (float) 1.0e-10;
 
   /**
    * bPoly transformation
@@ -152,8 +152,8 @@ public class Transformations {
   float correctTo01(float a) {
     float min = (float) 0.0;
     float max = (float) 1.0;
-    float min_epsilon = min - epsilon;
-    float max_epsilon = max + epsilon;
+    float min_epsilon = min - EPSILON;
+    float max_epsilon = max + EPSILON;
 
     if ((a <= min && a >= min_epsilon) || (a >= min && a <= min_epsilon)) {
       return min;
