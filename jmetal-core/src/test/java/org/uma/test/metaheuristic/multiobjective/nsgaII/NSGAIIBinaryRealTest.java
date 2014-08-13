@@ -50,5 +50,4 @@ public class NSGAIIBinaryRealTest {
     assertTrue(solutionSet.size() >= 98) ;
     assertEquals(defaultMaxEvaluations, ((NSGAII) algorithm).getEvaluations());
   }
-
 }

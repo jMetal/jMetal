@@ -77,6 +77,7 @@ public abstract class Operator implements Serializable {
    *
    * @param name  The parameter name.
    * @param value Object representing the parameter.
+   * @deprecated
    */
   @Deprecated
   public void setParameter(String name, Object value) {
@@ -109,15 +110,15 @@ public abstract class Operator implements Serializable {
    * @return True if the solution type of the solution is valid
    */
   public boolean solutionTypeIsValid(Solution solution) {
+    /*
     boolean result ;
     if (validSolutionTypes.contains(solution.getType().getClass())) {
       result = true ;
-    }
-    else {
+    } else {
       result = false ;
     }
-
-    return result ;
+*/
+    return validSolutionTypes.contains(solution.getType().getClass()) ;
   }
 
   /**

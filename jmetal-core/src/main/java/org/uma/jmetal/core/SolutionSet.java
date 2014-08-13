@@ -219,7 +219,7 @@ public class SolutionSet implements Serializable {
    * @return true if the solution set if empty
    */
   public boolean isEmtpy() {
-    return (solutionsList.isEmpty());
+    return solutionsList.isEmpty();
   }
 
   /**
@@ -438,7 +438,7 @@ public class SolutionSet implements Serializable {
 
     for (Solution solution : solutionsList) {
        if (solution.getOverallConstraintViolation() == 0) {
-         feasibleSolutions.add(new Solution((solution))) ;
+         feasibleSolutions.add(new Solution(solution)) ;
        }
     }
 
