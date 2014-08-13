@@ -107,10 +107,8 @@ public class SinglePointCrossover extends Crossover {
 
           //5. Make the crossover into the gene;
           Binary offSpring1, offSpring2;
-          offSpring1 = new Binary((Binary)parent1.getDecisionVariables()[variable]) ;
-              //(Binary) parent1.getDecisionVariables()[variable].copy();
-          offSpring2 = new Binary((Binary)parent2.getDecisionVariables()[variable]) ;
-              //(Binary) parent2.getDecisionVariables()[variable].copy();
+          offSpring1 = (Binary) parent1.getDecisionVariables()[variable].copy();
+          offSpring2 = (Binary) parent2.getDecisionVariables()[variable].copy();
 
           for (int i = intoVariableCrossoverPoint; i < offSpring1.getNumberOfBits(); i++) {
             boolean swap = offSpring1.getBits().get(i);
@@ -123,11 +121,8 @@ public class SinglePointCrossover extends Crossover {
 
           //6. Apply the crossover to the other variables
           for (int i = 0; i < variable; i++) {
-            offSpring[0].getDecisionVariables()[i] = new Binary((Binary)parent2.getDecisionVariables()[i]) ;
-                //parent2.getDecisionVariables()[i].copy();
-
-            offSpring[1].getDecisionVariables()[i] = new Binary((Binary)parent1.getDecisionVariables()[i]) ;
-               // parent1.getDecisionVariables()[i].copy();
+            offSpring[0].getDecisionVariables()[i] = parent2.getDecisionVariables()[i].copy();
+            offSpring[1].getDecisionVariables()[i] =  parent1.getDecisionVariables()[i].copy();
           }
 
           //7. Decode the results

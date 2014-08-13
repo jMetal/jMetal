@@ -40,7 +40,7 @@ public class SBXSinglePointCrossover extends Crossover {
   private static final double EPS = 1.0e-14;
 
   private static final double ETA_C_DEFAULT = 20.0;
-  private double distributionIndex_ = ETA_C_DEFAULT;
+  private double distributionIndex = ETA_C_DEFAULT;
   /**
    * Valid solution types to apply this operator
    */
@@ -62,7 +62,7 @@ public class SBXSinglePointCrossover extends Crossover {
       binaryCrossoverProbability = (Double) parameters.get("binaryrossoverProbability");
     }
     if (parameters.get("distributionIndex") != null) {
-      distributionIndex_ = (Double) parameters.get("distributionIndex");
+      distributionIndex = (Double) parameters.get("distributionIndex");
     }
   }
 
@@ -116,24 +116,24 @@ public class SBXSinglePointCrossover extends Crossover {
             yu = x1.getUpperBound(i);
             rand = PseudoRandom.randDouble();
             beta = 1.0 + (2.0 * (y1 - yL) / (y2 - y1));
-            alpha = 2.0 - java.lang.Math.pow(beta, -(distributionIndex_ + 1.0));
+            alpha = 2.0 - java.lang.Math.pow(beta, -(distributionIndex + 1.0));
 
             if (rand <= (1.0 / alpha)) {
-              betaq = java.lang.Math.pow((rand * alpha), (1.0 / (distributionIndex_ + 1.0)));
+              betaq = java.lang.Math.pow((rand * alpha), (1.0 / (distributionIndex + 1.0)));
             } else {
               betaq = java.lang.Math
-                .pow((1.0 / (2.0 - rand * alpha)), (1.0 / (distributionIndex_ + 1.0)));
+                .pow((1.0 / (2.0 - rand * alpha)), (1.0 / (distributionIndex + 1.0)));
             }
 
             c1 = 0.5 * ((y1 + y2) - betaq * (y2 - y1));
             beta = 1.0 + (2.0 * (yu - y2) / (y2 - y1));
-            alpha = 2.0 - java.lang.Math.pow(beta, -(distributionIndex_ + 1.0));
+            alpha = 2.0 - java.lang.Math.pow(beta, -(distributionIndex + 1.0));
 
             if (rand <= (1.0 / alpha)) {
-              betaq = java.lang.Math.pow((rand * alpha), (1.0 / (distributionIndex_ + 1.0)));
+              betaq = java.lang.Math.pow((rand * alpha), (1.0 / (distributionIndex + 1.0)));
             } else {
               betaq = java.lang.Math
-                .pow((1.0 / (2.0 - rand * alpha)), (1.0 / (distributionIndex_ + 1.0)));
+                .pow((1.0 / (2.0 - rand * alpha)), (1.0 / (distributionIndex + 1.0)));
             }
 
             c2 = 0.5 * ((y1 + y2) + betaq * (y2 - y1));

@@ -105,6 +105,10 @@ public class MutationLocalSearch extends LocalSearch {
     return mutationOperator;
   }
 
+  public int getEvaluations() {
+    return evaluations;
+  }
+
   /** Execute() method */
   public Object execute(Object object) throws JMetalException {
     if (null == object) {
@@ -163,13 +167,6 @@ public class MutationLocalSearch extends LocalSearch {
     }
     while (i < rounds);
     return new Solution(solution);
-  }
-
-  /**
-   * Returns the number of computed evaluations
-   */
-  public int getEvaluations() {
-    return evaluations;
   }
 
   /** Builder class */

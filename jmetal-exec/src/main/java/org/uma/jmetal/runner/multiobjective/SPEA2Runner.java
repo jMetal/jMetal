@@ -87,12 +87,15 @@ public class SPEA2Runner {
       indicators = new QualityIndicatorGetter(problem, args[1]);
     } else {
       problem = new Kursawe("Real", 3);
-      //problem = new Water("Real");
-      //problem = new ZDT1("ArrayReal", 1000);
-      //problem = new ZDT4("BinaryReal");
-      //problem = new WFG1("Real");
-      //problem = new DTLZ1("Real");
-      //problem = new OKA2("Real") ;
+    /*
+      EXAMPLES:
+      problem = new Water("Real");
+      problem = new ZDT1("ArrayReal", 1000);
+      problem = new ZDT4("BinaryReal");
+      problem = new WFG1("Real");
+      problem = new DTLZ1("Real");
+      problem = new OKA2("Real") ;
+    */
     }
 
     crossover = new SBXCrossover.Builder()

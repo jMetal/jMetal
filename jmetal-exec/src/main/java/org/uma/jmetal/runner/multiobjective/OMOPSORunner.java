@@ -82,11 +82,14 @@ public class OMOPSORunner {
       indicators = new QualityIndicatorGetter(problem, args[1]);
     } else {
       problem = new Kursawe("Real", 3);
-      //problem = new Water("Real");
-      //problem = new ZDT4("Real");
-      //problem = new WFG1("Real");
-      //problem = new DTLZ1("Real");
-      //problem = new OKA2("Real") ;
+    /*
+      EXAMPLES:
+      problem = new Water("Real");
+      problem = new ZDT1("ArrayReal", 1000);
+      problem = new WFG1("Real");
+      problem = new DTLZ1("Real");
+      problem = new OKA2("Real") ;
+    */
     }
 
         /*

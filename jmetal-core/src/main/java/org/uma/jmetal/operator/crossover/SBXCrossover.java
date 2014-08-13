@@ -54,6 +54,7 @@ public class SBXCrossover extends Crossover {
    * Constructor
    * Create a new SBX crossover operator whit a default
    * index given by <code>DEFAULT_INDEX_CROSSOVER</code>
+   * @deprecated
    */
   @Deprecated
   public SBXCrossover(HashMap<String, Object> parameters) {
@@ -175,7 +176,7 @@ public class SBXCrossover extends Crossover {
               betaq = java.lang.Math.pow((rand * alpha), (1.0 / (distributionIndex + 1.0)));
             } else {
               betaq = java.lang.Math
-                .pow((1.0 / (2.0 - rand * alpha)), (1.0 / (distributionIndex + 1.0)));
+                .pow(1.0 / (2.0 - rand * alpha), 1.0 / (distributionIndex + 1.0));
             }
 
             c1 = 0.5 * ((y1 + y2) - betaq * (y2 - y1));
@@ -186,10 +187,10 @@ public class SBXCrossover extends Crossover {
               betaq = java.lang.Math.pow((rand * alpha), (1.0 / (distributionIndex + 1.0)));
             } else {
               betaq = java.lang.Math
-                .pow((1.0 / (2.0 - rand * alpha)), (1.0 / (distributionIndex + 1.0)));
+                .pow(1.0 / (2.0 - rand * alpha), 1.0 / (distributionIndex + 1.0));
             }
 
-            c2 = 0.5 * ((y1 + y2) + betaq * (y2 - y1));
+            c2 = 0.5 * (y1 + y2 + betaq * (y2 - y1));
 
             if (c1 < yL) {
               c1 = yL;
@@ -273,10 +274,10 @@ public class SBXCrossover extends Crossover {
             alpha = 2.0 - java.lang.Math.pow(beta, -(distributionIndex + 1.0));
 
             if (rand <= (1.0 / alpha)) {
-              betaq = java.lang.Math.pow((rand * alpha), (1.0 / (distributionIndex + 1.0)));
+              betaq = java.lang.Math.pow(rand * alpha, 1.0 / (distributionIndex + 1.0));
             } else {
               betaq = java.lang.Math
-                .pow((1.0 / (2.0 - rand * alpha)), (1.0 / (distributionIndex + 1.0)));
+                .pow(1.0 / (2.0 - rand * alpha), 1.0 / (distributionIndex + 1.0));
             }
 
             c1 = 0.5 * ((y1 + y2) - betaq * (y2 - y1));
@@ -284,10 +285,10 @@ public class SBXCrossover extends Crossover {
             alpha = 2.0 - java.lang.Math.pow(beta, -(distributionIndex + 1.0));
 
             if (rand <= (1.0 / alpha)) {
-              betaq = java.lang.Math.pow((rand * alpha), (1.0 / (distributionIndex + 1.0)));
+              betaq = java.lang.Math.pow(rand * alpha, 1.0 / (distributionIndex + 1.0));
             } else {
               betaq = java.lang.Math
-                .pow((1.0 / (2.0 - rand * alpha)), (1.0 / (distributionIndex + 1.0)));
+                .pow(1.0 / (2.0 - rand * alpha), 1.0 / (distributionIndex + 1.0));
             }
 
             c2 = 0.5 * ((y1 + y2) + betaq * (y2 - y1));

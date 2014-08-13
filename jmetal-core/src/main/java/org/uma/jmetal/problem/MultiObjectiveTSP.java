@@ -38,16 +38,14 @@ import java.util.logging.Level;
 public class MultiObjectiveTSP extends Problem {
   private static final long serialVersionUID = 3869748855198680149L;
 
-  public int numberOfCities;
-  public double[][] distanceMatrix;
-  public double[][] costMatrix;
+  private int numberOfCities;
+  private double[][] distanceMatrix;
+  private double[][] costMatrix;
 
   /**
    * Creates a new multiobjective TSP problem instance. It accepts data files from TSPLIB
    */
-  public MultiObjectiveTSP(String solutionType,
-    String fileDistances,
-    String fileCost) throws Exception {
+  public MultiObjectiveTSP(String solutionType, String fileDistances, String fileCost) throws FileNotFoundException {
     numberOfVariables = 1;
     numberOfObjectives = 2;
     numberOfConstraints = 0;
@@ -97,8 +95,7 @@ public class MultiObjectiveTSP extends Problem {
   }
 
 
-  public double[][] readProblem(String file) throws
-    Exception {
+  private double[][] readProblem(String file) throws FileNotFoundException {
     double[][] matrix = null;
     Reader inputFile = new BufferedReader(
       new InputStreamReader(
@@ -130,8 +127,7 @@ public class MultiObjectiveTSP extends Problem {
       found = false;
       token.nextToken();
       while (!found) {
-        if ((token.sval != null) &&
-          ((token.sval.compareTo("SECTION") == 0))) {
+        if ((token.sval != null) && (token.sval.compareTo("SECTION") == 0)) {
           found = true;
         } else {
           token.nextToken();
@@ -155,8 +151,7 @@ public class MultiObjectiveTSP extends Problem {
       for (int k = 0; k < numberOfCities; k++) {
         matrix[k][k] = 0;
         for (int j = k + 1; j < numberOfCities; j++) {
-          dist = Math.sqrt(Math.pow((c[k * 2] - c[j * 2]), 2.0) +
-            Math.pow((c[k * 2 + 1] - c[j * 2 + 1]), 2));
+          dist = Math.sqrt(Math.pow(c[k * 2] - c[j * 2], 2.0) + Math.pow(c[k * 2 + 1] - c[j * 2 + 1], 2));
           dist = (int) (dist + .5);
           matrix[k][j] = dist;
           matrix[j][k] = dist;
@@ -165,7 +160,7 @@ public class MultiObjectiveTSP extends Problem {
     } catch (Exception e) {
       JMetalLogger.logger
         .log(Level.SEVERE, "mTSP.readProblem(): error when reading data file", e);
-      throw new Exception("mTSP.readProblem(): error when reading data file " + e);
+      throw new JMetalException("mTSP.readProblem(): error when reading data file " + e);
     }
     return matrix;
   }

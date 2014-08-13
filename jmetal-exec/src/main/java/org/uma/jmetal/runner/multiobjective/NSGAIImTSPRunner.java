@@ -26,14 +26,21 @@ import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII;
+import org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAIITemplate;
 import org.uma.jmetal.operator.crossover.CrossoverFactory;
+import org.uma.jmetal.operator.crossover.PMXCrossover;
 import org.uma.jmetal.operator.mutation.MutationFactory;
+import org.uma.jmetal.operator.mutation.SwapMutation;
+import org.uma.jmetal.operator.selection.BinaryTournament2;
 import org.uma.jmetal.operator.selection.SelectionFactory;
 import org.uma.jmetal.problem.MultiObjectiveTSP;
 import org.uma.jmetal.qualityindicator.QualityIndicatorGetter;
+import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.evaluator.SequentialSolutionSetEvaluator;
 import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
+import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
+import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.util.HashMap;
 import java.util.logging.FileHandler;
@@ -44,8 +51,8 @@ import java.util.logging.FileHandler;
  */
 
 public class NSGAIImTSPRunner {
-  public static java.util.logging.Logger logger_;
-  public static FileHandler fileHandler_; 
+  public static java.util.logging.Logger logger;
+  public static FileHandler fileHandler;
 
   /**
    * @param args Command line arguments.
@@ -64,55 +71,61 @@ public class NSGAIImTSPRunner {
     QualityIndicatorGetter indicators;
 
     // Logger object and file to store log messages
-    logger_ = JMetalLogger.logger;
-    fileHandler_ = new FileHandler("NSGAII_main.log");
-    logger_.addHandler(fileHandler_);
+    logger = JMetalLogger.logger;
+    fileHandler = new FileHandler("NSGAIImTSPRunner.log");
+    logger.addHandler(fileHandler);
 
     indicators = null;
     problem = new MultiObjectiveTSP("Permutation", "kroA100.tsp", "kroB100.tsp");
 
-    SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator();
-    //SolutionSetEvaluator executor = new MultithreadedSolutionSetEvaluator(4, problem) ;
-    algorithm = new NSGAII(evaluator);
-    algorithm.setProblem(problem);
+     /*
+     * Alternatives:
+     * - "NSGAII"
+     * - "SteadyStateNSGAII"
+     */
 
-    // Algorithm parameters
-    algorithm.setInputParameter("populationSize", 100);
-    algorithm.setInputParameter("maxEvaluations", 1000000);
-    
-    /* Crossover operator */
-    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
-    crossoverParameters.put("probability", 0.95);
-    //crossover = CrossoverFactory.getCrossoverOperator("TwoPointsCrossover", parameters);
-    crossover = CrossoverFactory.getCrossoverOperator("PMXCrossover", crossoverParameters);
-    
-    /* Mutation operator */
-    HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
-    mutationParameters.put("probability", 0.2);
-    mutation = MutationFactory.getMutationOperator("SwapMutation", mutationParameters);                    
-  
-    /* Selection Operator */
-    HashMap<String, Object> selectionParameters = new HashMap<String, Object>() ;
-    selection = SelectionFactory.getSelectionOperator("BinaryTournament", selectionParameters);
+    String nsgaIIVersion = "NSGAII" ;
+      /*
+     * Alternatives:
+     * - evaluator = new SequentialSolutionSetEvaluator() // NSGAII
+     * - evaluator = new MultithreadedSolutionSetEvaluator(threads, problem) // parallel NSGAII
+     */
 
-    // Add the operator to the algorithm
-    algorithm.addOperator("crossover", crossover);
-    algorithm.addOperator("mutation", mutation);
-    algorithm.addOperator("selection", selection);
+    SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator() ;
 
-    // Add the indicator object to the algorithm
-    algorithm.setInputParameter("indicators", indicators);
+    crossover = new PMXCrossover.Builder()
+            .probability(0.95)
+            .build() ;
 
-    // Execute the Algorithm
-    long initTime = System.currentTimeMillis();
-    SolutionSet population = algorithm.execute();
-    long estimatedTime = System.currentTimeMillis() - initTime;
+    mutation = new SwapMutation.Builder()
+            .probability(0.2)
+            .build() ;
 
-    // Result messages 
-    logger_.info("Total execution time: " + estimatedTime + "ms");
-    logger_.info("Variables values have been writen to file VAR");
-    population.printVariablesToFile("VAR");
-    logger_.info("Objectives values have been writen to file FUN");
-    population.printObjectivesToFile("FUN");
+    selection = new BinaryTournament2.Builder()
+            .build() ;
+
+    algorithm = new NSGAIITemplate.Builder(problem, evaluator)
+            .populationSize(100)
+            .maxEvaluations(1000000)
+            .crossover(crossover)
+            .mutation(mutation)
+            .selection(selection)
+            .build("NSGAII") ;
+
+    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+            .execute() ;
+
+    SolutionSet population = algorithmRunner.getSolutionSet() ;
+    long computingTime = algorithmRunner.getComputingTime() ;
+
+    new SolutionSetOutput.Printer(population)
+            .separator("\t")
+            .varFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+            .funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+            .print();
+
+    logger.info("Total execution time: " + computingTime + "ms");
+    logger.info("Objectives values have been written to file FUN.tsv");
+    logger.info("Variables values have been written to file VAR.tsv");
   } 
 } 

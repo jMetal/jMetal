@@ -121,13 +121,13 @@ public class PolynomialMutation extends Mutation {
         mutPow = 1.0 / (distributionIndex + 1.0);
         if (rnd <= 0.5) {
           xy = 1.0 - delta1;
-          val = 2.0 * rnd + (1.0 - 2.0 * rnd) * (Math.pow(xy, (distributionIndex + 1.0)));
+          val = 2.0 * rnd + (1.0 - 2.0 * rnd) * (Math.pow(xy, distributionIndex + 1.0));
           deltaq = java.lang.Math.pow(val, mutPow) - 1.0;
         } else {
           xy = 1.0 - delta2;
           val =
-            2.0 * (1.0 - rnd) + 2.0 * (rnd - 0.5) * (Math.pow(xy, (distributionIndex + 1.0)));
-          deltaq = 1.0 - (java.lang.Math.pow(val, mutPow));
+            2.0 * (1.0 - rnd) + 2.0 * (rnd - 0.5) * (Math.pow(xy, distributionIndex + 1.0));
+          deltaq = 1.0 - Math.pow(val, mutPow);
         }
         y = y + deltaq * (yu - yl);
         if (y < yl) {
