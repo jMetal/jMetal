@@ -330,7 +330,6 @@ public class SBXCrossover extends Crossover {
     return offSpring;
   }
 
-
   /** Builder class */
   public static class Builder {
     private double distributionIndex ;

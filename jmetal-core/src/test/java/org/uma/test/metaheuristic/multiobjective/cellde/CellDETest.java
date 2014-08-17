@@ -1,4 +1,4 @@
-//  GDE3Test.java
+//  CellDETest.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -18,12 +18,12 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.test.metaheuristic.multiobjective.gde3;
+package org.uma.test.metaheuristic.multiobjective.cellde;
 
+import org.junit.Test;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.experiment.settings.GDE3Settings;
-import org.junit.Test;
+import org.uma.jmetal.experiment.settings.CellDESettings;
 
 import java.io.IOException;
 
@@ -32,16 +32,16 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by Antonio J. Nebro on 12/06/14.
  */
-public class GDE3Test {
+public class CellDETest {
   Algorithm algorithm;
 
   @Test
   public void testNumberOfReturnedSolutionsInEasyProblem() throws IOException, ClassNotFoundException {
-    algorithm = new GDE3Settings("Kursawe").configure() ;
+    algorithm = new CellDESettings("DTLZ1").configure() ;
 
     SolutionSet solutionSet = algorithm.execute() ;
     /*
-      Rationale: the default problem is Kursawe, and usually GDE3; configured with standard
+      Rationale: the default problem is DTLZ1, and usually CellDE; configured with standard
       settings should return 100 solutions
      */
     assertTrue(solutionSet.size() >= 98) ;

@@ -25,7 +25,11 @@ import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.experiment.Settings;
 import org.uma.jmetal.metaheuristic.multiobjective.cellde.CellDE;
+import org.uma.jmetal.operator.crossover.Crossover;
 import org.uma.jmetal.operator.crossover.CrossoverFactory;
+import org.uma.jmetal.operator.crossover.DifferentialEvolutionCrossover;
+import org.uma.jmetal.operator.selection.BinaryTournament;
+import org.uma.jmetal.operator.selection.Selection;
 import org.uma.jmetal.operator.selection.SelectionFactory;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.util.JMetalLogger;
@@ -43,7 +47,7 @@ public class CellDESettings extends Settings {
   private int populationSize;
   private int archiveSize;
   private int maxEvaluations;
-  private int archiveFeedback;
+  private int numberOfFeedbackSolutionsFromArchive;
 
   /** Constructor */
   public CellDESettings(String problemName) {
@@ -64,39 +68,31 @@ public class CellDESettings extends Settings {
     populationSize = 100;
     archiveSize = 100;
     maxEvaluations = 25000;
-    archiveFeedback = 20;
+    numberOfFeedbackSolutionsFromArchive = 20;
   }
 
   /** configure() method */
   public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
-    Operator selection;
-    Operator crossover;
+    Selection selection;
+    Crossover crossover;
 
-    // Creating the problem
-    Object[] problemParams = {"Real"};
-    problem = (new ProblemFactory()).getProblem(problemName, problemParams);
-    algorithm = new CellDE();
-    algorithm.setProblem(problem);
+    crossover = new DifferentialEvolutionCrossover.Builder()
+            .cr(cr)
+            .f(f)
+            .build() ;
 
-    // Algorithm parameters
-    algorithm.setInputParameter("populationSize", populationSize);
-    algorithm.setInputParameter("archiveSize", archiveSize);
-    algorithm.setInputParameter("maxEvaluations", maxEvaluations);
-    algorithm.setInputParameter("archiveFeedBack", archiveFeedback);
+    selection = new BinaryTournament.Builder()
+            .build() ;
 
-    // Crossover operator 
-    HashMap<String, Object> parameters = new HashMap<String, Object>();
-    parameters.put("CR", cr);
-    parameters.put("F", f);
-    crossover = CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", parameters);
-
-    // Add the operator to the algorithm
-    parameters = null;
-    selection = SelectionFactory.getSelectionOperator("BinaryTournament", parameters);
-
-    algorithm.addOperator("crossover", crossover);
-    algorithm.addOperator("selection", selection);
+    algorithm = new CellDE.Builder(problem)
+            .populationSize(populationSize)
+            .archiveSize(archiveSize)
+            .maxEvaluations(maxEvaluations)
+            .numberOfFeedbackSolutionsFromArchive(numberOfFeedbackSolutionsFromArchive)
+            .crossover(crossover)
+            .selection(selection)
+            .build() ;
 
     return algorithm;
   }
@@ -110,11 +106,11 @@ public class CellDESettings extends Settings {
       .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations)));
     archiveSize =
       Integer.parseInt(configuration.getProperty("archiveSize", String.valueOf(archiveSize)));
-    archiveFeedback = Integer
-      .parseInt(configuration.getProperty("archiveFeedback", String.valueOf(archiveFeedback)));
+    numberOfFeedbackSolutionsFromArchive = Integer
+      .parseInt(configuration.getProperty("archiveFeedback", String.valueOf(numberOfFeedbackSolutionsFromArchive)));
 
-    cr = Double.parseDouble(configuration.getProperty("CR", String.valueOf(cr)));
-    f = Double.parseDouble(configuration.getProperty("F", String.valueOf(f)));
+    cr = Double.parseDouble(configuration.getProperty("cr", String.valueOf(cr)));
+    f = Double.parseDouble(configuration.getProperty("f", String.valueOf(f)));
 
     return configure();
   }

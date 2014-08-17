@@ -21,25 +21,28 @@
 package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.core.Algorithm;
-import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.metaheuristic.multiobjective.cellde.CellDE;
-import org.uma.jmetal.operator.crossover.CrossoverFactory;
-import org.uma.jmetal.operator.selection.SelectionFactory;
+import org.uma.jmetal.operator.crossover.DifferentialEvolutionCrossover;
+import org.uma.jmetal.operator.selection.BinaryTournament;
+import org.uma.jmetal.operator.selection.Selection;
+import org.uma.jmetal.operator.crossover.Crossover;
 import org.uma.jmetal.problem.Kursawe;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.qualityindicator.QualityIndicatorGetter;
-import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
+import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.logging.FileHandler;
 
 public class CellDERunner {
-  public static java.util.logging.Logger logger_;
-  public static FileHandler fileHandler_; 
+  private static java.util.logging.Logger logger;
+  private static FileHandler fileHandler;
 
   /**
    * @param args Command line arguments.
@@ -54,15 +57,15 @@ public class CellDERunner {
     JMetalException, SecurityException, IOException, ClassNotFoundException {
     Problem problem;
     Algorithm algorithm;
-    Operator selection;
-    Operator crossover;
+    Selection selection;
+    Crossover crossover;
 
     QualityIndicatorGetter indicators;
 
     // Logger object and file to store log messages
-    logger_ = JMetalLogger.logger;
-    fileHandler_ = new FileHandler("MOCell_main.log");
-    logger_.addHandler(fileHandler_);
+    logger = JMetalLogger.logger;
+    fileHandler = new FileHandler("CellDERunner.log");
+    logger.addHandler(fileHandler);
 
     indicators = null;
     if (args.length == 1) {
@@ -74,55 +77,54 @@ public class CellDERunner {
       indicators = new QualityIndicatorGetter(problem, args[1]);
     } else { 
       problem = new Kursawe("Real", 3);
-      //problem = new Kursawe("BinaryReal", 3);
+      /* Examples
       //problem = new Water("Real");
       //problem = new ZDT4("ArrayReal");
       //problem = new WFG1("Real");
       //problem = new DTLZ1("Real");
       //problem = new OKA2("Real") ;
-    } // else
+      */
+    }
+    crossover = new DifferentialEvolutionCrossover.Builder()
+            .cr(0.5)
+            .f(0.5)
+            .build() ;
 
-    algorithm = new CellDE();
-    algorithm.setProblem(problem);
+    selection = new BinaryTournament.Builder()
+            .build() ;
 
-    // Algorithm parameters
-    algorithm.setInputParameter("populationSize", 100);
-    algorithm.setInputParameter("archiveSize", 100);
-    algorithm.setInputParameter("maxEvaluations", 25000);
-    algorithm.setInputParameter("archiveFeedBack", 20);
+    algorithm = new CellDE.Builder(problem)
+            .populationSize(100)
+            .archiveSize(100)
+            .maxEvaluations(25000)
+            .numberOfFeedbackSolutionsFromArchive(20)
+            .crossover(crossover)
+            .selection(selection)
+            .build() ;
 
-    // Crossover operator 
-    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
-    crossoverParameters.put("CR", 0.5);
-    crossoverParameters.put("F", 0.5);
-    crossover =
-      CrossoverFactory.getCrossoverOperator("DifferentialEvolutionCrossover", crossoverParameters);
+    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+            .execute() ;
 
-    // Add the operator to the algorithm
-    HashMap<String, Object> selectionParameters = null; // FIXME why we are passing null?
-    selection = SelectionFactory.getSelectionOperator("BinaryTournament", selectionParameters);
+    SolutionSet population = algorithmRunner.getSolutionSet() ;
+    long computingTime = algorithmRunner.getComputingTime() ;
 
-    algorithm.addOperator("crossover", crossover);
-    algorithm.addOperator("selection", selection);
+    new SolutionSetOutput.Printer(population)
+            .separator("\t")
+            .varFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+            .funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+            .print();
 
-    // Execute the Algorithm 
-    long initTime = System.currentTimeMillis();
-    SolutionSet population = algorithm.execute();
-    long estimatedTime = System.currentTimeMillis() - initTime;
-    JMetalLogger.logger.info("Total execution time: " + estimatedTime);
-
-    // Log messages 
-    logger_.info("Objectives values have been writen to file FUN");
-    population.printObjectivesToFile("FUN");
-    logger_.info("Variables values have been writen to file VAR");
-    population.printVariablesToFile("VAR");
+    logger.info("Total execution time: " + computingTime + "ms");
+    logger.info("Objectives values have been written to file FUN.tsv");
+    logger.info("Variables values have been written to file VAR.tsv");
 
     if (indicators != null) {
-      logger_.info("Quality indicators");
-      logger_.info("Hypervolume: " + indicators.getHypervolume(population));
-      logger_.info("GD         : " + indicators.getGD(population));
-      logger_.info("IGD        : " + indicators.getIGD(population));
-      logger_.info("Spread     : " + indicators.getSpread(population));
+      logger.info("Quality indicators");
+      logger.info("Hypervolume: " + indicators.getHypervolume(population));
+      logger.info("GD         : " + indicators.getGD(population));
+      logger.info("IGD        : " + indicators.getIGD(population));
+      logger.info("Spread     : " + indicators.getSpread(population));
+      logger.info("Epsilon    : " + indicators.getEpsilon(population));
     }
   }
 }

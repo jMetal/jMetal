@@ -59,9 +59,7 @@ public abstract class Settings {
   abstract public Algorithm configure() throws JMetalException;
 
   /** configure() method based on reading a properties file */
-  public Algorithm configure(Properties configuration) throws JMetalException {
-    return null;
-  }
+  abstract public Algorithm configure(Properties configuration) throws JMetalException;
 
   /**
    * Configure() method. Change the default configuration
@@ -72,6 +70,7 @@ public abstract class Settings {
    * @throws ClassNotFoundException
    */
   // FIXME: to be revised
+  /*
   public final Algorithm configure(HashMap settings)
     throws JMetalException, IllegalArgumentException, IllegalAccessException, ClassNotFoundException {
     if (settings != null) {
@@ -165,5 +164,5 @@ public abstract class Settings {
 
     return configure();
   }
-
+*/
 }

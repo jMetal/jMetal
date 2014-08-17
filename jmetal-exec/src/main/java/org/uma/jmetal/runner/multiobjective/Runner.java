@@ -49,9 +49,9 @@ public class Runner {
    * @throws org.uma.jmetal.util.JMetalException
    * @throws IOException
    * @throws SecurityException      Usage: three options
-   *                                - org.uma.jmetal.experiment.Main algorithmName
-   *                                - org.uma.jmetal.experiment.Main algorithmName problemName
-   *                                - org.uma.jmetal.experiment.Main algorithmName problemName paretoFrontFile
+   *                                - org.uma.jmetal.runner.multiobjective.Runner algorithmName
+   *                                - org.uma.jmetal.runner.multiobjective.Runner algorithmName problemName
+   *                                - org.uma.jmetal.runner.multiobjective.Runner problemName paretoFrontFile
    * @throws ClassNotFoundException
    */
 

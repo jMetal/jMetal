@@ -23,6 +23,7 @@ package org.uma.test.experiment.settings;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.experiment.Settings;
 import org.uma.jmetal.experiment.settings.CellDESettings;
+import org.uma.jmetal.metaheuristic.multiobjective.cellde.CellDE;
 import org.uma.jmetal.operator.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.util.JMetalException;
 
@@ -45,50 +46,46 @@ import static org.junit.Assert.assertEquals;
  * To change this template use File | Settings | File Templates.
  */
 public class CellDESettingsTest {
-  Properties configuration_ ;
+  Properties configuration ;
 
   @Before
   public void init() throws FileNotFoundException, IOException {
-    configuration_ = new Properties();
+    configuration = new Properties();
     InputStreamReader isr = new InputStreamReader(new FileInputStream(ClassLoader.getSystemResource("CellDE.conf").getPath()));
-    configuration_.load(isr);
+    configuration.load(isr);
   }
 
   @Test
   public void settingsTest() throws JMetalException {
     double epsilon = 0.000000000000001 ;
     Settings cellDESettings = new CellDESettings("Fonseca");
-    Algorithm algorithm = cellDESettings.configure() ;
+    CellDE algorithm = (CellDE)cellDESettings.configure() ;
 
-    DifferentialEvolutionCrossover crossover = (DifferentialEvolutionCrossover)algorithm.getOperator("crossover") ;
-    double CR = (Double)crossover.getParameter("CR") ;
-    double F = (Double)crossover.getParameter("F") ;
+    DifferentialEvolutionCrossover crossover = (DifferentialEvolutionCrossover)algorithm.getCrossover() ;
 
-    assertEquals("CellDE_SettingsTest", 100, ((Integer)algorithm.getInputParameter("populationSize")).intValue());
-    assertEquals("CellDE_SettingsTest", 25000, ((Integer)algorithm.getInputParameter("maxEvaluations")).intValue());
-    assertEquals("CellDE_SettingsTest", 100, ((Integer)algorithm.getInputParameter("archiveSize")).intValue());
-    assertEquals("CellDE_SettingsTest", 20, ((Integer)algorithm.getInputParameter("archiveFeedBack")).intValue());
+    assertEquals("CellDE_SettingsTest", 100, algorithm.getPopulationSize());
+    assertEquals("CellDE_SettingsTest", 25000, algorithm.getMaxEvaluations());
+    assertEquals("CellDE_SettingsTest", 100, algorithm.getArchiveSize());
+    assertEquals("CellDE_SettingsTest", 20, algorithm.getNumberOfFeedbackSolutionsFromArchive());
 
-    assertEquals("CellDE_SettingsTest", 0.5, CR, epsilon);
-    assertEquals("CellDE_SettingsTest", 0.5, F, epsilon);
+    assertEquals("CellDE_SettingsTest", 0.5, crossover.getCr(), epsilon);
+    assertEquals("CellDE_SettingsTest", 0.5, crossover.getF(), epsilon);
   }
 
   @Test
   public void settingsFromConfigurationFileTest() throws JMetalException {
     double epsilon = 0.000000000000001 ;
     Settings cellDESettings = new CellDESettings("Fonseca");
-    Algorithm algorithm = cellDESettings.configure(configuration_) ;
+    CellDE algorithm = (CellDE)cellDESettings.configure(configuration) ;
 
-    DifferentialEvolutionCrossover crossover = (DifferentialEvolutionCrossover)algorithm.getOperator("crossover") ;
-    double CR = (Double)crossover.getParameter("CR") ;
-    double F = (Double)crossover.getParameter("F") ;
+    DifferentialEvolutionCrossover crossover = (DifferentialEvolutionCrossover)algorithm.getCrossover() ;
 
-    assertEquals("CellDE_SettingsTest", 100, ((Integer)algorithm.getInputParameter("populationSize")).intValue());
-    assertEquals("CellDE_SettingsTest", 25000, ((Integer)algorithm.getInputParameter("maxEvaluations")).intValue());
-    assertEquals("CellDE_SettingsTest", 100, ((Integer)algorithm.getInputParameter("archiveSize")).intValue());
-    assertEquals("CellDE_SettingsTest", 20, ((Integer)algorithm.getInputParameter("archiveFeedBack")).intValue());
+    assertEquals("CellDE_SettingsTest", 100, algorithm.getPopulationSize());
+    assertEquals("CellDE_SettingsTest", 25000, algorithm.getMaxEvaluations());
+    assertEquals("CellDE_SettingsTest", 100, algorithm.getArchiveSize());
+    assertEquals("CellDE_SettingsTest", 20, algorithm.getNumberOfFeedbackSolutionsFromArchive());
 
-    assertEquals("CellDE_SettingsTest", 0.5, CR, epsilon);
-    assertEquals("CellDE_SettingsTest", 0.5, F, epsilon);
+    assertEquals("CellDE_SettingsTest", 0.5, crossover.getCr(), epsilon);
+    assertEquals("CellDE_SettingsTest", 0.5, crossover.getF(), epsilon);
   }
 }
