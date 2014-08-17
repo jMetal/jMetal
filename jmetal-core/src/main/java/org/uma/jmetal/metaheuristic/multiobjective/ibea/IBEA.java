@@ -21,9 +21,16 @@
 package org.uma.jmetal.metaheuristic.multiobjective.ibea;
 
 import org.uma.jmetal.core.*;
+import org.uma.jmetal.operator.crossover.Crossover;
+import org.uma.jmetal.operator.crossover.SBXCrossover;
+import org.uma.jmetal.operator.mutation.Mutation;
+import org.uma.jmetal.operator.mutation.PolynomialMutation;
+import org.uma.jmetal.operator.selection.BinaryTournament;
+import org.uma.jmetal.operator.selection.Selection;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.Ranking;
 import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.comparator.FitnessComparator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,43 +39,71 @@ import java.util.List;
  * This class implementing the IBEA algorithm
  */
 public class IBEA extends Algorithm {
-
-  /**
-   * Defines the number of tournaments for creating the mating pool
-   */
-  public static final int TOURNAMENTS_ROUNDS = 1;
-  /**
-   *
-   */
   private static final long serialVersionUID = -1889165434725718813L;
-  /**
-   * Stores the value of the indicator between each pair of solutions into
-   * the solutiontype set
-   */
-  private List<List<Double>> indicatorValues_;
 
-  /**
-   *
-   */
-  private double maxIndicatorValue_;
+  public static final int TOURNAMENTS_ROUNDS = 1;
 
-  /**
-   * Constructor.
-   * Create a new IBEA instance
-   */
+  private List<List<Double>> indicatorValues;
+  private double maxIndicatorValue;
+
+  private int populationSize ;
+  private int archiveSize ;
+  private int maxEvaluations;
+
+  private Crossover crossover ;
+  private Mutation mutation ;
+  private Selection selection ;
+
+  @Deprecated
   public IBEA() {
     super();
+  }
+
+  /** Constructor */
+  private IBEA(Builder builder) {
+    this.problem = builder.problem ;
+    this.populationSize = builder.populationSize ;
+    this.archiveSize = builder.archiveSize ;
+    this.maxEvaluations = builder.maxEvaluations ;
+    this.crossover = builder.crossover ;
+    this.mutation = builder.mutation ;
+    this.selection = builder.selection ;
+  }
+
+  /* Getters */
+  public int getPopulationSize() {
+    return populationSize;
+  }
+
+  public int getArchiveSize() {
+    return archiveSize;
+  }
+
+  public int getMaxEvaluations() {
+    return maxEvaluations;
+  }
+
+  public Crossover getCrossover() {
+    return crossover;
+  }
+
+  public Mutation getMutation() {
+    return mutation;
+  }
+
+  public Selection getSelection() {
+    return selection;
   }
 
   /**
    * calculates the hypervolume of that portion of the objective space that
    * is dominated by individual a but not by individual b
    */
-  double calcHypervolumeIndicator(Solution p_ind_a,
-    Solution p_ind_b,
-    int d,
-    double maximumValues[],
-    double minimumValues[]) {
+  double calculateHypervolumeIndicator(Solution solutionA,
+                                       Solution solutionB,
+                                       int d,
+                                       double maximumValues[],
+                                       double minimumValues[]) {
     double a, b, r, max;
     double volume = 0;
     double rho = 2.0;
@@ -76,12 +111,11 @@ public class IBEA extends Algorithm {
     r = rho * (maximumValues[d - 1] - minimumValues[d - 1]);
     max = minimumValues[d - 1] + r;
 
-
-    a = p_ind_a.getObjective(d - 1);
-    if (p_ind_b == null) {
+    a = solutionA.getObjective(d - 1);
+    if (solutionB == null) {
       b = max;
     } else {
-      b = p_ind_b.getObjective(d - 1);
+      b = solutionB.getObjective(d - 1);
     }
 
     if (d == 1) {
@@ -92,13 +126,13 @@ public class IBEA extends Algorithm {
       }
     } else {
       if (a < b) {
-        volume = calcHypervolumeIndicator(p_ind_a, null, d - 1, maximumValues, minimumValues) *
-          (b - a) / r;
-        volume += calcHypervolumeIndicator(p_ind_a, p_ind_b, d - 1, maximumValues, minimumValues) *
-          (max - b) / r;
+        volume = calculateHypervolumeIndicator(solutionA, null, d - 1, maximumValues, minimumValues) *
+                (b - a) / r;
+        volume += calculateHypervolumeIndicator(solutionA, solutionB, d - 1, maximumValues, minimumValues) *
+                (max - b) / r;
       } else {
-        volume = calcHypervolumeIndicator(p_ind_a, p_ind_b, d - 1, maximumValues, minimumValues) *
-          (max - b) / r;
+        volume = calculateHypervolumeIndicator(solutionA, solutionB, d - 1, maximumValues, minimumValues) *
+                (max - b) / r;
       }
     }
 
@@ -106,15 +140,15 @@ public class IBEA extends Algorithm {
   }
 
   /**
-   * This structure store the indicator values of each pair of elements
+   * This structure stores the indicator values of each pair of elements
    */
   public void computeIndicatorValuesHD(SolutionSet solutionSet,
-    double[] maximumValues,
-    double[] minimumValues) throws JMetalException {
+                                       double[] maximumValues,
+                                       double[] minimumValues) throws JMetalException {
     SolutionSet A, B;
     // Initialize the structures
-    indicatorValues_ = new ArrayList<List<Double>>();
-    maxIndicatorValue_ = -Double.MAX_VALUE;
+    indicatorValues = new ArrayList<List<Double>>();
+    maxIndicatorValue = -Double.MAX_VALUE;
 
     for (int j = 0; j < solutionSet.size(); j++) {
       A = new SolutionSet(1);
@@ -129,20 +163,20 @@ public class IBEA extends Algorithm {
 
         double value = 0.0;
         if (flag == -1) {
-          value = -calcHypervolumeIndicator(A.get(0), B.get(0), problem.getNumberOfObjectives(),
-            maximumValues, minimumValues);
+          value = -calculateHypervolumeIndicator(A.get(0), B.get(0), problem.getNumberOfObjectives(),
+                  maximumValues, minimumValues);
         } else {
-          value = calcHypervolumeIndicator(B.get(0), A.get(0), problem.getNumberOfObjectives(),
-            maximumValues, minimumValues);
+          value = calculateHypervolumeIndicator(B.get(0), A.get(0), problem.getNumberOfObjectives(),
+                  maximumValues, minimumValues);
         }
 
         //Update the max value of the indicator
-        if (Math.abs(value) > maxIndicatorValue_) {
-          maxIndicatorValue_ = Math.abs(value);
+        if (Math.abs(value) > maxIndicatorValue) {
+          maxIndicatorValue = Math.abs(value);
         }
         aux.add(value);
       }
-      indicatorValues_.add(aux);
+      indicatorValues.add(aux);
     }
   }
 
@@ -155,7 +189,7 @@ public class IBEA extends Algorithm {
 
     for (int i = 0; i < solutionSet.size(); i++) {
       if (i != pos) {
-        fitness += Math.exp((-1 * indicatorValues_.get(i).get(pos) / maxIndicatorValue_) / kappa);
+        fitness += Math.exp((-1 * indicatorValues.get(i).get(pos) / maxIndicatorValue) / kappa);
       }
     }
     solutionSet.get(pos).setFitness(fitness);
@@ -214,42 +248,24 @@ public class IBEA extends Algorithm {
       if (i != worstIndex) {
         double fitness = solutionSet.get(i).getFitness();
         fitness -=
-          Math.exp((-indicatorValues_.get(worstIndex).get(i) / maxIndicatorValue_) / kappa);
+                Math.exp((-indicatorValues.get(worstIndex).get(i) / maxIndicatorValue) / kappa);
         solutionSet.get(i).setFitness(fitness);
       }
     }
 
     // remove worst from the indicatorValues list
-    indicatorValues_.remove(worstIndex);
-    for (List<Double> anIndicatorValues_ : indicatorValues_) {
+    indicatorValues.remove(worstIndex);
+    for (List<Double> anIndicatorValues_ : indicatorValues) {
       anIndicatorValues_.remove(worstIndex);
     }
-
 
     solutionSet.remove(worstIndex);
   }
 
-  /**
-   * Runs of the IBEA algorithm.
-   *
-   * @return aSolutionSet that is a set of non dominated solutions
-   * as a experimentoutput of the algorithm execution
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Execute() method */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
-    int populationSize, archiveSize, maxEvaluations, evaluations;
-    Operator crossoverOperator, mutationOperator, selectionOperator;
+    int evaluations;
     SolutionSet solutionSet, archive, offSpringSolutionSet;
-
-    //Read the params
-    populationSize = ((Integer) getInputParameter("populationSize")).intValue();
-    archiveSize = ((Integer) getInputParameter("archiveSize")).intValue();
-    maxEvaluations = ((Integer) getInputParameter("maxEvaluations")).intValue();
-
-    //Read the operator
-    crossoverOperator = operators.get("crossover");
-    mutationOperator = operators.get("mutation");
-    selectionOperator = operators.get("selection");
 
     //Initialize the variables
     solutionSet = new SolutionSet(populationSize);
@@ -267,7 +283,7 @@ public class IBEA extends Algorithm {
     }
 
     while (evaluations < maxEvaluations) {
-      SolutionSet union = ((SolutionSet) solutionSet).union(archive);
+      SolutionSet union = solutionSet.union(archive);
       calculateFitness(union);
       archive = union;
 
@@ -281,17 +297,17 @@ public class IBEA extends Algorithm {
         int j = 0;
         do {
           j++;
-          parents[0] = (Solution) selectionOperator.execute(archive);
+          parents[0] = (Solution) selection.execute(archive);
         } while (j < IBEA.TOURNAMENTS_ROUNDS);
         int k = 0;
         do {
           k++;
-          parents[1] = (Solution) selectionOperator.execute(archive);
+          parents[1] = (Solution) selection.execute(archive);
         } while (k < IBEA.TOURNAMENTS_ROUNDS);
 
         //make the crossover
-        Solution[] offSpring = (Solution[]) crossoverOperator.execute(parents);
-        mutationOperator.execute(offSpring[0]);
+        Solution[] offSpring = (Solution[]) crossover.execute(parents);
+        mutation.execute(offSpring[0]);
         problem.evaluate(offSpring[0]);
         problem.evaluateConstraints(offSpring[0]);
         offSpringSolutionSet.add(offSpring[0]);
@@ -303,5 +319,79 @@ public class IBEA extends Algorithm {
 
     Ranking ranking = new Ranking(archive);
     return ranking.getSubfront(0);
+  }
+
+  /** Builder class */
+  public static class Builder {
+    private Problem problem ;
+    private int populationSize ;
+    private int archiveSize ;
+    private int maxEvaluations;
+
+    private Crossover crossover ;
+    private Mutation mutation ;
+    private Selection selection ;
+
+    public Builder(Problem problem) {
+      this.problem = problem ;
+      populationSize = 100 ;
+      archiveSize = 100 ;
+      maxEvaluations = 25000 ;
+
+      crossover = new SBXCrossover.Builder()
+              .probability(0.9)
+              .distributionIndex(20.0)
+              .build();
+
+      mutation = new PolynomialMutation.Builder()
+              .probability(1.0/problem.getNumberOfVariables())
+              .distributionIndex(20.0)
+              .build() ;
+
+      selection = new BinaryTournament.Builder()
+              .comparator(new FitnessComparator())
+              .build() ;
+
+    }
+
+    public Builder setPopulationSize(int populationSize) {
+      this.populationSize = populationSize;
+
+      return this ;
+    }
+
+    public Builder setArchiveSize(int archiveSize) {
+      this.archiveSize = archiveSize;
+
+      return this ;
+    }
+
+    public Builder setMaxEvaluations(int maxEvaluations) {
+      this.maxEvaluations = maxEvaluations;
+
+      return this ;
+    }
+
+    public Builder setCrossover(Crossover crossover) {
+      this.crossover = crossover;
+
+      return this ;
+    }
+
+    public Builder setMutation(Mutation mutation) {
+      this.mutation = mutation;
+
+      return this ;
+    }
+
+    public Builder setSelection(Selection selection) {
+      this.selection = selection;
+
+      return this ;
+    }
+
+    public IBEA build() {
+      return new IBEA(this) ;
+    }
   }
 }

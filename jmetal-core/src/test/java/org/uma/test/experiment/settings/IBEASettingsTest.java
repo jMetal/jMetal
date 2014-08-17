@@ -1,4 +1,4 @@
-//  IBEA_SettingsTest.java
+//  IBEASettingsTest.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -24,6 +24,7 @@ import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.experiment.Settings;
 import org.uma.jmetal.experiment.settings.IBEASettings;
+import org.uma.jmetal.metaheuristic.multiobjective.ibea.IBEA;
 import org.uma.jmetal.operator.crossover.SBXCrossover;
 import org.uma.jmetal.operator.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.Fonseca;
@@ -40,68 +41,69 @@ import java.util.Properties;
 
 /**
  * Created with IntelliJ IDEA.
- * User: antelverde
+ * User: Antonio J. Nebro
  * Date: 17/06/13
  * Time: 22:47
- * To change this template use File | Settings | File Templates.
  */
 public class IBEASettingsTest {
-  Properties configuration_ ;
+  Properties configuration ;
 
   @Before
   public void init() throws FileNotFoundException, IOException {
-    configuration_ = new Properties();
+    configuration = new Properties();
     InputStreamReader isr = new InputStreamReader(new FileInputStream(ClassLoader.getSystemResource("IBEA.conf").getPath()));
-    configuration_.load(isr);
+    configuration.load(isr);
   }
 
   @Test
   public void testConfigure() throws Exception {
     double epsilon = 0.000000000000001 ;
     Settings ibeaSettings = new IBEASettings("Fonseca");
-    Algorithm algorithm = ibeaSettings.configure() ;
+    
+    IBEA algorithm = (IBEA)ibeaSettings.configure() ;
     Problem problem = new Fonseca("Real") ;
-    SBXCrossover crossover = (SBXCrossover)algorithm.getOperator("crossover") ;
-    double pc = (Double)crossover.getParameter("probability") ;
-    double dic = (Double)crossover.getParameter("distributionIndex") ;
-    //MutationLocalSearch improvement = (MutationLocalSearch)algorithm.getOperator("improvement") ;
-    PolynomialMutation mutation = (PolynomialMutation)algorithm.getOperator("mutation") ;
-    double pm = (Double)mutation.getParameter("probability") ;
-    double dim = (Double)mutation.getParameter("distributionIndex") ;
 
-    Assert.assertEquals("IBEA_SettingsTest", 100, ((Integer)algorithm.getInputParameter("populationSize")).intValue());
-    Assert.assertEquals("IBEA_SettingsTest", 25000, ((Integer)algorithm.getInputParameter("maxEvaluations")).intValue());
-    Assert.assertEquals("IBEA_SettingsTest", 100, ((Integer)algorithm.getInputParameter("archiveSize")).intValue());
+    SBXCrossover crossover = (SBXCrossover) algorithm.getCrossover() ;
+    double pc = crossover.getCrossoverProbability() ;
+    double dic = crossover.getDistributionIndex() ;
+    PolynomialMutation mutation = (PolynomialMutation)algorithm.getMutation() ;
+    double pm = mutation.getMutationProbability() ;
+    double dim = mutation.getDistributionIndex() ;
 
-    Assert.assertEquals("IBEA_SettingsTest", 0.9, pc, epsilon);
-    Assert.assertEquals("IBEA_SettingsTest", 20.0, dic, epsilon);
+    Assert.assertEquals(100, algorithm.getPopulationSize());
+    Assert.assertEquals(25000, algorithm.getMaxEvaluations());
+    Assert.assertEquals(100, algorithm.getArchiveSize());
 
-    Assert.assertEquals("IBEA_SettingsTest", 1.0/problem.getNumberOfVariables(), pm, epsilon);
-    Assert.assertEquals("IBEA_SettingsTest", 20.0, dim, epsilon);
+    Assert.assertEquals(0.9, pc, epsilon);
+    Assert.assertEquals(20.0, dic, epsilon);
+
+    Assert.assertEquals(1.0/problem.getNumberOfVariables(), pm, epsilon);
+    Assert.assertEquals(20.0, dim, epsilon);
   }
 
   @Test
   public void testConfigure2() throws Exception {
     double epsilon = 0.000000000000001 ;
     Settings ibeaSettings = new IBEASettings("Fonseca");
-    Algorithm algorithm = ibeaSettings.configure(configuration_) ;
+
+    IBEA algorithm = (IBEA)ibeaSettings.configure(configuration) ;
     Problem problem = new Fonseca("Real") ;
-    SBXCrossover crossover = (SBXCrossover)algorithm.getOperator("crossover") ;
-    double pc = (Double)crossover.getParameter("probability") ;
-    double dic = (Double)crossover.getParameter("distributionIndex") ;
-    //MutationLocalSearch improvement = (MutationLocalSearch)algorithm.getOperator("improvement") ;
-    PolynomialMutation mutation = (PolynomialMutation)algorithm.getOperator("mutation") ;
-    double pm = (Double)mutation.getParameter("probability") ;
-    double dim = (Double)mutation.getParameter("distributionIndex") ;
 
-    Assert.assertEquals("IBEA_SettingsTest", 100, ((Integer)algorithm.getInputParameter("populationSize")).intValue());
-    Assert.assertEquals("IBEA_SettingsTest", 25000, ((Integer)algorithm.getInputParameter("maxEvaluations")).intValue());
-    Assert.assertEquals("IBEA_SettingsTest", 100, ((Integer)algorithm.getInputParameter("archiveSize")).intValue());
+    SBXCrossover crossover = (SBXCrossover) algorithm.getCrossover() ;
+    double pc = crossover.getCrossoverProbability() ;
+    double dic = crossover.getDistributionIndex() ;
+    PolynomialMutation mutation = (PolynomialMutation)algorithm.getMutation() ;
+    double pm = mutation.getMutationProbability() ;
+    double dim = mutation.getDistributionIndex() ;
 
-    Assert.assertEquals("IBEA_SettingsTest", 0.9, pc, epsilon);
-    Assert.assertEquals("IBEA_SettingsTest", 20.0, dic, epsilon);
+    Assert.assertEquals(100, algorithm.getPopulationSize());
+    Assert.assertEquals(25000, algorithm.getMaxEvaluations());
+    Assert.assertEquals(100, algorithm.getArchiveSize());
 
-    Assert.assertEquals("IBEA_SettingsTest", 1.0/problem.getNumberOfVariables(), pm, epsilon);
-    Assert.assertEquals("IBEA_SettingsTest", 20.0, dim, epsilon);
+    Assert.assertEquals(0.9, pc, epsilon);
+    Assert.assertEquals(20.0, dic, epsilon);
+
+    Assert.assertEquals(1.0/problem.getNumberOfVariables(), pm, epsilon);
+    Assert.assertEquals(20.0, dim, epsilon);
   }
 }

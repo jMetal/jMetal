@@ -22,22 +22,21 @@
 package org.uma.jmetal.experiment.settings;
 
 import org.uma.jmetal.core.Algorithm;
-import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.experiment.Settings;
 import org.uma.jmetal.metaheuristic.multiobjective.ibea.IBEA;
-import org.uma.jmetal.operator.crossover.CrossoverFactory;
-import org.uma.jmetal.operator.mutation.MutationFactory;
+import org.uma.jmetal.operator.crossover.Crossover ;
+import org.uma.jmetal.operator.crossover.SBXCrossover;
+import org.uma.jmetal.operator.mutation.Mutation;
+import org.uma.jmetal.operator.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.selection.BinaryTournament;
+import org.uma.jmetal.operator.selection.Selection;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.comparator.FitnessComparator;
 
-import java.util.HashMap;
 import java.util.Properties;
 
-/**
- * Settings class of algorithm IBEA
- */
+/** Settings class of algorithm IBEA */
 public class IBEASettings extends Settings {
 
   private int populationSize;
@@ -50,11 +49,7 @@ public class IBEASettings extends Settings {
   private double crossoverDistributionIndex;
   private double mutationDistributionIndex;
 
-  /**
-   * Constructor
-   *
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Constructor */
   public IBEASettings(String problemName) throws JMetalException {
     super(problemName);
 
@@ -73,55 +68,41 @@ public class IBEASettings extends Settings {
     mutationDistributionIndex = 20.0;
   }
 
-  /**
-   * Configure IBEA with user-defined parameter experiment.settings
-   *
-   * @return A IBEA algorithm object
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Configure() method */
+  @Override
   public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
-    Operator selection;
-    Operator crossover;
-    Operator mutation;
+    Selection selection;
+    Crossover crossover;
+    Mutation mutation;
 
-    algorithm = new IBEA();
-    algorithm.setProblem(problem);
+    crossover = new SBXCrossover.Builder()
+            .probability(crossoverProbability)
+            .distributionIndex(crossoverDistributionIndex)
+            .build() ;
 
-    // Algorithm parameters
-    algorithm.setInputParameter("populationSize", populationSize);
-    algorithm.setInputParameter("maxEvaluations", maxEvaluations);
-    algorithm.setInputParameter("archiveSize", archiveSize);
+    mutation = new PolynomialMutation.Builder()
+            .probability(mutationProbability)
+            .distributionIndex(mutationDistributionIndex)
+            .build() ;
 
-    // Mutation and Crossover for Real codification 
-    HashMap<String, Object> parameters = new HashMap<String, Object>();
-    parameters.put("probability", crossoverProbability);
-    parameters.put("distributionIndex", crossoverDistributionIndex);
-    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", parameters);
+    selection = new BinaryTournament.Builder()
+            .comparator(new FitnessComparator())
+            .build() ;
 
-    parameters = new HashMap<String, Object>();
-    parameters.put("probability", mutationProbability);
-    parameters.put("distributionIndex", mutationDistributionIndex);
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", parameters);                    
-
-    /* Selection Operator */
-    parameters = new HashMap<String, Object>();
-    parameters.put("comparator", new FitnessComparator());
-    selection = new BinaryTournament(parameters);
-
-    // Add the operator to the algorithm
-    algorithm.addOperator("crossover", crossover);
-    algorithm.addOperator("mutation", mutation);
-    algorithm.addOperator("selection", selection);
+    algorithm = new IBEA.Builder(problem)
+            .setArchiveSize(archiveSize)
+            .setPopulationSize(populationSize)
+            .setMaxEvaluations(maxEvaluations)
+            .setCrossover(crossover)
+            .setMutation(mutation)
+            .setSelection(selection)
+            .build() ;
 
     return algorithm;
   }
 
-  /**
-   * Configure IBEA with user-defined parameter experiment.settings
-   *
-   * @return An IBEA algorithm object
-   */
+  /** Configure() method */
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {
     populationSize = Integer
