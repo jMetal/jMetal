@@ -1,4 +1,4 @@
-//  NSGAIIRunner.java
+//  MOCellRunner.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -24,16 +24,20 @@ import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
+import org.uma.jmetal.metaheuristic.multiobjective.mocell.MOCellTemplate;
 import org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAIITemplate;
 import org.uma.jmetal.operator.crossover.SBXCrossover;
+import org.uma.jmetal.operator.mutation.Mutation;
+import org.uma.jmetal.operator.crossover.Crossover;
 import org.uma.jmetal.operator.mutation.PolynomialMutation;
-import org.uma.jmetal.operator.selection.BinaryTournament2;
+import org.uma.jmetal.operator.selection.BinaryTournament;
+import org.uma.jmetal.operator.selection.Selection;
 import org.uma.jmetal.problem.Kursawe;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.qualityindicator.QualityIndicatorGetter;
 import org.uma.jmetal.util.AlgorithmRunner;
-import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.evaluator.SequentialSolutionSetEvaluator;
 import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
 import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
@@ -43,17 +47,10 @@ import java.io.IOException;
 import java.util.logging.FileHandler;
 
 /**
- * Class to configure and execute the NSGA-II algorithm.
- * <p/>
- * Besides the classic NSGA-II, a steady-state version (ssNSGAII) is also
- * included (See: J.J. Durillo, A.J. Nebro, F. Luna and E. Alba
- * "On the Effect of the Steady-State Selection Scheme in
- * Multi-Objective Genetic Algorithms"
- * 5th International Conference, EMO 2009, pp: 183-197.
- * April 2009)
+ * Class to configure and execute the MOCell algorithm (variant: AsyncMOCell2)
  */
 
-public class NSGAIIRunner {
+public class MOCellRunner {
   private static java.util.logging.Logger logger;
   private static FileHandler fileHandler;
 
@@ -74,15 +71,15 @@ public class NSGAIIRunner {
 
     Problem problem;
     Algorithm algorithm;
-    Operator crossover;
-    Operator mutation;
-    Operator selection;
+    Crossover crossover;
+    Mutation mutation;
+    Selection selection;
 
     QualityIndicatorGetter indicators;
 
     // Logger object and file to store log messages
     logger = JMetalLogger.logger;
-    fileHandler = new FileHandler("NSGAIIRunner.log");
+    fileHandler = new FileHandler("MOCell.log");
     logger.addHandler(fileHandler);
 
     indicators = null;
@@ -104,41 +101,28 @@ public class NSGAIIRunner {
         problem = new OKA2("Real")
       */
     }
-
-    /*
-     * Alternatives:
-     * - "NSGAII"
-     * - "SteadyStateNSGAII"
-     */
-    String nsgaIIVersion = "NSGAII" ;
-
-    /*
-     * Alternatives:
-     * - evaluator = new SequentialSolutionSetEvaluator() // NSGAII
-     * - evaluator = new MultithreadedSolutionSetEvaluator(threads, problem) // parallel NSGAII
-     */
-    SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator() ;
-
     crossover = new SBXCrossover.Builder()
-      .distributionIndex(20.0)
-      .probability(0.9)
-      .build() ;
+            .probability(0.9)
+            .distributionIndex(20.0)
+            .build();
 
     mutation = new PolynomialMutation.Builder()
-      .distributionIndex(20.0)
-      .probability(1.0/problem.getNumberOfVariables())
-      .build();
+            .probability(1.0 / problem.getNumberOfVariables())
+            .distributionIndex(20.0)
+            .build();
 
-    selection = new BinaryTournament2.Builder()
-      .build();
+    selection = new BinaryTournament.Builder()
+            .build() ;
 
-    algorithm = new NSGAIITemplate.Builder(problem, evaluator)
-      .crossover(crossover)
-      .mutation(mutation)
-      .selection(selection)
-      .maxEvaluations(25000)
-      .populationSize(100)
-      .build(nsgaIIVersion) ;
+    algorithm = new MOCellTemplate.Builder(problem)
+            .populationSize(100)
+            .archiveSize(100)
+            .maxEvaluations(25000)
+            .numberOfFeedbackSolutionsFromArchive(20)
+            .crossover(crossover)
+            .mutation(mutation)
+            .selection(selection)
+            .build("AsyncMOCell2");
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
       .execute() ;

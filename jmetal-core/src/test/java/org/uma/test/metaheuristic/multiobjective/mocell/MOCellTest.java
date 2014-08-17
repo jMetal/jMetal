@@ -44,9 +44,7 @@ public class MOCellTest {
     Rationale: the default problem is ZDT2, and usually AsyncMOCell1, configured with standard
     settings, should return 100 solutions
      */
-    int defaultMaxEvaluations = 25000 ;
     assertTrue(solutionSet.size() >= 98) ;
-    //assertEquals(defaultMaxEvaluations, ((NSGAII) algorithm).getEvaluations());
   }
 
   @Test
@@ -58,9 +56,7 @@ public class MOCellTest {
     Rationale: the default problem is ZDT1, and usually AsyncMOCell2, configured with standard
     settings, should return 100 solutions
      */
-    int defaultMaxEvaluations = 25000 ;
     assertTrue(solutionSet.size() >= 98) ;
-    //assertEquals(defaultMaxEvaluations, ((NSGAII) algorithm).getEvaluations());
   }
 
   @Test
@@ -72,9 +68,7 @@ public class MOCellTest {
     Rationale: the default problem is ZDT1, and usually AsyncMOCell3, configured with standard
     settings, should return 100 solutions
      */
-    int defaultMaxEvaluations = 25000 ;
     assertTrue(solutionSet.size() >= 98) ;
-    //assertEquals(defaultMaxEvaluations, ((NSGAII) algorithm).getEvaluations());
   }
 
   @Test
@@ -86,9 +80,7 @@ public class MOCellTest {
     Rationale: the default problem is ZDT1, and usually AsyncMOCell4, configured with standard
     settings, should return 100 solutions
      */
-    int defaultMaxEvaluations = 25000 ;
     assertTrue(solutionSet.size() >= 98) ;
-    //assertEquals(defaultMaxEvaluations, ((NSGAII) algorithm).getEvaluations());
   }
 
   @Test
@@ -100,9 +92,7 @@ public class MOCellTest {
     Rationale: the default problem is Fonseca, and usually SyncMOCell1, configured with standard
     settings, should return 100 solutions
      */
-    int defaultMaxEvaluations = 25000 ;
     assertTrue(solutionSet.size() >= 98) ;
-    //assertEquals(defaultMaxEvaluations, ((NSGAII) algorithm).getEvaluations());
   }
 
   public void testNumberOfReturnedSolutionsInEasyProblemWithSyncMOCell2() throws IOException, ClassNotFoundException {
@@ -113,8 +103,6 @@ public class MOCellTest {
     Rationale: the default problem is ZDT2, and usually SyncMOCell2, configured with standard
     settings, should return 100 solutions
      */
-    int defaultMaxEvaluations = 25000 ;
     assertTrue(solutionSet.size() >= 98) ;
-    //assertEquals(defaultMaxEvaluations, ((NSGAII) algorithm).getEvaluations());
   }
 }
