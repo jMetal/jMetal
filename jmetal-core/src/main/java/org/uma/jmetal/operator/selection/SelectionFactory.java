@@ -21,6 +21,7 @@
 
 package org.uma.jmetal.operator.selection;
 
+import org.uma.jmetal.metaheuristic.multiobjective.pesa2.PESA2Selection;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 

@@ -146,13 +146,13 @@ public class PAES extends Algorithm {
 
   /** Builder class */
   public static class Builder {
-    protected Problem problem;
+    private Problem problem;
 
-    protected int archiveSize;
-    protected int maxEvaluations;
-    protected int biSections;
+    private int archiveSize;
+    private int maxEvaluations;
+    private int biSections;
 
-    protected Operator mutationOperator;
+    private Operator mutationOperator;
 
     public Builder(Problem problem) {
       this.problem = problem ;

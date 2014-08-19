@@ -26,12 +26,19 @@ import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.metaheuristic.multiobjective.pesa2.PESA2;
-import org.uma.jmetal.operator.crossover.CrossoverFactory;
+import org.uma.jmetal.operator.crossover.Crossover;
+import org.uma.jmetal.operator.crossover.SBXCrossover;
+import org.uma.jmetal.operator.mutation.Mutation;
 import org.uma.jmetal.operator.mutation.MutationFactory;
+import org.uma.jmetal.operator.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.Kursawe;
 import org.uma.jmetal.problem.ProblemFactory;
+import org.uma.jmetal.qualityindicator.QualityIndicatorGetter;
+import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
+import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -41,8 +48,8 @@ import java.util.logging.FileHandler;
  * Class for configuring and running the PESA2 algorithm
  */
 public class PESA2Runner {
-  public static java.util.logging.Logger logger_;
-  public static FileHandler fileHandler_; 
+  public static java.util.logging.Logger logger;
+  public static FileHandler fileHandler;
 
   /**
    * @param args Command line arguments. The first (optional) argument specifies
@@ -56,62 +63,78 @@ public class PESA2Runner {
   public static void main(String[] args) throws JMetalException, IOException, ClassNotFoundException {
     Problem problem;
     Algorithm algorithm;
-    Operator crossover;
-    Operator mutation;
+    Crossover crossover;
+    Mutation mutation;
 
     // Logger object and file to store log messages
-    logger_ = JMetalLogger.logger;
-    fileHandler_ = new FileHandler("PESA2_main.log");
-    logger_.addHandler(fileHandler_);
+    logger = JMetalLogger.logger;
+    fileHandler = new FileHandler("PESA2Runner.log");
+    logger.addHandler(fileHandler);
 
+    QualityIndicatorGetter indicators;
+
+    indicators = null;
     if (args.length == 1) {
       Object[] params = {"Real"};
       problem = (new ProblemFactory()).getProblem(args[0], params);
+    } else if (args.length == 2) {
+      Object[] params = {"Real"};
+      problem = (new ProblemFactory()).getProblem(args[0], params);
+      indicators = new QualityIndicatorGetter(problem, args[1]);
     } else {
       problem = new Kursawe("Real", 3);
-      //problem = new Water("Real");
-      //problem = new ZDT1("ArrayReal", 1000);
-      //problem = new ZDT4("BinaryReal");
-      //problem = new WFG1("Real");
-      //problem = new DTLZ1("Real");
-      //problem = new OKA2("Real") ;
+      /*
+        Examples:
+        problem = new Water("Real");
+        problem = new ZDT3("ArrayReal", 30);
+        problem = new ConstrEx("Real");
+        problem = new DTLZ1("Real");
+        problem = new OKA2("Real")
+      */
     }
 
-    algorithm = new PESA2();
-    algorithm.setProblem(problem);
+    crossover = new SBXCrossover.Builder()
+            .probability(0.9)
+            .distributionIndex(20.0)
+            .build() ;
 
-    // Algorithm parameters 
-    algorithm.setInputParameter("populationSize", 10);
-    algorithm.setInputParameter("archiveSize", 100);
-    algorithm.setInputParameter("bisections", 5);
-    algorithm.setInputParameter("maxEvaluations", 25000);
+    mutation = new PolynomialMutation.Builder()
+            .probability(1.0/problem.getNumberOfVariables())
+            .distributionIndex(20.0)
+            .build() ;
 
-    // Mutation and Crossover for Real codification 
-    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
-    crossoverParameters.put("probability", 0.9);
-    crossoverParameters.put("distributionIndex", 20.0);
-    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", crossoverParameters);
+    algorithm = new PESA2.Builder(problem)
+            .populationSize(10)
+            .archiveSize(100)
+            .maxEvaluations(25000)
+            .biSections(5)
+            .crossover(crossover)
+            .mutation(mutation)
+            .build() ;
 
-    HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
-    mutationParameters.put("probability", 1.0 / problem.getNumberOfVariables());
-    mutationParameters.put("distributionIndex", 20.0);
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
+    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+            .execute() ;
 
-    // Add the operator to the algorithm
-    algorithm.addOperator("crossover", crossover);
-    algorithm.addOperator("mutation", mutation);
+    SolutionSet population = algorithmRunner.getSolutionSet() ;
+    long computingTime = algorithmRunner.getComputingTime() ;
 
-    // Execute the Algorithm
-    long initTime = System.currentTimeMillis();
-    SolutionSet population = algorithm.execute();
-    long estimatedTime = System.currentTimeMillis() - initTime;
-    JMetalLogger.logger.info("Total execution time: " + estimatedTime);
+    new SolutionSetOutput.Printer(population)
+            .separator("\t")
+            .varFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+            .funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+            .print();
 
-    // Result messages 
-    logger_.info("Total execution time: " + estimatedTime);
-    logger_.info("Objectives values have been writen to file FUN");
-    population.printObjectivesToFile("FUN");
-    logger_.info("Variables values have been writen to file VAR");
-    population.printVariablesToFile("VAR");
+    logger.info("Total execution time: " + computingTime + "ms");
+    logger.info("Objectives values have been written to file FUN.tsv");
+    logger.info("Variables values have been written to file VAR.tsv");
+
+    if (indicators != null) {
+      logger.info("Quality indicators");
+      logger.info("Hypervolume: " + indicators.getHypervolume(population));
+      logger.info("GD         : " + indicators.getGD(population));
+      logger.info("IGD        : " + indicators.getIGD(population));
+      logger.info("Spread     : " + indicators.getSpread(population));
+      logger.info("Epsilon    : " + indicators.getEpsilon(population));
+    }
   }
 }

@@ -19,9 +19,10 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.operator.selection;
+package org.uma.jmetal.metaheuristic.multiobjective.pesa2;
 
 import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.operator.selection.Selection;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.archive.AdaptiveGridArchive;
 import org.uma.jmetal.util.random.PseudoRandom;
@@ -29,8 +30,7 @@ import org.uma.jmetal.util.random.PseudoRandom;
 import java.util.HashMap;
 
 /**
- * This class implements a selection operator as the used in PESA-II
- * algorithm
+ * This class implements a selection operator as the used in the PESA2 algorithm
  */
 public class PESA2Selection extends Selection {
   private static final long serialVersionUID = 4941044300155040616L;
@@ -40,6 +40,7 @@ public class PESA2Selection extends Selection {
     super(parameters);
   }
 
+  /** Constructor */
   public PESA2Selection(Builder builder) {
     super(new HashMap<String, Object>()) ;
   }
@@ -47,7 +48,7 @@ public class PESA2Selection extends Selection {
   /**
    * Performs the operation
    *
-   * @param object Object representing a SolutionSet. This solutiontype set
+   * @param object Object representing a SolutionSet. This solution set
    *               must be an instance <code>AdaptiveGridArchive</code>
    * @return the selected solution
    * @throws org.uma.jmetal.util.JMetalException
