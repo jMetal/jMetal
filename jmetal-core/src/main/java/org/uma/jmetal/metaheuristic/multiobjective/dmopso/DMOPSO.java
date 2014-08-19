@@ -36,6 +36,9 @@ public class DMOPSO extends Algorithm {
   private int maxIterations;
   private int iteration;
 
+  private double changeVelocity1 = -1.0 ;
+  private double changeVelocity2 = -1.0 ;
+  
   private SolutionSet swarm;
   private Solution[] localBest;
   private Solution[] globalBest;
@@ -49,49 +52,6 @@ public class DMOPSO extends Algorithm {
   private double deltaMax[];
   private double deltaMin[];
 
-  public DMOPSO() {
-    super();
-    r1Max = 1.0;
-    r1Min = 0.0;
-    r2Max = 1.0;
-    r2Min = 0.0;
-    c1Max = 2.5;
-    c1Min = 1.5;
-    c2Max = 2.5;
-    c2Min = 1.5;
-    weightMax = 0.4;
-    weightMin = 0.1;
-    changeVelocity1 = -1.0;
-    changeVelocity2 = -1.0;
-  }
-
-  public DMOPSO(
-          Vector<Double> variables,
-          String trueParetoFront) throws FileNotFoundException {
-    super();
-
-    r1Max = variables.get(0);
-    r1Min = variables.get(1);
-    r2Max = variables.get(2);
-    r2Min = variables.get(3);
-    c1Max = variables.get(4);
-    c1Min = variables.get(5);
-    c2Max = variables.get(6);
-    c2Min = variables.get(7);
-    weightMax = variables.get(8);
-    weightMin = variables.get(9);
-    changeVelocity1 = variables.get(10);
-    changeVelocity2 = variables.get(11);
-
-    // THIS IS GOING TO CRASH
-    hypervolume = new Hypervolume();
-    org.uma.jmetal.qualityindicator.util.MetricsUtil mu = new org.uma.jmetal.qualityindicator.util.MetricsUtil();
-    trueFront = mu.readNonDominatedSolutionSet(trueParetoFront);
-    trueHypervolume_ = hypervolume.hypervolume(trueFront.writeObjectivesToMatrix(),
-            trueFront.writeObjectivesToMatrix());
-
-  }
-
   /** Constructor */
   private DMOPSO(Builder builder) {
     this.problem = builder.problem ;
@@ -101,23 +61,36 @@ public class DMOPSO extends Algorithm {
     this.maxIterations = builder.maxIterations ;
     this.functionType = builder.functionType ;
     this.dataDirectory = builder.dataDirectory ;
+    
+    changeVelocity1 = -1.0;
+    changeVelocity2 = -1.0;
   }
-
+  
+  /* Getters */
+  public int getSwarmSize() {
+  	return swarmSize ;
+  }
+  
+  public int getMaxAge() {
+  	return maxAge ;
+  }
+  
+  public int getMaxIterations() {
+  	return maxIterations ;
+  }
+  
+  public String getFunctionType() {
+  	return functionType ;
+  }
+  
+  public String getDataDirectory() {
+  	return dataDirectory ;
+  }
+  
   /**
    * Initialize all parameter of the algorithm
    */
   public void initParams() {
-//    swarmSize = (Integer) getInputParameter("swarmSize");
-//    maxIterations = (Integer) getInputParameter("maxIterations");
-//    maxAge = (Integer) getInputParameter("maxAge");
-//    indicators = (QualityIndicatorGetter) getInputParameter("indicators");
-//    dataDirectory = getInputParameter("dataDirectory").toString();
-//
-//    String funcType = ((String) getInputParameter("functionType"));
-//    if ("".equals(funcType)) {
-//      functionType = funcType;
-//    }
-
     iteration = 0;
 
     swarm = new SolutionSet(swarmSize);
@@ -189,16 +162,15 @@ public class DMOPSO extends Algorithm {
     XReal bestParticle = new XReal(localBest[i]);
     XReal bestGlobal = new XReal(globalBest[shfGBest[i]]);
 
-    r1 = PseudoRandom.randDouble(r1Min, r1Max);
-    r2 = PseudoRandom.randDouble(r2Min, r2Max);
-    C1 = PseudoRandom.randDouble(c1Min, c1Max);
-    C2 = PseudoRandom.randDouble(c2Min, c2Max);
+    r1 = PseudoRandom.randDouble(0, 1);
+    r2 = PseudoRandom.randDouble(0, 1);
+    C1 = PseudoRandom.randDouble(1.5, 2.5);
+    C2 = PseudoRandom.randDouble(1.5, 2.5);
 
-    wmax = weightMax;
-    wmin = weightMin;
+    wmax = 0.4;
+    wmin = 0.1;
 
     for (int var = 0; var < particle.size(); var++) {
-      //Computing the velocity of this particle
       try {
         speed[i][var] = velocityConstriction(constrictionCoefficient(C1, C2) *
                 (inertiaWeight(iteration, maxIterations, wmax, wmin) * speed[i][var] +
@@ -224,13 +196,7 @@ public class DMOPSO extends Algorithm {
     }
   }
 
-  /**
-   * Runs of the DMOPSO algorithm.
-   *
-   * @return a <code>SolutionSet</code> that is a set of non dominated solutions
-   * as a experimentoutput of the algorithm execution
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Execute() method */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     //->Step 1.1 Initialize parameters (iteration = 0)
     initParams();
@@ -543,7 +509,7 @@ public class DMOPSO extends Algorithm {
       this.problem = problem ;
 
       swarmSize = 100 ;
-      maxIterations = 25000 ;
+      maxIterations = 250 ;
       maxAge = 2 ;
       functionType = "_TCHE" ;
       dataDirectory = "" ;

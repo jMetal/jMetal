@@ -74,16 +74,12 @@ public class DMOPSOSettings extends Settings {
   public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
 
-    // Creating the problem
-    algorithm = new DMOPSO();
-    algorithm.setProblem(problem);
-
-    // Algorithm parameters
-    algorithm.setInputParameter("swarmSize", swarmSize);
-    algorithm.setInputParameter("maxIterations", maxIterations);
-    algorithm.setInputParameter("maxAge", maxAge);
-    algorithm.setInputParameter("functionType", functionType);
-    algorithm.setInputParameter("dataDirectory", dataDirectory);
+    algorithm = new DMOPSO.Builder(problem)
+    .swarmSize(swarmSize)
+    .maxIterations(maxIterations)
+    .maxAge(maxAge)
+    .functionType(functionType)
+    .build();
 
     return algorithm;
   }
