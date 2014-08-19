@@ -33,50 +33,32 @@ import java.util.Properties;
  * Settings class of algorithm RandomSearch
  */
 public class RandomSearchSettings extends Settings {
-  // Default experiment.settings
   private int maxEvaluations = 25000;
 
-  /**
-   * Constructor
-   *
-   * @param problem Problem to solve
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Constructor */
   public RandomSearchSettings(String problem) throws JMetalException {
     super(problem);
 
     Object [] problemParams = {"Real"};
     this.problem = (new ProblemFactory()).getProblem(problemName, problemParams);
-  } 
+  }
 
-  /**
-   * Configure the random search algorithm with default parameter experiment.settings
-   *
-   * @return an algorithm object
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Configure() method */
   public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
 
-    // Creating the problem
-    algorithm = new RandomSearch();
-    algorithm.setProblem(problem);
-
-    // Algorithm parameters
-    algorithm.setInputParameter("maxEvaluations", maxEvaluations);
+    algorithm = new RandomSearch.Builder(problem)
+            .setMaxEvaluations(maxEvaluations)
+            .build();
 
     return algorithm;
-  } // Constructor
+  }
 
-  /**
-   * Configure SMPSO with user-defined parameter experiment.settings
-   *
-   * @return A SMPSO algorithm object
-   */
+  /** Configure() method */
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {
     maxEvaluations = Integer.parseInt(configuration.getProperty("maxEvaluations",String.valueOf(
-      maxEvaluations)));
+            maxEvaluations)));
 
     return configure() ;
   }

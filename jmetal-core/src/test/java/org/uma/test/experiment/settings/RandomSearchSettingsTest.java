@@ -1,4 +1,4 @@
-//  RandomSearch_SettingsTest.java
+//  RandomSearchSettingsTest.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -26,6 +26,7 @@ import org.uma.jmetal.experiment.settings.RandomSearchSettings;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.uma.jmetal.metaheuristic.multiobjective.randomSearch.RandomSearch;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -37,34 +38,34 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Created with IntelliJ IDEA.
- * User: antelverde
+ * User: Antonio J. Nebro
  * Date: 27/06/13
  * Time: 07:54
  * To change this template use File | Settings | File Templates.
  */
 public class RandomSearchSettingsTest {
-  Properties configuration_ ;
+  Properties configuration;
 
   @Before
   public void init() throws FileNotFoundException, IOException {
-    configuration_ = new Properties();
+    configuration = new Properties();
     InputStreamReader isr = new InputStreamReader(new FileInputStream(ClassLoader.getSystemResource("RandomSearch.conf").getPath()));
-    configuration_.load(isr);
+    configuration.load(isr);
   }
 
   @Test
   public void testConfigure() throws Exception {
     Settings randomSettings = new RandomSearchSettings("Fonseca");
-    Algorithm algorithm = randomSettings.configure() ;
+    RandomSearch algorithm = (RandomSearch)randomSettings.configure() ;
 
-    assertEquals("RandomSearch_SettingsTest", 25000, ((Integer)algorithm.getInputParameter("maxEvaluations")).intValue());
+    assertEquals(25000, algorithm.getMaxEvaluations());
   }
 
   @Test
   public void testConfigure2() throws Exception {
     Settings randomSettings = new RandomSearchSettings("Fonseca");
-    Algorithm algorithm = randomSettings.configure(configuration_) ;
+    RandomSearch algorithm = (RandomSearch)randomSettings.configure(configuration) ;
 
-    assertEquals("RandomSearch_SettingsTest", 25000, ((Integer)algorithm.getInputParameter("maxEvaluations")).intValue());
+    assertEquals(25000, algorithm.getMaxEvaluations());
   }
 }

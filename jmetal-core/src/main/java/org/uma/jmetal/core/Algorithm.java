@@ -101,6 +101,6 @@ public abstract class Algorithm implements Serializable {
     return problem;
   }
   public void setProblem(Problem problem) {
-	  this.problem = problem;
+    this.problem = problem;
   }
 }

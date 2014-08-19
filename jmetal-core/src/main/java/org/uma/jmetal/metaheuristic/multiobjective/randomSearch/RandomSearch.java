@@ -22,8 +22,10 @@
 package org.uma.jmetal.metaheuristic.multiobjective.randomSearch;
 
 import org.uma.jmetal.core.Algorithm;
+import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
+import org.uma.jmetal.operator.selection.RandomSelection;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.NonDominatedSolutionList;
 
@@ -33,39 +35,56 @@ import org.uma.jmetal.util.NonDominatedSolutionList;
 public class RandomSearch extends Algorithm {
   private static final long serialVersionUID = 7957970222128947424L;
 
+  private int maxEvaluations ;
+
   /** Constructor */
-  public RandomSearch() {
-    super();
-  } 
+  private RandomSearch(Builder builder) {
+    this.problem = builder.problem ;
+    this.maxEvaluations = builder.maxEvaluations ;
+  }
 
-  /**
-   * Runs the RandomSearch algorithm.
-   *
-   * @return a <code>SolutionSet</code> that is a set of solutions
-   * as a experimentoutput of the algorithm execution
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  public int getMaxEvaluations() {
+    return maxEvaluations;
+  }
+
+  /** Execute() method */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
-    int maxEvaluations;
     int evaluations;
+    NonDominatedSolutionList nonDominatedSet ;
 
-    maxEvaluations = ((Integer) getInputParameter("maxEvaluations")).intValue();
-
-    //Initialize the variables
     evaluations = 0;
+    nonDominatedSet = new NonDominatedSolutionList();
 
-    NonDominatedSolutionList ndl = new NonDominatedSolutionList();
-
-    // Create the initial solutionSet
     Solution newSolution;
     for (int i = 0; i < maxEvaluations; i++) {
       newSolution = new Solution(problem);
       problem.evaluate(newSolution);
       problem.evaluateConstraints(newSolution);
       evaluations++;
-      ndl.add(newSolution);
-    } //for
+      nonDominatedSet.add(newSolution);
+    }
 
-    return ndl;
-  } 
+    return nonDominatedSet;
+  }
+
+  /** Builder class */
+  public static class Builder {
+    Problem problem ;
+    int maxEvaluations ;
+
+    public Builder(Problem problem) {
+      this.problem = problem ;
+      maxEvaluations = 25000 ;
+    }
+
+    public Builder setMaxEvaluations(int maxEvaluations) {
+      this.maxEvaluations = maxEvaluations ;
+
+      return this ;
+    }
+
+    public RandomSearch build() {
+      return new RandomSearch(this) ;
+    }
+  }
 } 
