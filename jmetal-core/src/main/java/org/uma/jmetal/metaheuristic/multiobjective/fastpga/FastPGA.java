@@ -22,6 +22,12 @@
 package org.uma.jmetal.metaheuristic.multiobjective.fastpga;
 
 import org.uma.jmetal.core.*;
+import org.uma.jmetal.operator.crossover.Crossover;
+import org.uma.jmetal.operator.crossover.SBXCrossover;
+import org.uma.jmetal.operator.mutation.Mutation;
+import org.uma.jmetal.operator.mutation.PolynomialMutation;
+import org.uma.jmetal.operator.selection.BinaryTournament;
+import org.uma.jmetal.operator.selection.Selection;
 import org.uma.jmetal.util.Distance;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.Ranking;
@@ -35,53 +41,102 @@ import java.util.Comparator;
 public class FastPGA extends Algorithm {
   private static final long serialVersionUID = -1288400553889158174L;
 
-  /*
-   * Constructor
-   * Creates a new instance of FastPGA
-   */
+  private int maxPopulationSize ;
+  private int initialPopulationSize ;
+  private int maxEvaluations ;
+  private double a ;
+  private double b ;
+  private double c ;
+  private double d ;
+  private int termination ;
+
+  private Crossover crossover;
+  private Mutation mutation;
+  private Selection selection;
+
+  @Deprecated
   public FastPGA() {
     super();
   }
 
-  /**
-   * Runs of the FastPGA algorithm.
-   *
-   * @return a <code>SolutionSet</code> that is a set of non dominated solutions
-   * as a experimentoutput of the algorithm execution
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Constructor */
+  private FastPGA(Builder builder) {
+    problem = builder.problem ;
+    maxPopulationSize = builder.maxPopulationSize ;
+    initialPopulationSize = builder.initialPopulationSize ;
+    maxEvaluations = builder.maxEvaluations ;
+    a = builder.a ;
+    b = builder.b ;
+    c = builder.c ;
+    d = builder.d ;
+    termination = builder.termination ;
+
+    crossover = builder.crossover ;
+    mutation = builder.mutation ;
+    selection = builder.selection ;
+  }
+
+  /* Getters */
+  public int getMaxPopulationSize() {
+    return maxPopulationSize;
+  }
+
+  public int getInitialPopulationSize() {
+    return initialPopulationSize;
+  }
+
+  public int getMaxEvaluations() {
+    return maxEvaluations;
+  }
+
+  public double getA() {
+    return a;
+  }
+
+  public double getB() {
+    return b;
+  }
+
+  public double getC() {
+    return c;
+  }
+
+  public double getD() {
+    return d;
+  }
+
+  public int getTermination() {
+    return termination;
+  }
+
+  public Crossover getCrossover() {
+    return crossover;
+  }
+
+  public Mutation getMutation() {
+    return mutation;
+  }
+
+  public Selection getSelection() {
+    return selection;
+  }
+
+  /** Execute() method */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
-    int maxPopSize, populationSize, offSpringSize,
-      evaluations, maxEvaluations, initialPopulationSize;
-    SolutionSet solutionSet, offSpringSolutionSet, candidateSolutionSet = null;
-    double a, b, c, d;
-    Operator crossover, mutation, selection;
-    int termination;
+    int populationSize ;
+    int offSpringSize ;
+    int evaluations;
+    SolutionSet solutionSet ;
+    SolutionSet offSpringSolutionSet ;
+    SolutionSet candidateSolutionSet ;
+
     Distance distance = new Distance();
     Comparator<Solution> fpgaFitnessComparator = new FPGAFitnessComparator();
-
-    //Read the parameters
-    maxPopSize = (Integer) getInputParameter("maxPopSize");
-    maxEvaluations = (Integer) getInputParameter("maxEvaluations");
-    initialPopulationSize =
-      (Integer) getInputParameter("initialPopulationSize");
-    termination = (Integer) getInputParameter("termination");
-
-    //Read the operator
-    crossover = (Operator) operators.get("crossover");
-    mutation = (Operator) operators.get("mutation");
-    selection = (Operator) operators.get("selection");
-
-    //Read the params
-    a = (Double) getInputParameter("a");
-    b = (Double) getInputParameter("b");
-    c = (Double) getInputParameter("c");
-    d = (Double) getInputParameter("d");
 
     //Initialize populationSize and offSpringSize
     evaluations = 0;
     populationSize = initialPopulationSize;
-    offSpringSize = maxPopSize;
+    offSpringSize = maxPopulationSize;
 
     //Build a solution set randomly
     solutionSet = new SolutionSet(populationSize);
@@ -131,8 +186,8 @@ public class FastPGA extends Algorithm {
       int count = ranking.getSubfront(0).size();
 
       //Regulate
-      populationSize = (int) Math.min(a + Math.floor(b * count), maxPopSize);
-      offSpringSize = (int) Math.min(c + Math.floor(d * count), maxPopSize);
+      populationSize = (int) Math.min(a + Math.floor(b * count), maxPopulationSize);
+      offSpringSize = (int) Math.min(c + Math.floor(d * count), maxPopulationSize);
 
       candidateSolutionSet.sort(fpgaFitnessComparator);
       solutionSet = new SolutionSet(populationSize);
@@ -145,7 +200,7 @@ public class FastPGA extends Algorithm {
       if (termination == 0) {
         ranking = new Ranking(solutionSet);
         count = ranking.getSubfront(0).size();
-        if (count == maxPopSize) {
+        if (count == maxPopulationSize) {
           if (reachesMaxNonDominated == 0) {
             reachesMaxNonDominated = evaluations;
           }
@@ -162,9 +217,123 @@ public class FastPGA extends Algorithm {
       }
     }
 
-    setOutputParameter("evaluations", evaluations);
-
     Ranking ranking = new Ranking(solutionSet);
     return ranking.getSubfront(0);
+  }
+
+  /** Builder class */
+  public static class Builder {
+    private Problem problem ;
+    private int maxPopulationSize ;
+    private int initialPopulationSize ;
+    private int maxEvaluations ;
+    private double a ;
+    private double b ;
+    private double c ;
+    private double d ;
+    private int termination ;
+
+    private Crossover crossover;
+    private Mutation mutation;
+    private Selection selection;
+
+    public Builder(Problem problem) {
+      this.problem = problem ;
+      maxPopulationSize = 100 ;
+      initialPopulationSize = 100 ;
+      maxEvaluations = 25000 ;
+      a = 20.0 ;
+      b = 1.0 ;
+      c = 20.0 ;
+      d = 0.0 ;
+      termination = 1 ;
+
+      crossover = new SBXCrossover.Builder()
+              .probability(0.9)
+              .distributionIndex(20.0)
+              .build() ;
+
+      mutation = new PolynomialMutation.Builder()
+              .probability(1.0/problem.getNumberOfVariables())
+              .distributionIndex(20.0)
+              .build() ;
+
+      selection = new BinaryTournament.Builder()
+              .comparator(new FPGAFitnessComparator())
+              .build() ;
+    }
+
+    public Builder setMaxPopulationSize(int maxPopulationSize) {
+      this.maxPopulationSize = maxPopulationSize;
+
+      return this ;
+    }
+
+    public Builder setInitialPopulationSize(int initialPopulationSize) {
+      this.initialPopulationSize = initialPopulationSize;
+
+      return this ;
+    }
+
+    public Builder setMaxEvaluations(int maxEvaluations) {
+      this.maxEvaluations = maxEvaluations;
+
+      return this ;
+    }
+
+    public Builder setA(double a) {
+      this.a = a;
+
+      return this ;
+    }
+
+    public Builder setB(double b) {
+      this.b = b;
+
+      return this ;
+    }
+
+    public Builder setC(double c) {
+      this.c = c;
+
+      return this ;
+    }
+
+    public Builder setD(double d) {
+      this.d = d;
+
+      return this ;
+    }
+
+    public Builder setTermination(int termination) {
+      if ((termination != 0) && (termination != 1)) {
+        throw new JMetalException("Invalid termination value: " + termination) ;
+      }
+      this.termination = termination ;
+
+      return this ;
+    }
+
+    public Builder setCrossover(Crossover crossover) {
+      this.crossover = crossover;
+
+      return this ;
+    }
+
+    public Builder setMutation(Mutation mutation) {
+      this.mutation = mutation;
+
+      return this ;
+    }
+
+    public Builder setSelection(Selection selection) {
+      this.selection = selection;
+
+      return this ;
+    }
+
+    public FastPGA build() {
+      return new FastPGA(this) ;
+    }
   }
 }

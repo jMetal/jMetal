@@ -1,4 +1,4 @@
-//  NSGAIISettingsTest.java
+//  FastPGASettingsTest.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -20,14 +20,16 @@
 
 package org.uma.test.experiment.settings;
 
+import org.junit.Before;
+import org.junit.Test;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.experiment.Settings;
+import org.uma.jmetal.experiment.settings.FastPGASettings;
+import org.uma.jmetal.metaheuristic.multiobjective.fastpga.FastPGA;
 import org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII;
 import org.uma.jmetal.operator.crossover.SBXCrossover;
 import org.uma.jmetal.operator.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.Fonseca;
-import org.junit.Before;
-import org.junit.Test;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -40,64 +42,53 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created with IntelliJ IDEA.
  * User: Antonio J. Nebro
- * Date: 26/06/13
- * Time: 07:56
+ * Date: 19/08/14
  */
-public class NSGAIISettingsTest {
+public class FastPGASettingsTest {
   Properties configuration;
 
   @Before
   public void init() throws FileNotFoundException, IOException {
     configuration = new Properties();
-    InputStreamReader isr = new InputStreamReader(new FileInputStream(ClassLoader.getSystemResource("NSGAII.conf").getPath()));
+    InputStreamReader isr = new InputStreamReader(new FileInputStream(ClassLoader.getSystemResource("FastPGA.conf").getPath()));
     configuration.load(isr);
   }
 
   @Test
   public void testConfigure() throws Exception {
     double epsilon = 0.000000000000001 ;
-    Settings NSGAIISettings = new org.uma.jmetal.experiment.settings.NSGAIISettings("Fonseca");
-    NSGAII algorithm = (NSGAII) NSGAIISettings.configure() ;
+    Settings FastPGASettings = new FastPGASettings("Fonseca");
+    FastPGA algorithm = (FastPGA) FastPGASettings.configure() ;
     Problem problem = new Fonseca("Real") ;
 
-    SBXCrossover crossover = (SBXCrossover) algorithm.getCrossoverOperator() ;
-    double pc = crossover.getCrossoverProbability() ;
-    double dic = crossover.getDistributionIndex() ;
-    PolynomialMutation mutation = (PolynomialMutation)algorithm.getMutationOperator() ;
-    double pm = mutation.getMutationProbability() ;
-    double dim = mutation.getDistributionIndex() ;
-
-    assertEquals(100, algorithm.getPopulationSize());
+    assertEquals(100, algorithm.getMaxPopulationSize());
+    assertEquals(100, algorithm.getInitialPopulationSize());
     assertEquals(25000, algorithm.getMaxEvaluations());
 
-    assertEquals(0.9, pc, epsilon);
-    assertEquals(20.0, dic, epsilon);
+    assertEquals(20.0, algorithm.getA(), epsilon);
+    assertEquals(1.0, algorithm.getB(), epsilon);
+    assertEquals(20.0, algorithm.getC(), epsilon);
+    assertEquals(0.0, algorithm.getD(), epsilon);
 
-    assertEquals(1.0/problem.getNumberOfVariables(), pm, epsilon);
-    assertEquals(20.0, dim, epsilon);
+    assertEquals(1, algorithm.getTermination());
   }
 
   @Test
   public void testConfigure2() throws Exception {
     double epsilon = 0.000000000000001 ;
-    Settings NSGAIISettings = new org.uma.jmetal.experiment.settings.NSGAIISettings("Fonseca");
-    NSGAII algorithm = (NSGAII)NSGAIISettings.configure(configuration) ;
+    Settings FastPGASettings = new FastPGASettings("Fonseca");
+    FastPGA algorithm = (FastPGA) FastPGASettings.configure(configuration) ;
     Problem problem = new Fonseca("Real") ;
 
-    SBXCrossover crossover = (SBXCrossover) algorithm.getCrossoverOperator() ;
-    double pc = crossover.getCrossoverProbability() ;
-    double dic = crossover.getDistributionIndex() ;
-    PolynomialMutation mutation = (PolynomialMutation)algorithm.getMutationOperator() ;
-    double pm = mutation.getMutationProbability() ;
-    double dim = mutation.getDistributionIndex() ;
-
-    assertEquals(100, algorithm.getPopulationSize());
+    assertEquals(100, algorithm.getMaxPopulationSize());
+    assertEquals(100, algorithm.getInitialPopulationSize());
     assertEquals(25000, algorithm.getMaxEvaluations());
 
-    assertEquals(0.9, pc, epsilon);
-    assertEquals(20.0, dic, epsilon);
+    assertEquals(20.0, algorithm.getA(), epsilon);
+    assertEquals(1.0, algorithm.getB(), epsilon);
+    assertEquals(20.0, algorithm.getC(), epsilon);
+    assertEquals(0.0, algorithm.getD(), epsilon);
 
-    assertEquals(1.0/problem.getNumberOfVariables(), pm, epsilon);
-    assertEquals(20.0, dim, epsilon);
+    assertEquals(1, algorithm.getTermination());
   }
 }

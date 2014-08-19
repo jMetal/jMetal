@@ -21,19 +21,26 @@
 package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.core.Algorithm;
-import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.metaheuristic.multiobjective.fastpga.FastPGA;
 import org.uma.jmetal.operator.crossover.CrossoverFactory;
+import org.uma.jmetal.operator.crossover.SBXCrossover;
+import org.uma.jmetal.operator.mutation.Mutation;
+import org.uma.jmetal.operator.crossover.Crossover;
 import org.uma.jmetal.operator.mutation.MutationFactory;
+import org.uma.jmetal.operator.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.selection.BinaryTournament;
+import org.uma.jmetal.operator.selection.Selection;
 import org.uma.jmetal.problem.Kursawe;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.qualityindicator.QualityIndicatorGetter;
+import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.comparator.FPGAFitnessComparator;
+import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
+import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -54,15 +61,15 @@ public class FastPGARunner {
   public static void main(String[] args) throws JMetalException, IOException, ClassNotFoundException {
     Problem problem;
     Algorithm algorithm;
-    Operator crossover;
-    Operator mutation;
-    Operator selection;
+    Crossover crossover;
+    Mutation mutation;
+    Selection selection;
 
     QualityIndicatorGetter indicators;
 
     // Logger object and file to store log messages
     logger = JMetalLogger.logger;
-    fileHandler = new FileHandler("FastPGA_main.log");
+    fileHandler = new FileHandler("FastPGARunner.log");
     logger.addHandler(fileHandler);
 
     indicators = null;
@@ -83,56 +90,49 @@ public class FastPGARunner {
       //problem = new OKA2("Real") ;
     }
 
-    algorithm = new FastPGA();
-    algorithm.setProblem(problem);
+    crossover = new SBXCrossover.Builder()
+            .probability(0.9)
+            .distributionIndex(20.0)
+            .build() ;
 
-    algorithm.setInputParameter("maxPopSize", 100);
-    algorithm.setInputParameter("initialPopulationSize", 100);
-    algorithm.setInputParameter("maxEvaluations", 25000);
-    algorithm.setInputParameter("a", 20.0);
-    algorithm.setInputParameter("b", 1.0);
-    algorithm.setInputParameter("c", 20.0);
-    algorithm.setInputParameter("d", 0.0);
+    mutation = new PolynomialMutation.Builder()
+            .probability(1.0/problem.getNumberOfVariables())
+            .distributionIndex(20.0)
+            .build() ;
 
-    // Parameter "termination"
-    // If the preferred stopping criterium is PPR based, termination must 
-    // be set to 0; otherwise, if the algorithm is intended to iterate until 
-    // a give number of evaluations is carried out, termination must be set to 
-    // that number
-    algorithm.setInputParameter("termination", 1);
+    selection = new BinaryTournament.Builder()
+            .comparator(new FPGAFitnessComparator())
+            .build() ;
 
-    // Mutation and Crossover for Real codification 
-    HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
-    crossoverParameters.put("probability", 0.9);
-    crossoverParameters.put("distributionIndex", 20.0);
-    crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", crossoverParameters);
-    //crossover.setParameter("probability",0.9);                   
-    //crossover.setParameter("distributionIndex",20.0);
+    algorithm = new FastPGA.Builder(problem)
+            .setMaxPopulationSize(100)
+            .setInitialPopulationSize(100)
+            .setMaxEvaluations(25000)
+            .setA(20.0)
+            .setB(1.0)
+            .setC(20.0)
+            .setD(0.0)
+            .setTermination(1)
+            .setSelection(selection)
+            .setCrossover(crossover)
+            .setMutation(mutation)
+            .build() ;
 
-    HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
-    mutationParameters.put("probability", 1.0 / problem.getNumberOfVariables());
-    mutationParameters.put("distributionIndex", 20.0);
-    mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
-    // Mutation and Crossover for Binary codification
+    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+            .execute() ;
 
-    HashMap<String, Object> selectionParameters = new HashMap<String, Object>();
-    selectionParameters.put("comparator", new FPGAFitnessComparator());
-    selection = new BinaryTournament(selectionParameters);
+    SolutionSet population = algorithmRunner.getSolutionSet() ;
+    long computingTime = algorithmRunner.getComputingTime() ;
 
-    algorithm.addOperator("crossover", crossover);
-    algorithm.addOperator("mutation", mutation);
-    algorithm.addOperator("selection", selection);
+    new SolutionSetOutput.Printer(population)
+            .separator("\t")
+            .varFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+            .funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+            .print();
 
-    long initTime = System.currentTimeMillis();
-    SolutionSet population = algorithm.execute();
-    long estimatedTime = System.currentTimeMillis() - initTime;
-
-    // Result messages 
-    logger.info("Total execution time: " + estimatedTime + "ms");
-    logger.info("Variables values have been writen to file VAR");
-    population.printVariablesToFile("VAR");
-    logger.info("Objectives values have been writen to file FUN");
-    population.printObjectivesToFile("FUN");
+    logger.info("Total execution time: " + computingTime + "ms");
+    logger.info("Objectives values have been written to file FUN.tsv");
+    logger.info("Variables values have been written to file VAR.tsv");
 
     if (indicators != null) {
       logger.info("Quality indicators");
@@ -141,9 +141,6 @@ public class FastPGARunner {
       logger.info("IGD        : " + indicators.getIGD(population));
       logger.info("Spread     : " + indicators.getSpread(population));
       logger.info("Epsilon    : " + indicators.getEpsilon(population));
-
-      int evaluations = ((Integer) algorithm.getOutputParameter("evaluations")).intValue();
-      logger.info("Speed      : " + evaluations + " evaluations");
     }
   }
 }
