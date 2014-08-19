@@ -19,10 +19,9 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.metaheuristic.multiobjective.pesa2;
+package org.uma.jmetal.operator.selection;
 
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.operator.selection.Selection;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.archive.AdaptiveGridArchive;
 import org.uma.jmetal.util.random.PseudoRandom;

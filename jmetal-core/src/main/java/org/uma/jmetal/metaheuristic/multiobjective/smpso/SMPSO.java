@@ -47,18 +47,18 @@ public class SMPSO extends Algorithm {
 
   SolutionSetEvaluator evaluator;
 
-  double r1Max;
-  double r1Min;
-  double r2Max;
-  double r2Min;
-  double c1Max;
-  double c1Min;
-  double c2Max;
-  double c2Min;
-  double weightMax;
-  double weightMin;
-  double changeVelocity1;
-  double changeVelocity2;
+  private double c1Max;
+  private double c1Min;
+  private double c2Max;
+  private double c2Min;
+  private double r1Max;
+  private double r1Min;
+  private double r2Max;
+  private double r2Min;
+  private double weightMax;
+  private double weightMin;
+  private double changeVelocity1;
+  private double changeVelocity2;
 
   private int swarmSize;
   private int maxIterations;

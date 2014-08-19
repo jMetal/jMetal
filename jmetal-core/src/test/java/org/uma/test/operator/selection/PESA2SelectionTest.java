@@ -1,4 +1,4 @@
-//  BinaryTournamentTest.java
+//  PESA2SelectionTest.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -25,7 +25,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.metaheuristic.multiobjective.pesa2.PESA2Selection;
+import org.uma.jmetal.operator.selection.PESA2Selection;
 import org.uma.jmetal.problem.Kursawe;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.archive.AdaptiveGridArchive;

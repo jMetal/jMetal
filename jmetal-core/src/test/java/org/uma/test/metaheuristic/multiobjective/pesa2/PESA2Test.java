@@ -50,4 +50,3 @@ public class PESA2Test {
     assertTrue(solutionSet.size() >= 95) ;
   }
 }
-  

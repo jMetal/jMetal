@@ -26,6 +26,7 @@ import org.uma.jmetal.operator.crossover.SBXCrossover;
 import org.uma.jmetal.operator.mutation.Mutation;
 import org.uma.jmetal.operator.crossover.Crossover;
 import org.uma.jmetal.operator.mutation.PolynomialMutation;
+import org.uma.jmetal.operator.selection.PESA2Selection;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.archive.AdaptiveGridArchive;
 

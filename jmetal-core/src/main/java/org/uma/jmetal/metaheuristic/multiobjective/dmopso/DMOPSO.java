@@ -5,15 +5,14 @@
  */
 package org.uma.jmetal.metaheuristic.multiobjective.dmopso;
 
-import org.uma.jmetal.core.Algorithm;
-import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.core.SolutionSet;
+import org.uma.jmetal.core.*;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 import org.uma.jmetal.qualityindicator.Hypervolume;
 import org.uma.jmetal.qualityindicator.QualityIndicatorGetter;
-import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.random.PseudoRandom;
-import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 
 import java.io.*;
 import java.util.StringTokenizer;
@@ -28,26 +27,15 @@ public class DMOPSO extends Algorithm {
   Solution[] indArray;
 
   //"_PBI";//"_TCHE";//"_AGG";
-  String functionType = "_PBI";
-  String dataDirectory;
+  private String functionType = "_PBI";
+  private String dataDirectory;
   QualityIndicatorGetter indicators;
-  double r1Max;
-  double r1Min;
-  double r2Max;
-  double r2Min;
-  double c1Max;
-  double c1Min;
-  double c2Max;
-  double c2Min;
-  double weightMax;
-  double weightMin;
-  double changeVelocity1;
-  double changeVelocity2;
 
   private int swarmSize;
   private int maxAge;
   private int maxIterations;
   private int iteration;
+
   private SolutionSet swarm;
   private Solution[] localBest;
   private Solution[] globalBest;
@@ -100,24 +88,35 @@ public class DMOPSO extends Algorithm {
     org.uma.jmetal.qualityindicator.util.MetricsUtil mu = new org.uma.jmetal.qualityindicator.util.MetricsUtil();
     trueFront = mu.readNonDominatedSolutionSet(trueParetoFront);
     trueHypervolume_ = hypervolume.hypervolume(trueFront.writeObjectivesToMatrix(),
-      trueFront.writeObjectivesToMatrix());
+            trueFront.writeObjectivesToMatrix());
 
+  }
+
+  /** Constructor */
+  private DMOPSO(Builder builder) {
+    this.problem = builder.problem ;
+
+    this.swarmSize = builder.swarmSize ;
+    this.maxAge = builder.maxAge ;
+    this.maxIterations = builder.maxIterations ;
+    this.functionType = builder.functionType ;
+    this.dataDirectory = builder.dataDirectory ;
   }
 
   /**
    * Initialize all parameter of the algorithm
    */
   public void initParams() {
-    swarmSize = (Integer) getInputParameter("swarmSize");
-    maxIterations = (Integer) getInputParameter("maxIterations");
-    maxAge = (Integer) getInputParameter("maxAge");
-    indicators = (QualityIndicatorGetter) getInputParameter("indicators");
-    dataDirectory = getInputParameter("dataDirectory").toString();
-
-    String funcType = ((String) getInputParameter("functionType"));
-    if ("".equals(funcType)) {
-      functionType = funcType;
-    }
+//    swarmSize = (Integer) getInputParameter("swarmSize");
+//    maxIterations = (Integer) getInputParameter("maxIterations");
+//    maxAge = (Integer) getInputParameter("maxAge");
+//    indicators = (QualityIndicatorGetter) getInputParameter("indicators");
+//    dataDirectory = getInputParameter("dataDirectory").toString();
+//
+//    String funcType = ((String) getInputParameter("functionType"));
+//    if ("".equals(funcType)) {
+//      functionType = funcType;
+//    }
 
     iteration = 0;
 
@@ -134,12 +133,12 @@ public class DMOPSO extends Algorithm {
     deltaMin = new double[problem.getNumberOfVariables()];
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
       deltaMax[i] = (problem.getUpperLimit(i) -
-        problem.getLowerLimit(i)) / 2.0;
+              problem.getLowerLimit(i)) / 2.0;
       deltaMin[i] = -deltaMax[i];
     }
   }
 
-  // Adaptive inertia 
+  // Adaptive inertia
   private double inertiaWeight(int iter, int miter, double wma, double wmin) {
     return wma;
   }
@@ -147,7 +146,7 @@ public class DMOPSO extends Algorithm {
   // constriction coefficient (M. Clerc)
   private double constrictionCoefficient(double c1, double c2) {
     double rho = c1 + c2;
-        if (rho <= 4) {
+    if (rho <= 4) {
       return 1.0;
     } else {
       return 2 / (2 - rho - Math.sqrt(Math.pow(rho, 2.0) - 4.0 * rho));
@@ -156,8 +155,8 @@ public class DMOPSO extends Algorithm {
 
   // velocity bounds
   private double velocityConstriction(double v, double[] deltaMax,
-    double[] deltaMin, int variableIndex,
-    int particleIndex) throws IOException {
+                                      double[] deltaMin, int variableIndex,
+                                      int particleIndex) throws IOException {
 
     double result;
 
@@ -199,14 +198,14 @@ public class DMOPSO extends Algorithm {
     wmin = weightMin;
 
     for (int var = 0; var < particle.size(); var++) {
-      //Computing the velocity of this particle 
+      //Computing the velocity of this particle
       try {
         speed[i][var] = velocityConstriction(constrictionCoefficient(C1, C2) *
-          (inertiaWeight(iteration, maxIterations, wmax, wmin) * speed[i][var] +
-            C1 * r1 * (bestParticle.getValue(var) -
-              particle.getValue(var)) +
-            C2 * r2 * (bestGlobal.getValue(var) -
-              particle.getValue(var))), deltaMax, deltaMin, var, i);
+                (inertiaWeight(iteration, maxIterations, wmax, wmin) * speed[i][var] +
+                        C1 * r1 * (bestParticle.getValue(var) -
+                                particle.getValue(var)) +
+                        C2 * r2 * (bestGlobal.getValue(var) -
+                                particle.getValue(var))), deltaMax, deltaMin, var, i);
       } catch (IOException e) {
         JMetalLogger.logger.log(Level.SEVERE, "Error", e);
       }
@@ -223,7 +222,7 @@ public class DMOPSO extends Algorithm {
     for (int var = 0; var < particle.size(); var++) {
       particle.setValue(var, particle.getValue(var) + speed[i][var]);
     }
-  } 
+  }
 
   /**
    * Runs of the DMOPSO algorithm.
@@ -267,7 +266,7 @@ public class DMOPSO extends Algorithm {
     }
     updateGlobalBest();
 
-    // Iterations ...        
+    // Iterations ...
     while (iteration < maxIterations) {
 
       //-> Step 2 Suffle the global best
@@ -306,7 +305,7 @@ public class DMOPSO extends Algorithm {
     }
 
     return ss;
-  } 
+  }
 
   private void shuffleGlobalBest() {
     int[] aux = new int[swarmSize];
@@ -355,12 +354,12 @@ public class DMOPSO extends Algorithm {
 
       java.util.Random rnd = new java.util.Random();
 
-      N = rnd.nextGaussian() * sigma + mean; 
-      
+      N = rnd.nextGaussian() * sigma + mean;
+
       particle.setValue(var, N);
       speed[i][var] = 0.0;
     }
-  } 
+  }
 
   private void updateParticle(int i) throws JMetalException {
     computeSpeed(i);
@@ -380,14 +379,14 @@ public class DMOPSO extends Algorithm {
     } else {
       String dataFileName;
       dataFileName = "W" + problem.getNumberOfObjectives() + "D_" +
-        swarmSize + ".dat";
+              swarmSize + ".dat";
 
       try {
         // Open the file
         FileInputStream fis =
-          new FileInputStream(
-            this.getClass().getClassLoader().getResource(dataDirectory + "/" + dataFileName)
-              .getPath());
+                new FileInputStream(
+                        this.getClass().getClassLoader().getResource(dataDirectory + "/" + dataFileName)
+                                .getPath());
         InputStreamReader isr = new InputStreamReader(fis);
         BufferedReader br = new BufferedReader(isr);
 
@@ -410,9 +409,9 @@ public class DMOPSO extends Algorithm {
         br.close();
       } catch (Exception e) {
         JMetalLogger.logger.log(
-          Level.SEVERE,
-          "initializeUniformWeight: failed when reading for file: " + dataDirectory + "/" + dataFileName,
-          e);
+                Level.SEVERE,
+                "initializeUniformWeight: failed when reading for file: " + dataDirectory + "/" + dataFileName,
+                e);
       }
     }
   }
@@ -529,5 +528,59 @@ public class DMOPSO extends Algorithm {
       throw new JMetalException("DMOPSO.fitnessFunction: unknown type " + functionType);
     }
     return fitness;
+  }
+
+  /** Builder class */
+  public static class Builder {
+    protected Problem problem;
+    private int swarmSize;
+    private int maxAge;
+    private int maxIterations;
+    private String functionType ;
+    private String dataDirectory ;
+
+    public Builder(Problem problem) {
+      this.problem = problem ;
+
+      swarmSize = 100 ;
+      maxIterations = 25000 ;
+      maxAge = 2 ;
+      functionType = "_TCHE" ;
+      dataDirectory = "" ;
+    }
+
+    public Builder swarmSize(int swarmSize) {
+      this.swarmSize = swarmSize ;
+
+      return this ;
+    }
+
+    public Builder maxIterations(int maxIterations) {
+      this.maxIterations = maxIterations ;
+
+      return this ;
+    }
+
+    public Builder maxAge(int maxAge) {
+      this.maxAge = maxAge ;
+
+      return this ;
+    }
+
+    public Builder functionType(String functionType) {
+      this.functionType = functionType ;
+
+      return this ;
+    }
+
+    public Builder dataDirectory(String dataDirectory) {
+      this.dataDirectory = dataDirectory ;
+
+      return this ;
+    }
+
+    public DMOPSO build() {
+      return new DMOPSO(this) ;
+    }
   }
 }
