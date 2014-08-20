@@ -108,7 +108,7 @@ public class MOEADDRASettings extends Settings {
       .neighborSize(neighborSize)
       .crossover(crossover)
       .mutation(mutation)
-      .dataDirectory("MOEAD_Weights")
+      .dataDirectory(dataDirectory)
       .build("MOEADDRA") ;
 
     return algorithm;

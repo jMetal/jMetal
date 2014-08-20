@@ -299,10 +299,8 @@ public abstract class MOEADTemplate extends Algorithm {
         }
         br.close();
       } catch (Exception e) {
-        JMetalLogger.logger.log(
-          Level.SEVERE,
-          "initializeUniformWeight: failed when reading for file: " + dataDirectory + "/" + dataFileName,
-          e);
+        throw new JMetalException("initializeUniformWeight: failed when reading for file: "
+                + dataDirectory + "/" + dataFileName, e) ;
       }
     }
   }

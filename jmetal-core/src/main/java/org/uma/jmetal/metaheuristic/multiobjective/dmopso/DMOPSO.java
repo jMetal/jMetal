@@ -46,9 +46,7 @@ public class DMOPSO extends Algorithm {
 
   private double[][] speed;
   private int[] age;
-  private double trueHypervolume_;
-  private Hypervolume hypervolume;
-  private SolutionSet trueFront;
+
   private double deltaMax[];
   private double deltaMin[];
 
@@ -336,7 +334,7 @@ public class DMOPSO extends Algorithm {
    * initializeUniformWeight
    */
   private void initUniformWeight() {
-    if ((problem.getNumberOfObjectives() == 2) && (swarmSize < 300)) {
+    if ((problem.getNumberOfObjectives() == 2) && (swarmSize <= 300)) {
       for (int n = 0; n < swarmSize; n++) {
         double a = 1.0 * n / (swarmSize - 1);
         lambda[n][0] = a;
@@ -348,7 +346,7 @@ public class DMOPSO extends Algorithm {
               swarmSize + ".dat";
 
       try {
-        // Open the file
+        // Open the file from the resources directory
         FileInputStream fis =
                 new FileInputStream(
                         this.getClass().getClassLoader().getResource(dataDirectory + "/" + dataFileName)
@@ -356,7 +354,7 @@ public class DMOPSO extends Algorithm {
         InputStreamReader isr = new InputStreamReader(fis);
         BufferedReader br = new BufferedReader(isr);
 
-        int numberOfObjectives = 0;
+        int numberOfObjectives ;
         int i = 0;
         int j = 0;
         String aux = br.readLine();
@@ -374,10 +372,8 @@ public class DMOPSO extends Algorithm {
         }
         br.close();
       } catch (Exception e) {
-        JMetalLogger.logger.log(
-                Level.SEVERE,
-                "initializeUniformWeight: failed when reading for file: " + dataDirectory + "/" + dataFileName,
-                e);
+        throw new JMetalException("initializeUniformWeight: failed when reading for file: "
+                + dataDirectory + "/" + dataFileName, e) ;
       }
     }
   }

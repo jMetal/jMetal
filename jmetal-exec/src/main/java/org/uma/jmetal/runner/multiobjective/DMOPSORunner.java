@@ -27,15 +27,18 @@ import org.uma.jmetal.metaheuristic.multiobjective.dmopso.DMOPSO;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.problem.zdt.ZDT1;
 import org.uma.jmetal.qualityindicator.QualityIndicatorGetter;
+import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
+import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
 import java.util.logging.FileHandler;
 
 public class DMOPSORunner {
-  public static java.util.logging.Logger logger_;
-  public static FileHandler fileHandler_; 
+  public static java.util.logging.Logger logger;
+  public static FileHandler fileHandler;
 
   /**
    * @param args Command line arguments. The first (optional) argument specifies
@@ -53,9 +56,9 @@ public class DMOPSORunner {
     QualityIndicatorGetter indicators;
 
     // Logger object and file to store log messages
-    logger_ = JMetalLogger.logger;
-    fileHandler_ = new FileHandler("dMOPSO_main.log");
-    logger_.addHandler(fileHandler_);
+    logger = JMetalLogger.logger;
+    fileHandler = new FileHandler("DMOPSORunner.log");
+    logger.addHandler(fileHandler);
 
     indicators = null;
     if (args.length == 1) {
@@ -78,35 +81,37 @@ public class DMOPSORunner {
       //problem = new LZ09F1("Real");
     }
 
-    algorithm = new DMOPSO();
-    algorithm.setProblem(problem);
+    algorithm = new DMOPSO.Builder(problem)
+            .swarmSize(100)
+            .maxIterations(250)
+            .maxAge(2)
+            .dataDirectory("MOEAD_Weights")
+            .functionType("_TCHE")
+            .build();
 
-    // Algorithm parameters
-    algorithm.setInputParameter("swarmSize", 100);
-    algorithm.setInputParameter("maxAge", 2);
-    algorithm.setInputParameter("maxIterations", 250);
-    algorithm.setInputParameter("functionType", "_TCHE");
-    algorithm.setInputParameter("dataDirectory", "MOEAD_Weight");
+    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+            .execute() ;
 
-    // Execute the Algorithm 
-    long initTime = System.currentTimeMillis();
-    SolutionSet population = algorithm.execute();
-    long estimatedTime = System.currentTimeMillis() - initTime;
+    SolutionSet population = algorithmRunner.getSolutionSet() ;
+    long computingTime = algorithmRunner.getComputingTime() ;
 
-    // Result messages 
-    logger_.info("Total execution time: " + estimatedTime + "ms");
-    logger_.info("Objectives values have been writen to file FUN");
-    population.printObjectivesToFile("FUN");
-    logger_.info("Variables values have been writen to file VAR");
-    population.printVariablesToFile("VAR");
+    new SolutionSetOutput.Printer(population)
+            .separator("\t")
+            .varFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+            .funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+            .print();
+
+    logger.info("Total execution time: " + computingTime + "ms");
+    logger.info("Objectives values have been written to file FUN.tsv");
+    logger.info("Variables values have been written to file VAR.tsv");
 
     if (indicators != null) {
-      logger_.info("Quality indicators");
-      logger_.info("Hypervolume: " + indicators.getHypervolume(population));
-      logger_.info("GD         : " + indicators.getGD(population));
-      logger_.info("IGD        : " + indicators.getIGD(population));
-      logger_.info("Spread     : " + indicators.getSpread(population));
-      logger_.info("Epsilon    : " + indicators.getEpsilon(population));
+      logger.info("Quality indicators");
+      logger.info("Hypervolume: " + indicators.getHypervolume(population));
+      logger.info("GD         : " + indicators.getGD(population));
+      logger.info("IGD        : " + indicators.getIGD(population));
+      logger.info("Spread     : " + indicators.getSpread(population));
+      logger.info("Epsilon    : " + indicators.getEpsilon(population));
     }
   }
 }
