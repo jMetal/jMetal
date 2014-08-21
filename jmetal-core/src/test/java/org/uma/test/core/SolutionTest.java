@@ -21,19 +21,17 @@
 
 package org.uma.test.core;
 
+import org.junit.Test;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.problem.IntRealProblem;
 import org.uma.jmetal.problem.Kursawe;
 import org.uma.jmetal.problem.singleObjective.OneMax;
 import org.uma.jmetal.util.JMetalException;
-import org.junit.Test;
 
 import java.util.Arrays;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.*;
 import static org.junit.Assert.assertNotEquals;
 
 /**

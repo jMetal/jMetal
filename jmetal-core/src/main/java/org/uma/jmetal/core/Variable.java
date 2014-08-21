@@ -21,11 +21,6 @@
 
 package org.uma.jmetal.core;
 
-import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.JMetalException;
-
-import java.io.Serializable;
-
 /**
  * This abstract class is the base for defining new types of variables.
  */

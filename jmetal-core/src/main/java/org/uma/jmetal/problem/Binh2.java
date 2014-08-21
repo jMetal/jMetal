@@ -24,8 +24,8 @@ import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
-import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
+import org.uma.jmetal.util.JMetalException;
 
 /** Class representing problem Binh2 */
 public class Binh2 extends Problem {

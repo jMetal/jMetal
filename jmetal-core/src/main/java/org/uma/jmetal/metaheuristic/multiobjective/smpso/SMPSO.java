@@ -21,6 +21,7 @@
 package org.uma.jmetal.metaheuristic.multiobjective.smpso;
 
 import org.uma.jmetal.core.*;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 import org.uma.jmetal.qualityindicator.fasthypervolume.FastHypervolumeArchive;
 import org.uma.jmetal.util.Distance;
 import org.uma.jmetal.util.JMetalException;
@@ -30,7 +31,6 @@ import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
 import org.uma.jmetal.util.random.PseudoRandom;
-import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 
 import java.io.IOException;
 import java.util.Comparator;

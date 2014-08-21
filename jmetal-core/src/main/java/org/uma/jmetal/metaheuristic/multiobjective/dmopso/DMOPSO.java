@@ -5,18 +5,21 @@
  */
 package org.uma.jmetal.metaheuristic.multiobjective.dmopso;
 
-import org.uma.jmetal.core.*;
+import org.uma.jmetal.core.Algorithm;
+import org.uma.jmetal.core.Problem;
+import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
-import org.uma.jmetal.qualityindicator.Hypervolume;
 import org.uma.jmetal.qualityindicator.QualityIndicatorGetter;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.random.PseudoRandom;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.StringTokenizer;
-import java.util.Vector;
 import java.util.logging.Level;
 
 public class DMOPSO extends Algorithm {

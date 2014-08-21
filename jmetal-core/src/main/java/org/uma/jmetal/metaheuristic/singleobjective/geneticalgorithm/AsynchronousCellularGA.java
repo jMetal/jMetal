@@ -23,8 +23,8 @@ package org.uma.jmetal.metaheuristic.singleobjective.geneticalgorithm;
 
 import org.uma.jmetal.core.*;
 import org.uma.jmetal.operator.selection.BestSolutionSelection;
-import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.Neighborhood;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 

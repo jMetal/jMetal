@@ -20,10 +20,12 @@
 
 package org.uma.jmetal.metaheuristic.singleobjective.cmaes;
 
-import org.uma.jmetal.core.*;
+import org.uma.jmetal.core.Algorithm;
+import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
-import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.random.PseudoRandom;
 

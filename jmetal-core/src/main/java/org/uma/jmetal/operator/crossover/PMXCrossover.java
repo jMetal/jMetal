@@ -22,15 +22,12 @@
 package org.uma.jmetal.operator.crossover;
 
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.encoding.solutiontype.*;
+import org.uma.jmetal.encoding.solutiontype.PermutationSolutionType;
 import org.uma.jmetal.encoding.variable.Permutation;
-import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * This class allows to apply a PMX crossover operator using two parent

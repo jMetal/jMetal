@@ -20,12 +20,10 @@
 
 package org.uma.test.experiment.settings;
 
-import org.uma.jmetal.core.Algorithm;
-import org.uma.jmetal.experiment.Settings;
-import org.uma.jmetal.experiment.settings.RandomSearchSettings;
-
 import org.junit.Before;
 import org.junit.Test;
+import org.uma.jmetal.experiment.Settings;
+import org.uma.jmetal.experiment.settings.RandomSearchSettings;
 import org.uma.jmetal.metaheuristic.multiobjective.randomSearch.RandomSearch;
 
 import java.io.FileInputStream;

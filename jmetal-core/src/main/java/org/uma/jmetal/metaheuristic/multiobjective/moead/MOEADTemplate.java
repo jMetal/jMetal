@@ -24,7 +24,6 @@ import org.uma.jmetal.core.*;
 import org.uma.jmetal.operator.mutation.Mutation;
 import org.uma.jmetal.util.Distance;
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.random.PseudoRandom;
 
 import java.io.BufferedReader;
@@ -34,7 +33,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.Vector;
-import java.util.logging.Level;
 
 /**
  * Created by Antonio J. Nebro on 02/08/14.

@@ -46,8 +46,8 @@
 //
 package org.uma.jmetal.problem.singleObjective.cec2005Competition.originalCode;
 
-import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.JMetalLogger;
 
 public class F22_rotated_hybrid_composition_3_high_cond_num_matrix extends TestFunc {
 

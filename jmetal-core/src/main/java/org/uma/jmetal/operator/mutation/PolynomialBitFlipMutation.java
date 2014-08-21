@@ -22,10 +22,10 @@ package org.uma.jmetal.operator.mutation;
 
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.encoding.solutiontype.ArrayRealAndBinarySolutionType;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 import org.uma.jmetal.encoding.variable.Binary;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
-import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 
 public class PolynomialBitFlipMutation extends Mutation {
   private static final double ETA_M_DEFAULT = 20.0;

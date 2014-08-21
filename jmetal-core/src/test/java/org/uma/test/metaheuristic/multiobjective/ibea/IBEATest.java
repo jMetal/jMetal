@@ -24,12 +24,9 @@ import org.junit.Test;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.experiment.settings.IBEASettings;
-import org.uma.jmetal.experiment.settings.NSGAIISettings;
-import org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII;
 
 import java.io.IOException;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**

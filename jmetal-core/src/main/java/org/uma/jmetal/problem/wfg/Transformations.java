@@ -21,8 +21,8 @@
 
 package org.uma.jmetal.problem.wfg;
 
-import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.JMetalLogger;
 
 /**
  * Class implementing the basics transformations for wfg

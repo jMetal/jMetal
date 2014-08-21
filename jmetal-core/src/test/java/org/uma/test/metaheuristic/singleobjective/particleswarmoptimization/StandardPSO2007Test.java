@@ -20,12 +20,12 @@
 
 package org.uma.test.metaheuristic.singleobjective.particleswarmoptimization;
 
-import org.uma.jmetal.core.Problem;
-import org.uma.jmetal.metaheuristic.singleobjective.particleswarmoptimization.StandardPSO2007;
-import org.uma.jmetal.problem.singleObjective.Sphere;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.uma.jmetal.core.Problem;
+import org.uma.jmetal.metaheuristic.singleobjective.particleswarmoptimization.StandardPSO2007;
+import org.uma.jmetal.problem.singleObjective.Sphere;
 
 import static org.junit.Assert.assertEquals;
 

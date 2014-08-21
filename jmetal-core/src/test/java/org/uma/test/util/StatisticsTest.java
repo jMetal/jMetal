@@ -20,8 +20,8 @@
 
 package org.uma.test.util;
 
-import org.uma.jmetal.util.Statistics;
 import org.junit.Test;
+import org.uma.jmetal.util.Statistics;
 
 import java.util.Vector;
 

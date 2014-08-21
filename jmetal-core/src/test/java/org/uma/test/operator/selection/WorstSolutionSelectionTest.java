@@ -1,18 +1,18 @@
 package org.uma.test.operator.selection;
 
-import static org.junit.Assert.*;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.operator.selection.BestSolutionSelection;
 import org.uma.jmetal.operator.selection.WorstSolutionSelection;
 import org.uma.jmetal.problem.Kursawe;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class WorstSolutionSelectionTest {
   static final int POPULATION_SIZE = 10 ;

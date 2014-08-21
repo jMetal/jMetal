@@ -26,7 +26,6 @@ import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
 
-import javax.management.JMException;
 import java.util.HashMap;
 
 /**

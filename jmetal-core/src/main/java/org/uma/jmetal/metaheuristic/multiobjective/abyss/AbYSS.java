@@ -22,18 +22,18 @@
 package org.uma.jmetal.metaheuristic.multiobjective.abyss;
 
 import org.uma.jmetal.core.*;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
+import org.uma.jmetal.metaheuristic.multiobjective.spea2.Spea2Fitness;
 import org.uma.jmetal.operator.crossover.Crossover;
 import org.uma.jmetal.operator.localSearch.LocalSearch;
 import org.uma.jmetal.util.Distance;
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.metaheuristic.multiobjective.spea2.Spea2Fitness;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.EqualSolutions;
 import org.uma.jmetal.util.comparator.FitnessComparator;
 import org.uma.jmetal.util.random.PseudoRandom;
-import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 
 import java.util.Comparator;
 

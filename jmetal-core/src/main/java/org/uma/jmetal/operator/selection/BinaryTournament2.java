@@ -24,7 +24,6 @@ package org.uma.jmetal.operator.selection;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.encoding.variable.Permutation;
-import org.uma.jmetal.operator.selection.BinaryTournament.Builder;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.random.PseudoRandom;

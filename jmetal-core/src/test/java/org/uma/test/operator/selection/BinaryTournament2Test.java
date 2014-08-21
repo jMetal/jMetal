@@ -20,18 +20,15 @@
 
 package org.uma.test.operator.selection;
 
-import static org.junit.Assert.*;
-
-import java.util.Arrays;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.operator.selection.BinaryTournament2;
-import org.uma.jmetal.operator.selection.RandomSelection;
 import org.uma.jmetal.util.JMetalException;
+
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by Antonio J. Nebro on 15/06/14.

@@ -23,11 +23,6 @@
 
 package org.uma.jmetal.core;
 
-import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
-import org.uma.jmetal.encoding.solutiontype.BinarySolutionType;
-import org.uma.jmetal.encoding.variable.Binary;
-import org.uma.jmetal.encoding.variable.BinaryReal;
-
 import java.io.Serializable;
 import java.util.Arrays;
 

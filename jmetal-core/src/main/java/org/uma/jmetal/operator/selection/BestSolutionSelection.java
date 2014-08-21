@@ -24,7 +24,6 @@ package org.uma.jmetal.operator.selection;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.comparator.ObjectiveComparator;
 
 import java.util.Comparator;
 import java.util.HashMap;

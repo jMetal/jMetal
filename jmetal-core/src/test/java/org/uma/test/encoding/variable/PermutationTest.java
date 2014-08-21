@@ -20,7 +20,6 @@
 
 package org.uma.test.encoding.variable;
 
-import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,7 +29,6 @@ import org.uma.jmetal.encoding.variable.Permutation;
 import java.util.Arrays;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertFalse;
 
 /**
  * Created by Antonio J. Nebro on 12/08/14.

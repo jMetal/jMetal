@@ -20,10 +20,10 @@
 
 package org.uma.test.metaheuristic.multiobjective.gde3;
 
+import org.junit.Test;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.experiment.settings.GDE3Settings;
-import org.junit.Test;
 
 import java.io.IOException;
 

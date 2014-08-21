@@ -22,9 +22,9 @@
 package org.uma.jmetal.metaheuristic.multiobjective.pesa2;
 
 import org.uma.jmetal.core.*;
+import org.uma.jmetal.operator.crossover.Crossover;
 import org.uma.jmetal.operator.crossover.SBXCrossover;
 import org.uma.jmetal.operator.mutation.Mutation;
-import org.uma.jmetal.operator.crossover.Crossover;
 import org.uma.jmetal.operator.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.selection.PESA2Selection;
 import org.uma.jmetal.util.JMetalException;

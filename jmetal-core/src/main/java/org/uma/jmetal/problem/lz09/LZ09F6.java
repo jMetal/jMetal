@@ -23,14 +23,12 @@ package org.uma.jmetal.problem.lz09;
 
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.core.Variable;
 import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 import org.uma.jmetal.util.JMetalException;
 
 import java.util.ArrayList;
-import java.util.Vector;
 
 /**
  * Class representing problem LZ09F6

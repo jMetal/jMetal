@@ -24,8 +24,8 @@ import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.encoding.solutiontype.ArrayIntSolutionType;
 import org.uma.jmetal.encoding.solutiontype.IntSolutionType;
-import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.encoding.solutiontype.wrapper.XInt;
+import org.uma.jmetal.util.JMetalException;
 
 /**
  * Created by Antonio J. Nebro on 03/07/14.

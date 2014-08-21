@@ -20,11 +20,11 @@
 
 package org.uma.test.qualityIndicator.fastHypervolume.wfg;
 
+import org.junit.Before;
+import org.junit.Test;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.qualityindicator.fasthypervolume.FastHypervolumeArchive;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
-import org.junit.Before;
-import org.junit.Test;
 
 import java.util.Comparator;
 

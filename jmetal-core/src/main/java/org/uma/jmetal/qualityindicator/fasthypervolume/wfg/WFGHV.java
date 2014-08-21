@@ -29,8 +29,8 @@ package org.uma.jmetal.qualityindicator.fasthypervolume.wfg;
 
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.JMetalLogger;
 
 import java.io.IOException;
 import java.util.Arrays;

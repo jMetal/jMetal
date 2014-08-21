@@ -20,15 +20,13 @@
 
 package org.uma.test.experiment.settings;
 
-import org.uma.jmetal.core.Algorithm;
+import org.junit.Before;
+import org.junit.Test;
 import org.uma.jmetal.experiment.Settings;
 import org.uma.jmetal.experiment.settings.CellDESettings;
 import org.uma.jmetal.metaheuristic.multiobjective.cellde.CellDE;
 import org.uma.jmetal.operator.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.util.JMetalException;
-
-import org.junit.Before;
-import org.junit.Test;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

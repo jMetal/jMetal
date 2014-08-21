@@ -2,8 +2,8 @@ package org.uma.jmetal.metaheuristic.multiobjective.nsgaII;
 
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.Ranking;
 import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
 import org.uma.jmetal.util.offspring.Offspring;

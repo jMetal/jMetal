@@ -20,15 +20,18 @@
 
 package org.uma.jmetal.metaheuristic.singleobjective.particleswarmoptimization;
 
-import org.uma.jmetal.core.*;
+import org.uma.jmetal.core.Algorithm;
+import org.uma.jmetal.core.Operator;
+import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.core.SolutionSet;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 import org.uma.jmetal.operator.selection.BestSolutionSelection;
 import org.uma.jmetal.util.AdaptiveRandomNeighborhood;
-import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.Distance;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.random.PseudoRandom;
-import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 
 import java.util.Comparator;
 import java.util.HashMap;

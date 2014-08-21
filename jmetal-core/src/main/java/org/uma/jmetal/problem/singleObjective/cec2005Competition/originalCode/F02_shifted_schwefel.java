@@ -47,8 +47,8 @@
 
 package org.uma.jmetal.problem.singleObjective.cec2005Competition.originalCode;
 
-import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.JMetalLogger;
 
 public class F02_shifted_schwefel extends TestFunc {
 

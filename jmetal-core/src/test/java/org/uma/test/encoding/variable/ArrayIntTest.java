@@ -20,21 +20,19 @@
 
 package org.uma.test.encoding.variable;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.util.Arrays;
-
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.encoding.variable.ArrayInt;
 import org.uma.jmetal.encoding.variable.ArrayReal;
 import org.uma.jmetal.problem.Kursawe;
 import org.uma.jmetal.problem.NMMin;
 import org.uma.jmetal.util.JMetalException;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
+import java.util.Arrays;
+
+import static org.junit.Assert.*;
 
 /**
  * Created with IntelliJ IDEA.

@@ -20,6 +20,8 @@
 
 package org.uma.test.core;
 
+import org.junit.Before;
+import org.junit.Test;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
@@ -27,12 +29,10 @@ import org.uma.jmetal.encoding.solutiontype.BinarySolutionType;
 import org.uma.jmetal.encoding.solutiontype.IntSolutionType;
 import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
 import org.uma.jmetal.problem.Water;
+import org.uma.jmetal.problem.singleObjective.OneMax;
 import org.uma.jmetal.problem.zdt.ZDT1;
 import org.uma.jmetal.problem.zdt.ZDT5;
-import org.uma.jmetal.problem.singleObjective.OneMax;
 import org.uma.jmetal.util.JMetalException;
-import org.junit.Before;
-import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

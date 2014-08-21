@@ -25,13 +25,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.experiment.Settings;
-import org.uma.jmetal.experiment.settings.MOEADSettings;
 import org.uma.jmetal.experiment.settings.ParallelMOEADSettings;
-import org.uma.jmetal.metaheuristic.multiobjective.moead.MOEAD;
 import org.uma.jmetal.metaheuristic.multiobjective.moead.ParallelMOEAD;
 import org.uma.jmetal.operator.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.PolynomialMutation;
-import org.uma.jmetal.problem.Fonseca;
 import org.uma.jmetal.problem.lz09.LZ09F2;
 
 import java.io.FileInputStream;

@@ -22,11 +22,8 @@
 package org.uma.jmetal.encoding.variable;
 
 import org.uma.jmetal.core.Variable;
-import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
-
-import java.util.logging.Level;
 
 /**
  * This class implements a Real value decision variable

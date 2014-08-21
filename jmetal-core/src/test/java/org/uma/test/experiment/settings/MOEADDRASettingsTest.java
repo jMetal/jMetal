@@ -20,6 +20,9 @@
 
 package org.uma.test.experiment.settings;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.experiment.Settings;
 import org.uma.jmetal.experiment.settings.MOEADDRASettings;
@@ -27,11 +30,11 @@ import org.uma.jmetal.metaheuristic.multiobjective.moead.MOEADDRA;
 import org.uma.jmetal.operator.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.lz09.LZ09F2;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Properties;
 
 import static org.junit.Assert.assertNotNull;

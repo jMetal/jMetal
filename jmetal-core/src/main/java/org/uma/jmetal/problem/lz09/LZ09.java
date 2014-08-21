@@ -22,7 +22,6 @@
 package org.uma.jmetal.problem.lz09;
 
 import java.util.ArrayList;
-import java.util.Vector;
 
 /**
  * Base class to implement the problem of the lz09 benchmark, which is

@@ -46,8 +46,8 @@
 //
 package org.uma.jmetal.problem.singleObjective.cec2005Competition.originalCode;
 
-import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.JMetalLogger;
 
 public class F08_shifted_rotated_ackley_global_opt_bound extends TestFunc {
 

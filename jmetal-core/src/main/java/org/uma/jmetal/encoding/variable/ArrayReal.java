@@ -21,12 +21,12 @@
 
 package org.uma.jmetal.encoding.variable;
 
-import java.util.Arrays;
-
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Variable;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
+
+import java.util.Arrays;
 
 /**
  * Class implementing a decision encoding.variable representing an array of real values.

@@ -30,8 +30,8 @@ import org.uma.jmetal.operator.mutation.Mutation;
 import org.uma.jmetal.operator.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.selection.BinaryTournament;
 import org.uma.jmetal.problem.ProblemFactory;
-import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.JMetalLogger;
 
 import java.util.Properties;
 import java.util.logging.Level;

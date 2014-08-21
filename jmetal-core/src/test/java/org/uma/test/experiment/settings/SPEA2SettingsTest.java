@@ -20,7 +20,8 @@
 
 package org.uma.test.experiment.settings;
 
-import org.uma.jmetal.core.Algorithm;
+import org.junit.Before;
+import org.junit.Test;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.experiment.Settings;
 import org.uma.jmetal.experiment.settings.SPEA2Settings;
@@ -28,9 +29,6 @@ import org.uma.jmetal.metaheuristic.multiobjective.spea2.SPEA2;
 import org.uma.jmetal.operator.crossover.SBXCrossover;
 import org.uma.jmetal.operator.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.Fonseca;
-
-import org.junit.Before;
-import org.junit.Test;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

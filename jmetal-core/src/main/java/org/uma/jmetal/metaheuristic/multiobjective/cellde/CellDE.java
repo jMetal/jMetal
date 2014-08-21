@@ -21,7 +21,10 @@
 
 package org.uma.jmetal.metaheuristic.multiobjective.cellde;
 
-import org.uma.jmetal.core.*;
+import org.uma.jmetal.core.Algorithm;
+import org.uma.jmetal.core.Problem;
+import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.operator.crossover.Crossover;
 import org.uma.jmetal.operator.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.selection.BinaryTournament;

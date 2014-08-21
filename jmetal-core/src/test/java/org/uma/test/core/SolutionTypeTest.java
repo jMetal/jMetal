@@ -20,13 +20,12 @@
 
 package org.uma.test.core;
 
+import org.junit.Test;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionType;
 import org.uma.jmetal.encoding.solutiontype.BinarySolutionType;
 import org.uma.jmetal.problem.zdt.ZDT5;
 import org.uma.jmetal.util.JMetalException;
-
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 

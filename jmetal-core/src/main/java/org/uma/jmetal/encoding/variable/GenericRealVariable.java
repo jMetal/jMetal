@@ -21,8 +21,6 @@
 package org.uma.jmetal.encoding.variable;
 
 import org.uma.jmetal.core.Variable;
-import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.JMetalLogger;
 
 /**
  * Created by Antonio J. Nebro on 07/08/14.

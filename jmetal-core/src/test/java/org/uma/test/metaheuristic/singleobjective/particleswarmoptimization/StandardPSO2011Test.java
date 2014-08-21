@@ -20,12 +20,12 @@
 
 package org.uma.test.metaheuristic.singleobjective.particleswarmoptimization;
 
-import org.uma.jmetal.core.Problem;
-import org.uma.jmetal.metaheuristic.singleobjective.particleswarmoptimization.StandardPSO2011;
-import org.uma.jmetal.problem.Fonseca;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.uma.jmetal.core.Problem;
+import org.uma.jmetal.metaheuristic.singleobjective.particleswarmoptimization.StandardPSO2011;
+import org.uma.jmetal.problem.Fonseca;
 
 import static org.junit.Assert.assertEquals;
 

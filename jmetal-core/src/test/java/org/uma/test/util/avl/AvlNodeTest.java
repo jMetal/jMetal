@@ -1,13 +1,11 @@
 package org.uma.test.util.avl;
 
-import org.uma.jmetal.util.avl.AvlNode;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.uma.jmetal.util.avl.AvlNode;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Created with IntelliJ IDEA.

@@ -1,10 +1,10 @@
 package org.uma.test.util.avl;
 
-import org.uma.jmetal.util.avl.AvlNode;
-import org.uma.jmetal.util.avl.AvlTree;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.uma.jmetal.util.avl.AvlNode;
+import org.uma.jmetal.util.avl.AvlTree;
 
 import java.util.Comparator;
 

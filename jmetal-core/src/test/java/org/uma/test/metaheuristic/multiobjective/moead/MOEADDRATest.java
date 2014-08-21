@@ -23,7 +23,6 @@ package org.uma.test.metaheuristic.multiobjective.moead;
 import org.junit.Test;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.experiment.settings.ConstraintMOEADSettings;
 import org.uma.jmetal.experiment.settings.MOEADDRASettings;
 
 import java.io.IOException;

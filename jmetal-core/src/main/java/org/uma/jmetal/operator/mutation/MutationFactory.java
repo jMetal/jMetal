@@ -21,8 +21,8 @@
 
 package org.uma.jmetal.operator.mutation;
 
-import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.JMetalLogger;
 
 import java.util.HashMap;
 

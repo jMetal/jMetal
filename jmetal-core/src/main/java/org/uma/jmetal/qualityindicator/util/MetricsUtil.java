@@ -24,8 +24,8 @@ package org.uma.jmetal.qualityindicator.util;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.qualityindicator.Hypervolume;
-import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.NonDominatedSolutionList;
 
 import java.io.BufferedReader;

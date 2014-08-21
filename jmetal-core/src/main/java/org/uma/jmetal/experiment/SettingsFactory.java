@@ -21,8 +21,8 @@
 
 package org.uma.jmetal.experiment;
 
-import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.JMetalLogger;
 
 import java.lang.reflect.Constructor;
 import java.util.logging.Level;

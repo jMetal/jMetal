@@ -22,11 +22,8 @@
 package org.uma.jmetal.metaheuristic.multiobjective.spea2;
 
 import org.uma.jmetal.core.*;
-import org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII;
-import org.uma.jmetal.metaheuristic.multiobjective.nsgaII.SteadyStateNSGAII;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.Ranking;
-import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
 
 /**
  * This class representing the SPEA2 algorithm

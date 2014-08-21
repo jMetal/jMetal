@@ -11,8 +11,8 @@ package org.uma.jmetal.util.offspring;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.operator.mutation.MutationFactory;
-import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.JMetalLogger;
 
 import java.util.HashMap;
 import java.util.logging.Level;

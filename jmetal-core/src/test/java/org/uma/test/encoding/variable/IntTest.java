@@ -20,17 +20,13 @@
 
 package org.uma.test.encoding.variable;
 
-import org.uma.jmetal.encoding.variable.Int;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.uma.jmetal.encoding.variable.Int;
 import org.uma.jmetal.encoding.variable.Permutation;
-import org.uma.jmetal.encoding.variable.Real;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Created with IntelliJ IDEA.
