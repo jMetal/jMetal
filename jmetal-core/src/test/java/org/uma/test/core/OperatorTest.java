@@ -28,10 +28,10 @@ import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.encoding.solutiontype.BinarySolutionType;
 import org.uma.jmetal.encoding.solutiontype.IntSolutionType;
 import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
-import org.uma.jmetal.problem.Water;
+import org.uma.jmetal.problem.multiobjective.Water;
 import org.uma.jmetal.problem.singleObjective.OneMax;
-import org.uma.jmetal.problem.zdt.ZDT1;
-import org.uma.jmetal.problem.zdt.ZDT5;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT5;
 import org.uma.jmetal.util.JMetalException;
 
 import static org.junit.Assert.assertFalse;

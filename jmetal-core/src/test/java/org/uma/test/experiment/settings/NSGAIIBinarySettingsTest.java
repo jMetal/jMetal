@@ -28,7 +28,7 @@ import org.uma.jmetal.experiment.settings.NSGAIIBinarySettings;
 import org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII;
 import org.uma.jmetal.operator.crossover.SinglePointCrossover;
 import org.uma.jmetal.operator.mutation.BitFlipMutation;
-import org.uma.jmetal.problem.zdt.ZDT5;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT5;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

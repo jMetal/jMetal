@@ -26,7 +26,7 @@ import org.junit.Test;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.operator.selection.PESA2Selection;
-import org.uma.jmetal.problem.Kursawe;
+import org.uma.jmetal.problem.multiobjective.Kursawe;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.archive.AdaptiveGridArchive;
 

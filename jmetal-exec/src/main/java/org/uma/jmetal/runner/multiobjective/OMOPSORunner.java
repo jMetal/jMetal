@@ -28,7 +28,7 @@ import org.uma.jmetal.metaheuristic.multiobjective.omopso.OMOPSO;
 import org.uma.jmetal.operator.mutation.Mutation;
 import org.uma.jmetal.operator.mutation.NonUniformMutation;
 import org.uma.jmetal.operator.mutation.UniformMutation;
-import org.uma.jmetal.problem.Kursawe;
+import org.uma.jmetal.problem.multiobjective.Kursawe;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.qualityindicator.QualityIndicatorGetter;
 import org.uma.jmetal.util.AlgorithmRunner;

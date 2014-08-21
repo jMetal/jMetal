@@ -29,7 +29,7 @@ import org.uma.jmetal.experiment.settings.MOCellSettings;
 import org.uma.jmetal.metaheuristic.multiobjective.mocell.*;
 import org.uma.jmetal.operator.crossover.SBXCrossover;
 import org.uma.jmetal.operator.mutation.PolynomialMutation;
-import org.uma.jmetal.problem.Fonseca;
+import org.uma.jmetal.problem.multiobjective.Fonseca;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

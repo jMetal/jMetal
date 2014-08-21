@@ -23,7 +23,7 @@ package org.uma.test.util;
 import org.junit.Test;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.problem.Fonseca;
+import org.uma.jmetal.problem.multiobjective.Fonseca;
 import org.uma.jmetal.problem.singleObjective.OneMax;
 import org.uma.jmetal.util.BinaryUtils;
 import org.uma.jmetal.util.JMetalException;

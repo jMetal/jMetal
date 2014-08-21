@@ -25,15 +25,11 @@ import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII;
 import org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAIITemplate;
-import org.uma.jmetal.operator.crossover.CrossoverFactory;
 import org.uma.jmetal.operator.crossover.PMXCrossover;
-import org.uma.jmetal.operator.mutation.MutationFactory;
 import org.uma.jmetal.operator.mutation.SwapMutation;
 import org.uma.jmetal.operator.selection.BinaryTournament2;
-import org.uma.jmetal.operator.selection.SelectionFactory;
-import org.uma.jmetal.problem.MultiObjectiveTSP;
+import org.uma.jmetal.problem.multiobjective.MultiObjectiveTSP;
 import org.uma.jmetal.qualityindicator.QualityIndicatorGetter;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
@@ -42,7 +38,6 @@ import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
 import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
-import java.util.HashMap;
 import java.util.logging.FileHandler;
 
 /**

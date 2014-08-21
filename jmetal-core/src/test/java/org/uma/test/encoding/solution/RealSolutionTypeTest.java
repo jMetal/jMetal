@@ -8,7 +8,7 @@ import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.Variable;
 import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
 import org.uma.jmetal.encoding.variable.Real;
-import org.uma.jmetal.problem.Kursawe;
+import org.uma.jmetal.problem.multiobjective.Kursawe;
 
 import static org.junit.Assert.*;
 

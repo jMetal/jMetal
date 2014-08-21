@@ -27,7 +27,7 @@ import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.operator.selection.RandomSelection;
-import org.uma.jmetal.problem.zdt.ZDT1;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.util.JMetalException;
 
 import static org.junit.Assert.assertNotEquals;

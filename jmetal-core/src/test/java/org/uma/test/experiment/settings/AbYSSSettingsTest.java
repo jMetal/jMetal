@@ -27,7 +27,7 @@ import org.uma.jmetal.experiment.Settings;
 import org.uma.jmetal.experiment.settings.AbYSSSettings;
 import org.uma.jmetal.metaheuristic.multiobjective.abyss.AbYSS;
 import org.uma.jmetal.operator.localSearch.MutationLocalSearch;
-import org.uma.jmetal.problem.Fonseca;
+import org.uma.jmetal.problem.multiobjective.Fonseca;
 import org.uma.jmetal.util.JMetalException;
 
 import java.io.FileInputStream;

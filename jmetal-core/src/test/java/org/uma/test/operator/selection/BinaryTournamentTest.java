@@ -27,7 +27,7 @@ import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.operator.selection.BinaryTournament;
-import org.uma.jmetal.problem.Kursawe;
+import org.uma.jmetal.problem.multiobjective.Kursawe;
 import org.uma.jmetal.util.JMetalException;
 
 import static junit.framework.Assert.assertEquals;

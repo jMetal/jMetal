@@ -36,7 +36,7 @@ import org.uma.jmetal.metaheuristic.multiobjective.smsemoa.FastSMSEMOA;
 import org.uma.jmetal.operator.crossover.SBXCrossover;
 import org.uma.jmetal.operator.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.selection.RandomSelection;
-import org.uma.jmetal.problem.Kursawe;
+import org.uma.jmetal.problem.multiobjective.Kursawe;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.qualityindicator.QualityIndicatorGetter;
 import org.uma.jmetal.util.AlgorithmRunner;

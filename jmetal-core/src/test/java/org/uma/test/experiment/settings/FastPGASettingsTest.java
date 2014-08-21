@@ -26,7 +26,7 @@ import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.experiment.Settings;
 import org.uma.jmetal.experiment.settings.FastPGASettings;
 import org.uma.jmetal.metaheuristic.multiobjective.fastpga.FastPGA;
-import org.uma.jmetal.problem.Fonseca;
+import org.uma.jmetal.problem.multiobjective.Fonseca;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

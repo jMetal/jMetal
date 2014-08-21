@@ -24,10 +24,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.experiment.Settings;
+import org.uma.jmetal.experiment.settings.DMOPSOSettings;
+import org.uma.jmetal.metaheuristic.multiobjective.dmopso.DMOPSO;
 import org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII;
 import org.uma.jmetal.operator.crossover.SBXCrossover;
 import org.uma.jmetal.operator.mutation.PolynomialMutation;
-import org.uma.jmetal.problem.Fonseca;
+import org.uma.jmetal.problem.multiobjective.Fonseca;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -49,55 +51,37 @@ public class DMOPSOSettingsTest {
   @Before
   public void init() throws FileNotFoundException, IOException {
     configuration = new Properties();
-    InputStreamReader isr = new InputStreamReader(new FileInputStream(ClassLoader.getSystemResource("dMOPSO.conf").getPath()));
+    InputStreamReader isr = new InputStreamReader(new FileInputStream(ClassLoader.getSystemResource("DMOPSO.conf").getPath()));
     configuration.load(isr);
   }
 
   @Test
   public void testConfigure() throws Exception {
     double epsilon = 0.000000000000001 ;
-    Settings NSGAIISettings = new org.uma.jmetal.experiment.settings.NSGAIISettings("Fonseca");
-    NSGAII algorithm = (NSGAII) NSGAIISettings.configure() ;
+    Settings dmposoSettings = new DMOPSOSettings("Fonseca");
+    DMOPSO algorithm = (DMOPSO) dmposoSettings.configure() ;
     Problem problem = new Fonseca("Real") ;
 
-    SBXCrossover crossover = (SBXCrossover) algorithm.getCrossoverOperator() ;
-    double pc = crossover.getCrossoverProbability() ;
-    double dic = crossover.getDistributionIndex() ;
-    PolynomialMutation mutation = (PolynomialMutation)algorithm.getMutationOperator() ;
-    double pm = mutation.getMutationProbability() ;
-    double dim = mutation.getDistributionIndex() ;
+    assertEquals(100, algorithm.getSwarmSize());
+    assertEquals(250, algorithm.getMaxIterations());
 
-    assertEquals(100, algorithm.getPopulationSize());
-    assertEquals(25000, algorithm.getMaxEvaluations());
-
-    assertEquals(0.9, pc, epsilon);
-    assertEquals(20.0, dic, epsilon);
-
-    assertEquals(1.0/problem.getNumberOfVariables(), pm, epsilon);
-    assertEquals(20.0, dim, epsilon);
+    assertEquals(2, algorithm.getMaxAge());
+    assertEquals("_TCHE", algorithm.getFunctionType());
   }
 
   @Test
   public void testConfigure2() throws Exception {
     double epsilon = 0.000000000000001 ;
-    Settings NSGAIISettings = new org.uma.jmetal.experiment.settings.NSGAIISettings("Fonseca");
-    NSGAII algorithm = (NSGAII)NSGAIISettings.configure(configuration) ;
+    Settings dmposoSettings = new DMOPSOSettings("Fonseca");
+    DMOPSO algorithm = (DMOPSO) dmposoSettings.configure(configuration) ;
     Problem problem = new Fonseca("Real") ;
 
-    SBXCrossover crossover = (SBXCrossover) algorithm.getCrossoverOperator() ;
-    double pc = crossover.getCrossoverProbability() ;
-    double dic = crossover.getDistributionIndex() ;
-    PolynomialMutation mutation = (PolynomialMutation)algorithm.getMutationOperator() ;
-    double pm = mutation.getMutationProbability() ;
-    double dim = mutation.getDistributionIndex() ;
+    assertEquals(100, algorithm.getSwarmSize());
+    assertEquals(250, algorithm.getMaxIterations());
 
-    assertEquals(100, algorithm.getPopulationSize());
-    assertEquals(25000, algorithm.getMaxEvaluations());
-
-    assertEquals(0.9, pc, epsilon);
-    assertEquals(20.0, dic, epsilon);
-
-    assertEquals(1.0/problem.getNumberOfVariables(), pm, epsilon);
-    assertEquals(20.0, dim, epsilon);
+    assertEquals(2, algorithm.getMaxAge());
+    assertEquals("_TCHE", algorithm.getFunctionType());
   }
+
+
 }

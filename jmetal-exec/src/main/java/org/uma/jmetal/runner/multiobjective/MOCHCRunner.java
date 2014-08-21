@@ -32,7 +32,7 @@ import org.uma.jmetal.operator.mutation.Mutation;
 import org.uma.jmetal.operator.selection.RandomSelection;
 import org.uma.jmetal.operator.selection.RankingAndCrowdingSelection;
 import org.uma.jmetal.operator.selection.Selection;
-import org.uma.jmetal.problem.zdt.ZDT5;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT5;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;

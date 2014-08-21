@@ -29,7 +29,7 @@ import org.uma.jmetal.experiment.settings.ConstraintMOEADSettings;
 import org.uma.jmetal.metaheuristic.multiobjective.moead.ConstraintMOEAD;
 import org.uma.jmetal.operator.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.PolynomialMutation;
-import org.uma.jmetal.problem.Srinivas;
+import org.uma.jmetal.problem.multiobjective.Srinivas;
 import org.uma.jmetal.util.JMetalException;
 
 import java.io.FileInputStream;

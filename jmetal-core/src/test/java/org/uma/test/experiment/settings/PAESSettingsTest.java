@@ -27,7 +27,7 @@ import org.uma.jmetal.experiment.Settings;
 import org.uma.jmetal.experiment.settings.PAESSettings;
 import org.uma.jmetal.metaheuristic.multiobjective.paes.PAES;
 import org.uma.jmetal.operator.mutation.PolynomialMutation;
-import org.uma.jmetal.problem.Fonseca;
+import org.uma.jmetal.problem.multiobjective.Fonseca;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

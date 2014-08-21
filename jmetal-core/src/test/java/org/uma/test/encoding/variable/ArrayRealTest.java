@@ -25,8 +25,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.encoding.variable.ArrayReal;
-import org.uma.jmetal.problem.Kursawe;
-import org.uma.jmetal.problem.zdt.ZDT1;
+import org.uma.jmetal.problem.multiobjective.Kursawe;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.util.JMetalException;
 
 import java.util.Arrays;

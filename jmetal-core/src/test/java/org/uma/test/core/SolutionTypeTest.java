@@ -24,7 +24,7 @@ import org.junit.Test;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionType;
 import org.uma.jmetal.encoding.solutiontype.BinarySolutionType;
-import org.uma.jmetal.problem.zdt.ZDT5;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT5;
 import org.uma.jmetal.util.JMetalException;
 
 import static org.junit.Assert.assertEquals;

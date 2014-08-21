@@ -30,8 +30,8 @@ import org.uma.jmetal.experiment.settings.OMOPSOSettings;
 import org.uma.jmetal.metaheuristic.multiobjective.omopso.OMOPSO;
 import org.uma.jmetal.operator.mutation.NonUniformMutation;
 import org.uma.jmetal.operator.mutation.UniformMutation;
-import org.uma.jmetal.problem.Fonseca;
-import org.uma.jmetal.problem.zdt.ZDT6;
+import org.uma.jmetal.problem.multiobjective.Fonseca;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT6;
 import org.uma.jmetal.util.evaluator.MultithreadedSolutionSetEvaluator;
 import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
 

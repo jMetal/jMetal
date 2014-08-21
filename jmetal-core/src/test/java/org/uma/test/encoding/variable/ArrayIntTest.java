@@ -26,8 +26,8 @@ import org.junit.Test;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.encoding.variable.ArrayInt;
 import org.uma.jmetal.encoding.variable.ArrayReal;
-import org.uma.jmetal.problem.Kursawe;
-import org.uma.jmetal.problem.NMMin;
+import org.uma.jmetal.problem.multiobjective.Kursawe;
+import org.uma.jmetal.problem.multiobjective.NMMin;
 import org.uma.jmetal.util.JMetalException;
 
 import java.util.Arrays;

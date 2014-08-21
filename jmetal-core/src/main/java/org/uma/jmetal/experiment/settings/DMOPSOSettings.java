@@ -85,7 +85,7 @@ public class DMOPSOSettings extends Settings {
   }
 
   /**
-   * Configure DMOPSO with user-defined parameter experiment.settings
+   * Configure DMOPSO with user-defined parameter settings
    *
    * @return A DMOPSO algorithm object
    */

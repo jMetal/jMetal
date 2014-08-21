@@ -28,7 +28,7 @@ import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.operator.localSearch.MutationLocalSearch;
 import org.uma.jmetal.operator.mutation.Mutation;
 import org.uma.jmetal.operator.mutation.PolynomialMutation;
-import org.uma.jmetal.problem.Kursawe;
+import org.uma.jmetal.problem.multiobjective.Kursawe;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.CrowdingArchive;

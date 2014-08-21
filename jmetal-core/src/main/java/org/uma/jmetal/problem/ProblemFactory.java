@@ -26,6 +26,7 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 
 /**
@@ -48,41 +49,42 @@ public class ProblemFactory {
     if ("TSP".equals(name) || "OneMax".equals(name)) {
       base += "singleobjective.";
     } else if ("MultiObjectiveQAP".equals(name)) {
-      base += "mqap.";
+      base += "multiobjective.mqap.";
     } else if ("Qom".equalsIgnoreCase(name)) {
     } else if ("dtlz".equalsIgnoreCase(name.substring(0, name.length() - 1))) {
-      base += "dtlz.";
+      base += "multiobjective.dtlz.";
     } else if ("wfg".equalsIgnoreCase(name.substring(0, name.length() - 1))) {
-      base += "wfg.";
+      base += "multiobjective.wfg.";
     } else if ("UF".equalsIgnoreCase(name.substring(0, name.length() - 1))) {
-      base += "cec2009competition.";
+      base += "multiobjective.cec2009competition.";
     } else if ("UF".equalsIgnoreCase(name.substring(0, name.length() - 2))) {
-      base += "cec2009competition.";
+      base += "multiobjective.cec2009competition.";
     } else if ("zdt".equalsIgnoreCase(name.substring(0, name.length() - 1))) {
-      base += "zdt.";
+      base += "multiobjective.zdt.";
     } else if ("lz09".equalsIgnoreCase(name.substring(0, name.length() - 2))) {
-      base += "lz09.";
+      base += "multiobjective.lz09.";
+    } else {
+      base += "multiobjective." ;
     }
 
     try {
-      Class<?> problemClass = Class.forName(base + name);
-      Constructor<?>[] constructors = problemClass.getConstructors();
+      Class<?> problemClass ;
+      problemClass = Class.forName(base + name);
+
+      Constructor<?>[] constructors;
+      constructors = problemClass.getConstructors();
+
       int i = 0;
       //find the constructor
       while ((i < constructors.length) &&
-        (constructors[i].getParameterTypes().length != params.length)) {
+              (constructors[i].getParameterTypes().length != params.length)) {
         i++;
       }
       // constructors[i] is the selected one constructor
       return (Problem)constructors[i].newInstance(params);
     } catch(Exception e) {
-      JMetalLogger.logger.log(
-        Level.SEVERE,
-        "ProblemFactory.getProblem: " + "Problem '" + name + "' does not exist. " +
-          "Please, check the problem names in org.uma.jmetal/problem",
-        e
-      );
-      throw new JMetalException("Exception in " + name + ".getProblem()");
+      throw new JMetalException("ProblemFactory.getProblem: " + "Problem '" + name + "' does not exist. " +
+              "Please, check the problem names in org.uma.jmetal.problem. ", e);
     }
   }
 }

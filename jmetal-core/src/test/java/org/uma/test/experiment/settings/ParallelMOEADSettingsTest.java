@@ -29,7 +29,7 @@ import org.uma.jmetal.experiment.settings.ParallelMOEADSettings;
 import org.uma.jmetal.metaheuristic.multiobjective.moead.ParallelMOEAD;
 import org.uma.jmetal.operator.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.PolynomialMutation;
-import org.uma.jmetal.problem.lz09.LZ09F2;
+import org.uma.jmetal.problem.multiobjective.lz09.LZ09F2;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
