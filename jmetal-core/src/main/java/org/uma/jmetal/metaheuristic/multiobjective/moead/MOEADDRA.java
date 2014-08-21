@@ -121,7 +121,6 @@ public class MOEADDRA extends MOEADTemplate {
   }
 
   public List<Integer> tourSelection(int depth) {
-    // selection based on utility
     List<Integer> selected = new ArrayList<Integer>();
     List<Integer> candidate = new ArrayList<Integer>();
 

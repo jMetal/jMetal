@@ -1,4 +1,4 @@
-//  MOEADSettingsTest.java
+//  ParallelMOEADSettingsTest.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -26,10 +26,13 @@ import org.junit.Test;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.experiment.Settings;
 import org.uma.jmetal.experiment.settings.MOEADSettings;
+import org.uma.jmetal.experiment.settings.ParallelMOEADSettings;
 import org.uma.jmetal.metaheuristic.multiobjective.moead.MOEAD;
+import org.uma.jmetal.metaheuristic.multiobjective.moead.ParallelMOEAD;
 import org.uma.jmetal.operator.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.Fonseca;
+import org.uma.jmetal.problem.lz09.LZ09F2;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -42,25 +45,25 @@ import static org.junit.Assert.assertNotNull;
 /**
  * Created with IntelliJ IDEA.
  * User: Antonio J. Nebro
- * Date: 26/07/14
+ * Date: 20/08/14
  */
-public class MOEADSettingsTest {
+public class ParallelMOEADSettingsTest {
 
   Properties configuration;
 
   @Before
   public void init() throws FileNotFoundException, IOException {
     configuration = new Properties();
-    InputStreamReader isr = new InputStreamReader(new FileInputStream(ClassLoader.getSystemResource("MOEAD.conf").getPath()));
+    InputStreamReader isr = new InputStreamReader(new FileInputStream(ClassLoader.getSystemResource("ParallelMOEAD.conf").getPath()));
     configuration.load(isr);
   }
 
   @Test
   public void testConfigure() throws Exception {
     double epsilon = 0.000000000000001;
-    Settings MOEADSettings = new MOEADSettings("Fonseca");
-    MOEAD algorithm = (MOEAD)MOEADSettings.configure();
-    Problem problem = new Fonseca("Real");
+    Settings parallelMOEADSettings = new ParallelMOEADSettings("LZ09F2");
+    ParallelMOEAD algorithm = (ParallelMOEAD)parallelMOEADSettings.configure();
+    Problem problem = new LZ09F2("Real");
 
     PolynomialMutation mutation = (PolynomialMutation) algorithm.getMutation() ;
     double pm = mutation.getMutationProbability() ;
@@ -84,6 +87,8 @@ public class MOEADSettingsTest {
     Assert.assertEquals(0.5, f, epsilon);
     Assert.assertEquals(20.0, dim, epsilon);
     Assert.assertEquals(1.0 / problem.getNumberOfVariables(), pm, epsilon);
+
+    Assert.assertEquals(8, algorithm.getNumberOfThreads());
 
     assertNotNull(experimentDirectoryName);
   }
@@ -91,9 +96,9 @@ public class MOEADSettingsTest {
   @Test
   public void testConfigure2() throws Exception {
     double epsilon = 0.000000000000001;
-    Settings MOEADSettings = new MOEADSettings("Fonseca");
-    MOEAD algorithm = (MOEAD)MOEADSettings.configure(configuration);
-    Problem problem = new Fonseca("Real");
+    Settings parallelMOEADSettings = new ParallelMOEADSettings("LZ09F2");
+    ParallelMOEAD algorithm = (ParallelMOEAD)parallelMOEADSettings.configure(configuration);
+    Problem problem = new LZ09F2("Real");
 
     PolynomialMutation mutation = (PolynomialMutation) algorithm.getMutation() ;
     double pm = mutation.getMutationProbability() ;
@@ -117,6 +122,8 @@ public class MOEADSettingsTest {
     Assert.assertEquals(0.5, f, epsilon);
     Assert.assertEquals(20.0, dim, epsilon);
     Assert.assertEquals(1.0 / problem.getNumberOfVariables(), pm, epsilon);
+
+    Assert.assertEquals(8, algorithm.getNumberOfThreads());
 
     assertNotNull(experimentDirectoryName);
   }

@@ -67,6 +67,8 @@ public abstract class MOEADTemplate extends Algorithm {
 
   protected int evaluations;
   protected int maxEvaluations;
+
+  protected int numberOfThreads ;
   
   /** Constructor */
   protected MOEADTemplate (Builder builder) {
@@ -87,6 +89,8 @@ public abstract class MOEADTemplate extends Algorithm {
     neighborhood = new int[populationSize][neighborSize];
     idealPoint = new double[problem.getNumberOfObjectives()];
     lambda = new double[populationSize][problem.getNumberOfObjectives()];
+
+    numberOfThreads = builder.numberOfThreads ;
   }
 
   /* Getters/Setters */
@@ -130,6 +134,10 @@ public abstract class MOEADTemplate extends Algorithm {
     return neighborhoodSelectionProbability;
   }
 
+  public int getNumberOfThreads() {
+    return numberOfThreads ;
+  }
+
   /** Builder class */
   public static class Builder {
     private Problem problem ;
@@ -143,10 +151,13 @@ public abstract class MOEADTemplate extends Algorithm {
     private Operator mutation ;
     private String dataDirectory ;
     private int resultPopulationSize;
+    private int numberOfThreads ;
 
     public Builder(Problem problem) {
       this.problem = problem ;
       functionType = "_TCHE1";
+
+      this.numberOfThreads = 1 ;
     }
 
     public Builder populationSize(int populationSize) {
@@ -212,6 +223,12 @@ public abstract class MOEADTemplate extends Algorithm {
       return this ;
     }
 
+    public Builder numberOfThreads(int numberOfThreads) {
+      this.numberOfThreads = numberOfThreads ;
+
+      return this ;
+    }
+
     public MOEADTemplate build(String moeadVariant) {
       MOEADTemplate algorithm  ;
       if ("MOEAD".equals(moeadVariant)) {
@@ -221,7 +238,7 @@ public abstract class MOEADTemplate extends Algorithm {
       } else if ("MOEADDRA".equals(moeadVariant)) {
         algorithm = new MOEADDRA(this) ;      
       } else if ("ParallelMOEAD".equals(moeadVariant)) {
-          algorithm = new ParallelMOEAD(this) ;
+          algorithm = new ParallelMOEAD(this, null, 0, numberOfThreads) ;
       } else {
         throw new JMetalException(moeadVariant + " variant unknown") ;
       }
