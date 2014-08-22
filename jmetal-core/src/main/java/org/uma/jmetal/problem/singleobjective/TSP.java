@@ -70,7 +70,6 @@ public class TSP extends Problem {
     }
     readProblem(filename);
 
-    JMetalLogger.logger.info(""+ numberOfCities);
     length[0] = numberOfCities;
   }
 
@@ -102,9 +101,8 @@ public class TSP extends Problem {
   public void readProblem(String fileName) throws
     Exception {
     Reader inputFile = new BufferedReader(
-      new InputStreamReader(
-        new FileInputStream(fileName))
-    );
+      new InputStreamReader(new FileInputStream(ClassLoader.getSystemResource(fileName).getPath())));
+
 
     StreamTokenizer token = new StreamTokenizer(inputFile);
     try {

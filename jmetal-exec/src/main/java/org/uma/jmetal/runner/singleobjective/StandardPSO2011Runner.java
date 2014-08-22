@@ -34,7 +34,7 @@ import java.util.logging.FileHandler;
 /**
  * Class for configuring and running a single-objective PSO algorithm
  */
-public class StandardPSO2011_main {
+public class StandardPSO2011Runner {
   public static java.util.logging.Logger logger_;      // Logger object
   public static FileHandler fileHandler_; // FileHandler object
 

@@ -2,9 +2,8 @@
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
 //
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
+//  Copyright (c) 2014 Antonio J. Nebro
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -24,15 +23,10 @@ package org.uma.jmetal.util;
 import java.io.Serializable;
 import java.util.logging.Level;
 
-
 /**
  * jMetal exception class
  */
 public class JMetalException extends RuntimeException implements Serializable {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = 4288481737365385068L;
 
   public JMetalException(String message) {

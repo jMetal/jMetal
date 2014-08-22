@@ -132,6 +132,18 @@ public class ProblemFactoryTest {
     assertEquals(512, problem.getLength(0));
   }
 
+  @Test
+  public void tspTest() {
+    Object[] problemParams = {"Permutation", "eil101.tsp"};
+    Problem problem = (new ProblemFactory()).getProblem("TSP", problemParams);
+
+    assertNotNull(problem) ;
+    assertEquals("TSP", problem.getName()) ;
+    assertEquals(1, problem.getNumberOfVariables()) ;
+    assertEquals(1, problem.getNumberOfObjectives()) ;
+    assertEquals(0, problem.getNumberOfConstraints()) ;
+  }
+
   @Rule
   public ExpectedException exception = ExpectedException.none();
 

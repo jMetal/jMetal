@@ -20,7 +20,10 @@
 
 package org.uma.jmetal.util;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
 
 /**
  * jMetal logger class
@@ -28,7 +31,17 @@ import java.io.Serializable;
 public class JMetalLogger implements Serializable {
   private static final long serialVersionUID = 891486004065726989L;
 
-  public static java.util.logging.Logger logger = java.util.logging.Logger.getLogger("jMetal");
+  public static Logger logger = Logger.getLogger("jMetal");
+  private static FileHandler fileHandler;
+
+  static {
+    try {
+      fileHandler = new FileHandler("jMetal.log");
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    logger.addHandler(fileHandler);
+  }
 
   public static String cec2005SupportDataDirectory =
     "/Users/antelverde/Softw/jMetal/jMetalMV/cec2005CompetitionResources/supportData";

@@ -34,6 +34,7 @@ import org.uma.jmetal.problem.multiobjective.zdt.ZDT4;
 import org.uma.jmetal.qualityindicator.QualityIndicatorGetter;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.CrowdingArchive;
 import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
@@ -44,8 +45,8 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
 /**
- * This class is the main program used to configure and run AbYSS, a
- * multiobjective scatter search metaheuristic, which is described in:
+ * This class is the main program used to configure and run AbYSS, a multiobjective scatter search metaheuristic,
+ * which is described in:
  * A.J. Nebro, F. Luna, E. Alba, B. Dorronsoro, J.J. Durillo, A. Beham
  * "AbYSS: Adapting Scatter Search to Multiobjective Optimization."
  * IEEE Transactions on Evolutionary Computation. Vol. 12,
@@ -53,17 +54,16 @@ import java.util.logging.Logger;
  */
 
 public class AbYSSRunner {
-  public static final Logger LOGGER = Logger.getLogger(AbYSSRunner.class.getName());
-  public static FileHandler fileHandler;
-
   /**
    * @param args Command line arguments.
    * @throws org.uma.jmetal.util.JMetalException
    * @throws IOException
-   * @throws SecurityException Usage: three choices
-   *                           - org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII_main
-   *                           - org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII_main problemName
-   *                           - org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII_main problemName paretoFrontFile
+   * @throws SecurityException
+   * @throws java.lang.ClassNotFoundException
+   * Usage: three choices
+   *                           - org.uma.jmetal.runner.multiobjective.AbYSSRunner
+   *                           - org.uma.jmetal.runner.multiobjective.AbYSSRunner problemName
+   *                           - org.uma.jmetal.runner.multiobjective.AbYSSRunner problemName paretoFrontFile
    */
   public static void main(String[] args) throws
           JMetalException, SecurityException, IOException, ClassNotFoundException {
@@ -84,9 +84,6 @@ public class AbYSSRunner {
 
     QualityIndicatorGetter indicators;
 
-    fileHandler = new FileHandler("AbYSS.log");
-    LOGGER.addHandler(fileHandler);
-
     indicators = null;
     if (args.length == 1) {
       Object[] params = {"Real"};
@@ -96,13 +93,15 @@ public class AbYSSRunner {
       problem = (new ProblemFactory()).getProblem(args[0], params);
       indicators = new QualityIndicatorGetter(problem, args[1]);
     } else {
+      problem = new ZDT4("ArrayReal", 10);
+      /* Examples
       //problem = new Kursawe("Real", 3);
       //problem = new Kursawe("BinaryReal", 3);
       //problem = new Water("Real");
-      problem = new ZDT4("ArrayReal", 10);
       //problem = new ConstrEx("Real");
       //problem = new DTLZ1("Real");
       //problem = new OKA2("Real") ;
+      */
     } 
 
     Algorithm algorithm;
@@ -164,17 +163,17 @@ public class AbYSSRunner {
             .funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
             .print();
 
-    LOGGER.info("Total execution time: " + computingTime + "ms");
-    LOGGER.info("Objectives values have been written to file FUN.tsv");
-    LOGGER.info("Variables values have been written to file VAR.tsv");
+    JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
+    JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
+    JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
 
     if (indicators != null) {
-      LOGGER.info("Quality indicators");
-      LOGGER.info("Hypervolume: " + indicators.getHypervolume(population));
-      LOGGER.info("GD         : " + indicators.getGD(population));
-      LOGGER.info("IGD        : " + indicators.getIGD(population));
-      LOGGER.info("Spread     : " + indicators.getSpread(population));
-      LOGGER.info("Epsilon    : " + indicators.getEpsilon(population));
+      JMetalLogger.logger.info("Quality indicators");
+      JMetalLogger.logger.info("Hypervolume: " + indicators.getHypervolume(population));
+      JMetalLogger.logger.info("GD         : " + indicators.getGD(population));
+      JMetalLogger.logger.info("IGD        : " + indicators.getIGD(population));
+      JMetalLogger.logger.info("Spread     : " + indicators.getSpread(population));
+      JMetalLogger.logger.info("Epsilon    : " + indicators.getEpsilon(population));
     }
   }
 }
