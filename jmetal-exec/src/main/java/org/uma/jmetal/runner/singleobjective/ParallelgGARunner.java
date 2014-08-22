@@ -28,7 +28,7 @@ import org.uma.jmetal.metaheuristic.singleobjective.geneticalgorithm.pgGA;
 import org.uma.jmetal.operator.crossover.CrossoverFactory;
 import org.uma.jmetal.operator.mutation.MutationFactory;
 import org.uma.jmetal.operator.selection.SelectionFactory;
-import org.uma.jmetal.problem.singleObjective.Griewank;
+import org.uma.jmetal.problem.singleobjective.Griewank;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.parallel.MultithreadedEvaluator;

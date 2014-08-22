@@ -29,7 +29,7 @@ import org.uma.jmetal.metaheuristic.singleobjective.geneticalgorithm.ssGA;
 import org.uma.jmetal.operator.crossover.CrossoverFactory;
 import org.uma.jmetal.operator.mutation.MutationFactory;
 import org.uma.jmetal.operator.selection.SelectionFactory;
-import org.uma.jmetal.problem.singleObjective.TSP;
+import org.uma.jmetal.problem.singleobjective.TSP;
 import org.uma.jmetal.util.JMetalLogger;
 
 import java.util.HashMap;

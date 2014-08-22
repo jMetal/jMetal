@@ -44,13 +44,13 @@ public class ProblemFactory {
   public Problem getProblem(String name, Object[] params) throws JMetalException {
     // Params are the arguments
     // The number of argument must correspond with the problem constructor params
+    Problem result = null ;
 
     String base = "org.uma.jmetal.problem.";
     if ("TSP".equals(name) || "OneMax".equals(name)) {
       base += "singleobjective.";
     } else if ("MultiObjectiveQAP".equals(name)) {
       base += "multiobjective.mqap.";
-    } else if ("Qom".equalsIgnoreCase(name)) {
     } else if ("dtlz".equalsIgnoreCase(name.substring(0, name.length() - 1))) {
       base += "multiobjective.dtlz.";
     } else if ("wfg".equalsIgnoreCase(name.substring(0, name.length() - 1))) {
@@ -67,10 +67,16 @@ public class ProblemFactory {
       base += "multiobjective." ;
     }
 
-    try {
-      Class<?> problemClass ;
-      problemClass = Class.forName(base + name);
+    Class<?> problemClass ;
 
+    try {
+      problemClass = Class.forName(base + name);
+    } catch (ClassNotFoundException e) {
+      throw new JMetalException("ProblemFactory.getProblem: " + "Problem '" + name + "' does not exist. " +
+              "Please, check the problem names in org.uma.jmetal.problem. ", e);
+    }
+
+    try {
       Constructor<?>[] constructors;
       constructors = problemClass.getConstructors();
 
@@ -81,10 +87,21 @@ public class ProblemFactory {
         i++;
       }
       // constructors[i] is the selected one constructor
-      return (Problem)constructors[i].newInstance(params);
-    } catch(Exception e) {
-      throw new JMetalException("ProblemFactory.getProblem: " + "Problem '" + name + "' does not exist. " +
-              "Please, check the problem names in org.uma.jmetal.problem. ", e);
+      result = (Problem)constructors[i].newInstance(params);
+    } catch (InvocationTargetException e) {
+      throw new JMetalException("ProblemFactory.getProblem: wrong parameters", e) ;
+    } catch (InstantiationException e) {
+      throw new JMetalException(e) ;
+    } catch (IllegalAccessException e) {
+      throw new JMetalException(e) ;
     }
+
+    return result ;
   }
 }
+/*
+catch(Exception e) {
+        throw new JMetalException("ProblemFactory.getProblem: " + "Problem '" + name + "' does not exist. " +
+        "Please, check the problem names in org.uma.jmetal.problem. ", e);
+        }
+        */

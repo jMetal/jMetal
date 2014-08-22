@@ -59,7 +59,7 @@ public class NSGAIIRandomSettings extends Settings {
    *
    * @throws org.uma.jmetal.util.JMetalException
    */
-  public NSGAIIRandomSettings(String problem) throws JMetalException {
+  public NSGAIIRandomSettings(String problem) throws JMetalException, ClassNotFoundException {
     super(problem) ;
     
     Object [] problemParams = {"Real"};

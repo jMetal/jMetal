@@ -26,7 +26,7 @@ import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.problem.multiobjective.IntRealProblem;
 import org.uma.jmetal.problem.multiobjective.Kursawe;
-import org.uma.jmetal.problem.singleObjective.OneMax;
+import org.uma.jmetal.problem.singleobjective.OneMax;
 import org.uma.jmetal.util.JMetalException;
 
 import java.util.Arrays;

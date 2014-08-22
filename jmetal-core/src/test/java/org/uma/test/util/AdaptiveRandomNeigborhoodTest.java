@@ -26,7 +26,7 @@ import org.junit.Test;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.problem.singleObjective.Sphere;
+import org.uma.jmetal.problem.singleobjective.Sphere;
 import org.uma.jmetal.util.AdaptiveRandomNeighborhood;
 import org.uma.jmetal.util.JMetalException;
 

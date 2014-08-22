@@ -27,8 +27,8 @@ import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.metaheuristic.singleobjective.particleswarmoptimization.PSO;
 import org.uma.jmetal.operator.mutation.Mutation;
 import org.uma.jmetal.operator.mutation.MutationFactory;
-import org.uma.jmetal.problem.singleObjective.Griewank;
-import org.uma.jmetal.problem.singleObjective.Sphere;
+import org.uma.jmetal.problem.singleobjective.Griewank;
+import org.uma.jmetal.problem.singleobjective.Sphere;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 

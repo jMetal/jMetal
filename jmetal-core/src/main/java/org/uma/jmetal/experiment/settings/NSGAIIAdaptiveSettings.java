@@ -59,7 +59,7 @@ public class NSGAIIAdaptiveSettings extends Settings {
    *
    * @throws org.uma.jmetal.util.JMetalException
    */
-  public NSGAIIAdaptiveSettings(String problem) throws JMetalException {
+  public NSGAIIAdaptiveSettings(String problem) throws JMetalException, ClassNotFoundException {
     super(problem);
 
     Object[] problemParams = {"Real"};

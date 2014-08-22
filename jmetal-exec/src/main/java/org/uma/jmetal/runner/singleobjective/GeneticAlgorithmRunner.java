@@ -28,7 +28,7 @@ import org.uma.jmetal.metaheuristic.singleobjective.geneticalgorithm.Generationa
 import org.uma.jmetal.operator.crossover.CrossoverFactory;
 import org.uma.jmetal.operator.mutation.MutationFactory;
 import org.uma.jmetal.operator.selection.SelectionFactory;
-import org.uma.jmetal.problem.singleObjective.OneMax;
+import org.uma.jmetal.problem.singleobjective.OneMax;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;

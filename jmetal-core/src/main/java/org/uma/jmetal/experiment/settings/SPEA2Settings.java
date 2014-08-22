@@ -50,7 +50,7 @@ public class SPEA2Settings extends Settings {
     super(problem) ;
 
     Object [] problemParams = {"Real"};
-      this.problem = (new ProblemFactory()).getProblem(problemName, problemParams);
+    this.problem = (new ProblemFactory()).getProblem(problemName, problemParams);
 
     populationSize = 100   ;
     archiveSize = 100   ;
@@ -59,7 +59,7 @@ public class SPEA2Settings extends Settings {
     crossoverProbability = 0.9   ;
     crossoverDistributionIndex = 20.0  ;
     mutationDistributionIndex = 20.0  ;
-  } 
+  }
 
   /** Configure() method */
   public Algorithm configure() throws JMetalException {
@@ -101,19 +101,19 @@ public class SPEA2Settings extends Settings {
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {
     populationSize = Integer.parseInt(configuration.getProperty("populationSize",String.valueOf(
-      populationSize)));
+            populationSize)));
     maxEvaluations = Integer.parseInt(configuration.getProperty("maxEvaluations",String.valueOf(
-      maxEvaluations)));
+            maxEvaluations)));
     archiveSize = Integer.parseInt(configuration.getProperty("archiveSize",String.valueOf(
-      archiveSize)));
+            archiveSize)));
     crossoverProbability = Double.parseDouble(configuration.getProperty("crossoverProbability",String.valueOf(
-      crossoverProbability)));
+            crossoverProbability)));
     crossoverDistributionIndex = Double.parseDouble(configuration.getProperty("crossoverDistributionIndex",String.valueOf(
-      crossoverDistributionIndex)));
+            crossoverDistributionIndex)));
     mutationProbability = Double.parseDouble(configuration.getProperty("mutationProbability",String.valueOf(
-      mutationProbability)));
+            mutationProbability)));
     mutationDistributionIndex = Double.parseDouble(configuration.getProperty("mutationDistributionIndex",String.valueOf(
-      mutationDistributionIndex)));
+            mutationDistributionIndex)));
 
     return configure() ;
   }

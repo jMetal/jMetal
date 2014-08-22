@@ -27,7 +27,7 @@ import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.metaheuristic.singleobjective.differentialevolution.DE;
 import org.uma.jmetal.operator.crossover.CrossoverFactory;
 import org.uma.jmetal.operator.selection.SelectionFactory;
-import org.uma.jmetal.problem.singleObjective.CEC2005Problem;
+import org.uma.jmetal.problem.singleobjective.CEC2005Problem;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 

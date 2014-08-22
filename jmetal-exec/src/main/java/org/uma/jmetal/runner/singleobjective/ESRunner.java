@@ -26,7 +26,7 @@ import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.metaheuristic.singleobjective.evolutionstrategy.ElitistES;
 import org.uma.jmetal.operator.mutation.MutationFactory;
-import org.uma.jmetal.problem.singleObjective.OneMax;
+import org.uma.jmetal.problem.singleobjective.OneMax;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 

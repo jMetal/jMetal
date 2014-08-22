@@ -20,7 +20,9 @@
 
 package org.uma.test.problem;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.util.JMetalException;
@@ -117,15 +119,34 @@ public class ProblemFactoryTest {
     assertEquals(7, problem.getNumberOfConstraints()) ;
   }
 
-  @Test (expected = Exception.class)
-  public void nonExistingProblemTest() {
-    Object[] problemParams = {"Real"};
-    Problem problem = (new ProblemFactory()).getProblem("UnknownProblem_", problemParams);
+  @Test
+  public void oneMaxProblemTest() {
+    Object[] problemParams = {"Binary"};
+    Problem problem = (new ProblemFactory()).getProblem("OneMax", problemParams);
+
+    assertNotNull(problem) ;
+    assertEquals("OneMax", problem.getName()) ;
+    assertEquals(1, problem.getNumberOfVariables()) ;
+    assertEquals(1, problem.getNumberOfObjectives()) ;
+    assertEquals(0, problem.getNumberOfConstraints()) ;
+    assertEquals(512, problem.getLength(0));
   }
 
-  /*@Test (expected = JMetalException.class)
+  @Rule
+  public ExpectedException exception = ExpectedException.none();
+
+  @Test
+  public void nonExistingProblemTest() {
+    exception.expect(JMetalException.class);
+
+    Object[] problemParams = {"Real"};
+    Problem problem = (new ProblemFactory()).getProblem("UnknownProblemName", problemParams);
+  }
+
+  @Test (expected = JMetalException.class)
   public void invalidParametersTest() {
     Object[] problemParams = {"noexisting parameter"};
     Problem problem = (new ProblemFactory()).getProblem("ZDT1", problemParams);
-  }*/
+  }
+
 }

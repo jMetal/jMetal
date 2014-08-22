@@ -74,7 +74,7 @@ public class ZDT1 extends Problem {
     } else if (solutionType.compareTo("ArrayReal") == 0) {
       this.solutionType = new ArrayRealSolutionType(this);
     } else {
-      throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
+      throw new JMetalException("Error: solution type '" + solutionType + "' invalid");
     }
   }
 

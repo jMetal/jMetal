@@ -62,11 +62,11 @@ public class GDE3SettingsTest {
     DifferentialEvolutionCrossover crossover =
       (DifferentialEvolutionCrossover) algorithm.getCrossoverOperator();
 
-    Assert.assertEquals("GDE3_SettingsTest", 100, algorithm.getPopulationSize());
-    Assert.assertEquals("GDE3_SettingsTest", 250, algorithm.getMaxIterations());
+    Assert.assertEquals(100, algorithm.getPopulationSize());
+    Assert.assertEquals(250, algorithm.getMaxIterations());
 
-    Assert.assertEquals("GDE3_SettingsTest", 0.5, crossover.getCr(), epsilon);
-    Assert.assertEquals("GDE3_SettingsTest", 0.5, crossover.getF(), epsilon);
+    Assert.assertEquals(0.5, crossover.getCr(), epsilon);
+    Assert.assertEquals(0.5, crossover.getF(), epsilon);
   }
 
   @Test
@@ -78,10 +78,10 @@ public class GDE3SettingsTest {
     DifferentialEvolutionCrossover crossover =
       (DifferentialEvolutionCrossover) algorithm.getCrossoverOperator();
 
-    Assert.assertEquals("GDE3_SettingsTest", 100, algorithm.getPopulationSize());
-    Assert.assertEquals("GDE3_SettingsTest", 250, algorithm.getMaxIterations());
+    Assert.assertEquals(100, algorithm.getPopulationSize());
+    Assert.assertEquals(250, algorithm.getMaxIterations());
 
-    Assert.assertEquals("GDE3_SettingsTest", 0.5, crossover.getCr(), epsilon);
-    Assert.assertEquals("GDE3_SettingsTest", 0.5, crossover.getF(), epsilon);
+    Assert.assertEquals(0.5, crossover.getCr(), epsilon);
+    Assert.assertEquals(0.5, crossover.getF(), epsilon);
   }
 }
