@@ -1,10 +1,9 @@
-//  TSPGARunner.java
+//  BinarySteadyStateGeneticAlgorithmRunner.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
 //
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
+//  Copyright (c) 2014 Antonio J. Nebro
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -24,49 +23,47 @@ package org.uma.jmetal.runner.singleobjective;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
+import org.uma.jmetal.metaheuristic.singleobjective.geneticalgorithm.GenerationalGeneticAlgorithm;
 import org.uma.jmetal.metaheuristic.singleobjective.geneticalgorithm.SteadyStateGeneticAlgorithm;
 import org.uma.jmetal.operator.crossover.Crossover;
-import org.uma.jmetal.operator.crossover.PMXCrossover;
-import org.uma.jmetal.operator.crossover.TwoPointsCrossover;
+import org.uma.jmetal.operator.crossover.SinglePointCrossover;
+import org.uma.jmetal.operator.mutation.BitFlipMutation;
 import org.uma.jmetal.operator.mutation.Mutation;
-import org.uma.jmetal.operator.mutation.MutationFactory;
-import org.uma.jmetal.operator.mutation.SwapMutation;
 import org.uma.jmetal.operator.selection.BinaryTournament;
 import org.uma.jmetal.operator.selection.Selection;
-import org.uma.jmetal.operator.selection.SelectionFactory;
-import org.uma.jmetal.problem.singleobjective.TSP;
+import org.uma.jmetal.problem.singleobjective.OneMax;
 import org.uma.jmetal.util.AlgorithmRunner;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
-import java.util.HashMap;
+import java.io.IOException;
 
 /**
  * This class runs a single-objective genetic algorithm (GA). The GA can be
- * a steady-state GA (class SSGA) or a generational GA (class GGA). The TSP
- * is used to org.uma.test the algorithms. The data files accepted as in input are from
- * TSPLIB.
+ * a steady-state GA (class SteadyStateGeneticAlgorithm), a generational GA (class gGA), a synchronous
+ * cGA (class SynchronousCellularGA) or an asynchronous cGA (class AsynchronousCellularGA). The OneMax
+ * problem is used to org.uma.test the algorithms.
  */
-public class TSPGARunner {
+public class BinarySteadyStateGeneticAlgorithmRunner {
 
-  public static void main(String[] args) throws Exception {
+  public static void main(String[] args) throws JMetalException, ClassNotFoundException, IOException {
     Problem problem;
     Algorithm algorithm;
     Crossover crossover;
     Mutation mutation;
     Selection selection;
 
-    String problemName = "eil101.tsp";
+    int bits = 512;
+    problem = new OneMax("Binary", bits);
 
-    problem = new TSP("Permutation", problemName);
-
-    crossover = new PMXCrossover.Builder()
-            .probability(0.95)
+    crossover = new SinglePointCrossover.Builder()
+           .probability(0.9)
             .build() ;
 
-    mutation = new SwapMutation.Builder()
-            .probability(0.2)
+    mutation = new BitFlipMutation.Builder()
+            .probability(1.0/bits)
             .build() ;
 
     selection = new BinaryTournament.Builder()
@@ -74,7 +71,7 @@ public class TSPGARunner {
 
     algorithm = new SteadyStateGeneticAlgorithm.Builder(problem)
             .setPopulationSize(100)
-            .setMaxEvaluations(2000000)
+            .setMaxEvaluations(25000)
             .setCrossover(crossover)
             .setMutation(mutation)
             .setSelection(selection)

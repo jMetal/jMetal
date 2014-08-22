@@ -29,6 +29,7 @@ public class JMetalLogger implements Serializable {
   private static final long serialVersionUID = 891486004065726989L;
 
   public static java.util.logging.Logger logger = java.util.logging.Logger.getLogger("jMetal");
+
   public static String cec2005SupportDataDirectory =
     "/Users/antelverde/Softw/jMetal/jMetalMV/cec2005CompetitionResources/supportData";
   public static String cec2005Package =

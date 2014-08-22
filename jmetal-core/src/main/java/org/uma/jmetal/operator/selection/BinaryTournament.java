@@ -65,15 +65,17 @@ public class BinaryTournament extends Selection {
 
     SolutionSet solutionSet = (SolutionSet) object;
 
-    Solution solution1, solution2;
-    solution1 = solutionSet.get(PseudoRandom.randInt(0, solutionSet.size() - 1));
-    solution2 = solutionSet.get(PseudoRandom.randInt(0, solutionSet.size() - 1));
+    int indexSolution1 = PseudoRandom.randInt(0, solutionSet.size() - 1) ;
+    int indexSolution2 = PseudoRandom.randInt(0, solutionSet.size() - 1) ;
 
     if (solutionSet.size() >= 2) {
-      while (solution1.equals(solution2)) {
-        solution2 = solutionSet.get(PseudoRandom.randInt(0, solutionSet.size() - 1));
+      while (indexSolution1 == indexSolution2) {
+        indexSolution2 = PseudoRandom.randInt(0, solutionSet.size() - 1) ;
       }
     }
+
+    Solution solution1 = solutionSet.get(indexSolution1) ;
+    Solution solution2 = solutionSet.get(indexSolution2) ;
 
     int flag = comparator.compare(solution1, solution2);
     if (flag == -1) {
