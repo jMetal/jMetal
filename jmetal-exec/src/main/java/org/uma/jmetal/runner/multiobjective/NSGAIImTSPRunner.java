@@ -46,9 +46,6 @@ import java.util.logging.FileHandler;
  */
 
 public class NSGAIImTSPRunner {
-  public static java.util.logging.Logger logger;
-  public static FileHandler fileHandler;
-
   /**
    * @param args Command line arguments.
    * @throws org.uma.jmetal.util.JMetalException
@@ -65,12 +62,6 @@ public class NSGAIImTSPRunner {
 
     QualityIndicatorGetter indicators;
 
-    // Logger object and file to store log messages
-    logger = JMetalLogger.logger;
-    fileHandler = new FileHandler("NSGAIImTSPRunner.log");
-    logger.addHandler(fileHandler);
-
-    indicators = null;
     problem = new MultiObjectiveTSP("Permutation", "kroA100.tsp", "kroB100.tsp");
 
      /*
@@ -119,8 +110,8 @@ public class NSGAIImTSPRunner {
             .funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
             .print();
 
-    logger.info("Total execution time: " + computingTime + "ms");
-    logger.info("Objectives values have been written to file FUN.tsv");
-    logger.info("Variables values have been written to file VAR.tsv");
+    JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
+    JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
+    JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
   } 
 } 

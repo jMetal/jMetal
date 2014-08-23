@@ -41,9 +41,6 @@ import java.util.logging.Level;
  * Class for running algorithms
  */
 public class Runner {
-  private static java.util.logging.Logger logger;
-  private static FileHandler fileHandler;
-
   /**
    * @param args Command line arguments.
    * @throws org.uma.jmetal.util.JMetalException
@@ -61,10 +58,6 @@ public class Runner {
     ClassNotFoundException {
     Algorithm algorithm;
 
-    logger = JMetalLogger.logger;
-    fileHandler = new FileHandler("jMetal.log");
-    logger.addHandler(fileHandler);
-
     QualityIndicatorGetter indicators;
 
     Settings settings = null;
@@ -76,7 +69,7 @@ public class Runner {
     indicators = null;
 
     if (args.length == 0) {
-      logger.log(Level.SEVERE, "Sintax error. Usage:\n" +
+      JMetalLogger.logger.log(Level.SEVERE, "Sintax error. Usage:\n" +
         "a) org.uma.jmetal.experiment.Main algorithmName \n" +
         "b) org.uma.jmetal.experiment.Main algorithmName problemName\n" +
         "c) org.uma.jmetal.experiment.Main algorithmName problemName paretoFrontFile");
@@ -111,25 +104,25 @@ public class Runner {
     long estimatedTime = System.currentTimeMillis() - initTime;
 
     // Result messages
-    logger.info("Total execution time: " + estimatedTime + "ms");
+    JMetalLogger.logger.info("Total execution time: " + estimatedTime + "ms");
 
     FileOutputContext fileContext = new DefaultFileOutputContext("VAR.tsv") ;
     fileContext.setSeparator("\t");
-    logger.info("Variables values have been written to file VAR.tsv");
+    JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
     SolutionSetOutput.printVariablesToFile(fileContext, population) ;
 
     fileContext = new DefaultFileOutputContext("FUN.tsv");
     fileContext.setSeparator("\t");
     SolutionSetOutput.printObjectivesToFile(fileContext, population);
-    logger.info("Objectives values have been written to file FUN");
+    JMetalLogger.logger.info("Objectives values have been written to file FUN");
 
     if (indicators != null) {
-      logger.info("Quality indicators");
-      logger.info("Hypervolume: " + indicators.getHypervolume(population));
-      logger.info("GD         : " + indicators.getGD(population));
-      logger.info("IGD        : " + indicators.getIGD(population));
-      logger.info("Spread     : " + indicators.getSpread(population));
-      logger.info("Epsilon    : " + indicators.getEpsilon(population));
+      JMetalLogger.logger.info("Quality indicators");
+      JMetalLogger.logger.info("Hypervolume: " + indicators.getHypervolume(population));
+      JMetalLogger.logger.info("GD         : " + indicators.getGD(population));
+      JMetalLogger.logger.info("IGD        : " + indicators.getIGD(population));
+      JMetalLogger.logger.info("Spread     : " + indicators.getSpread(population));
+      JMetalLogger.logger.info("Epsilon    : " + indicators.getEpsilon(population));
     }
   }
 }

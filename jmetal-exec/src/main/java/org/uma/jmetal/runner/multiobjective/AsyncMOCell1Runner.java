@@ -41,25 +41,22 @@ import java.io.IOException;
 import java.util.logging.FileHandler;
 
 /**
- * * This class executes the algorithms described in
+ * * This class executes the asynchronous version 1 of the MOCell algorithm described in
  * A.J. Nebro, J.J. Durillo, F. Luna, B. Dorronsoro, E. Alba
  * "Design Issues in a Multiobjective Cellular Genetic Algorithm."
  * Evolutionary Multi-Criterion Optimization. 4th International Conference,
  * EMO 2007. Sendai/Matsushima, Japan, March 2007.
  */
 public class AsyncMOCell1Runner {
-  public static java.util.logging.Logger logger_;
-  public static FileHandler fileHandler_;
-
   /**
    * @param args Command line arguments. The first (optional) argument specifies
    *             the problem to solve.
    * @throws org.uma.jmetal.util.JMetalException
    * @throws java.io.IOException
    * @throws SecurityException Usage: three options
-   *                           - org.uma.jmetal.runner.MOCell_main
-   *                           - org.uma.jmetal.runner.MOCell_main problemName
-   *                           - org.uma.jmetal.runner.MOCell_main problemName ParetoFrontFile
+   *                           - org.uma.jmetal.runner.multiobjective.AsyncMOCell1Runner
+   *                           - org.uma.jmetal.runner.multiobjective.AsyncMOCell1Runner problemName
+   *                           - org.uma.jmetal.runner.multiobjective.AsyncMOCell1Runner problemName ParetoFrontFile
    */
   public static void main(String[] args)
     throws JMetalException, SecurityException, IOException, ClassNotFoundException {
@@ -70,11 +67,6 @@ public class AsyncMOCell1Runner {
     Operator selection;
 
     QualityIndicatorGetter indicators;
-
-    // Logger object and file to store log messages
-    logger_ = JMetalLogger.logger;
-    fileHandler_ = new FileHandler("MOCell_main.log");
-    logger_.addHandler(fileHandler_);
 
     indicators = null;
     if (args.length == 1) {
@@ -129,17 +121,17 @@ public class AsyncMOCell1Runner {
       .funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
       .print();
 
-    logger_.info("Total execution time: " + computingTime + "ms");
-    logger_.info("Objectives values have been written to file FUN.tsv");
-    logger_.info("Variables values have been written to file VAR.tsv");
+    JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
+    JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
+    JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
 
     if (indicators != null) {
-      logger_.info("Quality indicators");
-      logger_.info("Hypervolume: " + indicators.getHypervolume(population));
-      logger_.info("GD         : " + indicators.getGD(population));
-      logger_.info("IGD        : " + indicators.getIGD(population));
-      logger_.info("Spread     : " + indicators.getSpread(population));
-      logger_.info("Epsilon    : " + indicators.getEpsilon(population));
+      JMetalLogger.logger.info("Quality indicators");
+      JMetalLogger.logger.info("Hypervolume: " + indicators.getHypervolume(population));
+      JMetalLogger.logger.info("GD         : " + indicators.getGD(population));
+      JMetalLogger.logger.info("IGD        : " + indicators.getIGD(population));
+      JMetalLogger.logger.info("Spread     : " + indicators.getSpread(population));
+      JMetalLogger.logger.info("Epsilon    : " + indicators.getEpsilon(population));
     }
   }
 }

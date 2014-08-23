@@ -54,9 +54,6 @@ import java.util.logging.FileHandler;
  */
 
 public class NSGAIIRunner {
-  private static java.util.logging.Logger logger;
-  private static FileHandler fileHandler;
-
   /**
    * @param args Command line arguments.
    * @throws org.uma.jmetal.util.JMetalException
@@ -79,11 +76,6 @@ public class NSGAIIRunner {
     Operator selection;
 
     QualityIndicatorGetter indicators;
-
-    // Logger object and file to store log messages
-    logger = JMetalLogger.logger;
-    fileHandler = new FileHandler("NSGAIIRunner.log");
-    logger.addHandler(fileHandler);
 
     indicators = null;
     if (args.length == 1) {
@@ -152,17 +144,17 @@ public class NSGAIIRunner {
       .funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
       .print();
 
-    logger.info("Total execution time: " + computingTime + "ms");
-    logger.info("Objectives values have been written to file FUN.tsv");
-    logger.info("Variables values have been written to file VAR.tsv");
+    JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
+    JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
+    JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
 
     if (indicators != null) {
-      logger.info("Quality indicators");
-      logger.info("Hypervolume: " + indicators.getHypervolume(population));
-      logger.info("GD         : " + indicators.getGD(population));
-      logger.info("IGD        : " + indicators.getIGD(population));
-      logger.info("Spread     : " + indicators.getSpread(population));
-      logger.info("Epsilon    : " + indicators.getEpsilon(population));
+      JMetalLogger.logger.info("Quality indicators");
+      JMetalLogger.logger.info("Hypervolume: " + indicators.getHypervolume(population));
+      JMetalLogger.logger.info("GD         : " + indicators.getGD(population));
+      JMetalLogger.logger.info("IGD        : " + indicators.getIGD(population));
+      JMetalLogger.logger.info("Spread     : " + indicators.getSpread(population));
+      JMetalLogger.logger.info("Epsilon    : " + indicators.getEpsilon(population));
     }
   }
 }

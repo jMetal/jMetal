@@ -44,9 +44,6 @@ import java.util.logging.Level;
  * Class for running algorithms reading the configuration from properties files
  */
 public class RunnerC {
-  private static java.util.logging.Logger logger_;
-  private static FileHandler fileHandler_;
-
   /**
    * @param args Command line arguments.
    * @throws org.uma.jmetal.util.JMetalException
@@ -65,10 +62,6 @@ public class RunnerC {
 
     QualityIndicatorGetter indicators;
 
-    logger_ = JMetalLogger.logger;
-    fileHandler_ = new FileHandler("jMetal.log");
-    logger_.addHandler(fileHandler_);
-
     Settings settings = null;
 
     String algorithmName = "";
@@ -81,10 +74,10 @@ public class RunnerC {
     InputStreamReader inputStreamReader = null;
 
     if (args.length == 0) {
-      logger_.log(Level.SEVERE, "Sintax error. Usage:");
-      logger_.log(Level.SEVERE, "a) org.uma.jmetal.experiment.Main configurationFile ");
-      logger_.log(Level.SEVERE, "b) org.uma.jmetal.experiment.Main configurationFile problemName");
-      logger_.log(Level.SEVERE, "c) org.uma.jmetal.experiment.Main configurationFile problemName paretoFrontFile");
+      JMetalLogger.logger.log(Level.SEVERE, "Sintax error. Usage:");
+      JMetalLogger.logger.log(Level.SEVERE, "a) org.uma.jmetal.experiment.Main configurationFile ");
+      JMetalLogger.logger.log(Level.SEVERE, "b) org.uma.jmetal.experiment.Main configurationFile problemName");
+      JMetalLogger.logger.log(Level.SEVERE, "c) org.uma.jmetal.experiment.Main configurationFile problemName paretoFrontFile");
       throw new RuntimeException("Sintax error when invoking the program");
     } else if (args.length == 1) {
       inputStreamReader = new InputStreamReader(new FileInputStream(args[0]));
@@ -126,25 +119,25 @@ public class RunnerC {
     long estimatedTime = System.currentTimeMillis() - initTime;
 
     // Result messages
-    logger_.info("Total execution time: " + estimatedTime + "ms");
+    JMetalLogger.logger.info("Total execution time: " + estimatedTime + "ms");
 
     FileOutputContext fileContext = new DefaultFileOutputContext("VAR.tsv") ;
     fileContext.setSeparator("\t");
-    logger_.info("Variables values have been writen to file VAR.tsv");
+    JMetalLogger.logger.info("Variables values have been writen to file VAR.tsv");
     SolutionSetOutput.printVariablesToFile(fileContext, population) ;
 
     fileContext = new DefaultFileOutputContext("FUN.tsv");
     fileContext.setSeparator("\t");
     SolutionSetOutput.printObjectivesToFile(fileContext, population);
-    logger_.info("Objectives values have been written to file FUN");
+    JMetalLogger.logger.info("Objectives values have been written to file FUN");
 
     if (indicators != null) {
-      logger_.info("Quality indicators");
-      logger_.info("Hypervolume: " + indicators.getHypervolume(population));
-      logger_.info("GD         : " + indicators.getGD(population));
-      logger_.info("IGD        : " + indicators.getIGD(population));
-      logger_.info("Spread     : " + indicators.getSpread(population));
-      logger_.info("Epsilon    : " + indicators.getEpsilon(population));
+      JMetalLogger.logger.info("Quality indicators");
+      JMetalLogger.logger.info("Hypervolume: " + indicators.getHypervolume(population));
+      JMetalLogger.logger.info("GD         : " + indicators.getGD(population));
+      JMetalLogger.logger.info("IGD        : " + indicators.getIGD(population));
+      JMetalLogger.logger.info("Spread     : " + indicators.getSpread(population));
+      JMetalLogger.logger.info("Epsilon    : " + indicators.getEpsilon(population));
     }
   }
 }

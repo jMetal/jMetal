@@ -35,9 +35,6 @@ import java.util.logging.FileHandler;
  * Class for configuring and running a single-objective PSO algorithm
  */
 public class StandardPSO2011Runner {
-  public static java.util.logging.Logger logger_;      // Logger object
-  public static FileHandler fileHandler_; // FileHandler object
-
   /**
    * @param args Command line arguments. The first (optional) argument specifies
    *             the problem to solve.
@@ -49,11 +46,6 @@ public class StandardPSO2011Runner {
     throws JMetalException, IOException, ClassNotFoundException {
     Problem problem;  // The problem to solve
     Algorithm algorithm;  // The algorithm to use
-
-    // Logger object and file to store log messages
-    logger_ = JMetalLogger.logger;
-    fileHandler_ = new FileHandler("PSO_main.log");
-    logger_.addHandler(fileHandler_);
 
     //problem = new Sphere("Real", 20) ;
     //problem = new Easom("Real") ;
@@ -76,10 +68,10 @@ public class StandardPSO2011Runner {
     long estimatedTime = System.currentTimeMillis() - initTime;
 
     // Result messages 
-    logger_.info("Total execution time: " + estimatedTime + "ms");
-    logger_.info("Objectives values have been writen to file FUN");
+    JMetalLogger.logger.info("Total execution time: " + estimatedTime + "ms");
+    JMetalLogger.logger.info("Objectives values have been writen to file FUN");
     population.printObjectivesToFile("FUN");
-    logger_.info("Variables values have been writen to file VAR");
+    JMetalLogger.logger.info("Variables values have been writen to file VAR");
     population.printVariablesToFile("VAR");
   }
 }

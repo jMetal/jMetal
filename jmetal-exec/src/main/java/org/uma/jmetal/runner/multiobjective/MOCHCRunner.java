@@ -50,19 +50,12 @@ import java.util.logging.FileHandler;
  * evolutionary computation. London, England. July 2007.
  */
 public class MOCHCRunner {
-  private static java.util.logging.Logger logger_;
-  private static FileHandler fileHandler_;
-
   public static void main(String[] args) throws IOException, JMetalException, ClassNotFoundException {
     Crossover crossoverOperator;
     Mutation mutationOperator;
     Selection parentsSelection;
     Selection newGenerationSelection;
     Algorithm algorithm ;
-
-    logger_ = JMetalLogger.logger;
-    fileHandler_ = new FileHandler("MOCHCRunner.log");
-    logger_.addHandler(fileHandler_);
 
     Problem problem = new ZDT5("Binary");
 
@@ -104,8 +97,8 @@ public class MOCHCRunner {
       .funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
       .print();
 
-    logger_.info("Total execution time: " + computingTime + "ms");
-    logger_.info("Objectives values have been written to file FUN.tsv");
-    logger_.info("Variables values have been written to file VAR.tsv");
+    JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
+    JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
+    JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
   }
 }

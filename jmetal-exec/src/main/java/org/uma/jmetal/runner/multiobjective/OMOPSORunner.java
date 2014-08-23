@@ -46,9 +46,6 @@ import java.util.logging.FileHandler;
  * Class for configuring and running the OMOPSO algorithm
  */
 public class OMOPSORunner {
-  public static java.util.logging.Logger logger_;
-  public static FileHandler fileHandler_; 
-
   /**
    * @param args Command line arguments. The first (optional) argument specifies
    *             the problem to solve.
@@ -66,11 +63,6 @@ public class OMOPSORunner {
     Mutation nonUniformMutation;
 
     QualityIndicatorGetter indicators;
-
-    // Logger object and file to store log messages
-    logger_ = JMetalLogger.logger;
-    fileHandler_ = new FileHandler("OMOPSO_main.log");
-    logger_.addHandler(fileHandler_);
 
     indicators = null;
     if (args.length == 1) {
@@ -125,17 +117,17 @@ public class OMOPSORunner {
       .funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
       .print();
 
-    logger_.info("Total execution time: " + computingTime + "ms");
-    logger_.info("Objectives values have been written to file FUN.tsv");
-    logger_.info("Variables values have been written to file VAR.tsv");
+    JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
+    JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
+    JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
 
     if (indicators != null) {
-      logger_.info("Quality indicators");
-      logger_.info("Hypervolume: " + indicators.getHypervolume(population));
-      logger_.info("GD         : " + indicators.getGD(population));
-      logger_.info("IGD        : " + indicators.getIGD(population));
-      logger_.info("Spread     : " + indicators.getSpread(population));
-      logger_.info("Epsilon    : " + indicators.getEpsilon(population));
+      JMetalLogger.logger.info("Quality indicators");
+      JMetalLogger.logger.info("Hypervolume: " + indicators.getHypervolume(population));
+      JMetalLogger.logger.info("GD         : " + indicators.getGD(population));
+      JMetalLogger.logger.info("IGD        : " + indicators.getIGD(population));
+      JMetalLogger.logger.info("Spread     : " + indicators.getSpread(population));
+      JMetalLogger.logger.info("Epsilon    : " + indicators.getEpsilon(population));
     }
   }
 }

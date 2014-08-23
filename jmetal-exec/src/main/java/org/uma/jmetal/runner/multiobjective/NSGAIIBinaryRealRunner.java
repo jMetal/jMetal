@@ -47,9 +47,6 @@ import java.util.logging.FileHandler;
  */
 
 public class NSGAIIBinaryRealRunner {
-  private static java.util.logging.Logger logger_;
-  private static FileHandler fileHandler_;
-
   /**
    * @param args Command line arguments.
    * @throws org.uma.jmetal.util.JMetalException
@@ -67,18 +64,6 @@ public class NSGAIIBinaryRealRunner {
 
     String problemName;
     Algorithm algorithm;
-    Operator crossover;
-    Operator mutation;
-    Operator selection;
-
-    QualityIndicatorGetter indicators;
-
-    HashMap<String, Object> parameters ;
-
-    // Logger object and file to store log messages
-    logger_ = JMetalLogger.logger;
-    fileHandler_ = new FileHandler("NSGAII_main.log");
-    logger_.addHandler(fileHandler_);
 
     if (args.length == 1) {
       problemName = args[0] ;
@@ -92,19 +77,19 @@ public class NSGAIIBinaryRealRunner {
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;
-    logger_.info("Total execution time: " + estimatedTime + "ms");
+    JMetalLogger.logger.info("Total execution time: " + estimatedTime + "ms");
 
     // Result messages
     FileOutputContext fileContext = new DefaultFileOutputContext("VAR.tsv") ;
     fileContext.setSeparator("\t");
 
-    logger_.info("Variables values have been writen to file VAR.tsv");
+    JMetalLogger.logger.info("Variables values have been writen to file VAR.tsv");
     SolutionSetOutput.printVariablesToFile(fileContext, population) ;
 
     fileContext = new DefaultFileOutputContext("FUN.tsv");
     fileContext.setSeparator("\t");
 
     SolutionSetOutput.printObjectivesToFile(fileContext, population);
-    logger_.info("Objectives values have been written to file FUN.tsv");
+    JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
   }
 }

@@ -1,9 +1,9 @@
-//  SMSEMOA_main.java
+//  FastSMSEMOARunner.java
 //
 //  Author:
-//       Simon Wessing
+//       Antonio J. Nebro
 //
-//  Copyright (c) 2011 Simon Wessing
+//  Copyright (c) 2014 Antonio J. Nebro
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -46,7 +46,6 @@ import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
-import java.util.logging.FileHandler;
 
 /**
  * Class for configuring and running the SMS-EMOA algorithm. This
@@ -54,9 +53,6 @@ import java.util.logging.FileHandler;
  * to obtained the convergence speed of the algorithm.
  */
 public class FastSMSEMOARunner {
-  public static java.util.logging.Logger logger;
-  public static FileHandler fileHandler;
-
   /**
    * @param args Command line arguments.
    * @throws org.uma.jmetal.util.JMetalException
@@ -86,11 +82,6 @@ public class FastSMSEMOARunner {
     double offset;
 
     QualityIndicatorGetter indicators;
-
-    // Logger object and file to store log messages
-    logger = JMetalLogger.logger;
-    fileHandler = new FileHandler("FastSMSEMOARunner.log");
-    logger.addHandler(fileHandler);
 
     indicators = null;
     if (args.length == 1) {
@@ -152,17 +143,17 @@ public class FastSMSEMOARunner {
       .funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
       .print();
 
-    logger.info("Total execution time: " + computingTime + "ms");
-    logger.info("Objectives values have been written to file FUN.tsv");
-    logger.info("Variables values have been written to file VAR.tsv");
+    JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
+    JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
+    JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
 
     if (indicators != null) {
-      logger.info("Quality indicators");
-      logger.info("Hypervolume: " + indicators.getHypervolume(population));
-      logger.info("GD         : " + indicators.getGD(population));
-      logger.info("IGD        : " + indicators.getIGD(population));
-      logger.info("Spread     : " + indicators.getSpread(population));
-      logger.info("Epsilon    : " + indicators.getEpsilon(population));
+      JMetalLogger.logger.info("Quality indicators");
+      JMetalLogger.logger.info("Hypervolume: " + indicators.getHypervolume(population));
+      JMetalLogger.logger.info("GD         : " + indicators.getGD(population));
+      JMetalLogger.logger.info("IGD        : " + indicators.getIGD(population));
+      JMetalLogger.logger.info("Spread     : " + indicators.getSpread(population));
+      JMetalLogger.logger.info("Epsilon    : " + indicators.getEpsilon(population));
     }
   }
 }
