@@ -42,7 +42,7 @@ public class GDE3 extends Algorithm {
   protected int populationSize;
   protected int maxIterations;
   protected int iterations;
-
+  
   protected SolutionSet population;
   protected SolutionSet offspringPopulation;
 
@@ -95,6 +95,10 @@ public class GDE3 extends Algorithm {
   public int getMaxIterations() {
     return maxIterations;
   }
+  
+  public SolutionSetEvaluator getEvaluator() {
+  	return evaluator ;
+  }
 
   /** Builder class */
   public static class Builder {
@@ -103,7 +107,7 @@ public class GDE3 extends Algorithm {
 
     protected int populationSize;
     protected  int maxIterations;
-
+    
     protected Operator crossoverOperator;
     protected Operator selectionOperator;
 
@@ -123,7 +127,7 @@ public class GDE3 extends Algorithm {
 
       return this ;
     }
-
+    
     public Builder setEvaluator(SolutionSetEvaluator evaluator) {
       this.evaluator = evaluator ;
 

@@ -17,15 +17,7 @@
 // 
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-/**
- * SMSEMOA_main.java
- *
- * @author Simon Wessing
- * @version 1.0
- *   This implementation of SMS-EMOA makes use of a QualityIndicator object
- *   to obtained the convergence speed of the algorithm.
- *
- */
+
 package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.core.Algorithm;
@@ -48,9 +40,7 @@ import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 import java.io.IOException;
 
 /**
- * Class for configuring and running the SMS-EMOA algorithm. This
- * implementation of SMS-EMOA makes use of a QualityIndicator object
- * to obtained the convergence speed of the algorithm.
+ * Class for configuring and running the SMS-EMOA algorithm.
  */
 public class FastSMSEMOARunner {
   /**

@@ -82,11 +82,7 @@ public class OMOPSOSettings extends Settings{
     return algorithm ;
   }
 
-  /**
-   * Configure OMOPSO with user-defined parameter settings
-   *
-   * @return A OMOPSO algorithm object
-   */
+  /** Configure OMOPSO from a properties file */
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {
     swarmSize = Integer.parseInt(configuration.getProperty("swarmSize",String.valueOf(swarmSize)));

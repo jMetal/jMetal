@@ -31,8 +31,10 @@ import org.uma.jmetal.util.parallel.MultithreadedEvaluator;
 public class MultithreadedSolutionSetEvaluator implements SolutionSetEvaluator {
   private MultithreadedEvaluator evaluator;
   private Problem problem;
+  private int numberOfThreads ;
 
   public MultithreadedSolutionSetEvaluator(int numberOfThreads, Problem problem) {
+  	this.numberOfThreads = numberOfThreads ;
     evaluator = new MultithreadedEvaluator(numberOfThreads)  ;
     this.problem = problem ;
     evaluator.start(problem) ;
@@ -48,6 +50,10 @@ public class MultithreadedSolutionSetEvaluator implements SolutionSetEvaluator {
     return solutionSet;
   }
 
+  public int getNumberOfThreads() {
+  	return numberOfThreads ;
+  }
+  
   @Override public void shutdown() {
     evaluator.stop();
   }

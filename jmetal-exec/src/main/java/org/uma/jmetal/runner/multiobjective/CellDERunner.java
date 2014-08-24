@@ -18,6 +18,7 @@
 // 
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.core.Algorithm;
@@ -39,6 +40,13 @@ import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
 
+/**
+ * This class is the main program used to configure and run the CellDE algorithm, which is 
+ * which is described in:
+ * Juan José Durillo, Antonio J. Nebro, Francisco Luna, Enrique Alba
+ * Solving Three-Objective Optimization Problems Using a New Hybrid Cellular Genetic Algorithm. 
+ * PPSN 2008, pp 661-670
+ */
 public class CellDERunner {
   /**
    * @param args Command line arguments.

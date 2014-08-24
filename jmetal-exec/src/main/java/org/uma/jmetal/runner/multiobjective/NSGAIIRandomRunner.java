@@ -1,4 +1,4 @@
-//  NSGAIIAdaptive_main.java
+//  NSGAIIRandomRunner.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>

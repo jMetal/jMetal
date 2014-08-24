@@ -44,8 +44,7 @@ import java.io.IOException;
  * This class executes the algorithm described in:
  * H. Li and Q. Zhang,
  * "Multiobjective Optimization Problems with Complicated Pareto Sets,  MOEA/D
- * and NSGA-II". IEEE Trans on Evolutionary Computation, vol. 12,  no 2,
- * pp 284-302, April/2009.
+ * and NSGA-II". IEEE Trans on Evolutionary Computation, vol. 12,  no 2, pp 284-302, April/2009.
  */
 public class MOEADRunner {
   /**

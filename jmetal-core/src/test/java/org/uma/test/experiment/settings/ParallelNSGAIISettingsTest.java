@@ -1,4 +1,4 @@
-//  ParallelNSGAII_SettingsTest.java
+//  ParallelNSGAIISettingsTest.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -61,6 +61,7 @@ public class ParallelNSGAIISettingsTest {
     Settings NSGAIISettings = new ParallelNSGAIISettings("Fonseca");
     NSGAII algorithm = (NSGAII) NSGAIISettings.configure();
     Problem problem = new Fonseca("Real");
+    
     SBXCrossover crossover = (SBXCrossover) algorithm.getCrossoverOperator();
     double pc = crossover.getCrossoverProbability();
     double dic = crossover.getDistributionIndex();
@@ -68,14 +69,14 @@ public class ParallelNSGAIISettingsTest {
     double pm = mutation.getMutationProbability();
     double dim = mutation.getDistributionIndex();
 
-    assertEquals("NSGAII_SettingsTest", 100, algorithm.getPopulationSize());
-    assertEquals("NSGAII_SettingsTest", 25000, algorithm.getMaxEvaluations());
+    assertEquals(100, algorithm.getPopulationSize());
+    assertEquals(25000, algorithm.getMaxEvaluations());
 
-    assertEquals("NSGAII_SettingsTest", 0.9, pc, epsilon);
-    assertEquals("NSGAII_SettingsTest", 20.0, dic, epsilon);
+    assertEquals(0.9, pc, epsilon);
+    assertEquals(20.0, dic, epsilon);
 
-    assertEquals("NSGAII_SettingsTest", 1.0 / problem.getNumberOfVariables(), pm, epsilon);
-    assertEquals("NSGAII_SettingsTest", 20.0, dim, epsilon);
+    assertEquals(1.0 / problem.getNumberOfVariables(), pm, epsilon);
+    assertEquals(20.0, dim, epsilon);
   }
 
   @Test
@@ -91,13 +92,13 @@ public class ParallelNSGAIISettingsTest {
     double pm = mutation.getMutationProbability() ;
     double dim = mutation.getDistributionIndex() ;
 
-    assertEquals("NSGAII_SettingsTest", 100, algorithm.getPopulationSize());
-    assertEquals("NSGAII_SettingsTest", 25000, algorithm.getMaxEvaluations());
+    assertEquals(100, algorithm.getPopulationSize());
+    assertEquals(25000, algorithm.getMaxEvaluations());
 
-    assertEquals("NSGAII_SettingsTest", 0.9, pc, epsilon);
-    assertEquals("NSGAII_SettingsTest", 20.0, dic, epsilon);
+    assertEquals(0.9, pc, epsilon);
+    assertEquals(20.0, dic, epsilon);
 
-    assertEquals("NSGAII_SettingsTest", 1.0/problem.getNumberOfVariables(), pm, epsilon);
-    assertEquals("NSGAII_SettingsTest", 20.0, dim, epsilon);
+    assertEquals(1.0/problem.getNumberOfVariables(), pm, epsilon);
+    assertEquals(20.0, dim, epsilon);
   }
 }

@@ -1,10 +1,9 @@
-//  GDE3Settings.java
+//  ParallelGDE3Settings.java
 //
 //  Authors:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
 //
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
+//  Copyright (c) 2014 Antonio J. Nebro
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -30,32 +29,37 @@ import org.uma.jmetal.operator.selection.DifferentialEvolutionSelection;
 import org.uma.jmetal.operator.selection.Selection;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.evaluator.MultithreadedSolutionSetEvaluator;
 import org.uma.jmetal.util.evaluator.SequentialSolutionSetEvaluator;
 import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
 
 import java.util.Properties;
 
 /**
- * Settings class of algorithm GDE3
+ * Settings class of algorithm GDE3 (parallel version)
  */
-public class GDE3Settings extends Settings {
+public class ParallelGDE3Settings extends Settings {
   private double cr;
   private double f;
   private int populationSize;
   private int maxIterations;
+  private int numberOfThreads ;
   private SolutionSetEvaluator evaluator;
 
   /** Constructor */
-  public GDE3Settings(String problemName) throws JMetalException {
+  public ParallelGDE3Settings(String problemName) throws JMetalException {
     super(problemName);
 
     Object[] problemParams = {"Real"};
     problem = (new ProblemFactory()).getProblem(this.problemName, problemParams);
 
+    // Default experiment.settings
     cr = 0.5;
     f = 0.5;
     populationSize = 100;
     maxIterations = 250;
+    
+    numberOfThreads = 4 ;
   }
 
   /** Configure GDE3 with default parameter settings */
@@ -65,7 +69,7 @@ public class GDE3Settings extends Settings {
     Selection selection;
     Crossover crossover;
     
-    evaluator = new SequentialSolutionSetEvaluator() ;
+    evaluator = new MultithreadedSolutionSetEvaluator(numberOfThreads, problem) ;
 
     crossover = new DifferentialEvolutionCrossover.Builder()
             .setCr(cr)
@@ -93,6 +97,9 @@ public class GDE3Settings extends Settings {
             .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize)));
     maxIterations =
             Integer.parseInt(configuration.getProperty("maxIterations", String.valueOf(maxIterations)));
+
+    numberOfThreads =
+        Integer.parseInt(configuration.getProperty("numberOfThreads", String.valueOf(numberOfThreads)));
 
     cr = Double.parseDouble(configuration.getProperty("CR", String.valueOf(cr)));
     f = Double.parseDouble(configuration.getProperty("F", String.valueOf(f)));

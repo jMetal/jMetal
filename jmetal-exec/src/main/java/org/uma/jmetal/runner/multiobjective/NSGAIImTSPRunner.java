@@ -41,8 +41,8 @@ import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 import java.util.logging.FileHandler;
 
 /**
- * Class to configure and execute the NSGA-II algorithm. The experiment.settings are aimed
- * at solving the mTSP problem.
+ * Class to configure and execute the NSGA-II algorithm. The settings are aimed
+ * at solving the multiobjective TSP problem.
  */
 
 public class NSGAIImTSPRunner {

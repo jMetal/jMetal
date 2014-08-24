@@ -84,11 +84,6 @@ public class OMOPSORunner {
     */
     }
 
-        /*
-     * Alternatives:
-     * - evaluator = new SequentialSolutionSetEvaluator() // SMPSO
-     * - evaluator = new MultithreadedSolutionSetEvaluator(threads, problem) // parallel SMPSO
-     */
     SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator();
 
     uniformMutation = new UniformMutation.Builder(0.5, 1.0/problem.getNumberOfVariables())

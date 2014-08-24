@@ -52,9 +52,9 @@ public class NSGAIIRunner {
    * @throws SecurityException
    * @throws java.lang.ClassNotFoundException
    * Usage: three options
-   *           - org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAIIRunner
-   *           - org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAIIRunner problemName
-   *           - org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAIIRunner problemName paretoFrontFile
+   *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner
+   *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName
+   *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName paretoFrontFile
    */
   public static void main(String[] args) throws
           JMetalException, SecurityException, IOException, ClassNotFoundException {
