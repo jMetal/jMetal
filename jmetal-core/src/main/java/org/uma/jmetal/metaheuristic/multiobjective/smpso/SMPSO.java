@@ -77,7 +77,7 @@ public class SMPSO extends Algorithm {
   private double deltaMax[];
   private double deltaMin[];
 
-
+  /** Constructor */
   public SMPSO(Builder builder) {
     super() ;
 
@@ -120,7 +120,7 @@ public class SMPSO extends Algorithm {
     changeVelocity2 = -1;
   }
 
-  /* Getters/Setters */
+  /* Getters */
   public void setEvaluator(SolutionSetEvaluator evaluator) {
     this.evaluator = evaluator;
   }
@@ -185,12 +185,150 @@ public class SMPSO extends Algorithm {
     return changeVelocity2;
   }
 
-  /**
-   * Runs of the SMPSO algorithm.
-   *
-   * @return a <code>SolutionSet</code> that is a set of non dominated solutions
-   * as a experimentoutput of the algorithm execution
-   */
+  /** Builder class */
+  public static class Builder {
+    protected SolutionSetEvaluator evaluator;
+    protected Problem problem;
+    protected Archive leaders;
+
+    protected int swarmSize;
+    protected int maxIterations;
+    protected int archiveSize;
+
+    protected Operator mutationOperator;
+
+    private double c1Max;
+    private double c1Min;
+    private double c2Max;
+    private double c2Min;
+    private double r1Max;
+    private double r1Min;
+    private double r2Max;
+    private double r2Min;
+    private double weightMax;
+    private double weightMin;
+    private double changeVelocity1;
+    private double changeVelocity2;
+
+
+    public Builder(Problem problem, Archive leaders, SolutionSetEvaluator evaluator) {
+      this.evaluator = evaluator ;
+      this.problem = problem ;
+      this.leaders = leaders ;
+
+      swarmSize = 100 ;
+      maxIterations = 25000 ;
+
+      r1Max = 1.0;
+      r1Min = 0.0;
+      r2Max = 1.0;
+      r2Min = 0.0;
+      c1Max = 2.5;
+      c1Min = 1.5;
+      c2Max = 2.5;
+      c2Min = 1.5;
+      weightMax = 0.1;
+      weightMin = 0.1;
+      changeVelocity1 = -1;
+      changeVelocity2 = -1;
+    }
+
+    public Builder setSwarmSize(int swarmSize) {
+      this.swarmSize = swarmSize ;
+
+      return this ;
+    }
+
+    public Builder setMaxIterations(int maxIterations) {
+      this.maxIterations = maxIterations ;
+
+      return this ;
+    }
+
+    public Builder setMutation(Operator mutation) {
+      mutationOperator = mutation ;
+
+      return this ;
+    }
+
+    public Builder setC1Max(double c1Max) {
+      this.c1Max = c1Max ;
+
+      return this ;
+    }
+
+    public Builder setC1Min(double c1Min) {
+      this.c1Min = c1Min ;
+
+      return this ;
+    }
+
+    public Builder setC2Max(double c2Max) {
+      this.c2Max = c2Max ;
+
+      return this ;
+    }
+
+    public Builder setC2Min(double c2Min) {
+      this.c2Min = c2Min ;
+
+      return this ;
+    }
+
+    public Builder setR1Max(double r1Max) {
+      this.r1Max = r1Max ;
+
+      return this ;
+    }
+
+    public Builder setR1Min(double r1Min) {
+      this.r1Min = r1Min ;
+
+      return this ;
+    }
+
+    public Builder setR2Max(double r2Max) {
+      this.r2Max = r2Max ;
+
+      return this ;
+    }
+
+    public Builder setR2Min(double r2Min) {
+      this.r2Min = r2Min ;
+
+      return this ;
+    }
+
+    public Builder setWeightMax(double weightMax) {
+      this.weightMax = weightMax ;
+
+      return this ;
+    }
+
+    public Builder setWeightMin(double weightMin) {
+      this.weightMin = weightMin ;
+
+      return this ;
+    }
+
+    public Builder setChangeVelocity1(double changeVelocity1) {
+      this.changeVelocity1 = changeVelocity1 ;
+
+      return this ;
+    }
+
+    public Builder setChangeVelocity2(double changeVelocity2) {
+      this.changeVelocity2 = changeVelocity2 ;
+
+      return this ;
+    }
+
+    public SMPSO build() {
+      return new SMPSO(this) ;
+    }
+  }
+
+  /** Execute() method  */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException, IOException {
     initialization();
     createInitialSwarm() ;
@@ -276,7 +414,7 @@ public class SMPSO extends Algorithm {
     } else if (leaders instanceof FastHypervolumeArchive) {
       ((FastHypervolumeArchive) leaders).computeHVContribution();
     } else {
-      throw new JMetalException("Invalid archive type") ;
+      throw new JMetalException("Invalid setArchive type") ;
     }
   }
 
@@ -379,7 +517,7 @@ public class SMPSO extends Algorithm {
   }
 
   private double inertiaWeight(int iter, int miter, double wma, double wmin) {
-    //Alternative: return - (((wma-wmin)*(double)iter)/(double)miter);
+    /*Alternative: return - (((wma-wmin)*(double)iter)/(double)miter);*/
     return wma;
   }
 
@@ -418,148 +556,5 @@ public class SMPSO extends Algorithm {
 
   protected void tearDown() {
     evaluator.shutdown();
-  }
-
-  /** Builder class */
-  public static class Builder {
-    protected SolutionSetEvaluator evaluator;
-    protected Problem problem;
-    protected Archive leaders;
-
-    protected int swarmSize;
-    protected int maxIterations;
-    protected int archiveSize;
-
-    protected Operator mutationOperator;
-
-    private double c1Max;
-    private double c1Min;
-    private double c2Max;
-    private double c2Min;
-    private double r1Max;
-    private double r1Min;
-    private double r2Max;
-    private double r2Min;
-    private double weightMax;
-    private double weightMin;
-    private double changeVelocity1;
-    private double changeVelocity2;
-
-
-    public Builder(Problem problem, Archive leaders, SolutionSetEvaluator evaluator) {
-      this.evaluator = evaluator ;
-      this.problem = problem ;
-      this.leaders = leaders ;
-
-      swarmSize = 100 ;
-      maxIterations = 25000 ;
-
-      r1Max = 1.0;
-      r1Min = 0.0;
-      r2Max = 1.0;
-      r2Min = 0.0;
-      c1Max = 2.5;
-      c1Min = 1.5;
-      c2Max = 2.5;
-      c2Min = 1.5;
-      weightMax = 0.1;
-      weightMin = 0.1;
-      changeVelocity1 = -1;
-      changeVelocity2 = -1;
-    }
-
-    public Builder swarmSize(int swarmSize) {
-      this.swarmSize = swarmSize ;
-
-      return this ;
-    }
-
-    public Builder maxIterations(int maxIterations) {
-      this.maxIterations = maxIterations ;
-
-      return this ;
-    }
-
-    public Builder mutation(Operator mutation) {
-      mutationOperator = mutation ;
-
-      return this ;
-    }
-
-    public Builder c1Max(double c1Max) {
-      this.c1Max = c1Max ;
-
-      return this ;
-    }
-
-    public Builder c1Min(double c1Min) {
-      this.c1Min = c1Min ;
-
-      return this ;
-    }
-
-    public Builder c2Max(double c2Max) {
-      this.c2Max = c2Max ;
-
-      return this ;
-    }
-
-    public Builder c2Min(double c2Min) {
-      this.c2Min = c2Min ;
-
-      return this ;
-    }
-
-    public Builder r1Max(double r1Max) {
-      this.r1Max = r1Max ;
-
-      return this ;
-    }
-
-    public Builder r1Min(double r1Min) {
-      this.r1Min = r1Min ;
-
-      return this ;
-    }
-
-    public Builder r2Max(double r2Max) {
-      this.r2Max = r2Max ;
-
-      return this ;
-    }
-
-    public Builder r2Min(double r2Min) {
-      this.r2Min = r2Min ;
-
-      return this ;
-    }
-
-    public Builder weightMax(double weightMax) {
-      this.weightMax = weightMax ;
-
-      return this ;
-    }
-
-    public Builder weightMin(double weightMin) {
-      this.weightMin = weightMin ;
-
-      return this ;
-    }
-
-    public Builder changeVelocity1(double changeVelocity1) {
-      this.changeVelocity1 = changeVelocity1 ;
-
-      return this ;
-    }
-
-    public Builder changeVelocity2(double changeVelocity2) {
-      this.changeVelocity2 = changeVelocity2 ;
-
-      return this ;
-    }
-
-    public SMPSO build() {
-      return new SMPSO(this) ;
-    }
   }
 }

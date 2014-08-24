@@ -23,7 +23,7 @@ package org.uma.jmetal.util.archive;
 import org.uma.jmetal.core.SolutionSet;
 
 /**
- * This class represents the super class for archive objects.
+ * This class represents the super class for setArchive objects.
  */
 public class Archive extends SolutionSet {
   private static final long serialVersionUID = -84460522040441282L;

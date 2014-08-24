@@ -39,7 +39,6 @@ import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
-import java.util.logging.FileHandler;
 
 /**
  * Class for configuring and running the PESA2 algorithm
@@ -83,22 +82,22 @@ public class PESA2Runner {
     }
 
     crossover = new SBXCrossover.Builder()
-            .probability(0.9)
-            .distributionIndex(20.0)
+            .setProbability(0.9)
+            .setDistributionIndex(20.0)
             .build() ;
 
     mutation = new PolynomialMutation.Builder()
-            .probability(1.0/problem.getNumberOfVariables())
-            .distributionIndex(20.0)
+            .setProbability(1.0 / problem.getNumberOfVariables())
+            .setDistributionIndex(20.0)
             .build() ;
 
     algorithm = new PESA2.Builder(problem)
-            .populationSize(10)
-            .archiveSize(100)
-            .maxEvaluations(25000)
-            .biSections(5)
-            .crossover(crossover)
-            .mutation(mutation)
+            .setPopulationSize(10)
+            .setArchiveSize(100)
+            .setMaxEvaluations(25000)
+            .setBiSections(5)
+            .setCrossover(crossover)
+            .setMutation(mutation)
             .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)

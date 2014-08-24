@@ -1,10 +1,9 @@
-//  CellDE_Settings.java 
+//  CellDESettings.java
 //
 //  Authors:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
 //
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
+//  Copyright (c) 2011 Antonio J. Nebro
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -57,7 +56,6 @@ public class CellDESettings extends Settings {
       throw new JMetalException(e);
     }
 
-    // Default experiment.settings
     cr = 0.5;
     f = 0.5;
 
@@ -67,15 +65,16 @@ public class CellDESettings extends Settings {
     numberOfFeedbackSolutionsFromArchive = 20;
   }
 
-  /** configure() method */
+  /** Configure CellDE with default parameter settings */
+  @Override
   public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
     Selection selection;
     Crossover crossover;
 
     crossover = new DifferentialEvolutionCrossover.Builder()
-            .cr(cr)
-            .f(f)
+            .setCr(cr)
+            .setF(f)
             .build() ;
 
     selection = new BinaryTournament.Builder()
@@ -93,17 +92,17 @@ public class CellDESettings extends Settings {
     return algorithm;
   }
 
-  /** configure() method using a properties file */
+  /** Configure CellDE method from a properties file */
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {
     populationSize = Integer
-      .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize)));
+            .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize)));
     maxEvaluations = Integer
-      .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations)));
+            .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations)));
     archiveSize =
-      Integer.parseInt(configuration.getProperty("archiveSize", String.valueOf(archiveSize)));
+            Integer.parseInt(configuration.getProperty("archiveSize", String.valueOf(archiveSize)));
     numberOfFeedbackSolutionsFromArchive = Integer
-      .parseInt(configuration.getProperty("archiveFeedback", String.valueOf(numberOfFeedbackSolutionsFromArchive)));
+            .parseInt(configuration.getProperty("archiveFeedback", String.valueOf(numberOfFeedbackSolutionsFromArchive)));
 
     cr = Double.parseDouble(configuration.getProperty("cr", String.valueOf(cr)));
     f = Double.parseDouble(configuration.getProperty("f", String.valueOf(f)));

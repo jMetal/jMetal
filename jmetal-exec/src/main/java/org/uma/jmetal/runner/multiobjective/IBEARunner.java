@@ -42,7 +42,6 @@ import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
-import java.util.logging.FileHandler;
 
 /**
  * Class for configuring and running the IBEA algorithm
@@ -52,10 +51,12 @@ public class IBEARunner {
    * @param args Command line arguments.
    * @throws org.uma.jmetal.util.JMetalException
    * @throws IOException
-   * @throws SecurityException Usage: three choices
-   *                           - org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII_main
-   *                           - org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII_main problemName
-   *                           - org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII_main problemName paretoFrontFile
+   * @throws SecurityException
+   * @throws java.lang.ClassNotFoundException
+   * Usage: three choices
+   *       - org.uma.jmetal.runner.multiobjective.IBEARunner
+   *       - org.uma.jmetal.runner.multiobjective.IBEARunner problemName
+   *       - org.uma.jmetal.runner.multiobjective.IBEARunner problemName paretoFrontFile
    */
   public static void main(String[] args) throws JMetalException, IOException, ClassNotFoundException {
     Problem problem;
@@ -75,27 +76,28 @@ public class IBEARunner {
       problem = (new ProblemFactory()).getProblem(args[0], params);
       indicators = new QualityIndicatorGetter(problem, args[1]);
     } else {
-      problem = new Kursawe("Real", 3);
-      //problem = new Kursawe("BinaryReal", 3);
+      problem = new Kursawe("Real", 3) ;
+      /* Examples
       //problem = new Water("Real");
-      //problem = new ZDT1("ArrayReal", 100);
-      //problem = new ConstrEx("Real");
+      //problem = new ZDT4("ArrayReal");
+      //problem = new WFG1("Real");
       //problem = new DTLZ1("Real");
       //problem = new OKA2("Real") ;
+      */
     }
 
     crossover = new SBXCrossover.Builder()
-            .probability(0.9)
-            .distributionIndex(20.0)
+            .setProbability(0.9)
+            .setDistributionIndex(20.0)
             .build() ;
 
     mutation = new PolynomialMutation.Builder()
-            .probability(1.0 / problem.getNumberOfVariables())
-            .distributionIndex(20.0)
+            .setProbability(1.0 / problem.getNumberOfVariables())
+            .setDistributionIndex(20.0)
             .build() ;
 
     selection = new BinaryTournament.Builder()
-            .comparator(new FitnessComparator())
+            .setComparator(new FitnessComparator())
             .build() ;
 
     algorithm = new IBEA.Builder(problem)

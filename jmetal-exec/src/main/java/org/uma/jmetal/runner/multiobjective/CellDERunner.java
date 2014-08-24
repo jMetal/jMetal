@@ -38,17 +38,18 @@ import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
-import java.util.logging.FileHandler;
 
 public class CellDERunner {
   /**
    * @param args Command line arguments.
    * @throws org.uma.jmetal.util.JMetalException
    * @throws IOException
-   * @throws SecurityException Usage: three choices
-   *                           - org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII_main
-   *                           - org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII_main problemName
-   *                           - org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII_main problemName paretoFrontFile
+   * @throws SecurityException
+   * @throws java.lang.ClassNotFoundException
+   * Usage: three choices
+   *       - org.uma.jmetal.runner.multiobjective.CellDERunner
+   *       - org.uma.jmetal.runner.multiobjective.CellDERunner problemName
+   *       - org.uma.jmetal.runner.multiobjective.CellDERunner problemName paretoFrontFile
    */
   public static void main(String[] args) throws
     JMetalException, SecurityException, IOException, ClassNotFoundException {
@@ -78,8 +79,8 @@ public class CellDERunner {
       */
     }
     crossover = new DifferentialEvolutionCrossover.Builder()
-            .cr(0.5)
-            .f(0.5)
+            .setCr(0.5)
+            .setF(0.5)
             .build() ;
 
     selection = new BinaryTournament.Builder()

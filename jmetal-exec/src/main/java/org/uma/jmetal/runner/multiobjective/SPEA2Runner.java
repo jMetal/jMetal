@@ -39,7 +39,6 @@ import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
-import java.util.logging.FileHandler;
 
 /**
  * Class for configuring and running the SPEA2 algorithm
@@ -86,25 +85,25 @@ public class SPEA2Runner {
     }
 
     crossover = new SBXCrossover.Builder()
-            .distributionIndex(20.0)
-            .probability(0.9)
+            .setDistributionIndex(20.0)
+            .setProbability(0.9)
             .build() ;
 
     mutation = new PolynomialMutation.Builder()
-            .distributionIndex(20.0)
-            .probability(1.0/problem.getNumberOfVariables())
+            .setDistributionIndex(20.0)
+            .setProbability(1.0 / problem.getNumberOfVariables())
             .build();
 
     selection = new BinaryTournament2.Builder()
             .build();
 
     algorithm = new SPEA2.Builder(problem)
-            .crossover(crossover)
-            .mutation(mutation)
-            .selection(selection)
-            .maxEvaluations(25000)
-            .populationSize(100)
-            .archiveSize(100)
+            .setCrossover(crossover)
+            .setMutation(mutation)
+            .setSelection(selection)
+            .setMaxEvaluations(25000)
+            .setPopulationSize(100)
+            .setArchiveSize(100)
             .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)

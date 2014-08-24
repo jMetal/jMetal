@@ -75,8 +75,8 @@ public class PSORunner {
     algorithm.setInputParameter("maxIterations", 5000);
 
     HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
-    mutationParameters.put("probability", 1.0 / problem.getNumberOfVariables());
-    mutationParameters.put("distributionIndex", 20.0);
+    mutationParameters.put("setProbability", 1.0 / problem.getNumberOfVariables());
+    mutationParameters.put("setDistributionIndex", 20.0);
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
 
     algorithm.addOperator("mutation", mutation);

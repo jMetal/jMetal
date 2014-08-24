@@ -37,7 +37,6 @@ import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
-import java.util.logging.FileHandler;
 
 /**
  * Class for configuring and running the PAES algorithm
@@ -82,15 +81,15 @@ public class PAESRunner {
     }
 
     mutation = new PolynomialMutation.Builder()
-      .distributionIndex(20.0)
-      .probability(1.0/problem.getNumberOfVariables())
+      .setDistributionIndex(20.0)
+      .setProbability(1.0 / problem.getNumberOfVariables())
       .build();
 
     algorithm = new PAES.Builder(problem)
-      .mutation(mutation)
-      .maxEvaluations(25000)
-      .archiveSize(100)
-      .biSections(5)
+      .setMutation(mutation)
+      .setMaxEvaluations(25000)
+      .setArchiveSize(100)
+      .setBiSections(5)
       .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)

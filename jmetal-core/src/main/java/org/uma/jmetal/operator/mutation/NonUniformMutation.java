@@ -45,8 +45,8 @@ public class NonUniformMutation extends Mutation {
   @Deprecated
   public NonUniformMutation(HashMap<String, Object> parameters) {
     super(parameters);
-    if (parameters.get("probability") != null) {
-      mutationProbability = (Double) parameters.get("probability");
+    if (parameters.get("setProbability") != null) {
+      mutationProbability = (Double) parameters.get("setProbability");
     }
     if (parameters.get("perturbation") != null) {
       perturbation = (Double) parameters.get("perturbation");
@@ -123,7 +123,7 @@ public class NonUniformMutation extends Mutation {
   /**
    * Perform the mutation operation
    *
-   * @param probability Mutation probability
+   * @param probability Mutation setProbability
    * @param solution    The solutiontype to mutate
    * @throws org.uma.jmetal.util.JMetalException
    */

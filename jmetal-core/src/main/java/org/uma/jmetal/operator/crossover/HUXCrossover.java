@@ -51,8 +51,8 @@ public class HUXCrossover extends Crossover {
     addValidSolutionType(BinarySolutionType.class);
     addValidSolutionType(BinaryRealSolutionType.class);
 
-    if (parameters.get("probability") != null) {
-      probability = (Double) parameters.get("probability");
+    if (parameters.get("setProbability") != null) {
+      probability = (Double) parameters.get("setProbability");
     }
   }
 
@@ -72,7 +72,7 @@ public class HUXCrossover extends Crossover {
   /**
    * Perform the crossover operation
    *
-   * @param probability Crossover probability
+   * @param probability Crossover setProbability
    * @param parent1     The first parent
    * @param parent2     The second parent
    * @return An array containing the two offsprings

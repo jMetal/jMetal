@@ -45,6 +45,7 @@ public class PAES extends Algorithm {
     super();
   }
 
+  /** Constructor */
   private PAES(Builder builder) {
     super();
 
@@ -55,6 +56,7 @@ public class PAES extends Algorithm {
     mutationOperator = builder.mutationOperator;
   }
 
+  /* Getters */
   public int getArchiveSize() {
     return archiveSize;
   }
@@ -69,6 +71,49 @@ public class PAES extends Algorithm {
 
   public Operator getMutationOperator() {
     return mutationOperator;
+  }
+
+  /** Builder class */
+  public static class Builder {
+    private Problem problem;
+
+    private int archiveSize;
+    private int maxEvaluations;
+    private int biSections;
+
+    private Operator mutationOperator;
+
+    public Builder(Problem problem) {
+      this.problem = problem ;
+    }
+
+    public Builder setArchiveSize(int archiveSize) {
+      this.archiveSize = archiveSize ;
+
+      return this ;
+    }
+
+    public Builder setMaxEvaluations(int maxEvaluations) {
+      this.maxEvaluations = maxEvaluations ;
+
+      return this ;
+    }
+
+    public Builder setBiSections(int biSections) {
+      this.biSections = biSections ;
+
+      return this ;
+    }
+
+    public Builder setMutation(Operator mutation) {
+      mutationOperator = mutation ;
+
+      return this ;
+    }
+
+    public PAES build() {
+      return new PAES(this) ;
+    }
   }
 
   /** execute() method */
@@ -87,7 +132,7 @@ public class PAES extends Algorithm {
     problem.evaluateConstraints(solution);
     evaluations++;
 
-    // Add it to the archive
+    // Add it to the setArchive
     archive.add(new Solution(solution));
 
     //Iterations....
@@ -142,48 +187,5 @@ public class PAES extends Algorithm {
     }
 
     return new Solution(solution);
-  }
-
-  /** Builder class */
-  public static class Builder {
-    private Problem problem;
-
-    private int archiveSize;
-    private int maxEvaluations;
-    private int biSections;
-
-    private Operator mutationOperator;
-
-    public Builder(Problem problem) {
-      this.problem = problem ;
-    }
-
-    public Builder archiveSize(int archiveSize) {
-      this.archiveSize = archiveSize ;
-
-      return this ;
-    }
-
-    public Builder maxEvaluations(int maxEvaluations) {
-      this.maxEvaluations = maxEvaluations ;
-
-      return this ;
-    }
-
-    public Builder biSections(int biSections) {
-      this.biSections = biSections ;
-
-      return this ;
-    }
-
-    public Builder mutation(Operator mutation) {
-      mutationOperator = mutation ;
-
-      return this ;
-    }
-
-    public PAES build() {
-      return new PAES(this) ;
-    }
   }
 }

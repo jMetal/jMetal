@@ -118,7 +118,7 @@ public class FastHypervolume {
   /**
    * Computes the HV of a solutiontype set.
    * REQUIRES: The problem is bi-objective
-   * REQUIRES: The archive is ordered in descending order by the second objective
+   * REQUIRES: The setArchive is ordered in descending order by the second objective
    *
    * @return
    */

@@ -36,7 +36,7 @@ import java.util.HashMap;
 
 /**
  * This class implements an local search operator based in the use of a
- * mutation operator. An archive is used to store the non-dominated solutions
+ * mutation operator. An setArchive is used to store the non-dominated solutions
  * found during the search.
  */
 public class MutationLocalSearch extends LocalSearch {
@@ -64,8 +64,8 @@ public class MutationLocalSearch extends LocalSearch {
     if (parameters.get("problem") != null) {
       problem = (Problem) parameters.get("problem");
     }
-    if (parameters.get("improvementRounds") != null) {
-      improvementRounds = (Integer) parameters.get("improvementRounds");
+    if (parameters.get("setImprovementRounds") != null) {
+      improvementRounds = (Integer) parameters.get("setImprovementRounds");
     }
     if (parameters.get("mutation") != null) {
       mutationOperator = (Mutation) parameters.get("mutation");
@@ -180,19 +180,19 @@ public class MutationLocalSearch extends LocalSearch {
       this.problem = problem ;
     }
 
-    public Builder improvementRounds(int improvementRounds) {
+    public Builder setImprovementRounds(int improvementRounds) {
       this.improvementRounds = improvementRounds ;
 
       return this ;
     }
 
-    public Builder mutationOperator(Operator mutationOperator) {
+    public Builder setMutationOperator(Operator mutationOperator) {
       this.mutationOperator = mutationOperator ;
 
       return this ;
     }
 
-    public Builder archive(Archive archive) {
+    public Builder setArchive(Archive archive) {
       this.archive = archive ;
 
       return this ;

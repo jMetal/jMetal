@@ -41,14 +41,14 @@ public class SBXCrossoverAndPolynomialMutationOffspring extends Offspring {
 
     // Crossover operator
     HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
-    crossoverParameters.put("probability", this.crossoverProbability);
-    crossoverParameters.put("distributionIndex", this.distributionIndexForCrossover);
+    crossoverParameters.put("setProbability", this.crossoverProbability);
+    crossoverParameters.put("setDistributionIndex", this.distributionIndexForCrossover);
 
     crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", crossoverParameters);
 
     HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
-    mutationParameters.put("probability", this.mutationProbability);
-    mutationParameters.put("distributionIndex", this.distributionIndexForMutation);
+    mutationParameters.put("setProbability", this.mutationProbability);
+    mutationParameters.put("setDistributionIndex", this.distributionIndexForMutation);
 
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
 

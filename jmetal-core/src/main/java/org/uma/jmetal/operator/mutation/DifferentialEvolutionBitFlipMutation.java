@@ -90,7 +90,7 @@ public class DifferentialEvolutionBitFlipMutation extends Mutation {
 		
 		Double binaryProbability = (Double)getParameter("binaryProbability");       
 		if (binaryProbability == null){
-			JMetalLogger.logger.severe("PolynomialBitFlipMutation.execute: probability of the binary component" +
+			JMetalLogger.logger.severe("PolynomialBitFlipMutation.execute: setProbability of the binary component" +
 			"not specified");
 			Class cls = java.lang.String.class;
 			String name = cls.getName(); 

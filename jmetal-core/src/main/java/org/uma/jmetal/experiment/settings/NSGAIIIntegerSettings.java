@@ -29,12 +29,15 @@ import org.uma.jmetal.operator.mutation.Mutation;
 import org.uma.jmetal.operator.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.selection.BinaryTournament2;
 import org.uma.jmetal.operator.selection.Selection;
+import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.problem.multiobjective.NMMin;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.evaluator.SequentialSolutionSetEvaluator;
 import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
 
 import java.util.Properties;
+import java.util.logging.Level;
 
 /** Settings class of algorithm NSGA-II (integer encoding) */
 public class NSGAIIIntegerSettings extends Settings {
@@ -48,11 +51,15 @@ public class NSGAIIIntegerSettings extends Settings {
 
   /** Constructor */
   public NSGAIIIntegerSettings(String problem) throws JMetalException, ClassNotFoundException {
-    super(problem);
+    Object[] problemParams = {"Integer"};
 
-    this.problem = new NMMin("Integer") ;
+    try {
+      this.problem = (new ProblemFactory()).getProblem(problemName, problemParams);
+    } catch (JMetalException e) {
+      JMetalLogger.logger.log(Level.SEVERE, "Unable to get problem", e);
+    }
+    //this.problem = new NMMin("Integer") ;
 
-    // Default experiment.settings
     populationSize = 100;
     maxEvaluations = 250000;
     mutationProbability = 1.0 / this.problem.getNumberOfVariables();
@@ -62,7 +69,8 @@ public class NSGAIIIntegerSettings extends Settings {
     evaluator = new SequentialSolutionSetEvaluator() ;
   }
 
-  /** Configure method */
+  /** Configure NSGAII with default parameter settings */
+  @Deprecated
   public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
     Selection selection;
@@ -70,46 +78,46 @@ public class NSGAIIIntegerSettings extends Settings {
     Mutation mutation;
 
     crossover = new SBXCrossover.Builder()
-      .distributionIndex(crossoverDistributionIndex)
-      .probability(crossoverProbability)
-      .build() ;
+            .setDistributionIndex(crossoverDistributionIndex)
+            .setProbability(crossoverProbability)
+            .build() ;
 
     mutation = new PolynomialMutation.Builder()
-      .distributionIndex(mutationDistributionIndex)
-      .probability(mutationProbability)
-      .build();
+            .setDistributionIndex(mutationDistributionIndex)
+            .setProbability(mutationProbability)
+            .build();
 
     selection = new BinaryTournament2.Builder()
-      .build();
+            .build();
 
     algorithm = new NSGAII.Builder(problem, evaluator)
-      .crossover(crossover)
-      .mutation(mutation)
-      .selection(selection)
-      .maxEvaluations(maxEvaluations)
-      .populationSize(populationSize)
-      .build("NSGAII") ;
+            .setCrossover(crossover)
+            .setMutation(mutation)
+            .setSelection(selection)
+            .setMaxEvaluations(maxEvaluations)
+            .setPopulationSize(populationSize)
+            .build("NSGAII") ;
 
     return algorithm;
   }
 
-  /** Configure method from configuration file */
+  /** Configure NSGAII from a properties file */
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {
     populationSize = Integer
-      .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize)));
+            .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize)));
     maxEvaluations = Integer
-      .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations)));
+            .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations)));
 
     crossoverProbability = Double.parseDouble(
-      configuration.getProperty("crossoverProbability", String.valueOf(crossoverProbability)));
+            configuration.getProperty("crossoverProbability", String.valueOf(crossoverProbability)));
     crossoverDistributionIndex = Double.parseDouble(configuration
-      .getProperty("crossoverDistributionIndex", String.valueOf(crossoverDistributionIndex)));
+            .getProperty("crossoverDistributionIndex", String.valueOf(crossoverDistributionIndex)));
 
     mutationProbability = Double.parseDouble(
-      configuration.getProperty("mutationProbability", String.valueOf(mutationProbability)));
+            configuration.getProperty("mutationProbability", String.valueOf(mutationProbability)));
     mutationDistributionIndex = Double.parseDouble(configuration
-      .getProperty("mutationDistributionIndex", String.valueOf(mutationDistributionIndex)));
+            .getProperty("mutationDistributionIndex", String.valueOf(mutationDistributionIndex)));
 
     return configure();
   }

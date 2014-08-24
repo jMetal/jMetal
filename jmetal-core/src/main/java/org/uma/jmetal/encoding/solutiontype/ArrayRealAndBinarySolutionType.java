@@ -34,7 +34,7 @@ import org.uma.jmetal.encoding.variable.Binary;
  * ASSUMPTIONs:
  * - The numberOfVariables field in class Problem must contain the number
  * of real variables. This field is used to apply real operator (e.g.,
- * mutation probability)
+ * mutation setProbability)
  * - The upperLimit and lowerLimit arrays must have the length indicated
  * by numberOfVariables.
  */

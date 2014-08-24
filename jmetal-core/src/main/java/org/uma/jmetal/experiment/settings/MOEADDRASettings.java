@@ -1,4 +1,4 @@
-//  MOEAD_DRA_Settings.java 
+//  MOEADDRASettings.java
 //
 //  Authors:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -33,9 +33,7 @@ import org.uma.jmetal.util.JMetalException;
 
 import java.util.Properties;
 
-/**
- * Settings class of algorithm MOEA/D-DRA
- */
+/** Settings class of algorithm MOEA/D-DRA */
 public class MOEADDRASettings extends Settings {
   private double cr;
   private double f;
@@ -60,7 +58,6 @@ public class MOEADDRASettings extends Settings {
     Object[] problemParams = {"Real"};
     this.problem = (new ProblemFactory()).getProblem(problemName, problemParams);
 
-    // Default experiment.settings
     cr = 1.0;
     f = 0.5;
     populationSize = 600;
@@ -80,41 +77,40 @@ public class MOEADDRASettings extends Settings {
     // on CEC09 Unconstrained MOP Test Instances Working Report CES-491, School 
     // of CS & EE, University of Essex, 02/2009.
     // http://dces.essex.ac.uk/staff/qzhang/MOEAcompetition/CEC09final/code/ZhangMOEADcode/moead0305.rar
-
     dataDirectory = "MOEAD_Weights";
   }
 
-  /** Configure() method */
+  /** Configure MDEADDRA with default parameter settings */
   public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
     Crossover crossover;
     Mutation mutation;
     crossover = new DifferentialEvolutionCrossover.Builder()
-      .cr(cr)
-      .f(f)
+      .setCr(cr)
+      .setF(f)
       .build() ;
 
     mutation = new PolynomialMutation.Builder()
-      .distributionIndex(mutationDistributionIndex)
-      .probability(mutationProbability)
+      .setDistributionIndex(mutationDistributionIndex)
+      .setProbability(mutationProbability)
       .build();
 
     algorithm = new MOEADDRA.Builder(problem)
-      .populationSize(populationSize)
-      .maxEvaluations(maxEvaluations)
-      .neighborhoodSelectionProbability(neighborhoodSelectionProbability)
-      .maximumNumberOfReplacedSolutions(maximumNumberOfReplacedSolutions)
-      .resultPopulationSize(resultPopulationSize)
-      .neighborSize(neighborSize)
-      .crossover(crossover)
-      .mutation(mutation)
-      .dataDirectory(dataDirectory)
+      .setPopulationSize(populationSize)
+      .setMaxEvaluations(maxEvaluations)
+      .setNeighborhoodSelectionProbability(neighborhoodSelectionProbability)
+      .setMaximumNumberOfReplacedSolutions(maximumNumberOfReplacedSolutions)
+      .setResultPopulationSize(resultPopulationSize)
+      .setNeighborSize(neighborSize)
+      .setCrossover(crossover)
+      .setMutation(mutation)
+      .setDataDirectory(dataDirectory)
       .build("MOEADDRA") ;
 
     return algorithm;
   }
 
-  /** Configure() method */
+  /** Configure MDEADDRA from a properties file */
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {
     populationSize = Integer
@@ -132,7 +128,7 @@ public class MOEADDRASettings extends Settings {
     resultPopulationSize = Integer
         .parseInt(configuration.getProperty("resultPopulationSize", String.valueOf(resultPopulationSize)));
     
-    cr = Double.parseDouble(configuration.getProperty("cr", String.valueOf(cr)));
+    cr = Double.parseDouble(configuration.getProperty("setCr", String.valueOf(cr)));
     f = Double.parseDouble(configuration.getProperty("f", String.valueOf(f)));
 
     mutationProbability = Double.parseDouble(

@@ -36,9 +36,7 @@ import org.uma.jmetal.util.JMetalLogger;
 import java.util.Properties;
 import java.util.logging.Level;
 
-/**
- * Settings class of algorithm MOCell
- */
+/** Settings class of algorithm MOCell */
 public class MOCellSettings extends Settings {
 
   private int populationSize;
@@ -51,9 +49,7 @@ public class MOCellSettings extends Settings {
   private double mutationDistributionIndex;
   private String mocellVariant ;
 
-  /**
-   * Constructor
-   */
+  /** Constructor */
   public MOCellSettings(String problemName) {
     super(problemName);
 
@@ -64,7 +60,6 @@ public class MOCellSettings extends Settings {
       JMetalLogger.logger.log(Level.SEVERE, "Unable to get problem", e);
     }
 
-    // Default experiment.settings
     populationSize = 100;
     maxEvaluations = 25000;
     archiveSize = 100;
@@ -77,12 +72,7 @@ public class MOCellSettings extends Settings {
     mocellVariant = "SyncMOCell1" ;
   }
 
-  /**
-   * Configure the MOCell algorithm with default parameter settings
-   *
-   * @return an algorithm object
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Configure MOCell with default parameter settings */
   public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
 
@@ -91,26 +81,26 @@ public class MOCellSettings extends Settings {
     Operator selection;
 
     crossover = new SBXCrossover.Builder()
-      .probability(crossoverProbability)
-      .distributionIndex(crossoverDistributionIndex)
+      .setProbability(crossoverProbability)
+      .setDistributionIndex(crossoverDistributionIndex)
       .build();
 
     mutation = new PolynomialMutation.Builder()
-      .probability(mutationProbability)
-      .distributionIndex(mutationDistributionIndex)
+      .setProbability(mutationProbability)
+      .setDistributionIndex(mutationDistributionIndex)
       .build();
 
     selection = new BinaryTournament.Builder()
       .build();
 
     algorithm = new MOCellTemplate.Builder(problem)
-      .populationSize(populationSize)
-      .archiveSize(archiveSize)
-      .maxEvaluations(maxEvaluations)
-      .numberOfFeedbackSolutionsFromArchive(numberOfFeedbackSolutionsFromArchive)
-      .crossover(crossover)
-      .mutation(mutation)
-      .selection(selection)
+      .setPopulationSize(populationSize)
+      .setArchiveSize(archiveSize)
+      .setMaxEvaluations(maxEvaluations)
+      .setNumberOfFeedbackSolutionsFromArchive(numberOfFeedbackSolutionsFromArchive)
+      .setCrossover(crossover)
+      .setMutation(mutation)
+      .setSelection(selection)
       .build(mocellVariant);
 
     return algorithm;
@@ -122,11 +112,7 @@ public class MOCellSettings extends Settings {
     return configure() ;
   }
 
-  /**
-   * Configure MOCell with user-defined parameter settings
-   *
-   * @return A MOCell algorithm object
-   */
+  /** Configure MOCell (variant: SyncMOCell1) from a properties file */
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {
     populationSize = Integer

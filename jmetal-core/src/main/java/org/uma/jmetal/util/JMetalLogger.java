@@ -38,7 +38,7 @@ public class JMetalLogger implements Serializable {
     try {
       fileHandler = new FileHandler("jMetal.log");
     } catch (IOException e) {
-      e.printStackTrace();
+      throw new JMetalException(e);
     }
     logger.addHandler(fileHandler);
   }

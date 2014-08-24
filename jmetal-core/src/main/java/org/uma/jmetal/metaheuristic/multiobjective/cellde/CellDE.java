@@ -43,7 +43,7 @@ import java.util.Comparator;
 /**
  * This class represents the original asynchronous MOCell algorithm
  * hybridized with Differential Evolution, called CellDE. It uses an
- * archive based on spea2 fitness to store non-dominated solutions, and it is
+ * setArchive based on spea2 fitness to store non-dominated solutions, and it is
  * described in:
  * J.J. Durillo, A.J. Nebro, F. Luna, E. Alba "Solving Three-Objective
  * Optimization Problems Using a new Hybrid Cellular Genetic Algorithm".
@@ -119,8 +119,8 @@ public class CellDE extends Algorithm {
       this.problem = problem ;
 
       crossover = new DifferentialEvolutionCrossover.Builder()
-              .cr(0.5)
-              .f(0.5).
+              .setCr(0.5)
+              .setF(0.5).
                       build() ;
       selection = new BinaryTournament.Builder()
               .build() ;
@@ -247,7 +247,7 @@ public class CellDE extends Algorithm {
         }
       }
 
-      //Store a portion of the archive into the population
+      //Store a portion of the setArchive into the population
       for (int j = 0; j < numberOfFeedbackSolutionsFromArchive; j++) {
         if (archive.size() > j) {
           int r = PseudoRandom.randInt(0, population.size() - 1);

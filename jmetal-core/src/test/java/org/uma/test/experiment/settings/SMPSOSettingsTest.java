@@ -146,14 +146,14 @@ public class SMPSOSettingsTest {
       evaluator = new SequentialSolutionSetEvaluator();
 
     Operator mutation = new PolynomialMutation.Builder()
-      .distributionIndex(20.0)
-      .probability(1.0 / problem.getNumberOfVariables())
+      .setDistributionIndex(20.0)
+      .setProbability(1.0 / problem.getNumberOfVariables())
       .build();
 
     SMPSO algorithm = new SMPSO.Builder(problem, archive, evaluator)
-      .mutation(mutation)
-      .maxIterations(250)
-      .swarmSize(100)
+      .setMutation(mutation)
+      .setMaxIterations(250)
+      .setSwarmSize(100)
       .build();
 
     SolutionSet solutionSet = algorithm.execute() ;
@@ -167,14 +167,14 @@ public class SMPSOSettingsTest {
     SolutionSetEvaluator evaluator = new MultithreadedSolutionSetEvaluator(6, problem);
 
     Operator mutation = new PolynomialMutation.Builder()
-      .distributionIndex(20.0)
-      .probability(1.0 / problem.getNumberOfVariables())
+      .setDistributionIndex(20.0)
+      .setProbability(1.0 / problem.getNumberOfVariables())
       .build();
 
     SMPSO algorithm = new SMPSO.Builder(problem, archive, evaluator)
-      .mutation(mutation)
-      .maxIterations(250)
-      .swarmSize(100)
+      .setMutation(mutation)
+      .setMaxIterations(250)
+      .setSwarmSize(100)
       .build();
 
     SolutionSet solutionSet = algorithm.execute() ;

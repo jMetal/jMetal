@@ -47,11 +47,12 @@ public class SinglePointCrossover extends Crossover {
   @Deprecated
   public SinglePointCrossover(HashMap<String, Object> parameters) {
     super(parameters);
-    if (parameters.get("probability") != null) {
-      crossoverProbability = (Double) parameters.get("probability");
+    if (parameters.get("setProbability") != null) {
+      crossoverProbability = (Double) parameters.get("setProbability");
     }
   }
 
+  /** Constructor */
   private SinglePointCrossover(Builder builder) {
     addValidSolutionType(BinarySolutionType.class);
     addValidSolutionType(BinaryRealSolutionType.class);
@@ -60,14 +61,68 @@ public class SinglePointCrossover extends Crossover {
     crossoverProbability = builder.crossoverProbability;
   }
 
+  /* Getter */
   public double getCrossoverProbability() {
     return crossoverProbability;
+  }
+
+  /** Builder class */
+  public static class Builder {
+    private double crossoverProbability;
+
+    public Builder() {
+      crossoverProbability = 0 ;
+    }
+
+    public Builder setProbability(double probability) {
+      if ((probability < 0) || (probability > 1.0)) {
+        throw new JMetalException("Probability value invalid: " + probability) ;
+      } else {
+        crossoverProbability = probability;
+      }
+
+      return this ;
+    }
+
+    public SinglePointCrossover build() {
+      return new SinglePointCrossover(this) ;
+    }
+  }
+
+  /** Execute() method */
+  public Object execute(Object object) throws JMetalException {
+    if (object == null) {
+      throw new JMetalException("SinglePointCrossover.execute: null argument");
+    }
+
+    Solution[] parents = (Solution[]) object;
+    if (parents.length < 2) {
+      throw new JMetalException("SinglePointCrossover.execute: operator needs two parents");
+    }
+
+    if (!solutionTypeIsValid(parents)) {
+      throw new JMetalException("SinglePointCrossover.execute: the solutions " +
+              "are not of the right type. The type should be 'Binary' or 'Int', but " +
+              parents[0].getType() + " and " +
+              parents[1].getType() + " are obtained");
+    }
+
+    Solution[] offSpring;
+    offSpring = doCrossover(crossoverProbability, parents[0], parents[1]);
+
+    // Update the offSpring solutions
+    for (Solution solution : offSpring) {
+      solution.setCrowdingDistance(0.0);
+      solution.setRank(0);
+    }
+
+    return offSpring;
   }
 
   /**
    * Perform the crossover operation.
    *
-   * @param probability Crossover probability
+   * @param probability Crossover setProbability
    * @param parent1     The first parent
    * @param parent2     The second parent
    * @return An array containing the two offspring
@@ -153,58 +208,5 @@ public class SinglePointCrossover extends Crossover {
       throw new JMetalException("Exception in " + name + ".doCrossover()");
     }
     return offSpring;
-  }
-
-  /** Execute() method */
-  public Object execute(Object object) throws JMetalException {
-    if (object == null) {
-      throw new JMetalException("SinglePointCrossover.execute: null argument");
-    }
-
-    Solution[] parents = (Solution[]) object;
-    if (parents.length < 2) {
-      throw new JMetalException("SinglePointCrossover.execute: operator needs two parents");
-    }
-
-    if (!solutionTypeIsValid(parents)) {
-      throw new JMetalException("SinglePointCrossover.execute: the solutions " +
-        "are not of the right type. The type should be 'Binary' or 'Int', but " +
-        parents[0].getType() + " and " +
-        parents[1].getType() + " are obtained");
-    }
-
-    Solution[] offSpring;
-    offSpring = doCrossover(crossoverProbability, parents[0], parents[1]);
-
-    // Update the offSpring solutions
-    for (Solution solution : offSpring) {
-      solution.setCrowdingDistance(0.0);
-      solution.setRank(0);
-    }
-
-    return offSpring;
-  }
-
-  /** Builder class */
-  public static class Builder {
-    private double crossoverProbability;
-
-    public Builder() {
-      crossoverProbability = 0 ;
-    }
-
-    public Builder probability(double probability) {
-      if ((probability < 0) || (probability > 1.0)) {
-        throw new JMetalException("Probability value invalid: " + probability) ;
-      } else {
-        crossoverProbability = probability;
-      }
-
-      return this ;
-    }
-
-    public SinglePointCrossover build() {
-      return new SinglePointCrossover(this) ;
-    }
   }
 }

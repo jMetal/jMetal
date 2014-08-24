@@ -1,9 +1,11 @@
-//  pMOEAD_Settings.java
+//  ParallelMOEADSettings.java
 //
-//  Author:
-//       Andre Siqueira
+//  Authors:
+//       Antonio J. Nebro <antonio@lcc.uma.es>
 //
-//  This program is free software: you can redistribute it and/or modify
+//  Copyright (c) 2014 Antonio J. Nebro
+//
+// This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
 //  (at your option) any later version.
@@ -29,9 +31,7 @@ import org.uma.jmetal.util.JMetalException;
 
 import java.util.Properties;
 
-/**
- * Settings class of algorithm MOEA/D
- */
+/** Settings class of algorithm MOEA/D (parallel version) */
 public class ParallelMOEADSettings extends Settings {
   private double cr;
   private double f;
@@ -49,17 +49,13 @@ public class ParallelMOEADSettings extends Settings {
 
   private int numberOfThreads;
 
-  /**
-   * Constructor
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Constructor */
   public ParallelMOEADSettings(String problem) throws JMetalException {
     super(problem);
 
     Object[] problemParams = {"Real"};
     this.problem = (new ProblemFactory()).getProblem(problemName, problemParams);
 
-    // Default experiment.settings
     cr = 1.0;
     f = 0.5;
     populationSize = 300;
@@ -82,37 +78,37 @@ public class ParallelMOEADSettings extends Settings {
     dataDirectory = "MOEAD_Weights";
   }
 
-  /** Configure() method */
+  /** Configure MDEAD with default parameter settings */
   public Algorithm configure() {
     Algorithm algorithm;
     Crossover crossover;
     Mutation mutation;
     crossover = new DifferentialEvolutionCrossover.Builder()
-            .cr(cr)
-            .f(f)
+            .setCr(cr)
+            .setF(f)
             .build() ;
 
     mutation = new PolynomialMutation.Builder()
-            .distributionIndex(mutationDistributionIndex)
-            .probability(mutationProbability)
+            .setDistributionIndex(mutationDistributionIndex)
+            .setProbability(mutationProbability)
             .build();
 
     algorithm = new MOEAD.Builder(problem)
-            .populationSize(populationSize)
-            .maxEvaluations(maxEvaluations)
-            .neighborhoodSelectionProbability(neighborhoodSelectionProbability)
-            .maximumNumberOfReplacedSolutions(maximumNumberOfReplacedSolutions)
-            .neighborSize(neighborSize)
-            .crossover(crossover)
-            .mutation(mutation)
-            .numberOfThreads(numberOfThreads)
-            .dataDirectory(dataDirectory)
+            .setPopulationSize(populationSize)
+            .setMaxEvaluations(maxEvaluations)
+            .setNeighborhoodSelectionProbability(neighborhoodSelectionProbability)
+            .setMaximumNumberOfReplacedSolutions(maximumNumberOfReplacedSolutions)
+            .setNeighborSize(neighborSize)
+            .setCrossover(crossover)
+            .setMutation(mutation)
+            .setNumberOfThreads(numberOfThreads)
+            .setDataDirectory(dataDirectory)
             .build("ParallelMOEAD") ;
 
     return algorithm;
   }
 
-  /** Configure() method */
+  /** Configure MDEAD from a configuration file */
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {
     populationSize = Integer
@@ -131,7 +127,7 @@ public class ParallelMOEADSettings extends Settings {
     numberOfThreads = Integer.parseInt(configuration.getProperty("numberOfThreads",
                     String.valueOf(numberOfThreads)));
 
-    cr = Double.parseDouble(configuration.getProperty("cr", String.valueOf(cr)));
+    cr = Double.parseDouble(configuration.getProperty("setCr", String.valueOf(cr)));
     f = Double.parseDouble(configuration.getProperty("f", String.valueOf(f)));
 
     mutationProbability = Double.parseDouble(

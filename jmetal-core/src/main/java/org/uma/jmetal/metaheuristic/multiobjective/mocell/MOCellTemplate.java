@@ -142,6 +142,7 @@ public abstract class MOCellTemplate extends Algorithm {
     }
   }
 
+  /** Builder class */
   public static class Builder {
     protected Problem problem ;
 
@@ -159,7 +160,6 @@ public abstract class MOCellTemplate extends Algorithm {
 
     protected Archive archive ;
 
-    /** Builder class */
     public Builder(Problem problem) {
       this.problem = problem ;
       dominanceComparator = new DominanceComparator() ;
@@ -169,43 +169,43 @@ public abstract class MOCellTemplate extends Algorithm {
       numberOfFeedbackSolutionsFromArchive = 0 ;
     }
 
-    public Builder populationSize(int populationSize) {
+    public Builder setPopulationSize(int populationSize) {
       this.populationSize = populationSize ;
 
       return this ;
     }
 
-    public Builder maxEvaluations(int maxEvaluations) {
+    public Builder setMaxEvaluations(int maxEvaluations) {
       this.maxEvaluations = maxEvaluations ;
 
       return this ;
     }
 
-    public Builder archiveSize(int archiveSize) {
+    public Builder setArchiveSize(int archiveSize) {
       this.archiveSize = archiveSize ;
 
       return this ;
     }
 
-    public Builder numberOfFeedbackSolutionsFromArchive(int numberOfFeedbackSolutionsFromArchive) {
+    public Builder setNumberOfFeedbackSolutionsFromArchive(int numberOfFeedbackSolutionsFromArchive) {
       this.numberOfFeedbackSolutionsFromArchive = numberOfFeedbackSolutionsFromArchive ;
 
       return this ;
     }
 
-    public Builder crossover(Operator crossover) {
+    public Builder setCrossover(Operator crossover) {
       crossoverOperator = crossover ;
 
       return this ;
     }
 
-    public Builder mutation(Operator mutation) {
+    public Builder setMutation(Operator mutation) {
       mutationOperator = mutation ;
 
       return this ;
     }
 
-    public Builder selection(Operator selection) {
+    public Builder setSelection(Operator selection) {
       selectionOperator = selection ;
 
       return this ;

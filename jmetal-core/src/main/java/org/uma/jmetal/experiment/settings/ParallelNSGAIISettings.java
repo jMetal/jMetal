@@ -23,6 +23,7 @@ package org.uma.jmetal.experiment.settings;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.experiment.Settings;
 import org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII;
+import org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAIITemplate;
 import org.uma.jmetal.operator.crossover.Crossover;
 import org.uma.jmetal.operator.crossover.SBXCrossover;
 import org.uma.jmetal.operator.mutation.Mutation;
@@ -53,7 +54,6 @@ public class ParallelNSGAIISettings extends Settings {
     Object[] problemParams = {"Real"};
     this.problem = (new ProblemFactory()).getProblem(problemName, problemParams);
 
-    /* Default settings */
     populationSize = 100;
     maxEvaluations = 25000;
     mutationProbability = 1.0 / this.problem.getNumberOfVariables();
@@ -64,7 +64,7 @@ public class ParallelNSGAIISettings extends Settings {
     numberOfThreads = 2;
   }
 
-  /** Configure ParallelNSGAII with user-defined parameter settings */
+  /** Configure ParallelNSGAII with default parameter settings */
   public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
     Selection selection;
@@ -72,54 +72,54 @@ public class ParallelNSGAIISettings extends Settings {
     Mutation mutation;
 
     SolutionSetEvaluator evaluator = new MultithreadedSolutionSetEvaluator(numberOfThreads,
-      problem) ;
+            problem) ;
 
     crossover = new SBXCrossover.Builder()
-      .distributionIndex(crossoverDistributionIndex)
-      .probability(crossoverProbability)
-      .build() ;
+            .setDistributionIndex(crossoverDistributionIndex)
+            .setProbability(crossoverProbability)
+            .build() ;
 
     mutation = new PolynomialMutation.Builder()
-      .distributionIndex(mutationDistributionIndex)
-      .probability(mutationProbability)
-      .build();
+            .setDistributionIndex(mutationDistributionIndex)
+            .setProbability(mutationProbability)
+            .build();
 
     selection = new BinaryTournament2.Builder()
-      .build();
+            .build();
 
-    algorithm = new NSGAII.Builder(problem, evaluator)
-      .crossover(crossover)
-      .mutation(mutation)
-      .selection(selection)
-      .maxEvaluations(25000)
-      .populationSize(100)
-      .build("NSGAII") ;
+    algorithm = new NSGAIITemplate.Builder(problem, evaluator)
+            .setCrossover(crossover)
+            .setMutation(mutation)
+            .setSelection(selection)
+            .setMaxEvaluations(25000)
+            .setPopulationSize(100)
+            .build("NSGAII") ;
 
     return algorithm;
   }
 
-  /** Configure NSGAIISettings from a properties file */
+  /** Configure ParallelNSGAII from a properties file */
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {
     numberOfThreads = Integer
-      .parseInt(configuration.getProperty("numberOfThreads", String.valueOf(numberOfThreads)));
+            .parseInt(configuration.getProperty("numberOfThreads", String.valueOf(numberOfThreads)));
 
     // Algorithm parameters
     populationSize = Integer
-      .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize)));
+            .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize)));
     maxEvaluations = Integer
-      .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations)));
+            .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations)));
 
     // Mutation and Crossover for Real codification
     crossoverProbability = Double.parseDouble(
-      configuration.getProperty("crossoverProbability", String.valueOf(crossoverProbability)));
+            configuration.getProperty("crossoverProbability", String.valueOf(crossoverProbability)));
     crossoverDistributionIndex = Double.parseDouble(configuration
-      .getProperty("crossoverDistributionIndex", String.valueOf(crossoverDistributionIndex)));
+            .getProperty("crossoverDistributionIndex", String.valueOf(crossoverDistributionIndex)));
 
     mutationProbability = Double.parseDouble(
-      configuration.getProperty("mutationProbability", String.valueOf(mutationProbability)));
+            configuration.getProperty("mutationProbability", String.valueOf(mutationProbability)));
     mutationDistributionIndex = Double.parseDouble(configuration
-      .getProperty("mutationDistributionIndex", String.valueOf(mutationDistributionIndex)));
+            .getProperty("mutationDistributionIndex", String.valueOf(mutationDistributionIndex)));
 
     return configure();
   }

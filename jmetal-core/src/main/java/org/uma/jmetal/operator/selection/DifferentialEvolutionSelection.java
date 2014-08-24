@@ -33,15 +33,9 @@ import java.util.HashMap;
  * are returned from a population.
  */
 public class DifferentialEvolutionSelection extends Selection {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = 2866073033079299561L;
 
-  /**
-   * Constructor
-   */
+  /** Constructor */
   @Deprecated
   DifferentialEvolutionSelection(HashMap<String, Object> parameters) {
     super(parameters);
@@ -52,7 +46,18 @@ public class DifferentialEvolutionSelection extends Selection {
     super(new HashMap<String, Object>()) ;
   }
 
-  /** execute() method  */
+  /** Builder class */
+  public static class Builder {
+
+    public Builder() {
+    }
+
+    public DifferentialEvolutionSelection build() {
+      return new DifferentialEvolutionSelection(this) ;
+    }
+  }
+
+  /** Execute() method  */
   public Object execute(Object object) throws JMetalException {
     if (null == object) {
       throw new JMetalException("Parameter is null") ;
@@ -95,16 +100,5 @@ public class DifferentialEvolutionSelection extends Selection {
     parents[2] = population.get(r3);
 
     return parents;
-  }
-
-  /** Builder class */
-  public static class Builder {
-
-    public Builder() {
-    }
-
-    public DifferentialEvolutionSelection build() {
-      return new DifferentialEvolutionSelection(this) ;
-    }
   }
 }

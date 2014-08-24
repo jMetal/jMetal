@@ -45,7 +45,7 @@ public class SinglePointCrossoverTest {
   public void setUp() throws JMetalException {
     problem = new ZDT5("Binary", 4) ;
     crossover = new SinglePointCrossover.Builder()
-            .probability(0.9)
+            .setProbability(0.9)
             .build() ;
   }
 
@@ -63,7 +63,7 @@ public class SinglePointCrossoverTest {
   @Test
   public void setCrossoverProbabilityTest() {
     crossover = new SinglePointCrossover.Builder()
-            .probability(1.0)
+            .setProbability(1.0)
             .build() ;
 
     assertEquals(1.0, crossover.getCrossoverProbability(), DELTA) ;
@@ -72,7 +72,7 @@ public class SinglePointCrossoverTest {
   @Test (expected = JMetalException.class)
   public void setInvalidCrossoverProbabilityTest() {
     crossover = new SinglePointCrossover.Builder()
-            .probability(-2.5)
+            .setProbability(-2.5)
             .build() ;
   }
 
@@ -84,7 +84,7 @@ public class SinglePointCrossoverTest {
   @Test
   public void operatorExecutionTest() throws ClassNotFoundException {
     crossover = new SinglePointCrossover.Builder()
-            .probability(0.9)
+            .setProbability(0.9)
             .build();
 
     Solution[] parents = {new Solution(problem), new Solution(problem)};

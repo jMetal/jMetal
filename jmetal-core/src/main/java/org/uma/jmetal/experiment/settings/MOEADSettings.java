@@ -1,4 +1,4 @@
-//  MOEAD_Settings.java 
+//  MOEADSettings.java
 //
 //  Authors:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -33,9 +33,7 @@ import org.uma.jmetal.util.JMetalException;
 
 import java.util.Properties;
 
-/**
- * Settings class of algorithm MOEA/D
- */
+/** Settings class of algorithm MOEA/D */
 public class MOEADSettings extends Settings {
   private double cr;
   private double f;
@@ -58,7 +56,6 @@ public class MOEADSettings extends Settings {
     Object[] problemParams = {"Real"};
     this.problem = (new ProblemFactory()).getProblem(problemName, problemParams);
 
-    // Default experiment.settings
     cr = 1.0;
     f = 0.5;
     populationSize = 300;
@@ -76,62 +73,62 @@ public class MOEADSettings extends Settings {
     // on CEC09 Unconstrained MOP Test Instances Working Report CES-491, School 
     // of CS & EE, University of Essex, 02/2009.
     // http://dces.essex.ac.uk/staff/qzhang/MOEAcompetition/CEC09final/code/ZhangMOEADcode/moead0305.rar
-
     dataDirectory = "MOEAD_Weights";
   }
 
-  /** Configure() method */
+  /** Configure MDEAD with default parameter settings */
+  @Override
   public Algorithm configure() {
     Algorithm algorithm;
     Crossover crossover;
     Mutation mutation;
     crossover = new DifferentialEvolutionCrossover.Builder()
-      .cr(cr)
-      .f(f)
-      .build() ;
+            .setCr(cr)
+            .setF(f)
+            .build() ;
 
     mutation = new PolynomialMutation.Builder()
-      .distributionIndex(mutationDistributionIndex)
-      .probability(mutationProbability)
-      .build();
+            .setDistributionIndex(mutationDistributionIndex)
+            .setProbability(mutationProbability)
+            .build();
 
     algorithm = new MOEAD.Builder(problem)
-      .populationSize(populationSize)
-      .maxEvaluations(maxEvaluations)
-      .neighborhoodSelectionProbability(neighborhoodSelectionProbability)
-      .maximumNumberOfReplacedSolutions(maximumNumberOfReplacedSolutions)
-      .neighborSize(neighborSize)
-      .crossover(crossover)
-      .mutation(mutation)
-      .dataDirectory(dataDirectory)
-      .build("MOEAD") ;
+            .setPopulationSize(populationSize)
+            .setMaxEvaluations(maxEvaluations)
+            .setNeighborhoodSelectionProbability(neighborhoodSelectionProbability)
+            .setMaximumNumberOfReplacedSolutions(maximumNumberOfReplacedSolutions)
+            .setNeighborSize(neighborSize)
+            .setCrossover(crossover)
+            .setMutation(mutation)
+            .setDataDirectory(dataDirectory)
+            .build("MOEAD") ;
 
     return algorithm;
   }
 
-  /** Configure() method */
+  /** Configure MDEADDRA from a properties file */
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {
     populationSize = Integer
-      .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize)));
+            .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize)));
     maxEvaluations = Integer
-      .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations)));
+            .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations)));
     dataDirectory = configuration.getProperty("dataDirectory", dataDirectory);
     neighborhoodSelectionProbability =
-      Double.parseDouble(configuration.getProperty("neighborhoodSelectionProbability", String.valueOf(
-      neighborhoodSelectionProbability)));
+            Double.parseDouble(configuration.getProperty("neighborhoodSelectionProbability", String.valueOf(
+                    neighborhoodSelectionProbability)));
     neighborSize = Integer.parseInt(configuration.getProperty("neighborSize", String.valueOf(neighborSize)));
     maximumNumberOfReplacedSolutions =
-      Integer.parseInt(configuration.getProperty("maximumNumberOfReplacedSolutions",
-        String.valueOf(maximumNumberOfReplacedSolutions)));
+            Integer.parseInt(configuration.getProperty("maximumNumberOfReplacedSolutions",
+                    String.valueOf(maximumNumberOfReplacedSolutions)));
 
-    cr = Double.parseDouble(configuration.getProperty("cr", String.valueOf(cr)));
+    cr = Double.parseDouble(configuration.getProperty("setCr", String.valueOf(cr)));
     f = Double.parseDouble(configuration.getProperty("f", String.valueOf(f)));
 
     mutationProbability = Double.parseDouble(
-      configuration.getProperty("mutationProbability", String.valueOf(mutationProbability)));
+            configuration.getProperty("mutationProbability", String.valueOf(mutationProbability)));
     mutationDistributionIndex = Double.parseDouble(configuration
-      .getProperty("mutationDistributionIndex", String.valueOf(mutationDistributionIndex)));
+            .getProperty("mutationDistributionIndex", String.valueOf(mutationDistributionIndex)));
 
     return configure();
   }

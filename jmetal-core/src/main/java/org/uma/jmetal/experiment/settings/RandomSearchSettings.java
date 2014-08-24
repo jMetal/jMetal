@@ -1,4 +1,4 @@
-//  RandomSearch_Settings.java 
+//  RandomSearchSettings.java
 //
 //  Authors:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -29,9 +29,7 @@ import org.uma.jmetal.util.JMetalException;
 
 import java.util.Properties;
 
-/**
- * Settings class of algorithm RandomSearch
- */
+/** Settings class of algorithm RandomSearch */
 public class RandomSearchSettings extends Settings {
   private int maxEvaluations = 25000;
 
@@ -43,7 +41,7 @@ public class RandomSearchSettings extends Settings {
     this.problem = (new ProblemFactory()).getProblem(problemName, problemParams);
   }
 
-  /** Configure() method */
+  /** Configure RandomSearch with default parameter settings */
   public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
 

@@ -1,4 +1,4 @@
-//  IBEA_Settings.java 
+//  IBEASettings.java
 //
 //  Authors:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -56,7 +56,6 @@ public class IBEASettings extends Settings {
     Object[] problemParams = {"Real"};
     problem = (new ProblemFactory()).getProblem(this.problemName, problemParams);
 
-    // Default experiment.settings
     populationSize = 100;
     maxEvaluations = 25000;
     archiveSize = 100;
@@ -68,7 +67,7 @@ public class IBEASettings extends Settings {
     mutationDistributionIndex = 20.0;
   }
 
-  /** Configure() method */
+  /** Configure IBEA with default parameter settings */
   @Override
   public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
@@ -77,17 +76,17 @@ public class IBEASettings extends Settings {
     Mutation mutation;
 
     crossover = new SBXCrossover.Builder()
-            .probability(crossoverProbability)
-            .distributionIndex(crossoverDistributionIndex)
+            .setProbability(crossoverProbability)
+            .setDistributionIndex(crossoverDistributionIndex)
             .build() ;
 
     mutation = new PolynomialMutation.Builder()
-            .probability(mutationProbability)
-            .distributionIndex(mutationDistributionIndex)
+            .setProbability(mutationProbability)
+            .setDistributionIndex(mutationDistributionIndex)
             .build() ;
 
     selection = new BinaryTournament.Builder()
-            .comparator(new FitnessComparator())
+            .setComparator(new FitnessComparator())
             .build() ;
 
     algorithm = new IBEA.Builder(problem)
@@ -102,25 +101,25 @@ public class IBEASettings extends Settings {
     return algorithm;
   }
 
-  /** Configure() method */
+  /** Configure IBEA from a properties file */
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {
     populationSize = Integer
-      .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize)));
+            .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize)));
     maxEvaluations = Integer
-      .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations)));
+            .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations)));
     archiveSize =
-      Integer.parseInt(configuration.getProperty("archiveSize", String.valueOf(archiveSize)));
+            Integer.parseInt(configuration.getProperty("archiveSize", String.valueOf(archiveSize)));
 
     crossoverProbability = Double.parseDouble(
-      configuration.getProperty("crossoverProbability", String.valueOf(crossoverProbability)));
+            configuration.getProperty("crossoverProbability", String.valueOf(crossoverProbability)));
     crossoverDistributionIndex = Double.parseDouble(configuration
-      .getProperty("crossoverDistributionIndex", String.valueOf(crossoverDistributionIndex)));
+            .getProperty("crossoverDistributionIndex", String.valueOf(crossoverDistributionIndex)));
 
     mutationProbability = Double.parseDouble(
-      configuration.getProperty("mutationProbability", String.valueOf(mutationProbability)));
+            configuration.getProperty("mutationProbability", String.valueOf(mutationProbability)));
     mutationDistributionIndex = Double.parseDouble(configuration
-      .getProperty("mutationDistributionIndex", String.valueOf(mutationDistributionIndex)));
+            .getProperty("mutationDistributionIndex", String.valueOf(mutationDistributionIndex)));
 
     return configure();
   }

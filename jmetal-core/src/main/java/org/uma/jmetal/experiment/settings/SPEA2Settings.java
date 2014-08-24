@@ -1,4 +1,4 @@
-//  SPEA2_Settings.java 
+//  SPEA2Settings.java
 //
 //  Authors:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -33,9 +33,7 @@ import org.uma.jmetal.util.JMetalException;
 
 import java.util.Properties;
 
-/**
- * Settings class of algorithm SPEA2
- */
+/** Settings class of algorithm SPEA2 */
 public class SPEA2Settings extends Settings {
   private int populationSize;
   private int archiveSize;
@@ -61,7 +59,8 @@ public class SPEA2Settings extends Settings {
     mutationDistributionIndex = 20.0  ;
   }
 
-  /** Configure() method */
+  /** Configure SPEA2 with default parameter settings */
+  @Override
   public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
     Operator crossover;
@@ -69,35 +68,31 @@ public class SPEA2Settings extends Settings {
     Operator selection;
 
     crossover = new SBXCrossover.Builder()
-            .distributionIndex(crossoverDistributionIndex)
-            .probability(crossoverProbability)
+            .setDistributionIndex(crossoverDistributionIndex)
+            .setProbability(crossoverProbability)
             .build() ;
 
     mutation = new PolynomialMutation.Builder()
-            .distributionIndex(mutationDistributionIndex)
-            .probability(mutationProbability)
+            .setDistributionIndex(mutationDistributionIndex)
+            .setProbability(mutationProbability)
             .build();
 
     selection = new BinaryTournament.Builder()
             .build();
 
     algorithm = new SPEA2.Builder(problem)
-            .populationSize(populationSize)
-            .archiveSize(archiveSize)
-            .maxEvaluations(maxEvaluations)
-            .crossover(crossover)
-            .mutation(mutation)
-            .selection(selection)
+            .setPopulationSize(populationSize)
+            .setArchiveSize(archiveSize)
+            .setMaxEvaluations(maxEvaluations)
+            .setCrossover(crossover)
+            .setMutation(mutation)
+            .setSelection(selection)
             .build() ;
 
     return algorithm ;
   }
 
-  /**
-   * Configure SPEA2 with user-defined parameter settings
-   *
-   * @return A SPEA2 algorithm object
-   */
+  /** Configure SPEA2 from a properties file */
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {
     populationSize = Integer.parseInt(configuration.getProperty("populationSize",String.valueOf(

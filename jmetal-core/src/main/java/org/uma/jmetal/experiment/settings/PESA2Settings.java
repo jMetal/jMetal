@@ -50,7 +50,6 @@ public class PESA2Settings extends Settings {
     Object[] problemParams = {"Real"};
     this.problem = (new ProblemFactory()).getProblem(problemName, problemParams);
 
-    /* Default settings */
     populationSize = 10;
     maxEvaluations = 25000;
     archiveSize = 100 ;
@@ -61,7 +60,7 @@ public class PESA2Settings extends Settings {
     crossoverDistributionIndex = 20.0;
   }
 
-  /** Configure() method */
+  /** Configure PESA2 with default parameter settings */
   @Override
   public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
@@ -69,28 +68,28 @@ public class PESA2Settings extends Settings {
     Mutation mutation;
 
     crossover = new SBXCrossover.Builder()
-            .distributionIndex(crossoverDistributionIndex)
-            .probability(crossoverProbability)
+            .setDistributionIndex(crossoverDistributionIndex)
+            .setProbability(crossoverProbability)
             .build() ;
 
     mutation = new PolynomialMutation.Builder()
-            .distributionIndex(mutationDistributionIndex)
-            .probability(mutationProbability)
+            .setDistributionIndex(mutationDistributionIndex)
+            .setProbability(mutationProbability)
             .build();
 
     algorithm = new PESA2.Builder(problem)
-            .maxEvaluations(maxEvaluations)
-            .populationSize(populationSize)
-            .archiveSize(archiveSize)
-            .biSections(biSections)
-            .crossover(crossover)
-            .mutation(mutation)
+            .setMaxEvaluations(maxEvaluations)
+            .setPopulationSize(populationSize)
+            .setArchiveSize(archiveSize)
+            .setBiSections(biSections)
+            .setCrossover(crossover)
+            .setMutation(mutation)
             .build() ;
 
     return algorithm;
   }
 
-  /** Configure() method */
+  /** Configure PESA2 from a configuration file */
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {
     populationSize = Integer

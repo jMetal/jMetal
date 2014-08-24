@@ -29,7 +29,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 
 /**
- * This class implements an archive based on an adaptive grid used in PAES
+ * This class implements an setArchive based on an adaptive grid used in PAES
  */
 public class AdaptiveGridArchive extends Archive {
   private static final long serialVersionUID = -1265707693992803196L;
@@ -41,7 +41,7 @@ public class AdaptiveGridArchive extends Archive {
   /**
    * Constructor.
    *
-   * @param maxSize    The maximum size of the archive
+   * @param maxSize    The maximum size of the setArchive
    * @param bisections The maximum number of bi-divisions for the adaptive
    *                   grid.
    * @param objectives The number of objectives.
@@ -54,10 +54,10 @@ public class AdaptiveGridArchive extends Archive {
   }
 
   /**
-   * Adds a <code>Solution</code> to the archive. If the <code>Solution</code>
-   * is dominated by any member of the archive then it is discarded. If the
-   * <code>Solution</code> dominates some members of the archive, these are
-   * removed. If the archive is full and the <code>Solution</code> has to be
+   * Adds a <code>Solution</code> to the setArchive. If the <code>Solution</code>
+   * is dominated by any member of the setArchive then it is discarded. If the
+   * <code>Solution</code> dominates some members of the setArchive, these are
+   * removed. If the setArchive is full and the <code>Solution</code> has to be
    * inserted, one <code>Solution</code> of the most populated hypercube of the
    * adaptive grid is removed.
    *
@@ -73,8 +73,8 @@ public class AdaptiveGridArchive extends Archive {
       Solution element = iterator.next();
       int flag = dominanceComparator.compare(solution, element);
       if (flag == -1) { // The Individual to insert dominates other
-        // individuals in  the archive
-        iterator.remove(); //Delete it from the archive
+        // individuals in  the setArchive
+        iterator.remove(); //Delete it from the setArchive
         int location = grid.location(element);
         if (grid.getLocationDensity(location) > 1) {//The hypercube contains
           grid.removeSolution(location);            //more than one individual
@@ -89,13 +89,13 @@ public class AdaptiveGridArchive extends Archive {
     }
 
     // At this point, the solutiontype may be inserted
-    if (size() == 0) { //The archive is empty
+    if (size() == 0) { //The setArchive is empty
       solutionsList.add(solution);
       grid.updateGrid(this);
       return true;
     }
 
-    if (size() < maxSize) { //The archive is not full
+    if (size() < maxSize) { //The setArchive is not full
       grid.updateGrid(solution, this); // Update the grid if applicable
       int location;
       location = grid.location(solution); // Get the location of the solutiontype
@@ -104,7 +104,7 @@ public class AdaptiveGridArchive extends Archive {
       return true;
     }
 
-    // At this point, the solutiontype has to be inserted and the archive is full
+    // At this point, the solutiontype has to be inserted and the setArchive is full
     grid.updateGrid(solution, this);
     int location = grid.location(solution);
     if (location == grid.getMostPopulatedHypercube()) { // The solutiontype is in the

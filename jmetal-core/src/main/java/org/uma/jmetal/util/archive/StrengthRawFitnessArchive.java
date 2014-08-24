@@ -30,7 +30,7 @@ import org.uma.jmetal.util.comparator.FitnessComparator;
 import java.util.Comparator;
 
 /**
- * This class implements a bounded archive based on strength raw fitness (as defined in SPEA2).
+ * This class implements a bounded setArchive based on strength raw fitness (as defined in SPEA2).
  */
 public class StrengthRawFitnessArchive extends Archive {
   private static final long serialVersionUID = 7432108704079114025L;
@@ -51,10 +51,10 @@ public class StrengthRawFitnessArchive extends Archive {
   }
 
   /**
-   * Adds a Solution to the archive. If the <code>Solution</code>
-   * is dominated by any member of the archive then it is discarded. If the
-   * <code>Solution</code> dominates some members of the archive, these are
-   * removed. If the archive is full and the <code>Solution</code> has to be
+   * Adds a Solution to the setArchive. If the <code>Solution</code>
+   * is dominated by any member of the setArchive then it is discarded. If the
+   * <code>Solution</code> dominates some members of the setArchive, these are
+   * removed. If the setArchive is full and the <code>Solution</code> has to be
    * inserted, all the solutions are ordered by his strengthRawFitness value and
    * the one having the worst value is removed.
    *

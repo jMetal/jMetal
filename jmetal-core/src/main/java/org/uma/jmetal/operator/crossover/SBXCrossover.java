@@ -63,11 +63,11 @@ public class SBXCrossover extends Crossover {
     addValidSolutionType(RealSolutionType.class);
     addValidSolutionType(ArrayRealSolutionType.class);
 
-    if (parameters.get("probability") != null) {
-      crossoverProbability = (Double) parameters.get("probability");
+    if (parameters.get("setProbability") != null) {
+      crossoverProbability = (Double) parameters.get("setProbability");
     }
-    if (parameters.get("distributionIndex") != null) {
-      distributionIndex= (Double) parameters.get("distributionIndex");
+    if (parameters.get("setDistributionIndex") != null) {
+      distributionIndex= (Double) parameters.get("setDistributionIndex");
     }
   }
 
@@ -340,7 +340,7 @@ public class SBXCrossover extends Crossover {
       crossoverProbability = DEFAULT_PROBABILITY ;
     }
 
-    public Builder distributionIndex(double distributionIndex) {
+    public Builder setDistributionIndex(double distributionIndex) {
       if (distributionIndex < 0) {
         throw new JMetalException("Distribution index invalid: " + distributionIndex) ;
       } else {
@@ -350,7 +350,7 @@ public class SBXCrossover extends Crossover {
       return this ;
     }
 
-    public Builder probability(double probability) {
+    public Builder setProbability(double probability) {
       if ((probability < 0) || (probability > 1.0)) {
         throw new JMetalException("Probability value invalid: " + probability) ;
       } else {

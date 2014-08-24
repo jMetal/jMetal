@@ -60,7 +60,6 @@ public class SPEA2 extends Algorithm {
   }
 
   /* Getters */
-
   public int getPopulationSize() {
     return populationSize;
   }
@@ -83,6 +82,64 @@ public class SPEA2 extends Algorithm {
 
   public Operator getSelectionOperator() {
     return selectionOperator;
+  }
+
+  /** Builder class */
+  public static class Builder {
+    private Problem problem;
+
+    private int populationSize;
+    private int archiveSize;
+
+    private int maxEvaluations;
+
+    private Operator mutationOperator;
+    private Operator crossoverOperator;
+    private Operator selectionOperator;
+
+    public Builder(Problem problem) {
+      this.problem = problem ;
+    }
+
+    public Builder setPopulationSize(int populationSize) {
+      this.populationSize = populationSize ;
+
+      return this ;
+    }
+
+    public Builder setArchiveSize(int archiveSize) {
+      this.archiveSize = archiveSize ;
+
+      return this ;
+    }
+
+    public Builder setMaxEvaluations(int maxEvaluations) {
+      this.maxEvaluations = maxEvaluations ;
+
+      return this ;
+    }
+
+    public Builder setCrossover(Operator crossover) {
+      crossoverOperator = crossover ;
+
+      return this ;
+    }
+
+    public Builder setMutation(Operator mutation) {
+      mutationOperator = mutation ;
+
+      return this ;
+    }
+
+    public Builder setSelection(Operator selection) {
+      selectionOperator = selection ;
+
+      return this ;
+    }
+
+    public SPEA2 build() {
+      return new SPEA2(this) ;
+    }
   }
 
   /** Execute() method */
@@ -141,63 +198,5 @@ public class SPEA2 extends Algorithm {
 
     Ranking ranking = new Ranking(archive);
     return ranking.getSubfront(0);
-  }
-
-  /** Builder class */
-  public static class Builder {
-    private Problem problem;
-
-    private int populationSize;
-    private int archiveSize;
-
-    private int maxEvaluations;
-
-    private Operator mutationOperator;
-    private Operator crossoverOperator;
-    private Operator selectionOperator;
-
-    public Builder(Problem problem) {
-      this.problem = problem ;
-    }
-
-    public Builder populationSize(int populationSize) {
-      this.populationSize = populationSize ;
-
-      return this ;
-    }
-
-    public Builder archiveSize(int archiveSize) {
-      this.archiveSize = archiveSize ;
-
-      return this ;
-    }
-
-    public Builder maxEvaluations(int maxEvaluations) {
-      this.maxEvaluations = maxEvaluations ;
-
-      return this ;
-    }
-
-    public Builder crossover(Operator crossover) {
-      crossoverOperator = crossover ;
-
-      return this ;
-    }
-
-    public Builder mutation(Operator mutation) {
-      mutationOperator = mutation ;
-
-      return this ;
-    }
-
-    public Builder selection(Operator selection) {
-      selectionOperator = selection ;
-
-      return this ;
-    }
-
-    public SPEA2 build() {
-      return new SPEA2(this) ;
-    }
   }
 } 

@@ -41,7 +41,7 @@ import org.uma.jmetal.util.random.PseudoRandom;
 
 import java.util.Comparator;
 
-/** Class implementing the  OMOPSO algorithm */
+/** Class implementing the OMOPSO algorithm */
 public class OMOPSO extends Algorithm {
   private static final long serialVersionUID = -4920101693175195923L;
 
@@ -66,9 +66,6 @@ public class OMOPSO extends Algorithm {
   private UniformMutation uniformMutation;
   private NonUniformMutation nonUniformMutation;
 
-  /**
-   * eta value
-   */
   private double eta = 0.0075;
 
   /**
@@ -102,7 +99,7 @@ public class OMOPSO extends Algorithm {
     speed = new double[swarmSize][problem.getNumberOfVariables()];
   }
 
-  /* getters/setters */
+  /* Getters */
   public int getArchiveSize() {
     return archiveSize;
   }
@@ -123,7 +120,61 @@ public class OMOPSO extends Algorithm {
     return nonUniformMutation;
   }
 
-  /** execute() method */
+  /** Buider class */
+  public static class Builder{
+    protected SolutionSetEvaluator evaluator;
+
+    protected Problem problem;
+
+    private int swarmSize = 100 ;
+    private int archiveSize = 100 ;
+    private int maxIterations = 25000 ;
+
+    private UniformMutation uniformMutation ;
+    private NonUniformMutation nonUniformMutation ;
+
+    public Builder(Problem problem, SolutionSetEvaluator evaluator) {
+      this.evaluator = evaluator ;
+      this.problem = problem ;
+    }
+
+    public Builder setSwarmSize(int swarmSize) {
+      this.swarmSize = swarmSize ;
+
+      return this ;
+    }
+
+    public Builder setArchiveSize(int archiveSize) {
+      this.archiveSize = archiveSize ;
+
+      return this ;
+    }
+
+    public Builder setMaxIterations(int maxIterations) {
+      this.maxIterations = maxIterations ;
+
+      return this ;
+    }
+
+    public Builder setUniformMutation(Mutation uniformMutation) {
+      this.uniformMutation = (UniformMutation)uniformMutation ;
+
+      return this ;
+    }
+
+    public Builder setNonUniformMutation(Mutation nonUniformMutation) {
+      this.nonUniformMutation = (NonUniformMutation)nonUniformMutation ;
+
+      return this ;
+    }
+
+
+    public OMOPSO build() {
+      return new OMOPSO(this) ;
+    }
+  }
+
+  /** Execute() method */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     createInitialSwarm();
     evaluateSwarm();
@@ -270,59 +321,5 @@ public class OMOPSO extends Algorithm {
 
   protected void tearDown() {
     evaluator.shutdown();
-  }
-
-  /** Buider class */
-  public static class Builder{
-    protected SolutionSetEvaluator evaluator;
-
-    protected Problem problem;
-
-    private int swarmSize = 100 ;
-    private int archiveSize = 100 ;
-    private int maxIterations = 25000 ;
-
-    private UniformMutation uniformMutation ;
-    private NonUniformMutation nonUniformMutation ;
-
-    public Builder(Problem problem, SolutionSetEvaluator evaluator) {
-      this.evaluator = evaluator ;
-      this.problem = problem ;
-    }
-
-    public Builder swarmSize(int swarmSize) {
-      this.swarmSize = swarmSize ;
-
-      return this ;
-    }
-
-    public Builder archiveSize(int archiveSize) {
-      this.archiveSize = archiveSize ;
-
-      return this ;
-    }
-
-    public Builder maxIterations(int maxIterations) {
-      this.maxIterations = maxIterations ;
-
-      return this ;
-    }
-
-    public Builder uniformMutation(Mutation uniformMutation) {
-      this.uniformMutation = (UniformMutation)uniformMutation ;
-
-      return this ;
-    }
-
-    public Builder nonUniformMutation(Mutation nonUniformMutation) {
-      this.nonUniformMutation = (NonUniformMutation)nonUniformMutation ;
-
-      return this ;
-    }
-
-
-    public OMOPSO build() {
-      return new OMOPSO(this) ;
-    }
   }
 }

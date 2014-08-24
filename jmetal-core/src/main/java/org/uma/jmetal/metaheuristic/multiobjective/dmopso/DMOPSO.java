@@ -87,7 +87,62 @@ public class DMOPSO extends Algorithm {
   public String getDataDirectory() {
   	return dataDirectory ;
   }
-  
+
+
+  /** Builder class */
+  public static class Builder {
+    protected Problem problem;
+    private int swarmSize;
+    private int maxAge;
+    private int maxIterations;
+    private String functionType ;
+    private String dataDirectory ;
+
+    public Builder(Problem problem) {
+      this.problem = problem ;
+
+      swarmSize = 100 ;
+      maxIterations = 250 ;
+      maxAge = 2 ;
+      functionType = "_TCHE" ;
+      dataDirectory = "" ;
+    }
+
+    public Builder setSwarmSize(int swarmSize) {
+      this.swarmSize = swarmSize ;
+
+      return this ;
+    }
+
+    public Builder setMaxIterations(int maxIterations) {
+      this.maxIterations = maxIterations ;
+
+      return this ;
+    }
+
+    public Builder setMaxAge(int maxAge) {
+      this.maxAge = maxAge ;
+
+      return this ;
+    }
+
+    public Builder setFunctionType(String functionType) {
+      this.functionType = functionType ;
+
+      return this ;
+    }
+
+    public Builder setDataDirectory(String dataDirectory) {
+      this.dataDirectory = dataDirectory ;
+
+      return this ;
+    }
+
+    public DMOPSO build() {
+      return new DMOPSO(this) ;
+    }
+  }
+
   /**
    * Initialize all parameter of the algorithm
    */
@@ -493,59 +548,5 @@ public class DMOPSO extends Algorithm {
       throw new JMetalException("DMOPSO.fitnessFunction: unknown type " + functionType);
     }
     return fitness;
-  }
-
-  /** Builder class */
-  public static class Builder {
-    protected Problem problem;
-    private int swarmSize;
-    private int maxAge;
-    private int maxIterations;
-    private String functionType ;
-    private String dataDirectory ;
-
-    public Builder(Problem problem) {
-      this.problem = problem ;
-
-      swarmSize = 100 ;
-      maxIterations = 250 ;
-      maxAge = 2 ;
-      functionType = "_TCHE" ;
-      dataDirectory = "" ;
-    }
-
-    public Builder swarmSize(int swarmSize) {
-      this.swarmSize = swarmSize ;
-
-      return this ;
-    }
-
-    public Builder maxIterations(int maxIterations) {
-      this.maxIterations = maxIterations ;
-
-      return this ;
-    }
-
-    public Builder maxAge(int maxAge) {
-      this.maxAge = maxAge ;
-
-      return this ;
-    }
-
-    public Builder functionType(String functionType) {
-      this.functionType = functionType ;
-
-      return this ;
-    }
-
-    public Builder dataDirectory(String dataDirectory) {
-      this.dataDirectory = dataDirectory ;
-
-      return this ;
-    }
-
-    public DMOPSO build() {
-      return new DMOPSO(this) ;
-    }
   }
 }

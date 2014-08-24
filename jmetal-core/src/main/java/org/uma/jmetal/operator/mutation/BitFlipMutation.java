@@ -53,8 +53,8 @@ public class BitFlipMutation extends Mutation {
   @Deprecated
   public BitFlipMutation(HashMap<String, Object> parameters) {
     super(parameters);
-    if (parameters.get("probability") != null) {
-      mutationProbability = (Double) parameters.get("probability");
+    if (parameters.get("setProbability") != null) {
+      mutationProbability = (Double) parameters.get("setProbability");
     }
   }
 
@@ -67,14 +67,57 @@ public class BitFlipMutation extends Mutation {
     mutationProbability = builder.mutationProbability;
   }
 
+  /* Getter */
   public double getMutationProbability() {
     return mutationProbability;
+  }
+
+  /** Builder class */
+  public static class Builder {
+    private double mutationProbability = 0.0 ;
+
+    public Builder() {
+    }
+
+    public Builder(double probability) {
+      mutationProbability = probability ;
+    }
+
+    public Builder setProbability(double probability) {
+      mutationProbability = probability ;
+
+      return this ;
+    }
+
+    public BitFlipMutation build() {
+      return new BitFlipMutation(this) ;
+    }
+  }
+
+  /** Execute() method */
+  public Object execute(Object object) throws JMetalException {
+    if (null == object) {
+      throw new JMetalException("Null parameter") ;
+    } else if (!(object instanceof Solution)) {
+      throw new JMetalException("Invalid parameter class") ;
+    }
+
+    Solution solution = (Solution) object;
+
+    if (!solutionTypeIsValid(solution)) {
+      throw new JMetalException("BitFlipMutation.execute: the solution type " +
+              "is not of the right type. The type should be 'Binary', " +
+              "'BinaryReal' or 'Int', but " + solution.getType() + " is obtained");
+    }
+
+    doMutation(mutationProbability, solution);
+    return solution;
   }
 
   /**
    * Perform the mutation operation
    *
-   * @param probability Mutation probability
+   * @param probability Mutation setProbability
    * @param solution    The solutiontype to mutate
    * @throws org.uma.jmetal.util.JMetalException
    */
@@ -112,48 +155,6 @@ public class BitFlipMutation extends Mutation {
       Class<String> cls = java.lang.String.class;
       String name = cls.getName();
       throw new JMetalException("Exception in " + name + ".doMutation()");
-    }
-  }
-
-  /** execute() method */
-  public Object execute(Object object) throws JMetalException {
-    if (null == object) {
-      throw new JMetalException("Null parameter") ;
-    } else if (!(object instanceof Solution)) {
-      throw new JMetalException("Invalid parameter class") ;
-    }
-
-    Solution solution = (Solution) object;
-
-    if (!solutionTypeIsValid(solution)) {
-      throw new JMetalException("BitFlipMutation.execute: the solution type " +
-        "is not of the right type. The type should be 'Binary', " +
-        "'BinaryReal' or 'Int', but " + solution.getType() + " is obtained");
-    }
-
-    doMutation(mutationProbability, solution);
-    return solution;
-  }
-
-  /** Builder class */
-  public static class Builder {
-    private double mutationProbability = 0.0 ;
-
-    public Builder() {
-    }
-
-    public Builder(double probability) {
-      mutationProbability = probability ;
-    }
-
-    public Builder probability(double probability) {
-      mutationProbability = probability ;
-
-      return this ;
-    }
-
-    public BitFlipMutation build() {
-      return new BitFlipMutation(this) ;
     }
   }
 }

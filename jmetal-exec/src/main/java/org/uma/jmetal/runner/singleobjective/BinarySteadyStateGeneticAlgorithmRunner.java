@@ -59,11 +59,11 @@ public class BinarySteadyStateGeneticAlgorithmRunner {
     problem = new OneMax("Binary", bits);
 
     crossover = new SinglePointCrossover.Builder()
-           .probability(0.9)
+           .setProbability(0.9)
             .build() ;
 
     mutation = new BitFlipMutation.Builder()
-            .probability(1.0/bits)
+            .setProbability(1.0/bits)
             .build() ;
 
     selection = new BinaryTournament.Builder()

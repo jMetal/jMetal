@@ -30,9 +30,7 @@ import org.uma.jmetal.operator.selection.PESA2Selection;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.archive.AdaptiveGridArchive;
 
-/**
- * This class implements the PESA2 algorithm.
- */
+/** This class implements the PESA2 algorithm */
 public class PESA2 extends Algorithm {
   private static final long serialVersionUID = 6904671980699718772L;
 
@@ -81,6 +79,76 @@ public class PESA2 extends Algorithm {
     return mutation;
   }
 
+  /** Builder class */
+  public static class Builder {
+    private Problem problem;
+
+    private int populationSize;
+    private int archiveSize;
+    private int maxEvaluations;
+    private int biSections;
+
+    private Crossover crossover ;
+    private Mutation mutation ;
+
+    public Builder(Problem problem) {
+      this.problem = problem ;
+      this.populationSize = 10 ;
+      this.archiveSize = 100 ;
+      this.biSections = 5 ;
+
+      this.crossover = new SBXCrossover.Builder()
+              .setProbability(0.9)
+              .setDistributionIndex(20.0)
+              .build() ;
+
+      this.mutation = new PolynomialMutation.Builder()
+              .setProbability(1.0 / problem.getNumberOfVariables())
+              .setDistributionIndex(20.0)
+              .build() ;
+    }
+
+    public Builder setPopulationSize(int populationSize) {
+      this.populationSize = populationSize ;
+
+      return this ;
+    }
+
+    public Builder setArchiveSize(int archiveSize) {
+      this.archiveSize = archiveSize ;
+
+      return this ;
+    }
+
+    public Builder setMaxEvaluations(int maxEvaluations) {
+      this.maxEvaluations = maxEvaluations ;
+
+      return this ;
+    }
+
+    public Builder setBiSections(int biSections) {
+      this.biSections = biSections ;
+
+      return this ;
+    }
+
+    public Builder setMutation(Mutation mutation) {
+      this.mutation = mutation ;
+
+      return this ;
+    }
+
+    public Builder setCrossover(Crossover crossover) {
+      this.crossover = crossover ;
+
+      return this ;
+    }
+
+    public PESA2 build() {
+      return new PESA2(this) ;
+    }
+  }
+
   /** Execute() method */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     int evaluations ;
@@ -104,9 +172,9 @@ public class PESA2 extends Algorithm {
       solutionSet.add(solution);
     }               
 
-    // Incorporate non-dominated solutiontype to the archive
+    // Incorporate non-dominated solutiontype to the setArchive
     for (int i = 0; i < solutionSet.size(); i++) {
-      archive.add(solutionSet.get(i)); // Only non dominated are accepted by the archive
+      archive.add(solutionSet.get(i)); // Only non dominated are accepted by the setArchive
     }
 
     // Clear the init solutionSet
@@ -138,75 +206,5 @@ public class PESA2 extends Algorithm {
     } while (evaluations < maxEvaluations);
     //Return the  solutionSet of non-dominated individual
     return archive;
-  }
-
-  /** Builder class */
-  public static class Builder {
-    private Problem problem;
-
-    private int populationSize;
-    private int archiveSize;
-    private int maxEvaluations;
-    private int biSections;
-
-    private Crossover crossover ;
-    private Mutation mutation ;
-
-    public Builder(Problem problem) {
-      this.problem = problem ;
-      this.populationSize = 10 ;
-      this.archiveSize = 100 ;
-      this.biSections = 5 ;
-
-      this.crossover = new SBXCrossover.Builder()
-              .probability(0.9)
-              .distributionIndex(20.0)
-              .build() ;
-
-      this.mutation = new PolynomialMutation.Builder()
-              .probability(1.0/problem.getNumberOfVariables())
-              .distributionIndex(20.0)
-              .build() ;
-    }
-
-    public Builder populationSize(int populationSize) {
-      this.populationSize = populationSize ;
-
-      return this ;
-    }
-
-    public Builder archiveSize(int archiveSize) {
-      this.archiveSize = archiveSize ;
-
-      return this ;
-    }
-
-    public Builder maxEvaluations(int maxEvaluations) {
-      this.maxEvaluations = maxEvaluations ;
-
-      return this ;
-    }
-
-    public Builder biSections(int biSections) {
-      this.biSections = biSections ;
-
-      return this ;
-    }
-
-    public Builder mutation(Mutation mutation) {
-      this.mutation = mutation ;
-
-      return this ;
-    }
-
-    public Builder crossover(Crossover crossover) {
-      this.crossover = crossover ;
-
-      return this ;
-    }
-
-    public PESA2 build() {
-      return new PESA2(this) ;
-    }
   }
 } 

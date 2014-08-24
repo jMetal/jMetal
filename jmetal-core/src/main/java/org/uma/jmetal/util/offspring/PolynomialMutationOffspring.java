@@ -28,8 +28,8 @@ public class PolynomialMutationOffspring extends Offspring {
     double distributionIndexForMutation
   ) throws JMetalException {
     HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
-    mutationParameters.put("probability", this.mutationProbability = mutationProbability);
-    mutationParameters.put("distributionIndex", distributionIndex = distributionIndexForMutation);
+    mutationParameters.put("setProbability", this.mutationProbability = mutationProbability);
+    mutationParameters.put("setDistributionIndex", distributionIndex = distributionIndexForMutation);
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
 
     id = "PolynomialMutation";

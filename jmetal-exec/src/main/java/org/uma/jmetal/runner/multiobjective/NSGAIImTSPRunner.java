@@ -1,4 +1,4 @@
-//  NSGAII_MOTSP_main.java
+//  NSGAIImMOTSPRunner.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -50,8 +50,9 @@ public class NSGAIImTSPRunner {
    * @param args Command line arguments.
    * @throws org.uma.jmetal.util.JMetalException
    * @throws java.io.IOException
-   * @throws SecurityException Usage:
-   *                           - org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII_mTSP_main
+   * @throws SecurityException
+   * Usage:
+   *       - org.uma.jmetal.runner.multiobjective.NSGAIImTSPRunner
    */
   public static void main(String[] args) throws Exception {
     Problem problem; 
@@ -80,22 +81,22 @@ public class NSGAIImTSPRunner {
     SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator() ;
 
     crossover = new PMXCrossover.Builder()
-            .probability(0.95)
+            .setProbability(0.95)
             .build() ;
 
     mutation = new SwapMutation.Builder()
-            .probability(0.2)
+            .setProbability(0.2)
             .build() ;
 
     selection = new BinaryTournament2.Builder()
             .build() ;
 
     algorithm = new NSGAIITemplate.Builder(problem, evaluator)
-            .populationSize(100)
-            .maxEvaluations(1000000)
-            .crossover(crossover)
-            .mutation(mutation)
-            .selection(selection)
+            .setPopulationSize(100)
+            .setMaxEvaluations(1000000)
+            .setCrossover(crossover)
+            .setMutation(mutation)
+            .setSelection(selection)
             .build("NSGAII") ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)

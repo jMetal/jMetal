@@ -57,16 +57,15 @@ public class FastSMSEMOARunner {
    * @param args Command line arguments.
    * @throws org.uma.jmetal.util.JMetalException
    * @throws java.io.IOException
-   * @throws SecurityException Usage: three options
-   *                           - org.uma.jmetal.runner.SMSEMOA_main
-   *                           - org.uma.jmetal.runner.SMSEMOA_main problemName
-   *                           - org.uma.jmetal.runner.SMSEMOA_main problemName paretoFrontFile
+   * @throws SecurityException
+   * @throws java.lang.ClassNotFoundException
+   * Usage: three options
+   *       - org.uma.jmetal.runner.multiobjective.FastSMSEMOARunner
+   *       - org.uma.jmetal.runner.multiobjective.FastSMSEMOARunner problemName
+   *       - org.uma.jmetal.runner.multiobjective.FastSMSEMOARunner problemName paretoFrontFile
    */
   public static void main(String[] args) throws
-    JMetalException,
-    SecurityException,
-    IOException,
-    ClassNotFoundException {
+          JMetalException, SecurityException, IOException, ClassNotFoundException {
     Problem problem;
     Algorithm algorithm;
     Operator crossover;
@@ -93,12 +92,13 @@ public class FastSMSEMOARunner {
       indicators = new QualityIndicatorGetter(problem, args[1]);
     } else {
       problem = new Kursawe("Real", 3);
-      //problem = new Kursawe("BinaryReal", 3);
+      /* Examples
       //problem = new Water("Real");
-      //problem = new ZDT1("ArrayReal", 100);
-      //problem = new ConstrEx("Real");
+      //problem = new ZDT4("ArrayReal");
+      //problem = new WFG1("Real");
       //problem = new DTLZ1("Real");
       //problem = new OKA2("Real") ;
+      */
     }
 
     populationSize = 100   ;
@@ -110,38 +110,38 @@ public class FastSMSEMOARunner {
     offset = 100.0 ;
 
     crossover = new SBXCrossover.Builder()
-      .distributionIndex(crossoverDistributionIndex)
-      .probability(crossoverProbability)
-      .build() ;
+            .setDistributionIndex(crossoverDistributionIndex)
+            .setProbability(crossoverProbability)
+            .build() ;
 
     mutation = new PolynomialMutation.Builder()
-      .distributionIndex(mutationDistributionIndex)
-      .probability(mutationProbability)
-      .build();
+            .setDistributionIndex(mutationDistributionIndex)
+            .setProbability(mutationProbability)
+            .build();
 
     selection = new RandomSelection.Builder()
-      .build();
+            .build();
 
     algorithm = new FastSMSEMOA.Builder(problem)
-      .crossover(crossover)
-      .mutation(mutation)
-      .selection(selection)
-      .offset(offset)
-      .maxEvaluations(maxEvaluations)
-      .populationSize(populationSize)
-      .build("FastSMSEMOA") ;
+            .setCrossover(crossover)
+            .setMutation(mutation)
+            .setSelection(selection)
+            .setOffset(offset)
+            .setMaxEvaluations(maxEvaluations)
+            .setPopulationSize(populationSize)
+            .build("FastSMSEMOA") ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-      .execute() ;
+            .execute() ;
 
     SolutionSet population = algorithmRunner.getSolutionSet() ;
     long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)
-      .separator("\t")
-      .varFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
-      .funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
-      .print();
+            .separator("\t")
+            .varFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+            .funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+            .print();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
     JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");

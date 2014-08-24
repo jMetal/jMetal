@@ -41,17 +41,23 @@ import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
-import java.util.logging.FileHandler;
 
 /**
  * Class for configuring and running the FastPGA algorithm
  */
 public class FastPGARunner {
   /**
-   * @param args Command line arguments. The first (optional) argument specifies
-   *             the problem to solve.
+   * @param args Command line arguments. The first (optional) argument specifies the problem to solve.
    * @throws org.uma.jmetal.util.JMetalException
+   * @throws IOException
+   * @throws SecurityException
+   * @throws java.lang.ClassNotFoundException
+   * Usage: three options
+   *       - org.uma.jmetal.runner.multiobjective.FastPGARunner
+   *       - org.uma.jmetal.runner.multiobjective.FastPGARunner problemName
+   *       - org.uma.jmetal.runner.multiobjective.FastPGARunner problemName paretoFrontFile
    */
+
   public static void main(String[] args) throws JMetalException, IOException, ClassNotFoundException {
     Problem problem;
     Algorithm algorithm;
@@ -71,26 +77,27 @@ public class FastPGARunner {
       indicators = new QualityIndicatorGetter(problem, args[1]);
     } else {
       problem = new Kursawe("Real", 3);
-      //problem = new Kursawe("BinaryReal", 3);
+      /* Examples
       //problem = new Water("Real");
-      //problem = new ZDT1("ArrayReal", 100);
-      //problem = new ConstrEx("Real");
+      //problem = new ZDT4("ArrayReal");
+      //problem = new WFG1("Real");
       //problem = new DTLZ1("Real");
       //problem = new OKA2("Real") ;
+      */
     }
 
     crossover = new SBXCrossover.Builder()
-            .probability(0.9)
-            .distributionIndex(20.0)
+            .setProbability(0.9)
+            .setDistributionIndex(20.0)
             .build() ;
 
     mutation = new PolynomialMutation.Builder()
-            .probability(1.0/problem.getNumberOfVariables())
-            .distributionIndex(20.0)
+            .setProbability(1.0 / problem.getNumberOfVariables())
+            .setDistributionIndex(20.0)
             .build() ;
 
     selection = new BinaryTournament.Builder()
-            .comparator(new FPGAFitnessComparator())
+            .setComparator(new FPGAFitnessComparator())
             .build() ;
 
     algorithm = new FastPGA.Builder(problem)

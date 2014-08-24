@@ -58,13 +58,13 @@ public class ParallelGenerationalGeneticAlgorithmRunner {
     problem = new Sphere("Real", 30);
 
     crossover = new SBXCrossover.Builder()
-            .probability(0.9)
-            .distributionIndex(20)
+            .setProbability(0.9)
+            .setDistributionIndex(20)
             .build() ;
 
     mutation = new PolynomialMutation.Builder()
-            .probability(1.0/problem.getNumberOfVariables())
-            .distributionIndex(20)
+            .setProbability(1.0 / problem.getNumberOfVariables())
+            .setDistributionIndex(20)
             .build() ;
 
     selection = new BinaryTournament.Builder()

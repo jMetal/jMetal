@@ -79,7 +79,75 @@ public class GDE3 extends Algorithm {
     dominanceComparator = new DominanceComparator();
   }
 
-  /** execute() method  */
+  /* Getters */
+  public Operator getCrossoverOperator() {
+    return crossoverOperator;
+  }
+
+  public Operator getSelectionOperator() {
+    return selectionOperator;
+  }
+
+  public int getPopulationSize() {
+    return populationSize;
+  }
+
+  public int getMaxIterations() {
+    return maxIterations;
+  }
+
+  /** Builder class */
+  public static class Builder {
+    protected SolutionSetEvaluator evaluator;
+    protected Problem problem;
+
+    protected int populationSize;
+    protected  int maxIterations;
+
+    protected Operator crossoverOperator;
+    protected Operator selectionOperator;
+
+    public Builder(Problem problem, SolutionSetEvaluator evaluator) {
+      this.evaluator = evaluator ;
+      this.problem = problem ;
+    }
+
+    public Builder setPopulationSize(int populationSize) {
+      this.populationSize = populationSize ;
+
+      return this ;
+    }
+
+    public Builder setMaxIterations(int maxIterations) {
+      this.maxIterations = maxIterations ;
+
+      return this ;
+    }
+
+    public Builder setEvaluator(SolutionSetEvaluator evaluator) {
+      this.evaluator = evaluator ;
+
+      return this ;
+    }
+
+    public Builder setCrossover(Operator crossover) {
+      crossoverOperator = crossover ;
+
+      return this ;
+    }
+
+    public Builder setSelection(Operator selection) {
+      selectionOperator = selection ;
+
+      return this ;
+    }
+
+    public GDE3 build() {
+      return new GDE3(this) ;
+    }
+  }
+
+  /** Execute() method  */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     createInitialPopulation();
     population = evaluatePopulation(population);
@@ -92,12 +160,12 @@ public class GDE3 extends Algorithm {
       SolutionSet tmpSolutionSet = new SolutionSet(populationSize) ;
 
       for (int i = 0; i < populationSize; i++) {
-        // Obtain parents. Two parameters are required: the population and the 
+        // Obtain parents. Two parameters are required: the population and the
         //                 index of the current individual
         Solution[] parent = (Solution[]) selectionOperator.execute(new Object[] {population, i});
 
         Solution child;
-        // Crossover. Two parameters are required: the current individual and the 
+        // Crossover. Two parameters are required: the current individual and the
         //            array of parents
         child = (Solution) crossoverOperator.execute(new Object[] {population.get(i), parent});
 
@@ -144,23 +212,6 @@ public class GDE3 extends Algorithm {
     tearDown();
 
     return getNonDominatedSolutions() ;
-  }
-
-  /* Getters */
-  public Operator getCrossoverOperator() {
-    return crossoverOperator;
-  }
-
-  public Operator getSelectionOperator() {
-    return selectionOperator;
-  }
-
-  public int getPopulationSize() {
-    return populationSize;
-  }
-
-  public int getMaxIterations() {
-    return maxIterations;
   }
 
   @Deprecated
@@ -231,56 +282,5 @@ public class GDE3 extends Algorithm {
 
   protected void tearDown() {
     evaluator.shutdown();
-  }
-
-  /** Builder class */
-  public static class Builder {
-    protected SolutionSetEvaluator evaluator;
-    protected Problem problem;
-
-    protected int populationSize;
-    protected  int maxIterations;
-
-    protected Operator crossoverOperator;
-    protected Operator selectionOperator;
-
-    public Builder(Problem problem, SolutionSetEvaluator evaluator) {
-      this.evaluator = evaluator ;
-      this.problem = problem ;
-    }
-
-    public Builder populationSize(int populationSize) {
-      this.populationSize = populationSize ;
-
-      return this ;
-    }
-
-    public Builder maxIterations(int maxIterations) {
-      this.maxIterations = maxIterations ;
-
-      return this ;
-    }
-
-    public Builder evaluator(SolutionSetEvaluator evaluator) {
-      this.evaluator = evaluator ;
-
-      return this ;
-    }
-
-    public Builder crossover(Operator crossover) {
-      crossoverOperator = crossover ;
-
-      return this ;
-    }
-
-    public Builder selection(Operator selection) {
-      selectionOperator = selection ;
-
-      return this ;
-    }
-
-    public GDE3 build() {
-      return new GDE3(this) ;
-    }
   }
 } 

@@ -1,4 +1,4 @@
-//  SMSEMA_Settings.java 
+//  SMSEMOASettings.java
 //
 //  Authors:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -35,9 +35,7 @@ import org.uma.jmetal.util.JMetalException;
 
 import java.util.Properties;
 
-/**
- * Settings class of algorithm SMSEMOA
- */
+/** Settings class of algorithm SMSEMOA */
 public class SMSEMOASettings extends Settings {
   private int populationSize;
   private int maxEvaluations;
@@ -71,25 +69,25 @@ public class SMSEMOASettings extends Settings {
     Mutation mutation;
 
     crossover = new SBXCrossover.Builder()
-      .distributionIndex(crossoverDistributionIndex)
-      .probability(crossoverProbability)
+      .setDistributionIndex(crossoverDistributionIndex)
+      .setProbability(crossoverProbability)
       .build() ;
 
     mutation = new PolynomialMutation.Builder()
-      .distributionIndex(mutationDistributionIndex)
-      .probability(mutationProbability)
+      .setDistributionIndex(mutationDistributionIndex)
+      .setProbability(mutationProbability)
       .build();
 
     selection = new RandomSelection.Builder()
       .build();
 
     algorithm = new SMSEMOA.Builder(problem)
-      .crossover(crossover)
-      .mutation(mutation)
-      .selection(selection)
-      .offset(offset)
-      .maxEvaluations(maxEvaluations)
-      .populationSize(populationSize)
+      .setCrossover(crossover)
+      .setMutation(mutation)
+      .setSelection(selection)
+      .setOffset(offset)
+      .setMaxEvaluations(maxEvaluations)
+      .setPopulationSize(populationSize)
       .build("SMSEMOA") ;
 
     return algorithm ;

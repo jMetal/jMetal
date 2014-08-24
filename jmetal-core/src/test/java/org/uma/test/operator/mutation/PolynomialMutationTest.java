@@ -45,7 +45,7 @@ public class PolynomialMutationTest {
   public void setUp() throws JMetalException {
     problem = new Kursawe("Real", 3) ;
 
-    mutation = new PolynomialMutation.Builder().probability(1.0/ problem.getNumberOfVariables()).build() ;
+    mutation = new PolynomialMutation.Builder().setProbability(1.0 / problem.getNumberOfVariables()).build() ;
   }
 
   @After
@@ -63,7 +63,7 @@ public class PolynomialMutationTest {
   @Test
   public void setMutationProbabilityTest() {
     mutation = new PolynomialMutation.Builder()
-      .probability(0.02)
+      .setProbability(0.02)
       .build() ;
 
     assertEquals(0.02, mutation.getMutationProbability(), DELTA) ;
@@ -72,7 +72,7 @@ public class PolynomialMutationTest {
   @Test
   public void setMutationDistributionIndex() {
     mutation = new PolynomialMutation.Builder()
-      .distributionIndex(5.0)
+      .setDistributionIndex(5.0)
       .build() ;
 
     assertEquals(5.0, mutation.getDistributionIndex(), DELTA) ;
@@ -92,7 +92,7 @@ public class PolynomialMutationTest {
   @Test
   public void operatorExecutionTest() throws ClassNotFoundException {
     mutation = new PolynomialMutation.Builder()
-      .probability(0.9)
+      .setProbability(0.9)
       .build();
 
     Object result = mutation.execute(new Solution(problem));

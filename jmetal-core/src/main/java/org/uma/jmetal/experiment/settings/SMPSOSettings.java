@@ -34,10 +34,7 @@ import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
 
 import java.util.Properties;
 
-/**
- * Settings class of algorithm SMPSO
- */
-
+/** Settings class of algorithm SMPSO */
 public class SMPSOSettings extends Settings {
   private int swarmSize;
   private int maxIterations;
@@ -60,7 +57,7 @@ public class SMPSOSettings extends Settings {
 
   private SolutionSetEvaluator evaluator ;
 
-
+  /** Constructor */
   public SMPSOSettings(String problem) {
     super(problem);
 
@@ -90,7 +87,7 @@ public class SMPSOSettings extends Settings {
     changeVelocity2 = -1;
   }
 
-  /** Configure() method s*/
+  /** Configure SMPSO with default parameter settings s*/
   public Algorithm configure() {
     Algorithm algorithm;
     Mutation mutation;
@@ -98,34 +95,32 @@ public class SMPSOSettings extends Settings {
     Archive archive = new CrowdingArchive(archiveSize, problem.getNumberOfObjectives()) ;
 
     mutation = new PolynomialMutation.Builder()
-      .distributionIndex(mutationDistributionIndex)
-      .probability(mutationProbability)
+      .setDistributionIndex(mutationDistributionIndex)
+      .setProbability(mutationProbability)
       .build();
 
     algorithm = new SMPSO.Builder(problem, archive, evaluator)
-      .mutation(mutation)
-      .maxIterations(maxIterations)
-      .swarmSize(swarmSize)
-      .c1Max(c1Max)
-      .c1Min(c1Min)
-      .c2Max(c2Max)
-      .c2Min(c2Min)
-      .r1Max(r1Max)
-      .r1Min(r1Min)
-      .r2Max(r2Max)
-      .r2Min(r2Min)
-      .weightMax(weightMax)
-      .weightMin(weightMin)
-      .changeVelocity1(changeVelocity1)
-      .changeVelocity2(changeVelocity2)
+      .setMutation(mutation)
+      .setMaxIterations(maxIterations)
+      .setSwarmSize(swarmSize)
+      .setC1Max(c1Max)
+      .setC1Min(c1Min)
+      .setC2Max(c2Max)
+      .setC2Min(c2Min)
+      .setR1Max(r1Max)
+      .setR1Min(r1Min)
+      .setR2Max(r2Max)
+      .setR2Min(r2Min)
+      .setWeightMax(weightMax)
+      .setWeightMin(weightMin)
+      .setChangeVelocity1(changeVelocity1)
+      .setChangeVelocity2(changeVelocity2)
       .build();
 
     return algorithm ;
   }
 
-  /**
-   * Configure SMPSO with user-defined parameter settings
-   */
+  /** Configure SMPSO from a propertires file */
   @Override
   public Algorithm configure(Properties configuration) {
     swarmSize =

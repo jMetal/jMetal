@@ -34,9 +34,7 @@ import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
 
 import java.util.Properties;
 
-/**
- * Settings class of algorithm SMPSOHV
- */
+/** Settings class of algorithm SMPSOHV */
 
 public class SMPSOHVSettings extends Settings {
   private int swarmSize;
@@ -60,14 +58,13 @@ public class SMPSOHVSettings extends Settings {
 
   private SolutionSetEvaluator evaluator ;
 
-
+  /** Constructor */
   public SMPSOHVSettings(String problem) {
     super(problem);
 
     Object[] problemParams = {"Real"};
     this.problem = (new ProblemFactory()).getProblem(problemName, problemParams);
 
-    // Default experiment.settings
     swarmSize = 100;
     maxIterations = 250;
     archiveSize = 100;
@@ -90,7 +87,8 @@ public class SMPSOHVSettings extends Settings {
     changeVelocity2 = -1;
   }
 
-  /** Configure() method s*/
+  /** Configure SMPSO (variant SMPSOHV) with default parameter settings */
+  @Override
   public Algorithm configure() {
     Algorithm algorithm;
     Mutation mutation;
@@ -98,34 +96,32 @@ public class SMPSOHVSettings extends Settings {
     Archive archive = new FastHypervolumeArchive(archiveSize, problem.getNumberOfObjectives()) ;
 
     mutation = new PolynomialMutation.Builder()
-      .distributionIndex(mutationDistributionIndex)
-      .probability(mutationProbability)
+      .setDistributionIndex(mutationDistributionIndex)
+      .setProbability(mutationProbability)
       .build();
 
     algorithm = new SMPSO.Builder(problem, archive, evaluator)
-      .mutation(mutation)
-      .maxIterations(maxIterations)
-      .swarmSize(swarmSize)
-      .c1Max(c1Max)
-      .c1Min(c1Min)
-      .c2Max(c2Max)
-      .c2Min(c2Min)
-      .r1Max(r1Max)
-      .r1Min(r1Min)
-      .r2Max(r2Max)
-      .r2Min(r2Min)
-      .weightMax(weightMax)
-      .weightMin(weightMin)
-      .changeVelocity1(changeVelocity1)
-      .changeVelocity2(changeVelocity2)
+      .setMutation(mutation)
+      .setMaxIterations(maxIterations)
+      .setSwarmSize(swarmSize)
+      .setC1Max(c1Max)
+      .setC1Min(c1Min)
+      .setC2Max(c2Max)
+      .setC2Min(c2Min)
+      .setR1Max(r1Max)
+      .setR1Min(r1Min)
+      .setR2Max(r2Max)
+      .setR2Min(r2Min)
+      .setWeightMax(weightMax)
+      .setWeightMin(weightMin)
+      .setChangeVelocity1(changeVelocity1)
+      .setChangeVelocity2(changeVelocity2)
       .build();
 
     return algorithm ;
   }
 
-  /**
-   * Configure SMPSOHV with user-defined parameter settings
-   */
+  /** Configure SMPSO (variant SMPSOHV) from a properties file */
   @Override
   public Algorithm configure(Properties configuration) {
     swarmSize =

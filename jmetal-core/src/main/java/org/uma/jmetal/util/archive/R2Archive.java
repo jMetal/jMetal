@@ -31,7 +31,7 @@ import org.uma.jmetal.util.random.PseudoRandom;
 import java.util.Comparator;
 
 /**
- * This class implements a bounded archive based on crowding distances (as
+ * This class implements a bounded setArchive based on crowding distances (as
  * defined in NSGA-II).
  */
 public class R2Archive extends Archive {
@@ -42,7 +42,7 @@ public class R2Archive extends Archive {
   private static final long serialVersionUID = -2344933516980116613L;
 
   /**
-   * Stores the maximum size of the archive.
+   * Stores the maximum size of the setArchive.
    */
   private int maxSize;
 
@@ -67,7 +67,7 @@ public class R2Archive extends Archive {
   /**
    * Constructor. Creates an R2Archive for a problem of 2 objectives
    *
-   * @param maxSize The maximum size of the archive.
+   * @param maxSize The maximum size of the setArchive.
    */
   public R2Archive(int maxSize) {
     super(maxSize);
@@ -82,7 +82,7 @@ public class R2Archive extends Archive {
   /**
    * Constructor.
    *
-   * @param maxSize            The maximum size of the archive.
+   * @param maxSize            The maximum size of the setArchive.
    * @param numberOfObjectives The number of objectives.
    */
   public R2Archive(int maxSize, int numberOfObjectives, String file) {
@@ -96,10 +96,10 @@ public class R2Archive extends Archive {
   }
 
   /**
-   * Adds a <code>Solution</code> to the archive. If the <code>Solution</code>
-   * is dominated by any member of the archive, then it is discarded. If the
-   * <code>Solution</code> dominates some members of the archive, these are
-   * removed. If the archive is full and the <code>Solution</code> has to be
+   * Adds a <code>Solution</code> to the setArchive. If the <code>Solution</code>
+   * is dominated by any member of the setArchive, then it is discarded. If the
+   * <code>Solution</code> dominates some members of the setArchive, these are
+   * removed. If the setArchive is full and the <code>Solution</code> has to be
    * inserted, the solutions are sorted by crowding distance and the one having
    * the minimum crowding distance value.
    *
@@ -127,9 +127,9 @@ public class R2Archive extends Archive {
         i++;
       }
     }
-    // Insert the solution into the archive
+    // Insert the solution into the setArchive
     solutionsList.add(solution);
-    if (size() > maxSize) { // The archive is full
+    if (size() > maxSize) { // The setArchive is full
       // Removing the one contributing the less
       int indexWorst = this.r2Indicator.getWorst(this);
       remove(indexWorst);
@@ -138,7 +138,7 @@ public class R2Archive extends Archive {
   }
 
   /**
-   * Returns a solution from the archive based on their contribution to the R2
+   * Returns a solution from the setArchive based on their contribution to the R2
    * indicator. The solution is chosen using a binary tournament.
    */
   public Solution

@@ -181,13 +181,13 @@ public class GenerationalGeneticAlgorithm extends Algorithm {
       maxEvaluations = 25000 ;
 
       crossover = new SBXCrossover.Builder()
-              .probability(0.9)
-              .distributionIndex(20.0)
+              .setProbability(0.9)
+              .setDistributionIndex(20.0)
               .build() ;
 
       mutation = new PolynomialMutation.Builder()
-              .probability(1.0/problem.getNumberOfVariables())
-              .distributionIndex(20.0)
+              .setProbability(1.0 / problem.getNumberOfVariables())
+              .setDistributionIndex(20.0)
               .build() ;
 
       selection = new BinaryTournament.Builder()

@@ -50,11 +50,11 @@ public class PolynomialMutation extends Mutation {
     addValidSolutionType(RealSolutionType.class);
     addValidSolutionType(ArrayRealSolutionType.class);
 
-    if (parameters.get("probability") != null) {
-      mutationProbability = (Double) parameters.get("probability");
+    if (parameters.get("setProbability") != null) {
+      mutationProbability = (Double) parameters.get("setProbability");
     }
-    if (parameters.get("distributionIndex") != null) {
-      distributionIndex = (Double) parameters.get("distributionIndex");
+    if (parameters.get("setDistributionIndex") != null) {
+      distributionIndex = (Double) parameters.get("setDistributionIndex");
     }
   }
 
@@ -185,13 +185,13 @@ public class PolynomialMutation extends Mutation {
       distributionIndex = ETA_M_DEFAULT;
     }
 
-    public Builder distributionIndex(double distributionIndex) {
+    public Builder setDistributionIndex(double distributionIndex) {
       this.distributionIndex = distributionIndex ;
 
       return this ;
     }
 
-    public Builder probability(double probability) {
+    public Builder setProbability(double probability) {
       mutationProbability = probability ;
 
       return this ;

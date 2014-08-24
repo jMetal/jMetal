@@ -76,6 +76,7 @@ public class MOCHC extends Algorithm {
     this.parentSelection = builder.parentSelection ;
   }
 
+  /* Getters */
   public Problem getProblem() {
     return problem;
   }
@@ -116,52 +117,86 @@ public class MOCHC extends Algorithm {
     return preservedPopulation ;
   }
 
-  /**
-   * Compares two solutionSets to determine if both are equals
-   *
-   * @param solutionSet    A <code>SolutionSet</code>
-   * @param newSolutionSet A <code>SolutionSet</code>
-   * @return true if both are contains the same solutions, false in other case
-   */
-  public boolean solutionSetsAreEquals(SolutionSet solutionSet, SolutionSet newSolutionSet) {
-    boolean found;
-    for (int i = 0; i < solutionSet.size(); i++) {
+  /** Builder class */
+  static public class Builder {
+    Problem problem ;
+    SolutionSetEvaluator evaluator ;
+    int populationSize ;
+    int maxEvaluations ;
+    int convergenceValue ;
+    double preservedPopulation ;
+    double initialConvergenceCount ;
+    Crossover crossover ;
+    Mutation cataclysmicMutation;
+    Selection parentSelection ;
+    Selection newGenerationSelection ;
 
-      int j = 0;
-      found = false;
-      while (j < newSolutionSet.size()) {
-
-        if (solutionSet.get(i).equals(newSolutionSet.get(j))) {
-          found = true;
-        }
-        j++;
-      }
-      if (!found) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  /**
-   * Calculate the hamming distance between two solutions
-   *
-   * @param solutionOne A <code>Solution</code>
-   * @param solutionTwo A <code>Solution</code>
-   * @return the hamming distance between solutions
-   */
-  public int hammingDistance(Solution solutionOne, Solution solutionTwo) {
-    int distance = 0;
-    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      distance +=
-        ((Binary) solutionOne.getDecisionVariables()[i]).
-          hammingDistance((Binary) solutionTwo.getDecisionVariables()[i]);
+    public Builder(Problem problem) {
+      this.problem = problem ;
     }
 
-    return distance;
+    public Builder setPopulationSize(int populationSize) {
+      this.populationSize = populationSize ;
+
+      return this ;
+    }
+
+    public Builder setMaxEvaluations(int maxEvaluations) {
+      this.maxEvaluations = maxEvaluations ;
+
+      return this ;
+    }
+
+    public Builder setConvergenceValue(int convergenceValue) {
+      this.convergenceValue = convergenceValue ;
+
+      return this ;
+    }
+
+    public Builder setInitialConvergenceCount(double initialConvergenceCount) {
+      this.initialConvergenceCount = initialConvergenceCount ;
+
+      return this ;
+    }
+
+    public Builder setPreservedPopulation(double preservedPopulation) {
+      this.preservedPopulation = preservedPopulation ;
+
+      return this ;
+    }
+
+    public Builder setCrossover(Crossover crossover) {
+      this.crossover = crossover ;
+
+      return this ;
+    }
+
+    public Builder setCataclysmicMutation(Mutation cataclysmicMutation) {
+      this.cataclysmicMutation = cataclysmicMutation ;
+
+      return this ;
+    }
+
+    public Builder setParentSelection(Selection parentSelection) {
+      this.parentSelection = parentSelection ;
+
+      return this ;
+    }
+
+    public Builder setNewGenerationSelection(Selection newGenerationSelection) {
+      this.newGenerationSelection = newGenerationSelection ;
+
+      return this ;
+    }
+
+    public MOCHC build() {
+      MOCHC algorithm =  new MOCHC(this) ;
+
+      return algorithm ;
+    }
   }
 
-  /** execute() method */
+  /** Execute() method */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     int iterations;
 
@@ -253,82 +288,48 @@ public class MOCHC extends Algorithm {
     return archive;
   }
 
-  /** Builder class */
-  static public class Builder {
-    Problem problem ;
-    SolutionSetEvaluator evaluator ;
-    int populationSize ;
-    int maxEvaluations ;
-    int convergenceValue ;
-    double preservedPopulation ;
-    double initialConvergenceCount ;
-    Crossover crossover ;
-    Mutation cataclysmicMutation;
-    Selection parentSelection ;
-    Selection newGenerationSelection ;
+  /**
+   * Compares two solutionSets to determine if both are equals
+   *
+   * @param solutionSet    A <code>SolutionSet</code>
+   * @param newSolutionSet A <code>SolutionSet</code>
+   * @return true if both are contains the same solutions, false in other case
+   */
+  public boolean solutionSetsAreEquals(SolutionSet solutionSet, SolutionSet newSolutionSet) {
+    boolean found;
+    for (int i = 0; i < solutionSet.size(); i++) {
 
-    public Builder(Problem problem) {
-      this.problem = problem ;
+      int j = 0;
+      found = false;
+      while (j < newSolutionSet.size()) {
+
+        if (solutionSet.get(i).equals(newSolutionSet.get(j))) {
+          found = true;
+        }
+        j++;
+      }
+      if (!found) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /**
+   * Calculate the hamming distance between two solutions
+   *
+   * @param solutionOne A <code>Solution</code>
+   * @param solutionTwo A <code>Solution</code>
+   * @return the hamming distance between solutions
+   */
+  public int hammingDistance(Solution solutionOne, Solution solutionTwo) {
+    int distance = 0;
+    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
+      distance +=
+        ((Binary) solutionOne.getDecisionVariables()[i]).
+          hammingDistance((Binary) solutionTwo.getDecisionVariables()[i]);
     }
 
-    public Builder populationSize(int populationSize) {
-      this.populationSize = populationSize ;
-
-      return this ;
-    }
-
-    public Builder maxEvaluations(int maxEvaluations) {
-      this.maxEvaluations = maxEvaluations ;
-
-      return this ;
-    }
-
-    public Builder convergenceValue(int convergenceValue) {
-      this.convergenceValue = convergenceValue ;
-
-      return this ;
-    }
-
-    public Builder initialConvergenceCount(double initialConvergenceCount) {
-      this.initialConvergenceCount = initialConvergenceCount ;
-
-      return this ;
-    }
-
-    public Builder preservedPopulation(double preservedPopulation) {
-      this.preservedPopulation = preservedPopulation ;
-
-      return this ;
-    }
-
-    public Builder crossover(Crossover crossover) {
-      this.crossover = crossover ;
-
-      return this ;
-    }
-
-    public Builder cataclysmicMutation(Mutation cataclysmicMutation) {
-      this.cataclysmicMutation = cataclysmicMutation ;
-
-      return this ;
-    }
-
-    public Builder parentSelection(Selection parentSelection) {
-      this.parentSelection = parentSelection ;
-
-      return this ;
-    }
-
-    public Builder newGenerationSelection(Selection newGenerationSelection) {
-      this.newGenerationSelection = newGenerationSelection ;
-
-      return this ;
-    }
-
-    public MOCHC build() {
-      MOCHC algorithm =  new MOCHC(this) ;
-
-      return algorithm ;
-    }
+    return distance;
   }
 }

@@ -50,16 +50,16 @@ public class MutationLocalSearchTest {
   public void setUp() throws JMetalException {
     problem = new Kursawe("Real", 3) ;
     mutation = new PolynomialMutation.Builder()
-            .distributionIndex(20)
-            .probability(1.0/problem.getNumberOfVariables())
+            .setDistributionIndex(20)
+            .setProbability(1.0 / problem.getNumberOfVariables())
             .build();
 
     archive = new CrowdingArchive(100, problem.getNumberOfObjectives()) ;
 
     localSearch = new MutationLocalSearch.Builder(problem)
-            .mutationOperator(mutation)
-            .improvementRounds(1)
-            .archive(archive)
+            .setMutationOperator(mutation)
+            .setImprovementRounds(1)
+            .setArchive(archive)
             .build() ;
   }
 

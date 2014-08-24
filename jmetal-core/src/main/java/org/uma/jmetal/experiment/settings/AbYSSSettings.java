@@ -1,10 +1,9 @@
-//  NSGAIISettings.java
+//  AbYSSSettings.java
 //
 //  Authors:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
 //
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
+//  Copyright (c) 2014 Antonio J. Nebro
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -36,7 +35,7 @@ import org.uma.jmetal.util.archive.CrowdingArchive;
 
 import java.util.Properties;
 
-/** Settings class of algorithm NSGA-II (real encoding) */
+/** Settings class of algorithm AbYSS  */
 public class AbYSSSettings extends Settings {
   private int maxEvaluations;
   private int populationSize ;
@@ -75,6 +74,7 @@ public class AbYSSSettings extends Settings {
   }
 
   /** Configure AbYSS with default parameter settings */
+  @Override
   public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
     Crossover crossover;
@@ -82,21 +82,21 @@ public class AbYSSSettings extends Settings {
     MutationLocalSearch localSearch ;
 
     crossover = new SBXCrossover.Builder()
-            .distributionIndex(crossoverDistributionIndex)
-            .probability(crossoverProbability)
+            .setDistributionIndex(crossoverDistributionIndex)
+            .setProbability(crossoverProbability)
             .build() ;
 
     mutation = new PolynomialMutation.Builder()
-            .distributionIndex(mutationDistributionIndex)
-            .probability(mutationProbability)
+            .setDistributionIndex(mutationDistributionIndex)
+            .setProbability(mutationProbability)
             .build();
 
     archive = new CrowdingArchive(archiveSize, problem.getNumberOfObjectives()) ;
 
     localSearch = new MutationLocalSearch.Builder(problem)
-            .mutationOperator(mutation)
-            .improvementRounds(improvementRounds)
-            .archive(archive)
+            .setMutationOperator(mutation)
+            .setImprovementRounds(improvementRounds)
+            .setArchive(archive)
             .build() ;
 
     algorithm = new AbYSS.Builder(problem)
@@ -129,7 +129,7 @@ public class AbYSSSettings extends Settings {
     refSet2Size =
             Integer.parseInt(configuration.getProperty("refSet2Size", String.valueOf(refSet2Size)));
     improvementRounds = Integer
-            .parseInt(configuration.getProperty("improvementRounds", String.valueOf(improvementRounds)));
+            .parseInt(configuration.getProperty("setImprovementRounds", String.valueOf(improvementRounds)));
     numberOfSubranges = Integer
             .parseInt(configuration.getProperty("numberOfSubranges", String.valueOf(numberOfSubranges)));
 

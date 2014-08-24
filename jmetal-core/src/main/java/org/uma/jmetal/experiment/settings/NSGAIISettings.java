@@ -72,25 +72,25 @@ public class NSGAIISettings extends Settings {
     Mutation mutation;
 
     crossover = new SBXCrossover.Builder()
-      .distributionIndex(crossoverDistributionIndex)
-      .probability(crossoverProbability)
-      .build() ;
+            .setDistributionIndex(crossoverDistributionIndex)
+            .setProbability(crossoverProbability)
+            .build() ;
 
     mutation = new PolynomialMutation.Builder()
-      .distributionIndex(mutationDistributionIndex)
-      .probability(mutationProbability)
-      .build();
+            .setDistributionIndex(mutationDistributionIndex)
+            .setProbability(mutationProbability)
+            .build();
 
     selection = new BinaryTournament2.Builder()
-      .build();
+            .build();
 
     algorithm = new NSGAII.Builder(problem, evaluator)
-      .crossover(crossover)
-      .mutation(mutation)
-      .selection(selection)
-      .maxEvaluations(maxEvaluations)
-      .populationSize(populationSize)
-      .build("NSGAII") ;
+            .setPopulationSize(populationSize)
+            .setMaxEvaluations(maxEvaluations)
+            .setCrossover(crossover)
+            .setMutation(mutation)
+            .setSelection(selection)
+            .build("NSGAII") ;
 
     return algorithm;
   }
@@ -99,19 +99,19 @@ public class NSGAIISettings extends Settings {
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {
     populationSize = Integer
-      .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize)));
+            .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize)));
     maxEvaluations = Integer
-      .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations)));
+            .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations)));
 
     crossoverProbability = Double.parseDouble(
-      configuration.getProperty("crossoverProbability", String.valueOf(crossoverProbability)));
+            configuration.getProperty("crossoverProbability", String.valueOf(crossoverProbability)));
     crossoverDistributionIndex = Double.parseDouble(configuration
-      .getProperty("crossoverDistributionIndex", String.valueOf(crossoverDistributionIndex)));
+            .getProperty("crossoverDistributionIndex", String.valueOf(crossoverDistributionIndex)));
 
     mutationProbability = Double.parseDouble(
-      configuration.getProperty("mutationProbability", String.valueOf(mutationProbability)));
+            configuration.getProperty("mutationProbability", String.valueOf(mutationProbability)));
     mutationDistributionIndex = Double.parseDouble(configuration
-      .getProperty("mutationDistributionIndex", String.valueOf(mutationDistributionIndex)));
+            .getProperty("mutationDistributionIndex", String.valueOf(mutationDistributionIndex)));
 
     return configure();
   }

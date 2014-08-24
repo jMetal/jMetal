@@ -1,4 +1,4 @@
-//  NSGAIIBinary_Settings.java 
+//  NSGAIIBinaryRealSettings.java
 //
 //  Authors:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -35,9 +35,7 @@ import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
 
 import java.util.Properties;
 
-/**
- * Settings class of algorithm NSGA-II (binary encoding)
- */
+/** Settings class of algorithm NSGA-II (binary real encoding) */
 public class NSGAIIBinaryRealSettings extends Settings {
   private int populationSize;
   private int maxEvaluations;
@@ -46,18 +44,13 @@ public class NSGAIIBinaryRealSettings extends Settings {
   private double crossoverProbability;
   private SolutionSetEvaluator evaluator;
 
-  /**
-   * Constructor
-   *
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Constructor */
   public NSGAIIBinaryRealSettings(String problem) throws JMetalException {
     super(problem);
 
     Object[] problemParams = {"BinaryReal"};
     this.problem = (new ProblemFactory()).getProblem(problemName, problemParams);
 
-    // Default experiment.settings
     populationSize = 100;
     maxEvaluations = 25000;
 
@@ -67,12 +60,7 @@ public class NSGAIIBinaryRealSettings extends Settings {
     evaluator = new SequentialSolutionSetEvaluator() ;
   }
 
-  /**
-   * Configure NSGAII with user-defined parameter experiment.settings
-   *
-   * @return A NSGAII algorithm object
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Configure NSGAII with default parameter settings */
   public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
     Operator selection;
@@ -80,32 +68,28 @@ public class NSGAIIBinaryRealSettings extends Settings {
     Operator mutation;
 
     crossover = new SinglePointCrossover.Builder()
-      .probability(crossoverProbability)
+      .setProbability(crossoverProbability)
       .build() ;
 
     mutation = new BitFlipMutation.Builder()
-      .probability(mutationProbability)
+      .setProbability(mutationProbability)
       .build();
 
     selection = new BinaryTournament2.Builder()
       .build();
 
     algorithm = new NSGAII.Builder(problem, evaluator)
-      .crossover(crossover)
-      .mutation(mutation)
-      .selection(selection)
-      .maxEvaluations(25000)
-      .populationSize(100)
+      .setCrossover(crossover)
+      .setMutation(mutation)
+      .setSelection(selection)
+      .setMaxEvaluations(25000)
+      .setPopulationSize(100)
       .build("NSGAII") ;
 
     return algorithm;
   }
 
-  /**
-   * Configure NSGAII with user-defined parameter experiment.settings
-   *
-   * @return A NSGAII algorithm object
-   */
+  /** Configure NSGAII from a properties file */
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {
     populationSize = Integer

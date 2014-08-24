@@ -1,4 +1,4 @@
-//  OMOPSO_Settings.java 
+//  OMOPSOSettings.java
 //
 //  Authors:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -33,9 +33,7 @@ import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
 
 import java.util.Properties;
 
-/**
- * Settings class of algorithm OMOPSO
- */
+/** Settings class of algorithm OMOPSO */
 public class OMOPSOSettings extends Settings{
   private int swarmSize;
   private int maxIterations;
@@ -54,7 +52,6 @@ public class OMOPSOSettings extends Settings{
 
     evaluator = new SequentialSolutionSetEvaluator() ;
 
-    // Default experiment.settings
     swarmSize = 100 ;
     maxIterations = 250 ;
     archiveSize = 100 ;
@@ -62,12 +59,7 @@ public class OMOPSOSettings extends Settings{
     mutationProbability = 1.0/ this.problem.getNumberOfVariables() ;
   }
 
-  /**
-   * Configure OMOPSO with user-defined parameter experiment.settings
-   *
-   * @return A OMOPSO algorithm object
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Configure OMOPSO with default parameter settings */
   public Algorithm configure() throws JMetalException {
     OMOPSO algorithm;
     UniformMutation uniformMutation;
@@ -80,11 +72,11 @@ public class OMOPSOSettings extends Settings{
       .build() ;
 
     algorithm = new OMOPSO.Builder(problem, evaluator)
-      .swarmSize(swarmSize)
-      .archiveSize(archiveSize)
-      .maxIterations(maxIterations)
-      .uniformMutation(uniformMutation)
-      .nonUniformMutation(nonUniformMutation)
+      .setSwarmSize(swarmSize)
+      .setArchiveSize(archiveSize)
+      .setMaxIterations(maxIterations)
+      .setUniformMutation(uniformMutation)
+      .setNonUniformMutation(nonUniformMutation)
       .build() ;
 
     return algorithm ;

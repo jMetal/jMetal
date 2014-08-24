@@ -53,10 +53,10 @@ public class NSGAIIPermutationSettingsTest {
     Algorithm algorithm = nsgaIISettings.configure() ;
     Problem problem = new mQAP("Permutation") ;
     TwoPointsCrossover crossover = (TwoPointsCrossover)algorithm.getOperator("crossover") ;
-    double pc = (Double)crossover.getParameter("probability") ;
+    double pc = (Double)crossover.getParameter("setProbability") ;
 
     SwapMutation mutation = (SwapMutation)algorithm.getOperator("mutation") ;
-    double pm = (Double)mutation.getParameter("probability") ;
+    double pm = (Double)mutation.getParameter("setProbability") ;
 
     assertEquals("NSGAIIPermutation_SettingsTest", 100, ((Integer)algorithm.getInputParameter("populationSize")).intValue());
     assertEquals("NSGAIIPermutation_SettingsTest", 25000, ((Integer)algorithm.getInputParameter("maxEvaluations")).intValue());

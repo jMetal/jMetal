@@ -113,37 +113,37 @@ public abstract class SMSEMOATemplate extends Algorithm {
       this.offset = DEFAULT_OFFSET ;
     }
 
-    public Builder populationSize(int populationSize) {
+    public Builder setPopulationSize(int populationSize) {
       this.populationSize = populationSize ;
 
       return this ;
     }
 
-    public Builder maxEvaluations(int maxEvaluations) {
+    public Builder setMaxEvaluations(int maxEvaluations) {
       this.maxEvaluations = maxEvaluations ;
 
       return this ;
     }
 
-    public Builder crossover(Operator crossover) {
+    public Builder setCrossover(Operator crossover) {
       crossoverOperator = crossover ;
 
       return this ;
     }
 
-    public Builder mutation(Operator mutation) {
+    public Builder setMutation(Operator mutation) {
       mutationOperator = mutation ;
 
       return this ;
     }
 
-    public Builder selection(Operator selection) {
+    public Builder setSelection(Operator selection) {
       selectionOperator = selection ;
 
       return this ;
     }
 
-    public Builder offset(double offset) {
+    public Builder setOffset(double offset) {
       this.offset = offset ;
 
       return this ;

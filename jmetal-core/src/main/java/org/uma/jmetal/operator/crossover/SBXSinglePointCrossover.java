@@ -61,15 +61,15 @@ public class SBXSinglePointCrossover extends Crossover {
     if (parameters.get("binaryrossoverProbability") != null) {
       binaryCrossoverProbability = (Double) parameters.get("binaryrossoverProbability");
     }
-    if (parameters.get("distributionIndex") != null) {
-      distributionIndex = (Double) parameters.get("distributionIndex");
+    if (parameters.get("setDistributionIndex") != null) {
+      distributionIndex = (Double) parameters.get("setDistributionIndex");
     }
   }
 
   /**
    * Perform the crossover operation.
    *
-   * @param realProbability Crossover probability
+   * @param realProbability Crossover setProbability
    * @param parent1         The first parent
    * @param parent2         The second parent
    * @return An array containing the two offsprings

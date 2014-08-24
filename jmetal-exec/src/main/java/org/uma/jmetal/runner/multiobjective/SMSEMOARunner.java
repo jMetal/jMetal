@@ -46,7 +46,6 @@ import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
-import java.util.logging.FileHandler;
 
 /**
  * Class for configuring and running the SMS-EMOA algorithm. This
@@ -114,25 +113,25 @@ public class SMSEMOARunner {
     offset = 100.0 ;
 
     crossover = new SBXCrossover.Builder()
-      .distributionIndex(crossoverDistributionIndex)
-      .probability(crossoverProbability)
+      .setDistributionIndex(crossoverDistributionIndex)
+      .setProbability(crossoverProbability)
       .build() ;
 
     mutation = new PolynomialMutation.Builder()
-      .distributionIndex(mutationDistributionIndex)
-      .probability(mutationProbability)
+      .setDistributionIndex(mutationDistributionIndex)
+      .setProbability(mutationProbability)
       .build();
 
     selection = new RandomSelection.Builder()
       .build();
 
     algorithm = new SMSEMOA.Builder(problem)
-      .crossover(crossover)
-      .mutation(mutation)
-      .selection(selection)
-      .offset(offset)
-      .maxEvaluations(maxEvaluations)
-      .populationSize(populationSize)
+      .setCrossover(crossover)
+      .setMutation(mutation)
+      .setSelection(selection)
+      .setOffset(offset)
+      .setMaxEvaluations(maxEvaluations)
+      .setPopulationSize(populationSize)
       .build("SMSEMOA") ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)

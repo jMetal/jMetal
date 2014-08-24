@@ -38,7 +38,6 @@ import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
-import java.util.logging.FileHandler;
 
 /**
  * This class executes a parallel version of the MOEA/D algorithm described in:
@@ -85,25 +84,25 @@ public class ParallelMOEADRunner {
     }
 
     crossover = new DifferentialEvolutionCrossover.Builder()
-            .cr(1.0)
-            .f(0.5)
+            .setCr(1.0)
+            .setF(0.5)
             .build() ;
 
     mutation = new PolynomialMutation.Builder()
-            .distributionIndex(20.0)
-            .probability(1.0/problem.getNumberOfVariables())
+            .setDistributionIndex(20.0)
+            .setProbability(1.0 / problem.getNumberOfVariables())
             .build();
 
     algorithm = new MOEADTemplate.Builder(problem)
-            .populationSize(300)
-            .maxEvaluations(150000)
-            .neighborhoodSelectionProbability(0.9)
-            .maximumNumberOfReplacedSolutions(2)
-            .neighborSize(20)
-            .crossover(crossover)
-            .mutation(mutation)
-            .numberOfThreads(8)
-            .dataDirectory("MOEAD_Weights")
+            .setPopulationSize(300)
+            .setMaxEvaluations(150000)
+            .setNeighborhoodSelectionProbability(0.9)
+            .setMaximumNumberOfReplacedSolutions(2)
+            .setNeighborSize(20)
+            .setCrossover(crossover)
+            .setMutation(mutation)
+            .setNumberOfThreads(8)
+            .setDataDirectory("MOEAD_Weights")
             .build("ParallelMOEAD") ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)

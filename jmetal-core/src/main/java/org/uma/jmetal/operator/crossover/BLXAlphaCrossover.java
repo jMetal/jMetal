@@ -45,8 +45,8 @@ public class BLXAlphaCrossover extends Crossover {
   public BLXAlphaCrossover(HashMap<String, Object> parameters) {
     super(parameters);
 
-    if (parameters.get("probability") != null) {
-      crossoverProbability = (Double) parameters.get("probability");
+    if (parameters.get("setProbability") != null) {
+      crossoverProbability = (Double) parameters.get("setProbability");
     }
     if (parameters.get("alpha") != null) {
       alpha = (Double) parameters.get("alpha");
@@ -65,12 +65,65 @@ public class BLXAlphaCrossover extends Crossover {
     alpha = builder.alpha;
   }
 
+  /* Getters */
   public double getCrossoverProbability() {
     return crossoverProbability;
   }
 
   public double getAlpha() {
     return alpha;
+  }
+
+  /** Builder class */
+  public static class Builder {
+    private double alpha;
+    private double crossoverProbability;
+
+    public Builder() {
+      alpha = DEFAULT_ALPHA ;
+      crossoverProbability = 0.9 ;
+    }
+
+    public Builder probability(double probability) {
+      if ((probability < 0) || (probability > 1.0)) {
+        throw new JMetalException("Probability value invalid: " + probability) ;
+      } else {
+        crossoverProbability = probability;
+      }
+
+      return this ;
+    }
+
+    public Builder getAlpha(double alpha) {
+      this.alpha = alpha;
+
+      return this ;
+    }
+
+    public BLXAlphaCrossover build() {
+      return new BLXAlphaCrossover(this) ;
+    }
+  }
+
+  /** Execute() method */
+  public Object execute(Object object) throws JMetalException {
+    Solution[] parents = (Solution[]) object;
+
+    if (parents.length != 2) {
+      throw new JMetalException("BLXAlphaCrossover.execute: operator needs two parents");
+    }
+
+    if (!solutionTypeIsValid(parents)) {
+      throw new JMetalException("BLXAlphaCrossover.execute: the solutions " +
+              "type " + parents[0].getType() + " is not allowed with this operator");
+    }
+
+    Solution[] offSpring;
+    offSpring = doCrossover(crossoverProbability,
+            parents[0],
+            parents[1]);
+
+    return offSpring;
   }
 
   /** Perform the crossover operation */
@@ -151,57 +204,5 @@ public class BLXAlphaCrossover extends Crossover {
     }
 
     return offSpring;
-  }
-
-  /** Execute() method */
-  public Object execute(Object object) throws JMetalException {
-    Solution[] parents = (Solution[]) object;
-
-    if (parents.length != 2) {
-      throw new JMetalException("BLXAlphaCrossover.execute: operator needs two parents");
-    }
-
-    if (!solutionTypeIsValid(parents)) {
-      throw new JMetalException("BLXAlphaCrossover.execute: the solutions " +
-        "type " + parents[0].getType() + " is not allowed with this operator");
-    }
-
-    Solution[] offSpring;
-    offSpring = doCrossover(crossoverProbability,
-      parents[0],
-      parents[1]);
-
-    return offSpring;
-  }
-
-  /** Builder class */
-  public static class Builder {
-    private double alpha;
-    private double crossoverProbability;
-
-    public Builder() {
-      alpha = DEFAULT_ALPHA ;
-      crossoverProbability = 0.9 ;
-    }
-
-    public Builder probability(double probability) {
-      if ((probability < 0) || (probability > 1.0)) {
-        throw new JMetalException("Probability value invalid: " + probability) ;
-      } else {
-        crossoverProbability = probability;
-      }
-
-      return this ;
-    }
-
-    public Builder alpha(double alpha) {
-        this.alpha = alpha;
-
-      return this ;
-    }
-
-    public BLXAlphaCrossover build() {
-      return new BLXAlphaCrossover(this) ;
-    }
   }
 }

@@ -1,4 +1,4 @@
-//  fastSMSEMA2_Settings.java
+//  fastSMSEMOASettings.java
 //
 //  Authors:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -34,10 +34,7 @@ import org.uma.jmetal.util.JMetalException;
 
 import java.util.Properties;
 
-/**
- * Settings class of algorithm FastSMSEMOA. This algorithm is just SMS-EMOA but using
- * the FastHypervolume archive
- */
+/** Settings class of algorithm FastSMSEMOA. This algorithm is just SMS-EMOA but using the FastHypervolume archive */
 public class FastSMSEMOASettings extends Settings {
   private int populationSize;
   private int maxEvaluations;
@@ -63,8 +60,8 @@ public class FastSMSEMOASettings extends Settings {
     offset = 100.0;
   }
 
-
   /** Configure FastSMSEMOA with default parameter settings */
+  @Override
   public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
     Selection selection;
@@ -72,50 +69,48 @@ public class FastSMSEMOASettings extends Settings {
     Mutation mutation;
 
     crossover = new SBXCrossover.Builder()
-      .distributionIndex(crossoverDistributionIndex)
-      .probability(crossoverProbability)
-      .build() ;
+            .setDistributionIndex(crossoverDistributionIndex)
+            .setProbability(crossoverProbability)
+            .build() ;
 
     mutation = new PolynomialMutation.Builder()
-      .distributionIndex(mutationDistributionIndex)
-      .probability(mutationProbability)
-      .build();
+            .setDistributionIndex(mutationDistributionIndex)
+            .setProbability(mutationProbability)
+            .build();
 
     selection = new RandomSelection.Builder()
-      .build();
+            .build();
 
     algorithm = new FastSMSEMOA.Builder(problem)
-      .crossover(crossover)
-      .mutation(mutation)
-      .selection(selection)
-      .offset(offset)
-      .maxEvaluations(maxEvaluations)
-      .populationSize(populationSize)
-      .build("FastSMSEMOA") ;
+            .setCrossover(crossover)
+            .setMutation(mutation)
+            .setSelection(selection)
+            .setOffset(offset)
+            .setMaxEvaluations(maxEvaluations)
+            .setPopulationSize(populationSize)
+            .build("FastSMSEMOA") ;
 
     return algorithm ;
   }
 
-  /**
-   * Configure FastSMSEMOA from a properties file
-   */
+  /** Configure FastSMSEMOA from a properties file */
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {
     populationSize = Integer
-      .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize)));
+            .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize)));
     maxEvaluations = Integer
-      .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations)));
+            .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations)));
     offset = Double.parseDouble(configuration.getProperty("offset", String.valueOf(offset)));
 
     crossoverProbability = Double.parseDouble(
-      configuration.getProperty("crossoverProbability", String.valueOf(crossoverProbability)));
+            configuration.getProperty("crossoverProbability", String.valueOf(crossoverProbability)));
     crossoverDistributionIndex = Double.parseDouble(configuration
-      .getProperty("crossoverDistributionIndex", String.valueOf(crossoverDistributionIndex)));
+            .getProperty("crossoverDistributionIndex", String.valueOf(crossoverDistributionIndex)));
 
     mutationProbability = Double.parseDouble(
-      configuration.getProperty("mutationProbability", String.valueOf(mutationProbability)));
+            configuration.getProperty("mutationProbability", String.valueOf(mutationProbability)));
     mutationDistributionIndex = Double.parseDouble(configuration
-      .getProperty("mutationDistributionIndex", String.valueOf(mutationDistributionIndex)));
+            .getProperty("mutationDistributionIndex", String.valueOf(mutationDistributionIndex)));
 
     return configure();
   }

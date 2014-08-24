@@ -43,8 +43,8 @@ public class UniformMutation extends Mutation {
   public UniformMutation(HashMap<String, Object> parameters) {
     super(parameters);
 
-    if (parameters.get("probability") != null) {
-      mutationProbability = (Double) parameters.get("probability");
+    if (parameters.get("setProbability") != null) {
+      mutationProbability = (Double) parameters.get("setProbability");
     }
     if (parameters.get("perturbation") != null) {
       perturbation = (Double) parameters.get("perturbation");
@@ -74,7 +74,7 @@ public class UniformMutation extends Mutation {
   /**
    * Perform the operation
    *
-   * @param probability Mutation probability
+   * @param probability Mutation setProbability
    * @param solution    The solutiontype to mutate
    */
   public void doMutation(double probability, Solution solution)  {

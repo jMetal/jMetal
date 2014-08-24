@@ -45,8 +45,8 @@ public class BitFlipMutationTest {
   public void setUp() throws JMetalException {
     problem = new Kursawe("BinaryReal", 3) ;
 
-    mutation = new BitFlipMutation.Builder().
-      probability(1.0 / problem.getNumberOfVariables())
+    mutation = new BitFlipMutation.Builder()
+            .setProbability(1.0 / problem.getNumberOfVariables())
       .build() ;
   }
 
@@ -63,9 +63,8 @@ public class BitFlipMutationTest {
 
   @Test
   public void setMutationProbabilityTest() {
-    mutation = new BitFlipMutation
-      .Builder()
-      .probability(0.02).build() ;
+    mutation = new BitFlipMutation.Builder()
+      .setProbability(0.02).build() ;
 
     assertEquals(0.02, mutation.getMutationProbability(), DELTA) ;
   }
@@ -73,7 +72,7 @@ public class BitFlipMutationTest {
   @Test
   public void operatorExecutionTest() throws ClassNotFoundException {
     mutation = new BitFlipMutation.Builder()
-      .probability(0.9)
+      .setProbability(0.9)
       .build();
 
     Object result = mutation.execute(new Solution(problem));

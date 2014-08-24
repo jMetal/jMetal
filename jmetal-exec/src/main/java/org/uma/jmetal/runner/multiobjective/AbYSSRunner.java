@@ -41,16 +41,13 @@ import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
-import java.util.logging.FileHandler;
-import java.util.logging.Logger;
 
 /**
  * This class is the main program used to configure and run AbYSS, a multiobjective scatter search metaheuristic,
  * which is described in:
  * A.J. Nebro, F. Luna, E. Alba, B. Dorronsoro, J.J. Durillo, A. Beham
  * "AbYSS: Adapting Scatter Search to Multiobjective Optimization."
- * IEEE Transactions on Evolutionary Computation. Vol. 12,
- * No. 4 (August 2008), pp. 439-457
+ * IEEE Transactions on Evolutionary Computation. Vol. 12, No. 4 (August 2008), pp. 439-457
  */
 
 public class AbYSSRunner {
@@ -61,9 +58,9 @@ public class AbYSSRunner {
    * @throws SecurityException
    * @throws java.lang.ClassNotFoundException
    * Usage: three choices
-   *                           - org.uma.jmetal.runner.multiobjective.AbYSSRunner
-   *                           - org.uma.jmetal.runner.multiobjective.AbYSSRunner problemName
-   *                           - org.uma.jmetal.runner.multiobjective.AbYSSRunner problemName paretoFrontFile
+   *       - org.uma.jmetal.runner.multiobjective.AbYSSRunner
+   *       - org.uma.jmetal.runner.multiobjective.AbYSSRunner problemName
+   *       - org.uma.jmetal.runner.multiobjective.AbYSSRunner problemName paretoFrontFile
    */
   public static void main(String[] args) throws
           JMetalException, SecurityException, IOException, ClassNotFoundException {
@@ -102,7 +99,7 @@ public class AbYSSRunner {
       //problem = new DTLZ1("Real");
       //problem = new OKA2("Real") ;
       */
-    } 
+    }
 
     Algorithm algorithm;
     Crossover crossover;
@@ -123,21 +120,21 @@ public class AbYSSRunner {
     improvementRounds = 1 ;
 
     crossover = new SBXCrossover.Builder()
-            .distributionIndex(crossoverDistributionIndex)
-            .probability(crossoverProbability)
+            .setDistributionIndex(crossoverDistributionIndex)
+            .setProbability(crossoverProbability)
             .build() ;
 
     mutation = new PolynomialMutation.Builder()
-            .distributionIndex(mutationDistributionIndex)
-            .probability(mutationProbability)
+            .setDistributionIndex(mutationDistributionIndex)
+            .setProbability(mutationProbability)
             .build();
 
     archive = new CrowdingArchive(archiveSize, problem.getNumberOfObjectives()) ;
 
     localSearch = new MutationLocalSearch.Builder(problem)
-            .mutationOperator(mutation)
-            .improvementRounds(improvementRounds)
-            .archive(archive)
+            .setMutationOperator(mutation)
+            .setImprovementRounds(improvementRounds)
+            .setArchive(archive)
             .build() ;
 
     algorithm = new AbYSS.Builder(problem)

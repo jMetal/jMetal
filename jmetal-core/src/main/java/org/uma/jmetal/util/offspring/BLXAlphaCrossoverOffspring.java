@@ -33,7 +33,7 @@ public class BLXAlphaCrossoverOffspring extends Offspring {
 
     // Crossover operator
     HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
-    crossoverParameters.put("probability", this.crossoverProbability);
+    crossoverParameters.put("setProbability", this.crossoverProbability);
     crossoverParameters.put("alpha", this.alpha);
 
     crossover = CrossoverFactory.getCrossoverOperator("BLXAlphaCrossover", crossoverParameters);

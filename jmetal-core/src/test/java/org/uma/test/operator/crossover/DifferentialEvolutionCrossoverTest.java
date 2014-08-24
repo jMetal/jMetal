@@ -35,103 +35,105 @@ import static org.junit.Assert.*;
  * Created by Antonio J. Nebro on 21/04/14.
  */
 public class DifferentialEvolutionCrossoverTest {
-  DifferentialEvolutionCrossover crossover_ ;
-  Problem problem_ ;
+  DifferentialEvolutionCrossover crossover;
+  Problem problem;
 
   static final double DELTA = 0.0000000000001 ;
 
   @Before
   public void setUp() throws JMetalException {
-    problem_ = new Kursawe("Real", 3) ;
-    crossover_ = new DifferentialEvolutionCrossover.Builder().build() ;
+    problem = new Kursawe("Real", 3) ;
+    crossover = new DifferentialEvolutionCrossover.Builder().build() ;
   }
 
   @After
   public void tearDown() throws Exception {
-    crossover_ = null ;
-    problem_ = null ;
+    crossover = null ;
+    problem = null ;
   }
 
   @Test
   public void defaultParametersTest() {
-    assertEquals(0.5, crossover_.getCr(), DELTA) ;
-    assertEquals(0.5, crossover_.getF(), DELTA) ;
-    assertEquals(0.5, crossover_.getK(), DELTA) ;
-    assertEquals("rand/1/bin", crossover_.getVariant());
+    assertEquals(0.5, crossover.getCr(), DELTA) ;
+    assertEquals(0.5, crossover.getF(), DELTA) ;
+    assertEquals(0.5, crossover.getK(), DELTA) ;
+    assertEquals("rand/1/bin", crossover.getVariant());
   }
 
 
   @Test
   public void setCrTest() {
-    crossover_ = new DifferentialEvolutionCrossover.Builder()
-      .cr(0.1)
-      .build() ;
+    crossover = new DifferentialEvolutionCrossover.Builder()
+            .setCr(0.1)
+            .build() ;
 
-    assertEquals(0.1, crossover_.getCr(), DELTA) ;
+    assertEquals(0.1, crossover.getCr(), DELTA) ;
   }
 
   @Test (expected = JMetalException.class)
   public void setInvalidCrTest() {
-    crossover_ = new DifferentialEvolutionCrossover.Builder().cr(2.0).build() ;
+    crossover = new DifferentialEvolutionCrossover.Builder().setCr(2.0).build() ;
   }
 
   @Test
   public void setFTest() {
-    crossover_ = new DifferentialEvolutionCrossover.Builder()
-      .f(0.75)
-      .build() ;
+    crossover = new DifferentialEvolutionCrossover.Builder()
+            .setF(0.75)
+            .build() ;
 
-    assertEquals(0.75, crossover_.getF(), DELTA) ;
+    assertEquals(0.75, crossover.getF(), DELTA) ;
   }
 
   @Test (expected = JMetalException.class)
   public void setInvalidFTest() {
-    crossover_ = new DifferentialEvolutionCrossover.Builder()
-      .f(-15)
-      .build() ;
+    crossover = new DifferentialEvolutionCrossover.Builder()
+            .setF(-15)
+            .build() ;
   }
 
   @Test
   public void setKTest() {
-    crossover_ = new DifferentialEvolutionCrossover.Builder()
-      .k(0.63)
-      .build() ;
+    crossover = new DifferentialEvolutionCrossover.Builder()
+            .setK(0.63)
+            .build() ;
 
-    assertEquals(0.63, crossover_.getK(), DELTA) ;
+    assertEquals(0.63, crossover.getK(), DELTA) ;
   }
 
   @Test (expected = JMetalException.class)
   public void setInvalidKTest() {
-    crossover_ = new DifferentialEvolutionCrossover.Builder()
-      .k(-32)
-      .build() ;
+    crossover = new DifferentialEvolutionCrossover.Builder()
+            .setK(-32)
+            .build() ;
   }
 
   @Test
   public void setVariantTest() {
-    crossover_ = new DifferentialEvolutionCrossover.Builder()
-      .variant("current-to-rand/1/bin")
-      .build() ;
+    crossover = new DifferentialEvolutionCrossover.Builder()
+            .setVariant("current-to-rand/1/bin")
+            .build() ;
 
-    assertTrue("current-to-rand/1/bin".equals(crossover_.getVariant())) ;
+    assertTrue("current-to-rand/1/bin".equals(crossover.getVariant())) ;
   }
 
   @Test (expected = JMetalException.class)
   public void setWrongVariantTest() throws ClassNotFoundException {
-    crossover_ = new DifferentialEvolutionCrossover.Builder().variant("current-to-rand").build() ;
+    crossover = new DifferentialEvolutionCrossover.Builder()
+            .setVariant("current-to-rand")
+            .build() ;
   }
 
   @Test
   public void operatorExecutionTest() throws ClassNotFoundException {
-    crossover_ = new DifferentialEvolutionCrossover.Builder()
-      .cr(0.5)
-      .f(1.0)
-      .build() ;
+    crossover = new DifferentialEvolutionCrossover.Builder()
+            .setCr(0.5)
+            .setF(1.0)
+            .build() ;
 
-    Solution current = new Solution(problem_) ;
-    Solution[] parents = {new Solution(problem_), new Solution(problem_), new Solution(problem_)} ;
+    Solution current = new Solution(problem) ;
+    Solution[] parents = {new Solution(problem), new Solution(problem), new Solution(problem)} ;
 
-    Object result = crossover_.execute(new Object[]{current, parents}) ;
+    Object result = crossover.execute(new Object[]{current, parents}) ;
     assertNotNull(result);
   }
 }

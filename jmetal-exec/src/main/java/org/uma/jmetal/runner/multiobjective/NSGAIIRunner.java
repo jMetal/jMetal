@@ -40,34 +40,24 @@ import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
-import java.util.logging.FileHandler;
 
 /**
- * Class to configure and execute the NSGA-II algorithm.
- * <p/>
- * Besides the classic NSGA-II, a steady-state version (ssNSGAII) is also
- * included (See: J.J. Durillo, A.J. Nebro, F. Luna and E. Alba
- * "On the Effect of the Steady-State Selection Scheme in
- * Multi-Objective Genetic Algorithms"
- * 5th International Conference, EMO 2009, pp: 183-197.
- * April 2009)
+ * Class to configure and execute the NSGA-II algorithm (including Steady State and parallel versions)
  */
-
 public class NSGAIIRunner {
   /**
    * @param args Command line arguments.
    * @throws org.uma.jmetal.util.JMetalException
    * @throws java.io.IOException
-   * @throws SecurityException Usage: three options
-   *                           - org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAIIRunner
-   *                           - org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAIIRunner problemName
-   *                           - org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAIIRunner problemName paretoFrontFile
+   * @throws SecurityException
+   * @throws java.lang.ClassNotFoundException
+   * Usage: three options
+   *           - org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAIIRunner
+   *           - org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAIIRunner problemName
+   *           - org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAIIRunner problemName paretoFrontFile
    */
   public static void main(String[] args) throws
-    JMetalException,
-    SecurityException,
-    IOException,
-    ClassNotFoundException {
+          JMetalException, SecurityException, IOException, ClassNotFoundException {
 
     Problem problem;
     Algorithm algorithm;
@@ -112,37 +102,37 @@ public class NSGAIIRunner {
     SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator() ;
 
     crossover = new SBXCrossover.Builder()
-      .distributionIndex(20.0)
-      .probability(0.9)
-      .build() ;
+            .setDistributionIndex(20.0)
+            .setProbability(0.9)
+            .build() ;
 
     mutation = new PolynomialMutation.Builder()
-      .distributionIndex(20.0)
-      .probability(1.0/problem.getNumberOfVariables())
-      .build();
+            .setDistributionIndex(20.0)
+            .setProbability(1.0 / problem.getNumberOfVariables())
+            .build();
 
     selection = new BinaryTournament2.Builder()
-      .build();
+            .build();
 
     algorithm = new NSGAIITemplate.Builder(problem, evaluator)
-      .crossover(crossover)
-      .mutation(mutation)
-      .selection(selection)
-      .maxEvaluations(25000)
-      .populationSize(100)
-      .build(nsgaIIVersion) ;
+            .setCrossover(crossover)
+            .setMutation(mutation)
+            .setSelection(selection)
+            .setMaxEvaluations(25000)
+            .setPopulationSize(100)
+            .build(nsgaIIVersion) ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-      .execute() ;
+            .execute() ;
 
     SolutionSet population = algorithmRunner.getSolutionSet() ;
     long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)
-      .separator("\t")
-      .varFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
-      .funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
-      .print();
+            .separator("\t")
+            .varFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+            .funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+            .print();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
     JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");

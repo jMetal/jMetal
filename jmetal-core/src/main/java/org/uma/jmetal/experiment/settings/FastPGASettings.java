@@ -59,7 +59,6 @@ public class FastPGASettings extends Settings {
     Object[] problemParams = {"Real"};
     this.problem = (new ProblemFactory()).getProblem(problemName, problemParams);
 
-    /* Default settings */
     maxPopulationSize = 100 ;
     initialPopulationSize = 100 ;
     maxEvaluations = 25000 ;
@@ -71,6 +70,7 @@ public class FastPGASettings extends Settings {
   }
 
   /** Configure FastPGA with default parameter settings */
+  @Override
   public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
     Selection selection;
@@ -78,17 +78,17 @@ public class FastPGASettings extends Settings {
     Mutation mutation;
 
     crossover = new SBXCrossover.Builder()
-            .probability(0.9)
-            .distributionIndex(20.0)
+            .setProbability(0.9)
+            .setDistributionIndex(20.0)
             .build() ;
 
     mutation = new PolynomialMutation.Builder()
-            .probability(1.0/problem.getNumberOfVariables())
-            .distributionIndex(20.0)
+            .setProbability(1.0 / problem.getNumberOfVariables())
+            .setDistributionIndex(20.0)
             .build() ;
 
     selection = new BinaryTournament.Builder()
-            .comparator(new FPGAFitnessComparator())
+            .setComparator(new FPGAFitnessComparator())
             .build() ;
 
     algorithm = new FastPGA.Builder(problem)
@@ -116,7 +116,7 @@ public class FastPGASettings extends Settings {
     initialPopulationSize = Integer
             .parseInt(configuration.getProperty("initialPopulationSize", String.valueOf(initialPopulationSize)));
     maxEvaluations = Integer
-      .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations)));
+            .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations)));
 
     a = Double.parseDouble(configuration.getProperty("a", String.valueOf(a)));
     b = Double.parseDouble(configuration.getProperty("b", String.valueOf(b)));

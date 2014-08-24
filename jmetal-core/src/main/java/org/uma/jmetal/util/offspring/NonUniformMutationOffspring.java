@@ -31,7 +31,7 @@ public class NonUniformMutationOffspring extends Offspring {
     int maxIterations
   ) throws JMetalException {
     HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
-    mutationParameters.put("probability", this.mutationProbability = mutationProbability);
+    mutationParameters.put("setProbability", this.mutationProbability = mutationProbability);
     mutationParameters.put("perturbation", this.perturbation = perturbation);
     mutationParameters.put("maxIterations", this.maxIterations = maxIterations);
     mutation = MutationFactory.getMutationOperator("NonUniformMutation", mutationParameters);

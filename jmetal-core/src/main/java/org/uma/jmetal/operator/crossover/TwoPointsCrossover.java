@@ -51,8 +51,8 @@ public class TwoPointsCrossover extends Crossover {
     addValidSolutionType(PermutationSolutionType.class);
     addValidSolutionType(IntSolutionType.class);
 
-    if (parameters.get("probability") != null) {
-      crossoverProbability = (Double) parameters.get("probability");
+    if (parameters.get("setProbability") != null) {
+      crossoverProbability = (Double) parameters.get("setProbability");
     }
   }
   
@@ -66,7 +66,7 @@ public class TwoPointsCrossover extends Crossover {
   /**
    * Perform the crossover operation
    *
-   * @param probability Crossover probability
+   * @param probability Crossover setProbability
    * @param parent1     The first parent
    * @param parent2     The second parent
    * @return Two offspring solutions

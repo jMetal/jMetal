@@ -62,7 +62,7 @@ public class SBXCrossoverTest {
   @Test
   public void setCrossoverProbabilityTest() {
     crossover = new SBXCrossover.Builder()
-      .probability(1.0)
+      .setProbability(1.0)
       .build() ;
 
     assertEquals(1.0, crossover.getCrossoverProbability(), DELTA) ;
@@ -71,14 +71,14 @@ public class SBXCrossoverTest {
   @Test (expected = JMetalException.class)
   public void setInvalidCrossoverProbabilityTest() {
     crossover = new SBXCrossover.Builder()
-      .probability(-2.5)
+      .setProbability(-2.5)
       .build() ;
   }
 
   @Test
   public void setCrossoverDistributionIndex() {
     crossover = new SBXCrossover.Builder()
-      .distributionIndex(5.0)
+      .setDistributionIndex(5.0)
       .build() ;
 
     assertEquals(5.0, crossover.getDistributionIndex(), DELTA) ;
@@ -87,15 +87,15 @@ public class SBXCrossoverTest {
   @Test (expected = JMetalException.class)
   public void setInvalidCrossoverDistributionIndex() {
     crossover = new SBXCrossover.Builder()
-      .distributionIndex(-1.25)
+      .setDistributionIndex(-1.25)
       .build() ;
   }
 
   @Test
   public void operatorExecutionTest() throws ClassNotFoundException {
     crossover = new SBXCrossover.Builder()
-      .probability(0.9)
-      .distributionIndex(20)
+      .setProbability(0.9)
+      .setDistributionIndex(20)
       .build();
 
     Solution[] parents = {new Solution(problem), new Solution(problem)};

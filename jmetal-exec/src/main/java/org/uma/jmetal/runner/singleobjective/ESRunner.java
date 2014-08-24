@@ -67,7 +67,7 @@ public class ESRunner {
     /* Mutation and Crossover for Real codification */
     /* Mutation for Real codification */
     HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
-    mutationParameters.put("probability", 1.0 / bits);
+    mutationParameters.put("setProbability", 1.0 / bits);
     mutation = MutationFactory.getMutationOperator("BitFlipMutation", mutationParameters);
 
     algorithm.addOperator("mutation", mutation);

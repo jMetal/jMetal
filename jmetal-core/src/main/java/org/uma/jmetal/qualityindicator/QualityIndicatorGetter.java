@@ -58,7 +58,6 @@ public class QualityIndicatorGetter {
       trueParetoFront.writeObjectivesToMatrix());
   }
 
-
   /**
    * Returns the hypervolume of the true Pareto front
    *

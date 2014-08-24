@@ -42,28 +42,9 @@ public class RandomSearch extends Algorithm {
     this.maxEvaluations = builder.maxEvaluations ;
   }
 
+  /* Getter */
   public int getMaxEvaluations() {
     return maxEvaluations;
-  }
-
-  /** Execute() method */
-  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
-    int evaluations;
-    NonDominatedSolutionList nonDominatedSet ;
-
-    evaluations = 0;
-    nonDominatedSet = new NonDominatedSolutionList();
-
-    Solution newSolution;
-    for (int i = 0; i < maxEvaluations; i++) {
-      newSolution = new Solution(problem);
-      problem.evaluate(newSolution);
-      problem.evaluateConstraints(newSolution);
-      evaluations++;
-      nonDominatedSet.add(newSolution);
-    }
-
-    return nonDominatedSet;
   }
 
   /** Builder class */
@@ -85,5 +66,25 @@ public class RandomSearch extends Algorithm {
     public RandomSearch build() {
       return new RandomSearch(this) ;
     }
+  }
+
+  /** Execute() method */
+  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
+    int evaluations;
+    NonDominatedSolutionList nonDominatedSet ;
+
+    evaluations = 0;
+    nonDominatedSet = new NonDominatedSolutionList();
+
+    Solution newSolution;
+    for (int i = 0; i < maxEvaluations; i++) {
+      newSolution = new Solution(problem);
+      problem.evaluate(newSolution);
+      problem.evaluateConstraints(newSolution);
+      evaluations++;
+      nonDominatedSet.add(newSolution);
+    }
+
+    return nonDominatedSet;
   }
 } 

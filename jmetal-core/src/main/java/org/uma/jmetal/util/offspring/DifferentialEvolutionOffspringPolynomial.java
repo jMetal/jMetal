@@ -35,8 +35,8 @@ public class DifferentialEvolutionOffspringPolynomial extends Offspring {
     this.distributionIndexForMutation = distributionIndexForMutation;
 
     HashMap<String, Object> mutationParameters = new HashMap<String, Object>();
-    mutationParameters.put("probability", this.mutationProbability);
-    mutationParameters.put("distributionIndex", this.distributionIndexForMutation);
+    mutationParameters.put("setProbability", this.mutationProbability);
+    mutationParameters.put("setDistributionIndex", this.distributionIndexForMutation);
     mutation = MutationFactory.getMutationOperator("PolynomialMutation", mutationParameters);
 
     selection = SelectionFactory.getSelectionOperator("BinaryTournament", null);

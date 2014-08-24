@@ -25,6 +25,7 @@ import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.metaheuristic.multiobjective.dmopso.DMOPSO;
 import org.uma.jmetal.problem.ProblemFactory;
+import org.uma.jmetal.problem.multiobjective.Kursawe;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.qualityindicator.QualityIndicatorGetter;
 import org.uma.jmetal.util.AlgorithmRunner;
@@ -34,18 +35,18 @@ import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
-import java.util.logging.FileHandler;
 
 public class DMOPSORunner {
   /**
-   * @param args Command line arguments. The first (optional) argument specifies
-   *             the problem to solve.
+   * @param args Command line arguments. The first (optional) argument specifies the problem to solve.
    * @throws org.uma.jmetal.util.JMetalException
    * @throws IOException
-   * @throws SecurityException Usage: three options
-   *                           - org.uma.jmetal.runner.MOCell_main
-   *                           - org.uma.jmetal.runner.MOCell_main problemName
-   *                           - org.uma.jmetal.runner.MOCell_main problemName ParetoFrontFile
+   * @throws SecurityException
+   * @throws java.lang.ClassNotFoundException
+   * Usage: three choices
+   *       - org.uma.jmetal.runner.multiobjective.DMOPSORunner
+   *       - org.uma.jmetal.runner.multiobjective.DMOPSORunner problemName
+   *       - org.uma.jmetal.runner.multiobjective.DMOPSORunner problemName paretoFrontFile
    */
   public static void main(String[] args) throws JMetalException, IOException, ClassNotFoundException {
     Problem problem;
@@ -60,25 +61,23 @@ public class DMOPSORunner {
       Object[] params = {"Real"};
       problem = (new ProblemFactory()).getProblem(args[0], params);
       indicators = new QualityIndicatorGetter(problem, args[1]);
-    } else { 
-      //problem = new Kursawe("Real", 3);
-      //problem = new Fonseca("Real");
+    } else {
+      problem = new Kursawe("Real", 3);
+      /* Examples
       //problem = new Water("Real");
-      //problem = new ZDT1("ArrayReal", 1000);
-      problem = new ZDT1("Real");
-      //problem = new ZDT2("Real");
+      //problem = new ZDT4("ArrayReal");
       //problem = new WFG1("Real");
       //problem = new DTLZ1("Real");
       //problem = new OKA2("Real") ;
-      //problem = new LZ09F1("Real");
+      */
     }
 
     algorithm = new DMOPSO.Builder(problem)
-            .swarmSize(100)
-            .maxIterations(250)
-            .maxAge(2)
-            .dataDirectory("MOEAD_Weights")
-            .functionType("_TCHE")
+            .setSwarmSize(100)
+            .setMaxIterations(250)
+            .setMaxAge(2)
+            .setDataDirectory("MOEAD_Weights")
+            .setFunctionType("_TCHE")
             .build();
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)

@@ -123,11 +123,11 @@ public class OMOPSOSettingsTest {
       .build() ;
 
     algorithm = new OMOPSO.Builder(problem, evaluator)
-      .swarmSize(100)
-      .archiveSize(100)
-      .maxIterations(250)
-      .uniformMutation(uniformMutation)
-      .nonUniformMutation(nonUniformMutation)
+      .setSwarmSize(100)
+      .setArchiveSize(100)
+      .setMaxIterations(250)
+      .setUniformMutation(uniformMutation)
+      .setNonUniformMutation(nonUniformMutation)
       .build() ;
 
     SolutionSet solutionSet = algorithm.execute() ;

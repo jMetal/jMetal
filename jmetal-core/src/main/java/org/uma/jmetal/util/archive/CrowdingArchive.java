@@ -31,7 +31,7 @@ import org.uma.jmetal.util.comparator.EqualSolutions;
 import java.util.Comparator;
 
 /**
- * This class implements a bounded archive based on crowding distances (as
+ * This class implements a bounded setArchive based on crowding distances (as
  * defined in NSGA-II).
  */
 public class CrowdingArchive extends Archive {
@@ -54,10 +54,10 @@ public class CrowdingArchive extends Archive {
   }
 
   /**
-   * Adds a <code>Solution</code> to the archive. If the <code>Solution</code>
-   * is dominated by any member of the archive, then it is discarded. If the
-   * <code>Solution</code> dominates some members of the archive, these are
-   * removed. If the archive is full and the <code>Solution</code> has to be
+   * Adds a <code>Solution</code> to the setArchive. If the <code>Solution</code>
+   * is dominated by any member of the setArchive, then it is discarded. If the
+   * <code>Solution</code> dominates some members of the setArchive, these are
+   * removed. If the setArchive is full and the <code>Solution</code> has to be
    * inserted, the solutions are sorted by crowding distance and the one having
    * the minimum crowding distance value.
    *

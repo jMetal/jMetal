@@ -33,8 +33,8 @@ public class SBXCrossoverOffspring extends Offspring {
 
     // Crossover operator
     HashMap<String, Object> crossoverParameters = new HashMap<String, Object>();
-    crossoverParameters.put("probability", this.crossoverProbability);
-    crossoverParameters.put("distributionIndex", this.distributionIndexForCrossover);
+    crossoverParameters.put("setProbability", this.crossoverProbability);
+    crossoverParameters.put("setDistributionIndex", this.distributionIndexForCrossover);
 
     crossover = CrossoverFactory.getCrossoverOperator("SBXCrossover", crossoverParameters);
     selection = SelectionFactory.getSelectionOperator("BinaryTournament", null);

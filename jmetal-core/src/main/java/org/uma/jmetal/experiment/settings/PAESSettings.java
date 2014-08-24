@@ -1,4 +1,4 @@
-//  PAES_Settings.java 
+//  PAESSettings.java
 //
 //  Authors:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -31,9 +31,7 @@ import org.uma.jmetal.util.JMetalException;
 
 import java.util.Properties;
 
-/**
- * Settings class of algorithm PAES
- */
+/** Settings class of algorithm PAES */
 public class PAESSettings extends Settings {
   private int maxEvaluations;
   private int archiveSize;
@@ -48,7 +46,6 @@ public class PAESSettings extends Settings {
     Object [] problemParams = {"Real"};
     this.problem = (new ProblemFactory()).getProblem(problemName, problemParams);
 
-    // Default experiment.settings
     maxEvaluations = 25000 ;
     archiveSize = 100   ;
     biSections = 5     ;
@@ -56,48 +53,39 @@ public class PAESSettings extends Settings {
     mutationDistributionIndex = 20.0 ;
   }
 
-  /**
-   * Configure the PAES algorithm with default parameter experiment.settings
-   *
-   * @return an algorithm object
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Configure the PAES algorithm with default parameter settings */
   public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
     Mutation mutation;
 
     mutation = new PolynomialMutation.Builder()
-      .distributionIndex(20.0)
-      .probability(1.0/ problem.getNumberOfVariables())
-      .build();
+            .setDistributionIndex(mutationDistributionIndex)
+            .setProbability(mutationProbability)
+            .build();
 
     algorithm = new PAES.Builder(problem)
-      .mutation(mutation)
-      .maxEvaluations(25000)
-      .archiveSize(100)
-      .biSections(5)
-      .build() ;
+            .setMutation(mutation)
+            .setMaxEvaluations(maxEvaluations)
+            .setArchiveSize(archiveSize)
+            .setBiSections(biSections)
+            .build() ;
 
     return algorithm ;
-  } 
+  }
 
-  /**
-   * Configure PAES with user-defined parameter experiment.settings
-   *
-   * @return A PAES algorithm object
-   */
+  /** Configure the PAES algorithm from a configuration file*/
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {
     archiveSize = Integer.parseInt(configuration.getProperty("archiveSize",String.valueOf(
-      archiveSize)));
+            archiveSize)));
     maxEvaluations = Integer.parseInt(configuration.getProperty("maxEvaluations",String.valueOf(
-      maxEvaluations)));
+            maxEvaluations)));
     biSections = Integer.parseInt(configuration.getProperty("biSections",String.valueOf(biSections)));
 
     mutationProbability = Double.parseDouble(
-      configuration.getProperty("mutationProbability", String.valueOf(mutationProbability)));
+            configuration.getProperty("mutationProbability", String.valueOf(mutationProbability)));
     mutationDistributionIndex = Double.parseDouble(configuration
-      .getProperty("mutationDistributionIndex", String.valueOf(mutationDistributionIndex)));
+            .getProperty("mutationDistributionIndex", String.valueOf(mutationDistributionIndex)));
 
     return configure() ;
   }

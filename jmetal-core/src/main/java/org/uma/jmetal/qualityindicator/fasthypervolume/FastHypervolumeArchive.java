@@ -29,7 +29,7 @@ import org.uma.jmetal.util.comparator.EqualSolutions;
 import java.util.Comparator;
 
 /**
- * This class implements a bounded archive based on the hypervolume quality indicator
+ * This class implements a bounded setArchive based on the hypervolume quality indicator
  */
 public class FastHypervolumeArchive extends Archive {
 
@@ -39,7 +39,7 @@ public class FastHypervolumeArchive extends Archive {
   private static final long serialVersionUID = 124744170266943517L;
   public Solution referencePoint_;
   /**
-   * Stores the maximum size of the archive.
+   * Stores the maximum size of the setArchive.
    */
   private int maxSize_;
   /**
@@ -60,7 +60,7 @@ public class FastHypervolumeArchive extends Archive {
   /**
    * Constructor.
    *
-   * @param maxSize            The maximum size of the archive.
+   * @param maxSize            The maximum size of the setArchive.
    * @param numberOfObjectives The number of objectives.
    */
   public FastHypervolumeArchive(int maxSize, int numberOfObjectives) {
@@ -78,10 +78,10 @@ public class FastHypervolumeArchive extends Archive {
   }
 
   /**
-   * Adds a <code>Solution</code> to the archive. If the <code>Solution</code>
-   * is dominated by any member of the archive, then it is discarded. If the
-   * <code>Solution</code> dominates some members of the archive, these are
-   * removed. If the archive is full and the <code>Solution</code> has to be
+   * Adds a <code>Solution</code> to the setArchive. If the <code>Solution</code>
+   * is dominated by any member of the setArchive, then it is discarded. If the
+   * <code>Solution</code> dominates some members of the setArchive, these are
+   * removed. If the setArchive is full and the <code>Solution</code> has to be
    * inserted, the solutiontype contributing the least to the HV of the solutiontype set
    * is discarded.
    *
@@ -100,7 +100,7 @@ public class FastHypervolumeArchive extends Archive {
       flag = dominance_.compare(solution, aux);
       if (flag == 1) {               // The solutiontype to add is dominated
         return false;                // Discard the new solutiontype
-      } else if (flag == -1) {       // A solutiontype in the archive is dominated
+      } else if (flag == -1) {       // A solutiontype in the setArchive is dominated
         solutionsList.remove(i);    // Remove it from the population
       } else {
         if (equals_.compare(aux, solution) == 0) { // There is an equal solutiontype
@@ -110,9 +110,9 @@ public class FastHypervolumeArchive extends Archive {
         i++;
       }
     }
-    // Insert the solutiontype into the archive
+    // Insert the solutiontype into the setArchive
     solutionsList.add(solution);
-    if (size() > maxSize_) { // The archive is full
+    if (size() > maxSize_) { // The setArchive is full
       computeHVContribution();
 
       remove(indexWorst(crowdingDistance_));

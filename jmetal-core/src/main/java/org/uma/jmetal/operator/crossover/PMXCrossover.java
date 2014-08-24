@@ -47,8 +47,8 @@ public class PMXCrossover extends Crossover {
     super(parameters);
     addValidSolutionType(PermutationSolutionType.class);
 
-    if (parameters.get("probability") != null) {
-      crossoverProbability = (Double) parameters.get("probability");
+    if (parameters.get("setProbability") != null) {
+      crossoverProbability = (Double) parameters.get("setProbability");
     }
   }
 
@@ -59,10 +59,63 @@ public class PMXCrossover extends Crossover {
     crossoverProbability = builder.crossoverProbability ;
   }
 
+  /* Getter */
+  public double getCrossoverProbability() {
+    return crossoverProbability ;
+  }
+
+  /** Builder class */
+  public static class Builder {
+    private double crossoverProbability ;
+
+    public Builder() {
+      crossoverProbability = DEFAULT_PROBABILITY ;
+    }
+
+    public Builder setProbability(double probability) {
+      if ((probability < 0) || (probability > 1.0)) {
+        throw new JMetalException("Probability value invalid: " + probability) ;
+      } else {
+        crossoverProbability = probability;
+      }
+
+      return this ;
+    }
+
+    public PMXCrossover build() {
+      return new PMXCrossover(this) ;
+    }
+  }
+
+  /** Execute() method */
+  public Object execute(Object object) throws JMetalException {
+    if (null == object) {
+      throw new JMetalException("Null parameter") ;
+    } else if (!(object instanceof Solution[])) {
+      throw new JMetalException("Invalid parameter class") ;
+    }
+
+    Solution[] parents = (Solution[]) object;
+
+    if (parents.length != 2) {
+      throw new JMetalException("PMXCrossover.execute: operator needs two " +
+              "parents");
+    }
+
+    if (!solutionTypeIsValid(parents)) {
+      throw new JMetalException("PMXCrossover.execute: the solutions " +
+              "type " + parents[0].getType() + " is not allowed with this operator");
+    }
+
+    Solution[] offspring = doCrossover(crossoverProbability, parents[0], parents[1]);
+
+    return offspring;
+  }
+
   /**
    * Perform the crossover operation
    *
-   * @param probability Crossover probability
+   * @param probability Crossover setProbability
    * @param parent1     The first parent
    * @param parent2     The second parent
    * @return An array containig the two offsprings
@@ -143,53 +196,5 @@ public class PMXCrossover extends Crossover {
     }
 
     return offspring;
-  }
-
-  /** Execute() method */
-  public Object execute(Object object) throws JMetalException {
-    if (null == object) {
-      throw new JMetalException("Null parameter") ;
-    } else if (!(object instanceof Solution[])) {
-      throw new JMetalException("Invalid parameter class") ;
-    }
-
-    Solution[] parents = (Solution[]) object;
-
-    if (parents.length != 2) {
-      throw new JMetalException("PMXCrossover.execute: operator needs two " +
-              "parents");
-    }
-
-    if (!solutionTypeIsValid(parents)) {
-      throw new JMetalException("PMXCrossover.execute: the solutions " +
-              "type " + parents[0].getType() + " is not allowed with this operator");
-    }
-
-    Solution[] offspring = doCrossover(crossoverProbability, parents[0], parents[1]);
-
-    return offspring;
-  }
-
-  /** Builder class */
-  public static class Builder {
-    private double crossoverProbability ;
-
-    public Builder() {
-      crossoverProbability = DEFAULT_PROBABILITY ;
-    }
-
-    public Builder probability(double probability) {
-      if ((probability < 0) || (probability > 1.0)) {
-        throw new JMetalException("Probability value invalid: " + probability) ;
-      } else {
-        crossoverProbability = probability;
-      }
-
-      return this ;
-    }
-
-    public PMXCrossover build() {
-      return new PMXCrossover(this) ;
-    }
   }
 }

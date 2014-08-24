@@ -26,6 +26,7 @@ import org.uma.jmetal.util.Distance;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
 
+import javax.management.JMException;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
@@ -158,70 +159,73 @@ public abstract class MOEADTemplate extends Algorithm {
       this.numberOfThreads = 1 ;
     }
 
-    public Builder populationSize(int populationSize) {
+    public Builder setPopulationSize(int populationSize) {
       this.populationSize = populationSize;
 
       return this;
     }
     
-    public Builder resultPopulationSize(int resultPopulationSize) {
+    public Builder setResultPopulationSize(int resultPopulationSize) {
       this.resultPopulationSize = resultPopulationSize;
 
       return this;
     }
 
-    public Builder maxEvaluations(int maxEvaluations) {
+    public Builder setMaxEvaluations(int maxEvaluations) {
       this.maxEvaluations = maxEvaluations;
 
       return this;
     }
 
-    public Builder neighborSize(int neighborSize) {
+    public Builder setNeighborSize(int neighborSize) {
       this.neighborSize = neighborSize ;
 
       return this ;
     }
 
-    public Builder neighborhoodSelectionProbability(double neighborhoodSelectionProbability) {
+    public Builder setNeighborhoodSelectionProbability(double neighborhoodSelectionProbability) {
       this.neighborhoodSelectionProbability = neighborhoodSelectionProbability ;
 
       return this ;
     }
 
-    public Builder functionType(String functionType) {
+    public Builder setFunctionType(String functionType) {
     	if (("_TCHE1".equals(functionType)) ||
     			("_PBI".equals(functionType)) ||
-    			("_AGG".equals(functionType)))
+    			("_AGG".equals(functionType))) {
       this.functionType = functionType ;
+      } else {
+        throw new JMetalException("Function type invalid: " + functionType) ;
+      }
     
       return this ;
     }
 
-    public Builder maximumNumberOfReplacedSolutions(int maximumNumberOfReplacedSolutions) {
+    public Builder setMaximumNumberOfReplacedSolutions(int maximumNumberOfReplacedSolutions) {
       this.maximumNumberOfReplacedSolutions = maximumNumberOfReplacedSolutions ;
 
       return this ;
     }
 
-    public Builder crossover(Operator crossover) {
+    public Builder setCrossover(Operator crossover) {
       this.crossover = crossover ;
 
       return this ;
     }
 
-    public Builder mutation(Mutation mutation) {
+    public Builder setMutation(Mutation mutation) {
       this.mutation = mutation ;
 
       return this ;
     }
 
-    public Builder dataDirectory(String dataDirectory) {
+    public Builder setDataDirectory(String dataDirectory) {
       this.dataDirectory = dataDirectory ;
 
       return this ;
     }
 
-    public Builder numberOfThreads(int numberOfThreads) {
+    public Builder setNumberOfThreads(int numberOfThreads) {
       this.numberOfThreads = numberOfThreads ;
 
       return this ;
@@ -246,6 +250,7 @@ public abstract class MOEADTemplate extends Algorithm {
   }
 
   /* Class methods */
+
   protected boolean stoppingCondition() {
     return evaluations >= maxEvaluations;
   }
@@ -288,7 +293,6 @@ public abstract class MOEADTemplate extends Algorithm {
         populationSize + ".dat";
 
       try {
-        // Open the file from the resources directory
         FileInputStream fis =
           new FileInputStream(
             this.getClass().getClassLoader().getResource(dataDirectory + "/" + dataFileName)
@@ -358,12 +362,6 @@ public abstract class MOEADTemplate extends Algorithm {
     }
   }
 
-  /**
-   *
-   * @param listOfSolutions
-   * @param subproblemId
-   * @param neighbourType
-   */
   protected void matingSelection(Vector<Integer> listOfSolutions, int subproblemId, NeighborType neighbourType) {
     // list : the set of the indexes of selected mating parents
     // subProblemId  : the id of current subproblem
@@ -396,9 +394,6 @@ public abstract class MOEADTemplate extends Algorithm {
     }
   }
 
-  /**
-   * @param individual
-   */
   void updateIdealPoint(Solution individual) {
     for (int n = 0; n < problem.getNumberOfObjectives(); n++) {
       if (individual.getObjective(n) < idealPoint[n]) {
@@ -407,11 +402,6 @@ public abstract class MOEADTemplate extends Algorithm {
     }
   }
 
-  /**
-   * @param individual
-   * @param subProblemId
-   * @param neighborType
-   */
   void updateNeighborhood(Solution individual, int subProblemId, NeighborType neighborType) throws JMetalException {
     int size;
     int time;

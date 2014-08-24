@@ -30,7 +30,7 @@ import org.uma.jmetal.util.archive.CrowdingArchive;
 
 /**
  * This class represents an asynchronous version of the MOCell algorithm, which
- * applies an archive feedback through parent selection.
+ * applies an setArchive feedback through parent selection.
  */
 public class AsyncMOCell2 extends MOCellTemplate {
   private static final long serialVersionUID = 6036292773938388363L;

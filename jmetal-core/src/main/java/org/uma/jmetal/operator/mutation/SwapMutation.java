@@ -39,8 +39,8 @@ public class SwapMutation extends Mutation {
   public SwapMutation(HashMap<String, Object> parameters) {
     super(parameters);
 
-    if (parameters.get("probability") != null) {
-      mutationProbability = (double) parameters.get("probability");
+    if (parameters.get("setProbability") != null) {
+      mutationProbability = (double) parameters.get("setProbability");
     }
 
     addValidSolutionType(PermutationSolutionType.class);
@@ -53,8 +53,47 @@ public class SwapMutation extends Mutation {
     mutationProbability = builder.mutationProbability ;
   }
 
+  /* Getter */
   public double getMutationProbability() {
     return mutationProbability;
+  }
+
+  /** Builder class */
+  public static class Builder {
+    private double mutationProbability ;
+
+    public Builder() {
+      mutationProbability = 0 ;
+    }
+
+    public Builder setProbability(double probability) {
+      mutationProbability = probability ;
+
+      return this ;
+    }
+
+    public SwapMutation build() {
+      return new SwapMutation(this) ;
+    }
+  }
+
+  /** Execute() method */
+  public Object execute(Object object) throws JMetalException {
+    if (null == object) {
+      throw new JMetalException("Null parameter") ;
+    } else if (!(object instanceof Solution)) {
+      throw new JMetalException("Invalid parameter class") ;
+    }
+
+    Solution solution = (Solution) object;
+
+    if (!solutionTypeIsValid(solution)) {
+      throw new JMetalException("SwapMutation.execute: the solution " +
+              "type " + solution.getType() + " is not allowed with this operator");
+    }
+
+    this.doMutation(mutationProbability, solution);
+    return solution;
   }
 
   /** Perform mutation */
@@ -87,43 +126,6 @@ public class SwapMutation extends Mutation {
       }
     } else {
       /* Other encodings here in the future */
-    }
-  }
-
-  /** execute() method */
-  public Object execute(Object object) throws JMetalException {
-    if (null == object) {
-      throw new JMetalException("Null parameter") ;
-    } else if (!(object instanceof Solution)) {
-      throw new JMetalException("Invalid parameter class") ;
-    }
-
-    Solution solution = (Solution) object;
-
-    if (!solutionTypeIsValid(solution)) {
-      throw new JMetalException("SwapMutation.execute: the solution " +
-              "type " + solution.getType() + " is not allowed with this operator");
-    }
-
-    this.doMutation(mutationProbability, solution);
-    return solution;
-  }
-
-  /** Builder class */
-  public static class Builder {
-    private double mutationProbability ;
-
-    public Builder() {
-    }
-
-    public Builder probability(double probability) {
-      mutationProbability = probability ;
-
-      return this ;
-    }
-
-    public SwapMutation build() {
-      return new SwapMutation(this) ;
     }
   }
 }

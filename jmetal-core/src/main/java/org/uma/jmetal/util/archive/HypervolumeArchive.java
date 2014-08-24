@@ -29,7 +29,7 @@ import org.uma.jmetal.util.comparator.EqualSolutions;
 import java.util.Comparator;
 
 /**
- * This class implements a bounded archive based on the Hypervolume quality indicator).
+ * This class implements a bounded setArchive based on the Hypervolume quality indicator).
  */
 public class HypervolumeArchive extends Archive {
   private static final long serialVersionUID = 3084983453913397884L;
@@ -45,7 +45,7 @@ public class HypervolumeArchive extends Archive {
   /**
    * Constructor.
    *
-   * @param maxSize            The maximum size of the archive.
+   * @param maxSize            The maximum size of the setArchive.
    * @param numberOfObjectives The number of numberOfObjectives.
    */
   public HypervolumeArchive(int maxSize, int numberOfObjectives) {
@@ -59,10 +59,10 @@ public class HypervolumeArchive extends Archive {
   } 
 
   /**
-   * Adds a <code>Solution</code> to the archive. If the <code>Solution</code>
-   * is dominated by any member of the archive, then it is discarded. If the
-   * <code>Solution</code> dominates some members of the archive, these are
-   * removed. If the archive is full and the <code>Solution</code> has to be
+   * Adds a <code>Solution</code> to the setArchive. If the <code>Solution</code>
+   * is dominated by any member of the setArchive, then it is discarded. If the
+   * <code>Solution</code> dominates some members of the setArchive, these are
+   * removed. If the setArchive is full and the <code>Solution</code> has to be
    * inserted, the solutions are sorted by crowding distance and the one having
    * the minimum crowding distance value.
    *
@@ -90,9 +90,9 @@ public class HypervolumeArchive extends Archive {
         i++;
       }
     }
-    // Insert the solution into the archive
+    // Insert the solution into the setArchive
     solutionsList.add(solution);
-    if (size() > maxSize) { // The archive is full
+    if (size() > maxSize) { // The setArchive is full
       double[][] frontValues = this.writeObjectivesToMatrix();
       int numberOfObjectives = this.numberOfObjectives;
       // STEP 1. Obtain the maximum and minimum values of the Pareto front
@@ -172,7 +172,7 @@ public class HypervolumeArchive extends Archive {
   }
 
   /**
-   * This method returns the location (integer position) of a solution in the archive.
+   * This method returns the location (integer position) of a solution in the setArchive.
    * For that, the equalsComparator comparator is used
    */
   public int getLocation(Solution solution) {

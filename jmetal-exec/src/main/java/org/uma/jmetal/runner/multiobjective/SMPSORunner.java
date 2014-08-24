@@ -40,7 +40,6 @@ import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
-import java.util.logging.FileHandler;
 
 /**
  * This class executes:
@@ -100,20 +99,20 @@ public class SMPSORunner {
 
     /*
      * Alternatives:
-     * - archive = new CrowdingArchive(100, problem.getNumberOfObjectives()) ; // SMPSO
-     * - archive = new FastHypervolumeArchive(100, problem.getNumberOfObjectives()); // SMPSOhv
+     * - setArchive = new CrowdingArchive(100, problem.getNumberOfObjectives()) ; // SMPSO
+     * - setArchive = new FastHypervolumeArchive(100, problem.getNumberOfObjectives()); // SMPSOhv
      */
     Archive archive = new CrowdingArchive(100, problem.getNumberOfObjectives()) ;
 
     mutation = new PolynomialMutation.Builder()
-      .distributionIndex(20.0)
-      .probability(1.0 / problem.getNumberOfVariables())
+      .setDistributionIndex(20.0)
+      .setProbability(1.0 / problem.getNumberOfVariables())
       .build();
 
     algorithm = new SMPSO.Builder(problem, archive, evaluator)
-      .mutation(mutation)
-      .maxIterations(250)
-      .swarmSize(100)
+      .setMutation(mutation)
+      .setMaxIterations(250)
+      .setSwarmSize(100)
       .build();
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)

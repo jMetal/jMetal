@@ -38,7 +38,6 @@ import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
-import java.util.logging.FileHandler;
 
 /**
  * Class for configuring and running the GDE3 algorithm
@@ -48,10 +47,12 @@ public class GDE3Runner {
    * @param args Command line arguments.
    * @throws org.uma.jmetal.util.JMetalException
    * @throws java.io.IOException
-   * @throws SecurityException Usage: three choices
-   *                           - org.uma.jmetal.runner.multiobjective.GDE3Runner
-   *                           - org.uma.jmetal.runner.multiobjective.GDE3Runner problemName
-   *                           - org.uma.jmetal.runner.multiobjective.GDE3Runner problemName paretoFrontFile
+   * @throws SecurityException
+   * @throws java.lang.ClassNotFoundException
+   * Usage: three choices
+   *        - org.uma.jmetal.runner.multiobjective.GDE3Runner
+   *        - org.uma.jmetal.runner.multiobjective.GDE3Runner problemName
+   *        - org.uma.jmetal.runner.multiobjective.GDE3Runner problemName paretoFrontFile
    */
   public static void main(String[] args)
     throws JMetalException, SecurityException, IOException, ClassNotFoundException {
@@ -72,11 +73,13 @@ public class GDE3Runner {
       indicators = new QualityIndicatorGetter(problem, args[1]);
     } else {
       problem = new Kursawe("Real", 3);
+      /* Examples
       //problem = new Water("Real");
-      //problem = new ZDT1("ArrayReal", 100);
-      //problem = new ConstrEx("Real");
+      //problem = new ZDT4("ArrayReal");
+      //problem = new WFG1("Real");
       //problem = new DTLZ1("Real");
       //problem = new OKA2("Real") ;
+      */
     }
 
      /*
@@ -87,18 +90,18 @@ public class GDE3Runner {
     SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator();
 
     crossover = new DifferentialEvolutionCrossover.Builder()
-      .cr(0.5)
-      .f(0.5)
+      .setCr(0.5)
+      .setF(0.5)
       .build() ;
 
     selection = new DifferentialEvolutionSelection.Builder()
       .build();
 
     algorithm = new GDE3.Builder(problem, evaluator)
-      .crossover(crossover)
-      .selection(selection)
-      .maxIterations(250)
-      .populationSize(100)
+      .setCrossover(crossover)
+      .setSelection(selection)
+      .setMaxIterations(250)
+      .setPopulationSize(100)
       .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)

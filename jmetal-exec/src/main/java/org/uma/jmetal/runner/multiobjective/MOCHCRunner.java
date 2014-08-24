@@ -60,42 +60,42 @@ public class MOCHCRunner {
     Problem problem = new ZDT5("Binary");
 
     crossoverOperator = new HUXCrossover.Builder()
-      .probability(1.0)
-      .build() ;
+            .probability(1.0)
+            .build() ;
 
     parentsSelection = new RandomSelection.Builder()
-      .build() ;
+            .build() ;
 
     newGenerationSelection = new RankingAndCrowdingSelection.Builder(100)
-      .build() ;
+            .build() ;
 
     mutationOperator = new BitFlipMutation.Builder()
-      .probability(0.35)
-      .build() ;
+            .setProbability(0.35)
+            .build() ;
 
     algorithm = new MOCHC.Builder(problem)
-      .initialConvergenceCount(0.25)
-      .convergenceValue(3)
-      .preservedPopulation(0.05)
-      .populationSize(100)
-      .maxEvaluations(25000)
-      .crossover(crossoverOperator)
-      .newGenerationSelection(newGenerationSelection)
-      .cataclysmicMutation(mutationOperator)
-      .parentSelection(parentsSelection)
-      .build() ;
+            .setInitialConvergenceCount(0.25)
+            .setConvergenceValue(3)
+            .setPreservedPopulation(0.05)
+            .setPopulationSize(100)
+            .setMaxEvaluations(25000)
+            .setCrossover(crossoverOperator)
+            .setNewGenerationSelection(newGenerationSelection)
+            .setCataclysmicMutation(mutationOperator)
+            .setParentSelection(parentsSelection)
+            .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-      .execute() ;
+            .execute() ;
 
     SolutionSet population = algorithmRunner.getSolutionSet() ;
     long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)
-      .separator("\t")
-      .varFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
-      .funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
-      .print();
+            .separator("\t")
+            .varFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+            .funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+            .print();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
     JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");

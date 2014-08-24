@@ -1,4 +1,4 @@
-//  NSGAIIRunner.java
+//  NSGAIIBinaryRealRunner.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -35,32 +35,20 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.logging.FileHandler;
 
-/**
- * Class to configure and execute the NSGA-II algorithm.
- * <p/>
- * Besides the classic NSGA-II, a steady-state version (ssNSGAII) is also
- * included (See: J.J. Durillo, A.J. Nebro, F. Luna and E. Alba
- * "On the Effect of the Steady-State Selection Scheme in
- * Multi-Objective Genetic Algorithms"
- * 5th International Conference, EMO 2009, pp: 183-197.
- * April 2009)
- */
-
+/** Class to configure and execute the NSGA-II algorithm (Binary real encoding) */
 public class NSGAIIBinaryRealRunner {
   /**
    * @param args Command line arguments.
    * @throws org.uma.jmetal.util.JMetalException
    * @throws java.io.IOException
-   * @throws SecurityException Usage: three options
-   *                           - org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII_main
-   *                           - org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII_main problemName
-   *                           - org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII_main problemName paretoFrontFile
+   * @throws SecurityException
+   * Usage: three options
+   *           - org.uma.jmetal.runner.multiobjective.NSGAIIBinaryRealRunner
+   *           - org.uma.jmetal.runner.multiobjective.NSGAIIBinaryRealRunner problemName
+   *           - org.uma.jmetal.runner.multiobjective.NSGAIIBinaryRealRunner problemName paretoFrontFile
    */
   public static void main(String[] args) throws
-    JMetalException,
-    SecurityException,
-    IOException,
-    ClassNotFoundException {
+    JMetalException, SecurityException, IOException, ClassNotFoundException {
 
     String problemName;
     Algorithm algorithm;

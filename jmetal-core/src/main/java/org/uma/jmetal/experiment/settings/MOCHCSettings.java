@@ -1,4 +1,4 @@
-//  MOCell_Settings.java
+//  MOCHCSettings.java
 //
 //  Authors:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -41,7 +41,6 @@ import java.util.Properties;
  * User: Antonio J. Nebro
  * Date: 17/06/13
  * Time: 23:40
- * To change this template use File | Settings | File Templates.
  */
 public class MOCHCSettings extends Settings {
   private int populationSize;
@@ -59,7 +58,6 @@ public class MOCHCSettings extends Settings {
     Object[] problemParams = {"Binary"};
     problem = (new ProblemFactory()).getProblem(this.problemName, problemParams);
 
-    // Default experiment.settings
     populationSize = 100;
     maxEvaluations = 25000;
     initialConvergenceCount = 0.25;
@@ -70,12 +68,7 @@ public class MOCHCSettings extends Settings {
     mutationProbability = 0.35;
   }
 
-  /**
-   * Configure MOCHC with user-defined parameter experiment.settings
-   *
-   * @return A MOCHC algorithm object
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Configure MOCHC with default parameter settings */
   public Algorithm configure() throws JMetalException {
     Crossover crossoverOperator;
     Mutation mutationOperator;
@@ -84,56 +77,52 @@ public class MOCHCSettings extends Settings {
     Algorithm algorithm ;
 
     crossoverOperator = new HUXCrossover.Builder()
-      .probability(crossoverProbability)
-      .build() ;
+            .probability(crossoverProbability)
+            .build() ;
 
     parentsSelection = new RandomSelection.Builder()
-      .build() ;
+            .build() ;
 
     newGenerationSelection = new RankingAndCrowdingSelection.Builder(populationSize)
-      .build() ;
+            .build() ;
 
     mutationOperator = new BitFlipMutation.Builder()
-      .probability(mutationProbability)
-      .build() ;
+            .setProbability(mutationProbability)
+            .build() ;
 
     algorithm = new MOCHC.Builder(problem)
-      .initialConvergenceCount(initialConvergenceCount)
-      .preservedPopulation(preservedPopulation)
-      .populationSize(populationSize)
-      .maxEvaluations(maxEvaluations)
-      .convergenceValue(convergenceValue)
-      .crossover(crossoverOperator)
-      .newGenerationSelection(newGenerationSelection)
-      .cataclysmicMutation(mutationOperator)
-      .parentSelection(parentsSelection)
-      .build() ;
+            .setInitialConvergenceCount(initialConvergenceCount)
+            .setPreservedPopulation(preservedPopulation)
+            .setPopulationSize(populationSize)
+            .setMaxEvaluations(maxEvaluations)
+            .setConvergenceValue(convergenceValue)
+            .setCrossover(crossoverOperator)
+            .setNewGenerationSelection(newGenerationSelection)
+            .setCataclysmicMutation(mutationOperator)
+            .setParentSelection(parentsSelection)
+            .build() ;
 
     return algorithm ;
   }
 
-  /**
-   * Configure MOCHC with user-defined parameter experiment.settings
-   *
-   * @return A MOCHC algorithm object
-   */
+  /** Configure MOCHC from a properties file */
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {
     populationSize = Integer
-      .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize)));
+            .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize)));
     maxEvaluations = Integer
-      .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations)));
+            .parseInt(configuration.getProperty("maxEvaluations", String.valueOf(maxEvaluations)));
     initialConvergenceCount = Double.parseDouble(configuration
-      .getProperty("initialConvergenceCount", String.valueOf(initialConvergenceCount)));
+            .getProperty("initialConvergenceCount", String.valueOf(initialConvergenceCount)));
     preservedPopulation = Double.parseDouble(
-      configuration.getProperty("preservedPopulation", String.valueOf(preservedPopulation)));
+            configuration.getProperty("preservedPopulation", String.valueOf(preservedPopulation)));
     convergenceValue = Integer
-      .parseInt(configuration.getProperty("convergenceValue", String.valueOf(convergenceValue)));
+            .parseInt(configuration.getProperty("convergenceValue", String.valueOf(convergenceValue)));
 
     crossoverProbability = Double.parseDouble(
-      configuration.getProperty("crossoverProbability", String.valueOf(crossoverProbability)));
+            configuration.getProperty("crossoverProbability", String.valueOf(crossoverProbability)));
     mutationProbability = Double.parseDouble(
-      configuration.getProperty("mutationProbability", String.valueOf(mutationProbability)));
+            configuration.getProperty("mutationProbability", String.valueOf(mutationProbability)));
 
     return configure();
   }

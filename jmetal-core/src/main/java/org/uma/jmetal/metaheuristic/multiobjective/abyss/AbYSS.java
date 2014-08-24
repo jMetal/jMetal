@@ -44,8 +44,7 @@ import java.util.Comparator;
  * in Computer Science, Springer Verlag, 1997. AbYSS is described in:
  * A.J. Nebro, F. Luna, E. Alba, B. Dorronsoro, J.J. Durillo, A. Beham
  * "AbYSS: Adapting Scatter Search to Multiobjective Optimization."
- * IEEE Transactions on Evolutionary Computation. Vol. 12,
- * No. 4 (August 2008), pp. 439-457
+ * IEEE Transactions on Evolutionary Computation. Vol. 12,  No. 4 (August 2008), pp. 439-457
  */
 public class AbYSS extends Algorithm {
   private static final long serialVersionUID = 1682316127611498510L;
@@ -207,6 +206,82 @@ public class AbYSS extends Algorithm {
     public AbYSS build() {
       return new AbYSS(this) ;
     }
+  }
+
+  /** Execute() method */
+  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
+    Solution solution;
+    for (int i = 0; i < populationSize; i++) {
+      solution = diversificationGeneration();
+      problem.evaluate(solution);
+      problem.evaluateConstraints(solution);
+      evaluations++;
+      solution = (Solution) improvementOperator.execute(solution);
+      evaluations += improvementOperator.getEvaluations();
+      solutionSet.add(solution);
+    }
+
+    int newSolutions;
+    while (evaluations < maxEvaluations) {
+      referenceSetUpdate(true);
+      newSolutions = subSetGeneration();
+      while (newSolutions > 0) {
+        referenceSetUpdate(false);
+        if (evaluations >= maxEvaluations) {
+          return archive;
+        }
+        newSolutions = subSetGeneration();
+      }
+
+      if (evaluations < maxEvaluations) {
+        solutionSet.clear();
+        // Add refSet1 to SolutionSet
+        for (int i = 0; i < refSet1.size(); i++) {
+          solution = refSet1.get(i);
+          solution.unMarked();
+          solution = (Solution) improvementOperator.execute(solution);
+          evaluations += improvementOperator.getEvaluations();
+          solutionSet.add(solution);
+        }
+        // Remove refSet1 and refSet2
+        refSet1.clear();
+        refSet2.clear();
+
+        // Sort the setArchive and insert the best solutions
+        distance.crowdingDistanceAssignment(archive);
+        archive.sort(crowdingDistance);
+
+        int insert = populationSize / 2;
+        if (insert > archive.size()) {
+          insert = archive.size();
+        }
+
+        if (insert > (populationSize - solutionSet.size())) {
+          insert = populationSize - solutionSet.size();
+        }
+
+        // Insert solutions
+        for (int i = 0; i < insert; i++) {
+          solution = new Solution(archive.get(i));
+          solution.unMarked();
+          solutionSet.add(solution);
+        }
+
+        // Create the rest of solutions randomly
+        while (solutionSet.size() < populationSize) {
+          solution = diversificationGeneration();
+          problem.evaluateConstraints(solution);
+          problem.evaluate(solution);
+          evaluations++;
+          solution = (Solution) improvementOperator.execute(solution);
+          evaluations += improvementOperator.getEvaluations();
+          solution.unMarked();
+          solutionSet.add(solution);
+        }
+      }
+    }
+
+    return archive;
   }
 
   /**
@@ -505,91 +580,5 @@ public class AbYSS extends Algorithm {
     }
 
     return subSet.size();
-  }
-
-  /**
-   * Runs of the AbYSS algorithm.
-   *
-   * @return a <code>SolutionSet</code> that is a set of non dominated solutions
-   * as a experimentoutput of the algorithm execution
-   * @throws org.uma.jmetal.util.JMetalException
-   */
-  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
-    // STEP 2. Build the initial solutionSet
-    Solution solution;
-    for (int i = 0; i < populationSize; i++) {
-      solution = diversificationGeneration();
-      problem.evaluate(solution);
-      problem.evaluateConstraints(solution);
-      evaluations++;
-      solution = (Solution) improvementOperator.execute(solution);
-      evaluations += improvementOperator.getEvaluations();
-      solutionSet.add(solution);
-    }
-
-    // STEP 3. Main loop
-    int newSolutions;
-    while (evaluations < maxEvaluations) {
-      referenceSetUpdate(true);
-      newSolutions = subSetGeneration();
-      while (newSolutions > 0) {
-        referenceSetUpdate(false);
-        if (evaluations >= maxEvaluations) {
-          return archive;
-        }
-        newSolutions = subSetGeneration();
-      }
-
-      // RE-START
-      if (evaluations < maxEvaluations) {
-        solutionSet.clear();
-        // Add refSet1 to SolutionSet
-        for (int i = 0; i < refSet1.size(); i++) {
-          solution = refSet1.get(i);
-          solution.unMarked();
-          solution = (Solution) improvementOperator.execute(solution);
-          evaluations += improvementOperator.getEvaluations();
-          solutionSet.add(solution);
-        }
-        // Remove refSet1 and refSet2
-        refSet1.clear();
-        refSet2.clear();
-
-        // Sort the archive and insert the best solutions
-        distance.crowdingDistanceAssignment(archive);
-        archive.sort(crowdingDistance);
-
-        int insert = populationSize / 2;
-        if (insert > archive.size()) {
-          insert = archive.size();
-        }
-
-        if (insert > (populationSize - solutionSet.size())) {
-          insert = populationSize - solutionSet.size();
-        }
-
-        // Insert solutions 
-        for (int i = 0; i < insert; i++) {
-          solution = new Solution(archive.get(i));
-          solution.unMarked();
-          solutionSet.add(solution);
-        }
-
-        // Create the rest of solutions randomly
-        while (solutionSet.size() < populationSize) {
-          solution = diversificationGeneration();
-          problem.evaluateConstraints(solution);
-          problem.evaluate(solution);
-          evaluations++;
-          solution = (Solution) improvementOperator.execute(solution);
-          evaluations += improvementOperator.getEvaluations();
-          solution.unMarked();
-          solutionSet.add(solution);
-        }
-      }
-    }
-
-    // STEP 4. Return the archive
-    return archive;
   }
 } 

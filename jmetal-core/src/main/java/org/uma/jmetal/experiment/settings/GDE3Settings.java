@@ -1,4 +1,4 @@
-//  GDE3_Settings.java 
+//  GDE3Settings.java
 //
 //  Authors:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -61,38 +61,38 @@ public class GDE3Settings extends Settings {
     evaluator = new SequentialSolutionSetEvaluator() ;
   }
 
-  /** configure() method */
+  /** Configure GDE3 with default parameter settings */
   @Override
   public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
     Selection selection;
     Crossover crossover;
     crossover = new DifferentialEvolutionCrossover.Builder()
-      .cr(cr)
-      .f(f)
-      .build() ;
+            .setCr(cr)
+            .setF(f)
+            .build() ;
 
     selection = new DifferentialEvolutionSelection.Builder()
-      .build();
+            .build();
 
     algorithm = new GDE3.Builder(problem, evaluator)
-      .crossover(crossover)
-      .selection(selection)
-      .maxIterations(maxIterations)
-      .populationSize(populationSize)
-      .build() ;
+            .setCrossover(crossover)
+            .setSelection(selection)
+            .setMaxIterations(maxIterations)
+            .setPopulationSize(populationSize)
+            .build() ;
 
 
     return algorithm ;
   }
 
-  /** configure() method using a properties file */
+  /** Configure GDE3 from a properties file */
   @Override
   public Algorithm configure(Properties configuration) throws JMetalException {
     populationSize = Integer
-      .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize)));
+            .parseInt(configuration.getProperty("populationSize", String.valueOf(populationSize)));
     maxIterations =
-      Integer.parseInt(configuration.getProperty("maxIterations", String.valueOf(maxIterations)));
+            Integer.parseInt(configuration.getProperty("maxIterations", String.valueOf(maxIterations)));
 
     cr = Double.parseDouble(configuration.getProperty("CR", String.valueOf(cr)));
     f = Double.parseDouble(configuration.getProperty("F", String.valueOf(f)));

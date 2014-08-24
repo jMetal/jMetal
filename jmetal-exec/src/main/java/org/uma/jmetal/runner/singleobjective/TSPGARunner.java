@@ -62,11 +62,11 @@ public class TSPGARunner {
     problem = new TSP("Permutation", problemName);
 
     crossover = new PMXCrossover.Builder()
-            .probability(0.95)
+            .setProbability(0.95)
             .build() ;
 
     mutation = new SwapMutation.Builder()
-            .probability(0.2)
+            .setProbability(0.2)
             .build() ;
 
     selection = new BinaryTournament.Builder()

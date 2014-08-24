@@ -1,4 +1,4 @@
-//  MOCell_SettingsTest.java
+//  MOCellSettings.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -32,7 +32,6 @@ import org.uma.jmetal.operator.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.multiobjective.Fonseca;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Properties;
@@ -42,16 +41,15 @@ import java.util.Properties;
  * User: Antonio J. Nebro
  * Date: 17/06/13
  * Time: 22:54
- * To change this template use File | Settings | File Templates.
  */
 public class MOCellSettingsTest {
-  Properties configuration_ ;
+  Properties configuration ;
 
   @Before
-  public void init() throws FileNotFoundException, IOException {
-    configuration_ = new Properties();
+  public void init() throws IOException {
+    configuration = new Properties();
     InputStreamReader isr = new InputStreamReader(new FileInputStream(ClassLoader.getSystemResource("MOCell.conf").getPath()));
-    configuration_.load(isr);
+    configuration.load(isr);
   }
 
   @Test
@@ -226,7 +224,7 @@ public class MOCellSettingsTest {
   public void testConfigure2() throws Exception {
     double epsilon = 0.000000000000001 ;
     Settings mocellSettings = new MOCellSettings("Fonseca");
-    MOCellTemplate algorithm = (MOCellTemplate)mocellSettings.configure(configuration_) ;
+    MOCellTemplate algorithm = (MOCellTemplate)mocellSettings.configure(configuration) ;
 
     Problem problem = new Fonseca("Real") ;
 

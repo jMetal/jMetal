@@ -38,7 +38,6 @@ import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
-import java.util.logging.FileHandler;
 
 /**
  * * This class executes the asynchronous version 1 of the MOCell algorithm described in
@@ -49,17 +48,18 @@ import java.util.logging.FileHandler;
  */
 public class AsyncMOCell1Runner {
   /**
-   * @param args Command line arguments. The first (optional) argument specifies
-   *             the problem to solve.
+   * @param args Command line arguments. The first (optional) argument specifies the problem to solve.
    * @throws org.uma.jmetal.util.JMetalException
    * @throws java.io.IOException
-   * @throws SecurityException Usage: three options
-   *                           - org.uma.jmetal.runner.multiobjective.AsyncMOCell1Runner
-   *                           - org.uma.jmetal.runner.multiobjective.AsyncMOCell1Runner problemName
-   *                           - org.uma.jmetal.runner.multiobjective.AsyncMOCell1Runner problemName ParetoFrontFile
+   * @throws SecurityException
+   * @throws java.lang.ClassNotFoundException
+   * Usage: three choices
+   *        - org.uma.jmetal.runner.multiobjective.AsyncMOCell1Runner
+   *        - org.uma.jmetal.runner.multiobjective.AsyncMOCell1Runner problemName
+   *        - org.uma.jmetal.runner.multiobjective.AsyncMOCell1Runner problemName ParetoFrontFile
    */
   public static void main(String[] args)
-    throws JMetalException, SecurityException, IOException, ClassNotFoundException {
+          throws JMetalException, SecurityException, IOException, ClassNotFoundException {
     Problem problem;
     Algorithm algorithm;
     Operator crossover;
@@ -87,39 +87,39 @@ public class AsyncMOCell1Runner {
     }
 
     crossover = new SBXCrossover.Builder()
-      .probability(0.9)
-      .distributionIndex(20.0)
-      .build();
+            .setProbability(0.9)
+            .setDistributionIndex(20.0)
+            .build();
 
     mutation = new PolynomialMutation.Builder()
-      .probability(1.0 / problem.getNumberOfVariables())
-      .distributionIndex(20.0)
-      .build();
+            .setProbability(1.0 / problem.getNumberOfVariables())
+            .setDistributionIndex(20.0)
+            .build();
 
     selection = new BinaryTournament.Builder()
-      .build();
+            .build();
 
     algorithm = new MOCellTemplate.Builder(problem)
-      .populationSize(100)
-      .archiveSize(100)
-      .maxEvaluations(25000)
-      .numberOfFeedbackSolutionsFromArchive(20)
-      .crossover(crossover)
-      .mutation(mutation)
-      .selection(selection)
-      .build("AsyncMOCell1");
+            .setPopulationSize(100)
+            .setArchiveSize(100)
+            .setMaxEvaluations(25000)
+            .setNumberOfFeedbackSolutionsFromArchive(20)
+            .setCrossover(crossover)
+            .setMutation(mutation)
+            .setSelection(selection)
+            .build("AsyncMOCell1");
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-      .execute();
+            .execute();
 
     SolutionSet population = algorithmRunner.getSolutionSet();
     long computingTime = algorithmRunner.getComputingTime();
 
     new SolutionSetOutput.Printer(population)
-      .separator("\t")
-      .varFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
-      .funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
-      .print();
+            .separator("\t")
+            .varFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+            .funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+            .print();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
     JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");

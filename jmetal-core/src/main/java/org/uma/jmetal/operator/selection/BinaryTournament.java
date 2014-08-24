@@ -99,7 +99,7 @@ public class BinaryTournament extends Selection {
       comparator = new DominanceComparator() ;
     }
 
-    public Builder comparator(Comparator<Solution> comparator) {
+    public Builder setComparator(Comparator<Solution> comparator) {
       this.comparator = comparator ;
 
       return this ;

@@ -61,6 +61,7 @@ public abstract class NSGAIITemplate extends Algorithm {
     this.evaluator = evaluator ;
   }
 
+  /** Constructor */
   protected NSGAIITemplate(Builder builder) {
     super() ;
 
@@ -74,6 +75,92 @@ public abstract class NSGAIITemplate extends Algorithm {
     distance = new Distance();
 
     evaluations = 0 ;
+  }
+
+  /* Getters */
+  public Operator getCrossoverOperator() {
+    return crossoverOperator;
+  }
+
+  public Operator getMutationOperator() {
+    return mutationOperator;
+  }
+
+  public Operator getSelectionOperator() {
+    return selectionOperator;
+  }
+
+  public int getPopulationSize() {
+    return populationSize;
+  }
+
+  public int getMaxEvaluations() {
+    return maxEvaluations;
+  }
+
+  public int getEvaluations () {
+    return evaluations;
+  }
+
+  /** Builder class */
+  public static class Builder {
+    protected SolutionSetEvaluator evaluator ;
+    protected Problem problem;
+
+    protected int populationSize;
+    protected int maxEvaluations;
+
+    protected Operator mutationOperator;
+    protected Operator crossoverOperator;
+    protected Operator selectionOperator;
+
+    public Builder(Problem problem, SolutionSetEvaluator evaluator) {
+      this.evaluator = evaluator ;
+      this.problem = problem ;
+    }
+
+    public Builder setPopulationSize(int populationSize) {
+      this.populationSize = populationSize ;
+
+      return this ;
+    }
+
+    public Builder setMaxEvaluations(int maxEvaluations) {
+      this.maxEvaluations = maxEvaluations ;
+
+      return this ;
+    }
+
+    public Builder setCrossover(Operator crossover) {
+      crossoverOperator = crossover ;
+
+      return this ;
+    }
+
+    public Builder setMutation(Operator mutation) {
+      mutationOperator = mutation ;
+
+      return this ;
+    }
+
+    public Builder setSelection(Operator selection) {
+      selectionOperator = selection ;
+
+      return this ;
+    }
+
+    public NSGAIITemplate build(String nsgaIIvariant) {
+      NSGAIITemplate algorithm  ;
+      if ("NSGAII".equals(nsgaIIvariant)) {
+        algorithm = new NSGAII(this);
+      } else if ("SteadyStateNSGAII".equals(nsgaIIvariant)) {
+        algorithm =  new SteadyStateNSGAII(this) ;
+      } else {
+        throw new JMetalException(nsgaIIvariant + " variant unknown") ;
+      }
+
+      return algorithm ;
+    }
   }
 
   /** @deprecated */
@@ -168,91 +255,5 @@ public abstract class NSGAIITemplate extends Algorithm {
 
   protected void tearDown() {
     evaluator.shutdown();
-  }
-
-  /* Getters */
-  public Operator getCrossoverOperator() {
-    return crossoverOperator;
-  }
-
-  public Operator getMutationOperator() {
-    return mutationOperator;
-  }
-
-  public Operator getSelectionOperator() {
-    return selectionOperator;
-  }
-
-  public int getPopulationSize() {
-    return populationSize;
-  }
-
-  public int getMaxEvaluations() {
-    return maxEvaluations;
-  }
-
-  public int getEvaluations () {
-    return evaluations;
-  }
-
-  /** Builder class */
-  public static class Builder {
-    protected SolutionSetEvaluator evaluator ;
-    protected Problem problem;
-
-    protected int populationSize;
-    protected int maxEvaluations;
-
-    protected Operator mutationOperator;
-    protected Operator crossoverOperator;
-    protected Operator selectionOperator;
-
-    public Builder(Problem problem, SolutionSetEvaluator evaluator) {
-      this.evaluator = evaluator ;
-      this.problem = problem ;
-    }
-
-    public Builder populationSize(int populationSize) {
-      this.populationSize = populationSize ;
-
-      return this ;
-    }
-
-    public Builder maxEvaluations(int maxEvaluations) {
-      this.maxEvaluations = maxEvaluations ;
-
-      return this ;
-    }
-
-    public Builder crossover(Operator crossover) {
-      crossoverOperator = crossover ;
-
-      return this ;
-    }
-
-    public Builder mutation(Operator mutation) {
-      mutationOperator = mutation ;
-
-      return this ;
-    }
-
-    public Builder selection(Operator selection) {
-      selectionOperator = selection ;
-
-      return this ;
-    }
-
-    public NSGAIITemplate build(String nsgaIIvariant) {
-      NSGAIITemplate algorithm  ;
-      if ("NSGAII".equals(nsgaIIvariant)) {
-        algorithm = new NSGAII(this);
-      } else if ("SteadyStateNSGAII".equals(nsgaIIvariant)) {
-        algorithm =  new SteadyStateNSGAII(this) ;
-      } else {
-        throw new JMetalException(nsgaIIvariant + " variant unknown") ;
-      }
-
-      return algorithm ;
-    }
   }
 } 

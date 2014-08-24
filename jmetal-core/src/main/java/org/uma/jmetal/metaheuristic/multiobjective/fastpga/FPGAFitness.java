@@ -36,7 +36,7 @@ public class FPGAFitness {
   private static final Comparator<Solution> dominanceComparator = new DominanceComparator();
   /**
    * Need the population to assign the fitness, this population may contain
-   * solutions in the population and the archive
+   * solutions in the population and the setArchive
    */
   private SolutionSet solutionSet = null;
 
