@@ -80,27 +80,25 @@ the reporting of output information. As an example, the `NSGAIIRunner` program t
 NSGA-II looks like this code:
 
 ``` java
+//  NSGAIIRunner.java
 
-package jmetal.runner;
-
+/**
+ * Class to configure and execute the NSGA-II algorithm (including Steady State and parallel versions)
+ */
 public class NSGAIIRunner {
-  private static Logger logger_;
-  private static FileHandler fileHandler_;
-
   /**
    * @param args Command line arguments.
-   * @throws jmetal.util.JMetalException
+   * @throws org.uma.jmetal.util.JMetalException
    * @throws java.io.IOException
-   * @throws SecurityException Usage: three options
-   *                           - jmetal.metaheuristics.nsgaII.NSGAIIRunner
-   *                           - jmetal.metaheuristics.nsgaII.NSGAIIRunner problemName
-   *                           - jmetal.metaheuristics.nsgaII.NSGAIIRunner problemName paretoFrontFile
+   * @throws SecurityException
+   * @throws java.lang.ClassNotFoundException
+   * Usage: three options
+   *           - org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAIIRunner
+   *           - org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAIIRunner problemName
+   *           - org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAIIRunner problemName paretoFrontFile
    */
   public static void main(String[] args) throws
-    JMetalException,
-    SecurityException,
-    IOException,
-    ClassNotFoundException {
+          JMetalException, SecurityException, IOException, ClassNotFoundException {
 
     Problem problem;
     Algorithm algorithm;
@@ -108,12 +106,7 @@ public class NSGAIIRunner {
     Operator mutation;
     Operator selection;
 
-    QualityIndicator indicators;
-
-    // Logger object and file to store log messages
-    logger_ = Configuration.logger_;
-    fileHandler_ = new FileHandler("NSGAII_main.log");
-    logger_.addHandler(fileHandler_);
+    QualityIndicatorGetter indicators;
 
     indicators = null;
     if (args.length == 1) {
@@ -122,7 +115,7 @@ public class NSGAIIRunner {
     } else if (args.length == 2) {
       Object[] params = {"Real"};
       problem = (new ProblemFactory()).getProblem(args[0], params);
-      indicators = new QualityIndicator(problem, args[1]);
+      indicators = new QualityIndicatorGetter(problem, args[1]);
     } else {
       problem = new Kursawe("Real", 3);
       /*
@@ -150,52 +143,53 @@ public class NSGAIIRunner {
     SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator() ;
 
     crossover = new SBXCrossover.Builder()
-      .distributionIndex(20.0)
-      .probability(0.9)
-      .build() ;
+            .setDistributionIndex(20.0)
+            .setProbability(0.9)
+            .build() ;
 
     mutation = new PolynomialMutation.Builder()
-      .distributionIndex(20.0)
-      .probability(1.0/problem.getNumberOfVariables())
-      .build();
+            .setDistributionIndex(20.0)
+            .setProbability(1.0 / problem.getNumberOfVariables())
+            .build();
 
     selection = new BinaryTournament2.Builder()
-      .build();
+            .build();
 
     algorithm = new NSGAIITemplate.Builder(problem, evaluator)
-      .crossover(crossover)
-      .mutation(mutation)
-      .selection(selection)
-      .maxEvaluations(25000)
-      .populationSize(100)
-      .build(nsgaIIVersion) ;
+            .setCrossover(crossover)
+            .setMutation(mutation)
+            .setSelection(selection)
+            .setMaxEvaluations(25000)
+            .setPopulationSize(100)
+            .build(nsgaIIVersion) ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-      .execute() ;
+            .execute() ;
 
     SolutionSet population = algorithmRunner.getSolutionSet() ;
     long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)
-      .separator("\t")
-      .varFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
-      .funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
-      .print();
+            .separator("\t")
+            .varFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+            .funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+            .print();
 
-    logger_.info("Total execution time: " + computingTime + "ms");
-    logger_.info("Objectives values have been written to file FUN.tsv");
-    logger_.info("Variables values have been written to file VAR.tsv");
+    JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
+    JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
+    JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
 
     if (indicators != null) {
-      logger_.info("Quality indicators");
-      logger_.info("Hypervolume: " + indicators.getHypervolume(population));
-      logger_.info("GD         : " + indicators.getGD(population));
-      logger_.info("IGD        : " + indicators.getIGD(population));
-      logger_.info("Spread     : " + indicators.getSpread(population));
-      logger_.info("Epsilon    : " + indicators.getEpsilon(population));
+      JMetalLogger.logger.info("Quality indicators");
+      JMetalLogger.logger.info("Hypervolume: " + indicators.getHypervolume(population));
+      JMetalLogger.logger.info("GD         : " + indicators.getGD(population));
+      JMetalLogger.logger.info("IGD        : " + indicators.getIGD(population));
+      JMetalLogger.logger.info("Spread     : " + indicators.getSpread(population));
+      JMetalLogger.logger.info("Epsilon    : " + indicators.getEpsilon(population));
     }
   }
 }
+
 ```
 
 The list of operators adapted to use the fluent interface is:
