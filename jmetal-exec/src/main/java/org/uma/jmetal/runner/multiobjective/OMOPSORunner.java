@@ -52,9 +52,9 @@ public class OMOPSORunner {
    * @throws org.uma.jmetal.util.JMetalException
    * @throws IOException
    * @throws SecurityException Usage: three options
-   *                           - org.uma.jmetal.runner.MOCell_main
-   *                           - org.uma.jmetal.runner.MOCell_main problemName
-   *                           - org.uma.jmetal.runner.MOCell_main problemName ParetoFrontFile
+   *              - org.uma.jmetal.runner.multiobjective.OMOPSORunner
+   *              - org.uma.jmetal.runner.multiobjective.OMOPSORunner problemName
+   *              - org.uma.jmetal.runner.multiobjective.OMOPSORunner problemName ParetoFrontFile
    */
   public static void main(String[] args) throws JMetalException, IOException, ClassNotFoundException {
     Problem problem;

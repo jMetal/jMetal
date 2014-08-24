@@ -38,6 +38,8 @@ import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
 import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.logging.FileHandler;
 
 /**
@@ -48,13 +50,10 @@ import java.util.logging.FileHandler;
 public class NSGAIImTSPRunner {
   /**
    * @param args Command line arguments.
-   * @throws org.uma.jmetal.util.JMetalException
-   * @throws java.io.IOException
-   * @throws SecurityException
-   * Usage:
-   *       - org.uma.jmetal.runner.multiobjective.NSGAIImTSPRunner
+   * @throws IOException 
+   * @throws ClassNotFoundException 
    */
-  public static void main(String[] args) throws Exception {
+  public static void main(String[] args) throws ClassNotFoundException, IOException {
     Problem problem; 
     Algorithm algorithm; 
     Operator crossover; 

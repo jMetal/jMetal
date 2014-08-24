@@ -45,17 +45,16 @@ public class Runner {
    * @param args Command line arguments.
    * @throws org.uma.jmetal.util.JMetalException
    * @throws IOException
-   * @throws SecurityException      Usage: three options
-   *                                - org.uma.jmetal.runner.multiobjective.Runner algorithmName
-   *                                - org.uma.jmetal.runner.multiobjective.Runner algorithmName problemName
-   *                                - org.uma.jmetal.runner.multiobjective.Runner problemName paretoFrontFile
+   * @throws SecurityException      
+   * Usage: three options
+   *       - org.uma.jmetal.runner.multiobjective.Runner algorithmName
+   *       - org.uma.jmetal.runner.multiobjective.Runner algorithmName problemName
+   *       - org.uma.jmetal.runner.multiobjective.Runner problemName paretoFrontFile
    * @throws ClassNotFoundException
    */
 
   public static void main(String[] args) throws
-    JMetalException, SecurityException, IOException,
-    IllegalArgumentException, IllegalAccessException,
-    ClassNotFoundException {
+    JMetalException, SecurityException, IOException, ClassNotFoundException {
     Algorithm algorithm;
 
     QualityIndicatorGetter indicators;

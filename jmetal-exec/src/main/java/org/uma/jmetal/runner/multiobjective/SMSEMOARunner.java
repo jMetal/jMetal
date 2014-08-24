@@ -1,9 +1,9 @@
-//  SMSEMOA_main.java
+//  SMSEMOARunner.java
 //
 //  Author:
-//       Simon Wessing
+//       Antonio J. Nebro
 //
-//  Copyright (c) 2011 Simon Wessing
+//  Copyright (c) 2014 Antonio J. Nebro
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -57,16 +57,15 @@ public class SMSEMOARunner {
    * @param args Command line arguments.
    * @throws org.uma.jmetal.util.JMetalException
    * @throws IOException
-   * @throws SecurityException Usage: three options
-   *                           - org.uma.jmetal.runner.SMSEMOA_main
-   *                           - org.uma.jmetal.runner.SMSEMOA_main problemName
-   *                           - org.uma.jmetal.runner.SMSEMOA_main problemName paretoFrontFile
+   * @throws SecurityException 
+   * @throws ClassNotFoundException
+   * Usage: three options
+   *         - org.uma.jmetal.runner.multiobjective.SMSEMOARunner
+   *         - org.uma.jmetal.runner.multiobjective.SMSEMOARunner problemName
+   *         - org.uma.jmetal.runner.multiobjective.SMSEMOARunner problemName paretoFrontFile
    */
   public static void main(String[] args) throws
-    JMetalException,
-    SecurityException,
-    IOException,
-    ClassNotFoundException {
+    JMetalException, SecurityException, IOException, ClassNotFoundException {
     Problem problem;
     Algorithm algorithm;
     Operator crossover;

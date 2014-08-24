@@ -24,6 +24,7 @@ import org.junit.Test;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.experiment.settings.GDE3Settings;
+import org.uma.jmetal.experiment.settings.ParallelGDE3Settings;
 
 import java.io.IOException;
 
@@ -36,8 +37,20 @@ public class GDE3Test {
   Algorithm algorithm;
 
   @Test
-  public void testNumberOfReturnedSolutionsInEasyProblem() throws IOException, ClassNotFoundException {
+  public void numberOfReturnedSolutionsInEasyProblemTest() throws IOException, ClassNotFoundException {
     algorithm = new GDE3Settings("Kursawe").configure() ;
+
+    SolutionSet solutionSet = algorithm.execute() ;
+    /*
+      Rationale: the default problem is Kursawe, and usually GDE3; configured with standard
+      settings should return 100 solutions
+     */
+    assertTrue(solutionSet.size() >= 98) ;
+  }
+  
+  @Test
+  public void parallelVerstionTest() throws IOException, ClassNotFoundException {
+    algorithm = new ParallelGDE3Settings("Kursawe").configure() ;
 
     SolutionSet solutionSet = algorithm.execute() ;
     /*

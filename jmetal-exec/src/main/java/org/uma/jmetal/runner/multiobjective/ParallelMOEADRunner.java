@@ -50,11 +50,12 @@ public class ParallelMOEADRunner {
    *             the problem to solve.
    * @throws org.uma.jmetal.util.JMetalException
    * @throws java.io.IOException
-   * @throws SecurityException      Usage: three options
-   *                                - org.uma.jmetal.runner.MOEAD_main
-   *                                - org.uma.jmetal.runner.MOEAD_main problemName
-   *                                - org.uma.jmetal.runner.MOEAD_main problemName ParetoFrontFile
+   * @throws SecurityException      
    * @throws ClassNotFoundException
+   * Usage: three options
+   *         - org.uma.jmetal.runner.multiobjective.ParallelMOEADRunner
+   *         - org.uma.jmetal.runner.multiobjective.ParallelMOEADRunner problemName
+   *         - org.uma.jmetal.runner.multiobjective.ParallelMOEADRunner problemName paretoFrontFile
    */
   public static void main(String[] args)
           throws JMetalException, SecurityException, IOException, ClassNotFoundException {

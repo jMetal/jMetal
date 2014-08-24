@@ -43,9 +43,9 @@ public class NSGAIIBinaryRealRunner {
    * @throws java.io.IOException
    * @throws SecurityException
    * Usage: three options
-   *           - org.uma.jmetal.runner.multiobjective.NSGAIIBinaryRealRunner
-   *           - org.uma.jmetal.runner.multiobjective.NSGAIIBinaryRealRunner problemName
-   *           - org.uma.jmetal.runner.multiobjective.NSGAIIBinaryRealRunner problemName paretoFrontFile
+   *         - org.uma.jmetal.runner.multiobjective.NSGAIIBinaryRealRunner
+   *         - org.uma.jmetal.runner.multiobjective.NSGAIIBinaryRealRunner problemName
+   * @throws ClassNotFoundException 
    */
   public static void main(String[] args) throws
     JMetalException, SecurityException, IOException, ClassNotFoundException {

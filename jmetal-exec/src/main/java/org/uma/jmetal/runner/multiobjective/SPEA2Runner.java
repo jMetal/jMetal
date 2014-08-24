@@ -49,10 +49,12 @@ public class SPEA2Runner {
    *             the problem to solve.
    * @throws org.uma.jmetal.util.JMetalException
    * @throws IOException
-   * @throws SecurityException Usage: three options
-   *                           - org.uma.jmetal.runner.SPEA2_main
-   *                           - org.uma.jmetal.runner.SPEA2_main problemName
-   *                           - org.uma.jmetal.runner.SPEA2_main problemName ParetoFrontFile
+   * @throws SecurityException 
+   * @throws ClassNotFoundException
+   * Usage: three options
+   *        - org.uma.jmetal.runner.multiobjective.SPEA2Runner
+   *        - org.uma.jmetal.runner.multiobjective.SPEA2Runner problemName
+   *        - org.uma.jmetal.runner.multiobjective.SPEA2Runner problemName paretoFrontFile
    */
   public static void main(String[] args) throws JMetalException, IOException, ClassNotFoundException {
     Problem problem;

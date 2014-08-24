@@ -1,4 +1,4 @@
-//  PAES.main
+//  PAESRunner
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -47,10 +47,12 @@ public class PAESRunner {
    *             the problem to solve.
    * @throws org.uma.jmetal.util.JMetalException
    * @throws IOException
-   * @throws SecurityException Usage: three options
-   *              - org.uma.jmetal.runner.MOCell_main
-   *              - org.uma.jmetal.runner.MOCell_main problemName
-   *              - org.uma.jmetal.runner.MOCell_main problemName ParetoFrontFile
+   * @throws SecurityException 
+   * @throws ClassNotFoundException
+   * Usage: three options
+   *        - org.uma.jmetal.runner.multiobjective.PAESRunner
+   *        - org.uma.jmetal.runner.multiobjective.PAESRunner problemName
+   *        - org.uma.jmetal.runner.multiobjective.PAESRunner problemName paretoFrontFile
    */
   public static void main(String[] args) throws JMetalException, IOException, ClassNotFoundException {
     Problem problem;

@@ -49,9 +49,12 @@ public class PESA2Runner {
    *             the problem to solve.
    * @throws org.uma.jmetal.util.JMetalException
    * @throws IOException
-   * @throws SecurityException Usage: three options
-   *                           - org.uma.jmetal.runner.PESA2_main
-   *                           - org.uma.jmetal.runner.PESA2_main problemName
+   * @throws SecurityException 
+   * @throws ClassNotFoundException
+   * Usage: three options
+   *         - org.uma.jmetal.runner.multiobjective.PESA2Runner
+   *         - org.uma.jmetal.runner.multiobjective.PESA2Runner problemName
+   *         - org.uma.jmetal.runner.multiobjective.PESA2Runner problemName paretoFrontFile
    */
   public static void main(String[] args) throws JMetalException, IOException, ClassNotFoundException {
     Problem problem;

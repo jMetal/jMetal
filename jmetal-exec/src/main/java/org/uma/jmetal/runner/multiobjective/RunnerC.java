@@ -48,10 +48,11 @@ public class RunnerC {
    * @param args Command line arguments.
    * @throws org.uma.jmetal.util.JMetalException
    * @throws java.io.IOException
-   * @throws SecurityException       Usage: three options
-   *                                 - org.uma.jmetal.experiment.Main algorithmName
-   *                                 - org.uma.jmetal.experiment.Main algorithmName problemName
-   *                                 - org.uma.jmetal.experiment.Main algorithmName problemName paretoFrontFile
+   * @throws SecurityException       
+   * Usage: three options
+   *       - org.uma.jmetal.runner.multiobjective.RunnerC propertiesFile
+   *       - org.uma.jmetal.runner.multiobjective.RunnerC propertiesFile problemName
+   *       - org.uma.jmetal.runner.multiobjective.RunnerC propertiesFile paretoFrontFile
    * @throws ClassNotFoundException
    */
   public static void main(String[] args) throws

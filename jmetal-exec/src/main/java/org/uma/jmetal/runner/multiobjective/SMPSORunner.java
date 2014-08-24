@@ -58,10 +58,11 @@ public class SMPSORunner {
    *             the problem to solve.
    * @throws org.uma.jmetal.util.JMetalException
    * @throws java.io.IOException
-   * @throws SecurityException       Usage: three options
-   *                                 - org.uma.jmetal.runner.multiobjective.SMPSORunner
-   *                                 - org.uma.jmetal.runner.multiobjective.SMPSORunner problemName
-   *                                 - org.uma.jmetal.runner.multiobjective.SMPSORunner problemName ParetoFrontFile
+   * @throws SecurityException       
+   * Usage: three options
+   *          - org.uma.jmetal.runner.multiobjective.SMPSORunner
+   *          - org.uma.jmetal.runner.multiobjective.SMPSORunner problemName
+   *          - org.uma.jmetal.runner.multiobjective.SMPSORunner problemName ParetoFrontFile
    */
   public static void main(String[] args) throws JMetalException, IOException, ClassNotFoundException {
     Problem problem;

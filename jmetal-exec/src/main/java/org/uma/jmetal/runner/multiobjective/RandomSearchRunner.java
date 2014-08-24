@@ -45,9 +45,12 @@ public class RandomSearchRunner {
    * @param args Command line arguments.
    * @throws org.uma.jmetal.util.JMetalException
    * @throws IOException
-   * @throws SecurityException Usage: three options
-   *                           - org.uma.jmetal.runner.RandomSearch_main
-   *                           - org.uma.jmetal.runner.RandomSearch_main problemName
+   * @throws SecurityException 
+   * @throws ClassNotFoundException
+   * Usage: three options
+   *         - org.uma.jmetal.runner.multiobjective.RandomSearchRunner
+   *         - org.uma.jmetal.runner.multiobjective.RandomSearchRunner problemName
+   *         - org.uma.jmetal.runner.multiobjective.RandomSearchRunner problemName paretoFrontFile
    */
   public static void main(String[] args) throws
     JMetalException, SecurityException, IOException, ClassNotFoundException {
