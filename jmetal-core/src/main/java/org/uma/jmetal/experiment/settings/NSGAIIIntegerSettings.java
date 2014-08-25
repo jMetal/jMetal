@@ -50,7 +50,7 @@ public class NSGAIIIntegerSettings extends Settings {
   private SolutionSetEvaluator evaluator;
 
   /** Constructor */
-  public NSGAIIIntegerSettings(String problem) throws JMetalException, ClassNotFoundException {
+  public NSGAIIIntegerSettings(String problemName) throws JMetalException, ClassNotFoundException {
     Object[] problemParams = {"Integer"};
 
     try {
@@ -58,6 +58,7 @@ public class NSGAIIIntegerSettings extends Settings {
     } catch (JMetalException e) {
       JMetalLogger.logger.log(Level.SEVERE, "Unable to get problem", e);
     }
+    
     //this.problem = new NMMin("Integer") ;
 
     populationSize = 100;
@@ -70,7 +71,6 @@ public class NSGAIIIntegerSettings extends Settings {
   }
 
   /** Configure NSGAII with default parameter settings */
-  @Deprecated
   public Algorithm configure() throws JMetalException {
     Algorithm algorithm;
     Selection selection;

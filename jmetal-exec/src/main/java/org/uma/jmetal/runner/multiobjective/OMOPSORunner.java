@@ -51,7 +51,9 @@ public class OMOPSORunner {
    *             the problem to solve.
    * @throws org.uma.jmetal.util.JMetalException
    * @throws IOException
-   * @throws SecurityException Usage: three options
+   * @throws SecurityException 
+   * @throws ClassNotFoundException
+   * Usage: three options
    *              - org.uma.jmetal.runner.multiobjective.OMOPSORunner
    *              - org.uma.jmetal.runner.multiobjective.OMOPSORunner problemName
    *              - org.uma.jmetal.runner.multiobjective.OMOPSORunner problemName ParetoFrontFile
