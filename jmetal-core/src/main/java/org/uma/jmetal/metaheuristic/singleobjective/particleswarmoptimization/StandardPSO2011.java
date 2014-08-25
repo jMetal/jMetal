@@ -162,11 +162,6 @@ public class StandardPSO2011 extends Algorithm {
     }
   }
 
-  /**
-   * Update the position of each particle
-   *
-   * @throws org.uma.jmetal.util.JMetalException
-   */
   private void computeNewPositions() throws JMetalException {
     for (int i = 0; i < swarmSize; i++) {
       XReal particle = new XReal(swarm.get(i));
@@ -185,13 +180,7 @@ public class StandardPSO2011 extends Algorithm {
     }
   }
 
-  /**
-   * Runs of the SMPSO algorithm.
-   *
-   * @return a <code>SolutionSet</code> that is a set of non dominated solutions
-   * as a experimentoutput of the algorithm execution
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Execute() method */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     initParams();
 

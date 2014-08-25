@@ -40,42 +40,30 @@ public class StandardPSO2007Test {
   @Before
   public void setUp() throws Exception {
     problem = new Sphere("Real", 30) ;
-    standardPSO = new StandardPSO2007() ;
-    standardPSO.setProblem(problem);
-    standardPSO.setInputParameter("swarmSize", 40);
-    standardPSO.setInputParameter("maxIterations", 5000);
-    standardPSO.setInputParameter("numberOfParticlesToInform", 3);
-    standardPSO.initParams();
+    standardPSO = new StandardPSO2007.Builder(problem)
+    .setSwarmSize(40)
+    .setMaxIterations(5000)
+    .setNumberOfParticlesToInform(3)
+    .build() ;
   }
 
   @Test
-  public void initParamsTest() {
-    assertEquals("StandardPSO2007Test.initParamsTest", 40, ((Integer) standardPSO.getInputParameter("swarmSize")).intValue());
-    assertEquals("StandardPSO2007Test.initParamsTest", 5000, ((Integer) standardPSO.getInputParameter("maxIterations")).intValue());
-    assertEquals("StandardPSO2007Test.initParamsTest", 3, ((Integer) standardPSO.getInputParameter("numberOfParticlesToInform")).intValue());
+  public void parameterTest() {
+    assertEquals(40, ((StandardPSO2007)standardPSO).getSwarmSize());
+    assertEquals(5000,((StandardPSO2007)standardPSO).getMaxIterations());
+    assertEquals(3, ((StandardPSO2007)standardPSO).getNumberOfParticlesToInform());
   }
 
   @Test
   public void valuesOfWAndCTest() {
     double offset = 0.001 ;
-    assertEquals("StandardPSO2007Test.valuesOfWAndCTest", 1.193, standardPSO.getC(), offset);
-    assertEquals("StandardPSO2007Test.valuesOfWAndCTest", 0.721, standardPSO.getW(), offset);
+    assertEquals(1.193, standardPSO.getC(), offset);
+    assertEquals(0.721, standardPSO.getW(), offset);
   }
 
   @Test
   public void defaultSwarmSizeTest() {
-    assertEquals("StandardPSO2007Test.defaultSwarmSizeTest", 20, 2 * (int)(2*Math.sqrt(
-      problem.getNumberOfVariables())));
-  }
-
-
-  @Test
-  public void neighborTest() {
-    //FIXME: to complete
-    StandardPSO2007 newPSO = new StandardPSO2007() ;
-    newPSO.setProblem(problem);
-    newPSO.setInputParameter("swarmSize",10);
-    newPSO.setInputParameter("numberOfParticlesToInform",3);
+    assertEquals(20, 2 * (int)(2*Math.sqrt(problem.getNumberOfVariables())));
   }
 
   @After

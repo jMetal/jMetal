@@ -25,8 +25,11 @@ import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.metaheuristic.singleobjective.particleswarmoptimization.StandardPSO2007;
 import org.uma.jmetal.problem.singleobjective.CEC2005Problem;
+import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
+import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
 import java.util.logging.FileHandler;
@@ -35,45 +38,45 @@ import java.util.logging.FileHandler;
  * Class for configuring and running a single-objective PSO algorithm
  */
 public class StandardPSO2007Runner {
-  /**
-   * @param args Command line arguments. The first (optional) argument specifies
-   *             the problem to solve.
-   * @throws org.uma.jmetal.util.JMetalException
-   * @throws java.io.IOException
-   * @throws SecurityException
-   */
-  public static void main(String[] args)
-    throws JMetalException, IOException, ClassNotFoundException {
-    Problem problem;  // The problem to solve
-    Algorithm algorithm;  // The algorithm to use
+	/**
+	 * @param args Command line arguments. The first (optional) argument specifies
+	 *             the problem to solve.
+	 * @throws org.uma.jmetal.util.JMetalException
+	 * @throws java.io.IOException
+	 * @throws SecurityException
+	 */
+	public static void main(String[] args)
+			throws JMetalException, IOException, ClassNotFoundException {
+		Problem problem;  
+		Algorithm algorithm;  
 
-
-    //problem = new Rosenbrock("Real", 10) ;
+		problem = new CEC2005Problem("Real", 5, 10);
+		/* Examples
     //problem = new Sphere("Real", 20) ;
     //problem = new Easom("Real") ;
-    //problem = new Griewank("Real", 10) ;
+    // problem = new Griewank("Real", 10) ;
+		 */
 
-    //problem = new Sphere("Real", 20);
-    problem = new CEC2005Problem("Real", 5, 10);
+		algorithm = new StandardPSO2007.Builder(problem)
+		.setSwarmSize(10 + (int) (2 * Math.sqrt(problem.getNumberOfVariables())))
+		.setMaxIterations(80000)
+		.setNumberOfParticlesToInform(3)
+		.build() ;
+		
+		AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+		.execute() ;
 
-    algorithm = new StandardPSO2007();
-    algorithm.setProblem(problem);
-    // Algorithm parameters
-    algorithm
-      .setInputParameter("swarmSize", 10 + (int) (2 * Math.sqrt(problem.getNumberOfVariables())));
-    algorithm.setInputParameter("maxIterations", 80000);
-    algorithm.setInputParameter("numberOfParticlesToInform", 3);
+		SolutionSet population = algorithmRunner.getSolutionSet() ;
+		long computingTime = algorithmRunner.getComputingTime() ;
 
-    // Execute the Algorithm 
-    long initTime = System.currentTimeMillis();
-    SolutionSet population = algorithm.execute();
-    long estimatedTime = System.currentTimeMillis() - initTime;
+		new SolutionSetOutput.Printer(population)
+		.separator("\t")
+		.varFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+		.funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+		.print();
 
-    // Result messages 
-    JMetalLogger.logger.info("Total execution time: " + estimatedTime + "ms");
-    JMetalLogger.logger.info("Objectives values have been writen to file FUN");
-    population.printObjectivesToFile("FUN");
-    JMetalLogger.logger.info("Variables values have been writen to file VAR");
-    population.printVariablesToFile("VAR");
-  }
+		JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
+		JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
+		JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
+	}
 }

@@ -1,4 +1,4 @@
-//  StandardPSO2011_main.java
+//  StandardPSO2011Runner.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -40,19 +40,19 @@ public class StandardPSO2011Runner {
    *             the problem to solve.
    * @throws org.uma.jmetal.util.JMetalException
    * @throws java.io.IOException
-   * @throws SecurityException
+   * @throws ClassNotFoundException
    */
   public static void main(String[] args)
     throws JMetalException, IOException, ClassNotFoundException {
-    Problem problem;  // The problem to solve
-    Algorithm algorithm;  // The algorithm to use
+    Problem problem;  
+    Algorithm algorithm;  
 
+    problem = new CEC2005Problem("Real", 5, 10);
+    /* Examples
     //problem = new Sphere("Real", 20) ;
     //problem = new Easom("Real") ;
     // problem = new Griewank("Real", 10) ;
-
-    //problem = new Sphere("Real", 20);
-    problem = new CEC2005Problem("Real", 5, 10);
+    */
 
     algorithm = new StandardPSO2011();
     algorithm.setProblem(problem);

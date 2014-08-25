@@ -55,8 +55,26 @@ public class BestSolutionSelection extends Selection {
   	
   	this.comparator = builder.comparator ;
   }
+  
+  /** Builder class */
+  public static class Builder {
+    private Comparator<Solution> comparator;
+    
+    public Builder(Comparator<Solution> comparator) {
+	  	this.comparator = comparator ;
+	  }
+	  
+	  public BestSolutionSelection build() {
+	  	 return new BestSolutionSelection(this) ;
+	  }
+  }
+  
+  /* Getter */
+  public Comparator getComparator() {
+  	return comparator ;
+  }
 
-  /** execute method */
+  /** Execute() method */
   public Object execute(Object object) {
   	if (null == object) {
   		throw new JMetalException("Null parameter") ;
@@ -76,18 +94,5 @@ public class BestSolutionSelection extends Selection {
     }
 
     return bestSolution;
-  }
-  
-  /** Builder class */
-  public static class Builder {
-    private Comparator<Solution> comparator;
-    
-    public Builder(Comparator<Solution> comparator) {
-	  	this.comparator = comparator ;
-	  }
-	  
-	  public BestSolutionSelection build() {
-	  	 return new BestSolutionSelection(this) ;
-	  }
   }
 }
