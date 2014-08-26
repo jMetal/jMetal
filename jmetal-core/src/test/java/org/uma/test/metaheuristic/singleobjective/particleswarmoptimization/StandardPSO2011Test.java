@@ -24,8 +24,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.core.Problem;
+import org.uma.jmetal.metaheuristic.singleobjective.particleswarmoptimization.StandardPSO2007;
 import org.uma.jmetal.metaheuristic.singleobjective.particleswarmoptimization.StandardPSO2011;
 import org.uma.jmetal.problem.multiobjective.Fonseca;
+import org.uma.jmetal.problem.singleobjective.Sphere;
 
 import static org.junit.Assert.assertEquals;
 
@@ -39,20 +41,26 @@ public class StandardPSO2011Test {
 
   @Before
   public void setUp() throws Exception {
-    problem = new Fonseca("Real") ;
-    standardPSO = new StandardPSO2011() ;
-    standardPSO.setProblem(problem);
-    standardPSO.setInputParameter("swarmSize", 40);
-    standardPSO.setInputParameter("maxIterations", 5000);
-    standardPSO.setInputParameter("numberOfParticlesToInform", 3);
-    standardPSO.initParams();
+    problem = new Sphere("Real", 30) ;
+    standardPSO = new StandardPSO2011.Builder(problem)
+    .setSwarmSize(40)
+    .setMaxIterations(5000)
+    .setNumberOfParticlesToInform(3)
+    .build() ;
   }
 
   @Test
-  public void initParamsTest() {
-    assertEquals("StandardPSO2011Test.initParamsTest", 40, ((Integer) standardPSO.getInputParameter("swarmSize")).intValue());
-    assertEquals("StandardPSO2011Test.initParamsTest", 5000, ((Integer) standardPSO.getInputParameter("maxIterations")).intValue());
-    assertEquals("StandardPSO2011Test.initParamsTest", 3, ((Integer) standardPSO.getInputParameter("numberOfParticlesToInform")).intValue());
+  public void parameterTest() {
+    assertEquals(40, ((StandardPSO2011)standardPSO).getSwarmSize());
+    assertEquals(5000,((StandardPSO2011)standardPSO).getMaxIterations());
+    assertEquals(3, ((StandardPSO2011)standardPSO).getNumberOfParticlesToInform());
+  }
+  
+  @Test
+  public void valuesOfWeightAndCTest() {
+    double offset = 0.001 ;
+    assertEquals(1.193, standardPSO.getC(), offset);
+    assertEquals(0.721, standardPSO.getWeight(), offset);
   }
 
 /*  @Test
@@ -73,14 +81,14 @@ public class StandardPSO2011Test {
     assertEquals("StandardPSO2011Test.neighbourhoodMethodTest", 38, neighbours[0]) ;
     assertEquals("StandardPSO2011Test.neighbourhoodMethodTest", 39, neighbours[1]) ;
     assertEquals("StandardPSO2011Test.neighbourhoodMethodTest", 0, neighbours[2]) ;
-  }*/
+  }
 
   @Test
   public void getNeighborWithMinimumFitnessTest() {
 
   }
 
-
+*/
   @After
   public void tearDown() throws Exception {
     problem = null;

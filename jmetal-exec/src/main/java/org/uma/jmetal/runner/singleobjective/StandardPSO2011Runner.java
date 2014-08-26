@@ -23,10 +23,14 @@ package org.uma.jmetal.runner.singleobjective;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
+import org.uma.jmetal.metaheuristic.singleobjective.particleswarmoptimization.StandardPSO2007;
 import org.uma.jmetal.metaheuristic.singleobjective.particleswarmoptimization.StandardPSO2011;
 import org.uma.jmetal.problem.singleobjective.CEC2005Problem;
+import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
+import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
 import java.util.logging.FileHandler;
@@ -47,31 +51,33 @@ public class StandardPSO2011Runner {
     Problem problem;  
     Algorithm algorithm;  
 
-    problem = new CEC2005Problem("Real", 5, 10);
-    /* Examples
+		problem = new CEC2005Problem("Real", 5, 10);
+		/* Examples
     //problem = new Sphere("Real", 20) ;
     //problem = new Easom("Real") ;
     // problem = new Griewank("Real", 10) ;
-    */
+		 */
 
-    algorithm = new StandardPSO2011();
-    algorithm.setProblem(problem);
+		algorithm = new StandardPSO2011.Builder(problem)
+		.setSwarmSize(10 + (int) (2 * Math.sqrt(problem.getNumberOfVariables())))
+		.setMaxIterations(80000)
+		.setNumberOfParticlesToInform(3)
+		.build() ;
+		
+		AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+		.execute() ;
 
-    // Algorithm parameters
-    algorithm.setInputParameter("swarmSize", 100);
-    algorithm.setInputParameter("maxIterations", 8000);
-    algorithm.setInputParameter("numberOfParticlesToInform", 3);
+		SolutionSet population = algorithmRunner.getSolutionSet() ;
+		long computingTime = algorithmRunner.getComputingTime() ;
 
-    // Execute the Algorithm 
-    long initTime = System.currentTimeMillis();
-    SolutionSet population = algorithm.execute();
-    long estimatedTime = System.currentTimeMillis() - initTime;
+		new SolutionSetOutput.Printer(population)
+		.separator("\t")
+		.varFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+		.funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+		.print();
 
-    // Result messages 
-    JMetalLogger.logger.info("Total execution time: " + estimatedTime + "ms");
-    JMetalLogger.logger.info("Objectives values have been writen to file FUN");
-    population.printObjectivesToFile("FUN");
-    JMetalLogger.logger.info("Variables values have been writen to file VAR");
-    population.printVariablesToFile("VAR");
-  }
+		JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
+		JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
+		JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
+	}
 }

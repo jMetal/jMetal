@@ -22,15 +22,19 @@ package org.uma.jmetal.metaheuristic.singleobjective.particleswarmoptimization;
 
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
+import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
+import org.uma.jmetal.metaheuristic.singleobjective.particleswarmoptimization.StandardPSO2007.Builder;
 import org.uma.jmetal.operator.selection.BestSolutionSelection;
 import org.uma.jmetal.util.AdaptiveRandomNeighborhood;
 import org.uma.jmetal.util.Distance;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
+import org.uma.jmetal.util.evaluator.SequentialSolutionSetEvaluator;
+import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
 import org.uma.jmetal.util.random.PseudoRandom;
 
 import java.util.Comparator;
@@ -38,234 +42,295 @@ import java.util.HashMap;
 import java.util.logging.Level;
 
 /**
- * Class implementing a Stantard PSO 2011 algorithm
+ * Class implementing a Standard PSO 2011 algorithm
  */
 public class StandardPSO2011 extends Algorithm {
+	private Operator findBestSolution;
+	private Comparator fitnessComparator;
+	private SolutionSet swarm;
+	private int swarmSize;
+	private int maxIterations;
+	private int iterations;
+	private int numberOfParticlesToInform;
+	private Solution[] localBest;
+	private Solution[] neighborhoodBest;
+	private double[][] speed;
+	private AdaptiveRandomNeighborhood neighborhood;
+	private double weight;
+	private double c;
+	private double changeVelocity;
 
-  int evaluations;
-  Comparator comparator;
-  Operator findBestSolution;
-  private SolutionSet swarm;
-  private int swarmSize;
-  private int maxIterations;
-  private int iteration;
-  private int numberOfParticlesToInform;
-  private Solution[] localBest;
-  private Solution[] neighborhoodBest;
-  private double[][] speed;
-  private AdaptiveRandomNeighborhood neighborhood;
-  private double weight;
-  private double c;
-  private double changeVelocity;
+	SolutionSetEvaluator evaluator;
 
-  /** Constructor */
-  public StandardPSO2011() {
-    super();
+	/** Constructor */
+	public StandardPSO2011(Builder builder) {
+		super();
+		this.problem = builder.problem ;
+		this.swarmSize = builder.swarmSize ;
+		this.maxIterations = builder.maxIterations ;
+		this.numberOfParticlesToInform = builder.numberOfParticlesToInform ;
+		this.evaluator = builder.evaluator ;
 
-    weight = 1.0 / (2.0 * Math.log(2)); //0.721;
-    c = 1.0 / 2.0 + Math.log(2); //1.193;
-    changeVelocity = -0.5;
+		weight = 1.0 / (2.0 * Math.log(2)); //0.721;
+		c = 1.0 / 2.0 + Math.log(2); //1.193;
+		changeVelocity = -0.5 ; 
 
-    comparator = new ObjectiveComparator(0);
-    HashMap parameters;
+		fitnessComparator = new ObjectiveComparator(0) ; 
+		findBestSolution = new BestSolutionSelection.Builder(fitnessComparator).build();
 
-    parameters = new HashMap();
-    parameters.put("comparator", comparator);
-    findBestSolution = new BestSolutionSelection(parameters);
+		swarm = new SolutionSet(swarmSize);
+		localBest = new Solution[swarmSize];
+		neighborhoodBest = new Solution[swarmSize];
 
-    evaluations = 0;
-  }
+		speed = new double[swarmSize][problem.getNumberOfVariables()];
+		neighborhood = new AdaptiveRandomNeighborhood(swarm, numberOfParticlesToInform);
+	}
 
-  public double getWeight() {
-    return weight;
-  }
+	/* Getters */
+	public int getSwarmSize() {
+		return swarmSize ;
+	}
 
-  public double getC() {
-    return c;
-  }
+	public int getNumberOfParticlesToInform() {
+		return numberOfParticlesToInform ;
+	}
 
-  /**
-   * Initialize all parameter of the algorithm
-   */
-  public void initParams() {
-    swarmSize = ((Integer) getInputParameter("swarmSize")).intValue();
-    maxIterations = ((Integer) getInputParameter("maxIterations")).intValue();
-    numberOfParticlesToInform =
-      ((Integer) getInputParameter("numberOfParticlesToInform")).intValue();
+	public int getMaxIterations() {
+		return maxIterations ;
+	}
 
-    iteration = 0;
+	public double getWeight() {
+		return weight;
+	}
 
-    swarm = new SolutionSet(swarmSize);
-    localBest = new Solution[swarmSize];
-    neighborhoodBest = new Solution[swarmSize];
+	public double getC() {
+		return c;
+	}
 
-    speed = new double[swarmSize][problem.getNumberOfVariables()];
-  }
+	public SolutionSetEvaluator getEvaluator() {
+		return evaluator ;
+	}
 
-  private Solution getNeighborBest(int i) {
-    Solution bestLocalBestSolution = null;
+	/** Builder class */
+	public static class Builder {
+		private Problem problem ;
+		private int swarmSize;
+		private int maxIterations;
+		private int numberOfParticlesToInform; 
 
-    try {
-      for (int index : neighborhood.getNeighbors(i)) {
-        if ((bestLocalBestSolution == null) || (bestLocalBestSolution.getObjective(0)
-          > localBest[index].getObjective(0))) {
-          bestLocalBestSolution = localBest[index];
-        }
-      }
-    } catch (JMetalException e) {
-      JMetalLogger.logger.log(Level.SEVERE, "Error", e);
-    }
+		private SolutionSetEvaluator evaluator ;
 
-    return bestLocalBestSolution;
-  }
+		public Builder(Problem problem) {
+			this.problem = problem ;
+			swarmSize = 100 ;
+			maxIterations = 80000 ;
+			numberOfParticlesToInform = 3 ;
+			evaluator = new SequentialSolutionSetEvaluator() ;
+		}
 
-  private void computeSpeed() throws ClassNotFoundException, JMetalException {
-    for (int i = 0; i < swarmSize; i++) {
-      XReal particle = new XReal(swarm.get(i));
-      XReal lBest = new XReal(this.localBest[i]);
-      XReal neighborhoodBest = new XReal(this.neighborhoodBest[i]);
-      XReal gravityCenter = new XReal(new Solution(problem));
-      XReal randomParticle = new XReal(new Solution(swarm.get(i)));
+		public Builder setSwarmSize(int swarmSize) {
+			this.swarmSize = swarmSize ;
 
-      if (this.localBest[i] != this.neighborhoodBest[i]) {
-        for (int var = 0; var < particle.size(); var++) {
-          double G;
-          G = particle.getValue(var) +
-            c * (lBest.getValue(var) + neighborhoodBest.getValue(var) - 2 * particle
-              .getValue(var)) / 3.0;
+			return this ;
+		}
 
-          gravityCenter.setValue(var, G);
-        }
-      } else {
-        for (int var = 0; var < particle.size(); var++) {
-          double g  = particle.getValue(var) +
-            c * (lBest.getValue(var) - particle.getValue(var)) / 2.0;
+		public Builder setMaxIterations(int maxIterations) {
+			this.maxIterations = maxIterations ;
 
-          gravityCenter.setValue(var, g);
-        }
-      }
+			return this ;
+		}
 
-      double radius = 0;
-      radius = new Distance()
-        .distanceBetweenSolutions(gravityCenter.getSolution(), particle.getSolution());
+		public Builder setNumberOfParticlesToInform(int numberOfParticlesToInform) {
+			this.numberOfParticlesToInform = numberOfParticlesToInform ;
 
-      double[] random = PseudoRandom.randSphere(problem.getNumberOfVariables());
+			return this ;
+		}
 
-      for (int var = 0; var < particle.size(); var++) {
-        randomParticle.setValue(var, gravityCenter.getValue(var) + radius * random[var]);
-      }
+		public Builder setEvaluator(SolutionSetEvaluator evaluator) {
+			this.evaluator = evaluator ;
 
-      for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
-        speed[i][var] =
-          weight * speed[i][var] + randomParticle.getValue(var) - particle.getValue(var);
-      }
-    }
-  }
+			return this ;
+		}
 
-  private void computeNewPositions() throws JMetalException {
-    for (int i = 0; i < swarmSize; i++) {
-      XReal particle = new XReal(swarm.get(i));
-      for (int var = 0; var < particle.size(); var++) {
-        particle.setValue(var, particle.getValue(var) + speed[i][var]);
+		public StandardPSO2011 build() {
+			return new StandardPSO2011(this) ;
+		}
+	}
 
-        if (particle.getValue(var) < problem.getLowerLimit(var)) {
-          particle.setValue(var, problem.getLowerLimit(var));
-          speed[i][var] = changeVelocity * speed[i][var];
-        }
-        if (particle.getValue(var) > problem.getUpperLimit(var)) {
-          particle.setValue(var, problem.getUpperLimit(var));
-          speed[i][var] = changeVelocity * speed[i][var];
-        }
-      }
-    }
-  }
+	/** Execute() method */
+	public SolutionSet execute() throws JMetalException, ClassNotFoundException {
+		createInitialSwarm() ;
+		evaluateSwarm() ;
+		initializeParticlesSpeed() ;
+    initializeParticlesLocalBest() ;
+    updateNeighborBest() ;
 
-  /** Execute() method */
-  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
-    initParams();
+    iterations = 1 ;
 
-    // Step 1 Create the initial population and evaluate
-    for (int i = 0; i < swarmSize; i++) {
-      Solution particle = new Solution(problem);
-      problem.evaluate(particle);
-      evaluations++;
-      swarm.add(particle);
-    }
+	//	swarm.printObjectives();
+	//	double b = swarm.best(fitnessComparator).getObjective(0);
 
-    neighborhood = new AdaptiveRandomNeighborhood(swarm, numberOfParticlesToInform);
+		double bestFoundFitness = Double.MAX_VALUE;
+		while (iterations < maxIterations) {
+			computeSpeed();
+			computeNewPositions();
+			evaluateSwarm() ;
+			updateParticlesLocalBest() ;			
+			updateNeighborBest() ;
+			
+			iterations++;
 
-    JMetalLogger.logger.info("SwarmSize: " + swarmSize);
-    JMetalLogger.logger.info("Swarm size: " + swarm.size());
-    JMetalLogger.logger.info("list size: " + neighborhood.getNeighborhood().size());
+			Double bestCurrentFitness = swarm.best(fitnessComparator).getObjective(0);
+			JMetalLogger.logger.info("Best: " + bestCurrentFitness);
 
-    // Step2. Initialize the speed of each particle
-    for (int i = 0; i < swarmSize; i++) {
-      XReal particle = new XReal(swarm.get(i));
-      for (int j = 0; j < problem.getNumberOfVariables(); j++) {
-        speed[i][j] = (PseudoRandom.randDouble(
-          particle.getLowerBound(j) - particle.getValue(0),
-          particle.getUpperBound(j) - particle.getValue(0)));
-      }
-    }
+			if (bestCurrentFitness == bestFoundFitness) {
+				JMetalLogger.logger.info("Recomputing");
+				neighborhood.recompute();
+			}
 
-    // Step 6. Initialize the memory of each particle
-    for (int i = 0; i < swarm.size(); i++) {
-      Solution particle = new Solution(swarm.get(i));
-      localBest[i] = particle;
-    }
+			if (bestCurrentFitness < bestFoundFitness) {
+				bestFoundFitness = bestCurrentFitness;
+			}
+		}
 
-    for (int i = 0; i < swarm.size(); i++) {
-      neighborhoodBest[i] = getNeighborBest(i);
-    }
+		tearDown() ;
+		
+		return getPopulationWithTheBestSolution() ;
+	}
 
-    swarm.printObjectives();
-    Double b = swarm.best(comparator).getObjective(0);
+	private void createInitialSwarm() throws ClassNotFoundException, JMetalException {
+		swarm = new SolutionSet(swarmSize);
 
-    double bestFoundFitness = Double.MAX_VALUE;
-    while (iteration < maxIterations) {
-      //Compute the speed
-      computeSpeed();
+		Solution newSolution;
+		for (int i = 0; i < swarmSize; i++) {
+			newSolution = new Solution(problem);
+			swarm.add(newSolution);
+		}
+	}
 
-      //Compute the new positions for the swarm
-      computeNewPositions();
+	private void evaluateSwarm() throws JMetalException {
+		swarm = evaluator.evaluate(swarm, problem);
+	}
+	
+	private void initializeParticlesSpeed() {
+		for (int i = 0; i < swarmSize; i++) {
+			XReal particle = new XReal(swarm.get(i));
+			for (int j = 0; j < problem.getNumberOfVariables(); j++) {
+				speed[i][j] = (PseudoRandom.randDouble(
+						particle.getLowerBound(j) - particle.getValue(0),
+						particle.getUpperBound(j) - particle.getValue(0)));
+			}
+		}
+	}
 
-      //Evaluate the new swarm in new positions
-      for (int i = 0; i < swarm.size(); i++) {
-        Solution particle = swarm.get(i);
-        problem.evaluate(particle);
-        evaluations++;
-      }
+	private void initializeParticlesLocalBest() {
+		for (int i = 0; i < swarm.size(); i++) {
+			Solution particle = new Solution(swarm.get(i));
+			localBest[i] = particle;
+		}
+	}
+	
+	private void updateNeighborBest() {
+		for (int i = 0; i < swarm.size(); i++) {
+			neighborhoodBest[i] = getNeighborBest(i);
+		}
+	}
+	
+	private void updateParticlesLocalBest() {
+		for (int i = 0; i < swarm.size(); i++) {
+			if ((swarm.get(i).getObjective(0) < localBest[i].getObjective(0))) {
+				Solution particle = new Solution(swarm.get(i));
+				localBest[i] = particle;
+			}
+		}
+	}
+	
+	private Solution getNeighborBest(int i) {
+		Solution bestLocalBestSolution = null;
 
-      //Update the memory of the particles
-      for (int i = 0; i < swarm.size(); i++) {
-        if ((swarm.get(i).getObjective(0) < localBest[i].getObjective(0))) {
-          Solution particle = new Solution(swarm.get(i));
-          localBest[i] = particle;
-        }
-      }
-      for (int i = 0; i < swarm.size(); i++) {
-        neighborhoodBest[i] = getNeighborBest(i);
-      }
+		try {
+			for (int index : neighborhood.getNeighbors(i)) {
+				if ((bestLocalBestSolution == null) || (bestLocalBestSolution.getObjective(0)
+						> localBest[index].getObjective(0))) {
+					bestLocalBestSolution = localBest[index];
+				}
+			}
+		} catch (JMetalException e) {
+			JMetalLogger.logger.log(Level.SEVERE, "Error", e);
+		}
 
-      iteration++;
+		return bestLocalBestSolution;
+	}
 
-      Double bestCurrentFitness = swarm.best(comparator).getObjective(0);
-      JMetalLogger.logger.info("Best: " + bestCurrentFitness);
+	private void computeSpeed() throws ClassNotFoundException, JMetalException {
+		for (int i = 0; i < swarmSize; i++) {
+			XReal particle = new XReal(swarm.get(i));
+			XReal lBest = new XReal(this.localBest[i]);
+			XReal neighborhoodBest = new XReal(this.neighborhoodBest[i]);
+			XReal gravityCenter = new XReal(new Solution(problem));
+			XReal randomParticle = new XReal(new Solution(swarm.get(i)));
 
-      if (bestCurrentFitness == bestFoundFitness) {
-        JMetalLogger.logger.info("Recomputing");
-        neighborhood.recompute();
-      }
+			if (this.localBest[i] != this.neighborhoodBest[i]) {
+				for (int var = 0; var < particle.size(); var++) {
+					double G;
+					G = particle.getValue(var) +
+							c * (lBest.getValue(var) + neighborhoodBest.getValue(var) - 2 * particle
+									.getValue(var)) / 3.0;
 
-      if (bestCurrentFitness < bestFoundFitness) {
-        bestFoundFitness = bestCurrentFitness;
-      }
-    }
+					gravityCenter.setValue(var, G);
+				}
+			} else {
+				for (int var = 0; var < particle.size(); var++) {
+					double g  = particle.getValue(var) +
+							c * (lBest.getValue(var) - particle.getValue(var)) / 2.0;
 
-    // Return a population with the best individual
-    SolutionSet resultPopulation = new SolutionSet(1);
-    resultPopulation.add(swarm.get((Integer) findBestSolution.execute(swarm)));
+					gravityCenter.setValue(var, g);
+				}
+			}
 
-    return resultPopulation;
+			double radius = 0;
+			radius = new Distance()
+			.distanceBetweenSolutions(gravityCenter.getSolution(), particle.getSolution());
+
+			double[] random = PseudoRandom.randSphere(problem.getNumberOfVariables());
+
+			for (int var = 0; var < particle.size(); var++) {
+				randomParticle.setValue(var, gravityCenter.getValue(var) + radius * random[var]);
+			}
+
+			for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
+				speed[i][var] =
+						weight * speed[i][var] + randomParticle.getValue(var) - particle.getValue(var);
+			}
+		}
+	}
+
+	private void computeNewPositions() throws JMetalException {
+		for (int i = 0; i < swarmSize; i++) {
+			XReal particle = new XReal(swarm.get(i));
+			for (int var = 0; var < particle.size(); var++) {
+				particle.setValue(var, particle.getValue(var) + speed[i][var]);
+
+				if (particle.getValue(var) < problem.getLowerLimit(var)) {
+					particle.setValue(var, problem.getLowerLimit(var));
+					speed[i][var] = changeVelocity * speed[i][var];
+				}
+				if (particle.getValue(var) > problem.getUpperLimit(var)) {
+					particle.setValue(var, problem.getUpperLimit(var));
+					speed[i][var] = changeVelocity * speed[i][var];
+				}
+			}
+		}
+	}
+	
+	private SolutionSet getPopulationWithTheBestSolution() {
+		SolutionSet resultPopulation = new SolutionSet(1);
+		resultPopulation.add(swarm.get((Integer) findBestSolution.execute(swarm)));
+
+		return resultPopulation;		
+	}
+	
+  protected void tearDown() {
+    evaluator.shutdown();
   }
 }

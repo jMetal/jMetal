@@ -27,8 +27,8 @@ import org.uma.jmetal.encoding.solutiontype.ArrayRealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
-import org.uma.jmetal.problem.singleobjective.cec2005Competition.originalCode.Benchmark;
-import org.uma.jmetal.problem.singleobjective.cec2005Competition.originalCode.TestFunc;
+import org.uma.jmetal.problem.singleobjective.cec2005competitioncode.Benchmark;
+import org.uma.jmetal.problem.singleobjective.cec2005competitioncode.TestFunc;
 import org.uma.jmetal.util.JMetalException;
 
 /**

@@ -41,18 +41,18 @@ import java.util.logging.Level;
  * Class implementing a Standard PSO 2007 algorithm
  */
 public class StandardPSO2007 extends Algorithm {
-  Operator findBestSolution;
-  Comparator fitnessComparator ;
+  private Operator findBestSolution;
+  private Comparator fitnessComparator ;
   private SolutionSet swarm;
   private int swarmSize;
   private int maxIterations;
-  private int iteration;
+  private int iterations;
   private int numberOfParticlesToInform; 
   private Solution[] localBest;
   private Solution[] neighborhoodBest;
   private double[][] speed;
   private AdaptiveRandomNeighborhood neighborhood;
-  private double w;
+  private double weight;
   private double c;
 
   /** Constructor */
@@ -63,7 +63,7 @@ public class StandardPSO2007 extends Algorithm {
     this.maxIterations = builder.maxIterations ;
     this.numberOfParticlesToInform = builder.numberOfParticlesToInform ;
 
-    w = 1.0 / (2.0 * Math.log(2)); 
+    weight = 1.0 / (2.0 * Math.log(2)); 
     c = 1.0 / 2.0 + Math.log(2); 
 
     fitnessComparator = new ObjectiveComparator(0) ; 
@@ -90,8 +90,8 @@ public class StandardPSO2007 extends Algorithm {
   	return maxIterations ;
   }
   
-  public double getW() {
-    return w;
+  public double getWeight() {
+    return weight;
   }
 
   public double getC() {
@@ -147,7 +147,7 @@ public class StandardPSO2007 extends Algorithm {
     JMetalLogger.logger.info("Swarm size: " + swarm.size());
     JMetalLogger.logger.info("list size: " + neighborhood.getNeighborhood().size());
 
-    iteration = 1;
+    iterations = 1;
 
     for (int i = 0; i < swarmSize; i++) {
       XReal particle = new XReal(swarm.get(i));
@@ -172,7 +172,7 @@ public class StandardPSO2007 extends Algorithm {
    
     double bestFoundFitness = Double.MAX_VALUE;
 
-    while (iteration < maxIterations) {
+    while (iterations < maxIterations) {
       //Compute the speed
       computeSpeed();
 
@@ -196,7 +196,7 @@ public class StandardPSO2007 extends Algorithm {
         neighborhoodBest[i] = getNeighborBest(i);
       }
 
-      iteration++;
+      iterations++;
 
       Double bestCurrentFitness = swarm.best(fitnessComparator).getObjective(0);
       JMetalLogger.logger.info("Best: " + bestCurrentFitness);
@@ -249,13 +249,13 @@ public class StandardPSO2007 extends Algorithm {
 
       if (this.localBest[i] != this.neighborhoodBest[i]) {
         for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
-          speed[i][var] = w * speed[i][var] +
+          speed[i][var] = weight * speed[i][var] +
             r1 * (localBest.getValue(var) - particle.getValue(var)) +
             r2 * (neighborhoodBest.getValue(var) - particle.getValue(var));
         }
       } else {
         for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
-          speed[i][var] = w * speed[i][var] +
+          speed[i][var] = weight * speed[i][var] +
             r1 * (localBest.getValue(var) - particle.getValue(var));
         }
       }

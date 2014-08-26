@@ -55,10 +55,10 @@ public class StandardPSO2007Test {
   }
 
   @Test
-  public void valuesOfWAndCTest() {
+  public void valuesOfWeightAndCTest() {
     double offset = 0.001 ;
     assertEquals(1.193, standardPSO.getC(), offset);
-    assertEquals(0.721, standardPSO.getW(), offset);
+    assertEquals(0.721, standardPSO.getWeight(), offset);
   }
 
   @Test
