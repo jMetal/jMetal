@@ -53,10 +53,8 @@ public class F03_shifted_rotated_high_cond_elliptic extends TestFunc {
 
   // Fixed (class) parameters
   static final public String FUNCTION_NAME = "Shifted Rotated High Conditioned Elliptic Function";
-  static final public String DEFAULT_FILE_DATA =
-    "" + JMetalLogger.cec2005SupportDataDirectory + "/high_cond_elliptic_rot_data.txt";
-  static final public String DEFAULT_FILE_MX_PREFIX =
-    "" + JMetalLogger.cec2005SupportDataDirectory + "/Elliptic_M_D";
+  static final public String DEFAULT_FILE_DATA = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/high_cond_elliptic_rot_data.txt";
+  static final public String DEFAULT_FILE_MX_PREFIX = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/Elliptic_M_D";
   static final public String DEFAULT_FILE_MX_SUFFIX = ".txt";
 
   // Shifted global optimum

@@ -53,10 +53,8 @@ public class F14_shifted_rotated_expanded_scaffer extends TestFunc {
 
   // Fixed (class) parameters
   static final public String FUNCTION_NAME = "Shifted Rotated Expanded Scaffer's F6 Function";
-  static final public String DEFAULT_FILE_DATA =
-    "" + JMetalLogger.cec2005SupportDataDirectory + "/supportData/E_ScafferF6_func_data.txt";
-  static final public String DEFAULT_FILE_MX_PREFIX =
-    "" + JMetalLogger.cec2005SupportDataDirectory + "/supportData/E_ScafferF6_M_D";
+  static final public String DEFAULT_FILE_DATA = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/E_ScafferF6_func_data.txt";
+  static final public String DEFAULT_FILE_MX_PREFIX = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/E_ScafferF6_M_D";
   static final public String DEFAULT_FILE_MX_SUFFIX = ".txt";
 
   // Shifted global optimum

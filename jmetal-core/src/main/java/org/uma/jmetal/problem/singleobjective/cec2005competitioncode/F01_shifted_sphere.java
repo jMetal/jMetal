@@ -53,8 +53,7 @@ public class F01_shifted_sphere extends TestFunc {
 
   // Fixed (class) parameters
   static final public String FUNCTION_NAME = "Shifted Sphere Function";
-  static final public String DEFAULT_FILE_DATA =
-    "" + JMetalLogger.cec2005SupportDataDirectory + "/sphere_func_data.txt";
+  static final public String DEFAULT_FILE_DATA = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/sphere_func_data.txt";
 
   // Shifted global optimum
   private final double[] m_o;

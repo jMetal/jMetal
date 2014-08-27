@@ -51,18 +51,20 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.text.DecimalFormat;
 import java.util.Random;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 
 public class Benchmark {
-
   // Fixed (class) parameters
+  static final public String CEC2005SUPPORTDATADIRECTORY = "cec2005CompetitionResources/supportData" ;
+  static final private String CEC2005Code = "org.uma.jmetal.problem.singleobjective.cec2005competitioncode" ;
   static final public int NUM_TEST_FUNC = 25;
-  static final public String DEFAULT_FILE_BIAS =
-    JMetalLogger.cec2005SupportDataDirectory + "/fbias_data.txt";
+  static final public String DEFAULT_FILE_BIAS = CEC2005SUPPORTDATADIRECTORY + "/fbias_data.txt";
   static final public String[] test_func_class_names = {
     "F01_shifted_sphere",
     "F02_shifted_schwefel",
@@ -499,7 +501,10 @@ public class Benchmark {
   static public void loadRowVectorFromFile(String file, int columns, double[] row)
     throws JMetalException {
     try {
-      BufferedReader brSrc = new BufferedReader(new FileReader(file));
+      BufferedReader brSrc =
+              new BufferedReader(
+                      new InputStreamReader(new FileInputStream(ClassLoader.getSystemResource(file).getPath()))) ;
+      //BufferedReader brSrc = new BufferedReader(new FileReader(file));
       loadRowVector(brSrc, columns, row);
       brSrc.close();
     } catch (Exception e) {
@@ -521,7 +526,10 @@ public class Benchmark {
   static public void loadColumnVectorFromFile(String file, int rows, double[] column)
     throws JMetalException {
     try {
-      BufferedReader brSrc = new BufferedReader(new FileReader(file));
+      BufferedReader brSrc =
+              new BufferedReader(
+                      new InputStreamReader(new FileInputStream(ClassLoader.getSystemResource(file).getPath()))) ;
+      //BufferedReader brSrc = new BufferedReader(new FileReader(file));
       loadColumnVector(brSrc, rows, column);
       brSrc.close();
     } catch (Exception e) {
@@ -543,26 +551,30 @@ public class Benchmark {
   static public void loadNMatrixFromFile(String file, int N, int rows, int columns,
     double[][][] matrix) throws JMetalException {
     try {
-      BufferedReader brSrc = new BufferedReader(new FileReader(file));
+      BufferedReader brSrc =
+              new BufferedReader(
+                      new InputStreamReader(new FileInputStream(ClassLoader.getSystemResource(file).getPath()))) ;
+      //BufferedReader brSrc = new BufferedReader(new FileReader(file));
       for (int i = 0; i < N; i++) {
         loadMatrix(brSrc, rows, columns, matrix[i]);
       }
       brSrc.close();
     } catch (Exception e) {
-      JMetalLogger.logger.log(Level.SEVERE, "Error in Benchmark.java", e);
-      throw new JMetalException("Error in Benchmark.java");
+      throw new JMetalException("Error in Benchmark.java", e);
     }
   }
 
   static public void loadMatrixFromFile(String file, int rows, int columns, double[][] matrix)
     throws JMetalException {
     try {
-      BufferedReader brSrc = new BufferedReader(new FileReader(file));
+      BufferedReader brSrc =
+              new BufferedReader(
+                      new InputStreamReader(new FileInputStream(ClassLoader.getSystemResource(file).getPath()))) ;
+      //BufferedReader brSrc = new BufferedReader(new FileReader(file));
       loadMatrix(brSrc, rows, columns, matrix);
       brSrc.close();
     } catch (Exception e) {
-      JMetalLogger.logger.log(Level.SEVERE, "Error in Benchmark.java", e);
-      throw new JMetalException("Error in Benchmark.java");
+      throw new JMetalException("Error in Benchmark.java", e);
     }
   }
 
@@ -574,13 +586,13 @@ public class Benchmark {
   }
 
   //
-  // Use this function to manufacture new org.uma.test function objects
+  // Use this function to manufacture new test function objects
   //
   public TestFunc testFunctionFactory(int func_num, int dimension) throws JMetalException {
     TestFunc returnFunc = null;
     try {
       returnFunc = (TestFunc)
-        loader.loadClass(JMetalLogger.cec2005Package + "." + test_func_class_names[func_num - 1])
+        loader.loadClass(CEC2005Code + "." + test_func_class_names[func_num - 1])
           .getConstructor(test_func_arg_types)
           .newInstance(
             new Object[] {
@@ -589,13 +601,12 @@ public class Benchmark {
             }
           );
     } catch (Exception e) {
-      JMetalLogger.logger.log(Level.SEVERE, "Error in Benchmark.java", e);
-      throw new JMetalException("Error in Benchmark.java");
+      throw new JMetalException("Error in Benchmark.java", e);
     }
     return (returnFunc);
   }
 
-  // Run tests on the org.uma.test functions
+  // Run tests on the test functions
   //	< 0:	Error!
   //	= 0:	On all the functions
   //	> 0:	On the specified org.uma.test function

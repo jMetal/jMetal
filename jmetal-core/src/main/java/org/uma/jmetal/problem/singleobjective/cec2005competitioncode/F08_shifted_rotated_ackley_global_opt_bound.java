@@ -54,10 +54,8 @@ public class F08_shifted_rotated_ackley_global_opt_bound extends TestFunc {
   // Fixed (class) parameters
   static final public String FUNCTION_NAME =
     "Shifted Rotated Ackley's Function with Global Optimum on Bounds";
-  static final public String DEFAULT_FILE_DATA =
-    "" + JMetalLogger.cec2005SupportDataDirectory + "/ackley_func_data.txt";
-  static final public String DEFAULT_FILE_MX_PREFIX =
-    "" + JMetalLogger.cec2005SupportDataDirectory + "/ackley_M_D";
+  static final public String DEFAULT_FILE_DATA = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/ackley_func_data.txt";
+  static final public String DEFAULT_FILE_MX_PREFIX = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/ackley_M_D";
   static final public String DEFAULT_FILE_MX_SUFFIX = ".txt";
 
   // Shifted global optimum

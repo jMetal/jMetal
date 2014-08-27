@@ -25,6 +25,7 @@ import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.metaheuristic.singleobjective.particleswarmoptimization.StandardPSO2007;
 import org.uma.jmetal.problem.singleobjective.CEC2005Problem;
+import org.uma.jmetal.problem.singleobjective.Griewank;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;

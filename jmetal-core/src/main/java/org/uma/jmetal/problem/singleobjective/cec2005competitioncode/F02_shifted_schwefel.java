@@ -54,8 +54,7 @@ public class F02_shifted_schwefel extends TestFunc {
 
   // Fixed (class) parameters
   static final public String FUNCTION_NAME = "Shifted Schwefel's Problem 1.2";
-  static final public String DEFAULT_FILE_DATA =
-    "" + JMetalLogger.cec2005SupportDataDirectory + "/schwefel_102_data.txt";
+  static final public String DEFAULT_FILE_DATA = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/schwefel_102_data.txt";
 
   // Shifted global optimum
   private final double[] m_o;

@@ -74,7 +74,6 @@ public class StandardPSO2007 extends Algorithm {
     neighborhoodBest = new Solution[swarmSize];
 
     speed = new double[swarmSize][problem.getNumberOfVariables()];
-    neighborhood = new AdaptiveRandomNeighborhood(swarm, numberOfParticlesToInform);
   }
 
   /* Getters */
@@ -143,9 +142,7 @@ public class StandardPSO2007 extends Algorithm {
       swarm.add(particle);
     }
 
-    JMetalLogger.logger.info("SwarmSize: " + swarmSize);
-    JMetalLogger.logger.info("Swarm size: " + swarm.size());
-    JMetalLogger.logger.info("list size: " + neighborhood.getNeighborhood().size());
+    neighborhood = new AdaptiveRandomNeighborhood(swarm, numberOfParticlesToInform);
 
     iterations = 1;
 
@@ -199,10 +196,8 @@ public class StandardPSO2007 extends Algorithm {
       iterations++;
 
       Double bestCurrentFitness = swarm.best(fitnessComparator).getObjective(0);
-      JMetalLogger.logger.info("Best: " + bestCurrentFitness);
 
       if (bestCurrentFitness == bestFoundFitness) {
-        JMetalLogger.logger.info("Recomputing");
         neighborhood.recompute();
       }
 

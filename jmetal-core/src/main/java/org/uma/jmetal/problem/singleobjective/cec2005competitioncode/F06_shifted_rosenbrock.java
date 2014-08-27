@@ -53,8 +53,7 @@ public class F06_shifted_rosenbrock extends TestFunc {
 
   // Fixed (class) parameters
   static final public String FUNCTION_NAME = "Shifted Rosenbrock's Function";
-  static final public String DEFAULT_FILE_DATA =
-    "" + JMetalLogger.cec2005SupportDataDirectory + "/rosenbrock_func_data.txt";
+  static final public String DEFAULT_FILE_DATA = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/rosenbrock_func_data.txt";
 
   // Shifted global optimum
   private final double[] m_o;

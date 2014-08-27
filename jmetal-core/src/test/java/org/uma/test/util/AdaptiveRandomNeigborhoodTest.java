@@ -38,45 +38,50 @@ import static org.junit.Assert.assertEquals;
  * Created by Antonio J. Nebro on 17/03/14.
  */
 public class AdaptiveRandomNeigborhoodTest {
-  private int numberOfRandomNeighbours_ ;
+  private int numberOfRandomNeighbours;
 
-  AdaptiveRandomNeighborhood adaptiveRandomNeighborhood_ ;
+  AdaptiveRandomNeighborhood adaptiveRandomNeighborhood;
 
   @Before
   public void setUp()  {
-    numberOfRandomNeighbours_ = 3 ;
+    numberOfRandomNeighbours = 3 ;
   }
 
   @After
   public void tearDown() throws Exception {
   }
 
-  @Test
-  public void testEmptySolutionSet() {
-    adaptiveRandomNeighborhood_ = new AdaptiveRandomNeighborhood(new SolutionSet(), numberOfRandomNeighbours_) ;
-    ArrayList<ArrayList<Integer>> list = adaptiveRandomNeighborhood_.getNeighborhood() ;
-    assertEquals("AdaptiveRandomNeigborhoodTest.testEmptySolutionSet", 0, list.size()) ;
+  @Test (expected = JMetalException.class)
+  public void nullSolutionSetTest() {
+    adaptiveRandomNeighborhood = new AdaptiveRandomNeighborhood(null, numberOfRandomNeighbours) ;
   }
 
   @Test
-  public void testNumberOfRandomNeighbors() {
-    adaptiveRandomNeighborhood_ = new AdaptiveRandomNeighborhood(new SolutionSet(), numberOfRandomNeighbours_) ;
-    assertEquals("AdaptiveRandomNeigborhoodTest.testNumberOfNeighbors", 3, adaptiveRandomNeighborhood_.getNumberOfRandomNeighbours()) ;
+  public void emptySolutionSetTest() {
+    adaptiveRandomNeighborhood = new AdaptiveRandomNeighborhood(new SolutionSet(), numberOfRandomNeighbours) ;
+    ArrayList<ArrayList<Integer>> list = adaptiveRandomNeighborhood.getNeighborhood() ;
+    assertEquals(0, list.size()) ;
   }
 
   @Test
-  public void testSolutionSetWithOneElement() throws JMetalException {
+  public void numberOfRandomNeighborsTest() {
+    adaptiveRandomNeighborhood = new AdaptiveRandomNeighborhood(new SolutionSet(), numberOfRandomNeighbours) ;
+    assertEquals(3, adaptiveRandomNeighborhood.getNumberOfRandomNeighbours()) ;
+  }
+
+  @Test
+  public void solutionSetWithOneElementTest() throws JMetalException {
     SolutionSet solutionSet = new SolutionSet(1) ;
     Solution solution = new Solution(1) ;
     solution.setObjective(0, 1.0);
     solutionSet.add(solution) ;
-    adaptiveRandomNeighborhood_ = new AdaptiveRandomNeighborhood(solutionSet, numberOfRandomNeighbours_) ;
-    ArrayList<ArrayList<Integer>> list = adaptiveRandomNeighborhood_.getNeighborhood() ;
+    adaptiveRandomNeighborhood = new AdaptiveRandomNeighborhood(solutionSet, numberOfRandomNeighbours) ;
+    ArrayList<ArrayList<Integer>> list = adaptiveRandomNeighborhood.getNeighborhood() ;
     assertEquals("AdaptiveRandomNeigborhoodTest.testEmptySolutionSet", 1, list.size()) ;
   }
 
   @Test
-  public void testSolutionSetWithThreeElements() throws JMetalException {
+  public void solutionSetWithThreeElementsTest() throws JMetalException {
     SolutionSet solutionSet = new SolutionSet(3) ;
     Solution solution = new Solution(1) ;
     solution.setObjective(0, 1.0);
@@ -87,16 +92,16 @@ public class AdaptiveRandomNeigborhoodTest {
     solution = new Solution(1) ;
     solution.setObjective(0, 3.0);
     solutionSet.add(solution) ;
-    adaptiveRandomNeighborhood_ = new AdaptiveRandomNeighborhood(solutionSet, numberOfRandomNeighbours_) ;
-    ArrayList<ArrayList<Integer>> list = adaptiveRandomNeighborhood_.getNeighborhood() ;
-    assertEquals("AdaptiveRandomNeigborhoodTest.testSolutionSetWithThreeElements", 3, list.size()) ;
-    assertEquals("AdaptiveRandomNeigborhoodTest.testSolutionSetWithThreeElements", 0, (int)(list.get(0).get(0)));
-    assertEquals("AdaptiveRandomNeigborhoodTest.testSolutionSetWithThreeElements", 1, (int)(list.get(1).get(0)));
-    assertEquals("AdaptiveRandomNeigborhoodTest.testSolutionSetWithThreeElements", 2, (int)(list.get(2).get(0)));
+    adaptiveRandomNeighborhood = new AdaptiveRandomNeighborhood(solutionSet, numberOfRandomNeighbours) ;
+    ArrayList<ArrayList<Integer>> list = adaptiveRandomNeighborhood.getNeighborhood() ;
+    assertEquals(3, list.size()) ;
+    assertEquals(0, (int)(list.get(0).get(0)));
+    assertEquals(1, (int)(list.get(1).get(0)));
+    assertEquals(2, (int)(list.get(2).get(0)));
   }
 
   @Test
-  public void testRecomputeNeighboursWithSolutionSetWithThreeElements() throws JMetalException {
+  public void reecomputeNeighboursWithSolutionSetWithThreeElementsTest() throws JMetalException {
     SolutionSet solutionSet = new SolutionSet(3) ;
     Solution solution = new Solution(1) ;
     solution.setObjective(0, 1.0);
@@ -107,17 +112,17 @@ public class AdaptiveRandomNeigborhoodTest {
     solution = new Solution(1) ;
     solution.setObjective(0, 3.0);
     solutionSet.add(solution) ;
-    adaptiveRandomNeighborhood_ = new AdaptiveRandomNeighborhood(solutionSet, numberOfRandomNeighbours_) ;
-    adaptiveRandomNeighborhood_.recompute();
-    ArrayList<ArrayList<Integer>> list = adaptiveRandomNeighborhood_.getNeighborhood() ;
-    assertEquals("AdaptiveRandomNeigborhoodTest.testRecomputeNeighboursWithSolutionSetWithThreeElements", 3, list.size()) ;
-    assertEquals("AdaptiveRandomNeigborhoodTest.testRecomputeNeighboursWithSolutionSetWithThreeElements", 0, (int)(list.get(0).get(0)));
-    assertEquals("AdaptiveRandomNeigborhoodTest.testRecomputeNeighboursWithSolutionSetWithThreeElements", 1, (int)(list.get(1).get(0)));
-    assertEquals("AdaptiveRandomNeigborhoodTest.testRecomputeNeighboursWithSolutionSetWithThreeElements", 2, (int)(list.get(2).get(0)));
+    adaptiveRandomNeighborhood = new AdaptiveRandomNeighborhood(solutionSet, numberOfRandomNeighbours) ;
+    adaptiveRandomNeighborhood.recompute();
+    ArrayList<ArrayList<Integer>> list = adaptiveRandomNeighborhood.getNeighborhood() ;
+    assertEquals(3, list.size()) ;
+    assertEquals(0, (int)(list.get(0).get(0)));
+    assertEquals(1, (int)(list.get(1).get(0)));
+    assertEquals(2, (int)(list.get(2).get(0)));
   }
 
   @Test(expected=JMetalException.class)
-  public void testCatchExceptionWhenRequestingAnNonExistingNeighbor() throws JMetalException {
+  public void catchExceptionWhenRequestingAnNonExistingNeighborTest() throws JMetalException {
     SolutionSet solutionSet = new SolutionSet(3) ;
     Solution solution = new Solution(1) ;
     solution.setObjective(0, 1.0);
@@ -125,12 +130,12 @@ public class AdaptiveRandomNeigborhoodTest {
     solution = new Solution(1) ;
     solution.setObjective(0, 2.0);
     solutionSet.add(solution) ;
-    adaptiveRandomNeighborhood_ = new AdaptiveRandomNeighborhood(solutionSet, numberOfRandomNeighbours_) ;
-    adaptiveRandomNeighborhood_.getNeighbors(6) ;
+    adaptiveRandomNeighborhood = new AdaptiveRandomNeighborhood(solutionSet, numberOfRandomNeighbours) ;
+    adaptiveRandomNeighborhood.getNeighbors(6) ;
   }
 
   @Test
-  public void testUsingPopulationOf100Individuals() throws ClassNotFoundException, JMetalException {
+  public void usingPopulationOf100IndividualsTest() throws ClassNotFoundException, JMetalException {
     int solutionSetSize = 100 ;
     Problem problem = new Sphere("Real", 10) ;
     SolutionSet solutionSet = new SolutionSet(solutionSetSize) ;
@@ -140,10 +145,10 @@ public class AdaptiveRandomNeigborhoodTest {
       problem.evaluate(solution);
       solutionSet.add(solution) ;
     }
-    adaptiveRandomNeighborhood_ = new AdaptiveRandomNeighborhood(solutionSet, numberOfRandomNeighbours_) ;
-    ArrayList<ArrayList<Integer>> list = adaptiveRandomNeighborhood_.getNeighborhood() ;
-    assertEquals("AdaptiveRandomNeigborhoodTest.testUsingPopulationOf100Individuals", solutionSetSize, list.size()) ;
+    adaptiveRandomNeighborhood = new AdaptiveRandomNeighborhood(solutionSet, numberOfRandomNeighbours) ;
+    ArrayList<ArrayList<Integer>> list = adaptiveRandomNeighborhood.getNeighborhood() ;
+    assertEquals(solutionSetSize, list.size()) ;
     for (int i = 0 ; i < solutionSetSize; i++)
-      assertEquals("AdaptiveRandomNeigborhoodTest.testUsingPopulationOf100Individuals", i, (int)(list.get(i).get(0)));
+      assertEquals(i, (int)(list.get(i).get(0)));
   }
 }

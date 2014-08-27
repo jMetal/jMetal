@@ -26,6 +26,7 @@ import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.metaheuristic.singleobjective.particleswarmoptimization.StandardPSO2007;
 import org.uma.jmetal.metaheuristic.singleobjective.particleswarmoptimization.StandardPSO2011;
 import org.uma.jmetal.problem.singleobjective.CEC2005Problem;
+import org.uma.jmetal.problem.singleobjective.Griewank;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
@@ -54,7 +55,6 @@ public class StandardPSO2011Runner {
 		problem = new CEC2005Problem("Real", 5, 10);
 		/* Examples
     //problem = new Sphere("Real", 20) ;
-    //problem = new Easom("Real") ;
     // problem = new Griewank("Real", 10) ;
 		 */
 

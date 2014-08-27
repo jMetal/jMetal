@@ -53,10 +53,8 @@ public class F11_shifted_rotated_weierstrass extends TestFunc {
 
   // Fixed (class) parameters
   static final public String FUNCTION_NAME = "Shifted Rotated Weierstrass Function";
-  static final public String DEFAULT_FILE_DATA =
-    "" + JMetalLogger.cec2005SupportDataDirectory + "/weierstrass_data.txt";
-  static final public String DEFAULT_FILE_MX_PREFIX =
-    "" + JMetalLogger.cec2005SupportDataDirectory + "/weierstrass_M_D";
+  static final public String DEFAULT_FILE_DATA = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/weierstrass_data.txt";
+  static final public String DEFAULT_FILE_MX_PREFIX = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/weierstrass_M_D";
   static final public String DEFAULT_FILE_MX_SUFFIX = ".txt";
 
   static final public double PIx2 = Math.PI * 2.0;

@@ -52,8 +52,8 @@ public class F10_shifted_rotated_rastrigin extends TestFunc {
 
   // Fixed (class) parameters
   static final public String FUNCTION_NAME = "Shifted Rotated Rastrigin's Function";
-  static final public String DEFAULT_FILE_DATA = "/supportData/rastrigin_func_data.txt";
-  static final public String DEFAULT_FILE_MX_PREFIX = "/supportData/rastrigin_M_D";
+  static final public String DEFAULT_FILE_DATA = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/rastrigin_func_data.txt";
+  static final public String DEFAULT_FILE_MX_PREFIX = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/rastrigin_M_D";
   static final public String DEFAULT_FILE_MX_SUFFIX = ".txt";
 
   // Shifted global optimum

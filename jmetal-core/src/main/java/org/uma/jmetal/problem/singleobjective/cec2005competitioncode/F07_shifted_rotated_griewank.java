@@ -53,10 +53,8 @@ public class F07_shifted_rotated_griewank extends TestFunc {
 
   // Fixed (class) parameters
   static final public String FUNCTION_NAME = "Shifted Rotated Griewank's Function without Bounds";
-  static final public String DEFAULT_FILE_DATA =
-    "" + JMetalLogger.cec2005SupportDataDirectory + "/griewank_func_data.txt";
-  static final public String DEFAULT_FILE_MX_PREFIX =
-    "" + JMetalLogger.cec2005SupportDataDirectory + "/griewank_M_D";
+  static final public String DEFAULT_FILE_DATA = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/griewank_func_data.txt";
+  static final public String DEFAULT_FILE_MX_PREFIX = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/griewank_M_D";
   static final public String DEFAULT_FILE_MX_SUFFIX = ".txt";
 
   // Shifted global optimum

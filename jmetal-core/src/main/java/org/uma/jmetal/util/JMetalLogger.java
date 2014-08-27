@@ -42,9 +42,4 @@ public class JMetalLogger implements Serializable {
     }
     logger.addHandler(fileHandler);
   }
-
-  public static String cec2005SupportDataDirectory =
-    "/Users/antelverde/Softw/jMetal/jMetalMV/cec2005CompetitionResources/supportData";
-  public static String cec2005Package =
-    "org.uma.jmetal.problem.singleobjective.cec2005competitioncode.originalCode";
 }

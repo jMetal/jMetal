@@ -54,10 +54,8 @@ public class F19_rotated_hybrid_composition_2_narrow_basin_global_opt extends Te
   // Fixed (class) parameters
   static final public String FUNCTION_NAME =
     "Rotated Hybrid Composition Function 2 with narrow basin global optimum";
-  static final public String DEFAULT_FILE_DATA =
-    "" + JMetalLogger.cec2005SupportDataDirectory + "/hybrid_func2_data.txt";
-  static final public String DEFAULT_FILE_MX_PREFIX =
-    "" + JMetalLogger.cec2005SupportDataDirectory + "/hybrid_func2_M_D";
+  static final public String DEFAULT_FILE_DATA = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/hybrid_func2_data.txt";
+  static final public String DEFAULT_FILE_MX_PREFIX = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/hybrid_func2_M_D";
   static final public String DEFAULT_FILE_MX_SUFFIX = ".txt";
 
   // Number of functions

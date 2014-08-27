@@ -53,10 +53,8 @@ public class F24_rotated_hybrid_composition_4 extends TestFunc {
 
   // Fixed (class) parameters
   static final public String FUNCTION_NAME = "Rotated Hybrid Composition Function 4";
-  static final public String DEFAULT_FILE_DATA =
-    "" + JMetalLogger.cec2005SupportDataDirectory + "/supportData/hybrid_func4_data.txt";
-  static final public String DEFAULT_FILE_MX_PREFIX =
-    "" + JMetalLogger.cec2005SupportDataDirectory + "/supportData/hybrid_func4_M_D";
+  static final public String DEFAULT_FILE_DATA = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/hybrid_func4_data.txt";
+  static final public String DEFAULT_FILE_MX_PREFIX = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/hybrid_func4_M_D";
   static final public String DEFAULT_FILE_MX_SUFFIX = ".txt";
 
   // Number of functions

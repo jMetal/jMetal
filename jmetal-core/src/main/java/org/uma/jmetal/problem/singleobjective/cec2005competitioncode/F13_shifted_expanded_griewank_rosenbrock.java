@@ -54,8 +54,7 @@ public class F13_shifted_expanded_griewank_rosenbrock extends TestFunc {
   // Fixed (class) parameters
   static final public String FUNCTION_NAME =
     "Shifted Expanded Griewank's plus Rosenbrock's Function";
-  static final public String DEFAULT_FILE_DATA =
-    "" + JMetalLogger.cec2005SupportDataDirectory + "/EF8F2_func_data.txt";
+  static final public String DEFAULT_FILE_DATA = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/EF8F2_func_data.txt";
 
   // Shifted global optimum
   private final double[] m_o;

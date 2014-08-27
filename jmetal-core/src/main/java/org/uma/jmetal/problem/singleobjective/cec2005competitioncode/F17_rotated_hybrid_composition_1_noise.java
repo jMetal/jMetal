@@ -54,10 +54,8 @@ public class F17_rotated_hybrid_composition_1_noise extends TestFunc {
   // Fixed (class) parameters
   static final public String FUNCTION_NAME =
     "Rotated Hybrid Composition Function 1 with Noise in Fitness";
-  static final public String DEFAULT_FILE_DATA =
-    "" + JMetalLogger.cec2005SupportDataDirectory + "/hybrid_func1_data.txt";
-  static final public String DEFAULT_FILE_MX_PREFIX =
-    "" + JMetalLogger.cec2005SupportDataDirectory + "/hybrid_func1_M_D";
+  static final public String DEFAULT_FILE_DATA = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/hybrid_func1_data.txt";
+  static final public String DEFAULT_FILE_MX_PREFIX = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/hybrid_func1_M_D";
   static final public String DEFAULT_FILE_MX_SUFFIX = ".txt";
 
   // Number of functions
