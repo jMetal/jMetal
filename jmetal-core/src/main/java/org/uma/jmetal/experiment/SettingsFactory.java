@@ -43,8 +43,8 @@ public class SettingsFactory {
     throws JMetalException {
     String base = "org.uma.jmetal.experiment.settings." + algorithmName + "Settings";
     try {
-      Class problemClass = Class.forName(base);
-      Constructor[] constructors = problemClass.getConstructors();
+      Class<?> settingClass = Class.forName(base);
+      Constructor<?>[] constructors = settingClass.getConstructors();
       int i = 0;
       //find the constructor
       while ((i < constructors.length) &&
