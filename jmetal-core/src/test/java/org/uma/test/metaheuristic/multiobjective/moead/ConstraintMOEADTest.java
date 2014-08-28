@@ -33,19 +33,19 @@ import static org.junit.Assert.assertTrue;
  * Created by Antonio J. Nebro on 12/06/14.
  */
 public class ConstraintMOEADTest {
-    Algorithm algorithm;
+  Algorithm algorithm;
 
-    @Test
-    public void testNumberOfReturnedSolutionsInEasyProblem() throws IOException, ClassNotFoundException {
-      algorithm = new ConstraintMOEADSettings("LZ09F2").configure() ;
+  @Test
+  public void testNumberOfReturnedSolutionsInEasyProblem() throws IOException, ClassNotFoundException {
+    algorithm = new ConstraintMOEADSettings("LZ09F2").configure() ;
 
-      SolutionSet solutionSet = algorithm.execute() ;
+    SolutionSet solutionSet = algorithm.execute() ;
     /*
       Rationale: the default problem is LZ09F2, and usually ConstraintMOEAD, configured with standard
       settings, should return 300 solutions
      */
-      assertTrue(solutionSet.size() >= 299) ;
-    }
+    assertTrue(solutionSet.size() >= 299) ;
+  }
 
   @Test
   public void testNumberOfReturnedSolutionsInEasyConstrainedProblem() throws IOException, ClassNotFoundException {
