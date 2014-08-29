@@ -34,51 +34,51 @@ import java.io.IOException;
 public class ZDTExperimentRunner {
   public static void main(String[] args) throws JMetalException, IOException {
     ExperimentData experimentData = new ExperimentData.Builder("ZDTExperiment")
-      .algorithmNameList(new String[]{"NSGAII", "SMPSO", "MOCell", "GDE3"})
-      .problemList(new String[]{"ZDT1", "ZDT2", "ZDT3", "ZDT4", "ZDT6"})
-      .experimentBaseDirectory("/Users/antelverde/Softw/jMetal/jMetalGitHub/pruebas")
-      .outputParetoFrontFileName("FUN")
-      .outputParetoSetFileName("VAR")
-      .independentRuns(8)
+      .setAlgorithmNameList(new String[] {"NSGAII", "SMPSO", "MOCell", "GDE3"})
+      .setProblemList(new String[] {"ZDT1", "ZDT2", "ZDT3", "ZDT4", "ZDT6"})
+      .setExperimentBaseDirectory("/Users/antelverde/Softw/jMetal/jMetalGitHub/pruebas")
+      .setOutputParetoFrontFileName("FUN")
+      .setOutputParetoSetFileName("VAR")
+      .setIndependentRuns(8)
       .build() ;
 
     AlgorithmExecution algorithmExecution = new AlgorithmExecution.Builder(experimentData)
-      .numberOfThreads(8)
-      .paretoSetFileName("VAR")
-      .paretoFrontFileName("FUN")
-      .useAlgorithmConfigurationFiles()
+      .setNumberOfThreads(8)
+      .setParetoSetFileName("VAR")
+      .setParetoFrontFileName("FUN")
+      .setUseAlgorithmConfigurationFiles()
       .build() ;
 
     String[] paretoFrontFilesList = new String[]{"ZDT1.pf","ZDT2.pf", "ZDT3.pf", "ZDT4.pf", "ZDT6.pf"} ;
     String[] indicatorList = new String[]{"HV", "IGD", "EPSILON", "SPREAD", "GD"} ;
     QualityIndicatorGeneration qualityIndicatorGeneration = new QualityIndicatorGeneration.Builder(experimentData)
-      .paretoFrontDirectory("/Users/antelverde/Softw/pruebas/data/paretoFronts")
-      .paretoFrontFiles(paretoFrontFilesList)
-      .qualityIndicatorList(indicatorList)
+      .setParetoFrontDirectory("/Users/antelverde/Softw/pruebas/data/paretoFronts")
+      .setParetoFrontFiles(paretoFrontFilesList)
+      .setQualityIndicatorList(indicatorList)
       .build() ;
 
     SetCoverageTableGeneration setCoverageTables = new SetCoverageTableGeneration.Builder(experimentData)
       .build() ;
 
     BoxplotGeneration boxplotGeneration = new BoxplotGeneration.Builder(experimentData)
-      .indicatorList(indicatorList)
-      .numberOfRows(3)
-      .numberOfColumns(2)
+      .setIndicatorList(indicatorList)
+      .setNumberOfRows(3)
+      .setNumberOfColumns(2)
       .includeNotch()
       .build() ;
 
     WilcoxonTestTableGeneration wilcoxonTestTableGeneration =
       new WilcoxonTestTableGeneration.Builder(experimentData)
-        .indicatorList(indicatorList)
+        .setIndicatorList(indicatorList)
         .build() ;
 
     QualityIndicatorLatexTableGeneration qualityIndicatorLatexTableGeneration =
       new QualityIndicatorLatexTableGeneration.Builder(experimentData)
-        .indicatorList(indicatorList)
+        .setIndicatorList(indicatorList)
         .build() ;
 
     FriedmanTableGeneration friedmanTableGeneration = new FriedmanTableGeneration.Builder(experimentData)
-      .indicatorList(indicatorList)
+      .setIndicatorList(indicatorList)
       .build() ;
 
     Experiment experiment = new Experiment.Builder(experimentData)

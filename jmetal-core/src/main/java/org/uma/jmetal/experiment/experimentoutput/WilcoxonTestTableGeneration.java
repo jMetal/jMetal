@@ -42,7 +42,7 @@ public class WilcoxonTestTableGeneration implements ExperimentOutput {
       outputDirectory = experimentData.getExperimentBaseDirectory()+"/R" ;
     }
 
-    public Builder indicatorList(String[] indicatorList) {
+    public Builder setIndicatorList(String[] indicatorList) {
       this.indicatorList = Arrays.copyOf(indicatorList, indicatorList.length) ;
 
       return this ;

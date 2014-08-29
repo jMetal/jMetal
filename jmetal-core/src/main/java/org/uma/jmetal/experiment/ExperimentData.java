@@ -92,39 +92,39 @@ public class ExperimentData {
 			this.experimentName = experimentName ;
 		}
 
-		public Builder algorithmNameList(String[] algorithmNameList) {
+		public Builder setAlgorithmNameList(String[] algorithmNameList) {
 			this.algorithmNameList = new String[algorithmNameList.length] ;
 			this.algorithmNameList = Arrays.copyOf(algorithmNameList, algorithmNameList.length) ;
 
 			return this ;
 		}
 
-		public Builder problemList(String[] problemList) {
+		public Builder setProblemList(String[] problemList) {
 			this.problemList = new String[problemList.length] ;
 			this.problemList = Arrays.copyOf(problemList, problemList.length) ;
 
 			return this ;
 		}
 
-		public Builder experimentBaseDirectory(String experimentBaseDirectory) {
+		public Builder setExperimentBaseDirectory(String experimentBaseDirectory) {
 			this.experimentBaseDirectory = experimentBaseDirectory+"/"+experimentName ;
 
 			return this ;
 		}
 
-		public Builder outputParetoFrontFileName(String outputParetoFrontFileName) {
+		public Builder setOutputParetoFrontFileName(String outputParetoFrontFileName) {
 			this.outputParetoFrontFileName = outputParetoFrontFileName ;
 
 			return this ;
 		}
 
-		public Builder outputParetoSetFileName(String outputParetoSetFileName) {
+		public Builder setOutputParetoSetFileName(String outputParetoSetFileName) {
 			this.outputParetoSetFileName = outputParetoSetFileName ;
 
 			return this ;
 		}
 		
-		public Builder independentRuns(int independentRuns) {
+		public Builder setIndependentRuns(int independentRuns) {
 			this.independentRuns = independentRuns ;
 
 			return this ;

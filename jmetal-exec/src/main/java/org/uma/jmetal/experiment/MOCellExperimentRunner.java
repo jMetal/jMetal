@@ -15,19 +15,20 @@ import java.io.IOException;
 public class MOCellExperimentRunner {
   public static void main(String[] args) throws JMetalException, IOException {
     ExperimentData experimentData = new ExperimentData.Builder("MOCellStudy")
-      .algorithmNameList(new String[]{"sMOCell1", "sMOCell2", "aMOCell1", "aMOCell2", "aMOCell3", "aMOCell4"})
-      .problemList(new String[]{"ZDT1", "ZDT2", "ZDT3", "ZDT4", "ZDT6"})
-      .experimentBaseDirectory("/Users/antelverde/Softw/jMetal/jMetalGitHub/pruebas")
-      .outputParetoFrontFileName("FUN")
-      .outputParetoSetFileName("VAR")
-      .independentRuns(30)
+      .setAlgorithmNameList(
+        new String[] {"sMOCell1", "sMOCell2", "aMOCell1", "aMOCell2", "aMOCell3", "aMOCell4"})
+      .setProblemList(new String[] {"ZDT1", "ZDT2", "ZDT3", "ZDT4", "ZDT6"})
+      .setExperimentBaseDirectory("/Users/antelverde/Softw/jMetal/jMetalGitHub/pruebas")
+      .setOutputParetoFrontFileName("FUN")
+      .setOutputParetoSetFileName("VAR")
+      .setIndependentRuns(30)
       .build() ;
 
     AlgorithmExecution algorithmExecution = new AlgorithmExecution.Builder(experimentData)
-      .numberOfThreads(8)
-      .paretoSetFileName("VAR")
-      .paretoFrontFileName("FUN")
-      .useAlgorithmConfigurationFiles()
+      .setNumberOfThreads(8)
+      .setParetoSetFileName("VAR")
+      .setParetoFrontFileName("FUN")
+      .setUseAlgorithmConfigurationFiles()
       .build() ;
 
     ParetoFrontsGeneration paretoFrontsGeneration = new ParetoFrontsGeneration.Builder(experimentData)
@@ -35,32 +36,32 @@ public class MOCellExperimentRunner {
 
     String[] indicatorList = new String[]{"HV", "IGD", "EPSILON", "SPREAD", "GD"} ;
     QualityIndicatorGeneration qualityIndicatorGeneration = new QualityIndicatorGeneration.Builder(experimentData)
-      .paretoFrontDirectory("/Users/antelverde/Softw/pruebas/data/paretoFronts")
-      .paretoFrontFiles(new String[]{"ZDT1.pf","ZDT2.pf", "ZDT3.pf", "ZDT4.pf", "ZDT6.pf"})
-      .qualityIndicatorList(indicatorList)
+      .setParetoFrontDirectory("/Users/antelverde/Softw/pruebas/data/paretoFronts")
+      .setParetoFrontFiles(new String[] {"ZDT1.pf", "ZDT2.pf", "ZDT3.pf", "ZDT4.pf", "ZDT6.pf"})
+      .setQualityIndicatorList(indicatorList)
       .build() ;
 
     SetCoverageTableGeneration setCoverageTables = new SetCoverageTableGeneration.Builder(experimentData)
       .build() ;
 
     BoxplotGeneration boxplotGeneration = new BoxplotGeneration.Builder(experimentData)
-      .indicatorList(indicatorList)
-      .numberOfRows(3)
-      .numberOfColumns(2)
+      .setIndicatorList(indicatorList)
+      .setNumberOfRows(3)
+      .setNumberOfColumns(2)
       .build() ;
 
     WilcoxonTestTableGeneration wilcoxonTestTableGeneration =
       new WilcoxonTestTableGeneration.Builder(experimentData)
-        .indicatorList(indicatorList)
+        .setIndicatorList(indicatorList)
         .build() ;
 
     QualityIndicatorLatexTableGeneration qualityIndicatorLatexTableGeneration =
       new QualityIndicatorLatexTableGeneration.Builder(experimentData)
-        .indicatorList(indicatorList)
+        .setIndicatorList(indicatorList)
         .build() ;
 
     FriedmanTableGeneration friedmanTableGeneration = new FriedmanTableGeneration.Builder(experimentData)
-      .indicatorList(indicatorList)
+      .setIndicatorList(indicatorList)
       .build() ;
 
 

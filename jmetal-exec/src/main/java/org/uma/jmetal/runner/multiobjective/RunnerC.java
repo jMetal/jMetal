@@ -27,8 +27,8 @@ import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.experiment.Settings;
 import org.uma.jmetal.experiment.SettingsFactory;
 import org.uma.jmetal.qualityindicator.QualityIndicatorGetter;
-import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileOutput.FileOutputContext;
 import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
@@ -37,7 +37,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Properties;
-import java.util.logging.FileHandler;
 import java.util.logging.Level;
 
 /**
@@ -76,9 +75,9 @@ public class RunnerC {
 
     if (args.length == 0) {
       JMetalLogger.logger.log(Level.SEVERE, "Sintax error. Usage:");
-      JMetalLogger.logger.log(Level.SEVERE, "a) org.uma.jmetal.experiment.Main configurationFile ");
-      JMetalLogger.logger.log(Level.SEVERE, "b) org.uma.jmetal.experiment.Main configurationFile problemName");
-      JMetalLogger.logger.log(Level.SEVERE, "c) org.uma.jmetal.experiment.Main configurationFile problemName paretoFrontFile");
+      JMetalLogger.logger.log(Level.SEVERE, "a) org.uma.jmetal.runner.multiobjective.RunnerC configurationFile ");
+      JMetalLogger.logger.log(Level.SEVERE, "b) org.uma.jmetal.runner.multiobjective.RunnerC configurationFile problemName");
+      JMetalLogger.logger.log(Level.SEVERE, "c) org.uma.jmetal.runner.multiobjective.RunnerC configurationFile problemName paretoFrontFile");
       throw new RuntimeException("Sintax error when invoking the program");
     } else if (args.length == 1) {
       inputStreamReader = new InputStreamReader(new FileInputStream(args[0]));

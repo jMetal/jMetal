@@ -73,13 +73,13 @@ public class QualityIndicatorGeneration implements ExperimentOutput {
       qualityIndicatorList = new String[0] ;
     }
 
-    public Builder paretoFrontDirectory(String paretoFrontDirectory) {
+    public Builder setParetoFrontDirectory(String paretoFrontDirectory) {
       this.paretoFrontDirectory = paretoFrontDirectory ;
 
       return this ;
     }
 
-    public Builder paretoFrontFiles(String[] paretoFrontFiles) {
+    public Builder setParetoFrontFiles(String[] paretoFrontFiles) {
       if (paretoFrontFiles.length != experimentData.getProblemList().length) {
         System.out.println("problem list length: "+ experimentData.getProblemList().length) ;
         System.out.println(experimentData.getProblemList()[0]);
@@ -93,7 +93,7 @@ public class QualityIndicatorGeneration implements ExperimentOutput {
       return this ;
     }
 
-    public Builder qualityIndicatorList(String []qualityIndicatorList) {
+    public Builder setQualityIndicatorList(String[] qualityIndicatorList) {
       this.qualityIndicatorList = Arrays.copyOf(qualityIndicatorList, qualityIndicatorList.length) ;
 
       return this ;

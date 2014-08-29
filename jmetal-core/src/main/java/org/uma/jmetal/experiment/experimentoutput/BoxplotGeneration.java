@@ -54,7 +54,7 @@ public class BoxplotGeneration implements ExperimentOutput {
       numberOfColumns = 1 ;
     }
 
-    public Builder indicatorList(String[] indicatorList) {
+    public Builder setIndicatorList(String[] indicatorList) {
       this.indicatorList = Arrays.copyOf(indicatorList, indicatorList.length) ;
 
       return this ;
@@ -72,13 +72,13 @@ public class BoxplotGeneration implements ExperimentOutput {
       return this ;
     }
 
-    public Builder numberOfRows(int numberOfRows) {
+    public Builder setNumberOfRows(int numberOfRows) {
       this.numberOfRows = numberOfRows ;
 
       return this ;
     }
 
-    public Builder numberOfColumns(int numberOfColumns) {
+    public Builder setNumberOfColumns(int numberOfColumns) {
       this.numberOfColumns = numberOfColumns ;
 
       return this ;

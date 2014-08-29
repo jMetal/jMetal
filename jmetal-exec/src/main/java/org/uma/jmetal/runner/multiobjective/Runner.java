@@ -27,14 +27,13 @@ import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.experiment.Settings;
 import org.uma.jmetal.experiment.SettingsFactory;
 import org.uma.jmetal.qualityindicator.QualityIndicatorGetter;
-import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileOutput.FileOutputContext;
 import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
-import java.util.logging.FileHandler;
 import java.util.logging.Level;
 
 /**
@@ -52,7 +51,6 @@ public class Runner {
    *       - org.uma.jmetal.runner.multiobjective.Runner problemName paretoFrontFile
    * @throws ClassNotFoundException
    */
-
   public static void main(String[] args) throws
     JMetalException, SecurityException, IOException, ClassNotFoundException {
     Algorithm algorithm;
@@ -69,8 +67,8 @@ public class Runner {
 
     if (args.length == 0) {
       JMetalLogger.logger.log(Level.SEVERE, "Sintax error. Usage:\n" +
-        "a) org.uma.jmetal.experiment.Main algorithmName \n" +
-        "b) org.uma.jmetal.experiment.Main algorithmName problemName\n" +
+        "a) org.uma.jmetal.runner.multiobjective.Runner algorithmName \n" +
+        "b) org.uma.jmetal.runner.multiobjective.RunnerC algorithmName problemName\n" +
         "c) org.uma.jmetal.experiment.Main algorithmName problemName paretoFrontFile");
       throw new JMetalException("Sintax error when invoking the program");
     } else if (args.length == 1) {

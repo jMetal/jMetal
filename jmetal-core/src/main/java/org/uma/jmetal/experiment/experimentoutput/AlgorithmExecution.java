@@ -86,26 +86,26 @@ public class AlgorithmExecution implements ExperimentOutput {
       useAlgorithmConfigurationFiles = false ;
     }
 
-    public Builder numberOfThreads(int numberOfThreads) {
+    public Builder setNumberOfThreads(int numberOfThreads) {
       this.numberOfThreads = numberOfThreads ;
       parallelExecutor = new MultithreadedExperimentExecutor(numberOfThreads) ;
 
       return this ;
     }
 
-    public Builder paretoFrontFileName(String fileName) {
+    public Builder setParetoFrontFileName(String fileName) {
       paretoFrontFileName = fileName ;
 
       return this ;
     }
 
-    public Builder paretoSetFileName(String fileName) {
+    public Builder setParetoSetFileName(String fileName) {
       paretoSetFileName = fileName ;
 
       return this ;
     }
 
-    public Builder useAlgorithmConfigurationFiles() {
+    public Builder setUseAlgorithmConfigurationFiles() {
       useAlgorithmConfigurationFiles = true ;
 
       return this ;
