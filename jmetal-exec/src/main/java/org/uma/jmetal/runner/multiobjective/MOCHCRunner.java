@@ -40,7 +40,6 @@ import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
-import java.util.logging.FileHandler;
 
 /**
  * This class executes the algorithm described in:
@@ -92,9 +91,9 @@ public class MOCHCRunner {
     long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)
-            .separator("\t")
-            .varFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
-            .funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+            .setSeparator("\t")
+            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
             .print();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");

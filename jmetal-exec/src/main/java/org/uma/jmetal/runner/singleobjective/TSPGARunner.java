@@ -27,20 +27,15 @@ import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.metaheuristic.singleobjective.geneticalgorithm.SteadyStateGeneticAlgorithm;
 import org.uma.jmetal.operator.crossover.Crossover;
 import org.uma.jmetal.operator.crossover.PMXCrossover;
-import org.uma.jmetal.operator.crossover.TwoPointsCrossover;
 import org.uma.jmetal.operator.mutation.Mutation;
-import org.uma.jmetal.operator.mutation.MutationFactory;
 import org.uma.jmetal.operator.mutation.SwapMutation;
 import org.uma.jmetal.operator.selection.BinaryTournament;
 import org.uma.jmetal.operator.selection.Selection;
-import org.uma.jmetal.operator.selection.SelectionFactory;
 import org.uma.jmetal.problem.singleobjective.TSP;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
-
-import java.util.HashMap;
 
 /**
  * This class runs a single-objective genetic algorithm (GA). The GA can be
@@ -87,9 +82,9 @@ public class TSPGARunner {
     long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)
-            .separator("\t")
-            .varFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
-            .funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+            .setSeparator("\t")
+            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
             .print();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");

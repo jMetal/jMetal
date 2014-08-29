@@ -49,13 +49,13 @@ public class SolutionSetOutput {
       selectFeasibleSolutions = false;
     }
 
-    public Printer varFileOutputContext(FileOutputContext fileContext) {
+    public Printer setVarFileOutputContext(FileOutputContext fileContext) {
       varFileContext = fileContext;
 
       return this;
     }
 
-    public Printer funFileOutputContext(FileOutputContext fileContext) {
+    public Printer setFunFileOutputContext(FileOutputContext fileContext) {
       funFileContext = fileContext;
 
       return this;
@@ -67,7 +67,7 @@ public class SolutionSetOutput {
       return this;
     }
 
-    public Printer separator(String separator) {
+    public Printer setSeparator(String separator) {
       this.separator = separator;
       varFileContext.separator = this.separator;
       funFileContext.separator = this.separator;

@@ -23,10 +23,8 @@ package org.uma.jmetal.runner.singleobjective;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristic.singleobjective.particleswarmoptimization.StandardPSO2007;
 import org.uma.jmetal.metaheuristic.singleobjective.particleswarmoptimization.StandardPSO2011;
 import org.uma.jmetal.problem.singleobjective.CEC2005Problem;
-import org.uma.jmetal.problem.singleobjective.Griewank;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
@@ -34,7 +32,6 @@ import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
-import java.util.logging.FileHandler;
 
 /**
  * Class for configuring and running a single-objective PSO algorithm
@@ -71,9 +68,9 @@ public class StandardPSO2011Runner {
 		long computingTime = algorithmRunner.getComputingTime() ;
 
 		new SolutionSetOutput.Printer(population)
-		.separator("\t")
-		.varFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
-		.funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+		.setSeparator("\t")
+		.setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+		.setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
 		.print();
 
 		JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");

@@ -38,9 +38,7 @@ import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
 import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.logging.FileHandler;
 
 /**
  * Class to configure and execute the NSGA-II algorithm. The settings are aimed
@@ -105,9 +103,9 @@ public class NSGAIImTSPRunner {
     long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)
-            .separator("\t")
-            .varFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
-            .funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+            .setSeparator("\t")
+            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
             .print();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");

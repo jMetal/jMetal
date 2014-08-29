@@ -24,15 +24,9 @@ import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristic.multiobjective.cellde.CellDE;
 import org.uma.jmetal.metaheuristic.multiobjective.gde3.GDE3;
-import org.uma.jmetal.operator.crossover.Crossover;
-import org.uma.jmetal.operator.crossover.CrossoverFactory;
 import org.uma.jmetal.operator.crossover.DifferentialEvolutionCrossover;
-import org.uma.jmetal.operator.selection.BinaryTournament;
 import org.uma.jmetal.operator.selection.DifferentialEvolutionSelection;
-import org.uma.jmetal.operator.selection.Selection;
-import org.uma.jmetal.operator.selection.SelectionFactory;
 import org.uma.jmetal.problem.multiobjective.Kursawe;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.qualityindicator.QualityIndicatorGetter;
@@ -40,14 +34,11 @@ import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.evaluator.MultithreadedSolutionSetEvaluator;
-import org.uma.jmetal.util.evaluator.SequentialSolutionSetEvaluator;
 import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
 import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.logging.FileHandler;
 
 /**
  * Class for configuring and running the GDE3 algorithm
@@ -117,9 +108,9 @@ public class ParallelGDE3Runner {
     long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)
-      .separator("\t")
-      .varFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
-      .funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+      .setSeparator("\t")
+      .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+      .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
       .print();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");

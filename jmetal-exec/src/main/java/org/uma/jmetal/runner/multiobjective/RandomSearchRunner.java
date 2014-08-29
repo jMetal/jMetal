@@ -22,7 +22,6 @@
 package org.uma.jmetal.runner.multiobjective;
 
 import java.io.IOException;
-import java.util.logging.FileHandler;
 
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Problem;
@@ -91,9 +90,9 @@ public class RandomSearchRunner {
     long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)
-            .separator("\t")
-            .varFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
-            .funFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+            .setSeparator("\t")
+            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
             .print();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
