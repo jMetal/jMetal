@@ -21,9 +21,9 @@
 
 package org.uma.jmetal.core;
 
-/**
- * This abstract class is the base for defining new types of variables.
- */
+/** Interface representing types of decision variables */
 public interface Variable {
+
+  /** Method to return a copy of a variable object */
   public abstract Variable copy();
 }

@@ -26,9 +26,6 @@ package org.uma.jmetal.core;
  */
 public interface SolutionType {
 
-  /** Abstract method to create the variables of the solution type */
+  /** Method to create the variables of the solution type */
   public Variable[] createVariables() throws ClassNotFoundException;
-
-  /** Copy the decision variables */
-  //public Variable[] copyVariables(Variable[] variables) ;
 }
