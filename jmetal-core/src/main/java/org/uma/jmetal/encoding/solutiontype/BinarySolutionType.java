@@ -27,19 +27,20 @@ import org.uma.jmetal.core.Variable;
 import org.uma.jmetal.encoding.variable.Binary;
 
 /** Class representing the solution type type of solutions composed of Binary variables */
-public class BinarySolutionType extends SolutionType {
+public class BinarySolutionType implements SolutionType {
+  private Problem problem ;
 
   /** Constructor */
   public BinarySolutionType(Problem problem) {
-    super(problem);
+    this.problem = problem ;
   }
 
   /** Create the variables of the solution type */
   public Variable[] createVariables() {
-    Variable[] variables = new Variable[getProblem().getNumberOfVariables()];
+    Variable[] variables = new Variable[problem.getNumberOfVariables()];
 
-    for (int var = 0; var < getProblem().getNumberOfVariables(); var++) {
-      variables[var] = new Binary(getProblem().getLength(var));
+    for (int var = 0; var < problem.getNumberOfVariables(); var++) {
+      variables[var] = new Binary(problem.getLength(var));
     }
 
     return variables;

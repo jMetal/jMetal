@@ -23,7 +23,6 @@ package org.uma.jmetal.encoding.solutiontype;
 
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.core.SolutionType;
 import org.uma.jmetal.core.Variable;
 import org.uma.jmetal.encoding.variable.ArrayInt;
 
@@ -31,18 +30,19 @@ import org.uma.jmetal.encoding.variable.ArrayInt;
  * Class representing the solution type of solutions composed of an ArrayInt
  * encoding.variable
  */
-public class ArrayIntSolutionType extends SolutionType implements GenericIntSolutionType {
+public class ArrayIntSolutionType implements GenericIntSolutionType {
+  private Problem problem ;
 
   /** Constructor */
   public ArrayIntSolutionType(Problem problem) {
-    super(problem);
+    this.problem = problem ;
   }
 
   /** Creates the variables of the solution type */
   public Variable[] createVariables() {
     Variable[] variables = new Variable[1];
 
-    variables[0] = new ArrayInt(getProblem().getNumberOfVariables(), getProblem());
+    variables[0] = new ArrayInt(problem.getNumberOfVariables(), problem);
     return variables;
   }
 

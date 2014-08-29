@@ -23,7 +23,6 @@ package org.uma.jmetal.encoding.solutiontype;
 
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.core.SolutionType;
 import org.uma.jmetal.core.Variable;
 import org.uma.jmetal.encoding.variable.BinaryReal;
 import org.uma.jmetal.encoding.variable.GenericRealVariable;
@@ -33,28 +32,29 @@ import org.uma.jmetal.util.JMetalException;
  * Class representing the solution type of solutions composed of BinaryReal
  * variables
  */
-public class BinaryRealSolutionType extends SolutionType implements GenericRealSolutionType {
+public class BinaryRealSolutionType implements GenericRealSolutionType {
+  private Problem problem ;
 
   /** Constructor */
   public BinaryRealSolutionType(Problem problem) {
-    super(problem);
+    this.problem = problem ;
   }
 
   /** Creates the variables of the solution type */
   public Variable[] createVariables() {
-    Variable[] variables = new Variable[getProblem().getNumberOfVariables()];
+    Variable[] variables = new Variable[problem.getNumberOfVariables()];
 
-    for (int var = 0; var < getProblem().getNumberOfVariables(); var++) {
-      if (getProblem().getPrecision() == null) {
-        int[] precision = new int[getProblem().getNumberOfVariables()];
-        for (int i = 0; i < getProblem().getNumberOfVariables(); i++) {
+    for (int var = 0; var < problem.getNumberOfVariables(); var++) {
+      if (problem.getPrecision() == null) {
+        int[] precision = new int[problem.getNumberOfVariables()];
+        for (int i = 0; i < problem.getNumberOfVariables(); i++) {
           precision[i] = org.uma.jmetal.encoding.variable.BinaryReal.DEFAULT_PRECISION;
         }
-        getProblem().setPrecision(precision);
+        problem.setPrecision(precision);
       }
-      variables[var] = new BinaryReal(getProblem().getPrecision(var),
-        getProblem().getLowerLimit(var),
-        getProblem().getUpperLimit(var));
+      variables[var] = new BinaryReal(problem.getPrecision(var),
+        problem.getLowerLimit(var),
+        problem.getUpperLimit(var));
     }
     return variables;
   }

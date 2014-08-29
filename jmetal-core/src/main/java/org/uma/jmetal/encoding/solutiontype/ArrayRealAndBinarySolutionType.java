@@ -23,7 +23,6 @@ package org.uma.jmetal.encoding.solutiontype;
 
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.core.SolutionType;
 import org.uma.jmetal.core.Variable;
 import org.uma.jmetal.encoding.variable.ArrayReal;
 import org.uma.jmetal.encoding.variable.Binary;
@@ -38,7 +37,8 @@ import org.uma.jmetal.encoding.variable.Binary;
  * - The upperLimit and lowerLimit arrays must have the length indicated
  * by numberOfVariables.
  */
-public class ArrayRealAndBinarySolutionType extends SolutionType implements GenericRealSolutionType {
+public class ArrayRealAndBinarySolutionType  implements GenericRealSolutionType {
+  private Problem problem ;
 
   private final int binaryStringLength;
   private final int numberOfRealVariables;
@@ -53,16 +53,16 @@ public class ArrayRealAndBinarySolutionType extends SolutionType implements Gene
   public ArrayRealAndBinarySolutionType(Problem problem,
     int realVariables,
     int binaryStringLength) {
-    super(problem);
+    this.problem = problem ;
     this.binaryStringLength = binaryStringLength;
-    numberOfRealVariables = realVariables;
+    this.numberOfRealVariables = realVariables;
   }
 
   /** Creates the variables of the solution type */
   public Variable[] createVariables() throws ClassNotFoundException {
     Variable[] variables = new Variable[2];
 
-    variables[0] = new ArrayReal(numberOfRealVariables, getProblem());
+    variables[0] = new ArrayReal(numberOfRealVariables, problem);
     variables[1] = new Binary(binaryStringLength);
     return variables;
   }

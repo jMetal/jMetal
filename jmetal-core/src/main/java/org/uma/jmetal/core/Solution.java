@@ -184,7 +184,10 @@ public class Solution implements Serializable {
       objective[i] = solution.getObjective(i);
     }
 
-    variable = type.copyVariables(solution.variable);
+    variable = new Variable[solution.variable.length] ; //type.copyVariables(solution.variable);
+    for (int i = 0 ; i < variable.length; i++) {
+      variable[i] = solution.variable[i].copy() ;
+    }
     overallConstraintViolation = solution.getOverallConstraintViolation();
     numberOfViolatedConstraints = solution.getNumberOfViolatedConstraint();
     distanceToSolutionSet = solution.getDistanceToSolutionSet();

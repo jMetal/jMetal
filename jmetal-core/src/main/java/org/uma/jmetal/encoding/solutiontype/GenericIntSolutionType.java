@@ -21,9 +21,10 @@
 package org.uma.jmetal.encoding.solutiontype;
 
 import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.core.SolutionType;
 
 /** Template for solution types including an integer encoding */
-public interface GenericIntSolutionType {
+public interface GenericIntSolutionType extends SolutionType {
   public int getIntValue(Solution solution, int index) ;
   public void setIntValue(Solution solution, int index, int value) ;
   public int getNumberOfIntVariables(Solution solution_);

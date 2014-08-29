@@ -23,7 +23,6 @@ package org.uma.jmetal.encoding.solutiontype;
 
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.core.SolutionType;
 import org.uma.jmetal.core.Variable;
 import org.uma.jmetal.encoding.variable.ArrayReal;
 
@@ -31,18 +30,19 @@ import org.uma.jmetal.encoding.variable.ArrayReal;
  * Class representing the solutiontype type of solutions composed of an ArrayReal
  * encoding.variable
  */
-public class ArrayRealSolutionType extends SolutionType implements GenericRealSolutionType {
+public class ArrayRealSolutionType implements GenericRealSolutionType {
+  private Problem problem ;
 
   /** Constructor */
   public ArrayRealSolutionType(Problem problem) {
-    super(problem);
+    this.problem = problem;
   }
 
   /** Creates the variables of the solution */
   public Variable[] createVariables() {
     Variable[] variables = new Variable[1];
 
-    variables[0] = new ArrayReal(getProblem().getNumberOfVariables(), getProblem());
+    variables[0] = new ArrayReal(problem.getNumberOfVariables(), problem);
     return variables;
   }
 

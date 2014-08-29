@@ -21,37 +21,14 @@
 
 package org.uma.jmetal.core;
 
-import java.io.Serializable;
-
 /**
- * Abstract class representing solution types, which define the types of variables constituting a solution
+ * Interface representing solution types, which define the types of variables constituting a solution
  */
-public abstract class SolutionType implements Serializable {
-
-  private final Problem problem;
-
-  /** Constructor */
-  public SolutionType(Problem problem) {
-    this.problem = problem;
-  }
-
-  public Problem getProblem() {
-    return problem;
-  }
+public interface SolutionType {
 
   /** Abstract method to create the variables of the solution type */
-  public abstract Variable[] createVariables() throws ClassNotFoundException;
+  public Variable[] createVariables() throws ClassNotFoundException;
 
   /** Copy the decision variables */
-  public Variable[] copyVariables(Variable[] vars) {
-    Variable[] variables;
-
-    variables = new Variable[vars.length];
-
-    for (int var = 0; var < vars.length; var++) {
-      variables[var] = vars[var].copy();
-    }
-
-    return variables;
-  }
+  //public Variable[] copyVariables(Variable[] variables) ;
 }

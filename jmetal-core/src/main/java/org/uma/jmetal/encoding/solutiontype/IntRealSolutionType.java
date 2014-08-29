@@ -23,7 +23,6 @@ package org.uma.jmetal.encoding.solutiontype;
 
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.core.SolutionType;
 import org.uma.jmetal.core.Variable;
 import org.uma.jmetal.encoding.variable.Int;
 import org.uma.jmetal.encoding.variable.Real;
@@ -31,7 +30,8 @@ import org.uma.jmetal.encoding.variable.Real;
 /**
  * Class representing a solution type including two kind of variables: integer and real.
  */
-public class IntRealSolutionType extends SolutionType implements GenericIntSolutionType, GenericRealSolutionType {
+public class IntRealSolutionType implements GenericIntSolutionType, GenericRealSolutionType {
+  private final Problem problem ;
   private final int numberOfIntVariables;
   private final int numberOfRealVariables;
 
@@ -43,22 +43,22 @@ public class IntRealSolutionType extends SolutionType implements GenericIntSolut
    * @param realVariables Number of real variables
    */
   public IntRealSolutionType(Problem problem, int intVariables, int realVariables) {
-    super(problem);
+    this.problem = problem ;
     numberOfIntVariables = intVariables;
     numberOfRealVariables = realVariables;
   }
 
   /** Creates the variables of the solution type */
   public Variable[] createVariables() throws ClassNotFoundException {
-    Variable[] variables = new Variable[getProblem().getNumberOfVariables()];
+    Variable[] variables = new Variable[problem.getNumberOfVariables()];
 
     for (int var = 0; var < numberOfIntVariables; var++) {
       variables[var] =
-        new Int((int) getProblem().getLowerLimit(var), (int) getProblem().getUpperLimit(var));
+        new Int((int) problem.getLowerLimit(var), (int) problem.getUpperLimit(var));
     }
 
     for (int var = numberOfIntVariables; var < (numberOfIntVariables + numberOfRealVariables); var++) {
-      variables[var] = new Real(getProblem().getLowerLimit(var), getProblem().getUpperLimit(var));
+      variables[var] = new Real(problem.getLowerLimit(var), problem.getUpperLimit(var));
     }
 
     return variables;

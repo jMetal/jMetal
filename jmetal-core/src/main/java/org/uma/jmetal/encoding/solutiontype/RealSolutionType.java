@@ -23,24 +23,24 @@ package org.uma.jmetal.encoding.solutiontype;
 
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.core.SolutionType;
 import org.uma.jmetal.core.Variable;
 import org.uma.jmetal.encoding.variable.Real;
 
 /** Class representing a solution type type composed of real variables */
-public class RealSolutionType extends SolutionType implements GenericRealSolutionType {
+public class RealSolutionType implements GenericRealSolutionType {
+  private Problem problem ;
 
   /** Constructor */
   public RealSolutionType(Problem problem) {
-    super(problem);
+    this.problem = problem ;
   }
 
   /** Create the variables of the solution type */
   public Variable[] createVariables() {
-    Variable[] variables = new Variable[getProblem().getNumberOfVariables()];
+    Variable[] variables = new Variable[problem.getNumberOfVariables()];
 
-    for (int var = 0; var < getProblem().getNumberOfVariables(); var++) {
-      variables[var] = new Real(getProblem().getLowerLimit(var), getProblem().getUpperLimit(var));
+    for (int var = 0; var < problem.getNumberOfVariables(); var++) {
+      variables[var] = new Real(problem.getLowerLimit(var), problem.getUpperLimit(var));
     }
 
     return variables;

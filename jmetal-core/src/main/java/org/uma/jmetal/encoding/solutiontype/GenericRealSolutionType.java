@@ -21,9 +21,10 @@
 package org.uma.jmetal.encoding.solutiontype;
 
 import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.core.SolutionType;
 
 /** Template for solution types including a real encoding */
-public interface GenericRealSolutionType {
+public interface GenericRealSolutionType extends SolutionType{
   public double getRealValue(Solution solution, int index) ;
   public void setRealValue(Solution solution, int index, double value) ;
   public int getNumberOfRealVariables(Solution solution_);

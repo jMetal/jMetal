@@ -36,11 +36,6 @@ public class RealSolutionTypeTest {
   }
 
   @Test
-  public void testGetProblem() throws Exception {
-    assertEquals(problem, solution.getType().getProblem()) ;
-  }
-
-  @Test
   public void testCreateVariables() throws Exception {
     Variable[] variables = new RealSolutionType(problem).createVariables() ;
     assertNotNull(variables) ;
@@ -82,15 +77,6 @@ public class RealSolutionTypeTest {
   public void testGetRealLowerBound() throws Exception {
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
       assertEquals(problem.getLowerLimit(i), solutionType.getRealLowerBound(solution, i), EPSILON);
-    }
-  }
-
-  @Test
-  public void testCopyVariables() throws Exception {
-    Variable[] vars = solutionType.copyVariables(solution.getDecisionVariables()) ;
-    assertEquals(PROBLEM_VARIABLES, vars.length);
-    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      assertEquals(((Real)vars[i]).getValue(), solutionType.getRealValue(solution, i), EPSILON);
     }
   }
 

@@ -30,19 +30,20 @@ import org.uma.jmetal.encoding.variable.Permutation;
  * Class representing the solutiontype type of solutions composed of Permutation
  * variables
  */
-public class PermutationSolutionType extends SolutionType {
+public class PermutationSolutionType implements SolutionType {
+  private Problem problem ;
 
   /** Constructor */
   public PermutationSolutionType(Problem problem) {
-    super(problem);
+    this.problem = problem ;
   }
 
   /** Creates the variables of the solution type */
   public Variable[] createVariables() {
-    Variable[] variables = new Variable[getProblem().getNumberOfVariables()];
+    Variable[] variables = new Variable[problem.getNumberOfVariables()];
 
-    for (int var = 0; var < getProblem().getNumberOfVariables(); var++) {
-      variables[var] = new Permutation(getProblem().getLength(var));
+    for (int var = 0; var < problem.getNumberOfVariables(); var++) {
+      variables[var] = new Permutation(problem.getLength(var));
     }
 
     return variables;

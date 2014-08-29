@@ -20,25 +20,9 @@
 
 package org.uma.test.core;
 
-import org.junit.Test;
-import org.uma.jmetal.core.Problem;
-import org.uma.jmetal.core.SolutionType;
-import org.uma.jmetal.encoding.solutiontype.BinarySolutionType;
-import org.uma.jmetal.problem.multiobjective.zdt.ZDT5;
-import org.uma.jmetal.util.JMetalException;
-
-import static org.junit.Assert.assertEquals;
-
 /**
  * Created by Antonio J. Nebro on 18/05/14.
  */
 public class SolutionTypeTest {
 
-  @Test
-  public void getProblemTest() throws JMetalException {
-    Problem problem = new ZDT5("Binary", 10) ;
-
-    SolutionType solutionType = new BinarySolutionType(problem) ;
-    assertEquals(problem, solutionType.getProblem()) ;
-  }
 }
