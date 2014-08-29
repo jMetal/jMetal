@@ -100,14 +100,14 @@ public class AbYSSSettings extends Settings {
             .build() ;
 
     algorithm = new AbYSS.Builder(problem)
-            .maxEvaluations(maxEvaluations)
-            .populationSize(populationSize)
-            .refSet1Size(refSet1Size)
-            .refSet2Size(refSet2Size)
-            .numberOfSubranges(numberOfSubranges)
-            .archive(archive)
-            .crossover(crossover)
-            .localSearch(localSearch)
+            .setMaxEvaluations(maxEvaluations)
+            .setPopulationSize(populationSize)
+            .setRefSet1Size(refSet1Size)
+            .setRefSet2Size(refSet2Size)
+            .setNumberOfSubranges(numberOfSubranges)
+            .setArchive(archive)
+            .setCrossover(crossover)
+            .setLocalSearch(localSearch)
             .build() ;
 
     return algorithm;

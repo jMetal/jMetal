@@ -155,49 +155,49 @@ public class AbYSS extends Algorithm {
       numberOfSubranges = 4 ;
     }
 
-    public Builder maxEvaluations(int maxEvaluations) {
+    public Builder setMaxEvaluations(int maxEvaluations) {
       this.maxEvaluations = maxEvaluations ;
 
       return this ;
     }
 
-    public Builder populationSize(int populationSize) {
+    public Builder setPopulationSize(int populationSize) {
       this.populationSize = populationSize ;
 
       return this ;
     }
 
-    public Builder refSet1Size(int refSet1Size) {
+    public Builder setRefSet1Size(int refSet1Size) {
       this.refSet1Size = refSet1Size ;
 
       return this ;
     }
 
-    public Builder refSet2Size(int refSet2Size) {
+    public Builder setRefSet2Size(int refSet2Size) {
       this.refSet2Size = refSet2Size ;
 
       return this ;
     }
 
-    public Builder numberOfSubranges(int numberOfSubranges) {
+    public Builder setNumberOfSubranges(int numberOfSubranges) {
       this.numberOfSubranges = numberOfSubranges ;
 
       return this ;
     }
 
-    public Builder archive(Archive archive) {
+    public Builder setArchive(Archive archive) {
       this.archive = archive ;
 
       return this ;
     }
 
-    public Builder crossover(Crossover crossover) {
+    public Builder setCrossover(Crossover crossover) {
       this.crossover = crossover ;
 
       return this ;
     }
 
-    public Builder localSearch(LocalSearch localSearch) {
+    public Builder setLocalSearch(LocalSearch localSearch) {
       this.localSearch = localSearch ;
 
       return this ;
