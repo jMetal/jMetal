@@ -1,4 +1,4 @@
-//  DE.java
+//  DifferentialEvolution.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -21,10 +21,11 @@
 
 package org.uma.jmetal.metaheuristic.singleobjective.differentialevolution;
 
-import org.uma.jmetal.core.Algorithm;
-import org.uma.jmetal.core.Operator;
-import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.core.SolutionSet;
+import org.uma.jmetal.core.*;
+import org.uma.jmetal.operator.crossover.DifferentialEvolutionCrossover;
+import org.uma.jmetal.operator.selection.DifferentialEvolutionSelection;
+import org.uma.jmetal.operator.selection.Selection;
+import org.uma.jmetal.operator.crossover.Crossover;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
@@ -35,57 +36,87 @@ import java.util.logging.Level;
 /**
  * This class implements a differential evolution algorithm.
  */
-public class DE extends Algorithm {
-
-  /**
-   *
-   */
+public class DifferentialEvolution extends Algorithm {
   private static final long serialVersionUID = 7663009441358542943L;
 
-  /**
-   * Constructor
-   *
-   * @param problem Problem to solve
-   */
-  public DE() {
-	  super();
-  } // gDE
+  private int populationSize;
+  private int maxEvaluations;
+  private Crossover crossover ;
+  private Selection selection ;
 
-  /**
-   * Runs of the DE algorithm.
-   *
-   * @return a <code>SolutionSet</code> that is a set of non dominated solutions
-   * as a experimentoutput of the algorithm execution
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Constructor */
+  private DifferentialEvolution(Builder builder) {
+    this.problem = builder.problem ;
+    this.populationSize = builder.populationSize ;
+    this.maxEvaluations = builder.maxEvaluations ;
+    this.crossover = builder.crossover ;
+    this.selection = builder.selection ;
+  }
+
+  /** Builder class */
+  public static class Builder {
+    private Problem problem ;
+    private int populationSize;
+    private int maxEvaluations;
+    private Crossover crossover ;
+    private Selection selection ;
+
+    public Builder(Problem problem) {
+      this.problem = problem ;
+      this.populationSize = 100 ;
+      this.maxEvaluations = 20000 ;
+      this.crossover = new DifferentialEvolutionCrossover.Builder()
+              .setCr(0.5)
+              .setF(0.5)
+              .setVariant("rand/1/bin")
+              .build() ;
+
+      this.selection = new DifferentialEvolutionSelection.Builder()
+              .build() ;
+    }
+
+    public Builder setPopulationSize(int populationSize) {
+      this.populationSize = populationSize ;
+
+      return this ;
+    }
+
+    public Builder setMaxEvaluations(int maxEvaluations) {
+      this.maxEvaluations = maxEvaluations ;
+
+      return this ;
+    }
+
+    public Builder setCrossover (Crossover crossover) {
+      this.crossover = crossover ;
+
+      return this ;
+    }
+
+    public Builder setSelection (Selection selection) {
+      this.selection = selection ;
+
+      return this ;
+    }
+
+    public DifferentialEvolution build() {
+      return new DifferentialEvolution(this) ;
+    }
+  }
+
+  /** Execute() method */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
-    int populationSize;
-    int maxEvaluations;
-    int evaluations;
-
     SolutionSet population;
     SolutionSet offspringPopulation;
-
-    Operator selectionOperator;
-    Operator crossoverOperator;
 
     Comparator<Solution> comparator;
     comparator = new ObjectiveComparator(0);
 
-    Solution parent[];
-
-    //Read the parameters
-    populationSize = ((Integer) this.getInputParameter("populationSize")).intValue();
-    maxEvaluations = ((Integer) this.getInputParameter("maxEvaluations")).intValue();
-
-    selectionOperator = operators.get("selection");
-    crossoverOperator = operators.get("crossover");
-
-    //Initialize the variables
     population = new SolutionSet(populationSize);
+
+    int evaluations;
     evaluations = 0;
 
-    // Create the initial solutionSet
     Solution newSolution;
     for (int i = 0; i < populationSize; i++) {
       newSolution = new Solution(problem);
@@ -93,9 +124,8 @@ public class DE extends Algorithm {
       problem.evaluateConstraints(newSolution);
       evaluations++;
       population.add(newSolution);
-    } //for
+    }
 
-    // Generations ...
     population.sort(comparator);
     while (evaluations < maxEvaluations) {
 
@@ -105,13 +135,13 @@ public class DE extends Algorithm {
       for (int i = 0; i < populationSize; i++) {
         // Obtain parents. Two parameters are required: the population and the
         //                 index of the current individual
-        parent = (Solution[]) selectionOperator.execute(new Object[] {population, i});
+        Solution parent[];
+        parent = (Solution[]) selection.execute(new Object[] {population, i});
 
         Solution child;
-
         // Crossover. Two parameters are required: the current individual and the
         //            array of parents
-        child = (Solution) crossoverOperator.execute(new Object[] {population.get(i), parent});
+        child = (Solution) crossover.execute(new Object[] {population.get(i), parent});
 
         problem.evaluate(child);
 
