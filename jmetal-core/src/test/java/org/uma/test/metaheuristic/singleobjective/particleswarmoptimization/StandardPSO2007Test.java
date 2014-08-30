@@ -33,7 +33,6 @@ import static org.junit.Assert.assertEquals;
  * Created by Antonio J. Nebro on 26/03/14.
  */
 public class StandardPSO2007Test {
-
   StandardPSO2007 standardPSO;
   Problem problem;
 

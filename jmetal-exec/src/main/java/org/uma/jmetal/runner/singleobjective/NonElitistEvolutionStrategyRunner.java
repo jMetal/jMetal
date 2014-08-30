@@ -1,9 +1,9 @@
-//  CMAESRunner.java
+//  EvolutionStrategyRunner.java
 //
 //  Author:
-//       Esteban López-Camacho <esteban@lcc.uma.es>
+//       Antonio J. Nebro <antonio@lcc.uma.es>
 //
-//  Copyright (c) 2013 Esteban López-Camacho
+//  Copyright (c) 2014 Antonio J. Nebro
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -23,38 +23,52 @@ package org.uma.jmetal.runner.singleobjective;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristic.singleobjective.cmaes.CMAES;
-import org.uma.jmetal.problem.singleobjective.Rosenbrock;
+import org.uma.jmetal.metaheuristic.singleobjective.evolutionstrategy.ElitistEvolutionStrategy;
+import org.uma.jmetal.metaheuristic.singleobjective.evolutionstrategy.NonElitistEvolutionStrategy;
+import org.uma.jmetal.operator.mutation.BitFlipMutation;
+import org.uma.jmetal.operator.mutation.Mutation;
+import org.uma.jmetal.operator.mutation.PolynomialMutation;
+import org.uma.jmetal.problem.singleobjective.OneMax;
+import org.uma.jmetal.problem.singleobjective.Sphere;
 import org.uma.jmetal.util.AlgorithmRunner;
-import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
 
 /**
- * This class runs a single-objective CMA-ES algorithm.
+ * This class runs a single-objective Evolution Strategy (ES). The ES can be
+ * a (mu+lambda) ES (class ElitistEvolutionStrategy) or a (mu,lambda) ES (class NonElitistGA).
+ * The OneMax problem is used to test the algorithms.
  */
-public class CMAESRunner {
+public class NonElitistEvolutionStrategyRunner {
 
   public static void main(String[] args) throws JMetalException, ClassNotFoundException, IOException {
-    int numberOfVariables = 20;
-    int populationSize = 10;
-    int maxEvaluations = 1000000;
-
     Problem problem;
     Algorithm algorithm;
+    Mutation mutation;
 
-    //problem = new Sphere("Real", numberOfVariables) ;
-    //problem = new Griewank("Real", populationSize) ;
-    //problem = new Schwefel("Real", numberOfVariables) ;
-    problem = new Rosenbrock("Real", numberOfVariables);
-    //problem = new Rastrigin("Real", numberOfVariables) ;
+    problem = new Sphere("Real", 20) ;
 
-    algorithm = new CMAES.Builder(problem)
-            .setPopulationSize(populationSize)
-            .setMaxEvaluations(maxEvaluations)
+    int mu;
+    int lambda;
+
+    // Requirement: lambda must be divisible by mu
+    mu = 1;
+    lambda = 10;
+
+    mutation = new PolynomialMutation.Builder()
+            .setProbability(1.0/problem.getNumberOfVariables())
+            .setDistributionIndex(20.0)
+            .build() ;
+
+    algorithm = new NonElitistEvolutionStrategy.Builder(problem)
+            .setMu(mu)
+            .setLambda(lambda)
+            .setMaxEvaluations(25000)
+            .setMutation(mutation)
             .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)

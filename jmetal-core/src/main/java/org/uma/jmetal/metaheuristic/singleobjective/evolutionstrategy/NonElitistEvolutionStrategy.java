@@ -1,10 +1,9 @@
-//  NonElitistES.java
+//  NonElitistEvolutionStrategy.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
 //
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
+//  Copyright (c) 2014 Antonio J. Nebro
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -21,10 +20,9 @@
 
 package org.uma.jmetal.metaheuristic.singleobjective.evolutionstrategy;
 
-import org.uma.jmetal.core.Algorithm;
-import org.uma.jmetal.core.Operator;
-import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.core.SolutionSet;
+import org.uma.jmetal.core.*;
+import org.uma.jmetal.operator.mutation.Mutation;
+import org.uma.jmetal.operator.mutation.PolynomialMutation;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
@@ -32,64 +30,107 @@ import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import java.util.Comparator;
 
 /**
- * Class implementing a (mu,lambda) ES. Lambda must be divisible by mu.
+ * Class implementing a (mu,lambda) Evolution Strategy (lambda must be divisible by mu)
  */
-public class NonElitistES extends Algorithm {
-
-  /**
-   *
-   */
+public class NonElitistEvolutionStrategy extends Algorithm {
   private static final long serialVersionUID = 5994321940086052871L;
 
-  private int mu_;
-  private int lambda_;
+  private int mu;
+  private int lambda;
+  private int maxEvaluations ;
+  private Mutation mutation ;
 
-  /**
-   * Constructor
-   * Create a new NonElitistES instance.
-   *
-   * @param problem Problem to solve.
-   * @param mu
-   * @param lambda
-   */
-  public NonElitistES(int mu, int lambda) {
-    super();
-    mu_ = mu;
-    lambda_ = lambda;
-  } // NonElitistES
+  /** Constructor */
+  private NonElitistEvolutionStrategy(Builder builder) {
+    this.problem = builder.problem ;
+    this.mu = builder.mu ;
+    this.lambda = builder.lambda ;
+    this.maxEvaluations = builder.maxEvaluations ;
+    this.mutation = builder.mutation ;
+  }
 
-  /**
-   * Execute the NonElitistES algorithm
-   *
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /* Getters */
+  public int getMu() {
+    return mu;
+  }
+
+  public int getLambda() {
+    return lambda;
+  }
+
+  public int getMaxEvaluations() {
+    return maxEvaluations;
+  }
+
+  public Mutation getMutation() {
+    return mutation;
+  }
+
+  /** Builder class */
+  public static class Builder {
+    private Problem problem ;
+    private int mu;
+    private int lambda;
+    private int maxEvaluations ;
+    private Mutation mutation ;
+
+    public Builder(Problem problem) {
+      this.problem = problem ;
+      this.mu = 1 ;
+      this.lambda = 10 ;
+      this.maxEvaluations = 250000 ;
+      this.mutation = new PolynomialMutation.Builder()
+              .setProbability(1.0/problem.getNumberOfVariables())
+              .setDistributionIndex(20.0)
+              .build() ;
+    }
+
+    public Builder setMu(int mu) {
+      this.mu = mu ;
+
+      return this ;
+    }
+
+    public Builder setLambda(int lambda) {
+      this.lambda = lambda ;
+
+      return this ;
+    }
+
+    public Builder setMaxEvaluations(int maxEvaluations) {
+      this.maxEvaluations = maxEvaluations ;
+
+      return this ;
+    }
+
+    public Builder setMutation(Mutation mutation) {
+      this.mutation = mutation ;
+
+      return this ;
+    }
+
+    public NonElitistEvolutionStrategy build() {
+      return new NonElitistEvolutionStrategy(this) ;
+    }
+  }
+
+  /** Execute() method */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
-    int maxEvaluations;
-    int evaluations;
-
     Solution bestIndividual;
 
     SolutionSet population;
     SolutionSet offspringPopulation;
 
-    Operator mutationOperator;
     Comparator<Solution> comparator;
 
-    comparator = new ObjectiveComparator(0); // Single objective comparator
-
-    // Read the params
-    maxEvaluations = ((Integer) this.getInputParameter("maxEvaluations")).intValue();
+    comparator = new ObjectiveComparator(0);
 
     // Initialize the variables
-    population = new SolutionSet(mu_ + 1);
-    offspringPopulation = new SolutionSet(lambda_);
+    population = new SolutionSet(mu + 1);
+    offspringPopulation = new SolutionSet(lambda);
 
+    int evaluations;
     evaluations = 0;
-
-    // Read the operator
-    mutationOperator = this.operators.get("mutation");
-
-    JMetalLogger.logger.info("(" + mu_ + " , " + lambda_ + ")ES");
 
     // Create the parent population of mu solutions
     Solution newIndividual;
@@ -99,8 +140,7 @@ public class NonElitistES extends Algorithm {
     population.add(newIndividual);
     bestIndividual = new Solution(newIndividual);
 
-    for (int i = 1; i < mu_; i++) {
-      JMetalLogger.logger.info(""+i);
+    for (int i = 1; i < mu; i++) {
       newIndividual = new Solution(problem);
       problem.evaluate(newIndividual);
       evaluations++;
@@ -112,14 +152,14 @@ public class NonElitistES extends Algorithm {
     }
 
     // Main loop
-    int offsprings;
-    offsprings = lambda_ / mu_;
+    int children;
+    children = lambda / mu ;
     while (evaluations < maxEvaluations) {
       // STEP 1. Generate the lambda population
-      for (int i = 0; i < mu_; i++) {
-        for (int j = 0; j < offsprings; j++) {
+      for (int i = 0; i < mu; i++) {
+        for (int j = 0; j < children; j++) {
           Solution offspring = new Solution(population.get(i));
-          mutationOperator.execute(offspring);
+          mutation.execute(offspring);
           problem.evaluate(offspring);
           offspringPopulation.add(offspring);
           evaluations++;
@@ -136,13 +176,9 @@ public class NonElitistES extends Algorithm {
 
       // STEP 4. Create the new mu population
       population.clear();
-      for (int i = 0; i < mu_; i++) {
+      for (int i = 0; i < mu; i++) {
         population.add(offspringPopulation.get(i));
       }
-
-      JMetalLogger.logger.info("Evaluation: " + evaluations +
-        " Current best fitness: " + population.get(0).getObjective(0) +
-        " Global best fitness: " + bestIndividual.getObjective(0));
 
       // STEP 5. Delete the lambda population
       offspringPopulation.clear();
