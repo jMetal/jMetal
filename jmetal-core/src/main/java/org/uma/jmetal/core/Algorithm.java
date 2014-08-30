@@ -45,11 +45,7 @@ public abstract class Algorithm implements Serializable {
   @Deprecated
   protected Map<String, Object> inputParameters = null;
 
-  /**
-   * Launches the execution of an specific algorithm.
-   *
-   * @return a <code>SolutionSet</code> 
-   */
+  /** Executes the algorithm */
   public abstract SolutionSet execute() throws JMetalException, ClassNotFoundException, IOException;
 
   @Deprecated
@@ -58,11 +54,6 @@ public abstract class Algorithm implements Serializable {
       operators = new HashMap<String, Operator>();
     }
     operators.put(name, operator);
-  }
-
-  @Deprecated
-  public Operator getOperator(String name) {
-    return operators.get(name);
   }
 
   @Deprecated

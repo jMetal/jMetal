@@ -48,7 +48,7 @@ public class NonElitistEvolutionStrategyTest {
 
   @Test
   public void solvingBinaryProblemTest() throws IOException, ClassNotFoundException {
-    int binaryStringLength = 250 ;
+    int binaryStringLength = 200 ;
     problem = new OneMax("Binary", binaryStringLength) ;
 
     Mutation mutation = new BitFlipMutation.Builder()
