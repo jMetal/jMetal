@@ -24,8 +24,11 @@ import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.metaheuristic.singleobjective.cmaes.CMAES;
 import org.uma.jmetal.problem.singleobjective.Rosenbrock;
+import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
+import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
 
@@ -43,29 +46,30 @@ public class CMAESRunner {
     Algorithm algorithm;
 
     //problem = new Sphere("Real", numberOfVariables) ;
-    //problem = new Easom("Real") ;
     //problem = new Griewank("Real", populationSize) ;
     //problem = new Schwefel("Real", numberOfVariables) ;
     problem = new Rosenbrock("Real", numberOfVariables);
     //problem = new Rastrigin("Real", numberOfVariables) ;
 
-    algorithm = new CMAES();
-    algorithm.setProblem(problem);
-    
-    /* Algorithm parameters*/
-    algorithm.setInputParameter("populationSize", populationSize);
-    algorithm.setInputParameter("maxEvaluations", maxEvaluations);
- 
-    /* Execute the Algorithm */
-    long initTime = System.currentTimeMillis();
-    SolutionSet population = algorithm.execute();
-    long estimatedTime = System.currentTimeMillis() - initTime;
-    JMetalLogger.logger.info("Total execution time: " + estimatedTime);
+    algorithm = new CMAES.Builder(problem)
+            .setPopulationSize(populationSize)
+            .setMaxEvaluations(maxEvaluations)
+            .build() ;
 
-    /* Log messages */
-    JMetalLogger.logger.info("Objectives values have been written to file FUN");
-    population.printObjectivesToFile("FUN");
-    JMetalLogger.logger.info("Variables values have been written to file VAR");
-    population.printVariablesToFile("VAR");
+    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+            .execute() ;
+
+    SolutionSet population = algorithmRunner.getSolutionSet() ;
+    long computingTime = algorithmRunner.getComputingTime() ;
+
+    new SolutionSetOutput.Printer(population)
+            .setSeparator("\t")
+            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+            .print();
+
+    JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
+    JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
+    JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
   }
 }

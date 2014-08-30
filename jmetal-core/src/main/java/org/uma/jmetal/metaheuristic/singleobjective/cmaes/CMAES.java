@@ -21,6 +21,7 @@
 package org.uma.jmetal.metaheuristic.singleobjective.cmaes;
 
 import org.uma.jmetal.core.Algorithm;
+import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
@@ -78,7 +79,7 @@ public class CMAES extends Algorithm {
   private double chiN;
 
   private double[][] arx;
-  private SolutionSet population_;
+  private SolutionSet population;
   private Solution bestSolutionEver = null;
 
   private Random rand;
@@ -86,15 +87,94 @@ public class CMAES extends Algorithm {
   /**
    * Constructor
    */
+  @Deprecated
   public CMAES() {
     long seed = System.currentTimeMillis();
     rand = new Random(seed);
   }
 
+  /** Constructor */
+  private CMAES (Builder builder) {
+    this.problem = builder.problem ;
+    this.populationSize = builder.populationSize ;
+    this.maxEvaluations = builder.maxEvaluations ;
+
+    long seed = System.currentTimeMillis();
+    rand = new Random(seed);
+  }
+
+  /* Getters */
+
+  public int getPopulationSize() {
+    return populationSize ;
+  }
+
+  public int getMaxEvaluations() {
+    return maxEvaluations ;
+  }
+
+  /** Buider class */
+  public static class Builder {
+    private Problem problem ;
+    private int populationSize ;
+    private int maxEvaluations ;
+
+    public Builder(Problem problem)  {
+      this.problem = problem ;
+      populationSize = 10;
+      maxEvaluations = 1000000;
+    }
+
+    public Builder setPopulationSize (int populationSize) {
+      this.populationSize = populationSize ;
+
+      return this ;
+    }
+
+    public Builder setMaxEvaluations (int maxEvaluations) {
+      this.maxEvaluations = maxEvaluations ;
+
+      return this ;
+    }
+
+
+    public CMAES build() {
+      return new CMAES(this) ;
+    }
+  }
+
+  /** Execute() method */
+  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
+    counteval = 0;
+
+    Comparator<Solution> comparator = new ObjectiveComparator(0);
+
+    init();
+
+    while (counteval < maxEvaluations) {
+      population = samplePopulation();
+      for (int i = 0; i < populationSize; i++) {
+        if (!isFeasible(population.get(i))) {
+          population.replace(i, resampleSingle(i));
+        }
+        problem.evaluate(population.get(i));
+
+        counteval += populationSize;
+      }
+
+      storeBest(comparator);
+      JMetalLogger.logger.info(counteval + ": " + bestSolutionEver);
+      updateDistribution();
+    }
+
+    SolutionSet resultPopulation = new SolutionSet(1);
+    resultPopulation.add(bestSolutionEver);
+
+    return resultPopulation;
+
+  }
+
   private void init() throws ClassNotFoundException {
-
-    /* User defined input parameters */
-
     // number of objective variables/problem dimension
     int N = problem.getNumberOfVariables();
 
@@ -275,7 +355,7 @@ public class CMAES extends Algorithm {
   }
 
   private void storeBest(Comparator<Solution> comparator) {
-    Solution bestInPopulation = new Solution(population_.best(comparator));
+    Solution bestInPopulation = new Solution(population.best(comparator));
     if ((bestSolutionEver == null) || (bestSolutionEver.getObjective(0) > bestInPopulation
             .getObjective(0))) {
       bestSolutionEver = bestInPopulation;
@@ -295,7 +375,7 @@ public class CMAES extends Algorithm {
 
     //minimization
     for (int i = 0; i < lambda; i++) {
-      arfitness[i] = population_.get(i).getObjective(0);
+      arfitness[i] = population.get(i).getObjective(0);
       arindex[i] = i;
     }
     Utils.minFastSort(arfitness, arindex, lambda);
@@ -421,41 +501,5 @@ public class CMAES extends Algorithm {
       }
 
     }
-  }
-
-  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
-
-    //Read the parameters
-    populationSize = (Integer) getInputParameter("populationSize");
-    maxEvaluations = (Integer) getInputParameter("maxEvaluations");
-
-    //Initialize the variables
-    counteval = 0;
-
-    Comparator<Solution> comparator = new ObjectiveComparator(0);
-
-    init();
-
-    while (counteval < maxEvaluations) {
-      population_ = samplePopulation();
-      for (int i = 0; i < populationSize; i++) {
-        if (!isFeasible(population_.get(i))) {
-          population_.replace(i, resampleSingle(i));
-        }
-        problem.evaluate(population_.get(i));
-
-        counteval += populationSize;
-      }
-
-      storeBest(comparator);
-      JMetalLogger.logger.info(counteval + ": " + bestSolutionEver);
-      updateDistribution();
-    }
-
-    SolutionSet resultPopulation = new SolutionSet(1);
-    resultPopulation.add(bestSolutionEver);
-
-    return resultPopulation;
-
   }
 }

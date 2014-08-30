@@ -44,8 +44,6 @@ public abstract class Algorithm implements Serializable {
   protected Map<String, Operator> operators = null;
   @Deprecated
   protected Map<String, Object> inputParameters = null;
-  @Deprecated
-  private Map<String, Object> outPutParameters = null;
 
   /**
    * Launches the execution of an specific algorithm.
@@ -78,23 +76,6 @@ public abstract class Algorithm implements Serializable {
   @Deprecated
   public Object getInputParameter(String name) {
     return inputParameters.get(name);
-  }
-
-  @Deprecated
-  public void setOutputParameter(String name, Object object) {
-    if (outPutParameters == null) {
-      outPutParameters = new HashMap<String, Object>();
-    }
-    outPutParameters.put(name, object);
-  }
-
-  @Deprecated
-  public Object getOutputParameter(String name) {
-    if (outPutParameters != null) {
-      return outPutParameters.get(name);
-    } else {
-      return null;
-    }
   }
 
   public Problem getProblem() {
