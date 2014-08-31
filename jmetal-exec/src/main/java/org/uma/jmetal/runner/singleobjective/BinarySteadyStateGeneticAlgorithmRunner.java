@@ -42,7 +42,7 @@ import java.io.IOException;
 /**
  * This class runs a single-objective genetic algorithm (GA). The GA can be
  * a steady-state GA (class SteadyStateGeneticAlgorithm), a generational GA (class gGA), a synchronous
- * cGA (class SynchronousCellularGA) or an asynchronous cGA (class AsynchronousCellularGA). The OneMax
+ * cGA (class SynchronousCellularGeneticAlgorithm) or an asynchronous cGA (class AsynchronousCellularGA). The OneMax
  * problem is used to org.uma.test the algorithms.
  */
 public class BinarySteadyStateGeneticAlgorithmRunner {

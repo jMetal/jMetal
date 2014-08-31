@@ -1,4 +1,4 @@
-//  RealGenerationalGeneticAlgorithmRunner.java
+//  AsynchronousCellularGeneticAlgorithmRunner.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -23,13 +23,12 @@ package org.uma.jmetal.runner.singleobjective;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristic.singleobjective.geneticalgorithm.GenerationalGeneticAlgorithm;
+import org.uma.jmetal.metaheuristic.singleobjective.geneticalgorithm.AsynchronousCellularGeneticAlgorithm;
+import org.uma.jmetal.metaheuristic.singleobjective.geneticalgorithm.SynchronousCellularGeneticAlgorithm;
 import org.uma.jmetal.operator.crossover.Crossover;
 import org.uma.jmetal.operator.crossover.SBXCrossover;
 import org.uma.jmetal.operator.mutation.Mutation;
 import org.uma.jmetal.operator.mutation.PolynomialMutation;
-import org.uma.jmetal.operator.selection.BinaryTournament;
-import org.uma.jmetal.operator.selection.Selection;
 import org.uma.jmetal.problem.singleobjective.Sphere;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
@@ -40,19 +39,15 @@ import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 import java.io.IOException;
 
 /**
- * This class runs a single-objective genetic algorithm (GA). The GA can be
- * a steady-state GA (class SteadyStateGeneticAlgorithm), a generational GA (class gGA), a synchronous
- * cGA (class SynchronousCellularGeneticAlgorithm) or an asynchronous cGA (class AsynchronousCellularGA). The OneMax
- * problem is used to org.uma.test the algorithms.
+ * This class runs a single-objective asynchronous genetic algorithm
  */
-public class RealGenerationalGeneticAlgorithmRunner {
+public class AsynchronousCellularGeneticAlgorithmRunner {
 
   public static void main(String[] args) throws JMetalException, ClassNotFoundException, IOException {
     Problem problem;
     Algorithm algorithm;
     Crossover crossover;
     Mutation mutation;
-    Selection selection;
 
     problem = new Sphere("Real", 30);
 
@@ -66,15 +61,11 @@ public class RealGenerationalGeneticAlgorithmRunner {
             .setDistributionIndex(20)
             .build() ;
 
-    selection = new BinaryTournament.Builder()
-            .build() ;
-
-    algorithm = new GenerationalGeneticAlgorithm.Builder(problem)
+    algorithm = new AsynchronousCellularGeneticAlgorithm.Builder(problem)
             .setPopulationSize(100)
             .setMaxEvaluations(250000)
             .setCrossover(crossover)
             .setMutation(mutation)
-            .setSelection(selection)
             .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)

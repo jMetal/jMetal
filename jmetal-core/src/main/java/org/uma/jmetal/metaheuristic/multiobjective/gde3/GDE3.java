@@ -218,15 +218,6 @@ public class GDE3 extends Algorithm {
     return getNonDominatedSolutions() ;
   }
 
-  @Deprecated
-  void readParameterSettings() {
-    populationSize = ((Integer) this.getInputParameter("populationSize")).intValue();
-    maxIterations = ((Integer) this.getInputParameter("maxIterations")).intValue();
-
-    selectionOperator = operators.get("selection");
-    crossoverOperator = operators.get("crossover");
-  }
-
   protected void createInitialPopulation() throws ClassNotFoundException, JMetalException {
     population = new SolutionSet(populationSize);
 

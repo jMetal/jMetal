@@ -49,22 +49,6 @@ public abstract class Algorithm implements Serializable {
   public abstract SolutionSet execute() throws JMetalException, ClassNotFoundException, IOException;
 
   @Deprecated
-  public void addOperator(String name, Operator operator) {
-    if (operators == null) {
-      operators = new HashMap<String, Operator>();
-    }
-    operators.put(name, operator);
-  }
-
-  @Deprecated
-  public void setInputParameter(String name, Object object) {
-    if (inputParameters == null) {
-      inputParameters = new HashMap<String, Object>();
-    }
-    inputParameters.put(name, object);
-  }
-
-  @Deprecated
   public Object getInputParameter(String name) {
     return inputParameters.get(name);
   }

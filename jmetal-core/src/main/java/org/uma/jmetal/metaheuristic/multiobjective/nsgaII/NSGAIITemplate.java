@@ -163,17 +163,6 @@ public abstract class NSGAIITemplate extends Algorithm {
     }
   }
 
-  /** @deprecated */
-  @Deprecated
-  void readParameterSettings() {
-    populationSize = ((Integer) getInputParameter("populationSize")).intValue();
-    maxEvaluations = ((Integer) getInputParameter("maxEvaluations")).intValue();
-
-    mutationOperator = operators.get("mutation");
-    crossoverOperator = operators.get("crossover");
-    selectionOperator = operators.get("selection");
-  }
-
   protected void createInitialPopulation() throws ClassNotFoundException, JMetalException {
     population = new SolutionSet(populationSize);
 
