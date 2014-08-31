@@ -109,7 +109,7 @@ public class RunnerC {
     inputStreamReader.close();
 
     if (args.length == 3) {
-      Problem p = algorithm.getProblem();
+      Problem p = settings.getProblem();
       indicators = new QualityIndicatorGetter(p, paretoFrontFile);
     }
 

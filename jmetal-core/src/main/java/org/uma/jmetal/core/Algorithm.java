@@ -40,18 +40,9 @@ public abstract class Algorithm implements Serializable {
 
   protected Problem problem;
 
-  @Deprecated
-  protected Map<String, Operator> operators = null;
-  @Deprecated
-  protected Map<String, Object> inputParameters = null;
 
   /** Executes the algorithm */
   public abstract SolutionSet execute() throws JMetalException, ClassNotFoundException, IOException;
-
-  @Deprecated
-  public Object getInputParameter(String name) {
-    return inputParameters.get(name);
-  }
 
   public Problem getProblem() {
     return problem;

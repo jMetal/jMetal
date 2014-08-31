@@ -44,9 +44,18 @@ public abstract class Settings {
     this.problemName = problemName;
   }
 
-  /** configure() method */
+  /* Getters */
+  public Problem getProblem() {
+    return problem ;
+  }
+
+  public String getProblemName() {
+    return problemName ;
+  }
+
+  /** Configure() method */
   abstract public Algorithm configure() throws JMetalException;
 
-  /** configure() method based on reading a properties file */
+  /** Configure() method based on reading a properties file */
   abstract public Algorithm configure(Properties configuration) throws JMetalException;
 }
