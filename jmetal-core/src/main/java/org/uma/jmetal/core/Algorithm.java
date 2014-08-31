@@ -44,9 +44,6 @@ public abstract class Algorithm implements Serializable {
   /** Executes the algorithm */
   public abstract SolutionSet execute() throws JMetalException, ClassNotFoundException, IOException;
 
-  public Problem getProblem() {
-    return problem;
-  }
   public void setProblem(Problem problem) {
     this.problem = problem;
   }
