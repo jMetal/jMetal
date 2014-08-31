@@ -43,23 +43,20 @@ import java.util.Comparator;
  * GECCO '07: Proceedings of the 9th annual conference on Genetic and
  * evolutionary computation. London, England. July 2007.
  */
-public class MOCHC extends Algorithm {
+public class MOCHC implements Algorithm {
   private static final long serialVersionUID = -2880293437154543456L;
 
-  int populationSize ;
-  int maxEvaluations ;
-  int convergenceValue ;
-  double preservedPopulation ;
-  double initialConvergenceCount ;
-  Crossover crossover ;
-  Mutation cataclysmicMutation ;
-  Selection newGenerationSelection ;
-  Selection parentSelection ;
+  private Problem problem ;
 
-  @Deprecated
-  public MOCHC() {
-    super();
-  }
+  private int populationSize ;
+  private int maxEvaluations ;
+  private int convergenceValue ;
+  private double preservedPopulation ;
+  private double initialConvergenceCount ;
+  private Crossover crossover ;
+  private Mutation cataclysmicMutation ;
+  private Selection newGenerationSelection ;
+  private Selection parentSelection ;
 
   /** Constructor */
   private MOCHC(Builder builder) {

@@ -35,17 +35,6 @@ public class SwapMutation extends Mutation {
 
   private double mutationProbability = 0.0 ;
 
-  @Deprecated
-  public SwapMutation(HashMap<String, Object> parameters) {
-    super(parameters);
-
-    if (parameters.get("setProbability") != null) {
-      mutationProbability = (double) parameters.get("setProbability");
-    }
-
-    addValidSolutionType(PermutationSolutionType.class);
-  }
-
   /** Constructor */
   private SwapMutation(Builder builder) {
     addValidSolutionType(PermutationSolutionType.class);

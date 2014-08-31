@@ -54,7 +54,7 @@ public class PAESRunner {
    *        - org.uma.jmetal.runner.multiobjective.PAESRunner problemName
    *        - org.uma.jmetal.runner.multiobjective.PAESRunner problemName paretoFrontFile
    */
-  public static void main(String[] args) throws JMetalException, IOException, ClassNotFoundException {
+  public static void main(String[] args) throws Exception {
     Problem problem;
     Algorithm algorithm;
     Operator mutation;

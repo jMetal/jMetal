@@ -64,7 +64,7 @@ public class SMPSORunner {
    *          - org.uma.jmetal.runner.multiobjective.SMPSORunner problemName
    *          - org.uma.jmetal.runner.multiobjective.SMPSORunner problemName ParetoFrontFile
    */
-  public static void main(String[] args) throws JMetalException, IOException, ClassNotFoundException {
+  public static void main(String[] args) throws Exception {
     Problem problem;
     Algorithm algorithm;
     Mutation mutation;

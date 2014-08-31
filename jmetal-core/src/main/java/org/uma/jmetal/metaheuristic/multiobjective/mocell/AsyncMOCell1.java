@@ -21,6 +21,7 @@
 
 package org.uma.jmetal.metaheuristic.multiobjective.mocell;
 
+import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.util.Distance;
@@ -32,7 +33,7 @@ import org.uma.jmetal.util.archive.CrowdingArchive;
 /**
  * This class represents the asynchronous version of the MOCell algorithm
  */
-public class AsyncMOCell1 extends MOCellTemplate {
+public class AsyncMOCell1 extends MOCellTemplate implements Algorithm {
   private static final long serialVersionUID = -2634874614451620996L;
 
   /** Constructor */

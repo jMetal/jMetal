@@ -42,17 +42,6 @@ public class PMXCrossover extends Crossover {
   private double crossoverProbability ;
 
   /** Constructor */
-  @Deprecated
-  public PMXCrossover(HashMap<String, Object> parameters) {
-    super(parameters);
-    addValidSolutionType(PermutationSolutionType.class);
-
-    if (parameters.get("setProbability") != null) {
-      crossoverProbability = (Double) parameters.get("setProbability");
-    }
-  }
-
-  /** Constructor */
   private PMXCrossover(Builder builder) {
     addValidSolutionType(PermutationSolutionType.class);
 

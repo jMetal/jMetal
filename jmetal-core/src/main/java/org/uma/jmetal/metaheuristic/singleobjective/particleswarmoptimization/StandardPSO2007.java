@@ -40,7 +40,9 @@ import java.util.logging.Level;
 /**
  * Class implementing a Standard PSO 2007 algorithm
  */
-public class StandardPSO2007 extends Algorithm {
+public class StandardPSO2007 implements Algorithm {
+  private Problem problem ;
+
   private Operator findBestSolution;
   private Comparator fitnessComparator ;
   private SolutionSet swarm;

@@ -31,8 +31,10 @@ import org.uma.jmetal.util.NonDominatedSolutionList;
 /**
  * This class implements a simple random search algorithm.
  */
-public class RandomSearch extends Algorithm {
+public class RandomSearch implements Algorithm {
   private static final long serialVersionUID = 7957970222128947424L;
+
+  private Problem problem ;
 
   private int maxEvaluations ;
 

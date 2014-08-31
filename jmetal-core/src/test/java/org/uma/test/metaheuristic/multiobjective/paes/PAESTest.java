@@ -36,7 +36,7 @@ public class PAESTest {
     Algorithm algorithm ;
 
     @Test
-    public void testNumberOfReturnedSolutionsInEasyProblem() throws IOException, ClassNotFoundException {
+    public void testNumberOfReturnedSolutionsInEasyProblem() throws Exception {
       algorithm = new PAESSettings("Fonseca").configure() ;
 
       SolutionSet solutionSet = algorithm.execute() ;

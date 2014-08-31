@@ -46,9 +46,10 @@ import java.util.Comparator;
  * "AbYSS: Adapting Scatter Search to Multiobjective Optimization."
  * IEEE Transactions on Evolutionary Computation. Vol. 12,  No. 4 (August 2008), pp. 439-457
  */
-public class AbYSS extends Algorithm {
+public class AbYSS implements Algorithm {
   private static final long serialVersionUID = 1682316127611498510L;
 
+  private Problem problem ;
   private int numberOfSubranges;
   private int[] sumOfFrequencyValues;
   private int[] sumOfReverseFrequencyValues;
@@ -209,7 +210,7 @@ public class AbYSS extends Algorithm {
   }
 
   /** Execute() method */
-  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
+  public SolutionSet execute() throws ClassNotFoundException {
     Solution solution;
     for (int i = 0; i < populationSize; i++) {
       solution = diversificationGeneration();

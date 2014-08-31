@@ -22,8 +22,10 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 
-public class DMOPSO extends Algorithm {
+public class DMOPSO implements Algorithm {
   private static final long serialVersionUID = -7045622315440304387L;
+
+  private Problem problem ;
 
   double[] z;
   double[][] lambda;

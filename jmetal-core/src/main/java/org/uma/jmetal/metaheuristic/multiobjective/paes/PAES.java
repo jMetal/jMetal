@@ -31,8 +31,10 @@ import java.util.Comparator;
 /**
  * This class implements the PAES algorithm.
  */
-public class PAES extends Algorithm {
+public class PAES implements Algorithm {
   private static final long serialVersionUID = 264140016408197977L;
+
+  private Problem problem ;
 
   private int archiveSize;
   private int maxEvaluations;

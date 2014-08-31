@@ -37,7 +37,7 @@ public class GDE3Test {
   Algorithm algorithm;
 
   @Test
-  public void numberOfReturnedSolutionsInEasyProblemTest() throws IOException, ClassNotFoundException {
+  public void numberOfReturnedSolutionsInEasyProblemTest() throws Exception {
     algorithm = new GDE3Settings("Kursawe").configure() ;
 
     SolutionSet solutionSet = algorithm.execute() ;
@@ -49,7 +49,7 @@ public class GDE3Test {
   }
   
   @Test
-  public void parallelVerstionTest() throws IOException, ClassNotFoundException {
+  public void parallelVerstionTest() throws Exception {
     algorithm = new ParallelGDE3Settings("Kursawe").configure() ;
 
     SolutionSet solutionSet = algorithm.execute() ;

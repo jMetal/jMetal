@@ -49,7 +49,7 @@ public class GenerationalGeneticAlgorithmTest {
   Problem problem;
 
   @Test
-  public void solvingBinaryProblemTest() throws IOException, ClassNotFoundException {
+  public void solvingBinaryProblemTest() throws Exception {
     int binaryStringLength = 200 ;
     problem = new OneMax("Binary", binaryStringLength) ;
 
@@ -77,8 +77,8 @@ public class GenerationalGeneticAlgorithmTest {
   }
 
   @Test
-  public void solvingRealProblemTest() throws IOException, ClassNotFoundException {
-    problem = new Sphere("Real", 20) ;
+  public void solvingRealProblemTest() throws Exception {
+    problem = new Sphere("Real", 10) ;
 
     Mutation mutation = new PolynomialMutation.Builder()
             .setProbability(1.0 / problem.getNumberOfVariables())
@@ -102,6 +102,6 @@ public class GenerationalGeneticAlgorithmTest {
 
     SolutionSet population = algorithmRunner.getSolutionSet() ;
     Solution solution = population.get(0) ;
-    assertTrue(solution.getObjective(0) < 0.00001) ;
+    assertTrue(solution.getObjective(0) < 0.0001) ;
   }
 }

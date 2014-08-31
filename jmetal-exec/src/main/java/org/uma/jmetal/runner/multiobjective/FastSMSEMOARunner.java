@@ -55,7 +55,7 @@ public class FastSMSEMOARunner {
    *       - org.uma.jmetal.runner.multiobjective.FastSMSEMOARunner problemName paretoFrontFile
    */
   public static void main(String[] args) throws
-          JMetalException, SecurityException, IOException, ClassNotFoundException {
+          Exception {
     Problem problem;
     Algorithm algorithm;
     Operator crossover;

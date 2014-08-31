@@ -36,7 +36,7 @@ public class AbYSSTest {
     Algorithm algorithm;
 
     @Test
-    public void testNumberOfReturnedSolutionsInEasyProblem() throws IOException, ClassNotFoundException {
+    public void testNumberOfReturnedSolutionsInEasyProblem() throws Exception {
       algorithm = new AbYSSSettings("Kursawe").configure() ;
 
       SolutionSet solutionSet = algorithm.execute() ;

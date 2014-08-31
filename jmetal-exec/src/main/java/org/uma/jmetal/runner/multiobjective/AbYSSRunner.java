@@ -62,7 +62,7 @@ public class AbYSSRunner {
 	 *       - org.uma.jmetal.runner.multiobjective.AbYSSRunner problemName paretoFrontFile
 	 */
 	public static void main(String[] args) throws
-	JMetalException, SecurityException, IOException, ClassNotFoundException {
+          Exception {
 		Problem problem ;
 		int maxEvaluations;
 		int populationSize ;

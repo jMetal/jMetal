@@ -37,8 +37,10 @@ import java.util.Comparator;
 /**
  * Class implementing a generational genetic algorithm
  */
-public class GenerationalGeneticAlgorithm extends Algorithm {
+public class GenerationalGeneticAlgorithm implements Algorithm {
   private static final long serialVersionUID = -8566068150403243344L;
+
+  private Problem problem ;
 
   private int populationSize;
   private int maxEvaluations;

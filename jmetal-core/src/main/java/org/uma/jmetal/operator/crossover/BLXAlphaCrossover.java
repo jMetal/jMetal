@@ -41,21 +41,6 @@ public class BLXAlphaCrossover extends Crossover {
 
   private double crossoverProbability;
 
-  @Deprecated
-  public BLXAlphaCrossover(HashMap<String, Object> parameters) {
-    super(parameters);
-
-    if (parameters.get("setProbability") != null) {
-      crossoverProbability = (Double) parameters.get("setProbability");
-    }
-    if (parameters.get("alpha") != null) {
-      alpha = (Double) parameters.get("alpha");
-    }
-
-    addValidSolutionType(RealSolutionType.class);
-    addValidSolutionType(ArrayRealSolutionType.class);
-  }
-
   /** Constructor */
   private BLXAlphaCrossover(Builder builder) {
     addValidSolutionType(RealSolutionType.class);

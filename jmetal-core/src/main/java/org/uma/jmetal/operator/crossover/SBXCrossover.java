@@ -48,28 +48,7 @@ public class SBXCrossover extends Crossover {
   private static final double DEFAULT_PROBABILITY = 0.9 ;
 
   private double distributionIndex = ETA_C_DEFAULT;
-  private double crossoverProbability = DEFAULT_PROBABILITY;
-
-  /**
-   * Constructor
-   * Create a new SBX crossover operator whit a default
-   * index given by <code>DEFAULT_INDEX_CROSSOVER</code>
-   * @deprecated
-   */
-  @Deprecated
-  public SBXCrossover(HashMap<String, Object> parameters) {
-    super(parameters);
-
-    addValidSolutionType(RealSolutionType.class);
-    addValidSolutionType(ArrayRealSolutionType.class);
-
-    if (parameters.get("setProbability") != null) {
-      crossoverProbability = (Double) parameters.get("setProbability");
-    }
-    if (parameters.get("setDistributionIndex") != null) {
-      distributionIndex= (Double) parameters.get("setDistributionIndex");
-    }
-  }
+  private double crossoverProbability = DEFAULT_PROBABILITY ;
 
   /** Constructor */
   private SBXCrossover(Builder builder) {

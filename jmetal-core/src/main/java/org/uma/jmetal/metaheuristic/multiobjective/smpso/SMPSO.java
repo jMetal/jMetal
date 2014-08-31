@@ -42,8 +42,10 @@ import java.util.Comparator;
  * IEEE Symposium on Computational Intelligence in Multicriteria Decision-Making
  * (MCDM 2009), pp: 66-73. March 2009
  */
-public class SMPSO extends Algorithm {
+public class SMPSO implements Algorithm {
   private static final long serialVersionUID = 6433458914602768519L;
+
+  private Problem problem ;
 
   SolutionSetEvaluator evaluator;
 

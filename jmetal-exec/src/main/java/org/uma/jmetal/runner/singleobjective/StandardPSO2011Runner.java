@@ -45,7 +45,7 @@ public class StandardPSO2011Runner {
    * @throws ClassNotFoundException
    */
   public static void main(String[] args)
-    throws JMetalException, IOException, ClassNotFoundException {
+          throws Exception {
     Problem problem;  
     Algorithm algorithm;  
 

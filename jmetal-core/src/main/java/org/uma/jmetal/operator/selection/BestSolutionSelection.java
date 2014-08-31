@@ -36,18 +36,6 @@ public class BestSolutionSelection extends Selection {
   private static final long serialVersionUID = 7515153213699830920L;
 
   private Comparator<Solution> comparator;
-
-  @Deprecated
-  public BestSolutionSelection(HashMap<String, Object> parameters) {
-    super(parameters);
-
-    comparator = null;
-
-    Object obj = parameters.get("comparator");
-    if (obj instanceof Comparator<?>) {
-      comparator = (Comparator<Solution>) obj;
-    }
-  }
   
   /** Constructor */
   private BestSolutionSelection(Builder builder) {

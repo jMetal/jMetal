@@ -47,7 +47,7 @@ public class DMOPSORunner {
    *       - org.uma.jmetal.runner.multiobjective.DMOPSORunner problemName
    *       - org.uma.jmetal.runner.multiobjective.DMOPSORunner problemName paretoFrontFile
    */
-  public static void main(String[] args) throws JMetalException, IOException, ClassNotFoundException {
+  public static void main(String[] args) throws Exception {
     Problem problem;
     Algorithm algorithm;
     QualityIndicatorGetter indicators;

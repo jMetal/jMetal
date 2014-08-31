@@ -21,6 +21,7 @@
 
 package org.uma.jmetal.metaheuristic.multiobjective.mocell;
 
+import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.util.Distance;
@@ -37,7 +38,7 @@ import org.uma.jmetal.util.archive.CrowdingArchive;
  * Evolutionary Multi-Criterion Optimization. 4th International Conference,
  * EMO 2007. Sendai/Matsushima, Japan, March 2007.
  */
-public class AsyncMOCell4 extends MOCellTemplate {
+public class AsyncMOCell4 extends MOCellTemplate implements Algorithm {
   private static final long serialVersionUID = -2479285259392945976L;
 
   /** Constructor */

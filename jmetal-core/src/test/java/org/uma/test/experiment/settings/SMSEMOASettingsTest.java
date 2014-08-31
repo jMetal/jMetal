@@ -60,10 +60,10 @@ public class SMSEMOASettingsTest {
     SMSEMOA algorithm = (SMSEMOA) smsemoaSettings.configure() ;
     Problem problem = new Fonseca("Real") ;
 
-    SBXCrossover crossover = (SBXCrossover) algorithm.getCrossoverOperator() ;
+    SBXCrossover crossover = (SBXCrossover) algorithm.getCrossover() ;
     double pc = crossover.getCrossoverProbability() ;
     double dic = crossover.getDistributionIndex() ;
-    PolynomialMutation mutation = (PolynomialMutation)algorithm.getMutationOperator() ;
+    PolynomialMutation mutation = (PolynomialMutation)algorithm.getMutation() ;
     double pm = mutation.getMutationProbability() ;
     double dim = mutation.getDistributionIndex() ;
     double offset = algorithm.getOffset() ;
@@ -87,10 +87,10 @@ public class SMSEMOASettingsTest {
     SMSEMOA algorithm = (SMSEMOA) smsemoaSettings.configure(configuration) ;
     Problem problem = new Fonseca("Real") ;
 
-    SBXCrossover crossover = (SBXCrossover) algorithm.getCrossoverOperator() ;
+    SBXCrossover crossover = (SBXCrossover) algorithm.getCrossover() ;
     double pc = crossover.getCrossoverProbability() ;
     double dic = crossover.getDistributionIndex() ;
-    PolynomialMutation mutation = (PolynomialMutation)algorithm.getMutationOperator() ;
+    PolynomialMutation mutation = (PolynomialMutation)algorithm.getMutation() ;
     double pm = mutation.getMutationProbability() ;
     double dim = mutation.getDistributionIndex() ;
     double offset = algorithm.getOffset() ;

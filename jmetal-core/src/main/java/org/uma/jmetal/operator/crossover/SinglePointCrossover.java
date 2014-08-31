@@ -44,14 +44,6 @@ public class SinglePointCrossover extends Crossover {
 
   private double crossoverProbability = 0;
 
-  @Deprecated
-  public SinglePointCrossover(HashMap<String, Object> parameters) {
-    super(parameters);
-    if (parameters.get("setProbability") != null) {
-      crossoverProbability = (Double) parameters.get("setProbability");
-    }
-  }
-
   /** Constructor */
   private SinglePointCrossover(Builder builder) {
     addValidSolutionType(BinarySolutionType.class);

@@ -56,7 +56,7 @@ public class SPEA2Runner {
    *        - org.uma.jmetal.runner.multiobjective.SPEA2Runner problemName
    *        - org.uma.jmetal.runner.multiobjective.SPEA2Runner problemName paretoFrontFile
    */
-  public static void main(String[] args) throws JMetalException, IOException, ClassNotFoundException {
+  public static void main(String[] args) throws Exception {
     Problem problem;
     Algorithm algorithm;
     Operator crossover;

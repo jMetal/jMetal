@@ -45,7 +45,7 @@ import java.io.IOException;
  */
 public class SynchronousCellularGeneticAlgorithmRunner {
 
-  public static void main(String[] args) throws JMetalException, ClassNotFoundException, IOException {
+  public static void main(String[] args) throws Exception {
     Problem problem;
     Algorithm algorithm;
     Crossover crossover;

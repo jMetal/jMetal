@@ -31,8 +31,10 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.archive.AdaptiveGridArchive;
 
 /** This class implements the PESA2 algorithm */
-public class PESA2 extends Algorithm {
+public class PESA2 implements Algorithm {
   private static final long serialVersionUID = 6904671980699718772L;
+
+  private Problem problem ;
 
   private int populationSize;
   private int archiveSize;

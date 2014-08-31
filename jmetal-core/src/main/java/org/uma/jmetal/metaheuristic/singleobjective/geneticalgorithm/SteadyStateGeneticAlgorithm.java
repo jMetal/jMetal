@@ -36,8 +36,10 @@ import java.util.Comparator;
 /**
  * Class implementing a steady-state genetic algorithm
  */
-public class SteadyStateGeneticAlgorithm extends Algorithm {
+public class SteadyStateGeneticAlgorithm implements Algorithm {
   private static final long serialVersionUID = -6340093758636629106L;
+
+  private Problem problem ;
 
   private int populationSize;
   private int maxEvaluations;

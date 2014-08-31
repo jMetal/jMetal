@@ -44,18 +44,6 @@ public class HUXCrossover extends Crossover {
 
   private double probability = 1.0;
 
-  @Deprecated
-  public HUXCrossover(HashMap<String, Object> parameters) {
-    super(parameters);
-
-    addValidSolutionType(BinarySolutionType.class);
-    addValidSolutionType(BinaryRealSolutionType.class);
-
-    if (parameters.get("setProbability") != null) {
-      probability = (Double) parameters.get("setProbability");
-    }
-  }
-
   /** Constructor */
   private HUXCrossover(Builder builder) {
     addValidSolutionType(BinarySolutionType.class);

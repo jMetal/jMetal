@@ -36,7 +36,7 @@ public class OMOPSOTest {
   Algorithm algorithm;
 
   @Test
-  public void testNumberOfReturnedSolutionsInEasyProblem() throws IOException, ClassNotFoundException {
+  public void testNumberOfReturnedSolutionsInEasyProblem() throws Exception {
     algorithm = new OMOPSOSettings("ZDT1").configure() ;
 
     SolutionSet solutionSet = algorithm.execute() ;

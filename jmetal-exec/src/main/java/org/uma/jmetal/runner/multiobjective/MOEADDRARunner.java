@@ -58,7 +58,7 @@ public class MOEADDRARunner {
    *       - org.uma.jmetal.runner.multiobjective.MOEADDRARunner problemName paretoFrontFile
    */
   public static void main(String[] args)
-          throws JMetalException, SecurityException, IOException, ClassNotFoundException {
+          throws Exception {
     Problem problem;
     Algorithm algorithm;
     Crossover crossover;

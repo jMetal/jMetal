@@ -34,8 +34,10 @@ import java.util.Comparator;
 /**
  * This class implements the GDE3 algorithm.
  */
-public class GDE3 extends Algorithm {
+public class GDE3 implements Algorithm {
   private static final long serialVersionUID = -8007862618252202475L;
+
+  private Problem problem ;
 
   protected SolutionSetEvaluator evaluator;
 

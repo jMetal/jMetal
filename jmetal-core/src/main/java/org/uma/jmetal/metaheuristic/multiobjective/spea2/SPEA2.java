@@ -25,11 +25,11 @@ import org.uma.jmetal.core.*;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.Ranking;
 
-/**
- * This class representing the SPEA2 algorithm
- */
-public class SPEA2 extends Algorithm {
+/** Class representing the SPEA2 algorithm */
+public class SPEA2 implements Algorithm {
   private static final long serialVersionUID = -6552554169817006100L;
+
+  private Problem problem ;
 
   private static final int TOURNAMENTS_ROUNDS = 1;
 

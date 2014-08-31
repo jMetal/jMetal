@@ -45,7 +45,7 @@ public class StandardPSO2007Runner {
 	 * @throws SecurityException
 	 */
 	public static void main(String[] args)
-			throws JMetalException, IOException, ClassNotFoundException {
+          throws Exception {
 		Problem problem;  
 		Algorithm algorithm;  
 

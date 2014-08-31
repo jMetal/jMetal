@@ -38,8 +38,10 @@ import java.util.Vector;
 /**
  * Created by Antonio J. Nebro on 02/08/14.
  */
-public abstract class MOEADTemplate extends Algorithm {
+public abstract class MOEADTemplate implements Algorithm {
   protected enum NeighborType {NEIGHBOR, POPULATION}
+
+  protected Problem problem ;
 
   /** Z vector in Zhang & Li paper */
   protected double[] idealPoint;

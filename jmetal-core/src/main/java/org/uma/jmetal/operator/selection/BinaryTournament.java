@@ -36,17 +36,6 @@ public class BinaryTournament extends Selection {
   private Comparator<Solution> comparator;
 
   /** Constructor */
-  @Deprecated
-  public BinaryTournament(HashMap<String, Object> parameters) {
-    super(parameters);
-    if ((parameters != null) && (parameters.get("comparator") != null)) {
-      comparator = (Comparator<Solution>) parameters.get("comparator");
-    } else {
-      comparator = new DominanceComparator();
-    }
-  }
-
-  /** Constructor */
   private BinaryTournament(Builder builder) {
     super(new HashMap<String, Object>()) ;
 

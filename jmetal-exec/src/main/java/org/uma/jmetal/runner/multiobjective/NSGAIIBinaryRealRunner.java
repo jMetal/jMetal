@@ -48,7 +48,7 @@ public class NSGAIIBinaryRealRunner {
    * @throws ClassNotFoundException 
    */
   public static void main(String[] args) throws
-    JMetalException, SecurityException, IOException, ClassNotFoundException {
+          Exception {
 
     String problemName;
     Algorithm algorithm;

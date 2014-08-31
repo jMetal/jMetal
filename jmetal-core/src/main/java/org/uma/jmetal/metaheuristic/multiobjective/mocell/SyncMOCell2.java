@@ -21,6 +21,7 @@
 
 package org.uma.jmetal.metaheuristic.multiobjective.mocell;
 
+import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.util.Distance;
@@ -33,7 +34,7 @@ import org.uma.jmetal.util.archive.CrowdingArchive;
  * This class represents a synchronous version of MOCell algorithm, which
  * applies an setArchive feedback through parent selection.
  */
-public class SyncMOCell2 extends MOCellTemplate {
+public class SyncMOCell2 extends MOCellTemplate implements Algorithm {
   private static final long serialVersionUID = -2245599709758873327L;
 
   /** Constructor */

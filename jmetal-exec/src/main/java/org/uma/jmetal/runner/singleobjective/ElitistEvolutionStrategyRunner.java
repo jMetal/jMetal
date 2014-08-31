@@ -21,14 +21,11 @@
 package org.uma.jmetal.runner.singleobjective;
 
 import org.uma.jmetal.core.Algorithm;
-import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.metaheuristic.singleobjective.evolutionstrategy.ElitistEvolutionStrategy;
-import org.uma.jmetal.metaheuristic.singleobjective.evolutionstrategy.NonElitistEvolutionStrategy;
 import org.uma.jmetal.operator.mutation.BitFlipMutation;
 import org.uma.jmetal.operator.mutation.Mutation;
-import org.uma.jmetal.operator.mutation.MutationFactory;
 import org.uma.jmetal.problem.singleobjective.OneMax;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
@@ -37,7 +34,6 @@ import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 /**
  * This class runs a single-objective Evolution Strategy (ES). The ES can be
@@ -46,7 +42,7 @@ import java.util.HashMap;
  */
 public class ElitistEvolutionStrategyRunner {
 
-  public static void main(String[] args) throws JMetalException, ClassNotFoundException, IOException {
+  public static void main(String[] args) throws Exception {
     Problem problem;
     Algorithm algorithm;
     Mutation mutation;

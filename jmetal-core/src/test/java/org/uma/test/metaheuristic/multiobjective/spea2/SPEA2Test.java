@@ -36,7 +36,7 @@ public class SPEA2Test {
   Algorithm algorithm;
 
   @Test
-  public void numberOfReturnedSolutionsInEasyProblemTest() throws IOException, ClassNotFoundException {
+  public void numberOfReturnedSolutionsInEasyProblemTest() throws Exception {
     algorithm = new SPEA2Settings("Kursawe").configure() ;
 
     SolutionSet solutionSet = algorithm.execute() ;

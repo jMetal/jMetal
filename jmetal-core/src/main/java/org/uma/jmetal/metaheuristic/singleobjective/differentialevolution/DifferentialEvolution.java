@@ -36,8 +36,10 @@ import java.util.logging.Level;
 /**
  * This class implements a differential evolution algorithm.
  */
-public class DifferentialEvolution extends Algorithm {
+public class DifferentialEvolution implements Algorithm {
   private static final long serialVersionUID = 7663009441358542943L;
+
+  private Problem problem ;
 
   private int populationSize;
   private int maxEvaluations;

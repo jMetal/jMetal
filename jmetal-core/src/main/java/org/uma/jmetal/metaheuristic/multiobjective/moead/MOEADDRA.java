@@ -21,6 +21,7 @@
 
 package org.uma.jmetal.metaheuristic.multiobjective.moead;
 
+import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.util.JMetalException;
@@ -29,7 +30,7 @@ import org.uma.jmetal.util.random.PseudoRandom;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MOEADDRA extends MOEADTemplate {
+public class MOEADDRA extends MOEADTemplate implements Algorithm {
   private static final long serialVersionUID = -4289052728188335534L;
 
   private Solution[] savedValues;

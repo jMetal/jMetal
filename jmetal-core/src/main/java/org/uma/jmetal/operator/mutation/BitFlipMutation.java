@@ -45,19 +45,6 @@ public class BitFlipMutation extends Mutation {
 
   private double mutationProbability = 0;
 
-  /**
-   * Constructor
-   * Creates a new instance of the Bit Flip mutation operator
-   * @deprecated
-   */
-  @Deprecated
-  public BitFlipMutation(HashMap<String, Object> parameters) {
-    super(parameters);
-    if (parameters.get("setProbability") != null) {
-      mutationProbability = (Double) parameters.get("setProbability");
-    }
-  }
-
   /** Constructor */
   private BitFlipMutation(Builder builder) {
     addValidSolutionType(BinarySolutionType.class);

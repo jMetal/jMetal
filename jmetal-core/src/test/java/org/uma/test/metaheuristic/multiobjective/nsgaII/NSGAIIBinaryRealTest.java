@@ -38,7 +38,7 @@ public class NSGAIIBinaryRealTest {
   Algorithm algorithm;
 
   @Test
-  public void testNumberOfReturnedSolutionsInEasyProblem() throws IOException, ClassNotFoundException {
+  public void testNumberOfReturnedSolutionsInEasyProblem() throws Exception {
     algorithm = new NSGAIIBinaryRealSettings("Kursawe").configure() ;
 
     SolutionSet solutionSet = algorithm.execute() ;

@@ -37,8 +37,10 @@ import java.util.Comparator;
 /**
  * Class implementing a single-objective synchronous cellular genetic algorithm
  */
-public class SynchronousCellularGeneticAlgorithm extends Algorithm {
+public class SynchronousCellularGeneticAlgorithm implements Algorithm {
   private static final long serialVersionUID = -7315994069313234885L;
+
+  private Problem problem ;
 
   private int populationSize ;
   private int maxEvaluations ;

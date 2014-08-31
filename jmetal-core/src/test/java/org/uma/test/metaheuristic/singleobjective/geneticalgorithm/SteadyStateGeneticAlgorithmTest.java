@@ -49,7 +49,7 @@ public class SteadyStateGeneticAlgorithmTest {
   Problem problem;
 
   @Test
-  public void solvingBinaryProblemTest() throws IOException, ClassNotFoundException {
+  public void solvingBinaryProblemTest() throws Exception {
     int binaryStringLength = 200 ;
     problem = new OneMax("Binary", binaryStringLength) ;
 
@@ -77,7 +77,7 @@ public class SteadyStateGeneticAlgorithmTest {
   }
 
   @Test
-  public void solvingRealProblemTest() throws IOException, ClassNotFoundException {
+  public void solvingRealProblemTest() throws Exception {
     problem = new Sphere("Real", 20) ;
 
     Mutation mutation = new PolynomialMutation.Builder()

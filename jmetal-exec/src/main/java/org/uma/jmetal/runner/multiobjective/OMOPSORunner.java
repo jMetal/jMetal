@@ -57,7 +57,7 @@ public class OMOPSORunner {
    *              - org.uma.jmetal.runner.multiobjective.OMOPSORunner problemName
    *              - org.uma.jmetal.runner.multiobjective.OMOPSORunner problemName ParetoFrontFile
    */
-  public static void main(String[] args) throws JMetalException, IOException, ClassNotFoundException {
+  public static void main(String[] args) throws Exception {
     Problem problem;
     Algorithm algorithm;
     Mutation uniformMutation;

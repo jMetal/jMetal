@@ -49,7 +49,7 @@ import java.io.IOException;
  * evolutionary computation. London, England. July 2007.
  */
 public class MOCHCRunner {
-  public static void main(String[] args) throws IOException, JMetalException, ClassNotFoundException {
+  public static void main(String[] args) throws Exception {
     Crossover crossoverOperator;
     Mutation mutationOperator;
     Selection parentsSelection;

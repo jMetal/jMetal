@@ -42,23 +42,6 @@ public class NonUniformMutation extends Mutation {
 
   private int currentIteration;
 
-  @Deprecated
-  public NonUniformMutation(HashMap<String, Object> parameters) {
-    super(parameters);
-    if (parameters.get("setProbability") != null) {
-      mutationProbability = (Double) parameters.get("setProbability");
-    }
-    if (parameters.get("perturbation") != null) {
-      perturbation = (Double) parameters.get("perturbation");
-    }
-    if (parameters.get("maxIterations") != null) {
-      maxIterations = (Integer) parameters.get("maxIterations");
-    }
-
-    addValidSolutionType(RealSolutionType.class);
-    addValidSolutionType(ArrayRealSolutionType.class);
-  }
-
   /** Constructor */
   private NonUniformMutation(Builder builder) {
     super(new HashMap<String, Object>()) ;

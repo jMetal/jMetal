@@ -38,7 +38,7 @@ public class NSGAIITest {
   Algorithm algorithm;
 
   @Test
-  public void numberOfReturnedSolutionsInEasyProblemTest() throws IOException, ClassNotFoundException {
+  public void numberOfReturnedSolutionsInEasyProblemTest() throws Exception {
     algorithm = new NSGAIISettings("Kursawe").configure() ;
 
     SolutionSet solutionSet = algorithm.execute() ;

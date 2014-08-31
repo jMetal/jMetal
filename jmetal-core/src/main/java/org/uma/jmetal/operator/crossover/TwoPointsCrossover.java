@@ -41,21 +41,7 @@ public class TwoPointsCrossover extends Crossover {
 
   private double crossoverProbability ;
 
-  /**
-   * Constructor
-   * Creates a new instance of the two point crossover operator
-   */
-  @Deprecated
-  public TwoPointsCrossover(HashMap<String, Object> parameters) {
-    super(parameters);
-    addValidSolutionType(PermutationSolutionType.class);
-    addValidSolutionType(IntSolutionType.class);
-
-    if (parameters.get("setProbability") != null) {
-      crossoverProbability = (Double) parameters.get("setProbability");
-    }
-  }
-  
+  /** Constructor */
   private TwoPointsCrossover(Builder builder) {
     addValidSolutionType(PermutationSolutionType.class);
     addValidSolutionType(IntSolutionType.class);

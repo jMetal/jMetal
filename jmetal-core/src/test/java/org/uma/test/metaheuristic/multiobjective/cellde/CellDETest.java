@@ -36,7 +36,7 @@ public class CellDETest {
   Algorithm algorithm;
 
   @Test
-  public void testNumberOfReturnedSolutionsInEasyProblem() throws IOException, ClassNotFoundException {
+  public void testNumberOfReturnedSolutionsInEasyProblem() throws Exception {
     algorithm = new CellDESettings("DTLZ1").configure() ;
 
     SolutionSet solutionSet = algorithm.execute() ;

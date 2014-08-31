@@ -9,10 +9,12 @@ import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
 /**
  * Created by Antonio J. Nebro on 31/07/14.
  */
-public abstract class SMSEMOATemplate extends Algorithm {
+public abstract class SMSEMOATemplate implements Algorithm {
   private static final double DEFAULT_OFFSET = 100.0 ;
 
   private SolutionSetEvaluator evaluator ;
+
+  protected Problem problem ;
 
   protected int populationSize;
   protected int maxEvaluations;
@@ -21,9 +23,9 @@ public abstract class SMSEMOATemplate extends Algorithm {
   protected SolutionSet population;
   protected SolutionSet offspringPopulation;
 
-  protected Operator mutationOperator;
-  protected Operator crossoverOperator;
-  protected Operator selectionOperator;
+  protected Operator mutation;
+  protected Operator crossover;
+  protected Operator selection;
 
   protected double offset ;
 
@@ -33,9 +35,9 @@ public abstract class SMSEMOATemplate extends Algorithm {
     problem = builder.problem;
     populationSize = builder.populationSize;
     maxEvaluations = builder.maxEvaluations;
-    mutationOperator = builder.mutationOperator;
-    crossoverOperator = builder.crossoverOperator;
-    selectionOperator = builder.selectionOperator;
+    mutation = builder.mutationOperator;
+    crossover = builder.crossoverOperator;
+    selection = builder.selectionOperator;
     offset = builder.offset;
 
     evaluations = 0 ;
@@ -67,16 +69,16 @@ public abstract class SMSEMOATemplate extends Algorithm {
   }
 
   /* Getters */
-  public Operator getCrossoverOperator() {
-    return crossoverOperator;
+  public Operator getCrossover() {
+    return crossover;
   }
 
-  public Operator getMutationOperator() {
-    return mutationOperator;
+  public Operator getMutation() {
+    return mutation;
   }
 
-  public Operator getSelectionOperator() {
-    return selectionOperator;
+  public Operator getSelection() {
+    return selection;
   }
 
   public int getPopulationSize() {

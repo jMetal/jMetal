@@ -38,7 +38,7 @@ import java.io.IOException;
  */
 public class CMAESRunner {
 
-  public static void main(String[] args) throws JMetalException, ClassNotFoundException, IOException {
+  public static void main(String[] args) throws Exception {
     int numberOfVariables = 20;
     int populationSize = 10;
     int maxEvaluations = 1000000;

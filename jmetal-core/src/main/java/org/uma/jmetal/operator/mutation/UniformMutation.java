@@ -39,21 +39,6 @@ public class UniformMutation extends Mutation {
   private Double perturbation;
   private Double mutationProbability = null;
 
-  @Deprecated
-  public UniformMutation(HashMap<String, Object> parameters) {
-    super(parameters);
-
-    if (parameters.get("setProbability") != null) {
-      mutationProbability = (Double) parameters.get("setProbability");
-    }
-    if (parameters.get("perturbation") != null) {
-      perturbation = (Double) parameters.get("perturbation");
-    }
-
-    addValidSolutionType(RealSolutionType.class);
-    addValidSolutionType(ArrayRealSolutionType.class);
-  }
-
   /** Constructor */
   private UniformMutation(Builder builder) {
     addValidSolutionType(RealSolutionType.class);

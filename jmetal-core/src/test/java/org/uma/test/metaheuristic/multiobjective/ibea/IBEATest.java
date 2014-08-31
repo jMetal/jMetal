@@ -36,7 +36,7 @@ public class IBEATest {
   Algorithm algorithm;
 
   @Test
-  public void numberOfReturnedSolutionsInEasyProblemTest() throws IOException, ClassNotFoundException {
+  public void numberOfReturnedSolutionsInEasyProblemTest() throws Exception {
     algorithm = new IBEASettings("ZDT1").configure() ;
 
     SolutionSet solutionSet = algorithm.execute() ;

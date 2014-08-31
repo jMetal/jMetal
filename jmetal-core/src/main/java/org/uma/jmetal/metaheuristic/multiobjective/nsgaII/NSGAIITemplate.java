@@ -37,8 +37,10 @@ import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
  * To be presented in: PPSN'08. Dortmund. September 2008.
  */
 
-public abstract class NSGAIITemplate extends Algorithm {
+public abstract class NSGAIITemplate implements Algorithm {
   protected SolutionSetEvaluator evaluator ;
+
+  protected Problem problem ;
 
   protected int populationSize;
   protected int maxEvaluations;
@@ -53,18 +55,8 @@ public abstract class NSGAIITemplate extends Algorithm {
 
   private Distance distance;
 
-  @Deprecated
-  public NSGAIITemplate(SolutionSetEvaluator evaluator) {
-    super();
-    evaluations = 0 ;
-    distance = new Distance();
-    this.evaluator = evaluator ;
-  }
-
   /** Constructor */
   protected NSGAIITemplate(Builder builder) {
-    super() ;
-
     problem = builder.problem;
     evaluator = builder.evaluator ;
     populationSize = builder.populationSize;

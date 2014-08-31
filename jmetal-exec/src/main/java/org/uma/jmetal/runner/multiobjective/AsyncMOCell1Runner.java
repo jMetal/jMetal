@@ -59,7 +59,7 @@ public class AsyncMOCell1Runner {
    *        - org.uma.jmetal.runner.multiobjective.AsyncMOCell1Runner problemName ParetoFrontFile
    */
   public static void main(String[] args)
-          throws JMetalException, SecurityException, IOException, ClassNotFoundException {
+          throws Exception {
     Problem problem;
     Algorithm algorithm;
     Operator crossover;

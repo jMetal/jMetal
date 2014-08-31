@@ -45,7 +45,7 @@ import java.io.IOException;
  */
 public class NonElitistEvolutionStrategyRunner {
 
-  public static void main(String[] args) throws JMetalException, ClassNotFoundException, IOException {
+  public static void main(String[] args) throws Exception {
     Problem problem;
     Algorithm algorithm;
     Mutation mutation;

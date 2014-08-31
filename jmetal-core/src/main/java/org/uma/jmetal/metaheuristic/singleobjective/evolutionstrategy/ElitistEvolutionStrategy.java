@@ -32,8 +32,10 @@ import java.util.Comparator;
 /**
  * Class implementing a (mu + lambda) Evolution Strategy (lambda must be divisible by mu)
  */
-public class ElitistEvolutionStrategy extends Algorithm {
+public class ElitistEvolutionStrategy implements Algorithm {
   private static final long serialVersionUID = 1906178079398664652L;
+
+  private Problem problem ;
 
   private int mu;
   private int lambda;

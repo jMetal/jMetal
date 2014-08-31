@@ -21,6 +21,7 @@
 
 package org.uma.jmetal.metaheuristic.multiobjective.nsgaII;
 
+import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.util.JMetalException;
@@ -30,13 +31,9 @@ import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
 /**
  * This class implements a steady-state version of NSGA-II.
  */
-public class SteadyStateNSGAII extends NSGAIITemplate {
+public class SteadyStateNSGAII extends NSGAIITemplate implements Algorithm {
 
   private static final long serialVersionUID = 3588191288161132897L;
-
-  public SteadyStateNSGAII(SolutionSetEvaluator evaluator) {
-    super(evaluator);
-  }
 
   /** Constructor */
   protected SteadyStateNSGAII(Builder builder) {

@@ -41,8 +41,10 @@ import java.util.Comparator;
 /**
  * This class implements the FPGA (Fast Pareto Genetic Algorithm).
  */
-public class FastPGA extends Algorithm {
+public class FastPGA implements Algorithm {
   private static final long serialVersionUID = -1288400553889158174L;
+
+  private Problem problem ;
 
   private int maxPopulationSize ;
   private int initialPopulationSize ;

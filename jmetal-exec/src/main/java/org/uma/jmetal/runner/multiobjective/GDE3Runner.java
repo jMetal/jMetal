@@ -56,7 +56,7 @@ public class GDE3Runner {
    *        - org.uma.jmetal.runner.multiobjective.GDE3Runner problemName paretoFrontFile
    */
   public static void main(String[] args)
-    throws JMetalException, SecurityException, IOException, ClassNotFoundException {
+          throws Exception {
     Problem problem;
     Algorithm algorithm;
     Operator selection;

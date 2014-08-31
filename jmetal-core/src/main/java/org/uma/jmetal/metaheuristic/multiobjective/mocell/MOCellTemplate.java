@@ -35,8 +35,11 @@ import java.util.Comparator;
 /**
  * Created by Antonio J. Nebro on 29/06/14.
  */
-public abstract class MOCellTemplate extends Algorithm {
+public abstract class MOCellTemplate implements Algorithm {
   private static final int DEFAULT_ARCHIVE_SIZE = 100 ;
+
+  protected Problem problem ;
+
   protected int populationSize;
   protected int maxEvaluations;
   protected int evaluations;

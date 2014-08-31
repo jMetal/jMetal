@@ -58,7 +58,7 @@ public class FastPGARunner {
    *       - org.uma.jmetal.runner.multiobjective.FastPGARunner problemName paretoFrontFile
    */
 
-  public static void main(String[] args) throws JMetalException, IOException, ClassNotFoundException {
+  public static void main(String[] args) throws Exception {
     Problem problem;
     Algorithm algorithm;
     Crossover crossover;

@@ -52,7 +52,7 @@ public class RandomSearchRunner {
    *         - org.uma.jmetal.runner.multiobjective.RandomSearchRunner problemName paretoFrontFile
    */
   public static void main(String[] args) throws
-    JMetalException, SecurityException, IOException, ClassNotFoundException {
+          Exception {
     Problem problem;
     Algorithm algorithm;
 

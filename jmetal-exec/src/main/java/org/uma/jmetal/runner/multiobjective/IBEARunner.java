@@ -58,7 +58,7 @@ public class IBEARunner {
    *       - org.uma.jmetal.runner.multiobjective.IBEARunner problemName
    *       - org.uma.jmetal.runner.multiobjective.IBEARunner problemName paretoFrontFile
    */
-  public static void main(String[] args) throws JMetalException, IOException, ClassNotFoundException {
+  public static void main(String[] args) throws Exception {
     Problem problem;
     Algorithm algorithm;
     Crossover crossover;

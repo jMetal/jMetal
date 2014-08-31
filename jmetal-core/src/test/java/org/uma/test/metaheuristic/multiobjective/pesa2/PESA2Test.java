@@ -36,7 +36,7 @@ public class PESA2Test {
   Algorithm algorithm;
 
   @Test
-  public void numberOfReturnedSolutionsInEasyProblemTest() throws IOException, ClassNotFoundException {
+  public void numberOfReturnedSolutionsInEasyProblemTest() throws Exception {
     algorithm = new PESA2Settings("ZDT1").configure() ;
 
     SolutionSet solutionSet = algorithm.execute() ;

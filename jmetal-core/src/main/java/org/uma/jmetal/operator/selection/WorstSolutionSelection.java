@@ -37,13 +37,6 @@ public class WorstSolutionSelection extends Selection {
 
   private Comparator<Solution> comparator;
 
-  @Deprecated
-  public WorstSolutionSelection(HashMap<String, Object> parameters) {
-    super(parameters);
-
-    comparator = (Comparator<Solution>) parameters.get("comparator");
-  }
-
   /** Constructor */
   private WorstSolutionSelection(Builder builder) {
   	super(new HashMap<String, Object>()) ;

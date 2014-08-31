@@ -57,7 +57,7 @@ public class NSGAIIRunner {
    *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName paretoFrontFile
    */
   public static void main(String[] args) throws
-          JMetalException, SecurityException, IOException, ClassNotFoundException {
+          Exception {
 
     Problem problem;
     Algorithm algorithm;

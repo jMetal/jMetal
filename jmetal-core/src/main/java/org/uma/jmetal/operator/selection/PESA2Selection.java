@@ -34,11 +34,6 @@ import java.util.HashMap;
 public class PESA2Selection extends Selection {
   private static final long serialVersionUID = 4941044300155040616L;
 
-  @Deprecated
-  public PESA2Selection(HashMap<String, Object> parameters) {
-    super(parameters);
-  }
-
   /** Constructor */
   public PESA2Selection(Builder builder) {
     super(new HashMap<String, Object>()) ;

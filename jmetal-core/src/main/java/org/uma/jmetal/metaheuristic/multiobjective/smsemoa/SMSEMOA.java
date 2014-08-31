@@ -20,6 +20,7 @@
 
 package org.uma.jmetal.metaheuristic.multiobjective.smsemoa;
 
+import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.qualityindicator.Hypervolume;
@@ -47,7 +48,7 @@ import java.util.LinkedList;
  * Congress on Evolutionary Computation (CEC 2005), Edinburgh, Band 2, pp. 1282-1289.
  * IEEE Press, Piscataway NJ, 2005.
  */
-public class SMSEMOA extends SMSEMOATemplate {
+public class SMSEMOA extends SMSEMOATemplate implements Algorithm {
   private static final long serialVersionUID = -5932329422133559836L;
 
   private MetricsUtil utils;
@@ -69,9 +70,9 @@ public class SMSEMOA extends SMSEMOATemplate {
     while (!stoppingCondition()) {
       offspringPopulation = new SolutionSet(populationSize);
 
-      Solution[] parents = (Solution[])selectionOperator.execute(population) ;
-      Solution[] offSpring = (Solution[]) crossoverOperator.execute(parents) ;
-      mutationOperator.execute(offSpring[0]);
+      Solution[] parents = (Solution[]) selection.execute(population) ;
+      Solution[] offSpring = (Solution[]) crossover.execute(parents) ;
+      mutation.execute(offSpring[0]);
 
       problem.evaluate(offSpring[0]);
       problem.evaluateConstraints(offSpring[0]);

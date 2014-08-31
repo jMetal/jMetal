@@ -37,8 +37,10 @@ import java.util.logging.Level;
 /**
  * This class implements the CMA-ES algorithm
  */
-public class CMAES extends Algorithm {
+public class CMAES implements Algorithm {
   private static final long serialVersionUID = -1341901419653809198L;
+
+  private Problem problem ;
 
   private int populationSize;
 

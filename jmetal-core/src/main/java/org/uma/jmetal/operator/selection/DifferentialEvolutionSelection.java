@@ -36,12 +36,6 @@ public class DifferentialEvolutionSelection extends Selection {
   private static final long serialVersionUID = 2866073033079299561L;
 
   /** Constructor */
-  @Deprecated
-  DifferentialEvolutionSelection(HashMap<String, Object> parameters) {
-    super(parameters);
-  }
-
-  /** Constructor */
   DifferentialEvolutionSelection(Builder builder) {
     super(new HashMap<String, Object>()) ;
   }

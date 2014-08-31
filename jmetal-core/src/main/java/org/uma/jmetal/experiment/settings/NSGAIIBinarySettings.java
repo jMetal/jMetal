@@ -25,6 +25,7 @@ import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.experiment.Settings;
 import org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII;
+import org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAIITemplate;
 import org.uma.jmetal.operator.crossover.SinglePointCrossover;
 import org.uma.jmetal.operator.mutation.BitFlipMutation;
 import org.uma.jmetal.operator.selection.BinaryTournament2;
@@ -79,7 +80,7 @@ public class NSGAIIBinarySettings extends Settings {
     selection = new BinaryTournament2.Builder()
       .build();
 
-    algorithm = new NSGAII.Builder(problem, evaluator)
+    algorithm = new NSGAIITemplate.Builder(problem, evaluator)
       .setCrossover(crossover)
       .setMutation(mutation)
       .setSelection(selection)

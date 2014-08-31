@@ -36,7 +36,7 @@ public class MOCellTest {
   Algorithm algorithm;
 
   @Test
-  public void testNumberOfReturnedSolutionsInEasyProblemWithAsyncMOCell1() throws IOException, ClassNotFoundException {
+  public void testNumberOfReturnedSolutionsInEasyProblemWithAsyncMOCell1() throws Exception {
     algorithm = new MOCellSettings("ZDT2").configure("AsyncMOCell1") ;
 
     SolutionSet solutionSet = algorithm.execute() ;
@@ -48,7 +48,7 @@ public class MOCellTest {
   }
 
   @Test
-  public void testNumberOfReturnedSolutionsInEasyProblemWithAsyncMOCell2() throws IOException, ClassNotFoundException {
+  public void testNumberOfReturnedSolutionsInEasyProblemWithAsyncMOCell2() throws Exception {
     algorithm = new MOCellSettings("ZDT1").configure("AsyncMOCell2") ;
 
     SolutionSet solutionSet = algorithm.execute() ;
@@ -60,7 +60,7 @@ public class MOCellTest {
   }
 
   @Test
-  public void testNumberOfReturnedSolutionsInEasyProblemWithAsyncMOCell3() throws IOException, ClassNotFoundException {
+  public void testNumberOfReturnedSolutionsInEasyProblemWithAsyncMOCell3() throws Exception {
     algorithm = new MOCellSettings("ZDT2").configure("AsyncMOCell3") ;
 
     SolutionSet solutionSet = algorithm.execute() ;
@@ -72,7 +72,7 @@ public class MOCellTest {
   }
 
   @Test
-  public void testNumberOfReturnedSolutionsInEasyProblemWithAsyncMOCell4() throws IOException, ClassNotFoundException {
+  public void testNumberOfReturnedSolutionsInEasyProblemWithAsyncMOCell4() throws Exception {
     algorithm = new MOCellSettings("ZDT4").configure("AsyncMOCell4") ;
 
     SolutionSet solutionSet = algorithm.execute() ;
@@ -84,7 +84,7 @@ public class MOCellTest {
   }
 
   @Test
-  public void testNumberOfReturnedSolutionsInEasyProblemWithSyncMOCell1() throws IOException, ClassNotFoundException {
+  public void testNumberOfReturnedSolutionsInEasyProblemWithSyncMOCell1() throws Exception {
     algorithm = new MOCellSettings("Fonseca").configure("SyncMOCell1") ;
 
     SolutionSet solutionSet = algorithm.execute() ;
@@ -95,7 +95,7 @@ public class MOCellTest {
     assertTrue(solutionSet.size() >= 98) ;
   }
 
-  public void testNumberOfReturnedSolutionsInEasyProblemWithSyncMOCell2() throws IOException, ClassNotFoundException {
+  public void testNumberOfReturnedSolutionsInEasyProblemWithSyncMOCell2() throws Exception {
     algorithm = new MOCellSettings("ZDT2").configure("SyncMOCell2") ;
 
     SolutionSet solutionSet = algorithm.execute() ;

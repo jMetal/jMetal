@@ -23,12 +23,10 @@ import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.metaheuristic.singleobjective.differentialevolution.DifferentialEvolution;
-import org.uma.jmetal.operator.crossover.CrossoverFactory;
 import org.uma.jmetal.operator.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.selection.DifferentialEvolutionSelection;
 import org.uma.jmetal.operator.selection.Selection;
 import org.uma.jmetal.operator.crossover.Crossover;
-import org.uma.jmetal.operator.selection.SelectionFactory;
 import org.uma.jmetal.problem.singleobjective.CEC2005Problem;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
@@ -37,12 +35,11 @@ import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 /** This class runs a single-objective DE algorithm */
 public class DifferentialEvolutionRunner {
 
-  public static void main(String[] args) throws JMetalException, ClassNotFoundException, IOException {
+  public static void main(String[] args) throws Exception {
     Problem problem;
     Algorithm algorithm;
     Crossover crossover;

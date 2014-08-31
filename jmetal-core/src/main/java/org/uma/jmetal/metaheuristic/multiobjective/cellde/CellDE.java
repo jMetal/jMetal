@@ -49,9 +49,10 @@ import java.util.Comparator;
  * Optimization Problems Using a new Hybrid Cellular Genetic Algorithm".
  * PPSN'08. Dortmund. September 2008.
  */
-public class CellDE extends Algorithm {
+public class CellDE implements Algorithm {
   private static final long serialVersionUID = 8699667515096532262L;
 
+  private Problem problem ;
   private int populationSize ;
   private int archiveSize    ;
   private int maxEvaluations  ;

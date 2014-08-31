@@ -36,7 +36,7 @@ public class SMPSOTest {
   Algorithm algorithm;
 
   @Test
-  public void testNumberOfReturnedSolutionsInEasyProblem() throws IOException, ClassNotFoundException {
+  public void testNumberOfReturnedSolutionsInEasyProblem() throws Exception {
     algorithm = new SMPSOSettings("ZDT4").configure() ;
 
     SolutionSet solutionSet = algorithm.execute() ;

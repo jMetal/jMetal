@@ -36,7 +36,7 @@ public class MOEADTest {
     Algorithm algorithm;
 
     @Test
-    public void testNumberOfReturnedSolutionsInEasyProblem() throws IOException, ClassNotFoundException {
+    public void testNumberOfReturnedSolutionsInEasyProblem() throws Exception {
       algorithm = new MOEADSettings("LZ09F2").configure() ;
 
       SolutionSet solutionSet = algorithm.execute() ;

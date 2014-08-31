@@ -2,9 +2,8 @@
 //
 //  Authors:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
-//// 
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
+////
+//  Copyright (c) 2014 Antonio J. Nebro
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -21,30 +20,9 @@
 
 package org.uma.jmetal.core;
 
-import org.uma.jmetal.util.JMetalException;
-
-import java.io.IOException;
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-
-/**
- * This class implements a generic template for the algorithms developed in
- * jMetal. Every algorithm must have a mapping between the parameters and and
- * their names, and another mapping between the operator and their names. The
- * class declares an abstract method called <code>execute</code>, which defines
- * the behavior of the algorithm.
- */
-public abstract class Algorithm implements Serializable {
-  private static final long serialVersionUID = -5414794431994226777L;
-
-  protected Problem problem;
-
+/** Interface representing an algorithm */
+public interface Algorithm  {
 
   /** Executes the algorithm */
-  public abstract SolutionSet execute() throws JMetalException, ClassNotFoundException, IOException;
-
-  public void setProblem(Problem problem) {
-    this.problem = problem;
-  }
+  public SolutionSet execute() throws Exception ;
 }

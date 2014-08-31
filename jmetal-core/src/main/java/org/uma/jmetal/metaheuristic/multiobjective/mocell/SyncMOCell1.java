@@ -21,6 +21,7 @@
 
 package org.uma.jmetal.metaheuristic.multiobjective.mocell;
 
+import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.util.Distance;
@@ -30,6 +31,8 @@ import org.uma.jmetal.util.Ranking;
 import org.uma.jmetal.util.archive.CrowdingArchive;
 import org.uma.jmetal.util.random.PseudoRandom;
 
+import java.util.AbstractList;
+
 /**
  * This class represents the original synchronous MOCell algorithm
  * A description of MOCell can be consulted in
@@ -38,7 +41,7 @@ import org.uma.jmetal.util.random.PseudoRandom;
  * International Journal of Intelligent Systems. Vol.24, No. 7 (July 2009),
  * pp. 726-746
  */
-public class SyncMOCell1 extends MOCellTemplate {
+public class SyncMOCell1 extends MOCellTemplate implements Algorithm {
   private static final long serialVersionUID = -5671233949239815443L;
 
   /** Constructor */

@@ -21,10 +21,11 @@
 
 package org.uma.jmetal.metaheuristic.multiobjective.moead;
 
+import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
 
-public class MOEAD extends MOEADTemplate {
+public class MOEAD extends MOEADTemplate implements Algorithm {
   private static final long serialVersionUID = -8602634334286344579L;
 
   /** Constructor */

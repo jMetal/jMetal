@@ -38,11 +38,11 @@ import org.uma.jmetal.util.comparator.FitnessComparator;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * This class implementing the IBEA algorithm
- */
-public class IBEA extends Algorithm {
+/** This class implementing the IBEA algorithm */
+public class IBEA implements Algorithm {
   private static final long serialVersionUID = -1889165434725718813L;
+
+  private Problem problem ;
 
   public static final int TOURNAMENTS_ROUNDS = 1;
 

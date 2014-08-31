@@ -35,11 +35,7 @@ import java.util.HashMap;
 public class RandomSelection extends Selection {
   private static final long serialVersionUID = -3975079865177120226L;
 
-  @Deprecated
-  public RandomSelection(HashMap<String, Object> parameters) {
-    super(parameters);
-  }
-
+  /** Constructor */
   private RandomSelection(Builder builder) {
     super(new HashMap<String, Object>()) ;
   }

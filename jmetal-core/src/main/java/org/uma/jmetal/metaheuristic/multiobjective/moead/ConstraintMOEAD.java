@@ -21,6 +21,7 @@
 
 package org.uma.jmetal.metaheuristic.multiobjective.moead;
 
+import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.util.JMetalException;
@@ -32,7 +33,7 @@ import java.io.IOException;
 /**
  * Created by Antonio J. Nebro on 02/08/14.
  */
-public class ConstraintMOEAD extends MOEADTemplate {
+public class ConstraintMOEAD extends MOEADTemplate implements Algorithm {
   private static final long serialVersionUID = 6039274453532436343L;
 
   IConstraintViolationComparator comparator = new ViolationThresholdComparator();
@@ -44,8 +45,7 @@ public class ConstraintMOEAD extends MOEADTemplate {
 
   /** Execute() method */
   @Override
-  public SolutionSet execute()
-    throws JMetalException, ClassNotFoundException, IOException {
+  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     evaluations = 0 ;
 
     initializeUniformWeight();

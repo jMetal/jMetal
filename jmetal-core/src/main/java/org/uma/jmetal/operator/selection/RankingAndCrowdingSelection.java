@@ -47,26 +47,6 @@ public class RankingAndCrowdingSelection extends Selection {
 
   private int solutionsToSelect = 0 ;
 
-  @Deprecated
-  public RankingAndCrowdingSelection(HashMap<String, Object> parameters) {
-    super(parameters);
-
-    if (parameters.get("problem") != null) {
-      problem = (Problem) parameters.get("problem");
-    }
-
-    if (parameters.get("solutionsToSelect") != null) {
-      solutionsToSelect = (Integer) parameters.get("solutionsToSelect");
-    }
-
-    if (problem == null) {
-      JMetalLogger.logger.severe("RankingAndCrowdingSelection.execute: " +
-              "problem not specified");
-      Class cls = java.lang.String.class;
-      String name = cls.getName();
-    }
-  }
-
   /** Constructor */
   private RankingAndCrowdingSelection(Builder builder) {
     super(new HashMap<String, Object>()) ;

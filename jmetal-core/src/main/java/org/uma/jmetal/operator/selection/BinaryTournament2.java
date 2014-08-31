@@ -48,17 +48,7 @@ public class BinaryTournament2 extends Selection {
    */
   private int index = 0;
 
-  /**
-   * Constructor
-   * Creates a new instance of the Binary tournament operator (Deb's
-   * NSGA-II implementation version)
-   */
-  @Deprecated
-  public BinaryTournament2(HashMap<String, Object> parameters) {
-    super(parameters);
-    comparator = new DominanceComparator();
-  }
-
+  /** Constructor */
   private BinaryTournament2(Builder builder) {
     super(new HashMap<String, Object>()) ;
 

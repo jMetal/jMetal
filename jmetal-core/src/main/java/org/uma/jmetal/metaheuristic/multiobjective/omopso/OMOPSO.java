@@ -42,8 +42,10 @@ import org.uma.jmetal.util.random.PseudoRandom;
 import java.util.Comparator;
 
 /** Class implementing the OMOPSO algorithm */
-public class OMOPSO extends Algorithm {
+public class OMOPSO implements Algorithm {
   private static final long serialVersionUID = -4920101693175195923L;
+
+  private Problem problem ;
 
   SolutionSetEvaluator evaluator;
 

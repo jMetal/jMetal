@@ -51,7 +51,7 @@ public class NSGAIImTSPRunner {
    * @throws IOException 
    * @throws ClassNotFoundException 
    */
-  public static void main(String[] args) throws ClassNotFoundException, IOException {
+  public static void main(String[] args) throws Exception {
     Problem problem; 
     Algorithm algorithm; 
     Operator crossover; 

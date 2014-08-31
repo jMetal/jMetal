@@ -58,7 +58,7 @@ public class MOCellRunner {
    *       - org.uma.jmetal.runner.multiobjective.MOCellRunner problemName paretoFrontFile
    */
   public static void main(String[] args) throws
-          JMetalException, SecurityException, IOException, ClassNotFoundException {
+          Exception {
 
     Problem problem;
     Algorithm algorithm;

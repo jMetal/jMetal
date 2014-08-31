@@ -36,7 +36,7 @@ public class MOCHCTest {
   Algorithm algorithm ;
 
   @Test
-  public void testNumberOfReturnedSolutionsInEasyProblem() throws IOException, ClassNotFoundException {
+  public void testNumberOfReturnedSolutionsInEasyProblem() throws Exception {
     algorithm = new MOCHCSettings("ZDT5").configure() ;
 
     SolutionSet solutionSet = algorithm.execute() ;

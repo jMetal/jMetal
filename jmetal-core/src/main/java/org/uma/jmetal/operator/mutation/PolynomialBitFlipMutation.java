@@ -34,6 +34,7 @@ public class PolynomialBitFlipMutation extends Mutation {
   private double realMutationProbability = 0.0 ;
   private double binaryMutationProbability = 0.0 ;
 
+  /** Constructor */
   private PolynomialBitFlipMutation(Builder builder) {
     addValidSolutionType(ArrayRealAndBinarySolutionType.class);
 

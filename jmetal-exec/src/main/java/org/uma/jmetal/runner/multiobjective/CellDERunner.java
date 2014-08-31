@@ -60,7 +60,7 @@ public class CellDERunner {
    *       - org.uma.jmetal.runner.multiobjective.CellDERunner problemName paretoFrontFile
    */
   public static void main(String[] args) throws
-    JMetalException, SecurityException, IOException, ClassNotFoundException {
+          Exception {
     Problem problem;
     Algorithm algorithm;
     Selection selection;

@@ -20,6 +20,7 @@
 
 package org.uma.jmetal.metaheuristic.multiobjective.nsgaII;
 
+import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.util.JMetalException;
@@ -36,15 +37,11 @@ import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
  * To be presented in: PPSN'08. Dortmund. September 2008.
  */
 
-public class NSGAII extends NSGAIITemplate {
+public class NSGAII extends NSGAIITemplate implements Algorithm {
   private static final long serialVersionUID = 5815971727148859507L;
 
   protected NSGAII(Builder builder) {
     super(builder) ;
-  }
-
-  public NSGAII(SolutionSetEvaluator evaluator) {
-	  super(evaluator);
   }
 
   /**

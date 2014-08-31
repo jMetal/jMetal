@@ -39,8 +39,10 @@ import java.util.Comparator;
 /**
  * Class implementing an asynchronous cellular genetic algorithm
  */
-public class AsynchronousCellularGeneticAlgorithm extends Algorithm {
+public class AsynchronousCellularGeneticAlgorithm implements Algorithm {
   private static final long serialVersionUID = -3128274013412638310L;
+
+  private Problem problem ;
 
   private int populationSize ;
   private int maxEvaluations ;

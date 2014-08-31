@@ -20,6 +20,7 @@
 
 package org.uma.jmetal.metaheuristic.multiobjective.smsemoa;
 
+import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.qualityindicator.fasthypervolume.FastHypervolume;
@@ -45,7 +46,7 @@ import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
  * <p/>
  * This algoritm is SMS-EMOA using the FastHypervolume class
  */
-public class FastSMSEMOA extends SMSEMOATemplate {
+public class FastSMSEMOA extends SMSEMOATemplate implements Algorithm {
   private static final long serialVersionUID = 2217597718629923190L;
 
   /** Constructor */
@@ -64,9 +65,9 @@ public class FastSMSEMOA extends SMSEMOATemplate {
     while (!stoppingCondition()) {
       offspringPopulation = new SolutionSet(populationSize);
 
-      Solution[] parents = (Solution[])selectionOperator.execute(population) ;
-      Solution[] offSpring = (Solution[]) crossoverOperator.execute(parents) ;
-      mutationOperator.execute(offSpring[0]);
+      Solution[] parents = (Solution[]) selection.execute(population) ;
+      Solution[] offSpring = (Solution[]) crossover.execute(parents) ;
+      mutation.execute(offSpring[0]);
 
       problem.evaluate(offSpring[0]);
       problem.evaluateConstraints(offSpring[0]);

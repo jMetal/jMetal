@@ -20,6 +20,7 @@
 
 package org.uma.jmetal.metaheuristic.multiobjective.moead;
 
+import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.util.JMetalLogger;
@@ -28,9 +29,9 @@ import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 import java.util.logging.Level;
 
-public class ParallelMOEAD extends MOEADTemplate implements Runnable {
+public class ParallelMOEAD extends MOEADTemplate implements Runnable, Algorithm {
   private static final long serialVersionUID = -8602634324582384579L;
-  // FIXME: Pending to be implemented
+
   private ParallelMOEAD parentThread;
   private Thread[] thread;
   private CyclicBarrier barrier;

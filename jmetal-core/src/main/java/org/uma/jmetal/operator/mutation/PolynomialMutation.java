@@ -43,21 +43,7 @@ public class PolynomialMutation extends Mutation {
 
   private double mutationProbability = 0.0;
 
-  @Deprecated
-  public PolynomialMutation(HashMap<String, Object> parameters) {
-    super(parameters);
-
-    addValidSolutionType(RealSolutionType.class);
-    addValidSolutionType(ArrayRealSolutionType.class);
-
-    if (parameters.get("setProbability") != null) {
-      mutationProbability = (Double) parameters.get("setProbability");
-    }
-    if (parameters.get("setDistributionIndex") != null) {
-      distributionIndex = (Double) parameters.get("setDistributionIndex");
-    }
-  }
-
+  /** Constructor */
   private PolynomialMutation(Builder builder) {
     addValidSolutionType(RealSolutionType.class);
     addValidSolutionType(ArrayRealSolutionType.class);

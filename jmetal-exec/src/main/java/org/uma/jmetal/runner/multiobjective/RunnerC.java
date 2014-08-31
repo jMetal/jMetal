@@ -55,9 +55,7 @@ public class RunnerC {
    * @throws ClassNotFoundException
    */
   public static void main(String[] args) throws
-    JMetalException, SecurityException, IOException,
-    IllegalArgumentException, IllegalAccessException,
-    ClassNotFoundException {
+          Exception {
     Algorithm algorithm;
 
     QualityIndicatorGetter indicators;

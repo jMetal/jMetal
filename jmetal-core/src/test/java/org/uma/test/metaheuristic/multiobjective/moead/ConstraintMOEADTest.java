@@ -36,7 +36,7 @@ public class ConstraintMOEADTest {
   Algorithm algorithm;
 
   @Test
-  public void testNumberOfReturnedSolutionsInEasyProblem() throws IOException, ClassNotFoundException {
+  public void testNumberOfReturnedSolutionsInEasyProblem() throws Exception {
     algorithm = new ConstraintMOEADSettings("LZ09F2").configure() ;
 
     SolutionSet solutionSet = algorithm.execute() ;
@@ -48,7 +48,7 @@ public class ConstraintMOEADTest {
   }
 
   @Test
-  public void testNumberOfReturnedSolutionsInEasyConstrainedProblem() throws IOException, ClassNotFoundException {
+  public void testNumberOfReturnedSolutionsInEasyConstrainedProblem() throws Exception {
     algorithm = new ConstraintMOEADSettings("Srinivas").configure() ;
 
     SolutionSet solutionSet = algorithm.execute() ;

@@ -38,7 +38,7 @@ public class FastSMSEMOATest {
   Algorithm algorithm;
 
   @Test
-  public void numberOfReturnedSolutionsInEasyProblemTest() throws IOException, ClassNotFoundException {
+  public void numberOfReturnedSolutionsInEasyProblemTest() throws Exception {
     algorithm = new FastSMSEMOASettings("Kursawe").configure() ;
 
     SolutionSet solutionSet = algorithm.execute() ;
