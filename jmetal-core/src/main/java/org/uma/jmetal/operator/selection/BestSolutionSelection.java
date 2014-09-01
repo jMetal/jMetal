@@ -39,8 +39,6 @@ public class BestSolutionSelection extends Selection {
   
   /** Constructor */
   private BestSolutionSelection(Builder builder) {
-  	super(new HashMap<String, Object>()) ;
-  	
   	this.comparator = builder.comparator ;
   }
   

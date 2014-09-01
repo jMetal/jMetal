@@ -50,12 +50,29 @@ public class BinaryTournament2 extends Selection {
 
   /** Constructor */
   private BinaryTournament2(Builder builder) {
-    super(new HashMap<String, Object>()) ;
-
     comparator = builder.comparator ;
   }
 
-  /** execute() method */
+  /** Builder class */
+  public static class Builder {
+    Comparator<Solution> comparator ;
+
+    public Builder() {
+      comparator = new DominanceComparator() ;
+    }
+
+    public Builder setComparator(Comparator<Solution> comparator) {
+      this.comparator = comparator ;
+
+      return this ;
+    }
+
+    public BinaryTournament2 build() {
+      return new BinaryTournament2(this) ;
+    }
+  }
+
+  /** Execute() method */
   public Object execute(Object object) {
     if (null == object) {
       throw new JMetalException("Parameter is null") ;
@@ -93,25 +110,6 @@ public class BinaryTournament2 extends Selection {
       } else {
         return solution2;
       }
-    }
-  }
-
-  /** Builder class */
-  public static class Builder {
-    Comparator<Solution> comparator ;
-
-    public Builder() {
-      comparator = new DominanceComparator() ;
-    }
-
-    public Builder setComparator(Comparator<Solution> comparator) {
-      this.comparator = comparator ;
-
-      return this ;
-    }
-
-    public BinaryTournament2 build() {
-      return new BinaryTournament2(this) ;
     }
   }
 }

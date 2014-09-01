@@ -39,12 +39,23 @@ public class WorstSolutionSelection extends Selection {
 
   /** Constructor */
   private WorstSolutionSelection(Builder builder) {
-  	super(new HashMap<String, Object>()) ;
-
   	this.comparator = builder.comparator ;
   }
-  
-  /** execute() method */
+
+  /** Builder class */
+  public static class Builder {
+    private Comparator<Solution> comparator;
+
+    public Builder(final Comparator<Solution> comparator) {
+      this.comparator = comparator ;
+    }
+
+    public WorstSolutionSelection build() {
+      return new WorstSolutionSelection(this) ;
+    }
+  }
+
+  /** Execute() method */
   public Object execute(Object object) {
   	if (null == object) {
   		throw new JMetalException("Null parameter") ;
@@ -64,18 +75,5 @@ public class WorstSolutionSelection extends Selection {
     }
 
     return worstSolution;
-  }
-  
-  /** Builder class */
-  public static class Builder {
-    private Comparator<Solution> comparator;
-
-	  public Builder(final Comparator<Solution> comparator) {
-	  	this.comparator = comparator ;
-	  }
-	  
-	  public WorstSolutionSelection build() {
-	  	 return new WorstSolutionSelection(this) ;
-	  }
   }
 }

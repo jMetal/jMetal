@@ -37,10 +37,9 @@ public class RandomSelection extends Selection {
 
   /** Constructor */
   private RandomSelection(Builder builder) {
-    super(new HashMap<String, Object>()) ;
   }
 
-  /** execute() method */
+  /** Execute() method */
   public Object execute(Object object) {
     if (null == object) {
       throw new JMetalException("Parameter is null") ;

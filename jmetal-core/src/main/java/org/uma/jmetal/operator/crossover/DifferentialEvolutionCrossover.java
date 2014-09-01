@@ -76,39 +76,8 @@ public class DifferentialEvolutionCrossover extends Crossover {
   // DE variant (rand/1/bin, rand/1/exp, etc.)
   private String variant;
 
-  /**
-   * @deprecated
-   */
-  @Deprecated
-  public DifferentialEvolutionCrossover(HashMap<String, Object> parameters) {
-    super(parameters);
-
-    cr = DEFAULT_CR;
-    f = DEFAULT_F;
-    k = DEFAULT_K;
-    variant = DEFAULT_DE_VARIANT;
-
-    if (parameters.get("CR") != null) {
-      cr = (Double) parameters.get("CR");
-    }
-    if (parameters.get("F") != null) {
-      f = (Double) parameters.get("F");
-    }
-    if (parameters.get("K") != null) {
-      k = (Double) parameters.get("K");
-    }
-    if (parameters.get("DE_VARIANT") != null) {
-      variant = (String) parameters.get("DE_VARIANT");
-    }
-
-    addValidSolutionType(RealSolutionType.class);
-    addValidSolutionType(ArrayRealSolutionType.class);
-  }
-
   /** Constructor */
   public DifferentialEvolutionCrossover(Builder builder) {
-    super(new HashMap<String, Object>()) ;
-
     cr = builder.cr;
     f = builder.f;
     k = builder.k;

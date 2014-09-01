@@ -49,16 +49,15 @@ public class RankingAndCrowdingSelection extends Selection {
 
   /** Constructor */
   private RankingAndCrowdingSelection(Builder builder) {
-    super(new HashMap<String, Object>()) ;
-
     solutionsToSelect = builder.solutionsToSelect ;
   }
 
+  /* Getter */
   public int getSolutionsToSelect() {
     return solutionsToSelect;
   }
 
-  /** execute() method */
+  /** Execute() method */
   public Object execute(Object object) throws JMetalException {
     if (null == object) {
       throw new JMetalException("Parameter is null") ;

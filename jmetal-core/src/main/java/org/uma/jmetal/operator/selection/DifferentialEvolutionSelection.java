@@ -37,7 +37,6 @@ public class DifferentialEvolutionSelection extends Selection {
 
   /** Constructor */
   DifferentialEvolutionSelection(Builder builder) {
-    super(new HashMap<String, Object>()) ;
   }
 
   /** Builder class */

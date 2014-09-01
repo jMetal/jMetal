@@ -52,31 +52,6 @@ public class MutationLocalSearch extends LocalSearch {
 
   private Operator mutationOperator;
 
-  /**
-   * Constructor.
-   * Creates a new local search object.
-   *
-   * @param parameters The parameters
-   */
-  @Deprecated
-  public MutationLocalSearch(HashMap<String, Object> parameters) {
-    super(parameters);
-    if (parameters.get("problem") != null) {
-      problem = (Problem) parameters.get("problem");
-    }
-    if (parameters.get("setImprovementRounds") != null) {
-      improvementRounds = (Integer) parameters.get("setImprovementRounds");
-    }
-    if (parameters.get("mutation") != null) {
-      mutationOperator = (Mutation) parameters.get("mutation");
-    }
-
-    evaluations = 0;
-    archive = null;
-    dominanceComparator = new DominanceComparator();
-    constraintComparator = new OverallConstraintViolationComparator();
-  }
-
   /** Constructor */
   private MutationLocalSearch(Builder builder) {
     problem = builder.problem ;

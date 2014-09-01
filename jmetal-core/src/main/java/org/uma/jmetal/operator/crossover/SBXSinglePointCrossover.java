@@ -22,6 +22,7 @@ package org.uma.jmetal.operator.crossover;
 
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.encoding.solutiontype.ArrayRealAndBinarySolutionType;
+import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
 import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
 import org.uma.jmetal.encoding.variable.Binary;
 import org.uma.jmetal.util.JMetalException;
@@ -40,30 +41,95 @@ public class SBXSinglePointCrossover extends Crossover {
   private static final double EPS = 1.0e-14;
 
   private static final double ETA_C_DEFAULT = 20.0;
-  private double distributionIndex = ETA_C_DEFAULT;
+
+  private double distributionIndex ;
+  private double realCrossoverProbability ;
+  private double binaryCrossoverProbability ;
   /**
    * Valid solution types to apply this operator
    */
   private static final List<Class<ArrayRealAndBinarySolutionType>> VALID_TYPES =
     Arrays.asList(ArrayRealAndBinarySolutionType.class);
-  private Double realCrossoverProbability = null;
-  private Double binaryCrossoverProbability = null;
 
-  /**
-   * Constructor
-   */
-  public SBXSinglePointCrossover(HashMap<String, Object> parameters) {
-    super(parameters);
+  /** Constructor */
+  private SBXSinglePointCrossover(Builder builder) {
+    addValidSolutionType(ArrayRealAndBinarySolutionType.class);
 
-    if (parameters.get("realCrossoverProbability") != null) {
-      realCrossoverProbability = (Double) parameters.get("realCrossoverProbability");
+    this.realCrossoverProbability = builder.realCrossoverProbability ;
+    this.binaryCrossoverProbability = builder.binaryCrossoverProbability ;
+    this.distributionIndex = builder.distributionIndex ;
+  }
+
+  /* Getters */
+
+  public double getDistributionIndex() {
+    return distributionIndex;
+  }
+
+  public double getRealCrossoverProbability() {
+    return realCrossoverProbability;
+  }
+
+  public double getBinaryCrossoverProbability() {
+    return binaryCrossoverProbability;
+  }
+
+  /** Builder class */
+  public static class Builder {
+    private double distributionIndex ;
+    private double realCrossoverProbability ;
+    private double binaryCrossoverProbability ;
+
+    public Builder() {
+      realCrossoverProbability = 0.9 ;
+      binaryCrossoverProbability = 0.9 ;
+      distributionIndex = ETA_C_DEFAULT ;
     }
-    if (parameters.get("binaryrossoverProbability") != null) {
-      binaryCrossoverProbability = (Double) parameters.get("binaryrossoverProbability");
+
+    public Builder setRealCrossoverProbability(double realCrossoverProbability) {
+      this.realCrossoverProbability = realCrossoverProbability ;
+
+      return this ;
     }
-    if (parameters.get("setDistributionIndex") != null) {
-      distributionIndex = (Double) parameters.get("setDistributionIndex");
+
+    public Builder setBinaryCrossoverProbability(double binaryCrossoverProbability) {
+      this.binaryCrossoverProbability = binaryCrossoverProbability ;
+
+      return this ;
     }
+
+    public Builder setDistributionIndex (double distributionIndex) {
+      this.distributionIndex = distributionIndex ;
+
+      return this ;
+    }
+
+    public SBXSinglePointCrossover build() {
+      return new SBXSinglePointCrossover(this) ;
+    }
+  }
+
+  /** Execute() method */
+  @Override
+  public Object execute(Object object) throws JMetalException {
+    Solution[] parents = (Solution[]) object;
+
+    if (parents.length != 2) {
+      throw new JMetalException("SBXSinglePointCrossover.execute: operator " +
+              "needs two parents");
+    }
+
+    if (!(VALID_TYPES.contains(parents[0].getType().getClass()) &&
+            VALID_TYPES.contains(parents[1].getType().getClass()))) {
+      throw new JMetalException("SBXSinglePointCrossover.execute: the solutions " +
+              "type " + parents[0].getType() + " is not allowed with this operator");
+    }
+
+    Solution[] offSpring;
+    offSpring = doCrossover(realCrossoverProbability,
+            binaryCrossoverProbability, parents[0], parents[1]);
+
+    return offSpring;
   }
 
   /**
@@ -189,28 +255,6 @@ public class SBXSinglePointCrossover extends Crossover {
         binaryChild1.getBits().set(i, swap);
       }
     }
-
-    return offSpring;
-  }
-
-  @Override
-  public Object execute(Object object) throws JMetalException {
-    Solution[] parents = (Solution[]) object;
-
-    if (parents.length != 2) {
-      throw new JMetalException("SBXSinglePointCrossover.execute: operator " +
-        "needs two parents");
-    }
-
-    if (!(VALID_TYPES.contains(parents[0].getType().getClass()) &&
-      VALID_TYPES.contains(parents[1].getType().getClass()))) {
-      throw new JMetalException("SBXSinglePointCrossover.execute: the solutions " +
-        "type " + parents[0].getType() + " is not allowed with this operator");
-    }
-
-    Solution[] offSpring;
-    offSpring = doCrossover(realCrossoverProbability,
-            binaryCrossoverProbability, parents[0], parents[1]);
 
     return offSpring;
   }

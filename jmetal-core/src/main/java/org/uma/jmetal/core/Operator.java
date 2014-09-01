@@ -38,27 +38,9 @@ public abstract class Operator implements Serializable {
 
   private List<Class<? extends SolutionType>> validSolutionTypes;
 
-  /**
-   * Stores the current operator parameters. It is defined as a Map of pairs 
-   * (<code>String</code>, <code>Object</code>), and it allows objects to be
-   * accessed by their names, which are specified by the string.
-   * @deprecated
-   */
-  @Deprecated
-  protected final Map<String, Object> parameters;
-
-  /**
-   * @deprecated
-   */
-  @Deprecated
-  public Operator(Map<String, Object> parameters) {
-    this.parameters = parameters;
-    validSolutionTypes = new ArrayList<>() ;
-  }
-
+  /** Constructor */
   public Operator() {
     validSolutionTypes = new ArrayList<>() ;
-    parameters = new HashMap<>() ;
   }
 
   /**
@@ -71,30 +53,6 @@ public abstract class Operator implements Serializable {
    * @return An object reference. The returned value depends on the operator.
    */
   public abstract Object execute(Object object) throws JMetalException;
-
-  /**
-   * Sets a new <code>Object</code> parameter to the operator.
-   *
-   * @param name  The parameter name.
-   * @param value Object representing the parameter.
-   * @deprecated
-   */
-  @Deprecated
-  public void setParameter(String name, Object value) {
-    parameters.put(name, value);
-  }
-
-  /**
-   * Returns an object representing a parameter of the <code>Operator</code>
-   *
-   * @param name The parameter name.
-   * @return the parameter.
-   * @deprecated
-   */
-  @Deprecated
-  public Object getParameter(String name) {
-    return parameters.get(name);
-  }
 
   /**
    * Add a new valid solution type
@@ -110,14 +68,6 @@ public abstract class Operator implements Serializable {
    * @return True if the solution type of the solution is valid
    */
   public boolean solutionTypeIsValid(Solution solution) {
-    /*
-    boolean result ;
-    if (validSolutionTypes.contains(solution.getType().getClass())) {
-      result = true ;
-    } else {
-      result = false ;
-    }
-*/
     return validSolutionTypes.contains(solution.getType().getClass()) ;
   }
 

@@ -36,17 +36,17 @@ public class PESA2Selection extends Selection {
 
   /** Constructor */
   public PESA2Selection(Builder builder) {
-    super(new HashMap<String, Object>()) ;
   }
 
-  /**
-   * Performs the operation
-   *
-   * @param object Object representing a SolutionSet. This solution set
-   *               must be an instance <code>AdaptiveGridArchive</code>
-   * @return the selected solution
-   * @throws org.uma.jmetal.util.JMetalException
-   */
+  /** Builder class */
+  static public class Builder {
+
+    public PESA2Selection build() {
+      return new PESA2Selection(this) ;
+    }
+  }
+
+  /** Execute() method */
   public Object execute(Object object) throws JMetalException {
     if (null == object) {
       throw new JMetalException("Null parameter") ;
@@ -100,13 +100,5 @@ public class PESA2Selection extends Selection {
 			throw new JMetalException("Exception in " + name + ".execute()");
 		}
 		*/
-  }
-
-  /** Builder class*/
-  static public class Builder {
-
-    public PESA2Selection build() {
-      return new PESA2Selection(this) ;
-    }
   }
 }

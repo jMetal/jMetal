@@ -44,8 +44,6 @@ public class NonUniformMutation extends Mutation {
 
   /** Constructor */
   private NonUniformMutation(Builder builder) {
-    super(new HashMap<String, Object>()) ;
-
     addValidSolutionType(RealSolutionType.class);
     addValidSolutionType(ArrayRealSolutionType.class);
 
@@ -91,11 +89,6 @@ public class NonUniformMutation extends Mutation {
     if (!solutionTypeIsValid(solution)) {
       throw new JMetalException("NonUniformMutation.execute: the solution " +
         "type " + solution.getType() + " is not allowed with this operator");
-    }
-
-
-    if (getParameter("currentIteration") != null) {
-      currentIteration = (Integer) getParameter("currentIteration");
     }
 
     doMutation(mutationProbability, solution);
