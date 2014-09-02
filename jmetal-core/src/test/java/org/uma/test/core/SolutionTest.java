@@ -31,8 +31,7 @@ import org.uma.jmetal.util.JMetalException;
 
 import java.util.Arrays;
 
-import static junit.framework.Assert.*;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.*;
 
 /**
  * Created by Antonio J. Nebro on 10/05/14.

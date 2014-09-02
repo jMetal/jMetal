@@ -25,5 +25,5 @@ package org.uma.jmetal.core;
 public interface Variable {
 
   /** Method to return a copy of a variable object */
-  public abstract Variable copy();
+  public Variable copy();
 }
