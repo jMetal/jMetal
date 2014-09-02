@@ -15,6 +15,20 @@ public class IntPermutation implements Permutation {
   private List<Integer> permutation ;
 
   /** Default constructor */
+  public IntPermutation(int size) {
+    ArrayList<Integer> randomSequence = new ArrayList<>(size);
+
+    for (int i = 0; i < size; i++) {
+      randomSequence.add(i);
+    }
+
+    java.util.Collections.shuffle(randomSequence);
+
+    permutation = new ArrayList<Integer>(size) ;
+    Collections.copy(permutation, randomSequence) ;
+  }
+
+  /** Constructor */
   public IntPermutation(List<Integer> permutation) {
     this.permutation = new ArrayList<Integer>(permutation.size()) ;
     Collections.copy(this.permutation, permutation) ;
