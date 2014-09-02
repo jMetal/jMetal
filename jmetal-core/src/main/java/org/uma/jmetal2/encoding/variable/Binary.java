@@ -8,6 +8,4 @@ import java.util.BitSet;
  * Created by Antonio J. Nebro on 02/09/14.
  */
 public interface Binary extends Variable<BitSet> {
-  public BitSet getValue() ;
-  void setValue(BitSet value) ;
 }

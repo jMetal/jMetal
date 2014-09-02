@@ -8,6 +8,4 @@ import java.util.List;
  * Created by Antonio J. Nebro on 02/09/14.
  */
 public interface Permutation extends Variable<List> {
-  public List getValue() ;
-  void setValue(List value) ;
 }

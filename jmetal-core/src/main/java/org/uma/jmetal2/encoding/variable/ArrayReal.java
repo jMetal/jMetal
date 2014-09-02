@@ -7,5 +7,4 @@ import org.uma.jmetal2.core.Variable;
  */
 public interface ArrayReal {
   public Real getReal(int index) ;
-  public void setReal(int index, Real realVariable) ;
 }

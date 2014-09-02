@@ -39,9 +39,4 @@ public class EfficientArrayReal implements ArrayReal {
   public Real getReal(int index) {
     return new SimpleReal(array[index]);
   }
-
-  @Override
-  public void setReal(int index, Real realVariable) {
-    array[index] = realVariable.getValue() ;
-  }
 }

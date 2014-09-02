@@ -45,13 +45,4 @@ public class SimpleArrayReal implements ArrayReal {
       throw new JMetalException("Index out of bounds") ;
     }
   }
-
-  @Override
-  public void setReal(int index, Real realVariable) {
-    if ((index >= 0) && (index < array.length)) {
-      array[index] = realVariable ;
-    } else {
-      throw new JMetalException("Index out of bounds") ;
-    }
-  }
 }
