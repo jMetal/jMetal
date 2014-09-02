@@ -1,0 +1,13 @@
+package org.uma.jmetal2.encoding.variable;
+
+import org.uma.jmetal2.core.Variable;
+
+import java.util.List;
+
+/**
+ * Created by Antonio J. Nebro on 02/09/14.
+ */
+public interface Permutation extends Variable<List> {
+  public List getValue() ;
+  void setValue(List value) ;
+}

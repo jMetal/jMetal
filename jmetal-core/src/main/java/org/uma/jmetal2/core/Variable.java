@@ -18,9 +18,11 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.core;
+package org.uma.jmetal2.core;
 
 /** Interface representing types of decision variables */
-public interface Variable {
-  public Variable copy() ;
+public interface Variable<Value> {
+  public Value getValue() ;
+  public void setValue(Value value) ;
+  public Variable copy();
 }
