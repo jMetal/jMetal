@@ -8,7 +8,7 @@ import org.uma.jmetal3.core.impl.NumericalSolutionImpl;
 /**
  * Created by Antonio J. Nebro on 03/09/14.
  */
-public class SimpleRealProblem extends Problem{
+public class SimpleRealProblem extends Problem {
   public SimpleRealProblem() {
     numberOfVariables = 5 ;
     numberOfObjectives = 2 ;
