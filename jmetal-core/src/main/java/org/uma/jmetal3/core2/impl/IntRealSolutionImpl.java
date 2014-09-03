@@ -8,11 +8,16 @@ import org.uma.jmetal3.core.NumericalSolution;
 public class IntRealSolutionImpl<V> implements NumericalSolution {
   double [] objective ;
   V [] variable ;
+  int numberOfIntegerVariables ;
+  int numberOfRealVariables ;
 
   /** Constructor */
-  public IntRealSolutionImpl(int numberOfObjectives, int numberOfVariables) {
+  public IntRealSolutionImpl(int numberOfObjectives, int numberOfIntegerVariables, int numberOfRealVariables) {
     objective = new double[numberOfObjectives] ;
-    variable = (V[])new Object[numberOfVariables] ;
+    this.numberOfIntegerVariables = numberOfIntegerVariables ;
+    this.numberOfRealVariables = numberOfRealVariables ;
+
+    variable = (V[])new Object[numberOfIntegerVariables + numberOfRealVariables] ;
   }
 
   @Override
