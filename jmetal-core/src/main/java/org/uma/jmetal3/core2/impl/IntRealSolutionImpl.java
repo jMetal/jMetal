@@ -5,12 +5,12 @@ import org.uma.jmetal3.core.NumericalSolution;
 /**
  * Created by antonio on 03/09/14.
  */
-public class NumericalSolutionImpl<V> implements NumericalSolution {
+public class IntRealSolutionImpl<V> implements NumericalSolution {
   double [] objective ;
   V [] variable ;
 
   /** Constructor */
-  public NumericalSolutionImpl(int numberOfObjectives, int numberOfVariables) {
+  public IntRealSolutionImpl(int numberOfObjectives, int numberOfVariables) {
     objective = new double[numberOfObjectives] ;
     variable = (V[])new Object[numberOfVariables] ;
   }
