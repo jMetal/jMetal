@@ -1,6 +1,6 @@
-package org.uma.jmetal3.core.impl;
+package org.uma.jmetal3.encoding.impl;
 
-import org.uma.jmetal3.core.NumericalSolution;
+import org.uma.jmetal3.encoding.NumericalSolution;
 
 /**
  * Created by antonio on 03/09/14.
@@ -31,12 +31,12 @@ public class IntRealSolutionImpl<V> implements NumericalSolution {
   }
 
   @Override
-  public V getVariable(int index) {
+  public V getVariableValue(int index) {
     return variable[index];
   }
 
   @Override
-  public void setVariable(int index, Object value) {
+  public void setVariableVariable(int index, Object value) {
     variable[index] = (V)value ;
   }
 

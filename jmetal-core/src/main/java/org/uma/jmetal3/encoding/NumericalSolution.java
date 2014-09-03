@@ -1,4 +1,4 @@
-package org.uma.jmetal3.core;
+package org.uma.jmetal3.encoding;
 
 import org.uma.jmetal3.core.Solution;
 
