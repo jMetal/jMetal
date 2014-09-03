@@ -1,19 +1,18 @@
 package org.uma.jmetal3.core.impl;
 
 import org.uma.jmetal3.core.NumericalSolution;
-import org.uma.jmetal3.core.Solution;
 
 /**
- * Created by antonio on 03/09/14.
+ * Created by Antonio J. Nebro on 03/09/14.
  */
-public class NumericalSolutionImpl<Variable> implements NumericalSolution {
+public class NumericalSolutionImpl<V> implements NumericalSolution {
   double [] objective ;
-  Variable [] variable ;
+  V [] variable ;
 
   /** Constructor */
   public NumericalSolutionImpl(int numberOfObjectives, int numberOfVariables) {
     objective = new double[numberOfObjectives] ;
-    variable = (Variable[])new Object[numberOfVariables] ;
+    variable = (V[])new Object[numberOfVariables] ;
   }
 
   @Override
@@ -27,17 +26,22 @@ public class NumericalSolutionImpl<Variable> implements NumericalSolution {
   }
 
   @Override
-  public Variable getVariable(int index) {
+  public V getVariable(int index) {
     return variable[index];
   }
 
   @Override
   public void setVariable(int index, Object value) {
-    variable[index] = (Variable)value ;
+    variable[index] = (V)value ;
   }
 
   @Override
-  public Object getUpperBound(int index) {
-    return null;
+  public Double getUpperBound(int index) {
+    return 0.0;
+  }
+  
+  @Override
+  public Double getLowerBound(int index) {
+    return 0.0;
   }
 }
