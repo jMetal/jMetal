@@ -1,9 +1,9 @@
 package org.uma.jmetal3.core2.impl;
 
-import org.uma.jmetal3.core.NumericalSolution;
+import org.uma.jmetal3.core2.NumericalSolution;
 
 /**
- * Created by antonio on 03/09/14.
+ * Created by Antonio J. Nebro on 03/09/14.
  */
 public class NumericalSolutionImpl<V> implements NumericalSolution {
   double [] objective ;
@@ -37,6 +37,11 @@ public class NumericalSolutionImpl<V> implements NumericalSolution {
 
   @Override
   public Double getUpperBound(int index) {
+    return 0.0;
+  }
+  
+  @Override
+  public Double getLowerBound(int index) {
     return 0.0;
   }
 }

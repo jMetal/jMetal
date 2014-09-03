@@ -1,6 +1,6 @@
 package org.uma.jmetal3.core2.impl;
 
-import org.uma.jmetal3.core.NumericalSolution;
+import org.uma.jmetal3.core2.NumericalSolution;
 
 /**
  * Created by antonio on 03/09/14.
@@ -41,7 +41,20 @@ public class IntRealSolutionImpl<V> implements NumericalSolution {
   }
 
   @Override
-  public Double getUpperBound(int index) {
+  public Number getUpperBound(int index) {
     return 0.0;
+  }
+  
+  @Override
+  public Number getLowerBound(int index) {
+    return 0.0;
+  }
+
+  public int getNumberOfIntegerVariables() {
+    return numberOfIntegerVariables ;
+  }
+
+  public int getNumberOfRealVariables() {
+    return numberOfRealVariables ;
   }
 }
