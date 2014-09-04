@@ -35,7 +35,7 @@ public class SimpleRandomMutation implements Operator {
     return solution;
   }
 
-	// FIXME:
+	// FIXME: doesn't work with integers
 	private void doMutation(double probability2, NumericalSolution solution) {
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
     	Random random = new Random() ;
