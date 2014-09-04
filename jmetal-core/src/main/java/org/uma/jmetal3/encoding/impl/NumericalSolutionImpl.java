@@ -1,6 +1,5 @@
 package org.uma.jmetal3.encoding.impl;
 
-import org.uma.jmetal3.core.Problem;
 import org.uma.jmetal3.encoding.NumericalSolution;
 import org.uma.jmetal3.problem.ContinuousProblem;
 
