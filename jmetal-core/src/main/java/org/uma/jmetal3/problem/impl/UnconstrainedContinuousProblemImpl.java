@@ -43,23 +43,23 @@ public abstract class UnconstrainedContinuousProblemImpl
 	}
 
   /* Setters */
-  public void setNumberOfVariables(int numberOfVariables) {
+  protected void setNumberOfVariables(int numberOfVariables) {
     this.numberOfVariables = numberOfVariables;
   }
 
-  public void setNumberOfObjectives(int numberOfObjectives) {
+  protected void setNumberOfObjectives(int numberOfObjectives) {
     this.numberOfObjectives = numberOfObjectives;
   }
 
-  public void setName(String name) {
+  protected void setName(String name) {
     this.name = name;
   }
 
-  public void setLowerLimit(List<Double> lowerLimit) {
+  protected void setLowerLimit(List<Double> lowerLimit) {
     this.lowerLimit = lowerLimit;
   }
 
-  public void setUpperLimit(List<Double> upperLimit) {
+  protected void setUpperLimit(List<Double> upperLimit) {
     this.upperLimit = upperLimit;
   }
 }

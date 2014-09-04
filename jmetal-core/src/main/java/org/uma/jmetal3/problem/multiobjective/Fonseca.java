@@ -35,7 +35,7 @@ public class Fonseca extends UnconstrainedContinuousProblemImpl {
   /** Constructor */
   public Fonseca()  {
     setNumberOfVariables(numberOfVariables);
-    setNumberOfObjectives(2);
+    setNumberOfObjectives(numberOfObjectives);
     setName("Fonseca");
 
     ArrayList<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
