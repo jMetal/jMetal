@@ -32,7 +32,8 @@ public class SimpleRandomMutation implements IndividualOperator<NumericSolution<
     return solution;
   }
 
-	private void doMutation(double probability2, NumericSolution<Double> solution) {
+  /** Implements the mutation operation */
+	private void doMutation(double probability, NumericSolution<Double> solution) {
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
     	Random random = new Random() ;
       if (random.nextDouble() <= probability) {
