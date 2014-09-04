@@ -42,8 +42,8 @@ public class Fonseca extends UnconstrainedContinuousProblemImpl {
     }
   }
 
-	public Solution<Double> createSolution() {
-		Solution<Double> solution = new NumericalSolutionImpl<Double>(numberOfObjectives, numberOfVariables) ;
+	public Solution createSolution() {
+		Solution solution = new NumericalSolutionImpl<Double>(numberOfObjectives, numberOfVariables) ;
 
 		return solution ;
 	}

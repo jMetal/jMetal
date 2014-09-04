@@ -51,7 +51,7 @@ public class NumericalSolutionImpl<V extends Number> implements NumericalSolutio
   }
 
 	@Override
-  public void setVariableVariable(int index, V value) {
-    variable[index] = value ;  
+  public void setVariableVariable(int index, Object value) {
+    variable[index] = (V) value ;  
   }
 }

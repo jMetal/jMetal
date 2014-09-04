@@ -33,13 +33,11 @@ public class SimpleRandomMutation implements Operator {
     return solution;
   }
 
-	// FIXME: doesn't work with integers
 	private void doMutation(double probability2, NumericalSolution<Double> solution) {
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
     	Random random = new Random() ;
       if (random.nextDouble() <= probability) {
-      	Double value = solution.getVariableValue(i) ; // this is useless now
-      	value = problem.getLowerBound(i).doubleValue() + 
+      	Double value = problem.getLowerBound(i) + 
       			((problem.getUpperBound(i) - problem.getLowerBound(i)) * random.nextDouble()) ;
       	
       	solution.setVariableVariable(i, value) ;

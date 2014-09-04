@@ -21,8 +21,6 @@
 
 package org.uma.jmetal3.core;
 
-import java.io.Serializable;
-
 /** Interface representing a multiobjective optimization problem */
 public interface Problem {
   /* Getters */
