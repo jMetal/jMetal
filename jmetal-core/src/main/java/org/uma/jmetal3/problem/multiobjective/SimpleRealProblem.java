@@ -6,12 +6,12 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal3.encoding.impl.NumericalSolutionImpl;
 import org.uma.jmetal3.problem.NumericProblem;
 import org.uma.jmetal3.problem.UnconstrainedProblem;
-import org.uma.jmetal3.problem.impl.UnconsntrainedNumericProblemImpl;
+import org.uma.jmetal3.problem.impl.UnconstrainedNumericProblemImpl;
 
 /**
  * Created by Antonio J. Nebro on 03/09/14.
  */
-public class SimpleRealProblem extends UnconsntrainedNumericProblemImpl {
+public class SimpleRealProblem extends UnconstrainedNumericProblemImpl {
 	
 	/** Constructor */
 	public SimpleRealProblem() {

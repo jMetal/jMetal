@@ -41,11 +41,6 @@ public class NumericalSolutionImpl<V extends Number> implements NumericalSolutio
   }
 
   @Override
-  public void setVariableVariable(int index, Object value) {
-    variable[index] = (V)value ;
-  }
-
-  @Override
   public V getUpperBound(int index) {
     return (V)problem.getUpperBound(index);
   }
@@ -53,5 +48,10 @@ public class NumericalSolutionImpl<V extends Number> implements NumericalSolutio
   @Override
   public V getLowerBound(int index) {
     return (V)problem.getLowerBound(index) ;
+  }
+
+	@Override
+  public void setVariableVariable(int index, V value) {
+    variable[index] = value ;  
   }
 }

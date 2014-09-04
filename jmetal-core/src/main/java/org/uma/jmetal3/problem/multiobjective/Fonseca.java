@@ -25,10 +25,10 @@ import org.uma.jmetal3.core.Problem;
 import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal3.encoding.impl.NumericalSolutionImpl;
 import org.uma.jmetal3.problem.NumericProblem;
-import org.uma.jmetal3.problem.impl.UnconsntrainedNumericProblemImpl;
+import org.uma.jmetal3.problem.impl.UnconstrainedNumericProblemImpl;
 
 /** Class representing problem Fonseca */
-public class Fonseca extends UnconsntrainedNumericProblemImpl {
+public class Fonseca extends UnconstrainedNumericProblemImpl {
 	
   /** Constructor */
   public Fonseca(String solutionType)  {
