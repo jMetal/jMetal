@@ -6,18 +6,13 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal3.encoding.impl.NumericalSolutionImpl;
 import org.uma.jmetal3.problem.NumericProblem;
 import org.uma.jmetal3.problem.UnconstrainedProblem;
+import org.uma.jmetal3.problem.impl.UnconsntrainedNumericProblemImpl;
 
 /**
  * Created by Antonio J. Nebro on 03/09/14.
  */
-public class SimpleRealProblem implements UnconstrainedProblem, NumericProblem {
-	private int numberOfVariables ;
-	private int numberOfObjectives ;
-	private String name ;
-
-	private Double []lowerLimit ;
-	private Double []upperLimit ;
-
+public class SimpleRealProblem extends UnconsntrainedNumericProblemImpl {
+	
 	/** Constructor */
 	public SimpleRealProblem() {
 		numberOfVariables = 5 ;
@@ -36,30 +31,5 @@ public class SimpleRealProblem implements UnconstrainedProblem, NumericProblem {
 
 	@Override
 	public void evaluate(Solution solution) {	  
-	}
-
-	@Override
-	public int getNumberOfVariables() {
-		return numberOfVariables ;
-	}
-
-	@Override
-	public int getNumberOfObjectives() {
-		return numberOfObjectives ;
-	}
-
-	@Override
-	public String getName() {
-		return name ;
-	}
-
-	@Override
-	public Number getUpperBound(int index) {
-		return upperLimit[index] ;
-	}
-
-	@Override
-	public Number getLowerBound(int index) {
-		return lowerLimit[index] ;
 	}
 }

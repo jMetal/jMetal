@@ -25,15 +25,10 @@ import org.uma.jmetal3.core.Problem;
 import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal3.encoding.impl.NumericalSolutionImpl;
 import org.uma.jmetal3.problem.NumericProblem;
+import org.uma.jmetal3.problem.impl.UnconsntrainedNumericProblemImpl;
 
 /** Class representing problem Fonseca */
-public class Fonseca implements NumericProblem {
-	private int numberOfVariables ;
-	private int numberOfObjectives ;
-	private String name ;
-
-	private Double []lowerLimit ;
-	private Double []upperLimit ;
+public class Fonseca extends UnconsntrainedNumericProblemImpl {
 	
   /** Constructor */
   public Fonseca(String solutionType)  {
@@ -81,29 +76,4 @@ public class Fonseca implements NumericProblem {
     solution.setObjective(0, f[0]);
     solution.setObjective(1, f[1]);
   }
-
-	@Override
-	public int getNumberOfVariables() {
-		return numberOfVariables ;
-	}
-
-	@Override
-	public int getNumberOfObjectives() {
-		return numberOfObjectives ;
-	}
-
-	@Override
-	public String getName() {
-		return name ;
-	}
-
-	@Override
-	public Number getUpperBound(int index) {
-		return upperLimit[index] ;
-	}
-
-	@Override
-	public Number getLowerBound(int index) {
-		return lowerLimit[index] ;
-	}
 }
