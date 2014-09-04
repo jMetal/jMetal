@@ -4,7 +4,7 @@
 //       Antonio J. Nebro <antonio@lcc.uma.es>
 //       Juan J. Durillo <durillo@lcc.uma.es>
 //
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
+//  Copyright (c) 2014 Antonio J. Nebro, Juan J. Durillo
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -45,7 +45,7 @@ public class Fonseca extends UnconstrainedContinuousProblemImpl {
 	public Solution createSolution() {
 		Solution solution = new NumericalSolutionImpl<Double>(numberOfObjectives, numberOfVariables) ;
 
-		return solution ;
+		return solution ; 
 	}
 	
   /** Evaluate() method */

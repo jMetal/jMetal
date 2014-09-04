@@ -1,8 +1,7 @@
 package org.uma.jmetal3.problem;
 
-import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal3.core.Problem;
-import org.uma.jmetal3.core.Solution;
 
+/** Interface representing problems having no constraints */
 public interface UnconstrainedProblem extends Problem {
 }

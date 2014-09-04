@@ -1,11 +1,7 @@
 package org.uma.jmetal3.problem.multiobjective;
 
-import org.uma.jmetal3.core.Problem;
 import org.uma.jmetal3.core.Solution;
-import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal3.encoding.impl.NumericalSolutionImpl;
-import org.uma.jmetal3.problem.ContinuousProblem;
-import org.uma.jmetal3.problem.UnconstrainedProblem;
 import org.uma.jmetal3.problem.impl.UnconstrainedContinuousProblemImpl;
 
 /**
