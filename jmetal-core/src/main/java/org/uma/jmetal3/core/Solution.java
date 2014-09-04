@@ -8,5 +8,8 @@ public interface Solution {
   public double getObjective(int index) ;
 
   public Object getVariableValue(int index) ;
-  public void setVariableVariable(int index, Object value) ;
+  public void setVariableValue(int index, Object value) ;
+
+  public int getNumberOfVariables() ;
+  public int getNumberOfObjectives() ;
  }

@@ -8,5 +8,5 @@ import java.util.Collection;
 /**
  * Created by Antonio J. Nebro on 04/09/14.
  */
-public interface PopulationOperator<S,R extends Solution> extends Operator<Collection<S>,R> {
+public interface PopulationOperator<Source,Result extends Solution> extends Operator<Collection<Source>,Result> {
 }

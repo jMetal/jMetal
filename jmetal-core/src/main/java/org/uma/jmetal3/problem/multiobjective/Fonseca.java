@@ -29,18 +29,16 @@ import java.util.ArrayList;
 
 /** Class representing problem Fonseca */
 public class Fonseca extends UnconstrainedContinuousProblemImpl {
-  private int numberOfVariables = 3 ;
-  private int numberOfObjectives = 2 ;
 
   /** Constructor */
   public Fonseca()  {
-    setNumberOfVariables(numberOfVariables);
-    setNumberOfObjectives(numberOfObjectives);
+    setNumberOfVariables(3);
+    setNumberOfObjectives(2);
     setName("Fonseca");
 
-    ArrayList<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
-    ArrayList<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
-    for (int var = 0; var < numberOfVariables; var++) {
+    ArrayList<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
+    ArrayList<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
+    for (int var = 0; var < getNumberOfVariables(); var++) {
       lowerLimit.set(var, -4.0);
       upperLimit.set(var, 4.0);
     }
@@ -50,14 +48,16 @@ public class Fonseca extends UnconstrainedContinuousProblemImpl {
   }
 
 	public Solution createSolution() {
-		Solution solution = new NumericSolutionImpl<Double>(numberOfObjectives, numberOfVariables) ;
+		Solution solution = new NumericSolutionImpl<Double>(getNumberOfObjectives(), getNumberOfVariables()) ;
 
 		return solution ; 
 	}
 	
   /** Evaluate() method */
   public void evaluate(Solution solution) {
-    double[] f = new double[numberOfObjectives];
+    int numberOfVariables = getNumberOfVariables() ;
+
+    double[] f = new double[getNumberOfObjectives()];
     double[] x = new double[numberOfVariables] ;
     
     for (int i = 0; i < numberOfVariables; i++) {

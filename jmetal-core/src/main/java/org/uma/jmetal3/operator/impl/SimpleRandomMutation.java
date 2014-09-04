@@ -3,7 +3,6 @@ package org.uma.jmetal3.operator.impl;
 import java.util.Random;
 
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal3.encoding.NumericSolution;
 import org.uma.jmetal3.operator.IndividualOperator;
 import org.uma.jmetal3.problem.ContinuousProblem;
@@ -40,7 +39,7 @@ public class SimpleRandomMutation implements IndividualOperator<NumericSolution<
       	Double value = problem.getLowerBound(i) + 
       			((problem.getUpperBound(i) - problem.getLowerBound(i)) * random.nextDouble()) ;
       	
-      	solution.setVariableVariable(i, value) ;
+      	solution.setVariableValue(i, value) ;
       }
     }
 	}

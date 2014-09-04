@@ -10,14 +10,14 @@ import java.util.List;
  * Created by Antonio J. Nebro on 03/09/14.
  */
 public class NumericSolutionImpl<V extends Number> implements NumericSolution<V> {
-  private double [] objective ;
-  private List<V> variable ;
+  private double [] objectives;
+  private List<V> variables;
   private ContinuousProblem problem ;
   
   /** Constructor */
   public NumericSolutionImpl(int numberOfObjectives, int numberOfVariables) {
-    objective = new double[numberOfObjectives] ;
-    variable = new ArrayList<V>(numberOfVariables) ;
+    objectives = new double[numberOfObjectives] ;
+    variables = new ArrayList<V>(numberOfVariables) ;
   }
   
   /** Constructor */
@@ -28,22 +28,22 @@ public class NumericSolutionImpl<V extends Number> implements NumericSolution<V>
 
   @Override
   public void setObjective(int index, double value) {
-    objective[index] = value ;
+    objectives[index] = value ;
   }
 
   @Override
   public double getObjective(int index) {
-    return objective[index];
+    return objectives[index];
   }
 
   @Override
   public V getVariableValue(int index) {
-    return variable.get(index);
+    return variables.get(index);
   }
 
   @Override
-  public void setVariableVariable(int index, Object value) {
-    variable.set(index, (V)value) ;
+  public void setVariableValue(int index, Object value) {
+    variables.set(index, (V) value) ;
   }
 
   @Override
@@ -54,5 +54,15 @@ public class NumericSolutionImpl<V extends Number> implements NumericSolution<V>
   @Override
   public V getLowerBound(int index) {
     return (V)problem.getLowerBound(index) ;
+  }
+
+  @Override
+  public int getNumberOfVariables() {
+    return variables.size();
+  }
+
+  @Override
+  public int getNumberOfObjectives() {
+    return objectives.length;
   }
 }
