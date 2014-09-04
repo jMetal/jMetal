@@ -2,19 +2,17 @@ package org.uma.jmetal3.operator;
 
 import java.util.Random;
 
-import org.uma.jmetal3.core.Problem;
 import org.uma.jmetal3.core.Operator;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal3.encoding.NumericalSolution;
-import org.uma.jmetal3.problem.NumericProblem;
-import org.uma.jmetal3.core.Solution;
+import org.uma.jmetal3.problem.ContinuousProblem;
 
 public class SimpleRandomMutation implements Operator {
   private double probability ;
-  private NumericProblem problem ;
+  private ContinuousProblem problem ;
   
   /**  Constructor */
-  public SimpleRandomMutation(NumericProblem problem) {
+  public SimpleRandomMutation(ContinuousProblem problem) {
   	this.problem = problem ;
   	probability = 1.0/problem.getNumberOfVariables() ;
   }
@@ -28,7 +26,7 @@ public class SimpleRandomMutation implements Operator {
       throw new JMetalException("Invalid parameter class") ;
     }
 
-    NumericalSolution solution = (NumericalSolution) object;	  
+    NumericalSolution<Double> solution = (NumericalSolution<Double>) object;	  
     
     doMutation(probability, solution) ;
     
@@ -36,14 +34,13 @@ public class SimpleRandomMutation implements Operator {
   }
 
 	// FIXME: doesn't work with integers
-	private void doMutation(double probability2, NumericalSolution solution) {
+	private void doMutation(double probability2, NumericalSolution<Double> solution) {
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
     	Random random = new Random() ;
       if (random.nextDouble() <= probability) {
-      	Number value = (Number)solution.getVariableValue(i) ; // this is useless now
+      	Double value = solution.getVariableValue(i) ; // this is useless now
       	value = problem.getLowerBound(i).doubleValue() + 
-      			((problem.getUpperBound(i).doubleValue() - problem.getLowerBound(i).doubleValue())
-      			* random.nextDouble()) ;
+      			((problem.getUpperBound(i) - problem.getLowerBound(i)) * random.nextDouble()) ;
       	
       	solution.setVariableVariable(i, value) ;
       }

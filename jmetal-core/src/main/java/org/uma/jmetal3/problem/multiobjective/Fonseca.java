@@ -21,14 +21,12 @@
 
 package org.uma.jmetal3.problem.multiobjective;
 
-import org.uma.jmetal3.core.Problem;
 import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal3.encoding.impl.NumericalSolutionImpl;
-import org.uma.jmetal3.problem.NumericProblem;
-import org.uma.jmetal3.problem.impl.UnconstrainedNumericProblemImpl;
+import org.uma.jmetal3.problem.impl.UnconstrainedContinuousProblemImpl;
 
 /** Class representing problem Fonseca */
-public class Fonseca extends UnconstrainedNumericProblemImpl {
+public class Fonseca extends UnconstrainedContinuousProblemImpl {
 	
   /** Constructor */
   public Fonseca(String solutionType)  {

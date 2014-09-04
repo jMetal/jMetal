@@ -2,7 +2,7 @@ package org.uma.jmetal3.encoding.impl;
 
 import org.uma.jmetal3.core.Problem;
 import org.uma.jmetal3.encoding.NumericalSolution;
-import org.uma.jmetal3.problem.NumericProblem;
+import org.uma.jmetal3.problem.ContinuousProblem;
 
 /**
  * Created by Antonio J. Nebro on 03/09/14.
@@ -10,7 +10,7 @@ import org.uma.jmetal3.problem.NumericProblem;
 public class NumericalSolutionImpl<V extends Number> implements NumericalSolution<V> {
   double [] objective ;
   V [] variable ;
-  NumericProblem problem ;
+  ContinuousProblem problem ;
   
   /** Constructor */
   public NumericalSolutionImpl(int numberOfObjectives, int numberOfVariables) {
@@ -19,7 +19,7 @@ public class NumericalSolutionImpl<V extends Number> implements NumericalSolutio
   }
   
   /** Constructor */
-  public NumericalSolutionImpl(NumericProblem problem) {
+  public NumericalSolutionImpl(ContinuousProblem problem) {
   	this.problem = problem ;
     objective = new double[problem.getNumberOfObjectives()] ;
     variable = (V[])new Object[problem.getNumberOfVariables()] ;

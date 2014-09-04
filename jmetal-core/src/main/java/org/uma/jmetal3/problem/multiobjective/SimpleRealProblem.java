@@ -4,14 +4,14 @@ import org.uma.jmetal3.core.Problem;
 import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal3.encoding.impl.NumericalSolutionImpl;
-import org.uma.jmetal3.problem.NumericProblem;
+import org.uma.jmetal3.problem.ContinuousProblem;
 import org.uma.jmetal3.problem.UnconstrainedProblem;
-import org.uma.jmetal3.problem.impl.UnconstrainedNumericProblemImpl;
+import org.uma.jmetal3.problem.impl.UnconstrainedContinuousProblemImpl;
 
 /**
  * Created by Antonio J. Nebro on 03/09/14.
  */
-public class SimpleRealProblem extends UnconstrainedNumericProblemImpl {
+public class SimpleRealProblem extends UnconstrainedContinuousProblemImpl {
 	
 	/** Constructor */
 	public SimpleRealProblem() {
