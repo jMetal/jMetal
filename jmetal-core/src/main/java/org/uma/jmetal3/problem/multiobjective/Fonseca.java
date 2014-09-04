@@ -22,28 +22,35 @@
 package org.uma.jmetal3.problem.multiobjective;
 
 import org.uma.jmetal3.core.Solution;
-import org.uma.jmetal3.encoding.impl.NumericalSolutionImpl;
+import org.uma.jmetal3.encoding.impl.NumericSolutionImpl;
 import org.uma.jmetal3.problem.impl.UnconstrainedContinuousProblemImpl;
+
+import java.util.ArrayList;
 
 /** Class representing problem Fonseca */
 public class Fonseca extends UnconstrainedContinuousProblemImpl {
-	
-  /** Constructor */
-  public Fonseca(String solutionType)  {
-    numberOfVariables = 3;
-    numberOfObjectives = 2;
-    name = "Fonseca";
+  private int numberOfVariables = 3 ;
+  private int numberOfObjectives = 2 ;
 
-    upperLimit = new Double[numberOfVariables];
-    lowerLimit = new Double[numberOfVariables];
+  /** Constructor */
+  public Fonseca()  {
+    setNumberOfVariables(numberOfVariables);
+    setNumberOfObjectives(2);
+    setName("Fonseca");
+
+    ArrayList<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
+    ArrayList<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
     for (int var = 0; var < numberOfVariables; var++) {
-      lowerLimit[var] = -4.0;
-      upperLimit[var] = 4.0;
+      lowerLimit.set(var, -4.0);
+      upperLimit.set(var, 4.0);
     }
+
+    setLowerLimit(lowerLimit);
+    setUpperLimit(upperLimit);
   }
 
 	public Solution createSolution() {
-		Solution solution = new NumericalSolutionImpl<Double>(numberOfObjectives, numberOfVariables) ;
+		Solution solution = new NumericSolutionImpl<Double>(numberOfObjectives, numberOfVariables) ;
 
 		return solution ; 
 	}

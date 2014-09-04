@@ -1,7 +1,7 @@
 package org.uma.jmetal3.problem.multiobjective;
 
 import org.uma.jmetal3.core.Solution;
-import org.uma.jmetal3.encoding.impl.NumericalSolutionImpl;
+import org.uma.jmetal3.encoding.impl.NumericSolutionImpl;
 import org.uma.jmetal3.problem.impl.UnconstrainedContinuousProblemImpl;
 
 /**
@@ -20,7 +20,7 @@ public class SimpleRealProblem extends UnconstrainedContinuousProblemImpl {
 	}
 
 	public Solution createSolution() {
-		Solution solution = new NumericalSolutionImpl<Double>(numberOfObjectives, numberOfVariables) ;
+		Solution solution = new NumericSolutionImpl<Double>(numberOfObjectives, numberOfVariables) ;
 
 		return solution ;
 	}

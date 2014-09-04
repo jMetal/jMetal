@@ -1,27 +1,29 @@
 package org.uma.jmetal3.encoding.impl;
 
-import org.uma.jmetal3.encoding.NumericalSolution;
+import org.uma.jmetal3.encoding.NumericSolution;
 import org.uma.jmetal3.problem.ContinuousProblem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Antonio J. Nebro on 03/09/14.
  */
-public class NumericalSolutionImpl<V extends Number> implements NumericalSolution<V> {
-  double [] objective ;
-  V [] variable ;
-  ContinuousProblem problem ;
+public class NumericSolutionImpl<V extends Number> implements NumericSolution<V> {
+  private double [] objective ;
+  private List<V> variable ;
+  private ContinuousProblem problem ;
   
   /** Constructor */
-  public NumericalSolutionImpl(int numberOfObjectives, int numberOfVariables) {
+  public NumericSolutionImpl(int numberOfObjectives, int numberOfVariables) {
     objective = new double[numberOfObjectives] ;
-    variable = (V[])new Object[numberOfVariables] ;
+    variable = new ArrayList<V>(numberOfVariables) ;
   }
   
   /** Constructor */
-  public NumericalSolutionImpl(ContinuousProblem problem) {
+  public NumericSolutionImpl(ContinuousProblem problem) {
+    this(problem.getNumberOfObjectives(), problem.getNumberOfVariables()) ;
   	this.problem = problem ;
-    objective = new double[problem.getNumberOfObjectives()] ;
-    variable = (V[])new Object[problem.getNumberOfVariables()] ;
   }
 
   @Override
@@ -36,7 +38,12 @@ public class NumericalSolutionImpl<V extends Number> implements NumericalSolutio
 
   @Override
   public V getVariableValue(int index) {
-    return variable[index];
+    return variable.get(index);
+  }
+
+  @Override
+  public void setVariableVariable(int index, Object value) {
+    variable.set(index, (V)value) ;
   }
 
   @Override
@@ -47,10 +54,5 @@ public class NumericalSolutionImpl<V extends Number> implements NumericalSolutio
   @Override
   public V getLowerBound(int index) {
     return (V)problem.getLowerBound(index) ;
-  }
-
-	@Override
-  public void setVariableVariable(int index, Object value) {
-    variable[index] = (V) value ;  
   }
 }

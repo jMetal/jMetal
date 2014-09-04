@@ -1,13 +1,14 @@
-package org.uma.jmetal3.operator;
+package org.uma.jmetal3.operator.impl;
 
 import java.util.Random;
 
-import org.uma.jmetal3.core.Operator;
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal3.encoding.NumericalSolution;
+import org.uma.jmetal3.core.Solution;
+import org.uma.jmetal3.encoding.NumericSolution;
+import org.uma.jmetal3.operator.IndividualOperator;
 import org.uma.jmetal3.problem.ContinuousProblem;
 
-public class SimpleRandomMutation implements Operator {
+public class SimpleRandomMutation implements IndividualOperator<NumericSolution<Double>, NumericSolution<Double>> {
   private double probability ;
   private ContinuousProblem problem ;
   
@@ -19,21 +20,19 @@ public class SimpleRandomMutation implements Operator {
 	
 	/** Execute() method */
 	@Override
-  public Object execute(Object object) throws JMetalException {
+  public NumericSolution execute(NumericSolution object) throws JMetalException {
     if (null == object) {
       throw new JMetalException("Null parameter") ;
-    } else if (!(object instanceof NumericalSolution)) {
-      throw new JMetalException("Invalid parameter class") ;
     }
 
-    NumericalSolution<Double> solution = (NumericalSolution<Double>) object;	  
+    NumericSolution<Double> solution = (NumericSolution<Double>) object;
     
     doMutation(probability, solution) ;
     
     return solution;
   }
 
-	private void doMutation(double probability2, NumericalSolution<Double> solution) {
+	private void doMutation(double probability2, NumericSolution<Double> solution) {
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
     	Random random = new Random() ;
       if (random.nextDouble() <= probability) {
@@ -45,5 +44,4 @@ public class SimpleRandomMutation implements Operator {
     }
 	}
 
-	
 }

@@ -1,18 +1,22 @@
 package org.uma.jmetal3.problem.impl;
 
+import org.uma.jmetal3.core.Problem;
 import org.uma.jmetal3.problem.ContinuousProblem;
-import org.uma.jmetal3.problem.UnconstrainedProblem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class UnconstrainedContinuousProblemImpl 
-  implements ContinuousProblem, UnconstrainedProblem {
+  implements ContinuousProblem, Problem {
 
-	protected int numberOfVariables ;
-	protected int numberOfObjectives ;
-	protected String name ;
+	private int numberOfVariables ;
+  private int numberOfObjectives ;
+  private String name ;
 
-	protected Double []lowerLimit ;
-	protected Double []upperLimit ;
-	
+  private List<Double> lowerLimit ;
+  private List<Double> upperLimit ;
+
+  /* Getters */
 	@Override
 	public int getNumberOfVariables() {
 		return numberOfVariables ;
@@ -30,11 +34,32 @@ public abstract class UnconstrainedContinuousProblemImpl
 
 	@Override
 	public Double getUpperBound(int index) {
-		return upperLimit[index] ;
+		return upperLimit.get(index);
 	}
 
 	@Override
 	public Double getLowerBound(int index) {
-		return lowerLimit[index] ;
+		return lowerLimit.get(index);
 	}
+
+  /* Setters */
+  public void setNumberOfVariables(int numberOfVariables) {
+    this.numberOfVariables = numberOfVariables;
+  }
+
+  public void setNumberOfObjectives(int numberOfObjectives) {
+    this.numberOfObjectives = numberOfObjectives;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public void setLowerLimit(List<Double> lowerLimit) {
+    this.lowerLimit = lowerLimit;
+  }
+
+  public void setUpperLimit(List<Double> upperLimit) {
+    this.upperLimit = upperLimit;
+  }
 }
