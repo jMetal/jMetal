@@ -66,8 +66,6 @@ public class BinaryTournamentSelection implements SelectionOperator<List<Solutio
       throw new JMetalException("Solution set size is 0") ;
     }
 
-    Solution result ;
-
     int indexSolution1 = PseudoRandom.randInt(0, solutions.size() - 1) ;
     int indexSolution2 = PseudoRandom.randInt(0, solutions.size() - 1) ;
 
@@ -79,6 +77,8 @@ public class BinaryTournamentSelection implements SelectionOperator<List<Solutio
 
     Solution solution1 = solutions.get(indexSolution1) ;
     Solution solution2 = solutions.get(indexSolution2) ;
+
+    Solution result ;
 
     int flag = comparator.compare(solution1, solution2);
     if (flag == -1) {

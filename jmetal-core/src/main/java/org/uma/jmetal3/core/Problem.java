@@ -30,5 +30,6 @@ public interface Problem {
 
   /* Methods */
   public void evaluate(Solution solution) ;
+  public Solution createSolution() ;
 
 }

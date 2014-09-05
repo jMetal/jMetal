@@ -38,17 +38,18 @@ public class Fonseca extends UnconstrainedContinuousProblemImpl {
 
     ArrayList<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
     ArrayList<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
-    for (int var = 0; var < getNumberOfVariables(); var++) {
-      lowerLimit.set(var, -4.0);
-      upperLimit.set(var, 4.0);
+    for (int i = 0; i < getNumberOfVariables(); i++) {
+      lowerLimit.set(i, -4.0);
+      upperLimit.set(i, 4.0);
     }
 
     setLowerLimit(lowerLimit);
     setUpperLimit(upperLimit);
   }
 
+  @Override
 	public Solution createSolution() {
-		Solution solution = new NumericSolutionImpl<Double>(getNumberOfObjectives(), getNumberOfVariables()) ;
+		Solution solution = new NumericSolutionImpl<Double>(this) ;
 
 		return solution ; 
 	}
