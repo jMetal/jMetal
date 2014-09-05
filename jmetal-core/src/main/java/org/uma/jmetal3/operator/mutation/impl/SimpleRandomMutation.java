@@ -1,13 +1,13 @@
-package org.uma.jmetal3.operator.impl;
+package org.uma.jmetal3.operator.mutation.impl;
 
 import java.util.Random;
 
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal3.encoding.NumericSolution;
-import org.uma.jmetal3.operator.IndividualOperator;
+import org.uma.jmetal3.operator.mutation.MutationOperator;
 import org.uma.jmetal3.problem.ContinuousProblem;
 
-public class SimpleRandomMutation implements IndividualOperator<NumericSolution<Double>, NumericSolution<Double>> {
+public class SimpleRandomMutation implements MutationOperator<NumericSolution<Double>> {
   private double probability ;
   private ContinuousProblem problem ;
   

@@ -18,15 +18,15 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal3.operator.impl;
+package org.uma.jmetal3.operator.mutation.impl;
 
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
 import org.uma.jmetal3.encoding.NumericSolution;
-import org.uma.jmetal3.operator.IndividualOperator;
+import org.uma.jmetal3.operator.mutation.MutationOperator;
 
 /** This class implements a polynomial mutation operator */
-public class PolynomialMutation implements IndividualOperator<NumericSolution<Double>, NumericSolution<Double>> {
+public class PolynomialMutation implements MutationOperator<NumericSolution<Double>> {
   private static final double ETA_M_DEFAULT = 20.0;
   private double distributionIndex ;
 
