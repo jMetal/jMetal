@@ -30,11 +30,11 @@ import org.uma.jmetal3.util.comparator.DominanceComparator;
 import java.util.Comparator;
 import java.util.List;
 
-public class BinaryTournament implements SelectionOperator<List<Solution>,Solution> {
+public class BinaryTournamentSelection implements SelectionOperator<List<Solution>,Solution> {
   private Comparator<Solution> comparator;
 
   /** Constructor */
-  private BinaryTournament(Builder builder) {
+  private BinaryTournamentSelection(Builder builder) {
     comparator = builder.comparator ;
   }
 
@@ -52,8 +52,8 @@ public class BinaryTournament implements SelectionOperator<List<Solution>,Soluti
       return this ;
     }
 
-    public BinaryTournament build() {
-      return new BinaryTournament(this) ;
+    public BinaryTournamentSelection build() {
+      return new BinaryTournamentSelection(this) ;
     }
   }
 
