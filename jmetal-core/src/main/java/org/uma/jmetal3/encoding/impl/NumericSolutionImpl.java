@@ -13,11 +13,13 @@ public class NumericSolutionImpl<V extends Number> implements NumericSolution<V>
   private double [] objectives;
   private List<V> variables;
   private ContinuousProblem problem ;
+  private double overallConstraintViolationDegree ;
   
   /** Constructor */
   public NumericSolutionImpl(int numberOfObjectives, int numberOfVariables) {
     objectives = new double[numberOfObjectives] ;
     variables = new ArrayList<V>(numberOfVariables) ;
+    overallConstraintViolationDegree = 0.0 ;
   }
   
   /** Constructor */
@@ -64,5 +66,10 @@ public class NumericSolutionImpl<V extends Number> implements NumericSolution<V>
   @Override
   public int getNumberOfObjectives() {
     return objectives.length;
+  }
+
+  @Override
+  public double getOverallConstraintViolationDegree() {
+    return overallConstraintViolationDegree ;
   }
 }

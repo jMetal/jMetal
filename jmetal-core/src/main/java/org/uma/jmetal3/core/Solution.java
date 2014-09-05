@@ -12,4 +12,6 @@ public interface Solution {
 
   public int getNumberOfVariables() ;
   public int getNumberOfObjectives() ;
+
+  public double getOverallConstraintViolationDegree() ;
  }
