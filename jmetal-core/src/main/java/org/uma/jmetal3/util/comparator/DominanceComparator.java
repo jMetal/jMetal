@@ -33,6 +33,10 @@ import java.util.Comparator;
 public class DominanceComparator implements Comparator<Solution> {
   private OverallConstraintViolationComparator constraintViolationComparator;
 
+  /** Constructor */
+  public DominanceComparator() {
+    constraintViolationComparator = new OverallConstraintViolationComparator() ;
+  }
   /**
    * Compares two solutions.
    *

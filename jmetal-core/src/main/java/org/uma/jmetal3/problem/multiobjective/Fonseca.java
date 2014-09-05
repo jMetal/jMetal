@@ -38,9 +38,10 @@ public class Fonseca extends UnconstrainedContinuousProblemImpl {
 
     ArrayList<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
     ArrayList<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
+
     for (int i = 0; i < getNumberOfVariables(); i++) {
-      lowerLimit.set(i, -4.0);
-      upperLimit.set(i, 4.0);
+      lowerLimit.add(-4.0);
+      upperLimit.add(4.0);
     }
 
     setLowerLimit(lowerLimit);
@@ -55,6 +56,7 @@ public class Fonseca extends UnconstrainedContinuousProblemImpl {
 	}
 	
   /** Evaluate() method */
+  @Override
   public void evaluate(Solution solution) {
     int numberOfVariables = getNumberOfVariables() ;
 
