@@ -4,7 +4,7 @@
 //       Antonio J. Nebro <antonio@lcc.uma.es>
 //       Juan J. Durillo <durillo@lcc.uma.es>
 //
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
+//  Copyright (c) 2014 Antonio J. Nebro, Juan J. Durillo
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -21,25 +21,24 @@
 
 package org.uma.jmetal3.operator.selection.impl;
 
+import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.random.PseudoRandom;
 import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal3.operator.selection.SelectionOperator;
+import org.uma.jmetal3.util.comparator.DominanceComparator;
 
-import java.net.SocketOption;
-import java.util.Collection;
 import java.util.Comparator;
+import java.util.List;
 
-public class BinaryTournament implements SelectionOperator<Collection<Solution>,Solution> {
-  @Override
-  public Solution execute(Collection<Solution> solutions) {
-    return null;
-  }
-/*
+public class BinaryTournament implements SelectionOperator<List<Solution>,Solution> {
   private Comparator<Solution> comparator;
 
+  /** Constructor */
   private BinaryTournament(Builder builder) {
     comparator = builder.comparator ;
   }
 
+  /** Builder class */
   public static class Builder {
     Comparator<Solution> comparator ;
 
@@ -58,41 +57,42 @@ public class BinaryTournament implements SelectionOperator<Collection<Solution>,
     }
   }
 
-  public Object execute(Object object) {
-    if (null == object) {
+  @Override
+  /** Execute() method */
+  public Solution execute(List<Solution> solutions) {
+    if (null == solutions) {
       throw new JMetalException("Parameter is null") ;
-    } else if (!(object instanceof SolutionSet)) {
-      throw new JMetalException("Invalid parameter class") ;
-    } else if (((SolutionSet)object).size() == 0) {
+    } else if (solutions.size() == 0) {
       throw new JMetalException("Solution set size is 0") ;
     }
 
-    SolutionSet solutionSet = (SolutionSet) object;
+    Solution result ;
 
-    int indexSolution1 = PseudoRandom.randInt(0, solutionSet.size() - 1) ;
-    int indexSolution2 = PseudoRandom.randInt(0, solutionSet.size() - 1) ;
+    int indexSolution1 = PseudoRandom.randInt(0, solutions.size() - 1) ;
+    int indexSolution2 = PseudoRandom.randInt(0, solutions.size() - 1) ;
 
-    if (solutionSet.size() >= 2) {
+    if (solutions.size() >= 2) {
       while (indexSolution1 == indexSolution2) {
-        indexSolution2 = PseudoRandom.randInt(0, solutionSet.size() - 1) ;
+        indexSolution2 = PseudoRandom.randInt(0, solutions.size() - 1) ;
       }
     }
 
-    Solution solution1 = solutionSet.get(indexSolution1) ;
-    Solution solution2 = solutionSet.get(indexSolution2) ;
+    Solution solution1 = solutions.get(indexSolution1) ;
+    Solution solution2 = solutions.get(indexSolution2) ;
 
     int flag = comparator.compare(solution1, solution2);
     if (flag == -1) {
-      return solution1;
+      result = solution1;
     } else if (flag == 1) {
-      return solution2;
+      result = solution2;
     } else {
       if (PseudoRandom.randDouble() < 0.5) {
-        return solution1;
+        result = solution1;
       } else {
-        return solution2;
+        result = solution2;
       }
     }
+
+    return result;
   }
-  */
 }
