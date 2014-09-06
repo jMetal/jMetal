@@ -23,11 +23,13 @@ package org.uma.jmetal3.util.comparator;
 
 import org.uma.jmetal3.core.Solution;
 
+import java.util.Comparator;
+
 /**
  * This class implements a <code>Comparator</code> (a method for comparing <code>Solution</code> objects)
  * based on the overall constraint violation of the solutions, as done in NSGA-II.
  */
-public class OverallConstraintViolationComparator {
+public class OverallConstraintViolationComparator implements Comparator<Solution> {
   /**
    * Compares two solutions.
    *

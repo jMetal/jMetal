@@ -1,5 +1,7 @@
 package org.uma.jmetal3.encoding.impl;
 
+import org.uma.jmetal.metaheuristic.multiobjective.ibea.IBEA;
+import org.uma.jmetal.util.random.PseudoRandom;
 import org.uma.jmetal3.encoding.NumericSolution;
 import org.uma.jmetal3.problem.ContinuousProblem;
 
@@ -16,16 +18,18 @@ public class NumericSolutionImpl<V extends Number> implements NumericSolution<V>
   private double overallConstraintViolationDegree ;
   
   /** Constructor */
-  public NumericSolutionImpl(int numberOfObjectives, int numberOfVariables) {
-    objectives = new double[numberOfObjectives] ;
-    variables = new ArrayList<V>(numberOfVariables) ;
-    overallConstraintViolationDegree = 0.0 ;
-  }
-  
-  /** Constructor */
   public NumericSolutionImpl(ContinuousProblem problem) {
-    this(problem.getNumberOfObjectives(), problem.getNumberOfVariables()) ;
   	this.problem = problem ;
+    objectives = new double[problem.getNumberOfObjectives()] ;
+    variables = new ArrayList<V>(problem.getNumberOfVariables()) ;
+    overallConstraintViolationDegree = 0.0 ;
+
+    // NEW CODE
+    for (int i = 0 ; i < problem.getNumberOfVariables(); i++) {
+      Double value = PseudoRandom.randDouble() * ((Double)getUpperBound(i) - (Double)getLowerBound(i)) + (Double)getLowerBound(i);
+      variables.add((V)value) ;
+    }
+    // END OF NEW CODE
   }
 
   @Override
@@ -44,8 +48,8 @@ public class NumericSolutionImpl<V extends Number> implements NumericSolution<V>
   }
 
   @Override
-  public void setVariableValue(int index, Object value) {
-    variables.set(index, (V) value) ;
+  public void setVariableValue(int index, V value) {
+    variables.set(index, value) ;
   }
 
   @Override
