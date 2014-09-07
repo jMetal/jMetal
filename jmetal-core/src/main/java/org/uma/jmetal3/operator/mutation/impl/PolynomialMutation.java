@@ -33,6 +33,12 @@ public class PolynomialMutation implements MutationOperator<NumericSolution<Doub
   private double mutationProbability ;
 
   /** Constructor */
+  public PolynomialMutation() {
+    this.mutationProbability = 0.01;
+    this.distributionIndex = 20.0;
+  }
+
+  /** Constructor */
   public PolynomialMutation(double mutationProbability, double distributionIndex) {
     this.mutationProbability = mutationProbability;
     this.distributionIndex = distributionIndex;
@@ -60,7 +66,7 @@ public class PolynomialMutation implements MutationOperator<NumericSolution<Doub
 
     public Builder() {
       distributionIndex = ETA_M_DEFAULT;
-      mutationProbability = 0.0 ;
+      mutationProbability = 0.01 ;
     }
 
     public Builder setDistributionIndex(double distributionIndex) {
@@ -136,8 +142,4 @@ public class PolynomialMutation implements MutationOperator<NumericSolution<Doub
       }
     }
   }
-
-//  private void doIntegerMutation(double probability, Solution solution) {
-//
-//  }
 }

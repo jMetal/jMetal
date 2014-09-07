@@ -36,6 +36,11 @@ public class SinglePointCrossover implements CrossoverOperator<List<BinarySoluti
   private double crossoverProbability ;
 
   /** Constructor */
+  private SinglePointCrossover() {
+    this.crossoverProbability = 0.9;
+  }
+
+  /** Constructor */
   private SinglePointCrossover(double crossoverProbability) {
     this.crossoverProbability = crossoverProbability;
   }
@@ -52,7 +57,14 @@ public class SinglePointCrossover implements CrossoverOperator<List<BinarySoluti
 
   @Override
   public List<BinarySolution> execute(List<BinarySolution> solutions) {
-    return null;
+    if (solutions == null) {
+      throw new JMetalException("Null parameter") ;
+    } else if (solutions.size() != 2) {
+      throw new JMetalException("There must be two parents instead of " + solutions.size()) ;
+    }
+
+    return doCrossover(crossoverProbability, solutions.get(0), solutions.get(1)) ;
+
   }
 
   /** Builder class */

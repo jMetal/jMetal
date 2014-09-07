@@ -29,7 +29,12 @@ import org.uma.jmetal3.operator.mutation.MutationOperator;
 public class BitFlipMutation implements MutationOperator<BinarySolution> {
   private static final long serialVersionUID = -3349165791496573889L;
 
-  private double mutationProbability = 0;
+  private double mutationProbability ;
+
+  /** Constructor */
+  private BitFlipMutation() {
+    this.mutationProbability = 0.1;
+  }
 
   /** Constructor */
   private BitFlipMutation(double mutationProbability) {
@@ -48,7 +53,7 @@ public class BitFlipMutation implements MutationOperator<BinarySolution> {
 
   /** Builder class */
   public static class Builder {
-    private double mutationProbability = 0.0 ;
+    private double mutationProbability = 0.1 ;
 
     public Builder() {
     }
