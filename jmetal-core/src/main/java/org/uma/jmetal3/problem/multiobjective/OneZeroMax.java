@@ -23,16 +23,22 @@ package org.uma.jmetal3.problem.multiobjective;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal3.core.Problem;
 import org.uma.jmetal3.core.Solution;
+import org.uma.jmetal3.encoding.BinarySolution;
 import org.uma.jmetal3.encoding.impl.BinarySolutionImpl;
 import org.uma.jmetal3.encoding.impl.NumericSolutionImpl;
+import org.uma.jmetal3.problem.BinaryProblem;
 import org.uma.jmetal3.problem.impl.GenericProblemImpl;
+
+import java.util.BitSet;
 
 /**
  * Class representing problem OneZeroMax. The problem consist of maximizing the
  * number of '1's and '0's in a binary string.
  */
-public class OneZeroMax extends GenericProblemImpl {
+public class OneZeroMax extends GenericProblemImpl implements BinaryProblem {
   private static final long serialVersionUID = 2580449794690931406L;
+
+  private int numberOfBits ;
 
   /** Constructor */
   public OneZeroMax() throws ClassNotFoundException, JMetalException {
@@ -44,6 +50,13 @@ public class OneZeroMax extends GenericProblemImpl {
     setNumberOfVariables(1);
     setNumberOfObjectives(2);
     setName("OneZeroMax");
+
+    this.numberOfBits = numberOfBits ;
+  }
+
+  @Override
+  public int getNumberOfBits(int index) {
+    return numberOfBits ;
   }
 
   @Override
@@ -56,18 +69,16 @@ public class OneZeroMax extends GenericProblemImpl {
   /** Evaluate() method */
   @Override
   public void evaluate(Solution solution) {
-    /*
-    Binary variable;
     int counterOnes;
     int counterZeroes;
-
-    variable = ((Binary) solution.getDecisionVariables()[0]);
 
     counterOnes = 0;
     counterZeroes = 0;
 
-    for (int i = 0; i < variable.getNumberOfBits(); i++) {
-      if (variable.getBits().get(i)) {
+    BitSet bitset = ((BinarySolution)solution).getVariableValue(0) ;
+
+    for (int i = 0; i < bitset.length(); i++) {
+      if (bitset.get(i)) {
         counterOnes++;
       } else {
         counterZeroes++;
@@ -77,6 +88,5 @@ public class OneZeroMax extends GenericProblemImpl {
     // OneZeroMax is a maximization problem: multiply by -1 to minimize
     solution.setObjective(0, -1.0 * counterOnes);
     solution.setObjective(1, -1.0 * counterZeroes);
-    */
   }
 }

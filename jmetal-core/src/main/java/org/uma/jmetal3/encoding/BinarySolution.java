@@ -9,5 +9,6 @@ import java.util.BitSet;
  * Created by Antonio on 03/09/14.
  */
 public interface BinarySolution extends Solution<BitSet> {
-  public int getNumberOfBits() ;
+  public int getNumberOfBits(int index) ;
+  public int getTotalNumberOfBits() ;
  }

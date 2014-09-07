@@ -9,12 +9,10 @@ import org.uma.jmetal3.problem.ContinuousProblem;
 
 public class SimpleRandomMutation implements MutationOperator<NumericSolution<Double>> {
   private double probability ;
-  private ContinuousProblem problem ;
-  
+
   /**  Constructor */
-  public SimpleRandomMutation(ContinuousProblem problem) {
-  	this.problem = problem ;
-  	probability = 1.0/problem.getNumberOfVariables() ;
+  public SimpleRandomMutation(double probability) {
+  	this.probability = probability ;
   }
 	
 	/** Execute() method */
@@ -33,11 +31,11 @@ public class SimpleRandomMutation implements MutationOperator<NumericSolution<Do
 
   /** Implements the mutation operation */
 	private void doMutation(double probability, NumericSolution<Double> solution) {
-    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
+    for (int i = 0; i < solution.getNumberOfVariables(); i++) {
     	Random random = new Random() ;
       if (random.nextDouble() <= probability) {
-      	Double value = problem.getLowerBound(i) + 
-      			((problem.getUpperBound(i) - problem.getLowerBound(i)) * random.nextDouble()) ;
+      	Double value = solution.getLowerBound(i) +
+      			((solution.getUpperBound(i) - solution.getLowerBound(i)) * random.nextDouble()) ;
       	
       	solution.setVariableValue(i, value) ;
       }
