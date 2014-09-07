@@ -31,7 +31,6 @@ import java.util.List;
 
 /** Class implementing a single point crossover */
 public class SinglePointCrossover implements CrossoverOperator<List<BinarySolution>, List<BinarySolution>> {
-  private static final long serialVersionUID = 2375915160877386980L;
 
   private double crossoverProbability ;
 
@@ -64,7 +63,6 @@ public class SinglePointCrossover implements CrossoverOperator<List<BinarySoluti
     }
 
     return doCrossover(crossoverProbability, solutions.get(0), solutions.get(1)) ;
-
   }
 
   /** Builder class */
@@ -141,8 +139,6 @@ public class SinglePointCrossover implements CrossoverOperator<List<BinarySoluti
       for (int i = 0; i < variable; i++) {
         offspring.get(0).setVariableValue(i, parent2.getVariableValue(i));
         offspring.get(1).setVariableValue(i, parent1.getVariableValue(i));
-        //offSpring[0].getDecisionVariables()[i] = parent2.getDecisionVariables()[i].copy();
-        //offSpring[1].getDecisionVariables()[i] =  parent1.getDecisionVariables()[i].copy();
       }
 
     }

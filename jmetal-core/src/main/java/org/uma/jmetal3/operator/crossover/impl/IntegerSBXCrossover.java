@@ -23,15 +23,14 @@ package org.uma.jmetal3.operator.crossover.impl;
 
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
-import org.uma.jmetal3.encoding.BinarySolution;
 import org.uma.jmetal3.encoding.NumericSolution;
 import org.uma.jmetal3.operator.crossover.CrossoverOperator;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/** This class allows to apply a SBX crossover operator using two parent solutions (Double encoding) */
-public class SBXCrossover implements CrossoverOperator<List<NumericSolution<Double>>, List<NumericSolution<Double>>> {
+/** This class allows to apply a SBX crossover operator using two parent solutions (Integer encoding) */
+public class IntegerSBXCrossover implements CrossoverOperator<List<NumericSolution<Integer>>, List<NumericSolution<Integer>>> {
 
   /** EPS defines the minimum difference allowed between real values */
   private static final double EPS = 1.0e-14;
@@ -43,19 +42,19 @@ public class SBXCrossover implements CrossoverOperator<List<NumericSolution<Doub
   private double crossoverProbability  ;
 
   /** Constructor */
-  public SBXCrossover() {
+  public IntegerSBXCrossover() {
     this.crossoverProbability = 0.9 ;
     this.distributionIndex = 20.0 ;
   }
 
   /** Constructor */
-  public SBXCrossover(double crossoverProbability, double distributionIndex) {
+  public IntegerSBXCrossover(double crossoverProbability, double distributionIndex) {
     this.crossoverProbability = crossoverProbability ;
     this.distributionIndex = distributionIndex ;
   }
 
   /** Constructor */
-  private SBXCrossover(Builder builder) {
+  private IntegerSBXCrossover(Builder builder) {
     crossoverProbability = builder.crossoverProbability ;
     distributionIndex = builder.distributionIndex ;
   }
@@ -71,7 +70,7 @@ public class SBXCrossover implements CrossoverOperator<List<NumericSolution<Doub
 
   /** Execute() method */
   @Override
-  public List<NumericSolution<Double>> execute(List<NumericSolution<Double>> solutions) {
+  public List<NumericSolution<Integer>> execute(List<NumericSolution<Integer>> solutions) {
     if (null == solutions) {
       throw new JMetalException("Null parameter") ;
     } else if (solutions.size() != 2) {
@@ -82,19 +81,19 @@ public class SBXCrossover implements CrossoverOperator<List<NumericSolution<Doub
   }
 
   /** doCrossover method */
-  public List<NumericSolution<Double>>  doCrossover(
-          double probability, NumericSolution<Double> parent1, NumericSolution<Double> parent2) {
-    List<NumericSolution<Double>> offspring = new ArrayList<NumericSolution<Double>>(2);
+  public List<NumericSolution<Integer>>  doCrossover(
+          double probability, NumericSolution<Integer> parent1, NumericSolution<Integer> parent2) {
+    List<NumericSolution<Integer>> offspring = new ArrayList<NumericSolution<Integer>>(2);
 
-    offspring.add((NumericSolution<Double>) parent1.copy()) ;
-    offspring.add((NumericSolution<Double>) parent2.copy()) ;
+    offspring.add((NumericSolution<Integer>) parent1.copy()) ;
+    offspring.add((NumericSolution<Integer>) parent2.copy()) ;
 
     int i;
     double rand;
     double y1, y2, yL, yu;
     double c1, c2;
     double alpha, beta, betaq;
-    double valueX1, valueX2;
+    int valueX1, valueX2;
 
     if (PseudoRandom.randDouble() <= probability) {
       for (i = 0; i < parent1.getNumberOfVariables(); i++) {
@@ -154,11 +153,11 @@ public class SBXCrossover implements CrossoverOperator<List<NumericSolution<Doub
             }
 
             if (PseudoRandom.randDouble() <= 0.5) {
-              offspring.get(0).setVariableValue(i, c2);
-              offspring.get(1).setVariableValue(i, c1);
+              offspring.get(0).setVariableValue(i, (int)c2);
+              offspring.get(1).setVariableValue(i, (int)c1);
             } else {
-              offspring.get(0).setVariableValue(i, c1);
-              offspring.get(1).setVariableValue(i, c2);
+              offspring.get(0).setVariableValue(i, (int)c1);
+              offspring.get(1).setVariableValue(i, (int)c2);
             }
           } else {
             offspring.get(0).setVariableValue(i, valueX1);
@@ -204,8 +203,8 @@ public class SBXCrossover implements CrossoverOperator<List<NumericSolution<Doub
       return this ;
     }
 
-    public SBXCrossover build() {
-      return new SBXCrossover(this) ;
+    public IntegerSBXCrossover build() {
+      return new IntegerSBXCrossover(this) ;
     }
   }
 }
