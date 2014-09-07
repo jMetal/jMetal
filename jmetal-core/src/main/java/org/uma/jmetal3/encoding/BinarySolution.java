@@ -1,6 +1,5 @@
 package org.uma.jmetal3.encoding;
 
-import org.uma.jmetal.encoding.variable.Binary;
 import org.uma.jmetal3.core.Solution;
 
 import java.util.BitSet;

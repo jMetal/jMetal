@@ -100,7 +100,7 @@ public class SinglePointCrossover implements CrossoverOperator<List<BinarySoluti
    * @throws org.uma.jmetal.util.JMetalException
    */
   public List<BinarySolution> doCrossover(double probability, BinarySolution parent1, BinarySolution parent2)  {
-    List<BinarySolution> offspring = new ArrayList<BinarySolution>(2);
+    List<BinarySolution> offspring = new ArrayList<>(2);
     offspring.add((BinarySolution) parent1.copy()) ;
     offspring.add((BinarySolution) parent2.copy()) ;
 

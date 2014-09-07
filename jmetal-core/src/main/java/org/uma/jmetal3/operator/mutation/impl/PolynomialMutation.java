@@ -87,7 +87,7 @@ public class PolynomialMutation implements MutationOperator<NumericSolution<Doub
   }
 
   /** Execute() method */
-  public NumericSolution execute(NumericSolution object) throws JMetalException {
+  public NumericSolution<Double> execute(NumericSolution object) throws JMetalException {
     if (null == object) {
       throw new JMetalException("Null parameter") ;
     }
@@ -100,12 +100,7 @@ public class PolynomialMutation implements MutationOperator<NumericSolution<Doub
 
   /** Perform the mutation operation */
   public void doMutation(double probability, NumericSolution<Double> solution) throws JMetalException {
-    //SolutionType type = solution.getType();
-    //if ((type instanceof RealSolutionType) || (type instanceof ArrayRealSolutionType)) {
-      doRealMutation(probability, solution);
-    //} else {
-    //  doIntegerMutation(probability, solution) ;
-    //}
+    doRealMutation(probability, solution);
   }
 
   private void doRealMutation(double probability, NumericSolution<Double> solution) {
@@ -114,9 +109,9 @@ public class PolynomialMutation implements MutationOperator<NumericSolution<Doub
 
     for (int i = 0; i < solution.getNumberOfVariables(); i++) {
       if (PseudoRandom.randDouble() <= probability) {
-        y = (Double)solution.getVariableValue(i); //x.getValue(var);
-        yl = solution.getLowerBound(i) ;//x.getLowerBound(var);
-        yu = solution.getUpperBound(i) ;//x.getUpperBound(var);
+        y = solution.getVariableValue(i);
+        yl = solution.getLowerBound(i) ;
+        yu = solution.getUpperBound(i) ;
         delta1 = (y - yl) / (yu - yl);
         delta2 = (yu - y) / (yu - yl);
         rnd = PseudoRandom.randDouble();
@@ -128,7 +123,7 @@ public class PolynomialMutation implements MutationOperator<NumericSolution<Doub
         } else {
           xy = 1.0 - delta2;
           val =
-            2.0 * (1.0 - rnd) + 2.0 * (rnd - 0.5) * (Math.pow(xy, distributionIndex + 1.0));
+                  2.0 * (1.0 - rnd) + 2.0 * (rnd - 0.5) * (Math.pow(xy, distributionIndex + 1.0));
           deltaq = 1.0 - Math.pow(val, mutPow);
         }
         y = y + deltaq * (yu - yl);
