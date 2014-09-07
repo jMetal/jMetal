@@ -14,4 +14,6 @@ public interface Solution<T> {
   public int getNumberOfObjectives() ;
 
   public double getOverallConstraintViolationDegree() ;
+
+  public Solution copy() ;
  }

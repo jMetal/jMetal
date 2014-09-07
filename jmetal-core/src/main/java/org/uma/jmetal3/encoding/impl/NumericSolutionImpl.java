@@ -2,6 +2,7 @@ package org.uma.jmetal3.encoding.impl;
 
 import org.uma.jmetal.metaheuristic.multiobjective.ibea.IBEA;
 import org.uma.jmetal.util.random.PseudoRandom;
+import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal3.encoding.NumericSolution;
 import org.uma.jmetal3.problem.ContinuousProblem;
 
@@ -75,5 +76,10 @@ public class NumericSolutionImpl<V extends Number> implements NumericSolution<V>
   @Override
   public double getOverallConstraintViolationDegree() {
     return overallConstraintViolationDegree ;
+  }
+
+  @Override
+  public Solution copy() {
+    return new NumericSolutionImpl(problem);
   }
 }

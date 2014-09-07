@@ -2,6 +2,7 @@ package org.uma.jmetal3.encoding.impl;
 
 import org.uma.jmetal.util.random.PseudoRandom;
 import org.uma.jmetal3.core.Problem;
+import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal3.encoding.BinarySolution;
 import org.uma.jmetal3.encoding.NumericSolution;
 import org.uma.jmetal3.problem.BinaryProblem;
@@ -15,7 +16,7 @@ import java.util.List;
  * Created by Antonio J. Nebro on 03/09/14.
  */
 public class BinarySolutionImpl implements BinarySolution {
-  private double [] objectives;
+  private List<Double> objectives;
   private List<BitSet> variables;
   private BinaryProblem problem ;
   private double overallConstraintViolationDegree ;
@@ -23,7 +24,7 @@ public class BinarySolutionImpl implements BinarySolution {
   /** Constructor */
   public BinarySolutionImpl(BinaryProblem problem) {
     this.problem = problem ;
-    objectives = new double[problem.getNumberOfVariables()] ;
+    objectives = new ArrayList<>(problem.getNumberOfVariables()) ;
     variables = new ArrayList<>(problem.getNumberOfObjectives()) ;
 
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
@@ -47,12 +48,12 @@ public class BinarySolutionImpl implements BinarySolution {
 
   @Override
   public void setObjective(int index, double value) {
-    objectives[index] = value ;
+    objectives.set(index, value) ;
   }
 
   @Override
   public double getObjective(int index) {
-    return objectives[index];
+    return objectives.get(index);
   }
 
   @Override
@@ -73,7 +74,7 @@ public class BinarySolutionImpl implements BinarySolution {
 
   @Override
   public int getNumberOfObjectives() {
-    return objectives.length;
+    return objectives.size();
   }
 
   @Override
@@ -84,6 +85,11 @@ public class BinarySolutionImpl implements BinarySolution {
   @Override
   public int getNumberOfBits(int index) {
     return variables.get(index).length() ;
+  }
+
+  @Override
+  public Solution copy() {
+    return new BinarySolutionImpl(problem);
   }
 
   @Override

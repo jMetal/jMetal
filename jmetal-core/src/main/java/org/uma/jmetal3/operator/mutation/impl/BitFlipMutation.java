@@ -25,9 +25,7 @@ import org.uma.jmetal.util.random.PseudoRandom;
 import org.uma.jmetal3.encoding.BinarySolution;
 import org.uma.jmetal3.operator.mutation.MutationOperator;
 
-/**
- * This class implements a bit flip mutation operator.
- */
+/** This class implements a bit flip mutation operator. */
 public class BitFlipMutation implements MutationOperator<BinarySolution> {
   private static final long serialVersionUID = -3349165791496573889L;
 
