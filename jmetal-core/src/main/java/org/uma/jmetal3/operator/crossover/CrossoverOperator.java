@@ -3,7 +3,6 @@ package org.uma.jmetal3.operator.crossover;
 import org.uma.jmetal3.core.Operator;
 import org.uma.jmetal3.core.Solution;
 
-import java.util.Collection;
 import java.util.List;
 
 /**

@@ -18,7 +18,7 @@ public class DoubleSolutionImpl implements NumericSolution<Double> {
   private double overallConstraintViolationDegree ;
 
   /** Constructor */
-  public DoubleSolutionImpl(ContinuousProblem problem) {
+  public DoubleSolutionImpl(ContinuousProblem<Double> problem) {
   	this.problem = problem ;
     objectives = new double[problem.getNumberOfObjectives()] ;
     variables = new ArrayList<>(problem.getNumberOfVariables()) ;
@@ -81,7 +81,7 @@ public class DoubleSolutionImpl implements NumericSolution<Double> {
   }
 
   @Override
-  public Solution copy() {
+  public Solution<?> copy() {
     return new DoubleSolutionImpl(problem);
   }
 }

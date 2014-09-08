@@ -21,10 +21,13 @@
 
 package org.uma.jmetal3.problem.multiobjective;
 
+import org.uma.jmetal3.core.Problem;
 import org.uma.jmetal3.core.Solution;
+import org.uma.jmetal3.encoding.NumericSolution;
 import org.uma.jmetal3.encoding.impl.NumericSolutionImpl;
 import org.uma.jmetal3.problem.impl.ContinuousProblemImpl;
 
+import javax.print.attribute.standard.PrinterLocation;
 import java.util.ArrayList;
 
 /** Class representing problem Fonseca */
@@ -49,15 +52,17 @@ public class Fonseca extends ContinuousProblemImpl<Double> {
   }
 
   @Override
-	public Solution createSolution() {
-		Solution solution = new NumericSolutionImpl<Double>(this) ;
+	public NumericSolution<Double> createSolution() {
+    NumericSolution<Double> solution = new NumericSolutionImpl<>(this) ;
 
-		return solution ; 
+		return solution ;
 	}
 	
   /** Evaluate() method */
   @Override
-  public void evaluate(Solution solution) {
+//  public void evaluate(NumericSolution<Double> solution) {
+  public void evaluate(Solution sol) {
+    NumericSolution<Double> solution = (NumericSolution<Double>)sol ;
     int numberOfVariables = getNumberOfVariables() ;
 
     double[] f = new double[getNumberOfObjectives()];

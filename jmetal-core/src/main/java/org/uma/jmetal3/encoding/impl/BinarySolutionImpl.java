@@ -1,12 +1,9 @@
 package org.uma.jmetal3.encoding.impl;
 
 import org.uma.jmetal.util.random.PseudoRandom;
-import org.uma.jmetal3.core.Problem;
 import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal3.encoding.BinarySolution;
-import org.uma.jmetal3.encoding.NumericSolution;
 import org.uma.jmetal3.problem.BinaryProblem;
-import org.uma.jmetal3.problem.ContinuousProblem;
 
 import java.util.ArrayList;
 import java.util.BitSet;
@@ -93,7 +90,7 @@ public class BinarySolutionImpl implements BinarySolution {
   }
 
   @Override
-  public Solution copy() {
+  public Solution<?> copy() {
     return new BinarySolutionImpl(problem);
   }
 

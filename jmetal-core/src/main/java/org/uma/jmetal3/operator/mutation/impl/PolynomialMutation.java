@@ -87,12 +87,10 @@ public class PolynomialMutation implements MutationOperator<NumericSolution<Doub
   }
 
   /** Execute() method */
-  public NumericSolution<Double> execute(NumericSolution object) throws JMetalException {
-    if (null == object) {
+  public NumericSolution<Double> execute(NumericSolution<Double> solution) throws JMetalException {
+    if (null == solution) {
       throw new JMetalException("Null parameter") ;
     }
-
-    NumericSolution<Double> solution = (NumericSolution<Double>) object;
 
     doMutation(mutationProbability, solution);
     return solution;

@@ -5,7 +5,6 @@ import java.util.Random;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal3.encoding.NumericSolution;
 import org.uma.jmetal3.operator.mutation.MutationOperator;
-import org.uma.jmetal3.problem.ContinuousProblem;
 
 public class SimpleRandomMutation implements MutationOperator<NumericSolution<Double>> {
   private double probability ;
@@ -17,7 +16,7 @@ public class SimpleRandomMutation implements MutationOperator<NumericSolution<Do
 	
 	/** Execute() method */
 	@Override
-  public NumericSolution execute(NumericSolution object) throws JMetalException {
+  public NumericSolution<Double> execute(NumericSolution<Double> object) throws JMetalException {
     if (null == object) {
       throw new JMetalException("Null parameter") ;
     }

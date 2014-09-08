@@ -22,6 +22,7 @@ package org.uma.jmetal3.problem.multiobjective;
 
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal3.core.Solution;
+import org.uma.jmetal3.encoding.NumericSolution;
 import org.uma.jmetal3.encoding.impl.NumericSolutionImpl;
 import org.uma.jmetal3.problem.impl.ContinuousProblemImpl;
 
@@ -62,8 +63,8 @@ public class NMMin extends ContinuousProblemImpl<Integer> {
   }
 
   @Override
-  public Solution createSolution() {
-    Solution solution = new NumericSolutionImpl<Integer>(this) ;
+  public NumericSolution<Integer> createSolution() {
+    NumericSolution<Integer> solution = new NumericSolutionImpl<Integer>(this) ;
 
     return solution ;
   }

@@ -23,7 +23,6 @@ package org.uma.jmetal3.operator.crossover.impl;
 
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
-import org.uma.jmetal3.encoding.BinarySolution;
 import org.uma.jmetal3.encoding.NumericSolution;
 import org.uma.jmetal3.operator.crossover.CrossoverOperator;
 
@@ -82,7 +81,7 @@ public class SBXCrossover implements CrossoverOperator<List<NumericSolution<Doub
   }
 
   /** doCrossover method */
-  public List<NumericSolution<Double>>  doCrossover(
+  public List<NumericSolution<Double>> doCrossover(
           double probability, NumericSolution<Double> parent1, NumericSolution<Double> parent2) {
     List<NumericSolution<Double>> offspring = new ArrayList<NumericSolution<Double>>(2);
 

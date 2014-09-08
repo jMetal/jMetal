@@ -3,7 +3,7 @@
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
 //
-//  Copyright (c) 2014 Antonio J. Nebro
+//  Copyright (c) 2014 Antonio J. Nebro, Juan J. Durillo
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -21,6 +21,7 @@
 package org.uma.jmetal3.problem.multiobjective;
 
 import org.uma.jmetal3.core.Solution;
+import org.uma.jmetal3.encoding.NumericSolution;
 import org.uma.jmetal3.encoding.impl.NumericSolutionImpl;
 import org.uma.jmetal3.problem.ConstrainedProblem;
 import org.uma.jmetal3.problem.impl.ContinuousProblemImpl;
@@ -28,7 +29,7 @@ import org.uma.jmetal3.problem.impl.ContinuousProblemImpl;
 import java.util.ArrayList;
 
 /** Class representing problem Srinivas */
-public class Srinivas extends ContinuousProblemImpl implements ConstrainedProblem {
+public class Srinivas extends ContinuousProblemImpl<Double> implements ConstrainedProblem {
 
   /** Constructor */
   public Srinivas()  {
@@ -49,16 +50,19 @@ public class Srinivas extends ContinuousProblemImpl implements ConstrainedProble
     setUpperLimit(upperLimit);
   }
 
+
   @Override
-  public Solution createSolution() {
-    Solution solution = new NumericSolutionImpl<Double>(this) ;
+  public NumericSolution<Double> createSolution() {
+    NumericSolution<Double> solution = new NumericSolutionImpl<Double>(this) ;
 
     return solution ;
   }
 
   /** Evaluate() method */
   @Override
-  public void evaluate(Solution solution)  {
+  //public void evaluate(NumericSolution<Double> solution)  {
+  public void evaluate(Solution sol)  {
+    NumericSolution<Double> solution = (NumericSolution<Double>)sol ;
     double[] f = new double[solution.getNumberOfVariables()];
 
     double x1 = (double) solution.getVariableValue(0);

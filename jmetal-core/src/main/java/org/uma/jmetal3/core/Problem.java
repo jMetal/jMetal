@@ -22,16 +22,15 @@
 package org.uma.jmetal3.core;
 
 /** Interface representing a multiobjective optimization problem */
-public interface Problem {
+public interface Problem<S extends Solution<?>> {
   /* Getters */
   public int getNumberOfVariables() ;
   public int getNumberOfObjectives() ;
   public int getNumberOfConstraints() ;
-
   public String getName() ;
 
   /* Methods */
-  public void evaluate(Solution solution) ;
-  public Solution createSolution() ;
-
+  public void evaluate(S solution) ;
+  public S createSolution() ;
 }
+

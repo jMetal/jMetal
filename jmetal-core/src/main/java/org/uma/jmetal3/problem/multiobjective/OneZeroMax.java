@@ -20,6 +20,7 @@
 
 package org.uma.jmetal3.problem.multiobjective;
 
+import org.uma.jmetal.encoding.variable.Binary;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal3.core.Problem;
 import org.uma.jmetal3.core.Solution;
@@ -59,8 +60,8 @@ public class OneZeroMax extends GenericProblemImpl implements BinaryProblem {
   }
 
   @Override
-  public Solution createSolution() {
-    Solution solution = new BinarySolutionImpl(this);
+  public BinarySolution createSolution() {
+    BinarySolution solution = new BinarySolutionImpl(this);
 
     return solution ;
   }
@@ -68,14 +69,16 @@ public class OneZeroMax extends GenericProblemImpl implements BinaryProblem {
 
   /** Evaluate() method */
   @Override
-  public void evaluate(Solution solution) {
+  //public void evaluate(BinarySolution solution) {
+    public void evaluate(Solution sol) {
+    BinarySolution solution = (BinarySolution)sol ;
     int counterOnes;
     int counterZeroes;
 
     counterOnes = 0;
     counterZeroes = 0;
 
-    BitSet bitset = ((BinarySolution)solution).getVariableValue(0) ;
+    BitSet bitset = solution.getVariableValue(0) ;
 
     for (int i = 0; i < bitset.length(); i++) {
       if (bitset.get(i)) {

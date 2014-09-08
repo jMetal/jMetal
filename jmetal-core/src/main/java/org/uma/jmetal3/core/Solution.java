@@ -16,5 +16,5 @@ public interface Solution<T> {
   public double getOverallConstraintViolationDegree() ;
   public void setOverallConstraintViolationDegree(double violationDegree) ;
 
-  public Solution copy() ;
+  public Solution<?> copy() ;
  }
