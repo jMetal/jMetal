@@ -76,6 +76,11 @@ public class DoubleSolutionImpl implements NumericSolution<Double> {
   }
 
   @Override
+  public void setOverallConstraintViolationDegree(double violationDegree) {
+    overallConstraintViolationDegree = violationDegree ;
+  }
+
+  @Override
   public Solution copy() {
     return new DoubleSolutionImpl(problem);
   }

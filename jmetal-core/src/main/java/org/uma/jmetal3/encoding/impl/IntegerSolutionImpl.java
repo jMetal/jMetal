@@ -76,6 +76,11 @@ public class IntegerSolutionImpl implements NumericSolution<Integer> {
   }
 
   @Override
+  public void setOverallConstraintViolationDegree(double violationDegree) {
+    overallConstraintViolationDegree = violationDegree ;
+  }
+
+  @Override
   public Solution copy() {
     return new IntegerSolutionImpl(problem);
   }

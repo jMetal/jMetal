@@ -83,6 +83,11 @@ public class BinarySolutionImpl implements BinarySolution {
   }
 
   @Override
+  public void setOverallConstraintViolationDegree(double violationDegree) {
+    overallConstraintViolationDegree = violationDegree ;
+  }
+
+  @Override
   public int getNumberOfBits(int index) {
     return variables.get(index).length() ;
   }

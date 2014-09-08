@@ -6,10 +6,10 @@ import org.uma.jmetal3.problem.ContinuousProblem;
 import java.util.List;
 
 public abstract class GenericProblemImpl implements Problem {
-
-	private int numberOfVariables ;
-  private int numberOfObjectives ;
-  private String name ;
+	private int numberOfVariables = 0 ;
+  private int numberOfObjectives = 0 ;
+  private int numberOfConstraints = 0 ;
+  private String name = null ;
 
   /* Getters */
 	@Override
@@ -21,6 +21,11 @@ public abstract class GenericProblemImpl implements Problem {
 	public int getNumberOfObjectives() {
 		return numberOfObjectives ;
 	}
+
+  @Override
+  public int getNumberOfConstraints() {
+    return numberOfConstraints ;
+  }
 
 	@Override
 	public String getName() {
@@ -34,6 +39,9 @@ public abstract class GenericProblemImpl implements Problem {
 
   protected void setNumberOfObjectives(int numberOfObjectives) {
     this.numberOfObjectives = numberOfObjectives;
+  }
+  protected void setNumberOfConstraints(int numberOfConstraints) {
+    this.numberOfConstraints = numberOfConstraints;
   }
 
   protected void setName(String name) {

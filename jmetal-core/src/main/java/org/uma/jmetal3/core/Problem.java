@@ -26,6 +26,8 @@ public interface Problem {
   /* Getters */
   public int getNumberOfVariables() ;
   public int getNumberOfObjectives() ;
+  public int getNumberOfConstraints() ;
+
   public String getName() ;
 
   /* Methods */

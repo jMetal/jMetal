@@ -3,7 +3,7 @@
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
 //
-//  Copyright (c) 2012 Antonio J. Nebro
+//  Copyright (c) 2014 Antonio J. Nebro
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -36,7 +36,6 @@ import java.util.BitSet;
  * number of '1's and '0's in a binary string.
  */
 public class OneZeroMax extends GenericProblemImpl implements BinaryProblem {
-  private static final long serialVersionUID = 2580449794690931406L;
 
   private int numberOfBits ;
 
@@ -65,6 +64,7 @@ public class OneZeroMax extends GenericProblemImpl implements BinaryProblem {
 
     return solution ;
   }
+
 
   /** Evaluate() method */
   @Override
