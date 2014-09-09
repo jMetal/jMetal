@@ -21,10 +21,9 @@
 package org.uma.jmetal3.problem.multiobjective;
 
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal3.core.Solution;
-import org.uma.jmetal3.encoding.NumericSolution;
-import org.uma.jmetal3.encoding.impl.NumericSolutionImpl;
-import org.uma.jmetal3.problem.impl.ContinuousProblemImpl;
+import org.uma.jmetal3.encoding.IntegerSolution;
+import org.uma.jmetal3.encoding.impl.IntegerSolutionImpl;
+import org.uma.jmetal3.problem.impl.IntegerProblemImpl;
 
 import java.util.ArrayList;
 
@@ -34,7 +33,7 @@ import java.util.ArrayList;
  * Objective 1: minimizing the distance to value N
  * Objective 2: minimizing the distance to value M
  */
-public class NMMin extends ContinuousProblemImpl<Integer> {
+public class NMMin extends IntegerProblemImpl<IntegerSolution> {
   private int valueN ;
   private int valueM ;
 
@@ -63,15 +62,15 @@ public class NMMin extends ContinuousProblemImpl<Integer> {
   }
 
   @Override
-  public NumericSolution<Integer> createSolution() {
-    NumericSolution<Integer> solution = new NumericSolutionImpl<Integer>(this) ;
+  public IntegerSolution createSolution() {
+    IntegerSolution solution = new IntegerSolutionImpl(this) ;
 
     return solution ;
   }
 
   /** Evaluate() method */
   @Override
-  public void evaluate(Solution solution) {
+  public void evaluate(IntegerSolution solution) {
     int approximationToN;
     int approximationToM ;
 
@@ -79,7 +78,7 @@ public class NMMin extends ContinuousProblemImpl<Integer> {
     approximationToM = 0;
 
     for (int i = 0; i < solution.getNumberOfVariables(); i++) {
-      int value = (int)solution.getVariableValue(i) ;
+      int value = solution.getVariableValue(i) ;
       approximationToN += Math.abs(valueN - value) ;
       approximationToM += Math.abs(valueM - value) ;
     }

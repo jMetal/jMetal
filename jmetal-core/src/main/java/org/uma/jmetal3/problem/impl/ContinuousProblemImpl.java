@@ -1,34 +1,36 @@
 package org.uma.jmetal3.problem.impl;
 
-import org.uma.jmetal3.core.Problem;
+import org.uma.jmetal3.core.Solution;
+import org.uma.jmetal3.encoding.DoubleSolution;
 import org.uma.jmetal3.problem.ContinuousProblem;
 
-import java.util.ArrayList;
 import java.util.List;
+// public interface ContinuousProblem<S extends Solution<? extends Double>> extends Problem<S> {
+// public abstract class GenericProblemImpl<S extends Solution<?>> implements Problem<S> {
 
-public abstract class ContinuousProblemImpl<T extends Number>
-        extends GenericProblemImpl implements ContinuousProblem<T> {
+public abstract class ContinuousProblemImpl<S extends Solution<? extends Double>> extends GenericProblemImpl<S>
+  implements ContinuousProblem<S>{
 
-  private List<T> lowerLimit ;
-  private List<T> upperLimit ;
+  private List<Double> lowerLimit ;
+  private List<Double> upperLimit ;
 
   /* Getters */
 	@Override
-	public T getUpperBound(int index) {
+	public Double getUpperBound(int index) {
 		return upperLimit.get(index);
 	}
 
 	@Override
-	public T getLowerBound(int index) {
+	public Double getLowerBound(int index) {
 		return lowerLimit.get(index);
 	}
 
   /* Setters */
-  protected void setLowerLimit(List<T> lowerLimit) {
+  protected void setLowerLimit(List<Double> lowerLimit) {
     this.lowerLimit = lowerLimit;
   }
 
-  protected void setUpperLimit(List<T> upperLimit) {
+  protected void setUpperLimit(List<Double> upperLimit) {
     this.upperLimit = upperLimit;
   }
 }

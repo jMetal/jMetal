@@ -21,17 +21,15 @@
 
 package org.uma.jmetal3.problem.multiobjective;
 
-import org.uma.jmetal3.core.Problem;
 import org.uma.jmetal3.core.Solution;
-import org.uma.jmetal3.encoding.NumericSolution;
-import org.uma.jmetal3.encoding.impl.NumericSolutionImpl;
+import org.uma.jmetal3.encoding.DoubleSolution;
+import org.uma.jmetal3.encoding.impl.DoubleSolutionImpl;
 import org.uma.jmetal3.problem.impl.ContinuousProblemImpl;
 
-import javax.print.attribute.standard.PrinterLocation;
 import java.util.ArrayList;
 
 /** Class representing problem Fonseca */
-public class Fonseca extends ContinuousProblemImpl<Double> {
+public class Fonseca extends ContinuousProblemImpl<DoubleSolution> {
 
   /** Constructor */
   public Fonseca()  {
@@ -52,26 +50,25 @@ public class Fonseca extends ContinuousProblemImpl<Double> {
   }
 
   @Override
-	public NumericSolution<Double> createSolution() {
-    NumericSolution<Double> solution = new NumericSolutionImpl<>(this) ;
+  public DoubleSolution createSolution() {
+    DoubleSolution solution = new DoubleSolutionImpl(this) ;
 
-		return solution ;
-	}
-	
+    return solution ;
+  }
+
   /** Evaluate() method */
   @Override
-//  public void evaluate(NumericSolution<Double> solution) {
-  public void evaluate(Solution sol) {
-    NumericSolution<Double> solution = (NumericSolution<Double>)sol ;
+  //public void evaluate(NumericSolution<Double> solution) {
+  public void evaluate(DoubleSolution solution) {
     int numberOfVariables = getNumberOfVariables() ;
 
     double[] f = new double[getNumberOfObjectives()];
     double[] x = new double[numberOfVariables] ;
-    
+
     for (int i = 0; i < numberOfVariables; i++) {
-    	x[i] = (double)solution.getVariableValue(i) ;
+      x[i] = (double)solution.getVariableValue(i) ;
     }
-    
+
     double sum1 = 0.0;
     for (int i = 0; i < numberOfVariables; i++) {
       sum1 += StrictMath.pow(x[i] - (1.0 / StrictMath.sqrt((double) numberOfVariables)), 2.0);
@@ -89,4 +86,6 @@ public class Fonseca extends ContinuousProblemImpl<Double> {
     solution.setObjective(0, f[0]);
     solution.setObjective(1, f[1]);
   }
+
+
 }

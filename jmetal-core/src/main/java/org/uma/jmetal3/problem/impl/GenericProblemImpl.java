@@ -1,11 +1,9 @@
 package org.uma.jmetal3.problem.impl;
 
 import org.uma.jmetal3.core.Problem;
-import org.uma.jmetal3.problem.ContinuousProblem;
+import org.uma.jmetal3.core.Solution;
 
-import java.util.List;
-
-public abstract class GenericProblemImpl implements Problem {
+public abstract class GenericProblemImpl<S extends Solution<?>> implements Problem<S> {
 	private int numberOfVariables = 0 ;
   private int numberOfObjectives = 0 ;
   private int numberOfConstraints = 0 ;

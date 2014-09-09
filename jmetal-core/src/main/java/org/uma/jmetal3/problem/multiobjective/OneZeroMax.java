@@ -20,13 +20,10 @@
 
 package org.uma.jmetal3.problem.multiobjective;
 
-import org.uma.jmetal.encoding.variable.Binary;
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal3.core.Problem;
 import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal3.encoding.BinarySolution;
 import org.uma.jmetal3.encoding.impl.BinarySolutionImpl;
-import org.uma.jmetal3.encoding.impl.NumericSolutionImpl;
 import org.uma.jmetal3.problem.BinaryProblem;
 import org.uma.jmetal3.problem.impl.GenericProblemImpl;
 

@@ -2,8 +2,9 @@ package org.uma.jmetal3.encoding.impl;
 
 import org.uma.jmetal.util.random.PseudoRandom;
 import org.uma.jmetal3.core.Solution;
-import org.uma.jmetal3.encoding.NumericSolution;
+import org.uma.jmetal3.encoding.DoubleSolution;
 import org.uma.jmetal3.problem.ContinuousProblem;
+import org.uma.jmetal3.problem.impl.ContinuousProblemImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,14 +12,14 @@ import java.util.List;
 /**
  * Created by Antonio J. Nebro on 03/09/14.
  */
-public class DoubleSolutionImpl implements NumericSolution<Double> {
+public class DoubleSolutionImpl implements DoubleSolution {
   private double [] objectives;
   private List<Double> variables;
-  private ContinuousProblem<Double> problem ;
+  private ContinuousProblem<DoubleSolution> problem ;
   private double overallConstraintViolationDegree ;
 
   /** Constructor */
-  public DoubleSolutionImpl(ContinuousProblem<Double> problem) {
+  public DoubleSolutionImpl(ContinuousProblem<DoubleSolution> problem) {
   	this.problem = problem ;
     objectives = new double[problem.getNumberOfObjectives()] ;
     variables = new ArrayList<>(problem.getNumberOfVariables()) ;

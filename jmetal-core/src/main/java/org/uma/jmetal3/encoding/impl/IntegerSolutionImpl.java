@@ -2,8 +2,8 @@ package org.uma.jmetal3.encoding.impl;
 
 import org.uma.jmetal.util.random.PseudoRandom;
 import org.uma.jmetal3.core.Solution;
-import org.uma.jmetal3.encoding.NumericSolution;
-import org.uma.jmetal3.problem.ContinuousProblem;
+import org.uma.jmetal3.encoding.IntegerSolution;
+import org.uma.jmetal3.problem.IntegerProblem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,14 +11,14 @@ import java.util.List;
 /**
  * Created by Antonio J. Nebro on 03/09/14.
  */
-public class IntegerSolutionImpl implements NumericSolution<Integer> {
+public class IntegerSolutionImpl implements IntegerSolution {
   private double [] objectives;
   private List<Integer> variables;
-  private ContinuousProblem<Integer> problem ;
+  private IntegerProblem<IntegerSolution> problem ;
   private double overallConstraintViolationDegree ;
 
   /** Constructor */
-  public IntegerSolutionImpl(ContinuousProblem<Integer> problem) {
+  public IntegerSolutionImpl(IntegerProblem<IntegerSolution> problem) {
   	this.problem = problem ;
     objectives = new double[problem.getNumberOfObjectives()] ;
     variables = new ArrayList<>(problem.getNumberOfVariables()) ;

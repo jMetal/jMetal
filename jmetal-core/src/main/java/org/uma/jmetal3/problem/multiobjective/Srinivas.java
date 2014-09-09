@@ -21,15 +21,15 @@
 package org.uma.jmetal3.problem.multiobjective;
 
 import org.uma.jmetal3.core.Solution;
-import org.uma.jmetal3.encoding.NumericSolution;
-import org.uma.jmetal3.encoding.impl.NumericSolutionImpl;
+import org.uma.jmetal3.encoding.DoubleSolution;
+import org.uma.jmetal3.encoding.impl.DoubleSolutionImpl;
 import org.uma.jmetal3.problem.ConstrainedProblem;
 import org.uma.jmetal3.problem.impl.ContinuousProblemImpl;
 
 import java.util.ArrayList;
 
 /** Class representing problem Srinivas */
-public class Srinivas extends ContinuousProblemImpl<Double> implements ConstrainedProblem {
+public class Srinivas extends ContinuousProblemImpl<DoubleSolution> implements ConstrainedProblem<DoubleSolution> {
 
   /** Constructor */
   public Srinivas()  {
@@ -50,19 +50,16 @@ public class Srinivas extends ContinuousProblemImpl<Double> implements Constrain
     setUpperLimit(upperLimit);
   }
 
-
   @Override
-  public NumericSolution<Double> createSolution() {
-    NumericSolution<Double> solution = new NumericSolutionImpl<Double>(this) ;
+  public DoubleSolution createSolution() {
+    DoubleSolution solution = new DoubleSolutionImpl(this) ;
 
     return solution ;
   }
 
   /** Evaluate() method */
   @Override
-  //public void evaluate(NumericSolution<Double> solution)  {
-  public void evaluate(Solution sol)  {
-    NumericSolution<Double> solution = (NumericSolution<Double>)sol ;
+  public void evaluate(DoubleSolution solution)  {
     double[] f = new double[solution.getNumberOfVariables()];
 
     double x1 = (double) solution.getVariableValue(0);
@@ -75,11 +72,12 @@ public class Srinivas extends ContinuousProblemImpl<Double> implements Constrain
   }
 
   /** EvaluateConstraints() method  */
-  public void evaluateConstraints(Solution solution)  {
+  @Override
+  public void evaluateConstraints(DoubleSolution solution)  {
     double[] constraint = new double[this.getNumberOfConstraints()];
 
-    double x1 = (double)solution.getVariableValue(0) ;
-    double x2 = (double)solution.getVariableValue(1) ;
+    double x1 = solution.getVariableValue(0) ;
+    double x2 = solution.getVariableValue(1) ;
 
     constraint[0] = 1.0 - (x1 * x1 + x2 * x2) / 225.0;
     constraint[1] = (3.0 * x2 - x1) / 10.0 - 1.0;
