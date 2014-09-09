@@ -30,7 +30,7 @@ import org.uma.jmetal3.util.comparator.DominanceComparator;
 import java.util.Comparator;
 import java.util.List;
 
-public class BinaryTournamentSelection implements SelectionOperator<List<Solution>,Solution> {
+public class BinaryTournamentSelection implements SelectionOperator<List<Solution<?>>,Solution<?>> {
   private Comparator<Solution> comparator;
 
   /** Constructor */
@@ -59,7 +59,7 @@ public class BinaryTournamentSelection implements SelectionOperator<List<Solutio
 
   @Override
   /** Execute() method */
-  public Solution execute(List<Solution> solutions) {
+  public Solution<?> execute(List<Solution<?>> solutions) {
     if (null == solutions) {
       throw new JMetalException("Parameter is null") ;
     } else if (solutions.size() == 0) {

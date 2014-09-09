@@ -6,5 +6,5 @@ import org.uma.jmetal3.core.Solution;
 /**
  * Created by Antonio J. Nebro on 05/09/14.
  */
-public interface MutationOperator<S extends Solution<?>> extends Operator<S, S> {
+public interface MutationOperator<Source extends Solution<?>> extends Operator<Source, Source> {
 }

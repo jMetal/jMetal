@@ -58,7 +58,6 @@ public class Fonseca extends ContinuousProblemImpl<DoubleSolution> {
 
   /** Evaluate() method */
   @Override
-  //public void evaluate(NumericSolution<Double> solution) {
   public void evaluate(DoubleSolution solution) {
     int numberOfVariables = getNumberOfVariables() ;
 

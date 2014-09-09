@@ -23,14 +23,14 @@ package org.uma.jmetal3.operator.crossover.impl;
 
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
-import org.uma.jmetal3.encoding.NumericSolution;
+import org.uma.jmetal3.encoding.IntegerSolution;
 import org.uma.jmetal3.operator.crossover.CrossoverOperator;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /** This class allows to apply a SBX crossover operator using two parent solutions (Integer encoding) */
-public class IntegerSBXCrossover implements CrossoverOperator<List<NumericSolution<Integer>>, List<NumericSolution<Integer>>> {
+public class IntegerSBXCrossover implements CrossoverOperator<List<IntegerSolution>, List<IntegerSolution>> {
 
   /** EPS defines the minimum difference allowed between real values */
   private static final double EPS = 1.0e-14;
@@ -70,7 +70,7 @@ public class IntegerSBXCrossover implements CrossoverOperator<List<NumericSoluti
 
   /** Execute() method */
   @Override
-  public List<NumericSolution<Integer>> execute(List<NumericSolution<Integer>> solutions) {
+  public List<IntegerSolution> execute(List<IntegerSolution> solutions) {
     if (null == solutions) {
       throw new JMetalException("Null parameter") ;
     } else if (solutions.size() != 2) {
@@ -81,12 +81,12 @@ public class IntegerSBXCrossover implements CrossoverOperator<List<NumericSoluti
   }
 
   /** doCrossover method */
-  public List<NumericSolution<Integer>>  doCrossover(
-          double probability, NumericSolution<Integer> parent1, NumericSolution<Integer> parent2) {
-    List<NumericSolution<Integer>> offspring = new ArrayList<NumericSolution<Integer>>(2);
+  public List<IntegerSolution> doCrossover(
+          double probability, IntegerSolution parent1, IntegerSolution parent2) {
+    List<IntegerSolution> offspring = new ArrayList<IntegerSolution>(2);
 
-    offspring.add((NumericSolution<Integer>) parent1.copy()) ;
-    offspring.add((NumericSolution<Integer>) parent2.copy()) ;
+    offspring.add((IntegerSolution) parent1.copy()) ;
+    offspring.add((IntegerSolution) parent2.copy()) ;
 
     int i;
     double rand;

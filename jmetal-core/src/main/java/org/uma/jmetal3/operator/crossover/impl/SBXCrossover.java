@@ -23,14 +23,14 @@ package org.uma.jmetal3.operator.crossover.impl;
 
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
-import org.uma.jmetal3.encoding.NumericSolution;
+import org.uma.jmetal3.encoding.DoubleSolution;
 import org.uma.jmetal3.operator.crossover.CrossoverOperator;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /** This class allows to apply a SBX crossover operator using two parent solutions (Double encoding) */
-public class SBXCrossover implements CrossoverOperator<List<NumericSolution<Double>>, List<NumericSolution<Double>>> {
+public class SBXCrossover implements CrossoverOperator<List<DoubleSolution>, List<DoubleSolution>> {
 
   /** EPS defines the minimum difference allowed between real values */
   private static final double EPS = 1.0e-14;
@@ -70,7 +70,7 @@ public class SBXCrossover implements CrossoverOperator<List<NumericSolution<Doub
 
   /** Execute() method */
   @Override
-  public List<NumericSolution<Double>> execute(List<NumericSolution<Double>> solutions) {
+  public List<DoubleSolution> execute(List<DoubleSolution> solutions) {
     if (null == solutions) {
       throw new JMetalException("Null parameter") ;
     } else if (solutions.size() != 2) {
@@ -81,12 +81,12 @@ public class SBXCrossover implements CrossoverOperator<List<NumericSolution<Doub
   }
 
   /** doCrossover method */
-  public List<NumericSolution<Double>> doCrossover(
-          double probability, NumericSolution<Double> parent1, NumericSolution<Double> parent2) {
-    List<NumericSolution<Double>> offspring = new ArrayList<NumericSolution<Double>>(2);
+  public List<DoubleSolution> doCrossover(
+          double probability, DoubleSolution parent1, DoubleSolution parent2) {
+    List<DoubleSolution> offspring = new ArrayList<DoubleSolution>(2);
 
-    offspring.add((NumericSolution<Double>) parent1.copy()) ;
-    offspring.add((NumericSolution<Double>) parent2.copy()) ;
+    offspring.add((DoubleSolution) parent1.copy()) ;
+    offspring.add((DoubleSolution) parent2.copy()) ;
 
     int i;
     double rand;

@@ -44,7 +44,7 @@ public class BinaryTournamentSelectionTest {
 
   private BinaryTournamentSelection selection ;
   private Problem problem ;
-  private List<Solution> population ;
+  private List<Solution<?>> population ;
 
   @Before
   public void startup() throws ClassNotFoundException {
@@ -80,8 +80,8 @@ public class BinaryTournamentSelectionTest {
   @Test
   public void executeWithSolutionSetSizeTwoTest() throws ClassNotFoundException {
     population = new ArrayList<>(2) ;
-    population.add(new NumericSolutionImpl<Double>((ContinuousProblem)problem)) ;
-    population.add(new NumericSolutionImpl<Double>((ContinuousProblem)problem)) ;
+    population.add(problem.createSolution()) ;
+    population.add(problem.createSolution()) ;
     assertNotNull(selection.execute(population));
   }
 

@@ -3,10 +3,10 @@ package org.uma.jmetal3.operator.mutation.impl;
 import java.util.Random;
 
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal3.encoding.NumericSolution;
+import org.uma.jmetal3.encoding.DoubleSolution;
 import org.uma.jmetal3.operator.mutation.MutationOperator;
 
-public class SimpleRandomMutation implements MutationOperator<NumericSolution<Double>> {
+public class SimpleRandomMutation implements MutationOperator<DoubleSolution> {
   private double probability ;
 
   /**  Constructor */
@@ -16,20 +16,18 @@ public class SimpleRandomMutation implements MutationOperator<NumericSolution<Do
 	
 	/** Execute() method */
 	@Override
-  public NumericSolution<Double> execute(NumericSolution<Double> object) throws JMetalException {
-    if (null == object) {
+  public DoubleSolution execute(DoubleSolution solution) throws JMetalException {
+    if (null == solution) {
       throw new JMetalException("Null parameter") ;
     }
 
-    NumericSolution<Double> solution = (NumericSolution<Double>) object;
-    
     doMutation(probability, solution) ;
     
     return solution;
   }
 
   /** Implements the mutation operation */
-	private void doMutation(double probability, NumericSolution<Double> solution) {
+	private void doMutation(double probability, DoubleSolution solution) {
     for (int i = 0; i < solution.getNumberOfVariables(); i++) {
     	Random random = new Random() ;
       if (random.nextDouble() <= probability) {

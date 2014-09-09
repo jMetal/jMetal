@@ -22,11 +22,11 @@ package org.uma.jmetal3.operator.mutation.impl;
 
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
-import org.uma.jmetal3.encoding.NumericSolution;
+import org.uma.jmetal3.encoding.DoubleSolution;
 import org.uma.jmetal3.operator.mutation.MutationOperator;
 
 /** This class implements a polynomial mutation operator */
-public class PolynomialMutation implements MutationOperator<NumericSolution<Double>> {
+public class PolynomialMutation implements MutationOperator<DoubleSolution> {
   private static final double ETA_M_DEFAULT = 20.0;
   private double distributionIndex ;
 
@@ -87,7 +87,7 @@ public class PolynomialMutation implements MutationOperator<NumericSolution<Doub
   }
 
   /** Execute() method */
-  public NumericSolution<Double> execute(NumericSolution<Double> solution) throws JMetalException {
+  public DoubleSolution execute(DoubleSolution solution) throws JMetalException {
     if (null == solution) {
       throw new JMetalException("Null parameter") ;
     }
@@ -97,11 +97,11 @@ public class PolynomialMutation implements MutationOperator<NumericSolution<Doub
   }
 
   /** Perform the mutation operation */
-  public void doMutation(double probability, NumericSolution<Double> solution) throws JMetalException {
+  public void doMutation(double probability, DoubleSolution solution) throws JMetalException {
     doRealMutation(probability, solution);
   }
 
-  private void doRealMutation(double probability, NumericSolution<Double> solution) {
+  private void doRealMutation(double probability, DoubleSolution solution) {
     Double rnd, delta1, delta2, mutPow, deltaq;
     Double y, yl, yu, val, xy;
 
