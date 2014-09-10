@@ -50,7 +50,3 @@ public class NSGAIISolution extends GenericSolutionImpl implements RankingSoluti
      return this.solution ;
   }
 }
-
-
-//public abstract class GenericSolutionImpl<T, P extends Problem> implements Solution<T>{
-// public class BinarySolutionImpl extends GenericSolutionImpl<BitSet, BinaryProblem> implements BinarySolution {
