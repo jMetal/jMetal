@@ -7,4 +7,5 @@ import org.uma.jmetal3.core.Solution;
  */
 public interface CrowdingDistanceSolution extends Solution {
   public double getCrowdingDistance() ;
+  public void setCrowdingDistance(double crowdingDistance) ;
 }
