@@ -11,16 +11,12 @@ import java.util.List;
 /**
  * Created by Antonio J. Nebro on 03/09/14.
  */
-public class IntegerSolutionImpl implements IntegerSolution {
-  private double [] objectives;
-  private List<Integer> variables;
-  private IntegerProblem<IntegerSolution> problem ;
-  private double overallConstraintViolationDegree ;
+public class IntegerSolutionImpl extends GenericSolutionImpl<Integer, IntegerProblem<IntegerSolution>> implements IntegerSolution {
 
   /** Constructor */
   public IntegerSolutionImpl(IntegerProblem<IntegerSolution> problem) {
   	this.problem = problem ;
-    objectives = new double[problem.getNumberOfObjectives()] ;
+    objectives = new ArrayList<>(problem.getNumberOfObjectives()) ;
     variables = new ArrayList<>(problem.getNumberOfVariables()) ;
     overallConstraintViolationDegree = 0.0 ;
 
@@ -31,53 +27,13 @@ public class IntegerSolutionImpl implements IntegerSolution {
   }
 
   @Override
-  public void setObjective(int index, double value) {
-    objectives[index] = value ;
-  }
-
-  @Override
-  public double getObjective(int index) {
-    return objectives[index];
-  }
-
-  @Override
-  public Integer getVariableValue(int index) {
-    return variables.get(index);
-  }
-
-  @Override
-  public void setVariableValue(int index, Integer value) {
-    variables.set(index, value) ;
-  }
-
-  @Override
   public Integer getUpperBound(int index) {
-    return (Integer) problem.getUpperBound(index);
+    return problem.getUpperBound(index);
   }
-  
+
   @Override
   public Integer getLowerBound(int index) {
     return problem.getLowerBound(index) ;
-  }
-
-  @Override
-  public int getNumberOfVariables() {
-    return variables.size();
-  }
-
-  @Override
-  public int getNumberOfObjectives() {
-    return objectives.length;
-  }
-
-  @Override
-  public double getOverallConstraintViolationDegree() {
-    return overallConstraintViolationDegree ;
-  }
-
-  @Override
-  public void setOverallConstraintViolationDegree(double violationDegree) {
-    overallConstraintViolationDegree = violationDegree ;
   }
 
   @Override

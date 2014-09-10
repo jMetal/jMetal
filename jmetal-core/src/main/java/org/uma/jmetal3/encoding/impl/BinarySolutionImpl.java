@@ -3,7 +3,10 @@ package org.uma.jmetal3.encoding.impl;
 import org.uma.jmetal.util.random.PseudoRandom;
 import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal3.encoding.BinarySolution;
+import org.uma.jmetal3.encoding.DoubleSolution;
 import org.uma.jmetal3.problem.BinaryProblem;
+import org.uma.jmetal3.problem.ContinuousProblem;
+import org.uma.jmetal3.problem.impl.GenericProblemImpl;
 
 import java.util.ArrayList;
 import java.util.BitSet;
@@ -12,11 +15,7 @@ import java.util.List;
 /**
  * Created by Antonio J. Nebro on 03/09/14.
  */
-public class BinarySolutionImpl implements BinarySolution {
-  private List<Double> objectives;
-  private List<BitSet> variables;
-  private BinaryProblem problem ;
-  private double overallConstraintViolationDegree ;
+public class BinarySolutionImpl extends GenericSolutionImpl<BitSet, BinaryProblem> implements BinarySolution {
 
   /** Constructor */
   public BinarySolutionImpl(BinaryProblem problem) {
@@ -41,47 +40,6 @@ public class BinarySolutionImpl implements BinarySolution {
     }
 
     return bitSet ;
-  }
-
-  @Override
-  public void setObjective(int index, double value) {
-    objectives.set(index, value) ;
-  }
-
-  @Override
-  public double getObjective(int index) {
-    return objectives.get(index);
-  }
-
-  @Override
-  public BitSet getVariableValue(int index) {
-    return variables.get(index);
-  }
-
-  @Override
-  public void setVariableValue(int index, BitSet value) {
-    variables.set(index, value) ;
-  }
-
-
-  @Override
-  public int getNumberOfVariables() {
-    return variables.size();
-  }
-
-  @Override
-  public int getNumberOfObjectives() {
-    return objectives.size();
-  }
-
-  @Override
-  public double getOverallConstraintViolationDegree() {
-    return overallConstraintViolationDegree ;
-  }
-
-  @Override
-  public void setOverallConstraintViolationDegree(double violationDegree) {
-    overallConstraintViolationDegree = violationDegree ;
   }
 
   @Override
