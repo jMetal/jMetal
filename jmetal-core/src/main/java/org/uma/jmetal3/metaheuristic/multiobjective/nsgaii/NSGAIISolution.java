@@ -24,8 +24,16 @@ public class NSGAIISolution extends GenericSolutionImpl implements RankingSoluti
   }
 
   @Override
-  public int getRanking() {
+  public int getRank() {
     return ranking;
+  }
+
+  public void setRank(int ranking) {
+    this.ranking = ranking ;
+  }
+
+  public void setCrowdingDistance(double crowdingDistance) {
+    this.crowdingDistance = crowdingDistance ;
   }
 
   @Override

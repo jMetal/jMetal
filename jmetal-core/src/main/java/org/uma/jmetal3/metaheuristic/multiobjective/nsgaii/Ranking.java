@@ -23,6 +23,7 @@ package org.uma.jmetal3.metaheuristic.multiobjective.nsgaii;
 
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal3.core.Solution;
+import org.uma.jmetal3.encoding.attributes.RankingSolution;
 import org.uma.jmetal3.util.comparator.DominanceComparator;
 import org.uma.jmetal3.util.comparator.OverallConstraintViolationComparator;
 
@@ -37,14 +38,13 @@ import java.util.*;
  * solutions, subset 1 contains the non-dominated solutions after removing those
  * belonging to subset 0, and so on.
  */
-public class Ranking {
+public class Ranking<T extends RankingSolution> {
   private static final Comparator<Solution> DOMINANCE_COMPARATOR = new DominanceComparator();
   private static final Comparator<Solution> CONSTRAINT_VIOLATION_COMPARATOR =
     new OverallConstraintViolationComparator();
 
-  private List<Solution> population;
-  private List<ArrayList<Solution>> rankedSubpopulations;
-  private int[] solutionRanking ;
+  private List<T> population;
+  private List<ArrayList<T>> rankedSubpopulations;
 
   /**
    * Constructor.
@@ -52,7 +52,7 @@ public class Ranking {
    * @param solutionSet The <code>SolutionSet</code> to be ranked.
    * @throws org.uma.jmetal.util.JMetalException
    */
-  public Ranking(List<Solution> solutionSet) throws JMetalException {
+  public Ranking(List<T> solutionSet) throws JMetalException {
     this.population = solutionSet;
 
     // dominateMe[i] contains the number of solutions dominating i
@@ -63,9 +63,6 @@ public class Ranking {
 
     // front[i] contains the list of individuals belonging to the front i
     List<Integer>[] front = new List[this.population.size() + 1];
-
-    // solutionRanking stores the ranking of each solution in the solution set
-    solutionRanking = new int[solutionSet.size()] ;
 
     // Initialize the fronts 
     for (int i = 0; i < front.length; i++) {
@@ -102,8 +99,7 @@ public class Ranking {
     for (int i = 0; i < this.population.size(); i++) {
       if (dominateMe[i] == 0) {
         front[0].add(i);
-        //solutionSet.get(i).setRank(0);
-        solutionRanking[i] = 0 ;
+        solutionSet.get(i).setRank(0);
       }
     }
 
@@ -121,18 +117,18 @@ public class Ranking {
           if (dominateMe[index] == 0) {
             front[i].add(index);
             //this.population.get(index).setRank(i);
-            solutionRanking[index] = i ;
+            solutionSet.get(index).setRank(i);
           }
         }
       }
     }
 
     //rankedSubpopulations = new SolutionSet[i];
-    rankedSubpopulations = new ArrayList<ArrayList<Solution>>() ;
+    rankedSubpopulations = new ArrayList<ArrayList<T>>() ;
     //0,1,2,....,i-1 are fronts, then i fronts
     for (int j = 0; j < i; j++) {
       //rankedSubpopulations[j] = new SolutionSet(front[j].size());
-      rankedSubpopulations.set(j, new ArrayList<Solution>(front[j].size()));
+      rankedSubpopulations.set(j, new ArrayList<T>(front[j].size()));
       it1 = front[j].iterator();
       while (it1.hasNext()) {
         //rankedSubpopulations[j].add(solutionSet.get(it1.next()));
@@ -148,15 +144,11 @@ public class Ranking {
    * @param rank The rank
    * @return Object representing the <code>SolutionSet</code>.
    */
-  public List<Solution> getSubfront(int rank) {
+  public List<T> getSubfront(int rank) {
     return rankedSubpopulations.get(rank);
   }
 
   public int getNumberOfSubfronts() {
     return rankedSubpopulations.size();
-  }
-
-  public int getSolutionRanking(int index) {
-    return solutionRanking[index] ;
   }
 }

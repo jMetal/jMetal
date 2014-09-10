@@ -52,8 +52,8 @@ public abstract class NSGAIITemplate implements Algorithm {
   protected int maxEvaluations;
   protected int evaluations;
 
-  protected List<Solution> population;
-  protected List<Solution> offspringPopulation;
+  protected List<NSGAIISolution> population;
+  protected List<NSGAIISolution> offspringPopulation;
 
   protected MutationOperator mutationOperator;
   protected CrossoverOperator crossoverOperator;
@@ -176,18 +176,25 @@ public abstract class NSGAIITemplate implements Algorithm {
   protected void createInitialPopulation() throws ClassNotFoundException, JMetalException {
     population = new ArrayList<>(populationSize);
 
-    Solution newSolution;
+//    Solution newSolution;
+//    for (int i = 0; i < populationSize; i++) {
+//      newSolution = problem.createSolution();
+//      population.add(newSolution);
+//    }
+
+    NSGAIISolution newNSGAIISolution;
     for (int i = 0; i < populationSize; i++) {
-      newSolution = problem.createSolution();
-      population.add(newSolution);
+      newNSGAIISolution = new NSGAIISolution(problem.createSolution());
+      population.add(newNSGAIISolution);
     }
+
   }
 
-  protected ArrayList<Solution> evaluatePopulation(ArrayList<Solution> population) throws JMetalException {
+  protected ArrayList<NSGAIISolution> evaluatePopulation(ArrayList<NSGAIISolution> population) throws JMetalException {
     evaluations += population.size() ;
 
     for (int i = 0 ; i < population.size(); i++) {
-      problem.evaluate(population.get(i)) ;
+      problem.evaluate(population.get(i).getProblemSolution()) ;
       //problem.evaluateConstraints(solutionSet.get(i)) ;
     }
 
@@ -199,13 +206,13 @@ public abstract class NSGAIITemplate implements Algorithm {
   }
 
   protected Ranking rankPopulation() throws JMetalException {
-    ArrayList<Solution> union = new ArrayList<Solution>() ;
+    ArrayList<NSGAIISolution> union = new ArrayList<NSGAIISolution>() ;
     union.addAll(population);
     union.addAll(offspringPopulation);
 
-    return new Ranking(union) ;
+    return new Ranking<>(union) ;
   }
-
+/*
   protected void addRankedSolutionsToPopulation(Ranking ranking, int rank) throws JMetalException {
     List<Solution> front ;
 
@@ -215,7 +222,7 @@ public abstract class NSGAIITemplate implements Algorithm {
       population.add(front.get(i));
     }
   }
-/*
+
   protected void computeCrowdingDistance(Ranking ranking, int rank) throws JMetalException {
     List<Solution> currentRankedFront = ranking.getSubfront(rank) ;
     distance.crowdingDistanceAssignment(currentRankedFront);
