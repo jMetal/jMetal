@@ -30,8 +30,14 @@ public class NSGAIISolution extends GenericSolutionImpl implements RankingSoluti
 
   @Override
   public Solution<?> copy() {
+    NSGAIISolution newSolution = new NSGAIISolution(this) ;
+    newSolution.solution = this.solution.copy();
 
-    return null;
+    return newSolution;
+  }
+
+  public Solution getProblemSolution() {
+     return this.solution ;
   }
 }
 
