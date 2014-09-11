@@ -26,6 +26,21 @@ public class IntegerSolutionImpl extends GenericSolutionImpl<Integer, IntegerPro
     }
   }
 
+  /** Copy constructor */
+  public IntegerSolutionImpl(IntegerSolutionImpl solution) {
+    problem = solution.problem ;
+    objectives = new ArrayList<>() ;
+    for (Double obj : solution.objectives) {
+      objectives.add(new Double(obj)) ;
+    }
+    variables = new ArrayList<>() ;
+    for (Integer var : solution.variables) {
+      variables.add(new Integer(var)) ;
+    }
+
+    overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
+  }
+
   @Override
   public Integer getUpperBound(int index) {
     return problem.getUpperBound(index);
@@ -38,6 +53,6 @@ public class IntegerSolutionImpl extends GenericSolutionImpl<Integer, IntegerPro
 
   @Override
   public Solution<?> copy() {
-    return new IntegerSolutionImpl(problem);
+    return new IntegerSolutionImpl(this);
   }
 }

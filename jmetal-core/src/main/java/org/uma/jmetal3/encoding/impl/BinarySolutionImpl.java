@@ -28,6 +28,20 @@ public class BinarySolutionImpl extends GenericSolutionImpl<BitSet, BinaryProble
     }
   }
 
+  /** Copy constructor */
+  public BinarySolutionImpl(BinarySolutionImpl solution) {
+    problem = solution.problem ;
+    objectives = new ArrayList<>() ;
+    for (Double obj : solution.objectives) {
+      objectives.add(new Double(obj)) ;
+    }
+    variables = new ArrayList<>() ;
+    for (BitSet var : solution.variables) {
+      variables.add((BitSet)var.clone()) ;
+    }
+    overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
+  }
+
   private BitSet createNewBitSet(int numberOfBits) {
     BitSet bitSet = new BitSet(numberOfBits) ;
 
@@ -49,7 +63,7 @@ public class BinarySolutionImpl extends GenericSolutionImpl<BitSet, BinaryProble
 
   @Override
   public Solution<?> copy() {
-    return new BinarySolutionImpl(problem);
+    return new BinarySolutionImpl(this);
   }
 
   @Override

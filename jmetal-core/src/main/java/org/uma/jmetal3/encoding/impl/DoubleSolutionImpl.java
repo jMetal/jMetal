@@ -28,6 +28,21 @@ public class DoubleSolutionImpl extends GenericSolutionImpl<Double, ContinuousPr
     }
   }
 
+  /** Copy constructor */
+  public DoubleSolutionImpl(DoubleSolutionImpl solution) {
+    problem = solution.problem ;
+    objectives = new ArrayList<>() ;
+    for (Double obj : solution.objectives) {
+      objectives.add(new Double(obj)) ;
+    }
+    variables = new ArrayList<>() ;
+    for (Double var : solution.variables) {
+      variables.add(new Double(var)) ;
+    }
+
+    overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
+  }
+
   @Override
   public Double getUpperBound(int index) {
     return problem.getUpperBound(index);
@@ -40,6 +55,6 @@ public class DoubleSolutionImpl extends GenericSolutionImpl<Double, ContinuousPr
 
   @Override
   public Solution<?> copy() {
-    return new DoubleSolutionImpl(problem);
+    return new DoubleSolutionImpl(this);
   }
 }

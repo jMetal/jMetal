@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by Antonio J. Nebro on 03/09/14.
  */
-public abstract class GenericSolutionImpl<T, P extends Problem> implements Solution<T>{
+public abstract class GenericSolutionImpl<T, P extends Problem> implements Solution<T> {
   protected List<Double> objectives;
   protected List<T> variables;
   protected P problem ;
