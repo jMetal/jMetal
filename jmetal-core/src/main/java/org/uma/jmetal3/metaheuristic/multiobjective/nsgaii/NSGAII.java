@@ -23,6 +23,7 @@ package org.uma.jmetal3.metaheuristic.multiobjective.nsgaii;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal3.core.Solution;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -56,7 +57,7 @@ public class NSGAII extends NSGAIITemplate  {
 
     // Main loop
     while (!stoppingCondition()) {
-      offspringPopulation = new SolutionSet(populationSize);
+      offspringPopulation = new ArrayList<>(populationSize);
       for (int i = 0; i < (populationSize / 2); i++) {
         if (!stoppingCondition()) {
           Solution[] parents = new Solution[2];
@@ -80,9 +81,7 @@ public class NSGAII extends NSGAIITemplate  {
     }
 
     tearDown() ;
-
+*/
     return getNonDominatedSolutions(population) ;
-    */
-    return null ;
   }
 } 

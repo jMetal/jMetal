@@ -29,6 +29,7 @@ import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal3.operator.crossover.CrossoverOperator;
 import org.uma.jmetal3.operator.mutation.MutationOperator;
 import org.uma.jmetal3.operator.selection.SelectionOperator;
+import org.uma.jmetal3.util.comparator.CrowdingComparator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,8 +73,7 @@ public abstract class NSGAIITemplate implements Algorithm {
     mutationOperator = builder.mutationOperator;
     crossoverOperator = builder.crossoverOperator;
     selectionOperator = builder.selectionOperator;
-    variant = this.variant ;
-    //distance = new Distance();
+    variant = builder.variant ;
 
     evaluations = 0 ;
   }
@@ -212,9 +212,9 @@ public abstract class NSGAIITemplate implements Algorithm {
 
     return new Ranking<>(union) ;
   }
-/*
+
   protected void addRankedSolutionsToPopulation(Ranking ranking, int rank) throws JMetalException {
-    List<Solution> front ;
+    List<NSGAIISolution> front ;
 
     front = ranking.getSubfront(rank);
 
@@ -224,12 +224,12 @@ public abstract class NSGAIITemplate implements Algorithm {
   }
 
   protected void computeCrowdingDistance(Ranking ranking, int rank) throws JMetalException {
-    List<Solution> currentRankedFront = ranking.getSubfront(rank) ;
-    distance.crowdingDistanceAssignment(currentRankedFront);
+    List<NSGAIISolution> currentRankedFront = ranking.getSubfront(rank) ;
+    Distance.crowdingDistanceAssignment(currentRankedFront);
   }
 
   protected void addLastRankedSolutions(Ranking ranking, int rank) throws JMetalException {
-    SolutionSet currentRankedFront = ranking.getSubfront(rank) ;
+    List<NSGAIISolution> currentRankedFront = ranking.getSubfront(rank) ;
 
     currentRankedFront.sort(new CrowdingComparator());
 
@@ -240,6 +240,7 @@ public abstract class NSGAIITemplate implements Algorithm {
     }
   }
 
+
   protected boolean populationIsNotFull() {
     return population.size() < populationSize;
   }
@@ -248,7 +249,7 @@ public abstract class NSGAIITemplate implements Algorithm {
     return ranking.getSubfront(rank).size() < (populationSize - population.size()) ;
   }
 
-  protected SolutionSet getNonDominatedSolutions(SolutionSet solutionSet) throws JMetalException {
+  protected List<Solution> getNonDominatedSolutions(List<NSGAIISolution> solutionSet) throws JMetalException {
     return new Ranking(solutionSet).getSubfront(0);
   }
 
@@ -269,5 +270,4 @@ public abstract class NSGAIITemplate implements Algorithm {
   protected void tearDown() {
     evaluator.shutdown();
   }
-  */
 } 
