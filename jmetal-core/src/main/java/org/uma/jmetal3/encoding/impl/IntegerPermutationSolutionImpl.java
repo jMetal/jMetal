@@ -32,18 +32,29 @@ public class IntegerPermutationSolutionImpl
       }
 
       java.util.Collections.shuffle(randomSequence);
-
-      //for (int j = 0; j < randomSequence.size(); j++) {
-      //  vector[j] = randomSequence.get(j);
-      //}
       variables.set(i, randomSequence) ;
     }
   }
 
+  /** Copy Constructor */
+  public IntegerPermutationSolutionImpl(IntegerPermutationSolutionImpl solution) {
+    problem = solution.problem ;
+    objectives = new ArrayList<>() ;
+    for (Double obj : solution.objectives) {
+      objectives.add(new Double(obj)) ;
+    }
+    variables = new ArrayList<>() ;
+    for (List<Integer> var : solution.variables) {
+      ArrayList<Integer> list = new ArrayList<>() ;
+      for (Integer element : var) {
+        var.add(new Integer(element)) ;
+      }
+      variables.add(list) ;
+    }
+  }
 
   @Override
   public Solution<?> copy() {
-    // TODO
-    return null;
+    return new IntegerPermutationSolutionImpl(this);
   }
 }
