@@ -23,6 +23,7 @@ public class IntegerPermutationSolutionImpl
     this.problem = problem ;
     objectives = new ArrayList<>(problem.getNumberOfObjectives()) ;
     variables = new ArrayList<>(problem.getNumberOfVariables()) ;
+    overallConstraintViolationDegree = 0.0 ;
 
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
       ArrayList<Integer> randomSequence = new ArrayList<>(problem.getPermutationLength(i));
@@ -51,6 +52,8 @@ public class IntegerPermutationSolutionImpl
       }
       variables.add(list) ;
     }
+
+    overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
   }
 
   @Override
