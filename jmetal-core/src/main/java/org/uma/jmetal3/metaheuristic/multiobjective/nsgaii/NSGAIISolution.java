@@ -41,7 +41,7 @@ public class NSGAIISolution extends GenericSolutionImpl implements RankingSoluti
   @Override
   public Solution<?> copy() {
     NSGAIISolution newSolution = new NSGAIISolution(this) ;
-    // TODO: do we need to make a copy?? 
+    // TODO: do we need to make a copy??
     // newSolution.problemSolution = this.problemSolution.copy();
 
     return newSolution;

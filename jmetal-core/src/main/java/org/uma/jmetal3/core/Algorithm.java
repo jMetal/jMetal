@@ -23,8 +23,8 @@ package org.uma.jmetal3.core;
 import java.util.List;
 
 /** Interface representing an algorithm */
-public interface Algorithm {
+public interface Algorithm<Solution, Result> {
 
   /** Executes the algorithm */
-  public List<Solution> execute() throws ClassNotFoundException;
+  public Result execute() ;
 }

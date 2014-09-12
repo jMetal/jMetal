@@ -26,6 +26,7 @@ import org.uma.jmetal3.core.Algorithm;
 import org.uma.jmetal3.core.Operator;
 import org.uma.jmetal3.core.Problem;
 import org.uma.jmetal3.core.Solution;
+import org.uma.jmetal3.encoding.DoubleSolution;
 import org.uma.jmetal3.operator.crossover.CrossoverOperator;
 import org.uma.jmetal3.operator.mutation.MutationOperator;
 import org.uma.jmetal3.operator.selection.SelectionOperator;
@@ -44,7 +45,7 @@ import java.util.List;
  * To be presented in: PPSN'08. Dortmund. September 2008.
  */
 
-public abstract class NSGAIITemplate implements Algorithm {
+public abstract class NSGAIITemplate implements Algorithm<DoubleSolution, List<DoubleSolution>> {
   protected SolutionSetEvaluator evaluator ;
 
   protected Problem problem ;
