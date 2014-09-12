@@ -52,7 +52,7 @@ public class NSGAII extends NSGAIITemplate  {
    */
   public List<Solution> execute() throws JMetalException, ClassNotFoundException {
     createInitialPopulation();
-/*
+
     population = evaluatePopulation(population);
 
     // Main loop
@@ -60,28 +60,29 @@ public class NSGAII extends NSGAIITemplate  {
       offspringPopulation = new ArrayList<>(populationSize);
       for (int i = 0; i < (populationSize / 2); i++) {
         if (!stoppingCondition()) {
-          Solution[] parents = new Solution[2];
-          parents[0] = (Solution) selectionOperator.execute(population);
-          parents[1] = (Solution) selectionOperator.execute(population);
+          List<NSGAIISolution> parents = new ArrayList<>(2);
+          parents.set(0, new NSGAIISolution((Solution)selectionOperator.execute(population)));
+          parents.set(1, new NSGAIISolution((Solution)selectionOperator.execute(population)));
 
           Solution[] offSpring = (Solution[]) crossoverOperator.execute(parents);
 
           mutationOperator.execute(offSpring[0]);
           mutationOperator.execute(offSpring[1]);
 
-          offspringPopulation.add(offSpring[0]);
-          offspringPopulation.add(offSpring[1]);
+          offspringPopulation.add(new NSGAIISolution(offSpring[0]));
+          offspringPopulation.add(new NSGAIISolution(offSpring[1]));
         }
       }
 
       offspringPopulation = evaluatePopulation(offspringPopulation);
-
-      Ranking ranking = new Ranking(population.union(offspringPopulation));
+      List<NSGAIISolution> union = new ArrayList<>() ;
+      union.addAll(population) ;
+      union.addAll(offspringPopulation) ;
+      Ranking ranking = new Ranking(union);
       crowdingDistanceSelection(ranking);
     }
 
     tearDown() ;
-*/
     return getNonDominatedSolutions(population) ;
   }
 } 

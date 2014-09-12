@@ -65,7 +65,7 @@ public class Fonseca extends ContinuousProblemImpl<DoubleSolution> {
     double[] x = new double[numberOfVariables] ;
 
     for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = (double)solution.getVariableValue(i) ;
+      x[i] = solution.getVariableValue(i) ;
     }
 
     double sum1 = 0.0;

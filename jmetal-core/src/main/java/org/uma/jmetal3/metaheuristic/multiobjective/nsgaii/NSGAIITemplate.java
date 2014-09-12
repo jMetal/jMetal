@@ -190,7 +190,7 @@ public abstract class NSGAIITemplate implements Algorithm {
 
   }
 
-  protected ArrayList<NSGAIISolution> evaluatePopulation(ArrayList<NSGAIISolution> population) throws JMetalException {
+  protected List<NSGAIISolution> evaluatePopulation(List<NSGAIISolution> population) throws JMetalException {
     evaluations += population.size() ;
 
     for (int i = 0 ; i < population.size(); i++) {

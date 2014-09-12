@@ -12,10 +12,10 @@ import org.uma.jmetal3.encoding.impl.GenericSolutionImpl;
 public class NSGAIISolution extends GenericSolutionImpl implements RankingSolution, CrowdingDistanceSolution {
   private double crowdingDistance ;
   private int ranking ;
-  private Solution solution ;
+  private Solution problemSolution ;
 
   public NSGAIISolution(Solution solution) {
-    this.solution = solution ;
+    problemSolution = solution ;
   }
 
   @Override
@@ -41,12 +41,13 @@ public class NSGAIISolution extends GenericSolutionImpl implements RankingSoluti
   @Override
   public Solution<?> copy() {
     NSGAIISolution newSolution = new NSGAIISolution(this) ;
-    newSolution.solution = this.solution.copy();
+    // TODO: do we need to make a copy?? 
+    // newSolution.problemSolution = this.problemSolution.copy();
 
     return newSolution;
   }
 
   public Solution getProblemSolution() {
-     return this.solution ;
+     return this.problemSolution ;
   }
 }
