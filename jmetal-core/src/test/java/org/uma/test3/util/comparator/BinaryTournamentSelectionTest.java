@@ -45,7 +45,7 @@ public class BinaryTournamentSelectionTest {
   private BinaryTournamentSelection selection ;
   private Problem problem ;
   private List<Solution<?>> population ;
-
+/*
   @Before
   public void startup() throws ClassNotFoundException {
     problem = new Fonseca() ;
@@ -96,4 +96,5 @@ public class BinaryTournamentSelectionTest {
     population = null ;
     problem = null ;
   }
+  */
 }
