@@ -105,7 +105,6 @@ public abstract class NSGAIITemplate implements Algorithm<List<Solution>> {
 
   /** Builder class */
   public static class Builder {
-    protected SolutionSetEvaluator evaluator ;
     protected Problem problem;
 
     protected int populationSize;
@@ -117,8 +116,7 @@ public abstract class NSGAIITemplate implements Algorithm<List<Solution>> {
 
     protected String variant ;
 
-    public Builder(Problem problem, SolutionSetEvaluator evaluator) {
-      this.evaluator = evaluator ;
+    public Builder(Problem problem) {
       this.problem = problem ;
       this.variant = "NSGAII" ;
     }
@@ -220,7 +218,7 @@ public abstract class NSGAIITemplate implements Algorithm<List<Solution>> {
     front = ranking.getSubfront(rank);
 
     for (int i = 0 ; i < front.size(); i++) {
-      population.add(front.get(i));
+      population.add((Solution) front.get(i));
     }
   }
 

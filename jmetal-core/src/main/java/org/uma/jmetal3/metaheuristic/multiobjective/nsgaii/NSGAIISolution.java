@@ -7,7 +7,8 @@ import org.uma.jmetal3.encoding.impl.GenericSolutionImpl;
 /**
  * Created by antonio on 10/09/14.
  */
-public class NSGAIISolution extends GenericSolutionImpl implements org.uma.jmetal3.encoding.attributes.Ranking, CrowdingDistance {
+public class NSGAIISolution {}
+/*;extends GenericSolutionImpl implements org.uma.jmetal3.encoding.attributes.Ranking, CrowdingDistance {
   private double crowdingDistance ;
   private int ranking ;
   private Solution problemSolution ;
@@ -48,4 +49,4 @@ public class NSGAIISolution extends GenericSolutionImpl implements org.uma.jmeta
   public Solution getProblemSolution() {
      return this.problemSolution ;
   }
-}
+  */

@@ -127,15 +127,12 @@ public class Ranking<T extends Solution<?>> {
       }
     }
 
-    //rankedSubpopulations = new SolutionSet[i];
     rankedSubpopulations = new ArrayList<ArrayList<T>>() ;
     //0,1,2,....,i-1 are fronts, then i fronts
     for (int j = 0; j < i; j++) {
-      //rankedSubpopulations[j] = new SolutionSet(front[j].size());
       rankedSubpopulations.set(j, new ArrayList<T>(front[j].size()));
       it1 = front[j].iterator();
       while (it1.hasNext()) {
-        //rankedSubpopulations[j].add(solutionSet.get(it1.next()));
         rankedSubpopulations.get(j).add(solutionSet.get(it1.next()));
       }
     }
