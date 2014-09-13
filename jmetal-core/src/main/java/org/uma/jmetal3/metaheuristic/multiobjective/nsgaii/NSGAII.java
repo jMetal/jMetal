@@ -51,8 +51,8 @@ public class NSGAII extends NSGAIITemplate  {
    * as a experimentoutput of the algorithm execution
    * @throws org.uma.jmetal.util.JMetalException
    */
-  public List<DoubleSolution> execute() throws JMetalException {
-    /*
+  public List<?> execute() throws JMetalException {
+
     createInitialPopulation();
 
     population = evaluatePopulation(population);
@@ -62,22 +62,22 @@ public class NSGAII extends NSGAIITemplate  {
       offspringPopulation = new ArrayList<>(populationSize);
       for (int i = 0; i < (populationSize / 2); i++) {
         if (!stoppingCondition()) {
-          List<NSGAIISolution> parents = new ArrayList<>(2);
-          parents.set(0, new NSGAIISolution((Solution)selectionOperator.execute(population)));
-          parents.set(1, new NSGAIISolution((Solution)selectionOperator.execute(population)));
+          List<Solution> parents = new ArrayList<>(2);
+          parents.set(0, (Solution)selectionOperator.execute(population));
+          parents.set(1, (Solution)selectionOperator.execute(population));
 
           Solution[] offSpring = (Solution[]) crossoverOperator.execute(parents);
 
           mutationOperator.execute(offSpring[0]);
           mutationOperator.execute(offSpring[1]);
 
-          offspringPopulation.add(new NSGAIISolution(offSpring[0]));
-          offspringPopulation.add(new NSGAIISolution(offSpring[1]));
+          offspringPopulation.add(offSpring[0]);
+          offspringPopulation.add(offSpring[1]);
         }
       }
 
       offspringPopulation = evaluatePopulation(offspringPopulation);
-      List<NSGAIISolution> union = new ArrayList<>() ;
+      List<Solution> union = new ArrayList<>() ;
       union.addAll(population) ;
       union.addAll(offspringPopulation) ;
       Ranking ranking = new Ranking(union);
@@ -86,7 +86,5 @@ public class NSGAII extends NSGAIITemplate  {
 
     tearDown() ;
     return getNonDominatedSolutions(population) ;
-    */
-    return null ;
   }
 } 

@@ -4,6 +4,7 @@ import org.uma.jmetal.util.random.PseudoRandom;
 import org.uma.jmetal3.core.Problem;
 import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal3.encoding.BinarySolution;
+import org.uma.jmetal3.encoding.attributes.Attributes;
 import org.uma.jmetal3.problem.BinaryProblem;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public abstract class GenericSolutionImpl<T, P extends Problem> implements Solut
   protected List<T> variables;
   protected P problem ;
   protected double overallConstraintViolationDegree ;
+  public Attributes attributes ;
 
   @Override
   public void setObjective(int index, double value) {
@@ -58,4 +60,10 @@ public abstract class GenericSolutionImpl<T, P extends Problem> implements Solut
   public void setOverallConstraintViolationDegree(double violationDegree) {
     overallConstraintViolationDegree = violationDegree ;
   }
+
+  @Override
+  public Attributes getAttributes() {
+    return attributes ;
+  }
+
 }

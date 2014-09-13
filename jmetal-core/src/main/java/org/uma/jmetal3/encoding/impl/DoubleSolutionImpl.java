@@ -4,11 +4,13 @@ import org.uma.jmetal.util.random.PseudoRandom;
 import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal3.encoding.DoubleSolution;
 import org.uma.jmetal3.encoding.IntegerSolution;
+import org.uma.jmetal3.encoding.attributes.Attributes;
 import org.uma.jmetal3.problem.ContinuousProblem;
 import org.uma.jmetal3.problem.IntegerProblem;
 import org.uma.jmetal3.problem.impl.ContinuousProblemImpl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -16,11 +18,12 @@ import java.util.List;
  */
 public class DoubleSolutionImpl extends GenericSolutionImpl<Double, ContinuousProblem<DoubleSolution>> implements DoubleSolution {
   /** Constructor */
-  public DoubleSolutionImpl(ContinuousProblem<DoubleSolution> problem) {
+  public DoubleSolutionImpl(ContinuousProblem<DoubleSolution> problem, Attributes attr) {
   	this.problem = problem ;
     objectives = new ArrayList<>(problem.getNumberOfObjectives()) ;
     variables = new ArrayList<>(problem.getNumberOfVariables()) ;
     overallConstraintViolationDegree = 0.0 ;
+    attributes = attr ;
 
     for (int i = 0 ; i < problem.getNumberOfVariables(); i++) {
       Double value = PseudoRandom.randDouble() * (getUpperBound(i) - getLowerBound(i)) + getLowerBound(i);
@@ -41,6 +44,7 @@ public class DoubleSolutionImpl extends GenericSolutionImpl<Double, ContinuousPr
     }
 
     overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
+    attributes = solution.attributes.copy() ;
   }
 
   @Override

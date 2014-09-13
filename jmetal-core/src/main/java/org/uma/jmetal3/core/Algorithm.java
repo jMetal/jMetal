@@ -20,11 +20,13 @@
 
 package org.uma.jmetal3.core;
 
+import org.uma.jmetal3.encoding.DoubleSolution;
+
 import java.util.List;
 
 /** Interface representing an algorithm */
-public interface Algorithm<Solution, Result> {
+public interface Algorithm<Result> {
 
   /** Executes the algorithm */
-  public Result execute() ;
+  public List<?> execute() ;
 }

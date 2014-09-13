@@ -1,15 +1,13 @@
 package org.uma.jmetal3.metaheuristic.multiobjective.nsgaii;
 
-import org.uma.jmetal3.core.Problem;
 import org.uma.jmetal3.core.Solution;
-import org.uma.jmetal3.encoding.attributes.CrowdingDistanceSolution;
-import org.uma.jmetal3.encoding.attributes.RankingSolution;
+import org.uma.jmetal3.encoding.attributes.*;
 import org.uma.jmetal3.encoding.impl.GenericSolutionImpl;
 
 /**
  * Created by antonio on 10/09/14.
  */
-public class NSGAIISolution extends GenericSolutionImpl implements RankingSolution, CrowdingDistanceSolution {
+public class NSGAIISolution extends GenericSolutionImpl implements org.uma.jmetal3.encoding.attributes.Ranking, CrowdingDistance {
   private double crowdingDistance ;
   private int ranking ;
   private Solution problemSolution ;

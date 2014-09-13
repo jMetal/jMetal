@@ -21,8 +21,8 @@
 
 package org.uma.jmetal3.util.comparator;
 
-import org.uma.jmetal.core.Solution;
-import org.uma.jmetal3.encoding.attributes.CrowdingDistanceSolution;
+import org.uma.jmetal3.core.Solution;
+import org.uma.jmetal3.encoding.attributes.CrowdingDistance;
 
 import java.util.Comparator;
 
@@ -30,7 +30,7 @@ import java.util.Comparator;
  * This class implements a <code>Comparator</code> (a method for comparing
  * <code>Solution</code> objects) based on the rank of the solutions.
  */
-public class RankingComparator implements Comparator<CrowdingDistanceSolution> {
+public class RankingComparator implements Comparator<Solution> {
   /**
    * Compares two solutions.
    *
@@ -40,7 +40,7 @@ public class RankingComparator implements Comparator<CrowdingDistanceSolution> {
    * respectively.
    */
   @Override
-  public int compare(CrowdingDistanceSolution o1, CrowdingDistanceSolution o2) {
+  public int compare(Solution o1, Solution o2) {
     if (o1 == null) {
       return 1;
     } else if (o2 == null) {
@@ -49,11 +49,11 @@ public class RankingComparator implements Comparator<CrowdingDistanceSolution> {
 
     Solution solution1 = (Solution) o1;
     Solution solution2 = (Solution) o2;
-    if (solution1.getRank() < solution2.getRank()) {
+    if ((int)solution1.getAttributes().getAttribute("Rank") < (int)solution2.getAttributes().getAttribute("Rank")) {
       return -1;
     }
 
-    if (solution1.getRank() > solution2.getRank()) {
+    if ((int)solution1.getAttributes().getAttribute("Rank") > (int)solution2.getAttributes().getAttribute("Rank")) {
       return 1;
     }
 

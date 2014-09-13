@@ -21,9 +21,10 @@
 
 package org.uma.jmetal3.metaheuristic.multiobjective.nsgaii;
 
+import com.sun.tools.doclint.HtmlTag;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal3.core.Solution;
-import org.uma.jmetal3.encoding.attributes.RankingSolution;
+import org.uma.jmetal3.encoding.attributes.Attributes;
 import org.uma.jmetal3.util.comparator.DominanceComparator;
 import org.uma.jmetal3.util.comparator.OverallConstraintViolationComparator;
 
@@ -38,7 +39,7 @@ import java.util.*;
  * solutions, subset 1 contains the non-dominated solutions after removing those
  * belonging to subset 0, and so on.
  */
-public class Ranking<T extends RankingSolution> {
+public class Ranking<T extends Solution<?>> {
   private static final Comparator<Solution> DOMINANCE_COMPARATOR = new DominanceComparator();
   private static final Comparator<Solution> CONSTRAINT_VIOLATION_COMPARATOR =
     new OverallConstraintViolationComparator();
@@ -99,7 +100,8 @@ public class Ranking<T extends RankingSolution> {
     for (int i = 0; i < this.population.size(); i++) {
       if (dominateMe[i] == 0) {
         front[0].add(i);
-        solutionSet.get(i).setRank(0);
+        Attributes attr = solutionSet.get(i).getAttributes() ;
+        ((org.uma.jmetal3.encoding.attributes.Ranking)attr).setRank(0);
       }
     }
 
@@ -117,7 +119,9 @@ public class Ranking<T extends RankingSolution> {
           if (dominateMe[index] == 0) {
             front[i].add(index);
             //this.population.get(index).setRank(i);
-            solutionSet.get(index).setRank(i);
+            //solutionSet.get(index).setRank(i);
+            Attributes attr = solutionSet.get(i).getAttributes() ;
+            ((NSGAIIAttr)attr).setRank(i);
           }
         }
       }

@@ -23,6 +23,7 @@ package org.uma.jmetal3.problem.multiobjective;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal3.encoding.BinarySolution;
+import org.uma.jmetal3.encoding.attributes.Attributes;
 import org.uma.jmetal3.encoding.impl.BinarySolutionImpl;
 import org.uma.jmetal3.problem.BinaryProblem;
 import org.uma.jmetal3.problem.impl.GenericProblemImpl;
@@ -57,8 +58,8 @@ public class OneZeroMax extends GenericProblemImpl<BinarySolution> implements Bi
   }
 
   @Override
-  public BinarySolution createSolution() {
-    BinarySolution solution = new BinarySolutionImpl(this);
+  public BinarySolution createSolution(Attributes attr) {
+    BinarySolution solution = new BinarySolutionImpl(this, attr);
 
     return solution ;
   }

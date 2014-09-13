@@ -22,7 +22,9 @@
 package org.uma.jmetal3.metaheuristic.multiobjective.nsgaii;
 
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal3.encoding.attributes.CrowdingDistanceSolution;
+import org.uma.jmetal3.core.Solution;
+import org.uma.jmetal3.encoding.attributes.Attributes;
+import org.uma.jmetal3.encoding.attributes.CrowdingDistance;
 import org.uma.jmetal3.util.comparator.ObjectiveComparator;
 
 import java.util.ArrayList;
@@ -40,33 +42,34 @@ public class Distance {
    * @throws org.uma.jmetal.util.JMetalException
    */
 
-  public static void crowdingDistanceAssignment(List<? extends CrowdingDistanceSolution> solutionSet) throws
+  public static void crowdingDistanceAssignment(List<? extends Solution> solutionSet) throws
           JMetalException {
     int size = solutionSet.size();
+    CrowdingDistance attr ;
 
     if (size == 0) {
       return;
     }
 
     if (size == 1) {
-      solutionSet.get(0).setCrowdingDistance(Double.POSITIVE_INFINITY);
+      solutionSet.get(0).getAttributes().setAttribute("CrowdingDistance", Double.POSITIVE_INFINITY);
       return;
     }
 
     if (size == 2) {
-      solutionSet.get(0).setCrowdingDistance(Double.POSITIVE_INFINITY);
-      solutionSet.get(1).setCrowdingDistance(Double.POSITIVE_INFINITY);
+      solutionSet.get(0).getAttributes().setAttribute("CrowdingDistance", Double.POSITIVE_INFINITY);
+      solutionSet.get(1).getAttributes().setAttribute("CrowdingDistance", Double.POSITIVE_INFINITY);
       return;
     }
 
     //Use a new SolutionSet to avoid altering the original solutionSet
-    List<CrowdingDistanceSolution> front = new ArrayList<>(size);
+    List<Solution> front = new ArrayList<>(size);
     for (int i = 0; i < size; i++) {
       front.add(solutionSet.get(i));
     }
 
     for (int i = 0; i < size; i++) {
-      front.get(i).setCrowdingDistance(0.0);
+      front.get(i).getAttributes().setAttribute("CrowdingDistance", 0.0);
     }
 
     double objetiveMaxn;
@@ -82,68 +85,14 @@ public class Distance {
       objetiveMaxn = front.get(front.size() - 1).getObjective(i);
 
       //Set de crowding distance            
-      front.get(0).setCrowdingDistance(Double.POSITIVE_INFINITY);
-      front.get(size - 1).setCrowdingDistance(Double.POSITIVE_INFINITY);
+      front.get(0).getAttributes().setAttribute("CrowdingDistance", Double.POSITIVE_INFINITY);
+      front.get(size - 1).getAttributes().setAttribute("CrowdingDistance", Double.POSITIVE_INFINITY);
 
       for (int j = 1; j < size - 1; j++) {
         distance = front.get(j + 1).getObjective(i) - front.get(j - 1).getObjective(i);
         distance = distance / (objetiveMaxn - objetiveMinn);
-        distance += front.get(j).getCrowdingDistance();
-        front.get(j).setCrowdingDistance(distance);
-      }
-    }
-  }
-
-  public static void crowdingDistance(List<? extends CrowdingDistanceSolution> solutionSet) throws
-    JMetalException {
-    int size = solutionSet.size();
-
-    if (size == 0) {
-      return;
-    }
-
-    if (size == 1) {
-      solutionSet.get(0).setCrowdingDistance(Double.POSITIVE_INFINITY);
-      return;
-    }
-
-    if (size == 2) {
-      solutionSet.get(0).setCrowdingDistance(Double.POSITIVE_INFINITY);
-      solutionSet.get(1).setCrowdingDistance(Double.POSITIVE_INFINITY);
-      return;
-    }
-
-    //Use a new SolutionSet to avoid altering the original solutionSet
-    List<CrowdingDistanceSolution> front = new ArrayList<>(size);
-    for (int i = 0; i < size; i++) {
-      front.add(solutionSet.get(i));
-    }
-
-    for (int i = 0; i < size; i++) {
-      front.get(i).setCrowdingDistance(0.0);
-    }
-
-    double objetiveMaxn;
-    double objetiveMinn;
-    double distance;
-
-    int numberOfObjectives = solutionSet.get(0).getNumberOfObjectives() ;
-
-    for (int i = 0; i < numberOfObjectives; i++) {
-      // Sort the population by Obj n
-      front.sort(new ObjectiveComparator(i));
-      objetiveMinn = front.get(0).getObjective(i);
-      objetiveMaxn = front.get(front.size() - 1).getObjective(i);
-
-      //Set de crowding distance
-      front.get(0).setCrowdingDistance(Double.POSITIVE_INFINITY);
-      front.get(size - 1).setCrowdingDistance(Double.POSITIVE_INFINITY);
-
-      for (int j = 1; j < size - 1; j++) {
-        distance = front.get(j + 1).getObjective(i) - front.get(j - 1).getObjective(i);
-        distance = distance / (objetiveMaxn - objetiveMinn);
-        distance += front.get(j).getCrowdingDistance();
-        front.get(j).setCrowdingDistance(distance);
+        distance += (Integer)front.get(j).getAttributes().getAttribute("CrowdingDistance");
+        front.get(j).getAttributes().setAttribute("CrowdingDistance", distance);
       }
     }
   }

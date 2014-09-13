@@ -22,7 +22,7 @@
 package org.uma.jmetal3.util.comparator;
 
 import org.uma.jmetal3.core.Solution;
-import org.uma.jmetal3.encoding.attributes.CrowdingDistanceSolution;
+import org.uma.jmetal3.encoding.attributes.CrowdingDistance;
 
 import java.util.Comparator;
 
@@ -30,12 +30,12 @@ import java.util.Comparator;
  * This class implements a <code>Comparator</code> (a method for comparing
  * <code>Solution</code> objects) based on the crowding distance, as in NSGA-II.
  */
-public class CrowdingComparator implements Comparator<CrowdingDistanceSolution> {
+public class CrowdingComparator implements Comparator<Solution> {
 
   /**
    * stores a RANK_COMPARATOR for check the rank of solutions
    */
-  private static final Comparator<CrowdingDistanceSolution> RANK_COMPARATOR = new RankingComparator();
+  private static final Comparator<Solution> RANK_COMPARATOR = new RankingComparator();
 
   /**
    * Compare two solutions.
@@ -46,7 +46,7 @@ public class CrowdingComparator implements Comparator<CrowdingDistanceSolution> 
    * respectively.
    */
   @Override
-  public int compare(CrowdingDistanceSolution o1, CrowdingDistanceSolution o2) {
+  public int compare(Solution o1, Solution o2) {
     if (o1 == null) {
       return 1;
     } else if (o2 == null) {
@@ -59,8 +59,8 @@ public class CrowdingComparator implements Comparator<CrowdingDistanceSolution> 
     }
     
     /* His rank is equal, then distance crowding RANK_COMPARATOR */
-    double distance1 = o1.getCrowdingDistance();
-    double distance2 = o2.getCrowdingDistance();
+    double distance1 = (double)o1.getAttributes().getAttribute("CrowdingDistance");
+    double distance2 = (double)o2.getAttributes().getAttribute("CrowdingDistance");
     if (distance1 > distance2) {
       return -1;
     }

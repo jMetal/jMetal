@@ -26,7 +26,6 @@ import org.uma.jmetal3.core.Algorithm;
 import org.uma.jmetal3.core.Operator;
 import org.uma.jmetal3.core.Problem;
 import org.uma.jmetal3.core.Solution;
-import org.uma.jmetal3.encoding.DoubleSolution;
 import org.uma.jmetal3.operator.crossover.CrossoverOperator;
 import org.uma.jmetal3.operator.mutation.MutationOperator;
 import org.uma.jmetal3.operator.selection.SelectionOperator;
@@ -45,7 +44,7 @@ import java.util.List;
  * To be presented in: PPSN'08. Dortmund. September 2008.
  */
 
-public abstract class NSGAIITemplate implements Algorithm<DoubleSolution, List<DoubleSolution>> {
+public abstract class NSGAIITemplate implements Algorithm<List<Solution>> {
   protected SolutionSetEvaluator evaluator ;
 
   protected Problem problem ;
@@ -54,8 +53,8 @@ public abstract class NSGAIITemplate implements Algorithm<DoubleSolution, List<D
   protected int maxEvaluations;
   protected int evaluations;
 
-  protected List<NSGAIISolution> population;
-  protected List<NSGAIISolution> offspringPopulation;
+  protected List<Solution> population;
+  protected List<Solution> offspringPopulation;
 
   protected MutationOperator mutationOperator;
   protected CrossoverOperator crossoverOperator;
@@ -174,7 +173,7 @@ public abstract class NSGAIITemplate implements Algorithm<DoubleSolution, List<D
     }
   }
 
-  protected void createInitialPopulation() throws ClassNotFoundException, JMetalException {
+  protected void createInitialPopulation() throws JMetalException {
     population = new ArrayList<>(populationSize);
 
 //    Solution newSolution;
@@ -183,20 +182,21 @@ public abstract class NSGAIITemplate implements Algorithm<DoubleSolution, List<D
 //      population.add(newSolution);
 //    }
 
-    NSGAIISolution newNSGAIISolution;
+    Solution solution;
     for (int i = 0; i < populationSize; i++) {
-      newNSGAIISolution = new NSGAIISolution(problem.createSolution());
-      population.add(newNSGAIISolution);
+      solution = problem.createSolution(new NSGAIIAttr());
+      population.add(solution);
     }
 
   }
 
-  protected List<NSGAIISolution> evaluatePopulation(List<NSGAIISolution> population) throws JMetalException {
+  protected List<Solution> evaluatePopulation(List<Solution> population) throws JMetalException {
     evaluations += population.size() ;
 
     for (int i = 0 ; i < population.size(); i++) {
-      problem.evaluate(population.get(i).getProblemSolution()) ;
+      //problem.evaluate(population.get(i).getProblemSolution()) ;
       //problem.evaluateConstraints(solutionSet.get(i)) ;
+      problem.equals(population.get(i)) ;
     }
 
     return population ;
@@ -207,11 +207,11 @@ public abstract class NSGAIITemplate implements Algorithm<DoubleSolution, List<D
   }
 
   protected Ranking rankPopulation() throws JMetalException {
-    ArrayList<NSGAIISolution> union = new ArrayList<NSGAIISolution>() ;
+    ArrayList<Solution> union = new ArrayList<Solution>() ;
     union.addAll(population);
     union.addAll(offspringPopulation);
 
-    return new Ranking<>(union) ;
+    return new Ranking(union) ;
   }
 
   protected void addRankedSolutionsToPopulation(Ranking ranking, int rank) throws JMetalException {
@@ -225,12 +225,12 @@ public abstract class NSGAIITemplate implements Algorithm<DoubleSolution, List<D
   }
 
   protected void computeCrowdingDistance(Ranking ranking, int rank) throws JMetalException {
-    List<NSGAIISolution> currentRankedFront = ranking.getSubfront(rank) ;
+    List<Solution> currentRankedFront = ranking.getSubfront(rank) ;
     Distance.crowdingDistanceAssignment(currentRankedFront);
   }
 
   protected void addLastRankedSolutions(Ranking ranking, int rank) throws JMetalException {
-    List<NSGAIISolution> currentRankedFront = ranking.getSubfront(rank) ;
+    List<Solution> currentRankedFront = ranking.getSubfront(rank) ;
 
     currentRankedFront.sort(new CrowdingComparator());
 
@@ -250,7 +250,7 @@ public abstract class NSGAIITemplate implements Algorithm<DoubleSolution, List<D
     return ranking.getSubfront(rank).size() < (populationSize - population.size()) ;
   }
 
-  protected List<Solution> getNonDominatedSolutions(List<NSGAIISolution> solutionSet) throws JMetalException {
+  protected List<Solution> getNonDominatedSolutions(List<Solution> solutionSet) throws JMetalException {
     return new Ranking(solutionSet).getSubfront(0);
   }
 

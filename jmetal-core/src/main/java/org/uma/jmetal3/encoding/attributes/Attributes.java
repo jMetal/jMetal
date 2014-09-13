@@ -1,0 +1,34 @@
+package org.uma.jmetal3.encoding.attributes;
+
+import java.util.HashMap;
+
+/**
+ * Created by antonio on 13/09/14.
+ */
+public class Attributes {
+  public HashMap<String, Object> map ;
+
+  public Attributes() {
+    map = new HashMap<String, Object>() ;
+  }
+
+  public Attributes(Attributes attr) {
+    try {
+      map = (HashMap<String, Object>)attr.clone() ;
+    } catch (CloneNotSupportedException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public void setAttribute(String name, Object value) {
+    map.put(name, value) ;
+  }
+
+  public Object getAttribute(String name) {
+    return map.get(name) ;
+  }
+
+  public Attributes copy() {
+    return new Attributes(this) ;
+  }
+}

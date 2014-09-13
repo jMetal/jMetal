@@ -22,6 +22,7 @@ package org.uma.jmetal3.problem.multiobjective;
 
 import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal3.encoding.DoubleSolution;
+import org.uma.jmetal3.encoding.attributes.Attributes;
 import org.uma.jmetal3.encoding.impl.DoubleSolutionImpl;
 import org.uma.jmetal3.problem.ConstrainedProblem;
 import org.uma.jmetal3.problem.impl.ContinuousProblemImpl;
@@ -51,8 +52,8 @@ public class Srinivas extends ContinuousProblemImpl<DoubleSolution> implements C
   }
 
   @Override
-  public DoubleSolution createSolution() {
-    DoubleSolution solution = new DoubleSolutionImpl(this) ;
+  public DoubleSolution createSolution(Attributes attr) {
+    DoubleSolution solution = new DoubleSolutionImpl(this, attr) ;
 
     return solution ;
   }
