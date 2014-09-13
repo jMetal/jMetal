@@ -67,7 +67,6 @@ public abstract class NSGAIITemplate implements Algorithm<List<Solution>> {
   /** Constructor */
   protected NSGAIITemplate(Builder builder) {
     problem = builder.problem;
-    evaluator = builder.evaluator ;
     populationSize = builder.populationSize;
     maxEvaluations = builder.maxEvaluations;
     mutationOperator = builder.mutationOperator;

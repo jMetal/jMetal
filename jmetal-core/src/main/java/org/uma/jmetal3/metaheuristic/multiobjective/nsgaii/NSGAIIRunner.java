@@ -22,8 +22,8 @@ package org.uma.jmetal3.metaheuristic.multiobjective.nsgaii;
 
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal3.core.Algorithm;
-import org.uma.jmetal3.core.Operator;
 import org.uma.jmetal3.core.Problem;
+import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal3.operator.crossover.CrossoverOperator;
 import org.uma.jmetal3.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal3.operator.mutation.MutationOperator;
@@ -31,6 +31,11 @@ import org.uma.jmetal3.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal3.operator.selection.SelectionOperator;
 import org.uma.jmetal3.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal3.problem.multiobjective.Fonseca;
+import org.uma.jmetal3.util.AlgorithmRunner;
+import org.uma.jmetal3.util.fileOutput.DefaultFileOutputContext;
+import org.uma.jmetal3.util.fileOutput.SolutionSetOutput;
+
+import java.util.List;
 
 /**
  * Class to configure and execute the NSGA-II algorithm (including Steady State and parallel versions)
@@ -83,7 +88,7 @@ public class NSGAIIRunner {
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
-    SolutionSet population = algorithmRunner.getSolutionSet() ;
+    List<Solution> population = algorithmRunner.getSolutionSet() ;
     long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)
