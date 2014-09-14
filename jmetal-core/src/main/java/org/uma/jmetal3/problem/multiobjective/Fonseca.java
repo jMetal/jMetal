@@ -51,8 +51,8 @@ public class Fonseca extends ContinuousProblemImpl<DoubleSolution> {
   }
 
   @Override
-  public DoubleSolution createSolution(Attributes t) {
-    DoubleSolution solution = new DoubleSolutionImpl(this, t) ;
+  public DoubleSolution createSolution(Attributes attr) {
+    DoubleSolution solution = new DoubleSolutionImpl(this, attr) ;
 
     return solution ;
   }
@@ -86,6 +86,4 @@ public class Fonseca extends ContinuousProblemImpl<DoubleSolution> {
     solution.setObjective(0, f[0]);
     solution.setObjective(1, f[1]);
   }
-
-
 }

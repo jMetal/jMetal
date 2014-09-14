@@ -193,7 +193,7 @@ public abstract class NSGAIITemplate implements Algorithm<List<Solution>> {
     for (int i = 0 ; i < population.size(); i++) {
       //problem.evaluate(population.get(i).getProblemSolution()) ;
       //problem.evaluateConstraints(solutionSet.get(i)) ;
-      problem.equals(population.get(i)) ;
+      problem.evaluate(population.get(i)) ;
     }
 
     return population ;
@@ -266,6 +266,6 @@ public abstract class NSGAIITemplate implements Algorithm<List<Solution>> {
   }
 
   protected void tearDown() {
-    evaluator.shutdown();
+    //evaluator.shutdown();
   }
 } 

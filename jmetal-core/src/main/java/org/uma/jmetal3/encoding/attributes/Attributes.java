@@ -5,7 +5,7 @@ import java.util.HashMap;
 /**
  * Created by antonio on 13/09/14.
  */
-public class Attributes {
+public abstract class Attributes {
   public HashMap<String, Object> map ;
 
   public Attributes() {
@@ -13,11 +13,7 @@ public class Attributes {
   }
 
   public Attributes(Attributes attr) {
-    try {
-      map = (HashMap<String, Object>)attr.clone() ;
-    } catch (CloneNotSupportedException e) {
-      e.printStackTrace();
-    }
+    map = (HashMap<String, Object>)attr.map.clone() ;
   }
 
   public void setAttribute(String name, Object value) {
@@ -28,7 +24,5 @@ public class Attributes {
     return map.get(name) ;
   }
 
-  public Attributes copy() {
-    return new Attributes(this) ;
-  }
+  public abstract Attributes copy() ;
 }

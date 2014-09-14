@@ -91,7 +91,7 @@ public class Distance {
       for (int j = 1; j < size - 1; j++) {
         distance = front.get(j + 1).getObjective(i) - front.get(j - 1).getObjective(i);
         distance = distance / (objetiveMaxn - objetiveMinn);
-        distance += (Integer)front.get(j).getAttributes().getAttribute("CrowdingDistance");
+        distance += (Double)front.get(j).getAttributes().getAttribute("CrowdingDistance");
         front.get(j).getAttributes().setAttribute("CrowdingDistance", distance);
       }
     }

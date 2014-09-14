@@ -95,13 +95,16 @@ public class Ranking<T extends Solution<?>> {
           dominateMe[i]++;
         }
       }
-      // If nobody dominates p, p belongs to the first front
     }
+
     for (int i = 0; i < this.population.size(); i++) {
+      //System.out.println("I: " + i + ". Popsize: " + this.population.size());
       if (dominateMe[i] == 0) {
+        //System.out.println("In");
+
         front[0].add(i);
         Attributes attr = solutionSet.get(i).getAttributes() ;
-        ((org.uma.jmetal3.encoding.attributes.Ranking)attr).setRank(0);
+        ((NSGAIIAttr)attr).setRank(0);
       }
     }
 
@@ -130,7 +133,7 @@ public class Ranking<T extends Solution<?>> {
     rankedSubpopulations = new ArrayList<ArrayList<T>>() ;
     //0,1,2,....,i-1 are fronts, then i fronts
     for (int j = 0; j < i; j++) {
-      rankedSubpopulations.set(j, new ArrayList<T>(front[j].size()));
+      rankedSubpopulations.add(j, new ArrayList<T>(front[j].size()));
       it1 = front[j].iterator();
       while (it1.hasNext()) {
         rankedSubpopulations.get(j).add(solutionSet.get(it1.next()));

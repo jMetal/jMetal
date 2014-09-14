@@ -60,21 +60,20 @@ public class NSGAII extends NSGAIITemplate  {
     // Main loop
     while (!stoppingCondition()) {
       offspringPopulation = new ArrayList<>(populationSize);
-      for (int i = 0; i < (populationSize / 2); i++) {
+      for (int i = 0; i < (populationSize / 2); i++)
         if (!stoppingCondition()) {
           List<Solution> parents = new ArrayList<>(2);
-          parents.set(0, (Solution)selectionOperator.execute(population));
-          parents.set(1, (Solution)selectionOperator.execute(population));
+          parents.add ((Solution) selectionOperator.execute(population));
+          parents.add ((Solution) selectionOperator.execute(population));
 
-          Solution[] offSpring = (Solution[]) crossoverOperator.execute(parents);
+          List<Solution> offSpring = (List<Solution>) crossoverOperator.execute(parents);
 
-          mutationOperator.execute(offSpring[0]);
-          mutationOperator.execute(offSpring[1]);
+          mutationOperator.execute(offSpring.get(0));
+          mutationOperator.execute(offSpring.get(1));
 
-          offspringPopulation.add(offSpring[0]);
-          offspringPopulation.add(offSpring[1]);
+          offspringPopulation.add(offSpring.get(0));
+          offspringPopulation.add(offSpring.get(1));
         }
-      }
 
       offspringPopulation = evaluatePopulation(offspringPopulation);
       List<Solution> union = new ArrayList<>() ;

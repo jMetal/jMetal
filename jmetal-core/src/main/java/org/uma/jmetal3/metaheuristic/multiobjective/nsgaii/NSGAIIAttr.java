@@ -11,6 +11,10 @@ public class NSGAIIAttr extends Attributes implements CrowdingDistance, Ranking 
     super();
   }
 
+  public NSGAIIAttr(NSGAIIAttr attr) {
+    super(attr);
+  }
+
   @Override
   public Double getCrowdingDistance() {
     return (Double) map.get("crowdingDistance") ;
@@ -23,12 +27,16 @@ public class NSGAIIAttr extends Attributes implements CrowdingDistance, Ranking 
 
   @Override
   public Integer getRank() {
-    return (Integer)map.get("Ranking");
+    return (Integer)map.get("Rank");
   }
 
   @Override
   public void setRank(Integer rank) {
-    map.put("Ranking", rank) ;
+    map.put("Rank", rank) ;
+  }
 
+  @Override
+  public Attributes copy() {
+    return new NSGAIIAttr(this) ;
   }
 }

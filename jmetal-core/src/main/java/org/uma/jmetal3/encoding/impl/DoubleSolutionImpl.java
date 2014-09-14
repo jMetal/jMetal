@@ -29,6 +29,10 @@ public class DoubleSolutionImpl extends GenericSolutionImpl<Double, ContinuousPr
       Double value = PseudoRandom.randDouble() * (getUpperBound(i) - getLowerBound(i)) + getLowerBound(i);
       variables.add(value) ;
     }
+
+    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
+      objectives.add(new Double(0.0)) ;
+    }
   }
 
   /** Copy constructor */
@@ -60,5 +64,21 @@ public class DoubleSolutionImpl extends GenericSolutionImpl<Double, ContinuousPr
   @Override
   public Solution<?> copy() {
     return new DoubleSolutionImpl(this);
+  }
+
+  @Override
+  public String toString() {
+    String result = "Variables: " ;
+    for (Double var : variables) {
+      result += "" + var + " " ;
+    }
+    result += "\n" ;
+    result += "Objectives: " ;
+    for (Double obj : objectives) {
+      result += "" + obj + " " ;
+    }
+    result += "\n" ;
+
+    return result ;
   }
 }

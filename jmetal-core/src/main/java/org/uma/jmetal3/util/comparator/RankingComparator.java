@@ -47,8 +47,10 @@ public class RankingComparator implements Comparator<Solution> {
       return -1;
     }
 
-    Solution solution1 = (Solution) o1;
-    Solution solution2 = (Solution) o2;
+    Solution solution1 = o1;
+    Solution solution2 = o2;
+    System.out.println("S1: " + solution1) ;
+    System.out.println("S2: " + solution2) ;
     if ((int)solution1.getAttributes().getAttribute("Rank") < (int)solution2.getAttributes().getAttribute("Rank")) {
       return -1;
     }
