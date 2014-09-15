@@ -57,6 +57,8 @@ public class NSGAII extends NSGAIITemplate  {
 
     population = evaluatePopulation(population);
 
+    System.out.println("POP: " + population) ;
+
     Ranking r = new Ranking(population);
     System.out.println("RANKING: ") ;
     for (Solution s : population) {

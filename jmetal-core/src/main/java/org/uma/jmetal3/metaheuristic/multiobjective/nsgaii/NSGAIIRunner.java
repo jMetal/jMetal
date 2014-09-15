@@ -82,7 +82,7 @@ public class NSGAIIRunner {
             .setMutation(mutation)
             .setSelection(selection)
             .setMaxEvaluations(25000)
-            .setPopulationSize(10)
+            .setPopulationSize(2)
             .setVariant("NSGAII")
             .build() ;
 

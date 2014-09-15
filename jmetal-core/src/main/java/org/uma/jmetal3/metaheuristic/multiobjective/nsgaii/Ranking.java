@@ -21,7 +21,6 @@
 
 package org.uma.jmetal3.metaheuristic.multiobjective.nsgaii;
 
-import com.sun.tools.doclint.HtmlTag;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal3.encoding.attributes.Attributes;
@@ -72,27 +71,27 @@ public class Ranking<T extends Solution<?>> {
 
     // Fast non dominated sorting algorithm
     // Contribution of Guillaume Jacquenot
-    for (int i = 0; i < this.population.size(); i++) {
+    for (int p = 0; p < this.population.size(); p++) {
       // Initialize the list of individuals that i dominate and the number
       // of individuals that dominate me
-      iDominate[i] = new LinkedList<Integer>();
-      dominateMe[i] = 0;
+      iDominate[p] = new LinkedList<Integer>();
+      dominateMe[p] = 0;
     }
 
     int flagDominate;
-    for (int i = 0; i < (this.population.size() - 1); i++) {
+    for (int p = 0; p < (this.population.size() - 1); p++) {
       // For all q individuals , calculate if p dominates q or vice versa
-      for (int q = i + 1; q < this.population.size(); q++) {
-        flagDominate = CONSTRAINT_VIOLATION_COMPARATOR.compare(solutionSet.get(i), solutionSet.get(q));
+      for (int q = p + 1; q < this.population.size(); q++) {
+        flagDominate = CONSTRAINT_VIOLATION_COMPARATOR.compare(solutionSet.get(p), solutionSet.get(q));
         if (flagDominate == 0) {
-          flagDominate = DOMINANCE_COMPARATOR.compare(solutionSet.get(i), solutionSet.get(q));
+          flagDominate = DOMINANCE_COMPARATOR.compare(solutionSet.get(p), solutionSet.get(q));
         }
         if (flagDominate == -1) {
-          iDominate[i].add(q);
+          iDominate[p].add(q);
           dominateMe[q]++;
         } else if (flagDominate == 1) {
-          iDominate[q].add(i);
-          dominateMe[i]++;
+          iDominate[q].add(p);
+          dominateMe[p]++;
         }
       }
     }
@@ -121,7 +120,7 @@ public class Ranking<T extends Solution<?>> {
             front[i].add(index);
             //this.population.get(index).setRank(i);
             //solutionSet.get(index).setRank(i);
-            Attributes attr = solutionSet.get(i).getAttributes() ;
+            Attributes attr = solutionSet.get(index).getAttributes() ;
             ((NSGAIIAttr)attr).setRank(i);
           }
         }
@@ -147,6 +146,9 @@ public class Ranking<T extends Solution<?>> {
    * @return Object representing the <code>SolutionSet</code>.
    */
   public List<T> getSubfront(int rank) {
+    if (rank >= rankedSubpopulations.size()) {
+      throw new JMetalException("Invalid rank: " + rank + ". Max rank = " + (rankedSubpopulations.size() -1)) ;
+    }
     return rankedSubpopulations.get(rank);
   }
 

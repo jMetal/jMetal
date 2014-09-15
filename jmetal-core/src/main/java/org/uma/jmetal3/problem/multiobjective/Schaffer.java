@@ -72,6 +72,8 @@ public class Schaffer extends ContinuousProblemImpl<DoubleSolution> {
     f[0] = value * value;
     f[1] = (value - 2.0) * (value - 2.0);
 
+    System.out.println("Fo: " + f[0] + ". F1: " + f[1]) ;
+
     solution.setObjective(0, f[0]);
     solution.setObjective(1, f[1]);
   }
