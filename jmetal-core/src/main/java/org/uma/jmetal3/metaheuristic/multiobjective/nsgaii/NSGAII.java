@@ -52,19 +52,8 @@ public class NSGAII extends NSGAIITemplate  {
    * @throws org.uma.jmetal.util.JMetalException
    */
   public List<?> execute() throws JMetalException {
-
     createInitialPopulation();
-
     population = evaluatePopulation(population);
-
-    System.out.println("POP: " + population) ;
-
-    Ranking r = new Ranking(population);
-    System.out.println("RANKING: ") ;
-    for (Solution s : population) {
-      System.out.println(s) ;
-    }
-    System.exit(0) ;
 
     // Main loop
     while (!stoppingCondition()) {
@@ -88,20 +77,9 @@ public class NSGAII extends NSGAIITemplate  {
       List<Solution> union = new ArrayList<>() ;
       union.addAll(population) ;
       union.addAll(offspringPopulation) ;
-      System.out.println("POP: ") ;
-      for (Solution s : population) {
-        System.out.println(s) ;
-      }
-      System.out.println("OFF: ") ;
-      for (Solution s : offspringPopulation) {
-        System.out.println(s) ;
-      }
+
       Ranking ranking = new Ranking(union);
-      System.out.println("RANKING: ") ;
-      for (Solution s : union) {
-        System.out.println(s) ;
-      }
-System.exit(0) ;
+
       crowdingDistanceSelection(ranking);
     }
 

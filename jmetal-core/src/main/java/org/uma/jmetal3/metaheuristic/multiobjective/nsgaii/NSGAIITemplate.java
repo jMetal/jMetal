@@ -229,11 +229,6 @@ public abstract class NSGAIITemplate implements Algorithm<List<Solution>> {
   protected void addLastRankedSolutions(Ranking ranking, int rank) throws JMetalException {
     List<Solution> currentRankedFront = ranking.getSubfront(rank) ;
 
-    System.out.println("Solutions: ") ;
-    for (Solution sol : currentRankedFront) {
-      System.out.println(sol) ;
-    }
-
     currentRankedFront.sort(new CrowdingComparator());
 
     int i = 0 ;

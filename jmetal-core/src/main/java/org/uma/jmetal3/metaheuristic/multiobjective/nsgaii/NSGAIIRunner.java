@@ -62,7 +62,7 @@ public class NSGAIIRunner {
     MutationOperator mutation;
     SelectionOperator selection;
 
-    problem = new Schaffer();
+    problem = new Fonseca();
 
     crossover = new SBXCrossover.Builder()
             .setDistributionIndex(20.0)
@@ -82,7 +82,7 @@ public class NSGAIIRunner {
             .setMutation(mutation)
             .setSelection(selection)
             .setMaxEvaluations(25000)
-            .setPopulationSize(2)
+            .setPopulationSize(100)
             .setVariant("NSGAII")
             .build() ;
 
