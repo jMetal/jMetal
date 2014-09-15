@@ -39,4 +39,9 @@ public class NSGAIIAttr extends Attributes implements CrowdingDistance, Ranking 
   public Attributes copy() {
     return new NSGAIIAttr(this) ;
   }
+
+  @Override
+  public String toString() {
+    return "Rank: "+ getRank() + ". CD: " + getCrowdingDistance() ;
+  }
 }

@@ -72,12 +72,12 @@ public class DoubleSolutionImpl extends GenericSolutionImpl<Double, ContinuousPr
     for (Double var : variables) {
       result += "" + var + " " ;
     }
-    result += "\n" ;
     result += "Objectives: " ;
     for (Double obj : objectives) {
       result += "" + obj + " " ;
     }
     result += "\n" ;
+    result += "Attributes: " + attributes ;
 
     return result ;
   }

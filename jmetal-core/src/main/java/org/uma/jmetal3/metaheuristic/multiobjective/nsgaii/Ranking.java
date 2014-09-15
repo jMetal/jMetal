@@ -54,7 +54,7 @@ public class Ranking<T extends Solution<?>> {
    * @throws org.uma.jmetal.util.JMetalException
    */
   public Ranking(List<T> solutionSet) throws JMetalException {
-    this.population = solutionSet;
+    population = solutionSet;
 
     // dominateMe[i] contains the number of solutions dominating i
     int[] dominateMe = new int[this.population.size()];
@@ -98,9 +98,7 @@ public class Ranking<T extends Solution<?>> {
     }
 
     for (int i = 0; i < this.population.size(); i++) {
-      //System.out.println("I: " + i + ". Popsize: " + this.population.size());
       if (dominateMe[i] == 0) {
-        //System.out.println("In");
 
         front[0].add(i);
         Attributes attr = solutionSet.get(i).getAttributes() ;
