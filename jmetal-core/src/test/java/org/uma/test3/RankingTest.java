@@ -71,12 +71,12 @@ public class RankingTest {
     assertEquals(1, ranking.getNumberOfSubfronts()) ;
     assertNotNull(ranking.getSubfront(0));
     assertEquals(2, ranking.getSubfront(0).size()) ;
-    assertEquals(0, population.get(0).getAlgorithmAttributes().getAttribute("Rank")) ;
-    assertEquals(0, population.get(1).getAlgorithmAttributes().getAttribute("Rank")) ;
+    System.out.println("R:" + population) ;
+    assertEquals(0, (int)NSGAIIAttr.getAttributes(population.get(0)).getRank()) ;
+    assertEquals(0, (int)NSGAIIAttr.getAttributes(population.get(1)).getRank()) ;
 
     List<Solution> subfront = ranking.getSubfront(0) ;
-    assertEquals(0, subfront.get(0).getAlgorithmAttributes().getAttribute("Rank")) ;
-    assertEquals(0, subfront.get(0).getAlgorithmAttributes().getAttribute("Rank")) ;
+    assertEquals(0, (int)NSGAIIAttr.getAttributes(subfront.get(0)).getRank()) ;
   }
 
   @Test
@@ -98,14 +98,14 @@ public class RankingTest {
     assertNotNull(ranking.getSubfront(0));
     assertEquals(1, ranking.getSubfront(0).size()) ;
     assertEquals(1, ranking.getSubfront(1).size()) ;
-    assertEquals(0, population.get(0).getAlgorithmAttributes().getAttribute("Rank")) ;
-    assertEquals(1, population.get(1).getAlgorithmAttributes().getAttribute("Rank")) ;
+    assertEquals(0, (int)NSGAIIAttr.getAttributes(population.get(0)).getRank()) ;
+    assertEquals(1, (int)NSGAIIAttr.getAttributes(population.get(1)).getRank()) ;
 
     List<Solution> subfront = ranking.getSubfront(0) ;
     List<Solution> subfront1 = ranking.getSubfront(1) ;
 
-    assertEquals(0, subfront.get(0).getAlgorithmAttributes().getAttribute("Rank")) ;
-    assertEquals(1, subfront1.get(0).getAlgorithmAttributes().getAttribute("Rank")) ;
+    assertEquals(0, (int)NSGAIIAttr.getAttributes(subfront.get(0)).getRank()) ;
+    assertEquals(1, (int)NSGAIIAttr.getAttributes(subfront1.get(0)).getRank()) ;
   }
 
   @Test
@@ -126,10 +126,8 @@ public class RankingTest {
 
     Ranking ranking = new Ranking(population) ;
 
-    System.out.println(population) ;
-
-    assertEquals(1, population.get(0).getAlgorithmAttributes().getAttribute("Rank")) ;
-    assertEquals(0, population.get(1).getAlgorithmAttributes().getAttribute("Rank")) ;
+    assertEquals(1, (int)NSGAIIAttr.getAttributes(population.get(0)).getRank()) ;
+    assertEquals(0, (int)NSGAIIAttr.getAttributes(population.get(1)).getRank()) ;
   }
 
 }

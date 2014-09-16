@@ -44,20 +44,24 @@ public class Distance {
   public static void crowdingDistanceAssignment(List<? extends Solution> solutionSet) throws
           JMetalException {
     int size = solutionSet.size();
-    CrowdingDistance attr ;
 
     if (size == 0) {
       return;
     }
 
     if (size == 1) {
-      solutionSet.get(0).getAlgorithmAttributes().setAttribute("CrowdingDistance", Double.POSITIVE_INFINITY);
+      NSGAIIAttr.getAttributes(solutionSet.get(0)).setCrowdingDistance(Double.POSITIVE_INFINITY);
+      //attributes = (NSGAIIAttr)solutionSet.get(0).getAlgorithmAttributes() ;
+      //attributes.setCrowdingDistance(Double.POSITIVE_INFINITY);
+      //solutionSet.get(0).getAlgorithmAttributes().setAttribute("CrowdingDistance", Double.POSITIVE_INFINITY);
       return;
     }
 
     if (size == 2) {
-      solutionSet.get(0).getAlgorithmAttributes().setAttribute("CrowdingDistance", Double.POSITIVE_INFINITY);
-      solutionSet.get(1).getAlgorithmAttributes().setAttribute("CrowdingDistance", Double.POSITIVE_INFINITY);
+      NSGAIIAttr.getAttributes(solutionSet.get(0)).setCrowdingDistance(Double.POSITIVE_INFINITY);
+      NSGAIIAttr.getAttributes(solutionSet.get(1)).setCrowdingDistance(Double.POSITIVE_INFINITY);
+      //solutionSet.get(0).getAlgorithmAttributes().setAttribute("CrowdingDistance", Double.POSITIVE_INFINITY);
+      //solutionSet.get(1).getAlgorithmAttributes().setAttribute("CrowdingDistance", Double.POSITIVE_INFINITY);
       return;
     }
 
@@ -68,7 +72,8 @@ public class Distance {
     }
 
     for (int i = 0; i < size; i++) {
-      front.get(i).getAlgorithmAttributes().setAttribute("CrowdingDistance", 0.0);
+      //front.get(i).getAlgorithmAttributes().setAttribute("CrowdingDistance", 0.0);
+      NSGAIIAttr.getAttributes(front.get(i)).setCrowdingDistance(0.0);
     }
 
     double objetiveMaxn;
@@ -83,15 +88,19 @@ public class Distance {
       objetiveMinn = front.get(0).getObjective(i);
       objetiveMaxn = front.get(front.size() - 1).getObjective(i);
 
-      //SSet de crowding distance
-      front.get(0).getAlgorithmAttributes().setAttribute("CrowdingDistance", Double.POSITIVE_INFINITY);
-      front.get(size - 1).getAlgorithmAttributes().setAttribute("CrowdingDistance", Double.POSITIVE_INFINITY);
+      //Set de crowding distance
+      NSGAIIAttr.getAttributes(front.get(0)).setCrowdingDistance(Double.POSITIVE_INFINITY);
+      NSGAIIAttr.getAttributes(front.get(size-1)).setCrowdingDistance(Double.POSITIVE_INFINITY);
+      //front.get(0).getAlgorithmAttributes().setAttribute("CrowdingDistance", Double.POSITIVE_INFINITY);
+      //front.get(size - 1).getAlgorithmAttributes().setAttribute("CrowdingDistance", Double.POSITIVE_INFINITY);
 
       for (int j = 1; j < size - 1; j++) {
         distance = front.get(j + 1).getObjective(i) - front.get(j - 1).getObjective(i);
         distance = distance / (objetiveMaxn - objetiveMinn);
-        distance += (Double)front.get(j).getAlgorithmAttributes().getAttribute("CrowdingDistance");
-        front.get(j).getAlgorithmAttributes().setAttribute("CrowdingDistance", distance);
+        distance += NSGAIIAttr.getAttributes(front.get(j)).getCrowdingDistance();
+        NSGAIIAttr.getAttributes(front.get(j)).setCrowdingDistance(distance);
+        //distance += (Double)front.get(j).getAlgorithmAttributes().getAttribute("CrowdingDistance");
+        //front.get(j).getAlgorithmAttributes().setAttribute("CrowdingDistance", distance);
       }
     }
   }

@@ -100,8 +100,10 @@ public class Ranking<T extends Solution<?>> {
       if (dominateMe[i] == 0) {
 
         front[0].add(i);
-        AlgorithmAttributes attr = solutionSet.get(i).getAlgorithmAttributes() ;
-        ((NSGAIIAttr)attr).setRank(0);
+        //AlgorithmAttributes attr = solutionSet.get(i).getAlgorithmAttributes() ;
+        //((NSGAIIAttr)attr).setRank(0);
+        NSGAIIAttr.getAttributes(solutionSet.get(0)).setRank(0);
+
       }
     }
 
@@ -120,8 +122,9 @@ public class Ranking<T extends Solution<?>> {
             front[i].add(index);
             //this.population.get(index).setRank(i);
             //solutionSet.get(index).setRank(i);
-            AlgorithmAttributes attr = solutionSet.get(index).getAlgorithmAttributes() ;
-            ((NSGAIIAttr)attr).setRank(i);
+            //AlgorithmAttributes attr = solutionSet.get(index).getAlgorithmAttributes() ;
+            //((NSGAIIAttr)attr).setRank(i);
+            NSGAIIAttr.getAttributes(solutionSet.get(index)).setRank(i);
           }
         }
       }

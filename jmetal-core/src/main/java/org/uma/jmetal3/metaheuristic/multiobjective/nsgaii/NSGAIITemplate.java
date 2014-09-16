@@ -173,12 +173,6 @@ public abstract class NSGAIITemplate implements Algorithm<List<Solution>> {
   protected void createInitialPopulation() throws JMetalException {
     population = new ArrayList<>(populationSize);
 
-//    Solution newSolution;
-//    for (int i = 0; i < populationSize; i++) {
-//      newSolution = problem.createSolution();
-//      population.add(newSolution);
-//    }
-
     Solution solution;
     for (int i = 0; i < populationSize; i++) {
       solution = problem.createSolution(new NSGAIIAttr());

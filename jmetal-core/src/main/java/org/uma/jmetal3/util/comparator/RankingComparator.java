@@ -22,6 +22,7 @@
 package org.uma.jmetal3.util.comparator;
 
 import org.uma.jmetal3.core.Solution;
+import org.uma.jmetal3.metaheuristic.multiobjective.nsgaii.NSGAIIAttr;
 
 import java.util.Comparator;
 
@@ -46,11 +47,11 @@ public class RankingComparator implements Comparator<Solution> {
       return -1;
     }
 
-    if ((int)solution1.getAlgorithmAttributes().getAttribute("Rank") < (int)solution2.getAlgorithmAttributes().getAttribute("Rank")) {
+    if (NSGAIIAttr.getAttributes(solution1).getRank() < NSGAIIAttr.getAttributes(solution2).getRank()) {
       return -1;
     }
 
-    if ((int)solution1.getAlgorithmAttributes().getAttribute("Rank") > (int)solution2.getAlgorithmAttributes().getAttribute("Rank")) {
+    if (NSGAIIAttr.getAttributes(solution1).getRank() > NSGAIIAttr.getAttributes(solution2).getRank()) {
       return 1;
     }
 
