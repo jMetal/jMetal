@@ -19,11 +19,11 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal3.metaheuristic.multiobjective.nsgaii;
+package org.uma.jmetal3.util;
 
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal3.core.Solution;
-import org.uma.jmetal3.encoding.attributes.CrowdingDistance;
+import org.uma.jmetal3.encoding.attributes.impl.RankingAndCrowdingAttr;
 import org.uma.jmetal3.util.comparator.ObjectiveComparator;
 
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * This class implements some utilities for calculating distances
  */
-public class Distance {
+public class CrowdingDistance {
 
   /**
    * Assigns crowding distances to all solutions in a <code>SolutionSet</code>.
@@ -50,18 +50,15 @@ public class Distance {
     }
 
     if (size == 1) {
-      NSGAIIAttr.getAttributes(solutionSet.get(0)).setCrowdingDistance(Double.POSITIVE_INFINITY);
-      //attributes = (NSGAIIAttr)solutionSet.get(0).getAlgorithmAttributes() ;
-      //attributes.setCrowdingDistance(Double.POSITIVE_INFINITY);
-      //solutionSet.get(0).getAlgorithmAttributes().setAttribute("CrowdingDistance", Double.POSITIVE_INFINITY);
+      RankingAndCrowdingAttr.getAttributes(solutionSet.get(0)).setCrowdingDistance(Double.POSITIVE_INFINITY);
+
       return;
     }
 
     if (size == 2) {
-      NSGAIIAttr.getAttributes(solutionSet.get(0)).setCrowdingDistance(Double.POSITIVE_INFINITY);
-      NSGAIIAttr.getAttributes(solutionSet.get(1)).setCrowdingDistance(Double.POSITIVE_INFINITY);
-      //solutionSet.get(0).getAlgorithmAttributes().setAttribute("CrowdingDistance", Double.POSITIVE_INFINITY);
-      //solutionSet.get(1).getAlgorithmAttributes().setAttribute("CrowdingDistance", Double.POSITIVE_INFINITY);
+      RankingAndCrowdingAttr.getAttributes(solutionSet.get(0)).setCrowdingDistance(Double.POSITIVE_INFINITY);
+      RankingAndCrowdingAttr.getAttributes(solutionSet.get(1)).setCrowdingDistance(Double.POSITIVE_INFINITY);
+
       return;
     }
 
@@ -72,8 +69,7 @@ public class Distance {
     }
 
     for (int i = 0; i < size; i++) {
-      //front.get(i).getAlgorithmAttributes().setAttribute("CrowdingDistance", 0.0);
-      NSGAIIAttr.getAttributes(front.get(i)).setCrowdingDistance(0.0);
+      RankingAndCrowdingAttr.getAttributes(front.get(i)).setCrowdingDistance(0.0);
     }
 
     double objetiveMaxn;
@@ -89,18 +85,14 @@ public class Distance {
       objetiveMaxn = front.get(front.size() - 1).getObjective(i);
 
       //Set de crowding distance
-      NSGAIIAttr.getAttributes(front.get(0)).setCrowdingDistance(Double.POSITIVE_INFINITY);
-      NSGAIIAttr.getAttributes(front.get(size-1)).setCrowdingDistance(Double.POSITIVE_INFINITY);
-      //front.get(0).getAlgorithmAttributes().setAttribute("CrowdingDistance", Double.POSITIVE_INFINITY);
-      //front.get(size - 1).getAlgorithmAttributes().setAttribute("CrowdingDistance", Double.POSITIVE_INFINITY);
+      RankingAndCrowdingAttr.getAttributes(front.get(0)).setCrowdingDistance(Double.POSITIVE_INFINITY);
+      RankingAndCrowdingAttr.getAttributes(front.get(size - 1)).setCrowdingDistance(Double.POSITIVE_INFINITY);
 
       for (int j = 1; j < size - 1; j++) {
         distance = front.get(j + 1).getObjective(i) - front.get(j - 1).getObjective(i);
         distance = distance / (objetiveMaxn - objetiveMinn);
-        distance += NSGAIIAttr.getAttributes(front.get(j)).getCrowdingDistance();
-        NSGAIIAttr.getAttributes(front.get(j)).setCrowdingDistance(distance);
-        //distance += (Double)front.get(j).getAlgorithmAttributes().getAttribute("CrowdingDistance");
-        //front.get(j).getAlgorithmAttributes().setAttribute("CrowdingDistance", distance);
+        distance += RankingAndCrowdingAttr.getAttributes(front.get(j)).getCrowdingDistance();
+        RankingAndCrowdingAttr.getAttributes(front.get(j)).setCrowdingDistance(distance);
       }
     }
   }

@@ -1,22 +1,22 @@
-package org.uma.jmetal3.metaheuristic.multiobjective.nsgaii;
+package org.uma.jmetal3.encoding.attributes.impl;
 
 import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal3.encoding.attributes.*;
-import org.uma.jmetal3.encoding.attributes.Ranking;
+import org.uma.jmetal3.encoding.attributes.RankingAttr;
 
 /**
  * Created by antonio on 13/09/14.
  */
-public class NSGAIIAttr extends AlgorithmAttributes implements CrowdingDistance, Ranking {
+public class RankingAndCrowdingAttr extends AlgorithmAttributes implements CrowdingDistanceAttr, RankingAttr {
   private int rank;
   private double crowdingDistance ;
 
-  public NSGAIIAttr() {
+  public RankingAndCrowdingAttr() {
     rank = 0 ;
     crowdingDistance = 0.0 ;
   }
 
-  public NSGAIIAttr(NSGAIIAttr attr) {
+  public RankingAndCrowdingAttr(RankingAndCrowdingAttr attr) {
     this.rank = attr.rank ;
     this.crowdingDistance = attr.crowdingDistance ;
   }
@@ -42,8 +42,8 @@ public class NSGAIIAttr extends AlgorithmAttributes implements CrowdingDistance,
   }
 
   @Override
-  public AlgorithmAttributes copy() {
-    return new NSGAIIAttr(this) ;
+  public Object clone() {
+    return new RankingAndCrowdingAttr(this) ;
   }
 
   @Override
@@ -51,7 +51,7 @@ public class NSGAIIAttr extends AlgorithmAttributes implements CrowdingDistance,
     return "Rank: "+ getRank() + ". CD: " + getCrowdingDistance() ;
   }
 
-  public static NSGAIIAttr getAttributes(Solution solution) {
-    return (NSGAIIAttr)solution.getAlgorithmAttributes() ;
+  public static RankingAndCrowdingAttr getAttributes(Solution solution) {
+    return (RankingAndCrowdingAttr)solution.getAlgorithmAttributes() ;
   }
 }

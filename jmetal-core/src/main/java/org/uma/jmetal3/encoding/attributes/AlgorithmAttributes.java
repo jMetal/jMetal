@@ -6,5 +6,6 @@ import java.util.HashMap;
  * Created by antonio on 13/09/14.
  */
 public abstract class AlgorithmAttributes {
-  public abstract AlgorithmAttributes copy() ;
+@Override
+  public abstract Object clone() ;
 }

@@ -43,7 +43,7 @@ public class DoubleSolutionImpl extends GenericSolutionImpl<Double, ContinuousPr
     }
 
     overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
-    attributes = solution.attributes.copy() ;
+    attributes = (AlgorithmAttributes)solution.attributes.clone() ;
   }
 
   @Override

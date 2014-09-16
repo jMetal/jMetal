@@ -4,6 +4,7 @@ import org.uma.jmetal.util.random.PseudoRandom;
 import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal3.encoding.BinarySolution;
 import org.uma.jmetal3.encoding.PermutationSolution;
+import org.uma.jmetal3.encoding.attributes.AlgorithmAttributes;
 import org.uma.jmetal3.problem.BinaryProblem;
 import org.uma.jmetal3.problem.PermutationProblem;
 
@@ -19,11 +20,12 @@ public class IntegerPermutationSolutionImpl
         implements PermutationSolution<List<Integer>> {
 
   /** Constructor */
-  public IntegerPermutationSolutionImpl(PermutationProblem problem) {
+  public IntegerPermutationSolutionImpl(PermutationProblem problem, AlgorithmAttributes attr) {
     this.problem = problem ;
     objectives = new ArrayList<>(problem.getNumberOfObjectives()) ;
     variables = new ArrayList<>(problem.getNumberOfVariables()) ;
     overallConstraintViolationDegree = 0.0 ;
+    attributes = attr ;
 
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
       ArrayList<Integer> randomSequence = new ArrayList<>(problem.getPermutationLength(i));
@@ -54,6 +56,7 @@ public class IntegerPermutationSolutionImpl
     }
 
     overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
+    attributes = (AlgorithmAttributes)solution.attributes.clone() ;
   }
 
   @Override

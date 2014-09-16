@@ -19,11 +19,11 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal3.metaheuristic.multiobjective.nsgaii;
+package org.uma.jmetal3.util;
 
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal3.core.Solution;
-import org.uma.jmetal3.encoding.attributes.AlgorithmAttributes;
+import org.uma.jmetal3.encoding.attributes.impl.RankingAndCrowdingAttr;
 import org.uma.jmetal3.util.comparator.DominanceComparator;
 import org.uma.jmetal3.util.comparator.OverallConstraintViolationComparator;
 
@@ -101,8 +101,8 @@ public class Ranking<T extends Solution<?>> {
 
         front[0].add(i);
         //AlgorithmAttributes attr = solutionSet.get(i).getAlgorithmAttributes() ;
-        //((NSGAIIAttr)attr).setRank(0);
-        NSGAIIAttr.getAttributes(solutionSet.get(0)).setRank(0);
+        //((RankingAndCrowdingAttr)attr).setRank(0);
+        RankingAndCrowdingAttr.getAttributes(solutionSet.get(0)).setRank(0);
 
       }
     }
@@ -123,8 +123,8 @@ public class Ranking<T extends Solution<?>> {
             //this.population.get(index).setRank(i);
             //solutionSet.get(index).setRank(i);
             //AlgorithmAttributes attr = solutionSet.get(index).getAlgorithmAttributes() ;
-            //((NSGAIIAttr)attr).setRank(i);
-            NSGAIIAttr.getAttributes(solutionSet.get(index)).setRank(i);
+            //((RankingAndCrowdingAttr)attr).setRank(i);
+            RankingAndCrowdingAttr.getAttributes(solutionSet.get(index)).setRank(i);
           }
         }
       }

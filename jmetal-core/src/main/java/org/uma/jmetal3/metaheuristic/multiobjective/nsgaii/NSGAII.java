@@ -22,7 +22,7 @@ package org.uma.jmetal3.metaheuristic.multiobjective.nsgaii;
 
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal3.core.Solution;
-import org.uma.jmetal3.encoding.DoubleSolution;
+import org.uma.jmetal3.util.Ranking;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -22,7 +22,7 @@
 package org.uma.jmetal3.util.comparator;
 
 import org.uma.jmetal3.core.Solution;
-import org.uma.jmetal3.metaheuristic.multiobjective.nsgaii.NSGAIIAttr;
+import org.uma.jmetal3.encoding.attributes.impl.RankingAndCrowdingAttr;
 
 import java.util.Comparator;
 
@@ -59,10 +59,10 @@ public class CrowdingComparator implements Comparator<Solution> {
     }
     
     /* His rank is equal, then distance crowding RANK_COMPARATOR */
-    double distance1 = NSGAIIAttr.getAttributes(o1).getCrowdingDistance() ;
-    double distance2 = NSGAIIAttr.getAttributes(o2).getCrowdingDistance() ;
-    //double distance1 = (double)o1.getAlgorithmAttributes().getAttribute("CrowdingDistance");
-    //double distance2 = (double)o2.getAlgorithmAttributes().getAttribute("CrowdingDistance");
+    double distance1 = RankingAndCrowdingAttr.getAttributes(o1).getCrowdingDistance() ;
+    double distance2 = RankingAndCrowdingAttr.getAttributes(o2).getCrowdingDistance() ;
+    //double distance1 = (double)o1.getAlgorithmAttributes().getAttribute("CrowdingDistanceAttr");
+    //double distance2 = (double)o2.getAlgorithmAttributes().getAttribute("CrowdingDistanceAttr");
     if (distance1 > distance2) {
       return -1;
     }

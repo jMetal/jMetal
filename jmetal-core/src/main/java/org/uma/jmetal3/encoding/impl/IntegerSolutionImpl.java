@@ -19,6 +19,7 @@ public class IntegerSolutionImpl extends GenericSolutionImpl<Integer, IntegerPro
     objectives = new ArrayList<>(problem.getNumberOfObjectives()) ;
     variables = new ArrayList<>(problem.getNumberOfVariables()) ;
     overallConstraintViolationDegree = 0.0 ;
+    attributes = attr ;
 
     for (int i = 0 ; i < problem.getNumberOfVariables(); i++) {
       Integer value = PseudoRandom.randInt(getLowerBound(i), getLowerBound(i));
@@ -39,6 +40,7 @@ public class IntegerSolutionImpl extends GenericSolutionImpl<Integer, IntegerPro
     }
 
     overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
+    attributes = (AlgorithmAttributes)solution.attributes.clone() ;
   }
 
   @Override

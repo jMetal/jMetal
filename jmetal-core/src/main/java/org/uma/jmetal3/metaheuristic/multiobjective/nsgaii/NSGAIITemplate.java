@@ -26,9 +26,12 @@ import org.uma.jmetal3.core.Algorithm;
 import org.uma.jmetal3.core.Operator;
 import org.uma.jmetal3.core.Problem;
 import org.uma.jmetal3.core.Solution;
+import org.uma.jmetal3.encoding.attributes.impl.RankingAndCrowdingAttr;
 import org.uma.jmetal3.operator.crossover.CrossoverOperator;
 import org.uma.jmetal3.operator.mutation.MutationOperator;
 import org.uma.jmetal3.operator.selection.SelectionOperator;
+import org.uma.jmetal3.util.CrowdingDistance;
+import org.uma.jmetal3.util.Ranking;
 import org.uma.jmetal3.util.comparator.CrowdingComparator;
 
 import java.util.ArrayList;
@@ -175,7 +178,7 @@ public abstract class NSGAIITemplate implements Algorithm<List<Solution>> {
 
     Solution solution;
     for (int i = 0; i < populationSize; i++) {
-      solution = problem.createSolution(new NSGAIIAttr());
+      solution = problem.createSolution(new RankingAndCrowdingAttr());
       population.add(solution);
     }
 
@@ -206,7 +209,7 @@ public abstract class NSGAIITemplate implements Algorithm<List<Solution>> {
   }
 
   protected void addRankedSolutionsToPopulation(Ranking ranking, int rank) throws JMetalException {
-    List<NSGAIISolution> front ;
+    List<Solution> front ;
 
     front = ranking.getSubfront(rank);
 
@@ -217,7 +220,7 @@ public abstract class NSGAIITemplate implements Algorithm<List<Solution>> {
 
   protected void computeCrowdingDistance(Ranking ranking, int rank) throws JMetalException {
     List<Solution> currentRankedFront = ranking.getSubfront(rank) ;
-    Distance.crowdingDistanceAssignment(currentRankedFront);
+    CrowdingDistance.crowdingDistanceAssignment(currentRankedFront);
   }
 
   protected void addLastRankedSolutions(Ranking ranking, int rank) throws JMetalException {
