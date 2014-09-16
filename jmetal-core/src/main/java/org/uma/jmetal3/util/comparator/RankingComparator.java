@@ -22,7 +22,6 @@
 package org.uma.jmetal3.util.comparator;
 
 import org.uma.jmetal3.core.Solution;
-import org.uma.jmetal3.encoding.attributes.CrowdingDistance;
 
 import java.util.Comparator;
 
@@ -34,28 +33,24 @@ public class RankingComparator implements Comparator<Solution> {
   /**
    * Compares two solutions.
    *
-   * @param o1 Object representing the first <code>Solution</code>.
-   * @param o2 Object representing the second <code>Solution</code>.
+   * @param solution1 Object representing the first <code>Solution</code>.
+   * @param solution2 Object representing the second <code>Solution</code>.
    * @return -1, or 0, or 1 if o1 is less than, equal, or greater than o2,
    * respectively.
    */
   @Override
-  public int compare(Solution o1, Solution o2) {
-    if (o1 == null) {
+  public int compare(Solution solution1, Solution solution2) {
+    if (solution1 == null) {
       return 1;
-    } else if (o2 == null) {
+    } else if (solution2 == null) {
       return -1;
     }
 
-    Solution solution1 = o1;
-    Solution solution2 = o2;
-    System.out.println("S1: " + solution1) ;
-    System.out.println("S2: " + solution2) ;
-    if ((int)solution1.getAttributes().getAttribute("Rank") < (int)solution2.getAttributes().getAttribute("Rank")) {
+    if ((int)solution1.getAlgorithmAttributes().getAttribute("Rank") < (int)solution2.getAlgorithmAttributes().getAttribute("Rank")) {
       return -1;
     }
 
-    if ((int)solution1.getAttributes().getAttribute("Rank") > (int)solution2.getAttributes().getAttribute("Rank")) {
+    if ((int)solution1.getAlgorithmAttributes().getAttribute("Rank") > (int)solution2.getAlgorithmAttributes().getAttribute("Rank")) {
       return 1;
     }
 

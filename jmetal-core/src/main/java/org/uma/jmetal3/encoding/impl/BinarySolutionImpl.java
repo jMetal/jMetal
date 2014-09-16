@@ -3,15 +3,11 @@ package org.uma.jmetal3.encoding.impl;
 import org.uma.jmetal.util.random.PseudoRandom;
 import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal3.encoding.BinarySolution;
-import org.uma.jmetal3.encoding.DoubleSolution;
-import org.uma.jmetal3.encoding.attributes.Attributes;
+import org.uma.jmetal3.encoding.attributes.AlgorithmAttributes;
 import org.uma.jmetal3.problem.BinaryProblem;
-import org.uma.jmetal3.problem.ContinuousProblem;
-import org.uma.jmetal3.problem.impl.GenericProblemImpl;
 
 import java.util.ArrayList;
 import java.util.BitSet;
-import java.util.List;
 
 /**
  * Created by Antonio J. Nebro on 03/09/14.
@@ -19,7 +15,7 @@ import java.util.List;
 public class BinarySolutionImpl extends GenericSolutionImpl<BitSet, BinaryProblem> implements BinarySolution {
 
   /** Constructor */
-  public BinarySolutionImpl(BinaryProblem problem, Attributes attr) {
+  public BinarySolutionImpl(BinaryProblem problem, AlgorithmAttributes attr) {
     this.problem = problem ;
     objectives = new ArrayList<>(problem.getNumberOfObjectives()) ;
     variables = new ArrayList<>(problem.getNumberOfVariables()) ;

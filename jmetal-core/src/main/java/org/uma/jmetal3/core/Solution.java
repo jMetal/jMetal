@@ -1,6 +1,6 @@
 package org.uma.jmetal3.core;
 
-import org.uma.jmetal3.encoding.attributes.Attributes;
+import org.uma.jmetal3.encoding.attributes.AlgorithmAttributes;
 
 /**
  * Created by Antonio on 03/09/14.
@@ -20,5 +20,5 @@ public interface Solution<T> {
 
   public Solution<?> copy() ;
 
-  public Attributes getAttributes() ;
+  public AlgorithmAttributes getAlgorithmAttributes() ;
  }

@@ -22,7 +22,6 @@
 package org.uma.jmetal3.util.comparator;
 
 import org.uma.jmetal3.core.Solution;
-import org.uma.jmetal3.encoding.attributes.CrowdingDistance;
 
 import java.util.Comparator;
 
@@ -59,8 +58,8 @@ public class CrowdingComparator implements Comparator<Solution> {
     }
     
     /* His rank is equal, then distance crowding RANK_COMPARATOR */
-    double distance1 = (double)o1.getAttributes().getAttribute("CrowdingDistance");
-    double distance2 = (double)o2.getAttributes().getAttribute("CrowdingDistance");
+    double distance1 = (double)o1.getAlgorithmAttributes().getAttribute("CrowdingDistance");
+    double distance2 = (double)o2.getAlgorithmAttributes().getAttribute("CrowdingDistance");
     if (distance1 > distance2) {
       return -1;
     }

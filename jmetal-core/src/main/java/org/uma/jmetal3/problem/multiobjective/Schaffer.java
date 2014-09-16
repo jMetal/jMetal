@@ -21,10 +21,8 @@
 
 package org.uma.jmetal3.problem.multiobjective;
 
-import org.uma.jmetal3.core.Problem;
-import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal3.encoding.DoubleSolution;
-import org.uma.jmetal3.encoding.attributes.Attributes;
+import org.uma.jmetal3.encoding.attributes.AlgorithmAttributes;
 import org.uma.jmetal3.encoding.impl.DoubleSolutionImpl;
 import org.uma.jmetal3.problem.impl.ContinuousProblemImpl;
 
@@ -58,7 +56,7 @@ public class Schaffer extends ContinuousProblemImpl<DoubleSolution> {
   }
 
   @Override
-  public DoubleSolution createSolution(Attributes attr) {
+  public DoubleSolution createSolution(AlgorithmAttributes attr) {
     DoubleSolution solution = new DoubleSolutionImpl(this, attr) ;
 
     return solution ;

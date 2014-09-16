@@ -5,14 +5,14 @@ import java.util.HashMap;
 /**
  * Created by antonio on 13/09/14.
  */
-public abstract class Attributes {
+public abstract class AlgorithmAttributes {
   public HashMap<String, Object> map ;
 
-  public Attributes() {
+  public AlgorithmAttributes() {
     map = new HashMap<String, Object>() ;
   }
 
-  public Attributes(Attributes attr) {
+  public AlgorithmAttributes(AlgorithmAttributes attr) {
     map = (HashMap<String, Object>)attr.map.clone() ;
   }
 
@@ -24,5 +24,5 @@ public abstract class Attributes {
     return map.get(name) ;
   }
 
-  public abstract Attributes copy() ;
+  public abstract AlgorithmAttributes copy() ;
 }

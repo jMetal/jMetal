@@ -3,22 +3,17 @@ package org.uma.jmetal3.encoding.impl;
 import org.uma.jmetal.util.random.PseudoRandom;
 import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal3.encoding.DoubleSolution;
-import org.uma.jmetal3.encoding.IntegerSolution;
-import org.uma.jmetal3.encoding.attributes.Attributes;
+import org.uma.jmetal3.encoding.attributes.AlgorithmAttributes;
 import org.uma.jmetal3.problem.ContinuousProblem;
-import org.uma.jmetal3.problem.IntegerProblem;
-import org.uma.jmetal3.problem.impl.ContinuousProblemImpl;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by Antonio J. Nebro on 03/09/14.
  */
 public class DoubleSolutionImpl extends GenericSolutionImpl<Double, ContinuousProblem<DoubleSolution>> implements DoubleSolution {
   /** Constructor */
-  public DoubleSolutionImpl(ContinuousProblem<DoubleSolution> problem, Attributes attr) {
+  public DoubleSolutionImpl(ContinuousProblem<DoubleSolution> problem, AlgorithmAttributes attr) {
   	this.problem = problem ;
     objectives = new ArrayList<>(problem.getNumberOfObjectives()) ;
     variables = new ArrayList<>(problem.getNumberOfVariables()) ;
@@ -77,7 +72,7 @@ public class DoubleSolutionImpl extends GenericSolutionImpl<Double, ContinuousPr
       result += "" + obj + " " ;
     }
     result += "\n" ;
-    result += "Attributes: " + attributes ;
+    result += "AlgorithmAttributes: " + attributes ;
 
     return result ;
   }

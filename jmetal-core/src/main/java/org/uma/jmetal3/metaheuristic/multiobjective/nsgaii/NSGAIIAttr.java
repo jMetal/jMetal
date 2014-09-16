@@ -6,7 +6,7 @@ import org.uma.jmetal3.encoding.attributes.Ranking;
 /**
  * Created by antonio on 13/09/14.
  */
-public class NSGAIIAttr extends Attributes implements CrowdingDistance, Ranking {
+public class NSGAIIAttr extends AlgorithmAttributes implements CrowdingDistance, Ranking {
   public NSGAIIAttr() {
     super();
   }
@@ -36,7 +36,7 @@ public class NSGAIIAttr extends Attributes implements CrowdingDistance, Ranking 
   }
 
   @Override
-  public Attributes copy() {
+  public AlgorithmAttributes copy() {
     return new NSGAIIAttr(this) ;
   }
 

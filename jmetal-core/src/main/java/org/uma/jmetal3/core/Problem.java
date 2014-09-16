@@ -21,7 +21,7 @@
 
 package org.uma.jmetal3.core;
 
-import org.uma.jmetal3.encoding.attributes.Attributes;
+import org.uma.jmetal3.encoding.attributes.AlgorithmAttributes;
 
 /** Interface representing a multiobjective optimization problem */
 public interface Problem<S extends Solution<?>> {
@@ -33,6 +33,6 @@ public interface Problem<S extends Solution<?>> {
 
   /* Methods */
   public void evaluate(S solution) ;
-  public S createSolution(Attributes t) ;
+  public S createSolution(AlgorithmAttributes t) ;
 }
 

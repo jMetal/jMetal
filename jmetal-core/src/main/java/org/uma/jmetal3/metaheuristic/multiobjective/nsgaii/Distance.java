@@ -23,7 +23,6 @@ package org.uma.jmetal3.metaheuristic.multiobjective.nsgaii;
 
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal3.core.Solution;
-import org.uma.jmetal3.encoding.attributes.Attributes;
 import org.uma.jmetal3.encoding.attributes.CrowdingDistance;
 import org.uma.jmetal3.util.comparator.ObjectiveComparator;
 
@@ -52,13 +51,13 @@ public class Distance {
     }
 
     if (size == 1) {
-      solutionSet.get(0).getAttributes().setAttribute("CrowdingDistance", Double.POSITIVE_INFINITY);
+      solutionSet.get(0).getAlgorithmAttributes().setAttribute("CrowdingDistance", Double.POSITIVE_INFINITY);
       return;
     }
 
     if (size == 2) {
-      solutionSet.get(0).getAttributes().setAttribute("CrowdingDistance", Double.POSITIVE_INFINITY);
-      solutionSet.get(1).getAttributes().setAttribute("CrowdingDistance", Double.POSITIVE_INFINITY);
+      solutionSet.get(0).getAlgorithmAttributes().setAttribute("CrowdingDistance", Double.POSITIVE_INFINITY);
+      solutionSet.get(1).getAlgorithmAttributes().setAttribute("CrowdingDistance", Double.POSITIVE_INFINITY);
       return;
     }
 
@@ -69,7 +68,7 @@ public class Distance {
     }
 
     for (int i = 0; i < size; i++) {
-      front.get(i).getAttributes().setAttribute("CrowdingDistance", 0.0);
+      front.get(i).getAlgorithmAttributes().setAttribute("CrowdingDistance", 0.0);
     }
 
     double objetiveMaxn;
@@ -84,15 +83,15 @@ public class Distance {
       objetiveMinn = front.get(0).getObjective(i);
       objetiveMaxn = front.get(front.size() - 1).getObjective(i);
 
-      //Set de crowding distance            
-      front.get(0).getAttributes().setAttribute("CrowdingDistance", Double.POSITIVE_INFINITY);
-      front.get(size - 1).getAttributes().setAttribute("CrowdingDistance", Double.POSITIVE_INFINITY);
+      //SSet de crowding distance
+      front.get(0).getAlgorithmAttributes().setAttribute("CrowdingDistance", Double.POSITIVE_INFINITY);
+      front.get(size - 1).getAlgorithmAttributes().setAttribute("CrowdingDistance", Double.POSITIVE_INFINITY);
 
       for (int j = 1; j < size - 1; j++) {
         distance = front.get(j + 1).getObjective(i) - front.get(j - 1).getObjective(i);
         distance = distance / (objetiveMaxn - objetiveMinn);
-        distance += (Double)front.get(j).getAttributes().getAttribute("CrowdingDistance");
-        front.get(j).getAttributes().setAttribute("CrowdingDistance", distance);
+        distance += (Double)front.get(j).getAlgorithmAttributes().getAttribute("CrowdingDistance");
+        front.get(j).getAlgorithmAttributes().setAttribute("CrowdingDistance", distance);
       }
     }
   }

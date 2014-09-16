@@ -3,11 +3,10 @@ package org.uma.jmetal3.encoding.impl;
 import org.uma.jmetal.util.random.PseudoRandom;
 import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal3.encoding.IntegerSolution;
-import org.uma.jmetal3.encoding.attributes.Attributes;
+import org.uma.jmetal3.encoding.attributes.AlgorithmAttributes;
 import org.uma.jmetal3.problem.IntegerProblem;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Antonio J. Nebro on 03/09/14.
@@ -15,7 +14,7 @@ import java.util.List;
 public class IntegerSolutionImpl extends GenericSolutionImpl<Integer, IntegerProblem<IntegerSolution>> implements IntegerSolution {
 
   /** Constructor */
-  public IntegerSolutionImpl(IntegerProblem<IntegerSolution> problem, Attributes attr) {
+  public IntegerSolutionImpl(IntegerProblem<IntegerSolution> problem, AlgorithmAttributes attr) {
   	this.problem = problem ;
     objectives = new ArrayList<>(problem.getNumberOfObjectives()) ;
     variables = new ArrayList<>(problem.getNumberOfVariables()) ;

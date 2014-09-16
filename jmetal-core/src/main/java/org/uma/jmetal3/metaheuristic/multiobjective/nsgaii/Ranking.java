@@ -23,7 +23,7 @@ package org.uma.jmetal3.metaheuristic.multiobjective.nsgaii;
 
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal3.core.Solution;
-import org.uma.jmetal3.encoding.attributes.Attributes;
+import org.uma.jmetal3.encoding.attributes.AlgorithmAttributes;
 import org.uma.jmetal3.util.comparator.DominanceComparator;
 import org.uma.jmetal3.util.comparator.OverallConstraintViolationComparator;
 
@@ -100,7 +100,7 @@ public class Ranking<T extends Solution<?>> {
       if (dominateMe[i] == 0) {
 
         front[0].add(i);
-        Attributes attr = solutionSet.get(i).getAttributes() ;
+        AlgorithmAttributes attr = solutionSet.get(i).getAlgorithmAttributes() ;
         ((NSGAIIAttr)attr).setRank(0);
       }
     }
@@ -120,7 +120,7 @@ public class Ranking<T extends Solution<?>> {
             front[i].add(index);
             //this.population.get(index).setRank(i);
             //solutionSet.get(index).setRank(i);
-            Attributes attr = solutionSet.get(index).getAttributes() ;
+            AlgorithmAttributes attr = solutionSet.get(index).getAlgorithmAttributes() ;
             ((NSGAIIAttr)attr).setRank(i);
           }
         }

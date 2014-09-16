@@ -6,8 +6,6 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal3.core.Problem;
 import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal3.encoding.DoubleSolution;
-import org.uma.jmetal3.encoding.attributes.Attributes;
-import org.uma.jmetal3.encoding.impl.DoubleSolutionImpl;
 import org.uma.jmetal3.metaheuristic.multiobjective.nsgaii.NSGAIIAttr;
 import org.uma.jmetal3.metaheuristic.multiobjective.nsgaii.Ranking;
 import org.uma.jmetal3.problem.multiobjective.Fonseca;
@@ -73,12 +71,12 @@ public class RankingTest {
     assertEquals(1, ranking.getNumberOfSubfronts()) ;
     assertNotNull(ranking.getSubfront(0));
     assertEquals(2, ranking.getSubfront(0).size()) ;
-    assertEquals(0, population.get(0).getAttributes().getAttribute("Rank")) ;
-    assertEquals(0, population.get(1).getAttributes().getAttribute("Rank")) ;
+    assertEquals(0, population.get(0).getAlgorithmAttributes().getAttribute("Rank")) ;
+    assertEquals(0, population.get(1).getAlgorithmAttributes().getAttribute("Rank")) ;
 
     List<Solution> subfront = ranking.getSubfront(0) ;
-    assertEquals(0, subfront.get(0).getAttributes().getAttribute("Rank")) ;
-    assertEquals(0, subfront.get(0).getAttributes().getAttribute("Rank")) ;
+    assertEquals(0, subfront.get(0).getAlgorithmAttributes().getAttribute("Rank")) ;
+    assertEquals(0, subfront.get(0).getAlgorithmAttributes().getAttribute("Rank")) ;
   }
 
   @Test
@@ -100,14 +98,14 @@ public class RankingTest {
     assertNotNull(ranking.getSubfront(0));
     assertEquals(1, ranking.getSubfront(0).size()) ;
     assertEquals(1, ranking.getSubfront(1).size()) ;
-    assertEquals(0, population.get(0).getAttributes().getAttribute("Rank")) ;
-    assertEquals(1, population.get(1).getAttributes().getAttribute("Rank")) ;
+    assertEquals(0, population.get(0).getAlgorithmAttributes().getAttribute("Rank")) ;
+    assertEquals(1, population.get(1).getAlgorithmAttributes().getAttribute("Rank")) ;
 
     List<Solution> subfront = ranking.getSubfront(0) ;
     List<Solution> subfront1 = ranking.getSubfront(1) ;
 
-    assertEquals(0, subfront.get(0).getAttributes().getAttribute("Rank")) ;
-    assertEquals(1, subfront1.get(0).getAttributes().getAttribute("Rank")) ;
+    assertEquals(0, subfront.get(0).getAlgorithmAttributes().getAttribute("Rank")) ;
+    assertEquals(1, subfront1.get(0).getAlgorithmAttributes().getAttribute("Rank")) ;
   }
 
   @Test
@@ -130,8 +128,8 @@ public class RankingTest {
 
     System.out.println(population) ;
 
-    assertEquals(1, population.get(0).getAttributes().getAttribute("Rank")) ;
-    assertEquals(0, population.get(1).getAttributes().getAttribute("Rank")) ;
+    assertEquals(1, population.get(0).getAlgorithmAttributes().getAttribute("Rank")) ;
+    assertEquals(0, population.get(1).getAlgorithmAttributes().getAttribute("Rank")) ;
   }
 
 }
