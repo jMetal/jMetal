@@ -31,6 +31,7 @@ import org.uma.jmetal3.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal3.operator.selection.SelectionOperator;
 import org.uma.jmetal3.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal3.problem.multiobjective.Fonseca;
+import org.uma.jmetal3.problem.multiobjective.Kursawe;
 import org.uma.jmetal3.problem.multiobjective.Schaffer;
 import org.uma.jmetal3.util.AlgorithmRunner;
 import org.uma.jmetal3.util.fileOutput.DefaultFileOutputContext;
@@ -62,7 +63,8 @@ public class NSGAIIRunner {
     MutationOperator mutation;
     SelectionOperator selection;
 
-    problem = new Fonseca();
+    //problem = new Fonseca();
+    problem = new Kursawe();
 
     crossover = new SBXCrossover.Builder()
             .setDistributionIndex(20.0)
