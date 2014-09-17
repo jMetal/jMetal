@@ -74,6 +74,7 @@ public class NSGAII extends NSGAIITemplate  {
         }
 
       offspringPopulation = evaluatePopulation(offspringPopulation);
+
       List<Solution> union = new ArrayList<>() ;
       union.addAll(population) ;
       union.addAll(offspringPopulation) ;

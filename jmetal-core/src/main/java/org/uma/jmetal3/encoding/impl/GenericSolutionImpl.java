@@ -61,4 +61,19 @@ public abstract class GenericSolutionImpl<T, P extends Problem> implements Solut
     return attributes ;
   }
 
+  @Override
+  public String toString() {
+    String result = "Variables: " ;
+    for (T var : variables) {
+      result += "" + var + " " ;
+    }
+    result += "Objectives: " ;
+    for (Double obj : objectives) {
+      result += "" + obj + " " ;
+    }
+    result += "\t" ;
+    result += "AlgorithmAttributes: " + attributes + "\n" ;
+
+    return result ;
+  }
 }

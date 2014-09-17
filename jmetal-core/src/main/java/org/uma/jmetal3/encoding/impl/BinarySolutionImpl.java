@@ -25,6 +25,10 @@ public class BinarySolutionImpl extends GenericSolutionImpl<BitSet, BinaryProble
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
       variables.add(createNewBitSet(problem.getNumberOfBits(i)));
     }
+
+    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
+      objectives.add(new Double(0.0)) ;
+    }
   }
 
   /** Copy constructor */

@@ -38,8 +38,8 @@ public class NMMin extends IntegerProblemImpl<IntegerSolution> {
   private int valueN ;
   private int valueM ;
 
-  public NMMin() throws JMetalException {
-    this(25, 100, -100, -1000, +1000);
+  public NMMin() {
+    this(10, 100, -100, -1000, +1000);
   }
 
   /** Constructor */

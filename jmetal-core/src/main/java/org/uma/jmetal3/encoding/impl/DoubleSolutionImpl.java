@@ -61,19 +61,19 @@ public class DoubleSolutionImpl extends GenericSolutionImpl<Double, ContinuousPr
     return new DoubleSolutionImpl(this);
   }
 
-  @Override
-  public String toString() {
-    String result = "Variables: " ;
-    for (Double var : variables) {
-      result += "" + var + " " ;
-    }
-    result += "Objectives: " ;
-    for (Double obj : objectives) {
-      result += "" + obj + " " ;
-    }
-    result += "\n" ;
-    result += "AlgorithmAttributes: " + attributes ;
-
-    return result ;
-  }
+//  @Override
+//  public String toString() {
+//    String result = "Variables: " ;
+//    for (Double var : variables) {
+//      result += "" + var + " " ;
+//    }
+//    result += "Objectives: " ;
+//    for (Double obj : objectives) {
+//      result += "" + obj + " " ;
+//    }
+//    result += "\n" ;
+//    result += "AlgorithmAttributes: " + attributes ;
+//
+//    return result ;
+//  }
 }

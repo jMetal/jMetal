@@ -22,8 +22,12 @@ public class IntegerSolutionImpl extends GenericSolutionImpl<Integer, IntegerPro
     attributes = attr ;
 
     for (int i = 0 ; i < problem.getNumberOfVariables(); i++) {
-      Integer value = PseudoRandom.randInt(getLowerBound(i), getLowerBound(i));
+      Integer value = PseudoRandom.randInt(getLowerBound(i), getUpperBound(i));
       variables.add(value) ;
+    }
+
+    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
+      objectives.add(new Double(0.0)) ;
     }
   }
 
