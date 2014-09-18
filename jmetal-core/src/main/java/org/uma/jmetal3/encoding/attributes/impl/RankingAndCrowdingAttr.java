@@ -5,7 +5,7 @@ import org.uma.jmetal3.encoding.attributes.*;
 import org.uma.jmetal3.encoding.attributes.RankingAttr;
 
 /**
- * Created by antonio on 13/09/14.
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class RankingAndCrowdingAttr extends AlgorithmAttributes implements CrowdingDistanceAttr, RankingAttr {
   private int rank;

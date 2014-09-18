@@ -4,7 +4,9 @@ import org.uma.jmetal.encoding.variable.Int;
 import org.uma.jmetal3.core.Solution;
 
 /**
- * Created by antonio on 10/09/14.
+ * Attribute representing the rank of a solution, used in NSGA-II and many other algorithms
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public interface RankingAttr {
   public Integer getRank() ;
