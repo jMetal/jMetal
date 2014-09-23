@@ -57,22 +57,9 @@ public class CrowdingComparator implements Comparator<Solution> {
     if (flagComparatorRank != 0) {
       return flagComparatorRank;
     }
-    
-    /* His rank is equal, then distance crowding RANK_COMPARATOR */
-    //double distance1 = RankingAndCrowdingAttr.getAttributes(solution1).getCrowdingDistance() ;
-    //double distance2 = RankingAndCrowdingAttr.getAttributes(solution2).getCrowdingDistance() ;
-    //double distance1 = (double)solution1.getAlgorithmAttributes().getAttribute("CrowdingDistanceAttr");
-    //double distance2 = (double)solution2.getAlgorithmAttributes().getAttribute("CrowdingDistanceAttr");
+
     double distance1 = (double)solution1.getAttribute(CrowdingDistance.ATTRIBUTE.CROWDNG) ;
     double distance2 = (double)solution2.getAttribute(CrowdingDistance.ATTRIBUTE.CROWDNG) ;
-
-    //distance1 = d1 ;
-    //distance2 = d2 ;
-//    System.out.println("distance1: " + distance1) ;
-//    System.out.println("d1: " + d1) ;
-//    System.out.println("distance2: " + distance2) ;
-//    System.out.println("d2: " + d2) ;
-//    System.exit(9);
 
     if (distance1 > distance2) {
       return -1;

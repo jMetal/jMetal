@@ -72,12 +72,11 @@ public class NSGAII extends NSGAIITemplate {
           offspringPopulation.add(offSpring.get(1));
         }
 
-      offspringPopulation = evaluatePopulation(offspringPopulation);
-      offspringPopulation.addAll(population) ;
+      List<Solution> jointPopulation = evaluatePopulation(offspringPopulation);
+      jointPopulation.addAll(population) ;
 
-      ranking.computeRanking(offspringPopulation);
-
-      crowdingDistanceSelection(ranking);
+      computeRanking(jointPopulation);
+      crowdingDistanceSelection();
     }
 
     tearDown() ;

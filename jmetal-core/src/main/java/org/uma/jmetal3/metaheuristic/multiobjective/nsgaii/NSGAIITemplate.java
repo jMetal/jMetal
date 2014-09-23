@@ -69,8 +69,6 @@ public abstract class NSGAIITemplate implements Algorithm<List<Solution>> {
   protected Ranking ranking ;
   protected CrowdingDistance crowdingDistance;
 
-  //private Distance distance;
-
   /** Constructor */
   protected NSGAIITemplate(Builder builder) {
     problem = builder.problem;
@@ -193,7 +191,6 @@ public abstract class NSGAIITemplate implements Algorithm<List<Solution>> {
     evaluations += population.size() ;
 
     for (int i = 0 ; i < population.size(); i++) {
-      //problem.evaluate(population.get(i).getProblemSolution()) ;
       //problem.evaluateConstraints(solutionSet.get(i)) ;
       problem.evaluate(population.get(i)) ;
     }
@@ -205,27 +202,14 @@ public abstract class NSGAIITemplate implements Algorithm<List<Solution>> {
     return evaluations >= maxEvaluations;
   }
 
-//  protected Ranking rankPopulation() throws JMetalException {
-//    ArrayList<Solution> union = new ArrayList<Solution>() ;
-//    union.addAll(population);
-//    union.addAll(offspringPopulation);
-//
-//    return new Ranking(union) ;
-//  }
-
   protected void addRankedSolutionsToPopulation(Ranking ranking, int rank) throws JMetalException {
     List<Solution> front ;
 
     front = ranking.getSubfront(rank);
 
     for (int i = 0 ; i < front.size(); i++) {
-      population.add((Solution) front.get(i));
+      population.add(front.get(i));
     }
-  }
-
-  protected void computeCrowdingDistance(Ranking ranking, int rank) throws JMetalException {
-    List<Solution> currentRankedFront = ranking.getSubfront(rank) ;
-    crowdingDistance.computeCrowdingDistance(currentRankedFront);
   }
 
   protected void addLastRankedSolutions(Ranking ranking, int rank) throws JMetalException {
@@ -240,7 +224,6 @@ public abstract class NSGAIITemplate implements Algorithm<List<Solution>> {
     }
   }
 
-
   protected boolean populationIsNotFull() {
     return population.size() < populationSize;
   }
@@ -253,7 +236,11 @@ public abstract class NSGAIITemplate implements Algorithm<List<Solution>> {
     return ranking.computeRanking(solutionSet).getSubfront(0);
   }
 
-  protected void crowdingDistanceSelection(Ranking ranking) {
+  protected void computeRanking(List<Solution> solutionSet) {
+    ranking.computeRanking(solutionSet) ;
+  }
+
+  protected void crowdingDistanceSelection() {
     population.clear();
     int rankingIndex = 0;
     while (populationIsNotFull()) {
@@ -261,7 +248,6 @@ public abstract class NSGAIITemplate implements Algorithm<List<Solution>> {
         addRankedSolutionsToPopulation(ranking, rankingIndex);
         rankingIndex++;
       } else {
-        //computeCrowdingDistance(ranking, rankingIndex);
         crowdingDistance.computeCrowdingDistance(ranking.getSubfront(rankingIndex));
         addLastRankedSolutions(ranking, rankingIndex);
       }

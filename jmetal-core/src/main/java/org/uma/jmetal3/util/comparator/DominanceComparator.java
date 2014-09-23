@@ -65,8 +65,6 @@ public class DominanceComparator implements Comparator<Solution> {
     int flag;
     double value1, value2;
     for (int i = 0; i < solution1.getNumberOfObjectives(); i++) {
-      //System.out.println("S1: " + solution1) ;
-      //System.out.println("S2: " + solution2) ;
       value1 = solution1.getObjective(i);
       value2 = solution2.getObjective(i);
       if (value1 < value2) {
