@@ -22,7 +22,6 @@ package org.uma.jmetal3.metaheuristic.multiobjective.nsgaii;
 
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal3.core.Solution;
-import org.uma.jmetal3.util.Ranking;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +36,7 @@ import java.util.List;
  * To be presented in: PPSN'08. Dortmund. September 2008.
  */
 
-public class NSGAII extends NSGAIITemplate  {
+public class NSGAII extends NSGAIITemplate {
   private static final long serialVersionUID = 5815971727148859507L;
 
   protected NSGAII(Builder builder) {
@@ -76,7 +75,7 @@ public class NSGAII extends NSGAIITemplate  {
       offspringPopulation = evaluatePopulation(offspringPopulation);
       offspringPopulation.addAll(population) ;
 
-      Ranking ranking = new Ranking(offspringPopulation);
+      ranking.computeRanking(offspringPopulation);
 
       crowdingDistanceSelection(ranking);
     }

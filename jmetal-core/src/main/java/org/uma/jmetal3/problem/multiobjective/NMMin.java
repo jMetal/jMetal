@@ -22,7 +22,6 @@ package org.uma.jmetal3.problem.multiobjective;
 
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal3.encoding.IntegerSolution;
-import org.uma.jmetal3.encoding.attributes.AlgorithmAttributes;
 import org.uma.jmetal3.encoding.impl.IntegerSolutionImpl;
 import org.uma.jmetal3.problem.impl.IntegerProblemImpl;
 
@@ -63,8 +62,8 @@ public class NMMin extends IntegerProblemImpl<IntegerSolution> {
   }
 
   @Override
-  public IntegerSolution createSolution(AlgorithmAttributes attr) {
-    IntegerSolution solution = new IntegerSolutionImpl(this, attr) ;
+  public IntegerSolution createSolution() {
+    IntegerSolution solution = new IntegerSolutionImpl(this) ;
 
     return solution ;
   }

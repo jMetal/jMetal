@@ -23,7 +23,6 @@ package org.uma.jmetal3.problem.multiobjective;
 import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal3.encoding.IntegerDoubleSolution;
 import org.uma.jmetal3.encoding.IntegerSolution;
-import org.uma.jmetal3.encoding.attributes.AlgorithmAttributes;
 import org.uma.jmetal3.encoding.impl.IntegerDoubleSolutionImpl;
 import org.uma.jmetal3.encoding.impl.IntegerSolutionImpl;
 import org.uma.jmetal3.problem.impl.IntegerDoubleProblemImpl;
@@ -68,8 +67,8 @@ public class NMMin2 extends IntegerDoubleProblemImpl<IntegerDoubleSolution> {
   }
 
   @Override
-  public IntegerDoubleSolution createSolution(AlgorithmAttributes attr) {
-    IntegerDoubleSolution solution = new IntegerDoubleSolutionImpl(this, attr) ;
+  public IntegerDoubleSolution createSolution() {
+    IntegerDoubleSolution solution = new IntegerDoubleSolutionImpl(this) ;
 
     return solution ;
   }

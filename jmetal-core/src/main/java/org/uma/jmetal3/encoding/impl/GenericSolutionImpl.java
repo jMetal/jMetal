@@ -2,7 +2,6 @@ package org.uma.jmetal3.encoding.impl;
 
 import org.uma.jmetal3.core.Problem;
 import org.uma.jmetal3.core.Solution;
-import org.uma.jmetal3.encoding.attributes.AlgorithmAttributes;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,21 +15,20 @@ public abstract class GenericSolutionImpl<T, P extends Problem> implements Solut
   protected List<T> variables;
   protected P problem ;
   protected double overallConstraintViolationDegree ;
-  public AlgorithmAttributes attributes ;
-  protected Map<Object, Object> attr ;
+  protected Map<Object, Object> attributes ;
 
   protected GenericSolutionImpl() {
-    attr = new HashMap<>() ;
+    attributes = new HashMap<>() ;
   }
 
   @Override
   public void setAttribute(Object id, Object value) {
-    attr.put(id, value) ;
+    attributes.put(id, value) ;
   }
 
   @Override
   public Object getAttribute(Object id) {
-    return attr.get(id) ;
+    return attributes.get(id) ;
   }
 
   @Override
@@ -71,11 +69,6 @@ public abstract class GenericSolutionImpl<T, P extends Problem> implements Solut
   @Override
   public void setOverallConstraintViolationDegree(double violationDegree) {
     overallConstraintViolationDegree = violationDegree ;
-  }
-
-  @Override
-  public AlgorithmAttributes getAlgorithmAttributes() {
-    return attributes ;
   }
 
   @Override

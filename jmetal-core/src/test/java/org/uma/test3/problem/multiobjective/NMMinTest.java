@@ -16,7 +16,7 @@ public class NMMinTest {
   @Test
   public void evaluateSimpleSolutions() {
     problem = new NMMin(1, 100, -100, -1000, 1000) ;
-    Solution solution = problem.createSolution(null) ;
+    Solution solution = problem.createSolution() ;
     solution.setVariableValue(0, 100);
     problem.evaluate(solution);
 

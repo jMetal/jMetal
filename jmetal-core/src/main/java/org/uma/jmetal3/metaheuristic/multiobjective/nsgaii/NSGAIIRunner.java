@@ -32,10 +32,9 @@ import org.uma.jmetal3.operator.selection.SelectionOperator;
 import org.uma.jmetal3.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal3.problem.multiobjective.Fonseca;
 import org.uma.jmetal3.problem.multiobjective.Kursawe;
-import org.uma.jmetal3.problem.multiobjective.Schaffer;
 import org.uma.jmetal3.util.AlgorithmRunner;
-import org.uma.jmetal3.util.fileOutput.DefaultFileOutputContext;
-import org.uma.jmetal3.util.fileOutput.SolutionSetOutput;
+import org.uma.jmetal3.util.fileoutput.DefaultFileOutputContext;
+import org.uma.jmetal3.util.fileoutput.SolutionSetOutput;
 
 import java.util.List;
 
@@ -79,7 +78,7 @@ public class NSGAIIRunner {
     selection = new BinaryTournamentSelection.Builder()
             .build();
 
-    algorithm = new NSGAIITemplateb.Builder(problem)
+    algorithm = new NSGAIITemplate.Builder(problem)
             .setCrossover(crossover)
             .setMutation(mutation)
             .setSelection(selection)

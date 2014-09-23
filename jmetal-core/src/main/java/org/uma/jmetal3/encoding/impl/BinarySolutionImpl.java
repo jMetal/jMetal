@@ -3,11 +3,11 @@ package org.uma.jmetal3.encoding.impl;
 import org.uma.jmetal.util.random.PseudoRandom;
 import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal3.encoding.BinarySolution;
-import org.uma.jmetal3.encoding.attributes.AlgorithmAttributes;
 import org.uma.jmetal3.problem.BinaryProblem;
 
 import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.HashMap;
 
 /**
  * Created by Antonio J. Nebro on 03/09/14.
@@ -15,12 +15,11 @@ import java.util.BitSet;
 public class BinarySolutionImpl extends GenericSolutionImpl<BitSet, BinaryProblem> implements BinarySolution {
 
   /** Constructor */
-  public BinarySolutionImpl(BinaryProblem problem, AlgorithmAttributes attr) {
+  public BinarySolutionImpl(BinaryProblem problem) {
     this.problem = problem ;
     objectives = new ArrayList<>(problem.getNumberOfObjectives()) ;
     variables = new ArrayList<>(problem.getNumberOfVariables()) ;
     overallConstraintViolationDegree = 0.0 ;
-    attributes = attr ;
 
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
       variables.add(createNewBitSet(problem.getNumberOfBits(i)));
@@ -43,7 +42,7 @@ public class BinarySolutionImpl extends GenericSolutionImpl<BitSet, BinaryProble
       variables.add((BitSet)var.clone()) ;
     }
     overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
-    attributes = (AlgorithmAttributes)solution.attributes.clone() ;
+    attributes = new HashMap(solution.attributes) ;
   }
 
   private BitSet createNewBitSet(int numberOfBits) {

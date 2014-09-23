@@ -4,11 +4,11 @@ import org.uma.jmetal.util.random.PseudoRandom;
 import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal3.encoding.DoubleSolution;
 import org.uma.jmetal3.encoding.IntegerDoubleSolution;
-import org.uma.jmetal3.encoding.attributes.AlgorithmAttributes;
 import org.uma.jmetal3.problem.ContinuousProblem;
 import org.uma.jmetal3.problem.IntegerDoubleProblem;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Antonio J. Nebro on 03/09/14.
@@ -20,14 +20,13 @@ public class IntegerDoubleSolutionImpl
   private int numberOfDoubleVariables ;
 
   /** Constructor */
-  public IntegerDoubleSolutionImpl(IntegerDoubleProblem problem, AlgorithmAttributes attr) {
+  public IntegerDoubleSolutionImpl(IntegerDoubleProblem problem) {
   	this.problem = problem ;
     objectives = new ArrayList<>(problem.getNumberOfObjectives()) ;
     variables = new ArrayList<>(problem.getNumberOfVariables()) ;
     numberOfIntegerVariables = problem.getNumberOfIntegerVariables() ;
     numberOfDoubleVariables = problem.getNumberOfDoubleVariables() ;
     overallConstraintViolationDegree = 0.0 ;
-    attributes = attr ;
 
     for (int i = 0 ; i < numberOfIntegerVariables; i++) {
       Integer value = PseudoRandom.randInt((Integer)getLowerBound(i), (Integer)getUpperBound(i)) ;
@@ -62,7 +61,7 @@ public class IntegerDoubleSolutionImpl
     }
 
     overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
-    attributes = (AlgorithmAttributes)solution.attributes.clone() ;
+    attributes = new HashMap(solution.attributes) ;
   }
 
   @Override

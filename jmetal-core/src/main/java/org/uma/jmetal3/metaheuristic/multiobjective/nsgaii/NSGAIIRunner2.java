@@ -26,21 +26,14 @@ import org.uma.jmetal3.core.Problem;
 import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal3.operator.crossover.CrossoverOperator;
 import org.uma.jmetal3.operator.crossover.impl.IntegerSBXCrossover;
-import org.uma.jmetal3.operator.crossover.impl.SBXCrossover;
-import org.uma.jmetal3.operator.crossover.impl.SinglePointCrossover;
 import org.uma.jmetal3.operator.mutation.MutationOperator;
-import org.uma.jmetal3.operator.mutation.impl.BitFlipMutation;
 import org.uma.jmetal3.operator.mutation.impl.IntegerPolynomialMutation;
-import org.uma.jmetal3.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal3.operator.selection.SelectionOperator;
 import org.uma.jmetal3.operator.selection.impl.BinaryTournamentSelection;
-import org.uma.jmetal3.problem.BinaryProblem;
-import org.uma.jmetal3.problem.multiobjective.Kursawe;
 import org.uma.jmetal3.problem.multiobjective.NMMin;
-import org.uma.jmetal3.problem.multiobjective.OneZeroMax;
 import org.uma.jmetal3.util.AlgorithmRunner;
-import org.uma.jmetal3.util.fileOutput.DefaultFileOutputContext;
-import org.uma.jmetal3.util.fileOutput.SolutionSetOutput;
+import org.uma.jmetal3.util.fileoutput.DefaultFileOutputContext;
+import org.uma.jmetal3.util.fileoutput.SolutionSetOutput;
 
 import java.util.List;
 

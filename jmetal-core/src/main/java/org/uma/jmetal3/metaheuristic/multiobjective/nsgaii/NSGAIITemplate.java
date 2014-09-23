@@ -26,13 +26,14 @@ import org.uma.jmetal3.core.Algorithm;
 import org.uma.jmetal3.core.Operator;
 import org.uma.jmetal3.core.Problem;
 import org.uma.jmetal3.core.Solution;
-import org.uma.jmetal3.encoding.attributes.impl.RankingAndCrowdingAttr;
 import org.uma.jmetal3.operator.crossover.CrossoverOperator;
 import org.uma.jmetal3.operator.mutation.MutationOperator;
 import org.uma.jmetal3.operator.selection.SelectionOperator;
-import org.uma.jmetal3.util.CrowdingDistance;
-import org.uma.jmetal3.util.Ranking;
 import org.uma.jmetal3.util.comparator.CrowdingComparator;
+import org.uma.jmetal3.util.solutionattribute.CrowdingDistance;
+import org.uma.jmetal3.util.solutionattribute.Ranking;
+import org.uma.jmetal3.util.solutionattribute.impl.CrowdingDistanceImpl;
+import org.uma.jmetal3.util.solutionattribute.impl.RankingImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +66,9 @@ public abstract class NSGAIITemplate implements Algorithm<List<Solution>> {
 
   protected String variant ;
 
+  protected Ranking ranking ;
+  protected CrowdingDistance crowdingDistance;
+
   //private Distance distance;
 
   /** Constructor */
@@ -76,6 +80,9 @@ public abstract class NSGAIITemplate implements Algorithm<List<Solution>> {
     crossoverOperator = builder.crossoverOperator;
     selectionOperator = builder.selectionOperator;
     variant = builder.variant ;
+
+    ranking = new RankingImpl() ;
+    crowdingDistance = new CrowdingDistanceImpl() ;
 
     evaluations = 0 ;
   }
@@ -163,8 +170,6 @@ public abstract class NSGAIITemplate implements Algorithm<List<Solution>> {
       NSGAIITemplate algorithm  ;
       if ("NSGAII".equals(variant)) {
         algorithm = new NSGAII(this);
-      } else if ("SteadyStateNSGAII".equals(variant)) {
-        algorithm =  new SteadyStateNSGAII(this) ;
       } else {
         throw new JMetalException(variant + " variant unknown") ;
       }
@@ -178,7 +183,7 @@ public abstract class NSGAIITemplate implements Algorithm<List<Solution>> {
 
     Solution solution;
     for (int i = 0; i < populationSize; i++) {
-      solution = problem.createSolution(new RankingAndCrowdingAttr());
+      solution = problem.createSolution();
       population.add(solution);
     }
 
@@ -200,13 +205,13 @@ public abstract class NSGAIITemplate implements Algorithm<List<Solution>> {
     return evaluations >= maxEvaluations;
   }
 
-  protected Ranking rankPopulation() throws JMetalException {
-    ArrayList<Solution> union = new ArrayList<Solution>() ;
-    union.addAll(population);
-    union.addAll(offspringPopulation);
-
-    return new Ranking(union) ;
-  }
+//  protected Ranking rankPopulation() throws JMetalException {
+//    ArrayList<Solution> union = new ArrayList<Solution>() ;
+//    union.addAll(population);
+//    union.addAll(offspringPopulation);
+//
+//    return new Ranking(union) ;
+//  }
 
   protected void addRankedSolutionsToPopulation(Ranking ranking, int rank) throws JMetalException {
     List<Solution> front ;
@@ -220,7 +225,7 @@ public abstract class NSGAIITemplate implements Algorithm<List<Solution>> {
 
   protected void computeCrowdingDistance(Ranking ranking, int rank) throws JMetalException {
     List<Solution> currentRankedFront = ranking.getSubfront(rank) ;
-    CrowdingDistance.crowdingDistanceAssignment(currentRankedFront);
+    crowdingDistance.computeCrowdingDistance(currentRankedFront);
   }
 
   protected void addLastRankedSolutions(Ranking ranking, int rank) throws JMetalException {
@@ -245,7 +250,7 @@ public abstract class NSGAIITemplate implements Algorithm<List<Solution>> {
   }
 
   protected List<Solution> getNonDominatedSolutions(List<Solution> solutionSet) throws JMetalException {
-    return new Ranking(solutionSet).getSubfront(0);
+    return ranking.computeRanking(solutionSet).getSubfront(0);
   }
 
   protected void crowdingDistanceSelection(Ranking ranking) {
@@ -256,7 +261,8 @@ public abstract class NSGAIITemplate implements Algorithm<List<Solution>> {
         addRankedSolutionsToPopulation(ranking, rankingIndex);
         rankingIndex++;
       } else {
-        computeCrowdingDistance(ranking, rankingIndex);
+        //computeCrowdingDistance(ranking, rankingIndex);
+        crowdingDistance.computeCrowdingDistance(ranking.getSubfront(rankingIndex));
         addLastRankedSolutions(ranking, rankingIndex);
       }
     }

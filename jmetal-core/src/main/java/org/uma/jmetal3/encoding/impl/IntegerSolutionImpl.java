@@ -3,10 +3,10 @@ package org.uma.jmetal3.encoding.impl;
 import org.uma.jmetal.util.random.PseudoRandom;
 import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal3.encoding.IntegerSolution;
-import org.uma.jmetal3.encoding.attributes.AlgorithmAttributes;
 import org.uma.jmetal3.problem.IntegerProblem;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Antonio J. Nebro on 03/09/14.
@@ -14,12 +14,11 @@ import java.util.ArrayList;
 public class IntegerSolutionImpl extends GenericSolutionImpl<Integer, IntegerProblem<IntegerSolution>> implements IntegerSolution {
 
   /** Constructor */
-  public IntegerSolutionImpl(IntegerProblem<IntegerSolution> problem, AlgorithmAttributes attr) {
+  public IntegerSolutionImpl(IntegerProblem<IntegerSolution> problem) {
   	this.problem = problem ;
     objectives = new ArrayList<>(problem.getNumberOfObjectives()) ;
     variables = new ArrayList<>(problem.getNumberOfVariables()) ;
     overallConstraintViolationDegree = 0.0 ;
-    attributes = attr ;
 
     for (int i = 0 ; i < problem.getNumberOfVariables(); i++) {
       Integer value = PseudoRandom.randInt(getLowerBound(i), getUpperBound(i));
@@ -44,7 +43,7 @@ public class IntegerSolutionImpl extends GenericSolutionImpl<Integer, IntegerPro
     }
 
     overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
-    attributes = (AlgorithmAttributes)solution.attributes.clone() ;
+    attributes = new HashMap(solution.attributes) ;
   }
 
   @Override
