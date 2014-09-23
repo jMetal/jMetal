@@ -4,7 +4,9 @@ import org.uma.jmetal3.core.Problem;
 import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal3.encoding.attributes.AlgorithmAttributes;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Antonio J. Nebro on 03/09/14.
@@ -15,6 +17,21 @@ public abstract class GenericSolutionImpl<T, P extends Problem> implements Solut
   protected P problem ;
   protected double overallConstraintViolationDegree ;
   public AlgorithmAttributes attributes ;
+  protected Map<Object, Object> attr ;
+
+  protected GenericSolutionImpl() {
+    attr = new HashMap<>() ;
+  }
+
+  @Override
+  public void setAttribute(Object id, Object value) {
+    attr.put(id, value) ;
+  }
+
+  @Override
+  public Object getAttribute(Object id) {
+    return attr.get(id) ;
+  }
 
   @Override
   public void setObjective(int index, double value) {

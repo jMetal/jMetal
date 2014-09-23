@@ -63,8 +63,8 @@ public class NSGAIIRunner {
     MutationOperator mutation;
     SelectionOperator selection;
 
-    //problem = new Fonseca();
-    problem = new Kursawe();
+    problem = new Fonseca();
+    //problem = new Kursawe();
 
     crossover = new SBXCrossover.Builder()
             .setDistributionIndex(20.0)
@@ -79,7 +79,7 @@ public class NSGAIIRunner {
     selection = new BinaryTournamentSelection.Builder()
             .build();
 
-    algorithm = new NSGAIITemplate.Builder(problem)
+    algorithm = new NSGAIITemplateb.Builder(problem)
             .setCrossover(crossover)
             .setMutation(mutation)
             .setSelection(selection)

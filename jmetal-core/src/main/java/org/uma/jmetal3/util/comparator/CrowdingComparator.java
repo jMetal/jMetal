@@ -23,6 +23,7 @@ package org.uma.jmetal3.util.comparator;
 
 import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal3.encoding.attributes.impl.RankingAndCrowdingAttr;
+import org.uma.jmetal3.util.solutionattribute.CrowdingDistance;
 
 import java.util.Comparator;
 
@@ -40,29 +41,40 @@ public class CrowdingComparator implements Comparator<Solution> {
   /**
    * Compare two solutions.
    *
-   * @param o1 Object representing the first <code>Solution</code>.
-   * @param o2 Object representing the second <code>Solution</code>.
+   * @param solution1 Object representing the first <code>Solution</code>.
+   * @param solution2 Object representing the second <code>Solution</code>.
    * @return -1, or 0, or 1 if o1 is less than, equal, or greater than o2,
    * respectively.
    */
   @Override
-  public int compare(Solution o1, Solution o2) {
-    if (o1 == null) {
+  public int compare(Solution solution1, Solution solution2) {
+    if (solution1 == null) {
       return 1;
-    } else if (o2 == null) {
+    } else if (solution2 == null) {
       return -1;
     }
 
-    int flagComparatorRank = RANK_COMPARATOR.compare(o1, o2);
+    int flagComparatorRank = RANK_COMPARATOR.compare(solution1, solution2);
     if (flagComparatorRank != 0) {
       return flagComparatorRank;
     }
     
     /* His rank is equal, then distance crowding RANK_COMPARATOR */
-    double distance1 = RankingAndCrowdingAttr.getAttributes(o1).getCrowdingDistance() ;
-    double distance2 = RankingAndCrowdingAttr.getAttributes(o2).getCrowdingDistance() ;
-    //double distance1 = (double)o1.getAlgorithmAttributes().getAttribute("CrowdingDistanceAttr");
-    //double distance2 = (double)o2.getAlgorithmAttributes().getAttribute("CrowdingDistanceAttr");
+    //double distance1 = RankingAndCrowdingAttr.getAttributes(solution1).getCrowdingDistance() ;
+    //double distance2 = RankingAndCrowdingAttr.getAttributes(solution2).getCrowdingDistance() ;
+    //double distance1 = (double)solution1.getAlgorithmAttributes().getAttribute("CrowdingDistanceAttr");
+    //double distance2 = (double)solution2.getAlgorithmAttributes().getAttribute("CrowdingDistanceAttr");
+    double distance1 = (double)solution1.getAttribute(CrowdingDistance.ATTRIBUTE.CROWDNG) ;
+    double distance2 = (double)solution2.getAttribute(CrowdingDistance.ATTRIBUTE.CROWDNG) ;
+
+    //distance1 = d1 ;
+    //distance2 = d2 ;
+//    System.out.println("distance1: " + distance1) ;
+//    System.out.println("d1: " + d1) ;
+//    System.out.println("distance2: " + distance2) ;
+//    System.out.println("d2: " + d2) ;
+//    System.exit(9);
+
     if (distance1 > distance2) {
       return -1;
     }

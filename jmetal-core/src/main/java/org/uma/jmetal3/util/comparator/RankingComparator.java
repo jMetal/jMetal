@@ -22,7 +22,7 @@
 package org.uma.jmetal3.util.comparator;
 
 import org.uma.jmetal3.core.Solution;
-import org.uma.jmetal3.encoding.attributes.impl.RankingAndCrowdingAttr;
+import org.uma.jmetal3.util.solutionattribute.Ranking;
 
 import java.util.Comparator;
 
@@ -47,11 +47,11 @@ public class RankingComparator implements Comparator<Solution> {
       return -1;
     }
 
-    if (RankingAndCrowdingAttr.getAttributes(solution1).getRank() < RankingAndCrowdingAttr.getAttributes(solution2).getRank()) {
+    if ((int)solution1.getAttribute(Ranking.ATTRIBUTE.RANK) < (int)solution2.getAttribute(Ranking.ATTRIBUTE.RANK)) {
       return -1;
     }
 
-    if (RankingAndCrowdingAttr.getAttributes(solution1).getRank() > RankingAndCrowdingAttr.getAttributes(solution2).getRank()) {
+    if ((int)solution1.getAttribute(Ranking.ATTRIBUTE.RANK) > (int)solution2.getAttribute(Ranking.ATTRIBUTE.RANK)) {
       return 1;
     }
 

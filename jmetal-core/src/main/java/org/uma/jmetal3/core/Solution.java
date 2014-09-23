@@ -21,4 +21,7 @@ public interface Solution<T> {
   public Solution<?> copy() ;
 
   public AlgorithmAttributes getAlgorithmAttributes() ;
+
+  public void setAttribute(Object key, Object value) ;
+  public Object getAttribute(Object key) ;
  }

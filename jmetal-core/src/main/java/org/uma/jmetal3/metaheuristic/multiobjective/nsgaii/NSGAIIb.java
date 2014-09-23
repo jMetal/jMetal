@@ -37,10 +37,10 @@ import java.util.List;
  * To be presented in: PPSN'08. Dortmund. September 2008.
  */
 
-public class NSGAII extends NSGAIITemplate  {
+public class NSGAIIb extends NSGAIITemplateb  {
   private static final long serialVersionUID = 5815971727148859507L;
 
-  protected NSGAII(Builder builder) {
+  protected NSGAIIb(Builder builder) {
     super(builder) ;
   }
 
@@ -76,7 +76,7 @@ public class NSGAII extends NSGAIITemplate  {
       offspringPopulation = evaluatePopulation(offspringPopulation);
       offspringPopulation.addAll(population) ;
 
-      Ranking ranking = new Ranking(offspringPopulation);
+      ranking.computeRanking(offspringPopulation);
 
       crowdingDistanceSelection(ranking);
     }
