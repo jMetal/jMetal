@@ -168,6 +168,8 @@ public abstract class NSGAIITemplate implements Algorithm<List<Solution>> {
       NSGAIITemplate algorithm  ;
       if ("NSGAII".equals(variant)) {
         algorithm = new NSGAII(this);
+      } else if ("SteadyStateNSGAII".equals(variant)) {
+        algorithm = new NSGAII(this);
       } else {
         throw new JMetalException(variant + " variant unknown") ;
       }

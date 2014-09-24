@@ -42,7 +42,7 @@ public class SteadyStateNSGAII extends NSGAIITemplate  {
 
 
   /**
-   * Runs the ssNSGA-II algorithm.
+   * Runs the steady-state version of the NSGA-II algorithm.
    *
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
    * as a experimentoutput of the algorithm execution
@@ -50,46 +50,25 @@ public class SteadyStateNSGAII extends NSGAIITemplate  {
    */
   public List<?> execute()  {
     createInitialPopulation();
-    /*
     population = evaluatePopulation(population);
 
+    // Main loop
     while (!stoppingCondition()) {
-      offspringPopulation = new SolutionSet(1);
-      Solution[] parents = new Solution[2];
+      List<Solution> parents = new ArrayList<>(2);
+      parents.add ((Solution) selectionOperator.execute(population));
+      parents.add((Solution) selectionOperator.execute(population));
 
-      parents[0] = (Solution) selectionOperator.execute(population);
-      parents[1] = (Solution) selectionOperator.execute(population);
+      List<Solution> offSpring = (List<Solution>) crossoverOperator.execute(parents);
 
-      Solution[] offSpring = (Solution[]) crossoverOperator.execute(parents);
+      mutationOperator.execute(offSpring.get(0));
 
-      mutationOperator.execute(offSpring[0]);
+      evaluations++ ;
+      population.add(offSpring.get(0)) ;
 
-      problem.evaluate(offSpring[0]);
-      problem.evaluateConstraints(offSpring[0]);
-
-      offspringPopulation.add(offSpring[0]);
-
-      evaluations++;
-
-      Ranking ranking = new Ranking(population.union(offspringPopulation));
-
-      population.clear();
-      int rankingIndex = 0 ;
-      while (populationIsNotFull()) {
-        if (subfrontFillsIntoThePopulation(ranking, rankingIndex)) {
-          addRankedSolutionsToPopulation(ranking, rankingIndex);
-          rankingIndex ++ ;
-        } else {
-          computeCrowdingDistance(ranking, rankingIndex) ;
-          addLastRankedSolutions(ranking, rankingIndex);
-        }
-      }
+      computeRanking(population);
+      crowdingDistanceSelection();
     }
 
-    tearDown();
-
     return getNonDominatedSolutions(population) ;
-    */
-    return new ArrayList<Solution>() ;
-  } 
+  }
 } 

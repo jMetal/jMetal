@@ -85,6 +85,7 @@ public class NSGAIIRunner {
             .setMaxEvaluations(25000)
             .setPopulationSize(100)
             .setVariant("NSGAII")
+            //.setVariant("SteadyStateNSGAII")
             .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
