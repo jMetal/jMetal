@@ -14,6 +14,8 @@ import java.util.HashMap;
 public class DoubleSolutionImpl extends GenericSolutionImpl<Double, ContinuousProblem<DoubleSolution>> implements DoubleSolution {
   /** Constructor */
   public DoubleSolutionImpl(ContinuousProblem<DoubleSolution> problem) {
+    super() ;
+
   	this.problem = problem ;
     objectives = new ArrayList<>(problem.getNumberOfObjectives()) ;
     variables = new ArrayList<>(problem.getNumberOfVariables()) ;
