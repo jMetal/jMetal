@@ -21,7 +21,6 @@
 
 package org.uma.jmetal3.util.comparator;
 
-
 import org.uma.jmetal3.core.Solution;
 
 import java.util.Comparator;

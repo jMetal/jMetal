@@ -36,6 +36,7 @@ import org.uma.jmetal3.util.solutionattribute.impl.CrowdingDistanceImpl;
 import org.uma.jmetal3.util.solutionattribute.impl.RankingImpl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -217,7 +218,8 @@ public abstract class NSGAIITemplate implements Algorithm<List<Solution>> {
   protected void addLastRankedSolutions(Ranking ranking, int rank) throws JMetalException {
     List<Solution> currentRankedFront = ranking.getSubfront(rank) ;
 
-    currentRankedFront.sort(new CrowdingComparator());
+    //currentRankedFront.sort(new CrowdingComparator());
+    Collections.sort(currentRankedFront, new CrowdingComparator()) ;
 
     int i = 0 ;
     while (population.size() < populationSize) {

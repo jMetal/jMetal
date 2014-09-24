@@ -26,6 +26,7 @@ import org.uma.jmetal3.util.solutionattribute.CrowdingDistance;
 import org.uma.jmetal3.util.comparator.ObjectiveComparator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -83,7 +84,8 @@ public class CrowdingDistanceImpl implements CrowdingDistance {
 
     for (int i = 0; i < numberOfObjectives; i++) {
       // Sort the population by Obj n
-      front.sort(new ObjectiveComparator(i));
+      //front.sort(new ObjectiveComparator(i));
+      Collections.sort(front, new ObjectiveComparator(i)) ;
       objetiveMinn = front.get(0).getObjective(i);
       objetiveMaxn = front.get(front.size() - 1).getObjective(i);
 
