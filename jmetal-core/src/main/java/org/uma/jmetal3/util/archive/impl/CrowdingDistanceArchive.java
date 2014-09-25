@@ -2,7 +2,7 @@ package org.uma.jmetal3.util.archive.impl;
 
 import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal3.util.archive.Archive;
-import org.uma.jmetal3.util.comparator.CrowdingComparator;
+import org.uma.jmetal3.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal3.util.comparator.DominanceComparator;
 import org.uma.jmetal3.util.solutionattribute.CrowdingDistance;
 import org.uma.jmetal3.util.solutionattribute.impl.CrowdingDistanceImpl;
@@ -27,7 +27,7 @@ public class CrowdingDistanceArchive implements Archive {
     this.maxSize = maxSize ;
     solutionSet = new ArrayList<>(maxSize + 1) ;
     dominanceComparator = new DominanceComparator();
-    crowdingDistanceComparator = new CrowdingComparator() ;
+    crowdingDistanceComparator = new CrowdingDistanceComparator() ;
     crowdingDistance = new CrowdingDistanceImpl() ;
   }
 
@@ -68,5 +68,9 @@ public class CrowdingDistanceArchive implements Archive {
   @Override
   public int getMaxSize() {
     return maxSize;
+  }
+
+  public void computeDistance() {
+    crowdingDistance.computeCrowdingDistance(solutionSet);
   }
 }

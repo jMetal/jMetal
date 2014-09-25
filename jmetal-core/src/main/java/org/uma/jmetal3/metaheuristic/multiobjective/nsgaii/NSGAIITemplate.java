@@ -29,7 +29,7 @@ import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal3.operator.crossover.CrossoverOperator;
 import org.uma.jmetal3.operator.mutation.MutationOperator;
 import org.uma.jmetal3.operator.selection.SelectionOperator;
-import org.uma.jmetal3.util.comparator.CrowdingComparator;
+import org.uma.jmetal3.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal3.util.solutionattribute.CrowdingDistance;
 import org.uma.jmetal3.util.solutionattribute.Ranking;
 import org.uma.jmetal3.util.solutionattribute.impl.CrowdingDistanceImpl;
@@ -218,8 +218,8 @@ public abstract class NSGAIITemplate implements Algorithm<List<Solution>> {
   protected void addLastRankedSolutions(Ranking ranking, int rank) throws JMetalException {
     List<Solution> currentRankedFront = ranking.getSubfront(rank) ;
 
-    //currentRankedFront.sort(new CrowdingComparator());
-    Collections.sort(currentRankedFront, new CrowdingComparator()) ;
+    //currentRankedFront.sort(new CrowdingDistanceComparator());
+    Collections.sort(currentRankedFront, new CrowdingDistanceComparator()) ;
 
     int i = 0 ;
     while (population.size() < populationSize) {

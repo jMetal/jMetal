@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * Created by antonio on 24/09/14.
+ * Created by Antonio J. Nebro on 24/09/14.
  */
 public class FindWorstSolution {
   public static int find(List<Solution> solutionList, Comparator<Solution> comparator) {

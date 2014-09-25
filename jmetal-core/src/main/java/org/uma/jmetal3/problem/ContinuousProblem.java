@@ -7,4 +7,7 @@ import org.uma.jmetal3.core.Solution;
 public interface ContinuousProblem<S extends Solution<? extends Double>> extends Problem<S> {
   public Double getLowerBound(int index) ;
   public Double getUpperBound(int index) ;
+
+  @Override
+  public S createSolution() ;
 }
