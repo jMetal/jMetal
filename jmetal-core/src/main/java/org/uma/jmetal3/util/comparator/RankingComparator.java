@@ -47,11 +47,22 @@ public class RankingComparator implements Comparator<Solution> {
       return -1;
     }
 
-    if ((int)solution1.getAttribute(Ranking.ATTRIBUTE.RANK) < (int)solution2.getAttribute(Ranking.ATTRIBUTE.RANK)) {
+    int rank1 = Integer.MAX_VALUE ;
+    int rank2 = Integer.MAX_VALUE ;
+
+    if (solution1.getAttribute(Ranking.ATTRIBUTE.RANK) != null) {
+      rank1 = (int)solution1.getAttribute(Ranking.ATTRIBUTE.RANK) ;
+    }
+
+    if (solution2.getAttribute(Ranking.ATTRIBUTE.RANK) != null){
+      rank2 = (int) solution2.getAttribute(Ranking.ATTRIBUTE.RANK);
+    }
+
+    if (rank1 < rank2) {
       return -1;
     }
 
-    if ((int)solution1.getAttribute(Ranking.ATTRIBUTE.RANK) > (int)solution2.getAttribute(Ranking.ATTRIBUTE.RANK)) {
+    if (rank1 > rank2) {
       return 1;
     }
 

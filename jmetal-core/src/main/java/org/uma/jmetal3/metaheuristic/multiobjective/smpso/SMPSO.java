@@ -4,7 +4,6 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
 import org.uma.jmetal3.core.Algorithm;
 import org.uma.jmetal3.core.Operator;
-import org.uma.jmetal3.core.Problem;
 import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal3.encoding.DoubleSolution;
 import org.uma.jmetal3.problem.ContinuousProblem;
@@ -13,7 +12,6 @@ import org.uma.jmetal3.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal3.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal3.util.comparator.DominanceComparator;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -21,7 +19,7 @@ import java.util.List;
 /**
  * Created by antonio on 24/09/14.
  */
-public class SMPSO implements Algorithm<List<Solution>> {
+public class SMPSO implements Algorithm<List<DoubleSolution>> {
   private ContinuousProblem problem ;
 
   private double c1Max;
@@ -41,7 +39,7 @@ public class SMPSO implements Algorithm<List<Solution>> {
   private int maxIterations;
   private int iterations;
   private List<DoubleSolution> swarm;
-  private Solution[] best;
+  private DoubleSolution[] best;
 
   private Archive leaders;
   private double[][] speed;
@@ -327,7 +325,7 @@ public class SMPSO implements Algorithm<List<Solution>> {
     iterations = 1;
 
     swarm = new ArrayList<DoubleSolution>(swarmSize);
-    best = new Solution[swarmSize];
+    best = new DoubleSolution[swarmSize];
 
     dominanceComparator = new DominanceComparator();
     crowdingDistanceComparator = new CrowdingDistanceComparator();
@@ -348,7 +346,7 @@ public class SMPSO implements Algorithm<List<Solution>> {
     }
   }
 
-  protected void createInitialSwarm() throws ClassNotFoundException, JMetalException {
+  protected void createInitialSwarm() {
     swarm = new ArrayList<>(swarmSize);
 
     DoubleSolution newSolution;
@@ -376,7 +374,7 @@ public class SMPSO implements Algorithm<List<Solution>> {
   protected void initializeParticlesMemory() {
     for (int i = 0; i < swarm.size(); i++) {
       Solution particle = swarm.get(i).copy();
-      best[i] = particle;
+      best[i] = (DoubleSolution)particle;
     }
   }
 
@@ -395,14 +393,14 @@ public class SMPSO implements Algorithm<List<Solution>> {
     return iterations == maxIterations;
   }
 
-  protected void computeSpeed(int iter, int miter) throws JMetalException, IOException {
+  protected void computeSpeed(int iter, int miter)  {
     double r1, r2, c1, c2;
     double wmax, wmin ;
-    Solution bestGlobal;
+    DoubleSolution bestGlobal;
 
     for (int i = 0; i < swarmSize; i++) {
-      Solution particle = swarm.get(i).copy();
-      Solution bestParticle = best[i].copy();
+      DoubleSolution particle = (DoubleSolution)swarm.get(i).copy();
+      DoubleSolution bestParticle = (DoubleSolution)best[i].copy();
 
       bestGlobal = selectGlobalBest() ;
 
@@ -418,25 +416,25 @@ public class SMPSO implements Algorithm<List<Solution>> {
                 (inertiaWeight(iter, miter, wmax, wmin) *
                         speed[i][var] +
                         c1 * r1 * (bestParticle.getVariableValue(var) -
-                                particle.getValue(var)) +
+                                particle.getVariableValue(var)) +
                         c2 * r2 * (bestGlobal.getVariableValue(var) -
-                                particle.getValue(var))), deltaMax, deltaMin, var);
+                                particle.getVariableValue(var))), deltaMax, deltaMin, var);
       }
     }
   }
 
   protected void computeNewPositions() {
     for (int i = 0; i < swarmSize; i++) {
-      DoubleSolution particle = swarm.get(i).copy();
-      for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
-        particle.setValue(var, particle.getValue(var) + speed[i][var]);
+      DoubleSolution particle = (DoubleSolution)swarm.get(i).copy();
+      for (int var = 0; var < particle.getNumberOfVariables(); var++) {
+        particle.setVariableValue(var, particle.getVariableValue(var) + speed[i][var]);
 
-        if (particle.getValue(var) < problem.getLowerLimit(var)) {
-          particle.setValue(var, problem.getLowerLimit(var));
+        if (particle.getVariableValue(var) < problem.getLowerBound(var)) {
+          particle.setVariableValue(var, problem.getLowerBound(var));
           speed[i][var] = speed[i][var] * changeVelocity1;
         }
-        if (particle.getValue(var) > problem.getUpperLimit(var)) {
-          particle.setValue(var, problem.getUpperLimit(var));
+        if (particle.getVariableValue(var) > problem.getUpperBound(var)) {
+          particle.setVariableValue(var, problem.getUpperBound(var));
           speed[i][var] = speed[i][var] * changeVelocity2;
         }
       }
@@ -451,18 +449,18 @@ public class SMPSO implements Algorithm<List<Solution>> {
     }
   }
 
-  protected XReal selectGlobalBest() {
-    org.uma.jmetal.core.Solution one, two;
-    XReal bestGlobal ;
-    int pos1 = PseudoRandom.randInt(0, leaders.size() - 1);
-    int pos2 = PseudoRandom.randInt(0, leaders.size() - 1);
-    one = leaders.get(pos1);
-    two = leaders.get(pos2);
+  protected DoubleSolution selectGlobalBest() {
+    Solution one, two;
+    DoubleSolution bestGlobal ;
+    int pos1 = PseudoRandom.randInt(0, leaders.getSolutionList().size() - 1);
+    int pos2 = PseudoRandom.randInt(0, leaders.getSolutionList().size() - 1);
+    one = leaders.getSolutionList().get(pos1);
+    two = leaders.getSolutionList().get(pos2);
 
     if (crowdingDistanceComparator.compare(one, two) < 1) {
-      bestGlobal = new XReal(one);
+      bestGlobal = (DoubleSolution)one.copy();
     } else {
-      bestGlobal = new XReal(two);
+      bestGlobal = (DoubleSolution)two.copy();
     }
 
     return bestGlobal ;
@@ -470,7 +468,7 @@ public class SMPSO implements Algorithm<List<Solution>> {
 
   protected void updateLeaders() {
     for (int i = 0; i < swarm.size(); i++) {
-      org.uma.jmetal.core.Solution particle = new org.uma.jmetal.core.Solution(swarm.get(i));
+      Solution particle = swarm.get(i).copy();
       leaders.add(particle);
     }
   }
@@ -479,7 +477,7 @@ public class SMPSO implements Algorithm<List<Solution>> {
     for (int i = 0; i < swarm.size(); i++) {
       int flag = dominanceComparator.compare(swarm.get(i), best[i]);
       if (flag != 1) {
-        org.uma.jmetal.core.Solution particle = new org.uma.jmetal.core.Solution(swarm.get(i));
+        DoubleSolution particle = (DoubleSolution)swarm.get(i).copy();
         best[i] = particle;
       }
     }
@@ -507,7 +505,7 @@ public class SMPSO implements Algorithm<List<Solution>> {
           double v,
           double[] deltaMax,
           double[] deltaMin,
-          int variableIndex) throws IOException {
+          int variableIndex) {
 
     double result;
 
