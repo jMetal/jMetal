@@ -4,6 +4,7 @@ import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal3.util.archive.Archive;
 import org.uma.jmetal3.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal3.util.comparator.DominanceComparator;
+import org.uma.jmetal3.util.comparator.EqualSolutionsComparator;
 import org.uma.jmetal3.util.solutionattribute.CrowdingDistance;
 import org.uma.jmetal3.util.solutionattribute.impl.CrowdingDistanceImpl;
 import org.uma.jmetal3.util.solutionlistsutils.FindWorstSolution;
@@ -29,6 +30,7 @@ public class CrowdingDistanceArchive implements Archive {
     dominanceComparator = new DominanceComparator();
     crowdingDistanceComparator = new CrowdingDistanceComparator() ;
     crowdingDistance = new CrowdingDistanceImpl() ;
+    equalsComparator = new EqualSolutionsComparator() ;
   }
 
   @Override
@@ -45,8 +47,9 @@ public class CrowdingDistanceArchive implements Archive {
       } else if (flag == -1) {
         solutionSet.remove(i);
       } else {
-        //if (equalsComparator.compare(aux, solution) == 0) {
-        return false;
+        if (equalsComparator.compare(aux, solution) == 0) {
+          return false;
+        }
       }
       i++;
     }

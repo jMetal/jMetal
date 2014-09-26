@@ -69,7 +69,7 @@ public class NSGAII extends NSGAIITemplate {
           mutationOperator.execute(offSpring.get(1));
 
           offspringPopulation.add(offSpring.get(0));
-          offspringPopulation.add(offSpring.get(1));
+          offspringPopulation.add(offSpring.get(1)) ;
         }
 
       List<Solution> jointPopulation = evaluatePopulation(offspringPopulation);
