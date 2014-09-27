@@ -23,17 +23,15 @@ package org.uma.jmetal3.problem.multiobjective.zdt;
 
 import org.uma.jmetal3.encoding.BinarySolution;
 import org.uma.jmetal3.encoding.impl.BinarySolutionImpl;
-import org.uma.jmetal3.problem.BinaryProblem;
-import org.uma.jmetal3.problem.impl.GenericProblemImpl;
+import org.uma.jmetal3.problem.impl.BinaryProblemImpl;
 
 import java.util.BitSet;
 
 /**
  * Class representing problem ZDT5
  */
-public class ZDT5 extends GenericProblemImpl<BinarySolution> implements BinaryProblem<BinarySolution> {
+public class ZDT5 extends BinaryProblemImpl<BinarySolution> {
 
-  private int [] numberOfBitsPerVariable;
   /** Creates a default instance of problem ZDT5 (11 decision variables) */
   public ZDT5() {
     this(11);
@@ -49,11 +47,11 @@ public class ZDT5 extends GenericProblemImpl<BinarySolution> implements BinaryPr
     setNumberOfObjectives(2);
     setName("ZDT5");
 
-    numberOfBitsPerVariable = new int[numberOfVariables] ;
+    bitsPerVariable = new int[numberOfVariables] ;
 
-    numberOfBitsPerVariable[0] = 30;
+    bitsPerVariable[0] = 30;
     for (int var = 1; var < numberOfVariables; var++) {
-      numberOfBitsPerVariable[var] = 5;
+      bitsPerVariable[var] = 5;
     }
   }
 
@@ -120,9 +118,5 @@ public class ZDT5 extends GenericProblemImpl<BinarySolution> implements BinaryPr
    */
   private double u(BitSet bitset) {
     return bitset.cardinality() ;
-  }
-
-  @Override public int getNumberOfBits(int index) {
-    return numberOfBitsPerVariable[index] ;
   }
 }
