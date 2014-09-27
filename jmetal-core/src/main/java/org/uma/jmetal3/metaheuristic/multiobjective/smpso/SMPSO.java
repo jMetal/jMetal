@@ -53,8 +53,6 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
 
   /** Constructor */
   public SMPSO(Builder builder) {
-    super() ;
-
     problem = builder.problem;
     swarmSize = builder.swarmSize;
     leaders = builder.leaders;
@@ -73,24 +71,6 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
     weightMin = builder.weightMin;
     changeVelocity1 = builder.changeVelocity1;
     changeVelocity2 = builder.changeVelocity2;
-  }
-
-  @Deprecated
-  public SMPSO() {
-    super();
-
-    r1Max = 1.0;
-    r1Min = 0.0;
-    r2Max = 1.0;
-    r2Min = 0.0;
-    c1Max = 2.5;
-    c1Min = 1.5;
-    c2Max = 2.5;
-    c2Min = 1.5;
-    weightMax = 0.1;
-    weightMin = 0.1;
-    changeVelocity1 = -1;
-    changeVelocity2 = -1;
   }
 
   /* Getters */
@@ -298,7 +278,7 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
   /** Execute() method  */
   @Override
   public List<Solution> execute() {
-    initialization();
+    initialization() ;
     createInitialSwarm() ;
     evaluateSwarm();
     initializeLeaders() ;
@@ -309,7 +289,7 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
       computeSpeed(iterations, maxIterations);
       computeNewPositions();
       perturbation();
-      evaluateSwarm();
+      evaluateSwarm() ;
       updateLeaders() ;
       updateParticleMemory() ;
       updateLeadersDensityEstimator() ;
@@ -425,18 +405,22 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
 
   protected void computeNewPositions() {
     for (int i = 0; i < swarmSize; i++) {
-      DoubleSolution particle = (DoubleSolution)swarm.get(i).copy();
-      for (int var = 0; var < particle.getNumberOfVariables(); var++) {
-        particle.setVariableValue(var, particle.getVariableValue(var) + speed[i][var]);
+      DoubleSolution particle = swarm.get(i);
+      for (int j = 0; j < particle.getNumberOfVariables(); j++) {
+        double v = particle.getVariableValue(j);
+        particle.setVariableValue(j, particle.getVariableValue(j) + speed[i][j]);
 
-        if (particle.getVariableValue(var) < problem.getLowerBound(var)) {
-          particle.setVariableValue(var, problem.getLowerBound(var));
-          speed[i][var] = speed[i][var] * changeVelocity1;
+        if (particle.getVariableValue(j) < problem.getLowerBound(j)) {
+          particle.setVariableValue(j, problem.getLowerBound(j));
+          speed[i][j] = speed[i][j] * changeVelocity1;
         }
-        if (particle.getVariableValue(var) > problem.getUpperBound(var)) {
-          particle.setVariableValue(var, problem.getUpperBound(var));
-          speed[i][var] = speed[i][var] * changeVelocity2;
+        if (particle.getVariableValue(j) > problem.getUpperBound(j)) {
+          particle.setVariableValue(j, problem.getUpperBound(j));
+          speed[i][j] = speed[i][j] * changeVelocity2;
         }
+
+        //System.out.println(i + ", " + j + "antes: " + v + "\t");
+        //System.out.println(i + ", " + j + ". despues: " + particle.getVariableValue(j) +"\t");
       }
     }
   }

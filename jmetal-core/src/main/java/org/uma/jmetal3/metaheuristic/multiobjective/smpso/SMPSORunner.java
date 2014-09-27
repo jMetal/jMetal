@@ -26,7 +26,7 @@ import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal3.operator.mutation.MutationOperator;
 import org.uma.jmetal3.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal3.problem.ContinuousProblem;
-import org.uma.jmetal3.problem.multiobjective.Fonseca;
+import org.uma.jmetal3.problem.multiobjective.Kursawe;
 import org.uma.jmetal3.util.AlgorithmRunner;
 import org.uma.jmetal3.util.archive.Archive;
 import org.uma.jmetal3.util.archive.impl.CrowdingDistanceArchive;
@@ -63,7 +63,7 @@ public class SMPSORunner {
     Algorithm algorithm;
     MutationOperator mutation;
 
-    problem = new Fonseca();
+    problem = new Kursawe() ;
 
     Archive archive = new CrowdingDistanceArchive(100) ;
 

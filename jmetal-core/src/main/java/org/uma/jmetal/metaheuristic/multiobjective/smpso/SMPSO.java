@@ -335,18 +335,19 @@ public class SMPSO implements Algorithm {
     initialization();
     createInitialSwarm() ;
     evaluateSwarm();
+
     initializeLeaders() ;
     initializeParticlesMemory() ;
     updateLeadersDensityEstimator() ;
 
     while (!stoppingCondition()) {
-      computeSpeed(iterations, maxIterations);
+      computeSpeed(iterations, maxIterations) ;
       computeNewPositions();
-      perturbation();
       evaluateSwarm();
       updateLeaders() ;
       updateParticleMemory() ;
       updateLeadersDensityEstimator() ;
+
       iterations++ ;
     }
 
@@ -370,8 +371,7 @@ public class SMPSO implements Algorithm {
     deltaMax = new double[problem.getNumberOfVariables()];
     deltaMin = new double[problem.getNumberOfVariables()];
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      deltaMax[i] = (problem.getUpperLimit(i) -
-        problem.getLowerLimit(i)) / 2.0;
+      deltaMax[i] = (problem.getUpperLimit(i) - problem.getLowerLimit(i)) / 2.0;
       deltaMin[i] = -deltaMax[i];
     }
 
@@ -457,16 +457,18 @@ public class SMPSO implements Algorithm {
   protected void computeNewPositions() {
     for (int i = 0; i < swarmSize; i++) {
       XReal particle = new XReal(swarm.get(i));
-      for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
-        particle.setValue(var, particle.getValue(var) + speed[i][var]);
+      for (int j = 0; j < particle.getNumberOfDecisionVariables(); j++) {
+        double v = particle.getValue(j);
 
-        if (particle.getValue(var) < problem.getLowerLimit(var)) {
-          particle.setValue(var, problem.getLowerLimit(var));
-          speed[i][var] = speed[i][var] * changeVelocity1;
+        particle.setValue(j, particle.getValue(j) + speed[i][j]);
+
+        if (particle.getValue(j) < problem.getLowerLimit(j)) {
+          particle.setValue(j, problem.getLowerLimit(j));
+          speed[i][j] = speed[i][j] * changeVelocity1;
         }
-        if (particle.getValue(var) > problem.getUpperLimit(var)) {
-          particle.setValue(var, problem.getUpperLimit(var));
-          speed[i][var] = speed[i][var] * changeVelocity2;
+        if (particle.getValue(j) > problem.getUpperLimit(j)) {
+          particle.setValue(j, problem.getUpperLimit(j));
+          speed[i][j] = speed[i][j] * changeVelocity2;
         }
       }
     }

@@ -26,20 +26,17 @@ import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.metaheuristic.multiobjective.smpso.SMPSO;
 import org.uma.jmetal.operator.mutation.Mutation;
 import org.uma.jmetal.operator.mutation.PolynomialMutation;
-import org.uma.jmetal.problem.multiobjective.Kursawe;
 import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.qualityindicator.QualityIndicatorGetter;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.CrowdingArchive;
 import org.uma.jmetal.util.evaluator.SequentialSolutionSetEvaluator;
 import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
 import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
-
-import java.io.IOException;
+import org.uma.jmetal.problem.multiobjective.Fonseca;
 
 /**
  * This class executes:
@@ -80,7 +77,7 @@ public class SMPSORunner {
       problem = (new ProblemFactory()).getProblem(args[0], params);
       indicators = new QualityIndicatorGetter(problem, args[1]);
     } else {
-      problem = new Kursawe("Real", 3);
+      problem = new Fonseca("Real");
       /*
         Examples:
         problem = new Water("Real");
@@ -103,7 +100,7 @@ public class SMPSORunner {
      * - setArchive = new CrowdingArchive(100, problem.getNumberOfObjectives()) ; // SMPSO
      * - setArchive = new FastHypervolumeArchive(100, problem.getNumberOfObjectives()); // SMPSOhv
      */
-    Archive archive = new CrowdingArchive(100, problem.getNumberOfObjectives()) ;
+    Archive archive = new CrowdingArchive(10, problem.getNumberOfObjectives()) ;
 
     mutation = new PolynomialMutation.Builder()
       .setDistributionIndex(20.0)
@@ -112,8 +109,8 @@ public class SMPSORunner {
 
     algorithm = new SMPSO.Builder(problem, archive, evaluator)
       .setMutation(mutation)
-      .setMaxIterations(250)
-      .setSwarmSize(100)
+      .setMaxIterations(2)
+      .setSwarmSize(10)
       .build();
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
