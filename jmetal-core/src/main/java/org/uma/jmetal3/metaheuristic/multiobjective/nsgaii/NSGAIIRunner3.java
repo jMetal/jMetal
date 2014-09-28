@@ -30,7 +30,7 @@ import org.uma.jmetal3.operator.mutation.impl.BitFlipMutation;
 import org.uma.jmetal3.operator.selection.SelectionOperator;
 import org.uma.jmetal3.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal3.problem.BinaryProblem;
-import org.uma.jmetal3.problem.multiobjective.OneZeroMax;
+import org.uma.jmetal3.problem.multiobjective.zdt.ZDT5;
 import org.uma.jmetal3.util.AlgorithmRunner;
 import org.uma.jmetal3.util.fileoutput.DefaultFileOutputContext;
 import org.uma.jmetal3.util.fileoutput.SolutionSetOutput;
@@ -61,7 +61,7 @@ public class NSGAIIRunner3 {
     MutationOperator mutation;
     SelectionOperator selection;
 
-    problem = new OneZeroMax(100);
+    problem = new ZDT5();
 
     crossover = new SinglePointCrossover.Builder()
             .setProbability(0.9)

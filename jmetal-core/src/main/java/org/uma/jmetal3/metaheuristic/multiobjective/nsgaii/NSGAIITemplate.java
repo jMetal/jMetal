@@ -218,7 +218,6 @@ public abstract class NSGAIITemplate implements Algorithm<List<Solution>> {
   protected void addLastRankedSolutions(Ranking ranking, int rank) throws JMetalException {
     List<Solution> currentRankedFront = ranking.getSubfront(rank) ;
 
-    //currentRankedFront.sort(new CrowdingDistanceComparator());
     Collections.sort(currentRankedFront, new CrowdingDistanceComparator()) ;
 
     int i = 0 ;
@@ -236,7 +235,7 @@ public abstract class NSGAIITemplate implements Algorithm<List<Solution>> {
     return ranking.getSubfront(rank).size() < (populationSize - population.size()) ;
   }
 
-  protected List<Solution> getNonDominatedSolutions(List<Solution> solutionSet) throws JMetalException {
+  protected List<Solution> getNonDominatedSolutions(List<Solution> solutionSet) {
     return ranking.computeRanking(solutionSet).getSubfront(0);
   }
 
