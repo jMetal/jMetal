@@ -140,6 +140,7 @@ public class GDE3 implements org.uma.jmetal3.core.Algorithm<List<DoubleSolution>
 
   /** Execute() method  */
   public List<DoubleSolution> execute() {
+    /*
     createInitialPopulation();
     population = evaluatePopulation(population);
 
@@ -208,7 +209,8 @@ public class GDE3 implements org.uma.jmetal3.core.Algorithm<List<DoubleSolution>
 
     tearDown();
 
-    return getNonDominatedSolutions() ;
+    return getNonDominatedSolutions() ;     */
+    return null ;
   }
 
   protected void createInitialPopulation() {
