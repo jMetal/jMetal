@@ -58,11 +58,11 @@ public class NSGAII extends NSGAIITemplate {
       offspringPopulation = new ArrayList<>(populationSize);
       for (int i = 0; i < (populationSize / 2); i++)
         if (!stoppingCondition()) {
-          List<Solution> parents = new ArrayList<>(2);
-          parents.add ((Solution) selectionOperator.execute(population));
-          parents.add ((Solution) selectionOperator.execute(population));
+          List<Solution<?>> parents = new ArrayList<>(2);
+          parents.add (selectionOperator.execute(population));
+          parents.add (selectionOperator.execute(population));
 
-          List<Solution> offspring = (List<Solution>) crossoverOperator.execute(parents);
+          List<Solution<?>> offspring = crossoverOperator.execute(parents);
 
           mutationOperator.execute(offspring.get(0));
           mutationOperator.execute(offspring.get(1));
@@ -71,7 +71,7 @@ public class NSGAII extends NSGAIITemplate {
           offspringPopulation.add(offspring.get(1)) ;
         }
 
-      List<Solution> jointPopulation = evaluatePopulation(offspringPopulation);
+      List<Solution<?>> jointPopulation = evaluatePopulation(offspringPopulation);
       jointPopulation.addAll(population) ;
 
       computeRanking(jointPopulation);

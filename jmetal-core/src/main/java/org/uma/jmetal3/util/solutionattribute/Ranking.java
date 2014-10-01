@@ -32,7 +32,7 @@ import java.util.*;
 public interface Ranking {
   public enum ATTRIBUTE { RANK }
 
-  public Ranking computeRanking(List<Solution> solutionSet) ;
-  public List<Solution> getSubfront(int rank) ;
+  public Ranking computeRanking(List<Solution<?>> solutionSet) ;
+  public List<Solution<?>> getSubfront(int rank) ;
   public int getNumberOfSubfronts() ;
 }

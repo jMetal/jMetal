@@ -43,11 +43,11 @@ public class RankingImpl implements Ranking {
   private static final Comparator<Solution> CONSTRAINT_VIOLATION_COMPARATOR =
     new OverallConstraintViolationComparator();
 
-  private List<Solution> population;
-  private List<ArrayList<Solution>> rankedSubpopulations;
+  private List<Solution<?>> population;
+  private List<ArrayList<Solution<?>>> rankedSubpopulations;
 
   @Override
-  public Ranking computeRanking(List<Solution> solutionSet) {
+  public Ranking computeRanking(List<Solution<?>> solutionSet) {
     population = solutionSet;
 
     // dominateMe[i] contains the number of solutions dominating i
@@ -120,10 +120,10 @@ public class RankingImpl implements Ranking {
       }
     }
 
-    rankedSubpopulations = new ArrayList<ArrayList<Solution>>() ;
+    rankedSubpopulations = new ArrayList<ArrayList<Solution<?>>>() ;
     //0,1,2,....,i-1 are fronts, then i fronts
     for (int j = 0; j < i; j++) {
-      rankedSubpopulations.add(j, new ArrayList<Solution>(front[j].size()));
+      rankedSubpopulations.add(j, new ArrayList<Solution<?>>(front[j].size()));
       it1 = front[j].iterator();
       while (it1.hasNext()) {
         rankedSubpopulations.get(j).add(solutionSet.get(it1.next()));
@@ -135,7 +135,7 @@ public class RankingImpl implements Ranking {
 
 
   @Override
-  public List<Solution> getSubfront(int rank) {
+  public List<Solution<?>> getSubfront(int rank) {
     if (rank >= rankedSubpopulations.size()) {
       throw new JMetalException("Invalid rank: " + rank + ". Max rank = " + (rankedSubpopulations.size() -1)) ;
     }

@@ -58,12 +58,12 @@ public abstract class NSGAIITemplate implements Algorithm<List<Solution>> {
   protected int maxEvaluations;
   protected int evaluations;
 
-  protected List<Solution> population;
-  protected List<Solution> offspringPopulation;
+  protected List<Solution<?>> population;
+  protected List<Solution<?>> offspringPopulation;
 
   protected MutationOperator mutationOperator;
-  protected CrossoverOperator crossoverOperator;
-  protected SelectionOperator selectionOperator;
+  protected CrossoverOperator<List<Solution<?>>, List<Solution<?>>> crossoverOperator;
+  protected SelectionOperator<List<Solution<?>>, Solution> selectionOperator;
 
   protected String variant ;
 
@@ -190,7 +190,7 @@ public abstract class NSGAIITemplate implements Algorithm<List<Solution>> {
 
   }
 
-  protected List<Solution> evaluatePopulation(List<Solution> population) throws JMetalException {
+  protected List<Solution<?>> evaluatePopulation(List<Solution<?>> population) throws JMetalException {
     evaluations += population.size() ;
 
     for (int i = 0 ; i < population.size(); i++) {
@@ -206,7 +206,7 @@ public abstract class NSGAIITemplate implements Algorithm<List<Solution>> {
   }
 
   protected void addRankedSolutionsToPopulation(Ranking ranking, int rank) throws JMetalException {
-    List<Solution> front ;
+    List<Solution<?>> front ;
 
     front = ranking.getSubfront(rank);
 
@@ -216,7 +216,7 @@ public abstract class NSGAIITemplate implements Algorithm<List<Solution>> {
   }
 
   protected void addLastRankedSolutions(Ranking ranking, int rank) throws JMetalException {
-    List<Solution> currentRankedFront = ranking.getSubfront(rank) ;
+    List<Solution<?>> currentRankedFront = ranking.getSubfront(rank) ;
 
     Collections.sort(currentRankedFront, new CrowdingDistanceComparator()) ;
 
@@ -235,11 +235,11 @@ public abstract class NSGAIITemplate implements Algorithm<List<Solution>> {
     return ranking.getSubfront(rank).size() < (populationSize - population.size()) ;
   }
 
-  protected List<Solution> getNonDominatedSolutions(List<Solution> solutionSet) {
+  protected List<Solution<?>> getNonDominatedSolutions(List<Solution<?>> solutionSet) {
     return ranking.computeRanking(solutionSet).getSubfront(0);
   }
 
-  protected void computeRanking(List<Solution> solutionSet) {
+  protected void computeRanking(List<Solution<?>> solutionSet) {
     ranking.computeRanking(solutionSet) ;
   }
 

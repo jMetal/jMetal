@@ -31,6 +31,6 @@ import java.util.List;
 public interface CrowdingDistance {
   public enum ATTRIBUTE { CROWDNG }
 
-  public void computeCrowdingDistance(List<Solution> solutionSet) ;
+  public void computeCrowdingDistance(List<Solution<?>> solutionSet) ;
 }
 

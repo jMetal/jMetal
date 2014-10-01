@@ -25,8 +25,6 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal3.core.Solution;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -45,27 +43,31 @@ import java.util.List;
  * Congress on Evolutionary Computation (CEC 2005), Edinburgh, Band 2, pp. 1282-1289.
  * IEEE Press, Piscataway NJ, 2005.
  */
-public class SMSEMOA extends SMSEMOATemplate  {
+public class SMSEMOA extends SMSEMOATemplate {
 
   private Hypervolume hypervolume;
 
-  /** Constructor */
+  /**
+   * Constructor
+   */
   protected SMSEMOA(Builder builder) {
     super(builder);
 
     this.hypervolume = new Hypervolume();
   }
 
-  /** Execute() method */
+  /**
+   * Execute() method
+   */
   public List<?> execute() throws JMetalException {
     createInitialPopulation();
-    population = evaluatePopulation(population) ;
+    population = evaluatePopulation(population);
 
     while (!stoppingCondition()) {
-      offspringPopulation = new ArrayList<>(populationSize+1);
+      offspringPopulation = new ArrayList<>(populationSize + 1);
 
       List<Solution> parents = new ArrayList<>();
-      parents.add ((Solution) selection.execute(population));
+      parents.add((Solution) selection.execute(population));
 
       List<Solution> offspring = (List<Solution>) crossover.execute(parents);
       mutation.execute(offspring.get(0));
@@ -141,17 +143,17 @@ public class SMSEMOA extends SMSEMOATemplate  {
 
     return getNonDominatedSolutions(population) ;
     */
-      return  null ;
-  }
+    }
+    return null;
 
-  /**
-   * Calculates how much hypervolume each point dominates exclusively. The points
-   * have to be transformed beforehand, to accommodate the assumptions of Zitzler's
-   * hypervolume code.
-   *
-   * @param front transformed objective values
-   * @return HV contributions
-   */
+    /**
+     * Calculates how much hypervolume each point dominates exclusively. The points
+     * have to be transformed beforehand, to accommodate the assumptions of Zitzler's
+     * hypervolume code.
+     *
+     * @param front transformed objective values
+     * @return HV contributions
+     */
     /*
   private double[] hvContributions(double[][] front) {
     int numberOfObjectives = problem.getNumberOfObjectives();
@@ -175,4 +177,5 @@ public class SMSEMOA extends SMSEMOATemplate  {
     return contributions;
   }
   */
+  }
 }

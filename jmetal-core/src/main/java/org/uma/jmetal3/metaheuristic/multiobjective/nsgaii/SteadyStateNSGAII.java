@@ -21,9 +21,7 @@
 
 package org.uma.jmetal3.metaheuristic.multiobjective.nsgaii;
 
-import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal3.core.Solution;
-import org.uma.jmetal3.encoding.DoubleSolution;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,11 +52,11 @@ public class SteadyStateNSGAII extends NSGAIITemplate  {
 
     // Main loop
     while (!stoppingCondition()) {
-      List<Solution> parents = new ArrayList<>(2);
-      parents.add ((Solution) selectionOperator.execute(population));
-      parents.add((Solution) selectionOperator.execute(population));
+      List<Solution<?>> parents = new ArrayList<>(2);
+      parents.add(selectionOperator.execute(population));
+      parents.add(selectionOperator.execute(population));
 
-      List<Solution> offSpring = (List<Solution>) crossoverOperator.execute(parents);
+      List<Solution<?>> offSpring = crossoverOperator.execute(parents);
 
       mutationOperator.execute(offSpring.get(0));
 
