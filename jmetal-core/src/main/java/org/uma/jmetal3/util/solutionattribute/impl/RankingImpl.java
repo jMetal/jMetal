@@ -39,7 +39,7 @@ import java.util.*;
  * belonging to subset 0, and so on.
  */
 public class RankingImpl implements Ranking {
-  public enum ATTRIBUTE { DOMINANCE_RANK }
+  private String ATTRIBUTE = this.getClass().getName() ;
 
   private static final Comparator<Solution<?>> DOMINANCE_COMPARATOR = new DominanceComparator();
   private static final Comparator<Solution<?>> CONSTRAINT_VIOLATION_COMPARATOR =
@@ -98,7 +98,7 @@ public class RankingImpl implements Ranking {
 
         front[0].add(i);
         //RankingAndCrowdingAttr.getAttributes(solutionSet.get(0)).setRank(0);
-        solutionSet.get(i).setAttribute(ATTRIBUTE.DOMINANCE_RANK, 0);
+        solutionSet.get(i).setAttribute(ATTRIBUTE, 0);
       }
     }
 
@@ -116,7 +116,7 @@ public class RankingImpl implements Ranking {
           if (dominateMe[index] == 0) {
             front[i].add(index);
             //RankingAndCrowdingAttr.getAttributes(solutionSet.get(index)).setRank(i);
-            solutionSet.get(index).setAttribute(ATTRIBUTE.DOMINANCE_RANK, i);
+            solutionSet.get(index).setAttribute(ATTRIBUTE, i);
           }
         }
       }
@@ -151,11 +151,11 @@ public class RankingImpl implements Ranking {
 
   @Override
   public void setAttribute(Solution<?> solution, Integer value) {
-    solution.setAttribute(ATTRIBUTE.DOMINANCE_RANK, value);
+    solution.setAttribute(ATTRIBUTE, value);
   }
 
   @Override
   public Integer getAttribute(Solution<?> solution) {
-    return (Integer) solution.getAttribute(ATTRIBUTE.DOMINANCE_RANK);
+    return (Integer) solution.getAttribute(ATTRIBUTE);
   }
 }
