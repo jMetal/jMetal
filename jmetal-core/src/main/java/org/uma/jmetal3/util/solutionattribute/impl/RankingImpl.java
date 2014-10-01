@@ -38,8 +38,8 @@ import java.util.*;
  * solutions, subset 1 contains the non-dominated solutions after removing those
  * belonging to subset 0, and so on.
  */
-public class RankingImpl implements Ranking {
-  private String ATTRIBUTE = this.getClass().getName() ;
+public class RankingImpl implements Ranking<Solution<?>> {
+  private final Object ATTRIBUTE = this ;
 
   private static final Comparator<Solution<?>> DOMINANCE_COMPARATOR = new DominanceComparator();
   private static final Comparator<Solution<?>> CONSTRAINT_VIOLATION_COMPARATOR =
@@ -79,7 +79,8 @@ public class RankingImpl implements Ranking {
     for (int p = 0; p < (this.population.size() - 1); p++) {
       // For all q individuals , calculate if p dominates q or vice versa
       for (int q = p + 1; q < this.population.size(); q++) {
-        flagDominate = CONSTRAINT_VIOLATION_COMPARATOR.compare(solutionSet.get(p), solutionSet.get(q));
+        flagDominate =
+          CONSTRAINT_VIOLATION_COMPARATOR.compare(solutionSet.get(p), solutionSet.get(q));
         if (flagDominate == 0) {
           flagDominate = DOMINANCE_COMPARATOR.compare(solutionSet.get(p), solutionSet.get(q));
         }
@@ -122,7 +123,7 @@ public class RankingImpl implements Ranking {
       }
     }
 
-    rankedSubpopulations = new ArrayList<ArrayList<Solution<?>>>() ;
+    rankedSubpopulations = new ArrayList<ArrayList<Solution<?>>>();
     //0,1,2,....,i-1 are fronts, then i fronts
     for (int j = 0; j < i; j++) {
       rankedSubpopulations.add(j, new ArrayList<Solution<?>>(front[j].size()));
@@ -132,9 +133,8 @@ public class RankingImpl implements Ranking {
       }
     }
 
-    return this ;
+    return this;
   }
-
 
   @Override
   public List<Solution<?>> getSubfront(int rank) {
@@ -151,11 +151,15 @@ public class RankingImpl implements Ranking {
 
   @Override
   public void setAttribute(Solution<?> solution, Integer value) {
-    solution.setAttribute(ATTRIBUTE, value);
+    solution.setAttribute(getAttributeID(), value);
   }
 
   @Override
   public Integer getAttribute(Solution<?> solution) {
-    return (Integer) solution.getAttribute(ATTRIBUTE);
+    return (Integer) solution.getAttribute(getAttributeID());
+  }
+
+  public Object getAttributeID() {
+    return this;
   }
 }

@@ -29,12 +29,11 @@ import java.util.*;
  *
  * @author Antonio J. Nebro
  */
-public interface Ranking {
-  public Ranking computeRanking(List<Solution<?>> solutionSet) ;
-  public List<Solution<?>> getSubfront(int rank) ;
+public interface Ranking<S extends Solution<?>> {
+  public Ranking computeRanking(List<S> solutionSet) ;
+  public List<S> getSubfront(int rank) ;
   public int getNumberOfSubfronts() ;
 
-  public void setAttribute(Solution<?> solution, Integer value) ;
-  public Integer getAttribute(Solution<?> solution) ;
-
+  public void setAttribute(S solution, Integer value) ;
+  public Integer getAttribute(S solution) ;
 }
