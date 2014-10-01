@@ -34,7 +34,9 @@ import java.util.List;
  * are returned from a population.
  */
 public class DifferentialEvolutionSelection implements
-  SelectionOperator<List<?>,List<Solution<?>>> {
+  SelectionOperator<List<Solution<?>>,List<? extends Solution<?>>> {
+
+  private int solutionListIndex = Integer.MIN_VALUE ;
 
   /** Constructor */
   DifferentialEvolutionSelection(Builder builder) {
@@ -51,45 +53,46 @@ public class DifferentialEvolutionSelection implements
     }
   }
 
+  public void setIndex(int index) {
+    this.solutionListIndex = index ;
+  }
+
   /** Execute() method  */
   @Override
-  public List<Solution<?>> execute(List<?> params) {
-    if (null == params) {
+  public List<? extends Solution<?>> execute(List<Solution<?>> solutionSet) {
+    if (null == solutionSet) {
       throw new JMetalException("Parameter is null") ;
-    } else if (params.size() != 2) {
-      throw new JMetalException("A list of size 2 is required") ;
-    //} else if (!((params.get(0)) instanceof List<Solution>)) {
-    //  throw new JMetalException("Parameter 0 must be of class List<Solution>") ;
-    } else if (!((params.get(1)) instanceof Integer)) {
-      throw new JMetalException("Parameter 2 must be of class Integer") ;
+    } else if (solutionSet.size() != 2) {
+      throw new JMetalException("A list of size 2 is required");
+      //} else if (!((params.get(0)) instanceof List<Solution>)) {
+      //  throw new JMetalException("Parameter 0 must be of class List<Solution>") ;
+      //    } else if (!((params.get(1)) instanceof Integer)) {
+      //      throw new JMetalException("Parameter 2 must be of class Integer") ;
+      //    }
+    } else if (solutionSet.size() < 4) {
+      throw new JMetalException(
+        "DifferentialEvolutionSelection: the population has less than four solutions");
+    } else if ((solutionListIndex < 0) || (solutionListIndex > solutionSet.size())) {
+      throw new JMetalException(
+        "DifferentialEvolutionSelection: index value invalid: " + solutionListIndex );
     }
-    
-    List<Solution<?>> population = (List<Solution<?>>)params.get(0) ;
-    int index = (Integer)params.get(1) ;
 
     List<Solution<?>> parents = new ArrayList<>(3);
     int r1, r2, r3;
 
-    if (population.size() < 4) {
-      throw new JMetalException(
-        "DifferentialEvolutionSelection: the population has less than four solutions");
-    } else if (index < 0) {
-      throw new JMetalException("The index is negative") ;
-    }
+    do {
+      r1 = PseudoRandom.randInt(0, solutionSet.size() - 1);
+    } while (r1 == solutionListIndex);
+    do {
+      r2 = PseudoRandom.randInt(0, solutionSet.size() - 1);
+    } while (r2 == solutionListIndex || r2 == r1);
+    do {
+      r3 = PseudoRandom.randInt(0, solutionSet.size() - 1);
+    } while (r3 == solutionListIndex || r3 == r1 || r3 == r2);
 
-    do {
-      r1 = PseudoRandom.randInt(0, population.size() - 1);
-    } while (r1 == index);
-    do {
-      r2 = PseudoRandom.randInt(0, population.size() - 1);
-    } while (r2 == index || r2 == r1);
-    do {
-      r3 = PseudoRandom.randInt(0, population.size() - 1);
-    } while (r3 == index || r3 == r1 || r3 == r2);
-
-    parents.add(population.get(r1));
-    parents.add(population.get(r2));
-    parents.add(population.get(r3));
+    parents.add(solutionSet.get(r1));
+    parents.add(solutionSet.get(r2));
+    parents.add(solutionSet.get(r3));
 
     return parents;
   }

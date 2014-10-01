@@ -7,6 +7,6 @@ import org.uma.jmetal3.core.Operator;
  */
 public interface SelectionOperator<
   //Source extends List<? extends Solution<?>>,
-  //Result extends Solution<?>> extends Operator<Source,Result> {
+  //Result extends List<? extends Solution<?>>> extends Operator<Source,Result> {
   Source, Result> extends Operator<Source,Result> {
 }
