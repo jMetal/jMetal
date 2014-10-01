@@ -39,8 +39,10 @@ import java.util.*;
  * belonging to subset 0, and so on.
  */
 public class RankingImpl implements Ranking {
-  private static final Comparator<Solution> DOMINANCE_COMPARATOR = new DominanceComparator();
-  private static final Comparator<Solution> CONSTRAINT_VIOLATION_COMPARATOR =
+  public enum ATTRIBUTE { DOMINANCE_RANK }
+
+  private static final Comparator<Solution<?>> DOMINANCE_COMPARATOR = new DominanceComparator();
+  private static final Comparator<Solution<?>> CONSTRAINT_VIOLATION_COMPARATOR =
     new OverallConstraintViolationComparator();
 
   private List<Solution<?>> population;
@@ -96,7 +98,7 @@ public class RankingImpl implements Ranking {
 
         front[0].add(i);
         //RankingAndCrowdingAttr.getAttributes(solutionSet.get(0)).setRank(0);
-        solutionSet.get(i).setAttribute(ATTRIBUTE.RANK, 0);
+        solutionSet.get(i).setAttribute(ATTRIBUTE.DOMINANCE_RANK, 0);
       }
     }
 
@@ -114,7 +116,7 @@ public class RankingImpl implements Ranking {
           if (dominateMe[index] == 0) {
             front[i].add(index);
             //RankingAndCrowdingAttr.getAttributes(solutionSet.get(index)).setRank(i);
-            solutionSet.get(index).setAttribute(ATTRIBUTE.RANK, i);
+            solutionSet.get(index).setAttribute(ATTRIBUTE.DOMINANCE_RANK, i);
           }
         }
       }
@@ -145,5 +147,15 @@ public class RankingImpl implements Ranking {
   @Override
   public int getNumberOfSubfronts() {
     return rankedSubpopulations.size();
+  }
+
+  @Override
+  public void setAttribute(Solution<?> solution, Integer value) {
+    solution.setAttribute(ATTRIBUTE.DOMINANCE_RANK, value);
+  }
+
+  @Override
+  public Integer getAttribute(Solution<?> solution) {
+    return (Integer) solution.getAttribute(ATTRIBUTE.DOMINANCE_RANK);
   }
 }

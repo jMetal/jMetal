@@ -29,7 +29,7 @@ import java.util.Comparator;
  * This class implements a <code>Comparator</code> (a method for comparing <code>Solution</code> objects)
  * based on a constraint violation, as done in NSGA-II.
  */
-public class DominanceComparator implements Comparator<Solution> {
+public class DominanceComparator implements Comparator<Solution<?>> {
   private OverallConstraintViolationComparator constraintViolationComparator;
 
   /** Constructor */
@@ -45,7 +45,7 @@ public class DominanceComparator implements Comparator<Solution> {
    * non-dominated, or solution1  is dominated by solution2, respectively.
    */
   @Override
-  public int compare(Solution solution1, Solution solution2) {
+  public int compare(Solution<?> solution1, Solution<?> solution2) {
     // TODO: test for null are needed here
     int result ;
     result = constraintViolationComparator.compare(solution1, solution2) ;

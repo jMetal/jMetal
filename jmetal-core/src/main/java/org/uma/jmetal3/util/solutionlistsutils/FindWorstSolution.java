@@ -9,7 +9,7 @@ import java.util.List;
  * Created by Antonio J. Nebro on 24/09/14.
  */
 public class FindWorstSolution {
-  public static int find(List<Solution> solutionList, Comparator<Solution> comparator) {
+  public static int find(List<Solution<?>> solutionList, Comparator<Solution<?>> comparator) {
     if ((solutionList == null) || (solutionList.isEmpty())) {
       return -1;
     }

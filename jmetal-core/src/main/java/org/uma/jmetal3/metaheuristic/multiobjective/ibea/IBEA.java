@@ -39,7 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** This class implements the IBEA algorithm */
-public class IBEA implements Algorithm<List<Solution>> {
+public class IBEA implements Algorithm<List<Solution<?>>> {
   private Problem problem ;
 
   public static final int TOURNAMENTS_ROUNDS = 1;
@@ -170,9 +170,9 @@ public class IBEA implements Algorithm<List<Solution>> {
 
   /** Execute() method */
   @Override
-  public List<Solution> execute() {
+  public List<Solution<?>> execute() {
     int evaluations;
-    List<Solution> solutionSet, archive, offSpringSolutionSet;
+    List<Solution<?>> solutionSet, archive, offSpringSolutionSet;
 
     //Initialize the variables
     solutionSet = new ArrayList<>(populationSize);
@@ -191,7 +191,7 @@ public class IBEA implements Algorithm<List<Solution>> {
     }
 
     while (evaluations < maxEvaluations) {
-      List<Solution> union = new ArrayList<>() ;
+      List<Solution<?>> union = new ArrayList<>() ;
       union.addAll(solutionSet) ;
       union.addAll(archive);
       calculateFitness(union);
@@ -216,7 +216,7 @@ public class IBEA implements Algorithm<List<Solution>> {
           parent2 = (Solution) selection.execute(archive);
         } while (k < IBEA.TOURNAMENTS_ROUNDS);
 
-        List<Solution> parents = new ArrayList<>(2);
+        List<Solution<?>> parents = new ArrayList<>(2);
         parents.add(parent1) ;
         parents.add(parent2) ;
 
@@ -238,8 +238,8 @@ public class IBEA implements Algorithm<List<Solution>> {
    * Calculates the hypervolume of that portion of the objective space that
    * is dominated by individual a but not by individual b
    */
-  double calculateHypervolumeIndicator(Solution solutionA,
-                                       Solution solutionB,
+  double calculateHypervolumeIndicator(Solution<?> solutionA,
+                                       Solution<?> solutionB,
                                        int d,
                                        double maximumValues[],
                                        double minimumValues[]) {
@@ -281,7 +281,7 @@ public class IBEA implements Algorithm<List<Solution>> {
   /**
    * This structure stores the indicator values of each pair of elements
    */
-  public void computeIndicatorValuesHD(List<Solution> solutionSet,
+  public void computeIndicatorValuesHD(List<Solution<?>> solutionSet,
                                        double[] maximumValues,
                                        double[] minimumValues) {
     List<Solution> A, B;
@@ -323,7 +323,7 @@ public class IBEA implements Algorithm<List<Solution>> {
   /**
    * Calculate the fitness for the individual at position pos
    */
-  public void fitness(List<Solution> solutionSet, int pos) {
+  public void fitness(List<Solution<?>> solutionSet, int pos) {
     double fitness = 0.0;
     double kappa = 0.05;
 
@@ -339,7 +339,7 @@ public class IBEA implements Algorithm<List<Solution>> {
   /**
    * Calculate the fitness for the entire population.
    */
-  public void calculateFitness(List<Solution> solutionSet) {
+  public void calculateFitness(List<Solution<?>> solutionSet) {
     // Obtains the lower and upper bounds of the population
     double[] maximumValues = new double[problem.getNumberOfObjectives()];
     double[] minimumValues = new double[problem.getNumberOfObjectives()];
@@ -370,7 +370,7 @@ public class IBEA implements Algorithm<List<Solution>> {
   /**
    * Update the fitness before removing an individual
    */
-  public void removeWorst(List<Solution> solutionSet) {
+  public void removeWorst(List<Solution<?>> solutionSet) {
 
     // Find the worst;
     //double worst = solutionSet.get(0).getFitness();

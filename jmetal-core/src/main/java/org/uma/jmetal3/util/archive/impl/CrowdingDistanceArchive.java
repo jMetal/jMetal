@@ -18,10 +18,10 @@ import java.util.List;
  */
 public class CrowdingDistanceArchive implements Archive {
   private int maxSize ;
-  private List<Solution> solutionSet;
-  private Comparator<Solution> dominanceComparator;
-  private Comparator<Solution> equalsComparator;
-  private Comparator<Solution> crowdingDistanceComparator;
+  private List<Solution<?>> solutionSet;
+  private Comparator<Solution<?>> dominanceComparator;
+  private Comparator<Solution<?>> equalsComparator;
+  private Comparator<Solution<?>> crowdingDistanceComparator;
   private CrowdingDistance crowdingDistance ;
 
   public CrowdingDistanceArchive(int maxSize) {
@@ -64,7 +64,7 @@ public class CrowdingDistanceArchive implements Archive {
   }
 
   @Override
-  public List<Solution> getSolutionList() {
+  public List<Solution<?>> getSolutionList() {
     return solutionSet ;
   }
 

@@ -22,12 +22,14 @@ import static org.junit.Assert.assertNull;
  * Created by Antonio on 15/09/14.
  */
 public class RankingAttrTest {
-  List<Solution> population ;
-  Problem problem ;
+  private List<Solution<?>> population ;
+  private Problem problem ;
+  private Ranking ranking ;
 
   @Before
   public void startup() {
     problem = new Fonseca() ;
+    ranking = new RankingImpl() ;
   }
 
   @Test
@@ -40,7 +42,7 @@ public class RankingAttrTest {
 
   @Test
   public void rankingOfAnPopulationOfSizeOne() {
-    population = new ArrayList<Solution>();
+    population = new ArrayList<>();
 
     DoubleSolution solution = (DoubleSolution)problem.createSolution() ;
     population.add(solution) ;
@@ -77,11 +79,11 @@ public class RankingAttrTest {
     assertNotNull(ranking.getSubfront(0));
     assertEquals(2, ranking.getSubfront(0).size()) ;
 
-    assertEquals(0, (int) population.get(0).getAttribute(Ranking.ATTRIBUTE.RANK)) ;
-    assertEquals(0, (int) population.get(1).getAttribute(Ranking.ATTRIBUTE.RANK)) ;
+    assertEquals(0, (int) ranking.getAttribute(population.get(0))) ;
+    assertEquals(0, (int) ranking.getAttribute(population.get(1))) ;
 
-    List<Solution> subfront = ranking.getSubfront(0) ;
-    assertEquals(0, (int) subfront.get(0).getAttribute(Ranking.ATTRIBUTE.RANK)) ;
+    List<Solution<?>> subfront = ranking.getSubfront(0) ;
+    assertEquals(0, (int) ranking.getAttribute(subfront.get(0))) ;
   }
 
   @Test
@@ -105,14 +107,20 @@ public class RankingAttrTest {
     assertNotNull(ranking.getSubfront(0));
     assertEquals(1, ranking.getSubfront(0).size()) ;
     assertEquals(1, ranking.getSubfront(1).size()) ;
-    assertEquals(0, (int) population.get(0).getAttribute(Ranking.ATTRIBUTE.RANK)) ;
-    assertEquals(1, (int) population.get(1).getAttribute(Ranking.ATTRIBUTE.RANK)) ;
+    assertEquals(0, (int) ranking.getAttribute(population.get(0))) ;
+    assertEquals(1, (int) ranking.getAttribute(population.get(1))) ;
 
-    List<Solution> subfront = ranking.getSubfront(0) ;
-    List<Solution> subfront1 = ranking.getSubfront(1) ;
+   // assertEquals(0, (int) population.get(0).getAttribute(Ranking.ATTRIBUTE.RANK)) ;
+   // assertEquals(1, (int) population.get(1).getAttribute(Ranking.ATTRIBUTE.RANK)) ;
 
-    assertEquals(0, (int) subfront.get(0).getAttribute(Ranking.ATTRIBUTE.RANK)) ;
-    assertEquals(1, (int) subfront1.get(0).getAttribute(Ranking.ATTRIBUTE.RANK)) ;
+    List<Solution<?>> subfront = ranking.getSubfront(0) ;
+    List<Solution<?>> subfront1 = ranking.getSubfront(1) ;
+
+    assertEquals(0, (int) ranking.getAttribute(subfront.get(0))) ;
+    assertEquals(1, (int) ranking.getAttribute(subfront1.get(0))) ;
+
+    //assertEquals(0, (int) subfront.get(0).getAttribute(Ranking.ATTRIBUTE.RANK)) ;
+    //assertEquals(1, (int) subfront1.get(0).getAttribute(Ranking.ATTRIBUTE.RANK)) ;
   }
 
   @Test
@@ -134,8 +142,10 @@ public class RankingAttrTest {
     Ranking ranking = new RankingImpl() ;
     ranking.computeRanking(population) ;
 
-    assertEquals(1, (int) population.get(0).getAttribute(Ranking.ATTRIBUTE.RANK)) ;
-    assertEquals(0, (int) population.get(1).getAttribute(Ranking.ATTRIBUTE.RANK)) ;
+    assertEquals(1, (int) ranking.getAttribute(population.get(0))) ;
+    assertEquals(0, (int) ranking.getAttribute(population.get(1))) ;
+    //assertEquals(1, (int) population.get(0).getAttribute(Ranking.ATTRIBUTE.RANK)) ;
+    //assertEquals(0, (int) population.get(1).getAttribute(Ranking.ATTRIBUTE.RANK)) ;
   }
 
 }

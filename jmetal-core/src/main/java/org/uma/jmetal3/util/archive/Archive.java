@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface Archive {
   public boolean add(Solution<?> solution) ;
-  public List<Solution> getSolutionList() ;
+  public List<Solution<?>> getSolutionList() ;
   public int getMaxSize() ;
 
 }

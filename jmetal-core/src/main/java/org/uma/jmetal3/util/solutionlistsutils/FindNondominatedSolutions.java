@@ -12,7 +12,7 @@ import java.util.List;
 public class FindNondominatedSolutions {
   private static Ranking ranking = new RankingImpl() ;
 
-  public static List<Solution> getNonDominatedSolutions(List<Solution> solutionSet) {
+  public static List<Solution<?>> getNonDominatedSolutions(List<Solution<?>> solutionSet) {
     return ranking.computeRanking(solutionSet).getSubfront(0);
   }
 }

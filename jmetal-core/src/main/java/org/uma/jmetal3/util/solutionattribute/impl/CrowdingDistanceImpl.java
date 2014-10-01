@@ -62,7 +62,7 @@ public class CrowdingDistanceImpl implements CrowdingDistance {
     }
 
     //Use a new SolutionSet to avoid altering the original solutionSet
-    List<Solution> front = new ArrayList<>(size);
+    List<Solution<?>> front = new ArrayList<>(size);
     for (int i = 0; i < size; i++) {
       front.add(solutionSet.get(i));
     }

@@ -74,11 +74,11 @@ public abstract class SMSEMOATemplate implements Algorithm<List<Solution>> {
     return evaluations >= maxEvaluations;
   }
 
-  protected List<Solution> getNonDominatedSolutions(List<Solution> solutionSet) {
+  protected List<Solution<?>> getNonDominatedSolutions(List<Solution<?>> solutionSet) {
     return ranking.computeRanking(solutionSet).getSubfront(0);
   }
 
-  protected void computeRanking(List<Solution> solutionSet) {
+  protected void computeRanking(List<Solution<?>> solutionSet) {
     ranking.computeRanking(solutionSet) ;
   }
 

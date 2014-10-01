@@ -23,6 +23,7 @@ package org.uma.jmetal3.util.comparator;
 
 import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal3.util.solutionattribute.Ranking;
+import org.uma.jmetal3.util.solutionattribute.impl.RankingImpl;
 
 import java.util.Comparator;
 
@@ -30,7 +31,9 @@ import java.util.Comparator;
  * This class implements a <code>Comparator</code> (a method for comparing
  * <code>Solution</code> objects) based on the rank of the solutions.
  */
-public class RankingComparator implements Comparator<Solution> {
+public class RankingComparator implements Comparator<Solution<?>> {
+  private Ranking ranking = new RankingImpl() ;
+
   /**
    * Compares two solutions.
    *
@@ -40,7 +43,7 @@ public class RankingComparator implements Comparator<Solution> {
    * respectively.
    */
   @Override
-  public int compare(Solution solution1, Solution solution2) {
+  public int compare(Solution<?> solution1, Solution<?> solution2) {
     if (solution1 == null) {
       return 1;
     } else if (solution2 == null) {
@@ -50,12 +53,16 @@ public class RankingComparator implements Comparator<Solution> {
     int rank1 = Integer.MAX_VALUE ;
     int rank2 = Integer.MAX_VALUE ;
 
-    if (solution1.getAttribute(Ranking.ATTRIBUTE.RANK) != null) {
-      rank1 = (int)solution1.getAttribute(Ranking.ATTRIBUTE.RANK) ;
+    if (ranking.getAttribute(solution1) != null ) {
+    //if (solution1.getAttribute(Ranking.ATTRIBUTE.RANK) != null) {
+      //rank1 = (int)solution1.getAttribute(Ranking.ATTRIBUTE.RANK) ;
+      rank1 = ranking.getAttribute(solution1) ;
     }
 
-    if (solution2.getAttribute(Ranking.ATTRIBUTE.RANK) != null){
-      rank2 = (int) solution2.getAttribute(Ranking.ATTRIBUTE.RANK);
+    if (ranking.getAttribute(solution2) != null ) {
+      //if (solution2.getAttribute(Ranking.ATTRIBUTE.RANK) != null){
+      //rank2 = (int) solution2.getAttribute(Ranking.ATTRIBUTE.RANK);
+      rank2 = ranking.getAttribute(solution2) ;
     }
 
     if (rank1 < rank2) {
