@@ -37,7 +37,6 @@ import java.util.List;
  */
 
 public class NSGAII extends NSGAIITemplate {
-  private static final long serialVersionUID = 5815971727148859507L;
 
   protected NSGAII(Builder builder) {
     super(builder) ;
@@ -63,13 +62,13 @@ public class NSGAII extends NSGAIITemplate {
           parents.add ((Solution) selectionOperator.execute(population));
           parents.add ((Solution) selectionOperator.execute(population));
 
-          List<Solution> offSpring = (List<Solution>) crossoverOperator.execute(parents);
+          List<Solution> offspring = (List<Solution>) crossoverOperator.execute(parents);
 
-          mutationOperator.execute(offSpring.get(0));
-          mutationOperator.execute(offSpring.get(1));
+          mutationOperator.execute(offspring.get(0));
+          mutationOperator.execute(offspring.get(1));
 
-          offspringPopulation.add(offSpring.get(0));
-          offspringPopulation.add(offSpring.get(1)) ;
+          offspringPopulation.add(offspring.get(0));
+          offspringPopulation.add(offspring.get(1)) ;
         }
 
       List<Solution> jointPopulation = evaluatePopulation(offspringPopulation);
