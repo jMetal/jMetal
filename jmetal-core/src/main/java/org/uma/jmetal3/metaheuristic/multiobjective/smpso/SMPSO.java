@@ -136,7 +136,7 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
 
   /** Builder class */
   public static class Builder {
-    protected ContinuousProblem<?> problem;
+    protected ContinuousProblem problem;
     protected Archive leaders;
 
     protected int swarmSize;

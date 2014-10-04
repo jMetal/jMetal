@@ -22,15 +22,20 @@
 package org.uma.jmetal3.metaheuristic.multiobjective.gde3;
 
 import org.uma.jmetal3.core.Operator;
+import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal3.encoding.DoubleSolution;
+import org.uma.jmetal3.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal3.operator.selection.impl.DifferentialEvolutionSelection;
 import org.uma.jmetal3.problem.ContinuousProblem;
+import org.uma.jmetal3.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal3.util.comparator.DominanceComparator;
 import org.uma.jmetal3.util.solutionattribute.DensityEstimator;
 import org.uma.jmetal3.util.solutionattribute.Ranking;
 import org.uma.jmetal3.util.solutionattribute.impl.CrowdingDistance;
 import org.uma.jmetal3.util.solutionattribute.impl.DominanceRanking;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -44,7 +49,7 @@ public class GDE3 implements org.uma.jmetal3.core.Algorithm<List<DoubleSolution>
   protected List<DoubleSolution> population;
   protected List<DoubleSolution> offspringPopulation;
 
-  protected Operator crossoverOperator;
+  protected DifferentialEvolutionCrossover crossoverOperator;
   protected DifferentialEvolutionSelection selectionOperator;
 
   protected Comparator dominanceComparator;
@@ -54,7 +59,6 @@ public class GDE3 implements org.uma.jmetal3.core.Algorithm<List<DoubleSolution>
 
   /** Constructor */
   public GDE3(Builder builder) {
-    super() ;
     problem = builder.problem;
     maxIterations = builder.maxIterations;
     crossoverOperator = builder.crossoverOperator;
@@ -92,7 +96,7 @@ public class GDE3 implements org.uma.jmetal3.core.Algorithm<List<DoubleSolution>
     protected int populationSize;
     protected int maxIterations;
     
-    protected Operator crossoverOperator;
+    protected DifferentialEvolutionCrossover crossoverOperator;
     protected DifferentialEvolutionSelection selectionOperator;
 
     public Builder(ContinuousProblem problem) {
@@ -112,17 +116,17 @@ public class GDE3 implements org.uma.jmetal3.core.Algorithm<List<DoubleSolution>
       return this ;
     }
 
-    public Builder setCrossover(Operator crossover) {
+    public Builder setCrossover(DifferentialEvolutionCrossover crossover) {
       crossoverOperator = crossover ;
 
       return this ;
     }
 
-    //public Builder setSelection(SelectionOperator selection) {
-    //  selectionOperator = selection ;
-    //
-    //  return this ;
-    //}
+    public Builder setSelection(DifferentialEvolutionSelection selection) {
+      selectionOperator = selection ;
+
+      return this ;
+    }
 
     public GDE3 build() {
       return new GDE3(this) ;
@@ -131,35 +135,35 @@ public class GDE3 implements org.uma.jmetal3.core.Algorithm<List<DoubleSolution>
 
   /** Execute() method  */
   public List<DoubleSolution> execute() {
-                     /*
+
     createInitialPopulation();
     population = evaluatePopulation(population);
-
+                                                            System.out.println("Pozsize: " + population.size()) ;
     // Generations ...
     while (!stoppingCondition()) {
 
       // Create the offSpring solutionSet
       offspringPopulation = new ArrayList<>(populationSize * 2);
-      ArrayList<Solution> tmpSolutionSet = new ArrayList<>(populationSize) ;
+      ArrayList<DoubleSolution> tmpSolutionSet = new ArrayList<>(populationSize) ;
 
       for (int i = 0; i < populationSize; i++) {
         // Obtain parents. Two parameters are required: the population and the
         //                 index of the current individual
         selectionOperator.setIndex(i);
-        List<Solution> parents = (List<Solution>) selectionOperator.execute(population);
+        List<DoubleSolution> parents = selectionOperator.execute(population);
 
-        Solution child;
-        // Crossover. Two parameters are required: the current individual and the
-        //            array of parents
-        child = (Solution) crossoverOperator.execute(new Object[] {population.get(i), parent});
+        crossoverOperator.setCurrentSolution(population.get(i));
+        List<DoubleSolution>children = crossoverOperator.execute(parents);
 
-        tmpSolutionSet.add(child);
+        tmpSolutionSet.add(children.get(0));
       }
-      tmpSolutionSet = evaluatePopulation(tmpSolutionSet);
+
+      ////////Todo: tmpSolutionSet = evaluatePopulation(tmpSolutionSet);
+      evaluatePopulation(tmpSolutionSet);
 
       for (int i = 0; i < populationSize; i++) {
         // Dominance org.uma.test
-        Solution child = tmpSolutionSet.get(i) ;
+        DoubleSolution child = tmpSolutionSet.get(i) ;
         int result;
         result = dominanceComparator.compare(population.get(i), child);
         if (result == -1) {
@@ -176,7 +180,7 @@ public class GDE3 implements org.uma.jmetal3.core.Algorithm<List<DoubleSolution>
       }
 
       // Ranking the offspring population
-      org.uma.jmetal.util.Ranking ranking = new org.uma.jmetal.util.Ranking(offspringPopulation);
+      ranking.computeRanking(offspringPopulation);
 
       population.clear();
       int rankingIndex = 0;
@@ -196,16 +200,14 @@ public class GDE3 implements org.uma.jmetal3.core.Algorithm<List<DoubleSolution>
     tearDown();
 
     return getNonDominatedSolutions(population) ;
-    */
-    return null ;
   }
-                        /*
+
   protected void createInitialPopulation() {
     population = new ArrayList<>(populationSize);
 
-    Solution newSolution;
+    DoubleSolution newSolution;
     for (int i = 0; i < populationSize; i++) {
-      newSolution = problem.createSolution() ;
+      newSolution = problem.createSolution();
       population.add(newSolution);
     }
   }
@@ -223,7 +225,7 @@ public class GDE3 implements org.uma.jmetal3.core.Algorithm<List<DoubleSolution>
   }
 
   protected void addLastRankedSolutions(Ranking ranking, int rank) {
-    List<Solution> currentRankedFront = ranking.getSubfront(rank) ;
+    List<DoubleSolution> currentRankedFront = ranking.getSubfront(rank) ;
 
     Collections.sort(currentRankedFront, new CrowdingDistanceComparator()) ;
 
@@ -235,7 +237,7 @@ public class GDE3 implements org.uma.jmetal3.core.Algorithm<List<DoubleSolution>
   }
 
   protected void addRankedSolutionsToPopulation(Ranking ranking, int rank)  {
-    List<Solution> front ;
+    List<DoubleSolution> front ;
 
     front = ranking.getSubfront(rank);
 
@@ -256,11 +258,10 @@ public class GDE3 implements org.uma.jmetal3.core.Algorithm<List<DoubleSolution>
     return ranking.getSubfront(rank).size() < (populationSize - population.size()) ;
   }
 
-  protected List<Solution> getNonDominatedSolutions(List<Solution> solutionSet) {
+  protected List<DoubleSolution> getNonDominatedSolutions(List<DoubleSolution> solutionSet) {
     return ranking.computeRanking(solutionSet).getSubfront(0);
   }
 
   protected void tearDown() {
   }
-  */
 } 

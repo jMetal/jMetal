@@ -28,7 +28,7 @@ import org.uma.jmetal3.problem.impl.ContinuousProblemImpl;
 import java.util.ArrayList;
 
 /** Class representing problem Srinivas */
-public class Srinivas extends ContinuousProblemImpl<DoubleSolution> implements ConstrainedProblem<DoubleSolution> {
+public class Srinivas extends ContinuousProblemImpl implements ConstrainedProblem<DoubleSolution> {
 
   /** Constructor */
   public Srinivas()  {

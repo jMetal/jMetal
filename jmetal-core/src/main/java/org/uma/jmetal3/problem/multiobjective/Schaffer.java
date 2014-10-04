@@ -30,7 +30,7 @@ import java.util.ArrayList;
 /**
  * Class representing problem Schaffer
  */
-public class Schaffer extends ContinuousProblemImpl<DoubleSolution> {
+public class Schaffer extends ContinuousProblemImpl {
   private static final long serialVersionUID = -2366503015218789989L;
 
   /**

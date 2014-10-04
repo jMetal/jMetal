@@ -1,13 +1,12 @@
 package org.uma.jmetal3.problem.impl;
 
-import org.uma.jmetal3.core.Solution;
-import org.uma.jmetal3.problem.ContinuousProblem;
+import org.uma.jmetal3.encoding.IntegerSolution;
 import org.uma.jmetal3.problem.IntegerProblem;
 
 import java.util.List;
 
-public abstract class IntegerProblemImpl<S extends Solution<? extends Integer>> extends GenericProblemImpl<S>
-  implements IntegerProblem<S> {
+public abstract class IntegerProblemImpl extends GenericProblemImpl<IntegerSolution>
+  implements IntegerProblem {
 
   private List<Integer> lowerLimit ;
   private List<Integer> upperLimit ;

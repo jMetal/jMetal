@@ -1,6 +1,5 @@
 package org.uma.jmetal3.problem.impl;
 
-import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal3.encoding.DoubleSolution;
 import org.uma.jmetal3.problem.ContinuousProblem;
 
@@ -8,8 +7,8 @@ import java.util.List;
 // public interface ContinuousProblem<S extends Solution<? extends Double>> extends Problem<S> {
 // public abstract class GenericProblemImpl<S extends Solution<?>> implements Problem<S> {
 
-public abstract class ContinuousProblemImpl<S extends Solution<? extends Double>> extends GenericProblemImpl<S>
-  implements ContinuousProblem<S>{
+public abstract class ContinuousProblemImpl extends GenericProblemImpl<DoubleSolution>
+  implements ContinuousProblem {
 
   private List<Double> lowerLimit ;
   private List<Double> upperLimit ;

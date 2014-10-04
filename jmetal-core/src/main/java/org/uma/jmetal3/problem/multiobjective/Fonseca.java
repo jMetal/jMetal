@@ -28,7 +28,7 @@ import org.uma.jmetal3.problem.impl.ContinuousProblemImpl;
 import java.util.ArrayList;
 
 /** Class representing problem Fonseca */
-public class Fonseca extends ContinuousProblemImpl<DoubleSolution> {
+public class Fonseca extends ContinuousProblemImpl {
 
   /** Constructor */
   public Fonseca()  {

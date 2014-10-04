@@ -23,7 +23,7 @@ package org.uma.jmetal3.operator.selection.impl;
 
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.random.PseudoRandom;
-import org.uma.jmetal3.core.Solution;
+import org.uma.jmetal3.encoding.DoubleSolution;
 import org.uma.jmetal3.operator.selection.SelectionOperator;
 
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ import java.util.List;
  * are returned from a population.
  */
 public class DifferentialEvolutionSelection implements
-  SelectionOperator<List<Solution<?>>,List<? extends Solution<?>>> {
+  SelectionOperator<List<DoubleSolution>,List<DoubleSolution>> {
 
   private int solutionListIndex = Integer.MIN_VALUE ;
 
@@ -59,16 +59,9 @@ public class DifferentialEvolutionSelection implements
 
   /** Execute() method  */
   @Override
-  public List<? extends Solution<?>> execute(List<Solution<?>> solutionSet) {
+  public List<DoubleSolution> execute(List<DoubleSolution> solutionSet) {
     if (null == solutionSet) {
       throw new JMetalException("Parameter is null") ;
-    } else if (solutionSet.size() != 2) {
-      throw new JMetalException("A list of size 2 is required");
-      //} else if (!((params.get(0)) instanceof List<Solution>)) {
-      //  throw new JMetalException("Parameter 0 must be of class List<Solution>") ;
-      //    } else if (!((params.get(1)) instanceof Integer)) {
-      //      throw new JMetalException("Parameter 2 must be of class Integer") ;
-      //    }
     } else if (solutionSet.size() < 4) {
       throw new JMetalException(
         "DifferentialEvolutionSelection: the population has less than four solutions");
@@ -77,7 +70,7 @@ public class DifferentialEvolutionSelection implements
         "DifferentialEvolutionSelection: index value invalid: " + solutionListIndex );
     }
 
-    List<Solution<?>> parents = new ArrayList<>(3);
+    List<DoubleSolution> parents = new ArrayList<>(3);
     int r1, r2, r3;
 
     do {

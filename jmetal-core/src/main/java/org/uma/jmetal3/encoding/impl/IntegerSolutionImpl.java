@@ -11,10 +11,10 @@ import java.util.HashMap;
 /**
  * Created by Antonio J. Nebro on 03/09/14.
  */
-public class IntegerSolutionImpl extends GenericSolutionImpl<Integer, IntegerProblem<IntegerSolution>> implements IntegerSolution {
+public class IntegerSolutionImpl extends GenericSolutionImpl<Integer, IntegerProblem> implements IntegerSolution {
 
   /** Constructor */
-  public IntegerSolutionImpl(IntegerProblem<IntegerSolution> problem) {
+  public IntegerSolutionImpl(IntegerProblem problem) {
   	this.problem = problem ;
     objectives = new ArrayList<>(problem.getNumberOfObjectives()) ;
     variables = new ArrayList<>(problem.getNumberOfVariables()) ;

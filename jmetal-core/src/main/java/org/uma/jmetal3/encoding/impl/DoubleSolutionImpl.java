@@ -11,9 +11,9 @@ import java.util.HashMap;
 /**
  * Created by Antonio J. Nebro on 03/09/14.
  */
-public class DoubleSolutionImpl extends GenericSolutionImpl<Double, ContinuousProblem<DoubleSolution>> implements DoubleSolution {
+public class DoubleSolutionImpl extends GenericSolutionImpl<Double, ContinuousProblem> implements DoubleSolution {
   /** Constructor */
-  public DoubleSolutionImpl(ContinuousProblem<DoubleSolution> problem) {
+  public DoubleSolutionImpl(ContinuousProblem problem) {
     super() ;
 
   	this.problem = problem ;

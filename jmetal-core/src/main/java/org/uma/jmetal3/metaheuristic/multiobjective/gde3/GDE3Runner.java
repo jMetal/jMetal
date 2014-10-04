@@ -18,24 +18,20 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.runner.multiobjective;
+package org.uma.jmetal3.metaheuristic.multiobjective.gde3;
 
-import org.uma.jmetal.core.Algorithm;
-import org.uma.jmetal.core.Operator;
-import org.uma.jmetal.core.Problem;
-import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.metaheuristic.multiobjective.gde3.GDE3;
-import org.uma.jmetal.operator.crossover.DifferentialEvolutionCrossover;
-import org.uma.jmetal.operator.selection.DifferentialEvolutionSelection;
-import org.uma.jmetal.problem.ProblemFactory;
-import org.uma.jmetal.problem.multiobjective.zdt.ZDT3;
-import org.uma.jmetal.qualityindicator.QualityIndicatorGetter;
-import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.evaluator.SequentialSolutionSetEvaluator;
-import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
-import org.uma.jmetal.util.fileOutput.DefaultFileOutputContext;
-import org.uma.jmetal.util.fileOutput.SolutionSetOutput;
+import org.uma.jmetal3.core.Algorithm;
+import org.uma.jmetal3.core.Solution;
+import org.uma.jmetal3.operator.crossover.impl.DifferentialEvolutionCrossover;
+import org.uma.jmetal3.operator.selection.impl.DifferentialEvolutionSelection;
+import org.uma.jmetal3.problem.ContinuousProblem;
+import org.uma.jmetal3.problem.multiobjective.zdt.ZDT3;
+import org.uma.jmetal3.util.AlgorithmRunner;
+import org.uma.jmetal3.util.fileoutput.DefaultFileOutputContext;
+import org.uma.jmetal3.util.fileoutput.SolutionSetOutput;
+
+import java.util.List;
 
 /**
  * Class for configuring and running the GDE3 algorithm
@@ -46,31 +42,20 @@ public class GDE3Runner {
    * @throws org.uma.jmetal.util.JMetalException
    * @throws java.io.IOException
    * @throws SecurityException
-   * @throws java.lang.ClassNotFoundException
+   * @throws ClassNotFoundException
    * Usage: three choices
    *        - org.uma.jmetal.runner.multiobjective.GDE3Runner
    *        - org.uma.jmetal.runner.multiobjective.GDE3Runner problemName
    *        - org.uma.jmetal.runner.multiobjective.GDE3Runner problemName paretoFrontFile
    */
   public static void main(String[] args)
-          throws Exception {
-    Problem problem;
+    throws Exception {
+    ContinuousProblem problem;
     Algorithm algorithm;
-    Operator selection;
-    Operator crossover;
+    DifferentialEvolutionSelection selection;
+    DifferentialEvolutionCrossover crossover;
 
-    QualityIndicatorGetter indicators;
-
-    indicators = null;
-    if (args.length == 1) {
-      Object[] params = {"Real"};
-      problem = (new ProblemFactory()).getProblem(args[0], params);
-    } else if (args.length == 2) {
-      Object[] params = {"Real"};
-      problem = (new ProblemFactory()).getProblem(args[0], params);
-      indicators = new QualityIndicatorGetter(problem, args[1]);
-    } else {
-      problem = new ZDT3("Real");
+    problem = new ZDT3();
       /* Examples
       //problem = new Water("Real");
       //problem = new ZDT4("ArrayReal");
@@ -78,14 +63,12 @@ public class GDE3Runner {
       //problem = new DTLZ1("Real");
       //problem = new OKA2("Real") ;
       */
-    }
 
      /*
      * Alternatives:
      * - evaluator = new SequentialSolutionSetEvaluator()
      * - evaluator = new MultithreadedSolutionSetEvaluator(threads, problem)
      */
-    SolutionSetEvaluator evaluator = new SequentialSolutionSetEvaluator();
 
     crossover = new DifferentialEvolutionCrossover.Builder()
       .setCr(0.5)
@@ -95,7 +78,7 @@ public class GDE3Runner {
     selection = new DifferentialEvolutionSelection.Builder()
       .build();
 
-    algorithm = new GDE3.Builder(problem, evaluator)
+    algorithm = new GDE3.Builder(problem)
       .setCrossover(crossover)
       .setSelection(selection)
       .setMaxIterations(250)
@@ -105,7 +88,7 @@ public class GDE3Runner {
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
       .execute() ;
 
-    SolutionSet population = algorithmRunner.getSolutionSet() ;
+    List<Solution> population = algorithmRunner.getSolutionSet() ;
     long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)
@@ -117,14 +100,5 @@ public class GDE3Runner {
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
     JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
     JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
-
-    if (indicators != null) {
-      JMetalLogger.logger.info("Quality indicators");
-      JMetalLogger.logger.info("Hypervolume: " + indicators.getHypervolume(population));
-      JMetalLogger.logger.info("GD         : " + indicators.getGD(population));
-      JMetalLogger.logger.info("IGD        : " + indicators.getIGD(population));
-      JMetalLogger.logger.info("Spread     : " + indicators.getSpread(population));
-      JMetalLogger.logger.info("Epsilon    : " + indicators.getEpsilon(population));
-    }
   }
 }

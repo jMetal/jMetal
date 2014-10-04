@@ -28,7 +28,7 @@ import org.uma.jmetal3.problem.impl.ContinuousProblemImpl;
 import java.util.ArrayList;
 
 /** Class representing problem ZDT2 */
-public class ZDT2 extends ContinuousProblemImpl<DoubleSolution> {
+public class ZDT2 extends ContinuousProblemImpl {
 
   /** Constructor. Creates default instance of problem ZDT2 (30 decision variables) */
   public ZDT2()  {

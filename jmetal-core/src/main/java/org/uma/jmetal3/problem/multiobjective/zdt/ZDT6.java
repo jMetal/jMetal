@@ -30,7 +30,7 @@ import java.util.ArrayList;
 /**
  * Class representing problem ZDT6
  */
-public class ZDT6 extends ContinuousProblemImpl<DoubleSolution> {
+public class ZDT6 extends ContinuousProblemImpl {
 
   /** Constructor. Creates a default instance of problem ZDT6 (10 decision variables) */
   public ZDT6()  {
