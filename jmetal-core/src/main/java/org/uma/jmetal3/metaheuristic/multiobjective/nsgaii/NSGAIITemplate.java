@@ -30,10 +30,10 @@ import org.uma.jmetal3.operator.crossover.CrossoverOperator;
 import org.uma.jmetal3.operator.mutation.MutationOperator;
 import org.uma.jmetal3.operator.selection.SelectionOperator;
 import org.uma.jmetal3.util.comparator.CrowdingDistanceComparator;
-import org.uma.jmetal3.util.solutionattribute.CrowdingDistance;
+import org.uma.jmetal3.util.solutionattribute.DensityEstimator;
 import org.uma.jmetal3.util.solutionattribute.Ranking;
-import org.uma.jmetal3.util.solutionattribute.impl.CrowdingDistanceImpl;
-import org.uma.jmetal3.util.solutionattribute.impl.RankingImpl;
+import org.uma.jmetal3.util.solutionattribute.impl.CrowdingDistance;
+import org.uma.jmetal3.util.solutionattribute.impl.DominanceRanking;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -68,7 +68,7 @@ public abstract class NSGAIITemplate implements Algorithm<List<Solution>> {
   protected String variant ;
 
   protected Ranking ranking ;
-  protected CrowdingDistance crowdingDistance;
+  protected DensityEstimator crowdingDistance;
 
   /** Constructor */
   protected NSGAIITemplate(Builder builder) {
@@ -80,8 +80,8 @@ public abstract class NSGAIITemplate implements Algorithm<List<Solution>> {
     selectionOperator = builder.selectionOperator;
     variant = builder.variant ;
 
-    ranking = new RankingImpl() ;
-    crowdingDistance = new CrowdingDistanceImpl() ;
+    ranking = new DominanceRanking() ;
+    crowdingDistance = new CrowdingDistance() ;
 
     evaluations = 0 ;
   }
@@ -251,7 +251,7 @@ public abstract class NSGAIITemplate implements Algorithm<List<Solution>> {
         addRankedSolutionsToPopulation(ranking, rankingIndex);
         rankingIndex++;
       } else {
-        crowdingDistance.computeCrowdingDistance(ranking.getSubfront(rankingIndex));
+        crowdingDistance.computeDensityEstimator(ranking.getSubfront(rankingIndex));
         addLastRankedSolutions(ranking, rankingIndex);
       }
     }

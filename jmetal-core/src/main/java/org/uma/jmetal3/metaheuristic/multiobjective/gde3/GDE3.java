@@ -26,10 +26,10 @@ import org.uma.jmetal3.encoding.DoubleSolution;
 import org.uma.jmetal3.operator.selection.impl.DifferentialEvolutionSelection;
 import org.uma.jmetal3.problem.ContinuousProblem;
 import org.uma.jmetal3.util.comparator.DominanceComparator;
-import org.uma.jmetal3.util.solutionattribute.CrowdingDistance;
+import org.uma.jmetal3.util.solutionattribute.DensityEstimator;
 import org.uma.jmetal3.util.solutionattribute.Ranking;
-import org.uma.jmetal3.util.solutionattribute.impl.CrowdingDistanceImpl;
-import org.uma.jmetal3.util.solutionattribute.impl.RankingImpl;
+import org.uma.jmetal3.util.solutionattribute.impl.CrowdingDistance;
+import org.uma.jmetal3.util.solutionattribute.impl.DominanceRanking;
 
 import java.util.Comparator;
 import java.util.List;
@@ -50,7 +50,7 @@ public class GDE3 implements org.uma.jmetal3.core.Algorithm<List<DoubleSolution>
   protected Comparator dominanceComparator;
 
   protected Ranking ranking ;
-  protected CrowdingDistance crowdingDistance;
+  protected DensityEstimator crowdingDistance;
 
   /** Constructor */
   public GDE3(Builder builder) {
@@ -64,8 +64,8 @@ public class GDE3 implements org.uma.jmetal3.core.Algorithm<List<DoubleSolution>
 
     dominanceComparator = new DominanceComparator();
     iterations = 0 ;
-    ranking = new RankingImpl() ;
-    crowdingDistance = new CrowdingDistanceImpl() ;
+    ranking = new DominanceRanking() ;
+    crowdingDistance = new CrowdingDistance() ;
   }
 
   /* Getters */
@@ -185,7 +185,7 @@ public class GDE3 implements org.uma.jmetal3.core.Algorithm<List<DoubleSolution>
           addRankedSolutionsToPopulation(ranking, rankingIndex);
           rankingIndex++;
         } else {
-          crowdingDistance.computeCrowdingDistance(ranking.getSubfront(rankingIndex));
+          crowdingDistance.computeDensityEstimator(ranking.getSubfront(rankingIndex));
           addLastRankedSolutions(ranking, rankingIndex);
         }
       }

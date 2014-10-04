@@ -8,7 +8,7 @@ import org.uma.jmetal3.operator.crossover.CrossoverOperator;
 import org.uma.jmetal3.operator.mutation.MutationOperator;
 import org.uma.jmetal3.operator.selection.SelectionOperator;
 import org.uma.jmetal3.util.solutionattribute.Ranking;
-import org.uma.jmetal3.util.solutionattribute.impl.RankingImpl;
+import org.uma.jmetal3.util.solutionattribute.impl.DominanceRanking;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +45,7 @@ public abstract class SMSEMOATemplate implements Algorithm<List<Solution>> {
     selection = builder.selectionOperator;
     offset = builder.offset;
 
-    ranking = new RankingImpl() ;
+    ranking = new DominanceRanking() ;
 
     evaluations = 0 ;
   }

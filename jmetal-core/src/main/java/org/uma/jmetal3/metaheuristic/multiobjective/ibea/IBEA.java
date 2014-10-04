@@ -31,8 +31,7 @@ import org.uma.jmetal3.operator.selection.SelectionOperator;
 import org.uma.jmetal3.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal3.util.comparator.DominanceComparator;
 import org.uma.jmetal3.util.comparator.FitnessComparator;
-import org.uma.jmetal3.util.solutionattribute.Fitness;
-import org.uma.jmetal3.util.solutionattribute.impl.FitnessImpl;
+import org.uma.jmetal3.util.solutionattribute.impl.Fitness;
 import org.uma.jmetal3.util.solutionlistsutils.FindNondominatedSolutions;
 
 import java.util.ArrayList;
@@ -55,7 +54,7 @@ public class IBEA implements Algorithm<List<Solution<?>>> {
   private MutationOperator mutation ;
   private SelectionOperator selection ;
 
-  private Fitness solutionFitness = new FitnessImpl() ;
+  private Fitness solutionFitness = new Fitness() ;
   private DominanceComparator dominanceComparator = new DominanceComparator() ;
 
   /** Constructor */
@@ -332,7 +331,7 @@ public class IBEA implements Algorithm<List<Solution<?>>> {
         fitness += Math.exp((-1 * indicatorValues.get(i).get(pos) / maxIndicatorValue) / kappa);
       }
     }
-    solutionFitness.setFitness(solutionSet.get(pos), fitness);
+    solutionFitness.setAttribute(solutionSet.get(pos), fitness);
     //solutionSet.get(pos).setFitness(fitness);
   }
 
@@ -374,15 +373,15 @@ public class IBEA implements Algorithm<List<Solution<?>>> {
 
     // Find the worst;
     //double worst = solutionSet.get(0).getFitness();
-    double worst = solutionFitness.getFitness(solutionSet.get(0)) ;
+    double worst = (double) solutionFitness.getAttribute(solutionSet.get(0));
     int worstIndex = 0;
     double kappa = 0.05;
 
     for (int i = 1; i < solutionSet.size(); i++) {
       //if (solutionSet.get(i).getFitness() > worst) {
-      if (solutionFitness.getFitness(solutionSet.get(i)) > worst) {
+      if ((double)solutionFitness.getAttribute(solutionSet.get(i)) > worst) {
         //worst = solutionSet.get(i).getFitness();
-        worst = solutionFitness.getFitness(solutionSet.get(i)) ;
+        worst = (double)solutionFitness.getAttribute(solutionSet.get(i)) ;
         worstIndex = i;
       }
     }
@@ -391,11 +390,11 @@ public class IBEA implements Algorithm<List<Solution<?>>> {
     for (int i = 0; i < solutionSet.size(); i++) {
       if (i != worstIndex) {
         //double fitness = solutionSet.get(i).getFitness();
-        double fitness = solutionFitness.getFitness(solutionSet.get(i)) ;
+        double fitness = (double)solutionFitness.getAttribute(solutionSet.get(i)) ;
         fitness -=
                 Math.exp((-indicatorValues.get(worstIndex).get(i) / maxIndicatorValue) / kappa);
 //        solutionSet.get(i).setFitness(fitness);
-        solutionFitness.setFitness(solutionSet.get(i), fitness);
+        solutionFitness.setAttribute(solutionSet.get(i), fitness);
       }
     }
 

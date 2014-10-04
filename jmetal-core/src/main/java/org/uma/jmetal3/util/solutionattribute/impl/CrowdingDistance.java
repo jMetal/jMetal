@@ -22,7 +22,7 @@
 package org.uma.jmetal3.util.solutionattribute.impl;
 
 import org.uma.jmetal3.core.Solution;
-import org.uma.jmetal3.util.solutionattribute.CrowdingDistance;
+import org.uma.jmetal3.util.solutionattribute.DensityEstimator;
 import org.uma.jmetal3.util.comparator.ObjectiveComparator;
 
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * This class implements some utilities for calculating distances
  */
-public class CrowdingDistanceImpl implements CrowdingDistance {
+public class CrowdingDistance implements DensityEstimator<Solution<?>, Double> {
 
   /**
    * Assigns crowding distances to all solutions in a <code>SolutionSet</code>.
@@ -42,7 +42,7 @@ public class CrowdingDistanceImpl implements CrowdingDistance {
    */
 
   @Override
-  public void computeCrowdingDistance(List<Solution<?>> solutionSet) {
+  public void computeDensityEstimator(List<Solution<?>> solutionSet) {
     int size = solutionSet.size();
 
     if (size == 0) {
@@ -50,13 +50,13 @@ public class CrowdingDistanceImpl implements CrowdingDistance {
     }
 
     if (size == 1) {
-      solutionSet.get(0).setAttribute(ATTRIBUTE.CROWDNG, Double.POSITIVE_INFINITY);
+      solutionSet.get(0).setAttribute(getAttributeID(), Double.POSITIVE_INFINITY);
       return;
     }
 
     if (size == 2) {
-      solutionSet.get(0).setAttribute(ATTRIBUTE.CROWDNG, Double.POSITIVE_INFINITY);
-      solutionSet.get(1).setAttribute(ATTRIBUTE.CROWDNG, Double.POSITIVE_INFINITY);
+      solutionSet.get(0).setAttribute(getAttributeID(), Double.POSITIVE_INFINITY);
+      solutionSet.get(1).setAttribute(getAttributeID(), Double.POSITIVE_INFINITY);
 
       return;
     }
@@ -68,7 +68,7 @@ public class CrowdingDistanceImpl implements CrowdingDistance {
     }
 
     for (int i = 0; i < size; i++) {
-      front.get(i).setAttribute(ATTRIBUTE.CROWDNG, 0.0);
+      front.get(i).setAttribute(getAttributeID(), 0.0);
     }
 
     double objetiveMaxn;
@@ -84,16 +84,31 @@ public class CrowdingDistanceImpl implements CrowdingDistance {
       objetiveMaxn = front.get(front.size() - 1).getObjective(i);
 
       //Set de crowding distance
-      front.get(0).setAttribute(ATTRIBUTE.CROWDNG, Double.POSITIVE_INFINITY);
-      front.get(size - 1).setAttribute(ATTRIBUTE.CROWDNG, Double.POSITIVE_INFINITY);
+      front.get(0).setAttribute(getAttributeID(), Double.POSITIVE_INFINITY);
+      front.get(size - 1).setAttribute(getAttributeID(), Double.POSITIVE_INFINITY);
 
       for (int j = 1; j < size - 1; j++) {
         distance = front.get(j + 1).getObjective(i) - front.get(j - 1).getObjective(i);
         distance = distance / (objetiveMaxn - objetiveMinn);
-        distance += (double)front.get(j).getAttribute(ATTRIBUTE.CROWDNG);
-        front.get(j).setAttribute(ATTRIBUTE.CROWDNG, distance);
+        distance += (double)front.get(j).getAttribute(getAttributeID());
+        front.get(j).setAttribute(getAttributeID(), distance);
       }
     }
+  }
+
+  @Override
+  public void setAttribute(Solution<?> solution, Double value) {
+    solution.setAttribute(getAttributeID(), value);
+  }
+
+  @Override
+  public Double getAttribute(Solution<?> solution) {
+    return (Double) solution.getAttribute(getAttributeID());
+  }
+
+  @Override
+  public Object getAttributeID() {
+    return this.getClass();
   }
 }
 

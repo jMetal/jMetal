@@ -23,7 +23,7 @@ package org.uma.jmetal3.util.comparator;
 
 import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal3.util.solutionattribute.Ranking;
-import org.uma.jmetal3.util.solutionattribute.impl.RankingImpl;
+import org.uma.jmetal3.util.solutionattribute.impl.DominanceRanking;
 
 import java.util.Comparator;
 
@@ -32,7 +32,7 @@ import java.util.Comparator;
  * <code>Solution</code> objects) based on the rank of the solutions.
  */
 public class RankingComparator implements Comparator<Solution<?>> {
-  private Ranking ranking = new RankingImpl() ;
+  private Ranking ranking = new DominanceRanking() ;
 
   /**
    * Compares two solutions.
@@ -56,13 +56,13 @@ public class RankingComparator implements Comparator<Solution<?>> {
     if (ranking.getAttribute(solution1) != null ) {
     //if (solution1.getAttribute(Ranking.ATTRIBUTE.RANK) != null) {
       //rank1 = (int)solution1.getAttribute(Ranking.ATTRIBUTE.RANK) ;
-      rank1 = ranking.getAttribute(solution1) ;
+      rank1 = (int)ranking.getAttribute(solution1) ;
     }
 
     if (ranking.getAttribute(solution2) != null ) {
       //if (solution2.getAttribute(Ranking.ATTRIBUTE.RANK) != null){
       //rank2 = (int) solution2.getAttribute(Ranking.ATTRIBUTE.RANK);
-      rank2 = ranking.getAttribute(solution2) ;
+      rank2 = (int)ranking.getAttribute(solution2) ;
     }
 
     if (rank1 < rank2) {

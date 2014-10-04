@@ -22,7 +22,7 @@
 package org.uma.jmetal3.util.comparator;
 
 import org.uma.jmetal3.core.Solution;
-import org.uma.jmetal3.util.solutionattribute.CrowdingDistance;
+import org.uma.jmetal3.util.solutionattribute.impl.CrowdingDistance;
 
 import java.util.Comparator;
 
@@ -32,10 +32,8 @@ import java.util.Comparator;
  */
 public class CrowdingDistanceComparator implements Comparator<Solution<?>> {
 
-  /**
-   * stores a RANK_COMPARATOR for check the rank of solutions
-   */
-  private static final Comparator<Solution<?>> RANK_COMPARATOR = new RankingComparator();
+  private static final Comparator<Solution<?>> rankComparator = new RankingComparator();
+  private static final CrowdingDistance crowdingDistance = new CrowdingDistance() ;
 
   /**
    * Compare two solutions.
@@ -53,13 +51,13 @@ public class CrowdingDistanceComparator implements Comparator<Solution<?>> {
       return -1;
     }
 
-    int flagComparatorRank = RANK_COMPARATOR.compare(solution1, solution2);
+    int flagComparatorRank = rankComparator.compare(solution1, solution2);
     if (flagComparatorRank != 0) {
       return flagComparatorRank;
     }
 
-    double distance1 = (double)solution1.getAttribute(CrowdingDistance.ATTRIBUTE.CROWDNG) ;
-    double distance2 = (double)solution2.getAttribute(CrowdingDistance.ATTRIBUTE.CROWDNG) ;
+    double distance1 = (double)solution1.getAttribute(crowdingDistance.getAttributeID()) ;
+    double distance2 = (double)solution2.getAttribute(crowdingDistance.getAttributeID()) ;
 
     if (distance1 > distance2) {
       return -1;

@@ -1,4 +1,4 @@
-//  Ranking.java
+//  CrowdingDistance.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -21,15 +21,14 @@
 package org.uma.jmetal3.util.solutionattribute;
 
 import org.uma.jmetal3.core.Solution;
+import java.util.List;
 
 /**
- * Ranks a list of solutions according to the dominance relationship
+ * Interface representing implementations to compute the crowding distance
  *
  * @author Antonio J. Nebro
  */
-public interface Fitness {
-  public enum ATTRIBUTE { FITNESS }
-
-  public Double getFitness(Solution solution)  ;
-  public void setFitness(Solution solution, Double fitness) ;
+public interface DensityEstimator<S extends Solution<?>, Double> extends SolutionAttribute<S, Double>{
+  public void computeDensityEstimator(List<S> solutionSet) ;
 }
+

@@ -8,7 +8,7 @@ import org.uma.jmetal3.core.Solution;
 import org.uma.jmetal3.encoding.DoubleSolution;
 import org.uma.jmetal3.util.solutionattribute.Ranking;
 import org.uma.jmetal3.problem.multiobjective.Fonseca;
-import org.uma.jmetal3.util.solutionattribute.impl.RankingImpl;
+import org.uma.jmetal3.util.solutionattribute.impl.DominanceRanking;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,13 +29,13 @@ public class RankingAttrTest {
   @Before
   public void startup() {
     problem = new Fonseca() ;
-    ranking = new RankingImpl() ;
+    ranking = new DominanceRanking() ;
   }
 
   @Test
   public void rankingOfAnEmptyPopulation() {
     population = Collections.emptyList() ;
-    Ranking ranking = new RankingImpl() ;
+    Ranking ranking = new DominanceRanking() ;
     ranking.computeRanking(population) ;
     assertEquals(0, ranking.getNumberOfSubfronts()) ;
   }
@@ -47,7 +47,7 @@ public class RankingAttrTest {
     DoubleSolution solution = (DoubleSolution)problem.createSolution() ;
     population.add(solution) ;
 
-    Ranking ranking = new RankingImpl() ;
+    Ranking ranking = new DominanceRanking() ;
     ranking.computeRanking(population) ;
 
     assertEquals(1, ranking.getNumberOfSubfronts()) ;
@@ -72,7 +72,7 @@ public class RankingAttrTest {
     population.add(solution) ;
     population.add(solution2) ;
 
-    Ranking ranking = new RankingImpl() ;
+    Ranking ranking = new DominanceRanking() ;
     ranking.computeRanking(population) ;
 
     assertEquals(1, ranking.getNumberOfSubfronts()) ;
@@ -100,7 +100,7 @@ public class RankingAttrTest {
     population.add(solution) ;
     population.add(solution2) ;
 
-    Ranking ranking = new RankingImpl() ;
+    Ranking ranking = new DominanceRanking() ;
     ranking.computeRanking(population) ;
 
     assertEquals(2, ranking.getNumberOfSubfronts()) ;
@@ -139,7 +139,7 @@ public class RankingAttrTest {
     population.add(solution) ;
     population.add(solution2) ;
 
-    Ranking ranking = new RankingImpl() ;
+    Ranking ranking = new DominanceRanking() ;
     ranking.computeRanking(population) ;
 
     assertEquals(1, (int) ranking.getAttribute(population.get(0))) ;

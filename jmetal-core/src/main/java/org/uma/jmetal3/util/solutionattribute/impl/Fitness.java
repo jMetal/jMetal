@@ -1,10 +1,9 @@
-//  Ranking.java
+//  Fitness.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
 //
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
+//  Copyright (c) 2014 Antonio J. Nebro
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -22,19 +21,24 @@
 package org.uma.jmetal3.util.solutionattribute.impl;
 
 import org.uma.jmetal3.core.Solution;
-import org.uma.jmetal3.util.solutionattribute.Fitness;
+import org.uma.jmetal3.util.solutionattribute.SolutionAttribute;
 
 /**
  */
-public class FitnessImpl implements Fitness {
+public class Fitness implements SolutionAttribute<Solution<?>, Double> {
 
   @Override
-  public Double getFitness(Solution solution) {
-    return (Double)solution.getAttribute(ATTRIBUTE.FITNESS);
+  public Double getAttribute(Solution solution) {
+    return (Double)solution.getAttribute(getAttributeID());
   }
 
   @Override
-  public void setFitness(Solution solution, Double fitness) {
-     solution.setAttribute(ATTRIBUTE.FITNESS, fitness);
+  public void setAttribute(Solution<?> solution, Double fitness) {
+     solution.setAttribute(getAttributeID(), fitness);
+  }
+
+  @Override
+  public Object getAttributeID() {
+  return this.getClass();
   }
 }

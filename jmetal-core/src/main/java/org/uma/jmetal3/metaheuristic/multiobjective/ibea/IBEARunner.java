@@ -31,7 +31,7 @@ import org.uma.jmetal3.operator.mutation.MutationOperator;
 import org.uma.jmetal3.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal3.operator.selection.SelectionOperator;
 import org.uma.jmetal3.operator.selection.impl.BinaryTournamentSelection;
-import org.uma.jmetal3.problem.multiobjective.zdt.ZDT4;
+import org.uma.jmetal3.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal3.util.AlgorithmRunner;
 import org.uma.jmetal3.util.comparator.FitnessComparator;
 import org.uma.jmetal3.util.fileoutput.DefaultFileOutputContext;
@@ -61,7 +61,7 @@ public class IBEARunner {
     MutationOperator mutation;
     SelectionOperator selection;
 
-    problem = new ZDT4() ;
+    problem = new ZDT1() ;
       /* Examples
       //problem = new Water("Real");
       //problem = new ZDT4("ArrayReal");

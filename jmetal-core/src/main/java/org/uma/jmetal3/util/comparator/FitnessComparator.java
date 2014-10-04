@@ -22,8 +22,7 @@
 package org.uma.jmetal3.util.comparator;
 
 import org.uma.jmetal3.core.Solution;
-import org.uma.jmetal3.util.solutionattribute.Fitness;
-import org.uma.jmetal3.util.solutionattribute.impl.FitnessImpl;
+import org.uma.jmetal3.util.solutionattribute.impl.Fitness;
 
 import java.util.Comparator;
 
@@ -34,7 +33,7 @@ import java.util.Comparator;
  * method <code>getFitness</code>.
  */
 public class FitnessComparator implements Comparator<Solution<?>> {
-  private Fitness solutionFitness = new FitnessImpl() ;
+  private Fitness solutionFitness = new Fitness() ;
 
   /**
    * Compares two solutions.
@@ -52,8 +51,8 @@ public class FitnessComparator implements Comparator<Solution<?>> {
       return -1;
     }
 
-    double fitness1 = solutionFitness.getFitness(solution1) ;
-    double fitness2 = solutionFitness.getFitness(solution2) ;
+    double fitness1 = solutionFitness.getAttribute(solution1) ;
+    double fitness2 = solutionFitness.getAttribute(solution2) ;
     if (fitness1 < fitness2) {
       return -1;
     }

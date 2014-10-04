@@ -29,11 +29,8 @@ import java.util.*;
  *
  * @author Antonio J. Nebro
  */
-public interface Ranking<S extends Solution<?>> {
+public interface Ranking<S extends Solution<?>, Integer> extends SolutionAttribute<S, Integer>{
   public Ranking computeRanking(List<S> solutionSet) ;
   public List<S> getSubfront(int rank) ;
   public int getNumberOfSubfronts() ;
-
-  public void setAttribute(S solution, Integer value) ;
-  public Integer getAttribute(S solution) ;
 }

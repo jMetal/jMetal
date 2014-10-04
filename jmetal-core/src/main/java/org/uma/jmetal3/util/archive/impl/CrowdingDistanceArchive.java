@@ -5,8 +5,8 @@ import org.uma.jmetal3.util.archive.Archive;
 import org.uma.jmetal3.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal3.util.comparator.DominanceComparator;
 import org.uma.jmetal3.util.comparator.EqualSolutionsComparator;
-import org.uma.jmetal3.util.solutionattribute.CrowdingDistance;
-import org.uma.jmetal3.util.solutionattribute.impl.CrowdingDistanceImpl;
+import org.uma.jmetal3.util.solutionattribute.DensityEstimator;
+import org.uma.jmetal3.util.solutionattribute.impl.CrowdingDistance;
 import org.uma.jmetal3.util.solutionlistsutils.FindWorstSolution;
 
 import java.util.ArrayList;
@@ -22,14 +22,14 @@ public class CrowdingDistanceArchive implements Archive {
   private Comparator<Solution<?>> dominanceComparator;
   private Comparator<Solution<?>> equalsComparator;
   private Comparator<Solution<?>> crowdingDistanceComparator;
-  private CrowdingDistance crowdingDistance ;
+  private DensityEstimator crowdingDistance ;
 
   public CrowdingDistanceArchive(int maxSize) {
     this.maxSize = maxSize ;
     solutionSet = new ArrayList<>(maxSize + 1) ;
     dominanceComparator = new DominanceComparator();
     crowdingDistanceComparator = new CrowdingDistanceComparator() ;
-    crowdingDistance = new CrowdingDistanceImpl() ;
+    crowdingDistance = new CrowdingDistance() ;
     equalsComparator = new EqualSolutionsComparator() ;
   }
 
@@ -56,7 +56,7 @@ public class CrowdingDistanceArchive implements Archive {
 
     solutionSet.add(solution);
     if (solutionSet.size() > maxSize) { // FIXME: check whether the removed solution is the inserted one
-      crowdingDistance.computeCrowdingDistance(solutionSet);
+      crowdingDistance.computeDensityEstimator(solutionSet);
       int index = FindWorstSolution.find(solutionSet, crowdingDistanceComparator) ;
       solutionSet.remove(index);
     }
@@ -74,6 +74,6 @@ public class CrowdingDistanceArchive implements Archive {
   }
 
   public void computeDistance() {
-    crowdingDistance.computeCrowdingDistance(solutionSet);
+    crowdingDistance.computeDensityEstimator(solutionSet);
   }
 }

@@ -38,8 +38,7 @@ import java.util.*;
  * solutions, subset 1 contains the non-dominated solutions after removing those
  * belonging to subset 0, and so on.
  */
-public class RankingImpl implements Ranking<Solution<?>> {
-  private final Object ATTRIBUTE = this ;
+public class DominanceRanking implements Ranking<Solution<?>, Integer> {
 
   private static final Comparator<Solution<?>> DOMINANCE_COMPARATOR = new DominanceComparator();
   private static final Comparator<Solution<?>> CONSTRAINT_VIOLATION_COMPARATOR =
@@ -99,7 +98,7 @@ public class RankingImpl implements Ranking<Solution<?>> {
 
         front[0].add(i);
         //RankingAndCrowdingAttr.getAttributes(solutionSet.get(0)).setRank(0);
-        solutionSet.get(i).setAttribute(ATTRIBUTE, 0);
+        solutionSet.get(i).setAttribute(getAttributeID(), 0);
       }
     }
 
@@ -117,7 +116,7 @@ public class RankingImpl implements Ranking<Solution<?>> {
           if (dominateMe[index] == 0) {
             front[i].add(index);
             //RankingAndCrowdingAttr.getAttributes(solutionSet.get(index)).setRank(i);
-            solutionSet.get(index).setAttribute(ATTRIBUTE, i);
+            solutionSet.get(index).setAttribute(getAttributeID(), i);
           }
         }
       }
@@ -159,7 +158,8 @@ public class RankingImpl implements Ranking<Solution<?>> {
     return (Integer) solution.getAttribute(getAttributeID());
   }
 
+  @Override
   public Object getAttributeID() {
-    return this;
+    return this.getClass();
   }
 }
