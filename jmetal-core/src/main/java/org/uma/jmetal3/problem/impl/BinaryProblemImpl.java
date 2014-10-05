@@ -1,12 +1,10 @@
 package org.uma.jmetal3.problem.impl;
 
-import org.uma.jmetal3.core.Solution;
+import org.uma.jmetal3.encoding.BinarySolution;
 import org.uma.jmetal3.problem.BinaryProblem;
 
-import java.util.BitSet;
-
-public abstract class BinaryProblemImpl<S extends Solution<? extends BitSet>> extends GenericProblemImpl<S>
-  implements BinaryProblem<S> {
+public abstract class BinaryProblemImpl extends GenericProblemImpl<BinarySolution>
+  implements BinaryProblem {
 
   protected int [] bitsPerVariable ;
 

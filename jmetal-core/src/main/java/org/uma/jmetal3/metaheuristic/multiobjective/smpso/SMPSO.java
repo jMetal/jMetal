@@ -418,9 +418,6 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
           particle.setVariableValue(j, problem.getUpperBound(j));
           speed[i][j] = speed[i][j] * changeVelocity2;
         }
-
-        //System.out.println(i + ", " + j + "antes: " + v + "\t");
-        //System.out.println(i + ", " + j + ". despues: " + particle.getVariableValue(j) +"\t");
       }
     }
   }

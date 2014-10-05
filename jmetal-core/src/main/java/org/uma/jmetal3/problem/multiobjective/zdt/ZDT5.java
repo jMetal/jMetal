@@ -30,7 +30,7 @@ import java.util.BitSet;
 /**
  * Class representing problem ZDT5
  */
-public class ZDT5 extends BinaryProblemImpl<BinarySolution> {
+public class ZDT5 extends BinaryProblemImpl {
 
   /** Creates a default instance of problem ZDT5 (11 decision variables) */
   public ZDT5() {

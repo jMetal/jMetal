@@ -230,7 +230,7 @@ public class IBEA implements Algorithm<List<Solution<?>>> {
       solutionSet = offSpringSolutionSet;
     }
 
-    return FindNondominatedSolutions.getNonDominatedSolutions(archive) ;
+    return FindNondominatedSolutions.execute(archive) ;
   }
 
   /**

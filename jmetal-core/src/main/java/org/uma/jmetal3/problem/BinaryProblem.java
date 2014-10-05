@@ -1,9 +1,9 @@
 package org.uma.jmetal3.problem;
 
 import org.uma.jmetal3.core.Problem;
-import org.uma.jmetal3.core.Solution;
+import org.uma.jmetal3.encoding.BinarySolution;
 
 /** Interface representing binary problems */
-public interface BinaryProblem<S extends Solution<?>> extends Problem<S> {
+public interface BinaryProblem extends Problem<BinarySolution> {
   public int getNumberOfBits(int index) ;
 }

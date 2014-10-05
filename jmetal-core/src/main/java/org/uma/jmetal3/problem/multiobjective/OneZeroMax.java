@@ -31,7 +31,7 @@ import java.util.BitSet;
  * Class representing problem OneZeroMax. The problem consist of maximizing the
  * number of '1's and '0's in a binary string.
  */
-public class OneZeroMax extends BinaryProblemImpl<BinarySolution> {
+public class OneZeroMax extends BinaryProblemImpl {
 
   private int numberOfBits ;
 

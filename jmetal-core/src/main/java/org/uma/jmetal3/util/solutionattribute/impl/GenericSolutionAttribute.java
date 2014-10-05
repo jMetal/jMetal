@@ -21,8 +21,24 @@
 package org.uma.jmetal3.util.solutionattribute.impl;
 
 import org.uma.jmetal3.core.Solution;
+import org.uma.jmetal3.util.solutionattribute.SolutionAttribute;
 
 /**
  */
-public class Fitness extends GenericSolutionAttribute<Solution<?>, Double> {
+public class GenericSolutionAttribute <S extends Solution<?>, V> implements SolutionAttribute<S, V>{
+
+  @Override
+  public V getAttribute(Solution solution) {
+    return (V)solution.getAttribute(getAttributeID());
+  }
+
+  @Override
+  public void setAttribute(S solution, V fitness) {
+     solution.setAttribute(getAttributeID(), fitness);
+  }
+
+  @Override
+  public Object getAttributeID() {
+  return this.getClass();
+  }
 }

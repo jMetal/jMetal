@@ -24,5 +24,5 @@ import org.uma.jmetal3.core.Solution;
 
 /**
  */
-public class Fitness extends GenericSolutionAttribute<Solution<?>, Double> {
+public class HypervolumeContribution extends GenericSolutionAttribute<Solution<?>, Double> {
 }

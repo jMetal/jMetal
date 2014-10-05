@@ -57,7 +57,7 @@ public class CrowdingDistanceArchive implements Archive {
     solutionSet.add(solution);
     if (solutionSet.size() > maxSize) { // FIXME: check whether the removed solution is the inserted one
       crowdingDistance.computeDensityEstimator(solutionSet);
-      int index = FindWorstSolution.find(solutionSet, crowdingDistanceComparator) ;
+      int index = FindWorstSolution.execute(solutionSet, crowdingDistanceComparator) ;
       solutionSet.remove(index);
     }
     return true;
