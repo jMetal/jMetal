@@ -1,13 +1,13 @@
 package org.uma.jmetal3.util.archive.impl;
 
 import org.uma.jmetal3.core.Solution;
+import org.uma.jmetal3.util.SolutionListUtils;
 import org.uma.jmetal3.util.archive.Archive;
 import org.uma.jmetal3.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal3.util.comparator.DominanceComparator;
 import org.uma.jmetal3.util.comparator.EqualSolutionsComparator;
 import org.uma.jmetal3.util.solutionattribute.DensityEstimator;
 import org.uma.jmetal3.util.solutionattribute.impl.CrowdingDistance;
-import org.uma.jmetal3.util.solutionlistsutils.FindWorstSolution;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -57,7 +57,7 @@ public class CrowdingDistanceArchive implements Archive {
     solutionSet.add(solution);
     if (solutionSet.size() > maxSize) { // FIXME: check whether the removed solution is the inserted one
       crowdingDistance.computeDensityEstimator(solutionSet);
-      int index = FindWorstSolution.execute(solutionSet, crowdingDistanceComparator) ;
+      int index = SolutionListUtils.findWorstSolution(solutionSet, crowdingDistanceComparator) ;
       solutionSet.remove(index);
     }
     return true;

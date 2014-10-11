@@ -29,10 +29,10 @@ import org.uma.jmetal3.operator.mutation.MutationOperator;
 import org.uma.jmetal3.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal3.operator.selection.SelectionOperator;
 import org.uma.jmetal3.operator.selection.impl.BinaryTournamentSelection;
+import org.uma.jmetal3.util.SolutionListUtils;
 import org.uma.jmetal3.util.comparator.DominanceComparator;
 import org.uma.jmetal3.util.comparator.FitnessComparator;
 import org.uma.jmetal3.util.solutionattribute.impl.Fitness;
-import org.uma.jmetal3.util.solutionlistsutils.FindNondominatedSolutions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -230,7 +230,8 @@ public class IBEA implements Algorithm<List<Solution<?>>> {
       solutionSet = offSpringSolutionSet;
     }
 
-    return FindNondominatedSolutions.execute(archive) ;
+    return SolutionListUtils.findNondominatedSolutions(archive) ;
+    //return FindNondominatedSolutions.execute(archive) ;
   }
 
   /**
