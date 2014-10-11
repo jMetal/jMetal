@@ -20,17 +20,13 @@
 
 package org.uma.jmetal.metaheuristic.multiobjective.smsemoa;
 
-import org.uma.jmetal.core.Algorithm;
+import org.uma.jmetal45.qualityindicator.fasthypervolume.FastHypervolume;
+import org.uma.jmetal45.util.JMetalException;
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.qualityindicator.Hypervolume;
-import org.uma.jmetal.qualityindicator.util.MetricsUtil;
-import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.Ranking;
-import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
+import org.uma.jmetal.util.solutionattribute.impl.HypervolumeContribution;
 
-import java.util.Collections;
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class implements the SMS-EMOA algorithm, as described in
@@ -48,133 +44,57 @@ import java.util.LinkedList;
  * Congress on Evolutionary Computation (CEC 2005), Edinburgh, Band 2, pp. 1282-1289.
  * IEEE Press, Piscataway NJ, 2005.
  */
-public class SMSEMOA extends SMSEMOATemplate implements Algorithm {
-  private static final long serialVersionUID = -5932329422133559836L;
+public class SMSEMOA extends SMSEMOATemplate {
 
-  private MetricsUtil utils;
-  private Hypervolume hypervolume;
+  private FastHypervolume fastHypervolume; ;
+  private HypervolumeContribution hypervolumeContribution ;
 
-  /** Constructor */
+  /**
+   * Constructor
+   */
   protected SMSEMOA(Builder builder) {
     super(builder);
 
-    this.utils = new org.uma.jmetal.qualityindicator.util.MetricsUtil();
-    this.hypervolume = new Hypervolume();
+    fastHypervolume = new FastHypervolume(offset);
+    hypervolumeContribution = new HypervolumeContribution() ;
   }
 
-  /** Execute() method */
-  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
+  /**
+   * Execute() method
+   */
+  public List<?> execute() throws JMetalException {
     createInitialPopulation();
-    population = evaluatePopulation(population) ;
+    population = evaluatePopulation(population);
 
     while (!stoppingCondition()) {
-      offspringPopulation = new SolutionSet(populationSize);
+      offspringPopulation = new ArrayList<>(populationSize + 1);
 
-      Solution[] parents = (Solution[]) selection.execute(population) ;
-      Solution[] offSpring = (Solution[]) crossover.execute(parents) ;
-      mutation.execute(offSpring[0]);
+      List<Solution> parents = new ArrayList<>();
+      parents.add((Solution) selection.execute(population));
 
-      problem.evaluate(offSpring[0]);
-      problem.evaluateConstraints(offSpring[0]);
+      List<Solution> offspring = (List<Solution>) crossover.execute(parents);
+      mutation.execute(offspring.get(0));
 
-      offspringPopulation.add(offSpring[0]);
+      problem.evaluate(offspring.get(0));
+      //problem.evaluateConstraints(offSpring[0]);
+
+      offspringPopulation.add(offspring.get(0));
 
       evaluations++;
 
       // Create the solutionSet union of solutionSet and offSpring
-      SolutionSet union = population.union(offspringPopulation);
+      offspringPopulation.addAll(population);
+      computeRanking(offspringPopulation);
 
-      // Ranking the union (non-dominated sorting)
-      Ranking ranking = new Ranking(union);
-
-      // ensure crowding distance values are up to date
-      // (may be important for parent selection)
       for (int j = 0; j < population.size(); j++) {
-        population.get(j).setCrowdingDistance(0.0);
+        hypervolumeContribution.setAttribute(population.get(j), 0.0);
       }
 
-      SolutionSet lastFront = ranking.getSubfront(ranking.getNumberOfSubfronts() - 1);
-      if (lastFront.size() > 1) {
-        double[][] frontValues = lastFront.writeObjectivesToMatrix();
-        int numberOfObjectives = problem.getNumberOfObjectives();
-        // STEP 1. Obtain the maximum and minimum values of the Pareto front
-        double[] maximumValues =
-          utils.getMaximumValues(union.writeObjectivesToMatrix(), numberOfObjectives);
-        double[] minimumValues =
-          utils.getMinimumValues(union.writeObjectivesToMatrix(), numberOfObjectives);
-        // STEP 2. Get the normalized front
-        double[][] normalizedFront =
-          utils.getNormalizedFront(frontValues, maximumValues, minimumValues);
-        // compute offsets for reference point in normalized space
-        double[] offsets = new double[maximumValues.length];
-        for (int i = 0; i < maximumValues.length; i++) {
-          offsets[i] = offset / (maximumValues[i] - minimumValues[i]);
-        }
-        // STEP 3. Inverse the pareto front. This is needed because the original
-        //metric by Zitzler is for maximization problem
-        double[][] invertedFront = utils.invertedFront(normalizedFront);
-        // shift away from origin, so that boundary points also get a contribution > 0
-        for (double[] point : invertedFront) {
-          for (int i = 0; i < point.length; i++) {
-            point[i] += offsets[i];
-          }
-        }
+      List<Solution<?>> lastFront = ranking.getSubfront(ranking.getNumberOfSubfronts() - 1);
 
-        // calculate contributions and sort
-        double[] contributions = hvContributions(invertedFront);
-        for (int i = 0; i < contributions.length; i++) {
-          // contribution values are used analogously to crowding distance
-          lastFront.get(i).setCrowdingDistance(contributions[i]);
-        }
-
-        lastFront.sort(new CrowdingDistanceComparator());
-      }
-
-      // all but the worst are carried over to the survivor population
-      SolutionSet front = null;
-      population.clear();
-      for (int i = 0; i < ranking.getNumberOfSubfronts() - 1; i++) {
-        front = ranking.getSubfront(i);
-        for (int j = 0; j < front.size(); j++) {
-          population.add(front.get(j));
-        }
-      }
-      for (int i = 0; i < lastFront.size() - 1; i++) {
-        population.add(lastFront.get(i));
-      }
-
+      //fastHypervolume.computeHVContributions(lastFront);
+      //lastFront.sort(new org.uma.jmetal45.util.comparator.CrowdingDistanceComparator());
     }
-
-    return getNonDominatedSolutions(population) ;
-  }
-
-  /**
-   * Calculates how much hypervolume each point dominates exclusively. The points
-   * have to be transformed beforehand, to accommodate the assumptions of Zitzler's
-   * hypervolume code.
-   *
-   * @param front transformed objective values
-   * @return HV contributions
-   */
-  private double[] hvContributions(double[][] front) {
-    int numberOfObjectives = problem.getNumberOfObjectives();
-    double[] contributions = new double[front.length];
-    double[][] frontSubset = new double[front.length - 1][front[0].length];
-    LinkedList<double[]> frontCopy = new LinkedList<double[]>();
-    Collections.addAll(frontCopy, front);
-    double[][] totalFront = frontCopy.toArray(frontSubset);
-    double totalVolume =
-      hypervolume.calculateHypervolume(totalFront, totalFront.length, numberOfObjectives);
-    for (int i = 0; i < front.length; i++) {
-      double[] evaluatedPoint = frontCopy.remove(i);
-      frontSubset = frontCopy.toArray(frontSubset);
-      // STEP4. The hypervolume (control is passed to java version of Zitzler code)
-      double hv = hypervolume.calculateHypervolume(frontSubset, frontSubset.length, numberOfObjectives);
-      double contribution = totalVolume - hv;
-      contributions[i] = contribution;
-      // put point back
-      frontCopy.add(i, evaluatedPoint);
-    }
-    return contributions;
+    return null ;
   }
 }

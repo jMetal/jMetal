@@ -21,11 +21,9 @@
 package org.uma.test.metaheuristic.multiobjective.smpso;
 
 import org.junit.Test;
-import org.uma.jmetal.core.Algorithm;
-import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.experiment.settings.SMPSOSettings;
-
-import java.io.IOException;
+import org.uma.jmetal45.core.Algorithm;
+import org.uma.jmetal45.core.SolutionSet;
+import org.uma.jmetal45.experiment.settings.SMPSOSettings;
 
 import static org.junit.Assert.assertTrue;
 

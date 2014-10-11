@@ -20,17 +20,10 @@
 
 package org.uma.test3.util.comparator;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal3.core.Problem;
-import org.uma.jmetal3.core.Solution;
-import org.uma.jmetal3.operator.selection.impl.BinaryTournamentSelection;
-import org.uma.jmetal3.problem.ContinuousProblem;
-import org.uma.jmetal3.problem.multiobjective.Fonseca;
+import org.uma.jmetal.core.Problem;
+import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;

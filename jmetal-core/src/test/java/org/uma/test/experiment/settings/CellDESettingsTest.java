@@ -22,11 +22,11 @@ package org.uma.test.experiment.settings;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.uma.jmetal.experiment.Settings;
-import org.uma.jmetal.experiment.settings.CellDESettings;
-import org.uma.jmetal.metaheuristic.multiobjective.cellde.CellDE;
-import org.uma.jmetal.operator.crossover.DifferentialEvolutionCrossover;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal45.experiment.Settings;
+import org.uma.jmetal45.experiment.settings.CellDESettings;
+import org.uma.jmetal45.metaheuristic.multiobjective.cellde.CellDE;
+import org.uma.jmetal45.operator.crossover.DifferentialEvolutionCrossover;
+import org.uma.jmetal45.util.JMetalException;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

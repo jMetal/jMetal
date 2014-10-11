@@ -22,17 +22,17 @@ package org.uma.test.core;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.uma.jmetal.core.Operator;
-import org.uma.jmetal.core.Problem;
-import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.encoding.solutiontype.BinarySolutionType;
-import org.uma.jmetal.encoding.solutiontype.IntSolutionType;
-import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
-import org.uma.jmetal.problem.multiobjective.Water;
-import org.uma.jmetal.problem.singleobjective.OneMax;
-import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
-import org.uma.jmetal.problem.multiobjective.zdt.ZDT5;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal45.core.Operator;
+import org.uma.jmetal45.core.Problem;
+import org.uma.jmetal45.core.Solution;
+import org.uma.jmetal45.encoding.solutiontype.BinarySolutionType;
+import org.uma.jmetal45.encoding.solutiontype.IntSolutionType;
+import org.uma.jmetal45.encoding.solutiontype.RealSolutionType;
+import org.uma.jmetal45.problem.multiobjective.Water;
+import org.uma.jmetal45.problem.singleobjective.OneMax;
+import org.uma.jmetal45.problem.multiobjective.zdt.ZDT1;
+import org.uma.jmetal45.problem.multiobjective.zdt.ZDT5;
+import org.uma.jmetal45.util.JMetalException;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
