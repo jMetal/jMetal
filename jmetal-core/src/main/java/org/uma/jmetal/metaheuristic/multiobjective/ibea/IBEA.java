@@ -18,6 +18,9 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+// This implementation is based on the PISA code:
+// http://www.tik.ee.ethz.ch/sop/pisa/selectors/ibea/?page=ibea.php
+
 package org.uma.jmetal.metaheuristic.multiobjective.ibea;
 
 import org.uma.jmetal.core.Algorithm;
@@ -181,7 +184,6 @@ public class IBEA implements Algorithm<List<Solution<?>>> {
     //-> Create the initial solutionSet
     Solution newSolution;
     for (int i = 0; i < populationSize; i++) {
-      //newSolution = new Solution(problem);
       newSolution = problem.createSolution() ;
       problem.evaluate(newSolution);
       //problem.evaluateConstraints(newSolution);

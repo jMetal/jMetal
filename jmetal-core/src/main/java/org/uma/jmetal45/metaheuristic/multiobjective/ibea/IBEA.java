@@ -18,6 +18,9 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+// This implementation is based on the PISA code:
+// http://www.tik.ee.ethz.ch/sop/pisa/selectors/ibea/?page=ibea.php
+
 package org.uma.jmetal45.metaheuristic.multiobjective.ibea;
 
 import org.uma.jmetal45.core.Algorithm;
@@ -135,7 +138,7 @@ public class IBEA implements Algorithm {
                 (max - b) / r;
       } else {
         volume = calculateHypervolumeIndicator(solutionA, solutionB, d - 1, maximumValues, minimumValues) *
-                (max - b) / r;
+                (max - a) / r;
       }
     }
 
