@@ -23,13 +23,11 @@ package org.uma.test.experiment.settings;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.uma.jmetal.experiment.Settings;
-import org.uma.jmetal.experiment.settings.GDE3Settings;
-import org.uma.jmetal.experiment.settings.ParallelGDE3Settings;
-import org.uma.jmetal.metaheuristic.multiobjective.gde3.GDE3;
-import org.uma.jmetal.operator.crossover.DifferentialEvolutionCrossover;
-import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.evaluator.MultithreadedSolutionSetEvaluator;
+import org.uma.jmetal45.experiment.settings.ParallelGDE3Settings;
+import org.uma.jmetal45.metaheuristic.multiobjective.gde3.GDE3;
+import org.uma.jmetal45.operator.crossover.DifferentialEvolutionCrossover;
+import org.uma.jmetal45.util.JMetalException;
+import org.uma.jmetal45.util.evaluator.MultithreadedSolutionSetEvaluator;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

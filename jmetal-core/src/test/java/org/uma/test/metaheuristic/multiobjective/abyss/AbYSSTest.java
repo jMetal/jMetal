@@ -21,11 +21,9 @@
 package org.uma.test.metaheuristic.multiobjective.abyss;
 
 import org.junit.Test;
-import org.uma.jmetal.core.Algorithm;
-import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.experiment.settings.AbYSSSettings;
-
-import java.io.IOException;
+import org.uma.jmetal45.core.Algorithm;
+import org.uma.jmetal45.core.SolutionSet;
+import org.uma.jmetal45.experiment.settings.AbYSSSettings;
 
 import static org.junit.Assert.assertTrue;
 
@@ -36,7 +34,7 @@ public class AbYSSTest {
     Algorithm algorithm;
 
     @Test
-    public void testNumberOfReturnedSolutionsInEasyProblem() throws IOException, ClassNotFoundException {
+    public void testNumberOfReturnedSolutionsInEasyProblem() throws Exception {
       algorithm = new AbYSSSettings("Kursawe").configure() ;
 
       SolutionSet solutionSet = algorithm.execute() ;

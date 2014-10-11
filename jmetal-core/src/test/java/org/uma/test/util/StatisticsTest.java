@@ -21,7 +21,7 @@
 package org.uma.test.util;
 
 import org.junit.Test;
-import org.uma.jmetal.util.Statistics;
+import org.uma.jmetal45.util.Statistics;
 
 import java.util.Vector;
 

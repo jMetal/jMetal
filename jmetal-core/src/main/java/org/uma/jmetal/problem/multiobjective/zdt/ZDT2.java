@@ -21,29 +21,18 @@
 
 package org.uma.jmetal.problem.multiobjective.zdt;
 
-import org.uma.jmetal.core.Problem;
-import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.encoding.solutiontype.ArrayRealSolutionType;
-import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
-import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
-import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.encoding.DoubleSolution;
+import org.uma.jmetal.encoding.impl.DoubleSolutionImpl;
+import org.uma.jmetal.problem.impl.ContinuousProblemImpl;
 
-/**
- * Class representing problem ZDT2
- */
-public class ZDT2 extends Problem {
-  private static final long serialVersionUID = 469083313731522351L;
+import java.util.ArrayList;
 
-  /**
-   * Constructor.
-   * Creates a default instance of  problem ZDT2 (30 decision variables)
-   *
-   * @param solutionType The solution type must "Real", "BinaryReal, and "ArrayReal".
-   */
-  public ZDT2(String solutionType) throws ClassNotFoundException, JMetalException {
-    // 30 variables by default
-    this(solutionType, 30);
+/** Class representing problem ZDT2 */
+public class ZDT2 extends ContinuousProblemImpl {
+
+  /** Constructor. Creates default instance of problem ZDT2 (30 decision variables) */
+  public ZDT2()  {
+    this(30);
   }
 
   /**
@@ -51,59 +40,58 @@ public class ZDT2 extends Problem {
    * Creates a new ZDT2 problem instance.
    *
    * @param numberOfVariables Number of variables
-   * @param solutionType      The solution type must "Real" or "BinaryReal".
    */
-  public ZDT2(String solutionType, Integer numberOfVariables) throws JMetalException {
-    this.numberOfVariables = numberOfVariables;
-    numberOfObjectives = 2;
-    numberOfConstraints = 0;
-    problemName = "ZDT2";
+  public ZDT2(Integer numberOfVariables) {
+    setNumberOfVariables(numberOfVariables);
+    setNumberOfObjectives(2);
+    setName("ZDT2");
 
-    upperLimit = new double[this.numberOfVariables];
-    lowerLimit = new double[this.numberOfVariables];
+    ArrayList<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
+    ArrayList<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
 
-    for (int var = 0; var < this.numberOfVariables; var++) {
-      lowerLimit[var] = 0.0;
-      upperLimit[var] = 1.0;
+    for (int i = 0; i < getNumberOfVariables(); i++) {
+      lowerLimit.add(0.0);
+      upperLimit.add(1.0);
     }
 
-    if (solutionType.compareTo("BinaryReal") == 0) {
-      this.solutionType = new BinaryRealSolutionType(this);
-    } else if (solutionType.compareTo("Real") == 0) {
-      this.solutionType = new RealSolutionType(this);
-    } else if (solutionType.compareTo("ArrayReal") == 0) {
-      this.solutionType = new ArrayRealSolutionType(this);
-    } else {
-      throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
-    }
+    setLowerLimit(lowerLimit);
+    setUpperLimit(upperLimit);
+  }
+
+  @Override
+  public DoubleSolution createSolution() {
+    DoubleSolution solution = new DoubleSolutionImpl(this) ;
+
+    return solution ;
   }
 
   /** Evaluate() method */
-  public void evaluate(Solution solution) throws JMetalException {
-    XReal x = new XReal(solution);
+  public void evaluate(DoubleSolution solution) {
+    int numberOfVariables = getNumberOfVariables() ;
 
-    double[] fx = new double[numberOfObjectives];
-    fx[0] = x.getValue(0);
-    double g = this.evalG(x);
-    double h = this.evalH(fx[0], g);
-    fx[1] = h * g;
+    double[] f = new double[getNumberOfObjectives()];
+    double[] x = new double[numberOfVariables] ;
 
-    solution.setObjective(0, fx[0]);
-    solution.setObjective(1, fx[1]);
+    f[0] = solution.getVariableValue(0);
+    double g = this.evalG(solution);
+    double h = this.evalH(f[0], g);
+    f[1] = h * g;
+
+    solution.setObjective(0, f[0]);
+    solution.setObjective(1, f[1]);
   }
 
   /**
    * Returns the value of the ZDT2 function G.
    *
-   * @param x Solution
-   * @throws org.uma.jmetal.util.JMetalException
+   * @param solution Solution
    */
-  private double evalG(XReal x) throws JMetalException {
+  private double evalG(DoubleSolution solution) {
     double g = 0.0;
-    for (int i = 1; i < x.getNumberOfDecisionVariables(); i++) {
-      g += x.getValue(i);
+    for (int i = 1; i < solution.getNumberOfVariables(); i++) {
+      g += solution.getVariableValue(i);
     }
-    double constant = 9.0 / (numberOfVariables - 1);
+    double constant = 9.0 / (solution.getNumberOfVariables() - 1);
     g = constant * g;
     g = g + 1.0;
     return g;
@@ -117,7 +105,7 @@ public class ZDT2 extends Problem {
    */
   public double evalH(double f, double g) {
     double h ;
-    h = 1.0 - java.lang.Math.pow(f / g, 2.0);
+    h = 1.0 - Math.pow(f / g, 2.0);
     return h;
   }
 }

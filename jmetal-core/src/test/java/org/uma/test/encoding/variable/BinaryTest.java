@@ -23,7 +23,7 @@ package org.uma.test.encoding.variable;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.uma.jmetal.encoding.variable.Binary;
+import org.uma.jmetal45.encoding.variable.Binary;
 
 import static org.junit.Assert.assertTrue;
 

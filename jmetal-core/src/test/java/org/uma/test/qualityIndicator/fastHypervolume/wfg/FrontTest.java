@@ -22,7 +22,7 @@ package org.uma.test.qualityIndicator.fastHypervolume.wfg;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.uma.jmetal.qualityindicator.fasthypervolume.wfg.Front;
+import org.uma.jmetal45.qualityindicator.fasthypervolume.wfg.Front;
 
 import java.util.ArrayList;
 import java.util.List;

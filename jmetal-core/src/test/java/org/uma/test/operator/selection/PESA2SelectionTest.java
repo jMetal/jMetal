@@ -23,12 +23,12 @@ package org.uma.test.operator.selection;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.uma.jmetal.core.Problem;
-import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.operator.selection.PESA2Selection;
-import org.uma.jmetal.problem.multiobjective.Kursawe;
-import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.archive.AdaptiveGridArchive;
+import org.uma.jmetal45.core.Problem;
+import org.uma.jmetal45.core.Solution;
+import org.uma.jmetal45.operator.selection.PESA2Selection;
+import org.uma.jmetal45.problem.multiobjective.Kursawe;
+import org.uma.jmetal45.util.JMetalException;
+import org.uma.jmetal45.util.archive.AdaptiveGridArchive;
 
 import static org.junit.Assert.assertNotNull;
 

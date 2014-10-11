@@ -21,11 +21,9 @@
 package org.uma.test.metaheuristic.multiobjective.nsgaII;
 
 import org.junit.Test;
-import org.uma.jmetal.core.Algorithm;
-import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.experiment.settings.ParallelNSGAIISettings;
-
-import java.io.IOException;
+import org.uma.jmetal45.core.Algorithm;
+import org.uma.jmetal45.core.SolutionSet;
+import org.uma.jmetal45.experiment.settings.ParallelNSGAIISettings;
 
 import static org.junit.Assert.assertTrue;
 
@@ -36,7 +34,7 @@ public class ParallelNSGAIITest {
   Algorithm algorithm;
 
   @Test
-  public void testNumberOfReturnedSolutionsInEasyProblem() throws IOException, ClassNotFoundException {
+  public void testNumberOfReturnedSolutionsInEasyProblem() throws Exception {
     algorithm = new ParallelNSGAIISettings("Kursawe").configure() ;
 
     SolutionSet solutionSet = algorithm.execute() ;

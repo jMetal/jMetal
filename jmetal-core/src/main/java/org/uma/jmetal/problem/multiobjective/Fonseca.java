@@ -4,7 +4,7 @@
 //       Antonio J. Nebro <antonio@lcc.uma.es>
 //       Juan J. Durillo <durillo@lcc.uma.es>
 //
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
+//  Copyright (c) 2014 Antonio J. Nebro, Juan J. Durillo
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -21,67 +21,62 @@
 
 package org.uma.jmetal.problem.multiobjective;
 
-import org.uma.jmetal.core.Problem;
-import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.encoding.solutiontype.ArrayRealSolutionType;
-import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
-import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
-import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.encoding.DoubleSolution;
+import org.uma.jmetal.encoding.impl.DoubleSolutionImpl;
+import org.uma.jmetal.problem.impl.ContinuousProblemImpl;
 
-/**
- * Class representing problem Fonseca
- */
-public class Fonseca extends Problem {
-  private static final long serialVersionUID = -5170038987171863224L;
+import java.util.ArrayList;
 
-  /**
-   * Constructor
-   * Creates a default instance of the Fonseca problem
-   *
-   * @param solutionType The solution type must "Real", "BinaryReal or ArrayReal".
-   */
-  public Fonseca(String solutionType) throws JMetalException {
-    numberOfVariables = 3;
-    numberOfObjectives = 2;
-    numberOfConstraints = 0;
-    problemName = "Fonseca";
+/** Class representing problem Fonseca */
+public class Fonseca extends ContinuousProblemImpl {
 
-    upperLimit = new double[numberOfVariables];
-    lowerLimit = new double[numberOfVariables];
-    for (int var = 0; var < numberOfVariables; var++) {
-      lowerLimit[var] = -4.0;
-      upperLimit[var] = 4.0;
+  /** Constructor */
+  public Fonseca()  {
+    setNumberOfVariables(3);
+    setNumberOfObjectives(2);
+    setName("Fonseca");
+
+    ArrayList<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
+    ArrayList<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
+
+    for (int i = 0; i < getNumberOfVariables(); i++) {
+      lowerLimit.add(-4.0);
+      upperLimit.add(4.0);
     }
 
-    if (solutionType.compareTo("BinaryReal") == 0) {
-      this.solutionType = new BinaryRealSolutionType(this);
-    } else if (solutionType.compareTo("Real") == 0) {
-      this.solutionType = new RealSolutionType(this);
-    } else if (solutionType.compareTo("ArrayReal") == 0) {
-      this.solutionType = new ArrayRealSolutionType(this);
-    } else {
-      throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
-    }
+    setLowerLimit(lowerLimit);
+    setUpperLimit(upperLimit);
+  }
+
+  @Override
+  public DoubleSolution createSolution() {
+    DoubleSolution solution = new DoubleSolutionImpl(this) ;
+
+    return solution ;
   }
 
   /** Evaluate() method */
-  public void evaluate(Solution solution) throws JMetalException {
-    XReal x = new XReal(solution);
+  @Override
+  public void evaluate(DoubleSolution solution) {
+    int numberOfVariables = getNumberOfVariables() ;
 
-    double[] f = new double[numberOfObjectives];
+    double[] f = new double[getNumberOfObjectives()];
+    double[] x = new double[numberOfVariables] ;
+
+    for (int i = 0; i < numberOfVariables; i++) {
+      x[i] = solution.getVariableValue(i) ;
+    }
+
     double sum1 = 0.0;
-    for (int var = 0; var < numberOfVariables; var++) {
-      sum1 += StrictMath.pow(x.getValue(var)
-        - (1.0 / StrictMath.sqrt((double) numberOfVariables)), 2.0);
+    for (int i = 0; i < numberOfVariables; i++) {
+      sum1 += StrictMath.pow(x[i] - (1.0 / StrictMath.sqrt((double) numberOfVariables)), 2.0);
     }
     double exp1 = StrictMath.exp((-1.0) * sum1);
     f[0] = 1 - exp1;
 
     double sum2 = 0.0;
-    for (int var = 0; var < numberOfVariables; var++) {
-      sum2 += StrictMath.pow(x.getValue(var)
-        + (1.0 / StrictMath.sqrt((double) numberOfVariables)), 2.0);
+    for (int i = 0; i < numberOfVariables; i++) {
+      sum2 += StrictMath.pow(x[i] + (1.0 / StrictMath.sqrt((double) numberOfVariables)), 2.0);
     }
     double exp2 = StrictMath.exp((-1.0) * sum2);
     f[1] = 1 - exp2;

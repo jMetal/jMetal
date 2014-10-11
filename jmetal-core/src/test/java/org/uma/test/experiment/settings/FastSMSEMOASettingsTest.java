@@ -22,13 +22,13 @@ package org.uma.test.experiment.settings;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.uma.jmetal.core.Problem;
-import org.uma.jmetal.experiment.Settings;
-import org.uma.jmetal.experiment.settings.FastSMSEMOASettings;
-import org.uma.jmetal.metaheuristic.multiobjective.smsemoa.FastSMSEMOA;
-import org.uma.jmetal.operator.crossover.SBXCrossover;
-import org.uma.jmetal.operator.mutation.PolynomialMutation;
-import org.uma.jmetal.problem.multiobjective.Fonseca;
+import org.uma.jmetal45.core.Problem;
+import org.uma.jmetal45.experiment.Settings;
+import org.uma.jmetal45.experiment.settings.FastSMSEMOASettings;
+import org.uma.jmetal45.metaheuristic.multiobjective.smsemoa.FastSMSEMOA;
+import org.uma.jmetal45.operator.crossover.SBXCrossover;
+import org.uma.jmetal45.operator.mutation.PolynomialMutation;
+import org.uma.jmetal45.problem.multiobjective.Fonseca;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -62,10 +62,10 @@ public class FastSMSEMOASettingsTest {
     FastSMSEMOA algorithm = (FastSMSEMOA) fastSMEEMOASettings.configure() ;
     Problem problem = new Fonseca("Real") ;
 
-    SBXCrossover crossover = (SBXCrossover) algorithm.getCrossoverOperator() ;
+    SBXCrossover crossover = (SBXCrossover) algorithm.getCrossover() ;
     double pc = crossover.getCrossoverProbability() ;
     double dic = crossover.getDistributionIndex() ;
-    PolynomialMutation mutation = (PolynomialMutation)algorithm.getMutationOperator() ;
+    PolynomialMutation mutation = (PolynomialMutation)algorithm.getMutation() ;
     double pm = mutation.getMutationProbability() ;
     double dim = mutation.getDistributionIndex() ;
     double offset = algorithm.getOffset() ;
@@ -89,10 +89,10 @@ public class FastSMSEMOASettingsTest {
     FastSMSEMOA algorithm = (FastSMSEMOA) fastSMEEMOASettings.configure(configuration) ;
     Problem problem = new Fonseca("Real") ;
 
-    SBXCrossover crossover = (SBXCrossover) algorithm.getCrossoverOperator() ;
+    SBXCrossover crossover = (SBXCrossover) algorithm.getCrossover() ;
     double pc = crossover.getCrossoverProbability() ;
     double dic = crossover.getDistributionIndex() ;
-    PolynomialMutation mutation = (PolynomialMutation)algorithm.getMutationOperator() ;
+    PolynomialMutation mutation = (PolynomialMutation)algorithm.getMutation() ;
     double pm = mutation.getMutationProbability() ;
     double dim = mutation.getDistributionIndex() ;
     double offset = algorithm.getOffset() ;
