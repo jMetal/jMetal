@@ -38,7 +38,6 @@ public class SteadyStateNSGAII extends NSGAIITemplate  {
     super(builder) ;
   }
 
-
   /**
    * Runs the steady-state version of the NSGA-II algorithm.
    *

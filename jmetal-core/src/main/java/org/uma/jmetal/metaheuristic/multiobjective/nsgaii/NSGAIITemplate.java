@@ -194,7 +194,7 @@ public abstract class NSGAIITemplate implements Algorithm<List<Solution>> {
     evaluations += population.size() ;
 
     for (int i = 0 ; i < population.size(); i++) {
-      //problem.evaluateConstraints(solutionSet.get(i)) ;
+        //problem.evaluateConstraints(solutionSet.get(i)) ;
       problem.evaluate(population.get(i)) ;
     }
 
