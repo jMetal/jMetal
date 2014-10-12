@@ -27,8 +27,8 @@ import org.uma.jmetal45.metaheuristic.singleobjective.particleswarmoptimization.
 import org.uma.jmetal45.problem.singleobjective.CEC2005Problem;
 import org.uma.jmetal45.util.AlgorithmRunner;
 import org.uma.jmetal45.util.JMetalLogger;
-import org.uma.jmetal45.util.fileOutput.DefaultFileOutputContext;
-import org.uma.jmetal45.util.fileOutput.SolutionSetOutput;
+import org.uma.jmetal45.util.fileoutput.DefaultFileOutputContext;
+import org.uma.jmetal45.util.fileoutput.SolutionSetOutput;
 
 /**
  * Class for configuring and running a single-objective PSO algorithm

@@ -35,8 +35,8 @@ import org.uma.jmetal45.problem.ProblemFactory;
 import org.uma.jmetal45.qualityindicator.QualityIndicatorGetter;
 import org.uma.jmetal45.util.AlgorithmRunner;
 import org.uma.jmetal45.util.JMetalLogger;
-import org.uma.jmetal45.util.fileOutput.DefaultFileOutputContext;
-import org.uma.jmetal45.util.fileOutput.SolutionSetOutput;
+import org.uma.jmetal45.util.fileoutput.DefaultFileOutputContext;
+import org.uma.jmetal45.util.fileoutput.SolutionSetOutput;
 
 /**
  * Class to configure and execute the MOCell algorithm (variant: AsyncMOCell2)

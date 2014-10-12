@@ -24,9 +24,9 @@ import org.uma.jmetal45.core.Algorithm;
 import org.uma.jmetal45.core.SolutionSet;
 import org.uma.jmetal45.experiment.settings.NSGAIIBinaryRealSettings;
 import org.uma.jmetal45.util.JMetalLogger;
-import org.uma.jmetal45.util.fileOutput.DefaultFileOutputContext;
-import org.uma.jmetal45.util.fileOutput.FileOutputContext;
-import org.uma.jmetal45.util.fileOutput.SolutionSetOutput;
+import org.uma.jmetal45.util.fileoutput.DefaultFileOutputContext;
+import org.uma.jmetal45.util.fileoutput.FileOutputContext;
+import org.uma.jmetal45.util.fileoutput.SolutionSetOutput;
 
 /** Class to configure and execute the NSGA-II algorithm (Binary real encoding) */
 public class NSGAIIBinaryRealRunner {

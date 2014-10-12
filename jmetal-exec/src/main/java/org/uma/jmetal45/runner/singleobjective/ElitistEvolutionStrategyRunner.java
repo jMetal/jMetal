@@ -29,8 +29,8 @@ import org.uma.jmetal45.operator.mutation.Mutation;
 import org.uma.jmetal45.problem.singleobjective.OneMax;
 import org.uma.jmetal45.util.AlgorithmRunner;
 import org.uma.jmetal45.util.JMetalLogger;
-import org.uma.jmetal45.util.fileOutput.DefaultFileOutputContext;
-import org.uma.jmetal45.util.fileOutput.SolutionSetOutput;
+import org.uma.jmetal45.util.fileoutput.DefaultFileOutputContext;
+import org.uma.jmetal45.util.fileoutput.SolutionSetOutput;
 
 /**
  * This class runs a single-objective Evolution Strategy (ES). The ES can be

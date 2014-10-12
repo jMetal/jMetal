@@ -30,8 +30,8 @@ import org.uma.jmetal45.operator.crossover.Crossover;
 import org.uma.jmetal45.problem.singleobjective.CEC2005Problem;
 import org.uma.jmetal45.util.AlgorithmRunner;
 import org.uma.jmetal45.util.JMetalLogger;
-import org.uma.jmetal45.util.fileOutput.DefaultFileOutputContext;
-import org.uma.jmetal45.util.fileOutput.SolutionSetOutput;
+import org.uma.jmetal45.util.fileoutput.DefaultFileOutputContext;
+import org.uma.jmetal45.util.fileoutput.SolutionSetOutput;
 
 /** This class runs a single-objective DE algorithm */
 public class DifferentialEvolutionRunner {

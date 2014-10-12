@@ -28,7 +28,7 @@ import org.uma.jmetal45.experiment.Settings;
 import org.uma.jmetal45.experiment.SettingsFactory;
 import org.uma.jmetal45.experiment.experimentoutput.AlgorithmExecution;
 import org.uma.jmetal45.util.JMetalLogger;
-import org.uma.jmetal45.util.fileOutput.SolutionSetOutput;
+import org.uma.jmetal45.util.fileoutput.SolutionSetOutput;
 import org.uma.jmetal45.util.parallel.SynchronousParallelTaskExecutor;
 
 import java.io.File;

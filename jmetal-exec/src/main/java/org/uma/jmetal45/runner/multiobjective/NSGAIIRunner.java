@@ -35,8 +35,8 @@ import org.uma.jmetal45.util.AlgorithmRunner;
 import org.uma.jmetal45.util.JMetalLogger;
 import org.uma.jmetal45.util.evaluator.SequentialSolutionSetEvaluator;
 import org.uma.jmetal45.util.evaluator.SolutionSetEvaluator;
-import org.uma.jmetal45.util.fileOutput.DefaultFileOutputContext;
-import org.uma.jmetal45.util.fileOutput.SolutionSetOutput;
+import org.uma.jmetal45.util.fileoutput.DefaultFileOutputContext;
+import org.uma.jmetal45.util.fileoutput.SolutionSetOutput;
 
 /**
  * Class to configure and execute the NSGA-II algorithm (including Steady State and parallel versions)

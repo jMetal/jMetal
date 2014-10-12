@@ -28,9 +28,9 @@ import org.uma.jmetal45.experiment.Settings;
 import org.uma.jmetal45.experiment.SettingsFactory;
 import org.uma.jmetal45.qualityindicator.QualityIndicatorGetter;
 import org.uma.jmetal45.util.JMetalLogger;
-import org.uma.jmetal45.util.fileOutput.DefaultFileOutputContext;
-import org.uma.jmetal45.util.fileOutput.FileOutputContext;
-import org.uma.jmetal45.util.fileOutput.SolutionSetOutput;
+import org.uma.jmetal45.util.fileoutput.DefaultFileOutputContext;
+import org.uma.jmetal45.util.fileoutput.FileOutputContext;
+import org.uma.jmetal45.util.fileoutput.SolutionSetOutput;
 
 import java.io.FileInputStream;
 import java.io.InputStreamReader;

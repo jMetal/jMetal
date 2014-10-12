@@ -34,8 +34,8 @@ import org.uma.jmetal45.util.archive.Archive;
 import org.uma.jmetal45.util.archive.CrowdingArchive;
 import org.uma.jmetal45.util.evaluator.SequentialSolutionSetEvaluator;
 import org.uma.jmetal45.util.evaluator.SolutionSetEvaluator;
-import org.uma.jmetal45.util.fileOutput.DefaultFileOutputContext;
-import org.uma.jmetal45.util.fileOutput.SolutionSetOutput;
+import org.uma.jmetal45.util.fileoutput.DefaultFileOutputContext;
+import org.uma.jmetal45.util.fileoutput.SolutionSetOutput;
 import org.uma.jmetal45.problem.multiobjective.Fonseca;
 
 /**
