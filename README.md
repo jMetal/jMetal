@@ -14,4 +14,15 @@ software. Some of the ideas we are elaborating are:
 the algorithms.
 * We will incorporate progressively unit tests to all the classes.
 
-If you are interested in contributing with your ideas and comments, please take a look the current discusions in the [Issues section](https://github.com/jMetal/jMetal/issues).
+If you are interested in contributing with your ideas and comments, please take a look the current discussions in the [Issues section](https://github.com/jMetal/jMetal/issues).
+
+Features of the current development version:
+* Algorithms: NSGA-II, SMPSO, GDE3, IBEA (corrected version)
+* Encodings: Binary, Real, Integer, Permutation, Integer+Double
+* Crossover operators: SBXCrossover, SinglePointCrossover, DifferentialEvolutionCrossover, IntegerSBXCrossover
+* Mutation operators: PolynomialMutation, SingleRandomMutation, BitFlipMutation, IntegerPolynomialMutation
+* Selection operators:  BinaryTournamentSelection, DifferentialEvolutionSelection
+* Problems: Fonseca, Kursawe, Schaffer, Srinivas, OneZeroMax, NMMin, NMIN2, ZDT family
+
+
+
