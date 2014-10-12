@@ -31,8 +31,6 @@ import java.util.List;
  */
 public class SteadyStateNSGAII extends NSGAIITemplate  {
 
-  private static final long serialVersionUID = 3588191288161132897L;
-
   /** Constructor */
   protected SteadyStateNSGAII(Builder builder) {
     super(builder) ;

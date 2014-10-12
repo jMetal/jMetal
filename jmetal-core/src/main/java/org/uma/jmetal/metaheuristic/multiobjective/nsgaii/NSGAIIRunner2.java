@@ -38,7 +38,7 @@ import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
 import java.util.List;
 
 /**
- * Class to configure and execute the NSGA-II algorithm (including Steady State and parallel versions)
+ * Class to configure and execute the NSGA-II algorithm
  */
 public class NSGAIIRunner2 {
   /**
