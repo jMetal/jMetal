@@ -21,51 +21,52 @@
 
 package org.uma.jmetal.problem.multiobjective;
 
-import org.uma.jmetal.core.Problem;
-import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
-import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
-import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.encoding.DoubleSolution;
+import org.uma.jmetal.encoding.impl.DoubleSolutionImpl;
+import org.uma.jmetal.problem.impl.ContinuousProblemImpl;
+
+import java.util.ArrayList;
 
 /**
  * Class representing problem Schaffer
  */
-public class Schaffer extends Problem {
+public class Schaffer extends ContinuousProblemImpl {
   private static final long serialVersionUID = -2366503015218789989L;
 
   /**
    * Constructor.
    * Creates a default instance of problem Schaffer
-   *
-   * @param solutionType The solution type must "Real" or "BinaryReal".
    */
-  public Schaffer(String solutionType) throws JMetalException {
-    numberOfVariables = 1;
-    numberOfObjectives = 2;
-    numberOfConstraints = 0;
-    problemName = "Schaffer";
+  public Schaffer() {
+    setNumberOfVariables(1);
+    setNumberOfObjectives(2);
+    setName("Schaffer");
 
-    lowerLimit = new double[numberOfVariables];
-    upperLimit = new double[numberOfVariables];
-    lowerLimit[0] = -100000;
-    upperLimit[0] = 100000;
+    ArrayList<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
+    ArrayList<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
 
-    if (solutionType.compareTo("BinaryReal") == 0) {
-      this.solutionType = new BinaryRealSolutionType(this);
-    } else if (solutionType.compareTo("Real") == 0) {
-      this.solutionType = new RealSolutionType(this);
-    } else {
-      throw new JMetalException("Error: solution type " + solutionType + " invalid") ;
+    for (int i = 0; i < getNumberOfVariables(); i++) {
+      lowerLimit.add(-100000.0);
+      upperLimit.add(100000.0);
     }
+
+    setLowerLimit(lowerLimit);
+    setUpperLimit(upperLimit);
+  }
+
+  @Override
+  public DoubleSolution createSolution() {
+    DoubleSolution solution = new DoubleSolutionImpl(this) ;
+
+    return solution ;
   }
 
   /** Evaluate() method */
-  public void evaluate(Solution solution) throws JMetalException {
-    double[] f = new double[numberOfObjectives];
-    double value = XReal.getValue(solution, 0) ;
-    f[0] = value * value;
+  public void evaluate(DoubleSolution solution) {
+    double[] f = new double[getNumberOfObjectives()];
+    double value = solution.getVariableValue(0) ;
 
+    f[0] = value * value;
     f[1] = (value - 2.0) * (value - 2.0);
 
     solution.setObjective(0, f[0]);

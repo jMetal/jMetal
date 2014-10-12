@@ -21,11 +21,9 @@
 package org.uma.test.metaheuristic.multiobjective.pesa2;
 
 import org.junit.Test;
-import org.uma.jmetal.core.Algorithm;
-import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.experiment.settings.PESA2Settings;
-
-import java.io.IOException;
+import org.uma.jmetal45.core.Algorithm;
+import org.uma.jmetal45.core.SolutionSet;
+import org.uma.jmetal45.experiment.settings.PESA2Settings;
 
 import static org.junit.Assert.assertTrue;
 
@@ -36,7 +34,7 @@ public class PESA2Test {
   Algorithm algorithm;
 
   @Test
-  public void numberOfReturnedSolutionsInEasyProblemTest() throws IOException, ClassNotFoundException {
+  public void numberOfReturnedSolutionsInEasyProblemTest() throws Exception {
     algorithm = new PESA2Settings("ZDT1").configure() ;
 
     SolutionSet solutionSet = algorithm.execute() ;

@@ -22,8 +22,8 @@ package org.uma.test.qualityIndicator.fastHypervolume.wfg;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.uma.jmetal.qualityindicator.fasthypervolume.wfg.Point;
-import org.uma.jmetal.qualityindicator.fasthypervolume.wfg.PointComparator;
+import org.uma.jmetal45.qualityindicator.fasthypervolume.wfg.Point;
+import org.uma.jmetal45.qualityindicator.fasthypervolume.wfg.PointComparator;
 
 import java.util.Comparator;
 

@@ -23,9 +23,9 @@ package org.uma.test.metaheuristic.singleobjective.particleswarmoptimization;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.uma.jmetal.core.Problem;
-import org.uma.jmetal.metaheuristic.singleobjective.particleswarmoptimization.StandardPSO2007;
-import org.uma.jmetal.problem.singleobjective.Sphere;
+import org.uma.jmetal45.core.Problem;
+import org.uma.jmetal45.metaheuristic.singleobjective.particleswarmoptimization.StandardPSO2007;
+import org.uma.jmetal45.problem.singleobjective.Sphere;
 
 import static org.junit.Assert.assertEquals;
 
@@ -33,7 +33,6 @@ import static org.junit.Assert.assertEquals;
  * Created by Antonio J. Nebro on 26/03/14.
  */
 public class StandardPSO2007Test {
-
   StandardPSO2007 standardPSO;
   Problem problem;
 

@@ -21,12 +21,10 @@
 package org.uma.test.metaheuristic.multiobjective.gde3;
 
 import org.junit.Test;
-import org.uma.jmetal.core.Algorithm;
-import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.experiment.settings.GDE3Settings;
-import org.uma.jmetal.experiment.settings.ParallelGDE3Settings;
-
-import java.io.IOException;
+import org.uma.jmetal45.core.Algorithm;
+import org.uma.jmetal45.core.SolutionSet;
+import org.uma.jmetal45.experiment.settings.GDE3Settings;
+import org.uma.jmetal45.experiment.settings.ParallelGDE3Settings;
 
 import static org.junit.Assert.assertTrue;
 
@@ -37,7 +35,7 @@ public class GDE3Test {
   Algorithm algorithm;
 
   @Test
-  public void numberOfReturnedSolutionsInEasyProblemTest() throws IOException, ClassNotFoundException {
+  public void numberOfReturnedSolutionsInEasyProblemTest() throws Exception {
     algorithm = new GDE3Settings("Kursawe").configure() ;
 
     SolutionSet solutionSet = algorithm.execute() ;
@@ -49,7 +47,7 @@ public class GDE3Test {
   }
   
   @Test
-  public void parallelVerstionTest() throws IOException, ClassNotFoundException {
+  public void parallelVerstionTest() throws Exception {
     algorithm = new ParallelGDE3Settings("Kursawe").configure() ;
 
     SolutionSet solutionSet = algorithm.execute() ;

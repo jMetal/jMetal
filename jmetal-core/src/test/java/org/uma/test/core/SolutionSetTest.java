@@ -23,11 +23,11 @@ package org.uma.test.core;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.uma.jmetal.core.Problem;
-import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.problem.multiobjective.Kursawe;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal45.core.Problem;
+import org.uma.jmetal45.core.Solution;
+import org.uma.jmetal45.core.SolutionSet;
+import org.uma.jmetal45.problem.multiobjective.Kursawe;
+import org.uma.jmetal45.util.JMetalException;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
@@ -68,7 +68,7 @@ public class SolutionSetTest {
 
   /**
    * Test: Adding an element to a full solutiontype set must return a false value because it is not added
-   * @throws org.uma.jmetal.util.JMetalException
+   * @throws org.uma.jmetal45.util.JMetalException
    */
   @Test (expected = JMetalException.class)
   public void testAddOneElementToAFullSolutionSet() throws JMetalException {

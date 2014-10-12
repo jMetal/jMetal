@@ -23,12 +23,12 @@ package org.uma.test.operator.selection;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.uma.jmetal.core.Problem;
-import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.operator.selection.RankingAndCrowdingSelection;
-import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal45.core.Problem;
+import org.uma.jmetal45.core.Solution;
+import org.uma.jmetal45.core.SolutionSet;
+import org.uma.jmetal45.operator.selection.RankingAndCrowdingSelection;
+import org.uma.jmetal45.problem.multiobjective.zdt.ZDT1;
+import org.uma.jmetal45.util.JMetalException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

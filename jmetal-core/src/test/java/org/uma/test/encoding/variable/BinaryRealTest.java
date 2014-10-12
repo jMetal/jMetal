@@ -22,8 +22,8 @@ package org.uma.test.encoding.variable;
 
 import org.junit.After;
 import org.junit.Before;
-import org.uma.jmetal.encoding.variable.Binary;
-import org.uma.jmetal.encoding.variable.BinaryReal;
+import org.uma.jmetal45.encoding.variable.Binary;
+import org.uma.jmetal45.encoding.variable.BinaryReal;
 
 /**
  * Created by Antonio J. Nebro on 12/08/14.

@@ -21,107 +21,16 @@
 
 package org.uma.jmetal.core;
 
-import org.uma.jmetal.util.JMetalException;
+/** Interface representing a multiobjective optimization problem */
+public interface Problem<S extends Solution<?>> {
+  /* Getters */
+  public int getNumberOfVariables() ;
+  public int getNumberOfObjectives() ;
+  public int getNumberOfConstraints() ;
+  public String getName() ;
 
-import java.io.Serializable;
-import java.util.Arrays;
-
-/**
- * Abstract class representing a multiobjective optimization problem
- */
-public abstract class Problem implements Serializable {
-  private static final long serialVersionUID = 7027317068597003106L;
-
-  private static final int DEFAULT_PRECISION = 16;
-  protected int numberOfVariables;
-  protected int numberOfObjectives;
-  protected int numberOfConstraints;
-  protected String problemName;
-  protected SolutionType solutionType;
-  
-  // Arrays used by number encodings (e.g., real, integer) 
-  protected double[] lowerLimit;
-  protected double[] upperLimit;
-  
-  // Arrays used by non number encodings (e.g., binary, permutation)
-  protected int[] precision;
-  protected int[] length;
-
-  public Problem() {
-    solutionType = null;
-  }
-
-  public Problem(SolutionType solutionType) {
-    this.solutionType = solutionType;
-  }
-
-  public int getNumberOfVariables() {
-    return numberOfVariables;
-  }
-
-  public void setNumberOfVariables(int numberOfVariables) {
-    this.numberOfVariables = numberOfVariables;
-  }
-
-  public int getNumberOfObjectives() {
-    return numberOfObjectives;
-  }
-
-  public double getLowerLimit(int i) {
-    return lowerLimit[i];
-  }
-
-  public double getUpperLimit(int i) {
-    return upperLimit[i];
-  }
-
-  public abstract void evaluate(Solution solution) throws JMetalException;
-
-  public int getNumberOfConstraints() {
-    return numberOfConstraints;
-  }
-
-  public void evaluateConstraints(Solution solution) throws JMetalException {
-    // The default behavior is to do nothing. Only constrained problem have to
-    // re-define this method
-  }
-
-  public int getPrecision(int var) {
-    return precision[var];
-  }
-
-  public int[] getPrecision() {
-    return precision;
-  }
-
-  public void setPrecision(int[] precision) {
-    this.precision = Arrays.copyOf(precision, precision.length);
-  }
-
-  public int getLength(int var) {
-    if (length == null) {
-      return DEFAULT_PRECISION;
-    }
-    return length[var];
-  }
-
-  public SolutionType getSolutionType() {
-    return solutionType;
-  }
-
-  public void setSolutionType(SolutionType type) {
-    solutionType = type;
-  } 
-
-  public String getName() {
-    return problemName;
-  }
-
-  public int getNumberOfBits() {
-    int result = 0;
-    for (int var = 0; var < numberOfVariables; var++) {
-      result += getLength(var);
-    }
-    return result;
-  }
+  /* Methods */
+  public void evaluate(S solution) ;
+  public S createSolution() ;
 }
+

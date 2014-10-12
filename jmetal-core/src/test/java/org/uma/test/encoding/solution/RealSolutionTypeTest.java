@@ -3,12 +3,12 @@ package org.uma.test.encoding.solution;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.uma.jmetal.core.Problem;
-import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.core.Variable;
-import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
-import org.uma.jmetal.encoding.variable.Real;
-import org.uma.jmetal.problem.multiobjective.Kursawe;
+import org.uma.jmetal45.core.Problem;
+import org.uma.jmetal45.core.Solution;
+import org.uma.jmetal45.core.Variable;
+import org.uma.jmetal45.encoding.solutiontype.RealSolutionType;
+import org.uma.jmetal45.encoding.variable.Real;
+import org.uma.jmetal45.problem.multiobjective.Kursawe;
 
 import static org.junit.Assert.*;
 
@@ -33,11 +33,6 @@ public class RealSolutionTypeTest {
   public void tearDown() throws Exception {
     problem = null ;
     solution = null ;
-  }
-
-  @Test
-  public void testGetProblem() throws Exception {
-    assertEquals(problem, solution.getType().getProblem()) ;
   }
 
   @Test
@@ -82,15 +77,6 @@ public class RealSolutionTypeTest {
   public void testGetRealLowerBound() throws Exception {
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
       assertEquals(problem.getLowerLimit(i), solutionType.getRealLowerBound(solution, i), EPSILON);
-    }
-  }
-
-  @Test
-  public void testCopyVariables() throws Exception {
-    Variable[] vars = solutionType.copyVariables(solution.getDecisionVariables()) ;
-    assertEquals(PROBLEM_VARIABLES, vars.length);
-    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      assertEquals(((Real)vars[i]).getValue(), solutionType.getRealValue(solution, i), EPSILON);
     }
   }
 

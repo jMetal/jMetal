@@ -21,15 +21,15 @@
 package org.uma.jmetal.util;
 
 import org.uma.jmetal.core.Algorithm;
-import org.uma.jmetal.core.SolutionSet;
+import org.uma.jmetal.core.Solution;
 
-import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by Antonio J. Nebro on 08/06/14.
  */
 public class AlgorithmRunner {
-  private SolutionSet solutionSet;
+  private List<Solution> solutionSet;
   private long computingTime;
 
   /** Constructor */
@@ -39,7 +39,7 @@ public class AlgorithmRunner {
   }
 
   /* Getters */
-  public SolutionSet getSolutionSet() {
+  public List<Solution> getSolutionSet() {
     return solutionSet;
   }
 
@@ -51,13 +51,13 @@ public class AlgorithmRunner {
   public static class Executor {
     Algorithm algorithm;
     long computingTime;
-    SolutionSet solutionSet;
+    List<Solution> solutionSet;
 
     public Executor(Algorithm algorithm) {
       this.algorithm = algorithm ;
     }
 
-    public AlgorithmRunner execute() throws IOException, ClassNotFoundException {
+    public AlgorithmRunner execute() throws Exception {
       long initTime = System.currentTimeMillis();
       solutionSet = algorithm.execute() ;
       computingTime = System.currentTimeMillis() - initTime ;

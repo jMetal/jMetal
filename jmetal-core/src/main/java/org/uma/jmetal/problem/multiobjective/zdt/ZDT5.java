@@ -21,58 +21,52 @@
 
 package org.uma.jmetal.problem.multiobjective.zdt;
 
-import org.uma.jmetal.core.Problem;
-import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.core.Variable;
-import org.uma.jmetal.encoding.solutiontype.BinarySolutionType;
-import org.uma.jmetal.encoding.variable.Binary;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.encoding.BinarySolution;
+import org.uma.jmetal.encoding.impl.BinarySolutionImpl;
+import org.uma.jmetal.problem.impl.BinaryProblemImpl;
+
+import java.util.BitSet;
 
 /**
  * Class representing problem ZDT5
  */
-public class ZDT5 extends Problem {
-  private static final long serialVersionUID = 6980764091779887017L;
+public class ZDT5 extends BinaryProblemImpl {
 
-  /**
-   * Creates a default instance of problem ZDT5 (11 decision variables).
-   * This problem allows only "Binary" representations.
-   */
-  public ZDT5(String solutionType) throws ClassNotFoundException, JMetalException {
-    // 11 variables by default
-    this(solutionType, 11);
+  /** Creates a default instance of problem ZDT5 (11 decision variables) */
+  public ZDT5() {
+    this(11);
   }
 
   /**
    * Creates a instance of problem ZDT5
    *
    * @param numberOfVariables Number of variables.
-   *                          This problem allows only "Binary" representations.
    */
-  public ZDT5(String solutionType, Integer numberOfVariables) throws JMetalException {
-    this.numberOfVariables = numberOfVariables;
-    numberOfObjectives = 2;
-    numberOfConstraints = 0;
-    problemName = "ZDT5";
+  public ZDT5(Integer numberOfVariables) {
+    setNumberOfVariables(numberOfVariables);
+    setNumberOfObjectives(2);
+    setName("ZDT5");
 
-    length = new int[this.numberOfVariables];
-    length[0] = 30;
-    for (int var = 1; var < this.numberOfVariables; var++) {
-      length[var] = 5;
-    }
+    bitsPerVariable = new int[numberOfVariables] ;
 
-    if (solutionType.compareTo("Binary") == 0) {
-      this.solutionType = new BinarySolutionType(this);
-    } else {
-      throw new JMetalException("Error: solution type " + solutionType + " invalid");
+    bitsPerVariable[0] = 30;
+    for (int var = 1; var < numberOfVariables; var++) {
+      bitsPerVariable[var] = 5;
     }
   }
 
+  @Override
+  public BinarySolution createSolution() {
+    BinarySolution solution = new BinarySolutionImpl(this) ;
+
+    return solution ;
+  }
+
   /** Evaluate() method */
-  public void evaluate(Solution solution) {
-    double[] f = new double[numberOfObjectives];
-    f[0] = 1 + u((Binary) solution.getDecisionVariables()[0]);
-    double g = evalG(solution.getDecisionVariables());
+  public void evaluate(BinarySolution solution) {
+    double[] f = new double[solution.getNumberOfObjectives()];
+    f[0] = 1 + u(solution.getVariableValue(0));
+    double g = evalG(solution);
     double h = evalH(f[0], g);
     f[1] = h * g;
 
@@ -83,13 +77,12 @@ public class ZDT5 extends Problem {
   /**
    * Returns the value of the ZDT5 function G.
    *
-   * @param decisionVariables The decision variables of the solutiontype to
-   *                          evaluate.
+   * @param solution The solution.
    */
-  public double evalG(Variable[] decisionVariables) {
+  public double evalG(BinarySolution solution) {
     double res = 0.0;
-    for (int var = 1; var < numberOfVariables; var++) {
-      res += evalV(u((Binary) decisionVariables[var]));
+    for (int i = 1; i < solution.getNumberOfVariables(); i++) {
+      res += evalV(u(solution.getVariableValue(i)));
     }
 
     return res;
@@ -119,11 +112,11 @@ public class ZDT5 extends Problem {
   }
 
   /**
-   * Returns the u value defined in ZDT5 for a encoding.variable.
+   * Returns the u value defined in ZDT5 for a solution.
    *
-   * @param variable The binary encoding.variable
+   * @param bitset A bitset variable
    */
-  private double u(Binary variable) {
-    return variable.getBits().cardinality();
+  private double u(BitSet bitset) {
+    return bitset.cardinality() ;
   }
 }
