@@ -79,13 +79,13 @@ public class NMMin2 extends IntegerDoubleProblemImpl<IntegerDoubleSolution> {
     approximationToM = 0;
 
     for (int i = 0; i < solution.getNumberOfIntegerVariables(); i++) {
-      int value = (int)solution.getVariableValue(i) ;
+      int value = solution.getVariableValue(i).intValue() ;
       approximationToN += Math.abs(valueN - value) ;
       approximationToM += Math.abs(valueM - value) ;
     }
 
     for (int i = solution.getNumberOfIntegerVariables(); i < (solution.getNumberOfIntegerVariables()+solution.getNumberOfDoubleVariables()); i++) {
-      double value = (double)solution.getVariableValue(i) ;
+      double value = solution.getVariableValue(i).doubleValue() ;
       approximationToN += Math.abs(valueN - value) ;
       approximationToM += Math.abs(valueM - value) ;
     }

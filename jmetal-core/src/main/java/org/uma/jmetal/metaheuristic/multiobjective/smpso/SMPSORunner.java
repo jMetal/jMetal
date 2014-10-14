@@ -30,7 +30,7 @@ import org.uma.jmetal.problem.multiobjective.zdt.ZDT4;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
-import org.uma.jmetal.util.fileoutput.DefaultFileOutputContext;
+import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
 
 import java.util.List;

@@ -1,4 +1,6 @@
-package org.uma.jmetal.util.fileoutput;
+package org.uma.jmetal.util.fileoutput.impl;
+
+import org.uma.jmetal.util.fileoutput.FileOutputContext;
 
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
