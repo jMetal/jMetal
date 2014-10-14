@@ -32,7 +32,7 @@ import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.multiobjective.NMMin;
 import org.uma.jmetal.util.AlgorithmRunner;
-import org.uma.jmetal.util.fileoutput.DefaultFileOutputContext;
+import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
 
 import java.util.List;

@@ -34,7 +34,7 @@ import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.comparator.FitnessComparator;
-import org.uma.jmetal.util.fileoutput.DefaultFileOutputContext;
+import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
 
 import java.util.List;

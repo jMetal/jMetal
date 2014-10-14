@@ -28,7 +28,7 @@ import org.uma.jmetal.operator.selection.impl.DifferentialEvolutionSelection;
 import org.uma.jmetal.problem.ContinuousProblem;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT3;
 import org.uma.jmetal.util.AlgorithmRunner;
-import org.uma.jmetal.util.fileoutput.DefaultFileOutputContext;
+import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
 
 import java.util.List;
