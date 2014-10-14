@@ -20,7 +20,7 @@
 
 package org.uma.jmetal.metaheuristic.multiobjective.nsgaii;
 
-import org.uma.jmetal45.util.JMetalLogger;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -43,14 +43,14 @@ import java.util.List;
 public class NSGAIIRunner3 {
   /**
    * @param args Command line arguments.
-   * @throws org.uma.jmetal45.util.JMetalException
+   * @throws org.uma.jmetal.util.JMetalException
    * @throws java.io.IOException
    * @throws SecurityException
    * @throws ClassNotFoundException
    * Usage: three options
-   *        - org.uma.jmetal45.runner.multiobjective.NSGAIIRunner
-   *        - org.uma.jmetal45.runner.multiobjective.NSGAIIRunner problemName
-   *        - org.uma.jmetal45.runner.multiobjective.NSGAIIRunner problemName paretoFrontFile
+   *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner
+   *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName
+   *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName paretoFrontFile
    */
   public static void main(String[] args) throws
           Exception {
