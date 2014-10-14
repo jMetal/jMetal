@@ -30,7 +30,6 @@ import java.util.List;
 
 /**
  * Created by Antonio J. Nebro on 31/05/14.
- * TODO: Class to be refactorized
  */
 public class SolutionSetOutput {
 
@@ -46,8 +45,8 @@ public class SolutionSetOutput {
     public Printer(List<Solution<?>> solutionSet) throws FileNotFoundException {
       varFileContext = new DefaultFileOutputContext(varFileName);
       funFileContext = new DefaultFileOutputContext(funFileName);
-      varFileContext.separator = separator;
-      funFileContext.separator = separator;
+      varFileContext.setSeparator(separator);
+      funFileContext.setSeparator(separator);
       this.solutionSet = solutionSet;
       selectFeasibleSolutions = false;
     }
@@ -71,8 +70,8 @@ public class SolutionSetOutput {
 
     public Printer setSeparator(String separator) {
       this.separator = separator;
-      varFileContext.separator = this.separator;
-      funFileContext.separator = this.separator;
+      varFileContext.setSeparator(this.separator);
+      funFileContext.setSeparator(this.separator);
 
       return this;
     }
