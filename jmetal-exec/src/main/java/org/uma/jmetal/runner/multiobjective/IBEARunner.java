@@ -19,8 +19,9 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.metaheuristic.multiobjective.ibea;
+package org.uma.jmetal.runner.multiobjective;
 
+import org.uma.jmetal.metaheuristic.multiobjective.ibea.IBEA;
 import org.uma.jmetal45.util.JMetalLogger;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Problem;
@@ -34,7 +35,7 @@ import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.comparator.FitnessComparator;
-import org.uma.jmetal.util.fileoutput.DefaultFileOutputContext;
+import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
 
 import java.util.List;
@@ -96,7 +97,7 @@ public class IBEARunner {
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
       .execute() ;
 
-    List<Solution> population = algorithmRunner.getSolutionSet() ;
+    List<Solution<?>> population = algorithmRunner.getSolutionSet() ;
     long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)

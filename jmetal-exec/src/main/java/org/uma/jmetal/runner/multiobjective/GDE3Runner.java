@@ -18,8 +18,9 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.metaheuristic.multiobjective.gde3;
+package org.uma.jmetal.runner.multiobjective;
 
+import org.uma.jmetal.metaheuristic.multiobjective.gde3.GDE3;
 import org.uma.jmetal45.util.JMetalLogger;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Solution;
@@ -28,7 +29,7 @@ import org.uma.jmetal.operator.selection.impl.DifferentialEvolutionSelection;
 import org.uma.jmetal.problem.ContinuousProblem;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT3;
 import org.uma.jmetal.util.AlgorithmRunner;
-import org.uma.jmetal.util.fileoutput.DefaultFileOutputContext;
+import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
 
 import java.util.List;
@@ -88,7 +89,7 @@ public class GDE3Runner {
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
       .execute() ;
 
-    List<Solution> population = algorithmRunner.getSolutionSet() ;
+    List<Solution<?>> population = algorithmRunner.getSolutionSet() ;
     long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)

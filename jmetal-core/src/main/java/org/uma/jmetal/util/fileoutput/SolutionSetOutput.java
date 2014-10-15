@@ -21,6 +21,7 @@
 package org.uma.jmetal.util.fileoutput;
 
 import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
@@ -38,14 +39,14 @@ public class SolutionSetOutput {
     private String varFileName = "VAR";
     private String funFileName = "FUN";
     String separator = "\t";
-    List<Solution> solutionSet;
+    List<Solution<?>> solutionSet;
     boolean selectFeasibleSolutions;
 
-    public Printer(List<Solution> solutionSet) throws FileNotFoundException {
+    public Printer(List<Solution<?>> solutionSet) throws FileNotFoundException {
       varFileContext = new DefaultFileOutputContext(varFileName);
       funFileContext = new DefaultFileOutputContext(funFileName);
-      varFileContext.separator = separator;
-      funFileContext.separator = separator;
+      varFileContext.setSeparator(separator);
+      funFileContext.setSeparator(separator);
       this.solutionSet = solutionSet;
       selectFeasibleSolutions = false;
     }
@@ -69,8 +70,8 @@ public class SolutionSetOutput {
 
     public Printer setSeparator(String separator) {
       this.separator = separator;
-      varFileContext.separator = this.separator;
-      funFileContext.separator = this.separator;
+      varFileContext.setSeparator(this.separator);
+      funFileContext.setSeparator(this.separator);
 
       return this;
     }
@@ -81,7 +82,7 @@ public class SolutionSetOutput {
     }
   }
 
-  static public void printVariablesToFile(FileOutputContext context, List<Solution> solutionSet)
+  static public void printVariablesToFile(FileOutputContext context, List<Solution<?>> solutionSet)
     throws IOException {
     BufferedWriter bufferedWriter = context.getFileWriter();
 
@@ -96,7 +97,7 @@ public class SolutionSetOutput {
     bufferedWriter.close();
   }
 
-  static public void printObjectivesToFile(FileOutputContext context, List<Solution> solutionSet)
+  static public void printObjectivesToFile(FileOutputContext context, List<Solution<?>> solutionSet)
     throws IOException {
     BufferedWriter bufferedWriter = context.getFileWriter();
 
@@ -113,11 +114,11 @@ public class SolutionSetOutput {
   /*
    * Wrappers for printing with default configuration
    */
-  public static void printObjectivesToFile(List<Solution> solutionSet, String fileName) throws IOException {
+  public static void printObjectivesToFile(List<Solution<?>> solutionSet, String fileName) throws IOException {
     printObjectivesToFile(new DefaultFileOutputContext(fileName), solutionSet);
   }
 
-  public static void printVariablesToFile(List<Solution> solutionSet, String fileName) throws IOException {
+  public static void printVariablesToFile(List<Solution<?>> solutionSet, String fileName) throws IOException {
     printVariablesToFile(new DefaultFileOutputContext(fileName), solutionSet);
   }
 

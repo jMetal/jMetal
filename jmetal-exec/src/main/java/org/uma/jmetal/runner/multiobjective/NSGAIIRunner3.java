@@ -18,21 +18,22 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.metaheuristic.multiobjective.nsgaii;
+package org.uma.jmetal.runner.multiobjective;
 
-import org.uma.jmetal45.util.JMetalLogger;
+import org.uma.jmetal.metaheuristic.multiobjective.nsgaii.NSGAIITemplate;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.core.Algorithm;
-import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
-import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
+import org.uma.jmetal.operator.crossover.impl.SinglePointCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
-import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
+import org.uma.jmetal.operator.mutation.impl.BitFlipMutation;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
-import org.uma.jmetal.problem.multiobjective.Fonseca;
+import org.uma.jmetal.problem.BinaryProblem;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT5;
 import org.uma.jmetal.util.AlgorithmRunner;
-import org.uma.jmetal.util.fileoutput.DefaultFileOutputContext;
+import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
 
 import java.util.List;
@@ -40,38 +41,35 @@ import java.util.List;
 /**
  * Class to configure and execute the NSGA-II algorithm
  */
-public class NSGAIIRunner {
+public class NSGAIIRunner3 {
   /**
    * @param args Command line arguments.
-   * @throws org.uma.jmetal45.util.JMetalException
+   * @throws org.uma.jmetal.util.JMetalException
    * @throws java.io.IOException
    * @throws SecurityException
    * @throws ClassNotFoundException
    * Usage: three options
-   *        - org.uma.jmetal45.runner.multiobjective.NSGAIIRunner
-   *        - org.uma.jmetal45.runner.multiobjective.NSGAIIRunner problemName
-   *        - org.uma.jmetal45.runner.multiobjective.NSGAIIRunner problemName paretoFrontFile
+   *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner
+   *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName
+   *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName paretoFrontFile
    */
   public static void main(String[] args) throws
           Exception {
 
-    Problem problem;
+    BinaryProblem problem;
     Algorithm algorithm;
     CrossoverOperator crossover;
     MutationOperator mutation;
     SelectionOperator selection;
 
-    problem = new Fonseca();
-    //problem = new Kursawe();
+    problem = new ZDT5();
 
-    crossover = new SBXCrossover.Builder()
-            .setDistributionIndex(20.0)
+    crossover = new SinglePointCrossover.Builder()
             .setProbability(0.9)
             .build() ;
 
-    mutation = new PolynomialMutation.Builder()
-            .setDistributionIndex(20.0)
-            .setProbability(1.0 / problem.getNumberOfVariables())
+    mutation = new BitFlipMutation.Builder()
+            .setProbability(1.0 / problem.getNumberOfBits(0))
             .build();
 
     selection = new BinaryTournamentSelection.Builder()
@@ -84,13 +82,12 @@ public class NSGAIIRunner {
             .setMaxEvaluations(25000)
             .setPopulationSize(100)
             .setVariant("NSGAII")
-            //.setVariant("SteadyStateNSGAII")
             .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
-    List<Solution> population = algorithmRunner.getSolutionSet() ;
+    List<Solution<?>> population = algorithmRunner.getSolutionSet() ;
     long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)

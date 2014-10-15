@@ -18,9 +18,10 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.metaheuristic.multiobjective.smpso;
+package org.uma.jmetal.runner.multiobjective;
 
-import org.uma.jmetal45.util.JMetalLogger;
+import org.uma.jmetal.metaheuristic.multiobjective.smpso.SMPSO;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -30,7 +31,7 @@ import org.uma.jmetal.problem.multiobjective.zdt.ZDT4;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
-import org.uma.jmetal.util.fileoutput.DefaultFileOutputContext;
+import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
 
 import java.util.List;
@@ -50,13 +51,13 @@ public class SMPSORunner {
   /**
    * @param args Command line arguments. The first (optional) argument specifies
    *             the problem to solve.
-   * @throws org.uma.jmetal45.util.JMetalException
+   * @throws org.uma.jmetal.util.JMetalException
    * @throws java.io.IOException
    * @throws SecurityException
    * Usage: three options
-   *          - org.uma.jmetal45.runner.multiobjective.SMPSORunner
-   *          - org.uma.jmetal45.runner.multiobjective.SMPSORunner problemName
-   *          - org.uma.jmetal45.runner.multiobjective.SMPSORunner problemName ParetoFrontFile
+   *          - org.uma.jmetal.runner.multiobjective.SMPSORunner
+   *          - org.uma.jmetal.runner.multiobjective.SMPSORunner problemName
+   *          - org.uma.jmetal.runner.multiobjective.SMPSORunner problemName ParetoFrontFile
    */
   public static void main(String[] args) throws Exception {
     ContinuousProblem problem;
@@ -81,7 +82,7 @@ public class SMPSORunner {
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
       .execute();
 
-    List<Solution> population = algorithmRunner.getSolutionSet();
+    List<Solution<?>> population = algorithmRunner.getSolutionSet();
     long computingTime = algorithmRunner.getComputingTime();
 
     new SolutionSetOutput.Printer(population)
