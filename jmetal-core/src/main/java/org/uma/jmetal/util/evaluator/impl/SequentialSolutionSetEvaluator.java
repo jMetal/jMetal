@@ -20,13 +20,15 @@
 //
 
 
-package org.uma.jmetal45.util.evaluator;
+package org.uma.jmetal.util.evaluator.impl;
 
-import org.uma.jmetal45.core.Problem;
-import org.uma.jmetal45.core.SolutionSet;
-import org.uma.jmetal45.util.JMetalException;
-import org.uma.jmetal45.util.JMetalLogger;
+import org.uma.jmetal.core.Problem;
+import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
 
+import java.util.List;
 import java.util.logging.Level;
 
 /**
@@ -35,11 +37,12 @@ import java.util.logging.Level;
 public class SequentialSolutionSetEvaluator implements SolutionSetEvaluator {
 
   @Override
-  public SolutionSet evaluate(SolutionSet solutionSet, Problem problem) throws JMetalException {
+  public List<Solution<?>> evaluate(List<Solution<?>> solutionSet, Problem problem) throws
+    JMetalException {
     try {
       for (int i = 0 ; i < solutionSet.size(); i++) {
         problem.evaluate(solutionSet.get(i)) ;
-        problem.evaluateConstraints(solutionSet.get(i)) ;
+        //problem.evaluateConstraints(solutionSet.get(i)) ;
       }
     } catch (JMetalException e) {
       JMetalLogger.logger.log(Level.SEVERE, "Error evaluating solution", e);

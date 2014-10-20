@@ -18,9 +18,10 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.metaheuristic.multiobjective.nsgaii;
+package org.uma.jmetal.runner.multiobjective;
 
-import org.uma.jmetal45.util.JMetalLogger;
+import org.uma.jmetal.metaheuristic.multiobjective.nsgaii.NSGAIITemplate;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
@@ -43,18 +44,15 @@ import java.util.List;
 public class NSGAIIRunner {
   /**
    * @param args Command line arguments.
-   * @throws org.uma.jmetal45.util.JMetalException
    * @throws java.io.IOException
    * @throws SecurityException
    * @throws ClassNotFoundException
    * Usage: three options
-   *        - org.uma.jmetal45.runner.multiobjective.NSGAIIRunner
-   *        - org.uma.jmetal45.runner.multiobjective.NSGAIIRunner problemName
-   *        - org.uma.jmetal45.runner.multiobjective.NSGAIIRunner problemName paretoFrontFile
+   *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner
+   *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName
+   *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName paretoFrontFile
    */
-  public static void main(String[] args) throws
-          Exception {
-
+  public static void main(String[] args) throws Exception {
     Problem problem;
     Algorithm algorithm;
     CrossoverOperator crossover;

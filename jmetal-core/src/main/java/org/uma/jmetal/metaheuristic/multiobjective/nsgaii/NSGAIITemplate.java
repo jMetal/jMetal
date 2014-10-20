@@ -20,7 +20,7 @@
 
 package org.uma.jmetal.metaheuristic.multiobjective.nsgaii;
 
-import org.uma.jmetal45.util.JMetalException;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal45.util.evaluator.SolutionSetEvaluator;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
