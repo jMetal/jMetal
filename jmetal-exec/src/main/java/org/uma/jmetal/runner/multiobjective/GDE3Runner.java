@@ -23,14 +23,13 @@ package org.uma.jmetal.runner.multiobjective;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.metaheuristic.multiobjective.gde3.GDE3;
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal45.util.JMetalLogger;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.selection.impl.DifferentialEvolutionSelection;
 import org.uma.jmetal.problem.ContinuousProblem;
-import org.uma.jmetal.problem.multiobjective.zdt.ZDT3;
 import org.uma.jmetal.util.AlgorithmRunner;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
 
