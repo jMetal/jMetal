@@ -20,7 +20,10 @@
 
 package org.uma.jmetal.runner.multiobjective;
 
+import org.uma.jmetal.encoding.impl.IntegerPermutationSolutionImpl;
 import org.uma.jmetal.metaheuristic.multiobjective.nsgaii.NSGAIITemplate;
+import org.uma.jmetal.problem.ContinuousProblem;
+import org.uma.jmetal.problem.IntegerProblem;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.core.Algorithm;
@@ -34,6 +37,7 @@ import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.multiobjective.NMMin;
 import org.uma.jmetal.util.AlgorithmRunner;
+import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
 
@@ -55,10 +59,9 @@ public class NSGAIIRunner2 {
    *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName
    *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName paretoFrontFile
    */
-  public static void main(String[] args) throws
-          Exception {
+  public static void main(String[] args) {
 
-    Problem problem;
+    IntegerProblem problem;
     Algorithm algorithm;
     CrossoverOperator crossover;
     MutationOperator mutation;
@@ -66,20 +69,7 @@ public class NSGAIIRunner2 {
     
     String problemName = "org.uma.jmetal.problem.multiobjective.NMMin" ;
 
-    try {
-      problem = (Problem)Class.forName(problemName).getConstructor().newInstance() ;
-      //problem = (Problem) ClassLoader.getSystemClassLoader().loadClass("org.uma.jmetal.problem.multiobjective.Fonseca").newInstance();
-    } catch (InstantiationException e) {
-      throw new JMetalException("newInstance() cannot instantiate (abstract class)", e) ;
-    } catch (IllegalAccessException e) {
-      throw new JMetalException("newInstance() is not usable (uses restriction)", e) ;
-    } catch (InvocationTargetException e) {
-      throw new JMetalException("an exception was thrown during the call of newInstance()", e) ;
-    } catch (NoSuchMethodException e) {
-      throw new JMetalException("getConstructor() was not able to find the constructor without arguments", e) ;
-    } catch (ClassNotFoundException e) {
-      throw new JMetalException("Class.forName() did not recognized the name of the class", e) ;
-    }
+    problem = (IntegerProblem) ProblemUtils.loadProblem(problemName);
 
     crossover = new IntegerSBXCrossover.Builder()
             .setDistributionIndex(20)

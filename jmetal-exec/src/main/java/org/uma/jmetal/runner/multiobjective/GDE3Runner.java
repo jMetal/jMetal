@@ -30,6 +30,7 @@ import org.uma.jmetal.operator.selection.impl.DifferentialEvolutionSelection;
 import org.uma.jmetal.problem.ContinuousProblem;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
 
@@ -59,20 +60,7 @@ public class GDE3Runner {
 
     String problemName = "org.uma.jmetal.problem.multiobjective.Fonseca" ;
 
-    try {
-      problem = (ContinuousProblem)Class.forName(problemName).getConstructor().newInstance() ;
-      //problem = (Problem) ClassLoader.getSystemClassLoader().loadClass("org.uma.jmetal.problem.multiobjective.Fonseca").newInstance();
-    } catch (InstantiationException e) {
-      throw new JMetalException("newInstance() cannot instantiate (abstract class)", e) ;
-    } catch (IllegalAccessException e) {
-      throw new JMetalException("newInstance() is not usable (uses restriction)", e) ;
-    } catch (InvocationTargetException e) {
-      throw new JMetalException("an exception was thrown during the call of newInstance()", e) ;
-    } catch (NoSuchMethodException e) {
-      throw new JMetalException("getConstructor() was not able to find the constructor without arguments", e) ;
-    } catch (ClassNotFoundException e) {
-      throw new JMetalException("Class.forName() did not recognized the name of the class", e) ;
-    }
+    problem = (ContinuousProblem) ProblemUtils.loadProblem(problemName);
 
      /*
      * Alternatives:

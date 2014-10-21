@@ -1,7 +1,6 @@
 package org.uma.jmetal.util;
 
 import org.uma.jmetal.core.Problem;
-import org.uma.jmetal.problem.ContinuousProblem;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -9,10 +8,16 @@ import java.lang.reflect.InvocationTargetException;
  * Created by Antonio J. Nebro on 21/10/14.
  */
 public class ProblemUtils {
+
+  /**
+   * Create an instance of problem passed as argument
+   * @param problemName A full qualified problem name
+   * @return An instance of the problem
+   */
   public static Problem loadProblem(String problemName) {
     Problem problem ;
     try {
-      problem = (ContinuousProblem)Class.forName(problemName).getConstructor().newInstance() ;
+      problem = (Problem)Class.forName(problemName).getConstructor().newInstance() ;
       //problem = (Problem) ClassLoader.getSystemClassLoader().loadClass("org.uma.jmetal.problem.multiobjective.Fonseca").newInstance();
     } catch (InstantiationException e) {
       throw new JMetalException("newInstance() cannot instantiate (abstract class)", e) ;

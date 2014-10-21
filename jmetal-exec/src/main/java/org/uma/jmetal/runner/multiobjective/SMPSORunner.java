@@ -31,6 +31,7 @@ import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.ContinuousProblem;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT4;
 import org.uma.jmetal.util.AlgorithmRunner;
+import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
@@ -69,20 +70,7 @@ public class SMPSORunner {
 
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4" ;
 
-    try {
-      problem = (ContinuousProblem)Class.forName(problemName).getConstructor().newInstance() ;
-      //problem = (Problem) ClassLoader.getSystemClassLoader().loadClass("org.uma.jmetal.problem.multiobjective.Fonseca").newInstance();
-    } catch (InstantiationException e) {
-      throw new JMetalException("newInstance() cannot instantiate (abstract class)", e) ;
-    } catch (IllegalAccessException e) {
-      throw new JMetalException("newInstance() is not usable (uses restriction)", e) ;
-    } catch (InvocationTargetException e) {
-      throw new JMetalException("an exception was thrown during the call of newInstance()", e) ;
-    } catch (NoSuchMethodException e) {
-      throw new JMetalException("getConstructor() was not able to find the constructor without arguments", e) ;
-    } catch (ClassNotFoundException e) {
-      throw new JMetalException("Class.forName() did not recognized the name of the class", e) ;
-    }
+    problem = (ContinuousProblem) ProblemUtils.loadProblem(problemName);
 
     Archive archive = new CrowdingDistanceArchive(100) ;
 
