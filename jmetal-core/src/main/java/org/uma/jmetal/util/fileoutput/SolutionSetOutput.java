@@ -21,6 +21,7 @@
 package org.uma.jmetal.util.fileoutput;
 
 import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
 import java.io.BufferedWriter;
@@ -42,7 +43,7 @@ public class SolutionSetOutput {
     List<Solution<?>> solutionSet;
     boolean selectFeasibleSolutions;
 
-    public Printer(List<Solution<?>> solutionSet) throws FileNotFoundException {
+    public Printer(List<Solution<?>> solutionSet)  {
       varFileContext = new DefaultFileOutputContext(varFileName);
       funFileContext = new DefaultFileOutputContext(funFileName);
       varFileContext.setSeparator(separator);
@@ -76,39 +77,45 @@ public class SolutionSetOutput {
       return this;
     }
 
-    public void print() throws IOException {
-      printObjectivesToFile(funFileContext, solutionSet);
-      printVariablesToFile(varFileContext, solutionSet);
+    public void print()  {
+        printObjectivesToFile(funFileContext, solutionSet);
+        printVariablesToFile(varFileContext, solutionSet);
     }
   }
 
-  static public void printVariablesToFile(FileOutputContext context, List<Solution<?>> solutionSet)
-    throws IOException {
+  static public void printVariablesToFile(FileOutputContext context, List<Solution<?>> solutionSet) {
     BufferedWriter bufferedWriter = context.getFileWriter();
 
     int numberOfVariables = solutionSet.get(0).getNumberOfVariables();
-    for (int i = 0; i < solutionSet.size(); i++) {
-      for (int j = 0; j < numberOfVariables; j++) {
-        bufferedWriter.write(solutionSet.get(i).getVariableValue(j).toString() +
-          context.getSeparator());
+    try {
+      for (int i = 0; i < solutionSet.size(); i++) {
+        for (int j = 0; j < numberOfVariables; j++) {
+          bufferedWriter.write(solutionSet.get(i).getVariableValue(j).toString() +
+                  context.getSeparator());
+        }
+        bufferedWriter.newLine();
       }
-      bufferedWriter.newLine();
+      bufferedWriter.close();
+    } catch (IOException e) {
+      throw new JMetalException("Exception when printing variables to file", e) ;
     }
-    bufferedWriter.close();
   }
 
-  static public void printObjectivesToFile(FileOutputContext context, List<Solution<?>> solutionSet)
-    throws IOException {
+  static public void printObjectivesToFile(FileOutputContext context, List<Solution<?>> solutionSet) {
     BufferedWriter bufferedWriter = context.getFileWriter();
 
     int numberOfObjectives = solutionSet.get(0).getNumberOfObjectives();
-    for (int i = 0; i < solutionSet.size(); i++) {
-      for (int j = 0; j < numberOfObjectives; j++) {
-        bufferedWriter.write(solutionSet.get(i).getObjective(j) + context.getSeparator());
+    try {
+      for (int i = 0; i < solutionSet.size(); i++) {
+        for (int j = 0; j < numberOfObjectives; j++) {
+          bufferedWriter.write(solutionSet.get(i).getObjective(j) + context.getSeparator());
+        }
+        bufferedWriter.newLine();
       }
-      bufferedWriter.newLine();
+      bufferedWriter.close();
+    } catch (IOException e) {
+      throw new JMetalException("Exception when printing objectives to file", e) ;
     }
-    bufferedWriter.close();
   }
 
   /*

@@ -21,6 +21,7 @@
 package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.metaheuristic.multiobjective.nsgaii.NSGAIITemplate;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Problem;
@@ -31,11 +32,12 @@ import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
-import org.uma.jmetal.problem.multiobjective.Fonseca;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
@@ -52,15 +54,29 @@ public class NSGAIIRunner {
    *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName
    *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName paretoFrontFile
    */
-  public static void main(String[] args) throws Exception {
+  public static void main(String[] args) throws JMetalException {
     Problem problem;
     Algorithm algorithm;
     CrossoverOperator crossover;
     MutationOperator mutation;
     SelectionOperator selection;
 
-    problem = new Fonseca();
-    //problem = new Kursawe();
+    String problemName = "org.uma.jmetal.problem.multiobjective.Fonseca" ;
+
+    try {
+      problem = (Problem)Class.forName(problemName).getConstructor().newInstance() ;
+      //problem = (Problem) ClassLoader.getSystemClassLoader().loadClass("org.uma.jmetal.problem.multiobjective.Fonseca").newInstance();
+    } catch (InstantiationException e) {
+      throw new JMetalException("newInstance() cannot instantiate (abstract class)", e) ;
+    } catch (IllegalAccessException e) {
+      throw new JMetalException("newInstance() is not usable (uses restriction)", e) ;
+    } catch (InvocationTargetException e) {
+      throw new JMetalException("an exception was thrown during the call of newInstance()", e) ;
+    } catch (NoSuchMethodException e) {
+      throw new JMetalException("getConstructor() was not able to find the constructor without arguments", e) ;
+    } catch (ClassNotFoundException e) {
+      throw new JMetalException("Class.forName() did not recognized the name of the class", e) ;
+    }
 
     crossover = new SBXCrossover.Builder()
             .setDistributionIndex(20.0)

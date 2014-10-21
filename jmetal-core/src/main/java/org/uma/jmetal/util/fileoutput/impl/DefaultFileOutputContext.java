@@ -1,5 +1,6 @@
 package org.uma.jmetal.util.fileoutput.impl;
 
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.fileoutput.FileOutputContext;
 
 import java.io.BufferedWriter;
@@ -22,8 +23,13 @@ public class DefaultFileOutputContext implements FileOutputContext {
   }
 
   @Override
-  public BufferedWriter getFileWriter() throws FileNotFoundException {
-    FileOutputStream outputStream = new FileOutputStream(fileName);
+  public BufferedWriter getFileWriter() {
+    FileOutputStream outputStream = null;
+    try {
+      outputStream = new FileOutputStream(fileName);
+    } catch (FileNotFoundException e) {
+      throw new JMetalException("Exception when calling method getFileWriter()", e) ;
+    }
     OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream);
     BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter) ;
 

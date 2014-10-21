@@ -20,7 +20,9 @@
 
 package org.uma.jmetal.runner.multiobjective;
 
+import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.metaheuristic.multiobjective.smpso.SMPSO;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Solution;
@@ -34,6 +36,7 @@ import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
@@ -64,7 +67,22 @@ public class SMPSORunner {
     Algorithm algorithm;
     MutationOperator mutation;
 
-    problem = new ZDT4() ;
+    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4" ;
+
+    try {
+      problem = (ContinuousProblem)Class.forName(problemName).getConstructor().newInstance() ;
+      //problem = (Problem) ClassLoader.getSystemClassLoader().loadClass("org.uma.jmetal.problem.multiobjective.Fonseca").newInstance();
+    } catch (InstantiationException e) {
+      throw new JMetalException("newInstance() cannot instantiate (abstract class)", e) ;
+    } catch (IllegalAccessException e) {
+      throw new JMetalException("newInstance() is not usable (uses restriction)", e) ;
+    } catch (InvocationTargetException e) {
+      throw new JMetalException("an exception was thrown during the call of newInstance()", e) ;
+    } catch (NoSuchMethodException e) {
+      throw new JMetalException("getConstructor() was not able to find the constructor without arguments", e) ;
+    } catch (ClassNotFoundException e) {
+      throw new JMetalException("Class.forName() did not recognized the name of the class", e) ;
+    }
 
     Archive archive = new CrowdingDistanceArchive(100) ;
 

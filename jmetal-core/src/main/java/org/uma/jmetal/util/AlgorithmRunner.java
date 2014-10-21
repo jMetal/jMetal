@@ -57,7 +57,7 @@ public class AlgorithmRunner {
       this.algorithm = algorithm ;
     }
 
-    public AlgorithmRunner execute() throws Exception {
+    public AlgorithmRunner execute() {
       long initTime = System.currentTimeMillis();
       solutionSet = algorithm.execute() ;
       computingTime = System.currentTimeMillis() - initTime ;
