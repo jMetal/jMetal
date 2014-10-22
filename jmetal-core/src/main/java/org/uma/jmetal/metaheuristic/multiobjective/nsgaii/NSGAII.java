@@ -21,6 +21,7 @@
 package org.uma.jmetal.metaheuristic.multiobjective.nsgaii;
 
 import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.encoding.DoubleSolution;
 import org.uma.jmetal45.util.JMetalException;
 
 import java.util.ArrayList;
@@ -43,7 +44,8 @@ public class NSGAII extends NSGAIITemplate {
    * as a experimentoutput of the algorithm execution
    * @throws org.uma.jmetal45.util.JMetalException
    */
-  public List<?> execute() throws JMetalException {
+  //public List<?> execute() throws JMetalException {
+  public void execute() throws JMetalException {
     createInitialPopulation();
     population = evaluatePopulation(population);
 
@@ -73,6 +75,11 @@ public class NSGAII extends NSGAIITemplate {
     }
 
     tearDown() ;
+    //return getNonDominatedSolutions(population) ;
+  }
+
+  @Override
+  public List<Solution<?>> getResult() {
     return getNonDominatedSolutions(population) ;
   }
 } 

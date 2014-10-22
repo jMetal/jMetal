@@ -43,7 +43,7 @@ import java.util.List;
  * Template for implement NSGA-II and variants
  */
 
-public abstract class NSGAIITemplate implements Algorithm<List<Solution>> {
+public abstract class NSGAIITemplate implements Algorithm<List<Solution<?>>> {
   protected SolutionSetEvaluator evaluator ;
 
   protected Problem problem ;

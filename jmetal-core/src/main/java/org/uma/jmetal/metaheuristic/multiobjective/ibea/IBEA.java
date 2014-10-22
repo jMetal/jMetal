@@ -26,6 +26,7 @@ package org.uma.jmetal.metaheuristic.multiobjective.ibea;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.encoding.DoubleSolution;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -52,6 +53,8 @@ public class IBEA implements Algorithm<List<Solution<?>>> {
   private int populationSize ;
   private int archiveSize ;
   private int maxEvaluations;
+
+  private List<Solution<?>> archive ;
 
   private CrossoverOperator crossover ;
   private MutationOperator mutation ;
@@ -172,9 +175,10 @@ public class IBEA implements Algorithm<List<Solution<?>>> {
 
   /** Execute() method */
   @Override
-  public List<Solution<?>> execute() {
+//  public List<Solution<?>> execute() {
+  public void execute() {
     int evaluations;
-    List<Solution<?>> solutionSet, archive, offSpringSolutionSet;
+    List<Solution<?>> solutionSet, offSpringSolutionSet;
 
     //Initialize the variables
     solutionSet = new ArrayList<>(populationSize);
@@ -232,8 +236,13 @@ public class IBEA implements Algorithm<List<Solution<?>>> {
       solutionSet = offSpringSolutionSet;
     }
 
-    return SolutionListUtils.findNondominatedSolutions(archive) ;
+    //return SolutionListUtils.findNondominatedSolutions(archive) ;
     //return FindNondominatedSolutions.execute(archive) ;
+  }
+
+  @Override
+  public List<Solution<?>> getResult() {
+    return new SolutionListUtils().findNondominatedSolutions(archive) ;
   }
 
   /**

@@ -41,7 +41,7 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
   private List<DoubleSolution> swarm;
   private DoubleSolution[] best;
 
-  private Archive leaders;
+  private Archive<DoubleSolution> leaders;
   private double[][] speed;
   private Comparator<Solution<?>> dominanceComparator;
   private Comparator<Solution<?>> crowdingDistanceComparator;
@@ -277,7 +277,8 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
 
   /** Execute() method  */
   @Override
-  public List<Solution<?>> execute() {
+  //public List<Solution<?>> execute() {
+  public void execute() {
     initialization() ;
     createInitialSwarm() ;
     evaluateSwarm();
@@ -297,6 +298,11 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
     }
 
     tearDown() ;
+    //return paretoFrontApproximation() ;
+  }
+
+  @Override
+  public List<DoubleSolution> getResult() {
     return paretoFrontApproximation() ;
   }
 
@@ -346,7 +352,7 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
 
   protected void initializeLeaders() {
     for (int i = 0; i < swarm.size(); i++) {
-      Solution particle = swarm.get(i).copy() ;
+      DoubleSolution particle = (DoubleSolution)swarm.get(i).copy() ;
       leaders.add(particle);
     }
   }
@@ -449,7 +455,7 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
 
   protected void updateLeaders() {
     for (int i = 0; i < swarm.size(); i++) {
-      Solution particle = swarm.get(i).copy();
+      DoubleSolution particle = (DoubleSolution)swarm.get(i).copy();
       leaders.add(particle);
     }
   }
@@ -464,7 +470,7 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
     }
   }
 
-  protected List<Solution<?>> paretoFrontApproximation() {
+  protected List<DoubleSolution> paretoFrontApproximation() {
     return this.leaders.getSolutionList();
   }
 

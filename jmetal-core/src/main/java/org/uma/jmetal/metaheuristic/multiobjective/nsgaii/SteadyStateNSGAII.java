@@ -43,7 +43,7 @@ public class SteadyStateNSGAII extends NSGAIITemplate  {
    * as a experimentoutput of the algorithm execution
    * @throws org.uma.jmetal45.util.JMetalException
    */
-  public List<?> execute()  {
+  public void execute()  {
     createInitialPopulation();
     population = evaluatePopulation(population);
 
@@ -64,6 +64,11 @@ public class SteadyStateNSGAII extends NSGAIITemplate  {
       crowdingDistanceSelection();
     }
 
+    //return getNonDominatedSolutions(population) ;
+  }
+
+  @Override
+  public List<Solution<?>> getResult() {
     return getNonDominatedSolutions(population) ;
   }
 } 

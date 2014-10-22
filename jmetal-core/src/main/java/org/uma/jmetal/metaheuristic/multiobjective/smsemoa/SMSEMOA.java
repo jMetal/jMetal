@@ -20,6 +20,7 @@
 
 package org.uma.jmetal.metaheuristic.multiobjective.smsemoa;
 
+import org.uma.jmetal.encoding.DoubleSolution;
 import org.uma.jmetal45.qualityindicator.fasthypervolume.FastHypervolume;
 import org.uma.jmetal45.util.JMetalException;
 import org.uma.jmetal.core.Solution;
@@ -62,7 +63,7 @@ public class SMSEMOA extends SMSEMOATemplate {
   /**
    * Execute() method
    */
-  public List<?> execute() throws JMetalException {
+  public void execute() throws JMetalException {
     createInitialPopulation();
     population = evaluatePopulation(population);
 
@@ -94,7 +95,13 @@ public class SMSEMOA extends SMSEMOATemplate {
 
       //fastHypervolume.computeHVContributions(lastFront);
       //lastFront.sort(new org.uma.jmetal45.util.comparator.CrowdingDistanceComparator());
+      // TODO: to be implemented
     }
+  }
+
+  @Override
+  public List<Solution> getResult() {
+    // TODO: to be implemented
     return null ;
   }
 }
