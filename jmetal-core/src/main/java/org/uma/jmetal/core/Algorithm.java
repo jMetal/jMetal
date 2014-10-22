@@ -20,11 +20,10 @@
 
 package org.uma.jmetal.core;
 
-import java.util.List;
-
 /** Interface representing an algorithm */
 public interface Algorithm<Result> {
 
   /** Executes the algorithm */
-  public List<?> execute() ;
+  public void execute() ;
+  public Result getResult() ;
 }
