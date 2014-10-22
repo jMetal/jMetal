@@ -49,7 +49,7 @@ public class AlgorithmRunner {
 
   /** Executor class */
   public static class Executor {
-    Algorithm algorithm;
+    Algorithm<List<Solution<?>>> algorithm ;
     long computingTime;
     List<Solution<?>> solutionSet;
 
@@ -59,7 +59,8 @@ public class AlgorithmRunner {
 
     public AlgorithmRunner execute() {
       long initTime = System.currentTimeMillis();
-      solutionSet = algorithm.execute() ;
+      algorithm.execute() ;
+      solutionSet = algorithm.getResult() ;
       computingTime = System.currentTimeMillis() - initTime ;
 
       return new AlgorithmRunner(this) ;
