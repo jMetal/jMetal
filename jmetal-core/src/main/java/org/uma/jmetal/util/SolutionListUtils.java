@@ -12,14 +12,14 @@ import java.util.List;
 /**
  * Created by Antonio J. Nebro on 04/10/14.
  */
-public class SolutionListUtils {
+public class SolutionListUtils<T extends List<Solution<?>>> {
 
-  public static List<Solution<?>> findNondominatedSolutions(List<Solution<?>> solutionSet) {
+  public List<Solution<?>> findNondominatedSolutions(T solutionSet) {
     Ranking ranking = new DominanceRanking() ;
     return ranking.computeRanking(solutionSet).getSubfront(0);
   }
 
-  public static int findWorstSolution(List<Solution<?>> solutionList, Comparator<Solution<?>> comparator) {
+  public int findWorstSolution(T solutionList, Comparator<Solution<?>> comparator) {
     if ((solutionList == null) || (solutionList.isEmpty())) {
       return -1;
     }
@@ -61,7 +61,7 @@ public class SolutionListUtils {
    * Gets the maximum values for each objectives in a given list of solutions
    *
    * @param solutionList        The list of solutions
-   * @return A list with the maximun values for each objective
+   * @return A list with the maximum values for each objective
    */
   public static List<Double> getMaximumValues(List<Solution<?>> solutionList) {
     List<Double> maximumValue ;
