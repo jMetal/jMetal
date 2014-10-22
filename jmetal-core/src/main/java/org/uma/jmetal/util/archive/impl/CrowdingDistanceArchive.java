@@ -16,9 +16,9 @@ import java.util.List;
 /**
  * Created by Antonio J. Nebro on 24/09/14.
  */
-public class CrowdingDistanceArchive implements Archive {
+public class CrowdingDistanceArchive<T extends Solution<?>> implements Archive<T> {
   private int maxSize ;
-  private List<Solution<?>> solutionSet;
+  private List<T> solutionSet;
   private Comparator<Solution<?>> dominanceComparator;
   private Comparator<Solution<?>> equalsComparator;
   private Comparator<Solution<?>> crowdingDistanceComparator;
@@ -34,7 +34,7 @@ public class CrowdingDistanceArchive implements Archive {
   }
 
   @Override
-  public boolean add(Solution<?> solution) {
+  public boolean add(T solution) {
     int flag ;
     int i = 0;
     Solution aux;
@@ -57,14 +57,14 @@ public class CrowdingDistanceArchive implements Archive {
     solutionSet.add(solution);
     if (solutionSet.size() > maxSize) { // FIXME: check whether the removed solution is the inserted one
       crowdingDistance.computeDensityEstimator(solutionSet);
-      int index = SolutionListUtils.findWorstSolution(solutionSet, crowdingDistanceComparator) ;
+      int index = new SolutionListUtils().findWorstSolution(solutionSet, crowdingDistanceComparator) ;
       solutionSet.remove(index);
     }
     return true;
   }
 
   @Override
-  public List<Solution<?>> getSolutionList() {
+  public List<T> getSolutionList() {
     return solutionSet ;
   }
 

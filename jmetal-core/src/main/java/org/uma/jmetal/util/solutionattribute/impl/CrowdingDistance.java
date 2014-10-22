@@ -38,7 +38,7 @@ public class CrowdingDistance implements DensityEstimator<Solution<?>, Double> {
    * Assigns crowding distances to all solutions in a <code>SolutionSet</code>.
    *
    * @param solutionSet The <code>SolutionSet</code>.
-   * @throws org.uma.jmetal45.util.JMetalException
+   * @throws org.uma.jmetal.util.JMetalException
    */
 
   @Override
