@@ -44,8 +44,8 @@ public class NSGAII extends NSGAIITemplate {
    * as a experimentoutput of the algorithm execution
    * @throws org.uma.jmetal45.util.JMetalException
    */
-  //public List<?> execute() throws JMetalException {
-  public void execute() throws JMetalException {
+  //public List<?> run() throws JMetalException {
+  public void run() throws JMetalException {
     createInitialPopulation();
     population = evaluatePopulation(population);
 

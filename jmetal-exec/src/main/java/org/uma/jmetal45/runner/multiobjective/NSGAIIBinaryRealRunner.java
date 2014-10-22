@@ -28,7 +28,7 @@ import org.uma.jmetal45.util.fileoutput.DefaultFileOutputContext;
 import org.uma.jmetal45.util.fileoutput.FileOutputContext;
 import org.uma.jmetal45.util.fileoutput.SolutionSetOutput;
 
-/** Class to configure and execute the NSGA-II algorithm (Binary real encoding) */
+/** Class to configure and run the NSGA-II algorithm (Binary real encoding) */
 public class NSGAIIBinaryRealRunner {
   /**
    * @param args Command line arguments.

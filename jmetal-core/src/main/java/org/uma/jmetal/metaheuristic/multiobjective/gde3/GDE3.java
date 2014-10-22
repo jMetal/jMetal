@@ -135,8 +135,8 @@ public class GDE3 implements Algorithm<List<DoubleSolution>> {
   }
 
   /** Execute() method  */
-  // old version public List<DoubleSolution> execute() {
-  public void execute() {
+  // old version public List<DoubleSolution> run() {
+  public void run() {
 
     createInitialPopulation();
     population = evaluatePopulation(population);

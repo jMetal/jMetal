@@ -42,7 +42,7 @@ public class SyncMOCell2 extends MOCellTemplate implements Algorithm {
     super(builder);
   }
 
-  /** execute() method */
+  /** run() method */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     SolutionSet newSolutionSet;
 

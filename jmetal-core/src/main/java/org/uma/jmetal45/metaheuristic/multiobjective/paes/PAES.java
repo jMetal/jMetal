@@ -118,7 +118,7 @@ public class PAES implements Algorithm {
     }
   }
 
-  /** execute() method */
+  /** run() method */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     int evaluations;
     AdaptiveGridArchive archive;

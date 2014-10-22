@@ -175,8 +175,8 @@ public class IBEA implements Algorithm<List<Solution<?>>> {
 
   /** Execute() method */
   @Override
-//  public List<Solution<?>> execute() {
-  public void execute() {
+//  public List<Solution<?>> run() {
+  public void run() {
     int evaluations;
     List<Solution<?>> solutionSet, offSpringSolutionSet;
 
@@ -237,7 +237,7 @@ public class IBEA implements Algorithm<List<Solution<?>>> {
     }
 
     //return SolutionListUtils.findNondominatedSolutions(archive) ;
-    //return FindNondominatedSolutions.execute(archive) ;
+    //return FindNondominatedSolutions.run(archive) ;
   }
 
   @Override

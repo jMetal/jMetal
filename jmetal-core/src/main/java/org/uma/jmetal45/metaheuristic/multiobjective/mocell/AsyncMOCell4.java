@@ -46,7 +46,7 @@ public class AsyncMOCell4 extends MOCellTemplate implements Algorithm {
     super(builder);
   }
 
-  /** execute() method */
+  /** run() method */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     archive = new CrowdingArchive(archiveSize, problem.getNumberOfObjectives());
     neighborhood = new Neighborhood(populationSize);

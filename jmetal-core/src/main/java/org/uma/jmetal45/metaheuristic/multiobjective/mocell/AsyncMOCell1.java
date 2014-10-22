@@ -41,7 +41,7 @@ public class AsyncMOCell1 extends MOCellTemplate implements Algorithm {
     super(builder) ;
   }
 
-  /** execute() method */
+  /** run() method */
   public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     neighborhood = new Neighborhood(populationSize);
     neighbors = new SolutionSet[populationSize];

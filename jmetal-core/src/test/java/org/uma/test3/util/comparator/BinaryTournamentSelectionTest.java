@@ -53,7 +53,7 @@ public class BinaryTournamentSelectionTest {
 
   @Test
   public void executeWithCorrectParametersTest() {
-    assertNotNull(selection.execute(population));
+    assertNotNull(selection.run(population));
   }
 
   @Test
@@ -61,13 +61,13 @@ public class BinaryTournamentSelectionTest {
     population = new ArrayList<>(1) ;
     Solution solution = problem.createSolution() ;
     population.add(solution) ;
-    assertEquals(solution, selection.execute(population));
+    assertEquals(solution, selection.run(population));
   }
 
   @Test (expected = JMetalException.class)
   public void executeWithPopulationSizeZeroTest() {
     population = new ArrayList<>(1) ;
-    selection.execute(population) ;
+    selection.run(population) ;
   }
 
   @Test
@@ -75,12 +75,12 @@ public class BinaryTournamentSelectionTest {
     population = new ArrayList<>(2) ;
     population.add(problem.createSolution()) ;
     population.add(problem.createSolution()) ;
-    assertNotNull(selection.execute(population));
+    assertNotNull(selection.run(population));
   }
 
   @Test (expected = JMetalException.class)
   public void nullParameterTest() {
-    selection.execute(null) ;
+    selection.run(null) ;
   }
 
   @After

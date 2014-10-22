@@ -187,7 +187,7 @@ public class SMPSOSettingsTest {
     Settings smpsoSettings = new SMPSO_Settings("Fonseca");
     Algorithm algorithm = smpsoSettings.configure(configuration) ;
     
-    SolutionSet solutionSet = algorithm.execute() ;
+    SolutionSet solutionSet = algorithm.run() ;
     assertEquals("testExecuteSMPSO", 100, solutionSet.size());        
   }  */
 }

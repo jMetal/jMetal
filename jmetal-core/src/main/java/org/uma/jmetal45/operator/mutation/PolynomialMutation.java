@@ -61,7 +61,7 @@ public class PolynomialMutation extends Mutation {
     return distributionIndex;
   }
 
-  /** execute() method */
+  /** run() method */
   public Object execute(Object object) throws JMetalException {
     if (null == object) {
       throw new JMetalException("Null parameter") ;

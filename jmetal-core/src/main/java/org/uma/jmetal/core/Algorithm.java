@@ -21,9 +21,9 @@
 package org.uma.jmetal.core;
 
 /** Interface representing an algorithm */
-public interface Algorithm<Result> {
+public interface Algorithm<Result> extends Runnable {
 
   /** Executes the algorithm */
-  public void execute() ;
+  public void run() ;
   public Result getResult() ;
 }

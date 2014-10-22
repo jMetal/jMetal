@@ -59,7 +59,7 @@ public class AlgorithmRunner {
 
     public AlgorithmRunner execute() {
       long initTime = System.currentTimeMillis();
-      algorithm.execute() ;
+      algorithm.run() ;
       solutionSet = algorithm.getResult() ;
       computingTime = System.currentTimeMillis() - initTime ;
 

@@ -90,7 +90,7 @@ public class BinaryTournament2Test {
   public void theResultIsAPermutationTest() {
   	SolutionSet selectedSolutions = new SolutionSet(POPULATION_SIZE) ;
   	for (int i = 0; i < POPULATION_SIZE; i++) {
-  		selectedSolutions.add((Solution)selection.execute(solutionSet)) ;
+  		selectedSolutions.add((Solution)selection.run(solutionSet)) ;
   	}
 
   	boolean found = true ;

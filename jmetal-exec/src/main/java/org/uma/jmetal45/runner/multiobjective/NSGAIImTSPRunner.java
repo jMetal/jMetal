@@ -41,7 +41,7 @@ import org.uma.jmetal45.util.fileoutput.SolutionSetOutput;
 import java.io.IOException;
 
 /**
- * Class to configure and execute the NSGA-II algorithm. The settings are aimed
+ * Class to configure and run the NSGA-II algorithm. The settings are aimed
  * at solving the multiobjective TSP problem.
  */
 

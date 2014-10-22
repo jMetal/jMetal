@@ -63,7 +63,7 @@ public class SMSEMOA extends SMSEMOATemplate {
   /**
    * Execute() method
    */
-  public void execute() throws JMetalException {
+  public void run() throws JMetalException {
     createInitialPopulation();
     population = evaluatePopulation(population);
 

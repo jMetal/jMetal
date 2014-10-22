@@ -89,13 +89,13 @@ public class PESA2Selection extends Selection {
     return archive.get((base + cnt) % archive.size());
 /*		} catch (ClassCastException e) {
 			Configuration.logger.log(Level.SEVERE,
-					"PESA2Selection.execute: ClassCastException. " +
+					"PESA2Selection.run: ClassCastException. " +
 							"Found" + object.getClass() + "Expected: AdaptativeGridArchive",
 							e
 					);
 			Class<String> cls = java.lang.String.class;
 			String name = cls.getName();
-			throw new JMetalException("Exception in " + name + ".execute()");
+			throw new JMetalException("Exception in " + name + ".run()");
 		}
 		*/
   }

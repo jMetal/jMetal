@@ -74,7 +74,7 @@ public class NonUniformMutation extends Mutation {
     this.currentIteration = currentIteration;
   }
 
-  /** execute() method */
+  /** run() method */
   public Object execute(Object object) throws JMetalException {
     if (null == object) {
       throw new JMetalException("Null parameter") ;

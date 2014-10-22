@@ -277,8 +277,8 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
 
   /** Execute() method  */
   @Override
-  //public List<Solution<?>> execute() {
-  public void execute() {
+  //public List<Solution<?>> run() {
+  public void run() {
     initialization() ;
     createInitialSwarm() ;
     evaluateSwarm();

@@ -39,7 +39,7 @@ import org.uma.jmetal45.util.fileoutput.DefaultFileOutputContext;
 import org.uma.jmetal45.util.fileoutput.SolutionSetOutput;
 
 /**
- * Class to configure and execute the MOCell algorithm (variant: AsyncMOCell2)
+ * Class to configure and run the MOCell algorithm (variant: AsyncMOCell2)
  */
 
 public class MOCellRunner {

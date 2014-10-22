@@ -39,7 +39,7 @@ import org.uma.jmetal45.util.fileoutput.DefaultFileOutputContext;
 import org.uma.jmetal45.util.fileoutput.SolutionSetOutput;
 
 /**
- * Class to configure and execute the NSGA-II algorithm (including Steady State and parallel versions)
+ * Class to configure and run the NSGA-II algorithm (including Steady State and parallel versions)
  */
 public class NSGAIIRunner {
   /**

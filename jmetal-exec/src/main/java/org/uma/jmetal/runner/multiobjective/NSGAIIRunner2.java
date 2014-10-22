@@ -45,7 +45,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
- * Class to configure and execute the NSGA-II algorithm
+ * Class to configure and run the NSGA-II algorithm
  */
 public class NSGAIIRunner2 {
   /**
