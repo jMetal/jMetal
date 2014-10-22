@@ -21,6 +21,7 @@
 
 package org.uma.jmetal.metaheuristic.multiobjective.gde3;
 
+import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.encoding.DoubleSolution;
@@ -40,7 +41,7 @@ import java.util.Comparator;
 import java.util.List;
 
 /** This class implements the GDE3 algorithm */
-public class GDE3 implements org.uma.jmetal.core.Algorithm<List<DoubleSolution>> {
+public class GDE3 implements Algorithm<List<DoubleSolution>> {
   private ContinuousProblem problem ;
   protected int populationSize;
   protected int maxIterations;
@@ -134,11 +135,13 @@ public class GDE3 implements org.uma.jmetal.core.Algorithm<List<DoubleSolution>>
   }
 
   /** Execute() method  */
-  public List<DoubleSolution> execute() {
+  // old version public List<DoubleSolution> execute() {
+  public void execute() {
 
     createInitialPopulation();
     population = evaluatePopulation(population);
-                                                            System.out.println("Pozsize: " + population.size()) ;
+    System.out.println("Popsize: " + population.size()) ;
+
     // Generations ...
     while (!stoppingCondition()) {
 
@@ -198,7 +201,10 @@ public class GDE3 implements org.uma.jmetal.core.Algorithm<List<DoubleSolution>>
     }
 
     tearDown();
+  }
 
+  @Override
+  public List<DoubleSolution> getResult() {
     return getNonDominatedSolutions(population) ;
   }
 
