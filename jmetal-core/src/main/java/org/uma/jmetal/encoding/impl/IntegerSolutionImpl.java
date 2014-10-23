@@ -1,9 +1,9 @@
 package org.uma.jmetal.encoding.impl;
 
-import org.uma.jmetal45.util.random.PseudoRandom;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.encoding.IntegerSolution;
 import org.uma.jmetal.problem.IntegerProblem;
+import org.uma.jmetal45.util.random.PseudoRandom;
 
 import java.util.ArrayList;
 import java.util.HashMap;

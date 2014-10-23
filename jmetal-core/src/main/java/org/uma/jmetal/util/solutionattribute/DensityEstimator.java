@@ -21,6 +21,7 @@
 package org.uma.jmetal.util.solutionattribute;
 
 import org.uma.jmetal.core.Solution;
+
 import java.util.List;
 
 /**

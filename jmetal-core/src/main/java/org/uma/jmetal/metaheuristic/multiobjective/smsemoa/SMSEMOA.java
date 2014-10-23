@@ -20,11 +20,10 @@
 
 package org.uma.jmetal.metaheuristic.multiobjective.smsemoa;
 
-import org.uma.jmetal.encoding.DoubleSolution;
-import org.uma.jmetal45.qualityindicator.fasthypervolume.FastHypervolume;
-import org.uma.jmetal45.util.JMetalException;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.util.solutionattribute.impl.HypervolumeContribution;
+import org.uma.jmetal45.qualityindicator.fasthypervolume.FastHypervolume;
+import org.uma.jmetal45.util.JMetalException;
 
 import java.util.ArrayList;
 import java.util.List;

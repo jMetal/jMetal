@@ -20,8 +20,6 @@
 
 package org.uma.jmetal.metaheuristic.multiobjective.nsgaii;
 
-import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal45.util.evaluator.SolutionSetEvaluator;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Problem;
@@ -29,11 +27,13 @@ import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.selection.SelectionOperator;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.solutionattribute.DensityEstimator;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;
 import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
+import org.uma.jmetal45.util.evaluator.SolutionSetEvaluator;
 
 import java.util.ArrayList;
 import java.util.Collections;

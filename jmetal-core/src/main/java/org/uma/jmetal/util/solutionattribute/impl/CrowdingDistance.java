@@ -22,8 +22,8 @@
 package org.uma.jmetal.util.solutionattribute.impl;
 
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.util.solutionattribute.DensityEstimator;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
+import org.uma.jmetal.util.solutionattribute.DensityEstimator;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -25,7 +25,6 @@ import org.uma.jmetal45.core.Algorithm;
 import org.uma.jmetal45.core.SolutionSet;
 import org.uma.jmetal45.experiment.settings.NSGAIIIntegerSettings;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**

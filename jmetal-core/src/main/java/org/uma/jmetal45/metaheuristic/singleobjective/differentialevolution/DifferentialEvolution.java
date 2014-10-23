@@ -21,11 +21,14 @@
 
 package org.uma.jmetal45.metaheuristic.singleobjective.differentialevolution;
 
-import org.uma.jmetal45.core.*;
+import org.uma.jmetal45.core.Algorithm;
+import org.uma.jmetal45.core.Problem;
+import org.uma.jmetal45.core.Solution;
+import org.uma.jmetal45.core.SolutionSet;
+import org.uma.jmetal45.operator.crossover.Crossover;
 import org.uma.jmetal45.operator.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal45.operator.selection.DifferentialEvolutionSelection;
 import org.uma.jmetal45.operator.selection.Selection;
-import org.uma.jmetal45.operator.crossover.Crossover;
 import org.uma.jmetal45.util.JMetalException;
 import org.uma.jmetal45.util.JMetalLogger;
 import org.uma.jmetal45.util.comparator.ObjectiveComparator;

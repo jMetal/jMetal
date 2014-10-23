@@ -32,7 +32,6 @@ import org.uma.jmetal45.problem.singleobjective.OneMax;
 import org.uma.jmetal45.problem.singleobjective.Sphere;
 import org.uma.jmetal45.util.AlgorithmRunner;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 

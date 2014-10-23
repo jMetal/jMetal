@@ -21,7 +21,6 @@
 package org.uma.jmetal.metaheuristic.multiobjective.nsgaii;
 
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.encoding.DoubleSolution;
 import org.uma.jmetal45.util.JMetalException;
 
 import java.util.ArrayList;

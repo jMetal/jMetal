@@ -20,7 +20,10 @@
 
 package org.uma.jmetal45.metaheuristic.singleobjective.evolutionstrategy;
 
-import org.uma.jmetal45.core.*;
+import org.uma.jmetal45.core.Algorithm;
+import org.uma.jmetal45.core.Problem;
+import org.uma.jmetal45.core.Solution;
+import org.uma.jmetal45.core.SolutionSet;
 import org.uma.jmetal45.operator.mutation.Mutation;
 import org.uma.jmetal45.operator.mutation.PolynomialMutation;
 import org.uma.jmetal45.util.JMetalException;

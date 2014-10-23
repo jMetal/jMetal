@@ -2,21 +2,19 @@ package org.uma.test3;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.uma.jmetal45.util.JMetalException;
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.encoding.DoubleSolution;
-import org.uma.jmetal.util.solutionattribute.Ranking;
 import org.uma.jmetal.problem.multiobjective.Fonseca;
+import org.uma.jmetal.util.solutionattribute.Ranking;
 import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
+import org.uma.jmetal45.util.JMetalException;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 /**
  * Created by Antonio on 15/09/14.

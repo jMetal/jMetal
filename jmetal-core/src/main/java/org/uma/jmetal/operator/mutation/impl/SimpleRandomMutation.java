@@ -1,10 +1,10 @@
 package org.uma.jmetal.operator.mutation.impl;
 
-import java.util.Random;
-
-import org.uma.jmetal45.util.JMetalException;
 import org.uma.jmetal.encoding.DoubleSolution;
 import org.uma.jmetal.operator.mutation.MutationOperator;
+import org.uma.jmetal45.util.JMetalException;
+
+import java.util.Random;
 
 public class SimpleRandomMutation implements MutationOperator<DoubleSolution> {
   private double probability ;

@@ -20,10 +20,10 @@
 
 package org.uma.jmetal.problem.multiobjective;
 
-import org.uma.jmetal45.util.JMetalException;
 import org.uma.jmetal.encoding.BinarySolution;
 import org.uma.jmetal.encoding.impl.BinarySolutionImpl;
 import org.uma.jmetal.problem.impl.BinaryProblemImpl;
+import org.uma.jmetal45.util.JMetalException;
 
 import java.util.BitSet;
 

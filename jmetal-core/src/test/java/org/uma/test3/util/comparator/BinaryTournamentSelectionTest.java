@@ -26,9 +26,6 @@ import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
 /**
  * Created by Antonio J. Nebro on 15/06/14.
  */

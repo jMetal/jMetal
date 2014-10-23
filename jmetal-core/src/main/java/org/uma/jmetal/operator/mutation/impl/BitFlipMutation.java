@@ -20,10 +20,10 @@
 
 package org.uma.jmetal.operator.mutation.impl;
 
-import org.uma.jmetal45.util.JMetalException;
-import org.uma.jmetal45.util.random.PseudoRandom;
 import org.uma.jmetal.encoding.BinarySolution;
 import org.uma.jmetal.operator.mutation.MutationOperator;
+import org.uma.jmetal45.util.JMetalException;
+import org.uma.jmetal45.util.random.PseudoRandom;
 
 /** This class implements a bit flip mutation operator. */
 public class BitFlipMutation implements MutationOperator<BinarySolution> {

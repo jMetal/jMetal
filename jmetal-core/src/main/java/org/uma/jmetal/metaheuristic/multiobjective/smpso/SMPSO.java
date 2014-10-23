@@ -1,7 +1,5 @@
 package org.uma.jmetal.metaheuristic.multiobjective.smpso;
 
-import org.uma.jmetal45.util.JMetalException;
-import org.uma.jmetal45.util.random.PseudoRandom;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Solution;
@@ -11,6 +9,8 @@ import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal45.util.JMetalException;
+import org.uma.jmetal45.util.random.PseudoRandom;
 
 import java.util.ArrayList;
 import java.util.Comparator;

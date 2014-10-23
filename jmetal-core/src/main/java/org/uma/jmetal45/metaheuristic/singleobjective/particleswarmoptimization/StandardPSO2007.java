@@ -20,11 +20,7 @@
 
 package org.uma.jmetal45.metaheuristic.singleobjective.particleswarmoptimization;
 
-import org.uma.jmetal45.core.Algorithm;
-import org.uma.jmetal45.core.Operator;
-import org.uma.jmetal45.core.Problem;
-import org.uma.jmetal45.core.Solution;
-import org.uma.jmetal45.core.SolutionSet;
+import org.uma.jmetal45.core.*;
 import org.uma.jmetal45.encoding.solutiontype.wrapper.XReal;
 import org.uma.jmetal45.operator.selection.BestSolutionSelection;
 import org.uma.jmetal45.util.AdaptiveRandomNeighborhood;

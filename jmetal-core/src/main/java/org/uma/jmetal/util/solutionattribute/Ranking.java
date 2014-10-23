@@ -22,7 +22,7 @@ package org.uma.jmetal.util.solutionattribute;
 
 import org.uma.jmetal.core.Solution;
 
-import java.util.*;
+import java.util.List;
 
 /**
  * Ranks a list of solutions according to the dominance relationship
