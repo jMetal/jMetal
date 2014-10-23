@@ -11,15 +11,16 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.encoding;
-
-import org.uma.jmetal.core.Solution;
-
-import java.util.List;
+package org.uma.jmetal.util.pseudorandom;
 
 /**
  * @author Antonio J. Nebro
  * @version 0.1
  */
-public interface PermutationSolution<T extends List<?>> extends Solution<T> {
+public interface PseudoRandom {
+  public int nextInt(int lowerBound, int upperBound) ;
+  public double nextDouble(double lowerBound, double upperBound) ;
+  public long nextLong(long lowerBound, long upperBound) ;
+  public float nextFloat(float lowerBound, long upperBound) ;
+  public byte[] nextBytes(int count) ;
 }
