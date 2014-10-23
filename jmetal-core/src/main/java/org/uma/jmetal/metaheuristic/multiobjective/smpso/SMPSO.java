@@ -9,8 +9,9 @@ import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.comparator.DominanceComparator;
-import org.uma.jmetal45.util.JMetalException;
-import org.uma.jmetal45.util.random.PseudoRandom;
+import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.pseudorandom.PseudoRandom;
+import org.uma.jmetal.util.pseudorandom.impl.ApacheRandomUtils;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -40,6 +41,8 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
   private int iterations;
   private List<DoubleSolution> swarm;
   private DoubleSolution[] best;
+
+  private PseudoRandom randomGenerator ;
 
   private Archive<DoubleSolution> leaders;
   private double[][] speed;
@@ -71,6 +74,8 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
     weightMin = builder.weightMin;
     changeVelocity1 = builder.changeVelocity1;
     changeVelocity2 = builder.changeVelocity2;
+
+    randomGenerator = new ApacheRandomUtils() ;
   }
 
   /* Getters */
@@ -390,10 +395,10 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
 
       bestGlobal = selectGlobalBest() ;
 
-      r1 = PseudoRandom.randDouble(r1Min, r1Max);
-      r2 = PseudoRandom.randDouble(r2Min, r2Max);
-      c1 = PseudoRandom.randDouble(c1Min, c1Max);
-      c2 = PseudoRandom.randDouble(c2Min, c2Max);
+      r1 = randomGenerator.nextDouble(r1Min, r1Max);
+      r2 = randomGenerator.nextDouble(r2Min, r2Max);
+      c1 = randomGenerator.nextDouble(c1Min, c1Max);
+      c2 = randomGenerator.nextDouble(c2Min, c2Max);
       wmax = weightMax;
       wmin = weightMin;
 
@@ -439,8 +444,8 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
   protected DoubleSolution selectGlobalBest() {
     Solution one, two;
     DoubleSolution bestGlobal ;
-    int pos1 = PseudoRandom.randInt(0, leaders.getSolutionList().size() - 1);
-    int pos2 = PseudoRandom.randInt(0, leaders.getSolutionList().size() - 1);
+    int pos1 = randomGenerator.nextInt(0, leaders.getSolutionList().size() - 1);
+    int pos2 = randomGenerator.nextInt(0, leaders.getSolutionList().size() - 1);
     one = leaders.getSolutionList().get(pos1);
     two = leaders.getSolutionList().get(pos2);
 
