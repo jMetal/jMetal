@@ -33,7 +33,7 @@ import org.uma.jmetal.util.solutionattribute.DensityEstimator;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;
 import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
-import org.uma.jmetal45.util.evaluator.SolutionSetEvaluator;
+import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -21,7 +21,7 @@
 package org.uma.jmetal.metaheuristic.multiobjective.nsgaii;
 
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal45.util.JMetalException;
+import org.uma.jmetal.util.JMetalException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +41,7 @@ public class NSGAII extends NSGAIITemplate {
    *
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
    * as a experimentoutput of the algorithm execution
-   * @throws org.uma.jmetal45.util.JMetalException
+   * @throws org.uma.jmetal.util.JMetalException
    */
   //public List<?> run() throws JMetalException {
   public void run() throws JMetalException {
