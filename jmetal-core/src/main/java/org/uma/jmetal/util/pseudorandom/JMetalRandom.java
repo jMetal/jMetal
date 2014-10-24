@@ -21,7 +21,7 @@ public class JMetalRandom {
   }
 
   public void setRandomGenerator(PseudoRandomGenerator randomGenerator) {
-    this.randomGenerator = randomGenerator ;
+    this.randomGenerator = randomGenerator;
   }
 
   public int nextInt() {
