@@ -25,10 +25,6 @@ public class JMetalRandom {
     this.randomGenerator = randomGenerator;
   }
 
-  public int nextInt() {
-    return nextInt(0, 1) ;
-  }
-
   public int nextInt(int lowerBound, int upperBound) {
     return randomGenerator.nextInt(lowerBound, upperBound) ;
   }
@@ -39,9 +35,5 @@ public class JMetalRandom {
 
   public double nextDouble(double lowerBound, double upperBound) {
     return randomGenerator.nextDouble(lowerBound, upperBound) ;
-  }
-
-  public byte[] nextBytes(int count) {
-    return randomGenerator.nextBytes(count) ;
   }
 }

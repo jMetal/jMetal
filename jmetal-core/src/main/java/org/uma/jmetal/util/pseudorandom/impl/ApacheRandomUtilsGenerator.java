@@ -32,9 +32,4 @@ public class ApacheRandomUtilsGenerator implements PseudoRandomGenerator {
   public double nextDouble(double lowerBound, double upperBound) {
     return RandomUtils.nextDouble(lowerBound, upperBound);
   }
-
-  @Override
-  public byte[] nextBytes(int count) {
-    return RandomUtils.nextBytes(count) ;
-  }
 }

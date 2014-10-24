@@ -22,7 +22,24 @@ import java.util.Random;
  * @version 0.1
  */
 public class JavaRandomGenerator implements PseudoRandomGenerator {
-  private Random rnd = new Random() ;
+  private Random rnd ;
+  private long seed ;
+
+  /** Constructor */
+  public JavaRandomGenerator() {
+    seed = System.currentTimeMillis() ;
+    rnd = new Random(seed) ;
+  }
+
+  /** Constructor */
+  public JavaRandomGenerator(long seed) {
+    this.seed = seed ;
+    rnd = new Random(seed) ;
+  }
+
+  public long getSeed() {
+    return seed ;
+  }
 
   @Override
   public int nextInt(int lowerBound, int upperBound) {
@@ -32,12 +49,5 @@ public class JavaRandomGenerator implements PseudoRandomGenerator {
   @Override
   public double nextDouble(double lowerBound, double upperBound) {
     return lowerBound + rnd.nextDouble()*(upperBound - lowerBound) ;
-  }
-
-  @Override
-  public byte[] nextBytes(int count) {
-    byte[] bytes = new byte[count] ;
-    rnd.nextBytes(bytes);
-    return bytes ;
   }
 }

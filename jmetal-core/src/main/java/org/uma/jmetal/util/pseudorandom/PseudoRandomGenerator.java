@@ -20,5 +20,4 @@ package org.uma.jmetal.util.pseudorandom;
 public interface PseudoRandomGenerator {
   public int nextInt(int lowerBound, int upperBound) ;
   public double nextDouble(double lowerBound, double upperBound) ;
-  public byte[] nextBytes(int count) ;
 }
