@@ -1,9 +1,10 @@
-//  NSGAII.java
+//  SteadyStateNSGAII.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
+//       Juan J. Durillo <durillo@lcc.uma.es>
 //
-//  Copyright (c) 2014 Antonio J. Nebro
+//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -18,62 +19,51 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.algorithm.multiobjective.nsgaii;
+package org.uma.jmetal.algorithm.impl.multiobjective.nsgaii;
 
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.JMetalException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Implementation of NSGA-II.
+ * This class implements a steady-state version of NSGA-II.
  */
+public class SteadyStateNSGAII extends NSGAIITemplate  {
 
-public class NSGAII extends NSGAIITemplate {
-
-  protected NSGAII(Builder builder) {
+  /** Constructor */
+  protected SteadyStateNSGAII(Builder builder) {
     super(builder) ;
   }
 
   /**
-   * Runs the NSGA-II algorithm.
+   * Runs the steady-state version of the NSGA-II algorithm.
    *
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
    * as a experimentoutput of the algorithm execution
-   * @throws org.uma.jmetal.util.JMetalException
+   * @throws org.uma.jmetal45.util.JMetalException
    */
   @Override
-  public void run() throws JMetalException {
+  public void run()  {
     createInitialPopulation();
     population = evaluatePopulation(population);
 
     // Main loop
     while (!stoppingCondition()) {
-      offspringPopulation = new ArrayList<>(populationSize);
-      for (int i = 0; i < (populationSize / 2); i++) {
-        if (!stoppingCondition()) {
-          List<Solution<?>> parents = new ArrayList<>(2);
-          parents.add(selectionOperator.execute(population));
-          parents.add(selectionOperator.execute(population));
+      List<Solution<?>> parents = new ArrayList<>(2);
+      parents.add(selectionOperator.execute(population));
+      parents.add(selectionOperator.execute(population));
 
-          List<Solution<?>> offspring = crossoverOperator.execute(parents);
+      List<Solution<?>> offSpring = crossoverOperator.execute(parents);
 
-          mutationOperator.execute(offspring.get(0));
-          mutationOperator.execute(offspring.get(1));
+      mutationOperator.execute(offSpring.get(0));
 
-          offspringPopulation.add(offspring.get(0));
-          offspringPopulation.add(offspring.get(1));
-        }
-      }
-      List<Solution<?>> jointPopulation = evaluatePopulation(offspringPopulation);
-      jointPopulation.addAll(population) ;
+      evaluations++ ;
+      population.add(offSpring.get(0)) ;
 
-      computeRanking(jointPopulation);
+      computeRanking(population);
       crowdingDistanceSelection();
     }
-
-    tearDown() ;
   }
 
   @Override

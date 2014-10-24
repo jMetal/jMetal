@@ -20,7 +20,7 @@
 
 package org.uma.jmetal.runner.multiobjective;
 
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIITemplate;
+import org.uma.jmetal.algorithm.impl.multiobjective.nsgaii.NSGAIITemplate;
 import org.uma.jmetal.problem.ContinuousProblem;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;

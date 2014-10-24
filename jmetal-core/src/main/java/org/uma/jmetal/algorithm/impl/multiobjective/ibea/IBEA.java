@@ -21,7 +21,7 @@
 // This implementation is based on the PISA code:
 // http://www.tik.ee.ethz.ch/sop/pisa/selectors/ibea/?page=ibea.php
 
-package org.uma.jmetal.algorithm.multiobjective.ibea;
+package org.uma.jmetal.algorithm.impl.multiobjective.ibea;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.problem.Problem;

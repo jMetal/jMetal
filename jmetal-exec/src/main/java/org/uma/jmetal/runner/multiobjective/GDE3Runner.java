@@ -20,7 +20,7 @@
 
 package org.uma.jmetal.runner.multiobjective;
 
-import org.uma.jmetal.algorithm.multiobjective.gde3.GDE3;
+import org.uma.jmetal.algorithm.impl.multiobjective.gde3.GDE3;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
