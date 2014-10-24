@@ -3,7 +3,6 @@ package org.uma.jmetal.encoding.impl;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.encoding.BinarySolution;
 import org.uma.jmetal.problem.BinaryProblem;
-import org.uma.jmetal45.util.random.PseudoRandom;
 
 import java.util.ArrayList;
 import java.util.BitSet;
@@ -13,7 +12,6 @@ import java.util.HashMap;
  * Created by Antonio J. Nebro on 03/09/14.
  */
 public class BinarySolutionImpl extends GenericSolutionImpl<BitSet, BinaryProblem> implements BinarySolution {
-
   /** Constructor */
   public BinarySolutionImpl(BinaryProblem problem) {
     this.problem = problem ;
@@ -49,7 +47,7 @@ public class BinarySolutionImpl extends GenericSolutionImpl<BitSet, BinaryProble
     BitSet bitSet = new BitSet(numberOfBits) ;
 
     for (int i = 0; i < numberOfBits; i++) {
-      if (PseudoRandom.randDouble() < 0.5) {
+      if (randomGenerator.nextDouble() < 0.5) {
         bitSet.set(i, true);
       } else {
         bitSet.set(i, false);

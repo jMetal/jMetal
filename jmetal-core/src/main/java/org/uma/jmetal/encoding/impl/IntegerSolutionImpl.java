@@ -3,7 +3,6 @@ package org.uma.jmetal.encoding.impl;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.encoding.IntegerSolution;
 import org.uma.jmetal.problem.IntegerProblem;
-import org.uma.jmetal45.util.random.PseudoRandom;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +20,7 @@ public class IntegerSolutionImpl extends GenericSolutionImpl<Integer, IntegerPro
     overallConstraintViolationDegree = 0.0 ;
 
     for (int i = 0 ; i < problem.getNumberOfVariables(); i++) {
-      Integer value = PseudoRandom.randInt(getLowerBound(i), getUpperBound(i));
+      Integer value = randomGenerator.nextInt(getLowerBound(i), getUpperBound(i));
       variables.add(value) ;
     }
 

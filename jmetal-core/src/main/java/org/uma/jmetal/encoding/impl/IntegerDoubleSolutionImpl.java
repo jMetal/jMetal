@@ -3,7 +3,6 @@ package org.uma.jmetal.encoding.impl;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.encoding.IntegerDoubleSolution;
 import org.uma.jmetal.problem.IntegerDoubleProblem;
-import org.uma.jmetal45.util.random.PseudoRandom;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,12 +26,12 @@ public class IntegerDoubleSolutionImpl
     overallConstraintViolationDegree = 0.0 ;
 
     for (int i = 0 ; i < numberOfIntegerVariables; i++) {
-      Integer value = PseudoRandom.randInt((Integer)getLowerBound(i), (Integer)getUpperBound(i)) ;
+      Integer value = randomGenerator.nextInt((Integer)getLowerBound(i), (Integer)getUpperBound(i)) ;
       variables.add(value) ;
     }
 
     for (int i = numberOfIntegerVariables ; i < getNumberOfVariables(); i++) {
-      Double value = PseudoRandom.randDouble((Double)getLowerBound(i), (Double)getUpperBound(i)) ;
+      Double value = randomGenerator.nextDouble((Double)getLowerBound(i), (Double)getUpperBound(i)) ;
       variables.add(value) ;
     }
 

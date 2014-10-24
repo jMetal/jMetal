@@ -3,7 +3,6 @@ package org.uma.jmetal.encoding.impl;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.encoding.DoubleSolution;
 import org.uma.jmetal.problem.ContinuousProblem;
-import org.uma.jmetal45.util.random.PseudoRandom;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,7 +21,7 @@ public class DoubleSolutionImpl extends GenericSolutionImpl<Double, ContinuousPr
     overallConstraintViolationDegree = 0.0 ;
 
     for (int i = 0 ; i < problem.getNumberOfVariables(); i++) {
-      Double value = PseudoRandom.randDouble() * (getUpperBound(i) - getLowerBound(i)) + getLowerBound(i);
+      Double value = randomGenerator.nextDouble() * (getUpperBound(i) - getLowerBound(i)) + getLowerBound(i);
       variables.add(value) ;
     }
 

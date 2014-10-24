@@ -2,6 +2,7 @@ package org.uma.jmetal.encoding.impl;
 
 import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,9 +17,12 @@ public abstract class GenericSolutionImpl<T, P extends Problem> implements Solut
   protected P problem ;
   protected double overallConstraintViolationDegree ;
   protected Map<Object, Object> attributes ;
+  protected JMetalRandom randomGenerator ;
+
 
   protected GenericSolutionImpl() {
     attributes = new HashMap<>() ;
+    randomGenerator = JMetalRandom.getInstance() ;
   }
 
   @Override
