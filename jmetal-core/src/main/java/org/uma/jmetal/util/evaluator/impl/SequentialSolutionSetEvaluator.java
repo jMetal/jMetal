@@ -42,7 +42,6 @@ public class SequentialSolutionSetEvaluator implements SolutionSetEvaluator {
     try {
       for (int i = 0 ; i < solutionSet.size(); i++) {
         problem.evaluate(solutionSet.get(i)) ;
-        //problem.evaluateConstraints(solutionSet.get(i)) ;
       }
     } catch (JMetalException e) {
       JMetalLogger.logger.log(Level.SEVERE, "Error evaluating solution", e);

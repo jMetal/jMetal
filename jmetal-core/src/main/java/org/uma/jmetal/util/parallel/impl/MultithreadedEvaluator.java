@@ -144,7 +144,6 @@ public class MultithreadedEvaluator implements SynchronousParallelTaskExecutor {
 
     public Solution call() throws Exception {
       problem.evaluate(solution);
-      //problem.evaluateConstraints(solution);
 
       return solution;
     }

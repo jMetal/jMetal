@@ -63,7 +63,6 @@ public class EqualSolutionsComparator implements Comparator<Solution<?>> {
     int flag;
     double value1, value2;
     for (int i = 0; i < solution1.getNumberOfObjectives(); i++) {
-      //flag = (new ObjectiveComparator(i)).compare(solution1, solution2);
       value1 = solution1.getObjective(i);
       value2 = solution2.getObjective(i);
 

@@ -60,7 +60,7 @@ public class  NSGAIIRunner {
     MutationOperator mutation;
     SelectionOperator selection;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.Fonseca" ;
+    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1" ;
 
     problem = (ContinuousProblem) ProblemUtils.loadProblem(problemName);
 

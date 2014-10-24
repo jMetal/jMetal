@@ -117,11 +117,11 @@ public class SinglePointCrossover implements CrossoverOperator<List<BinarySoluti
         bitsAccount += parent1.getVariableValue(variable).length() ;
       }
 
-      //4. Compute the bit into the selected encoding.variable
+      // 4. Compute the bit into the selected variable
       int diff = bitsAccount - crossoverPoint;
       int intoVariableCrossoverPoint = parent1.getVariableValue(variable).length() - diff ;
 
-      //5. Make the crossover into the variable;
+      // 5. Apply the crossover to the variable;
       BitSet offspring1, offspring2;
       offspring1 = (BitSet) parent1.getVariableValue(variable).clone();
       offspring2 = (BitSet) parent1.getVariableValue(variable).clone();
@@ -135,7 +135,7 @@ public class SinglePointCrossover implements CrossoverOperator<List<BinarySoluti
       offspring.get(0).setVariableValue(variable, offspring1);
       offspring.get(1).setVariableValue(variable, offspring2);
 
-      //6. Apply the crossover to the other variables
+      // 6. Apply the crossover to the other variables
       for (int i = 0; i < variable; i++) {
         offspring.get(0).setVariableValue(i, parent2.getVariableValue(i));
         offspring.get(1).setVariableValue(i, parent1.getVariableValue(i));

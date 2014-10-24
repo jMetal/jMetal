@@ -125,7 +125,6 @@ public class DifferentialEvolution implements Algorithm<List<DoubleSolution>> {
     for (int i = 0; i < populationSize; i++) {
       newSolution = problem.createSolution() ;
       problem.evaluate(newSolution);
-      //problem.evaluateConstraints(newSolution);
       evaluations++;
       population.add(newSolution);
     }

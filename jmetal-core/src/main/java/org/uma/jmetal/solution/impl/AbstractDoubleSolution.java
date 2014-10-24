@@ -60,20 +60,4 @@ public class AbstractDoubleSolution extends AbstractGenericSolution<Double, Cont
   public Solution<?> copy() {
     return new AbstractDoubleSolution(this);
   }
-
-//  @Override
-//  public String toString() {
-//    String result = "Variables: " ;
-//    for (Double var : variables) {
-//      result += "" + var + " " ;
-//    }
-//    result += "Objectives: " ;
-//    for (Double obj : objectives) {
-//      result += "" + obj + " " ;
-//    }
-//    result += "\n" ;
-//    result += "AlgorithmAttributes: " + attributes ;
-//
-//    return result ;
-//  }
 }

@@ -38,6 +38,7 @@ public abstract class AbstractGenericProblem<S extends Solution<?>> implements P
   protected void setNumberOfObjectives(int numberOfObjectives) {
     this.numberOfObjectives = numberOfObjectives;
   }
+
   protected void setNumberOfConstraints(int numberOfConstraints) {
     this.numberOfConstraints = numberOfConstraints;
   }

@@ -18,7 +18,6 @@ public class ProblemUtils {
     Problem problem ;
     try {
       problem = (Problem)Class.forName(problemName).getConstructor().newInstance() ;
-      //problem = (Problem) ClassLoader.getSystemClassLoader().loadClass("org.uma.jmetal.problem.multiobjective.Fonseca").newInstance();
     } catch (InstantiationException e) {
       throw new JMetalException("newInstance() cannot instantiate (abstract class)", e) ;
     } catch (IllegalAccessException e) {

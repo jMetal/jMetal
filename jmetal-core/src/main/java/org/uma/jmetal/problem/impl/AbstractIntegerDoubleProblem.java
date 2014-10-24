@@ -34,7 +34,6 @@ public abstract class AbstractIntegerDoubleProblem<S extends Solution<Number>>
 		return lowerLimit.get(index);
 	}
 
-  /* Getters */
   /* Setters */
   protected void setNumberOfDoubleVariables(int numberOfDoubleVariables) {
     this.numberOfDoubleVariables = numberOfDoubleVariables;

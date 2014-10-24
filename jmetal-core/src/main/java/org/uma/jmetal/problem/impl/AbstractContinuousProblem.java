@@ -4,8 +4,6 @@ import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.problem.ContinuousProblem;
 
 import java.util.List;
-// public interface ContinuousProblem<S extends Solution<? extends Double>> extends Problem<S> {
-// public abstract class GenericProblemImpl<S extends Solution<?>> implements Problem<S> {
 
 public abstract class AbstractContinuousProblem extends AbstractGenericProblem<DoubleSolution>
   implements ContinuousProblem {
