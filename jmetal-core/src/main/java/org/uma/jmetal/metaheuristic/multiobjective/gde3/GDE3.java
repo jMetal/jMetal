@@ -140,7 +140,6 @@ public class GDE3 implements Algorithm<List<DoubleSolution>> {
 
     createInitialPopulation();
     population = evaluatePopulation(population);
-    System.out.println("Popsize: " + population.size()) ;
 
     // Generations ...
     while (!stoppingCondition()) {

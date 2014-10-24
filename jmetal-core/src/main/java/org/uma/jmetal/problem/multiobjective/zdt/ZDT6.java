@@ -62,9 +62,7 @@ public class ZDT6 extends ContinuousProblemImpl {
 
   @Override
   public DoubleSolution createSolution() {
-    DoubleSolution solution = new DoubleSolutionImpl(this) ;
-
-    return solution ;
+    return new DoubleSolutionImpl(this) ;
   }
 
   /** Evaluate() method */

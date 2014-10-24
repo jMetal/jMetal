@@ -65,9 +65,7 @@ public class NMMin2 extends IntegerDoubleProblemImpl<IntegerDoubleSolution> {
 
   @Override
   public IntegerDoubleSolution createSolution() {
-    IntegerDoubleSolution solution = new IntegerDoubleSolutionImpl(this) ;
-
-    return solution ;
+    return new IntegerDoubleSolutionImpl(this) ;
   }
 
   /** Evaluate() method */

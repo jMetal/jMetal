@@ -52,9 +52,7 @@ public class Srinivas extends ContinuousProblemImpl implements ConstrainedProble
 
   @Override
   public DoubleSolution createSolution() {
-    DoubleSolution solution = new DoubleSolutionImpl(this) ;
-
-    return solution ;
+    return new DoubleSolutionImpl(this) ;
   }
 
   /** Evaluate() method */
@@ -62,8 +60,8 @@ public class Srinivas extends ContinuousProblemImpl implements ConstrainedProble
   public void evaluate(DoubleSolution solution)  {
     double[] f = new double[solution.getNumberOfVariables()];
 
-    double x1 = (double) solution.getVariableValue(0);
-    double x2 = (double) solution.getVariableValue(1);
+    double x1 = solution.getVariableValue(0);
+    double x2 = solution.getVariableValue(1);
     f[0] = 2.0 + (x1 - 2.0) * (x1 - 2.0) + (x2 - 1.0) * (x2 - 1.0);
     f[1] = 9.0 * x1 - (x2 - 1.0) * (x2 - 1.0);
 

@@ -56,9 +56,7 @@ public class OneZeroMax extends BinaryProblemImpl {
 
   @Override
   public BinarySolution createSolution() {
-    BinarySolution solution = new BinarySolutionImpl(this);
-
-    return solution ;
+    return new BinarySolutionImpl(this) ;
   }
 
   /** Evaluate() method */

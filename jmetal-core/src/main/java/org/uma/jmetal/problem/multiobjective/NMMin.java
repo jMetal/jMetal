@@ -63,9 +63,7 @@ public class NMMin extends IntegerProblemImpl {
 
   @Override
   public IntegerSolution createSolution() {
-    IntegerSolution solution = new IntegerSolutionImpl(this) ;
-
-    return solution ;
+    return new IntegerSolutionImpl(this) ;
   }
 
   /** Evaluate() method */

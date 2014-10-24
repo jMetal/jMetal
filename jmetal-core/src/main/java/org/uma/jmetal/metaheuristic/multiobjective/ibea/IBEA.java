@@ -60,7 +60,6 @@ public class IBEA implements Algorithm<List<Solution<?>>> {
   private SelectionOperator selection ;
 
   private Fitness solutionFitness = new Fitness() ;
-  private DominanceComparator dominanceComparator = new DominanceComparator() ;
 
   /** Constructor */
   private IBEA(Builder builder) {

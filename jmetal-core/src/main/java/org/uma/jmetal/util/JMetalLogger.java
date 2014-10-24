@@ -30,7 +30,7 @@ import java.util.logging.Logger;
  */
 public class JMetalLogger implements Serializable {
 
-  public static Logger logger = Logger.getLogger("jMetal");
+  public static final Logger logger = Logger.getLogger("jMetal");
   private static FileHandler fileHandler;
 
   static {
