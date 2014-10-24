@@ -22,8 +22,6 @@ package org.uma.jmetal.operator.mutation.impl;
 
 import org.uma.jmetal.encoding.DoubleSolution;
 import org.uma.jmetal.operator.mutation.MutationOperator;
-import org.uma.jmetal45.util.JMetalException;
-import org.uma.jmetal45.util.random.PseudoRandom;
 
 /** This class implements a polynomial mutation operator */
 public class PolynomialMutation implements MutationOperator<DoubleSolution> {

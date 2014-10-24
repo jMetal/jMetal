@@ -23,9 +23,6 @@ package org.uma.jmetal.operator.crossover.impl;
 
 import org.uma.jmetal.encoding.DoubleSolution;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
-import org.uma.jmetal45.util.JMetalException;
-import org.uma.jmetal45.util.JMetalLogger;
-import org.uma.jmetal45.util.random.PseudoRandom;
 
 import java.util.ArrayList;
 import java.util.Arrays;

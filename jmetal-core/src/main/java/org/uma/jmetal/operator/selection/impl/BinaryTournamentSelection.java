@@ -23,19 +23,22 @@ package org.uma.jmetal.operator.selection.impl;
 
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.operator.selection.SelectionOperator;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.comparator.DominanceComparator;
-import org.uma.jmetal45.util.JMetalException;
-import org.uma.jmetal45.util.random.PseudoRandom;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
 
 import java.util.Comparator;
 import java.util.List;
 
 public class BinaryTournamentSelection implements SelectionOperator<List<Solution<?>>,Solution<?>> {
   private Comparator<Solution<?>> comparator;
+  private JMetalRandom randomGenerator ;
 
   /** Constructor */
   private BinaryTournamentSelection(Builder builder) {
     comparator = builder.comparator ;
+    randomGenerator = JMetalRandom.getInstance() ;
   }
 
   /** Builder class */
@@ -66,12 +69,12 @@ public class BinaryTournamentSelection implements SelectionOperator<List<Solutio
       throw new JMetalException("Solution set size is 0") ;
     }
 
-    int indexSolution1 = PseudoRandom.randInt(0, solutions.size() - 1) ;
-    int indexSolution2 = PseudoRandom.randInt(0, solutions.size() - 1) ;
+    int indexSolution1 = randomGenerator.nextInt(0, solutions.size() - 1) ;
+    int indexSolution2 = randomGenerator.nextInt(0, solutions.size() - 1) ;
 
     if (solutions.size() >= 2) {
       while (indexSolution1 == indexSolution2) {
-        indexSolution2 = PseudoRandom.randInt(0, solutions.size() - 1) ;
+        indexSolution2 = randomGenerator.nextInt(0, solutions.size() - 1) ;
       }
     }
 
@@ -86,7 +89,7 @@ public class BinaryTournamentSelection implements SelectionOperator<List<Solutio
     } else if (flag == 1) {
       result = solution2;
     } else {
-      if (PseudoRandom.randDouble() < 0.5) {
+      if (randomGenerator.nextDouble() < 0.5) {
         result = solution1;
       } else {
         result = solution2;

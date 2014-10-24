@@ -13,7 +13,7 @@ public class JMetalRandom {
     randomGenerator = new JavaRandomGenerator() ;
   }
 
-  public JMetalRandom getInstance() {
+  public static JMetalRandom getInstance() {
     if (instance == null) {
       instance = new JMetalRandom() ;
     }
