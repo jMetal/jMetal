@@ -1,4 +1,4 @@
-package org.uma.test3;
+package org.uma.test;
 
 import org.junit.Before;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package org.uma.test3.problem.multiobjective;
+package org.uma.test.problem.multiobjective;
 
 import org.junit.Test;
 import org.uma.jmetal.core.Problem;

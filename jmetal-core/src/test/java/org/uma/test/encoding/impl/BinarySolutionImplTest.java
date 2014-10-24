@@ -1,4 +1,4 @@
-package org.uma.test3.encoding.impl;
+package org.uma.test.encoding.impl;
 
 public class BinarySolutionImplTest {
 
