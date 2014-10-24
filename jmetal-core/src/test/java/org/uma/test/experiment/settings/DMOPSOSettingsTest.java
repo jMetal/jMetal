@@ -22,11 +22,11 @@ package org.uma.test.experiment.settings;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.uma.jmetal45.core.Problem;
-import org.uma.jmetal45.experiment.Settings;
-import org.uma.jmetal45.experiment.settings.DMOPSOSettings;
-import org.uma.jmetal45.metaheuristic.multiobjective.dmopso.DMOPSO;
-import org.uma.jmetal45.problem.multiobjective.Fonseca;
+import org.uma.jmetal.core.Problem;
+import org.uma.jmetal.experiment.Settings;
+import org.uma.jmetal.experiment.settings.DMOPSOSettings;
+import org.uma.jmetal.metaheuristic.multiobjective.dmopso.DMOPSO;
+import org.uma.jmetal.problem.multiobjective.Fonseca;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

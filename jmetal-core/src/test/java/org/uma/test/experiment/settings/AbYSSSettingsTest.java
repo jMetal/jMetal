@@ -22,13 +22,13 @@ package org.uma.test.experiment.settings;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.uma.jmetal45.core.Problem;
-import org.uma.jmetal45.experiment.Settings;
-import org.uma.jmetal45.experiment.settings.AbYSSSettings;
-import org.uma.jmetal45.metaheuristic.multiobjective.abyss.AbYSS;
-import org.uma.jmetal45.operator.localSearch.MutationLocalSearch;
-import org.uma.jmetal45.problem.multiobjective.Fonseca;
-import org.uma.jmetal45.util.JMetalException;
+import org.uma.jmetal.core.Problem;
+import org.uma.jmetal.experiment.Settings;
+import org.uma.jmetal.experiment.settings.AbYSSSettings;
+import org.uma.jmetal.metaheuristic.multiobjective.abyss.AbYSS;
+import org.uma.jmetal.operator.localSearch.MutationLocalSearch;
+import org.uma.jmetal.problem.multiobjective.Fonseca;
+import org.uma.jmetal.util.JMetalException;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

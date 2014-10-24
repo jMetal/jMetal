@@ -27,6 +27,8 @@ import java.util.logging.Level;
  * jMetal exception class
  */
 public class JMetalException extends RuntimeException implements Serializable {
+  private static final long serialVersionUID = 4288481737365385068L;
+
   public JMetalException(String message) {
     super(message);
   }

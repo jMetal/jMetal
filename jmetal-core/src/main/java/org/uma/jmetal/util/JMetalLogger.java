@@ -29,6 +29,7 @@ import java.util.logging.Logger;
  * jMetal logger class
  */
 public class JMetalLogger implements Serializable {
+  private static final long serialVersionUID = 891486004065726989L;
 
   public static Logger logger = Logger.getLogger("jMetal");
   private static FileHandler fileHandler;

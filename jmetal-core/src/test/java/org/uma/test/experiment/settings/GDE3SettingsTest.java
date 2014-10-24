@@ -23,11 +23,11 @@ package org.uma.test.experiment.settings;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.uma.jmetal45.experiment.Settings;
-import org.uma.jmetal45.experiment.settings.GDE3Settings;
-import org.uma.jmetal45.metaheuristic.multiobjective.gde3.GDE3;
-import org.uma.jmetal45.operator.crossover.DifferentialEvolutionCrossover;
-import org.uma.jmetal45.util.JMetalException;
+import org.uma.jmetal.experiment.Settings;
+import org.uma.jmetal.experiment.settings.GDE3Settings;
+import org.uma.jmetal.metaheuristic.multiobjective.gde3.GDE3;
+import org.uma.jmetal.operator.crossover.DifferentialEvolutionCrossover;
+import org.uma.jmetal.util.JMetalException;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -56,7 +56,7 @@ public class GDE3SettingsTest {
   @Test
   public void test() throws JMetalException {
     double epsilon = 0.000000000000001;
-    GDE3Settings GDE3Settings = new org.uma.jmetal45.experiment.settings.GDE3Settings("Fonseca");
+    GDE3Settings GDE3Settings = new org.uma.jmetal.experiment.settings.GDE3Settings("Fonseca");
     GDE3 algorithm = (GDE3) GDE3Settings.configure();
 
     DifferentialEvolutionCrossover crossover =
@@ -72,7 +72,7 @@ public class GDE3SettingsTest {
   @Test
   public void test2() throws JMetalException {
     double epsilon = 0.000000000000001;
-    Settings GDE3Settings = new org.uma.jmetal45.experiment.settings.GDE3Settings("Fonseca");
+    Settings GDE3Settings = new org.uma.jmetal.experiment.settings.GDE3Settings("Fonseca");
     GDE3 algorithm = (GDE3) GDE3Settings.configure(configuration_);
 
     DifferentialEvolutionCrossover crossover =

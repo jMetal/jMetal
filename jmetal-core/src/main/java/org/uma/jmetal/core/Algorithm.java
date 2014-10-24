@@ -1,3 +1,10 @@
+//  Algorithm.java
+//
+//  Authors:
+//       Antonio J. Nebro <antonio@lcc.uma.es>
+////
+//  Copyright (c) 2014 Antonio J. Nebro
+//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -13,14 +20,9 @@
 
 package org.uma.jmetal.core;
 
-/**
- * Interface representing an algorithm
- * @author Antonio J. Nebro
- * @version 0.1
- */
-public interface Algorithm<Result> extends Runnable {
+/** Interface representing an algorithm */
+public interface Algorithm  {
 
-  /** Runs the algorithm */
-  public void run() ;
-  public Result getResult() ;
+  /** Executes the algorithm */
+  public SolutionSet execute() throws Exception ;
 }

@@ -21,9 +21,9 @@
 package org.uma.test.metaheuristic.multiobjective.ibea;
 
 import org.junit.Test;
-import org.uma.jmetal45.core.Algorithm;
-import org.uma.jmetal45.core.SolutionSet;
-import org.uma.jmetal45.experiment.settings.IBEASettings;
+import org.uma.jmetal.core.Algorithm;
+import org.uma.jmetal.core.SolutionSet;
+import org.uma.jmetal.experiment.settings.IBEASettings;
 
 import static org.junit.Assert.assertTrue;
 

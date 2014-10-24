@@ -21,61 +21,69 @@
 
 package org.uma.jmetal.problem.multiobjective.zdt;
 
-import org.uma.jmetal.encoding.DoubleSolution;
-import org.uma.jmetal.encoding.impl.DoubleSolutionImpl;
-import org.uma.jmetal.problem.impl.ContinuousProblemImpl;
-
-import java.util.ArrayList;
+import org.uma.jmetal.core.Problem;
+import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.encoding.solutiontype.ArrayRealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
+import org.uma.jmetal.util.JMetalException;
 
 /**
  * Class representing problem ZDT6
  */
-public class ZDT6 extends ContinuousProblemImpl {
+public class ZDT6 extends Problem {
+ private static final long serialVersionUID = 7195659093659262118L;
 
-  /** Constructor. Creates a default instance of problem ZDT6 (10 decision variables) */
-  public ZDT6()  {
-    this(10);
+  /**
+   * Creates a default instance of problem ZDT6 (10 decision variables)
+   *
+   * @param solutionType The solution type must "Real", "BinaryReal, and "ArrayReal".
+   */
+  public ZDT6(String solutionType) throws ClassNotFoundException, JMetalException {
+    // 10 variables by default
+    this(solutionType, 10);
   }
 
   /**
    * Creates a instance of problem ZDT6
    *
    * @param numberOfVariables Number of variables
+   * @param solutionType      The solution type must "Real", "BinaryReal, and "ArrayReal".
    */
-  public ZDT6(Integer numberOfVariables) {
-    setNumberOfVariables(numberOfVariables);
-    setNumberOfObjectives(2);
-    setName("ZDT6");
+  public ZDT6(String solutionType, Integer numberOfVariables) throws JMetalException {
+    this.numberOfVariables = numberOfVariables;
+    numberOfObjectives = 2;
+    numberOfConstraints = 0;
+    problemName = "ZDT6";
 
-    ArrayList<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
-    ArrayList<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
+    lowerLimit = new double[this.numberOfVariables];
+    upperLimit = new double[this.numberOfVariables];
 
-    for (int i = 0; i < getNumberOfVariables(); i++) {
-      lowerLimit.add(0.0);
-      upperLimit.add(1.0);
+    for (int var = 0; var < this.numberOfVariables; var++) {
+      lowerLimit[var] = 0.0;
+      upperLimit[var] = 1.0;
     }
 
-    setLowerLimit(lowerLimit);
-    setUpperLimit(upperLimit);
-  }
-
-  @Override
-  public DoubleSolution createSolution() {
-    DoubleSolution solution = new DoubleSolutionImpl(this) ;
-
-    return solution ;
+    if (solutionType.compareTo("BinaryReal") == 0) {
+      this.solutionType = new BinaryRealSolutionType(this);
+    } else if (solutionType.compareTo("Real") == 0) {
+      this.solutionType = new RealSolutionType(this);
+    } else if (solutionType.compareTo("ArrayReal") == 0) {
+      this.solutionType = new ArrayRealSolutionType(this);
+    } else {
+      throw new JMetalException("Error: solution type " + solutionType + " invalid");
+    }
   }
 
   /** Evaluate() method */
-  public void evaluate(DoubleSolution solution) {
-    int numberOfVariables = getNumberOfVariables() ;
+  public void evaluate(Solution solution) throws JMetalException {
+    XReal x = new XReal(solution);
 
-    double[] f = new double[getNumberOfObjectives()];
-    double[] x = new double[numberOfVariables] ;
-
-    double x1 = solution.getVariableValue(0);
+    double x1 = x.getValue(0);
+    double[] f = new double[numberOfObjectives];
     f[0] = 1.0 - Math.exp((-4.0) * x1) * Math.pow(Math.sin(6.0 * Math.PI * x1), 6.0);
-    double g = this.evalG(solution);
+    double g = this.evalG(x);
     double h = this.evalH(f[0], g);
     f[1] = h * g;
 
@@ -86,15 +94,16 @@ public class ZDT6 extends ContinuousProblemImpl {
   /**
    * Returns the value of the ZDT6 function G.
    *
-   * @param solution Solution
+   * @param x Solution
+   * @throws org.uma.jmetal.util.JMetalException
    */
-  public double evalG(DoubleSolution solution) {
+  public double evalG(XReal x) throws JMetalException {
     double g = 0.0;
-    for (int var = 1; var < solution.getNumberOfVariables(); var++) {
-      g += solution.getVariableValue(var);
+    for (int var = 1; var < this.numberOfVariables; var++) {
+      g += x.getValue(var);
     }
-    g = g / (solution.getNumberOfVariables() - 1);
-    g = Math.pow(g, 0.25);
+    g = g / (numberOfVariables - 1);
+    g = java.lang.Math.pow(g, 0.25);
     g = 9.0 * g;
     g = 1.0 + g;
     return g;

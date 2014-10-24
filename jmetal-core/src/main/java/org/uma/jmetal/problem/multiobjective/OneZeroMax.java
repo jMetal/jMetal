@@ -3,7 +3,7 @@
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
 //
-//  Copyright (c) 2014 Antonio J. Nebro
+//  Copyright (c) 2012 Antonio J. Nebro
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -20,60 +20,65 @@
 
 package org.uma.jmetal.problem.multiobjective;
 
-import org.uma.jmetal.encoding.BinarySolution;
-import org.uma.jmetal.encoding.impl.BinarySolutionImpl;
-import org.uma.jmetal.problem.impl.BinaryProblemImpl;
-import org.uma.jmetal45.util.JMetalException;
-
-import java.util.BitSet;
+import org.uma.jmetal.core.Problem;
+import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.encoding.solutiontype.BinarySolutionType;
+import org.uma.jmetal.encoding.variable.Binary;
+import org.uma.jmetal.util.JMetalException;
 
 /**
  * Class representing problem OneZeroMax. The problem consist of maximizing the
  * number of '1's and '0's in a binary string.
  */
-public class OneZeroMax extends BinaryProblemImpl {
+public class OneZeroMax extends Problem {
+  private static final long serialVersionUID = 2580449794690931406L;
 
-  private int numberOfBits ;
-
-  /** Constructor */
-  public OneZeroMax() throws ClassNotFoundException, JMetalException {
-    this(512);
+  /**
+   * Creates a new OneZeroMax problem instance
+   *
+   * @param solutionType Solution type
+   */
+  public OneZeroMax(String solutionType) throws ClassNotFoundException, JMetalException {
+    this(solutionType, 512);
   }
 
-  /** Constructor */
-  public OneZeroMax(Integer numberOfBits) throws JMetalException {
-    setNumberOfVariables(1);
-    setNumberOfObjectives(2);
-    setName("OneZeroMax");
+  /**
+   * Creates a new OneZeroMax problem instance
+   *
+   * @param solutionType Solution type
+   * @param numberOfBits Length of the problem
+   */
+  public OneZeroMax(String solutionType, Integer numberOfBits) throws JMetalException {
+    numberOfVariables = 1;
+    numberOfObjectives = 2;
+    numberOfConstraints = 0;
+    problemName = "OneZeroMax";
 
-    this.numberOfBits = numberOfBits ;
-  }
+    this.solutionType = new BinarySolutionType(this);
 
-  @Override
-  public int getNumberOfBits(int index) {
-    return numberOfBits ;
-  }
+    length = new int[numberOfVariables];
+    length[0] = numberOfBits;
 
-  @Override
-  public BinarySolution createSolution() {
-    BinarySolution solution = new BinarySolutionImpl(this);
-
-    return solution ;
+    if (solutionType.compareTo("Binary") == 0) {
+      this.solutionType = new BinarySolutionType(this);
+    } else {
+      throw new JMetalException("Error: solution type " + solutionType + " invalid");
+    }
   }
 
   /** Evaluate() method */
-  @Override
-    public void evaluate(BinarySolution solution) {
+  public void evaluate(Solution solution) {
+    Binary variable;
     int counterOnes;
     int counterZeroes;
+
+    variable = ((Binary) solution.getDecisionVariables()[0]);
 
     counterOnes = 0;
     counterZeroes = 0;
 
-    BitSet bitset = solution.getVariableValue(0) ;
-
-    for (int i = 0; i < bitset.length(); i++) {
-      if (bitset.get(i)) {
+    for (int i = 0; i < variable.getNumberOfBits(); i++) {
+      if (variable.getBits().get(i)) {
         counterOnes++;
       } else {
         counterZeroes++;

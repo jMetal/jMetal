@@ -22,13 +22,13 @@ package org.uma.test.experiment.settings;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.uma.jmetal45.core.Problem;
-import org.uma.jmetal45.experiment.Settings;
-import org.uma.jmetal45.experiment.settings.NSGAIIBinaryRealSettings;
-import org.uma.jmetal45.metaheuristic.multiobjective.nsgaII.NSGAII;
-import org.uma.jmetal45.operator.crossover.SinglePointCrossover;
-import org.uma.jmetal45.operator.mutation.BitFlipMutation;
-import org.uma.jmetal45.problem.multiobjective.zdt.ZDT1;
+import org.uma.jmetal.core.Problem;
+import org.uma.jmetal.experiment.Settings;
+import org.uma.jmetal.experiment.settings.NSGAIIBinaryRealSettings;
+import org.uma.jmetal.metaheuristic.multiobjective.nsgaII.NSGAII;
+import org.uma.jmetal.operator.crossover.SinglePointCrossover;
+import org.uma.jmetal.operator.mutation.BitFlipMutation;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

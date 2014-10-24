@@ -23,16 +23,14 @@
 package org.uma.jmetal.util.evaluator;
 
 import org.uma.jmetal.core.Problem;
-import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.util.JMetalException;
-
-import java.util.List;
 
 /**
  * Created by Antonio J. Nebro on 30/05/14.
  */
 
 public interface SolutionSetEvaluator {
-  public List<Solution<?>> evaluate(List<Solution<?>> solutionSet, Problem problem) throws JMetalException;
+  public SolutionSet evaluate(SolutionSet solutionSet, Problem problem) throws JMetalException;
   public void shutdown() ;
 }

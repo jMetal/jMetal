@@ -21,19 +21,29 @@
 
 package org.uma.jmetal.problem.multiobjective.zdt;
 
-import org.uma.jmetal.encoding.DoubleSolution;
-import org.uma.jmetal.encoding.impl.DoubleSolutionImpl;
-import org.uma.jmetal.problem.impl.ContinuousProblemImpl;
-
-import java.util.ArrayList;
+import org.uma.jmetal.core.Problem;
+import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.encoding.solutiontype.ArrayRealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.BinaryRealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XReal;
+import org.uma.jmetal.util.JMetalException;
 
 /**
  * Class representing problem ZDT3
  */
-public class ZDT3 extends ContinuousProblemImpl {
-  /** Constructor. Creates default instance of problem ZDT3 (30 decision variables) */
-  public ZDT3() {
-    this(30);
+public class ZDT3 extends Problem {
+  private static final long serialVersionUID = -773138580076559651L;
+
+  /**
+   * Constructor.
+   * Creates default instance of problem ZDT3 (30 decision variables.
+   *
+   * @param solutionType The solution type must "Real", "BinaryReal, and "ArrayReal".
+   */
+  public ZDT3(String solutionType) throws ClassNotFoundException, JMetalException {
+    // 30 variables by default
+    this(solutionType, 30);
   }
 
   /**
@@ -41,40 +51,40 @@ public class ZDT3 extends ContinuousProblemImpl {
    * Creates a instance of ZDT3 problem.
    *
    * @param numberOfVariables Number of variables.
+   * @param solutionType      The solution type must "Real", "BinaryReal, and "ArrayReal".
    */
-  public ZDT3(Integer numberOfVariables) {
-    setNumberOfVariables(numberOfVariables);
-    setNumberOfObjectives(2);
-    setName("ZDT3");
+  public ZDT3(String solutionType, Integer numberOfVariables) throws JMetalException {
+    this.numberOfVariables = numberOfVariables;
+    numberOfObjectives = 2;
+    numberOfConstraints = 0;
+    problemName = "ZDT3";
 
-    ArrayList<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
-    ArrayList<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
+    upperLimit = new double[this.numberOfVariables];
+    lowerLimit = new double[this.numberOfVariables];
 
-    for (int i = 0; i < getNumberOfVariables(); i++) {
-      lowerLimit.add(0.0);
-      upperLimit.add(1.0);
+    for (int var = 0; var < this.numberOfVariables; var++) {
+      lowerLimit[var] = 0.0;
+      upperLimit[var] = 1.0;
     }
 
-    setLowerLimit(lowerLimit);
-    setUpperLimit(upperLimit);
-  }
-
-  @Override
-  public DoubleSolution createSolution() {
-    DoubleSolution solution = new DoubleSolutionImpl(this) ;
-
-    return solution ;
+    if (solutionType.compareTo("BinaryReal") == 0) {
+      this.solutionType = new BinaryRealSolutionType(this);
+    } else if (solutionType.compareTo("Real") == 0) {
+      this.solutionType = new RealSolutionType(this);
+    } else if (solutionType.compareTo("ArrayReal") == 0) {
+      this.solutionType = new ArrayRealSolutionType(this);
+    } else {
+      throw new JMetalException("Error: solutiontype type " + solutionType + " invalid");
+    }
   }
 
   /** Evaluate() method */
-  public void evaluate(DoubleSolution solution) {
-    int numberOfVariables = getNumberOfVariables() ;
+  public void evaluate(Solution solution) throws JMetalException {
+    XReal x = new XReal(solution);
 
-    double[] f = new double[getNumberOfObjectives()];
-    double[] x = new double[numberOfVariables] ;
-
-    f[0] = solution.getVariableValue(0);
-    double g = this.evalG(solution);
+    double[] f = new double[numberOfObjectives];
+    f[0] = x.getValue(0);
+    double g = this.evalG(x);
     double h = this.evalH(f[0], g);
     f[1] = h * g;
 
@@ -85,15 +95,15 @@ public class ZDT3 extends ContinuousProblemImpl {
   /**
    * Returns the value of the ZDT2 function G.
    *
-   * @param solution Solution
-   * @throws org.uma.jmetal45.util.JMetalException
+   * @param x Solution
+   * @throws org.uma.jmetal.util.JMetalException
    */
-  private double evalG(DoubleSolution solution) {
+  private double evalG(XReal x) throws JMetalException {
     double g = 0.0;
-    for (int i = 1; i < solution.getNumberOfVariables(); i++) {
-      g += solution.getVariableValue(i);
+    for (int i = 1; i < x.getNumberOfDecisionVariables(); i++) {
+      g += x.getValue(i);
     }
-    double constant = 9.0 / (solution.getNumberOfVariables() - 1);
+    double constant = 9.0 / (numberOfVariables - 1);
     g = constant * g;
     g = g + 1.0;
     return g;
@@ -107,8 +117,8 @@ public class ZDT3 extends ContinuousProblemImpl {
    */
   public double evalH(double f, double g) {
     double h ;
-    h = 1.0 - Math.sqrt(f / g)
-      - (f / g) * Math.sin(10.0 * Math.PI * f);
+    h = 1.0 - java.lang.Math.sqrt(f / g)
+      - (f / g) * java.lang.Math.sin(10.0 * java.lang.Math.PI * f);
     return h;
   }
 }

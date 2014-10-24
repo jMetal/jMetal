@@ -21,12 +21,12 @@
 package org.uma.test.util;
 
 import org.junit.Test;
-import org.uma.jmetal45.core.Problem;
-import org.uma.jmetal45.core.Solution;
-import org.uma.jmetal45.problem.multiobjective.Fonseca;
-import org.uma.jmetal45.problem.singleobjective.OneMax;
-import org.uma.jmetal45.util.BinaryUtils;
-import org.uma.jmetal45.util.JMetalException;
+import org.uma.jmetal.core.Problem;
+import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.problem.multiobjective.Fonseca;
+import org.uma.jmetal.problem.singleobjective.OneMax;
+import org.uma.jmetal.util.BinaryUtils;
+import org.uma.jmetal.util.JMetalException;
 
 import static org.junit.Assert.assertEquals;
 
@@ -48,7 +48,7 @@ public class BinaryUtilsTest {
     Problem problem = new Fonseca("BinaryReal") ;
     Solution solution = new Solution(problem) ;
 
-    int expected = org.uma.jmetal45.encoding.variable.BinaryReal.DEFAULT_PRECISION * problem.getNumberOfVariables() ;
+    int expected = org.uma.jmetal.encoding.variable.BinaryReal.DEFAULT_PRECISION * problem.getNumberOfVariables() ;
 
     assertEquals(expected, BinaryUtils.getNumberOfBits(solution)) ;
   }

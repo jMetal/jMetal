@@ -23,10 +23,10 @@ package org.uma.test.operator.selection;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.uma.jmetal45.core.Solution;
-import org.uma.jmetal45.core.SolutionSet;
-import org.uma.jmetal45.operator.selection.BinaryTournament2;
-import org.uma.jmetal45.util.JMetalException;
+import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.core.SolutionSet;
+import org.uma.jmetal.operator.selection.BinaryTournament2;
+import org.uma.jmetal.util.JMetalException;
 
 import static org.junit.Assert.assertNotNull;
 

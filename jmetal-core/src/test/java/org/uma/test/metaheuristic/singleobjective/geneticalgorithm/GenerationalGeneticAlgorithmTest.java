@@ -21,19 +21,19 @@
 package org.uma.test.metaheuristic.singleobjective.geneticalgorithm;
 
 import org.junit.Test;
-import org.uma.jmetal45.core.Problem;
-import org.uma.jmetal45.core.Solution;
-import org.uma.jmetal45.core.SolutionSet;
-import org.uma.jmetal45.metaheuristic.singleobjective.geneticalgorithm.GenerationalGeneticAlgorithm;
-import org.uma.jmetal45.operator.crossover.Crossover;
-import org.uma.jmetal45.operator.crossover.SBXCrossover;
-import org.uma.jmetal45.operator.crossover.SinglePointCrossover;
-import org.uma.jmetal45.operator.mutation.BitFlipMutation;
-import org.uma.jmetal45.operator.mutation.Mutation;
-import org.uma.jmetal45.operator.mutation.PolynomialMutation;
-import org.uma.jmetal45.problem.singleobjective.OneMax;
-import org.uma.jmetal45.problem.singleobjective.Sphere;
-import org.uma.jmetal45.util.AlgorithmRunner;
+import org.uma.jmetal.core.Problem;
+import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.core.SolutionSet;
+import org.uma.jmetal.metaheuristic.singleobjective.geneticalgorithm.GenerationalGeneticAlgorithm;
+import org.uma.jmetal.operator.crossover.Crossover;
+import org.uma.jmetal.operator.crossover.SBXCrossover;
+import org.uma.jmetal.operator.crossover.SinglePointCrossover;
+import org.uma.jmetal.operator.mutation.BitFlipMutation;
+import org.uma.jmetal.operator.mutation.Mutation;
+import org.uma.jmetal.operator.mutation.PolynomialMutation;
+import org.uma.jmetal.problem.singleobjective.OneMax;
+import org.uma.jmetal.problem.singleobjective.Sphere;
+import org.uma.jmetal.util.AlgorithmRunner;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

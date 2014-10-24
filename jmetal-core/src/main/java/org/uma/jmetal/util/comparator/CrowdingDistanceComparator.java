@@ -1,4 +1,4 @@
-//  CrowdingComparator.java
+//  CrowdingDistanceComparator.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -22,7 +22,6 @@
 package org.uma.jmetal.util.comparator;
 
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;
 
 import java.util.Comparator;
 
@@ -30,43 +29,33 @@ import java.util.Comparator;
  * This class implements a <code>Comparator</code> (a method for comparing
  * <code>Solution</code> objects) based on the crowding distance, as in NSGA-II.
  */
-public class CrowdingDistanceComparator implements Comparator<Solution<?>> {
-
-  private static final Comparator<Solution<?>> rankComparator = new RankingComparator();
-  private static final CrowdingDistance crowdingDistance = new CrowdingDistance() ;
+public class CrowdingDistanceComparator implements Comparator<Solution> {
 
   /**
-   * Compare two solutions.
+   * Compares two solutions.
    *
-   * @param solution1 Object representing the first <code>Solution</code>.
-   * @param solution2 Object representing the second <code>Solution</code>.
+   * @param o1 Object representing the first <code>Solution</code>.
+   * @param o2 Object representing the second <code>Solution</code>.
    * @return -1, or 0, or 1 if o1 is less than, equal, or greater than o2,
    * respectively.
    */
   @Override
-  public int compare(Solution<?> solution1, Solution<?> solution2) {
-    if (solution1 == null) {
+  public int compare(Solution o1, Solution o2) {
+    if (o1 == null) {
       return 1;
-    } else if (solution2 == null) {
+    } else if (o2 == null) {
       return -1;
     }
 
-    int flagComparatorRank = rankComparator.compare(solution1, solution2);
-    if (flagComparatorRank != 0) {
-      return flagComparatorRank;
-    }
-
-    double distance1 = (double)solution1.getAttribute(crowdingDistance.getAttributeID()) ;
-    double distance2 = (double)solution2.getAttribute(crowdingDistance.getAttributeID()) ;
-
+    double distance1 = ((Solution) o1).getCrowdingDistance();
+    double distance2 = ((Solution) o2).getCrowdingDistance();
     if (distance1 > distance2) {
       return -1;
     }
-
     if (distance1 < distance2) {
       return 1;
     }
-
     return 0;
   }
 }
+

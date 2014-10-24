@@ -21,56 +21,64 @@
 
 package org.uma.jmetal.metaheuristic.multiobjective.gde3;
 
-import org.uma.jmetal.core.Algorithm;
-import org.uma.jmetal.core.Operator;
-import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.encoding.DoubleSolution;
-import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
-import org.uma.jmetal.operator.selection.impl.DifferentialEvolutionSelection;
-import org.uma.jmetal.problem.ContinuousProblem;
-import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
+import org.uma.jmetal.core.*;
+import org.uma.jmetal.util.Distance;
+import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.Ranking;
+import org.uma.jmetal.util.comparator.CrowdingComparator;
 import org.uma.jmetal.util.comparator.DominanceComparator;
-import org.uma.jmetal.util.solutionattribute.DensityEstimator;
-import org.uma.jmetal.util.solutionattribute.Ranking;
-import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;
-import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
+import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
-/** This class implements the GDE3 algorithm */
-public class GDE3 implements Algorithm<List<DoubleSolution>> {
-  private ContinuousProblem problem ;
+/**
+ * This class implements the GDE3 algorithm.
+ */
+public class GDE3 implements Algorithm {
+  private static final long serialVersionUID = -8007862618252202475L;
+
+  private Problem problem ;
+
+  protected SolutionSetEvaluator evaluator;
+
   protected int populationSize;
   protected int maxIterations;
   protected int iterations;
   
-  protected List<DoubleSolution> population;
-  protected List<DoubleSolution> offspringPopulation;
+  protected SolutionSet population;
+  protected SolutionSet offspringPopulation;
 
-  protected DifferentialEvolutionCrossover crossoverOperator;
-  protected DifferentialEvolutionSelection selectionOperator;
+  protected Operator crossoverOperator;
+  protected Operator selectionOperator;
 
   protected Comparator dominanceComparator;
 
-  protected Ranking ranking ;
-  protected DensityEstimator crowdingDistance;
+  protected Distance distance;
+
+  /**
+   * @deprecated
+   */
+  @Deprecated
+  public GDE3(SolutionSetEvaluator evaluator) {
+    super();
+    this.evaluator = evaluator ;
+    distance = new Distance();
+    dominanceComparator = new DominanceComparator();
+    iterations = 0 ;
+  }
 
   /** Constructor */
   public GDE3(Builder builder) {
+    super() ;
     problem = builder.problem;
     maxIterations = builder.maxIterations;
     crossoverOperator = builder.crossoverOperator;
     selectionOperator = builder.selectionOperator;
     populationSize = builder.populationSize;
-    dominanceComparator = new DominanceComparator();
+    evaluator = builder.evaluator;
 
+    distance = new Distance();
     dominanceComparator = new DominanceComparator();
-    iterations = 0 ;
-    ranking = new DominanceRanking() ;
-    crowdingDistance = new CrowdingDistance() ;
   }
 
   /* Getters */
@@ -89,20 +97,25 @@ public class GDE3 implements Algorithm<List<DoubleSolution>> {
   public int getMaxIterations() {
     return maxIterations;
   }
+  
+  public SolutionSetEvaluator getEvaluator() {
+  	return evaluator ;
+  }
 
   /** Builder class */
   public static class Builder {
-    protected ContinuousProblem problem;
+    protected SolutionSetEvaluator evaluator;
+    protected Problem problem;
 
     protected int populationSize;
-    protected int maxIterations;
+    protected  int maxIterations;
     
-    protected DifferentialEvolutionCrossover crossoverOperator;
-    protected DifferentialEvolutionSelection selectionOperator;
+    protected Operator crossoverOperator;
+    protected Operator selectionOperator;
 
-    public Builder(ContinuousProblem problem) {
+    public Builder(Problem problem, SolutionSetEvaluator evaluator) {
+      this.evaluator = evaluator ;
       this.problem = problem ;
-      selectionOperator = new DifferentialEvolutionSelection.Builder().build() ;
     }
 
     public Builder setPopulationSize(int populationSize) {
@@ -116,14 +129,20 @@ public class GDE3 implements Algorithm<List<DoubleSolution>> {
 
       return this ;
     }
+    
+    public Builder setEvaluator(SolutionSetEvaluator evaluator) {
+      this.evaluator = evaluator ;
 
-    public Builder setCrossover(DifferentialEvolutionCrossover crossover) {
+      return this ;
+    }
+
+    public Builder setCrossover(Operator crossover) {
       crossoverOperator = crossover ;
 
       return this ;
     }
 
-    public Builder setSelection(DifferentialEvolutionSelection selection) {
+    public Builder setSelection(Operator selection) {
       selectionOperator = selection ;
 
       return this ;
@@ -135,38 +154,34 @@ public class GDE3 implements Algorithm<List<DoubleSolution>> {
   }
 
   /** Execute() method  */
-  // old version public List<DoubleSolution> run() {
-  public void run() {
-
+  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
     createInitialPopulation();
     population = evaluatePopulation(population);
-    System.out.println("Popsize: " + population.size()) ;
 
     // Generations ...
     while (!stoppingCondition()) {
 
       // Create the offSpring solutionSet
-      offspringPopulation = new ArrayList<>(populationSize * 2);
-      ArrayList<DoubleSolution> tmpSolutionSet = new ArrayList<>(populationSize) ;
+      offspringPopulation = new SolutionSet(populationSize * 2);
+      SolutionSet tmpSolutionSet = new SolutionSet(populationSize) ;
 
       for (int i = 0; i < populationSize; i++) {
         // Obtain parents. Two parameters are required: the population and the
         //                 index of the current individual
-        selectionOperator.setIndex(i);
-        List<DoubleSolution> parents = selectionOperator.execute(population);
+        Solution[] parent = (Solution[]) selectionOperator.execute(new Object[] {population, i});
 
-        crossoverOperator.setCurrentSolution(population.get(i));
-        List<DoubleSolution>children = crossoverOperator.execute(parents);
+        Solution child;
+        // Crossover. Two parameters are required: the current individual and the
+        //            array of parents
+        child = (Solution) crossoverOperator.execute(new Object[] {population.get(i), parent});
 
-        tmpSolutionSet.add(children.get(0));
+        tmpSolutionSet.add(child);
       }
-
-      ////////Todo: tmpSolutionSet = evaluatePopulation(tmpSolutionSet);
-      evaluatePopulation(tmpSolutionSet);
+      tmpSolutionSet = evaluatePopulation(tmpSolutionSet);
 
       for (int i = 0; i < populationSize; i++) {
         // Dominance org.uma.test
-        DoubleSolution child = tmpSolutionSet.get(i) ;
+        Solution child = tmpSolutionSet.get(i) ;
         int result;
         result = dominanceComparator.compare(population.get(i), child);
         if (result == -1) {
@@ -183,16 +198,16 @@ public class GDE3 implements Algorithm<List<DoubleSolution>> {
       }
 
       // Ranking the offspring population
-      ranking.computeRanking(offspringPopulation);
+      Ranking ranking = new Ranking(offspringPopulation);
 
       population.clear();
-      int rankingIndex = 0;
+      int rankingIndex = 0 ;
       while (populationIsNotFull()) {
         if (subfrontFillsIntoThePopulation(ranking, rankingIndex)) {
           addRankedSolutionsToPopulation(ranking, rankingIndex);
-          rankingIndex++;
+          rankingIndex ++ ;
         } else {
-          crowdingDistance.computeDensityEstimator(ranking.getSubfront(rankingIndex));
+          computeCrowdingDistance(ranking, rankingIndex) ;
           addLastRankedSolutions(ranking, rankingIndex);
         }
       }
@@ -201,49 +216,30 @@ public class GDE3 implements Algorithm<List<DoubleSolution>> {
     }
 
     tearDown();
+
+    return getNonDominatedSolutions() ;
   }
 
-  @Override
-  public List<DoubleSolution> getResult() {
-    return getNonDominatedSolutions(population) ;
-  }
+  protected void createInitialPopulation() throws ClassNotFoundException, JMetalException {
+    population = new SolutionSet(populationSize);
 
-  protected void createInitialPopulation() {
-    population = new ArrayList<>(populationSize);
-
-    DoubleSolution newSolution;
+    Solution newSolution;
     for (int i = 0; i < populationSize; i++) {
-      newSolution = problem.createSolution();
+      newSolution = new Solution(problem);
       population.add(newSolution);
     }
   }
 
-  protected List<DoubleSolution> evaluatePopulation(List<DoubleSolution> population) {
-    for (int i = 0 ; i < population.size(); i++) {
-      problem.evaluate(population.get(i)) ;
-    }
-
-    return population ;
+  protected SolutionSet evaluatePopulation(SolutionSet population) throws JMetalException {
+    return evaluator.evaluate(population, problem) ;
   }
 
   protected boolean stoppingCondition() {
     return iterations == maxIterations;
   }
 
-  protected void addLastRankedSolutions(Ranking ranking, int rank) {
-    List<DoubleSolution> currentRankedFront = ranking.getSubfront(rank) ;
-
-    Collections.sort(currentRankedFront, new CrowdingDistanceComparator()) ;
-
-    int i = 0 ;
-    while (population.size() < populationSize) {
-      population.add(currentRankedFront.get(i)) ;
-      i++ ;
-    }
-  }
-
-  protected void addRankedSolutionsToPopulation(Ranking ranking, int rank)  {
-    List<DoubleSolution> front ;
+  protected void addRankedSolutionsToPopulation(Ranking ranking, int rank) throws JMetalException {
+    SolutionSet front ;
 
     front = ranking.getSubfront(rank);
 
@@ -252,8 +248,21 @@ public class GDE3 implements Algorithm<List<DoubleSolution>> {
     }
   }
 
-  protected void computeRanking(List<Solution> solutionSet) {
-    ranking.computeRanking(solutionSet) ;
+  protected void computeCrowdingDistance(Ranking ranking, int rank) throws JMetalException {
+    SolutionSet currentRankedFront = ranking.getSubfront(rank) ;
+    distance.crowdingDistanceAssignment(currentRankedFront);
+  }
+
+  protected void addLastRankedSolutions(Ranking ranking, int rank) throws JMetalException {
+    SolutionSet currentRankedFront = ranking.getSubfront(rank) ;
+
+    currentRankedFront.sort(new CrowdingComparator());
+
+    int i = 0 ;
+    while (population.size() < populationSize) {
+      population.add(currentRankedFront.get(i)) ;
+      i++ ;
+    }
   }
 
   protected boolean populationIsNotFull() {
@@ -264,10 +273,11 @@ public class GDE3 implements Algorithm<List<DoubleSolution>> {
     return ranking.getSubfront(rank).size() < (populationSize - population.size()) ;
   }
 
-  protected List<DoubleSolution> getNonDominatedSolutions(List<DoubleSolution> solutionSet) {
-    return ranking.computeRanking(solutionSet).getSubfront(0);
+  protected SolutionSet getNonDominatedSolutions() throws JMetalException {
+    return new Ranking(population).getSubfront(0);
   }
 
   protected void tearDown() {
+    evaluator.shutdown();
   }
 } 

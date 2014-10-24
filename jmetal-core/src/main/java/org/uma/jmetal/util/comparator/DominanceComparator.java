@@ -4,7 +4,7 @@
 //       Antonio J. Nebro <antonio@lcc.uma.es>
 //       Juan J. Durillo <durillo@lcc.uma.es>
 //
-//  Copyright (c) 2014 Antonio J. Nebro, Juan J. Durillo
+//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -26,42 +26,61 @@ import org.uma.jmetal.core.Solution;
 import java.util.Comparator;
 
 /**
- * This class implements a <code>Comparator</code> (a method for comparing <code>Solution</code> objects)
- * based on a constraint violation, as done in NSGA-II.
+ * This class implements a <code>Comparator</code> (a method for comparing
+ * <code>Solution</code> objects) based on a constraint violation org.uma.test +
+ * dominance checking, as in NSGA-II.
  */
-public class DominanceComparator implements Comparator<Solution<?>> {
-  private OverallConstraintViolationComparator constraintViolationComparator;
+public class DominanceComparator implements Comparator<Solution> {
+  IConstraintViolationComparator constraintViolationComparator;
 
   /** Constructor */
   public DominanceComparator() {
-    constraintViolationComparator = new OverallConstraintViolationComparator() ;
+    constraintViolationComparator = new OverallConstraintViolationComparator();
   }
+
+  /**
+   * Constructor
+   *
+   * @param comparator
+   */
+  public DominanceComparator(IConstraintViolationComparator comparator) {
+    constraintViolationComparator = comparator;
+  }
+
   /**
    * Compares two solutions.
    *
-   * @param solution1 Object representing the first <code>Solution</code>.
-   * @param solution2 Object representing the second <code>Solution</code>.
+   * @param object1 Object representing the first <code>Solution</code>.
+   * @param object2 Object representing the second <code>Solution</code>.
    * @return -1, or 0, or 1 if solution1 dominates solution2, both are
-   * non-dominated, or solution1  is dominated by solution2, respectively.
+   * non-dominated, or solution1  is dominated by solution22, respectively.
    */
   @Override
-  public int compare(Solution<?> solution1, Solution<?> solution2) {
-    // TODO: test for null are needed here
-    int result ;
-    result = constraintViolationComparator.compare(solution1, solution2) ;
-    if (result == 0) {
-      result = dominanceTest(solution1, solution2) ;
+  public int compare(Solution object1, Solution object2) {
+    if (object1 == null) {
+      return 1;
+    } else if (object2 == null) {
+      return -1;
     }
 
-    return result ;
-  }
+    Solution solution1 = (Solution) object1;
+    Solution solution2 = (Solution) object2;
 
-  private int dominanceTest(Solution solution1, Solution solution2) {
-    int result ;
-    boolean solution1Dominates = false ;
-    boolean solution2Dominates = false ;
+    int dominate1; // dominate1 indicates if some objective of solution1
+    // dominates the same objective in solution2. dominate2
+    int dominate2; // is the complementary of dominate1.
+
+    dominate1 = 0;
+    dominate2 = 0;
 
     int flag;
+
+    // Test to determine whether at least a solution violates some constraint
+    if (constraintViolationComparator.needToCompare(solution1, solution2)) {
+      return constraintViolationComparator.compare(solution1, solution2);
+    }
+
+    // Equal number of violated constraints. Applying a dominance Test then
     double value1, value2;
     for (int i = 0; i < solution1.getNumberOfObjectives(); i++) {
       value1 = solution1.getObjective(i);
@@ -75,24 +94,35 @@ public class DominanceComparator implements Comparator<Solution<?>> {
       }
 
       if (flag == -1) {
-        solution1Dominates = true ;
+        dominate1 = 1;
       }
 
       if (flag == 1) {
-        solution2Dominates = true ;
+        dominate2 = 1;
       }
     }
 
-    if (solution1Dominates == solution2Dominates) {
-      // non-dominated solutions
-      result = 0;
-    } else if (solution1Dominates) {
-      // solution1 dominates
-      result = -1;
-    } else {
-      // solution2 dominates
-      result = 1;
+    if (dominate1 == dominate2) {
+      //No one dominate the other
+      return 0;
     }
-    return result ;
+    if (dominate1 == 1) {
+      // solution1 dominate
+      return -1;
+    }
+    // solution2 dominate
+    return 1;
   }
+
+//  public static boolean firstSolutionDominates(int value) {
+//    return value == -1 ;
+//  }
+//
+//  public static boolean secondSolutionDominates(int value) {
+//    return value == 1 ;
+//  }
+//
+//  public static boolean bothSolutionsAreNonDominated (int value) {
+//    return value == 0 ;
+//  }
 }

@@ -23,8 +23,8 @@ package org.uma.test.encoding.variable;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.uma.jmetal45.encoding.variable.Permutation;
-import org.uma.jmetal45.encoding.variable.Real;
+import org.uma.jmetal.encoding.variable.Permutation;
+import org.uma.jmetal.encoding.variable.Real;
 
 import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.*;

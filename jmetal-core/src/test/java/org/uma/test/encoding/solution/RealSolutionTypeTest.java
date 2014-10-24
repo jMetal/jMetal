@@ -3,12 +3,12 @@ package org.uma.test.encoding.solution;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.uma.jmetal45.core.Problem;
-import org.uma.jmetal45.core.Solution;
-import org.uma.jmetal45.core.Variable;
-import org.uma.jmetal45.encoding.solutiontype.RealSolutionType;
-import org.uma.jmetal45.encoding.variable.Real;
-import org.uma.jmetal45.problem.multiobjective.Kursawe;
+import org.uma.jmetal.core.Problem;
+import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.core.Variable;
+import org.uma.jmetal.encoding.solutiontype.RealSolutionType;
+import org.uma.jmetal.encoding.variable.Real;
+import org.uma.jmetal.problem.multiobjective.Kursawe;
 
 import static org.junit.Assert.*;
 

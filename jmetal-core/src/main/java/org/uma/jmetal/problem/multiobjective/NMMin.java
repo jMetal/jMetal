@@ -1,9 +1,9 @@
 //  NMMin.java
 //
 //  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
+//       Juan J. Durillo <durillo@lcc.uma.es>
 //
-//  Copyright (c) 2014 Antonio J. Nebro
+//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -20,11 +20,12 @@
 //
 package org.uma.jmetal.problem.multiobjective;
 
-import org.uma.jmetal.encoding.IntegerSolution;
-import org.uma.jmetal.encoding.impl.IntegerSolutionImpl;
-import org.uma.jmetal.problem.impl.IntegerProblemImpl;
-
-import java.util.ArrayList;
+import org.uma.jmetal.core.Problem;
+import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.encoding.solutiontype.ArrayIntSolutionType;
+import org.uma.jmetal.encoding.solutiontype.IntSolutionType;
+import org.uma.jmetal.encoding.solutiontype.wrapper.XInt;
+import org.uma.jmetal.util.JMetalException;
 
 /**
  * Created by Antonio J. Nebro on 03/07/14.
@@ -32,52 +33,49 @@ import java.util.ArrayList;
  * Objective 1: minimizing the distance to value N
  * Objective 2: minimizing the distance to value M
  */
-public class NMMin extends IntegerProblemImpl {
+public class NMMin extends Problem {
   private int valueN ;
   private int valueM ;
 
-  public NMMin() {
-    this(10, 100, -100, -1000, +1000);
+  public NMMin(String solutionType) throws ClassNotFoundException, JMetalException {
+    this(solutionType, 25, 100, -100, -1000, +1000);
   }
 
   /** Constructor */
-  public NMMin(int numberOfVariables, int n, int m, int lowerBound, int upperBound)  {
+  public NMMin(String solutionType, int numberOfVariables, int n, int m, int lowerBound, int upperBound) throws JMetalException {
     valueN = n ;
     valueM = m ;
-    setNumberOfVariables(numberOfVariables);
-    setNumberOfObjectives(2);
-    setName("NMMin");
+    this.numberOfVariables = numberOfVariables;
+    numberOfObjectives = 2;
+    numberOfConstraints = 0;
+    problemName = "NMMin";
 
-    ArrayList<Integer> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
-    ArrayList<Integer> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
-
-    for (int i = 0; i < getNumberOfVariables(); i++) {
-      lowerLimit.add(lowerBound);
-      upperLimit.add(upperBound);
+    lowerLimit = new double[this.numberOfVariables];
+    upperLimit = new double[this.numberOfVariables];
+    for (int var = 0; var < this.numberOfVariables; var++) {
+      lowerLimit[var] = lowerBound;
+      upperLimit[var] = upperBound;
     }
 
-    setLowerLimit(lowerLimit);
-    setUpperLimit(upperLimit);
-  }
-
-  @Override
-  public IntegerSolution createSolution() {
-    IntegerSolution solution = new IntegerSolutionImpl(this) ;
-
-    return solution ;
+    if (solutionType.compareTo("Integer") == 0) {
+      this.solutionType = new IntSolutionType(this);
+    } else if (solutionType.compareTo("ArrayInt") == 0) {
+      this.solutionType = new ArrayIntSolutionType(this);
+    } else {
+      throw new JMetalException("Error: solution type " + solutionType + " invalid");
+    }
   }
 
   /** Evaluate() method */
-  @Override
-  public void evaluate(IntegerSolution solution) {
+  public void evaluate(Solution solution) {
     int approximationToN;
     int approximationToM ;
 
     approximationToN = 0;
     approximationToM = 0;
 
-    for (int i = 0; i < solution.getNumberOfVariables(); i++) {
-      int value = solution.getVariableValue(i) ;
+    for (int i = 0; i < XInt.getNumberOfDecisionVariables(solution); i++) {
+      int value = XInt.getValue(solution, i) ;
       approximationToN += Math.abs(valueN - value) ;
       approximationToM += Math.abs(valueM - value) ;
     }

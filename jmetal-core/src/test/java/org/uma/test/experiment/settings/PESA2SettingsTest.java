@@ -22,13 +22,13 @@ package org.uma.test.experiment.settings;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.uma.jmetal45.core.Problem;
-import org.uma.jmetal45.experiment.Settings;
-import org.uma.jmetal45.experiment.settings.PESA2Settings;
-import org.uma.jmetal45.metaheuristic.multiobjective.pesa2.PESA2;
-import org.uma.jmetal45.operator.crossover.SBXCrossover;
-import org.uma.jmetal45.operator.mutation.PolynomialMutation;
-import org.uma.jmetal45.problem.multiobjective.Fonseca;
+import org.uma.jmetal.core.Problem;
+import org.uma.jmetal.experiment.Settings;
+import org.uma.jmetal.experiment.settings.PESA2Settings;
+import org.uma.jmetal.metaheuristic.multiobjective.pesa2.PESA2;
+import org.uma.jmetal.operator.crossover.SBXCrossover;
+import org.uma.jmetal.operator.mutation.PolynomialMutation;
+import org.uma.jmetal.problem.multiobjective.Fonseca;
 
 import java.io.FileInputStream;
 import java.io.IOException;
