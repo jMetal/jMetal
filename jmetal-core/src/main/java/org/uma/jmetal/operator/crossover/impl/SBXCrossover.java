@@ -23,13 +23,14 @@ package org.uma.jmetal.operator.crossover.impl;
 
 import org.uma.jmetal.encoding.DoubleSolution;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
+import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /** This class allows to apply a SBX crossover operator using two parent solutions (Double encoding) */
 public class SBXCrossover implements CrossoverOperator<List<DoubleSolution>, List<DoubleSolution>> {
-
   /** EPS defines the minimum difference allowed between real values */
   private static final double EPS = 1.0e-14;
 
@@ -39,22 +40,23 @@ public class SBXCrossover implements CrossoverOperator<List<DoubleSolution>, Lis
   private double distributionIndex ;
   private double crossoverProbability  ;
 
-  /** Constructor */
-  public SBXCrossover() {
-    this.crossoverProbability = 0.9 ;
-    this.distributionIndex = 20.0 ;
-  }
+  private JMetalRandom randomGenerator ;
 
   /** Constructor */
   public SBXCrossover(double crossoverProbability, double distributionIndex) {
     this.crossoverProbability = crossoverProbability ;
     this.distributionIndex = distributionIndex ;
+    randomGenerator = JMetalRandom.getInstance() ;
+  }
+
+  /** Constructor */
+  public SBXCrossover() {
+    this(0.9, 20.0) ;
   }
 
   /** Constructor */
   private SBXCrossover(Builder builder) {
-    crossoverProbability = builder.crossoverProbability ;
-    distributionIndex = builder.distributionIndex ;
+    this(builder.crossoverProbability, builder.distributionIndex) ;
   }
 
   /* Getters */
@@ -93,11 +95,11 @@ public class SBXCrossover implements CrossoverOperator<List<DoubleSolution>, Lis
     double alpha, beta, betaq;
     double valueX1, valueX2;
 
-    if (PseudoRandom.randDouble() <= probability) {
+    if (randomGenerator.nextDouble() <= probability) {
       for (i = 0; i < parent1.getNumberOfVariables(); i++) {
         valueX1 = parent1.getVariableValue(i);
         valueX2 = parent2.getVariableValue(i);
-        if (PseudoRandom.randDouble() <= 0.5) {
+        if (randomGenerator.nextDouble() <= 0.5) {
           if (Math.abs(valueX1 - valueX2) > EPS) {
 
             if (valueX1 < valueX2) {
@@ -110,7 +112,7 @@ public class SBXCrossover implements CrossoverOperator<List<DoubleSolution>, Lis
 
             yL = parent1.getLowerBound(i);
             yu = parent1.getUpperBound(i);
-            rand = PseudoRandom.randDouble();
+            rand = randomGenerator.nextDouble();
             beta = 1.0 + (2.0 * (y1 - yL) / (y2 - y1));
             alpha = 2.0 - Math.pow(beta, -(distributionIndex + 1.0));
 
@@ -150,7 +152,7 @@ public class SBXCrossover implements CrossoverOperator<List<DoubleSolution>, Lis
               c2 = yu;
             }
 
-            if (PseudoRandom.randDouble() <= 0.5) {
+            if (randomGenerator.nextDouble() <= 0.5) {
               offspring.get(0).setVariableValue(i, c2);
               offspring.get(1).setVariableValue(i, c1);
             } else {
