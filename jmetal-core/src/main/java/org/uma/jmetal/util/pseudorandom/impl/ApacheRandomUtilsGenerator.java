@@ -24,22 +24,13 @@ public class ApacheRandomUtilsGenerator implements PseudoRandomGenerator {
 
   @Override
   public int nextInt(int lowerBound, int upperBound) {
-    return RandomUtils.nextInt(lowerBound, upperBound) ;
+    int randomValue = RandomUtils.nextInt(0, upperBound - lowerBound) ;
+    return lowerBound + randomValue ;
   }
 
   @Override
   public double nextDouble(double lowerBound, double upperBound) {
     return RandomUtils.nextDouble(lowerBound, upperBound);
-  }
-
-  @Override
-  public long nextLong(long lowerBound, long upperBound) {
-    return RandomUtils.nextLong(lowerBound, upperBound);
-  }
-
-  @Override
-  public float nextFloat(float lowerBound, float upperBound) {
-    return RandomUtils.nextFloat(lowerBound, upperBound) ;
   }
 
   @Override

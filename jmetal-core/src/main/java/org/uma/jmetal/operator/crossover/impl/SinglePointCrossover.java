@@ -37,6 +37,7 @@ public class SinglePointCrossover implements CrossoverOperator<List<BinarySoluti
   /** Constructor */
   private SinglePointCrossover(double crossoverProbability) {
     this.crossoverProbability = crossoverProbability;
+    randomGenerator = JMetalRandom.getInstance() ;
   }
 
   /** Constructor */

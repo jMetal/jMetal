@@ -26,7 +26,6 @@ import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
 
 import java.util.Comparator;
 import java.util.List;

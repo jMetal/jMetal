@@ -45,7 +45,7 @@ import java.util.List;
 /**
  * Class to configure and run the NSGA-II algorithm
  */
-public class NSGAIIRunner {
+public class  NSGAIIRunner {
   /**
    * @param args Command line arguments.
    * @throws java.io.IOException

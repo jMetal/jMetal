@@ -26,22 +26,12 @@ public class JavaRandomGenerator implements PseudoRandomGenerator {
 
   @Override
   public int nextInt(int lowerBound, int upperBound) {
-    return lowerBound + rnd.nextInt()*(upperBound - lowerBound) ;
+    return lowerBound + rnd.nextInt((upperBound - lowerBound)) ;
   }
 
   @Override
   public double nextDouble(double lowerBound, double upperBound) {
     return lowerBound + rnd.nextDouble()*(upperBound - lowerBound) ;
-  }
-
-  @Override
-  public long nextLong(long lowerBound, long upperBound) {
-    return lowerBound + rnd.nextLong()*(upperBound - lowerBound);
-  }
-
-  @Override
-  public float nextFloat(float lowerBound, float upperBound) {
-    return lowerBound + rnd.nextFloat()*(upperBound - lowerBound) ;
   }
 
   @Override
