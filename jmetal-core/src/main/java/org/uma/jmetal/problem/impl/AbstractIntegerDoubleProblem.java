@@ -5,8 +5,8 @@ import org.uma.jmetal.problem.IntegerDoubleProblem;
 
 import java.util.List;
 
-public abstract class IntegerDoubleProblemImpl<S extends Solution<Number>>
-  extends GenericProblemImpl<S>
+public abstract class AbstractIntegerDoubleProblem<S extends Solution<Number>>
+  extends AbstractGenericProblem<S>
   implements IntegerDoubleProblem<S> {
 
   private int numberOfIntegerVariables ;

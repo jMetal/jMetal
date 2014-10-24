@@ -22,15 +22,15 @@
 package org.uma.jmetal.problem.multiobjective.zdt;
 
 import org.uma.jmetal.solution.BinarySolution;
-import org.uma.jmetal.solution.impl.BinarySolutionImpl;
-import org.uma.jmetal.problem.impl.BinaryProblemImpl;
+import org.uma.jmetal.solution.impl.AbstractBinarySolution;
+import org.uma.jmetal.problem.impl.AbstractBinaryProblem;
 
 import java.util.BitSet;
 
 /**
  * Class representing problem ZDT5
  */
-public class ZDT5 extends BinaryProblemImpl {
+public class ZDT5 extends AbstractBinaryProblem {
 
   /** Creates a default instance of problem ZDT5 (11 decision variables) */
   public ZDT5() {
@@ -57,7 +57,7 @@ public class ZDT5 extends BinaryProblemImpl {
 
   @Override
   public BinarySolution createSolution() {
-    return new BinarySolutionImpl(this)  ;
+    return new AbstractBinarySolution(this)  ;
   }
 
   /** Evaluate() method */

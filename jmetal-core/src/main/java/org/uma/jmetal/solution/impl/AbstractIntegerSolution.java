@@ -10,10 +10,10 @@ import java.util.HashMap;
 /**
  * Created by Antonio J. Nebro on 03/09/14.
  */
-public class IntegerSolutionImpl extends GenericSolutionImpl<Integer, IntegerProblem> implements IntegerSolution {
+public class AbstractIntegerSolution extends AbstractGenericSolution<Integer, IntegerProblem> implements IntegerSolution {
 
   /** Constructor */
-  public IntegerSolutionImpl(IntegerProblem problem) {
+  public AbstractIntegerSolution(IntegerProblem problem) {
   	this.problem = problem ;
     objectives = new ArrayList<>(problem.getNumberOfObjectives()) ;
     variables = new ArrayList<>(problem.getNumberOfVariables()) ;
@@ -30,7 +30,7 @@ public class IntegerSolutionImpl extends GenericSolutionImpl<Integer, IntegerPro
   }
 
   /** Copy constructor */
-  public IntegerSolutionImpl(IntegerSolutionImpl solution) {
+  public AbstractIntegerSolution(AbstractIntegerSolution solution) {
     problem = solution.problem ;
     objectives = new ArrayList<>() ;
     for (Double obj : solution.objectives) {
@@ -57,6 +57,6 @@ public class IntegerSolutionImpl extends GenericSolutionImpl<Integer, IntegerPro
 
   @Override
   public Solution<?> copy() {
-    return new IntegerSolutionImpl(this);
+    return new AbstractIntegerSolution(this);
   }
 }

@@ -21,8 +21,8 @@
 package org.uma.jmetal.problem.multiobjective;
 
 import org.uma.jmetal.solution.BinarySolution;
-import org.uma.jmetal.solution.impl.BinarySolutionImpl;
-import org.uma.jmetal.problem.impl.BinaryProblemImpl;
+import org.uma.jmetal.solution.impl.AbstractBinarySolution;
+import org.uma.jmetal.problem.impl.AbstractBinaryProblem;
 import org.uma.jmetal.util.JMetalException;
 
 import java.util.BitSet;
@@ -31,7 +31,7 @@ import java.util.BitSet;
  * Class representing problem OneZeroMax. The problem consist of maximizing the
  * number of '1's and '0's in a binary string.
  */
-public class OneZeroMax extends BinaryProblemImpl {
+public class OneZeroMax extends AbstractBinaryProblem {
 
   private int numberOfBits ;
 
@@ -56,7 +56,7 @@ public class OneZeroMax extends BinaryProblemImpl {
 
   @Override
   public BinarySolution createSolution() {
-    return new BinarySolutionImpl(this) ;
+    return new AbstractBinarySolution(this) ;
   }
 
   /** Evaluate() method */

@@ -5,7 +5,7 @@ import org.uma.jmetal.problem.IntegerProblem;
 
 import java.util.List;
 
-public abstract class IntegerProblemImpl extends GenericProblemImpl<IntegerSolution>
+public abstract class AbstractIntegerProblem extends AbstractGenericProblem<IntegerSolution>
   implements IntegerProblem {
 
   private List<Integer> lowerLimit ;

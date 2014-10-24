@@ -22,8 +22,8 @@
 package org.uma.jmetal.problem.singleobjective;
 
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.impl.DoubleSolutionImpl;
-import org.uma.jmetal.problem.impl.ContinuousProblemImpl;
+import org.uma.jmetal.solution.impl.AbstractDoubleSolution;
+import org.uma.jmetal.problem.impl.AbstractContinuousProblem;
 import org.uma.jmetal.util.JMetalException;
 
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * Class representing a Sphere problem.
  */
-public class Sphere extends ContinuousProblemImpl {
+public class Sphere extends AbstractContinuousProblem {
   /** Constructor */
   public Sphere(Integer numberOfVariables) throws JMetalException {
     setNumberOfVariables(numberOfVariables);
@@ -53,7 +53,7 @@ public class Sphere extends ContinuousProblemImpl {
 
   @Override
   public DoubleSolution createSolution() {
-    return new DoubleSolutionImpl(this) ;
+    return new AbstractDoubleSolution(this) ;
   }
 
   /** Evaluate() method */

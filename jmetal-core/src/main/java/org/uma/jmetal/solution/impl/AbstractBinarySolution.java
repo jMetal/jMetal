@@ -11,9 +11,9 @@ import java.util.HashMap;
 /**
  * Created by Antonio J. Nebro on 03/09/14.
  */
-public class BinarySolutionImpl extends GenericSolutionImpl<BitSet, BinaryProblem> implements BinarySolution {
+public class AbstractBinarySolution extends AbstractGenericSolution<BitSet, BinaryProblem> implements BinarySolution {
   /** Constructor */
-  public BinarySolutionImpl(BinaryProblem problem) {
+  public AbstractBinarySolution(BinaryProblem problem) {
     this.problem = problem ;
     objectives = new ArrayList<>(problem.getNumberOfObjectives()) ;
     variables = new ArrayList<>(problem.getNumberOfVariables()) ;
@@ -29,7 +29,7 @@ public class BinarySolutionImpl extends GenericSolutionImpl<BitSet, BinaryProble
   }
 
   /** Copy constructor */
-  public BinarySolutionImpl(BinarySolutionImpl solution) {
+  public AbstractBinarySolution(AbstractBinarySolution solution) {
     problem = solution.problem ;
     objectives = new ArrayList<>() ;
     for (Double obj : solution.objectives) {
@@ -64,7 +64,7 @@ public class BinarySolutionImpl extends GenericSolutionImpl<BitSet, BinaryProble
 
   @Override
   public Solution<?> copy() {
-    return new BinarySolutionImpl(this);
+    return new AbstractBinarySolution(this);
   }
 
   @Override

@@ -22,8 +22,8 @@
 package org.uma.jmetal.problem.multiobjective.zdt;
 
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.impl.DoubleSolutionImpl;
-import org.uma.jmetal.problem.impl.ContinuousProblemImpl;
+import org.uma.jmetal.solution.impl.AbstractDoubleSolution;
+import org.uma.jmetal.problem.impl.AbstractContinuousProblem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ import java.util.List;
 /**
  * Class representing problem ZDT4
  */
-public class ZDT4 extends ContinuousProblemImpl {
+public class ZDT4 extends AbstractContinuousProblem {
 
   /** Constructor. Creates a default instance of problem ZDT4 (10 decision variables */
   public ZDT4() {
@@ -64,7 +64,7 @@ public class ZDT4 extends ContinuousProblemImpl {
 
   @Override
   public DoubleSolution createSolution() {
-    return new DoubleSolutionImpl(this) ;
+    return new AbstractDoubleSolution(this) ;
   }
 
   /** Evaluate() method */

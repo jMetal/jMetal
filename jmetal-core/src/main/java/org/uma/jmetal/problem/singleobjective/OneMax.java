@@ -22,8 +22,8 @@
 package org.uma.jmetal.problem.singleobjective;
 
 import org.uma.jmetal.solution.BinarySolution;
-import org.uma.jmetal.solution.impl.BinarySolutionImpl;
-import org.uma.jmetal.problem.impl.BinaryProblemImpl;
+import org.uma.jmetal.solution.impl.AbstractBinarySolution;
+import org.uma.jmetal.problem.impl.AbstractBinaryProblem;
 import org.uma.jmetal.util.JMetalException;
 
 import java.util.BitSet;
@@ -32,7 +32,7 @@ import java.util.BitSet;
  * Class representing problem OneMax. The problem consist of maximizing the
  * number of '1's in a binary string.
  */
-public class OneMax extends BinaryProblemImpl {
+public class OneMax extends AbstractBinaryProblem {
   private int numberOfBits ;
 
   /** Constructor */
@@ -56,7 +56,7 @@ public class OneMax extends BinaryProblemImpl {
 
   @Override
   public BinarySolution createSolution() {
-    return new BinarySolutionImpl(this) ;
+    return new AbstractBinarySolution(this) ;
   }
 
   /** Evaluate() method */

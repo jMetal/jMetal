@@ -10,9 +10,9 @@ import java.util.HashMap;
 /**
  * Created by Antonio J. Nebro on 03/09/14.
  */
-public class DoubleSolutionImpl extends GenericSolutionImpl<Double, ContinuousProblem> implements DoubleSolution {
+public class AbstractDoubleSolution extends AbstractGenericSolution<Double, ContinuousProblem> implements DoubleSolution {
   /** Constructor */
-  public DoubleSolutionImpl(ContinuousProblem problem) {
+  public AbstractDoubleSolution(ContinuousProblem problem) {
     super() ;
 
   	this.problem = problem ;
@@ -31,7 +31,7 @@ public class DoubleSolutionImpl extends GenericSolutionImpl<Double, ContinuousPr
   }
 
   /** Copy constructor */
-  public DoubleSolutionImpl(DoubleSolutionImpl solution) {
+  public AbstractDoubleSolution(AbstractDoubleSolution solution) {
     problem = solution.problem ;
     objectives = new ArrayList<>() ;
     for (Double obj : solution.objectives) {
@@ -58,7 +58,7 @@ public class DoubleSolutionImpl extends GenericSolutionImpl<Double, ContinuousPr
 
   @Override
   public Solution<?> copy() {
-    return new DoubleSolutionImpl(this);
+    return new AbstractDoubleSolution(this);
   }
 
 //  @Override

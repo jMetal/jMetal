@@ -21,8 +21,8 @@
 package org.uma.jmetal.problem.multiobjective;
 
 import org.uma.jmetal.solution.IntegerSolution;
-import org.uma.jmetal.solution.impl.IntegerSolutionImpl;
-import org.uma.jmetal.problem.impl.IntegerProblemImpl;
+import org.uma.jmetal.solution.impl.AbstractIntegerSolution;
+import org.uma.jmetal.problem.impl.AbstractIntegerProblem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +33,7 @@ import java.util.List;
  * Objective 1: minimizing the distance to value N
  * Objective 2: minimizing the distance to value M
  */
-public class NMMin extends IntegerProblemImpl {
+public class NMMin extends AbstractIntegerProblem {
   private int valueN ;
   private int valueM ;
 
@@ -63,7 +63,7 @@ public class NMMin extends IntegerProblemImpl {
 
   @Override
   public IntegerSolution createSolution() {
-    return new IntegerSolutionImpl(this) ;
+    return new AbstractIntegerSolution(this) ;
   }
 
   /** Evaluate() method */

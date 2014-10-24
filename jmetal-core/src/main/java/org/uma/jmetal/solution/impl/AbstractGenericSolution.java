@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * Created by Antonio J. Nebro on 03/09/14.
  */
-public abstract class GenericSolutionImpl<T, P extends Problem> implements Solution<T> {
+public abstract class AbstractGenericSolution<T, P extends Problem> implements Solution<T> {
   protected List<Double> objectives;
   protected List<T> variables;
   protected P problem ;
@@ -20,7 +20,7 @@ public abstract class GenericSolutionImpl<T, P extends Problem> implements Solut
   protected JMetalRandom randomGenerator ;
 
 
-  protected GenericSolutionImpl() {
+  protected AbstractGenericSolution() {
     attributes = new HashMap<>() ;
     randomGenerator = JMetalRandom.getInstance() ;
   }

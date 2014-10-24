@@ -21,15 +21,15 @@
 package org.uma.jmetal.problem.multiobjective;
 
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.impl.DoubleSolutionImpl;
+import org.uma.jmetal.solution.impl.AbstractDoubleSolution;
 import org.uma.jmetal.problem.ConstrainedProblem;
-import org.uma.jmetal.problem.impl.ContinuousProblemImpl;
+import org.uma.jmetal.problem.impl.AbstractContinuousProblem;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /** Class representing problem Srinivas */
-public class Srinivas extends ContinuousProblemImpl implements ConstrainedProblem<DoubleSolution> {
+public class Srinivas extends AbstractContinuousProblem implements ConstrainedProblem<DoubleSolution> {
 
   /** Constructor */
   public Srinivas()  {
@@ -52,7 +52,7 @@ public class Srinivas extends ContinuousProblemImpl implements ConstrainedProble
 
   @Override
   public DoubleSolution createSolution() {
-    return new DoubleSolutionImpl(this) ;
+    return new AbstractDoubleSolution(this) ;
   }
 
   /** Evaluate() method */

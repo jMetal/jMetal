@@ -3,7 +3,7 @@ package org.uma.jmetal.problem.impl;
 import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.problem.BinaryProblem;
 
-public abstract class BinaryProblemImpl extends GenericProblemImpl<BinarySolution>
+public abstract class AbstractBinaryProblem extends AbstractGenericProblem<BinarySolution>
   implements BinaryProblem {
 
   protected int [] bitsPerVariable ;
