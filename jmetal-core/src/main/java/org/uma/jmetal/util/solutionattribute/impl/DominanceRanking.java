@@ -22,10 +22,10 @@
 package org.uma.jmetal.util.solutionattribute.impl;
 
 import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.OverallConstraintViolationComparator;
 import org.uma.jmetal.util.solutionattribute.Ranking;
-import org.uma.jmetal45.util.JMetalException;
 
 import java.util.*;
 
