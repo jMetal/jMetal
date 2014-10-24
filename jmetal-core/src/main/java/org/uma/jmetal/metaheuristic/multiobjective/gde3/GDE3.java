@@ -24,7 +24,7 @@ package org.uma.jmetal.metaheuristic.multiobjective.gde3;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.encoding.DoubleSolution;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.selection.impl.DifferentialEvolutionSelection;
 import org.uma.jmetal.problem.ContinuousProblem;

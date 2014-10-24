@@ -3,7 +3,7 @@ package org.uma.jmetal.metaheuristic.multiobjective.smpso;
 import org.uma.jmetal.core.Algorithm;
 import org.uma.jmetal.core.Operator;
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.encoding.DoubleSolution;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.problem.ContinuousProblem;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;

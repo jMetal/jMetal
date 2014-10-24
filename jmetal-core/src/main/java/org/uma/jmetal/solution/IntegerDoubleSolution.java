@@ -11,15 +11,17 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.encoding;
+package org.uma.jmetal.solution;
 
 import org.uma.jmetal.core.Solution;
-
-import java.util.List;
 
 /**
  * @author Antonio J. Nebro
  * @version 0.1
  */
-public interface PermutationSolution<T extends List<?>> extends Solution<T> {
-}
+public interface IntegerDoubleSolution extends Solution<Number> {
+  public Number getLowerBound(int index) ;
+  public Number getUpperBound(int index) ;
+  public int getNumberOfIntegerVariables() ;
+  public int getNumberOfDoubleVariables() ;
+ }

@@ -1,7 +1,7 @@
 package org.uma.jmetal.problem;
 
 import org.uma.jmetal.core.Problem;
-import org.uma.jmetal.encoding.IntegerSolution;
+import org.uma.jmetal.solution.IntegerSolution;
 
 /** Interface representing integer problems */
 public interface IntegerProblem extends Problem<IntegerSolution> {

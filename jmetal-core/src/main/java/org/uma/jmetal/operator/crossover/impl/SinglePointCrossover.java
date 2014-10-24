@@ -20,7 +20,7 @@
 
 package org.uma.jmetal.operator.crossover.impl;
 
-import org.uma.jmetal.encoding.BinarySolution;
+import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;

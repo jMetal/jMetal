@@ -20,8 +20,8 @@
 
 package org.uma.jmetal.problem.multiobjective;
 
-import org.uma.jmetal.encoding.BinarySolution;
-import org.uma.jmetal.encoding.impl.BinarySolutionImpl;
+import org.uma.jmetal.solution.BinarySolution;
+import org.uma.jmetal.solution.impl.BinarySolutionImpl;
 import org.uma.jmetal.problem.impl.BinaryProblemImpl;
 import org.uma.jmetal.util.JMetalException;
 

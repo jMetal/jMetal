@@ -1,7 +1,7 @@
-package org.uma.jmetal.encoding.impl;
+package org.uma.jmetal.solution.impl;
 
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.encoding.PermutationSolution;
+import org.uma.jmetal.solution.PermutationSolution;
 import org.uma.jmetal.problem.PermutationProblem;
 
 import java.util.ArrayList;

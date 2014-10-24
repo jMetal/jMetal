@@ -1,7 +1,7 @@
 package org.uma.jmetal.problem;
 
 import org.uma.jmetal.core.Problem;
-import org.uma.jmetal.encoding.BinarySolution;
+import org.uma.jmetal.solution.BinarySolution;
 
 /** Interface representing binary problems */
 public interface BinaryProblem extends Problem<BinarySolution> {

@@ -1,7 +1,7 @@
 package org.uma.jmetal.problem;
 
 import org.uma.jmetal.core.Problem;
-import org.uma.jmetal.encoding.DoubleSolution;
+import org.uma.jmetal.solution.DoubleSolution;
 
 /** Interface representing continuous problems */
 public interface ContinuousProblem extends Problem<DoubleSolution> {

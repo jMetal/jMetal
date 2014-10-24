@@ -22,16 +22,12 @@
 package org.uma.jmetal.metaheuristic.singleobjective.differentialevolution;
 
 import org.uma.jmetal.core.Algorithm;
-import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.encoding.DoubleSolution;
-import org.uma.jmetal.operator.crossover.CrossoverOperator;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
-import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.DifferentialEvolutionSelection;
 import org.uma.jmetal.problem.ContinuousProblem;
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 
 import java.util.ArrayList;

@@ -1,7 +1,7 @@
-package org.uma.jmetal.encoding.impl;
+package org.uma.jmetal.solution.impl;
 
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.encoding.DoubleSolution;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.problem.ContinuousProblem;
 
 import java.util.ArrayList;

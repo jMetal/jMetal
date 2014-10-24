@@ -1,6 +1,6 @@
 package org.uma.jmetal.problem.impl;
 
-import org.uma.jmetal.encoding.DoubleSolution;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.problem.ContinuousProblem;
 
 import java.util.List;

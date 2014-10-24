@@ -1,7 +1,7 @@
-package org.uma.jmetal.encoding.impl;
+package org.uma.jmetal.solution.impl;
 
 import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.encoding.BinarySolution;
+import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.problem.BinaryProblem;
 
 import java.util.ArrayList;

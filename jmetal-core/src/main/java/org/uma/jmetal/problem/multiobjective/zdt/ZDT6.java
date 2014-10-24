@@ -21,8 +21,8 @@
 
 package org.uma.jmetal.problem.multiobjective.zdt;
 
-import org.uma.jmetal.encoding.DoubleSolution;
-import org.uma.jmetal.encoding.impl.DoubleSolutionImpl;
+import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.solution.impl.DoubleSolutionImpl;
 import org.uma.jmetal.problem.impl.ContinuousProblemImpl;
 
 import java.util.ArrayList;

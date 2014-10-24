@@ -21,11 +21,8 @@
 
 package org.uma.jmetal.problem.singleobjective;
 
-import org.uma.jmetal.core.Problem;
-import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.encoding.DoubleSolution;
-import org.uma.jmetal.encoding.impl.DoubleSolutionImpl;
-import org.uma.jmetal.problem.ContinuousProblem;
+import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.solution.impl.DoubleSolutionImpl;
 import org.uma.jmetal.problem.impl.ContinuousProblemImpl;
 import org.uma.jmetal.util.JMetalException;
 
