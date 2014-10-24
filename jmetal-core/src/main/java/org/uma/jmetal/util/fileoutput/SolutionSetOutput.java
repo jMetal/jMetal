@@ -20,7 +20,7 @@
 
 package org.uma.jmetal.util.fileoutput;
 
-import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 

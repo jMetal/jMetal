@@ -20,16 +20,13 @@
 
 package org.uma.jmetal.runner.multiobjective;
 
-import org.uma.jmetal.core.Problem;
-import org.uma.jmetal.metaheuristic.multiobjective.smpso.SMPSO;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSO;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.core.Algorithm;
-import org.uma.jmetal.core.Solution;
-import org.uma.jmetal.operator.mutation.MutationOperator;
-import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
+import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.operator.MutationOperator;
+import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.ContinuousProblem;
-import org.uma.jmetal.problem.multiobjective.zdt.ZDT4;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.archive.Archive;
@@ -37,7 +34,6 @@ import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**

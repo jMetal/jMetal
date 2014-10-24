@@ -1,7 +1,7 @@
 package org.uma.jmetal.problem.impl;
 
-import org.uma.jmetal.core.Problem;
-import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.solution.Solution;
 
 public abstract class GenericProblemImpl<S extends Solution<?>> implements Problem<S> {
 	private int numberOfVariables = 0 ;

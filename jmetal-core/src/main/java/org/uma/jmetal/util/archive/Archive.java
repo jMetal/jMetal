@@ -1,6 +1,6 @@
 package org.uma.jmetal.util.archive;
 
-import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.solution.Solution;
 
 import java.util.List;
 

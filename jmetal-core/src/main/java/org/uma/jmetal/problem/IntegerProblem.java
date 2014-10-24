@@ -1,6 +1,5 @@
 package org.uma.jmetal.problem;
 
-import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.solution.IntegerSolution;
 
 /** Interface representing integer problems */

@@ -1,6 +1,6 @@
 package org.uma.jmetal.util.solutionattribute;
 
-import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.solution.Solution;
 
 /**
  * Created by Antonio J. Nebro on 03/10/14.

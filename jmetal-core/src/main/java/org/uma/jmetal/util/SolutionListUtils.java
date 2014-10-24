@@ -1,6 +1,6 @@
 package org.uma.jmetal.util;
 
-import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
 

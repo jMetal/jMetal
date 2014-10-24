@@ -1,6 +1,6 @@
 package org.uma.jmetal.solution.impl;
 
-import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.IntegerDoubleSolution;
 import org.uma.jmetal.problem.IntegerDoubleProblem;
 

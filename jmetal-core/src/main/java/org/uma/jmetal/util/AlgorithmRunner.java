@@ -20,8 +20,8 @@
 
 package org.uma.jmetal.util;
 
-import org.uma.jmetal.core.Algorithm;
-import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.solution.Solution;
 
 import java.util.List;
 

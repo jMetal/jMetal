@@ -21,8 +21,8 @@
 
 package org.uma.jmetal.util.evaluator.impl;
 
-import org.uma.jmetal.core.Problem;
-import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
 import org.uma.jmetal.util.parallel.impl.MultithreadedEvaluator;
 

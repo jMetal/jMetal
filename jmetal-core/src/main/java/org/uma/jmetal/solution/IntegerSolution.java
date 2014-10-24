@@ -13,8 +13,6 @@
 
 package org.uma.jmetal.solution;
 
-import org.uma.jmetal.core.Solution;
-
 /**
  * @author Antonio J. Nebro
  * @version 0.1

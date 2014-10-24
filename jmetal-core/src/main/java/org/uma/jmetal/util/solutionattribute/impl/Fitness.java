@@ -20,7 +20,7 @@
 
 package org.uma.jmetal.util.solutionattribute.impl;
 
-import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.solution.Solution;
 
 /**
  */

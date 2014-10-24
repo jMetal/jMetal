@@ -13,8 +13,6 @@
 
 package org.uma.jmetal.solution;
 
-import org.uma.jmetal.core.Solution;
-
 import java.util.List;
 
 /**

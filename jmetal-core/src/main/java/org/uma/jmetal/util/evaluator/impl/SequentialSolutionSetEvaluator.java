@@ -22,8 +22,8 @@
 
 package org.uma.jmetal.util.evaluator.impl;
 
-import org.uma.jmetal.core.Problem;
-import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;

@@ -1,7 +1,6 @@
 package org.uma.jmetal.problem;
 
-import org.uma.jmetal.core.Problem;
-import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.solution.Solution;
 
 /** Interface representing problems having integer and double variables*/
 public interface IntegerDoubleProblem<S extends Solution<Number>> extends Problem<S> {

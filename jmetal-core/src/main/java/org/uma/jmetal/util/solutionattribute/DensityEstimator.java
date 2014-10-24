@@ -20,7 +20,7 @@
 
 package org.uma.jmetal.util.solutionattribute;
 
-import org.uma.jmetal.core.Solution;
+import org.uma.jmetal.solution.Solution;
 
 import java.util.List;
 

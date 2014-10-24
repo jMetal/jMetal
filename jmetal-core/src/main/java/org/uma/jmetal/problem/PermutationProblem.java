@@ -1,6 +1,5 @@
 package org.uma.jmetal.problem;
 
-import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.solution.PermutationSolution;
 
 /** Interface representing permutation problems */
