@@ -11,7 +11,7 @@ import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
-import org.uma.jmetal.util.pseudorandom.impl.ApacheRandomUtils;
+import org.uma.jmetal.util.pseudorandom.impl.ApacheRandomUtilsGenerator;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -75,7 +75,7 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
     changeVelocity1 = builder.changeVelocity1;
     changeVelocity2 = builder.changeVelocity2;
 
-    randomGenerator = new ApacheRandomUtils() ;
+    randomGenerator = new ApacheRandomUtilsGenerator() ;
   }
 
   /* Getters */

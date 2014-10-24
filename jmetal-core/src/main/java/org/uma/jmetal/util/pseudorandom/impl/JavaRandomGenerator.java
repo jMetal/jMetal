@@ -13,37 +13,41 @@
 
 package org.uma.jmetal.util.pseudorandom.impl;
 
-import org.apache.commons.lang3.RandomUtils;
 import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
+
+import java.util.Random;
 
 /**
  * @author Antonio J. Nebro
  * @version 0.1
  */
-public class ApacheRandomUtils implements PseudoRandomGenerator {
+public class JavaRandomGenerator implements PseudoRandomGenerator {
+  private Random rnd = new Random() ;
 
   @Override
   public int nextInt(int lowerBound, int upperBound) {
-    return RandomUtils.nextInt(lowerBound, upperBound) ;
+    return lowerBound + rnd.nextInt()*(upperBound - lowerBound) ;
   }
 
   @Override
   public double nextDouble(double lowerBound, double upperBound) {
-    return RandomUtils.nextDouble(lowerBound, upperBound);
+    return lowerBound + rnd.nextDouble()*(upperBound - lowerBound) ;
   }
 
   @Override
   public long nextLong(long lowerBound, long upperBound) {
-    return RandomUtils.nextLong(lowerBound, upperBound);
+    return lowerBound + rnd.nextLong()*(upperBound - lowerBound);
   }
 
   @Override
   public float nextFloat(float lowerBound, float upperBound) {
-    return RandomUtils.nextFloat(lowerBound, upperBound) ;
+    return lowerBound + rnd.nextFloat()*(upperBound - lowerBound) ;
   }
 
   @Override
   public byte[] nextBytes(int count) {
-    return RandomUtils.nextBytes(count) ;
+    byte[] bytes = new byte[count] ;
+    rnd.nextBytes(bytes);
+    return bytes ;
   }
 }
