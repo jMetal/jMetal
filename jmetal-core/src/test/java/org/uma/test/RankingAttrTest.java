@@ -6,9 +6,9 @@ import org.uma.jmetal.core.Problem;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.encoding.DoubleSolution;
 import org.uma.jmetal.problem.multiobjective.Fonseca;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
-import org.uma.jmetal45.util.JMetalException;
 
 import java.util.ArrayList;
 import java.util.Collections;

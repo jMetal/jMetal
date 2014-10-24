@@ -43,7 +43,6 @@ import java.util.List;
 public class GDE3Runner {
   /**
    * @param args Command line arguments.
-   * @throws org.uma.jmetal45.util.JMetalException
    * @throws java.io.IOException
    * @throws SecurityException
    * @throws ClassNotFoundException
