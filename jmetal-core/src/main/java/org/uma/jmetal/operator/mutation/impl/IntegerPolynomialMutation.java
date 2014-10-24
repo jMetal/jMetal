@@ -22,30 +22,32 @@ package org.uma.jmetal.operator.mutation.impl;
 
 import org.uma.jmetal.encoding.IntegerSolution;
 import org.uma.jmetal.operator.mutation.MutationOperator;
+import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /** This class implements a polynomial mutation operator */
 public class IntegerPolynomialMutation implements MutationOperator<IntegerSolution> {
   private static final double ETA_M_DEFAULT = 20.0;
   private double distributionIndex ;
-
   private double mutationProbability ;
 
-  /** Constructor */
-  public IntegerPolynomialMutation() {
-    this.mutationProbability = 0.01;
-    this.distributionIndex = 20.0;
-  }
+  private JMetalRandom randomGenerator ;
 
   /** Constructor */
   public IntegerPolynomialMutation(double mutationProbability, double distributionIndex) {
     this.mutationProbability = mutationProbability;
     this.distributionIndex = distributionIndex;
+    randomGenerator = JMetalRandom.getInstance() ;
+  }
+
+  /** Constructor */
+  public IntegerPolynomialMutation() {
+    this(0.01, 20.0) ;
   }
 
   /** Constructor */
   private IntegerPolynomialMutation(Builder builder) {
-    mutationProbability = builder.mutationProbability;
-    distributionIndex = builder.distributionIndex;
+    this(builder.mutationProbability, builder.distributionIndex) ;
   }
 
   /* Getters */
@@ -104,13 +106,13 @@ public class IntegerPolynomialMutation implements MutationOperator<IntegerSoluti
     Double y, yl, yu, val, xy;
 
     for (int i = 0; i < solution.getNumberOfVariables(); i++) {
-      if (PseudoRandom.randDouble() <= probability) {
+      if (randomGenerator.nextDouble() <= probability) {
         y = (double)solution.getVariableValue(i);
         yl = (double)solution.getLowerBound(i) ;
         yu = (double)solution.getUpperBound(i) ;
         delta1 = (y - yl) / (yu - yl);
         delta2 = (yu - y) / (yu - yl);
-        rnd = PseudoRandom.randDouble();
+        rnd = randomGenerator.nextDouble();
         mutPow = 1.0 / (distributionIndex + 1.0);
         if (rnd <= 0.5) {
           xy = 1.0 - delta1;

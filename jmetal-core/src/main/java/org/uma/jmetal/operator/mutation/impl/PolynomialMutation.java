@@ -22,30 +22,32 @@ package org.uma.jmetal.operator.mutation.impl;
 
 import org.uma.jmetal.encoding.DoubleSolution;
 import org.uma.jmetal.operator.mutation.MutationOperator;
+import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /** This class implements a polynomial mutation operator */
 public class PolynomialMutation implements MutationOperator<DoubleSolution> {
   private static final double ETA_M_DEFAULT = 20.0;
   private double distributionIndex ;
-
   private double mutationProbability ;
 
-  /** Constructor */
-  public PolynomialMutation() {
-    this.mutationProbability = 0.01;
-    this.distributionIndex = 20.0;
-  }
+  private JMetalRandom randomGenerator ;
 
   /** Constructor */
   public PolynomialMutation(double mutationProbability, double distributionIndex) {
     this.mutationProbability = mutationProbability;
     this.distributionIndex = distributionIndex;
+    randomGenerator = JMetalRandom.getInstance() ;
+  }
+
+  /** Constructor */
+  public PolynomialMutation() {
+    this(0.01, 20.0) ;
   }
 
   /** Constructor */
   private PolynomialMutation(Builder builder) {
-    mutationProbability = builder.mutationProbability;
-    distributionIndex = builder.distributionIndex;
+    this(builder.mutationProbability, builder.distributionIndex) ;
   }
 
   /* Getters */
@@ -104,13 +106,13 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
     Double y, yl, yu, val, xy;
 
     for (int i = 0; i < solution.getNumberOfVariables(); i++) {
-      if (PseudoRandom.randDouble() <= probability) {
+      if (randomGenerator.nextDouble() <= probability) {
         y = solution.getVariableValue(i);
         yl = solution.getLowerBound(i) ;
         yu = solution.getUpperBound(i) ;
         delta1 = (y - yl) / (yu - yl);
         delta2 = (yu - y) / (yu - yl);
-        rnd = PseudoRandom.randDouble();
+        rnd = randomGenerator.nextDouble();
         mutPow = 1.0 / (distributionIndex + 1.0);
         if (rnd <= 0.5) {
           xy = 1.0 - delta1;

@@ -22,24 +22,28 @@ package org.uma.jmetal.operator.mutation.impl;
 
 import org.uma.jmetal.encoding.BinarySolution;
 import org.uma.jmetal.operator.mutation.MutationOperator;
+import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /** This class implements a bit flip mutation operator. */
 public class BitFlipMutation implements MutationOperator<BinarySolution> {
   private double mutationProbability ;
+  private JMetalRandom randomGenerator ;
 
   /** Constructor */
-  private BitFlipMutation() {
-    this.mutationProbability = 0.1;
+  public BitFlipMutation(double mutationProbability) {
+    this.mutationProbability = mutationProbability;
+    randomGenerator = JMetalRandom.getInstance() ;
   }
 
   /** Constructor */
-  private BitFlipMutation(double mutationProbability) {
-    this.mutationProbability = mutationProbability;
+  public BitFlipMutation() {
+    this(0.1) ;
   }
 
   /** Constructor */
   private BitFlipMutation(Builder builder) {
-    mutationProbability = builder.mutationProbability;
+    this(builder.mutationProbability);
   }
 
   /* Getter */
@@ -88,7 +92,7 @@ public class BitFlipMutation implements MutationOperator<BinarySolution> {
   public void doMutation(double probability, BinarySolution solution)  {
     for (int i = 0; i < solution.getNumberOfVariables(); i++) {
       for (int j = 0; j < solution.getVariableValue(i).length(); j++) {
-        if (PseudoRandom.randDouble() <= probability) {
+        if (randomGenerator.nextDouble() <= probability) {
           solution.getVariableValue(i).flip(j);
         }
       }
