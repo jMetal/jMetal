@@ -17,10 +17,10 @@ package org.uma.jmetal.util.pseudorandom;
  * @author Antonio J. Nebro
  * @version 0.1
  */
-public interface PseudoRandom {
+public interface PseudoRandomGenerator {
   public int nextInt(int lowerBound, int upperBound) ;
   public double nextDouble(double lowerBound, double upperBound) ;
   public long nextLong(long lowerBound, long upperBound) ;
-  public float nextFloat(float lowerBound, long upperBound) ;
+  public float nextFloat(float lowerBound, float upperBound) ;
   public byte[] nextBytes(int count) ;
 }

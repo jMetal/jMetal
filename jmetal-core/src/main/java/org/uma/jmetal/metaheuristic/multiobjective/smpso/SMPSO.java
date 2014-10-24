@@ -10,7 +10,7 @@ import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.pseudorandom.PseudoRandom;
+import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.impl.ApacheRandomUtils;
 
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
   private List<DoubleSolution> swarm;
   private DoubleSolution[] best;
 
-  private PseudoRandom randomGenerator ;
+  private PseudoRandomGenerator randomGenerator ;
 
   private Archive<DoubleSolution> leaders;
   private double[][] speed;

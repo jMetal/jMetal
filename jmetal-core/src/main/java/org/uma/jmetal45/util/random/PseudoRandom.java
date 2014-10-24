@@ -43,7 +43,7 @@ public class PseudoRandom {
 
   /**
    * Constructor.
-   * Creates a new instance of PseudoRandom.
+   * Creates a new instance of PseudoRandomGenerator.
    */
   private PseudoRandom() {
     if (random == null) {
@@ -69,7 +69,7 @@ public class PseudoRandom {
   }
 
   /**
-   * Returns a random double value using the PseudoRandom generator.
+   * Returns a random double value using the PseudoRandomGenerator generator.
    * Returns A random double value.
    */
   public static double randDouble() {
@@ -81,7 +81,7 @@ public class PseudoRandom {
 
   /**
    * Returns a random int value between a minimum bound and maximum bound using
-   * the PseudoRandom generator.
+   * the PseudoRandomGenerator generator.
    *
    * @param minBound The minimum bound.
    * @param maxBound The maximum bound.
@@ -96,7 +96,7 @@ public class PseudoRandom {
 
   /**
    * Returns a random double value between a minimum bound and a maximum bound
-   * using the PseudoRandom generator.
+   * using the PseudoRandomGenerator generator.
    *
    * @param minBound The minimum bound.
    * @param maxBound The maximum bound.

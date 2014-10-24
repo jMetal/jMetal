@@ -14,13 +14,13 @@
 package org.uma.jmetal.util.pseudorandom.impl;
 
 import org.apache.commons.lang3.RandomUtils;
-import org.uma.jmetal.util.pseudorandom.PseudoRandom;
+import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
 
 /**
  * @author Antonio J. Nebro
  * @version 0.1
  */
-public class ApacheRandomUtils implements PseudoRandom {
+public class ApacheRandomUtils implements PseudoRandomGenerator {
 
   @Override
   public int nextInt(int lowerBound, int upperBound) {
@@ -38,7 +38,7 @@ public class ApacheRandomUtils implements PseudoRandom {
   }
 
   @Override
-  public float nextFloat(float lowerBound, long upperBound) {
+  public float nextFloat(float lowerBound, float upperBound) {
     return RandomUtils.nextFloat(lowerBound, upperBound) ;
   }
 
