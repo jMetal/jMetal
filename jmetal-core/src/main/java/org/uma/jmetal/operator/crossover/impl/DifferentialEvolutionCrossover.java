@@ -299,7 +299,7 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<List<Do
       throw new JMetalException("Exception in " + name + ".execute()");
     }
 
-    ArrayList<DoubleSolution> result = new ArrayList<>(1) ;
+    List<DoubleSolution> result = new ArrayList<>(1) ;
     result.add(child) ;
     return result;
   }

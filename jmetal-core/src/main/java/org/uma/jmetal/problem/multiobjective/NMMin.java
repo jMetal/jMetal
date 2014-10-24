@@ -25,6 +25,7 @@ import org.uma.jmetal.encoding.impl.IntegerSolutionImpl;
 import org.uma.jmetal.problem.impl.IntegerProblemImpl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Antonio J. Nebro on 03/07/14.
@@ -48,8 +49,8 @@ public class NMMin extends IntegerProblemImpl {
     setNumberOfObjectives(2);
     setName("NMMin");
 
-    ArrayList<Integer> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
-    ArrayList<Integer> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
+    List<Integer> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
+    List<Integer> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
 
     for (int i = 0; i < getNumberOfVariables(); i++) {
       lowerLimit.add(lowerBound);

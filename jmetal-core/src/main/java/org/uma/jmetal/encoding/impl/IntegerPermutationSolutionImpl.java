@@ -23,7 +23,7 @@ public class IntegerPermutationSolutionImpl
     overallConstraintViolationDegree = 0.0 ;
 
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      ArrayList<Integer> randomSequence = new ArrayList<>(problem.getPermutationLength(i));
+      List<Integer> randomSequence = new ArrayList<>(problem.getPermutationLength(i));
 
       for (int j = 0; j < problem.getPermutationLength(i); i++) {
         randomSequence.add(i);
@@ -43,7 +43,7 @@ public class IntegerPermutationSolutionImpl
     }
     variables = new ArrayList<>() ;
     for (List<Integer> var : solution.variables) {
-      ArrayList<Integer> list = new ArrayList<>() ;
+      List<Integer> list = new ArrayList<>() ;
       for (Integer element : var) {
         var.add(new Integer(element)) ;
       }

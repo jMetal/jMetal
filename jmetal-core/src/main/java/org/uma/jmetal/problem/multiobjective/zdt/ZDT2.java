@@ -26,6 +26,7 @@ import org.uma.jmetal.encoding.impl.DoubleSolutionImpl;
 import org.uma.jmetal.problem.impl.ContinuousProblemImpl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /** Class representing problem ZDT2 */
 public class ZDT2 extends ContinuousProblemImpl {
@@ -46,8 +47,8 @@ public class ZDT2 extends ContinuousProblemImpl {
     setNumberOfObjectives(2);
     setName("ZDT2");
 
-    ArrayList<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
-    ArrayList<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
+    List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
+    List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
 
     for (int i = 0; i < getNumberOfVariables(); i++) {
       lowerLimit.add(0.0);

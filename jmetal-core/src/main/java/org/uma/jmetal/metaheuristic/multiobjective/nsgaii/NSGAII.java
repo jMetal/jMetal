@@ -43,7 +43,6 @@ public class NSGAII extends NSGAIITemplate {
    * as a experimentoutput of the algorithm execution
    * @throws org.uma.jmetal.util.JMetalException
    */
-  //public List<?> run() throws JMetalException {
   public void run() throws JMetalException {
     createInitialPopulation();
     population = evaluatePopulation(population);
@@ -74,7 +73,6 @@ public class NSGAII extends NSGAIITemplate {
     }
 
     tearDown() ;
-    //return getNonDominatedSolutions(population) ;
   }
 
   @Override

@@ -26,6 +26,7 @@ import org.uma.jmetal.problem.ConstrainedProblem;
 import org.uma.jmetal.problem.impl.ContinuousProblemImpl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /** Class representing problem Srinivas */
 public class Srinivas extends ContinuousProblemImpl implements ConstrainedProblem<DoubleSolution> {
@@ -37,8 +38,8 @@ public class Srinivas extends ContinuousProblemImpl implements ConstrainedProble
     setNumberOfConstraints(2);
     setName("Srinivas");
 
-    ArrayList<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
-    ArrayList<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
+    List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
+    List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
 
     for (int i = 0; i < getNumberOfVariables(); i++) {
       lowerLimit.add(-4.0);

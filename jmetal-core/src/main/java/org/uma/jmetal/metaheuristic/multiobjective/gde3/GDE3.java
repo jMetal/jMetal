@@ -147,7 +147,7 @@ public class GDE3 implements Algorithm<List<DoubleSolution>> {
 
       // Create the offSpring solutionSet
       offspringPopulation = new ArrayList<>(populationSize * 2);
-      ArrayList<DoubleSolution> tmpSolutionSet = new ArrayList<>(populationSize) ;
+      List<DoubleSolution> tmpSolutionSet = new ArrayList<>(populationSize) ;
 
       for (int i = 0; i < populationSize; i++) {
         // Obtain parents. Two parameters are required: the population and the
@@ -161,7 +161,6 @@ public class GDE3 implements Algorithm<List<DoubleSolution>> {
         tmpSolutionSet.add(children.get(0));
       }
 
-      ////////Todo: tmpSolutionSet = evaluatePopulation(tmpSolutionSet);
       evaluatePopulation(tmpSolutionSet);
 
       for (int i = 0; i < populationSize; i++) {

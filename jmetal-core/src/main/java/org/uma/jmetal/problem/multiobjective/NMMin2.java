@@ -25,6 +25,7 @@ import org.uma.jmetal.encoding.impl.IntegerDoubleSolutionImpl;
 import org.uma.jmetal.problem.impl.IntegerDoubleProblemImpl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Antonio J. Nebro on 18/09/14.
@@ -50,8 +51,8 @@ public class NMMin2 extends IntegerDoubleProblemImpl<IntegerDoubleSolution> {
     setNumberOfObjectives(2);
     setName("NMMin");
 
-    ArrayList<Number> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
-    ArrayList<Number> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
+    List<Number> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
+    List<Number> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
 
     for (int i = 0; i < getNumberOfVariables(); i++) {
       lowerLimit.add(lowerBound);

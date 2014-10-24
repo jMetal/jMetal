@@ -63,8 +63,6 @@ public class SteadyStateNSGAII extends NSGAIITemplate  {
       computeRanking(population);
       crowdingDistanceSelection();
     }
-
-    //return getNonDominatedSolutions(population) ;
   }
 
   @Override

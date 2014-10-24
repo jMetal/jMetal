@@ -26,6 +26,7 @@ import org.uma.jmetal.encoding.impl.DoubleSolutionImpl;
 import org.uma.jmetal.problem.impl.ContinuousProblemImpl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class representing problem Kursawe
@@ -52,8 +53,8 @@ public class Kursawe extends ContinuousProblemImpl{
     setNumberOfObjectives(2);
     setName("Kursawe");
 
-    ArrayList<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
-    ArrayList<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
+    List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
+    List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
 
     for (int i = 0; i < getNumberOfVariables(); i++) {
       lowerLimit.add(-5.0);
