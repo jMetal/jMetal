@@ -17,7 +17,7 @@ public abstract class AbstractGenericSolution<T, P extends Problem> implements S
   protected P problem ;
   protected double overallConstraintViolationDegree ;
   protected Map<Object, Object> attributes ;
-  protected JMetalRandom randomGenerator ;
+  protected final JMetalRandom randomGenerator ;
 
 
   protected AbstractGenericSolution() {

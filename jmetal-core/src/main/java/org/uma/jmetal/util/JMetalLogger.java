@@ -31,9 +31,9 @@ import java.util.logging.Logger;
 public class JMetalLogger implements Serializable {
 
   public static final Logger logger = Logger.getLogger("jMetal");
-  private static FileHandler fileHandler;
 
   static {
+    FileHandler fileHandler;
     try {
       fileHandler = new FileHandler("jMetal.log");
     } catch (IOException e) {

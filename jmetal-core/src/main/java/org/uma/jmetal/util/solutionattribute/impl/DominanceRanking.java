@@ -44,40 +44,39 @@ public class DominanceRanking implements Ranking<Solution<?>, Integer> {
   private static final Comparator<Solution<?>> CONSTRAINT_VIOLATION_COMPARATOR =
     new OverallConstraintViolationComparator();
 
-  private List<Solution<?>> population;
   private List<ArrayList<Solution<?>>> rankedSubpopulations;
 
   @Override
   public Ranking computeRanking(List<Solution<?>> solutionSet) {
-    population = solutionSet;
+    List<Solution<?>> population = solutionSet;
 
     // dominateMe[i] contains the number of solutions dominating i
-    int[] dominateMe = new int[this.population.size()];
+    int[] dominateMe = new int[population.size()];
 
     // iDominate[k] contains the list of solutions dominated by k
-    List<Integer>[] iDominate = new List[this.population.size()];
+    List<Integer>[] iDominate = new List[population.size()];
 
     // front[i] contains the list of individuals belonging to the front i
-    List<Integer>[] front = new List[this.population.size() + 1];
+    List<Integer>[] front = new List[population.size() + 1];
 
     // Initialize the fronts 
     for (int i = 0; i < front.length; i++) {
-      front[i] = new LinkedList<Integer>();
+      front[i] = new LinkedList<>();
     }
 
     // Fast non dominated sorting algorithm
     // Contribution of Guillaume Jacquenot
-    for (int p = 0; p < this.population.size(); p++) {
+    for (int p = 0; p < population.size(); p++) {
       // Initialize the list of individuals that i dominate and the number
       // of individuals that dominate me
-      iDominate[p] = new LinkedList<Integer>();
+      iDominate[p] = new LinkedList<>();
       dominateMe[p] = 0;
     }
 
     int flagDominate;
-    for (int p = 0; p < (this.population.size() - 1); p++) {
+    for (int p = 0; p < (population.size() - 1); p++) {
       // For all q individuals , calculate if p dominates q or vice versa
-      for (int q = p + 1; q < this.population.size(); q++) {
+      for (int q = p + 1; q < population.size(); q++) {
         flagDominate =
           CONSTRAINT_VIOLATION_COMPARATOR.compare(solutionSet.get(p), solutionSet.get(q));
         if (flagDominate == 0) {
@@ -93,7 +92,7 @@ public class DominanceRanking implements Ranking<Solution<?>, Integer> {
       }
     }
 
-    for (int i = 0; i < this.population.size(); i++) {
+    for (int i = 0; i < population.size(); i++) {
       if (dominateMe[i] == 0) {
 
         front[0].add(i);
@@ -122,7 +121,7 @@ public class DominanceRanking implements Ranking<Solution<?>, Integer> {
       }
     }
 
-    rankedSubpopulations = new ArrayList<ArrayList<Solution<?>>>();
+    rankedSubpopulations = new ArrayList<>();
     //0,1,2,....,i-1 are fronts, then i fronts
     for (int j = 0; j < i; j++) {
       rankedSubpopulations.add(j, new ArrayList<Solution<?>>(front[j].size()));

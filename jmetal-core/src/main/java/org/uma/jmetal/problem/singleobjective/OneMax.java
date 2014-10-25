@@ -33,10 +33,10 @@ import java.util.BitSet;
  * number of '1's in a binary string.
  */
 public class OneMax extends AbstractBinaryProblem {
-  private int numberOfBits ;
+  private final int numberOfBits ;
 
   /** Constructor */
-  public OneMax(String solutionType) throws ClassNotFoundException, JMetalException {
+  public OneMax(String solutionType) throws JMetalException {
     this(512);
   }
 

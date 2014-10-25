@@ -36,7 +36,7 @@ public class OneZeroMax extends AbstractBinaryProblem {
   private int numberOfBits ;
 
   /** Constructor */
-  public OneZeroMax() throws ClassNotFoundException, JMetalException {
+  public OneZeroMax() throws JMetalException {
     this(512);
   }
 

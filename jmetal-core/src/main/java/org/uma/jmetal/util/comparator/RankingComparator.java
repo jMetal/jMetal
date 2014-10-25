@@ -54,14 +54,10 @@ public class RankingComparator implements Comparator<Solution<?>> {
     int rank2 = Integer.MAX_VALUE ;
 
     if (ranking.getAttribute(solution1) != null ) {
-    //if (solution1.getAttribute(Ranking.ATTRIBUTE.RANK) != null) {
-      //rank1 = (int)solution1.getAttribute(Ranking.ATTRIBUTE.RANK) ;
       rank1 = (int)ranking.getAttribute(solution1) ;
     }
 
     if (ranking.getAttribute(solution2) != null ) {
-      //if (solution2.getAttribute(Ranking.ATTRIBUTE.RANK) != null){
-      //rank2 = (int) solution2.getAttribute(Ranking.ATTRIBUTE.RANK);
       rank2 = (int)ranking.getAttribute(solution2) ;
     }
 

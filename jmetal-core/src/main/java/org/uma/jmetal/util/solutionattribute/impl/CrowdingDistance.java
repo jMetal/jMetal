@@ -63,8 +63,8 @@ public class CrowdingDistance implements DensityEstimator<Solution<?>, Double> {
 
     //Use a new SolutionSet to avoid altering the original solutionSet
     List<Solution<?>> front = new ArrayList<>(size);
-    for (int i = 0; i < size; i++) {
-      front.add(solutionSet.get(i));
+    for (Solution<?> solution : solutionSet) {
+      front.add(solution);
     }
 
     for (int i = 0; i < size; i++) {

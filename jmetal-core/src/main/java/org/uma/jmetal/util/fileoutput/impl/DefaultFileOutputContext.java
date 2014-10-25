@@ -31,9 +31,8 @@ public class DefaultFileOutputContext implements FileOutputContext {
       throw new JMetalException("Exception when calling method getFileWriter()", e) ;
     }
     OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream);
-    BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter) ;
 
-    return bufferedWriter;
+    return new BufferedWriter(outputStreamWriter);
   }
 
   @Override

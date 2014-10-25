@@ -187,8 +187,8 @@ public abstract class NSGAIITemplate implements Algorithm<List<Solution<?>>> {
   protected List<Solution<?>> evaluatePopulation(List<Solution<?>> population) throws JMetalException {
     evaluations += population.size() ;
 
-    for (int i = 0 ; i < population.size(); i++) {
-      problem.evaluate(population.get(i)) ;
+    for (Solution<?> solution : population) {
+      problem.evaluate(solution);
     }
 
     return population ;

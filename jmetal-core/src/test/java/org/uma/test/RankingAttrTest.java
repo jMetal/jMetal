@@ -53,6 +53,7 @@ public class RankingAttrTest {
     try {
       assertNull(ranking.getSubfront(1)) ;
     } catch (JMetalException e) {
+      e.printStackTrace();
     }
   }
 

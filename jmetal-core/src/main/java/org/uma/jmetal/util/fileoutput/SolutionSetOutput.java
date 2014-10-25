@@ -31,6 +31,7 @@ import java.util.List;
 /**
  * Created by Antonio J. Nebro on 31/05/14.
  */
+@SuppressWarnings("ALL")
 public class SolutionSetOutput {
 
   public static class Printer {

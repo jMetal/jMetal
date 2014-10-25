@@ -150,7 +150,7 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<List<Do
     }
 
     public Builder setVariant(String variant) {
-      Vector<String> validVariants = new Vector<String>(Arrays.asList(VALID_VARIANTS)) ;
+      Vector<String> validVariants = new Vector<>(Arrays.asList(VALID_VARIANTS)) ;
       if (validVariants.contains(variant)) {
         this.variant = variant ;
       } else {

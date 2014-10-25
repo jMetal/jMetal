@@ -38,8 +38,6 @@ import java.util.List;
  * This class implements a differential evolution algorithm.
  */
 public class DifferentialEvolution implements Algorithm<List<DoubleSolution>> {
-  private static final long serialVersionUID = 7663009441358542943L;
-
   private ContinuousProblem problem ;
 
   private int populationSize;

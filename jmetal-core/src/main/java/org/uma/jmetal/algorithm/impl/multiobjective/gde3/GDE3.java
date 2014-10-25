@@ -215,8 +215,8 @@ public class GDE3 implements Algorithm<List<DoubleSolution>> {
   }
 
   protected List<DoubleSolution> evaluatePopulation(List<DoubleSolution> population) {
-    for (int i = 0 ; i < population.size(); i++) {
-      problem.evaluate(population.get(i)) ;
+    for (DoubleSolution solution : population) {
+      problem.evaluate(solution);
     }
 
     return population ;

@@ -173,7 +173,6 @@ public class IBEA implements Algorithm<List<Solution<?>>> {
 
   /** Execute() method */
   @Override
-//  public List<Solution<?>> run() {
   public void run() {
     int evaluations;
     List<Solution<?>> solutionSet, offSpringSolutionSet;
@@ -188,7 +187,6 @@ public class IBEA implements Algorithm<List<Solution<?>>> {
     for (int i = 0; i < populationSize; i++) {
       newSolution = problem.createSolution() ;
       problem.evaluate(newSolution);
-      //problem.evaluateConstraints(newSolution);
       evaluations++;
       solutionSet.add(newSolution);
     }
@@ -233,9 +231,6 @@ public class IBEA implements Algorithm<List<Solution<?>>> {
       }
       solutionSet = offSpringSolutionSet;
     }
-
-    //return SolutionListUtils.findNondominatedSolutions(archive) ;
-    //return FindNondominatedSolutions.run(archive) ;
   }
 
   @Override
@@ -307,7 +302,6 @@ public class IBEA implements Algorithm<List<Solution<?>>> {
         B = new ArrayList<>(1);
         B.add(solutionSet.get(i));
 
-        //int flag = (new DominanceComparator()).compare(A.get(0), B.get(0));
         int flag = (new DominanceComparator()).compare(A.get(0), B.get(0));
 
         double value = 0.0;
@@ -342,7 +336,6 @@ public class IBEA implements Algorithm<List<Solution<?>>> {
       }
     }
     solutionFitness.setAttribute(solutionSet.get(pos), fitness);
-    //solutionSet.get(pos).setFitness(fitness);
   }
 
   /**
@@ -382,15 +375,12 @@ public class IBEA implements Algorithm<List<Solution<?>>> {
   public void removeWorst(List<Solution<?>> solutionSet) {
 
     // Find the worst;
-    //double worst = solutionSet.get(0).getFitness();
     double worst = (double) solutionFitness.getAttribute(solutionSet.get(0));
     int worstIndex = 0;
     double kappa = 0.05;
 
     for (int i = 1; i < solutionSet.size(); i++) {
-      //if (solutionSet.get(i).getFitness() > worst) {
       if ((double)solutionFitness.getAttribute(solutionSet.get(i)) > worst) {
-        //worst = solutionSet.get(i).getFitness();
         worst = (double)solutionFitness.getAttribute(solutionSet.get(i)) ;
         worstIndex = i;
       }
@@ -399,11 +389,9 @@ public class IBEA implements Algorithm<List<Solution<?>>> {
     // Update the population
     for (int i = 0; i < solutionSet.size(); i++) {
       if (i != worstIndex) {
-        //double fitness = solutionSet.get(i).getFitness();
         double fitness = (double)solutionFitness.getAttribute(solutionSet.get(i)) ;
         fitness -=
                 Math.exp((-indicatorValues.get(worstIndex).get(i) / maxIndicatorValue) / kappa);
-//        solutionSet.get(i).setFitness(fitness);
         solutionFitness.setAttribute(solutionSet.get(i), fitness);
       }
     }
