@@ -12,6 +12,8 @@ import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.impl.ApacheRandomUtilsGenerator;
+import org.uma.jmetal.util.pseudorandom.impl.JavaRandomGenerator;
+import org.uma.jmetal.util.pseudorandom.impl.MersenneTwisterGenerator;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -75,7 +77,7 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
     changeVelocity1 = builder.changeVelocity1;
     changeVelocity2 = builder.changeVelocity2;
 
-    randomGenerator = new ApacheRandomUtilsGenerator() ;
+    randomGenerator = builder.randomGenerator;
   }
 
   /* Getters */
@@ -162,7 +164,7 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
     private double weightMin;
     private double changeVelocity1;
     private double changeVelocity2;
-
+    private PseudoRandomGenerator randomGenerator ;
 
     public Builder(ContinuousProblem problem, Archive leaders) {
       this.problem = problem ;
@@ -183,6 +185,8 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
       weightMin = 0.1;
       changeVelocity1 = -1;
       changeVelocity2 = -1;
+
+      randomGenerator = new JavaRandomGenerator() ;
     }
 
     public Builder setSwarmSize(int swarmSize) {
@@ -271,6 +275,12 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
 
     public Builder setChangeVelocity2(double changeVelocity2) {
       this.changeVelocity2 = changeVelocity2 ;
+
+      return this ;
+    }
+
+    public Builder setRandomGenerator(PseudoRandomGenerator randomGenerator) {
+      this.randomGenerator = randomGenerator ;
 
       return this ;
     }

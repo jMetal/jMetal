@@ -33,6 +33,7 @@ import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
+import org.uma.jmetal.util.pseudorandom.impl.MersenneTwisterGenerator;
 
 import java.util.List;
 
@@ -71,27 +72,28 @@ public class SMPSORunner {
     Archive archive = new CrowdingDistanceArchive(100) ;
 
     mutation = new PolynomialMutation.Builder()
-      .setDistributionIndex(20.0)
-      .setProbability(1.0 / problem.getNumberOfVariables())
-      .build();
+            .setDistributionIndex(20.0)
+            .setProbability(1.0 / problem.getNumberOfVariables())
+            .build();
 
     algorithm = new SMPSO.Builder(problem, archive)
-      .setMutation(mutation)
-      .setMaxIterations(250)
-      .setSwarmSize(100)
-      .build();
+            .setMutation(mutation)
+            .setMaxIterations(250)
+            .setSwarmSize(100)
+            .setRandomGenerator(new MersenneTwisterGenerator())
+            .build();
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-      .execute();
+            .execute();
 
     List<Solution<?>> population = algorithmRunner.getSolutionSet();
     long computingTime = algorithmRunner.getComputingTime();
 
     new SolutionSetOutput.Printer(population)
-      .setSeparator("\t")
-      .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
-      .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
-      .print();
+            .setSeparator("\t")
+            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+            .print();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
     JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
