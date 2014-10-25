@@ -11,9 +11,7 @@ import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
-import org.uma.jmetal.util.pseudorandom.impl.ApacheRandomUtilsGenerator;
 import org.uma.jmetal.util.pseudorandom.impl.JavaRandomGenerator;
-import org.uma.jmetal.util.pseudorandom.impl.MersenneTwisterGenerator;
 
 import java.util.ArrayList;
 import java.util.Comparator;

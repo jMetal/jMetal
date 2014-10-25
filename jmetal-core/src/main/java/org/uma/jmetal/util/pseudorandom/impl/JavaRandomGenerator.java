@@ -37,6 +37,7 @@ public class JavaRandomGenerator implements PseudoRandomGenerator {
     rnd = new Random(seed) ;
   }
 
+  @Override
   public long getSeed() {
     return seed ;
   }
@@ -49,5 +50,11 @@ public class JavaRandomGenerator implements PseudoRandomGenerator {
   @Override
   public double nextDouble(double lowerBound, double upperBound) {
     return lowerBound + rnd.nextDouble()*(upperBound - lowerBound) ;
+  }
+
+  @Override
+  public void setSeed(long seed) {
+    this.seed = seed ;
+    rnd.setSeed(seed);
   }
 }

@@ -1,6 +1,5 @@
 package org.uma.jmetal.util.pseudorandom;
 
-import org.uma.jmetal.util.pseudorandom.impl.ApacheRandomUtilsGenerator;
 import org.uma.jmetal.util.pseudorandom.impl.JavaRandomGenerator;
 
 /**
@@ -11,7 +10,7 @@ public class JMetalRandom {
   private PseudoRandomGenerator randomGenerator ;
 
   private JMetalRandom() {
-    randomGenerator = new ApacheRandomUtilsGenerator() ;
+    randomGenerator = new JavaRandomGenerator() ;
   }
 
   public static JMetalRandom getInstance() {
@@ -35,5 +34,13 @@ public class JMetalRandom {
 
   public double nextDouble(double lowerBound, double upperBound) {
     return randomGenerator.nextDouble(lowerBound, upperBound) ;
+  }
+
+  public void setSeed(long seed) {
+    randomGenerator.setSeed(seed);
+  }
+
+  public long getSeed() {
+    return randomGenerator.getSeed() ;
   }
 }
