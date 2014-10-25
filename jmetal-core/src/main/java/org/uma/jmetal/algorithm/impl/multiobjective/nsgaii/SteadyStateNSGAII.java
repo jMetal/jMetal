@@ -41,7 +41,7 @@ public class SteadyStateNSGAII extends NSGAIITemplate  {
    *
    * @return a <code>SolutionSet</code> that is a set of non dominated solutions
    * as a experimentoutput of the algorithm execution
-   * @throws org.uma.jmetal45.util.JMetalException
+   * @throws org.uma.jmetal.util.JMetalException
    */
   @Override
   public void run()  {
