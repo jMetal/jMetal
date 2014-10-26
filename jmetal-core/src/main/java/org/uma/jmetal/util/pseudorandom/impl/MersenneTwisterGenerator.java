@@ -25,6 +25,7 @@ import java.util.Random;
 public class MersenneTwisterGenerator implements PseudoRandomGenerator {
   private MersenneTwister rnd ;
   private long seed ;
+  private static final String name = "MersenneTwister" ;
 
   /** Constructor */
   public MersenneTwisterGenerator() {
@@ -57,5 +58,10 @@ public class MersenneTwisterGenerator implements PseudoRandomGenerator {
   public void setSeed(long seed) {
     this.seed = seed ;
     rnd.setSeed(seed);
+  }
+
+  @Override
+  public String getName() {
+    return name ;
   }
 }

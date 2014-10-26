@@ -43,4 +43,8 @@ public class JMetalRandom {
   public long getSeed() {
     return randomGenerator.getSeed() ;
   }
+
+  public String getGeneratorName() {
+    return randomGenerator.getName() ;
+  }
 }

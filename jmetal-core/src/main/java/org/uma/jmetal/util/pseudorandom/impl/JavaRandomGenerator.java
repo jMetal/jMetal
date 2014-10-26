@@ -24,6 +24,7 @@ import java.util.Random;
 public class JavaRandomGenerator implements PseudoRandomGenerator {
   private Random rnd ;
   private long seed ;
+  private static final String name = "JavaRandomGenerator" ;
 
   /** Constructor */
   public JavaRandomGenerator() {
@@ -56,5 +57,10 @@ public class JavaRandomGenerator implements PseudoRandomGenerator {
   public void setSeed(long seed) {
     this.seed = seed ;
     rnd.setSeed(seed);
+  }
+
+  @Override
+  public String getName() {
+    return name ;
   }
 }

@@ -22,4 +22,5 @@ public interface PseudoRandomGenerator {
   public double nextDouble(double lowerBound, double upperBound) ;
   public void setSeed(long seed) ;
   public long getSeed() ;
+  public String getName() ;
 }

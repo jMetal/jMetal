@@ -10,8 +10,8 @@ import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
-import org.uma.jmetal.util.pseudorandom.impl.JavaRandomGenerator;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -42,7 +42,7 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
   private List<DoubleSolution> swarm;
   private DoubleSolution[] best;
 
-  private PseudoRandomGenerator randomGenerator ;
+  private JMetalRandom randomGenerator ;
 
   private Archive<DoubleSolution> leaders;
   private double[][] speed;
@@ -75,7 +75,7 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
     changeVelocity1 = builder.changeVelocity1;
     changeVelocity2 = builder.changeVelocity2;
 
-    randomGenerator = builder.randomGenerator;
+    randomGenerator = JMetalRandom.getInstance();
   }
 
   /* Getters */
@@ -162,7 +162,7 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
     private double weightMin;
     private double changeVelocity1;
     private double changeVelocity2;
-    private PseudoRandomGenerator randomGenerator ;
+    private JMetalRandom randomGenerator ;
 
     public Builder(ContinuousProblem problem, Archive leaders) {
       this.problem = problem ;
@@ -184,7 +184,7 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
       changeVelocity1 = -1;
       changeVelocity2 = -1;
 
-      randomGenerator = new JavaRandomGenerator() ;
+      randomGenerator = JMetalRandom.getInstance();
     }
 
     public Builder setSwarmSize(int swarmSize) {
@@ -278,7 +278,7 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
     }
 
     public Builder setRandomGenerator(PseudoRandomGenerator randomGenerator) {
-      this.randomGenerator = randomGenerator ;
+      JMetalRandom.getInstance().setRandomGenerator(randomGenerator);
 
       return this ;
     }
@@ -311,7 +311,6 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
     }
 
     tearDown() ;
-    //return paretoFrontApproximation() ;
   }
 
   @Override
@@ -350,17 +349,15 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
 
     DoubleSolution newSolution;
     for (int i = 0; i < swarmSize; i++) {
-      newSolution = (DoubleSolution)problem.createSolution() ;
+      newSolution = problem.createSolution() ;
       swarm.add(newSolution);
     }
   }
 
   protected void evaluateSwarm() throws JMetalException {
     for (int i = 0 ; i < swarm.size(); i++) {
-      //problem.evaluateConstraints(solutionSet.get(i)) ;
       problem.evaluate(swarm.get(i)) ;
     }
-    //swarm = evaluator.evaluate(swarm, problem);
   }
 
   protected void initializeLeaders() {
@@ -380,9 +377,6 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
   protected void updateLeadersDensityEstimator() {
    if (leaders instanceof CrowdingDistanceArchive) {
      ((CrowdingDistanceArchive) leaders).computeDistance();
-//      distance.crowdingDistanceAssignment(leaders);
-//    } else if (leaders instanceof FastHypervolumeArchive) {
-//      ((FastHypervolumeArchive) leaders).computeHVContribution();
     } else {
       throw new JMetalException("Invalid setArchive type") ;
     }
@@ -488,7 +482,6 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
   }
 
   private double inertiaWeight(int iter, int miter, double wma, double wmin) {
-    /*Alternative: return - (((wma-wmin)*(double)iter)/(double)miter);*/
     return wma;
   }
 
