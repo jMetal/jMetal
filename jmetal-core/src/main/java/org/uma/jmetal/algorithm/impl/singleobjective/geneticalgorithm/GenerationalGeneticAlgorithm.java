@@ -20,12 +20,12 @@ import java.util.List;
 /**
  * Created by ajnebro on 26/10/14.
  */
-public class SteadyStateGeneticAlgorithm extends AbstractGeneticAlgorithm {
+public class GenerationalGeneticAlgorithm extends AbstractGeneticAlgorithm {
   private Comparator<Solution<?>> comparator = new ObjectiveComparator(0) ;
 
   BinaryProblem problem = new OneMax(256) ;
 
-  public SteadyStateGeneticAlgorithm() {
+  public GenerationalGeneticAlgorithm() {
     maxIterations = 250 ;
     populationSize = 100 ;
     crossoverOperator = new SinglePointCrossover.Builder()
