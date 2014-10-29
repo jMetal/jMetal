@@ -11,7 +11,7 @@
       <groupId>org.uma.jmetal</groupId>
       <artifactId>jmetal</artifactId>
       <version>5.0-Beta-16-SNAPSHOT</version>
-     </parent>
+    </parent>
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Java framework for multi-objective optimization with metaheuristics</description>
