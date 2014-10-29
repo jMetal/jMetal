@@ -90,6 +90,8 @@ public class SolutionSetOutput {
     try {
       for (int i = 0; i < solutionSet.size(); i++) {
         for (int j = 0; j < numberOfVariables; j++) {
+          System.out.println("Sol: " + solutionSet.get(0).getVariableValue(0).toString()) ;
+
           bufferedWriter.write(solutionSet.get(i).getVariableValue(j).toString() +
                   context.getSeparator());
         }

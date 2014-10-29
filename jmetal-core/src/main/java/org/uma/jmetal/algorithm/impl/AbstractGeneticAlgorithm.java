@@ -9,61 +9,47 @@ import org.uma.jmetal.solution.Solution;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.CRC32;
 
 /**
  * Created by ajnebro on 26/10/14.
  */
 public abstract class AbstractGeneticAlgorithm<Result> implements Algorithm <Result> {
+
+  protected int iterations ;
+  protected int maxIterations ;
   protected int populationSize ;
   protected Problem problem ;
-  protected int evaluations ;
-  protected int maxEvaluations ;
 
   protected List<Solution<?>> population ;
   protected List<Solution<?>> offspringPopulation ;
+  protected List<Solution<?>> matingPopulation ;
+
   protected SelectionOperator<List<Solution<?>>,Solution<?>> selectionOperator ;
   protected CrossoverOperator<List<Solution<?>>,List<Solution<?>>> crossoverOperator ;
   protected MutationOperator mutationOperator ;
 
-  protected abstract void initialization() ;
   protected abstract boolean stoppingCondition() ;
-  protected abstract void createInitialPopulation() ;
-  protected abstract List<Solution<?>> evaluatePopulation(List<Solution<?>> population) ;
-  protected abstract void solutionSelection(List<Solution<?>> population) ;
+  protected abstract List<Solution<?>> createInitialPopulation() ;
+  protected abstract void evaluatePopulation(List<Solution<?>> population) ;
+  protected abstract List<Solution<?>> selection(List<Solution<?>> population) ;
+  protected abstract List<Solution<?>> reproduction(List<Solution<?>> population) ;
+  protected abstract List<Solution<?>> replacement(List<Solution<?>> population1, List<Solution<?>> population2) ;
+
   @Override
   public abstract Result getResult() ;
 
-  protected void increaseEvaluations() {
-    evaluations ++ ;
-  }
-
-  protected void increaseEvaluations(int amount) {
-    evaluations += amount ;
-  }
-
   @Override
   public void run() {
-    initialization();
-    createInitialPopulation();
-    population = evaluatePopulation(population);
+    population = createInitialPopulation();
+    evaluatePopulation(population);
+    iterations = 1 ;
     while (!stoppingCondition()) {
-      for (int i = 0; i < (populationSize / 2); i++) {
-        List<Solution<?>> parents = new ArrayList<>(2);
-        parents.add(selectionOperator.execute(population));
-        parents.add(selectionOperator.execute(population));
+      matingPopulation = selection(population) ;
+      offspringPopulation = reproduction(matingPopulation) ;
+      evaluatePopulation(offspringPopulation);
+      population = replacement(population, offspringPopulation) ;
 
-        List<Solution<?>> offspring = crossoverOperator.execute(parents);
-
-        mutationOperator.execute(offspring.get(0));
-        mutationOperator.execute(offspring.get(1));
-
-        offspringPopulation.add(offspring.get(0));
-        offspringPopulation.add(offspring.get(1));
-      }
-      List<Solution<?>> jointPopulation = evaluatePopulation(offspringPopulation);
-      increaseEvaluations(offspringPopulation.size());
-      solutionSelection(jointPopulation);
+      iterations ++ ;
     }
   }
 }

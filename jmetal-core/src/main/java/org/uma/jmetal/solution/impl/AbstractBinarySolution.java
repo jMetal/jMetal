@@ -76,4 +76,22 @@ public class AbstractBinarySolution extends AbstractGenericSolution<BitSet, Bina
 
     return sum ;
   }
+
+  @Override
+  public String toString() {
+    String result = "" ;
+    for (BitSet var : variables) {
+      for (int i = 0; i < var.size() ; i++) {
+        if (var.get(i)) {
+          result += "1" ;
+        }
+        else {
+          result+= "0" ;
+        }
+      }
+      result += "\t" ;
+    }
+
+    return result ;
+  }
 }

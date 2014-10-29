@@ -11,7 +11,7 @@ import java.io.OutputStreamWriter;
 /**
  * Created by Antonio J. Nebro on 31/05/14.
  */
-public class DefaultFileOutputContext implements FileOutputContext {
+public class  DefaultFileOutputContext implements FileOutputContext {
   private static final String DEFAULT_SEPARATOR = " " ;
 
   protected String fileName;

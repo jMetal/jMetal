@@ -36,14 +36,14 @@ public class OneMax extends AbstractBinaryProblem {
   private final int numberOfBits ;
 
   /** Constructor */
-  public OneMax(String solutionType) throws JMetalException {
-    this(512);
+  public OneMax() {
+    this(256);
   }
 
   /** Constructor */
-  public OneMax(Integer numberOfBits) throws JMetalException {
+  public OneMax(Integer numberOfBits) {
     setNumberOfVariables(1);
-    setNumberOfObjectives(2);
+    setNumberOfObjectives(1);
     setName("OneMax");
 
     this.numberOfBits = numberOfBits ;
