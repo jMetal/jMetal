@@ -29,7 +29,7 @@ import java.util.Comparator;
  * This class implements a <code>Comparator</code> (a method for comparing
  * <code>Solution</code> objects) based on a objective values.
  */
-public class ObjectiveComparator implements Comparator<Solution<?>> {
+public class ObjectiveComparator implements Comparator<Solution> {
 
   /**
    * Stores the index of the objective to compare
@@ -55,21 +55,21 @@ public class ObjectiveComparator implements Comparator<Solution<?>> {
   /**
    * Compares two solutions.
    *
-   * @param o1 Object representing the first <code>Solution</code>.
-   * @param o2 Object representing the second <code>Solution</code>.
+   * @param solution1 Object representing the first <code>Solution</code>.
+   * @param solution2 Object representing the second <code>Solution</code>.
    * @return -1, or 0, or 1 if o1 is less than, equal, or greater than o2,
    * respectively.
    */
   @Override
-  public int compare(Solution<?> o1, Solution<?> o2) {
-    if (o1 == null) {
+  public int compare(Solution solution1, Solution solution2) {
+    if (solution1 == null) {
       return 1;
-    } else if (o2 == null) {
+    } else if (solution2 == null) {
       return -1;
     }
 
-    double objective1 = ((Solution) o1).getObjective(this.nObj);
-    double objective2 = ((Solution) o2).getObjective(this.nObj);
+    double objective1 = solution1.getObjective(this.nObj);
+    double objective2 = solution2.getObjective(this.nObj);
     if (ascendingOrder) {
       if (objective1 < objective2) {
         return -1;

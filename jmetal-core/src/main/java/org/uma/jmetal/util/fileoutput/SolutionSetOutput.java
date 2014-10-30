@@ -40,10 +40,10 @@ public class SolutionSetOutput {
     private String varFileName = "VAR";
     private String funFileName = "FUN";
     String separator = "\t";
-    List<Solution<?>> solutionSet;
+    List<Solution> solutionSet;
     boolean selectFeasibleSolutions;
 
-    public Printer(List<Solution<?>> solutionSet)  {
+    public Printer(List<Solution> solutionSet)  {
       varFileContext = new DefaultFileOutputContext(varFileName);
       funFileContext = new DefaultFileOutputContext(funFileName);
       varFileContext.setSeparator(separator);
@@ -83,7 +83,7 @@ public class SolutionSetOutput {
     }
   }
 
-  static public void printVariablesToFile(FileOutputContext context, List<Solution<?>> solutionSet) {
+  static public void printVariablesToFile(FileOutputContext context, List<Solution> solutionSet) {
     BufferedWriter bufferedWriter = context.getFileWriter();
 
     int numberOfVariables = solutionSet.get(0).getNumberOfVariables();
@@ -103,7 +103,7 @@ public class SolutionSetOutput {
     }
   }
 
-  static public void printObjectivesToFile(FileOutputContext context, List<Solution<?>> solutionSet) {
+  static public void printObjectivesToFile(FileOutputContext context, List<Solution> solutionSet) {
     BufferedWriter bufferedWriter = context.getFileWriter();
 
     int numberOfObjectives = solutionSet.get(0).getNumberOfObjectives();
@@ -123,11 +123,11 @@ public class SolutionSetOutput {
   /*
    * Wrappers for printing with default configuration
    */
-  public static void printObjectivesToFile(List<Solution<?>> solutionSet, String fileName) throws IOException {
+  public static void printObjectivesToFile(List<Solution> solutionSet, String fileName) throws IOException {
     printObjectivesToFile(new DefaultFileOutputContext(fileName), solutionSet);
   }
 
-  public static void printVariablesToFile(List<Solution<?>> solutionSet, String fileName) throws IOException {
+  public static void printVariablesToFile(List<Solution> solutionSet, String fileName) throws IOException {
     printVariablesToFile(new DefaultFileOutputContext(fileName), solutionSet);
   }
 
