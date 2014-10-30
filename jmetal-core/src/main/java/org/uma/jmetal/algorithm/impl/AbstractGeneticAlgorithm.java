@@ -19,9 +19,6 @@ public abstract class AbstractGeneticAlgorithm<Result> implements Algorithm <Res
   public int getIterations() {
     return iterations ;
   }
-  public void increaseIterations(int amount) {
-    iterations+= amount ;
-  }
 
   private List<Solution> population ;
   public List<Solution> getPopulation() {
@@ -37,7 +34,7 @@ public abstract class AbstractGeneticAlgorithm<Result> implements Algorithm <Res
   protected abstract List<Solution> evaluatePopulation(List<Solution> population) ;
   protected abstract List<Solution> selection(List<Solution> population) ;
   protected abstract List<Solution> reproduction(List<Solution> population) ;
-  protected abstract List<Solution> replacement(List<Solution> population1, List<Solution> population2) ;
+  protected abstract List<Solution> replacement(List<Solution> population, List<Solution> offspringPopulation) ;
 
   @Override
   public abstract Result getResult() ;

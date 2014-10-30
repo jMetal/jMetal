@@ -12,14 +12,14 @@ import java.util.List;
 /**
  * Created by Antonio J. Nebro on 04/10/14.
  */
-public class SolutionListUtils<T extends List<Solution<?>>> {
+public class SolutionListUtils<T extends List<Solution>> {
 
-  public List<Solution<?>> findNondominatedSolutions(T solutionSet) {
+  public List<Solution> findNondominatedSolutions(T solutionSet) {
     Ranking ranking = new DominanceRanking() ;
     return ranking.computeRanking(solutionSet).getSubfront(0);
   }
 
-  public int findWorstSolution(T solutionList, Comparator<Solution<?>> comparator) {
+  public int findWorstSolution(T solutionList, Comparator<Solution> comparator) {
     if ((solutionList == null) || (solutionList.isEmpty())) {
       return -1;
     }
@@ -39,7 +39,7 @@ public class SolutionListUtils<T extends List<Solution<?>>> {
     return index;
   }
 
-  public static double[][] writeObjectivesToMatrix(List<Solution<?>> solutionList) {
+  public static double[][] writeObjectivesToMatrix(List<Solution> solutionList) {
     if (solutionList.size() == 0) {
       return new double[0][0];
     }
@@ -63,7 +63,7 @@ public class SolutionListUtils<T extends List<Solution<?>>> {
    * @param solutionList        The list of solutions
    * @return A list with the maximum values for each objective
    */
-  public static List<Double> getMaximumValues(List<Solution<?>> solutionList) {
+  public static List<Double> getMaximumValues(List<Solution> solutionList) {
     List<Double> maximumValue ;
     if ((solutionList == null) || (solutionList.size() == 0)) {
       maximumValue = Collections.EMPTY_LIST ;
@@ -75,7 +75,7 @@ public class SolutionListUtils<T extends List<Solution<?>>> {
         maximumValue.set(i, Double.MIN_VALUE) ;
       }
 
-      for (Solution<?> solution : solutionList) {
+      for (Solution solution : solutionList) {
         for (int j = 0; j < solution.getNumberOfObjectives(); j++) {
           if (solution.getObjective(j) > maximumValue.get(j)) {
             maximumValue.set(j, solution.getObjective(j));
@@ -93,7 +93,7 @@ public class SolutionListUtils<T extends List<Solution<?>>> {
    * @param solutionList        The list of solutions
    * @return A list with the minimum values for each objective
    */
-  public static List<Double> getMinimumValues(List<Solution<?>> solutionList) {
+  public static List<Double> getMinimumValues(List<Solution> solutionList) {
     List<Double> minimumValue ;
     if ((solutionList == null) || (solutionList.size() == 0)) {
       minimumValue = Collections.EMPTY_LIST ;
@@ -105,7 +105,7 @@ public class SolutionListUtils<T extends List<Solution<?>>> {
         minimumValue.set(i, Double.MAX_VALUE) ;
       }
 
-      for (Solution<?> solution : solutionList) {
+      for (Solution solution : solutionList) {
         for (int j = 0; j < solution.getNumberOfObjectives(); j++) {
           if (solution.getObjective(j) < minimumValue.get(j)) {
             minimumValue.set(j, solution.getObjective(j));
@@ -126,23 +126,18 @@ public class SolutionListUtils<T extends List<Solution<?>>> {
    * @param minimumValue The minimum values of the objectives
    * @return the normalized list of non-dominated solutions
    */
-  public static List<Solution<?>> getNormalizedFront(List<Solution<?>> solutionList,
+  public static List<Solution> getNormalizedFront(List<Solution> solutionList,
     List<Double> maximumValue,
     List<Double> minimumValue) {
 
-    List<Solution<?>> normalizedSolutionSet = new ArrayList<>(solutionList.size()) ;
-
-    //double[][] normalizedFront = new double[front.length][];
+    List<Solution> normalizedSolutionSet = new ArrayList<>(solutionList.size()) ;
 
     int numberOfObjectives = solutionList.get(0).getNumberOfObjectives() ;
     for (int i = 0; i < solutionList.size(); i++) {
       Solution<?> solution = solutionList.get(i).copy() ;
-      //normalizedFront[i] = new double[front[i].length];
       for (int j = 0; j < numberOfObjectives; j++) {
         double normalizedValue = (solutionList.get(i).getObjective(j) - minimumValue.get(j)) /
           (maximumValue.get(j) - minimumValue.get(j));
-       // normalizedFront[i][j] = (front[i][j] - minimumValue[j]) /
-         // (maximumValue[j] - minimumValue[j]);
         solution.setObjective(j, normalizedValue);
       }
     }
