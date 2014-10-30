@@ -25,7 +25,7 @@ public class GenerationalGeneticAlgorithm extends AbstractGeneticAlgorithm<List<
   private int maxIterations ;
   private int populationSize ;
 
-  private BinaryProblem problem = new OneMax(256) ;
+  private BinaryProblem problem = new OneMax(512) ;
 
   public GenerationalGeneticAlgorithm() {
     maxIterations = 250 ;
@@ -52,7 +52,7 @@ public class GenerationalGeneticAlgorithm extends AbstractGeneticAlgorithm<List<
   protected List<Solution> createInitialPopulation() {
     List<Solution> population = new ArrayList<>(populationSize) ;
     for (int i = 0; i < populationSize; i++) {
-      Solution<?> newIndividual = problem.createSolution();
+      Solution newIndividual = problem.createSolution();
       population.add(newIndividual);
     }
     return population;
@@ -71,14 +71,14 @@ public class GenerationalGeneticAlgorithm extends AbstractGeneticAlgorithm<List<
   }
 
   @Override
-  protected List<Solution> reproduction(List matingPopulation) {
+  protected List<Solution> reproduction(List<Solution> matingPopulation) {
     List<Solution> offspringPopulation = new ArrayList<>(matingPopulation.size()+2) ;
     for (int i = 0; i < populationSize; i+=2) {
-      List<Solution<?>> parents = new ArrayList<>(2);
-      parents.add((Solution<?>)matingPopulation.get(i)) ;
-      parents.add((Solution<?>)matingPopulation.get(i + 1));
+      List<Solution> parents = new ArrayList<>(2);
+      parents.add(matingPopulation.get(i)) ;
+      parents.add(matingPopulation.get(i + 1));
 
-      List<Solution<?>> offspring = (List<Solution<?>>) crossoverOperator.execute(parents);
+      List<Solution> offspring = (List<Solution>) crossoverOperator.execute(parents);
       mutationOperator.execute(offspring.get(0)) ;
       mutationOperator.execute(offspring.get(1)) ;
 
@@ -89,10 +89,10 @@ public class GenerationalGeneticAlgorithm extends AbstractGeneticAlgorithm<List<
   }
 
   @Override
-  protected List<Solution> selection(List population) {
+  protected List<Solution> selection(List<Solution> population) {
     List<Solution> matingPopulation = new ArrayList<>(population.size()) ;
     for (int i = 0; i < populationSize; i++) {
-      Solution<?> solution = (Solution<?>) selectionOperator.execute(population);
+      Solution solution = (Solution) selectionOperator.execute(population);
       matingPopulation.add(solution) ;
     }
 
