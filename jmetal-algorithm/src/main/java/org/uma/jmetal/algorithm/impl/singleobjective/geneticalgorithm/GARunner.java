@@ -21,6 +21,14 @@
 package org.uma.jmetal.algorithm.impl.singleobjective.geneticalgorithm;
 
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.operator.CrossoverOperator;
+import org.uma.jmetal.operator.MutationOperator;
+import org.uma.jmetal.operator.SelectionOperator;
+import org.uma.jmetal.operator.impl.crossover.SinglePointCrossover;
+import org.uma.jmetal.operator.impl.mutation.BitFlipMutation;
+import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
+import org.uma.jmetal.problem.BinaryProblem;
+import org.uma.jmetal.problem.singleobjective.OneMax;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
@@ -30,26 +38,35 @@ import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import java.util.List;
 
 /**
- * Class to configure and run the NSGA-II algorithm
  */
 public class GARunner {
   /**
-   * @param args Command line arguments.
-   * @throws org.uma.jmetal.util.JMetalException
-   * @throws java.io.IOException
-   * @throws SecurityException
-   * @throws ClassNotFoundException
-   * Usage: three options
-   *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner
-   *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName
-   *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName paretoFrontFile
    */
   public static void main(String[] args) throws
           Exception {
 
     Algorithm algorithm;
+    BinaryProblem problem = new OneMax(512) ;
 
-    algorithm = new GenerationalGeneticAlgorithm() ;
+    CrossoverOperator crossoverOperator = new SinglePointCrossover.Builder()
+            .setProbability(0.9)
+            .build() ;
+
+    MutationOperator mutationOperator = new BitFlipMutation.Builder()
+            .setProbability(1.0 / problem.getNumberOfBits(0))
+            .build();
+
+    SelectionOperator selectionOperator = new BinaryTournamentSelection.Builder()
+            .build();
+
+    algorithm = new GenerationalGeneticAlgorithm.Builder(problem)
+            .setPopulationSize(100)
+            .setMaxIterations(250)
+            .setCrossoverOperator(crossoverOperator)
+            .setMutationOperator(mutationOperator)
+            .setSelectionOperator(selectionOperator)
+            .build() ;
+
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;

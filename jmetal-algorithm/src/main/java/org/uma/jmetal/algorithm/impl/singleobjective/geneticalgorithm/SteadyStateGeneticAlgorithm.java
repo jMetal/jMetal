@@ -1,15 +1,20 @@
 package org.uma.jmetal.algorithm.impl.singleobjective.geneticalgorithm;
 
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
+import org.uma.jmetal.operator.CrossoverOperator;
+import org.uma.jmetal.operator.MutationOperator;
+import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.operator.impl.crossover.SinglePointCrossover;
 import org.uma.jmetal.operator.impl.mutation.BitFlipMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.BinaryProblem;
+import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.singleobjective.OneMax;
 import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 
+import java.nio.channels.MulticastChannel;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -18,25 +23,74 @@ import java.util.List;
  * Created by ajnebro on 26/10/14.
  */
 public class SteadyStateGeneticAlgorithm extends AbstractGeneticAlgorithm<List<Solution>> {
-  private Comparator<Solution> comparator = new ObjectiveComparator(0) ;
+  private Comparator<Solution> comparator ;
   private int maxIterations ;
   private int populationSize ;
 
-  private BinaryProblem problem = new OneMax(512) ;
+  private Problem problem ;
 
-  public SteadyStateGeneticAlgorithm() {
-    maxIterations = 25000 ;
-    populationSize = 100 ;
-    crossoverOperator = new SinglePointCrossover.Builder()
-            .setProbability(0.9)
-            .build() ;
+  /** Constructor */
+  private SteadyStateGeneticAlgorithm(Builder builder) {
+    problem = builder.problem ;
+    maxIterations = builder.maxIterations ;
+    populationSize = builder.populationSize ;
 
-    mutationOperator = new BitFlipMutation.Builder()
-            .setProbability(1.0 / problem.getNumberOfBits(0))
-            .build();
+    crossoverOperator = builder.crossoverOperator ;
+    mutationOperator = builder.mutationOperator ;
+    selectionOperator = builder.selectionOperator ;
 
-    selectionOperator = new BinaryTournamentSelection.Builder()
-            .build();
+    comparator = new ObjectiveComparator(0) ;
+  }
+
+  /** Builder class */
+  public static class Builder {
+    private Problem problem ;
+    private int maxIterations ;
+    private int populationSize ;
+    private CrossoverOperator crossoverOperator ;
+    private MutationOperator mutationOperator ;
+    private SelectionOperator selectionOperator ;
+
+    /** Builder constructor */
+    public Builder(Problem problem) {
+      this.problem = problem ;
+      maxIterations = 250 ;
+      populationSize = 100 ;
+    }
+
+    public Builder setMaxIterations(int maxIterations) {
+      this.maxIterations = maxIterations ;
+
+      return this ;
+    }
+
+    public Builder setPopulationSize(int populationSize) {
+      this.populationSize = populationSize ;
+
+      return this ;
+    }
+
+    public Builder setCrossoverOperator(CrossoverOperator crossoverOperator) {
+      this.crossoverOperator = crossoverOperator ;
+
+      return this ;
+    }
+
+    public Builder setMutationOperator(MutationOperator mutationOperator) {
+      this.mutationOperator = mutationOperator ;
+
+      return this ;
+    }
+
+    public Builder setSelectionOperator(SelectionOperator selectionOperator) {
+      this.selectionOperator = selectionOperator ;
+
+      return this ;
+    }
+
+    public SteadyStateGeneticAlgorithm build() {
+      return new SteadyStateGeneticAlgorithm(this) ;
+    }
 
   }
 
@@ -96,7 +150,7 @@ public class SteadyStateGeneticAlgorithm extends AbstractGeneticAlgorithm<List<S
   @Override
   protected List<Solution> evaluatePopulation(List<Solution> population) {
     for (Solution solution : population) {
-      problem.evaluate((BinarySolution)solution);
+      problem.evaluate(solution);
     }
 
     return population ;

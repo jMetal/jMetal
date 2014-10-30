@@ -8,6 +8,7 @@ import org.uma.jmetal.operator.impl.crossover.SinglePointCrossover;
 import org.uma.jmetal.operator.impl.mutation.BitFlipMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.BinaryProblem;
+import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.singleobjective.OneMax;
 import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.solution.Solution;
@@ -21,25 +22,74 @@ import java.util.List;
  * Created by ajnebro on 26/10/14.
  */
 public class GenerationalGeneticAlgorithm extends AbstractGeneticAlgorithm<List<Solution>> {
-  private Comparator<Solution> comparator = new ObjectiveComparator(0) ;
+  private Comparator<Solution> comparator ;
   private int maxIterations ;
   private int populationSize ;
 
-  private BinaryProblem problem = new OneMax(512) ;
+  private Problem problem ;
 
-  public GenerationalGeneticAlgorithm() {
-    maxIterations = 250 ;
-    populationSize = 100 ;
-    crossoverOperator = new SinglePointCrossover.Builder()
-            .setProbability(0.9)
-            .build() ;
+  /** Constructor */
+  private GenerationalGeneticAlgorithm(Builder builder) {
+    problem = builder.problem ;
+    maxIterations = builder.maxIterations ;
+    populationSize = builder.populationSize ;
 
-    mutationOperator = new BitFlipMutation.Builder()
-            .setProbability(1.0 / problem.getNumberOfBits(0))
-            .build();
+    crossoverOperator = builder.crossoverOperator ;
+    mutationOperator = builder.mutationOperator ;
+    selectionOperator = builder.selectionOperator ;
 
-    selectionOperator = new BinaryTournamentSelection.Builder()
-            .build();
+    comparator = new ObjectiveComparator(0) ;
+  }
+
+  /** Builder class */
+  public static class Builder {
+    private Problem problem ;
+    private int maxIterations ;
+    private int populationSize ;
+    private CrossoverOperator crossoverOperator ;
+    private MutationOperator mutationOperator ;
+    private SelectionOperator selectionOperator ;
+
+    /** Builder constructor */
+    public Builder(Problem problem) {
+      this.problem = problem ;
+      maxIterations = 250 ;
+      populationSize = 100 ;
+    }
+
+    public Builder setMaxIterations(int maxIterations) {
+      this.maxIterations = maxIterations ;
+
+      return this ;
+    }
+
+    public Builder setPopulationSize(int populationSize) {
+      this.populationSize = populationSize ;
+
+      return this ;
+    }
+
+    public Builder setCrossoverOperator(CrossoverOperator crossoverOperator) {
+      this.crossoverOperator = crossoverOperator ;
+
+      return this ;
+    }
+
+    public Builder setMutationOperator(MutationOperator mutationOperator) {
+      this.mutationOperator = mutationOperator ;
+
+      return this ;
+    }
+
+    public Builder setSelectionOperator(SelectionOperator selectionOperator) {
+      this.selectionOperator = selectionOperator ;
+
+      return this ;
+    }
+
+    public GenerationalGeneticAlgorithm build() {
+      return new GenerationalGeneticAlgorithm(this) ;
+    }
 
   }
 
@@ -59,15 +109,15 @@ public class GenerationalGeneticAlgorithm extends AbstractGeneticAlgorithm<List<
   }
 
   @Override
-  protected List<Solution> replacement(List pop, List offspringPop) {
-    pop.sort(comparator);
-    offspringPop.add(pop.get(0)) ;
-    offspringPop.add(pop.get(1)) ;
-    offspringPop.sort(comparator);
-    offspringPop.remove(offspringPop.size() - 1) ;
-    offspringPop.remove(offspringPop.size() - 1) ;
+  protected List<Solution> replacement(List population, List offspringPopulation) {
+    population.sort(comparator);
+    offspringPopulation.add(population.get(0)) ;
+    offspringPopulation.add(population.get(1)) ;
+    offspringPopulation.sort(comparator);
+    offspringPopulation.remove(offspringPopulation.size() - 1) ;
+    offspringPopulation.remove(offspringPopulation.size() - 1) ;
 
-    return offspringPop;
+    return offspringPopulation;
   }
 
   @Override
@@ -102,7 +152,7 @@ public class GenerationalGeneticAlgorithm extends AbstractGeneticAlgorithm<List<
   @Override
   protected List<Solution> evaluatePopulation(List<Solution> population) {
     for (Solution solution : population) {
-      problem.evaluate((BinarySolution)solution);
+      problem.evaluate(solution);
     }
 
     return population ;
