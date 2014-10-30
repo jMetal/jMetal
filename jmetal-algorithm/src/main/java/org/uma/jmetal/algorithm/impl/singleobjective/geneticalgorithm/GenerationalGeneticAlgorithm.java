@@ -20,10 +20,12 @@ import java.util.List;
 /**
  * Created by ajnebro on 26/10/14.
  */
-public class GenerationalGeneticAlgorithm extends AbstractGeneticAlgorithm {
-  private Comparator<Solution<?>> comparator = new ObjectiveComparator(0) ;
+public class GenerationalGeneticAlgorithm extends AbstractGeneticAlgorithm<List<Solution>> {
+  private Comparator<Solution> comparator = new ObjectiveComparator(0) ;
+  private int maxIterations ;
+  private int populationSize ;
 
-  BinaryProblem problem = new OneMax(256) ;
+  private BinaryProblem problem = new OneMax(256) ;
 
   public GenerationalGeneticAlgorithm() {
     maxIterations = 250 ;
@@ -42,13 +44,13 @@ public class GenerationalGeneticAlgorithm extends AbstractGeneticAlgorithm {
   }
 
   @Override
-  protected boolean stoppingCondition() {
-    return (iterations >= maxIterations) ;
+  protected boolean isStoppingConditionReached() {
+    return (getIterations() >= maxIterations) ;
   }
 
   @Override
-  protected List<Solution<?>> createInitialPopulation() {
-    population = new ArrayList<>(populationSize) ;
+  protected List<Solution> createInitialPopulation() {
+    List<Solution> population = new ArrayList<>(populationSize) ;
     for (int i = 0; i < populationSize; i++) {
       Solution<?> newIndividual = problem.createSolution();
       population.add(newIndividual);
@@ -57,7 +59,7 @@ public class GenerationalGeneticAlgorithm extends AbstractGeneticAlgorithm {
   }
 
   @Override
-  protected List<Solution<?>> replacement(List pop, List offspringPop) {
+  protected List<Solution> replacement(List pop, List offspringPop) {
     pop.sort(comparator);
     offspringPop.add(pop.get(0)) ;
     offspringPop.add(pop.get(1)) ;
@@ -69,8 +71,8 @@ public class GenerationalGeneticAlgorithm extends AbstractGeneticAlgorithm {
   }
 
   @Override
-  protected List<Solution<?>> reproduction(List population) {
-    offspringPopulation = new ArrayList<>(population.size()+2) ;
+  protected List<Solution> reproduction(List matingPopulation) {
+    List<Solution> offspringPopulation = new ArrayList<>(matingPopulation.size()+2) ;
     for (int i = 0; i < populationSize; i+=2) {
       List<Solution<?>> parents = new ArrayList<>(2);
       parents.add((Solution<?>)matingPopulation.get(i)) ;
@@ -87,8 +89,8 @@ public class GenerationalGeneticAlgorithm extends AbstractGeneticAlgorithm {
   }
 
   @Override
-  protected List<Solution<?>> selection(List population) {
-    matingPopulation = new ArrayList<>(population.size()) ;
+  protected List<Solution> selection(List population) {
+    List<Solution> matingPopulation = new ArrayList<>(population.size()) ;
     for (int i = 0; i < populationSize; i++) {
       Solution<?> solution = (Solution<?>) selectionOperator.execute(population);
       matingPopulation.add(solution) ;
@@ -98,17 +100,19 @@ public class GenerationalGeneticAlgorithm extends AbstractGeneticAlgorithm {
   }
 
   @Override
-  protected void evaluatePopulation(List population) {
-    for (Solution solution : (List<Solution<?>>)population) {
+  protected List<Solution> evaluatePopulation(List<Solution> population) {
+    for (Solution solution : population) {
       problem.evaluate((BinarySolution)solution);
     }
+
+    return population ;
   }
 
   @Override
-  public Object getResult() {
-    population.sort(comparator);
-    List<Solution<?>> result = new ArrayList<>(1) ;
-    result.add((Solution<?>) population.get(0));
+  public List<Solution> getResult() {
+    getPopulation().sort(comparator);
+    List<Solution> result = new ArrayList<>(1) ;
+    result.add(getPopulation().get(0));
     return result;
   }
 }

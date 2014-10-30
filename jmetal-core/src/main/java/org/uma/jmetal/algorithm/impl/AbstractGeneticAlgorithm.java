@@ -15,38 +15,45 @@ import java.util.List;
  */
 public abstract class AbstractGeneticAlgorithm<Result> implements Algorithm <Result> {
 
-  protected int iterations ;
-  protected int maxIterations ;
-  protected int populationSize ;
-  protected Problem problem ;
+  private int iterations ;
+  public int getIterations() {
+    return iterations ;
+  }
+  public void increaseIterations(int amount) {
+    iterations+= amount ;
+  }
 
-  protected List<Solution<?>> population ;
-  protected List<Solution<?>> offspringPopulation ;
-  protected List<Solution<?>> matingPopulation ;
+  private List<Solution> population ;
+  public List<Solution> getPopulation() {
+    return population ;
+  }
 
-  protected SelectionOperator<List<Solution<?>>,Solution<?>> selectionOperator ;
-  protected CrossoverOperator<List<Solution<?>>,List<Solution<?>>> crossoverOperator ;
+  protected SelectionOperator selectionOperator ;
+  protected CrossoverOperator crossoverOperator ;
   protected MutationOperator mutationOperator ;
 
-  protected abstract boolean stoppingCondition() ;
-  protected abstract List<Solution<?>> createInitialPopulation() ;
-  protected abstract void evaluatePopulation(List<Solution<?>> population) ;
-  protected abstract List<Solution<?>> selection(List<Solution<?>> population) ;
-  protected abstract List<Solution<?>> reproduction(List<Solution<?>> population) ;
-  protected abstract List<Solution<?>> replacement(List<Solution<?>> population1, List<Solution<?>> population2) ;
+  protected abstract boolean isStoppingConditionReached() ;
+  protected abstract List<Solution> createInitialPopulation() ;
+  protected abstract List<Solution> evaluatePopulation(List<Solution> population) ;
+  protected abstract List<Solution> selection(List<Solution> population) ;
+  protected abstract List<Solution> reproduction(List<Solution> population) ;
+  protected abstract List<Solution> replacement(List<Solution> population1, List<Solution> population2) ;
 
   @Override
   public abstract Result getResult() ;
 
   @Override
   public void run() {
+    List<Solution> offspringPopulation ;
+    List<Solution> matingPopulation ;
+
     population = createInitialPopulation();
-    evaluatePopulation(population);
+    population = evaluatePopulation(population);
     iterations = 1 ;
-    while (!stoppingCondition()) {
+    while (!isStoppingConditionReached()) {
       matingPopulation = selection(population) ;
       offspringPopulation = reproduction(matingPopulation) ;
-      evaluatePopulation(offspringPopulation);
+      offspringPopulation = evaluatePopulation(offspringPopulation);
       population = replacement(population, offspringPopulation) ;
 
       iterations ++ ;
