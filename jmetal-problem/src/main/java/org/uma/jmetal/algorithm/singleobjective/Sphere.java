@@ -22,7 +22,7 @@
 package org.uma.jmetal.problem.singleobjective;
 
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.impl.AbstractDoubleSolution;
+import org.uma.jmetal.solution.impl.GenericDoubleSolution;
 import org.uma.jmetal.problem.impl.AbstractContinuousProblem;
 import org.uma.jmetal.util.JMetalException;
 
@@ -53,7 +53,7 @@ public class Sphere extends AbstractContinuousProblem {
 
   @Override
   public DoubleSolution createSolution() {
-    return new AbstractDoubleSolution(this) ;
+    return new GenericDoubleSolution(this) ;
   }
 
   /** Evaluate() method */

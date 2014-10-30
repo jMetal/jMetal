@@ -21,7 +21,7 @@
 package org.uma.jmetal.problem.multiobjective;
 
 import org.uma.jmetal.solution.IntegerDoubleSolution;
-import org.uma.jmetal.solution.impl.AbstractIntegerDoubleSolution;
+import org.uma.jmetal.solution.impl.GenericIntegerDoubleSolution;
 import org.uma.jmetal.problem.impl.AbstractIntegerDoubleProblem;
 
 import java.util.ArrayList;
@@ -65,7 +65,7 @@ public class NMMin2 extends AbstractIntegerDoubleProblem<IntegerDoubleSolution> 
 
   @Override
   public IntegerDoubleSolution createSolution() {
-    return new AbstractIntegerDoubleSolution(this) ;
+    return new GenericIntegerDoubleSolution(this) ;
   }
 
   /** Evaluate() method */

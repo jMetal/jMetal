@@ -22,7 +22,7 @@
 package org.uma.jmetal.problem.multiobjective.zdt;
 
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.impl.AbstractDoubleSolution;
+import org.uma.jmetal.solution.impl.GenericDoubleSolution;
 import org.uma.jmetal.problem.impl.AbstractContinuousProblem;
 
 import java.util.ArrayList;
@@ -60,7 +60,7 @@ public class ZDT1 extends AbstractContinuousProblem {
 
   @Override
   public DoubleSolution createSolution() {
-    return new AbstractDoubleSolution(this)  ;
+    return new GenericDoubleSolution(this)  ;
   }
 
   /** Evaluate() method */

@@ -21,7 +21,7 @@
 package org.uma.jmetal.problem.multiobjective;
 
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.impl.AbstractDoubleSolution;
+import org.uma.jmetal.solution.impl.GenericDoubleSolution;
 import org.uma.jmetal.problem.ConstrainedProblem;
 import org.uma.jmetal.problem.impl.AbstractContinuousProblem;
 
@@ -52,7 +52,7 @@ public class Srinivas extends AbstractContinuousProblem implements ConstrainedPr
 
   @Override
   public DoubleSolution createSolution() {
-    return new AbstractDoubleSolution(this) ;
+    return new GenericDoubleSolution(this) ;
   }
 
   /** Evaluate() method */
