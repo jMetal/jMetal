@@ -11,12 +11,12 @@ import java.util.List;
 /**
  * Created by Antonio J. Nebro on 03/09/14.
  */
-public class AbstractIntegerPermutationSolution
+public class GenericIntegerPermutationSolution
         extends AbstractGenericSolution<List<Integer>, PermutationProblem>
         implements PermutationSolution<List<Integer>> {
 
   /** Constructor */
-  public AbstractIntegerPermutationSolution(PermutationProblem problem) {
+  public GenericIntegerPermutationSolution(PermutationProblem problem) {
     this.problem = problem ;
     objectives = new ArrayList<>(problem.getNumberOfObjectives()) ;
     variables = new ArrayList<>(problem.getNumberOfVariables()) ;
@@ -35,7 +35,7 @@ public class AbstractIntegerPermutationSolution
   }
 
   /** Copy Constructor */
-  public AbstractIntegerPermutationSolution(AbstractIntegerPermutationSolution solution) {
+  public GenericIntegerPermutationSolution(GenericIntegerPermutationSolution solution) {
     problem = solution.problem ;
     objectives = new ArrayList<>() ;
     for (Double obj : solution.objectives) {
@@ -56,7 +56,7 @@ public class AbstractIntegerPermutationSolution
 
   @Override
   public Solution copy() {
-    return new AbstractIntegerPermutationSolution(this);
+    return new GenericIntegerPermutationSolution(this);
   }
 
   @Override

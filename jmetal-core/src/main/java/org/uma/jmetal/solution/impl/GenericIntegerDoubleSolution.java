@@ -10,14 +10,14 @@ import java.util.HashMap;
 /**
  * Created by Antonio J. Nebro on 03/09/14.
  */
-public class AbstractIntegerDoubleSolution
+public class GenericIntegerDoubleSolution
         extends AbstractGenericSolution<Number, IntegerDoubleProblem>
         implements IntegerDoubleSolution {
   private int numberOfIntegerVariables ;
   private int numberOfDoubleVariables ;
 
   /** Constructor */
-  public AbstractIntegerDoubleSolution(IntegerDoubleProblem problem) {
+  public GenericIntegerDoubleSolution(IntegerDoubleProblem problem) {
   	this.problem = problem ;
     objectives = new ArrayList<>(problem.getNumberOfObjectives()) ;
     variables = new ArrayList<>(problem.getNumberOfVariables()) ;
@@ -41,7 +41,7 @@ public class AbstractIntegerDoubleSolution
   }
 
   /** Copy constructor */
-  public AbstractIntegerDoubleSolution(AbstractIntegerDoubleSolution solution) {
+  public GenericIntegerDoubleSolution(GenericIntegerDoubleSolution solution) {
     problem = solution.problem ;
     objectives = new ArrayList<>() ;
     for (Double obj : solution.objectives) {
@@ -83,7 +83,7 @@ public class AbstractIntegerDoubleSolution
 
   @Override
   public Solution copy() {
-    return new AbstractIntegerDoubleSolution(this);
+    return new GenericIntegerDoubleSolution(this);
   }
 
   @Override

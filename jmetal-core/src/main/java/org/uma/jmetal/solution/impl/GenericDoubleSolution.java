@@ -5,15 +5,14 @@ import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.problem.ContinuousProblem;
 
 import java.util.ArrayList;
-import java.util.BitSet;
 import java.util.HashMap;
 
 /**
  * Created by Antonio J. Nebro on 03/09/14.
  */
-public class AbstractDoubleSolution extends AbstractGenericSolution<Double, ContinuousProblem> implements DoubleSolution {
+public class GenericDoubleSolution extends AbstractGenericSolution<Double, ContinuousProblem> implements DoubleSolution {
   /** Constructor */
-  public AbstractDoubleSolution(ContinuousProblem problem) {
+  public GenericDoubleSolution(ContinuousProblem problem) {
     super() ;
 
   	this.problem = problem ;
@@ -32,7 +31,7 @@ public class AbstractDoubleSolution extends AbstractGenericSolution<Double, Cont
   }
 
   /** Copy constructor */
-  public AbstractDoubleSolution(AbstractDoubleSolution solution) {
+  public GenericDoubleSolution(GenericDoubleSolution solution) {
     problem = solution.problem ;
     objectives = new ArrayList<>() ;
     for (Double obj : solution.objectives) {
@@ -59,7 +58,7 @@ public class AbstractDoubleSolution extends AbstractGenericSolution<Double, Cont
 
   @Override
   public Solution<?> copy() {
-    return new AbstractDoubleSolution(this);
+    return new GenericDoubleSolution(this);
   }
 
   @Override
