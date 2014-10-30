@@ -24,6 +24,7 @@ public interface Solution<T> {
 
   public T getVariableValue(int index) ;
   public void setVariableValue(int index, T value) ;
+  public String getVariableValueString(int index) ;
 
   public int getNumberOfVariables() ;
   public int getNumberOfObjectives() ;
@@ -31,7 +32,7 @@ public interface Solution<T> {
   public double getOverallConstraintViolationDegree() ;
   public void setOverallConstraintViolationDegree(double violationDegree) ;
 
-  public Solution<?> copy() ;
+  public Solution copy() ;
 
   public void setAttribute(Object id, Object value) ;
   public Object getAttribute(Object id) ;

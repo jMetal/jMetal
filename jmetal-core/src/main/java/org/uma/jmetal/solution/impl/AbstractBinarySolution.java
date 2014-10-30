@@ -63,7 +63,7 @@ public class AbstractBinarySolution extends AbstractGenericSolution<BitSet, Bina
   }
 
   @Override
-  public Solution<?> copy() {
+  public Solution copy() {
     return new AbstractBinarySolution(this);
   }
 
@@ -78,7 +78,7 @@ public class AbstractBinarySolution extends AbstractGenericSolution<BitSet, Bina
   }
 
   @Override
-  public String toString() {
+  public String getVariableValueString(int index) {
     String result = "" ;
     for (BitSet var : variables) {
       for (int i = 0; i < var.size() ; i++) {

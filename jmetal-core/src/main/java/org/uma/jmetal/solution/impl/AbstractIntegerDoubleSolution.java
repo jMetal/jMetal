@@ -82,7 +82,12 @@ public class AbstractIntegerDoubleSolution
   }
 
   @Override
-  public Solution<?> copy() {
+  public Solution copy() {
     return new AbstractIntegerDoubleSolution(this);
+  }
+
+  @Override
+  public String getVariableValueString(int index) {
+    return variables.get(index).toString() ;
   }
 }

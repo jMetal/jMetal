@@ -56,7 +56,12 @@ public class AbstractIntegerSolution extends AbstractGenericSolution<Integer, In
   }
 
   @Override
-  public Solution<?> copy() {
+  public Solution copy() {
     return new AbstractIntegerSolution(this);
+  }
+
+  @Override
+  public String getVariableValueString(int index) {
+    return variables.get(index).toString() ;
   }
 }

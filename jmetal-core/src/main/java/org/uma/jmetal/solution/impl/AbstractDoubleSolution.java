@@ -5,6 +5,7 @@ import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.problem.ContinuousProblem;
 
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.HashMap;
 
 /**
@@ -59,5 +60,10 @@ public class AbstractDoubleSolution extends AbstractGenericSolution<Double, Cont
   @Override
   public Solution<?> copy() {
     return new AbstractDoubleSolution(this);
+  }
+
+  @Override
+  public String getVariableValueString(int index) {
+    return variables.get(index).toString() ;
   }
 }

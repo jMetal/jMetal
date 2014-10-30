@@ -55,7 +55,17 @@ public class AbstractIntegerPermutationSolution
   }
 
   @Override
-  public Solution<?> copy() {
+  public Solution copy() {
     return new AbstractIntegerPermutationSolution(this);
+  }
+
+  @Override
+  public String getVariableValueString(int index) {
+    String result = "" ;
+    for (Integer element : variables.get(index)) {
+      result += element + " " ;
+    }
+
+    return variables.get(index).toString() ;
   }
 }
