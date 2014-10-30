@@ -90,7 +90,6 @@ public class GenerationalGeneticAlgorithm extends AbstractGeneticAlgorithm<List<
     public GenerationalGeneticAlgorithm build() {
       return new GenerationalGeneticAlgorithm(this) ;
     }
-
   }
 
   @Override

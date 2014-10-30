@@ -30,7 +30,7 @@ import java.util.Comparator;
  * This class implements a <code>Comparator</code> (a method for comparing
  * <code>Solution</code> objects) based on the crowding distance, as in NSGA-II.
  */
-public class CrowdingDistanceComparator implements Comparator<Solution<?>> {
+public class CrowdingDistanceComparator implements Comparator<Solution> {
 
   private static final Comparator<Solution<?>> rankComparator = new RankingComparator();
   private static final CrowdingDistance crowdingDistance = new CrowdingDistance() ;
@@ -44,7 +44,7 @@ public class CrowdingDistanceComparator implements Comparator<Solution<?>> {
    * respectively.
    */
   @Override
-  public int compare(Solution<?> solution1, Solution<?> solution2) {
+  public int compare(Solution solution1, Solution solution2) {
     if (solution1 == null) {
       return 1;
     } else if (solution2 == null) {
