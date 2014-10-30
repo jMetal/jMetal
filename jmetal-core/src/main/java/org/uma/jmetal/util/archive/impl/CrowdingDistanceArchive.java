@@ -16,12 +16,12 @@ import java.util.List;
 /**
  * Created by Antonio J. Nebro on 24/09/14.
  */
-public class CrowdingDistanceArchive<T extends Solution<?>> implements Archive<T> {
+public class CrowdingDistanceArchive<T extends Solution> implements Archive<T> {
   private int maxSize ;
   private List<T> solutionSet;
-  private Comparator<Solution<?>> dominanceComparator;
-  private Comparator<Solution<?>> equalsComparator;
-  private Comparator<Solution<?>> crowdingDistanceComparator;
+  private Comparator<Solution> dominanceComparator;
+  private Comparator<Solution> equalsComparator;
+  private Comparator<Solution> crowdingDistanceComparator;
   private DensityEstimator crowdingDistance ;
 
   public CrowdingDistanceArchive(int maxSize) {

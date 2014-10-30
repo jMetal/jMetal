@@ -32,7 +32,7 @@ import java.util.Comparator;
  * <code>Solution</code> objects) based on the fitness value returned by the
  * method <code>getFitness</code>.
  */
-public class FitnessComparator implements Comparator<Solution<?>> {
+public class FitnessComparator implements Comparator<Solution> {
   private Fitness solutionFitness = new Fitness() ;
 
   /**
@@ -44,7 +44,7 @@ public class FitnessComparator implements Comparator<Solution<?>> {
    * respectively.
    */
   @Override
-  public int compare(Solution<?> solution1, Solution<?> solution2) {
+  public int compare(Solution solution1, Solution solution2) {
     if (solution1 == null) {
       return 1;
     } else if (solution2 == null) {

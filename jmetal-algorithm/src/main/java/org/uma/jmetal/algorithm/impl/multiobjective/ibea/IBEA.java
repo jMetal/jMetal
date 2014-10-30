@@ -41,7 +41,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** This class implements the IBEA algorithm */
-public class IBEA implements Algorithm<List<Solution<?>>> {
+public class IBEA implements Algorithm<List<Solution>> {
   private Problem problem ;
 
   public static final int TOURNAMENTS_ROUNDS = 1;
@@ -53,7 +53,7 @@ public class IBEA implements Algorithm<List<Solution<?>>> {
   private int archiveSize ;
   private int maxEvaluations;
 
-  private List<Solution<?>> archive ;
+  private List<Solution> archive ;
 
   private CrossoverOperator crossover ;
   private MutationOperator mutation ;
@@ -175,7 +175,7 @@ public class IBEA implements Algorithm<List<Solution<?>>> {
   @Override
   public void run() {
     int evaluations;
-    List<Solution<?>> solutionSet, offSpringSolutionSet;
+    List<Solution> solutionSet, offSpringSolutionSet;
 
     //Initialize the variables
     solutionSet = new ArrayList<>(populationSize);
@@ -192,7 +192,7 @@ public class IBEA implements Algorithm<List<Solution<?>>> {
     }
 
     while (evaluations < maxEvaluations) {
-      List<Solution<?>> union = new ArrayList<>() ;
+      List<Solution> union = new ArrayList<>() ;
       union.addAll(solutionSet) ;
       union.addAll(archive);
       calculateFitness(union);
@@ -234,7 +234,7 @@ public class IBEA implements Algorithm<List<Solution<?>>> {
   }
 
   @Override
-  public List<Solution<?>> getResult() {
+  public List<Solution> getResult() {
     return new SolutionListUtils().findNondominatedSolutions(archive) ;
   }
 
@@ -285,7 +285,7 @@ public class IBEA implements Algorithm<List<Solution<?>>> {
   /**
    * This structure stores the indicator values of each pair of elements
    */
-  public void computeIndicatorValuesHD(List<Solution<?>> solutionSet,
+  public void computeIndicatorValuesHD(List<Solution> solutionSet,
                                        double[] maximumValues,
                                        double[] minimumValues) {
     List<Solution> A, B;
@@ -326,7 +326,7 @@ public class IBEA implements Algorithm<List<Solution<?>>> {
   /**
    * Calculate the fitness for the individual at position pos
    */
-  public void fitness(List<Solution<?>> solutionSet, int pos) {
+  public void fitness(List<Solution> solutionSet, int pos) {
     double fitness = 0.0;
     double kappa = 0.05;
 
@@ -341,7 +341,7 @@ public class IBEA implements Algorithm<List<Solution<?>>> {
   /**
    * Calculate the fitness for the entire population.
    */
-  public void calculateFitness(List<Solution<?>> solutionSet) {
+  public void calculateFitness(List<Solution> solutionSet) {
     // Obtains the lower and upper bounds of the population
     double[] maximumValues = new double[problem.getNumberOfObjectives()];
     double[] minimumValues = new double[problem.getNumberOfObjectives()];
@@ -372,7 +372,7 @@ public class IBEA implements Algorithm<List<Solution<?>>> {
   /**
    * Update the fitness before removing an individual
    */
-  public void removeWorst(List<Solution<?>> solutionSet) {
+  public void removeWorst(List<Solution> solutionSet) {
 
     // Find the worst;
     double worst = (double) solutionFitness.getAttribute(solutionSet.get(0));

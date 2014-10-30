@@ -46,8 +46,8 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
 
   private Archive<DoubleSolution> leaders;
   private double[][] speed;
-  private Comparator<Solution<?>> dominanceComparator;
-  private Comparator<Solution<?>> crowdingDistanceComparator;
+  private Comparator<Solution> dominanceComparator;
+  private Comparator<Solution> crowdingDistanceComparator;
 
   private Operator mutation;
 
@@ -290,7 +290,6 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
 
   /** Execute() method  */
   @Override
-  //public List<Solution<?>> run() {
   public void run() {
     initialization() ;
     createInitialSwarm() ;

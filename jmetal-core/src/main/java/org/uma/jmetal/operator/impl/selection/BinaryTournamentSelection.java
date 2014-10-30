@@ -30,8 +30,8 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import java.util.Comparator;
 import java.util.List;
 
-public class BinaryTournamentSelection implements SelectionOperator<List<Solution<?>>,Solution<?>> {
-  private Comparator<Solution<?>> comparator;
+public class BinaryTournamentSelection implements SelectionOperator<List<Solution>,Solution> {
+  private Comparator<Solution> comparator;
   private JMetalRandom randomGenerator ;
 
   /** Constructor */
@@ -42,13 +42,13 @@ public class BinaryTournamentSelection implements SelectionOperator<List<Solutio
 
   /** Builder class */
   public static class Builder {
-    Comparator<Solution<?>> comparator ;
+    Comparator<Solution> comparator ;
 
     public Builder() {
       comparator = new DominanceComparator() ;
     }
 
-    public Builder setComparator(Comparator<Solution<?>> comparator) {
+    public Builder setComparator(Comparator<Solution> comparator) {
       this.comparator = comparator ;
 
       return this ;
@@ -61,7 +61,7 @@ public class BinaryTournamentSelection implements SelectionOperator<List<Solutio
 
   @Override
   /** Execute() method */
-  public Solution<?> execute(List<Solution<?>> solutions) {
+  public Solution<?> execute(List<Solution> solutions) {
     if (null == solutions) {
       throw new JMetalException("Parameter is null") ;
     } else if (solutions.size() == 0) {

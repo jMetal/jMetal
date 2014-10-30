@@ -31,7 +31,7 @@ import java.util.Comparator;
  * equal or not. A dominance org.uma.test is applied to decide about what solutiontype
  * is the best.
  */
-public class EqualSolutionsComparator implements Comparator<Solution<?>> {
+public class EqualSolutionsComparator implements Comparator<Solution> {
 
   /**
    * Compares two solutions.
@@ -43,7 +43,7 @@ public class EqualSolutionsComparator implements Comparator<Solution<?>> {
    * respectively.
    */
   @Override
-  public int compare(Solution<?> object1, Solution<?> object2) {
+  public int compare(Solution object1, Solution object2) {
     if (object1 == null) {
       return 1;
     } else if (object2 == null) {
