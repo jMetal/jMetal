@@ -123,7 +123,7 @@ public class ElitistEvolutionStrategy implements Algorithm<List<Solution<?>>> {
   /** Execute() method */
   @Override
   public void run()  {
-    Comparator<Solution<?>> comparator;
+    Comparator<Solution> comparator;
     comparator = new ObjectiveComparator(0);
 
     // Initialize the variables

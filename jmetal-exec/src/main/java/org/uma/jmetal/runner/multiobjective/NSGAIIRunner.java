@@ -90,7 +90,7 @@ public class  NSGAIIRunner {
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
-    List<Solution<?>> population = algorithmRunner.getSolutionSet() ;
+    List<Solution> population = algorithmRunner.getSolutionSet() ;
     long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)

@@ -111,7 +111,7 @@ public class DifferentialEvolution implements Algorithm<List<DoubleSolution>> {
   /** Execute() method */
   @Override
   public void run() throws JMetalException {
-    Comparator<Solution<?>> comparator;
+    Comparator<Solution> comparator;
     comparator = new ObjectiveComparator(0);
 
     population = new ArrayList<>(populationSize);

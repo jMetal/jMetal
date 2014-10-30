@@ -29,7 +29,7 @@ import java.util.List;
  * Created by Antonio J. Nebro on 08/06/14.
  */
 public class AlgorithmRunner {
-  private List<Solution<?>> solutionSet;
+  private List<Solution> solutionSet;
   private long computingTime;
 
   /** Constructor */
@@ -39,7 +39,7 @@ public class AlgorithmRunner {
   }
 
   /* Getters */
-  public List<Solution<?>> getSolutionSet() {
+  public List<Solution> getSolutionSet() {
     return solutionSet;
   }
 
@@ -49,9 +49,9 @@ public class AlgorithmRunner {
 
   /** Executor class */
   public static class Executor {
-    Algorithm<List<Solution<?>>> algorithm ;
+    Algorithm<List<Solution>> algorithm ;
     long computingTime;
-    List<Solution<?>> solutionSet;
+    List<Solution> solutionSet;
 
     public Executor(Algorithm algorithm) {
       this.algorithm = algorithm ;

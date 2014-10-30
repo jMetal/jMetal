@@ -125,7 +125,7 @@ public class NonElitistEvolutionStrategy implements Algorithm<List<Solution<?>>>
   public void run() throws JMetalException {
     Solution bestIndividual;
 
-    Comparator<Solution<?>> comparator;
+    Comparator<Solution> comparator;
     comparator = new ObjectiveComparator(0);
 
     // Initialize the variables
