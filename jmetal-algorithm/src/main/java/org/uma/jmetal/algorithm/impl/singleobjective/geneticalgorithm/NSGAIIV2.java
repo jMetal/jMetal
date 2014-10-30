@@ -29,8 +29,8 @@ public class NSGAIIV2 extends AbstractGeneticAlgorithm<List<Solution>> {
 
   private Problem problem ;
 
-  protected Ranking ranking ;
-  protected DensityEstimator crowdingDistance;
+  //protected Ranking ranking ;
+  //protected DensityEstimator crowdingDistance;
 
   /** Constructor */
   private NSGAIIV2(Builder builder) {
@@ -42,8 +42,8 @@ public class NSGAIIV2 extends AbstractGeneticAlgorithm<List<Solution>> {
     mutationOperator = builder.mutationOperator ;
     selectionOperator = builder.selectionOperator ;
 
-    ranking = new DominanceRanking() ;
-    crowdingDistance = new CrowdingDistance() ;
+    //ranking = new DominanceRanking() ;
+    //crowdingDistance = new CrowdingDistance() ;
   }
 
   /** Builder class */
@@ -159,15 +159,15 @@ public class NSGAIIV2 extends AbstractGeneticAlgorithm<List<Solution>> {
     jointPopulation.addAll(population) ;
     jointPopulation.addAll(offspringPopulation) ;
 
-    computeRanking(jointPopulation);
-    crowdingDistanceSelection();
+    Ranking ranking = computeRanking(jointPopulation);
+    List<Solution> pop = crowdingDistanceSelection(ranking);
 
-    return jointPopulation;
+    return pop;
   }
 
   @Override
   public List<Solution> getResult() {
-    return null;
+    return getNonDominatedSolutions(getPopulation()) ;
   }
 
 ////////////// TODO: to be integrated smoothly
@@ -203,14 +203,19 @@ public class NSGAIIV2 extends AbstractGeneticAlgorithm<List<Solution>> {
   }
 
   protected List<Solution> getNonDominatedSolutions(List<Solution> solutionSet) {
+    Ranking ranking = new DominanceRanking() ;
     return ranking.computeRanking(solutionSet).getSubfront(0);
   }
 
-  protected void computeRanking(List<Solution> solutionSet) {
+  protected Ranking computeRanking(List<Solution> solutionSet) {
+    Ranking ranking = new DominanceRanking() ;
     ranking.computeRanking(solutionSet) ;
+
+    return ranking ;
   }
 
-  protected void crowdingDistanceSelection() {
+  protected List<Solution> crowdingDistanceSelection(Ranking ranking) {
+    CrowdingDistance crowdingDistance = new CrowdingDistance() ;
     getPopulation().clear();
     int rankingIndex = 0;
     while (populationIsNotFull()) {
@@ -222,5 +227,7 @@ public class NSGAIIV2 extends AbstractGeneticAlgorithm<List<Solution>> {
         addLastRankedSolutions(ranking, rankingIndex);
       }
     }
+
+    return getPopulation() ;
   }
 }
