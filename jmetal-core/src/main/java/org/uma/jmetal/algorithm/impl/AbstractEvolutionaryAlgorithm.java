@@ -12,13 +12,9 @@ import java.util.List;
  * Created by ajnebro on 26/10/14.
  */
 public abstract class AbstractEvolutionaryAlgorithm<Result> implements Algorithm <Result> {
-  private int iterations ;
-  public int getIterations() {
-    return iterations ;
-  }
-  public void increaseIterations(double value) {
-    iterations += value ;
-  }
+
+  protected abstract void initProgress() ;
+  protected abstract void updateProgress() ;
 
   private List<Solution> population ;
   public List<Solution> getPopulation() {
@@ -42,13 +38,13 @@ public abstract class AbstractEvolutionaryAlgorithm<Result> implements Algorithm
 
     population = createInitialPopulation();
     population = evaluatePopulation(population);
-    iterations = 1 ;
+    initProgress();
     while (!isStoppingConditionReached()) {
       matingPopulation = selection(population) ;
       offspringPopulation = reproduction(matingPopulation) ;
       offspringPopulation = evaluatePopulation(offspringPopulation);
       population = replacement(population, offspringPopulation) ;
-      iterations ++ ;
+      updateProgress();
     }
   }
 }

@@ -19,6 +19,7 @@ public class SteadyStateGeneticAlgorithm extends AbstractGeneticAlgorithm<List<S
   private Comparator<Solution> comparator ;
   private int maxIterations ;
   private int populationSize ;
+  private int iterations ;
 
   private Problem problem ;
 
@@ -89,7 +90,7 @@ public class SteadyStateGeneticAlgorithm extends AbstractGeneticAlgorithm<List<S
 
   @Override
   protected boolean isStoppingConditionReached() {
-    return (getIterations() >= maxIterations) ;
+    return (iterations >= maxIterations) ;
   }
 
   @Override
@@ -155,5 +156,15 @@ public class SteadyStateGeneticAlgorithm extends AbstractGeneticAlgorithm<List<S
     List<Solution> result = new ArrayList<>(1) ;
     result.add(getPopulation().get(0));
     return result;
+  }
+
+  @Override
+  public void initProgress() {
+    iterations = 1 ;
+  }
+
+  @Override
+  public void updateProgress() {
+    iterations++ ;
   }
 }

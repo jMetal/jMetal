@@ -21,6 +21,7 @@ public class GenerationalGeneticAlgorithm extends AbstractGeneticAlgorithm<List<
   private Comparator<Solution> comparator ;
   private int maxIterations ;
   private int populationSize ;
+  private int iterations ;
 
   private Problem problem ;
 
@@ -102,7 +103,7 @@ public class GenerationalGeneticAlgorithm extends AbstractGeneticAlgorithm<List<
 
   @Override
   protected boolean isStoppingConditionReached() {
-    return (getIterations() >= maxIterations) ;
+    return (iterations >= maxIterations) ;
   }
 
   @Override
@@ -171,5 +172,15 @@ public class GenerationalGeneticAlgorithm extends AbstractGeneticAlgorithm<List<
     List<Solution> result = new ArrayList<>(1) ;
     result.add(getPopulation().get(0));
     return result;
+  }
+
+  @Override
+  public void initProgress() {
+    iterations = 1 ;
+  }
+
+  @Override
+  public void updateProgress() {
+    iterations++ ;
   }
 }

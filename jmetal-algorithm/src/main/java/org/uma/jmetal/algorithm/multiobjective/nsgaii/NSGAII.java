@@ -21,6 +21,7 @@ import java.util.List;
  * Created by ajnebro on 30/10/14.
  */
 public class NSGAII extends AbstractGeneticAlgorithm<List<Solution>> {
+  protected int iterations ;
   protected int maxIterations ;
   protected int populationSize ;
 
@@ -104,8 +105,18 @@ public class NSGAII extends AbstractGeneticAlgorithm<List<Solution>> {
   }
 
   @Override
+  protected void initProgress() {
+    iterations = 1 ;
+  }
+
+  @Override
+  protected void updateProgress() {
+    iterations++ ;
+  }
+
+  @Override
   protected boolean isStoppingConditionReached() {
-    return getIterations() >= maxIterations;
+    return iterations >= maxIterations;
   }
 
   @Override

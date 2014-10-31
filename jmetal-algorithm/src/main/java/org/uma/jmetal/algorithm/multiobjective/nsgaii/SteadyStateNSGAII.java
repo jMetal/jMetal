@@ -13,7 +13,6 @@ import java.util.List;
  * Created by ajnebro on 30/10/14.
  */
 public class SteadyStateNSGAII extends NSGAII {
-
   /** Constructor */
   private SteadyStateNSGAII(Builder builder) {
     problem = builder.problem ;
