@@ -20,29 +20,28 @@
 
 package org.uma.jmetal.runner.multiobjective;
 
-import org.uma.jmetal.algorithm.impl.multiobjective.nsgaii.NSGAIITemplate;
+import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.operator.CrossoverOperator;
+import org.uma.jmetal.operator.MutationOperator;
+import org.uma.jmetal.operator.SelectionOperator;
+import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
+import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
+import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.ContinuousProblem;
+import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.operator.CrossoverOperator;
-import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
-import org.uma.jmetal.operator.MutationOperator;
-import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
-import org.uma.jmetal.operator.SelectionOperator;
-import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
-import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.ProblemUtils;
-import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
+import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
 import java.util.List;
 
 /**
  * Class to configure and run the NSGA-II algorithm
  */
-public class  NSGAIIRunner {
+public class NSGAIIV2Runner {
   /**
    * @param args Command line arguments.
    * @throws java.io.IOException
@@ -77,14 +76,12 @@ public class  NSGAIIRunner {
     selection = new BinaryTournamentSelection.Builder()
             .build();
 
-    algorithm = new NSGAIITemplate.Builder(problem)
-            .setCrossover(crossover)
-            .setMutation(mutation)
-            .setSelection(selection)
-            .setMaxEvaluations(25000)
+    algorithm = new NSGAIIV2.Builder(problem)
+            .setCrossoverOperator(crossover)
+            .setMutationOperator(mutation)
+            .setSelectionOperator(selection)
+            .setMaxIterations(250)
             .setPopulationSize(100)
-            .setVariant("NSGAII")
-            //.setVariant("SteadyStateNSGAII")
             .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)

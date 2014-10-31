@@ -1,73 +1,104 @@
-//  SteadyStateNSGAII.java
-//
-//  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
-//
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
-//
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-// 
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package org.uma.jmetal.algorithm.impl.multiobjective.nsgaii;
 
+import org.uma.jmetal.operator.CrossoverOperator;
+import org.uma.jmetal.operator.MutationOperator;
+import org.uma.jmetal.operator.SelectionOperator;
+import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class implements a steady-state version of NSGA-II.
+ * Created by ajnebro on 30/10/14.
  */
-public class SteadyStateNSGAII extends NSGAIITemplate  {
+public class SteadyStateNSGAII extends NSGAIIV2 {
 
   /** Constructor */
-  protected SteadyStateNSGAII(Builder builder) {
-    super(builder) ;
+  private SteadyStateNSGAII(Builder builder) {
+    problem = builder.problem ;
+    maxIterations = builder.maxIterations ;
+    populationSize = builder.populationSize ;
+
+    crossoverOperator = builder.crossoverOperator ;
+    mutationOperator = builder.mutationOperator ;
+    selectionOperator = builder.selectionOperator ;
   }
 
-  /**
-   * Runs the steady-state version of the NSGA-II algorithm.
-   *
-   * @return a <code>SolutionSet</code> that is a set of non dominated solutions
-   * as a experimentoutput of the algorithm execution
-   * @throws org.uma.jmetal.util.JMetalException
-   */
-  @Override
-  public void run()  {
-    createInitialPopulation();
-    population = evaluatePopulation(population);
+  /** Builder class */
+  public static class Builder {
+    private Problem problem ;
+    private int maxIterations ;
+    private int populationSize ;
+    private CrossoverOperator crossoverOperator ;
+    private MutationOperator mutationOperator ;
+    private SelectionOperator selectionOperator ;
 
-    // Main loop
-    while (!stoppingCondition()) {
-      List<Solution<?>> parents = new ArrayList<>(2);
-      parents.add(selectionOperator.execute(population));
-      parents.add(selectionOperator.execute(population));
+    /** Builder constructor */
+    public Builder(Problem problem) {
+      this.problem = problem ;
+      maxIterations = 250 ;
+      populationSize = 100 ;
+    }
 
-      List<Solution<?>> offSpring = crossoverOperator.execute(parents);
+    public Builder setMaxIterations(int maxIterations) {
+      this.maxIterations = maxIterations ;
 
-      mutationOperator.execute(offSpring.get(0));
+      return this ;
+    }
 
-      evaluations++ ;
-      population.add(offSpring.get(0)) ;
+    public Builder setPopulationSize(int populationSize) {
+      this.populationSize = populationSize ;
 
-      computeRanking(population);
-      crowdingDistanceSelection();
+      return this ;
+    }
+
+    public Builder setCrossoverOperator(CrossoverOperator crossoverOperator) {
+      this.crossoverOperator = crossoverOperator ;
+
+      return this ;
+    }
+
+    public Builder setMutationOperator(MutationOperator mutationOperator) {
+      this.mutationOperator = mutationOperator ;
+
+      return this ;
+    }
+
+    public Builder setSelectionOperator(SelectionOperator selectionOperator) {
+      this.selectionOperator = selectionOperator ;
+
+      return this ;
+    }
+
+    public SteadyStateNSGAII build() {
+      return new SteadyStateNSGAII(this) ;
     }
   }
 
   @Override
-  public List<Solution<?>> getResult() {
-    return getNonDominatedSolutions(population) ;
+  protected List<Solution> selection(List<Solution> population) {
+    List<Solution> matingPopulation = new ArrayList<>(2) ;
+
+    matingPopulation.add(selectionOperator.execute(population)) ;
+    matingPopulation.add(selectionOperator.execute(population)) ;
+
+    return matingPopulation;
   }
-} 
+
+  @Override
+  protected List<Solution> reproduction(List<Solution> population) {
+    List<Solution> offspringPopulation = new ArrayList<>(1);
+
+    List<Solution> parents = new ArrayList<>(2);
+    parents.add(population.get(0));
+    parents.add(population.get(1));
+
+    List<Solution> offspring = crossoverOperator.execute(parents);
+
+    mutationOperator.execute(offspring.get(0));
+
+    offspringPopulation.add(offspring.get(0));
+    return offspringPopulation ;
+  }
+}
