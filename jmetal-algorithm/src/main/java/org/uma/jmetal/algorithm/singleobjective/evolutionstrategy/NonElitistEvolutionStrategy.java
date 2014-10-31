@@ -35,7 +35,7 @@ import java.util.List;
 /**
  * Class implementing a (mu,lambda) Evolution Strategy (lambda must be divisible by mu)
  */
-public class NonElitistEvolutionStrategy implements Algorithm<List<Solution<?>>>  {
+public class NonElitistEvolutionStrategy implements Algorithm<List<Solution>>  {
   private Problem problem ;
 
   private int mu;
@@ -43,8 +43,8 @@ public class NonElitistEvolutionStrategy implements Algorithm<List<Solution<?>>>
   private int maxEvaluations ;
   private MutationOperator mutation ;
 
-  private List<Solution<?>> population;
-  private List<Solution<?>> offspringPopulation;
+  private List<Solution> population;
+  private List<Solution> offspringPopulation;
 
   /** Constructor */
   private NonElitistEvolutionStrategy(Builder builder) {
@@ -189,9 +189,9 @@ public class NonElitistEvolutionStrategy implements Algorithm<List<Solution<?>>>
   }
 
   @Override
-  public List<Solution<?>> getResult() {
+  public List<Solution> getResult() {
     // Return a population with the best individual
-    List<Solution<?>> resultPopulation = new ArrayList<>(1);
+    List<Solution> resultPopulation = new ArrayList<>(1);
     resultPopulation.add(population.get(0));
 
     return resultPopulation ;
