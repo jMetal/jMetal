@@ -33,6 +33,7 @@ import org.uma.jmetal.problem.singleobjective.OneMax;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.evaluator.impl.MultithreadedSolutionListEvaluator;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
@@ -40,7 +41,7 @@ import java.util.List;
 
 /**
  */
-public class GenerationalGeneticAlgorithmRunner {
+public class ParallelGenerationalGeneticAlgorithmRunner {
   /**
    */
   public static void main(String[] args) throws Exception {
@@ -65,6 +66,7 @@ public class GenerationalGeneticAlgorithmRunner {
             .setCrossoverOperator(crossoverOperator)
             .setMutationOperator(mutationOperator)
             .setSelectionOperator(selectionOperator)
+            .setSolutionListEvaluator(new MultithreadedSolutionListEvaluator(4, problem))
             .build() ;
 
 

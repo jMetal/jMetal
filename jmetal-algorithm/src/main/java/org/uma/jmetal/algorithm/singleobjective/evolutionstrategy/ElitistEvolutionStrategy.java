@@ -1,4 +1,4 @@
-//  NonElitistEvolutionStrategy.java
+//  ElitistES.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -18,14 +18,14 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.algorithm.impl.singleobjective.evolutionstrategy;
+package org.uma.jmetal.algorithm.singleobjective.evolutionstrategy;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 
 import java.util.ArrayList;
@@ -33,9 +33,9 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * Class implementing a (mu,lambda) Evolution Strategy (lambda must be divisible by mu)
+ * Class implementing a (mu + lambda) Evolution Strategy (lambda must be divisible by mu)
  */
-public class NonElitistEvolutionStrategy implements Algorithm<List<Solution<?>>>  {
+public class ElitistEvolutionStrategy implements Algorithm<List<Solution<?>>> {
   private Problem problem ;
 
   private int mu;
@@ -47,7 +47,7 @@ public class NonElitistEvolutionStrategy implements Algorithm<List<Solution<?>>>
   private List<Solution<?>> offspringPopulation;
 
   /** Constructor */
-  private NonElitistEvolutionStrategy(Builder builder) {
+  private ElitistEvolutionStrategy(Builder builder) {
     this.problem = builder.problem ;
     this.mu = builder.mu ;
     this.lambda = builder.lambda ;
@@ -115,50 +115,40 @@ public class NonElitistEvolutionStrategy implements Algorithm<List<Solution<?>>>
       return this ;
     }
 
-    public NonElitistEvolutionStrategy build() {
-      return new NonElitistEvolutionStrategy(this) ;
+    public ElitistEvolutionStrategy build() {
+      return new ElitistEvolutionStrategy(this) ;
     }
   }
 
   /** Execute() method */
   @Override
-  public void run() throws JMetalException {
-    Solution bestIndividual;
-
+  public void run()  {
     Comparator<Solution> comparator;
     comparator = new ObjectiveComparator(0);
 
     // Initialize the variables
-    population = new ArrayList<>(mu + 1);
-    offspringPopulation = new ArrayList<>(lambda);
+    population = new ArrayList<>(mu);
+    offspringPopulation = new ArrayList<>(mu + lambda);
 
     int evaluations;
     evaluations = 0;
 
+    JMetalLogger.logger.info("(" + mu + " + " + lambda + ")ES");
+
     // Create the parent population of mu solutions
     Solution newIndividual;
-    newIndividual = problem.createSolution();
-    problem.evaluate(newIndividual);
-    evaluations++;
-    population.add(newIndividual);
-    bestIndividual = newIndividual.copy();
-
-    for (int i = 1; i < mu; i++) {
-      newIndividual = problem.createSolution();
+    for (int i = 0; i < mu; i++) {
+      newIndividual = problem.createSolution() ;
       problem.evaluate(newIndividual);
       evaluations++;
       population.add(newIndividual);
-
-      if (comparator.compare(bestIndividual, newIndividual) > 0) {
-        bestIndividual = newIndividual.copy();
-      }
     }
 
     // Main loop
     int children;
     children = lambda / mu;
     while (evaluations < maxEvaluations) {
-      // STEP 1. Generate the lambda population
+      // STEP 1. Generate the mu+lambda population
       for (int i = 0; i < mu; i++) {
         for (int j = 0; j < children; j++) {
           Solution offspring = population.get(i).copy();
@@ -169,21 +159,21 @@ public class NonElitistEvolutionStrategy implements Algorithm<List<Solution<?>>>
         }
       }
 
-      // STEP 2. Sort the lambda population
+      // STEP 2. Add the mu individuals to the offspring population
+      for (int i = 0; i < mu; i++) {
+        offspringPopulation.add(population.get(i));
+      }
+      population.clear();
+
+      // STEP 3. Sort the mu+lambda population
       offspringPopulation.sort(comparator);
 
-      // STEP 3. Update the best individual 
-      if (comparator.compare(bestIndividual, offspringPopulation.get(0)) > 0) {
-        bestIndividual = offspringPopulation.get(0).copy();
-      }
-
       // STEP 4. Create the new mu population
-      population.clear();
       for (int i = 0; i < mu; i++) {
         population.add(offspringPopulation.get(i));
       }
 
-      // STEP 5. Delete the lambda population
+      // STEP 6. Delete the mu+lambda population
       offspringPopulation.clear();
     }
   }

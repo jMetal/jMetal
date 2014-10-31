@@ -1,18 +1,14 @@
-package org.uma.jmetal.algorithm.impl.singleobjective.geneticalgorithm;
+package org.uma.jmetal.algorithm.singleobjective.geneticalgorithm;
 
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
-import org.uma.jmetal.operator.impl.crossover.SinglePointCrossover;
-import org.uma.jmetal.operator.impl.mutation.BitFlipMutation;
-import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
-import org.uma.jmetal.problem.BinaryProblem;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.problem.singleobjective.OneMax;
-import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
+import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
+import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -28,6 +24,8 @@ public class GenerationalGeneticAlgorithm extends AbstractGeneticAlgorithm<List<
 
   private Problem problem ;
 
+  private SolutionListEvaluator evaluator ;
+
   /** Constructor */
   private GenerationalGeneticAlgorithm(Builder builder) {
     problem = builder.problem ;
@@ -37,6 +35,8 @@ public class GenerationalGeneticAlgorithm extends AbstractGeneticAlgorithm<List<
     crossoverOperator = builder.crossoverOperator ;
     mutationOperator = builder.mutationOperator ;
     selectionOperator = builder.selectionOperator ;
+
+    evaluator = builder.evaluator ;
 
     comparator = new ObjectiveComparator(0) ;
   }
@@ -49,12 +49,14 @@ public class GenerationalGeneticAlgorithm extends AbstractGeneticAlgorithm<List<
     private CrossoverOperator crossoverOperator ;
     private MutationOperator mutationOperator ;
     private SelectionOperator selectionOperator ;
+    private SolutionListEvaluator evaluator ;
 
     /** Builder constructor */
     public Builder(Problem problem) {
       this.problem = problem ;
       maxIterations = 250 ;
       populationSize = 100 ;
+      evaluator = new SequentialSolutionListEvaluator() ;
     }
 
     public Builder setMaxIterations(int maxIterations) {
@@ -85,6 +87,12 @@ public class GenerationalGeneticAlgorithm extends AbstractGeneticAlgorithm<List<
       this.selectionOperator = selectionOperator ;
 
       return this ;
+    }
+
+    public Builder setSolutionListEvaluator(SolutionListEvaluator evaluator) {
+      this.evaluator = evaluator ;
+
+       return this ;
     }
 
     public GenerationalGeneticAlgorithm build() {

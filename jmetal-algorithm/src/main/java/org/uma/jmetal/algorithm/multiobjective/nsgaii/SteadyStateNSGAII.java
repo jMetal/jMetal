@@ -1,4 +1,4 @@
-package org.uma.jmetal.algorithm.impl.multiobjective.nsgaii;
+package org.uma.jmetal.algorithm.multiobjective.nsgaii;
 
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;

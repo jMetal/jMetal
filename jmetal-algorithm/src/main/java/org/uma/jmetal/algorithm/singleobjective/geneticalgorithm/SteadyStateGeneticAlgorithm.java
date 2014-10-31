@@ -1,4 +1,4 @@
-package org.uma.jmetal.algorithm.impl.singleobjective.geneticalgorithm;
+package org.uma.jmetal.algorithm.singleobjective.geneticalgorithm;
 
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.operator.CrossoverOperator;

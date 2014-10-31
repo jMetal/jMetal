@@ -1,4 +1,4 @@
-package org.uma.jmetal.algorithm.impl.multiobjective.nsgaii;
+package org.uma.jmetal.algorithm.multiobjective.nsgaii;
 
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.operator.CrossoverOperator;
@@ -7,6 +7,8 @@ import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
+import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
+import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;
 import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
@@ -24,6 +26,7 @@ public class NSGAII extends AbstractGeneticAlgorithm<List<Solution>> {
 
   protected Problem problem ;
 
+  protected SolutionListEvaluator evaluator ;
   /** Constructor */
   public NSGAII() {
   }
@@ -37,6 +40,8 @@ public class NSGAII extends AbstractGeneticAlgorithm<List<Solution>> {
     crossoverOperator = builder.crossoverOperator ;
     mutationOperator = builder.mutationOperator ;
     selectionOperator = builder.selectionOperator ;
+
+    evaluator = builder.evaluator ;
   }
 
   /** Builder class */
@@ -47,12 +52,14 @@ public class NSGAII extends AbstractGeneticAlgorithm<List<Solution>> {
     private CrossoverOperator crossoverOperator ;
     private MutationOperator mutationOperator ;
     private SelectionOperator selectionOperator ;
+    private SolutionListEvaluator evaluator ;
 
     /** Builder constructor */
     public Builder(Problem problem) {
       this.problem = problem ;
       maxIterations = 250 ;
       populationSize = 100 ;
+      evaluator = new SequentialSolutionListEvaluator() ;
     }
 
     public Builder setMaxIterations(int maxIterations) {
@@ -85,6 +92,12 @@ public class NSGAII extends AbstractGeneticAlgorithm<List<Solution>> {
       return this ;
     }
 
+    public Builder setSolutionListEvaluator(SolutionListEvaluator evaluator) {
+      this.evaluator = evaluator ;
+
+      return this ;
+    }
+
     public NSGAII build() {
       return new NSGAII(this) ;
     }
@@ -107,9 +120,7 @@ public class NSGAII extends AbstractGeneticAlgorithm<List<Solution>> {
 
   @Override
   protected List<Solution> evaluatePopulation(List<Solution> population) {
-    for (Solution solution : population) {
-      problem.evaluate(solution);
-    }
+    population = evaluator.evaluate(population, problem) ;
 
     return population ;
   }

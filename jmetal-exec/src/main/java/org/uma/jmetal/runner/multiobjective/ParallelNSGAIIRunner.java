@@ -18,55 +18,75 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.runner.singleobjective;
+package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.singleobjective.geneticalgorithm.GenerationalGeneticAlgorithm;
+import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
-import org.uma.jmetal.operator.impl.crossover.SinglePointCrossover;
-import org.uma.jmetal.operator.impl.mutation.BitFlipMutation;
+import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
+import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
-import org.uma.jmetal.problem.BinaryProblem;
-import org.uma.jmetal.problem.singleobjective.OneMax;
+import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AlgorithmRunner;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
+import org.uma.jmetal.util.evaluator.impl.MultithreadedSolutionListEvaluator;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
 import java.util.List;
 
 /**
+ * Class to configure and run the NSGA-II algorithm
  */
-public class GenerationalGeneticAlgorithmRunner {
+public class ParallelNSGAIIRunner {
   /**
+   * @param args Command line arguments.
+   * @throws java.io.IOException
+   * @throws SecurityException
+   * @throws ClassNotFoundException
+   * Usage: three options
+   *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner
+   *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName
+   *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName paretoFrontFile
    */
-  public static void main(String[] args) throws Exception {
-
+  public static void main(String[] args) throws JMetalException {
+    Problem problem;
     Algorithm algorithm;
-    BinaryProblem problem = new OneMax(512) ;
+    CrossoverOperator crossover;
+    MutationOperator mutation;
+    SelectionOperator selection;
 
-    CrossoverOperator crossoverOperator = new SinglePointCrossover.Builder()
+    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1" ;
+
+    problem = ProblemUtils.loadProblem(problemName);
+
+    crossover = new SBXCrossover.Builder()
+            .setDistributionIndex(20.0)
             .setProbability(0.9)
             .build() ;
 
-    MutationOperator mutationOperator = new BitFlipMutation.Builder()
-            .setProbability(1.0 / problem.getNumberOfBits(0))
+    mutation = new PolynomialMutation.Builder()
+            .setDistributionIndex(20.0)
+            .setProbability(1.0 / problem.getNumberOfVariables())
             .build();
 
-    SelectionOperator selectionOperator = new BinaryTournamentSelection.Builder()
+    selection = new BinaryTournamentSelection.Builder()
             .build();
 
-    algorithm = new GenerationalGeneticAlgorithm.Builder(problem)
-            .setPopulationSize(100)
+    algorithm = new NSGAII.Builder(problem)
+            .setCrossoverOperator(crossover)
+            .setMutationOperator(mutation)
+            .setSelectionOperator(selection)
             .setMaxIterations(250)
-            .setCrossoverOperator(crossoverOperator)
-            .setMutationOperator(mutationOperator)
-            .setSelectionOperator(selectionOperator)
+            .setPopulationSize(100)
+            .setSolutionListEvaluator(new MultithreadedSolutionListEvaluator(8, problem))
             .build() ;
-
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
