@@ -18,9 +18,10 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.algorithm.impl.singleobjective.geneticalgorithm;
+package org.uma.jmetal.runner.singleobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.algorithm.impl.singleobjective.geneticalgorithm.GenerationalGeneticAlgorithm;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -39,7 +40,7 @@ import java.util.List;
 
 /**
  */
-public class GARunner {
+public class GenerationalGeneticAlgorithmRunner {
   /**
    */
   public static void main(String[] args) throws
