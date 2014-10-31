@@ -52,7 +52,6 @@ public abstract class AbstractGeneticAlgorithm<Result> implements Algorithm <Res
       offspringPopulation = reproduction(matingPopulation) ;
       offspringPopulation = evaluatePopulation(offspringPopulation);
       population = replacement(population, offspringPopulation) ;
-
       iterations ++ ;
     }
   }

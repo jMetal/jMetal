@@ -127,7 +127,7 @@ public class GenerationalGeneticAlgorithm extends AbstractGeneticAlgorithm<List<
       parents.add(matingPopulation.get(i)) ;
       parents.add(matingPopulation.get(i + 1));
 
-      List<Solution> offspring = (List<Solution>) crossoverOperator.execute(parents);
+      List<Solution> offspring = crossoverOperator.execute(parents);
       mutationOperator.execute(offspring.get(0)) ;
       mutationOperator.execute(offspring.get(1)) ;
 
@@ -141,7 +141,7 @@ public class GenerationalGeneticAlgorithm extends AbstractGeneticAlgorithm<List<
   protected List<Solution> selection(List<Solution> population) {
     List<Solution> matingPopulation = new ArrayList<>(population.size()) ;
     for (int i = 0; i < populationSize; i++) {
-      Solution solution = (Solution) selectionOperator.execute(population);
+      Solution solution = selectionOperator.execute(population);
       matingPopulation.add(solution) ;
     }
 
