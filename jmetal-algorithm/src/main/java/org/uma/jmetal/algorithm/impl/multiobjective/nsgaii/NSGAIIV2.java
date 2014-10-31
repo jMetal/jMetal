@@ -19,10 +19,14 @@ import java.util.List;
  * Created by ajnebro on 30/10/14.
  */
 public class NSGAIIV2 extends AbstractGeneticAlgorithm<List<Solution>> {
-  private int maxIterations ;
-  private int populationSize ;
+  protected int maxIterations ;
+  protected int populationSize ;
 
-  private Problem problem ;
+  protected Problem problem ;
+
+  /** Constructor */
+  public NSGAIIV2() {
+  }
 
   /** Constructor */
   private NSGAIIV2(Builder builder) {
@@ -114,7 +118,7 @@ public class NSGAIIV2 extends AbstractGeneticAlgorithm<List<Solution>> {
   protected List<Solution> selection(List<Solution> population) {
     List<Solution> matingPopulation = new ArrayList<>(population.size()) ;
     for (int i = 0; i < populationSize; i++) {
-      Solution solution = (Solution) selectionOperator.execute(population);
+      Solution solution = selectionOperator.execute(population);
       matingPopulation.add(solution) ;
     }
 
@@ -124,20 +128,18 @@ public class NSGAIIV2 extends AbstractGeneticAlgorithm<List<Solution>> {
   @Override
   protected List<Solution> reproduction(List<Solution> population) {
     List<Solution> offspringPopulation = new ArrayList<>(populationSize);
-    for (int i = 0; i < (populationSize / 2); i++) {
-      if (!isStoppingConditionReached()) {
-        List<Solution> parents = new ArrayList<>(2);
-        parents.add((Solution) selectionOperator.execute(population));
-        parents.add((Solution) selectionOperator.execute(population));
+    for (int i = 0; i < populationSize; i+=2) {
+      List<Solution> parents = new ArrayList<>(2);
+      parents.add(population.get(i));
+      parents.add(population.get(i+1));
 
-        List<Solution> offspring = (List<Solution>) crossoverOperator.execute(parents);
+      List<Solution> offspring = crossoverOperator.execute(parents);
 
-        mutationOperator.execute(offspring.get(0));
-        mutationOperator.execute(offspring.get(1));
+      mutationOperator.execute(offspring.get(0));
+      mutationOperator.execute(offspring.get(1));
 
-        offspringPopulation.add(offspring.get(0));
-        offspringPopulation.add(offspring.get(1));
-      }
+      offspringPopulation.add(offspring.get(0));
+      offspringPopulation.add(offspring.get(1));
     }
     return offspringPopulation ;
   }
