@@ -1,4 +1,4 @@
-package org.uma.jmetal.algorithm.impl.singleobjective.geneticalgorithm;
+package org.uma.jmetal.algorithm.impl.multiobjective.nsgaii;
 
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.operator.CrossoverOperator;
@@ -6,7 +6,6 @@ import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;

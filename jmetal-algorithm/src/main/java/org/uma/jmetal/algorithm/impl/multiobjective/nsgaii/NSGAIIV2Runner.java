@@ -18,10 +18,9 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.algorithm.impl.singleobjective.geneticalgorithm;
+package org.uma.jmetal.algorithm.impl.multiobjective.nsgaii;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.impl.multiobjective.nsgaii.NSGAIITemplate;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;

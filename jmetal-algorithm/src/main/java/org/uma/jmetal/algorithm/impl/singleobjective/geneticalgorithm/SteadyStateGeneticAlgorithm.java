@@ -4,17 +4,10 @@ import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
-import org.uma.jmetal.operator.impl.crossover.SinglePointCrossover;
-import org.uma.jmetal.operator.impl.mutation.BitFlipMutation;
-import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
-import org.uma.jmetal.problem.BinaryProblem;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.problem.singleobjective.OneMax;
-import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 
-import java.nio.channels.MulticastChannel;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
