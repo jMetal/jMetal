@@ -125,11 +125,11 @@ public class SteadyStateGeneticAlgorithm extends AbstractGeneticAlgorithm<List<S
   protected List<Solution> reproduction(List<Solution> matingPopulation) {
     List<Solution> offspringPopulation = new ArrayList<>(1) ;
 
-    List<Solution<?>> parents = new ArrayList<>(2);
+    List<Solution> parents = new ArrayList<>(2);
     parents.add(matingPopulation.get(0)) ;
     parents.add(matingPopulation.get(1));
 
-    List<Solution> offspring = (List<Solution>) crossoverOperator.execute(parents);
+    List<Solution> offspring = crossoverOperator.execute(parents);
     mutationOperator.execute(offspring.get(0)) ;
 
     offspringPopulation.add(offspring.get(0)) ;
@@ -140,7 +140,7 @@ public class SteadyStateGeneticAlgorithm extends AbstractGeneticAlgorithm<List<S
   protected List<Solution> selection(List<Solution> population) {
     List<Solution> matingPopulation = new ArrayList<>(2) ;
     for (int i = 0; i < 2; i++) {
-      Solution<?> solution = (Solution<?>) selectionOperator.execute(population);
+      Solution solution = selectionOperator.execute(population);
       matingPopulation.add(solution) ;
     }
 

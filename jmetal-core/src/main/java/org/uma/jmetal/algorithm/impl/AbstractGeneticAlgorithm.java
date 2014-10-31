@@ -25,9 +25,9 @@ public abstract class AbstractGeneticAlgorithm<Result> implements Algorithm <Res
     return population ;
   }
 
-  protected SelectionOperator selectionOperator ;
-  protected CrossoverOperator crossoverOperator ;
-  protected MutationOperator mutationOperator ;
+  protected SelectionOperator<List<Solution>, Solution> selectionOperator ;
+  protected CrossoverOperator<List<Solution>, List<Solution>> crossoverOperator ;
+  protected MutationOperator<Solution> mutationOperator ;
 
   protected abstract boolean isStoppingConditionReached() ;
   protected abstract List<Solution> createInitialPopulation() ;
