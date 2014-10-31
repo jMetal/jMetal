@@ -18,18 +18,18 @@ import java.util.List;
 /**
  * Created by ajnebro on 30/10/14.
  */
-public class NSGAIIV2 extends AbstractGeneticAlgorithm<List<Solution>> {
+public class NSGAII extends AbstractGeneticAlgorithm<List<Solution>> {
   protected int maxIterations ;
   protected int populationSize ;
 
   protected Problem problem ;
 
   /** Constructor */
-  public NSGAIIV2() {
+  public NSGAII() {
   }
 
   /** Constructor */
-  private NSGAIIV2(Builder builder) {
+  private NSGAII(Builder builder) {
     problem = builder.problem ;
     maxIterations = builder.maxIterations ;
     populationSize = builder.populationSize ;
@@ -85,8 +85,8 @@ public class NSGAIIV2 extends AbstractGeneticAlgorithm<List<Solution>> {
       return this ;
     }
 
-    public NSGAIIV2 build() {
-      return new NSGAIIV2(this) ;
+    public NSGAII build() {
+      return new NSGAII(this) ;
     }
   }
 

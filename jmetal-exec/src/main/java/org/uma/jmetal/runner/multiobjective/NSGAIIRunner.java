@@ -21,6 +21,7 @@
 package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.algorithm.impl.multiobjective.nsgaii.NSGAII;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -41,7 +42,7 @@ import java.util.List;
 /**
  * Class to configure and run the NSGA-II algorithm
  */
-public class NSGAIIV2Runner {
+public class NSGAIIRunner {
   /**
    * @param args Command line arguments.
    * @throws java.io.IOException
@@ -76,7 +77,7 @@ public class NSGAIIV2Runner {
     selection = new BinaryTournamentSelection.Builder()
             .build();
 
-    algorithm = new NSGAIIV2.Builder(problem)
+    algorithm = new NSGAII.Builder(problem)
             .setCrossoverOperator(crossover)
             .setMutationOperator(mutation)
             .setSelectionOperator(selection)

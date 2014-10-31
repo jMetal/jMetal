@@ -20,7 +20,7 @@
 
 package org.uma.jmetal.runner.multiobjective;
 
-import org.uma.jmetal.algorithm.impl.multiobjective.nsgaii.NSGAIITemplate;
+import org.uma.jmetal.algorithm.impl.multiobjective.nsgaii.NSGAII;
 import org.uma.jmetal.problem.IntegerProblem;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.algorithm.Algorithm;
@@ -77,13 +77,12 @@ public class NSGAIIRunner2 {
     selection = new BinaryTournamentSelection.Builder()
             .build();
 
-    algorithm = new NSGAIITemplate.Builder(problem)
-            .setCrossover(crossover)
-            .setMutation(mutation)
-            .setSelection(selection)
-            .setMaxEvaluations(25000)
+    algorithm = new NSGAII.Builder(problem)
+            .setCrossoverOperator(crossover)
+            .setMutationOperator(mutation)
+            .setSelectionOperator(selection)
+            .setMaxIterations(250)
             .setPopulationSize(100)
-            .setVariant("NSGAII")
             .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
