@@ -26,7 +26,7 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
+import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -34,23 +34,23 @@ import java.util.logging.Level;
 /**
  * Created by Antonio J. Nebro on 30/05/14.
  */
-public class SequentialSolutionSetEvaluator implements SolutionSetEvaluator {
+public class SequentialSolutionListEvaluator implements SolutionListEvaluator {
 
   @Override
-  public List<Solution<?>> evaluate(List<Solution<?>> solutionSet, Problem problem) throws
-    JMetalException {
+  public List<Solution> evaluate(List<Solution> solutionList, Problem problem) throws JMetalException {
     try {
-      for (int i = 0 ; i < solutionSet.size(); i++) {
-        problem.evaluate(solutionSet.get(i)) ;
+      for (int i = 0 ; i < solutionList.size(); i++) {
+        problem.evaluate(solutionList.get(i)) ;
       }
     } catch (JMetalException e) {
       JMetalLogger.logger.log(Level.SEVERE, "Error evaluating solution", e);
       throw new JMetalException("Error in SequentialSolutionSetEvaluator.evaluate()") ;
     }
 
-    return solutionSet;
+    return solutionList;
   }
 
  @Override public void shutdown() {
+   ;
  }
 }

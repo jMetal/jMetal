@@ -23,7 +23,7 @@ package org.uma.jmetal.util.evaluator.impl;
 
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.evaluator.SolutionSetEvaluator;
+import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.parallel.impl.MultithreadedEvaluator;
 
 import java.util.List;
@@ -31,12 +31,12 @@ import java.util.List;
 /**
  * Created by Antonio J. Nebro on 30/05/14.
  */
-public class MultithreadedSolutionSetEvaluator implements SolutionSetEvaluator {
+public class MultithreadedSolutionListEvaluator implements SolutionListEvaluator {
   private MultithreadedEvaluator evaluator;
   private Problem problem;
   private int numberOfThreads ;
 
-  public MultithreadedSolutionSetEvaluator(int numberOfThreads, Problem problem) {
+  public MultithreadedSolutionListEvaluator(int numberOfThreads, Problem problem) {
   	this.numberOfThreads = numberOfThreads ;
     evaluator = new MultithreadedEvaluator(numberOfThreads)  ;
     this.problem = problem ;
@@ -44,13 +44,13 @@ public class MultithreadedSolutionSetEvaluator implements SolutionSetEvaluator {
   }
 
   @Override
-  public List<Solution<?>> evaluate(List<Solution<?>> solutionSet, Problem problem) {
-    for (int i = 0 ; i < solutionSet.size(); i++) {
-      evaluator.addTask(new Object[] {solutionSet.get(i)});
+  public List<Solution> evaluate(List<Solution> SolutionList, Problem problem) {
+    for (int i = 0 ; i < SolutionList.size(); i++) {
+      evaluator.addTask(new Object[] {SolutionList.get(i)});
     }
     evaluator.parallelExecution() ;
 
-    return solutionSet;
+    return SolutionList;
   }
 
   public int getNumberOfThreads() {

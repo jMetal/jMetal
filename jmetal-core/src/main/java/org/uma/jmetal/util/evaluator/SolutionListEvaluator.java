@@ -32,7 +32,7 @@ import java.util.List;
  * Created by Antonio J. Nebro on 30/05/14.
  */
 
-public interface SolutionSetEvaluator {
-  public List<Solution<?>> evaluate(List<Solution<?>> solutionSet, Problem problem) throws JMetalException;
+public interface SolutionListEvaluator {
+  public List<Solution> evaluate(List<Solution> solutionSet, Problem problem) throws JMetalException;
   public void shutdown() ;
 }
