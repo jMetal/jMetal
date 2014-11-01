@@ -15,6 +15,7 @@ public class GenericBinarySolution extends AbstractGenericSolution<BitSet, Binar
   /** Constructor */
   public GenericBinarySolution(BinaryProblem problem) {
     this.problem = problem ;
+
     objectives = new ArrayList<>(problem.getNumberOfObjectives()) ;
     variables = new ArrayList<>(problem.getNumberOfVariables()) ;
     overallConstraintViolationDegree = 0.0 ;
@@ -37,8 +38,9 @@ public class GenericBinarySolution extends AbstractGenericSolution<BitSet, Binar
     }
     variables = new ArrayList<>() ;
     for (BitSet var : solution.variables) {
-      variables.add((BitSet)var.clone()) ;
+      variables.add((BitSet) var.clone()) ;
     }
+
     overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
     attributes = new HashMap(solution.attributes) ;
   }
@@ -53,7 +55,6 @@ public class GenericBinarySolution extends AbstractGenericSolution<BitSet, Binar
         bitSet.set(i, false);
       }
     }
-
     return bitSet ;
   }
 
@@ -81,7 +82,7 @@ public class GenericBinarySolution extends AbstractGenericSolution<BitSet, Binar
   public String getVariableValueString(int index) {
     String result = "" ;
     for (BitSet var : variables) {
-      for (int i = 0; i < var.size() ; i++) {
+      for (int i = 0; i < problem.getNumberOfBits(i) ; i++) {
         if (var.get(i)) {
           result += "1" ;
         }
@@ -91,7 +92,6 @@ public class GenericBinarySolution extends AbstractGenericSolution<BitSet, Binar
       }
       result += "\t" ;
     }
-
     return result ;
   }
 }
