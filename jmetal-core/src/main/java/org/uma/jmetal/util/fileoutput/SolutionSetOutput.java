@@ -35,20 +35,20 @@ import java.util.List;
 public class SolutionSetOutput {
 
   public static class Printer {
-    FileOutputContext varFileContext;
-    FileOutputContext funFileContext;
+    private FileOutputContext varFileContext;
+    private FileOutputContext funFileContext;
     private String varFileName = "VAR";
     private String funFileName = "FUN";
-    String separator = "\t";
-    List<Solution> solutionSet;
-    boolean selectFeasibleSolutions;
+    private String separator = "\t";
+    private List<Solution> solutionSet;
+    private boolean selectFeasibleSolutions;
 
-    public Printer(List<Solution> solutionSet)  {
+    public Printer(List<? extends Solution> solutionSet)  {
       varFileContext = new DefaultFileOutputContext(varFileName);
       funFileContext = new DefaultFileOutputContext(funFileName);
       varFileContext.setSeparator(separator);
       funFileContext.setSeparator(separator);
-      this.solutionSet = solutionSet;
+      this.solutionSet = (List<Solution>) solutionSet;
       selectFeasibleSolutions = false;
     }
 

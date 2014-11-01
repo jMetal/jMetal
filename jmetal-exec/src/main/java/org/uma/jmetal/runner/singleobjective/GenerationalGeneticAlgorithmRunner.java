@@ -36,6 +36,7 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -71,7 +72,10 @@ public class GenerationalGeneticAlgorithmRunner {
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
-    List<Solution> population = algorithmRunner.getSolutionSet() ;
+    Solution solution = ((GenerationalGeneticAlgorithm)algorithm).getResult() ;
+    List<Solution> population = new ArrayList<>(1) ;
+    population.add(solution) ;
+
     long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)

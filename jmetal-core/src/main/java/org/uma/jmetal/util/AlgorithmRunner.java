@@ -29,20 +29,14 @@ import java.util.List;
  * Created by Antonio J. Nebro on 08/06/14.
  */
 public class AlgorithmRunner {
-  private List<Solution> solutionSet;
   private long computingTime;
 
   /** Constructor */
   private AlgorithmRunner(Executor execute) {
-    solutionSet = execute.solutionSet;
     computingTime = execute.computingTime;
   }
 
   /* Getters */
-  public List<Solution> getSolutionSet() {
-    return solutionSet;
-  }
-
   public long getComputingTime() {
     return computingTime;
   }
@@ -60,7 +54,6 @@ public class AlgorithmRunner {
     public AlgorithmRunner execute() {
       long initTime = System.currentTimeMillis();
       algorithm.run() ;
-      solutionSet = algorithm.getResult() ;
       computingTime = System.currentTimeMillis() - initTime ;
 
       return new AlgorithmRunner(this) ;

@@ -36,6 +36,7 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -70,8 +71,11 @@ public class SteadyStateGeneticAlgorithmRunner {
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
-    List<Solution> population = algorithmRunner.getSolutionSet() ;
     long computingTime = algorithmRunner.getComputingTime() ;
+
+    Solution solution = ((SteadyStateGeneticAlgorithm)algorithm).getResult() ;
+    List<Solution> population = new ArrayList<>(1) ;
+    population.add(solution) ;
 
     new SolutionSetOutput.Printer(population)
             .setSeparator("\t")

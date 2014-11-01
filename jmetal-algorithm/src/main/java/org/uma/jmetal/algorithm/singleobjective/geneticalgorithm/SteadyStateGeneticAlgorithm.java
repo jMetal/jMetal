@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Created by ajnebro on 26/10/14.
  */
-public class SteadyStateGeneticAlgorithm extends AbstractGeneticAlgorithm<List<Solution>> {
+public class SteadyStateGeneticAlgorithm extends AbstractGeneticAlgorithm<Solution> {
   private Comparator<Solution> comparator ;
   private int maxIterations ;
   private int populationSize ;
@@ -151,11 +151,9 @@ public class SteadyStateGeneticAlgorithm extends AbstractGeneticAlgorithm<List<S
   }
 
   @Override
-  public List<Solution> getResult() {
+  public Solution getResult() {
     getPopulation().sort(comparator);
-    List<Solution> result = new ArrayList<>(1) ;
-    result.add(getPopulation().get(0));
-    return result;
+    return getPopulation().get(0);
   }
 
   @Override
