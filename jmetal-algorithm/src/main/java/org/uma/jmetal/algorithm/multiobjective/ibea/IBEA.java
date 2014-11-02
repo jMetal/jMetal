@@ -235,7 +235,7 @@ public class IBEA implements Algorithm<List<Solution>> {
 
   @Override
   public List<Solution> getResult() {
-    return new SolutionListUtils().findNondominatedSolutions(archive) ;
+    return SolutionListUtils.getNondominatedSolutions(archive) ;
   }
 
   /**

@@ -12,14 +12,14 @@ import java.util.List;
 /**
  * Created by Antonio J. Nebro on 04/10/14.
  */
-public class SolutionListUtils<T extends List<Solution>> {
+public class SolutionListUtils {
 
-  public List<Solution> findNondominatedSolutions(T solutionSet) {
+  public static List<Solution> getNondominatedSolutions(List<? extends Solution> solutionList) {
     Ranking ranking = new DominanceRanking() ;
-    return ranking.computeRanking(solutionSet).getSubfront(0);
+    return ranking.computeRanking(solutionList).getSubfront(0);
   }
 
-  public int findWorstSolution(T solutionList, Comparator<Solution> comparator) {
+  public static int findWorstSolution(List<? extends Solution> solutionList, Comparator<Solution> comparator) {
     if ((solutionList == null) || (solutionList.isEmpty())) {
       return -1;
     }
