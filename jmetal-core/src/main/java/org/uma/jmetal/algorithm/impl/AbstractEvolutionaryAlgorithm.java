@@ -8,29 +8,29 @@ import java.util.List;
 /**
  * Created by ajnebro on 26/10/14.
  */
-public abstract class AbstractEvolutionaryAlgorithm<Sol extends Solution, Result> implements Algorithm <Result> {
+public abstract class AbstractEvolutionaryAlgorithm<S extends Solution, Result> implements Algorithm <Result> {
   protected abstract void initProgress() ;
   protected abstract void updateProgress() ;
 
-  private List<Sol> population ;
-  public List<Sol> getPopulation() {
+  private List<S> population ;
+  public List<S> getPopulation() {
     return population ;
   }
 
   protected abstract boolean isStoppingConditionReached() ;
-  protected abstract List<Sol> createInitialPopulation() ;
-  protected abstract List<Sol> evaluatePopulation(List<Sol> population) ;
-  protected abstract List<Sol> selection(List<Sol> population) ;
-  protected abstract List<Sol> reproduction(List<Sol> population) ;
-  protected abstract List<Sol> replacement(List<Sol> population, List<Sol> offspringPopulation) ;
+  protected abstract List<S> createInitialPopulation() ;
+  protected abstract List<S> evaluatePopulation(List<S> population) ;
+  protected abstract List<S> selection(List<S> population) ;
+  protected abstract List<S> reproduction(List<S> population) ;
+  protected abstract List<S> replacement(List<S> population, List<S> offspringPopulation) ;
 
   @Override
   public abstract Result getResult() ;
 
   @Override
   public void run() {
-    List<Sol> offspringPopulation ;
-    List<Sol> matingPopulation ;
+    List<S> offspringPopulation ;
+    List<S> matingPopulation ;
 
     population = createInitialPopulation();
     population = evaluatePopulation(population);

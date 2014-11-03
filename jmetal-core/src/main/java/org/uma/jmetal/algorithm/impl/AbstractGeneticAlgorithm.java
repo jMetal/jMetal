@@ -10,8 +10,8 @@ import java.util.List;
 /**
  * Created by ajnebro on 26/10/14.
  */
-public abstract class AbstractGeneticAlgorithm<Sol extends Solution, Result> extends AbstractEvolutionaryAlgorithm<Sol, Result> {
-  protected SelectionOperator<List<Sol>, Sol> selectionOperator ;
-  protected CrossoverOperator<List<Sol>, List<Sol>> crossoverOperator ;
-  protected MutationOperator<Sol> mutationOperator ;
+public abstract class AbstractGeneticAlgorithm<S extends Solution, Result> extends AbstractEvolutionaryAlgorithm<S, Result> {
+  protected SelectionOperator<List<S>, S> selectionOperator ;
+  protected CrossoverOperator<List<S>, List<S>> crossoverOperator ;
+  protected MutationOperator<S> mutationOperator ;
 }

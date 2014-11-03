@@ -39,7 +39,7 @@ public class SolutionListUtils {
     return index;
   }
 
-  public static double[][] writeObjectivesToMatrix(List<Solution> solutionList) {
+  public static <S extends Solution> double[][] writeObjectivesToMatrix(List<S> solutionList) {
     if (solutionList.size() == 0) {
       return new double[0][0];
     }
@@ -118,8 +118,8 @@ public class SolutionListUtils {
   }
 
   /**
-   * This method receives a list of non-dominated solutions and maximum and mimnimum values of the
-   * objecttives, and returns a the normalized set of solutions.
+   * This method receives a list of non-dominated solutions and maximum and minimum values of the
+   * objectives, and returns a the normalized set of solutions.
    *
    * @param solutionList A list of non-dominated solutions
    * @param maximumValue The maximum values of the objectives
@@ -151,12 +151,12 @@ public class SolutionListUtils {
    * @param solutionSet The front to invert
    * @return The inverted front
    */
-  public static List<Solution<?>> getInvertedFront(List<Solution<?>> solutionSet) {
-    List<Solution<?>> invertedFront = new ArrayList<>(solutionSet.size()) ;
+  public static <S extends Solution> List<S> getInvertedFront(List<S> solutionSet) {
+    List<S> invertedFront = new ArrayList<>(solutionSet.size()) ;
     int numberOfObjectives = solutionSet.get(0).getNumberOfObjectives() ;
 
     for (int i = 0; i < solutionSet.size(); i++) {
-      invertedFront.add(i, solutionSet.get(i).copy()) ;
+      invertedFront.add(i, (S) solutionSet.get(i).copy()) ;
       for (int j = 0; j < numberOfObjectives; j++) {
         if (solutionSet.get(i).getObjective(j) <= 1.0 &&
           solutionSet.get(i).getObjective(j) >= 0.0) {
