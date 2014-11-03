@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * Created by ajnebro on 30/10/14.
  */
-public class NSGAII extends AbstractGeneticAlgorithm<List<Solution>> {
+public class NSGAII extends AbstractGeneticAlgorithm<Solution, List<Solution>> {
   protected int iterations ;
   protected int maxIterations ;
   protected int populationSize ;

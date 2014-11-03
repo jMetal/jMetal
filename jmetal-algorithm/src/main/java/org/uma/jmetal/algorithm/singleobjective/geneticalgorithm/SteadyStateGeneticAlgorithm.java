@@ -15,13 +15,13 @@ import java.util.List;
 /**
  * Created by ajnebro on 26/10/14.
  */
-public class SteadyStateGeneticAlgorithm extends AbstractGeneticAlgorithm<Solution> {
+public class SteadyStateGeneticAlgorithm extends AbstractGeneticAlgorithm<Solution, Solution> {
   private Comparator<Solution> comparator ;
   private int maxIterations ;
   private int populationSize ;
   private int iterations ;
 
-  private Problem problem ;
+  private Problem<Solution> problem ;
 
   /** Constructor */
   private SteadyStateGeneticAlgorithm(Builder builder) {

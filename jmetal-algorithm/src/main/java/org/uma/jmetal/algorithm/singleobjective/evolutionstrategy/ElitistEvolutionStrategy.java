@@ -34,7 +34,7 @@ import java.util.List;
 /**
  * Class implementing a (mu + lambda) Evolution Strategy (lambda must be divisible by mu)
  */
-public class ElitistEvolutionStrategy extends AbstractEvolutionStrategy<Solution> {
+public class ElitistEvolutionStrategy extends AbstractEvolutionStrategy<Solution, Solution> {
   private Problem problem ;
 
   private int mu;

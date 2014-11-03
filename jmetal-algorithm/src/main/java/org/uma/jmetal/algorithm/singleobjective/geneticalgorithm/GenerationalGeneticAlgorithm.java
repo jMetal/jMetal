@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Created by ajnebro on 26/10/14.
  */
-public class GenerationalGeneticAlgorithm extends AbstractGeneticAlgorithm<Solution> {
+public class GenerationalGeneticAlgorithm extends AbstractGeneticAlgorithm<Solution, Solution> {
   private Comparator<Solution> comparator ;
   private int maxIterations ;
   private int populationSize ;

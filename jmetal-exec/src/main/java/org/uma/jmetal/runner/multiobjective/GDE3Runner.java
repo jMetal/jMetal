@@ -20,21 +20,18 @@
 
 package org.uma.jmetal.runner.multiobjective;
 
-import org.uma.jmetal.algorithm.multiobjective.gde3.GDE3;
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
-import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.algorithm.multiobjective.gde3.GDE3;
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.impl.selection.DifferentialEvolutionSelection;
 import org.uma.jmetal.problem.ContinuousProblem;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
-import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
+import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -57,7 +54,7 @@ public class GDE3Runner {
     DifferentialEvolutionSelection selection;
     DifferentialEvolutionCrossover crossover;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.Fonseca" ;
+    String problemName = "org.uma.jmetal.problem.multiobjective.Kursawe" ;
 
     problem = (ContinuousProblem) ProblemUtils.loadProblem(problemName);
 
