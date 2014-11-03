@@ -8,9 +8,9 @@
     <packaging>jar</packaging>
 
     <parent>
-      <groupId>org.uma.jmetal</groupId>
-      <artifactId>jmetal</artifactId>
-      <version>5.0-Beta-16-SNAPSHOT</version>
+        <groupId>org.uma.jmetal</groupId>
+        <artifactId>jmetal</artifactId>
+        <version>5.0-Beta-16-SNAPSHOT</version>
     </parent>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -25,6 +25,11 @@
         <dependency>
             <groupId>org.uma.jmetal</groupId>
             <artifactId>jmetal-algorithm</artifactId>
+            <version>5.0-Beta-16-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.uma.jmetal</groupId>
+            <artifactId>jmetal-problem</artifactId>
             <version>5.0-Beta-16-SNAPSHOT</version>
         </dependency>
         <dependency>
