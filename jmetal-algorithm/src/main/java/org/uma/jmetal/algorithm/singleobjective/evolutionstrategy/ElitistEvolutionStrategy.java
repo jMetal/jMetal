@@ -159,11 +159,6 @@ public class ElitistEvolutionStrategy extends AbstractEvolutionStrategy<Solution
   @Override
   protected List<Solution> selection(List<Solution> population) {
     return population ;
-//    List<Solution> matingPopulation = new ArrayList<>(mu) ;
-//    for (Solution solution: population) {
-//      matingPopulation.add(solution.copy()) ;
-//    }
-//    return matingPopulation ;
   }
 
   @Override

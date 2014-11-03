@@ -64,10 +64,10 @@ public class DifferentialEvolutionSelection implements SelectionOperator<List<Do
       throw new JMetalException("Parameter is null") ;
     } else if (solutionSet.size() < 4) {
       throw new JMetalException(
-        "DifferentialEvolutionSelection: the population has less than four solutions");
+              "DifferentialEvolutionSelection: the population has less than four solutions");
     } else if ((solutionListIndex < 0) || (solutionListIndex > solutionSet.size())) {
       throw new JMetalException(
-        "DifferentialEvolutionSelection: index value invalid: " + solutionListIndex );
+              "DifferentialEvolutionSelection: index value invalid: " + solutionListIndex );
     }
 
     List<DoubleSolution> parents = new ArrayList<>(3);

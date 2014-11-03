@@ -21,16 +21,19 @@
 package org.uma.jmetal.runner.singleobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.impl.SteadyStateGeneticAlgorithm2;
-import org.uma.jmetal.algorithm.singleobjective.geneticalgorithm.SteadyStateGeneticAlgorithm;
+import org.uma.jmetal.algorithm.singleobjective.geneticalgorithm.GenerationalGeneticAlgorithm;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
+import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.crossover.SinglePointCrossover;
 import org.uma.jmetal.operator.impl.mutation.BitFlipMutation;
+import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.BinaryProblem;
+import org.uma.jmetal.problem.ContinuousProblem;
 import org.uma.jmetal.problem.singleobjective.OneMax;
+import org.uma.jmetal.problem.singleobjective.Sphere;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
@@ -42,41 +45,44 @@ import java.util.List;
 
 /**
  */
-public class SteadyStateGeneticAlgorithmRunner {
+public class GenerationalGeneticAlgorithmRunner2 {
   /**
    */
-  public static void main(String[] args) throws
-          Exception {
+  public static void main(String[] args) throws Exception {
 
     Algorithm algorithm;
-    BinaryProblem problem = new OneMax(512) ;
-    CrossoverOperator crossoverOperator = new SinglePointCrossover.Builder()
+    ContinuousProblem problem = new Sphere(20) ;
+
+    CrossoverOperator crossoverOperator = new SBXCrossover.Builder()
             .setProbability(0.9)
+            .setDistributionIndex(20.0)
             .build() ;
 
-    MutationOperator mutationOperator = new BitFlipMutation.Builder()
-            .setProbability(1.0 / problem.getNumberOfBits(0))
+    MutationOperator mutationOperator = new PolynomialMutation.Builder()
+            .setProbability(1.0 / problem.getNumberOfVariables())
+            .setDistributionIndex(20.0)
             .build();
 
     SelectionOperator selectionOperator = new BinaryTournamentSelection.Builder()
             .build();
 
-    algorithm = new SteadyStateGeneticAlgorithm2.Builder(problem)
+    algorithm = new GenerationalGeneticAlgorithm.Builder(problem)
             .setPopulationSize(100)
-            .setMaxIterations(25000)
+            .setMaxIterations(250)
             .setCrossoverOperator(crossoverOperator)
             .setMutationOperator(mutationOperator)
             .setSelectionOperator(selectionOperator)
             .build() ;
 
+
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
-    long computingTime = algorithmRunner.getComputingTime() ;
-
-    Solution solution = ((SteadyStateGeneticAlgorithm2)algorithm).getResult() ;
+    Solution solution = ((GenerationalGeneticAlgorithm)algorithm).getResult() ;
     List<Solution> population = new ArrayList<>(1) ;
     population.add(solution) ;
+
+    long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)
             .setSeparator("\t")

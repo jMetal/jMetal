@@ -28,7 +28,7 @@ public class NSGAII extends AbstractGeneticAlgorithm<List<Solution>> {
 
   protected Problem problem ;
 
-  protected SolutionListEvaluator evaluator ;
+  protected SolutionListEvaluator<Solution> evaluator ;
   /** Constructor */
   public NSGAII() {
   }
