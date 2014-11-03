@@ -31,7 +31,7 @@ import java.util.List;
 /**
  * Created by Antonio J. Nebro on 30/05/14.
  */
-public class MultithreadedSolutionListEvaluator implements SolutionListEvaluator {
+public class MultithreadedSolutionListEvaluator<S extends Solution> implements SolutionListEvaluator<S> {
   private MultithreadedEvaluator evaluator;
   private Problem problem;
   private int numberOfThreads ;
@@ -44,7 +44,7 @@ public class MultithreadedSolutionListEvaluator implements SolutionListEvaluator
   }
 
   @Override
-  public List<Solution> evaluate(List<Solution> SolutionList, Problem problem) {
+  public List<S> evaluate(List<S> SolutionList, Problem problem) {
     for (int i = 0 ; i < SolutionList.size(); i++) {
       evaluator.addTask(new Object[] {SolutionList.get(i)});
     }

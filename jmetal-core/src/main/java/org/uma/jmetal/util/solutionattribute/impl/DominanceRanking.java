@@ -38,7 +38,7 @@ import java.util.*;
  * solutions, subset 1 contains the non-dominated solutions after removing those
  * belonging to subset 0, and so on.
  */
-public class DominanceRanking implements Ranking<Solution, Integer> {
+public class DominanceRanking implements Ranking<Solution> {
 
   private static final Comparator<Solution> DOMINANCE_COMPARATOR = new DominanceComparator();
   private static final Comparator<Solution> CONSTRAINT_VIOLATION_COMPARATOR =

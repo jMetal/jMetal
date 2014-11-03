@@ -34,10 +34,10 @@ import java.util.logging.Level;
 /**
  * Created by Antonio J. Nebro on 30/05/14.
  */
-public class SequentialSolutionListEvaluator implements SolutionListEvaluator {
+public class SequentialSolutionListEvaluator<S extends Solution> implements SolutionListEvaluator<S> {
 
   @Override
-  public List<Solution> evaluate(List<Solution> solutionList, Problem problem) throws JMetalException {
+  public List<S> evaluate(List<S> solutionList, Problem problem) throws JMetalException {
     try {
       for (int i = 0 ; i < solutionList.size(); i++) {
         problem.evaluate(solutionList.get(i)) ;

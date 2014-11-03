@@ -20,7 +20,7 @@ import org.uma.jmetal.solution.Solution;
  * @author Antonio J. Nebro
  * @version 0.1
  */
-public interface Problem<S extends Solution<?>> {
+public interface Problem<S extends Solution> {
   /* Getters */
   public int getNumberOfVariables() ;
   public int getNumberOfObjectives() ;
