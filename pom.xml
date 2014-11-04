@@ -207,6 +207,21 @@
                 <version>5.0-Beta-16-SNAPSHOT</version>
             </dependency>
             <dependency>
+                <groupId>org.uma.jmetal</groupId>
+                <artifactId>jmetal-exec</artifactId>
+                <version>5.0-Beta-16-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.uma.jmetal</groupId>
+                <artifactId>jmetal-problem</artifactId>
+                <version>5.0-Beta-16-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.uma.jmetal</groupId>
+                <artifactId>jmetal-algorithm</artifactId>
+                <version>5.0-Beta-16-SNAPSHOT</version>
+            </dependency>
+            <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>4.11</version>
