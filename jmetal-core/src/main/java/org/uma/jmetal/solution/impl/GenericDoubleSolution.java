@@ -57,7 +57,7 @@ public class GenericDoubleSolution extends AbstractGenericSolution<Double, Conti
   }
 
   @Override
-  public Solution<?> copy() {
+  public Solution copy() {
     return new GenericDoubleSolution(this);
   }
 
