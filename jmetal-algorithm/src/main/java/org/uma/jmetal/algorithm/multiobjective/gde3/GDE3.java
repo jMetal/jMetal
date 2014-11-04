@@ -46,9 +46,6 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
   protected int maxIterations;
   protected int iterations;
 
-  protected DifferentialEvolutionCrossover crossoverOperator;
-  protected DifferentialEvolutionSelection selectionOperator;
-
   protected Comparator dominanceComparator;
 
   protected Ranking ranking ;
@@ -161,9 +158,9 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
 
   @Override
   protected List<DoubleSolution> evaluatePopulation(List<DoubleSolution> population) {
-    population = evaluator.evaluate(population, problem) ;
+    List<DoubleSolution> pop = evaluator.evaluate(population, problem) ;
 
-    return population ;
+    return pop ;
   }
 
   @Override
