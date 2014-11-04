@@ -34,6 +34,11 @@ import java.util.List;
  */
 public class Sphere extends AbstractContinuousProblem {
   /** Constructor */
+  public Sphere() {
+    this(10) ;
+  }
+
+  /** Constructor */
   public Sphere(Integer numberOfVariables) throws JMetalException {
     setNumberOfVariables(numberOfVariables);
     setNumberOfObjectives(1);
