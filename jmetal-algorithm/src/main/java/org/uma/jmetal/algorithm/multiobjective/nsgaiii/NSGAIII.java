@@ -60,9 +60,9 @@ public class NSGAIII extends AbstractGeneticAlgorithm<Solution, List<Solution>> 
 
     System.out.println("rpssize: " + referencePoints.size()) ;
     for (int i = 0; i < referencePoints.size(); i++) {
-      System.out.println(referencePoints.get(i).position.size()) ;
-      for (int j = 0 ; j < referencePoints.get(i).position.size(); j++) {
-        System.out.println("   " + referencePoints.get(i).position.get(j)) ;
+      System.out.println(referencePoints.get(i).position.length) ;
+      for (int j = 0 ; j < referencePoints.get(i).position.length; j++) {
+        System.out.println("   " + referencePoints.get(i).position[j]) ;
       }
     }
 /*
