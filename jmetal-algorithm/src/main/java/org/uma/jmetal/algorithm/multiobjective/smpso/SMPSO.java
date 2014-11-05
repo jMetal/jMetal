@@ -321,7 +321,7 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
     // The initial swarm evaluation is iteration 0
     iterations = 1;
 
-    swarm = new ArrayList<DoubleSolution>(swarmSize);
+    swarm = new ArrayList<>(swarmSize);
     best = new DoubleSolution[swarmSize];
 
     dominanceComparator = new DominanceComparator();

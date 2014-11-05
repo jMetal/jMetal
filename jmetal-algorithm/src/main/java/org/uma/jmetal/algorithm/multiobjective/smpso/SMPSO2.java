@@ -1,7 +1,6 @@
 package org.uma.jmetal.algorithm.multiobjective.smpso;
 
-import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.impl.AbstractParticleSwarmOptimizationAlgorithm;
+import org.uma.jmetal.algorithm.impl.AbstractParticleSwarmOptimization;
 import org.uma.jmetal.operator.Operator;
 import org.uma.jmetal.problem.ContinuousProblem;
 import org.uma.jmetal.solution.DoubleSolution;
@@ -23,7 +22,7 @@ import java.util.List;
 /**
  * Created by antonio on 24/09/14.
  */
-public class SMPSO2 extends AbstractParticleSwarmOptimizationAlgorithm<DoubleSolution, List<DoubleSolution>> {
+public class SMPSO2 extends AbstractParticleSwarmOptimization<DoubleSolution, List<DoubleSolution>> {
   private ContinuousProblem problem ;
 
   private double c1Max;
@@ -312,6 +311,36 @@ public class SMPSO2 extends AbstractParticleSwarmOptimizationAlgorithm<DoubleSol
   }
 
   @Override
+  public void run() {
+    List<DoubleSolution> swarm ;
+    swarm = createInitialSwarm() ;
+    swarm = evaluateSwarm(swarm);
+    initializeLeaders(swarm) ;
+    initializeParticlesMemory(swarm) ;
+    updateLeadersDensityEstimator() ;
+    initProgress();
+
+    while (!isStoppingConditionReached()) {
+      updateVelocity(swarm);
+      updatePosition(swarm);
+      perturbation(swarm);
+      swarm = evaluateSwarm(swarm) ;
+      updateLeaders(swarm) ;
+      updateParticlesMemory(swarm) ;
+      updateLeadersDensityEstimator() ;
+      updateProgress();
+    }
+  }
+
+  protected void updateLeadersDensityEstimator() {
+    if (leaders instanceof CrowdingDistanceArchive) {
+      ((CrowdingDistanceArchive) leaders).computeDistance();
+    } else {
+      throw new JMetalException("Invalid setArchive type") ;
+    }
+  }
+
+  @Override
   protected void initProgress() {
     iterations = 1 ;
   }
@@ -363,32 +392,141 @@ public class SMPSO2 extends AbstractParticleSwarmOptimizationAlgorithm<DoubleSol
   }
 
   @Override
-  protected void computeSpeed() {
+  protected void updateVelocity(List<DoubleSolution> swarm) {
+    double r1, r2, c1, c2;
+    double wmax, wmin ;
+    DoubleSolution bestGlobal;
 
+    for (int i = 0; i < swarmSize; i++) {
+      DoubleSolution particle = (DoubleSolution)swarm.get(i).copy();
+      DoubleSolution bestParticle = (DoubleSolution)best[i].copy();
+
+      bestGlobal = selectGlobalBest() ;
+
+      r1 = randomGenerator.nextDouble(r1Min, r1Max);
+      r2 = randomGenerator.nextDouble(r2Min, r2Max);
+      c1 = randomGenerator.nextDouble(c1Min, c1Max);
+      c2 = randomGenerator.nextDouble(c2Min, c2Max);
+      wmax = weightMax;
+      wmin = weightMin;
+
+      for (int var = 0; var < particle.getNumberOfVariables(); var++) {
+        speed[i][var] = velocityConstriction(constrictionCoefficient(c1, c2) *
+                (inertiaWeight(iterations, maxIterations, wmax, wmin) *
+                        speed[i][var] +
+                        c1 * r1 * (bestParticle.getVariableValue(var) -
+                                particle.getVariableValue(var)) +
+                        c2 * r2 * (bestGlobal.getVariableValue(var) -
+                                particle.getVariableValue(var))), deltaMax, deltaMin, var);
+      }
+    }
   }
 
   @Override
-  protected void computeNewPositions() {
+  protected void updatePosition(List<DoubleSolution> swarm) {
+    for (int i = 0; i < swarmSize; i++) {
+      DoubleSolution particle = swarm.get(i);
+      for (int j = 0; j < particle.getNumberOfVariables(); j++) {
+        double v = particle.getVariableValue(j);
+        particle.setVariableValue(j, particle.getVariableValue(j) + speed[i][j]);
 
+        if (particle.getVariableValue(j) < problem.getLowerBound(j)) {
+          particle.setVariableValue(j, problem.getLowerBound(j));
+          speed[i][j] = speed[i][j] * changeVelocity1;
+        }
+        if (particle.getVariableValue(j) > problem.getUpperBound(j)) {
+          particle.setVariableValue(j, problem.getUpperBound(j));
+          speed[i][j] = speed[i][j] * changeVelocity2;
+        }
+      }
+    }
   }
 
   @Override
-  protected void perturbation() {
-
+  protected void perturbation(List<DoubleSolution> swarm) {
+    for (int i = 0; i < swarm.size(); i++) {
+      if ((i % 6) == 0) {
+        mutation.execute(swarm.get(i));
+      }
+    }
   }
 
   @Override
-  protected void updateLeaders() {
-
+  protected void updateLeaders(List<DoubleSolution> swarm) {
+    for (int i = 0; i < swarm.size(); i++) {
+      DoubleSolution particle = (DoubleSolution)swarm.get(i).copy();
+      leaders.add(particle);
+    }
   }
 
   @Override
-  protected void updateParticleMemory() {
-
+  protected void updateParticlesMemory(List<DoubleSolution> swarm) {
+    for (int i = 0; i < swarm.size(); i++) {
+      int flag = dominanceComparator.compare(swarm.get(i), best[i]);
+      if (flag != 1) {
+        DoubleSolution particle = (DoubleSolution)swarm.get(i).copy();
+        best[i] = particle;
+      }
+    }
   }
 
   @Override
   public List<DoubleSolution> getResult() {
-    return null;
+    return this.leaders.getSolutionList();
   }
+
+  protected DoubleSolution selectGlobalBest() {
+    Solution one, two;
+    DoubleSolution bestGlobal ;
+    int pos1 = randomGenerator.nextInt(0, leaders.getSolutionList().size() - 1);
+    int pos2 = randomGenerator.nextInt(0, leaders.getSolutionList().size() - 1);
+    one = leaders.getSolutionList().get(pos1);
+    two = leaders.getSolutionList().get(pos2);
+
+    if (crowdingDistanceComparator.compare(one, two) < 1) {
+      bestGlobal = (DoubleSolution)one.copy();
+    } else {
+      bestGlobal = (DoubleSolution)two.copy();
+    }
+
+    return bestGlobal ;
+  }
+
+  private double velocityConstriction(
+          double v,
+          double[] deltaMax,
+          double[] deltaMin,
+          int variableIndex) {
+
+    double result;
+
+    double dmax = deltaMax[variableIndex];
+    double dmin = deltaMin[variableIndex];
+
+    result = v;
+
+    if (v > dmax) {
+      result = dmax;
+    }
+
+    if (v < dmin) {
+      result = dmin;
+    }
+
+    return result;
+  }
+
+  private double constrictionCoefficient(double c1, double c2) {
+    double rho = c1 + c2;
+    if (rho <= 4) {
+      return 1.0;
+    } else {
+      return 2 / (2 - rho - Math.sqrt(Math.pow(rho, 2.0) - 4.0 * rho));
+    }
+  }
+
+  private double inertiaWeight(int iter, int miter, double wma, double wmin) {
+    return wma;
+  }
+
 }

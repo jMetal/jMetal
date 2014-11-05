@@ -21,6 +21,7 @@
 package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSO;
+import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSO2;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.algorithm.Algorithm;
@@ -79,7 +80,7 @@ public class SMPSORunner {
             .setProbability(1.0 / problem.getNumberOfVariables())
             .build();
 
-    algorithm = new SMPSO.Builder(problem, archive)
+    algorithm = new SMPSO2.Builder(problem, archive)
             .setMutation(mutation)
             .setMaxIterations(250)
             .setSwarmSize(100)
@@ -89,7 +90,7 @@ public class SMPSORunner {
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute();
 
-    List<DoubleSolution> population = ((SMPSO)algorithm).getResult();
+    List<DoubleSolution> population = ((SMPSO2)algorithm).getResult();
     long computingTime = algorithmRunner.getComputingTime();
 
     new SolutionSetOutput.Printer(population)
