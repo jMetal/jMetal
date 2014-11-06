@@ -21,11 +21,9 @@
 package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSO;
-import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSO2;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.ContinuousProblem;
@@ -36,9 +34,7 @@ import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-import org.uma.jmetal.util.pseudorandom.impl.MersenneTwisterGenerator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -80,17 +76,17 @@ public class SMPSORunner {
             .setProbability(1.0 / problem.getNumberOfVariables())
             .build();
 
-    algorithm = new SMPSO2.Builder(problem, archive)
+    algorithm = new SMPSO.Builder(problem, archive)
             .setMutation(mutation)
             .setMaxIterations(250)
             .setSwarmSize(100)
-            .setRandomGenerator(new MersenneTwisterGenerator())
+            //.setRandomGenerator(new MersenneTwisterGenerator())
             .build();
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute();
 
-    List<DoubleSolution> population = ((SMPSO2)algorithm).getResult();
+    List<DoubleSolution> population = ((SMPSO)algorithm).getResult();
     long computingTime = algorithmRunner.getComputingTime();
 
     new SolutionSetOutput.Printer(population)

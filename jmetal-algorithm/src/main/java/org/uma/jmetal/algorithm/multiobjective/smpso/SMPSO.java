@@ -1,15 +1,17 @@
 package org.uma.jmetal.algorithm.multiobjective.smpso;
 
-import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.algorithm.impl.AbstractParticleSwarmOptimization;
 import org.uma.jmetal.operator.Operator;
-import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.problem.ContinuousProblem;
+import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.comparator.DominanceComparator;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
+import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
 
@@ -20,7 +22,7 @@ import java.util.List;
 /**
  * Created by antonio on 24/09/14.
  */
-public class SMPSO implements Algorithm<List<DoubleSolution>> {
+public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, List<DoubleSolution>> {
   private ContinuousProblem problem ;
 
   private double c1Max;
@@ -39,7 +41,6 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
   private int swarmSize;
   private int maxIterations;
   private int iterations;
-  private List<DoubleSolution> swarm;
   private DoubleSolution[] best;
 
   private JMetalRandom randomGenerator ;
@@ -53,6 +54,8 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
 
   private double deltaMax[];
   private double deltaMin[];
+
+  private SolutionListEvaluator evaluator ;
 
   /** Constructor */
   public SMPSO(Builder builder) {
@@ -76,6 +79,25 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
     changeVelocity2 = builder.changeVelocity2;
 
     randomGenerator = JMetalRandom.getInstance();
+    evaluator = new SequentialSolutionListEvaluator() ;
+
+    dominanceComparator = new DominanceComparator();
+    crowdingDistanceComparator = new CrowdingDistanceComparator();
+    best = new DoubleSolution[swarmSize];
+    speed = new double[swarmSize][problem.getNumberOfVariables()];
+
+    deltaMax = new double[problem.getNumberOfVariables()];
+    deltaMin = new double[problem.getNumberOfVariables()];
+    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
+      deltaMax[i] = (problem.getUpperBound(i) - problem.getLowerBound(i)) / 2.0;
+      deltaMin[i] = -deltaMax[i];
+    }
+
+    for (int i = 0; i < swarmSize; i++) {
+      for (int j = 0; j < problem.getNumberOfVariables(); j++) {
+        speed[i][j] = 0.0;
+      }
+    }
   }
 
   /* Getters */
@@ -288,104 +310,89 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
     }
   }
 
-  /** Execute() method  */
   @Override
   public void run() {
-    initialization() ;
-    createInitialSwarm() ;
-    evaluateSwarm();
-    initializeLeaders() ;
-    initializeParticlesMemory() ;
+    List<DoubleSolution> swarm ;
+    swarm = createInitialSwarm() ;
+    swarm = evaluateSwarm(swarm);
+    initializeLeaders(swarm) ;
+    initializeParticlesMemory(swarm) ;
     updateLeadersDensityEstimator() ;
+    initProgress();
 
-    while (!stoppingCondition()) {
-      computeSpeed(iterations, maxIterations);
-      computeNewPositions();
-      perturbation();
-      evaluateSwarm() ;
-      updateLeaders() ;
-      updateParticleMemory() ;
+    while (!isStoppingConditionReached()) {
+      updateVelocity(swarm);
+      updatePosition(swarm);
+      perturbation(swarm);
+      swarm = evaluateSwarm(swarm) ;
+      updateLeaders(swarm) ;
+      updateParticlesMemory(swarm) ;
       updateLeadersDensityEstimator() ;
-      iterations++ ;
+      updateProgress();
     }
+  }
 
-    tearDown() ;
+  protected void updateLeadersDensityEstimator() {
+    if (leaders instanceof CrowdingDistanceArchive) {
+      ((CrowdingDistanceArchive) leaders).computeDistance();
+    } else {
+      throw new JMetalException("Invalid setArchive type") ;
+    }
   }
 
   @Override
-  public List<DoubleSolution> getResult() {
-    return paretoFrontApproximation() ;
+  protected void initProgress() {
+    iterations = 1 ;
   }
 
-  public void initialization() {
-    // The initial swarm evaluation is iteration 0
-    iterations = 1;
-
-    swarm = new ArrayList<>(swarmSize);
-    best = new DoubleSolution[swarmSize];
-
-    dominanceComparator = new DominanceComparator();
-    crowdingDistanceComparator = new CrowdingDistanceComparator();
-
-    speed = new double[swarmSize][problem.getNumberOfVariables()];
-
-    deltaMax = new double[problem.getNumberOfVariables()];
-    deltaMin = new double[problem.getNumberOfVariables()];
-    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      deltaMax[i] = (problem.getUpperBound(i) - problem.getLowerBound(i)) / 2.0;
-      deltaMin[i] = -deltaMax[i];
-    }
-
-    for (int i = 0; i < swarmSize; i++) {
-      for (int j = 0; j < problem.getNumberOfVariables(); j++) {
-        speed[i][j] = 0.0;
-      }
-    }
+  @Override
+  protected void updateProgress() {
+    iterations += 1 ;
   }
 
-  protected void createInitialSwarm() {
-    swarm = new ArrayList<>(swarmSize);
+  @Override
+  protected boolean isStoppingConditionReached() {
+    return iterations >= maxIterations ;
+  }
+
+  @Override
+  protected List<DoubleSolution> createInitialSwarm() {
+    List<DoubleSolution> swarm = new ArrayList<>(swarmSize);
 
     DoubleSolution newSolution;
     for (int i = 0; i < swarmSize; i++) {
       newSolution = problem.createSolution() ;
       swarm.add(newSolution);
     }
+
+    return swarm ;
   }
 
-  protected void evaluateSwarm() throws JMetalException {
-    for (int i = 0 ; i < swarm.size(); i++) {
-      problem.evaluate(swarm.get(i)) ;
-    }
+  @Override
+  protected List<DoubleSolution> evaluateSwarm(List<DoubleSolution> swarm) {
+    swarm = evaluator.evaluate(swarm, problem) ;
+
+    return swarm ;
   }
 
-  protected void initializeLeaders() {
+  @Override
+  protected void initializeLeaders(List<DoubleSolution> swarm) {
     for (int i = 0; i < swarm.size(); i++) {
-      DoubleSolution particle = (DoubleSolution)swarm.get(i).copy() ;
+      DoubleSolution particle = (DoubleSolution) swarm.get(i).copy();
       leaders.add(particle);
     }
   }
 
-  protected void initializeParticlesMemory() {
+  @Override
+  protected void initializeParticlesMemory(List<DoubleSolution> swarm) {
     for (int i = 0; i < swarm.size(); i++) {
       Solution particle = swarm.get(i).copy();
       best[i] = (DoubleSolution)particle;
     }
   }
 
-  protected void updateLeadersDensityEstimator() {
-   if (leaders instanceof CrowdingDistanceArchive) {
-     ((CrowdingDistanceArchive) leaders).computeDistance();
-    } else {
-      throw new JMetalException("Invalid setArchive type") ;
-    }
-  }
-
-  protected boolean stoppingCondition() {
-    return iterations == maxIterations;
-  }
-
-  protected void computeSpeed(int iter, int miter)  {
+  @Override
+  protected void updateVelocity(List<DoubleSolution> swarm) {
     double r1, r2, c1, c2;
     double wmax, wmin ;
     DoubleSolution bestGlobal;
@@ -405,7 +412,7 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
 
       for (int var = 0; var < particle.getNumberOfVariables(); var++) {
         speed[i][var] = velocityConstriction(constrictionCoefficient(c1, c2) *
-                (inertiaWeight(iter, miter, wmax, wmin) *
+                (inertiaWeight(iterations, maxIterations, wmax, wmin) *
                         speed[i][var] +
                         c1 * r1 * (bestParticle.getVariableValue(var) -
                                 particle.getVariableValue(var)) +
@@ -415,7 +422,8 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
     }
   }
 
-  protected void computeNewPositions() {
+  @Override
+  protected void updatePosition(List<DoubleSolution> swarm) {
     for (int i = 0; i < swarmSize; i++) {
       DoubleSolution particle = swarm.get(i);
       for (int j = 0; j < particle.getNumberOfVariables(); j++) {
@@ -434,12 +442,37 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
     }
   }
 
-  protected void perturbation() {
+  @Override
+  protected void perturbation(List<DoubleSolution> swarm) {
     for (int i = 0; i < swarm.size(); i++) {
       if ((i % 6) == 0) {
         mutation.execute(swarm.get(i));
       }
     }
+  }
+
+  @Override
+  protected void updateLeaders(List<DoubleSolution> swarm) {
+    for (int i = 0; i < swarm.size(); i++) {
+      DoubleSolution particle = (DoubleSolution)swarm.get(i).copy();
+      leaders.add(particle);
+    }
+  }
+
+  @Override
+  protected void updateParticlesMemory(List<DoubleSolution> swarm) {
+    for (int i = 0; i < swarm.size(); i++) {
+      int flag = dominanceComparator.compare(swarm.get(i), best[i]);
+      if (flag != 1) {
+        DoubleSolution particle = (DoubleSolution)swarm.get(i).copy();
+        best[i] = particle;
+      }
+    }
+  }
+
+  @Override
+  public List<DoubleSolution> getResult() {
+    return this.leaders.getSolutionList();
   }
 
   protected DoubleSolution selectGlobalBest() {
@@ -457,40 +490,6 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
     }
 
     return bestGlobal ;
-  }
-
-  protected void updateLeaders() {
-    for (int i = 0; i < swarm.size(); i++) {
-      DoubleSolution particle = (DoubleSolution)swarm.get(i).copy();
-      leaders.add(particle);
-    }
-  }
-
-  protected void updateParticleMemory() {
-    for (int i = 0; i < swarm.size(); i++) {
-      int flag = dominanceComparator.compare(swarm.get(i), best[i]);
-      if (flag != 1) {
-        DoubleSolution particle = (DoubleSolution)swarm.get(i).copy();
-        best[i] = particle;
-      }
-    }
-  }
-
-  protected List<DoubleSolution> paretoFrontApproximation() {
-    return this.leaders.getSolutionList();
-  }
-
-  private double inertiaWeight(int iter, int miter, double wma, double wmin) {
-    return wma;
-  }
-
-  private double constrictionCoefficient(double c1, double c2) {
-    double rho = c1 + c2;
-    if (rho <= 4) {
-      return 1.0;
-    } else {
-      return 2 / (2 - rho - Math.sqrt(Math.pow(rho, 2.0) - 4.0 * rho));
-    }
   }
 
   private double velocityConstriction(
@@ -517,7 +516,17 @@ public class SMPSO implements Algorithm<List<DoubleSolution>> {
     return result;
   }
 
-  protected void tearDown() {
+  private double constrictionCoefficient(double c1, double c2) {
+    double rho = c1 + c2;
+    if (rho <= 4) {
+      return 1.0;
+    } else {
+      return 2 / (2 - rho - Math.sqrt(Math.pow(rho, 2.0) - 4.0 * rho));
+    }
+  }
+
+  private double inertiaWeight(int iter, int miter, double wma, double wmin) {
+    return wma;
   }
 
 }
