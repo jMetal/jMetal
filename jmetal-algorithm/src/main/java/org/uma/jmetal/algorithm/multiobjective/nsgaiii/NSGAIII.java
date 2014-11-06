@@ -197,7 +197,8 @@ public class NSGAIII extends AbstractGeneticAlgorithm<Solution, List<Solution>> 
     jointPopulation.addAll(offspringPopulation) ;
 
     Ranking ranking = computeRanking(jointPopulation);
-    List<Solution> pop = crowdingDistanceSelection(ranking);
+    //List<Solution> pop = crowdingDistanceSelection(ranking);
+    List<Solution> pop = environmentalSelection(ranking);
 
     return pop;
   }
@@ -208,6 +209,40 @@ public class NSGAIII extends AbstractGeneticAlgorithm<Solution, List<Solution>> 
   }
 
 ////////////// TODO: to be integrated smoothly
+
+  protected List<Solution> environmentalSelection(Ranking ranking) {
+    List<Solution> population = new ArrayList<>(populationSize) ;
+
+    int rankingIndex = 0;
+    while (populationIsNotFull(population)) {
+      if (subfrontFillsIntoThePopulation(ranking, rankingIndex, population)) {
+        addRankedSolutionsToPopulation(ranking, rankingIndex, population);
+        rankingIndex++;
+      } else {
+        //crowdingDistance.computeDensityEstimator(ranking.getSubfront(rankingIndex));
+        addLastRankedSolutionsToPopulation(ranking, rankingIndex, population);
+      }
+    }
+
+    return population ;
+  }
+
+  protected void computenNewCrowding(List<Solution> solutionList) {
+
+    /*
+    	vector<double> ideal_point = TranslateObjectives(&cur, fronts);
+
+	vector<size_t> extreme_points;
+	FindExtremePoints(&extreme_points, cur, fronts);
+
+	vector<double> intercepts;
+	ConstructHyperplane(&intercepts, cur, extreme_points);
+
+	NormalizeObjectives(&cur, fronts, intercepts, ideal_point);
+
+     */
+  }
+
 
   protected Ranking computeRanking(List<Solution> solutionList) {
     Ranking ranking = new DominanceRanking() ;
