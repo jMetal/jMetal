@@ -21,6 +21,8 @@ import java.util.Vector;
 
 /**
  * Created by ajnebro on 30/10/14.
+ * This implementation is based on the code of Tsung-Che Chiang
+ * http://web.ntnu.edu.tw/~tcchiang/publications/nsga3cpp/nsga3cpp.htm
  */
 public class NSGAIII extends AbstractGeneticAlgorithm<Solution, List<Solution>> {
   protected int iterations ;
@@ -60,20 +62,11 @@ public class NSGAIII extends AbstractGeneticAlgorithm<Solution, List<Solution>> 
 
     System.out.println("rpssize: " + referencePoints.size()) ;
     for (int i = 0; i < referencePoints.size(); i++) {
-      System.out.println(referencePoints.get(i).position.length) ;
+      //System.out.println(referencePoints.get(i).position.length) ;
       for (int j = 0 ; j < referencePoints.get(i).position.length; j++) {
-        System.out.println("   " + referencePoints.get(i).position[j]) ;
+        //System.out.println("   " + referencePoints.get(i).position[j]) ;
       }
     }
-/*
-    cout << "rpssize: " << rps.size() << endl ;
-    for (int i = 0; i < rps.size(); i++) {
-      cout << rps[i].pos().size()<< endl ;
-      for (int j = 0 ; j < rps[i].pos().size(); j++) {
-        cout << "   " << rps[i].pos()[j] << endl ;
-      }
-    }
-*/
   }
 
   /** Builder class */
