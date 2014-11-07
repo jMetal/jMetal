@@ -227,7 +227,14 @@ public class NSGAIII extends AbstractGeneticAlgorithm<Solution, List<Solution>> 
     return population ;
   }
 
-  protected void computenNewCrowding(List<Solution> solutionList) {
+  protected Vector<Double> translateObjectives(List<Solution> solutionList, Ranking ranking) {
+    Vector<Double> idealPoint = new Vector<>(problem.getNumberOfObjectives()) ;
+    // ....
+
+    return null ;
+  }
+
+  protected void computeNewCrowding(List<Solution> solutionList) {
 
     /*
     	vector<double> ideal_point = TranslateObjectives(&cur, fronts);
