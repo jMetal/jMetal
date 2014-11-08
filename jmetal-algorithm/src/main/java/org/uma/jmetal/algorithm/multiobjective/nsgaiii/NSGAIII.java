@@ -227,11 +227,27 @@ public class NSGAIII extends AbstractGeneticAlgorithm<Solution, List<Solution>> 
     return population ;
   }
 
-  protected Vector<Double> translateObjectives(List<Solution> solutionList, Ranking ranking) {
+  protected Vector<Double> computeIdealPoint(List<Solution> solutionList) {
     Vector<Double> idealPoint = new Vector<>(problem.getNumberOfObjectives()) ;
-    // ....
+    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
+      double minValue = 1.0e+30 ;
+      for (Solution solution : solutionList) {
+        if (solution.getObjective(i) < minValue) {
+          minValue = solution.getObjective(i) ;
+        }
+      }
+      idealPoint.add(minValue);
+    }
 
-    return null ;
+    return idealPoint ;
+  }
+
+  protected  void translateObjectives(List<Solution> solutionList, Vector<Double> idealPoint) {
+    for (Solution solution: solutionList) {
+      for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
+        solution.setObjective(i, solution.getObjective(i) - idealPoint.get(i));
+      }
+    }
   }
 
   protected void computeNewCrowding(List<Solution> solutionList) {
