@@ -46,7 +46,7 @@ public class AlgorithmRunner {
     Algorithm<List<Solution>> algorithm ;
     long computingTime;
 
-    public Executor(Algorithm algorithm) {
+    public Executor(Algorithm<List<Solution>> algorithm) {
       this.algorithm = algorithm ;
     }
 
