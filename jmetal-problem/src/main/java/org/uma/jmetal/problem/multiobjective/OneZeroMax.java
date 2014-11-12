@@ -33,8 +33,6 @@ import java.util.BitSet;
  */
 public class OneZeroMax extends AbstractBinaryProblem {
 
-  private int numberOfBits ;
-
   /** Constructor */
   public OneZeroMax() throws JMetalException {
     this(512);
@@ -46,13 +44,13 @@ public class OneZeroMax extends AbstractBinaryProblem {
     setNumberOfObjectives(2);
     setName("OneZeroMax");
 
-    this.numberOfBits = numberOfBits ;
+    bitsPerVariable[0] = numberOfBits ;
   }
 
-  @Override
-  public int getNumberOfBits(int index) {
-    return numberOfBits ;
-  }
+  //@Override
+  //public int getNumberOfBits(int index) {
+  //  return numberOfBits ;
+  //}
 
   @Override
   public BinarySolution createSolution() {

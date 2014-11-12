@@ -257,9 +257,6 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
       //Equality condition between solutions
       if (hammingDistance(parents.get(0), parents.get(1)) >= (minimumDistance)) {
         List<BinarySolution> offspring = (List<BinarySolution>) crossover.execute(parents);
-        //problem.evaluate(offspring.get(0));
-        //problem.evaluate(offspring.get(1));
-        //evaluations += 2;
         offspringPopulation.add(offspring.get(0));
         offspringPopulation.add(offspring.get(1));
       }
@@ -269,7 +266,36 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
 
   @Override
   protected List<BinarySolution> replacement(List<BinarySolution> population, List<BinarySolution> offspringPopulation) {
-    return null;
+    List<BinarySolution> union = new ArrayList<>() ;
+    union.addAll(population) ;
+    union.addAll(offspringPopulation) ;
+
+    List<BinarySolution> newPopulation = (List<BinarySolution>) newGenerationSelection.execute(union);
+
+    if (solutionSetsAreEquals(population, newPopulation)) {
+      minimumDistance--;
+    }
+/*
+    if (minimumDistance <= -convergenceValue) {
+
+      minimumDistance = (int) (1.0 / size * (1 - 1.0 / size) * size);
+
+      int preserve = (int) Math.floor(preservedPopulation * populationSize);
+      newPopulation = new SolutionSet(populationSize);
+      solutionSet.sort(crowdingComparator);
+      for (int i = 0; i < preserve; i++) {
+        newPopulation.add(new Solution(solutionSet.get(i)));
+      }
+      for (int i = preserve; i < populationSize; i++) {
+        Solution solution = new Solution(solutionSet.get(i));
+        cataclysmicMutation.execute(solution);
+        problem.evaluate(solution);
+        problem.evaluateConstraints(solution);
+        newPopulation.add(solution);
+      }
+    }
+*/
+    return union;
   }
 
   @Override
@@ -379,7 +405,7 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
    * @param newSolutionSet A <code>SolutionSet</code>
    * @return true if both are contains the same solutions, false in other case
    */
-  public boolean solutionSetsAreEquals(List<Solution> solutionSet, List<Solution> newSolutionSet) {
+  public boolean solutionSetsAreEquals(List<BinarySolution> solutionSet, List<BinarySolution> newSolutionSet) {
     boolean found;
     for (int i = 0; i < solutionSet.size(); i++) {
 

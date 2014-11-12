@@ -32,8 +32,6 @@ import java.util.BitSet;
  * number of '1's in a binary string.
  */
 public class OneMax extends AbstractBinaryProblem {
-  private final int numberOfBits ;
-
   /** Constructor */
   public OneMax() {
     this(256);
@@ -45,13 +43,13 @@ public class OneMax extends AbstractBinaryProblem {
     setNumberOfObjectives(1);
     setName("OneMax");
 
-    this.numberOfBits = numberOfBits ;
+    bitsPerVariable[0] = numberOfBits ;
   }
 
-  @Override
-  public int getNumberOfBits(int index) {
-    return numberOfBits ;
-  }
+  //@Override
+  //public int getNumberOfBits(int index) {
+  //  return bitsPerVariable ;
+  //}
 
   @Override
   public BinarySolution createSolution() {
