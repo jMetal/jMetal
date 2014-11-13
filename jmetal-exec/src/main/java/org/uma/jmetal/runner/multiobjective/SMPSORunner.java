@@ -34,6 +34,7 @@ import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.pseudorandom.impl.MersenneTwisterGenerator;
 
 import java.util.List;
 
@@ -80,7 +81,7 @@ public class SMPSORunner {
             .setMutation(mutation)
             .setMaxIterations(250)
             .setSwarmSize(100)
-            //.setRandomGenerator(new MersenneTwisterGenerator())
+            .setRandomGenerator(new MersenneTwisterGenerator())
             .build();
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
