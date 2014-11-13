@@ -66,7 +66,7 @@ public class SMPSORunner {
     Algorithm algorithm;
     MutationOperator mutation;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4" ;
+    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ7" ;
 
     problem = (ContinuousProblem) ProblemUtils.loadProblem(problemName);
 
