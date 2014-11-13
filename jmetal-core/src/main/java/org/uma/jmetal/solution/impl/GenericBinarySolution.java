@@ -82,7 +82,7 @@ public class GenericBinarySolution extends AbstractGenericSolution<BitSet, Binar
   public String getVariableValueString(int index) {
     String result = "" ;
     for (BitSet var : variables) {
-      for (int i = 0; i < problem.getNumberOfBits(i) ; i++) {
+      for (int i = 0; i < var.length() ; i++) {
         if (var.get(i)) {
           result += "1" ;
         }

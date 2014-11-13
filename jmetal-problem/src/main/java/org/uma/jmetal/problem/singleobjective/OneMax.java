@@ -23,6 +23,7 @@ package org.uma.jmetal.problem.singleobjective;
 
 import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.solution.impl.GenericBinarySolution;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.problem.impl.AbstractBinaryProblem;
 
 import java.util.BitSet;
@@ -32,6 +33,8 @@ import java.util.BitSet;
  * number of '1's in a binary string.
  */
 public class OneMax extends AbstractBinaryProblem {
+	private int bits ;
+	
   /** Constructor */
   public OneMax() {
     this(256);
@@ -43,14 +46,17 @@ public class OneMax extends AbstractBinaryProblem {
     setNumberOfObjectives(1);
     setName("OneMax");
 
-    bitsPerVariable[0] = numberOfBits ;
+    bits = numberOfBits ;
   }
 
-  //@Override
-  //public int getNumberOfBits(int index) {
-  //  return bitsPerVariable ;
-  //}
-
+  @Override
+  protected int getBitsPervariable(int index) {
+  	if (index != 0) {
+  		throw new JMetalException("Problem OneMax has only a variable. Index = " + index) ;
+  	}
+  	return bits ;
+  }
+   
   @Override
   public BinarySolution createSolution() {
     return new GenericBinarySolution(this) ;
