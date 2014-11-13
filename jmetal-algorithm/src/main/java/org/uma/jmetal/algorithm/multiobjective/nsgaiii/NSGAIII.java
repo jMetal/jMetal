@@ -59,7 +59,7 @@ public class NSGAIII extends AbstractGeneticAlgorithm<Solution, List<Solution>> 
 
     /// NSGAIII
     numberOfDivisions = new Vector<>(1) ;
-    numberOfDivisions.add(91) ; // Default value for 3D problems
+    numberOfDivisions.add(builder.getDivisions()) ; // Default value for 3D problems
 
 
     ReferencePoint.generateReferencePoints(referencePoints, problem.getNumberOfObjectives() , numberOfDivisions);

@@ -19,6 +19,7 @@ public class BuilderNSGAIII {
   MutationOperator mutationOperator ;
   SelectionOperator selectionOperator ;
   SolutionListEvaluator evaluator ;
+  int divisions;
   
   /** Builder constructor */
   public BuilderNSGAIII(Problem problem) {
@@ -64,6 +65,15 @@ public class BuilderNSGAIII {
     return this ;
   }
 
+  public BuilderNSGAIII setDivisions(int div) {
+	  this.divisions = div;
+	  return this;
+  }
+  
+  public int getDivisions() {
+	  return this.divisions;
+  }
+  
   public NSGAIII build() {
     return new NSGAIII(this) ;
   }

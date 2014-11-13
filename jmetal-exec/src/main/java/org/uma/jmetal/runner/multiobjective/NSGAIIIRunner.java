@@ -84,6 +84,7 @@ public class NSGAIIIRunner {
             .setMutationOperator(mutation)
             .setSelectionOperator(selection)
             .setMaxIterations(250)
+            .setDivisions(12)
            // .setPopulationSize(100)
             .build() ;
 
