@@ -63,11 +63,6 @@ public class DTLZ7 extends AbstractContinuousProblem {
     setUpperLimit(upperLimit);
   }
 
-  @Override
-  public DoubleSolution createSolution() {
-    return new GenericDoubleSolution(this)  ;
-  }
-
   /** Evaluate() method */
   public void evaluate(DoubleSolution solution) {
     int numberOfVariables = getNumberOfVariables();
