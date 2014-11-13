@@ -167,7 +167,7 @@ public class NSGAIII extends AbstractGeneticAlgorithm<Solution, List<Solution>> 
       fronts.add(ranking.getSubfront(rankingIndex));
       candidateSolutions += ranking.getSubfront(rankingIndex).size();
       if ((pop.size() + ranking.getSubfront(rankingIndex).size()) <= populationSize) 
-        addRankedSolutionsToPopulation(ranking, rankingIndex, population);
+        addRankedSolutionsToPopulation(ranking, rankingIndex, pop);
       rankingIndex++;
     }
     

@@ -245,7 +245,6 @@ public class EnvironmentalSelection implements SelectionOperator<List<Solution>,
 	{
 		// find the minimal cluster size
 		int min_size = Integer.MAX_VALUE;
-		System.out.println(this.referencePoints.size());
 		for (int r=0; r<this.referencePoints.size(); r+=1)
 		{
 			min_size = Math.min(min_size, this.referencePoints.get(r).MemberSize());
@@ -260,7 +259,6 @@ public class EnvironmentalSelection implements SelectionOperator<List<Solution>,
 				min_rps.add(r);
 			}
 		}
-		System.out.println(min_rps.size());
 		// return a random reference point (j-bar)
 		return min_rps.get(min_rps.size() > 1 ? JMetalRandom.getInstance().nextInt(0, min_rps.size()-1):0);
 	}
