@@ -4,6 +4,7 @@ import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
+import org.uma.jmetal.operator.impl.selection.EnvironmentalSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
@@ -21,6 +22,7 @@ import java.util.Vector;
 
 /**
  * Created by ajnebro on 30/10/14.
+ * Modified by Juanjo on 13/11/14
  * This implementation is based on the code of Tsung-Che Chiang
  * http://web.ntnu.edu.tw/~tcchiang/publications/nsga3cpp/nsga3cpp.htm
  */
@@ -34,97 +36,45 @@ public class NSGAIII extends AbstractGeneticAlgorithm<Solution, List<Solution>> 
   protected SolutionListEvaluator<Solution> evaluator ;
 
   private Vector<Integer> numberOfDivisions  ;
+  private List<ReferencePoint> referencePoints = new Vector<>() ;
+  
+  public static BuilderNSGAIII Builder;
+  
 
   /** Constructor */
   public NSGAIII() {
   }
 
   /** Constructor */
-  private NSGAIII(Builder builder) {
+  NSGAIII(BuilderNSGAIII builder) { // can be created from the BuilderNSGAIII within the same package
     problem = builder.problem ;
     maxIterations = builder.maxIterations ;
-    populationSize = builder.populationSize ;
+    
 
-    crossoverOperator = builder.crossoverOperator ;
-    mutationOperator = builder.mutationOperator ;
-    selectionOperator = builder.selectionOperator ;
+    crossoverOperator =  builder.crossoverOperator ;
+    mutationOperator  =  builder.mutationOperator ;
+    selectionOperator =  builder.selectionOperator ;
 
     evaluator = builder.evaluator ;
 
     /// NSGAIII
     numberOfDivisions = new Vector<>(1) ;
-    numberOfDivisions.add(12) ; // Default value for 3D problems
-
-    Vector<ReferencePoint> referencePoints = new Vector<>() ;
-    ReferencePoint.generateReferencePoints(referencePoints, 3 , numberOfDivisions);
-    System.out.println("referencePoints.size: " + referencePoints.size()) ;
+    numberOfDivisions.add(91) ; // Default value for 3D problems
 
 
+    ReferencePoint.generateReferencePoints(referencePoints, problem.getNumberOfObjectives() , numberOfDivisions);
+    
+    populationSize = referencePoints.size();
+    while (populationSize%4>0) populationSize++;
+
+    
+    // REMOVE THIS CODE ANTONIO PUT HERE FOR DEBUGGING??
     System.out.println("rpssize: " + referencePoints.size()) ;
     for (int i = 0; i < referencePoints.size(); i++) {
       //System.out.println(referencePoints.get(i).position.length) ;
-      for (int j = 0 ; j < referencePoints.get(i).position.length; j++) {
+      for (int j = 0 ; j < referencePoints.get(i).position.size(); j++) {
         //System.out.println("   " + referencePoints.get(i).position[j]) ;
       }
-    }
-  }
-
-  /** Builder class */
-  public static class Builder {
-    private Problem problem ;
-    private int maxIterations ;
-    private int populationSize ;
-    private CrossoverOperator crossoverOperator ;
-    private MutationOperator mutationOperator ;
-    private SelectionOperator selectionOperator ;
-    private SolutionListEvaluator evaluator ;
-
-    /** Builder constructor */
-    public Builder(Problem problem) {
-      this.problem = problem ;
-      maxIterations = 250 ;
-      populationSize = 100 ;
-      evaluator = new SequentialSolutionListEvaluator() ;
-    }
-
-    public Builder setMaxIterations(int maxIterations) {
-      this.maxIterations = maxIterations ;
-
-      return this ;
-    }
-
-    public Builder setPopulationSize(int populationSize) {
-      this.populationSize = populationSize ;
-
-      return this ;
-    }
-
-    public Builder setCrossoverOperator(CrossoverOperator crossoverOperator) {
-      this.crossoverOperator = crossoverOperator ;
-
-      return this ;
-    }
-
-    public Builder setMutationOperator(MutationOperator mutationOperator) {
-      this.mutationOperator = mutationOperator ;
-
-      return this ;
-    }
-
-    public Builder setSelectionOperator(SelectionOperator selectionOperator) {
-      this.selectionOperator = selectionOperator ;
-
-      return this ;
-    }
-
-    public Builder setSolutionListEvaluator(SolutionListEvaluator evaluator) {
-      this.evaluator = evaluator ;
-
-      return this ;
-    }
-
-    public NSGAIII build() {
-      return new NSGAIII(this) ;
     }
   }
 
@@ -190,16 +140,49 @@ public class NSGAIII extends AbstractGeneticAlgorithm<Solution, List<Solution>> 
     return offspringPopulation ;
   }
 
+  
+  private List<ReferencePoint> getReferencePointsCopy() {
+	  List<ReferencePoint> copy = new ArrayList<>();
+	  for (ReferencePoint r : this.referencePoints) {
+		  copy.add(new ReferencePoint(r));
+	  }
+	  return copy;
+  }
+  
   @Override
   protected List<Solution> replacement(List<Solution> population, List<Solution> offspringPopulation) {
-    List<Solution> jointPopulation = new ArrayList<>();
+   
+	List<Solution> jointPopulation = new ArrayList<>();
     jointPopulation.addAll(population) ;
     jointPopulation.addAll(offspringPopulation) ;
 
     Ranking ranking = computeRanking(jointPopulation);
+    
     //List<Solution> pop = crowdingDistanceSelection(ranking);
-    List<Solution> pop = environmentalSelection(ranking);
-
+    List<Solution> pop = new ArrayList<>();
+    List<List<Solution>> fronts = new ArrayList<>();
+    int rankingIndex = 0;
+    int candidateSolutions = 0;
+    while (candidateSolutions < populationSize) {
+      fronts.add(ranking.getSubfront(rankingIndex));
+      candidateSolutions += ranking.getSubfront(rankingIndex).size();
+      if ((pop.size() + ranking.getSubfront(rankingIndex).size()) <= populationSize) 
+        addRankedSolutionsToPopulation(ranking, rankingIndex, pop);
+      rankingIndex++;
+    }
+    
+    // A copy of the reference list should be used as parameter of the environmental selection
+    
+    
+    EnvironmentalSelection selection = new EnvironmentalSelection.Builder()
+    													 .setNumberOfObjectives(problem.getNumberOfObjectives())
+    													 .setFronts(fronts)
+    													 .setSolutionsToSelect(populationSize)
+    													 .setReferencePoints(getReferencePointsCopy())
+    													 .build();
+    
+    pop = selection.execute(pop);
+     
     return pop;
   }
 
@@ -208,40 +191,6 @@ public class NSGAIII extends AbstractGeneticAlgorithm<Solution, List<Solution>> 
     return getNonDominatedSolutions(getPopulation()) ;
   }
 
-////////////// TODO: to be integrated smoothly
-
-  protected List<Solution> environmentalSelection(Ranking ranking) {
-    List<Solution> population = new ArrayList<>(populationSize) ;
-
-    int rankingIndex = 0;
-    while (populationIsNotFull(population)) {
-      if (subfrontFillsIntoThePopulation(ranking, rankingIndex, population)) {
-        addRankedSolutionsToPopulation(ranking, rankingIndex, population);
-        rankingIndex++;
-      } else {
-        //crowdingDistance.computeDensityEstimator(ranking.getSubfront(rankingIndex));
-        addLastRankedSolutionsToPopulation(ranking, rankingIndex, population);
-      }
-    }
-
-    return population ;
-  }
-
-  protected void computenNewCrowding(List<Solution> solutionList) {
-
-    /*
-    	vector<double> ideal_point = TranslateObjectives(&cur, fronts);
-
-	vector<size_t> extreme_points;
-	FindExtremePoints(&extreme_points, cur, fronts);
-
-	vector<double> intercepts;
-	ConstructHyperplane(&intercepts, cur, extreme_points);
-
-	NormalizeObjectives(&cur, fronts, intercepts, ideal_point);
-
-     */
-  }
 
 
   protected Ranking computeRanking(List<Solution> solutionList) {
@@ -249,23 +198,6 @@ public class NSGAIII extends AbstractGeneticAlgorithm<Solution, List<Solution>> 
     ranking.computeRanking(solutionList) ;
 
     return ranking ;
-  }
-
-  protected List<Solution> crowdingDistanceSelection(Ranking ranking) {
-    CrowdingDistance crowdingDistance = new CrowdingDistance() ;
-    List<Solution> population = new ArrayList<>(populationSize) ;
-    int rankingIndex = 0;
-    while (populationIsNotFull(population)) {
-      if (subfrontFillsIntoThePopulation(ranking, rankingIndex, population)) {
-        addRankedSolutionsToPopulation(ranking, rankingIndex, population);
-        rankingIndex++;
-      } else {
-        crowdingDistance.computeDensityEstimator(ranking.getSubfront(rankingIndex));
-        addLastRankedSolutionsToPopulation(ranking, rankingIndex, population);
-      }
-    }
-
-    return population ;
   }
 
   protected boolean populationIsNotFull(List<Solution> population) {
@@ -283,18 +215,6 @@ public class NSGAIII extends AbstractGeneticAlgorithm<Solution, List<Solution>> 
 
     for (int i = 0 ; i < front.size(); i++) {
       population.add(front.get(i));
-    }
-  }
-
-  protected void addLastRankedSolutionsToPopulation(Ranking ranking, int rank, List<Solution>population) {
-    List<Solution> currentRankedFront = ranking.getSubfront(rank) ;
-
-    Collections.sort(currentRankedFront, new CrowdingDistanceComparator()) ;
-
-    int i = 0 ;
-    while (population.size() < populationSize) {
-      population.add(currentRankedFront.get(i)) ;
-      i++ ;
     }
   }
 

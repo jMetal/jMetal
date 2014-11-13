@@ -21,6 +21,7 @@
 package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.algorithm.multiobjective.nsgaiii.BuilderNSGAIII;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
 import org.uma.jmetal.algorithm.multiobjective.nsgaiii.NSGAIII;
 import org.uma.jmetal.operator.CrossoverOperator;
@@ -78,12 +79,12 @@ public class NSGAIIIRunner {
     selection = new BinaryTournamentSelection.Builder()
             .build();
 
-    algorithm = new NSGAIII.Builder(problem)
+    algorithm = new BuilderNSGAIII(problem)
             .setCrossoverOperator(crossover)
             .setMutationOperator(mutation)
             .setSelectionOperator(selection)
             .setMaxIterations(250)
-            .setPopulationSize(100)
+           // .setPopulationSize(100)
             .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
