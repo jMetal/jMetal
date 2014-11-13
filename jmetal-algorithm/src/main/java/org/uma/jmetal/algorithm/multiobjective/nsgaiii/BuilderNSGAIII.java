@@ -7,7 +7,6 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
-
 /** Builder class */
 public class BuilderNSGAIII {
   

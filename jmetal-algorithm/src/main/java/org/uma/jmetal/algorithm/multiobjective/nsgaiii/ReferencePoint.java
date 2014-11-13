@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * Created by ajnebro on 5/11/14.
- * Modified by Juanjo on 13/11/14
+ * Modified by Juanjo Durillo on 13/11/14
  * This implementation is based on the code of Tsung-Che Chiang
  * http://web.ntnu.edu.tw/~tcchiang/publications/nsga3cpp/nsga3cpp.htm
  */
