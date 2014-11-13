@@ -1,4 +1,4 @@
-//  ZDT1.java
+//  DTLZ1.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -19,32 +19,37 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.problem.multiobjective.zdt;
+package org.uma.jmetal.problem.multiobjective.dtlz;
 
+import org.uma.jmetal.problem.impl.AbstractContinuousProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.impl.GenericDoubleSolution;
-import org.uma.jmetal.problem.impl.AbstractContinuousProblem;
+import org.uma.jmetal.util.JMetalException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/** Class representing problem ZDT1 */
-public class ZDT1 extends AbstractContinuousProblem {
-
-  /** Constructor. Creates default instance of problem ZDT1 (30 decision variables) */
-  public ZDT1() {
-    this(30);
+/**
+ * Class representing problem DTLZ1
+ */
+public class DTLZ1 extends AbstractContinuousProblem {
+  /**
+   * Creates a default DTLZ1 problem (7 variables and 3 objectives)
+   */
+  public DTLZ1() throws ClassNotFoundException, JMetalException {
+    this(7, 3);
   }
 
   /**
-   * Creates a new instance of problem ZDT1.
+   * Creates a DTLZ1 problem instance
    *
-   * @param numberOfVariables Number of variables.
+   * @param numberOfVariables  Number of variables
+   * @param numberOfObjectives Number of objective functions
    */
-  public ZDT1(Integer numberOfVariables) {
+  public DTLZ1(Integer numberOfVariables, Integer numberOfObjectives) throws JMetalException {
     setNumberOfVariables(numberOfVariables);
-    setNumberOfObjectives(2);
-    setName("ZDT1");
+    setNumberOfObjectives(numberOfObjectives);
+    setName("DTLZ1");
 
     List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
     List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
@@ -68,40 +73,31 @@ public class ZDT1 extends AbstractContinuousProblem {
     double[] f = new double[getNumberOfObjectives()];
     double[] x = new double[getNumberOfVariables()] ;
 
-    f[0] = solution.getVariableValue(0);
-    double g = this.evalG(solution);
-    double h = this.evalH(f[0], g);
-    f[1] = h * g;
+    int k = getNumberOfVariables() - getNumberOfObjectives() + 1;
 
-    solution.setObjective(0, f[0]);
-    solution.setObjective(1, f[1]);
-  }
-
-  /**
-   * Returns the value of the ZDT1 function G.
-   *
-   * @param solution Solution
-   */
-  private double evalG(DoubleSolution solution) {
     double g = 0.0;
-    for (int i = 1; i < solution.getNumberOfVariables(); i++) {
-      g += solution.getVariableValue(i);
+    for (int i = getNumberOfVariables() - k; i < getNumberOfVariables(); i++) {
+      g += (x[i] - 0.5) * (x[i] - 0.5) - Math.cos(20.0 * Math.PI * (x[i] - 0.5));
     }
-    double constant = 9.0 / (solution.getNumberOfVariables() - 1);
-    g = constant * g;
-    g = g + 1.0;
-    return g;
-  }
 
-  /**
-   * Returns the value of the ZDT1 function H.
-   *
-   * @param f First argument of the function H.
-   * @param g Second argument of the function H.
-   */
-  public double evalH(double f, double g) {
-    double h ;
-    h = 1.0 - Math.sqrt(f / g);
-    return h;
+    g = 100 * (k + g);
+    for (int i = 0; i < getNumberOfObjectives(); i++) {
+      f[i] = (1.0 + g) * 0.5;
+    }
+
+    for (int i = 0; i < getNumberOfObjectives(); i++) {
+      for (int j = 0; j < getNumberOfObjectives() - (i + 1); j++) {
+        f[i] *= x[j];
+      }
+      if (i != 0) {
+        int aux = getNumberOfObjectives() - (i + 1);
+        f[i] *= 1 - x[aux];
+      }
+    }
+
+    for (int i = 0; i < getNumberOfObjectives(); i++) {
+      solution.setObjective(i, f[i]);
+    }
   }
 }
+
