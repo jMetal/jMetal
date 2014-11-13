@@ -32,7 +32,7 @@ import java.util.BitSet;
  * number of '1's and '0's in a binary string.
  */
 public class OneZeroMax extends AbstractBinaryProblem {
-
+  private int bits ;
   /** Constructor */
   public OneZeroMax() throws JMetalException {
     this(512);
@@ -44,13 +44,16 @@ public class OneZeroMax extends AbstractBinaryProblem {
     setNumberOfObjectives(2);
     setName("OneZeroMax");
 
-    bitsPerVariable[0] = numberOfBits ;
+    bits = numberOfBits ;
   }
 
-  //@Override
-  //public int getNumberOfBits(int index) {
-  //  return numberOfBits ;
-  //}
+  @Override
+  protected int getBitsPervariable(int index) {
+  	if (index != 0) {
+  		throw new JMetalException("Problem OneZeroMax has only a variable. Index = " + index) ;
+  	}
+  	return bits ;
+  }
 
   @Override
   public BinarySolution createSolution() {

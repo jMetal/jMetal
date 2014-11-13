@@ -23,6 +23,7 @@ package org.uma.jmetal.problem.multiobjective.zdt;
 
 import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.solution.impl.GenericBinarySolution;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.problem.impl.AbstractBinaryProblem;
 
 import java.util.BitSet;
@@ -31,6 +32,7 @@ import java.util.BitSet;
  * Class representing problem ZDT5
  */
 public class ZDT5 extends AbstractBinaryProblem {
+	private int[] bitsPerVariable ;
 
   /** Creates a default instance of problem ZDT5 (11 decision variables) */
   public ZDT5() {
@@ -53,6 +55,14 @@ public class ZDT5 extends AbstractBinaryProblem {
     for (int var = 1; var < numberOfVariables; var++) {
       bitsPerVariable[var] = 5;
     }
+  }
+  
+  @Override
+  protected int getBitsPervariable(int index) {
+  	if ((index <0) || (index >= this.getNumberOfVariables())) {
+  		throw new JMetalException("Index value is incorrect: " + index) ;
+  	}
+  	return bitsPerVariable[index] ;
   }
 
   @Override
