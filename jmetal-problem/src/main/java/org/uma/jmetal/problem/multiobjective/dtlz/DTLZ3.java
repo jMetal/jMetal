@@ -75,6 +75,10 @@ public class DTLZ3 extends AbstractContinuousProblem {
     double[] f = new double[numberOfObjectives];
     double[] x = new double[numberOfVariables] ;
 
+    for (int i = 0; i < numberOfVariables; i++) {
+      x[i] = solution.getVariableValue(i) ;
+    }
+
     int k = getNumberOfVariables() - getNumberOfObjectives() + 1;
 
     double g = 0.0;

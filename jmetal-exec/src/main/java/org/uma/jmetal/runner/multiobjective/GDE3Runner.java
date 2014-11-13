@@ -54,7 +54,7 @@ public class GDE3Runner {
     DifferentialEvolutionSelection selection;
     DifferentialEvolutionCrossover crossover;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.Kursawe" ;
+    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1" ;
 
     problem = (ContinuousProblem) ProblemUtils.loadProblem(problemName);
 

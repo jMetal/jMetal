@@ -62,7 +62,7 @@ public class NSGAIIIRunner {
     MutationOperator mutation;
     SelectionOperator selection;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1" ;
+    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ3" ;
 
     problem = ProblemUtils.loadProblem(problemName);
 
