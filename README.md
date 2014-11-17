@@ -19,12 +19,12 @@ If you are interested in contributing with your ideas and comments, please take 
 
 Features of the current development version:
 
-* Algorithms: NSGA-II, SMPSO, GDE3, IBEA (corrected version)
+* Algorithms: NSGA-II, NSGA-III (to be tested), SMPSO, GDE3, IBEA (corrected version)
 * Encodings: Binary, Real, Integer, Permutation, Integer+Double
 * Crossover operators: SBXCrossover, SinglePointCrossover, DifferentialEvolutionCrossover, IntegerSBXCrossover
 * Mutation operators: PolynomialMutation, SingleRandomMutation, BitFlipMutation, IntegerPolynomialMutation
 * Selection operators:  BinaryTournamentSelection, DifferentialEvolutionSelection
-* Problems: Fonseca, Kursawe, Schaffer, Srinivas, OneZeroMax, NMMin, NMIN2, ZDT family
+* Problems: Fonseca, Kursawe, Schaffer, Srinivas, OneZeroMax, NMMin, NMIN2, ZDT benchrmark, DTLZ benchmark, WFG benchmark, LZ09 benchmark 
 
 
 
