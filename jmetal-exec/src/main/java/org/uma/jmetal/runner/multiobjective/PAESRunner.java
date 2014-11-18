@@ -1,4 +1,4 @@
-//  NSGAIIIRunner.java
+//  NSGAIIRunner.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -21,9 +21,9 @@
 package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.nsgaiii.BuilderNSGAIII;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
-import org.uma.jmetal.algorithm.multiobjective.nsgaiii.NSGAIII;
+import org.uma.jmetal.algorithm.multiobjective.paes.PAES;
+import org.uma.jmetal.algorithm.multiobjective.paes.PAESBuilder;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -42,46 +42,44 @@ import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import java.util.List;
 
 /**
- * Class to configure and run the NSGA-III algorithm
+ * Class to configure and run the NSGA-II algorithm
  */
-public class NSGAIIIRunner {
-
+public class PAESRunner {
+  /**
+   * @param args Command line arguments.
+   * @throws java.io.IOException
+   * @throws SecurityException
+   * @throws ClassNotFoundException
+   * Usage: three options
+   *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner
+   *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName
+   *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName paretoFrontFile
+   */
   public static void main(String[] args) throws JMetalException {
     Problem problem;
     Algorithm algorithm;
-    CrossoverOperator crossover;
     MutationOperator mutation;
-    SelectionOperator selection;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1" ;
+    String problemName = "org.uma.jmetal.problem.multiobjective.Fonseca" ;
 
     problem = ProblemUtils.loadProblem(problemName);
-
-    crossover = new SBXCrossover.Builder()
-            .setDistributionIndex(30.0)
-            .setProbability(0.9)
-            .build() ;
 
     mutation = new PolynomialMutation.Builder()
             .setDistributionIndex(20.0)
             .setProbability(1.0 / problem.getNumberOfVariables())
             .build();
 
-    selection = new BinaryTournamentSelection.Builder()
-            .build();
-
-    algorithm = new BuilderNSGAIII(problem)
-            .setCrossoverOperator(crossover)
+    algorithm = new PAESBuilder(problem)
             .setMutationOperator(mutation)
-            .setSelectionOperator(selection)
             .setMaxEvaluations(25000)
-            .setDivisions(12)
+            .setArchiveSize(100)
+            .setBiSections(5)
             .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
-    List<Solution> population = ((NSGAIII)algorithm).getResult() ;
+    List<Solution> population = ((PAES)algorithm).getResult() ;
     long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)

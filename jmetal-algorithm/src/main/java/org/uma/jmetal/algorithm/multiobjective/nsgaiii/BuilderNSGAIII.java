@@ -12,7 +12,7 @@ public class BuilderNSGAIII {
   
   // no access modifier means access from classes within the same package
   Problem problem ;
-  int maxIterations ;
+  int maxEvaluations ;
   int populationSize ;
   CrossoverOperator crossoverOperator ;
   MutationOperator mutationOperator ;
@@ -23,13 +23,13 @@ public class BuilderNSGAIII {
   /** Builder constructor */
   public BuilderNSGAIII(Problem problem) {
     this.problem = problem ;
-    maxIterations = 250 ;
+    maxEvaluations = 25000 ;
     populationSize = 100 ;
     evaluator = new SequentialSolutionListEvaluator() ;
   }
 
-  public BuilderNSGAIII setMaxIterations(int maxIterations) {
-    this.maxIterations = maxIterations ;
+  public BuilderNSGAIII setMaxEvaluations(int maxEvaluations) {
+    this.maxEvaluations = maxEvaluations ;
 
     return this ;
   }

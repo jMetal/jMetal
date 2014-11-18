@@ -19,8 +19,8 @@ import java.util.Vector;
  * http://web.ntnu.edu.tw/~tcchiang/publications/nsga3cpp/nsga3cpp.htm
  */
 public class NSGAIII extends AbstractGeneticAlgorithm<Solution, List<Solution>> {
-  protected int iterations ;
-  protected int maxIterations ;
+  protected int evaluations ;
+  protected int maxEvaluations ;
   protected int populationSize ;
 
   protected Problem problem ;
@@ -40,7 +40,7 @@ public class NSGAIII extends AbstractGeneticAlgorithm<Solution, List<Solution>> 
   /** Constructor */
   NSGAIII(BuilderNSGAIII builder) { // can be created from the BuilderNSGAIII within the same package
     problem = builder.problem ;
-    maxIterations = builder.maxIterations ;
+    maxEvaluations = builder.maxEvaluations ;
 
 
     crossoverOperator =  builder.crossoverOperator ;
@@ -58,28 +58,21 @@ public class NSGAIII extends AbstractGeneticAlgorithm<Solution, List<Solution>> 
 
     populationSize = referencePoints.size();
     while (populationSize%4>0) populationSize++;
-
-
-    // REMOVE THIS CODE ANTONIO PUT HERE FOR DEBUGGING??
-    for (int i = 0; i < referencePoints.size(); i++) {
-      for (int j = 0 ; j < referencePoints.get(i).position.size(); j++) {
-      }
-    }
   }
 
   @Override
   protected void initProgress() {
-    iterations = 1 ;
+    evaluations = populationSize ;
   }
 
   @Override
   protected void updateProgress() {
-    iterations++ ;
+    evaluations+=populationSize ;
   }
 
   @Override
   protected boolean isStoppingConditionReached() {
-    return iterations >= maxIterations;
+    return evaluations >= maxEvaluations;
   }
 
   @Override
@@ -161,8 +154,6 @@ public class NSGAIII extends AbstractGeneticAlgorithm<Solution, List<Solution>> 
     }
 
     // A copy of the reference list should be used as parameter of the environmental selection
-
-
     EnvironmentalSelection selection = new EnvironmentalSelection.Builder()
             .setNumberOfObjectives(problem.getNumberOfObjectives())
             .setFronts(fronts)
