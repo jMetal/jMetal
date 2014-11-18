@@ -15,6 +15,19 @@ import java.util.List;
  */
 public class SteadyStateNSGAII extends NSGAII {
   /** Constructor */
+  public SteadyStateNSGAII(SteadyStateNSGAIIBuilder builder) {
+    problem = builder.problem ;
+    maxIterations = builder.maxIterations ;
+    populationSize = builder.populationSize ;
+
+    crossoverOperator = builder.crossoverOperator ;
+    mutationOperator = builder.mutationOperator ;
+    selectionOperator = builder.selectionOperator ;
+
+    evaluator = new SequentialSolutionListEvaluator() ;
+  }
+
+  /** Constructor */
   private SteadyStateNSGAII(Builder builder) {
     problem = builder.problem ;
     maxIterations = builder.maxIterations ;

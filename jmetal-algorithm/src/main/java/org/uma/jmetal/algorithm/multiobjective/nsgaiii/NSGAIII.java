@@ -37,9 +37,9 @@ public class NSGAIII extends AbstractGeneticAlgorithm<Solution, List<Solution>> 
 
   private Vector<Integer> numberOfDivisions  ;
   private List<ReferencePoint> referencePoints = new Vector<>() ;
-  
+
   public static BuilderNSGAIII Builder;
-  
+
 
   /** Constructor */
   public NSGAIII() {
@@ -49,7 +49,7 @@ public class NSGAIII extends AbstractGeneticAlgorithm<Solution, List<Solution>> 
   NSGAIII(BuilderNSGAIII builder) { // can be created from the BuilderNSGAIII within the same package
     problem = builder.problem ;
     maxIterations = builder.maxIterations ;
-    
+
 
     crossoverOperator =  builder.crossoverOperator ;
     mutationOperator  =  builder.mutationOperator ;
@@ -63,11 +63,11 @@ public class NSGAIII extends AbstractGeneticAlgorithm<Solution, List<Solution>> 
 
 
     ReferencePoint.generateReferencePoints(referencePoints, problem.getNumberOfObjectives() , numberOfDivisions);
-    
+
     populationSize = referencePoints.size();
     while (populationSize%4>0) populationSize++;
 
-    
+
     // REMOVE THIS CODE ANTONIO PUT HERE FOR DEBUGGING??
     for (int i = 0; i < referencePoints.size(); i++) {
       for (int j = 0 ; j < referencePoints.get(i).position.size(); j++) {
@@ -137,24 +137,24 @@ public class NSGAIII extends AbstractGeneticAlgorithm<Solution, List<Solution>> 
     return offspringPopulation ;
   }
 
-  
+
   private List<ReferencePoint> getReferencePointsCopy() {
-	  List<ReferencePoint> copy = new ArrayList<>();
-	  for (ReferencePoint r : this.referencePoints) {
-		  copy.add(new ReferencePoint(r));
-	  }
-	  return copy;
+    List<ReferencePoint> copy = new ArrayList<>();
+    for (ReferencePoint r : this.referencePoints) {
+      copy.add(new ReferencePoint(r));
+    }
+    return copy;
   }
-  
+
   @Override
   protected List<Solution> replacement(List<Solution> population, List<Solution> offspringPopulation) {
-   
-	List<Solution> jointPopulation = new ArrayList<>();
+
+    List<Solution> jointPopulation = new ArrayList<>();
     jointPopulation.addAll(population) ;
     jointPopulation.addAll(offspringPopulation) ;
 
     Ranking ranking = computeRanking(jointPopulation);
-    
+
     //List<Solution> pop = crowdingDistanceSelection(ranking);
     List<Solution> pop = new ArrayList<>();
     List<List<Solution>> fronts = new ArrayList<>();
@@ -163,23 +163,23 @@ public class NSGAIII extends AbstractGeneticAlgorithm<Solution, List<Solution>> 
     while (candidateSolutions < populationSize) {
       fronts.add(ranking.getSubfront(rankingIndex));
       candidateSolutions += ranking.getSubfront(rankingIndex).size();
-      if ((pop.size() + ranking.getSubfront(rankingIndex).size()) <= populationSize) 
+      if ((pop.size() + ranking.getSubfront(rankingIndex).size()) <= populationSize)
         addRankedSolutionsToPopulation(ranking, rankingIndex, pop);
       rankingIndex++;
     }
-    
+
     // A copy of the reference list should be used as parameter of the environmental selection
-    
-    
+
+
     EnvironmentalSelection selection = new EnvironmentalSelection.Builder()
-    													 .setNumberOfObjectives(problem.getNumberOfObjectives())
-    													 .setFronts(fronts)
-    													 .setSolutionsToSelect(populationSize)
-    													 .setReferencePoints(getReferencePointsCopy())
-    													 .build();
-    
+            .setNumberOfObjectives(problem.getNumberOfObjectives())
+            .setFronts(fronts)
+            .setSolutionsToSelect(populationSize)
+            .setReferencePoints(getReferencePointsCopy())
+            .build();
+
     pop = selection.execute(pop);
-     
+
     return pop;
   }
 

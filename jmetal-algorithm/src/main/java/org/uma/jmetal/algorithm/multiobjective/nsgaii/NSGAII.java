@@ -33,6 +33,19 @@ public class NSGAII extends AbstractGeneticAlgorithm<Solution, List<Solution>> {
   public NSGAII() {
   }
 
+  /** Builder */
+  public NSGAII(NSGAIIBuilder builder) {
+    problem = builder.problem ;
+    maxIterations = builder.maxIterations ;
+    populationSize = builder.populationSize ;
+
+    crossoverOperator = builder.crossoverOperator ;
+    mutationOperator = builder.mutationOperator ;
+    selectionOperator = builder.selectionOperator ;
+
+    evaluator = builder.evaluator ;
+  }
+
   /** Constructor */
   private NSGAII(Builder builder) {
     problem = builder.problem ;

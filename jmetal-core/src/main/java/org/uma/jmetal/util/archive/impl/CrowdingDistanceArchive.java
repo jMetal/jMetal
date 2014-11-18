@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class CrowdingDistanceArchive<T extends Solution> implements Archive<T> {
   private int maxSize ;
-  private List<T> solutionSet;
+  private List<T> solutionList;
   private Comparator<Solution> dominanceComparator;
   private Comparator<Solution> equalsComparator;
   private Comparator<Solution> crowdingDistanceComparator;
@@ -26,7 +26,7 @@ public class CrowdingDistanceArchive<T extends Solution> implements Archive<T> {
 
   public CrowdingDistanceArchive(int maxSize) {
     this.maxSize = maxSize ;
-    solutionSet = new ArrayList<>(maxSize + 1) ;
+    solutionList = new ArrayList<>(maxSize + 1) ;
     dominanceComparator = new DominanceComparator();
     crowdingDistanceComparator = new CrowdingDistanceComparator() ;
     crowdingDistance = new CrowdingDistance() ;
@@ -38,14 +38,14 @@ public class CrowdingDistanceArchive<T extends Solution> implements Archive<T> {
     int flag ;
     int i = 0;
     Solution aux;
-    while (i < solutionSet.size()) {
-      aux = solutionSet.get(i);
+    while (i < solutionList.size()) {
+      aux = solutionList.get(i);
 
       flag = dominanceComparator.compare(solution, aux);
       if (flag == 1) {
         return false;
       } else if (flag == -1) {
-        solutionSet.remove(i);
+        solutionList.remove(i);
       } else {
         if (equalsComparator.compare(aux, solution) == 0) {
           return false;
@@ -54,18 +54,18 @@ public class CrowdingDistanceArchive<T extends Solution> implements Archive<T> {
       i++;
     }
 
-    solutionSet.add(solution);
-    if (solutionSet.size() > maxSize) { // FIXME: check whether the removed solution is the inserted one
-      crowdingDistance.computeDensityEstimator(solutionSet);
-      int index = new SolutionListUtils().findWorstSolution(solutionSet, crowdingDistanceComparator) ;
-      solutionSet.remove(index);
+    solutionList.add(solution);
+    if (solutionList.size() > maxSize) { // FIXME: check whether the removed solution is the inserted one
+      crowdingDistance.computeDensityEstimator(solutionList);
+      int index = new SolutionListUtils().findWorstSolution(solutionList, crowdingDistanceComparator) ;
+      solutionList.remove(index);
     }
     return true;
   }
 
   @Override
   public List<T> getSolutionList() {
-    return solutionSet ;
+    return solutionList;
   }
 
   @Override
@@ -74,6 +74,6 @@ public class CrowdingDistanceArchive<T extends Solution> implements Archive<T> {
   }
 
   public void computeDistance() {
-    crowdingDistance.computeDensityEstimator(solutionSet);
+    crowdingDistance.computeDensityEstimator(solutionList);
   }
 }
