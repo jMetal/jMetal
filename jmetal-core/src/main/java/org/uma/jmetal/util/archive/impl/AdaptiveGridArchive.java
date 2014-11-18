@@ -26,6 +26,7 @@ import org.uma.jmetal.util.AdaptiveGrid;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -53,6 +54,7 @@ public class AdaptiveGridArchive<T extends Solution> implements Archive<T> {
     this.maxSize = maxSize;
     dominanceComparator = new DominanceComparator();
     grid = new AdaptiveGrid(bisections, objectives);
+    solutionList = new ArrayList<>(maxSize) ;
   }
 
   /**

@@ -37,7 +37,7 @@ public class PAESBuilder {
     return this ;
   }
 
-  public PAESBuilder setMutation(MutationOperator mutation) {
+  public PAESBuilder setMutationOperator(MutationOperator mutation) {
     mutationOperator = mutation ;
 
     return this ;

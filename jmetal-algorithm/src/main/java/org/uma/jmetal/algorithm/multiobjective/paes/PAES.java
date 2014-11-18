@@ -117,31 +117,36 @@ public class PAES extends AbstractEvolutionStrategy<Solution, List<Solution>> {
 
   @Override
   protected List<Solution> reproduction(List<Solution> population) {
+    Solution mutatedSolution = population.get(0).copy() ;
+    mutationOperator.execute(mutatedSolution) ;
+
     List<Solution> mutationSolutionList = new ArrayList<>(1) ;
-    mutationOperator.execute(population.get(0)) ;
-    mutationSolutionList.add(population.get(0)) ;
+    mutationSolutionList.add(mutatedSolution) ;
     return mutationSolutionList;
   }
 
   @Override
   protected List<Solution> replacement(List<Solution> population, List<Solution> offspringPopulation) {
-    int flag = comparator.compare(population.get(0), offspringPopulation.get(0)) ;
+    Solution current = population.get(0) ;
+    Solution mutatedSolution = offspringPopulation.get(0) ;
 
+    int flag = comparator.compare(current, mutatedSolution) ;
     if (flag == 1) {
-      population.set(0, offspringPopulation.get(0)) ;
-      archive.add(offspringPopulation.get(0));
-    } else if (flag == 0) { //If none dominate the other
-      if (archive.add(offspringPopulation.get(0))) {
-        population.set(0, test(population.get(0), offspringPopulation.get(0), archive));
+      current = mutatedSolution.copy() ;
+      archive.add(mutatedSolution);
+    } else if (flag == 0) {
+      if (archive.add(mutatedSolution)) {
+        population.set(0, test(current, mutatedSolution, archive));
       }
     }
 
-     return population;
+    population.set(0, current) ;
+    return population;
   }
 
   @Override
   public List<Solution> getResult() {
-    return null;
+    return archive.getSolutionList() ;
   }
 
   /** run() method */
