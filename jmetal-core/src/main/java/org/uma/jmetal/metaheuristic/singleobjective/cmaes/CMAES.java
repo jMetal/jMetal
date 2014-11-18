@@ -160,9 +160,8 @@ public class CMAES implements Algorithm {
           population.replace(i, resampleSingle(i));
         }
         problem.evaluate(population.get(i));
-
-        counteval += populationSize;
       }
+      counteval += populationSize;
 
       storeBest(comparator);
       JMetalLogger.logger.info(counteval + ": " + bestSolutionEver);
