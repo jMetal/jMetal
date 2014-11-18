@@ -136,3 +136,5 @@ jmetal-algorithm/*.iml
 jmetal-problem/*.iml
 FUN.tsv
 VAR.tsv
+coverage
+*.iml
