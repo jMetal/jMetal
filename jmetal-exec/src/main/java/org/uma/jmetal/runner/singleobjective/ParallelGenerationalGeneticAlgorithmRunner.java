@@ -50,16 +50,11 @@ public class ParallelGenerationalGeneticAlgorithmRunner {
     Algorithm algorithm;
     BinaryProblem problem = new OneMax(512) ;
 
-    CrossoverOperator crossoverOperator = new SinglePointCrossover.Builder()
-            .setProbability(0.9)
-            .build() ;
+    CrossoverOperator crossoverOperator = new SinglePointCrossover(0.9) ;
 
-    MutationOperator mutationOperator = new BitFlipMutation.Builder()
-            .setProbability(1.0 / problem.getNumberOfBits(0))
-            .build();
+    MutationOperator mutationOperator = new BitFlipMutation(1.0 / problem.getNumberOfBits(0)) ;
 
-    SelectionOperator selectionOperator = new BinaryTournamentSelection.Builder()
-            .build();
+    SelectionOperator selectionOperator = new BinaryTournamentSelection();
 
     algorithm = new GenerationalGeneticAlgorithm.Builder(problem)
             .setPopulationSize(100)

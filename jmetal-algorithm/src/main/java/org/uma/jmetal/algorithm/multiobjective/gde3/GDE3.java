@@ -99,7 +99,7 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
 
     public Builder(ContinuousProblem problem) {
       this.problem = problem ;
-      selectionOperator = new DifferentialEvolutionSelection.Builder().build() ;
+      selectionOperator = new DifferentialEvolutionSelection() ;
     }
 
     public Builder setPopulationSize(int populationSize) {

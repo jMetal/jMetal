@@ -64,10 +64,7 @@ public class PAESRunner {
 
     problem = ProblemUtils.loadProblem(problemName);
 
-    mutation = new PolynomialMutation.Builder()
-            .setDistributionIndex(20.0)
-            .setProbability(1.0 / problem.getNumberOfVariables())
-            .build();
+    mutation = new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0) ;
 
     algorithm = new PAESBuilder(problem)
             .setMutationOperator(mutation)

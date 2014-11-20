@@ -40,16 +40,6 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
     randomGenerator = JMetalRandom.getInstance() ;
   }
 
-  /** Constructor */
-  public PolynomialMutation() {
-    this(0.01, 20.0) ;
-  }
-
-  /** Constructor */
-  private PolynomialMutation(Builder builder) {
-    this(builder.mutationProbability, builder.distributionIndex) ;
-  }
-
   /* Getters */
   public double getMutationProbability() {
     return mutationProbability;
@@ -57,33 +47,6 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
 
   public double getDistributionIndex() {
     return distributionIndex;
-  }
-
-  /** Builder class */
-  public static class Builder {
-    private double distributionIndex;
-    private double mutationProbability;
-
-    public Builder() {
-      distributionIndex = ETA_M_DEFAULT;
-      mutationProbability = 0.01 ;
-    }
-
-    public Builder setDistributionIndex(double distributionIndex) {
-      this.distributionIndex = distributionIndex ;
-
-      return this ;
-    }
-
-    public Builder setProbability(double probability) {
-      mutationProbability = probability ;
-
-      return this ;
-    }
-
-    public PolynomialMutation build() {
-      return new PolynomialMutation(this) ;
-    }
   }
 
   /** Execute() method */

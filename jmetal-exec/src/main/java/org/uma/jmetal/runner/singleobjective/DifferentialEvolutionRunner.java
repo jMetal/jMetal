@@ -58,14 +58,9 @@ public class DifferentialEvolutionRunner {
      * - evaluator = new MultithreadedSolutionSetEvaluator(threads, problem)
      */
 
-    crossover = new DifferentialEvolutionCrossover.Builder()
-            .setCr(0.5)
-            .setF(0.5)
-            .setVariant("rand/1/bin")
-            .build() ;
+    crossover = new DifferentialEvolutionCrossover(0.5, 0.5, "rand/1/bin") ;
 
-    selection = new DifferentialEvolutionSelection.Builder()
-            .build();
+    selection = new DifferentialEvolutionSelection();
 
     algorithm = new DifferentialEvolution.Builder(problem)
             .setCrossover(crossover)

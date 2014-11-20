@@ -36,41 +36,9 @@ public class BitFlipMutation implements MutationOperator<BinarySolution> {
     randomGenerator = JMetalRandom.getInstance() ;
   }
 
-  /** Constructor */
-  public BitFlipMutation() {
-    this(0.1) ;
-  }
-
-  /** Constructor */
-  private BitFlipMutation(Builder builder) {
-    this(builder.mutationProbability);
-  }
-
   /* Getter */
   public double getMutationProbability() {
     return mutationProbability;
-  }
-
-  /** Builder class */
-  public static class Builder {
-    private double mutationProbability = 0.1 ;
-
-    public Builder() {
-    }
-
-    public Builder(double probability) {
-      mutationProbability = probability ;
-    }
-
-    public Builder setProbability(double probability) {
-      mutationProbability = probability ;
-
-      return this ;
-    }
-
-    public BitFlipMutation build() {
-      return new BitFlipMutation(this) ;
-    }
   }
 
   /** Execute() method */

@@ -66,16 +66,15 @@ public class SMPSORunner {
     Algorithm algorithm;
     MutationOperator mutation;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.wfg.WFG9" ;
+    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4" ;
 
     problem = (ContinuousProblem) ProblemUtils.loadProblem(problemName);
 
     Archive archive = new CrowdingDistanceArchive(100) ;
 
-    mutation = new PolynomialMutation.Builder()
-            .setDistributionIndex(20.0)
-            .setProbability(1.0 / problem.getNumberOfVariables())
-            .build();
+    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
+    double mutationDistributionIndex = 20.0 ;
+    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
     algorithm = new SMPSO.Builder(problem, archive)
             .setMutation(mutation)

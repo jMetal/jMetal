@@ -8,7 +8,7 @@ import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
 /** Builder class */
-public class BuilderNSGAIII {
+public class NSGAIIIBuilder {
   
   // no access modifier means access from classes within the same package
   Problem problem ;
@@ -21,50 +21,50 @@ public class BuilderNSGAIII {
   int divisions;
   
   /** Builder constructor */
-  public BuilderNSGAIII(Problem problem) {
+  public NSGAIIIBuilder(Problem problem) {
     this.problem = problem ;
     maxEvaluations = 25000 ;
     populationSize = 100 ;
     evaluator = new SequentialSolutionListEvaluator() ;
   }
 
-  public BuilderNSGAIII setMaxEvaluations(int maxEvaluations) {
+  public NSGAIIIBuilder setMaxEvaluations(int maxEvaluations) {
     this.maxEvaluations = maxEvaluations ;
 
     return this ;
   }
 
-  public BuilderNSGAIII setPopulationSize(int populationSize) {
+  public NSGAIIIBuilder setPopulationSize(int populationSize) {
     this.populationSize = populationSize ;
 
     return this ;
   }
 
-  public BuilderNSGAIII setCrossoverOperator(CrossoverOperator crossoverOperator) {
+  public NSGAIIIBuilder setCrossoverOperator(CrossoverOperator crossoverOperator) {
     this.crossoverOperator = crossoverOperator ;
 
     return this ;
   }
 
-  public BuilderNSGAIII setMutationOperator(MutationOperator mutationOperator) {
+  public NSGAIIIBuilder setMutationOperator(MutationOperator mutationOperator) {
     this.mutationOperator = mutationOperator ;
 
     return this ;
   }
 
-  public BuilderNSGAIII setSelectionOperator(SelectionOperator selectionOperator) {
+  public NSGAIIIBuilder setSelectionOperator(SelectionOperator selectionOperator) {
     this.selectionOperator = selectionOperator ;
 
     return this ;
   }
 
-  public BuilderNSGAIII setSolutionListEvaluator(SolutionListEvaluator evaluator) {
+  public NSGAIIIBuilder setSolutionListEvaluator(SolutionListEvaluator evaluator) {
     this.evaluator = evaluator ;
 
     return this ;
   }
 
-  public BuilderNSGAIII setDivisions(int div) {
+  public NSGAIIIBuilder setDivisions(int div) {
 	  this.divisions = div;
 	  return this;
   }

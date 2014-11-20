@@ -78,13 +78,19 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<List<Do
   private JMetalRandom randomGenerator ;
 
   /** Constructor */
-  public DifferentialEvolutionCrossover(Builder builder) {
-    cr = builder.cr;
-    f = builder.f;
-    k = builder.k;
-    variant = builder.variant;
+  public DifferentialEvolutionCrossover(double cr, double f, String variant) {
+    this.cr = cr;
+    this.f = f;
+    this.k = DEFAULT_K ;
+    this.variant = variant ;
 
     randomGenerator = JMetalRandom.getInstance() ;
+  }
+
+  /** Constructor */
+  public DifferentialEvolutionCrossover(double cr, double f, double k, String variant) {
+    this(cr, f, variant) ;
+    this.k = k ;
   }
 
   /* Getters */
@@ -102,66 +108,6 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<List<Do
 
   public String getVariant() {
     return variant;
-  }
-
-  /** Builder class */
-  public static class Builder {
-    private double cr;
-    private double f;
-    private double k;
-    // DE variant (rand/1/bin, rand/1/exp, etc.)
-    private String variant;
-
-    public Builder() {
-      cr = DEFAULT_CR ;
-      f = DEFAULT_F ;
-      k = DEFAULT_K ;
-      variant = DEFAULT_DE_VARIANT ;
-    }
-
-    public Builder setCr(double cr) {
-      if ((cr < 0) || (cr > 1.0)) {
-        throw new JMetalException("Invalid CR value: " + cr ) ;
-      } else {
-        this.cr = cr ;
-      }
-
-      return this ;
-    }
-
-    public Builder setF(double f) {
-      if ((f < 0) || (f > 1.0)) {
-        throw new JMetalException("Invalid F value: " + f) ;
-      } else {
-        this.f = f;
-      }
-
-      return this ;
-    }
-
-    public Builder setK(double k) {
-      if ((k < 0) || (k > 1.0)) {
-        throw new JMetalException("Invalid K value: " + k) ;
-      } else {
-        this.k = k;
-      }
-
-      return this ;
-    }
-
-    public Builder setVariant(String variant) {
-      Vector<String> validVariants = new Vector<>(Arrays.asList(VALID_VARIANTS)) ;
-      if (validVariants.contains(variant)) {
-        this.variant = variant ;
-      } else {
-        throw new JMetalException("Invalid DE variant: " + variant) ;
-      }
-
-      return this ;
-    }
-    public DifferentialEvolutionCrossover build() {
-      return new DifferentialEvolutionCrossover(this) ;
-    }
   }
 
   public void setCurrentSolution(DoubleSolution current) {

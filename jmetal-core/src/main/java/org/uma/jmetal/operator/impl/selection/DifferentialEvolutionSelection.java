@@ -38,19 +38,8 @@ public class DifferentialEvolutionSelection implements SelectionOperator<List<Do
   private JMetalRandom randomGenerator ;
 
   /** Constructor */
-  DifferentialEvolutionSelection(Builder builder) {
+  public DifferentialEvolutionSelection() {
     randomGenerator = JMetalRandom.getInstance() ;
-  }
-
-  /** Builder class */
-  public static class Builder {
-
-    public Builder() {
-    }
-
-    public DifferentialEvolutionSelection build() {
-      return new DifferentialEvolutionSelection(this) ;
-    }
   }
 
   public void setIndex(int index) {
