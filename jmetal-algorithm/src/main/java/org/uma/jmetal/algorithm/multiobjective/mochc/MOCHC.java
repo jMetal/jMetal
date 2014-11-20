@@ -27,8 +27,10 @@ import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.BinaryProblem;
+import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 
 import java.util.ArrayList;
@@ -61,19 +63,22 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
   private SolutionListEvaluator evaluator ;
 
   /** Constructor */
-  private MOCHC(Builder builder) {
+  public MOCHC(BinaryProblem problem, int populationSize, int maxEvaluations, int convergenceValue,
+               double preservedPopulation, double initialConvergenceCount, CrossoverOperator crossoverOperator,
+               MutationOperator cataclysmicMutation, SelectionOperator newGenerationSelection,
+               SelectionOperator parentSelection, SolutionListEvaluator evaluator) {
     super() ;
-    this.problem = builder.problem ;
-    this.populationSize = builder.populationSize ;
-    this.maxEvaluations = builder.maxEvaluations ;
-    this.convergenceValue = builder.convergenceValue ;
-    this.preservedPopulation = builder.preservedPopulation ;
-    this.initialConvergenceCount = builder.initialConvergenceCount ;
-    this.crossover = builder.crossover ;
-    this.cataclysmicMutation = builder.cataclysmicMutation ;
-    this.newGenerationSelection = builder.newGenerationSelection ;
-    this.parentSelection = builder.parentSelection ;
-    this.evaluator = builder.evaluator ;
+    this.problem = problem ;
+    this.populationSize = populationSize ;
+    this.maxEvaluations = maxEvaluations ;
+    this.convergenceValue = convergenceValue ;
+    this.preservedPopulation = preservedPopulation ;
+    this.initialConvergenceCount = initialConvergenceCount ;
+    this.crossover = crossoverOperator ;
+    this.cataclysmicMutation = cataclysmicMutation ;
+    this.newGenerationSelection = newGenerationSelection ;
+    this.parentSelection = parentSelection ;
+    this.evaluator = evaluator ;
 
     int size = 0 ;
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
@@ -121,85 +126,6 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
 
   public double getPreservedPopulation() {
     return preservedPopulation ;
-  }
-
-  /** Builder class */
-  static public class Builder {
-    BinaryProblem problem ;
-    SolutionListEvaluator evaluator ;
-    int populationSize ;
-    int maxEvaluations ;
-    int convergenceValue ;
-    double preservedPopulation ;
-    double initialConvergenceCount ;
-    CrossoverOperator crossover ;
-    MutationOperator cataclysmicMutation;
-    SelectionOperator parentSelection ;
-    SelectionOperator newGenerationSelection ;
-
-    public Builder(BinaryProblem problem) {
-      this.problem = problem ;
-    }
-
-    public Builder setPopulationSize(int populationSize) {
-      this.populationSize = populationSize ;
-
-      return this ;
-    }
-
-    public Builder setMaxEvaluations(int maxEvaluations) {
-      this.maxEvaluations = maxEvaluations ;
-
-      return this ;
-    }
-
-    public Builder setConvergenceValue(int convergenceValue) {
-      this.convergenceValue = convergenceValue ;
-
-      return this ;
-    }
-
-    public Builder setInitialConvergenceCount(double initialConvergenceCount) {
-      this.initialConvergenceCount = initialConvergenceCount ;
-
-      return this ;
-    }
-
-    public Builder setPreservedPopulation(double preservedPopulation) {
-      this.preservedPopulation = preservedPopulation ;
-
-      return this ;
-    }
-
-    public Builder setCrossover(CrossoverOperator crossover) {
-      this.crossover = crossover ;
-
-      return this ;
-    }
-
-    public Builder setCataclysmicMutation(MutationOperator cataclysmicMutation) {
-      this.cataclysmicMutation = cataclysmicMutation ;
-
-      return this ;
-    }
-
-    public Builder setParentSelection(SelectionOperator parentSelection) {
-      this.parentSelection = parentSelection ;
-
-      return this ;
-    }
-
-    public Builder setNewGenerationSelection(SelectionOperator newGenerationSelection) {
-      this.newGenerationSelection = newGenerationSelection ;
-
-      return this ;
-    }
-
-    public MOCHC build() {
-      MOCHC algorithm =  new MOCHC(this) ;
-
-      return algorithm ;
-    }
   }
 
 
@@ -300,7 +226,7 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
 
   @Override
   public List<BinarySolution> getResult() {
-    return null;
+    return SolutionListUtils.getNondominatedSolutions(getPopulation()) ;
   }
 
 
