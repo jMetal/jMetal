@@ -35,19 +35,9 @@ public class SinglePointCrossover implements CrossoverOperator<List<BinarySoluti
   private JMetalRandom randomGenerator ;
 
   /** Constructor */
-  private SinglePointCrossover(double crossoverProbability) {
+  public SinglePointCrossover(double crossoverProbability) {
     this.crossoverProbability = crossoverProbability;
     randomGenerator = JMetalRandom.getInstance() ;
-  }
-
-  /** Constructor */
-  private SinglePointCrossover() {
-    this(0.9) ;
-  }
-
-  /** Constructor */
-  private SinglePointCrossover(Builder builder) {
-    this(builder.crossoverProbability);
   }
 
   /* Getter */
@@ -64,29 +54,6 @@ public class SinglePointCrossover implements CrossoverOperator<List<BinarySoluti
     }
 
     return doCrossover(crossoverProbability, solutions.get(0), solutions.get(1)) ;
-  }
-
-  /** Builder class */
-  public static class Builder {
-    private double crossoverProbability;
-
-    public Builder() {
-      crossoverProbability = 0.9 ;
-    }
-
-    public Builder setProbability(double probability) {
-      if ((probability < 0) || (probability > 1.0)) {
-        throw new JMetalException("Probability value invalid: " + probability) ;
-      } else {
-        crossoverProbability = probability;
-      }
-
-      return this ;
-    }
-
-    public SinglePointCrossover build() {
-      return new SinglePointCrossover(this) ;
-    }
   }
 
   /**

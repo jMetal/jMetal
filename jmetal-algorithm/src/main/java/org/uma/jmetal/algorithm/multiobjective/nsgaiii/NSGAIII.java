@@ -30,7 +30,7 @@ public class NSGAIII extends AbstractGeneticAlgorithm<Solution, List<Solution>> 
   private Vector<Integer> numberOfDivisions  ;
   private List<ReferencePoint> referencePoints = new Vector<>() ;
 
-  public static BuilderNSGAIII Builder;
+  public static NSGAIIIBuilder Builder;
 
 
   /** Constructor */
@@ -38,7 +38,7 @@ public class NSGAIII extends AbstractGeneticAlgorithm<Solution, List<Solution>> 
   }
 
   /** Constructor */
-  NSGAIII(BuilderNSGAIII builder) { // can be created from the BuilderNSGAIII within the same package
+  NSGAIII(NSGAIIIBuilder builder) { // can be created from the BuilderNSGAIII within the same package
     problem = builder.problem ;
     maxEvaluations = builder.maxEvaluations ;
 

@@ -29,93 +29,20 @@ public class NSGAII extends AbstractGeneticAlgorithm<Solution, List<Solution>> {
   protected Problem problem ;
 
   protected SolutionListEvaluator<Solution> evaluator ;
-  /** Constructor */
-  public NSGAII() {
-  }
-
-  /** Builder */
-  public NSGAII(NSGAIIBuilder builder) {
-    problem = builder.problem ;
-    maxIterations = builder.maxIterations ;
-    populationSize = builder.populationSize ;
-
-    crossoverOperator = builder.crossoverOperator ;
-    mutationOperator = builder.mutationOperator ;
-    selectionOperator = builder.selectionOperator ;
-
-    evaluator = builder.evaluator ;
-  }
 
   /** Constructor */
-  private NSGAII(Builder builder) {
-    problem = builder.problem ;
-    maxIterations = builder.maxIterations ;
-    populationSize = builder.populationSize ;
+  public NSGAII(Problem problem, int maxIterations, int populationSize, CrossoverOperator crossoverOperator,
+                MutationOperator mutationOperator, SelectionOperator selectionOperator,
+                SolutionListEvaluator evaluator) {
+    this.problem = problem ;
+    this.maxIterations = maxIterations ;
+    this.populationSize = populationSize ;
 
-    crossoverOperator = builder.crossoverOperator ;
-    mutationOperator = builder.mutationOperator ;
-    selectionOperator = builder.selectionOperator ;
+    this.crossoverOperator = crossoverOperator ;
+    this.mutationOperator = mutationOperator ;
+    this.selectionOperator = selectionOperator ;
 
-    evaluator = builder.evaluator ;
-  }
-
-  /** Builder class */
-  public static class Builder {
-    private Problem problem ;
-    private int maxIterations ;
-    private int populationSize ;
-    private CrossoverOperator crossoverOperator ;
-    private MutationOperator mutationOperator ;
-    private SelectionOperator selectionOperator ;
-    private SolutionListEvaluator evaluator ;
-
-    /** Builder constructor */
-    public Builder(Problem problem) {
-      this.problem = problem ;
-      maxIterations = 250 ;
-      populationSize = 100 ;
-      evaluator = new SequentialSolutionListEvaluator() ;
-    }
-
-    public Builder setMaxIterations(int maxIterations) {
-      this.maxIterations = maxIterations ;
-
-      return this ;
-    }
-
-    public Builder setPopulationSize(int populationSize) {
-      this.populationSize = populationSize ;
-
-      return this ;
-    }
-
-    public Builder setCrossoverOperator(CrossoverOperator crossoverOperator) {
-      this.crossoverOperator = crossoverOperator ;
-
-      return this ;
-    }
-
-    public Builder setMutationOperator(MutationOperator mutationOperator) {
-      this.mutationOperator = mutationOperator ;
-
-      return this ;
-    }
-
-    public Builder setSelectionOperator(SelectionOperator selectionOperator) {
-      this.selectionOperator = selectionOperator ;
-
-      return this ;
-    }
-
-    public Builder setSolutionListEvaluator(SolutionListEvaluator evaluator) {
-      this.evaluator = evaluator ;
-
-      return this ;
-    }
-
-    public NSGAII build() {
-      return new NSGAII(this) ;
-    }
+    this.evaluator = evaluator ;
   }
 
   @Override

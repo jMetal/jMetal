@@ -114,20 +114,15 @@ public class IBEA implements Algorithm<List<Solution>> {
       archiveSize = 100 ;
       maxEvaluations = 25000 ;
 
-      crossover = new SBXCrossover.Builder()
-        .setProbability(0.9)
-        .setDistributionIndex(20.0)
-        .build();
+      double crossoverProbability = 0.9 ;
+      double crossoverDistributionIndex = 20.0 ;
+      crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex) ;
 
-      mutation = new PolynomialMutation.Builder()
-        .setProbability(1.0 / problem.getNumberOfVariables())
-        .setDistributionIndex(20.0)
-        .build() ;
+      double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
+      double mutationDistributionIndex = 20.0 ;
+      mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-      selection = new BinaryTournamentSelection.Builder()
-        .setComparator(new FitnessComparator())
-        .build() ;
-
+      selection = new BinaryTournamentSelection();
     }
 
     public Builder setPopulationSize(int populationSize) {

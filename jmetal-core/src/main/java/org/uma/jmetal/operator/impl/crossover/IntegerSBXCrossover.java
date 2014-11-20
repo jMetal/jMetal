@@ -49,16 +49,6 @@ public class IntegerSBXCrossover implements CrossoverOperator<List<IntegerSoluti
     randomGenerator = JMetalRandom.getInstance() ;
   }
 
-  /** Constructor */
-  public IntegerSBXCrossover() {
-    this(0.9, 20.0) ;
-  }
-
-  /** Constructor */
-  private IntegerSBXCrossover(Builder builder) {
-    this(builder.crossoverProbability, builder.distributionIndex) ;
-  }
-
   /* Getters */
   public double getCrossoverProbability() {
     return crossoverProbability;
@@ -171,40 +161,5 @@ public class IntegerSBXCrossover implements CrossoverOperator<List<IntegerSoluti
     }
 
     return offspring;
-  }
-
-  /** Builder class */
-  public static class Builder {
-    private double distributionIndex ;
-    private double crossoverProbability ;
-
-    public Builder() {
-      distributionIndex = ETA_C_DEFAULT ;
-      crossoverProbability = DEFAULT_PROBABILITY ;
-    }
-
-    public Builder setDistributionIndex(double distributionIndex) {
-      if (distributionIndex < 0) {
-        throw new JMetalException("Distribution index invalid: " + distributionIndex) ;
-      } else {
-        this.distributionIndex = distributionIndex;
-      }
-
-      return this ;
-    }
-
-    public Builder setProbability(double probability) {
-      if ((probability < 0) || (probability > 1.0)) {
-        throw new JMetalException("Probability value invalid: " + probability) ;
-      } else {
-        crossoverProbability = probability;
-      }
-
-      return this ;
-    }
-
-    public IntegerSBXCrossover build() {
-      return new IntegerSBXCrossover(this) ;
-    }
   }
 }

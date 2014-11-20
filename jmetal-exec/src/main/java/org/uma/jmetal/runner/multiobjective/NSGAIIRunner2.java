@@ -21,6 +21,9 @@
 package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
+import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
+import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
+import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.IntegerProblem;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.algorithm.Algorithm;
@@ -65,19 +68,17 @@ public class NSGAIIRunner2 {
 
     problem = (IntegerProblem) ProblemUtils.loadProblem(problemName);
 
-    crossover = new IntegerSBXCrossover.Builder()
-            .setDistributionIndex(20)
-            .setProbability(0.9)
-            .build() ;
+    double crossoverProbability = 0.9 ;
+    double crossoverDistributionIndex = 20.0 ;
+    crossover = new IntegerSBXCrossover(crossoverProbability, crossoverDistributionIndex) ;
 
-    mutation = new IntegerPolynomialMutation.Builder()
-            .setProbability(1.0 / problem.getNumberOfVariables())
-            .build();
+    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
+    double mutationDistributionIndex = 20.0 ;
+    mutation = new IntegerPolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    selection = new BinaryTournamentSelection.Builder()
-            .build();
+    selection = new BinaryTournamentSelection() ;
 
-    algorithm = new NSGAII.Builder(problem)
+    algorithm = new NSGAIIBuilder(problem)
             .setCrossoverOperator(crossover)
             .setMutationOperator(mutation)
             .setSelectionOperator(selection)

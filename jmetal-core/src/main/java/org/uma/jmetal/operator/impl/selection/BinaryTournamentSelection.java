@@ -35,33 +35,19 @@ public class BinaryTournamentSelection implements SelectionOperator<List<Solutio
   private JMetalRandom randomGenerator ;
 
   /** Constructor */
-  private BinaryTournamentSelection(Builder builder) {
-    comparator = builder.comparator ;
+  public BinaryTournamentSelection() {
     randomGenerator = JMetalRandom.getInstance() ;
+    comparator = new DominanceComparator() ;
   }
 
-  /** Builder class */
-  public static class Builder {
-    Comparator<Solution> comparator ;
-
-    public Builder() {
-      comparator = new DominanceComparator() ;
-    }
-
-    public Builder setComparator(Comparator<Solution> comparator) {
-      this.comparator = comparator ;
-
-      return this ;
-    }
-
-    public BinaryTournamentSelection build() {
-      return new BinaryTournamentSelection(this) ;
-    }
+  /** Constructor */
+  public BinaryTournamentSelection(Comparator<Solution> comparator) {
+    this.comparator = comparator ;
   }
 
   @Override
   /** Execute() method */
-  public Solution<?> execute(List<Solution> solutions) {
+  public Solution execute(List<Solution> solutions) {
     if (null == solutions) {
       throw new JMetalException("Parameter is null") ;
     } else if (solutions.size() == 0) {

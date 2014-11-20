@@ -5,6 +5,7 @@ import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
 import java.util.ArrayList;
@@ -15,80 +16,11 @@ import java.util.List;
  */
 public class SteadyStateNSGAII extends NSGAII {
   /** Constructor */
-  public SteadyStateNSGAII(SteadyStateNSGAIIBuilder builder) {
-    problem = builder.problem ;
-    maxIterations = builder.maxIterations ;
-    populationSize = builder.populationSize ;
-
-    crossoverOperator = builder.crossoverOperator ;
-    mutationOperator = builder.mutationOperator ;
-    selectionOperator = builder.selectionOperator ;
-
-    evaluator = new SequentialSolutionListEvaluator() ;
-  }
-
-  /** Constructor */
-  private SteadyStateNSGAII(Builder builder) {
-    problem = builder.problem ;
-    maxIterations = builder.maxIterations ;
-    populationSize = builder.populationSize ;
-
-    crossoverOperator = builder.crossoverOperator ;
-    mutationOperator = builder.mutationOperator ;
-    selectionOperator = builder.selectionOperator ;
-
-    evaluator = new SequentialSolutionListEvaluator() ;
-  }
-
-  /** Builder class */
-  public static class Builder {
-    private Problem problem ;
-    private int maxIterations ;
-    private int populationSize ;
-    private CrossoverOperator crossoverOperator ;
-    private MutationOperator mutationOperator ;
-    private SelectionOperator selectionOperator ;
-
-    /** Builder constructor */
-    public Builder(Problem problem) {
-      this.problem = problem ;
-      maxIterations = 250 ;
-      populationSize = 100 ;
-    }
-
-    public Builder setMaxIterations(int maxIterations) {
-      this.maxIterations = maxIterations ;
-
-      return this ;
-    }
-
-    public Builder setPopulationSize(int populationSize) {
-      this.populationSize = populationSize ;
-
-      return this ;
-    }
-
-    public Builder setCrossoverOperator(CrossoverOperator crossoverOperator) {
-      this.crossoverOperator = crossoverOperator ;
-
-      return this ;
-    }
-
-    public Builder setMutationOperator(MutationOperator mutationOperator) {
-      this.mutationOperator = mutationOperator ;
-
-      return this ;
-    }
-
-    public Builder setSelectionOperator(SelectionOperator selectionOperator) {
-      this.selectionOperator = selectionOperator ;
-
-      return this ;
-    }
-
-    public SteadyStateNSGAII build() {
-      return new SteadyStateNSGAII(this) ;
-    }
+  public SteadyStateNSGAII(Problem problem, int maxIterations, int populationSize, CrossoverOperator crossoverOperator,
+                           MutationOperator mutationOperator, SelectionOperator selectionOperator,
+                           SolutionListEvaluator evaluator) {
+    super(problem, maxIterations, populationSize, crossoverOperator, mutationOperator, selectionOperator,
+            evaluator) ;
   }
 
   @Override

@@ -45,9 +45,7 @@ public class ElitistEvolutionStrategyRunner {
     Algorithm algorithm;
     BinaryProblem problem = new OneMax(512) ;
 
-    MutationOperator mutationOperator = new BitFlipMutation.Builder()
-            .setProbability(1.0 / problem.getNumberOfBits(0))
-            .build();
+    MutationOperator mutationOperator = new BitFlipMutation(1.0 / problem.getNumberOfBits(0)) ;
 
     algorithm = new ElitistEvolutionStrategy.Builder(problem)
             .setMaxEvaluations(25000)

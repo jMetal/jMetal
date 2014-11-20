@@ -73,14 +73,9 @@ public class DifferentialEvolution extends AbstractDifferentialEvolution<Solutio
       this.problem = problem ;
       this.populationSize = 100 ;
       this.maxEvaluations = 20000 ;
-      this.crossoverOperator = new DifferentialEvolutionCrossover.Builder()
-              .setCr(0.5)
-              .setF(0.5)
-              .setVariant("rand/1/bin")
-              .build() ;
+      this.crossoverOperator = new DifferentialEvolutionCrossover(0.5, 0.5, "rand/1/bin") ;
 
-      this.selectionOperator = new DifferentialEvolutionSelection.Builder()
-              .build() ;
+      this.selectionOperator = new DifferentialEvolutionSelection() ;
     }
 
     public Builder setPopulationSize(int populationSize) {

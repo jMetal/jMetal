@@ -86,10 +86,7 @@ public class NonElitistEvolutionStrategy extends AbstractEvolutionStrategy<Solut
       this.mu = 1 ;
       this.lambda = 10 ;
       this.maxEvaluations = 250000 ;
-      this.mutation = new PolynomialMutation.Builder()
-              .setProbability(1.0/problem.getNumberOfVariables())
-              .setDistributionIndex(20.0)
-              .build() ;
+      this.mutation = new PolynomialMutation(1.0/problem.getNumberOfVariables(), 20.0) ;
     }
 
     public Builder setMu(int mu) {

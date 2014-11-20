@@ -12,7 +12,7 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
  */
 public class NSGAIIBuilder {
   /** NSGAIIBuilder class */
-  public Problem problem ;
+  public final Problem problem ;
   public int maxIterations ;
   public int populationSize ;
   public CrossoverOperator crossoverOperator ;
@@ -65,6 +65,7 @@ public class NSGAIIBuilder {
   }
 
   public NSGAII build() {
-    return new NSGAII(this) ;
+    return new NSGAII(problem, maxIterations, populationSize, crossoverOperator, mutationOperator,
+            selectionOperator, evaluator) ;
   }
 }

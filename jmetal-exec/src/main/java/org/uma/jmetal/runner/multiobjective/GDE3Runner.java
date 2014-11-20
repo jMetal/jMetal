@@ -54,7 +54,7 @@ public class GDE3Runner {
     DifferentialEvolutionSelection selection;
     DifferentialEvolutionCrossover crossover;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ3" ;
+    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1" ;
 
     problem = (ContinuousProblem) ProblemUtils.loadProblem(problemName);
 
@@ -64,13 +64,11 @@ public class GDE3Runner {
      * - evaluator = new MultithreadedSolutionSetEvaluator(threads, problem)
      */
 
-    crossover = new DifferentialEvolutionCrossover.Builder()
-      .setCr(0.5)
-      .setF(0.5)
-      .build() ;
+    double cr = 0.5 ;
+    double f = 0.5 ;
+    crossover = new DifferentialEvolutionCrossover(cr, f, "rand/1/bin") ;
 
-    selection = new DifferentialEvolutionSelection.Builder()
-      .build();
+    selection = new DifferentialEvolutionSelection() ;
 
     algorithm = new GDE3.Builder(problem)
       .setCrossover(crossover)

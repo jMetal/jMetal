@@ -49,18 +49,11 @@ public class SteadyStateGeneticAlgorithmRunner {
 
     Algorithm algorithm;
     ContinuousProblem problem = new Sphere(512) ;
-    CrossoverOperator crossoverOperator = new SBXCrossover.Builder()
-            .setProbability(0.9)
-            .setDistributionIndex(20.0)
-            .build() ;
+    CrossoverOperator crossoverOperator = new SBXCrossover(0.9, 20.0) ;
 
-    MutationOperator mutationOperator = new PolynomialMutation.Builder()
-            .setProbability(1.0 / problem.getNumberOfVariables())
-            .setDistributionIndex(20.0)
-            .build();
+    MutationOperator mutationOperator = new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0) ;
 
-    SelectionOperator selectionOperator = new BinaryTournamentSelection.Builder()
-            .build();
+    SelectionOperator selectionOperator = new BinaryTournamentSelection() ;
 
     algorithm = new SteadyStateGeneticAlgorithm.Builder(problem)
             .setPopulationSize(100)
