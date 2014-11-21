@@ -31,6 +31,7 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
+import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 
 import java.util.ArrayList;
@@ -59,6 +60,8 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
   private SelectionOperator parentSelection ;
   private int evaluations ;
   private int minimumDistance;
+  private int size ;
+  private Comparator comparator ;
 
   private SolutionListEvaluator evaluator ;
 
@@ -80,11 +83,12 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
     this.parentSelection = parentSelection ;
     this.evaluator = evaluator ;
 
-    int size = 0 ;
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
       size += problem.getNumberOfBits(i) ;
     }
     minimumDistance = (int) Math.floor(initialConvergenceCount * size);
+
+    comparator = new CrowdingDistanceComparator() ;
   }
 
   /* Getters */
@@ -201,27 +205,26 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
     if (solutionSetsAreEquals(population, newPopulation)) {
       minimumDistance--;
     }
-/*
-    if (minimumDistance <= -convergenceValue) {
 
+    if (minimumDistance <= -convergenceValue) {
       minimumDistance = (int) (1.0 / size * (1 - 1.0 / size) * size);
 
       int preserve = (int) Math.floor(preservedPopulation * populationSize);
-      newPopulation = new SolutionSet(populationSize);
-      solutionSet.sort(crowdingComparator);
+      newPopulation = new ArrayList<>(populationSize);
+      population.sort(comparator);
       for (int i = 0; i < preserve; i++) {
-        newPopulation.add(new Solution(solutionSet.get(i)));
+        newPopulation.add((BinarySolution) population.get(i).copy());
       }
       for (int i = preserve; i < populationSize; i++) {
-        Solution solution = new Solution(solutionSet.get(i));
+        BinarySolution solution = (BinarySolution) population.get(i).copy();
         cataclysmicMutation.execute(solution);
-        problem.evaluate(solution);
-        problem.evaluateConstraints(solution);
+        //problem.evaluate(solution);
+        //problem.evaluateConstraints(solution);
         newPopulation.add(solution);
       }
     }
-*/
-    return union;
+
+    return newPopulation;
   }
 
   @Override
@@ -367,7 +370,6 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
 
     return distance;
   }
-
 
   private int hammingDistance(BitSet bitSet1, BitSet bitSet2) {
     int distance = 0;

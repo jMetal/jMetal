@@ -82,6 +82,12 @@ public class MOCHCBuilder {
     return this ;
   }
 
+  public MOCHCBuilder setEvaluator(SolutionListEvaluator evaluator) {
+    this.evaluator = evaluator ;
+
+    return this ;
+  }
+
   public MOCHC build() {
     MOCHC algorithm =  new MOCHC(problem, populationSize, maxEvaluations, convergenceValue,
             preservedPopulation, initialConvergenceCount, crossoverOperator,

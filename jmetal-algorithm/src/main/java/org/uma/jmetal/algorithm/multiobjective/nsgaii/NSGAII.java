@@ -19,17 +19,17 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by ajnebro on 30/10/14.
+ * Created by Antonio J. Nebro on 30/10/14.
  */
 public class NSGAII extends AbstractGeneticAlgorithm<Solution, List<Solution>> {
+  protected final int maxIterations ;
+  protected final int populationSize ;
+
+  protected final Problem problem ;
+
+  protected final SolutionListEvaluator<Solution> evaluator ;
+
   protected int iterations ;
-  protected int maxIterations ;
-  protected int populationSize ;
-
-  protected Problem problem ;
-
-  protected SolutionListEvaluator<Solution> evaluator ;
-
   /** Constructor */
   public NSGAII(Problem problem, int maxIterations, int populationSize, CrossoverOperator crossoverOperator,
                 MutationOperator mutationOperator, SelectionOperator selectionOperator,
@@ -123,8 +123,6 @@ public class NSGAII extends AbstractGeneticAlgorithm<Solution, List<Solution>> {
   public List<Solution> getResult() {
     return getNonDominatedSolutions(getPopulation()) ;
   }
-
-////////////// TODO: to be integrated smoothly
 
   protected Ranking computeRanking(List<Solution> solutionList) {
     Ranking ranking = new DominanceRanking() ;
