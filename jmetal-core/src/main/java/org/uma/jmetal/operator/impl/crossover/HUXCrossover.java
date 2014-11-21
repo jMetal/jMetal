@@ -29,7 +29,6 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
-import java.util.logging.Level;
 
 /**
  * This class allows to apply a HUX crossover operator using two parent
