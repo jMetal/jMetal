@@ -169,7 +169,7 @@ public class DifferentialEvolution extends AbstractDifferentialEvolution<Solutio
       if (comparator.compare(population.get(i), offspringPopulation.get(i)) < 0) {
         pop.add(population.get(i));
       } else {
-        pop.add(offspringPopulation.get(0));
+          pop.add(offspringPopulation.get(i));
       }
     }
 
