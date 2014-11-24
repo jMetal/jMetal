@@ -24,7 +24,7 @@ package org.uma.jmetal.algorithm.singleobjective.differentialevolution;
 import org.uma.jmetal.algorithm.impl.AbstractDifferentialEvolution;
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.impl.selection.DifferentialEvolutionSelection;
-import org.uma.jmetal.problem.ContinuousProblem;
+import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
@@ -39,7 +39,7 @@ import java.util.List;
  * This class implements a differential evolution algorithm.
  */
 public class DifferentialEvolution extends AbstractDifferentialEvolution<Solution> {
-  private ContinuousProblem problem ;
+  private DoubleProblem problem ;
 
   private int populationSize;
   private int maxEvaluations;
@@ -63,13 +63,13 @@ public class DifferentialEvolution extends AbstractDifferentialEvolution<Solutio
 
   /** Builder class */
   public static class Builder {
-    private ContinuousProblem problem ;
+    private DoubleProblem problem ;
     private int populationSize;
     private int maxEvaluations;
     private DifferentialEvolutionCrossover crossoverOperator ;
     private DifferentialEvolutionSelection selectionOperator ;
 
-    public Builder(ContinuousProblem problem) {
+    public Builder(DoubleProblem problem) {
       this.problem = problem ;
       this.populationSize = 100 ;
       this.maxEvaluations = 20000 ;

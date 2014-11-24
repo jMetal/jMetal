@@ -25,7 +25,7 @@ import org.uma.jmetal.algorithm.impl.AbstractDifferentialEvolution;
 import org.uma.jmetal.operator.Operator;
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.impl.selection.DifferentialEvolutionSelection;
-import org.uma.jmetal.problem.ContinuousProblem;
+import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
@@ -41,7 +41,7 @@ import java.util.*;
 
 /** This class implements the GDE3 algorithm */
 public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
-  private ContinuousProblem problem ;
+  private DoubleProblem problem ;
   protected int populationSize;
   protected int maxIterations;
   protected int iterations;
@@ -89,7 +89,7 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
 
   /** Builder class */
   public static class Builder {
-    protected ContinuousProblem problem;
+    protected DoubleProblem problem;
 
     protected int populationSize;
     protected int maxIterations;
@@ -97,7 +97,7 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
     protected DifferentialEvolutionCrossover crossoverOperator;
     protected DifferentialEvolutionSelection selectionOperator;
 
-    public Builder(ContinuousProblem problem) {
+    public Builder(DoubleProblem problem) {
       this.problem = problem ;
       selectionOperator = new DifferentialEvolutionSelection() ;
     }

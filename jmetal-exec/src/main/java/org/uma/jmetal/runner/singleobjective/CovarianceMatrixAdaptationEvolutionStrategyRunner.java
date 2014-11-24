@@ -22,7 +22,7 @@ package org.uma.jmetal.runner.singleobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.singleobjective.evolutionstrategy.CovarianceMatrixAdaptationEvolutionStrategy;
-import org.uma.jmetal.problem.ContinuousProblem;
+import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.singleobjective.Sphere;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AlgorithmRunner;
@@ -41,7 +41,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategyRunner {
   public static void main(String[] args) throws Exception {
 
     Algorithm algorithm;
-    ContinuousProblem problem = new Sphere() ;
+    DoubleProblem problem = new Sphere() ;
 
     algorithm = new CovarianceMatrixAdaptationEvolutionStrategy.Builder(problem)
             .build() ;

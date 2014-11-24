@@ -26,7 +26,7 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
-import org.uma.jmetal.problem.ContinuousProblem;
+import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.archive.Archive;
@@ -62,13 +62,13 @@ public class SMPSORunner {
    *          - org.uma.jmetal.runner.multiobjective.SMPSORunner problemName ParetoFrontFile
    */
   public static void main(String[] args) throws Exception {
-    ContinuousProblem problem;
+    DoubleProblem problem;
     Algorithm algorithm;
     MutationOperator mutation;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4" ;
 
-    problem = (ContinuousProblem) ProblemUtils.loadProblem(problemName);
+    problem = (DoubleProblem) ProblemUtils.loadProblem(problemName);
 
     Archive archive = new CrowdingDistanceArchive(100) ;
 

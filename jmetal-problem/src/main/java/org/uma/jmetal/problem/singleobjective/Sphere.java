@@ -23,7 +23,7 @@ package org.uma.jmetal.problem.singleobjective;
 
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.impl.GenericDoubleSolution;
-import org.uma.jmetal.problem.impl.AbstractContinuousProblem;
+import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.util.JMetalException;
 
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * Class representing a Sphere problem.
  */
-public class Sphere extends AbstractContinuousProblem {
+public class Sphere extends AbstractDoubleProblem {
   /** Constructor */
   public Sphere() {
     this(10) ;

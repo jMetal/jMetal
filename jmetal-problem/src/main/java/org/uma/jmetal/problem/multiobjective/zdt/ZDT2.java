@@ -23,13 +23,13 @@ package org.uma.jmetal.problem.multiobjective.zdt;
 
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.impl.GenericDoubleSolution;
-import org.uma.jmetal.problem.impl.AbstractContinuousProblem;
+import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /** Class representing problem ZDT2 */
-public class ZDT2 extends AbstractContinuousProblem {
+public class ZDT2 extends AbstractDoubleProblem {
 
   /** Constructor. Creates default instance of problem ZDT2 (30 decision variables) */
   public ZDT2()  {

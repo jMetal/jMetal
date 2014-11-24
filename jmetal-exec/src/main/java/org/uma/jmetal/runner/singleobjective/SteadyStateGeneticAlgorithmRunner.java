@@ -28,7 +28,7 @@ import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
-import org.uma.jmetal.problem.ContinuousProblem;
+import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.singleobjective.Sphere;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AlgorithmRunner;
@@ -48,7 +48,7 @@ public class SteadyStateGeneticAlgorithmRunner {
           Exception {
 
     Algorithm algorithm;
-    ContinuousProblem problem = new Sphere(512) ;
+    DoubleProblem problem = new Sphere(512) ;
     CrossoverOperator crossoverOperator = new SBXCrossover(0.9, 20.0) ;
 
     MutationOperator mutationOperator = new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0) ;

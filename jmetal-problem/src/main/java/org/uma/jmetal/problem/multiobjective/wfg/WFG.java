@@ -21,7 +21,7 @@
 
 package org.uma.jmetal.problem.multiobjective.wfg;
 
-import org.uma.jmetal.problem.impl.AbstractContinuousProblem;
+import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.impl.GenericDoubleSolution;
 
@@ -37,7 +37,7 @@ import java.util.Random;
  * Third International Conference, EMO 2005.
  * Proceedings, volume 3410 of Lecture Notes in Computer Science
  */
-public abstract class WFG extends AbstractContinuousProblem {
+public abstract class WFG extends AbstractDoubleProblem {
 
   /**
    * stores a epsilon default value

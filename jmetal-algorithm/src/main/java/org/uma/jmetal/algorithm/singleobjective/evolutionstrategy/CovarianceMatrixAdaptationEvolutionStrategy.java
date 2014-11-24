@@ -21,7 +21,7 @@
 package org.uma.jmetal.algorithm.singleobjective.evolutionstrategy;
 
 import org.uma.jmetal.algorithm.impl.AbstractEvolutionStrategy;
-import org.uma.jmetal.problem.ContinuousProblem;
+import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalLogger;
@@ -42,7 +42,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy extends AbstractEvoluti
   private int evaluations ;
   private int maxEvaluations ;
 
-  private ContinuousProblem problem ;
+  private DoubleProblem problem ;
 
   private double sigma ;
 
@@ -106,11 +106,11 @@ public class CovarianceMatrixAdaptationEvolutionStrategy extends AbstractEvoluti
 
   /** Buider class */
   public static class Builder {
-    private ContinuousProblem problem ;
+    private DoubleProblem problem ;
     private int lambda ;
     private int maxEvaluations ;
 
-    public Builder(ContinuousProblem problem)  {
+    public Builder(DoubleProblem problem)  {
       this.problem = problem ;
       lambda = 10;
       maxEvaluations = 1000000;

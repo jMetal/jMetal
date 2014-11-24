@@ -23,7 +23,7 @@ package org.uma.jmetal.problem.multiobjective;
 
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.impl.GenericDoubleSolution;
-import org.uma.jmetal.problem.impl.AbstractContinuousProblem;
+import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ import java.util.List;
 /**
  * Class representing problem Kursawe
  */
-public class Kursawe extends AbstractContinuousProblem {
+public class Kursawe extends AbstractDoubleProblem {
 
   /**
    * Constructor.

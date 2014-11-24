@@ -1,13 +1,13 @@
 package org.uma.jmetal.problem.impl;
 
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.problem.ContinuousProblem;
+import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.solution.impl.GenericDoubleSolution;
 
 import java.util.List;
 
-public abstract class AbstractContinuousProblem extends AbstractGenericProblem<DoubleSolution>
-  implements ContinuousProblem {
+public abstract class AbstractDoubleProblem extends AbstractGenericProblem<DoubleSolution>
+  implements DoubleProblem {
 
   private List<Double> lowerLimit ;
   private List<Double> upperLimit ;

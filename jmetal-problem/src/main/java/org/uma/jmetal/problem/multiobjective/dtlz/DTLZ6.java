@@ -21,9 +21,8 @@
 
 package org.uma.jmetal.problem.multiobjective.dtlz;
 
-import org.uma.jmetal.problem.impl.AbstractContinuousProblem;
+import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.impl.GenericDoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 
 import java.util.ArrayList;
@@ -32,7 +31,7 @@ import java.util.List;
 /**
  * Class representing problem DTLZ6
  */
-public class DTLZ6 extends AbstractContinuousProblem {
+public class DTLZ6 extends AbstractDoubleProblem {
   /**
    * Creates a default DTLZ6 problem (12 variables and 3 objectives)
    */

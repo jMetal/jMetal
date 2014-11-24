@@ -21,7 +21,7 @@
 
 package org.uma.jmetal.problem.multiobjective.lz09;
 
-import org.uma.jmetal.problem.impl.AbstractContinuousProblem;
+import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 
@@ -31,7 +31,7 @@ import java.util.List;
 /**
  * Class representing problem LZ09F9
  */
-public class LZ09F9 extends AbstractContinuousProblem {
+public class LZ09F9 extends AbstractDoubleProblem {
   private static final long serialVersionUID = 3762600989114109415L;
 
   private LZ09 lz09;

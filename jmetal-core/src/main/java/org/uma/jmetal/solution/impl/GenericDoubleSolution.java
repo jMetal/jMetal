@@ -2,7 +2,7 @@ package org.uma.jmetal.solution.impl;
 
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.problem.ContinuousProblem;
+import org.uma.jmetal.problem.DoubleProblem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,9 +10,9 @@ import java.util.HashMap;
 /**
  * Created by Antonio J. Nebro on 03/09/14.
  */
-public class GenericDoubleSolution extends AbstractGenericSolution<Double, ContinuousProblem> implements DoubleSolution {
+public class GenericDoubleSolution extends AbstractGenericSolution<Double, DoubleProblem> implements DoubleSolution {
   /** Constructor */
-  public GenericDoubleSolution(ContinuousProblem problem) {
+  public GenericDoubleSolution(DoubleProblem problem) {
     super() ;
 
   	this.problem = problem ;

@@ -2,7 +2,7 @@ package org.uma.jmetal.algorithm.multiobjective.smpso;
 
 import org.uma.jmetal.algorithm.impl.AbstractParticleSwarmOptimization;
 import org.uma.jmetal.operator.Operator;
-import org.uma.jmetal.problem.ContinuousProblem;
+import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
@@ -23,7 +23,7 @@ import java.util.List;
  * Created by antonio on 24/09/14.
  */
 public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, List<DoubleSolution>> {
-  private ContinuousProblem problem ;
+  private DoubleProblem problem ;
 
   private double c1Max;
   private double c1Min;
@@ -163,7 +163,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
 
   /** Builder class */
   public static class Builder {
-    protected ContinuousProblem problem;
+    protected DoubleProblem problem;
     protected Archive leaders;
 
     protected int swarmSize;
@@ -186,7 +186,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
     private double changeVelocity2;
     private JMetalRandom randomGenerator ;
 
-    public Builder(ContinuousProblem problem, Archive leaders) {
+    public Builder(DoubleProblem problem, Archive leaders) {
       this.problem = problem ;
       this.leaders = leaders ;
 
