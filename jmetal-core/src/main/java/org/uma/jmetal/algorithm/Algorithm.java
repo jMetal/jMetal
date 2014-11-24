@@ -17,10 +17,11 @@ package org.uma.jmetal.algorithm;
  * Interface representing an algorithm
  * @author Antonio J. Nebro
  * @version 0.1
+ * @param <R> Result
  */
-public interface Algorithm<Result> extends Runnable {
+public interface Algorithm<R> extends Runnable {
 
   /** Runs the algorithm */
   public void run() ;
-  public Result getResult() ;
+  public R getResult() ;
 }

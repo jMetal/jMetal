@@ -19,11 +19,12 @@ import org.uma.jmetal.util.JMetalException;
  * Interface representing an operator
  * @author Antonio J. Nebro
  * @version 0.1
+ * @param <S> Source
+ * @param <R> Result
  */
-public interface Operator<Source, Result> {
+public interface Operator<S, R> {
   /**
    * @param source the data to process
-   * @throws JMetalException when the combination of parameters is inconsistent (missing or incompatible values)
    */
-  public Result execute(Source source) throws JMetalException;
+  public R execute(S source) ;
 }

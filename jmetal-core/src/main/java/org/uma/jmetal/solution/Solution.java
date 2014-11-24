@@ -17,6 +17,7 @@ package org.uma.jmetal.solution;
  * Interface representing a Solution
  * @author Antonio J. Nebro
  * @version 0.1
+ * @param <T> Type (Double, Integer, etc.)
  */
 public interface Solution<T> {
   public void setObjective(int index, double value) ;
