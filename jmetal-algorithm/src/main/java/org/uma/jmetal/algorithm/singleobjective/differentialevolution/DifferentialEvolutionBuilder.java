@@ -43,8 +43,8 @@ public class DifferentialEvolutionBuilder {
   }
 
   public DifferentialEvolutionBuilder setMaxEvaluations(int maxEvaluations) {
-    if (populationSize < 0) {
-      throw new JMetalException("MaxEvaluations is negative: "  + populationSize) ;
+    if (maxEvaluations < 0) {
+      throw new JMetalException("MaxEvaluations is negative: "  + maxEvaluations) ;
     }
 
     this.maxEvaluations = maxEvaluations ;

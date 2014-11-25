@@ -3,12 +3,17 @@ package org.uma.jmetal.algorithm.singleobjective.differentialevolution;
 import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
+import org.uma.jmetal.operator.impl.selection.DifferentialEvolutionSelection;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.evaluator.impl.MultithreadedSolutionListEvaluator;
+import org.uma.jmetal.util.parallel.impl.MultithreadedEvaluator;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -77,4 +82,49 @@ public class DifferentialEvolutionBuilderTest {
     assertTrue("rand/1/bin".equals(crossover.getVariant())) ;
   }
 
+  @Test
+  public void setValidPopulationSize() {
+    builder.setPopulationSize(150) ;
+    assertEquals(150, builder.getPopulationSize());
+  }
+
+  @Test (expected = JMetalException.class)
+  public void setNegativePopulationSize() {
+    builder.setPopulationSize(-1) ;
+  }
+
+  @Test
+  public void setPositiveMaxNumberOfEvaluations() {
+    builder.setMaxEvaluations(200) ;
+    assertEquals(200, builder.getMaxEvaluations());
+  }
+
+  @Test (expected = JMetalException.class)
+  public void setNegativeMaxNumberOfEvaluations() {
+    builder.setMaxEvaluations(-100) ;
+  }
+
+  @Test
+  public void setNewCrossoverOperator() {
+    DifferentialEvolutionCrossover crossover = new DifferentialEvolutionCrossover() ;
+    assertNotEquals(crossover, builder.getCrossoverOperator());
+    builder.setCrossover(crossover) ;
+    assertEquals(crossover, builder.getCrossoverOperator()) ;
+  }
+
+  @Test
+  public void setNewSelectionOperator() {
+    DifferentialEvolutionSelection selection = new DifferentialEvolutionSelection() ;
+    assertNotEquals(selection, builder.getSelectionOperator());
+    builder.setSelection(selection) ;
+    assertEquals(selection, builder.getSelectionOperator()) ;
+  }
+
+  @Test
+  public void setNewEvaluator() {
+    MultithreadedSolutionListEvaluator evaluator = new MultithreadedSolutionListEvaluator(2, problem) ;
+    assertNotEquals(evaluator, builder.getEvaluator());
+    builder.setEvaluator(evaluator) ;
+    assertEquals(evaluator, builder.getEvaluator()) ;
+  }
 }
