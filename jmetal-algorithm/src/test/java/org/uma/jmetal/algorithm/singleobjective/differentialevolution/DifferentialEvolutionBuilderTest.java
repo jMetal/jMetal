@@ -1,5 +1,6 @@
 package org.uma.jmetal.algorithm.singleobjective.differentialevolution;
 
+import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,6 +14,7 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.evaluator.impl.MultithreadedSolutionListEvaluator;
 import org.uma.jmetal.util.parallel.impl.MultithreadedEvaluator;
 
+import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
@@ -75,6 +77,17 @@ public class DifferentialEvolutionBuilderTest {
   public void cleanup() {
     problem = null ;
     builder = null ;
+  }
+
+  @Test
+  public void buildAlgorithm() {
+    DifferentialEvolution algorithm = builder.build() ;
+    assertNotNull(algorithm) ;
+  }
+
+  @Test
+  public void getProblem() {
+    assertEquals(problem, builder.getProblem());
   }
 
   @Test

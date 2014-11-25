@@ -78,6 +78,10 @@ public class DifferentialEvolution extends AbstractDifferentialEvolution<Solutio
     return evaluations ;
   }
 
+  public void setEvaluations(int evaluations) {
+    this.evaluations = evaluations ;
+  }
+
   @Override
   protected void initProgress() {
     evaluations = populationSize ;
