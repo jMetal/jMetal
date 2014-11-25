@@ -26,23 +26,15 @@ public class GenericDoubleBinarySolution
 
   /** Constructor */
   public GenericDoubleBinarySolution(DoubleBinaryProblem problem) {
-  	this.problem = problem ;
+    this.problem = problem ;
     objectives = new ArrayList<>(problem.getNumberOfObjectives()) ;
     variables = new ArrayList<>(problem.getNumberOfVariables()) ;
     numberOfDoubleVariables = problem.getNumberOfDoubleVariables() ;
     overallConstraintViolationDegree = 0.0 ;
 
-    for (int i = 0 ; i < numberOfDoubleVariables; i++) {
-      Double value = randomGenerator.nextDouble((Double) getLowerBound(i), (Double) getUpperBound(i)) ;
-      variables.add(value) ;
-    }
-
-    BitSet bitset = createNewBitSet(problem.getNumberOfBits()) ;
-    variables.add(bitset) ;
-
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      objectives.add(new Double(0.0)) ;
-    }
+    initializeDoubleVariables();
+    initializeBitSet() ;
+    initializeObjectiveValues();
   }
 
   /** Copy constructor */
@@ -52,15 +44,35 @@ public class GenericDoubleBinarySolution
     for (Double obj : solution.objectives) {
       objectives.add(new Double(obj)) ;
     }
+    copyDoubleVariables(solution);
+    copyBitSet(solution);
+
+    overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
+    attributes = new HashMap(solution.attributes) ;
+  }
+
+  private void initializeDoubleVariables() {
+    for (int i = 0 ; i < numberOfDoubleVariables; i++) {
+      Double value = randomGenerator.nextDouble(getLowerBound(i), getUpperBound(i)) ;
+      variables.add(value) ;
+    }
+  }
+
+  private void initializeBitSet() {
+    BitSet bitset = createNewBitSet(problem.getNumberOfBits()) ;
+    variables.add(bitset) ;
+  }
+
+  private void copyDoubleVariables(GenericDoubleBinarySolution solution) {
     variables = new ArrayList<>() ;
     for (int i = 0 ; i < numberOfDoubleVariables; i++) {
       variables.add(new Double((Double) solution.getVariableValue(i))) ;
     }
+  }
 
-    variables.add(solution.getVariableValue(solution.getNumberOfVariables()-1)) ;
-
-    overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
-    attributes = new HashMap(solution.attributes) ;
+  private void copyBitSet(GenericDoubleBinarySolution solution) {
+    BitSet bitset = (BitSet)solution.getVariableValue(solution.getNumberOfVariables()-1) ;
+    variables.add(bitset.clone()) ;
   }
 
   @Override

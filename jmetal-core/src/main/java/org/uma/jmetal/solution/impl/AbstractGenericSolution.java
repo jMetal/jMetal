@@ -19,7 +19,9 @@ public abstract class AbstractGenericSolution<T, P extends Problem> implements S
   protected Map<Object, Object> attributes ;
   protected final JMetalRandom randomGenerator ;
 
-
+  /**
+   * Constructor
+   */
   protected AbstractGenericSolution() {
     attributes = new HashMap<>() ;
     randomGenerator = JMetalRandom.getInstance() ;
@@ -73,6 +75,12 @@ public abstract class AbstractGenericSolution<T, P extends Problem> implements S
   @Override
   public void setOverallConstraintViolationDegree(double violationDegree) {
     overallConstraintViolationDegree = violationDegree ;
+  }
+
+  protected void initializeObjectiveValues() {
+    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
+      objectives.add(new Double(0.0)) ;
+    }
   }
 
   @Override
