@@ -78,6 +78,16 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<List<Do
   private JMetalRandom randomGenerator ;
 
   /** Constructor */
+  public DifferentialEvolutionCrossover() {
+    this(DEFAULT_CR, DEFAULT_F, DEFAULT_K, DEFAULT_DE_VARIANT) ;
+  }
+
+  /**
+   * Constructor
+   * @param cr
+   * @param f
+   * @param variant
+   */
   public DifferentialEvolutionCrossover(double cr, double f, String variant) {
     this.cr = cr;
     this.f = f;
@@ -117,7 +127,6 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<List<Do
   /** Execute() method */
   @Override
   public List<DoubleSolution> execute(List<DoubleSolution> parentSolutions) {
-
     DoubleSolution child;
 
     int jrand;
