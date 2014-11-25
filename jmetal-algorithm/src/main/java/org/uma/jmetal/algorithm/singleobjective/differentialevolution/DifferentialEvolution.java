@@ -74,6 +74,9 @@ public class DifferentialEvolution extends AbstractDifferentialEvolution<Solutio
     comparator = new ObjectiveComparator(0) ;
   }
 
+  public int getEvaluations() {
+    return evaluations ;
+  }
 
   @Override
   protected void initProgress() {

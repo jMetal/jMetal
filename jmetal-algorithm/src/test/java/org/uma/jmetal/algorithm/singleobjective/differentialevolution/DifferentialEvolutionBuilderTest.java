@@ -1,5 +1,6 @@
 package org.uma.jmetal.algorithm.singleobjective.differentialevolution;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
@@ -68,6 +69,12 @@ public class DifferentialEvolutionBuilderTest {
       }
     } ;
     builder = new DifferentialEvolutionBuilder(problem) ;
+  }
+
+  @After
+  public void cleanup() {
+    problem = null ;
+    builder = null ;
   }
 
   @Test
