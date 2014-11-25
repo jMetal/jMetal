@@ -15,16 +15,20 @@
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU Lesser General Public License for more details.
-// 
+//
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 package org.uma.jmetal.algorithm.singleobjective.differentialevolution;
 
 import org.uma.jmetal.algorithm.impl.AbstractDifferentialEvolution;
+import org.uma.jmetal.operator.CrossoverOperator;
+import org.uma.jmetal.operator.MutationOperator;
+import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.impl.selection.DifferentialEvolutionSelection;
 import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
@@ -40,72 +44,36 @@ import java.util.List;
  */
 public class DifferentialEvolution extends AbstractDifferentialEvolution<Solution> {
   private DoubleProblem problem ;
-
   private int populationSize;
   private int maxEvaluations;
-  private int evaluations ;
-
   private SolutionListEvaluator evaluator ;
-
   private Comparator<Solution> comparator;
 
-  /** Constructor */
-  private DifferentialEvolution(Builder builder) {
-    this.problem = builder.problem ;
-    this.populationSize = builder.populationSize ;
-    this.maxEvaluations = builder.maxEvaluations ;
-    this.crossoverOperator = builder.crossoverOperator ;
-    this.selectionOperator = builder.selectionOperator ;
+  private int evaluations ;
 
-    this.evaluator = new SequentialSolutionListEvaluator() ;
-    comparator = new ObjectiveComparator(0);
+  /**
+   * Constructor
+   * @param problem
+   * @param maxEvaluations
+   * @param populationSize
+   * @param crossoverOperator
+   * @param selectionOperator
+   * @param evaluator
+   */
+  public DifferentialEvolution(DoubleProblem problem, int maxEvaluations, int populationSize,
+                               DifferentialEvolutionCrossover crossoverOperator,
+                               DifferentialEvolutionSelection selectionOperator,
+                               SolutionListEvaluator evaluator) {
+    this.problem = problem ;
+    this.maxEvaluations = maxEvaluations ;
+    this.populationSize = populationSize ;
+    this.crossoverOperator = crossoverOperator ;
+    this.selectionOperator = selectionOperator ;
+    this.evaluator = evaluator ;
+
+    comparator = new ObjectiveComparator(0) ;
   }
 
-  /** Builder class */
-  public static class Builder {
-    private DoubleProblem problem ;
-    private int populationSize;
-    private int maxEvaluations;
-    private DifferentialEvolutionCrossover crossoverOperator ;
-    private DifferentialEvolutionSelection selectionOperator ;
-
-    public Builder(DoubleProblem problem) {
-      this.problem = problem ;
-      this.populationSize = 100 ;
-      this.maxEvaluations = 20000 ;
-      this.crossoverOperator = new DifferentialEvolutionCrossover(0.5, 0.5, "rand/1/bin") ;
-
-      this.selectionOperator = new DifferentialEvolutionSelection() ;
-    }
-
-    public Builder setPopulationSize(int populationSize) {
-      this.populationSize = populationSize ;
-
-      return this ;
-    }
-
-    public Builder setMaxEvaluations(int maxEvaluations) {
-      this.maxEvaluations = maxEvaluations ;
-
-      return this ;
-    }
-
-    public Builder setCrossover (DifferentialEvolutionCrossover crossover) {
-      this.crossoverOperator = crossover ;
-
-      return this ;
-    }
-
-    public Builder setSelection (DifferentialEvolutionSelection selection) {
-      this.selectionOperator = selection ;
-
-      return this ;
-    }
-
-    public DifferentialEvolution build() {
-      return new DifferentialEvolution(this) ;
-    }
-  }
 
   @Override
   protected void initProgress() {
@@ -169,7 +137,7 @@ public class DifferentialEvolution extends AbstractDifferentialEvolution<Solutio
       if (comparator.compare(population.get(i), offspringPopulation.get(i)) < 0) {
         pop.add(population.get(i));
       } else {
-          pop.add(offspringPopulation.get(i));
+        pop.add(offspringPopulation.get(i));
       }
     }
 

@@ -22,6 +22,7 @@ package org.uma.jmetal.runner.singleobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.singleobjective.differentialevolution.DifferentialEvolution;
+import org.uma.jmetal.algorithm.singleobjective.differentialevolution.DifferentialEvolutionBuilder;
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.impl.selection.DifferentialEvolutionSelection;
 import org.uma.jmetal.problem.DoubleProblem;
@@ -62,7 +63,7 @@ public class DifferentialEvolutionRunner {
 
     selection = new DifferentialEvolutionSelection();
 
-    algorithm = new DifferentialEvolution.Builder(problem)
+    algorithm = new DifferentialEvolutionBuilder(problem)
             .setCrossover(crossover)
             .setSelection(selection)
             .setMaxEvaluations(250000)
