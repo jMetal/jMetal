@@ -52,7 +52,14 @@ public class AlgorithmRunner {
 
     public AlgorithmRunner execute() {
       long initTime = System.currentTimeMillis();
-      algorithm.run() ;
+      Thread thread = new Thread(algorithm) ;
+      //algorithm.run() ;
+      thread.start();
+      try {
+        thread.join();
+      } catch (InterruptedException e) {
+        throw new JMetalException("Error in thread.join()", e) ;
+      }
       computingTime = System.currentTimeMillis() - initTime ;
 
       return new AlgorithmRunner(this) ;
