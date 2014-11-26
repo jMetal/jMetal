@@ -1,33 +1,24 @@
 package org.uma.jmetal.algorithm.singleobjective.differentialevolution;
 
-import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Matchers;
-import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.impl.selection.DifferentialEvolutionSelection;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.Kursawe;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.solution.impl.GenericDoubleSolution;
-import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
+import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertNotNull;
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyList;
-import static org.mockito.Matchers.anyListOf;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Antonio J. Nebro on 25/11/14.
@@ -41,50 +32,6 @@ public class DifferentialEvolutionTest {
 
   @Before
   public void startup() {
-    //problem = mock(DoubleProblem.class) ;
-
-    problem = new DoubleProblem() {
-      @Override
-      public Double getLowerBound(int index) {
-        return null;
-      }
-
-      @Override
-      public Double getUpperBound(int index) {
-        return null;
-      }
-
-      @Override
-      public DoubleSolution createSolution() {
-        return new GenericDoubleSolution(this) ;
-      }
-
-      @Override
-      public int getNumberOfVariables() {
-        return 0;
-      }
-
-      @Override
-      public int getNumberOfObjectives() {
-        return 0;
-      }
-
-      @Override
-      public int getNumberOfConstraints() {
-        return 0;
-      }
-
-      @Override
-      public String getName() {
-        return null;
-      }
-
-      @Override
-      public void evaluate(DoubleSolution solution) {
-
-      }
-    } ;
-
     problem = new Kursawe() ;
     algorithm = new DifferentialEvolution(problem, maxEvaluations, populationSize,
             new DifferentialEvolutionCrossover(),
@@ -153,15 +100,6 @@ public class DifferentialEvolutionTest {
 
   @Test
   public void theInitialPopulationHasInstantiatedSolutions() {
-    /*
-    DoubleProblem problem = mock(DoubleProblem.class) ;
-    algorithm = new DifferentialEvolution(problem, maxEvaluations, populationSize,
-            new DifferentialEvolutionCrossover(),
-            new DifferentialEvolutionSelection(),
-            new SequentialSolutionListEvaluator()) ;
-
-    when(problem.createSolution()).thenReturn(mock(DoubleSolution.class)) ;
-*/
     List<DoubleSolution> population = algorithm.createInitialPopulation() ;
 
     assertNotNull(population.get(0)) ;
@@ -171,41 +109,6 @@ public class DifferentialEvolutionTest {
 
   @Test
   public void evaluationOfTheInitialPopulation() {
-    /*
-    DoubleProblem problem = mock(DoubleProblem.class) ;
-    SolutionListEvaluator evaluator = mock(SolutionListEvaluator.class) ;
-    algorithm = new DifferentialEvolution(problem, maxEvaluations, populationSize,
-            new DifferentialEvolutionCrossover(),
-            new DifferentialEvolutionSelection(),
-            evaluator) ;
-
-    //when(problem.evaluate(any(DoubleSolution.class))).thenReturn(mock(DoubleSolution.class)) ;
-
-    /*
-    when(problem.createSolution()).thenReturn(new Answer<DoubleSolution>() {
-      DoubleSolution sol = new GenericDoubleSolution(problem) ; ;
-
-      public DoubleSolution answer(InvocationOnMock invocation) throws Throwable {
-        return sol;
-      }
-    }) ;
-    */
-
-   /*
-    Answer<DoubleSolution> answer = new Answer<DoubleSolution>() {
-      private DoubleSolution solution = new GenericDoubleSolution(problem) ;
-      @Override
-      public DoubleSolution answer(InvocationOnMock invocationOnMock) throws Throwable {
-        return mock(DoubleSolution.class);
-      }
-    } ;
-
-    when(problem.createSolution()).thenReturn(answer) ;
-    */
-
-    //when(problem.createSolution()).thenReturn(mock(DoubleSolution.class)) ;
-    //when(evaluator.evaluate(Matchers.anyListOf(Solution.class),problem)).thenReturn(DoubleSolution.class);
-
     List<DoubleSolution> population1 = algorithm.createInitialPopulation() ;
     List<DoubleSolution> population2 = algorithm.evaluatePopulation(population1) ;
     assertEquals(population1.size(), population2.size());
@@ -226,29 +129,34 @@ public class DifferentialEvolutionTest {
   @Test
   public void reproductionReturnsTheSameNumberOfSolutions() {
     List<DoubleSolution> population = algorithm.createInitialPopulation() ;
-    List<DoubleSolution> population1 = algorithm.evaluatePopulation(population) ;
-    List<DoubleSolution> population2 = algorithm.reproduction(population1) ;
+    population = algorithm.evaluatePopulation(population) ;
+    List<DoubleSolution> offspringPopulation = algorithm.reproduction(population) ;
 
-    assertEquals(populationSize, population2.size());
+    assertEquals(populationSize, offspringPopulation.size());
   }
 
+  @Test
+  public void replacementReturnsASolutionSetWithTheRightSize() {
+    List<DoubleSolution> population = algorithm.createInitialPopulation() ;
+    population = algorithm.evaluatePopulation(population) ;
+    List<DoubleSolution> offspringPopulation = algorithm.reproduction(population) ;
+    offspringPopulation = algorithm.evaluatePopulation(offspringPopulation) ;
 
-  /*
-
-    protected List<DoubleSolution> replacement(List<DoubleSolution> population, List<DoubleSolution> offspringPopulation) {
-    List<DoubleSolution> pop = new ArrayList<>() ;
-
-    for (int i = 0; i < populationSize; i++) {
-      if (comparator.compare(population.get(i), offspringPopulation.get(i)) < 0) {
-        pop.add(population.get(i));
-      } else {
-        pop.add(offspringPopulation.get(i));
-      }
-    }
-
-    pop.sort(comparator);
-    return pop;
+    population = algorithm.replacement(population, offspringPopulation) ;
+    assertEquals(populationSize, population.size());
   }
-   */
+
+  @Test
+  public void getResultReturnsTheBestIndividual() {
+    List<DoubleSolution> population = algorithm.createInitialPopulation() ;
+    algorithm.setPopulation(algorithm.evaluatePopulation(population)) ;
+
+    DoubleSolution solution = algorithm.getResult() ;
+    Comparator<Solution> comparator = new ObjectiveComparator(0) ;
+    assertEquals(0, comparator.compare(solution, algorithm.getPopulation().get(0)));
+    assertEquals(-1, comparator.compare(solution, algorithm.getPopulation().get(1)));
+    assertEquals(-1, comparator.compare(solution, algorithm.getPopulation().get(2)));
+    assertEquals(-1, comparator.compare(solution, algorithm.getPopulation().get(populationSize-1)));
+  }
 
 }

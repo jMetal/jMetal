@@ -152,9 +152,11 @@ public class DifferentialEvolution extends AbstractDifferentialEvolution<Solutio
     return pop;
   }
 
+  /**
+   * Returns the best individual
+   */
   @Override
   public DoubleSolution getResult() {
-    // Return a population with the best individual
     getPopulation().sort(comparator);
 
     return getPopulation().get(0) ;
