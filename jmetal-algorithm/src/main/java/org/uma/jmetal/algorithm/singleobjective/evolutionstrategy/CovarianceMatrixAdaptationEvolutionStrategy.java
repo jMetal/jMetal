@@ -35,7 +35,8 @@ import java.util.Random;
 /**
  * Class implementing the CMA-ES algorithm
  */
-public class CovarianceMatrixAdaptationEvolutionStrategy extends AbstractEvolutionStrategy<DoubleSolution, DoubleSolution> {
+public class CovarianceMatrixAdaptationEvolutionStrategy
+      extends AbstractEvolutionStrategy<DoubleSolution, DoubleSolution> {
 
   private Comparator<Solution> comparator ;
   private int lambda ;
@@ -44,39 +45,66 @@ public class CovarianceMatrixAdaptationEvolutionStrategy extends AbstractEvoluti
 
   private DoubleProblem problem ;
 
+
+  /**
+   * CMA-ES state variables
+   */
+
+  // Distribution mean and current favorite solution to the optimization problem
+  private double[] distributionMean ;
+
+  // Step-size
   private double sigma ;
 
-  private double[] xMean ;
+  // Symmetric and positive definitive covariance matrix
+  private double[][] c ;
+
+  // Evolution paths for c and sigma
+  private double[] pathsC ;
+  private double[] pathsSigma ;
+
 
   /*
    * Strategy parameter setting: Selection
    */
+
+  // number of parents/points for recombination
   private int mu ;
+
+
   private double[] weights ;
   private double muEff;
 
   /*
    * Strategy parameter setting: Adaptation
    */
-  private double cc ;
-  private double cs ;
+
+  // time constant for cumulation for c
+  private double cumulationC ;
+
+  // t-const for cumulation for sigma control
+  private double cumulationSigma ;
+
+  // learning rate for rank-one update of c
   private double c1 ;
+
+  // learning rate for rank-mu update
   private double cmu ;
-  private double damps ;
+
+  // damping for sigma
+  private double dampingSigma;
 
   /*
    * Dynamic (internal) strategy parameters and constants
    */
-  private double[] pc ;
-  private double[] ps ;
-  private double[][] B ;
-  private double[] diagD ;
-  private double[][] C ;
-  private double[][] invsqrtC ;
-  private int eigeneval ;
+
+  private double[][] b; // coordinate system
+  private double[] diagD ; // diagonal D defines the scaling
+
+  private double[][] invSqrtC; // c^1/2
+  private int eigenEval; // track update of b and c
   private double chiN ;
 
-  //private double[][] arx;
   private DoubleSolution bestSolutionEver = null;
 
   private Random rand;
@@ -107,13 +135,17 @@ public class CovarianceMatrixAdaptationEvolutionStrategy extends AbstractEvoluti
   /** Buider class */
   public static class Builder {
     private DoubleProblem problem ;
+
+    private final int DEFAULT_LAMBDA = 10 ;
+    private final int DEFAULT_MAX_EVALUATIONS = 1000000 ;
+
     private int lambda ;
     private int maxEvaluations ;
 
     public Builder(DoubleProblem problem)  {
       this.problem = problem ;
-      lambda = 10;
-      maxEvaluations = 1000000;
+      lambda = DEFAULT_LAMBDA;
+      maxEvaluations = DEFAULT_MAX_EVALUATIONS;
     }
 
     public Builder setLambda (int lambda) {
@@ -196,22 +228,19 @@ public class CovarianceMatrixAdaptationEvolutionStrategy extends AbstractEvoluti
   private void initializeInternalParameters() {
 
     // number of objective variables/problem dimension
-    int N = problem.getNumberOfVariables();
+    int numberOfVariables = problem.getNumberOfVariables();
 
     // objective variables initial point
     // TODO: Initialize the mean in a better way
-    xMean = new double[N];
-    for (int i = 0; i < N; i++) {
-      xMean[i] = rand.nextDouble();
+    distributionMean = new double[numberOfVariables];
+    for (int i = 0; i < numberOfVariables; i++) {
+      distributionMean[i] = rand.nextDouble();
     }
 
     // coordinate wise standard deviation (step size)
     sigma = 0.3;
 
     /* Strategy parameter setting: Selection */
-
-    // population size, offspring number
-    //lambda = 4+Math.floor(3*Math.log(N));
 
     // number of parents/points for recombination
     // TODO: Maybe use this parameter in recombination
@@ -241,127 +270,136 @@ public class CovarianceMatrixAdaptationEvolutionStrategy extends AbstractEvoluti
     /* Strategy parameter setting: Adaptation */
 
     // time constant for cumulation for C
-    cc = (4 + muEff / N) / (N + 4 + 2 * muEff / N);
+    cumulationC = (4 + muEff / numberOfVariables)
+          / (numberOfVariables + 4 + 2 * muEff / numberOfVariables);
 
     // t-const for cumulation for sigma control
-    cs = (muEff + 2) / (N + muEff + 5);
+    cumulationSigma = (muEff + 2) / (numberOfVariables + muEff + 5);
 
     // learning rate for rank-one update of C
-    c1 = 2 / ((N + 1.3) * (N + 1.3) + muEff);
+    c1 = 2 / ((numberOfVariables + 1.3) * (numberOfVariables + 1.3) + muEff);
 
     // learning rate for rank-mu update
-    cmu = Math.min(1 - c1, 2 * (muEff - 2 + 1 / muEff) / ((N + 2) * (N + 2) + muEff));
+    cmu = Math.min(1 - c1,
+          2 * (muEff - 2 + 1 / muEff)
+                / ((numberOfVariables + 2)
+                * (numberOfVariables + 2) + muEff));
 
     // damping for sigma, usually close to 1
-    damps = 1 + 2 * Math.max(0, Math.sqrt((muEff - 1) / (N + 1)) - 1) + cs;
+    dampingSigma = 1 +
+          2 * Math.max(0, Math.sqrt((muEff - 1)
+                / (numberOfVariables + 1)) - 1) + cumulationSigma;
 
     /* Initialize dynamic (internal) strategy parameters and constants */
 
     // diagonal D defines the scaling
-    diagD = new double[N];
+    diagD = new double[numberOfVariables];
 
     // evolution paths for C and sigma
-    pc = new double[N];
-    ps = new double[N];
+    pathsC = new double[numberOfVariables];
+    pathsSigma = new double[numberOfVariables];
 
-    // B defines the coordinate system
-    B = new double[N][N];
+    // b defines the coordinate system
+    b = new double[numberOfVariables][numberOfVariables];
     // covariance matrix C
-    C = new double[N][N];
+    c = new double[numberOfVariables][numberOfVariables];
 
     // C^-1/2
-    invsqrtC = new double[N][N];
+    invSqrtC = new double[numberOfVariables][numberOfVariables];
 
-    for (int i = 0; i < N; i++) {
-      pc[i] = 0;
-      ps[i] = 0;
+    for (int i = 0; i < numberOfVariables; i++) {
+      pathsC[i] = 0;
+      pathsSigma[i] = 0;
       diagD[i] = 1;
-      for (int j = 0; j < N; j++) {
-        B[i][j] = 0;
-        invsqrtC[i][j] = 0;
+      for (int j = 0; j < numberOfVariables; j++) {
+        b[i][j] = 0;
+        invSqrtC[i][j] = 0;
       }
       for (int j = 0; j < i; j++) {
-        C[i][j] = 0;
+        c[i][j] = 0;
       }
-      B[i][i] = 1;
-      C[i][i] = diagD[i] * diagD[i];
-      invsqrtC[i][i] = 1;
+      b[i][i] = 1;
+      c[i][i] = diagD[i] * diagD[i];
+      invSqrtC[i][i] = 1;
     }
 
-    // track update of B and D
-    eigeneval = 0;
+    // track update of b and D
+    eigenEval = 0;
 
-    chiN = Math.sqrt(N) * (1 - 1 / (4 * N) + 1 / (21 * N * N));
+    chiN = Math.sqrt(numberOfVariables)
+          * (1 - 1 / (4 * numberOfVariables) + 1
+          /  (21 * numberOfVariables * numberOfVariables));
 
   }
 
   private void updateInternalParameters() {
 
-    int N = problem.getNumberOfVariables();
+    int numberOfVariables = problem.getNumberOfVariables();
 
-    double[] oldXMean = new double[N];
+    double[] oldXMean = new double[numberOfVariables];
 
-    /* Sort by fitness and compute weighted mean into xMean */
-
+    /* Sort by fitness and compute weighted mean into distributionMean */
     //minimization
     getPopulation().sort(comparator);
     storeBest();
 
-    // calculate xMean and BDz~N(0,C)
-    for (int i = 0; i < N; i++) {
-      oldXMean[i] = xMean[i];
-      xMean[i] = 0.;
+    // calculate distributionMean and BDz~N(0,C)
+    for (int i = 0; i < numberOfVariables; i++) {
+      oldXMean[i] = distributionMean[i];
+      distributionMean[i] = 0.;
       for (int iNk = 0; iNk < mu; iNk++) {
-        //xMean[i] += weights[iNk] * arx[arindex[iNk]][i];
         double variableValue = (double) getPopulation().get(iNk).getVariableValue(i);
-        xMean[i] += weights[iNk] * variableValue;
+        distributionMean[i] += weights[iNk] * variableValue;
       }
     }
 
 
     /* Cumulation: Update evolution paths */
 
-    double[] artmp = new double[N];
-    for (int i = 0; i < N; i++) {
+    double[] artmp = new double[numberOfVariables];
+    for (int i = 0; i < numberOfVariables; i++) {
       artmp[i] = 0;
-      for (int j = 0; j < N; j++) {
-        artmp[i] += invsqrtC[i][j] * (xMean[j] - oldXMean[j]) / sigma;
+      for (int j = 0; j < numberOfVariables; j++) {
+        artmp[i] += invSqrtC[i][j] * (distributionMean[j] - oldXMean[j]) / sigma;
       }
     }
-    // cumulation for sigma (ps)
-    for (int i = 0; i < N; i++) {
-      ps[i] = (1. - cs) * ps[i]
-          + Math.sqrt(cs * (2. - cs) * muEff)
-          * artmp[i];
+    // cumulation for sigma (pathsSigma)
+    for (int i = 0; i < numberOfVariables; i++) {
+      pathsSigma[i] = (1. - cumulationSigma) * pathsSigma[i]
+            + Math.sqrt(cumulationSigma * (2. - cumulationSigma) * muEff)
+            * artmp[i];
     }
 
-    // calculate norm(ps)^2
+    // calculate norm(pathsSigma)^2
     double psxps = 0.0;
-    for (int i = 0; i < N; i++) {
-      psxps += ps[i] * ps[i];
+    for (int i = 0; i < numberOfVariables; i++) {
+      psxps += pathsSigma[i] * pathsSigma[i];
     }
 
-    // cumulation for covariance matrix (pc)
+    // cumulation for covariance matrix (pathsC)
     int hsig = 0;
-    if ((Math.sqrt(psxps) / Math.sqrt(1. - Math.pow(1. - cs, 2. * evaluations / lambda)) / chiN)
-        < (1.4 + 2. / (N + 1.))) {
+    if ((Math.sqrt(psxps)
+          / Math.sqrt(1. - Math.pow(1. - cumulationSigma, 2. * evaluations / lambda)) / chiN)
+          < (1.4 + 2. / (numberOfVariables + 1.))) {
       hsig = 1;
     }
-    for (int i = 0; i < N; i++) {
-      pc[i] = (1. - cc) * pc[i]
-          + hsig * Math.sqrt(cc * (2. - cc) * muEff) * (xMean[i] - oldXMean[i]) / sigma;
+    for (int i = 0; i < numberOfVariables; i++) {
+      pathsC[i] = (1. - cumulationC) * pathsC[i]
+            + hsig * Math.sqrt(cumulationC * (2. - cumulationC) * muEff)
+                                  * (distributionMean[i] - oldXMean[i])
+            / sigma;
     }
 
 
     /* Adapt covariance matrix C */
 
-    for (int i = 0; i < N; i++) {
+    for (int i = 0; i < numberOfVariables; i++) {
       for (int j = 0; j <= i; j++) {
-        C[i][j] = (1 - c1 - cmu)
-            * C[i][j]
-            + c1
-            * (pc[i] * pc[j] + (1 - hsig) * cc
-            * (2. - cc) * C[i][j]);
+        c[i][j] = (1 - c1 - cmu)
+              * c[i][j]
+              + c1
+              * (pathsC[i] * pathsC[j] + (1 - hsig) * cumulationC
+              * (2. - cumulationC) * c[i][j]);
         for (int k = 0; k < mu; k++) {
           /*
            * additional rank mu
@@ -369,45 +407,45 @@ public class CovarianceMatrixAdaptationEvolutionStrategy extends AbstractEvoluti
            */
           double valueI = (double) getPopulation().get(k).getVariableValue(i);
           double valueJ = (double) getPopulation().get(k).getVariableValue(j);
-          C[i][j] += cmu
-              * weights[k]
-              * (valueI - oldXMean[i])
-              * (valueJ - oldXMean[j]) /sigma
-              / sigma;
+          c[i][j] += cmu
+                * weights[k]
+                * (valueI - oldXMean[i])
+                * (valueJ - oldXMean[j]) /sigma
+                / sigma;
         }
       }
     }
 
     /* Adapt step size sigma */
 
-    sigma *= Math.exp((cs / damps) * (Math.sqrt(psxps) / chiN - 1));
+    sigma *= Math.exp((cumulationSigma / dampingSigma) * (Math.sqrt(psxps) / chiN - 1));
 
 
-    /* Decomposition of C into B*diag(D.^2)*B' (diagonalization) */
+    /* Decomposition of C into b*diag(D.^2)*b' (diagonalization) */
 
-    if (evaluations - eigeneval > lambda / (c1 + cmu) / N / 10) {
+    if (evaluations - eigenEval > lambda / (c1 + cmu) / numberOfVariables / 10) {
 
-      eigeneval = evaluations;
+      eigenEval = evaluations;
 
       // enforce symmetry
-      for (int i = 0; i < N; i++) {
+      for (int i = 0; i < numberOfVariables; i++) {
         for (int j = 0; j <= i; j++) {
-          B[i][j] = B[j][i] = C[i][j];
+          b[i][j] = b[j][i] = c[i][j];
         }
       }
 
-      // eigen decomposition, B==normalized eigenvectors
-      double[] offdiag = new double[N];
-      CMAESUtils.tred2(N, B, diagD, offdiag);
-      CMAESUtils.tql2(N, diagD, offdiag, B);
+      // eigen decomposition, b==normalized eigenvectors
+      double[] offdiag = new double[numberOfVariables];
+      CMAESUtils.tred2(numberOfVariables, b, diagD, offdiag);
+      CMAESUtils.tql2(numberOfVariables, diagD, offdiag, b);
 
       // TODO: Maybe refactor as stoppping condition
-      if (CMAESUtils.checkEigenSystem(N, C, diagD, B) > 0) {
+      if (CMAESUtils.checkEigenSystem(numberOfVariables, c, diagD, b) > 0) {
         evaluations = maxEvaluations;
       }
 
       // TODO: Maybe refactor as stoppping condition
-      for (int i = 0; i < N; i++) {
+      for (int i = 0; i < numberOfVariables; i++) {
         if (diagD[i] < 0) { // numerical problem?
           JMetalLogger.logger.severe(
                   "CovarianceMatrixAdaptationEvolutionStrategy.updateDistribution:" +
@@ -417,17 +455,17 @@ public class CovarianceMatrixAdaptationEvolutionStrategy extends AbstractEvoluti
         diagD[i] = Math.sqrt(diagD[i]);
       }
 
-      double[][] artmp2 = new double[N][N];
-      for (int i = 0; i < N; i++) {
-        for (int j = 0; j < N; j++) {
-          artmp2[i][j] = B[i][j] * (1 / diagD[j]);
+      double[][] artmp2 = new double[numberOfVariables][numberOfVariables];
+      for (int i = 0; i < numberOfVariables; i++) {
+        for (int j = 0; j < numberOfVariables; j++) {
+          artmp2[i][j] = b[i][j] * (1 / diagD[j]);
         }
       }
-      for (int i = 0; i < N; i++) {
-        for (int j = 0; j < N; j++) {
-          invsqrtC[i][j] = 0.0;
-          for (int k = 0; k < N; k++) {
-            invsqrtC[i][j] += artmp2[i][k] * B[j][k];
+      for (int i = 0; i < numberOfVariables; i++) {
+        for (int j = 0; j < numberOfVariables; j++) {
+          invSqrtC[i][j] = 0.0;
+          for (int k = 0; k < numberOfVariables; k++) {
+            invSqrtC[i][j] += artmp2[i][k] * b[j][k];
           }
         }
       }
@@ -440,21 +478,21 @@ public class CovarianceMatrixAdaptationEvolutionStrategy extends AbstractEvoluti
 
     DoubleSolution solution = problem.createSolution();
 
-    int N = problem.getNumberOfVariables();
-    double[] artmp = new double[N];
+    int numberOfVariables = problem.getNumberOfVariables();
+    double[] artmp = new double[numberOfVariables];
     double sum;
 
-    for (int i = 0; i < N; i++) {
+    for (int i = 0; i < numberOfVariables; i++) {
       //TODO: Check the correctness of this random (http://en.wikipedia.org/wiki/CMA-ES)
       artmp[i] = diagD[i] * rand.nextGaussian();
     }
-    for (int i = 0; i < N; i++) {
+    for (int i = 0; i < numberOfVariables; i++) {
       sum = 0.0;
-      for (int j = 0; j < N; j++) {
-        sum += B[i][j] * artmp[j];
+      for (int j = 0; j < numberOfVariables; j++) {
+        sum += b[i][j] * artmp[j];
       }
 
-      double value = xMean[i] + sigma * sum;
+      double value = distributionMean[i] + sigma * sum;
       if (value > problem.getUpperBound(i)) {
         value = problem.getUpperBound(i);
       } else if (value < problem.getLowerBound(i)) {
