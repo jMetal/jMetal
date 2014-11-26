@@ -60,7 +60,7 @@ public class DifferentialEvolutionBuilder {
     return this ;
   }
 
-  public DifferentialEvolutionBuilder setEvaluator (SolutionListEvaluator evaluator) {
+  public DifferentialEvolutionBuilder setSolutionListEvaluator(SolutionListEvaluator evaluator) {
     this.evaluator = evaluator ;
 
     return this ;
@@ -91,7 +91,7 @@ public class DifferentialEvolutionBuilder {
     return selectionOperator;
   }
 
-  public SolutionListEvaluator getEvaluator() {
+  public SolutionListEvaluator getSolutionListEvaluator() {
     return evaluator;
   }
 }

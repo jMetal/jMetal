@@ -6,12 +6,14 @@ import org.junit.Test;
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.impl.selection.DifferentialEvolutionSelection;
 import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.evaluator.impl.MultithreadedSolutionListEvaluator;
 
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
 
 /**
  * Created by ajnebro on 25/11/14.
@@ -23,47 +25,7 @@ public class DifferentialEvolutionBuilderTest {
 
   @Before
   public void startup() {
-    problem =  new DoubleProblem() {
-      @Override
-      public Double getLowerBound(int index) {
-        return null;
-      }
-
-      @Override
-      public Double getUpperBound(int index) {
-        return null;
-      }
-
-      @Override
-      public DoubleSolution createSolution() {
-        return null;
-      }
-
-      @Override
-      public int getNumberOfVariables() {
-        return 0;
-      }
-
-      @Override
-      public int getNumberOfObjectives() {
-        return 0;
-      }
-
-      @Override
-      public int getNumberOfConstraints() {
-        return 0;
-      }
-
-      @Override
-      public String getName() {
-        return null;
-      }
-
-      @Override
-      public void evaluate(DoubleSolution solution) {
-
-      }
-    } ;
+    problem = mock(DoubleProblem.class) ;
     builder = new DifferentialEvolutionBuilder(problem) ;
   }
 
@@ -137,8 +99,8 @@ public class DifferentialEvolutionBuilderTest {
   @Test
   public void setNewEvaluator() {
     MultithreadedSolutionListEvaluator evaluator = new MultithreadedSolutionListEvaluator(2, problem) ;
-    assertNotEquals(evaluator, builder.getEvaluator());
-    builder.setEvaluator(evaluator) ;
-    assertEquals(evaluator, builder.getEvaluator()) ;
+    assertNotEquals(evaluator, builder.getSolutionListEvaluator());
+    builder.setSolutionListEvaluator(evaluator) ;
+    assertEquals(evaluator, builder.getSolutionListEvaluator()) ;
   }
 }
