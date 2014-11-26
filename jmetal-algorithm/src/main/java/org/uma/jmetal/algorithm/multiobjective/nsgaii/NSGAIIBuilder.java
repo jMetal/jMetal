@@ -3,7 +3,11 @@ package org.uma.jmetal.algorithm.multiobjective.nsgaii;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
+import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
+import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
+import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
@@ -25,40 +29,63 @@ public class NSGAIIBuilder {
     this.problem = problem ;
     maxIterations = 250 ;
     populationSize = 100 ;
+    crossoverOperator = new SBXCrossover(0.5,20.0) ;
+    mutationOperator = new PolynomialMutation(1.0/problem.getNumberOfVariables(), 20.0) ;
+    selectionOperator = new BinaryTournamentSelection() ;
     evaluator = new SequentialSolutionListEvaluator() ;
   }
 
   public NSGAIIBuilder setMaxIterations(int maxIterations) {
+    if (maxIterations < 0) {
+      throw new JMetalException("maxIterations is negative: " + maxIterations) ;
+    }
     this.maxIterations = maxIterations ;
 
     return this ;
   }
 
   public NSGAIIBuilder setPopulationSize(int populationSize) {
+    if (populationSize < 0) {
+      throw new JMetalException("Population size is negative: "  + populationSize) ;
+    }
+
     this.populationSize = populationSize ;
 
     return this ;
   }
 
   public NSGAIIBuilder setCrossoverOperator(CrossoverOperator crossoverOperator) {
+    if (crossoverOperator == null) {
+      throw new JMetalException("crossoverOperator is null") ;
+    }
     this.crossoverOperator = crossoverOperator ;
 
     return this ;
   }
 
   public NSGAIIBuilder setMutationOperator(MutationOperator mutationOperator) {
+    if (mutationOperator == null) {
+      throw new JMetalException("mutationOperator is null") ;
+    }
+
     this.mutationOperator = mutationOperator ;
 
     return this ;
   }
 
   public NSGAIIBuilder setSelectionOperator(SelectionOperator selectionOperator) {
+    if (selectionOperator == null) {
+      throw new JMetalException("selectionOperator is null") ;
+    }
     this.selectionOperator = selectionOperator ;
 
     return this ;
   }
 
   public NSGAIIBuilder setSolutionListEvaluator(SolutionListEvaluator evaluator) {
+    if (evaluator == null) {
+      throw new JMetalException("evaluator is null") ;
+    }
     this.evaluator = evaluator ;
 
     return this ;
