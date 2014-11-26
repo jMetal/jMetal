@@ -186,6 +186,9 @@
                     <formats>
                         <format>html</format>
                     </formats>
+                    <instrumentation>
+                        <ignoreTrivial>true</ignoreTrivial>
+                    </instrumentation>
                 </configuration>
             </plugin>
             <plugin>

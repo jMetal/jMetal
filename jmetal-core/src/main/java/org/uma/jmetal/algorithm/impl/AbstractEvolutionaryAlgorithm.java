@@ -11,13 +11,16 @@ import java.util.List;
  * @param <R> Result
  */
 public abstract class AbstractEvolutionaryAlgorithm<S extends Solution, R> implements Algorithm <R> {
-  protected abstract void initProgress() ;
-  protected abstract void updateProgress() ;
-
   private List<S> population ;
   public List<S> getPopulation() {
     return population ;
   }
+  public void setPopulation(List<S> population) {
+    this.population = population ;
+  }
+
+  protected abstract void initProgress() ;
+  protected abstract void updateProgress() ;
 
   protected abstract boolean isStoppingConditionReached() ;
   protected abstract List<S> createInitialPopulation() ;
@@ -43,6 +46,7 @@ public abstract class AbstractEvolutionaryAlgorithm<S extends Solution, R> imple
       offspringPopulation = evaluatePopulation(offspringPopulation);
       population = replacement(population, offspringPopulation) ;
       updateProgress();
+
     }
   }
 }
