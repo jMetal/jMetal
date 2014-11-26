@@ -13,7 +13,6 @@
 
 package org.uma.jmetal.util.pseudorandom.impl;
 
-import org.apache.commons.math3.random.MersenneTwister;
 import org.apache.commons.math3.random.Well44497b;
 import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
 

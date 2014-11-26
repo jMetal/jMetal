@@ -1,7 +1,7 @@
 package org.uma.jmetal.operator.impl.mutation;
 
-import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.operator.MutationOperator;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 
 import java.util.Random;

@@ -1,7 +1,7 @@
 package org.uma.jmetal.problem.impl;
 
-import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.problem.BinaryProblem;
+import org.uma.jmetal.solution.BinarySolution;
 
 public abstract class AbstractBinaryProblem extends AbstractGenericProblem<BinarySolution>
   implements BinaryProblem {

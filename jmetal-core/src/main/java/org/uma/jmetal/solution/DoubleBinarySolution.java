@@ -1,7 +1,5 @@
 package org.uma.jmetal.solution;
 
-import java.util.BitSet;
-
 /**
  * Created by ajnebro on 24/11/14.
  * Interface representing a solution having an array of real values and a bitset

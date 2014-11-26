@@ -2,7 +2,6 @@ package org.uma.jmetal.problem.multiobjective;
 
 import org.junit.Test;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.problem.multiobjective.NMMin;
 import org.uma.jmetal.solution.Solution;
 
 import static org.junit.Assert.assertEquals;

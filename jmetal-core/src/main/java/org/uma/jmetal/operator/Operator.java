@@ -13,8 +13,6 @@
 
 package org.uma.jmetal.operator;
 
-import org.uma.jmetal.util.JMetalException;
-
 /**
  * Interface representing an operator
  * @author Antonio J. Nebro

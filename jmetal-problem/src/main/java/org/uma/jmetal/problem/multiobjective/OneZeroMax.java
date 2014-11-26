@@ -20,9 +20,9 @@
 
 package org.uma.jmetal.problem.multiobjective;
 
+import org.uma.jmetal.problem.impl.AbstractBinaryProblem;
 import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.solution.impl.GenericBinarySolution;
-import org.uma.jmetal.problem.impl.AbstractBinaryProblem;
 import org.uma.jmetal.util.JMetalException;
 
 import java.util.BitSet;

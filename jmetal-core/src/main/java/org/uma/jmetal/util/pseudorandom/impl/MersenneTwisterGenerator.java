@@ -16,8 +16,6 @@ package org.uma.jmetal.util.pseudorandom.impl;
 import org.apache.commons.math3.random.MersenneTwister;
 import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
 
-import java.util.Random;
-
 /**
  * @author Antonio J. Nebro
  * @version 0.1

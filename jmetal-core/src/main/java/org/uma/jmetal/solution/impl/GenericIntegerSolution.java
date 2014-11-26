@@ -1,8 +1,8 @@
 package org.uma.jmetal.solution.impl;
 
-import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.solution.IntegerSolution;
 import org.uma.jmetal.problem.IntegerProblem;
+import org.uma.jmetal.solution.IntegerSolution;
+import org.uma.jmetal.solution.Solution;
 
 import java.util.ArrayList;
 import java.util.HashMap;

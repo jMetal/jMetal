@@ -20,9 +20,9 @@
 
 package org.uma.test.util.comparator;
 
+import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 
 import java.util.List;
 

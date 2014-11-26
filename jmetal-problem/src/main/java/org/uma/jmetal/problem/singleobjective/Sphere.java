@@ -21,9 +21,9 @@
 
 package org.uma.jmetal.problem.singleobjective;
 
+import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.impl.GenericDoubleSolution;
-import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.util.JMetalException;
 
 import java.util.ArrayList;

@@ -1,7 +1,7 @@
 package org.uma.jmetal.problem.impl;
 
-import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.impl.GenericDoubleSolution;
 
 import java.util.List;

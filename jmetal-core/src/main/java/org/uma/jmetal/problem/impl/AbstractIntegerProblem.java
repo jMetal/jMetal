@@ -1,7 +1,7 @@
 package org.uma.jmetal.problem.impl;
 
-import org.uma.jmetal.solution.IntegerSolution;
 import org.uma.jmetal.problem.IntegerProblem;
+import org.uma.jmetal.solution.IntegerSolution;
 
 import java.util.List;
 

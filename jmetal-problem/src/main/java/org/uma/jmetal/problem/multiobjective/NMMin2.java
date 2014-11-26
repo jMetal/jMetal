@@ -20,9 +20,9 @@
 //
 package org.uma.jmetal.problem.multiobjective;
 
+import org.uma.jmetal.problem.impl.AbstractIntegerDoubleProblem;
 import org.uma.jmetal.solution.IntegerDoubleSolution;
 import org.uma.jmetal.solution.impl.GenericIntegerDoubleSolution;
-import org.uma.jmetal.problem.impl.AbstractIntegerDoubleProblem;
 
 import java.util.ArrayList;
 import java.util.List;
