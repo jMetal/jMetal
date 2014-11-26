@@ -29,7 +29,7 @@ public class NSGAIIBuilder {
     this.problem = problem ;
     maxIterations = 250 ;
     populationSize = 100 ;
-    crossoverOperator = new SBXCrossover(0.5,20.0) ;
+    crossoverOperator = new SBXCrossover(0.9, 20.0) ;
     mutationOperator = new PolynomialMutation(1.0/problem.getNumberOfVariables(), 20.0) ;
     selectionOperator = new BinaryTournamentSelection() ;
     evaluator = new SequentialSolutionListEvaluator() ;
@@ -94,5 +94,34 @@ public class NSGAIIBuilder {
   public NSGAII build() {
     return new NSGAII(problem, maxIterations, populationSize, crossoverOperator, mutationOperator,
             selectionOperator, evaluator) ;
+  }
+
+  /* Getters */
+  public Problem getProblem() {
+    return problem;
+  }
+
+  public int getMaxIterations() {
+    return maxIterations;
+  }
+
+  public int getPopulationSize() {
+    return populationSize;
+  }
+
+  public CrossoverOperator getCrossoverOperator() {
+    return crossoverOperator;
+  }
+
+  public MutationOperator getMutationOperator() {
+    return mutationOperator;
+  }
+
+  public SelectionOperator getSelectionOperator() {
+    return selectionOperator;
+  }
+
+  public SolutionListEvaluator getSolutionListEvaluator() {
+    return evaluator;
   }
 }
