@@ -6,9 +6,11 @@ import org.uma.jmetal.solution.Solution;
 import java.util.List;
 
 /**
- * Created by ajnebro on 26/10/14.
+ * Created by Antonio J. Nebro on 26/10/14.
+ * @param <S> Solution
+ * @param <R> Result
  */
-public abstract class AbstractEvolutionaryAlgorithm<S extends Solution, Result> implements Algorithm <Result> {
+public abstract class AbstractEvolutionaryAlgorithm<S extends Solution, R> implements Algorithm <R> {
   protected abstract void initProgress() ;
   protected abstract void updateProgress() ;
 
@@ -25,7 +27,7 @@ public abstract class AbstractEvolutionaryAlgorithm<S extends Solution, Result> 
   protected abstract List<S> replacement(List<S> population, List<S> offspringPopulation) ;
 
   @Override
-  public abstract Result getResult() ;
+  public abstract R getResult() ;
 
   @Override
   public void run() {
