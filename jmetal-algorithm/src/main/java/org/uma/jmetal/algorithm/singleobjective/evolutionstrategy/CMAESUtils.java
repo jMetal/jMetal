@@ -28,14 +28,14 @@ public class CMAESUtils {
 
   // Symmetric Householder reduction to tridiagonal form, taken from JAMA package.
 
-  public static void tred2(int n, double V[][], double d[], double e[]) {
+  public static void tred2(int n, double v[][], double d[], double e[]) {
 
     //  This is derived from the Algol procedures tred2 by
     //  Bowdler, Martin, Reinsch, and Wilkinson, Handbook for
     //  Auto. Comp., Vol.ii-Linear Algebra, and the corresponding
     //  Fortran subroutine in EISPACK.
 
-    System.arraycopy(V[n - 1], 0, d, 0, n);
+    System.arraycopy(v[n - 1], 0, d, 0, n);
 
     // Householder reduction to tridiagonal form.
 
@@ -51,9 +51,9 @@ public class CMAESUtils {
       if (scale == 0.0) {
         e[i] = d[i - 1];
         for (int j = 0; j < i; j++) {
-          d[j] = V[i - 1][j];
-          V[i][j] = 0.0;
-          V[j][i] = 0.0;
+          d[j] = v[i - 1][j];
+          v[i][j] = 0.0;
+          v[j][i] = 0.0;
         }
       } else {
 
@@ -79,11 +79,11 @@ public class CMAESUtils {
 
         for (int j = 0; j < i; j++) {
           f = d[j];
-          V[j][i] = f;
-          g = e[j] + V[j][j] * f;
+          v[j][i] = f;
+          g = e[j] + v[j][j] * f;
           for (int k = j + 1; k <= i - 1; k++) {
-            g += V[k][j] * d[k];
-            e[k] += V[k][j] * f;
+            g += v[k][j] * d[k];
+            e[k] += v[k][j] * f;
           }
           e[j] = g;
         }
@@ -100,10 +100,10 @@ public class CMAESUtils {
           f = d[j];
           g = e[j];
           for (int k = j; k <= i - 1; k++) {
-            V[k][j] -= (f * e[k] + g * d[k]);
+            v[k][j] -= (f * e[k] + g * d[k]);
           }
-          d[j] = V[i - 1][j];
-          V[i][j] = 0.0;
+          d[j] = v[i - 1][j];
+          v[i][j] = 0.0;
         }
       }
       d[i] = h;
@@ -112,38 +112,38 @@ public class CMAESUtils {
     // Accumulate transformations.
 
     for (int i = 0; i < n - 1; i++) {
-      V[n - 1][i] = V[i][i];
-      V[i][i] = 1.0;
+      v[n - 1][i] = v[i][i];
+      v[i][i] = 1.0;
       double h = d[i + 1];
       if (h != 0.0) {
         for (int k = 0; k <= i; k++) {
-          d[k] = V[k][i + 1] / h;
+          d[k] = v[k][i + 1] / h;
         }
         for (int j = 0; j <= i; j++) {
           double g = 0.0;
           for (int k = 0; k <= i; k++) {
-            g += V[k][i + 1] * V[k][j];
+            g += v[k][i + 1] * v[k][j];
           }
           for (int k = 0; k <= i; k++) {
-            V[k][j] -= g * d[k];
+            v[k][j] -= g * d[k];
           }
         }
       }
       for (int k = 0; k <= i; k++) {
-        V[k][i + 1] = 0.0;
+        v[k][i + 1] = 0.0;
       }
     }
     for (int j = 0; j < n; j++) {
-      d[j] = V[n - 1][j];
-      V[n - 1][j] = 0.0;
+      d[j] = v[n - 1][j];
+      v[n - 1][j] = 0.0;
     }
-    V[n - 1][n - 1] = 1.0;
+    v[n - 1][n - 1] = 1.0;
     e[0] = 0.0;
   }
 
   // Symmetric tridiagonal QL algorithm, taken from JAMA package.
 
-  public static void tql2(int n, double d[], double e[], double V[][]) {
+  public static void tql2(int n, double d[], double e[], double v[][]) {
 
     //  This is derived from the Algol procedures tql2, by
     //  Bowdler, Martin, Reinsch, and Wilkinson, Handbook for
@@ -219,9 +219,9 @@ public class CMAESUtils {
             // Accumulate transformation.
 
             for (int k = 0; k < n; k++) {
-              h = V[k][i + 1];
-              V[k][i + 1] = s * V[k][i] + c * h;
-              V[k][i] = c * V[k][i] - s * h;
+              h = v[k][i + 1];
+              v[k][i + 1] = s * v[k][i] + c * h;
+              v[k][i] = c * v[k][i] - s * h;
             }
           }
           p = -s * s2 * c3 * el1 * e[l] / dl1;
@@ -251,15 +251,15 @@ public class CMAESUtils {
         d[k] = d[i]; // swap k and i
         d[i] = p;
         for (int j = 0; j < n; j++) {
-          p = V[j][i];
-          V[j][i] = V[j][k];
-          V[j][k] = p;
+          p = v[j][i];
+          v[j][i] = v[j][k];
+          v[j][k] = p;
         }
       }
     }
   } // tql2
 
-  public static int checkEigenSystem(int N, double C[][], double diag[], double Q[][])
+  public static int checkEigenSystem(int n, double c[][], double diag[], double q[][])
   /*
      exhaustive org.uma.test of the output of the eigendecomposition
      needs O(n^3) operations
@@ -267,24 +267,24 @@ public class CMAESUtils {
      produces error
      returns number of detected inaccuracies
   */ {
-      /* compute Q diag Q^T and Q Q^T to check */
+      /* compute q diag q^T and q q^T to check */
     int i, j, k, res = 0;
     double cc, dd;
     String s;
 
-    for (i = 0; i < N; ++i) {
-      for (j = 0; j < N; ++j) {
-        for (cc = 0., dd = 0., k = 0; k < N; ++k) {
-          cc += diag[k] * Q[i][k] * Q[j][k];
-          dd += Q[i][k] * Q[j][k];
+    for (i = 0; i < n; ++i) {
+      for (j = 0; j < n; ++j) {
+        for (cc = 0., dd = 0., k = 0; k < n; ++k) {
+          cc += diag[k] * q[i][k] * q[j][k];
+          dd += q[i][k] * q[j][k];
         }
         /* check here, is the normalization the right one? */
-        if (Math.abs(cc - C[i > j ? i : j][i > j ? j : i]) / Math.sqrt(C[i][i] * C[j][j]) > 1e-10
-            && Math.abs(cc - C[i > j ? i : j][i > j ? j : i]) > 1e-9) { /* quite large */
-          s = " " + i + " " + j + " " + cc + " " + C[i > j ? i : j][i > j ? j : i] + " " + (cc - C[
+        if (Math.abs(cc - c[i > j ? i : j][i > j ? j : i]) / Math.sqrt(c[i][i] * c[j][j]) > 1e-10
+            && Math.abs(cc - c[i > j ? i : j][i > j ? j : i]) > 1e-9) { /* quite large */
+          s = " " + i + " " + j + " " + cc + " " + c[i > j ? i : j][i > j ? j : i] + " " + (cc - c[
               i > j ? i : j][i > j ? j : i]);
           JMetalLogger.logger.severe(
-                  "CMAESUtils.checkEigenSystem: WARNING - imprecise experimentoutput detected "
+                  "CMAESUtils.checkEigenSystem: WARNING - imprecise experiment output detected "
                   + s
           );
           ++res;
@@ -293,7 +293,7 @@ public class CMAESUtils {
           s = i + " " + j + " " + dd;
           JMetalLogger.logger.severe(
                   "CMAESUtils.checkEigenSystem():" +
-                  " WARNING - imprecise experimentoutput detected (Q not orthog.) "
+                  " WARNING - imprecise experiment output detected (Q not orthog.) "
                   + s);
           ++res;
         }
@@ -317,28 +317,4 @@ public class CMAESUtils {
     return r;
   }
 
-  public static void minFastSort(double[] x, int[] idx, int size) {
-
-    for (int i = 0; i < size; i++) {
-      for (int j = i + 1; j < size; j++) {
-        if (x[i] > x[j]) {
-          double temp = x[i];
-          int tempIdx = idx[i];
-          x[i] = x[j];
-          x[j] = temp;
-          idx[i] = idx[j];
-          idx[j] = tempIdx;
-        } else if (x[i] == x[j]) {
-          if (idx[i] > idx[j]) {
-            double temp = x[i];
-            int tempIdx = idx[i];
-            x[i] = x[j];
-            x[j] = temp;
-            idx[i] = idx[j];
-            idx[j] = tempIdx;
-          }
-        }
-      }
-    }
-  }
 }
