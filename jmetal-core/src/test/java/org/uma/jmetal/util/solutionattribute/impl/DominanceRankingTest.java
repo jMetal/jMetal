@@ -2,33 +2,43 @@ package org.uma.jmetal.util.solutionattribute.impl;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.solution.impl.GenericDoubleSolution;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.assertNull;
 import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Antonio on 15/09/14.
  */
 public class DominanceRankingTest {
-  private List<Solution<?>> population ;
-  private Problem problem ;
+  @Mock
+  private DoubleProblem problem ;
+
   private Ranking ranking ;
 
   @Before
   public void startup() {
-    problem = Mockito.mock(Problem.class) ;
+    //problem = Mockito.mock(Problem.class) ;
     ranking = new DominanceRanking() ;
   }
 
   @Test
   public void rankingOfAnEmptyPopulation() {
-    population = Collections.emptyList() ;
+    List<Solution> population = Collections.emptyList() ;
     Ranking ranking = new DominanceRanking() ;
     ranking.computeRanking(population) ;
     assertEquals(0, ranking.getNumberOfSubfronts()) ;
@@ -38,10 +48,11 @@ public class DominanceRankingTest {
 /*
   @Test
   public void rankingOfAnPopulationOfSizeOne() {
-    population = new ArrayList<>();
-
-    DoubleSolution solution = (DoubleSolution)problem.createSolution() ;
-    population.add(solution) ;
+    problem = Mockito.mock(DoubleProblem.class) ;
+    List<DoubleSolution> population = Arrays.<DoubleSolution>asList(
+            new GenericDoubleSolution(problem),
+            new GenericDoubleSolution(problem),
+            new GenericDoubleSolution(problem));
 
     Ranking ranking = new DominanceRanking() ;
     ranking.computeRanking(population) ;
@@ -57,7 +68,11 @@ public class DominanceRankingTest {
 
   @Test
   public void rankingOfAnPopulationWithTwoNonDominatedSolutions() {
-    population = new ArrayList<>();
+    List<DoubleSolution>population = Arrays.<DoubleSolution>asList(
+            new GenericDoubleSolution(problem),
+            new GenericDoubleSolution(problem)) ;
+
+    Mockito.when(population.get(0)).thenReturn()
 
     DoubleSolution solution = (DoubleSolution)problem.createSolution() ;
     solution.setObjective(0, 2.0);
@@ -79,10 +94,10 @@ public class DominanceRankingTest {
     assertEquals(0, (int) ranking.getAttribute(population.get(0))) ;
     assertEquals(0, (int) ranking.getAttribute(population.get(1))) ;
 
-    List<Solution<?>> subfront = ranking.getSubfront(0) ;
+    List<Solution> subfront = ranking.getSubfront(0) ;
     assertEquals(0, (int) ranking.getAttribute(subfront.get(0))) ;
   }
-
+/*
   @Test
   public void rankingOfAnPopulationWithTwoDominatedSolutions() {
     population = new ArrayList<>();
