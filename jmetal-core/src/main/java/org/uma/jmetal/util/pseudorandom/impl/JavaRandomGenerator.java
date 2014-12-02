@@ -45,7 +45,7 @@ public class JavaRandomGenerator implements PseudoRandomGenerator {
 
   @Override
   public int nextInt(int lowerBound, int upperBound) {
-    return lowerBound + rnd.nextInt((upperBound - lowerBound)) ;
+    return lowerBound + rnd.nextInt((upperBound - lowerBound) + 1) ;
   }
 
   @Override
