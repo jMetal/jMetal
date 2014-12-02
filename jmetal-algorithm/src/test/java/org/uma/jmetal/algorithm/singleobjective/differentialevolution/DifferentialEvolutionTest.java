@@ -2,13 +2,13 @@ package org.uma.jmetal.algorithm.singleobjective.differentialevolution;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.TestCase.assertFalse;
-import static junit.framework.TestCase.assertNotNull;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+
+import junit.framework.TestCase;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -21,8 +21,8 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.impl.selection.DifferentialEvolutionSelection;
 import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.problem.multiobjective.Kursawe;
-import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ4;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.impl.GenericDoubleSolution;
@@ -62,10 +62,10 @@ public class DifferentialEvolutionTest {
     }
 
     @Test
-    public void shouldEvaluatePopulation() {
-        List<DoubleSolution> population = Arrays.<DoubleSolution>asList(new GenericDoubleSolution(new DTLZ4()));
+    public void shouldEvaluatePopulationWhenSinglePopulation() {
+        List<DoubleSolution> population = Arrays.<DoubleSolution> asList(new GenericDoubleSolution(new MockProblem()));
 
-        List<DoubleSolution> expectedResult = Arrays.<DoubleSolution>asList(new GenericDoubleSolution(new DTLZ4()));
+        List<DoubleSolution> expectedResult = Arrays.<DoubleSolution> asList(new GenericDoubleSolution(new MockProblem()));
 
         Mockito.when(evaluator.evaluate(population, problem)).thenReturn(expectedResult);
         List<DoubleSolution> result = algorithm.evaluatePopulation(population);
@@ -75,7 +75,7 @@ public class DifferentialEvolutionTest {
     }
 
     @Test
-    public void initProgress() {
+    public void shouldInitProgress() {
         Integer expectedPopulationSize = 10;
         ReflectionTestUtils.setField(algorithm, "populationSize", expectedPopulationSize);
 
@@ -84,117 +84,247 @@ public class DifferentialEvolutionTest {
     }
 
     @Test
-    public void updateProgressFirstIteration() {
+    public void shouldUpdateProgressWhenFirstIteration() {
+        Integer evaluations = 11;
+        Integer population = 10;
+        ReflectionTestUtils.setField(algorithm, "evaluations", evaluations);
+        ReflectionTestUtils.setField(algorithm, "populationSize", population);
 
-        algorithm.initProgress();
         algorithm.updateProgress();
-        assertEquals(populationSize * 2, algorithm.getEvaluations());
+        assertEquals(population + evaluations, algorithm.getEvaluations());
     }
 
     @Test
-    public void updateProgressSecondIteration() {
-        algorithm.initProgress();
-        algorithm.updateProgress();
-        assertEquals(populationSize * 2, algorithm.getEvaluations());
-        algorithm.updateProgress();
-        assertEquals(populationSize * 3, algorithm.getEvaluations());
+    public void shouldIsStoppingConditionReachedWhenEvaluationsLesserThanMaxEvaluations() {
+        int evaluations = maxEvaluations - 1;
+        algorithm.setEvaluations(evaluations);
 
-        algorithm.setEvaluations(20000);
-        algorithm.updateProgress();
-        assertEquals(20000 + populationSize, algorithm.getEvaluations());
-
+        assertFalse("Stopping condition reached.", algorithm.isStoppingConditionReached());
     }
 
     @Test
-    public void updateProgress() {
-        algorithm.setEvaluations(20000);
-        algorithm.updateProgress();
-        assertEquals(20000 + populationSize, algorithm.getEvaluations());
-
-    }
-
-    @Test
-    public void stoppingConditionNotReachedByOneEvaluation() {
-        int value = maxEvaluations - 1;
-        algorithm.setEvaluations(value);
-        assertFalse(algorithm.isStoppingConditionReached());
-    }
-
-    @Test
-    public void stoppingConditionReached() {
+    public void shouldIsStoppingConditionReachedWhenEvaluationsEqualToMaxEvaluations() {
         algorithm.setEvaluations(maxEvaluations);
-        assertTrue(algorithm.isStoppingConditionReached());
-
-        algorithm.setEvaluations(maxEvaluations++);
-        assertTrue(algorithm.isStoppingConditionReached());
+        assertTrue("Stopping condition not reached", algorithm.isStoppingConditionReached());
     }
 
     @Test
-    public void theInitialPopulationHasTheRightSize() {
+    public void shouldIsStoppingConditionReachedWhenEvaluationsBiggerThenMaxEvaluations() {
+        algorithm.setEvaluations(maxEvaluations + 1);
+        assertTrue("Stopping condition not reached", algorithm.isStoppingConditionReached());
+    }
+
+    @Test
+    public void shouldCreateInitialPopulationWhenPopulationSizeIs0() {
+        Integer populationSize = 0;
+        ReflectionTestUtils.setField(algorithm, "populationSize", populationSize);
+
         List<DoubleSolution> population = algorithm.createInitialPopulation();
 
-        assertEquals(population.size(), populationSize);
+        assertTrue("Population is not empty.", population.isEmpty());
     }
 
     @Test
-    public void theInitialPopulationHasInstantiatedSolutions() {
+    public void shouldCreateInitialPopulationWhenPopulationSizeIsBiggerThan0() {
+        Integer populationSize = 3;
+        ReflectionTestUtils.setField(algorithm, "populationSize", populationSize);
+
+        DoubleSolution expectedSolution = new MockDoubleSolution();
+
+        Mockito.when(problem.createSolution()).thenReturn(expectedSolution);
         List<DoubleSolution> population = algorithm.createInitialPopulation();
+        Mockito.verify(problem, Mockito.times(3)).createSolution();
 
-        assertNotNull(population.get(0));
-        assertNotNull(population.get(populationSize - 1));
-        assertNotEquals(population.get(0), population.get(populationSize - 1));
+        assertEquals("Population size is different from expected.", populationSize.intValue(), population.size());
+        for (DoubleSolution solution : population) {
+            Assert.assertEquals("There are null solutions.", expectedSolution, solution);
+        }
+        assertEquals("There are solutions which are the same.", populationSize.intValue(), population.size());
+
     }
 
     @Test
-    public void evaluationOfTheInitialPopulation() {
-        List<DoubleSolution> population1 = algorithm.createInitialPopulation();
-        List<DoubleSolution> population2 = algorithm.evaluatePopulation(population1);
-        assertEquals(population1.size(), population2.size());
+    public void shouldEvaluatePopulation() {
+        Integer populationSize = 3;
+        ReflectionTestUtils.setField(algorithm, "populationSize", populationSize);
 
-        assertEquals(population1.get(0), population2.get(0));
-        assertNotEquals(population1.get(0), population2.get(1));
-        assertEquals(population1.get(populationSize - 1), population2.get(populationSize - 1));
+        List<DoubleSolution> population = Arrays.<DoubleSolution> asList(new MockDoubleSolution(), new MockDoubleSolution(),
+                new MockDoubleSolution());
+        List<DoubleSolution> expectedResult = Arrays.<DoubleSolution> asList(new MockDoubleSolution(), new MockDoubleSolution(),
+                new MockDoubleSolution());
+
+        Mockito.when(evaluator.evaluate(population, problem)).thenReturn(expectedResult);
+
+        List<DoubleSolution> result = algorithm.evaluatePopulation(population);
+        assertEquals(expectedResult, result);
     }
 
     @Test
-    public void selection() {
-        List<DoubleSolution> population = algorithm.createInitialPopulation();
+    public void shouldSelection() {
+        List<DoubleSolution> population = Arrays.<DoubleSolution> asList(new GenericDoubleSolution(new MockProblem()));
 
         List<DoubleSolution> offspringPopulation = algorithm.selection(population);
         assertEquals(population, offspringPopulation);
     }
 
     @Test
-    public void reproductionReturnsTheSameNumberOfSolutions() {
-        List<DoubleSolution> population = algorithm.createInitialPopulation();
-        population = algorithm.evaluatePopulation(population);
-        List<DoubleSolution> offspringPopulation = algorithm.reproduction(population);
+    public void shouldReproduction() {
+        Integer populationSize = 3;
+        ReflectionTestUtils.setField(algorithm, "populationSize", populationSize);
 
-        assertEquals(populationSize, offspringPopulation.size());
+        List<DoubleSolution> population = Arrays.<DoubleSolution> asList(new MockDoubleSolution(), new MockDoubleSolution(),
+                new MockDoubleSolution());
+        List<DoubleSolution> parents = Arrays.<DoubleSolution> asList(new MockDoubleSolution(), new MockDoubleSolution(),
+                new MockDoubleSolution());
+        DoubleSolution childSolution1 = new MockDoubleSolution();
+        DoubleSolution childSolution2 = new MockDoubleSolution();
+        DoubleSolution childSolution3 = new MockDoubleSolution();
+        List<DoubleSolution> children = Arrays.asList(childSolution1, childSolution2, childSolution3);
+
+        Mockito.when(selection.execute(population)).thenReturn(parents);
+        Mockito.when(crossover.execute(parents)).thenReturn(children);
+        List<DoubleSolution> result = algorithm.reproduction(population);
+
+        Mockito.verify(selection).setIndex(0);
+        Mockito.verify(selection).setIndex(1);
+        Mockito.verify(selection).setIndex(2);
+        Mockito.verify(crossover).setCurrentSolution(population.get(0));
+        Mockito.verify(crossover).setCurrentSolution(population.get(1));
+        Mockito.verify(crossover).setCurrentSolution(population.get(2));
+
+        assertEquals("Reproduction population size is different from expected.", population.size(), result.size());
+        for (int i = 0; i < populationSize; i++) {
+            TestCase.assertEquals(String.format("Result %d different from expected.", i),
+                children.get(0), result.get(i));
+        }
+    }
+
+    //Add different tests checking what happens when the indexes are different from 0
+
+    @Test
+    public void shouldReplacement() {
+        Integer populationSize = 3;
+        ReflectionTestUtils.setField(algorithm, "populationSize", populationSize);
+
+        List<DoubleSolution> population = Arrays.<DoubleSolution> asList(new MockDoubleSolution(0, 2D),
+            new MockDoubleSolution(0, 3D), new MockDoubleSolution(0, 1D));
+        List<DoubleSolution> offspringPopulation= Arrays.<DoubleSolution> asList(new MockDoubleSolution(0, 1D),
+            new MockDoubleSolution(0, 3D), new MockDoubleSolution(0, 2D));
+
+        List<DoubleSolution> result = algorithm.replacement(population, offspringPopulation);
+        assertEquals("Result size different from expected.", populationSize.intValue(), result.size());
+        assertEquals(1D, result.get(0).getObjective(0));
+        assertEquals(1D, result.get(1).getObjective(0));
+        assertEquals(3D, result.get(2).getObjective(0));
     }
 
     @Test
-    public void replacementReturnsASolutionSetWithTheRightSize() {
-        List<DoubleSolution> population = algorithm.createInitialPopulation();
-        population = algorithm.evaluatePopulation(population);
-        List<DoubleSolution> offspringPopulation = algorithm.reproduction(population);
-        offspringPopulation = algorithm.evaluatePopulation(offspringPopulation);
+    public void shouldGetResultReturnsThenReturnTheBestIndividual() {
 
-        population = algorithm.replacement(population, offspringPopulation);
-        assertEquals(populationSize, population.size());
+        Integer populationSize = 3;
+        ReflectionTestUtils.setField(algorithm, "populationSize", populationSize);
+
+        List<DoubleSolution> population = Arrays.<DoubleSolution> asList(
+            new MockDoubleSolution(0, 2D), new MockDoubleSolution(0, 3D),
+            new MockDoubleSolution(0, 1D));
+        ReflectionTestUtils.setField(algorithm, "population", population);
+
+        DoubleSolution result= algorithm.getResult();
+        assertEquals(1D, result.getObjective(0));
     }
 
-    @Test
-    public void getResultReturnsTheBestIndividual() {
-        List<DoubleSolution> population = algorithm.createInitialPopulation();
-        algorithm.setPopulation(algorithm.evaluatePopulation(population));
+    private class MockProblem extends AbstractDoubleProblem {
 
-        DoubleSolution solution = algorithm.getResult();
-        Comparator<Solution> comparator = new ObjectiveComparator(0);
-        assertEquals(0, comparator.compare(solution, algorithm.getPopulation().get(0)));
-        assertEquals(-1, comparator.compare(solution, algorithm.getPopulation().get(1)));
-        assertEquals(-1, comparator.compare(solution, algorithm.getPopulation().get(2)));
-        assertEquals(-1, comparator.compare(solution, algorithm.getPopulation().get(populationSize - 1)));
+        @Override
+        public void evaluate(DoubleSolution solution) {
+            // Does nothing.
+        }
     }
 
+    private class MockDoubleSolution implements DoubleSolution {
+
+        private Double value;
+
+        private Integer index;
+
+        public MockDoubleSolution() {
+        }
+
+        public MockDoubleSolution(Integer index, Double value) {
+            setObjective(index, value);
+        }
+        @Override
+        public Double getLowerBound(int index) {
+            return null;
+        }
+
+        @Override
+        public Double getUpperBound(int index) {
+            return null;
+        }
+
+        @Override
+        public void setObjective(int index, double value) {
+            this.index = index;
+            this.value = value;
+        }
+
+        @Override
+        public double getObjective(int index) {
+            if (index == this.index) {
+                return value;
+            }
+            return 0;
+        }
+
+        @Override
+        public Double getVariableValue(int index) {
+            return null;
+        }
+
+        @Override
+        public void setVariableValue(int index, Double value) {
+
+        }
+
+        @Override
+        public String getVariableValueString(int index) {
+            return null;
+        }
+
+        @Override
+        public int getNumberOfVariables() {
+            return 0;
+        }
+
+        @Override
+        public int getNumberOfObjectives() {
+            return 0;
+        }
+
+        @Override
+        public double getOverallConstraintViolationDegree() {
+            return 0;
+        }
+
+        @Override
+        public void setOverallConstraintViolationDegree(double violationDegree) {
+
+        }
+
+        @Override
+        public Solution copy() {
+            return null;
+        }
+
+        @Override
+        public void setAttribute(Object id, Object value) {
+
+        }
+
+        @Override
+        public Object getAttribute(Object id) {
+            return null;
+        }
+    }
 }
