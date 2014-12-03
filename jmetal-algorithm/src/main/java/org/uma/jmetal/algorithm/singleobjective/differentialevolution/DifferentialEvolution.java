@@ -49,8 +49,8 @@ public class DifferentialEvolution extends AbstractDifferentialEvolution<Solutio
   /**
    * Constructor
    *
-   * @param problem
-   * @param maxEvaluations
+   * @param problem Problem to solve
+   * @param maxEvaluations Maximum number of evaluations to perform
    * @param populationSize
    * @param crossoverOperator
    * @param selectionOperator
@@ -68,7 +68,7 @@ public class DifferentialEvolution extends AbstractDifferentialEvolution<Solutio
 
     comparator = new ObjectiveComparator(0);
   }
-
+  
   public int getEvaluations() {
     return evaluations;
   }

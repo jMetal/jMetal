@@ -60,7 +60,7 @@ public class DominanceRankingTest {
     assertNotNull(ranking.getSubfront(0));
     assertNull(ranking.getSubfront(1)) ;
   }
-
+/*
   @Test
   public void rankingOfAnPopulationWithTwoNonDominatedSolutions() {
     List<DoubleSolution>population = Arrays.<DoubleSolution>asList(

@@ -3,6 +3,8 @@ package org.uma.jmetal.algorithm.singleobjective.differentialevolution;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -33,6 +35,8 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
  * Created by Antonio J. Nebro on 25/11/14.
  */
 @RunWith(MockitoJUnitRunner.class) public class DifferentialEvolutionTest {
+  private static final int DEFAULT_POPULATION_SIZE = 100 ;
+  private static final int DEFAULT_MAX_EVALUATIONS = 25000 ;
   private DifferentialEvolution algorithm;
   private int populationSize;
   private int maxEvaluations;
@@ -46,43 +50,46 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
   @Mock private DoubleProblem problem;
 
   @Before public void startup() {
-    populationSize = 100;
-    maxEvaluations = 25000;
+    populationSize = DEFAULT_POPULATION_SIZE;
+    maxEvaluations = DEFAULT_MAX_EVALUATIONS;
     algorithm =
         new DifferentialEvolution(problem, maxEvaluations, populationSize, crossover, selection,
             evaluator);
   }
 
-  @Test public void shouldEvaluatePopulationWhenSinglePopulation() {
-    List<DoubleSolution> population =
-        Arrays.<DoubleSolution>asList(new GenericDoubleSolution(new MockProblem()));
+  @Test public void shouldGetEvaluations() {
+    ReflectionTestUtils.setField(algorithm, "evaluations", 15);
+    assertEquals(15, algorithm.getEvaluations()) ;
+  }
 
-    List<DoubleSolution> expectedResult =
-        Arrays.<DoubleSolution>asList(new GenericDoubleSolution(new MockProblem()));
-
-    Mockito.when(evaluator.evaluate(population, problem)).thenReturn(expectedResult);
-    List<DoubleSolution> result = algorithm.evaluatePopulation(population);
-    Mockito.verify(evaluator).evaluate(population, problem);
-
-    Assert.assertEquals("Evaluation result is different from expected.", expectedResult, result);
+  @Test public void shouldSetEvaluations() {
+    algorithm.setEvaluations(15);
+    Assert.assertEquals(15, ReflectionTestUtils.getField(algorithm, "evaluations"));
   }
 
   @Test public void shouldInitProgress() {
-    Integer expectedPopulationSize = 10;
-    ReflectionTestUtils.setField(algorithm, "populationSize", expectedPopulationSize);
+    //Integer expectedPopulationSize = 10;
+    //ReflectionTestUtils.setField(algorithm, "populationSize", expectedPopulationSize);
 
     algorithm.initProgress();
-    assertEquals(expectedPopulationSize.intValue(), algorithm.getEvaluations());
+    //assertEquals(expectedPopulationSize.intValue(), algorithm.getEvaluations());
+    assertEquals(DEFAULT_POPULATION_SIZE, algorithm.getEvaluations()) ;
   }
 
   @Test public void shouldUpdateProgressWhenFirstIteration() {
-    Integer evaluations = 11;
-    Integer population = 10;
+    Integer evaluations = DEFAULT_POPULATION_SIZE;
     ReflectionTestUtils.setField(algorithm, "evaluations", evaluations);
-    ReflectionTestUtils.setField(algorithm, "populationSize", population);
 
     algorithm.updateProgress();
-    assertEquals(population + evaluations, algorithm.getEvaluations());
+    assertEquals(DEFAULT_POPULATION_SIZE + evaluations, algorithm.getEvaluations());
+  }
+
+  @Test public void shouldUpdateProgressWhenAnyIteration() {
+    Integer evaluations = 300;
+    ReflectionTestUtils.setField(algorithm, "evaluations", evaluations);
+
+    algorithm.updateProgress();
+    assertEquals(DEFAULT_POPULATION_SIZE + evaluations, algorithm.getEvaluations());
   }
 
   @Test public void shouldIsStoppingConditionReachedWhenEvaluationsLesserThanMaxEvaluations() {
@@ -112,23 +119,24 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
   }
 
   @Test public void shouldCreateInitialPopulationWhenPopulationSizeIsBiggerThan0() {
-    Integer populationSize = 3;
+    int populationSize = 3;
     ReflectionTestUtils.setField(algorithm, "populationSize", populationSize);
 
-    DoubleSolution expectedSolution = new MockDoubleSolution();
+    DoubleSolution [] expectedSolution = new DoubleSolution[]{
+        new MockDoubleSolution(), new MockDoubleSolution(), new MockDoubleSolution()} ;
 
-    Mockito.when(problem.createSolution()).thenReturn(expectedSolution);
+    Mockito.when(problem.createSolution()).thenReturn(expectedSolution[0], expectedSolution[1], expectedSolution[2]);
     List<DoubleSolution> population = algorithm.createInitialPopulation();
-    Mockito.verify(problem, Mockito.times(3)).createSolution();
+    Mockito.verify(problem, times(3)).createSolution();
 
-    assertEquals("Population size is different from expected.", populationSize.intValue(),
-        population.size());
-    for (DoubleSolution solution : population) {
-      Assert.assertEquals("There are null solutions.", expectedSolution, solution);
+    assertEquals("Population size is different from expected.", populationSize, population.size());
+    //for (DoubleSolution solution : population) {
+    //  Assert.assertEquals("There are null solutions.", expectedSolution, solution);
+    //}
+    for (int i = 0 ; i < populationSize; i++) {
+      assertEquals("Solution is different", expectedSolution[i], population.get(i)) ;
     }
-    assertEquals("There are solutions which are the same.", populationSize.intValue(),
-        population.size());
-
+    //assertEquals("There are solutions which are the same.", populationSize, population.size());
   }
 
   @Test public void shouldEvaluatePopulation() {
@@ -145,6 +153,7 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
     Mockito.when(evaluator.evaluate(population, problem)).thenReturn(expectedResult);
 
     List<DoubleSolution> result = algorithm.evaluatePopulation(population);
+    Mockito.verify(evaluator).evaluate(population, problem) ;
     assertEquals(expectedResult, result);
   }
 
@@ -156,6 +165,11 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
     assertEquals(population, offspringPopulation);
   }
 
+
+
+
+
+
   @Test public void shouldReproduction() {
     Integer populationSize = 3;
     ReflectionTestUtils.setField(algorithm, "populationSize", populationSize);
@@ -164,31 +178,34 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
         .<DoubleSolution>asList(new MockDoubleSolution(), new MockDoubleSolution(),
             new MockDoubleSolution());
     List<DoubleSolution> parents = Arrays
-        .<DoubleSolution>asList(new MockDoubleSolution(), new MockDoubleSolution(),
-            new MockDoubleSolution());
-    DoubleSolution childSolution1 = new MockDoubleSolution();
-    DoubleSolution childSolution2 = new MockDoubleSolution();
-    DoubleSolution childSolution3 = new MockDoubleSolution();
-    List<DoubleSolution> children = Arrays.asList(childSolution1, childSolution2, childSolution3);
+        .<DoubleSolution>asList(new MockDoubleSolution(), new MockDoubleSolution());
+
+    List<DoubleSolution> children = Arrays
+        .<DoubleSolution>asList(new MockDoubleSolution(), new MockDoubleSolution());
 
     Mockito.when(selection.execute(population)).thenReturn(parents);
     Mockito.when(crossover.execute(parents)).thenReturn(children);
+
     List<DoubleSolution> result = algorithm.reproduction(population);
 
     Mockito.verify(selection).setIndex(0);
     Mockito.verify(selection).setIndex(1);
     Mockito.verify(selection).setIndex(2);
+    Mockito.verify(selection,never()).setIndex(3);
     Mockito.verify(crossover).setCurrentSolution(population.get(0));
     Mockito.verify(crossover).setCurrentSolution(population.get(1));
     Mockito.verify(crossover).setCurrentSolution(population.get(2));
 
     assertEquals("Reproduction population size is different from expected.", population.size(),
         result.size());
+
     for (int i = 0; i < populationSize; i++) {
       TestCase.assertEquals(String.format("Result %d different from expected.", i), children.get(0),
           result.get(i));
     }
   }
+
+
 
   //Add different tests checking what happens when the indexes are different from 0
 
