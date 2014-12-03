@@ -39,21 +39,25 @@ import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
 
 import java.util.*;
 
-/** This class implements the GDE3 algorithm */
+/**
+ * This class implements the GDE3 algorithm
+ */
 public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
-  private DoubleProblem problem ;
+  private DoubleProblem problem;
   protected int populationSize;
   protected int maxIterations;
   protected int iterations;
 
   protected Comparator dominanceComparator;
 
-  protected Ranking ranking ;
+  protected Ranking ranking;
   protected DensityEstimator crowdingDistance;
 
-  protected SolutionListEvaluator evaluator ;
+  protected SolutionListEvaluator evaluator;
 
-  /** Constructor */
+  /**
+   * Constructor
+   */
   public GDE3(Builder builder) {
     problem = builder.problem;
     maxIterations = builder.maxIterations;
@@ -63,11 +67,11 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
     dominanceComparator = new DominanceComparator();
 
     dominanceComparator = new DominanceComparator();
-    iterations = 0 ;
-    ranking = new DominanceRanking() ;
-    crowdingDistance = new CrowdingDistance() ;
+    iterations = 0;
+    ranking = new DominanceRanking();
+    crowdingDistance = new CrowdingDistance();
 
-    evaluator = new SequentialSolutionListEvaluator() ;
+    evaluator = new SequentialSolutionListEvaluator();
   }
 
   /* Getters */
@@ -87,68 +91,66 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
     return maxIterations;
   }
 
-  /** Builder class */
+  /**
+   * Builder class
+   */
   public static class Builder {
     protected DoubleProblem problem;
 
     protected int populationSize;
     protected int maxIterations;
-    
+
     protected DifferentialEvolutionCrossover crossoverOperator;
     protected DifferentialEvolutionSelection selectionOperator;
 
     public Builder(DoubleProblem problem) {
-      this.problem = problem ;
-      selectionOperator = new DifferentialEvolutionSelection() ;
+      this.problem = problem;
+      selectionOperator = new DifferentialEvolutionSelection();
     }
 
     public Builder setPopulationSize(int populationSize) {
-      this.populationSize = populationSize ;
+      this.populationSize = populationSize;
 
-      return this ;
+      return this;
     }
 
     public Builder setMaxIterations(int maxIterations) {
-      this.maxIterations = maxIterations ;
+      this.maxIterations = maxIterations;
 
-      return this ;
+      return this;
     }
 
     public Builder setCrossover(DifferentialEvolutionCrossover crossover) {
-      crossoverOperator = crossover ;
+      crossoverOperator = crossover;
 
-      return this ;
+      return this;
     }
 
     public Builder setSelection(DifferentialEvolutionSelection selection) {
-      selectionOperator = selection ;
+      selectionOperator = selection;
 
-      return this ;
+      return this;
     }
 
     public GDE3 build() {
-      return new GDE3(this) ;
+      return new GDE3(this);
     }
   }
 
-  @Override
-  protected void initProgress() {
-    iterations = 1 ;
+  @Override protected void initProgress() {
+    iterations = 1;
   }
 
-  @Override
-  protected void updateProgress() {
-    iterations++ ;
+  @Override protected void updateProgress() {
+    iterations++;
   }
 
-  @Override
-  protected boolean isStoppingConditionReached() {
+  @Override protected boolean isStoppingConditionReached() {
     return iterations >= maxIterations;
   }
 
-  @Override
-  protected List<DoubleSolution> createInitialPopulation() {
-    List<DoubleSolution> population = new ArrayList<>(populationSize) ;
+  @Override protected List<DoubleSolution> createInitialPopulation() {
+    List<DoubleSolution> population = new ArrayList<>(populationSize);
     for (int i = 0; i < populationSize; i++) {
       DoubleSolution newIndividual = problem.createSolution();
       population.add(newIndividual);
@@ -156,42 +158,39 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
     return population;
   }
 
-  @Override
-  protected List<DoubleSolution> evaluatePopulation(List<DoubleSolution> population) {
-    List<DoubleSolution> pop = evaluator.evaluate(population, problem) ;
+  @Override protected List<DoubleSolution> evaluatePopulation(List<DoubleSolution> population) {
+    List<DoubleSolution> pop = evaluator.evaluate(population, problem);
 
-    return pop ;
+    return pop;
   }
 
-  @Override
-  protected List<DoubleSolution> selection(List<DoubleSolution> population) {
-    List<DoubleSolution> matingPopulation = new LinkedList<>() ;
+  @Override protected List<DoubleSolution> selection(List<DoubleSolution> population) {
+    List<DoubleSolution> matingPopulation = new LinkedList<>();
     for (int i = 0; i < populationSize; i++) {
       // Obtain parents. Two parameters are required: the population and the
       //                 index of the current individual
       selectionOperator.setIndex(i);
       List<DoubleSolution> parents = selectionOperator.execute(population);
 
-      matingPopulation.addAll(parents) ;
+      matingPopulation.addAll(parents);
     }
 
     return matingPopulation;
   }
 
-  @Override
-  protected List<DoubleSolution> reproduction(List<DoubleSolution> matingPopulation) {
-    List<DoubleSolution> offspringPopulation = new ArrayList<>() ;
+  @Override protected List<DoubleSolution> reproduction(List<DoubleSolution> matingPopulation) {
+    List<DoubleSolution> offspringPopulation = new ArrayList<>();
 
     for (int i = 0; i < populationSize; i++) {
       crossoverOperator.setCurrentSolution(getPopulation().get(i));
-      List<DoubleSolution>parents = new ArrayList<>(3) ;
-      for (int j = 0 ;  j < 3 ; j++) {
-        parents.add(matingPopulation.get(0)) ;
-        matingPopulation.remove(0) ;
+      List<DoubleSolution> parents = new ArrayList<>(3);
+      for (int j = 0; j < 3; j++) {
+        parents.add(matingPopulation.get(0));
+        matingPopulation.remove(0);
       }
 
       crossoverOperator.setCurrentSolution(getPopulation().get(i));
-      List<DoubleSolution>children = crossoverOperator.execute(parents);
+      List<DoubleSolution> children = crossoverOperator.execute(parents);
 
       offspringPopulation.add(children.get(0));
     }
@@ -199,12 +198,12 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
     return offspringPopulation;
   }
 
-  @Override
-  protected List<DoubleSolution> replacement(List<DoubleSolution> population, List<DoubleSolution> offspringPopulation) {
-    List<DoubleSolution> tmpList = new ArrayList<>() ;
+  @Override protected List<DoubleSolution> replacement(List<DoubleSolution> population,
+      List<DoubleSolution> offspringPopulation) {
+    List<DoubleSolution> tmpList = new ArrayList<>();
     for (int i = 0; i < populationSize; i++) {
       // Dominance test
-      DoubleSolution child = offspringPopulation.get(i) ;
+      DoubleSolution child = offspringPopulation.get(i);
       int result;
       result = dominanceComparator.compare(population.get(i), child);
       if (result == -1) {
@@ -225,22 +224,21 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
     return pop;
   }
 
-  @Override
-  public List<DoubleSolution> getResult() {
-    return getNonDominatedSolutions(getPopulation()) ;
+  @Override public List<DoubleSolution> getResult() {
+    return getNonDominatedSolutions(getPopulation());
   }
 
 
   protected Ranking computeRanking(List<DoubleSolution> solutionList) {
-    Ranking ranking = new DominanceRanking() ;
-    ranking.computeRanking(solutionList) ;
+    Ranking ranking = new DominanceRanking();
+    ranking.computeRanking(solutionList);
 
-    return ranking ;
+    return ranking;
   }
 
   protected List<DoubleSolution> crowdingDistanceSelection(Ranking ranking) {
-    CrowdingDistance crowdingDistance = new CrowdingDistance() ;
-    List<DoubleSolution> population = new ArrayList<>(populationSize) ;
+    CrowdingDistance crowdingDistance = new CrowdingDistance();
+    List<DoubleSolution> population = new ArrayList<>(populationSize);
     int rankingIndex = 0;
     while (populationIsNotFull(population)) {
       if (subfrontFillsIntoThePopulation(ranking, rankingIndex, population)) {
@@ -252,40 +250,43 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
       }
     }
 
-    return population ;
+    return population;
   }
 
   protected boolean populationIsNotFull(List<DoubleSolution> population) {
     return population.size() < populationSize;
   }
 
-  protected boolean subfrontFillsIntoThePopulation(Ranking ranking, int rank, List<DoubleSolution> population) {
-    return ranking.getSubfront(rank).size() < (populationSize - population.size()) ;
+  protected boolean subfrontFillsIntoThePopulation(Ranking ranking, int rank,
+      List<DoubleSolution> population) {
+    return ranking.getSubfront(rank).size() < (populationSize - population.size());
   }
 
-  protected void addRankedSolutionsToPopulation(Ranking ranking, int rank, List<DoubleSolution> population) {
-    List<DoubleSolution> front ;
+  protected void addRankedSolutionsToPopulation(Ranking ranking, int rank,
+      List<DoubleSolution> population) {
+    List<DoubleSolution> front;
 
     front = ranking.getSubfront(rank);
 
-    for (int i = 0 ; i < front.size(); i++) {
+    for (int i = 0; i < front.size(); i++) {
       population.add(front.get(i));
     }
   }
 
-  protected void addLastRankedSolutionsToPopulation(Ranking ranking, int rank, List<DoubleSolution>population) {
-    List<DoubleSolution> currentRankedFront = ranking.getSubfront(rank) ;
+  protected void addLastRankedSolutionsToPopulation(Ranking ranking, int rank,
+      List<DoubleSolution> population) {
+    List<DoubleSolution> currentRankedFront = ranking.getSubfront(rank);
 
-    Collections.sort(currentRankedFront, new CrowdingDistanceComparator()) ;
+    Collections.sort(currentRankedFront, new CrowdingDistanceComparator());
 
-    int i = 0 ;
+    int i = 0;
     while (population.size() < populationSize) {
-      population.add(currentRankedFront.get(i)) ;
-      i++ ;
+      population.add(currentRankedFront.get(i));
+      i++;
     }
   }
 
   protected List<DoubleSolution> getNonDominatedSolutions(List<DoubleSolution> solutionList) {
-    return SolutionListUtils.getNondominatedSolutions(solutionList) ;
+    return SolutionListUtils.getNondominatedSolutions(solutionList);
   }
 } 

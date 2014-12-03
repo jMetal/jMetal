@@ -284,17 +284,13 @@ public class CMAESUtils {
           s = " " + i + " " + j + " " + cc + " " + c[i > j ? i : j][i > j ? j : i] + " " + (cc - c[
               i > j ? i : j][i > j ? j : i]);
           JMetalLogger.logger.severe(
-                  "CMAESUtils.checkEigenSystem: WARNING - imprecise experiment output detected "
-                  + s
-          );
+              "CMAESUtils.checkEigenSystem: WARNING - imprecise experiment output detected " + s);
           ++res;
         }
         if (Math.abs(dd - (i == j ? 1 : 0)) > 1e-10) {
           s = i + " " + j + " " + dd;
-          JMetalLogger.logger.severe(
-                  "CMAESUtils.checkEigenSystem():" +
-                  " WARNING - imprecise experiment output detected (Q not orthog.) "
-                  + s);
+          JMetalLogger.logger.severe("CMAESUtils.checkEigenSystem():" +
+                  " WARNING - imprecise experiment output detected (Q not orthog.) " + s);
           ++res;
         }
       }

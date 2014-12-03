@@ -14,26 +14,26 @@ import java.util.List;
  * Created by ajnebro on 30/10/14.
  */
 public class SteadyStateNSGAII extends NSGAII {
-  /** Constructor */
-  public SteadyStateNSGAII(Problem problem, int maxIterations, int populationSize, CrossoverOperator crossoverOperator,
-                           MutationOperator mutationOperator, SelectionOperator selectionOperator,
-                           SolutionListEvaluator evaluator) {
-    super(problem, maxIterations, populationSize, crossoverOperator, mutationOperator, selectionOperator,
-            evaluator) ;
+  /**
+   * Constructor
+   */
+  public SteadyStateNSGAII(Problem problem, int maxIterations, int populationSize,
+      CrossoverOperator crossoverOperator, MutationOperator mutationOperator,
+      SelectionOperator selectionOperator, SolutionListEvaluator evaluator) {
+    super(problem, maxIterations, populationSize, crossoverOperator, mutationOperator,
+        selectionOperator, evaluator);
   }
 
-  @Override
-  protected List<Solution> selection(List<Solution> population) {
-    List<Solution> matingPopulation = new ArrayList<>(2) ;
+  @Override protected List<Solution> selection(List<Solution> population) {
+    List<Solution> matingPopulation = new ArrayList<>(2);
 
-    matingPopulation.add(selectionOperator.execute(population)) ;
-    matingPopulation.add(selectionOperator.execute(population)) ;
+    matingPopulation.add(selectionOperator.execute(population));
+    matingPopulation.add(selectionOperator.execute(population));
 
     return matingPopulation;
   }
 
-  @Override
-  protected List<Solution> reproduction(List<Solution> population) {
+  @Override protected List<Solution> reproduction(List<Solution> population) {
     List<Solution> offspringPopulation = new ArrayList<>(1);
 
     List<Solution> parents = new ArrayList<>(2);
@@ -45,6 +45,6 @@ public class SteadyStateNSGAII extends NSGAII {
     mutationOperator.execute(offspring.get(0));
 
     offspringPopulation.add(offspring.get(0));
-    return offspringPopulation ;
+    return offspringPopulation;
   }
 }

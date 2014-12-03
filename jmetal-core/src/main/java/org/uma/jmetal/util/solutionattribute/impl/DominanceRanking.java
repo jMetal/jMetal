@@ -46,6 +46,13 @@ public class DominanceRanking implements Ranking<Solution> {
 
   private List<ArrayList<Solution>> rankedSubpopulations;
 
+  /**
+   * Constructor
+   */
+  public DominanceRanking() {
+    rankedSubpopulations = new ArrayList<>();
+  }
+
   @Override
   public Ranking computeRanking(List<Solution> solutionSet) {
     List<Solution> population = solutionSet;

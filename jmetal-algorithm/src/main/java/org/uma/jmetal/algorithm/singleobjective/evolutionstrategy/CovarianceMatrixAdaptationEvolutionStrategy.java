@@ -36,14 +36,14 @@ import java.util.Random;
  * Class implementing the CMA-ES algorithm
  */
 public class CovarianceMatrixAdaptationEvolutionStrategy
-      extends AbstractEvolutionStrategy<DoubleSolution, DoubleSolution> {
+    extends AbstractEvolutionStrategy<DoubleSolution, DoubleSolution> {
 
-  private Comparator<Solution> comparator ;
-  private int lambda ;
-  private int evaluations ;
-  private int maxEvaluations ;
+  private Comparator<Solution> comparator;
+  private int lambda;
+  private int evaluations;
+  private int maxEvaluations;
 
-  private DoubleProblem problem ;
+  private DoubleProblem problem;
 
 
   /**
@@ -51,17 +51,17 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
    */
 
   // Distribution mean and current favorite solution to the optimization problem
-  private double[] distributionMean ;
+  private double[] distributionMean;
 
   // Step-size
-  private double sigma ;
+  private double sigma;
 
   // Symmetric and positive definitive covariance matrix
-  private double[][] c ;
+  private double[][] c;
 
   // Evolution paths for c and sigma
-  private double[] pathsC ;
-  private double[] pathsSigma ;
+  private double[] pathsC;
+  private double[] pathsSigma;
 
 
   /*
@@ -69,10 +69,10 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
    */
 
   // number of parents/points for recombination
-  private int mu ;
+  private int mu;
 
 
-  private double[] weights ;
+  private double[] weights;
   private double muEff;
 
   /*
@@ -80,16 +80,16 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
    */
 
   // time constant for cumulation for c
-  private double cumulationC ;
+  private double cumulationC;
 
   // t-const for cumulation for sigma control
-  private double cumulationSigma ;
+  private double cumulationSigma;
 
   // learning rate for rank-one update of c
-  private double c1 ;
+  private double c1;
 
   // learning rate for rank-mu update
-  private double cmu ;
+  private double cmu;
 
   // damping for sigma
   private double dampingSigma;
@@ -99,21 +99,23 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
    */
 
   private double[][] b; // coordinate system
-  private double[] diagD ; // diagonal D defines the scaling
+  private double[] diagD; // diagonal D defines the scaling
 
   private double[][] invSqrtC; // c^1/2
   private int eigenEval; // track update of b and c
-  private double chiN ;
+  private double chiN;
 
   private DoubleSolution bestSolutionEver = null;
 
   private Random rand;
 
-  /** Constructor */
-  private CovarianceMatrixAdaptationEvolutionStrategy (Builder builder) {
-    this.problem = builder.problem ;
-    this.lambda = builder.lambda ;
-    this.maxEvaluations = builder.maxEvaluations ;
+  /**
+   * Constructor
+   */
+  private CovarianceMatrixAdaptationEvolutionStrategy(Builder builder) {
+    this.problem = builder.problem;
+    this.lambda = builder.lambda;
+    this.maxEvaluations = builder.maxEvaluations;
 
     long seed = System.currentTimeMillis();
     rand = new Random(seed);
@@ -132,41 +134,42 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
     return maxEvaluations;
   }
 
-  /** Buider class */
+  /**
+   * Buider class
+   */
   public static class Builder {
-    private DoubleProblem problem ;
+    private DoubleProblem problem;
 
-    private final int DEFAULT_LAMBDA = 10 ;
-    private final int DEFAULT_MAX_EVALUATIONS = 1000000 ;
+    private final int DEFAULT_LAMBDA = 10;
+    private final int DEFAULT_MAX_EVALUATIONS = 1000000;
 
-    private int lambda ;
-    private int maxEvaluations ;
+    private int lambda;
+    private int maxEvaluations;
 
-    public Builder(DoubleProblem problem)  {
-      this.problem = problem ;
+    public Builder(DoubleProblem problem) {
+      this.problem = problem;
       lambda = DEFAULT_LAMBDA;
       maxEvaluations = DEFAULT_MAX_EVALUATIONS;
     }
 
-    public Builder setLambda (int lambda) {
-      this.lambda = lambda ;
+    public Builder setLambda(int lambda) {
+      this.lambda = lambda;
 
-      return this ;
+      return this;
     }
 
-    public Builder setMaxEvaluations (int maxEvaluations) {
-      this.maxEvaluations = maxEvaluations ;
+    public Builder setMaxEvaluations(int maxEvaluations) {
+      this.maxEvaluations = maxEvaluations;
 
-      return this ;
+      return this;
     }
 
     public CovarianceMatrixAdaptationEvolutionStrategy build() {
-      return new CovarianceMatrixAdaptationEvolutionStrategy(this) ;
+      return new CovarianceMatrixAdaptationEvolutionStrategy(this);
     }
   }
 
-  @Override
-  protected void initProgress() {
+  @Override protected void initProgress() {
     evaluations = 0;
   }
 
@@ -175,14 +178,12 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
     updateInternalParameters();
   }
 
-  @Override
-  protected boolean isStoppingConditionReached() {
+  @Override protected boolean isStoppingConditionReached() {
     return evaluations >= maxEvaluations;
   }
 
-  @Override
-  protected List<DoubleSolution> createInitialPopulation() {
-    List<DoubleSolution> population = new ArrayList<>(lambda) ;
+  @Override protected List<DoubleSolution> createInitialPopulation() {
+    List<DoubleSolution> population = new ArrayList<>(lambda);
     for (int i = 0; i < lambda; i++) {
       DoubleSolution newIndividual = problem.createSolution();
       population.add(newIndividual);
@@ -190,23 +191,20 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
     return population;
   }
 
-  @Override
-  protected List<DoubleSolution> evaluatePopulation(List<DoubleSolution> population) {
+  @Override protected List<DoubleSolution> evaluatePopulation(List<DoubleSolution> population) {
     for (DoubleSolution solution : population) {
       problem.evaluate(solution);
     }
-    return population ;
-  }
-
-  @Override
-  protected List<DoubleSolution> selection(List<DoubleSolution> population) {
     return population;
   }
 
-  @Override
-  protected List<DoubleSolution> reproduction(List<DoubleSolution> population) {
+  @Override protected List<DoubleSolution> selection(List<DoubleSolution> population) {
+    return population;
+  }
 
-    List<DoubleSolution> offspringPopulation = new ArrayList<>(lambda) ;
+  @Override protected List<DoubleSolution> reproduction(List<DoubleSolution> population) {
+
+    List<DoubleSolution> offspringPopulation = new ArrayList<>(lambda);
 
     for (int iNk = 0; iNk < lambda; iNk++) {
       offspringPopulation.add(sampleSolution());
@@ -215,9 +213,8 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
     return offspringPopulation;
   }
 
-  @Override
-  protected List<DoubleSolution> replacement(List<DoubleSolution> population,
-          List<DoubleSolution> offspringPopulation) {
+  @Override protected List<DoubleSolution> replacement(List<DoubleSolution> population,
+      List<DoubleSolution> offspringPopulation) {
     return offspringPopulation;
   }
 
@@ -270,8 +267,8 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
     /* Strategy parameter setting: Adaptation */
 
     // time constant for cumulation for C
-    cumulationC = (4 + muEff / numberOfVariables)
-          / (numberOfVariables + 4 + 2 * muEff / numberOfVariables);
+    cumulationC =
+        (4 + muEff / numberOfVariables) / (numberOfVariables + 4 + 2 * muEff / numberOfVariables);
 
     // t-const for cumulation for sigma control
     cumulationSigma = (muEff + 2) / (numberOfVariables + muEff + 5);
@@ -281,14 +278,11 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
 
     // learning rate for rank-mu update
     cmu = Math.min(1 - c1,
-          2 * (muEff - 2 + 1 / muEff)
-                / ((numberOfVariables + 2)
-                * (numberOfVariables + 2) + muEff));
+        2 * (muEff - 2 + 1 / muEff) / ((numberOfVariables + 2) * (numberOfVariables + 2) + muEff));
 
     // damping for sigma, usually close to 1
     dampingSigma = 1 +
-          2 * Math.max(0, Math.sqrt((muEff - 1)
-                / (numberOfVariables + 1)) - 1) + cumulationSigma;
+        2 * Math.max(0, Math.sqrt((muEff - 1) / (numberOfVariables + 1)) - 1) + cumulationSigma;
 
     /* Initialize dynamic (internal) strategy parameters and constants */
 
@@ -326,9 +320,8 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
     // track update of b and D
     eigenEval = 0;
 
-    chiN = Math.sqrt(numberOfVariables)
-          * (1 - 1 / (4 * numberOfVariables) + 1
-          /  (21 * numberOfVariables * numberOfVariables));
+    chiN = Math.sqrt(numberOfVariables) * (1 - 1 / (4 * numberOfVariables) + 1 / (21
+        * numberOfVariables * numberOfVariables));
 
   }
 
@@ -366,8 +359,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
     // cumulation for sigma (pathsSigma)
     for (int i = 0; i < numberOfVariables; i++) {
       pathsSigma[i] = (1. - cumulationSigma) * pathsSigma[i]
-            + Math.sqrt(cumulationSigma * (2. - cumulationSigma) * muEff)
-            * artmp[i];
+          + Math.sqrt(cumulationSigma * (2. - cumulationSigma) * muEff) * artmp[i];
     }
 
     // calculate norm(pathsSigma)^2
@@ -378,16 +370,15 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
 
     // cumulation for covariance matrix (pathsC)
     int hsig = 0;
-    if ((Math.sqrt(psxps)
-          / Math.sqrt(1. - Math.pow(1. - cumulationSigma, 2. * evaluations / lambda)) / chiN)
-          < (1.4 + 2. / (numberOfVariables + 1.))) {
+    if ((Math.sqrt(psxps) / Math
+        .sqrt(1. - Math.pow(1. - cumulationSigma, 2. * evaluations / lambda)) / chiN) < (1.4
+        + 2. / (numberOfVariables + 1.))) {
       hsig = 1;
     }
     for (int i = 0; i < numberOfVariables; i++) {
-      pathsC[i] = (1. - cumulationC) * pathsC[i]
-            + hsig * Math.sqrt(cumulationC * (2. - cumulationC) * muEff)
-                                  * (distributionMean[i] - oldXMean[i])
-            / sigma;
+      pathsC[i] = (1. - cumulationC) * pathsC[i] +
+          hsig * Math.sqrt(cumulationC * (2. - cumulationC) * muEff) * (distributionMean[i]
+              - oldXMean[i]) / sigma;
     }
 
 
@@ -395,11 +386,9 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
 
     for (int i = 0; i < numberOfVariables; i++) {
       for (int j = 0; j <= i; j++) {
-        c[i][j] = (1 - c1 - cmu)
-              * c[i][j]
-              + c1
-              * (pathsC[i] * pathsC[j] + (1 - hsig) * cumulationC
-              * (2. - cumulationC) * c[i][j]);
+        c[i][j] =
+            (1 - c1 - cmu) * c[i][j] + c1 * (pathsC[i] * pathsC[j] + (1 - hsig) * cumulationC * (2.
+                - cumulationC) * c[i][j]);
         for (int k = 0; k < mu; k++) {
           /*
            * additional rank mu
@@ -407,11 +396,8 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
            */
           double valueI = (double) getPopulation().get(k).getVariableValue(i);
           double valueJ = (double) getPopulation().get(k).getVariableValue(j);
-          c[i][j] += cmu
-                * weights[k]
-                * (valueI - oldXMean[i])
-                * (valueJ - oldXMean[j]) /sigma
-                / sigma;
+          c[i][j] +=
+              cmu * weights[k] * (valueI - oldXMean[i]) * (valueJ - oldXMean[j]) / sigma / sigma;
         }
       }
     }
@@ -448,8 +434,8 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
       for (int i = 0; i < numberOfVariables; i++) {
         if (diagD[i] < 0) { // numerical problem?
           JMetalLogger.logger.severe(
-                  "CovarianceMatrixAdaptationEvolutionStrategy.updateDistribution:" +
-                  " WARNING - an eigenvalue has become negative.");
+              "CovarianceMatrixAdaptationEvolutionStrategy.updateDistribution:"
+                  + " WARNING - an eigenvalue has become negative.");
           evaluations = maxEvaluations;
         }
         diagD[i] = Math.sqrt(diagD[i]);
@@ -506,8 +492,8 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
   }
 
   private void storeBest() {
-    if ((bestSolutionEver == null)
-            || (bestSolutionEver.getObjective(0) > getPopulation().get(0).getObjective(0))) {
+    if ((bestSolutionEver == null) || (bestSolutionEver.getObjective(0) > getPopulation().get(0)
+        .getObjective(0))) {
       bestSolutionEver = getPopulation().get(0);
     }
   }

@@ -37,19 +37,21 @@ import java.util.List;
  */
 public class PAES extends AbstractEvolutionStrategy<Solution, List<Solution>> {
 
-  private Problem problem ;
+  private Problem problem;
 
   private int archiveSize;
   private int maxEvaluations;
   private int biSections;
-  private int evaluations ;
+  private int evaluations;
 
   private MutationOperator mutationOperator;
 
   private AdaptiveGridArchive archive;
-  private Comparator comparator ;
+  private Comparator comparator;
 
-  /** Constructor */
+  /**
+   * Constructor
+   */
   public PAES(PAESBuilder builder) {
     super();
 
@@ -81,57 +83,50 @@ public class PAES extends AbstractEvolutionStrategy<Solution, List<Solution>> {
     return mutationOperator;
   }
 
-  @Override
-  protected void initProgress() {
-    evaluations = 0 ;
+  @Override protected void initProgress() {
+    evaluations = 0;
   }
 
-  @Override
-  protected void updateProgress() {
-    evaluations ++ ;
+  @Override protected void updateProgress() {
+    evaluations++;
   }
 
-  @Override
-  protected boolean isStoppingConditionReached() {
+  @Override protected boolean isStoppingConditionReached() {
     return evaluations >= maxEvaluations;
   }
 
-  @Override
-  protected List<Solution> createInitialPopulation() {
-    List<Solution> solutionList = new ArrayList<>(1) ;
-    solutionList.add(problem.createSolution()) ;
-    return solutionList ;
+  @Override protected List<Solution> createInitialPopulation() {
+    List<Solution> solutionList = new ArrayList<>(1);
+    solutionList.add(problem.createSolution());
+    return solutionList;
   }
 
-  @Override
-  protected List<Solution> evaluatePopulation(List<Solution> population) {
+  @Override protected List<Solution> evaluatePopulation(List<Solution> population) {
     problem.evaluate(population.get(0));
-    return population ;
-  }
-
-  @Override
-  protected List<Solution> selection(List<Solution> population) {
     return population;
   }
 
-  @Override
-  protected List<Solution> reproduction(List<Solution> population) {
-    Solution mutatedSolution = population.get(0).copy() ;
-    mutationOperator.execute(mutatedSolution) ;
+  @Override protected List<Solution> selection(List<Solution> population) {
+    return population;
+  }
 
-    List<Solution> mutationSolutionList = new ArrayList<>(1) ;
-    mutationSolutionList.add(mutatedSolution) ;
+  @Override protected List<Solution> reproduction(List<Solution> population) {
+    Solution mutatedSolution = population.get(0).copy();
+    mutationOperator.execute(mutatedSolution);
+
+    List<Solution> mutationSolutionList = new ArrayList<>(1);
+    mutationSolutionList.add(mutatedSolution);
     return mutationSolutionList;
   }
 
-  @Override
-  protected List<Solution> replacement(List<Solution> population, List<Solution> offspringPopulation) {
-    Solution current = population.get(0) ;
-    Solution mutatedSolution = offspringPopulation.get(0) ;
+  @Override protected List<Solution> replacement(List<Solution> population,
+      List<Solution> offspringPopulation) {
+    Solution current = population.get(0);
+    Solution mutatedSolution = offspringPopulation.get(0);
 
-    int flag = comparator.compare(current, mutatedSolution) ;
+    int flag = comparator.compare(current, mutatedSolution);
     if (flag == 1) {
-      current = mutatedSolution.copy() ;
+      current = mutatedSolution.copy();
       archive.add(mutatedSolution);
     } else if (flag == 0) {
       if (archive.add(mutatedSolution)) {
@@ -139,13 +134,12 @@ public class PAES extends AbstractEvolutionStrategy<Solution, List<Solution>> {
       }
     }
 
-    population.set(0, current) ;
+    population.set(0, current);
     return population;
   }
 
-  @Override
-  public List<Solution> getResult() {
-    return archive.getSolutionList() ;
+  @Override public List<Solution> getResult() {
+    return archive.getSolutionList();
   }
 
   /** run() method */
@@ -199,9 +193,7 @@ public class PAES extends AbstractEvolutionStrategy<Solution, List<Solution>> {
    * @param solution        The actual guide of PAES
    * @param mutatedSolution A candidate guide
    */
-  public Solution test(Solution solution,
-    Solution mutatedSolution,
-    AdaptiveGridArchive archive) {
+  public Solution test(Solution solution, Solution mutatedSolution, AdaptiveGridArchive archive) {
 
     int originalLocation = archive.getGrid().location(solution);
     int mutatedLocation = archive.getGrid().location(mutatedSolution);
@@ -214,8 +206,8 @@ public class PAES extends AbstractEvolutionStrategy<Solution, List<Solution>> {
       return solution.copy();
     }
 
-    if (archive.getGrid().getLocationDensity(mutatedLocation) <
-      archive.getGrid().getLocationDensity(originalLocation)) {
+    if (archive.getGrid().getLocationDensity(mutatedLocation) < archive.getGrid()
+        .getLocationDensity(originalLocation)) {
       return mutatedSolution.copy();
     }
 

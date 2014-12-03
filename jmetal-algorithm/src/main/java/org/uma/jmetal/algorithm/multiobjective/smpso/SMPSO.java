@@ -23,7 +23,7 @@ import java.util.List;
  * Created by antonio on 24/09/14.
  */
 public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, List<DoubleSolution>> {
-  private DoubleProblem problem ;
+  private DoubleProblem problem;
 
   private double c1Max;
   private double c1Min;
@@ -43,7 +43,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
   private int iterations;
   private DoubleSolution[] best;
 
-  private JMetalRandom randomGenerator ;
+  private JMetalRandom randomGenerator;
 
   private Archive<DoubleSolution> leaders;
   private double[][] speed;
@@ -55,9 +55,11 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
   private double deltaMax[];
   private double deltaMin[];
 
-  private SolutionListEvaluator evaluator ;
+  private SolutionListEvaluator evaluator;
 
-  /** Constructor */
+  /**
+   * Constructor
+   */
   public SMPSO(Builder builder) {
     problem = builder.problem;
     swarmSize = builder.swarmSize;
@@ -79,7 +81,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
     changeVelocity2 = builder.changeVelocity2;
 
     randomGenerator = JMetalRandom.getInstance();
-    evaluator = new SequentialSolutionListEvaluator() ;
+    evaluator = new SequentialSolutionListEvaluator();
 
     dominanceComparator = new DominanceComparator();
     crowdingDistanceComparator = new CrowdingDistanceComparator();
@@ -161,7 +163,9 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
     return changeVelocity2;
   }
 
-  /** Builder class */
+  /**
+   * Builder class
+   */
   public static class Builder {
     protected DoubleProblem problem;
     protected Archive leaders;
@@ -184,14 +188,14 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
     private double weightMin;
     private double changeVelocity1;
     private double changeVelocity2;
-    private JMetalRandom randomGenerator ;
+    private JMetalRandom randomGenerator;
 
     public Builder(DoubleProblem problem, Archive leaders) {
-      this.problem = problem ;
-      this.leaders = leaders ;
+      this.problem = problem;
+      this.leaders = leaders;
 
-      swarmSize = 100 ;
-      maxIterations = 25000 ;
+      swarmSize = 100;
+      maxIterations = 25000;
 
       r1Max = 1.0;
       r1Min = 0.0;
@@ -210,124 +214,123 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
     }
 
     public Builder setSwarmSize(int swarmSize) {
-      this.swarmSize = swarmSize ;
+      this.swarmSize = swarmSize;
 
-      return this ;
+      return this;
     }
 
     public Builder setMaxIterations(int maxIterations) {
-      this.maxIterations = maxIterations ;
+      this.maxIterations = maxIterations;
 
-      return this ;
+      return this;
     }
 
     public Builder setMutation(Operator mutation) {
-      mutationOperator = mutation ;
+      mutationOperator = mutation;
 
-      return this ;
+      return this;
     }
 
     public Builder setC1Max(double c1Max) {
-      this.c1Max = c1Max ;
+      this.c1Max = c1Max;
 
-      return this ;
+      return this;
     }
 
     public Builder setC1Min(double c1Min) {
-      this.c1Min = c1Min ;
+      this.c1Min = c1Min;
 
-      return this ;
+      return this;
     }
 
     public Builder setC2Max(double c2Max) {
-      this.c2Max = c2Max ;
+      this.c2Max = c2Max;
 
-      return this ;
+      return this;
     }
 
     public Builder setC2Min(double c2Min) {
-      this.c2Min = c2Min ;
+      this.c2Min = c2Min;
 
-      return this ;
+      return this;
     }
 
     public Builder setR1Max(double r1Max) {
-      this.r1Max = r1Max ;
+      this.r1Max = r1Max;
 
-      return this ;
+      return this;
     }
 
     public Builder setR1Min(double r1Min) {
-      this.r1Min = r1Min ;
+      this.r1Min = r1Min;
 
-      return this ;
+      return this;
     }
 
     public Builder setR2Max(double r2Max) {
-      this.r2Max = r2Max ;
+      this.r2Max = r2Max;
 
-      return this ;
+      return this;
     }
 
     public Builder setR2Min(double r2Min) {
-      this.r2Min = r2Min ;
+      this.r2Min = r2Min;
 
-      return this ;
+      return this;
     }
 
     public Builder setWeightMax(double weightMax) {
-      this.weightMax = weightMax ;
+      this.weightMax = weightMax;
 
-      return this ;
+      return this;
     }
 
     public Builder setWeightMin(double weightMin) {
-      this.weightMin = weightMin ;
+      this.weightMin = weightMin;
 
-      return this ;
+      return this;
     }
 
     public Builder setChangeVelocity1(double changeVelocity1) {
-      this.changeVelocity1 = changeVelocity1 ;
+      this.changeVelocity1 = changeVelocity1;
 
-      return this ;
+      return this;
     }
 
     public Builder setChangeVelocity2(double changeVelocity2) {
-      this.changeVelocity2 = changeVelocity2 ;
+      this.changeVelocity2 = changeVelocity2;
 
-      return this ;
+      return this;
     }
 
     public Builder setRandomGenerator(PseudoRandomGenerator randomGenerator) {
       JMetalRandom.getInstance().setRandomGenerator(randomGenerator);
 
-      return this ;
+      return this;
     }
 
     public SMPSO build() {
-      return new SMPSO(this) ;
+      return new SMPSO(this);
     }
   }
 
-  @Override
-  public void run() {
-    List<DoubleSolution> swarm ;
-    swarm = createInitialSwarm() ;
+  @Override public void run() {
+    List<DoubleSolution> swarm;
+    swarm = createInitialSwarm();
     swarm = evaluateSwarm(swarm);
-    initializeLeaders(swarm) ;
-    initializeParticlesMemory(swarm) ;
-    updateLeadersDensityEstimator() ;
+    initializeLeaders(swarm);
+    initializeParticlesMemory(swarm);
+    updateLeadersDensityEstimator();
     initProgress();
 
     while (!isStoppingConditionReached()) {
       updateVelocity(swarm);
       updatePosition(swarm);
       perturbation(swarm);
-      swarm = evaluateSwarm(swarm) ;
-      updateLeaders(swarm) ;
-      updateParticlesMemory(swarm) ;
-      updateLeadersDensityEstimator() ;
+      swarm = evaluateSwarm(swarm);
+      updateLeaders(swarm);
+      updateParticlesMemory(swarm);
+      updateLeadersDensityEstimator();
       updateProgress();
     }
   }
@@ -336,72 +339,64 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
     if (leaders instanceof CrowdingDistanceArchive) {
       ((CrowdingDistanceArchive) leaders).computeDistance();
     } else {
-      throw new JMetalException("Invalid setArchive type") ;
+      throw new JMetalException("Invalid setArchive type");
     }
   }
 
-  @Override
-  protected void initProgress() {
-    iterations = 1 ;
+  @Override protected void initProgress() {
+    iterations = 1;
   }
 
-  @Override
-  protected void updateProgress() {
-    iterations += 1 ;
+  @Override protected void updateProgress() {
+    iterations += 1;
   }
 
-  @Override
-  protected boolean isStoppingConditionReached() {
-    return iterations >= maxIterations ;
+  @Override protected boolean isStoppingConditionReached() {
+    return iterations >= maxIterations;
   }
 
-  @Override
-  protected List<DoubleSolution> createInitialSwarm() {
+  @Override protected List<DoubleSolution> createInitialSwarm() {
     List<DoubleSolution> swarm = new ArrayList<>(swarmSize);
 
     DoubleSolution newSolution;
     for (int i = 0; i < swarmSize; i++) {
-      newSolution = problem.createSolution() ;
+      newSolution = problem.createSolution();
       swarm.add(newSolution);
     }
 
-    return swarm ;
+    return swarm;
   }
 
-  @Override
-  protected List<DoubleSolution> evaluateSwarm(List<DoubleSolution> swarm) {
-    swarm = evaluator.evaluate(swarm, problem) ;
+  @Override protected List<DoubleSolution> evaluateSwarm(List<DoubleSolution> swarm) {
+    swarm = evaluator.evaluate(swarm, problem);
 
-    return swarm ;
+    return swarm;
   }
 
-  @Override
-  protected void initializeLeaders(List<DoubleSolution> swarm) {
+  @Override protected void initializeLeaders(List<DoubleSolution> swarm) {
     for (int i = 0; i < swarm.size(); i++) {
       DoubleSolution particle = (DoubleSolution) swarm.get(i).copy();
       leaders.add(particle);
     }
   }
 
-  @Override
-  protected void initializeParticlesMemory(List<DoubleSolution> swarm) {
+  @Override protected void initializeParticlesMemory(List<DoubleSolution> swarm) {
     for (int i = 0; i < swarm.size(); i++) {
       Solution particle = swarm.get(i).copy();
-      best[i] = (DoubleSolution)particle;
+      best[i] = (DoubleSolution) particle;
     }
   }
 
-  @Override
-  protected void updateVelocity(List<DoubleSolution> swarm) {
+  @Override protected void updateVelocity(List<DoubleSolution> swarm) {
     double r1, r2, c1, c2;
-    double wmax, wmin ;
+    double wmax, wmin;
     DoubleSolution bestGlobal;
 
     for (int i = 0; i < swarmSize; i++) {
-      DoubleSolution particle = (DoubleSolution)swarm.get(i).copy();
-      DoubleSolution bestParticle = (DoubleSolution)best[i].copy();
+      DoubleSolution particle = (DoubleSolution) swarm.get(i).copy();
+      DoubleSolution bestParticle = (DoubleSolution) best[i].copy();
 
-      bestGlobal = selectGlobalBest() ;
+      bestGlobal = selectGlobalBest();
 
       r1 = randomGenerator.nextDouble(r1Min, r1Max);
       r2 = randomGenerator.nextDouble(r2Min, r2Max);
@@ -411,19 +406,16 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
       wmin = weightMin;
 
       for (int var = 0; var < particle.getNumberOfVariables(); var++) {
-        speed[i][var] = velocityConstriction(constrictionCoefficient(c1, c2) *
-                (inertiaWeight(iterations, maxIterations, wmax, wmin) *
-                        speed[i][var] +
-                        c1 * r1 * (bestParticle.getVariableValue(var) -
-                                particle.getVariableValue(var)) +
-                        c2 * r2 * (bestGlobal.getVariableValue(var) -
-                                particle.getVariableValue(var))), deltaMax, deltaMin, var);
+        speed[i][var] = velocityConstriction(constrictionCoefficient(c1, c2) * (
+            inertiaWeight(iterations, maxIterations, wmax, wmin) * speed[i][var] +
+                c1 * r1 * (bestParticle.getVariableValue(var) - particle.getVariableValue(var)) +
+                c2 * r2 * (bestGlobal.getVariableValue(var) - particle.getVariableValue(var))),
+            deltaMax, deltaMin, var);
       }
     }
   }
 
-  @Override
-  protected void updatePosition(List<DoubleSolution> swarm) {
+  @Override protected void updatePosition(List<DoubleSolution> swarm) {
     for (int i = 0; i < swarmSize; i++) {
       DoubleSolution particle = swarm.get(i);
       for (int j = 0; j < particle.getNumberOfVariables(); j++) {
@@ -442,8 +434,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
     }
   }
 
-  @Override
-  protected void perturbation(List<DoubleSolution> swarm) {
+  @Override protected void perturbation(List<DoubleSolution> swarm) {
     for (int i = 0; i < swarm.size(); i++) {
       if ((i % 6) == 0) {
         mutation.execute(swarm.get(i));
@@ -451,52 +442,46 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
     }
   }
 
-  @Override
-  protected void updateLeaders(List<DoubleSolution> swarm) {
+  @Override protected void updateLeaders(List<DoubleSolution> swarm) {
     for (int i = 0; i < swarm.size(); i++) {
-      DoubleSolution particle = (DoubleSolution)swarm.get(i).copy();
+      DoubleSolution particle = (DoubleSolution) swarm.get(i).copy();
       leaders.add(particle);
     }
   }
 
-  @Override
-  protected void updateParticlesMemory(List<DoubleSolution> swarm) {
+  @Override protected void updateParticlesMemory(List<DoubleSolution> swarm) {
     for (int i = 0; i < swarm.size(); i++) {
       int flag = dominanceComparator.compare(swarm.get(i), best[i]);
       if (flag != 1) {
-        DoubleSolution particle = (DoubleSolution)swarm.get(i).copy();
+        DoubleSolution particle = (DoubleSolution) swarm.get(i).copy();
         best[i] = particle;
       }
     }
   }
 
-  @Override
-  public List<DoubleSolution> getResult() {
+  @Override public List<DoubleSolution> getResult() {
     return this.leaders.getSolutionList();
   }
 
   protected DoubleSolution selectGlobalBest() {
     Solution one, two;
-    DoubleSolution bestGlobal ;
+    DoubleSolution bestGlobal;
     int pos1 = randomGenerator.nextInt(0, leaders.getSolutionList().size() - 1);
     int pos2 = randomGenerator.nextInt(0, leaders.getSolutionList().size() - 1);
     one = leaders.getSolutionList().get(pos1);
     two = leaders.getSolutionList().get(pos2);
 
     if (crowdingDistanceComparator.compare(one, two) < 1) {
-      bestGlobal = (DoubleSolution)one.copy();
+      bestGlobal = (DoubleSolution) one.copy();
     } else {
-      bestGlobal = (DoubleSolution)two.copy();
+      bestGlobal = (DoubleSolution) two.copy();
     }
 
-    return bestGlobal ;
+    return bestGlobal;
   }
 
-  private double velocityConstriction(
-          double v,
-          double[] deltaMax,
-          double[] deltaMin,
-          int variableIndex) {
+  private double velocityConstriction(double v, double[] deltaMax, double[] deltaMin,
+      int variableIndex) {
 
     double result;
 

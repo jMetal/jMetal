@@ -44,48 +44,51 @@ import java.util.List;
  * evolutionary computation. London, England. July 2007.
  */
 public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<BinarySolution>> {
-  private BinaryProblem problem ;
+  private BinaryProblem problem;
 
-  private int populationSize ;
-  private int maxEvaluations ;
-  private int convergenceValue ;
-  private double preservedPopulation ;
-  private double initialConvergenceCount ;
-  private CrossoverOperator crossover ;
-  private MutationOperator cataclysmicMutation ;
-  private SelectionOperator newGenerationSelection ;
-  private SelectionOperator parentSelection ;
-  private int evaluations ;
+  private int populationSize;
+  private int maxEvaluations;
+  private int convergenceValue;
+  private double preservedPopulation;
+  private double initialConvergenceCount;
+  private CrossoverOperator crossover;
+  private MutationOperator cataclysmicMutation;
+  private SelectionOperator newGenerationSelection;
+  private SelectionOperator parentSelection;
+  private int evaluations;
   private int minimumDistance;
-  private int size ;
-  private Comparator comparator ;
+  private int size;
+  private Comparator comparator;
 
-  private SolutionListEvaluator evaluator ;
+  private SolutionListEvaluator evaluator;
 
-  /** Constructor */
+  /**
+   * Constructor
+   */
   public MOCHC(BinaryProblem problem, int populationSize, int maxEvaluations, int convergenceValue,
-               double preservedPopulation, double initialConvergenceCount, CrossoverOperator crossoverOperator,
-               MutationOperator cataclysmicMutation, SelectionOperator newGenerationSelection,
-               SelectionOperator parentSelection, SolutionListEvaluator evaluator) {
-    super() ;
-    this.problem = problem ;
-    this.populationSize = populationSize ;
-    this.maxEvaluations = maxEvaluations ;
-    this.convergenceValue = convergenceValue ;
-    this.preservedPopulation = preservedPopulation ;
-    this.initialConvergenceCount = initialConvergenceCount ;
-    this.crossover = crossoverOperator ;
-    this.cataclysmicMutation = cataclysmicMutation ;
-    this.newGenerationSelection = newGenerationSelection ;
-    this.parentSelection = parentSelection ;
-    this.evaluator = evaluator ;
+      double preservedPopulation, double initialConvergenceCount,
+      CrossoverOperator crossoverOperator, MutationOperator cataclysmicMutation,
+      SelectionOperator newGenerationSelection, SelectionOperator parentSelection,
+      SolutionListEvaluator evaluator) {
+    super();
+    this.problem = problem;
+    this.populationSize = populationSize;
+    this.maxEvaluations = maxEvaluations;
+    this.convergenceValue = convergenceValue;
+    this.preservedPopulation = preservedPopulation;
+    this.initialConvergenceCount = initialConvergenceCount;
+    this.crossover = crossoverOperator;
+    this.cataclysmicMutation = cataclysmicMutation;
+    this.newGenerationSelection = newGenerationSelection;
+    this.parentSelection = parentSelection;
+    this.evaluator = evaluator;
 
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      size += problem.getNumberOfBits(i) ;
+      size += problem.getNumberOfBits(i);
     }
     minimumDistance = (int) Math.floor(initialConvergenceCount * size);
 
-    comparator = new CrowdingDistanceComparator() ;
+    comparator = new CrowdingDistanceComparator();
   }
 
   /* Getters */
@@ -94,60 +97,56 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
   }
 
   public int getPopulationSize() {
-    return populationSize ;
+    return populationSize;
   }
 
   public int getMaxEvaluation() {
-    return maxEvaluations ;
+    return maxEvaluations;
   }
 
   public double getInitialConvergenceCount() {
-    return initialConvergenceCount ;
+    return initialConvergenceCount;
   }
 
   public int getConvergenceValue() {
-    return convergenceValue ;
+    return convergenceValue;
   }
 
   public CrossoverOperator getCrossover() {
-    return crossover ;
+    return crossover;
   }
 
   public MutationOperator getCataclysmicMutation() {
-    return cataclysmicMutation ;
+    return cataclysmicMutation;
   }
 
   public SelectionOperator getParentSelection() {
-    return parentSelection ;
+    return parentSelection;
   }
 
   public SelectionOperator getNewGenerationSelection() {
-    return newGenerationSelection ;
+    return newGenerationSelection;
   }
 
   public double getPreservedPopulation() {
-    return preservedPopulation ;
+    return preservedPopulation;
   }
 
 
-  @Override
-  protected void initProgress() {
-    evaluations = 0 ;
+  @Override protected void initProgress() {
+    evaluations = 0;
   }
 
-  @Override
-  protected void updateProgress() {
-    evaluations += populationSize ;
+  @Override protected void updateProgress() {
+    evaluations += populationSize;
   }
 
-  @Override
-  protected boolean isStoppingConditionReached() {
-    return evaluations >= maxEvaluations ;
+  @Override protected boolean isStoppingConditionReached() {
+    return evaluations >= maxEvaluations;
   }
 
-  @Override
-  protected List<BinarySolution> createInitialPopulation() {
-    List<BinarySolution> population = new ArrayList<>(populationSize) ;
+  @Override protected List<BinarySolution> createInitialPopulation() {
+    List<BinarySolution> population = new ArrayList<>(populationSize);
     for (int i = 0; i < populationSize; i++) {
       BinarySolution newIndividual = problem.createSolution();
       population.add(newIndividual);
@@ -155,28 +154,25 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
     return population;
   }
 
-  @Override
-  protected List<BinarySolution> evaluatePopulation(List<BinarySolution> population) {
-    population = evaluator.evaluate(population, problem) ;
+  @Override protected List<BinarySolution> evaluatePopulation(List<BinarySolution> population) {
+    population = evaluator.evaluate(population, problem);
 
-    return population ;
+    return population;
   }
 
-  @Override
-  protected List<BinarySolution> selection(List<BinarySolution> population) {
-    List<BinarySolution> matingPopulation = new ArrayList<>(population.size()) ;
-    for (int i = 0; i < populationSize; i+=2) {
+  @Override protected List<BinarySolution> selection(List<BinarySolution> population) {
+    List<BinarySolution> matingPopulation = new ArrayList<>(population.size());
+    for (int i = 0; i < populationSize; i += 2) {
       List<BinarySolution> solution = (List<BinarySolution>) parentSelection.execute(population);
-      matingPopulation.add(solution.get(0)) ;
-      matingPopulation.add(solution.get(1)) ;
+      matingPopulation.add(solution.get(0));
+      matingPopulation.add(solution.get(1));
     }
 
     return matingPopulation;
   }
 
-  @Override
-  protected List<BinarySolution> reproduction(List<BinarySolution> matingPopulation) {
-    List<BinarySolution> offspringPopulation = new ArrayList<>() ;
+  @Override protected List<BinarySolution> reproduction(List<BinarySolution> matingPopulation) {
+    List<BinarySolution> offspringPopulation = new ArrayList<>();
     for (int i = 0; i < matingPopulation.size(); i += 2) {
       List<BinarySolution> parents = new ArrayList<>(2);
       parents.add(matingPopulation.get(i));
@@ -188,16 +184,17 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
         offspringPopulation.add(offspring.get(1));
       }
     }
-    return offspringPopulation ;
+    return offspringPopulation;
   }
 
-  @Override
-  protected List<BinarySolution> replacement(List<BinarySolution> population, List<BinarySolution> offspringPopulation) {
-    List<BinarySolution> union = new ArrayList<>() ;
-    union.addAll(population) ;
-    union.addAll(offspringPopulation) ;
+  @Override protected List<BinarySolution> replacement(List<BinarySolution> population,
+      List<BinarySolution> offspringPopulation) {
+    List<BinarySolution> union = new ArrayList<>();
+    union.addAll(population);
+    union.addAll(offspringPopulation);
 
-    List<BinarySolution> newPopulation = (List<BinarySolution>) newGenerationSelection.execute(union);
+    List<BinarySolution> newPopulation =
+        (List<BinarySolution>) newGenerationSelection.execute(union);
 
     if (solutionSetsAreEquals(population, newPopulation)) {
       minimumDistance--;
@@ -224,9 +221,8 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
     return newPopulation;
   }
 
-  @Override
-  public List<BinarySolution> getResult() {
-    return SolutionListUtils.getNondominatedSolutions(getPopulation()) ;
+  @Override public List<BinarySolution> getResult() {
+    return SolutionListUtils.getNondominatedSolutions(getPopulation());
   }
 
 
@@ -324,6 +320,7 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
     return archive;
   }
 */
+
   /**
    * Compares two solutionSets to determine if both are equals
    *
@@ -331,7 +328,8 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
    * @param newSolutionSet A <code>SolutionSet</code>
    * @return true if both are contains the same solutions, false in other case
    */
-  public boolean solutionSetsAreEquals(List<BinarySolution> solutionSet, List<BinarySolution> newSolutionSet) {
+  public boolean solutionSetsAreEquals(List<BinarySolution> solutionSet,
+      List<BinarySolution> newSolutionSet) {
     boolean found;
     for (int i = 0; i < solutionSet.size(); i++) {
 
@@ -362,7 +360,7 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
   private int hammingDistance(BinarySolution solutionOne, BinarySolution solutionTwo) {
     int distance = 0;
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      distance += hammingDistance(solutionOne.getVariableValue(i), solutionTwo.getVariableValue(2)) ;
+      distance += hammingDistance(solutionOne.getVariableValue(i), solutionTwo.getVariableValue(2));
     }
 
     return distance;

@@ -1,5 +1,6 @@
 package org.uma.jmetal.util.solutionattribute.impl;
 
+import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -44,10 +45,8 @@ public class DominanceRankingTest {
     assertEquals(0, ranking.getNumberOfSubfronts()) ;
   }
 
-
-/*
-  @Test
-  public void rankingOfAnPopulationOfSizeOne() {
+  @Test (expected = JMetalException.class)
+  public void rankingOfAnPopulationOfSizeOne(){
     problem = Mockito.mock(DoubleProblem.class) ;
     List<DoubleSolution> population = Arrays.<DoubleSolution>asList(
             new GenericDoubleSolution(problem),
@@ -57,13 +56,9 @@ public class DominanceRankingTest {
     Ranking ranking = new DominanceRanking() ;
     ranking.computeRanking(population) ;
 
-    assertEquals(1, ranking.getNumberOfSubfronts()) ;
+    assertEquals(1, ranking.getNumberOfSubfronts());
     assertNotNull(ranking.getSubfront(0));
-    try {
-      assertNull(ranking.getSubfront(1)) ;
-    } catch (JMetalException e) {
-      e.printStackTrace();
-    }
+    assertNull(ranking.getSubfront(1)) ;
   }
 
   @Test
@@ -72,7 +67,7 @@ public class DominanceRankingTest {
             new GenericDoubleSolution(problem),
             new GenericDoubleSolution(problem)) ;
 
-    Mockito.when(population.get(0)).thenReturn()
+    //Mockito.when(population.get(0)).thenReturn()
 
     DoubleSolution solution = (DoubleSolution)problem.createSolution() ;
     solution.setObjective(0, 2.0);
@@ -97,6 +92,7 @@ public class DominanceRankingTest {
     List<Solution> subfront = ranking.getSubfront(0) ;
     assertEquals(0, (int) ranking.getAttribute(subfront.get(0))) ;
   }
+
 /*
   @Test
   public void rankingOfAnPopulationWithTwoDominatedSolutions() {

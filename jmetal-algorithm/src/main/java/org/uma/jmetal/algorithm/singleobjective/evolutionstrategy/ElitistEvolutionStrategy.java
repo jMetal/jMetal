@@ -35,23 +35,25 @@ import java.util.List;
  * Class implementing a (mu + lambda) Evolution Strategy (lambda must be divisible by mu)
  */
 public class ElitistEvolutionStrategy extends AbstractEvolutionStrategy<Solution, Solution> {
-  private Problem problem ;
+  private Problem problem;
 
   private int mu;
   private int lambda;
-  private int maxEvaluations ;
-  private int evaluations ;
-  private MutationOperator mutation ;
+  private int maxEvaluations;
+  private int evaluations;
+  private MutationOperator mutation;
 
-  private  Comparator<Solution> comparator;
+  private Comparator<Solution> comparator;
 
-  /** Constructor */
+  /**
+   * Constructor
+   */
   private ElitistEvolutionStrategy(Builder builder) {
-    this.problem = builder.problem ;
-    this.mu = builder.mu ;
-    this.lambda = builder.lambda ;
-    this.maxEvaluations = builder.maxEvaluations ;
-    this.mutation = builder.mutation ;
+    this.problem = builder.problem;
+    this.mu = builder.mu;
+    this.lambda = builder.lambda;
+    this.maxEvaluations = builder.maxEvaluations;
+    this.mutation = builder.mutation;
 
     comparator = new ObjectiveComparator(0);
   }
@@ -73,122 +75,116 @@ public class ElitistEvolutionStrategy extends AbstractEvolutionStrategy<Solution
     return mutation;
   }
 
-  /** Builder class */
+  /**
+   * Builder class
+   */
   public static class Builder {
-    private Problem problem ;
+    private Problem problem;
     private int mu;
     private int lambda;
-    private int maxEvaluations ;
-    private MutationOperator mutation ;
+    private int maxEvaluations;
+    private MutationOperator mutation;
 
     public Builder(Problem problem) {
-      this.problem = problem ;
-      this.mu = 1 ;
-      this.lambda = 10 ;
-      this.maxEvaluations = 250000 ;
-      this.mutation = new PolynomialMutation(1.0/problem.getNumberOfVariables(), 20.0) ;
+      this.problem = problem;
+      this.mu = 1;
+      this.lambda = 10;
+      this.maxEvaluations = 250000;
+      this.mutation = new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0);
     }
 
     public Builder setMu(int mu) {
-      this.mu = mu ;
+      this.mu = mu;
 
-      return this ;
+      return this;
     }
 
     public Builder setLambda(int lambda) {
-      this.lambda = lambda ;
+      this.lambda = lambda;
 
-      return this ;
+      return this;
     }
 
     public Builder setMaxEvaluations(int maxEvaluations) {
-      this.maxEvaluations = maxEvaluations ;
+      this.maxEvaluations = maxEvaluations;
 
-      return this ;
+      return this;
     }
 
     public Builder setMutationOperator(MutationOperator mutation) {
-      this.mutation = mutation ;
+      this.mutation = mutation;
 
-      return this ;
+      return this;
     }
 
     public ElitistEvolutionStrategy build() {
-      return new ElitistEvolutionStrategy(this) ;
+      return new ElitistEvolutionStrategy(this);
     }
   }
 
-  @Override
-  protected void initProgress() {
-    evaluations = 1 ;
+  @Override protected void initProgress() {
+    evaluations = 1;
   }
 
-  @Override
-  protected void updateProgress() {
-    evaluations += lambda ;
+  @Override protected void updateProgress() {
+    evaluations += lambda;
   }
 
-  @Override
-  protected boolean isStoppingConditionReached() {
+  @Override protected boolean isStoppingConditionReached() {
     return evaluations >= maxEvaluations;
   }
 
-  @Override
-  protected List<Solution> createInitialPopulation() {
-    List<Solution> population = new ArrayList<>(mu) ;
+  @Override protected List<Solution> createInitialPopulation() {
+    List<Solution> population = new ArrayList<>(mu);
     for (int i = 0; i < mu; i++) {
-      Solution newIndividual = problem.createSolution() ;
+      Solution newIndividual = problem.createSolution();
       population.add(newIndividual);
     }
 
     return population;
   }
 
-  @Override
-  protected List<Solution> evaluatePopulation(List<Solution> population) {
-    for (Solution solution: population) {
+  @Override protected List<Solution> evaluatePopulation(List<Solution> population) {
+    for (Solution solution : population) {
       problem.evaluate(solution);
     }
 
     return population;
   }
 
-  @Override
-  protected List<Solution> selection(List<Solution> population) {
-    return population ;
+  @Override protected List<Solution> selection(List<Solution> population) {
+    return population;
   }
 
-  @Override
-  protected List<Solution> reproduction(List<Solution> population) {
-    List<Solution> offspringPopulation = new ArrayList<>(lambda+mu) ;
+  @Override protected List<Solution> reproduction(List<Solution> population) {
+    List<Solution> offspringPopulation = new ArrayList<>(lambda + mu);
     for (int i = 0; i < mu; i++) {
-      for (int j = 0; j < lambda/mu; j++) {
+      for (int j = 0; j < lambda / mu; j++) {
         Solution offspring = population.get(i).copy();
         mutation.execute(offspring);
         offspringPopulation.add(offspring);
       }
     }
 
-    return offspringPopulation ;
+    return offspringPopulation;
   }
 
-  @Override
-  protected List<Solution> replacement(List<Solution> population, List<Solution> offspringPopulation) {
+  @Override protected List<Solution> replacement(List<Solution> population,
+      List<Solution> offspringPopulation) {
     for (int i = 0; i < mu; i++) {
       offspringPopulation.add(population.get(i));
     }
 
     offspringPopulation.sort(comparator);
 
-    List<Solution> newPopulation = new ArrayList<>(mu) ;
+    List<Solution> newPopulation = new ArrayList<>(mu);
     for (int i = 0; i < mu; i++) {
       newPopulation.add(offspringPopulation.get(i));
     }
     return newPopulation;
   }
 
-  @Override
-  public Solution getResult() {
-    return getPopulation().get(0) ;
+  @Override public Solution getResult() {
+    return getPopulation().get(0);
   }
 }

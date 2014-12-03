@@ -16,34 +16,34 @@ public class PAESBuilder {
   public MutationOperator mutationOperator;
 
   public PAESBuilder(Problem problem) {
-    this.problem = problem ;
+    this.problem = problem;
   }
 
   public PAESBuilder setArchiveSize(int archiveSize) {
-    this.archiveSize = archiveSize ;
+    this.archiveSize = archiveSize;
 
-    return this ;
+    return this;
   }
 
   public PAESBuilder setMaxEvaluations(int maxEvaluations) {
-    this.maxEvaluations = maxEvaluations ;
+    this.maxEvaluations = maxEvaluations;
 
-    return this ;
+    return this;
   }
 
   public PAESBuilder setBiSections(int biSections) {
-    this.biSections = biSections ;
+    this.biSections = biSections;
 
-    return this ;
+    return this;
   }
 
   public PAESBuilder setMutationOperator(MutationOperator mutation) {
-    mutationOperator = mutation ;
+    mutationOperator = mutation;
 
-    return this ;
+    return this;
   }
 
   public PAES build() {
-    return new PAES(this) ;
+    return new PAES(this);
   }
 }

@@ -7,73 +7,77 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
-/** Builder class */
+/**
+ * Builder class
+ */
 public class NSGAIIIBuilder {
-  
+
   // no access modifier means access from classes within the same package
-  Problem problem ;
-  int maxEvaluations ;
-  int populationSize ;
-  CrossoverOperator crossoverOperator ;
-  MutationOperator mutationOperator ;
-  SelectionOperator selectionOperator ;
-  SolutionListEvaluator evaluator ;
+  Problem problem;
+  int maxEvaluations;
+  int populationSize;
+  CrossoverOperator crossoverOperator;
+  MutationOperator mutationOperator;
+  SelectionOperator selectionOperator;
+  SolutionListEvaluator evaluator;
   int divisions;
-  
-  /** Builder constructor */
+
+  /**
+   * Builder constructor
+   */
   public NSGAIIIBuilder(Problem problem) {
-    this.problem = problem ;
-    maxEvaluations = 25000 ;
-    populationSize = 100 ;
-    evaluator = new SequentialSolutionListEvaluator() ;
+    this.problem = problem;
+    maxEvaluations = 25000;
+    populationSize = 100;
+    evaluator = new SequentialSolutionListEvaluator();
   }
 
   public NSGAIIIBuilder setMaxEvaluations(int maxEvaluations) {
-    this.maxEvaluations = maxEvaluations ;
+    this.maxEvaluations = maxEvaluations;
 
-    return this ;
+    return this;
   }
 
   public NSGAIIIBuilder setPopulationSize(int populationSize) {
-    this.populationSize = populationSize ;
+    this.populationSize = populationSize;
 
-    return this ;
+    return this;
   }
 
   public NSGAIIIBuilder setCrossoverOperator(CrossoverOperator crossoverOperator) {
-    this.crossoverOperator = crossoverOperator ;
+    this.crossoverOperator = crossoverOperator;
 
-    return this ;
+    return this;
   }
 
   public NSGAIIIBuilder setMutationOperator(MutationOperator mutationOperator) {
-    this.mutationOperator = mutationOperator ;
+    this.mutationOperator = mutationOperator;
 
-    return this ;
+    return this;
   }
 
   public NSGAIIIBuilder setSelectionOperator(SelectionOperator selectionOperator) {
-    this.selectionOperator = selectionOperator ;
+    this.selectionOperator = selectionOperator;
 
-    return this ;
+    return this;
   }
 
   public NSGAIIIBuilder setSolutionListEvaluator(SolutionListEvaluator evaluator) {
-    this.evaluator = evaluator ;
+    this.evaluator = evaluator;
 
-    return this ;
+    return this;
   }
 
   public NSGAIIIBuilder setDivisions(int div) {
-	  this.divisions = div;
-	  return this;
+    this.divisions = div;
+    return this;
   }
-  
+
   public int getDivisions() {
-	  return this.divisions;
+    return this.divisions;
   }
-  
+
   public NSGAIII build() {
-    return new NSGAIII(this) ;
+    return new NSGAIII(this);
   }
 }

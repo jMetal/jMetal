@@ -27,6 +27,8 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -36,12 +38,12 @@ public class BinaryTournamentSelection implements SelectionOperator<List<Solutio
 
   /** Constructor */
   public BinaryTournamentSelection() {
-    randomGenerator = JMetalRandom.getInstance() ;
-    comparator = new DominanceComparator() ;
+    this(new DominanceComparator()) ;
   }
 
   /** Constructor */
   public BinaryTournamentSelection(Comparator<Solution> comparator) {
+    randomGenerator = JMetalRandom.getInstance() ;
     this.comparator = comparator ;
   }
 
@@ -54,20 +56,33 @@ public class BinaryTournamentSelection implements SelectionOperator<List<Solutio
       throw new JMetalException("Solution set size is 0") ;
     }
 
-    int indexSolution1 = randomGenerator.nextInt(0, solutions.size() - 1) ;
-    int indexSolution2 = randomGenerator.nextInt(0, solutions.size() - 1) ;
+    Solution result ;
+    if (solutions.size() == 1) {
+      result = solutions.get(0) ;
+    }
+    else {
+      List<Solution> selectedSolutions = selectRandomSolutions(solutions) ;
+      result = getBestSolution(selectedSolutions.get(0), selectedSolutions.get(1)) ;
+    }
+
+    return result;
+  }
+
+  private List<Solution> selectRandomSolutions(List<Solution> solutions) {
+    int indexSolution1 = randomGenerator.nextInt(0, solutions.size() - 1);
+    int indexSolution2 = randomGenerator.nextInt(0, solutions.size() - 1);
 
     if (solutions.size() >= 2) {
       while (indexSolution1 == indexSolution2) {
-        indexSolution2 = randomGenerator.nextInt(0, solutions.size() - 1) ;
+        indexSolution2 = randomGenerator.nextInt(0, solutions.size() - 1);
       }
     }
 
-    Solution solution1 = solutions.get(indexSolution1) ;
-    Solution solution2 = solutions.get(indexSolution2) ;
+    return new ArrayList<>(Arrays.asList(solutions.get(indexSolution1), solutions.get(indexSolution2))) ;
+  }
 
+  private Solution getBestSolution(Solution solution1, Solution solution2) {
     Solution result ;
-
     int flag = comparator.compare(solution1, solution2);
     if (flag == -1) {
       result = solution1;
@@ -81,6 +96,37 @@ public class BinaryTournamentSelection implements SelectionOperator<List<Solutio
       }
     }
 
-    return result;
+    return result ;
   }
+  /*
+  private Solution getWinnerSolution(List<Solution> solutions) {
+    int indexSolution1 = randomGenerator.nextInt(0, solutions.size() - 1);
+    int indexSolution2 = randomGenerator.nextInt(0, solutions.size() - 1);
+
+    if (solutions.size() >= 2) {
+      while (indexSolution1 == indexSolution2) {
+        indexSolution2 = randomGenerator.nextInt(0, solutions.size() - 1);
+      }
+    }
+
+    Solution solution1 = solutions.get(indexSolution1);
+    Solution solution2 = solutions.get(indexSolution2);
+
+    Solution result ;
+    int flag = comparator.compare(solution1, solution2);
+    if (flag == -1) {
+      result = solution1;
+    } else if (flag == 1) {
+      result = solution2;
+    } else {
+      if (randomGenerator.nextDouble() < 0.5) {
+        result = solution1;
+      } else {
+        result = solution2;
+      }
+    }
+
+    return result ;
+  }
+  */
 }

@@ -10,90 +10,92 @@ import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.BinaryProblem;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 
-/** Builder class */
+/**
+ * Builder class
+ */
 public class MOCHCBuilder {
-  BinaryProblem problem ;
-  SolutionListEvaluator evaluator ;
-  int populationSize ;
-  int maxEvaluations ;
-  int convergenceValue ;
-  double preservedPopulation ;
-  double initialConvergenceCount ;
+  BinaryProblem problem;
+  SolutionListEvaluator evaluator;
+  int populationSize;
+  int maxEvaluations;
+  int convergenceValue;
+  double preservedPopulation;
+  double initialConvergenceCount;
   CrossoverOperator crossoverOperator;
   MutationOperator cataclysmicMutation;
-  SelectionOperator parentSelection ;
-  SelectionOperator newGenerationSelection ;
+  SelectionOperator parentSelection;
+  SelectionOperator newGenerationSelection;
 
   public MOCHCBuilder(BinaryProblem problem) {
-    this.problem = problem ;
+    this.problem = problem;
   }
 
   public MOCHCBuilder setPopulationSize(int populationSize) {
-    this.populationSize = populationSize ;
+    this.populationSize = populationSize;
 
-    return this ;
+    return this;
   }
 
   public MOCHCBuilder setMaxEvaluations(int maxEvaluations) {
-    this.maxEvaluations = maxEvaluations ;
+    this.maxEvaluations = maxEvaluations;
 
-    return this ;
+    return this;
   }
 
   public MOCHCBuilder setConvergenceValue(int convergenceValue) {
-    this.convergenceValue = convergenceValue ;
+    this.convergenceValue = convergenceValue;
 
-    return this ;
+    return this;
   }
 
   public MOCHCBuilder setInitialConvergenceCount(double initialConvergenceCount) {
-    this.initialConvergenceCount = initialConvergenceCount ;
+    this.initialConvergenceCount = initialConvergenceCount;
 
-    return this ;
+    return this;
   }
 
   public MOCHCBuilder setPreservedPopulation(double preservedPopulation) {
-    this.preservedPopulation = preservedPopulation ;
+    this.preservedPopulation = preservedPopulation;
 
-    return this ;
+    return this;
   }
 
   public MOCHCBuilder setCrossover(CrossoverOperator crossover) {
-    this.crossoverOperator = crossover ;
+    this.crossoverOperator = crossover;
 
-    return this ;
+    return this;
   }
 
   public MOCHCBuilder setCataclysmicMutation(MutationOperator cataclysmicMutation) {
-    this.cataclysmicMutation = cataclysmicMutation ;
+    this.cataclysmicMutation = cataclysmicMutation;
 
-    return this ;
+    return this;
   }
 
   public MOCHCBuilder setParentSelection(SelectionOperator parentSelection) {
-    this.parentSelection = parentSelection ;
+    this.parentSelection = parentSelection;
 
-    return this ;
+    return this;
   }
 
   public MOCHCBuilder setNewGenerationSelection(SelectionOperator newGenerationSelection) {
-    this.newGenerationSelection = newGenerationSelection ;
+    this.newGenerationSelection = newGenerationSelection;
 
-    return this ;
+    return this;
   }
 
   public MOCHCBuilder setEvaluator(SolutionListEvaluator evaluator) {
-    this.evaluator = evaluator ;
+    this.evaluator = evaluator;
 
-    return this ;
+    return this;
   }
 
   public MOCHC build() {
-    MOCHC algorithm =  new MOCHC(problem, populationSize, maxEvaluations, convergenceValue,
-            preservedPopulation, initialConvergenceCount, crossoverOperator,
-            cataclysmicMutation, newGenerationSelection,
-            parentSelection, evaluator) ;
+    MOCHC algorithm =
+        new MOCHC(problem, populationSize, maxEvaluations, convergenceValue, preservedPopulation,
+            initialConvergenceCount, crossoverOperator, cataclysmicMutation, newGenerationSelection,
+            parentSelection, evaluator);
 
-    return algorithm ;
+    return algorithm;
   }
 }

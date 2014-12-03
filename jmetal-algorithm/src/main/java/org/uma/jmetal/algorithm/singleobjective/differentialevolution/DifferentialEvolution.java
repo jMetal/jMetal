@@ -38,16 +38,17 @@ import java.util.List;
  * This class implements a differential evolution algorithm.
  */
 public class DifferentialEvolution extends AbstractDifferentialEvolution<Solution> {
-  private DoubleProblem problem ;
+  private DoubleProblem problem;
   private int populationSize;
   private int maxEvaluations;
-  private SolutionListEvaluator evaluator ;
+  private SolutionListEvaluator evaluator;
   private Comparator<Solution> comparator;
 
-  private int evaluations ;
+  private int evaluations;
 
   /**
    * Constructor
+   *
    * @param problem
    * @param maxEvaluations
    * @param populationSize
@@ -56,45 +57,40 @@ public class DifferentialEvolution extends AbstractDifferentialEvolution<Solutio
    * @param evaluator
    */
   public DifferentialEvolution(DoubleProblem problem, int maxEvaluations, int populationSize,
-                               DifferentialEvolutionCrossover crossoverOperator,
-                               DifferentialEvolutionSelection selectionOperator,
-                               SolutionListEvaluator evaluator) {
-    this.problem = problem ;
-    this.maxEvaluations = maxEvaluations ;
-    this.populationSize = populationSize ;
-    this.crossoverOperator = crossoverOperator ;
-    this.selectionOperator = selectionOperator ;
-    this.evaluator = evaluator ;
+      DifferentialEvolutionCrossover crossoverOperator,
+      DifferentialEvolutionSelection selectionOperator, SolutionListEvaluator evaluator) {
+    this.problem = problem;
+    this.maxEvaluations = maxEvaluations;
+    this.populationSize = populationSize;
+    this.crossoverOperator = crossoverOperator;
+    this.selectionOperator = selectionOperator;
+    this.evaluator = evaluator;
 
-    comparator = new ObjectiveComparator(0) ;
+    comparator = new ObjectiveComparator(0);
   }
 
   public int getEvaluations() {
-    return evaluations ;
+    return evaluations;
   }
 
   public void setEvaluations(int evaluations) {
-    this.evaluations = evaluations ;
+    this.evaluations = evaluations;
   }
 
-  @Override
-  protected void initProgress() {
-    evaluations = populationSize ;
+  @Override protected void initProgress() {
+    evaluations = populationSize;
   }
 
-  @Override
-  protected void updateProgress() {
-    evaluations += populationSize ;
+  @Override protected void updateProgress() {
+    evaluations += populationSize;
   }
 
-  @Override
-  protected boolean isStoppingConditionReached() {
+  @Override protected boolean isStoppingConditionReached() {
     return evaluations >= maxEvaluations;
   }
 
-  @Override
-  protected List<DoubleSolution> createInitialPopulation() {
-    List<DoubleSolution> population = new ArrayList<>(populationSize) ;
+  @Override protected List<DoubleSolution> createInitialPopulation() {
+    List<DoubleSolution> population = new ArrayList<>(populationSize);
     for (int i = 0; i < populationSize; i++) {
       DoubleSolution newIndividual = problem.createSolution();
       population.add(newIndividual);
@@ -102,28 +98,25 @@ public class DifferentialEvolution extends AbstractDifferentialEvolution<Solutio
     return population;
   }
 
-  @Override
-  protected List<DoubleSolution> evaluatePopulation(List<DoubleSolution> population) {
-    List<DoubleSolution> pop = evaluator.evaluate(population, problem) ;
+  @Override protected List<DoubleSolution> evaluatePopulation(List<DoubleSolution> population) {
+    List<DoubleSolution> pop = evaluator.evaluate(population, problem);
 
-    return pop ;
+    return pop;
   }
 
-  @Override
-  protected List<DoubleSolution> selection(List<DoubleSolution> population) {
-    return population ;
+  @Override protected List<DoubleSolution> selection(List<DoubleSolution> population) {
+    return population;
   }
 
-  @Override
-  protected List<DoubleSolution> reproduction(List<DoubleSolution> matingPopulation) {
-    List<DoubleSolution> offspringPopulation = new ArrayList<>() ;
+  @Override protected List<DoubleSolution> reproduction(List<DoubleSolution> matingPopulation) {
+    List<DoubleSolution> offspringPopulation = new ArrayList<>();
 
     for (int i = 0; i < populationSize; i++) {
       selectionOperator.setIndex(i);
       List<DoubleSolution> parents = selectionOperator.execute(matingPopulation);
 
       crossoverOperator.setCurrentSolution(matingPopulation.get(i));
-      List<DoubleSolution>children = crossoverOperator.execute(parents);
+      List<DoubleSolution> children = crossoverOperator.execute(parents);
 
       offspringPopulation.add(children.get(0));
     }
@@ -131,9 +124,9 @@ public class DifferentialEvolution extends AbstractDifferentialEvolution<Solutio
     return offspringPopulation;
   }
 
-  @Override
-  protected List<DoubleSolution> replacement(List<DoubleSolution> population, List<DoubleSolution> offspringPopulation) {
-    List<DoubleSolution> pop = new ArrayList<>() ;
+  @Override protected List<DoubleSolution> replacement(List<DoubleSolution> population,
+      List<DoubleSolution> offspringPopulation) {
+    List<DoubleSolution> pop = new ArrayList<>();
 
     for (int i = 0; i < populationSize; i++) {
       if (comparator.compare(population.get(i), offspringPopulation.get(i)) < 0) {
@@ -150,10 +143,9 @@ public class DifferentialEvolution extends AbstractDifferentialEvolution<Solutio
   /**
    * Returns the best individual
    */
-  @Override
-  public DoubleSolution getResult() {
+  @Override public DoubleSolution getResult() {
     getPopulation().sort(comparator);
 
-    return getPopulation().get(0) ;
+    return getPopulation().get(0);
   }
 }

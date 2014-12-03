@@ -15,85 +15,89 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
  * Created by ajnebro on 16/11/14.
  */
 public class NSGAIIBuilder {
-  /** NSGAIIBuilder class */
-  public final Problem problem ;
-  public int maxIterations ;
-  public int populationSize ;
-  public CrossoverOperator crossoverOperator ;
-  public MutationOperator mutationOperator ;
-  public SelectionOperator selectionOperator ;
-  public SolutionListEvaluator evaluator ;
+  /**
+   * NSGAIIBuilder class
+   */
+  public final Problem problem;
+  public int maxIterations;
+  public int populationSize;
+  public CrossoverOperator crossoverOperator;
+  public MutationOperator mutationOperator;
+  public SelectionOperator selectionOperator;
+  public SolutionListEvaluator evaluator;
 
-  /** NSGAIIBuilder constructor */
+  /**
+   * NSGAIIBuilder constructor
+   */
   public NSGAIIBuilder(Problem problem) {
-    this.problem = problem ;
-    maxIterations = 250 ;
-    populationSize = 100 ;
-    crossoverOperator = new SBXCrossover(0.9, 20.0) ;
-    mutationOperator = new PolynomialMutation(1.0/problem.getNumberOfVariables(), 20.0) ;
-    selectionOperator = new BinaryTournamentSelection() ;
-    evaluator = new SequentialSolutionListEvaluator() ;
+    this.problem = problem;
+    maxIterations = 250;
+    populationSize = 100;
+    crossoverOperator = new SBXCrossover(0.9, 20.0);
+    mutationOperator = new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0);
+    selectionOperator = new BinaryTournamentSelection();
+    evaluator = new SequentialSolutionListEvaluator();
   }
 
   public NSGAIIBuilder setMaxIterations(int maxIterations) {
     if (maxIterations < 0) {
-      throw new JMetalException("maxIterations is negative: " + maxIterations) ;
+      throw new JMetalException("maxIterations is negative: " + maxIterations);
     }
-    this.maxIterations = maxIterations ;
+    this.maxIterations = maxIterations;
 
-    return this ;
+    return this;
   }
 
   public NSGAIIBuilder setPopulationSize(int populationSize) {
     if (populationSize < 0) {
-      throw new JMetalException("Population size is negative: "  + populationSize) ;
+      throw new JMetalException("Population size is negative: " + populationSize);
     }
 
-    this.populationSize = populationSize ;
+    this.populationSize = populationSize;
 
-    return this ;
+    return this;
   }
 
   public NSGAIIBuilder setCrossoverOperator(CrossoverOperator crossoverOperator) {
     if (crossoverOperator == null) {
-      throw new JMetalException("crossoverOperator is null") ;
+      throw new JMetalException("crossoverOperator is null");
     }
-    this.crossoverOperator = crossoverOperator ;
+    this.crossoverOperator = crossoverOperator;
 
-    return this ;
+    return this;
   }
 
   public NSGAIIBuilder setMutationOperator(MutationOperator mutationOperator) {
     if (mutationOperator == null) {
-      throw new JMetalException("mutationOperator is null") ;
+      throw new JMetalException("mutationOperator is null");
     }
 
-    this.mutationOperator = mutationOperator ;
+    this.mutationOperator = mutationOperator;
 
-    return this ;
+    return this;
   }
 
   public NSGAIIBuilder setSelectionOperator(SelectionOperator selectionOperator) {
     if (selectionOperator == null) {
-      throw new JMetalException("selectionOperator is null") ;
+      throw new JMetalException("selectionOperator is null");
     }
-    this.selectionOperator = selectionOperator ;
+    this.selectionOperator = selectionOperator;
 
-    return this ;
+    return this;
   }
 
   public NSGAIIBuilder setSolutionListEvaluator(SolutionListEvaluator evaluator) {
     if (evaluator == null) {
-      throw new JMetalException("evaluator is null") ;
+      throw new JMetalException("evaluator is null");
     }
-    this.evaluator = evaluator ;
+    this.evaluator = evaluator;
 
-    return this ;
+    return this;
   }
 
   public NSGAII build() {
     return new NSGAII(problem, maxIterations, populationSize, crossoverOperator, mutationOperator,
-            selectionOperator, evaluator) ;
+        selectionOperator, evaluator);
   }
 
   /* Getters */
