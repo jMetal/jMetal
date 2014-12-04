@@ -3,6 +3,7 @@ package org.uma.jmetal.algorithm.singleobjective.differentialevolution;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 
@@ -24,11 +25,9 @@ import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.impl.selection.DifferentialEvolutionSelection;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.problem.multiobjective.Kursawe;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.impl.GenericDoubleSolution;
-import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
 /**
@@ -123,7 +122,7 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
     ReflectionTestUtils.setField(algorithm, "populationSize", populationSize);
 
     DoubleSolution [] expectedSolution = new DoubleSolution[]{
-        new MockDoubleSolution(), new MockDoubleSolution(), new MockDoubleSolution()} ;
+        mock(DoubleSolution.class), mock(DoubleSolution.class), mock(DoubleSolution.class)} ;
 
     Mockito.when(problem.createSolution()).thenReturn(expectedSolution[0], expectedSolution[1], expectedSolution[2]);
     List<DoubleSolution> population = algorithm.createInitialPopulation();
@@ -144,11 +143,11 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
     ReflectionTestUtils.setField(algorithm, "populationSize", populationSize);
 
     List<DoubleSolution> population = Arrays
-        .<DoubleSolution>asList(new MockDoubleSolution(), new MockDoubleSolution(),
-            new MockDoubleSolution());
+        .<DoubleSolution>asList(mock(DoubleSolution.class), mock(DoubleSolution.class),
+            mock(DoubleSolution.class));
     List<DoubleSolution> expectedResult = Arrays
-        .<DoubleSolution>asList(new MockDoubleSolution(), new MockDoubleSolution(),
-            new MockDoubleSolution());
+        .<DoubleSolution>asList(mock(DoubleSolution.class), mock(DoubleSolution.class),
+            mock(DoubleSolution.class));
 
     Mockito.when(evaluator.evaluate(population, problem)).thenReturn(expectedResult);
 
@@ -159,29 +158,24 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
   @Test public void shouldSelection() {
     List<DoubleSolution> population =
-        Arrays.<DoubleSolution>asList(new GenericDoubleSolution(new MockProblem()));
+        Arrays.<DoubleSolution>asList(mock(DoubleSolution.class));
 
     List<DoubleSolution> offspringPopulation = algorithm.selection(population);
     assertEquals(population, offspringPopulation);
   }
-
-
-
-
-
 
   @Test public void shouldReproduction() {
     Integer populationSize = 3;
     ReflectionTestUtils.setField(algorithm, "populationSize", populationSize);
 
     List<DoubleSolution> population = Arrays
-        .<DoubleSolution>asList(new MockDoubleSolution(), new MockDoubleSolution(),
-            new MockDoubleSolution());
+        .<DoubleSolution>asList(mock(DoubleSolution.class), mock(DoubleSolution.class),
+            mock(DoubleSolution.class));
     List<DoubleSolution> parents = Arrays
-        .<DoubleSolution>asList(new MockDoubleSolution(), new MockDoubleSolution());
+        .<DoubleSolution>asList(mock(DoubleSolution.class), mock(DoubleSolution.class));
 
     List<DoubleSolution> children = Arrays
-        .<DoubleSolution>asList(new MockDoubleSolution(), new MockDoubleSolution());
+        .<DoubleSolution>asList(mock(DoubleSolution.class), mock(DoubleSolution.class));
 
     Mockito.when(selection.execute(population)).thenReturn(parents);
     Mockito.when(crossover.execute(parents)).thenReturn(children);
@@ -205,121 +199,71 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
     }
   }
 
-
-
   //Add different tests checking what happens when the indexes are different from 0
 
-  @Test public void shouldReplacement() {
-    Integer populationSize = 3;
+
+
+  @Test public void shouldReplacemen2t() {
+    int populationSize = 2;
     ReflectionTestUtils.setField(algorithm, "populationSize", populationSize);
 
+    DoubleSolution solution1 = mock(DoubleSolution.class) ;
+    Mockito.when(solution1.getNumberOfObjectives()).thenReturn(1) ;
+    Mockito.when(solution1.getObjective(0)).thenReturn(2.0) ;
+
+    DoubleSolution solution2 = mock(DoubleSolution.class) ;
+    Mockito.when(solution2.getNumberOfObjectives()).thenReturn(1) ;
+    Mockito.when(solution2.getObjective(0)).thenReturn(1.0) ;
+
+    DoubleSolution solution3 = mock(DoubleSolution.class) ;
+    Mockito.when(solution3.getNumberOfObjectives()).thenReturn(1) ;
+    Mockito.when(solution3.getObjective(0)).thenReturn(6.0) ;
+
+    DoubleSolution solution4 = mock(DoubleSolution.class) ;
+    Mockito.when(solution4.getNumberOfObjectives()).thenReturn(1) ;
+    Mockito.when(solution4.getObjective(0)).thenReturn(0.5) ;
+
     List<DoubleSolution> population = Arrays
-        .<DoubleSolution>asList(new MockDoubleSolution(0, 2D), new MockDoubleSolution(0, 3D),
-            new MockDoubleSolution(0, 1D));
+        .<DoubleSolution>asList(solution1, solution2);
     List<DoubleSolution> offspringPopulation = Arrays
-        .<DoubleSolution>asList(new MockDoubleSolution(0, 1D), new MockDoubleSolution(0, 3D),
-            new MockDoubleSolution(0, 2D));
+        .<DoubleSolution>asList(solution3, solution4);
+
+    List<DoubleSolution> expectedSolutionList = Arrays
+        .<DoubleSolution>asList(solution4, solution1);
+
 
     List<DoubleSolution> result = algorithm.replacement(population, offspringPopulation);
-    assertEquals("Result size different from expected.", populationSize.intValue(), result.size());
-    assertEquals(1D, result.get(0).getObjective(0));
-    assertEquals(1D, result.get(1).getObjective(0));
-    assertEquals(3D, result.get(2).getObjective(0));
+    assertEquals("Result size different from expected.", populationSize, result.size());
+    assertEquals(expectedSolutionList, result);
   }
 
   @Test public void shouldGetResultReturnsThenReturnTheBestIndividual() {
-
-    Integer populationSize = 3;
+    int populationSize = 4;
     ReflectionTestUtils.setField(algorithm, "populationSize", populationSize);
 
+    DoubleSolution solution1 = mock(DoubleSolution.class) ;
+    Mockito.when(solution1.getNumberOfObjectives()).thenReturn(1) ;
+    Mockito.when(solution1.getObjective(0)).thenReturn(2.0) ;
+
+    DoubleSolution solution2 = mock(DoubleSolution.class) ;
+    Mockito.when(solution2.getNumberOfObjectives()).thenReturn(1) ;
+    Mockito.when(solution2.getObjective(0)).thenReturn(1.0) ;
+
+    DoubleSolution solution3 = mock(DoubleSolution.class) ;
+    Mockito.when(solution3.getNumberOfObjectives()).thenReturn(1) ;
+    Mockito.when(solution3.getObjective(0)).thenReturn(6.0) ;
+
+    DoubleSolution solution4 = mock(DoubleSolution.class) ;
+    Mockito.when(solution4.getNumberOfObjectives()).thenReturn(1) ;
+    Mockito.when(solution4.getObjective(0)).thenReturn(0.5) ;
+
     List<DoubleSolution> population = Arrays
-        .<DoubleSolution>asList(new MockDoubleSolution(0, 2D), new MockDoubleSolution(0, 3D),
-            new MockDoubleSolution(0, 1D));
+        .<DoubleSolution>asList(solution1, solution2, solution3, solution4);
+
     ReflectionTestUtils.setField(algorithm, "population", population);
 
     DoubleSolution result = algorithm.getResult();
-    assertEquals(1D, result.getObjective(0));
-  }
-
-  private class MockProblem extends AbstractDoubleProblem {
-
-    @Override public void evaluate(DoubleSolution solution) {
-      // Does nothing.
-    }
-  }
-
-
-  private class MockDoubleSolution implements DoubleSolution {
-
-    private Double value;
-
-    private Integer index;
-
-    public MockDoubleSolution() {
-    }
-
-    public MockDoubleSolution(Integer index, Double value) {
-      setObjective(index, value);
-    }
-
-    @Override public Double getLowerBound(int index) {
-      return null;
-    }
-
-    @Override public Double getUpperBound(int index) {
-      return null;
-    }
-
-    @Override public void setObjective(int index, double value) {
-      this.index = index;
-      this.value = value;
-    }
-
-    @Override public double getObjective(int index) {
-      if (index == this.index) {
-        return value;
-      }
-      return 0;
-    }
-
-    @Override public Double getVariableValue(int index) {
-      return null;
-    }
-
-    @Override public void setVariableValue(int index, Double value) {
-
-    }
-
-    @Override public String getVariableValueString(int index) {
-      return null;
-    }
-
-    @Override public int getNumberOfVariables() {
-      return 0;
-    }
-
-    @Override public int getNumberOfObjectives() {
-      return 0;
-    }
-
-    @Override public double getOverallConstraintViolationDegree() {
-      return 0;
-    }
-
-    @Override public void setOverallConstraintViolationDegree(double violationDegree) {
-
-    }
-
-    @Override public Solution copy() {
-      return null;
-    }
-
-    @Override public void setAttribute(Object id, Object value) {
-
-    }
-
-    @Override public Object getAttribute(Object id) {
-      return null;
-    }
+    assertEquals(solution4, result);
+    assertEquals(0.5, result.getObjective(0));
   }
 }
