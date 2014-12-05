@@ -53,6 +53,10 @@ public class JavaRandomGenerator implements PseudoRandomGenerator {
     return lowerBound + rnd.nextDouble()*(upperBound - lowerBound) ;
   }
 
+  @Override public double nextDouble() {
+    return nextDouble(0.0, 1.0);
+  }
+
   @Override
   public void setSeed(long seed) {
     this.seed = seed ;

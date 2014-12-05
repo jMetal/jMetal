@@ -29,7 +29,7 @@ public class JMetalRandom {
   }
 
   public double nextDouble() {
-    return nextDouble(0.0, 1.0) ;
+    return randomGenerator.nextDouble() ;
   }
 
   public double nextDouble(double lowerBound, double upperBound) {
