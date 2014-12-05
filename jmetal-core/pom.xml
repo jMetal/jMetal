@@ -40,5 +40,9 @@
             <artifactId>mockito-core</artifactId>
             <version>1.10.8</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+        </dependency>
     </dependencies>
 </project>
