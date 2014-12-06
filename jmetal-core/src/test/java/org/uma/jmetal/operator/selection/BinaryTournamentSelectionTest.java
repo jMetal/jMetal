@@ -21,6 +21,7 @@
 package org.uma.jmetal.operator.selection;
 
 import junit.framework.Assert;
+import org.apache.commons.math3.random.RandomGenerator;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,10 +29,14 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,6 +45,7 @@ import java.util.List;
 
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.mock;
@@ -61,11 +67,6 @@ public class BinaryTournamentSelectionTest {
   @Before
   public void startup() throws ClassNotFoundException {
     selection = new BinaryTournamentSelection() ;
-
-    //population = new ArrayList<>(POPULATION_SIZE) ;
-    //for (int i = 0 ; i < POPULATION_SIZE; i++) {
-    //  population.add(problem.createSolution()) ;
-    //}
   }
 
   @Test (expected = JMetalException.class)
@@ -83,6 +84,7 @@ public class BinaryTournamentSelectionTest {
   @Test
   public void executeWithCorrectParametersTest() {
     Solution solution = mock(Solution.class) ;
+
     Mockito.when(problem.createSolution()).thenReturn(solution) ;
 
     population = new ArrayList<>(POPULATION_SIZE) ;
@@ -112,23 +114,158 @@ public class BinaryTournamentSelectionTest {
   }
 
   @Test
-  public void theFirstSelectionSolutionIsDominatedByTheSecondOne() {
-    Comparator comparator = mock(Comparator.class) ;
-    //Solution solution1 = mock(Solution.class) ;
-    //Solution solution2 = mock(Solution.class) ;
+  public void theFirstSelectedSolutionIsDominatedByTheSecondOne() {
+    JMetalRandom randomGenerator = mock(JMetalRandom.class) ;
+    Comparator<Solution> comparator = mock(Comparator.class) ;
+
+    Solution solution1 = mock(Solution.class) ;
+    Mockito.when(solution1.getNumberOfObjectives()).thenReturn(2) ;
+    Mockito.when(solution1.getObjective(0)).thenReturn(2.0) ;
+    Mockito.when(solution1.getObjective(1)).thenReturn(3.0) ;
+
+    Solution solution2 = mock(Solution.class) ;
+    Mockito.when(solution2.getNumberOfObjectives()).thenReturn(1) ;
+    Mockito.when(solution2.getObjective(0)).thenReturn(1.0) ;
+    Mockito.when(solution2.getObjective(1)).thenReturn(2.0) ;
+
+    Mockito.when(comparator.compare(solution1, solution2)).thenReturn(1) ;
+    Mockito.when(randomGenerator.nextInt(0, 1)).thenReturn(0, 1) ;
+
+    List<Solution> population = Arrays.<Solution>asList(solution1, solution2);
+
     selection = new BinaryTournamentSelection(comparator) ;
+    ReflectionTestUtils.setField(selection, "randomGenerator", randomGenerator);
 
-    Mockito.when(comparator.compare(any(Solution.class), any(Solution.class))).thenReturn(-1) ;
+    Solution result = selection.execute(population) ;
 
-    population = new ArrayList<>(POPULATION_SIZE) ;
-    for (int i = 0 ; i < POPULATION_SIZE; i++) {
-      population.add(problem.createSolution()) ;
-    }
-    selection.execute(population) ;
-    verify(comparator, times(1)).compare(anyObject(), anyObject());
+    assertEquals(solution2, result) ;
+    assertNotEquals(solution1, result);
+    verify(comparator).compare(any(Solution.class), any(Solution.class));
+    verify(randomGenerator, times(2)).nextInt(0, 1);
   }
 
+  @Test
+  public void theSecondSelectedSolutionIsDominatedByTheFirstOne() {
+    JMetalRandom randomGenerator = mock(JMetalRandom.class) ;
+    Comparator<Solution> comparator = mock(Comparator.class) ;
 
+    Solution solution1 = mock(Solution.class) ;
+    Mockito.when(solution1.getNumberOfObjectives()).thenReturn(2) ;
+    Mockito.when(solution1.getObjective(0)).thenReturn(1.0) ;
+    Mockito.when(solution1.getObjective(1)).thenReturn(2.0) ;
+
+    Solution solution2 = mock(Solution.class) ;
+    Mockito.when(solution2.getNumberOfObjectives()).thenReturn(1) ;
+    Mockito.when(solution2.getObjective(0)).thenReturn(2.0) ;
+    Mockito.when(solution2.getObjective(1)).thenReturn(3.0) ;
+
+    Mockito.when(comparator.compare(solution1, solution2)).thenReturn(-1) ;
+    Mockito.when(randomGenerator.nextInt(0, 1)).thenReturn(0, 1) ;
+
+    List<Solution> population = Arrays.<Solution>asList(solution1, solution2);
+
+    selection = new BinaryTournamentSelection(comparator) ;
+    ReflectionTestUtils.setField(selection, "randomGenerator", randomGenerator);
+
+    Solution result = selection.execute(population) ;
+
+    assertEquals(solution1, result) ;
+    assertNotEquals(solution2, result);
+    verify(comparator).compare(any(Solution.class), any(Solution.class));
+    verify(randomGenerator, times(2)).nextInt(0, 1);
+  }
+
+  @Test
+  public void theBothSelectedSolutionsAreNonDominatedAndTheFirstOneIsReturned() {
+    JMetalRandom randomGenerator = mock(JMetalRandom.class) ;
+    Comparator<Solution> comparator = mock(Comparator.class) ;
+
+    Solution solution1 = mock(Solution.class) ;
+    Mockito.when(solution1.getNumberOfObjectives()).thenReturn(2) ;
+    Mockito.when(solution1.getObjective(0)).thenReturn(1.0) ;
+    Mockito.when(solution1.getObjective(1)).thenReturn(2.0) ;
+
+    Solution solution2 = mock(Solution.class) ;
+    Mockito.when(solution2.getNumberOfObjectives()).thenReturn(1) ;
+    Mockito.when(solution2.getObjective(0)).thenReturn(2.0) ;
+    Mockito.when(solution2.getObjective(1)).thenReturn(1.0) ;
+
+    Mockito.when(comparator.compare(solution1, solution2)).thenReturn(0) ;
+    Mockito.when(randomGenerator.nextInt(0, 1)).thenReturn(0, 1) ;
+    Mockito.when(randomGenerator.nextDouble()).thenReturn(0.3) ;
+
+    List<Solution> population = Arrays.<Solution>asList(solution1, solution2);
+
+    selection = new BinaryTournamentSelection(comparator) ;
+    ReflectionTestUtils.setField(selection, "randomGenerator", randomGenerator);
+
+    Solution result = selection.execute(population) ;
+
+    assertEquals(solution1, result) ;
+    assertNotEquals(solution2, result);
+    verify(comparator).compare(any(Solution.class), any(Solution.class));
+    verify(randomGenerator, times(2)).nextInt(0, 1);
+    verify(randomGenerator, times(1)).nextDouble();
+  }
+
+  @Test
+  public void theBothSelectedSolutionsAreNonDominatedAndTheSecondOneIsReturned() {
+    JMetalRandom randomGenerator = mock(JMetalRandom.class) ;
+    Comparator<Solution> comparator = mock(Comparator.class) ;
+
+    Solution solution1 = mock(Solution.class) ;
+    Mockito.when(solution1.getNumberOfObjectives()).thenReturn(2) ;
+    Mockito.when(solution1.getObjective(0)).thenReturn(1.0) ;
+    Mockito.when(solution1.getObjective(1)).thenReturn(2.0) ;
+
+    Solution solution2 = mock(Solution.class) ;
+    Mockito.when(solution2.getNumberOfObjectives()).thenReturn(1) ;
+    Mockito.when(solution2.getObjective(0)).thenReturn(2.0) ;
+    Mockito.when(solution2.getObjective(1)).thenReturn(1.0) ;
+
+    Mockito.when(comparator.compare(solution1, solution2)).thenReturn(0) ;
+    Mockito.when(randomGenerator.nextInt(0, 1)).thenReturn(0, 1) ;
+    Mockito.when(randomGenerator.nextDouble()).thenReturn(0.7) ;
+
+    List<Solution> population = Arrays.<Solution>asList(solution1, solution2);
+
+    selection = new BinaryTournamentSelection(comparator) ;
+    ReflectionTestUtils.setField(selection, "randomGenerator", randomGenerator);
+
+    Solution result = selection.execute(population) ;
+
+    assertEquals(solution2, result) ;
+    assertNotEquals(solution1, result);
+    verify(comparator).compare(any(Solution.class), any(Solution.class));
+    verify(randomGenerator, times(2)).nextInt(0, 1);
+    verify(randomGenerator, times(1)).nextDouble();
+  }
+
+  @Test
+  public void theSameSolutionIsSelectedTwiceTheFirstTime() {
+    JMetalRandom randomGenerator = mock(JMetalRandom.class) ;
+
+    Solution solution1 = mock(Solution.class) ;
+    Mockito.when(solution1.getNumberOfObjectives()).thenReturn(2) ;
+    Mockito.when(solution1.getObjective(0)).thenReturn(2.0) ;
+    Mockito.when(solution1.getObjective(1)).thenReturn(3.0) ;
+
+    Solution solution2 = mock(Solution.class) ;
+    Mockito.when(solution2.getNumberOfObjectives()).thenReturn(1) ;
+    Mockito.when(solution2.getObjective(0)).thenReturn(1.0) ;
+    Mockito.when(solution2.getObjective(1)).thenReturn(2.0) ;
+
+    Mockito.when(randomGenerator.nextInt(0, 1)).thenReturn(0, 0, 1) ;
+
+    List<Solution> population = Arrays.<Solution>asList(solution1, solution2);
+
+    selection = new BinaryTournamentSelection() ;
+    ReflectionTestUtils.setField(selection, "randomGenerator", randomGenerator);
+
+    selection.execute(population) ;
+
+    verify(randomGenerator, times(3)).nextInt(0, 1);
+  }
 
   @After
   public void tearDown() {

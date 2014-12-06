@@ -35,6 +35,7 @@ import java.util.List;
 public class BinaryTournamentSelection implements SelectionOperator<List<Solution>,Solution> {
   private Comparator<Solution> comparator;
   private JMetalRandom randomGenerator ;
+  private int v = 4 ;
 
   /** Constructor */
   public BinaryTournamentSelection() {
@@ -68,6 +69,11 @@ public class BinaryTournamentSelection implements SelectionOperator<List<Solutio
     return result;
   }
 
+  /**
+   * Given a list with two or more solutions, select two of them randomly
+   * @param solutions The list of solutions
+   * @return A list with two solutions
+   */
   private List<Solution> selectRandomSolutions(List<Solution> solutions) {
     int indexSolution1 = randomGenerator.nextInt(0, solutions.size() - 1);
     int indexSolution2 = randomGenerator.nextInt(0, solutions.size() - 1);
@@ -81,6 +87,12 @@ public class BinaryTournamentSelection implements SelectionOperator<List<Solutio
     return new ArrayList<>(Arrays.asList(solutions.get(indexSolution1), solutions.get(indexSolution2))) ;
   }
 
+  /**
+   * Return the best solution between those passed as arguments
+   * @param solution1
+   * @param solution2
+   * @return The best solution
+   */
   private Solution getBestSolution(Solution solution1, Solution solution2) {
     Solution result ;
     int flag = comparator.compare(solution1, solution2);
@@ -98,35 +110,4 @@ public class BinaryTournamentSelection implements SelectionOperator<List<Solutio
 
     return result ;
   }
-  /*
-  private Solution getWinnerSolution(List<Solution> solutions) {
-    int indexSolution1 = randomGenerator.nextInt(0, solutions.size() - 1);
-    int indexSolution2 = randomGenerator.nextInt(0, solutions.size() - 1);
-
-    if (solutions.size() >= 2) {
-      while (indexSolution1 == indexSolution2) {
-        indexSolution2 = randomGenerator.nextInt(0, solutions.size() - 1);
-      }
-    }
-
-    Solution solution1 = solutions.get(indexSolution1);
-    Solution solution2 = solutions.get(indexSolution2);
-
-    Solution result ;
-    int flag = comparator.compare(solution1, solution2);
-    if (flag == -1) {
-      result = solution1;
-    } else if (flag == 1) {
-      result = solution2;
-    } else {
-      if (randomGenerator.nextDouble() < 0.5) {
-        result = solution1;
-      } else {
-        result = solution2;
-      }
-    }
-
-    return result ;
-  }
-  */
 }
