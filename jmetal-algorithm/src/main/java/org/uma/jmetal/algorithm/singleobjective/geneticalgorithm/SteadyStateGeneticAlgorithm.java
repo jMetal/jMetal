@@ -17,9 +17,9 @@ import java.util.List;
  */
 public class SteadyStateGeneticAlgorithm extends AbstractGeneticAlgorithm<Solution, Solution> {
   private Comparator<Solution> comparator;
-  private int maxIterations;
+  private int maxEvaluations;
   private int populationSize;
-  private int iterations;
+  private int evaluations;
 
   private Problem<Solution> problem;
 
@@ -28,7 +28,7 @@ public class SteadyStateGeneticAlgorithm extends AbstractGeneticAlgorithm<Soluti
    */
   private SteadyStateGeneticAlgorithm(Builder builder) {
     problem = builder.problem;
-    maxIterations = builder.maxIterations;
+    maxEvaluations = builder.maxEvaluations;
     populationSize = builder.populationSize;
 
     crossoverOperator = builder.crossoverOperator;
@@ -43,7 +43,7 @@ public class SteadyStateGeneticAlgorithm extends AbstractGeneticAlgorithm<Soluti
    */
   public static class Builder {
     private Problem problem;
-    private int maxIterations;
+    private int maxEvaluations;
     private int populationSize;
     private CrossoverOperator crossoverOperator;
     private MutationOperator mutationOperator;
@@ -54,12 +54,12 @@ public class SteadyStateGeneticAlgorithm extends AbstractGeneticAlgorithm<Soluti
      */
     public Builder(Problem problem) {
       this.problem = problem;
-      maxIterations = 250;
+      maxEvaluations = 250;
       populationSize = 100;
     }
 
-    public Builder setMaxIterations(int maxIterations) {
-      this.maxIterations = maxIterations;
+    public Builder setMaxEvaluations(int maxIterations) {
+      this.maxEvaluations = maxIterations;
 
       return this;
     }
@@ -95,7 +95,7 @@ public class SteadyStateGeneticAlgorithm extends AbstractGeneticAlgorithm<Soluti
   }
 
   @Override protected boolean isStoppingConditionReached() {
-    return (iterations >= maxIterations);
+    return (evaluations >= maxEvaluations);
   }
 
   @Override protected List<Solution> createInitialPopulation() {
@@ -157,10 +157,10 @@ public class SteadyStateGeneticAlgorithm extends AbstractGeneticAlgorithm<Soluti
   }
 
   @Override public void initProgress() {
-    iterations = 1;
+    evaluations = 1;
   }
 
   @Override public void updateProgress() {
-    iterations++;
+    evaluations++;
   }
 }

@@ -57,7 +57,7 @@ public class SteadyStateGeneticAlgorithmRunner {
 
     algorithm = new SteadyStateGeneticAlgorithm.Builder(problem)
             .setPopulationSize(100)
-            .setMaxIterations(25000)
+            .setMaxEvaluations(25000)
             .setCrossoverOperator(crossoverOperator)
             .setMutationOperator(mutationOperator)
             .setSelectionOperator(selectionOperator)

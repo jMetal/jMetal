@@ -46,7 +46,6 @@ public abstract class AbstractEvolutionaryAlgorithm<S extends Solution, R> imple
       offspringPopulation = evaluatePopulation(offspringPopulation);
       population = replacement(population, offspringPopulation) ;
       updateProgress();
-
     }
   }
 }
