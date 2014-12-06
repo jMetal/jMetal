@@ -35,7 +35,7 @@ import java.util.List;
 
 /**
  * Applies a binary tournament selection to return the best solution between two that have been
- * chosen at random
+ * chosen at random from a solution list.
  * @version 1.0
  */
 public class BinaryTournamentSelection implements SelectionOperator<List<Solution>,Solution> {
