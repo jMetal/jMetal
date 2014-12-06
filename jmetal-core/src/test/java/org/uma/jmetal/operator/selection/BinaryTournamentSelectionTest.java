@@ -22,6 +22,7 @@ package org.uma.jmetal.operator.selection;
 
 import junit.framework.Assert;
 import org.apache.commons.math3.random.RandomGenerator;
+import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,6 +45,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import static junit.framework.TestCase.assertNotNull;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.mockito.Matchers.any;
@@ -131,7 +133,7 @@ public class BinaryTournamentSelectionTest {
     Mockito.when(comparator.compare(solution1, solution2)).thenReturn(1) ;
     Mockito.when(randomGenerator.nextInt(0, 1)).thenReturn(0, 1) ;
 
-    List<Solution> population = Arrays.<Solution>asList(solution1, solution2);
+    List<Solution> population = Arrays.asList(solution1, solution2);
 
     selection = new BinaryTournamentSelection(comparator) ;
     ReflectionTestUtils.setField(selection, "randomGenerator", randomGenerator);
@@ -162,7 +164,7 @@ public class BinaryTournamentSelectionTest {
     Mockito.when(comparator.compare(solution1, solution2)).thenReturn(-1) ;
     Mockito.when(randomGenerator.nextInt(0, 1)).thenReturn(0, 1) ;
 
-    List<Solution> population = Arrays.<Solution>asList(solution1, solution2);
+    List<Solution> population = Arrays.asList(solution1, solution2);
 
     selection = new BinaryTournamentSelection(comparator) ;
     ReflectionTestUtils.setField(selection, "randomGenerator", randomGenerator);
@@ -175,8 +177,9 @@ public class BinaryTournamentSelectionTest {
     verify(randomGenerator, times(2)).nextInt(0, 1);
   }
 
+
   @Test
-  public void theBothSelectedSolutionsAreNonDominatedAndTheFirstOneIsReturned() {
+  public void theBothSelectedSolutionsAreNonDominated() {
     JMetalRandom randomGenerator = mock(JMetalRandom.class) ;
     Comparator<Solution> comparator = mock(Comparator.class) ;
 
@@ -192,7 +195,6 @@ public class BinaryTournamentSelectionTest {
 
     Mockito.when(comparator.compare(solution1, solution2)).thenReturn(0) ;
     Mockito.when(randomGenerator.nextInt(0, 1)).thenReturn(0, 1) ;
-    Mockito.when(randomGenerator.nextDouble()).thenReturn(0.3) ;
 
     List<Solution> population = Arrays.<Solution>asList(solution1, solution2);
 
@@ -201,44 +203,9 @@ public class BinaryTournamentSelectionTest {
 
     Solution result = selection.execute(population) ;
 
-    assertEquals(solution1, result) ;
-    assertNotEquals(solution2, result);
+    assertThat(result, Matchers.either(Matchers.is(solution1)).or(Matchers.is(solution2))) ;
     verify(comparator).compare(any(Solution.class), any(Solution.class));
     verify(randomGenerator, times(2)).nextInt(0, 1);
-    verify(randomGenerator, times(1)).nextDouble();
-  }
-
-  @Test
-  public void theBothSelectedSolutionsAreNonDominatedAndTheSecondOneIsReturned() {
-    JMetalRandom randomGenerator = mock(JMetalRandom.class) ;
-    Comparator<Solution> comparator = mock(Comparator.class) ;
-
-    Solution solution1 = mock(Solution.class) ;
-    Mockito.when(solution1.getNumberOfObjectives()).thenReturn(2) ;
-    Mockito.when(solution1.getObjective(0)).thenReturn(1.0) ;
-    Mockito.when(solution1.getObjective(1)).thenReturn(2.0) ;
-
-    Solution solution2 = mock(Solution.class) ;
-    Mockito.when(solution2.getNumberOfObjectives()).thenReturn(1) ;
-    Mockito.when(solution2.getObjective(0)).thenReturn(2.0) ;
-    Mockito.when(solution2.getObjective(1)).thenReturn(1.0) ;
-
-    Mockito.when(comparator.compare(solution1, solution2)).thenReturn(0) ;
-    Mockito.when(randomGenerator.nextInt(0, 1)).thenReturn(0, 1) ;
-    Mockito.when(randomGenerator.nextDouble()).thenReturn(0.7) ;
-
-    List<Solution> population = Arrays.<Solution>asList(solution1, solution2);
-
-    selection = new BinaryTournamentSelection(comparator) ;
-    ReflectionTestUtils.setField(selection, "randomGenerator", randomGenerator);
-
-    Solution result = selection.execute(population) ;
-
-    assertEquals(solution2, result) ;
-    assertNotEquals(solution1, result);
-    verify(comparator).compare(any(Solution.class), any(Solution.class));
-    verify(randomGenerator, times(2)).nextInt(0, 1);
-    verify(randomGenerator, times(1)).nextDouble();
   }
 
   @Test
@@ -257,7 +224,7 @@ public class BinaryTournamentSelectionTest {
 
     Mockito.when(randomGenerator.nextInt(0, 1)).thenReturn(0, 0, 1) ;
 
-    List<Solution> population = Arrays.<Solution>asList(solution1, solution2);
+    List<Solution> population = Arrays.asList(solution1, solution2);
 
     selection = new BinaryTournamentSelection() ;
     ReflectionTestUtils.setField(selection, "randomGenerator", randomGenerator);

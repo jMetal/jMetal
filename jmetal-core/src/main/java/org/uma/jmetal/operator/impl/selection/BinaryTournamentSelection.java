@@ -1,4 +1,4 @@
-//  BinaryTournament.java
+//  BinaryTournamentSelection.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -24,6 +24,7 @@ package org.uma.jmetal.operator.impl.selection;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.SolutionUtils;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
@@ -32,10 +33,14 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * Applies a binary tournament selection to return the best solution between two that have been
+ * chosen at random
+ * @version 1.0
+ */
 public class BinaryTournamentSelection implements SelectionOperator<List<Solution>,Solution> {
   private Comparator<Solution> comparator;
   private JMetalRandom randomGenerator ;
-  private int v = 4 ;
 
   /** Constructor */
   public BinaryTournamentSelection() {
@@ -53,24 +58,23 @@ public class BinaryTournamentSelection implements SelectionOperator<List<Solutio
   public Solution execute(List<Solution> solutions) {
     if (null == solutions) {
       throw new JMetalException("Parameter is null") ;
-    } else if (solutions.size() == 0) {
+    } else if (solutions.isEmpty()) {
       throw new JMetalException("Solution set size is 0") ;
     }
 
     Solution result ;
     if (solutions.size() == 1) {
       result = solutions.get(0) ;
-    }
-    else {
+    } else {
       List<Solution> selectedSolutions = selectRandomSolutions(solutions) ;
-      result = getBestSolution(selectedSolutions.get(0), selectedSolutions.get(1)) ;
+      result = SolutionUtils.getBestSolution(selectedSolutions.get(0), selectedSolutions.get(1),comparator) ;
     }
 
     return result;
   }
 
   /**
-   * Given a list with two or more solutions, select two of them randomly
+   * Given a list with two or more solutions, selects two of them randomly
    * @param solutions The list of solutions
    * @return A list with two solutions
    */
@@ -78,36 +82,10 @@ public class BinaryTournamentSelection implements SelectionOperator<List<Solutio
     int indexSolution1 = randomGenerator.nextInt(0, solutions.size() - 1);
     int indexSolution2 = randomGenerator.nextInt(0, solutions.size() - 1);
 
-    if (solutions.size() >= 2) {
-      while (indexSolution1 == indexSolution2) {
-        indexSolution2 = randomGenerator.nextInt(0, solutions.size() - 1);
-      }
+    while (indexSolution1 == indexSolution2) {
+      indexSolution2 = randomGenerator.nextInt(0, solutions.size() - 1);
     }
 
     return new ArrayList<>(Arrays.asList(solutions.get(indexSolution1), solutions.get(indexSolution2))) ;
-  }
-
-  /**
-   * Return the best solution between those passed as arguments
-   * @param solution1
-   * @param solution2
-   * @return The best solution
-   */
-  private Solution getBestSolution(Solution solution1, Solution solution2) {
-    Solution result ;
-    int flag = comparator.compare(solution1, solution2);
-    if (flag == -1) {
-      result = solution1;
-    } else if (flag == 1) {
-      result = solution2;
-    } else {
-      if (randomGenerator.nextDouble() < 0.5) {
-        result = solution1;
-      } else {
-        result = solution2;
-      }
-    }
-
-    return result ;
   }
 }
