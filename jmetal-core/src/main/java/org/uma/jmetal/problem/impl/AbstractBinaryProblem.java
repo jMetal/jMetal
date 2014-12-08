@@ -6,18 +6,18 @@ import org.uma.jmetal.solution.BinarySolution;
 public abstract class AbstractBinaryProblem extends AbstractGenericProblem<BinarySolution>
   implements BinaryProblem {
 
-  protected abstract int getBitsPervariable(int index) ;
+  protected abstract int getBitsPerVariable(int index) ;
 
   @Override
   public int getNumberOfBits(int index) {
-    return getBitsPervariable(index) ;
+    return getBitsPerVariable(index) ;
   }
   
   @Override
   public int getTotalNumberOfBits() {
   	int count = 0 ;
   	for (int i = 0; i < this.getNumberOfVariables(); i++) {
-  		count += this.getBitsPervariable(i) ;
+  		count += this.getBitsPerVariable(i) ;
   	}
   	
   	return count ;

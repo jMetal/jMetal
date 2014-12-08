@@ -58,7 +58,7 @@ public class ZDT5 extends AbstractBinaryProblem {
   }
   
   @Override
-  protected int getBitsPervariable(int index) {
+  protected int getBitsPerVariable(int index) {
   	if ((index <0) || (index >= this.getNumberOfVariables())) {
   		throw new JMetalException("Index value is incorrect: " + index) ;
   	}
