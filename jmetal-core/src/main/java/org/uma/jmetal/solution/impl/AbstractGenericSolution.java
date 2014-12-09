@@ -108,15 +108,15 @@ public abstract class AbstractGenericSolution<T, P extends Problem> implements S
 
     AbstractGenericSolution that = (AbstractGenericSolution) o;
 
-    if (Double.compare(that.overallConstraintViolationDegree, overallConstraintViolationDegree)
-        != 0)
-      return false;
-    if (attributes != null ? !attributes.equals(that.attributes) : that.attributes != null)
-      return false;
+    //if (Double.compare(that.overallConstraintViolationDegree, overallConstraintViolationDegree)
+    //    != 0)
+    //  return false;
+    //if (attributes != null ? !attributes.equals(that.attributes) : that.attributes != null)
+    //  return false;
     if (objectives != null ? !objectives.equals(that.objectives) : that.objectives != null)
       return false;
-    if (problem != null ? !problem.equals(that.problem) : that.problem != null)
-      return false;
+    //if (problem != null ? !problem.equals(that.problem) : that.problem != null)
+    //  return false;
     if (variables != null ? !variables.equals(that.variables) : that.variables != null)
       return false;
 
@@ -128,11 +128,11 @@ public abstract class AbstractGenericSolution<T, P extends Problem> implements S
     long temp;
     result = objectives != null ? objectives.hashCode() : 0;
     result = 31 * result + (variables != null ? variables.hashCode() : 0);
-    result = 31 * result + (problem != null ? problem.hashCode() : 0);
+    //result = 31 * result + (problem != null ? problem.hashCode() : 0);
     temp = Double.doubleToLongBits(overallConstraintViolationDegree);
     result = 31 * result + (int) (temp ^ (temp >>> 32));
     result = 31 * result + (attributes != null ? attributes.hashCode() : 0);
     return result;
   }
-*/
+  */
 }

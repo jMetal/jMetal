@@ -8,6 +8,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.solutionattribute.SolutionAttribute;
 
 import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
