@@ -99,6 +99,7 @@ public abstract class AbstractGenericSolution<T, P extends Problem> implements S
     return result ;
   }
 
+
   @Override public boolean equals(Object o) {
     if (this == o)
       return true;
@@ -116,10 +117,6 @@ public abstract class AbstractGenericSolution<T, P extends Problem> implements S
       return false;
     if (problem != null ? !problem.equals(that.problem) : that.problem != null)
       return false;
-    if (randomGenerator != null ?
-        !randomGenerator.equals(that.randomGenerator) :
-        that.randomGenerator != null)
-      return false;
     if (variables != null ? !variables.equals(that.variables) : that.variables != null)
       return false;
 
@@ -135,7 +132,7 @@ public abstract class AbstractGenericSolution<T, P extends Problem> implements S
     temp = Double.doubleToLongBits(overallConstraintViolationDegree);
     result = 31 * result + (int) (temp ^ (temp >>> 32));
     result = 31 * result + (attributes != null ? attributes.hashCode() : 0);
-    result = 31 * result + (randomGenerator != null ? randomGenerator.hashCode() : 0);
     return result;
   }
+
 }
