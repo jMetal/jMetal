@@ -10,9 +10,7 @@ import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by ajnebro on 26/10/14.
@@ -121,10 +119,10 @@ public class GenerationalGeneticAlgorithm extends AbstractGeneticAlgorithm<Solut
   }
 
   @Override protected List<Solution> replacement(List population, List offspringPopulation) {
-    population.sort(comparator);
+    Collections.sort(population, comparator);
     offspringPopulation.add(population.get(0));
     offspringPopulation.add(population.get(1));
-    offspringPopulation.sort(comparator);
+    Collections.sort(offspringPopulation, comparator) ;
     offspringPopulation.remove(offspringPopulation.size() - 1);
     offspringPopulation.remove(offspringPopulation.size() - 1);
 
@@ -167,7 +165,7 @@ public class GenerationalGeneticAlgorithm extends AbstractGeneticAlgorithm<Solut
   }
 
   @Override public Solution getResult() {
-    getPopulation().sort(comparator);
+    Collections.sort(getPopulation(), comparator) ;
     return getPopulation().get(0);
   }
 

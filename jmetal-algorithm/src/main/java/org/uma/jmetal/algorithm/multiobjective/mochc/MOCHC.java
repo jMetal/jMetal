@@ -31,10 +31,7 @@ import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 
-import java.util.ArrayList;
-import java.util.BitSet;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * This class executes the MOCHC algorithm described in:
@@ -205,7 +202,7 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
 
       int preserve = (int) Math.floor(preservedPopulation * populationSize);
       newPopulation = new ArrayList<>(populationSize);
-      population.sort(comparator);
+      Collections.sort(population, comparator);
       for (int i = 0; i < preserve; i++) {
         newPopulation.add((BinarySolution) population.get(i).copy());
       }

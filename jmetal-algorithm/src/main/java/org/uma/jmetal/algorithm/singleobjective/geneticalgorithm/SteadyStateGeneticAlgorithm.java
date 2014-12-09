@@ -9,6 +9,7 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -109,7 +110,7 @@ public class SteadyStateGeneticAlgorithm extends AbstractGeneticAlgorithm<Soluti
 
   @Override protected List<Solution> replacement(List<Solution> population,
       List<Solution> offspringPopulation) {
-    population.sort(comparator);
+    Collections.sort(population, comparator) ;
     int worstSolutionIndex = population.size() - 1;
     if (comparator.compare(population.get(worstSolutionIndex), offspringPopulation.get(0)) > 0) {
       population.remove(worstSolutionIndex);
@@ -152,7 +153,7 @@ public class SteadyStateGeneticAlgorithm extends AbstractGeneticAlgorithm<Soluti
   }
 
   @Override public Solution getResult() {
-    getPopulation().sort(comparator);
+    Collections.sort(getPopulation(), comparator) ;
     return getPopulation().get(0);
   }
 

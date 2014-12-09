@@ -28,6 +28,7 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -178,7 +179,7 @@ public class NonElitistEvolutionStrategy extends AbstractEvolutionStrategy<Solut
 
   @Override protected List<Solution> replacement(List<Solution> population,
       List<Solution> offspringPopulation) {
-    offspringPopulation.sort(comparator);
+    Collections.sort(offspringPopulation, comparator) ;
 
     List<Solution> newPopulation = new ArrayList<>(mu);
     for (int i = 0; i < mu; i++) {
