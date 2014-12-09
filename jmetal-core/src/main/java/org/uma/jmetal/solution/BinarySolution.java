@@ -13,13 +13,13 @@
 
 package org.uma.jmetal.solution;
 
-import java.util.BitSet;
+import org.uma.jmetal.util.binarySet.BinarySet;
 
 /**
  * @author Antonio J. Nebro
  * @version 0.1
  */
-public interface BinarySolution extends Solution<BitSet> {
+public interface BinarySolution extends Solution<BinarySet> {
   public int getNumberOfBits(int index) ;
   public int getTotalNumberOfBits() ;
  }

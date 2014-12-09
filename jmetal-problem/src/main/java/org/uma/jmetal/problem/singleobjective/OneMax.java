@@ -50,7 +50,7 @@ public class OneMax extends AbstractBinaryProblem {
   }
 
   @Override
-  protected int getBitsPervariable(int index) {
+  protected int getBitsPerVariable(int index) {
   	if (index != 0) {
   		throw new JMetalException("Problem OneMax has only a variable. Index = " + index) ;
   	}

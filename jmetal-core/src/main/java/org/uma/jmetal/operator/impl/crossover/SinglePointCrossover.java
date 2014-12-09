@@ -23,6 +23,7 @@ package org.uma.jmetal.operator.impl.crossover;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.binarySet.BinarySet;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.ArrayList;
@@ -78,22 +79,22 @@ public class SinglePointCrossover implements CrossoverOperator<List<BinarySoluti
 
       // 3. Compute the variable containing the crossover bit
       int variable = 0;
-      int bitsAccount = parent1.getVariableValue(variable).length() ;
+      int bitsAccount = parent1.getVariableValue(variable).getBinarySetLength() ;
       while (bitsAccount < (crossoverPoint + 1)) {
         variable++;
-        bitsAccount += parent1.getVariableValue(variable).length() ;
+        bitsAccount += parent1.getVariableValue(variable).getBinarySetLength() ;
       }
 
       // 4. Compute the bit into the selected variable
       int diff = bitsAccount - crossoverPoint;
-      int intoVariableCrossoverPoint = parent1.getVariableValue(variable).length() - diff ;
+      int intoVariableCrossoverPoint = parent1.getVariableValue(variable).getBinarySetLength() - diff ;
 
       // 5. Apply the crossover to the variable;
-      BitSet offspring1, offspring2;
-      offspring1 = (BitSet) parent1.getVariableValue(variable).clone();
-      offspring2 = (BitSet) parent1.getVariableValue(variable).clone();
+      BinarySet offspring1, offspring2;
+      offspring1 = (BinarySet) parent1.getVariableValue(variable).clone();
+      offspring2 = (BinarySet) parent1.getVariableValue(variable).clone();
 
-      for (int i = intoVariableCrossoverPoint; i < offspring1.length(); i++) {
+      for (int i = intoVariableCrossoverPoint; i < offspring1.getBinarySetLength(); i++) {
         boolean swap = offspring1.get(i);
         offspring1.set(i, offspring2.get(i));
         offspring2.set(i, swap);

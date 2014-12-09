@@ -82,11 +82,7 @@ public class GenericBinarySolutionTest {
     solution.getVariableValue(0).clear(2) ;
     assertEquals("11011", solution.getVariableValueString(0)) ;
   }
-/*
-  @Test public void testToString() throws Exception {
 
-  }
-*/
   /**
    * Mock class representing a binary problem
    */
