@@ -462,24 +462,13 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
       CMAESUtils.tred2(numberOfVariables, b, diagD, offdiag);
       CMAESUtils.tql2(numberOfVariables, diagD, offdiag, b);
 
-      // TODO: Maybe refactor as stoppping condition
-      if (CMAESUtils.checkEigenSystem(numberOfVariables, c, diagD, b) > 0) {
-        evaluations = maxEvaluations;
-      }
-
-      // TODO: Maybe refactor as stoppping condition
-      for (int i = 0; i < numberOfVariables; i++) {
-        if (diagD[i] < 0) { // numerical problem?
-          JMetalLogger.logger.severe(
-                "CovarianceMatrixAdaptationEvolutionStrategy.updateDistribution:" +
-                      " WARNING - an eigenvalue has become negative.");
-          evaluations = maxEvaluations;
-        }
-        diagD[i] = Math.sqrt(diagD[i]);
-      }
+      checkEigenCorrectness();
 
       double[][] artmp2 = new double[numberOfVariables][numberOfVariables];
       for (int i = 0; i < numberOfVariables; i++) {
+        if (diagD[i] > 0) {
+          diagD[i] = Math.sqrt(diagD[i]);
+        }
         for (int j = 0; j < numberOfVariables; j++) {
           artmp2[i][j] = b[i][j] * (1 / diagD[j]);
         }
@@ -493,6 +482,25 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
         }
       }
 
+    }
+
+  }
+
+  private void checkEigenCorrectness() {
+
+    int numberOfVariables = problem.getNumberOfVariables();
+
+    if (CMAESUtils.checkEigenSystem(numberOfVariables, c, diagD, b) > 0) {
+      evaluations = maxEvaluations;
+    }
+
+    for (int i = 0; i < numberOfVariables; i++) {
+      if (diagD[i] < 0) { // numerical problem?
+        JMetalLogger.logger.severe(
+              "CovarianceMatrixAdaptationEvolutionStrategy.updateDistribution:" +
+                    " WARNING - an eigenvalue has become negative.");
+        evaluations = maxEvaluations;
+      }
     }
 
   }

@@ -26,7 +26,8 @@ import org.uma.jmetal.util.JMetalLogger;
 
 public class CMAESUtils {
 
-  private CMAESUtils () { }
+  private CMAESUtils () {
+  }
 
   // Symmetric Householder reduction to tridiagonal form, taken from JAMA package.
 
@@ -319,8 +320,9 @@ public class CMAESUtils {
         if (Math.abs(cc - c[biggerValue(i,j)][smallerValue(i,j)])
               / Math.sqrt(c[i][i] * c[j][j]) > 1e-10
             && Math.abs(cc - c[biggerValue(i,j)][smallerValue(i,j)]) > 1e-9) {
-          s = " " + i + " " + j + " " + cc + " " + c[i > j ? i : j][i > j ? j : i] + " " + (cc - c[
-              i > j ? i : j][i > j ? j : i]);
+          s = " " + i + " " + j + " " + cc
+                + " " + c[biggerValue(i,j)][smallerValue(i,j)]
+                + " " + (cc - c[biggerValue(i,j)][smallerValue(i,j)]);
           JMetalLogger.logger.severe(
               "CMAESUtils.checkEigenSystem: WARNING - imprecise experiment output detected " + s);
           ++res;
@@ -363,14 +365,14 @@ public class CMAESUtils {
    * Returns the bigger value of the two params
    */
   private static int biggerValue(int i, int j) {
-    return (i > j ? i : j);
+    return i > j ? i : j;
   }
 
   /**
    * Returns the smaller value of the two params
    */
   private static int smallerValue(int i, int j) {
-    return (i > j ? j : i);
+    return i > j ? j : i;
   }
 
 }
