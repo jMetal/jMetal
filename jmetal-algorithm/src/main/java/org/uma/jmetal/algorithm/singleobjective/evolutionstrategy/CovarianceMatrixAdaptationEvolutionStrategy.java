@@ -27,10 +27,7 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Class implementing the CMA-ES algorithm
@@ -355,7 +352,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
 
     // Sort by fitness and compute weighted mean into distributionMean
     // minimization
-    getPopulation().sort(comparator);
+    Collections.sort(getPopulation(), comparator);
     storeBest();
 
     // calculate new distribution mean and BDz~N(0,C)
