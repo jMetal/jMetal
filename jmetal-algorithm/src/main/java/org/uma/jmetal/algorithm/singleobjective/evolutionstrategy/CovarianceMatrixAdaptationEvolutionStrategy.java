@@ -435,8 +435,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
 
     for (int i = 0; i < numberOfVariables; i++) {
       for (int j = 0; j <= i; j++) {
-        c[i][j] = (1 - c1 - cmu)
-              * c[i][j]
+        c[i][j] = (1 - c1 - cmu) * c[i][j]
               + c1
               * (pathsC[i] * pathsC[j] + (1 - hsig) * cumulationC
               * (2. - cumulationC) * c[i][j]);
@@ -445,8 +444,8 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
            * additional rank mu
            * update
            */
-          double valueI = (double) getPopulation().get(k).getVariableValue(i);
-          double valueJ = (double) getPopulation().get(k).getVariableValue(j);
+          double valueI = getPopulation().get(k).getVariableValue(i);
+          double valueJ = getPopulation().get(k).getVariableValue(j);
           c[i][j] += cmu
                 * weights[k]
                 * (valueI - oldDistributionMean[i])
@@ -457,8 +456,6 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
     }
 
   }
-
-
 
   private void decomposeCovarianceMatrix() {
 
@@ -514,8 +511,6 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
     }
 
   }
-
-
 
   private DoubleSolution sampleSolution() {
 
