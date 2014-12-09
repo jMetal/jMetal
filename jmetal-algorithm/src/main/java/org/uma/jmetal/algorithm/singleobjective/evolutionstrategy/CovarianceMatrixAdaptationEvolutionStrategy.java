@@ -42,7 +42,6 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
 
   private DoubleProblem problem;
 
-
   /**
    * CMA-ES state variables
    */
@@ -50,7 +49,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
   // Distribution mean and current favorite solution to the optimization problem
   private double[] distributionMean;
 
-  // Step-size
+  // coordinate wise standard deviation (step size)
   private double sigma;
 
   // Symmetric and positive definitive covariance matrix
@@ -59,7 +58,6 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
   // Evolution paths for c and sigma
   private double[] pathsC;
   private double[] pathsSigma;
-
 
   /*
    * Strategy parameter setting: Selection
@@ -95,11 +93,18 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
    * Dynamic (internal) strategy parameters and constants
    */
 
-  private double[][] b; // coordinate system
-  private double[] diagD; // diagonal D defines the scaling
+  // coordinate system
+  private double[][] b;
 
-  private double[][] invSqrtC; // c^1/2
-  private int eigenEval; // track update of b and c
+  // diagonal D defines the scaling
+  private double[] diagD;
+
+  // c^1/2
+  private double[][] invSqrtC;
+
+  // track update of b and c
+  private int eigenEval;
+
   private double chiN;
 
   private DoubleSolution bestSolutionEver = null;
@@ -112,6 +117,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
     this.lambda = builder.lambda ;
     this.maxEvaluations = builder.maxEvaluations ;
     this.typicalX = builder.typicalX;
+    this.sigma = builder.sigma;
 
     long seed = System.currentTimeMillis();
     rand = new Random(seed);
@@ -136,33 +142,38 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
   public static class Builder {
     private static final int DEFAULT_LAMBDA = 10 ;
     private static final int DEFAULT_MAX_EVALUATIONS = 1000000 ;
+    private static final double DEFAULT_SIGMA = 0.3;
 
     private DoubleProblem problem ;
     private int lambda ;
     private int maxEvaluations ;
     private double [] typicalX;
+    private double sigma;
 
     public Builder(DoubleProblem problem) {
       this.problem = problem;
       lambda = DEFAULT_LAMBDA;
       maxEvaluations = DEFAULT_MAX_EVALUATIONS;
+      sigma = DEFAULT_SIGMA;
     }
 
     public Builder setLambda(int lambda) {
       this.lambda = lambda;
-
       return this;
     }
 
     public Builder setMaxEvaluations(int maxEvaluations) {
       this.maxEvaluations = maxEvaluations;
-
       return this;
     }
 
     public Builder setTypicalX (double [] typicalX) {
       this.typicalX = typicalX;
+      return this;
+    }
 
+    public Builder setSigma (double sigma) {
+      this.sigma = sigma;
       return this;
     }
 
@@ -241,13 +252,9 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
       }
     }
 
-    // coordinate wise standard deviation (step size)
-    sigma = 0.3;
-
     /* Strategy parameter setting: Selection */
 
     // number of parents/points for recombination
-    // TODO: Maybe use this parameter in recombination
     mu = (int) Math.floor(lambda / 2);
 
     // muXone array for weighted recombination
@@ -495,7 +502,8 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
     }
 
     for (int i = 0; i < numberOfVariables; i++) {
-      if (diagD[i] < 0) { // numerical problem?
+      // Numerical problem?
+      if (diagD[i] < 0) {
         JMetalLogger.logger.severe(
               "CovarianceMatrixAdaptationEvolutionStrategy.updateDistribution:" +
                     " WARNING - an eigenvalue has become negative.");
