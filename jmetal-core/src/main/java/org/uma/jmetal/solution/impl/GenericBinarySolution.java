@@ -24,6 +24,7 @@ package org.uma.jmetal.solution.impl;
 import org.uma.jmetal.problem.BinaryProblem;
 import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.binarySet.BinarySet;
 
 import java.util.ArrayList;
 import java.util.BitSet;
@@ -33,7 +34,8 @@ import java.util.HashMap;
  * Defines an implementation of a binary solution
  * Created by Antonio J. Nebro on 03/09/14.
  */
-public class GenericBinarySolution extends AbstractGenericSolution<BitSet, BinaryProblem> implements BinarySolution {
+public class GenericBinarySolution extends AbstractGenericSolution<BinarySet, BinaryProblem> implements BinarySolution {
+
   /** Constructor */
   public GenericBinarySolution(BinaryProblem problem) {
     this.problem = problem ;
@@ -47,7 +49,7 @@ public class GenericBinarySolution extends AbstractGenericSolution<BitSet, Binar
     }
 
     for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      objectives.add(new Double(0.0)) ;
+      objectives.add(0.0) ;
     }
   }
 
@@ -61,21 +63,22 @@ public class GenericBinarySolution extends AbstractGenericSolution<BitSet, Binar
 
     variables = new ArrayList<>() ;
     for (BitSet var : solution.variables) {
-      variables.add((BitSet) var.clone()) ;
+      variables.add((BinarySet) var.clone()) ;
     }
 
     overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
     attributes = new HashMap(solution.attributes) ;
   }
 
-  private BitSet createNewBitSet(int numberOfBits) {
-    BitSet bitSet = new BitSet(numberOfBits) ;
+  private BinarySet createNewBitSet(int numberOfBits) {
+    BinarySet bitSet = new BinarySet(numberOfBits) ;
 
     for (int i = 0; i < numberOfBits; i++) {
-      if (randomGenerator.nextDouble() < 0.5) {
-        bitSet.set(i, true);
+      double rnd= randomGenerator.nextDouble() ;
+      if (rnd < 0.5) {
+        bitSet.set(i);
       } else {
-        bitSet.set(i, false);
+        bitSet.clear(i);
       }
     }
     return bitSet ;
@@ -83,7 +86,7 @@ public class GenericBinarySolution extends AbstractGenericSolution<BitSet, Binar
 
   @Override
   public int getNumberOfBits(int index) {
-    return variables.get(index).length() ;
+    return variables.get(index).getBinarySetLength() ;
   }
 
   @Override
@@ -94,8 +97,8 @@ public class GenericBinarySolution extends AbstractGenericSolution<BitSet, Binar
   @Override
   public int getTotalNumberOfBits() {
     int sum = 0 ;
-    for (BitSet binaryString : variables) {
-      sum += binaryString.length() ;
+    for (int i = 0; i < getNumberOfVariables(); i++) {
+      sum += variables.get(i).getBinarySetLength() ;
     }
 
     return sum ;
@@ -104,16 +107,13 @@ public class GenericBinarySolution extends AbstractGenericSolution<BitSet, Binar
   @Override
   public String getVariableValueString(int index) {
     String result = "" ;
-    for (BitSet var : variables) {
-      for (int i = 0; i < var.length() ; i++) {
-        if (var.get(i)) {
-          result += "1" ;
-        }
-        else {
-          result+= "0" ;
-        }
+    for (int i = 0; i < variables.get(index).getBinarySetLength() ; i++) {
+      if (variables.get(index).get(i)) {
+        result += "1" ;
       }
-      result += "\t" ;
+      else {
+        result+= "0" ;
+      }
     }
     return result ;
   }
