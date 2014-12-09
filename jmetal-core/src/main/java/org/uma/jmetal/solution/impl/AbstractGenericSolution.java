@@ -99,7 +99,7 @@ public abstract class AbstractGenericSolution<T, P extends Problem> implements S
     return result ;
   }
 
-
+/*
   @Override public boolean equals(Object o) {
     if (this == o)
       return true;
@@ -134,5 +134,5 @@ public abstract class AbstractGenericSolution<T, P extends Problem> implements S
     result = 31 * result + (attributes != null ? attributes.hashCode() : 0);
     return result;
   }
-
+*/
 }
