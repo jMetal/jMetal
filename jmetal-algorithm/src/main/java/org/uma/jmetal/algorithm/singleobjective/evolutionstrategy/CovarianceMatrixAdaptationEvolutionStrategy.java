@@ -42,6 +42,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
   private int lambda ;
   private int evaluations ;
   private int maxEvaluations ;
+  private double[] typicalX;
 
   private ContinuousProblem problem ;
 
@@ -114,6 +115,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
     this.problem = builder.problem ;
     this.lambda = builder.lambda ;
     this.maxEvaluations = builder.maxEvaluations ;
+    this.typicalX = builder.typicalX;
 
     long seed = System.currentTimeMillis();
     rand = new Random(seed);
@@ -135,12 +137,13 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
   /** Buider class */
   public static class Builder {
 
-    private final int DEFAULT_LAMBDA = 10 ;
-    private final int DEFAULT_MAX_EVALUATIONS = 1000000 ;
+    private static final int DEFAULT_LAMBDA = 10 ;
+    private static final int DEFAULT_MAX_EVALUATIONS = 1000000 ;
 
     private ContinuousProblem problem ;
     private int lambda ;
     private int maxEvaluations ;
+    private double [] typicalX;
 
     public Builder(ContinuousProblem problem)  {
       this.problem = problem ;
@@ -158,6 +161,12 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
       this.maxEvaluations = maxEvaluations ;
 
       return this ;
+    }
+
+    public Builder setTypicalX (double [] typicalX) {
+      this.typicalX = typicalX;
+
+      return this;
     }
 
     public CovarianceMatrixAdaptationEvolutionStrategy build() {
@@ -232,9 +241,14 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
 
     // objective variables initial point
     // TODO: Initialize the mean in a better way
-    distributionMean = new double[numberOfVariables];
-    for (int i = 0; i < numberOfVariables; i++) {
-      distributionMean[i] = rand.nextDouble();
+
+    if (typicalX != null) {
+      distributionMean = typicalX;
+    } else {
+      distributionMean = new double[numberOfVariables];
+      for (int i = 0; i < numberOfVariables; i++) {
+        distributionMean[i] = rand.nextDouble();
+      }
     }
 
     // coordinate wise standard deviation (step size)
@@ -336,16 +350,37 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
 
     int numberOfVariables = problem.getNumberOfVariables();
 
-    double[] oldXMean = new double[numberOfVariables];
+    double[] oldDistributionMean = new double[numberOfVariables];
+    System.arraycopy( distributionMean, 0, oldDistributionMean, 0, numberOfVariables );
 
-    /* Sort by fitness and compute weighted mean into distributionMean */
-    //minimization
+    // Sort by fitness and compute weighted mean into distributionMean
+    // minimization
     getPopulation().sort(comparator);
     storeBest();
 
-    // calculate distributionMean and BDz~N(0,C)
+    // calculate new distribution mean and BDz~N(0,C)
+    updateDistributionMean();
+
+    // Cumulation: Update evolution paths
+    int hsig = updateEvolutionPaths(oldDistributionMean);
+
+    // Adapt covariance matrix C
+    adaptCovarianceMatrix(oldDistributionMean, hsig);
+
+    // Adapt step size sigma
+    double psxps = CMAESUtils.norm(pathsSigma);
+    sigma *= Math.exp((cumulationSigma / dampingSigma) * (Math.sqrt(psxps) / chiN - 1));
+
+    // Decomposition of C into b*diag(D.^2)*b' (diagonalization)
+    decomposeCovarianceMatrix();
+
+  }
+
+  private void updateDistributionMean() {
+
+    int numberOfVariables = problem.getNumberOfVariables();
+
     for (int i = 0; i < numberOfVariables; i++) {
-      oldXMean[i] = distributionMean[i];
       distributionMean[i] = 0.;
       for (int iNk = 0; iNk < mu; iNk++) {
         double variableValue = (double) getPopulation().get(iNk).getVariableValue(i);
@@ -353,14 +388,17 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
       }
     }
 
+  }
 
-    /* Cumulation: Update evolution paths */
+  private int updateEvolutionPaths(double[] oldDistributionMean) {
+
+    int numberOfVariables = problem.getNumberOfVariables();
 
     double[] artmp = new double[numberOfVariables];
     for (int i = 0; i < numberOfVariables; i++) {
       artmp[i] = 0;
       for (int j = 0; j < numberOfVariables; j++) {
-        artmp[i] += invSqrtC[i][j] * (distributionMean[j] - oldXMean[j]) / sigma;
+        artmp[i] += invSqrtC[i][j] * (distributionMean[j] - oldDistributionMean[j]) / sigma;
       }
     }
     // cumulation for sigma (pathsSigma)
@@ -371,10 +409,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
     }
 
     // calculate norm(pathsSigma)^2
-    double psxps = 0.0;
-    for (int i = 0; i < numberOfVariables; i++) {
-      psxps += pathsSigma[i] * pathsSigma[i];
-    }
+    double psxps = CMAESUtils.norm(pathsSigma);
 
     // cumulation for covariance matrix (pathsC)
     int hsig = 0;
@@ -386,12 +421,17 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
     for (int i = 0; i < numberOfVariables; i++) {
       pathsC[i] = (1. - cumulationC) * pathsC[i]
             + hsig * Math.sqrt(cumulationC * (2. - cumulationC) * muEff)
-                                  * (distributionMean[i] - oldXMean[i])
+            * (distributionMean[i] - oldDistributionMean[i])
             / sigma;
     }
 
+    return hsig;
 
-    /* Adapt covariance matrix C */
+  }
+
+  private void adaptCovarianceMatrix(double[] oldDistributionMean, int hsig) {
+
+    int numberOfVariables = problem.getNumberOfVariables();
 
     for (int i = 0; i < numberOfVariables; i++) {
       for (int j = 0; j <= i; j++) {
@@ -409,19 +449,20 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
           double valueJ = (double) getPopulation().get(k).getVariableValue(j);
           c[i][j] += cmu
                 * weights[k]
-                * (valueI - oldXMean[i])
-                * (valueJ - oldXMean[j]) /sigma
+                * (valueI - oldDistributionMean[i])
+                * (valueJ - oldDistributionMean[j]) /sigma
                 / sigma;
         }
       }
     }
 
-    /* Adapt step size sigma */
-
-    sigma *= Math.exp((cumulationSigma / dampingSigma) * (Math.sqrt(psxps) / chiN - 1));
+  }
 
 
-    /* Decomposition of C into b*diag(D.^2)*b' (diagonalization) */
+
+  private void decomposeCovarianceMatrix() {
+
+    int numberOfVariables = problem.getNumberOfVariables();
 
     if (evaluations - eigenEval > lambda / (c1 + cmu) / numberOfVariables / 10) {
 
@@ -448,8 +489,8 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
       for (int i = 0; i < numberOfVariables; i++) {
         if (diagD[i] < 0) { // numerical problem?
           JMetalLogger.logger.severe(
-                  "CovarianceMatrixAdaptationEvolutionStrategy.updateDistribution:" +
-                  " WARNING - an eigenvalue has become negative.");
+                "CovarianceMatrixAdaptationEvolutionStrategy.updateDistribution:" +
+                      " WARNING - an eigenvalue has become negative.");
           evaluations = maxEvaluations;
         }
         diagD[i] = Math.sqrt(diagD[i]);
@@ -473,6 +514,8 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
     }
 
   }
+
+
 
   private DoubleSolution sampleSolution() {
 
