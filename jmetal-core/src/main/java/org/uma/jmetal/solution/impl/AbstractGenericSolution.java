@@ -107,11 +107,11 @@ public abstract class AbstractGenericSolution<T, P extends Problem> implements S
 
     AbstractGenericSolution that = (AbstractGenericSolution) o;
 
-    //if (Double.compare(that.overallConstraintViolationDegree, overallConstraintViolationDegree)
-    //    != 0)
-    //  return false;
-    //if (attributes != null ? !attributes.equals(that.attributes) : that.attributes != null)
-    //  return false;
+    if (Double.compare(that.overallConstraintViolationDegree, overallConstraintViolationDegree)
+        != 0)
+      return false;
+    if (attributes != null ? !attributes.equals(that.attributes) : that.attributes != null)
+      return false;
     if (objectives != null ? !objectives.equals(that.objectives) : that.objectives != null)
       return false;
     //if (problem != null ? !problem.equals(that.problem) : that.problem != null)

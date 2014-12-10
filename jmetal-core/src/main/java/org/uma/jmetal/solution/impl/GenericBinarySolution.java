@@ -117,7 +117,7 @@ public class GenericBinarySolution extends AbstractGenericSolution<BinarySet, Bi
     }
     return result ;
   }
-
+/*
   @Override public boolean equals(Object o) {
     if (this == o)
       return true;
@@ -152,4 +152,5 @@ public class GenericBinarySolution extends AbstractGenericSolution<BinarySet, Bi
     result = 31 * result + (attributes != null ? attributes.hashCode() : 0);
     return result;
   }
+  */
 }
