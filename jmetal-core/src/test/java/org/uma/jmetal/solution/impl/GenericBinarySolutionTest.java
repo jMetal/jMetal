@@ -23,18 +23,11 @@ package org.uma.jmetal.solution.impl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.uma.jmetal.problem.BinaryProblem;
 import org.uma.jmetal.problem.impl.AbstractBinaryProblem;
 import org.uma.jmetal.solution.BinarySolution;
-import org.uma.jmetal.util.JMetalException;
 
-import java.util.BitSet;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class GenericBinarySolutionTest {
   private static final int NUMBER_OF_BITS_OF_MOCKED_BINARY_PROBLEM = 5 ;
