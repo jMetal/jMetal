@@ -28,81 +28,20 @@ public class GenerationalGeneticAlgorithm extends AbstractGeneticAlgorithm<Solut
   /**
    * Constructor
    */
-  private GenerationalGeneticAlgorithm(Builder builder) {
-    problem = builder.problem;
-    maxIterations = builder.maxIterations;
-    populationSize = builder.populationSize;
+  public GenerationalGeneticAlgorithm(Problem problem, int maxIterations, int populationSize,
+      CrossoverOperator crossoverOperator, MutationOperator mutationOperator,
+      SelectionOperator selectionOperator, SolutionListEvaluator evaluator) {
+    this.problem = problem;
+    this.maxIterations = maxIterations;
+    this.populationSize = populationSize;
 
-    crossoverOperator = builder.crossoverOperator;
-    mutationOperator = builder.mutationOperator;
-    selectionOperator = builder.selectionOperator;
+    this.crossoverOperator = crossoverOperator;
+    this.mutationOperator = mutationOperator;
+    this.selectionOperator = selectionOperator;
 
-    evaluator = builder.evaluator;
+    this.evaluator = evaluator;
 
     comparator = new ObjectiveComparator(0);
-  }
-
-  /**
-   * Builder class
-   */
-  public static class Builder {
-    private Problem problem;
-    private int maxIterations;
-    private int populationSize;
-    private CrossoverOperator crossoverOperator;
-    private MutationOperator mutationOperator;
-    private SelectionOperator selectionOperator;
-    private SolutionListEvaluator evaluator;
-
-    /**
-     * Builder constructor
-     */
-    public Builder(Problem problem) {
-      this.problem = problem;
-      maxIterations = 250;
-      populationSize = 100;
-      evaluator = new SequentialSolutionListEvaluator();
-    }
-
-    public Builder setMaxIterations(int maxIterations) {
-      this.maxIterations = maxIterations;
-
-      return this;
-    }
-
-    public Builder setPopulationSize(int populationSize) {
-      this.populationSize = populationSize;
-
-      return this;
-    }
-
-    public Builder setCrossoverOperator(CrossoverOperator crossoverOperator) {
-      this.crossoverOperator = crossoverOperator;
-
-      return this;
-    }
-
-    public Builder setMutationOperator(MutationOperator mutationOperator) {
-      this.mutationOperator = mutationOperator;
-
-      return this;
-    }
-
-    public Builder setSelectionOperator(SelectionOperator selectionOperator) {
-      this.selectionOperator = selectionOperator;
-
-      return this;
-    }
-
-    public Builder setSolutionListEvaluator(SolutionListEvaluator evaluator) {
-      this.evaluator = evaluator;
-
-      return this;
-    }
-
-    public GenerationalGeneticAlgorithm build() {
-      return new GenerationalGeneticAlgorithm(this);
-    }
   }
 
   @Override protected boolean isStoppingConditionReached() {

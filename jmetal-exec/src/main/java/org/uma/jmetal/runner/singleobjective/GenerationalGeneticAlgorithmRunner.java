@@ -22,6 +22,7 @@ package org.uma.jmetal.runner.singleobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.singleobjective.geneticalgorithm.GenerationalGeneticAlgorithm;
+import org.uma.jmetal.algorithm.singleobjective.geneticalgorithm.GenerationalGeneticAlgorithmBuilder;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -55,7 +56,7 @@ public class GenerationalGeneticAlgorithmRunner {
 
     SelectionOperator selectionOperator = new BinaryTournamentSelection();
 
-    algorithm = new GenerationalGeneticAlgorithm.Builder(problem)
+    algorithm = new GenerationalGeneticAlgorithmBuilder(problem)
             .setPopulationSize(100)
             .setMaxIterations(250)
             .setCrossoverOperator(crossoverOperator)
