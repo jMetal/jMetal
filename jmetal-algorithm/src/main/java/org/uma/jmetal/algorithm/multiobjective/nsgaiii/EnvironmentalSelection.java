@@ -130,7 +130,7 @@ public class EnvironmentalSelection implements SelectionOperator<List<Solution>,
     boolean duplicate = false;
     for (int i = 0; !duplicate && i < extreme_points.size(); i += 1) {
       for (int j = i + 1; !duplicate && j < extreme_points.size(); j += 1) {
-        duplicate = extreme_points.get(i).equals(extreme_points.get(j));
+        duplicate = extreme_points.get(i)==extreme_points.get(j); // here we only compare references
       }
     }
 

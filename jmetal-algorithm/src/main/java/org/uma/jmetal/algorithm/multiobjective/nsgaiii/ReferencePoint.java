@@ -112,7 +112,7 @@ public class ReferencePoint {
   public void RemovePotentialMember(Solution solution) {
     Iterator<Pair<Solution, Double>> it = this.potentialMembers.iterator();
     while (it.hasNext())
-      if (it.next().getLeft().equals(solution))
+      if (it.next().getLeft()==(solution)) // this removal is based only on references
         it.remove();
 
   }
