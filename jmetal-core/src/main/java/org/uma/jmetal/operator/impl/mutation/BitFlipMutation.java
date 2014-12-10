@@ -32,6 +32,9 @@ public class BitFlipMutation implements MutationOperator<BinarySolution> {
 
   /** Constructor */
   public BitFlipMutation(double mutationProbability) {
+    if (mutationProbability < 0) {
+      throw new JMetalException("Mutation probability is less than 0: " + mutationProbability) ;
+    }
     this.mutationProbability = mutationProbability;
     randomGenerator = JMetalRandom.getInstance() ;
   }
@@ -49,7 +52,8 @@ public class BitFlipMutation implements MutationOperator<BinarySolution> {
     }
 
     doMutation(mutationProbability, solution);
-    return solution;  }
+    return solution;
+  }
 
   /**
    * Perform the mutation operation
@@ -59,7 +63,7 @@ public class BitFlipMutation implements MutationOperator<BinarySolution> {
    */
   public void doMutation(double probability, BinarySolution solution)  {
     for (int i = 0; i < solution.getNumberOfVariables(); i++) {
-      for (int j = 0; j < solution.getVariableValue(i).length(); j++) {
+      for (int j = 0; j < solution.getVariableValue(i).getBinarySetLength(); j++) {
         if (randomGenerator.nextDouble() <= probability) {
           solution.getVariableValue(i).flip(j);
         }
