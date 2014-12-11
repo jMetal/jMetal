@@ -1,11 +1,3 @@
-//  BinaryTournamentSelection.java
-//
-//  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
-//
-//  Copyright (c) 2014 Antonio J. Nebro, Juan J. Durillo
-//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -15,7 +7,7 @@
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU Lesser General Public License for more details.
-// 
+//
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -34,9 +26,12 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
+ * @author Antonio J. Nebro
+ * @author Juan J. Durillo
+ * @version 1.0
+ * 
  * Applies a binary tournament selection to return the best solution between two that have been
  * chosen at random from a solution list.
- * @version 1.0
  */
 public class BinaryTournamentSelection implements SelectionOperator<List<Solution>,Solution> {
   private Comparator<Solution> comparator;

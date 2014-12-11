@@ -13,6 +13,8 @@
 
 package org.uma.jmetal.solution.util;
 
+import org.uma.jmetal.util.JMetalException;
+
 /**
  * @author Antonio J. Nebro
  * @version 1.0
@@ -26,6 +28,11 @@ public class RepairDoubleSolutionAtBounds implements RepairDoubleSolution {
    * @return The same value if it is in the limits or a repaired value otherwise
    */
   public double repairSolutionVariableValue(double value, double lowerBound, double upperBound) {
+    if (lowerBound > upperBound) {
+      throw new JMetalException("The lower bound (" + lowerBound + ") is greater than the "
+          + "upper bound (" + upperBound+")") ;
+    }
+
     double result = value ;
     if (value < lowerBound) {
       result = lowerBound ;

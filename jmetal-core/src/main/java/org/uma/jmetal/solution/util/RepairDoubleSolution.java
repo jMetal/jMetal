@@ -16,6 +16,9 @@ package org.uma.jmetal.solution.util;
 /**
  * @author Antonio J. Nebro
  * @version 1.0
+ *
+ * Interface representing classes that check whether a value is between a lower and an upper bound.
+ * If not, a value between those limits is returned
  */
 public interface RepairDoubleSolution {
   /**

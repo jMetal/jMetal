@@ -1,10 +1,3 @@
-//  PolynomialMutation.java
-//
-//  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//
-//  Copyright (c) 2014 Antonio J. Nebro
-//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -14,7 +7,7 @@
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU Lesser General Public License for more details.
-// 
+//
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -27,7 +20,11 @@ import org.uma.jmetal.solution.util.RepairDoubleSolutionAtBounds;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
-/** This class implements a polynomial mutation operator */
+/**
+ * @author Antonio J. Nebro
+ * @version 1.0
+ * This class implements a polynomial mutation operator
+ */
 public class PolynomialMutation implements MutationOperator<DoubleSolution> {
   private static final double ETA_M_DEFAULT = 20.0;
   private double distributionIndex ;
@@ -108,5 +105,4 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
       }
     }
   }
-
 }

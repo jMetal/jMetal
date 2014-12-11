@@ -1,10 +1,3 @@
-//  SinglePointCrossover.java
-//
-//  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//
-//  Copyright (c) 2014 Antonio J. Nebro
-//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -14,7 +7,7 @@
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU Lesser General Public License for more details.
-// 
+//
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -27,16 +20,23 @@ import org.uma.jmetal.util.binarySet.BinarySet;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.ArrayList;
-import java.util.BitSet;
 import java.util.List;
 
-/** Class implementing a single point crossover */
+/**
+ * @author Antonio J. Nebro
+ * @version 1.0
+ *
+ * This class implements a single point crossover operator.
+ */
 public class SinglePointCrossover implements CrossoverOperator<List<BinarySolution>, List<BinarySolution>> {
   private double crossoverProbability ;
   private JMetalRandom randomGenerator ;
 
   /** Constructor */
   public SinglePointCrossover(double crossoverProbability) {
+    if (crossoverProbability < 0) {
+      throw new JMetalException("Crossover probability is negative: " + crossoverProbability) ;
+    }
     this.crossoverProbability = crossoverProbability;
     randomGenerator = JMetalRandom.getInstance() ;
   }
