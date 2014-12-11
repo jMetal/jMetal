@@ -22,6 +22,8 @@ package org.uma.jmetal.operator.impl.mutation;
 
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.solution.util.RepairDoubleSolution;
+import org.uma.jmetal.solution.util.RepairDoubleSolutionAtBounds;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
@@ -30,13 +32,27 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
   private static final double ETA_M_DEFAULT = 20.0;
   private double distributionIndex ;
   private double mutationProbability ;
+  private RepairDoubleSolution solutionRepair ;
 
   private JMetalRandom randomGenerator ;
 
   /** Constructor */
   public PolynomialMutation(double mutationProbability, double distributionIndex) {
+    this(mutationProbability, distributionIndex, new RepairDoubleSolutionAtBounds()) ;
+  }
+
+  /** Constructor */
+  public PolynomialMutation(double mutationProbability, double distributionIndex,
+      RepairDoubleSolution solutionRepair) {
+    if (mutationProbability < 0) {
+      throw new JMetalException("Mutation probability is negative: " + mutationProbability) ;
+    } else if (distributionIndex < 0) {
+      throw new JMetalException("Distribution index is negative: " + distributionIndex) ;
+    }
     this.mutationProbability = mutationProbability;
     this.distributionIndex = distributionIndex;
+    this.solutionRepair = solutionRepair ;
+
     randomGenerator = JMetalRandom.getInstance() ;
   }
 
@@ -65,8 +81,8 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
   }
 
   private void doRealMutation(double probability, DoubleSolution solution) {
-    Double rnd, delta1, delta2, mutPow, deltaq;
-    Double y, yl, yu, val, xy;
+    double rnd, delta1, delta2, mutPow, deltaq;
+    double y, yl, yu, val, xy;
 
     for (int i = 0; i < solution.getNumberOfVariables(); i++) {
       if (randomGenerator.nextDouble() <= probability) {
@@ -83,19 +99,14 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
           deltaq = Math.pow(val, mutPow) - 1.0;
         } else {
           xy = 1.0 - delta2;
-          val =
-                  2.0 * (1.0 - rnd) + 2.0 * (rnd - 0.5) * (Math.pow(xy, distributionIndex + 1.0));
+          val = 2.0 * (1.0 - rnd) + 2.0 * (rnd - 0.5) * (Math.pow(xy, distributionIndex + 1.0));
           deltaq = 1.0 - Math.pow(val, mutPow);
         }
         y = y + deltaq * (yu - yl);
-        if (y < yl) {
-          y = yl;
-        }
-        if (y > yu) {
-          y = yu;
-        }
+        y = solutionRepair.repairSolutionVariableValue(y, yl, yu) ;
         solution.setVariableValue(i, y);
       }
     }
   }
+
 }
