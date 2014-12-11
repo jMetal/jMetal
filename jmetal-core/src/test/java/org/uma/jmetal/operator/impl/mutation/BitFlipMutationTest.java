@@ -39,7 +39,7 @@ public class BitFlipMutationTest {
   private static final int NUMBER_OF_BITS_OF_MOCKED_BINARY_PROBLEM = 4 ;
 
   @Test
-  public void shouldBitFlipMutationConstructorAssignTheCorrectProbabilityValue() {
+  public void shouldConstructorAssignTheCorrectProbabilityValue() {
     double mutationProbability = 0.1 ;
     BitFlipMutation mutation = new BitFlipMutation(mutationProbability) ;
     assertEquals(mutationProbability, (Double) ReflectionTestUtils
@@ -47,7 +47,7 @@ public class BitFlipMutationTest {
   }
 
   @Test (expected = JMetalException.class)
-  public void shouldBitFlipMutationConstructorFailWhenPassedANegativeProbabilityValue() {
+  public void shouldConstructorFailWhenPassedANegativeProbabilityValue() {
     double mutationProbability = -0.1 ;
     new BitFlipMutation(mutationProbability) ;
   }

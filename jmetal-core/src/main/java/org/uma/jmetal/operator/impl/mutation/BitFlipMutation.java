@@ -33,7 +33,7 @@ public class BitFlipMutation implements MutationOperator<BinarySolution> {
   /** Constructor */
   public BitFlipMutation(double mutationProbability) {
     if (mutationProbability < 0) {
-      throw new JMetalException("Mutation probability is less than 0: " + mutationProbability) ;
+      throw new JMetalException("Mutation probability is negative: " + mutationProbability) ;
     }
     this.mutationProbability = mutationProbability;
     randomGenerator = JMetalRandom.getInstance() ;
