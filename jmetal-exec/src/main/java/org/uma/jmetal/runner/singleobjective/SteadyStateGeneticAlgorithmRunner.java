@@ -22,6 +22,7 @@ package org.uma.jmetal.runner.singleobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.singleobjective.geneticalgorithm.SteadyStateGeneticAlgorithm;
+import org.uma.jmetal.algorithm.singleobjective.geneticalgorithm.SteadyStateGeneticAlgorithmBuilder;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -55,7 +56,7 @@ public class SteadyStateGeneticAlgorithmRunner {
 
     SelectionOperator selectionOperator = new BinaryTournamentSelection() ;
 
-    algorithm = new SteadyStateGeneticAlgorithm.Builder(problem)
+    algorithm = new SteadyStateGeneticAlgorithmBuilder(problem)
             .setPopulationSize(100)
             .setMaxEvaluations(25000)
             .setCrossoverOperator(crossoverOperator)

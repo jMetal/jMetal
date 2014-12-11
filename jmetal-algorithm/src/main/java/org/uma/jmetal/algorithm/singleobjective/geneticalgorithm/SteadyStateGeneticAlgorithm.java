@@ -27,72 +27,18 @@ public class SteadyStateGeneticAlgorithm extends AbstractGeneticAlgorithm<Soluti
   /**
    * Constructor
    */
-  private SteadyStateGeneticAlgorithm(Builder builder) {
-    problem = builder.problem;
-    maxEvaluations = builder.maxEvaluations;
-    populationSize = builder.populationSize;
+  public SteadyStateGeneticAlgorithm(Problem problem, int maxEvaluations, int populationSize,
+      CrossoverOperator crossoverOperator, MutationOperator mutationOperator,
+      SelectionOperator selectionOperator) {
+    this.problem = problem;
+    this.maxEvaluations = maxEvaluations;
+    this.populationSize = populationSize;
 
-    crossoverOperator = builder.crossoverOperator;
-    mutationOperator = builder.mutationOperator;
-    selectionOperator = builder.selectionOperator;
+    this.crossoverOperator = crossoverOperator;
+    this.mutationOperator = mutationOperator;
+    this.selectionOperator = selectionOperator;
 
     comparator = new ObjectiveComparator(0);
-  }
-
-  /**
-   * Builder class
-   */
-  public static class Builder {
-    private Problem problem;
-    private int maxEvaluations;
-    private int populationSize;
-    private CrossoverOperator crossoverOperator;
-    private MutationOperator mutationOperator;
-    private SelectionOperator selectionOperator;
-
-    /**
-     * Builder constructor
-     */
-    public Builder(Problem problem) {
-      this.problem = problem;
-      maxEvaluations = 250;
-      populationSize = 100;
-    }
-
-    public Builder setMaxEvaluations(int maxIterations) {
-      this.maxEvaluations = maxIterations;
-
-      return this;
-    }
-
-    public Builder setPopulationSize(int populationSize) {
-      this.populationSize = populationSize;
-
-      return this;
-    }
-
-    public Builder setCrossoverOperator(CrossoverOperator crossoverOperator) {
-      this.crossoverOperator = crossoverOperator;
-
-      return this;
-    }
-
-    public Builder setMutationOperator(MutationOperator mutationOperator) {
-      this.mutationOperator = mutationOperator;
-
-      return this;
-    }
-
-    public Builder setSelectionOperator(SelectionOperator selectionOperator) {
-      this.selectionOperator = selectionOperator;
-
-      return this;
-    }
-
-    public SteadyStateGeneticAlgorithm build() {
-      return new SteadyStateGeneticAlgorithm(this);
-    }
-
   }
 
   @Override protected boolean isStoppingConditionReached() {
