@@ -39,6 +39,12 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+/**
+ * @author Antonio J. Nebro
+ * @version 1.0
+ * Disclaimer: this class does check that the polynomial mutation operator does not return invalid
+ * values, but not that it works properly.
+ */
 public class PolynomialMutationTest {
   private static final double EPSILON = 0.00000000000001 ;
 
