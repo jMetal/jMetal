@@ -92,7 +92,7 @@ public class SinglePointCrossover implements CrossoverOperator<List<BinarySoluti
       // 5. Apply the crossover to the variable;
       BinarySet offspring1, offspring2;
       offspring1 = (BinarySet) parent1.getVariableValue(variable).clone();
-      offspring2 = (BinarySet) parent1.getVariableValue(variable).clone();
+      offspring2 = (BinarySet) parent2.getVariableValue(variable).clone();
 
       for (int i = intoVariableCrossoverPoint; i < offspring1.getBinarySetLength(); i++) {
         boolean swap = offspring1.get(i);
@@ -104,7 +104,7 @@ public class SinglePointCrossover implements CrossoverOperator<List<BinarySoluti
       offspring.get(1).setVariableValue(variable, offspring2);
 
       // 6. Apply the crossover to the other variables
-      for (int i = 0; i < variable; i++) {
+      for (int i = variable + 1; i < parent1.getNumberOfVariables(); i++) {
         offspring.get(0).setVariableValue(i, parent2.getVariableValue(i));
         offspring.get(1).setVariableValue(i, parent1.getVariableValue(i));
       }
