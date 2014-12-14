@@ -207,7 +207,7 @@ public class SinglePointCrossoverTest {
   @Test
   public void shouldCrossingTheFistBitOfSecondVariableReturnTheCorrectCrossedSolutions() {
     int numberOfVariables = 3 ;
-    int cuttingBit = BITS_OF_MOCKED_BINARY_PROBLEM - 1 ;
+    int cuttingBit = BITS_OF_MOCKED_BINARY_PROBLEM ;
 
     JMetalRandom randomGenerator = mock(JMetalRandom.class) ;
     double crossoverProbability = 0.9;
@@ -225,8 +225,7 @@ public class SinglePointCrossoverTest {
     ReflectionTestUtils.setField(crossover, "randomGenerator", randomGenerator);
 
     List<BinarySolution> resultSolutions = crossover.execute(solutions) ;
-
-    /*
+/*
     System.out.print("solution 0: " + solutions.get(0).getVariableValueString(0)) ;
     System.out.print(" " + solutions.get(0).getVariableValueString(1)) ;
     System.out.println(" " + solutions.get(0).getVariableValueString(2)) ;
