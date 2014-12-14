@@ -26,7 +26,6 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  * This class implements a polynomial mutation operator
  */
 public class PolynomialMutation implements MutationOperator<DoubleSolution> {
-  private static final double ETA_M_DEFAULT = 20.0;
   private double distributionIndex ;
   private double mutationProbability ;
   private RepairDoubleSolution solutionRepair ;
