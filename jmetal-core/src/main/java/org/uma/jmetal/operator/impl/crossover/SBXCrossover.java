@@ -1,11 +1,3 @@
-//  SBXCrossover.java
-//
-//  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
-//
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
-//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -31,7 +23,15 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import java.util.ArrayList;
 import java.util.List;
 
-/** This class allows to apply a SBX crossover operator using two parent solutions (Double encoding) */
+/**
+ * @author Antonio J. Nebro
+ * @author Juan J. Durillo
+ * @version 1.0
+ * This class allows to apply a SBX crossover operator using two parent solutions (Double encoding).
+ *
+ * The implementation is based on the NSGA-II code available in
+ * http://www.iitk.ac.in/kangal/codes.shtml
+ */
 public class SBXCrossover implements CrossoverOperator<List<DoubleSolution>, List<DoubleSolution>> {
   /** EPS defines the minimum difference allowed between real values */
   private static final double EPS = 1.0e-14;
@@ -115,12 +115,12 @@ public class SBXCrossover implements CrossoverOperator<List<DoubleSolution>, Lis
             alpha = 2.0 - Math.pow(beta, -(distributionIndex + 1.0));
 
             if (rand <= (1.0 / alpha)) {
-              betaq = Math.pow((rand * alpha), (1.0 / (distributionIndex + 1.0)));
+              betaq = Math.pow(rand * alpha, (1.0 / (distributionIndex + 1.0)));
             } else {
               betaq = Math
                   .pow(1.0 / (2.0 - rand * alpha), 1.0 / (distributionIndex + 1.0));
             }
-            c1 = 0.5 * ((y1 + y2) - betaq * (y2 - y1));
+            c1 = 0.5 * (y1 + y2 - betaq * (y2 - y1));
 
             beta = 1.0 + (2.0 * (upperBound - y2) / (y2 - y1));
             alpha = 2.0 - Math.pow(beta, -(distributionIndex + 1.0));
@@ -135,23 +135,7 @@ public class SBXCrossover implements CrossoverOperator<List<DoubleSolution>, Lis
 
             c1 = solutionRepair.repairSolutionVariableValue(c1, lowerBound, upperBound) ;
             c2 = solutionRepair.repairSolutionVariableValue(c2, lowerBound, upperBound) ;
-/*
-            if (c1 < yL) {
-              c1 = yL;
-            }
 
-            if (c2 < yL) {
-              c2 = yL;
-            }
-
-            if (c1 > yu) {
-              c1 = yu;
-            }
-
-            if (c2 > yu) {
-              c2 = yu;
-            }
-*/
             if (randomGenerator.nextDouble() <= 0.5) {
               offspring.get(0).setVariableValue(i, c2);
               offspring.get(1).setVariableValue(i, c1);

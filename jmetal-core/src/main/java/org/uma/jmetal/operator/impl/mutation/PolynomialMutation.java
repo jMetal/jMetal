@@ -24,6 +24,9 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  * @author Antonio J. Nebro
  * @version 1.0
  * This class implements a polynomial mutation operator
+ *
+ * The implementation is based on the NSGA-II code available in
+ * http://www.iitk.ac.in/kangal/codes.shtml
  */
 public class PolynomialMutation implements MutationOperator<DoubleSolution> {
   private double distributionIndex ;
