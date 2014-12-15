@@ -19,7 +19,8 @@ import java.util.List;
  * This class is intended to verify the working of the polynomial mutation operator. A figure
  * depicting the values obtained when generating 10000 points, a granularity of 100, and a number
  * of different distribution index values (5.0, 10, 20, 40) can be found here:
- * https://github.com/jMetal/jMetal/blob/master/figures/polynomial.png
+ * <a href="https://github.com/jMetal/jMetal/blob/master/figures/polynomial.png">
+   https://github.com/jMetal/jMetal/blob/master/figures/polynomial.png</a>
  */
 public class PolynomialMutationWorkingTest {
   /**
