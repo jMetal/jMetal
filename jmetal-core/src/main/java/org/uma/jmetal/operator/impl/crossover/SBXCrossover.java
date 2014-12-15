@@ -30,7 +30,7 @@ import java.util.List;
  * This class allows to apply a SBX crossover operator using two parent solutions (Double encoding).
  *
  * The implementation is based on the NSGA-II code available in
- * http://www.iitk.ac.in/kangal/codes.shtml
+ * <a href="http://www.iitk.ac.in/kangal/codes.shtml">http://www.iitk.ac.in/kangal/codes.shtml</a>
  */
 public class SBXCrossover implements CrossoverOperator<List<DoubleSolution>, List<DoubleSolution>> {
   /** EPS defines the minimum difference allowed between real values */

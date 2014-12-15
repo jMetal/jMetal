@@ -21,7 +21,8 @@ import java.util.*;
  * This class is intended to verify the working of the SBX crossover operator. A figure
  * depicting the values obtained when generating 10000 solutions, a granularity of 100, and a number
  * of different distribution index values (10, 20, 50) can be found here:
- * https://github.com/jMetal/jMetal/blob/master/figures/sbx.png
+ * <a hrefhttps://github.com/jMetal/jMetal/blob/master/figures/sbx.png
+ * <a href="http://www.iitk.ac.in/kangal/codes.shtml">http://www.iitk.ac.in/kangal/codes.shtml</a>
  */
 public class SBXCrossoverWorkingTest {
   /**
@@ -113,7 +114,7 @@ public class SBXCrossoverWorkingTest {
 
     return classifier ;
   }
-  
+
   public static class VariableComparator implements Comparator<DoubleSolution> {
     /**
      * Compares two solutions according to the first variable value
