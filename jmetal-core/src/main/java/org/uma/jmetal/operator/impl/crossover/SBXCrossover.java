@@ -24,13 +24,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Antonio J. Nebro
- * @author Juan J. Durillo
- * @version 1.0
  * This class allows to apply a SBX crossover operator using two parent solutions (Double encoding).
  *
  * The implementation is based on the NSGA-II code available in
  * <a href="http://www.iitk.ac.in/kangal/codes.shtml">http://www.iitk.ac.in/kangal/codes.shtml</a>
+ *
+ * @author Antonio J. Nebro
+ * @author Juan J. Durillo
+ * @version 1.0
  */
 public class SBXCrossover implements CrossoverOperator<List<DoubleSolution>, List<DoubleSolution>> {
   /** EPS defines the minimum difference allowed between real values */
@@ -49,6 +50,12 @@ public class SBXCrossover implements CrossoverOperator<List<DoubleSolution>, Lis
 
   /** Constructor */
   public SBXCrossover(double crossoverProbability, double distributionIndex, RepairDoubleSolution solutionRepair) {
+    if (crossoverProbability < 0) {
+      throw new JMetalException("Crossover probability is negative: " + crossoverProbability) ;
+    } else if (distributionIndex < 0) {
+      throw new JMetalException("Distribution index is negative: " + distributionIndex);
+    }
+
     this.crossoverProbability = crossoverProbability ;
     this.distributionIndex = distributionIndex ;
     this.solutionRepair = solutionRepair ;
@@ -148,8 +155,8 @@ public class SBXCrossover implements CrossoverOperator<List<DoubleSolution>, Lis
             offspring.get(1).setVariableValue(i, valueX2);
           }
         } else {
-          offspring.get(0).setVariableValue(i, valueX2);
-          offspring.get(1).setVariableValue(i, valueX1);
+          offspring.get(0).setVariableValue(i, valueX1);
+          offspring.get(1).setVariableValue(i, valueX2);
         }
       }
     }
