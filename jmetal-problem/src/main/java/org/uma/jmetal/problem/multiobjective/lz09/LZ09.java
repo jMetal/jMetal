@@ -22,6 +22,7 @@
 package org.uma.jmetal.problem.multiobjective.lz09;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Base class to implement the problem of the lz09 benchmark, which is
@@ -45,7 +46,7 @@ public class LZ09 {
   }
 
   // control the PF shape
-  void alphaFunction(double alpha[], ArrayList<Double> x, int dim, int type) {
+  void alphaFunction(double alpha[], List<Double> x, int dim, int type) {
     if (dim == 2) {
       if (type == 21) {
         alpha[0] = x.get(0);
@@ -98,7 +99,7 @@ public class LZ09 {
   }
 
   // control the distance
-  double betaFunction(ArrayList<Double> x, int type) {
+  double betaFunction(List<Double> x, int type) {
     double beta;
     beta = 0;
     int dim = x.size();
@@ -239,7 +240,7 @@ public class LZ09 {
     return beta;
   }
 
-  void objective(ArrayList<Double> xVar, ArrayList<Double> yObj) {
+  void objective(List<Double> xVar, List<Double> yObj) {
     // 2-objective case
     if (nobj == 2) {
       if (ltype == 21 || ltype == 22 || ltype == 23 || ltype == 24 || ltype == 26) {
