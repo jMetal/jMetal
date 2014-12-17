@@ -65,7 +65,7 @@ public class ExecApplication {
 
         @Bean(name = "nsgaII")
         @Scope("prototype")
-        public Algorithm nsgII(String algorithmVersion, String[] args) throws FileNotFoundException {
+        public Algorithm nsgaII(String algorithmVersion, String[] args) throws FileNotFoundException {
 
             switch (NsgaIIType.valueOf(algorithmVersion)) {
             case binary:
