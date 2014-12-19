@@ -1,11 +1,3 @@
-//  HUXCrossover.java
-//
-//  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
-//
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
-//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -35,20 +27,36 @@ import java.util.List;
  * solutions.
  * NOTE: the operator is applied to the first encoding.variable of the solutions, and
  * the type of the solutions must be Binary
+ *
+ * @author Antonio J. Nebro
+ * @author Juan J. Durillo
+ * @version 1.0
  */
 public class HUXCrossover implements CrossoverOperator<List<BinarySolution>, List<BinarySolution>> {
-  private double probability ;
+  private double crossoverProbability ;
   private JMetalRandom randomGenerator ;
 
   /** Constructor */
-  public HUXCrossover(double probability) {
-    this.probability = probability ;
+  public HUXCrossover(double crossoverProbability) {
+    if (crossoverProbability < 0) {
+      throw new JMetalException("Crossover probability is negative: " + crossoverProbability) ;
+    }
+    this.crossoverProbability = crossoverProbability ;
     randomGenerator = JMetalRandom.getInstance() ;
   }
 
   /* Getter */
   public double getCrossoverProbability() {
-    return this.probability;
+    return this.crossoverProbability;
+  }
+
+  /** Execute() method */
+  public List<BinarySolution> execute(List<BinarySolution> parents) {
+    if (parents.size() != 2) {
+      throw new JMetalException("HUXCrossover.execute: operator needs two parents");
+    }
+
+    return doCrossover(crossoverProbability, parents.get(0), parents.get(1));
   }
 
   /**
@@ -82,21 +90,5 @@ public class HUXCrossover implements CrossoverOperator<List<BinarySolution>, Lis
     offSpring.add(parent2) ;
 
     return offSpring;
-  }
-
-  /** Execute() method */
-  public List<BinarySolution> execute(List<BinarySolution> parents) {
-    if (parents.size() != 2) {
-      throw new JMetalException("HUXCrossover.execute: operator needs two parents");
-    }
-
-    //List<BinarySolution> offSpring = doCrossover(probability, parents.get(0), parents.get(1));
-
-    //for (Solution solution : offSpring) {
-    //  solution.setCrowdingDistance(0.0);
-    //  solution.setRank(0);
-    //}
-
-    return doCrossover(probability, parents.get(0), parents.get(1));
   }
 }

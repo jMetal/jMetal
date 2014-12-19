@@ -100,24 +100,30 @@ public abstract class AbstractGenericSolution<T, P extends Problem> implements S
   }
 
   @Override public boolean equals(Object o) {
-	if (this == o)
+    if (this == o) {
       return true;
-    if (!(o instanceof AbstractGenericSolution))
+    }
+    if (!(o instanceof AbstractGenericSolution)) {
       return false;
+    }
 
     AbstractGenericSolution that = (AbstractGenericSolution) o;
 
     if (Double.compare(that.overallConstraintViolationDegree, overallConstraintViolationDegree)
-        != 0)
+        != 0) {
       return false;
-    if (attributes != null ? !attributes.equals(that.attributes) : that.attributes != null)
+    }
+    if (attributes != null ? !attributes.equals(that.attributes) : that.attributes != null) {
       return false;
-    if (objectives != null ? !objectives.equals(that.objectives) : that.objectives != null)
+    }
+    if (objectives != null ? !objectives.equals(that.objectives) : that.objectives != null) {
       return false;
+    }
     //if (problem != null ? !problem.equals(that.problem) : that.problem != null)
     //  return false;
-    if (variables != null ? !variables.equals(that.variables) : that.variables != null)
+    if (variables != null ? !variables.equals(that.variables) : that.variables != null) {
       return false;
+    }
 
     return true;
   }
@@ -133,5 +139,5 @@ public abstract class AbstractGenericSolution<T, P extends Problem> implements S
     result = 31 * result + (attributes != null ? attributes.hashCode() : 0);
     return result;
   }
-//*/
+  //*/
 }
