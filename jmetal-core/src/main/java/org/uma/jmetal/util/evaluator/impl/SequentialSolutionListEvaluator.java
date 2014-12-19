@@ -22,6 +22,7 @@
 
 package org.uma.jmetal.util.evaluator.impl;
 
+import org.uma.jmetal.problem.ConstrainedProblem;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
@@ -39,8 +40,15 @@ public class SequentialSolutionListEvaluator<S extends Solution> implements Solu
   @Override
   public List<S> evaluate(List<S> solutionList, Problem problem) throws JMetalException {
     try {
-      for (int i = 0 ; i < solutionList.size(); i++) {
-        problem.evaluate(solutionList.get(i)) ;
+      if (problem instanceof ConstrainedProblem) {
+        for (int i = 0 ; i < solutionList.size(); i++) {
+          problem.evaluate(solutionList.get(i)) ;
+          ((ConstrainedProblem)problem).evaluateConstraints(solutionList.get(i)) ;
+        }
+      } else {
+        for (int i = 0 ; i < solutionList.size(); i++) {
+          problem.evaluate(solutionList.get(i)) ;
+        }
       }
     } catch (JMetalException e) {
       JMetalLogger.logger.log(Level.SEVERE, "Error evaluating solution", e);
@@ -50,7 +58,7 @@ public class SequentialSolutionListEvaluator<S extends Solution> implements Solu
     return solutionList;
   }
 
- @Override public void shutdown() {
-   ;
- }
+  @Override public void shutdown() {
+    ;
+  }
 }
