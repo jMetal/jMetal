@@ -66,7 +66,6 @@ public class ZDT1 extends AbstractDoubleProblem {
   /** Evaluate() method */
   public void evaluate(DoubleSolution solution) {
     double[] f = new double[getNumberOfObjectives()];
-    double[] x = new double[getNumberOfVariables()] ;
 
     f[0] = solution.getVariableValue(0);
     double g = this.evalG(solution);

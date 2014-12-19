@@ -56,7 +56,6 @@ public class Tanaka extends AbstractDoubleProblem implements ConstrainedProblem<
     setUpperLimit(upperLimit);
   }
 
-  /** Evaluate() method */
   @Override
   public DoubleSolution createSolution() {
     return new GenericDoubleSolution(this) ;
