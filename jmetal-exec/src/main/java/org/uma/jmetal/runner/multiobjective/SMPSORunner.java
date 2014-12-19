@@ -34,7 +34,6 @@ import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-import org.uma.jmetal.util.pseudorandom.impl.MersenneTwisterGenerator;
 
 import java.util.List;
 
@@ -66,7 +65,13 @@ public class SMPSORunner {
     Algorithm algorithm;
     MutationOperator mutation;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4" ;
+    String problemName ;
+    if (args.length == 1) {
+      problemName = args[0] ;
+    } else {
+      //problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+      problemName = "org.uma.jmetal.problem.multiobjective.Srinivas";
+    }
 
     problem = (DoubleProblem) ProblemUtils.loadProblem(problemName);
 
@@ -80,7 +85,7 @@ public class SMPSORunner {
             .setMutation(mutation)
             .setMaxIterations(250)
             .setSwarmSize(100)
-            .setRandomGenerator(new MersenneTwisterGenerator())
+            //.setRandomGenerator(new MersenneTwisterGenerator())
             .build();
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)

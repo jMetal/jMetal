@@ -9,7 +9,6 @@
 package org.uma.jmetal.problem.multiobjective;
 
 import org.uma.jmetal.problem.ConstrainedProblem;
-import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.impl.GenericDoubleSolution;
@@ -19,6 +18,8 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -778,8 +779,8 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
     System.out.println("Algorithm configuration: ");
 
     //Fill lower and upper limits
-    double[] lowerLimit = new double[getNumberOfVariables()];
-    double []upperLimit = new double[getNumberOfVariables()];
+    Double[] lowerLimit = new Double[getNumberOfVariables()];
+    Double []upperLimit = new Double[getNumberOfVariables()];
     int var=0;
     for (int gr=0; gr<numberOfGroupElements_;gr++){
 
@@ -895,6 +896,9 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
         System.out.println("Error in LIMITES LOWER/UPPER: transversal section not considerated for: " + gr + " group") ;
       } // end if
     } // gr 
+
+    setLowerLimit(new ArrayList(Arrays.<Double>asList(lowerLimit)));
+    setUpperLimit(new ArrayList(Arrays.<Double>asList(upperLimit)));
 
     // greates difference between nodes
     elementsBetweenDiffGreat_ = 0;
