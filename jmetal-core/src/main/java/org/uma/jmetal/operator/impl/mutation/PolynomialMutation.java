@@ -21,12 +21,15 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /**
+ * This class implements a polynomial mutation operator
+ *
+ * The implementation is based on the NSGA-II code available in
+ * http://www.iitk.ac.in/kangal/codes.shtml
+ *
  * @author Antonio J. Nebro
  * @version 1.0
- * This class implements a polynomial mutation operator
  */
 public class PolynomialMutation implements MutationOperator<DoubleSolution> {
-  private static final double ETA_M_DEFAULT = 20.0;
   private double distributionIndex ;
   private double mutationProbability ;
   private RepairDoubleSolution solutionRepair ;

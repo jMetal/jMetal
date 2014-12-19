@@ -25,8 +25,8 @@ public class GenericIntegerPermutationSolution
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
       List<Integer> randomSequence = new ArrayList<>(problem.getPermutationLength(i));
 
-      for (int j = 0; j < problem.getPermutationLength(i); i++) {
-        randomSequence.add(i);
+      for (int j = 0; j < problem.getPermutationLength(i); j++) {
+        randomSequence.add(j);
       }
 
       java.util.Collections.shuffle(randomSequence);

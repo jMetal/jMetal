@@ -39,6 +39,13 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+/**
+ * Note: this class does check that the polynomial mutation operator does not return invalid
+ * values, but not that it works properly (@see PolynomialMutationWorkingTest)
+ *
+ * @author Antonio J. Nebro
+ * @version 1.0
+ */
 public class PolynomialMutationTest {
   private static final double EPSILON = 0.00000000000001 ;
 
@@ -87,6 +94,21 @@ public class PolynomialMutationTest {
     PolynomialMutation mutation = new PolynomialMutation(0.1, 20.0) ;
 
     mutation.execute(null) ;
+  }
+
+  @Test
+  public void shouldMutateASingleVariableSolutionReturnTheSameSolutionIfProbabilityIsZero() {
+    double mutationProbability = 0.0;
+    double distributionIndex = 20.0 ;
+
+    PolynomialMutation mutation = new PolynomialMutation(mutationProbability, distributionIndex) ;
+    DoubleProblem problem = new MockDoubleProblem(1) ;
+    DoubleSolution solution = problem.createSolution() ;
+    DoubleSolution oldSolution = (DoubleSolution)solution.copy() ;
+
+    mutation.execute(solution) ;
+
+    assertEquals(oldSolution, solution) ;
   }
 
   @Test

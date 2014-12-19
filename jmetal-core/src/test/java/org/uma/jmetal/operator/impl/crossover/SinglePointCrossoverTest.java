@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -207,7 +206,7 @@ public class SinglePointCrossoverTest {
   @Test
   public void shouldCrossingTheFistBitOfSecondVariableReturnTheCorrectCrossedSolutions() {
     int numberOfVariables = 3 ;
-    int cuttingBit = BITS_OF_MOCKED_BINARY_PROBLEM - 1 ;
+    int cuttingBit = BITS_OF_MOCKED_BINARY_PROBLEM ;
 
     JMetalRandom randomGenerator = mock(JMetalRandom.class) ;
     double crossoverProbability = 0.9;
@@ -226,21 +225,6 @@ public class SinglePointCrossoverTest {
 
     List<BinarySolution> resultSolutions = crossover.execute(solutions) ;
 
-    /*
-    System.out.print("solution 0: " + solutions.get(0).getVariableValueString(0)) ;
-    System.out.print(" " + solutions.get(0).getVariableValueString(1)) ;
-    System.out.println(" " + solutions.get(0).getVariableValueString(2)) ;
-    System.out.print("solution 1: " + solutions.get(1).getVariableValueString(0)) ;
-    System.out.print(" " + solutions.get(1).getVariableValueString(1)) ;
-    System.out.println(" " + solutions.get(1).getVariableValueString(2)) ;
-    System.out.println() ;
-    System.out.print("solution 2: " + resultSolutions.get(0).getVariableValueString(0)) ;
-    System.out.print(" " + resultSolutions.get(0).getVariableValueString(1)) ;
-    System.out.println(" " + resultSolutions.get(0).getVariableValueString(2)) ;
-    System.out.print("solution 3: " + resultSolutions.get(1).getVariableValueString(0)) ;
-    System.out.print(" " + resultSolutions.get(1).getVariableValueString(1)) ;
-    System.out.println(" " + resultSolutions.get(1).getVariableValueString(2)) ;
-*/
     assertEquals(solutions.get(0).getVariableValue(0), resultSolutions.get(0).getVariableValue(0)) ;
     assertEquals(solutions.get(1).getVariableValue(0), resultSolutions.get(1).getVariableValue(0)) ;
     assertEquals(solutions.get(0).getVariableValue(1), resultSolutions.get(1).getVariableValue(1)) ;
@@ -274,21 +258,7 @@ public class SinglePointCrossoverTest {
     ReflectionTestUtils.setField(crossover, "randomGenerator", randomGenerator);
 
     List<BinarySolution> resultSolutions = crossover.execute(solutions) ;
-/*
-    System.out.print("solution 0: " + solutions.get(0).getVariableValueString(0)) ;
-    System.out.print(" " + solutions.get(0).getVariableValueString(1)) ;
-    System.out.println(" " + solutions.get(0).getVariableValueString(2)) ;
-    System.out.print("solution 1: " + solutions.get(1).getVariableValueString(0)) ;
-    System.out.print(" " + solutions.get(1).getVariableValueString(1)) ;
-    System.out.println(" " + solutions.get(1).getVariableValueString(2)) ;
-    System.out.println() ;
-    System.out.print("solution 2: " + resultSolutions.get(0).getVariableValueString(0)) ;
-    System.out.print(" " + resultSolutions.get(0).getVariableValueString(1)) ;
-    System.out.println(" " + resultSolutions.get(0).getVariableValueString(2)) ;
-    System.out.print("solution 3: " + resultSolutions.get(1).getVariableValueString(0)) ;
-    System.out.print(" " + resultSolutions.get(1).getVariableValueString(1)) ;
-    System.out.println(" " + resultSolutions.get(1).getVariableValueString(2)) ;
-*/
+
     assertEquals(solutions.get(0).getVariableValue(0), resultSolutions.get(0).getVariableValue(0)) ;
     assertEquals(solutions.get(1).getVariableValue(0), resultSolutions.get(1).getVariableValue(0)) ;
 
