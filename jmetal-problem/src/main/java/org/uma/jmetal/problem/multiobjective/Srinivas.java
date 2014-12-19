@@ -42,8 +42,8 @@ public class Srinivas extends AbstractDoubleProblem implements ConstrainedProble
     List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
 
     for (int i = 0; i < getNumberOfVariables(); i++) {
-      lowerLimit.add(-4.0);
-      upperLimit.add(4.0);
+      lowerLimit.add(-20.0);
+      upperLimit.add(20.0);
     }
 
     setLowerLimit(lowerLimit);
