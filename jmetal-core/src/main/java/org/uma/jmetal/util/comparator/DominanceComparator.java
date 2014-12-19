@@ -30,11 +30,16 @@ import java.util.Comparator;
  * based on a constraint violation, as done in NSGA-II.
  */
 public class DominanceComparator implements Comparator<Solution> {
-  private OverallConstraintViolationComparator constraintViolationComparator;
+  private ConstraintViolationComparator constraintViolationComparator;
 
   /** Constructor */
   public DominanceComparator() {
-    constraintViolationComparator = new OverallConstraintViolationComparator() ;
+    this(new OverallConstraintViolationComparator()) ;
+  }
+
+  /** Constructor */
+  public DominanceComparator(ConstraintViolationComparator constraintComparator) {
+    constraintViolationComparator = constraintComparator ;
   }
   /**
    * Compares two solutions.

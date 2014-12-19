@@ -1,9 +1,10 @@
-//  Srinivas.java
+//  Tanaka.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
+//       Juan J. Durillo <durillo@lcc.uma.es>
 //
-//  Copyright (c) 2014 Antonio J. Nebro, Juan J. Durillo
+//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -28,28 +29,34 @@ import org.uma.jmetal.solution.impl.GenericDoubleSolution;
 import java.util.ArrayList;
 import java.util.List;
 
-/** Class representing problem Srinivas */
-public class Srinivas extends AbstractDoubleProblem implements ConstrainedProblem<DoubleSolution> {
+/**
+ * Class representing problem Tanaka
+ */
+public class Tanaka extends AbstractDoubleProblem implements ConstrainedProblem<DoubleSolution> {
 
-  /** Constructor */
-  public Srinivas()  {
+  /**
+   * Constructor.
+   * Creates a default instance of the problem Tanaka
+   */
+  public Tanaka() {
     setNumberOfVariables(2);
     setNumberOfObjectives(2);
     setNumberOfConstraints(2);
-    setName("Srinivas");
+    setName("Tanaka") ;
 
     List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
     List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
 
     for (int i = 0; i < getNumberOfVariables(); i++) {
-      lowerLimit.add(-20.0);
-      upperLimit.add(20.0);
+      lowerLimit.add(10e-5);
+      upperLimit.add(Math.PI);
     }
 
     setLowerLimit(lowerLimit);
     setUpperLimit(upperLimit);
   }
 
+  /** Evaluate() method */
   @Override
   public DoubleSolution createSolution() {
     return new GenericDoubleSolution(this) ;
@@ -58,18 +65,11 @@ public class Srinivas extends AbstractDoubleProblem implements ConstrainedProble
   /** Evaluate() method */
   @Override
   public void evaluate(DoubleSolution solution)  {
-    double[] f = new double[solution.getNumberOfVariables()];
-
-    double x1 = solution.getVariableValue(0);
-    double x2 = solution.getVariableValue(1);
-    f[0] = 2.0 + (x1 - 2.0) * (x1 - 2.0) + (x2 - 1.0) * (x2 - 1.0);
-    f[1] = 9.0 * x1 - (x2 - 1.0) * (x2 - 1.0);
-
-    solution.setObjective(0, f[0]);
-    solution.setObjective(1, f[1]);
+    solution.setObjective(0, solution.getVariableValue(0));
+    solution.setObjective(1, solution.getVariableValue(1));
   }
 
-  /** EvaluateConstraints() method  */
+  /** EvaluateConstraints() method */
   @Override
   public void evaluateConstraints(DoubleSolution solution)  {
     double[] constraint = new double[this.getNumberOfConstraints()];
@@ -77,12 +77,14 @@ public class Srinivas extends AbstractDoubleProblem implements ConstrainedProble
     double x1 = solution.getVariableValue(0) ;
     double x2 = solution.getVariableValue(1) ;
 
-    constraint[0] = 1.0 - (x1 * x1 + x2 * x2) / 225.0;
-    constraint[1] = (3.0 * x2 - x1) / 10.0 - 1.0;
+    constraint[0] = (x1 * x1 + x2 * x2 - 1.0 - 0.1 * Math.cos(16.0 * Math.atan(x1 / x2)));
+    constraint[1] = -2.0 * ((x1 - 0.5) * (x1 - 0.5) + (x2 - 0.5) * (x2 - 0.5) - 0.5);
 
+    int number = 0;
     double total = 0.0;
     for (int i = 0; i < this.getNumberOfConstraints(); i++) {
       if (constraint[i] < 0.0) {
+        number++;
         total += constraint[i];
       }
     }

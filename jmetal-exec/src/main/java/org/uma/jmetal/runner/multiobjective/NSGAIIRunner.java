@@ -61,7 +61,13 @@ public class NSGAIIRunner {
     MutationOperator mutation;
     SelectionOperator selection;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1" ;
+    String problemName ;
+    if (args.length == 1) {
+      problemName = args[0] ;
+    } else {
+      //problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+      problemName = "org.uma.jmetal.problem.multiobjective.Srinivas";
+    }
 
     problem = ProblemUtils.loadProblem(problemName);
 
