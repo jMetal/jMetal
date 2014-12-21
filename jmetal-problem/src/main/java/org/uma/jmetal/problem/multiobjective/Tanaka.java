@@ -80,15 +80,16 @@ public class Tanaka extends AbstractDoubleProblem implements ConstrainedProblem<
     constraint[0] = (x1 * x1 + x2 * x2 - 1.0 - 0.1 * Math.cos(16.0 * Math.atan(x1 / x2)));
     constraint[1] = -2.0 * ((x1 - 0.5) * (x1 - 0.5) + (x2 - 0.5) * (x2 - 0.5) - 0.5);
 
-    int number = 0;
     double total = 0.0;
-    for (int i = 0; i < this.getNumberOfConstraints(); i++) {
-      if (constraint[i] < 0.0) {
-        number++;
-        total += constraint[i];
+    int numberOfViolatedConstraints = 0;
+    for (int i = 0; i < getNumberOfConstraints(); i++) {
+      if (constraint[i]<0.0){
+        total+=constraint[i];
+        numberOfViolatedConstraints++;
       }
     }
 
     solution.setOverallConstraintViolationDegree(total);
+    solution.setNumberOfViolatedConstraints(numberOfViolatedConstraints);
   }
 }

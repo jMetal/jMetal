@@ -99,15 +99,15 @@ public class Water extends AbstractDoubleProblem implements ConstrainedProblem<D
     constraint[6] = 550 - (0.164/(x[0]*x[1])+631.13*x[2]-54.48) ;
     
     double total = 0.0;
-    int number = 0;
+    int numberOfViolatedConstraints = 0;
     for (int i = 0; i < getNumberOfConstraints(); i++) {
       if (constraint[i]<0.0){
         total+=constraint[i];
-        number++;
+        numberOfViolatedConstraints++;
       }
-    } 
+    }
         
     solution.setOverallConstraintViolationDegree(total);
-    //solution.setNumberOfViolatedConstraint(number);
+    solution.setNumberOfViolatedConstraints(numberOfViolatedConstraints);
   }
 }
