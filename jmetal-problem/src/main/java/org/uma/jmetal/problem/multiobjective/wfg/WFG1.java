@@ -36,8 +36,6 @@ import java.util.logging.Level;
  * Proceedings, volume 3410 of Lecture Notes in Computer Science
  */
 public class WFG1 extends WFG {
-  private static final long serialVersionUID = 3828260878519078349L;
-
   /**
    * Constructor
    * Creates a default WFG1 instance with

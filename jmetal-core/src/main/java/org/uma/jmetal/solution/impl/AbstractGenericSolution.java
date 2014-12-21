@@ -16,6 +16,7 @@ public abstract class AbstractGenericSolution<T, P extends Problem> implements S
   protected List<T> variables;
   protected P problem ;
   protected double overallConstraintViolationDegree ;
+  protected int numberOfViolatedConstraints ;
   protected Map<Object, Object> attributes ;
   protected final JMetalRandom randomGenerator ;
 
@@ -75,6 +76,15 @@ public abstract class AbstractGenericSolution<T, P extends Problem> implements S
   @Override
   public void setOverallConstraintViolationDegree(double violationDegree) {
     overallConstraintViolationDegree = violationDegree ;
+  }
+
+  @Override public int getNumberOfViolatedConstraints() {
+    return numberOfViolatedConstraints;
+  }
+
+  @Override
+  public void setNumberOfViolatedConstraints(int numberOfViolatedConstraints) {
+    this.numberOfViolatedConstraints = numberOfViolatedConstraints;
   }
 
   protected void initializeObjectiveValues() {

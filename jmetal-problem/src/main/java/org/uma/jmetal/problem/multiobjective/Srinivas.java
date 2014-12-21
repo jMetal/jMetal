@@ -23,7 +23,6 @@ package org.uma.jmetal.problem.multiobjective;
 import org.uma.jmetal.problem.ConstrainedProblem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.impl.GenericDoubleSolution;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,11 +47,6 @@ public class Srinivas extends AbstractDoubleProblem implements ConstrainedProble
 
     setLowerLimit(lowerLimit);
     setUpperLimit(upperLimit);
-  }
-
-  @Override
-  public DoubleSolution createSolution() {
-    return new GenericDoubleSolution(this) ;
   }
 
   /** Evaluate() method */
@@ -81,12 +75,15 @@ public class Srinivas extends AbstractDoubleProblem implements ConstrainedProble
     constraint[1] = (3.0 * x2 - x1) / 10.0 - 1.0;
 
     double total = 0.0;
-    for (int i = 0; i < this.getNumberOfConstraints(); i++) {
-      if (constraint[i] < 0.0) {
-        total += constraint[i];
+    int numberOfViolatedConstraints = 0;
+    for (int i = 0; i < getNumberOfConstraints(); i++) {
+      if (constraint[i]<0.0){
+        total+=constraint[i];
+        numberOfViolatedConstraints++;
       }
     }
 
     solution.setOverallConstraintViolationDegree(total);
+    solution.setNumberOfViolatedConstraints(numberOfViolatedConstraints);
   }
 }

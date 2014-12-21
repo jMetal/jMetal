@@ -2,6 +2,7 @@ package org.uma.jmetal.problem.impl;
 
 import org.uma.jmetal.problem.BinaryProblem;
 import org.uma.jmetal.solution.BinarySolution;
+import org.uma.jmetal.solution.impl.GenericBinarySolution;
 
 public abstract class AbstractBinaryProblem extends AbstractGenericProblem<BinarySolution>
   implements BinaryProblem {
@@ -21,5 +22,10 @@ public abstract class AbstractBinaryProblem extends AbstractGenericProblem<Binar
   	}
   	
   	return count ;
+  }
+
+  @Override
+  public BinarySolution createSolution() {
+    return new GenericBinarySolution(this)  ;
   }
 }

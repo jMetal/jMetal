@@ -60,11 +60,6 @@ public class ZDT3 extends AbstractDoubleProblem {
     setUpperLimit(upperLimit);
   }
 
-  @Override
-  public DoubleSolution createSolution() {
-    return new GenericDoubleSolution(this) ;
-  }
-
   /** Evaluate() method */
   public void evaluate(DoubleSolution solution) {
     int numberOfVariables = getNumberOfVariables() ;

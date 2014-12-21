@@ -23,7 +23,6 @@ package org.uma.jmetal.problem.multiobjective.zdt;
 
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.impl.GenericDoubleSolution;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,11 +55,6 @@ public class ZDT1 extends AbstractDoubleProblem {
 
     setLowerLimit(lowerLimit);
     setUpperLimit(upperLimit);
-  }
-
-  @Override
-  public DoubleSolution createSolution() {
-    return new GenericDoubleSolution(this)  ;
   }
 
   /** Evaluate() method */

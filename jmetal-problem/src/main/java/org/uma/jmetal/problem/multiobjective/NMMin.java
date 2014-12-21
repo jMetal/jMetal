@@ -22,7 +22,6 @@ package org.uma.jmetal.problem.multiobjective;
 
 import org.uma.jmetal.problem.impl.AbstractIntegerProblem;
 import org.uma.jmetal.solution.IntegerSolution;
-import org.uma.jmetal.solution.impl.GenericIntegerSolution;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,11 +58,6 @@ public class NMMin extends AbstractIntegerProblem {
 
     setLowerLimit(lowerLimit);
     setUpperLimit(upperLimit);
-  }
-
-  @Override
-  public IntegerSolution createSolution() {
-    return new GenericIntegerSolution(this) ;
   }
 
   /** Evaluate() method */
