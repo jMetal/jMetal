@@ -6,7 +6,7 @@
   *         Juan J. Durillo <durillo@lcc.uma.es>
   * @version 1.0
  */
-package org.uma.jmetal.problem.multiobjective;
+package org.uma.jmetal.problem.multiobjective.ebes;
 
 import org.uma.jmetal.problem.ConstrainedProblem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
