@@ -2,6 +2,7 @@ package org.uma.jmetal.problem.impl;
 
 import org.uma.jmetal.problem.IntegerProblem;
 import org.uma.jmetal.solution.IntegerSolution;
+import org.uma.jmetal.solution.impl.GenericIntegerSolution;
 
 import java.util.List;
 
@@ -30,4 +31,10 @@ public abstract class AbstractIntegerProblem extends AbstractGenericProblem<Inte
   protected void setUpperLimit(List<Integer> upperLimit) {
     this.upperLimit = upperLimit;
   }
+
+  @Override
+  public IntegerSolution createSolution() {
+    return new GenericIntegerSolution(this) ;
+  }
+
 }

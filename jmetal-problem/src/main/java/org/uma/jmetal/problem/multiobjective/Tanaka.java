@@ -24,7 +24,6 @@ package org.uma.jmetal.problem.multiobjective;
 import org.uma.jmetal.problem.ConstrainedProblem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.impl.GenericDoubleSolution;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,12 +53,6 @@ public class Tanaka extends AbstractDoubleProblem implements ConstrainedProblem<
 
     setLowerLimit(lowerLimit);
     setUpperLimit(upperLimit);
-  }
-
-  /** Evaluate() method */
-  @Override
-  public DoubleSolution createSolution() {
-    return new GenericDoubleSolution(this) ;
   }
 
   /** Evaluate() method */

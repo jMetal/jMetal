@@ -73,8 +73,8 @@ public class Kursawe extends AbstractDoubleProblem {
   /** Evaluate() method */
   public void evaluate(DoubleSolution solution){
     double aux, xi, xj;
-    double[] fx = new double[2];
-    double[] x = new double[solution.getNumberOfVariables()];
+    double[] fx = new double[getNumberOfObjectives()];
+    double[] x = new double[getNumberOfVariables()];
     for (int i = 0; i < solution.getNumberOfVariables(); i++) {
       x[i] = solution.getVariableValue(i) ;
     }
