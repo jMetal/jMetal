@@ -21,14 +21,10 @@
 package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
-import org.uma.jmetal.operator.CrossoverOperator;
+import org.uma.jmetal.algorithm.multiobjective.paes.PAES;
+import org.uma.jmetal.algorithm.multiobjective.paes.PAESBuilder;
 import org.uma.jmetal.operator.MutationOperator;
-import org.uma.jmetal.operator.SelectionOperator;
-import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
-import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AlgorithmRunner;
@@ -43,7 +39,7 @@ import java.util.List;
 /**
  * Class to configure and run the NSGA-II algorithm
  */
-public class NSGAIIRunner {
+public class PAESEbesRunner {
   /**
    * @param args Command line arguments.
    * @throws java.io.IOException
@@ -57,42 +53,25 @@ public class NSGAIIRunner {
   public static void main(String[] args) throws JMetalException {
     Problem problem;
     Algorithm algorithm;
-    CrossoverOperator crossover;
     MutationOperator mutation;
-    SelectionOperator selection;
 
-    String problemName ;
-    if (args.length == 1) {
-      problemName = args[0] ;
-    } else {
-      //problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-      problemName = "org.uma.jmetal.problem.multiobjective.Srinivas";
-    }
+    String problemName = "org.uma.jmetal.problem.multiobjective.ebes.Ebes2" ;
 
     problem = ProblemUtils.loadProblem(problemName);
 
-    double crossoverProbability = 0.9 ;
-    double crossoverDistributionIndex = 20.0 ;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex) ;
+    mutation = new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0) ;
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
-    double mutationDistributionIndex = 20.0 ;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
-
-    selection = new BinaryTournamentSelection();
-
-    algorithm = new NSGAIIBuilder(problem)
-            .setCrossoverOperator(crossover)
+    algorithm = new PAESBuilder(problem)
             .setMutationOperator(mutation)
-            .setSelectionOperator(selection)
-            .setMaxIterations(100)
-            .setPopulationSize(100)
+            .setMaxEvaluations(25000)
+            .setArchiveSize(100)
+            .setBiSections(5)
             .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
-    List<Solution> population = ((NSGAII)algorithm).getResult() ;
+    List<Solution> population = ((PAES)algorithm).getResult() ;
     long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)

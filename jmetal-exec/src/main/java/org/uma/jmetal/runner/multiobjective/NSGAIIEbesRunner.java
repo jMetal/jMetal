@@ -27,9 +27,10 @@ import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
-import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.problem.multiobjective.ebes.Ebes2;
+import org.uma.jmetal.problem.multiobjective.ebes.EbesMutation;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
@@ -43,7 +44,7 @@ import java.util.List;
 /**
  * Class to configure and run the NSGA-II algorithm
  */
-public class NSGAIIRunner {
+public class NSGAIIEbesRunner {
   /**
    * @param args Command line arguments.
    * @throws java.io.IOException
@@ -61,13 +62,8 @@ public class NSGAIIRunner {
     MutationOperator mutation;
     SelectionOperator selection;
 
-    String problemName ;
-    if (args.length == 1) {
-      problemName = args[0] ;
-    } else {
-      //problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-      problemName = "org.uma.jmetal.problem.multiobjective.Srinivas";
-    }
+    String problemName = "org.uma.jmetal.problem.multiobjective.ebes.Ebes2" ;
+
 
     problem = ProblemUtils.loadProblem(problemName);
 
@@ -75,9 +71,8 @@ public class NSGAIIRunner {
     double crossoverDistributionIndex = 20.0 ;
     crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex) ;
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
-    double mutationDistributionIndex = 20.0 ;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
+    double mutationProbability = 1.0 / ((Ebes2)problem).getnumberOfGroupElements() ;
+    mutation = new EbesMutation(mutationProbability) ;
 
     selection = new BinaryTournamentSelection();
 
@@ -97,8 +92,8 @@ public class NSGAIIRunner {
 
     new SolutionSetOutput.Printer(population)
             .setSeparator("\t")
-            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
-            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+            .setVarFileOutputContext(new DefaultFileOutputContext("VAR2.tsv"))
+            .setFunFileOutputContext(new DefaultFileOutputContext("FUN2.tsv"))
             .print();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
