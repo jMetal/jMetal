@@ -701,7 +701,8 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
   int  selectedOF = 12;
   String []OF_;
 
-  public Ebes() throws ClassNotFoundException {
+  public Ebes() {
+
     EBEsInitialize();
 
   }
@@ -729,9 +730,8 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
     // la forma de la secciÃ³n determina las cantidades de variables
     // y la cantidad inicial de restricciones
 
-
-    ////numberOfVariables=0;
-    ////numberOfConstraints_=0;
+    //numberOfVariables_=0;
+    int numberOfConstraints_=0;
       /*
       for(int gr=0;gr<numberOfGroupElements_;gr++){
         numberOfVariables_+= Groups_[gr][VARIABLES];
@@ -739,16 +739,16 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
       }
       */
     // variable position, amount variables and geometric constraints
-    Variable_Position();
+    setNumberOfVariables(Variable_Position());
     // geomtric constraints for shape
-    int numberOfConstraints=numberOfConstraintsGeometric_;
+    numberOfConstraints_=numberOfConstraintsGeometric_;
 
     // constraint for stress
-    numberOfConstraints+= numberOfGroupElements_ * 3;
+    numberOfConstraints_+= numberOfGroupElements_ * 3;
 
     // total restrictions    
-    numberOfConstraints+= numberOfConstraintsNodes_;
-    setNumberOfConstraints(numberOfConstraints) ;
+    numberOfConstraints_+= numberOfConstraintsNodes_;
+    setNumberOfConstraints(numberOfConstraints_);
 
     // amount objectives
     setNumberOfObjectives(OF_.length);
@@ -771,7 +771,7 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
     System.out.println("  Number of constraints for Geometric: " + numberOfConstraintsGeometric_);
     System.out.println("  Number of constraints for Stress: " + (numberOfGroupElements_ * 3));
     System.out.println("  Number of constraints for Deflection: " + numberOfConstraintsNodes_);
-    System.out.println("  Number of Constraints: " + getNumberOfConstraints());
+    System.out.println("  Number of Constraints: " + numberOfConstraints_);
 
     // objectives
     // Weight, Deflections, stress squared absolute error;
@@ -779,126 +779,125 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
     System.out.println("Algorithm configuration: ");
 
     //Fill lower and upper limits
-    Double[] lowerLimit = new Double[getNumberOfVariables()];
-    Double []upperLimit = new Double[getNumberOfVariables()];
+    Double[] lowerLimit_ = new Double[getNumberOfVariables()];
+    Double[] upperLimit_ = new Double[getNumberOfVariables()];
     int var=0;
     for (int gr=0; gr<numberOfGroupElements_;gr++){
-
       var+=Groups_[gr][VARIABLES];
 
       if (Groups_[gr][SHAPE]==CIRCLE){
-        lowerLimit[var-1] = Groups_[gr][VAR_Y_LOWER_LIMIT]; // diameter min
-        upperLimit[var-1] = Groups_[gr][VAR_Y_UPPER_LIMIT]; // diameter max
+        lowerLimit_[var-1] = Groups_[gr][VAR_Y_LOWER_LIMIT]; // diameter min
+        upperLimit_[var-1] = Groups_[gr][VAR_Y_UPPER_LIMIT]; // diameter max
       }
       else if (Groups_[gr][SHAPE]==HOLE_CIRCLE){
-        lowerLimit[var-2] = Groups_[gr][VAR_Y_LOWER_LIMIT]; // diameter min
-        lowerLimit[var-1] = Groups_[gr][VAR_eY_LOWER_LIMIT]; // thickness min
-        upperLimit[var-2] = Groups_[gr][VAR_Y_UPPER_LIMIT]; // diameter max
-        upperLimit[var-1] = Groups_[gr][VAR_eY_UPPER_LIMIT]; // thickness max
+        lowerLimit_[var-2] = Groups_[gr][VAR_Y_LOWER_LIMIT]; // diameter min
+        lowerLimit_[var-1] = Groups_[gr][VAR_eY_LOWER_LIMIT]; // thickness min
+        upperLimit_[var-2] = Groups_[gr][VAR_Y_UPPER_LIMIT]; // diameter max
+        upperLimit_[var-1] = Groups_[gr][VAR_eY_UPPER_LIMIT]; // thickness max
       }
       else if (Groups_[gr][SHAPE]==RECTANGLE){
-        lowerLimit[var-2] = Groups_[gr][VAR_Y_LOWER_LIMIT]; // higth min for rectangle
-        lowerLimit[var-1] = Groups_[gr][VAR_Z_LOWER_LIMIT]; // witdth min
-        upperLimit[var-2] = Groups_[gr][VAR_Y_UPPER_LIMIT]; // higth max for rectangle
-        upperLimit[var-1] = Groups_[gr][VAR_Z_UPPER_LIMIT]; // width max for rectangle
+        lowerLimit_[var-2] = Groups_[gr][VAR_Y_LOWER_LIMIT]; // higth min for rectangle
+        lowerLimit_[var-1] = Groups_[gr][VAR_Z_LOWER_LIMIT]; // witdth min
+        upperLimit_[var-2] = Groups_[gr][VAR_Y_UPPER_LIMIT]; // higth max for rectangle
+        upperLimit_[var-1] = Groups_[gr][VAR_Z_UPPER_LIMIT]; // width max for rectangle
       }
       else if (Groups_[gr][SHAPE]==HOLE_RECTANGLE){
-        lowerLimit[var-4] = Groups_[gr][VAR_Y_LOWER_LIMIT]; // height min
-        lowerLimit[var-3] = Groups_[gr][VAR_Z_LOWER_LIMIT]; // wide min
-        lowerLimit[var-2] = Groups_[gr][VAR_eY_LOWER_LIMIT];  // tickness min in Y principal local axis 
-        lowerLimit[var-1] = Groups_[gr][VAR_eZ_LOWER_LIMIT];  // tickness min in Z principal local axis
-        upperLimit[var-4] = Groups_[gr][VAR_Y_UPPER_LIMIT]; // height max
-        upperLimit[var-3] = Groups_[gr][VAR_Z_UPPER_LIMIT]; // wide max
-        upperLimit[var-2] = Groups_[gr][VAR_eY_UPPER_LIMIT]; // tickness max in Y principal local axis
-        upperLimit[var-1] = Groups_[gr][VAR_eZ_UPPER_LIMIT]; // tickness max in Z principal local axis
+        lowerLimit_[var-4] = Groups_[gr][VAR_Y_LOWER_LIMIT]; // height min
+        lowerLimit_[var-3] = Groups_[gr][VAR_Z_LOWER_LIMIT]; // wide min
+        lowerLimit_[var-2] = Groups_[gr][VAR_eY_LOWER_LIMIT];  // tickness min in Y principal local axis 
+        lowerLimit_[var-1] = Groups_[gr][VAR_eZ_LOWER_LIMIT];  // tickness min in Z principal local axis
+        upperLimit_[var-4] = Groups_[gr][VAR_Y_UPPER_LIMIT]; // height max
+        upperLimit_[var-3] = Groups_[gr][VAR_Z_UPPER_LIMIT]; // wide max
+        upperLimit_[var-2] = Groups_[gr][VAR_eY_UPPER_LIMIT]; // tickness max in Y principal local axis
+        upperLimit_[var-1] = Groups_[gr][VAR_eZ_UPPER_LIMIT]; // tickness max in Z principal local axis
       }
       else if (Groups_[gr][SHAPE]==I_SINGLE){
-        lowerLimit[var-4] = Groups_[gr][VAR_Y_LOWER_LIMIT]; // height min
-        lowerLimit[var-3] = Groups_[gr][VAR_Z_LOWER_LIMIT]; // wide min
-        lowerLimit[var-2] = Groups_[gr][VAR_eY_LOWER_LIMIT]; // tickness min in Y principal local axis 
-        lowerLimit[var-1] = Groups_[gr][VAR_eZ_LOWER_LIMIT]; // ticknees min in Z principal local axis
-        upperLimit[var-4] = Groups_[gr][VAR_Y_UPPER_LIMIT]; // height max in y axis
-        upperLimit[var-3] = Groups_[gr][VAR_Z_UPPER_LIMIT]; // wide max in z axiz
-        upperLimit[var-2] = Groups_[gr][VAR_eY_UPPER_LIMIT]; // tickness max in Y principal local axis
-        upperLimit[var-1] = Groups_[gr][VAR_eZ_UPPER_LIMIT]; // tickness max in Z principal local axis
+        lowerLimit_[var-4] = Groups_[gr][VAR_Y_LOWER_LIMIT]; // height min
+        lowerLimit_[var-3] = Groups_[gr][VAR_Z_LOWER_LIMIT]; // wide min
+        lowerLimit_[var-2] = Groups_[gr][VAR_eY_LOWER_LIMIT]; // tickness min in Y principal local axis 
+        lowerLimit_[var-1] = Groups_[gr][VAR_eZ_LOWER_LIMIT]; // ticknees min in Z principal local axis
+        upperLimit_[var-4] = Groups_[gr][VAR_Y_UPPER_LIMIT]; // height max in y axis
+        upperLimit_[var-3] = Groups_[gr][VAR_Z_UPPER_LIMIT]; // wide max in z axiz
+        upperLimit_[var-2] = Groups_[gr][VAR_eY_UPPER_LIMIT]; // tickness max in Y principal local axis
+        upperLimit_[var-1] = Groups_[gr][VAR_eZ_UPPER_LIMIT]; // tickness max in Z principal local axis
       }
       else if (Groups_[gr][SHAPE]==I_DOUBLE){
-        lowerLimit[var-4] = Groups_[gr][VAR_Y_LOWER_LIMIT]; // height min
-        lowerLimit[var-3] = Groups_[gr][VAR_Z_LOWER_LIMIT]; // wide min
-        lowerLimit[var-2] = Groups_[gr][VAR_eY_LOWER_LIMIT]; // tickness min in Y principal local axis 
-        lowerLimit[var-1] = Groups_[gr][VAR_eZ_LOWER_LIMIT]; // tickness min in Z principal local axis
-        upperLimit[var-4] = Groups_[gr][VAR_Y_UPPER_LIMIT]; // height max
-        upperLimit[var-3] = Groups_[gr][VAR_Z_UPPER_LIMIT]; // wide max in z 
-        upperLimit[var-2] = Groups_[gr][VAR_eY_UPPER_LIMIT]; // tickness max in Y principal local axis
-        upperLimit[var-1] = Groups_[gr][VAR_eZ_UPPER_LIMIT]; // thickness max in plate z
+        lowerLimit_[var-4] = Groups_[gr][VAR_Y_LOWER_LIMIT]; // height min
+        lowerLimit_[var-3] = Groups_[gr][VAR_Z_LOWER_LIMIT]; // wide min
+        lowerLimit_[var-2] = Groups_[gr][VAR_eY_LOWER_LIMIT]; // tickness min in Y principal local axis 
+        lowerLimit_[var-1] = Groups_[gr][VAR_eZ_LOWER_LIMIT]; // tickness min in Z principal local axis
+        upperLimit_[var-4] = Groups_[gr][VAR_Y_UPPER_LIMIT]; // height max
+        upperLimit_[var-3] = Groups_[gr][VAR_Z_UPPER_LIMIT]; // wide max in z 
+        upperLimit_[var-2] = Groups_[gr][VAR_eY_UPPER_LIMIT]; // tickness max in Y principal local axis
+        upperLimit_[var-1] = Groups_[gr][VAR_eZ_UPPER_LIMIT]; // thickness max in plate z
       }
       else if (Groups_[gr][SHAPE]==H_SINGLE){
-        lowerLimit[var-4] = Groups_[gr][VAR_Y_LOWER_LIMIT]; // height min
-        lowerLimit[var-3] = Groups_[gr][VAR_Z_LOWER_LIMIT]; // wide min
-        lowerLimit[var-2] = Groups_[gr][VAR_eY_LOWER_LIMIT]; // tickness min in Y principal local axis 
-        lowerLimit[var-1] = Groups_[gr][VAR_eZ_LOWER_LIMIT]; // ticknees min in Z principal local axis
-        upperLimit[var-4] = Groups_[gr][VAR_Y_UPPER_LIMIT]; // height max in y axis
-        upperLimit[var-3] = Groups_[gr][VAR_Z_UPPER_LIMIT]; // wide max in z axiz
-        upperLimit[var-2] = Groups_[gr][VAR_eY_UPPER_LIMIT]; // tickness max in Y principal local axis
-        upperLimit[var-1] = Groups_[gr][VAR_eZ_UPPER_LIMIT]; // tickness max in Z principal local axis
+        lowerLimit_[var-4] = Groups_[gr][VAR_Y_LOWER_LIMIT]; // height min
+        lowerLimit_[var-3] = Groups_[gr][VAR_Z_LOWER_LIMIT]; // wide min
+        lowerLimit_[var-2] = Groups_[gr][VAR_eY_LOWER_LIMIT]; // tickness min in Y principal local axis 
+        lowerLimit_[var-1] = Groups_[gr][VAR_eZ_LOWER_LIMIT]; // ticknees min in Z principal local axis
+        upperLimit_[var-4] = Groups_[gr][VAR_Y_UPPER_LIMIT]; // height max in y axis
+        upperLimit_[var-3] = Groups_[gr][VAR_Z_UPPER_LIMIT]; // wide max in z axiz
+        upperLimit_[var-2] = Groups_[gr][VAR_eY_UPPER_LIMIT]; // tickness max in Y principal local axis
+        upperLimit_[var-1] = Groups_[gr][VAR_eZ_UPPER_LIMIT]; // tickness max in Z principal local axis
       }
       else if (Groups_[gr][SHAPE]==H_DOUBLE){
-        lowerLimit[var-4] = Groups_[gr][VAR_Y_LOWER_LIMIT]; // height min
-        lowerLimit[var-3] = Groups_[gr][VAR_Z_LOWER_LIMIT]; // wide min
-        lowerLimit[var-2] = Groups_[gr][VAR_eY_LOWER_LIMIT]; // tickness min in Y principal local axis 
-        lowerLimit[var-1] = Groups_[gr][VAR_eZ_LOWER_LIMIT]; // tickness min in Z principal local axis
-        upperLimit[var-4] = Groups_[gr][VAR_Y_UPPER_LIMIT]; // height max
-        upperLimit[var-3] = Groups_[gr][VAR_Z_UPPER_LIMIT]; // wide max in z 
-        upperLimit[var-2] = Groups_[gr][VAR_eY_UPPER_LIMIT]; // tickness max in Y principal local axis
-        upperLimit[var-1] = Groups_[gr][VAR_eZ_UPPER_LIMIT]; // thickness max in plate z
+        lowerLimit_[var-4] = Groups_[gr][VAR_Y_LOWER_LIMIT]; // height min
+        lowerLimit_[var-3] = Groups_[gr][VAR_Z_LOWER_LIMIT]; // wide min
+        lowerLimit_[var-2] = Groups_[gr][VAR_eY_LOWER_LIMIT]; // tickness min in Y principal local axis 
+        lowerLimit_[var-1] = Groups_[gr][VAR_eZ_LOWER_LIMIT]; // tickness min in Z principal local axis
+        upperLimit_[var-4] = Groups_[gr][VAR_Y_UPPER_LIMIT]; // height max
+        upperLimit_[var-3] = Groups_[gr][VAR_Z_UPPER_LIMIT]; // wide max in z 
+        upperLimit_[var-2] = Groups_[gr][VAR_eY_UPPER_LIMIT]; // tickness max in Y principal local axis
+        upperLimit_[var-1] = Groups_[gr][VAR_eZ_UPPER_LIMIT]; // thickness max in plate z
       }
       else if (Groups_[gr][SHAPE]==L_SINGLE){
-        lowerLimit[var-4] = Groups_[gr][VAR_Y_LOWER_LIMIT]; // height min
-        lowerLimit[var-3] = Groups_[gr][VAR_Z_LOWER_LIMIT]; // wide min
-        lowerLimit[var-2] = Groups_[gr][VAR_eY_LOWER_LIMIT]; // ticknees min in plate y 
-        lowerLimit[var-1] = Groups_[gr][VAR_eZ_LOWER_LIMIT]; // ticknees min in plate z
-        upperLimit[var-4] = Groups_[gr][VAR_Y_UPPER_LIMIT]; // height max
-        upperLimit[var-3] = Groups_[gr][VAR_Z_UPPER_LIMIT]; // wide max in z 
-        upperLimit[var-2] = Groups_[gr][VAR_eY_UPPER_LIMIT]; // thickness max in
-        upperLimit[var-1] = Groups_[gr][VAR_eZ_UPPER_LIMIT]; // thickness max in
+        lowerLimit_[var-4] = Groups_[gr][VAR_Y_LOWER_LIMIT]; // height min
+        lowerLimit_[var-3] = Groups_[gr][VAR_Z_LOWER_LIMIT]; // wide min
+        lowerLimit_[var-2] = Groups_[gr][VAR_eY_LOWER_LIMIT]; // ticknees min in plate y 
+        lowerLimit_[var-1] = Groups_[gr][VAR_eZ_LOWER_LIMIT]; // ticknees min in plate z
+        upperLimit_[var-4] = Groups_[gr][VAR_Y_UPPER_LIMIT]; // height max
+        upperLimit_[var-3] = Groups_[gr][VAR_Z_UPPER_LIMIT]; // wide max in z 
+        upperLimit_[var-2] = Groups_[gr][VAR_eY_UPPER_LIMIT]; // thickness max in
+        upperLimit_[var-1] = Groups_[gr][VAR_eZ_UPPER_LIMIT]; // thickness max in
       }
       else if (Groups_[gr][SHAPE]==L_DOUBLE){
-        lowerLimit[var-4] = Groups_[gr][VAR_Y_LOWER_LIMIT]; // height min
-        lowerLimit[var-3] = Groups_[gr][VAR_Z_LOWER_LIMIT]; // wide min
-        lowerLimit[var-2] = Groups_[gr][VAR_eY_LOWER_LIMIT]; // ticknees min in  
-        lowerLimit[var-1] = Groups_[gr][VAR_eZ_LOWER_LIMIT]; // ticknees min in 
-        upperLimit[var-4] = Groups_[gr][VAR_Y_UPPER_LIMIT]; // height max
-        upperLimit[var-3] = Groups_[gr][VAR_Z_UPPER_LIMIT]; // wide max in z 
-        upperLimit[var-2] = Groups_[gr][VAR_eY_UPPER_LIMIT]; // thickness max in
-        upperLimit[var-1] = Groups_[gr][VAR_eZ_UPPER_LIMIT]; // thickness max in
+        lowerLimit_[var-4] = Groups_[gr][VAR_Y_LOWER_LIMIT]; // height min
+        lowerLimit_[var-3] = Groups_[gr][VAR_Z_LOWER_LIMIT]; // wide min
+        lowerLimit_[var-2] = Groups_[gr][VAR_eY_LOWER_LIMIT]; // ticknees min in  
+        lowerLimit_[var-1] = Groups_[gr][VAR_eZ_LOWER_LIMIT]; // ticknees min in 
+        upperLimit_[var-4] = Groups_[gr][VAR_Y_UPPER_LIMIT]; // height max
+        upperLimit_[var-3] = Groups_[gr][VAR_Z_UPPER_LIMIT]; // wide max in z 
+        upperLimit_[var-2] = Groups_[gr][VAR_eY_UPPER_LIMIT]; // thickness max in
+        upperLimit_[var-1] = Groups_[gr][VAR_eZ_UPPER_LIMIT]; // thickness max in
       }
       else if (Groups_[gr][SHAPE]==T_SINGLE){
-        lowerLimit[var-4] = Groups_[gr][VAR_Y_LOWER_LIMIT]; // height min
-        lowerLimit[var-3] = Groups_[gr][VAR_Z_LOWER_LIMIT]; // wide min
-        lowerLimit[var-2] = Groups_[gr][VAR_eY_LOWER_LIMIT]; // ticknees min in plate y 
-        lowerLimit[var-1] = Groups_[gr][VAR_eZ_LOWER_LIMIT]; // ticknees min in plate z
-        upperLimit[var-4] = Groups_[gr][VAR_Y_UPPER_LIMIT]; // height max
-        upperLimit[var-3] = Groups_[gr][VAR_Z_UPPER_LIMIT]; // wide max in z 
-        upperLimit[var-2] = Groups_[gr][VAR_eY_UPPER_LIMIT]; // thickness max in
-        upperLimit[var-1] = Groups_[gr][VAR_eZ_UPPER_LIMIT]; // thickness max in
+        lowerLimit_[var-4] = Groups_[gr][VAR_Y_LOWER_LIMIT]; // height min
+        lowerLimit_[var-3] = Groups_[gr][VAR_Z_LOWER_LIMIT]; // wide min
+        lowerLimit_[var-2] = Groups_[gr][VAR_eY_LOWER_LIMIT]; // ticknees min in plate y 
+        lowerLimit_[var-1] = Groups_[gr][VAR_eZ_LOWER_LIMIT]; // ticknees min in plate z
+        upperLimit_[var-4] = Groups_[gr][VAR_Y_UPPER_LIMIT]; // height max
+        upperLimit_[var-3] = Groups_[gr][VAR_Z_UPPER_LIMIT]; // wide max in z 
+        upperLimit_[var-2] = Groups_[gr][VAR_eY_UPPER_LIMIT]; // thickness max in
+        upperLimit_[var-1] = Groups_[gr][VAR_eZ_UPPER_LIMIT]; // thickness max in
       }
       else if (Groups_[gr][SHAPE]==T_DOUBLE){
-        lowerLimit[var-4] = Groups_[gr][VAR_Y_LOWER_LIMIT]; // height min
-        lowerLimit[var-3] = Groups_[gr][VAR_Z_LOWER_LIMIT]; // wide min
-        lowerLimit[var-2] = Groups_[gr][VAR_eY_LOWER_LIMIT]; // ticknees min in  
-        lowerLimit[var-1] = Groups_[gr][VAR_eZ_LOWER_LIMIT]; // ticknees min in 
-        upperLimit[var-4] = Groups_[gr][VAR_Y_UPPER_LIMIT]; // height max
-        upperLimit[var-3] = Groups_[gr][VAR_Z_UPPER_LIMIT]; // wide max in z 
-        upperLimit[var-2] = Groups_[gr][VAR_eY_UPPER_LIMIT]; // thickness max in
-        upperLimit[var-1] = Groups_[gr][VAR_eZ_UPPER_LIMIT]; // thickness max in
+        lowerLimit_[var-4] = Groups_[gr][VAR_Y_LOWER_LIMIT]; // height min
+        lowerLimit_[var-3] = Groups_[gr][VAR_Z_LOWER_LIMIT]; // wide min
+        lowerLimit_[var-2] = Groups_[gr][VAR_eY_LOWER_LIMIT]; // ticknees min in  
+        lowerLimit_[var-1] = Groups_[gr][VAR_eZ_LOWER_LIMIT]; // ticknees min in 
+        upperLimit_[var-4] = Groups_[gr][VAR_Y_UPPER_LIMIT]; // height max
+        upperLimit_[var-3] = Groups_[gr][VAR_Z_UPPER_LIMIT]; // wide max in z 
+        upperLimit_[var-2] = Groups_[gr][VAR_eY_UPPER_LIMIT]; // thickness max in
+        upperLimit_[var-1] = Groups_[gr][VAR_eZ_UPPER_LIMIT]; // thickness max in
       }
       else{
         System.out.println("Error in LIMITES LOWER/UPPER: transversal section not considerated for: " + gr + " group") ;
       } // end if
     } // gr 
 
-    setLowerLimit(new ArrayList(Arrays.<Double>asList(lowerLimit)));
-    setUpperLimit(new ArrayList(Arrays.<Double>asList(upperLimit)));
+    setLowerLimit(new ArrayList(Arrays.<Double>asList(lowerLimit_)));
+    setUpperLimit(new ArrayList(Arrays.<Double>asList(upperLimit_)));
 
     // greates difference between nodes
     elementsBetweenDiffGreat_ = 0;
@@ -921,10 +920,9 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
   /**
    * Evaluates a solution 
    * @param solution The solution to evaluate
-   * @throws JMetalException
    */
   @Override
-  public void evaluate(DoubleSolution solution) throws JMetalException {
+  public void evaluate(DoubleSolution solution) {
 
     int hi=0;
     double [] fx = new double[getNumberOfObjectives()] ; // functions
@@ -1029,14 +1027,14 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
    * @throws JMetalException
    */
   @Override
-  public void evaluateConstraints(DoubleSolution solution) throws JMetalException {
-
+  public void evaluateConstraints(DoubleSolution solution) {
     double [] constraint = new double[this.getNumberOfConstraints()];
     double[] x = new double[getNumberOfVariables()] ;
-
+    
     for (int i = 0; i < getNumberOfVariables(); i++) {
       x[i] = solution.getVariableValue(i) ;
     }
+    
     double x1, x2, x3, x4;
     int var=0;
     int con=0;
@@ -1059,8 +1057,8 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
         constraint[con-1]=-ratio+Groups_[gr][RATIO_YZ]; // relaciÃ³n entre altura y base
       }
       else if (Groups_[gr][SHAPE]==RECTANGLE){
-        x1=x[var-2]; // hight (y axis)
-        x2=x[var-1]; // width (z axis)
+        x1=x[var-2]; // higth (y axis)
+        x2=x[var-1]; // witdth (z axis)
 
         double ratio = x1/x2;
         constraint[con-2]=+ratio-Groups_[gr][RATIO_YZ]*0.75; // relaciÃ³n entre altura y base maxima
@@ -1071,7 +1069,7 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
       else if (Groups_[gr][SHAPE]==HOLE_RECTANGLE){
         x1=x[var-4]; // height (y axis)
         x2=x[var-3]; // width (z axis)
-        x3=x[var-2]; // tickness along Y axis => tickness of width  plate
+        x3=x[var-2]; // tickness along Y axis => tickness of width  plate 
         x4=x[var-1]; // tickness along Z axis => tickness of heigth plate
 
         double ratio=x1/x2;
@@ -1091,7 +1089,7 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
       else if (Groups_[gr][SHAPE]==I_SINGLE){
         x1=x[var-4]; // height (y axis)
         x2=x[var-3]; // width (Z axis)
-        x3=x[var-2]; // tickness along Y axis => tickness of width  plate
+        x3=x[var-2]; // tickness along Y axis => tickness of width  plate 
         x4=x[var-1]; // tickness along Z axis => tickness of heigth plate
 
         double ratio=x1/x2;
@@ -1115,7 +1113,7 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
       else if (Groups_[gr][SHAPE]==I_DOUBLE){
         x1=x[var-4]; // height (y axis)
         x2=x[var-3]; // width (Z axis)
-        x3=x[var-2]; // tickness along Y axis => tickness of width  plate
+        x3=x[var-2]; // tickness along Y axis => tickness of width  plate 
         x4=x[var-1]; // tickness along Z axis => tickness of heigth plate
         double ratio=x1/x2;
         constraint[con-4]=-ratio+Groups_[gr][RATIO_YZ]; // relaciÃ³n entre altura y base maxima
@@ -1126,7 +1124,7 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
       else if (Groups_[gr][SHAPE]==H_SINGLE){
         x1=x[var-4]; // height (y axis)
         x2=x[var-3]; // width (Z axis)
-        x3=x[var-2]; // tickness along Y axis => tickness of width  plate
+        x3=x[var-2]; // tickness along Y axis => tickness of width  plate 
         x4=x[var-1]; // tickness along Z axis => tickness of heigth plate
         double ratio=x1/x2;
         constraint[con-4]=-ratio+Groups_[gr][RATIO_YZ]*0.85; // /2.0 relaciÃ³n entre altura y base maxima
@@ -1159,7 +1157,7 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
       else if (Groups_[gr][SHAPE]==L_DOUBLE){
         x1=x[var-4]; // height (y axis)
         x2=x[var-3]; // width (Z axis)
-        x3=x[var-2]; // tickness along Y axis => tickness of width  plate
+        x3=x[var-2]; // tickness along Y axis => tickness of width  plate 
         x4=x[var-1]; // tickness along Z axis => tickness of heigth plate
         double ratio=x1/x2;
         constraint[con-4]=-ratio+Groups_[gr][RATIO_YZ]; // relaciÃ³n entre altura y base maxima
@@ -1170,7 +1168,7 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
       else if (Groups_[gr][SHAPE]==T_SINGLE){
         x1=x[var-4]; // height (y axis)
         x2=x[var-3]; // width (Z axis)
-        x3=x[var-2]; // tickness along Y axis => tickness of width  plate
+        x3=x[var-2]; // tickness along Y axis => tickness of width  plate 
         x4=x[var-1]; // tickness along Z axis => tickness of heigth plate
         double ratio=x1/x2;
         constraint[con-4]=-ratio+Groups_[gr][RATIO_YZ]; // relaciÃ³n entre altura y base maxima
@@ -1181,7 +1179,7 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
       else if (Groups_[gr][SHAPE]==T_DOUBLE){
         x1=x[var-4]; // height (y axis)
         x2=x[var-3]; // width (Z axis)
-        x3=x[var-2]; // tickness along Y axis => tickness of width  plate
+        x3=x[var-2]; // tickness along Y axis => tickness of width  plate 
         x4=x[var-1]; // tickness along Z axis => tickness of heigth plate
         double ratio=x1/x2;
         constraint[con-4]=-ratio+Groups_[gr][RATIO_YZ]; // relaciÃ³n entre altura y base maxima
@@ -1261,9 +1259,8 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
     // asignaciÃ³n de las variables para cada grupo
     // y determinaciÃ³n de las caracterÃ­sticas mecÃ¡nicas
 
-    double[] x = new double[getNumberOfVariables()] ;
-
-    for (int i = 0; i < getNumberOfVariables(); i++) {
+    double[] x = new double[solution.getNumberOfVariables()];
+    for (int i = 0; i < solution.getNumberOfVariables(); i++) {
       x[i] = solution.getVariableValue(i) ;
     }
 
@@ -1308,49 +1305,49 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
       else if (Groups_[gr][SHAPE]==I_DOUBLE){
         x1=x[var-4]; // height (y axis)
         x2=x[var-3]; // width (Z axis)
-        x3=x[var-2]; // tickness heigth plate
+        x3=x[var-2]; // tickness heigth plate 
         x4=x[var-1]; // tickness width plate
         EBEsTransversalSection_I_Double(gr, x1, x2, x3, x4);
       }
       else if (Groups_[gr][SHAPE]==H_SINGLE){
         x1=x[var-4]; // height (y axis)
         x2=x[var-3]; // width (Z axis)
-        x3=x[var-2]; // tickness heigth plate
+        x3=x[var-2]; // tickness heigth plate 
         x4=x[var-1]; // tickness width plate
         EBEsTransversalSection_H_Single(gr, x1, x2, x3, x4);
       }
       else if (Groups_[gr][SHAPE]==H_DOUBLE){
         x1=x[var-4]; // height (y axis)
         x2=x[var-3]; // width (Z axis)
-        x3=x[var-2]; // tickness heigth plate
+        x3=x[var-2]; // tickness heigth plate 
         x4=x[var-1]; // tickness width plate
         EBEsTransversalSection_H_Double(gr, x1, x2, x3, x4);
       }
       else if (Groups_[gr][SHAPE]==L_SINGLE){
         x1=x[var-4]; // height (y axis)
         x2=x[var-3]; // width (Z axis)
-        x3=x[var-2]; // tickness heigth plate
+        x3=x[var-2]; // tickness heigth plate 
         x4=x[var-1]; // tickness width plate
         EBEsTransversalSection_L_Single(gr, x1, x2, x3, x4);
       }
       else if (Groups_[gr][SHAPE]==L_DOUBLE){
         x1=x[var-4]; // height (y axis)
         x2=x[var-3]; // width (Z axis)
-        x3=x[var-2]; // tickness heigth plate
+        x3=x[var-2]; // tickness heigth plate 
         x4=x[var-1]; // tickness width plate
         EBEsTransversalSection_L_Double(gr, x1, x2, x3, x4);
       }
       else if (Groups_[gr][SHAPE]==T_SINGLE){
         x1=x[var-4]; // height (y axis)
         x2=x[var-3]; // width (Z axis)
-        x3=x[var-2]; // tickness heigth plate
+        x3=x[var-2]; // tickness heigth plate 
         x4=x[var-1]; // tickness width plate
         EBEsTransversalSection_T_Single(gr, x1, x2, x3, x4);
       }
       else if (Groups_[gr][SHAPE]==T_DOUBLE){
         x1=x[var-4]; // height (y axis)
         x2=x[var-3]; // width (Z axis)
-        x3=x[var-2]; // tickness heigth plate
+        x3=x[var-2]; // tickness heigth plate 
         x4=x[var-1]; // tickness width plate
         EBEsTransversalSection_T_Double(gr, x1, x2, x3, x4);
       }
@@ -4329,8 +4326,7 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
   }
   public void EBEsTransversalSection_T_Double(int ba, double y, double z, double ey, double ez) throws JMetalException{
   }
-
-  /*
+/*
 public void EbesMutation(int groupId, int hi, Variable[] x) {
 
 
@@ -4413,8 +4409,8 @@ public void EbesMutation(int groupId, int hi, Variable[] x) {
         x[variableIndex+3].setValue(ez);
     }
 }
-
 */
+
   public double Interpolation_I_Single_Y_func_Area_(double A)
     {
         // A (cm2) es el area necesaria para cubrir la tensión
@@ -5279,115 +5275,115 @@ public void EbesMutation(int groupId, int hi, Variable[] x) {
     }
   }
 
-  public void Variable_Position() {
+  public int Variable_Position() {
+    int numberOfVariables_ = 0;
     try{
-      int numberOfVariables = 0;
       numberOfConstraintsGeometric_ = 0;
       for (int gr = 0; gr < numberOfGroupElements_; gr++) {
         if (Groups_[gr][SHAPE] == CIRCLE) {
           // variables
-          numberOfVariables += 1;
+          numberOfVariables_ += 1;
           Groups_[gr][VARIABLES] = 1;
-          Groups_[gr][VAR_POSITION] = numberOfVariables - 1;
+          Groups_[gr][VAR_POSITION] = numberOfVariables_ - 1;
           // constrain
           numberOfConstraintsGeometric_ += 0;
           Groups_[gr][CONSTRAINT]=0;
 
         } else if (Groups_[gr][SHAPE] == HOLE_CIRCLE) {
           // variables
-          numberOfVariables += 2;
+          numberOfVariables_ += 2;
           Groups_[gr][VARIABLES] = 2;
-          Groups_[gr][VAR_POSITION] = numberOfVariables - 2;
+          Groups_[gr][VAR_POSITION] = numberOfVariables_ - 2;
           // constrain
           numberOfConstraintsGeometric_ += 2;
           Groups_[gr][CONSTRAINT]=2;
 
         } else if (Groups_[gr][SHAPE] == RECTANGLE) {
           // variables
-          numberOfVariables += 2;
+          numberOfVariables_ += 2;
           Groups_[gr][VARIABLES] = 2;
-          Groups_[gr][VAR_POSITION] = numberOfVariables - 2;
+          Groups_[gr][VAR_POSITION] = numberOfVariables_ - 2;
           // constrain
           numberOfConstraintsGeometric_ += 2;
           Groups_[gr][CONSTRAINT]=2;
 
         } else if (Groups_[gr][SHAPE] == HOLE_RECTANGLE) {
           // variable
-          numberOfVariables += 4;
+          numberOfVariables_ += 4;
           Groups_[gr][VARIABLES] = 4;
-          Groups_[gr][VAR_POSITION] = numberOfVariables - 4;
+          Groups_[gr][VAR_POSITION] = numberOfVariables_ - 4;
           // constrain
           numberOfConstraintsGeometric_ += 4;
           Groups_[gr][CONSTRAINT]=4;
 
         } else if (Groups_[gr][SHAPE] == I_SINGLE) {
           // variable
-          numberOfVariables += 4;
+          numberOfVariables_ += 4;
           Groups_[gr][VARIABLES] = 4;
-          Groups_[gr][VAR_POSITION] = numberOfVariables - 4;
+          Groups_[gr][VAR_POSITION] = numberOfVariables_ - 4;
           // constrain
           numberOfConstraintsGeometric_ += 4;
           Groups_[gr][CONSTRAINT]=4;
 
         } else if (Groups_[gr][SHAPE] == I_DOUBLE) {
           // variable
-          numberOfVariables += 4;
+          numberOfVariables_ += 4;
           Groups_[gr][VARIABLES] = 4;
-          Groups_[gr][VAR_POSITION] = numberOfVariables - 4;
+          Groups_[gr][VAR_POSITION] = numberOfVariables_ - 4;
           // constrain
           numberOfConstraintsGeometric_ += 4;
           Groups_[gr][CONSTRAINT]=4;
 
         } else if (Groups_[gr][SHAPE] == H_SINGLE) {
           // variables
-          numberOfVariables += 4;
+          numberOfVariables_ += 4;
           Groups_[gr][VARIABLES] = 4;
-          Groups_[gr][VAR_POSITION] = numberOfVariables - 4;
+          Groups_[gr][VAR_POSITION] = numberOfVariables_ - 4;
           // constrain
           numberOfConstraintsGeometric_ += 4;
           Groups_[gr][CONSTRAINT]=4;
 
         } else if (Groups_[gr][SHAPE] == H_DOUBLE) {
           // variable
-          numberOfVariables += 4;
+          numberOfVariables_ += 4;
           Groups_[gr][VARIABLES] = 4;
-          Groups_[gr][VAR_POSITION] = numberOfVariables - 4;
+          Groups_[gr][VAR_POSITION] = numberOfVariables_ - 4;
           // constrain
           numberOfConstraintsGeometric_ += 4;
           Groups_[gr][CONSTRAINT]=4;
 
         } else if (Groups_[gr][SHAPE] == L_SINGLE) {
           // variable
-          numberOfVariables += 4;
+          numberOfVariables_ += 4;
           Groups_[gr][VARIABLES] = 4;
-          Groups_[gr][VAR_POSITION] = numberOfVariables - 4;
+          Groups_[gr][VAR_POSITION] = numberOfVariables_ - 4;
           // constrain
           numberOfConstraintsGeometric_ += 4;
           Groups_[gr][CONSTRAINT]=4;
 
         } else if (Groups_[gr][SHAPE] == L_DOUBLE) {
           // variable
-          numberOfVariables += 4;
+          numberOfVariables_ += 4;
           Groups_[gr][VARIABLES] = 4;
-          Groups_[gr][VAR_POSITION] = numberOfVariables - 4;
+          Groups_[gr][VAR_POSITION] = numberOfVariables_ - 4;
           // constrain
           numberOfConstraintsGeometric_ += 4;
           Groups_[gr][CONSTRAINT]=4;
 
         } else if (Groups_[gr][SHAPE] == T_SINGLE) {
           // variable
-          numberOfVariables += 4;
+          numberOfVariables_ += 4;
           Groups_[gr][VARIABLES] = 4;
-          Groups_[gr][VAR_POSITION] = numberOfVariables - 4;
+          Groups_[gr][VAR_POSITION] = numberOfVariables_ - 4;
           // constrain
           numberOfConstraintsGeometric_ += 4;
           Groups_[gr][CONSTRAINT]=4;
 
         } else if (Groups_[gr][SHAPE] == T_DOUBLE) {
           // variale
-          numberOfVariables += 4;
+          numberOfVariables_ += 4;
           Groups_[gr][VARIABLES] = 4;
-          Groups_[gr][VAR_POSITION] = numberOfVariables - 4;
+          Groups_[gr][VAR_POSITION] = numberOfVariables_ - 4;
           // constrain
           numberOfConstraintsGeometric_ += 4;
           Groups_[gr][CONSTRAINT]=4;
@@ -5397,13 +5393,14 @@ public void EbesMutation(int groupId, int hi, Variable[] x) {
           System.exit(1);
         } // end if
       } // gr
-      setNumberOfVariables(numberOfVariables);
     }
     catch (Exception ex) {
       System.out.println(ex.getCause());
       System.out.println(ex.getMessage());
       System.exit(1);
     }
+
+    return numberOfVariables_ ;
   }
 
 

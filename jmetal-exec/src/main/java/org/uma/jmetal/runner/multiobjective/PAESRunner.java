@@ -55,7 +55,12 @@ public class PAESRunner {
     Algorithm algorithm;
     MutationOperator mutation;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.Fonseca" ;
+    String problemName ;
+    if (args.length == 1) {
+      problemName = args[0] ;
+    } else {
+      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+    }
 
     problem = ProblemUtils.loadProblem(problemName);
 
@@ -63,7 +68,7 @@ public class PAESRunner {
 
     algorithm = new PAESBuilder(problem)
             .setMutationOperator(mutation)
-            .setMaxEvaluations(25000)
+            .setMaxEvaluations(10000)
             .setArchiveSize(100)
             .setBiSections(5)
             .build() ;

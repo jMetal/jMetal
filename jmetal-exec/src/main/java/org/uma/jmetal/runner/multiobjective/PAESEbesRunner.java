@@ -24,8 +24,9 @@ import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.paes.PAES;
 import org.uma.jmetal.algorithm.multiobjective.paes.PAESBuilder;
 import org.uma.jmetal.operator.MutationOperator;
-import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.problem.multiobjective.ebes.Ebes;
+import org.uma.jmetal.problem.multiobjective.ebes.EbesMutation;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
@@ -55,15 +56,17 @@ public class PAESEbesRunner {
     Algorithm algorithm;
     MutationOperator mutation;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.ebes.Ebes2" ;
+    String problemName = "org.uma.jmetal.problem.multiobjective.ebes.Ebes" ;
 
     problem = ProblemUtils.loadProblem(problemName);
 
-    mutation = new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0) ;
+    //mutation = new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0) ;
+    double mutationProbability = 1.0 / ((Ebes)problem).getnumberOfGroupElements() ;
+    mutation = new EbesMutation(mutationProbability) ;
 
     algorithm = new PAESBuilder(problem)
             .setMutationOperator(mutation)
-            .setMaxEvaluations(25000)
+            .setMaxEvaluations(10000)
             .setArchiveSize(100)
             .setBiSections(5)
             .build() ;
@@ -76,8 +79,8 @@ public class PAESEbesRunner {
 
     new SolutionSetOutput.Printer(population)
             .setSeparator("\t")
-            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
-            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+            .setVarFileOutputContext(new DefaultFileOutputContext("VARP.tsv"))
+            .setFunFileOutputContext(new DefaultFileOutputContext("FUNP.tsv"))
             .print();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");

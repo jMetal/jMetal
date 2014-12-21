@@ -29,7 +29,7 @@ import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.problem.multiobjective.ebes.Ebes2;
+import org.uma.jmetal.problem.multiobjective.ebes.Ebes;
 import org.uma.jmetal.problem.multiobjective.ebes.EbesMutation;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AlgorithmRunner;
@@ -71,7 +71,7 @@ public class NSGAIIEbesRunner {
     double crossoverDistributionIndex = 20.0 ;
     crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex) ;
 
-    double mutationProbability = 1.0 / ((Ebes2)problem).getnumberOfGroupElements() ;
+    double mutationProbability = 1.0 / ((Ebes)problem).getnumberOfGroupElements() ;
     mutation = new EbesMutation(mutationProbability) ;
 
     selection = new BinaryTournamentSelection();

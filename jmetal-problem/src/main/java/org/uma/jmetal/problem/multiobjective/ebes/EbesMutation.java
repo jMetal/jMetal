@@ -15,11 +15,8 @@ public class EbesMutation implements MutationOperator<DoubleSolution> {
 
   /** Constructor */
   public EbesMutation(double mutationProbability) {
-    try {
       ebes = new Ebes() ;
-    } catch (ClassNotFoundException e) {
-      e.printStackTrace();
-    }
+
     this.mutationProbability = mutationProbability ;
     randomGenerator = JMetalRandom.getInstance() ;
   }

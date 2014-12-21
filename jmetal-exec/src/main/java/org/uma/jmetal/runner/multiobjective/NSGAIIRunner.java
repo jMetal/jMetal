@@ -65,8 +65,7 @@ public class NSGAIIRunner {
     if (args.length == 1) {
       problemName = args[0] ;
     } else {
-      //problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-      problemName = "org.uma.jmetal.problem.multiobjective.Srinivas";
+      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
     }
 
     problem = ProblemUtils.loadProblem(problemName);
