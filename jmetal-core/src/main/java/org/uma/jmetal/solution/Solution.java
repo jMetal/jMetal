@@ -33,6 +33,9 @@ public interface Solution<T> {
   public double getOverallConstraintViolationDegree() ;
   public void setOverallConstraintViolationDegree(double violationDegree) ;
 
+  public int getNumberOfViolatedConstraints() ;
+  public void setNumberOfViolatedConstraints(int numberOfViolatedConstraints) ;
+
   public Solution copy() ;
 
   public void setAttribute(Object id, Object value) ;
