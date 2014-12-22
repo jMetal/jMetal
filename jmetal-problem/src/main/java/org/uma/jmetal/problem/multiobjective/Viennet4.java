@@ -37,7 +37,7 @@ public class Viennet4 extends AbstractDoubleProblem implements ConstrainedProble
   * Constructor.
   * Creates a default instance of the Viennet4 problem.
   */
-  public Viennet4(String solutionType) {
+  public Viennet4() {
     setNumberOfVariables(2);
     setNumberOfObjectives(3);
     setNumberOfConstraints(3);

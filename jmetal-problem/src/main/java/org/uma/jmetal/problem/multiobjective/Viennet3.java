@@ -36,7 +36,7 @@ public class Viennet3 extends AbstractDoubleProblem {
   * Constructor.
   * Creates a default instance of the Viennet3 problem.
   */
-  public Viennet3(String solutionType) {
+  public Viennet3() {
     setNumberOfVariables(2);
     setNumberOfObjectives(3);
     setNumberOfConstraints(0);
