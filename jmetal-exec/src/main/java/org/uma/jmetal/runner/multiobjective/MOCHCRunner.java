@@ -32,10 +32,10 @@ import org.uma.jmetal.operator.impl.mutation.BitFlipMutation;
 import org.uma.jmetal.operator.impl.selection.RandomSelection;
 import org.uma.jmetal.operator.impl.selection.RankingAndCrowdingSelection;
 import org.uma.jmetal.problem.BinaryProblem;
-import org.uma.jmetal.problem.multiobjective.zdt.ZDT5;
 import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
@@ -57,7 +57,16 @@ public class MOCHCRunner {
     SelectionOperator newGenerationSelection;
     Algorithm algorithm ;
 
-    BinaryProblem problem = new ZDT5();
+    BinaryProblem problem ;
+
+    String problemName ;
+    if (args.length == 1) {
+      problemName = args[0] ;
+    } else {
+      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT5";
+    }
+
+    problem = (BinaryProblem)ProblemUtils.loadProblem(problemName);
 
     crossoverOperator = new HUXCrossover(1.0) ;
 

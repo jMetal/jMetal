@@ -80,7 +80,7 @@ public class RankingAndCrowdingSelection implements SelectionOperator<List<Solut
     CrowdingDistance crowdingDistance = new CrowdingDistance() ;
     List<Solution> population = new ArrayList<>(solutionsToSelect) ;
     int rankingIndex = 0;
-    while (population.size() <= solutionsToSelect) {
+    while (population.size() < solutionsToSelect) {
       if (subfrontFillsIntoThePopulation(ranking, rankingIndex, population)) {
         addRankedSolutionsToPopulation(ranking, rankingIndex, population);
         rankingIndex++;
