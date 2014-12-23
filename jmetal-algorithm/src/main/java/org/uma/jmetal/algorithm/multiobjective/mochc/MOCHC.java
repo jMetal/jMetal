@@ -27,7 +27,9 @@ import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.BinaryProblem;
 import org.uma.jmetal.solution.BinarySolution;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.SolutionListUtils;
+import org.uma.jmetal.util.binarySet.BinarySet;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 
@@ -129,13 +131,13 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
     return preservedPopulation;
   }
 
-
   @Override protected void initProgress() {
-    evaluations = 0;
+    evaluations = populationSize ;
   }
 
   @Override protected void updateProgress() {
     evaluations += populationSize;
+    System.out.println("Vals: " + evaluations) ;
   }
 
   @Override protected boolean isStoppingConditionReached() {
@@ -189,13 +191,17 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
     List<BinarySolution> union = new ArrayList<>();
     union.addAll(population);
     union.addAll(offspringPopulation);
+    System.out.println("1") ;
 
     List<BinarySolution> newPopulation =
         (List<BinarySolution>) newGenerationSelection.execute(union);
 
+    System.out.println("2") ;
+
     if (solutionSetsAreEquals(population, newPopulation)) {
       minimumDistance--;
     }
+
 
     if (minimumDistance <= -convergenceValue) {
       minimumDistance = (int) (1.0 / size * (1 - 1.0 / size) * size);
@@ -222,102 +228,6 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
     return SolutionListUtils.getNondominatedSolutions(getPopulation());
   }
 
-
-
-  /** Execute() method */
-  /*
-  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
-    int iterations;
-
-    int minimumDistance;
-    int evaluations;
-
-    Comparator crowdingComparator = new CrowdingComparator();
-
-    boolean condition = false;
-    SolutionSet solutionSet, offspringPopulation, newPopulation;
-
-    iterations = 0;
-    evaluations = 0;
-
-    //Calculate the maximum problem sizes
-    Solution aux = new Solution(problem);
-    int size = 0;
-    for (int var = 0; var < problem.getNumberOfVariables(); var++) {
-      size += ((Binary) aux.getDecisionVariables()[var]).getNumberOfBits();
-    }
-    minimumDistance = (int) Math.floor(initialConvergenceCount * size);
-
-    solutionSet = new SolutionSet(populationSize);
-    for (int i = 0; i < populationSize; i++) {
-      Solution solution = new Solution(problem);
-      problem.evaluate(solution);
-      problem.evaluateConstraints(solution);
-      evaluations++;
-      solutionSet.add(solution);
-    }
-
-    while (!condition) {
-      offspringPopulation = new SolutionSet(populationSize);
-      for (int i = 0; i < solutionSet.size() / 2; i++) {
-        Solution[] parents = (Solution[]) parentSelection.execute(solutionSet);
-
-        //Equality condition between solutions
-        if (hammingDistance(parents[0], parents[1]) >= (minimumDistance)) {
-          Solution[] offspring = (Solution[]) crossover.execute(parents);
-          problem.evaluate(offspring[0]);
-          problem.evaluateConstraints(offspring[0]);
-          problem.evaluate(offspring[1]);
-          problem.evaluateConstraints(offspring[1]);
-          evaluations += 2;
-          offspringPopulation.add(offspring[0]);
-          offspringPopulation.add(offspring[1]);
-        }
-      }
-      SolutionSet union = solutionSet.union(offspringPopulation);
-      //newGenerationSelection.setParameter("populationSize", populationSize);
-      newPopulation = (SolutionSet) newGenerationSelection.execute(union);
-
-      if (solutionSetsAreEquals(solutionSet, newPopulation)) {
-        minimumDistance--;
-      }
-      if (minimumDistance <= -convergenceValue) {
-
-        minimumDistance = (int) (1.0 / size * (1 - 1.0 / size) * size);
-
-        int preserve = (int) Math.floor(preservedPopulation * populationSize);
-        newPopulation = new SolutionSet(populationSize);
-        solutionSet.sort(crowdingComparator);
-        for (int i = 0; i < preserve; i++) {
-          newPopulation.add(new Solution(solutionSet.get(i)));
-        }
-        for (int i = preserve; i < populationSize; i++) {
-          Solution solution = new Solution(solutionSet.get(i));
-          cataclysmicMutation.execute(solution);
-          problem.evaluate(solution);
-          problem.evaluateConstraints(solution);
-          newPopulation.add(solution);
-        }
-      }
-      iterations++;
-
-      solutionSet = newPopulation;
-      if (evaluations >= maxEvaluations) {
-        condition = true;
-      }
-    }
-
-
-    CrowdingArchive archive;
-    archive = new CrowdingArchive(populationSize, problem.getNumberOfObjectives());
-    for (int i = 0; i < solutionSet.size(); i++) {
-      archive.add(solutionSet.get(i));
-    }
-
-    return archive;
-  }
-*/
-
   /**
    * Compares two solutionSets to determine if both are equals
    *
@@ -333,7 +243,6 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
       int j = 0;
       found = false;
       while (j < newSolutionSet.size()) {
-
         if (solutionSet.get(i).equals(newSolutionSet.get(j))) {
           found = true;
         }
@@ -357,21 +266,26 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
   private int hammingDistance(BinarySolution solutionOne, BinarySolution solutionTwo) {
     int distance = 0;
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      distance += hammingDistance(solutionOne.getVariableValue(i), solutionTwo.getVariableValue(2));
+      distance += hammingDistance(solutionOne.getVariableValue(i), solutionTwo.getVariableValue(i));
     }
 
     return distance;
   }
 
-  private int hammingDistance(BitSet bitSet1, BitSet bitSet2) {
+  private int hammingDistance(BinarySet bitSet1, BinarySet bitSet2) {
+    if (bitSet1.getBinarySetLength() != bitSet2.getBinarySetLength()) {
+      throw new JMetalException("The bitsets have different length: "
+          + bitSet1.getBinarySetLength() +", " + bitSet2.getBinarySetLength()) ;
+    }
     int distance = 0;
     int i = 0;
-    while (i < bitSet1.size()) {
+    while (i < bitSet1.getBinarySetLength()) {
       if (bitSet1.get(i) != bitSet2.get(i)) {
         distance++;
       }
       i++;
     }
+
     return distance;
   }
 }
