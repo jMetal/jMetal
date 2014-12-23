@@ -48,44 +48,41 @@ package org.uma.jmetal.problem.singleobjective.cec2005competitioncode;
 
 import org.uma.jmetal.util.JMetalException;
 
-public class F10_shifted_rotated_rastrigin extends TestFunc {
+public class F13ShiftedExpandedGriewankRosenbrock extends TestFunc {
 
   // Fixed (class) parameters
-  static final public String FUNCTION_NAME = "Shifted Rotated Rastrigin's Function";
-  static final public String DEFAULT_FILE_DATA = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/rastrigin_func_data.txt";
-  static final public String DEFAULT_FILE_MX_PREFIX = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/rastrigin_M_D";
-  static final public String DEFAULT_FILE_MX_SUFFIX = ".txt";
+  static final public String FUNCTION_NAME =
+    "Shifted Expanded Griewank's plus Rosenbrock's Function";
+  static final public String DEFAULT_FILE_DATA = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/EF8F2_func_data.txt";
 
   // Shifted global optimum
   private final double[] m_o;
-  private final double[][] m_matrix;
 
   // In order to avoid excessive memory allocation,
   // a fixed memory buffer is allocated for each function object.
   private double[] m_z;
-  private double[] m_zM;
 
   // Constructors
-  public F10_shifted_rotated_rastrigin(int dimension, double bias) throws JMetalException {
-    this(dimension, bias, DEFAULT_FILE_DATA,
-      DEFAULT_FILE_MX_PREFIX + dimension + DEFAULT_FILE_MX_SUFFIX);
+  public F13ShiftedExpandedGriewankRosenbrock(int dimension, double bias) throws JMetalException {
+    this(dimension, bias, DEFAULT_FILE_DATA);
   }
 
-  public F10_shifted_rotated_rastrigin(int dimension, double bias, String file_data, String file_m)
+  public F13ShiftedExpandedGriewankRosenbrock(int dimension, double bias, String file_data)
     throws JMetalException {
     super(dimension, bias, FUNCTION_NAME);
 
     // Note: dimension starts from 0
-    m_o = new double[m_dimension];
-    m_matrix = new double[m_dimension][m_dimension];
-
-    m_z = new double[m_dimension];
-    m_zM = new double[m_dimension];
+    m_o = new double[mDimension];
+    m_z = new double[mDimension];
 
     // Load the shifted global optimum
-    Benchmark.loadRowVectorFromFile(file_data, m_dimension, m_o);
-    // Load the matrix
-    Benchmark.loadMatrixFromFile(file_m, m_dimension, m_dimension, m_matrix);
+    Benchmark.loadRowVectorFromFile(file_data, mDimension, m_o);
+
+    // z = x - o + 1 = x - (o - 1)
+    // Do the "(o - 1)" part first
+    for (int i = 0; i < mDimension; i++) {
+      m_o[i] -= 1.0;
+    }
   }
 
   // Function body
@@ -94,11 +91,10 @@ public class F10_shifted_rotated_rastrigin extends TestFunc {
     double result = 0.0;
 
     Benchmark.shift(m_z, x, m_o);
-    Benchmark.rotate(m_zM, m_z, m_matrix);
 
-    result = Benchmark.rastrigin(m_zM);
+    result = Benchmark.F8F2(m_z);
 
-    result += m_bias;
+    result += mBias;
 
     return (result);
   }

@@ -48,52 +48,44 @@ package org.uma.jmetal.problem.singleobjective.cec2005competitioncode;
 
 import org.uma.jmetal.util.JMetalException;
 
-public class F06_shifted_rosenbrock extends TestFunc {
+public class F01ShiftedSphere extends TestFunc {
 
   // Fixed (class) parameters
-  static final public String FUNCTION_NAME = "Shifted Rosenbrock's Function";
-  static final public String DEFAULT_FILE_DATA = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/rosenbrock_func_data.txt";
+  static final public String FUNCTION_NAME = "Shifted Sphere Function";
+  static final public String DEFAULT_FILE_DATA = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/sphere_func_data.txt";
 
   // Shifted global optimum
-  private final double[] m_o;
+  private final double[] shiftedGlobalOptimum;
 
   // In order to avoid excessive memory allocation,
   // a fixed memory buffer is allocated for each function object.
-  private double[] m_z;
+  private double[] memoryBuffer;
 
   // Constructors
-  public F06_shifted_rosenbrock(int dimension, double bias) throws JMetalException {
+  public F01ShiftedSphere(int dimension, double bias) throws JMetalException {
     this(dimension, bias, DEFAULT_FILE_DATA);
   }
 
-  public F06_shifted_rosenbrock(int dimension, double bias, String file_data) throws
-      JMetalException {
+  public F01ShiftedSphere(int dimension, double bias, String file_data) throws JMetalException {
     super(dimension, bias, FUNCTION_NAME);
 
     // Note: dimension starts from 0
-    m_o = new double[m_dimension];
-    m_z = new double[m_dimension];
+    shiftedGlobalOptimum = new double[mDimension];
+    memoryBuffer = new double[mDimension];
 
     // Load the shifted global optimum
-    Benchmark.loadRowVectorFromFile(file_data, m_dimension, m_o);
-
-    // z = x - o + 1 = x - (o - 1)
-    // Do the "(o - 1)" part first
-    for (int i = 0; i < m_dimension; i++) {
-      m_o[i] -= 1.0;
-    }
+    Benchmark.loadRowVectorFromFile(file_data, mDimension, shiftedGlobalOptimum);
   }
 
   // Function body
   public double f(double[] x) {
-
     double result = 0.0;
 
-    Benchmark.shift(m_z, x, m_o);
+    Benchmark.shift(memoryBuffer, x, shiftedGlobalOptimum);
 
-    result = Benchmark.rosenbrock(m_z);
+    result = Benchmark.sphere(memoryBuffer);
 
-    result += m_bias;
+    result += mBias;
 
     return (result);
   }

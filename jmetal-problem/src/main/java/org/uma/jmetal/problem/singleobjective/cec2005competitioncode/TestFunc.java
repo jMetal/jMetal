@@ -50,20 +50,20 @@ import org.uma.jmetal.util.JMetalException;
 
 public abstract class TestFunc {
 
-  protected int m_dimension;
-  protected double m_bias;
+  protected int mDimension;
+  protected double mBias;
 
-  protected String m_func_name;
+  protected String mFuncName;
 
   // Constructors
   public TestFunc(int dimension, double bias) {
     this(dimension, bias, "undefined");
   }
 
-  public TestFunc(int dimension, double bias, String func_name) {
-    m_dimension = dimension;
-    m_bias = bias;
-    m_func_name = func_name;
+  public TestFunc(int dimension, double bias, String funcName) {
+    mDimension = dimension;
+    mBias = bias;
+    mFuncName = funcName;
   }
 
   // Function body to be defined in the child classes
@@ -71,14 +71,14 @@ public abstract class TestFunc {
 
   // Property functions common for all child classes
   public int dimension() {
-    return (m_dimension);
+    return (mDimension);
   }
 
   public double bias() {
-    return (m_bias);
+    return (mBias);
   }
 
   public String name() {
-    return (m_func_name);
+    return (mFuncName);
   }
 }

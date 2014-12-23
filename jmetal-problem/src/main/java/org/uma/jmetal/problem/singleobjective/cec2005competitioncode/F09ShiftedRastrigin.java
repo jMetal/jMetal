@@ -48,11 +48,11 @@ package org.uma.jmetal.problem.singleobjective.cec2005competitioncode;
 
 import org.uma.jmetal.util.JMetalException;
 
-public class F01_shifted_sphere extends TestFunc {
+public class F09ShiftedRastrigin extends TestFunc {
 
   // Fixed (class) parameters
-  static final public String FUNCTION_NAME = "Shifted Sphere Function";
-  static final public String DEFAULT_FILE_DATA = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/sphere_func_data.txt";
+  static final public String FUNCTION_NAME = "Shifted Rastrigin's Function";
+  static final public String DEFAULT_FILE_DATA = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/rastrigin_func_data.txt";
 
   // Shifted global optimum
   private final double[] m_o;
@@ -62,30 +62,31 @@ public class F01_shifted_sphere extends TestFunc {
   private double[] m_z;
 
   // Constructors
-  public F01_shifted_sphere(int dimension, double bias) throws JMetalException {
+  public F09ShiftedRastrigin(int dimension, double bias) throws JMetalException {
     this(dimension, bias, DEFAULT_FILE_DATA);
   }
 
-  public F01_shifted_sphere(int dimension, double bias, String file_data) throws JMetalException {
+  public F09ShiftedRastrigin(int dimension, double bias, String file_data) throws JMetalException {
     super(dimension, bias, FUNCTION_NAME);
 
     // Note: dimension starts from 0
-    m_o = new double[m_dimension];
-    m_z = new double[m_dimension];
+    m_o = new double[mDimension];
+    m_z = new double[mDimension];
 
     // Load the shifted global optimum
-    Benchmark.loadRowVectorFromFile(file_data, m_dimension, m_o);
+    Benchmark.loadRowVectorFromFile(file_data, mDimension, m_o);
   }
 
   // Function body
   public double f(double[] x) {
+
     double result = 0.0;
 
     Benchmark.shift(m_z, x, m_o);
 
-    result = Benchmark.sphere(m_z);
+    result = Benchmark.rastrigin(m_z);
 
-    result += m_bias;
+    result += mBias;
 
     return (result);
   }

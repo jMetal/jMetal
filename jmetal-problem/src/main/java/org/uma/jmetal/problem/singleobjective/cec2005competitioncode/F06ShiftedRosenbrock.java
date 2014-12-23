@@ -48,77 +48,52 @@ package org.uma.jmetal.problem.singleobjective.cec2005competitioncode;
 
 import org.uma.jmetal.util.JMetalException;
 
-public class F12_schwefel extends TestFunc {
+public class F06ShiftedRosenbrock extends TestFunc {
 
   // Fixed (class) parameters
-  static final public String FUNCTION_NAME = "Schwefel's Problem 2.13";
-  static final public String DEFAULT_FILE_DATA = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/supportData/schwefel_213_data.txt";
+  static final public String FUNCTION_NAME = "Shifted Rosenbrock's Function";
+  static final public String DEFAULT_FILE_DATA = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/rosenbrock_func_data.txt";
 
   // Shifted global optimum
   private final double[] m_o;
-  private final double[][] m_a;
-  private final double[][] m_b;
 
   // In order to avoid excessive memory allocation,
   // a fixed memory buffer is allocated for each function object.
-  private double[] m_A;
-  private double[] m_B;
+  private double[] m_z;
 
   // Constructors
-  public F12_schwefel(int dimension, double bias) throws JMetalException {
+  public F06ShiftedRosenbrock(int dimension, double bias) throws JMetalException {
     this(dimension, bias, DEFAULT_FILE_DATA);
   }
 
-  public F12_schwefel(int dimension, double bias, String file_data) throws JMetalException {
+  public F06ShiftedRosenbrock(int dimension, double bias, String file_data) throws JMetalException {
     super(dimension, bias, FUNCTION_NAME);
 
     // Note: dimension starts from 0
-    m_o = new double[m_dimension];
-    m_a = new double[m_dimension][m_dimension];
-    m_b = new double[m_dimension][m_dimension];
-
-    m_A = new double[m_dimension];
-    m_B = new double[m_dimension];
-
-    // Data:
-    //	1. a 		100x100
-    //	2. b 		100x100
-    //	3. alpha	1x100
-    double[][] m_data = new double[100 + 100 + 1][m_dimension];
+    m_o = new double[mDimension];
+    m_z = new double[mDimension];
 
     // Load the shifted global optimum
-    Benchmark.loadMatrixFromFile(file_data, m_data.length, m_dimension, m_data);
-    for (int i = 0; i < m_dimension; i++) {
-      for (int j = 0; j < m_dimension; j++) {
-        m_a[i][j] = m_data[i][j];
-        m_b[i][j] = m_data[100 + i][j];
-      }
-      m_o[i] = m_data[100 + 100][i];
-    }
+    Benchmark.loadRowVectorFromFile(file_data, mDimension, m_o);
 
-    for (int i = 0; i < m_dimension; i++) {
-      m_A[i] = 0.0;
-      for (int j = 0; j < m_dimension; j++) {
-        m_A[i] += (m_a[i][j] * Math.sin(m_o[j]) + m_b[i][j] * Math.cos(m_o[j]));
-      }
+    // z = x - o + 1 = x - (o - 1)
+    // Do the "(o - 1)" part first
+    for (int i = 0; i < mDimension; i++) {
+      m_o[i] -= 1.0;
     }
   }
 
   // Function body
   public double f(double[] x) {
 
-    double sum = 0.0;
+    double result = 0.0;
 
-    for (int i = 0; i < m_dimension; i++) {
-      m_B[i] = 0.0;
-      for (int j = 0; j < m_dimension; j++) {
-        m_B[i] += (m_a[i][j] * Math.sin(x[j]) + m_b[i][j] * Math.cos(x[j]));
-      }
+    Benchmark.shift(m_z, x, m_o);
 
-      double temp = m_A[i] - m_B[i];
-      sum += (temp * temp);
-    }
+    result = Benchmark.rosenbrock(m_z);
 
-    return (sum + m_bias);
+    result += mBias;
+
+    return (result);
   }
 }

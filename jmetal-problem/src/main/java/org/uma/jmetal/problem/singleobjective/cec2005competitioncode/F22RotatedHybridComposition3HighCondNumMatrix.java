@@ -48,12 +48,13 @@ package org.uma.jmetal.problem.singleobjective.cec2005competitioncode;
 
 import org.uma.jmetal.util.JMetalException;
 
-public class F21_rotated_hybrid_composition_3 extends TestFunc {
+public class F22RotatedHybridComposition3HighCondNumMatrix extends TestFunc {
 
   // Fixed (class) parameters
-  static final public String FUNCTION_NAME = "Rotated Hybrid Composition Function 3";
+  static final public String FUNCTION_NAME =
+    "Rotated Hybrid Composition Function 3 with High Condition Number Matrix";
   static final public String DEFAULT_FILE_DATA = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/hybrid_func3_data.txt";
-  static final public String DEFAULT_FILE_MX_PREFIX = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/hybrid_func3_M_D";
+  static final public String DEFAULT_FILE_MX_PREFIX = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/hybrid_func3_HM_D";
   static final public String DEFAULT_FILE_MX_SUFFIX = ".txt";
 
   // Number of functions
@@ -87,51 +88,52 @@ public class F21_rotated_hybrid_composition_3 extends TestFunc {
   private double[][] m_zM;
 
   // Constructors
-  public F21_rotated_hybrid_composition_3(int dimension, double bias) throws JMetalException {
+  public F22RotatedHybridComposition3HighCondNumMatrix(int dimension, double bias)
+    throws JMetalException {
     this(dimension, bias, DEFAULT_FILE_DATA,
       DEFAULT_FILE_MX_PREFIX + dimension + DEFAULT_FILE_MX_SUFFIX);
   }
 
-  public F21_rotated_hybrid_composition_3(int dimension, double bias, String file_data,
-    String file_m) throws JMetalException {
+  public F22RotatedHybridComposition3HighCondNumMatrix(int dimension, double bias, String file_data,
+      String file_m) throws JMetalException {
     super(dimension, bias, FUNCTION_NAME);
 
     // Note: dimension starts from 0
-    m_o = new double[NUM_FUNC][m_dimension];
-    m_M = new double[NUM_FUNC][m_dimension][m_dimension];
+    m_o = new double[NUM_FUNC][mDimension];
+    m_M = new double[NUM_FUNC][mDimension][mDimension];
 
-    m_testPoint = new double[m_dimension];
-    m_testPointM = new double[m_dimension];
+    m_testPoint = new double[mDimension];
+    m_testPointM = new double[mDimension];
     m_fmax = new double[NUM_FUNC];
 
     m_w = new double[NUM_FUNC];
-    m_z = new double[NUM_FUNC][m_dimension];
-    m_zM = new double[NUM_FUNC][m_dimension];
+    m_z = new double[NUM_FUNC][mDimension];
+    m_zM = new double[NUM_FUNC][mDimension];
 
     // Load the shifted global optimum
-    Benchmark.loadMatrixFromFile(file_data, NUM_FUNC, m_dimension, m_o);
+    Benchmark.loadMatrixFromFile(file_data, NUM_FUNC, mDimension, m_o);
     // Load the matrix
-    Benchmark.loadNMatrixFromFile(file_m, NUM_FUNC, m_dimension, m_dimension, m_M);
+    Benchmark.loadNMatrixFromFile(file_m, NUM_FUNC, mDimension, mDimension, m_M);
 
     // Initialize the hybrid composition job object
-    theJob.num_func = NUM_FUNC;
-    theJob.num_dim = m_dimension;
+    theJob.numberOfBasicFunctions = NUM_FUNC;
+    theJob.numberOfDimensions = mDimension;
     theJob.C = 2000.0;
     theJob.sigma = m_sigma;
     theJob.biases = m_func_biases;
     theJob.lambda = m_lambda;
-    theJob.o = m_o;
-    theJob.M = m_M;
+    theJob.shiftGlobalOptimum = m_o;
+    theJob.linearTransformationMatrix = m_M;
     theJob.w = m_w;
     theJob.z = m_z;
     theJob.zM = m_zM;
     // Calculate/estimate the fmax for all the functions involved
     for (int i = 0; i < NUM_FUNC; i++) {
-      for (int j = 0; j < m_dimension; j++) {
+      for (int j = 0; j < mDimension; j++) {
         m_testPoint[j] = (5.0 / m_lambda[i]);
       }
       Benchmark.rotate(m_testPointM, m_testPoint, m_M[i]);
-      m_fmax[i] = Math.abs(theJob.basic_func(i, m_testPointM));
+      m_fmax[i] = Math.abs(theJob.basicFunc(i, m_testPointM));
     }
     theJob.fmax = m_fmax;
   }
@@ -143,14 +145,14 @@ public class F21_rotated_hybrid_composition_3 extends TestFunc {
 
     result = Benchmark.hybrid_composition(x, theJob);
 
-    result += m_bias;
+    result += mBias;
 
     return (result);
   }
 
 
   private class MyHCJob extends HCJob {
-    public double basic_func(int func_no, double[] x) throws JMetalException {
+    public double basicFunc(int func_no, double[] x) throws JMetalException {
       double result = 0.0;
       switch (func_no) {
         case 0:

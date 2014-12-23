@@ -48,70 +48,58 @@ package org.uma.jmetal.problem.singleobjective.cec2005competitioncode;
 
 import org.uma.jmetal.util.JMetalException;
 
-public class F05_schwefel_global_opt_bound extends TestFunc {
+public class F14ShiftedRotatedExpandedScaffer extends TestFunc {
 
   // Fixed (class) parameters
-  static final public String FUNCTION_NAME = "Schwefel's Problem 2.6 with Global Optimum on Bounds";
-  static final public String DEFAULT_FILE_DATA = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/schwefel_206_data.txt";
+  static final public String FUNCTION_NAME = "Shifted Rotated Expanded Scaffer's F6 Function";
+  static final public String DEFAULT_FILE_DATA = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/E_ScafferF6_func_data.txt";
+  static final public String DEFAULT_FILE_MX_PREFIX = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/E_ScafferF6_M_D";
+  static final public String DEFAULT_FILE_MX_SUFFIX = ".txt";
 
   // Shifted global optimum
   private final double[] m_o;
-  private final double[][] m_A;
+  private final double[][] m_matrix;
 
   // In order to avoid excessive memory allocation,
   // a fixed memory buffer is allocated for each function object.
-  private double[] m_B;
   private double[] m_z;
+  private double[] m_zM;
 
   // Constructors
-  public F05_schwefel_global_opt_bound(int dimension, double bias) throws JMetalException {
-    this(dimension, bias, DEFAULT_FILE_DATA);
+  public F14ShiftedRotatedExpandedScaffer(int dimension, double bias) throws JMetalException {
+    this(dimension, bias, DEFAULT_FILE_DATA,
+      DEFAULT_FILE_MX_PREFIX + dimension + DEFAULT_FILE_MX_SUFFIX);
   }
 
-  public F05_schwefel_global_opt_bound(int dimension, double bias, String file_data)
-    throws JMetalException {
+  public F14ShiftedRotatedExpandedScaffer(int dimension, double bias, String file_data,
+      String file_m) throws JMetalException {
     super(dimension, bias, FUNCTION_NAME);
 
     // Note: dimension starts from 0
-    m_o = new double[m_dimension];
-    m_A = new double[m_dimension][m_dimension];
+    m_o = new double[mDimension];
+    m_matrix = new double[mDimension][mDimension];
 
-    m_B = new double[m_dimension];
-    m_z = new double[m_dimension];
-
-    double[][] m_data = new double[m_dimension + 1][m_dimension];
+    m_z = new double[mDimension];
+    m_zM = new double[mDimension];
 
     // Load the shifted global optimum
-    Benchmark.loadMatrixFromFile(file_data, m_dimension + 1, m_dimension, m_data);
-    for (int i = 0; i < m_dimension; i++) {
-      if ((i + 1) <= Math.ceil(m_dimension / 4.0)) {
-        m_o[i] = -100.0;
-      } else if ((i + 1) >= Math.floor((3.0 * m_dimension) / 4.0)) {
-        m_o[i] = 100.0;
-      } else {
-        m_o[i] = m_data[0][i];
-      }
-    }
-    for (int i = 0; i < m_dimension; i++) {
-      System.arraycopy(m_data[i + 1], 0, m_A[i], 0, m_dimension);
-    }
-    Benchmark.Ax(m_B, m_A, m_o);
+    Benchmark.loadRowVectorFromFile(file_data, mDimension, m_o);
+    // Load the matrix
+    Benchmark.loadMatrixFromFile(file_m, mDimension, mDimension, m_matrix);
   }
 
   // Function body
   public double f(double[] x) {
 
-    double max = Double.NEGATIVE_INFINITY;
+    double result = 0.0;
 
-    Benchmark.Ax(m_z, m_A, x);
+    Benchmark.shift(m_z, x, m_o);
+    Benchmark.rotate(m_zM, m_z, m_matrix);
 
-    for (int i = 0; i < m_dimension; i++) {
-      double temp = Math.abs(m_z[i] - m_B[i]);
-      if (max < temp) {
-        max = temp;
-      }
-    }
+    result = Benchmark.EScafferF6(m_zM);
 
-    return (max + m_bias);
+    result += mBias;
+
+    return (result);
   }
 }

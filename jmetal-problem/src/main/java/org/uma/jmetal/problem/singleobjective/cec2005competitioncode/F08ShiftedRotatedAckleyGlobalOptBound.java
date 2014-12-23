@@ -48,18 +48,14 @@ package org.uma.jmetal.problem.singleobjective.cec2005competitioncode;
 
 import org.uma.jmetal.util.JMetalException;
 
-public class F11_shifted_rotated_weierstrass extends TestFunc {
+public class F08ShiftedRotatedAckleyGlobalOptBound extends TestFunc {
 
   // Fixed (class) parameters
-  static final public String FUNCTION_NAME = "Shifted Rotated Weierstrass Function";
-  static final public String DEFAULT_FILE_DATA = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/weierstrass_data.txt";
-  static final public String DEFAULT_FILE_MX_PREFIX = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/weierstrass_M_D";
+  static final public String FUNCTION_NAME =
+    "Shifted Rotated Ackley's Function with Global Optimum on Bounds";
+  static final public String DEFAULT_FILE_DATA = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/ackley_func_data.txt";
+  static final public String DEFAULT_FILE_MX_PREFIX = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/ackley_M_D";
   static final public String DEFAULT_FILE_MX_SUFFIX = ".txt";
-
-  static final public double PIx2 = Math.PI * 2.0;
-  static final public int Kmax = 20;
-  static final public double a = 0.5;
-  static final public double b = 3.0;
 
   // Shifted global optimum
   private final double[] m_o;
@@ -71,26 +67,31 @@ public class F11_shifted_rotated_weierstrass extends TestFunc {
   private double[] m_zM;
 
   // Constructors
-  public F11_shifted_rotated_weierstrass(int dimension, double bias) throws JMetalException {
+  public F08ShiftedRotatedAckleyGlobalOptBound(int dimension, double bias)
+    throws JMetalException {
     this(dimension, bias, DEFAULT_FILE_DATA,
       DEFAULT_FILE_MX_PREFIX + dimension + DEFAULT_FILE_MX_SUFFIX);
   }
 
-  public F11_shifted_rotated_weierstrass(int dimension, double bias, String file_data,
-    String file_m) throws JMetalException {
+  public F08ShiftedRotatedAckleyGlobalOptBound(int dimension, double bias, String file_data,
+      String file_m) throws JMetalException {
     super(dimension, bias, FUNCTION_NAME);
 
     // Note: dimension starts from 0
-    m_o = new double[m_dimension];
-    m_matrix = new double[m_dimension][m_dimension];
+    m_o = new double[mDimension];
+    m_matrix = new double[mDimension][mDimension];
 
-    m_z = new double[m_dimension];
-    m_zM = new double[m_dimension];
+    m_z = new double[mDimension];
+    m_zM = new double[mDimension];
 
     // Load the shifted global optimum
-    Benchmark.loadRowVectorFromFile(file_data, m_dimension, m_o);
+    Benchmark.loadRowVectorFromFile(file_data, mDimension, m_o);
     // Load the matrix
-    Benchmark.loadMatrixFromFile(file_m, m_dimension, m_dimension, m_matrix);
+    Benchmark.loadMatrixFromFile(file_m, mDimension, mDimension, m_matrix);
+
+    for (int i = 0; i < mDimension; i += 2) {
+      m_o[i] = -32.0;
+    }
   }
 
   // Function body
@@ -99,11 +100,11 @@ public class F11_shifted_rotated_weierstrass extends TestFunc {
     double result = 0.0;
 
     Benchmark.shift(m_z, x, m_o);
-    Benchmark.xA(m_zM, m_z, m_matrix);
+    Benchmark.rotate(m_zM, m_z, m_matrix);
 
-    result = Benchmark.weierstrass(m_zM);
+    result = Benchmark.ackley(m_zM);
 
-    result += m_bias;
+    result += mBias;
 
     return (result);
   }

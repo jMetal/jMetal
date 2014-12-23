@@ -44,15 +44,14 @@
 //		Revised according to the Matlab reference code and the PDF document
 //		dated March 8, 2005.
 //
-
 package org.uma.jmetal.problem.singleobjective.cec2005competitioncode;
 
 import org.uma.jmetal.util.JMetalException;
 
-public class F02_shifted_schwefel extends TestFunc {
+public class F04ShiftedSchwefelNoise extends TestFunc {
 
   // Fixed (class) parameters
-  static final public String FUNCTION_NAME = "Shifted Schwefel's Problem 1.2";
+  static final public String FUNCTION_NAME = "Shifted Schwefel's Problem 1.2 with Noise in Fitness";
   static final public String DEFAULT_FILE_DATA = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/schwefel_102_data.txt";
 
   // Shifted global optimum
@@ -63,19 +62,20 @@ public class F02_shifted_schwefel extends TestFunc {
   private double[] m_z;
 
   // Constructors
-  public F02_shifted_schwefel(int dimension, double bias) throws JMetalException {
+  public F04ShiftedSchwefelNoise(int dimension, double bias) throws JMetalException {
     this(dimension, bias, DEFAULT_FILE_DATA);
   }
 
-  public F02_shifted_schwefel(int dimension, double bias, String file_data) throws JMetalException {
+  public F04ShiftedSchwefelNoise(int dimension, double bias, String file_data)
+    throws JMetalException {
     super(dimension, bias, FUNCTION_NAME);
 
     // Note: dimension starts from 0
-    m_o = new double[m_dimension];
-    m_z = new double[m_dimension];
+    m_o = new double[mDimension];
+    m_z = new double[mDimension];
 
     // Load the shifted global optimum
-    Benchmark.loadRowVectorFromFile(file_data, m_dimension, m_o);
+    Benchmark.loadRowVectorFromFile(file_data, mDimension, m_o);
   }
 
   // Function body
@@ -86,7 +86,11 @@ public class F02_shifted_schwefel extends TestFunc {
 
     result = Benchmark.schwefel_102(m_z);
 
-    result += m_bias;
+    // NOISE
+    // Comment the next line to remove the noise
+    result *= (1.0 + 0.4 * Math.abs(Benchmark.random.nextGaussian()));
+
+    result += mBias;
 
     return (result);
   }

@@ -48,12 +48,12 @@ package org.uma.jmetal.problem.singleobjective.cec2005competitioncode;
 
 import org.uma.jmetal.util.JMetalException;
 
-public class F07_shifted_rotated_griewank extends TestFunc {
+public class F03ShiftedRotatedHighCondElliptic extends TestFunc {
 
   // Fixed (class) parameters
-  static final public String FUNCTION_NAME = "Shifted Rotated Griewank's Function without Bounds";
-  static final public String DEFAULT_FILE_DATA = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/griewank_func_data.txt";
-  static final public String DEFAULT_FILE_MX_PREFIX = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/griewank_M_D";
+  static final public String FUNCTION_NAME = "Shifted Rotated High Conditioned Elliptic Function";
+  static final public String DEFAULT_FILE_DATA = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/high_cond_elliptic_rot_data.txt";
+  static final public String DEFAULT_FILE_MX_PREFIX = Benchmark.CEC2005SUPPORTDATADIRECTORY + "/Elliptic_M_D";
   static final public String DEFAULT_FILE_MX_SUFFIX = ".txt";
 
   // Shifted global optimum
@@ -65,40 +65,47 @@ public class F07_shifted_rotated_griewank extends TestFunc {
   private double[] m_z;
   private double[] m_zM;
 
+  private double constant;
+
   // Constructors
-  public F07_shifted_rotated_griewank(int dimension, double bias) throws JMetalException {
+  public F03ShiftedRotatedHighCondElliptic(int dimension, double bias) throws JMetalException {
     this(dimension, bias, DEFAULT_FILE_DATA,
       DEFAULT_FILE_MX_PREFIX + dimension + DEFAULT_FILE_MX_SUFFIX);
   }
 
-  public F07_shifted_rotated_griewank(int dimension, double bias, String file_data, String file_m)
-    throws JMetalException {
+  public F03ShiftedRotatedHighCondElliptic(int dimension, double bias, String file_data,
+      String file_m) throws JMetalException {
     super(dimension, bias, FUNCTION_NAME);
 
     // Note: dimension starts from 0
-    m_o = new double[m_dimension];
-    m_matrix = new double[m_dimension][m_dimension];
+    m_o = new double[mDimension];
+    m_matrix = new double[mDimension][mDimension];
 
-    m_z = new double[m_dimension];
-    m_zM = new double[m_dimension];
+    m_z = new double[mDimension];
+    m_zM = new double[mDimension];
 
     // Load the shifted global optimum
-    Benchmark.loadRowVectorFromFile(file_data, m_dimension, m_o);
+    Benchmark.loadRowVectorFromFile(file_data, mDimension, m_o);
     // Load the matrix
-    Benchmark.loadMatrixFromFile(file_m, m_dimension, m_dimension, m_matrix);
+    Benchmark.loadMatrixFromFile(file_m, mDimension, mDimension, m_matrix);
+
+    constant = Math.pow(1.0e6, 1.0 / (mDimension - 1.0));
   }
 
   // Function body
   public double f(double[] x) {
-
     double result = 0.0;
 
     Benchmark.shift(m_z, x, m_o);
     Benchmark.rotate(m_zM, m_z, m_matrix);
 
-    result = Benchmark.griewank(m_zM);
+    double sum = 0.0;
 
-    result += m_bias;
+    for (int i = 0; i < mDimension; i++) {
+      sum += Math.pow(constant, i) * m_zM[i] * m_zM[i];
+    }
+
+    result = sum + mBias;
 
     return (result);
   }

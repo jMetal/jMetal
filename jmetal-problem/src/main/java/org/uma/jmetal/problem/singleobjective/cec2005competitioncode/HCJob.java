@@ -47,14 +47,12 @@
 
 package org.uma.jmetal.problem.singleobjective.cec2005competitioncode;
 
-import org.uma.jmetal.util.JMetalException;
-
 public abstract class HCJob {
 
   // Number of basic functions
-  public int num_func;
+  public int numberOfBasicFunctions;
   // Number of dimensions
-  public int num_dim;
+  public int numberOfDimensions;
 
   // Predefined constant
   public double C;
@@ -67,9 +65,9 @@ public abstract class HCJob {
   // Estimated fmax
   public double[] fmax;
   // Shift global optimum for each basic function
-  public double[][] o;
+  public double[][] shiftGlobalOptimum;
   // Linear transformation matrix for each basic function
-  public double[][][] M;
+  public double[][][] linearTransformationMatrix;
 
   // Working areas to avoid memory allocation operations
   public double[] w;
@@ -81,5 +79,5 @@ public abstract class HCJob {
     // This class is just a place holder.
   }
 
-  public abstract double basic_func(int func_no, double[] x) throws JMetalException;
+  public abstract double basicFunc(int func_no, double[] x) ;
 }

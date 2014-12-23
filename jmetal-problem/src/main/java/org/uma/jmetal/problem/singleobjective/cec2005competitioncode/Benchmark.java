@@ -382,14 +382,14 @@ public class Benchmark {
   // Hybrid composition
   static public double hybrid_composition(double[] x, HCJob job) throws JMetalException {
 
-    int num_func = job.num_func;
-    int num_dim = job.num_dim;
+    int num_func = job.numberOfBasicFunctions;
+    int num_dim = job.numberOfDimensions;
 
     // Get the raw weights
     double wMax = Double.NEGATIVE_INFINITY;
     for (int i = 0; i < num_func; i++) {
       double sumSqr = 0.0;
-      shift(job.z[i], x, job.o[i]);
+      shift(job.z[i], x, job.shiftGlobalOptimum[i]);
       for (int j = 0; j < num_dim; j++) {
         sumSqr += (job.z[i][j] * job.z[i][j]);
       }
@@ -419,11 +419,11 @@ public class Benchmark {
       for (int j = 0; j < num_dim; j++) {
         job.z[i][j] /= job.lambda[i];
       }
-      rotate(job.zM[i], job.z[i], job.M[i]);
+      rotate(job.zM[i], job.z[i], job.linearTransformationMatrix[i]);
       sumF +=
         job.w[i] *
           (
-            job.C * job.basic_func(i, job.zM[i]) / job.fmax[i] +
+            job.C * job.basicFunc(i, job.zM[i]) / job.fmax[i] +
               job.biases[i]
           );
     }
