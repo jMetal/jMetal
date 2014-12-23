@@ -1,8 +1,7 @@
-//  Sphere.java
+//  Rastrigin.java
 //
 //  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
+//       Esteban López-Camacho <esteban@lcc.uma.es>
 //
 //  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
 //
@@ -15,7 +14,7 @@
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU Lesser General Public License for more details.
-// 
+//
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -27,20 +26,18 @@ import org.uma.jmetal.solution.DoubleSolution;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Class representing a Sphere problem.
- */
-public class Sphere extends AbstractDoubleProblem {
-  /** Constructor */
-  public Sphere() {
-    this(10) ;
-  }
-
-  /** Constructor */
-  public Sphere(Integer numberOfVariables) {
+public class Rastrigin extends AbstractDoubleProblem {
+  /**
+   * Constructor
+   * Creates a default instance of the Rastrigin problem
+   *
+   * @param numberOfVariables Number of variables of the problem
+   */
+  public Rastrigin(Integer numberOfVariables) {
     setNumberOfVariables(numberOfVariables);
     setNumberOfObjectives(1);
-    setName("Sphere");
+    setNumberOfConstraints(0) ;
+    setName("Rastrigin");
 
     List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
     List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
@@ -66,13 +63,16 @@ public class Sphere extends AbstractDoubleProblem {
       x[i] = solution.getVariableValue(i) ;
     }
 
-    double sum = 0.0 ;
-    for (int var = 0; var < numberOfVariables; var++) {
-      double value = x[var];
-      sum += value * value;
-    }
+    double result = 0.0;
+    double a = 10.0;
+    double w = 2 * Math.PI;
 
-    solution.setObjective(0, sum);
+    for (int i = 0; i < numberOfVariables; i++) {
+      result += x[i] * x[i] - a * Math.cos(w * x[i]);
+    }
+    result += a * numberOfVariables;
+
+    solution.setObjective(0, result);
   }
 }
 

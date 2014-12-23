@@ -1,4 +1,4 @@
-//  Sphere.java
+//  Griewank.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -28,26 +28,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class representing a Sphere problem.
+ * Class representing problem Griewank
  */
-public class Sphere extends AbstractDoubleProblem {
-  /** Constructor */
-  public Sphere() {
-    this(10) ;
-  }
+public class Griewank extends AbstractDoubleProblem {
 
-  /** Constructor */
-  public Sphere(Integer numberOfVariables) {
+  /**
+   * Constructor
+   * Creates a default instance of the Griewank problem
+   *
+   * @param numberOfVariables Number of variables of the problem
+   */
+  public Griewank(Integer numberOfVariables)  {
     setNumberOfVariables(numberOfVariables);
     setNumberOfObjectives(1);
-    setName("Sphere");
+    setNumberOfConstraints(0) ;
+    setName("Griewank");
 
     List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
     List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
 
     for (int i = 0; i < getNumberOfVariables(); i++) {
-      lowerLimit.add(-5.12);
-      upperLimit.add(5.12);
+      lowerLimit.add(-600.0);
+      upperLimit.add(600.0);
     }
 
     setLowerLimit(lowerLimit);
@@ -59,20 +61,21 @@ public class Sphere extends AbstractDoubleProblem {
   public void evaluate(DoubleSolution solution) {
     int numberOfVariables = getNumberOfVariables() ;
 
-    double[] f = new double[getNumberOfObjectives()];
     double[] x = new double[numberOfVariables] ;
 
     for (int i = 0; i < numberOfVariables; i++) {
       x[i] = solution.getVariableValue(i) ;
     }
 
-    double sum = 0.0 ;
+    double sum = 0.0;
+    double mult = 1.0;
+    double d = 4000.0;
     for (int var = 0; var < numberOfVariables; var++) {
-      double value = x[var];
-      sum += value * value;
+      sum += x[var] * x[var];
+      mult *= Math.cos(x[var] / Math.sqrt(var + 1));
     }
 
-    solution.setObjective(0, sum);
+    solution.setObjective(0, 1.0 / d * sum - mult + 1.0);
   }
 }
 

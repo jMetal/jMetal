@@ -1,8 +1,7 @@
-//  Sphere.java
+//  Rosenbrock.java
 //
 //  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
+//       Esteban López-Camacho <esteban@lcc.uma.es>
 //
 //  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
 //
@@ -15,7 +14,7 @@
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU Lesser General Public License for more details.
-// 
+//
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -27,20 +26,19 @@ import org.uma.jmetal.solution.DoubleSolution;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Class representing a Sphere problem.
- */
-public class Sphere extends AbstractDoubleProblem {
-  /** Constructor */
-  public Sphere() {
-    this(10) ;
-  }
+public class Rosenbrock extends AbstractDoubleProblem {
 
-  /** Constructor */
-  public Sphere(Integer numberOfVariables) {
+  /**
+   * Constructor
+   * Creates a default instance of the Rosenbrock problem
+   *
+   * @param numberOfVariables Number of variables of the problem
+   */
+  public Rosenbrock(Integer numberOfVariables) {
     setNumberOfVariables(numberOfVariables);
     setNumberOfObjectives(1);
-    setName("Sphere");
+    setNumberOfConstraints(0) ;
+    setName("Rosenbrock");
 
     List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
     List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
@@ -49,9 +47,6 @@ public class Sphere extends AbstractDoubleProblem {
       lowerLimit.add(-5.12);
       upperLimit.add(5.12);
     }
-
-    setLowerLimit(lowerLimit);
-    setUpperLimit(upperLimit);
   }
 
   /** Evaluate() method */
@@ -66,10 +61,12 @@ public class Sphere extends AbstractDoubleProblem {
       x[i] = solution.getVariableValue(i) ;
     }
 
-    double sum = 0.0 ;
-    for (int var = 0; var < numberOfVariables; var++) {
-      double value = x[var];
-      sum += value * value;
+    double sum = 0.0;
+
+    for (int i = 0; i < numberOfVariables - 1; i++) {
+      double temp1 = (x[i] * x[i]) - x[i + 1];
+      double temp2 = x[i] - 1.0;
+      sum += (100.0 * temp1 * temp1) + (temp2 * temp2);
     }
 
     solution.setObjective(0, sum);
