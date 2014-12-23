@@ -27,7 +27,6 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.binarySet.BinarySet;
 
 import java.util.ArrayList;
-import java.util.BitSet;
 import java.util.HashMap;
 
 /**
@@ -62,7 +61,7 @@ public class GenericBinarySolution extends AbstractGenericSolution<BinarySet, Bi
     }
 
     variables = new ArrayList<>() ;
-    for (BitSet var : solution.variables) {
+    for (BinarySet var : solution.variables) {
       variables.add((BinarySet) var.clone()) ;
     }
 

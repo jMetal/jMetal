@@ -34,7 +34,7 @@ import java.util.List;
 public class ConstrEx extends AbstractDoubleProblem implements ConstrainedProblem<DoubleSolution> {
   /**
    * Constructor
-   * Creates a default instance of the Constr_Ex problem
+   * Creates a default instance of the ConstrEx problem
    */
   public ConstrEx() {
     setNumberOfVariables(2);
