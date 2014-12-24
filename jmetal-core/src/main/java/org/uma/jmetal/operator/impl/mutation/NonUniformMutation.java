@@ -74,7 +74,7 @@ public class NonUniformMutation implements MutationOperator<DoubleSolution> {
 
   /** Execute() method */
   @Override
-  public DoubleSolution execute(DoubleSolution solution) throws JMetalException {
+  public DoubleSolution execute(DoubleSolution solution) {
     if (null == solution) {
       throw new JMetalException("Null parameter") ;
     }
@@ -88,7 +88,7 @@ public class NonUniformMutation implements MutationOperator<DoubleSolution> {
    * Perform the mutation operation
    *
    * @param probability Mutation setProbability
-   * @param solution    The solutiontype to mutate
+   * @param solution    The solution to mutate
    */
   public void doMutation(double probability, DoubleSolution solution){
     for (int i = 0; i < solution.getNumberOfVariables(); i++) {

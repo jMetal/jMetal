@@ -9,6 +9,7 @@ import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.BinaryProblem;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
+import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
 /**
  * Builder class
@@ -28,6 +29,11 @@ public class MOCHCBuilder {
 
   public MOCHCBuilder(BinaryProblem problem) {
     this.problem = problem;
+    evaluator = new SequentialSolutionListEvaluator() ;
+    populationSize = 100 ;
+    maxEvaluations = 25000 ;
+    convergenceValue = 3 ;
+    preservedPopulation = 0.05 ;
   }
 
   public MOCHCBuilder setPopulationSize(int populationSize) {

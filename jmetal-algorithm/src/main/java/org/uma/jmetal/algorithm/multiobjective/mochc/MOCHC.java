@@ -137,7 +137,6 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
 
   @Override protected void updateProgress() {
     evaluations += populationSize;
-    System.out.println("Vals: " + evaluations) ;
   }
 
   @Override protected boolean isStoppingConditionReached() {
@@ -191,12 +190,9 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
     List<BinarySolution> union = new ArrayList<>();
     union.addAll(population);
     union.addAll(offspringPopulation);
-    System.out.println("1") ;
 
     List<BinarySolution> newPopulation =
         (List<BinarySolution>) newGenerationSelection.execute(union);
-
-    System.out.println("2") ;
 
     if (solutionSetsAreEquals(population, newPopulation)) {
       minimumDistance--;
