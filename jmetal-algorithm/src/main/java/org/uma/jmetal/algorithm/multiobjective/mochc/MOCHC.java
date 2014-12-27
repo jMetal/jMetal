@@ -30,7 +30,7 @@ import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.binarySet.BinarySet;
-import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
+import org.uma.jmetal.util.comparator.impl.CrowdingDistanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 
 import java.util.*;

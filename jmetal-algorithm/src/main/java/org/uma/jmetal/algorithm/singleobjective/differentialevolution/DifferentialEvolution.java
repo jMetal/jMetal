@@ -27,7 +27,7 @@ import org.uma.jmetal.operator.impl.selection.DifferentialEvolutionSelection;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.comparator.ObjectiveComparator;
+import org.uma.jmetal.util.comparator.impl.ObjectiveComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 
 import java.util.*;

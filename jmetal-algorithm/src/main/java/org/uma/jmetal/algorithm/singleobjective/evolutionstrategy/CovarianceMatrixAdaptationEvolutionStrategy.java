@@ -25,7 +25,7 @@ import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.comparator.ObjectiveComparator;
+import org.uma.jmetal.util.comparator.impl.ObjectiveComparator;
 
 import java.util.*;
 

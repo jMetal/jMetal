@@ -3,9 +3,9 @@ package org.uma.jmetal.util.archive.impl;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.archive.Archive;
-import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
-import org.uma.jmetal.util.comparator.DominanceComparator;
-import org.uma.jmetal.util.comparator.EqualSolutionsComparator;
+import org.uma.jmetal.util.comparator.impl.CrowdingDistanceComparator;
+import org.uma.jmetal.util.comparator.impl.DominanceComparator;
+import org.uma.jmetal.util.comparator.impl.EqualSolutionsComparator;
 import org.uma.jmetal.util.solutionattribute.DensityEstimator;
 import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;
 

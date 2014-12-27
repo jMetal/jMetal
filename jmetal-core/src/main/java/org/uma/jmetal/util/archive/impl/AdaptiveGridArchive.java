@@ -24,7 +24,7 @@ package org.uma.jmetal.util.archive.impl;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AdaptiveGrid;
 import org.uma.jmetal.util.archive.Archive;
-import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.comparator.impl.DominanceComparator;
 
 import java.util.ArrayList;
 import java.util.Comparator;

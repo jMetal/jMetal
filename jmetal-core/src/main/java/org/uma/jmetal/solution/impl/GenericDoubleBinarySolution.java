@@ -29,6 +29,7 @@ public class GenericDoubleBinarySolution
     variables = new ArrayList<>(problem.getNumberOfVariables()) ;
     numberOfDoubleVariables = problem.getNumberOfDoubleVariables() ;
     overallConstraintViolationDegree = 0.0 ;
+    numberOfViolatedConstraints = 0 ;
 
     initializeDoubleVariables();
     initializeBitSet() ;
