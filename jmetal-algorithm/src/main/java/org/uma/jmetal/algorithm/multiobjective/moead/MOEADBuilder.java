@@ -21,7 +21,8 @@ import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
 
 /**
- * Builder class for algorithm MOEA/D
+ * Builder class for algorithm MOEA/D and variants
+ *
  * @author Antonio J. Nebro
  * @version 1.0
  */
