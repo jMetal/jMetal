@@ -1,10 +1,10 @@
 package org.uma.jmetal.algorithm.multiobjective.moead;
 
+import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.Solution;
 
 import java.util.List;
 
@@ -13,21 +13,22 @@ import java.util.List;
  */
 public class MOEAD extends AbstractMOEAD<DoubleSolution> {
   private DifferentialEvolutionCrossover differentialEvolutionCrossover ;
+
   public MOEAD(Problem problem,
       int populationSize,
       int resultPopulationSize,
       int maxEvaluations,
       MutationOperator mutation,
+      CrossoverOperator crossover,
       FunctionType functionType,
       String dataDirectory,
       double neighborhoodSelectionProbability,
       int maximumNumberOfReplacedSolutions,
       int neighborSize) {
-    super(problem, populationSize, resultPopulationSize, maxEvaluations, mutation, functionType,
+    super(problem, populationSize, resultPopulationSize, maxEvaluations, crossover, mutation, functionType,
         dataDirectory, neighborhoodSelectionProbability, maximumNumberOfReplacedSolutions,
         neighborSize);
 
-    crossoverOperator = new DifferentialEvolutionCrossover() ;
     differentialEvolutionCrossover = (DifferentialEvolutionCrossover)crossoverOperator ;
   }
 
@@ -73,7 +74,7 @@ public class MOEAD extends AbstractMOEAD<DoubleSolution> {
     }
   }
 
-  @Override public List<Solution> getResult() {
-    return null;
+  @Override public List<DoubleSolution> getResult() {
+    return population ;
   }
 }

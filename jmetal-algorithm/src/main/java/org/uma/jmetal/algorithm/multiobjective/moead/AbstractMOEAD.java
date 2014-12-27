@@ -19,9 +19,9 @@ import java.util.Vector;
 /**
  * Created by ajnebro on 26/12/14.
  */
-public abstract class AbstractMOEAD<S extends Solution> implements Algorithm<List<Solution>> {
+public abstract class AbstractMOEAD<S extends Solution> implements Algorithm<List<? extends Solution>> {
   protected enum NeighborType {NEIGHBOR, POPULATION}
-  protected enum FunctionType {TCHE, PBI, AGG}
+  public enum FunctionType {TCHE, PBI, AGG}
 
   protected Problem problem ;
 
@@ -57,7 +57,7 @@ public abstract class AbstractMOEAD<S extends Solution> implements Algorithm<Lis
   protected int numberOfThreads ;
 
   public AbstractMOEAD(Problem problem, int populationSize, int resultPopulationSize,
-      int maxEvaluations, MutationOperator mutation,
+      int maxEvaluations, CrossoverOperator crossoverOperator, MutationOperator mutation,
       FunctionType functionType, String dataDirectory, double neighborhoodSelectionProbability,
       int maximumNumberOfReplacedSolutions, int neighborSize) {
     this.problem = problem ;
@@ -65,13 +65,19 @@ public abstract class AbstractMOEAD<S extends Solution> implements Algorithm<Lis
     this.resultPopulationSize = resultPopulationSize ;
     this.maxEvaluations = maxEvaluations ;
     this.mutationOperator = mutation ;
+    this.crossoverOperator = crossoverOperator ;
     this.functionType = functionType ;
     this.neighborhoodSelectionProbability = neighborhoodSelectionProbability ;
     this.maximumNumberOfReplacedSolutions = maximumNumberOfReplacedSolutions ;
     this.neighborSize = neighborSize ;
 
-    crossoverOperator = null ;
     randomGenerator = JMetalRandom.getInstance() ;
+
+    population = new ArrayList<>(populationSize);
+    indArray = new Solution[problem.getNumberOfObjectives()];
+    neighborhood = new int[populationSize][neighborSize];
+    idealPoint = new double[problem.getNumberOfObjectives()];
+    lambda = new double[populationSize][problem.getNumberOfObjectives()];
   }
 
   /**

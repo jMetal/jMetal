@@ -175,9 +175,9 @@ public class MOEADBuilder {
     return this ;
   }
 
-  public Algorithm build(String moeadVariant) {
+  public Algorithm build() {
     return new MOEAD(problem, populationSize, resultPopulationSize, maxEvaluations,
-        mutation, functionType, dataDirectory, neighborhoodSelectionProbability,
+        mutation, crossover, functionType, dataDirectory, neighborhoodSelectionProbability,
         maximumNumberOfReplacedSolutions, neighborSize) ;
   }
 }
