@@ -22,7 +22,7 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -83,6 +83,7 @@ public abstract class AbstractMOEAD<S extends Solution> implements Algorithm<Lis
     this.mutationOperator = mutation ;
     this.crossoverOperator = crossoverOperator ;
     this.functionType = functionType ;
+    this.dataDirectory = dataDirectory ;
     this.neighborhoodSelectionProbability = neighborhoodSelectionProbability ;
     this.maximumNumberOfReplacedSolutions = maximumNumberOfReplacedSolutions ;
     this.neighborSize = neighborSize ;
@@ -112,11 +113,8 @@ public abstract class AbstractMOEAD<S extends Solution> implements Algorithm<Lis
           populationSize + ".dat";
 
       try {
-        FileInputStream fis =
-            new FileInputStream(
-                this.getClass().getClassLoader().getResource(dataDirectory + "/" + dataFileName)
-                    .getPath());
-        InputStreamReader isr = new InputStreamReader(fis);
+        InputStream in = getClass().getResourceAsStream("/" + dataDirectory + "/" + dataFileName);
+        InputStreamReader isr = new InputStreamReader(in);
         BufferedReader br = new BufferedReader(isr);
 
         int i = 0;
@@ -205,11 +203,13 @@ public abstract class AbstractMOEAD<S extends Solution> implements Algorithm<Lis
     return parents ;
   }
 
+  /**
+   *
+   * @param listOfSolutions The set of the indexes of selected mating parents
+   * @param subproblemId the id of current subproblem
+   * @param neighbourType neighbour type
+   */
   protected void matingSelection(Vector<Integer> listOfSolutions, int subproblemId, NeighborType neighbourType) {
-    // list : the set of the indexes of selected mating parents
-    // subProblemId  : the id of current subproblem
-    // numberOfSolutionsToSelect : the number of selected mating parents
-    // type : 1 - neighborhood; otherwise - whole population
     int neighbourSize;
     int selectedSolution;
     int numberOfSolutionsToSelect = 2 ;

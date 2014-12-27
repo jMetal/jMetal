@@ -83,6 +83,7 @@ public class MOEADRunner {
         .setMaximumNumberOfReplacedSolutions(2)
         .setNeighborSize(20)
         .setFunctionType(AbstractMOEAD.FunctionType.TCHE)
+        .setDataDirectory("MOEAD_Weights")
         .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
