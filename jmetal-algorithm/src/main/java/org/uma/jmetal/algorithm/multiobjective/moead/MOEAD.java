@@ -22,7 +22,7 @@ import org.uma.jmetal.solution.DoubleSolution;
 import java.util.List;
 
 /**
- * Class implementing the MOEAD/DE algorithm described in :
+ * Class implementing the MOEA/D-DE algorithm described in :
  * Hui Li; Qingfu Zhang, "Multiobjective Optimization Problems With Complicated Pareto Sets,
  * MOEA/D and NSGA-II," Evolutionary Computation, IEEE Transactions on , vol.13, no.2, pp.284,302,
  * April 2009. doi: 10.1109/TEVC.2008.925798

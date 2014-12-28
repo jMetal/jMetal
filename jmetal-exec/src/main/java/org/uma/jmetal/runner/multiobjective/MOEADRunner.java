@@ -72,7 +72,7 @@ public class MOEADRunner {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    algorithm = new MOEADBuilder(problem, MOEADBuilder.Variant.ConstraintMOEAD)
+    algorithm = new MOEADBuilder(problem, MOEADBuilder.Variant.MOEADDRA)
         .setCrossover(crossover)
         .setMutation(mutation)
         .setMaxEvaluations(150000)

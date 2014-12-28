@@ -27,7 +27,7 @@ import org.uma.jmetal.problem.Problem;
  * @version 1.0
  */
 public class MOEADBuilder {
-  public enum Variant {MOEAD, ConstraintMOEAD} ;
+  public enum Variant {MOEAD, ConstraintMOEAD, MOEADDRA} ;
 
   private Problem problem ;
 
@@ -189,6 +189,10 @@ public class MOEADBuilder {
           maximumNumberOfReplacedSolutions, neighborSize);
     } else if (moeadVariant.equals(Variant.ConstraintMOEAD)) {
       algorithm =  new ConstraintMOEAD(problem, populationSize, resultPopulationSize, maxEvaluations, mutation,
+          crossover, functionType, dataDirectory, neighborhoodSelectionProbability,
+          maximumNumberOfReplacedSolutions, neighborSize);
+    } else if (moeadVariant.equals(Variant.MOEADDRA)) {
+      algorithm =  new MOEADDRA(problem, populationSize, resultPopulationSize, maxEvaluations, mutation,
           crossover, functionType, dataDirectory, neighborhoodSelectionProbability,
           maximumNumberOfReplacedSolutions, neighborSize);
     }
