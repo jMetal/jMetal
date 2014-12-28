@@ -21,8 +21,8 @@
 package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.SteadyStateNSGAII;
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.SteadyStateNSGAIIBuilder;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -61,7 +61,13 @@ public class SteadyStateNSGAIIRunner {
     MutationOperator mutation;
     SelectionOperator selection;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4" ;
+    String problemName ;
+    if (args.length == 1) {
+      problemName = args[0] ;
+    } else {
+      //problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+      problemName = "org.uma.jmetal.problem.multiobjective.Srinivas";
+    }
 
     problem = ProblemUtils.loadProblem(problemName);
 
@@ -75,7 +81,7 @@ public class SteadyStateNSGAIIRunner {
 
     selection = new BinaryTournamentSelection();
 
-    algorithm = new SteadyStateNSGAIIBuilder(problem)
+    algorithm = new NSGAIIBuilder(problem, NSGAIIBuilder.NSGAIIVariant.SteadyStateNSGAII)
             .setCrossoverOperator(crossover)
             .setMutationOperator(mutation)
             .setSelectionOperator(selection)
