@@ -27,30 +27,34 @@ import org.uma.jmetal.problem.Problem;
  * @version 1.0
  */
 public class MOEADBuilder {
-  protected Problem problem ;
+  public enum Variant {MOEAD, ConstraintMOEAD} ;
+
+  private Problem problem ;
 
   /** T in Zhang & Li paper */
-  protected int neighborSize;
+  private int neighborSize;
   /** Delta in Zhang & Li paper */
-  protected double neighborhoodSelectionProbability;
+  private double neighborhoodSelectionProbability;
   /** nr in Zhang & Li paper */
-  protected int maximumNumberOfReplacedSolutions;
+  private int maximumNumberOfReplacedSolutions;
 
-  protected MOEAD.FunctionType functionType;
+  private MOEAD.FunctionType functionType;
 
-  protected CrossoverOperator crossover;
-  protected MutationOperator mutation;
-  protected String dataDirectory;
+  private CrossoverOperator crossover;
+  private MutationOperator mutation;
+  private String dataDirectory;
 
-  protected int populationSize;
-  protected int resultPopulationSize ;
+  private int populationSize;
+  private int resultPopulationSize ;
 
-  protected int maxEvaluations;
+  private int maxEvaluations;
 
-  protected int numberOfThreads ;
+  private int numberOfThreads ;
+
+  private Variant moeadVariant ;
 
   /** Constructor */
-  public MOEADBuilder(Problem problem) {
+  public MOEADBuilder(Problem problem, Variant variant) {
     this.problem = problem ;
     populationSize = 300 ;
     resultPopulationSize = 300 ;
@@ -63,6 +67,7 @@ public class MOEADBuilder {
     dataDirectory = "" ;
     neighborSize = 20 ;
     numberOfThreads = 1 ;
+    moeadVariant = variant ;
   }
 
   /* Getters/Setters */
@@ -177,8 +182,17 @@ public class MOEADBuilder {
   }
 
   public Algorithm build() {
-    return new MOEAD(problem, populationSize, resultPopulationSize, maxEvaluations,
-        mutation, crossover, functionType, dataDirectory, neighborhoodSelectionProbability,
-        maximumNumberOfReplacedSolutions, neighborSize) ;
+    Algorithm algorithm = null ;
+    if (moeadVariant.equals(Variant.MOEAD)) {
+      algorithm = new MOEAD(problem, populationSize, resultPopulationSize, maxEvaluations, mutation,
+          crossover, functionType, dataDirectory, neighborhoodSelectionProbability,
+          maximumNumberOfReplacedSolutions, neighborSize);
+    } else if (moeadVariant.equals(Variant.ConstraintMOEAD)) {
+      algorithm =  new ConstraintMOEAD(problem, populationSize, resultPopulationSize, maxEvaluations, mutation,
+          crossover, functionType, dataDirectory, neighborhoodSelectionProbability,
+          maximumNumberOfReplacedSolutions, neighborSize);
+    }
+
+    return algorithm ;
   }
 }

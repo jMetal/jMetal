@@ -5,5 +5,5 @@ import org.uma.jmetal.solution.Solution;
 import java.util.Comparator;
 
 public interface ConstraintViolationComparator extends Comparator<Solution> {
-  public int compare(Solution o1, Solution o2);
+  public int compare(Solution solution1, Solution solution2);
 }

@@ -15,7 +15,6 @@ package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.moead.AbstractMOEAD;
-import org.uma.jmetal.algorithm.multiobjective.moead.MOEAD;
 import org.uma.jmetal.algorithm.multiobjective.moead.MOEADBuilder;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
@@ -73,7 +72,7 @@ public class MOEADRunner {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    algorithm = new MOEADBuilder(problem)
+    algorithm = new MOEADBuilder(problem, MOEADBuilder.Variant.ConstraintMOEAD)
         .setCrossover(crossover)
         .setMutation(mutation)
         .setMaxEvaluations(150000)
@@ -89,7 +88,7 @@ public class MOEADRunner {
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
         .execute() ;
 
-    List<DoubleSolution> population = ((MOEAD)algorithm).getResult() ;
+    List<DoubleSolution> population = (List<DoubleSolution>)algorithm.getResult() ;
     long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)
