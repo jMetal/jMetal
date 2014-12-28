@@ -21,6 +21,7 @@ public class GenericIntegerPermutationSolution
     objectives = new ArrayList<>(problem.getNumberOfObjectives()) ;
     variables = new ArrayList<>(problem.getNumberOfVariables()) ;
     overallConstraintViolationDegree = 0.0 ;
+    numberOfViolatedConstraints = 0 ;
 
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
       List<Integer> randomSequence = new ArrayList<>(problem.getPermutationLength(i));
@@ -51,6 +52,8 @@ public class GenericIntegerPermutationSolution
     }
 
     overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
+    numberOfViolatedConstraints = solution.numberOfViolatedConstraints ;
+
     attributes = new HashMap(solution.attributes) ;
   }
 

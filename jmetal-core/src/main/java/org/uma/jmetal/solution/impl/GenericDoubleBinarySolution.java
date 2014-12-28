@@ -47,6 +47,8 @@ public class GenericDoubleBinarySolution
     copyBitSet(solution);
 
     overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
+    numberOfViolatedConstraints = solution.numberOfViolatedConstraints ;
+
     attributes = new HashMap(solution.attributes) ;
   }
 
