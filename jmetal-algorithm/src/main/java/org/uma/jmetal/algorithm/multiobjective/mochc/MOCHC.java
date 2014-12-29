@@ -90,47 +90,6 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
     comparator = new CrowdingDistanceComparator();
   }
 
-  /* Getters */
-  public BinaryProblem getProblem() {
-    return problem;
-  }
-
-  public int getPopulationSize() {
-    return populationSize;
-  }
-
-  public int getMaxEvaluation() {
-    return maxEvaluations;
-  }
-
-  public double getInitialConvergenceCount() {
-    return initialConvergenceCount;
-  }
-
-  public int getConvergenceValue() {
-    return convergenceValue;
-  }
-
-  public CrossoverOperator getCrossover() {
-    return crossover;
-  }
-
-  public MutationOperator getCataclysmicMutation() {
-    return cataclysmicMutation;
-  }
-
-  public SelectionOperator getParentSelection() {
-    return parentSelection;
-  }
-
-  public SelectionOperator getNewGenerationSelection() {
-    return newGenerationSelection;
-  }
-
-  public double getPreservedPopulation() {
-    return preservedPopulation;
-  }
-
   @Override protected void initProgress() {
     evaluations = populationSize ;
   }
