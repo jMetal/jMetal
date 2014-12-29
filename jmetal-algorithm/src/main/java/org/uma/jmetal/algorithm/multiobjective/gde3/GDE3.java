@@ -22,7 +22,6 @@
 package org.uma.jmetal.algorithm.multiobjective.gde3;
 
 import org.uma.jmetal.algorithm.impl.AbstractDifferentialEvolution;
-import org.uma.jmetal.operator.Operator;
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.impl.selection.DifferentialEvolutionSelection;
 import org.uma.jmetal.problem.DoubleProblem;
@@ -31,7 +30,6 @@ import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.comparator.impl.CrowdingDistanceComparator;
 import org.uma.jmetal.util.comparator.impl.DominanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
-import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.solutionattribute.DensityEstimator;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;
@@ -58,83 +56,20 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
   /**
    * Constructor
    */
-  public GDE3(Builder builder) {
-    problem = builder.problem;
-    maxIterations = builder.maxIterations;
-    crossoverOperator = builder.crossoverOperator;
-    selectionOperator = builder.selectionOperator;
-    populationSize = builder.populationSize;
-    dominanceComparator = new DominanceComparator();
+  public GDE3(DoubleProblem problem, int populationSize, int maxIterations,
+      DifferentialEvolutionSelection selection, DifferentialEvolutionCrossover crossover,
+      SolutionListEvaluator evaluator) {
+    this.problem = problem;
+    this.populationSize = populationSize;
+    this.maxIterations = maxIterations;
+    this.crossoverOperator = crossover;
+    this.selectionOperator = selection;
 
     dominanceComparator = new DominanceComparator();
-    iterations = 0;
     ranking = new DominanceRanking();
     crowdingDistance = new CrowdingDistance();
 
-    evaluator = new SequentialSolutionListEvaluator();
-  }
-
-  /* Getters */
-  public Operator getCrossoverOperator() {
-    return crossoverOperator;
-  }
-
-  public Operator getSelectionOperator() {
-    return selectionOperator;
-  }
-
-  public int getPopulationSize() {
-    return populationSize;
-  }
-
-  public int getMaxIterations() {
-    return maxIterations;
-  }
-
-  /**
-   * Builder class
-   */
-  public static class Builder {
-    protected DoubleProblem problem;
-
-    protected int populationSize;
-    protected int maxIterations;
-
-    protected DifferentialEvolutionCrossover crossoverOperator;
-    protected DifferentialEvolutionSelection selectionOperator;
-
-    public Builder(DoubleProblem problem) {
-      this.problem = problem;
-      selectionOperator = new DifferentialEvolutionSelection();
-    }
-
-    public Builder setPopulationSize(int populationSize) {
-      this.populationSize = populationSize;
-
-      return this;
-    }
-
-    public Builder setMaxIterations(int maxIterations) {
-      this.maxIterations = maxIterations;
-
-      return this;
-    }
-
-    public Builder setCrossover(DifferentialEvolutionCrossover crossover) {
-      crossoverOperator = crossover;
-
-      return this;
-    }
-
-    public Builder setSelection(DifferentialEvolutionSelection selection) {
-      selectionOperator = selection;
-
-      return this;
-    }
-
-    public GDE3 build() {
-      return new GDE3(this);
-    }
+    this.evaluator = evaluator ;
   }
 
   @Override protected void initProgress() {

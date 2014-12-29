@@ -11,7 +11,6 @@ import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.impl.CrowdingDistanceComparator;
 import org.uma.jmetal.util.comparator.impl.DominanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
-import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.ArrayList;
@@ -62,7 +61,8 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
   public SMPSO(DoubleProblem problem, int swarmSize, Archive<DoubleSolution> leaders,
       MutationOperator mutationOperator, int maxIterations, double r1Min, double r1Max,
       double r2Min, double r2Max, double c1Min, double c1Max, double c2Min, double c2Max,
-      double weightMin, double weightMax, double changeVelocity1, double changeVelocity2) {
+      double weightMin, double weightMax, double changeVelocity1, double changeVelocity2,
+      SolutionListEvaluator evaluator) {
     this.problem = problem;
     this.swarmSize = swarmSize;
     this.leaders = leaders;
@@ -83,7 +83,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
     this.changeVelocity2 = changeVelocity2;
 
     randomGenerator = JMetalRandom.getInstance();
-    evaluator = new SequentialSolutionListEvaluator();
+    this.evaluator = evaluator;
 
     dominanceComparator = new DominanceComparator();
     crowdingDistanceComparator = new CrowdingDistanceComparator();

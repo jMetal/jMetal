@@ -1,10 +1,12 @@
 package org.uma.jmetal.algorithm.multiobjective.smpso;
 
 import org.uma.jmetal.operator.MutationOperator;
+import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
+import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
 
@@ -58,6 +60,9 @@ public class SMPSOBuilder  {
     weightMin = 0.1;
     changeVelocity1 = -1;
     changeVelocity2 = -1;
+
+    mutationOperator = new PolynomialMutation(1.0/problem.getNumberOfVariables(), 20.0) ;
+    evaluator = new SequentialSolutionListEvaluator() ;
   }
 
   /* Getters */
@@ -220,7 +225,8 @@ public class SMPSOBuilder  {
 
   public SMPSO build() {
     return new SMPSO(problem, swarmSize, leaders, mutationOperator, maxIterations, r1Min, r1Max,
-        r2Min, r2Max, c1Min, c1Max, c2Min, c2Max, weightMin, weightMax, changeVelocity1, changeVelocity2);
+        r2Min, r2Max, c1Min, c1Max, c2Min, c2Max, weightMin, weightMax, changeVelocity1,
+        changeVelocity2, evaluator);
   }
 }
 
