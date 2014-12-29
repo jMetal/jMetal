@@ -1,7 +1,7 @@
 package org.uma.jmetal.algorithm.multiobjective.smpso;
 
 import org.uma.jmetal.algorithm.impl.AbstractParticleSwarmOptimization;
-import org.uma.jmetal.operator.Operator;
+import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
@@ -13,7 +13,6 @@ import org.uma.jmetal.util.comparator.impl.DominanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -50,7 +49,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
   private Comparator<Solution> dominanceComparator;
   private Comparator<Solution> crowdingDistanceComparator;
 
-  private Operator mutation;
+  private MutationOperator mutation;
 
   private double deltaMax[];
   private double deltaMin[];
@@ -60,25 +59,28 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
   /**
    * Constructor
    */
-  public SMPSO(Builder builder) {
-    problem = builder.problem;
-    swarmSize = builder.swarmSize;
-    leaders = builder.leaders;
-    mutation = builder.mutationOperator;
-    maxIterations = builder.maxIterations;
+  public SMPSO(DoubleProblem problem, int swarmSize, Archive<DoubleSolution> leaders,
+      MutationOperator mutationOperator, int maxIterations, double r1Min, double r1Max,
+      double r2Min, double r2Max, double c1Min, double c1Max, double c2Min, double c2Max,
+      double weightMin, double weightMax, double changeVelocity1, double changeVelocity2) {
+    this.problem = problem;
+    this.swarmSize = swarmSize;
+    this.leaders = leaders;
+    this.mutation = mutationOperator;
+    this.maxIterations = maxIterations;
 
-    r1Max = builder.r1Max;
-    r1Min = builder.r1Min;
-    r2Max = builder.r2Max;
-    r2Min = builder.r2Min;
-    c1Max = builder.c1Max;
-    c1Min = builder.c1Min;
-    c2Max = builder.c2Max;
-    c2Min = builder.c2Min;
-    weightMax = builder.weightMax;
-    weightMin = builder.weightMin;
-    changeVelocity1 = builder.changeVelocity1;
-    changeVelocity2 = builder.changeVelocity2;
+    this.r1Max = r1Max;
+    this.r1Min = r1Min;
+    this.r2Max = r2Max;
+    this.r2Min = r2Min;
+    this.c1Max = c1Max;
+    this.c1Min = c1Min;
+    this.c2Max = c2Max;
+    this.c2Min = c2Min;
+    this.weightMax = weightMax;
+    this.weightMin = weightMin;
+    this.changeVelocity1 = changeVelocity1;
+    this.changeVelocity2 = changeVelocity2;
 
     randomGenerator = JMetalRandom.getInstance();
     evaluator = new SequentialSolutionListEvaluator();
@@ -99,218 +101,6 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
       for (int j = 0; j < problem.getNumberOfVariables(); j++) {
         speed[i][j] = 0.0;
       }
-    }
-  }
-
-  /* Getters */
-  public int getSwarmSize() {
-    return swarmSize;
-  }
-
-  public int getMaxIterations() {
-    return maxIterations;
-  }
-
-  public double getR1Max() {
-    return r1Max;
-  }
-
-  public double getR1Min() {
-    return r1Min;
-  }
-
-  public double getR2Max() {
-    return r2Max;
-  }
-
-  public double getR2Min() {
-    return r2Min;
-  }
-
-  public double getC1Max() {
-    return c1Max;
-  }
-
-  public double getC1Min() {
-    return c1Min;
-  }
-
-  public double getC2Max() {
-    return c2Max;
-  }
-
-  public double getC2Min() {
-    return c2Min;
-  }
-
-  public Operator getMutation() {
-    return mutation;
-  }
-
-  public double getWeightMax() {
-    return weightMax;
-  }
-
-  public double getWeightMin() {
-    return weightMin;
-  }
-
-  public double getChangeVelocity1() {
-    return changeVelocity1;
-  }
-
-  public double getChangeVelocity2() {
-    return changeVelocity2;
-  }
-
-  /**
-   * Builder class
-   */
-  public static class Builder {
-    protected DoubleProblem problem;
-    protected Archive leaders;
-
-    protected int swarmSize;
-    protected int maxIterations;
-    protected int archiveSize;
-
-    protected Operator mutationOperator;
-
-    private double c1Max;
-    private double c1Min;
-    private double c2Max;
-    private double c2Min;
-    private double r1Max;
-    private double r1Min;
-    private double r2Max;
-    private double r2Min;
-    private double weightMax;
-    private double weightMin;
-    private double changeVelocity1;
-    private double changeVelocity2;
-    private JMetalRandom randomGenerator;
-
-    public Builder(DoubleProblem problem, Archive leaders) {
-      this.problem = problem;
-      this.leaders = leaders;
-
-      swarmSize = 100;
-      maxIterations = 25000;
-
-      r1Max = 1.0;
-      r1Min = 0.0;
-      r2Max = 1.0;
-      r2Min = 0.0;
-      c1Max = 2.5;
-      c1Min = 1.5;
-      c2Max = 2.5;
-      c2Min = 1.5;
-      weightMax = 0.1;
-      weightMin = 0.1;
-      changeVelocity1 = -1;
-      changeVelocity2 = -1;
-
-      randomGenerator = JMetalRandom.getInstance();
-    }
-
-    public Builder setSwarmSize(int swarmSize) {
-      this.swarmSize = swarmSize;
-
-      return this;
-    }
-
-    public Builder setMaxIterations(int maxIterations) {
-      this.maxIterations = maxIterations;
-
-      return this;
-    }
-
-    public Builder setMutation(Operator mutation) {
-      mutationOperator = mutation;
-
-      return this;
-    }
-
-    public Builder setC1Max(double c1Max) {
-      this.c1Max = c1Max;
-
-      return this;
-    }
-
-    public Builder setC1Min(double c1Min) {
-      this.c1Min = c1Min;
-
-      return this;
-    }
-
-    public Builder setC2Max(double c2Max) {
-      this.c2Max = c2Max;
-
-      return this;
-    }
-
-    public Builder setC2Min(double c2Min) {
-      this.c2Min = c2Min;
-
-      return this;
-    }
-
-    public Builder setR1Max(double r1Max) {
-      this.r1Max = r1Max;
-
-      return this;
-    }
-
-    public Builder setR1Min(double r1Min) {
-      this.r1Min = r1Min;
-
-      return this;
-    }
-
-    public Builder setR2Max(double r2Max) {
-      this.r2Max = r2Max;
-
-      return this;
-    }
-
-    public Builder setR2Min(double r2Min) {
-      this.r2Min = r2Min;
-
-      return this;
-    }
-
-    public Builder setWeightMax(double weightMax) {
-      this.weightMax = weightMax;
-
-      return this;
-    }
-
-    public Builder setWeightMin(double weightMin) {
-      this.weightMin = weightMin;
-
-      return this;
-    }
-
-    public Builder setChangeVelocity1(double changeVelocity1) {
-      this.changeVelocity1 = changeVelocity1;
-
-      return this;
-    }
-
-    public Builder setChangeVelocity2(double changeVelocity2) {
-      this.changeVelocity2 = changeVelocity2;
-
-      return this;
-    }
-
-    public Builder setRandomGenerator(PseudoRandomGenerator randomGenerator) {
-      JMetalRandom.getInstance().setRandomGenerator(randomGenerator);
-
-      return this;
-    }
-
-    public SMPSO build() {
-      return new SMPSO(this);
     }
   }
 
@@ -513,5 +303,4 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
   private double inertiaWeight(int iter, int miter, double wma, double wmin) {
     return wma;
   }
-
 }

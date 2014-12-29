@@ -22,6 +22,7 @@ package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSO;
+import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.DoubleProblem;
@@ -80,7 +81,7 @@ public class SMPSORunner {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    algorithm = new SMPSO.Builder(problem, archive)
+    algorithm = new SMPSOBuilder(problem, archive)
             .setMutation(mutation)
             .setMaxIterations(250)
             .setSwarmSize(100)
