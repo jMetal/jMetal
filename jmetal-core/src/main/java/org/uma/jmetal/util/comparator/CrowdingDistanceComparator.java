@@ -22,7 +22,6 @@
 package org.uma.jmetal.util.comparator;
 
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.comparator.impl.RankingComparator;
 import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;
 
 import java.util.Comparator;

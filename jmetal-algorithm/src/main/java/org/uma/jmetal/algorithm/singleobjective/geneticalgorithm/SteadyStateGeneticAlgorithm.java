@@ -6,7 +6,7 @@ import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.comparator.impl.ObjectiveComparator;
+import org.uma.jmetal.util.comparator.ObjectiveComparator;
 
 import java.util.ArrayList;
 import java.util.Collections;

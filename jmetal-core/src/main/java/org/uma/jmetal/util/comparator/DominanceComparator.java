@@ -1,9 +1,3 @@
-//  DominanceComparator.java
-//
-//  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
-//
 //  Copyright (c) 2014 Antonio J. Nebro, Juan J. Durillo
 //
 //  This program is free software: you can redistribute it and/or modify
@@ -22,27 +16,43 @@
 package org.uma.jmetal.util.comparator;
 
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.comparator.ConstraintViolationComparator;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.comparator.impl.OverallConstraintViolationComparator;
 
 import java.util.Comparator;
 
 /**
- * This class implements a <code>Comparator</code> (a method for comparing <code>Solution</code> objects)
- * based on a constraint violation, as done in NSGA-II.
+ * @author Antonio J. Nebro
+ * @version 1.1
+ *
+ * This class implements a solution comparator taking into account the violation constraints and
+ * an optional epsilon value
  */
 public class DominanceComparator implements Comparator<Solution> {
   private ConstraintViolationComparator constraintViolationComparator;
+  private double epsilon = 0.0 ;
 
   /** Constructor */
   public DominanceComparator() {
-    this(new OverallConstraintViolationComparator()) ;
+    this(new OverallConstraintViolationComparator(), 0.0) ;
+  }
+
+  /** Constructor */
+  public DominanceComparator(double epsilon) {
+    this(new OverallConstraintViolationComparator(), epsilon) ;
   }
 
   /** Constructor */
   public DominanceComparator(ConstraintViolationComparator constraintComparator) {
-    constraintViolationComparator = constraintComparator ;
+    this(constraintComparator, 0.0) ;
   }
+
+  /** Constructor */
+  public DominanceComparator(ConstraintViolationComparator constraintComparator, double epsilon) {
+    constraintViolationComparator = constraintComparator ;
+    this.epsilon = epsilon ;
+  }
+
   /**
    * Compares two solutions.
    *
@@ -53,7 +63,11 @@ public class DominanceComparator implements Comparator<Solution> {
    */
   @Override
   public int compare(Solution solution1, Solution solution2) {
-    // TODO: test for null are needed here
+    if (solution1 == null) {
+      throw new JMetalException("Solution1 is null") ;
+    } else if (solution2 == null) {
+      throw new JMetalException("Solution2 is null") ;
+    }
     int result ;
     result = constraintViolationComparator.compare(solution1, solution2) ;
     if (result == 0) {
@@ -73,9 +87,9 @@ public class DominanceComparator implements Comparator<Solution> {
     for (int i = 0; i < solution1.getNumberOfObjectives(); i++) {
       value1 = solution1.getObjective(i);
       value2 = solution2.getObjective(i);
-      if (value1 < value2) {
+      if (value1 / (1 + epsilon) < value2) {
         flag = -1;
-      } else if (value1 > value2) {
+      } else if (value1 / (1 + epsilon) > value2) {
         flag = 1;
       } else {
         flag = 0;

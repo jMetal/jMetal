@@ -26,7 +26,7 @@ import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archive.impl.AdaptiveGridArchive;
-import org.uma.jmetal.util.comparator.impl.DominanceComparator;
+import org.uma.jmetal.util.comparator.DominanceComparator;
 
 import java.util.ArrayList;
 import java.util.Comparator;
