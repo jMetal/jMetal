@@ -1,4 +1,4 @@
-//  CrowdingComparator.java
+//  FitnessComparator.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -19,24 +19,24 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.util.comparator.impl;
+package org.uma.jmetal.util.comparator;
 
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;
+import org.uma.jmetal.util.solutionattribute.impl.Fitness;
 
 import java.util.Comparator;
 
+
 /**
  * This class implements a <code>Comparator</code> (a method for comparing
- * <code>Solution</code> objects) based on the crowding distance, as in NSGA-II.
+ * <code>Solution</code> objects) based on the fitness value returned by the
+ * method <code>getFitness</code>.
  */
-public class CrowdingDistanceComparator implements Comparator<Solution> {
-
-  private static final Comparator<Solution<?>> rankComparator = new RankingComparator();
-  private static final CrowdingDistance crowdingDistance = new CrowdingDistance() ;
+public class FitnessComparator implements Comparator<Solution> {
+  private Fitness solutionFitness = new Fitness() ;
 
   /**
-   * Compare two solutions.
+   * Compares two solutions.
    *
    * @param solution1 Object representing the first <code>Solution</code>.
    * @param solution2 Object representing the second <code>Solution</code>.
@@ -51,19 +51,13 @@ public class CrowdingDistanceComparator implements Comparator<Solution> {
       return -1;
     }
 
-    int flagComparatorRank = rankComparator.compare(solution1, solution2);
-    if (flagComparatorRank != 0) {
-      return flagComparatorRank;
-    }
-
-    double distance1 = (double)solution1.getAttribute(crowdingDistance.getAttributeID()) ;
-    double distance2 = (double)solution2.getAttribute(crowdingDistance.getAttributeID()) ;
-
-    if (distance1 > distance2) {
+    double fitness1 = solutionFitness.getAttribute(solution1) ;
+    double fitness2 = solutionFitness.getAttribute(solution2) ;
+    if (fitness1 < fitness2) {
       return -1;
     }
 
-    if (distance1 < distance2) {
+    if (fitness1 > fitness2) {
       return 1;
     }
 

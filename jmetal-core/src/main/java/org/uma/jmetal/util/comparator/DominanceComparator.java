@@ -19,10 +19,11 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.util.comparator.impl;
+package org.uma.jmetal.util.comparator;
 
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.ConstraintViolationComparator;
+import org.uma.jmetal.util.comparator.impl.OverallConstraintViolationComparator;
 
 import java.util.Comparator;
 
