@@ -96,12 +96,6 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
       deltaMax[i] = (problem.getUpperBound(i) - problem.getLowerBound(i)) / 2.0;
       deltaMin[i] = -deltaMax[i];
     }
-
-    for (int i = 0; i < swarmSize; i++) {
-      for (int j = 0; j < problem.getNumberOfVariables(); j++) {
-        speed[i][j] = 0.0;
-      }
-    }
   }
 
   @Override public void run() {
@@ -110,6 +104,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
     swarm = evaluateSwarm(swarm);
     initializeLeaders(swarm);
     initializeParticlesMemory(swarm);
+    initializeLeaders(swarm);
     updateLeadersDensityEstimator();
     initProgress();
 
@@ -170,6 +165,14 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
     }
   }
 
+  @Override protected void initializeVelocity(List<DoubleSolution> swarm) {
+    for (int i = 0; i < swarm.size(); i++) {
+      for (int j = 0; j < problem.getNumberOfVariables(); j++) {
+        speed[i][j] = 0.0;
+      }
+    }
+  }
+
   @Override protected void initializeParticlesMemory(List<DoubleSolution> swarm) {
     for (int i = 0; i < swarm.size(); i++) {
       Solution particle = swarm.get(i).copy();
@@ -182,7 +185,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
     double wmax, wmin;
     DoubleSolution bestGlobal;
 
-    for (int i = 0; i < swarmSize; i++) {
+    for (int i = 0; i < swarm.size(); i++) {
       DoubleSolution particle = (DoubleSolution) swarm.get(i).copy();
       DoubleSolution bestParticle = (DoubleSolution) best[i].copy();
 
