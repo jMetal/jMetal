@@ -2,7 +2,7 @@ package org.uma.jmetal.util.archive.impl;
 
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
-import org.uma.jmetal.util.archive.Archive;
+import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.EqualSolutionsComparator;
@@ -16,9 +16,9 @@ import java.util.List;
 /**
  * Created by Antonio J. Nebro on 24/09/14.
  */
-public class CrowdingDistanceArchive<T extends Solution> implements Archive<T> {
+public class CrowdingDistanceArchive<S extends Solution> implements BoundedArchive<S> {
   private int maxSize ;
-  private List<T> solutionList;
+  private List<S> solutionList;
   private Comparator<Solution> dominanceComparator;
   private Comparator<Solution> equalsComparator;
   private Comparator<Solution> crowdingDistanceComparator;
@@ -34,7 +34,7 @@ public class CrowdingDistanceArchive<T extends Solution> implements Archive<T> {
   }
 
   @Override
-  public boolean add(T solution) {
+  public boolean add(S solution) {
     int flag ;
     int i = 0;
     Solution aux;
@@ -64,16 +64,17 @@ public class CrowdingDistanceArchive<T extends Solution> implements Archive<T> {
   }
 
   @Override
-  public List<T> getSolutionList() {
+  public List<S> getSolutionList() {
     return solutionList;
-  }
-
-  @Override
-  public int getMaxSize() {
-    return maxSize;
   }
 
   public void computeDistance() {
     crowdingDistance.computeDensityEstimator(solutionList);
   }
+
+  @Override
+  public int getMaxSize() {
+    return maxSize ;
+  }
+
 }

@@ -23,7 +23,7 @@ package org.uma.jmetal.util.archive.impl;
 
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AdaptiveGrid;
-import org.uma.jmetal.util.archive.Archive;
+import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 
 import java.util.ArrayList;
@@ -32,12 +32,12 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * This class implements an setArchive based on an adaptive grid used in PAES
+ * This class implements an archive (solution list) based on an adaptive grid used in PAES
  */
-public class AdaptiveGridArchive<T extends Solution> implements Archive<T> {
+public class AdaptiveGridArchive<S extends Solution> implements BoundedArchive<S> {
 
-  private AdaptiveGrid<T> grid;
-  private List<T> solutionList;
+  private AdaptiveGrid<S> grid;
+  private List<S> solutionList;
 
   private int maxSize;
   private Comparator<Solution> dominanceComparator;
@@ -69,12 +69,12 @@ public class AdaptiveGridArchive<T extends Solution> implements Archive<T> {
    * @return true if the <code>Solution</code> has been inserted, false
    * otherwise.
    */
-  public boolean add(T solution) {
+  public boolean add(S solution) {
     //Iterator of individuals over the list
-    Iterator<T> iterator = solutionList.iterator();
+    Iterator<S> iterator = solutionList.iterator();
 
     while (iterator.hasNext()) {
-      T element = iterator.next();
+      S element = iterator.next();
       int flag = dominanceComparator.compare(solution, element);
       if (flag == -1) { // The Individual to insert dominates other
         // individuals in  the setArchive
@@ -120,7 +120,7 @@ public class AdaptiveGridArchive<T extends Solution> implements Archive<T> {
       boolean removed = false;
       while (iterator.hasNext()) {
         if (!removed) {
-          T element = iterator.next();
+          S element = iterator.next();
           int location2 = grid.location(element);
           if (location2 == grid.getMostPopulatedHypercube()) {
             iterator.remove();
@@ -141,12 +141,12 @@ public class AdaptiveGridArchive<T extends Solution> implements Archive<T> {
   }
 
   @Override
-  public List<T> getSolutionList() {
+  public List<S> getSolutionList() {
     return solutionList;
   }
 
   @Override
   public int getMaxSize() {
-    return maxSize;
+    return maxSize ;
   }
 }

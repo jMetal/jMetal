@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * This class implements some utilities for calculating distances
  */
-public class CrowdingDistance implements DensityEstimator<Solution, Double> {
+public class CrowdingDistance<S extends Solution> implements DensityEstimator<S> {
 
   /**
    * Assigns crowding distances to all solutions in a <code>SolutionSet</code>.
@@ -42,7 +42,7 @@ public class CrowdingDistance implements DensityEstimator<Solution, Double> {
    */
 
   @Override
-  public void computeDensityEstimator(List<Solution> solutionSet) {
+  public void computeDensityEstimator(List<S> solutionSet) {
     int size = solutionSet.size();
 
     if (size == 0) {
