@@ -11,11 +11,12 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
+import org.uma.jmetal.util.solutionattribute.AlgorithmBuilder;
 
 /**
  * Created by ajnebro on 16/11/14.
  */
-public class NSGAIIBuilder {
+public class NSGAIIBuilder implements AlgorithmBuilder {
   public enum NSGAIIVariant {NSGAII, SteadyStateNSGAII}
 
   /**

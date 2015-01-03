@@ -9,11 +9,12 @@ import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
+import org.uma.jmetal.util.solutionattribute.AlgorithmBuilder;
 
 /**
  * Created by antonio on 24/09/14.
  */
-public class SMPSOBuilder  {
+public class SMPSOBuilder implements AlgorithmBuilder {
   private DoubleProblem problem;
 
   private double c1Max;

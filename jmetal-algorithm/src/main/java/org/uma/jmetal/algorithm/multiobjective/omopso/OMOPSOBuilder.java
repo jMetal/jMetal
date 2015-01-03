@@ -27,9 +27,10 @@ import org.uma.jmetal.operator.impl.mutation.NonUniformMutation;
 import org.uma.jmetal.operator.impl.mutation.UniformMutation;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
+import org.uma.jmetal.util.solutionattribute.AlgorithmBuilder;
 
 /** Class implementing the OMOPSO algorithm */
-public class OMOPSOBuilder  {
+public class OMOPSOBuilder implements AlgorithmBuilder {
   protected DoubleProblem problem;
   protected SolutionListEvaluator evaluator;
 

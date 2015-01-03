@@ -30,11 +30,12 @@ import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.util.solutionattribute.AlgorithmBuilder;
 
 /**
  * This class implements the IBEA algorithm
  */
-public class IBEABuilder  {
+public class IBEABuilder implements AlgorithmBuilder {
   private Problem problem;
   private int populationSize;
   private int archiveSize;

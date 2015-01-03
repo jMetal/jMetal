@@ -19,6 +19,7 @@ import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.util.solutionattribute.AlgorithmBuilder;
 
 /**
  * Builder class for algorithm MOEA/D and variants
@@ -26,7 +27,7 @@ import org.uma.jmetal.problem.Problem;
  * @author Antonio J. Nebro
  * @version 1.0
  */
-public class MOEADBuilder {
+public class MOEADBuilder implements AlgorithmBuilder {
   public enum Variant {MOEAD, ConstraintMOEAD, MOEADDRA} ;
 
   private Problem problem ;

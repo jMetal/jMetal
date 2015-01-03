@@ -21,17 +21,19 @@
 
 package org.uma.jmetal.algorithm.multiobjective.gde3;
 
+import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.operator.Operator;
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.impl.selection.DifferentialEvolutionSelection;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
+import org.uma.jmetal.util.solutionattribute.AlgorithmBuilder;
 
 /**
  * This class implements the GDE3 algorithm
  */
-public class GDE3Builder {
+public class GDE3Builder implements AlgorithmBuilder {
   private DoubleProblem problem;
   protected int populationSize;
   protected int maxIterations;
@@ -82,7 +84,7 @@ public class GDE3Builder {
     return this ;
   }
 
-  public GDE3 build() {
+  public Algorithm build() {
     return new GDE3(problem, populationSize, maxIterations, selectionOperator, crossoverOperator, evaluator) ;
   }
 

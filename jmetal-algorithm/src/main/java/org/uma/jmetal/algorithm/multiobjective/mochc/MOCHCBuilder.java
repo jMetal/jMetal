@@ -10,11 +10,12 @@ import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.BinaryProblem;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
+import org.uma.jmetal.util.solutionattribute.AlgorithmBuilder;
 
 /**
  * Builder class
  */
-public class MOCHCBuilder {
+public class MOCHCBuilder implements AlgorithmBuilder {
   BinaryProblem problem;
   SolutionListEvaluator evaluator;
   int populationSize;

@@ -2,11 +2,12 @@ package org.uma.jmetal.algorithm.multiobjective.paes;
 
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.util.solutionattribute.AlgorithmBuilder;
 
 /**
  * Created by ajnebro on 17/11/14.
  */
-public class PAESBuilder {
+public class PAESBuilder implements AlgorithmBuilder {
   public Problem problem;
 
   public int archiveSize;
