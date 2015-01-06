@@ -12,29 +12,28 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-//  CREDIT
-//  This class is based on the code of the wfg group (http://www.wfg.csse.uwa.edu.au/hypervolume/)
-//  Copyright (C) 2010 Lyndon While, Lucas Bradstreet.
-
 package org.uma.jmetal.util.point.impl;
 
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.point.Point;
 
+import java.util.Arrays;
+
 /**
- * Class representing a point (i.e., an array of double values)
+ * Class representing a point (i.e, an array of double values)
  *
  * @author Antonio J. Nebro
  * @version 1.0
  */
-public class ArrayPoint implements Point{
+public class ArrayPoint implements Point {
   private double[] point;
 
   /**
    * Constructor
    *
-   * @param dimensions
+   * @param dimensions Dimensions of the point
+
    */
   public ArrayPoint(int dimensions) {
     point = new double[dimensions];
@@ -46,11 +45,15 @@ public class ArrayPoint implements Point{
 
 
   /**
-   * Constructor
+   * Copy constructor
    *
    * @param point
    */
   public ArrayPoint(Point point) {
+    if (point == null) {
+      throw new JMetalException("The point is null") ;
+    }
+
     this.point = new double[point.getNumberOfDimensions()];
 
     for (int i = 0; i < point.getNumberOfDimensions(); i++) {
@@ -59,11 +62,15 @@ public class ArrayPoint implements Point{
   }
 
   /**
-   * Constructor
+   * Constructor from a solution
    *
    * @param solution
    */
   public ArrayPoint(Solution solution) {
+    if (solution == null) {
+      throw new JMetalException("The solution is null") ;
+    }
+
     int dimensions = solution.getNumberOfObjectives();
     point = new double[dimensions];
 
@@ -73,11 +80,15 @@ public class ArrayPoint implements Point{
   }
 
   /**
-   * Constructor
+   * Constructor from an array of double values
    *
    * @param point
    */
   public ArrayPoint(double[] point) {
+    if (point == null) {
+      throw new JMetalException("The array of values is null") ;
+    }
+
     this.point = new double[point.length];
     System.arraycopy(point, 0, this.point, 0, point.length);
   }
@@ -118,5 +129,23 @@ public class ArrayPoint implements Point{
     }
 
     return result;
+  }
+
+  @Override public boolean equals(Object o) {
+    if (this == o)
+      return true;
+    if (o == null || getClass() != o.getClass())
+      return false;
+
+    ArrayPoint that = (ArrayPoint) o;
+
+    if (!Arrays.equals(point, that.point))
+      return false;
+
+    return true;
+  }
+
+  @Override public int hashCode() {
+    return Arrays.hashCode(point);
   }
 }
