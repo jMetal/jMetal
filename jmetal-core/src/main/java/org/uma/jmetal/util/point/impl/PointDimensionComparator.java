@@ -21,6 +21,7 @@
 
 package org.uma.jmetal.util.point.impl;
 
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.point.Point;
 
 import java.util.Comparator;
@@ -37,10 +38,14 @@ public class PointDimensionComparator implements Comparator<Point> {
   private int index;
 
   /**
-   * Constructor.
-   * Creates a new instance of ValueComparator
+   * Constructor
+   *
+   * Creates a new instance of PointDimensionComparator
    */
   public PointDimensionComparator(int index) {
+    if (index < 0) {
+      throw new JMetalException("The index value is negative");
+    }
     this.index = index;
   }
 
@@ -53,6 +58,18 @@ public class PointDimensionComparator implements Comparator<Point> {
    */
   @Override
   public int compare(Point pointOne, Point pointTwo) {
+    if (pointOne ==  null) {
+      throw new JMetalException("PointOne is null") ;
+    } else if (pointTwo == null) {
+      throw new JMetalException("PointTwo is null") ;
+    } else if (index >= pointOne.getNumberOfDimensions()) {
+      throw new JMetalException("The index value " + index
+          + " is out of range (0,  " + (pointOne.getNumberOfDimensions()-1) + ")") ;
+    } else if (index >= pointTwo.getNumberOfDimensions()) {
+      throw new JMetalException("The index value " + index
+          + " is out of range (0,  " + (pointTwo.getNumberOfDimensions()-1) + ")") ;
+    }
+
     if (pointOne.getDimensionValue(index) < pointTwo.getDimensionValue(index)) {
       return -1;
     } else if (pointOne.getDimensionValue(index) > pointTwo.getDimensionValue(index)) {
