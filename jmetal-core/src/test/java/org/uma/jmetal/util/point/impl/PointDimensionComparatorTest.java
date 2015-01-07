@@ -13,6 +13,7 @@
 
 package org.uma.jmetal.util.point.impl;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.util.JMetalException;
@@ -39,6 +40,11 @@ public class PointDimensionComparatorTest {
     point2.setDimensionValue(0, 1.0);
     point2.setDimensionValue(1, -3.0);
     point2.setDimensionValue(2, 5.0);
+  }
+
+  @After public void clean() {
+    point1 = null ;
+    point2 = null ;
   }
 
   @Test public void shouldCompareReturnZeroIfTheComparedValuesAreEqual() throws Exception {

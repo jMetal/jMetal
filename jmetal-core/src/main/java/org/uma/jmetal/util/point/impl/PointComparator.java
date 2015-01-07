@@ -18,6 +18,7 @@
 
 package org.uma.jmetal.util.point.impl;
 
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.point.Point;
 
 import java.util.Comparator;
@@ -44,6 +45,16 @@ public class PointComparator implements Comparator<Point> {
    */
   @Override
   public int compare(Point pointOne, Point pointTwo) {
+    if (pointOne ==  null) {
+      throw new JMetalException("PointOne is null") ;
+    } else if (pointTwo == null) {
+      throw new JMetalException("PointTwo is null") ;
+    } else if (pointOne.getNumberOfDimensions() != pointTwo.getNumberOfDimensions()) {
+      throw new JMetalException("Points have different size: "
+          + pointOne.getNumberOfDimensions()+ " and "
+          + pointTwo.getNumberOfDimensions()) ;
+    }
+
     for (int i = pointOne.getNumberOfDimensions()-1; i >= 0; i--) {
       if (isBetter(pointOne.getDimensionValue(i), pointTwo.getDimensionValue(i))) {
         return -1;
