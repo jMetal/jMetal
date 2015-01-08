@@ -32,12 +32,16 @@ public class PointComparatorTest {
   @Test(expected = JMetalException.class)
   public void shouldFirstPointToCompareEqualsToNullRaiseAnException() throws Exception {
     comparator = new PointComparator(true) ;
+
+    point2 = new ArrayPoint(4) ;
     comparator.compare(null, point2);
   }
 
   @Test (expected = JMetalException.class)
   public void shouldSecondPointToCompareEqualsToNullRaiseAnException() throws Exception {
     comparator = new PointComparator(true) ;
+
+    point1 = new ArrayPoint(4) ;
     comparator.compare(point1, null);
   }
 
