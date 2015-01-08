@@ -21,6 +21,7 @@
 
 package org.uma.jmetal.util.point.impl;
 
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.point.Point;
 
 import java.util.Comparator;
@@ -28,7 +29,7 @@ import java.util.Comparator;
 
 /**
  * This class implements the Comparator interface for comparing tow points.
- * The order used is lexicograhphical order.
+ * The order used is lexicographical order.
  */
 public class LexicographicalPointComparator implements Comparator<Point> {
 
@@ -37,10 +38,16 @@ public class LexicographicalPointComparator implements Comparator<Point> {
    *
    * @param pointOne An object that reference a double[]
    * @param pointTwo An object that reference a double[]
-   * @return The following value: -1 if o1 < o1, 1 if o1 > o2 or 0 in other case.
+   * @return The following value: -1 if point1 < point2, 1 if point1 > point2 or 0 in other case.
    */
   @Override
   public int compare(Point pointOne, Point pointTwo) {
+    if (pointOne ==  null) {
+      throw new JMetalException("PointOne is null") ;
+    } else if (pointTwo == null) {
+      throw new JMetalException("PointTwo is null");
+    }
+
     // Determine the first i such as pointOne[i] != pointTwo[i];
     int index = 0;
     while ((index < pointOne.getNumberOfDimensions())
@@ -49,13 +56,14 @@ public class LexicographicalPointComparator implements Comparator<Point> {
       index++;
     }
 
+    int result = 0 ;
     if ((index >= pointOne.getNumberOfDimensions()) || (index >= pointTwo.getNumberOfDimensions())) {
-      return 0;
+      result = 0;
     } else if (pointOne.getDimensionValue(index) < pointTwo.getDimensionValue(index)) {
-      return -1;
+      result = -1;
     } else if (pointOne.getDimensionValue(index) > pointTwo.getDimensionValue(index)) {
-      return 1;
+      result = 1;
     }
-    return 0;
+    return result ;
   }
 }

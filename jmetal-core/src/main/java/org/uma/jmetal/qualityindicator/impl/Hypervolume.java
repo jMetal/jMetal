@@ -22,10 +22,13 @@
 package org.uma.jmetal.qualityindicator.impl;
 
 import org.uma.jmetal.qualityindicator.QualityIndicator;
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.FrontUtils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 
 /**
@@ -198,7 +201,17 @@ public class Hypervolume implements QualityIndicator {
   }
 
   /**
-   * Returns the hypevolume value of a front of points
+   * Returns the hypervolume value of a list of solutions
+   *
+   * @param solutionListA    The list
+   * @param solutionListB    The true pareto front
+   */
+  public double hypervolume (List<Solution<?>> solutionListA, List<Solution<?>> solutionListB) {
+    return hypervolume(new ArrayList(solutionListA), new ArrayList<Solution<?>>(solutionListB)) ;
+  }
+
+  /**
+   * Returns the hypervolume value of a front of points
    *
    * @param front        The front
    * @param trueParetoFront    The true pareto front
@@ -223,7 +236,7 @@ public class Hypervolume implements QualityIndicator {
     //metric by Zitzler is for maximization problem
     invertedFront = FrontUtils.getInvertedFront(normalizedFront);
 
-    // STEP4. The hypervolume (control is passed to java version of Zitzler code)
+    // STEP4. The hypervolume (control is passed to the Java version of Zitzler code)
     return this.calculateHypervolume(FrontUtils.convertFrontToArray(invertedFront),
         invertedFront.getNumberOfPoints(), numberOfObjectives);
   }
