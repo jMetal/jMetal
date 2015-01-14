@@ -29,6 +29,7 @@ import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.point.impl.PointSolution;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -77,7 +78,8 @@ public class SetCoverage implements QualityIndicator {
    * @return The value of the set coverage
    * @throws org.uma.jmetal.util.JMetalException
    */
-  public double setCoverage(String file1, String file2) throws JMetalException {
+  public double setCoverage(String file1, String file2)
+      throws JMetalException, FileNotFoundException {
     Front front1 = new ArrayFront() ;
     front1.readFrontFromFile(file1);
     Front front2 = new ArrayFront() ;

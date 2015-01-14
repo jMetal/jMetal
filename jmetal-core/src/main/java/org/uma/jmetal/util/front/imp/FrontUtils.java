@@ -17,7 +17,7 @@ public class FrontUtils {
    * Gets the maximum values for each objectives in a front
    *
    * @param front A front of objective values
-   * @return double [] An array with the maximun values for each objective
+   * @return double [] An array with the maximum values for each objective
    */
   public static double[] getMaximumValues(Front front) {
     if (front == null) {

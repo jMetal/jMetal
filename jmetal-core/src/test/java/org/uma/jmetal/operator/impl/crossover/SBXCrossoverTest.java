@@ -17,12 +17,9 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.solution.impl.GenericDoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
@@ -31,10 +28,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.mockito.Mockito.*;
 
 /**
  * Note: this class does check that the SBX crossover operator does not return invalid
@@ -255,7 +251,7 @@ public class SBXCrossoverTest {
   }
 
   /**
-   * Mock class representing a binary problem
+   * Mock class representing a doubl problem
    */
   private class MockDoubleProblem extends AbstractDoubleProblem {
 
@@ -274,11 +270,6 @@ public class SBXCrossoverTest {
 
       setLowerLimit(lowerLimit);
       setUpperLimit(upperLimit);
-    }
-
-    @Override
-    public DoubleSolution createSolution() {
-      return new GenericDoubleSolution(this) ;
     }
 
     /** Evaluate() method */
