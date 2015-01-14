@@ -13,11 +13,10 @@
 
 package org.uma.jmetal.util.front;
 
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.point.Point;
 
+import java.io.FileNotFoundException;
 import java.util.Comparator;
-import java.util.List;
 
 /**
  * A front is a list of points
@@ -26,9 +25,10 @@ import java.util.List;
  * @version 1.0
  */
 public interface Front {
-  public void readFrontFromFile(String fileName) ;
-  public void createFrontFromAListOfSolutions(List<Solution> solutionList) ;
+  public void readFrontFromFile(String fileName) throws FileNotFoundException;
+ // public void createFrontFromAListOfSolutions(List<Solution> solutionList) ;
   public int getNumberOfPoints() ;
   public Point getPoint(int index) ;
+  public void setPoint(int index, Point point) ;
   public void sort(Comparator<Point> comparator) ;
 }
