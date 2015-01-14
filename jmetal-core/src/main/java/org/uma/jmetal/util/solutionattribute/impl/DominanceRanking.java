@@ -24,7 +24,7 @@ package org.uma.jmetal.util.solutionattribute.impl;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.comparator.DominanceComparator;
-import org.uma.jmetal.util.comparator.OverallConstraintViolationComparator;
+import org.uma.jmetal.util.comparator.impl.OverallConstraintViolationComparator;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 
 import java.util.*;

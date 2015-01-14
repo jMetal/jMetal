@@ -90,54 +90,12 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
     comparator = new CrowdingDistanceComparator();
   }
 
-  /* Getters */
-  public BinaryProblem getProblem() {
-    return problem;
-  }
-
-  public int getPopulationSize() {
-    return populationSize;
-  }
-
-  public int getMaxEvaluation() {
-    return maxEvaluations;
-  }
-
-  public double getInitialConvergenceCount() {
-    return initialConvergenceCount;
-  }
-
-  public int getConvergenceValue() {
-    return convergenceValue;
-  }
-
-  public CrossoverOperator getCrossover() {
-    return crossover;
-  }
-
-  public MutationOperator getCataclysmicMutation() {
-    return cataclysmicMutation;
-  }
-
-  public SelectionOperator getParentSelection() {
-    return parentSelection;
-  }
-
-  public SelectionOperator getNewGenerationSelection() {
-    return newGenerationSelection;
-  }
-
-  public double getPreservedPopulation() {
-    return preservedPopulation;
-  }
-
   @Override protected void initProgress() {
     evaluations = populationSize ;
   }
 
   @Override protected void updateProgress() {
     evaluations += populationSize;
-    System.out.println("Vals: " + evaluations) ;
   }
 
   @Override protected boolean isStoppingConditionReached() {
@@ -191,12 +149,9 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
     List<BinarySolution> union = new ArrayList<>();
     union.addAll(population);
     union.addAll(offspringPopulation);
-    System.out.println("1") ;
 
     List<BinarySolution> newPopulation =
         (List<BinarySolution>) newGenerationSelection.execute(union);
-
-    System.out.println("2") ;
 
     if (solutionSetsAreEquals(population, newPopulation)) {
       minimumDistance--;

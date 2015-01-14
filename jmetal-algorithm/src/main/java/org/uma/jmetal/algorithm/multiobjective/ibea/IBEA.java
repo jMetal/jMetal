@@ -27,9 +27,6 @@ import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
-import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
-import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
-import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
@@ -56,119 +53,25 @@ public class IBEA implements Algorithm<List<Solution>> {
 
   private List<Solution> archive;
 
-  private CrossoverOperator crossover;
-  private MutationOperator mutation;
-  private SelectionOperator selection;
+  private CrossoverOperator crossoverOperator;
+  private MutationOperator mutationOperator;
+  private SelectionOperator selectionOperator;
 
   private Fitness solutionFitness = new Fitness();
 
   /**
    * Constructor
    */
-  private IBEA(Builder builder) {
-    this.problem = builder.problem;
-    this.populationSize = builder.populationSize;
-    this.archiveSize = builder.archiveSize;
-    this.maxEvaluations = builder.maxEvaluations;
-    this.crossover = builder.crossover;
-    this.mutation = builder.mutation;
-    this.selection = builder.selection;
-  }
-
-  /* Getters */
-  public int getPopulationSize() {
-    return populationSize;
-  }
-
-  public int getArchiveSize() {
-    return archiveSize;
-  }
-
-  public int getMaxEvaluations() {
-    return maxEvaluations;
-  }
-
-  public CrossoverOperator getCrossover() {
-    return crossover;
-  }
-
-  public MutationOperator getMutation() {
-    return mutation;
-  }
-
-  public SelectionOperator getSelection() {
-    return selection;
-  }
-
-  /**
-   * Builder class
-   */
-  public static class Builder {
-    private Problem problem;
-    private int populationSize;
-    private int archiveSize;
-    private int maxEvaluations;
-
-    private CrossoverOperator crossover;
-    private MutationOperator mutation;
-    private SelectionOperator selection;
-
-    public Builder(Problem problem) {
-      this.problem = problem;
-      populationSize = 100;
-      archiveSize = 100;
-      maxEvaluations = 25000;
-
-      double crossoverProbability = 0.9;
-      double crossoverDistributionIndex = 20.0;
-      crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
-
-      double mutationProbability = 1.0 / problem.getNumberOfVariables();
-      double mutationDistributionIndex = 20.0;
-      mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
-
-      selection = new BinaryTournamentSelection();
-    }
-
-    public Builder setPopulationSize(int populationSize) {
-      this.populationSize = populationSize;
-
-      return this;
-    }
-
-    public Builder setArchiveSize(int archiveSize) {
-      this.archiveSize = archiveSize;
-
-      return this;
-    }
-
-    public Builder setMaxEvaluations(int maxEvaluations) {
-      this.maxEvaluations = maxEvaluations;
-
-      return this;
-    }
-
-    public Builder setCrossover(CrossoverOperator crossover) {
-      this.crossover = crossover;
-
-      return this;
-    }
-
-    public Builder setMutation(MutationOperator mutation) {
-      this.mutation = mutation;
-
-      return this;
-    }
-
-    public Builder setSelection(SelectionOperator selection) {
-      this.selection = selection;
-
-      return this;
-    }
-
-    public IBEA build() {
-      return new IBEA(this);
-    }
+  public IBEA(Problem problem, int populationSize, int archiveSize, int maxEvaluations,
+      SelectionOperator selectionOperator, CrossoverOperator crossoverOperator,
+      MutationOperator mutationOperator) {
+    this.problem = problem;
+    this.populationSize = populationSize;
+    this.archiveSize = archiveSize;
+    this.maxEvaluations = maxEvaluations;
+    this.crossoverOperator = crossoverOperator;
+    this.mutationOperator = mutationOperator;
+    this.selectionOperator = selectionOperator;
   }
 
   /**
@@ -210,12 +113,12 @@ public class IBEA implements Algorithm<List<Solution>> {
         int j = 0;
         do {
           j++;
-          parent1 = (Solution) selection.execute(archive);
+          parent1 = (Solution) selectionOperator.execute(archive);
         } while (j < IBEA.TOURNAMENTS_ROUNDS);
         int k = 0;
         do {
           k++;
-          parent2 = (Solution) selection.execute(archive);
+          parent2 = (Solution) selectionOperator.execute(archive);
         } while (k < IBEA.TOURNAMENTS_ROUNDS);
 
         List<Solution<?>> parents = new ArrayList<>(2);
@@ -223,8 +126,8 @@ public class IBEA implements Algorithm<List<Solution>> {
         parents.add(parent2);
 
         //make the crossover
-        List<Solution> offspring = (List<Solution>) crossover.execute(parents);
-        mutation.execute(offspring.get(0));
+        List<Solution> offspring = (List<Solution>) crossoverOperator.execute(parents);
+        mutationOperator.execute(offspring.get(0));
         problem.evaluate(offspring.get(0));
         //problem.evaluateConstraints(offSpring[0]);
         offSpringSolutionSet.add(offspring.get(0));

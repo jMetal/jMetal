@@ -23,8 +23,6 @@ package org.uma.jmetal.problem.singleobjective;
 
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.impl.GenericDoubleSolution;
-import org.uma.jmetal.util.JMetalException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +37,7 @@ public class Sphere extends AbstractDoubleProblem {
   }
 
   /** Constructor */
-  public Sphere(Integer numberOfVariables) throws JMetalException {
+  public Sphere(Integer numberOfVariables) {
     setNumberOfVariables(numberOfVariables);
     setNumberOfObjectives(1);
     setName("Sphere");
@@ -54,11 +52,6 @@ public class Sphere extends AbstractDoubleProblem {
 
     setLowerLimit(lowerLimit);
     setUpperLimit(upperLimit);
-  }
-
-  @Override
-  public DoubleSolution createSolution() {
-    return new GenericDoubleSolution(this) ;
   }
 
   /** Evaluate() method */

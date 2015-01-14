@@ -6,11 +6,12 @@ import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
+import org.uma.jmetal.util.solutionattribute.AlgorithmBuilder;
 
 /**
  * Builder class
  */
-public class NSGAIIIBuilder {
+public class NSGAIIIBuilder implements AlgorithmBuilder {
 
   // no access modifier means access from classes within the same package
   Problem problem;

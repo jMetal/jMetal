@@ -17,6 +17,7 @@ public abstract class AbstractParticleSwarmOptimization<S extends Solution, Resu
   protected abstract List<S> evaluateSwarm(List<S> swarm) ;
   protected abstract void initializeLeaders(List<S> swarm) ;
   protected abstract void initializeParticlesMemory(List<S> swarm) ;
+  protected abstract void initializeVelocity(List<S> swarm) ;
   protected abstract void updateVelocity(List<S> swarm) ;
   protected abstract void updatePosition(List<S> swarm) ;
   protected abstract void perturbation(List<S> swarm) ;
@@ -33,6 +34,7 @@ public abstract class AbstractParticleSwarmOptimization<S extends Solution, Resu
     swarm = evaluateSwarm(swarm);
     initializeLeaders(swarm) ;
     initializeParticlesMemory(swarm) ;
+    initializeLeaders(swarm);
     initProgress();
 
     while (!isStoppingConditionReached()) {

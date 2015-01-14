@@ -18,6 +18,7 @@ public class GenericIntegerSolution extends AbstractGenericSolution<Integer, Int
     objectives = new ArrayList<>(problem.getNumberOfObjectives()) ;
     variables = new ArrayList<>(problem.getNumberOfVariables()) ;
     overallConstraintViolationDegree = 0.0 ;
+    numberOfViolatedConstraints = 0 ;
 
     for (int i = 0 ; i < problem.getNumberOfVariables(); i++) {
       Integer value = randomGenerator.nextInt(getLowerBound(i), getUpperBound(i));
@@ -42,6 +43,8 @@ public class GenericIntegerSolution extends AbstractGenericSolution<Integer, Int
     }
 
     overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
+    numberOfViolatedConstraints = solution.numberOfViolatedConstraints ;
+
     attributes = new HashMap(solution.attributes) ;
   }
 

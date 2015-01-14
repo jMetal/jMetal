@@ -23,6 +23,7 @@ package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.ibea.IBEA;
+import org.uma.jmetal.algorithm.multiobjective.ibea.IBEABuilder;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -32,12 +33,11 @@ import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AlgorithmRunner;
-import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
@@ -61,21 +61,15 @@ public class IBEARunner {
     MutationOperator mutation;
     SelectionOperator selection;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.Fonseca" ;
-
-    try {
-      problem = (Problem)Class.forName(problemName).getConstructor().newInstance() ;
-    } catch (InstantiationException e) {
-      throw new JMetalException("newInstance() cannot instantiate (abstract class)", e) ;
-    } catch (IllegalAccessException e) {
-      throw new JMetalException("newInstance() is not usable (uses restriction)", e) ;
-    } catch (InvocationTargetException e) {
-      throw new JMetalException("an exception was thrown during the call of newInstance()", e) ;
-    } catch (NoSuchMethodException e) {
-      throw new JMetalException("getConstructor() was not able to find the constructor without arguments", e) ;
-    } catch (ClassNotFoundException e) {
-      throw new JMetalException("Class.forName() did not recognized the name of the class", e) ;
+    String problemName ;
+    if (args.length == 1) {
+      problemName = args[0] ;
+    } else {
+      //problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+      problemName = "org.uma.jmetal.problem.multiobjective.Srinivas";
     }
+
+    problem = ProblemUtils.loadProblem(problemName);
 
     double crossoverProbability = 0.9 ;
     double crossoverDistributionIndex = 20.0 ;
@@ -87,7 +81,7 @@ public class IBEARunner {
 
     selection = new BinaryTournamentSelection() ;
 
-    algorithm = new IBEA.Builder(problem)
+    algorithm = new IBEABuilder(problem)
       .setArchiveSize(100)
       .setPopulationSize(100)
       .setMaxEvaluations(25000)

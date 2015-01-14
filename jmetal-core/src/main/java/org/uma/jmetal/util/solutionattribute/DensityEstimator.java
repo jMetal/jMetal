@@ -29,7 +29,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro
  */
-public interface DensityEstimator<S extends Solution, Double> extends SolutionAttribute<S, Double>{
+public interface DensityEstimator<S extends Solution> extends SolutionAttribute<S, Double>{
   public void computeDensityEstimator(List<S> solutionSet) ;
 }
 

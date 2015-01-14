@@ -19,6 +19,7 @@ public class GenericDoubleSolution extends AbstractGenericSolution<Double, Doubl
     objectives = new ArrayList<>(problem.getNumberOfObjectives()) ;
     variables = new ArrayList<>(problem.getNumberOfVariables()) ;
     overallConstraintViolationDegree = 0.0 ;
+    numberOfViolatedConstraints = 0 ;
 
     for (int i = 0 ; i < problem.getNumberOfVariables(); i++) {
       Double value = randomGenerator.nextDouble() * (getUpperBound(i) - getLowerBound(i)) + getLowerBound(i);
@@ -43,6 +44,7 @@ public class GenericDoubleSolution extends AbstractGenericSolution<Double, Doubl
     }
 
     overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
+    numberOfViolatedConstraints = solution.numberOfViolatedConstraints ;
     attributes = new HashMap(solution.attributes) ;
   }
 

@@ -22,6 +22,7 @@ package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.gde3.GDE3;
+import org.uma.jmetal.algorithm.multiobjective.gde3.GDE3Builder;
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.impl.selection.DifferentialEvolutionSelection;
 import org.uma.jmetal.problem.DoubleProblem;
@@ -54,7 +55,13 @@ public class GDE3Runner {
     DifferentialEvolutionSelection selection;
     DifferentialEvolutionCrossover crossover;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1" ;
+    String problemName ;
+    if (args.length == 1) {
+      problemName = args[0] ;
+    } else {
+      //problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+      problemName = "org.uma.jmetal.problem.multiobjective.Srinivas";
+    }
 
     problem = (DoubleProblem) ProblemUtils.loadProblem(problemName);
 
@@ -70,7 +77,7 @@ public class GDE3Runner {
 
     selection = new DifferentialEvolutionSelection() ;
 
-    algorithm = new GDE3.Builder(problem)
+    algorithm = new GDE3Builder(problem)
       .setCrossover(crossover)
       .setSelection(selection)
       .setMaxIterations(250)

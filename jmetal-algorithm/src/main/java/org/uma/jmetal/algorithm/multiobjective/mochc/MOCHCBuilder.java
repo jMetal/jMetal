@@ -9,11 +9,13 @@ import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.BinaryProblem;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
+import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
+import org.uma.jmetal.util.solutionattribute.AlgorithmBuilder;
 
 /**
  * Builder class
  */
-public class MOCHCBuilder {
+public class MOCHCBuilder implements AlgorithmBuilder {
   BinaryProblem problem;
   SolutionListEvaluator evaluator;
   int populationSize;
@@ -28,8 +30,55 @@ public class MOCHCBuilder {
 
   public MOCHCBuilder(BinaryProblem problem) {
     this.problem = problem;
+    evaluator = new SequentialSolutionListEvaluator() ;
+    populationSize = 100 ;
+    maxEvaluations = 25000 ;
+    convergenceValue = 3 ;
+    preservedPopulation = 0.05 ;
   }
 
+  /* Getters */
+  public BinaryProblem getProblem() {
+    return problem;
+  }
+
+  public int getPopulationSize() {
+    return populationSize;
+  }
+
+  public int getMaxEvaluation() {
+    return maxEvaluations;
+  }
+
+  public double getInitialConvergenceCount() {
+    return initialConvergenceCount;
+  }
+
+  public int getConvergenceValue() {
+    return convergenceValue;
+  }
+
+  public CrossoverOperator getCrossover() {
+    return crossoverOperator;
+  }
+
+  public MutationOperator getCataclysmicMutation() {
+    return cataclysmicMutation;
+  }
+
+  public SelectionOperator getParentSelection() {
+    return parentSelection;
+  }
+
+  public SelectionOperator getNewGenerationSelection() {
+    return newGenerationSelection;
+  }
+
+  public double getPreservedPopulation() {
+    return preservedPopulation;
+  }
+
+  /* Setters */
   public MOCHCBuilder setPopulationSize(int populationSize) {
     this.populationSize = populationSize;
 

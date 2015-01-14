@@ -24,6 +24,7 @@ public class GenericIntegerDoubleSolution
     numberOfIntegerVariables = problem.getNumberOfIntegerVariables() ;
     numberOfDoubleVariables = problem.getNumberOfDoubleVariables() ;
     overallConstraintViolationDegree = 0.0 ;
+    numberOfViolatedConstraints = 0 ;
 
     for (int i = 0 ; i < numberOfIntegerVariables; i++) {
       Integer value = randomGenerator.nextInt((Integer)getLowerBound(i), (Integer)getUpperBound(i)) ;
@@ -58,6 +59,8 @@ public class GenericIntegerDoubleSolution
     }
 
     overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
+    numberOfViolatedConstraints = solution.numberOfViolatedConstraints ;
+
     attributes = new HashMap(solution.attributes) ;
   }
 
