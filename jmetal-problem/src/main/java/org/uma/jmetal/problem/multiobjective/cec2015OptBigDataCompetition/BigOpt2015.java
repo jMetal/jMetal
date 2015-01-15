@@ -31,6 +31,8 @@ public class BigOpt2015 extends AbstractDoubleProblem {
   public BigOpt2015(String instanceName)  {
     loadData(instanceName);
 
+    scaling = false ;
+
     setNumberOfVariables(dTypeG*256);
     setNumberOfObjectives(2);
     setNumberOfConstraints(0);
@@ -59,7 +61,7 @@ public class BigOpt2015 extends AbstractDoubleProblem {
     for (int i = 0 ; i < dTypeG; i++) {
       s1Temp = new ArrayList<>() ;
       for (int j = 0 ; j < icaComponent.get(0).size(); j++) {
-        s1Temp.add(solution.getVariableValue(i*(icaComponent.get(0).size()+j))) ;
+        s1Temp.add(solution.getVariableValue(i*(icaComponent.get(0).size())+j)) ;
       }
       s1.add(s1Temp) ;
     }
@@ -100,7 +102,7 @@ public class BigOpt2015 extends AbstractDoubleProblem {
 
   private void loadData(String problemId, String fName, int dType, int dLength) {
     List<List<Double>> list ;
-    String fileName = "cec2015Comp/"+problemId+fName ;
+    String fileName = "/cec2015Comp/"+problemId+fName ;
 
     InputStream inputStream = createInputStream(fileName) ;
 
