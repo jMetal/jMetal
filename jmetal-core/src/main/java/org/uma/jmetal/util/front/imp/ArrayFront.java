@@ -146,27 +146,11 @@ public class ArrayFront implements Front {
   }
 
   public InputStream createInputStream(String fileName) {
-    //FileInputStream inputStream;
-    //InputStream inputStream = new FileInputStream(fileName);
-
     InputStream inputStream = getClass().getResourceAsStream(fileName);
-
 
     return inputStream ;
   }
-/*
-  @Override public void createFrontFromAListOfSolutions(List<Solution> solutionList) {
-    numberOfPoints = solutionList.size() ;
-    pointDimensions = solutionList.get(0).getNumberOfObjectives() ;
 
-    points = new Point[numberOfPoints];
-    for (int i = 0; i < numberOfPoints; i++) {
-      for (int j = 0; j < pointDimensions; j++) {
-        points[i].setDimensionValue(j, (Double) solutionList.get(i).getVariableValue(j));
-      }
-    }
-  }
-*/
   @Override public int getNumberOfPoints() {
     return points.length;
   }
