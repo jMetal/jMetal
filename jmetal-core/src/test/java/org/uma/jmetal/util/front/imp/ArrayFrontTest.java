@@ -30,7 +30,6 @@ public class ArrayFrontTest {
   @Rule
   public ExpectedException exception = ExpectedException.none();
 
-
   @Test public void shouldDefaultConstructorCreateAnEmptyArrayFront() {
     Front front = new ArrayFront() ;
 

@@ -12,10 +12,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-//  CREDIT
-//  This class is based on the code of the wfg group (http://www.wfg.csse.uwa.edu.au/hypervolume/)
-//  Copyright (C) 2010 Lyndon While, Lucas Bradstreet.
-
 package org.uma.jmetal.util.front.imp;
 
 import org.uma.jmetal.solution.Solution;
