@@ -132,13 +132,21 @@ public class FrontUtils {
 
   /**
    * Gets the distance between a point and the nearest one in a front. If a distance equals to 0
-   * if found, that means that the point is in the front, so it is excluded
+   * is found, that means that the point is in the front, so it is excluded
    *
    * @param point The point
    * @param front The front that contains the other points to calculate the distances
    * @return The minimum distance between the point and the front
    */
   public static double distanceToNearestPoint(Point point, Front front) {
+    if (front == null) {
+      throw new JMetalException("The front is null");
+    } else if (front.getNumberOfPoints() == 0) {
+      throw new JMetalException("The front is empty");
+    } else if (point == null) {
+      throw new JMetalException("The point is null");
+    }
+
     double minDistance = Double.MAX_VALUE;
 
     for (int i = 0; i < front.getNumberOfPoints(); i++) {
@@ -157,9 +165,17 @@ public class FrontUtils {
    * @param point The point
    * @param front The front that contains the other points to calculate the
    *              distances
-   * @return The minimun distance between the point and the front
+   * @return The minimum distance between the point and the front
    */
   public static double distanceToClosestPoint(Point point, Front front) {
+    if (front == null) {
+      throw new JMetalException("The front is null");
+    } else if (front.getNumberOfPoints() == 0) {
+      throw new JMetalException("The front is empty");
+    } else if (point == null) {
+      throw new JMetalException("The point is null");
+    }
+
     double minDistance = PointUtils.euclideanDistance(point, front.getPoint(0));
 
     for (int i = 1; i < front.getNumberOfPoints(); i++) {
@@ -180,6 +196,12 @@ public class FrontUtils {
    * @return The inverted pareto front
    */
   public static Front getInvertedFront(Front front) {
+    if (front == null) {
+      throw new JMetalException("The front is null");
+    } else if (front.getNumberOfPoints() == 0) {
+      throw new JMetalException("The front is empty");
+    }
+
     int numberOfDimensions = front.getPoint(0).getNumberOfDimensions() ;
     Front invertedFront = new ArrayFront(front.getNumberOfPoints(), numberOfDimensions);
 
@@ -205,6 +227,10 @@ public class FrontUtils {
    * @return A front as double[][] array
    */
   public static double[][] convertFrontToArray(Front front) {
+    if (front == null) {
+      throw new JMetalException("The front is null");
+    }
+
     double[][] arrayFront = new double[front.getNumberOfPoints()][] ;
 
     for (int i = 0; i < front.getNumberOfPoints(); i++) {
