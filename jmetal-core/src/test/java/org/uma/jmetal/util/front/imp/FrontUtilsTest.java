@@ -10,7 +10,6 @@
 //
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-//
 
 package org.uma.jmetal.util.front.imp;
 
@@ -26,6 +25,10 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
+/**
+ * @author Antonio J. Nebro
+ * @version 1.0
+ */
 public class FrontUtilsTest {
   private static final double EPSILON = 0.0000000000001 ;
 

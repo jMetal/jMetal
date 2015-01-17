@@ -23,11 +23,12 @@ package org.uma.jmetal.qualityindicator.impl;
 
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.front.Front;
+import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.imp.FrontUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -42,6 +43,23 @@ import java.util.logging.Level;
  */
 public class Hypervolume implements QualityIndicator {
   private static final String NAME = "HV" ;
+
+  public double execute(List<? extends Solution> paretoFrontApproximation,
+      List<? extends Solution> trueParetoFront) {
+
+    if (paretoFrontApproximation == null) {
+      throw new JMetalException("The pareto front approximation object is null") ;
+    } else if (trueParetoFront == null) {
+      throw new JMetalException("The pareto front object is null");
+    }
+
+    return hypervolume(paretoFrontApproximation, trueParetoFront) ;
+  }
+
+  @Override
+  public String getName() {
+    return NAME ;
+  }
 
   /*
    returns true if 'point1' dominates 'points2' with respect to the
@@ -206,8 +224,8 @@ public class Hypervolume implements QualityIndicator {
    * @param solutionListA    The list
    * @param solutionListB    The true pareto front
    */
-  public double hypervolume (List<Solution<?>> solutionListA, List<Solution<?>> solutionListB) {
-    return hypervolume(new ArrayList(solutionListA), new ArrayList<Solution<?>>(solutionListB)) ;
+  private double hypervolume (List<? extends Solution> solutionListA, List<? extends Solution> solutionListB) {
+    return hypervolume(new ArrayFront(solutionListA), new ArrayFront(solutionListB)) ;
   }
 
   /**
@@ -242,12 +260,16 @@ public class Hypervolume implements QualityIndicator {
   }
 
   @Override
-  public double execute(Front paretoFrontApproximation, Front paretoTrueFront) {
-    return hypervolume(paretoFrontApproximation, paretoTrueFront) ;
+  public double execute(Front paretoFrontApproximation, Front trueParetoFront) {
+    if (paretoFrontApproximation == null) {
+      throw new JMetalException("The pareto front approximation object is null") ;
+    } else if (trueParetoFront == null) {
+      throw new JMetalException("The pareto front object is null");
+    }
+
+    return hypervolume(paretoFrontApproximation, trueParetoFront) ;
   }
 
-  @Override
-  public String getName() {
-    return NAME ;
-  }
+
+
 }
