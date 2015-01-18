@@ -57,8 +57,14 @@ public class ArrayFrontTest {
 
 
   @Test (expected = JMetalException.class)
-  public void shouldCreateAnArrayFrontFromANullListRaiseAnException() {
+  public void shouldCreateAnArrayFrontFromANullListRaiseAnAnException() {
     List<DoubleSolution> list = null ;
+    new ArrayFront(list) ;
+  }
+
+  @Test (expected = JMetalException.class)
+  public void shouldCreateAnArrayFrontFromAnEmptyListRaiseAnException() {
+    List<DoubleSolution> list = new ArrayList<>(0) ;
     new ArrayFront(list) ;
   }
 
@@ -101,6 +107,12 @@ public class ArrayFrontTest {
   @Test (expected = JMetalException.class)
   public void shouldCreateAnArrayFrontFromANullFrontRaiseAnException() {
     Front front = null ;
+    new ArrayFront(front) ;
+  }
+
+  @Test (expected = JMetalException.class)
+  public void shouldCreateAnArrayFrontFromAnEmptyFrontRaiseAnException() {
+    Front front = new ArrayFront(0, 0) ;
     new ArrayFront(front) ;
   }
 
