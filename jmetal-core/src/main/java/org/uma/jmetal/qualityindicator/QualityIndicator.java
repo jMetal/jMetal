@@ -21,12 +21,16 @@
 
 package org.uma.jmetal.qualityindicator;
 
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.front.Front;
+
+import java.util.List;
 
 /**
  * Created by Antonio J. Nebro on 20/07/14.
  */
 public interface QualityIndicator {
   public double execute(Front frontA, Front frontB) ;
+  public double execute(List<? extends Solution> frontA, List<? extends Solution> frontB) ;
   public String getName() ;
 }

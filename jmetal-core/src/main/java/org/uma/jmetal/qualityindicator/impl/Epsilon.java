@@ -22,9 +22,12 @@
 package org.uma.jmetal.qualityindicator.impl;
 
 import org.uma.jmetal.qualityindicator.QualityIndicator;
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
-import org.uma.jmetal.util.front.imp.FrontUtils;
+import org.uma.jmetal.util.front.imp.ArrayFront;
+
+import java.util.List;
 
 /**
  * This class implements the unary epsilon additive indicator as proposed in E.
@@ -37,11 +40,34 @@ import org.uma.jmetal.util.front.imp.FrontUtils;
  */
 
 public class Epsilon implements QualityIndicator {
-  private static String NAME ;
+  private static final String NAME = "EPSILON";
 
-  /** Constructor */
-  public Epsilon() {
-    NAME = "EPSILON" ;
+  @Override
+  public double execute(Front paretoFrontApproximation, Front trueParetoFront) {
+    if (paretoFrontApproximation == null) {
+      throw new JMetalException("The pareto front approximation object is null") ;
+    } else if (trueParetoFront == null) {
+      throw new JMetalException("The pareto front object is null");
+    }
+
+    return epsilon(paretoFrontApproximation, trueParetoFront) ;
+  }
+
+  @Override
+  public double execute(List<? extends Solution> paretoFrontApproximation,
+      List<? extends Solution> trueParetoFront) {
+
+    if (paretoFrontApproximation == null) {
+      throw new JMetalException("The pareto front approximation list is null") ;
+    } else if (trueParetoFront == null) {
+      throw new JMetalException("The pareto front list is null");
+    }
+
+    return this.execute(new ArrayFront(paretoFrontApproximation), new ArrayFront(trueParetoFront)) ;
+  }
+
+  @Override public String getName() {
+    return NAME ;
   }
 
   /**
@@ -52,6 +78,7 @@ public class Epsilon implements QualityIndicator {
    * @return the value of the epsilon indicator
    * @throws org.uma.jmetal.util.JMetalException
    */
+  /*
   public double epsilon(double[][] front, double[][] referenceFront) throws JMetalException {
     int i, j, k;
     double eps, epsJ = 0.0, epsK = 0.0, epsTemp;
@@ -84,14 +111,47 @@ public class Epsilon implements QualityIndicator {
     }
     return eps;
   }
+*/
+  /**
+   * Returns the value of the epsilon indicator.
+   *
+   * @param front Solution front
+   * @param referenceFront True Pareto front
+   * @return the value of the epsilon indicator
+   * @throws org.uma.jmetal.util.JMetalException
+   */
+  private double epsilon(Front front, Front referenceFront) throws JMetalException {
+    int i, j, k;
+    double eps, epsJ = 0.0, epsK = 0.0, epsTemp;
 
-  @Override
-  public double execute(Front paretoFrontApproximation, Front paretoTrueFront) {
-    return epsilon(FrontUtils.convertFrontToArray(paretoFrontApproximation),
-        FrontUtils.convertFrontToArray(paretoTrueFront)) ;
-  }
+    int numberOfObjectives = front.getPointDimensions() ;
 
-  @Override public String getName() {
-    return NAME ;
+    eps = Double.MIN_VALUE;
+
+    for (i = 0; i < referenceFront.getNumberOfPoints(); i++) {
+      for (j = 0; j < front.getNumberOfPoints(); j++) {
+        for (k = 0; k < numberOfObjectives; k++) {
+          epsTemp = front.getPoint(j).getDimensionValue(k)
+              - referenceFront.getPoint(i).getDimensionValue(k);
+          //epsTemp = front[j][k] - referenceFront[i][k];
+          if (k == 0) {
+            epsK = epsTemp;
+          } else if (epsK < epsTemp) {
+            epsK = epsTemp;
+          }
+        }
+        if (j == 0) {
+          epsJ = epsK;
+        } else if (epsJ > epsK) {
+          epsJ = epsK;
+        }
+      }
+      if (i == 0) {
+        eps = epsJ;
+      } else if (eps < epsJ) {
+        eps = epsJ;
+      }
+    }
+    return eps;
   }
 }
