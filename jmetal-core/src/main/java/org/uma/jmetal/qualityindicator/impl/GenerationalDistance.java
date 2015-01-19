@@ -22,8 +22,13 @@
 package org.uma.jmetal.qualityindicator.impl;
 
 import org.uma.jmetal.qualityindicator.QualityIndicator;
+import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
+import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.imp.FrontUtils;
+
+import java.util.List;
 
 /**
  * This class implements the generational distance indicator. It can be used also
@@ -45,6 +50,30 @@ public class GenerationalDistance implements QualityIndicator {
    * Creates a new instance of the generational distance metric.
    */
   public GenerationalDistance() {
+  }
+
+  @Override
+  public double execute(Front paretoFrontApproximation, Front trueParetoFront) {
+    if (paretoFrontApproximation == null) {
+      throw new JMetalException("The pareto front approximation object is null") ;
+    } else if (trueParetoFront == null) {
+      throw new JMetalException("The pareto front object is null");
+    }
+
+    return generationalDistance(paretoFrontApproximation, trueParetoFront) ;
+  }
+
+  @Override
+  public double execute(List<? extends Solution> paretoFrontApproximation,
+      List<? extends Solution> trueParetoFront) {
+
+    if (paretoFrontApproximation == null) {
+      throw new JMetalException("The pareto front approximation object is null") ;
+    } else if (trueParetoFront == null) {
+      throw new JMetalException("The pareto front object is null");
+    }
+
+    return this.execute(new ArrayFront(paretoFrontApproximation), new ArrayFront(trueParetoFront)) ;
   }
 
   /**
@@ -91,10 +120,7 @@ public class GenerationalDistance implements QualityIndicator {
     return generationalDistance;
   }
 
-  @Override
-  public double execute(Front paretoFrontApproximation, Front paretoTrueFront) {
-    return generationalDistance(paretoFrontApproximation, paretoTrueFront) ;
-  }
+
 
   @Override
   public String getName() {

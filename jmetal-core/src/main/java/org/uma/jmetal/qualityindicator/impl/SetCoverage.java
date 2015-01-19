@@ -42,6 +42,23 @@ public class SetCoverage implements QualityIndicator {
 
   private Comparator<Solution> dominance;
 
+  @Override public double execute(Front set1, Front set2) {
+    return this.setCoverage(transformArraysToSolutionSet(set1), transformArraysToSolutionSet(set2));
+  }
+
+  @Override
+  public double execute(List<? extends Solution> paretoFrontApproximation,
+      List<? extends Solution> trueParetoFront) {
+
+    if (paretoFrontApproximation == null) {
+      throw new JMetalException("The pareto front approximation object is null") ;
+    } else if (trueParetoFront == null) {
+      throw new JMetalException("The pareto front object is null");
+    }
+
+    return this.execute(new ArrayFront(paretoFrontApproximation), new ArrayFront(trueParetoFront)) ;
+  }
+
   /**
    * Calculates the set coverage of set1 over set2
    * @param set1
@@ -123,9 +140,7 @@ public class SetCoverage implements QualityIndicator {
     return solutionSet ;
   }
 
-  @Override public double execute(Front set1, Front set2) {
-    return this.setCoverage(transformArraysToSolutionSet(set1), transformArraysToSolutionSet(set2));
-  }
+
 
   @Override public String getName() {
     return NAME;

@@ -28,6 +28,7 @@ public interface Front {
   public void readFrontFromFile(String fileName) throws FileNotFoundException;
  // public void createFrontFromAListOfSolutions(List<Solution> solutionList) ;
   public int getNumberOfPoints() ;
+  public int getPointDimensions() ;
   public Point getPoint(int index) ;
   public void setPoint(int index, Point point) ;
   public void sort(Comparator<Point> comparator) ;

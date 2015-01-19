@@ -156,6 +156,10 @@ public class ArrayFront implements Front {
     return points.length;
   }
 
+  @Override public int getPointDimensions() {
+    return pointDimensions ;
+  }
+
   @Override public Point getPoint(int index) {
     if (index < 0) {
       throw new JMetalException("The index value is negative") ;

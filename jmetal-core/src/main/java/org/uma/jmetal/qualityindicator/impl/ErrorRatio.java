@@ -16,9 +16,13 @@
 package org.uma.jmetal.qualityindicator.impl;
 
 import org.uma.jmetal.qualityindicator.QualityIndicator;
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
+import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.imp.FrontUtils;
+
+import java.util.List;
 
 /**
  * The Error Ratio (ER) quality indicator reports the number of vectors in PFknown that are not members of PFtrue.
@@ -29,6 +33,31 @@ public class ErrorRatio implements QualityIndicator {
   /** Constructor */
   public ErrorRatio() {
     NAME = "ER" ;
+  }
+
+  @Override
+  public double execute(Front paretoFrontApproximation, Front trueParetoFront) {
+    if (paretoFrontApproximation == null) {
+      throw new JMetalException("The pareto front approximation object is null") ;
+    } else if (trueParetoFront == null) {
+      throw new JMetalException("The pareto front object is null");
+    }
+
+    return er(FrontUtils.convertFrontToArray(paretoFrontApproximation),
+        FrontUtils.convertFrontToArray(trueParetoFront)) ;
+  }
+
+  @Override
+  public double execute(List<? extends Solution> paretoFrontApproximation,
+      List<? extends Solution> trueParetoFront) {
+
+    if (paretoFrontApproximation == null) {
+      throw new JMetalException("The pareto front approximation object is null") ;
+    } else if (trueParetoFront == null) {
+      throw new JMetalException("The pareto front object is null");
+    }
+
+    return this.execute(new ArrayFront(paretoFrontApproximation), new ArrayFront(trueParetoFront)) ;
   }
 
   /**
@@ -69,11 +98,6 @@ public class ErrorRatio implements QualityIndicator {
     return error;
   }
 
-  @Override
-  public double execute(Front paretoFrontApproximation, Front paretoTrueFront) {
-    return er(FrontUtils.convertFrontToArray(paretoFrontApproximation),
-        FrontUtils.convertFrontToArray(paretoTrueFront)) ;
-  }
 
   @Override public String getName() {
     return NAME ;

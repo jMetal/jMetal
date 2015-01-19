@@ -22,6 +22,8 @@ import org.uma.jmetal.problem.impl.AbstractIntegerProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.IntegerSolution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.front.Front;
+import org.uma.jmetal.util.front.imp.ArrayFront;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,10 +46,10 @@ public class HypervolumeTest {
     exception.expect(JMetalException.class);
     exception.expectMessage(containsString("The pareto front approximation object is null"));
 
-    List<DoubleSolution> paretoFront = new ArrayList<>() ;
+    Front front = new ArrayFront(0, 0) ;
 
     Hypervolume hypervolume = new Hypervolume() ;
-    hypervolume.execute(null, paretoFront) ;
+    hypervolume.execute(null, front) ;
   }
 
   @Test
@@ -55,7 +57,7 @@ public class HypervolumeTest {
     exception.expect(JMetalException.class);
     exception.expectMessage(containsString("The pareto front object is null"));
 
-    List<DoubleSolution> front = new ArrayList<>() ;
+    Front front = new ArrayFront(0, 0) ;
 
     Hypervolume hypervolume = new Hypervolume() ;
     hypervolume.execute(front, null) ;
@@ -70,8 +72,18 @@ public class HypervolumeTest {
     List<DoubleSolution> front2 = Arrays.asList(problem.createSolution(), problem.createSolution()) ;
 
     Hypervolume hypervolume = new Hypervolume() ;
-    hypervolume.execute(front1, front2) ;
+    hypervolume.execute(new ArrayFront(front1), new ArrayFront(front2)) ;
   }
+
+
+
+
+
+
+
+
+
+
 
   private class MockDoubleProblem extends AbstractDoubleProblem {
     /**
