@@ -64,7 +64,7 @@ public class HypervolumeTest {
   }
 
   @Test
-  public void shouldExecuteRaiseAnExceptionIfTheParetoFsfdasfrontIl() {
+  public void tobecompleted() {
     int numberOfObjectives = 3 ;
     DoubleProblem problem = new MockDoubleProblem(numberOfObjectives) ;
 

@@ -1,5 +1,3 @@
-//  ErrorRatio.java
-//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -20,20 +18,16 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
-import org.uma.jmetal.util.front.imp.FrontUtils;
+import org.uma.jmetal.util.point.Point;
 
 import java.util.List;
 
 /**
- * The Error Ratio (ER) quality indicator reports the number of vectors in PFknown that are not members of PFtrue.
+ * The Error Ratio (ER) quality indicator reports the number of solutions in a front of points
+ * that are not members of the true Pareto front.
  */
 public class ErrorRatio implements QualityIndicator {
-  private static String NAME ;
-
-  /** Constructor */
-  public ErrorRatio() {
-    NAME = "ER" ;
-  }
+  private static final String NAME = "ER" ;
 
   @Override
   public double execute(Front paretoFrontApproximation, Front trueParetoFront) {
@@ -43,8 +37,7 @@ public class ErrorRatio implements QualityIndicator {
       throw new JMetalException("The pareto front object is null");
     }
 
-    return er(FrontUtils.convertFrontToArray(paretoFrontApproximation),
-        FrontUtils.convertFrontToArray(trueParetoFront)) ;
+    return er(paretoFrontApproximation, trueParetoFront) ;
   }
 
   @Override
@@ -69,33 +62,33 @@ public class ErrorRatio implements QualityIndicator {
    * @return the value of the error ratio indicator
    * @throws org.uma.jmetal.util.JMetalException
    */
-  public double er(double[][] front, double[][] referenceFront) throws JMetalException {
-    int num_objectives = referenceFront[0].length ;
-    double total_sum = 0;
-    for (int i = 0; i < front.length; i++) {
-      double [] current_know = front[i];
-      boolean is_there = false;
-      for (int j = 0; j < referenceFront.length; j++) {
-        double [] current_true = referenceFront[j];
+  private double er(Front front, Front referenceFront) throws JMetalException {
+    int numberOfObjectives = referenceFront.getPointDimensions() ;
+    double sum = 0;
+
+    for (int i = 0; i < front.getNumberOfPoints(); i++) {
+      Point currentPoint = front.getPoint(i);
+      boolean isThere = false;
+      for (int j = 0; j < referenceFront.getNumberOfPoints(); j++) {
+        Point currentParetoFrontPoint = referenceFront.getPoint(j);
         boolean flag = true;
-        for (int k = 0; k < num_objectives; k++) {
-          if(current_know[k] != current_true[k]){
+        for (int k = 0; k < numberOfObjectives; k++) {
+          if(currentPoint.getDimensionValue(k) != currentParetoFrontPoint.getDimensionValue(k)){
             flag = false;
             break;
           }
         }
         if(flag){
-          is_there = flag;
+          isThere = flag;
           break;
         }
       }
-      if(!is_there){
-        total_sum++;
+      if(!isThere){
+        sum++;
       }
     }
 
-    double error = total_sum / front.length;
-    return error;
+    return sum / front.getNumberOfPoints();
   }
 
 
