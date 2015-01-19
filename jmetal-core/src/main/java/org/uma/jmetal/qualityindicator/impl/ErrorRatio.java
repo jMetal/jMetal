@@ -25,6 +25,11 @@ import java.util.List;
 /**
  * The Error Ratio (ER) quality indicator reports the ratio of solutions in a front of points
  * that are not members of the true Pareto front.
+ *
+ * NOTE: the indicator merely checks if the solutions in the front are not members of the
+ * second front. No assumption is made about the second front is a true Pareto front, i.e,
+ * the front could contain solutions that dominate some of those of the supposed Pareto front.
+ * It is a responsibility of the caller to ensure that this does not happen.
  */
 public class ErrorRatio implements QualityIndicator {
   private static final String NAME = "ER" ;
