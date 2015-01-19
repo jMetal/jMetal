@@ -39,6 +39,7 @@ public class EpsilonTest {
 
   @Rule
   public ExpectedException exception = ExpectedException.none();
+
   private Epsilon epsilon ;
 
   @Before public void setup() {

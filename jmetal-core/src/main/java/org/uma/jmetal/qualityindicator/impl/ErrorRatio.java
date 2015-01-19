@@ -23,7 +23,7 @@ import org.uma.jmetal.util.point.Point;
 import java.util.List;
 
 /**
- * The Error Ratio (ER) quality indicator reports the number of solutions in a front of points
+ * The Error Ratio (ER) quality indicator reports the ratio of solutions in a front of points
  * that are not members of the true Pareto front.
  */
 public class ErrorRatio implements QualityIndicator {
@@ -45,9 +45,9 @@ public class ErrorRatio implements QualityIndicator {
       List<? extends Solution> trueParetoFront) {
 
     if (paretoFrontApproximation == null) {
-      throw new JMetalException("The pareto front approximation object is null") ;
+      throw new JMetalException("The pareto front approximation list is null") ;
     } else if (trueParetoFront == null) {
-      throw new JMetalException("The pareto front object is null");
+      throw new JMetalException("The pareto front list is null");
     }
 
     return this.execute(new ArrayFront(paretoFrontApproximation), new ArrayFront(trueParetoFront)) ;
@@ -68,22 +68,22 @@ public class ErrorRatio implements QualityIndicator {
 
     for (int i = 0; i < front.getNumberOfPoints(); i++) {
       Point currentPoint = front.getPoint(i);
-      boolean isThere = false;
+      boolean thePointIsInTheParetoFront = false;
       for (int j = 0; j < referenceFront.getNumberOfPoints(); j++) {
         Point currentParetoFrontPoint = referenceFront.getPoint(j);
-        boolean flag = true;
+        boolean found = true;
         for (int k = 0; k < numberOfObjectives; k++) {
           if(currentPoint.getDimensionValue(k) != currentParetoFrontPoint.getDimensionValue(k)){
-            flag = false;
+            found = false;
             break;
           }
         }
-        if(flag){
-          isThere = flag;
+        if(found){
+          thePointIsInTheParetoFront = found;
           break;
         }
       }
-      if(!isThere){
+      if(!thePointIsInTheParetoFront){
         sum++;
       }
     }
