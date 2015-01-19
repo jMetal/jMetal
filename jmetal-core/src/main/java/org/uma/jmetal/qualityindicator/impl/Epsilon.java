@@ -78,48 +78,6 @@ public class Epsilon implements QualityIndicator {
    * @return the value of the epsilon indicator
    * @throws org.uma.jmetal.util.JMetalException
    */
-  /*
-  public double epsilon(double[][] front, double[][] referenceFront) throws JMetalException {
-    int i, j, k;
-    double eps, epsJ = 0.0, epsK = 0.0, epsTemp;
-
-    int numberOfObjectives = front[0].length;
-
-    eps = Double.MIN_VALUE;
-
-    for (i = 0; i < referenceFront.length; i++) {
-      for (j = 0; j < front.length; j++) {
-        for (k = 0; k < numberOfObjectives; k++) {
-          epsTemp = front[j][k] - referenceFront[i][k];
-          if (k == 0) {
-            epsK = epsTemp;
-          } else if (epsK < epsTemp) {
-            epsK = epsTemp;
-          }
-        }
-        if (j == 0) {
-          epsJ = epsK;
-        } else if (epsJ > epsK) {
-          epsJ = epsK;
-        }
-      }
-      if (i == 0) {
-        eps = epsJ;
-      } else if (eps < epsJ) {
-        eps = epsJ;
-      }
-    }
-    return eps;
-  }
-*/
-  /**
-   * Returns the value of the epsilon indicator.
-   *
-   * @param front Solution front
-   * @param referenceFront True Pareto front
-   * @return the value of the epsilon indicator
-   * @throws org.uma.jmetal.util.JMetalException
-   */
   private double epsilon(Front front, Front referenceFront) throws JMetalException {
     int i, j, k;
     double eps, epsJ = 0.0, epsK = 0.0, epsTemp;
@@ -133,7 +91,6 @@ public class Epsilon implements QualityIndicator {
         for (k = 0; k < numberOfObjectives; k++) {
           epsTemp = front.getPoint(j).getDimensionValue(k)
               - referenceFront.getPoint(i).getDimensionValue(k);
-          //epsTemp = front[j][k] - referenceFront[i][k];
           if (k == 0) {
             epsK = epsTemp;
           } else if (epsK < epsTemp) {
