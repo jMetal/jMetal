@@ -1,6 +1,7 @@
 package org.uma.jmetal.util;
 
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
 
@@ -170,4 +171,21 @@ public class SolutionListUtils {
     }
     return invertedFront;
   }
+
+  public static <S extends Solution> boolean isSolutionDominatedBySolutionList(S solution, List<S> solutionSet) {
+    boolean result = false ;
+    Comparator<Solution> dominance = new DominanceComparator() ;
+
+    int i = 0 ;
+
+    while (!result && (i < solutionSet.size())) {
+      if (dominance.compare(solution, solutionSet.get(i)) == 1) {
+        result = true ;
+      }
+      i++ ;
+    }
+
+    return result ;
+  }
+
 }
