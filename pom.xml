@@ -4,7 +4,7 @@
 
     <groupId>org.uma.jmetal</groupId>
     <artifactId>jmetal</artifactId>
-    <version>5.0-Beta-17</version>
+    <version>5.0-Beta-18-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -62,7 +62,7 @@
                 <plugin>
                     <groupId>org.sonatype.plugins</groupId>
                     <artifactId>nexus-staging-maven-plugin</artifactId>
-                    <version>1.6.2</version>
+                    <version>1.6.3</version>
                     <extensions>true</extensions>
                     <configuration>
                         <serverId>ossrh</serverId>
@@ -206,22 +206,22 @@
             <dependency>
                 <groupId>org.uma.jmetal</groupId>
                 <artifactId>jmetal-core</artifactId>
-                <version>5.0-Beta-17</version>
+                <version>5.0-Beta-18-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>org.uma.jmetal</groupId>
                 <artifactId>jmetal-exec</artifactId>
-                <version>5.0-Beta-17</version>
+                <version>5.0-Beta-18-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>org.uma.jmetal</groupId>
                 <artifactId>jmetal-problem</artifactId>
-                <version>5.0-Beta-17</version>
+                <version>5.0-Beta-18-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>org.uma.jmetal</groupId>
                 <artifactId>jmetal-algorithm</artifactId>
-                <version>5.0-Beta-17</version>
+                <version>5.0-Beta-18-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>junit</groupId>
