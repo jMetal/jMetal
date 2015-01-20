@@ -4,13 +4,13 @@
 
     <groupId>org.uma.jmetal</groupId>
     <artifactId>jmetal-core</artifactId>
-    <version>5.0-Beta-24-SNAPSHOT</version>
+    <version>5.0-Beta-24</version>
     <packaging>jar</packaging>
 
     <parent>
       <groupId>org.uma.jmetal</groupId>
       <artifactId>jmetal</artifactId>
-      <version>5.0-Beta-24-SNAPSHOT</version>
+      <version>5.0-Beta-24</version>
     </parent>
 
     <name>${project.groupId}:${project.artifactId}</name>
