@@ -34,28 +34,28 @@ public class SetCoverage implements QualityIndicator {
 
   private Comparator<Solution> dominance;
 
-  @Override public double execute(Front paretoFrontApproximation, Front trueParetoFront) {
-    if (paretoFrontApproximation == null) {
-      throw new JMetalException("The pareto front approximation object is null") ;
-    } else if (trueParetoFront == null) {
-      throw new JMetalException("The pareto front object is null");
+  @Override public double execute(Front frontA, Front frontB) {
+    if (frontA == null) {
+      throw new JMetalException("The front A is null") ;
+    } else if (frontB == null) {
+      throw new JMetalException("The front B is null");
     }
 
-    return this.setCoverage(FrontUtils.convertFrontToSolutionList(paretoFrontApproximation),
-        FrontUtils.convertFrontToSolutionList(trueParetoFront));
+    return this.setCoverage(FrontUtils.convertFrontToSolutionList(frontA),
+        FrontUtils.convertFrontToSolutionList(frontB));
   }
 
   @Override
-  public double execute(List<? extends Solution> paretoFrontApproximation,
-      List<? extends Solution> trueParetoFront) {
+  public double execute(List<? extends Solution> solutionListA,
+      List<? extends Solution> solutionListB) {
 
-    if (paretoFrontApproximation == null) {
-      throw new JMetalException("The pareto front approximation list is null") ;
-    } else if (trueParetoFront == null) {
-      throw new JMetalException("The pareto front list is null");
+    if (solutionListA == null) {
+      throw new JMetalException("The list A is null") ;
+    } else if (solutionListB == null) {
+      throw new JMetalException("The list B is null");
     }
 
-    return this.execute(paretoFrontApproximation, trueParetoFront) ;
+    return this.setCoverage(solutionListA, solutionListB) ;
   }
 
   /**
@@ -64,7 +64,7 @@ public class SetCoverage implements QualityIndicator {
    * @param set2
    * @return The value of the set coverage
    */
-  public double setCoverage(List<? extends Solution> set1, List<? extends Solution<?>> set2) {
+  public double setCoverage(List<? extends Solution> set1, List<? extends Solution> set2) {
     double result ;
     int sum = 0 ;
 
@@ -87,40 +87,6 @@ public class SetCoverage implements QualityIndicator {
     return result ;
   }
 
-  /*
-  private boolean isSolutionDominatedBySolutionList(Solution solution, List<Solution> solutionSet) {
-    boolean result = false ;
-
-    int i = 0 ;
-
-    while (!result && (i < solutionSet.size())) {
-      if (dominance.compare(solution, solutionSet.get(i)) == 1) {
-        result = true ;
-      }
-      i++ ;
-    }
-
-    return result ;
-  }
-*/
-  /*
-  public List<PointSolution> transformArraysToSolutionSet(Front front) throws JMetalException {
-    int solutionSetSize = front.getNumberOfPoints() ;
-    int numberOfObjectives = front.getPoint(0).getNumberOfDimensions() ;
-    List<PointSolution> solutionSet = new ArrayList<>(solutionSetSize) ;
-
-    for (int i = 0; i < front.getNumberOfPoints(); i++) {
-      PointSolution solution = new PointSolution(numberOfObjectives);
-      for (int j = 0 ; j < numberOfObjectives; j++) {
-        solution.setObjective(j, front.getPoint(i).getDimensionValue(j));
-      }
-
-      solutionSet.add(solution) ;
-    }
-
-    return solutionSet ;
-  }
-*/
   @Override public String getName() {
     return NAME;
   }

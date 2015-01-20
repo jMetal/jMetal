@@ -21,8 +21,10 @@ import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
+import org.uma.jmetal.util.front.imp.FrontUtils;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
+import org.uma.jmetal.util.point.impl.PointSolution;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -207,6 +209,50 @@ public class EpsilonTest {
     paretoFront.setPoint(2, point6);
 
     assertEquals(0.5, epsilon.execute(frontApproximation, paretoFront), EPSILON);
+  }
+
+  /**
+   * The same case as shouldExecuteReturnTheCorrectValueCaseB() but using list of solutions
+   */
+  @Test
+  public void shouldExecuteReturnTheCorrectValueCaseC() {
+    int numberOfPoints = 3 ;
+    int numberOfDimensions = 2 ;
+    Front frontApproximation = new ArrayFront(numberOfPoints, numberOfDimensions);
+    Front paretoFront = new ArrayFront(numberOfPoints, numberOfDimensions);
+
+    Point point1 = new ArrayPoint(numberOfDimensions) ;
+    point1.setDimensionValue(0, 1.5);
+    point1.setDimensionValue(1, 4.0);
+    Point point2 = new ArrayPoint(numberOfDimensions) ;
+    point2.setDimensionValue(0, 1.5);
+    point2.setDimensionValue(1, 2.0);
+    Point point3 = new ArrayPoint(numberOfDimensions) ;
+    point3.setDimensionValue(0, 2.0);
+    point3.setDimensionValue(1, 1.5);
+
+    frontApproximation.setPoint(0, point1);
+    frontApproximation.setPoint(1, point2);
+    frontApproximation.setPoint(2, point3);
+
+    Point point4 = new ArrayPoint(numberOfDimensions) ;
+    point4.setDimensionValue(0, 1.0);
+    point4.setDimensionValue(1, 3.0);
+    Point point5 = new ArrayPoint(numberOfDimensions) ;
+    point5.setDimensionValue(0, 1.5);
+    point5.setDimensionValue(1, 2.0);
+    Point point6 = new ArrayPoint(numberOfDimensions) ;
+    point6.setDimensionValue(0, 2.0);
+    point6.setDimensionValue(1, 1.5);
+
+    paretoFront.setPoint(0, point4);
+    paretoFront.setPoint(1, point5);
+    paretoFront.setPoint(2, point6);
+
+    List<PointSolution> listA = FrontUtils.convertFrontToSolutionList(frontApproximation) ;
+    List<PointSolution> listB = FrontUtils.convertFrontToSolutionList(paretoFront) ;
+
+    assertEquals(0.5, epsilon.execute(listA, listB), EPSILON);
   }
 
   @Test

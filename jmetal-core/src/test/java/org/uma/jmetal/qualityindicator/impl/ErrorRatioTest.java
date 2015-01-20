@@ -174,7 +174,6 @@ public class ErrorRatioTest {
    */
   @Test
   public void shouldExecuteReturnTheCorrectValueCaseB() {
-    int numberOfDimensions = 2 ;
     DoubleProblem problem = new MockDoubleProblem() ;
 
     List<DoubleSolution> frontApproximation = Arrays.asList(problem.createSolution(),
