@@ -8,9 +8,9 @@
     <packaging>jar</packaging>
 
     <parent>
-      <groupId>org.uma.jmetal</groupId>
-      <artifactId>jmetal</artifactId>
-      <version>5.0-Beta-25-SNAPSHOT</version>
+        <groupId>org.uma.jmetal</groupId>
+        <artifactId>jmetal</artifactId>
+        <version>5.0-Beta-25-SNAPSHOT</version>
     </parent>
 
     <name>${project.groupId}:${project.artifactId}</name>
