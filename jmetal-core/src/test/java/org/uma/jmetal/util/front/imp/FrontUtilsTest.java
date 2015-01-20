@@ -20,6 +20,9 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
+import org.uma.jmetal.util.point.impl.PointSolution;
+
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertArrayEquals;
@@ -682,7 +685,7 @@ public class FrontUtilsTest {
   }
 
   /**
-   * Case A: The front has one three
+   * Case A: The front has one three points
    */
   @Test
   public void shouldConvertFrontToArrayReturnTheCorrectArrayCaseB() {
@@ -721,4 +724,88 @@ public class FrontUtilsTest {
     assertEquals(.4E+23, doubleFront[2][3], EPSILON);
   }
 
+  @Test
+  public void shouldConvertFrontToSolutionListRaiseAnExceptionIfTheFrontIsNull() {
+    exception.expect(JMetalException.class);
+    exception.expectMessage(containsString("The front is null"));
+
+    FrontUtils.convertFrontToArray(null) ;
+  }
+
+  @Test
+  public void shouldConvertFrontToSolutionListReturnAnEmptyListIfTheFrontIsEmpty() {
+    int numberOfDimensions = 2 ;
+    int numberOfPoints = 0 ;
+
+    Front front = new ArrayFront(numberOfPoints, numberOfDimensions) ;
+
+    List<PointSolution> list ;
+    list = FrontUtils.convertFrontToSolutionList(front) ;
+
+    assertEquals(0, list.size());
+  }
+
+  /**
+   * Case A: The front has one point
+   */
+  @Test
+  public void shouldConvertFrontToSolutionListReturnTheCorrectListCaseA() {
+    int numberOfDimensions = 2 ;
+    int numberOfPoints = 1 ;
+
+    Front front = new ArrayFront(numberOfPoints, numberOfDimensions) ;
+
+    Point point1 = new ArrayPoint(numberOfDimensions) ;
+    point1.setDimensionValue(0, 0.1);
+    point1.setDimensionValue(1, 0.9);
+
+    front.setPoint(0, point1);
+
+    List<PointSolution> list ;
+    list = FrontUtils.convertFrontToSolutionList(front) ;
+
+    assertEquals(1, list.size());
+    assertEquals(0.1, list.get(0).getObjective(0), EPSILON);
+    assertEquals(0.9, list.get(0).getObjective(1), EPSILON);
+  }
+
+  /**
+   * Case A: The front has one three points
+   */
+  @Test
+  public void shouldConvertFrontToSolutionListReturnTheCorrectListCaseB() {
+    int numberOfDimensions = 4 ;
+    int numberOfPoints = 3 ;
+
+    Front front = new ArrayFront(numberOfPoints, numberOfDimensions) ;
+
+    Point point1 = new ArrayPoint(numberOfDimensions) ;
+    point1.setDimensionValue(0, 0.1);
+    point1.setDimensionValue(1, 0.9);
+    point1.setDimensionValue(2, -2.23);
+    point1.setDimensionValue(3, 0.0);
+    Point point2 = new ArrayPoint(numberOfDimensions) ;
+    point2.setDimensionValue(0, 0.2);
+    point2.setDimensionValue(1, 0.8);
+    point2.setDimensionValue(2, 25.08);
+    point2.setDimensionValue(3, -232420.8);
+    Point point3 = new ArrayPoint(numberOfDimensions) ;
+    point3.setDimensionValue(0, 0.3);
+    point3.setDimensionValue(1, 0.7);
+    point3.setDimensionValue(2, 32342);
+    point3.setDimensionValue(3, 0.4E+23);
+
+    front.setPoint(0, point1);
+    front.setPoint(1, point2);
+    front.setPoint(2, point3);
+
+    List<PointSolution> list ;
+    list = FrontUtils.convertFrontToSolutionList(front) ;
+
+    assertEquals(3, list.size());
+    assertEquals(0.1, list.get(0).getObjective(0), EPSILON);
+    assertEquals(0.8, list.get(1).getObjective(1), EPSILON);
+    assertEquals(32342, list.get(2).getObjective(2), EPSILON);
+    assertEquals(.4E+23, list.get(2).getObjective(3), EPSILON);
+  }
 }

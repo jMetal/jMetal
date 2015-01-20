@@ -17,7 +17,11 @@ package org.uma.jmetal.util.front.imp;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.point.Point;
+import org.uma.jmetal.util.point.impl.PointSolution;
 import org.uma.jmetal.util.point.impl.PointUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A Front is a  list of points. This class includes utilities to work with fronts.
@@ -242,4 +246,37 @@ public class FrontUtils {
 
     return arrayFront ;
   }
+
+  /**
+   * Given a front, converts it to a Solution set of PointSolutions
+   *
+   * @param front
+   * @return A front as a List<FrontSolution>
+   */
+  public static List<PointSolution> convertFrontToSolutionList(Front front) {
+    if (front == null) {
+      throw new JMetalException("The front is null");
+    }
+
+    int numberOfObjectives ;
+    int solutionSetSize = front.getNumberOfPoints() ;
+    if (front.getNumberOfPoints() == 0) {
+      numberOfObjectives = 0 ;
+    } else {
+      numberOfObjectives = front.getPoint(0).getNumberOfDimensions();
+    }
+    List<PointSolution> solutionSet = new ArrayList<>(solutionSetSize) ;
+
+    for (int i = 0; i < front.getNumberOfPoints(); i++) {
+      PointSolution solution = new PointSolution(numberOfObjectives);
+      for (int j = 0 ; j < numberOfObjectives; j++) {
+        solution.setObjective(j, front.getPoint(i).getDimensionValue(j));
+      }
+
+      solutionSet.add(solution) ;
+    }
+
+    return solutionSet ;
+  }
+
 }
