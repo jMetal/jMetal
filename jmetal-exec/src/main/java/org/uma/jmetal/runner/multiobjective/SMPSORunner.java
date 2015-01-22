@@ -32,6 +32,7 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
+import org.uma.jmetal.util.evaluator.impl.MultithreadedSolutionListEvaluator;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
@@ -86,6 +87,7 @@ public class SMPSORunner {
             .setMaxIterations(250)
             .setSwarmSize(100)
      //       .setRandomGenerator(new MersenneTwisterGenerator())
+            .setSolutionListEvaluator(new MultithreadedSolutionListEvaluator(8, problem))
             .build();
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)

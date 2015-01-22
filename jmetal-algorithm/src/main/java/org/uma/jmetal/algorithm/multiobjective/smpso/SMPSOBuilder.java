@@ -39,7 +39,6 @@ public class SMPSOBuilder implements AlgorithmBuilder {
 
   private Archive<DoubleSolution> leaders;
 
-
   private SolutionListEvaluator evaluator;
 
   public SMPSOBuilder(DoubleProblem problem, Archive leaders) {
@@ -222,6 +221,12 @@ public class SMPSOBuilder implements AlgorithmBuilder {
     JMetalRandom.getInstance().setRandomGenerator(randomGenerator);
 
     return this;
+  }
+
+  public SMPSOBuilder setSolutionListEvaluator(SolutionListEvaluator evaluator) {
+    this.evaluator = evaluator ;
+
+    return this ;
   }
 
   public SMPSO build() {
