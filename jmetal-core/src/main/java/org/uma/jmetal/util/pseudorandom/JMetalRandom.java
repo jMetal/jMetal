@@ -2,10 +2,12 @@ package org.uma.jmetal.util.pseudorandom;
 
 import org.uma.jmetal.util.pseudorandom.impl.JavaRandomGenerator;
 
+import java.io.Serializable;
+
 /**
  * Created by ajnebro on 24/10/14.
  */
-public class JMetalRandom {
+public class JMetalRandom implements Serializable {
   private static JMetalRandom instance ;
   private PseudoRandomGenerator randomGenerator ;
 

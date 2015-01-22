@@ -72,7 +72,7 @@ public class HypervolumeTest {
     List<DoubleSolution> front2 = Arrays.asList(problem.createSolution(), problem.createSolution()) ;
 
     Hypervolume hypervolume = new Hypervolume() ;
-    hypervolume.execute(new ArrayFront(front1), new ArrayFront(front2)) ;
+//    hypervolume.execute(new ArrayFront(front1), new ArrayFront(front2)) ;
   }
 
 

@@ -84,16 +84,18 @@ public class GenerationalDistanceTest {
   }
 
   @Test
-  public void shouldExecuteReturnZeroIfTheFrontsContainOnePointWhichIsTheSame() {
+  public void shouldExecuteRaiseAndExceptionIfTheFrontsContainOnePointWhichIsTheSame() {
+    exception.expect(JMetalException.class);
+    exception.expectMessage(containsString("Maximum and minimum values of index 0 are the same: 10"));
+
     int numberOfPoints = 1 ;
-    int numberOfDimensions = 3 ;
+    int numberOfDimensions = 2 ;
     Front frontApproximation = new ArrayFront(numberOfPoints, numberOfDimensions);
     Front paretoFront = new ArrayFront(numberOfPoints, numberOfDimensions);
 
     Point point1 = new ArrayPoint(numberOfDimensions) ;
     point1.setDimensionValue(0, 10.0);
     point1.setDimensionValue(1, 12.0);
-    point1.setDimensionValue(2, -1.0);
 
     frontApproximation.setPoint(0, point1);
     paretoFront.setPoint(0, point1);

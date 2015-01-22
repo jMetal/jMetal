@@ -255,6 +255,33 @@ public class FrontUtilsTest {
   }
 
   /**
+   * Point: [2,4]
+   * Maximum values: [2, 4]
+   * Minimum values: [2, 4]
+   * Result: [0.5, 1.0]
+   */
+  @Test
+  public void shouldGetNormalizedFrontRaiseAnExceptionIfTheMaxAndMinValuesAreTheSame() {
+    exception.expect(JMetalException.class);
+    exception.expectMessage(containsString("Maximum and minimum values of index 0 are the same: 2"));
+
+    int numberOfPoints = 1 ;
+    int numberOfDimensions = 2 ;
+    Front front = new ArrayFront(numberOfPoints, numberOfDimensions);
+
+    Point point = new ArrayPoint(numberOfDimensions) ;
+    point.setDimensionValue(0, 2);
+    point.setDimensionValue(1, 4);
+
+    front.setPoint(0, point);
+
+    double[] minimum = {2, 4} ;
+    double[] maximum = {2, 4} ;
+
+    FrontUtils.getNormalizedFront(front, maximum, minimum) ;
+  }
+
+  /**
    * Points: [2,4], [-2, 3]
    * Maximum values: [6, 8]
    * Minimum values: [-10, 1]
