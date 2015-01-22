@@ -26,5 +26,8 @@ Features of the current development version:
 * Selection operators:  BinaryTournamentSelection, DifferentialEvolutionSelection
 * Problems: Fonseca, Kursawe, Schaffer, Srinivas, OneZeroMax, NMMin, NMIN2, ZDT benchrmark, DTLZ benchmark, WFG benchmark, LZ09 benchmark 
 
+##jMetal is available as a Maven Project in The Central Repository
+
+The link to the modules is: https://search.maven.org/#search%7Cga%7C1%7Cjmetal
 
 
