@@ -13,13 +13,15 @@
 
 package org.uma.jmetal.solution;
 
+import java.io.Serializable;
+
 /**
  * Interface representing a Solution
  * @author Antonio J. Nebro
  * @version 0.1
  * @param <T> Type (Double, Integer, etc.)
  */
-public interface Solution<T> {
+public interface Solution<T> extends Serializable {
   public void setObjective(int index, double value) ;
   public double getObjective(int index) ;
 

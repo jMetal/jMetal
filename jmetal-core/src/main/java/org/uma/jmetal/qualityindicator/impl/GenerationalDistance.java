@@ -45,13 +45,6 @@ public class GenerationalDistance implements QualityIndicator {
 
   private static final double POW = 2.0;
 
-  /**
-   * Constructor.
-   * Creates a new instance of the generational distance metric.
-   */
-  public GenerationalDistance() {
-  }
-
   @Override
   public double execute(Front paretoFrontApproximation, Front trueParetoFront) {
     if (paretoFrontApproximation == null) {
@@ -68,12 +61,12 @@ public class GenerationalDistance implements QualityIndicator {
       List<? extends Solution> trueParetoFront) {
 
     if (paretoFrontApproximation == null) {
-      throw new JMetalException("The pareto front approximation object is null") ;
+      throw new JMetalException("The pareto front approximation list is null") ;
     } else if (trueParetoFront == null) {
-      throw new JMetalException("The pareto front object is null");
+      throw new JMetalException("The pareto front list is null");
     }
 
-    return this.execute(new ArrayFront(paretoFrontApproximation), new ArrayFront(trueParetoFront)) ;
+    return this.generationalDistance(new ArrayFront(paretoFrontApproximation), new ArrayFront(trueParetoFront)) ;
   }
 
   /**
@@ -94,22 +87,19 @@ public class GenerationalDistance implements QualityIndicator {
 
     // STEP 2. Get the normalized front and true Pareto fronts
     normalizedFront = FrontUtils.getNormalizedFront(front,
-      maximumValue,
-      minimumValue);
+        maximumValue,
+        minimumValue);
     normalizedParetoFront = FrontUtils.getNormalizedFront(trueParetoFront,
-      maximumValue,
-      minimumValue);
+        maximumValue,
+        minimumValue);
 
     // STEP 3. Sum the distances between each point of the front and the
     // nearest point in the true Pareto front
     double sum = 0.0;
     for (int i = 0; i < front.getNumberOfPoints(); i++) {
       sum += Math.pow(FrontUtils.distanceToClosestPoint(normalizedFront.getPoint(i),
-          normalizedParetoFront),
-              POW
-      );
+              normalizedParetoFront), POW);
     }
-
 
     // STEP 4. Obtain the sqrt of the sum
     sum = Math.pow(sum, 1.0 / POW);
@@ -119,8 +109,6 @@ public class GenerationalDistance implements QualityIndicator {
 
     return generationalDistance;
   }
-
-
 
   @Override
   public String getName() {

@@ -64,7 +64,6 @@ public class GenerationalGeneticAlgorithmRunner {
             .setSelectionOperator(selectionOperator)
             .build() ;
 
-
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 

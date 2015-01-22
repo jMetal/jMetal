@@ -127,8 +127,7 @@ public class FrontUtils {
     for (int i = 0; i < front.getNumberOfPoints(); i++) {
       for (int j = 0; j < numberOfPointDimensions; j++) {
         normalizedFront.getPoint(i).setDimensionValue(j, (front.getPoint(i).getDimensionValue(j)
-            - minimumValues[j]) /
-            (maximumValues[j] - minimumValues[j]));
+            - minimumValues[j]) / (maximumValues[j] - minimumValues[j]));
       }
     }
     return normalizedFront;

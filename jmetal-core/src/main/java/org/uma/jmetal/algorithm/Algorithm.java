@@ -13,13 +13,15 @@
 
 package org.uma.jmetal.algorithm;
 
+import java.io.Serializable;
+
 /**
  * Interface representing an algorithm
  * @author Antonio J. Nebro
  * @version 0.1
  * @param <R> Result
  */
-public interface Algorithm<R> extends Runnable {
+public interface Algorithm<R> extends Runnable, Serializable {
 
   /** Runs the algorithm */
   public void run() ;

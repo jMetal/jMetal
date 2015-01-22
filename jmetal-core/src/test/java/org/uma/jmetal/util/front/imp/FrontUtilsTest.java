@@ -261,7 +261,7 @@ public class FrontUtilsTest {
    * Result: [0.5, 1.0], []
    */
   @Test
-  public void shouldGetNormalizedFrontReturnTheCorrectFrontIfThisContainsTwoPoint() {
+  public void shouldGetNormalizedFrontReturnTheCorrectFrontIfThisContainsTwoPoints() {
     int numberOfPoints = 2 ;
     int numberOfDimensions = 2 ;
     Front front = new ArrayFront(numberOfPoints, numberOfDimensions);

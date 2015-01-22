@@ -43,7 +43,7 @@ public class GDE3Builder implements AlgorithmBuilder {
 
   protected SolutionListEvaluator evaluator;
 
-
+  /** Constructor */
   public GDE3Builder(DoubleProblem problem) {
     this.problem = problem;
     maxIterations = 250 ;
