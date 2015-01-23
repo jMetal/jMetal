@@ -31,8 +31,7 @@ Features of the current development version:
 The link to the modules is: https://search.maven.org/#search%7Cga%7C1%7Cjmetal
 
 ###Code coverage (23th January 2015)
-Package: jmetal-core
 
 |Class % |Method %| Line % |
 |--------|--------|--------|
-|13,7% (37/ 270) |	12,6% (182/ 1442)	| 10,5% (936/ 8950)|
+|16,7% (45/ 270) |	15,9% (229/ 1442) |	11,9% (1069/ 8965)
