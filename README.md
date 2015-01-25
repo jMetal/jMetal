@@ -19,12 +19,13 @@ If you are interested in contributing with your ideas and comments, please take 
 
 Features of the current development version:
 
-* Algorithms: NSGA-II, NSGA-III (to be tested), SMPSO, GDE3, IBEA (corrected version)
+* Algorithms: NSGA-II, NSGA-III (to be tested), SMPSO, GDE3, IBEA (corrected version), MOEA/D (variants: MOEA/D-DE, MOEA/D-DRA, Constrained MOEA/D).
 * Encodings: Binary, Real, Integer, Permutation, Integer+Double
-* Crossover operators: SBXCrossover, SinglePointCrossover, DifferentialEvolutionCrossover, IntegerSBXCrossover
-* Mutation operators: PolynomialMutation, SingleRandomMutation, BitFlipMutation, IntegerPolynomialMutation
-* Selection operators:  BinaryTournamentSelection, DifferentialEvolutionSelection
+* Crossover operators: SBXCrossover, SinglePointCrossover, DifferentialEvolutionCrossover, IntegerSBXCrossover, BLXAlphaCrossover, HUXCrossover
+* Mutation operators: PolynomialMutation, SingleRandomMutation, BitFlipMutation, IntegerPolynomialMutation, UniformMutation, NonUniformMutation
+* Selection operators:  BinaryTournamentSelection, DifferentialEvolutionSelection, RankingAndCrowdingSelection
 * Problems: Fonseca, Kursawe, Schaffer, Srinivas, OneZeroMax, NMMin, NMIN2, ZDT benchrmark, DTLZ benchmark, WFG benchmark, LZ09 benchmark 
+* Qualitity indicators: Epsilon, Hypervolume, error ratio, spread, seneralized spread, generational distance, inverted generational distance, set coverage.
 
 ##jMetal is available as a Maven Project in The Central Repository
 
