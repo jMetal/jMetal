@@ -15,6 +15,8 @@ package org.uma.jmetal.operator.impl.crossover;
 
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.solution.util.RepairDoubleSolution;
+import org.uma.jmetal.solution.util.RepairDoubleSolutionAtBounds;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
@@ -31,13 +33,28 @@ public class BLXAlphaCrossover implements CrossoverOperator<List<DoubleSolution>
 
   private double crossoverProbability;
   private double alpha ;
+
+  private RepairDoubleSolution solutionRepair ;
+
   private JMetalRandom randomGenerator ;
 
   /** Constructor */
   public BLXAlphaCrossover(double crossoverProbability, double alpha) {
+    this (crossoverProbability, alpha, new RepairDoubleSolutionAtBounds()) ;
+  }
+
+  /** Constructor */
+  public BLXAlphaCrossover(double crossoverProbability, double alpha, RepairDoubleSolution solutionRepair) {
+    if (crossoverProbability < 0) {
+      throw new JMetalException("Crossover probability is negative: " + crossoverProbability) ;
+    } else if (alpha < 0) {
+      throw new JMetalException("Alpha is negative: " + alpha);
+    }
+
     this.crossoverProbability = crossoverProbability ;
     this.alpha = alpha ;
     randomGenerator = JMetalRandom.getInstance() ;
+    this.solutionRepair = solutionRepair ;
   }
 
   /* Getters */
@@ -75,13 +92,13 @@ public class BLXAlphaCrossover implements CrossoverOperator<List<DoubleSolution>
     double valueY2;
     double valueX1;
     double valueX2;
-    double upperValue;
-    double lowerValue;
+    double upperBound;
+    double lowerBound;
 
     if (randomGenerator.nextDouble() <= probability) {
       for (i = 0; i < parent1.getNumberOfVariables(); i++) {
-        upperValue = parent1.getUpperBound(i);
-        lowerValue = parent1.getLowerBound(i);
+        upperBound = parent1.getUpperBound(i);
+        lowerBound = parent1.getLowerBound(i);
         valueX1 = parent1.getVariableValue(i);
         valueX2 = parent2.getVariableValue(i);
 
@@ -111,21 +128,11 @@ public class BLXAlphaCrossover implements CrossoverOperator<List<DoubleSolution>
         random = randomGenerator.nextDouble();
         valueY2 = minRange + random * (maxRange - minRange);
 
-        if (valueY1 < lowerValue) {
-          offspring.get(0).setVariableValue(i, lowerValue);
-        } else if (valueY1 > upperValue) {
-          offspring.get(0).setVariableValue(i, upperValue);
-        } else {
-          offspring.get(0).setVariableValue(i, valueY1);
-        }
+        valueY1 = solutionRepair.repairSolutionVariableValue(valueY1, lowerBound, upperBound) ;
+        valueY2 = solutionRepair.repairSolutionVariableValue(valueY2, lowerBound, upperBound) ;
 
-        if (valueY2 < lowerValue) {
-          offspring.get(1).setVariableValue(i, lowerValue);
-        } else if (valueY2 > upperValue) {
-          offspring.get(1).setVariableValue(i, upperValue);
-        } else {
-          offspring.get(1).setVariableValue(i, valueY2);
-        }
+        offspring.get(0).setVariableValue(i, valueY1);
+        offspring.get(1).setVariableValue(i, valueY2);
       }
     }
 
