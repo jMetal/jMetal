@@ -30,8 +30,8 @@ Features of the current development version:
 
 The link to the modules is: https://search.maven.org/#search%7Cga%7C1%7Cjmetal
 
-###Code coverage (23th January 2015)
+###Code coverage (25th January 2015)
 
 |Class % |Method %| Line % |
 |--------|--------|--------|
-|16,7% (45/ 270) |	15,9% (229/ 1442) |	11,9% (1069/ 8965)
+|17,8% (48/ 270) |	16,8% (243/ 1443) |	13,4% (1199/ 8975)
