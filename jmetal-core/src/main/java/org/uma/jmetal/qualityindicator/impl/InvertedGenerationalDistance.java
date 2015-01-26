@@ -105,9 +105,7 @@ public class InvertedGenerationalDistance implements QualityIndicator {
     double sum = 0.0;
     for (int i = 0 ; i < normalizedParetoFront.getNumberOfPoints(); i++) {
       sum += Math.pow(FrontUtils.distanceToClosestPoint(normalizedParetoFront.getPoint(i),
-          normalizedFront),
-              POW
-      );
+          normalizedFront), POW);
     }
 
     // STEP 4. Obtain the sqrt of the sum

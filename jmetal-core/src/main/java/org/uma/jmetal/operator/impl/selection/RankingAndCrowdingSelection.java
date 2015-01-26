@@ -41,9 +41,7 @@ import java.util.List;
  * crowding distance values.
  */
 public class RankingAndCrowdingSelection implements SelectionOperator<List<Solution>,List<Solution>> {
-
   private Comparator<Solution> crowdingComparator = new CrowdingDistanceComparator();
-  //private Distance distance = new Distance();
   private Problem problem = null;
 
   private int solutionsToSelect = 0 ;

@@ -34,9 +34,6 @@ public class IntegerSBXCrossover implements CrossoverOperator<List<IntegerSoluti
   /** EPS defines the minimum difference allowed between real values */
   private static final double EPS = 1.0e-14;
 
-  private static final double ETA_C_DEFAULT = 20.0;
-  private static final double DEFAULT_PROBABILITY = 0.9 ;
-
   private double distributionIndex ;
   private double crossoverProbability  ;
 
@@ -44,6 +41,12 @@ public class IntegerSBXCrossover implements CrossoverOperator<List<IntegerSoluti
 
   /** Constructor */
   public IntegerSBXCrossover(double crossoverProbability, double distributionIndex) {
+    if (crossoverProbability < 0) {
+      throw new JMetalException("Crossover probability is negative: " + crossoverProbability) ;
+    } else if (distributionIndex < 0) {
+      throw new JMetalException("Distribution index is negative: " + distributionIndex);
+    }
+
     this.crossoverProbability = crossoverProbability ;
     this.distributionIndex = distributionIndex ;
     randomGenerator = JMetalRandom.getInstance() ;
