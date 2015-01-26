@@ -22,7 +22,6 @@
 package org.uma.jmetal.operator.impl.selection;
 
 import org.uma.jmetal.operator.SelectionOperator;
-import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
@@ -32,18 +31,15 @@ import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**
  * This class implements a selection for selecting a number of solutions from
- * a solutionSet. The solutions are taken by mean of its ranking and
+ * a solution list. The solutions are taken by mean of its ranking and
  * crowding distance values.
  */
-public class RankingAndCrowdingSelection implements SelectionOperator<List<Solution>,List<Solution>> {
-  private Comparator<Solution> crowdingComparator = new CrowdingDistanceComparator();
-  private Problem problem = null;
-
+public class RankingAndCrowdingSelection
+    implements SelectionOperator<List<? extends Solution>,List<? extends Solution>> {
   private int solutionsToSelect = 0 ;
 
   /** Constructor */
@@ -57,9 +53,11 @@ public class RankingAndCrowdingSelection implements SelectionOperator<List<Solut
   }
 
   /** Execute() method */
-  public List<Solution> execute(List<Solution> solutionList) throws JMetalException {
+  public List<? extends Solution> execute(List<? extends Solution> solutionList) throws JMetalException {
     if (null == solutionList) {
-      throw new JMetalException("Parameter is null") ;
+      throw new JMetalException("The solution list is null");
+    } else if (solutionList.isEmpty()) {
+        throw new JMetalException("The solution list is empty") ;
     }  else if (solutionList.size() < solutionsToSelect) {
       throw new JMetalException("The population size ("+solutionList.size()+") is smaller than" +
               "the solutions to selected ("+solutionsToSelect+")")  ;
