@@ -37,14 +37,15 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 /**
- * Created by Antonio J. Nebro on 15/06/14.
+ * @author Antonio J. Nebro
+ * @version 1.0
  */
-
 @RunWith(MockitoJUnitRunner.class)
 public class BinaryTournamentSelectionTest {
   private static final int POPULATION_SIZE = 20 ;
 
   private BinaryTournamentSelection selection ;
+
   @Mock private Problem problem ;
   private List<Solution> population ;
 

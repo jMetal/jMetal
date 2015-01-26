@@ -18,7 +18,6 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.comparator.DominanceComparator;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.Comparator;
 import java.util.List;
@@ -32,7 +31,6 @@ import java.util.List;
  */
 public class NaryTournamentSelection implements SelectionOperator<List<Solution>, Solution> {
   private Comparator<Solution> comparator;
-  private JMetalRandom randomGenerator ;
   private int numberOfSolutionsToBeReturned ;
 
   /** Constructor */
@@ -42,7 +40,6 @@ public class NaryTournamentSelection implements SelectionOperator<List<Solution>
 
   /** Constructor */
   public NaryTournamentSelection(int numberOfSolutionsToBeReturned, Comparator<Solution> comparator) {
-    randomGenerator = JMetalRandom.getInstance() ;
     this.numberOfSolutionsToBeReturned = numberOfSolutionsToBeReturned ;
     this.comparator = comparator ;
   }
