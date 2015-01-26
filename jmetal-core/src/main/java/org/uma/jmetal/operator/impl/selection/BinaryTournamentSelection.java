@@ -16,18 +16,16 @@ package org.uma.jmetal.operator.impl.selection;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.SolutionUtils;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
 /**
  * @author Antonio J. Nebro
- * @author Juan J. Durillo
  * @version 1.0
  * 
  * Applies a binary tournament selection to return the best solution between two that have been
@@ -61,26 +59,11 @@ public class BinaryTournamentSelection implements SelectionOperator<List<Solutio
     if (solutions.size() == 1) {
       result = solutions.get(0) ;
     } else {
-      List<Solution> selectedSolutions = selectRandomSolutions(solutions) ;
-      result = SolutionUtils.getBestSolution(selectedSolutions.get(0), selectedSolutions.get(1),comparator) ;
+      List<Solution> selectedSolutions = SolutionListUtils.selectNRandomDifferentSolutions(2, solutions);
+      result = SolutionUtils
+          .getBestSolution(selectedSolutions.get(0), selectedSolutions.get(1), comparator) ;
     }
 
     return result;
-  }
-
-  /**
-   * Given a list with two or more solutions, selects two of them randomly
-   * @param solutions The list of solutions
-   * @return A list with two solutions
-   */
-  private List<Solution> selectRandomSolutions(List<Solution> solutions) {
-    int indexSolution1 = randomGenerator.nextInt(0, solutions.size() - 1);
-    int indexSolution2 = randomGenerator.nextInt(0, solutions.size() - 1);
-
-    while (indexSolution1 == indexSolution2) {
-      indexSolution2 = randomGenerator.nextInt(0, solutions.size() - 1);
-    }
-
-    return new ArrayList<>(Arrays.asList(solutions.get(indexSolution1), solutions.get(indexSolution2))) ;
   }
 }
