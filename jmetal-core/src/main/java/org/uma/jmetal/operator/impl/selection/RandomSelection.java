@@ -47,7 +47,7 @@ public class RandomSelection implements SelectionOperator<List<? extends Solutio
   public List<? extends Solution> execute(List<? extends Solution> solutionList) {
     if (null == solutionList) {
       throw new JMetalException("The solution list is null") ;
-    } else if (solutionList.size() == 0) {
+    } else if (solutionList.isEmpty()) {
       throw new JMetalException("The solution list is empty") ;
     } else if (solutionList.size() < numberOfSolutionsToBeReturned) {
       throw new JMetalException("The solution list size (" + solutionList.size() +") is less than "

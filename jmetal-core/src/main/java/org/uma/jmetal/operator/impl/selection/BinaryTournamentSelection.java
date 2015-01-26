@@ -48,18 +48,18 @@ public class BinaryTournamentSelection implements SelectionOperator<List<Solutio
 
   @Override
   /** Execute() method */
-  public Solution execute(List<Solution> solutions) {
-    if (null == solutions) {
-      throw new JMetalException("Parameter is null") ;
-    } else if (solutions.isEmpty()) {
-      throw new JMetalException("Solution set size is 0") ;
+  public Solution execute(List<Solution> solutionList) {
+    if (null == solutionList) {
+      throw new JMetalException("The solution list is null") ;
+    } else if (solutionList.isEmpty()) {
+      throw new JMetalException("The solution list is empt") ;
     }
 
     Solution result ;
-    if (solutions.size() == 1) {
-      result = solutions.get(0) ;
+    if (solutionList.size() == 1) {
+      result = solutionList.get(0) ;
     } else {
-      List<Solution> selectedSolutions = SolutionListUtils.selectNRandomDifferentSolutions(2, solutions);
+      List<Solution> selectedSolutions = SolutionListUtils.selectNRandomDifferentSolutions(2, solutionList);
       result = SolutionUtils
           .getBestSolution(selectedSolutions.get(0), selectedSolutions.get(1), comparator) ;
     }
