@@ -1,4 +1,4 @@
-//  CrowdingComparator.java
+//  RankComparator.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -22,19 +22,19 @@
 package org.uma.jmetal.util.comparator;
 
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;
 
 import java.util.Comparator;
 
 /**
  * This class implements a <code>Comparator</code> (a method for comparing
- * <code>Solution</code> objects) based on the crowding distance, as in NSGA-II.
+ * <code>Solution</code> objects) based on the rank of the solutions.
  */
-public class CrowdingDistanceComparator implements Comparator<Solution> {
-  private final CrowdingDistance crowdingDistance = new CrowdingDistance() ;
+public class RankingAndCrowdingDistanceComparator implements Comparator<Solution> {
+  private final Comparator<Solution> rankComparator = new RankingComparator();
+  private final Comparator<Solution> crowdingDistanceComparator = new CrowdingDistanceComparator() ;
 
   /**
-   * Compare two solutions.
+   * Compares two solutions.
    *
    * @param solution1 Object representing the first <code>Solution</code>.
    * @param solution2 Object representing the second <code>Solution</code>.
@@ -43,33 +43,11 @@ public class CrowdingDistanceComparator implements Comparator<Solution> {
    */
   @Override
   public int compare(Solution solution1, Solution solution2) {
-    if (solution1 == null) {
-      return 1;
-    } else if (solution2 == null) {
-      return -1;
+    int result = rankComparator.compare(solution1, solution2) ;
+    if (result == 0) {
+      result = crowdingDistanceComparator.compare(solution1, solution2);
     }
 
-    //int flagComparatorRank = rankComparator.compare(solution1, solution2);
-    //if (flagComparatorRank != 0) {
-    //  return flagComparatorRank;
-    //}
-
-    if ((solution1.getAttribute(crowdingDistance.getAttributeID()) == null) &&
-        (solution2.getAttribute(crowdingDistance.getAttributeID()) == null)) {
-      return 0 ;
-    }
-
-    double distance1 = (double)solution1.getAttribute(crowdingDistance.getAttributeID()) ;
-    double distance2 = (double)solution2.getAttribute(crowdingDistance.getAttributeID()) ;
-
-    if (distance1 > distance2) {
-      return -1;
-    }
-
-    if (distance1 < distance2) {
-      return 1;
-    }
-
-    return 0;
+    return result;
   }
 }

@@ -104,6 +104,52 @@ public class GenerationalDistanceTest {
   }
 
   @Test
+  public void shouldExecuteReturnTheCorrectValue() {
+    int numberOfDimensions = 2 ;
+    Front frontApproximation = new ArrayFront(3, numberOfDimensions);
+    Front paretoFront = new ArrayFront(4, numberOfDimensions);
+
+    Point point1 = new ArrayPoint(numberOfDimensions) ;
+    point1.setDimensionValue(0, 2.5);
+    point1.setDimensionValue(1, 9.0);
+
+    Point point2 = new ArrayPoint(numberOfDimensions) ;
+    point2.setDimensionValue(0, 3.0);
+    point2.setDimensionValue(1, 6.0);
+
+    Point point3 = new ArrayPoint(numberOfDimensions) ;
+    point3.setDimensionValue(0, 5.0);
+    point3.setDimensionValue(1, 4.0);
+
+    frontApproximation.setPoint(0, point1);
+    frontApproximation.setPoint(1, point2);
+    frontApproximation.setPoint(2, point3);
+
+    Point point4 = new ArrayPoint(numberOfDimensions) ;
+    point4.setDimensionValue(0, 1.5);
+    point4.setDimensionValue(1, 10.0);
+
+    Point point5 = new ArrayPoint(numberOfDimensions) ;
+    point5.setDimensionValue(0, 2.0);
+    point5.setDimensionValue(1, 8.0);
+
+    Point point6 = new ArrayPoint(numberOfDimensions) ;
+    point6.setDimensionValue(0, 3.0);
+    point6.setDimensionValue(1, 6.0);
+
+    Point point7 = new ArrayPoint(numberOfDimensions) ;
+    point7.setDimensionValue(0, 4.0);
+    point7.setDimensionValue(1, 4.0);
+
+    paretoFront.setPoint(0, point4);
+    paretoFront.setPoint(1, point5);
+    paretoFront.setPoint(2, point6);
+    paretoFront.setPoint(3, point7);
+
+    //assertEquals(0.5, generationalDistance.execute(frontApproximation, paretoFront), EPSILON);
+  }
+
+  @Test
   public void shouldGetNameReturnTheCorrectValue() {
     assertEquals("GD", generationalDistance.getName());
   }
