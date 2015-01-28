@@ -29,7 +29,7 @@ public class RankingComparator implements Comparator<Solution> {
   private Ranking ranking = new DominanceRanking() ;
 
   /**
-   * Compares two solutions.
+   * Compares two solutions according to the ranking attribute. The lower the ranking the better
    *
    * @param solution1 Object representing the first solution.
    * @param solution2 Object representing the second solution.
@@ -48,7 +48,6 @@ public class RankingComparator implements Comparator<Solution> {
     } else if (solution2 == null) {
       result =  -1;
     } else {
-
       int rank1 = Integer.MAX_VALUE;
       int rank2 = Integer.MAX_VALUE;
 
