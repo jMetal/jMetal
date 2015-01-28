@@ -23,7 +23,7 @@ Features of the current development version:
 * Encodings: Binary, Real, Integer, Permutation, Integer+Double
 * Crossover operators: SBXCrossover, SinglePointCrossover, DifferentialEvolutionCrossover, IntegerSBXCrossover, BLXAlphaCrossover, HUXCrossover
 * Mutation operators: PolynomialMutation, SingleRandomMutation, BitFlipMutation, IntegerPolynomialMutation, UniformMutation, NonUniformMutation
-* Selection operators:  BinaryTournamentSelection, DifferentialEvolutionSelection, RankingAndCrowdingSelection
+* Selection operators:  BinaryTournamentSelection, DifferentialEvolutionSelection, RankingAndCrowdingSelection, NaryTournamentSelection
 * Problems: Fonseca, Kursawe, Schaffer, Srinivas, OneZeroMax, NMMin, NMIN2, ZDT benchrmark, DTLZ benchmark, WFG benchmark, LZ09 benchmark 
 * Qualitity indicators: Epsilon, Hypervolume, error ratio, spread, seneralized spread, generational distance, inverted generational distance, set coverage.
 
