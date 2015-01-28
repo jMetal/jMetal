@@ -19,7 +19,6 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.SolutionUtils;
 import org.uma.jmetal.util.comparator.DominanceComparator;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.Comparator;
 import java.util.List;
@@ -33,7 +32,6 @@ import java.util.List;
  */
 public class BinaryTournamentSelection implements SelectionOperator<List<Solution>,Solution> {
   private Comparator<Solution> comparator;
-  private JMetalRandom randomGenerator ;
 
   /** Constructor */
   public BinaryTournamentSelection() {
@@ -42,7 +40,6 @@ public class BinaryTournamentSelection implements SelectionOperator<List<Solutio
 
   /** Constructor */
   public BinaryTournamentSelection(Comparator<Solution> comparator) {
-    randomGenerator = JMetalRandom.getInstance() ;
     this.comparator = comparator ;
   }
 
@@ -52,7 +49,7 @@ public class BinaryTournamentSelection implements SelectionOperator<List<Solutio
     if (null == solutionList) {
       throw new JMetalException("The solution list is null") ;
     } else if (solutionList.isEmpty()) {
-      throw new JMetalException("The solution list is empt") ;
+      throw new JMetalException("The solution list is empty") ;
     }
 
     Solution result ;

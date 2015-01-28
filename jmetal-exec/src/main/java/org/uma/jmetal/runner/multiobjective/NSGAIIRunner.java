@@ -35,6 +35,7 @@ import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
@@ -79,7 +80,7 @@ public class NSGAIIRunner {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    selection = new BinaryTournamentSelection();
+    selection = new BinaryTournamentSelection(new RankingAndCrowdingDistanceComparator());
 
     algorithm = new NSGAIIBuilder(problem)
             .setCrossoverOperator(crossover)
