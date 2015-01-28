@@ -1,11 +1,3 @@
-//  RankComparator.java
-//
-//  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
-//
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
-//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -22,12 +14,14 @@
 package org.uma.jmetal.util.comparator;
 
 import org.uma.jmetal.solution.Solution;
-
 import java.util.Comparator;
 
 /**
- * This class implements a <code>Comparator</code> (a method for comparing
- * <code>Solution</code> objects) based on the rank of the solutions.
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @version 1.0
+ *
+ * This class implements a comparator based on the rank of the solutions; if the rank is the same
+ * then the crowding distance is used.
  */
 public class RankingAndCrowdingDistanceComparator implements Comparator<Solution> {
   private final Comparator<Solution> rankComparator = new RankingComparator();
@@ -36,9 +30,9 @@ public class RankingAndCrowdingDistanceComparator implements Comparator<Solution
   /**
    * Compares two solutions.
    *
-   * @param solution1 Object representing the first <code>Solution</code>.
-   * @param solution2 Object representing the second <code>Solution</code>.
-   * @return -1, or 0, or 1 if o1 is less than, equal, or greater than o2,
+   * @param solution1 Object representing the first solution
+   * @param solution2 Object representing the second solution.
+   * @return -1, or 0, or 1 if solution1 is less than, equal, or greater than solution2,
    * respectively.
    */
   @Override

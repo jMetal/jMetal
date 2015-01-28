@@ -26,7 +26,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 /**
- * @author Antonio J. Nebro
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * @version 1.0
  */
 public class CrowdingDistanceComparatorTest {
