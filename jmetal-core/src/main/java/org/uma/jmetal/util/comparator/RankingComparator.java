@@ -38,35 +38,37 @@ public class RankingComparator implements Comparator<Solution> {
    */
   @Override
   public int compare(Solution solution1, Solution solution2) {
+    int result ;
     if (solution1 == null) {
       if (solution2 == null) {
-        return 0;
+        result = 0;
       } else {
-        return 1;
+        result =  1;
       }
     } else if (solution2 == null) {
-      return -1;
+      result =  -1;
+    } else {
+
+      int rank1 = Integer.MAX_VALUE;
+      int rank2 = Integer.MAX_VALUE;
+
+      if (ranking.getAttribute(solution1) != null) {
+        rank1 = (int) ranking.getAttribute(solution1);
+      }
+
+      if (ranking.getAttribute(solution2) != null) {
+        rank2 = (int) ranking.getAttribute(solution2);
+      }
+
+      if (rank1 < rank2) {
+        result =  -1;
+      } else if (rank1 > rank2) {
+        result =  1;
+      } else {
+        result = 0;
+      }
     }
 
-    int rank1 = Integer.MAX_VALUE ;
-    int rank2 = Integer.MAX_VALUE ;
-
-    if (ranking.getAttribute(solution1) != null ) {
-      rank1 = (int)ranking.getAttribute(solution1) ;
-    }
-
-    if (ranking.getAttribute(solution2) != null ) {
-      rank2 = (int)ranking.getAttribute(solution2) ;
-    }
-
-    if (rank1 < rank2) {
-      return -1;
-    }
-
-    if (rank1 > rank2) {
-      return 1;
-    }
-
-    return 0;
+    return result ;
   }
 }
