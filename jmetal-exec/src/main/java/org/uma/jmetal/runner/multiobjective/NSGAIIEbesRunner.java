@@ -62,8 +62,7 @@ public class NSGAIIEbesRunner {
     MutationOperator mutation;
     SelectionOperator selection;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.ebes.Ebes2" ;
-
+    String problemName = "org.uma.jmetal.problem.multiobjective.ebes.Ebes" ;
 
     problem = ProblemUtils.loadProblem(problemName);
 
@@ -80,7 +79,7 @@ public class NSGAIIEbesRunner {
             .setCrossoverOperator(crossover)
             .setMutationOperator(mutation)
             .setSelectionOperator(selection)
-            .setMaxIterations(100)
+            .setMaxIterations(250)
             .setPopulationSize(100)
             .build() ;
 
@@ -92,8 +91,8 @@ public class NSGAIIEbesRunner {
 
     new SolutionSetOutput.Printer(population)
             .setSeparator("\t")
-            .setVarFileOutputContext(new DefaultFileOutputContext("VAR2.tsv"))
-            .setFunFileOutputContext(new DefaultFileOutputContext("FUN2.tsv"))
+            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
             .print();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
