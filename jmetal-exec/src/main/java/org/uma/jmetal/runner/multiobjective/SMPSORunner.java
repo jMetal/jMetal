@@ -86,13 +86,8 @@ public class SMPSORunner {
             .setMutation(mutation)
             .setMaxIterations(250)
             .setSwarmSize(100)
-<<<<<<< HEAD
             //.setRandomGenerator(new MersenneTwisterGenerator())
-=======
-     //       .setRandomGenerator(new MersenneTwisterGenerator())
-                //.setSolutionListEvaluator(new MultithreadedSolutionListEvaluator(8, problem)
             .setSolutionListEvaluator(new SequentialSolutionListEvaluator())
->>>>>>> master
             .build();
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
