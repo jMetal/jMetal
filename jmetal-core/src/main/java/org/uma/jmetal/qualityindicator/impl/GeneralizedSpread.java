@@ -22,13 +22,18 @@
 package org.uma.jmetal.qualityindicator.impl;
 
 import org.uma.jmetal.qualityindicator.QualityIndicator;
+import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
+import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.imp.FrontUtils;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
 import org.uma.jmetal.util.point.impl.LexicographicalPointComparator;
 import org.uma.jmetal.util.point.impl.PointDimensionComparator;
 import org.uma.jmetal.util.point.impl.PointUtils;
+
+import java.util.List;
 
 /**
  * This class implements the generalized spread metric for two or more dimensions.
@@ -45,6 +50,30 @@ public class GeneralizedSpread implements QualityIndicator {
    * Creates a new instance of GeneralizedSpread
    */
   public GeneralizedSpread() {
+  }
+
+  @Override
+  public double execute(Front paretoFrontApproximation, Front trueParetoFront) {
+    if (paretoFrontApproximation == null) {
+      throw new JMetalException("The pareto front approximation object is null") ;
+    } else if (trueParetoFront == null) {
+      throw new JMetalException("The pareto front object is null");
+    }
+
+    return generalizedSpread(paretoFrontApproximation, trueParetoFront);
+  }
+
+  @Override
+  public double execute(List<? extends Solution> paretoFrontApproximation,
+      List<? extends Solution> trueParetoFront) {
+
+    if (paretoFrontApproximation == null) {
+      throw new JMetalException("The pareto front approximation object is null") ;
+    } else if (trueParetoFront == null) {
+      throw new JMetalException("The pareto front object is null");
+    }
+
+    return this.execute(new ArrayFront(paretoFrontApproximation), new ArrayFront(trueParetoFront)) ;
   }
 
   /**
@@ -126,10 +155,7 @@ public class GeneralizedSpread implements QualityIndicator {
     }
   }
 
-  @Override
-  public double execute(Front paretoFrontApproximation, Front paretoTrueFront) {
-    return generalizedSpread(paretoFrontApproximation, paretoTrueFront);
-  }
+
 
   @Override
   public String getName() {

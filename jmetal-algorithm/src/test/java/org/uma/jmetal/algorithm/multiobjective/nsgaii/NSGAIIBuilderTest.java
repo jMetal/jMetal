@@ -8,11 +8,9 @@ import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
-import org.uma.jmetal.operator.impl.selection.RandomSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.evaluator.impl.MultithreadedSolutionListEvaluator;
-
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -104,7 +102,7 @@ public class NSGAIIBuilderTest {
   }
 
   @Test public void setNewSelectionOperator() {
-    SelectionOperator selection = new RandomSelection();
+    SelectionOperator selection = mock(SelectionOperator.class);
     assertNotEquals(selection, builder.getSelectionOperator());
     builder.setSelectionOperator(selection);
     assertEquals(selection, builder.getSelectionOperator());
@@ -125,5 +123,4 @@ public class NSGAIIBuilderTest {
   @Test(expected = JMetalException.class) public void setNullEvaluator() {
     builder.setSolutionListEvaluator(null);
   }
-
 }

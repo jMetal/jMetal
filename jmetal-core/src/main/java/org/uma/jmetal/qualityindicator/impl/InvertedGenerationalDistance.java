@@ -22,8 +22,13 @@
 package org.uma.jmetal.qualityindicator.impl;
 
 import org.uma.jmetal.qualityindicator.QualityIndicator;
+import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
+import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.imp.FrontUtils;
+
+import java.util.List;
 
 /**
  * This class implements the inverted generational distance metric.
@@ -45,6 +50,30 @@ public class InvertedGenerationalDistance implements QualityIndicator {
    * Creates a new instance of the generational distance metric.
    */
   public InvertedGenerationalDistance() {
+  }
+
+  @Override
+  public double execute(Front paretoFrontApproximation, Front trueParetoFront) {
+    if (paretoFrontApproximation == null) {
+      throw new JMetalException("The pareto front approximation object is null") ;
+    } else if (trueParetoFront == null) {
+      throw new JMetalException("The pareto front object is null");
+    }
+
+    return invertedGenerationalDistance(paretoFrontApproximation, trueParetoFront) ;
+  }
+
+  @Override
+  public double execute(List<? extends Solution> paretoFrontApproximation,
+      List<? extends Solution> trueParetoFront) {
+
+    if (paretoFrontApproximation == null) {
+      throw new JMetalException("The pareto front approximation object is null") ;
+    } else if (trueParetoFront == null) {
+      throw new JMetalException("The pareto front object is null");
+    }
+
+    return this.execute(new ArrayFront(paretoFrontApproximation), new ArrayFront(trueParetoFront)) ;
   }
 
   /**
@@ -76,9 +105,7 @@ public class InvertedGenerationalDistance implements QualityIndicator {
     double sum = 0.0;
     for (int i = 0 ; i < normalizedParetoFront.getNumberOfPoints(); i++) {
       sum += Math.pow(FrontUtils.distanceToClosestPoint(normalizedParetoFront.getPoint(i),
-          normalizedFront),
-              POW
-      );
+          normalizedFront), POW);
     }
 
     // STEP 4. Obtain the sqrt of the sum
@@ -88,11 +115,6 @@ public class InvertedGenerationalDistance implements QualityIndicator {
     double generationalDistance = sum / normalizedParetoFront.getNumberOfPoints();
 
     return generationalDistance;
-  }
-
-  @Override
-  public double execute(Front paretoFrontApproximation, Front paretoTrueFront) {
-    return invertedGenerationalDistance(paretoFrontApproximation, paretoTrueFront) ;
   }
 
   @Override

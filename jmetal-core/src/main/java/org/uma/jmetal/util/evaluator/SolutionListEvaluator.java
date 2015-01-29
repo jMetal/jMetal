@@ -25,13 +25,14 @@ package org.uma.jmetal.util.evaluator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Antonio J. Nebro on 30/05/14.
  */
 
-public interface SolutionListEvaluator<S extends Solution> {
+public interface SolutionListEvaluator<S extends Solution> extends Serializable {
   public List<S> evaluate(List<S> solutionSet, Problem problem) ;
   public void shutdown() ;
 }

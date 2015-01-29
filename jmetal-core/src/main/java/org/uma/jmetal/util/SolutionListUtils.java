@@ -1,13 +1,12 @@
 package org.uma.jmetal.util;
 
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Antonio J. Nebro on 04/10/14.
@@ -37,6 +36,42 @@ public class SolutionListUtils {
     }
 
     return index;
+  }
+
+  /**
+   * Finds the index of the best solution in the list according to a comparator
+   * @param solutionList
+   * @param comparator
+   * @return The index of the best solution
+   */
+  public static int findIndexOfBestSolution(List<? extends Solution> solutionList, Comparator<Solution> comparator) {
+    if (solutionList == null) {
+      throw new JMetalException("The solution list is null") ;
+    } else if (solutionList.isEmpty()) {
+      throw new JMetalException("The solution list is empty") ;
+    } else if (comparator == null) {
+      throw new JMetalException("The comparator is null") ;
+    }
+
+    int index = 0;
+    Solution bestKnown = solutionList.get(0) ;
+    Solution candidateSolution ;
+
+    int flag;
+    for (int i = 1; i < solutionList.size(); i++) {
+      candidateSolution = solutionList.get(i);
+      flag = comparator.compare(bestKnown, candidateSolution);
+      if (flag == 1) {
+        index = i;
+        bestKnown = candidateSolution;
+      }
+    }
+
+    return index;
+  }
+
+  public static Solution findBestSolution(List<? extends Solution> solutionList, Comparator<Solution> comparator) {
+    return solutionList.get(findIndexOfBestSolution(solutionList, comparator)) ;
   }
 
   public static <S extends Solution> double[][] writeObjectivesToMatrix(List<S> solutionList) {
@@ -169,5 +204,58 @@ public class SolutionListUtils {
       }
     }
     return invertedFront;
+  }
+
+  public static <S extends Solution> boolean isSolutionDominatedBySolutionList(S solution, List<S> solutionSet) {
+    boolean result = false ;
+    Comparator<Solution> dominance = new DominanceComparator() ;
+
+    int i = 0 ;
+
+    while (!result && (i < solutionSet.size())) {
+      if (dominance.compare(solution, solutionSet.get(i)) == 1) {
+        result = true ;
+      }
+      i++ ;
+    }
+
+    return result ;
+  }
+
+  /**
+   * This method receives a normalized list of non-dominated solutions and return the inverted one.
+   * This operation is needed for minimization problem
+   *
+   * @param solutionList The front to invert
+   * @return The inverted front
+   */
+  public static <S extends Solution> List<S> selectNRandomDifferentSolutions(
+      int numberOfSolutionsToBeReturned, List<S> solutionList) {
+    if (null == solutionList) {
+      throw new JMetalException("The solution list is null") ;
+    } else if (solutionList.size() == 0) {
+      throw new JMetalException("The solution list is empty") ;
+    } else if (solutionList.size() < numberOfSolutionsToBeReturned) {
+      throw new JMetalException("The solution list size (" + solutionList.size() +") is less than "
+          + "the number of requested solutions ("+numberOfSolutionsToBeReturned+")") ;
+    }
+
+    JMetalRandom randomGenerator = JMetalRandom.getInstance() ;
+    List<S> resultList = new ArrayList<>(numberOfSolutionsToBeReturned);
+
+    if (solutionList.size() == 1) {
+      resultList.add(solutionList.get(0));
+    } else {
+      Collection<Integer> positions = new HashSet<>(numberOfSolutionsToBeReturned);
+      while (positions.size() < numberOfSolutionsToBeReturned) {
+        int nextPosition = randomGenerator.nextInt(0, solutionList.size() - 1);
+        if (!positions.contains(nextPosition)) {
+          positions.add(nextPosition);
+          resultList.add(solutionList.get(nextPosition));
+        }
+      }
+    }
+
+    return resultList ;
   }
 }

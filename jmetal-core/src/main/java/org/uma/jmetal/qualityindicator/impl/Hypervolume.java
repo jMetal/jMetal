@@ -23,13 +23,12 @@ package org.uma.jmetal.qualityindicator.impl;
 
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
+import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.imp.FrontUtils;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 
 /**
  * This class implements the hypervolume indicator. The code is the a Java version
@@ -42,6 +41,36 @@ import java.util.logging.Level;
  */
 public class Hypervolume implements QualityIndicator {
   private static final String NAME = "HV" ;
+
+  @Override
+  public double execute(Front paretoFrontApproximation, Front trueParetoFront) {
+    if (paretoFrontApproximation == null) {
+      throw new JMetalException("The pareto front approximation object is null") ;
+    } else if (trueParetoFront == null) {
+      throw new JMetalException("The pareto front object is null");
+    }
+
+    return hypervolume(paretoFrontApproximation, trueParetoFront) ;
+  }
+
+  @Override
+  public double execute(List<? extends Solution> paretoFrontApproximation,
+      List<? extends Solution> trueParetoFront) {
+
+    if (paretoFrontApproximation == null) {
+      throw new JMetalException("The pareto front approximation object is null") ;
+    } else if (trueParetoFront == null) {
+      throw new JMetalException("The pareto front object is null");
+    }
+
+    return hypervolume(new ArrayFront(paretoFrontApproximation),
+        new ArrayFront(trueParetoFront)) ;
+  }
+
+  @Override
+  public String getName() {
+    return NAME ;
+  }
 
   /*
    returns true if 'point1' dominates 'points2' with respect to the
@@ -109,7 +138,7 @@ public class Hypervolume implements QualityIndicator {
     double minValue, value;
 
     if (noPoints < 1) {
-      JMetalLogger.logger.log(Level.SEVERE, "run-time error");
+      new JMetalException("run-time error");
     }
 
     minValue = front[0][objective];
@@ -154,10 +183,9 @@ public class Hypervolume implements QualityIndicator {
       double tempVolume, tempDistance;
 
       nonDominatedPoints = filterNondominatedSet(front, n, noObjectives - 1);
-      //noNondominatedPoints = front.length;
       if (noObjectives < 3) {
         if (nonDominatedPoints < 1) {
-          JMetalLogger.logger.log(Level.SEVERE, "run-time error");
+          new JMetalException("run-time error");
         }
 
         tempVolume = front[0][0];
@@ -173,42 +201,15 @@ public class Hypervolume implements QualityIndicator {
     return volume;
   }
 
-  /* merge two fronts */
-  double[][] mergeFronts(double[][] front1, int sizeFront1, double[][] front2, int sizeFront2, int noObjectives) {
-    int i, j;
-    int noPoints;
-    double[][] frontPtr;
-
-    /* allocate memory */
-    noPoints = sizeFront1 + sizeFront2;
-    frontPtr = new double[noPoints][noObjectives];
-    /* copy points */
-    noPoints = 0;
-    for (i = 0; i < sizeFront1; i++) {
-      for (j = 0; j < noObjectives; j++) {
-        frontPtr[noPoints][j] = front1[i][j];
-      }
-      noPoints++;
-    }
-    for (i = 0; i < sizeFront2; i++) {
-      for (j = 0; j < noObjectives; j++) {
-        frontPtr[noPoints][j] = front2[i][j];
-      }
-      noPoints++;
-    }
-
-    return frontPtr;
-  }
-
   /**
    * Returns the hypervolume value of a list of solutions
    *
    * @param solutionListA    The list
    * @param solutionListB    The true pareto front
    */
-  public double hypervolume (List<Solution<?>> solutionListA, List<Solution<?>> solutionListB) {
-    return hypervolume(new ArrayList(solutionListA), new ArrayList<Solution<?>>(solutionListB)) ;
-  }
+  //private double hypervolume (List<? extends Solution> solutionListA, List<? extends Solution> solutionListB) {
+  //  return hypervolume(new ArrayFront(solutionListA), new ArrayFront(solutionListB)) ;
+  //}
 
   /**
    * Returns the hypervolume value of a front of points
@@ -239,15 +240,5 @@ public class Hypervolume implements QualityIndicator {
     // STEP4. The hypervolume (control is passed to the Java version of Zitzler code)
     return this.calculateHypervolume(FrontUtils.convertFrontToArray(invertedFront),
         invertedFront.getNumberOfPoints(), numberOfObjectives);
-  }
-
-  @Override
-  public double execute(Front paretoFrontApproximation, Front paretoTrueFront) {
-    return hypervolume(paretoFrontApproximation, paretoTrueFront) ;
-  }
-
-  @Override
-  public String getName() {
-    return NAME ;
   }
 }

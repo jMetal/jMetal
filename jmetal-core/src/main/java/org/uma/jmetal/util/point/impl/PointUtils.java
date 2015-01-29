@@ -33,7 +33,7 @@ public class PointUtils {
     if (a == null) {
       throw new JMetalException("The first point is null") ;
     } else if (b == null) {
-      throw new JMetalException("The second poing is null") ;
+      throw new JMetalException("The second point is null") ;
     } else if (a.getNumberOfDimensions() != b.getNumberOfDimensions()) {
       throw new JMetalException("The dimensions of the points are different: "
       + a.getNumberOfDimensions() + ", " + b.getNumberOfDimensions()) ;

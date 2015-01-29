@@ -15,11 +15,11 @@ import java.util.*;
  * @author Antonio J. Nebro
  * @version 1.0
  *
- * This class is intended to verify the working of the SBX crossover operator. A figure
- * depicting the values obtained when generating 10000 solutions, a granularity of 100, and a number
- * of different distribution index values (10, 20, 50) can be found here:
- * <a href="https://github.com/jMetal/jMetal/blob/master/figures/sbx.png">
-   https://github.com/jMetal/jMetal/blob/master/figures/sbx.png</a>
+ * This class is intended to verify the working of the BLX-alpha crossover operator. A figure
+ * depicting the values obtained when generating 1000000 solutions, a granularity of 100, and a number
+ * of different distribution alpha values (0.1, 0.5) can be found here:
+ * <a href="https://github.com/jMetal/jMetal/blob/master/figures/blxalpha.png">
+   https://github.com/jMetal/jMetal/blob/master/figures/blxalpha.png</a>
  */
 public class BLXAlphaCrossoverWorkingTest {
   /**
@@ -27,7 +27,7 @@ public class BLXAlphaCrossoverWorkingTest {
    * crossover operator. The parameters to be introduced by the command line are:
    * - numberOfSolutions: number of solutions to generate
    * - granularity: number of subdivisions to be considered.
-   * - distributionIndex: distribution index of the polynomial mutation operator
+   * - alpha: alpha value
    * - outputFile: file containing the results
    *
    * @param args Command line arguments

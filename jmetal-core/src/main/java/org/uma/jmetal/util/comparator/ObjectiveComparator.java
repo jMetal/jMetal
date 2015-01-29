@@ -1,11 +1,3 @@
-//  ObjectiveComparator.java
-//
-//  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
-//
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
-//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -26,66 +18,92 @@ import org.uma.jmetal.solution.Solution;
 import java.util.Comparator;
 
 /**
- * This class implements a <code>Comparator</code> (a method for comparing
- * <code>Solution</code> objects) based on a objective values.
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @version 1.0
+ *
+ * This class implements a comparator based on a given objective
  */
 public class ObjectiveComparator implements Comparator<Solution> {
+  public enum Ordering {ASCENDING, DESCENDING} ;
+  private int objectiveId;
 
-  /**
-   * Stores the index of the objective to compare
-   */
-  private int nObj;
-  private boolean ascendingOrder;
+  private Ordering order;
 
   /**
    * Constructor.
    *
-   * @param nObj The index of the objective to compare
+   * @param objectiveId The index of the objective to compare
    */
-  public ObjectiveComparator(int nObj) {
-    this.nObj = nObj;
-    ascendingOrder = true;
+  public ObjectiveComparator(int objectiveId) {
+    this.objectiveId = objectiveId;
+    order = Ordering.ASCENDING;
   }
 
-  public ObjectiveComparator(int nObj, boolean descendingOrder) {
-    this.nObj = nObj;
-    ascendingOrder = !descendingOrder ;
+  /**
+   * Comparator.
+   * @param objectiveId The index of the objective to compare
+   * @param order Ascending or descending order
+   */
+  public ObjectiveComparator(int objectiveId, Ordering order) {
+    this.objectiveId = objectiveId;
+    this.order = order ;
   }
 
   /**
    * Compares two solutions.
    *
-   * @param solution1 Object representing the first <code>Solution</code>.
-   * @param solution2 Object representing the second <code>Solution</code>.
-   * @return -1, or 0, or 1 if o1 is less than, equal, or greater than o2,
-   * respectively.
+   * @param solution1 The first solution
+   * @param solution2 The second solution
+   * @return -1, or 0, or 1 if solution1 is less than, equal, or greater than solution2,
+   * respectively, according to the established order
    */
   @Override
   public int compare(Solution solution1, Solution solution2) {
+    int result ;
     if (solution1 == null) {
-      return 1;
+      if (solution2 == null) {
+        result = 0;
+      } else {
+        result =  1;
+      }
     } else if (solution2 == null) {
-      return -1;
-    }
-
-    double objective1 = solution1.getObjective(this.nObj);
-    double objective2 = solution2.getObjective(this.nObj);
-    if (ascendingOrder) {
-      if (objective1 < objective2) {
-        return -1;
-      } else if (objective1 > objective2) {
-        return 1;
-      } else {
-        return 0;
-      }
+      result =  -1;
     } else {
-      if (objective1 < objective2) {
-        return 1;
-      } else if (objective1 > objective2) {
-        return -1;
+      Double objective1 = solution1.getObjective(this.objectiveId);
+      Double objective2 = solution2.getObjective(this.objectiveId);
+      if (order == Ordering.ASCENDING) {
+
+        //      if (objective1 < objective2) {
+        //        return -1;
+        //      } else if (objective1 > objective2) {
+        //        return 1;
+        //      } else {
+        //        return 0;
+        //      }
+        //return compareOrder(objective1, objective2) ;
+        result = Double.compare(objective1, objective2);
       } else {
-        return 0;
+        //      if (objective1 < objective2) {
+        //        return 1;
+        //      } else if (objective1 > objective2) {
+        //        return -1;
+        //      } else {
+        //        return 0;
+        //      }
+        //return compareOrder(objective2, objective1) ;
+        result = Double.compare(objective2, objective1);
       }
+    }
+    return result ;
+  }
+
+  private int compareOrder(double value1, double value2) {
+    if (value1 < value1) {
+      return -1;
+    } else if (value1 > value1) {
+      return 1;
+    } else {
+      return 0;
     }
   }
 }

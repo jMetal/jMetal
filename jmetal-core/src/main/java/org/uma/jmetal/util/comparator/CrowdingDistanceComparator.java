@@ -1,11 +1,3 @@
-//  CrowdingComparator.java
-//
-//  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
-//
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
-//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -27,46 +19,55 @@ import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;
 import java.util.Comparator;
 
 /**
- * This class implements a <code>Comparator</code> (a method for comparing
- * <code>Solution</code> objects) based on the crowding distance, as in NSGA-II.
+ * @author Antonio J. Nebro
+ * @version 1.0
+ *
+ * Compares two solutions according to the crowding distance attribute. The higher
+ * the distance the better
  */
 public class CrowdingDistanceComparator implements Comparator<Solution> {
-
-  private static final Comparator<Solution<?>> rankComparator = new RankingComparator();
-  private static final CrowdingDistance crowdingDistance = new CrowdingDistance() ;
+  private final CrowdingDistance crowdingDistance = new CrowdingDistance() ;
 
   /**
    * Compare two solutions.
    *
    * @param solution1 Object representing the first <code>Solution</code>.
    * @param solution2 Object representing the second <code>Solution</code>.
-   * @return -1, or 0, or 1 if o1 is less than, equal, or greater than o2,
+   * @return -1, or 0, or 1 if solution1 is has greater, equal, or less distance value than solution2,
    * respectively.
    */
   @Override
   public int compare(Solution solution1, Solution solution2) {
+    int result ;
     if (solution1 == null) {
-      return 1;
+      if (solution2 == null) {
+        result = 0;
+      } else {
+        result = 1 ;
+      }
     } else if (solution2 == null) {
-      return -1;
+      result = -1;
+    } else {
+      double distance1 = Double.MIN_VALUE ;
+      double distance2 = Double.MIN_VALUE ;
+
+      if (crowdingDistance.getAttribute(solution1) != null) {
+        distance1 = crowdingDistance.getAttribute(solution1) ;
+      }
+
+      if (crowdingDistance.getAttribute(solution2) != null) {
+        distance2 = crowdingDistance.getAttribute(solution2) ;
+      }
+
+      if (distance1 > distance2) {
+        result = -1;
+      } else  if (distance1 < distance2) {
+        result = 1;
+      } else {
+        return 0;
+      }
     }
 
-    int flagComparatorRank = rankComparator.compare(solution1, solution2);
-    if (flagComparatorRank != 0) {
-      return flagComparatorRank;
-    }
-
-    double distance1 = (double)solution1.getAttribute(crowdingDistance.getAttributeID()) ;
-    double distance2 = (double)solution2.getAttribute(crowdingDistance.getAttributeID()) ;
-
-    if (distance1 > distance2) {
-      return -1;
-    }
-
-    if (distance1 < distance2) {
-      return 1;
-    }
-
-    return 0;
+    return result ;
   }
 }

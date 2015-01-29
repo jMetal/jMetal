@@ -12,10 +12,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-//  CREDIT
-//  This class is based on the code of the wfg group (http://www.wfg.csse.uwa.edu.au/hypervolume/)
-//  Copyright (C) 2010 Lyndon While, Lucas Bradstreet.
-
 package org.uma.jmetal.util.front.imp;
 
 import org.uma.jmetal.solution.Solution;
@@ -49,7 +45,10 @@ public class ArrayFront implements Front {
   public ArrayFront(List<? extends Solution> solutionList) {
     if (solutionList == null) {
       throw new JMetalException("The list of solution is null") ;
+    } else if (solutionList.size() == 0) {
+      throw new JMetalException("The list of solution is empty") ;
     }
+
     numberOfPoints = solutionList.size();
     pointDimensions = solutionList.get(0).getNumberOfObjectives() ;
     points = new Point[numberOfPoints] ;
@@ -68,6 +67,8 @@ public class ArrayFront implements Front {
   public ArrayFront(Front front) {
     if (front == null) {
       throw new JMetalException("The front is null") ;
+    } else if (front.getNumberOfPoints() == 0) {
+      throw new JMetalException("The front is empty") ;
     }
     numberOfPoints = front.getNumberOfPoints();
     pointDimensions = front.getPoint(0).getNumberOfDimensions() ;
@@ -146,29 +147,17 @@ public class ArrayFront implements Front {
   }
 
   public InputStream createInputStream(String fileName) {
-    //FileInputStream inputStream;
-    //InputStream inputStream = new FileInputStream(fileName);
-
     InputStream inputStream = getClass().getResourceAsStream(fileName);
-
 
     return inputStream ;
   }
-/*
-  @Override public void createFrontFromAListOfSolutions(List<Solution> solutionList) {
-    numberOfPoints = solutionList.size() ;
-    pointDimensions = solutionList.get(0).getNumberOfObjectives() ;
 
-    points = new Point[numberOfPoints];
-    for (int i = 0; i < numberOfPoints; i++) {
-      for (int j = 0; j < pointDimensions; j++) {
-        points[i].setDimensionValue(j, (Double) solutionList.get(i).getVariableValue(j));
-      }
-    }
-  }
-*/
   @Override public int getNumberOfPoints() {
     return points.length;
+  }
+
+  @Override public int getPointDimensions() {
+    return pointDimensions ;
   }
 
   @Override public Point getPoint(int index) {

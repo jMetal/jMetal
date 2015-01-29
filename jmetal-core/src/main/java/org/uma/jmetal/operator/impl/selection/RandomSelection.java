@@ -1,11 +1,3 @@
-//  RandomSelection.java
-//
-//  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
-//
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
-//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -24,44 +16,61 @@ package org.uma.jmetal.operator.impl.selection;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class implements a random selection operator used for selecting two
- * random parents
+ * This class implements a random selection operator used for selecting a N number of solutions from
+ * a list
+ *
+ * @author Antonio J. Nebro
+ * @version 1.0
  */
-public class RandomSelection implements SelectionOperator<List<Solution>,List<Solution>> {
+public class RandomSelection implements SelectionOperator<List<? extends Solution>,List<? extends Solution>> {
   private JMetalRandom randomGenerator ;
+  private int numberOfSolutionsToBeReturned ;
 
   /** Constructor */
   public RandomSelection() {
+    this(1) ;
+  }
+
+  /** Constructor */
+  public RandomSelection(int numberOfSolutionsToBeReturned) {
     randomGenerator = JMetalRandom.getInstance() ;
+    this.numberOfSolutionsToBeReturned = numberOfSolutionsToBeReturned ;
   }
 
   /** Execute() method */
-  public List<Solution> execute(List<Solution> solutions) {
-    if (null == solutions) {
-      throw new JMetalException("Parameter is null") ;
-    } else if (solutions.size() == 0) {
-      throw new JMetalException("Solution set size is 0") ;
-    } else if (solutions.size() == 1) {
-      throw new JMetalException("Solution set size is 1") ;
+  public List<? extends Solution> execute(List<? extends Solution> solutionList) {
+    if (null == solutionList) {
+      throw new JMetalException("The solution list is null") ;
+    } else if (solutionList.isEmpty()) {
+      throw new JMetalException("The solution list is empty") ;
+    } else if (solutionList.size() < numberOfSolutionsToBeReturned) {
+      throw new JMetalException("The solution list size (" + solutionList.size() +") is less than "
+          + "the number of requested solutions ("+numberOfSolutionsToBeReturned+")") ;
     }
 
-    int pos1, pos2;
-    pos1 = randomGenerator.nextInt(0, solutions.size() - 1);
-    pos2 = randomGenerator.nextInt(0, solutions.size() - 1);
-    while ((pos1 == pos2) && (solutions.size() > 1)) {
-      pos2 = randomGenerator.nextInt(0, solutions.size() - 1);
+    return SolutionListUtils.selectNRandomDifferentSolutions(numberOfSolutionsToBeReturned, solutionList) ;
+  /*
+    List<Solution<?>> resultList = new ArrayList<>(numberOfSolutionsToBeReturned) ;
+    if (solutionList.size() == 1) {
+      resultList.add(solutionList.get(0)) ;
+    } else {
+      Collection<Integer> positions = new HashSet<>(numberOfSolutionsToBeReturned) ;
+      while(positions.size() < numberOfSolutionsToBeReturned) {
+        int nextPosition = randomGenerator.nextInt(0, solutionList.size() - 1) ;
+        if (!positions.contains(nextPosition)) {
+          positions.add(nextPosition) ;
+          resultList.add(solutionList.get(nextPosition)) ;
+        }
+      }
     }
 
-    List<Solution> parents = new ArrayList<>(2);
-    parents.add(solutions.get(pos1));
-    parents.add(solutions.get(pos2));
-
-    return parents;
+    return resultList;
+    */
   }
 }

@@ -251,7 +251,7 @@ public class SBXCrossoverTest {
   }
 
   /**
-   * Mock class representing a doubl problem
+   * Mock class representing a double problem
    */
   private class MockDoubleProblem extends AbstractDoubleProblem {
 

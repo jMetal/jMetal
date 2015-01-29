@@ -21,8 +21,13 @@
 package org.uma.jmetal.qualityindicator.impl;
 
 import org.uma.jmetal.qualityindicator.QualityIndicator;
+import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
+import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.imp.FrontUtils;
+
+import java.util.List;
 
 public class R2 implements QualityIndicator {
   private static final String NAME = "R2" ;
@@ -30,6 +35,7 @@ public class R2 implements QualityIndicator {
   double[][] matrix = null;
   double[][] lambda = null;
   int numberOfObjectives = 0;
+
 
   /**
    * Creates a new instance of the R2 indicator for a problem with
@@ -63,6 +69,34 @@ public class R2 implements QualityIndicator {
       lambda[n][0] = a;
       lambda[n][1] = 1 - a;
     }
+  }
+
+  @Override
+  public double execute(Front paretoFrontApproximation, Front trueParetoFront) {
+    if (paretoFrontApproximation == null) {
+      throw new JMetalException("The pareto front approximation object is null") ;
+    } else if (trueParetoFront == null) {
+      throw new JMetalException("The pareto front object is null");
+    }
+
+    return r2(paretoFrontApproximation, trueParetoFront);
+  }
+
+  @Override
+  public double execute(List<? extends Solution> paretoFrontApproximation,
+      List<? extends Solution> trueParetoFront) {
+
+    if (paretoFrontApproximation == null) {
+      throw new JMetalException("The pareto front approximation object is null") ;
+    } else if (trueParetoFront == null) {
+      throw new JMetalException("The pareto front object is null");
+    }
+
+    return r2(new ArrayFront(paretoFrontApproximation), new ArrayFront(trueParetoFront)) ;
+  }
+
+  @Override public String getName() {
+    return NAME;
   }
 
   /**
@@ -108,14 +142,5 @@ public class R2 implements QualityIndicator {
 
     // STEP 5. Return the R2 value
     return sum / (double) lambda.length;
-  }
-
-  @Override
-  public double execute(Front paretoFrontApproximation, Front paretoTrueFront) {
-    return r2(paretoFrontApproximation, paretoTrueFront);
-  }
-
-  @Override public String getName() {
-    return NAME;
   }
 }

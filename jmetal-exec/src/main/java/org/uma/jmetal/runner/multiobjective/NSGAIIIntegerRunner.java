@@ -26,10 +26,10 @@ import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
-import org.uma.jmetal.operator.impl.crossover.SinglePointCrossover;
-import org.uma.jmetal.operator.impl.mutation.BitFlipMutation;
+import org.uma.jmetal.operator.impl.crossover.IntegerSBXCrossover;
+import org.uma.jmetal.operator.impl.mutation.IntegerPolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
-import org.uma.jmetal.problem.BinaryProblem;
+import org.uma.jmetal.problem.IntegerProblem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
@@ -42,7 +42,7 @@ import java.util.List;
 /**
  * Class to configure and run the NSGA-II algorithm
  */
-public class NSGAIIRunner3 {
+public class NSGAIIIntegerRunner {
   /**
    * @param args Command line arguments.
    * @throws org.uma.jmetal.util.JMetalException
@@ -54,24 +54,25 @@ public class NSGAIIRunner3 {
    *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName
    *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName paretoFrontFile
    */
-  public static void main(String[] args) throws
-          Exception {
+  public static void main(String[] args) {
 
-    BinaryProblem problem;
+    IntegerProblem problem;
     Algorithm algorithm;
     CrossoverOperator crossover;
     MutationOperator mutation;
     SelectionOperator selection;
+    
+    String problemName = "org.uma.jmetal.problem.multiobjective.NMMin" ;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT5" ;
-
-    problem = (BinaryProblem) ProblemUtils.loadProblem(problemName);
+    problem = (IntegerProblem) ProblemUtils.loadProblem(problemName);
 
     double crossoverProbability = 0.9 ;
-    crossover = new SinglePointCrossover(crossoverProbability) ;
+    double crossoverDistributionIndex = 20.0 ;
+    crossover = new IntegerSBXCrossover(crossoverProbability, crossoverDistributionIndex) ;
 
-    double mutationProbability = 1.0 / problem.getNumberOfBits(0) ;
-    mutation = new BitFlipMutation(mutationProbability) ;
+    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
+    double mutationDistributionIndex = 20.0 ;
+    mutation = new IntegerPolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
     selection = new BinaryTournamentSelection() ;
 

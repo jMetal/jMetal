@@ -32,6 +32,7 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
+import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
@@ -70,7 +71,7 @@ public class SMPSORunner {
     if (args.length == 1) {
       problemName = args[0] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
     }
 
     problem = (DoubleProblem) ProblemUtils.loadProblem(problemName);
@@ -85,7 +86,13 @@ public class SMPSORunner {
             .setMutation(mutation)
             .setMaxIterations(250)
             .setSwarmSize(100)
+<<<<<<< HEAD
             //.setRandomGenerator(new MersenneTwisterGenerator())
+=======
+     //       .setRandomGenerator(new MersenneTwisterGenerator())
+                //.setSolutionListEvaluator(new MultithreadedSolutionListEvaluator(8, problem)
+            .setSolutionListEvaluator(new SequentialSolutionListEvaluator())
+>>>>>>> master
             .build();
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)

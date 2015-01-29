@@ -1,11 +1,3 @@
-//  RankComparator.java
-//
-//  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
-//
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
-//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -28,47 +20,54 @@ import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
 import java.util.Comparator;
 
 /**
- * This class implements a <code>Comparator</code> (a method for comparing
- * <code>Solution</code> objects) based on the rank of the solutions.
+ * @author Antonio J. Nebro
+ * @version 1.0
+ *
+ * This class implements a comparator based on the rank of the solutions.
  */
-public class RankingComparator implements Comparator<Solution<?>> {
+public class RankingComparator implements Comparator<Solution> {
   private Ranking ranking = new DominanceRanking() ;
 
   /**
-   * Compares two solutions.
+   * Compares two solutions according to the ranking attribute. The lower the ranking the better
    *
-   * @param solution1 Object representing the first <code>Solution</code>.
-   * @param solution2 Object representing the second <code>Solution</code>.
+   * @param solution1 Object representing the first solution.
+   * @param solution2 Object representing the second solution.
    * @return -1, or 0, or 1 if o1 is less than, equal, or greater than o2,
    * respectively.
    */
   @Override
-  public int compare(Solution<?> solution1, Solution<?> solution2) {
+  public int compare(Solution solution1, Solution solution2) {
+    int result ;
     if (solution1 == null) {
-      return 1;
+      if (solution2 == null) {
+        result = 0;
+      } else {
+        result =  1;
+      }
     } else if (solution2 == null) {
-      return -1;
+      result =  -1;
+    } else {
+      int rank1 = Integer.MAX_VALUE;
+      int rank2 = Integer.MAX_VALUE;
+
+      if (ranking.getAttribute(solution1) != null) {
+        rank1 = (int) ranking.getAttribute(solution1);
+      }
+
+      if (ranking.getAttribute(solution2) != null) {
+        rank2 = (int) ranking.getAttribute(solution2);
+      }
+
+      if (rank1 < rank2) {
+        result =  -1;
+      } else if (rank1 > rank2) {
+        result =  1;
+      } else {
+        result = 0;
+      }
     }
 
-    int rank1 = Integer.MAX_VALUE ;
-    int rank2 = Integer.MAX_VALUE ;
-
-    if (ranking.getAttribute(solution1) != null ) {
-      rank1 = (int)ranking.getAttribute(solution1) ;
-    }
-
-    if (ranking.getAttribute(solution2) != null ) {
-      rank2 = (int)ranking.getAttribute(solution2) ;
-    }
-
-    if (rank1 < rank2) {
-      return -1;
-    }
-
-    if (rank1 > rank2) {
-      return 1;
-    }
-
-    return 0;
+    return result ;
   }
 }
