@@ -14,6 +14,7 @@
 package org.uma.jmetal.util.comparator;
 
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.JMetalException;
 
 import java.util.Comparator;
 
@@ -68,42 +69,21 @@ public class ObjectiveComparator implements Comparator<Solution> {
       }
     } else if (solution2 == null) {
       result =  -1;
+    } else if (solution1.getNumberOfObjectives() <= objectiveId) {
+      throw new JMetalException("The solution1 has " + solution1.getNumberOfObjectives()+ " objectives "
+          + "and the objective to sort is " + objectiveId) ;
+    } else if (solution2.getNumberOfObjectives() <= objectiveId) {
+      throw new JMetalException("The solution2 has " + solution2.getNumberOfObjectives()+ " objectives "
+          + "and the objective to sort is " + objectiveId) ;
     } else {
       Double objective1 = solution1.getObjective(this.objectiveId);
       Double objective2 = solution2.getObjective(this.objectiveId);
       if (order == Ordering.ASCENDING) {
-
-        //      if (objective1 < objective2) {
-        //        return -1;
-        //      } else if (objective1 > objective2) {
-        //        return 1;
-        //      } else {
-        //        return 0;
-        //      }
-        //return compareOrder(objective1, objective2) ;
         result = Double.compare(objective1, objective2);
       } else {
-        //      if (objective1 < objective2) {
-        //        return 1;
-        //      } else if (objective1 > objective2) {
-        //        return -1;
-        //      } else {
-        //        return 0;
-        //      }
-        //return compareOrder(objective2, objective1) ;
         result = Double.compare(objective2, objective1);
       }
     }
     return result ;
-  }
-
-  private int compareOrder(double value1, double value2) {
-    if (value1 < value1) {
-      return -1;
-    } else if (value1 > value1) {
-      return 1;
-    } else {
-      return 0;
-    }
   }
 }
