@@ -14,7 +14,7 @@
     </parent>
 
     <name>${project.groupId}:${project.artifactId}</name>
-    <description>Java framework for multi-objective optimization with metaheuristics</description>
+    <description>Runners classes</description>
     <url>http://jmetal.sourceforge.net</url>
 
     <build>
