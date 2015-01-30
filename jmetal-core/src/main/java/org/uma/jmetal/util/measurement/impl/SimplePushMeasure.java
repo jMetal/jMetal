@@ -58,6 +58,17 @@ public class SimplePushMeasure<Value> implements PushMeasure<Value> {
 		this(name, null);
 	}
 
+	/**
+	 * Create a {@link SimplePushMeasure} with the class name as its name and a
+	 * <code>null</code> description.
+	 * 
+	 * @param name
+	 *            the name of the measure
+	 */
+	public SimplePushMeasure() {
+		this(SimplePushMeasure.class.getSimpleName());
+	}
+
 	@Override
 	public void register(MeasureListener<Value> listener) {
 		listeners.add(listener);
