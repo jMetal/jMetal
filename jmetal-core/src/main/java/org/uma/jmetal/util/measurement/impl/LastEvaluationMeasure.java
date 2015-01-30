@@ -1,6 +1,5 @@
 package org.uma.jmetal.util.measurement.impl;
 
-import org.uma.jmetal.util.measurement.MeasureListener;
 import org.uma.jmetal.util.measurement.PushMeasure;
 import org.uma.jmetal.util.measurement.impl.LastEvaluationMeasure.Evaluation;
 
@@ -26,9 +25,8 @@ public class LastEvaluationMeasure<Solution, Value> extends
 	}
 
 	/**
-	 * Wrap the solution and its value into an {@link Evaluation} instance and
-	 * push it to the observers which has registered a {@link MeasureListener}
-	 * through {@link #register(MeasureListener)}.
+	 * This method is equivalent to {@link #push(Object)} excepted that it
+	 * automatically create the {@link Evaluation} instance.
 	 * 
 	 * @param solution
 	 *            the solution evaluated
