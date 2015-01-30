@@ -244,6 +244,11 @@
                 <artifactId>commons-lang3</artifactId>
                 <version>3.3.2</version>
             </dependency>
+            <dependency>
+                <groupId>fr.matthieu-vergne</groupId>
+                <artifactId>data-access</artifactId>
+                <version>1.1</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>
