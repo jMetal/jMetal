@@ -1,3 +1,16 @@
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU Lesser General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU Lesser General Public License for more details.
+//
+//  You should have received a copy of the GNU Lesser General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 package org.uma.jmetal.util.comparator;
 
 import org.junit.Rule;
@@ -11,6 +24,10 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
+/**
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @version 1.0
+ */
 public class ObjectiveComparatorTest {
   private ObjectiveComparator comparator ;
 
@@ -116,6 +133,11 @@ public class ObjectiveComparatorTest {
     when(solution2.getObjective(2)).thenReturn(25.0) ;
 
     assertEquals(1, comparator.compare(solution1, solution2)) ;
+
+    verify(solution1).getObjective(2) ;
+    verify(solution2).getObjective(2) ;
+    verify(solution1).getNumberOfObjectives();
+    verify(solution2).getNumberOfObjectives();
   }
 
   @Test public void shouldCompareRaiseAnExceptionIfSolution1HasLessObjectivesThanTheOneRequested() {
@@ -132,6 +154,9 @@ public class ObjectiveComparatorTest {
     when(solution2.getNumberOfObjectives()).thenReturn(6) ;
 
     comparator.compare(solution1, solution2) ;
+
+    verify(solution1).getNumberOfObjectives();
+    verify(solution2).getNumberOfObjectives();
   }
 
   @Test public void shouldCompareRaiseAnExceptionIfSolution2HasLessObjectivesThanTheOneRequested() {
@@ -148,5 +173,8 @@ public class ObjectiveComparatorTest {
     when(solution2.getNumberOfObjectives()).thenReturn(5) ;
 
     comparator.compare(solution1, solution2) ;
+
+    verify(solution1).getNumberOfObjectives();
+    verify(solution2).getNumberOfObjectives();
   }
 }

@@ -51,7 +51,7 @@ public class ObjectiveComparator implements Comparator<Solution> {
   }
 
   /**
-   * Compares two solutions.
+   * Compares two solutions according to a given objective.
    *
    * @param solution1 The first solution
    * @param solution2 The second solution
