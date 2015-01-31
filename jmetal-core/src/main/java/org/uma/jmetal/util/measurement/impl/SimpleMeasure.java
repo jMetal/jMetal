@@ -11,7 +11,7 @@ import org.uma.jmetal.util.measurement.Measure;
  * 
  * @param <Value>
  */
-public class SimpleMeasure implements Measure {
+public class SimpleMeasure<Value> implements Measure<Value> {
 
 	/**
 	 * The name of the measure.

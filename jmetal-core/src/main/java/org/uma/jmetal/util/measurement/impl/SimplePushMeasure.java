@@ -18,7 +18,7 @@ import java.util.Set;
  * 
  * @param <Value>
  */
-public class SimplePushMeasure<Value> extends SimpleMeasure implements
+public class SimplePushMeasure<Value> extends SimpleMeasure<Value> implements
 		PushMeasure<Value> {
 
 	/**

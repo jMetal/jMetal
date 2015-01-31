@@ -12,8 +12,8 @@ import org.uma.jmetal.util.measurement.PullMeasure;
  * 
  * @param <Value>
  */
-public abstract class SimplePullMeasure<T> extends SimpleMeasure implements
-		PullMeasure<T> {
+public abstract class SimplePullMeasure<Value> extends SimpleMeasure<Value>
+		implements PullMeasure<Value> {
 
 	/**
 	 * Create a {@link SimplePullMeasure} with a given name and a given
