@@ -12,16 +12,8 @@ import org.uma.jmetal.util.measurement.PullMeasure;
  * 
  * @param <Value>
  */
-public abstract class SimplePullMeasure<T> implements PullMeasure<T> {
-
-	/**
-	 * The name of the measure.
-	 */
-	private final String name;
-	/**
-	 * The description of the measure.
-	 */
-	private final String description;
+public abstract class SimplePullMeasure<Value> extends SimpleMeasure<Value>
+		implements PullMeasure<Value> {
 
 	/**
 	 * Create a {@link SimplePullMeasure} with a given name and a given
@@ -33,8 +25,7 @@ public abstract class SimplePullMeasure<T> implements PullMeasure<T> {
 	 *            the description of the measure
 	 */
 	public SimplePullMeasure(String name, String description) {
-		this.name = name;
-		this.description = description;
+		super(name, description);
 	}
 
 	/**
@@ -45,7 +36,7 @@ public abstract class SimplePullMeasure<T> implements PullMeasure<T> {
 	 *            the name of the measure
 	 */
 	public SimplePullMeasure(String name) {
-		this(name, null);
+		super(name);
 	}
 
 	/**
@@ -56,17 +47,7 @@ public abstract class SimplePullMeasure<T> implements PullMeasure<T> {
 	 *            the name of the measure
 	 */
 	public SimplePullMeasure() {
-		this(SimplePullMeasure.class.getSimpleName());
-	}
-
-	@Override
-	public String getName() {
-		return name;
-	}
-
-	@Override
-	public String getDescription() {
-		return description;
+		super();
 	}
 
 }

@@ -8,33 +8,6 @@ import org.uma.jmetal.util.measurement.MeasureListener;
 public class SimplePushMeasureTest {
 
 	@Test
-	public void testClassNameWhenNoName() {
-		assertEquals(SimplePushMeasure.class.getSimpleName(),
-				new SimplePushMeasure<Integer>().getName());
-	}
-
-	@Test
-	public void testNullDescriptionWhenNoDescription() {
-		assertNull(new SimplePushMeasure<Integer>().getDescription());
-		assertNull(new SimplePushMeasure<Integer>("name").getDescription());
-	}
-
-	@Test
-	public void testCorrectNameWhenProvided() {
-		String name = "named measure";
-		assertEquals(name, new SimplePushMeasure<Integer>(name).getName());
-		assertEquals(name,
-				new SimplePushMeasure<Integer>(name, "description").getName());
-	}
-
-	@Test
-	public void testCorrectDescriptionWhenProvided() {
-		String description = "My measure description is awesome!";
-		assertEquals(description, new SimplePushMeasure<Integer>("measure",
-				description).getDescription());
-	}
-
-	@Test
 	public void testNotifiedWhenRegistered() {
 		final Integer[] lastReceived = { null };
 		MeasureListener<Integer> listener = new MeasureListener<Integer>() {

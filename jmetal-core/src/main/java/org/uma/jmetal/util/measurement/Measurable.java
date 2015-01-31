@@ -1,8 +1,19 @@
 package org.uma.jmetal.util.measurement;
 
 /**
- * Created by Antonio J. Nebro on 21/10/14 based on the ideas of Matthieu Vergne
+ * A {@link Measurable} entity is an entity which provides one or several
+ * {@link Measure}s. To keep it simple, these {@link Measure}s are provided
+ * through a {@link MeasureManager}.
+ * 
+ * @author Created by Antonio J. Nebro on 21/10/14 based on the ideas of
+ *         Matthieu Vergne <matthieu.vergne@gmail.com>
+ * 
  */
 public interface Measurable {
-  public MeasureManager getMeasureManager();
+	/**
+	 * 
+	 * @return the {@link MeasureManager} which stores all the {@link Measure}s
+	 *         supported by this {@link Measurable} entity
+	 */
+	public MeasureManager getMeasureManager();
 }

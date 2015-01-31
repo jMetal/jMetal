@@ -18,20 +18,13 @@ import java.util.Set;
  * 
  * @param <Value>
  */
-public class SimplePushMeasure<Value> implements PushMeasure<Value> {
+public class SimplePushMeasure<Value> extends SimpleMeasure<Value> implements
+		PushMeasure<Value> {
 
 	/**
 	 * The observers registered to this {@link SimplePushMeasure}.
 	 */
 	private final Set<MeasureListener<Value>> listeners = new HashSet<>();
-	/**
-	 * The name of the measure.
-	 */
-	private final String name;
-	/**
-	 * The description of the measure.
-	 */
-	private final String description;
 
 	/**
 	 * Create a {@link SimplePushMeasure} with a given name and a given
@@ -43,8 +36,7 @@ public class SimplePushMeasure<Value> implements PushMeasure<Value> {
 	 *            the description of the measure
 	 */
 	public SimplePushMeasure(String name, String description) {
-		this.name = name;
-		this.description = description;
+		super(name, description);
 	}
 
 	/**
@@ -55,7 +47,7 @@ public class SimplePushMeasure<Value> implements PushMeasure<Value> {
 	 *            the name of the measure
 	 */
 	public SimplePushMeasure(String name) {
-		this(name, null);
+		super(name);
 	}
 
 	/**
@@ -66,7 +58,7 @@ public class SimplePushMeasure<Value> implements PushMeasure<Value> {
 	 *            the name of the measure
 	 */
 	public SimplePushMeasure() {
-		this(SimplePushMeasure.class.getSimpleName());
+		super();
 	}
 
 	@Override
@@ -92,18 +84,4 @@ public class SimplePushMeasure<Value> implements PushMeasure<Value> {
 		}
 	}
 
-	@Override
-	public String getName() {
-		return name;
-	}
-
-	@Override
-	public String getDescription() {
-		return description;
-	}
-
-	@Override
-	public String toString() {
-		return getName();
-	}
 }
