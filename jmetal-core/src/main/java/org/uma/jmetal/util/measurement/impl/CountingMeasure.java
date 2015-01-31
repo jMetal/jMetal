@@ -1,13 +1,13 @@
 package org.uma.jmetal.util.measurement.impl;
 
+import org.uma.jmetal.util.measurement.MeasureListener;
+import org.uma.jmetal.util.measurement.PullMeasure;
+import org.uma.jmetal.util.measurement.PushMeasure;
+
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.WeakHashMap;
-
-import org.uma.jmetal.util.measurement.MeasureListener;
-import org.uma.jmetal.util.measurement.PullMeasure;
-import org.uma.jmetal.util.measurement.PushMeasure;
 
 /**
  * A {@link CountingMeasure} provides a simple way to evaluate a number of
@@ -74,6 +74,14 @@ public class CountingMeasure extends SimplePushMeasure<Long> implements
 		count++;
 		push(count);
 	}
+
+  /**
+   * Increment the current count in a given amount
+   */
+  public void increment(int amount) {
+    count += amount;
+    push(count);
+  }
 
 	/**
 	 * 
