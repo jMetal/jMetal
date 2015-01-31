@@ -26,7 +26,7 @@ import java.util.Comparator;
  * @version 1.1
  *
  * This class implements a solution comparator taking into account the violation constraints and
- * an optional epsilon value
+ * an optional epsilon value (i.e, implements an epsilon dominance comparator)
  */
 public class DominanceComparator implements Comparator<Solution> {
   private ConstraintViolationComparator constraintViolationComparator;
