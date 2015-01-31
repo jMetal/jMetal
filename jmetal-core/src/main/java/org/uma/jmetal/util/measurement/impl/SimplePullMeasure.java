@@ -1,5 +1,6 @@
 package org.uma.jmetal.util.measurement.impl;
 
+import org.uma.jmetal.util.measurement.Measure;
 import org.uma.jmetal.util.measurement.PullMeasure;
 
 /**
@@ -20,9 +21,9 @@ public abstract class SimplePullMeasure<Value> extends SimpleMeasure<Value>
 	 * description.
 	 * 
 	 * @param name
-	 *            the name of the measure
+	 *            the name of the {@link Measure}
 	 * @param description
-	 *            the description of the measure
+	 *            the description of the {@link Measure}
 	 */
 	public SimplePullMeasure(String name, String description) {
 		super(name, description);
@@ -33,7 +34,7 @@ public abstract class SimplePullMeasure<Value> extends SimpleMeasure<Value>
 	 * <code>null</code> description.
 	 * 
 	 * @param name
-	 *            the name of the measure
+	 *            the name of the {@link Measure}
 	 */
 	public SimplePullMeasure(String name) {
 		super(name);
@@ -43,8 +44,6 @@ public abstract class SimplePullMeasure<Value> extends SimpleMeasure<Value>
 	 * Create a {@link SimplePullMeasure} with the class name as its name and a
 	 * <code>null</code> description.
 	 * 
-	 * @param name
-	 *            the name of the measure
 	 */
 	public SimplePullMeasure() {
 		super();

@@ -6,7 +6,7 @@ import java.util.Collection;
  * A {@link MeasureManager} aims at managing a set of {@link Measure}s.
  * Typically, a {@link Measurable} entity would create a single
  * {@link MeasureManager} to store all the {@link Measure}s it would like to
- * support, each of them being a identified by a key.<br/>
+ * support, each of them being identified by a key.<br/>
  * <br/>
  * Because a {@link Measure} can be whether a {@link PullMeasure} or a
  * {@link PushMeasure}, the two methods {@link #getPullMeasure(Object)} and

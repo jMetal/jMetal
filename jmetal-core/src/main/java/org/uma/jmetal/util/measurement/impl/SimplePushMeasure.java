@@ -1,10 +1,11 @@
 package org.uma.jmetal.util.measurement.impl;
 
-import org.uma.jmetal.util.measurement.MeasureListener;
-import org.uma.jmetal.util.measurement.PushMeasure;
-
 import java.util.HashSet;
 import java.util.Set;
+
+import org.uma.jmetal.util.measurement.Measure;
+import org.uma.jmetal.util.measurement.MeasureListener;
+import org.uma.jmetal.util.measurement.PushMeasure;
 
 /**
  * {@link SimplePushMeasure} is a basic implementation of {@link PushMeasure}.
@@ -31,9 +32,9 @@ public class SimplePushMeasure<Value> extends SimpleMeasure<Value> implements
 	 * description.
 	 * 
 	 * @param name
-	 *            the name of the measure
+	 *            the name of the {@link Measure}
 	 * @param description
-	 *            the description of the measure
+	 *            the description of the {@link Measure}
 	 */
 	public SimplePushMeasure(String name, String description) {
 		super(name, description);
@@ -44,7 +45,7 @@ public class SimplePushMeasure<Value> extends SimpleMeasure<Value> implements
 	 * <code>null</code> description.
 	 * 
 	 * @param name
-	 *            the name of the measure
+	 *            the name of the {@link Measure}
 	 */
 	public SimplePushMeasure(String name) {
 		super(name);
