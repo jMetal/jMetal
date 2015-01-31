@@ -1,5 +1,6 @@
 package org.uma.jmetal.util.measurement.impl;
 
+import org.uma.jmetal.util.generic.impl.SimpleDescribedEntity;
 import org.uma.jmetal.util.measurement.Measure;
 
 /**
@@ -11,16 +12,8 @@ import org.uma.jmetal.util.measurement.Measure;
  * 
  * @param <Value>
  */
-public class SimpleMeasure<Value> implements Measure<Value> {
-
-	/**
-	 * The name of the measure.
-	 */
-	private String name;
-	/**
-	 * The description of the measure.
-	 */
-	private String description;
+public class SimpleMeasure<Value> extends SimpleDescribedEntity implements
+		Measure<Value> {
 
 	/**
 	 * Create a {@link SimpleMeasure} with a given name and a given description.
@@ -31,8 +24,7 @@ public class SimpleMeasure<Value> implements Measure<Value> {
 	 *            the description of the {@link Measure}
 	 */
 	public SimpleMeasure(String name, String description) {
-		this.name = name;
-		this.description = description;
+		super(name, description);
 	}
 
 	/**
@@ -43,7 +35,7 @@ public class SimpleMeasure<Value> implements Measure<Value> {
 	 *            the name of the {@link Measure}
 	 */
 	public SimpleMeasure(String name) {
-		this(name, null);
+		super(name);
 	}
 
 	/**
@@ -52,39 +44,7 @@ public class SimpleMeasure<Value> implements Measure<Value> {
 	 * 
 	 */
 	public SimpleMeasure() {
-		this(SimpleMeasure.class.getSimpleName());
+		super();
 	}
 
-	/**
-	 * 
-	 * @param name
-	 *            the new name of this measure
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	@Override
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * 
-	 * @param description
-	 *            the new description of this measure
-	 */
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	@Override
-	public String getDescription() {
-		return description;
-	}
-
-	@Override
-	public String toString() {
-		return getName();
-	}
 }
