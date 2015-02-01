@@ -10,7 +10,8 @@ import org.uma.jmetal.util.measurement.impl.CountingMeasure;
 import org.uma.jmetal.util.measurement.impl.DurationMeasure;
 
 /**
- * Created by Antonio J. Nebro on 30/10/14.
+ * @author Antonio J. Nebro
+ * @version 1.0
  */
 public class NSGAIIM extends NSGAII {
   private CountingMeasure iterations ;
@@ -25,7 +26,7 @@ public class NSGAIIM extends NSGAII {
     super(problem, maxIterations, populationSize, crossoverOperator, mutationOperator, selectionOperator, evaluator) ;
 
     durationMeasure = new DurationMeasure() ;
-    durationMeasure.start(); 
+    durationMeasure.start();
   }
 
   @Override protected void initProgress() {
