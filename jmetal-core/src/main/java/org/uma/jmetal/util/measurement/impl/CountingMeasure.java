@@ -165,20 +165,22 @@ public class CountingMeasure extends SimplePushMeasure<Long> implements
 	}
 
 	/**
-	 * Restart the counter to zero.
+	 * Restart the counter to zero. Generate a notification if the value was not
+	 * zero.
 	 */
 	public void reset() {
 		reset(0);
 	}
 
 	/**
-	 * Restart the counter to a given value.
+	 * Restart the counter to a given value. Generate a notification if the
+	 * value was different.
 	 * 
 	 * @param value
 	 *            the value to restart from
 	 */
 	public void reset(long value) {
-		count = value;
+		increment(value - count);
 	}
 
 }

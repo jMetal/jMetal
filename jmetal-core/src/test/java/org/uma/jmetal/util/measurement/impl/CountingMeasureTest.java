@@ -176,6 +176,35 @@ public class CountingMeasureTest {
 	}
 
 	@Test
+	public void testResetNotificationsOccur() {
+		CountingMeasure measure = new CountingMeasure(15);
+		final boolean[] isCalled = { false };
+		measure.register(new MeasureListener<Long>() {
+
+			@Override
+			public void measureGenerated(Long value) {
+				isCalled[0] = true;
+			}
+		});
+
+		isCalled[0] = false;
+		measure.reset();
+		assertTrue(isCalled[0]);
+
+		isCalled[0] = false;
+		measure.reset();
+		assertFalse(isCalled[0]);
+
+		isCalled[0] = false;
+		measure.reset(35);
+		assertTrue(isCalled[0]);
+
+		isCalled[0] = false;
+		measure.reset(35);
+		assertFalse(isCalled[0]);
+	}
+	
+	@Test
 	public void testIncrementNotificationsOccurIfNonZero() {
 		CountingMeasure measure = new CountingMeasure(15);
 		final boolean[] isCalled = { false };
