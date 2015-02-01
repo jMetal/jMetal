@@ -141,4 +141,38 @@ public class CountingMeasureTest {
 		assertEquals(0, (long) measure.get());
 	}
 
+	@Test
+	public void testReset() {
+		CountingMeasure measure = new CountingMeasure();
+
+		measure.increment();
+		measure.increment();
+		measure.increment();
+		measure.reset();
+		assertEquals(0, (long) measure.get());
+
+		measure.increment(5);
+		measure.increment();
+		measure.increment(3);
+		measure.reset();
+		assertEquals(0, (long) measure.get());
+	}
+
+	@Test
+	public void testResetToAGivenValue() {
+		CountingMeasure measure = new CountingMeasure();
+
+		measure.increment();
+		measure.increment();
+		measure.increment();
+		measure.reset(-13);
+		assertEquals(-13, (long) measure.get());
+
+		measure.increment(5);
+		measure.increment();
+		measure.increment(3);
+		measure.reset(45);
+		assertEquals(45, (long) measure.get());
+	}
+
 }

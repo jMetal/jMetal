@@ -157,4 +157,21 @@ public class CountingMeasure extends SimplePushMeasure<Long> implements
 		super.finalize();
 	}
 
+	/**
+	 * Restart the counter to zero.
+	 */
+	public void reset() {
+		reset(0);
+	}
+
+	/**
+	 * Restart the counter to a given value.
+	 * 
+	 * @param value
+	 *            the value to restart from
+	 */
+	public void reset(long value) {
+		count = value;
+	}
+
 }
