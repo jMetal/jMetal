@@ -74,13 +74,16 @@ public class CountingMeasure extends SimplePushMeasure<Long> implements
 		increment(1);
 	}
 
-  /**
-   * Increment the current count in a given amount
-   */
-  public void increment(int amount) {
-    count += amount;
-    push(count);
-  }
+	/**
+	 * Increment the current count in a given amount
+	 * 
+	 * @param amount
+	 *            the amount to add
+	 */
+	public void increment(long amount) {
+		count += amount;
+		push(count);
+	}
 
 	/**
 	 * 
