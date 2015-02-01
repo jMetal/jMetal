@@ -26,9 +26,9 @@ public class SimpleMeasure<Value> implements Measure<Value> {
 	 * Create a {@link SimpleMeasure} with a given name and a given description.
 	 * 
 	 * @param name
-	 *            the name of the measure
+	 *            the name of the {@link Measure}
 	 * @param description
-	 *            the description of the measure
+	 *            the description of the {@link Measure}
 	 */
 	public SimpleMeasure(String name, String description) {
 		this.name = name;
@@ -40,7 +40,7 @@ public class SimpleMeasure<Value> implements Measure<Value> {
 	 * description.
 	 * 
 	 * @param name
-	 *            the name of the measure
+	 *            the name of the {@link Measure}
 	 */
 	public SimpleMeasure(String name) {
 		this(name, null);
@@ -50,8 +50,6 @@ public class SimpleMeasure<Value> implements Measure<Value> {
 	 * Create a {@link SimpleMeasure} with the class name as its name and a
 	 * <code>null</code> description.
 	 * 
-	 * @param name
-	 *            the name of the measure
 	 */
 	public SimpleMeasure() {
 		this(SimpleMeasure.class.getSimpleName());
