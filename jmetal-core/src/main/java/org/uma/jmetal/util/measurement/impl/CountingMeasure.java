@@ -75,14 +75,19 @@ public class CountingMeasure extends SimplePushMeasure<Long> implements
 	}
 
 	/**
-	 * Increment the current count in a given amount
+	 * Increment the current count in a given amount. If the amount is zero, no
+	 * change occurs, thus no notification is sent.
 	 * 
 	 * @param amount
 	 *            the amount to add
 	 */
 	public void increment(long amount) {
-		count += amount;
-		push(count);
+		if (amount == 0) {
+			// No change, just ignore it
+		} else {
+			count += amount;
+			push(count);
+		}
 	}
 
 	/**

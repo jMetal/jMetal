@@ -175,4 +175,32 @@ public class CountingMeasureTest {
 		assertEquals(45, (long) measure.get());
 	}
 
+	@Test
+	public void testIncrementNotificationsOccurIfNonZero() {
+		CountingMeasure measure = new CountingMeasure(15);
+		final boolean[] isCalled = { false };
+		measure.register(new MeasureListener<Long>() {
+
+			@Override
+			public void measureGenerated(Long value) {
+				isCalled[0] = true;
+			}
+		});
+
+		isCalled[0] = false;
+		measure.increment(3);
+		assertTrue(isCalled[0]);
+
+		isCalled[0] = false;
+		measure.increment(0);
+		assertFalse(isCalled[0]);
+
+		isCalled[0] = false;
+		measure.increment(-35);
+		assertTrue(isCalled[0]);
+
+		isCalled[0] = false;
+		measure.increment(0);
+		assertFalse(isCalled[0]);
+	}
 }
