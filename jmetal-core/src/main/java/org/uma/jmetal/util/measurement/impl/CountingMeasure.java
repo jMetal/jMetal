@@ -71,8 +71,7 @@ public class CountingMeasure extends SimplePushMeasure<Long> implements
 	 * observers.
 	 */
 	public void increment() {
-		count++;
-		push(count);
+		increment(1);
 	}
 
   /**
