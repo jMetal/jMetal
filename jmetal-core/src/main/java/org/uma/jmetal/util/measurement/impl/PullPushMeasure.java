@@ -7,11 +7,36 @@ import org.uma.jmetal.util.measurement.MeasureListener;
 import org.uma.jmetal.util.measurement.PullMeasure;
 import org.uma.jmetal.util.measurement.PushMeasure;
 
+/**
+ * A {@link PullPushMeasure} aims at providing both the {@link PushMeasure} and
+ * {@link PullMeasure} abilities into a single {@link Measure}. One could simply
+ * built a brand new {@link Measure} by calling
+ * {@link #PullPushMeasure(String, String)}, but in the case where some existing
+ * measures are available, he can wrap them into a {@link PullPushMeasure} by
+ * calling {@link #PullPushMeasure(PushMeasure, Object)} or other constructors
+ * taking a {@link Measure} as argument.
+ * 
+ * @author Matthieu Vergne <matthieu.vergne@gmail.com>
+ * 
+ * @param <Value>
+ */
 public class PullPushMeasure<Value> implements PullMeasure<Value>,
 		PushMeasure<Value> {
 
+	/**
+	 * The measure responsible of the {@link #get()} method.
+	 */
 	private final PullMeasure<Value> puller;
+	/**
+	 * The {@link Measure} responsible of the {@link #register(MeasureListener)}
+	 * and {@link #unregister(MeasureListener)} methods.
+	 */
 	private final PushMeasure<Value> pusher;
+	/**
+	 * The entity responsible of the {@link #getName()} and
+	 * {@link #getDescription()} methods, potentially the same than
+	 * {@link #puller} or {@link #pusher}.
+	 */
 	private final DescribedEntity reference;
 
 	/**
