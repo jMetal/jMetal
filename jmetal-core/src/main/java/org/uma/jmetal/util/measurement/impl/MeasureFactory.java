@@ -14,6 +14,22 @@ import org.uma.jmetal.util.measurement.PushMeasure;
  */
 public class MeasureFactory {
 
+	/**
+	 * Create a {@link PullMeasure} to backup the last {@link Value} of a
+	 * {@link PushMeasure}. When the {@link PushMeasure} send a notification
+	 * with a given {@link Value}, this {@link Value} is stored into a variable
+	 * so that it can be retrieved at any time through the method
+	 * {@link PullMeasure#get()}.
+	 * 
+	 * @param push
+	 *            a {@link PushMeasure} to backup
+	 * @param initialValue
+	 *            the {@link Value} to return before the next notification of
+	 *            the {@link PushMeasure} is sent
+	 * @return a {@link PullMeasure} allowing to retrieve the last value sent by
+	 *         the {@link PushMeasure}, or the initial value if it did not send
+	 *         any
+	 */
 	public <Value> PullMeasure<Value> createPullFromPush(
 			final PushMeasure<Value> push, Value initialValue) {
 		final Object[] cache = { initialValue };
