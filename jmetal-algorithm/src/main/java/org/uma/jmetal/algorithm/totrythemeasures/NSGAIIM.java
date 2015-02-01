@@ -7,12 +7,14 @@ import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.measurement.impl.CountingMeasure;
+import org.uma.jmetal.util.measurement.impl.DurationMeasure;
 
 /**
  * Created by Antonio J. Nebro on 30/10/14.
  */
 public class NSGAIIM extends NSGAII {
   private CountingMeasure iterations ;
+  private DurationMeasure durationMeasure ;
 
   /**
    * Constructor
@@ -22,6 +24,8 @@ public class NSGAIIM extends NSGAII {
       SelectionOperator selectionOperator, SolutionListEvaluator evaluator) {
     super(problem, maxIterations, populationSize, crossoverOperator, mutationOperator, selectionOperator, evaluator) ;
 
+    durationMeasure = new DurationMeasure() ;
+    durationMeasure.start(); 
   }
 
   @Override protected void initProgress() {
