@@ -185,98 +185,124 @@ public class MeasureFactoryTest {
 		assertTrue(measures.toString(), measures.isEmpty());
 	}
 
-	private class Parent {
-		@SuppressWarnings("unused")
-		public int getParentPublic1() {
-			return 5;
-		}
+	@Test
+	public void testCreatePullsFromFieldsRetrieveNothingFromEmptyObject() {
+		MeasureFactory factory = new MeasureFactory();
+		Map<String, PullMeasure<?>> measures = factory
+				.createPullsFromFields(new Object());
+		assertTrue(measures.toString(), measures.isEmpty());
+	}
 
-		@SuppressWarnings("unused")
-		public String getParentPublic2() {
+	@SuppressWarnings("unused")
+	private class Parent {
+		public boolean parentPublic = true;
+		protected boolean parentProtected = true;
+		private boolean parentPrivate = true;
+
+		public String getParentPublic() {
 			return "parent-test";
 		}
 
-		@SuppressWarnings("unused")
-		protected String getParentProtected1() {
+		protected String getParentProtected() {
 			return "parent-protected";
 		}
 
-		@SuppressWarnings("unused")
-		private String getParentPrivate1() {
+		private String getParentPrivate() {
 			return "parent-private";
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private class Child extends Parent {
-		@SuppressWarnings("unused")
-		public int getChildPublic1() {
-			return 3;
-		}
+		public boolean childPublic = false;
+		protected boolean childProtected = false;
+		private boolean childPrivate = false;
 
-		@SuppressWarnings("unused")
-		public String getChildPublic2() {
+		public String getChildPublic() {
 			return "child-test";
 		}
 
-		@SuppressWarnings("unused")
-		protected String getChildProtected1() {
+		protected String getChildProtected() {
 			return "child-protected";
 		}
 
-		@SuppressWarnings("unused")
-		private String getChildPrivate1() {
+		private String getChildPrivate() {
 			return "child-private";
 		}
 	}
 
 	@Test
 	public void testCreatePullsFromGettersRetrieveAllInstantiatedPublicGetters() {
-		Object object = new Child();
-
 		MeasureFactory factory = new MeasureFactory();
 		Map<String, PullMeasure<?>> measures = factory
-				.createPullsFromGetters(object);
-		assertTrue(measures.toString(), measures.containsKey("ChildPublic1"));
-		assertEquals(3, measures.get("ChildPublic1").get());
-		assertTrue(measures.toString(), measures.containsKey("ChildPublic2"));
-		assertEquals("child-test", measures.get("ChildPublic2").get());
+				.createPullsFromGetters(new Child());
+		assertTrue(measures.toString(), measures.containsKey("ChildPublic"));
+		assertEquals("child-test", measures.get("ChildPublic").get());
 	}
 
 	@Test
-	public void testCreatePullsFromGettersRetrieveNoInstantiatedProtectedNorPrivateGetter() {
-		Object object = new Child();
-
+	public void testCreatePullsFromFieldsRetrieveAllInstantiatedPublicFields() {
 		MeasureFactory factory = new MeasureFactory();
 		Map<String, PullMeasure<?>> measures = factory
-				.createPullsFromGetters(object);
-		assertFalse(measures.toString(),
-				measures.containsKey("ChildProtected1"));
-		assertFalse(measures.toString(), measures.containsKey("ChildPrivate1"));
+				.createPullsFromFields(new Child());
+		assertTrue(measures.toString(), measures.containsKey("childPublic"));
+		assertEquals(false, measures.get("childPublic").get());
 	}
 
 	@Test
 	public void testCreatePullsFromGettersRetrieveAllInheritedPublicGetters() {
-		Object object = new Child();
-
 		MeasureFactory factory = new MeasureFactory();
 		Map<String, PullMeasure<?>> measures = factory
-				.createPullsFromGetters(object);
-		assertTrue(measures.toString(), measures.containsKey("ParentPublic1"));
-		assertEquals(5, measures.get("ParentPublic1").get());
-		assertTrue(measures.toString(), measures.containsKey("ParentPublic2"));
-		assertEquals("parent-test", measures.get("ParentPublic2").get());
+				.createPullsFromGetters(new Child());
+		assertTrue(measures.toString(), measures.containsKey("ParentPublic"));
+		assertEquals("parent-test", measures.get("ParentPublic").get());
+	}
+
+	@Test
+	public void testCreatePullsFromFieldsRetrieveAllInheritedPublicFields() {
+		MeasureFactory factory = new MeasureFactory();
+		Map<String, PullMeasure<?>> measures = factory
+				.createPullsFromFields(new Child());
+		assertTrue(measures.toString(), measures.containsKey("parentPublic"));
+		assertEquals(true, measures.get("parentPublic").get());
+	}
+
+	@Test
+	public void testCreatePullsFromGettersRetrieveNoInstantiatedProtectedNorPrivateGetter() {
+		MeasureFactory factory = new MeasureFactory();
+		Map<String, PullMeasure<?>> measures = factory
+				.createPullsFromGetters(new Child());
+		assertFalse(measures.toString(), measures.containsKey("ChildProtected"));
+		assertFalse(measures.toString(), measures.containsKey("ChildPrivate"));
+	}
+
+	@Test
+	public void testCreatePullsFromFieldsRetrieveNoInstantiatedProtectedNorPrivateField() {
+		MeasureFactory factory = new MeasureFactory();
+		Map<String, PullMeasure<?>> measures = factory
+				.createPullsFromFields(new Child());
+		assertFalse(measures.toString(), measures.containsKey("childProtected"));
+		assertFalse(measures.toString(), measures.containsKey("childPrivate"));
 	}
 
 	@Test
 	public void testCreatePullsFromGettersRetrieveNoInheritedProtectedNorPrivateGetter() {
-		Object object = new Child();
-
 		MeasureFactory factory = new MeasureFactory();
 		Map<String, PullMeasure<?>> measures = factory
-				.createPullsFromGetters(object);
+				.createPullsFromGetters(new Child());
 		assertFalse(measures.toString(),
-				measures.containsKey("ParentProtected1"));
-		assertFalse(measures.toString(), measures.containsKey("ParentPrivate1"));
+				measures.containsKey("ParentProtected"));
+		assertFalse(measures.toString(), measures.containsKey("ParentPrivate"));
+	}
+
+	@Test
+	public void testCreatePullsFromFieldsRetrieveNoInheritedProtectedNorPrivateField() {
+		MeasureFactory factory = new MeasureFactory();
+		Map<String, PullMeasure<?>> measures = factory
+				.createPullsFromFields(new Child());
+		assertFalse(measures.toString(),
+				measures.containsKey("parentProtected"));
+		assertFalse(measures.toString(), measures.containsKey("parentPrivate"));
 	}
 
 }

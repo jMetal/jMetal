@@ -1,6 +1,7 @@
 package org.uma.jmetal.util.measurement.impl;
 
 import java.lang.ref.WeakReference;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -139,11 +140,12 @@ public class MeasureFactory {
 	/**
 	 * Create {@link PullMeasure}s based on the getters available from an
 	 * instance, whatever it is. The {@link Class} of the instance is analyzed
-	 * to retrieve its methods and a {@link PullMeasure} is built for each
-	 * method which use a getter-like signature. The name of the method is
+	 * to retrieve its public methods and a {@link PullMeasure} is built for
+	 * each method which use a getter-like signature. The name of the method is
 	 * further exploited to identify the measure, such that the map returned use
 	 * the name of the method (without "get") as a key which maps to the
-	 * {@link PullMeasure} built from this method.
+	 * {@link PullMeasure} built from this method. The {@link PullMeasure}
+	 * itself is named by using the name of the method.
 	 * 
 	 * @param object
 	 *            the {@link Object} to cover
@@ -177,6 +179,41 @@ public class MeasureFactory {
 			} else {
 				// not a getter, ignore it
 			}
+		}
+		return measures;
+	}
+
+	/**
+	 * Create {@link PullMeasure}s based on the fields available from an
+	 * instance, whatever it is. The {@link Class} of the instance is analyzed
+	 * to retrieve its public fields and a {@link PullMeasure} is built for each
+	 * of them. The name of the field is further exploited to identify the
+	 * measure, such that the map returned use the name of the field as a key
+	 * which maps to the {@link PullMeasure} built from this field. The
+	 * {@link PullMeasure} itself is named by using the name of the field.
+	 * 
+	 * @param object
+	 *            the {@link Object} to cover
+	 * @return the {@link Map} which contains the names of the getter methods
+	 *         and the corresponding {@link PullMeasure} built from them
+	 */
+	public Map<String, PullMeasure<?>> createPullsFromFields(final Object object) {
+		Map<String, PullMeasure<?>> measures = new HashMap<String, PullMeasure<?>>();
+		Class<? extends Object> clazz = object.getClass();
+		for (final Field field : clazz.getFields()) {
+			String key = field.getName();
+			// TODO exploit return type to restrict the generics
+			measures.put(key, new SimplePullMeasure<Object>(key) {
+
+				@Override
+				public Object get() {
+					try {
+						return field.get(object);
+					} catch (IllegalArgumentException | IllegalAccessException e) {
+						throw new RuntimeException();
+					}
+				}
+			});
 		}
 		return measures;
 	}
