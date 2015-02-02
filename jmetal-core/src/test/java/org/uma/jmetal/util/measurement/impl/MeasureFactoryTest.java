@@ -117,6 +117,41 @@ public class MeasureFactoryTest {
 	}
 
 	@Test
+	public void testCreatePushFromPullStopNotificationsWhenPushDestroyed()
+			throws InterruptedException {
+		// create a pull measure which is always different, thus leading to
+		// generate a notification at every check
+		final boolean[] isCalled = { false };
+		PullMeasure<Integer> pull = new SimplePullMeasure<Integer>() {
+
+			int count = 0;
+
+			@Override
+			public Integer get() {
+				isCalled[0] = true;
+				count++;
+				return count;
+			}
+		};
+
+		// create the push measure
+		MeasureFactory factory = new MeasureFactory();
+		final int period = 10;
+		@SuppressWarnings("unused")
+		PushMeasure<Integer> push = factory.createPushFromPull(pull, period);
+
+		// destroy the push measure
+		push = null;
+		System.gc();
+		System.gc();
+
+		// check no periodical check are made anymore
+		isCalled[0] = false;
+		Thread.sleep(10 * period);
+		assertFalse(isCalled[0]);
+	}
+
+	@Test
 	public void testCreatePushFromPullNotifiesOnlyWhenValueChanged()
 			throws InterruptedException {
 		// create a pull measure which changes only when we change the value of

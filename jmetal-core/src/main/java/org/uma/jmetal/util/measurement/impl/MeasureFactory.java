@@ -98,10 +98,12 @@ public class MeasureFactory {
 	 */
 	public <Value> PushMeasure<Value> createPushFromPull(
 			PullMeasure<Value> pull, final long period) {
-		final SimplePushMeasure<Value> push = new SimplePushMeasure<>(
-				pull.getName(), pull.getDescription());
+		SimplePushMeasure<Value> push = new SimplePushMeasure<>(pull.getName(),
+				pull.getDescription());
 		final WeakReference<PullMeasure<Value>> weakPull = new WeakReference<PullMeasure<Value>>(
 				pull);
+		final WeakReference<SimplePushMeasure<Value>> weakPush = new WeakReference<SimplePushMeasure<Value>>(
+				push);
 		final Value initialValue = pull.get();
 		/*
 		 * TODO Use a static thread to run the checks of all the measures
@@ -112,23 +114,30 @@ public class MeasureFactory {
 
 			@Override
 			public void run() {
-				PullMeasure<Value> pull = null;
-				while ((pull = weakPull.get()) != null) {
-					Value value = pull.get();
-					pull = null;
-					if (value == lastValue || value != null
-							&& value.equals(lastValue)) {
-						// still the same, don't notify
-					} else {
-						lastValue = value;
-						push.push(value);
-					}
-
+				boolean isThreadNeeded = true;
+				while (isThreadNeeded) {
 					try {
 						Thread.sleep(period);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
+
+					PullMeasure<Value> pull = weakPull.get();
+					SimplePushMeasure<Value> push = weakPush.get();
+					if (pull == null || push == null) {
+						isThreadNeeded = false;
+					} else {
+						Value value = pull.get();
+						if (value == lastValue || value != null
+								&& value.equals(lastValue)) {
+							// still the same, don't notify
+						} else {
+							lastValue = value;
+							push.push(value);
+						}
+					}
+					pull = null;
+					push = null;
 				}
 			}
 		});
