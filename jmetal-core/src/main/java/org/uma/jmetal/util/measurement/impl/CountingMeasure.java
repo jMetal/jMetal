@@ -71,17 +71,24 @@ public class CountingMeasure extends SimplePushMeasure<Long> implements
 	 * observers.
 	 */
 	public void increment() {
-		count++;
-		push(count);
+		increment(1);
 	}
 
-  /**
-   * Increment the current count in a given amount
-   */
-  public void increment(int amount) {
-    count += amount;
-    push(count);
-  }
+	/**
+	 * Increment the current count in a given amount. If the amount is zero, no
+	 * change occurs, thus no notification is sent.
+	 * 
+	 * @param amount
+	 *            the amount to add
+	 */
+	public void increment(long amount) {
+		if (amount == 0) {
+			// No change, just ignore it
+		} else {
+			count += amount;
+			push(count);
+		}
+	}
 
 	/**
 	 * 
@@ -155,6 +162,25 @@ public class CountingMeasure extends SimplePushMeasure<Long> implements
 			unlink(measure);
 		}
 		super.finalize();
+	}
+
+	/**
+	 * Restart the counter to zero. Generate a notification if the value was not
+	 * zero.
+	 */
+	public void reset() {
+		reset(0);
+	}
+
+	/**
+	 * Restart the counter to a given value. Generate a notification if the
+	 * value was different.
+	 * 
+	 * @param value
+	 *            the value to restart from
+	 */
+	public void reset(long value) {
+		increment(value - count);
 	}
 
 }
