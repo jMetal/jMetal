@@ -67,6 +67,10 @@ public class DominanceComparator implements Comparator<Solution> {
       throw new JMetalException("Solution1 is null") ;
     } else if (solution2 == null) {
       throw new JMetalException("Solution2 is null") ;
+    } else if (solution1.getNumberOfObjectives() != solution2.getNumberOfObjectives()) {
+      throw new JMetalException("Cannot compare because solution1 has " +
+          solution1.getNumberOfObjectives()+ " objectives and solution2 has " +
+          solution2.getNumberOfObjectives()) ;
     }
     int result ;
     result = constraintViolationComparator.compare(solution1, solution2) ;
