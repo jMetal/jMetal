@@ -34,7 +34,9 @@ public class MeasureFactoryTest {
 	@Test
 	public void testCreatePushFromPullNotifiesWithTheCorrectFrequency()
 			throws InterruptedException {
-		// create the pull meaure
+		// create a pull measure which returns the current time, thus it should
+		// change after each check, leading to notifications at the rythm of the
+		// checks.
 		PullMeasure<Long> pull = new SimplePullMeasure<Long>() {
 			@Override
 			public Long get() {
@@ -50,14 +52,14 @@ public class MeasureFactoryTest {
 		// register for notifications from now
 		final long start = System.currentTimeMillis();
 		final LinkedList<Long> timestamps = new LinkedList<>();
-		MeasureListener<Long> listener = new MeasureListener<Long>() {
+		push.register(new MeasureListener<Long>() {
 
 			@Override
 			public void measureGenerated(Long value) {
-				timestamps.add(System.currentTimeMillis() - start);
+				// store the time spent since the registration
+				timestamps.add(value - start);
 			}
-		};
-		push.register(listener);
+		});
 
 		// wait for notifications to come
 		Thread.sleep(10 * period);
@@ -75,18 +77,23 @@ public class MeasureFactoryTest {
 	@Test
 	public void testCreatePushFromPullStopNotificationsWhenPullDestroyed()
 			throws InterruptedException {
-		// create the pull measure
-		PullMeasure<Long> pull = new SimplePullMeasure<Long>() {
+		// create a pull measure which is always different, thus leading to
+		// generate a notification at every check
+		PullMeasure<Integer> pull = new SimplePullMeasure<Integer>() {
+
+			int count = 0;
+
 			@Override
-			public Long get() {
-				return System.currentTimeMillis();
+			public Integer get() {
+				count++;
+				return count;
 			}
 		};
 
 		// create the push measure
 		MeasureFactory factory = new MeasureFactory();
 		final int period = 10;
-		PushMeasure<Long> push = factory.createPushFromPull(pull, period);
+		PushMeasure<Integer> push = factory.createPushFromPull(pull, period);
 
 		// destroy the pull measure
 		pull = null;
@@ -94,11 +101,11 @@ public class MeasureFactoryTest {
 		System.gc();
 
 		// register for notifications only from now
-		final LinkedList<Long> timestamps = new LinkedList<>();
-		push.register(new MeasureListener<Long>() {
+		final LinkedList<Integer> timestamps = new LinkedList<>();
+		push.register(new MeasureListener<Integer>() {
 
 			@Override
-			public void measureGenerated(Long value) {
+			public void measureGenerated(Integer value) {
 				timestamps.add(value);
 			}
 		});
@@ -111,7 +118,8 @@ public class MeasureFactoryTest {
 	@Test
 	public void testCreatePushFromPullNotifiesOnlyWhenValueChanged()
 			throws InterruptedException {
-		// create the pull measure
+		// create a pull measure which changes only when we change the value of
+		// the array
 		final Integer[] value = { null };
 		PullMeasure<Integer> pull = new SimplePullMeasure<Integer>() {
 			@Override
@@ -135,20 +143,24 @@ public class MeasureFactoryTest {
 			}
 		});
 
+		// check no change provide no notifications
 		Thread.sleep(10 * period);
 		assertEquals(0, notified.size());
 
+		// check 1 change provides 1 notification with the correct value
 		value[0] = 56;
 		Thread.sleep(10 * period);
 		assertEquals(1, notified.size());
 		assertEquals(56, (Object) notified.get(0));
 
+		// check 1 more change provides 1 more notification with the new value
 		value[0] = 43;
 		Thread.sleep(10 * period);
 		assertEquals(2, notified.size());
 		assertEquals(56, (Object) notified.get(0));
 		assertEquals(43, (Object) notified.get(1));
 
+		// check 1 more change provides 1 more notification with the new value
 		value[0] = -43;
 		Thread.sleep(10 * period);
 		assertEquals(3, notified.size());
@@ -156,6 +168,7 @@ public class MeasureFactoryTest {
 		assertEquals(43, (Object) notified.get(1));
 		assertEquals(-43, (Object) notified.get(2));
 
+		// check no change provide no more notifications
 		Thread.sleep(10 * period);
 		assertEquals(3, notified.size());
 		assertEquals(56, (Object) notified.get(0));
