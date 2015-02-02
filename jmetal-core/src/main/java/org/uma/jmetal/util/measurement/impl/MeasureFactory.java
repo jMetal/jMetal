@@ -98,6 +98,10 @@ public class MeasureFactory {
 		final WeakReference<PullMeasure<Value>> weakPull = new WeakReference<PullMeasure<Value>>(
 				pull);
 		final Value initialValue = pull.get();
+		/*
+		 * TODO Use a static thread to run the checks of all the measures
+		 * created that way. Using a WeakHashMap could probably do the trick.
+		 */
 		Thread thread = new Thread(new Runnable() {
 			private Value lastValue = initialValue;
 
