@@ -1,6 +1,10 @@
 package org.uma.jmetal.util.measurement.impl;
 
 import java.lang.ref.WeakReference;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.uma.jmetal.util.measurement.Measure;
 import org.uma.jmetal.util.measurement.MeasureListener;
@@ -131,4 +135,50 @@ public class MeasureFactory {
 		thread.start();
 		return push;
 	}
+
+	/**
+	 * Create {@link PullMeasure}s based on the getters available from an
+	 * instance, whatever it is. The {@link Class} of the instance is analyzed
+	 * to retrieve its methods and a {@link PullMeasure} is built for each
+	 * method which use a getter-like signature. The name of the method is
+	 * further exploited to identify the measure, such that the map returned use
+	 * the name of the method (without "get") as a key which maps to the
+	 * {@link PullMeasure} built from this method.
+	 * 
+	 * @param object
+	 *            the {@link Object} to cover
+	 * @return the {@link Map} which contains the names of the getter methods
+	 *         and the corresponding {@link PullMeasure} built from them
+	 */
+	public Map<String, PullMeasure<?>> createPullsFromGetters(
+			final Object object) {
+		Map<String, PullMeasure<?>> measures = new HashMap<String, PullMeasure<?>>();
+		Class<? extends Object> clazz = object.getClass();
+		for (final Method method : clazz.getMethods()) {
+			if (method.getParameterTypes().length == 0
+					&& method.getReturnType() != null
+					&& !method.getName().equals("getClass")
+					&& method.getName().matches("get[^a-z].*")) {
+				String key = method.getName().substring(3);
+				// TODO exploit return type to restrict the generics
+				measures.put(key, new SimplePullMeasure<Object>(key) {
+
+					@Override
+					public Object get() {
+						try {
+							return method.invoke(object);
+						} catch (IllegalAccessException
+								| IllegalArgumentException
+								| InvocationTargetException e) {
+							throw new RuntimeException(e);
+						}
+					}
+				});
+			} else {
+				// not a getter, ignore it
+			}
+		}
+		return measures;
+	}
+
 }

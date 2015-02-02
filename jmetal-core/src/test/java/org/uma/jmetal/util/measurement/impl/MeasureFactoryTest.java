@@ -3,6 +3,7 @@ package org.uma.jmetal.util.measurement.impl;
 import static org.junit.Assert.*;
 
 import java.util.LinkedList;
+import java.util.Map;
 
 import org.junit.Test;
 import org.uma.jmetal.util.measurement.MeasureListener;
@@ -175,4 +176,107 @@ public class MeasureFactoryTest {
 		assertEquals(43, (Object) notified.get(1));
 		assertEquals(-43, (Object) notified.get(2));
 	}
+
+	@Test
+	public void testCreatePullsFromGettersRetrieveNothingFromEmptyObject() {
+		MeasureFactory factory = new MeasureFactory();
+		Map<String, PullMeasure<?>> measures = factory
+				.createPullsFromGetters(new Object());
+		assertTrue(measures.toString(), measures.isEmpty());
+	}
+
+	private class Parent {
+		@SuppressWarnings("unused")
+		public int getParentPublic1() {
+			return 5;
+		}
+
+		@SuppressWarnings("unused")
+		public String getParentPublic2() {
+			return "parent-test";
+		}
+
+		@SuppressWarnings("unused")
+		protected String getParentProtected1() {
+			return "parent-protected";
+		}
+
+		@SuppressWarnings("unused")
+		private String getParentPrivate1() {
+			return "parent-private";
+		}
+	}
+
+	private class Child extends Parent {
+		@SuppressWarnings("unused")
+		public int getChildPublic1() {
+			return 3;
+		}
+
+		@SuppressWarnings("unused")
+		public String getChildPublic2() {
+			return "child-test";
+		}
+
+		@SuppressWarnings("unused")
+		protected String getChildProtected1() {
+			return "child-protected";
+		}
+
+		@SuppressWarnings("unused")
+		private String getChildPrivate1() {
+			return "child-private";
+		}
+	}
+
+	@Test
+	public void testCreatePullsFromGettersRetrieveAllInstantiatedPublicGetters() {
+		Object object = new Child();
+
+		MeasureFactory factory = new MeasureFactory();
+		Map<String, PullMeasure<?>> measures = factory
+				.createPullsFromGetters(object);
+		assertTrue(measures.toString(), measures.containsKey("ChildPublic1"));
+		assertEquals(3, measures.get("ChildPublic1").get());
+		assertTrue(measures.toString(), measures.containsKey("ChildPublic2"));
+		assertEquals("child-test", measures.get("ChildPublic2").get());
+	}
+
+	@Test
+	public void testCreatePullsFromGettersRetrieveNoInstantiatedProtectedNorPrivateGetter() {
+		Object object = new Child();
+
+		MeasureFactory factory = new MeasureFactory();
+		Map<String, PullMeasure<?>> measures = factory
+				.createPullsFromGetters(object);
+		assertFalse(measures.toString(),
+				measures.containsKey("ChildProtected1"));
+		assertFalse(measures.toString(), measures.containsKey("ChildPrivate1"));
+	}
+
+	@Test
+	public void testCreatePullsFromGettersRetrieveAllInheritedPublicGetters() {
+		Object object = new Child();
+
+		MeasureFactory factory = new MeasureFactory();
+		Map<String, PullMeasure<?>> measures = factory
+				.createPullsFromGetters(object);
+		assertTrue(measures.toString(), measures.containsKey("ParentPublic1"));
+		assertEquals(5, measures.get("ParentPublic1").get());
+		assertTrue(measures.toString(), measures.containsKey("ParentPublic2"));
+		assertEquals("parent-test", measures.get("ParentPublic2").get());
+	}
+
+	@Test
+	public void testCreatePullsFromGettersRetrieveNoInheritedProtectedNorPrivateGetter() {
+		Object object = new Child();
+
+		MeasureFactory factory = new MeasureFactory();
+		Map<String, PullMeasure<?>> measures = factory
+				.createPullsFromGetters(object);
+		assertFalse(measures.toString(),
+				measures.containsKey("ParentProtected1"));
+		assertFalse(measures.toString(), measures.containsKey("ParentPrivate1"));
+	}
+
 }
