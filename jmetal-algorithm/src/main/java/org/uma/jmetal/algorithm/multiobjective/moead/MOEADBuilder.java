@@ -19,7 +19,7 @@ import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.util.solutionattribute.AlgorithmBuilder;
+import org.uma.jmetal.util.AlgorithmBuilder;
 
 /**
  * Builder class for algorithm MOEA/D and variants

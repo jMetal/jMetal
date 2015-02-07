@@ -31,7 +31,7 @@ import java.util.*;
  */
 public class ArrayFront implements Front {
   private Point[] points;
-  private int numberOfPoints ;
+  protected int numberOfPoints ;
   private int pointDimensions ;
 
   /** Constructor */
@@ -146,8 +146,11 @@ public class ArrayFront implements Front {
     }
   }
 
-  public InputStream createInputStream(String fileName) {
+  public InputStream createInputStream(String fileName) throws FileNotFoundException {
     InputStream inputStream = getClass().getResourceAsStream(fileName);
+    if (inputStream == null) {
+      inputStream = new FileInputStream(fileName) ;
+    }
 
     return inputStream ;
   }
