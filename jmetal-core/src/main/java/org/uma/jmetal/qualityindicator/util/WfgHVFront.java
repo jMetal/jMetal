@@ -1,19 +1,26 @@
 package org.uma.jmetal.qualityindicator.util;
 
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.point.Point;
 
+import java.util.List;
+
 /**
  * Created by ajnebro on 3/2/15.
  */
-public class WfgHVFront extends ArrayFront {
+public class WfgHvFront extends ArrayFront {
 
-  public WfgHVFront() {
+  public WfgHvFront() {
     super();
   }
 
-  public WfgHVFront(int numberOfPoints, int dimensions) {
+  public WfgHvFront(List<? extends Solution> solutionList) {
+    super(solutionList) ;
+  }
+
+  public WfgHvFront(int numberOfPoints, int dimensions) {
     super(numberOfPoints, dimensions) ;
   }
 

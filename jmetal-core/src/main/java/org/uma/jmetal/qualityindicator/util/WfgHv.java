@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class WfgHv {
   static final int OPT = 2;
-  WfgHVFront[] fs;
+  WfgHvFront[] fs;
   private Point referencePoint;
   boolean maximizing;
   private int currentDeep;
@@ -37,9 +37,9 @@ public class WfgHv {
     pointComparator = new PointComparator(true);
 
     int maxd = this.maxNumberOfPoints - (OPT / 2 + 1);
-    fs = new WfgHVFront[maxd];
+    fs = new WfgHvFront[maxd];
     for (int i = 0; i < maxd; i++) {
-      fs[i] = new WfgHVFront(maxNumberOfPoints, dimension);
+      fs[i] = new WfgHvFront(maxNumberOfPoints, dimension);
     }
   }
 
@@ -53,13 +53,13 @@ public class WfgHv {
     pointComparator = new PointComparator(true);
 
     int maxd = this.maxNumberOfPoints - (OPT / 2 + 1);
-    fs = new WfgHVFront[maxd];
+    fs = new WfgHvFront[maxd];
     for (int i = 0; i < maxd; i++) {
-      fs[i] = new WfgHVFront(maxNumberOfPoints, dimension);
+      fs[i] = new WfgHvFront(maxNumberOfPoints, dimension);
     }
   }
 
-  public double get2DHV(WfgHVFront front) {
+  public double get2DHV(WfgHvFront front) {
     double hv = 0.0;
 
     hv = Math.abs((front.getPoint(0).getDimensionValue(0) - referencePoint.getDimensionValue(0)) *
@@ -84,7 +84,7 @@ public class WfgHv {
     return volume;
   }
 
-  public double getExclusiveHV(WfgHVFront front, int point) {
+  public double getExclusiveHV(WfgHvFront front, int point) {
     double volume;
 
     volume = getInclusiveHV(front.getPoint(point));
@@ -98,7 +98,7 @@ public class WfgHv {
     return volume;
   }
 
-  public double getHV(WfgHVFront front) {
+  public double getHV(WfgHvFront front) {
     double volume ;
     front.sort(pointComparator);
 
@@ -121,7 +121,7 @@ public class WfgHv {
   }
 
 
-  public void makeDominatedBit(WfgHVFront front, int p) {
+  public void makeDominatedBit(WfgHvFront front, int p) {
     int z = front.getNumberOfPoints() - 1 - p;
 
     for (int i = 0; i < z; i++) {
@@ -170,7 +170,7 @@ public class WfgHv {
   }
 
   public int getLessContributorHV(List<Solution> solutionList) {
-    WfgHVFront wholeFront = (WfgHVFront)loadFront(solutionList, -1) ;
+    WfgHvFront wholeFront = (WfgHvFront)loadFront(solutionList, -1) ;
 
     int index = 0;
     double contribution = Double.POSITIVE_INFINITY;
@@ -205,7 +205,7 @@ public class WfgHv {
 
     int dimensions = solutionSet.get(0).getNumberOfObjectives();
 
-    Front front = new WfgHVFront(numberOfPoints, dimensions) ;
+    Front front = new WfgHvFront(numberOfPoints, dimensions) ;
 
     int index = 0;
     for (int i = 0; i < solutionSet.size(); i++) {
@@ -266,7 +266,7 @@ public class WfgHv {
   }
 
   public static void main(String args[]) throws IOException, JMetalException {
-    WfgHVFront front = new WfgHVFront();
+    WfgHvFront front = new WfgHvFront();
 
     if (args.length == 0) {
       throw new JMetalException("Usage: WFGHV front [reference point]");
