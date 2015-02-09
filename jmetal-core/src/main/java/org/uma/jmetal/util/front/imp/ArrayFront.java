@@ -30,7 +30,7 @@ import java.util.*;
  * @version 1.0
  */
 public class ArrayFront implements Front {
-  private Point[] points;
+  protected Point[] points;
   protected int numberOfPoints ;
   private int pointDimensions ;
 
@@ -156,7 +156,7 @@ public class ArrayFront implements Front {
   }
 
   @Override public int getNumberOfPoints() {
-    return points.length;
+    return numberOfPoints ;
   }
 
   @Override public int getPointDimensions() {
@@ -186,7 +186,8 @@ public class ArrayFront implements Front {
   }
 
   @Override public void sort(Comparator<Point> comparator) {
-    Arrays.sort(points, comparator);
+    //Arrays.sort(points, comparator);
+    Arrays.sort(points, 0, numberOfPoints, comparator);
   }
 
   @Override public boolean equals(Object o) {
