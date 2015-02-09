@@ -4,7 +4,6 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.front.Front;
-import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
 import org.uma.jmetal.util.point.impl.PointComparator;
@@ -19,7 +18,7 @@ import java.util.List;
  */
 public class WfgHv {
   static final int OPT = 2;
-  private WfgHVFront[] fs;
+  WfgHVFront[] fs;
   private Point referencePoint;
   boolean maximizing;
   private int currentDeep;
@@ -35,7 +34,7 @@ public class WfgHv {
     currentDimension = dimension;
     this.maxNumberOfPoints = maxNumberOfPoints;
     maxNumberOfObjectives = dimension;
-    pointComparator = new PointComparator(false);
+    pointComparator = new PointComparator(true);
 
     int maxd = this.maxNumberOfPoints - (OPT / 2 + 1);
     fs = new WfgHVFront[maxd];
@@ -90,9 +89,9 @@ public class WfgHv {
 
     volume = getInclusiveHV(front.getPoint(point));
     if (front.getNumberOfPoints() > point + 1) {
-     makeDominatedBit(front, point);
-     double v = getHV(fs[currentDeep - 1]);
-     volume -= v;
+      makeDominatedBit(front, point);
+      double v = getHV(fs[currentDeep - 1]);
+      volume -= v;
       currentDeep--;
     }
 
@@ -109,7 +108,8 @@ public class WfgHv {
       volume = 0.0;
 
       currentDimension--;
-      for (int i = front.getNumberOfPoints() - 1; i >= 0; i--) {
+      int numberOfPoints = front.getNumberOfPoints() ;
+      for (int i = numberOfPoints - 1; i >= 0; i--) {
         volume += Math.abs(front.getPoint(i).getDimensionValue(currentDimension) -
             referencePoint.getDimensionValue(currentDimension)) *
             this.getExclusiveHV(front, i);
@@ -126,9 +126,12 @@ public class WfgHv {
 
     for (int i = 0; i < z; i++) {
       for (int j = 0; j < currentDimension; j++) {
-        fs[currentDeep].getPoint(i).setDimensionValue(j,
-            worse(front.getPoint(p).getDimensionValue(j),
-                front.getPoint(p + 1 + i).getDimensionValue(j), false));
+        Point point1 = front.getPoint(p) ;
+        Point point2 = front.getPoint(p + 1 + i) ;
+        double worseValue = worse(point1.getDimensionValue(j), point2.getDimensionValue(j), false) ;
+        int cd = currentDeep ;
+        Point point3 = fs[currentDeep].getPoint(i) ;
+        point3.setDimensionValue(j, worseValue);
       }
     }
 
@@ -202,7 +205,7 @@ public class WfgHv {
 
     int dimensions = solutionSet.get(0).getNumberOfObjectives();
 
-    Front front = new ArrayFront(numberOfPoints, dimensions) ;
+    Front front = new WfgHVFront(numberOfPoints, dimensions) ;
 
     int index = 0;
     for (int i = 0; i < solutionSet.size(); i++) {
