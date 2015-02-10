@@ -5,6 +5,7 @@ import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.solutionattribute.impl.HypervolumeContribution;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,7 +29,7 @@ public class FastHypervolume {
     hvContribution = new HypervolumeContribution() ;
   }
 
-  public double computeHypervolume(List<Solution> solutionList) {
+  public double computeHypervolume(List<? extends Solution> solutionList) {
     double hv;
     if (solutionList.size() == 0) {
       hv = 0.0;
@@ -52,7 +53,7 @@ public class FastHypervolume {
     return hv;
   }
 
-  public double computeHypervolume(List<Solution> solutionList, Point referencePoint) {
+  public double computeHypervolume(List<? extends Solution> solutionList, Point referencePoint) {
     double hv = 0.0;
     if (solutionList.size() == 0) {
       hv = 0.0;
@@ -101,7 +102,7 @@ public class FastHypervolume {
   }
 
   /**
-   * Computes the HV of a solutiontype set.
+   * Computes the HV of a solution list.
    * REQUIRES: The problem is bi-objective
    * REQUIRES: The setArchive is ordered in descending order by the second objective
    *
@@ -123,32 +124,37 @@ public class FastHypervolume {
     return hv;
   }
 
+  private <T> void addHelper(List<T> list, T solution) {
+     list.add(solution);
+  }
+
   /**
    * Computes the HV contribution of the solutions
    *
    * @return
    */
-  public void computeHVContributions(List<Solution> solutionList) {
-    double[] contributions = new double[solutionList.size()];
+  public void computeHVContributions(List<? extends Solution> solutionList) {
+    List<Solution> list = (ArrayList<Solution>)solutionList ;
+    double[] contributions = new double[list.size()];
     double solutionSetHV = 0;
+
 
     solutionSetHV = computeHypervolume(solutionList);
 
     for (int i = 0; i < solutionList.size(); i++) {
-      Solution currentPoint = solutionList.get(i);
-      solutionList.remove(i);
+      Solution currentPoint = list.get(i);
+      list.remove(i);
 
       //Front front = new Front(solutionSet.size(), numberOfObjectives, solutionSet);
-      Front front = new WfgHvFront(solutionList);
+      WfgHvFront front = new WfgHvFront(list);
       double hv =
-          new WfgHv(numberOfObjectives, solutionList.size()).getHV(new WfgHvFront(solutionList));
+          new WfgHv(numberOfObjectives, list.size()).getHV(front);
       contributions[i] = solutionSetHV - hv;
 
-      solutionList.add(i, currentPoint);
+      list.add(i, currentPoint);
     }
 
     for (int i = 0; i < solutionList.size(); i++) {
-      HypervolumeContribution hvContrib = new HypervolumeContribution() ;
       hvContribution.setAttribute(solutionList.get(i), contributions[i]);
       //solutionList.get(i).setCrowdingDistance(contributions[i]);
     }
@@ -161,20 +167,21 @@ public class FastHypervolume {
    *
    * @return The hv contribution of the solutiontype
    */
-  public double computeSolutionHVContribution(List<Solution> solutionList, int solutionIndex,
+  public double computeSolutionHVContribution(List<? extends Solution> solutionList, int solutionIndex,
       double solutionSetHV) {
+    List<Solution> list = (ArrayList<Solution>)solutionList ;
     double contribution;
 
-    Solution currentPoint = solutionList.get(solutionIndex);
-    solutionList.remove(solutionIndex);
+    Solution currentPoint = list.get(solutionIndex);
+    list.remove(solutionIndex);
 
-    Front front = new WfgHvFront(solutionList);
+    WfgHvFront front = new WfgHvFront(list);
     double hv =
-        new WfgHv(numberOfObjectives, solutionList.size(), referencePoint).getHV(new WfgHvFront(solutionList));
+        new WfgHv(numberOfObjectives, list.size(), referencePoint).getHV(front);
     contribution = solutionSetHV - hv;
 
-    solutionList.add(solutionIndex, currentPoint);
-    hvContribution.setAttribute(solutionList.get(solutionIndex), contribution);
+    list.add(solutionIndex, currentPoint);
+    hvContribution.setAttribute(list.get(solutionIndex), contribution);
    // solutionSet.get(solutionIndex).setCrowdingDistance(contribution);
 
     return contribution;
