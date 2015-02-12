@@ -28,7 +28,11 @@ public class WfgHv {
   private Comparator<Point> pointComparator;
 
   public WfgHv(int dimension, int maxNumberOfPoints) {
-    referencePoint = null;
+    referencePoint = new ArrayPoint(dimension);
+    for (int i = 0; i < dimension; i++) {
+      referencePoint.setDimensionValue(i, 0.0);
+    }
+
     maximizing = false;
     currentDeep = 0;
     currentDimension = dimension;

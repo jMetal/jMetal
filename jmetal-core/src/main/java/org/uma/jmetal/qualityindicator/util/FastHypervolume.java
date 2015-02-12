@@ -3,6 +3,7 @@ package org.uma.jmetal.qualityindicator.util;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.point.Point;
+import org.uma.jmetal.util.point.impl.ArrayPoint;
 import org.uma.jmetal.util.solutionattribute.impl.HypervolumeContribution;
 
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public class FastHypervolume {
   private Point referencePoint;
   private int numberOfObjectives;
   private double offset ;
-  private HypervolumeContribution hvContribution ;
+  //private HypervolumeContribution hvContribution ;
 
   public FastHypervolume() {
     this(DEFAULT_OFFSET) ;
@@ -26,7 +27,7 @@ public class FastHypervolume {
     referencePoint = null;
     numberOfObjectives = 0;
     this.offset = offset;
-    hvContribution = new HypervolumeContribution() ;
+    //hvContribution = new HypervolumeContribution() ;
   }
 
   public double computeHypervolume(List<? extends Solution> solutionList) {
@@ -35,6 +36,8 @@ public class FastHypervolume {
       hv = 0.0;
     } else {
       numberOfObjectives = solutionList.get(0).getNumberOfObjectives();
+      referencePoint = new ArrayPoint(numberOfObjectives);
+      updateReferencePoint(solutionList);
       WfgHv wfgHv = new WfgHv(numberOfObjectives, solutionList.size());
       hv = wfgHv.getHV(new WfgHvFront(solutionList));
     }
@@ -78,6 +81,27 @@ public class FastHypervolume {
     return hv;
   }
 
+  /**
+   * Updates the reference point
+   */
+  private void updateReferencePoint(List<? extends Solution> solutionList) {
+    double[] maxObjectives = new double[numberOfObjectives];
+    for (int i = 0; i < numberOfObjectives; i++) {
+      maxObjectives[i] = 0;
+    }
+
+    for (int i = 0; i < solutionList.size(); i++) {
+      for (int j = 0; j < numberOfObjectives; j++) {
+        if (maxObjectives[j] < solutionList.get(i).getObjective(j)) {
+          maxObjectives[j] = solutionList.get(i).getObjective(j) ;
+        }
+      }
+    }
+
+    for (int i = 0; i < referencePoint.getNumberOfDimensions(); i++) {
+      referencePoint.setDimensionValue(i, maxObjectives[i] + offset);
+    }
+  }
 
   /**
    * Updates the reference point
@@ -138,7 +162,6 @@ public class FastHypervolume {
     double[] contributions = new double[list.size()];
     double solutionSetHV = 0;
 
-
     solutionSetHV = computeHypervolume(solutionList);
 
     for (int i = 0; i < solutionList.size(); i++) {
@@ -154,6 +177,7 @@ public class FastHypervolume {
       list.add(i, currentPoint);
     }
 
+    HypervolumeContribution hvContribution = new HypervolumeContribution() ;
     for (int i = 0; i < solutionList.size(); i++) {
       hvContribution.setAttribute(solutionList.get(i), contributions[i]);
       //solutionList.get(i).setCrowdingDistance(contributions[i]);
@@ -181,6 +205,7 @@ public class FastHypervolume {
     contribution = solutionSetHV - hv;
 
     list.add(solutionIndex, currentPoint);
+    HypervolumeContribution hvContribution = new HypervolumeContribution() ;
     hvContribution.setAttribute(list.get(solutionIndex), contribution);
    // solutionSet.get(solutionIndex).setCrowdingDistance(contribution);
 

@@ -131,6 +131,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
       updateParticlesMemory(swarm);
       updateLeadersDensityEstimator();
       updateProgress();
+      System.out.println("Iter: " + iterations) ;
     }
   }
 
