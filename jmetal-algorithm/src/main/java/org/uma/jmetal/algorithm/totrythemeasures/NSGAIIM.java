@@ -6,8 +6,8 @@ import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
-import org.uma.jmetal.util.measurement.impl.CountingMeasure;
-import org.uma.jmetal.util.measurement.impl.DurationMeasure;
+import org.uma.jmetal.measurement.impl.CountingMeasure;
+import org.uma.jmetal.measurement.impl.DurationMeasure;
 
 /**
  * @author Antonio J. Nebro
