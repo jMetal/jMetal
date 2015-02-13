@@ -60,7 +60,7 @@ public class FastHypervolumeTest {
 
     List<DoubleSolution> list = Arrays.asList(solution, solution2, solution3) ;
 
-    fastHV.computeHVContributions(list); ;
+    fastHV.computeHVContributions(list);
   }
 
 

@@ -93,13 +93,13 @@ public class FastHypervolumeArchive <S extends Solution> implements BoundedArchi
         return false;
       } else if (flag == -1) {
         solutionList.remove(i);
-      } //else {
-      //if (equalsComparator.compare(auxiliarSolution, solution) == 0) { // There is an equal solutiontype
-      // in the population
-      //  return false; // Discard the new solutiontype
-      //}
-      i++;
-      //}
+      } else {
+        //if (equalsComparator.compare(auxiliarSolution, solution) == 0) { // There is an equal solutiontype
+        // in the population
+        //  return false; // Discard the new solutiontype
+        //}
+        i++;
+      }
     }
     solutionList.add(solution);
     if (solutionList.size() > maxSize) {
@@ -117,8 +117,8 @@ public class FastHypervolumeArchive <S extends Solution> implements BoundedArchi
   public void computeHVContribution() {
     //if (size() > 2) { // The contribution can be updated
 
-      FastHypervolume fastHV = new FastHypervolume();
-      fastHV.computeHVContributions(solutionList);
+    FastHypervolume fastHV = new FastHypervolume();
+    fastHV.computeHVContributions(solutionList);
     //}
   }
 
