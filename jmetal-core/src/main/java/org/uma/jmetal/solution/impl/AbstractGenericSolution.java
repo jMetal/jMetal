@@ -2,13 +2,9 @@ package org.uma.jmetal.solution.impl;
 
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Antonio J. Nebro on 03/09/14.
@@ -59,9 +55,6 @@ public abstract class AbstractGenericSolution<T, P extends Problem> implements S
 
   @Override
   public T getVariableValue(int index) {
-    if (variables.get(index) == null) {
-      throw new JMetalException("rerarerere, i: " + index) ;
-    }
     return variables.get(index);
   }
 
@@ -122,44 +115,27 @@ public abstract class AbstractGenericSolution<T, P extends Problem> implements S
   }
 
   @Override public boolean equals(Object o) {
-    if (this == o) {
+    if (this == o)
       return true;
-    }
-    if (!(o instanceof AbstractGenericSolution)) {
+    if (o == null || getClass() != o.getClass())
       return false;
-    }
 
     AbstractGenericSolution that = (AbstractGenericSolution) o;
 
-    if (Double.compare(that.overallConstraintViolationDegree, overallConstraintViolationDegree)
-        != 0) {
+    if (!attributes.equals(that.attributes))
       return false;
-    }
-    if (attributes != null ? !attributes.equals(that.attributes) : that.attributes != null) {
+    if (!Arrays.equals(objectives, that.objectives))
       return false;
-    }
-    if (objectives != null ? !objectives.equals(that.objectives) : that.objectives != null) {
+    if (!variables.equals(that.variables))
       return false;
-    }
-    //if (problem != null ? !problem.equals(that.problem) : that.problem != null)
-    //  return false;
-    if (variables != null ? !variables.equals(that.variables) : that.variables != null) {
-      return false;
-    }
 
     return true;
   }
 
   @Override public int hashCode() {
-    int result;
-    long temp;
-    result = objectives != null ? objectives.hashCode() : 0;
-    result = 31 * result + (variables != null ? variables.hashCode() : 0);
-    //result = 31 * result + (problem != null ? problem.hashCode() : 0);
-    temp = Double.doubleToLongBits(overallConstraintViolationDegree);
-    result = 31 * result + (int) (temp ^ (temp >>> 32));
-    result = 31 * result + (attributes != null ? attributes.hashCode() : 0);
+    int result = Arrays.hashCode(objectives);
+    result = 31 * result + variables.hashCode();
+    result = 31 * result + attributes.hashCode();
     return result;
   }
-  //*/
 }
