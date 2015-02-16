@@ -26,7 +26,6 @@ import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.binarySet.BinarySet;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -37,33 +36,30 @@ public class GenericBinarySolution extends AbstractGenericSolution<BinarySet, Bi
 
   /** Constructor */
   public GenericBinarySolution(BinaryProblem problem) {
-    this.problem = problem ;
+    super(problem) ;
 
-    objectives = new ArrayList<>(problem.getNumberOfObjectives()) ;
-    variables = new ArrayList<>(problem.getNumberOfVariables()) ;
     overallConstraintViolationDegree = 0.0 ;
     numberOfViolatedConstraints = 0 ;
 
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      variables.add(createNewBitSet(problem.getNumberOfBits(i)));
+      setVariableValue(i, createNewBitSet(problem.getNumberOfBits(i)));
     }
 
     for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      objectives.add(0.0) ;
+      setObjective(i, 0.0);
     }
   }
 
   /** Copy constructor */
   public GenericBinarySolution(GenericBinarySolution solution) {
-    problem = solution.problem ;
-    objectives = new ArrayList<>() ;
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      objectives.add(solution.getObjective(i)) ;
+    super(solution.problem);
+
+    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
+      setVariableValue(i, (BinarySet) solution.getVariableValue(i).clone());
     }
 
-    variables = new ArrayList<>() ;
-    for (BinarySet var : solution.variables) {
-      variables.add((BinarySet) var.clone()) ;
+    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
+      setObjective(i, solution.getObjective(i)) ;
     }
 
     overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
@@ -88,7 +84,7 @@ public class GenericBinarySolution extends AbstractGenericSolution<BinarySet, Bi
 
   @Override
   public int getNumberOfBits(int index) {
-    return variables.get(index).getBinarySetLength() ;
+    return getVariableValue(index).getBinarySetLength() ;
   }
 
   @Override
@@ -100,7 +96,7 @@ public class GenericBinarySolution extends AbstractGenericSolution<BinarySet, Bi
   public int getTotalNumberOfBits() {
     int sum = 0 ;
     for (int i = 0; i < getNumberOfVariables(); i++) {
-      sum += variables.get(i).getBinarySetLength() ;
+      sum += getVariableValue(i).getBinarySetLength() ;
     }
 
     return sum ;
@@ -109,8 +105,8 @@ public class GenericBinarySolution extends AbstractGenericSolution<BinarySet, Bi
   @Override
   public String getVariableValueString(int index) {
     String result = "" ;
-    for (int i = 0; i < variables.get(index).getBinarySetLength() ; i++) {
-      if (variables.get(index).get(i)) {
+    for (int i = 0; i < getVariableValue(index).getBinarySetLength() ; i++) {
+      if (getVariableValue(index).get(i)) {
         result += "1" ;
       }
       else {

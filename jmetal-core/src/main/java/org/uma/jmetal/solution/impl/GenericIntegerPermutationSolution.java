@@ -17,9 +17,8 @@ public class GenericIntegerPermutationSolution
 
   /** Constructor */
   public GenericIntegerPermutationSolution(PermutationProblem problem) {
-    this.problem = problem ;
-    objectives = new ArrayList<>(problem.getNumberOfObjectives()) ;
-    variables = new ArrayList<>(problem.getNumberOfVariables()) ;
+    super(problem) ;
+
     overallConstraintViolationDegree = 0.0 ;
     numberOfViolatedConstraints = 0 ;
 
@@ -31,17 +30,25 @@ public class GenericIntegerPermutationSolution
       }
 
       java.util.Collections.shuffle(randomSequence);
-      variables.set(i, randomSequence) ;
+      setVariableValue(i, randomSequence) ;
     }
   }
 
   /** Copy Constructor */
   public GenericIntegerPermutationSolution(GenericIntegerPermutationSolution solution) {
-    problem = solution.problem ;
-    objectives = new ArrayList<>() ;
-    for (Double obj : solution.objectives) {
-      objectives.add(new Double(obj)) ;
+    super(solution.problem) ;
+    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
+      setObjective(i, solution.getObjective(i)) ;
     }
+
+    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
+      List<Integer> list = new ArrayList<>() ;
+      for (int j = 0 ; j < getVariableValue(i).size(); j++) {
+        list.add(solution.getVariableValue(i).get(j));
+      }
+      setVariableValue(i, list);
+    }
+    /*
     variables = new ArrayList<>() ;
     for (List<Integer> var : solution.variables) {
       List<Integer> list = new ArrayList<>() ;
@@ -50,7 +57,7 @@ public class GenericIntegerPermutationSolution
       }
       variables.add(list) ;
     }
-
+*/
     overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
     numberOfViolatedConstraints = solution.numberOfViolatedConstraints ;
 
@@ -65,10 +72,10 @@ public class GenericIntegerPermutationSolution
   @Override
   public String getVariableValueString(int index) {
     String result = "" ;
-    for (Integer element : variables.get(index)) {
+    for (Integer element : getVariableValue(index)) {
       result += element + " " ;
     }
 
-    return variables.get(index).toString() ;
+    return getVariableValue(index).toString() ;
   }
 }

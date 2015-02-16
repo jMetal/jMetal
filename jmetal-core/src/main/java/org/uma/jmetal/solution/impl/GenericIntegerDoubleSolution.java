@@ -4,7 +4,6 @@ import org.uma.jmetal.problem.IntegerDoubleProblem;
 import org.uma.jmetal.solution.IntegerDoubleSolution;
 import org.uma.jmetal.solution.Solution;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -18,9 +17,8 @@ public class GenericIntegerDoubleSolution
 
   /** Constructor */
   public GenericIntegerDoubleSolution(IntegerDoubleProblem problem) {
-  	this.problem = problem ;
-    objectives = new ArrayList<>(problem.getNumberOfObjectives()) ;
-    variables = new ArrayList<>(problem.getNumberOfVariables()) ;
+    super(problem) ;
+
     numberOfIntegerVariables = problem.getNumberOfIntegerVariables() ;
     numberOfDoubleVariables = problem.getNumberOfDoubleVariables() ;
     overallConstraintViolationDegree = 0.0 ;
@@ -28,26 +26,28 @@ public class GenericIntegerDoubleSolution
 
     for (int i = 0 ; i < numberOfIntegerVariables; i++) {
       Integer value = randomGenerator.nextInt((Integer)getLowerBound(i), (Integer)getUpperBound(i)) ;
-      variables.add(value) ;
+      setVariableValue(i, value) ;
     }
 
     for (int i = numberOfIntegerVariables ; i < getNumberOfVariables(); i++) {
       Double value = randomGenerator.nextDouble((Double)getLowerBound(i), (Double)getUpperBound(i)) ;
-      variables.add(value) ;
+      setVariableValue(i, value) ;
     }
 
     for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      objectives.add(new Double(0.0)) ;
+      setObjective(i, 0.0) ;
     }
   }
 
   /** Copy constructor */
   public GenericIntegerDoubleSolution(GenericIntegerDoubleSolution solution) {
-    problem = solution.problem ;
-    objectives = new ArrayList<>() ;
-    for (Double obj : solution.objectives) {
-      objectives.add(new Double(obj)) ;
+    super(solution.problem) ;
+
+    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
+      setObjective(i, solution.getObjective(i)) ;
     }
+
+    /*
     variables = new ArrayList<>() ;
     for (int i = 0 ; i < numberOfIntegerVariables; i++) {
       variables.add(new Integer((Integer) solution.getVariableValue(i))) ;
@@ -56,6 +56,14 @@ public class GenericIntegerDoubleSolution
     variables = new ArrayList<>() ;
     for (int i = numberOfIntegerVariables ; i < (numberOfIntegerVariables+numberOfDoubleVariables); i++) {
       variables.add(new Double((Double) solution.getVariableValue(i))) ;
+    }
+*/
+    for (int i = 0 ; i < numberOfIntegerVariables; i++) {
+      setVariableValue(i, solution.getVariableValue(i)) ;
+    }
+
+    for (int i = numberOfIntegerVariables ; i < (numberOfIntegerVariables+numberOfDoubleVariables); i++) {
+      setVariableValue(i, solution.getVariableValue(i)) ;
     }
 
     overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
@@ -91,6 +99,6 @@ public class GenericIntegerDoubleSolution
 
   @Override
   public String getVariableValueString(int index) {
-    return variables.get(index).toString() ;
+    return getVariableValue(index).toString() ;
   }
 }
