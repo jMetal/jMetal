@@ -15,7 +15,7 @@ package org.uma.jmetal.algorithm.multiobjective.paes;
 
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.util.solutionattribute.AlgorithmBuilder;
+import org.uma.jmetal.util.AlgorithmBuilder;
 
 /**
  * Created by ajnebro on 17/11/14.

@@ -4,7 +4,6 @@ import org.uma.jmetal.problem.DoubleBinaryProblem;
 import org.uma.jmetal.solution.DoubleBinarySolution;
 import org.uma.jmetal.solution.Solution;
 
-import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.HashMap;
 
@@ -18,15 +17,14 @@ import java.util.HashMap;
  *  - the bitset is the last variable
  */
 public class GenericDoubleBinarySolution
-        extends AbstractGenericSolution<Object, DoubleBinaryProblem>
-        implements DoubleBinarySolution {
+    extends AbstractGenericSolution<Object, DoubleBinaryProblem>
+    implements DoubleBinarySolution {
   private int numberOfDoubleVariables ;
 
   /** Constructor */
   public GenericDoubleBinarySolution(DoubleBinaryProblem problem) {
-    this.problem = problem ;
-    objectives = new ArrayList<>(problem.getNumberOfObjectives()) ;
-    variables = new ArrayList<>(problem.getNumberOfVariables()) ;
+    super(problem) ;
+
     numberOfDoubleVariables = problem.getNumberOfDoubleVariables() ;
     overallConstraintViolationDegree = 0.0 ;
     numberOfViolatedConstraints = 0 ;
@@ -38,11 +36,11 @@ public class GenericDoubleBinarySolution
 
   /** Copy constructor */
   public GenericDoubleBinarySolution(GenericDoubleBinarySolution solution) {
-    problem = solution.problem ;
-    objectives = new ArrayList<>() ;
-    for (Double obj : solution.objectives) {
-      objectives.add(new Double(obj)) ;
+    super(solution.problem) ;
+    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
+      setObjective(i, solution.getObjective(i)) ;
     }
+
     copyDoubleVariables(solution);
     copyBitSet(solution);
 
@@ -55,25 +53,30 @@ public class GenericDoubleBinarySolution
   private void initializeDoubleVariables() {
     for (int i = 0 ; i < numberOfDoubleVariables; i++) {
       Double value = randomGenerator.nextDouble(getLowerBound(i), getUpperBound(i)) ;
-      variables.add(value) ;
+      //variables.add(value) ;
+      setVariableValue(i, value);
     }
   }
 
   private void initializeBitSet() {
     BitSet bitset = createNewBitSet(problem.getNumberOfBits()) ;
-    variables.add(bitset) ;
+    //variables.add(bitset) ;
+    setVariableValue(numberOfDoubleVariables, bitset);
   }
 
   private void copyDoubleVariables(GenericDoubleBinarySolution solution) {
-    variables = new ArrayList<>() ;
+//    variables = new ArrayList<>() ;
+//    for (int i = 0 ; i < numberOfDoubleVariables; i++) {
+//      variables.add(new Double((Double) solution.getVariableValue(i))) ;
     for (int i = 0 ; i < numberOfDoubleVariables; i++) {
-      variables.add(new Double((Double) solution.getVariableValue(i))) ;
+      setVariableValue(i, solution.getVariableValue(i));
     }
   }
 
   private void copyBitSet(GenericDoubleBinarySolution solution) {
     BitSet bitset = (BitSet)solution.getVariableValue(solution.getNumberOfVariables()-1) ;
-    variables.add(bitset.clone()) ;
+    //variables.add(bitset.clone()) ;
+    setVariableValue(numberOfDoubleVariables, bitset);
   }
 
   @Override
@@ -103,7 +106,7 @@ public class GenericDoubleBinarySolution
 
   @Override
   public String getVariableValueString(int index) {
-    return variables.get(index).toString() ;
+    return getVariableValue(index).toString() ;
   }
 
   private BitSet createNewBitSet(int numberOfBits) {

@@ -4,16 +4,14 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Antonio J. Nebro on 03/09/14.
  */
 public abstract class AbstractGenericSolution<T, P extends Problem> implements Solution<T> {
-  protected List<Double> objectives;
-  protected List<T> variables;
+  private double[] objectives;
+  private List<T> variables;
   protected P problem ;
   protected double overallConstraintViolationDegree ;
   protected int numberOfViolatedConstraints ;
@@ -23,9 +21,16 @@ public abstract class AbstractGenericSolution<T, P extends Problem> implements S
   /**
    * Constructor
    */
-  protected AbstractGenericSolution() {
+  protected AbstractGenericSolution(P problem) {
+    this.problem = problem ;
     attributes = new HashMap<>() ;
     randomGenerator = JMetalRandom.getInstance() ;
+
+    objectives = new double[problem.getNumberOfObjectives()] ;
+    variables = new ArrayList<>(problem.getNumberOfVariables()) ;
+    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
+      variables.add(i, null) ;
+    }
   }
 
   @Override
@@ -40,12 +45,12 @@ public abstract class AbstractGenericSolution<T, P extends Problem> implements S
 
   @Override
   public void setObjective(int index, double value) {
-    objectives.set(index, value) ;
+    objectives[index] = value ;
   }
 
   @Override
   public double getObjective(int index) {
-    return objectives.get(index);
+    return objectives[index];
   }
 
   @Override
@@ -55,7 +60,7 @@ public abstract class AbstractGenericSolution<T, P extends Problem> implements S
 
   @Override
   public void setVariableValue(int index, T value) {
-    variables.set(index, value) ;
+    variables.set(index, value);
   }
 
   @Override
@@ -65,7 +70,7 @@ public abstract class AbstractGenericSolution<T, P extends Problem> implements S
 
   @Override
   public int getNumberOfObjectives() {
-    return objectives.size();
+    return objectives.length;
   }
 
   @Override
@@ -89,7 +94,7 @@ public abstract class AbstractGenericSolution<T, P extends Problem> implements S
 
   protected void initializeObjectiveValues() {
     for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      objectives.add(new Double(0.0)) ;
+      objectives[i] = 0.0 ;
     }
   }
 
@@ -110,44 +115,27 @@ public abstract class AbstractGenericSolution<T, P extends Problem> implements S
   }
 
   @Override public boolean equals(Object o) {
-    if (this == o) {
+    if (this == o)
       return true;
-    }
-    if (!(o instanceof AbstractGenericSolution)) {
+    if (o == null || getClass() != o.getClass())
       return false;
-    }
 
     AbstractGenericSolution that = (AbstractGenericSolution) o;
 
-    if (Double.compare(that.overallConstraintViolationDegree, overallConstraintViolationDegree)
-        != 0) {
+    if (!attributes.equals(that.attributes))
       return false;
-    }
-    if (attributes != null ? !attributes.equals(that.attributes) : that.attributes != null) {
+    if (!Arrays.equals(objectives, that.objectives))
       return false;
-    }
-    if (objectives != null ? !objectives.equals(that.objectives) : that.objectives != null) {
+    if (!variables.equals(that.variables))
       return false;
-    }
-    //if (problem != null ? !problem.equals(that.problem) : that.problem != null)
-    //  return false;
-    if (variables != null ? !variables.equals(that.variables) : that.variables != null) {
-      return false;
-    }
 
     return true;
   }
 
   @Override public int hashCode() {
-    int result;
-    long temp;
-    result = objectives != null ? objectives.hashCode() : 0;
-    result = 31 * result + (variables != null ? variables.hashCode() : 0);
-    //result = 31 * result + (problem != null ? problem.hashCode() : 0);
-    temp = Double.doubleToLongBits(overallConstraintViolationDegree);
-    result = 31 * result + (int) (temp ^ (temp >>> 32));
-    result = 31 * result + (attributes != null ? attributes.hashCode() : 0);
+    int result = Arrays.hashCode(objectives);
+    result = 31 * result + variables.hashCode();
+    result = 31 * result + attributes.hashCode();
     return result;
   }
-  //*/
 }

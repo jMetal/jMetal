@@ -17,10 +17,10 @@ import java.util.List;
  * @version 1.0
  *
  * This class is intended to verify the working of the polynomial mutation operator. A figure
- * depicting the values obtained when generating 10000 points, a granularity of 100, and a number
- * of different distribution index values (5.0, 10, 20, 40) can be found here:
- * <a href="https://github.com/jMetal/jMetal/blob/master/figures/polynomial.png">
-   https://github.com/jMetal/jMetal/blob/master/figures/polynomial.png</a>
+ * depicting the values obtained when generating 100000 points, a granularity of 200, and a number
+ * of different distribution index values (5, 10, 20) can be found here:
+ * <a href="https://github.com/jMetal/jMetal/blob/master/figures/polynomialMutation.png">
+   Polynomial mutation</a>
  */
 public class PolynomialMutationWorkingTest {
   /**

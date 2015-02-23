@@ -1,4 +1,4 @@
-package org.uma.jmetal.util.solutionattribute;
+package org.uma.jmetal.util;
 
 import org.uma.jmetal.algorithm.Algorithm;
 
