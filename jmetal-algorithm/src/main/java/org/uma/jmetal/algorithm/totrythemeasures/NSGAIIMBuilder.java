@@ -11,7 +11,7 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
-import org.uma.jmetal.util.solutionattribute.AlgorithmBuilder;
+import org.uma.jmetal.util.AlgorithmBuilder;
 
 /**
  * Created by ajnebro on 16/11/14.
