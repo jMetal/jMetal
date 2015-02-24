@@ -1,13 +1,15 @@
 package org.uma.jmetal.algorithm.totrythemeasures;
 
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
+import org.uma.jmetal.measurement.MeasureManager;
+import org.uma.jmetal.measurement.impl.CountingMeasure;
+import org.uma.jmetal.measurement.impl.DurationMeasure;
+import org.uma.jmetal.measurement.impl.SimpleMeasureManager;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
-import org.uma.jmetal.measurement.impl.CountingMeasure;
-import org.uma.jmetal.measurement.impl.DurationMeasure;
 
 /**
  * @author Antonio J. Nebro
@@ -16,6 +18,7 @@ import org.uma.jmetal.measurement.impl.DurationMeasure;
 public class NSGAIIM extends NSGAII {
   private CountingMeasure iterations ;
   private DurationMeasure durationMeasure ;
+  private SimpleMeasureManager measureManager ;
 
   /**
    * Constructor
@@ -25,12 +28,11 @@ public class NSGAIIM extends NSGAII {
       SelectionOperator selectionOperator, SolutionListEvaluator evaluator) {
     super(problem, maxIterations, populationSize, crossoverOperator, mutationOperator, selectionOperator, evaluator) ;
 
-    durationMeasure = new DurationMeasure() ;
-    durationMeasure.start();
+    initMeasures() ;
   }
 
   @Override protected void initProgress() {
-    iterations = new CountingMeasure(1) ;
+    iterations.increment(); ;
   }
 
   @Override protected void updateProgress() {
@@ -41,4 +43,18 @@ public class NSGAIIM extends NSGAII {
     return iterations.get() >= maxIterations;
   }
 
+  private void initMeasures() {
+    durationMeasure = new DurationMeasure() ;
+    iterations = new CountingMeasure(0) ;
+
+    measureManager = new SimpleMeasureManager() ;
+    measureManager.setMeasure("currentExecutionTime", durationMeasure);
+    measureManager.setMeasure("currentIteration", iterations);
+
+    durationMeasure.start();
+  }
+
+  public MeasureManager getMeasureManager() {
+    return measureManager ;
+  }
 }

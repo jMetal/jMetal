@@ -21,6 +21,7 @@
 package org.uma.jmetal.algorithm.totrythemeasures;
 
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.measurement.MeasureManager;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -86,6 +87,8 @@ public class NSGAIIMRunner {
             .setMaxIterations(100)
             .setPopulationSize(100)
             .build() ;
+
+    MeasureManager measureManager = ((NSGAIIM)algorithm).getMeasureManager() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
