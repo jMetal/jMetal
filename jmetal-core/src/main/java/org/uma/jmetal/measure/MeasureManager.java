@@ -1,4 +1,4 @@
-package org.uma.jmetal.measurement;
+package org.uma.jmetal.measure;
 
 import java.util.Collection;
 

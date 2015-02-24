@@ -1,4 +1,4 @@
-package org.uma.jmetal.measurement.impl;
+package org.uma.jmetal.measure.impl;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -6,10 +6,10 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.uma.jmetal.measurement.Measure;
-import org.uma.jmetal.measurement.MeasureManager;
-import org.uma.jmetal.measurement.PullMeasure;
-import org.uma.jmetal.measurement.PushMeasure;
+import org.uma.jmetal.measure.Measure;
+import org.uma.jmetal.measure.MeasureManager;
+import org.uma.jmetal.measure.PullMeasure;
+import org.uma.jmetal.measure.PushMeasure;
 
 /**
  * This {@link SimpleMeasureManager} provides a basic implementation to manage a

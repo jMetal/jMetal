@@ -1,9 +1,9 @@
-package org.uma.jmetal.measurement.impl;
+package org.uma.jmetal.measure.impl;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-import org.uma.jmetal.measurement.MeasureListener;
+import org.uma.jmetal.measure.MeasureListener;
 
 public class SimplePushMeasureTest {
 

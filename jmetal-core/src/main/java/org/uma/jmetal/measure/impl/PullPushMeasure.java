@@ -1,11 +1,11 @@
-package org.uma.jmetal.measurement.impl;
+package org.uma.jmetal.measure.impl;
 
 import org.uma.jmetal.util.naming.DescribedEntity;
 import org.uma.jmetal.util.naming.impl.SimpleDescribedEntity;
-import org.uma.jmetal.measurement.Measure;
-import org.uma.jmetal.measurement.MeasureListener;
-import org.uma.jmetal.measurement.PullMeasure;
-import org.uma.jmetal.measurement.PushMeasure;
+import org.uma.jmetal.measure.Measure;
+import org.uma.jmetal.measure.MeasureListener;
+import org.uma.jmetal.measure.PullMeasure;
+import org.uma.jmetal.measure.PushMeasure;
 
 /**
  * A {@link PullPushMeasure} aims at providing both the {@link PushMeasure} and

@@ -1,4 +1,4 @@
-package org.uma.jmetal.measurement;
+package org.uma.jmetal.measure;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.util.naming.DescribedEntity;

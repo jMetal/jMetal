@@ -1,4 +1,4 @@
-package org.uma.jmetal.measurement.impl;
+package org.uma.jmetal.measure.impl;
 
 import static org.junit.Assert.*;
 
@@ -6,9 +6,9 @@ import java.util.LinkedList;
 import java.util.Map;
 
 import org.junit.Test;
-import org.uma.jmetal.measurement.MeasureListener;
-import org.uma.jmetal.measurement.PullMeasure;
-import org.uma.jmetal.measurement.PushMeasure;
+import org.uma.jmetal.measure.MeasureListener;
+import org.uma.jmetal.measure.PullMeasure;
+import org.uma.jmetal.measure.PushMeasure;
 
 public class MeasureFactoryTest {
 

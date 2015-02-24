@@ -1,4 +1,4 @@
-package org.uma.jmetal.measurement;
+package org.uma.jmetal.measure;
 
 /**
  * A {@link PushMeasure} is a {@link Measure} which provides its {@link Value}

@@ -1,7 +1,7 @@
-package org.uma.jmetal.measurement.impl;
+package org.uma.jmetal.measure.impl;
 
-import org.uma.jmetal.measurement.Measure;
-import org.uma.jmetal.measurement.PullMeasure;
+import org.uma.jmetal.measure.Measure;
+import org.uma.jmetal.measure.PullMeasure;
 
 /**
  * {@link SimplePullMeasure} is a basic implementation of {@link PullMeasure}.

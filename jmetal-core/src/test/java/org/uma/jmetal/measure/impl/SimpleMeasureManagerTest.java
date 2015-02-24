@@ -1,4 +1,4 @@
-package org.uma.jmetal.measurement.impl;
+package org.uma.jmetal.measure.impl;
 
 import static org.junit.Assert.*;
 
@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Test;
-import org.uma.jmetal.measurement.Measure;
+import org.uma.jmetal.measure.Measure;
 
 public class SimpleMeasureManagerTest {
 

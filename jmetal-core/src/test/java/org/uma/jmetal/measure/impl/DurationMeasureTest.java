@@ -1,4 +1,4 @@
-package org.uma.jmetal.measurement.impl;
+package org.uma.jmetal.measure.impl;
 
 import static org.junit.Assert.*;
 
