@@ -22,6 +22,8 @@ package org.uma.jmetal.algorithm.totrythemeasures;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.measure.MeasureManager;
+import org.uma.jmetal.measure.impl.CountingMeasure;
+import org.uma.jmetal.measure.impl.DurationMeasure;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -30,7 +32,6 @@ import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
@@ -39,6 +40,7 @@ import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Class to configure and run the NSGA-II algorithm
@@ -54,7 +56,7 @@ public class NSGAIIMRunner {
    *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName
    *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName paretoFrontFile
    */
-  public static void main(String[] args) throws JMetalException {
+  public static void main(String[] args) throws JMetalException, InterruptedException {
     Problem problem;
     Algorithm algorithm;
     CrossoverOperator crossover;
@@ -65,7 +67,7 @@ public class NSGAIIMRunner {
     if (args.length == 1) {
       problemName = args[0] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+      problemName = "org.uma.jmetal.algorithm.totrythemeasures.MKursawe";
     }
 
     problem = ProblemUtils.loadProblem(problemName);
@@ -84,17 +86,36 @@ public class NSGAIIMRunner {
             .setCrossoverOperator(crossover)
             .setMutationOperator(mutation)
             .setSelectionOperator(selection)
-            .setMaxIterations(100)
+            .setMaxIterations(250)
             .setPopulationSize(100)
             .build() ;
 
+    /* Measure management */
     MeasureManager measureManager = ((NSGAIIM)algorithm).getMeasureManager() ;
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-            .execute() ;
+    CountingMeasure iteration =
+        (CountingMeasure) measureManager.getPullMeasure("currentIteration");
+    DurationMeasure currentComputingTime =
+        (DurationMeasure) measureManager.getPullMeasure("currentExecutionTime");
+    /* End of measure management */
+
+    //AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+    //        .execute() ;
+    Thread algorithmThread = new Thread(algorithm) ;
+    algorithmThread.start();
+
+    /* Using the measures */
+    for (int i = 0; i < 10; i++) {
+      TimeUnit.SECONDS.sleep(5);
+      System.out.println("Iteration (" + i + "): " + iteration.get()) ;
+      System.out.println("Computing time (" + i + "): " + currentComputingTime.get()) ;
+    }
+
+    algorithmThread.join();
 
     List<Solution> population = ((NSGAIIM)algorithm).getResult() ;
-    long computingTime = algorithmRunner.getComputingTime() ;
+    //long computingTime = algorithmRunner.getComputingTime() ;
+
 
     new SolutionSetOutput.Printer(population)
             .setSeparator("\t")
@@ -102,7 +123,7 @@ public class NSGAIIMRunner {
             .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
             .print();
 
-    JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
+    //JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
     JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
     JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
   }

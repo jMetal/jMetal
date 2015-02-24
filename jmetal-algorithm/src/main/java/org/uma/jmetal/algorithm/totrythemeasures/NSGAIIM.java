@@ -43,13 +43,14 @@ public class NSGAIIM extends NSGAII {
     return iterations.get() >= maxIterations;
   }
 
+  /* Measures code */
   private void initMeasures() {
     durationMeasure = new DurationMeasure() ;
     iterations = new CountingMeasure(0) ;
 
     measureManager = new SimpleMeasureManager() ;
-    measureManager.setMeasure("currentExecutionTime", durationMeasure);
-    measureManager.setMeasure("currentIteration", iterations);
+    measureManager.setPullMeasure("currentExecutionTime", durationMeasure);
+    measureManager.setPullMeasure("currentIteration", iterations);
 
     durationMeasure.start();
   }
