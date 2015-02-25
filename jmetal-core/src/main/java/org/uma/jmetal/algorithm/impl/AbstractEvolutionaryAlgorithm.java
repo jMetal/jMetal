@@ -1,6 +1,8 @@
 package org.uma.jmetal.algorithm.impl;
 
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.measure.Measurable;
+import org.uma.jmetal.measure.MeasureManager;
 import org.uma.jmetal.solution.Solution;
 
 import java.util.List;
@@ -47,5 +49,16 @@ public abstract class AbstractEvolutionaryAlgorithm<S extends Solution, R> imple
       population = replacement(population, offspringPopulation) ;
       updateProgress();
     }
+  }
+
+  /**
+   * @deprecated Should be properly implemented by the leaf implementations or
+   *             should return a proper manager with {@link Measure}s already
+   *             applicable from that level of implementation.
+   */
+  @Deprecated
+  @Override
+  public MeasureManager getMeasureManager() {
+    throw new NullPointerException("No measure manager provided.");
   }
 }

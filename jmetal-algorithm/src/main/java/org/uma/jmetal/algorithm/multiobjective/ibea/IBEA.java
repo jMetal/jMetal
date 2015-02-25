@@ -24,6 +24,7 @@
 package org.uma.jmetal.algorithm.multiobjective.ibea;
 
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.measure.MeasureManager;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -305,5 +306,16 @@ public class IBEA implements Algorithm<List<Solution>> {
     }
 
     solutionSet.remove(worstIndex);
+  }
+
+  /**
+   * @deprecated Should be properly implemented by the leaf implementations or
+   *             should return a proper manager with {@link Measure}s already
+   *             applicable from that level of implementation.
+   */
+  @Deprecated
+  @Override
+  public MeasureManager getMeasureManager() {
+    throw new NullPointerException("No measure manager provided.");
   }
 }

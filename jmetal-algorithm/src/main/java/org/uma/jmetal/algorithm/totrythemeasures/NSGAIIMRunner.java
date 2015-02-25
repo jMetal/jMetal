@@ -58,7 +58,7 @@ public class NSGAIIMRunner {
    */
   public static void main(String[] args) throws JMetalException, InterruptedException {
     Problem problem;
-    Algorithm algorithm;
+    Algorithm<List<Solution>> algorithm;
     CrossoverOperator crossover;
     MutationOperator mutation;
     SelectionOperator selection;
@@ -91,7 +91,7 @@ public class NSGAIIMRunner {
             .build() ;
 
     /* Measure management */
-    MeasureManager measureManager = ((NSGAIIM)algorithm).getMeasureManager() ;
+    MeasureManager measureManager = algorithm.getMeasureManager() ;
 
     CountingMeasure iteration =
         (CountingMeasure) measureManager.getPullMeasure("currentIteration");
@@ -113,8 +113,8 @@ public class NSGAIIMRunner {
 
     algorithmThread.join();
 
-    List<Solution> population = ((NSGAIIM)algorithm).getResult() ;
-    //long computingTime = algorithmRunner.getComputingTime() ;
+    List<Solution> population = algorithm.getResult() ;
+    long computingTime = currentComputingTime.get() ;
 
 
     new SolutionSetOutput.Printer(population)
@@ -123,7 +123,7 @@ public class NSGAIIMRunner {
             .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
             .print();
 
-    //JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
+    JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
     JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
     JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
   }

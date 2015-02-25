@@ -32,7 +32,7 @@ public class NSGAIIM extends NSGAII {
   }
 
   @Override protected void initProgress() {
-    iterations.increment(); ;
+    iterations.reset(1);
   }
 
   @Override protected void updateProgress() {
@@ -43,6 +43,14 @@ public class NSGAIIM extends NSGAII {
     return iterations.get() >= maxIterations;
   }
 
+  @Override
+  public void run() {
+    durationMeasure.reset();
+    durationMeasure.start();
+    super.run();
+    durationMeasure.stop();
+  }
+
   /* Measures code */
   private void initMeasures() {
     durationMeasure = new DurationMeasure() ;
@@ -51,10 +59,9 @@ public class NSGAIIM extends NSGAII {
     measureManager = new SimpleMeasureManager() ;
     measureManager.setPullMeasure("currentExecutionTime", durationMeasure);
     measureManager.setPullMeasure("currentIteration", iterations);
-
-    durationMeasure.start();
   }
 
+  @Override
   public MeasureManager getMeasureManager() {
     return measureManager ;
   }
