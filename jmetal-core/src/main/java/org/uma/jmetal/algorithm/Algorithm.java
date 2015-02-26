@@ -13,9 +13,6 @@
 
 package org.uma.jmetal.algorithm;
 
-import org.uma.jmetal.measure.Measurable;
-import org.uma.jmetal.measure.MeasureManager;
-
 import java.io.Serializable;
 
 /**
@@ -24,9 +21,7 @@ import java.io.Serializable;
  * @version 0.1
  * @param <R> Result
  */
-public interface Algorithm<R> extends Runnable, Serializable, Measurable {
+public interface Algorithm<R> extends Runnable, Serializable {
   public void run() ;
   public R getResult() ;
-
-  public MeasureManager getMeasureManager() ;
 }

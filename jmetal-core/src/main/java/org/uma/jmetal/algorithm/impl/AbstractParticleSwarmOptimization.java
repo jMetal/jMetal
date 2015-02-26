@@ -55,7 +55,7 @@ public abstract class AbstractParticleSwarmOptimization<S extends Solution, Resu
    *             applicable from that level of implementation.
    */
   @Deprecated
-  @Override
+  //@Override
   public MeasureManager getMeasureManager() {
     throw new NullPointerException("No measure manager provided.");
   }

@@ -314,7 +314,7 @@ public class IBEA implements Algorithm<List<Solution>> {
    *             applicable from that level of implementation.
    */
   @Deprecated
-  @Override
+  //@Override
   public MeasureManager getMeasureManager() {
     throw new NullPointerException("No measure manager provided.");
   }

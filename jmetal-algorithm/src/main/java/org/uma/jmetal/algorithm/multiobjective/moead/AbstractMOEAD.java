@@ -336,7 +336,7 @@ public abstract class AbstractMOEAD<S extends Solution> implements Algorithm<Lis
    *             applicable from that level of implementation.
    */
   @Deprecated
-  @Override
+  //@Override
   public MeasureManager getMeasureManager() {
     throw new NullPointerException("No measure manager provided.");
   }

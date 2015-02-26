@@ -6,7 +6,4 @@ import org.uma.jmetal.solution.DoubleSolution;
 public interface DoubleProblem extends Problem<DoubleSolution> {
   public Double getLowerBound(int index) ;
   public Double getUpperBound(int index) ;
-
-  @Override
-  public DoubleSolution createSolution() ;
 }

@@ -38,7 +38,7 @@ public class MKursawe extends AbstractDoubleProblem {
    * Creates a default instance of the Kursawe problem.
    */
   public MKursawe() {
-    this(3000);
+    this(1000);
   }
 
   /**

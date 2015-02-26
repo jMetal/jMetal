@@ -82,16 +82,18 @@ public class NSGAIIMRunner {
 
     selection = new BinaryTournamentSelection(new RankingAndCrowdingDistanceComparator());
 
+    int maxIterations = 250 ;
+    int populationSize = 100 ;
     algorithm = new NSGAIIMBuilder(problem)
             .setCrossoverOperator(crossover)
             .setMutationOperator(mutation)
             .setSelectionOperator(selection)
-            .setMaxIterations(250)
-            .setPopulationSize(100)
+            .setMaxIterations(maxIterations)
+            .setPopulationSize(populationSize)
             .build() ;
 
     /* Measure management */
-    MeasureManager measureManager = algorithm.getMeasureManager() ;
+    MeasureManager measureManager = ((NSGAIIM)algorithm).getMeasureManager() ;
 
     CountingMeasure iteration =
         (CountingMeasure) measureManager.getPullMeasure("currentIteration");
@@ -105,10 +107,12 @@ public class NSGAIIMRunner {
     algorithmThread.start();
 
     /* Using the measures */
-    for (int i = 0; i < 10; i++) {
+    int i = 0 ;
+    while(iteration.get() < maxIterations) {
       TimeUnit.SECONDS.sleep(5);
       System.out.println("Iteration (" + i + "): " + iteration.get()) ;
       System.out.println("Computing time (" + i + "): " + currentComputingTime.get()) ;
+      i++ ;
     }
 
     algorithmThread.join();

@@ -3,6 +3,8 @@ package org.uma.jmetal.algorithm.impl;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.measure.Measurable;
 import org.uma.jmetal.measure.MeasureManager;
+import org.uma.jmetal.measure.impl.DurationMeasure;
+import org.uma.jmetal.measure.impl.SimpleMeasureManager;
 import org.uma.jmetal.solution.Solution;
 
 import java.util.List;
@@ -12,7 +14,8 @@ import java.util.List;
  * @param <S> Solution
  * @param <R> Result
  */
-public abstract class AbstractEvolutionaryAlgorithm<S extends Solution, R> implements Algorithm <R> {
+public abstract class AbstractEvolutionaryAlgorithm<S extends Solution, R>  implements Algorithm<R>,
+    Measurable {
   private List<S> population ;
   public List<S> getPopulation() {
     return population ;
@@ -20,6 +23,9 @@ public abstract class AbstractEvolutionaryAlgorithm<S extends Solution, R> imple
   public void setPopulation(List<S> population) {
     this.population = population ;
   }
+
+  protected SimpleMeasureManager measureManager ;
+  protected DurationMeasure durationMeasure ;
 
   protected abstract void initProgress() ;
   protected abstract void updateProgress() ;
@@ -30,6 +36,13 @@ public abstract class AbstractEvolutionaryAlgorithm<S extends Solution, R> imple
   protected abstract List<S> selection(List<S> population) ;
   protected abstract List<S> reproduction(List<S> population) ;
   protected abstract List<S> replacement(List<S> population, List<S> offspringPopulation) ;
+
+  public AbstractEvolutionaryAlgorithm() {
+    durationMeasure = new DurationMeasure() ;
+
+    measureManager = new SimpleMeasureManager() ;
+    measureManager.setPullMeasure("currentExecutionTime", durationMeasure);
+  }
 
   @Override
   public abstract R getResult() ;
@@ -59,6 +72,6 @@ public abstract class AbstractEvolutionaryAlgorithm<S extends Solution, R> imple
   @Deprecated
   @Override
   public MeasureManager getMeasureManager() {
-    throw new NullPointerException("No measure manager provided.");
+    return measureManager ;
   }
 }

@@ -3,8 +3,6 @@ package org.uma.jmetal.algorithm.totrythemeasures;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
 import org.uma.jmetal.measure.MeasureManager;
 import org.uma.jmetal.measure.impl.CountingMeasure;
-import org.uma.jmetal.measure.impl.DurationMeasure;
-import org.uma.jmetal.measure.impl.SimpleMeasureManager;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -17,8 +15,8 @@ import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
  */
 public class NSGAIIM extends NSGAII {
   private CountingMeasure iterations ;
-  private DurationMeasure durationMeasure ;
-  private SimpleMeasureManager measureManager ;
+  //private DurationMeasure durationMeasure ;
+  //private SimpleMeasureManager measureManager ;
 
   /**
    * Constructor
@@ -53,11 +51,11 @@ public class NSGAIIM extends NSGAII {
 
   /* Measures code */
   private void initMeasures() {
-    durationMeasure = new DurationMeasure() ;
+    //durationMeasure = new DurationMeasure() ;
     iterations = new CountingMeasure(0) ;
 
-    measureManager = new SimpleMeasureManager() ;
-    measureManager.setPullMeasure("currentExecutionTime", durationMeasure);
+    //measureManager = new SimpleMeasureManager() ;
+    //measureManager.setPullMeasure("currentExecutionTime", durationMeasure);
     measureManager.setPullMeasure("currentIteration", iterations);
   }
 
