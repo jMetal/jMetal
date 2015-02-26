@@ -34,4 +34,3 @@ public interface Problem<S extends Solution> extends Serializable {
   public void evaluate(S solution) ;
   public S createSolution() ;
 }
-
