@@ -1,6 +1,5 @@
-package org.uma.jmetal.algorithm.totrythemeasures;
+package org.uma.jmetal.algorithm.multiobjective.nsgaii;
 
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
 import org.uma.jmetal.measure.MeasureManager;
 import org.uma.jmetal.measure.impl.CountingMeasure;
 import org.uma.jmetal.operator.CrossoverOperator;
@@ -13,7 +12,7 @@ import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
  * @author Antonio J. Nebro
  * @version 1.0
  */
-public class NSGAIIM extends NSGAII {
+public class NSGAIIMeasures extends NSGAII {
   private CountingMeasure iterations ;
   //private DurationMeasure durationMeasure ;
   //private SimpleMeasureManager measureManager ;
@@ -21,7 +20,7 @@ public class NSGAIIM extends NSGAII {
   /**
    * Constructor
    */
-  public NSGAIIM(Problem problem, int maxIterations, int populationSize,
+  public NSGAIIMeasures(Problem problem, int maxIterations, int populationSize,
       CrossoverOperator crossoverOperator, MutationOperator mutationOperator,
       SelectionOperator selectionOperator, SolutionListEvaluator evaluator) {
     super(problem, maxIterations, populationSize, crossoverOperator, mutationOperator, selectionOperator, evaluator) ;

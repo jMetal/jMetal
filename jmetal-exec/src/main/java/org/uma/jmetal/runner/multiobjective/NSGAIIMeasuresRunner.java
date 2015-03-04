@@ -18,9 +18,11 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.algorithm.totrythemeasures;
+package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIMeasures;
+import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIMeasuresBuilder;
 import org.uma.jmetal.measure.MeasureManager;
 import org.uma.jmetal.measure.impl.CountingMeasure;
 import org.uma.jmetal.measure.impl.DurationMeasure;
@@ -31,6 +33,7 @@ import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.problem.multiobjective.Kursawe;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
@@ -45,7 +48,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Class to configure and run the NSGA-II algorithm
  */
-public class NSGAIIMRunner {
+public class NSGAIIMeasuresRunner {
   /**
    * @param args Command line arguments.
    * @throws java.io.IOException
@@ -66,11 +69,10 @@ public class NSGAIIMRunner {
     String problemName ;
     if (args.length == 1) {
       problemName = args[0] ;
+      problem = ProblemUtils.loadProblem(problemName);
     } else {
-      problemName = "org.uma.jmetal.algorithm.totrythemeasures.MKursawe";
+      problem = new Kursawe(1000);
     }
-
-    problem = ProblemUtils.loadProblem(problemName);
 
     double crossoverProbability = 0.9 ;
     double crossoverDistributionIndex = 20.0 ;
@@ -84,7 +86,8 @@ public class NSGAIIMRunner {
 
     int maxIterations = 250 ;
     int populationSize = 100 ;
-    algorithm = new NSGAIIMBuilder(problem)
+
+    algorithm = new NSGAIIMeasuresBuilder(problem)
             .setCrossoverOperator(crossover)
             .setMutationOperator(mutation)
             .setSelectionOperator(selection)
@@ -93,7 +96,7 @@ public class NSGAIIMRunner {
             .build() ;
 
     /* Measure management */
-    MeasureManager measureManager = ((NSGAIIM)algorithm).getMeasureManager() ;
+    MeasureManager measureManager = ((NSGAIIMeasures)algorithm).getMeasureManager() ;
 
     CountingMeasure iteration =
         (CountingMeasure) measureManager.getPullMeasure("currentIteration");
@@ -120,6 +123,7 @@ public class NSGAIIMRunner {
     List<Solution> population = algorithm.getResult() ;
     long computingTime = currentComputingTime.get() ;
 
+    //long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)
             .setSeparator("\t")
