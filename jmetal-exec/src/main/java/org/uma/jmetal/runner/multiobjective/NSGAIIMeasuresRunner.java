@@ -18,9 +18,11 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.algorithm.totrythemeasures;
+package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIMeasuresBuilder;
+import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIMeasures;
 import org.uma.jmetal.measurement.MeasureManager;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
@@ -43,7 +45,7 @@ import java.util.List;
 /**
  * Class to configure and run the NSGA-II algorithm
  */
-public class NSGAIIMRunner {
+public class NSGAIIMeasuresRunner {
   /**
    * @param args Command line arguments.
    * @throws java.io.IOException
@@ -80,7 +82,7 @@ public class NSGAIIMRunner {
 
     selection = new BinaryTournamentSelection(new RankingAndCrowdingDistanceComparator());
 
-    algorithm = new NSGAIIMBuilder(problem)
+    algorithm = new NSGAIIMeasuresBuilder(problem)
             .setCrossoverOperator(crossover)
             .setMutationOperator(mutation)
             .setSelectionOperator(selection)
@@ -88,12 +90,12 @@ public class NSGAIIMRunner {
             .setPopulationSize(100)
             .build() ;
 
-    MeasureManager measureManager = ((NSGAIIM)algorithm).getMeasureManager() ;
+    MeasureManager measureManager = ((NSGAIIMeasures)algorithm).getMeasureManager() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
-    List<Solution> population = ((NSGAIIM)algorithm).getResult() ;
+    List<Solution> population = ((NSGAIIMeasures)algorithm).getResult() ;
     long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)
