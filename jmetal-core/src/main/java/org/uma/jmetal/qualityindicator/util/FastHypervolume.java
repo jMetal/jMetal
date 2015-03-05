@@ -46,8 +46,8 @@ public class FastHypervolume {
             ObjectiveComparator.Ordering.DESCENDING));
         hv = get2DHV(solutionList) ;
       } else {
-        WfgHv wfgHv = new WfgHv(numberOfObjectives, solutionList.size());
-        hv = wfgHv.getHV(new WfgHvFront(solutionList));
+        WfgHypervolume wfgHv = new WfgHypervolume(numberOfObjectives, solutionList.size());
+        hv = wfgHv.getHV(new WfgHypervolumeFront(solutionList));
       }
     }
 /*
@@ -88,8 +88,8 @@ public class FastHypervolume {
             ObjectiveComparator.Ordering.DESCENDING));
         hv = get2DHV(solutionList) ;
       } else {
-        WfgHv wfgHv = new WfgHv(numberOfObjectives, solutionList.size());
-        hv = wfgHv.getHV(new WfgHvFront(solutionList));
+        WfgHypervolume wfgHv = new WfgHypervolume(numberOfObjectives, solutionList.size());
+        hv = wfgHv.getHV(new WfgHypervolumeFront(solutionList));
       }
     }
 
@@ -183,8 +183,8 @@ public class FastHypervolume {
         contributions[i] = solutionSetHV - get2DHV(solutionList);
       } else {
         //Front front = new Front(solutionSet.size(), numberOfObjectives, solutionSet);
-        WfgHvFront front = new WfgHvFront(list);
-        double hv = new WfgHv(numberOfObjectives, list.size()).getHV(front);
+        WfgHypervolumeFront front = new WfgHypervolumeFront(list);
+        double hv = new WfgHypervolume(numberOfObjectives, list.size()).getHV(front);
         contributions[i] = solutionSetHV - hv;
       }
 
@@ -213,9 +213,9 @@ public class FastHypervolume {
     Solution currentPoint = list.get(solutionIndex);
     list.remove(solutionIndex);
 
-    WfgHvFront front = new WfgHvFront(list);
+    WfgHypervolumeFront front = new WfgHypervolumeFront(list);
     double hv =
-        new WfgHv(numberOfObjectives, list.size(), referencePoint).getHV(front);
+        new WfgHypervolume(numberOfObjectives, list.size(), referencePoint).getHV(front);
     contribution = solutionSetHV - hv;
 
     list.add(solutionIndex, currentPoint);

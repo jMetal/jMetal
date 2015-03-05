@@ -16,9 +16,9 @@ import java.util.List;
 /**
  * Created by ajnebro on 2/2/15.
  */
-public class WfgHv {
+public class WfgHypervolume {
   static final int OPT = 2;
-  WfgHvFront[] fs;
+  WfgHypervolumeFront[] fs;
   private Point referencePoint;
   boolean maximizing;
   private int currentDeep;
@@ -27,7 +27,7 @@ public class WfgHv {
   private int maxNumberOfObjectives;
   private Comparator<Point> pointComparator;
 
-  public WfgHv(int dimension, int maxNumberOfPoints) {
+  public WfgHypervolume(int dimension, int maxNumberOfPoints) {
     referencePoint = new ArrayPoint(dimension);
     for (int i = 0; i < dimension; i++) {
       referencePoint.setDimensionValue(i, 0.0);
@@ -41,13 +41,13 @@ public class WfgHv {
     pointComparator = new PointComparator(true);
 
     int maxd = this.maxNumberOfPoints - (OPT / 2 + 1);
-    fs = new WfgHvFront[maxd];
+    fs = new WfgHypervolumeFront[maxd];
     for (int i = 0; i < maxd; i++) {
-      fs[i] = new WfgHvFront(maxNumberOfPoints, dimension);
+      fs[i] = new WfgHypervolumeFront(maxNumberOfPoints, dimension);
     }
   }
 
-  public WfgHv(int dimension, int maxNumberOfPoints, Point referencePoint) {
+  public WfgHypervolume(int dimension, int maxNumberOfPoints, Point referencePoint) {
     this.referencePoint = new ArrayPoint(referencePoint);
     maximizing = false;
     currentDeep = 0;
@@ -57,13 +57,13 @@ public class WfgHv {
     pointComparator = new PointComparator(true);
 
     int maxd = this.maxNumberOfPoints - (OPT / 2 + 1);
-    fs = new WfgHvFront[maxd];
+    fs = new WfgHypervolumeFront[maxd];
     for (int i = 0; i < maxd; i++) {
-      fs[i] = new WfgHvFront(maxNumberOfPoints, dimension);
+      fs[i] = new WfgHypervolumeFront(maxNumberOfPoints, dimension);
     }
   }
 
-  public double get2DHV(WfgHvFront front) {
+  public double get2DHV(WfgHypervolumeFront front) {
     double hv = 0.0;
 
     hv = Math.abs((front.getPoint(0).getDimensionValue(0) - referencePoint.getDimensionValue(0)) *
@@ -88,7 +88,7 @@ public class WfgHv {
     return volume;
   }
 
-  public double getExclusiveHV(WfgHvFront front, int point) {
+  public double getExclusiveHV(WfgHypervolumeFront front, int point) {
     double volume;
 
     volume = getInclusiveHV(front.getPoint(point));
@@ -102,7 +102,7 @@ public class WfgHv {
     return volume;
   }
 
-  public double getHV(WfgHvFront front) {
+  public double getHV(WfgHypervolumeFront front) {
     double volume ;
     front.sort(pointComparator);
 
@@ -125,7 +125,7 @@ public class WfgHv {
   }
 
 
-  public void makeDominatedBit(WfgHvFront front, int p) {
+  public void makeDominatedBit(WfgHypervolumeFront front, int p) {
     int z = front.getNumberOfPoints() - 1 - p;
 
     for (int i = 0; i < z; i++) {
@@ -174,7 +174,7 @@ public class WfgHv {
   }
 
   public int getLessContributorHV(List<Solution> solutionList) {
-    WfgHvFront wholeFront = (WfgHvFront)loadFront(solutionList, -1) ;
+    WfgHypervolumeFront wholeFront = (WfgHypervolumeFront)loadFront(solutionList, -1) ;
 
     int index = 0;
     double contribution = Double.POSITIVE_INFINITY;
@@ -209,7 +209,7 @@ public class WfgHv {
 
     int dimensions = solutionSet.get(0).getNumberOfObjectives();
 
-    Front front = new WfgHvFront(numberOfPoints, dimensions) ;
+    Front front = new WfgHypervolumeFront(numberOfPoints, dimensions) ;
 
     int index = 0;
     for (int i = 0; i < solutionSet.size(); i++) {
@@ -270,7 +270,7 @@ public class WfgHv {
   }
 
   public static void main(String args[]) throws IOException, JMetalException {
-    WfgHvFront front = new WfgHvFront();
+    WfgHypervolumeFront front = new WfgHypervolumeFront();
 
     if (args.length == 0) {
       throw new JMetalException("Usage: WFGHV front [reference point]");
@@ -297,8 +297,8 @@ public class WfgHv {
     referencePoint = new ArrayPoint(points);
     JMetalLogger.logger.info("Using reference point: " + referencePoint);
 
-    WfgHv wfghv =
-        new WfgHv(referencePoint.getNumberOfDimensions(), front.getNumberOfPoints(), referencePoint);
+    WfgHypervolume wfghv =
+        new WfgHypervolume(referencePoint.getNumberOfDimensions(), front.getNumberOfPoints(), referencePoint);
 
     System.out.println("HV: " + wfghv.getHV(front)) ;
   }

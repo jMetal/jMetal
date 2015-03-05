@@ -10,17 +10,17 @@ import java.util.List;
 /**
  * Created by ajnebro on 3/2/15.
  */
-public class WfgHvFront extends ArrayFront {
+public class WfgHypervolumeFront extends ArrayFront {
 
-  public WfgHvFront() {
+  public WfgHypervolumeFront() {
     super();
   }
 
-  public WfgHvFront(List<? extends Solution> solutionList) {
+  public WfgHypervolumeFront(List<? extends Solution> solutionList) {
     super(solutionList) ;
   }
 
-  public WfgHvFront(int numberOfPoints, int dimensions) {
+  public WfgHypervolumeFront(int numberOfPoints, int dimensions) {
     super(numberOfPoints, dimensions) ;
   }
 
