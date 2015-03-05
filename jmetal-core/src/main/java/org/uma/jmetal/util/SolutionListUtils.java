@@ -70,6 +70,38 @@ public class SolutionListUtils {
     return index;
   }
 
+  /**
+   * Finds the index of the worst solution in the list according to a comparator
+   * @param solutionList
+   * @param comparator
+   * @return The index of the best solution
+   */
+  public static int findIndexOfWorstSolution(List<? extends Solution> solutionList, Comparator<Solution> comparator) {
+    if (solutionList == null) {
+      throw new JMetalException("The solution list is null") ;
+    } else if (solutionList.isEmpty()) {
+      throw new JMetalException("The solution list is empty") ;
+    } else if (comparator == null) {
+      throw new JMetalException("The comparator is null") ;
+    }
+
+    int index = 0;
+    Solution worstKnown = solutionList.get(0) ;
+    Solution candidateSolution ;
+
+    int flag;
+    for (int i = 1; i < solutionList.size(); i++) {
+      candidateSolution = solutionList.get(i);
+      flag = comparator.compare(worstKnown, candidateSolution);
+      if (flag == -1) {
+        index = i;
+        worstKnown = candidateSolution;
+      }
+    }
+
+    return index;
+  }
+
   public static Solution findBestSolution(List<? extends Solution> solutionList, Comparator<Solution> comparator) {
     return solutionList.get(findIndexOfBestSolution(solutionList, comparator)) ;
   }

@@ -4,7 +4,6 @@ import org.uma.jmetal.problem.IntegerProblem;
 import org.uma.jmetal.solution.IntegerSolution;
 import org.uma.jmetal.solution.Solution;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -14,32 +13,31 @@ public class GenericIntegerSolution extends AbstractGenericSolution<Integer, Int
 
   /** Constructor */
   public GenericIntegerSolution(IntegerProblem problem) {
-  	this.problem = problem ;
-    objectives = new ArrayList<>(problem.getNumberOfObjectives()) ;
-    variables = new ArrayList<>(problem.getNumberOfVariables()) ;
+    super(problem) ;
+
     overallConstraintViolationDegree = 0.0 ;
     numberOfViolatedConstraints = 0 ;
 
     for (int i = 0 ; i < problem.getNumberOfVariables(); i++) {
       Integer value = randomGenerator.nextInt(getLowerBound(i), getUpperBound(i));
-      variables.add(value) ;
+      setVariableValue(i, value) ;
     }
 
     for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      objectives.add(new Double(0.0)) ;
+      setObjective(i, 0.0) ;
     }
   }
 
   /** Copy constructor */
   public GenericIntegerSolution(GenericIntegerSolution solution) {
-    problem = solution.problem ;
-    objectives = new ArrayList<>() ;
-    for (Double obj : solution.objectives) {
-      objectives.add(new Double(obj)) ;
+    super(solution.problem) ;
+
+    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
+      setVariableValue(i, solution.getVariableValue(i));
     }
-    variables = new ArrayList<>() ;
-    for (Integer var : solution.variables) {
-      variables.add(new Integer(var)) ;
+
+    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
+      setObjective(i, solution.getObjective(i)) ;
     }
 
     overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
@@ -65,6 +63,6 @@ public class GenericIntegerSolution extends AbstractGenericSolution<Integer, Int
 
   @Override
   public String getVariableValueString(int index) {
-    return variables.get(index).toString() ;
+    return getVariableValue(index).toString() ;
   }
 }

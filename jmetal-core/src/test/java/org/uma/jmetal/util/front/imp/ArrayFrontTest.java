@@ -371,7 +371,9 @@ public class ArrayFrontTest {
     assertEquals(12.0, front1.getPoint(2).getDimensionValue(1), EPSILON) ;
   }
 
-  @Test (expected = NullPointerException.class)
+  //TODO more test for ordering are missing
+
+  @Test (expected = FileNotFoundException.class)
   public void shouldCreateInputStreamThrownAnExceptionIfFileDoesNotExist()
       throws FileNotFoundException {
     String fileName = "abcdefadg" ;

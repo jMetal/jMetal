@@ -1,12 +1,9 @@
 package org.uma.jmetal.workingTest;
 
 import org.uma.jmetal.operator.CrossoverOperator;
-import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
-import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.Kursawe;
-import org.uma.jmetal.problem.singleobjective.Sphere;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
@@ -19,10 +16,10 @@ import java.util.*;
  * @version 1.0
  *
  * This class is intended to verify the working of the SBX crossover operator. A figure
- * depicting the values obtained when generating 10000 solutions, a granularity of 100, and a number
- * of different distribution index values (10, 20, 50) can be found here:
- * <a href="https://github.com/jMetal/jMetal/blob/master/figures/sbx.png">
-   https://github.com/jMetal/jMetal/blob/master/figures/sbx.png</a>
+ * depicting the values obtained when generating 100000 solutions, a granularity of 200, and a number
+ * of different distribution index values (5, 10, 20) can be found here:
+ * <a href="https://github.com/jMetal/jMetal/blob/master/figures/sbxCrossover.png">
+   SBX crossover</a>
  */
 public class SBXCrossoverWorkingTest {
   /**

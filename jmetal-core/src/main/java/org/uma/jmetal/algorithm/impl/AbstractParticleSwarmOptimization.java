@@ -1,6 +1,7 @@
 package org.uma.jmetal.algorithm.impl;
 
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.measure.MeasureManager;
 import org.uma.jmetal.solution.Solution;
 
 import java.util.List;
@@ -46,5 +47,16 @@ public abstract class AbstractParticleSwarmOptimization<S extends Solution, Resu
       updateParticlesMemory(swarm) ;
       updateProgress();
     }
+  }
+
+  /**
+   * @deprecated Should be properly implemented by the leaf implementations or
+   *             should return a proper manager with {@link Measure}s already
+   *             applicable from that level of implementation.
+   */
+  @Deprecated
+  //@Override
+  public MeasureManager getMeasureManager() {
+    throw new NullPointerException("No measure manager provided.");
   }
 }

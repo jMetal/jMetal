@@ -32,38 +32,39 @@ import java.util.List;
 /**
  * This class implements some utilities for calculating distances
  */
-public class CrowdingDistance<S extends Solution> implements DensityEstimator<S> {
+public class CrowdingDistance<S extends Solution>
+    extends GenericSolutionAttribute<S, Double> implements DensityEstimator<S>{
 
   /**
    * Assigns crowding distances to all solutions in a <code>SolutionSet</code>.
    *
-   * @param solutionSet The <code>SolutionSet</code>.
+   * @param solutionList The <code>SolutionSet</code>.
    * @throws org.uma.jmetal.util.JMetalException
    */
 
   @Override
-  public void computeDensityEstimator(List<S> solutionSet) {
-    int size = solutionSet.size();
+  public void computeDensityEstimator(List<S> solutionList) {
+    int size = solutionList.size();
 
     if (size == 0) {
       return;
     }
 
     if (size == 1) {
-      solutionSet.get(0).setAttribute(getAttributeID(), Double.POSITIVE_INFINITY);
+      solutionList.get(0).setAttribute(getAttributeID(), Double.POSITIVE_INFINITY);
       return;
     }
 
     if (size == 2) {
-      solutionSet.get(0).setAttribute(getAttributeID(), Double.POSITIVE_INFINITY);
-      solutionSet.get(1).setAttribute(getAttributeID(), Double.POSITIVE_INFINITY);
+      solutionList.get(0).setAttribute(getAttributeID(), Double.POSITIVE_INFINITY);
+      solutionList.get(1).setAttribute(getAttributeID(), Double.POSITIVE_INFINITY);
 
       return;
     }
 
     //Use a new SolutionSet to avoid altering the original solutionSet
     List<Solution<?>> front = new ArrayList<>(size);
-    for (Solution<?> solution : solutionSet) {
+    for (Solution<?> solution : solutionList) {
       front.add(solution);
     }
 
@@ -75,7 +76,7 @@ public class CrowdingDistance<S extends Solution> implements DensityEstimator<S>
     double objetiveMinn;
     double distance;
 
-    int numberOfObjectives = solutionSet.get(0).getNumberOfObjectives() ;
+    int numberOfObjectives = solutionList.get(0).getNumberOfObjectives() ;
 
     for (int i = 0; i < numberOfObjectives; i++) {
       // Sort the population by Obj n
@@ -94,21 +95,6 @@ public class CrowdingDistance<S extends Solution> implements DensityEstimator<S>
         front.get(j).setAttribute(getAttributeID(), distance);
       }
     }
-  }
-
-  @Override
-  public void setAttribute(Solution solution, Double value) {
-    solution.setAttribute(getAttributeID(), value);
-  }
-
-  @Override
-  public Double getAttribute(Solution solution) {
-    return (Double) solution.getAttribute(getAttributeID());
-  }
-
-  @Override
-  public Object getAttributeID() {
-    return this.getClass();
   }
 }
 

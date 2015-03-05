@@ -28,7 +28,7 @@ import java.util.Comparator;
 /**
  * This class implements a <code>Comparator</code> (a method for comparing
  * <code>Solution</code> objects) based whether all the objective values are
- * equal or not. A dominance org.uma.test is applied to decide about what solutiontype
+ * equal or not. A dominance test is applied to decide about what solution
  * is the best.
  */
 public class EqualSolutionsComparator implements Comparator<Solution> {

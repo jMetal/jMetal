@@ -21,6 +21,7 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
+import org.uma.jmetal.util.archive.impl.FastHypervolumeArchive;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
@@ -130,12 +131,15 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
       updateParticlesMemory(swarm);
       updateLeadersDensityEstimator();
       updateProgress();
+      System.out.println("Iter: " + iterations) ;
     }
   }
 
   protected void updateLeadersDensityEstimator() {
     if (leaders instanceof CrowdingDistanceArchive) {
       ((CrowdingDistanceArchive) leaders).computeDistance();
+    } else if (leaders instanceof FastHypervolumeArchive) {
+      ((FastHypervolumeArchive) leaders).computeHVContribution();
     } else {
       throw new JMetalException("Invalid setArchive type");
     }

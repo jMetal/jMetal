@@ -52,11 +52,11 @@ public class CrowdingDistanceComparator implements Comparator<Solution> {
       double distance2 = Double.MIN_VALUE ;
 
       if (crowdingDistance.getAttribute(solution1) != null) {
-        distance1 = crowdingDistance.getAttribute(solution1) ;
+        distance1 = (double) crowdingDistance.getAttribute(solution1);
       }
 
       if (crowdingDistance.getAttribute(solution2) != null) {
-        distance2 = crowdingDistance.getAttribute(solution2) ;
+        distance2 = (double) crowdingDistance.getAttribute(solution2);
       }
 
       if (distance1 > distance2) {
@@ -64,7 +64,7 @@ public class CrowdingDistanceComparator implements Comparator<Solution> {
       } else  if (distance1 < distance2) {
         result = 1;
       } else {
-        return 0;
+        result = 0;
       }
     }
 

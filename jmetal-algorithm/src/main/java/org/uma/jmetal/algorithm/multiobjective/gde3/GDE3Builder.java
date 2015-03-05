@@ -28,7 +28,7 @@ import org.uma.jmetal.operator.impl.selection.DifferentialEvolutionSelection;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
-import org.uma.jmetal.util.solutionattribute.AlgorithmBuilder;
+import org.uma.jmetal.util.AlgorithmBuilder;
 
 /**
  * This class implements the GDE3 algorithm

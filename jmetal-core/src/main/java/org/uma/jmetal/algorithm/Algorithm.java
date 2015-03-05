@@ -22,8 +22,6 @@ import java.io.Serializable;
  * @param <R> Result
  */
 public interface Algorithm<R> extends Runnable, Serializable {
-
-  /** Runs the algorithm */
   public void run() ;
   public R getResult() ;
 }
