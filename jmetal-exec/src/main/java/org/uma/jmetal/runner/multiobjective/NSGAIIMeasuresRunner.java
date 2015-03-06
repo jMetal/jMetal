@@ -33,7 +33,7 @@ import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.problem.multiobjective.Kursawe;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
@@ -71,7 +71,7 @@ public class NSGAIIMeasuresRunner {
       problemName = args[0] ;
       problem = ProblemUtils.loadProblem(problemName);
     } else {
-      problem = new Kursawe(1000);
+      problem = new ZDT1(1000);
     }
 
     double crossoverProbability = 0.9 ;
@@ -84,7 +84,7 @@ public class NSGAIIMeasuresRunner {
 
     selection = new BinaryTournamentSelection(new RankingAndCrowdingDistanceComparator());
 
-    int maxIterations = 250 ;
+    int maxIterations = 1000 ;
     int populationSize = 100 ;
 
     algorithm = new NSGAIIMeasuresBuilder(problem)
@@ -102,6 +102,8 @@ public class NSGAIIMeasuresRunner {
         (CountingMeasure) measureManager.getPullMeasure("currentIteration");
     DurationMeasure currentComputingTime =
         (DurationMeasure) measureManager.getPullMeasure("currentExecutionTime");
+    CountingMeasure nonDominatedSolutions =
+        (CountingMeasure) measureManager.getPullMeasure("numberOfNonDominatedSolutionsInPopulation");
     /* End of measure management */
 
     //AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
@@ -113,8 +115,9 @@ public class NSGAIIMeasuresRunner {
     int i = 0 ;
     while(iteration.get() < maxIterations) {
       TimeUnit.SECONDS.sleep(5);
-      System.out.println("Iteration (" + i + "): " + iteration.get()) ;
-      System.out.println("Computing time (" + i + "): " + currentComputingTime.get()) ;
+      System.out.println("Iteration (" + i + ")                       : " + iteration.get()) ;
+      System.out.println("Computing time (" + i + ")                  : " + currentComputingTime.get()) ;
+      System.out.println("Number of Nondominated solutions (" + i + "): " + nonDominatedSolutions.get()) ;
       i++ ;
     }
 

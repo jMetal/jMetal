@@ -6,7 +6,11 @@ import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
+import org.uma.jmetal.util.solutionattribute.Ranking;
+
+import java.util.List;
 
 /**
  * @author Antonio J. Nebro
@@ -14,6 +18,7 @@ import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
  */
 public class NSGAIIMeasures extends NSGAII {
   private CountingMeasure iterations ;
+  private CountingMeasure numberOfNonDominatedSolutionsInPopulation ;
   //private DurationMeasure durationMeasure ;
   //private SimpleMeasureManager measureManager ;
 
@@ -52,14 +57,27 @@ public class NSGAIIMeasures extends NSGAII {
   private void initMeasures() {
     //durationMeasure = new DurationMeasure() ;
     iterations = new CountingMeasure(0) ;
+    numberOfNonDominatedSolutionsInPopulation = new CountingMeasure(0) ;
 
     //measureManager = new SimpleMeasureManager() ;
     //measureManager.setPullMeasure("currentExecutionTime", durationMeasure);
     measureManager.setPullMeasure("currentIteration", iterations);
+    measureManager.setPullMeasure("numberOfNonDominatedSolutionsInPopulation", numberOfNonDominatedSolutionsInPopulation);
   }
 
   @Override
   public MeasureManager getMeasureManager() {
     return measureManager ;
+  }
+
+  @Override protected List<Solution> replacement(List<Solution> population,
+      List<Solution> offspringPopulation) {
+    List<Solution> pop = super.replacement(population, offspringPopulation) ;
+
+    Ranking ranking = computeRanking(pop);
+
+    numberOfNonDominatedSolutionsInPopulation.reset(ranking.getSubfront(0).size());
+
+    return pop;
   }
 }
