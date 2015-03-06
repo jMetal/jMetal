@@ -24,8 +24,7 @@ public class SingleValueMeasure<T> extends SimplePushMeasure<T> implements
 	}
 
 	/**
-	 * Add 1 to the current count and push its value to all the registered
-	 * observers.
+	 * @param value The value to be stored
 	 */
 	public synchronized void set(T value) {
 		this.value = value ;
