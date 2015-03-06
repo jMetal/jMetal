@@ -70,7 +70,7 @@ public class CountingMeasure extends SimplePushMeasure<Long> implements
 	 * Add 1 to the current count and push its value to all the registered
 	 * observers.
 	 */
-	public void increment() {
+	public synchronized void increment() {
 		increment(1);
 	}
 
@@ -81,7 +81,7 @@ public class CountingMeasure extends SimplePushMeasure<Long> implements
 	 * @param amount
 	 *            the amount to add
 	 */
-	public void increment(long amount) {
+	public synchronized void increment(long amount) {
 		if (amount == 0) {
 			// No change, just ignore it
 		} else {
@@ -95,7 +95,7 @@ public class CountingMeasure extends SimplePushMeasure<Long> implements
 	 * @return the current amount of occurrences counted
 	 */
 	@Override
-	public Long get() {
+	public synchronized Long get() {
 		return count;
 	}
 
@@ -168,7 +168,7 @@ public class CountingMeasure extends SimplePushMeasure<Long> implements
 	 * Restart the counter to zero. Generate a notification if the value was not
 	 * zero.
 	 */
-	public void reset() {
+	public synchronized void reset() {
 		reset(0);
 	}
 
@@ -179,7 +179,7 @@ public class CountingMeasure extends SimplePushMeasure<Long> implements
 	 * @param value
 	 *            the value to restart from
 	 */
-	public void reset(long value) {
+	public synchronized void reset(long value) {
 		increment(value - count);
 	}
 
