@@ -41,14 +41,7 @@ public abstract class AbstractEvolutionaryAlgorithm<S extends Solution, R>  impl
   protected abstract List<S> reproduction(List<S> population);
 
   protected abstract List<S> replacement(List<S> population, List<S> offspringPopulation);
-
-  public AbstractEvolutionaryAlgorithm() {
-    durationMeasure = new DurationMeasure();
-
-    measureManager = new SimpleMeasureManager();
-    measureManager.setPullMeasure("currentExecutionTime", durationMeasure);
-  }
-
+  
   @Override public abstract R getResult();
 
   @Override public void run() {
