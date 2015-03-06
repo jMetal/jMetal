@@ -26,6 +26,7 @@ import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIMeasuresBuilder;
 import org.uma.jmetal.measure.MeasureManager;
 import org.uma.jmetal.measure.impl.CountingMeasure;
 import org.uma.jmetal.measure.impl.DurationMeasure;
+import org.uma.jmetal.measure.impl.SingleValueMeasure;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -102,8 +103,8 @@ public class NSGAIIMeasuresRunner {
         (CountingMeasure) measureManager.getPullMeasure("currentIteration");
     DurationMeasure currentComputingTime =
         (DurationMeasure) measureManager.getPullMeasure("currentExecutionTime");
-    CountingMeasure nonDominatedSolutions =
-        (CountingMeasure) measureManager.getPullMeasure("numberOfNonDominatedSolutionsInPopulation");
+    SingleValueMeasure<Integer> nonDominatedSolutions =
+        (SingleValueMeasure<Integer>) measureManager.getPullMeasure("numberOfNonDominatedSolutionsInPopulation");
     /* End of measure management */
 
     //AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)

@@ -1,7 +1,11 @@
 package org.uma.jmetal.algorithm.multiobjective.nsgaii;
 
+import org.uma.jmetal.measure.Measurable;
 import org.uma.jmetal.measure.MeasureManager;
 import org.uma.jmetal.measure.impl.CountingMeasure;
+import org.uma.jmetal.measure.impl.DurationMeasure;
+import org.uma.jmetal.measure.impl.SimpleMeasureManager;
+import org.uma.jmetal.measure.impl.SingleValueMeasure;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -16,11 +20,11 @@ import java.util.List;
  * @author Antonio J. Nebro
  * @version 1.0
  */
-public class NSGAIIMeasures extends NSGAII {
+public class NSGAIIMeasures extends NSGAII implements Measurable{
   private CountingMeasure iterations ;
-  private CountingMeasure numberOfNonDominatedSolutionsInPopulation ;
-  //private DurationMeasure durationMeasure ;
-  //private SimpleMeasureManager measureManager ;
+  private SingleValueMeasure<Integer> numberOfNonDominatedSolutionsInPopulation ;
+  private DurationMeasure durationMeasure ;
+  private SimpleMeasureManager measureManager ;
 
   /**
    * Constructor
@@ -55,12 +59,12 @@ public class NSGAIIMeasures extends NSGAII {
 
   /* Measures code */
   private void initMeasures() {
-    //durationMeasure = new DurationMeasure() ;
+    durationMeasure = new DurationMeasure() ;
     iterations = new CountingMeasure(0) ;
-    numberOfNonDominatedSolutionsInPopulation = new CountingMeasure(0) ;
+    numberOfNonDominatedSolutionsInPopulation = new SingleValueMeasure<>() ;
 
-    //measureManager = new SimpleMeasureManager() ;
-    //measureManager.setPullMeasure("currentExecutionTime", durationMeasure);
+    measureManager = new SimpleMeasureManager() ;
+    measureManager.setPullMeasure("currentExecutionTime", durationMeasure);
     measureManager.setPullMeasure("currentIteration", iterations);
     measureManager.setPullMeasure("numberOfNonDominatedSolutionsInPopulation", numberOfNonDominatedSolutionsInPopulation);
   }
@@ -76,7 +80,7 @@ public class NSGAIIMeasures extends NSGAII {
 
     Ranking ranking = computeRanking(pop);
 
-    numberOfNonDominatedSolutionsInPopulation.reset(ranking.getSubfront(0).size());
+    numberOfNonDominatedSolutionsInPopulation.set(ranking.getSubfront(0).size());
 
     return pop;
   }
