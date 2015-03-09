@@ -41,7 +41,7 @@ public abstract class AbstractEvolutionaryAlgorithm<S extends Solution, R>  impl
   protected abstract List<S> reproduction(List<S> population);
 
   protected abstract List<S> replacement(List<S> population, List<S> offspringPopulation);
-  
+
   @Override public abstract R getResult();
 
   @Override public void run() {
