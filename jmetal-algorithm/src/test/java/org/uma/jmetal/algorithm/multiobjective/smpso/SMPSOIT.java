@@ -53,7 +53,7 @@ public class SMPSOIT {
     // return find a front with a hypervolume value higher than 0.66
 
     Front referenceFront = new ArrayFront() ;
-    referenceFront.readFrontFromFile("/ZDT4.pf");
+    referenceFront.readFrontFromFile("/referenceFronts/ZDT4.pf");
 
     double hv = hypervolume.execute(new ArrayFront(population), referenceFront) ;
 

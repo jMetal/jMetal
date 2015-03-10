@@ -21,9 +21,6 @@
 package org.uma.jmetal.util;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.solution.Solution;
-
-import java.util.List;
 
 /**
  * Created by Antonio J. Nebro on 08/06/14.
@@ -43,10 +40,10 @@ public class AlgorithmRunner {
 
   /** Executor class */
   public static class Executor {
-    Algorithm<List<Solution>> algorithm ;
+    Algorithm algorithm ;
     long computingTime;
 
-    public Executor(Algorithm<List<Solution>> algorithm) {
+    public Executor(Algorithm algorithm) {
       this.algorithm = algorithm ;
     }
 
