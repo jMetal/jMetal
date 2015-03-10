@@ -21,7 +21,6 @@
 package org.uma.jmetal.runner.singleobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.singleobjective.geneticalgorithm.SteadyStateGeneticAlgorithm;
 import org.uma.jmetal.algorithm.singleobjective.geneticalgorithm.SteadyStateGeneticAlgorithmBuilder;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
@@ -48,7 +47,7 @@ public class SteadyStateGeneticAlgorithmRunner {
   public static void main(String[] args) throws
           Exception {
 
-    Algorithm algorithm;
+    Algorithm<Solution> algorithm;
     DoubleProblem problem = new Sphere(512) ;
     CrossoverOperator crossoverOperator = new SBXCrossover(0.9, 20.0) ;
 
@@ -69,7 +68,7 @@ public class SteadyStateGeneticAlgorithmRunner {
 
     long computingTime = algorithmRunner.getComputingTime() ;
 
-    Solution solution = ((SteadyStateGeneticAlgorithm)algorithm).getResult() ;
+    Solution solution = algorithm.getResult() ;
     List<Solution> population = new ArrayList<>(1) ;
     population.add(solution) ;
 

@@ -21,7 +21,6 @@
 package org.uma.jmetal.runner.singleobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.singleobjective.geneticalgorithm.GenerationalGeneticAlgorithm;
 import org.uma.jmetal.algorithm.singleobjective.geneticalgorithm.GenerationalGeneticAlgorithmBuilder;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
@@ -47,7 +46,7 @@ public class GenerationalGeneticAlgorithmRunner {
    */
   public static void main(String[] args) throws Exception {
 
-    Algorithm algorithm;
+    Algorithm<Solution> algorithm;
     BinaryProblem problem = new OneMax(512) ;
 
     CrossoverOperator crossoverOperator = new SinglePointCrossover(0.9) ;
@@ -67,7 +66,7 @@ public class GenerationalGeneticAlgorithmRunner {
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
-    Solution solution = ((GenerationalGeneticAlgorithm)algorithm).getResult() ;
+    Solution solution = algorithm.getResult() ;
     List<Solution> population = new ArrayList<>(1) ;
     population.add(solution) ;
 

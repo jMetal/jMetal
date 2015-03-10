@@ -21,12 +21,10 @@
 package org.uma.jmetal.runner.singleobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.singleobjective.differentialevolution.DifferentialEvolution;
 import org.uma.jmetal.algorithm.singleobjective.differentialevolution.DifferentialEvolutionBuilder;
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.impl.selection.DifferentialEvolutionSelection;
 import org.uma.jmetal.problem.DoubleProblem;
-import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
@@ -45,7 +43,7 @@ public class DifferentialEvolutionRunner {
   public static void main(String[] args) throws Exception {
 
     DoubleProblem problem;
-    Algorithm algorithm;
+    Algorithm<Solution> algorithm;
     DifferentialEvolutionSelection selection;
     DifferentialEvolutionCrossover crossover;
 
@@ -73,7 +71,7 @@ public class DifferentialEvolutionRunner {
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
-    DoubleSolution solution = ((DifferentialEvolution)algorithm).getResult() ;
+    Solution solution = algorithm.getResult() ;
     long computingTime = algorithmRunner.getComputingTime() ;
 
     List<Solution> population = new ArrayList<>(1) ;

@@ -41,8 +41,7 @@ public class ElitistEvolutionStrategyRunner {
   /**
    */
   public static void main(String[] args) throws Exception {
-
-    Algorithm algorithm;
+    Algorithm<Solution> algorithm;
     BinaryProblem problem = new OneMax(512) ;
 
     MutationOperator mutationOperator = new BitFlipMutation(1.0 / problem.getNumberOfBits(0)) ;
@@ -58,7 +57,7 @@ public class ElitistEvolutionStrategyRunner {
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
-    Solution solution = ((ElitistEvolutionStrategy)algorithm).getResult() ;
+    Solution solution = algorithm.getResult() ;
     List<Solution> population = new ArrayList<>(1) ;
     population.add(solution) ;
 
