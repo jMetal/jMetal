@@ -5,11 +5,12 @@ import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AlgorithmBuilder;
+import org.uma.jmetal.util.JMetalException;
 
 /**
  * Created by ajnebro on 10/3/15.
  */
-public class ElitistEvolutionStrategyBuilder<S extends Solution> implements AlgorithmBuilder {
+public class EvolutionStrategyBuilder<S extends Solution> implements AlgorithmBuilder {
   public enum EvolutionStrategyVariant {ELITIST, NON_ELITIST}
 
   private Problem<S> problem;
@@ -19,7 +20,7 @@ public class ElitistEvolutionStrategyBuilder<S extends Solution> implements Algo
   private MutationOperator<S> mutation;
   private EvolutionStrategyVariant variant ;
 
-  public ElitistEvolutionStrategyBuilder(Problem<S> problem, MutationOperator<S> mutationOperator,
+  public EvolutionStrategyBuilder(Problem<S> problem, MutationOperator<S> mutationOperator,
       EvolutionStrategyVariant variant) {
     this.problem = problem;
     this.mu = 1;
@@ -29,32 +30,38 @@ public class ElitistEvolutionStrategyBuilder<S extends Solution> implements Algo
     this.variant = variant ;
   }
 
-  public ElitistEvolutionStrategyBuilder setMu(int mu) {
+  public EvolutionStrategyBuilder setMu(int mu) {
     this.mu = mu;
 
     return this;
   }
 
-  public ElitistEvolutionStrategyBuilder setLambda(int lambda) {
+  public EvolutionStrategyBuilder setLambda(int lambda) {
     this.lambda = lambda;
 
     return this;
   }
 
-  public ElitistEvolutionStrategyBuilder setMaxEvaluations(int maxEvaluations) {
+  public EvolutionStrategyBuilder setMaxEvaluations(int maxEvaluations) {
     this.maxEvaluations = maxEvaluations;
 
     return this;
   }
 
-  public ElitistEvolutionStrategyBuilder setMutationOperator(MutationOperator<S> mutation) {
+  public EvolutionStrategyBuilder setMutationOperator(MutationOperator<S> mutation) {
     this.mutation = mutation;
 
     return this;
   }
 
   @Override public Algorithm build() {
-    return new ElitistEvolutionStrategy<S>(problem, mu, lambda, maxEvaluations, mutation);
+    if (variant == EvolutionStrategyVariant.ELITIST) {
+      return new ElitistEvolutionStrategy<S>(problem, mu, lambda, maxEvaluations, mutation);
+    } else if (variant == EvolutionStrategyVariant.NON_ELITIST) {
+      return new NonElitistEvolutionStrategy<S>(problem, mu, lambda, maxEvaluations, mutation);
+    } else {
+      throw new JMetalException("Unknown variant: " + variant) ;
+    }
   }
 
   /* Getters */

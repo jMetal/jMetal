@@ -21,7 +21,7 @@
 package org.uma.jmetal.runner.singleobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.singleobjective.evolutionstrategy.ElitistEvolutionStrategyBuilder;
+import org.uma.jmetal.algorithm.singleobjective.evolutionstrategy.EvolutionStrategyBuilder;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.mutation.BitFlipMutation;
 import org.uma.jmetal.problem.BinaryProblem;
@@ -48,8 +48,8 @@ public class ElitistEvolutionStrategyRunner {
     MutationOperator<BinarySolution> mutationOperator =
         new BitFlipMutation(1.0 / problem.getNumberOfBits(0)) ;
 
-    algorithm = new ElitistEvolutionStrategyBuilder<BinarySolution>(problem, mutationOperator,
-        ElitistEvolutionStrategyBuilder.EvolutionStrategyVariant.ELITIST)
+    algorithm = new EvolutionStrategyBuilder<BinarySolution>(problem, mutationOperator,
+        EvolutionStrategyBuilder.EvolutionStrategyVariant.ELITIST)
             .setMaxEvaluations(25000)
             .setMu(1)
             .setLambda(10)

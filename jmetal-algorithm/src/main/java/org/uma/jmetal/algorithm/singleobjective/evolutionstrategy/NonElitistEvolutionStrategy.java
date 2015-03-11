@@ -22,7 +22,6 @@ package org.uma.jmetal.algorithm.singleobjective.evolutionstrategy;
 
 import org.uma.jmetal.algorithm.impl.AbstractEvolutionStrategy;
 import org.uma.jmetal.operator.MutationOperator;
-import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
@@ -35,95 +34,30 @@ import java.util.List;
 /**
  * Class implementing a (mu + lambda) Evolution Strategy (lambda must be divisible by mu)
  */
-public class NonElitistEvolutionStrategy extends AbstractEvolutionStrategy<Solution, Solution> {
-  private Problem problem;
+public class NonElitistEvolutionStrategy<S extends Solution> extends AbstractEvolutionStrategy<S, S> {
+  private Problem<S> problem;
 
   private int mu;
   private int lambda;
   private int maxEvaluations;
   private int evaluations;
-  private MutationOperator mutation;
+  private MutationOperator<S> mutation;
 
   private Comparator<Solution> comparator;
 
   /**
    * Constructor
    */
-  private NonElitistEvolutionStrategy(Builder builder) {
-    this.problem = builder.problem;
-    this.mu = builder.mu;
-    this.lambda = builder.lambda;
-    this.maxEvaluations = builder.maxEvaluations;
-    this.mutation = builder.mutation;
+  public NonElitistEvolutionStrategy(Problem<S> problem, int mu, int lambda, int maxEvaluations,
+      MutationOperator<S> mutation) {
+    this.problem = problem;
+    this.mu = mu;
+    this.lambda = lambda;
+    this.maxEvaluations = maxEvaluations;
+    this.mutation = mutation;
 
     comparator = new ObjectiveComparator(0);
   }
-
-  /* Getters */
-  public int getMu() {
-    return mu;
-  }
-
-  public int getLambda() {
-    return lambda;
-  }
-
-  public int getMaxEvaluations() {
-    return maxEvaluations;
-  }
-
-  public MutationOperator getMutation() {
-    return mutation;
-  }
-
-  /**
-   * Builder class
-   */
-  public static class Builder {
-    private Problem problem;
-    private int mu;
-    private int lambda;
-    private int maxEvaluations;
-    private MutationOperator mutation;
-
-    public Builder(Problem problem) {
-      this.problem = problem;
-      this.mu = 1;
-      this.lambda = 10;
-      this.maxEvaluations = 250000;
-      this.mutation = new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0);
-    }
-
-    public Builder setMu(int mu) {
-      this.mu = mu;
-
-      return this;
-    }
-
-    public Builder setLambda(int lambda) {
-      this.lambda = lambda;
-
-      return this;
-    }
-
-    public Builder setMaxEvaluations(int maxEvaluations) {
-      this.maxEvaluations = maxEvaluations;
-
-      return this;
-    }
-
-    public Builder setMutationOperator(MutationOperator mutation) {
-      this.mutation = mutation;
-
-      return this;
-    }
-
-    public NonElitistEvolutionStrategy build() {
-      return new NonElitistEvolutionStrategy(this);
-    }
-  }
-
-
 
   @Override protected void initProgress() {
     evaluations = 1;
@@ -137,25 +71,25 @@ public class NonElitistEvolutionStrategy extends AbstractEvolutionStrategy<Solut
     return evaluations >= maxEvaluations;
   }
 
-  @Override protected List<Solution> createInitialPopulation() {
-    List<Solution> population = new ArrayList<>(mu);
+  @Override protected List<S> createInitialPopulation() {
+    List<S> population = new ArrayList<>(mu);
     for (int i = 0; i < mu; i++) {
-      Solution newIndividual = problem.createSolution();
+      S newIndividual = (S)problem.createSolution();
       population.add(newIndividual);
     }
 
     return population;
   }
 
-  @Override protected List<Solution> evaluatePopulation(List<Solution> population) {
-    for (Solution solution : population) {
+  @Override protected List<S> evaluatePopulation(List<S> population) {
+    for (S solution : population) {
       problem.evaluate(solution);
     }
 
     return population;
   }
 
-  @Override protected List<Solution> selection(List<Solution> population) {
+  @Override protected List<S> selection(List<S> population) {
     return population;
     //    List<Solution> matingPopulation = new ArrayList<>(mu) ;
     //    for (Solution solution: population) {
@@ -164,11 +98,11 @@ public class NonElitistEvolutionStrategy extends AbstractEvolutionStrategy<Solut
     //    return matingPopulation ;
   }
 
-  @Override protected List<Solution> reproduction(List<Solution> population) {
-    List<Solution> offspringPopulation = new ArrayList<>(lambda);
+  @Override protected List<S> reproduction(List<S> population) {
+    List<S> offspringPopulation = new ArrayList<>(lambda);
     for (int i = 0; i < mu; i++) {
       for (int j = 0; j < lambda / mu; j++) {
-        Solution offspring = population.get(i).copy();
+        S offspring = (S)population.get(i).copy();
         mutation.execute(offspring);
         offspringPopulation.add(offspring);
       }
@@ -177,18 +111,18 @@ public class NonElitistEvolutionStrategy extends AbstractEvolutionStrategy<Solut
     return offspringPopulation;
   }
 
-  @Override protected List<Solution> replacement(List<Solution> population,
-      List<Solution> offspringPopulation) {
+  @Override protected List<S> replacement(List<S> population,
+      List<S> offspringPopulation) {
     Collections.sort(offspringPopulation, comparator) ;
 
-    List<Solution> newPopulation = new ArrayList<>(mu);
+    List<S> newPopulation = new ArrayList<>(mu);
     for (int i = 0; i < mu; i++) {
       newPopulation.add(offspringPopulation.get(i));
     }
     return newPopulation;
   }
 
-  @Override public Solution getResult() {
+  @Override public S getResult() {
     return getPopulation().get(0);
   }
 }

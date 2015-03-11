@@ -21,11 +21,13 @@
 package org.uma.jmetal.runner.singleobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.algorithm.singleobjective.evolutionstrategy.EvolutionStrategyBuilder;
 import org.uma.jmetal.algorithm.singleobjective.evolutionstrategy.NonElitistEvolutionStrategy;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.mutation.BitFlipMutation;
 import org.uma.jmetal.problem.BinaryProblem;
 import org.uma.jmetal.problem.singleobjective.OneMax;
+import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
@@ -42,18 +44,17 @@ public class NonElitistEvolutionStrategyRunner {
    */
   public static void main(String[] args) throws Exception {
 
-    Algorithm algorithm;
+    Algorithm<BinarySolution> algorithm;
     BinaryProblem problem = new OneMax(512) ;
 
-    MutationOperator mutationOperator = new BitFlipMutation(1.0 / problem.getNumberOfBits(0)) ;
+    MutationOperator<BinarySolution> mutationOperator = new BitFlipMutation(1.0 / problem.getNumberOfBits(0)) ;
 
-    algorithm = new NonElitistEvolutionStrategy.Builder(problem)
-            .setMaxEvaluations(25000)
-            .setMu(1)
-            .setLambda(10)
-            .setMutationOperator(mutationOperator)
-            .build() ;
-
+    algorithm = new EvolutionStrategyBuilder<BinarySolution>(problem, mutationOperator,
+        EvolutionStrategyBuilder.EvolutionStrategyVariant.NON_ELITIST)
+        .setMaxEvaluations(25000)
+        .setMu(1)
+        .setLambda(10)
+        .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
