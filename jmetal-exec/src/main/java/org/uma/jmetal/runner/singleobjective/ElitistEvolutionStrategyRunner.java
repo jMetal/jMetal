@@ -48,7 +48,8 @@ public class ElitistEvolutionStrategyRunner {
     MutationOperator<BinarySolution> mutationOperator =
         new BitFlipMutation(1.0 / problem.getNumberOfBits(0)) ;
 
-    algorithm = new ElitistEvolutionStrategyBuilder<>(problem, mutationOperator)
+    algorithm = new ElitistEvolutionStrategyBuilder<BinarySolution>(problem, mutationOperator,
+        ElitistEvolutionStrategyBuilder.EvolutionStrategyVariant.ELITIST)
             .setMaxEvaluations(25000)
             .setMu(1)
             .setLambda(10)
@@ -72,6 +73,5 @@ public class ElitistEvolutionStrategyRunner {
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
     JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
     JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
-
   }
 }

@@ -10,18 +10,23 @@ import org.uma.jmetal.util.AlgorithmBuilder;
  * Created by ajnebro on 10/3/15.
  */
 public class ElitistEvolutionStrategyBuilder<S extends Solution> implements AlgorithmBuilder {
-  private Problem problem;
+  public enum EvolutionStrategyVariant {ELITIST, NON_ELITIST}
+
+  private Problem<S> problem;
   private int mu;
   private int lambda;
   private int maxEvaluations;
   private MutationOperator<S> mutation;
+  private EvolutionStrategyVariant variant ;
 
-  public ElitistEvolutionStrategyBuilder(Problem problem, MutationOperator<S> mutationOperator) {
+  public ElitistEvolutionStrategyBuilder(Problem<S> problem, MutationOperator<S> mutationOperator,
+      EvolutionStrategyVariant variant) {
     this.problem = problem;
     this.mu = 1;
     this.lambda = 10;
     this.maxEvaluations = 250000;
     this.mutation = mutationOperator;
+    this.variant = variant ;
   }
 
   public ElitistEvolutionStrategyBuilder setMu(int mu) {
