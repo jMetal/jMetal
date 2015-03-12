@@ -15,21 +15,22 @@ package org.uma.jmetal.algorithm.multiobjective.paes;
 
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AlgorithmBuilder;
 
 /**
  * Created by ajnebro on 17/11/14.
  */
-public class PAESBuilder implements AlgorithmBuilder {
-  public Problem problem;
+public class PAESBuilder<S extends Solution>  implements AlgorithmBuilder {
+  public Problem<S> problem;
 
   public int archiveSize;
   public int maxEvaluations;
   public int biSections;
 
-  public MutationOperator mutationOperator;
+  public MutationOperator<S> mutationOperator;
 
-  public PAESBuilder(Problem problem) {
+  public PAESBuilder(Problem<S> problem) {
     this.problem = problem;
   }
 
@@ -51,13 +52,13 @@ public class PAESBuilder implements AlgorithmBuilder {
     return this;
   }
 
-  public PAESBuilder setMutationOperator(MutationOperator mutation) {
+  public PAESBuilder setMutationOperator(MutationOperator<S> mutation) {
     mutationOperator = mutation;
 
     return this;
   }
 
   public PAES build() {
-    return new PAES(this);
+    return new PAES<S>(problem, archiveSize, maxEvaluations, biSections, mutationOperator);
   }
 }

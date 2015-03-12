@@ -31,16 +31,15 @@ import java.util.List;
  *
  * This class implements the PAES algorithm.
  */
-public class PAES extends AbstractEvolutionStrategy<Solution, List<Solution>> {
-
-  private Problem problem;
+public class PAES<S extends Solution> extends AbstractEvolutionStrategy<S, List<S>> {
+  private Problem<S> problem;
 
   private int archiveSize;
   private int maxEvaluations;
   private int biSections;
   private int evaluations;
 
-  private MutationOperator mutationOperator;
+  private MutationOperator<S> mutationOperator;
 
   private AdaptiveGridArchive archive;
   private Comparator comparator;
@@ -48,18 +47,16 @@ public class PAES extends AbstractEvolutionStrategy<Solution, List<Solution>> {
   /**
    * Constructor
    */
-  public PAES(PAESBuilder builder) {
-    super();
-
-    problem = builder.problem;
-    archiveSize = builder.archiveSize;
-    maxEvaluations = builder.maxEvaluations;
-    biSections = builder.biSections;
-    mutationOperator = builder.mutationOperator;
+  public PAES(Problem<S> problem, int archiveSize, int maxEvaluations, int biSections,
+      MutationOperator<S> mutationOperator) {
+    this.problem = problem;
+    this.archiveSize = archiveSize;
+    this.maxEvaluations = maxEvaluations;
+    this.biSections = biSections;
+    this.mutationOperator = mutationOperator;
 
     archive = new AdaptiveGridArchive(archiveSize, biSections, problem.getNumberOfObjectives());
     comparator = new DominanceComparator();
-
   }
 
   /* Getters */
@@ -91,38 +88,37 @@ public class PAES extends AbstractEvolutionStrategy<Solution, List<Solution>> {
     return evaluations >= maxEvaluations;
   }
 
-  @Override protected List<Solution> createInitialPopulation() {
-    List<Solution> solutionList = new ArrayList<>(1);
+  @Override protected List<S> createInitialPopulation() {
+    List<S> solutionList = new ArrayList<>(1);
     solutionList.add(problem.createSolution());
     return solutionList;
   }
 
-  @Override protected List<Solution> evaluatePopulation(List<Solution> population) {
+  @Override protected List<S> evaluatePopulation(List<S> population) {
     problem.evaluate(population.get(0));
     return population;
   }
 
-  @Override protected List<Solution> selection(List<Solution> population) {
+  @Override protected List<S> selection(List<S> population) {
     return population;
   }
 
-  @Override protected List<Solution> reproduction(List<Solution> population) {
-    Solution mutatedSolution = population.get(0).copy();
+  @Override protected List<S> reproduction(List<S> population) {
+    S mutatedSolution = (S)population.get(0).copy();
     mutationOperator.execute(mutatedSolution);
 
-    List<Solution> mutationSolutionList = new ArrayList<>(1);
+    List<S> mutationSolutionList = new ArrayList<>(1);
     mutationSolutionList.add(mutatedSolution);
     return mutationSolutionList;
   }
 
-  @Override protected List<Solution> replacement(List<Solution> population,
-      List<Solution> offspringPopulation) {
-    Solution current = population.get(0);
-    Solution mutatedSolution = offspringPopulation.get(0);
+  @Override protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
+    S current = population.get(0);
+    S mutatedSolution = offspringPopulation.get(0);
 
     int flag = comparator.compare(current, mutatedSolution);
     if (flag == 1) {
-      current = mutatedSolution.copy();
+      current = (S)mutatedSolution.copy();
       archive.add(mutatedSolution);
     } else if (flag == 0) {
       if (archive.add(mutatedSolution)) {
@@ -134,53 +130,9 @@ public class PAES extends AbstractEvolutionStrategy<Solution, List<Solution>> {
     return population;
   }
 
-  @Override public List<Solution> getResult() {
+  @Override public List<S> getResult() {
     return archive.getSolutionList();
   }
-
-  /** run() method */
-  /*
-  public SolutionSet execute() throws JMetalException, ClassNotFoundException {
-    int evaluations;
-    Comparator<Solution> dominance;
-
-    evaluations = 0;
-    archive = new AdaptiveGridArchive(archiveSize, biSections, problem.getNumberOfObjectives());
-    dominance = new DominanceComparator();
-
-    //-> Create the initial solutiontype and evaluate it and his constraints
-    Solution solution = new Solution(problem);
-    problem.evaluate(solution);
-    problem.evaluateConstraints(solution);
-    evaluations++;
-
-    // Add it to the setArchive
-    archive.add(new Solution(solution));
-
-    //Iterations....
-    do {
-      Solution mutatedIndividual = new Solution(solution);
-      mutationOperator.execute(mutatedIndividual);
-
-      problem.evaluate(mutatedIndividual);
-      problem.evaluateConstraints(mutatedIndividual);
-      evaluations++;
-
-      int flag = dominance.compare(solution, mutatedIndividual);
-
-      if (flag == 1) { //If mutate solutiontype dominate
-        solution = new Solution(mutatedIndividual);
-        archive.add(mutatedIndividual);
-      } else if (flag == 0) { //If none dominate the other                               
-        if (archive.add(mutatedIndividual)) {
-          solution = test(solution, mutatedIndividual, archive);
-        }
-      }
-    } while (evaluations < maxEvaluations);
-
-    return archive;
-  }
-  */
 
   /**
    * Tests two solutions to determine which one becomes be the guide of PAES
@@ -189,24 +141,24 @@ public class PAES extends AbstractEvolutionStrategy<Solution, List<Solution>> {
    * @param solution        The actual guide of PAES
    * @param mutatedSolution A candidate guide
    */
-  public Solution test(Solution solution, Solution mutatedSolution, AdaptiveGridArchive archive) {
+  public S test(S solution, S mutatedSolution, AdaptiveGridArchive archive) {
 
     int originalLocation = archive.getGrid().location(solution);
     int mutatedLocation = archive.getGrid().location(mutatedSolution);
 
     if (originalLocation == -1) {
-      return mutatedSolution.copy();
+      return (S)mutatedSolution.copy();
     }
 
     if (mutatedLocation == -1) {
-      return solution.copy();
+      return (S)solution.copy();
     }
 
     if (archive.getGrid().getLocationDensity(mutatedLocation) < archive.getGrid()
         .getLocationDensity(originalLocation)) {
-      return mutatedSolution.copy();
+      return (S)mutatedSolution.copy();
     }
 
-    return solution.copy();
+    return (S)solution.copy();
   }
 }

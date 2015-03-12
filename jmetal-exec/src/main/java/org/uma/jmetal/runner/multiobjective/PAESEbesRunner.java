@@ -21,13 +21,12 @@
 package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.paes.PAES;
 import org.uma.jmetal.algorithm.multiobjective.paes.PAESBuilder;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.multiobjective.ebes.Ebes;
 import org.uma.jmetal.problem.multiobjective.ebes.EbesMutation;
-import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
@@ -52,9 +51,9 @@ public class PAESEbesRunner {
    *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName paretoFrontFile
    */
   public static void main(String[] args) throws JMetalException {
-    Problem problem;
-    Algorithm algorithm;
-    MutationOperator mutation;
+    Problem<DoubleSolution> problem;
+    Algorithm<List<DoubleSolution>> algorithm;
+    MutationOperator<DoubleSolution> mutation;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.ebes.Ebes" ;
 
@@ -64,7 +63,7 @@ public class PAESEbesRunner {
     double mutationProbability = 1.0 / ((Ebes)problem).getnumberOfGroupElements() ;
     mutation = new EbesMutation(mutationProbability) ;
 
-    algorithm = new PAESBuilder(problem)
+    algorithm = new PAESBuilder<>(problem)
             .setMutationOperator(mutation)
             .setMaxEvaluations(10000)
             .setArchiveSize(100)
@@ -74,7 +73,7 @@ public class PAESEbesRunner {
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
-    List<Solution> population = ((PAES)algorithm).getResult() ;
+    List<DoubleSolution> population = algorithm.getResult() ;
     long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)
