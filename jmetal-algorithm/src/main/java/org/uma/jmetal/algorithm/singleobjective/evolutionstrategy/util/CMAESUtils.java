@@ -19,7 +19,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-package org.uma.jmetal.algorithm.singleobjective.evolutionstrategy;
+package org.uma.jmetal.algorithm.singleobjective.evolutionstrategy.util;
 
 
 import org.uma.jmetal.util.JMetalLogger;

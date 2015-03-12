@@ -16,9 +16,9 @@ import java.util.*;
  */
 public class GenerationalGeneticAlgorithm extends AbstractGeneticAlgorithm<Solution, Solution> {
   private Comparator<Solution> comparator;
-  private int maxIterations;
+  private int maxEvaluations;
   private int populationSize;
-  private int iterations;
+  private int evaluations;
 
   private Problem problem;
 
@@ -27,11 +27,11 @@ public class GenerationalGeneticAlgorithm extends AbstractGeneticAlgorithm<Solut
   /**
    * Constructor
    */
-  public GenerationalGeneticAlgorithm(Problem problem, int maxIterations, int populationSize,
+  public GenerationalGeneticAlgorithm(Problem problem, int maxEvaluations, int populationSize,
       CrossoverOperator crossoverOperator, MutationOperator mutationOperator,
       SelectionOperator selectionOperator, SolutionListEvaluator evaluator) {
     this.problem = problem;
-    this.maxIterations = maxIterations;
+    this.maxEvaluations = maxEvaluations;
     this.populationSize = populationSize;
 
     this.crossoverOperator = crossoverOperator;
@@ -44,7 +44,7 @@ public class GenerationalGeneticAlgorithm extends AbstractGeneticAlgorithm<Solut
   }
 
   @Override protected boolean isStoppingConditionReached() {
-    return (iterations >= maxIterations);
+    return (evaluations >= maxEvaluations);
   }
 
   @Override protected List<Solution> createInitialPopulation() {
@@ -108,10 +108,10 @@ public class GenerationalGeneticAlgorithm extends AbstractGeneticAlgorithm<Solut
   }
 
   @Override public void initProgress() {
-    iterations = 1;
+    evaluations = populationSize;
   }
 
   @Override public void updateProgress() {
-    iterations++;
+    evaluations += populationSize;
   }
 }
