@@ -1,4 +1,4 @@
-//  GDE3Runner.java
+//  NSGAIIRunner.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -21,70 +21,75 @@
 package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.gde3.GDE3;
-import org.uma.jmetal.algorithm.multiobjective.gde3.GDE3Builder;
-import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
-import org.uma.jmetal.operator.impl.selection.DifferentialEvolutionSelection;
-import org.uma.jmetal.problem.DoubleProblem;
-import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.algorithm.multiobjective.spea2.SPEA2Builder2;
+import org.uma.jmetal.operator.CrossoverOperator;
+import org.uma.jmetal.operator.MutationOperator;
+import org.uma.jmetal.operator.SelectionOperator;
+import org.uma.jmetal.operator.impl.crossover.SinglePointCrossover;
+import org.uma.jmetal.operator.impl.mutation.BitFlipMutation;
+import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
+import org.uma.jmetal.problem.BinaryProblem;
+import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.util.AlgorithmRunner;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
-import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
-import org.uma.jmetal.util.evaluator.impl.MultithreadedSolutionListEvaluator;
+import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
 import java.util.List;
 
 /**
- * Class for configuring and running the GDE3 algorithm
+ * Class to configure and run the SPEA2 algorithm. Copied from the NSGAII Runner Class
+ *
+ * @author juanjo
  */
-public class ParallelGDE3Runner {
+public class SPEA2BinaryRunner {
   /**
    * @param args Command line arguments.
    * @throws java.io.IOException
    * @throws SecurityException
    * @throws ClassNotFoundException
-   * Usage: three choices
-   *        - org.uma.jmetal45.runner.multiobjective.GDE3Runner
-   *        - org.uma.jmetal45.runner.multiobjective.GDE3Runner problemName
-   *        - org.uma.jmetal45.runner.multiobjective.GDE3Runner problemName paretoFrontFile
+   * Usage: two options
+   *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner
+   *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName
    */
-  public static void main(String[] args) {
-    DoubleProblem problem;
-    Algorithm algorithm;
-    DifferentialEvolutionSelection selection;
-    DifferentialEvolutionCrossover crossover;
+  public static void main(String[] args) throws JMetalException {
+    BinaryProblem problem;
+    Algorithm<List<BinarySolution>> algorithm;
+    CrossoverOperator<List<BinarySolution>, List<BinarySolution>> crossover;
+    MutationOperator<BinarySolution> mutation;
+    SelectionOperator selection;
 
     String problemName ;
     if (args.length == 1) {
       problemName = args[0] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT5";
     }
 
-    problem = (DoubleProblem) ProblemUtils.loadProblem(problemName);
+    problem = (BinaryProblem)ProblemUtils.loadProblem(problemName);
 
-    double cr = 0.5 ;
-    double f = 0.5 ;
-    crossover = new DifferentialEvolutionCrossover(cr, f, "rand/1/bin") ;
-    selection = new DifferentialEvolutionSelection() ;
+    double crossoverProbability = 0.9 ;
+    crossover = new SinglePointCrossover(crossoverProbability) ;
 
-    SolutionListEvaluator evaluator = new MultithreadedSolutionListEvaluator(0, problem) ;
+    double mutationProbability = 1.0 / problem.getTotalNumberOfBits() ;
+    mutation = new BitFlipMutation(mutationProbability) ;
 
-    algorithm = new GDE3Builder(problem)
-        .setCrossover(crossover)
-        .setSelection(selection)
+    selection = new BinaryTournamentSelection(new RankingAndCrowdingDistanceComparator());
+
+    algorithm = new SPEA2Builder2<>(problem, crossover, mutation)
+        .setSelectionOperator(selection)
         .setMaxIterations(250)
         .setPopulationSize(100)
-        .setSolutionSetEvaluator(evaluator)
         .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
         .execute() ;
 
-    List<DoubleSolution> population = ((GDE3)algorithm).getResult() ;
+    List<BinarySolution> population = algorithm.getResult();
+
     long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)
@@ -96,7 +101,5 @@ public class ParallelGDE3Runner {
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
     JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
     JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
-
-    evaluator.shutdown();
   }
 }

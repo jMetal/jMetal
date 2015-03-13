@@ -300,7 +300,7 @@ public class SolutionListUtils {
    * @param solutionSet
    * @return
    */
-  public static double [][] distanceMatrix(List<Solution> solutionSet) {   
+  public static  <S extends Solution> double [][] distanceMatrix(List<S> solutionSet) {
      //The matrix of distances
      double [][] distance = new double [solutionSet.size()][solutionSet.size()];        
      for (int i = 0; i < solutionSet.size(); i++){

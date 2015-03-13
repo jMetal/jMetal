@@ -21,8 +21,7 @@
 package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.spea2.SPEA2;
-import org.uma.jmetal.algorithm.multiobjective.spea2.SPEA2Builder;
+import org.uma.jmetal.algorithm.multiobjective.spea2.SPEA2Builder2;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -30,7 +29,7 @@ import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
@@ -57,17 +56,17 @@ public class SPEA2Runner {
    *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName
    */
   public static void main(String[] args) throws JMetalException {
-    Problem problem;
-    Algorithm algorithm;
-    CrossoverOperator crossover;
-    MutationOperator mutation;
+    Problem<DoubleSolution> problem;
+    Algorithm<List<DoubleSolution>> algorithm;
+    CrossoverOperator<List<DoubleSolution>, List<DoubleSolution>> crossover;
+    MutationOperator<DoubleSolution> mutation;
     SelectionOperator selection;
 
     String problemName ;
     if (args.length == 1) {
       problemName = args[0] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT3";
+      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT6";
     }
 
     problem = ProblemUtils.loadProblem(problemName);
@@ -82,9 +81,10 @@ public class SPEA2Runner {
 
     selection = new BinaryTournamentSelection(new RankingAndCrowdingDistanceComparator());
 
-    algorithm = new SPEA2Builder(problem)
-            .setCrossoverOperator(crossover)
-            .setMutationOperator(mutation)
+    //algorithm = new SPEA2Builder(problem)
+    algorithm = new SPEA2Builder2<>(problem, crossover, mutation)
+         //   .setCrossoverOperator(crossover)
+         //   .setMutationOperator(mutation)
             .setSelectionOperator(selection)
             .setMaxIterations(250)
             .setPopulationSize(100)
@@ -93,10 +93,8 @@ public class SPEA2Runner {
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
-    List<Solution> population =((SPEA2)algorithm).getResult(); 
-    		
-    		
-    	
+    List<DoubleSolution> population = algorithm.getResult();
+
     long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)
