@@ -10,6 +10,7 @@ import java.util.*;
 
 /**
  * Created by Antonio J. Nebro on 04/10/14.
+ * Modified by Juanjo 13/03/15
  */
 public class SolutionListUtils {
 
@@ -290,4 +291,26 @@ public class SolutionListUtils {
 
     return resultList ;
   }
+  
+
+  
+  /**
+   * Returns a matrix with the euclidean distance between each pair of solutions in the population.
+   * Distances are measured in the objective space
+   * @param solutionSet
+   * @return
+   */
+  public static double [][] distanceMatrix(List<Solution> solutionSet) {   
+     //The matrix of distances
+     double [][] distance = new double [solutionSet.size()][solutionSet.size()];        
+     for (int i = 0; i < solutionSet.size(); i++){
+       distance[i][i] = 0.0;
+       for (int j = i + 1; j < solutionSet.size(); j++){
+         distance[i][j] = SolutionUtils.distanceBetweenObjectives(solutionSet.get(i),solutionSet.get(j));                
+         distance[j][i] = distance[i][j];            
+       } // for
+     } // for        
+     return distance;
+  } // distanceMatrix
+  
 }

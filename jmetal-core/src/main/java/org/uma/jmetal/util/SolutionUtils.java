@@ -37,5 +37,25 @@ public class SolutionUtils {
 
     return result ;
   }
+  
+  
+  /**
+   * Returns the euclidean distance between a pair of solutions in the objective space
+   * @param firstSolution
+   * @param secondSolution
+   * @return
+   */
+   static double distanceBetweenObjectives(Solution firstSolution, Solution secondSolution) {
+   
+	    double diff;  
+	    double distance = 0.0;
+	    //euclidean distance
+	    for (int nObj = 0; nObj < firstSolution.getNumberOfObjectives();nObj++){
+	      diff = firstSolution.getObjective(nObj) - secondSolution.getObjective(nObj);
+	      distance += Math.pow(diff,2.0);           
+	    } // for   
+	        
+	    return Math.sqrt(distance);
+  }
 
 }
