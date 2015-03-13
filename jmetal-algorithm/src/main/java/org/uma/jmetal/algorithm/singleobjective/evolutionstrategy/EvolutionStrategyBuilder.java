@@ -48,13 +48,7 @@ public class EvolutionStrategyBuilder<S extends Solution> implements AlgorithmBu
     return this;
   }
 
-  public EvolutionStrategyBuilder setMutationOperator(MutationOperator<S> mutation) {
-    this.mutation = mutation;
-
-    return this;
-  }
-
-  @Override public Algorithm build() {
+  @Override public Algorithm<S> build() {
     if (variant == EvolutionStrategyVariant.ELITIST) {
       return new ElitistEvolutionStrategy<S>(problem, mu, lambda, maxEvaluations, mutation);
     } else if (variant == EvolutionStrategyVariant.NON_ELITIST) {

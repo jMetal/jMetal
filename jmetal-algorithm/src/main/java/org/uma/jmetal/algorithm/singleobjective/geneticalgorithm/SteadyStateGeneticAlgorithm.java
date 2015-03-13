@@ -16,19 +16,19 @@ import java.util.List;
 /**
  * Created by ajnebro on 26/10/14.
  */
-public class SteadyStateGeneticAlgorithm extends AbstractGeneticAlgorithm<Solution, Solution> {
+public class SteadyStateGeneticAlgorithm<S extends Solution> extends AbstractGeneticAlgorithm<S, S> {
   private Comparator<Solution> comparator;
   private int maxEvaluations;
   private int populationSize;
   private int evaluations;
 
-  private Problem<Solution> problem;
+  private Problem<S> problem;
 
   /**
    * Constructor
    */
-  public SteadyStateGeneticAlgorithm(Problem problem, int maxEvaluations, int populationSize,
-      CrossoverOperator crossoverOperator, MutationOperator mutationOperator,
+  public SteadyStateGeneticAlgorithm(Problem<S> problem, int maxEvaluations, int populationSize,
+      CrossoverOperator<List<S>, List<S>> crossoverOperator, MutationOperator<S> mutationOperator,
       SelectionOperator selectionOperator) {
     this.problem = problem;
     this.maxEvaluations = maxEvaluations;
@@ -45,17 +45,16 @@ public class SteadyStateGeneticAlgorithm extends AbstractGeneticAlgorithm<Soluti
     return (evaluations >= maxEvaluations);
   }
 
-  @Override protected List<Solution> createInitialPopulation() {
-    List<Solution> population = new ArrayList<>(populationSize);
+  @Override protected List<S> createInitialPopulation() {
+    List<S> population = new ArrayList<>(populationSize);
     for (int i = 0; i < populationSize; i++) {
-      Solution newIndividual = problem.createSolution();
+      S newIndividual = problem.createSolution();
       population.add(newIndividual);
     }
     return population;
   }
 
-  @Override protected List<Solution> replacement(List<Solution> population,
-      List<Solution> offspringPopulation) {
+  @Override protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
     Collections.sort(population, comparator) ;
     int worstSolutionIndex = population.size() - 1;
     if (comparator.compare(population.get(worstSolutionIndex), offspringPopulation.get(0)) > 0) {
@@ -66,39 +65,39 @@ public class SteadyStateGeneticAlgorithm extends AbstractGeneticAlgorithm<Soluti
     return population;
   }
 
-  @Override protected List<Solution> reproduction(List<Solution> matingPopulation) {
-    List<Solution> offspringPopulation = new ArrayList<>(1);
+  @Override protected List<S> reproduction(List<S> matingPopulation) {
+    List<S> offspringPopulation = new ArrayList<>(1);
 
-    List<Solution> parents = new ArrayList<>(2);
+    List<S> parents = new ArrayList<>(2);
     parents.add(matingPopulation.get(0));
     parents.add(matingPopulation.get(1));
 
-    List<Solution> offspring = crossoverOperator.execute(parents);
+    List<S> offspring = crossoverOperator.execute(parents);
     mutationOperator.execute(offspring.get(0));
 
     offspringPopulation.add(offspring.get(0));
     return offspringPopulation;
   }
 
-  @Override protected List<Solution> selection(List<Solution> population) {
-    List<Solution> matingPopulation = new ArrayList<>(2);
+  @Override protected List<S> selection(List<S> population) {
+    List<S> matingPopulation = new ArrayList<>(2);
     for (int i = 0; i < 2; i++) {
-      Solution solution = selectionOperator.execute(population);
+      S solution = selectionOperator.execute(population);
       matingPopulation.add(solution);
     }
 
     return matingPopulation;
   }
 
-  @Override protected List<Solution> evaluatePopulation(List<Solution> population) {
-    for (Solution solution : population) {
+  @Override protected List<S> evaluatePopulation(List<S> population) {
+    for (S solution : population) {
       problem.evaluate(solution);
     }
 
     return population;
   }
 
-  @Override public Solution getResult() {
+  @Override public S getResult() {
     Collections.sort(getPopulation(), comparator) ;
     return getPopulation().get(0);
   }

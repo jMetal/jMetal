@@ -1,10 +1,3 @@
-//  NSGAIIRunner.java
-//
-//  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//
-//  Copyright (c) 2014 Antonio J. Nebro
-//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -31,6 +24,7 @@ import org.uma.jmetal.operator.impl.mutation.BitFlipMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.BinaryProblem;
 import org.uma.jmetal.problem.singleobjective.OneMax;
+import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
@@ -42,30 +36,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Class to configure and run a parallel (multithreaded) generational genetic algorithm. The number
+ * of cores is specified as an optional parameter. A default value is used is the parameter is not
+ * provided. The target problem is OneMax
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class ParallelGenerationalGeneticAlgorithmRunner {
+  private static final int DEFAULT_NUMBER_OF_CORES = 0 ;
   /**
+   * Usage: org.uma.jmetal.runner.singleobjective.ParallelGenerationalGeneticAlgorithmRunner [cores]
    */
   public static void main(String[] args) throws Exception {
-
-    Algorithm algorithm;
+    Algorithm<BinarySolution> algorithm;
     BinaryProblem problem = new OneMax(512) ;
 
-    CrossoverOperator crossoverOperator = new SinglePointCrossover(0.9) ;
+    int numberOfCores ;
+    if (args.length == 1) {
+      numberOfCores = Integer.valueOf(args[0]) ;
+    } else {
+      numberOfCores = DEFAULT_NUMBER_OF_CORES ;
+    }
 
-    MutationOperator mutationOperator = new BitFlipMutation(1.0 / problem.getNumberOfBits(0)) ;
-
+    CrossoverOperator<List<BinarySolution>, List<BinarySolution>> crossoverOperator = new SinglePointCrossover(0.9) ;
+    MutationOperator<BinarySolution> mutationOperator = new BitFlipMutation(1.0 / problem.getNumberOfBits(0)) ;
     SelectionOperator selectionOperator = new BinaryTournamentSelection();
 
-    algorithm = new GeneticAlgorithmBuilder(problem, GeneticAlgorithmBuilder.GeneticAlgorithmVariant.GENERATIONAL)
+    algorithm = new GeneticAlgorithmBuilder<BinarySolution>(problem, crossoverOperator, mutationOperator,
+        GeneticAlgorithmBuilder.GeneticAlgorithmVariant.GENERATIONAL)
             .setPopulationSize(100)
             .setMaxEvaluations(25000)
-            .setCrossoverOperator(crossoverOperator)
-            .setMutationOperator(mutationOperator)
             .setSelectionOperator(selectionOperator)
-            .setSolutionListEvaluator(new MultithreadedSolutionListEvaluator(4, problem))
+            .setSolutionListEvaluator(new MultithreadedSolutionListEvaluator(numberOfCores, problem))
             .build() ;
-
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
@@ -85,6 +88,5 @@ public class ParallelGenerationalGeneticAlgorithmRunner {
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
     JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
     JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
-
   }
 }

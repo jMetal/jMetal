@@ -1,10 +1,3 @@
-//  NSGAIIRunner.java
-//
-//  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//
-//  Copyright (c) 2014 Antonio J. Nebro
-//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -29,6 +22,9 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
+import org.uma.jmetal.util.evaluator.impl.MultithreadedSolutionListEvaluator;
+import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
@@ -36,9 +32,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Class to configure and run a differential evolution algorithm. The algorithm can be configured
+ * to use threads. The number of cores is specified as an optional parameter. The target problem is Sphere.
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class DifferentialEvolutionRunner {
+  private static final int DEFAULT_NUMBER_OF_CORES = 1 ;
+
   /**
+   *  Usage: org.uma.jmetal.runner.singleobjective.DifferentialEvolutionRunner [cores]
    */
   public static void main(String[] args) throws Exception {
 
@@ -46,30 +49,38 @@ public class DifferentialEvolutionRunner {
     Algorithm<Solution> algorithm;
     DifferentialEvolutionSelection selection;
     DifferentialEvolutionCrossover crossover;
+    SolutionListEvaluator evaluator ;
 
     String problemName = "org.uma.jmetal.problem.singleobjective.Sphere" ;
 
     problem = (DoubleProblem) ProblemUtils.loadProblem(problemName);
 
-     /*
-     * Alternatives:
-     * - evaluator = new SequentialSolutionSetEvaluator()
-     * - evaluator = new MultithreadedSolutionSetEvaluator(threads, problem)
-     */
+    int numberOfCores ;
+    if (args.length == 1) {
+      numberOfCores = Integer.valueOf(args[0]) ;
+    } else {
+      numberOfCores = DEFAULT_NUMBER_OF_CORES ;
+    }
+
+    if (numberOfCores == 1) {
+      evaluator = new SequentialSolutionListEvaluator() ;
+    } else {
+      evaluator = new MultithreadedSolutionListEvaluator(numberOfCores, problem) ;
+    }
 
     crossover = new DifferentialEvolutionCrossover(0.5, 0.5, "rand/1/bin") ;
-
     selection = new DifferentialEvolutionSelection();
 
     algorithm = new DifferentialEvolutionBuilder(problem)
-            .setCrossover(crossover)
-            .setSelection(selection)
-            .setMaxEvaluations(250000)
-            .setPopulationSize(100)
-            .build() ;
+        .setCrossover(crossover)
+        .setSelection(selection)
+        .setSolutionListEvaluator(evaluator)
+        .setMaxEvaluations(250000)
+        .setPopulationSize(100)
+        .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-            .execute() ;
+        .execute() ;
 
     Solution solution = algorithm.getResult() ;
     long computingTime = algorithmRunner.getComputingTime() ;
@@ -77,14 +88,15 @@ public class DifferentialEvolutionRunner {
     List<Solution> population = new ArrayList<>(1) ;
     population.add(solution) ;
     new SolutionSetOutput.Printer(population)
-            .setSeparator("\t")
-            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
-            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
-            .print();
+        .setSeparator("\t")
+        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+        .print();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
     JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
     JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
 
+    evaluator.shutdown();
   }
 }

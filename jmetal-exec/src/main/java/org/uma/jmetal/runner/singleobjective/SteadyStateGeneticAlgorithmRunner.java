@@ -1,10 +1,3 @@
-//  NSGAIIRunner.java
-//
-//  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//
-//  Copyright (c) 2014 Antonio J. Nebro
-//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -30,6 +23,7 @@ import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.singleobjective.Sphere;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
@@ -40,26 +34,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Class to configure and run a steady-state genetic algorithm. The target problem is Sphere
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class SteadyStateGeneticAlgorithmRunner {
   /**
+   * Usage: org.uma.jmetal.runner.singleobjective.SteadyStateGeneticAlgorithmRunner
    */
-  public static void main(String[] args) throws
-          Exception {
+  public static void main(String[] args) throws Exception {
+    Algorithm<DoubleSolution> algorithm;
+    DoubleProblem problem = new Sphere(20) ;
 
-    Algorithm<Solution> algorithm;
-    DoubleProblem problem = new Sphere(512) ;
-    CrossoverOperator crossoverOperator = new SBXCrossover(0.9, 20.0) ;
-
-    MutationOperator mutationOperator = new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0) ;
-
+    CrossoverOperator<List<DoubleSolution>, List<DoubleSolution>> crossoverOperator =
+        new SBXCrossover(0.9, 20.0) ;
+    MutationOperator<DoubleSolution> mutationOperator =
+        new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0) ;
     SelectionOperator selectionOperator = new BinaryTournamentSelection() ;
 
-    algorithm = new GeneticAlgorithmBuilder(problem, GeneticAlgorithmBuilder.GeneticAlgorithmVariant.STEADY_STATE)
+    algorithm = new GeneticAlgorithmBuilder<DoubleSolution>(problem, crossoverOperator, mutationOperator,
+        GeneticAlgorithmBuilder.GeneticAlgorithmVariant.STEADY_STATE)
             .setPopulationSize(100)
             .setMaxEvaluations(25000)
-            .setCrossoverOperator(crossoverOperator)
-            .setMutationOperator(mutationOperator)
             .setSelectionOperator(selectionOperator)
             .build() ;
 
@@ -68,7 +64,7 @@ public class SteadyStateGeneticAlgorithmRunner {
 
     long computingTime = algorithmRunner.getComputingTime() ;
 
-    Solution solution = algorithm.getResult() ;
+    DoubleSolution solution = algorithm.getResult() ;
     List<Solution> population = new ArrayList<>(1) ;
     population.add(solution) ;
 
@@ -81,6 +77,5 @@ public class SteadyStateGeneticAlgorithmRunner {
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
     JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
     JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
-
   }
 }

@@ -14,21 +14,21 @@ import java.util.*;
 /**
  * Created by ajnebro on 26/10/14.
  */
-public class GenerationalGeneticAlgorithm extends AbstractGeneticAlgorithm<Solution, Solution> {
+public class GenerationalGeneticAlgorithm<S extends Solution> extends AbstractGeneticAlgorithm<S, S> {
   private Comparator<Solution> comparator;
   private int maxEvaluations;
   private int populationSize;
   private int evaluations;
 
-  private Problem problem;
+  private Problem<S> problem;
 
   private SolutionListEvaluator evaluator;
 
   /**
    * Constructor
    */
-  public GenerationalGeneticAlgorithm(Problem problem, int maxEvaluations, int populationSize,
-      CrossoverOperator crossoverOperator, MutationOperator mutationOperator,
+  public GenerationalGeneticAlgorithm(Problem<S> problem, int maxEvaluations, int populationSize,
+      CrossoverOperator<List<S>, List<S>> crossoverOperator, MutationOperator<S> mutationOperator,
       SelectionOperator selectionOperator, SolutionListEvaluator evaluator) {
     this.problem = problem;
     this.maxEvaluations = maxEvaluations;
@@ -47,16 +47,16 @@ public class GenerationalGeneticAlgorithm extends AbstractGeneticAlgorithm<Solut
     return (evaluations >= maxEvaluations);
   }
 
-  @Override protected List<Solution> createInitialPopulation() {
-    List<Solution> population = new ArrayList<>(populationSize);
+  @Override protected List<S> createInitialPopulation() {
+    List<S> population = new ArrayList<>(populationSize);
     for (int i = 0; i < populationSize; i++) {
-      Solution newIndividual = problem.createSolution();
+      S newIndividual = problem.createSolution();
       population.add(newIndividual);
     }
     return population;
   }
 
-  @Override protected List<Solution> replacement(List population, List offspringPopulation) {
+  @Override protected List<S> replacement(List population, List offspringPopulation) {
     Collections.sort(population, comparator);
     offspringPopulation.add(population.get(0));
     offspringPopulation.add(population.get(1));
@@ -67,14 +67,14 @@ public class GenerationalGeneticAlgorithm extends AbstractGeneticAlgorithm<Solut
     return offspringPopulation;
   }
 
-  @Override protected List<Solution> reproduction(List<Solution> matingPopulation) {
-    List<Solution> offspringPopulation = new ArrayList<>(matingPopulation.size() + 2);
+  @Override protected List<S> reproduction(List<S> matingPopulation) {
+    List<S> offspringPopulation = new ArrayList<>(matingPopulation.size() + 2);
     for (int i = 0; i < populationSize; i += 2) {
-      List<Solution> parents = new ArrayList<>(2);
+      List<S> parents = new ArrayList<>(2);
       parents.add(matingPopulation.get(i));
       parents.add(matingPopulation.get(i + 1));
 
-      List<Solution> offspring = crossoverOperator.execute(parents);
+      List<S> offspring = crossoverOperator.execute(parents);
       mutationOperator.execute(offspring.get(0));
       mutationOperator.execute(offspring.get(1));
 
@@ -84,25 +84,25 @@ public class GenerationalGeneticAlgorithm extends AbstractGeneticAlgorithm<Solut
     return offspringPopulation;
   }
 
-  @Override protected List<Solution> selection(List<Solution> population) {
-    List<Solution> matingPopulation = new ArrayList<>(population.size());
+  @Override protected List<S> selection(List<S> population) {
+    List<S> matingPopulation = new ArrayList<>(population.size());
     for (int i = 0; i < populationSize; i++) {
-      Solution solution = selectionOperator.execute(population);
+      S solution = selectionOperator.execute(population);
       matingPopulation.add(solution);
     }
 
     return matingPopulation;
   }
 
-  @Override protected List<Solution> evaluatePopulation(List<Solution> population) {
-    for (Solution solution : population) {
+  @Override protected List<S> evaluatePopulation(List<S> population) {
+    for (S solution : population) {
       problem.evaluate(solution);
     }
 
     return population;
   }
 
-  @Override public Solution getResult() {
+  @Override public S getResult() {
     Collections.sort(getPopulation(), comparator) ;
     return getPopulation().get(0);
   }

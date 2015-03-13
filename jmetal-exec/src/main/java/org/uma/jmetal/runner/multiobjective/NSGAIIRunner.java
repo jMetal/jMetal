@@ -43,6 +43,8 @@ import java.util.List;
 
 /**
  * Class to configure and run the NSGA-II algorithm
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class NSGAIIRunner {
   /**
@@ -50,10 +52,9 @@ public class NSGAIIRunner {
    * @throws java.io.IOException
    * @throws SecurityException
    * @throws ClassNotFoundException
-   * Usage: three options
+   * Usage: two options
    *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner
    *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName
-   *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName paretoFrontFile
    */
   public static void main(String[] args) throws JMetalException {
     Problem problem;

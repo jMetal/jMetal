@@ -1,10 +1,3 @@
-//  NSGAIIRunner.java
-//
-//  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//
-//  Copyright (c) 2014 Antonio J. Nebro
-//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -37,9 +30,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Class to configure and run an elitist (mu + lambda) evolution strategy. The target problem is
+ * OneMax.
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class ElitistEvolutionStrategyRunner {
   /**
+   * Usage: org.uma.jmetal.runner.singleobjective.ElitistEvolutionStrategyRunner
    */
   public static void main(String[] args) throws Exception {
     Algorithm<BinarySolution> algorithm;
@@ -50,13 +48,13 @@ public class ElitistEvolutionStrategyRunner {
 
     algorithm = new EvolutionStrategyBuilder<BinarySolution>(problem, mutationOperator,
         EvolutionStrategyBuilder.EvolutionStrategyVariant.ELITIST)
-            .setMaxEvaluations(25000)
-            .setMu(1)
-            .setLambda(10)
-            .build() ;
+        .setMaxEvaluations(25000)
+        .setMu(1)
+        .setLambda(10)
+        .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-            .execute() ;
+        .execute() ;
 
     Solution solution = algorithm.getResult() ;
     List<Solution> population = new ArrayList<>(1) ;
@@ -65,10 +63,10 @@ public class ElitistEvolutionStrategyRunner {
     long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)
-            .setSeparator("\t")
-            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
-            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
-            .print();
+        .setSeparator("\t")
+        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+        .print();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
     JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
