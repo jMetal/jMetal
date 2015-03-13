@@ -36,6 +36,8 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
+import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
+import org.uma.jmetal.util.evaluator.impl.MultithreadedSolutionListEvaluator;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
@@ -46,7 +48,7 @@ import java.util.List;
  *
  * @author juanjo
  */
-public class SPEA2Runner {
+public class ParallelSPEA2Runner {
   /**
    * @param args Command line arguments.
    * @throws java.io.IOException
@@ -62,12 +64,13 @@ public class SPEA2Runner {
     CrossoverOperator crossover;
     MutationOperator mutation;
     SelectionOperator selection;
+    SolutionListEvaluator evaluator ;
 
     String problemName ;
     if (args.length == 1) {
       problemName = args[0] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT3";
+      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
     }
 
     problem = ProblemUtils.loadProblem(problemName);
@@ -82,31 +85,36 @@ public class SPEA2Runner {
 
     selection = new BinaryTournamentSelection(new RankingAndCrowdingDistanceComparator());
 
+    evaluator = new MultithreadedSolutionListEvaluator(0, problem) ;
+
     algorithm = new SPEA2Builder(problem)
-            .setCrossoverOperator(crossover)
-            .setMutationOperator(mutation)
-            .setSelectionOperator(selection)
-            .setMaxIterations(250)
-            .setPopulationSize(100)
-            .build() ;
+        .setCrossoverOperator(crossover)
+        .setMutationOperator(mutation)
+        .setSelectionOperator(selection)
+        .setMaxIterations(250)
+        .setPopulationSize(100)
+        .setSolutionListEvaluator(evaluator)
+        .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-            .execute() ;
+        .execute() ;
 
-    List<Solution> population =((SPEA2)algorithm).getResult(); 
-    		
-    		
-    	
+    List<Solution> population =((SPEA2)algorithm).getResult();
+
+
+
     long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)
-            .setSeparator("\t")
-            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
-            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
-            .print();
+        .setSeparator("\t")
+        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+        .print();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
     JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
     JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
+
+    evaluator.shutdown();
   }
 }

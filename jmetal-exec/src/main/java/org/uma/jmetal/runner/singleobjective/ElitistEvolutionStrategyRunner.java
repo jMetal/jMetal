@@ -17,9 +17,11 @@ import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.singleobjective.evolutionstrategy.EvolutionStrategyBuilder;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.mutation.BitFlipMutation;
+import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.BinaryProblem;
 import org.uma.jmetal.problem.singleobjective.OneMax;
 import org.uma.jmetal.solution.BinarySolution;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
@@ -45,6 +47,8 @@ public class ElitistEvolutionStrategyRunner {
 
     MutationOperator<BinarySolution> mutationOperator =
         new BitFlipMutation(1.0 / problem.getNumberOfBits(0)) ;
+
+    MutationOperator<DoubleSolution> m = new PolynomialMutation(0.0, 1.0) ;
 
     algorithm = new EvolutionStrategyBuilder<BinarySolution>(problem, mutationOperator,
         EvolutionStrategyBuilder.EvolutionStrategyVariant.ELITIST)
