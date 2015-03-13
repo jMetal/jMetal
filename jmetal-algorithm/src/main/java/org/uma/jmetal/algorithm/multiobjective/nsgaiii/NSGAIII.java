@@ -154,8 +154,8 @@ public class NSGAIII extends AbstractGeneticAlgorithm<Solution, List<Solution>> 
     }
 
     // A copy of the reference list should be used as parameter of the environmental selection
-    EnvironmentalSelection selection =
-        new EnvironmentalSelection.Builder().setNumberOfObjectives(problem.getNumberOfObjectives())
+    EnvironmentalSelectionNSGAIII selection =
+        new EnvironmentalSelectionNSGAIII.Builder().setNumberOfObjectives(problem.getNumberOfObjectives())
             .setFronts(fronts).setSolutionsToSelect(populationSize)
             .setReferencePoints(getReferencePointsCopy()).build();
 
