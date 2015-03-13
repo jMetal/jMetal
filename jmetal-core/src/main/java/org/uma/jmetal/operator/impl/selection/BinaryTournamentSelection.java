@@ -24,43 +24,22 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * @author Antonio J. Nebro
+ * @author Antonio J. Nebro, Juan J. Durillo
  * @version 1.0
  * 
  * Applies a binary tournament selection to return the best solution between two that have been
  * chosen at random from a solution list.
+ * Modified by Juanjo in 13.03.2015. A binary tournament is now a TournamenteSelection with 2 
+ * tournaments
  */
-public class BinaryTournamentSelection implements SelectionOperator<List<Solution>,Solution> {
-  private Comparator<Solution> comparator;
-
-  /** Constructor */
+public class BinaryTournamentSelection extends TournamentSelection {
+    /** Constructor */
   public BinaryTournamentSelection() {
-    this(new DominanceComparator()) ;
+    super(new DominanceComparator(), 2) ;
   }
 
   /** Constructor */
   public BinaryTournamentSelection(Comparator<Solution> comparator) {
-    this.comparator = comparator ;
-  }
-
-  @Override
-  /** Execute() method */
-  public Solution execute(List<Solution> solutionList) {
-    if (null == solutionList) {
-      throw new JMetalException("The solution list is null") ;
-    } else if (solutionList.isEmpty()) {
-      throw new JMetalException("The solution list is empty") ;
-    }
-
-    Solution result ;
-    if (solutionList.size() == 1) {
-      result = solutionList.get(0) ;
-    } else {
-      List<Solution> selectedSolutions = SolutionListUtils.selectNRandomDifferentSolutions(2, solutionList);
-      result = SolutionUtils
-          .getBestSolution(selectedSolutions.get(0), selectedSolutions.get(1), comparator) ;
-    }
-
-    return result;
+    super(comparator,2);
   }
 }
