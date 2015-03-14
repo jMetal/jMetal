@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * @author Juanjo
  **/
-public class SPEA22<S extends Solution> extends AbstractGeneticAlgorithm<S, List<S>> {
+public class SPEA2Generics<S extends Solution> extends AbstractGeneticAlgorithm<S, List<S>> {
 
   protected final int maxIterations;
   protected final int populationSize;
@@ -27,7 +27,7 @@ public class SPEA22<S extends Solution> extends AbstractGeneticAlgorithm<S, List
   private final static StrengthRawFitness strenghtRawFitness = new StrengthRawFitness();
   private final EnvironmentalSelection environmentalSelection;
 
-  public SPEA22(Problem<S> problem, int maxIterations, int populationSize,
+  public SPEA2Generics(Problem<S> problem, int maxIterations, int populationSize,
       CrossoverOperator<List<S>, List<S>> crossoverOperator, MutationOperator<S> mutationOperator,
       SelectionOperator selectionOperator, SolutionListEvaluator evaluator) {
     super();

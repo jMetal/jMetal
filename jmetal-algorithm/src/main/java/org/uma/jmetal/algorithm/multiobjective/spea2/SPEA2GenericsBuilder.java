@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Created by juanjo 
  */
-public class SPEA2Builder2<S extends Solution> implements AlgorithmBuilder {
+public class SPEA2GenericsBuilder<S extends Solution> implements AlgorithmBuilder {
 
   /**
    * SPEA2Builder class
@@ -34,8 +34,8 @@ public class SPEA2Builder2<S extends Solution> implements AlgorithmBuilder {
   /**
    * SPEA2Builder constructor
    */
-  public SPEA2Builder2(Problem problem, CrossoverOperator<List<S>,List<S>> crossoverOperator,
-      MutationOperator<S> mutationOperator) {
+  public SPEA2GenericsBuilder(Problem problem,
+      CrossoverOperator<List<S>, List<S>> crossoverOperator, MutationOperator<S> mutationOperator) {
     this.problem = problem;
     maxIterations = 250;
     populationSize = 100;
@@ -45,7 +45,7 @@ public class SPEA2Builder2<S extends Solution> implements AlgorithmBuilder {
     evaluator = new SequentialSolutionListEvaluator();
   }
 
-  public SPEA2Builder2 setMaxIterations(int maxIterations) {
+  public SPEA2GenericsBuilder setMaxIterations(int maxIterations) {
     if (maxIterations < 0) {
       throw new JMetalException("maxIterations is negative: " + maxIterations);
     }
@@ -54,7 +54,7 @@ public class SPEA2Builder2<S extends Solution> implements AlgorithmBuilder {
     return this;
   }
 
-  public SPEA2Builder2 setPopulationSize(int populationSize) {
+  public SPEA2GenericsBuilder setPopulationSize(int populationSize) {
     if (populationSize < 0) {
       throw new JMetalException("Population size is negative: " + populationSize);
     }
@@ -64,7 +64,7 @@ public class SPEA2Builder2<S extends Solution> implements AlgorithmBuilder {
     return this;
   }
 
-  public SPEA2Builder2 setSelectionOperator(SelectionOperator selectionOperator) {
+  public SPEA2GenericsBuilder setSelectionOperator(SelectionOperator selectionOperator) {
     if (selectionOperator == null) {
       throw new JMetalException("selectionOperator is null");
     }
@@ -73,7 +73,7 @@ public class SPEA2Builder2<S extends Solution> implements AlgorithmBuilder {
     return this;
   }
 
-  public SPEA2Builder2 setSolutionListEvaluator(SolutionListEvaluator evaluator) {
+  public SPEA2GenericsBuilder setSolutionListEvaluator(SolutionListEvaluator evaluator) {
     if (evaluator == null) {
       throw new JMetalException("evaluator is null");
     }
@@ -84,7 +84,7 @@ public class SPEA2Builder2<S extends Solution> implements AlgorithmBuilder {
 
   public Algorithm build() {
     Algorithm algorithm = null ;
-    algorithm = new SPEA22<S>(problem, maxIterations, populationSize, crossoverOperator,
+    algorithm = new SPEA2Generics<S>(problem, maxIterations, populationSize, crossoverOperator,
           mutationOperator, selectionOperator, evaluator);
     
     return algorithm ;

@@ -21,14 +21,14 @@
 package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.spea2.SPEA2GenericsBuilder;
+import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIGenericsBuilder;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
-import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
@@ -41,11 +41,11 @@ import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import java.util.List;
 
 /**
- * Class to configure and run the SPEA2 algorithm. Copied from the NSGAII Runner Class
+ * Class to configure and run the NSGA-II algorithm
  *
- * @author juanjo
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class SPEA2Runner {
+public class NSGAIIGenericsRunner {
   /**
    * @param args Command line arguments.
    * @throws java.io.IOException
@@ -56,9 +56,9 @@ public class SPEA2Runner {
    *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName
    */
   public static void main(String[] args) throws JMetalException {
-    Problem<DoubleSolution> problem;
+    DoubleProblem problem;
     Algorithm<List<DoubleSolution>> algorithm;
-    CrossoverOperator<List<DoubleSolution>, List<DoubleSolution>> crossover;
+    CrossoverOperator<List<DoubleSolution>,List<DoubleSolution>> crossover;
     MutationOperator<DoubleSolution> mutation;
     SelectionOperator selection;
 
@@ -66,10 +66,10 @@ public class SPEA2Runner {
     if (args.length == 1) {
       problemName = args[0] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT6";
+      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
     }
 
-    problem = ProblemUtils.loadProblem(problemName);
+    problem = (DoubleProblem)ProblemUtils.loadProblem(problemName);
 
     double crossoverProbability = 0.9 ;
     double crossoverDistributionIndex = 20.0 ;
@@ -81,20 +81,17 @@ public class SPEA2Runner {
 
     selection = new BinaryTournamentSelection(new RankingAndCrowdingDistanceComparator());
 
-    //algorithm = new SPEA2Builder(problem)
-    algorithm = new SPEA2GenericsBuilder<>(problem, crossover, mutation)
-         //   .setCrossoverOperator(crossover)
-         //   .setMutationOperator(mutation)
+    algorithm = new NSGAIIGenericsBuilder<DoubleSolution>(problem, crossover, mutation,
+        NSGAIIGenericsBuilder.NSGAIIVariant.NSGAII)
             .setSelectionOperator(selection)
-            .setMaxIterations(250)
+            .setMaxIterations(100)
             .setPopulationSize(100)
             .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
-    List<DoubleSolution> population = algorithm.getResult();
-
+    List<DoubleSolution> population = algorithm.getResult() ;
     long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)
