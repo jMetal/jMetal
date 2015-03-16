@@ -21,16 +21,21 @@ import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.FrontUtils;
+import org.uma.jmetal.util.naming.impl.SimpleDescribedEntity;
 
 import java.util.Comparator;
 import java.util.List;
 
 /**
+ * TODO Add comments here
  * @author Antonio J. Nebro
  * @version 1.0
  */
-public class SetCoverage implements QualityIndicator {
-  private static final String NAME = "SC" ;
+public class SetCoverage extends SimpleDescribedEntity implements QualityIndicator {
+
+  public SetCoverage() {
+    super("SC", "Set coverage") ;
+  }
 
   private Comparator<Solution> dominance;
 
@@ -88,6 +93,6 @@ public class SetCoverage implements QualityIndicator {
   }
 
   @Override public String getName() {
-    return NAME;
+    return getName() ;
   }
 }

@@ -18,6 +18,7 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
+import org.uma.jmetal.util.naming.impl.SimpleDescribedEntity;
 import org.uma.jmetal.util.point.Point;
 
 import java.util.List;
@@ -31,8 +32,10 @@ import java.util.List;
  * the front could contain solutions that dominate some of those of the supposed Pareto front.
  * It is a responsibility of the caller to ensure that this does not happen.
  */
-public class ErrorRatio implements QualityIndicator {
-  private static final String NAME = "ER" ;
+public class ErrorRatio extends SimpleDescribedEntity implements QualityIndicator {
+  public ErrorRatio() {
+    super("ER", "Error quality indicator") ;
+  }
 
   @Override
   public double execute(Front paretoFrontApproximation, Front trueParetoFront) {
@@ -98,6 +101,6 @@ public class ErrorRatio implements QualityIndicator {
 
 
   @Override public String getName() {
-    return NAME ;
+    return getName() ;
   }
 }

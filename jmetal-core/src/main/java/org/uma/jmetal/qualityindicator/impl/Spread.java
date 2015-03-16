@@ -27,6 +27,7 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.imp.FrontUtils;
+import org.uma.jmetal.util.naming.impl.SimpleDescribedEntity;
 import org.uma.jmetal.util.point.impl.LexicographicalPointComparator;
 import org.uma.jmetal.util.point.impl.PointUtils;
 
@@ -37,14 +38,14 @@ import java.util.List;
  * Reference: Deb, K., Pratap, A., Agarwal, S., Meyarivan, T.: A fast and
  * elitist multiobjective genetic algorithm: NSGA-II. IEEE Trans. on Evol. Computation 6 (2002) 182-197
  */
-public class Spread implements QualityIndicator {
-  private static final String NAME = "SPREAD" ;
+public class Spread extends SimpleDescribedEntity implements QualityIndicator {
 
   /**
    * Constructor.
    * Creates a new instance of a Spread object
    */
   public Spread() {
+    super("SPREAD", "SPREAD quality indicator") ;
   }
 
   @Override
@@ -133,6 +134,6 @@ public class Spread implements QualityIndicator {
   }
 
   @Override public String getName() {
-    return NAME;
+    return getName() ;
   }
 }

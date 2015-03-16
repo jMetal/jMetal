@@ -26,16 +26,17 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.imp.FrontUtils;
+import org.uma.jmetal.util.naming.impl.SimpleDescribedEntity;
 
 import java.util.List;
 
-public class R2 implements QualityIndicator {
-  private static final String NAME = "R2" ;
-
+/**
+ * TODO: Add comments here
+ */
+public class R2 extends SimpleDescribedEntity implements QualityIndicator{
   double[][] matrix = null;
   double[][] lambda = null;
   int numberOfObjectives = 0;
-
 
   /**
    * Creates a new instance of the R2 indicator for a problem with
@@ -44,6 +45,8 @@ public class R2 implements QualityIndicator {
   public R2() {
     // by default it creates an R2 indicator for a two dimensions problem and
     // uses only 100 weight vectors for the R2 computation
+    super("R2", "R2 quality indicator") ;
+
     numberOfObjectives = 2;
     // generating the weights
     lambda = new double[100][2];
@@ -61,6 +64,8 @@ public class R2 implements QualityIndicator {
   public R2(int nVectors) {
     // by default it creates an R2 indicator for a two dimensions problem and
     // uses only <code>nVectors</code> weight vectors for the R2 computation
+    super("R2", "R2 quality indicator") ;
+
     numberOfObjectives = 2;
     // generating the weights
     lambda = new double[nVectors][2];
@@ -96,7 +101,7 @@ public class R2 implements QualityIndicator {
   }
 
   @Override public String getName() {
-    return NAME;
+    return getName();
   }
 
   /**

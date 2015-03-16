@@ -27,6 +27,7 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.imp.FrontUtils;
+import org.uma.jmetal.util.naming.impl.SimpleDescribedEntity;
 
 import java.util.List;
 
@@ -34,13 +35,15 @@ import java.util.List;
  * This class implements the hypervolume indicator. The code is the a Java version
  * of the original metric implementation by Eckart Zitzler.
  * Reference: E. Zitzler and L. Thiele
- * Multiobjective Evolutionary Algorithms: A Comparative Case Study
- * and the Strength Pareto Approach,
+ * Multiobjective Evolutionary Algorithms: A Comparative Case Study and the Strength Pareto Approach,
  * IEEE Transactions on Evolutionary Computation, vol. 3, no. 4,
  * pp. 257-271, 1999.
  */
-public class Hypervolume implements QualityIndicator {
-  private static final String NAME = "HV" ;
+public class Hypervolume extends SimpleDescribedEntity implements QualityIndicator {
+
+  public Hypervolume() {
+    super("HV", "Hypervolume quality indicator") ;
+  }
 
   @Override
   public double execute(Front paretoFrontApproximation, Front trueParetoFront) {
@@ -69,7 +72,7 @@ public class Hypervolume implements QualityIndicator {
 
   @Override
   public String getName() {
-    return NAME ;
+    return getName() ;
   }
 
   /*
@@ -156,7 +159,7 @@ public class Hypervolume implements QualityIndicator {
      'front[0..noPoints-1]' are considered; 'front' is resorted, such that
      'front[0..n-1]' contains the remaining points; 'n' is returned */
   int reduceNondominatedSet(double[][] front, int noPoints, int objective,
-    double threshold) {
+      double threshold) {
     int n;
     int i;
 

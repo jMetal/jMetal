@@ -27,6 +27,7 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.imp.FrontUtils;
+import org.uma.jmetal.util.naming.impl.SimpleDescribedEntity;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
 import org.uma.jmetal.util.point.impl.LexicographicalPointComparator;
@@ -42,14 +43,13 @@ import java.util.List;
  * multi-objective optimization using a convergence criterion,
  * 2006 IEEE Congress on Evolutionary Computation, 2006, pp. 3234-3241.
  */
-public class GeneralizedSpread implements QualityIndicator {
-  private static final String NAME = "GSPREAD" ;
-
+public class GeneralizedSpread extends SimpleDescribedEntity implements QualityIndicator {
   /**
    * Constructor
    * Creates a new instance of GeneralizedSpread
    */
   public GeneralizedSpread() {
+    super("GSPREAD", "Generalized SPREAD quality indicator") ;
   }
 
   @Override
@@ -155,10 +155,8 @@ public class GeneralizedSpread implements QualityIndicator {
     }
   }
 
-
-
   @Override
   public String getName() {
-    return NAME;
+    return getName();
   }
 }

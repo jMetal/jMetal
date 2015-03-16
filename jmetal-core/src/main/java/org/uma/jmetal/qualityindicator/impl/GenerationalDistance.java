@@ -27,23 +27,24 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.imp.FrontUtils;
+import org.uma.jmetal.util.naming.impl.SimpleDescribedEntity;
 
 import java.util.List;
 
 /**
- * This class implements the generational distance indicator. It can be used also
- * as a command line by typing:
- * "java org.uma.jmetal.qualityindicator.impl.GenerationalDistance <solutionFrontFile>
- * <trueFrontFile> <getNumberOfObjectives>"
+ * This class implements the generational distance indicator.
  * Reference: Van Veldhuizen, D.A., Lamont, G.B.: Multiobjective Evolutionary
  * Algorithm Research: A History and Analysis.
  * Technical Report TR-98-03, Dept. Elec. Comput. Eng., Air Force
  * Inst. Technol. (1998)
  */
-public class GenerationalDistance implements QualityIndicator {
-  private static final String NAME = "GD" ;
+public class GenerationalDistance extends SimpleDescribedEntity implements QualityIndicator {
 
   private static final double POW = 2.0;
+
+  public GenerationalDistance() {
+    super("GD", "Generational distance quality indicator") ;
+  }
 
   @Override
   public double execute(Front paretoFrontApproximation, Front trueParetoFront) {
@@ -112,6 +113,6 @@ public class GenerationalDistance implements QualityIndicator {
 
   @Override
   public String getName() {
-    return NAME;
+    return getName();
   }
 }

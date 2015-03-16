@@ -26,6 +26,7 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
+import org.uma.jmetal.util.naming.impl.SimpleDescribedEntity;
 
 import java.util.List;
 
@@ -39,8 +40,11 @@ import java.util.List;
  * <trueFrontFile> <getNumberOfObjectives>
  */
 
-public class Epsilon implements QualityIndicator {
-  private static final String NAME = "EPSILON";
+public class Epsilon extends SimpleDescribedEntity implements QualityIndicator {
+
+  public Epsilon() {
+    super ("EPSILON", "Additive Epsilon indicator") ;
+  }
 
   @Override
   public double execute(Front paretoFrontApproximation, Front trueParetoFront) {
@@ -67,7 +71,7 @@ public class Epsilon implements QualityIndicator {
   }
 
   @Override public String getName() {
-    return NAME ;
+    return getName() ;
   }
 
   /**

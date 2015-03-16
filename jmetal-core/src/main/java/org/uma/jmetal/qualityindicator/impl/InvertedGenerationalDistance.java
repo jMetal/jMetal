@@ -27,22 +27,18 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.imp.FrontUtils;
+import org.uma.jmetal.util.naming.impl.SimpleDescribedEntity;
 
 import java.util.List;
 
 /**
  * This class implements the inverted generational distance metric.
- * It can be used also as a command line by typing:
- * "java org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistance <solutionFrontFile> <trueFrontFile>
- * <getNumberOfObjectives>"
- * Reference: Van Veldhuizen, D.A., Lamont, G.B.: Multiobjective Evolutionary
- * Algorithm Research: A History and Analysis.
+ * Reference: Van Veldhuizen, D.A., Lamont, G.B.: Multiobjective Evolutionary Algorithm Research:
+ * A History and Analysis.
  * Technical Report TR-98-03, Dept. Elec. Comput. Eng., Air Force
  * Inst. Technol. (1998)
  */
-public class InvertedGenerationalDistance implements QualityIndicator {
-  private static final String NAME = "IGD" ;
-
+public class InvertedGenerationalDistance extends SimpleDescribedEntity implements QualityIndicator {
   private static final double POW = 2.0;
 
   /**
@@ -50,6 +46,7 @@ public class InvertedGenerationalDistance implements QualityIndicator {
    * Creates a new instance of the generational distance metric.
    */
   public InvertedGenerationalDistance() {
+    super("IGD", "Inverted generational distance") ;
   }
 
   @Override
@@ -119,6 +116,6 @@ public class InvertedGenerationalDistance implements QualityIndicator {
 
   @Override
   public String getName() {
-    return NAME;
+    return getName();
   }
 }
