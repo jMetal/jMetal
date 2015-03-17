@@ -54,9 +54,6 @@ public class SimplePushMeasure<Value> extends SimpleMeasure<Value> implements
 	/**
 	 * Create a {@link SimplePushMeasure} with the class name as its name and a
 	 * <code>null</code> description.
-	 * 
-	 * @param name
-	 *            the name of the measure
 	 */
 	public SimplePushMeasure() {
 		super();

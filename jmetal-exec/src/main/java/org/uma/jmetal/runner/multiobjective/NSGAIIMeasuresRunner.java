@@ -145,14 +145,13 @@ public class NSGAIIMeasuresRunner {
 
 
   private static class Listener implements MeasureListener<List<Solution>> {
-    private int numberOfSolutions ;
     private int counter = 0 ;
 
     @Override synchronized public void measureGenerated(List<Solution> solutions) {
-      numberOfSolutions = solutions.size() ;
-      System.out.print(
-          "PUSH MEASURE. Iteration: " + counter++ + "  Solutions: " + numberOfSolutions + " .") ;
-      System.out.println("First solution: " + solutions.get(0)) ;
+      if ((counter % 10 == 0)) {
+        System.out.println("PUSH MEASURE. Counter = " + counter+ " First solution: " + solutions.get(0)) ;
+      }
+      counter ++ ;
     }
   }
 }
