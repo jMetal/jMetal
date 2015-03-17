@@ -87,7 +87,6 @@ public class NSGAIIMeasures extends NSGAII implements Measurable{
     List<Solution> pop = super.replacement(population, offspringPopulation) ;
 
     Ranking ranking = computeRanking(pop);
-
     numberOfNonDominatedSolutionsInPopulation.set(ranking.getSubfront(0).size());
 
     return pop;
