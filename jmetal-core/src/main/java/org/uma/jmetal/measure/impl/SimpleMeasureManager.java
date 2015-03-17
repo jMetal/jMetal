@@ -66,9 +66,10 @@ public class SimpleMeasureManager implements MeasureManager {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public PullMeasure<?> getPullMeasure(Object key) {
-		return pullers.get(key);
+	public <T> PullMeasure<T> getPullMeasure(Object key) {
+		return (PullMeasure<T>) pullers.get(key);
 	}
 
 	/**
@@ -95,9 +96,10 @@ public class SimpleMeasureManager implements MeasureManager {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public PushMeasure<?> getPushMeasure(Object key) {
-		return pushers.get(key);
+	public <T> PushMeasure<T> getPushMeasure(Object key) {
+		return (PushMeasure<T>) pushers.get(key);
 	}
 
 	/**

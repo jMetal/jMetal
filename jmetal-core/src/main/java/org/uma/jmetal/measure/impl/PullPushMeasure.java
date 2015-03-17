@@ -10,7 +10,7 @@ import org.uma.jmetal.measure.PushMeasure;
 /**
  * A {@link PullPushMeasure} aims at providing both the {@link PushMeasure} and
  * {@link PullMeasure} abilities into a single {@link Measure}. One could simply
- * built a brand new {@link Measure} by calling
+ * build a brand new {@link Measure} by calling
  * {@link #PullPushMeasure(String, String)}, but in the case where some existing
  * measures are available, he can wrap them into a {@link PullPushMeasure} by
  * calling {@link #PullPushMeasure(PushMeasure, Object)} or other constructors
@@ -116,6 +116,12 @@ public class PullPushMeasure<Value> implements PullMeasure<Value>,
 	 *            the description of the {@link PullPushMeasure}
 	 */
 	public PullPushMeasure(String name, String description) {
+		/*
+		 * FIXME No way to access the newly created push measure. Probably
+		 * enclosing existing measures and creating a new one are conceptually
+		 * incompatible (the source of push is different) and so should not be
+		 * together in the same class.
+		 */
 		this(new SimplePushMeasure<Value>(name, description), null);
 	}
 
