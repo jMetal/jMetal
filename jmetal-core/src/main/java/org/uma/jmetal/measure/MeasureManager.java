@@ -41,7 +41,7 @@ public interface MeasureManager {
 	 *            the key of the {@link Measure}
 	 * @return the {@link PullMeasure} identified by this key
 	 */
-	public PullMeasure<?> getPullMeasure(Object key);
+	public <T> PullMeasure<T> getPullMeasure(Object key);
 
 	/**
 	 * 
@@ -49,5 +49,5 @@ public interface MeasureManager {
 	 *            the key of the {@link Measure}
 	 * @return the {@link PushMeasure} identified by this key
 	 */
-	public PushMeasure<?> getPushMeasure(Object key);
+	public <T> PushMeasure<T> getPushMeasure(Object key);
 }

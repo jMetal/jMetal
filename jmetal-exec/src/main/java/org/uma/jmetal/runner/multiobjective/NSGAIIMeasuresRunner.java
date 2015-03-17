@@ -101,11 +101,11 @@ public class NSGAIIMeasuresRunner {
     MeasureManager measureManager = ((NSGAIIMeasures)algorithm).getMeasureManager() ;
 
     CountingMeasure iteration =
-        (CountingMeasure) measureManager.getPullMeasure("currentIteration");
+        (CountingMeasure) measureManager.<Long>getPullMeasure("currentIteration");
     DurationMeasure currentComputingTime =
-        (DurationMeasure) measureManager.getPullMeasure("currentExecutionTime");
+        (DurationMeasure) measureManager.<Long>getPullMeasure("currentExecutionTime");
     SingleValueMeasure<Integer> nonDominatedSolutions =
-        (SingleValueMeasure<Integer>) measureManager.getPullMeasure("numberOfNonDominatedSolutionsInPopulation");
+        (SingleValueMeasure<Integer>) measureManager.<Integer>getPullMeasure("numberOfNonDominatedSolutionsInPopulation");
 
     SingleValueMeasure<List<Solution>> solutionListMeasure =
         (SingleValueMeasure) measureManager.getPushMeasure("currentPopulation");
