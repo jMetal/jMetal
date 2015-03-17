@@ -116,6 +116,12 @@ public class PullPushMeasure<Value> implements PullMeasure<Value>,
 	 *            the description of the {@link PullPushMeasure}
 	 */
 	public PullPushMeasure(String name, String description) {
+		/*
+		 * FIXME No way to access the newly created push measure. Probably
+		 * enclosing existing measures and creating a new one are conceptually
+		 * incompatible (the source of push is different) and so should not be
+		 * together in the same class.
+		 */
 		this(new SimplePushMeasure<Value>(name, description), null);
 	}
 
