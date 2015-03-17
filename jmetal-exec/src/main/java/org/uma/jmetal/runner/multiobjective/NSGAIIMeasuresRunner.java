@@ -28,7 +28,6 @@ import org.uma.jmetal.measure.MeasureManager;
 import org.uma.jmetal.measure.impl.CountingMeasure;
 import org.uma.jmetal.measure.impl.DurationMeasure;
 import org.uma.jmetal.measure.impl.SingleValueMeasure;
-import org.uma.jmetal.measure.impl.SolutionListMeasure;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -108,8 +107,8 @@ public class NSGAIIMeasuresRunner {
     SingleValueMeasure<Integer> nonDominatedSolutions =
         (SingleValueMeasure<Integer>) measureManager.getPullMeasure("numberOfNonDominatedSolutionsInPopulation");
 
-    SolutionListMeasure solutionListMeasure =
-        (SolutionListMeasure) measureManager.getPushMeasure("currentPopulation");
+    SingleValueMeasure<List<Solution>> solutionListMeasure =
+        (SingleValueMeasure) measureManager.getPushMeasure("currentPopulation");
     solutionListMeasure.register(new Listener());
     /* End of measure management */
 
@@ -151,7 +150,8 @@ public class NSGAIIMeasuresRunner {
 
     @Override synchronized public void measureGenerated(List<Solution> solutions) {
       numberOfSolutions = solutions.size() ;
-      System.out.print("PUSH MEASURE. Iteration: " + counter++ + "  Solutions: " + numberOfSolutions + " .") ;
+      System.out.print(
+          "PUSH MEASURE. Iteration: " + counter++ + "  Solutions: " + numberOfSolutions + " .") ;
       System.out.println("First solution: " + solutions.get(0)) ;
     }
   }

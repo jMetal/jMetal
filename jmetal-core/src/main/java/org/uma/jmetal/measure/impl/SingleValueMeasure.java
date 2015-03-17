@@ -37,4 +37,9 @@ public class SingleValueMeasure<T> extends SimplePushMeasure<T> implements
 	public synchronized T get() {
 		return value;
 	}
+
+  @Override public void push (T value) {
+    super.push(value) ;
+  }
+
 }

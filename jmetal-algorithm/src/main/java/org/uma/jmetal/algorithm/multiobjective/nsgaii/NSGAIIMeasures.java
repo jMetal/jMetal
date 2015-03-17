@@ -24,7 +24,7 @@ public class NSGAIIMeasures extends NSGAII implements Measurable{
   private DurationMeasure durationMeasure ;
   private SimpleMeasureManager measureManager ;
 
-  private SolutionListMeasure solutionListMeasure ;
+  private SingleValueMeasure<List<Solution>> solutionListMeasure ;
 
   /**
    * Constructor
@@ -67,7 +67,7 @@ public class NSGAIIMeasures extends NSGAII implements Measurable{
     durationMeasure = new DurationMeasure() ;
     iterations = new CountingMeasure(0) ;
     numberOfNonDominatedSolutionsInPopulation = new SingleValueMeasure<>() ;
-    solutionListMeasure = new SolutionListMeasure() ;
+    solutionListMeasure = new SingleValueMeasure<>() ;
 
     measureManager = new SimpleMeasureManager() ;
     measureManager.setPullMeasure("currentExecutionTime", durationMeasure);
