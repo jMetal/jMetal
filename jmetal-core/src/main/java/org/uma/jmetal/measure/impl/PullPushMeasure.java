@@ -10,7 +10,7 @@ import org.uma.jmetal.measure.PushMeasure;
 /**
  * A {@link PullPushMeasure} aims at providing both the {@link PushMeasure} and
  * {@link PullMeasure} abilities into a single {@link Measure}. One could simply
- * built a brand new {@link Measure} by calling
+ * build a brand new {@link Measure} by calling
  * {@link #PullPushMeasure(String, String)}, but in the case where some existing
  * measures are available, he can wrap them into a {@link PullPushMeasure} by
  * calling {@link #PullPushMeasure(PushMeasure, Object)} or other constructors
