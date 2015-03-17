@@ -23,10 +23,12 @@ package org.uma.jmetal.runner.multiobjective;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIMeasures;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIMeasuresBuilder;
+import org.uma.jmetal.measure.MeasureListener;
 import org.uma.jmetal.measure.MeasureManager;
 import org.uma.jmetal.measure.impl.CountingMeasure;
 import org.uma.jmetal.measure.impl.DurationMeasure;
 import org.uma.jmetal.measure.impl.SingleValueMeasure;
+import org.uma.jmetal.measure.impl.SolutionListMeasure;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -72,7 +74,7 @@ public class NSGAIIMeasuresRunner {
       problemName = args[0] ;
       problem = ProblemUtils.loadProblem(problemName);
     } else {
-      problem = new ZDT1(1000);
+      problem = new ZDT1(2500);
     }
 
     double crossoverProbability = 0.9 ;
@@ -85,16 +87,16 @@ public class NSGAIIMeasuresRunner {
 
     selection = new BinaryTournamentSelection(new RankingAndCrowdingDistanceComparator());
 
-    int maxIterations = 1000 ;
+    int maxIterations = 250 ;
     int populationSize = 100 ;
 
     algorithm = new NSGAIIMeasuresBuilder(problem)
-            .setCrossoverOperator(crossover)
-            .setMutationOperator(mutation)
-            .setSelectionOperator(selection)
-            .setMaxIterations(maxIterations)
-            .setPopulationSize(populationSize)
-            .build() ;
+        .setCrossoverOperator(crossover)
+        .setMutationOperator(mutation)
+        .setSelectionOperator(selection)
+        .setMaxIterations(maxIterations)
+        .setPopulationSize(populationSize)
+        .build() ;
 
     /* Measure management */
     MeasureManager measureManager = ((NSGAIIMeasures)algorithm).getMeasureManager() ;
@@ -105,10 +107,12 @@ public class NSGAIIMeasuresRunner {
         (DurationMeasure) measureManager.getPullMeasure("currentExecutionTime");
     SingleValueMeasure<Integer> nonDominatedSolutions =
         (SingleValueMeasure<Integer>) measureManager.getPullMeasure("numberOfNonDominatedSolutionsInPopulation");
+
+    SolutionListMeasure solutionListMeasure =
+        (SolutionListMeasure) measureManager.getPushMeasure("currentPopulation");
+    solutionListMeasure.register(new Listener());
     /* End of measure management */
 
-    //AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-    //        .execute() ;
     Thread algorithmThread = new Thread(algorithm) ;
     algorithmThread.start();
 
@@ -130,13 +134,25 @@ public class NSGAIIMeasuresRunner {
     //long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)
-            .setSeparator("\t")
-            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
-            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
-            .print();
+        .setSeparator("\t")
+        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+        .print();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
     JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
     JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
+  }
+
+
+  private static class Listener implements MeasureListener<List<Solution>> {
+    private int numberOfSolutions ;
+    private int counter = 0 ;
+
+    @Override synchronized public void measureGenerated(List<Solution> solutions) {
+      numberOfSolutions = solutions.size() ;
+      System.out.print("PUSH MEASURE. Iteration: " + counter++ + "  Solutions: " + numberOfSolutions + " .") ;
+      System.out.println("First solution: " + solutions.get(0)) ;
+    }
   }
 }

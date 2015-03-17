@@ -2,10 +2,7 @@ package org.uma.jmetal.algorithm.multiobjective.nsgaii;
 
 import org.uma.jmetal.measure.Measurable;
 import org.uma.jmetal.measure.MeasureManager;
-import org.uma.jmetal.measure.impl.CountingMeasure;
-import org.uma.jmetal.measure.impl.DurationMeasure;
-import org.uma.jmetal.measure.impl.SimpleMeasureManager;
-import org.uma.jmetal.measure.impl.SingleValueMeasure;
+import org.uma.jmetal.measure.impl.*;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -14,6 +11,7 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,6 +23,8 @@ public class NSGAIIMeasures extends NSGAII implements Measurable{
   private SingleValueMeasure<Integer> numberOfNonDominatedSolutionsInPopulation ;
   private DurationMeasure durationMeasure ;
   private SimpleMeasureManager measureManager ;
+
+  private SolutionListMeasure solutionListMeasure ;
 
   /**
    * Constructor
@@ -43,6 +43,11 @@ public class NSGAIIMeasures extends NSGAII implements Measurable{
 
   @Override protected void updateProgress() {
     iterations.increment();
+
+    if ((iterations.get() % 10) == 0) {
+      List<Solution> list = new ArrayList<>(getPopulation());
+      solutionListMeasure.push(list);
+    }
   }
 
   @Override protected boolean isStoppingConditionReached() {
@@ -62,11 +67,14 @@ public class NSGAIIMeasures extends NSGAII implements Measurable{
     durationMeasure = new DurationMeasure() ;
     iterations = new CountingMeasure(0) ;
     numberOfNonDominatedSolutionsInPopulation = new SingleValueMeasure<>() ;
+    solutionListMeasure = new SolutionListMeasure() ;
 
     measureManager = new SimpleMeasureManager() ;
     measureManager.setPullMeasure("currentExecutionTime", durationMeasure);
     measureManager.setPullMeasure("currentIteration", iterations);
     measureManager.setPullMeasure("numberOfNonDominatedSolutionsInPopulation", numberOfNonDominatedSolutionsInPopulation);
+
+    measureManager.setPushMeasure("currentPopulation", solutionListMeasure);
   }
 
   @Override
