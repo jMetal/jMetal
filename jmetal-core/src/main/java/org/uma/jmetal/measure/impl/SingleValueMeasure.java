@@ -10,36 +10,35 @@ import org.uma.jmetal.measure.PushMeasure;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class SingleValueMeasure<T> extends SimplePushMeasure<T> implements
-		PullMeasure<T>, PushMeasure<T> {
+    PullMeasure<T>, PushMeasure<T> {
 
-	private T value ;
+  private T value ;
 
-	/**
-	 * Create a {@link org.uma.jmetal.measure.impl.SingleValueMeasure}
-	 */
-	public SingleValueMeasure() {
-		super(
-				"SingleValue",
-				"Generic measure which stores a single value.");
-	}
+  /**
+   * Create a {@link org.uma.jmetal.measure.impl.SingleValueMeasure}
+   */
+  public SingleValueMeasure() {
+    super(
+        "SingleValue",
+        "Generic measure which stores a single value.");
+  }
 
-	/**
-	 * @param value The value to be stored
-	 */
-	public synchronized void set(T value) {
-		this.value = value ;
-	}
+  /**
+   * @param value The value to be stored
+   */
+  public synchronized void set(T value) {
+    this.value = value ;
+  }
 
-	/**
-	 * @return the current value
-	 */
-	@Override
-	public synchronized T get() {
-		return value;
-	}
+  /**
+   * @return the current value
+   */
+  @Override
+  public synchronized T get() {
+    return value;
+  }
 
   @Override public void push (T value) {
     super.push(value) ;
   }
-
 }
