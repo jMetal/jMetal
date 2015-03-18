@@ -38,6 +38,7 @@ public class SingleValueMeasure<T> extends SimplePushMeasure<T> implements
     return value;
   }
 
+  //TODO: invoke push in set()???
   @Override public void push (T value) {
     super.push(value) ;
   }

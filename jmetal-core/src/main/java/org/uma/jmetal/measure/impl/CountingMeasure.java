@@ -182,5 +182,4 @@ public class CountingMeasure extends SimplePushMeasure<Long> implements
 	public synchronized void reset(long value) {
 		increment(value - count);
 	}
-
 }

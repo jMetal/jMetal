@@ -20,7 +20,7 @@ import java.util.List;
  * @author Antonio J. Nebro
  * @version 1.0
  */
-public class NSGAIIMeasures extends NSGAII implements Measurable{
+public class NSGAIIMeasures extends NSGAII implements Measurable {
   private CountingMeasure iterations ;
   private SingleValueMeasure<Integer> numberOfNonDominatedSolutionsInPopulation ;
   private DurationMeasure durationMeasure ;
@@ -74,6 +74,7 @@ public class NSGAIIMeasures extends NSGAII implements Measurable{
     measureManager.setPullMeasure("numberOfNonDominatedSolutionsInPopulation", numberOfNonDominatedSolutionsInPopulation);
 
     measureManager.setPushMeasure("currentPopulation", solutionListMeasure);
+    measureManager.setPushMeasure("currentIteration", iterations);
   }
 
   @Override

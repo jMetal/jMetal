@@ -73,7 +73,7 @@ public class NSGAIIMeasuresRunner {
       problemName = args[0] ;
       problem = ProblemUtils.loadProblem(problemName);
     } else {
-      problem = new ZDT1(2500);
+      problem = new ZDT1(30);
     }
 
     double crossoverProbability = 0.9 ;
@@ -109,7 +109,11 @@ public class NSGAIIMeasuresRunner {
 
     SingleValueMeasure<List<Solution>> solutionListMeasure =
         (SingleValueMeasure) measureManager.getPushMeasure("currentPopulation");
+    CountingMeasure iteration2 =
+        (CountingMeasure) measureManager.<Long>getPushMeasure("currentIteration");
+
     solutionListMeasure.register(new Listener());
+    iteration2.register(new Listener2());
     /* End of measure management */
 
     Thread algorithmThread = new Thread(algorithm) ;
@@ -152,6 +156,14 @@ public class NSGAIIMeasuresRunner {
         System.out.println("PUSH MEASURE. Counter = " + counter+ " First solution: " + solutions.get(0)) ;
       }
       counter ++ ;
+    }
+  }
+
+  private static class Listener2 implements MeasureListener<Long> {
+    @Override synchronized public void measureGenerated(Long value) {
+      if ((value % 50 == 0)) {
+        System.out.println("PUSH MEASURE. Iteration: " + value) ;
+      }
     }
   }
 }
