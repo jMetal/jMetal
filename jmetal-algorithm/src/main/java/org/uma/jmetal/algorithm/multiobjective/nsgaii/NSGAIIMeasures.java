@@ -2,10 +2,7 @@ package org.uma.jmetal.algorithm.multiobjective.nsgaii;
 
 import org.uma.jmetal.measure.Measurable;
 import org.uma.jmetal.measure.MeasureManager;
-import org.uma.jmetal.measure.impl.CountingMeasure;
-import org.uma.jmetal.measure.impl.DurationMeasure;
-import org.uma.jmetal.measure.impl.SimpleMeasureManager;
-import org.uma.jmetal.measure.impl.SingleValueMeasure;
+import org.uma.jmetal.measure.impl.*;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -22,11 +19,12 @@ import java.util.List;
  */
 public class NSGAIIMeasures extends NSGAII implements Measurable {
   private CountingMeasure iterations ;
-  private SingleValueMeasure<Integer> numberOfNonDominatedSolutionsInPopulation ;
+  private BasicMeasure<Integer> numberOfNonDominatedSolutionsInPopulation ;
   private DurationMeasure durationMeasure ;
   private SimpleMeasureManager measureManager ;
 
-  private SingleValueMeasure<List<Solution>> solutionListMeasure ;
+  private BasicMeasure<List<Solution>> solutionListMeasure ;
+  //private SimplePushMeasure<List<Solution>> so;
 
   /**
    * Constructor
@@ -47,6 +45,7 @@ public class NSGAIIMeasures extends NSGAII implements Measurable {
     iterations.increment();
 
     solutionListMeasure.push(getPopulation());
+    //so.push(getPopulation());
   }
 
   @Override protected boolean isStoppingConditionReached() {
@@ -65,8 +64,9 @@ public class NSGAIIMeasures extends NSGAII implements Measurable {
   private void initMeasures() {
     durationMeasure = new DurationMeasure() ;
     iterations = new CountingMeasure(0) ;
-    numberOfNonDominatedSolutionsInPopulation = new SingleValueMeasure<>() ;
-    solutionListMeasure = new SingleValueMeasure<>() ;
+    numberOfNonDominatedSolutionsInPopulation = new BasicMeasure<>() ;
+    solutionListMeasure = new BasicMeasure<>() ;
+    //so = new SimplePushMeasure<>() ;
 
     measureManager = new SimpleMeasureManager() ;
     measureManager.setPullMeasure("currentExecutionTime", durationMeasure);

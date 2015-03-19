@@ -27,7 +27,7 @@ import org.uma.jmetal.measure.MeasureListener;
 import org.uma.jmetal.measure.MeasureManager;
 import org.uma.jmetal.measure.impl.CountingMeasure;
 import org.uma.jmetal.measure.impl.DurationMeasure;
-import org.uma.jmetal.measure.impl.SingleValueMeasure;
+import org.uma.jmetal.measure.impl.BasicMeasure;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -73,7 +73,7 @@ public class NSGAIIMeasuresRunner {
       problemName = args[0] ;
       problem = ProblemUtils.loadProblem(problemName);
     } else {
-      problem = new ZDT1(30);
+      problem = new ZDT1(3000);
     }
 
     double crossoverProbability = 0.9 ;
@@ -104,11 +104,11 @@ public class NSGAIIMeasuresRunner {
         (CountingMeasure) measureManager.<Long>getPullMeasure("currentIteration");
     DurationMeasure currentComputingTime =
         (DurationMeasure) measureManager.<Long>getPullMeasure("currentExecutionTime");
-    SingleValueMeasure<Integer> nonDominatedSolutions =
-        (SingleValueMeasure<Integer>) measureManager.<Integer>getPullMeasure("numberOfNonDominatedSolutionsInPopulation");
+    BasicMeasure<Integer> nonDominatedSolutions =
+        (BasicMeasure<Integer>) measureManager.<Integer>getPullMeasure("numberOfNonDominatedSolutionsInPopulation");
 
-    SingleValueMeasure<List<Solution>> solutionListMeasure =
-        (SingleValueMeasure) measureManager.getPushMeasure("currentPopulation");
+    BasicMeasure<List<Solution>> solutionListMeasure =
+        (BasicMeasure) measureManager.getPushMeasure("currentPopulation");
     CountingMeasure iteration2 =
         (CountingMeasure) measureManager.<Long>getPushMeasure("currentIteration");
 
