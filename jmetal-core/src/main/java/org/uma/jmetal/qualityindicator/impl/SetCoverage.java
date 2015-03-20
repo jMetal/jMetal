@@ -93,6 +93,6 @@ public class SetCoverage extends SimpleDescribedEntity implements QualityIndicat
   }
 
   @Override public String getName() {
-    return getName() ;
+    return super.getName() ;
   }
 }

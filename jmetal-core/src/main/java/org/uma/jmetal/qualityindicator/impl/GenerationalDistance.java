@@ -113,6 +113,6 @@ public class GenerationalDistance extends SimpleDescribedEntity implements Quali
 
   @Override
   public String getName() {
-    return getName();
+    return super.getName();
   }
 }

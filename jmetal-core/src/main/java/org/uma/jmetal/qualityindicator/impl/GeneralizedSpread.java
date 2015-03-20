@@ -157,6 +157,6 @@ public class GeneralizedSpread extends SimpleDescribedEntity implements QualityI
 
   @Override
   public String getName() {
-    return getName();
+    return super.getName();
   }
 }

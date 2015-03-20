@@ -134,6 +134,6 @@ public class Spread extends SimpleDescribedEntity implements QualityIndicator {
   }
 
   @Override public String getName() {
-    return getName() ;
+    return super.getName() ;
   }
 }

@@ -101,6 +101,6 @@ public class ErrorRatio extends SimpleDescribedEntity implements QualityIndicato
 
 
   @Override public String getName() {
-    return getName() ;
+    return super.getName() ;
   }
 }

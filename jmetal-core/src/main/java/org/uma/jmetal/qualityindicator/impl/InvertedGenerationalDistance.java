@@ -116,6 +116,6 @@ public class InvertedGenerationalDistance extends SimpleDescribedEntity implemen
 
   @Override
   public String getName() {
-    return getName();
+    return super.getName();
   }
 }
