@@ -75,9 +75,7 @@ public class NSGAIIEbesRunner {
 
     selection = new BinaryTournamentSelection();
 
-    algorithm = new NSGAIIBuilder(problem)
-            .setCrossoverOperator(crossover)
-            .setMutationOperator(mutation)
+    algorithm = new NSGAIIBuilder(problem, crossover, mutation, NSGAIIBuilder.NSGAIIVariant.NSGAII)
             .setSelectionOperator(selection)
             .setMaxIterations(250)
             .setPopulationSize(100)

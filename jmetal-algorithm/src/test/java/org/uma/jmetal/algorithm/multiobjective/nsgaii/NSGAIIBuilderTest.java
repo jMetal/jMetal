@@ -9,8 +9,12 @@ import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.evaluator.impl.MultithreadedSolutionListEvaluator;
+
+import java.util.List;
+
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -21,16 +25,26 @@ import static org.mockito.Mockito.when;
  * Created by Antonio J. Nebro on 25/11/14.
  */
 public class NSGAIIBuilderTest {
-  private NSGAIIBuilder builder;
+  private NSGAIIBuilder<DoubleSolution> builder;
   private Problem problem;
   private static final double EPSILON = 0.000000000000001;
   private static final int NUMBER_OF_VARIABLES_OF_THE_MOCKED_PROBLEM = 20;
+  private CrossoverOperator<List<DoubleSolution>,List<DoubleSolution>> crossover;
+  private MutationOperator<DoubleSolution> mutation;
 
   @Before public void startup() {
     problem = mock(Problem.class);
     when(problem.getNumberOfVariables()).thenReturn(NUMBER_OF_VARIABLES_OF_THE_MOCKED_PROBLEM);
 
-    builder = new NSGAIIBuilder(problem);
+    double crossoverProbability = 0.9 ;
+    double crossoverDistributionIndex = 20.0 ;
+    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex) ;
+
+    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
+    double mutationDistributionIndex = 20.0 ;
+    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
+
+    builder = new NSGAIIBuilder(problem, crossover, mutation, NSGAIIBuilder.NSGAIIVariant.NSGAII);
   }
 
   @After public void cleanup() {
@@ -77,28 +91,6 @@ public class NSGAIIBuilderTest {
 
   @Test(expected = JMetalException.class) public void setNegativeMaxNumberOfIterations() {
     builder.setMaxIterations(-100);
-  }
-
-  @Test public void setNewCrossoverOperator() {
-    CrossoverOperator crossover = new SBXCrossover(0.9, 20.0);
-    assertNotEquals(crossover, builder.getCrossoverOperator());
-    builder.setCrossoverOperator(crossover);
-    assertEquals(crossover, builder.getCrossoverOperator());
-  }
-
-  @Test(expected = JMetalException.class) public void setNullCrossoverOperator() {
-    builder.setCrossoverOperator(null);
-  }
-
-  @Test public void setNewMutationOperator() {
-    MutationOperator mutation = new PolynomialMutation(0.9, 20.0);
-    assertNotEquals(mutation, builder.getMutationOperator());
-    builder.setMutationOperator(mutation);
-    assertEquals(mutation, builder.getMutationOperator());
-  }
-
-  @Test(expected = JMetalException.class) public void setNullMutationOperator() {
-    builder.setMutationOperator(null);
   }
 
   @Test public void setNewSelectionOperator() {

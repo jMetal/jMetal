@@ -13,19 +13,19 @@ import java.util.List;
 /**
  * Created by ajnebro on 30/10/14.
  */
-public class SteadyStateNSGAII extends NSGAII {
+public class SteadyStateNSGAII<S extends Solution> extends NSGAII<S> {
   /**
    * Constructor
    */
-  public SteadyStateNSGAII(Problem problem, int maxIterations, int populationSize,
-      CrossoverOperator crossoverOperator, MutationOperator mutationOperator,
+  public SteadyStateNSGAII(Problem<S> problem, int maxIterations, int populationSize,
+      CrossoverOperator<List<S>, List<S>> crossoverOperator, MutationOperator<S> mutationOperator,
       SelectionOperator selectionOperator, SolutionListEvaluator evaluator) {
     super(problem, maxIterations, populationSize, crossoverOperator, mutationOperator,
         selectionOperator, evaluator);
   }
 
-  @Override protected List<Solution> selection(List<Solution> population) {
-    List<Solution> matingPopulation = new ArrayList<>(2);
+  @Override protected List<S> selection(List<S> population) {
+    List<S> matingPopulation = new ArrayList<>(2);
 
     matingPopulation.add(selectionOperator.execute(population));
     matingPopulation.add(selectionOperator.execute(population));
@@ -33,14 +33,14 @@ public class SteadyStateNSGAII extends NSGAII {
     return matingPopulation;
   }
 
-  @Override protected List<Solution> reproduction(List<Solution> population) {
-    List<Solution> offspringPopulation = new ArrayList<>(1);
+  @Override protected List<S> reproduction(List<S> population) {
+    List<S> offspringPopulation = new ArrayList<>(1);
 
-    List<Solution> parents = new ArrayList<>(2);
+    List<S> parents = new ArrayList<>(2);
     parents.add(population.get(0));
     parents.add(population.get(1));
 
-    List<Solution> offspring = crossoverOperator.execute(parents);
+    List<S> offspring = crossoverOperator.execute(parents);
 
     mutationOperator.execute(offspring.get(0));
 

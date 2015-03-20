@@ -21,7 +21,6 @@
 package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
@@ -30,7 +29,7 @@ import org.uma.jmetal.operator.impl.crossover.IntegerSBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.IntegerPolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.IntegerProblem;
-import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.solution.IntegerSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
@@ -55,11 +54,10 @@ public class NSGAIIIntegerRunner {
    *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName paretoFrontFile
    */
   public static void main(String[] args) {
-
     IntegerProblem problem;
-    Algorithm algorithm;
-    CrossoverOperator crossover;
-    MutationOperator mutation;
+    Algorithm<List<IntegerSolution>> algorithm;
+    CrossoverOperator<List<IntegerSolution>, List<IntegerSolution>> crossover;
+    MutationOperator<IntegerSolution> mutation;
     SelectionOperator selection;
     
     String problemName = "org.uma.jmetal.problem.multiobjective.NMMin" ;
@@ -76,9 +74,7 @@ public class NSGAIIIntegerRunner {
 
     selection = new BinaryTournamentSelection() ;
 
-    algorithm = new NSGAIIBuilder(problem)
-            .setCrossoverOperator(crossover)
-            .setMutationOperator(mutation)
+    algorithm = new NSGAIIBuilder(problem, crossover, mutation, NSGAIIBuilder.NSGAIIVariant.NSGAII)
             .setSelectionOperator(selection)
             .setMaxIterations(250)
             .setPopulationSize(100)
@@ -87,7 +83,7 @@ public class NSGAIIIntegerRunner {
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
-    List<Solution> population = ((NSGAII)algorithm).getResult() ;
+    List<IntegerSolution> population = algorithm.getResult() ;
     long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)

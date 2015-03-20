@@ -20,21 +20,21 @@ import java.util.List;
 /**
  * Created by Antonio J. Nebro on 30/10/14.
  */
-public class NSGAII extends AbstractGeneticAlgorithm<Solution, List<Solution>> {
+public class NSGAII<S extends  Solution> extends AbstractGeneticAlgorithm<S, List<S>> {
   protected final int maxIterations;
   protected final int populationSize;
 
-  protected final Problem problem;
+  protected final Problem<S> problem;
 
-  protected final SolutionListEvaluator<Solution> evaluator;
+  protected final SolutionListEvaluator<S> evaluator;
 
   protected int iterations;
 
   /**
    * Constructor
    */
-  public NSGAII(Problem problem, int maxIterations, int populationSize,
-      CrossoverOperator crossoverOperator, MutationOperator mutationOperator,
+  public NSGAII(Problem<S> problem, int maxIterations, int populationSize,
+      CrossoverOperator<List<S>, List<S>> crossoverOperator, MutationOperator<S> mutationOperator,
       SelectionOperator selectionOperator, SolutionListEvaluator evaluator) {
     super() ;
     this.problem = problem;
@@ -60,39 +60,39 @@ public class NSGAII extends AbstractGeneticAlgorithm<Solution, List<Solution>> {
     return iterations >= maxIterations;
   }
 
-  @Override protected List<Solution> createInitialPopulation() {
-    List<Solution> population = new ArrayList<>(populationSize);
+  @Override protected List<S> createInitialPopulation() {
+    List<S> population = new ArrayList<>(populationSize);
     for (int i = 0; i < populationSize; i++) {
-      Solution newIndividual = problem.createSolution();
+      S newIndividual = problem.createSolution();
       population.add(newIndividual);
     }
     return population;
   }
 
-  @Override protected List<Solution> evaluatePopulation(List<Solution> population) {
+  @Override protected List<S> evaluatePopulation(List<S> population) {
     population = evaluator.evaluate(population, problem);
 
     return population;
   }
 
-  @Override protected List<Solution> selection(List<Solution> population) {
-    List<Solution> matingPopulation = new ArrayList<>(population.size());
+  @Override protected List<S> selection(List<S> population) {
+    List<S> matingPopulation = new ArrayList<>(population.size());
     for (int i = 0; i < populationSize; i++) {
-      Solution solution = selectionOperator.execute(population);
+      S solution = selectionOperator.execute(population);
       matingPopulation.add(solution);
     }
 
     return matingPopulation;
   }
 
-  @Override protected List<Solution> reproduction(List<Solution> population) {
-    List<Solution> offspringPopulation = new ArrayList<>(populationSize);
+  @Override protected List<S> reproduction(List<S> population) {
+    List<S> offspringPopulation = new ArrayList<>(populationSize);
     for (int i = 0; i < populationSize; i += 2) {
-      List<Solution> parents = new ArrayList<>(2);
+      List<S> parents = new ArrayList<>(2);
       parents.add(population.get(i));
       parents.add(population.get(i + 1));
 
-      List<Solution> offspring = crossoverOperator.execute(parents);
+      List<S> offspring = crossoverOperator.execute(parents);
 
       mutationOperator.execute(offspring.get(0));
       mutationOperator.execute(offspring.get(1));
@@ -103,32 +103,31 @@ public class NSGAII extends AbstractGeneticAlgorithm<Solution, List<Solution>> {
     return offspringPopulation;
   }
 
-  @Override protected List<Solution> replacement(List<Solution> population,
-      List<Solution> offspringPopulation) {
-    List<Solution> jointPopulation = new ArrayList<>();
+  @Override protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
+    List<S> jointPopulation = new ArrayList<>();
     jointPopulation.addAll(population);
     jointPopulation.addAll(offspringPopulation);
 
-    Ranking ranking = computeRanking(jointPopulation);
-    List<Solution> pop = crowdingDistanceSelection(ranking);
+    Ranking<S> ranking = computeRanking(jointPopulation);
+    List<S> pop = crowdingDistanceSelection(ranking);
 
     return pop;
   }
 
-  @Override public List<Solution> getResult() {
+  @Override public List<S> getResult() {
     return getNonDominatedSolutions(getPopulation());
   }
 
-  protected Ranking computeRanking(List<Solution> solutionList) {
+  protected Ranking<S> computeRanking(List<S> solutionList) {
     Ranking ranking = new DominanceRanking();
     ranking.computeRanking(solutionList);
 
     return ranking;
   }
 
-  protected List<Solution> crowdingDistanceSelection(Ranking ranking) {
+  protected List<S> crowdingDistanceSelection(Ranking ranking) {
     CrowdingDistance crowdingDistance = new CrowdingDistance();
-    List<Solution> population = new ArrayList<>(populationSize);
+    List<S> population = new ArrayList<>(populationSize);
     int rankingIndex = 0;
     while (populationIsNotFull(population)) {
       if (subfrontFillsIntoThePopulation(ranking, rankingIndex, population)) {
@@ -143,18 +142,16 @@ public class NSGAII extends AbstractGeneticAlgorithm<Solution, List<Solution>> {
     return population;
   }
 
-  protected boolean populationIsNotFull(List<Solution> population) {
+  protected boolean populationIsNotFull(List<S> population) {
     return population.size() < populationSize;
   }
 
-  protected boolean subfrontFillsIntoThePopulation(Ranking ranking, int rank,
-      List<Solution> population) {
+  protected boolean subfrontFillsIntoThePopulation(Ranking ranking, int rank, List<S> population) {
     return ranking.getSubfront(rank).size() < (populationSize - population.size());
   }
 
-  protected void addRankedSolutionsToPopulation(Ranking ranking, int rank,
-      List<Solution> population) {
-    List<Solution> front;
+  protected void addRankedSolutionsToPopulation(Ranking ranking, int rank, List<S> population) {
+    List<S> front;
 
     front = ranking.getSubfront(rank);
 
@@ -163,9 +160,8 @@ public class NSGAII extends AbstractGeneticAlgorithm<Solution, List<Solution>> {
     }
   }
 
-  protected void addLastRankedSolutionsToPopulation(Ranking ranking, int rank,
-      List<Solution> population) {
-    List<Solution> currentRankedFront = ranking.getSubfront(rank);
+  protected void addLastRankedSolutionsToPopulation(Ranking ranking, int rank, List<S> population) {
+    List<S> currentRankedFront = ranking.getSubfront(rank);
 
     Collections.sort(currentRankedFront, new CrowdingDistanceComparator());
 
@@ -176,7 +172,7 @@ public class NSGAII extends AbstractGeneticAlgorithm<Solution, List<Solution>> {
     }
   }
 
-  protected List<Solution> getNonDominatedSolutions(List<Solution> solutionList) {
+  protected List<S> getNonDominatedSolutions(List<S> solutionList) {
     return SolutionListUtils.getNondominatedSolutions(solutionList);
   }
 }

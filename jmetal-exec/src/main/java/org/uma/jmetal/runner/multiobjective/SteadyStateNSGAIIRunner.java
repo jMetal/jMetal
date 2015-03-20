@@ -22,15 +22,14 @@ package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.SteadyStateNSGAII;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
-import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
@@ -55,10 +54,10 @@ public class SteadyStateNSGAIIRunner {
    *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName paretoFrontFile
    */
   public static void main(String[] args) throws JMetalException {
-    Problem problem;
-    Algorithm algorithm;
-    CrossoverOperator crossover;
-    MutationOperator mutation;
+    DoubleProblem problem;
+    Algorithm<List<DoubleSolution>> algorithm;
+    CrossoverOperator<List<DoubleSolution>,List<DoubleSolution>> crossover;
+    MutationOperator<DoubleSolution> mutation;
     SelectionOperator selection;
 
     String problemName ;
@@ -68,7 +67,7 @@ public class SteadyStateNSGAIIRunner {
       problemName = "org.uma.jmetal.problem.multiobjective.Srinivas";
     }
 
-    problem = ProblemUtils.loadProblem(problemName);
+    problem = (DoubleProblem) ProblemUtils.loadProblem(problemName);
 
     double crossoverProbability = 0.9 ;
     double crossoverDistributionIndex = 20.0 ;
@@ -80,9 +79,8 @@ public class SteadyStateNSGAIIRunner {
 
     selection = new BinaryTournamentSelection();
 
-    algorithm = new NSGAIIBuilder(problem, NSGAIIBuilder.NSGAIIVariant.SteadyStateNSGAII)
-            .setCrossoverOperator(crossover)
-            .setMutationOperator(mutation)
+    algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation,
+        NSGAIIBuilder.NSGAIIVariant.SteadyStateNSGAII)
             .setSelectionOperator(selection)
             .setMaxIterations(25000)
             .setPopulationSize(100)
@@ -91,7 +89,7 @@ public class SteadyStateNSGAIIRunner {
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
-    List<Solution> population = ((SteadyStateNSGAII)algorithm).getResult() ;
+    List<DoubleSolution> population = algorithm.getResult() ;
     long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)

@@ -21,21 +21,22 @@
 package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIMeasures;
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIMeasuresBuilder;
 import org.uma.jmetal.measure.MeasureListener;
 import org.uma.jmetal.measure.MeasureManager;
+import org.uma.jmetal.measure.impl.BasicMeasure;
 import org.uma.jmetal.measure.impl.CountingMeasure;
 import org.uma.jmetal.measure.impl.DurationMeasure;
-import org.uma.jmetal.measure.impl.BasicMeasure;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
-import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
@@ -62,16 +63,16 @@ public class NSGAIIMeasuresRunner {
    *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName paretoFrontFile
    */
   public static void main(String[] args) throws JMetalException, InterruptedException {
-    Problem problem;
-    Algorithm<List<Solution>> algorithm;
-    CrossoverOperator crossover;
-    MutationOperator mutation;
+    DoubleProblem problem;
+    Algorithm<List<DoubleSolution>> algorithm;
+    CrossoverOperator<List<DoubleSolution>, List<DoubleSolution>> crossover;
+    MutationOperator<DoubleSolution> mutation;
     SelectionOperator selection;
 
     String problemName ;
     if (args.length == 1) {
       problemName = args[0] ;
-      problem = ProblemUtils.loadProblem(problemName);
+      problem = (DoubleProblem) ProblemUtils.loadProblem(problemName);
     } else {
       problem = new ZDT1(3000);
     }
@@ -89,9 +90,8 @@ public class NSGAIIMeasuresRunner {
     int maxIterations = 250 ;
     int populationSize = 100 ;
 
-    algorithm = new NSGAIIMeasuresBuilder(problem)
-        .setCrossoverOperator(crossover)
-        .setMutationOperator(mutation)
+    algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation,
+        NSGAIIBuilder.NSGAIIVariant.Measures)
         .setSelectionOperator(selection)
         .setMaxIterations(maxIterations)
         .setPopulationSize(populationSize)
@@ -131,7 +131,7 @@ public class NSGAIIMeasuresRunner {
 
     algorithmThread.join();
 
-    List<Solution> population = algorithm.getResult() ;
+    List<DoubleSolution> population = algorithm.getResult() ;
     long computingTime = currentComputingTime.get() ;
 
     //long computingTime = algorithmRunner.getComputingTime() ;

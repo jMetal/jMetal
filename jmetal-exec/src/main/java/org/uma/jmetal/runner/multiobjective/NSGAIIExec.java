@@ -5,38 +5,12 @@ package org.uma.jmetal.runner.multiobjective;
  * Modified by ajnebro on 17/12/14.
  */
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.*;
-import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
-import org.uma.jmetal.operator.CrossoverOperator;
-import org.uma.jmetal.operator.MutationOperator;
-import org.uma.jmetal.operator.Operator;
-import org.uma.jmetal.operator.SelectionOperator;
-import org.uma.jmetal.operator.impl.crossover.SinglePointCrossover;
-import org.uma.jmetal.operator.impl.mutation.BitFlipMutation;
-import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
-import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
-import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.AlgorithmRunner;
-import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
-import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
-import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
-import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-
-import java.io.FileNotFoundException;
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * Run it with intellij: Params: nsgaII org.uma.jmetal.problem.multiobjective.Kursawe
  */
 public class NSGAIIExec {
   public static void main(String[] args) throws Exception {
+    /*
     AnnotationConfigApplicationContext application = new AnnotationConfigApplicationContext(JMetalApplication.class);
     Algorithm algorithm = (Algorithm) application.getBean(args[0], args[1], args) ;
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
@@ -106,13 +80,13 @@ public class NSGAIIExec {
     //  return new NSGAIITemplate.Builder(multiObjectiveTSP(), evaluator()).setPopulationSize(100).setMaxEvaluations(1000000)
     //      .setCrossover(crossover(0.95)).setMutation(swapMutation()).setSelection(selection()).build("NSGAII");
     //}
-
+/*
     @Bean
     @Lazy
     public SolutionListEvaluator evaluator() {
       return new SequentialSolutionListEvaluator();
     }
-
+*/
     //@Bean
     //@Scope("prototype")
     //@Lazy
@@ -130,7 +104,7 @@ public class NSGAIIExec {
     //public Problem problem(String name, String[] args) {
     //  return problemFactory().getProblem(name, args);
     //}
-
+    /*
     @Bean(name = "singlePointCrossover")
     @Scope("prototype")
     public CrossoverOperator singlePointCrossover(Double probability) {
@@ -168,4 +142,6 @@ public class NSGAIIExec {
   public static enum NsgaIIType {
     binary, real, permutation
   }
+  */
+ }
 }
