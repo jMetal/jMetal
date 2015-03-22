@@ -21,6 +21,9 @@
 
 package org.uma.jmetal.util.experiment;
 
+import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.problem.Problem;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,8 +34,8 @@ import java.util.List;
  */
 public class ExperimentConfiguration {
 	private String experimentName;
-	private List<String> algorithmNameList;
-	private List<String> problemList;
+	private List<Algorithm> algorithmList;
+	private List<Problem> problemList;
 	private String experimentBaseDirectory;
 
 	private String outputParetoFrontFileName;
@@ -43,7 +46,7 @@ public class ExperimentConfiguration {
 	private ExperimentConfiguration(Builder builder) {
 		experimentName = builder.experimentName ;
     this.experimentBaseDirectory = builder.experimentBaseDirectory ;
-    this.algorithmNameList = builder.algorithmNameList ;
+    this.algorithmList = builder.algorithmList ;
     this.problemList = builder.problemList ;
     this.independentRuns = builder.independentRuns ;
     this.outputParetoFrontFileName = builder.outputParetoFrontFileName ;
@@ -55,11 +58,11 @@ public class ExperimentConfiguration {
 		return experimentName;
 	}
 
-	public List<String> getAlgorithmNameList() {
-		return algorithmNameList;
+	public List<Algorithm> getAlgorithmList() {
+		return algorithmList;
 	}
 
-	public List<String> getProblemList() {
+	public List<Problem> getProblemList() {
 		return problemList;
 	}
 
@@ -82,8 +85,8 @@ public class ExperimentConfiguration {
 	/** Builder */
 	public static class Builder {
 		private final String experimentName ;
-		private List<String> algorithmNameList;
-		private List<String> problemList;
+		private List<Algorithm> algorithmList;
+		private List<Problem> problemList;
 		private String experimentBaseDirectory;
 		private String outputParetoFrontFileName;
 		private String outputParetoSetFileName;
@@ -93,13 +96,13 @@ public class ExperimentConfiguration {
 			this.experimentName = experimentName ;
 		}
 
-		public Builder setAlgorithmNameList(List<String> algorithmNameList) {
-			this.algorithmNameList = new ArrayList<>(algorithmNameList) ;
+		public Builder setAlgorithmList(List<Algorithm> algorithmList) {
+			this.algorithmList = new ArrayList<>(algorithmList) ;
 
 			return this ;
 		}
 
-		public Builder setProblemList(List<String> problemList) {
+		public Builder setProblemList(List<Problem> problemList) {
 			this.problemList = new ArrayList<>(problemList) ;
 
 			return this ;
