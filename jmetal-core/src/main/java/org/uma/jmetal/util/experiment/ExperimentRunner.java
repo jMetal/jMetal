@@ -23,13 +23,12 @@ package org.uma.jmetal.util.experiment;
 import org.uma.jmetal.util.JMetalException;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 public class ExperimentRunner {
   public static void main(String[] args) throws JMetalException, IOException {
-    ExperimentConfiguration configuration = new ExperimentConfiguration.Builder("Experiment")
-      .setAlgorithmNameList(Arrays.asList("NSGAII", "SMPSO", "MOCell", "GDE3"))
-      .setProblemList(Arrays.asList("ZDT1", "ZDT2", "ZDT3", "ZDT4", "ZDT6"))
+    ExperimentConfiguration configuration = new ExperimentConfigurationBuilder("Experiment")
+      //.setAlgorithmList(Arrays.asList("NSGAII", "SMPSO", "MOCell", "GDE3"))
+      //.setProblemList(Arrays.asList("ZDT1", "ZDT2", "ZDT3", "ZDT4", "ZDT6"))
       .setExperimentBaseDirectory("/Users/antelverde/Softw/jMetal/jMetalGitHub/pruebas")
       .setOutputParetoFrontFileName("FUN")
       .setOutputParetoSetFileName("VAR")

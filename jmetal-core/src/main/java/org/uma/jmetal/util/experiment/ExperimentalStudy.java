@@ -8,7 +8,7 @@ import java.util.List;
  * Class for configuring and running an experimental study
  */
 public class ExperimentalStudy {
-  private List<Experiment> resultObjectList ;
+  private List<ExperimentComponent> resultObjectList ;
 
   /** Constructor */
   private ExperimentalStudy(Builder builder) {
@@ -17,14 +17,14 @@ public class ExperimentalStudy {
   
   /** Builder */
   public static class Builder {
-    private LinkedList<Experiment> resultObjectList ;
+    private LinkedList<ExperimentComponent> resultObjectList ;
 
     public Builder(ExperimentConfiguration experimentData) {
       this.resultObjectList = new LinkedList<>() ;
   	}
 
-    public Builder addExperiment(Experiment experimentResult) {
-      resultObjectList.add(experimentResult) ;
+    public Builder addExperiment(ExperimentComponent experimentComponent) {
+      resultObjectList.add(experimentComponent) ;
 
       return this ;
     }
@@ -35,7 +35,7 @@ public class ExperimentalStudy {
   }
 
   public void run() {
-    for (Experiment result : resultObjectList) {
+    for (ExperimentComponent result : resultObjectList) {
       result.run();
     }
   }

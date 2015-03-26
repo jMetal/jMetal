@@ -23,7 +23,7 @@ package org.uma.jmetal.util.experiment.impl;
 
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.experiment.Experiment;
+import org.uma.jmetal.util.experiment.ExperimentComponent;
 import org.uma.jmetal.util.experiment.ExperimentConfiguration;
 
 import java.io.File;
@@ -31,7 +31,7 @@ import java.io.File;
 /**
  * Created by Antonio J. Nebro on 18/07/14.
  */
-public class AlgorithmExecution implements Experiment {
+public class AlgorithmExecution implements ExperimentComponent {
   private String paretoSetFileName ;
   private String paretoFrontFileName ;
   private ExperimentConfiguration configuration ;
@@ -88,10 +88,9 @@ public class AlgorithmExecution implements Experiment {
 
   @Override
   public void run() {
-    JMetalLogger.logger.info("ExperimentExecution: Running algorithms");
-    if (experimentDirectoryDoesNotExist()) {
-       createExperimentDirectory() ;
-    }
+    JMetalLogger.logger.info("ExperimentExecution: Preparing output directory");
+    prepareOutputDirectory() ;
+
 /*
     parallelExecutor.start(this);
 
@@ -108,6 +107,12 @@ public class AlgorithmExecution implements Experiment {
     parallelExecutor.parallelExecution();
     parallelExecutor.stop();
     */
+  }
+
+  private void prepareOutputDirectory() {
+    if (experimentDirectoryDoesNotExist()) {
+      createExperimentDirectory() ;
+    }
   }
 
   private boolean experimentDirectoryDoesNotExist() {
