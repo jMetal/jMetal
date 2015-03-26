@@ -25,6 +25,6 @@ package org.uma.jmetal.util.experiment;
  * Created by Antonio J. Nebro on 18/07/14.
  * Interface for all the results of an experiment
  */
-public interface Experiment {
+public interface ExperimentComponent {
   public void run() ;
 }
