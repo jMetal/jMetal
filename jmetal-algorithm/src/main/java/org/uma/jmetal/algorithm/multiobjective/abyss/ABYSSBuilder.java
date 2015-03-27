@@ -17,17 +17,16 @@ import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 
 
 public class ABYSSBuilder implements AlgorithmBuilder {
-
-  private DoubleProblem problem     ; // The problem to solve
-  private CrossoverOperator crossoverOperator   ; // Crossover operator
-  private MutationLocalSearch improvementOperator ; // Operator for improvement
-  private MutationOperator mutationOperator; // Mutation operator
-  private int numberOfSubranges; //subranges
-  private int populationSize;//Maximum size of the population
-  private int refSet1Size;//Maximum size of the reference set one
-  private int refSet2Size;//Maximum size of the reference set two
-  private int archiveSize;//Maximum size of the external archive
-  private int maxEvaluations;//Maximum number of getEvaluations to carry out
+  private DoubleProblem problem ;
+  private CrossoverOperator crossoverOperator ;
+  private MutationLocalSearch improvementOperator ;
+  private MutationOperator mutationOperator;
+  private int numberOfSubranges;
+  private int populationSize;
+  private int refSet1Size;
+  private int refSet2Size;
+  private int archiveSize;
+  private int maxEvaluations;
   private CrowdingDistanceArchive archive;
   public ABYSSBuilder(DoubleProblem problem,Archive archive){
     this.populationSize = 20;
@@ -133,4 +132,4 @@ public class ABYSSBuilder implements AlgorithmBuilder {
     this.maxEvaluations = maxEvaluations;
     return  this;
   }
-}// end ABYSSBuilder
+}

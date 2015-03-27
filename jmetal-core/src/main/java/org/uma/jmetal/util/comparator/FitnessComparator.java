@@ -32,8 +32,8 @@ import java.util.Comparator;
  * <code>Solution</code> objects) based on the fitness value returned by the
  * method <code>getFitness</code>.
  */
-public class FitnessComparator implements Comparator<Solution> {
-  private Fitness solutionFitness = new Fitness() ;
+public class FitnessComparator<S extends Solution> implements Comparator<S> {
+  private Fitness<S> solutionFitness = new Fitness() ;
 
   /**
    * Compares two solutions.
@@ -44,15 +44,15 @@ public class FitnessComparator implements Comparator<Solution> {
    * respectively.
    */
   @Override
-  public int compare(Solution solution1, Solution solution2) {
+  public int compare(S solution1, S solution2) {
     if (solution1 == null) {
       return 1;
     } else if (solution2 == null) {
       return -1;
     }
 
-    double fitness1 = solutionFitness.getAttribute(solution1) ;
-    double fitness2 = solutionFitness.getAttribute(solution2) ;
+    double fitness1 = solutionFitness.getAttribute(solution1);
+    double fitness2 = solutionFitness.getAttribute(solution2);
     if (fitness1 < fitness2) {
       return -1;
     }

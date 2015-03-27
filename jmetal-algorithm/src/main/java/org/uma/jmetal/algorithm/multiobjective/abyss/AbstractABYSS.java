@@ -16,7 +16,7 @@ import org.uma.jmetal.util.comparator.EqualSolutionsComparator;
 import org.uma.jmetal.util.comparator.StrengthFitnessComparator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.solutionattribute.impl.DistanceToSolutionListAttribute;
-import org.uma.jmetal.util.solutionattribute.impl.MarkAttribute;
+import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
 import org.uma.jmetal.util.solutionattribute.impl.StrengthRawFitness;
 
 import javax.management.JMException;
@@ -49,11 +49,11 @@ public abstract class AbstractABYSS <S extends Solution> implements Algorithm<Li
    * Stores the initial solution set
    */
   protected List<DoubleSolution> solutionSet;
+
   /**
    * Maximum number of solution allowed for the initial solution set
    */
   protected int solutionSetSize;
-
 
   /**
    * Stores the reference set one
@@ -83,6 +83,7 @@ public abstract class AbstractABYSS <S extends Solution> implements Algorithm<Li
    */
   protected DoubleProblem problem;
   // protected ConstrainedProblem<DoubleSolution> problem;
+
   protected JMetalRandom randomGenerator;
   /**
    * Stores the improvement operator
@@ -103,7 +104,7 @@ public abstract class AbstractABYSS <S extends Solution> implements Algorithm<Li
   /**
    * Solution Marked Attributed
    */
-  protected MarkAttribute marked;
+  protected GenericSolutionAttribute<DoubleSolution, Boolean> marked;
 
   /**
    * Solution Distance To Solution List Attribute
@@ -154,7 +155,7 @@ public abstract class AbstractABYSS <S extends Solution> implements Algorithm<Li
     fitnessComparator = new StrengthFitnessComparator();
     crowdingDistanceComparator = new CrowdingDistanceComparator();
     this.improvementOperator = improvementOperator;
-    marked = new MarkAttribute();
+    marked = new GenericSolutionAttribute<>();
     distanceToSolutionListAttribute = new DistanceToSolutionListAttribute();
     subSet = new ArrayList<DoubleSolution>(solutionSetSize * 1000);
     this.archive = (CrowdingDistanceArchive)archive;
