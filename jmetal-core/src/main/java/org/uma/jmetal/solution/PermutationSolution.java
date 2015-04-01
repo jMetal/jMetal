@@ -20,4 +20,5 @@ import java.util.List;
  * @version 0.1
  */
 public interface PermutationSolution<T extends List<?>> extends Solution<T> {
+  //public int getLength() ;
 }
