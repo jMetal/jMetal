@@ -13,12 +13,10 @@
 
 package org.uma.jmetal.solution;
 
-import java.util.List;
-
 /**
  * @author Antonio J. Nebro
  * @version 0.1
  */
-public interface PermutationSolution<T extends List<?>> extends Solution<T> {
+public interface PermutationSolution<T> extends Solution<T> {
   //public int getLength() ;
 }

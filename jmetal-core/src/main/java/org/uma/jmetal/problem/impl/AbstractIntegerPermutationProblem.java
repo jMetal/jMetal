@@ -2,20 +2,18 @@ package org.uma.jmetal.problem.impl;
 
 import org.uma.jmetal.problem.PermutationProblem;
 import org.uma.jmetal.solution.PermutationSolution;
-import org.uma.jmetal.solution.impl.GenericIntegerPermutationSolution;
-
-import java.util.List;
+import org.uma.jmetal.solution.impl.DefaultIntegerPermutationSolution;
 
 public abstract class AbstractIntegerPermutationProblem
-    extends AbstractGenericProblem<PermutationSolution<List<Integer>>> implements
-    PermutationProblem<PermutationSolution<List<Integer>>> {
+    extends AbstractGenericProblem<PermutationSolution<Integer>> implements
+    PermutationProblem<PermutationSolution<Integer>> {
 
   /* Getters */
 
   /* Setters */
 
   @Override
-  public PermutationSolution<List<Integer>> createSolution() {
-    return new GenericIntegerPermutationSolution(this) ;
+  public PermutationSolution<Integer> createSolution() {
+    return new DefaultIntegerPermutationSolution(this) ;
   }
 }

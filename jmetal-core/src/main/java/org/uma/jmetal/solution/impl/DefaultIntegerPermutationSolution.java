@@ -1,7 +1,7 @@
 package org.uma.jmetal.solution.impl;
 
 import org.uma.jmetal.problem.PermutationProblem;
-import org.uma.jmetal.solution.IntegerSolution;
+import org.uma.jmetal.solution.PermutationSolution;
 import org.uma.jmetal.solution.Solution;
 
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class DefaultIntegerPermutationSolution
     extends AbstractGenericSolution<Integer, PermutationProblem>
-    implements IntegerSolution {
+    implements PermutationSolution<Integer> {
 
   /** Constructor */
   public DefaultIntegerPermutationSolution(PermutationProblem problem) {
@@ -53,22 +53,11 @@ public class DefaultIntegerPermutationSolution
   }
 
   @Override public String getVariableValueString(int index) {
-    return "" + getVariableValue(index);
+    return getVariableValue(index).toString();
   }
 
   @Override
   public Solution copy() {
     return new DefaultIntegerPermutationSolution(this);
-  }
-
-
-
-
-  @Override public Integer getLowerBound(int index) {
-    return null;
-  }
-
-  @Override public Integer getUpperBound(int index) {
-    return null;
   }
 }

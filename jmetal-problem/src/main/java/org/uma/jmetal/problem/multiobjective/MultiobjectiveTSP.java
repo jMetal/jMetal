@@ -26,7 +26,6 @@ import org.uma.jmetal.solution.PermutationSolution;
 import org.uma.jmetal.util.JMetalException;
 
 import java.io.*;
-import java.util.List;
 
 /**
  * Class representing a multi-objective TSP (Traveling Salesman Problem) problem.
@@ -42,28 +41,28 @@ public class MultiobjectiveTSP extends AbstractIntegerPermutationProblem {
    * Creates a new MultiobjectiveTSP problem instance. It accepts data files from TSPLIB
    */
   public MultiobjectiveTSP(String distanceFile, String costFile) throws IOException {
-    setNumberOfVariables(1);
-    setNumberOfObjectives(2);
-    setName("MultiobjectiveTSP");
-
     distanceMatrix = readProblem(distanceFile) ;
     costMatrix     = readProblem(costFile);
+
+    setNumberOfVariables(numberOfCities);
+    setNumberOfObjectives(2);
+    setName("MultiobjectiveTSP");
   }
 
   /** Evaluate() method */
-  public void evaluate(PermutationSolution<List<Integer>> solution){
+  public void evaluate(PermutationSolution<Integer> solution){
     double fitness1   ;
     double fitness2   ;
 
-    fitness1   = 0.0 ;
-    fitness2   = 0.0 ;
+    fitness1 = 0.0 ;
+    fitness2 = 0.0 ;
 
     for (int i = 0; i < (numberOfCities - 1); i++) {
       int x ;
       int y ;
 
-      x = solution.getVariableValue(0).get(i) ;
-      y = solution.getVariableValue(0).get(i+1) ;
+      x = solution.getVariableValue(i) ;
+      y = solution.getVariableValue(i+1) ;
 
       fitness1 += distanceMatrix[x][y] ;
       fitness2 += costMatrix[x][y];
@@ -71,8 +70,8 @@ public class MultiobjectiveTSP extends AbstractIntegerPermutationProblem {
     int firstCity ;
     int lastCity  ;
 
-    firstCity = solution.getVariableValue(0).get(0) ;
-    lastCity = solution.getVariableValue(0).get(numberOfCities - 1) ;
+    firstCity = solution.getVariableValue(0) ;
+    lastCity = solution.getVariableValue(numberOfCities - 1) ;
 
     fitness1 += distanceMatrix[firstCity][lastCity] ;
     fitness2 += costMatrix[firstCity][lastCity];
@@ -148,10 +147,7 @@ public class MultiobjectiveTSP extends AbstractIntegerPermutationProblem {
     return matrix;
   }
 
-  @Override public int getPermutationLength(int index) {
-    if (index != 0) {
-      new JMetalException("Index value " + index + " is not 0") ;
-    }
-    return numberOfCities;
+  @Override public int getPermutationLength() {
+    return numberOfCities ;
   }
 }
