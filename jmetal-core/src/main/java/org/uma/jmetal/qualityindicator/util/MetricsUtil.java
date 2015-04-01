@@ -21,18 +21,21 @@
 
 package org.uma.jmetal.qualityindicator.util;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.StringTokenizer;
+import java.util.logging.Level;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.qualityindicator.Hypervolume;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.NonDominatedSolutionList;
-
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.util.*;
-import java.util.logging.Level;
 
 /**
  * This class provides some utilities to compute quality indicators.
@@ -124,7 +127,7 @@ public class MetricsUtil {
   public double[] getMinimumValues(double[][] front, int noObjectives) {
     double[] minimumValue = new double[noObjectives];
     for (int i = 0; i < noObjectives; i++) {
-      minimumValue[i] = Double.MAX_VALUE;
+      minimumValue[i] = Double.POSITIVE_INFINITY;
     }
 
     for (double[] aFront : front) {
@@ -218,8 +221,12 @@ public class MetricsUtil {
     for (int i = 0; i < front.length; i++) {
       normalizedFront[i] = new double[front[i].length];
       for (int j = 0; j < front[i].length; j++) {
-        normalizedFront[i][j] = (front[i][j] - minimumValue[j]) /
-          (maximumValue[j] - minimumValue[j]);
+        if (minimumValue[j] != maximumValue[j]) {
+          normalizedFront[i][j] = (front[i][j] - minimumValue[j]) /
+            (maximumValue[j] - minimumValue[j]);
+        } else {
+          normalizedFront[i][j] = 0.5;
+        }
       }
     }
     return normalizedFront;
