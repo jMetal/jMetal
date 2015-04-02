@@ -21,12 +21,11 @@
 
 package org.uma.jmetal.util;
 
+import java.util.Comparator;
+import java.util.Iterator;
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.util.comparator.DominanceComparator;
-
-import java.util.Comparator;
-import java.util.Iterator;
 
 /**
  * This class implements an unbound list of non-dominated solutions
@@ -44,6 +43,23 @@ public class NonDominatedSolutionList extends SolutionSet {
   public NonDominatedSolutionList(Comparator<Solution> dominance) {
     super();
     dominanceComparator = dominance;
+  }
+  
+  /**
+   * Inserts a solution set in the list
+   *
+   * @param solutionSet The solution set to be inserted.
+   * @return how many solutions from solutionSet were added.
+   */
+  public int addAll(SolutionSet solutionSet){
+    int count = 0;
+    for (Solution solution : solutionSet.getSolutionsList()) {
+      boolean added = add(solution);
+      if(added){
+        count++;
+      }
+    }
+    return count;
   }
 
   /**

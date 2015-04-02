@@ -660,4 +660,10 @@ public class MetricsUtil {
 
     return contribution;
   }
+  
+  public NonDominatedSolutionList getNonDominatedSolutions(SolutionSet solutions) {
+    NonDominatedSolutionList nonDominatedSolutions = new NonDominatedSolutionList();
+    nonDominatedSolutions.addAll(solutions);
+    return nonDominatedSolutions;
+  }
 }

@@ -46,32 +46,47 @@ public class GenerationalDistance implements QualityIndicator {
   public GenerationalDistance() {
     utils = new MetricsUtil();
   }
+  
+  /**
+   * Returns the generational distance value for a given front
+   *
+   * @param front           The front
+   * @param trueParetoFront The true pareto front
+   * @return the GD value for the given front.
+   */
+  public double generationalDistance(double[][] front, double[][] trueParetoFront){
+    double[] maximumValues;
+    double[] minimumValues;
+
+    int numberOfObjectives = trueParetoFront[0].length ;
+
+    // STEP 1. Obtain the maximum and minimum values of the Pareto front
+    maximumValues = utils.getMaximumValues(trueParetoFront, numberOfObjectives);
+    minimumValues = utils.getMinimumValues(trueParetoFront, numberOfObjectives);
+    
+    return generationalDistance(front, trueParetoFront, maximumValues, minimumValues);
+  }
 
   /**
    * Returns the generational distance value for a given front
    *
    * @param front           The front
    * @param trueParetoFront The true pareto front
+   * @param maximumValues   The maximum values for the normalization
+   * @param minimumValues   The minimum values for the normalization
+   * @return the GD value for the given front.
    */
-  public double generationalDistance(double[][] front, double[][] trueParetoFront) {
-    double[] maximumValue;
-    double[] minimumValue;
+  public double generationalDistance(double[][] front, double[][] trueParetoFront, double[] maximumValues, double[] minimumValues) {
     double[][] normalizedFront;
     double[][] normalizedParetoFront;
 
-    int numberOfObjectives = trueParetoFront[0].length ;
-
-    // STEP 1. Obtain the maximum and minimum values of the Pareto front
-    maximumValue = utils.getMaximumValues(trueParetoFront, numberOfObjectives);
-    minimumValue = utils.getMinimumValues(trueParetoFront, numberOfObjectives);
-
     // STEP 2. Get the normalized front and true Pareto fronts
     normalizedFront = utils.getNormalizedFront(front,
-      maximumValue,
-      minimumValue);
+      maximumValues,
+      minimumValues);
     normalizedParetoFront = utils.getNormalizedFront(trueParetoFront,
-      maximumValue,
-      minimumValue);
+      maximumValues,
+      minimumValues);
 
     // STEP 3. Sum the distances between each point of the front and the
     // nearest point in the true Pareto front

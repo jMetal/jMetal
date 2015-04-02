@@ -49,6 +49,26 @@ public class FastHypervolume {
     numberOfObjectives = 0;
     this.offset = offset;
   }
+  
+  public FastHypervolume(double offset, int numberOfObjectives) {
+    referencePoint = null;
+    this.numberOfObjectives = numberOfObjectives;
+    this.offset = offset;
+  }
+  
+  public double computeHypervolume(double[][] solutionSetArray){
+    SolutionSet solutionSet = new SolutionSet();
+    
+    for (double[] solutionArray : solutionSetArray) {
+      Solution solution = new Solution(solutionArray.length);
+      for (int i = 0; i < solutionArray.length; i++) {
+        solution.setObjective(i, solutionArray[i]);
+      }
+      solutionSet.add(solution);
+    }
+    
+    return computeHypervolume(solutionSet);
+  }
 
   public double computeHypervolume(SolutionSet solutionSet) {
     double hv;
@@ -96,7 +116,10 @@ public class FastHypervolume {
   /**
    * Updates the reference point
    */
-  private void updateReferencePoint(SolutionSet solutionSet) {
+  public void updateReferencePoint(SolutionSet solutionSet) {
+    if(referencePoint == null){
+      referencePoint = new Solution(numberOfObjectives);
+    }
     double[] maxObjectives = new double[numberOfObjectives];
     for (int i = 0; i < numberOfObjectives; i++) {
       maxObjectives[i] = 0;
