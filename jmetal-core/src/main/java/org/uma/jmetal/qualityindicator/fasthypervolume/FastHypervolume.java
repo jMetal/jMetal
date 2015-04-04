@@ -57,7 +57,7 @@ public class FastHypervolume {
   }
   
   public double computeHypervolume(double[][] solutionSetArray){
-    SolutionSet solutionSet = new SolutionSet();
+    SolutionSet solutionSet = new SolutionSet(solutionSetArray.length);
     
     for (double[] solutionArray : solutionSetArray) {
       Solution solution = new Solution(solutionArray.length);
@@ -91,6 +91,20 @@ public class FastHypervolume {
     return hv;
   }
 
+  public double computeHypervolume(double[][] solutionSetArray, Solution referencePoint){
+    SolutionSet solutionSet = new SolutionSet(solutionSetArray.length);
+    
+    for (double[] solutionArray : solutionSetArray) {
+      Solution solution = new Solution(solutionArray.length);
+      for (int i = 0; i < solutionArray.length; i++) {
+        solution.setObjective(i, solutionArray[i]);
+      }
+      solutionSet.add(solution);
+    }
+    
+    return computeHypervolume(solutionSet, referencePoint);
+  }
+  
   public double computeHypervolume(SolutionSet solutionSet, Solution referencePoint) {
     double hv = 0.0;
     if (solutionSet.size() == 0) {
@@ -116,7 +130,7 @@ public class FastHypervolume {
   /**
    * Updates the reference point
    */
-  public void updateReferencePoint(SolutionSet solutionSet) {
+  private void updateReferencePoint(SolutionSet solutionSet) {
     if(referencePoint == null){
       referencePoint = new Solution(numberOfObjectives);
     }

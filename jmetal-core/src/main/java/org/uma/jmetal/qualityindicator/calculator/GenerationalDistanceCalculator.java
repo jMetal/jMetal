@@ -55,7 +55,7 @@ public class GenerationalDistanceCalculator extends Calculator {
     if (internalPopulation.size() != 0) {
       double[] maximumValues = metricsUtil.getMaximumValues(internalPopulation.writeObjectivesToMatrix(), numberOfObjectives);
       double[] minimumValues = metricsUtil.getMinimumValues(internalPopulation.writeObjectivesToMatrix(), numberOfObjectives);
-      double[][] normalizedFront = metricsUtil.getNormalizedFront(front.writeObjectivesToMatrix(), minimumValues, maximumValues);
+      double[][] normalizedFront = metricsUtil.getNormalizedFront(front.writeObjectivesToMatrix(), maximumValues, minimumValues);
       return gd.generationalDistance(normalizedFront, metricsUtil.getNonDominatedSolutions(internalPopulation).writeObjectivesToMatrix(), maximumValues, minimumValues);
     }
     return 0D;

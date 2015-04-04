@@ -2,6 +2,7 @@ package org.uma.jmetal.qualityindicator.calculator;
 
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.qualityindicator.InvertedGenerationalDistance;
+import org.uma.jmetal.qualityindicator.util.MetricsUtil;
 
 /**
  * This class was designed to help the calculation of Inverted Generational Distance (IGD).
@@ -53,10 +54,10 @@ public class InvertedGenerationalDistanceCalculator extends Calculator {
     if (internalPopulation.size() != 0) {
       double[] maximumValues = metricsUtil.getMaximumValues(internalPopulation.writeObjectivesToMatrix(), numberOfObjectives);
       double[] minimumValues = metricsUtil.getMinimumValues(internalPopulation.writeObjectivesToMatrix(), numberOfObjectives);
-      double[][] normalizedFront = metricsUtil.getNormalizedFront(front.writeObjectivesToMatrix(), minimumValues, maximumValues);
+      double[][] normalizedFront = metricsUtil.getNormalizedFront(front.writeObjectivesToMatrix(), maximumValues, minimumValues);
       return igd.invertedGenerationalDistance(normalizedFront, metricsUtil.getNonDominatedSolutions(internalPopulation).writeObjectivesToMatrix(), maximumValues, minimumValues);
     }
     return 0D;
   }
-
+  
 }

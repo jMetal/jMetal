@@ -1,5 +1,6 @@
 package org.uma.jmetal.qualityindicator.calculator;
 
+import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.qualityindicator.fasthypervolume.FastHypervolume;
 
@@ -22,6 +23,8 @@ public class HypervolumeCalculator extends Calculator{
   private final FastHypervolume hypervolume;
 
   private final int numberOfObjectives;
+  
+  private final Solution referencePoint;
 
   /**
    * Constructor for the hypervolume calculator.
@@ -29,7 +32,7 @@ public class HypervolumeCalculator extends Calculator{
    * @param numberOfObjectives the number of objectives for the problem.
    */
   public HypervolumeCalculator(int numberOfObjectives) {
-    this(numberOfObjectives, 0.1);
+    this(numberOfObjectives, 0.01);
   }
 
   /**
@@ -41,6 +44,11 @@ public class HypervolumeCalculator extends Calculator{
   public HypervolumeCalculator(int numberOfObjectives, double offset) {
     this.numberOfObjectives = numberOfObjectives;
     this.hypervolume = new FastHypervolume(offset, numberOfObjectives);
+    
+    referencePoint = new Solution(numberOfObjectives);
+    for (int i = 0; i < numberOfObjectives; i++) {
+      referencePoint.setObjective(i, 1 + offset);
+    }
   }
 
   /**
@@ -65,11 +73,10 @@ public class HypervolumeCalculator extends Calculator{
   @Override
   public double execute(SolutionSet front) {
     if (internalPopulation.size() != 0) {
-      hypervolume.updateReferencePoint(internalPopulation);
       double[] maximumValues = metricsUtil.getMaximumValues(internalPopulation.writeObjectivesToMatrix(), numberOfObjectives);
       double[] minimumValues = metricsUtil.getMinimumValues(internalPopulation.writeObjectivesToMatrix(), numberOfObjectives);
-      double[][] normalizedFront = metricsUtil.getNormalizedFront(front.writeObjectivesToMatrix(), minimumValues, maximumValues);
-      return hypervolume.computeHypervolume(normalizedFront);
+      double[][] normalizedFront = metricsUtil.getNormalizedFront(front.writeObjectivesToMatrix(), maximumValues, minimumValues);
+      return hypervolume.computeHypervolume(normalizedFront, referencePoint);
     }
     return 0D;
   }
