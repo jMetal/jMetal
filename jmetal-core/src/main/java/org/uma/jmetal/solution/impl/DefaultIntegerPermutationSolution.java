@@ -22,9 +22,9 @@ public class DefaultIntegerPermutationSolution
     overallConstraintViolationDegree = 0.0 ;
     numberOfViolatedConstraints = 0 ;
 
-    List<Integer> randomSequence = new ArrayList<>(problem.getPermutationLength(0));
+    List<Integer> randomSequence = new ArrayList<>(problem.getPermutationLength());
 
-    for (int j = 0; j < problem.getPermutationLength(0); j++) {
+    for (int j = 0; j < problem.getPermutationLength(); j++) {
       randomSequence.add(j);
     }
 

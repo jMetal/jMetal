@@ -18,7 +18,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.problem.multiobjective;
+package org.uma.jmetal.problem.singleobjective;
 
 
 import org.uma.jmetal.problem.impl.AbstractIntegerPermutationProblem;
@@ -32,30 +32,26 @@ import java.io.*;
  * This class is tested with two objectives and the KROA150 and KROB150 
  * instances of TSPLIB
  */
-public class MultiobjectiveTSP extends AbstractIntegerPermutationProblem {
+public class TSP extends AbstractIntegerPermutationProblem {
   private int         numberOfCities ;
   private double [][] distanceMatrix ;
-  private double [][] costMatrix;
 
   /**
-   * Creates a new MultiobjectiveTSP problem instance. It accepts data files from TSPLIB
+   * Creates a new TSP problem instance. It accepts data files from TSPLIB
    */
-  public MultiobjectiveTSP(String distanceFile, String costFile) throws IOException {
+  public TSP(String distanceFile) throws IOException {
     distanceMatrix = readProblem(distanceFile) ;
-    costMatrix     = readProblem(costFile);
 
     setNumberOfVariables(numberOfCities);
-    setNumberOfObjectives(2);
-    setName("MultiobjectiveTSP");
+    setNumberOfObjectives(1);
+    setName("TSP");
   }
 
   /** Evaluate() method */
   public void evaluate(PermutationSolution<Integer> solution){
     double fitness1   ;
-    double fitness2   ;
 
     fitness1 = 0.0 ;
-    fitness2 = 0.0 ;
 
     for (int i = 0; i < (numberOfCities - 1); i++) {
       int x ;
@@ -65,7 +61,6 @@ public class MultiobjectiveTSP extends AbstractIntegerPermutationProblem {
       y = solution.getVariableValue(i+1) ;
 
       fitness1 += distanceMatrix[x][y] ;
-      fitness2 += costMatrix[x][y];
     }
     int firstCity ;
     int lastCity  ;
@@ -74,10 +69,8 @@ public class MultiobjectiveTSP extends AbstractIntegerPermutationProblem {
     lastCity = solution.getVariableValue(numberOfCities - 1) ;
 
     fitness1 += distanceMatrix[firstCity][lastCity] ;
-    fitness2 += costMatrix[firstCity][lastCity];
 
     solution.setObjective(0, fitness1);
-    solution.setObjective(1, fitness2);
   }
 
   public double [][] readProblem(String file) throws

@@ -38,8 +38,8 @@ public class PermutationSwapMutation<T> implements MutationOperator<PermutationS
    * Constructor
    */
   public PermutationSwapMutation(double mutationProbability) {
-    if (mutationProbability < 0) {
-      throw new JMetalException("Mutation probability is negative: " + mutationProbability) ;
+    if ((mutationProbability < 0) || (mutationProbability > 1)) {
+      throw new JMetalException("Mutation probability value invalid: " + mutationProbability) ;
     }
     this.mutationProbability = mutationProbability;
     randomGenerator = JMetalRandom.getInstance() ;
@@ -63,20 +63,22 @@ public class PermutationSwapMutation<T> implements MutationOperator<PermutationS
     int permutationLength ;
     permutationLength = solution.getNumberOfVariables() ;
 
-    if (randomGenerator.nextDouble()< mutationProbability) {
-      int pos1 = randomGenerator.nextInt(0, permutationLength - 1) ;
-      int pos2 = randomGenerator.nextInt(0, permutationLength - 1) ;
+    if ((permutationLength != 0) && (permutationLength != 1)) {
+      if (randomGenerator.nextDouble() < mutationProbability) {
+        int pos1 = randomGenerator.nextInt(0, permutationLength - 1);
+        int pos2 = randomGenerator.nextInt(0, permutationLength - 1);
 
-      while (pos1 == pos2) {
-        if (pos1 == (permutationLength - 1))
-          pos2 = randomGenerator.nextInt(0, permutationLength- 2);
-        else
-          pos2 = randomGenerator.nextInt(pos1, permutationLength- 1);
+        while (pos1 == pos2) {
+          if (pos1 == (permutationLength - 1))
+            pos2 = randomGenerator.nextInt(0, permutationLength - 2);
+          else
+            pos2 = randomGenerator.nextInt(pos1, permutationLength - 1);
+        }
+
+        T temp = solution.getVariableValue(pos1);
+        solution.setVariableValue(pos1, solution.getVariableValue(pos2));
+        solution.setVariableValue(pos2, temp);
       }
-
-      T temp = solution.getVariableValue(pos1);
-      solution.setVariableValue(pos1, solution.getVariableValue(pos2)) ;
-      solution.setVariableValue(pos2, temp) ;
     }
   }
 }

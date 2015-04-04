@@ -12,24 +12,24 @@ import java.util.List;
  * Created by Antonio J. Nebro on 03/09/14.
  */
 public class GenericIntegerPermutationSolution
-        extends AbstractGenericSolution<List<Integer>, PermutationProblem>
-        implements PermutationSolution<List<Integer>> {
+    extends AbstractGenericSolution<List<Integer>, PermutationProblem>
+    implements PermutationSolution<List<Integer>> {
 
   /** Constructor */
-  public GenericIntegerPermutationSolution(PermutationProblem problem) {
+  public GenericIntegerPermutationSolution(PermutationProblem<PermutationSolution<Integer>> problem) {
     super(problem) ;
 
     overallConstraintViolationDegree = 0.0 ;
     numberOfViolatedConstraints = 0 ;
 
-    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      List<Integer> randomSequence = new ArrayList<>(problem.getPermutationLength(i));
+    List<Integer> randomSequence = new ArrayList<>(problem.getPermutationLength());
 
-      for (int j = 0; j < problem.getPermutationLength(i); j++) {
-        randomSequence.add(j);
-      }
+    for (int i = 0; i < problem.getPermutationLength(); i++) {
+      randomSequence.add(i);
+    }
 
-      java.util.Collections.shuffle(randomSequence);
+    java.util.Collections.shuffle(randomSequence);
+    for (int i = 0; i < problem.getPermutationLength(); i++) {
       setVariableValue(i, randomSequence) ;
     }
   }
@@ -42,22 +42,9 @@ public class GenericIntegerPermutationSolution
     }
 
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      List<Integer> list = new ArrayList<>() ;
-      for (int j = 0 ; j < getVariableValue(i).size(); j++) {
-        list.add(solution.getVariableValue(i).get(j));
-      }
-      setVariableValue(i, list);
+      setVariableValue(i, solution.getVariableValue(i));
     }
-    /*
-    variables = new ArrayList<>() ;
-    for (List<Integer> var : solution.variables) {
-      List<Integer> list = new ArrayList<>() ;
-      for (Integer element : var) {
-        var.add(new Integer(element)) ;
-      }
-      variables.add(list) ;
-    }
-*/
+
     overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
     numberOfViolatedConstraints = solution.numberOfViolatedConstraints ;
 
