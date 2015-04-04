@@ -73,8 +73,7 @@ public class TSP extends AbstractIntegerPermutationProblem {
     solution.setObjective(0, fitness1);
   }
 
-  public double [][] readProblem(String file) throws
-      IOException {
+  private double [][] readProblem(String file) throws IOException {
     double [][] matrix = null;
 
     InputStream in = getClass().getResourceAsStream(file);
