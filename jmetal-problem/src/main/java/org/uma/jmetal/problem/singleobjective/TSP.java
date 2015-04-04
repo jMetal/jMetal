@@ -28,16 +28,16 @@ import org.uma.jmetal.util.JMetalException;
 import java.io.*;
 
 /**
- * Class representing a multi-objective TSP (Traveling Salesman Problem) problem.
- * This class is tested with two objectives and the KROA150 and KROB150 
- * instances of TSPLIB
+ * Class representing a single-objective TSP (Traveling Salesman Problem) problem.
+ * It accepts data files from TSPLIB:
+ *   http://www.iwr.uni-heidelberg.de/groups/comopt/software/TSPLIB95/tsp/
  */
 public class TSP extends AbstractIntegerPermutationProblem {
   private int         numberOfCities ;
   private double [][] distanceMatrix ;
 
   /**
-   * Creates a new TSP problem instance. It accepts data files from TSPLIB
+   * Creates a new TSP problem instance
    */
   public TSP(String distanceFile) throws IOException {
     distanceMatrix = readProblem(distanceFile) ;
@@ -80,10 +80,6 @@ public class TSP extends AbstractIntegerPermutationProblem {
     InputStream in = getClass().getResourceAsStream(file);
     InputStreamReader isr = new InputStreamReader(in);
     BufferedReader br = new BufferedReader(isr);
-
-//    Reader inputFile = new BufferedReader(
-//        new InputStreamReader(
-//            new FileInputStream(file)));
 
     StreamTokenizer token = new StreamTokenizer(br);
     try {
