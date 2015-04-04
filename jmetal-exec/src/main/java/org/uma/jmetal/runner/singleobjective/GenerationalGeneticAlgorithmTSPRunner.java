@@ -50,9 +50,9 @@ public class GenerationalGeneticAlgorithmTSPRunner {
     SelectionOperator selection;
 
     problem = new TSP("/tspInstances/kroA100.tsp");
+    problem = new TSP("/tspInstances/mona-lisa100K.tsp");
 
     crossover = new PMXCrossover(0.9) ;
-    //crossover = new NullCrossover() ;
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
     mutation = new PermutationSwapMutation<Integer>(mutationProbability) ;
