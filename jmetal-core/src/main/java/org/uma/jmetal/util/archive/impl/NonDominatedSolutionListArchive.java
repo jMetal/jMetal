@@ -90,4 +90,12 @@ public class NonDominatedSolutionListArchive<S extends Solution> implements Arch
   public List<S> getSolutionList() {
     return solutionList;
   }
+
+  @Override public int size() {
+    return solutionList.size();
+  }
+
+  @Override public S get(int index) {
+    return solutionList.get(index);
+  }
 }

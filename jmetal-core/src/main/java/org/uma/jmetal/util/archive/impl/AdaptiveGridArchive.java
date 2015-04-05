@@ -92,7 +92,7 @@ public class AdaptiveGridArchive<S extends Solution> implements BoundedArchive<S
       }
     }
 
-    // At this point, the solutiontype may be inserted
+    // At this point, the solution may be inserted
     if (solutionList.size() == 0) { //The setArchive is empty
       solutionList.add(solution);
       grid.updateGrid(solutionList);
@@ -102,20 +102,20 @@ public class AdaptiveGridArchive<S extends Solution> implements BoundedArchive<S
     if (solutionList.size() < maxSize) { //The setArchive is not full
       grid.updateGrid(solution, solutionList); // Update the grid if applicable
       int location;
-      location = grid.location(solution); // Get the location of the solutiontype
+      location = grid.location(solution); // Get the location of the solution
       grid.addSolution(location); // Increment the density of the hypercube
-      solutionList.add(solution); // Add the solutiontype to the list
+      solutionList.add(solution); // Add the solution to the list
       return true;
     }
 
-    // At this point, the solutiontype has to be inserted and the setArchive is full
+    // At this point, the solution has to be inserted and the setArchive is full
     grid.updateGrid(solution, solutionList);
     int location = grid.location(solution);
-    if (location == grid.getMostPopulatedHypercube()) { // The solutiontype is in the
+    if (location == grid.getMostPopulatedHypercube()) { // The solution is in the
       // most populated hypercube
       return false; // Not inserted
     } else {
-      // Remove an solutiontype from most populated area
+      // Remove an solution from most populated area
       iterator = solutionList.iterator();
       boolean removed = false;
       while (iterator.hasNext()) {
@@ -136,6 +136,10 @@ public class AdaptiveGridArchive<S extends Solution> implements BoundedArchive<S
     return true;
   }
 
+  @Override public S get(int index) {
+    return solutionList.get(index);
+  }
+
   public AdaptiveGrid getGrid() {
     return grid;
   }
@@ -143,6 +147,10 @@ public class AdaptiveGridArchive<S extends Solution> implements BoundedArchive<S
   @Override
   public List<S> getSolutionList() {
     return solutionList;
+  }
+
+  @Override public int size() {
+    return solutionList.size();
   }
 
   @Override

@@ -68,7 +68,6 @@ public class RankingAndCrowdingSelection
 
     List<Solution> resultPopulation = crowdingDistanceSelection(ranking) ;
 
-
     return resultPopulation;
   }
 
