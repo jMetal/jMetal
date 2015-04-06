@@ -36,13 +36,16 @@ try {
     // STEP 2. Main loop
     int newSolutions = 0;
     while (evaluations < maxEvaluations) {
-
         referenceSetUpdate(true);
         newSolutions = subSetGeneration();
-        while (newSolutions > 0 && evaluations < maxEvaluations ) { // New solutions are created
+        while (newSolutions > 0  ) { // New solutions are created
             referenceSetUpdate(false);
-
-            newSolutions = subSetGeneration();
+            if (evaluations < maxEvaluations) {
+                newSolutions = subSetGeneration();
+            }
+            else {
+                newSolutions = 0;
+            }//if
         } // while
 
         // RE-START
@@ -65,13 +68,11 @@ try {
             //CrowdingDistance<DoubleSolution> crowdingDistance = new CrowdingDistance();
             archive.computeDistance();
             Collections.sort(archive.getSolutionList(),crowdingDistanceComparator);
-            /*distance.crowdingDistanceAssignment(archive_,
-                    problem_.getNumberOfObjectives());
-            archive_.sort(crowdingDistance_);*/
 
             int insert = solutionSetSize / 2;
-            if (insert > archive.getMaxSize())
-                insert = archive.getMaxSize();
+
+           if (insert > archive.getSolutionList().size())
+                insert = archive.getSolutionList().size();
 
             if (insert > (solutionSetSize - solutionSet.size()))
                 insert = solutionSetSize - solutionSet.size();
@@ -79,12 +80,9 @@ try {
             // Insert solutions
             for (int i = 0; i < insert; i++) {
                 solution = archive.getSolutionList().get(i);
-                //solution = improvement(solution);
-                //solution.unMarked();
                 marked.setAttribute(solution,false);
                 solutionSet.add(solution);
             }
-
             // Create the rest of solutions randomly
             while (solutionSet.size() < solutionSetSize) {
                 solution = diversificationGeneration();
@@ -101,6 +99,7 @@ try {
                 solutionSet.add(solution);
             } // while
         } // if
+       // System.out.println(evaluations);
     } // while
 }catch(Exception e){
 e.printStackTrace();
@@ -119,7 +118,7 @@ e.printStackTrace();
 
     private void initialListSolution(){
         try {
-            DoubleSolution solution;
+            DoubleSolution solution ;
             for (int i = 0; i < this.solutionSetSize; i++) {
                 solution = super.diversificationGeneration();
                 problem.evaluate(solution);
@@ -129,10 +128,13 @@ e.printStackTrace();
                 evaluations++;
                 solution = (DoubleSolution) improvementOperator.execute(solution);
                 marked.setAttribute(solution,false);
-                strenghtRawFitness.setAttribute(solution,0.0);
+                if(strenghtRawFitness.getAttribute(solution) == null) {
+                    strenghtRawFitness.setAttribute(solution,0.0);
+                }
+
                 evaluations += improvementOperator.getEvaluations();
                 solutionSet.add(solution);
-            } // fpr
+            } // for
         }catch (Exception ex){
             ex.printStackTrace();
         }

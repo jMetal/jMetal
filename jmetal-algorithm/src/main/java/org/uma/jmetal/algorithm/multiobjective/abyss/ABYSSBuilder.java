@@ -45,11 +45,12 @@ public class ABYSSBuilder implements AlgorithmBuilder {
         double crossoverProbability = 0.9;
         double distributionIndex=20.0;
         this.crossoverOperator = new SBXCrossover(crossoverProbability,distributionIndex);
-        double mutationProbability= 1/problem.getNumberOfVariables();
+        double mutationProbability= 1.0/problem.getNumberOfVariables();
         this.mutationOperator = new PolynomialMutation(mutationProbability,distributionIndex);
         int improvementRounds= 1;
-        this.improvementOperator = new MutationLocalSearch(improvementRounds,mutationOperator,archive.getSolutionList(),problem);
         this.archive =(CrowdingDistanceArchive)archive;
+        this.improvementOperator = new MutationLocalSearch(improvementRounds,mutationOperator,this.archive,problem);
+
     }
 
     @Override

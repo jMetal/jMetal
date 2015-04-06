@@ -154,7 +154,6 @@ public abstract class AbstractABYSS <S extends Solution> implements Algorithm<Li
         distanceToSolutionListAttribute = new DistanceToSolutionListAttribute();
         subSet = new ArrayList<DoubleSolution>(solutionSetSize * 1000);
         this.archive = (CrowdingDistanceArchive)archive;
-
         sumOfFrequencyValues       = new int[problem.getNumberOfVariables()] ;
         sumOfReverseFrequencyValues = new int[problem.getNumberOfVariables()] ;
         frequency       = new int[numberOfSubranges][problem.getNumberOfVariables()] ;
@@ -172,6 +171,7 @@ public abstract class AbstractABYSS <S extends Solution> implements Algorithm<Li
 
         DoubleSolution solution = problem.createSolution();
         marked.setAttribute(solution,false);
+        strenghtRawFitness.setAttribute(solution,0.0);
         double value;
         int range;
 
@@ -183,7 +183,7 @@ public abstract class AbstractABYSS <S extends Solution> implements Algorithm<Li
             } // for
 
             if (sumOfReverseFrequencyValues[i] == 0) {
-                range = randomGenerator.nextInt(0, numberOfSubranges - 1);//PseudoRandom.randInt(0, numberOfSubranges_ - 1) ;
+                range = randomGenerator.nextInt(0, numberOfSubranges - 1);
             } else {
                 value = randomGenerator.nextInt(0, sumOfReverseFrequencyValues[i] - 1);
                 range = 0;
@@ -204,6 +204,7 @@ public abstract class AbstractABYSS <S extends Solution> implements Algorithm<Li
             value = randomGenerator.nextDouble(low, high);
             //solution.getDecisionVariables()[i].setValue(value);
             solution.setVariableValue(i, value);
+
         } // for
         return solution;
     } // diversificationGeneration
@@ -222,10 +223,7 @@ public abstract class AbstractABYSS <S extends Solution> implements Algorithm<Li
             // STEP 1. Select the p best individuals of P, where p is refSet1Size_.
             //         Selection Criterium: Spea2Fitness
             DoubleSolution individual;
-
-            //(new Spea2Fitness(solutionSet_)).fitnessAssign();
             strenghtRawFitness.computeDensityEstimator(solutionSet);
-            //solutionSet_.sort(fitness_);
             Collections.sort(solutionSet, fitnessComparator);
 
             // STEP 2. Build the RefSet1 with these p individuals
@@ -233,7 +231,6 @@ public abstract class AbstractABYSS <S extends Solution> implements Algorithm<Li
                 individual = solutionSet.get(0);
                 solutionSet.remove(0);
                 marked.setAttribute(individual, false);
-                //individual.unMarked();
                 refSet1.add(individual);
             }
 
@@ -243,7 +240,6 @@ public abstract class AbstractABYSS <S extends Solution> implements Algorithm<Li
                 individual = solutionSet.get(i);
                 double distanceAux = SolutionUtils.distanceToSolutionListInSolutionSpace(individual, refSet1);
                 distanceToSolutionListAttribute.setAttribute(individual, distanceAux);
-                //individual.setDistanceToSolutionSet(distance.distanceToSolutionSetInSolutionSpace(individual,refSet1_));
             }
 
             int size = refSet2Size;
@@ -257,10 +253,7 @@ public abstract class AbstractABYSS <S extends Solution> implements Algorithm<Li
                 double maxMinimum = 0.0;
                 int index = 0;
                 for (int j = 0; j < solutionSet.size(); j++) {
-                  /*  if (solutionSet_.get(j).getDistanceToSolutionSet() > maxMinimum){
-                        maxMinimum = solutionSet_.get(j).getDistanceToSolutionSet();
-                        index = j;
-                    }*/
+
                     DoubleSolution auxSolution = solutionSet.get(j);
                     if (distanceToSolutionListAttribute.getAttribute(auxSolution) > maxMinimum) {
                         maxMinimum = distanceToSolutionListAttribute.getAttribute(auxSolution);
@@ -273,10 +266,7 @@ public abstract class AbstractABYSS <S extends Solution> implements Algorithm<Li
                 // Update distances to REFSET in population
                 for (int j = 0; j < solutionSet.size(); j++) {
                     double aux = SolutionUtils.distanceBetweenSolutions(solutionSet.get(j), individual);
-                    //distance_.distanceBetweenSolutions(solutionSet_.get(j),individual);
-                   /* if (aux < individual.getDistanceToSolutionSet()){
-                        solutionSet_.get(j).setDistanceToSolutionSet(aux);
-                    }*/
+
                     if (aux < distanceToSolutionListAttribute.getAttribute(individual)) {
                         Solution auxSolution = solutionSet.get(j);
                         distanceToSolutionListAttribute.setAttribute(auxSolution, aux);
@@ -291,11 +281,7 @@ public abstract class AbstractABYSS <S extends Solution> implements Algorithm<Li
                     for (int k = 0; k < refSet2.size(); k++) {
                         if (i != j) {
                             double aux = SolutionUtils.distanceBetweenSolutions(refSet2.get(j), refSet2.get(k));
-                            //distance_.distanceBetweenSolutions(refSet2_.get(j),refSet2_.get(k));
                             Solution auxSolution = refSet2.get(j);
-                           /* if (aux < refSet2_.get(j).getDistanceToSolutionSet()){
-                                refSet2_.get(j).setDistanceToSolutionSet(aux);
-                            } // if*/
                             if (aux < distanceToSolutionListAttribute.getAttribute(auxSolution)) {
                                 distanceToSolutionListAttribute.setAttribute(auxSolution, aux);
                             }//if
@@ -315,9 +301,6 @@ public abstract class AbstractABYSS <S extends Solution> implements Algorithm<Li
                     for (int indSet2 = 0; indSet2 < refSet2.size(); indSet2++) {
                         double aux = SolutionUtils.distanceBetweenSolutions(individual,
                                 refSet2.get(indSet2));
-                        /*if (aux < refSet2_.get(indSet2).getDistanceToSolutionSet()) {
-                            refSet2_.get(indSet2).setDistanceToSolutionSet(aux);
-                        }*/
                         DoubleSolution auxSolution = refSet2.get(indSet2);
                         if (aux < distanceToSolutionListAttribute.getAttribute(auxSolution)) {
                             distanceToSolutionListAttribute.setAttribute(auxSolution, aux);
@@ -362,7 +345,6 @@ public abstract class AbstractABYSS <S extends Solution> implements Algorithm<Li
         } // while
 
         if (!dominated) {
-            //solution.unMarked();
             marked.setAttribute(solution, false);
             if (refSet1.size() < refSet1Size) { //refSet1 isn't full
                 refSet1.add(solution);
@@ -388,12 +370,7 @@ public abstract class AbstractABYSS <S extends Solution> implements Algorithm<Li
         if (refSet2.size() < refSet2Size) {
             double solutionAux = SolutionUtils.distanceToSolutionListInSolutionSpace(solution, refSet1);
             distanceToSolutionListAttribute.setAttribute(solution, solutionAux);
-            //solution.setDistanceToSolutionSet(distance_.distanceToSolutionSetInSolutionSpace(solution,refSet1_));
             double aux = SolutionUtils.distanceToSolutionListInSolutionSpace(solution, refSet2);
-            //distance_.distanceToSolutionSetInSolutionSpace(solution,refSet2_);
-            /*if (aux < solution.getDistanceToSolutionSet()) {
-                solution.setDistanceToSolutionSet(aux);
-            }*/
             if (aux < distanceToSolutionListAttribute.getAttribute(solution)) {
                 distanceToSolutionListAttribute.setAttribute(solution, aux);
             }
@@ -402,23 +379,15 @@ public abstract class AbstractABYSS <S extends Solution> implements Algorithm<Li
         }
         double auxDistance = SolutionUtils.distanceToSolutionListInSolutionSpace(solution, refSet1);
         distanceToSolutionListAttribute.setAttribute(solution, auxDistance);
-        // solution.setDistanceToSolutionSet(distance_.distanceToSolutionSetInSolutionSpace(solution,refSet1_));
         double aux = SolutionUtils.distanceToSolutionListInSolutionSpace(solution, refSet2);
-
-        //distance_.distanceToSolutionSetInSolutionSpace(solution,refSet2_);
         if (aux < distanceToSolutionListAttribute.getAttribute(solution)) {
             distanceToSolutionListAttribute.setAttribute(solution, aux);
         }
-        /*if (aux < solution.getDistanceToSolutionSet()) {
-            solution.setDistanceToSolutionSet(aux);
-        }*/
-
         double peor = 0.0;
         int index = 0;
         for (int i = 0; i < refSet2.size(); i++) {
             DoubleSolution auxSolution = refSet2.get(i);
             aux = distanceToSolutionListAttribute.getAttribute(auxSolution);
-            //refSet2_.get(i).getDistanceToSolutionSet();
             if (aux > peor) {
                 peor = aux;
                 index = i;
@@ -439,19 +408,6 @@ public abstract class AbstractABYSS <S extends Solution> implements Algorithm<Li
             refSet2.add(solution);
             return true;
         }
-       /* if (solution.getDistanceToSolutionSet() < peor){
-            refSet2_.remove(index);
-            //Update distances in REFSET2
-            for (int j = 0; j < refSet2_.size();j++){
-                aux = distance_.distanceBetweenSolutions(refSet2_.get(j),solution);
-                if (aux < refSet2_.get(j).getDistanceToSolutionSet()){
-                    refSet2_.get(j).setDistanceToSolutionSet(aux);
-                }
-            }
-            solution.unMarked();
-            refSet2_.add(solution);
-            return true;
-        }*/
         return false;
     } // refSet2Test
 
@@ -480,7 +436,6 @@ public abstract class AbstractABYSS <S extends Solution> implements Algorithm<Li
             for (int j = i + 1; j < refSet1.size(); j++) {
                 parents.set(1,refSet1.get(i));
                 if (!marked.getAttribute(parents.get(0)) || !marked.getAttribute(parents.get(1))) {//parents[0].isMarked() || parents[1].isMarked()
-                    //offSpring = parent1.crossover(1.0,parent2);
                     offSpring = (List<DoubleSolution>) crossoverOperator.execute(parents);
                     problem.evaluate(offSpring.get(0));
                     problem.evaluate(offSpring.get(1));
@@ -495,8 +450,7 @@ public abstract class AbstractABYSS <S extends Solution> implements Algorithm<Li
                     }
                     marked.setAttribute(parents.get(0), true);
                     marked.setAttribute(parents.get(1), true);
-                    //parents[0].marked();
-                    //parents[1].marked();
+
                 }
             }
         }
@@ -507,7 +461,6 @@ public abstract class AbstractABYSS <S extends Solution> implements Algorithm<Li
             for (int j = i + 1; j < refSet2.size(); j++) {
                 parents.set(1, refSet2.get(j));
                 if ( !marked.getAttribute(parents.get(0)) || !marked.getAttribute(parents.get(1))) {//!parents[0].isMarked() || !parents[1].isMarked()
-                    //offSpring = parents[0].crossover(1.0,parent2);
                     offSpring = (List<DoubleSolution>) crossoverOperator.execute(parents);
                     if (problem instanceof  ConstrainedProblem) {
                         ((ConstrainedProblem)problem).evaluateConstraints(offSpring.get(0));
@@ -522,16 +475,12 @@ public abstract class AbstractABYSS <S extends Solution> implements Algorithm<Li
                     }
                     marked.setAttribute(parents.get(0), true);
                     marked.setAttribute(parents.get(1), true);
-                    //parents[0].marked();
-                    //parents[1].marked();
                 }
             }
         }
 
         return subSet.size();
     } // subSetGeneration
-
-
 
 }
 
