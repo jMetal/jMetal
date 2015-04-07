@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Created by ajnebro on 4/4/15.
  */
-public class PESAII <S extends Solution> extends AbstractGeneticAlgorithm<S, List<S>> {
+public class PESA2<S extends Solution> extends AbstractGeneticAlgorithm<S, List<S>> {
   private int maxEvaluations ;
   private int archiveSize ;
   private int populationSize ;
@@ -31,7 +31,7 @@ public class PESAII <S extends Solution> extends AbstractGeneticAlgorithm<S, Lis
   private AdaptiveGridArchive<S> archive;
   protected final SolutionListEvaluator<S> evaluator;
 
-  public PESAII (Problem<S> problem, int maxEvaluations, int populationSize, int archiveSize,
+  public PESA2(Problem<S> problem, int maxEvaluations, int populationSize, int archiveSize,
       int biSections, CrossoverOperator<List<S>, List<S>> crossoverOperator,
       MutationOperator<S> mutationOperator, SolutionListEvaluator<S> evaluator) {
     this.problem = problem ;
@@ -94,7 +94,7 @@ public class PESAII <S extends Solution> extends AbstractGeneticAlgorithm<S, Lis
 
   @Override protected List<S> reproduction(List<S> population) {
     List<S> offspringPopulation = new ArrayList<>(populationSize);
-    for (int i = 0; i < populationSize; i ++) {
+    for (int i = 0; i < populationSize; i+=2) {
       List<S> parents = new ArrayList<>(2);
       parents.add(population.get(i));
       parents.add(population.get(i + 1));
