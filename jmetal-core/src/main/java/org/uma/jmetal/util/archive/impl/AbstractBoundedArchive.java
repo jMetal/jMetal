@@ -24,14 +24,6 @@ public abstract class AbstractBoundedArchive<S extends Solution> implements Boun
 
 		return success;
 			
-		/*
-	    if (solutionList.size() > maxSize) { // FIXME: check whether the removed solution is the inserted one
-	      crowdingDistance.computeDensityEstimator(solutionList);
-	      int index = new SolutionListUtils().findWorstSolution(solutionList, crowdingDistanceComparator) ;
-	      solutionList.remove(index);
-	    }
-	    return true;
-	*/
 	}
 
 	@Override
