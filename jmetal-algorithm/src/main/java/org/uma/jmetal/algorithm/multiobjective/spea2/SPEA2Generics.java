@@ -17,7 +17,6 @@ import java.util.List;
  * @author Juanjo
  **/
 public class SPEA2Generics<S extends Solution> extends AbstractGeneticAlgorithm<S, List<S>> {
-
   protected final int maxIterations;
   protected final int populationSize;
   protected final Problem<S> problem;

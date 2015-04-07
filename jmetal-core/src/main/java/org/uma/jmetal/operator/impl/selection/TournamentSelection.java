@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * @author Juanjo
  * @version 1.0
- * 
+ *
  * Applies a binary tournament selection to return the best solution between two that have been
  * chosen at random from a solution list.
  */
@@ -36,12 +36,12 @@ public class TournamentSelection implements SelectionOperator<List<Solution>,Sol
   private final int numberOfTournaments;
   /** Constructor */
   public TournamentSelection(int numberOfTournaments) {
-	this(new DominanceComparator(), numberOfTournaments) ;
+    this(new DominanceComparator(), numberOfTournaments) ;
   }
 
   /** Constructor */
   public TournamentSelection(Comparator<Solution> comparator, int numberOfTournaments) {
-	this.numberOfTournaments = numberOfTournaments;
+    this.numberOfTournaments = numberOfTournaments;
     this.comparator = comparator ;
   }
 
@@ -56,14 +56,14 @@ public class TournamentSelection implements SelectionOperator<List<Solution>,Sol
 
     Solution result;
     if (solutionList.size() == 1) {
-    	result = solutionList.get(0);
+      result = solutionList.get(0);
     } else {
-    	result = SolutionListUtils.selectNRandomDifferentSolutions(1, solutionList).get(0);
-    	int cnt = 1; // at least 2 solutions are compared
-    	do {
-    		Solution candidate = SolutionListUtils.selectNRandomDifferentSolutions(1, solutionList).get(0);
-    		result = SolutionUtils.getBestSolution(result, candidate, comparator) ;
-    	} while (++cnt < this.numberOfTournaments);
+      result = SolutionListUtils.selectNRandomDifferentSolutions(1, solutionList).get(0);
+      int cnt = 1; // at least 2 solutions are compared
+      do {
+        Solution candidate = SolutionListUtils.selectNRandomDifferentSolutions(1, solutionList).get(0);
+        result = SolutionUtils.getBestSolution(result, candidate, comparator) ;
+      } while (++cnt < this.numberOfTournaments);
     }
     return result;
   }

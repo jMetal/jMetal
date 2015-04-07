@@ -37,7 +37,6 @@ import java.util.List;
  * This class implements a bounded archive based on the hypervolume quality indicator
  */
 public class FastHypervolumeArchive <S extends Solution> implements BoundedArchive<S> {
-
   private List<S> solutionList;
 
   public Point referencePoint;
@@ -127,8 +126,16 @@ public class FastHypervolumeArchive <S extends Solution> implements BoundedArchi
     return solutionList;
   }
 
+  @Override public int size() {
+    return solutionList.size();
+  }
+
   @Override
   public int getMaxSize() {
     return maxSize ;
+  }
+
+  @Override public S get(int index) {
+    return solutionList.get(index);
   }
 }

@@ -35,7 +35,7 @@ public class NSGAII<S extends  Solution> extends AbstractGeneticAlgorithm<S, Lis
    */
   public NSGAII(Problem<S> problem, int maxIterations, int populationSize,
       CrossoverOperator<List<S>, List<S>> crossoverOperator, MutationOperator<S> mutationOperator,
-      SelectionOperator selectionOperator, SolutionListEvaluator evaluator) {
+      SelectionOperator selectionOperator, SolutionListEvaluator<S> evaluator) {
     super() ;
     this.problem = problem;
     this.maxIterations = maxIterations;

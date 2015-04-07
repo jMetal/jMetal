@@ -68,6 +68,10 @@ public class CrowdingDistanceArchive<S extends Solution> implements BoundedArchi
     return solutionList;
   }
 
+  @Override public int size() {
+    return solutionList.size();
+  }
+
   public void computeDistance() {
     crowdingDistance.computeDensityEstimator(solutionList);
   }
@@ -77,4 +81,7 @@ public class CrowdingDistanceArchive<S extends Solution> implements BoundedArchi
     return maxSize ;
   }
 
+  @Override public S get(int index) {
+    return solutionList.get(index);
+  }
 }

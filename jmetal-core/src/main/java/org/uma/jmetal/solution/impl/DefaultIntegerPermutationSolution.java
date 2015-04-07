@@ -11,12 +11,12 @@ import java.util.List;
 /**
  * Created by Antonio J. Nebro on 03/09/14.
  */
-public class GenericIntegerPermutationSolution
-    extends AbstractGenericSolution<List<Integer>, PermutationProblem>
-    implements PermutationSolution<List<Integer>> {
+public class DefaultIntegerPermutationSolution
+    extends AbstractGenericSolution<Integer, PermutationProblem>
+    implements PermutationSolution<Integer> {
 
   /** Constructor */
-  public GenericIntegerPermutationSolution(PermutationProblem<PermutationSolution<Integer>> problem) {
+  public DefaultIntegerPermutationSolution(PermutationProblem problem) {
     super(problem) ;
 
     overallConstraintViolationDegree = 0.0 ;
@@ -24,18 +24,19 @@ public class GenericIntegerPermutationSolution
 
     List<Integer> randomSequence = new ArrayList<>(problem.getPermutationLength());
 
-    for (int i = 0; i < problem.getPermutationLength(); i++) {
-      randomSequence.add(i);
+    for (int j = 0; j < problem.getPermutationLength(); j++) {
+      randomSequence.add(j);
     }
 
     java.util.Collections.shuffle(randomSequence);
-    for (int i = 0; i < problem.getPermutationLength(); i++) {
-      setVariableValue(i, randomSequence) ;
+
+    for (int i = 0; i < getNumberOfVariables(); i++) {
+      setVariableValue(i, randomSequence.get(i)) ;
     }
   }
 
   /** Copy Constructor */
-  public GenericIntegerPermutationSolution(GenericIntegerPermutationSolution solution) {
+  public DefaultIntegerPermutationSolution(DefaultIntegerPermutationSolution solution) {
     super(solution.problem) ;
     for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
       setObjective(i, solution.getObjective(i)) ;
@@ -51,18 +52,12 @@ public class GenericIntegerPermutationSolution
     attributes = new HashMap(solution.attributes) ;
   }
 
-  @Override
-  public Solution copy() {
-    return new GenericIntegerPermutationSolution(this);
+  @Override public String getVariableValueString(int index) {
+    return getVariableValue(index).toString();
   }
 
   @Override
-  public String getVariableValueString(int index) {
-    String result = "" ;
-    for (Integer element : getVariableValue(index)) {
-      result += element + " " ;
-    }
-
-    return getVariableValue(index).toString() ;
+  public Solution copy() {
+    return new DefaultIntegerPermutationSolution(this);
   }
 }

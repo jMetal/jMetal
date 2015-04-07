@@ -91,6 +91,8 @@ public class AlgorithmExecution implements ExperimentComponent {
     JMetalLogger.logger.info("ExperimentExecution: Preparing output directory");
     prepareOutputDirectory() ;
 
+
+
 /*
     parallelExecutor.start(this);
 
