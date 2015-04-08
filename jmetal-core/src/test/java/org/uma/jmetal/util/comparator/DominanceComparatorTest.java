@@ -80,8 +80,9 @@ public class DominanceComparatorTest {
 
     when(violationComparator.compare(solution1, solution2)).thenReturn(-1) ;
     comparator = new DominanceComparator(violationComparator) ;
+    int obtainedValue = comparator.compare(solution1, solution2) ;
 
-    assertEquals(-1, comparator.compare(solution1, solution2)) ;
+    assertEquals(-1, obtainedValue) ;
     verify(violationComparator).compare(solution1, solution2) ;
   }
 
