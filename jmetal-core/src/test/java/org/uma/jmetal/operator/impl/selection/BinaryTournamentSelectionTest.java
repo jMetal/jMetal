@@ -136,7 +136,7 @@ public class BinaryTournamentSelectionTest {
     Mockito.when(solution1.getObjective(1)).thenReturn(2.0) ;
 
     Solution solution2 = mock(Solution.class) ;
-    Mockito.when(solution2.getNumberOfObjectives()).thenReturn(1) ;
+    Mockito.when(solution2.getNumberOfObjectives()).thenReturn(2) ;
     Mockito.when(solution2.getObjective(0)).thenReturn(2.0) ;
     Mockito.when(solution2.getObjective(1)).thenReturn(3.0) ;
 
