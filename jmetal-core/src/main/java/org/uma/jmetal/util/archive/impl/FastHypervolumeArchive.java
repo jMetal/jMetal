@@ -62,7 +62,7 @@ public class FastHypervolumeArchive <S extends Solution> extends AbstractBounded
   /**
    * This method forces to compute the contribution of each solutiontype (required for PAEShv)
    */
-  private void computeHVContribution() {
+  public void computeHVContribution() {
     //if (size() > 2) { // The contribution can be updated
 
     FastHypervolume fastHV = new FastHypervolume();
