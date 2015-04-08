@@ -83,8 +83,7 @@ public class MOCellBuilder<S extends Solution> implements AlgorithmBuilder {
   }
 
   public Algorithm<List<S>> build() {
-    Algorithm<List<S>> algorithm = new MOCell<S>(problem, maxIterations, populationSize, crossoverOperator,
-          mutationOperator, selectionOperator, evaluator);
+    Algorithm<List<S>> algorithm = new MOCell<S>(problem, maxIterations, populationSize, crossoverOperator, mutationOperator, selectionOperator, evaluator);
     
     return algorithm ;
   }

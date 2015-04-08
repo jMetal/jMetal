@@ -24,6 +24,7 @@ package org.uma.jmetal.util.archive.impl;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.comparator.EqualSolutionsComparator;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -36,6 +37,7 @@ import java.util.List;
 public class NonDominatedSolutionListArchive<S extends Solution> implements Archive<S> {
   private List<S> solutionList;
   private Comparator<Solution> dominanceComparator;
+  private Comparator<Solution> equalSolutions = new EqualSolutionsComparator();
 
   /** Constructor */
   public NonDominatedSolutionListArchive() {
@@ -45,6 +47,7 @@ public class NonDominatedSolutionListArchive<S extends Solution> implements Arch
   /** Constructor */
   public NonDominatedSolutionListArchive(DominanceComparator comparator) {
     dominanceComparator = comparator ;
+   
     solutionList = new ArrayList<>() ;
   }
 
@@ -66,18 +69,23 @@ public class NonDominatedSolutionListArchive<S extends Solution> implements Arch
       Iterator<S> iterator = solutionList.iterator();
       boolean isDominated = false;
       
-      
-      while (!isDominated && (iterator.hasNext())) {
+      boolean isContained = false;
+      while (((!isDominated) && (!isContained)) && (iterator.hasNext())) {
         Solution listIndividual = iterator.next();
         int flag = dominanceComparator.compare(solution, listIndividual);
         if (flag == -1) {
           iterator.remove();
         }  else if (flag == 1) {
           isDominated = true; // dominated by one in the list
+        } else if (flag == 0) {
+        	int equalflag = equalSolutions.compare(solution, listIndividual);
+        	if (equalflag==0) // solutions are equals
+        		isContained = true;
         }
+        	
       }
       
-      if (!isDominated) {
+      if (!isDominated && !isContained) {
     	  solutionList.add(solution);
     	  solutionInserted = true;
       }
