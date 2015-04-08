@@ -20,6 +20,7 @@ import java.util.List;
 public class CrowdingDistanceArchive<S extends Solution> extends AbstractBoundedArchive<S> {
   private Comparator<Solution> crowdingDistanceComparator;
   private DensityEstimator<S> crowdingDistance ;
+  
 
   public CrowdingDistanceArchive(int maxSize) {
     super(maxSize);
@@ -37,4 +38,8 @@ public class CrowdingDistanceArchive<S extends Solution> extends AbstractBounded
     }
   }
 
+  public void computeDistance() {
+	    crowdingDistance.computeDensityEstimator(getSolutionList());
+	  }
+  
  }
