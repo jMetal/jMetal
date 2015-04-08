@@ -138,7 +138,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
       ((CrowdingDistanceArchive) leaders).computeDistance();
     //} else if (leaders instanceof FastHypervolumeArchive) {
     //  ((FastHypervolumeArchive) leaders).computeHVContribution();
-    //} else {
+    } else {
       throw new JMetalException("Invalid setArchive type");
     }
   }
