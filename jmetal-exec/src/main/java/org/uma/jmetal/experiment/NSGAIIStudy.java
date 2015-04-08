@@ -6,10 +6,10 @@ import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.multiobjective.zdt.*;
-import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.experiment.ExperimentConfiguration;
 import org.uma.jmetal.util.experiment.ExperimentConfigurationBuilder;
 import org.uma.jmetal.util.experiment.ExperimentalStudy;
+import org.uma.jmetal.util.experiment.impl.AlgorithmExecution;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,7 +34,10 @@ public class NSGAIIStudy  {
         .setIndependentRuns(4)
         .build();
 
+    AlgorithmExecution algorithmExecution = new AlgorithmExecution(configuration) ;
+
     ExperimentalStudy study = new ExperimentalStudy.Builder(configuration)
+        .addExperiment(algorithmExecution)
         .build() ;
 
     study.run() ;
@@ -46,21 +49,12 @@ public class NSGAIIStudy  {
     List<Algorithm> algorithms = new ArrayList<>() ;
     for (int i = 0 ; i < problemList.size(); i++) {
       algorithms.add(
-          new NSGAIIBuilder<DoubleSolution>(problemList.get(i), new SBXCrossover(1.0, 20.0),
+          new NSGAIIBuilder<>(problemList.get(i), new SBXCrossover(1.0, 20.0),
               new PolynomialMutation(1.0/problemList.get(i).getNumberOfVariables(), 20.0),
               NSGAIIBuilder.NSGAIIVariant.NSGAII)
               .build()) ;
     }
-/*
-    List<AlgorithmBuilder> builders = new ArrayList<>() ;
 
-    for (int i = 0 ; i < problemList.size(); i++) {
-      builders.add(
-          new NSGAIIBuilder(problemList.get(i), new SBXCrossover(1.0, 20.0),
-              new PolynomialMutation(1.0/problemList.get(i).getNumberOfVariables(), 20.0),
-              NSGAIIBuilder.NSGAIIVariant.NSGAII)) ;
-    }
-*/
     return algorithms ;
   }
 }
