@@ -2,7 +2,7 @@
 package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.spea2.SPEA2GenericsBuilder;
+import org.uma.jmetal.algorithm.multiobjective.mocell.MOCellBuilder;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -26,7 +26,7 @@ import java.util.List;
  *
  * @author juanjo
  */
-public class SPEA2Runner {
+public class MOCellRunner {
   /**
    * @param args Command line arguments.
    * @throws java.io.IOException
@@ -47,7 +47,7 @@ public class SPEA2Runner {
     if (args.length == 1) {
       problemName = args[0] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT6";
+      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
     }
 
     problem = ProblemUtils.loadProblem(problemName);
@@ -63,11 +63,11 @@ public class SPEA2Runner {
     selection = new BinaryTournamentSelection(new RankingAndCrowdingDistanceComparator());
 
     //algorithm = new SPEA2Builder(problem)
-    algorithm = new SPEA2GenericsBuilder<>(problem, crossover, mutation)
+    algorithm = new MOCellBuilder<>(problem, crossover, mutation)
          //   .setCrossoverOperator(crossover)
          //   .setMutationOperator(mutation)
             .setSelectionOperator(selection)
-            .setMaxIterations(250)
+            .setMaxIterations(25000)
             .setPopulationSize(100)
             .build() ;
 

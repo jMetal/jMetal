@@ -33,8 +33,8 @@ public class GenericSolutionAttribute <S extends Solution, V> implements Solutio
   }
 
   @Override
-  public void setAttribute(S solution, V fitness) {
-     solution.setAttribute(getAttributeID(), fitness);
+  public void setAttribute(S solution, V value) {
+     solution.setAttribute(getAttributeID(), value);
   }
 
   @Override
