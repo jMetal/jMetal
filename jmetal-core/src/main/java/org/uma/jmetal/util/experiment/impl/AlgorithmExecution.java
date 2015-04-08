@@ -32,58 +32,11 @@ import java.io.File;
  * Created by Antonio J. Nebro on 18/07/14.
  */
 public class AlgorithmExecution implements ExperimentComponent {
-  private String paretoSetFileName ;
-  private String paretoFrontFileName ;
   private ExperimentConfiguration configuration ;
 
   /** Constructor */
-  private AlgorithmExecution(Builder builder) {
-    paretoFrontFileName = builder.paretoFrontFileName ;
-    paretoSetFileName = builder.paretoSetFileName ;
-    configuration = builder.configuration ;
-  }
-
-  /* Getters */
-  public String getParetoSetFileName() {
-    return paretoSetFileName;
-  }
-
-  public String getParetoFrontFileName() {
-    return paretoFrontFileName;
-  }
-
-  public ExperimentConfiguration getExperimentData() {
-    return configuration;
-  }
-
-  /** Builder class */
-  public static class Builder {
-    private final ExperimentConfiguration configuration ;
-    private String paretoSetFileName ;
-    private String paretoFrontFileName ;
-
-    /** Builder class */
-    public Builder(ExperimentConfiguration configuration) {
-      this.configuration = configuration ;
-      paretoFrontFileName = "FUN" ;
-      paretoSetFileName = "VAR" ;
-    }
-
-    public Builder setParetoFrontFileName(String fileName) {
-      paretoFrontFileName = fileName ;
-
-      return this ;
-    }
-
-    public Builder setParetoSetFileName(String fileName) {
-      paretoSetFileName = fileName ;
-
-      return this ;
-    }
-
-    public AlgorithmExecution build() {
-      return new AlgorithmExecution(this) ;
-    }
+  public AlgorithmExecution(ExperimentConfiguration configuration) {
+    this.configuration = configuration ;
   }
 
   @Override
