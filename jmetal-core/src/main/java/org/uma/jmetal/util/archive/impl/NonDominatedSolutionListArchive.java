@@ -64,23 +64,25 @@ public class NonDominatedSolutionListArchive<S extends Solution> implements Arch
       solutionInserted = true ;
     } else {
       Iterator<S> iterator = solutionList.iterator();
-
-      while (!solutionInserted && (iterator.hasNext())) {
+      boolean isDominated = false;
+      
+      
+      while (!isDominated && (iterator.hasNext())) {
         Solution listIndividual = iterator.next();
         int flag = dominanceComparator.compare(solution, listIndividual);
-
         if (flag == -1) {
-          // A solution in the list is dominated by the new one
           iterator.remove();
-        } else if (flag == 0) {
-          // Non-dominated solutions
-          solutionList.add(solution) ;
-          solutionInserted = true ;
-        } else if (flag == 1) {
-          // The new solution is dominated
-          solutionInserted = false;
+        }  else if (flag == 1) {
+          isDominated = true; // dominated by one in the list
         }
       }
+      
+      if (!isDominated) {
+    	  solutionList.add(solution);
+    	  solutionInserted = true;
+      }
+      
+      return solutionInserted;
     }
 
     return solutionInserted ;
