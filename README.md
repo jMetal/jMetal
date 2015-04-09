@@ -19,7 +19,8 @@ If you are interested in contributing with your ideas and comments, please take 
 
 Features of the current development version:
 
-* Algorithms: NSGA-II, SPEA2, NSGA-III (to be tested), SMPSO, GDE3, IBEA (corrected version), MOEA/D (variants: MOEA/D-DE, MOEA/D-DRA, Constrained MOEA/D).
+
+* Algorithms: NSGA-II, NSGA-III (to be tested), SMPSO, GDE3, IBEA (corrected version), MOEA/D (variants: MOEA/D-DE, MOEA/D-DRA, Constrained MOEA/D), SPEA2, PESA2.
 * Encodings: Binary, Real, Integer, Permutation, Integer+Double
 * Crossover operators: SBXCrossover, SinglePointCrossover, DifferentialEvolutionCrossover, IntegerSBXCrossover, BLXAlphaCrossover, HUXCrossover
 * Mutation operators: PolynomialMutation, SingleRandomMutation, BitFlipMutation, IntegerPolynomialMutation, UniformMutation, NonUniformMutation
