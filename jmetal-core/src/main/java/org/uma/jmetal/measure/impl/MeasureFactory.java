@@ -6,6 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import org.uma.jmetal.measure.Measure;
 import org.uma.jmetal.measure.MeasureListener;
@@ -20,6 +21,8 @@ import org.uma.jmetal.measure.PushMeasure;
  * 
  */
 public class MeasureFactory {
+
+	private final Logger log = Logger.getLogger(MeasureFactory.class.getName());
 
 	/**
 	 * Create a {@link PullMeasure} to backup the last {@link Value} of a
@@ -115,12 +118,30 @@ public class MeasureFactory {
 			@Override
 			public void run() {
 				boolean isThreadNeeded = true;
+				long alreadyConsumed = 0;
 				while (isThreadNeeded) {
+					if (alreadyConsumed > period) {
+						long realConsumption = alreadyConsumed;
+						long missed = alreadyConsumed / period;
+						alreadyConsumed = alreadyConsumed % period;
+						log.warning("Too much time consumed in the last measuring ("
+								+ realConsumption
+								+ ">"
+								+ period
+								+ "), ignore the "
+								+ missed
+								+ " pushes missed and consider it has consumed "
+								+ alreadyConsumed);
+					} else {
+						// usual case.
+					}
 					try {
-						Thread.sleep(period);
+						Thread.sleep(period - alreadyConsumed);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
+					
+					long measureStart = System.currentTimeMillis();
 
 					PullMeasure<Value> pull = weakPull.get();
 					SimplePushMeasure<Value> push = weakPush.get();
@@ -138,6 +159,9 @@ public class MeasureFactory {
 					}
 					pull = null;
 					push = null;
+
+					long measureEnd = System.currentTimeMillis();
+					alreadyConsumed = measureEnd - measureStart;
 				}
 			}
 		});
