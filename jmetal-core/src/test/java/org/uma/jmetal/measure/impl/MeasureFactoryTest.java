@@ -63,16 +63,23 @@ public class MeasureFactoryTest {
 		});
 
 		// wait for notifications to come
-		Thread.sleep(10 * period);
+		int iterations = 1000;
+		Thread.sleep(iterations * period);
 
-		// check we have between 80%-120% of the expected notifications
-		assertTrue("" + timestamps.size(), timestamps.size() >= 8);
-		assertTrue("" + timestamps.size(), timestamps.size() <= 12);
+		// check we have between 90%-110% of the expected notifications
+		int minIterations = (int) Math.floor(iterations * 0.9);
+		int maxIterations = (int) Math.ceil(iterations * 1.1);
+		assertTrue(timestamps.size() + " notifications, it should be between "
+				+ minIterations + " and " + maxIterations,
+				timestamps.size() >= minIterations
+						&& timestamps.size() <= maxIterations);
 
-		// check the average period is between 80%-120% of the specified one
+		// check the average period is between 90%-110% of the specified one
 		long average = timestamps.getLast() / timestamps.size();
-		assertTrue("" + average, average >= period * 0.8);
-		assertTrue("" + average, average <= period * 1.2);
+		long minPeriod = (long) Math.floor(period * 0.9);
+		long maxPeriod = (long) Math.ceil(period * 1.1);
+		assertTrue(average + "ms, it should be between " + minPeriod + " and "
+				+ maxPeriod, average >= minPeriod && average <= maxPeriod);
 	}
 
 	@Test
