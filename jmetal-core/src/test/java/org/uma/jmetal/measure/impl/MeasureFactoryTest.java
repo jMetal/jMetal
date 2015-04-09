@@ -1,15 +1,16 @@
 package org.uma.jmetal.measure.impl;
 
-import static org.junit.Assert.*;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.uma.jmetal.measure.MeasureListener;
+import org.uma.jmetal.measure.PullMeasure;
+import org.uma.jmetal.measure.PushMeasure;
 
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Random;
 
-import org.junit.Test;
-import org.uma.jmetal.measure.MeasureListener;
-import org.uma.jmetal.measure.PullMeasure;
-import org.uma.jmetal.measure.PushMeasure;
+import static org.junit.Assert.*;
 
 public class MeasureFactoryTest {
 
@@ -33,7 +34,7 @@ public class MeasureFactoryTest {
 		assertEquals(-10, (Object) pull.get());
 	}
 
-	@Test
+  @Ignore @Test
 	public void testCreatePushFromPullNotifiesWithTheCorrectFrequency()
 			throws InterruptedException {
 		// create a pull measure
