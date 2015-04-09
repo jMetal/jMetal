@@ -1,56 +1,51 @@
-package org.uma.jmetal.algorithm.multiobjective.nsgaii;
+package org.uma.jmetal.algorithm.multiobjective.mocell;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
-import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
-import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.AlgorithmBuilder;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
-import org.uma.jmetal.util.AlgorithmBuilder;
+
+import java.util.List;
 
 /**
- * Created by ajnebro on 16/11/14.
- */
-public class NSGAIIMeasuresBuilder implements AlgorithmBuilder {
-  public enum NSGAIIVariant {NSGAII, SteadyStateNSGAII}
+ * Created by juanjo
+ *  */
+public class MOCellBuilder<S extends Solution> implements AlgorithmBuilder {
+  public enum MOCellVariant {MOCell, SteadyStateMOCell, Measures}
 
   /**
-   * NSGAIIBuilder class
+   * MOCellBuilder class
    */
-  private final Problem problem;
+  private final Problem<S> problem;
   private int maxIterations;
   private int populationSize;
-  private CrossoverOperator crossoverOperator;
-  private MutationOperator mutationOperator;
+  private CrossoverOperator<List<S>, List<S>>  crossoverOperator;
+  private MutationOperator<S> mutationOperator;
   private SelectionOperator selectionOperator;
   private SolutionListEvaluator evaluator;
 
   /**
-   * NSGAIIBuilder constructor
+   * MOCellBuilder constructor
    */
-  public NSGAIIMeasuresBuilder(Problem problem, NSGAIIVariant variant) {
+  public MOCellBuilder(Problem<S> problem, CrossoverOperator<List<S>, List<S>> crossoverOperator,
+      MutationOperator<S> mutationOperator) {
     this.problem = problem;
     maxIterations = 250;
     populationSize = 100;
-    crossoverOperator = new SBXCrossover(0.9, 20.0);
-    mutationOperator = new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0);
+    this.crossoverOperator = crossoverOperator ;
+    this.mutationOperator = mutationOperator ;
     selectionOperator = new BinaryTournamentSelection();
     evaluator = new SequentialSolutionListEvaluator();
   }
 
-  /**
-   * NSGAIIBuilder constructor
-   */
-  public NSGAIIMeasuresBuilder(Problem problem) {
-    this(problem, NSGAIIVariant.NSGAII) ;
-  }
-
-  public NSGAIIMeasuresBuilder setMaxIterations(int maxIterations) {
+  public MOCellBuilder setMaxIterations(int maxIterations) {
     if (maxIterations < 0) {
       throw new JMetalException("maxIterations is negative: " + maxIterations);
     }
@@ -59,7 +54,7 @@ public class NSGAIIMeasuresBuilder implements AlgorithmBuilder {
     return this;
   }
 
-  public NSGAIIMeasuresBuilder setPopulationSize(int populationSize) {
+  public MOCellBuilder setPopulationSize(int populationSize) {
     if (populationSize < 0) {
       throw new JMetalException("Population size is negative: " + populationSize);
     }
@@ -69,26 +64,7 @@ public class NSGAIIMeasuresBuilder implements AlgorithmBuilder {
     return this;
   }
 
-  public NSGAIIMeasuresBuilder setCrossoverOperator(CrossoverOperator crossoverOperator) {
-    if (crossoverOperator == null) {
-      throw new JMetalException("crossoverOperator is null");
-    }
-    this.crossoverOperator = crossoverOperator;
-
-    return this;
-  }
-
-  public NSGAIIMeasuresBuilder setMutationOperator(MutationOperator mutationOperator) {
-    if (mutationOperator == null) {
-      throw new JMetalException("mutationOperator is null");
-    }
-
-    this.mutationOperator = mutationOperator;
-
-    return this;
-  }
-
-  public NSGAIIMeasuresBuilder setSelectionOperator(SelectionOperator selectionOperator) {
+  public MOCellBuilder setSelectionOperator(SelectionOperator selectionOperator) {
     if (selectionOperator == null) {
       throw new JMetalException("selectionOperator is null");
     }
@@ -97,7 +73,7 @@ public class NSGAIIMeasuresBuilder implements AlgorithmBuilder {
     return this;
   }
 
-  public NSGAIIMeasuresBuilder setSolutionListEvaluator(SolutionListEvaluator evaluator) {
+  public MOCellBuilder setSolutionListEvaluator(SolutionListEvaluator evaluator) {
     if (evaluator == null) {
       throw new JMetalException("evaluator is null");
     }
@@ -106,11 +82,9 @@ public class NSGAIIMeasuresBuilder implements AlgorithmBuilder {
     return this;
   }
 
-  public Algorithm build() {
-    Algorithm algorithm ;
-    algorithm = new NSGAIIMeasures(problem, maxIterations, populationSize, crossoverOperator,
-        mutationOperator, selectionOperator, evaluator);
-
+  public Algorithm<List<S>> build() {
+    Algorithm<List<S>> algorithm = new MOCell<S>(problem, maxIterations, populationSize, crossoverOperator, mutationOperator, selectionOperator, evaluator);
+    
     return algorithm ;
   }
 

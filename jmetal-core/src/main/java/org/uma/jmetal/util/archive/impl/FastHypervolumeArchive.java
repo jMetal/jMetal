@@ -36,15 +36,10 @@ import java.util.List;
 /**
  * This class implements a bounded archive based on the hypervolume quality indicator
  */
-public class FastHypervolumeArchive <S extends Solution> implements BoundedArchive<S> {
-
-  private List<S> solutionList;
+public class FastHypervolumeArchive <S extends Solution> extends AbstractBoundedArchive<S> {
 
   public Point referencePoint;
-  private int maxSize;
 
-  private Comparator<Solution> dominanceComparator;
-  private Comparator<Solution> equalsComparator;
 
   private Comparator<Solution> hvContributionComparator;
 
@@ -55,59 +50,12 @@ public class FastHypervolumeArchive <S extends Solution> implements BoundedArchi
    * @param numberOfObjectives The number of objectives.
    */
   public FastHypervolumeArchive(int maxSize, int numberOfObjectives) {
-    this.maxSize = maxSize;
-    solutionList = new ArrayList<>(maxSize);
-    dominanceComparator = new DominanceComparator();
-    //equalsComparator = new EqualSolutions();
-
+    super(maxSize);
     referencePoint = new ArrayPoint(numberOfObjectives);
     for (int i = 0; i < numberOfObjectives; i++) {
       referencePoint.setDimensionValue(i, Double.MAX_VALUE);
     }
-
     hvContributionComparator = new HypervolumeContributorComparator();
-  }
-
-  /**
-   * Adds a <code>Solution</code> to the setArchive. If the <code>Solution</code>
-   * is dominated by any member of the setArchive, then it is discarded. If the
-   * <code>Solution</code> dominates some members of the setArchive, these are
-   * removed. If the setArchive is full and the <code>Solution</code> has to be
-   * inserted, the solutiontype contributing the least to the HV of the solutiontype set
-   * is discarded.
-   *
-   * @param solution The <code>Solution</code>
-   * @return true if the <code>Solution</code> has been inserted, false
-   * otherwise.
-   */
-  public boolean add(S solution) {
-    int flag;
-    Solution auxiliarSolution;
-
-    int i = 0;
-    while (i < solutionList.size()) {
-      auxiliarSolution = solutionList.get(i);
-
-      flag = dominanceComparator.compare(solution, auxiliarSolution);
-      if (flag == 1) {
-        return false;
-      } else if (flag == -1) {
-        solutionList.remove(i);
-      } else {
-        //if (equalsComparator.compare(auxiliarSolution, solution) == 0) { // There is an equal solutiontype
-        // in the population
-        //  return false; // Discard the new solutiontype
-        //}
-        i++;
-      }
-    }
-    solutionList.add(solution);
-    if (solutionList.size() > maxSize) {
-      computeHVContribution();
-
-      solutionList.remove(SolutionListUtils.findIndexOfWorstSolution(solutionList, hvContributionComparator));
-    }
-    return true;
   }
 
 
@@ -118,17 +66,15 @@ public class FastHypervolumeArchive <S extends Solution> implements BoundedArchi
     //if (size() > 2) { // The contribution can be updated
 
     FastHypervolume fastHV = new FastHypervolume();
-    fastHV.computeHVContributions(solutionList);
+    fastHV.computeHVContributions(getSolutionList());
     //}
   }
 
   @Override
-  public List<S> getSolutionList() {
-    return solutionList;
-  }
-
-  @Override
-  public int getMaxSize() {
-    return maxSize ;
+  public void prune() {
+	if (getSolutionList().size() > getMaxSize()) {
+      computeHVContribution();
+      getSolutionList().remove(SolutionListUtils.findIndexOfWorstSolution(getSolutionList(), hvContributionComparator));
+    }
   }
 }

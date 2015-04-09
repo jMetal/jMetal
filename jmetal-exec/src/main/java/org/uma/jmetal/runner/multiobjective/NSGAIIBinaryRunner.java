@@ -21,7 +21,6 @@
 package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
@@ -30,7 +29,7 @@ import org.uma.jmetal.operator.impl.crossover.SinglePointCrossover;
 import org.uma.jmetal.operator.impl.mutation.BitFlipMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.BinaryProblem;
-import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
@@ -58,9 +57,9 @@ public class NSGAIIBinaryRunner {
           Exception {
 
     BinaryProblem problem;
-    Algorithm algorithm;
-    CrossoverOperator crossover;
-    MutationOperator mutation;
+    Algorithm<List<BinarySolution>> algorithm;
+    CrossoverOperator<List<BinarySolution>, List<BinarySolution>> crossover;
+    MutationOperator<BinarySolution> mutation;
     SelectionOperator selection;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT5" ;
@@ -75,9 +74,7 @@ public class NSGAIIBinaryRunner {
 
     selection = new BinaryTournamentSelection() ;
 
-    algorithm = new NSGAIIBuilder(problem)
-            .setCrossoverOperator(crossover)
-            .setMutationOperator(mutation)
+    algorithm = new NSGAIIBuilder(problem, crossover, mutation, NSGAIIBuilder.NSGAIIVariant.NSGAII)
             .setSelectionOperator(selection)
             .setMaxIterations(250)
             .setPopulationSize(100)
@@ -86,7 +83,7 @@ public class NSGAIIBinaryRunner {
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
-    List<Solution> population = ((NSGAII)algorithm).getResult() ;
+    List<BinarySolution> population = algorithm.getResult() ;
     long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)

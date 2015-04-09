@@ -17,20 +17,19 @@ import java.util.List;
  * @author Antonio J. Nebro
  * @version 1.0
  */
-public class NSGAIIMeasures extends NSGAII implements Measurable {
+public class NSGAIIMeasures<S extends Solution> extends NSGAII<S> implements Measurable {
   private CountingMeasure iterations ;
   private BasicMeasure<Integer> numberOfNonDominatedSolutionsInPopulation ;
   private DurationMeasure durationMeasure ;
   private SimpleMeasureManager measureManager ;
 
-  private BasicMeasure<List<Solution>> solutionListMeasure ;
-  //private SimplePushMeasure<List<Solution>> so;
+  private BasicMeasure<List<S>> solutionListMeasure ;
 
   /**
    * Constructor
    */
-  public NSGAIIMeasures(Problem problem, int maxIterations, int populationSize,
-      CrossoverOperator crossoverOperator, MutationOperator mutationOperator,
+  public NSGAIIMeasures(Problem<S> problem, int maxIterations, int populationSize,
+      CrossoverOperator<List<S>, List<S>> crossoverOperator, MutationOperator<S> mutationOperator,
       SelectionOperator selectionOperator, SolutionListEvaluator evaluator) {
     super(problem, maxIterations, populationSize, crossoverOperator, mutationOperator, selectionOperator, evaluator) ;
 
@@ -45,7 +44,6 @@ public class NSGAIIMeasures extends NSGAII implements Measurable {
     iterations.increment();
 
     solutionListMeasure.push(getPopulation());
-    //so.push(getPopulation());
   }
 
   @Override protected boolean isStoppingConditionReached() {
@@ -66,7 +64,6 @@ public class NSGAIIMeasures extends NSGAII implements Measurable {
     iterations = new CountingMeasure(0) ;
     numberOfNonDominatedSolutionsInPopulation = new BasicMeasure<>() ;
     solutionListMeasure = new BasicMeasure<>() ;
-    //so = new SimplePushMeasure<>() ;
 
     measureManager = new SimpleMeasureManager() ;
     measureManager.setPullMeasure("currentExecutionTime", durationMeasure);
@@ -82,9 +79,9 @@ public class NSGAIIMeasures extends NSGAII implements Measurable {
     return measureManager ;
   }
 
-  @Override protected List<Solution> replacement(List<Solution> population,
-      List<Solution> offspringPopulation) {
-    List<Solution> pop = super.replacement(population, offspringPopulation) ;
+  @Override protected List<S> replacement(List<S> population,
+      List<S> offspringPopulation) {
+    List<S> pop = super.replacement(population, offspringPopulation) ;
 
     Ranking ranking = computeRanking(pop);
     numberOfNonDominatedSolutionsInPopulation.set(ranking.getSubfront(0).size());

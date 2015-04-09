@@ -21,7 +21,6 @@
 package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
@@ -29,8 +28,8 @@ import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
-import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
@@ -57,10 +56,10 @@ public class NSGAIIRunner {
    *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName
    */
   public static void main(String[] args) throws JMetalException {
-    Problem problem;
-    Algorithm algorithm;
-    CrossoverOperator crossover;
-    MutationOperator mutation;
+    DoubleProblem problem;
+    Algorithm<List<DoubleSolution>> algorithm;
+    CrossoverOperator<List<DoubleSolution>,List<DoubleSolution>> crossover;
+    MutationOperator<DoubleSolution> mutation;
     SelectionOperator selection;
 
     String problemName ;
@@ -70,7 +69,7 @@ public class NSGAIIRunner {
       problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
     }
 
-    problem = ProblemUtils.loadProblem(problemName);
+    problem = (DoubleProblem)ProblemUtils.loadProblem(problemName);
 
     double crossoverProbability = 0.9 ;
     double crossoverDistributionIndex = 20.0 ;
@@ -82,9 +81,8 @@ public class NSGAIIRunner {
 
     selection = new BinaryTournamentSelection(new RankingAndCrowdingDistanceComparator());
 
-    algorithm = new NSGAIIBuilder(problem)
-            .setCrossoverOperator(crossover)
-            .setMutationOperator(mutation)
+    algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation,
+        NSGAIIBuilder.NSGAIIVariant.NSGAII)
             .setSelectionOperator(selection)
             .setMaxIterations(100)
             .setPopulationSize(100)
@@ -93,7 +91,7 @@ public class NSGAIIRunner {
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
-    List<Solution> population = ((NSGAII)algorithm).getResult() ;
+    List<DoubleSolution> population = algorithm.getResult() ;
     long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)

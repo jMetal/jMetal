@@ -45,7 +45,7 @@ public class ZDT4 extends AbstractDoubleProblem {
   public ZDT4(Integer numberOfVariables) {
     setNumberOfVariables(numberOfVariables);
     setNumberOfObjectives(2);
-    setName("ZDT2");
+    setName("ZDT4");
 
     List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
     List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;

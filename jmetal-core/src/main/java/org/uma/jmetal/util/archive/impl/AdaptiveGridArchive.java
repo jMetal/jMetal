@@ -34,11 +34,10 @@ import java.util.List;
 /**
  * This class implements an archive (solution list) based on an adaptive grid used in PAES
  */
-public class AdaptiveGridArchive<S extends Solution> implements BoundedArchive<S> {
+public class AdaptiveGridArchive<S extends Solution> extends AbstractBoundedArchive<S> {
 
   private AdaptiveGrid<S> grid;
-  private List<S> solutionList;
-
+ 
   private int maxSize;
   private Comparator<Solution> dominanceComparator;
 
@@ -51,10 +50,9 @@ public class AdaptiveGridArchive<S extends Solution> implements BoundedArchive<S
    * @param objectives The number of objectives.
    */
   public AdaptiveGridArchive(int maxSize, int bisections, int objectives) {
-    this.maxSize = maxSize;
+    super(maxSize);
     dominanceComparator = new DominanceComparator();
     grid = new AdaptiveGrid(bisections, objectives);
-    solutionList = new ArrayList<>(maxSize) ;
   }
 
   /**
@@ -71,7 +69,7 @@ public class AdaptiveGridArchive<S extends Solution> implements BoundedArchive<S
    */
   public boolean add(S solution) {
     //Iterator of individuals over the list
-    Iterator<S> iterator = solutionList.iterator();
+    Iterator<S> iterator = getSolutionList().iterator();
 
     while (iterator.hasNext()) {
       S element = iterator.next();
@@ -83,7 +81,7 @@ public class AdaptiveGridArchive<S extends Solution> implements BoundedArchive<S
         if (grid.getLocationDensity(location) > 1) {//The hypercube contains
           grid.removeSolution(location);            //more than one individual
         } else {
-          grid.updateGrid(solutionList);
+          grid.updateGrid(getSolutionList());
         }
       }
       else if (flag == 1) { // An Individual into the file dominates the
@@ -92,31 +90,45 @@ public class AdaptiveGridArchive<S extends Solution> implements BoundedArchive<S
       }
     }
 
-    // At this point, the solutiontype may be inserted
-    if (solutionList.size() == 0) { //The setArchive is empty
-      solutionList.add(solution);
-      grid.updateGrid(solutionList);
+    // At this point, the solution may be inserted
+    if (this.size() == 0) { //The setArchive is empty
+      this.getSolutionList().add(solution);
+      grid.updateGrid(getSolutionList());
       return true;
     }
 
-    if (solutionList.size() < maxSize) { //The setArchive is not full
-      grid.updateGrid(solution, solutionList); // Update the grid if applicable
+    if (this.getSolutionList().size() < this.getMaxSize()) { //The setArchive is not full
+      grid.updateGrid(solution, getSolutionList()); // Update the grid if applicable
       int location;
-      location = grid.location(solution); // Get the location of the solutiontype
+      location = grid.location(solution); // Get the location of the solution
       grid.addSolution(location); // Increment the density of the hypercube
-      solutionList.add(solution); // Add the solutiontype to the list
+      getSolutionList().add(solution); // Add the solution to the list
       return true;
     }
 
-    // At this point, the solutiontype has to be inserted and the setArchive is full
-    grid.updateGrid(solution, solutionList);
+    // At this point, the solution has to be inserted and the setArchive is full
+    grid.updateGrid(solution, getSolutionList());
     int location = grid.location(solution);
-    if (location == grid.getMostPopulatedHypercube()) { // The solutiontype is in the
+    if (location == grid.getMostPopulatedHypercube()) { // The solution is in the
       // most populated hypercube
       return false; // Not inserted
     } else {
-      // Remove an solutiontype from most populated area
-      iterator = solutionList.iterator();
+      // Remove an solution from most populated area
+      prune();
+      // A solution from most populated hypercube has been removed,
+      // insert now the solution
+      grid.addSolution(location);
+      getSolutionList().add(solution);
+    }
+    return true;
+  }
+
+  public AdaptiveGrid getGrid() {
+    return grid;
+  }
+  
+  public void prune() {
+	  Iterator<S> iterator = getSolutionList().iterator();
       boolean removed = false;
       while (iterator.hasNext()) {
         if (!removed) {
@@ -128,25 +140,5 @@ public class AdaptiveGridArchive<S extends Solution> implements BoundedArchive<S
           }
         }
       }
-      // A solution from most populated hypercube has been removed,
-      // insert now the solution
-      grid.addSolution(location);
-      solutionList.add(solution);
-    }
-    return true;
-  }
-
-  public AdaptiveGrid getGrid() {
-    return grid;
-  }
-
-  @Override
-  public List<S> getSolutionList() {
-    return solutionList;
-  }
-
-  @Override
-  public int getMaxSize() {
-    return maxSize ;
   }
 }

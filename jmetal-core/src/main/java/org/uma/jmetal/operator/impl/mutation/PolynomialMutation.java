@@ -14,6 +14,7 @@
 package org.uma.jmetal.operator.impl.mutation;
 
 import org.uma.jmetal.operator.MutationOperator;
+import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.util.RepairDoubleSolution;
 import org.uma.jmetal.solution.util.RepairDoubleSolutionAtBounds;
@@ -30,11 +31,23 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  * @version 1.0
  */
 public class PolynomialMutation implements MutationOperator<DoubleSolution> {
+  private static final double DEFAULT_PROBABILITY = 0.01 ;
+  private static final double DEFAULT_DISTRIBUTION_INDEX = 20.0 ;
   private double distributionIndex ;
   private double mutationProbability ;
   private RepairDoubleSolution solutionRepair ;
 
   private JMetalRandom randomGenerator ;
+
+  /** Constructor */
+  public PolynomialMutation() {
+    this(DEFAULT_PROBABILITY, DEFAULT_DISTRIBUTION_INDEX) ;
+  }
+
+  /** Constructor */
+  public PolynomialMutation(DoubleProblem problem, double distributionIndex) {
+    this(1.0/problem.getNumberOfVariables(), DEFAULT_DISTRIBUTION_INDEX) ;
+  }
 
   /** Constructor */
   public PolynomialMutation(double mutationProbability, double distributionIndex) {
@@ -77,11 +90,7 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
   }
 
   /** Perform the mutation operation */
-  public void doMutation(double probability, DoubleSolution solution) throws JMetalException {
-    doRealMutation(probability, solution);
-  }
-
-  private void doRealMutation(double probability, DoubleSolution solution) {
+  private void doMutation(double probability, DoubleSolution solution) {
     double rnd, delta1, delta2, mutPow, deltaq;
     double y, yl, yu, val, xy;
 
