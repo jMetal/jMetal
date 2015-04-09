@@ -65,6 +65,7 @@ public class TournamentSelection implements SelectionOperator<List<Solution>,Sol
         result = SolutionUtils.getBestSolution(result, candidate, comparator) ;
       } while (++cnt < this.numberOfTournaments);
     }
+
     return result;
   }
 }

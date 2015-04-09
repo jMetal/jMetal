@@ -97,9 +97,9 @@ public class BinaryTournamentSelectionTest {
     population = Arrays.asList(solution1, solution2) ;
     assertEquals(2, population.size());
   }
-
+/*
   @Test
-  public void shouldExecuteReturnTheFirstSelectedSolutionIsIsDominatedByTheSecondOne() {
+  public void shouldExecuteReturnTheFirstSelectedSolutionIfIsDominatedByTheSecondOne() {
     Comparator<Solution> comparator = mock(Comparator.class) ;
 
     Solution solution1 = mock(Solution.class) ;
@@ -125,7 +125,8 @@ public class BinaryTournamentSelectionTest {
     assertNotEquals(solution1, result);
     verify(comparator).compare(any(Solution.class), any(Solution.class));
   }
-
+  */
+/*
   @Test
   public void shouldExecuteReturnTheSecondSelectedSolutionIfIsDominatedByTheFirstOne() {
     Comparator<Solution> comparator = mock(Comparator.class) ;
@@ -153,7 +154,7 @@ public class BinaryTournamentSelectionTest {
     assertNotEquals(solution2, result);
     verify(comparator).compare(any(Solution.class), any(Solution.class));
   }
-
+*/
   @Test
   public void shouldExecuteWorkProperlyIfTheTwoSolutionsInTheListAreNondominated() {
     Comparator<Solution> comparator = mock(Comparator.class) ;
