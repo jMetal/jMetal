@@ -84,7 +84,7 @@ public class NSGAIIRunner {
     algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation,
         NSGAIIBuilder.NSGAIIVariant.NSGAII)
             .setSelectionOperator(selection)
-            .setMaxIterations(100)
+            .setMaxIterations(250)
             .setPopulationSize(100)
             .build() ;
 
