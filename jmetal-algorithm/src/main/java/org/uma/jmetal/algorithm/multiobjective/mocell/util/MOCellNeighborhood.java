@@ -19,40 +19,30 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.algorithm.multiobjective.mocell;
+package org.uma.jmetal.algorithm.multiobjective.mocell.util;
+
+import org.uma.jmetal.solution.Solution;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.uma.jmetal.solution.*;
 /**
  * Class representing neighborhoods for a <code>Solution</code> into a
  * <code>SolutionSet</code>.
  */ 
 public class MOCellNeighborhood<S extends Solution> {    
   
-  /**
-   * Maximum rate considered
-   */
   private static int MAXRADIO = 2;
   
   /**
    * Stores the neighborhood.
-   * structure_ [i] represents a neighborhood for a solution.
-   * structure_ [i][j] represents a neighborhood with a ratio.
-   * structure_ [i][j][k] represents a neighbor of a solution.
+   * structure [i] represents a neighborhood for a solution.
+   * structure [i][j] represents a neighborhood with a ratio.
+   * structure [i][j][k] represents a neighbor of a solution.
    */
-  private int [][][] structure_;
-  
-  /**
-   * Stores the size of the solutionSet.
-   */
-  private int solutionSetSize_;
-  
-  /**
-   * Stores the size for each row
-   */
-  private int rowSize_;
+  private int [][][] structure;
+
+  private int solutionSetSize;
+  private int rowSize;
   
   /**
    * Enum type for defining the North, South, East, West, North-West, South-West,
@@ -66,65 +56,63 @@ public class MOCellNeighborhood<S extends Solution> {
    * @param solutionSetSize The size.
    */
   public MOCellNeighborhood(int solutionSetSize) {            
-    solutionSetSize_ = solutionSetSize;
-    //Create the structure_ for store the neighborhood
-    structure_ = new int[solutionSetSize_][MAXRADIO][];
+    this.solutionSetSize = solutionSetSize;
+    structure = new int[this.solutionSetSize][MAXRADIO][];
         
     //For each individual, and different rates the individual has a different 
     //number of neighborhoods
-    for (int ind = 0; ind < solutionSetSize_; ind ++) {
+    for (int ind = 0; ind < this.solutionSetSize; ind ++) {
       for (int radio = 0; radio < MAXRADIO; radio ++) {
         if (radio == 0) {//neighboors whit rate 1
-          structure_[ind][radio] = new int[8];
+          structure[ind][radio] = new int[8];
         } else if (radio == 1) { //neighboors whit rate 2
-          structure_[ind][radio] = new int[24];       
-        } // if
-      } // for
-    } // for
+          structure[ind][radio] = new int[24];
+        }
+      }
+    }
         
     //Calculate the size of a row
-    rowSize_ = (int) Math.sqrt((double)solutionSetSize_);
-        
-        
+    rowSize = (int) Math.sqrt((double) this.solutionSetSize);
+
     //Calculates the neighbors of a individual 
-    for (int ind = 0; ind < solutionSetSize_; ind++){
+    for (int ind = 0; ind < this.solutionSetSize; ind++){
       //rate 1
       //North neighbors
-      if (ind > rowSize_ - 1){
-        structure_[ind][0][Row.N.ordinal()] = ind - rowSize_;
+      if (ind > rowSize - 1){
+        structure[ind][0][Row.N.ordinal()] = ind - rowSize;
       } else {
-        structure_[ind][0][Row.N.ordinal()] = 
-       (ind - rowSize_ + solutionSetSize) % solutionSetSize;                                                          
+        structure[ind][0][Row.N.ordinal()] =
+       (ind - rowSize + solutionSetSize) % solutionSetSize;
       }
             
       //East neighbors
-      if  ((ind + 1) % rowSize_ == 0)
-        structure_[ind][0][Row.E.ordinal()] = (ind - (rowSize_ - 1));
+      if  ((ind + 1) % rowSize == 0)
+        structure[ind][0][Row.E.ordinal()] = (ind - (rowSize - 1));
       else
-        structure_[ind][0][Row.E.ordinal()] = (ind + 1);
+        structure[ind][0][Row.E.ordinal()] = (ind + 1);
 
       //Western neigbors
-      if (ind % rowSize_ == 0) {
-        structure_[ind][0][Row.W.ordinal()] = (ind + (rowSize_ - 1));
+      if (ind % rowSize == 0) {
+        structure[ind][0][Row.W.ordinal()] = (ind + (rowSize - 1));
       } else {
-        structure_[ind][0][Row.W.ordinal()] = (ind - 1);
+        structure[ind][0][Row.W.ordinal()] = (ind - 1);
       }
 
       //South neigbors
-      structure_[ind][0][Row.S.ordinal()] = (ind + rowSize_) % solutionSetSize;                        
+      structure[ind][0][Row.S.ordinal()] = (ind + rowSize) % solutionSetSize;
     }                
         
-    for (int ind = 0; ind < solutionSetSize_; ind++){
-      structure_[ind][0][Row.NE.ordinal()] = 
-        structure_[structure_[ind][0][Row.N.ordinal()]][0][Row.E.ordinal()];
-      structure_[ind][0][Row.NW.ordinal()] = 
-        structure_[structure_[ind][0][Row.N.ordinal()]][0][Row.W.ordinal()];
-      structure_[ind][0][Row.SE.ordinal()] = 
-        structure_[structure_[ind][0][Row.S.ordinal()]][0][Row.E.ordinal()];
-      structure_[ind][0][Row.SW.ordinal()] = 
-        structure_[structure_[ind][0][Row.S.ordinal()]][0][Row.W.ordinal()];
+    for (int ind = 0; ind < this.solutionSetSize; ind++){
+      structure[ind][0][Row.NE.ordinal()] =
+        structure[structure[ind][0][Row.N.ordinal()]][0][Row.E.ordinal()];
+      structure[ind][0][Row.NW.ordinal()] =
+        structure[structure[ind][0][Row.N.ordinal()]][0][Row.W.ordinal()];
+      structure[ind][0][Row.SE.ordinal()] =
+        structure[structure[ind][0][Row.S.ordinal()]][0][Row.E.ordinal()];
+      structure[ind][0][Row.SW.ordinal()] =
+        structure[structure[ind][0][Row.S.ordinal()]][0][Row.W.ordinal()];
     }
-  } // Neighborhood
+  }
     
   /**
    * Returns a <code>SolutionSet</code> with the North, Sout, East and West
@@ -145,24 +133,24 @@ public class MOCellNeighborhood<S extends Solution> {
     int index;        
         
     //North
-    index = structure_[location][0][Row.N.ordinal()];        
+    index = structure[location][0][Row.N.ordinal()];
     neighbors.add(solutionSet.get(index));
       
     //South
-    index = structure_[location][0][Row.S.ordinal()];
+    index = structure[location][0][Row.S.ordinal()];
     neighbors.add(solutionSet.get(index));
 
     //East
-    index = structure_[location][0][Row.E.ordinal()];
+    index = structure[location][0][Row.E.ordinal()];
     neighbors.add(solutionSet.get(index));
 
     //West
-    index = structure_[location][0][Row.W.ordinal()];
+    index = structure[location][0][Row.W.ordinal()];
     neighbors.add(solutionSet.get(index));         
     
     //Return the list of non-dominated individuals
     return neighbors;        
-  } //getFourNeighbors           
+  }
     
   /**
    * Returns a <code>SolutionSet</code> with the North, Sout, East, West, 
@@ -184,39 +172,39 @@ public class MOCellNeighborhood<S extends Solution> {
     int index;        
         
     //N
-    index = this.structure_[individual][0][Row.N.ordinal()];        
+    index = this.structure[individual][0][Row.N.ordinal()];
     neighbors.add(population.get(index));
 
     //S
-    index = this.structure_[individual][0][Row.S.ordinal()];
+    index = this.structure[individual][0][Row.S.ordinal()];
     neighbors.add(population.get(index));
 
     //E
-    index = this.structure_[individual][0][Row.E.ordinal()];
+    index = this.structure[individual][0][Row.E.ordinal()];
     neighbors.add(population.get(index));
 
     //W
-    index = this.structure_[individual][0][Row.W.ordinal()];
+    index = this.structure[individual][0][Row.W.ordinal()];
     neighbors.add(population.get(index));
 
     //NE
-    index = this.structure_[individual][0][Row.NE.ordinal()];
+    index = this.structure[individual][0][Row.NE.ordinal()];
     neighbors.add(population.get(index));
 
     //NW
-    index = this.structure_[individual][0][Row.NW.ordinal()];
+    index = this.structure[individual][0][Row.NW.ordinal()];
     neighbors.add(population.get(index));
 
     //SE
-    index = this.structure_[individual][0][Row.SE.ordinal()];
+    index = this.structure[individual][0][Row.SE.ordinal()];
     neighbors.add(population.get(index));
 
     //SW
-    index = this.structure_[individual][0][Row.SW.ordinal()];
+    index = this.structure[individual][0][Row.SW.ordinal()];
     neighbors.add(population.get(index));
 
 
     //Return the list of non-dominated individuals
     return neighbors;        
-  }  // getEightNeighbors
-} // Neighborhood
+  }
+}

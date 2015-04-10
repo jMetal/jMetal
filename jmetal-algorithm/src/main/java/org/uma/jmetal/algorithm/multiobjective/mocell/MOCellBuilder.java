@@ -9,6 +9,7 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AlgorithmBuilder;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
@@ -24,8 +25,9 @@ public class MOCellBuilder<S extends Solution> implements AlgorithmBuilder {
    * MOCellBuilder class
    */
   private final Problem<S> problem;
-  private int maxIterations;
+  private int maxEvaluations;
   private int populationSize;
+  private int archiveSize ;
   private CrossoverOperator<List<S>, List<S>>  crossoverOperator;
   private MutationOperator<S> mutationOperator;
   private SelectionOperator selectionOperator;
@@ -37,19 +39,20 @@ public class MOCellBuilder<S extends Solution> implements AlgorithmBuilder {
   public MOCellBuilder(Problem<S> problem, CrossoverOperator<List<S>, List<S>> crossoverOperator,
       MutationOperator<S> mutationOperator) {
     this.problem = problem;
-    maxIterations = 250;
+    maxEvaluations = 25000;
     populationSize = 100;
+    archiveSize = 100 ;
     this.crossoverOperator = crossoverOperator ;
     this.mutationOperator = mutationOperator ;
-    selectionOperator = new BinaryTournamentSelection();
+    selectionOperator = new BinaryTournamentSelection(new RankingAndCrowdingDistanceComparator());
     evaluator = new SequentialSolutionListEvaluator();
   }
 
-  public MOCellBuilder setMaxIterations(int maxIterations) {
-    if (maxIterations < 0) {
-      throw new JMetalException("maxIterations is negative: " + maxIterations);
+  public MOCellBuilder setMaxEvaluations(int maxEvaluations) {
+    if (maxEvaluations < 0) {
+      throw new JMetalException("maxEvaluations is negative: " + maxEvaluations);
     }
-    this.maxIterations = maxIterations;
+    this.maxEvaluations = maxEvaluations;
 
     return this;
   }
@@ -57,6 +60,16 @@ public class MOCellBuilder<S extends Solution> implements AlgorithmBuilder {
   public MOCellBuilder setPopulationSize(int populationSize) {
     if (populationSize < 0) {
       throw new JMetalException("Population size is negative: " + populationSize);
+    }
+
+    this.populationSize = populationSize;
+
+    return this;
+  }
+
+  public MOCellBuilder setArchiveSize(int archiveSize) {
+    if (archiveSize < 0) {
+      throw new JMetalException("archive size is negative: " + populationSize);
     }
 
     this.populationSize = populationSize;
@@ -83,7 +96,8 @@ public class MOCellBuilder<S extends Solution> implements AlgorithmBuilder {
   }
 
   public Algorithm<List<S>> build() {
-    Algorithm<List<S>> algorithm = new MOCell<S>(problem, maxIterations, populationSize, crossoverOperator, mutationOperator, selectionOperator, evaluator);
+    Algorithm<List<S>> algorithm = new MOCell<S>(problem, maxEvaluations, populationSize,
+        archiveSize, crossoverOperator, mutationOperator, selectionOperator, evaluator);
     
     return algorithm ;
   }
@@ -93,12 +107,16 @@ public class MOCellBuilder<S extends Solution> implements AlgorithmBuilder {
     return problem;
   }
 
-  public int getMaxIterations() {
-    return maxIterations;
+  public int getMaxEvaluations() {
+    return maxEvaluations;
   }
 
   public int getPopulationSize() {
     return populationSize;
+  }
+
+  public int getArchiveSize() {
+    return archiveSize ;
   }
 
   public CrossoverOperator getCrossoverOperator() {

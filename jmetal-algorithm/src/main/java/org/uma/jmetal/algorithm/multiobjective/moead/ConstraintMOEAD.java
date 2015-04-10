@@ -13,6 +13,7 @@
 
 package org.uma.jmetal.algorithm.multiobjective.moead;
 
+import org.uma.jmetal.algorithm.multiobjective.moead.util.MOEADUtils;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
@@ -68,7 +69,7 @@ public class ConstraintMOEAD extends AbstractMOEAD<DoubleSolution>  {
 
     do {
       int[] permutation = new int[populationSize];
-      Utils.randomPermutation(permutation, populationSize);
+      MOEADUtils.randomPermutation(permutation, populationSize);
 
       for (int i = 0; i < populationSize; i++) {
         int subProblemId = permutation[i];
@@ -126,7 +127,7 @@ public class ConstraintMOEAD extends AbstractMOEAD<DoubleSolution>  {
     }
     int[] perm = new int[size];
 
-    Utils.randomPermutation(perm, size);
+    MOEADUtils.randomPermutation(perm, size);
 
     for (int i = 0; i < size; i++) {
       int k;

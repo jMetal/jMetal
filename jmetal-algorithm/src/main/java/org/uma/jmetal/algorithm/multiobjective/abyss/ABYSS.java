@@ -1,3 +1,23 @@
+//  AbYSS.java
+//
+//  Author:
+//       Antonio J. Nebro <antonio@lcc.uma.es>
+//       Juan J. Durillo <durillo@lcc.uma.es>
+//
+//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU Lesser General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU Lesser General Public License for more details.
+//
+//  You should have received a copy of the GNU Lesser General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package org.uma.jmetal.algorithm.multiobjective.abyss;
 
 import org.uma.jmetal.operator.CrossoverOperator;
@@ -13,7 +33,14 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by cbarba on 25/3/15.
+ * This class implements the AbYSS algorithm. This algorithm is an adaptation
+ * of the single-objective scatter search template defined by F. Glover in:
+ * F. Glover. "A template for scatter search and path relinking", Lecture Notes
+ * in Computer Science, Springer Verlag, 1997. AbYSS is described in:
+ *   A.J. Nebro, F. Luna, E. Alba, B. Dorronsoro, J.J. Durillo, A. Beham
+ *   "AbYSS: Adapting Scatter Search to Multiobjective Optimization."
+ *   IEEE Transactions on Evolutionary Computation. Vol. 12,
+ *   No. 4 (August 2008), pp. 439-457
  */
 public class ABYSS extends AbstractABYSS<DoubleSolution> {
     public ABYSS(int numberOfSubranges,int solutionSetSize, int refSet1Size, int refSet2Size, int archiveSize, int maxEvaluations,
@@ -35,17 +62,18 @@ try {
 
     // STEP 2. Main loop
     int newSolutions = 0;
-    while (evaluations < maxEvaluations) {
+    boolean exit = false;
+    while ((evaluations < maxEvaluations)&& !exit) {
         referenceSetUpdate(true);
         newSolutions = subSetGeneration();
-        while (newSolutions > 0  ) { // New solutions are created
+        while ((newSolutions > 0  )&& !exit) { // New solutions are created
             referenceSetUpdate(false);
-            if (evaluations < maxEvaluations) {
+            if(evaluations>= maxEvaluations){
+                exit=true;
+            }
+            if(!exit){
                 newSolutions = subSetGeneration();
             }
-            else {
-                newSolutions = 0;
-            }//if
         } // while
 
         // RE-START
@@ -79,7 +107,7 @@ try {
 
             // Insert solutions
             for (int i = 0; i < insert; i++) {
-                solution = archive.getSolutionList().get(i);
+                solution = (DoubleSolution)archive.getSolutionList().get(i).copy();
                 marked.setAttribute(solution,false);
                 solutionSet.add(solution);
             }
@@ -128,10 +156,6 @@ e.printStackTrace();
                 evaluations++;
                 solution = (DoubleSolution) improvementOperator.execute(solution);
                 marked.setAttribute(solution,false);
-                if(strenghtRawFitness.getAttribute(solution) == null) {
-                    strenghtRawFitness.setAttribute(solution,0.0);
-                }
-
                 evaluations += improvementOperator.getEvaluations();
                 solutionSet.add(solution);
             } // for

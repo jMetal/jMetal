@@ -19,14 +19,14 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.algorithm.multiobjective.moead;
+package org.uma.jmetal.algorithm.multiobjective.moead.util;
 
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /**
  * Utilities methods to used by MOEA/D
  */
-public class Utils {
+public class MOEADUtils {
 
   public static double distVector(double[] vector1, double[] vector2) {
     int dim = vector1.length;
