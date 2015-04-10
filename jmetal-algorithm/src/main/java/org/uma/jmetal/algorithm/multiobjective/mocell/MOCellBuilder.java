@@ -27,6 +27,7 @@ public class MOCellBuilder<S extends Solution> implements AlgorithmBuilder {
   private final Problem<S> problem;
   private int maxEvaluations;
   private int populationSize;
+  private int archiveSize ;
   private CrossoverOperator<List<S>, List<S>>  crossoverOperator;
   private MutationOperator<S> mutationOperator;
   private SelectionOperator selectionOperator;
@@ -40,6 +41,7 @@ public class MOCellBuilder<S extends Solution> implements AlgorithmBuilder {
     this.problem = problem;
     maxEvaluations = 25000;
     populationSize = 100;
+    archiveSize = 100 ;
     this.crossoverOperator = crossoverOperator ;
     this.mutationOperator = mutationOperator ;
     selectionOperator = new BinaryTournamentSelection(new RankingAndCrowdingDistanceComparator());
@@ -58,6 +60,16 @@ public class MOCellBuilder<S extends Solution> implements AlgorithmBuilder {
   public MOCellBuilder setPopulationSize(int populationSize) {
     if (populationSize < 0) {
       throw new JMetalException("Population size is negative: " + populationSize);
+    }
+
+    this.populationSize = populationSize;
+
+    return this;
+  }
+
+  public MOCellBuilder setArchiveSize(int archiveSize) {
+    if (archiveSize < 0) {
+      throw new JMetalException("archive size is negative: " + populationSize);
     }
 
     this.populationSize = populationSize;
@@ -84,7 +96,8 @@ public class MOCellBuilder<S extends Solution> implements AlgorithmBuilder {
   }
 
   public Algorithm<List<S>> build() {
-    Algorithm<List<S>> algorithm = new MOCell<S>(problem, maxEvaluations, populationSize, crossoverOperator, mutationOperator, selectionOperator, evaluator);
+    Algorithm<List<S>> algorithm = new MOCell<S>(problem, maxEvaluations, populationSize,
+        archiveSize, crossoverOperator, mutationOperator, selectionOperator, evaluator);
     
     return algorithm ;
   }
@@ -100,6 +113,10 @@ public class MOCellBuilder<S extends Solution> implements AlgorithmBuilder {
 
   public int getPopulationSize() {
     return populationSize;
+  }
+
+  public int getArchiveSize() {
+    return archiveSize ;
   }
 
   public CrossoverOperator getCrossoverOperator() {

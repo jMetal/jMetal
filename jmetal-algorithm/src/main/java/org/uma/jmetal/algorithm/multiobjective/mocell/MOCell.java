@@ -28,6 +28,7 @@ public class MOCell<S extends Solution> extends AbstractGeneticAlgorithm<S, List
   protected int evaluations;
   protected int maxEvaluations;
   protected int populationSize;
+  protected int archiveSize;
   protected final SolutionListEvaluator<S> evaluator;
 
   private MOCellNeighborhood<S> neighborhood;
@@ -40,25 +41,26 @@ public class MOCell<S extends Solution> extends AbstractGeneticAlgorithm<S, List
   private Comparator<Solution> dominanceComparator;
   private LocationAttribute<S> location;
 
-
   /**
    * Constructor
    * @param problem
    * @param maxEvaluations
    * @param populationSize
+   * @param archiveSize
    * @param crossoverOperator
    * @param mutationOperator
    * @param selectionOperator
    * @param evaluator
    */
-  public MOCell(Problem<S> problem, int maxEvaluations, int populationSize,
+  public MOCell(Problem<S> problem, int maxEvaluations, int populationSize, int archiveSize,
       CrossoverOperator<List<S>, List<S>> crossoverOperator, MutationOperator<S> mutationOperator,
       SelectionOperator selectionOperator, SolutionListEvaluator<S> evaluator) {
     super();
     this.problem = problem;
     this.maxEvaluations = maxEvaluations;
     this.populationSize = populationSize;
-    this.archive = new CrowdingDistanceArchive<>(this.populationSize);
+    this.archiveSize = archiveSize ;
+    this.archive = new CrowdingDistanceArchive<>(archiveSize);
     this.neighborhood = new MOCellNeighborhood(this.populationSize);
 
 
