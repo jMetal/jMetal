@@ -26,49 +26,49 @@ import java.util.List;
  */
 public class ABYSSRunner {
 
-    /**
-     * @param args Command line arguments. The first (optional) argument specifies
-     *             the problem to solve.
-     * @throws org.uma.jmetal.util.JMetalException
-     * @throws java.io.IOException
-     * @throws SecurityException
-     * Usage: three options
-     *          - org.uma.jmetal.runner.multiobjective.SMPSORunner
-     *          - org.uma.jmetal.runner.multiobjective.SMPSORunner problemName
-     *          - org.uma.jmetal.runner.multiobjective.SMPSORunner problemName ParetoFrontFile
-     */
-    public static void main(String[] args) throws Exception {
-        DoubleProblem problem;
-        Algorithm algorithm;
-        String problemName ;
-        if (args!=null && args.length == 1) {
-            problemName = args[0] ;
-        } else {
-            problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
-        }
-
-        problem = (DoubleProblem) ProblemUtils.loadProblem(problemName);
-
-        Archive archive = new CrowdingDistanceArchive(100) ;
-
-        algorithm = new ABYSSBuilder(problem, archive)
-                .build();
-
-        AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-                .execute();
-
-        List<DoubleSolution> population = (List<DoubleSolution>)((ABYSS)algorithm).getResult();
-        long computingTime = algorithmRunner.getComputingTime();
-
-        new SolutionSetOutput.Printer(population)
-                .setSeparator("\t")
-                .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
-                .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
-                .print();
-
-        JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
-        JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
-        JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
-        JMetalLogger.logger.info("Random seed: " + JMetalRandom.getInstance().getSeed()) ;
+  /**
+   * @param args Command line arguments. The first (optional) argument specifies
+   *             the problem to solve.
+   * @throws org.uma.jmetal.util.JMetalException
+   * @throws java.io.IOException
+   * @throws SecurityException
+   * Usage: three options
+   *          - org.uma.jmetal.runner.multiobjective.SMPSORunner
+   *          - org.uma.jmetal.runner.multiobjective.SMPSORunner problemName
+   *          - org.uma.jmetal.runner.multiobjective.SMPSORunner problemName ParetoFrontFile
+   */
+  public static void main(String[] args) throws Exception {
+    DoubleProblem problem;
+    Algorithm algorithm;
+    String problemName ;
+    if (args!=null && args.length == 1) {
+      problemName = args[0] ;
+    } else {
+      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
     }
+
+    problem = (DoubleProblem) ProblemUtils.loadProblem(problemName);
+
+    Archive archive = new CrowdingDistanceArchive(100) ;
+
+    algorithm = new ABYSSBuilder(problem, archive)
+        .build();
+
+    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+        .execute();
+
+    List<DoubleSolution> population = (List<DoubleSolution>)((ABYSS)algorithm).getResult();
+    long computingTime = algorithmRunner.getComputingTime();
+
+    new SolutionSetOutput.Printer(population)
+        .setSeparator("\t")
+        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+        .print();
+
+    JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
+    JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
+    JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
+    JMetalLogger.logger.info("Random seed: " + JMetalRandom.getInstance().getSeed()) ;
+  }
 }
