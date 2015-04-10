@@ -1,9 +1,5 @@
 package org.uma.jmetal.algorithm.multiobjective.abyss;
 
-/**
- * Created by cbarba on 25/3/15.
- */
-
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
@@ -11,16 +7,18 @@ import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.localsearch.MutationLocalSearch;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.DoubleProblem;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AlgorithmBuilder;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 
-
+/**
+ * This class implements the AbYSS algorithm, a
+ * multiobjective scatter search metaheuristics, which is described in:
+ *   A.J. Nebro, F. Luna, E. Alba, B. Dorronsoro, J.J. Durillo, A. Beham
+ *   "AbYSS: Adapting Scatter Search to Multiobjective Optimization."
+ *   IEEE Transactions on Evolutionary Computation. Vol. 12,
+ *   No. 4 (August 2008), pp. 439-457
+ */
 public class ABYSSBuilder implements AlgorithmBuilder {
 
     private DoubleProblem problem     ; // The problem to solve

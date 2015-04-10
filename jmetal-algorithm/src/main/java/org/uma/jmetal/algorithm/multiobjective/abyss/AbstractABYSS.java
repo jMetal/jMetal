@@ -23,7 +23,14 @@ import org.uma.jmetal.util.solutionattribute.impl.StrengthRawFitness;
 
 
 /**
- * Created by cbarba on 3/3/15.
+ * This class implements the AbYSS algorithm. This algorithm is an adaptation
+ * of the single-objective scatter search template defined by F. Glover in:
+ * F. Glover. "A template for scatter search and path relinking", Lecture Notes
+ * in Computer Science, Springer Verlag, 1997. AbYSS is described in:
+ *   A.J. Nebro, F. Luna, E. Alba, B. Dorronsoro, J.J. Durillo, A. Beham
+ *   "AbYSS: Adapting Scatter Search to Multiobjective Optimization."
+ *   IEEE Transactions on Evolutionary Computation. Vol. 12,
+ *   No. 4 (August 2008), pp. 439-457
  */
 public abstract class AbstractABYSS <S extends Solution> implements Algorithm<List<? extends Solution>> {
     /**
@@ -170,8 +177,7 @@ public abstract class AbstractABYSS <S extends Solution> implements Algorithm<Li
     public DoubleSolution diversificationGeneration() throws JMException, ClassNotFoundException {
 
         DoubleSolution solution = problem.createSolution();
-        marked.setAttribute(solution,false);
-        strenghtRawFitness.setAttribute(solution,0.0);
+
         double value;
         int range;
 
@@ -422,10 +428,6 @@ public abstract class AbstractABYSS <S extends Solution> implements Algorithm<Li
         List<DoubleSolution> parents = new ArrayList<DoubleSolution>(2);
         parents.add(problem.createSolution());
         parents.add(problem.createSolution());
-        marked.setAttribute(parents.get(0), false);
-        marked.setAttribute(parents.get(1),false);
-        strenghtRawFitness.setAttribute(parents.get(0),0.0);
-        strenghtRawFitness.setAttribute(parents.get(1),0.0);
         List<DoubleSolution> offSpring;
 
         subSet.clear();
@@ -434,7 +436,7 @@ public abstract class AbstractABYSS <S extends Solution> implements Algorithm<Li
         for (int i = 0; i < refSet1.size(); i++) {
             parents.set(0,refSet1.get(i));
             for (int j = i + 1; j < refSet1.size(); j++) {
-                parents.set(1,refSet1.get(i));
+                parents.set(1,refSet1.get(j));
                 if (!marked.getAttribute(parents.get(0)) || !marked.getAttribute(parents.get(1))) {//parents[0].isMarked() || parents[1].isMarked()
                     offSpring = (List<DoubleSolution>) crossoverOperator.execute(parents);
                     problem.evaluate(offSpring.get(0));
