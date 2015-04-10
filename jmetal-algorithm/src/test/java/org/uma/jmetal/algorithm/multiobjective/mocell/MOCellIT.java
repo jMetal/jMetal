@@ -1,5 +1,6 @@
 package org.uma.jmetal.algorithm.multiobjective.mocell;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.operator.CrossoverOperator;
@@ -20,13 +21,13 @@ import static org.junit.Assert.assertTrue;
 
 public class MOCellIT {
   Algorithm<List<DoubleSolution>> algorithm;
+  DoubleProblem problem ;
+  CrossoverOperator<List<DoubleSolution>,List<DoubleSolution>> crossover;
+  MutationOperator<DoubleSolution> mutation;
 
-  @Test
-  public void shouldTheAlgorithmReturnANumberOfSolutionsWhenSolvingASimpleProblem() throws Exception {
-    DoubleProblem problem = new ZDT4() ;
-
-    CrossoverOperator<List<DoubleSolution>,List<DoubleSolution>> crossover;
-    MutationOperator<DoubleSolution> mutation;
+  @Before
+  public void setup() {
+    problem = new ZDT4() ;
 
     double crossoverProbability = 0.9 ;
     double crossoverDistributionIndex = 20.0 ;
@@ -35,7 +36,10 @@ public class MOCellIT {
     double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
+  }
 
+  @Test
+  public void shouldTheAlgorithmReturnANumberOfSolutionsWhenSolvingASimpleProblem() throws Exception {
     algorithm = new MOCellBuilder(problem, crossover, mutation)
         .build() ;
 
@@ -53,19 +57,6 @@ public class MOCellIT {
 
   @Test
   public void shouldTheHypervolumeHaveAMininumValue() throws Exception {
-    DoubleProblem problem = new ZDT4() ;
-
-    CrossoverOperator<List<DoubleSolution>,List<DoubleSolution>> crossover;
-    MutationOperator<DoubleSolution> mutation;
-
-    double crossoverProbability = 0.9 ;
-    double crossoverDistributionIndex = 20.0 ;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex) ;
-
-    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
-    double mutationDistributionIndex = 20.0 ;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
-    
     algorithm = new MOCellBuilder(problem, crossover, mutation)
         .build() ;
 
@@ -77,13 +68,13 @@ public class MOCellIT {
     Hypervolume hypervolume = new Hypervolume() ;
 
     // Rationale: the default problem is ZDT4, and MOCell, configured with standard settings, should
-    // return find a front with a hypervolume value higher than 0.64
+    // return find a front with a hypervolume value higher than 0.65
 
     Front referenceFront = new ArrayFront() ;
     referenceFront.readFrontFromFile("/referenceFronts/ZDT4.pf");
 
     double hv = hypervolume.execute(new ArrayFront(population), referenceFront) ;
 
-    assertTrue(hv > 0.64) ;
+    assertTrue(hv > 0.65) ;
   }
 }
