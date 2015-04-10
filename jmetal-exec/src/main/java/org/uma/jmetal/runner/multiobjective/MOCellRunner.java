@@ -67,7 +67,7 @@ public class MOCellRunner {
          //   .setCrossoverOperator(crossover)
          //   .setMutationOperator(mutation)
             .setSelectionOperator(selection)
-            .setMaxIterations(25000)
+            .setMaxEvaluations(25000)
             .setPopulationSize(100)
             .build() ;
 
