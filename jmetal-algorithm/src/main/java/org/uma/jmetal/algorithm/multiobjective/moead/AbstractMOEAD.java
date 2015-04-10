@@ -14,6 +14,7 @@
 package org.uma.jmetal.algorithm.multiobjective.moead;
 
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.algorithm.multiobjective.moead.util.MOEADUtils;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.problem.Problem;
@@ -149,12 +150,12 @@ public abstract class AbstractMOEAD<S extends Solution> implements Algorithm<Lis
     for (int i = 0; i < populationSize; i++) {
       // calculate the distances based on weight vectors
       for (int j = 0; j < populationSize; j++) {
-        x[j] = Utils.distVector(lambda[i], lambda[j]);
+        x[j] = MOEADUtils.distVector(lambda[i], lambda[j]);
         idx[j] = j;
       }
 
       // find 'niche' nearest neighboring subproblems
-      Utils.minFastSort(x, idx, populationSize, neighborSize);
+      MOEADUtils.minFastSort(x, idx, populationSize, neighborSize);
 
       System.arraycopy(idx, 0, neighborhood[i], 0, neighborSize);
     }
@@ -250,7 +251,7 @@ public abstract class AbstractMOEAD<S extends Solution> implements Algorithm<Lis
     }
     int[] perm = new int[size];
 
-    Utils.randomPermutation(perm, size);
+    MOEADUtils.randomPermutation(perm, size);
 
     for (int i = 0; i < size; i++) {
       int k;
