@@ -1,4 +1,4 @@
-package org.uma.jmetal.algorithm.multiobjective.pesaii;
+package org.uma.jmetal.algorithm.multiobjective.pesa2;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.operator.CrossoverOperator;

@@ -4,41 +4,42 @@ import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
-import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
-import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.AlgorithmBuilder;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
-import org.uma.jmetal.util.AlgorithmBuilder;
+
+import java.util.List;
 
 /**
  * Created by juanjo 
  */
-public class SPEA2Builder implements AlgorithmBuilder {
-  
+public class SPEA2Builder<S extends Solution> implements AlgorithmBuilder {
+
   /**
    * SPEA2Builder class
    */
-  private final Problem problem;
+  private final Problem<S> problem;
   private int maxIterations;
   private int populationSize;
-  private CrossoverOperator crossoverOperator;
-  private MutationOperator mutationOperator;
+  private CrossoverOperator<List<S>, List<S>> crossoverOperator;
+  private MutationOperator<S> mutationOperator;
   private SelectionOperator selectionOperator;
   private SolutionListEvaluator evaluator;
-
 
   /**
    * SPEA2Builder constructor
    */
-  public SPEA2Builder(Problem problem) {
+  public SPEA2Builder(Problem problem, CrossoverOperator<List<S>, List<S>> crossoverOperator,
+      MutationOperator<S> mutationOperator) {
     this.problem = problem;
     maxIterations = 250;
     populationSize = 100;
-    crossoverOperator = new SBXCrossover(0.9, 20.0);
-    mutationOperator = new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0);
+    this.crossoverOperator = crossoverOperator ;
+    this.mutationOperator = mutationOperator ;
     selectionOperator = new BinaryTournamentSelection();
     evaluator = new SequentialSolutionListEvaluator();
   }
@@ -58,25 +59,6 @@ public class SPEA2Builder implements AlgorithmBuilder {
     }
 
     this.populationSize = populationSize;
-
-    return this;
-  }
-
-  public SPEA2Builder setCrossoverOperator(CrossoverOperator crossoverOperator) {
-    if (crossoverOperator == null) {
-      throw new JMetalException("crossoverOperator is null");
-    }
-    this.crossoverOperator = crossoverOperator;
-
-    return this;
-  }
-
-  public SPEA2Builder setMutationOperator(MutationOperator mutationOperator) {
-    if (mutationOperator == null) {
-      throw new JMetalException("mutationOperator is null");
-    }
-
-    this.mutationOperator = mutationOperator;
 
     return this;
   }
@@ -101,7 +83,7 @@ public class SPEA2Builder implements AlgorithmBuilder {
 
   public Algorithm build() {
     Algorithm algorithm = null ;
-    algorithm = new SPEA2(problem, maxIterations, populationSize, crossoverOperator,
+    algorithm = new SPEA2<S>(problem, maxIterations, populationSize, crossoverOperator,
           mutationOperator, selectionOperator, evaluator);
     
     return algorithm ;

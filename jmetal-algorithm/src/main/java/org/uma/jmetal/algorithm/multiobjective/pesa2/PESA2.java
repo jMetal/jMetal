@@ -1,7 +1,7 @@
-package org.uma.jmetal.algorithm.multiobjective.pesaii;
+package org.uma.jmetal.algorithm.multiobjective.pesa2;
 
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
-import org.uma.jmetal.algorithm.multiobjective.pesaii.util.PESA2Selection;
+import org.uma.jmetal.algorithm.multiobjective.pesa2.util.PESA2Selection;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;

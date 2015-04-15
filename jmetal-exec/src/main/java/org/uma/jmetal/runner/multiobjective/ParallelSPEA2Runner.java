@@ -87,9 +87,7 @@ public class ParallelSPEA2Runner {
 
     evaluator = new MultithreadedSolutionListEvaluator(0, problem) ;
 
-    algorithm = new SPEA2Builder(problem)
-        .setCrossoverOperator(crossover)
-        .setMutationOperator(mutation)
+    algorithm = new SPEA2Builder(problem, crossover, mutation)
         .setSelectionOperator(selection)
         .setMaxIterations(250)
         .setPopulationSize(100)

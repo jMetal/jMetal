@@ -12,23 +12,22 @@ import org.uma.jmetal.util.solutionattribute.impl.StrengthRawFitness;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * @author Juanjo
  **/
-public class SPEA2 extends AbstractGeneticAlgorithm<Solution, List<Solution>> {
-
+public class SPEA2<S extends Solution> extends AbstractGeneticAlgorithm<S, List<S>> {
   protected final int maxIterations;
   protected final int populationSize;
-  protected final Problem problem;
-  protected final SolutionListEvaluator<Solution> evaluator;
+  protected final Problem<S> problem;
+  protected final SolutionListEvaluator<S> evaluator;
   protected int iterations;
-  protected List<Solution> archive;
+  protected List<S> archive;
   private final static StrengthRawFitness strenghtRawFitness = new StrengthRawFitness();
   private final EnvironmentalSelection environmentalSelection;
 
-  public SPEA2(Problem problem, int maxIterations, int populationSize,
-      CrossoverOperator crossoverOperator,
-      MutationOperator mutationOperator,
+  public SPEA2(Problem<S> problem, int maxIterations, int populationSize,
+      CrossoverOperator<List<S>, List<S>> crossoverOperator, MutationOperator<S> mutationOperator,
       SelectionOperator selectionOperator, SolutionListEvaluator evaluator) {
     super();
     this.problem = problem;
@@ -61,24 +60,24 @@ public class SPEA2 extends AbstractGeneticAlgorithm<Solution, List<Solution>> {
   }
 
   @Override
-  protected List<Solution> createInitialPopulation() {
-    List<Solution> population = new ArrayList<>(populationSize);
+  protected List<S> createInitialPopulation() {
+    List<S> population = new ArrayList<>(populationSize);
     for (int i = 0; i < populationSize; i++) {
-      Solution newIndividual = problem.createSolution();
+      S newIndividual = problem.createSolution();
       population.add(newIndividual);
     }
     return population;
   }
 
   @Override
-  protected List<Solution> evaluatePopulation(List<Solution> population) {
+  protected List<S> evaluatePopulation(List<S> population) {
     population = evaluator.evaluate(population, problem);
     return population;
   }
 
   @Override
-  protected List<Solution> selection(List<Solution> population) {
-    List<Solution> union = new ArrayList<>(2*populationSize);
+  protected List<S> selection(List<S> population) {
+    List<S> union = new ArrayList<>(2*populationSize);
     union.addAll(archive);
     union.addAll(population);
     strenghtRawFitness.computeDensityEstimator(union);
@@ -87,19 +86,19 @@ public class SPEA2 extends AbstractGeneticAlgorithm<Solution, List<Solution>> {
   }
 
   @Override
-  protected List<Solution> reproduction(List<Solution> population) {
-    List<Solution> offSpringPopulation= new ArrayList<>(populationSize);
+  protected List<S> reproduction(List<S> population) {
+    List<S> offSpringPopulation= new ArrayList<>(populationSize);
 
     while (offSpringPopulation.size() < populationSize){
-      List<Solution> parents = new ArrayList<>(2);
-      Solution candidateFirstParent = selectionOperator.execute(population);
+      List<S> parents = new ArrayList<>(2);
+      S candidateFirstParent = selectionOperator.execute(population);
       parents.add(candidateFirstParent);
-      Solution candidateSecondParent;
+      S candidateSecondParent;
       candidateSecondParent = selectionOperator.execute(population);
       parents.add(candidateSecondParent);
 
       //make the crossover
-      List<Solution> offspring = crossoverOperator.execute(parents);
+      List<S> offspring = crossoverOperator.execute(parents);
       mutationOperator.execute(offspring.get(0));
       offSpringPopulation.add(offspring.get(0));
     }
@@ -107,13 +106,13 @@ public class SPEA2 extends AbstractGeneticAlgorithm<Solution, List<Solution>> {
   }
 
   @Override
-  protected List<Solution> replacement(List<Solution> population,
-      List<Solution> offspringPopulation) {
+  protected List<S> replacement(List<S> population,
+      List<S> offspringPopulation) {
     return offspringPopulation;
   }
 
   @Override
-  public List<Solution> getResult() {
+  public List<S> getResult() {
     return archive;
   }
 

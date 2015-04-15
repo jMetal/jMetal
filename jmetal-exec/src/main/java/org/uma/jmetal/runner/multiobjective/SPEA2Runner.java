@@ -2,7 +2,7 @@
 package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.spea2.SPEA2GenericsBuilder;
+import org.uma.jmetal.algorithm.multiobjective.spea2.SPEA2Builder;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -63,7 +63,7 @@ public class SPEA2Runner {
     selection = new BinaryTournamentSelection(new RankingAndCrowdingDistanceComparator());
 
     //algorithm = new SPEA2Builder(problem)
-    algorithm = new SPEA2GenericsBuilder<>(problem, crossover, mutation)
+    algorithm = new SPEA2Builder<>(problem, crossover, mutation)
          //   .setCrossoverOperator(crossover)
          //   .setMutationOperator(mutation)
             .setSelectionOperator(selection)

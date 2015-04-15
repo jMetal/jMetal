@@ -21,7 +21,7 @@
 package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.pesaii.PESA2Builder;
+import org.uma.jmetal.algorithm.multiobjective.pesa2.PESA2Builder;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
