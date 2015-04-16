@@ -6,6 +6,15 @@
 The current jMetal development version is hosted in this repository; this way, interested users can take a look to
 the new incoming features in advance.
 
+# Table of contents
+- [Motivation](#id-motivation)
+- [New Features](#id-features)
+- [Components](#id-components)
+- [Maven](#id-maven)
+
+
+<div id='id-motivation'/>
+##Motivation
 After eight years since the first release of jMetal, we have decided it's time to make a deep redesign of the
 software. Some of the ideas we are elaborating are:
 
@@ -17,9 +26,17 @@ the algorithms.
 
 If you are interested in contributing with your ideas and comments, please take a look the current discussions in the [Issues section](https://github.com/jMetal/jMetal/issues).
 
-Features of the current development version:
+<div id='id-features'/>
+##New Features
 
-* Algorithms: NSGA-II, NSGA-III (to be tested), SMPSO, GDE3, IBEA (corrected version), MOEA/D (variants: MOEA/D-DE, MOEA/D-DRA, Constrained MOEA/D), SPEA2, PESA2, AbYSS, MOCell.
+
+###Redesigned architecture
+
+<div id='id-components'/>
+##Components
+The current development version provides:
+
+* Algorithms: NSGA-II, NSGA-III (to be tested), SMPSO, GDE3, IBEA, MOEA/D (variants: MOEA/D-DE, MOEA/D-DRA, Constrained MOEA/D), SPEA2, PESA2, AbYSS, MOCell, RandomSearch.
 * Encodings: Binary, Real, Integer, Permutation, Integer+Double
 * Crossover operators: SBXCrossover, SinglePointCrossover, DifferentialEvolutionCrossover, IntegerSBXCrossover, BLXAlphaCrossover, HUXCrossover
 * Mutation operators: PolynomialMutation, SingleRandomMutation, BitFlipMutation, IntegerPolynomialMutation, UniformMutation, NonUniformMutation
@@ -27,11 +44,12 @@ Features of the current development version:
 * Problems: Fonseca, Kursawe, Schaffer, Srinivas, OneZeroMax, NMMin, NMIN2, ZDT benchrmark, DTLZ benchmark, WFG benchmark, LZ09 benchmark, multiobjective TSP
 * Qualitity indicators: Epsilon, Hypervolume, error ratio, spread, generalized spread, generational distance, inverted generational distance, set coverage.
 
+<div id='id-maven'/>
 ##jMetal is available as a Maven Project in The Central Repository
 
 The link to the modules is: https://search.maven.org/#search%7Cga%7C1%7Cjmetal
 
-###Code coverage (25th January 2015)
+####Code coverage (25th January 2015)
 
 |Class % |Method %| Line % |
 |--------|--------|--------|
