@@ -36,3 +36,12 @@ The link to the modules is: https://search.maven.org/#search%7Cga%7C1%7Cjmetal
 |Class % |Method %| Line % |
 |--------|--------|--------|
 |17,8% (48/ 270) |	16,8% (243/ 1443) |	13,4% (1199/ 8975)
+
+# My Table of content
+- [Section 1](#id-section1)
+- [Section 2](#id-section2)
+
+<div id='id-section1'/>
+## Section 1
+<div id='id-section2'/>
+## Section 2
