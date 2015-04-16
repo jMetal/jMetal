@@ -6,7 +6,7 @@
 The current jMetal development version is hosted in this repository; this way, interested users can take a look to
 the new incoming features in advance.
 
-# Table of contents
+## Table of contents
 - [Motivation](#id-motivation)
 - [New Features](#id-features)
 - [Components](#id-components)
