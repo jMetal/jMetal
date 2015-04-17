@@ -6,33 +6,23 @@
 The current jMetal development version is hosted in this repository; this way, interested users can take a look to
 the new incoming features in advance.
 
-## Table of contents
-- [Motivation](#id-motivation)
-- [New Features](#id-features)
-- [Components](#id-components)
-- [Maven](#id-maven)
-
-
-<div id='id-motivation'/>
-##Motivation
 After eight years since the first release of jMetal, we have decided it's time to make a deep redesign of the
 software. Some of the ideas we are elaborating are:
 
+* Architecture redesign to provide a simpler design while keeping the same functionality.
+* Improve code quality:
+ * Application of unit testing
+ * Better use of Java features (e.g, generics)
+ * Design patterns
+ * Application of clean code guidelines - “Clean code: A Handbook of Agile Software Craftsmanship" (Robert C. Martin)
+* Algorithm templates
+* Parallelism support
 * Maven is used as the tool for development, testing, packaging and deployment.
-* The encoding takes into account the recommendations provided in “Clean code: A Handbook of Agile Software Craftsmanship" (Robert C. Martin)
-* The Fluent Interface (http://martinfowler.com/bliki/FluentInterface.html) is applied to configure and execute
-the algorithms.
-* We will incorporate progressively unit tests to all the classes.
 
 If you are interested in contributing with your ideas and comments, please take a look the current discussions in the [Issues section](https://github.com/jMetal/jMetal/issues).
 
 <div id='id-features'/>
-##New Features
 
-
-###Redesigned architecture
-
-<div id='id-components'/>
 ##Components
 The current development version provides:
 
@@ -49,20 +39,12 @@ The current development version provides:
 
 The link to the modules is: https://search.maven.org/#search%7Cga%7C1%7Cjmetal
 
+##jMetal user manual
+The user manual is hosted in https://github.com/jMetal/jMetalUserManual
+
 ####Code coverage (25th January 2015)
 
 |Class % |Method %| Line % |
 |--------|--------|--------|
 |17,8% (48/ 270) |	16,8% (243/ 1443) |	13,4% (1199/ 8975)
 
-
-<!---
-# My Table of content
-- [Section 1](#id-section1)
-- [Section 2](#id-section2)
-
-<div id='id-section1'/>
-## Section 1
-<div id='id-section2'/>
-## Section 2
--->
