@@ -35,7 +35,7 @@ import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.DoubleProblem;
-import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
+import org.uma.jmetal.problem.multiobjective.Binh2;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
@@ -74,7 +74,7 @@ public class NSGAIIMeasuresRunner {
       problemName = args[0] ;
       problem = (DoubleProblem) ProblemUtils.loadProblem(problemName);
     } else {
-      problem = new ZDT1(3000);
+      problem = new Binh2();
     }
 
     double crossoverProbability = 0.9 ;
@@ -112,8 +112,12 @@ public class NSGAIIMeasuresRunner {
     CountingMeasure iteration2 =
         (CountingMeasure) measureManager.<Long>getPushMeasure("currentIteration");
 
+    BasicMeasure<Integer> numberOfFeasibleSolutions =
+        (BasicMeasure) measureManager.getPushMeasure("numberOfFeasibleSolutionsInPopulation") ;
+
     solutionListMeasure.register(new Listener());
     iteration2.register(new Listener2());
+    numberOfFeasibleSolutions.register(new feasibleSolutionsListener());
     /* End of measure management */
 
     Thread algorithmThread = new Thread(algorithm) ;
@@ -164,6 +168,12 @@ public class NSGAIIMeasuresRunner {
       if ((value % 50 == 0)) {
         System.out.println("PUSH MEASURE. Iteration: " + value) ;
       }
+    }
+  }
+
+  private static class feasibleSolutionsListener implements MeasureListener<Integer> {
+    @Override synchronized public void measureGenerated(Integer value) {
+      System.out.println("Feasible solutions: " + value) ;
     }
   }
 }
