@@ -39,6 +39,6 @@ public class GenericSolutionAttribute <S extends Solution, V> implements Solutio
 
   @Override
   public Object getAttributeID() {
-  return this.getClass();
+  return this ;
   }
 }
