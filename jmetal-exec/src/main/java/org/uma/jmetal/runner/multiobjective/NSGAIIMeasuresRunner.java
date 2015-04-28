@@ -35,7 +35,7 @@ import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.DoubleProblem;
-import org.uma.jmetal.problem.multiobjective.Binh2;
+import org.uma.jmetal.problem.multiobjective.Golinski;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
@@ -74,7 +74,7 @@ public class NSGAIIMeasuresRunner {
       problemName = args[0] ;
       problem = (DoubleProblem) ProblemUtils.loadProblem(problemName);
     } else {
-      problem = new Binh2();
+      problem = new Golinski();
     }
 
     double crossoverProbability = 0.9 ;
