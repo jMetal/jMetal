@@ -2,7 +2,7 @@ package org.uma.jmetal.qualityindicator.calculator;
 
 import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
-import org.uma.jmetal.qualityindicator.fasthypervolume.FastHypervolume;
+import org.uma.jmetal.qualityindicator.Hypervolume;
 
 /**
  * This class was designed to help the calculation of Hypervolume.
@@ -20,7 +20,7 @@ import org.uma.jmetal.qualityindicator.fasthypervolume.FastHypervolume;
  */
 public class HypervolumeCalculator extends Calculator{
 
-  private final FastHypervolume hypervolume;
+  private final Hypervolume hypervolume;
 
   private final int numberOfObjectives;
   
@@ -43,7 +43,7 @@ public class HypervolumeCalculator extends Calculator{
    */
   public HypervolumeCalculator(int numberOfObjectives, double offset) {
     this.numberOfObjectives = numberOfObjectives;
-    this.hypervolume = new FastHypervolume(offset, numberOfObjectives);
+    this.hypervolume = new Hypervolume();
     
     referencePoint = new Solution(numberOfObjectives);
     for (int i = 0; i < numberOfObjectives; i++) {
@@ -75,8 +75,7 @@ public class HypervolumeCalculator extends Calculator{
     if (internalPopulation.size() != 0) {
       double[] maximumValues = metricsUtil.getMaximumValues(internalPopulation.writeObjectivesToMatrix(), numberOfObjectives);
       double[] minimumValues = metricsUtil.getMinimumValues(internalPopulation.writeObjectivesToMatrix(), numberOfObjectives);
-      double[][] normalizedFront = metricsUtil.getNormalizedFront(front.writeObjectivesToMatrix(), maximumValues, minimumValues);
-      return hypervolume.computeHypervolume(normalizedFront, referencePoint);
+      return hypervolume.hypervolume(front.writeObjectivesToMatrix(), maximumValues, minimumValues);
     }
     return 0D;
   }

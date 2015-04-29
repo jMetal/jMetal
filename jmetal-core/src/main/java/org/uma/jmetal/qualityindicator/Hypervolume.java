@@ -215,14 +215,32 @@ public class Hypervolume implements QualityIndicator {
 
     double[] maximumValues;
     double[] minimumValues;
-    double[][] normalizedFront;
-    double[][] invertedFront;
 
     int numberOfObjectives = trueParetoFront[0].length ;
 
     // STEP 1. Obtain the maximum and minimum values of the Pareto front
     maximumValues = utils.getMaximumValues(trueParetoFront, numberOfObjectives);
     minimumValues = utils.getMinimumValues(trueParetoFront, numberOfObjectives);
+
+    // STEP4. The hypervolume (control is passed to java version of Zitzler code)
+    return this.hypervolume(paretoFront, maximumValues, minimumValues);
+  }
+  
+  /**
+   * Returns the hypevolume value of the paretoFront. This method call to the
+   * calculate hypervolume one
+   *
+   * @param paretoFront        The pareto front
+   * @param maximumValues The maximum values for each objective function
+   * @param minimumValues The minimum values for each objective function
+   * @return The normalized hypervolume value
+   */
+  public double hypervolume(double[][] paretoFront, double[] maximumValues, double[] minimumValues) {
+
+    double[][] normalizedFront;
+    double[][] invertedFront;
+
+    int numberOfObjectives = paretoFront[0].length ;
 
     // STEP 2. Get the normalized front
     normalizedFront = utils.getNormalizedFront(paretoFront,
