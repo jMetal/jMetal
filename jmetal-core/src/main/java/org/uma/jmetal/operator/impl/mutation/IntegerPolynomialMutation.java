@@ -73,6 +73,9 @@ public class IntegerPolynomialMutation implements MutationOperator<IntegerSoluti
         y = (double)solution.getVariableValue(i);
         yl = (double)solution.getLowerBound(i) ;
         yu = (double)solution.getUpperBound(i) ;
+        if (yl == yu) {
+          throw new JMetalException("The lower and upper bounds have the same value: " + yl) ;
+        }
         delta1 = (y - yl) / (yu - yl);
         delta2 = (yu - y) / (yu - yl);
         rnd = randomGenerator.nextDouble();

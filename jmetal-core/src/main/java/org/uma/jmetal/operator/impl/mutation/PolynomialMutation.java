@@ -99,6 +99,9 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
         y = solution.getVariableValue(i);
         yl = solution.getLowerBound(i) ;
         yu = solution.getUpperBound(i) ;
+        if (yl == yu) {
+          throw new JMetalException("The lower and upper bounds have the same value: " + yl) ;
+        }
         delta1 = (y - yl) / (yu - yl);
         delta2 = (yu - y) / (yu - yl);
         rnd = randomGenerator.nextDouble();
