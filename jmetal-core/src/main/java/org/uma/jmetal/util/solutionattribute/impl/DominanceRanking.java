@@ -38,13 +38,14 @@ import java.util.*;
  * solutions, subset 1 contains the non-dominated solutions after removing those
  * belonging to subset 0, and so on.
  */
-public class DominanceRanking implements Ranking<Solution> {
+public class DominanceRanking <S extends Solution>
+    extends GenericSolutionAttribute<S, Integer> implements Ranking<S> {
 
   private static final Comparator<Solution> DOMINANCE_COMPARATOR = new DominanceComparator();
   private static final Comparator<Solution> CONSTRAINT_VIOLATION_COMPARATOR =
     new OverallConstraintViolationComparator();
 
-  private List<ArrayList<Solution>> rankedSubpopulations;
+  private List<ArrayList<S>> rankedSubpopulations;
 
   /**
    * Constructor
@@ -54,8 +55,8 @@ public class DominanceRanking implements Ranking<Solution> {
   }
 
   @Override
-  public Ranking computeRanking(List<Solution> solutionSet) {
-    List<Solution> population = solutionSet;
+  public Ranking computeRanking(List<S> solutionSet) {
+    List<S> population = solutionSet;
 
     // dominateMe[i] contains the number of solutions dominating i
     int[] dominateMe = new int[population.size()];
@@ -131,7 +132,7 @@ public class DominanceRanking implements Ranking<Solution> {
     rankedSubpopulations = new ArrayList<>();
     //0,1,2,....,i-1 are fronts, then i fronts
     for (int j = 0; j < i; j++) {
-      rankedSubpopulations.add(j, new ArrayList<Solution>(front[j].size()));
+      rankedSubpopulations.add(j, new ArrayList<S>(front[j].size()));
       it1 = front[j].iterator();
       while (it1.hasNext()) {
         rankedSubpopulations.get(j).add(solutionSet.get(it1.next()));
@@ -142,7 +143,7 @@ public class DominanceRanking implements Ranking<Solution> {
   }
 
   @Override
-  public List<Solution> getSubfront(int rank) {
+  public List<S> getSubfront(int rank) {
     if (rank >= rankedSubpopulations.size()) {
       throw new JMetalException("Invalid rank: " + rank + ". Max rank = " + (rankedSubpopulations.size() -1)) ;
     }
@@ -153,7 +154,7 @@ public class DominanceRanking implements Ranking<Solution> {
   public int getNumberOfSubfronts() {
     return rankedSubpopulations.size();
   }
-
+/*
   @Override
   public void setAttribute(Solution solution, Integer value) {
     solution.setAttribute(getAttributeID(), value);
@@ -168,4 +169,5 @@ public class DominanceRanking implements Ranking<Solution> {
   public Object getAttributeID() {
     return this.getClass();
   }
+  */
 }
