@@ -36,14 +36,26 @@ public class IntegerPolynomialMutationWorkingTest {
    * @param args Command line arguments
    */
   public static void main(String[] args) throws FileNotFoundException {
+    int numberOfPoints ;
+    int granularity ;
+    double distributionIndex ;
+    String outputFileName ;
+
     if (args.length !=4) {
-      System.err.println("Usage: numberOfSolutions granularity distributionIndex outputFile") ;
-      System.exit(-1) ;
+      System.out.println("Usage: numberOfSolutions granularity distributionIndex outputFile") ;
+      System.out.println("Using default parameters") ;
+
+      numberOfPoints = 10000 ;
+      granularity = 100 ;
+      distributionIndex = 20.0 ;
+      outputFileName = "integerPolynomialData.txt" ;
+    } else {
+      numberOfPoints = Integer.valueOf(args[0]);
+      granularity = Integer.valueOf(args[1]);
+      distributionIndex = Double.valueOf(args[2]);
+      outputFileName = args[3];
     }
-    int numberOfPoints = Integer.valueOf(args[0]) ;
-    int granularity = Integer.valueOf(args[1]) ;
-    double distributionIndex = Double.valueOf(args[2]) ;
-    String outputFileName = args[3] ;
+
     IntegerProblem problem ;
 
     problem = new NIntegerMin(1, 10, -1000, 1000);

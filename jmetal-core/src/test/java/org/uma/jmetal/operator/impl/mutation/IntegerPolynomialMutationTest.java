@@ -1,26 +1,13 @@
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-//
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package org.uma.jmetal.operator.impl.mutation;
 
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.uma.jmetal.problem.DoubleProblem;
-import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.impl.GenericDoubleSolution;
+import org.uma.jmetal.problem.IntegerProblem;
+import org.uma.jmetal.problem.impl.AbstractIntegerProblem;
+import org.uma.jmetal.solution.IntegerSolution;
+import org.uma.jmetal.solution.impl.GenericIntegerSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
@@ -32,20 +19,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
-/**
- * Note: this class does check that the polynomial mutation operator does not return invalid
- * values, but not that it works properly (@see PolynomialMutationWorkingTest)
- *
- * @author Antonio J. Nebro
- * @version 1.0
- */
-public class PolynomialMutationTest {
+public class IntegerPolynomialMutationTest {
   private static final double EPSILON = 0.00000000000001 ;
-
 
   @Test
   public void shouldConstructorWithoutParameterAssignTheDefaultValues() {
-    PolynomialMutation mutation = new PolynomialMutation() ;
+    IntegerPolynomialMutation mutation = new IntegerPolynomialMutation() ;
     assertEquals(0.01, (Double) ReflectionTestUtils
         .getField(mutation, "mutationProbability"), EPSILON) ;
     assertEquals(20.0, (Double) ReflectionTestUtils
@@ -54,8 +33,8 @@ public class PolynomialMutationTest {
 
   @Test
   public void shouldConstructorWithProblemAndDistributionIndexParametersAssignTheCorrectValues() {
-    DoubleProblem problem = new MockDoubleProblem(4) ;
-    PolynomialMutation mutation = new PolynomialMutation(problem, 10.0) ;
+    IntegerProblem problem = new MockIntegerProblem(4) ;
+    IntegerPolynomialMutation mutation = new IntegerPolynomialMutation(problem, 10.0) ;
     assertEquals(1.0/problem.getNumberOfVariables(), (Double) ReflectionTestUtils
         .getField(mutation, "mutationProbability"), EPSILON) ;
     assertEquals(10.0, (Double) ReflectionTestUtils
@@ -65,7 +44,7 @@ public class PolynomialMutationTest {
   @Test
   public void shouldConstructorAssignTheCorrectProbabilityValue() {
     double mutationProbability = 0.1 ;
-    PolynomialMutation mutation = new PolynomialMutation(mutationProbability, 2.0) ;
+    IntegerPolynomialMutation mutation = new IntegerPolynomialMutation(mutationProbability, 2.0) ;
     assertEquals(mutationProbability, (Double) ReflectionTestUtils
         .getField(mutation, "mutationProbability"), EPSILON) ;
   }
@@ -73,7 +52,7 @@ public class PolynomialMutationTest {
   @Test
   public void shouldConstructorAssignTheCorrectDistributionIndex() {
     double distributionIndex = 15.0 ;
-    PolynomialMutation mutation = new PolynomialMutation(0.1, distributionIndex) ;
+    IntegerPolynomialMutation mutation = new IntegerPolynomialMutation(0.1, distributionIndex) ;
     assertEquals(distributionIndex, (Double) ReflectionTestUtils
         .getField(mutation, "distributionIndex"), EPSILON) ;
   }
@@ -81,30 +60,30 @@ public class PolynomialMutationTest {
   @Test (expected = JMetalException.class)
   public void shouldConstructorFailWhenPassedANegativeProbabilityValue() {
     double mutationProbability = -0.1 ;
-    new PolynomialMutation(mutationProbability, 2.0) ;
+    new IntegerPolynomialMutation(mutationProbability, 2.0) ;
   }
 
   @Test (expected = JMetalException.class)
   public void shouldConstructorFailWhenPassedANegativeDistributionIndex() {
     double distributionIndex = -0.1 ;
-    new PolynomialMutation(0.1, distributionIndex) ;
+    new IntegerPolynomialMutation(0.1, distributionIndex) ;
   }
 
   @Test
   public void shouldGetMutationProbabilityReturnTheRightValue() {
-    PolynomialMutation mutation = new PolynomialMutation(0.1, 20.0) ;
+    IntegerPolynomialMutation mutation = new IntegerPolynomialMutation(0.1, 20.0) ;
     assertEquals(0.1, mutation.getMutationProbability(), EPSILON) ;
   }
 
   @Test
   public void shouldGetDistributionIndexReturnTheRightValue() {
-    PolynomialMutation mutation = new PolynomialMutation(0.1, 30.0) ;
+    IntegerPolynomialMutation mutation = new IntegerPolynomialMutation(0.1, 30.0) ;
     assertEquals(30.0, mutation.getDistributionIndex(), EPSILON) ;
   }
 
   @Test (expected = JMetalException.class)
   public void shouldExecuteWithNullParameterThrowAnException() {
-    PolynomialMutation mutation = new PolynomialMutation(0.1, 20.0) ;
+    IntegerPolynomialMutation mutation = new IntegerPolynomialMutation(0.1, 20.0) ;
 
     mutation.execute(null) ;
   }
@@ -114,10 +93,10 @@ public class PolynomialMutationTest {
     double mutationProbability = 0.0;
     double distributionIndex = 20.0 ;
 
-    PolynomialMutation mutation = new PolynomialMutation(mutationProbability, distributionIndex) ;
-    DoubleProblem problem = new MockDoubleProblem(1) ;
-    DoubleSolution solution = problem.createSolution() ;
-    DoubleSolution oldSolution = (DoubleSolution)solution.copy() ;
+    IntegerPolynomialMutation mutation = new IntegerPolynomialMutation(mutationProbability, distributionIndex) ;
+    IntegerProblem problem = new MockIntegerProblem(1) ;
+    IntegerSolution solution = problem.createSolution() ;
+    IntegerSolution oldSolution = (IntegerSolution)solution.copy() ;
 
     mutation.execute(solution) ;
 
@@ -132,10 +111,10 @@ public class PolynomialMutationTest {
 
     Mockito.when(randomGenerator.nextDouble()).thenReturn(1.0) ;
 
-    PolynomialMutation mutation = new PolynomialMutation(mutationProbability, distributionIndex) ;
-    DoubleProblem problem = new MockDoubleProblem(1) ;
-    DoubleSolution solution = problem.createSolution() ;
-    DoubleSolution oldSolution = (DoubleSolution)solution.copy() ;
+    IntegerPolynomialMutation mutation = new IntegerPolynomialMutation(mutationProbability, distributionIndex) ;
+    IntegerProblem problem = new MockIntegerProblem(1) ;
+    IntegerSolution solution = problem.createSolution() ;
+    IntegerSolution oldSolution = (IntegerSolution)solution.copy() ;
 
     ReflectionTestUtils.setField(mutation, "randomGenerator", randomGenerator);
 
@@ -153,16 +132,16 @@ public class PolynomialMutationTest {
 
     Mockito.when(randomGenerator.nextDouble()).thenReturn(0.005, 0.6) ;
 
-    PolynomialMutation mutation = new PolynomialMutation(mutationProbability, distributionIndex) ;
-    DoubleProblem problem = new MockDoubleProblem(1) ;
-    DoubleSolution solution = problem.createSolution() ;
+    IntegerPolynomialMutation mutation = new IntegerPolynomialMutation(mutationProbability, distributionIndex) ;
+    IntegerProblem problem = new MockIntegerProblem(1) ;
+    IntegerSolution solution = problem.createSolution() ;
 
     ReflectionTestUtils.setField(mutation, "randomGenerator", randomGenerator);
 
     mutation.execute(solution) ;
 
-    assertThat(solution.getVariableValue(0), Matchers.greaterThanOrEqualTo(
-        solution.getLowerBound(0))) ;
+    assertThat(solution.getVariableValue(0), Matchers
+        .greaterThanOrEqualTo(solution.getLowerBound(0))) ;
     assertThat(solution.getVariableValue(0), Matchers.lessThanOrEqualTo(solution.getUpperBound(0))) ;
     verify(randomGenerator, times(2)).nextDouble();
   }
@@ -175,9 +154,9 @@ public class PolynomialMutationTest {
 
     Mockito.when(randomGenerator.nextDouble()).thenReturn(0.005, 0.1) ;
 
-    PolynomialMutation mutation = new PolynomialMutation(mutationProbability, distributionIndex) ;
-    DoubleProblem problem = new MockDoubleProblem(1) ;
-    DoubleSolution solution = problem.createSolution() ;
+    IntegerPolynomialMutation mutation = new IntegerPolynomialMutation(mutationProbability, distributionIndex) ;
+    IntegerProblem problem = new MockIntegerProblem(1) ;
+    IntegerSolution solution = problem.createSolution() ;
 
     ReflectionTestUtils.setField(mutation, "randomGenerator", randomGenerator);
 
@@ -196,37 +175,40 @@ public class PolynomialMutationTest {
 
     Mockito.when(randomGenerator.nextDouble()).thenReturn(0.005, 0.1) ;
 
-    PolynomialMutation mutation = new PolynomialMutation(mutationProbability, distributionIndex) ;
+    IntegerPolynomialMutation mutation = new IntegerPolynomialMutation(mutationProbability, distributionIndex) ;
 
-    MockDoubleProblem problem = new MockDoubleProblem(1) ;
-    ReflectionTestUtils.setField(problem, "lowerLimit", Arrays.asList(new Double[]{1.0}));
-    ReflectionTestUtils.setField(problem, "upperLimit", Arrays.asList(new Double[]{1.0}));
+    MockIntegerProblem problem = new MockIntegerProblem(1) ;
+    ReflectionTestUtils.setField(problem, "lowerLimit", Arrays.asList(new Integer[]{1}));
+    ReflectionTestUtils.setField(problem, "upperLimit", Arrays.asList(new Integer[]{1}));
 
-    DoubleSolution solution = problem.createSolution() ;
+    IntegerSolution solution = problem.createSolution() ;
 
     ReflectionTestUtils.setField(mutation, "randomGenerator", randomGenerator);
 
     mutation.execute(solution) ;
 
-    assertEquals(1.0, solution.getVariableValue(0), EPSILON) ;
+    assertEquals(1, (long)solution.getVariableValue(0));
+
+    //int expectedValue = 1 ;
+    //assertTrue(expectedValue == solution.getVariableValue(0)); ;
   }
 
   /**
-   * Mock class representing a double problem
+   * Mock class representing an Integer problem
    */
-  private class MockDoubleProblem extends AbstractDoubleProblem {
+  private class MockIntegerProblem extends AbstractIntegerProblem {
 
     /** Constructor */
-    public MockDoubleProblem(Integer numberOfVariables) {
+    public MockIntegerProblem(Integer numberOfVariables) {
       setNumberOfVariables(numberOfVariables);
       setNumberOfObjectives(2);
 
-      List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
-      List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
+      List<Integer> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
+      List<Integer> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
 
       for (int i = 0; i < getNumberOfVariables(); i++) {
-        lowerLimit.add(-4.0);
-        upperLimit.add(4.0);
+        lowerLimit.add(-4);
+        upperLimit.add(4);
       }
 
       setLowerLimit(lowerLimit);
@@ -234,15 +216,15 @@ public class PolynomialMutationTest {
     }
 
     @Override
-    public DoubleSolution createSolution() {
-      return new GenericDoubleSolution(this) ;
+    public IntegerSolution createSolution() {
+      return new GenericIntegerSolution(this) ;
     }
 
     /** Evaluate() method */
     @Override
-    public void evaluate(DoubleSolution solution) {
-      solution.setObjective(0, 0.0);
-      solution.setObjective(1, 1.0);
+    public void evaluate(IntegerSolution solution) {
+      solution.setObjective(0, 4);
+      solution.setObjective(1, 2);
     }
   }
 }
