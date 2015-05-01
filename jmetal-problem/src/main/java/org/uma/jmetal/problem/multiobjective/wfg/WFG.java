@@ -23,7 +23,7 @@ package org.uma.jmetal.problem.multiobjective.wfg;
 
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.impl.GenericDoubleSolution;
+import org.uma.jmetal.solution.impl.DefaultDoubleSolution;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,7 +83,7 @@ public abstract class WFG extends AbstractDoubleProblem {
 
   @Override
   public DoubleSolution createSolution() {
-    return new GenericDoubleSolution(this)  ;
+    return new DefaultDoubleSolution(this)  ;
   }
 
   /**

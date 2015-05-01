@@ -32,10 +32,10 @@ import java.util.HashMap;
  * Defines an implementation of a binary solution
  * Created by Antonio J. Nebro on 03/09/14.
  */
-public class GenericBinarySolution extends AbstractGenericSolution<BinarySet, BinaryProblem> implements BinarySolution {
+public class DefaultBinarySolution extends AbstractGenericSolution<BinarySet, BinaryProblem> implements BinarySolution {
 
   /** Constructor */
-  public GenericBinarySolution(BinaryProblem problem) {
+  public DefaultBinarySolution(BinaryProblem problem) {
     super(problem) ;
 
     overallConstraintViolationDegree = 0.0 ;
@@ -51,7 +51,7 @@ public class GenericBinarySolution extends AbstractGenericSolution<BinarySet, Bi
   }
 
   /** Copy constructor */
-  public GenericBinarySolution(GenericBinarySolution solution) {
+  public DefaultBinarySolution(DefaultBinarySolution solution) {
     super(solution.problem);
 
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
@@ -89,7 +89,7 @@ public class GenericBinarySolution extends AbstractGenericSolution<BinarySet, Bi
 
   @Override
   public Solution copy() {
-    return new GenericBinarySolution(this);
+    return new DefaultBinarySolution(this);
   }
 
   @Override

@@ -2,7 +2,7 @@ package org.uma.jmetal.problem.impl;
 
 import org.uma.jmetal.problem.IntegerProblem;
 import org.uma.jmetal.solution.IntegerSolution;
-import org.uma.jmetal.solution.impl.GenericIntegerSolution;
+import org.uma.jmetal.solution.impl.DefaultIntegerSolution;
 
 import java.util.List;
 
@@ -34,7 +34,7 @@ public abstract class AbstractIntegerProblem extends AbstractGenericProblem<Inte
 
   @Override
   public IntegerSolution createSolution() {
-    return new GenericIntegerSolution(this) ;
+    return new DefaultIntegerSolution(this) ;
   }
 
 }

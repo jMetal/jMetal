@@ -42,13 +42,13 @@ public class GenericBinarySolutionTest {
   }
 
   @Test public void shouldTheSumOfGetNumberOfBitsBeEqualToTheSumOfBitsPerVariable() {
-    GenericBinarySolution solution = (GenericBinarySolution) problem.createSolution();
+    DefaultBinarySolution solution = (DefaultBinarySolution) problem.createSolution();
 
     assertEquals(problem.getTotalNumberOfBits(), solution.getTotalNumberOfBits());
   }
 
   @Test public void shouldGetNumberOfBitsBeEqualToTheNumberOfOfBitsPerVariable() {
-    GenericBinarySolution solution = (GenericBinarySolution) problem.createSolution();
+    DefaultBinarySolution solution = (DefaultBinarySolution) problem.createSolution();
 
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
       assertEquals(problem.getNumberOfBits(i), solution.getNumberOfBits(i));
@@ -56,8 +56,8 @@ public class GenericBinarySolutionTest {
   }
 
   @Test public void shouldCopyReturnAnIdenticalVariable() {
-    GenericBinarySolution expectedSolution = (GenericBinarySolution) problem.createSolution();
-    GenericBinarySolution newSolution = (GenericBinarySolution) expectedSolution.copy();
+    DefaultBinarySolution expectedSolution = (DefaultBinarySolution) problem.createSolution();
+    DefaultBinarySolution newSolution = (DefaultBinarySolution) expectedSolution.copy();
     assertEquals(expectedSolution, newSolution);
   }
 
@@ -67,7 +67,7 @@ public class GenericBinarySolutionTest {
   }
 
   @Test public void shouldGetVariableValueStringReturnARightStringRepresentation() throws Exception {
-    GenericBinarySolution solution = (GenericBinarySolution) problem.createSolution();
+    DefaultBinarySolution solution = (DefaultBinarySolution) problem.createSolution();
     solution.getVariableValue(0).set(0, NUMBER_OF_BITS_OF_MOCKED_BINARY_PROBLEM) ;
 
     assertEquals("11111", solution.getVariableValueString(0)) ;
@@ -105,7 +105,7 @@ public class GenericBinarySolutionTest {
 
     @Override
     public BinarySolution createSolution() {
-      return new GenericBinarySolution(this) ;
+      return new DefaultBinarySolution(this) ;
     }
 
     /** Evaluate() method */

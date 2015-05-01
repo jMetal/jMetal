@@ -11,7 +11,7 @@ package org.uma.jmetal.problem.multiobjective.ebes;
 import org.uma.jmetal.problem.ConstrainedProblem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.impl.GenericDoubleSolution;
+import org.uma.jmetal.solution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 
 import java.io.BufferedReader;
@@ -914,7 +914,7 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
 
   @Override
   public DoubleSolution createSolution() {
-    return new GenericDoubleSolution(this) ;
+    return new DefaultDoubleSolution(this) ;
   }
 
   /**

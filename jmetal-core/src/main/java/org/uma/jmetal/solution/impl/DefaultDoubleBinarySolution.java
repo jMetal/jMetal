@@ -16,13 +16,13 @@ import java.util.HashMap;
  *  - getNumberOfVariables() = getNumberOfDoubleVariables() + 1
  *  - the bitset is the last variable
  */
-public class GenericDoubleBinarySolution
+public class DefaultDoubleBinarySolution
     extends AbstractGenericSolution<Object, DoubleBinaryProblem>
     implements DoubleBinarySolution {
   private int numberOfDoubleVariables ;
 
   /** Constructor */
-  public GenericDoubleBinarySolution(DoubleBinaryProblem problem) {
+  public DefaultDoubleBinarySolution(DoubleBinaryProblem problem) {
     super(problem) ;
 
     numberOfDoubleVariables = problem.getNumberOfDoubleVariables() ;
@@ -35,7 +35,7 @@ public class GenericDoubleBinarySolution
   }
 
   /** Copy constructor */
-  public GenericDoubleBinarySolution(GenericDoubleBinarySolution solution) {
+  public DefaultDoubleBinarySolution(DefaultDoubleBinarySolution solution) {
     super(solution.problem) ;
     for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
       setObjective(i, solution.getObjective(i)) ;
@@ -64,7 +64,7 @@ public class GenericDoubleBinarySolution
     setVariableValue(numberOfDoubleVariables, bitset);
   }
 
-  private void copyDoubleVariables(GenericDoubleBinarySolution solution) {
+  private void copyDoubleVariables(DefaultDoubleBinarySolution solution) {
 //    variables = new ArrayList<>() ;
 //    for (int i = 0 ; i < numberOfDoubleVariables; i++) {
 //      variables.add(new Double((Double) solution.getVariableValue(i))) ;
@@ -73,7 +73,7 @@ public class GenericDoubleBinarySolution
     }
   }
 
-  private void copyBitSet(GenericDoubleBinarySolution solution) {
+  private void copyBitSet(DefaultDoubleBinarySolution solution) {
     BitSet bitset = (BitSet)solution.getVariableValue(solution.getNumberOfVariables()-1) ;
     //variables.add(bitset.clone()) ;
     setVariableValue(numberOfDoubleVariables, bitset);
@@ -101,7 +101,7 @@ public class GenericDoubleBinarySolution
 
   @Override
   public Solution copy() {
-    return new GenericDoubleBinarySolution(this);
+    return new DefaultDoubleBinarySolution(this);
   }
 
   @Override

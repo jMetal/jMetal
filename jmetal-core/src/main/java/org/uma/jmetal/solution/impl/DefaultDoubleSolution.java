@@ -1,7 +1,7 @@
 package org.uma.jmetal.solution.impl;
 
-import org.uma.jmetal.problem.IntegerProblem;
-import org.uma.jmetal.solution.IntegerSolution;
+import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
 
 import java.util.HashMap;
@@ -9,17 +9,15 @@ import java.util.HashMap;
 /**
  * Created by Antonio J. Nebro on 03/09/14.
  */
-public class GenericIntegerSolution extends AbstractGenericSolution<Integer, IntegerProblem> implements IntegerSolution {
-
+public class DefaultDoubleSolution extends AbstractGenericSolution<Double, DoubleProblem> implements DoubleSolution {
   /** Constructor */
-  public GenericIntegerSolution(IntegerProblem problem) {
+  public DefaultDoubleSolution(DoubleProblem problem) {
     super(problem) ;
-
     overallConstraintViolationDegree = 0.0 ;
     numberOfViolatedConstraints = 0 ;
 
     for (int i = 0 ; i < problem.getNumberOfVariables(); i++) {
-      Integer value = randomGenerator.nextInt(getLowerBound(i), getUpperBound(i));
+      Double value = randomGenerator.nextDouble() * (getUpperBound(i) - getLowerBound(i)) + getLowerBound(i);
       setVariableValue(i, value) ;
     }
 
@@ -29,7 +27,7 @@ public class GenericIntegerSolution extends AbstractGenericSolution<Integer, Int
   }
 
   /** Copy constructor */
-  public GenericIntegerSolution(GenericIntegerSolution solution) {
+  public DefaultDoubleSolution(DefaultDoubleSolution solution) {
     super(solution.problem) ;
 
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
@@ -42,23 +40,22 @@ public class GenericIntegerSolution extends AbstractGenericSolution<Integer, Int
 
     overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
     numberOfViolatedConstraints = solution.numberOfViolatedConstraints ;
-
     attributes = new HashMap(solution.attributes) ;
   }
 
   @Override
-  public Integer getUpperBound(int index) {
+  public Double getUpperBound(int index) {
     return problem.getUpperBound(index);
   }
 
   @Override
-  public Integer getLowerBound(int index) {
+  public Double getLowerBound(int index) {
     return problem.getLowerBound(index) ;
   }
 
   @Override
   public Solution copy() {
-    return new GenericIntegerSolution(this);
+    return new DefaultDoubleSolution(this);
   }
 
   @Override

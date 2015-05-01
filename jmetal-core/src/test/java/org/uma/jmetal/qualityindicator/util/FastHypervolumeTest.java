@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.impl.GenericDoubleSolution;
+import org.uma.jmetal.solution.impl.DefaultDoubleSolution;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -89,7 +89,7 @@ public class FastHypervolumeTest {
 
     @Override
     public DoubleSolution createSolution() {
-      return new GenericDoubleSolution(this) ;
+      return new DefaultDoubleSolution(this) ;
     }
 
     /** Evaluate() method */

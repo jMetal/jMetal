@@ -13,20 +13,17 @@
 
 package org.uma.jmetal.util.solutionattribute.impl;
 
-import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.uma.jmetal.problem.DoubleProblem;
-import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.solution.impl.GenericDoubleSolution;
+import org.uma.jmetal.solution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -62,9 +59,9 @@ public class DominanceRankingTest {
   public void rankingOfAnPopulationOfSizeOne(){
     problem = Mockito.mock(DoubleProblem.class) ;
     List<DoubleSolution> population = Arrays.<DoubleSolution>asList(
-            new GenericDoubleSolution(problem),
-            new GenericDoubleSolution(problem),
-            new GenericDoubleSolution(problem));
+            new DefaultDoubleSolution(problem),
+            new DefaultDoubleSolution(problem),
+            new DefaultDoubleSolution(problem));
 
     Ranking ranking = new DominanceRanking() ;
     ranking.computeRanking(population) ;

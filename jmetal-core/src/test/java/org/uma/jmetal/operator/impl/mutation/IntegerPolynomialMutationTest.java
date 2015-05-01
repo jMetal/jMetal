@@ -7,7 +7,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.problem.IntegerProblem;
 import org.uma.jmetal.problem.impl.AbstractIntegerProblem;
 import org.uma.jmetal.solution.IntegerSolution;
-import org.uma.jmetal.solution.impl.GenericIntegerSolution;
+import org.uma.jmetal.solution.impl.DefaultIntegerSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
@@ -217,7 +217,7 @@ public class IntegerPolynomialMutationTest {
 
     @Override
     public IntegerSolution createSolution() {
-      return new GenericIntegerSolution(this) ;
+      return new DefaultIntegerSolution(this) ;
     }
 
     /** Evaluate() method */

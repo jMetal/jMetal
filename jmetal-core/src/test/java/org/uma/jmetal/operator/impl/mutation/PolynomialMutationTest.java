@@ -20,7 +20,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.impl.GenericDoubleSolution;
+import org.uma.jmetal.solution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
@@ -235,7 +235,7 @@ public class PolynomialMutationTest {
 
     @Override
     public DoubleSolution createSolution() {
-      return new GenericDoubleSolution(this) ;
+      return new DefaultDoubleSolution(this) ;
     }
 
     /** Evaluate() method */

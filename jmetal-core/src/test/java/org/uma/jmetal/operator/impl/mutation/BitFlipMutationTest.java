@@ -19,7 +19,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.problem.BinaryProblem;
 import org.uma.jmetal.problem.impl.AbstractBinaryProblem;
 import org.uma.jmetal.solution.BinarySolution;
-import org.uma.jmetal.solution.impl.GenericBinarySolution;
+import org.uma.jmetal.solution.impl.DefaultBinarySolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
@@ -165,7 +165,7 @@ public class BitFlipMutationTest {
 
     @Override
     public BinarySolution createSolution() {
-      return new GenericBinarySolution(this) ;
+      return new DefaultBinarySolution(this) ;
     }
 
     /** Evaluate() method */

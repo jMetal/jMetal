@@ -22,7 +22,7 @@ package org.uma.jmetal.problem.multiobjective;
 
 import org.uma.jmetal.problem.impl.AbstractBinaryProblem;
 import org.uma.jmetal.solution.BinarySolution;
-import org.uma.jmetal.solution.impl.GenericBinarySolution;
+import org.uma.jmetal.solution.impl.DefaultBinarySolution;
 import org.uma.jmetal.util.JMetalException;
 
 import java.util.BitSet;
@@ -57,7 +57,7 @@ public class OneZeroMax extends AbstractBinaryProblem {
 
   @Override
   public BinarySolution createSolution() {
-    return new GenericBinarySolution(this) ;
+    return new DefaultBinarySolution(this) ;
   }
 
   /** Evaluate() method */
