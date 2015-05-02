@@ -28,25 +28,32 @@ import java.util.List;
  * @author Antonio J. Nebro
  * @version 1.0
  */
-public class RandomSelection implements SelectionOperator<List<Solution>, Solution> {
+public class NaryRandomSelection implements SelectionOperator<List<? extends Solution>,List<? extends Solution>> {
   private JMetalRandom randomGenerator ;
   private int numberOfSolutionsToBeReturned ;
 
   /** Constructor */
-  public RandomSelection() {
+  public NaryRandomSelection() {
+    this(1) ;
+  }
+
+  /** Constructor */
+  public NaryRandomSelection(int numberOfSolutionsToBeReturned) {
     randomGenerator = JMetalRandom.getInstance() ;
+    this.numberOfSolutionsToBeReturned = numberOfSolutionsToBeReturned ;
   }
 
   /** Execute() method */
-  public Solution execute(List<Solution> solutionList) {
+  public List<? extends Solution> execute(List<? extends Solution> solutionList) {
     if (null == solutionList) {
       throw new JMetalException("The solution list is null") ;
     } else if (solutionList.isEmpty()) {
       throw new JMetalException("The solution list is empty") ;
+    } else if (solutionList.size() < numberOfSolutionsToBeReturned) {
+      throw new JMetalException("The solution list size (" + solutionList.size() +") is less than "
+          + "the number of requested solutions ("+numberOfSolutionsToBeReturned+")") ;
     }
 
-    List<Solution> list = SolutionListUtils.selectNRandomDifferentSolutions(1, solutionList);
-
-    return list.get(0) ;
+    return SolutionListUtils.selectNRandomDifferentSolutions(numberOfSolutionsToBeReturned, solutionList) ;
   }
 }
