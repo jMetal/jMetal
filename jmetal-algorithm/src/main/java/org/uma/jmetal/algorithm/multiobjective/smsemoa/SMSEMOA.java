@@ -10,7 +10,7 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.HypervolumeContributorComparator;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
-import org.uma.jmetal.util.front.imp.FrontUtils;
+import org.uma.jmetal.util.front.util.FrontUtils;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;

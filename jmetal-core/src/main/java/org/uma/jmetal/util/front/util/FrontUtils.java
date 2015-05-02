@@ -12,10 +12,11 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-package org.uma.jmetal.util.front.imp;
+package org.uma.jmetal.util.front.util;
 
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
+import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.impl.PointSolution;
 import org.uma.jmetal.util.point.impl.PointUtils;
@@ -137,6 +138,50 @@ public class FrontUtils {
     }
     return normalizedFront;
   }
+
+  /**
+   * This method receives a front and returns a normalized front.
+   *
+   * @param front        A front of points.
+   * @return the normalized front
+   */
+  public static Front getNormalizedFront(Front front) {
+    if (front == null) {
+      throw new JMetalException("The front is null") ;
+    } else if (front.getNumberOfPoints() == 0) {
+      throw new JMetalException("The front is empty") ;
+    }
+
+    double[] maximumValues = getMaximumValues(front) ;
+    double[] minimumValues = getMinimumValues(front) ;
+
+    return getNormalizedFront(front, maximumValues, minimumValues) ;
+  }
+
+  /**
+   * This method receives a front and returns a normalized front according to a reference front
+   *
+   * @param front A front of points.
+   * @param referenceFront
+   * @return the normalized front
+   */
+  public static Front getNormalizedFront(Front front, Front referenceFront) {
+    if (front == null) {
+      throw new JMetalException("The front is null") ;
+    } else if (front.getNumberOfPoints() == 0) {
+      throw new JMetalException("The front is empty") ;
+    } else if (referenceFront == null) {
+      throw new JMetalException("The reference front is empty") ;
+    } else if (referenceFront.getNumberOfPoints() == 0) {
+      throw new JMetalException("The reference front is empty") ;
+    }
+
+    double[] maximumValues = getMaximumValues(referenceFront) ;
+    double[] minimumValues = getMinimumValues(referenceFront) ;
+
+    return getNormalizedFront(front, maximumValues, minimumValues) ;
+  }
+
 
   /**
    * Gets the distance between a point and the nearest one in a front. If a distance equals to 0

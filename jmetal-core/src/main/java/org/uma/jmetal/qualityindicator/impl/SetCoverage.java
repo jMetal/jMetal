@@ -20,7 +20,7 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.front.Front;
-import org.uma.jmetal.util.front.imp.FrontUtils;
+import org.uma.jmetal.util.front.util.FrontUtils;
 import org.uma.jmetal.util.naming.impl.SimpleDescribedEntity;
 
 import java.util.Comparator;

@@ -65,7 +65,7 @@ public class SMSEMOARunner {
     if (args.length == 1) {
       problemName = args[0] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT3";
+      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
     }
 
     problem = (DoubleProblem)ProblemUtils.loadProblem(problemName);

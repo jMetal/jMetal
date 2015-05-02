@@ -60,9 +60,9 @@ public class HypervolumeContributorComparator implements Comparator<Solution> {
       }
 
       if (contribution1 < contribution2) {
-        result = -1;
-      } else  if (contribution1 > contribution2) {
         result = 1;
+      } else  if (contribution1 > contribution2) {
+        result = -1;
       } else {
         result = 0;
       }
