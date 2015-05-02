@@ -17,6 +17,7 @@ software. Some of the ideas we are elaborating are:
  * Application of clean code guidelines - “Clean code: A Handbook of Agile Software Craftsmanship" (Robert C. Martin)
 * Algorithm templates
 * Parallelism support
+* Algorithm measures
 * Maven is used as the tool for development, testing, packaging and deployment.
 
 If you are interested in contributing with your ideas and comments, please take a look the current discussions in the [Issues section](https://github.com/jMetal/jMetal/issues).
@@ -26,7 +27,7 @@ If you are interested in contributing with your ideas and comments, please take 
 ##Components
 The current development version provides:
 
-* Algorithms: NSGA-II, NSGA-III (to be tested), SMPSO, GDE3, IBEA, MOEA/D (variants: MOEA/D-DE, MOEA/D-DRA, Constrained MOEA/D), SPEA2, PESA2, AbYSS, MOCell, RandomSearch.
+* Algorithms: NSGA-II, NSGA-III (to be tested), SMPSO, GDE3, IBEA, MOEA/D (variants: MOEA/D-DE, MOEA/D-DRA, Constrained MOEA/D), SPEA2, PESA2, AbYSS, MOCell, RandomSearch, SMS-EMOA
 * Encodings: Binary, Real, Integer, Permutation, Integer+Double
 * Crossover operators: SBXCrossover, SinglePointCrossover, DifferentialEvolutionCrossover, IntegerSBXCrossover, BLXAlphaCrossover, HUXCrossover
 * Mutation operators: PolynomialMutation, SingleRandomMutation, BitFlipMutation, IntegerPolynomialMutation, UniformMutation, NonUniformMutation
