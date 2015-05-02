@@ -126,66 +126,6 @@ public class SolutionListUtils {
   }
 
   /**
-   * Gets the maximum values for each objectives in a given list of solutions
-   *
-   * @param solutionList        The list of solutions
-   * @return A list with the maximum values for each objective
-   */
-  public static List<Double> getMaximumValues(List<Solution> solutionList) {
-    List<Double> maximumValue ;
-    if ((solutionList == null) || (solutionList.size() == 0)) {
-      maximumValue = Collections.EMPTY_LIST ;
-    } else {
-      int numberOfObjectives = solutionList.get(0).getNumberOfObjectives() ;
-      maximumValue = new ArrayList<>(numberOfObjectives) ;
-
-      for (int i = 0; i < numberOfObjectives; i++) {
-        maximumValue.set(i, Double.MIN_VALUE) ;
-      }
-
-      for (Solution solution : solutionList) {
-        for (int j = 0; j < solution.getNumberOfObjectives(); j++) {
-          if (solution.getObjective(j) > maximumValue.get(j)) {
-            maximumValue.set(j, solution.getObjective(j));
-          }
-        }
-      }
-    }
-
-    return maximumValue;
-  }
-
-  /**
-   * Gets the minimum values for each objectives in a given list of solutions
-   *
-   * @param solutionList        The list of solutions
-   * @return A list with the minimum values for each objective
-   */
-  public static List<Double> getMinimumValues(List<Solution> solutionList) {
-    List<Double> minimumValue ;
-    if ((solutionList == null) || (solutionList.size() == 0)) {
-      minimumValue = Collections.EMPTY_LIST ;
-    } else {
-      int numberOfObjectives = solutionList.get(0).getNumberOfObjectives() ;
-      minimumValue = new ArrayList<>(numberOfObjectives) ;
-
-      for (int i = 0; i < numberOfObjectives; i++) {
-        minimumValue.set(i, Double.MAX_VALUE) ;
-      }
-
-      for (Solution solution : solutionList) {
-        for (int j = 0; j < solution.getNumberOfObjectives(); j++) {
-          if (solution.getObjective(j) < minimumValue.get(j)) {
-            minimumValue.set(j, solution.getObjective(j));
-          }
-        }
-      }
-    }
-
-    return minimumValue;
-  }
-
-  /**
    * This method receives a list of non-dominated solutions and maximum and minimum values of the
    * objectives, and returns a the normalized set of solutions.
    *

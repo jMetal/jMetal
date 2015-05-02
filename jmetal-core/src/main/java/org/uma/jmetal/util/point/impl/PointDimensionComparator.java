@@ -39,8 +39,6 @@ public class PointDimensionComparator implements Comparator<Point> {
 
   /**
    * Constructor
-   *
-   * Creates a new instance of PointDimensionComparator
    */
   public PointDimensionComparator(int index) {
     if (index < 0) {
