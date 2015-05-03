@@ -35,10 +35,17 @@ return null ;
     //return hypervolume(front, trueParetoFront) ;
   }
 
-  @Override public double execute(Front frontA, Front frontB) {
-    return 0;
-  }
+  @Override
+  public double execute(Front paretoFrontApproximation, Front trueParetoFront) {
+    if (paretoFrontApproximation == null) {
+      throw new JMetalException("The pareto front approximation object is null") ;
+    } else if (trueParetoFront == null) {
+      throw new JMetalException("The pareto front object is null");
+    }
 
+    return hypervolume(paretoFrontApproximation, trueParetoFront) ;
+  }
+  
   @Override
   public double execute(List<? extends Solution> paretoFrontApproximation,
       List<? extends Solution> trueParetoFront) {

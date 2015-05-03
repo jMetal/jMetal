@@ -72,7 +72,7 @@ public class DefaultBinarySolution extends AbstractGenericSolution<BinarySet, Bi
     BinarySet bitSet = new BinarySet(numberOfBits) ;
 
     for (int i = 0; i < numberOfBits; i++) {
-      double rnd= randomGenerator.nextDouble() ;
+      double rnd = randomGenerator.nextDouble() ;
       if (rnd < 0.5) {
         bitSet.set(i);
       } else {

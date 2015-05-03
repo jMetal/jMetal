@@ -31,7 +31,11 @@ import java.util.List;
 
 /**
  * Class implementing the selection operator used in DE: three different solutions
- * are returned from a population.
+ * are returned from a population. The three solutions must be also different from the one
+ * indicated by an index (its position in the list). As a consequence, the operator requires a
+ * solution list with at least for elements.
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class DifferentialEvolutionSelection implements SelectionOperator<List<DoubleSolution>,List<DoubleSolution>> {
   private int solutionListIndex = Integer.MIN_VALUE ;
@@ -51,12 +55,12 @@ public class DifferentialEvolutionSelection implements SelectionOperator<List<Do
   public List<DoubleSolution> execute(List<DoubleSolution> solutionSet) {
     if (null == solutionSet) {
       throw new JMetalException("Parameter is null") ;
-    } else if (solutionSet.size() < 4) {
-      throw new JMetalException(
-              "DifferentialEvolutionSelection: the population has less than four solutions");
     } else if ((solutionListIndex < 0) || (solutionListIndex > solutionSet.size())) {
       throw new JMetalException(
-              "DifferentialEvolutionSelection: index value invalid: " + solutionListIndex );
+              "Index value invalid: " + solutionListIndex );
+    } else if (solutionSet.size() < 4) {
+      throw new JMetalException(
+          "The population has less than four solutions: " + solutionSet.size());
     }
 
     List<DoubleSolution> parents = new ArrayList<>(3);

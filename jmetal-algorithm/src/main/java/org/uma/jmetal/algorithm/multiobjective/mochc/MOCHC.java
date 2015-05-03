@@ -50,8 +50,8 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
   private int convergenceValue;
   private double preservedPopulation;
   private double initialConvergenceCount;
-  private CrossoverOperator crossover;
-  private MutationOperator cataclysmicMutation;
+  private CrossoverOperator<List<BinarySolution>, List<BinarySolution>> crossover;
+  private MutationOperator<BinarySolution> cataclysmicMutation;
   private SelectionOperator newGenerationSelection;
   private SelectionOperator parentSelection;
   private int evaluations;
@@ -66,7 +66,8 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
    */
   public MOCHC(BinaryProblem problem, int populationSize, int maxEvaluations, int convergenceValue,
       double preservedPopulation, double initialConvergenceCount,
-      CrossoverOperator crossoverOperator, MutationOperator cataclysmicMutation,
+      CrossoverOperator<List<BinarySolution>, List<BinarySolution>> crossoverOperator,
+      MutationOperator<BinarySolution> cataclysmicMutation,
       SelectionOperator newGenerationSelection, SelectionOperator parentSelection,
       SolutionListEvaluator evaluator) {
     super();
@@ -85,7 +86,7 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
       size += problem.getNumberOfBits(i);
     }
-    minimumDistance = (int) Math.floor(initialConvergenceCount * size);
+    minimumDistance = (int) Math.floor(this.initialConvergenceCount * size);
 
     comparator = new CrowdingDistanceComparator();
   }
@@ -119,10 +120,9 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
 
   @Override protected List<BinarySolution> selection(List<BinarySolution> population) {
     List<BinarySolution> matingPopulation = new ArrayList<>(population.size());
-    for (int i = 0; i < populationSize; i += 2) {
-      List<BinarySolution> solution = (List<BinarySolution>) parentSelection.execute(population);
-      matingPopulation.add(solution.get(0));
-      matingPopulation.add(solution.get(1));
+    for (int i = 0; i < populationSize; i ++) {
+      BinarySolution solution = (BinarySolution) parentSelection.execute(population);
+      matingPopulation.add(solution);
     }
 
     return matingPopulation;
@@ -136,7 +136,7 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
       parents.add(matingPopulation.get(i + 1));
       //Equality condition between solutions
       if (hammingDistance(parents.get(0), parents.get(1)) >= (minimumDistance)) {
-        List<BinarySolution> offspring = (List<BinarySolution>) crossover.execute(parents);
+        List<BinarySolution> offspring = crossover.execute(parents);
         offspringPopulation.add(offspring.get(0));
         offspringPopulation.add(offspring.get(1));
       }

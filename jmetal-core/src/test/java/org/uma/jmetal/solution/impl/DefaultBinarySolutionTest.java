@@ -29,7 +29,7 @@ import org.uma.jmetal.solution.BinarySolution;
 
 import static org.junit.Assert.assertEquals;
 
-public class GenericBinarySolutionTest {
+public class DefaultBinarySolutionTest {
   private static final int NUMBER_OF_BITS_OF_MOCKED_BINARY_PROBLEM = 5 ;
   BinaryProblem problem ;
 
@@ -56,9 +56,33 @@ public class GenericBinarySolutionTest {
   }
 
   @Test public void shouldCopyReturnAnIdenticalVariable() {
-    DefaultBinarySolution expectedSolution = (DefaultBinarySolution) problem.createSolution();
-    DefaultBinarySolution newSolution = (DefaultBinarySolution) expectedSolution.copy();
+    BinarySolution expectedSolution = problem.createSolution();
+    BinarySolution newSolution = (BinarySolution) expectedSolution.copy();
+
     assertEquals(expectedSolution, newSolution);
+  }
+
+  @Test public void shouldTheHashCodeOfTwoIdenticalSolutionsBeTheSame() {
+    BinaryProblem problem = new MockBinaryProblem(1) ;
+    BinarySolution solutionA = problem.createSolution();
+    BinarySolution solutionB = problem.createSolution();
+
+    solutionA.getVariableValue(0).set(0) ;
+    solutionA.getVariableValue(0).clear(1) ;
+    solutionA.getVariableValue(0).set(2) ;
+    solutionA.getVariableValue(0).clear(3) ;
+    solutionA.getVariableValue(0).set(4) ;
+
+    solutionB.getVariableValue(0).set(0) ;
+    solutionB.getVariableValue(0).clear(1) ;
+    solutionB.getVariableValue(0).set(2) ;
+    solutionB.getVariableValue(0).clear(3) ;
+    solutionB.getVariableValue(0).set(4) ;
+
+    System.out.println("A: " + solutionA) ;
+    System.out.println("B: " + solutionA) ;
+
+    assertEquals(solutionA.hashCode(), solutionB.hashCode());
   }
 
   @Test public void shouldGetTotalNumberOfBitsBeEqualToTheSumOfBitsPerVariable() {
@@ -67,7 +91,7 @@ public class GenericBinarySolutionTest {
   }
 
   @Test public void shouldGetVariableValueStringReturnARightStringRepresentation() throws Exception {
-    DefaultBinarySolution solution = (DefaultBinarySolution) problem.createSolution();
+    BinarySolution solution = problem.createSolution();
     solution.getVariableValue(0).set(0, NUMBER_OF_BITS_OF_MOCKED_BINARY_PROBLEM) ;
 
     assertEquals("11111", solution.getVariableValueString(0)) ;

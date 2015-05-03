@@ -51,11 +51,11 @@ import java.util.List;
  */
 public class MOCHCRunner {
   public static void main(String[] args) throws Exception {
-    CrossoverOperator crossoverOperator;
-    MutationOperator mutationOperator;
+    CrossoverOperator<List<BinarySolution>,List<BinarySolution>> crossoverOperator;
+    MutationOperator<BinarySolution> mutationOperator;
     SelectionOperator parentsSelection;
     SelectionOperator newGenerationSelection;
-    Algorithm algorithm ;
+    Algorithm<List<BinarySolution>> algorithm ;
 
     BinaryProblem problem ;
 
@@ -69,11 +69,8 @@ public class MOCHCRunner {
     problem = (BinaryProblem)ProblemUtils.loadProblem(problemName);
 
     crossoverOperator = new HUXCrossover(1.0) ;
-
     parentsSelection = new RandomSelection() ;
-
     newGenerationSelection = new RankingAndCrowdingSelection(100) ;
-
     mutationOperator = new BitFlipMutation(0.35) ;
 
     algorithm = new MOCHCBuilder(problem)
