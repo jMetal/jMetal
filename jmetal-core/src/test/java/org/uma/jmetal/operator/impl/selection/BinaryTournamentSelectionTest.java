@@ -22,6 +22,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 
@@ -97,87 +98,30 @@ public class BinaryTournamentSelectionTest {
     population = Arrays.asList(solution1, solution2) ;
     assertEquals(2, population.size());
   }
-/*
-  @Test
-  public void shouldExecuteReturnTheFirstSelectedSolutionIfIsDominatedByTheSecondOne() {
-    Comparator<Solution> comparator = mock(Comparator.class) ;
 
-    Solution solution1 = mock(Solution.class) ;
-    Mockito.when(solution1.getNumberOfObjectives()).thenReturn(2) ;
-    Mockito.when(solution1.getObjective(0)).thenReturn(2.0) ;
-    Mockito.when(solution1.getObjective(1)).thenReturn(3.0) ;
-
-    Solution solution2 = mock(Solution.class) ;
-    Mockito.when(solution2.getNumberOfObjectives()).thenReturn(2) ;
-    Mockito.when(solution2.getObjective(0)).thenReturn(1.0) ;
-    Mockito.when(solution2.getObjective(1)).thenReturn(2.0) ;
-
-    Mockito.when(comparator.compare(solution1, solution2)).thenReturn(1) ;
-    Mockito.when(comparator.compare(solution2, solution1)).thenReturn(-1) ;
-
-    List<Solution> population = Arrays.asList(solution1, solution2);
-
-    selection = new BinaryTournamentSelection(comparator) ;
-
-    Solution result = selection.execute(population) ;
-
-    assertEquals(solution2, result) ;
-    assertNotEquals(solution1, result);
-    verify(comparator).compare(any(Solution.class), any(Solution.class));
-  }
-  */
-/*
-  @Test
-  public void shouldExecuteReturnTheSecondSelectedSolutionIfIsDominatedByTheFirstOne() {
-    Comparator<Solution> comparator = mock(Comparator.class) ;
-
-    Solution solution1 = mock(Solution.class) ;
-    Mockito.when(solution1.getNumberOfObjectives()).thenReturn(2) ;
-    Mockito.when(solution1.getObjective(0)).thenReturn(1.0) ;
-    Mockito.when(solution1.getObjective(1)).thenReturn(2.0) ;
-
-    Solution solution2 = mock(Solution.class) ;
-    Mockito.when(solution2.getNumberOfObjectives()).thenReturn(2) ;
-    Mockito.when(solution2.getObjective(0)).thenReturn(2.0) ;
-    Mockito.when(solution2.getObjective(1)).thenReturn(3.0) ;
-
-    Mockito.when(comparator.compare(solution1, solution2)).thenReturn(-1) ;
-    Mockito.when(comparator.compare(solution2, solution1)).thenReturn(1) ;
-
-    List<Solution> population = Arrays.asList(solution1, solution2);
-
-    selection = new BinaryTournamentSelection(comparator) ;
-
-    Solution result = selection.execute(population);
-
-    assertEquals(solution1, result);
-    assertNotEquals(solution2, result);
-    verify(comparator).compare(any(Solution.class), any(Solution.class));
-  }
-*/
   @Test
   public void shouldExecuteWorkProperlyIfTheTwoSolutionsInTheListAreNondominated() {
-    Comparator<Solution> comparator = mock(Comparator.class) ;
+    Comparator<DoubleSolution> comparator = mock(Comparator.class) ;
 
-    Solution solution1 = mock(Solution.class) ;
+    DoubleSolution solution1 = mock(DoubleSolution.class) ;
     Mockito.when(solution1.getNumberOfObjectives()).thenReturn(2) ;
     Mockito.when(solution1.getObjective(0)).thenReturn(1.0) ;
     Mockito.when(solution1.getObjective(1)).thenReturn(2.0) ;
 
-    Solution solution2 = mock(Solution.class) ;
+    DoubleSolution solution2 = mock(DoubleSolution.class) ;
     Mockito.when(solution2.getNumberOfObjectives()).thenReturn(1) ;
     Mockito.when(solution2.getObjective(0)).thenReturn(2.0) ;
     Mockito.when(solution2.getObjective(1)).thenReturn(1.0) ;
 
     Mockito.when(comparator.compare(solution1, solution2)).thenReturn(0) ;
 
-    List<Solution> population = Arrays.<Solution>asList(solution1, solution2);
+    List<DoubleSolution> population = Arrays.<DoubleSolution>asList(solution1, solution2);
 
     selection = new BinaryTournamentSelection(comparator) ;
-    Solution result = selection.execute(population) ;
+    DoubleSolution result = (DoubleSolution) selection.execute(population);
 
     assertThat(result, Matchers.either(Matchers.is(solution1)).or(Matchers.is(solution2))) ;
-    verify(comparator).compare(any(Solution.class), any(Solution.class));
+    verify(comparator).compare(any(DoubleSolution.class), any(DoubleSolution.class));
   }
 
   @After

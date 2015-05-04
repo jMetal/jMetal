@@ -47,7 +47,7 @@ public class NaryTournamentSelectionTest {
   public ExpectedException exception = ExpectedException.none();
 
   @Test
-  public void shouldDefaultConstructorSetTheNumberOfSolutionsToBeReturnedEquasToTwo() {
+  public void shouldDefaultConstructorSetTheNumberOfSolutionsToBeReturnedEqualsToTwo() {
     selection = new NaryTournamentSelection() ;
 
     assertEquals(2, ReflectionTestUtils.getField(selection, "numberOfSolutionsToBeReturned"));

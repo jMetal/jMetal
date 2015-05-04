@@ -27,27 +27,27 @@ import java.util.List;
  * @author Juanjo
  * @version 1.0
  *
- * Applies a binary tournament selection to return the best solution between two that have been
- * chosen at random from a solution list.
+ * Applies a n-ary tournament selection to return a solution from a list.
  */
-public class TournamentSelection implements SelectionOperator<List<Solution>,Solution> {
-  private Comparator<Solution> comparator;
+public class TournamentSelection implements SelectionOperator<List<? extends Solution>,Solution> {
+  private Comparator<? extends Solution> comparator;
 
   private final int numberOfTournaments;
+
   /** Constructor */
   public TournamentSelection(int numberOfTournaments) {
     this(new DominanceComparator(), numberOfTournaments) ;
   }
 
   /** Constructor */
-  public TournamentSelection(Comparator<Solution> comparator, int numberOfTournaments) {
+  public TournamentSelection(Comparator<? extends Solution> comparator, int numberOfTournaments) {
     this.numberOfTournaments = numberOfTournaments;
     this.comparator = comparator ;
   }
 
   @Override
   /** Execute() method */
-  public Solution execute(List<Solution> solutionList) {
+  public Solution execute(List<? extends Solution> solutionList) {
     if (null == solutionList) {
       throw new JMetalException("The solution list is null") ;
     } else if (solutionList.isEmpty()) {
@@ -59,11 +59,11 @@ public class TournamentSelection implements SelectionOperator<List<Solution>,Sol
       result = solutionList.get(0);
     } else {
       result = SolutionListUtils.selectNRandomDifferentSolutions(1, solutionList).get(0);
-      int cnt = 1; // at least 2 solutions are compared
+      int count = 1; // at least 2 solutions are compared
       do {
         Solution candidate = SolutionListUtils.selectNRandomDifferentSolutions(1, solutionList).get(0);
         result = SolutionUtils.getBestSolution(result, candidate, comparator) ;
-      } while (++cnt < this.numberOfTournaments);
+      } while (++count < this.numberOfTournaments);
     }
 
     return result;

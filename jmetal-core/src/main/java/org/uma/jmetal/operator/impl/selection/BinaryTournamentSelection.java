@@ -13,15 +13,10 @@
 
 package org.uma.jmetal.operator.impl.selection;
 
-import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.SolutionListUtils;
-import org.uma.jmetal.util.SolutionUtils;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 
 import java.util.Comparator;
-import java.util.List;
 
 /**
  * @author Antonio J. Nebro, Juan J. Durillo
@@ -39,7 +34,7 @@ public class BinaryTournamentSelection extends TournamentSelection {
   }
 
   /** Constructor */
-  public BinaryTournamentSelection(Comparator<Solution> comparator) {
+  public BinaryTournamentSelection(Comparator<? extends Solution> comparator) {
     super(comparator,2);
   }
 }
