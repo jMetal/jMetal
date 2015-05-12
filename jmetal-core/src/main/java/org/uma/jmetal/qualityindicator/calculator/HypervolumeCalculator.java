@@ -1,6 +1,5 @@
 package org.uma.jmetal.qualityindicator.calculator;
 
-import org.uma.jmetal.core.Solution;
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.qualityindicator.Hypervolume;
 
@@ -24,31 +23,14 @@ public class HypervolumeCalculator extends Calculator{
 
   private final int numberOfObjectives;
   
-  private final Solution referencePoint;
-
   /**
    * Constructor for the hypervolume calculator.
    * 
    * @param numberOfObjectives the number of objectives for the problem.
    */
   public HypervolumeCalculator(int numberOfObjectives) {
-    this(numberOfObjectives, 0.01);
-  }
-
-  /**
-   * Constructor for the calculator.
-   * 
-   * @param numberOfObjectives the number of objectives for the problem.
-   * @param offset offset used for the reference point.
-   */
-  public HypervolumeCalculator(int numberOfObjectives, double offset) {
     this.numberOfObjectives = numberOfObjectives;
     this.hypervolume = new Hypervolume();
-    
-    referencePoint = new Solution(numberOfObjectives);
-    for (int i = 0; i < numberOfObjectives; i++) {
-      referencePoint.setObjective(i, 1 + offset);
-    }
   }
 
   /**
