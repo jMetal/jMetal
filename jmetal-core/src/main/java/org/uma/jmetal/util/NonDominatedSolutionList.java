@@ -54,8 +54,7 @@ public class NonDominatedSolutionList extends SolutionSet {
   public int addAll(SolutionSet solutionSet){
     int count = 0;
     for (Solution solution : solutionSet.getSolutionsList()) {
-      boolean added = add(solution);
-      if(added){
+      if(add(solution)){
         count++;
       }
     }
