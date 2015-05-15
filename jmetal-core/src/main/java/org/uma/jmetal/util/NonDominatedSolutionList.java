@@ -49,16 +49,14 @@ public class NonDominatedSolutionList extends SolutionSet {
    * Inserts a solution set in the list
    *
    * @param solutionSet The solution set to be inserted.
-   * @return how many solutions from solutionSet were added.
+   * @return if at least one solution was included in the list.
    */
-  public int addAll(SolutionSet solutionSet){
+  public boolean addAll(SolutionSet solutionSet){
     int count = 0;
     for (Solution solution : solutionSet.getSolutionsList()) {
-      if(add(solution)){
-        count++;
-      }
+      count += add(solution) ? 1 : 0;
     }
-    return count;
+    return count > 0;
   }
 
   /**
