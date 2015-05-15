@@ -2,7 +2,6 @@ package org.uma.jmetal.qualityindicator.calculator;
 
 import org.uma.jmetal.core.SolutionSet;
 import org.uma.jmetal.qualityindicator.InvertedGenerationalDistance;
-import org.uma.jmetal.qualityindicator.util.MetricsUtil;
 
 /**
  * This class was designed to help the calculation of Inverted Generational Distance (IGD).

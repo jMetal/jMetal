@@ -22,15 +22,27 @@ public class HypervolumeCalculator extends Calculator{
   private final Hypervolume hypervolume;
 
   private final int numberOfObjectives;
+  private final double offset;
   
-  /**
+   /**
    * Constructor for the hypervolume calculator.
    * 
    * @param numberOfObjectives the number of objectives for the problem.
    */
   public HypervolumeCalculator(int numberOfObjectives) {
+    this(numberOfObjectives, 0.01);
+  }
+  
+  /**
+   * Constructor for the hypervolume calculator.
+   * 
+   * @param numberOfObjectives the number of objectives for the problem.
+   * @param offset offset for the hypervolume reference point.
+   */
+  public HypervolumeCalculator(int numberOfObjectives, double offset) {
     this.numberOfObjectives = numberOfObjectives;
     this.hypervolume = new Hypervolume();
+    this.offset = offset;
   }
 
   /**
@@ -56,6 +68,10 @@ public class HypervolumeCalculator extends Calculator{
   public double execute(SolutionSet front) {
     if (internalPopulation.size() != 0) {
       double[] maximumValues = metricsUtil.getMaximumValues(internalPopulation.writeObjectivesToMatrix(), numberOfObjectives);
+      for (int i = 0; i < maximumValues.length; i++) {
+        //Adding an offset to properly calculate the hypervolume reference point
+        maximumValues[i] = maximumValues[i] + offset;
+      }
       double[] minimumValues = metricsUtil.getMinimumValues(internalPopulation.writeObjectivesToMatrix(), numberOfObjectives);
       return hypervolume.hypervolume(front.writeObjectivesToMatrix(), maximumValues, minimumValues);
     }
