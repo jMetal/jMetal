@@ -73,6 +73,16 @@ public class ListenerTimeMeasureTest {
 	}
 
 	@Test
+	public void testExceptionOnNullListener() {
+		ListenerTimeMeasure measure = new ListenerTimeMeasure();
+		try {
+			measure.wrapListener(null);
+			fail("No exception thrown");
+		} catch (IllegalArgumentException e) {
+		}
+	}
+
+	@Test
 	public void testReturnSameWrapperForSameListener()
 			throws InterruptedException {
 		ListenerTimeMeasure measure = new ListenerTimeMeasure();
@@ -134,6 +144,16 @@ public class ListenerTimeMeasureTest {
 		assertTrue("Time spent: " + measure.get() + " instead of " + expected,
 				measure.get() > expected * 0.9
 						&& measure.get() < expected * 1.1);
+	}
+
+	@Test
+	public void testExceptionOnNullMeasure() {
+		ListenerTimeMeasure measure = new ListenerTimeMeasure();
+		try {
+			measure.wrapMeasure(null);
+			fail("No exception thrown");
+		} catch (IllegalArgumentException e) {
+		}
 	}
 
 	@Test

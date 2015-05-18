@@ -51,29 +51,34 @@ public class ListenerTimeMeasure extends SimplePullMeasure<Long> implements
 	 * @param wrapped
 	 *            the {@link MeasureListener} to wrap
 	 * @return the {@link MeasureListener} wrapper
+	 * @throw {@link IllegalArgumentException} if no listener is provided
 	 */
 	public <Value> MeasureListener<Value> wrapListener(
 			final MeasureListener<Value> wrapped) {
-		@SuppressWarnings("unchecked")
-		MeasureListener<Value> wrapper = (MeasureListener<Value>) listenerCache
-				.get(wrapped);
-
-		if (wrapper == null) {
-			wrapper = new MeasureListener<Value>() {
-				@Override
-				public void measureGenerated(Value value) {
-					long start = System.currentTimeMillis();
-					wrapped.measureGenerated(value);
-					long stop = System.currentTimeMillis();
-					time += stop - Math.max(start, lastReset);
-				}
-			};
-			listenerCache.put(wrapped, wrapper);
+		if (wrapped == null) {
+			throw new IllegalArgumentException("No listener provided");
 		} else {
-			// reuse existing one
-		}
+			@SuppressWarnings("unchecked")
+			MeasureListener<Value> wrapper = (MeasureListener<Value>) listenerCache
+					.get(wrapped);
 
-		return wrapper;
+			if (wrapper == null) {
+				wrapper = new MeasureListener<Value>() {
+					@Override
+					public void measureGenerated(Value value) {
+						long start = System.currentTimeMillis();
+						wrapped.measureGenerated(value);
+						long stop = System.currentTimeMillis();
+						time += stop - Math.max(start, lastReset);
+					}
+				};
+				listenerCache.put(wrapped, wrapper);
+			} else {
+				// reuse existing one
+			}
+
+			return wrapper;
+		}
 	}
 
 	/**
@@ -92,42 +97,47 @@ public class ListenerTimeMeasure extends SimplePullMeasure<Long> implements
 	 * @param wrapped
 	 *            the {@link PushMeasure} to wrap
 	 * @return the {@link PushMeasure} wrapper
+	 * @throw {@link IllegalArgumentException} if no measure is provided
 	 */
 	public <Value> PushMeasure<Value> wrapMeasure(
 			final PushMeasure<Value> wrapped) {
-		@SuppressWarnings("unchecked")
-		PushMeasure<Value> wrapper = (PushMeasure<Value>) measureCache
-				.get(wrapped);
-
-		if (wrapper == null) {
-			wrapper = new PushMeasure<Value>() {
-
-				@Override
-				public String getName() {
-					return wrapped.getName();
-				}
-
-				@Override
-				public String getDescription() {
-					return wrapped.getDescription();
-				}
-
-				@Override
-				public void register(MeasureListener<Value> listener) {
-					wrapped.register(wrapListener(listener));
-				}
-
-				@Override
-				public void unregister(MeasureListener<Value> listener) {
-					wrapped.unregister(wrapListener(listener));
-				}
-			};
-			measureCache.put(wrapped, wrapper);
+		if (wrapped == null) {
+			throw new IllegalArgumentException("No measure provided");
 		} else {
-			// reuse existing one
-		}
+			@SuppressWarnings("unchecked")
+			PushMeasure<Value> wrapper = (PushMeasure<Value>) measureCache
+					.get(wrapped);
 
-		return wrapper;
+			if (wrapper == null) {
+				wrapper = new PushMeasure<Value>() {
+
+					@Override
+					public String getName() {
+						return wrapped.getName();
+					}
+
+					@Override
+					public String getDescription() {
+						return wrapped.getDescription();
+					}
+
+					@Override
+					public void register(MeasureListener<Value> listener) {
+						wrapped.register(wrapListener(listener));
+					}
+
+					@Override
+					public void unregister(MeasureListener<Value> listener) {
+						wrapped.unregister(wrapListener(listener));
+					}
+				};
+				measureCache.put(wrapped, wrapper);
+			} else {
+				// reuse existing one
+			}
+
+			return wrapper;
+		}
 	}
 
 	/**
