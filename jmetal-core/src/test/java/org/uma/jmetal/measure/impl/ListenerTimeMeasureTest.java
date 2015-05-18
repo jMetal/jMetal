@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.uma.jmetal.measure.MeasureListener;
+import org.uma.jmetal.measure.MeasureManager;
 import org.uma.jmetal.measure.PushMeasure;
 
 public class ListenerTimeMeasureTest {
@@ -190,6 +191,88 @@ public class ListenerTimeMeasureTest {
 		// check the instance always changes with an error of 10%
 		assertTrue("Differences: " + differences + "/" + rounds,
 				differences > rounds * 0.9 && differences <= rounds);
+	}
+
+	@Test
+	public void testCountTimeInManager() {
+		ListenerTimeMeasure measure = new ListenerTimeMeasure();
+
+		SimplePushMeasure<Object> measure1 = new SimplePushMeasure<Object>();
+		SimplePushMeasure<Object> measure2 = new SimplePushMeasure<Object>();
+		SimpleMeasureManager wrapped = new SimpleMeasureManager();
+		wrapped.setPushMeasure(1, measure1);
+		wrapped.setPushMeasure(2, measure2);
+		MeasureManager wrapper = measure.wrapManager(wrapped, null);
+
+		PushMeasure<Object> measure1With10ms = wrapper.getPushMeasure(1);
+		measure1With10ms.register(new FakeListener(5));
+		measure1With10ms.register(new FakeListener(5));
+
+		PushMeasure<Object> measure2With20ms = wrapper.getPushMeasure(2);
+		measure2With20ms.register(new FakeListener(5));
+		measure2With20ms.register(new FakeListener(10));
+		measure2With20ms.register(new FakeListener(5));
+
+		measure1.push(null);
+		measure2.push(null);
+		measure2.push(null);
+		measure1.push(null);
+		long expected = 60;
+
+		// check we are within a range of 10% around the expected time
+		assertTrue("Time spent: " + measure.get() + " instead of " + expected,
+				measure.get() > expected * 0.9
+						&& measure.get() < expected * 1.1);
+	}
+
+	@Test
+	public void testExceptionOnNullManager() {
+		ListenerTimeMeasure measure = new ListenerTimeMeasure();
+		try {
+			measure.wrapManager(null, null);
+			fail("No exception thrown");
+		} catch (IllegalArgumentException e) {
+		}
+	}
+
+	@Test
+	public void testAdditionalKeyForWrappedManagerReturnCurrentMeasure() {
+		ListenerTimeMeasure measure = new ListenerTimeMeasure();
+		String key = "measure";
+
+		SimpleMeasureManager wrapped = new SimpleMeasureManager();
+		MeasureManager wrapper = measure.wrapManager(wrapped, key);
+
+		assertEquals(measure, wrapper.getPullMeasure(key));
+	}
+
+	@Test
+	public void testAdditionalKeyForWrappedManagerRejectAlreadyUsedKeys() {
+		ListenerTimeMeasure measure = new ListenerTimeMeasure();
+
+		SimplePullMeasure<Object> pull = new SimplePullMeasure<Object>() {
+
+			@Override
+			public Object get() {
+				return null;
+			}
+		};
+		SimplePushMeasure<Object> push = new SimplePushMeasure<Object>();
+		SimpleMeasureManager wrapped = new SimpleMeasureManager();
+		wrapped.setPullMeasure(1, pull);
+		wrapped.setPullMeasure(2, pull);
+		wrapped.setPushMeasure(3, push);
+
+		int counter = 0;
+		for (Object key : wrapped.getMeasureKeys()) {
+			try {
+				measure.wrapManager(wrapped, key);
+				fail("No exception thrown for key " + key);
+			} catch (IllegalArgumentException e) {
+				counter++;
+			}
+		}
+		assertEquals(3, counter);
 	}
 
 	@Test

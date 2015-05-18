@@ -1,8 +1,10 @@
 package org.uma.jmetal.measure.impl;
 
+import java.util.Collection;
 import java.util.WeakHashMap;
 
 import org.uma.jmetal.measure.MeasureListener;
+import org.uma.jmetal.measure.MeasureManager;
 import org.uma.jmetal.measure.PullMeasure;
 import org.uma.jmetal.measure.PushMeasure;
 
@@ -137,6 +139,63 @@ public class ListenerTimeMeasure extends SimplePullMeasure<Long> implements
 			}
 
 			return wrapper;
+		}
+	}
+
+	/**
+	 * This method wrap a {@link MeasureManager} (the wrapped) into another one
+	 * (the wrapper) which provides the same measures, excepted that any
+	 * {@link PushMeasure} returned by the wrapper will be automatically wrapped
+	 * via {@link #wrapMeasure(PushMeasure)}. This allows to ensure that any
+	 * {@link MeasureListener} registered to the {@link PushMeasure}s provided
+	 * by the wrapper will be considered, independently of who registers it or
+	 * when it is registered. You can also provide an additional key to add this
+	 * {@link ListenerTimeMeasure} to the wrapper.<br/>
+	 * <br/>
+	 * The wrapped manager is not changed, thus it can be reused to register
+	 * {@link MeasureListener}s that we don't want to consider.
+	 * 
+	 * @param wrapped
+	 *            the {@link MeasureManager} to wrap
+	 * @param measureKey
+	 *            the key that the wrapper should use for this
+	 *            {@link ListenerTimeMeasure}, <code>null</code> if it should
+	 *            not use it
+	 * @return the {@link MeasureManager} wrapper
+	 * @throw {@link IllegalArgumentException} if no manager is provided or if
+	 *        the additional key is already used
+	 */
+	public <Value> MeasureManager wrapManager(final MeasureManager wrapped,
+			final Object measureKey) {
+		if (wrapped == null) {
+			throw new IllegalArgumentException("No manager provided");
+		} else if (measureKey != null
+				&& wrapped.getMeasureKeys().contains(measureKey)) {
+			throw new IllegalArgumentException("The key " + measureKey
+					+ " is already used by the wrapped manager " + wrapped);
+		} else {
+			return new MeasureManager() {
+
+				@Override
+				public <T> PushMeasure<T> getPushMeasure(Object key) {
+					return wrapMeasure(wrapped.<T> getPushMeasure(key));
+				}
+
+				@SuppressWarnings("unchecked")
+				@Override
+				public <T> PullMeasure<T> getPullMeasure(Object key) {
+					if (measureKey != null && key.equals(measureKey)) {
+						return (PullMeasure<T>) ListenerTimeMeasure.this;
+					} else {
+						return wrapped.<T> getPullMeasure(key);
+					}
+				}
+
+				@Override
+				public Collection<Object> getMeasureKeys() {
+					return wrapped.getMeasureKeys();
+				}
+			};
 		}
 	}
 
