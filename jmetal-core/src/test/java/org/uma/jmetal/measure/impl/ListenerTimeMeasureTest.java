@@ -236,6 +236,17 @@ public class ListenerTimeMeasureTest {
 	}
 
 	@Test
+	public void testAdditionalKeyProvidedByManager() {
+		ListenerTimeMeasure measure = new ListenerTimeMeasure();
+		String key = "measure";
+
+		SimpleMeasureManager wrapped = new SimpleMeasureManager();
+		MeasureManager wrapper = measure.wrapManager(wrapped, key);
+
+		assertTrue(wrapper.getMeasureKeys().contains(key));
+	}
+
+	@Test
 	public void testAdditionalKeyForWrappedManagerReturnCurrentMeasure() {
 		ListenerTimeMeasure measure = new ListenerTimeMeasure();
 		String key = "measure";

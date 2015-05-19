@@ -1,6 +1,7 @@
 package org.uma.jmetal.measure.impl;
 
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.WeakHashMap;
 
 import org.uma.jmetal.measure.MeasureListener;
@@ -193,7 +194,13 @@ public class ListenerTimeMeasure extends SimplePullMeasure<Long> implements
 
 				@Override
 				public Collection<Object> getMeasureKeys() {
-					return wrapped.getMeasureKeys();
+					if (measureKey == null) {
+						return wrapped.getMeasureKeys();
+					} else {
+						Collection<Object> keys = new LinkedList<>(wrapped.getMeasureKeys());
+						keys.add(measureKey);
+						return keys;
+					}
 				}
 			};
 		}
