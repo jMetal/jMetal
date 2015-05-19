@@ -175,34 +175,53 @@ public class ListenerTimeMeasure extends SimplePullMeasure<Long> implements
 			throw new IllegalArgumentException("The key " + measureKey
 					+ " is already used by the wrapped manager " + wrapped);
 		} else {
-			return new MeasureManager() {
+			MeasureManager wrapper;
+			if (measureKey != null) {
+				wrapper = new MeasureManager() {
 
-				@Override
-				public <T> PushMeasure<T> getPushMeasure(Object key) {
-					return wrapMeasure(wrapped.<T> getPushMeasure(key));
-				}
-
-				@SuppressWarnings("unchecked")
-				@Override
-				public <T> PullMeasure<T> getPullMeasure(Object key) {
-					if (measureKey != null && key.equals(measureKey)) {
-						return (PullMeasure<T>) ListenerTimeMeasure.this;
-					} else {
-						return wrapped.<T> getPullMeasure(key);
+					@Override
+					public <T> PushMeasure<T> getPushMeasure(Object key) {
+						return wrapMeasure(wrapped.<T> getPushMeasure(key));
 					}
-				}
 
-				@Override
-				public Collection<Object> getMeasureKeys() {
-					if (measureKey == null) {
-						return wrapped.getMeasureKeys();
-					} else {
-						Collection<Object> keys = new LinkedList<>(wrapped.getMeasureKeys());
+					@SuppressWarnings("unchecked")
+					@Override
+					public <T> PullMeasure<T> getPullMeasure(Object key) {
+						if (key.equals(measureKey)) {
+							return (PullMeasure<T>) ListenerTimeMeasure.this;
+						} else {
+							return wrapped.<T> getPullMeasure(key);
+						}
+					}
+
+					@Override
+					public Collection<Object> getMeasureKeys() {
+						Collection<Object> keys = new LinkedList<>(
+								wrapped.getMeasureKeys());
 						keys.add(measureKey);
 						return keys;
 					}
-				}
-			};
+				};
+			} else {
+				wrapper = new MeasureManager() {
+
+					@Override
+					public <T> PushMeasure<T> getPushMeasure(Object key) {
+						return wrapMeasure(wrapped.<T> getPushMeasure(key));
+					}
+
+					@Override
+					public <T> PullMeasure<T> getPullMeasure(Object key) {
+						return wrapped.<T> getPullMeasure(key);
+					}
+
+					@Override
+					public Collection<Object> getMeasureKeys() {
+						return wrapped.getMeasureKeys();
+					}
+				};
+			}
+			return wrapper;
 		}
 	}
 
