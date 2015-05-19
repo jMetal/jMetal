@@ -182,6 +182,8 @@ public class SMSEMOA<S extends Solution> extends AbstractGeneticAlgorithm<S, Lis
       }
 
       Collections.sort(lastFront, new HypervolumeContributorComparator());
+      //      lastFront.sort(new HypervolumeContributorComparator());
+
     }
     return lastFront ;
   }
