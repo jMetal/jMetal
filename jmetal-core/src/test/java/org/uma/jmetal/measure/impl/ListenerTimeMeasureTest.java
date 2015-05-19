@@ -194,6 +194,41 @@ public class ListenerTimeMeasureTest {
 	}
 
 	@Test
+	public void testSameNameAndDescriptionThanOriginalMeasure() {
+		ListenerTimeMeasure measure = new ListenerTimeMeasure();
+
+		{
+			String name = "measure 1";
+			String description = null;
+			PushMeasure<Object> original = new SimplePushMeasure<>(name,
+					description);
+			PushMeasure<Object> wrapper = measure.wrapMeasure(original);
+			assertEquals(name, wrapper.getName());
+			assertEquals(description, wrapper.getDescription());
+		}
+
+		{
+			String name = "measure 2";
+			String description = "Some description";
+			PushMeasure<Object> original = new SimplePushMeasure<>(name,
+					description);
+			PushMeasure<Object> wrapper = measure.wrapMeasure(original);
+			assertEquals(name, wrapper.getName());
+			assertEquals(description, wrapper.getDescription());
+		}
+
+		{
+			String name = null;
+			String description = "Unidentified Java Object";
+			PushMeasure<Object> original = new SimplePushMeasure<>(name,
+					description);
+			PushMeasure<Object> wrapper = measure.wrapMeasure(original);
+			assertEquals(name, wrapper.getName());
+			assertEquals(description, wrapper.getDescription());
+		}
+	}
+
+	@Test
 	public void testCountTimeInManager() {
 		ListenerTimeMeasure measure = new ListenerTimeMeasure();
 
@@ -236,6 +271,17 @@ public class ListenerTimeMeasureTest {
 	}
 
 	@Test
+	public void testAdditionalKeyProvidedByManager() {
+		ListenerTimeMeasure measure = new ListenerTimeMeasure();
+		String key = "measure";
+
+		SimpleMeasureManager wrapped = new SimpleMeasureManager();
+		MeasureManager wrapper = measure.wrapManager(wrapped, key);
+
+		assertTrue(wrapper.getMeasureKeys().contains(key));
+	}
+
+	@Test
 	public void testAdditionalKeyForWrappedManagerReturnCurrentMeasure() {
 		ListenerTimeMeasure measure = new ListenerTimeMeasure();
 		String key = "measure";
@@ -273,41 +319,6 @@ public class ListenerTimeMeasureTest {
 			}
 		}
 		assertEquals(3, counter);
-	}
-
-	@Test
-	public void testSameNameAndDescriptionThanOriginalMeasure() {
-		ListenerTimeMeasure measure = new ListenerTimeMeasure();
-
-		{
-			String name = "measure 1";
-			String description = null;
-			PushMeasure<Object> original = new SimplePushMeasure<>(name,
-					description);
-			PushMeasure<Object> wrapper = measure.wrapMeasure(original);
-			assertEquals(name, wrapper.getName());
-			assertEquals(description, wrapper.getDescription());
-		}
-
-		{
-			String name = "measure 2";
-			String description = "Some description";
-			PushMeasure<Object> original = new SimplePushMeasure<>(name,
-					description);
-			PushMeasure<Object> wrapper = measure.wrapMeasure(original);
-			assertEquals(name, wrapper.getName());
-			assertEquals(description, wrapper.getDescription());
-		}
-
-		{
-			String name = null;
-			String description = "Unidentified Java Object";
-			PushMeasure<Object> original = new SimplePushMeasure<>(name,
-					description);
-			PushMeasure<Object> wrapper = measure.wrapMeasure(original);
-			assertEquals(name, wrapper.getName());
-			assertEquals(description, wrapper.getDescription());
-		}
 	}
 
 	@Test
