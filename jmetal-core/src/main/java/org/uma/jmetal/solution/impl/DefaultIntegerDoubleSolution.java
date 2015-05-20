@@ -93,7 +93,7 @@ public class DefaultIntegerDoubleSolution
   }
 
   @Override
-  public Solution copy() {
+  public DefaultIntegerDoubleSolution copy() {
     return new DefaultIntegerDoubleSolution(this);
   }
 

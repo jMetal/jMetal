@@ -57,7 +57,7 @@ public class DefaultIntegerSolution extends AbstractGenericSolution<Integer, Int
   }
 
   @Override
-  public Solution copy() {
+  public DefaultIntegerSolution copy() {
     return new DefaultIntegerSolution(this);
   }
 
