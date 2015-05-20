@@ -2,7 +2,6 @@ package org.uma.jmetal.solution.impl;
 
 import org.uma.jmetal.problem.PermutationProblem;
 import org.uma.jmetal.solution.PermutationSolution;
-import org.uma.jmetal.solution.Solution;
 
 import java.util.ArrayList;
 import java.util.HashMap;
