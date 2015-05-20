@@ -88,7 +88,7 @@ public class DefaultBinarySolution extends AbstractGenericSolution<BinarySet, Bi
   }
 
   @Override
-  public Solution copy() {
+  public DefaultBinarySolution copy() {
     return new DefaultBinarySolution(this);
   }
 

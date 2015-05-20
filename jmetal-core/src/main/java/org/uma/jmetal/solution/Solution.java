@@ -38,7 +38,7 @@ public interface Solution<T> extends Serializable {
   public int getNumberOfViolatedConstraints() ;
   public void setNumberOfViolatedConstraints(int numberOfViolatedConstraints) ;
 
-  public Solution copy() ;
+  public Solution<T> copy() ;
 
   public void setAttribute(Object id, Object value) ;
   public Object getAttribute(Object id) ;

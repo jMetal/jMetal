@@ -57,7 +57,7 @@ public class DefaultIntegerPermutationSolution
   }
 
   @Override
-  public Solution copy() {
+  public DefaultIntegerPermutationSolution copy() {
     return new DefaultIntegerPermutationSolution(this);
   }
 }

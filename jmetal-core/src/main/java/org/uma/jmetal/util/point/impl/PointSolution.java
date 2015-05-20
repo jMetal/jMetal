@@ -94,7 +94,7 @@ public class PointSolution implements Solution<Double> {
 
   }
 
-  @Override public Solution copy() {
+  @Override public PointSolution copy() {
     return new PointSolution(this);
   }
 

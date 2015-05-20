@@ -54,7 +54,7 @@ public class DefaultDoubleSolution extends AbstractGenericSolution<Double, Doubl
   }
 
   @Override
-  public Solution copy() {
+  public DefaultDoubleSolution copy() {
     return new DefaultDoubleSolution(this);
   }
 

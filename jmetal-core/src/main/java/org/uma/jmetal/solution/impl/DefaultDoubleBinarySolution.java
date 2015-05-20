@@ -100,7 +100,7 @@ public class DefaultDoubleBinarySolution
   }
 
   @Override
-  public Solution copy() {
+  public DefaultDoubleBinarySolution copy() {
     return new DefaultDoubleBinarySolution(this);
   }
 
