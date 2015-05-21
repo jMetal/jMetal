@@ -2,7 +2,6 @@ package org.uma.jmetal.solution.impl;
 
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.Solution;
 
 import java.util.HashMap;
 
@@ -54,7 +53,7 @@ public class DefaultDoubleSolution extends AbstractGenericSolution<Double, Doubl
   }
 
   @Override
-  public Solution copy() {
+  public DefaultDoubleSolution copy() {
     return new DefaultDoubleSolution(this);
   }
 

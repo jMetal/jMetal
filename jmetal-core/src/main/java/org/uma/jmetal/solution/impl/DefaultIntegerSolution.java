@@ -2,7 +2,6 @@ package org.uma.jmetal.solution.impl;
 
 import org.uma.jmetal.problem.IntegerProblem;
 import org.uma.jmetal.solution.IntegerSolution;
-import org.uma.jmetal.solution.Solution;
 
 import java.util.HashMap;
 
@@ -57,7 +56,7 @@ public class DefaultIntegerSolution extends AbstractGenericSolution<Integer, Int
   }
 
   @Override
-  public Solution copy() {
+  public DefaultIntegerSolution copy() {
     return new DefaultIntegerSolution(this);
   }
 

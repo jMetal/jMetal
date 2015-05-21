@@ -28,11 +28,11 @@ import java.util.List;
 /**
  * Class representing neighborhoods for a <code>Solution</code> into a
  * <code>SolutionSet</code>.
- */ 
-public class MOCellNeighborhood<S extends Solution> {    
-  
+ */
+public class MOCellNeighborhood<S extends Solution> {
+
   private static int MAXRADIO = 2;
-  
+
   /**
    * Stores the neighborhood.
    * structure [i] represents a neighborhood for a solution.
@@ -43,23 +43,23 @@ public class MOCellNeighborhood<S extends Solution> {
 
   private int solutionSetSize;
   private int rowSize;
-  
+
   /**
    * Enum type for defining the North, South, East, West, North-West, South-West,
    * North-East, South-East neighbor.
    */
   enum Row {N, S, E, W, NW, SW, NE, SE};
-    
+
   /**
    * Constructor.
    * Defines a neighborhood of a given size.
    * @param solutionSetSize The size.
    */
-  public MOCellNeighborhood(int solutionSetSize) {            
+  public MOCellNeighborhood(int solutionSetSize) {
     this.solutionSetSize = solutionSetSize;
     structure = new int[this.solutionSetSize][MAXRADIO][];
-        
-    //For each individual, and different rates the individual has a different 
+
+    //For each individual, and different rates the individual has a different
     //number of neighborhoods
     for (int ind = 0; ind < this.solutionSetSize; ind ++) {
       for (int radio = 0; radio < MAXRADIO; radio ++) {
@@ -70,11 +70,11 @@ public class MOCellNeighborhood<S extends Solution> {
         }
       }
     }
-        
+
     //Calculate the size of a row
     rowSize = (int) Math.sqrt((double) this.solutionSetSize);
 
-    //Calculates the neighbors of a individual 
+    //Calculates the neighbors of a individual
     for (int ind = 0; ind < this.solutionSetSize; ind++){
       //rate 1
       //North neighbors
@@ -84,7 +84,7 @@ public class MOCellNeighborhood<S extends Solution> {
         structure[ind][0][Row.N.ordinal()] =
        (ind - rowSize + solutionSetSize) % solutionSetSize;
       }
-            
+
       //East neighbors
       if  ((ind + 1) % rowSize == 0)
         structure[ind][0][Row.E.ordinal()] = (ind - (rowSize - 1));
@@ -100,8 +100,8 @@ public class MOCellNeighborhood<S extends Solution> {
 
       //South neigbors
       structure[ind][0][Row.S.ordinal()] = (ind + rowSize) % solutionSetSize;
-    }                
-        
+    }
+
     for (int ind = 0; ind < this.solutionSetSize; ind++){
       structure[ind][0][Row.NE.ordinal()] =
         structure[structure[ind][0][Row.N.ordinal()]][0][Row.E.ordinal()];
@@ -113,10 +113,10 @@ public class MOCellNeighborhood<S extends Solution> {
         structure[structure[ind][0][Row.S.ordinal()]][0][Row.W.ordinal()];
     }
   }
-    
+
   /**
    * Returns a <code>SolutionSet</code> with the North, Sout, East and West
-   * neighbors solutions of ratio 0 of a given location into a given 
+   * neighbors solutions of ratio 0 of a given location into a given
    * <code>SolutionSet</code>.
    * @param solutionSet The <code>SolutionSet</code>.
    * @param location The location.
@@ -125,17 +125,17 @@ public class MOCellNeighborhood<S extends Solution> {
   public List<S> getFourNeighbors(List<S> solutionSet, int location){
     //SolutionSet that contains the neighbors (to return)
     List<S> neighbors;
-        
+
     //instance the solutionSet to a non dominated li of individuals
     neighbors = new ArrayList<>(24);
-        
+
     //Gets the neighboords N, S, E, W
-    int index;        
-        
+    int index;
+
     //North
     index = structure[location][0][Row.N.ordinal()];
     neighbors.add(solutionSet.get(index));
-      
+
     //South
     index = structure[location][0][Row.S.ordinal()];
     neighbors.add(solutionSet.get(index));
@@ -146,14 +146,14 @@ public class MOCellNeighborhood<S extends Solution> {
 
     //West
     index = structure[location][0][Row.W.ordinal()];
-    neighbors.add(solutionSet.get(index));         
-    
+    neighbors.add(solutionSet.get(index));
+
     //Return the list of non-dominated individuals
-    return neighbors;        
+    return neighbors;
   }
-    
+
   /**
-   * Returns a <code>SolutionSet</code> with the North, Sout, East, West, 
+   * Returns a <code>SolutionSet</code> with the North, Sout, East, West,
    * North-West, South-West, North-East and South-East neighbors solutions of
    * ratio 0 of a given location into a given <code>SolutionSet</code>.
    * solutions of a given location into a given <code>SolutionSet</code>.
@@ -169,8 +169,8 @@ public class MOCellNeighborhood<S extends Solution> {
     neighbors = new ArrayList<>(24);
 
     //Gets the neighboords N, S, E, W
-    int index;        
-        
+    int index;
+
     //N
     index = this.structure[individual][0][Row.N.ordinal()];
     neighbors.add(population.get(index));
@@ -205,6 +205,6 @@ public class MOCellNeighborhood<S extends Solution> {
 
 
     //Return the list of non-dominated individuals
-    return neighbors;        
+    return neighbors;
   }
 }

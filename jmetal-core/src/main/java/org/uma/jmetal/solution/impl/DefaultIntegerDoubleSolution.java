@@ -2,7 +2,6 @@ package org.uma.jmetal.solution.impl;
 
 import org.uma.jmetal.problem.IntegerDoubleProblem;
 import org.uma.jmetal.solution.IntegerDoubleSolution;
-import org.uma.jmetal.solution.Solution;
 
 import java.util.HashMap;
 
@@ -93,7 +92,7 @@ public class DefaultIntegerDoubleSolution
   }
 
   @Override
-  public Solution copy() {
+  public DefaultIntegerDoubleSolution copy() {
     return new DefaultIntegerDoubleSolution(this);
   }
 
