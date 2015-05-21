@@ -23,7 +23,6 @@ package org.uma.jmetal.solution.impl;
 
 import org.uma.jmetal.problem.BinaryProblem;
 import org.uma.jmetal.solution.BinarySolution;
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.binarySet.BinarySet;
 
 import java.util.HashMap;
