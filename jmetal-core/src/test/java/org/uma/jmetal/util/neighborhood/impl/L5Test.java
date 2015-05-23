@@ -143,7 +143,7 @@ public class L5Test {
       list.add(mock(IntegerSolution.class)) ;
     }
 
-    List<IntegerSolution> result = neighborhood.getNeighbors(list, 4) ;
+    List<IntegerSolution> result = neighborhood.getNeighbors(list, 1) ;
     assertEquals(4, result.size()) ;
     assertThat(result, hasItem(list.get(0))) ;
     assertThat(result, hasItem(list.get(7))) ;
