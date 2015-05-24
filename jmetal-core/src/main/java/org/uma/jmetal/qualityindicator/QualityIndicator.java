@@ -33,6 +33,6 @@ import java.util.List;
  */
 public interface QualityIndicator extends Serializable, DescribedEntity {
   public double execute(Front frontA, Front frontB) ;
-  public double execute(List<? extends Solution> frontA, List<? extends Solution> frontB) ;
+  public <S extends Solution<?>> double execute(List<S> frontA, List<S> frontB) ;
   public String getName() ;
 }

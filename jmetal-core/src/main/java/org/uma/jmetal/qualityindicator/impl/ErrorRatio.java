@@ -49,8 +49,8 @@ public class ErrorRatio extends SimpleDescribedEntity implements QualityIndicato
   }
 
   @Override
-  public double execute(List<? extends Solution> paretoFrontApproximation,
-      List<? extends Solution> trueParetoFront) {
+  public <S extends Solution<?>> double execute(List<S> paretoFrontApproximation,
+      List<S> trueParetoFront) {
 
     if (paretoFrontApproximation == null) {
       throw new JMetalException("The pareto front approximation list is null") ;

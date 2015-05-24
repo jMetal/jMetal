@@ -51,8 +51,8 @@ public class SetCoverage extends SimpleDescribedEntity implements QualityIndicat
   }
 
   @Override
-  public double execute(List<? extends Solution> solutionListA,
-      List<? extends Solution> solutionListB) {
+  public <S extends Solution<?>> double execute(List<S> solutionListA,
+      List<S> solutionListB) {
 
     if (solutionListA == null) {
       throw new JMetalException("The list A is null") ;
