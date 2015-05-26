@@ -15,10 +15,8 @@ import java.util.List;
  * North, South, East and West
  */
 public class L5<S extends Solution> implements Neighborhood<S> {
-  /*
-  Each movement is represented by an array of two positions. The first component represents the
-  movement in the file, second in the column
-   */
+  private int rows ;
+  private int columns ;
   private final int [] north      = {-1,  0};
   private final int [] south      = { 1 , 0};
   private final int [] east       = { 0 , 1};
@@ -27,27 +25,36 @@ public class L5<S extends Solution> implements Neighborhood<S> {
   private final int [][] neighborhood = {north, south, west, east};
 
   private int [][] mesh;
-  private int rows;
-  private int columns;
 
   /**
    * Constructor.
    * Defines a neighborhood for solutionSetSize (it has to have an exact squared root)
    */
-  public L5() {
+  public L5(int rows, int columns) {
+    this.rows = rows ;
+    this.columns = columns ;
+
+    createMesh();
   }
 
+  private void createMesh() {
+    // idea: if rows = 5, and columns=3, we need to fill the mesh
+    // as follows
+    // --------
+    //|00-01-02|
+    //|03-04-05|
+    //|06-07-08|
+    //|09-10-11|
+    //|12-13-14|
+    // --------
 
-  /**
-   * Checks whether a value has an exact square root
-   * @param number (we know is bigger than 0)
-   * @return
-   */
-  private boolean hasExactSquaredRoot(int number) {
-    boolean r = Math.round(Math.sqrt(number))==Math.sqrt(number) ;
-
-    return r ;
-    //return (number & (number-1)) == 0;
+    mesh = new int[this.rows][this.columns];
+    int solution = 0;
+    for (int row = 0; row < this.rows; row++) {
+      for (int column = 0; column < this.columns; column++) {
+        this.mesh[row][column] = solution++;
+      }
+    }
   }
 
   /**
@@ -76,35 +83,22 @@ public class L5<S extends Solution> implements Neighborhood<S> {
    * @return
    */
   private int getNeighbor(int solution, int [] neighbor) {
-    int r = getRow(solution)    > 0 ? (getRow(solution)    + neighbor[0]) % this.rows    : this.rows-1;
-    int c = getColumn(solution) > 0 ? (getColumn(solution) + neighbor[1]) % this.columns : this.columns-1;
+    int row = getRow(solution) ;
+    int col = getColumn((solution)) ;
+
+    int r ;
+    int c ;
+
+    r = (row + neighbor[0]) % this.rows ;
+    if (r < 0)
+      r = rows - 1;
+
+    c = (col + neighbor[1]) % this.columns ;
+    if (c < 0)
+      c = columns - 1 ;
+
     return this.mesh[r][c];
   }
-
-
-  /**
-   * Initializes the mesh of solutions. Each solution is assigned to a row and column within the row
-   */
-  private void createMesh() {
-    // idea: if rows = 5, and columns=3, we need to fill the mesh
-    // as follows
-    // --------
-    //|00-01-02|
-    //|03-04-05|
-    //|06-07-08|
-    //|09-10-11|
-    //|12-13-14|
-    // --------
-
-    mesh = new int[this.rows][this.columns];
-    int solution = 0;
-    for (int row = 0; row < this.rows; row++) {
-      for (int column = 0; column < this.columns; column++) {
-        this.mesh[row][column] = solution++;
-      }
-    }
-  }
-
 
   /**
    * Returns a solutionSet containing the neighbors of a given solution
@@ -113,19 +107,16 @@ public class L5<S extends Solution> implements Neighborhood<S> {
    * @param neighborhood The list of neighbors we want to obtain as shift regarding to solution
    * @return
    */
-  public List<S> getFourNeighbors(List<S> solutionSet, int solution, int[][] neighborhood) {
-    this.createMesh();
-
+  public List<S> findNeighbors(List<S> solutionSet, int solution, int [][] neighborhood) {
     List<S> neighbors = new ArrayList<>(neighborhood.length+1);
 
     for (int [] neighbor : neighborhood) {
-      neighbors.add(solutionSet.get(this.getNeighbor(solution, neighbor)));
+      int index = getNeighbor(solution, neighbor) ;
+      neighbors.add(solutionSet.get(index));
     }
 
     return neighbors;
   }
-
-
 
   /**
    * Returns the north,south, east, and west solutions of a given solution
@@ -138,19 +129,19 @@ public class L5<S extends Solution> implements Neighborhood<S> {
       throw new JMetalException("The solution list is null") ;
     } else if (solutionList.size() == 0) {
       throw new JMetalException("The solution list is empty") ;
-    } else if (!this.hasExactSquaredRoot(solutionList.size())) {
-      throw new JMetalException("The solution list size must have an exact square root: " +
-          solutionList.size());
     } else if (solutionPosition < 0) {
       throw new JMetalException("The solution position value is negative: " + solutionPosition) ;
-    } else if (solutionPosition >= solutionList.size()) {
-    throw new JMetalException("The solution position value is equal or greater than the solution list size: "
-        + solutionPosition) ;
-  }
+    } else if (solutionList.size() != rows * columns) {
+      throw new JMetalException("The solution list size " + solutionList.size() + " is not"
+          + "equal to the grid size: " + rows + " * " + columns) ;
+    }
+    else if (solutionPosition >= solutionList.size()) {
+      throw new JMetalException("The solution position value " + solutionPosition +
+          " is equal or greater than the solution list size "
+          + solutionList.size()) ;
+    }
 
-    this.rows = this.columns = (int) Math.sqrt(solutionList.size());
-
-    return this.getFourNeighbors(solutionList, solutionPosition, this.neighborhood);
+    return findNeighbors(solutionList, solutionPosition, neighborhood);
   }
 }
 
