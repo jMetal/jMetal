@@ -1,7 +1,6 @@
 package org.uma.jmetal.algorithm.multiobjective.mocell;
 
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
-import org.uma.jmetal.algorithm.multiobjective.mocell.util.MOCellNeighborhood;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -11,6 +10,7 @@ import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
+import org.uma.jmetal.util.neighborhood.Neighborhood;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;
 import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
@@ -31,7 +31,7 @@ public class MOCell<S extends Solution> extends AbstractGeneticAlgorithm<S, List
   protected int archiveSize;
   protected final SolutionListEvaluator<S> evaluator;
 
-  private MOCellNeighborhood<S> neighborhood;
+  private Neighborhood<S> neighborhood;
   private int currentIndividual;
   private List<S> currentNeighbors;
 
@@ -47,12 +47,14 @@ public class MOCell<S extends Solution> extends AbstractGeneticAlgorithm<S, List
    * @param maxEvaluations
    * @param populationSize
    * @param archiveSize
+   * @param neighborhood
    * @param crossoverOperator
    * @param mutationOperator
    * @param selectionOperator
    * @param evaluator
    */
   public MOCell(Problem<S> problem, int maxEvaluations, int populationSize, int archiveSize,
+      Neighborhood<S> neighborhood,
       CrossoverOperator<List<S>, List<S>> crossoverOperator, MutationOperator<S> mutationOperator,
       SelectionOperator selectionOperator, SolutionListEvaluator<S> evaluator) {
     super();
@@ -61,13 +63,11 @@ public class MOCell<S extends Solution> extends AbstractGeneticAlgorithm<S, List
     this.populationSize = populationSize;
     this.archiveSize = archiveSize ;
     this.archive = new CrowdingDistanceArchive<>(archiveSize);
-    this.neighborhood = new MOCellNeighborhood(this.populationSize);
-
-
+    this.neighborhood = neighborhood ;
     this.crossoverOperator = crossoverOperator;
     this.mutationOperator = mutationOperator;
     this.selectionOperator = selectionOperator;
-    this.dominanceComparator = new DominanceComparator();
+    this.dominanceComparator = new DominanceComparator() ;
 
 
     this.evaluator = evaluator ;
@@ -114,7 +114,7 @@ public class MOCell<S extends Solution> extends AbstractGeneticAlgorithm<S, List
   @Override
   protected List<S> selection(List<S> population) {
     List<S> parents = new ArrayList<>(2);
-    currentNeighbors = neighborhood.getEightNeighbors(population, currentIndividual);
+    currentNeighbors = neighborhood.getNeighbors(population, currentIndividual);
     currentNeighbors.add(population.get(currentIndividual));
 
     parents.add(selectionOperator.execute(currentNeighbors));

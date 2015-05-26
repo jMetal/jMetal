@@ -18,11 +18,12 @@ import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+import org.uma.jmetal.util.neighborhood.impl.L5;
 
 import java.util.List;
 
 /**
- * Class to configure and run the SPEA2 algorithm. Copied from the NSGAII Runner Class
+ * Class to configure and run the MOCell algorithm. Copied from the NSGAII Runner Class
  *
  * @author juanjo
  */
@@ -62,27 +63,26 @@ public class MOCellRunner {
 
     selection = new BinaryTournamentSelection(new RankingAndCrowdingDistanceComparator());
 
-    //algorithm = new SPEA2Builder(problem)
     algorithm = new MOCellBuilder<>(problem, crossover, mutation)
-         //   .setCrossoverOperator(crossover)
-         //   .setMutationOperator(mutation)
-            .setSelectionOperator(selection)
-            .setMaxEvaluations(25000)
-            .setPopulationSize(100)
-            .build() ;
+        .setSelectionOperator(selection)
+        .setMaxEvaluations(25000)
+        .setPopulationSize(100)
+        .setArchiveSize(100)
+        .setNeighborhood(new L5(10, 10))
+        .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-            .execute() ;
+        .execute() ;
 
     List<DoubleSolution> population = algorithm.getResult();
 
     long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)
-            .setSeparator("\t")
-            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
-            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
-            .print();
+        .setSeparator("\t")
+        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+        .print();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
     JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");

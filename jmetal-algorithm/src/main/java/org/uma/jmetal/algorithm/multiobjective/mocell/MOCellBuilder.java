@@ -12,6 +12,8 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
+import org.uma.jmetal.util.neighborhood.Neighborhood;
+import org.uma.jmetal.util.neighborhood.impl.C9;
 
 import java.util.List;
 
@@ -32,6 +34,7 @@ public class MOCellBuilder<S extends Solution> implements AlgorithmBuilder {
   private MutationOperator<S> mutationOperator;
   private SelectionOperator selectionOperator;
   private SolutionListEvaluator evaluator;
+  private Neighborhood<S> neighborhood ;
 
   /**
    * MOCellBuilder constructor
@@ -45,6 +48,7 @@ public class MOCellBuilder<S extends Solution> implements AlgorithmBuilder {
     this.crossoverOperator = crossoverOperator ;
     this.mutationOperator = mutationOperator ;
     selectionOperator = new BinaryTournamentSelection(new RankingAndCrowdingDistanceComparator());
+    this.neighborhood = new C9((int)Math.sqrt(populationSize), (int)Math.sqrt(populationSize)) ;
     evaluator = new SequentialSolutionListEvaluator();
   }
 
@@ -72,7 +76,13 @@ public class MOCellBuilder<S extends Solution> implements AlgorithmBuilder {
       throw new JMetalException("archive size is negative: " + populationSize);
     }
 
-    this.populationSize = populationSize;
+    this.archiveSize = archiveSize;
+
+    return this;
+  }
+
+  public MOCellBuilder setNeighborhood(Neighborhood<S> neighborhood) {
+    this.neighborhood = neighborhood;
 
     return this;
   }
@@ -97,7 +107,7 @@ public class MOCellBuilder<S extends Solution> implements AlgorithmBuilder {
 
   public Algorithm<List<S>> build() {
     Algorithm<List<S>> algorithm = new MOCell<S>(problem, maxEvaluations, populationSize,
-        archiveSize, crossoverOperator, mutationOperator, selectionOperator, evaluator);
+        archiveSize, neighborhood, crossoverOperator, mutationOperator, selectionOperator, evaluator);
     
     return algorithm ;
   }
