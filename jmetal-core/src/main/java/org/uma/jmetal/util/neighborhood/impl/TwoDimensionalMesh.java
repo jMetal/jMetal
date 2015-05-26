@@ -17,12 +17,9 @@ import java.util.List;
 public class TwoDimensionalMesh<S extends Solution> implements Neighborhood<S> {
   private int rows ;
   private int columns ;
-  private final int [] north      = {-1,  0};
-  private final int [] south      = { 1 , 0};
-  private final int [] east       = { 0 , 1};
-  private final int [] west       = { 0 ,-1};
 
-  private final int [][] neighborhood = {north, south, west, east};
+
+  private int[][] neighborhood ;
 
   private int [][] mesh;
 
@@ -30,9 +27,11 @@ public class TwoDimensionalMesh<S extends Solution> implements Neighborhood<S> {
    * Constructor.
    * Defines a neighborhood for solutionSetSize (it has to have an exact squared root)
    */
-  public TwoDimensionalMesh(int rows, int columns) {
+  public TwoDimensionalMesh(int rows, int columns, int[][]neighborhood) {
     this.rows = rows ;
     this.columns = columns ;
+
+    this.neighborhood = neighborhood ;
 
     createMesh();
   }
@@ -63,7 +62,7 @@ public class TwoDimensionalMesh<S extends Solution> implements Neighborhood<S> {
    * @return
    */
   private int getRow(int solution) {
-    return solution / this.rows;
+    return solution / columns;
   }
 
   /**
@@ -72,7 +71,7 @@ public class TwoDimensionalMesh<S extends Solution> implements Neighborhood<S> {
    * @return
    */
   private int getColumn(int solution) {
-    return solution % this.columns;
+    return solution % columns;
   }
 
   /**

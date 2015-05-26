@@ -22,12 +22,17 @@ import static org.mockito.Mockito.mock;
 public class TwoDimensionalMeshTest {
   private Neighborhood neighborhood ;
 
+  private static final int [] north      = {-1,  0};
+  private static final int [] south      = { 1 , 0};
+  private static final int [] east       = { 0 , 1};
+  private static final int [] west       = { 0 ,-1};
+
   @Rule
   public ExpectedException exception = ExpectedException.none();
 
   @Test
   public void shouldGetNeighborsWithANullListOfSolutionsThrowAnException() {
-    neighborhood = new TwoDimensionalMesh(3, 3) ;
+    neighborhood = new TwoDimensionalMesh(3, 3, new int[][]{north, south, east, west}) ;
 
     exception.expect(JMetalException.class);
     exception.expectMessage(containsString("The solution list is null"));
@@ -37,7 +42,7 @@ public class TwoDimensionalMeshTest {
 
   @Test
   public void shouldGetNeighborsWithAnEmptyListOfSolutionsThrowAnException() {
-    neighborhood = new TwoDimensionalMesh(3, 3) ;
+    neighborhood = new TwoDimensionalMesh(3, 3, new int[][]{north, south, east, west}) ;
 
     exception.expect(JMetalException.class);
     exception.expectMessage(containsString("The solution list is empty"));
@@ -49,7 +54,7 @@ public class TwoDimensionalMeshTest {
 
   @Test
   public void shouldGetNeighborsWithANegativeSolutionIndexThrowAnException() {
-    neighborhood = new TwoDimensionalMesh(3, 3) ;
+    neighborhood = new TwoDimensionalMesh(3, 3, new int[][]{north, south, east, west}) ;
 
     exception.expect(JMetalException.class);
     exception.expectMessage(containsString("The solution position value is negative: -1"));
@@ -65,7 +70,7 @@ public class TwoDimensionalMeshTest {
 
   @Test
   public void shouldGetNeighborsWithASolutionIndexValueEqualToTheListSizeThrowAnException() {
-    neighborhood = new TwoDimensionalMesh(1, 1) ;
+    neighborhood = new TwoDimensionalMesh(1, 1, new int[][]{north, south, east, west}) ;
 
     exception.expect(JMetalException.class);
     exception.expectMessage(containsString(
@@ -79,7 +84,7 @@ public class TwoDimensionalMeshTest {
 
   @Test
   public void shouldGetNeighborsWithASolutionIndexValueGreaterThanTheListSizeThrowAnException() {
-    neighborhood = new TwoDimensionalMesh(2, 2) ;
+    neighborhood = new TwoDimensionalMesh(2, 2, new int[][]{north, south, east, west}) ;
 
     exception.expect(JMetalException.class);
     exception.expectMessage(containsString(
@@ -108,7 +113,7 @@ public class TwoDimensionalMeshTest {
   public void shouldGetNeighborsReturnFourNeighborsCase1() {
     int rows = 3 ;
     int columns = 3 ;
-    neighborhood = new TwoDimensionalMesh(rows, columns) ;
+    neighborhood = new TwoDimensionalMesh(rows, columns, new int[][]{north, south, east, west}) ;
 
     List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
     for (int i = 0 ; i < rows*columns; i++) {
@@ -137,7 +142,7 @@ public class TwoDimensionalMeshTest {
   public void shouldGetNeighborsReturnFourNeighborsCase2() {
     int rows = 3 ;
     int columns = 3 ;
-    neighborhood = new TwoDimensionalMesh(rows, columns) ;
+    neighborhood = new TwoDimensionalMesh(rows, columns, new int[][]{north, south, east, west}) ;
 
     List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
     for (int i = 0 ; i < rows*columns; i++) {
@@ -166,7 +171,7 @@ public class TwoDimensionalMeshTest {
   public void shouldGetNeighborsReturnFourNeighborsCase3() {
     int rows = 3 ;
     int columns = 3 ;
-    neighborhood = new TwoDimensionalMesh(rows, columns) ;
+    neighborhood = new TwoDimensionalMesh(rows, columns, new int[][]{north, south, east, west}) ;
 
     List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
     for (int i = 0 ; i < rows*columns; i++) {
@@ -195,7 +200,7 @@ public class TwoDimensionalMeshTest {
   public void shouldGetNeighborsReturnFourNeighborsCase4() {
     int rows = 3 ;
     int columns = 3 ;
-    neighborhood = new TwoDimensionalMesh(rows, columns) ;
+    neighborhood = new TwoDimensionalMesh(rows, columns, new int[][]{north, south, east, west}) ;
 
     List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
     for (int i = 0 ; i < rows*columns; i++) {
@@ -224,7 +229,7 @@ public class TwoDimensionalMeshTest {
   public void shouldGetNeighborsReturnFourNeighborsCase5() {
     int rows = 3 ;
     int columns = 3 ;
-    neighborhood = new TwoDimensionalMesh(rows, columns) ;
+    neighborhood = new TwoDimensionalMesh(rows, columns, new int[][]{north, south, east, west}) ;
 
     List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
     for (int i = 0 ; i < rows*columns; i++) {
@@ -252,7 +257,7 @@ public class TwoDimensionalMeshTest {
   public void shouldGetNeighborsReturnFourNeighborsCase6() {
     int rows = 2 ;
     int columns = 3 ;
-    neighborhood = new TwoDimensionalMesh(rows, columns) ;
+    neighborhood = new TwoDimensionalMesh(rows, columns, new int[][]{north, south, east, west}) ;
 
     List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
     for (int i = 0 ; i < rows*columns; i++) {
@@ -279,7 +284,7 @@ public class TwoDimensionalMeshTest {
   public void shouldGetNeighborsReturnFourNeighborsCase7() {
     int rows = 2 ;
     int columns = 3 ;
-    neighborhood = new TwoDimensionalMesh(rows, columns) ;
+    neighborhood = new TwoDimensionalMesh(rows, columns, new int[][]{north, south, east, west}) ;
 
     List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
     for (int i = 0 ; i < rows*columns; i++) {
@@ -306,7 +311,7 @@ public class TwoDimensionalMeshTest {
   public void shouldGetNeighborsReturnFourNeighborsCase8() {
     int rows = 2 ;
     int columns = 2 ;
-    neighborhood = new TwoDimensionalMesh(rows, columns) ;
+    neighborhood = new TwoDimensionalMesh(rows, columns, new int[][]{north, south, east, west}) ;
 
     List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
     for (int i = 0 ; i < rows*columns; i++) {
