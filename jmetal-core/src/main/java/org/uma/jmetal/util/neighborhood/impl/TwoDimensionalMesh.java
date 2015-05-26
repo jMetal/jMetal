@@ -14,7 +14,7 @@ import java.util.List;
  * structured as a bi-dimensional square mesh. The neighbors are those solutions that are in the positions
  * North, South, East and West
  */
-public class L5<S extends Solution> implements Neighborhood<S> {
+public class TwoDimensionalMesh<S extends Solution> implements Neighborhood<S> {
   private int rows ;
   private int columns ;
   private final int [] north      = {-1,  0};
@@ -30,7 +30,7 @@ public class L5<S extends Solution> implements Neighborhood<S> {
    * Constructor.
    * Defines a neighborhood for solutionSetSize (it has to have an exact squared root)
    */
-  public L5(int rows, int columns) {
+  public TwoDimensionalMesh(int rows, int columns) {
     this.rows = rows ;
     this.columns = columns ;
 
@@ -48,11 +48,11 @@ public class L5<S extends Solution> implements Neighborhood<S> {
     //|12-13-14|
     // --------
 
-    mesh = new int[this.rows][this.columns];
+    mesh = new int[rows][columns];
     int solution = 0;
-    for (int row = 0; row < this.rows; row++) {
-      for (int column = 0; column < this.columns; column++) {
-        this.mesh[row][column] = solution++;
+    for (int row = 0; row < rows; row++) {
+      for (int column = 0; column < columns; column++) {
+        mesh[row][column] = solution++;
       }
     }
   }

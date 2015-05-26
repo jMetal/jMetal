@@ -19,7 +19,7 @@ import static org.mockito.Mockito.mock;
 /**
  * Created by ajnebro on 21/5/15.
  */
-public class L5Test {
+public class TwoDimensionalMeshTest {
   private Neighborhood neighborhood ;
 
   @Rule
@@ -27,7 +27,7 @@ public class L5Test {
 
   @Test
   public void shouldGetNeighborsWithANullListOfSolutionsThrowAnException() {
-    neighborhood = new L5(3, 3) ;
+    neighborhood = new TwoDimensionalMesh(3, 3) ;
 
     exception.expect(JMetalException.class);
     exception.expectMessage(containsString("The solution list is null"));
@@ -37,7 +37,7 @@ public class L5Test {
 
   @Test
   public void shouldGetNeighborsWithAnEmptyListOfSolutionsThrowAnException() {
-    neighborhood = new L5(3, 3) ;
+    neighborhood = new TwoDimensionalMesh(3, 3) ;
 
     exception.expect(JMetalException.class);
     exception.expectMessage(containsString("The solution list is empty"));
@@ -49,7 +49,7 @@ public class L5Test {
 
   @Test
   public void shouldGetNeighborsWithANegativeSolutionIndexThrowAnException() {
-    neighborhood = new L5(3, 3) ;
+    neighborhood = new TwoDimensionalMesh(3, 3) ;
 
     exception.expect(JMetalException.class);
     exception.expectMessage(containsString("The solution position value is negative: -1"));
@@ -65,7 +65,7 @@ public class L5Test {
 
   @Test
   public void shouldGetNeighborsWithASolutionIndexValueEqualToTheListSizeThrowAnException() {
-    neighborhood = new L5(1, 1) ;
+    neighborhood = new TwoDimensionalMesh(1, 1) ;
 
     exception.expect(JMetalException.class);
     exception.expectMessage(containsString(
@@ -79,7 +79,7 @@ public class L5Test {
 
   @Test
   public void shouldGetNeighborsWithASolutionIndexValueGreaterThanTheListSizeThrowAnException() {
-    neighborhood = new L5(2, 2) ;
+    neighborhood = new TwoDimensionalMesh(2, 2) ;
 
     exception.expect(JMetalException.class);
     exception.expectMessage(containsString(
@@ -108,7 +108,7 @@ public class L5Test {
   public void shouldGetNeighborsReturnFourNeighborsCase1() {
     int rows = 3 ;
     int columns = 3 ;
-    neighborhood = new L5(rows, columns) ;
+    neighborhood = new TwoDimensionalMesh(rows, columns) ;
 
     List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
     for (int i = 0 ; i < rows*columns; i++) {
@@ -137,7 +137,7 @@ public class L5Test {
   public void shouldGetNeighborsReturnFourNeighborsCase2() {
     int rows = 3 ;
     int columns = 3 ;
-    neighborhood = new L5(rows, columns) ;
+    neighborhood = new TwoDimensionalMesh(rows, columns) ;
 
     List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
     for (int i = 0 ; i < rows*columns; i++) {
@@ -166,7 +166,7 @@ public class L5Test {
   public void shouldGetNeighborsReturnFourNeighborsCase3() {
     int rows = 3 ;
     int columns = 3 ;
-    neighborhood = new L5(rows, columns) ;
+    neighborhood = new TwoDimensionalMesh(rows, columns) ;
 
     List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
     for (int i = 0 ; i < rows*columns; i++) {
@@ -195,7 +195,7 @@ public class L5Test {
   public void shouldGetNeighborsReturnFourNeighborsCase4() {
     int rows = 3 ;
     int columns = 3 ;
-    neighborhood = new L5(rows, columns) ;
+    neighborhood = new TwoDimensionalMesh(rows, columns) ;
 
     List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
     for (int i = 0 ; i < rows*columns; i++) {
@@ -224,7 +224,7 @@ public class L5Test {
   public void shouldGetNeighborsReturnFourNeighborsCase5() {
     int rows = 3 ;
     int columns = 3 ;
-    neighborhood = new L5(rows, columns) ;
+    neighborhood = new TwoDimensionalMesh(rows, columns) ;
 
     List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
     for (int i = 0 ; i < rows*columns; i++) {
@@ -252,7 +252,7 @@ public class L5Test {
   public void shouldGetNeighborsReturnFourNeighborsCase6() {
     int rows = 2 ;
     int columns = 3 ;
-    neighborhood = new L5(rows, columns) ;
+    neighborhood = new TwoDimensionalMesh(rows, columns) ;
 
     List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
     for (int i = 0 ; i < rows*columns; i++) {
@@ -279,7 +279,7 @@ public class L5Test {
   public void shouldGetNeighborsReturnFourNeighborsCase7() {
     int rows = 2 ;
     int columns = 3 ;
-    neighborhood = new L5(rows, columns) ;
+    neighborhood = new TwoDimensionalMesh(rows, columns) ;
 
     List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
     for (int i = 0 ; i < rows*columns; i++) {
@@ -306,7 +306,7 @@ public class L5Test {
   public void shouldGetNeighborsReturnFourNeighborsCase8() {
     int rows = 2 ;
     int columns = 2 ;
-    neighborhood = new L5(rows, columns) ;
+    neighborhood = new TwoDimensionalMesh(rows, columns) ;
 
     List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
     for (int i = 0 ; i < rows*columns; i++) {
