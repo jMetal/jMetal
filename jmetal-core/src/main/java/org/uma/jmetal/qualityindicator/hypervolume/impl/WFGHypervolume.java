@@ -26,7 +26,7 @@ public class WFGHypervolume extends SimpleDescribedEntity implements Hypervolume
   }
 
   @Override
-  public double execute(List<? extends Solution> frontA, List<? extends Solution> frontB) {
+  public <S extends Solution<?>> double execute(List<S> frontA, List<S> frontB) {
     return 0;
   }
 
