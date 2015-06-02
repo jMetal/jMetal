@@ -23,7 +23,6 @@ public class DifferentialEvolutionSelectionTest {
   private DifferentialEvolutionSelection selection ;
   private List<DoubleSolution> population ;
 
-
   @Rule
   public ExpectedException exception = ExpectedException.none();
 

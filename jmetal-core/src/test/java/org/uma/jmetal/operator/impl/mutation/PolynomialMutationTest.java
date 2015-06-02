@@ -41,8 +41,7 @@ import static org.mockito.Mockito.*;
  */
 public class PolynomialMutationTest {
   private static final double EPSILON = 0.00000000000001 ;
-
-
+  
   @Test
   public void shouldConstructorWithoutParameterAssignTheDefaultValues() {
     PolynomialMutation mutation = new PolynomialMutation() ;
