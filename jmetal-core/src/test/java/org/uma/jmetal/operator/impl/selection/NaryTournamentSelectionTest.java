@@ -53,8 +53,11 @@ public class NaryTournamentSelectionTest {
     assertEquals(2, ReflectionTestUtils.getField(selection, "numberOfSolutionsToBeReturned"));
   }
 
-  @Test(expected = JMetalException.class)
+  @Test
   public void shouldExecuteRaiseAnExceptionIfTheListOfSolutionsIsNull() {
+    exception.expect(JMetalException.class);
+    exception.expectMessage(containsString("The solution list is null"));
+
     selection = new NaryTournamentSelection() ;
     population = null ;
     selection.execute(population) ;

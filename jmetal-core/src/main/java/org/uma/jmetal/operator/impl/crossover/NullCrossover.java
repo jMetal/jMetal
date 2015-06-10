@@ -17,6 +17,7 @@ import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,6 +38,10 @@ public class NullCrossover<Source extends List<? extends Solution>, Result exten
       throw new JMetalException("There must be two parents instead of " + source.size()) ;
     }
 
-    return (Result) source ;
+    List<Solution> list = new ArrayList<>() ;
+    list.add(source.get(0).copy()) ;
+    list.add(source.get(1).copy()) ;
+
+    return (Result) list ;
   }
 }
