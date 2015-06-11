@@ -1,8 +1,9 @@
-package org.uma.jmetal.operator.impl.crossover;
+package org.uma.jmetal.algorithm.multiobjective.abyss;
 
+import org.junit.Before;
 import org.junit.Test;
-import org.uma.jmetal.operator.CrossoverOperator;
-import org.uma.jmetal.problem.Problem;
+import org.springframework.test.util.ReflectionTestUtils;
+import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.impl.DefaultDoubleSolution;
@@ -11,31 +12,56 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import java.util.ArrayList;
 import java.util.List;
 
+import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertTrue;
 
 /**
- * Created by ajnebro on 10/6/15.
+ * Created by ajnebro on 11/6/15.
  */
-public class NullCrossoverTest {
+public class ABYSSTest {
+
+  AbstractABYSS<DoubleSolution> abyss ;
+  DoubleProblem problem ;
+
+  @Before
+  public void setup() {
+    problem = new MockProblem();
+  }
 
   @Test
-  public void shouldExecuteReturnTwoDifferentObjectsWhichAreEquals() {
-    Problem problem = new MockProblem() ;
-    List<DoubleSolution> parents = new ArrayList<>(2) ;
-    parents.add((DoubleSolution) problem.createSolution()) ;
-    parents.add((DoubleSolution) problem.createSolution()) ;
+  public void shouldIsStoppingConditionReachedReturnTrueIfTheConditionFulfills() {
+    int maxEvaluations = 100 ;
+    abyss = new ABYSS(problem, maxEvaluations, 0, 0, 0, 0, null, null, null, 0) ;
 
-    CrossoverOperator<List<DoubleSolution>, List<DoubleSolution>> crossover;
-    crossover = new NullCrossover<List<DoubleSolution>, List<DoubleSolution>>() ;
+    ReflectionTestUtils.setField(abyss, "evaluations", 101);
 
-    List<DoubleSolution> offspring = crossover.execute(parents);
-    assertNotSame(parents.get(0), offspring.get(0)) ;
-    assertNotSame(parents.get(1), offspring.get(1)) ;
-
-    assertEquals(parents.get(0), offspring.get(0)) ;
-    assertEquals(parents.get(1), offspring.get(1)) ;
+    assertTrue(abyss.isStoppingConditionReached()) ;
   }
+
+  @Test
+  public void shouldIsStoppingConditionReachedReturnFalseIfTheConditionDoesNotFulfill() {
+    int maxEvaluations = 100 ;
+    abyss = new ABYSS(problem, maxEvaluations, 0, 0, 0, 0, null, null, null, 0) ;
+
+    ReflectionTestUtils.setField(abyss, "evaluations", 1);
+
+    assertFalse(abyss.isStoppingConditionReached()) ;
+  }
+
+  @Test
+  public void shouldInitializationPhaseLeadToAPopulationFilledWithEvaluatedSolutions() {
+    int populationSize = 20 ;
+    int numberOfSubRanges = 4 ;
+    DoubleProblem problem = new MockProblem() ;
+    abyss = new ABYSS(problem, 0, populationSize, 0, 0, 0, null, null, null, numberOfSubRanges) ;
+
+    abyss.initializationPhase() ;
+    assertEquals(populationSize, abyss.getPopulation().size()) ;
+    assertEquals(populationSize, abyss.evaluations);
+  }
+
+
 
   private class MockProblem extends AbstractDoubleProblem {
     private JMetalRandom randomGenerator = JMetalRandom.getInstance() ;
@@ -59,7 +85,7 @@ public class NullCrossoverTest {
     }
 
     @Override public int getNumberOfVariables() {
-      return 2;
+      return 3;
     }
 
     @Override public int getNumberOfObjectives() {

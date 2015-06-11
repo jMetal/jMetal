@@ -1,79 +1,100 @@
 package org.uma.jmetal.algorithm.multiobjective.abyss;
 
-import org.uma.jmetal.algorithm.impl.AbstractScatterSearch;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.LocalSearchOperator;
-import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.archive.Archive;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.List;
 
 /**
  * Created by ajnebro on 11/6/15.
  */
-public class AbYSS<S extends Solution> extends AbstractScatterSearch<S, List<S>> {
-  protected final int maxEvaluations ;
-  protected final Problem<S> problem;
-  protected final int referenceSet1Size ;
-  protected final int referenceSet2Size ;
-  protected final int archiveSize ;
+public class ABYSS extends AbstractABYSS<DoubleSolution> {
+  protected JMetalRandom randomGenerator ;
 
-  protected Archive<S> archive ;
-  protected LocalSearchOperator<S> localSearch ;
-  protected CrossoverOperator<List<S>, List<S>> crossover ;
-  protected int evaluations;
+  /**
+   * These variables are used in the diversification method.
+   */
+  protected int numberOfSubRanges;
+  protected int[] sumOfFrequencyValues;
+  protected int[] sumOfReverseFrequencyValues;
+  protected int[][] frequency;
+  protected int[][] reverseFrequency;
 
+  public ABYSS(DoubleProblem problem, int maxEvaluations, int populationSize, int referenceSet1Size,
+      int referenceSet2Size, int archiveSize, Archive<DoubleSolution> archive,
+      LocalSearchOperator<DoubleSolution> localSearch,
+      CrossoverOperator<List<DoubleSolution>, List<DoubleSolution>> crossoverOperator,
+      int numberOfSubRanges) {
+    super(problem, maxEvaluations, populationSize, referenceSet1Size, referenceSet2Size, archiveSize,
+        archive, localSearch, crossoverOperator) ;
 
-  public AbYSS(Problem<S> problem, int maxEvaluations, int populationSize, int referenceSet1Size,
-      int referenceSet2Size, int archiveSize, Archive<S> archive, LocalSearchOperator<S> localSearch,
-      CrossoverOperator<List<S>, List<S>> crossoverOperator) {
-    setPopulationSize(populationSize);
-    this.problem = problem ;
-    this.maxEvaluations = maxEvaluations ;
-    this.referenceSet1Size = referenceSet1Size ;
-    this.referenceSet2Size = referenceSet2Size ;
-    this.archiveSize = archiveSize ;
-    this.archive = archive ;
-    this.localSearch = localSearch ;
-    this.crossover = crossoverOperator ;
+    this.numberOfSubRanges = numberOfSubRanges ;
+    randomGenerator = JMetalRandom.getInstance() ;
+
+    sumOfFrequencyValues       = new int[problem.getNumberOfVariables()] ;
+    sumOfReverseFrequencyValues = new int[problem.getNumberOfVariables()] ;
+    frequency       = new int[numberOfSubRanges][problem.getNumberOfVariables()] ;
+    reverseFrequency = new int[numberOfSubRanges][problem.getNumberOfVariables()] ;
 
     evaluations = 0 ;
   }
 
-  @Override protected boolean isStoppingConditionReached() {
-    return false;
+  @Override protected DoubleSolution diversificationGeneration() {
+    DoubleSolution solution = problem.createSolution();
+
+    double value;
+    int range;
+
+    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
+      sumOfReverseFrequencyValues[i] = 0;
+      for (int j = 0; j < numberOfSubRanges; j++) {
+        reverseFrequency[j][i] = sumOfFrequencyValues[i] - frequency[j][i];
+        sumOfReverseFrequencyValues[i] += reverseFrequency[j][i];
+      }
+
+      if (sumOfReverseFrequencyValues[i] == 0) {
+        range = randomGenerator.nextInt(0, numberOfSubRanges - 1);
+      } else {
+        value = randomGenerator.nextInt(0, sumOfReverseFrequencyValues[i] - 1);
+        range = 0;
+        while (value > reverseFrequency[range][i]) {
+          value -= reverseFrequency[range][i];
+          range++;
+        }
+      }
+
+      frequency[range][i]++;
+      sumOfFrequencyValues[i]++;
+
+      double low = ((DoubleProblem)problem).getLowerBound(i) + range *
+          (((DoubleProblem)problem).getUpperBound(i) -
+              ((DoubleProblem)problem).getLowerBound(i)) / numberOfSubRanges;
+      double high = low + (((DoubleProblem)problem).getUpperBound(i) -
+          ((DoubleProblem)problem).getLowerBound(i)) / numberOfSubRanges;
+
+      value = randomGenerator.nextDouble(low, high);
+      solution.setVariableValue(i, value);
+    }
+    return solution;
   }
 
-  @Override protected boolean restartConditionIsFulfilled() {
-    return false;
+  @Override
+  public void initializationPhase() {
+    super.initializationPhase();
+
+    for (int i = 0 ; i < getPopulationSize(); i++) {
+      problem.evaluate(getPopulation().get(i));
+      evaluations++ ;
+    }
   }
 
-  @Override protected void restart() {
-
+  @Override protected DoubleSolution improvement(DoubleSolution solution) {
+    DoubleSolution improvedSolution = (DoubleSolution) solution.copy();
+    return solution;
   }
 
-  @Override protected S diversificationGeneration() {
-    return null;
-  }
-
-  @Override protected S improvement(S solution) {
-    return null;
-  }
-
-  @Override protected void referenceSetUpdate(boolean firstTime) {
-
-  }
-
-  @Override protected List<S> subsetGeneration() {
-    return null;
-  }
-
-  @Override protected List<S> solutionCombination(List<S> population) {
-    return null;
-  }
-
-  @Override public List<S> getResult() {
-    return null;
-  }
 }
