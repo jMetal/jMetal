@@ -31,15 +31,15 @@ public abstract class AbstractScatterSearch<S extends Solution, R>  implements A
     this.populationSize = populationSize ;
   }
 
-  protected abstract boolean isStoppingConditionReached();
+  public abstract boolean isStoppingConditionReached();
 
   public abstract boolean restartConditionIsFulfilled();
 
-  protected abstract void restart();
+  public abstract void restart();
 
-  protected abstract S diversificationGeneration();
+  public abstract S diversificationGeneration();
 
-  protected abstract S improvement(S solution);
+  public abstract S improvement(S solution);
 
   public abstract void referenceSetUpdate();
   public abstract void referenceSetUpdate(S solution);

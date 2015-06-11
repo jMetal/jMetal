@@ -228,6 +228,32 @@ public class ABYSSTest {
     assertEquals(expectedValue, list.size()) ;
   }
 
+  @Test
+  public void shouldRestartCreateANewPopulationWithTheRefSet1Solutions() {
+    int populationSize = 10;
+    int numberOfSubRanges = 4;
+    int referenceSet1Size = 4;
+    int referenceSet2Size = 4;
+
+    DoubleProblem problem = new MockProblem();
+
+    abyss = new ABYSS(problem, 0, populationSize, referenceSet1Size, referenceSet2Size, 10,
+        new CrowdingDistanceArchive<DoubleSolution>(10),
+        localSearch, new SBXCrossover(1.0, 20.0), numberOfSubRanges);
+
+    abyss.initializationPhase();
+    abyss.referenceSetUpdate();
+    List<List<DoubleSolution>> list = abyss.subsetGeneration();
+    List<DoubleSolution> combinedSolutions = abyss.solutionCombination(list) ;
+    for (DoubleSolution solution : combinedSolutions) {
+      DoubleSolution improvedSolution = abyss.improvement(solution) ;
+      abyss.referenceSetUpdate(improvedSolution);
+    }
+
+    abyss.restart();
+    assertEquals(populationSize, abyss.getPopulation().size());
+  }
+  
   /**
    * Mock problem
    */

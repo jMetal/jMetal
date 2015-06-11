@@ -49,11 +49,11 @@ public abstract class AbstractABYSS<S extends Solution> extends AbstractScatterS
     evaluations = 0 ;
   }
 
-  @Override protected boolean isStoppingConditionReached() {
+  @Override public boolean isStoppingConditionReached() {
     return evaluations >= maxEvaluations ;
   }
 
-  @Override protected S improvement(S solution) {
+  @Override public S improvement(S solution) {
     S improvedSolution = localSearch.execute(solution) ;
     evaluations += localSearch.getEvaluations() ;
 

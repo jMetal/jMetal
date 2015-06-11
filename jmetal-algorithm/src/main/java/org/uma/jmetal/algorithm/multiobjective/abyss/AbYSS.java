@@ -77,7 +77,7 @@ public class ABYSS extends AbstractABYSS<DoubleSolution> {
     evaluations = 0 ;
   }
 
-  @Override protected DoubleSolution diversificationGeneration() {
+  @Override public DoubleSolution diversificationGeneration() {
     DoubleSolution solution = problem.createSolution();
 
     double value;
@@ -398,7 +398,7 @@ public class ABYSS extends AbstractABYSS<DoubleSolution> {
   }
 
   @Override
-  protected void restart() {
+  public void restart() {
     getPopulation().clear();
     addReferenceSet1ToPopulation() ;
     updatePopulationWithArchive() ;
@@ -441,7 +441,7 @@ public class ABYSS extends AbstractABYSS<DoubleSolution> {
   private void fillPopulationWithRandomSolutions() {
     while (getPopulation().size() < getPopulationSize()) {
       DoubleSolution solution = diversificationGeneration();
-      if(problem instanceof ConstrainedProblem){
+      if (problem instanceof ConstrainedProblem){
         ((ConstrainedProblem)problem).evaluateConstraints(solution);
       }
 
