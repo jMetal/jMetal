@@ -38,7 +38,7 @@ import java.util.logging.Level;
 public class SequentialSolutionListEvaluator<S extends Solution> implements SolutionListEvaluator<S> {
 
   @Override
-  public List<S> evaluate(List<S> solutionList, Problem problem) throws JMetalException {
+  public List<S> evaluate(List<S> solutionList, Problem<S> problem) throws JMetalException {
     try {
       if (problem instanceof ConstrainedProblem) {
         for (int i = 0 ; i < solutionList.size(); i++) {

@@ -33,6 +33,6 @@ import java.util.List;
  */
 
 public interface SolutionListEvaluator<S extends Solution> extends Serializable {
-  public List<S> evaluate(List<S> solutionSet, Problem problem) ;
+  public List<S> evaluate(List<S> solutionSet, Problem<S> problem) ;
   public void shutdown() ;
 }
