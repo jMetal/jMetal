@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.operator.LocalSearchOperator;
 import org.uma.jmetal.operator.MutationOperator;
+import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
@@ -87,7 +88,7 @@ public class ABYSSTest {
         0, null, localSearch, null, numberOfSubRanges) ;
 
     abyss.initializationPhase() ;
-    abyss.referenceSetUpdate(true) ;
+    abyss.referenceSetUpdate() ;
 
     assertEquals(referenceSet1Size, abyss.referenceSet1.size());
     assertEquals(referenceSet2Size, abyss.referenceSet2.size());
@@ -107,7 +108,7 @@ public class ABYSSTest {
         0, null, localSearch, null, numberOfSubRanges) ;
 
     abyss.initializationPhase() ;
-    abyss.referenceSetUpdate(true) ;
+    abyss.referenceSetUpdate() ;
 
     assertEquals(referenceSet1Size, abyss.referenceSet1.size());
     assertEquals(populationSize-referenceSet1Size, abyss.referenceSet2.size());
@@ -127,7 +128,7 @@ public class ABYSSTest {
         0, null, localSearch, null, numberOfSubRanges) ;
 
     abyss.initializationPhase() ;
-    abyss.referenceSetUpdate(true);
+    abyss.referenceSetUpdate();
 
     MarkAttribute marked = new MarkAttribute();
     for (Solution solution : abyss.referenceSet1) {
@@ -154,7 +155,7 @@ public class ABYSSTest {
         0, null, localSearch, null, numberOfSubRanges) ;
 
     abyss.initializationPhase() ;
-    abyss.referenceSetUpdate(true);
+    abyss.referenceSetUpdate();
 
     MarkAttribute marked = new MarkAttribute();
     for (Solution solution : abyss.referenceSet1) {
@@ -183,7 +184,7 @@ public class ABYSSTest {
         localSearch, null, numberOfSubRanges);
 
     abyss.initializationPhase();
-    abyss.referenceSetUpdate(true);
+    abyss.referenceSetUpdate();
     List<List<DoubleSolution>> list = abyss.subsetGeneration();
 
     int expectedCombinations = 0;
@@ -200,62 +201,88 @@ public class ABYSSTest {
     }
 
     assertEquals(expectedCombinations, list.size()) ;
-  }
-    /**
-     * Mock problem
-     */
-    private class MockProblem extends AbstractDoubleProblem {
-      private JMetalRandom randomGenerator = JMetalRandom.getInstance() ;
-
-      public MockProblem() {
-        setNumberOfVariables(3);
-        setNumberOfObjectives(2);
-        setNumberOfConstraints(0);
-        setName("Fonseca");
-
-        List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
-        List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
-
-        for (int i = 0; i < getNumberOfVariables(); i++) {
-          lowerLimit.add(-4.0);
-          upperLimit.add(4.0);
-        }
-
-        setLowerLimit(lowerLimit);
-        setUpperLimit(upperLimit);
-      }
-
-      @Override public int getNumberOfVariables() {
-        return 3;
-      }
-
-      @Override public int getNumberOfObjectives() {
-        return 2;
-      }
-
-      @Override public int getNumberOfConstraints() {
-        return 0;
-      }
-
-      @Override public String getName() {
-        return null;
-      }
-
-      @Override public void evaluate(DoubleSolution solution) {
-        solution.setObjective(0, randomGenerator.nextDouble());
-        solution.setObjective(1, randomGenerator.nextDouble());
-      }
-
-      @Override public DoubleSolution createSolution() {
-        return new DefaultDoubleSolution(this);
-      }
-
-      @Override public Double getLowerBound(int index) {
-        return super.getUpperBound(index);
-      }
-
-      @Override public Double getUpperBound(int index) {
-        return super.getUpperBound(index);
-      }
+    for (List<DoubleSolution> pair : list) {
+      assertEquals(2, pair.size()) ;
     }
   }
+
+  @Test
+  public void shouldSolutionCombinationProduceTheRightNumberOfSolutions() {
+    int populationSize = 10;
+    int numberOfSubRanges = 4;
+    int referenceSet1Size = 4;
+    int referenceSet2Size = 4;
+
+    DoubleProblem problem = new MockProblem();
+
+    abyss = new ABYSS(problem, 0, populationSize, referenceSet1Size, referenceSet2Size, 0, null,
+        localSearch, new SBXCrossover(1.0, 20.0), numberOfSubRanges);
+
+    abyss.initializationPhase();
+    abyss.referenceSetUpdate();
+    List<List<DoubleSolution>> list = abyss.subsetGeneration();
+    List<DoubleSolution> combinedSolutions = abyss.solutionCombination(list) ;
+
+    int expectedValue = combinedSolutions.size() / 2 ;
+
+    assertEquals(expectedValue, list.size()) ;
+  }
+
+  /**
+   * Mock problem
+   */
+  private class MockProblem extends AbstractDoubleProblem {
+    private JMetalRandom randomGenerator = JMetalRandom.getInstance() ;
+
+    public MockProblem() {
+      setNumberOfVariables(3);
+      setNumberOfObjectives(2);
+      setNumberOfConstraints(0);
+      setName("Fonseca");
+
+      List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
+      List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
+
+      for (int i = 0; i < getNumberOfVariables(); i++) {
+        lowerLimit.add(-4.0);
+        upperLimit.add(4.0);
+      }
+
+      setLowerLimit(lowerLimit);
+      setUpperLimit(upperLimit);
+    }
+
+    @Override public int getNumberOfVariables() {
+      return 3;
+    }
+
+    @Override public int getNumberOfObjectives() {
+      return 2;
+    }
+
+    @Override public int getNumberOfConstraints() {
+      return 0;
+    }
+
+    @Override public String getName() {
+      return null;
+    }
+
+    @Override public void evaluate(DoubleSolution solution) {
+      solution.setObjective(0, randomGenerator.nextDouble());
+      solution.setObjective(1, randomGenerator.nextDouble());
+    }
+
+    @Override public DoubleSolution createSolution() {
+      return new DefaultDoubleSolution(this);
+    }
+
+    @Override public Double getLowerBound(int index) {
+      return super.getUpperBound(index);
+    }
+
+    @Override public Double getUpperBound(int index) {
+      return super.getUpperBound(index);
+    }
+  }
+}

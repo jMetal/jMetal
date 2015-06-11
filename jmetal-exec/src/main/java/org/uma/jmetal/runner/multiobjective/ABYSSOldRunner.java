@@ -1,8 +1,8 @@
 package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.abyss.ABYSS;
-import org.uma.jmetal.algorithm.multiobjective.abyss.ABYSSBuilder;
+import org.uma.jmetal.algorithm.multiobjective.abyss1.ABYSS;
+import org.uma.jmetal.algorithm.multiobjective.abyss1.ABYSSBuilder;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
@@ -24,7 +24,7 @@ import java.util.List;
  *   IEEE Transactions on Evolutionary Computation. Vol. 12,
  *   No. 4 (August 2008), pp. 439-457
  */
-public class ABYSSRunner {
+public class ABYSSOldRunner {
 
   /**
    * @param args Command line arguments. The first (optional) argument specifies
@@ -44,7 +44,7 @@ public class ABYSSRunner {
     if (args!=null && args.length == 1) {
       problemName = args[0] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
     }
 
     problem = (DoubleProblem) ProblemUtils.loadProblem(problemName);
@@ -52,7 +52,6 @@ public class ABYSSRunner {
     Archive archive = new CrowdingDistanceArchive(100) ;
 
     algorithm = new ABYSSBuilder(problem, archive)
-        .setMaxEvaluations(25000)
         .build();
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)

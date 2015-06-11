@@ -60,11 +60,7 @@ public abstract class AbstractABYSS<S extends Solution> extends AbstractScatterS
     return improvedSolution ;
   }
 
-  @Override protected void restart() {
-
-  }
-
   @Override public List<S> getResult() {
-    return null;
+    return archive.getSolutionList();
   }
 }

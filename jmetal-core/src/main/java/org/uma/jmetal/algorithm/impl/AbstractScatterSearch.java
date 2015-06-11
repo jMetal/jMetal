@@ -41,7 +41,8 @@ public abstract class AbstractScatterSearch<S extends Solution, R>  implements A
 
   protected abstract S improvement(S solution);
 
-  public abstract void referenceSetUpdate(boolean firstTime);
+  public abstract void referenceSetUpdate();
+  public abstract void referenceSetUpdate(S solution);
 
   public abstract List<List<S>> subsetGeneration();
 
@@ -51,18 +52,17 @@ public abstract class AbstractScatterSearch<S extends Solution, R>  implements A
 
   @Override public void run() {
     initializationPhase() ;
-    referenceSetUpdate(true);
+    referenceSetUpdate();
     while (!isStoppingConditionReached()) {
       if (restartConditionIsFulfilled()) {
         restart();
       } else {
         List<List<S>> subset = subsetGeneration();
         List<S> combinedSolutions = solutionCombination(subset) ;
-        List<S> improvedSolutions = new ArrayList<>() ;
         for (S solution : combinedSolutions) {
-          improvedSolutions.add(improvement(solution)) ;
+          S improvedSolution = improvement(solution) ;
+          referenceSetUpdate(improvedSolution);
         }
-        referenceSetUpdate(false);
       }
     }
   }
