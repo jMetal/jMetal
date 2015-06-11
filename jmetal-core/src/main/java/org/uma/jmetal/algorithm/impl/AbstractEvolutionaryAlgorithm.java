@@ -1,8 +1,6 @@
 package org.uma.jmetal.algorithm.impl;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.measure.impl.DurationMeasure;
-import org.uma.jmetal.measure.impl.SimpleMeasureManager;
 import org.uma.jmetal.solution.Solution;
 
 import java.util.List;
@@ -22,9 +20,6 @@ public abstract class AbstractEvolutionaryAlgorithm<S extends Solution, R>  impl
   public void setPopulation(List<S> population) {
     this.population = population;
   }
-
-  protected SimpleMeasureManager measureManager;
-  protected DurationMeasure durationMeasure;
 
   protected abstract void initProgress();
 
