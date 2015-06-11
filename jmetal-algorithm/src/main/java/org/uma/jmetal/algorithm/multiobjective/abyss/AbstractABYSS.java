@@ -7,6 +7,7 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archive.Archive;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,11 +16,15 @@ import java.util.List;
 public abstract class AbstractABYSS<S extends Solution> extends AbstractScatterSearch<S, List<S>> {
   protected final int maxEvaluations ;
   protected final Problem<S> problem;
+
   protected final int referenceSet1Size ;
   protected final int referenceSet2Size ;
-  protected final int archiveSize ;
+  protected List<S> referenceSet1 ;
+  protected List<S> referenceSet2 ;
 
+  protected final int archiveSize ;
   protected Archive<S> archive ;
+
   protected LocalSearchOperator<S> localSearch ;
   protected CrossoverOperator<List<S>, List<S>> crossover ;
   protected int evaluations;
@@ -38,6 +43,9 @@ public abstract class AbstractABYSS<S extends Solution> extends AbstractScatterS
     this.localSearch = localSearch ;
     this.crossover = crossoverOperator ;
 
+    referenceSet1 = new ArrayList<>(referenceSet1Size) ;
+    referenceSet2 = new ArrayList<>(referenceSet2Size) ;
+
     evaluations = 0 ;
   }
 
@@ -45,24 +53,15 @@ public abstract class AbstractABYSS<S extends Solution> extends AbstractScatterS
     return evaluations >= maxEvaluations ;
   }
 
-  @Override protected boolean restartConditionIsFulfilled() {
-    return false;
+  @Override protected S improvement(S solution) {
+    S improvedSolution = localSearch.execute(solution) ;
+    evaluations += localSearch.getEvaluations() ;
+
+    return improvedSolution ;
   }
 
   @Override protected void restart() {
 
-  }
-
-  @Override protected void referenceSetUpdate(boolean firstTime) {
-
-  }
-
-  @Override protected List<S> subsetGeneration() {
-    return null;
-  }
-
-  @Override protected List<S> solutionCombination(List<S> population) {
-    return null;
   }
 
   @Override public List<S> getResult() {

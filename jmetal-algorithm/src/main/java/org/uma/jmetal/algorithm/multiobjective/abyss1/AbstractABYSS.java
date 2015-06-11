@@ -466,7 +466,7 @@ public abstract class AbstractABYSS <S extends Solution> implements Algorithm<Li
       parents.set(0, refSet2.get(i));
       for (int j = i + 1; j < refSet2.size(); j++) {
         parents.set(1, refSet2.get(j));
-        if ( !marked.getAttribute(parents.get(0)) || !marked.getAttribute(parents.get(1))) {//!parents[0].isMarked() || !parents[1].isMarked()
+        if ( !marked.getAttribute(parents.get(0)) || !marked.getAttribute(parents.get(1))) {
           offSpring = (List<DoubleSolution>) crossoverOperator.execute(parents);
           if (problem instanceof  ConstrainedProblem) {
             ((ConstrainedProblem)problem).evaluateConstraints(offSpring.get(0));
@@ -486,7 +486,7 @@ public abstract class AbstractABYSS <S extends Solution> implements Algorithm<Li
     }
 
     return subSet.size();
-  } // subSetGeneration
+  }
 
 }
 
