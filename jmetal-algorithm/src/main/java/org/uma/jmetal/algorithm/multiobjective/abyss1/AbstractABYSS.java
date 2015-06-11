@@ -1,4 +1,4 @@
-package org.uma.jmetal.algorithm.multiobjective.abyss;
+package org.uma.jmetal.algorithm.multiobjective.abyss1;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.operator.CrossoverOperator;

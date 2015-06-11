@@ -2,7 +2,7 @@ package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.abyss.ABYSS;
-import org.uma.jmetal.algorithm.multiobjective.abyss.ABYSSBuilder;
+import org.uma.jmetal.algorithm.multiobjective.abyss1.ABYSSBuilder;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;

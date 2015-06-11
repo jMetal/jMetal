@@ -1,4 +1,4 @@
-package org.uma.jmetal.algorithm.multiobjective.abyss2;
+package org.uma.jmetal.algorithm.multiobjective.abyss;
 
 import org.uma.jmetal.algorithm.impl.AbstractScatterSearch;
 import org.uma.jmetal.operator.CrossoverOperator;
