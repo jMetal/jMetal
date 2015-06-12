@@ -51,7 +51,6 @@ public class ABYSSBuilder implements AlgorithmBuilder {
     int improvementRounds= 1;
     this.archive =(CrowdingDistanceArchive)archive;
     this.improvementOperator = new AbYSSLocalSearch<>(improvementRounds,mutationOperator,this.archive,problem);
-
   }
 
   @Override

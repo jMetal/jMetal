@@ -409,10 +409,8 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
     List<List<DoubleSolution>> solutionGroupsList ;
 
     solutionGroupsList = generatePairsFromSolutionList(referenceSet1) ;
-    System.out.println("Subset1 size: " + solutionGroupsList.size()) ;
 
     solutionGroupsList.addAll(generatePairsFromSolutionList(referenceSet2));
-    System.out.println("Subset2 size: " + solutionGroupsList.size()) ;
 
     for (List<DoubleSolution> pair : solutionGroupsList) {
       //marked.setAttribute(pair.get(0), true);
@@ -470,15 +468,11 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
       //marked.setAttribute(pair.get(1), true);
     }
 
-
-    System.out.println("Recombined: " + resultList.size()) ;
-
     return resultList;
   }
 
   @Override
   public void restart() {
-    System.out.println("Restart ---------------------- ") ;
     getPopulation().clear();
     addReferenceSet1ToPopulation() ;
     updatePopulationWithArchive() ;
