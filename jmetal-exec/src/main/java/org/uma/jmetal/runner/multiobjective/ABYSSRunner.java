@@ -44,17 +44,14 @@ public class ABYSSRunner {
     if (args!=null && args.length == 1) {
       problemName = args[0] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
+      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
     }
-
-    JMetalRandom.getInstance().setSeed(1);
 
     problem = (DoubleProblem) ProblemUtils.loadProblem(problemName);
 
     Archive archive = new CrowdingDistanceArchive(100) ;
 
     algorithm = new ABYSSBuilder(problem, archive)
-        .setMaxEvaluations(25000)
         .build();
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)

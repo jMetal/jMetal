@@ -56,14 +56,14 @@ public abstract class AbstractScatterSearch<S extends Solution, R>  implements A
     while (!isStoppingConditionReached()) {
       List<List<S>> subset = subsetGeneration();
       List<S> combinedSolutions = solutionCombination(subset) ;
-      for (S solution : combinedSolutions) {
-        S improvedSolution = improvement(solution) ;
-        referenceSetUpdate(improvedSolution);
-      }
-
       if (restartConditionIsFulfilled(combinedSolutions)) {
         restart();
         referenceSetUpdate();
+      } else {
+        for (S solution : combinedSolutions) {
+          S improvedSolution = improvement(solution);
+          referenceSetUpdate(improvedSolution);
+        }
       }
     }
   }

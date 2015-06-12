@@ -1,9 +1,11 @@
 package org.uma.jmetal.algorithm.multiobjective.abyss;
 
+import org.uma.jmetal.algorithm.impl.AbstractScatterSearch;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.LocalSearchOperator;
 import org.uma.jmetal.problem.ConstrainedProblem;
 import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionUtils;
@@ -19,12 +21,29 @@ import org.uma.jmetal.util.solutionattribute.impl.MarkAttribute;
 import org.uma.jmetal.util.solutionattribute.impl.StrengthRawFitness;
 
 import javax.management.JMException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * Created by ajnebro on 11/6/15.
  */
-public class ABYSS extends AbstractABYSS<DoubleSolution> {
+public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolution>> {
+  protected final int maxEvaluations ;
+  protected final Problem<DoubleSolution> problem;
+
+  protected final int referenceSet1Size ;
+  protected final int referenceSet2Size ;
+  protected List<DoubleSolution> referenceSet1 ;
+  protected List<DoubleSolution> referenceSet2 ;
+
+  protected final int archiveSize ;
+  protected Archive<DoubleSolution> archive ;
+
+  protected LocalSearchOperator<DoubleSolution> localSearch ;
+  protected CrossoverOperator<List<DoubleSolution>, List<DoubleSolution>> crossover ;
+  protected int evaluations;
   protected JMetalRandom randomGenerator ;
 
   /**
@@ -50,8 +69,22 @@ public class ABYSS extends AbstractABYSS<DoubleSolution> {
       LocalSearchOperator<DoubleSolution> localSearch,
       CrossoverOperator<List<DoubleSolution>, List<DoubleSolution>> crossoverOperator,
       int numberOfSubRanges) {
-    super(problem, maxEvaluations, populationSize, referenceSet1Size, referenceSet2Size, archiveSize,
-        archive, localSearch, crossoverOperator) ;
+
+    setPopulationSize(populationSize);
+
+    this.problem = problem ;
+    this.maxEvaluations = maxEvaluations ;
+    this.referenceSet1Size = referenceSet1Size ;
+    this.referenceSet2Size = referenceSet2Size ;
+    this.archiveSize = archiveSize ;
+    this.archive = archive ;
+    this.localSearch = localSearch ;
+    this.crossover = crossoverOperator ;
+
+    referenceSet1 = new ArrayList<>(referenceSet1Size) ;
+    referenceSet2 = new ArrayList<>(referenceSet2Size) ;
+
+    evaluations = 0 ;
 
     this.numberOfSubRanges = numberOfSubRanges ;
 
@@ -75,6 +108,21 @@ public class ABYSS extends AbstractABYSS<DoubleSolution> {
     equalComparator = new EqualSolutionsComparator();
 
     evaluations = 0 ;
+  }
+
+  @Override public boolean isStoppingConditionReached() {
+    return evaluations >= maxEvaluations ;
+  }
+
+  @Override public DoubleSolution improvement(DoubleSolution solution) {
+    DoubleSolution improvedSolution = localSearch.execute(solution) ;
+    evaluations += localSearch.getEvaluations() ;
+
+    return improvedSolution ;
+  }
+
+  @Override public List<DoubleSolution> getResult() {
+    return archive.getSolutionList();
   }
 
   @Override public DoubleSolution diversificationGeneration() {

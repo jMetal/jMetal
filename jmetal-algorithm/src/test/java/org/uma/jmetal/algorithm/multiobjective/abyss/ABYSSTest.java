@@ -28,7 +28,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class ABYSSTest {
 
-  AbstractABYSS<DoubleSolution> abyss ;
+  ABYSS abyss ;
   DoubleProblem problem ;
   LocalSearchOperator<DoubleSolution> localSearch ;
   MutationOperator<DoubleSolution> mutation ;
