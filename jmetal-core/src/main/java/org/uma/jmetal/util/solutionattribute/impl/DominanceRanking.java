@@ -38,11 +38,11 @@ import java.util.*;
  * solutions, subset 1 contains the non-dominated solutions after removing those
  * belonging to subset 0, and so on.
  */
-public class DominanceRanking <S extends Solution>
+public class DominanceRanking <S extends Solution<?>>
     extends GenericSolutionAttribute<S, Integer> implements Ranking<S> {
 
-  private static final Comparator<Solution> DOMINANCE_COMPARATOR = new DominanceComparator();
-  private static final Comparator<Solution> CONSTRAINT_VIOLATION_COMPARATOR =
+  private static final Comparator<Solution<?>> DOMINANCE_COMPARATOR = new DominanceComparator();
+  private static final Comparator<Solution<?>> CONSTRAINT_VIOLATION_COMPARATOR =
     new OverallConstraintViolationComparator();
 
   private List<ArrayList<S>> rankedSubpopulations;
@@ -55,7 +55,7 @@ public class DominanceRanking <S extends Solution>
   }
 
   @Override
-  public Ranking computeRanking(List<S> solutionSet) {
+  public Ranking<S> computeRanking(List<S> solutionSet) {
     List<S> population = solutionSet;
 
     // dominateMe[i] contains the number of solutions dominating i

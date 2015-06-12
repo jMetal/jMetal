@@ -5,11 +5,11 @@ import java.util.Comparator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.solutionattribute.impl.StrengthRawFitness;
 
-public class StrengthFitnessComparator implements Comparator<Solution>{
+public class StrengthFitnessComparator implements Comparator<Solution<?>>{
 	private final StrengthRawFitness fitnessValue = new StrengthRawFitness();
 
 	@Override
-	public int compare(Solution solution1, Solution solution2) {
+	public int compare(Solution<?> solution1, Solution<?> solution2) {
 		int result ;
 	    if (solution1 == null) {
 	      if (solution2 == null) {

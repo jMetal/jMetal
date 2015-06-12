@@ -34,18 +34,18 @@ import java.util.List;
 /**
  * This class implements an archive containing non-dominated solutions
  */
-public class NonDominatedSolutionListArchive<S extends Solution> implements Archive<S> {
+public class NonDominatedSolutionListArchive<S extends Solution<?>> implements Archive<S> {
   private List<S> solutionList;
-  private Comparator<Solution> dominanceComparator;
-  private Comparator<Solution> equalSolutions = new EqualSolutionsComparator();
+  private Comparator<S> dominanceComparator;
+  private Comparator<S> equalSolutions = new EqualSolutionsComparator<S>();
 
   /** Constructor */
   public NonDominatedSolutionListArchive() {
-    this(new DominanceComparator()) ;
+    this(new DominanceComparator<S>()) ;
   }
 
   /** Constructor */
-  public NonDominatedSolutionListArchive(DominanceComparator comparator) {
+  public NonDominatedSolutionListArchive(DominanceComparator<S> comparator) {
     dominanceComparator = comparator ;
    
     solutionList = new ArrayList<>() ;
@@ -71,7 +71,7 @@ public class NonDominatedSolutionListArchive<S extends Solution> implements Arch
       
       boolean isContained = false;
       while (((!isDominated) && (!isContained)) && (iterator.hasNext())) {
-        Solution listIndividual = iterator.next();
+        S listIndividual = iterator.next();
         int flag = dominanceComparator.compare(solution, listIndividual);
         if (flag == -1) {
           iterator.remove();

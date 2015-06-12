@@ -9,9 +9,9 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-public class StrengthRawFitness <S extends Solution>
+public class StrengthRawFitness <S extends Solution<?>>
     extends GenericSolutionAttribute<S, Double> implements DensityEstimator<S>{
-  private static final Comparator<Solution> DOMINANCE_COMPARATOR = new DominanceComparator();
+  private static final Comparator<Solution<?>> DOMINANCE_COMPARATOR = new DominanceComparator<Solution<?>>();
 
   @Override
   public void computeDensityEstimator(List<S> solutionSet) {

@@ -37,7 +37,7 @@ public class OverallConstraintViolationComparator implements ConstraintViolation
    * @return -1, or 0, or 1 if o1 is less than, equal, or greater than o2,
    * respectively.
    */
-  public int compare(Solution solution1, Solution solution2) {
+  public int compare(Solution<?> solution1, Solution<?> solution2) {
     double violationDegreeSolution1 ;
     double violationDegreeSolution2;
     violationDegreeSolution1 =  solution1.getOverallConstraintViolationDegree();

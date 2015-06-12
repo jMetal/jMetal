@@ -23,23 +23,20 @@ package org.uma.jmetal.util.archive.impl;
 
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AdaptiveGrid;
-import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * This class implements an archive (solution list) based on an adaptive grid used in PAES
  */
-public class AdaptiveGridArchive<S extends Solution> extends AbstractBoundedArchive<S> {
+public class AdaptiveGridArchive<S extends Solution<?>> extends AbstractBoundedArchive<S> {
 
   private AdaptiveGrid<S> grid;
  
   private int maxSize;
-  private Comparator<Solution> dominanceComparator;
+  private Comparator<S> dominanceComparator;
 
   /**
    * Constructor.
@@ -51,8 +48,8 @@ public class AdaptiveGridArchive<S extends Solution> extends AbstractBoundedArch
    */
   public AdaptiveGridArchive(int maxSize, int bisections, int objectives) {
     super(maxSize);
-    dominanceComparator = new DominanceComparator();
-    grid = new AdaptiveGrid(bisections, objectives);
+    dominanceComparator = new DominanceComparator<S>();
+    grid = new AdaptiveGrid<S>(bisections, objectives);
   }
 
   /**
@@ -123,7 +120,7 @@ public class AdaptiveGridArchive<S extends Solution> extends AbstractBoundedArch
     return true;
   }
 
-  public AdaptiveGrid getGrid() {
+  public AdaptiveGrid<S> getGrid() {
     return grid;
   }
   

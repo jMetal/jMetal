@@ -36,7 +36,7 @@ import java.util.List;
  *   IEEE Transactions on Evolutionary Computation. Vol. 12,
  *   No. 4 (August 2008), pp. 439-457
  */
-public abstract class AbstractABYSS <S extends Solution> implements Algorithm<List<? extends Solution>> {
+public abstract class AbstractABYSS <S extends Solution<?>> implements Algorithm<List<? extends Solution<?>>> {
   /**
    * Stores the number of subranges in which each encodings.variable is divided. Used in
    * the diversification method. By default it takes the value 4 (see the method
@@ -102,10 +102,10 @@ public abstract class AbstractABYSS <S extends Solution> implements Algorithm<Li
   /**
    * Stores the comparators for dominance and equality, respectively
    */
-  protected Comparator<Solution> dominanceComparator;
-  protected Comparator<Solution> equalComparator;
-  protected Comparator<Solution> fitnessComparator;
-  protected Comparator<Solution> crowdingDistanceComparator;
+  protected Comparator<Solution<?>> dominanceComparator;
+  protected Comparator<Solution<?>> equalComparator;
+  protected Comparator<Solution<?>> fitnessComparator;
+  protected Comparator<Solution<?>> crowdingDistanceComparator;
 
   /**
    * Solution Marked Attributed
@@ -278,7 +278,7 @@ public abstract class AbstractABYSS <S extends Solution> implements Algorithm<Li
           double aux = SolutionUtils.distanceBetweenSolutions(solutionSet.get(j), individual);
 
           if (aux < distanceToSolutionListAttribute.getAttribute(individual)) {
-            Solution auxSolution = solutionSet.get(j);
+            Solution<?> auxSolution = solutionSet.get(j);
             distanceToSolutionListAttribute.setAttribute(auxSolution, aux);
           }
         }
@@ -291,7 +291,7 @@ public abstract class AbstractABYSS <S extends Solution> implements Algorithm<Li
           for (int k = 0; k < refSet2.size(); k++) {
             if (i != j) {
               double aux = SolutionUtils.distanceBetweenSolutions(refSet2.get(j), refSet2.get(k));
-              Solution auxSolution = refSet2.get(j);
+              Solution<?> auxSolution = refSet2.get(j);
               if (aux < distanceToSolutionListAttribute.getAttribute(auxSolution)) {
                 distanceToSolutionListAttribute.setAttribute(auxSolution, aux);
               }//if

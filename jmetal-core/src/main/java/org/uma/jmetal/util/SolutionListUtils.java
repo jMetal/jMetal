@@ -14,18 +14,18 @@ import java.util.*;
  */
 public class SolutionListUtils {
 
-  public static <S extends Solution> List<S> getNondominatedSolutions(List<S> solutionList) {
-    Ranking ranking = new DominanceRanking() ;
+  public static <S extends Solution<?>> List<S> getNondominatedSolutions(List<S> solutionList) {
+    Ranking<S> ranking = new DominanceRanking<S>() ;
     return ranking.computeRanking(solutionList).getSubfront(0);
   }
 
-  public int findWorstSolution(List<? extends Solution> solutionList, Comparator<Solution> comparator) {
+  public <S extends Solution<?>> int findWorstSolution(List<S> solutionList, Comparator<S> comparator) {
     if ((solutionList == null) || (solutionList.isEmpty())) {
       return -1;
     }
 
     int index = 0;
-    Solution worstKnown = solutionList.get(0), candidateSolution;
+    S worstKnown = solutionList.get(0), candidateSolution;
     int flag;
     for (int i = 1; i < solutionList.size(); i++) {
       candidateSolution = solutionList.get(i);
@@ -45,7 +45,7 @@ public class SolutionListUtils {
    * @param comparator
    * @return The index of the best solution
    */
-  public static int findIndexOfBestSolution(List<? extends Solution> solutionList, Comparator<Solution> comparator) {
+  public static <S extends Solution<?>> int findIndexOfBestSolution(List<S> solutionList, Comparator<S> comparator) {
     if (solutionList == null) {
       throw new JMetalException("The solution list is null") ;
     } else if (solutionList.isEmpty()) {
@@ -55,8 +55,8 @@ public class SolutionListUtils {
     }
 
     int index = 0;
-    Solution bestKnown = solutionList.get(0) ;
-    Solution candidateSolution ;
+    S bestKnown = solutionList.get(0) ;
+    S candidateSolution ;
 
     int flag;
     for (int i = 1; i < solutionList.size(); i++) {
@@ -77,7 +77,7 @@ public class SolutionListUtils {
    * @param comparator
    * @return The index of the best solution
    */
-  public static int findIndexOfWorstSolution(List<? extends Solution> solutionList, Comparator<Solution> comparator) {
+  public static int findIndexOfWorstSolution(List<? extends Solution<?>> solutionList, Comparator<Solution<?>> comparator) {
     if (solutionList == null) {
       throw new JMetalException("The solution list is null") ;
     } else if (solutionList.isEmpty()) {
@@ -87,8 +87,8 @@ public class SolutionListUtils {
     }
 
     int index = 0;
-    Solution worstKnown = solutionList.get(0) ;
-    Solution candidateSolution ;
+    Solution<?> worstKnown = solutionList.get(0) ;
+    Solution<?> candidateSolution ;
 
     int flag;
     for (int i = 1; i < solutionList.size(); i++) {
@@ -103,11 +103,11 @@ public class SolutionListUtils {
     return index;
   }
 
-  public static Solution findBestSolution(List<? extends Solution> solutionList, Comparator<Solution> comparator) {
+  public static <S extends Solution<?>> S findBestSolution(List<S> solutionList, Comparator<S> comparator) {
     return solutionList.get(findIndexOfBestSolution(solutionList, comparator)) ;
   }
 
-  public static <S extends Solution> double[][] writeObjectivesToMatrix(List<S> solutionList) {
+  public static <S extends Solution<?>> double[][] writeObjectivesToMatrix(List<S> solutionList) {
     if (solutionList.size() == 0) {
       return new double[0][0];
     }
@@ -134,11 +134,11 @@ public class SolutionListUtils {
    * @param minimumValue The minimum values of the objectives
    * @return the normalized list of non-dominated solutions
    */
-  public static List<Solution> getNormalizedFront(List<Solution> solutionList,
+  public static List<Solution<?>> getNormalizedFront(List<Solution<?>> solutionList,
     List<Double> maximumValue,
     List<Double> minimumValue) {
 
-    List<Solution> normalizedSolutionSet = new ArrayList<>(solutionList.size()) ;
+    List<Solution<?>> normalizedSolutionSet = new ArrayList<>(solutionList.size()) ;
 
     int numberOfObjectives = solutionList.get(0).getNumberOfObjectives() ;
     for (int i = 0; i < solutionList.size(); i++) {
@@ -159,7 +159,7 @@ public class SolutionListUtils {
    * @param solutionSet The front to invert
    * @return The inverted front
    */
-  public static <S extends Solution> List<S> getInvertedFront(List<S> solutionSet) {
+  public static <S extends Solution<?>> List<S> getInvertedFront(List<S> solutionSet) {
     List<S> invertedFront = new ArrayList<>(solutionSet.size()) ;
     int numberOfObjectives = solutionSet.get(0).getNumberOfObjectives() ;
 
@@ -179,9 +179,9 @@ public class SolutionListUtils {
     return invertedFront;
   }
 
-  public static <S extends Solution> boolean isSolutionDominatedBySolutionList(S solution, List<S> solutionSet) {
+  public static <S extends Solution<?>> boolean isSolutionDominatedBySolutionList(S solution, List<S> solutionSet) {
     boolean result = false ;
-    Comparator<Solution> dominance = new DominanceComparator() ;
+    Comparator<S> dominance = new DominanceComparator<S>() ;
 
     int i = 0 ;
 
@@ -202,7 +202,7 @@ public class SolutionListUtils {
    * @param solutionList The front to invert
    * @return The inverted front
    */
-  public static <S extends Solution> List<S> selectNRandomDifferentSolutions(
+  public static <S extends Solution<?>> List<S> selectNRandomDifferentSolutions(
       int numberOfSolutionsToBeReturned, List<S> solutionList) {
     if (null == solutionList) {
       throw new JMetalException("The solution list is null") ;
@@ -240,7 +240,7 @@ public class SolutionListUtils {
    * @param solutionSet
    * @return
    */
-  public static  <S extends Solution> double [][] distanceMatrix(List<S> solutionSet) {
+  public static  <S extends Solution<?>> double [][] distanceMatrix(List<S> solutionSet) {
      //The matrix of distances
      double [][] distance = new double [solutionSet.size()][solutionSet.size()];        
      for (int i = 0; i < solutionSet.size(); i++){

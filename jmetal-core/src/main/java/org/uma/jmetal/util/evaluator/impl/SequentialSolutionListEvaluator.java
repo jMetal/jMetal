@@ -35,15 +35,15 @@ import java.util.logging.Level;
 /**
  * Created by Antonio J. Nebro on 30/05/14.
  */
-public class SequentialSolutionListEvaluator<S extends Solution> implements SolutionListEvaluator<S> {
+public class SequentialSolutionListEvaluator<S extends Solution<?>> implements SolutionListEvaluator<S> {
 
   @Override
-  public List<S> evaluate(List<S> solutionList, Problem problem) throws JMetalException {
+  public List<S> evaluate(List<S> solutionList, Problem<S> problem) throws JMetalException {
     try {
       if (problem instanceof ConstrainedProblem) {
         for (int i = 0 ; i < solutionList.size(); i++) {
           problem.evaluate(solutionList.get(i)) ;
-          ((ConstrainedProblem)problem).evaluateConstraints(solutionList.get(i)) ;
+          ((ConstrainedProblem<S>)problem).evaluateConstraints(solutionList.get(i)) ;
         }
       } else {
         for (int i = 0 ; i < solutionList.size(); i++) {

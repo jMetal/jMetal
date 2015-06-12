@@ -25,8 +25,8 @@ import java.util.Comparator;
  * Compares two solutions according to the crowding distance attribute. The higher
  * the distance the better
  */
-public class CrowdingDistanceComparator implements Comparator<Solution> {
-  private final CrowdingDistance crowdingDistance = new CrowdingDistance() ;
+public class CrowdingDistanceComparator<S extends Solution<?>> implements Comparator<S> {
+  private final CrowdingDistance<S> crowdingDistance = new CrowdingDistance<S>() ;
 
   /**
    * Compare two solutions.
@@ -37,7 +37,7 @@ public class CrowdingDistanceComparator implements Comparator<Solution> {
    * respectively.
    */
   @Override
-  public int compare(Solution solution1, Solution solution2) {
+  public int compare(S solution1, S solution2) {
     int result ;
     if (solution1 == null) {
       if (solution2 == null) {

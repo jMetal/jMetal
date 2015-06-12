@@ -28,7 +28,7 @@ import java.util.List;
 
 /**
  */
-public class HypervolumeContribution<S extends Solution>
+public class HypervolumeContribution<S extends Solution<?>>
     extends GenericSolutionAttribute<S, Double> implements DensityEstimator<S> {
   private FastHypervolume fastHV ;
 

@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * This class implements some utilities for calculating distances
  */
-public class CrowdingDistance<S extends Solution>
+public class CrowdingDistance<S extends Solution<?>>
     extends GenericSolutionAttribute<S, Double> implements DensityEstimator<S>{
 
   /**

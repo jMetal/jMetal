@@ -31,12 +31,12 @@ import java.util.List;
 /**
  * Created by Antonio J. Nebro on 30/05/14.
  */
-public class MultithreadedSolutionListEvaluator<S extends Solution> implements SolutionListEvaluator<S> {
+public class MultithreadedSolutionListEvaluator<S extends Solution<?>> implements SolutionListEvaluator<S> {
   private MultithreadedEvaluator evaluator;
-  private Problem problem;
+  private Problem<S> problem;
   private int numberOfThreads ;
 
-  public MultithreadedSolutionListEvaluator(int numberOfThreads, Problem problem) {
+  public MultithreadedSolutionListEvaluator(int numberOfThreads, Problem<S> problem) {
   	this.numberOfThreads = numberOfThreads ;
     evaluator = new MultithreadedEvaluator(numberOfThreads)  ;
     this.problem = problem ;
@@ -44,7 +44,7 @@ public class MultithreadedSolutionListEvaluator<S extends Solution> implements S
   }
 
   @Override
-  public List<S> evaluate(List<S> SolutionList, Problem problem) {
+  public List<S> evaluate(List<S> SolutionList, Problem<S> problem) {
     for (int i = 0 ; i < SolutionList.size(); i++) {
       evaluator.addTask(new Object[] {SolutionList.get(i)});
     }

@@ -140,7 +140,7 @@ public class ABYSS extends AbstractABYSS<DoubleSolution> {
   }
 
   @Override
-  public List<? extends Solution> getResult() {
+  public List<? extends Solution<?>> getResult() {
     return archive.getSolutionList();
   }
 

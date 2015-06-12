@@ -14,10 +14,10 @@ import java.util.*;
  * @author Juanjo Durillo
  * @param <S>
  */
-public class EnvironmentalSelection<S extends Solution> implements SelectionOperator<List<S>,List<S>> {
+public class EnvironmentalSelection<S extends Solution<?>> implements SelectionOperator<List<S>,List<S>> {
 
   private int solutionsToSelect = 0;
-  private final StrengthRawFitness strengthRawFitness= new StrengthRawFitness();
+  private final StrengthRawFitness<S> strengthRawFitness= new StrengthRawFitness<S>();
 
   public EnvironmentalSelection(int solutionsToSelect) {
     this.solutionsToSelect = solutionsToSelect;
@@ -62,7 +62,7 @@ public class EnvironmentalSelection<S extends Solution> implements SelectionOper
 
     double [][] distance = SolutionListUtils.distanceMatrix(aux);
     List<List<Pair<Integer, Double>> > distanceList = new ArrayList<>();
-    LocationAttribute location = new LocationAttribute(aux);
+    LocationAttribute<S> location = new LocationAttribute<S>(aux);
     for (int pos = 0; pos < aux.size(); pos++) {
       List<Pair<Integer, Double>> distanceNodeList = new ArrayList<>();
       for (int ref = 0; ref < aux.size(); ref++) {
@@ -75,11 +75,9 @@ public class EnvironmentalSelection<S extends Solution> implements SelectionOper
 
 
     for (int q = 0; q < distanceList.size(); q++){
-      Collections.sort(distanceList.get(q),new Comparator () {
+      Collections.sort(distanceList.get(q),new Comparator<Pair<Integer, Double>> () {
         @Override
-        public int compare(Object o1, Object o2) {
-          Pair<Integer, Double> pair1 = (Pair<Integer, Double>)o1;
-          Pair<Integer, Double> pair2 = (Pair<Integer, Double>)o2;
+        public int compare(Pair<Integer, Double> pair1, Pair<Integer, Double> pair2) {
           if (pair1.getRight()  < pair2.getRight()) {
             return -1;
           } else if (pair1.getRight()  > pair2.getRight()) {

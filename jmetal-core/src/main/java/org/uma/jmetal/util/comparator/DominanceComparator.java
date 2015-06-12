@@ -28,7 +28,7 @@ import java.util.Comparator;
  * This class implements a solution comparator taking into account the violation constraints and
  * an optional epsilon value (i.e, implements an epsilon dominance comparator)
  */
-public class DominanceComparator implements Comparator<Solution> {
+public class DominanceComparator<S extends Solution<?>> implements Comparator<S> {
   private ConstraintViolationComparator constraintViolationComparator;
   private double epsilon = 0.0 ;
 
@@ -62,7 +62,7 @@ public class DominanceComparator implements Comparator<Solution> {
    * non-dominated, or solution1  is dominated by solution2, respectively.
    */
   @Override
-  public int compare(Solution solution1, Solution solution2) {
+  public int compare(S solution1, S solution2) {
     if (solution1 == null) {
       throw new JMetalException("Solution1 is null") ;
     } else if (solution2 == null) {
@@ -81,7 +81,7 @@ public class DominanceComparator implements Comparator<Solution> {
     return result ;
   }
 
-  private int dominanceTest(Solution solution1, Solution solution2) {
+  private int dominanceTest(Solution<?> solution1, Solution<?> solution2) {
     int result ;
     boolean solution1Dominates = false ;
     boolean solution2Dominates = false ;
