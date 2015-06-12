@@ -33,7 +33,7 @@ public abstract class AbstractScatterSearch<S extends Solution, R>  implements A
 
   public abstract boolean isStoppingConditionReached();
 
-  public abstract boolean restartConditionIsFulfilled();
+  public abstract boolean restartConditionIsFulfilled(List<S> solutionList);
 
   public abstract void restart();
 
@@ -54,15 +54,16 @@ public abstract class AbstractScatterSearch<S extends Solution, R>  implements A
     initializationPhase() ;
     referenceSetUpdate();
     while (!isStoppingConditionReached()) {
-      if (restartConditionIsFulfilled()) {
+      List<List<S>> subset = subsetGeneration();
+      List<S> combinedSolutions = solutionCombination(subset) ;
+      for (S solution : combinedSolutions) {
+        S improvedSolution = improvement(solution) ;
+        referenceSetUpdate(improvedSolution);
+      }
+
+      if (restartConditionIsFulfilled(combinedSolutions)) {
         restart();
-      } else {
-        List<List<S>> subset = subsetGeneration();
-        List<S> combinedSolutions = solutionCombination(subset) ;
-        for (S solution : combinedSolutions) {
-          S improvedSolution = improvement(solution) ;
-          referenceSetUpdate(improvedSolution);
-        }
+        referenceSetUpdate();
       }
     }
   }

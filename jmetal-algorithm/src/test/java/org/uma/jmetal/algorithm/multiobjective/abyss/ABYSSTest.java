@@ -10,7 +10,6 @@ import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
@@ -111,10 +110,10 @@ public class ABYSSTest {
     abyss.referenceSetUpdate() ;
 
     assertEquals(referenceSet1Size, abyss.referenceSet1.size());
-    assertEquals(populationSize-referenceSet1Size, abyss.referenceSet2.size());
+    assertEquals(populationSize - referenceSet1Size, abyss.referenceSet2.size());
     assertEquals(0, abyss.getPopulation().size());
   }
-
+/*
   @Test
   public void shouldRestartConditionIsFulfilledReturnTrueIfAllTheSolutionsInTheRefSetsAreMarked() {
     int populationSize = 10 ;
@@ -170,7 +169,7 @@ public class ABYSSTest {
 
     assertFalse(abyss.restartConditionIsFulfilled()) ;
   }
-
+*/
   @Test
   public void shouldSubsetGenerationGenerateAllPairWiseCombinationsOfTheRefSets() {
     int populationSize = 10;
@@ -204,6 +203,34 @@ public class ABYSSTest {
     for (List<DoubleSolution> pair : list) {
       assertEquals(2, pair.size()) ;
     }
+  }
+
+  @Test
+  public void shouldSubsetGenerationProduceAnEmptyListIfAllTheSolutionsAreMarked() {
+    int populationSize = 10;
+    int numberOfSubRanges = 4;
+    int referenceSet1Size = 4;
+    int referenceSet2Size = 4;
+
+    DoubleProblem problem = new MockProblem();
+
+    abyss = new ABYSS(problem, 0, populationSize, referenceSet1Size, referenceSet2Size, 0, null,
+        localSearch, null, numberOfSubRanges);
+
+    abyss.initializationPhase();
+    abyss.referenceSetUpdate();
+
+    MarkAttribute marked = new MarkAttribute();
+    for (DoubleSolution solution: abyss.referenceSet1) {
+      marked.setAttribute(solution, true);
+    }
+
+    for (DoubleSolution solution: abyss.referenceSet2) {
+      marked.setAttribute(solution, true);
+    }
+    List<List<DoubleSolution>> list = abyss.subsetGeneration();
+
+    assertEquals(0, list.size()) ;
   }
 
   @Test
@@ -253,7 +280,7 @@ public class ABYSSTest {
     abyss.restart();
     assertEquals(populationSize, abyss.getPopulation().size());
   }
-  
+
   /**
    * Mock problem
    */

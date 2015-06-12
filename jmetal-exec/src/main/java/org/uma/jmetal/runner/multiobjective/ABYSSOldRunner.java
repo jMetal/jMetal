@@ -44,8 +44,10 @@ public class ABYSSOldRunner {
     if (args!=null && args.length == 1) {
       problemName = args[0] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
+      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
     }
+
+    JMetalRandom.getInstance().setSeed(1);
 
     problem = (DoubleProblem) ProblemUtils.loadProblem(problemName);
 

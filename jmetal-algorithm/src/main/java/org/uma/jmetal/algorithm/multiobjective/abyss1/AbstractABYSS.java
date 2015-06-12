@@ -461,6 +461,8 @@ public abstract class AbstractABYSS <S extends Solution> implements Algorithm<Li
       }
     }
 
+    System.out.println("Subset1 size: " + subSet.size()) ;
+
     // All pairs from refSet2
     for (int i = 0; i < refSet2.size(); i++) {
       parents.set(0, refSet2.get(i));
@@ -484,6 +486,8 @@ public abstract class AbstractABYSS <S extends Solution> implements Algorithm<Li
         }
       }
     }
+
+    System.out.println("Subset2 size: " + subSet.size()) ;
 
     return subSet.size();
   }

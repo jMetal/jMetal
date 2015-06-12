@@ -116,11 +116,18 @@ public class ABYSS extends AbstractABYSS<DoubleSolution> {
     return solution;
   }
 
+  /**
+   * Build the reference set after the initialization phase
+   */
   @Override public void referenceSetUpdate() {
     buildNewReferenceSet1() ;
     buildNewReferenceSet2();
   }
 
+  /**
+   * Update the reference set with a new solution
+   * @param solution
+   */
   @Override public void referenceSetUpdate(DoubleSolution solution) {
     if (refSet1Test(solution)) {
       for (int indSet2 = 0; indSet2 < referenceSet2.size(); indSet2++) {
@@ -312,7 +319,13 @@ public class ABYSS extends AbstractABYSS<DoubleSolution> {
   }
 
   @Override
-  public boolean restartConditionIsFulfilled() {
+  public boolean restartConditionIsFulfilled(List<DoubleSolution> combinedSolutions) {
+    if (combinedSolutions.isEmpty()) {
+      return true ;
+    } else {
+      return false ;
+    }
+    /*
     boolean allTheSolutionsAreMarked = true ;
 
     int i = 0 ;
@@ -333,7 +346,10 @@ public class ABYSS extends AbstractABYSS<DoubleSolution> {
       }
     }
 
+    System.out.println("Test: " + allTheSolutionsAreMarked) ;
+
     return allTheSolutionsAreMarked ;
+    */
   }
 
   /**
@@ -345,11 +361,14 @@ public class ABYSS extends AbstractABYSS<DoubleSolution> {
     List<List<DoubleSolution>> solutionGroupsList ;
 
     solutionGroupsList = generatePairsFromSolutionList(referenceSet1) ;
+    System.out.println("Subset1 size: " + solutionGroupsList.size()) ;
+
     solutionGroupsList.addAll(generatePairsFromSolutionList(referenceSet2));
+    System.out.println("Subset2 size: " + solutionGroupsList.size()) ;
 
     for (List<DoubleSolution> pair : solutionGroupsList) {
-      marked.setAttribute(pair.get(0), true);
-      marked.setAttribute(pair.get(1), true);
+      //marked.setAttribute(pair.get(0), true);
+      //marked.setAttribute(pair.get(1), true);
     }
 
     return solutionGroupsList ;
@@ -365,10 +384,16 @@ public class ABYSS extends AbstractABYSS<DoubleSolution> {
       for (int j = i + 1; j < solutionList.size(); j++) {
         DoubleSolution solution2 = solutionList.get(j);
 
-        List<DoubleSolution> pair = new ArrayList<>(2) ;
-        pair.add(solution1);
-        pair.add(solution2);
-        subset.add(pair);
+        if (!marked.getAttribute(solution1) ||
+            !marked.getAttribute(solution2)) {
+          List<DoubleSolution> pair = new ArrayList<>(2);
+          pair.add(solution1);
+          pair.add(solution2);
+          subset.add(pair);
+
+          marked.setAttribute(solutionList.get(i), true);
+          marked.setAttribute(solutionList.get(j), true);
+        }
       }
     }
 
@@ -392,13 +417,20 @@ public class ABYSS extends AbstractABYSS<DoubleSolution> {
         resultList.add(offspring.get(0));
         resultList.add(offspring.get(1));
       //}
+
+      //marked.setAttribute(pair.get(0), true);
+      //marked.setAttribute(pair.get(1), true);
     }
+
+
+    System.out.println("Recombined: " + resultList.size()) ;
 
     return resultList;
   }
 
   @Override
   public void restart() {
+    System.out.println("Restart ---------------------- ") ;
     getPopulation().clear();
     addReferenceSet1ToPopulation() ;
     updatePopulationWithArchive() ;

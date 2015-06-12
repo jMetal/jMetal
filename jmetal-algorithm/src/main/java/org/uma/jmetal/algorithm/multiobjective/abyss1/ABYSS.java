@@ -78,6 +78,7 @@ public class ABYSS extends AbstractABYSS<DoubleSolution> {
 
         // RE-START
         if (evaluations < maxEvaluations) {
+          System.out.println("REstart") ;
           solutionSet.clear();
           // Add refSet1 to SolutionSet
           for (int i = 0; i < refSet1.size(); i++) {
