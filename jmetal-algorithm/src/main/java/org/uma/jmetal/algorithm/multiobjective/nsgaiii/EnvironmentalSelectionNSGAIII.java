@@ -8,7 +8,6 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.solutionattribute.SolutionAttribute;
 
 import java.util.ArrayList;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,22 +16,22 @@ import java.util.List;
  * http://web.ntnu.edu.tw/~tcchiang/publications/nsga3cpp/nsga3cpp.htm
  */
 
-public class EnvironmentalSelectionNSGAIII implements SelectionOperator<List<Solution>, List<Solution>>,
-    SolutionAttribute<Solution, List<Double>> {
+public class EnvironmentalSelectionNSGAIII<S extends Solution<?>> implements SelectionOperator<List<S>, List<S>>,
+    SolutionAttribute<S, List<Double>> {
 
-  private List<List<Solution>> fronts;
+  private List<List<S>> fronts;
   private int solutionsToSelect;
-  private List<ReferencePoint> referencePoints;
+  private List<ReferencePoint<S>> referencePoints;
   private int numberOfObjectives;
 
-  public EnvironmentalSelectionNSGAIII(Builder builder) {
+  public EnvironmentalSelectionNSGAIII(Builder<S> builder) {
     fronts = builder.getFronts();
     solutionsToSelect = builder.getSolutionsToSelet();
     referencePoints = builder.getReferencePoints();
     numberOfObjectives = builder.getNumberOfObjectives();
   }
 
-  public List<Double> translateObjectives(List<Solution> population) {
+  public List<Double> translateObjectives(List<S> population) {
     List<Double> ideal_point;
     ideal_point = new ArrayList<>(numberOfObjectives);
 
@@ -44,8 +43,8 @@ public class EnvironmentalSelectionNSGAIII implements SelectionOperator<List<Sol
       }
       ideal_point.add(minf);
 
-      for (List<Solution> list : fronts) {
-        for (Solution s : list) {
+      for (List<S> list : fronts) {
+        for (S s : list) {
           if (f == 0) // in the first objective we create the vector of conv_objs
             setAttribute(s, new ArrayList<Double>());
 
@@ -65,7 +64,7 @@ public class EnvironmentalSelectionNSGAIII implements SelectionOperator<List<Sol
   // of the objective which uses 1.0; the rest will use 0.00001. This is
   // different to the one implementd in C++
   // ----------------------------------------------------------------------
-  private double ASF(Solution s, int index) {
+  private double ASF(S s, int index) {
     double max_ratio = Double.NEGATIVE_INFINITY;
     for (int i = 0; i < s.getNumberOfObjectives(); i++) {
       double weight = (index == i) ? 1.0 : 0.000001;
@@ -75,12 +74,12 @@ public class EnvironmentalSelectionNSGAIII implements SelectionOperator<List<Sol
   }
 
   // ----------------------------------------------------------------------
-  private List<Solution> findExtremePoints(List<Solution> population) {
-    List<Solution> extreme_points = new ArrayList<>();
-    Solution min_indv = null;
+  private List<S> findExtremePoints(List<S> population) {
+    List<S> extreme_points = new ArrayList<>();
+    S min_indv = null;
     for (int f = 0; f < numberOfObjectives; f += 1) {
       double min_ASF = Double.MAX_VALUE;
-      for (Solution s : fronts.get(0))  // only consider the individuals in the first front
+      for (S s : fronts.get(0))  // only consider the individuals in the first front
       {
         double asf = ASF(s, f);
         if (asf < min_ASF) {
@@ -123,8 +122,8 @@ public class EnvironmentalSelectionNSGAIII implements SelectionOperator<List<Sol
     return x;
   }
 
-  public List<Double> constructHyperplane(List<Solution> population,
-      List<Solution> extreme_points) {
+  public List<Double> constructHyperplane(List<S> population,
+      List<S> extreme_points) {
     // Check whether there are duplicate extreme points.
     // This might happen but the original paper does not mention how to deal with it.
     boolean duplicate = false;
@@ -149,7 +148,7 @@ public class EnvironmentalSelectionNSGAIII implements SelectionOperator<List<Sol
         b.add(1.0);
 
       List<List<Double>> A = new ArrayList<>();
-      for (Solution s : extreme_points) {
+      for (S s : extreme_points) {
         List<Double> aux = new ArrayList<>();
         for (int i = 0; i < numberOfObjectives; i++)
           aux.add(s.getObjective(i));
@@ -166,10 +165,10 @@ public class EnvironmentalSelectionNSGAIII implements SelectionOperator<List<Sol
     return intercepts;
   }
 
-  public void normalizeObjectives(List<Solution> population, List<Double> intercepts,
+  public void normalizeObjectives(List<S> population, List<Double> intercepts,
       List<Double> ideal_point) {
     for (int t = 0; t < fronts.size(); t += 1) {
-      for (Solution s : fronts.get(t)) {
+      for (S s : fronts.get(t)) {
 
         for (int f = 0; f < numberOfObjectives; f++) {
           List<Double> conv_obj = (List<Double>) getAttribute(s);
@@ -200,11 +199,11 @@ public class EnvironmentalSelectionNSGAIII implements SelectionOperator<List<Sol
   }
 
 
-  public void associate(List<Solution> population) {
+  public void associate(List<S> population) {
 
 
     for (int t = 0; t < fronts.size(); t++) {
-      for (Solution s : fronts.get(t)) {
+      for (S s : fronts.get(t)) {
         int min_rp = -1;
         double min_dist = Double.MAX_VALUE;
         for (int r = 0; r < this.referencePoints.size(); r++) {
@@ -252,8 +251,8 @@ public class EnvironmentalSelectionNSGAIII implements SelectionOperator<List<Sol
   //
   // Check the last two paragraphs in Section IV-E in the original paper.
   // ----------------------------------------------------------------------
-  Solution SelectClusterMember(ReferencePoint rp) {
-    Solution chosen = null;
+  S SelectClusterMember(ReferencePoint<S> rp) {
+    S chosen = null;
     if (rp.HasPotentialMember()) {
       if (rp.MemberSize() == 0) // currently has no member
       {
@@ -267,7 +266,7 @@ public class EnvironmentalSelectionNSGAIII implements SelectionOperator<List<Sol
 
   @Override
   /* This method performs the environmental Selection indicated in the paper describing NSGAIII*/ 
-  public List<Solution> execute(List<Solution> source) throws JMetalException {
+  public List<S> execute(List<S> source) throws JMetalException {
     // The comments show the C++ code
 
     // ---------- Steps 9-10 in Algorithm 1 ----------
@@ -278,7 +277,7 @@ public class EnvironmentalSelectionNSGAIII implements SelectionOperator<List<Sol
     // ---------- Step 14 / Algorithm 2 ----------
     //vector<double> ideal_point = TranslateObjectives(&cur, fronts);
     List<Double> ideal_point = translateObjectives(source);
-    List<Solution> extreme_points = findExtremePoints(source);
+    List<S> extreme_points = findExtremePoints(source);
     List<Double> intercepts = constructHyperplane(source, extreme_points);
 
     normalizeObjectives(source, intercepts, ideal_point);
@@ -289,7 +288,7 @@ public class EnvironmentalSelectionNSGAIII implements SelectionOperator<List<Sol
     while (source.size() < this.solutionsToSelect) {
       int min_rp = FindNicheReferencePoint();
 
-      Solution chosen = SelectClusterMember(this.referencePoints.get(min_rp));
+      S chosen = SelectClusterMember(this.referencePoints.get(min_rp));
       if (chosen == null) // no potential member in Fl, disregard this reference point
       {
         this.referencePoints.remove(min_rp);
@@ -303,20 +302,20 @@ public class EnvironmentalSelectionNSGAIII implements SelectionOperator<List<Sol
     return source;
   }
 
-  public static class Builder {
-    private List<List<Solution>> fronts;
+  public static class Builder<S extends Solution<?>> {
+    private List<List<S>> fronts;
     private int solutionsToSelect;
-    private List<ReferencePoint> referencePoints;
+    private List<ReferencePoint<S>> referencePoints;
     private int numberOfObjctives;
 
     // the default constructor is generated by default
 
-    public Builder setSolutionsToSelect(int solutions) {
+    public Builder<S> setSolutionsToSelect(int solutions) {
       solutionsToSelect = solutions;
       return this;
     }
 
-    public Builder setFronts(List<List<Solution>> f) {
+    public Builder<S> setFronts(List<List<S>> f) {
       fronts = f;
       return this;
     }
@@ -325,24 +324,24 @@ public class EnvironmentalSelectionNSGAIII implements SelectionOperator<List<Sol
       return this.solutionsToSelect;
     }
 
-    public List<List<Solution>> getFronts() {
+    public List<List<S>> getFronts() {
       return this.fronts;
     }
 
-    public EnvironmentalSelectionNSGAIII build() {
-      return new EnvironmentalSelectionNSGAIII(this);
+    public EnvironmentalSelectionNSGAIII<S> build() {
+      return new EnvironmentalSelectionNSGAIII<S>(this);
     }
 
-    public List<ReferencePoint> getReferencePoints() {
+    public List<ReferencePoint<S>> getReferencePoints() {
       return referencePoints;
     }
 
-    public Builder setReferencePoints(List<ReferencePoint> referencePoints) {
+    public Builder<S> setReferencePoints(List<ReferencePoint<S>> referencePoints) {
       this.referencePoints = referencePoints;
       return this;
     }
 
-    public Builder setNumberOfObjectives(int n) {
+    public Builder<S> setNumberOfObjectives(int n) {
       this.numberOfObjctives = n;
       return this;
     }
@@ -352,11 +351,12 @@ public class EnvironmentalSelectionNSGAIII implements SelectionOperator<List<Sol
     }
   }
 
-  @Override public void setAttribute(Solution solution, List<Double> value) {
+  @Override public void setAttribute(S solution, List<Double> value) {
     solution.setAttribute(getAttributeID(), value);
   }
 
-  @Override public List<Double> getAttribute(Solution solution) {
+  @SuppressWarnings("unchecked")
+  @Override public List<Double> getAttribute(S solution) {
     return (List<Double>) solution.getAttribute(getAttributeID());
   }
 

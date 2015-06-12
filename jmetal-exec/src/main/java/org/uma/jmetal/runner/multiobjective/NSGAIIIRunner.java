@@ -21,7 +21,6 @@
 package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.nsgaiii.NSGAIII;
 import org.uma.jmetal.algorithm.multiobjective.nsgaiii.NSGAIIIBuilder;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
@@ -30,7 +29,7 @@ import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
@@ -46,11 +45,11 @@ import java.util.List;
 public class NSGAIIIRunner {
 
   public static void main(String[] args) throws JMetalException {
-    Problem problem;
-    Algorithm algorithm;
-    CrossoverOperator crossover;
-    MutationOperator mutation;
-    SelectionOperator selection;
+    Problem<DoubleSolution> problem;
+    Algorithm<List<DoubleSolution>> algorithm;
+    CrossoverOperator<DoubleSolution> crossover;
+    MutationOperator<DoubleSolution> mutation;
+    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ3" ;
 
@@ -64,9 +63,9 @@ public class NSGAIIIRunner {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    selection = new BinaryTournamentSelection();
+    selection = new BinaryTournamentSelection<DoubleSolution>();
 
-    algorithm = new NSGAIIIBuilder(problem)
+    algorithm = new NSGAIIIBuilder<DoubleSolution>(problem)
             .setCrossoverOperator(crossover)
             .setMutationOperator(mutation)
             .setSelectionOperator(selection)
@@ -77,7 +76,7 @@ public class NSGAIIIRunner {
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
-    List<Solution> population = ((NSGAIII)algorithm).getResult() ;
+    List<DoubleSolution> population = algorithm.getResult() ;
     long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)

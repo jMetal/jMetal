@@ -21,7 +21,6 @@
 
 package org.uma.jmetal.runner.multiobjective;
 
-import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.ibea.IBEA;
 import org.uma.jmetal.algorithm.multiobjective.ibea.IBEABuilder;
 import org.uma.jmetal.operator.CrossoverOperator;
@@ -31,7 +30,7 @@ import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
@@ -55,11 +54,11 @@ public class IBEARunner {
    *       - org.uma.jmetal45.runner.multiobjective.IBEARunner problemName paretoFrontFile
    */
   public static void main(String[] args) throws Exception {
-    Problem problem;
-    Algorithm algorithm;
-    CrossoverOperator crossover;
-    MutationOperator mutation;
-    SelectionOperator selection;
+    Problem<DoubleSolution> problem;
+    IBEA<DoubleSolution> algorithm;
+    CrossoverOperator<DoubleSolution> crossover;
+    MutationOperator<DoubleSolution> mutation;
+    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
 
     String problemName ;
     if (args.length == 1) {
@@ -79,7 +78,7 @@ public class IBEARunner {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    selection = new BinaryTournamentSelection() ;
+    selection = new BinaryTournamentSelection<DoubleSolution>() ;
 
     algorithm = new IBEABuilder(problem)
       .setArchiveSize(100)
@@ -93,7 +92,7 @@ public class IBEARunner {
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
       .execute() ;
 
-    List<Solution> population = ((IBEA)algorithm).getResult() ;
+    List<DoubleSolution> population = algorithm.getResult() ;
     long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)

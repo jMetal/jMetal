@@ -21,7 +21,6 @@
 package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
@@ -31,7 +30,7 @@ import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.multiobjective.ebes.Ebes;
 import org.uma.jmetal.problem.multiobjective.ebes.EbesMutation;
-import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
@@ -56,11 +55,11 @@ public class NSGAIIEbesRunner {
    *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName paretoFrontFile
    */
   public static void main(String[] args) throws JMetalException {
-    Problem problem;
-    Algorithm algorithm;
-    CrossoverOperator crossover;
-    MutationOperator mutation;
-    SelectionOperator selection;
+    Problem<DoubleSolution> problem;
+    Algorithm<List<DoubleSolution>> algorithm;
+    CrossoverOperator<DoubleSolution> crossover;
+    MutationOperator<DoubleSolution> mutation;
+    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.ebes.Ebes" ;
 
@@ -73,9 +72,9 @@ public class NSGAIIEbesRunner {
     double mutationProbability = 1.0 / ((Ebes)problem).getnumberOfGroupElements() ;
     mutation = new EbesMutation(mutationProbability) ;
 
-    selection = new BinaryTournamentSelection();
+    selection = new BinaryTournamentSelection<DoubleSolution>();
 
-    algorithm = new NSGAIIBuilder(problem, crossover, mutation, NSGAIIBuilder.NSGAIIVariant.NSGAII)
+    algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, NSGAIIBuilder.NSGAIIVariant.NSGAII)
             .setSelectionOperator(selection)
             .setMaxIterations(250)
             .setPopulationSize(100)
@@ -84,7 +83,7 @@ public class NSGAIIEbesRunner {
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
-    List<Solution> population = ((NSGAII)algorithm).getResult() ;
+    List<DoubleSolution> population = algorithm.getResult() ;
     long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)
