@@ -39,7 +39,7 @@ public class ABYSSRunner {
    */
   public static void main(String[] args) throws Exception {
     DoubleProblem problem;
-    Algorithm algorithm;
+    Algorithm<List<DoubleSolution>> algorithm;
     String problemName ;
     if (args!=null && args.length == 1) {
       problemName = args[0] ;
@@ -47,9 +47,9 @@ public class ABYSSRunner {
       problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
     }
 
-    problem = (DoubleProblem) ProblemUtils.loadProblem(problemName);
+    problem = (DoubleProblem) ProblemUtils.<DoubleSolution> loadProblem(problemName);
 
-    Archive archive = new CrowdingDistanceArchive(100) ;
+    Archive<DoubleSolution> archive = new CrowdingDistanceArchive<DoubleSolution>(100) ;
 
     algorithm = new ABYSSBuilder(problem, archive)
         .build();

@@ -46,7 +46,7 @@ import java.util.List;
  * - current-to-rand/1/bin (current-to-best/1/bin)
  * - current-to-rand/1/exp (current-to-best/1/exp)
  */
-public class DifferentialEvolutionCrossover implements CrossoverOperator<List<DoubleSolution>, List<DoubleSolution>> {
+public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleSolution> {
   private static final double DEFAULT_CR = 0.5;
   private static final double DEFAULT_F = 0.5;
   private static final double DEFAULT_K = 0.5;

@@ -29,26 +29,26 @@ import java.util.Comparator;
  * an optional epsilon value (i.e, implements an epsilon dominance comparator)
  */
 public class DominanceComparator<S extends Solution<?>> implements Comparator<S> {
-  private ConstraintViolationComparator constraintViolationComparator;
+  private ConstraintViolationComparator<S> constraintViolationComparator;
   private double epsilon = 0.0 ;
 
   /** Constructor */
   public DominanceComparator() {
-    this(new OverallConstraintViolationComparator(), 0.0) ;
+    this(new OverallConstraintViolationComparator<S>(), 0.0) ;
   }
 
   /** Constructor */
   public DominanceComparator(double epsilon) {
-    this(new OverallConstraintViolationComparator(), epsilon) ;
+    this(new OverallConstraintViolationComparator<S>(), epsilon) ;
   }
 
   /** Constructor */
-  public DominanceComparator(ConstraintViolationComparator constraintComparator) {
+  public DominanceComparator(ConstraintViolationComparator<S> constraintComparator) {
     this(constraintComparator, 0.0) ;
   }
 
   /** Constructor */
-  public DominanceComparator(ConstraintViolationComparator constraintComparator, double epsilon) {
+  public DominanceComparator(ConstraintViolationComparator<S> constraintComparator, double epsilon) {
     constraintViolationComparator = constraintComparator ;
     this.epsilon = epsilon ;
   }

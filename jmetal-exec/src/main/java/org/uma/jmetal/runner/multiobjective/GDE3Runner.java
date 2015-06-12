@@ -51,7 +51,7 @@ public class GDE3Runner {
    */
   public static void main(String[] args) {
     DoubleProblem problem;
-    Algorithm algorithm;
+    Algorithm<List<DoubleSolution>> algorithm;
     DifferentialEvolutionSelection selection;
     DifferentialEvolutionCrossover crossover;
 
@@ -63,7 +63,7 @@ public class GDE3Runner {
       problemName = "org.uma.jmetal.problem.multiobjective.Srinivas";
     }
 
-    problem = (DoubleProblem) ProblemUtils.loadProblem(problemName);
+    problem = (DoubleProblem) ProblemUtils.<DoubleSolution> loadProblem(problemName);
 
      /*
      * Alternatives:

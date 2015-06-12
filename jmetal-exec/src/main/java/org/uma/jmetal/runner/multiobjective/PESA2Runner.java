@@ -55,7 +55,7 @@ public class PESA2Runner {
   public static void main(String[] args) throws JMetalException {
     Problem<DoubleSolution> problem;
     Algorithm<List<DoubleSolution>> algorithm;
-    CrossoverOperator<List<DoubleSolution>, List<DoubleSolution>> crossover;
+    CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
 
     String problemName ;

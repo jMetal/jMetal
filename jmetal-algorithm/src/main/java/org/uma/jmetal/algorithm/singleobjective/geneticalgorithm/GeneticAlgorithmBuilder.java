@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by ajnebro on 10/12/14.
  */
-public class GeneticAlgorithmBuilder<S extends Solution> {
+public class GeneticAlgorithmBuilder<S extends Solution<?>> {
   public enum GeneticAlgorithmVariant {GENERATIONAL, STEADY_STATE}
   /**
    * Builder class
@@ -24,19 +24,19 @@ public class GeneticAlgorithmBuilder<S extends Solution> {
   private Problem<S> problem;
   private int maxEvaluations;
   private int populationSize;
-  private CrossoverOperator<List<S>, List<S>> crossoverOperator;
+  private CrossoverOperator<S> crossoverOperator;
   private MutationOperator<S> mutationOperator;
-  private SelectionOperator selectionOperator;
-  private SolutionListEvaluator evaluator;
+  private SelectionOperator<List<S>, S> selectionOperator;
+  private SolutionListEvaluator<S> evaluator;
 
   private GeneticAlgorithmVariant variant ;
-  private SelectionOperator defaultSelectionOperator = new BinaryTournamentSelection() ;
+  private SelectionOperator<List<S>, S> defaultSelectionOperator = new BinaryTournamentSelection<S>() ;
 
   /**
    * Builder constructor
    */
   public GeneticAlgorithmBuilder(Problem<S> problem,
-      CrossoverOperator<List<S>, List<S>> crossoverOperator,
+      CrossoverOperator<S> crossoverOperator,
       MutationOperator<S> mutationOperator, GeneticAlgorithmVariant variant) {
     this.problem = problem;
     maxEvaluations = 25000;
@@ -45,30 +45,30 @@ public class GeneticAlgorithmBuilder<S extends Solution> {
     this.crossoverOperator = crossoverOperator ;
     this.selectionOperator = defaultSelectionOperator ;
 
-    evaluator = new SequentialSolutionListEvaluator();
+    evaluator = new SequentialSolutionListEvaluator<S>();
 
     this.variant = variant ;
   }
 
-  public GeneticAlgorithmBuilder setMaxEvaluations(int maxEvaluations) {
+  public GeneticAlgorithmBuilder<S> setMaxEvaluations(int maxEvaluations) {
     this.maxEvaluations = maxEvaluations;
 
     return this;
   }
 
-  public GeneticAlgorithmBuilder setPopulationSize(int populationSize) {
+  public GeneticAlgorithmBuilder<S> setPopulationSize(int populationSize) {
     this.populationSize = populationSize;
 
     return this;
   }
 
-  public GeneticAlgorithmBuilder setSelectionOperator(SelectionOperator selectionOperator) {
+  public GeneticAlgorithmBuilder<S> setSelectionOperator(SelectionOperator<List<S>, S> selectionOperator) {
     this.selectionOperator = selectionOperator;
 
     return this;
   }
 
-  public GeneticAlgorithmBuilder setSolutionListEvaluator(SolutionListEvaluator evaluator) {
+  public GeneticAlgorithmBuilder<S> setSolutionListEvaluator(SolutionListEvaluator<S> evaluator) {
     this.evaluator = evaluator;
 
     return this;

@@ -51,10 +51,10 @@ import java.util.List;
  */
 public class MOCHCRunner {
   public static void main(String[] args) throws Exception {
-    CrossoverOperator<List<BinarySolution>,List<BinarySolution>> crossoverOperator;
+    CrossoverOperator<BinarySolution> crossoverOperator;
     MutationOperator<BinarySolution> mutationOperator;
-    SelectionOperator parentsSelection;
-    SelectionOperator newGenerationSelection;
+    SelectionOperator<List<BinarySolution>, BinarySolution> parentsSelection;
+    SelectionOperator<List<BinarySolution>, List<BinarySolution>> newGenerationSelection;
     Algorithm<List<BinarySolution>> algorithm ;
 
     BinaryProblem problem ;
@@ -66,11 +66,11 @@ public class MOCHCRunner {
       problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT5";
     }
 
-    problem = (BinaryProblem)ProblemUtils.loadProblem(problemName);
+    problem = (BinaryProblem) ProblemUtils.<BinarySolution> loadProblem(problemName);
 
     crossoverOperator = new HUXCrossover(1.0) ;
-    parentsSelection = new RandomSelection() ;
-    newGenerationSelection = new RankingAndCrowdingSelection(100) ;
+    parentsSelection = new RandomSelection<BinarySolution>() ;
+    newGenerationSelection = new RankingAndCrowdingSelection<BinarySolution>(100) ;
     mutationOperator = new BitFlipMutation(0.35) ;
 
     algorithm = new MOCHCBuilder(problem)
@@ -83,7 +83,7 @@ public class MOCHCRunner {
             .setNewGenerationSelection(newGenerationSelection)
             .setCataclysmicMutation(mutationOperator)
             .setParentSelection(parentsSelection)
-            .setEvaluator(new SequentialSolutionListEvaluator())
+            .setEvaluator(new SequentialSolutionListEvaluator<BinarySolution>())
             .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)

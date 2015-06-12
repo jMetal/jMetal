@@ -27,21 +27,21 @@ import java.util.List;
  * @author Antonio J. Nebro
  * @version 1.0
  */
-public class NullCrossover<Source extends List<? extends Solution>, Result extends List<? extends Solution>>
-    implements CrossoverOperator<Source, Result> {
+public class NullCrossover<S extends Solution<?>>
+    implements CrossoverOperator<S> {
 
   /** Execute() method */
-  @Override public Result execute(Source source) {
+  @Override public List<S> execute(List<S> source) {
     if (null == source) {
       throw new JMetalException("Null parameter") ;
     } else if (source.size() != 2) {
       throw new JMetalException("There must be two parents instead of " + source.size()) ;
     }
 
-    List<Solution> list = new ArrayList<>() ;
-    list.add(source.get(0).copy()) ;
-    list.add(source.get(1).copy()) ;
+    List<S> list = new ArrayList<>() ;
+    list.add((S) source.get(0).copy()) ;
+    list.add((S) source.get(1).copy()) ;
 
-    return (Result) list ;
+    return list ;
   }
 }

@@ -3,6 +3,7 @@ package org.uma.jmetal.algorithm.singleobjective.differentialevolution;
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.impl.selection.DifferentialEvolutionSelection;
 import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
@@ -17,7 +18,7 @@ public class DifferentialEvolutionBuilder {
   private int maxEvaluations;
   private DifferentialEvolutionCrossover crossoverOperator;
   private DifferentialEvolutionSelection selectionOperator;
-  private SolutionListEvaluator evaluator;
+  private SolutionListEvaluator<DoubleSolution> evaluator;
 
   public DifferentialEvolutionBuilder(DoubleProblem problem) {
     this.problem = problem;
@@ -25,7 +26,7 @@ public class DifferentialEvolutionBuilder {
     this.maxEvaluations = 25000;
     this.crossoverOperator = new DifferentialEvolutionCrossover(0.5, 0.5, "rand/1/bin");
     this.selectionOperator = new DifferentialEvolutionSelection();
-    this.evaluator = new SequentialSolutionListEvaluator();
+    this.evaluator = new SequentialSolutionListEvaluator<DoubleSolution>();
   }
 
   public DifferentialEvolutionBuilder setPopulationSize(int populationSize) {
@@ -60,7 +61,7 @@ public class DifferentialEvolutionBuilder {
     return this;
   }
 
-  public DifferentialEvolutionBuilder setSolutionListEvaluator(SolutionListEvaluator evaluator) {
+  public DifferentialEvolutionBuilder setSolutionListEvaluator(SolutionListEvaluator<DoubleSolution> evaluator) {
     this.evaluator = evaluator;
 
     return this;
@@ -92,7 +93,7 @@ public class DifferentialEvolutionBuilder {
     return selectionOperator;
   }
 
-  public SolutionListEvaluator getSolutionListEvaluator() {
+  public SolutionListEvaluator<DoubleSolution> getSolutionListEvaluator() {
     return evaluator;
   }
 }

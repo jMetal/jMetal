@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Created by ajnebro on 4/4/15.
  */
-public class PESA2<S extends Solution> extends AbstractGeneticAlgorithm<S, List<S>> {
+public class PESA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>> {
   private int maxEvaluations ;
   private int archiveSize ;
   private int populationSize ;
@@ -26,13 +26,13 @@ public class PESA2<S extends Solution> extends AbstractGeneticAlgorithm<S, List<
   private int evaluations ;
 
   protected final Problem<S> problem;
-  protected SelectionOperator<AdaptiveGridArchive, S> selectionOperator ;
+  protected SelectionOperator<AdaptiveGridArchive<S>, S> selectionOperator ;
 
   private AdaptiveGridArchive<S> archive;
   protected final SolutionListEvaluator<S> evaluator;
 
   public PESA2(Problem<S> problem, int maxEvaluations, int populationSize, int archiveSize,
-      int biSections, CrossoverOperator<List<S>, List<S>> crossoverOperator,
+      int biSections, CrossoverOperator<S> crossoverOperator,
       MutationOperator<S> mutationOperator, SolutionListEvaluator<S> evaluator) {
     this.problem = problem ;
     this.maxEvaluations = maxEvaluations ;
@@ -42,7 +42,7 @@ public class PESA2<S extends Solution> extends AbstractGeneticAlgorithm<S, List<
 
     this.crossoverOperator = crossoverOperator;
     this.mutationOperator = mutationOperator;
-    this.selectionOperator = new PESA2Selection();
+    this.selectionOperator = new PESA2Selection<S>();
 
     this.evaluator = evaluator ;
 

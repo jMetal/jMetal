@@ -34,7 +34,7 @@ public class NSGAII<S extends  Solution<?>> extends AbstractGeneticAlgorithm<S, 
    * Constructor
    */
   public NSGAII(Problem<S> problem, int maxIterations, int populationSize,
-      CrossoverOperator<List<S>, List<S>> crossoverOperator, MutationOperator<S> mutationOperator,
+      CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
       SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator) {
     super() ;
     this.problem = problem;
@@ -163,7 +163,7 @@ public class NSGAII<S extends  Solution<?>> extends AbstractGeneticAlgorithm<S, 
   protected void addLastRankedSolutionsToPopulation(Ranking<S> ranking, int rank, List<S> population) {
     List<S> currentRankedFront = ranking.getSubfront(rank);
 
-    Collections.sort(currentRankedFront, new CrowdingDistanceComparator());
+    Collections.sort(currentRankedFront, new CrowdingDistanceComparator<S>());
 
     int i = 0;
     while (population.size() < populationSize) {

@@ -1,6 +1,5 @@
 package org.uma.jmetal.algorithm.multiobjective.spea2;
 
-import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -17,7 +16,7 @@ import java.util.List;
 /**
  * Created by juanjo 
  */
-public class SPEA2Builder<S extends Solution> implements AlgorithmBuilder {
+public class SPEA2Builder<S extends Solution<?>> implements AlgorithmBuilder<SPEA2<S>> {
 
   /**
    * SPEA2Builder class
@@ -25,26 +24,26 @@ public class SPEA2Builder<S extends Solution> implements AlgorithmBuilder {
   private final Problem<S> problem;
   private int maxIterations;
   private int populationSize;
-  private CrossoverOperator<List<S>, List<S>> crossoverOperator;
+  private CrossoverOperator<S> crossoverOperator;
   private MutationOperator<S> mutationOperator;
-  private SelectionOperator selectionOperator;
-  private SolutionListEvaluator evaluator;
+  private SelectionOperator<List<S>, S> selectionOperator;
+  private SolutionListEvaluator<S> evaluator;
 
   /**
    * SPEA2Builder constructor
    */
-  public SPEA2Builder(Problem problem, CrossoverOperator<List<S>, List<S>> crossoverOperator,
+  public SPEA2Builder(Problem<S> problem, CrossoverOperator<S> crossoverOperator,
       MutationOperator<S> mutationOperator) {
     this.problem = problem;
     maxIterations = 250;
     populationSize = 100;
     this.crossoverOperator = crossoverOperator ;
     this.mutationOperator = mutationOperator ;
-    selectionOperator = new BinaryTournamentSelection();
-    evaluator = new SequentialSolutionListEvaluator();
+    selectionOperator = new BinaryTournamentSelection<S>();
+    evaluator = new SequentialSolutionListEvaluator<S>();
   }
 
-  public SPEA2Builder setMaxIterations(int maxIterations) {
+  public SPEA2Builder<S> setMaxIterations(int maxIterations) {
     if (maxIterations < 0) {
       throw new JMetalException("maxIterations is negative: " + maxIterations);
     }
@@ -53,7 +52,7 @@ public class SPEA2Builder<S extends Solution> implements AlgorithmBuilder {
     return this;
   }
 
-  public SPEA2Builder setPopulationSize(int populationSize) {
+  public SPEA2Builder<S> setPopulationSize(int populationSize) {
     if (populationSize < 0) {
       throw new JMetalException("Population size is negative: " + populationSize);
     }
@@ -63,7 +62,7 @@ public class SPEA2Builder<S extends Solution> implements AlgorithmBuilder {
     return this;
   }
 
-  public SPEA2Builder setSelectionOperator(SelectionOperator selectionOperator) {
+  public SPEA2Builder<S> setSelectionOperator(SelectionOperator<List<S>, S> selectionOperator) {
     if (selectionOperator == null) {
       throw new JMetalException("selectionOperator is null");
     }
@@ -72,7 +71,7 @@ public class SPEA2Builder<S extends Solution> implements AlgorithmBuilder {
     return this;
   }
 
-  public SPEA2Builder setSolutionListEvaluator(SolutionListEvaluator evaluator) {
+  public SPEA2Builder<S> setSolutionListEvaluator(SolutionListEvaluator<S> evaluator) {
     if (evaluator == null) {
       throw new JMetalException("evaluator is null");
     }
@@ -81,8 +80,8 @@ public class SPEA2Builder<S extends Solution> implements AlgorithmBuilder {
     return this;
   }
 
-  public Algorithm build() {
-    Algorithm algorithm = null ;
+  public SPEA2<S> build() {
+    SPEA2<S> algorithm = null ;
     algorithm = new SPEA2<S>(problem, maxIterations, populationSize, crossoverOperator,
           mutationOperator, selectionOperator, evaluator);
     
@@ -90,7 +89,7 @@ public class SPEA2Builder<S extends Solution> implements AlgorithmBuilder {
   }
 
   /* Getters */
-  public Problem getProblem() {
+  public Problem<S> getProblem() {
     return problem;
   }
 
@@ -102,19 +101,19 @@ public class SPEA2Builder<S extends Solution> implements AlgorithmBuilder {
     return populationSize;
   }
 
-  public CrossoverOperator getCrossoverOperator() {
+  public CrossoverOperator<S> getCrossoverOperator() {
     return crossoverOperator;
   }
 
-  public MutationOperator getMutationOperator() {
+  public MutationOperator<S> getMutationOperator() {
     return mutationOperator;
   }
 
-  public SelectionOperator getSelectionOperator() {
+  public SelectionOperator<List<S>, S> getSelectionOperator() {
     return selectionOperator;
   }
 
-  public SolutionListEvaluator getSolutionListEvaluator() {
+  public SolutionListEvaluator<S> getSolutionListEvaluator() {
     return evaluator;
   }
 }

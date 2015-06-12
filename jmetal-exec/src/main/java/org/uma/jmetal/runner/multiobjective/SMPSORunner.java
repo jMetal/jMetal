@@ -64,8 +64,8 @@ public class SMPSORunner {
    */
   public static void main(String[] args) throws Exception {
     DoubleProblem problem;
-    Algorithm algorithm;
-    MutationOperator mutation;
+    Algorithm<List<DoubleSolution>> algorithm;
+    MutationOperator<DoubleSolution> mutation;
 
     String problemName ;
     if (args.length == 1) {
@@ -74,9 +74,9 @@ public class SMPSORunner {
       problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
     }
 
-    problem = (DoubleProblem) ProblemUtils.loadProblem(problemName);
+    problem = (DoubleProblem) ProblemUtils.<DoubleSolution> loadProblem(problemName);
 
-    Archive archive = new CrowdingDistanceArchive(100) ;
+    Archive<DoubleSolution> archive = new CrowdingDistanceArchive<DoubleSolution>(100) ;
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
     double mutationDistributionIndex = 20.0 ;
@@ -87,7 +87,7 @@ public class SMPSORunner {
             .setMaxIterations(250)
             .setSwarmSize(100)
             //.setRandomGenerator(new MersenneTwisterGenerator())
-            .setSolutionListEvaluator(new SequentialSolutionListEvaluator())
+            .setSolutionListEvaluator(new SequentialSolutionListEvaluator<DoubleSolution>())
             .build();
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)

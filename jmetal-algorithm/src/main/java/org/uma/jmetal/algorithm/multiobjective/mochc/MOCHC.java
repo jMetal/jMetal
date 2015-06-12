@@ -50,26 +50,26 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
   private int convergenceValue;
   private double preservedPopulation;
   private double initialConvergenceCount;
-  private CrossoverOperator<List<BinarySolution>, List<BinarySolution>> crossover;
+  private CrossoverOperator<BinarySolution> crossover;
   private MutationOperator<BinarySolution> cataclysmicMutation;
-  private SelectionOperator newGenerationSelection;
-  private SelectionOperator parentSelection;
+  private SelectionOperator<List<BinarySolution>, List<BinarySolution>> newGenerationSelection;
+  private SelectionOperator<List<BinarySolution>, BinarySolution> parentSelection;
   private int evaluations;
   private int minimumDistance;
   private int size;
-  private Comparator comparator;
+  private Comparator<BinarySolution> comparator;
 
-  private SolutionListEvaluator evaluator;
+  private SolutionListEvaluator<BinarySolution> evaluator;
 
   /**
    * Constructor
    */
   public MOCHC(BinaryProblem problem, int populationSize, int maxEvaluations, int convergenceValue,
       double preservedPopulation, double initialConvergenceCount,
-      CrossoverOperator<List<BinarySolution>, List<BinarySolution>> crossoverOperator,
+      CrossoverOperator<BinarySolution> crossoverOperator,
       MutationOperator<BinarySolution> cataclysmicMutation,
-      SelectionOperator newGenerationSelection, SelectionOperator parentSelection,
-      SolutionListEvaluator evaluator) {
+      SelectionOperator<List<BinarySolution>, List<BinarySolution>> newGenerationSelection, SelectionOperator<List<BinarySolution>, BinarySolution> parentSelection,
+      SolutionListEvaluator<BinarySolution> evaluator) {
     super();
     this.problem = problem;
     this.populationSize = populationSize;
@@ -88,7 +88,7 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
     }
     minimumDistance = (int) Math.floor(this.initialConvergenceCount * size);
 
-    comparator = new CrowdingDistanceComparator();
+    comparator = new CrowdingDistanceComparator<BinarySolution>();
   }
 
   @Override protected void initProgress() {
@@ -150,8 +150,7 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
     union.addAll(population);
     union.addAll(offspringPopulation);
 
-    List<BinarySolution> newPopulation =
-        (List<BinarySolution>) newGenerationSelection.execute(union);
+    List<BinarySolution> newPopulation = newGenerationSelection.execute(union);
 
     if (solutionSetsAreEquals(population, newPopulation)) {
       minimumDistance--;

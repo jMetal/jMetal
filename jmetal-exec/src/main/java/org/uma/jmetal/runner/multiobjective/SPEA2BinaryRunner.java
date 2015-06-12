@@ -58,9 +58,9 @@ public class SPEA2BinaryRunner {
   public static void main(String[] args) throws JMetalException {
     BinaryProblem problem;
     Algorithm<List<BinarySolution>> algorithm;
-    CrossoverOperator<List<BinarySolution>, List<BinarySolution>> crossover;
+    CrossoverOperator<BinarySolution> crossover;
     MutationOperator<BinarySolution> mutation;
-    SelectionOperator selection;
+    SelectionOperator<List<BinarySolution>, BinarySolution> selection;
 
     String problemName ;
     if (args.length == 1) {
@@ -69,7 +69,7 @@ public class SPEA2BinaryRunner {
       problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT5";
     }
 
-    problem = (BinaryProblem)ProblemUtils.loadProblem(problemName);
+    problem = (BinaryProblem)ProblemUtils.<BinarySolution> loadProblem(problemName);
 
     double crossoverProbability = 0.9 ;
     crossover = new SinglePointCrossover(crossoverProbability) ;
@@ -77,7 +77,7 @@ public class SPEA2BinaryRunner {
     double mutationProbability = 1.0 / problem.getTotalNumberOfBits() ;
     mutation = new BitFlipMutation(mutationProbability) ;
 
-    selection = new BinaryTournamentSelection(new RankingAndCrowdingDistanceComparator());
+    selection = new BinaryTournamentSelection<BinarySolution>(new RankingAndCrowdingDistanceComparator<BinarySolution>());
 
     algorithm = new SPEA2Builder<>(problem, crossover, mutation)
         .setSelectionOperator(selection)

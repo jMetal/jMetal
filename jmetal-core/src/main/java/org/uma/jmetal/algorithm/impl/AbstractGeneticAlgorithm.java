@@ -12,6 +12,6 @@ import java.util.List;
  */
 public abstract class AbstractGeneticAlgorithm<S extends Solution<?>, Result> extends AbstractEvolutionaryAlgorithm<S, Result> {
   protected SelectionOperator<List<S>, S> selectionOperator ;
-  protected CrossoverOperator<List<S>, List<S>> crossoverOperator ;
+  protected CrossoverOperator<S> crossoverOperator ;
   protected MutationOperator<S> mutationOperator ;
 }

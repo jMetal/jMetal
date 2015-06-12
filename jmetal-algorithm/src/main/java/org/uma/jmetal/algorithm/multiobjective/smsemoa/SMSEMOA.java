@@ -39,7 +39,7 @@ public class SMSEMOA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
    * Constructor
    */
   public SMSEMOA(Problem<S> problem, int maxEvaluations, int populationSize, double offset,
-      CrossoverOperator<List<S>, List<S>> crossoverOperator, MutationOperator<S> mutationOperator,
+      CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
       SelectionOperator<List<S>, S> selectionOperator) {
     super() ;
     this.problem = problem;

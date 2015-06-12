@@ -39,9 +39,9 @@ public class SPEA2Runner {
   public static void main(String[] args) throws JMetalException {
     Problem<DoubleSolution> problem;
     Algorithm<List<DoubleSolution>> algorithm;
-    CrossoverOperator<List<DoubleSolution>, List<DoubleSolution>> crossover;
+    CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
-    SelectionOperator selection;
+    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
 
     String problemName ;
     if (args.length == 1) {
@@ -60,7 +60,7 @@ public class SPEA2Runner {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    selection = new BinaryTournamentSelection(new RankingAndCrowdingDistanceComparator());
+    selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
     //algorithm = new SPEA2Builder(problem)
     algorithm = new SPEA2Builder<>(problem, crossover, mutation)

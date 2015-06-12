@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** This class allows to apply a SBX crossover operator using two parent solutions (Integer encoding) */
-public class IntegerSBXCrossover implements CrossoverOperator<List<IntegerSolution>, List<IntegerSolution>> {
+public class IntegerSBXCrossover implements CrossoverOperator<IntegerSolution> {
   /** EPS defines the minimum difference allowed between real values */
   private static final double EPS = 1.0e-14;
 

@@ -23,9 +23,9 @@ import java.util.Comparator;
  * This class implements a comparator based on the rank of the solutions; if the rank is the same
  * then the crowding distance is used.
  */
-public class RankingAndCrowdingDistanceComparator implements Comparator<Solution> {
-  private final Comparator<Solution> rankComparator = new RankingComparator();
-  private final Comparator<Solution> crowdingDistanceComparator = new CrowdingDistanceComparator() ;
+public class RankingAndCrowdingDistanceComparator<S extends Solution<?>> implements Comparator<S> {
+  private final Comparator<S> rankComparator = new RankingComparator<S>();
+  private final Comparator<S> crowdingDistanceComparator = new CrowdingDistanceComparator<S>() ;
 
   /**
    * Compares two solutions.
@@ -36,7 +36,7 @@ public class RankingAndCrowdingDistanceComparator implements Comparator<Solution
    * respectively.
    */
   @Override
-  public int compare(Solution solution1, Solution solution2) {
+  public int compare(S solution1, S solution2) {
     int result = rankComparator.compare(solution1, solution2) ;
     if (result == 0) {
       result = crowdingDistanceComparator.compare(solution1, solution2);

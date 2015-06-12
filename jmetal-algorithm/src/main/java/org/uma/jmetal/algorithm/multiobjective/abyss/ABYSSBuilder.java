@@ -1,12 +1,12 @@
 package org.uma.jmetal.algorithm.multiobjective.abyss;
 
-import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.localsearch.MutationLocalSearch;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmBuilder;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
@@ -19,20 +19,20 @@ import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
  *   IEEE Transactions on Evolutionary Computation. Vol. 12,
  *   No. 4 (August 2008), pp. 439-457
  */
-public class ABYSSBuilder implements AlgorithmBuilder {
+public class ABYSSBuilder implements AlgorithmBuilder<ABYSS> {
 
   private DoubleProblem problem     ; // The problem to solve
-  private CrossoverOperator crossoverOperator   ; // Crossover operator
+  private CrossoverOperator<DoubleSolution> crossoverOperator   ; // Crossover operator
   private MutationLocalSearch improvementOperator ; // Operator for improvement
-  private MutationOperator mutationOperator; // Mutation operator
+  private MutationOperator<DoubleSolution> mutationOperator; // Mutation operator
   private int numberOfSubranges; //subranges
   private int populationSize;//Maximum size of the population
   private int refSet1Size;//Maximum size of the reference set one
   private int refSet2Size;//Maximum size of the reference set two
   private int archiveSize;//Maximum size of the external archive
   private int maxEvaluations;//Maximum number of getEvaluations to carry out
-  private CrowdingDistanceArchive archive;
-  public ABYSSBuilder(DoubleProblem problem,Archive archive){
+  private CrowdingDistanceArchive<DoubleSolution> archive;
+  public ABYSSBuilder(DoubleProblem problem,Archive<DoubleSolution> archive){
     this.populationSize = 20;
     this.maxEvaluations = 25000;
     this.archiveSize = 100;
@@ -46,22 +46,22 @@ public class ABYSSBuilder implements AlgorithmBuilder {
     double mutationProbability= 1.0/problem.getNumberOfVariables();
     this.mutationOperator = new PolynomialMutation(mutationProbability,distributionIndex);
     int improvementRounds= 1;
-    this.archive =(CrowdingDistanceArchive)archive;
+    this.archive =(CrowdingDistanceArchive<DoubleSolution>)archive;
     this.improvementOperator = new MutationLocalSearch(improvementRounds,mutationOperator,this.archive,problem);
 
   }
 
   @Override
-  public Algorithm build() {
+  public ABYSS build() {
     return new ABYSS(numberOfSubranges,populationSize,refSet1Size,refSet2Size,archiveSize,maxEvaluations,
         archive,crossoverOperator,improvementOperator,problem);
   }
 
-  public CrossoverOperator getCrossoverOperator() {
+  public CrossoverOperator<DoubleSolution> getCrossoverOperator() {
     return crossoverOperator;
   }
 
-  public ABYSSBuilder setCrossoverOperator(CrossoverOperator crossoverOperator) {
+  public ABYSSBuilder setCrossoverOperator(CrossoverOperator<DoubleSolution> crossoverOperator) {
     this.crossoverOperator = crossoverOperator;
     return  this;
   }
@@ -75,11 +75,11 @@ public class ABYSSBuilder implements AlgorithmBuilder {
     return  this;
   }
 
-  public MutationOperator getMutationOperator() {
+  public MutationOperator<DoubleSolution> getMutationOperator() {
     return mutationOperator;
   }
 
-  public ABYSSBuilder setMutationOperator(MutationOperator mutationOperator) {
+  public ABYSSBuilder setMutationOperator(MutationOperator<DoubleSolution> mutationOperator) {
     this.mutationOperator = mutationOperator;
     return  this;
   }

@@ -28,7 +28,7 @@ import java.util.List;
  *
  * This class implements a single point crossover operator.
  */
-public class SinglePointCrossover implements CrossoverOperator<List<BinarySolution>, List<BinarySolution>> {
+public class SinglePointCrossover implements CrossoverOperator<BinarySolution> {
   private double crossoverProbability ;
   private JMetalRandom randomGenerator ;
 

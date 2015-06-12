@@ -16,19 +16,19 @@ import java.util.List;
 /**
  * @author Juanjo
  **/
-public class SPEA2<S extends Solution> extends AbstractGeneticAlgorithm<S, List<S>> {
+public class SPEA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>> {
   protected final int maxIterations;
   protected final int populationSize;
   protected final Problem<S> problem;
   protected final SolutionListEvaluator<S> evaluator;
   protected int iterations;
   protected List<S> archive;
-  private final static StrengthRawFitness strenghtRawFitness = new StrengthRawFitness();
-  private final EnvironmentalSelection environmentalSelection;
+  private final StrengthRawFitness<S> strenghtRawFitness = new StrengthRawFitness<S>();
+  private final EnvironmentalSelection<S> environmentalSelection;
 
   public SPEA2(Problem<S> problem, int maxIterations, int populationSize,
-      CrossoverOperator<List<S>, List<S>> crossoverOperator, MutationOperator<S> mutationOperator,
-      SelectionOperator selectionOperator, SolutionListEvaluator evaluator) {
+      CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
+      SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator) {
     super();
     this.problem = problem;
     this.maxIterations = maxIterations;
@@ -37,7 +37,7 @@ public class SPEA2<S extends Solution> extends AbstractGeneticAlgorithm<S, List<
     this.crossoverOperator = crossoverOperator;
     this.mutationOperator = mutationOperator;
     this.selectionOperator = selectionOperator;
-    this.environmentalSelection = new EnvironmentalSelection(populationSize);
+    this.environmentalSelection = new EnvironmentalSelection<S>(populationSize);
 
     this.archive = new ArrayList<>(populationSize);
 

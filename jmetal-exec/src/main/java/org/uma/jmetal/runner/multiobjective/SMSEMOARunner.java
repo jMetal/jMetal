@@ -57,9 +57,9 @@ public class SMSEMOARunner {
   public static void main(String[] args) throws JMetalException {
     DoubleProblem problem;
     Algorithm<List<DoubleSolution>> algorithm;
-    CrossoverOperator<List<DoubleSolution>,List<DoubleSolution>> crossover;
+    CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
-    SelectionOperator selection;
+    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
 
     String problemName ;
     if (args.length == 1) {
@@ -68,7 +68,7 @@ public class SMSEMOARunner {
       problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
     }
 
-    problem = (DoubleProblem)ProblemUtils.loadProblem(problemName);
+    problem = (DoubleProblem)ProblemUtils.<DoubleSolution> loadProblem(problemName);
 
     double crossoverProbability = 0.9 ;
     double crossoverDistributionIndex = 20.0 ;
@@ -78,7 +78,7 @@ public class SMSEMOARunner {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    selection = new RandomSelection();
+    selection = new RandomSelection<DoubleSolution>();
 
     algorithm = new SMSEMOABuilder<DoubleSolution>(problem, crossover, mutation)
             .setSelectionOperator(selection)

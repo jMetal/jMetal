@@ -38,7 +38,7 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
   private CrowdingDistanceArchive<S> archive;
   protected final Problem<S> problem;
 
-  private Comparator<Solution<?>> dominanceComparator;
+  private Comparator<S> dominanceComparator;
   private LocationAttribute<S> location;
 
   /**
@@ -55,7 +55,7 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
    */
   public MOCell(Problem<S> problem, int maxEvaluations, int populationSize, int archiveSize,
       Neighborhood<S> neighborhood,
-      CrossoverOperator<List<S>, List<S>> crossoverOperator, MutationOperator<S> mutationOperator,
+      CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
       SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator) {
     super();
     this.problem = problem;
@@ -67,7 +67,7 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
     this.crossoverOperator = crossoverOperator;
     this.mutationOperator = mutationOperator;
     this.selectionOperator = selectionOperator;
-    this.dominanceComparator = new DominanceComparator() ;
+    this.dominanceComparator = new DominanceComparator<S>() ;
 
 
     this.evaluator = evaluator ;
@@ -173,7 +173,7 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
       crowdingDistance.computeDensityEstimator(rank.getSubfront(j));
     }
 
-    Collections.sort(this.currentNeighbors,new RankingAndCrowdingDistanceComparator());
+    Collections.sort(this.currentNeighbors,new RankingAndCrowdingDistanceComparator<S>());
     S worst = this.currentNeighbors.get(this.currentNeighbors.size()-1);
 
     if (location.getAttribute(worst) == -1) { //The worst is the offspring

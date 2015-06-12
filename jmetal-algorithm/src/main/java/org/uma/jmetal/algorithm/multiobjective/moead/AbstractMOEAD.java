@@ -36,11 +36,11 @@ import java.util.Vector;
  * @author Antonio J. Nebro
  * @version 1.0
  */
-public abstract class AbstractMOEAD<S extends Solution> implements Algorithm<List<? extends Solution>> {
+public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<List<S>> {
   protected enum NeighborType {NEIGHBOR, POPULATION}
   public enum FunctionType {TCHE, PBI, AGG}
 
-  protected Problem problem ;
+  protected Problem<S> problem ;
 
   /** Z vector in Zhang & Li paper */
   protected double[] idealPoint;
@@ -54,7 +54,7 @@ public abstract class AbstractMOEAD<S extends Solution> implements Algorithm<Lis
   /** nr in Zhang & Li paper */
   protected int maximumNumberOfReplacedSolutions;
 
-  protected Solution[] indArray;
+  protected Solution<?>[] indArray;
   protected FunctionType functionType;
 
   protected String dataDirectory;
@@ -68,13 +68,13 @@ public abstract class AbstractMOEAD<S extends Solution> implements Algorithm<Lis
 
   protected JMetalRandom randomGenerator ;
 
-  protected CrossoverOperator crossoverOperator ;
-  protected MutationOperator mutationOperator ;
+  protected CrossoverOperator<S> crossoverOperator ;
+  protected MutationOperator<S> mutationOperator ;
 
   protected int numberOfThreads ;
 
-  public AbstractMOEAD(Problem problem, int populationSize, int resultPopulationSize,
-      int maxEvaluations, CrossoverOperator crossoverOperator, MutationOperator mutation,
+  public AbstractMOEAD(Problem<S> problem, int populationSize, int resultPopulationSize,
+      int maxEvaluations, CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutation,
       FunctionType functionType, String dataDirectory, double neighborhoodSelectionProbability,
       int maximumNumberOfReplacedSolutions, int neighborSize) {
     this.problem = problem ;
@@ -171,7 +171,7 @@ public abstract class AbstractMOEAD<S extends Solution> implements Algorithm<Lis
     }
   }
 
-  void updateIdealPoint(Solution individual) {
+  void updateIdealPoint(S individual) {
     for (int n = 0; n < problem.getNumberOfObjectives(); n++) {
       if (individual.getObjective(n) < idealPoint[n]) {
         idealPoint[n] = individual.getObjective(n);
@@ -238,7 +238,7 @@ public abstract class AbstractMOEAD<S extends Solution> implements Algorithm<Lis
     }
   }
 
-  void updateNeighborhood(Solution individual, int subProblemId, NeighborType neighborType) throws JMetalException {
+  void updateNeighborhood(S individual, int subProblemId, NeighborType neighborType) throws JMetalException {
     int size;
     int time;
 
@@ -276,7 +276,7 @@ public abstract class AbstractMOEAD<S extends Solution> implements Algorithm<Lis
     }
   }
 
-  double fitnessFunction(Solution individual, double[] lambda) throws JMetalException {
+  double fitnessFunction(S individual, double[] lambda) throws JMetalException {
     double fitness;
 
     if (MOEAD.FunctionType.TCHE.equals(functionType)) {

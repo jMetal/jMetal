@@ -13,13 +13,13 @@ import java.util.List;
 /**
  * Created by ajnebro on 30/10/14.
  */
-public class SteadyStateNSGAII<S extends Solution> extends NSGAII<S> {
+public class SteadyStateNSGAII<S extends Solution<?>> extends NSGAII<S> {
   /**
    * Constructor
    */
   public SteadyStateNSGAII(Problem<S> problem, int maxIterations, int populationSize,
-      CrossoverOperator<List<S>, List<S>> crossoverOperator, MutationOperator<S> mutationOperator,
-      SelectionOperator selectionOperator, SolutionListEvaluator evaluator) {
+      CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
+      SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator) {
     super(problem, maxIterations, populationSize, crossoverOperator, mutationOperator,
         selectionOperator, evaluator);
   }

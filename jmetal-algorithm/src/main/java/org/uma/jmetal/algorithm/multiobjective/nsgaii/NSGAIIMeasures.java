@@ -17,7 +17,7 @@ import java.util.List;
  * @author Antonio J. Nebro
  * @version 1.0
  */
-public class NSGAIIMeasures<S extends Solution> extends NSGAII<S> implements Measurable {
+public class NSGAIIMeasures<S extends Solution<?>> extends NSGAII<S> implements Measurable {
   private CountingMeasure iterations ;
   private BasicMeasure<Integer> numberOfFeasibleSolutionsInPopulation ;
   private DurationMeasure durationMeasure ;
@@ -31,8 +31,8 @@ public class NSGAIIMeasures<S extends Solution> extends NSGAII<S> implements Mea
    * Constructor
    */
   public NSGAIIMeasures(Problem<S> problem, int maxIterations, int populationSize,
-      CrossoverOperator<List<S>, List<S>> crossoverOperator, MutationOperator<S> mutationOperator,
-      SelectionOperator selectionOperator, SolutionListEvaluator evaluator) {
+      CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
+      SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator) {
     super(problem, maxIterations, populationSize, crossoverOperator, mutationOperator, selectionOperator, evaluator) ;
 
     initMeasures() ;
@@ -56,7 +56,7 @@ public class NSGAIIMeasures<S extends Solution> extends NSGAII<S> implements Mea
     population = super.evaluatePopulation(population);
 
     int countFeasibleSolutions = 0 ;
-    for (Solution solution : population) {
+    for (S solution : population) {
       if (solution.getOverallConstraintViolationDegree() == 0) {
         countFeasibleSolutions ++ ;
       }
@@ -104,7 +104,7 @@ public class NSGAIIMeasures<S extends Solution> extends NSGAII<S> implements Mea
       List<S> offspringPopulation) {
     List<S> pop = super.replacement(population, offspringPopulation) ;
 
-    Ranking ranking = computeRanking(pop);
+    Ranking<S> ranking = computeRanking(pop);
     numberOfNonDominatedSolutionsInPopulation.set(ranking.getSubfront(0).size());
 
     return pop;

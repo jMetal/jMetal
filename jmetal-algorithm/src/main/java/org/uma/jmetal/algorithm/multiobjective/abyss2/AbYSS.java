@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by ajnebro on 11/6/15.
  */
-public class AbYSS<S extends Solution> extends AbstractScatterSearch<S, List<S>> {
+public class AbYSS<S extends Solution<?>> extends AbstractScatterSearch<S, List<S>> {
   protected final int maxEvaluations ;
   protected final Problem<S> problem;
   protected final int referenceSet1Size ;
@@ -21,13 +21,13 @@ public class AbYSS<S extends Solution> extends AbstractScatterSearch<S, List<S>>
 
   protected Archive<S> archive ;
   protected LocalSearchOperator<S> localSearch ;
-  protected CrossoverOperator<List<S>, List<S>> crossover ;
+  protected CrossoverOperator<S> crossover ;
   protected int evaluations;
 
 
   public AbYSS(Problem<S> problem, int maxEvaluations, int populationSize, int referenceSet1Size,
       int referenceSet2Size, int archiveSize, Archive<S> archive, LocalSearchOperator<S> localSearch,
-      CrossoverOperator<List<S>, List<S>> crossoverOperator) {
+      CrossoverOperator<S> crossoverOperator) {
     setPopulationSize(populationSize);
     this.problem = problem ;
     this.maxEvaluations = maxEvaluations ;

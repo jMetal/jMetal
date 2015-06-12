@@ -27,14 +27,14 @@ import java.util.Comparator;
  * Modified by Juanjo in 13.03.2015. A binary tournament is now a TournamenteSelection with 2 
  * tournaments
  */
-public class BinaryTournamentSelection extends TournamentSelection {
+public class BinaryTournamentSelection<S extends Solution<?>> extends TournamentSelection<S> {
     /** Constructor */
   public BinaryTournamentSelection() {
-    super(new DominanceComparator(), 2) ;
+    super(new DominanceComparator<S>(), 2) ;
   }
 
   /** Constructor */
-  public BinaryTournamentSelection(Comparator<? extends Solution> comparator) {
+  public BinaryTournamentSelection(Comparator<S> comparator) {
     super(comparator,2);
   }
 }

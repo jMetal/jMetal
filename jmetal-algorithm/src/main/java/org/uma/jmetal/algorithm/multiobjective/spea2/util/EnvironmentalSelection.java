@@ -49,7 +49,7 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
     }
 
     if (aux.size() < size){
-      StrengthFitnessComparator comparator = new StrengthFitnessComparator();
+      StrengthFitnessComparator<S> comparator = new StrengthFitnessComparator<S>();
       Collections.sort(source,comparator);
       int remain = size - aux.size();
       for (i = 0; i < remain; i++){
