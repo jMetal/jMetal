@@ -46,28 +46,28 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
   protected int maxIterations;
   protected int iterations;
 
-  protected Comparator dominanceComparator;
+  protected Comparator<DoubleSolution> dominanceComparator;
 
-  protected Ranking ranking;
-  protected DensityEstimator crowdingDistance;
+  protected Ranking<DoubleSolution> ranking;
+  protected DensityEstimator<DoubleSolution> crowdingDistance;
 
-  protected SolutionListEvaluator evaluator;
+  protected SolutionListEvaluator<DoubleSolution> evaluator;
 
   /**
    * Constructor
    */
   public GDE3(DoubleProblem problem, int populationSize, int maxIterations,
       DifferentialEvolutionSelection selection, DifferentialEvolutionCrossover crossover,
-      SolutionListEvaluator evaluator) {
+      SolutionListEvaluator<DoubleSolution> evaluator) {
     this.problem = problem;
     this.populationSize = populationSize;
     this.maxIterations = maxIterations;
     this.crossoverOperator = crossover;
     this.selectionOperator = selection;
 
-    dominanceComparator = new DominanceComparator();
-    ranking = new DominanceRanking();
-    crowdingDistance = new CrowdingDistance();
+    dominanceComparator = new DominanceComparator<DoubleSolution>();
+    ranking = new DominanceRanking<DoubleSolution>();
+    crowdingDistance = new CrowdingDistance<DoubleSolution>();
 
     this.evaluator = evaluator ;
   }
@@ -153,7 +153,7 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
         tmpList.add(population.get(i));
       }
     }
-    Ranking ranking = computeRanking(tmpList);
+    Ranking<DoubleSolution> ranking = computeRanking(tmpList);
     List<DoubleSolution> pop = crowdingDistanceSelection(ranking);
 
     return pop;
@@ -164,15 +164,15 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
   }
 
 
-  protected Ranking computeRanking(List<DoubleSolution> solutionList) {
-    Ranking ranking = new DominanceRanking();
+  protected Ranking<DoubleSolution> computeRanking(List<DoubleSolution> solutionList) {
+    Ranking<DoubleSolution> ranking = new DominanceRanking<DoubleSolution>();
     ranking.computeRanking(solutionList);
 
     return ranking;
   }
 
-  protected List<DoubleSolution> crowdingDistanceSelection(Ranking ranking) {
-    CrowdingDistance crowdingDistance = new CrowdingDistance();
+  protected List<DoubleSolution> crowdingDistanceSelection(Ranking<DoubleSolution> ranking) {
+    CrowdingDistance<DoubleSolution> crowdingDistance = new CrowdingDistance<DoubleSolution>();
     List<DoubleSolution> population = new ArrayList<>(populationSize);
     int rankingIndex = 0;
     while (populationIsNotFull(population)) {
@@ -192,12 +192,12 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
     return population.size() < populationSize;
   }
 
-  protected boolean subfrontFillsIntoThePopulation(Ranking ranking, int rank,
+  protected boolean subfrontFillsIntoThePopulation(Ranking<DoubleSolution> ranking, int rank,
       List<DoubleSolution> population) {
     return ranking.getSubfront(rank).size() < (populationSize - population.size());
   }
 
-  protected void addRankedSolutionsToPopulation(Ranking ranking, int rank,
+  protected void addRankedSolutionsToPopulation(Ranking<DoubleSolution> ranking, int rank,
       List<DoubleSolution> population) {
     List<DoubleSolution> front;
 
@@ -208,11 +208,11 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
     }
   }
 
-  protected void addLastRankedSolutionsToPopulation(Ranking ranking, int rank,
+  protected void addLastRankedSolutionsToPopulation(Ranking<DoubleSolution> ranking, int rank,
       List<DoubleSolution> population) {
     List<DoubleSolution> currentRankedFront = ranking.getSubfront(rank);
 
-    Collections.sort(currentRankedFront, new CrowdingDistanceComparator());
+    Collections.sort(currentRankedFront, new CrowdingDistanceComparator<DoubleSolution>());
 
     int i = 0;
     while (population.size() < populationSize) {

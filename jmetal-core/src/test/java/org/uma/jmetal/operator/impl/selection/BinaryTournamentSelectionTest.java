@@ -15,7 +15,6 @@ package org.uma.jmetal.operator.impl.selection;
 
 import org.hamcrest.Matchers;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -45,31 +44,26 @@ import static org.mockito.Mockito.*;
 public class BinaryTournamentSelectionTest {
   private static final int POPULATION_SIZE = 20 ;
 
-  private BinaryTournamentSelection selection ;
-
-  @Mock private Problem problem ;
-  private List<Solution> population ;
-
-  @Before
-  public void startup() {
-    selection = new BinaryTournamentSelection() ;
-  }
+  @Mock private Problem<Solution<Object>> problem ;
+  private List<Solution<Object>> population ;
 
   @Test (expected = JMetalException.class)
   public void shouldExecuteRaiseAnExceptionIfTheListOfSolutionsIsNull() {
     population = null ;
+    BinaryTournamentSelection<Solution<Object>> selection = new BinaryTournamentSelection<Solution<Object>>() ;
     selection.execute(population) ;
   }
 
   @Test (expected = JMetalException.class)
   public void shouldExecuteRaiseAnExceptionIfTheListOfSolutionsIsEmpty() {
     population = new ArrayList<>(0) ;
+    BinaryTournamentSelection<Solution<Object>> selection = new BinaryTournamentSelection<Solution<Object>>() ;
     selection.execute(population) ;
   }
 
   @Test
   public void shouldExecuteReturnAValidSolutionIsWithCorrectParameters() {
-    Solution solution = mock(Solution.class) ;
+	  Solution<Object> solution = mock(Solution.class) ;
 
     Mockito.when(problem.createSolution()).thenReturn(solution) ;
 
@@ -77,23 +71,25 @@ public class BinaryTournamentSelectionTest {
     for (int i = 0 ; i < POPULATION_SIZE; i++) {
       population.add(problem.createSolution());
     }
+    BinaryTournamentSelection<Solution<Object>> selection = new BinaryTournamentSelection<Solution<Object>>() ;
     assertNotNull(selection.execute(population));
     verify(problem, times(POPULATION_SIZE)).createSolution();
   }
 
   @Test
   public void shouldExecuteReturnTheSameSolutionIfTheListContainsOneSolution() {
-    Solution solution = mock(Solution.class) ;
+	  Solution<Object> solution = mock(Solution.class) ;
 
     population = new ArrayList<>(1) ;
     population.add(solution) ;
+    BinaryTournamentSelection<Solution<Object>> selection = new BinaryTournamentSelection<Solution<Object>>() ;
     assertSame(solution, selection.execute(population));
   }
 
   @Test
   public void shouldExecuteReturnTwoSolutionsIfTheListContainsTwoSolutions() {
-    Solution solution1 = mock(Solution.class) ;
-    Solution solution2 = mock(Solution.class) ;
+    Solution<Object> solution1 = mock(Solution.class) ;
+    Solution<Object> solution2 = mock(Solution.class) ;
 
     population = Arrays.asList(solution1, solution2) ;
     assertEquals(2, population.size());
@@ -117,7 +113,7 @@ public class BinaryTournamentSelectionTest {
 
     List<DoubleSolution> population = Arrays.<DoubleSolution>asList(solution1, solution2);
 
-    selection = new BinaryTournamentSelection(comparator) ;
+    BinaryTournamentSelection<DoubleSolution> selection = new BinaryTournamentSelection<DoubleSolution>(comparator) ;
     DoubleSolution result = (DoubleSolution) selection.execute(population);
 
     assertThat(result, Matchers.either(Matchers.is(solution1)).or(Matchers.is(solution2))) ;
@@ -126,7 +122,6 @@ public class BinaryTournamentSelectionTest {
 
   @After
   public void tearDown() {
-    selection = null ;
     population = null ;
     problem = null ;
   }

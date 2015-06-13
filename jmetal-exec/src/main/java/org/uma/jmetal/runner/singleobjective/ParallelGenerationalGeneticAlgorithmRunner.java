@@ -14,7 +14,6 @@
 package org.uma.jmetal.runner.singleobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.singleobjective.geneticalgorithm.GenerationalGeneticAlgorithm;
 import org.uma.jmetal.algorithm.singleobjective.geneticalgorithm.GeneticAlgorithmBuilder;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
@@ -25,7 +24,6 @@ import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.BinaryProblem;
 import org.uma.jmetal.problem.singleobjective.OneMax;
 import org.uma.jmetal.solution.BinarySolution;
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.evaluator.impl.MultithreadedSolutionListEvaluator;
@@ -58,23 +56,23 @@ public class ParallelGenerationalGeneticAlgorithmRunner {
       numberOfCores = DEFAULT_NUMBER_OF_CORES ;
     }
 
-    CrossoverOperator<List<BinarySolution>, List<BinarySolution>> crossoverOperator = new SinglePointCrossover(0.9) ;
+    CrossoverOperator<BinarySolution> crossoverOperator = new SinglePointCrossover(0.9) ;
     MutationOperator<BinarySolution> mutationOperator = new BitFlipMutation(1.0 / problem.getNumberOfBits(0)) ;
-    SelectionOperator selectionOperator = new BinaryTournamentSelection();
+    SelectionOperator<List<BinarySolution>, BinarySolution> selectionOperator = new BinaryTournamentSelection<BinarySolution>();
 
     algorithm = new GeneticAlgorithmBuilder<BinarySolution>(problem, crossoverOperator, mutationOperator,
         GeneticAlgorithmBuilder.GeneticAlgorithmVariant.GENERATIONAL)
             .setPopulationSize(100)
             .setMaxEvaluations(25000)
             .setSelectionOperator(selectionOperator)
-            .setSolutionListEvaluator(new MultithreadedSolutionListEvaluator(numberOfCores, problem))
+            .setSolutionListEvaluator(new MultithreadedSolutionListEvaluator<BinarySolution>(numberOfCores, problem))
             .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
-    Solution solution = ((GenerationalGeneticAlgorithm)algorithm).getResult() ;
-    List<Solution> population = new ArrayList<>(1) ;
+    BinarySolution solution = algorithm.getResult() ;
+    List<BinarySolution> population = new ArrayList<>(1) ;
     population.add(solution) ;
 
     long computingTime = algorithmRunner.getComputingTime() ;

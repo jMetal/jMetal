@@ -64,8 +64,8 @@ public class OMOPSORunner {
    */
   public static void main(String[] args) throws Exception {
     DoubleProblem problem;
-    Algorithm algorithm;
-    MutationOperator mutation;
+    Algorithm<List<DoubleSolution>> algorithm;
+    MutationOperator<DoubleSolution> mutation;
 
     String problemName ;
     if (args.length == 1) {
@@ -74,13 +74,13 @@ public class OMOPSORunner {
       problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
     }
 
-    problem = (DoubleProblem) ProblemUtils.loadProblem(problemName);
+    problem = (DoubleProblem) ProblemUtils.<DoubleSolution> loadProblem(problemName);
 
-    Archive archive = new CrowdingDistanceArchive(100) ;
+    Archive<DoubleSolution> archive = new CrowdingDistanceArchive<DoubleSolution>(100) ;
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
 
-    algorithm = new OMOPSOBuilder(problem, new SequentialSolutionListEvaluator())
+    algorithm = new OMOPSOBuilder(problem, new SequentialSolutionListEvaluator<DoubleSolution>())
         .setMaxIterations(250)
         .setSwarmSize(100)
         .setUniformMutation(new UniformMutation(mutationProbability, 0.5))
@@ -90,7 +90,7 @@ public class OMOPSORunner {
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
         .execute();
 
-    List<DoubleSolution> population = (List<DoubleSolution>)algorithm.getResult();
+    List<DoubleSolution> population = algorithm.getResult();
     long computingTime = algorithmRunner.getComputingTime();
 
     new SolutionSetOutput.Printer(population)

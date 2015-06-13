@@ -24,7 +24,6 @@ import org.uma.jmetal.algorithm.impl.AbstractEvolutionStrategy;
 import org.uma.jmetal.algorithm.singleobjective.evolutionstrategy.util.CMAESUtils;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 
@@ -35,7 +34,7 @@ import java.util.*;
  */
 public class CovarianceMatrixAdaptationEvolutionStrategy
     extends AbstractEvolutionStrategy<DoubleSolution, DoubleSolution> {
-  private Comparator<Solution> comparator ;
+  private Comparator<DoubleSolution> comparator ;
   private int lambda ;
   private int evaluations ;
   private int maxEvaluations ;
@@ -122,7 +121,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
 
     long seed = System.currentTimeMillis();
     rand = new Random(seed);
-    comparator = new ObjectiveComparator(0);
+    comparator = new ObjectiveComparator<DoubleSolution>(0);
 
     initializeInternalParameters();
 

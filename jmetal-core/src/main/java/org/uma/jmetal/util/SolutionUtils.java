@@ -1,11 +1,9 @@
 package org.uma.jmetal.util;
 
-import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Comparator;
 import java.util.List;
 
@@ -22,8 +20,8 @@ public class SolutionUtils {
    * @param solution2
    * @return The best solution
    */
-  public static Solution getBestSolution(Solution solution1, Solution solution2, Comparator comparator) {
-    Solution result ;
+  public static <S extends Solution<?>> S getBestSolution(S solution1, S solution2, Comparator<S> comparator) {
+    S result ;
     int flag = comparator.compare(solution1, solution2);
     if (flag == -1) {
       result = solution1;
@@ -47,7 +45,7 @@ public class SolutionUtils {
    * @param secondSolution
    * @return
    */
-   static double distanceBetweenObjectives(Solution firstSolution, Solution secondSolution) {
+   static <S extends Solution<?>> double distanceBetweenObjectives(S firstSolution, S secondSolution) {
    
 	    double diff;  
 	    double distance = 0.0;

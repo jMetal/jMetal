@@ -1,19 +1,17 @@
 package org.uma.jmetal.util.archive.impl;
 
-import java.util.List;
-
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.SolutionListUtils;
-import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.BoundedArchive;
 
-public abstract class AbstractBoundedArchive<S extends Solution> implements BoundedArchive<S> {
-	protected NonDominatedSolutionListArchive list;
+import java.util.List;
+
+public abstract class AbstractBoundedArchive<S extends Solution<?>> implements BoundedArchive<S> {
+	protected NonDominatedSolutionListArchive<S> list;
 	protected int maxSize;
 	
 	public AbstractBoundedArchive(int maxSize) {
 		this.maxSize = maxSize;
-		this.list = new NonDominatedSolutionListArchive();
+		this.list = new NonDominatedSolutionListArchive<S>();
 	}
 	
 	@Override

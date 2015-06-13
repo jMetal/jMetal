@@ -71,7 +71,7 @@ public class ArrayPointTest {
 
   @Test
   public void shouldConstructFromASolutionReturnTheCorrectPoint() {
-    Solution solution = Mockito.mock(Solution.class) ;
+    Solution<?> solution = Mockito.mock(Solution.class) ;
 
     Mockito.when(solution.getNumberOfObjectives()).thenReturn(3) ;
     Mockito.when(solution.getObjective(0)).thenReturn(0.2) ;
@@ -91,7 +91,7 @@ public class ArrayPointTest {
 
   @Test (expected = JMetalException.class)
   public void shouldConstructAPointFromANullSolutionRaiseAnException() {
-    Solution solution = null ;
+    Solution<?> solution = null ;
 
     new ArrayPoint(solution) ;
   }

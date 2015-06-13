@@ -38,8 +38,8 @@ import java.util.List;
  * a solution list. The solutions are taken by mean of its ranking and
  * crowding distance values.
  */
-public class RankingAndCrowdingSelection
-    implements SelectionOperator<List<? extends Solution>,List<? extends Solution>> {
+public class RankingAndCrowdingSelection<S extends Solution<?>>
+    implements SelectionOperator<List<S>,List<S>> {
   private int solutionsToSelect = 0 ;
 
   /** Constructor */
@@ -53,7 +53,7 @@ public class RankingAndCrowdingSelection
   }
 
   /** Execute() method */
-  public List<? extends Solution> execute(List<? extends Solution> solutionList) throws JMetalException {
+  public List<S> execute(List<S> solutionList) throws JMetalException {
     if (null == solutionList) {
       throw new JMetalException("The solution list is null");
     } else if (solutionList.isEmpty()) {
@@ -63,17 +63,17 @@ public class RankingAndCrowdingSelection
               "the solutions to selected ("+solutionsToSelect+")")  ;
     }
 
-    Ranking ranking = new DominanceRanking();
+    Ranking<S> ranking = new DominanceRanking<S>();
     ranking.computeRanking(solutionList) ;
 
-    List<Solution> resultPopulation = crowdingDistanceSelection(ranking) ;
+    List<S> resultPopulation = crowdingDistanceSelection(ranking) ;
 
     return resultPopulation;
   }
 
-  protected List<Solution> crowdingDistanceSelection(Ranking ranking) {
-    CrowdingDistance crowdingDistance = new CrowdingDistance() ;
-    List<Solution> population = new ArrayList<>(solutionsToSelect) ;
+  protected List<S> crowdingDistanceSelection(Ranking<S> ranking) {
+    CrowdingDistance<S> crowdingDistance = new CrowdingDistance<S>() ;
+    List<S> population = new ArrayList<>(solutionsToSelect) ;
     int rankingIndex = 0;
     while (population.size() < solutionsToSelect) {
       if (subfrontFillsIntoThePopulation(ranking, rankingIndex, population)) {
@@ -88,12 +88,12 @@ public class RankingAndCrowdingSelection
     return population ;
   }
 
-  protected boolean subfrontFillsIntoThePopulation(Ranking ranking, int rank, List<Solution> population) {
+  protected boolean subfrontFillsIntoThePopulation(Ranking<S> ranking, int rank, List<S> population) {
     return ranking.getSubfront(rank).size() < (solutionsToSelect - population.size()) ;
   }
 
-  protected void addRankedSolutionsToPopulation(Ranking ranking, int rank, List<Solution> population) {
-    List<Solution> front ;
+  protected void addRankedSolutionsToPopulation(Ranking<S> ranking, int rank, List<S> population) {
+    List<S> front ;
 
     front = ranking.getSubfront(rank);
 
@@ -102,10 +102,10 @@ public class RankingAndCrowdingSelection
     }
   }
 
-  protected void addLastRankedSolutionsToPopulation(Ranking ranking, int rank, List<Solution>population) {
-    List<Solution> currentRankedFront = ranking.getSubfront(rank) ;
+  protected void addLastRankedSolutionsToPopulation(Ranking<S> ranking, int rank, List<S>population) {
+    List<S> currentRankedFront = ranking.getSubfront(rank) ;
 
-    Collections.sort(currentRankedFront, new CrowdingDistanceComparator()) ;
+    Collections.sort(currentRankedFront, new CrowdingDistanceComparator<S>()) ;
 
     int i = 0 ;
     while (population.size() < solutionsToSelect) {

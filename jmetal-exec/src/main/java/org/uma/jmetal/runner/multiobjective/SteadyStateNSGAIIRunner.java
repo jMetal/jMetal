@@ -56,9 +56,9 @@ public class SteadyStateNSGAIIRunner {
   public static void main(String[] args) throws JMetalException {
     DoubleProblem problem;
     Algorithm<List<DoubleSolution>> algorithm;
-    CrossoverOperator<List<DoubleSolution>,List<DoubleSolution>> crossover;
+    CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
-    SelectionOperator selection;
+    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
 
     String problemName ;
     if (args.length == 1) {
@@ -67,7 +67,7 @@ public class SteadyStateNSGAIIRunner {
       problemName = "org.uma.jmetal.problem.multiobjective.Srinivas";
     }
 
-    problem = (DoubleProblem) ProblemUtils.loadProblem(problemName);
+    problem = (DoubleProblem) ProblemUtils.<DoubleSolution> loadProblem(problemName);
 
     double crossoverProbability = 0.9 ;
     double crossoverDistributionIndex = 20.0 ;
@@ -77,7 +77,7 @@ public class SteadyStateNSGAIIRunner {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    selection = new BinaryTournamentSelection();
+    selection = new BinaryTournamentSelection<DoubleSolution>();
 
     algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation,
         NSGAIIBuilder.NSGAIIVariant.SteadyStateNSGAII)

@@ -14,7 +14,7 @@ import java.util.List;
  * structured as a bi-dimensional square mesh. The neighbors are those solutions that are in the positions
  * North, South, East and West
  */
-public class TwoDimensionalMesh<S extends Solution> implements Neighborhood<S> {
+public class TwoDimensionalMesh<S extends Solution<?>> implements Neighborhood<S> {
   private int rows ;
   private int columns ;
 

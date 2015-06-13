@@ -24,7 +24,7 @@ import java.util.*;
  *
  * @param <S>
  */
-public class MOCell<S extends Solution> extends AbstractGeneticAlgorithm<S, List<S>> {
+public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>> {
   protected int evaluations;
   protected int maxEvaluations;
   protected int populationSize;
@@ -38,7 +38,7 @@ public class MOCell<S extends Solution> extends AbstractGeneticAlgorithm<S, List
   private CrowdingDistanceArchive<S> archive;
   protected final Problem<S> problem;
 
-  private Comparator<Solution> dominanceComparator;
+  private Comparator<S> dominanceComparator;
   private LocationAttribute<S> location;
 
   /**
@@ -55,8 +55,8 @@ public class MOCell<S extends Solution> extends AbstractGeneticAlgorithm<S, List
    */
   public MOCell(Problem<S> problem, int maxEvaluations, int populationSize, int archiveSize,
       Neighborhood<S> neighborhood,
-      CrossoverOperator<List<S>, List<S>> crossoverOperator, MutationOperator<S> mutationOperator,
-      SelectionOperator selectionOperator, SolutionListEvaluator<S> evaluator) {
+      CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
+      SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator) {
     super();
     this.problem = problem;
     this.maxEvaluations = maxEvaluations;
@@ -67,7 +67,7 @@ public class MOCell<S extends Solution> extends AbstractGeneticAlgorithm<S, List
     this.crossoverOperator = crossoverOperator;
     this.mutationOperator = mutationOperator;
     this.selectionOperator = selectionOperator;
-    this.dominanceComparator = new DominanceComparator() ;
+    this.dominanceComparator = new DominanceComparator<S>() ;
 
 
     this.evaluator = evaluator ;
@@ -165,15 +165,15 @@ public class MOCell<S extends Solution> extends AbstractGeneticAlgorithm<S, List
     currentNeighbors.add(offspringPopulation.get(0));
     location.setAttribute(offspringPopulation.get(0), -1);
 
-    Ranking rank = new DominanceRanking();
+    Ranking<S> rank = new DominanceRanking<S>();
     rank.computeRanking(currentNeighbors);
 
-    CrowdingDistance crowdingDistance = new CrowdingDistance();
+    CrowdingDistance<S> crowdingDistance = new CrowdingDistance<S>();
     for (int j = 0; j < rank.getNumberOfSubfronts(); j++) {
       crowdingDistance.computeDensityEstimator(rank.getSubfront(j));
     }
 
-    Collections.sort(this.currentNeighbors,new RankingAndCrowdingDistanceComparator());
+    Collections.sort(this.currentNeighbors,new RankingAndCrowdingDistanceComparator<S>());
     S worst = this.currentNeighbors.get(this.currentNeighbors.size()-1);
 
     if (location.getAttribute(worst) == -1) { //The worst is the offspring

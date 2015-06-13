@@ -26,7 +26,6 @@ import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.impl.selection.DifferentialEvolutionSelection;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 
@@ -35,12 +34,12 @@ import java.util.*;
 /**
  * This class implements a differential evolution algorithm.
  */
-public class DifferentialEvolution extends AbstractDifferentialEvolution<Solution> {
+public class DifferentialEvolution extends AbstractDifferentialEvolution<DoubleSolution> {
   private DoubleProblem problem;
   private int populationSize;
   private int maxEvaluations;
-  private SolutionListEvaluator evaluator;
-  private Comparator<Solution> comparator;
+  private SolutionListEvaluator<DoubleSolution> evaluator;
+  private Comparator<DoubleSolution> comparator;
 
   private int evaluations;
 
@@ -56,7 +55,7 @@ public class DifferentialEvolution extends AbstractDifferentialEvolution<Solutio
    */
   public DifferentialEvolution(DoubleProblem problem, int maxEvaluations, int populationSize,
       DifferentialEvolutionCrossover crossoverOperator,
-      DifferentialEvolutionSelection selectionOperator, SolutionListEvaluator evaluator) {
+      DifferentialEvolutionSelection selectionOperator, SolutionListEvaluator<DoubleSolution> evaluator) {
     this.problem = problem;
     this.maxEvaluations = maxEvaluations;
     this.populationSize = populationSize;
@@ -64,7 +63,7 @@ public class DifferentialEvolution extends AbstractDifferentialEvolution<Solutio
     this.selectionOperator = selectionOperator;
     this.evaluator = evaluator;
 
-    comparator = new ObjectiveComparator(0);
+    comparator = new ObjectiveComparator<DoubleSolution>(0);
   }
   
   public int getEvaluations() {

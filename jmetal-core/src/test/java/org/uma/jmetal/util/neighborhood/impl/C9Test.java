@@ -15,7 +15,6 @@ import static org.mockito.Mockito.mock;
  * Created by ajnebro on 26/5/15.
  */
 public class C9Test {
-  private C9 neighborhood ;
 
   /**
    * Case 1
@@ -29,7 +28,7 @@ public class C9Test {
   public void shouldGetNeighborsReturnFourNeighborsCase1() {
     int rows = 1 ;
     int columns = 1 ;
-    neighborhood = new C9(rows, columns) ;
+    C9<IntegerSolution> neighborhood = new C9<IntegerSolution>(rows, columns) ;
 
     List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
     for (int i = 0 ; i < rows*columns; i++) {
@@ -53,7 +52,7 @@ public class C9Test {
   public void shouldGetNeighborsReturnFourNeighborsCase2() {
     int rows = 1 ;
     int columns = 2 ;
-    neighborhood = new C9(rows, columns) ;
+    C9<IntegerSolution> neighborhood = new C9<IntegerSolution>(rows, columns) ;
 
     List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
     for (int i = 0 ; i < rows*columns; i++) {
@@ -78,7 +77,7 @@ public class C9Test {
   public void shouldGetNeighborsReturnFourNeighborsCase3() {
     int rows = 1 ;
     int columns = 2 ;
-    neighborhood = new C9(rows, columns) ;
+    C9<IntegerSolution> neighborhood = new C9<IntegerSolution>(rows, columns) ;
 
     List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
     for (int i = 0 ; i < rows*columns; i++) {
@@ -104,7 +103,7 @@ public class C9Test {
   public void shouldGetNeighborsReturnFourNeighborsCase4() {
     int rows = 2 ;
     int columns = 2 ;
-    neighborhood = new C9(rows, columns) ;
+    C9<IntegerSolution> neighborhood = new C9<IntegerSolution>(rows, columns) ;
 
     List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
     for (int i = 0 ; i < rows*columns; i++) {
@@ -131,7 +130,7 @@ public class C9Test {
   public void shouldGetNeighborsReturnFourNeighborsCase5() {
     int rows = 2 ;
     int columns = 2 ;
-    neighborhood = new C9(rows, columns) ;
+    C9<IntegerSolution> neighborhood = new C9<IntegerSolution>(rows, columns) ;
 
     List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
     for (int i = 0 ; i < rows*columns; i++) {
@@ -158,7 +157,7 @@ public class C9Test {
   public void shouldGetNeighborsReturnFourNeighborsCase6() {
     int rows = 2 ;
     int columns = 2 ;
-    neighborhood = new C9(rows, columns) ;
+    C9<IntegerSolution> neighborhood = new C9<IntegerSolution>(rows, columns) ;
 
     List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
     for (int i = 0 ; i < rows*columns; i++) {
@@ -185,7 +184,7 @@ public class C9Test {
   public void shouldGetNeighborsReturnFourNeighborsCase7() {
     int rows = 2 ;
     int columns = 2 ;
-    neighborhood = new C9(rows, columns) ;
+    C9<IntegerSolution> neighborhood = new C9<IntegerSolution>(rows, columns) ;
 
     List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
     for (int i = 0 ; i < rows*columns; i++) {
@@ -212,7 +211,7 @@ public class C9Test {
   public void shouldGetNeighborsReturnFourNeighborsCase8() {
     int rows = 2 ;
     int columns = 4 ;
-    neighborhood = new C9(rows, columns) ;
+    C9<IntegerSolution> neighborhood = new C9<IntegerSolution>(rows, columns) ;
 
     List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
     for (int i = 0 ; i < rows*columns; i++) {
@@ -241,7 +240,7 @@ public class C9Test {
   public void shouldGetNeighborsReturnFourNeighborsCase9() {
     int rows = 2 ;
     int columns = 4 ;
-    neighborhood = new C9(rows, columns) ;
+    C9<IntegerSolution> neighborhood = new C9<IntegerSolution>(rows, columns) ;
 
     List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
     for (int i = 0 ; i < rows*columns; i++) {
@@ -271,7 +270,7 @@ public class C9Test {
   public void shouldGetNeighborsReturnFourNeighborsCase10() {
     int rows = 3 ;
     int columns = 4 ;
-    neighborhood = new C9(rows, columns) ;
+    C9<IntegerSolution> neighborhood = new C9<IntegerSolution>(rows, columns) ;
 
     List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
     for (int i = 0 ; i < rows*columns; i++) {
@@ -303,7 +302,7 @@ public class C9Test {
   public void shouldGetNeighborsReturnFourNeighborsCase11() {
     int rows = 3 ;
     int columns = 4 ;
-    neighborhood = new C9(rows, columns) ;
+    C9<IntegerSolution> neighborhood = new C9<IntegerSolution>(rows, columns) ;
 
     List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
     for (int i = 0 ; i < rows*columns; i++) {

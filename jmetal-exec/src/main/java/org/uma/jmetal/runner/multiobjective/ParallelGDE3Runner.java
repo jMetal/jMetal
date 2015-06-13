@@ -53,7 +53,7 @@ public class ParallelGDE3Runner {
    */
   public static void main(String[] args) {
     DoubleProblem problem;
-    Algorithm algorithm;
+    Algorithm<List<DoubleSolution>> algorithm;
     DifferentialEvolutionSelection selection;
     DifferentialEvolutionCrossover crossover;
 
@@ -64,14 +64,14 @@ public class ParallelGDE3Runner {
       problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
     }
 
-    problem = (DoubleProblem) ProblemUtils.loadProblem(problemName);
+    problem = (DoubleProblem) ProblemUtils.<DoubleSolution> loadProblem(problemName);
 
     double cr = 0.5 ;
     double f = 0.5 ;
     crossover = new DifferentialEvolutionCrossover(cr, f, "rand/1/bin") ;
     selection = new DifferentialEvolutionSelection() ;
 
-    SolutionListEvaluator evaluator = new MultithreadedSolutionListEvaluator(0, problem) ;
+    SolutionListEvaluator<DoubleSolution> evaluator = new MultithreadedSolutionListEvaluator<DoubleSolution>(0, problem) ;
 
     algorithm = new GDE3Builder(problem)
         .setCrossover(crossover)

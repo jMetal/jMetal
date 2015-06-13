@@ -9,13 +9,13 @@ import java.util.HashMap;
  * Created by Antonio J. Nebro on 03/09/14.
  */
 public class DefaultIntegerDoubleSolution
-        extends AbstractGenericSolution<Number, IntegerDoubleProblem>
+        extends AbstractGenericSolution<Number, IntegerDoubleProblem<?>>
         implements IntegerDoubleSolution {
   private int numberOfIntegerVariables ;
   private int numberOfDoubleVariables ;
 
   /** Constructor */
-  public DefaultIntegerDoubleSolution(IntegerDoubleProblem problem) {
+  public DefaultIntegerDoubleSolution(IntegerDoubleProblem<?> problem) {
     super(problem) ;
 
     numberOfIntegerVariables = problem.getNumberOfIntegerVariables() ;
@@ -68,7 +68,7 @@ public class DefaultIntegerDoubleSolution
     overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
     numberOfViolatedConstraints = solution.numberOfViolatedConstraints ;
 
-    attributes = new HashMap(solution.attributes) ;
+    attributes = new HashMap<Object, Object>(solution.attributes) ;
   }
 
   @Override

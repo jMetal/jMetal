@@ -57,13 +57,13 @@ public class ParallelNSGAIIRunner {
   public static void main(String[] args) throws JMetalException {
     DoubleProblem problem;
     Algorithm<List<DoubleSolution>> algorithm;
-    CrossoverOperator<List<DoubleSolution>, List<DoubleSolution>> crossover;
+    CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
-    SelectionOperator selection;
+    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1" ;
 
-    problem = (DoubleProblem) ProblemUtils.loadProblem(problemName);
+    problem = (DoubleProblem) ProblemUtils.<DoubleSolution> loadProblem(problemName);
 
     double crossoverProbability = 0.9 ;
     double crossoverDistributionIndex = 20.0 ;
@@ -73,13 +73,13 @@ public class ParallelNSGAIIRunner {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    selection = new BinaryTournamentSelection();
+    selection = new BinaryTournamentSelection<DoubleSolution>();
 
-    algorithm = new NSGAIIBuilder(problem, crossover, mutation, NSGAIIBuilder.NSGAIIVariant.NSGAII)
+    algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, NSGAIIBuilder.NSGAIIVariant.NSGAII)
             .setSelectionOperator(selection)
             .setMaxIterations(250)
             .setPopulationSize(100)
-            .setSolutionListEvaluator(new MultithreadedSolutionListEvaluator(8, problem))
+            .setSolutionListEvaluator(new MultithreadedSolutionListEvaluator<DoubleSolution>(8, problem))
             .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)

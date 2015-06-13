@@ -29,24 +29,24 @@ import java.util.List;
  * Applies a N-ary tournament selection to return the best solution between N that have been
  * chosen at random from a solution list.
  */
-public class NaryTournamentSelection implements SelectionOperator<List<Solution>, Solution> {
-  private Comparator<Solution> comparator;
+public class NaryTournamentSelection<S extends Solution<?>> implements SelectionOperator<List<S>, S> {
+  private Comparator<S> comparator;
   private int numberOfSolutionsToBeReturned ;
 
   /** Constructor */
   public NaryTournamentSelection() {
-    this(2, new DominanceComparator()) ;
+    this(2, new DominanceComparator<S>()) ;
   }
 
   /** Constructor */
-  public NaryTournamentSelection(int numberOfSolutionsToBeReturned, Comparator<Solution> comparator) {
+  public NaryTournamentSelection(int numberOfSolutionsToBeReturned, Comparator<S> comparator) {
     this.numberOfSolutionsToBeReturned = numberOfSolutionsToBeReturned ;
     this.comparator = comparator ;
   }
 
   @Override
   /** Execute() method */
-  public Solution execute(List<Solution> solutionList) {
+  public S execute(List<S> solutionList) {
     if (null == solutionList) {
       throw new JMetalException("The solution list is null") ;
     } else if (solutionList.isEmpty()) {
@@ -56,11 +56,11 @@ public class NaryTournamentSelection implements SelectionOperator<List<Solution>
           + "the number of requested solutions ("+numberOfSolutionsToBeReturned+")") ;
     }
 
-    Solution result ;
+    S result ;
     if (solutionList.size() == 1) {
       result = solutionList.get(0) ;
     } else {
-      List<Solution> selectedSolutions = SolutionListUtils.selectNRandomDifferentSolutions(
+      List<S> selectedSolutions = SolutionListUtils.selectNRandomDifferentSolutions(
           numberOfSolutionsToBeReturned, solutionList) ;
       result = SolutionListUtils.findBestSolution(selectedSolutions, comparator) ;
     }

@@ -15,7 +15,6 @@ import static org.mockito.Mockito.mock;
  * Created by ajnebro on 26/5/15.
  */
 public class L5Test {
-  private L5 neighborhood ;
 
   /**
    * Case 1
@@ -29,7 +28,7 @@ public class L5Test {
   public void shouldGetNeighborsReturnFourNeighborsCase1() {
     int rows = 1 ;
     int columns = 1 ;
-    neighborhood = new L5(rows, columns) ;
+    L5<IntegerSolution> neighborhood = new L5<IntegerSolution>(rows, columns) ;
 
     List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
     for (int i = 0 ; i < rows*columns; i++) {
@@ -53,7 +52,7 @@ public class L5Test {
   public void shouldGetNeighborsReturnFourNeighborsCase2() {
     int rows = 1 ;
     int columns = 2 ;
-    neighborhood = new L5(rows, columns) ;
+    L5<IntegerSolution> neighborhood = new L5<IntegerSolution>(rows, columns) ;
 
     List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
     for (int i = 0 ; i < rows*columns; i++) {
@@ -78,7 +77,7 @@ public class L5Test {
   public void shouldGetNeighborsReturnFourNeighborsCase3() {
     int rows = 1 ;
     int columns = 2 ;
-    neighborhood = new L5(rows, columns) ;
+    L5<IntegerSolution> neighborhood = new L5<IntegerSolution>(rows, columns) ;
 
     List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
     for (int i = 0 ; i < rows*columns; i++) {
@@ -104,7 +103,7 @@ public class L5Test {
   public void shouldGetNeighborsReturnFourNeighborsCase4() {
     int rows = 2 ;
     int columns = 2 ;
-    neighborhood = new L5(rows, columns) ;
+    L5<IntegerSolution> neighborhood = new L5<IntegerSolution>(rows, columns) ;
 
     List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
     for (int i = 0 ; i < rows*columns; i++) {
@@ -130,7 +129,7 @@ public class L5Test {
   public void shouldGetNeighborsReturnFourNeighborsCase5() {
     int rows = 2 ;
     int columns = 2 ;
-    neighborhood = new L5(rows, columns) ;
+    L5<IntegerSolution> neighborhood = new L5<IntegerSolution>(rows, columns) ;
 
     List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
     for (int i = 0 ; i < rows*columns; i++) {
@@ -156,7 +155,7 @@ public class L5Test {
   public void shouldGetNeighborsReturnFourNeighborsCase6() {
     int rows = 2 ;
     int columns = 2 ;
-    neighborhood = new L5(rows, columns) ;
+    L5<IntegerSolution> neighborhood = new L5<IntegerSolution>(rows, columns) ;
 
     List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
     for (int i = 0 ; i < rows*columns; i++) {
@@ -182,7 +181,7 @@ public class L5Test {
   public void shouldGetNeighborsReturnFourNeighborsCase7() {
     int rows = 2 ;
     int columns = 2 ;
-    neighborhood = new L5(rows, columns) ;
+    L5<IntegerSolution> neighborhood = new L5<IntegerSolution>(rows, columns) ;
 
     List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
     for (int i = 0 ; i < rows*columns; i++) {
@@ -208,7 +207,7 @@ public class L5Test {
   public void shouldGetNeighborsReturnFourNeighborsCase8() {
     int rows = 2 ;
     int columns = 4 ;
-    neighborhood = new L5(rows, columns) ;
+    L5<IntegerSolution> neighborhood = new L5<IntegerSolution>(rows, columns) ;
 
     List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
     for (int i = 0 ; i < rows*columns; i++) {
@@ -237,7 +236,7 @@ public class L5Test {
   public void shouldGetNeighborsReturnFourNeighborsCase9() {
     int rows = 4 ;
     int columns = 2 ;
-    neighborhood = new L5(rows, columns) ;
+    L5<IntegerSolution> neighborhood = new L5<IntegerSolution>(rows, columns) ;
 
     List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
     for (int i = 0 ; i < rows*columns; i++) {
@@ -266,7 +265,7 @@ public class L5Test {
   public void shouldGetNeighborsReturnFourNeighborsCase10() {
     int rows = 4 ;
     int columns = 2 ;
-    neighborhood = new L5(rows, columns) ;
+    L5<IntegerSolution> neighborhood = new L5<IntegerSolution>(rows, columns) ;
 
     List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
     for (int i = 0 ; i < rows*columns; i++) {

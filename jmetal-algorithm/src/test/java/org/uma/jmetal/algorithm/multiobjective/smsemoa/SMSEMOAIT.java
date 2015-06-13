@@ -8,7 +8,6 @@ import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.RandomSelection;
 import org.uma.jmetal.problem.DoubleProblem;
-import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT4;
 import org.uma.jmetal.qualityindicator.impl.Hypervolume;
 import org.uma.jmetal.solution.DoubleSolution;
@@ -25,8 +24,8 @@ public class SMSEMOAIT {
 
   @Test
   public void shouldTheAlgorithmReturnANumberOfSolutionsWhenSolvingASimpleProblem() throws Exception {
-    Problem problem = new ZDT4() ;
-    CrossoverOperator<List<DoubleSolution>,List<DoubleSolution>> crossover;
+    ZDT4 problem = new ZDT4() ;
+    CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
 
     double crossoverProbability = 0.9 ;
@@ -38,7 +37,7 @@ public class SMSEMOAIT {
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
     algorithm = new SMSEMOABuilder<>(problem, crossover, mutation)
-        .setSelectionOperator(new RandomSelection())
+        .setSelectionOperator(new RandomSelection<DoubleSolution>())
         .setMaxEvaluations(25000)
         .setPopulationSize(100)
         .build() ;
@@ -59,7 +58,7 @@ public class SMSEMOAIT {
   public void shouldTheHypervolumeHaveAMininumValue() throws Exception {
     DoubleProblem problem = new ZDT4() ;
 
-    CrossoverOperator<List<DoubleSolution>,List<DoubleSolution>> crossover;
+    CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
 
     double crossoverProbability = 0.9 ;
@@ -71,7 +70,7 @@ public class SMSEMOAIT {
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
     algorithm = new SMSEMOABuilder<>(problem, crossover, mutation)
-        .setSelectionOperator(new RandomSelection())
+        .setSelectionOperator(new RandomSelection<DoubleSolution>())
         .setMaxEvaluations(25000)
         .setPopulationSize(100)
         .build();

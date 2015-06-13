@@ -32,8 +32,8 @@ import java.util.Comparator;
  * <code>Solution</code> objects) based on the fitness value returned by the
  * method <code>getFitness</code>.
  */
-public class FitnessComparator<S extends Solution> implements Comparator<S> {
-  private Fitness<S> solutionFitness = new Fitness() ;
+public class FitnessComparator<S extends Solution<?>> implements Comparator<S> {
+  private Fitness<S> solutionFitness = new Fitness<S>() ;
 
   /**
    * Compares two solutions.

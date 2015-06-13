@@ -13,7 +13,6 @@
 
 package org.uma.jmetal.util.solutionattribute.impl;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -39,18 +38,10 @@ public class DominanceRankingTest {
   @Mock
   private DoubleProblem problem ;
 
-  private Ranking ranking ;
-
-  @Before
-  public void startup() {
-    //problem = Mockito.mock(Problem.class) ;
-    ranking = new DominanceRanking() ;
-  }
-
   @Test
   public void rankingOfAnEmptyPopulation() {
-    List<Solution> population = Collections.emptyList() ;
-    Ranking ranking = new DominanceRanking() ;
+    List<Solution<?>> population = Collections.emptyList() ;
+    Ranking<Solution<?>> ranking = new DominanceRanking<Solution<?>>() ;
     ranking.computeRanking(population) ;
     assertEquals(0, ranking.getNumberOfSubfronts()) ;
   }
@@ -63,7 +54,7 @@ public class DominanceRankingTest {
             new DefaultDoubleSolution(problem),
             new DefaultDoubleSolution(problem));
 
-    Ranking ranking = new DominanceRanking() ;
+    Ranking<DoubleSolution> ranking = new DominanceRanking<DoubleSolution>() ;
     ranking.computeRanking(population) ;
 
     assertEquals(1, ranking.getNumberOfSubfronts());

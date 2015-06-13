@@ -40,14 +40,12 @@ public class NaryRandomSelectionTest {
   @Rule
   public ExpectedException exception = ExpectedException.none();
 
-  private NaryRandomSelection selection ;
-
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheSolutionListIsNull() {
     exception.expect(JMetalException.class);
     exception.expectMessage(containsString("The solution list is null"));
 
-    selection = new NaryRandomSelection() ;
+    NaryRandomSelection<Solution<?>> selection = new NaryRandomSelection<Solution<?>>() ;
     selection.execute(null) ;
   }
 
@@ -56,7 +54,7 @@ public class NaryRandomSelectionTest {
     exception.expect(JMetalException.class);
     exception.expectMessage(containsString("The solution list is empty"));
 
-    selection = new NaryRandomSelection() ;
+    NaryRandomSelection<DoubleSolution> selection = new NaryRandomSelection<DoubleSolution>() ;
     List<DoubleSolution> list = new ArrayList<>() ;
 
     selection.execute(list) ;
@@ -64,7 +62,7 @@ public class NaryRandomSelectionTest {
 
   @Test
   public void shouldDefaultConstructorReturnASingleSolution() {
-    selection = new NaryRandomSelection() ;
+    NaryRandomSelection<Solution<?>> selection = new NaryRandomSelection<Solution<?>>() ;
 
     int result = (int)ReflectionTestUtils.getField(selection, "numberOfSolutionsToBeReturned");
     int expectedResult = 1 ;
@@ -74,7 +72,7 @@ public class NaryRandomSelectionTest {
   @Test
   public void shouldNonDefaultConstructorReturnTheCorrectNumberOfSolutions() {
     int solutionsToBeReturned = 4 ;
-    selection = new NaryRandomSelection(solutionsToBeReturned) ;
+    NaryRandomSelection<Solution<?>> selection = new NaryRandomSelection<Solution<?>>(solutionsToBeReturned) ;
 
     int result = (int)ReflectionTestUtils.getField(selection, "numberOfSolutionsToBeReturned");
     assertEquals(solutionsToBeReturned, result) ;
@@ -86,8 +84,8 @@ public class NaryRandomSelectionTest {
     exception.expectMessage(containsString("The solution list size (1) is less than " +
     "the number of requested solutions (2)"));
 
-    selection = new NaryRandomSelection(2) ;
-    List<Solution> list = new ArrayList<>(1) ;
+    NaryRandomSelection<Solution<?>> selection = new NaryRandomSelection<Solution<?>>(2) ;
+    List<Solution<?>> list = new ArrayList<>(1) ;
     list.add(mock(Solution.class)) ;
 
     selection.execute(list) ;
@@ -99,8 +97,8 @@ public class NaryRandomSelectionTest {
     exception.expectMessage(containsString("The solution list size (2) is less than " +
         "the number of requested solutions (4)"));
 
-    selection = new NaryRandomSelection(4) ;
-    List<Solution> list = new ArrayList<>(2) ;
+    NaryRandomSelection<Solution<?>> selection = new NaryRandomSelection<Solution<?>>(4) ;
+    List<Solution<?>> list = new ArrayList<>(2) ;
     list.add(mock(Solution.class)) ;
     list.add(mock(Solution.class)) ;
 
@@ -109,7 +107,7 @@ public class NaryRandomSelectionTest {
 
   @Test
   public void shouldExecuteReturnTheSolutionInTheListIfTheListContainsASolution() {
-    selection = new NaryRandomSelection(1) ;
+    NaryRandomSelection<IntegerSolution> selection = new NaryRandomSelection<IntegerSolution>(1) ;
     List<IntegerSolution> list = new ArrayList<>(2) ;
     IntegerSolution solution = mock(IntegerSolution.class) ;
     list.add(solution) ;
@@ -120,7 +118,7 @@ public class NaryRandomSelectionTest {
 
   @Test
   public void shouldExecuteReturnTheSolutionSInTheListIfTheListContainsTwoSolutions() {
-    selection = new NaryRandomSelection(2) ;
+    NaryRandomSelection<BinarySolution> selection = new NaryRandomSelection<BinarySolution>(2) ;
     List<BinarySolution> list = new ArrayList<>(2) ;
     BinarySolution solution1 = mock(BinarySolution.class) ;
     BinarySolution solution2 = mock(BinarySolution.class) ;
@@ -139,7 +137,7 @@ public class NaryRandomSelectionTest {
     int listSize = 20 ;
     int solutionsToBeReturned = 4 ;
 
-    selection = new NaryRandomSelection(solutionsToBeReturned) ;
+    NaryRandomSelection<BinarySolution> selection = new NaryRandomSelection<BinarySolution>(solutionsToBeReturned) ;
     List<BinarySolution> list = new ArrayList<>(listSize) ;
     for (int i = 0; i < listSize; i++) {
       list.add(mock(BinarySolution.class));
@@ -164,7 +162,7 @@ public class NaryRandomSelectionTest {
       list.add(solution[i]);
     }
 
-    selection = new NaryRandomSelection(solutionsToBeReturned) ;
+    NaryRandomSelection<IntegerSolution> selection = new NaryRandomSelection<IntegerSolution>(solutionsToBeReturned) ;
 
     List<IntegerSolution> result = (List<IntegerSolution>) selection.execute(list);
     assertTrue(result.contains(solution[0]));

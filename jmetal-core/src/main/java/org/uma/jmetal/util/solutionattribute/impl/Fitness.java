@@ -24,5 +24,5 @@ import org.uma.jmetal.solution.Solution;
 
 /**
  */
-public class Fitness<S extends Solution> extends GenericSolutionAttribute<S, Double> {
+public class Fitness<S extends Solution<?>> extends GenericSolutionAttribute<S, Double> {
 }

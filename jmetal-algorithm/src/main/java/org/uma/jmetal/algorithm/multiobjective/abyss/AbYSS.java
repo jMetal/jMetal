@@ -42,7 +42,7 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
   protected Archive<DoubleSolution> archive ;
 
   protected LocalSearchOperator<DoubleSolution> localSearch ;
-  protected CrossoverOperator<List<DoubleSolution>, List<DoubleSolution>> crossover ;
+  protected CrossoverOperator<DoubleSolution> crossover ;
   protected int evaluations;
   protected JMetalRandom randomGenerator ;
 
@@ -67,7 +67,7 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
   public ABYSS(DoubleProblem problem, int maxEvaluations, int populationSize, int referenceSet1Size,
       int referenceSet2Size, int archiveSize, Archive<DoubleSolution> archive,
       LocalSearchOperator<DoubleSolution> localSearch,
-      CrossoverOperator<List<DoubleSolution>, List<DoubleSolution>> crossoverOperator,
+      CrossoverOperator<DoubleSolution> crossoverOperator,
       int numberOfSubRanges) {
 
     setPopulationSize(populationSize);

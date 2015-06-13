@@ -27,7 +27,7 @@ import org.uma.jmetal.util.AlgorithmBuilder;
 /**
  * Created by antonio on 24/09/14.
  */
-public class SMPSOBuilder implements AlgorithmBuilder {
+public class SMPSOBuilder implements AlgorithmBuilder<SMPSO> {
   private DoubleProblem problem;
 
   private double c1Max;
@@ -48,13 +48,13 @@ public class SMPSOBuilder implements AlgorithmBuilder {
 
   protected int archiveSize;
 
-  protected MutationOperator mutationOperator;
+  protected MutationOperator<DoubleSolution> mutationOperator;
 
   private Archive<DoubleSolution> leaders;
 
-  private SolutionListEvaluator evaluator;
+  private SolutionListEvaluator<DoubleSolution> evaluator;
 
-  public SMPSOBuilder(DoubleProblem problem, Archive leaders) {
+  public SMPSOBuilder(DoubleProblem problem, Archive<DoubleSolution> leaders) {
     this.problem = problem;
     this.leaders = leaders;
 
@@ -75,7 +75,7 @@ public class SMPSOBuilder implements AlgorithmBuilder {
     changeVelocity2 = -1;
 
     mutationOperator = new PolynomialMutation(1.0/problem.getNumberOfVariables(), 20.0) ;
-    evaluator = new SequentialSolutionListEvaluator() ;
+    evaluator = new SequentialSolutionListEvaluator<DoubleSolution>() ;
   }
 
   /* Getters */
@@ -119,7 +119,7 @@ public class SMPSOBuilder implements AlgorithmBuilder {
     return c2Min;
   }
 
-  public MutationOperator getMutation() {
+  public MutationOperator<DoubleSolution> getMutation() {
     return mutationOperator;
   }
 
@@ -152,7 +152,7 @@ public class SMPSOBuilder implements AlgorithmBuilder {
     return this;
   }
 
-  public SMPSOBuilder setMutation(MutationOperator mutation) {
+  public SMPSOBuilder setMutation(MutationOperator<DoubleSolution> mutation) {
     mutationOperator = mutation;
 
     return this;
@@ -236,7 +236,7 @@ public class SMPSOBuilder implements AlgorithmBuilder {
     return this;
   }
 
-  public SMPSOBuilder setSolutionListEvaluator(SolutionListEvaluator evaluator) {
+  public SMPSOBuilder setSolutionListEvaluator(SolutionListEvaluator<DoubleSolution> evaluator) {
     this.evaluator = evaluator ;
 
     return this ;

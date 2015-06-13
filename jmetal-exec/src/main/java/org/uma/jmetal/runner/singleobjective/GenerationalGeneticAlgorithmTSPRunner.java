@@ -45,9 +45,9 @@ public class GenerationalGeneticAlgorithmTSPRunner {
   public static void main(String[] args) throws Exception {
     PermutationProblem<PermutationSolution<Integer>> problem;
     Algorithm<PermutationSolution<Integer>> algorithm;
-    CrossoverOperator crossover;
+    CrossoverOperator<PermutationSolution<Integer>> crossover;
     MutationOperator<PermutationSolution<Integer>> mutation;
-    SelectionOperator selection;
+    SelectionOperator<List<PermutationSolution<Integer>>, PermutationSolution<Integer>> selection;
 
     problem = new TSP("/tspInstances/kroA100.tsp");
     problem = new TSP("/tspInstances/mona-lisa100K.tsp");
@@ -57,7 +57,7 @@ public class GenerationalGeneticAlgorithmTSPRunner {
     double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
     mutation = new PermutationSwapMutation<Integer>(mutationProbability) ;
 
-    selection = new BinaryTournamentSelection(new RankingAndCrowdingDistanceComparator());
+    selection = new BinaryTournamentSelection<PermutationSolution<Integer>>(new RankingAndCrowdingDistanceComparator<PermutationSolution<Integer>>());
 
     algorithm = new GeneticAlgorithmBuilder<>(problem, crossover, mutation, GeneticAlgorithmBuilder.GeneticAlgorithmVariant.GENERATIONAL)
             .setPopulationSize(100)

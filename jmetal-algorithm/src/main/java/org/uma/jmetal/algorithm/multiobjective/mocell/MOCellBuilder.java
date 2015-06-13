@@ -1,6 +1,5 @@
 package org.uma.jmetal.algorithm.multiobjective.mocell;
 
-import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -20,7 +19,7 @@ import java.util.List;
 /**
  * Created by juanjo
  *  */
-public class MOCellBuilder<S extends Solution> implements AlgorithmBuilder {
+public class MOCellBuilder<S extends Solution<?>> implements AlgorithmBuilder<MOCell<S>> {
   public enum MOCellVariant {MOCell, SteadyStateMOCell, Measures}
 
   /**
@@ -30,16 +29,16 @@ public class MOCellBuilder<S extends Solution> implements AlgorithmBuilder {
   private int maxEvaluations;
   private int populationSize;
   private int archiveSize ;
-  private CrossoverOperator<List<S>, List<S>>  crossoverOperator;
+  private CrossoverOperator<S>  crossoverOperator;
   private MutationOperator<S> mutationOperator;
-  private SelectionOperator selectionOperator;
-  private SolutionListEvaluator evaluator;
+  private SelectionOperator<List<S>,S> selectionOperator;
+  private SolutionListEvaluator<S> evaluator;
   private Neighborhood<S> neighborhood ;
 
   /**
    * MOCellBuilder constructor
    */
-  public MOCellBuilder(Problem<S> problem, CrossoverOperator<List<S>, List<S>> crossoverOperator,
+  public MOCellBuilder(Problem<S> problem, CrossoverOperator<S> crossoverOperator,
       MutationOperator<S> mutationOperator) {
     this.problem = problem;
     maxEvaluations = 25000;
@@ -47,12 +46,12 @@ public class MOCellBuilder<S extends Solution> implements AlgorithmBuilder {
     archiveSize = 100 ;
     this.crossoverOperator = crossoverOperator ;
     this.mutationOperator = mutationOperator ;
-    selectionOperator = new BinaryTournamentSelection(new RankingAndCrowdingDistanceComparator());
-    this.neighborhood = new C9((int)Math.sqrt(populationSize), (int)Math.sqrt(populationSize)) ;
-    evaluator = new SequentialSolutionListEvaluator();
+    selectionOperator = new BinaryTournamentSelection<S>(new RankingAndCrowdingDistanceComparator<S>());
+    this.neighborhood = new C9<S>((int)Math.sqrt(populationSize), (int)Math.sqrt(populationSize)) ;
+    evaluator = new SequentialSolutionListEvaluator<S>();
   }
 
-  public MOCellBuilder setMaxEvaluations(int maxEvaluations) {
+  public MOCellBuilder<S> setMaxEvaluations(int maxEvaluations) {
     if (maxEvaluations < 0) {
       throw new JMetalException("maxEvaluations is negative: " + maxEvaluations);
     }
@@ -61,7 +60,7 @@ public class MOCellBuilder<S extends Solution> implements AlgorithmBuilder {
     return this;
   }
 
-  public MOCellBuilder setPopulationSize(int populationSize) {
+  public MOCellBuilder<S> setPopulationSize(int populationSize) {
     if (populationSize < 0) {
       throw new JMetalException("Population size is negative: " + populationSize);
     }
@@ -71,7 +70,7 @@ public class MOCellBuilder<S extends Solution> implements AlgorithmBuilder {
     return this;
   }
 
-  public MOCellBuilder setArchiveSize(int archiveSize) {
+  public MOCellBuilder<S> setArchiveSize(int archiveSize) {
     if (archiveSize < 0) {
       throw new JMetalException("archive size is negative: " + populationSize);
     }
@@ -81,13 +80,13 @@ public class MOCellBuilder<S extends Solution> implements AlgorithmBuilder {
     return this;
   }
 
-  public MOCellBuilder setNeighborhood(Neighborhood<S> neighborhood) {
+  public MOCellBuilder<S> setNeighborhood(Neighborhood<S> neighborhood) {
     this.neighborhood = neighborhood;
 
     return this;
   }
 
-  public MOCellBuilder setSelectionOperator(SelectionOperator selectionOperator) {
+  public MOCellBuilder<S> setSelectionOperator(SelectionOperator<List<S>,S> selectionOperator) {
     if (selectionOperator == null) {
       throw new JMetalException("selectionOperator is null");
     }
@@ -96,7 +95,7 @@ public class MOCellBuilder<S extends Solution> implements AlgorithmBuilder {
     return this;
   }
 
-  public MOCellBuilder setSolutionListEvaluator(SolutionListEvaluator evaluator) {
+  public MOCellBuilder<S> setSolutionListEvaluator(SolutionListEvaluator<S> evaluator) {
     if (evaluator == null) {
       throw new JMetalException("evaluator is null");
     }
@@ -105,15 +104,15 @@ public class MOCellBuilder<S extends Solution> implements AlgorithmBuilder {
     return this;
   }
 
-  public Algorithm<List<S>> build() {
-    Algorithm<List<S>> algorithm = new MOCell<S>(problem, maxEvaluations, populationSize,
+  public MOCell<S> build() {
+    MOCell<S> algorithm = new MOCell<S>(problem, maxEvaluations, populationSize,
         archiveSize, neighborhood, crossoverOperator, mutationOperator, selectionOperator, evaluator);
     
     return algorithm ;
   }
 
   /* Getters */
-  public Problem getProblem() {
+  public Problem<S> getProblem() {
     return problem;
   }
 
@@ -129,19 +128,19 @@ public class MOCellBuilder<S extends Solution> implements AlgorithmBuilder {
     return archiveSize ;
   }
 
-  public CrossoverOperator getCrossoverOperator() {
+  public CrossoverOperator<S> getCrossoverOperator() {
     return crossoverOperator;
   }
 
-  public MutationOperator getMutationOperator() {
+  public MutationOperator<S> getMutationOperator() {
     return mutationOperator;
   }
 
-  public SelectionOperator getSelectionOperator() {
+  public SelectionOperator<List<S>,S> getSelectionOperator() {
     return selectionOperator;
   }
 
-  public SolutionListEvaluator getSolutionListEvaluator() {
+  public SolutionListEvaluator<S> getSolutionListEvaluator() {
     return evaluator;
   }
 }

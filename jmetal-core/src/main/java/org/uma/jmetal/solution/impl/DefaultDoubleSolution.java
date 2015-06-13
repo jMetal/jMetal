@@ -39,7 +39,7 @@ public class DefaultDoubleSolution extends AbstractGenericSolution<Double, Doubl
 
     overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
     numberOfViolatedConstraints = solution.numberOfViolatedConstraints ;
-    attributes = new HashMap(solution.attributes) ;
+    attributes = new HashMap<Object, Object>(solution.attributes) ;
   }
 
   @Override

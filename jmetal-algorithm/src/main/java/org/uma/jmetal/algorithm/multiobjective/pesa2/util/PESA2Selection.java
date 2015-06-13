@@ -29,7 +29,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 /**
  * This class implements a selection operator as the used in the PESA-II algorithm
  */
-public class PESA2Selection<S extends Solution> implements SelectionOperator<AdaptiveGridArchive, S> {
+public class PESA2Selection<S extends Solution<?>> implements SelectionOperator<AdaptiveGridArchive<S>, S> {
 
   private JMetalRandom randomGenerator ;
 
@@ -37,7 +37,7 @@ public class PESA2Selection<S extends Solution> implements SelectionOperator<Ada
     randomGenerator = JMetalRandom.getInstance() ;
 	}
 
-  @Override public S execute(AdaptiveGridArchive archive) {
+  @Override public S execute(AdaptiveGridArchive<S> archive) {
     int selected;
     int hypercube1 = archive.getGrid().randomOccupiedHypercube();
     int hypercube2 = archive.getGrid().randomOccupiedHypercube();

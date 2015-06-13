@@ -21,15 +21,15 @@
 
 package org.uma.jmetal.algorithm.multiobjective.randomsearch;
 
-import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AlgorithmBuilder;
 
 /**
  * This class implements a simple random search algorithm.
  */
-public class RandomSearchBuilder implements AlgorithmBuilder {
-  private Problem problem ;
+public class RandomSearchBuilder<S extends Solution<?>> implements AlgorithmBuilder<RandomSearch<S>> {
+  private Problem<S> problem ;
   private int maxEvaluations ;
 
   /* Getter */
@@ -38,18 +38,18 @@ public class RandomSearchBuilder implements AlgorithmBuilder {
   }
 
 
-  public RandomSearchBuilder(Problem problem) {
+  public RandomSearchBuilder(Problem<S> problem) {
     this.problem = problem ;
     maxEvaluations = 25000 ;
   }
 
-  public RandomSearchBuilder setMaxEvaluations(int maxEvaluations) {
+  public RandomSearchBuilder<S> setMaxEvaluations(int maxEvaluations) {
     this.maxEvaluations = maxEvaluations ;
 
     return this ;
   }
 
-  public Algorithm build() {
-    return new RandomSearch(problem, maxEvaluations) ;
+  public RandomSearch<S> build() {
+    return new RandomSearch<S>(problem, maxEvaluations) ;
   }
 } 

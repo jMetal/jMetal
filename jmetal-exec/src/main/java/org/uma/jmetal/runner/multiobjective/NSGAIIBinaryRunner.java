@@ -58,13 +58,13 @@ public class NSGAIIBinaryRunner {
 
     BinaryProblem problem;
     Algorithm<List<BinarySolution>> algorithm;
-    CrossoverOperator<List<BinarySolution>, List<BinarySolution>> crossover;
+    CrossoverOperator<BinarySolution> crossover;
     MutationOperator<BinarySolution> mutation;
-    SelectionOperator selection;
+    SelectionOperator<List<BinarySolution>, BinarySolution> selection;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT5" ;
 
-    problem = (BinaryProblem) ProblemUtils.loadProblem(problemName);
+    problem = (BinaryProblem) ProblemUtils.<BinarySolution> loadProblem(problemName);
 
     double crossoverProbability = 0.9 ;
     crossover = new SinglePointCrossover(crossoverProbability) ;
@@ -72,9 +72,9 @@ public class NSGAIIBinaryRunner {
     double mutationProbability = 1.0 / problem.getNumberOfBits(0) ;
     mutation = new BitFlipMutation(mutationProbability) ;
 
-    selection = new BinaryTournamentSelection() ;
+    selection = new BinaryTournamentSelection<BinarySolution>() ;
 
-    algorithm = new NSGAIIBuilder(problem, crossover, mutation, NSGAIIBuilder.NSGAIIVariant.NSGAII)
+    algorithm = new NSGAIIBuilder<BinarySolution>(problem, crossover, mutation, NSGAIIBuilder.NSGAIIVariant.NSGAII)
             .setSelectionOperator(selection)
             .setMaxIterations(250)
             .setPopulationSize(100)

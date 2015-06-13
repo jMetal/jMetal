@@ -173,7 +173,7 @@ public class WfgHypervolume {
     currentDeep++;
   }
 
-  public int getLessContributorHV(List<Solution> solutionList) {
+  public int getLessContributorHV(List<Solution<?>> solutionList) {
     WfgHypervolumeFront wholeFront = (WfgHypervolumeFront)loadFront(solutionList, -1) ;
 
     int index = 0;
@@ -191,7 +191,7 @@ public class WfgHypervolume {
         contribution = aux;
       }
 
-      HypervolumeContribution hvc = new HypervolumeContribution() ;
+      HypervolumeContribution<Solution<?>> hvc = new HypervolumeContribution<Solution<?>>() ;
       hvc.setAttribute(solutionList.get(i), aux);
       //solutionList.get(i).setCrowdingDistance(aux);
     }
@@ -199,7 +199,7 @@ public class WfgHypervolume {
     return index;
   }
 
-  private Front loadFront(List<Solution> solutionSet, int notLoadingIndex) {
+  private Front loadFront(List<Solution<?>> solutionSet, int notLoadingIndex) {
     int numberOfPoints ;
     if (notLoadingIndex >= 0 && notLoadingIndex < solutionSet.size()) {
       numberOfPoints = solutionSet.size() - 1;

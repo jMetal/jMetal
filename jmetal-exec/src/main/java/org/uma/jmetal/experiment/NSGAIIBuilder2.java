@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Created by ajnebro on 16/11/14.
  */
-public class NSGAIIBuilder2<S extends Solution, P extends Problem<S>> implements AlgorithmBuilder2<S,P> {
+public class NSGAIIBuilder2<S extends Solution<?>, P extends Problem<S>> implements AlgorithmBuilder2<S,P> {
 
   public enum NSGAIIVariant2 {NSGAII, SteadyStateNSGAII, Measures}
 
@@ -29,30 +29,30 @@ public class NSGAIIBuilder2<S extends Solution, P extends Problem<S>> implements
   private P problem;
   private int maxIterations;
   private int populationSize;
-  private CrossoverOperator<List<S>, List<S>>  crossoverOperator;
+  private CrossoverOperator<S>  crossoverOperator;
   private MutationOperator<S> mutationOperator;
-  private SelectionOperator selectionOperator;
-  private SolutionListEvaluator evaluator;
+  private SelectionOperator<List<S>, S> selectionOperator;
+  private SolutionListEvaluator<S> evaluator;
 
   private NSGAIIVariant2 variant;
 
   /**
    * NSGAIIBuilder constructor
    */
-  public NSGAIIBuilder2(CrossoverOperator<List<S>, List<S>> crossoverOperator,
+  public NSGAIIBuilder2(CrossoverOperator<S> crossoverOperator,
       MutationOperator<S> mutationOperator, NSGAIIVariant2 variant) {
     this.problem = null ;
     maxIterations = 250;
     populationSize = 100;
     this.crossoverOperator = crossoverOperator ;
     this.mutationOperator = mutationOperator ;
-    selectionOperator = new BinaryTournamentSelection();
-    evaluator = new SequentialSolutionListEvaluator();
+    selectionOperator = new BinaryTournamentSelection<S>();
+    evaluator = new SequentialSolutionListEvaluator<S>();
 
     this.variant = variant ;
   }
 
-  public NSGAIIBuilder2 setMaxIterations(int maxIterations) {
+  public NSGAIIBuilder2<S, P> setMaxIterations(int maxIterations) {
     if (maxIterations < 0) {
       throw new JMetalException("maxIterations is negative: " + maxIterations);
     }
@@ -61,7 +61,7 @@ public class NSGAIIBuilder2<S extends Solution, P extends Problem<S>> implements
     return this;
   }
 
-  public NSGAIIBuilder2 setPopulationSize(int populationSize) {
+  public NSGAIIBuilder2<S, P> setPopulationSize(int populationSize) {
     if (populationSize < 0) {
       throw new JMetalException("Population size is negative: " + populationSize);
     }
@@ -71,7 +71,7 @@ public class NSGAIIBuilder2<S extends Solution, P extends Problem<S>> implements
     return this;
   }
 
-  public NSGAIIBuilder2 setSelectionOperator(SelectionOperator selectionOperator) {
+  public NSGAIIBuilder2<S, P> setSelectionOperator(SelectionOperator<List<S>, S> selectionOperator) {
     if (selectionOperator == null) {
       throw new JMetalException("selectionOperator is null");
     }
@@ -80,7 +80,7 @@ public class NSGAIIBuilder2<S extends Solution, P extends Problem<S>> implements
     return this;
   }
 
-  public NSGAIIBuilder2 setSolutionListEvaluator(SolutionListEvaluator evaluator) {
+  public NSGAIIBuilder2<S, P> setSolutionListEvaluator(SolutionListEvaluator<S> evaluator) {
     if (evaluator == null) {
       throw new JMetalException("evaluator is null");
     }
@@ -99,7 +99,7 @@ public class NSGAIIBuilder2<S extends Solution, P extends Problem<S>> implements
       algorithm = new SteadyStateNSGAII<S>(problem, maxIterations, populationSize, crossoverOperator,
           mutationOperator, selectionOperator, evaluator);
     } else if (variant.equals(NSGAIIVariant2.Measures)) {
-      algorithm = new NSGAIIMeasures(problem, maxIterations, populationSize, crossoverOperator,
+      algorithm = new NSGAIIMeasures<S>(problem, maxIterations, populationSize, crossoverOperator,
           mutationOperator, selectionOperator, evaluator);
     }
 
@@ -119,19 +119,19 @@ public class NSGAIIBuilder2<S extends Solution, P extends Problem<S>> implements
     return populationSize;
   }
 
-  public CrossoverOperator getCrossoverOperator() {
+  public CrossoverOperator<S> getCrossoverOperator() {
     return crossoverOperator;
   }
 
-  public MutationOperator getMutationOperator() {
+  public MutationOperator<S> getMutationOperator() {
     return mutationOperator;
   }
 
-  public SelectionOperator getSelectionOperator() {
+  public SelectionOperator<List<S>, S> getSelectionOperator() {
     return selectionOperator;
   }
 
-  public SolutionListEvaluator getSolutionListEvaluator() {
+  public SolutionListEvaluator<S> getSolutionListEvaluator() {
     return evaluator;
   }
 }

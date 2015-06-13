@@ -17,7 +17,7 @@ import java.util.Comparator;
  * mutation operator. An archive is used to store the non-dominated solutions
  * found during the search.
  */
-public class AbYSSLocalSearch<S extends Solution> implements LocalSearchOperator<S>{
+public class AbYSSLocalSearch<S extends Solution<?>> implements LocalSearchOperator<S>{
   private Problem<S> problem;
   private Archive<S> archive;
   private int improvementRounds ;

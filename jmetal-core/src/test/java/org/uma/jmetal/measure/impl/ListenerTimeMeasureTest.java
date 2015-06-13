@@ -1,11 +1,12 @@
 package org.uma.jmetal.measure.impl;
 
-import static org.junit.Assert.*;
-
+import org.junit.Ignore;
 import org.junit.Test;
 import org.uma.jmetal.measure.MeasureListener;
 import org.uma.jmetal.measure.MeasureManager;
 import org.uma.jmetal.measure.PushMeasure;
+
+import static org.junit.Assert.*;
 
 public class ListenerTimeMeasureTest {
 
@@ -27,6 +28,7 @@ public class ListenerTimeMeasureTest {
 		}
 	};
 
+	@Ignore
 	@Test
 	public void testFakeListener() {
 		for (long expected : new Long[] { 5L, 10L, 20L }) {
@@ -49,6 +51,7 @@ public class ListenerTimeMeasureTest {
 		}
 	}
 
+	@Ignore
 	@Test
 	public void testCountTimeInListeners() {
 		ListenerTimeMeasure measure = new ListenerTimeMeasure();
@@ -120,6 +123,7 @@ public class ListenerTimeMeasureTest {
 				differences > rounds * 0.9 && differences <= rounds);
 	}
 
+	@Ignore
 	@Test
 	public void testCountTimeInMeasures() {
 		ListenerTimeMeasure measure = new ListenerTimeMeasure();
@@ -228,6 +232,7 @@ public class ListenerTimeMeasureTest {
 		}
 	}
 
+	@Ignore
 	@Test
 	public void testCountTimeInManager() {
 		ListenerTimeMeasure measure = new ListenerTimeMeasure();
@@ -342,6 +347,7 @@ public class ListenerTimeMeasureTest {
 		assertEquals(0, (long) measure.get());
 	}
 
+	@Ignore
 	@Test
 	public void testResetToCurrentTimeWhenListenerIsRunning() {
 		final ListenerTimeMeasure measure = new ListenerTimeMeasure();

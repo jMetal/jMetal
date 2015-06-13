@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by ajnebro on 17/4/15.
  */
-public class SMSEMOA2<S extends Solution> extends AbstractGeneticAlgorithm<S, List<S>> {
+public class SMSEMOA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>> {
   protected final int maxEvaluations;
   protected final int populationSize;
   protected final double offset ;
@@ -31,7 +31,7 @@ public class SMSEMOA2<S extends Solution> extends AbstractGeneticAlgorithm<S, Li
    * Constructor
    */
   public SMSEMOA2(Problem<S> problem, int maxEvaluations, int populationSize, double offset,
-      CrossoverOperator<List<S>, List<S>> crossoverOperator, MutationOperator<S> mutationOperator,
+      CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
       SelectionOperator<List<S>, S> selectionOperator, Hypervolume hypervolume) {
     super() ;
     this.problem = problem;
@@ -129,7 +129,7 @@ public class SMSEMOA2<S extends Solution> extends AbstractGeneticAlgorithm<S, Li
   }
 
   protected Ranking<S> computeRanking(List<S> solutionList) {
-    Ranking ranking = new DominanceRanking();
+    Ranking<S> ranking = new DominanceRanking<S>();
     ranking.computeRanking(solutionList);
 
     return ranking;

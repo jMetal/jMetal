@@ -10,7 +10,7 @@ import org.uma.jmetal.util.JMetalException;
 /**
  * Created by ajnebro on 10/3/15.
  */
-public class EvolutionStrategyBuilder<S extends Solution> implements AlgorithmBuilder {
+public class EvolutionStrategyBuilder<S extends Solution<?>> implements AlgorithmBuilder<Algorithm<S>> {
   public enum EvolutionStrategyVariant {ELITIST, NON_ELITIST}
 
   private Problem<S> problem;
@@ -30,19 +30,19 @@ public class EvolutionStrategyBuilder<S extends Solution> implements AlgorithmBu
     this.variant = variant ;
   }
 
-  public EvolutionStrategyBuilder setMu(int mu) {
+  public EvolutionStrategyBuilder<S> setMu(int mu) {
     this.mu = mu;
 
     return this;
   }
 
-  public EvolutionStrategyBuilder setLambda(int lambda) {
+  public EvolutionStrategyBuilder<S> setLambda(int lambda) {
     this.lambda = lambda;
 
     return this;
   }
 
-  public EvolutionStrategyBuilder setMaxEvaluations(int maxEvaluations) {
+  public EvolutionStrategyBuilder<S> setMaxEvaluations(int maxEvaluations) {
     this.maxEvaluations = maxEvaluations;
 
     return this;
@@ -71,7 +71,7 @@ public class EvolutionStrategyBuilder<S extends Solution> implements AlgorithmBu
     return maxEvaluations;
   }
 
-  public MutationOperator getMutation() {
+  public MutationOperator<S> getMutation() {
     return mutation;
   }
 }

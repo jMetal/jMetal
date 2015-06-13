@@ -11,11 +11,11 @@ import java.util.List;
  * Created by Antonio J. Nebro on 03/09/14.
  */
 public class DefaultIntegerPermutationSolution
-    extends AbstractGenericSolution<Integer, PermutationProblem>
+    extends AbstractGenericSolution<Integer, PermutationProblem<?>>
     implements PermutationSolution<Integer> {
 
   /** Constructor */
-  public DefaultIntegerPermutationSolution(PermutationProblem problem) {
+  public DefaultIntegerPermutationSolution(PermutationProblem<?> problem) {
     super(problem) ;
 
     overallConstraintViolationDegree = 0.0 ;
@@ -48,7 +48,7 @@ public class DefaultIntegerPermutationSolution
     overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
     numberOfViolatedConstraints = solution.numberOfViolatedConstraints ;
 
-    attributes = new HashMap(solution.attributes) ;
+    attributes = new HashMap<Object, Object>(solution.attributes) ;
   }
 
   @Override public String getVariableValueString(int index) {

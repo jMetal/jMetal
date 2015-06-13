@@ -32,10 +32,10 @@ import static org.mockito.Mockito.when;
  * @version 1.0
  */
 public class RankingAndCrowdingDistanceComparatorTest {
-  private RankingAndCrowdingDistanceComparator comparator ;
+  private RankingAndCrowdingDistanceComparator<Solution<?>> comparator ;
 
   @Before public void setup() {
-    comparator = new RankingAndCrowdingDistanceComparator() ;
+    comparator = new RankingAndCrowdingDistanceComparator<Solution<?>>() ;
   }
 
   @After public void teardown() {
@@ -47,46 +47,46 @@ public class RankingAndCrowdingDistanceComparatorTest {
   }
 
   @Test public void shouldCompareWithANullSolutionAsFirstArgumentReturnOne() {
-    Solution solution = mock(Solution.class) ;
+    Solution<?> solution = mock(Solution.class) ;
     assertEquals(1, comparator.compare(null, solution)) ;
   }
 
   @Test public void shouldCompareWithANullSolutionAsSecondArgumentReturnMinusOne() {
-    Solution solution = mock(Solution.class) ;
+    Solution<?> solution = mock(Solution.class) ;
     assertEquals(-1, comparator.compare(solution, null)) ;
   }
 
   @Test public void shouldCompareWithNullRankingAttributeSolutionAsFirstArgumentReturnOne() {
-    Solution solution2 = mock(Solution.class) ;
+    Solution<?> solution2 = mock(Solution.class) ;
 
     assertEquals(1, comparator.compare(null, solution2)) ;
   }
 
   @Test public void shouldCompareWithRankingYieldingANonZeroValueReturnThatValue() {
-    Comparator<Solution> rankComparator = mock(Comparator.class) ;
+    Comparator<Solution<?>> rankComparator = mock(Comparator.class) ;
 
     when(rankComparator.compare(any(Solution.class), any(Solution.class))).thenReturn(1) ;
 
     ReflectionTestUtils.setField(comparator, "rankComparator", rankComparator);
 
-    Solution solution1 = mock(Solution.class) ;
-    Solution solution2 = mock(Solution.class) ;
+    Solution<?> solution1 = mock(Solution.class) ;
+    Solution<?> solution2 = mock(Solution.class) ;
     assertEquals(1, comparator.compare(solution1, solution2)) ;
     verify(rankComparator).compare(solution1, solution2) ;
   }
 
   @Test public void shouldCompareWhenRankingYieldingAZeroReturnTheCrowdingDistanceValue() {
-    Comparator<Solution> rankComparator = mock(Comparator.class) ;
+    Comparator<Solution<?>> rankComparator = mock(Comparator.class) ;
     when(rankComparator.compare(any(Solution.class), any(Solution.class))).thenReturn(0) ;
 
-    Comparator<Solution> crowdingDistanceComparator = mock(CrowdingDistanceComparator.class) ;
+    Comparator<Solution<?>> crowdingDistanceComparator = mock(CrowdingDistanceComparator.class) ;
     when(crowdingDistanceComparator.compare(any(Solution.class), any(Solution.class))).thenReturn(-1) ;
 
     ReflectionTestUtils.setField(comparator, "rankComparator", rankComparator);
     ReflectionTestUtils.setField(comparator, "crowdingDistanceComparator", crowdingDistanceComparator);
 
-    Solution solution1 = mock(Solution.class) ;
-    Solution solution2 = mock(Solution.class) ;
+    Solution<?> solution1 = mock(Solution.class) ;
+    Solution<?> solution2 = mock(Solution.class) ;
 
     assertEquals(-1, comparator.compare(solution1, solution2)) ;
     verify(rankComparator).compare(solution1, solution2) ;

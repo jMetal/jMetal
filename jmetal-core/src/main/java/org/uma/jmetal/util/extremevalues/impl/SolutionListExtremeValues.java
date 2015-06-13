@@ -9,13 +9,13 @@ import java.util.List;
 /**
  * Created by ajnebro on 23/4/15.
  */
-public class SolutionListExtremeValues implements ExtremeValuesFinder <List<Solution>, List<Double>> {
+public class SolutionListExtremeValues implements ExtremeValuesFinder <List<Solution<?>>, List<Double>> {
 
-  @Override public List<Double> findLowestValues(List<Solution> solutionList) {
+  @Override public List<Double> findLowestValues(List<Solution<?>> solutionList) {
 	  return new FrontExtremeValues().findLowestValues(new ArrayFront(solutionList));
   }
 
-  @Override public List<Double> findHighestValues(List<Solution> solutionList) {
+  @Override public List<Double> findHighestValues(List<Solution<?>> solutionList) {
 	  return new FrontExtremeValues().findHighestValues(new ArrayFront(solutionList));
   }
 }

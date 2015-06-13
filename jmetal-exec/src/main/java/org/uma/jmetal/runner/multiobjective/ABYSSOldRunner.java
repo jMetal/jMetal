@@ -44,12 +44,12 @@ public class ABYSSOldRunner {
     if (args!=null && args.length == 1) {
       problemName = args[0] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
     }
 
     JMetalRandom.getInstance().setSeed(1);
 
-    problem = (DoubleProblem) ProblemUtils.loadProblem(problemName);
+    problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
     Archive archive = new CrowdingDistanceArchive(100) ;
 

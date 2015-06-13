@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by ajnebro on 26/10/14.
  */
-public abstract class AbstractParticleSwarmOptimization<S extends Solution, Result> implements Algorithm <Result> {
+public abstract class AbstractParticleSwarmOptimization<S extends Solution<?>, Result> implements Algorithm <Result> {
   protected abstract void initProgress() ;
   protected abstract void updateProgress() ;
 

@@ -24,7 +24,7 @@ import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.singleobjective.evolutionstrategy.CovarianceMatrixAdaptationEvolutionStrategy;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.singleobjective.Sphere;
-import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
@@ -40,7 +40,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategyRunner {
    */
   public static void main(String[] args) throws Exception {
 
-    Algorithm algorithm;
+    Algorithm<DoubleSolution> algorithm;
     DoubleProblem problem = new Sphere() ;
 
     algorithm = new CovarianceMatrixAdaptationEvolutionStrategy.Builder(problem)
@@ -50,8 +50,8 @@ public class CovarianceMatrixAdaptationEvolutionStrategyRunner {
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
-    Solution solution = ((CovarianceMatrixAdaptationEvolutionStrategy)algorithm).getResult() ;
-    List<Solution> population = new ArrayList<>(1) ;
+    DoubleSolution solution = algorithm.getResult() ;
+    List<DoubleSolution> population = new ArrayList<>(1) ;
     population.add(solution) ;
 
     long computingTime = algorithmRunner.getComputingTime() ;

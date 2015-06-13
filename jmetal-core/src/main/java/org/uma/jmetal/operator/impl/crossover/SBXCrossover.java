@@ -33,7 +33,7 @@ import java.util.List;
  * @author Juan J. Durillo
  * @version 1.0
  */
-public class SBXCrossover implements CrossoverOperator<List<DoubleSolution>, List<DoubleSolution>> {
+public class SBXCrossover implements CrossoverOperator<DoubleSolution> {
   /** EPS defines the minimum difference allowed between real values */
   private static final double EPS = 1.0e-14;
 

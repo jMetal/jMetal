@@ -29,39 +29,39 @@ import java.util.List;
  *
  * Applies a n-ary tournament selection to return a solution from a list.
  */
-public class TournamentSelection implements SelectionOperator<List<? extends Solution>,Solution> {
-  private Comparator<? extends Solution> comparator;
+public class TournamentSelection<S extends Solution<?>> implements SelectionOperator<List<S>,S> {
+  private Comparator<S> comparator;
 
   private final int numberOfTournaments;
 
   /** Constructor */
   public TournamentSelection(int numberOfTournaments) {
-    this(new DominanceComparator(), numberOfTournaments) ;
+    this(new DominanceComparator<S>(), numberOfTournaments) ;
   }
 
   /** Constructor */
-  public TournamentSelection(Comparator<? extends Solution> comparator, int numberOfTournaments) {
+  public TournamentSelection(Comparator<S> comparator, int numberOfTournaments) {
     this.numberOfTournaments = numberOfTournaments;
     this.comparator = comparator ;
   }
 
   @Override
   /** Execute() method */
-  public Solution execute(List<? extends Solution> solutionList) {
+  public S execute(List<S> solutionList) {
     if (null == solutionList) {
       throw new JMetalException("The solution list is null") ;
     } else if (solutionList.isEmpty()) {
       throw new JMetalException("The solution list is empty") ;
     }
 
-    Solution result;
+    S result;
     if (solutionList.size() == 1) {
       result = solutionList.get(0);
     } else {
       result = SolutionListUtils.selectNRandomDifferentSolutions(1, solutionList).get(0);
       int count = 1; // at least 2 solutions are compared
       do {
-        Solution candidate = SolutionListUtils.selectNRandomDifferentSolutions(1, solutionList).get(0);
+        S candidate = SolutionListUtils.selectNRandomDifferentSolutions(1, solutionList).get(0);
         result = SolutionUtils.getBestSolution(result, candidate, comparator) ;
       } while (++count < this.numberOfTournaments);
     }

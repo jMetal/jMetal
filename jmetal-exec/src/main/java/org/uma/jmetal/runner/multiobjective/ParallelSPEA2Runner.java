@@ -21,7 +21,6 @@
 package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.spea2.SPEA2;
 import org.uma.jmetal.algorithm.multiobjective.spea2.SPEA2Builder;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
@@ -30,7 +29,7 @@ import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
@@ -59,12 +58,12 @@ public class ParallelSPEA2Runner {
    *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName
    */
   public static void main(String[] args) throws JMetalException {
-    Problem problem;
-    Algorithm algorithm;
-    CrossoverOperator crossover;
-    MutationOperator mutation;
-    SelectionOperator selection;
-    SolutionListEvaluator evaluator ;
+    Problem<DoubleSolution> problem;
+    Algorithm<List<DoubleSolution>> algorithm;
+    CrossoverOperator<DoubleSolution> crossover;
+    MutationOperator<DoubleSolution> mutation;
+    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
+    SolutionListEvaluator<DoubleSolution> evaluator ;
 
     String problemName ;
     if (args.length == 1) {
@@ -83,11 +82,11 @@ public class ParallelSPEA2Runner {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    selection = new BinaryTournamentSelection(new RankingAndCrowdingDistanceComparator());
+    selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
-    evaluator = new MultithreadedSolutionListEvaluator(0, problem) ;
+    evaluator = new MultithreadedSolutionListEvaluator<DoubleSolution>(0, problem) ;
 
-    algorithm = new SPEA2Builder(problem, crossover, mutation)
+    algorithm = new SPEA2Builder<DoubleSolution>(problem, crossover, mutation)
         .setSelectionOperator(selection)
         .setMaxIterations(250)
         .setPopulationSize(100)
@@ -97,7 +96,7 @@ public class ParallelSPEA2Runner {
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
         .execute() ;
 
-    List<Solution> population =((SPEA2)algorithm).getResult();
+    List<DoubleSolution> population =algorithm.getResult();
 
 
 

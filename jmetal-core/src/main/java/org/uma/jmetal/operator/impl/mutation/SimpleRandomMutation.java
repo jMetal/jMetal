@@ -18,8 +18,6 @@ import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
-import java.util.Random;
-
 /**
  * This class implements a random mutation operator for double solutions
  *

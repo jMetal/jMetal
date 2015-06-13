@@ -42,7 +42,7 @@ public class ArrayFront implements Front {
   }
 
   /** Constructor */
-  public ArrayFront(List<? extends Solution> solutionList) {
+  public ArrayFront(List<? extends Solution<?>> solutionList) {
     if (solutionList == null) {
       throw new JMetalException("The list of solution is null") ;
     } else if (solutionList.size() == 0) {

@@ -26,13 +26,14 @@ import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.mutation.NonUniformMutation;
 import org.uma.jmetal.operator.impl.mutation.UniformMutation;
 import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.AlgorithmBuilder;
 
 /** Class implementing the OMOPSO algorithm */
-public class OMOPSOBuilder implements AlgorithmBuilder {
+public class OMOPSOBuilder implements AlgorithmBuilder<OMOPSO> {
   protected DoubleProblem problem;
-  protected SolutionListEvaluator evaluator;
+  protected SolutionListEvaluator<DoubleSolution> evaluator;
 
   private int swarmSize = 100 ;
   private int archiveSize = 100 ;
@@ -41,7 +42,7 @@ public class OMOPSOBuilder implements AlgorithmBuilder {
   private UniformMutation uniformMutation ;
   private NonUniformMutation nonUniformMutation ;
 
-  public OMOPSOBuilder(DoubleProblem problem, SolutionListEvaluator evaluator) {
+  public OMOPSOBuilder(DoubleProblem problem, SolutionListEvaluator<DoubleSolution> evaluator) {
     this.evaluator = evaluator ;
     this.problem = problem ;
   }
@@ -64,13 +65,13 @@ public class OMOPSOBuilder implements AlgorithmBuilder {
     return this ;
   }
 
-  public OMOPSOBuilder setUniformMutation(MutationOperator uniformMutation) {
+  public OMOPSOBuilder setUniformMutation(MutationOperator<DoubleSolution> uniformMutation) {
     this.uniformMutation = (UniformMutation)uniformMutation ;
 
     return this ;
   }
 
-  public OMOPSOBuilder setNonUniformMutation(MutationOperator nonUniformMutation) {
+  public OMOPSOBuilder setNonUniformMutation(MutationOperator<DoubleSolution> nonUniformMutation) {
     this.nonUniformMutation = (NonUniformMutation)nonUniformMutation ;
 
     return this ;

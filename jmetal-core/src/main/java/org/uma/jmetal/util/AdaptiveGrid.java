@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * This class defines an adaptive grid over a list of solutions as the one used by algorithm PAES.
  */
-public class AdaptiveGrid<T extends Solution> {
+public class AdaptiveGrid<S extends Solution<?>> {
   private int bisections;
   private int numberOfObjectives;
   private int[] hypercubes;
@@ -71,7 +71,7 @@ public class AdaptiveGrid<T extends Solution> {
    *
    * @param solutionList The <code>solutionList</code> considered.
    */
-  private void updateLimits(List<T> solutionList) {
+  private void updateLimits(List<S> solutionList) {
     for (int obj = 0; obj < numberOfObjectives; obj++) {
       gridLowerLimits[obj] = Double.MAX_VALUE;
       gridUpperLimits[obj] = Double.MIN_VALUE;
@@ -79,7 +79,7 @@ public class AdaptiveGrid<T extends Solution> {
 
     //Find the max and min limits of objetives into the population
     for (int ind = 0; ind < solutionList.size(); ind++) {
-      Solution tmpIndividual = solutionList.get(ind);
+      Solution<?> tmpIndividual = solutionList.get(ind);
       for (int obj = 0; obj < numberOfObjectives; obj++) {
         if (tmpIndividual.getObjective(obj) < gridLowerLimits[obj]) {
           gridLowerLimits[obj] = tmpIndividual.getObjective(obj);
@@ -98,7 +98,7 @@ public class AdaptiveGrid<T extends Solution> {
    *
    * @param solutionList The <code>solutionList</code> considered.
    */
-  private void addSolutionSet(List<T> solutionList) {
+  private void addSolutionSet(List<S> solutionList) {
     //Calculate the location of all individuals and update the grid
     mostPopulatedHypercube = 0;
     int location;
@@ -122,7 +122,7 @@ public class AdaptiveGrid<T extends Solution> {
    *
    * @param solutionList The <code>solutionList</code>.
    */
-  public void updateGrid(List<T> solutionList) {
+  public void updateGrid(List<S> solutionList) {
     //Update lower and upper limits
     updateLimits(solutionList);
 
@@ -150,7 +150,7 @@ public class AdaptiveGrid<T extends Solution> {
    * @param solution    <code>Solution</code> considered to update the grid.
    * @param solutionSet <code>SolutionSet</code> used to update the grid.
    */
-  public void updateGrid(T solution, List<T>  solutionSet) {
+  public void updateGrid(S solution, List<S>  solutionSet) {
 
     int location = location(solution);
     if (location == -1) {
@@ -188,7 +188,7 @@ public class AdaptiveGrid<T extends Solution> {
    *
    * @param solution The <code>Solution</code>.
    */
-  public int location(T solution) {
+  public int location(S solution) {
     //Create a int [] to store the range of each objective
     int[] position = new int[numberOfObjectives];
 

@@ -5,7 +5,7 @@ import java.util.List;
 import org.uma.jmetal.solution.Solution;
 
 
-public class LocationAttribute <S extends Solution>
+public class LocationAttribute <S extends Solution<?>>
 extends GenericSolutionAttribute<S, Integer> {
 	    
 	 public LocationAttribute() {}

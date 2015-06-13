@@ -21,13 +21,13 @@ public class NullCrossoverTest {
 
   @Test
   public void shouldExecuteReturnTwoDifferentObjectsWhichAreEquals() {
-    Problem problem = new MockProblem() ;
+    Problem<DoubleSolution> problem = new MockProblem() ;
     List<DoubleSolution> parents = new ArrayList<>(2) ;
     parents.add((DoubleSolution) problem.createSolution()) ;
     parents.add((DoubleSolution) problem.createSolution()) ;
 
-    CrossoverOperator<List<DoubleSolution>, List<DoubleSolution>> crossover;
-    crossover = new NullCrossover<List<DoubleSolution>, List<DoubleSolution>>() ;
+    CrossoverOperator<DoubleSolution> crossover;
+    crossover = new NullCrossover<DoubleSolution>() ;
 
     List<DoubleSolution> offspring = crossover.execute(parents);
     assertNotSame(parents.get(0), offspring.get(0)) ;

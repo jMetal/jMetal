@@ -6,10 +6,8 @@ import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
-import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.multiobjective.Kursawe;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AlgorithmRunner;
 
 import java.util.List;
@@ -17,12 +15,12 @@ import java.util.List;
 import static org.junit.Assert.assertTrue;
 
 public class NSGAIIIT {
-  Algorithm<List<Solution>> algorithm;
+  Algorithm<List<DoubleSolution>> algorithm;
 
   @Test
   public void shouldTheAlgorithmReturnANumberOfSolutionsWhenSolvingASimpleProblem() throws Exception {
-    Problem problem = new Kursawe() ;
-    CrossoverOperator<List<DoubleSolution>,List<DoubleSolution>> crossover;
+    Kursawe problem = new Kursawe() ;
+    CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
 
     double crossoverProbability = 0.9 ;
@@ -33,12 +31,12 @@ public class NSGAIIIT {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    algorithm = new NSGAIIBuilder(problem, crossover, mutation, NSGAIIBuilder.NSGAIIVariant.NSGAII).build() ;
+    algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, NSGAIIBuilder.NSGAIIVariant.NSGAII).build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
         .execute() ;
 
-    List<Solution> population = algorithm.getResult() ;
+    List<DoubleSolution> population = algorithm.getResult() ;
 
     /*
     Rationale: the default problem is Kursawe, and usually NSGA-II, configured with standard
