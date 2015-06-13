@@ -30,20 +30,20 @@ import static org.mockito.Mockito.*;
  * @version 1.0
  */
 public class CrowdingDistanceComparatorTest {
-  private CrowdingDistanceComparator comparator ;
+  private CrowdingDistanceComparator<Solution<?>> comparator ;
 
   @Before public void setup() {
-    comparator = new CrowdingDistanceComparator() ;
+    comparator = new CrowdingDistanceComparator<Solution<?>>() ;
   }
 
   @Test public void shouldCompareReturnOneIfTheFirstSolutionIsNull() {
-    Solution solution2 = mock(Solution.class) ;
+    Solution<?> solution2 = mock(Solution.class) ;
 
     assertEquals(1, comparator.compare(null, solution2)) ;
   }
 
   @Test public void shouldCompareReturnMinusOneIfTheSecondSolutionIsNull() {
-    Solution solution1 = mock(Solution.class) ;
+    Solution<?> solution1 = mock(Solution.class) ;
 
     assertEquals(-1, comparator.compare(solution1, null)) ;
   }
@@ -53,20 +53,20 @@ public class CrowdingDistanceComparatorTest {
   }
 
   @Test public void shouldCompareReturnZeroIfBothSolutionsHaveNoCrowdingDistanceAttribute() {
-    CrowdingDistance distance = mock(CrowdingDistance.class) ;
+    CrowdingDistance<Solution<?>> distance = mock(CrowdingDistance.class) ;
     when(distance.getAttribute(any(Solution.class))).thenReturn(null, null) ;
 
     ReflectionTestUtils.setField(comparator, "crowdingDistance", distance);
 
-    Solution solution1 = mock(Solution.class) ;
-    Solution solution2 = mock(Solution.class) ;
+    Solution<?> solution1 = mock(Solution.class) ;
+    Solution<?> solution2 = mock(Solution.class) ;
 
     assertEquals(0, comparator.compare(solution1, solution2));
     verify(distance, times(2)).getAttribute(any(Solution.class)) ;
   }
 
   @Test public void shouldCompareReturnZeroIfBothSolutionsHaveTheSameDistance() {
-    CrowdingDistance distance = mock(CrowdingDistance.class) ;
+    CrowdingDistance<Solution<?>> distance = mock(CrowdingDistance.class) ;
     when(distance.getAttribute(any(DoubleSolution.class))).thenReturn(2.0, 2.0, 2.0, 2.0) ;
 
     ReflectionTestUtils.setField(comparator, "crowdingDistance", distance);
@@ -79,7 +79,7 @@ public class CrowdingDistanceComparatorTest {
   }
 
   @Test public void shouldCompareReturnOneIfSolutionAHasLessDistance() {
-    CrowdingDistance distance = mock(CrowdingDistance.class) ;
+    CrowdingDistance<Solution<?>> distance = mock(CrowdingDistance.class) ;
     when(distance.getAttribute(any(BinarySolution.class))).thenReturn(0.0, 0.0, 2.0, 2.0) ;
 
     ReflectionTestUtils.setField(comparator, "crowdingDistance", distance);
@@ -92,7 +92,7 @@ public class CrowdingDistanceComparatorTest {
   }
 
   @Test public void shouldCompareReturnMinusOneIfSolutionBHasHigherDistance() {
-    CrowdingDistance distance = mock(CrowdingDistance.class) ;
+    CrowdingDistance<Solution<?>> distance = mock(CrowdingDistance.class) ;
     when(distance.getAttribute(any(BinarySolution.class))).thenReturn(3.0, 3.0, 2.0, 2.0) ;
 
     ReflectionTestUtils.setField(comparator, "crowdingDistance", distance);

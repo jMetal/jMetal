@@ -64,7 +64,7 @@ public class DefaultBinarySolution extends AbstractGenericSolution<BinarySet, Bi
     overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
     numberOfViolatedConstraints = solution.numberOfViolatedConstraints ;
 
-    attributes = new HashMap(solution.attributes) ;
+    attributes = new HashMap<Object, Object>(solution.attributes) ;
   }
 
   private BinarySet createNewBitSet(int numberOfBits) {

@@ -7,7 +7,6 @@ import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
 import org.uma.jmetal.util.solutionattribute.impl.HypervolumeContribution;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -32,7 +31,7 @@ public class FastHypervolume {
     //hvContribution = new HypervolumeContribution() ;
   }
 
-  public double computeHypervolume(List<? extends Solution> solutionList) {
+  public double computeHypervolume(List<? extends Solution<?>> solutionList) {
     double hv;
     if (solutionList.size() == 0) {
       hv = 0.0;
@@ -42,7 +41,7 @@ public class FastHypervolume {
       updateReferencePoint(solutionList);
 
       if (numberOfObjectives == 2) {
-        Collections.sort(solutionList, new ObjectiveComparator(numberOfObjectives-1,
+        Collections.sort(solutionList, new ObjectiveComparator<Solution<?>>(numberOfObjectives-1,
             ObjectiveComparator.Ordering.DESCENDING));
         hv = get2DHV(solutionList) ;
       } else {
@@ -65,7 +64,7 @@ public class FastHypervolume {
     return hv;
   }
 
-  public double computeHypervolume(List<? extends Solution> solutionList, Point referencePoint) {
+  public double computeHypervolume(List<? extends Solution<?>> solutionList, Point referencePoint) {
     double hv = 0.0;
     if (solutionList.size() == 0) {
       hv = 0.0;
@@ -84,7 +83,7 @@ public class FastHypervolume {
       }
       */
       if (numberOfObjectives == 2) {
-        Collections.sort(solutionList, new ObjectiveComparator(solutionList.size()-1,
+        Collections.sort(solutionList, new ObjectiveComparator<Solution<?>>(solutionList.size()-1,
             ObjectiveComparator.Ordering.DESCENDING));
         hv = get2DHV(solutionList) ;
       } else {
@@ -99,7 +98,7 @@ public class FastHypervolume {
   /**
    * Updates the reference point
    */
-  private void updateReferencePoint(List<? extends Solution> solutionList) {
+  private void updateReferencePoint(List<? extends Solution<?>> solutionList) {
     double[] maxObjectives = new double[numberOfObjectives];
     for (int i = 0; i < numberOfObjectives; i++) {
       maxObjectives[i] = 0;
@@ -147,7 +146,7 @@ public class FastHypervolume {
    *
    * @return
    */
-  public double get2DHV(List<? extends Solution> solutionSet) {
+  public double get2DHV(List<? extends Solution<?>> solutionSet) {
     double hv = 0.0;
     if (solutionSet.size() > 0) {
       hv = Math.abs((solutionSet.get(0).getObjective(0) - referencePoint.getDimensionValue(0)) *
@@ -168,30 +167,29 @@ public class FastHypervolume {
    *
    * @return
    */
-  public void computeHVContributions(List<? extends Solution> solutionList) {
-    ArrayList<Solution> list = (ArrayList<Solution>)solutionList ;
-    double[] contributions = new double[list.size()];
+  public <S extends Solution<?>> void computeHVContributions(List<S> solutionList) {
+    double[] contributions = new double[solutionList.size()];
     double solutionSetHV = 0;
 
     solutionSetHV = computeHypervolume(solutionList);
 
     for (int i = 0; i < solutionList.size(); i++) {
-      Solution currentPoint = list.get(i);
-      list.remove(i);
+      S currentPoint = solutionList.get(i);
+      solutionList.remove(i);
 
       if (numberOfObjectives == 2) {
         contributions[i] = solutionSetHV - get2DHV(solutionList);
       } else {
         //Front front = new Front(solutionSet.size(), numberOfObjectives, solutionSet);
-        WfgHypervolumeFront front = new WfgHypervolumeFront(list);
-        double hv = new WfgHypervolume(numberOfObjectives, list.size()).getHV(front);
+        WfgHypervolumeFront front = new WfgHypervolumeFront(solutionList);
+        double hv = new WfgHypervolume(numberOfObjectives, solutionList.size()).getHV(front);
         contributions[i] = solutionSetHV - hv;
       }
 
-      list.add(i, currentPoint);
+      solutionList.add(i, currentPoint);
     }
 
-    HypervolumeContribution hvContribution = new HypervolumeContribution() ;
+    HypervolumeContribution<Solution<?>> hvContribution = new HypervolumeContribution<Solution<?>>() ;
     for (int i = 0; i < solutionList.size(); i++) {
       hvContribution.setAttribute(solutionList.get(i), contributions[i]);
       //solutionList.get(i).setCrowdingDistance(contributions[i]);
@@ -205,22 +203,21 @@ public class FastHypervolume {
    *
    * @return The hv contribution of the solutiontype
    */
-  public double computeSolutionHVContribution(List<? extends Solution> solutionList, int solutionIndex,
+  public <S extends Solution<?>> double computeSolutionHVContribution(List<S> solutionList, int solutionIndex,
       double solutionSetHV) {
-    List<Solution> list = (List<Solution>)solutionList ;
     double contribution;
 
-    Solution currentPoint = list.get(solutionIndex);
-    list.remove(solutionIndex);
+    S currentPoint = solutionList.get(solutionIndex);
+    solutionList.remove(solutionIndex);
 
-    WfgHypervolumeFront front = new WfgHypervolumeFront(list);
+    WfgHypervolumeFront front = new WfgHypervolumeFront(solutionList);
     double hv =
-        new WfgHypervolume(numberOfObjectives, list.size(), referencePoint).getHV(front);
+        new WfgHypervolume(numberOfObjectives, solutionList.size(), referencePoint).getHV(front);
     contribution = solutionSetHV - hv;
 
-    list.add(solutionIndex, currentPoint);
-    HypervolumeContribution hvContribution = new HypervolumeContribution() ;
-    hvContribution.setAttribute(list.get(solutionIndex), contribution);
+    solutionList.add(solutionIndex, currentPoint);
+    HypervolumeContribution<Solution<?>> hvContribution = new HypervolumeContribution<Solution<?>>() ;
+    hvContribution.setAttribute(solutionList.get(solutionIndex), contribution);
    // solutionSet.get(solutionIndex).setCrowdingDistance(contribution);
 
     return contribution;

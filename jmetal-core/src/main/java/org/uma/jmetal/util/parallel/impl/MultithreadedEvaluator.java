@@ -36,8 +36,8 @@ import java.util.logging.Level;
  * @author Antonio J. Nebro
  *         Class for evaluating solutions in parallel using threads
  */
-public class MultithreadedEvaluator implements SynchronousParallelTaskExecutor {
-  private Problem problem;
+public class MultithreadedEvaluator<S extends Solution<?>> implements SynchronousParallelTaskExecutor {
+  private Problem<S> problem;
   private Collection<EvaluationTask> taskList;
   private int numberOfThreads;
   private ExecutorService executor;
@@ -67,7 +67,7 @@ public class MultithreadedEvaluator implements SynchronousParallelTaskExecutor {
    * @param problem problem to solve
    */
   public void start(Object problem) {
-    this.problem = (Problem) problem;
+    this.problem = (Problem<S>) problem;
 
     executor = Executors.newFixedThreadPool(numberOfThreads);
     JMetalLogger.logger.info("Cores: " + numberOfThreads);
@@ -78,7 +78,7 @@ public class MultithreadedEvaluator implements SynchronousParallelTaskExecutor {
    * Adds a solution to be evaluated to a list of tasks
    */
   public void addTask(Object[] taskParameters) {
-    Solution<?> solution = (Solution<?>) taskParameters[0];
+    S solution = (S) taskParameters[0];
     if (taskList == null) {
       taskList = new ArrayList<EvaluationTask>();
     }
@@ -128,8 +128,8 @@ public class MultithreadedEvaluator implements SynchronousParallelTaskExecutor {
    */
 
   private class EvaluationTask implements Callable<Object> {
-    private Problem problem;
-    private Solution solution;
+    private Problem<S> problem;
+    private S solution;
 
     /**
      * Constructor
@@ -137,12 +137,12 @@ public class MultithreadedEvaluator implements SynchronousParallelTaskExecutor {
      * @param problem  Problem to solve
      * @param solution Solution to evaluate
      */
-    public EvaluationTask(Problem problem, Solution solution) {
+    public EvaluationTask(Problem<S> problem, S solution) {
       this.problem = problem;
       this.solution = solution;
     }
 
-    public Solution call() throws Exception {
+    public S call() throws Exception {
       problem.evaluate(solution);
 
       return solution;

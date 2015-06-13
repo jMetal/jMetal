@@ -40,10 +40,10 @@ public class AlgorithmRunner {
 
   /** Executor class */
   public static class Executor {
-    Algorithm algorithm ;
+    Algorithm<?> algorithm ;
     long computingTime;
 
-    public Executor(Algorithm algorithm) {
+    public Executor(Algorithm<?> algorithm) {
       this.algorithm = algorithm ;
     }
 

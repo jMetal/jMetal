@@ -30,20 +30,20 @@ import static org.mockito.Mockito.*;
  * @version 1.0
  */
 public class RankingComparatorTest {
-  private RankingComparator comparator ;
+  private RankingComparator<Solution<?>> comparator ;
 
   @Before public void setup() {
-    comparator = new RankingComparator() ;
+    comparator = new RankingComparator<Solution<?>>() ;
   }
 
   @Test public void shouldCompareReturnOneIfTheFirstSolutionIsNull() {
-    Solution solution2 = mock(Solution.class) ;
+    Solution<?> solution2 = mock(Solution.class) ;
 
     assertEquals(1, comparator.compare(null, solution2)) ;
   }
 
   @Test public void shouldCompareReturnMinusOneIfTheSecondSolutionIsNull() {
-    Solution solution1 = mock(Solution.class) ;
+    Solution<?> solution1 = mock(Solution.class) ;
 
     assertEquals(-1, comparator.compare(solution1, null)) ;
   }
@@ -53,20 +53,20 @@ public class RankingComparatorTest {
   }
 
   @Test public void shouldCompareReturnZeroIfBothSolutionsHaveNoRankingAttribute() {
-    Ranking ranking = mock(Ranking.class) ;
+    Ranking<Solution<?>> ranking = mock(Ranking.class) ;
     when(ranking.getAttribute(any(Solution.class))).thenReturn(null, null) ;
 
     ReflectionTestUtils.setField(comparator, "ranking", ranking);
 
-    Solution solution1 = mock(Solution.class) ;
-    Solution solution2 = mock(Solution.class) ;
+    Solution<?> solution1 = mock(Solution.class) ;
+    Solution<?> solution2 = mock(Solution.class) ;
 
     assertEquals(0, comparator.compare(solution1, solution2));
     verify(ranking, times(2)).getAttribute(any(Solution.class)) ;
   }
 
   @Test public void shouldCompareReturnZeroIfBothSolutionsHaveTheSameRanking() {
-    Ranking ranking = mock(Ranking.class) ;
+    Ranking<Solution<?>> ranking = mock(Ranking.class) ;
     when(ranking.getAttribute(any(DoubleSolution.class))).thenReturn(1, 1, 1, 1) ;
 
     ReflectionTestUtils.setField(comparator, "ranking", ranking);
@@ -79,7 +79,7 @@ public class RankingComparatorTest {
   }
 
   @Test public void shouldCompareReturnMinusOneIfSolutionAHasLessRanking() {
-    Ranking ranking = mock(Ranking.class) ;
+    Ranking<Solution<?>> ranking = mock(Ranking.class) ;
     when(ranking.getAttribute(any(BinarySolution.class))).thenReturn(0, 0, 2, 2) ;
 
     ReflectionTestUtils.setField(comparator, "ranking", ranking);
@@ -92,7 +92,7 @@ public class RankingComparatorTest {
   }
 
   @Test public void shouldCompareReturnOneIfSolutionBHasLessRanking() {
-    Ranking ranking = mock(Ranking.class) ;
+    Ranking<Solution<?>> ranking = mock(Ranking.class) ;
     when(ranking.getAttribute(any(BinarySolution.class))).thenReturn(3, 3, 2, 2) ;
 
     ReflectionTestUtils.setField(comparator, "ranking", ranking);

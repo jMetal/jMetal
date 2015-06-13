@@ -41,9 +41,9 @@ import java.util.*;
 public class DominanceRanking <S extends Solution<?>>
     extends GenericSolutionAttribute<S, Integer> implements Ranking<S> {
 
-  private static final Comparator<Solution<?>> DOMINANCE_COMPARATOR = new DominanceComparator();
+  private static final Comparator<Solution<?>> DOMINANCE_COMPARATOR = new DominanceComparator<Solution<?>>();
   private static final Comparator<Solution<?>> CONSTRAINT_VIOLATION_COMPARATOR =
-    new OverallConstraintViolationComparator();
+    new OverallConstraintViolationComparator<Solution<?>>();
 
   private List<ArrayList<S>> rankedSubpopulations;
 

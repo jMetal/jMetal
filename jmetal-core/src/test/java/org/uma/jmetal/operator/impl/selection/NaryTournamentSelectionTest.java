@@ -40,15 +40,15 @@ import static org.mockito.Mockito.*;
 public class NaryTournamentSelectionTest {
   private static final int POPULATION_SIZE = 20 ;
 
-  private NaryTournamentSelection selection ;
-  private List<Solution> population ;
+  private NaryTournamentSelection<?> selection ;
+  private List<Solution<?>> population ;
 
   @Rule
   public ExpectedException exception = ExpectedException.none();
 
   @Test
   public void shouldDefaultConstructorSetTheNumberOfSolutionsToBeReturnedEqualsToTwo() {
-    selection = new NaryTournamentSelection() ;
+    selection = new NaryTournamentSelection<Solution<?>>() ;
 
     assertEquals(2, ReflectionTestUtils.getField(selection, "numberOfSolutionsToBeReturned"));
   }
@@ -58,14 +58,14 @@ public class NaryTournamentSelectionTest {
     exception.expect(JMetalException.class);
     exception.expectMessage(containsString("The solution list is null"));
 
-    selection = new NaryTournamentSelection() ;
+    selection = new NaryTournamentSelection<Solution<?>>() ;
     population = null ;
     selection.execute(population) ;
   }
 
   @Test (expected = JMetalException.class)
   public void shouldExecuteRaiseAnExceptionIfTheListOfSolutionsIsEmpty() {
-    selection = new NaryTournamentSelection() ;
+    selection = new NaryTournamentSelection<Solution<?>>() ;
 
     population = new ArrayList<>(0) ;
 
@@ -74,10 +74,10 @@ public class NaryTournamentSelectionTest {
 
   @Test
   public void shouldExecuteReturnAValidSolutionIsWithCorrectParameters() {
-    selection = new NaryTournamentSelection() ;
-    Solution solution = mock(Solution.class) ;
+    selection = new NaryTournamentSelection<Solution<?>>() ;
+    Solution<Object> solution = mock(Solution.class) ;
 
-    Problem problem = mock(Problem.class) ;
+    Problem<Solution<Object>> problem = mock(Problem.class) ;
 
     Mockito.when(problem.createSolution()).thenReturn(solution) ;
 
@@ -91,8 +91,8 @@ public class NaryTournamentSelectionTest {
 
   @Test
   public void shouldExecuteReturnTheSameSolutionIfTheListContainsOneSolution() {
-    selection = new NaryTournamentSelection(1, mock(Comparator.class)) ;
-    Solution solution = mock(Solution.class) ;
+    selection = new NaryTournamentSelection<Solution<?>>(1, mock(Comparator.class)) ;
+    Solution<?> solution = mock(Solution.class) ;
 
     population = new ArrayList<>(1) ;
     population.add(solution) ;
@@ -101,10 +101,10 @@ public class NaryTournamentSelectionTest {
 
   @Test
   public void shouldExecuteReturnTwoSolutionsIfTheListContainsTwoSolutions() {
-    selection = new NaryTournamentSelection(2, mock(Comparator.class)) ;
+    selection = new NaryTournamentSelection<Solution<?>>(2, mock(Comparator.class)) ;
 
-    Solution solution1 = mock(Solution.class) ;
-    Solution solution2 = mock(Solution.class) ;
+    Solution<?> solution1 = mock(Solution.class) ;
+    Solution<?> solution2 = mock(Solution.class) ;
 
     population = Arrays.asList(solution1, solution2) ;
     assertEquals(2, population.size());
@@ -116,8 +116,8 @@ public class NaryTournamentSelectionTest {
     exception.expectMessage(containsString("The solution list size (1) is less than " +
         "the number of requested solutions (4)"));
 
-    selection = new NaryTournamentSelection(4, mock(Comparator.class)) ;
-    List<Solution> list = new ArrayList<>(1) ;
+    selection = new NaryTournamentSelection<Solution<?>>(4, mock(Comparator.class)) ;
+    List<Solution<?>> list = new ArrayList<>(1) ;
     list.add(mock(Solution.class)) ;
 
     selection.execute(list) ;

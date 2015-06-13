@@ -16,7 +16,7 @@ public class WfgHypervolumeFront extends ArrayFront {
     super();
   }
 
-  public WfgHypervolumeFront(List<? extends Solution> solutionList) {
+  public WfgHypervolumeFront(List<? extends Solution<?>> solutionList) {
     super(solutionList) ;
   }
 

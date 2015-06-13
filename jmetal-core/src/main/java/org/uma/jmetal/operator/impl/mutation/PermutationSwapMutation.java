@@ -47,7 +47,7 @@ public class PermutationSwapMutation<T> implements MutationOperator<PermutationS
 
   /** Execute() method */
   @Override
-  public PermutationSolution execute(PermutationSolution solution) {
+  public PermutationSolution<T> execute(PermutationSolution<T> solution) {
     if (null == solution) {
       throw new JMetalException("Null parameter") ;
     }

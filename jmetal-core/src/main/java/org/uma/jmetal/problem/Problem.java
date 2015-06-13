@@ -23,7 +23,7 @@ import java.io.Serializable;
  * @version 0.1
  * @param <S> Encoding
  */
-public interface Problem<S extends Solution> extends Serializable {
+public interface Problem<S extends Solution<?>> extends Serializable {
   /* Getters */
   public int getNumberOfVariables() ;
   public int getNumberOfObjectives() ;

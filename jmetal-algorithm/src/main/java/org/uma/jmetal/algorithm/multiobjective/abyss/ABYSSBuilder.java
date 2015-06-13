@@ -23,7 +23,7 @@ public class ABYSSBuilder implements AlgorithmBuilder<ABYSS> {
 
   private DoubleProblem problem     ; // The problem to solve
   private CrossoverOperator<DoubleSolution> crossoverOperator   ; // Crossover operator
-  private MutationLocalSearch improvementOperator ; // Operator for improvement
+  private MutationLocalSearch<DoubleSolution> improvementOperator ; // Operator for improvement
   private MutationOperator<DoubleSolution> mutationOperator; // Mutation operator
   private int numberOfSubranges; //subranges
   private int populationSize;//Maximum size of the population
@@ -47,7 +47,7 @@ public class ABYSSBuilder implements AlgorithmBuilder<ABYSS> {
     this.mutationOperator = new PolynomialMutation(mutationProbability,distributionIndex);
     int improvementRounds= 1;
     this.archive =(CrowdingDistanceArchive<DoubleSolution>)archive;
-    this.improvementOperator = new MutationLocalSearch(improvementRounds,mutationOperator,this.archive,problem);
+    this.improvementOperator = new MutationLocalSearch<DoubleSolution>(improvementRounds,mutationOperator,this.archive,problem);
 
   }
 

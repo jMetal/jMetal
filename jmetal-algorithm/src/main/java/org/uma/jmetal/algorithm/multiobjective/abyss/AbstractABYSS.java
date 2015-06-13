@@ -94,7 +94,7 @@ public abstract class AbstractABYSS implements Algorithm<List<DoubleSolution>> {
   /**
    * Stores the improvement operator
    */
-  protected MutationLocalSearch improvementOperator;
+  protected MutationLocalSearch<DoubleSolution> improvementOperator;
   /**
    * Fitness
    */
@@ -140,7 +140,7 @@ public abstract class AbstractABYSS implements Algorithm<List<DoubleSolution>> {
 
   public AbstractABYSS(int numberOfSubranges,int solutionSetSize, int refSet1Size, int refSet2Size,
       int archiveSize, int maxEvaluations,Archive<DoubleSolution> archive,
-      CrossoverOperator<DoubleSolution> crossoverOperator,MutationLocalSearch improvementOperator,
+      CrossoverOperator<DoubleSolution> crossoverOperator,MutationLocalSearch<DoubleSolution> improvementOperator,
       DoubleProblem problem) {
     this.numberOfSubranges=numberOfSubranges;
     this.solutionSetSize = solutionSetSize;

@@ -43,7 +43,7 @@ import java.util.List;
  */
 public class ABYSS extends AbstractABYSS {
   public ABYSS(int numberOfSubranges,int solutionSetSize, int refSet1Size, int refSet2Size, int archiveSize, int maxEvaluations,
-      CrowdingDistanceArchive<DoubleSolution> archive,     CrossoverOperator<DoubleSolution> crossoverOperator,MutationLocalSearch improvement, DoubleProblem problem){
+      CrowdingDistanceArchive<DoubleSolution> archive,     CrossoverOperator<DoubleSolution> crossoverOperator,MutationLocalSearch<DoubleSolution> improvement, DoubleProblem problem){
     super(numberOfSubranges,solutionSetSize,refSet1Size,refSet2Size,archiveSize,maxEvaluations,archive,crossoverOperator,improvement,problem);
   }
   /**
@@ -83,7 +83,7 @@ public class ABYSS extends AbstractABYSS {
             solution = refSet1.get(i);
             //solution.unMarked();
             marked.setAttribute(solution,false);
-            solution = (DoubleSolution) improvementOperator.execute(solution);
+            solution = improvementOperator.execute(solution);
             evaluations += improvementOperator.getEvaluations();
             solutionSet.add(solution);
           }
