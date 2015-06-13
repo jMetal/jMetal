@@ -25,6 +25,7 @@ import java.util.logging.Level;
 /**
  * jMetal exception class
  */
+@SuppressWarnings("serial")
 public class JMetalException extends RuntimeException {
   public JMetalException(String message) {
     super(message);
