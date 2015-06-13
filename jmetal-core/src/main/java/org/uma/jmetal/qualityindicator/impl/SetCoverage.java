@@ -83,7 +83,7 @@ public class SetCoverage extends SimpleDescribedEntity implements QualityIndicat
       dominance = new DominanceComparator<Solution<?>>();
 
       for (int i = 0; i < set2.size(); i++) {
-        if (SolutionListUtils.isSolutionDominatedBySolutionList(set2.get(i), (List<Solution<?>>) set1)) {
+        if (SolutionListUtils.isSolutionDominatedBySolutionList(set2.get(i), set1)) {
           sum++;
         }
       }
