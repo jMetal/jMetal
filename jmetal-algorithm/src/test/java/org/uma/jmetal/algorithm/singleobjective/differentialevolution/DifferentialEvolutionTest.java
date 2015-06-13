@@ -1,8 +1,6 @@
 package org.uma.jmetal.algorithm.singleobjective.differentialevolution;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.TestCase.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
@@ -260,6 +258,6 @@ public class DifferentialEvolutionTest {
 
     DoubleSolution result = algorithm.getResult();
     assertEquals(solution4, result);
-    assertEquals(0.5, result.getObjective(0));
+    assertEquals(0.5, result.getObjective(0), 0.0);
   }
 }
