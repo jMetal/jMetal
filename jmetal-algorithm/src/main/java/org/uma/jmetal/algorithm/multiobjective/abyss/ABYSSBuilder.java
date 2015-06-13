@@ -55,8 +55,8 @@ public class ABYSSBuilder implements AlgorithmBuilder<ABYSS> {
 
   @Override
   public ABYSS build() {
-    return new ABYSS(problem,populationSize,refSet1Size,refSet2Size,archiveSize,maxEvaluations,
-        archive,improvementOperator, crossoverOperator, numberOfSubranges);
+    return new ABYSS(problem,maxEvaluations, populationSize,refSet1Size,refSet2Size,archiveSize,
+        archive, improvementOperator, crossoverOperator, numberOfSubranges);
   }
 
   public CrossoverOperator<DoubleSolution> getCrossoverOperator() {
