@@ -25,13 +25,12 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.naming.DescribedEntity;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Antonio J. Nebro on 20/07/14.
  */
-public interface QualityIndicator extends Serializable, DescribedEntity {
+public interface QualityIndicator extends DescribedEntity {
   public double execute(Front frontA, Front frontB) ;
   public <S extends Solution<?>> double execute(List<S> frontA, List<S> frontB) ;
   public String getName() ;
