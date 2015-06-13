@@ -27,6 +27,7 @@ import org.uma.jmetal.util.solutionattribute.SolutionAttribute;
  */
 public class GenericSolutionAttribute <S extends Solution<?>, V> implements SolutionAttribute<S, V>{
 
+  @SuppressWarnings("unchecked")
   @Override
   public V getAttribute(S solution) {
     return (V)solution.getAttribute(getAttributeID());
