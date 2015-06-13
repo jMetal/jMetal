@@ -22,7 +22,7 @@ public class SMPSOIT {
   public void shouldTheAlgorithmReturnANumberOfSolutionsWhenSolvingASimpleProblem() throws Exception {
     DoubleProblem problem = new ZDT4() ;
 
-    algorithm = new SMPSOBuilder(problem, new CrowdingDistanceArchive(100)).build() ;
+    algorithm = new SMPSOBuilder(problem, new CrowdingDistanceArchive<DoubleSolution>(100)).build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
         .execute();
@@ -40,7 +40,7 @@ public class SMPSOIT {
   public void shouldTheHypervolumeHaveAMininumValue() throws Exception {
     DoubleProblem problem = new ZDT4() ;
 
-    algorithm = new SMPSOBuilder(problem, new CrowdingDistanceArchive(100)).build() ;
+    algorithm = new SMPSOBuilder(problem, new CrowdingDistanceArchive<DoubleSolution>(100)).build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
         .execute();

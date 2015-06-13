@@ -36,7 +36,7 @@ import java.util.List;
  * the type of those variables must be VariableType_.Permutation.
  */
 public class PMXCrossover implements
-    CrossoverOperator<List<PermutationSolution<Integer>>, List<PermutationSolution<Integer>>> {
+    CrossoverOperator<PermutationSolution<Integer>> {
   private double crossoverProbability = 1.0;
   private JMetalRandom randomGenerator ;
 

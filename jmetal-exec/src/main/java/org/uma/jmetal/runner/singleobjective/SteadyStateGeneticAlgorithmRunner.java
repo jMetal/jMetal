@@ -24,7 +24,6 @@ import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.singleobjective.Sphere;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
@@ -46,11 +45,11 @@ public class SteadyStateGeneticAlgorithmRunner {
     Algorithm<DoubleSolution> algorithm;
     DoubleProblem problem = new Sphere(20) ;
 
-    CrossoverOperator<List<DoubleSolution>, List<DoubleSolution>> crossoverOperator =
+    CrossoverOperator<DoubleSolution> crossoverOperator =
         new SBXCrossover(0.9, 20.0) ;
     MutationOperator<DoubleSolution> mutationOperator =
         new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0) ;
-    SelectionOperator selectionOperator = new BinaryTournamentSelection() ;
+    SelectionOperator<List<DoubleSolution>, DoubleSolution> selectionOperator = new BinaryTournamentSelection<DoubleSolution>() ;
 
     algorithm = new GeneticAlgorithmBuilder<DoubleSolution>(problem, crossoverOperator, mutationOperator,
         GeneticAlgorithmBuilder.GeneticAlgorithmVariant.STEADY_STATE)
@@ -65,7 +64,7 @@ public class SteadyStateGeneticAlgorithmRunner {
     long computingTime = algorithmRunner.getComputingTime() ;
 
     DoubleSolution solution = algorithm.getResult() ;
-    List<Solution> population = new ArrayList<>(1) ;
+    List<DoubleSolution> population = new ArrayList<>(1) ;
     population.add(solution) ;
 
     new SolutionSetOutput.Printer(population)

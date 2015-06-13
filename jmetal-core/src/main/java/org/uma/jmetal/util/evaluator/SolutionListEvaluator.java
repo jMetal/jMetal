@@ -32,7 +32,7 @@ import java.util.List;
  * Created by Antonio J. Nebro on 30/05/14.
  */
 
-public interface SolutionListEvaluator<S extends Solution> extends Serializable {
-  public List<S> evaluate(List<S> solutionSet, Problem problem) ;
+public interface SolutionListEvaluator<S extends Solution<?>> extends Serializable {
+  public List<S> evaluate(List<S> solutionSet, Problem<S> problem) ;
   public void shutdown() ;
 }

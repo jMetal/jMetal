@@ -16,19 +16,19 @@ import java.util.Comparator;
  * mutation operator. An archive is used to store the non-dominated solutions
  * found during the search.
  */
-public class MutationLocalSearch implements LocalSearchOperator<Solution>{
+public class MutationLocalSearch<S extends Solution<?>> implements LocalSearchOperator<S>{
 
 
     /**
      * Stores the problem to solve
      */
-    private Problem problem;
+    private Problem<S> problem;
 
     /**
      * Stores a reference to the archive in which the non-dominated solutions are
      * inserted
      */
-    private Archive archive;
+    private Archive<S> archive;
 
     private int improvementRounds ;
 
@@ -36,12 +36,12 @@ public class MutationLocalSearch implements LocalSearchOperator<Solution>{
      * Stores comparators for dealing with constraints and dominance checking,
      * respectively.
      */
-    private Comparator constraintComparator ;
-    private Comparator dominanceComparator ;
+    private Comparator<S> constraintComparator ;
+    private Comparator<S> dominanceComparator ;
     /**
      * Stores the mutation operator
      */
-    private MutationOperator mutationOperator;
+    private MutationOperator<S> mutationOperator;
 
     /**
      * Stores the number of evaluations_ carried out
@@ -58,14 +58,14 @@ public class MutationLocalSearch implements LocalSearchOperator<Solution>{
 
      */
 
-    public  MutationLocalSearch(int improvementRounds,MutationOperator mutationOperator,
-                                Archive archive,Problem problem ){
+    public  MutationLocalSearch(int improvementRounds,MutationOperator<S> mutationOperator,
+                                Archive<S> archive,Problem<S> problem ){
         this.problem=problem;
         this.mutationOperator=mutationOperator;
         this.improvementRounds=improvementRounds;
         this.archive=archive;
-        dominanceComparator  = new DominanceComparator();
-        constraintComparator = new OverallConstraintViolationComparator();
+        dominanceComparator  = new DominanceComparator<S>();
+        constraintComparator = new OverallConstraintViolationComparator<S>();
         evaluations=0;
     }
 
@@ -78,7 +78,7 @@ public class MutationLocalSearch implements LocalSearchOperator<Solution>{
      * @param  solution representing a solution
      * @return An object containing the new improved solution
      */
-    public Solution  execute(Solution solution)  {
+    public S  execute(S solution)  {
         int i = 0;
         int best = 0;
         evaluations = 0;
@@ -86,12 +86,12 @@ public class MutationLocalSearch implements LocalSearchOperator<Solution>{
         int rounds = improvementRounds;
 
         if (rounds <= 0)
-            return solution.copy();
+            return (S) solution.copy();
 
         do
         {
             i++;
-            Solution mutatedSolution = solution.copy();
+            S mutatedSolution = (S) solution.copy();
 
             mutationOperator.execute(mutatedSolution);
 
@@ -100,7 +100,7 @@ public class MutationLocalSearch implements LocalSearchOperator<Solution>{
             if (problem.getNumberOfConstraints() > 0)
             {
 
-                ((ConstrainedProblem)problem).evaluateConstraints(mutatedSolution);
+                ((ConstrainedProblem<S>)problem).evaluateConstraints(mutatedSolution);
                 best = constraintComparator.compare(mutatedSolution,solution);
                 if (best == 0) //none of then is better that the other one
                 {
@@ -133,7 +133,7 @@ public class MutationLocalSearch implements LocalSearchOperator<Solution>{
             }
         }
         while (i < rounds);
-        return solution.copy();
+        return (S) solution.copy();
     } // execute
 
 

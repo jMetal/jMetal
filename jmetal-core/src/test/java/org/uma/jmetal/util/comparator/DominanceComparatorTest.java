@@ -29,7 +29,7 @@ import static org.mockito.Mockito.*;
  * @version 1.0
  */
 public class DominanceComparatorTest {
-  private DominanceComparator comparator ;
+  private DominanceComparator<Solution<?>> comparator ;
 
   @Rule
   public ExpectedException exception = ExpectedException.none();
@@ -38,9 +38,9 @@ public class DominanceComparatorTest {
     exception.expect(JMetalException.class);
     exception.expectMessage(containsString("Solution1 is null"));
 
-    comparator = new DominanceComparator() ;
+    comparator = new DominanceComparator<Solution<?>>() ;
 
-    Solution solution2 = mock(Solution.class) ;
+    Solution<?> solution2 = mock(Solution.class) ;
 
     comparator.compare(null, solution2) ;
   }
@@ -49,9 +49,9 @@ public class DominanceComparatorTest {
     exception.expect(JMetalException.class);
     exception.expectMessage(containsString("Solution2 is null"));
 
-    comparator = new DominanceComparator(0) ;
+    comparator = new DominanceComparator<Solution<?>>(0) ;
 
-    Solution solution2 = mock(Solution.class) ;
+    Solution<?> solution2 = mock(Solution.class) ;
 
     comparator.compare(solution2, null) ;
   }
@@ -61,10 +61,10 @@ public class DominanceComparatorTest {
     exception.expectMessage(containsString("Cannot compare because solution1 has 4 objectives "
         + "and solution2 has 2"));
 
-    comparator = new DominanceComparator() ;
+    comparator = new DominanceComparator<Solution<?>>() ;
 
-    Solution solution1 = mock(Solution.class) ;
-    Solution solution2 = mock(Solution.class) ;
+    Solution<?> solution1 = mock(Solution.class) ;
+    Solution<?> solution2 = mock(Solution.class) ;
 
     when(solution1.getNumberOfObjectives()).thenReturn(4) ;
     when(solution2.getNumberOfObjectives()).thenReturn(2) ;
@@ -73,13 +73,13 @@ public class DominanceComparatorTest {
   }
 
   @Test public void shouldCompareReturnTheValueReturnedByTheConstraintViolationComparator() {
-    ConstraintViolationComparator violationComparator = mock(ConstraintViolationComparator.class) ;
+    ConstraintViolationComparator<Solution<?>> violationComparator = mock(ConstraintViolationComparator.class) ;
 
-    Solution solution1 = mock(Solution.class) ;
-    Solution solution2 = mock(Solution.class) ;
+    Solution<?> solution1 = mock(Solution.class) ;
+    Solution<?> solution2 = mock(Solution.class) ;
 
     when(violationComparator.compare(solution1, solution2)).thenReturn(-1) ;
-    comparator = new DominanceComparator(violationComparator) ;
+    comparator = new DominanceComparator<Solution<?>>(violationComparator) ;
     int obtainedValue = comparator.compare(solution1, solution2) ;
 
     assertEquals(-1, obtainedValue) ;
@@ -87,10 +87,10 @@ public class DominanceComparatorTest {
   }
 
   @Test public void shouldCompareReturnZeroIfTheTwoSolutionsHasOneObjectiveWithTheSameValue() {
-    ConstraintViolationComparator violationComparator = mock(ConstraintViolationComparator.class) ;
+    ConstraintViolationComparator<Solution<?>> violationComparator = mock(ConstraintViolationComparator.class) ;
 
-    Solution solution1 = mock(Solution.class) ;
-    Solution solution2 = mock(Solution.class) ;
+    Solution<?> solution1 = mock(Solution.class) ;
+    Solution<?> solution2 = mock(Solution.class) ;
 
     when(violationComparator.compare(solution1, solution2)).thenReturn(0) ;
 
@@ -100,7 +100,7 @@ public class DominanceComparatorTest {
     when(solution1.getObjective(0)).thenReturn(4.0) ;
     when(solution2.getObjective(0)).thenReturn(4.0) ;
 
-    comparator = new DominanceComparator(violationComparator) ;
+    comparator = new DominanceComparator<Solution<?>>(violationComparator) ;
 
     assertEquals(0, comparator.compare(solution1, solution2));
 
@@ -111,10 +111,10 @@ public class DominanceComparatorTest {
   }
 
   @Test public void shouldCompareReturnOneIfTheTwoSolutionsHasOneObjectiveAndTheSecondOneIsLower() {
-    ConstraintViolationComparator violationComparator = mock(ConstraintViolationComparator.class) ;
+    ConstraintViolationComparator<Solution<?>> violationComparator = mock(ConstraintViolationComparator.class) ;
 
-    Solution solution1 = mock(Solution.class) ;
-    Solution solution2 = mock(Solution.class) ;
+    Solution<?> solution1 = mock(Solution.class) ;
+    Solution<?> solution2 = mock(Solution.class) ;
 
     when(violationComparator.compare(solution1, solution2)).thenReturn(0) ;
 
@@ -124,7 +124,7 @@ public class DominanceComparatorTest {
     when(solution1.getObjective(0)).thenReturn(4.0) ;
     when(solution2.getObjective(0)).thenReturn(2.0) ;
 
-    comparator = new DominanceComparator(violationComparator) ;
+    comparator = new DominanceComparator<Solution<?>>(violationComparator) ;
 
     assertEquals(1, comparator.compare(solution1, solution2));
 
@@ -135,10 +135,10 @@ public class DominanceComparatorTest {
   }
 
   @Test public void shouldCompareReturnMinusOneIfTheTwoSolutionsHasOneObjectiveAndTheFirstOneIsLower() {
-    ConstraintViolationComparator violationComparator = mock(ConstraintViolationComparator.class) ;
+    ConstraintViolationComparator<Solution<?>> violationComparator = mock(ConstraintViolationComparator.class) ;
 
-    Solution solution1 = mock(Solution.class) ;
-    Solution solution2 = mock(Solution.class) ;
+    Solution<?> solution1 = mock(Solution.class) ;
+    Solution<?> solution2 = mock(Solution.class) ;
 
     when(violationComparator.compare(solution1, solution2)).thenReturn(0) ;
 
@@ -148,7 +148,7 @@ public class DominanceComparatorTest {
     when(solution1.getObjective(0)).thenReturn(-1.0) ;
     when(solution2.getObjective(0)).thenReturn(2.0) ;
 
-    comparator = new DominanceComparator(violationComparator) ;
+    comparator = new DominanceComparator<Solution<?>>(violationComparator) ;
 
     assertEquals(-1, comparator.compare(solution1, solution2));
 
@@ -162,10 +162,10 @@ public class DominanceComparatorTest {
    * Case A: solution1 has objectives [-1.0, 5.0, 9.0] and solution2 has [2.0, 6.0, 15.0]
    */
   @Test public void shouldCompareReturnMinusOneIfTheFirstSolutionDominatesTheSecondOneCaseA() {
-    ConstraintViolationComparator violationComparator = mock(ConstraintViolationComparator.class) ;
+    ConstraintViolationComparator<Solution<?>> violationComparator = mock(ConstraintViolationComparator.class) ;
 
-    Solution solution1 = mock(Solution.class) ;
-    Solution solution2 = mock(Solution.class) ;
+    Solution<?> solution1 = mock(Solution.class) ;
+    Solution<?> solution2 = mock(Solution.class) ;
 
     when(violationComparator.compare(solution1, solution2)).thenReturn(0) ;
 
@@ -179,7 +179,7 @@ public class DominanceComparatorTest {
     when(solution2.getObjective(1)).thenReturn(6.0) ;
     when(solution2.getObjective(2)).thenReturn(15.0) ;
 
-    comparator = new DominanceComparator(violationComparator) ;
+    comparator = new DominanceComparator<Solution<?>>(violationComparator) ;
 
     assertEquals(-1, comparator.compare(solution1, solution2));
 
@@ -193,10 +193,10 @@ public class DominanceComparatorTest {
    * Case B: solution1 has objectives [-1.0, 5.0, 9.0] and solution2 has [-1.0, 5.0, 10.0]
    */
   @Test public void shouldCompareReturnMinusOneIfTheFirstSolutionDominatesTheSecondOneCaseB() {
-    ConstraintViolationComparator violationComparator = mock(ConstraintViolationComparator.class) ;
+    ConstraintViolationComparator<Solution<?>> violationComparator = mock(ConstraintViolationComparator.class) ;
 
-    Solution solution1 = mock(Solution.class) ;
-    Solution solution2 = mock(Solution.class) ;
+    Solution<?> solution1 = mock(Solution.class) ;
+    Solution<?> solution2 = mock(Solution.class) ;
 
     when(violationComparator.compare(solution1, solution2)).thenReturn(0) ;
 
@@ -210,7 +210,7 @@ public class DominanceComparatorTest {
     when(solution2.getObjective(1)).thenReturn(5.0) ;
     when(solution2.getObjective(2)).thenReturn(10.0) ;
 
-    comparator = new DominanceComparator(violationComparator) ;
+    comparator = new DominanceComparator<Solution<?>>(violationComparator) ;
 
     assertEquals(-1, comparator.compare(solution1, solution2));
 
@@ -224,7 +224,7 @@ public class DominanceComparatorTest {
    * Case C: solution1 has  objectives [-1.0, 5.0, 9.0] and solution2 has [-2.0, 5.0, 9.0]
    */
   @Test public void shouldCompareReturnOneIfTheSecondSolutionDominatesTheFirstOneCaseC() {
-    ConstraintViolationComparator violationComparator = mock(ConstraintViolationComparator.class) ;
+    ConstraintViolationComparator<Solution<?>> violationComparator = mock(ConstraintViolationComparator.class) ;
 
     BinarySolution solution1 = mock(BinarySolution.class) ;
     BinarySolution solution2 = mock(BinarySolution.class) ;
@@ -241,7 +241,7 @@ public class DominanceComparatorTest {
     when(solution2.getObjective(1)).thenReturn(5.0) ;
     when(solution2.getObjective(2)).thenReturn(9.0) ;
 
-    comparator = new DominanceComparator(violationComparator) ;
+    comparator = new DominanceComparator<Solution<?>>(violationComparator) ;
 
     assertEquals(1, comparator.compare(solution1, solution2));
 
@@ -255,10 +255,10 @@ public class DominanceComparatorTest {
    * Case D: solution1 has  objectives [-1.0, 5.0, 9.0] and solution2 has [-1.0, 5.0, 8.0]
    */
   @Test public void shouldCompareReturnOneIfTheSecondSolutionDominatesTheFirstOneCaseD() {
-    ConstraintViolationComparator violationComparator = mock(ConstraintViolationComparator.class) ;
+    ConstraintViolationComparator<Solution<?>> violationComparator = mock(ConstraintViolationComparator.class) ;
 
-    Solution solution1 = mock(Solution.class) ;
-    Solution solution2 = mock(Solution.class) ;
+    Solution<?> solution1 = mock(Solution.class) ;
+    Solution<?> solution2 = mock(Solution.class) ;
 
     when(violationComparator.compare(solution1, solution2)).thenReturn(0) ;
 
@@ -272,7 +272,7 @@ public class DominanceComparatorTest {
     when(solution2.getObjective(1)).thenReturn(5.0) ;
     when(solution2.getObjective(2)).thenReturn(8.0) ;
 
-    comparator = new DominanceComparator(violationComparator) ;
+    comparator = new DominanceComparator<Solution<?>>(violationComparator) ;
 
     assertEquals(1, comparator.compare(solution1, solution2));
 

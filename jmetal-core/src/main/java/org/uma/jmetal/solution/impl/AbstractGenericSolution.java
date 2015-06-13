@@ -9,7 +9,7 @@ import java.util.*;
 /**
  * Created by Antonio J. Nebro on 03/09/14.
  */
-public abstract class AbstractGenericSolution<T, P extends Problem> implements Solution<T> {
+public abstract class AbstractGenericSolution<T, P extends Problem<?>> implements Solution<T> {
   private double[] objectives;
   private List<T> variables;
   protected P problem ;
@@ -120,7 +120,7 @@ public abstract class AbstractGenericSolution<T, P extends Problem> implements S
     if (o == null || getClass() != o.getClass())
       return false;
 
-    AbstractGenericSolution that = (AbstractGenericSolution) o;
+    AbstractGenericSolution<?, ?> that = (AbstractGenericSolution<?, ?>) o;
 
     if (!attributes.equals(that.attributes))
       return false;

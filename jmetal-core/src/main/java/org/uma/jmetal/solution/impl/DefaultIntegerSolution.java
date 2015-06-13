@@ -42,7 +42,7 @@ public class DefaultIntegerSolution extends AbstractGenericSolution<Integer, Int
     overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
     numberOfViolatedConstraints = solution.numberOfViolatedConstraints ;
 
-    attributes = new HashMap(solution.attributes) ;
+    attributes = new HashMap<Object, Object>(solution.attributes) ;
   }
 
   @Override

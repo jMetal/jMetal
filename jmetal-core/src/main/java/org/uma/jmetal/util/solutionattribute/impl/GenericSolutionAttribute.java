@@ -25,10 +25,10 @@ import org.uma.jmetal.util.solutionattribute.SolutionAttribute;
 
 /**
  */
-public class GenericSolutionAttribute <S extends Solution, V> implements SolutionAttribute<S, V>{
+public class GenericSolutionAttribute <S extends Solution<?>, V> implements SolutionAttribute<S, V>{
 
   @Override
-  public V getAttribute(Solution solution) {
+  public V getAttribute(S solution) {
     return (V)solution.getAttribute(getAttributeID());
   }
 

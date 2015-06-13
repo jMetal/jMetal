@@ -36,7 +36,7 @@ import java.util.List;
  *   IEEE Transactions on Evolutionary Computation. Vol. 12,
  *   No. 4 (August 2008), pp. 439-457
  */
-public abstract class AbstractABYSS <S extends Solution> implements Algorithm<List<? extends Solution>> {
+public abstract class AbstractABYSS implements Algorithm<List<DoubleSolution>> {
   /**
    * Stores the number of subranges in which each encodings.variable is divided. Used in
    * the diversification method. By default it takes the value 4 (see the method
@@ -94,18 +94,18 @@ public abstract class AbstractABYSS <S extends Solution> implements Algorithm<Li
   /**
    * Stores the improvement operator
    */
-  protected MutationLocalSearch improvementOperator;
+  protected MutationLocalSearch<DoubleSolution> improvementOperator;
   /**
    * Fitness
    */
-  protected StrengthRawFitness strenghtRawFitness;
+  protected StrengthRawFitness<DoubleSolution> strenghtRawFitness;
   /**
    * Stores the comparators for dominance and equality, respectively
    */
-  protected Comparator<Solution> dominanceComparator;
-  protected Comparator<Solution> equalComparator;
-  protected Comparator<Solution> fitnessComparator;
-  protected Comparator<Solution> crowdingDistanceComparator;
+  protected Comparator<DoubleSolution> dominanceComparator;
+  protected Comparator<DoubleSolution> equalComparator;
+  protected Comparator<DoubleSolution> fitnessComparator;
+  protected Comparator<DoubleSolution> crowdingDistanceComparator;
 
   /**
    * Solution Marked Attributed
@@ -131,7 +131,7 @@ public abstract class AbstractABYSS <S extends Solution> implements Algorithm<Li
   /**
    * Stores the crossover operator
    */
-  protected CrossoverOperator crossoverOperator;
+  protected CrossoverOperator<DoubleSolution> crossoverOperator;
   /**
    * Maximum number of getEvaluations to carry out
    */
@@ -139,8 +139,8 @@ public abstract class AbstractABYSS <S extends Solution> implements Algorithm<Li
 
 
   public AbstractABYSS(int numberOfSubranges,int solutionSetSize, int refSet1Size, int refSet2Size,
-      int archiveSize, int maxEvaluations,Archive archive,
-      CrossoverOperator crossoverOperator,MutationLocalSearch improvementOperator,
+      int archiveSize, int maxEvaluations,Archive<DoubleSolution> archive,
+      CrossoverOperator<DoubleSolution> crossoverOperator,MutationLocalSearch<DoubleSolution> improvementOperator,
       DoubleProblem problem) {
     this.numberOfSubranges=numberOfSubranges;
     this.solutionSetSize = solutionSetSize;
@@ -152,19 +152,19 @@ public abstract class AbstractABYSS <S extends Solution> implements Algorithm<Li
     this.maxEvaluations = maxEvaluations;
     this.evaluations=0;
     randomGenerator = JMetalRandom.getInstance();
-    strenghtRawFitness = new StrengthRawFitness();
+    strenghtRawFitness = new StrengthRawFitness<DoubleSolution>();
     solutionSet = new ArrayList<DoubleSolution>(solutionSetSize);
     refSet1 = new ArrayList<DoubleSolution>(refSet1Size);
     refSet2 = new ArrayList<DoubleSolution>(refSet2Size);
-    dominanceComparator = new DominanceComparator();
-    equalComparator = new EqualSolutionsComparator();
-    fitnessComparator = new StrengthFitnessComparator();
-    crowdingDistanceComparator = new CrowdingDistanceComparator();
+    dominanceComparator = new DominanceComparator<DoubleSolution>();
+    equalComparator = new EqualSolutionsComparator<DoubleSolution>();
+    fitnessComparator = new StrengthFitnessComparator<DoubleSolution>();
+    crowdingDistanceComparator = new CrowdingDistanceComparator<DoubleSolution>();
     this.improvementOperator = improvementOperator;
     marked = new MarkAttribute();
     distanceToSolutionListAttribute = new DistanceToSolutionListAttribute();
     subSet = new ArrayList<DoubleSolution>(solutionSetSize * 1000);
-    this.archive = (CrowdingDistanceArchive)archive;
+    this.archive = (CrowdingDistanceArchive<DoubleSolution>)archive;
     sumOfFrequencyValues       = new int[problem.getNumberOfVariables()] ;
     sumOfReverseFrequencyValues = new int[problem.getNumberOfVariables()] ;
     frequency       = new int[numberOfSubranges][problem.getNumberOfVariables()] ;
@@ -278,7 +278,7 @@ public abstract class AbstractABYSS <S extends Solution> implements Algorithm<Li
           double aux = SolutionUtils.distanceBetweenSolutions(solutionSet.get(j), individual);
 
           if (aux < distanceToSolutionListAttribute.getAttribute(individual)) {
-            Solution auxSolution = solutionSet.get(j);
+            Solution<?> auxSolution = solutionSet.get(j);
             distanceToSolutionListAttribute.setAttribute(auxSolution, aux);
           }
         }
@@ -291,7 +291,7 @@ public abstract class AbstractABYSS <S extends Solution> implements Algorithm<Li
           for (int k = 0; k < refSet2.size(); k++) {
             if (i != j) {
               double aux = SolutionUtils.distanceBetweenSolutions(refSet2.get(j), refSet2.get(k));
-              Solution auxSolution = refSet2.get(j);
+              Solution<?> auxSolution = refSet2.get(j);
               if (aux < distanceToSolutionListAttribute.getAttribute(auxSolution)) {
                 distanceToSolutionListAttribute.setAttribute(auxSolution, aux);
               }//if
@@ -446,8 +446,8 @@ public abstract class AbstractABYSS <S extends Solution> implements Algorithm<Li
           problem.evaluate(offSpring.get(0));
           problem.evaluate(offSpring.get(1));
           if (problem instanceof  ConstrainedProblem) {
-            ((ConstrainedProblem)problem).evaluateConstraints(offSpring.get(0));
-            ((ConstrainedProblem)problem).evaluateConstraints(offSpring.get(1));
+            ((ConstrainedProblem<DoubleSolution>)problem).evaluateConstraints(offSpring.get(0));
+            ((ConstrainedProblem<DoubleSolution>)problem).evaluateConstraints(offSpring.get(1));
           }
           evaluations += 2;
           if (evaluations < maxEvaluations) {
@@ -469,8 +469,8 @@ public abstract class AbstractABYSS <S extends Solution> implements Algorithm<Li
         if ( !marked.getAttribute(parents.get(0)) || !marked.getAttribute(parents.get(1))) {//!parents[0].isMarked() || !parents[1].isMarked()
           offSpring = (List<DoubleSolution>) crossoverOperator.execute(parents);
           if (problem instanceof  ConstrainedProblem) {
-            ((ConstrainedProblem)problem).evaluateConstraints(offSpring.get(0));
-            ((ConstrainedProblem)problem).evaluateConstraints(offSpring.get(1));
+            ((ConstrainedProblem<DoubleSolution>)problem).evaluateConstraints(offSpring.get(0));
+            ((ConstrainedProblem<DoubleSolution>)problem).evaluateConstraints(offSpring.get(1));
           }
           problem.evaluate(offSpring.get(0));
           problem.evaluate(offSpring.get(1));

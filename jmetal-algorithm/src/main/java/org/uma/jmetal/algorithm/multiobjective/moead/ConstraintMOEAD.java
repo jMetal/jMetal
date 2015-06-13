@@ -20,7 +20,6 @@ import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.problem.ConstrainedProblem;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.impl.ViolationThresholdComparator;
 
 import java.util.List;
@@ -38,12 +37,12 @@ public class ConstraintMOEAD extends AbstractMOEAD<DoubleSolution>  {
   private DifferentialEvolutionCrossover differentialEvolutionCrossover ;
   private ViolationThresholdComparator<DoubleSolution> violationThresholdComparator ;
 
-  public ConstraintMOEAD(Problem problem,
+  public ConstraintMOEAD(Problem<DoubleSolution> problem,
       int populationSize,
       int resultPopulationSize,
       int maxEvaluations,
-      MutationOperator mutation,
-      CrossoverOperator crossover,
+      MutationOperator<DoubleSolution> mutation,
+      CrossoverOperator<DoubleSolution> crossover,
       FunctionType functionType,
       String dataDirectory,
       double neighborhoodSelectionProbability,
@@ -54,7 +53,7 @@ public class ConstraintMOEAD extends AbstractMOEAD<DoubleSolution>  {
         neighborSize);
 
     differentialEvolutionCrossover = (DifferentialEvolutionCrossover)crossoverOperator ;
-    violationThresholdComparator = new ViolationThresholdComparator() ;
+    violationThresholdComparator = new ViolationThresholdComparator<DoubleSolution>() ;
   }
 
   @Override public void run() {
@@ -84,7 +83,7 @@ public class ConstraintMOEAD extends AbstractMOEAD<DoubleSolution>  {
         mutationOperator.execute(child);
         problem.evaluate(child);
         if (problem instanceof ConstrainedProblem) {
-          ((ConstrainedProblem) problem).evaluateConstraints(child);
+          ((ConstrainedProblem<DoubleSolution>) problem).evaluateConstraints(child);
         }
         evaluations++;
 
@@ -107,14 +106,14 @@ public class ConstraintMOEAD extends AbstractMOEAD<DoubleSolution>  {
 
       problem.evaluate(newSolution);
       if (problem instanceof ConstrainedProblem) {
-        ((ConstrainedProblem) problem).evaluateConstraints(newSolution);
+        ((ConstrainedProblem<DoubleSolution>) problem).evaluateConstraints(newSolution);
       }
       population.add(newSolution);
     }
   }
 
   @Override
-  void updateNeighborhood(Solution individual, int subproblemId, NeighborType neighborType) {
+  void updateNeighborhood(DoubleSolution individual, int subproblemId, NeighborType neighborType) {
     int size;
     int time;
 

@@ -45,9 +45,9 @@ public class GenerationalGeneticAlgorithmRunner {
     Algorithm<BinarySolution> algorithm;
     BinaryProblem problem = new OneMax(512) ;
 
-    CrossoverOperator<List<BinarySolution>, List<BinarySolution>> crossoverOperator = new SinglePointCrossover(0.9) ;
+    CrossoverOperator<BinarySolution> crossoverOperator = new SinglePointCrossover(0.9) ;
     MutationOperator<BinarySolution> mutationOperator = new BitFlipMutation(1.0 / problem.getNumberOfBits(0)) ;
-    SelectionOperator selectionOperator = new BinaryTournamentSelection();
+    SelectionOperator<List<BinarySolution>, BinarySolution> selectionOperator = new BinaryTournamentSelection<BinarySolution>();
 
     algorithm = new GeneticAlgorithmBuilder<BinarySolution>(problem,
         crossoverOperator, mutationOperator, GeneticAlgorithmBuilder.GeneticAlgorithmVariant.GENERATIONAL)

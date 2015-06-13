@@ -18,7 +18,7 @@ import org.uma.jmetal.algorithm.singleobjective.differentialevolution.Differenti
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.impl.selection.DifferentialEvolutionSelection;
 import org.uma.jmetal.problem.DoubleProblem;
-import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
@@ -46,14 +46,14 @@ public class DifferentialEvolutionRunner {
   public static void main(String[] args) throws Exception {
 
     DoubleProblem problem;
-    Algorithm<Solution> algorithm;
+    Algorithm<DoubleSolution> algorithm;
     DifferentialEvolutionSelection selection;
     DifferentialEvolutionCrossover crossover;
-    SolutionListEvaluator evaluator ;
+    SolutionListEvaluator<DoubleSolution> evaluator ;
 
     String problemName = "org.uma.jmetal.problem.singleobjective.Sphere" ;
 
-    problem = (DoubleProblem) ProblemUtils.loadProblem(problemName);
+    problem = (DoubleProblem) ProblemUtils.<DoubleSolution> loadProblem(problemName);
 
     int numberOfCores ;
     if (args.length == 1) {
@@ -63,9 +63,9 @@ public class DifferentialEvolutionRunner {
     }
 
     if (numberOfCores == 1) {
-      evaluator = new SequentialSolutionListEvaluator() ;
+      evaluator = new SequentialSolutionListEvaluator<DoubleSolution>() ;
     } else {
-      evaluator = new MultithreadedSolutionListEvaluator(numberOfCores, problem) ;
+      evaluator = new MultithreadedSolutionListEvaluator<DoubleSolution>(numberOfCores, problem) ;
     }
 
     crossover = new DifferentialEvolutionCrossover(0.5, 0.5, "rand/1/bin") ;
@@ -82,10 +82,10 @@ public class DifferentialEvolutionRunner {
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
         .execute() ;
 
-    Solution solution = algorithm.getResult() ;
+    DoubleSolution solution = algorithm.getResult() ;
     long computingTime = algorithmRunner.getComputingTime() ;
 
-    List<Solution> population = new ArrayList<>(1) ;
+    List<DoubleSolution> population = new ArrayList<>(1) ;
     population.add(solution) ;
     new SolutionSetOutput.Printer(population)
         .setSeparator("\t")

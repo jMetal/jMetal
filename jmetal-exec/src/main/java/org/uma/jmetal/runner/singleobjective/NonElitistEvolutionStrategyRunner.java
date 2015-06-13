@@ -15,13 +15,11 @@ package org.uma.jmetal.runner.singleobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.singleobjective.evolutionstrategy.EvolutionStrategyBuilder;
-import org.uma.jmetal.algorithm.singleobjective.evolutionstrategy.NonElitistEvolutionStrategy;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.mutation.BitFlipMutation;
 import org.uma.jmetal.problem.BinaryProblem;
 import org.uma.jmetal.problem.singleobjective.OneMax;
 import org.uma.jmetal.solution.BinarySolution;
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
@@ -57,8 +55,8 @@ public class NonElitistEvolutionStrategyRunner {
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
-    Solution solution = ((NonElitistEvolutionStrategy)algorithm).getResult() ;
-    List<Solution> population = new ArrayList<>(1) ;
+    BinarySolution solution = algorithm.getResult() ;
+    List<BinarySolution> population = new ArrayList<>(1) ;
     population.add(solution) ;
 
     long computingTime = algorithmRunner.getComputingTime() ;

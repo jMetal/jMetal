@@ -45,8 +45,8 @@ public class MOEADRunner {
    */
   public static void main(String[] args) {
     DoubleProblem problem;
-    Algorithm algorithm;
-    MutationOperator mutation;
+    Algorithm<List<DoubleSolution>> algorithm;
+    MutationOperator<DoubleSolution> mutation;
     DifferentialEvolutionCrossover crossover;
 
     String problemName ;
@@ -56,7 +56,7 @@ public class MOEADRunner {
       problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F2";
     }
 
-    problem = (DoubleProblem)ProblemUtils.loadProblem(problemName);
+    problem = (DoubleProblem)ProblemUtils.<DoubleSolution> loadProblem(problemName);
 
      /*
      * Alternatives:
@@ -88,7 +88,7 @@ public class MOEADRunner {
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
         .execute() ;
 
-    List<DoubleSolution> population = (List<DoubleSolution>)algorithm.getResult() ;
+    List<DoubleSolution> population = algorithm.getResult() ;
     long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)

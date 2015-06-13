@@ -59,7 +59,7 @@ public class IntegerPolynomialMutationWorkingTest {
     IntegerProblem problem ;
 
     problem = new NIntegerMin(1, 10, -1000, 1000);
-    MutationOperator mutation = new IntegerPolynomialMutation(1.0, distributionIndex) ;
+    MutationOperator<IntegerSolution> mutation = new IntegerPolynomialMutation(1.0, distributionIndex) ;
 
     IntegerSolution solution = problem.createSolution() ;
     solution.setVariableValue(0, 0);

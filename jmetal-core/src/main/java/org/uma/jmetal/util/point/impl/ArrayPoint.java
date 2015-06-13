@@ -65,7 +65,7 @@ public class ArrayPoint implements Point {
    *
    * @param solution
    */
-  public ArrayPoint(Solution solution) {
+  public ArrayPoint(Solution<?> solution) {
     if (solution == null) {
       throw new JMetalException("The solution is null") ;
     }

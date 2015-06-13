@@ -28,7 +28,7 @@ import java.util.List;
  * @author Antonio J. Nebro.
  * @version 1.0
  */
-public class BLXAlphaCrossover implements CrossoverOperator<List<DoubleSolution>, List<DoubleSolution>> {
+public class BLXAlphaCrossover implements CrossoverOperator<DoubleSolution> {
   private static final double DEFAULT_ALPHA = 0.5;
 
   private double crossoverProbability;

@@ -37,7 +37,7 @@ public class SetCoverage extends SimpleDescribedEntity implements QualityIndicat
     super("SC", "Set coverage") ;
   }
 
-  private Comparator<Solution> dominance;
+  private Comparator<Solution<?>> dominance;
 
   @Override public double execute(Front frontA, Front frontB) {
     if (frontA == null) {
@@ -69,7 +69,7 @@ public class SetCoverage extends SimpleDescribedEntity implements QualityIndicat
    * @param set2
    * @return The value of the set coverage
    */
-  public double setCoverage(List<? extends Solution> set1, List<? extends Solution> set2) {
+  public double setCoverage(List<? extends Solution<?>> set1, List<? extends Solution<?>> set2) {
     double result ;
     int sum = 0 ;
 
@@ -80,10 +80,10 @@ public class SetCoverage extends SimpleDescribedEntity implements QualityIndicat
         result = 1.0 ;
       }
     } else {
-      dominance = new DominanceComparator();
+      dominance = new DominanceComparator<Solution<?>>();
 
       for (int i = 0; i < set2.size(); i++) {
-        if (SolutionListUtils.isSolutionDominatedBySolutionList(set2.get(i), (List<Solution>) set1)) {
+        if (SolutionListUtils.isSolutionDominatedBySolutionList(set2.get(i), (List<Solution<?>>) set1)) {
           sum++;
         }
       }

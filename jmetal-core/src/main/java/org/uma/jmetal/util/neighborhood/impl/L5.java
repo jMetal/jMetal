@@ -9,7 +9,7 @@ import org.uma.jmetal.solution.Solution;
  * structured as a bi-dimensional square mesh. The neighbors are those solutions that are in the positions
  * North, South, East and West
  */
-public class L5<S extends Solution> extends TwoDimensionalMesh<S> {
+public class L5<S extends Solution<?>> extends TwoDimensionalMesh<S> {
   private static final int [] north      = {-1,  0};
   private static final int [] south      = { 1 , 0};
   private static final int [] east       = { 0 , 1};

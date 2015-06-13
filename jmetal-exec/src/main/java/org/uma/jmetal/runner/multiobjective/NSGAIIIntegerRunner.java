@@ -56,13 +56,13 @@ public class NSGAIIIntegerRunner {
   public static void main(String[] args) {
     IntegerProblem problem;
     Algorithm<List<IntegerSolution>> algorithm;
-    CrossoverOperator<List<IntegerSolution>, List<IntegerSolution>> crossover;
+    CrossoverOperator<IntegerSolution> crossover;
     MutationOperator<IntegerSolution> mutation;
-    SelectionOperator selection;
+    SelectionOperator<List<IntegerSolution>, IntegerSolution> selection;
     
     String problemName = "org.uma.jmetal.problem.multiobjective.NMMin" ;
 
-    problem = (IntegerProblem) ProblemUtils.loadProblem(problemName);
+    problem = (IntegerProblem) ProblemUtils.<IntegerSolution> loadProblem(problemName);
 
     double crossoverProbability = 0.9 ;
     double crossoverDistributionIndex = 20.0 ;
@@ -72,9 +72,9 @@ public class NSGAIIIntegerRunner {
     double mutationDistributionIndex = 20.0 ;
     mutation = new IntegerPolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    selection = new BinaryTournamentSelection() ;
+    selection = new BinaryTournamentSelection<IntegerSolution>() ;
 
-    algorithm = new NSGAIIBuilder(problem, crossover, mutation, NSGAIIBuilder.NSGAIIVariant.NSGAII)
+    algorithm = new NSGAIIBuilder<IntegerSolution>(problem, crossover, mutation, NSGAIIBuilder.NSGAIIVariant.NSGAII)
             .setSelectionOperator(selection)
             .setMaxIterations(250)
             .setPopulationSize(100)

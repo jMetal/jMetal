@@ -21,11 +21,14 @@
 
 package org.uma.jmetal.algorithm.multiobjective.gde3;
 
-import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.operator.Operator;
+import java.util.List;
+
+import org.uma.jmetal.operator.CrossoverOperator;
+import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.impl.selection.DifferentialEvolutionSelection;
 import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.AlgorithmBuilder;
@@ -33,7 +36,7 @@ import org.uma.jmetal.util.AlgorithmBuilder;
 /**
  * This class implements the GDE3 algorithm
  */
-public class GDE3Builder implements AlgorithmBuilder {
+public class GDE3Builder implements AlgorithmBuilder<GDE3> {
   private DoubleProblem problem;
   protected int populationSize;
   protected int maxIterations;
@@ -41,7 +44,7 @@ public class GDE3Builder implements AlgorithmBuilder {
   protected DifferentialEvolutionCrossover crossoverOperator;
   protected DifferentialEvolutionSelection selectionOperator;
 
-  protected SolutionListEvaluator evaluator;
+  protected SolutionListEvaluator<DoubleSolution> evaluator;
 
   /** Constructor */
   public GDE3Builder(DoubleProblem problem) {
@@ -50,7 +53,7 @@ public class GDE3Builder implements AlgorithmBuilder {
     populationSize = 100 ;
     selectionOperator = new DifferentialEvolutionSelection();
     crossoverOperator = new DifferentialEvolutionCrossover() ;
-    evaluator = new SequentialSolutionListEvaluator() ;
+    evaluator = new SequentialSolutionListEvaluator<DoubleSolution>() ;
   }
 
   /* Setters */
@@ -78,22 +81,22 @@ public class GDE3Builder implements AlgorithmBuilder {
     return this;
   }
 
-  public GDE3Builder setSolutionSetEvaluator(SolutionListEvaluator evaluator) {
+  public GDE3Builder setSolutionSetEvaluator(SolutionListEvaluator<DoubleSolution> evaluator) {
     this.evaluator = evaluator ;
 
     return this ;
   }
 
-  public Algorithm build() {
+  public GDE3 build() {
     return new GDE3(problem, populationSize, maxIterations, selectionOperator, crossoverOperator, evaluator) ;
   }
 
   /* Getters */
-  public Operator getCrossoverOperator() {
+  public CrossoverOperator<DoubleSolution> getCrossoverOperator() {
     return crossoverOperator;
   }
 
-  public Operator getSelectionOperator() {
+  public SelectionOperator<List<DoubleSolution>, List<DoubleSolution>> getSelectionOperator() {
     return selectionOperator;
   }
 

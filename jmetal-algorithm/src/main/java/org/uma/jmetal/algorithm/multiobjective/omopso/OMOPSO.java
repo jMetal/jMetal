@@ -26,7 +26,6 @@ import org.uma.jmetal.operator.impl.mutation.NonUniformMutation;
 import org.uma.jmetal.operator.impl.mutation.UniformMutation;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
@@ -44,7 +43,7 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
 
   private DoubleProblem problem;
 
-  SolutionListEvaluator evaluator;
+  SolutionListEvaluator<DoubleSolution> evaluator;
 
   private int swarmSize;
   private int archiveSize;
@@ -58,8 +57,8 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
 
   private double[][] speed;
 
-  private Comparator<Solution> dominanceComparator;
-  private Comparator<Solution> crowdingDistanceComparator;
+  private Comparator<DoubleSolution> dominanceComparator;
+  private Comparator<DoubleSolution> crowdingDistanceComparator;
 
   private UniformMutation uniformMutation;
   private NonUniformMutation nonUniformMutation;
@@ -67,10 +66,10 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
   private double eta = 0.0075;
 
   private JMetalRandom randomGenerator;
-  private CrowdingDistance crowdingDistance;
+  private CrowdingDistance<DoubleSolution> crowdingDistance;
 
   /** Constructor */
-  public OMOPSO(DoubleProblem problem, SolutionListEvaluator evaluator, int swarmSize, int maxIterations,
+  public OMOPSO(DoubleProblem problem, SolutionListEvaluator<DoubleSolution> evaluator, int swarmSize, int maxIterations,
       int archiveSize, UniformMutation uniformMutation, NonUniformMutation nonUniformMutation) {
     this.problem = problem ;
     this.evaluator = evaluator ;
@@ -84,15 +83,15 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
 
     localBest = new DoubleSolution[swarmSize];
     leaderArchive = new CrowdingDistanceArchive<DoubleSolution>(this.archiveSize);
-    epsilonArchive = new NonDominatedSolutionListArchive(new DominanceComparator(eta));
+    epsilonArchive = new NonDominatedSolutionListArchive<DoubleSolution>(new DominanceComparator<DoubleSolution>(eta));
 
-    dominanceComparator = new DominanceComparator();
-    crowdingDistanceComparator = new CrowdingDistanceComparator();
+    dominanceComparator = new DominanceComparator<DoubleSolution>();
+    crowdingDistanceComparator = new CrowdingDistanceComparator<DoubleSolution>();
 
     speed = new double[swarmSize][problem.getNumberOfVariables()];
 
     randomGenerator = JMetalRandom.getInstance() ;
-    crowdingDistance = new CrowdingDistance();
+    crowdingDistance = new CrowdingDistance<DoubleSolution>();
   }
 
   @Override public void run() {

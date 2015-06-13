@@ -72,7 +72,7 @@ public class MultithreadedExperimentExecutor implements SynchronousParallelTaskE
     String algorithm = (String) taskParameters[0];
     String problem = (String) taskParameters[1];
     Integer id = (Integer) taskParameters[2];
-    ExperimentConfiguration experimentData = (ExperimentConfiguration) taskParameters[3] ;
+    ExperimentConfiguration<?> experimentData = (ExperimentConfiguration<?>) taskParameters[3] ;
     taskList.add(new EvaluationTask(algorithm, problem, id, experimentData));
   }
 
@@ -109,10 +109,10 @@ public class MultithreadedExperimentExecutor implements SynchronousParallelTaskE
     private String problemName;
     private String algorithmName;
     private int id;
-    private ExperimentConfiguration experimentData ;
+    private ExperimentConfiguration<?> experimentData ;
 
     /** Constructor */
-    public EvaluationTask(String algorithm, String problem, int id, ExperimentConfiguration experimentData) {
+    public EvaluationTask(String algorithm, String problem, int id, ExperimentConfiguration<?> experimentData) {
       JMetalLogger.logger.info(
         " Task: " + algorithmName + ", problem: " + problemName + ", run: " + id);
       problemName = problem;

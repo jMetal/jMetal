@@ -25,8 +25,8 @@ import java.util.Comparator;
  *
  * This class implements a comparator based on the rank of the solutions.
  */
-public class RankingComparator implements Comparator<Solution> {
-  private Ranking ranking = new DominanceRanking() ;
+public class RankingComparator<S extends Solution<?>> implements Comparator<S> {
+  private Ranking<S> ranking = new DominanceRanking<S>() ;
 
   /**
    * Compares two solutions according to the ranking attribute. The lower the ranking the better
@@ -37,7 +37,7 @@ public class RankingComparator implements Comparator<Solution> {
    * respectively.
    */
   @Override
-  public int compare(Solution solution1, Solution solution2) {
+  public int compare(S solution1, S solution2) {
     int result ;
     if (solution1 == null) {
       if (solution2 == null) {

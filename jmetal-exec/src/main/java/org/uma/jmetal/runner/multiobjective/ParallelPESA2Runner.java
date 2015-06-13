@@ -57,7 +57,7 @@ public class ParallelPESA2Runner {
   public static void main(String[] args) throws JMetalException {
     Problem<DoubleSolution> problem;
     Algorithm<List<DoubleSolution>> algorithm;
-    CrossoverOperator<List<DoubleSolution>, List<DoubleSolution>> crossover;
+    CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
 
     String problemName ;
@@ -77,7 +77,7 @@ public class ParallelPESA2Runner {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    SolutionListEvaluator evaluator = new MultithreadedSolutionListEvaluator(0, problem) ;
+    SolutionListEvaluator<DoubleSolution> evaluator = new MultithreadedSolutionListEvaluator<DoubleSolution>(0, problem) ;
 
     algorithm = new PESA2Builder<DoubleSolution>(problem, crossover, mutation)
         .setMaxEvaluations(25000)

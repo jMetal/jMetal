@@ -23,6 +23,7 @@ package org.uma.jmetal.util.experiment;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.solution.Solution;
 
 import java.util.List;
 
@@ -31,10 +32,10 @@ import java.util.List;
  * 
  * Class for describing the configuration of a jMetal experiment
  */
-public class ExperimentConfiguration {
+public class ExperimentConfiguration<S extends Solution<?>> {
 	private String experimentName;
-	private List<Algorithm> algorithmList;
-	private List<Problem> problemList;
+	private List<Algorithm<?>> algorithmList;
+	private List<Problem<S>> problemList;
 	private String experimentBaseDirectory;
 
 	private String outputParetoFrontFileName;
@@ -42,7 +43,7 @@ public class ExperimentConfiguration {
 	private int independentRuns;
 
 	/** Constructor */
-	public ExperimentConfiguration(ExperimentConfigurationBuilder builder) {
+	public ExperimentConfiguration(ExperimentConfigurationBuilder<S> builder) {
 		experimentName = builder.getExperimentName() ;
     this.experimentBaseDirectory = builder.getExperimentBaseDirectory() ;
     this.algorithmList = builder.getAlgorithmList() ;
@@ -57,11 +58,11 @@ public class ExperimentConfiguration {
     return experimentName;
   }
 
-  public List<Algorithm> getAlgorithmList() {
+  public List<Algorithm<?>> getAlgorithmList() {
     return algorithmList;
   }
 
-  public List<Problem> getProblemList() {
+  public List<Problem<S>> getProblemList() {
     return problemList;
   }
 

@@ -14,22 +14,22 @@ import java.util.*;
 /**
  * Created by ajnebro on 26/10/14.
  */
-public class GenerationalGeneticAlgorithm<S extends Solution> extends AbstractGeneticAlgorithm<S, S> {
-  private Comparator<Solution> comparator;
+public class GenerationalGeneticAlgorithm<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, S> {
+  private Comparator<S> comparator;
   private int maxEvaluations;
   private int populationSize;
   private int evaluations;
 
   private Problem<S> problem;
 
-  private SolutionListEvaluator evaluator;
+  private SolutionListEvaluator<S> evaluator;
 
   /**
    * Constructor
    */
   public GenerationalGeneticAlgorithm(Problem<S> problem, int maxEvaluations, int populationSize,
-      CrossoverOperator<List<S>, List<S>> crossoverOperator, MutationOperator<S> mutationOperator,
-      SelectionOperator selectionOperator, SolutionListEvaluator evaluator) {
+      CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
+      SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator) {
     this.problem = problem;
     this.maxEvaluations = maxEvaluations;
     this.populationSize = populationSize;
@@ -40,7 +40,7 @@ public class GenerationalGeneticAlgorithm<S extends Solution> extends AbstractGe
 
     this.evaluator = evaluator;
 
-    comparator = new ObjectiveComparator(0);
+    comparator = new ObjectiveComparator<S>(0);
   }
 
   @Override protected boolean isStoppingConditionReached() {
@@ -56,7 +56,7 @@ public class GenerationalGeneticAlgorithm<S extends Solution> extends AbstractGe
     return population;
   }
 
-  @Override protected List<S> replacement(List population, List offspringPopulation) {
+  @Override protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
     Collections.sort(population, comparator);
     offspringPopulation.add(population.get(0));
     offspringPopulation.add(population.get(1));

@@ -28,7 +28,7 @@ import java.util.List;
  * @author Antonio J. Nebro
  * @version 1.0
  */
-public class NaryRandomSelection implements SelectionOperator<List<? extends Solution>,List<? extends Solution>> {
+public class NaryRandomSelection<S extends Solution<?>> implements SelectionOperator<List<S>,List<S>> {
   private JMetalRandom randomGenerator ;
   private int numberOfSolutionsToBeReturned ;
 
@@ -44,7 +44,7 @@ public class NaryRandomSelection implements SelectionOperator<List<? extends Sol
   }
 
   /** Execute() method */
-  public List<? extends Solution> execute(List<? extends Solution> solutionList) {
+  public List<S> execute(List<S> solutionList) {
     if (null == solutionList) {
       throw new JMetalException("The solution list is null") ;
     } else if (solutionList.isEmpty()) {

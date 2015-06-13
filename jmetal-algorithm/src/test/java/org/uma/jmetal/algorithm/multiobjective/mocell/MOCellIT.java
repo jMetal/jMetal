@@ -22,7 +22,7 @@ import static org.junit.Assert.assertTrue;
 public class MOCellIT {
   Algorithm<List<DoubleSolution>> algorithm;
   DoubleProblem problem ;
-  CrossoverOperator<List<DoubleSolution>,List<DoubleSolution>> crossover;
+  CrossoverOperator<DoubleSolution> crossover;
   MutationOperator<DoubleSolution> mutation;
 
   @Before
@@ -40,7 +40,7 @@ public class MOCellIT {
 
   @Test
   public void shouldTheAlgorithmReturnANumberOfSolutionsWhenSolvingASimpleProblem() throws Exception {
-    algorithm = new MOCellBuilder(problem, crossover, mutation)
+    algorithm = new MOCellBuilder<DoubleSolution>(problem, crossover, mutation)
         .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
@@ -57,7 +57,7 @@ public class MOCellIT {
 
   @Test
   public void shouldTheHypervolumeHaveAMininumValue() throws Exception {
-    algorithm = new MOCellBuilder(problem, crossover, mutation)
+    algorithm = new MOCellBuilder<DoubleSolution>(problem, crossover, mutation)
         .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)

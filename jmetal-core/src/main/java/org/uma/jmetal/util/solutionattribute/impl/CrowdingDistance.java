@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * This class implements some utilities for calculating distances
  */
-public class CrowdingDistance<S extends Solution>
+public class CrowdingDistance<S extends Solution<?>>
     extends GenericSolutionAttribute<S, Double> implements DensityEstimator<S>{
 
   /**
@@ -63,8 +63,8 @@ public class CrowdingDistance<S extends Solution>
     }
 
     //Use a new SolutionSet to avoid altering the original solutionSet
-    List<Solution<?>> front = new ArrayList<>(size);
-    for (Solution<?> solution : solutionList) {
+    List<S> front = new ArrayList<>(size);
+    for (S solution : solutionList) {
       front.add(solution);
     }
 
@@ -80,7 +80,7 @@ public class CrowdingDistance<S extends Solution>
 
     for (int i = 0; i < numberOfObjectives; i++) {
       // Sort the population by Obj n
-      Collections.sort(front, new ObjectiveComparator(i)) ;
+      Collections.sort(front, new ObjectiveComparator<S>(i)) ;
       objetiveMinn = front.get(0).getObjective(i);
       objetiveMaxn = front.get(front.size() - 1).getObjective(i);
 

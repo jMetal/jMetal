@@ -16,8 +16,8 @@ import java.util.List;
 /**
  * Created by ajnebro on 26/10/14.
  */
-public class SteadyStateGeneticAlgorithm<S extends Solution> extends AbstractGeneticAlgorithm<S, S> {
-  private Comparator<Solution> comparator;
+public class SteadyStateGeneticAlgorithm<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, S> {
+  private Comparator<S> comparator;
   private int maxEvaluations;
   private int populationSize;
   private int evaluations;
@@ -28,8 +28,8 @@ public class SteadyStateGeneticAlgorithm<S extends Solution> extends AbstractGen
    * Constructor
    */
   public SteadyStateGeneticAlgorithm(Problem<S> problem, int maxEvaluations, int populationSize,
-      CrossoverOperator<List<S>, List<S>> crossoverOperator, MutationOperator<S> mutationOperator,
-      SelectionOperator selectionOperator) {
+      CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
+      SelectionOperator<List<S>, S> selectionOperator) {
     this.problem = problem;
     this.maxEvaluations = maxEvaluations;
     this.populationSize = populationSize;
@@ -38,7 +38,7 @@ public class SteadyStateGeneticAlgorithm<S extends Solution> extends AbstractGen
     this.mutationOperator = mutationOperator;
     this.selectionOperator = selectionOperator;
 
-    comparator = new ObjectiveComparator(0);
+    comparator = new ObjectiveComparator<S>(0);
   }
 
   @Override protected boolean isStoppingConditionReached() {

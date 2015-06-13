@@ -45,7 +45,7 @@ public class PolynomialMutationWorkingTest {
     DoubleProblem problem ;
 
     problem = new Sphere(1) ;
-    MutationOperator mutation = new PolynomialMutation(1.0, distributionIndex) ;
+    MutationOperator<DoubleSolution> mutation = new PolynomialMutation(1.0, distributionIndex) ;
 
     DoubleSolution solution = problem.createSolution() ;
     solution.setVariableValue(0, 0.0);

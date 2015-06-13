@@ -26,10 +26,10 @@ import static org.mockito.Mockito.when;
  */
 public class NSGAIIBuilderTest {
   private NSGAIIBuilder<DoubleSolution> builder;
-  private Problem problem;
+  private Problem<DoubleSolution> problem;
   private static final double EPSILON = 0.000000000000001;
   private static final int NUMBER_OF_VARIABLES_OF_THE_MOCKED_PROBLEM = 20;
-  private CrossoverOperator<List<DoubleSolution>,List<DoubleSolution>> crossover;
+  private CrossoverOperator<DoubleSolution> crossover;
   private MutationOperator<DoubleSolution> mutation;
 
   @Before public void startup() {
@@ -44,7 +44,7 @@ public class NSGAIIBuilderTest {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    builder = new NSGAIIBuilder(problem, crossover, mutation, NSGAIIBuilder.NSGAIIVariant.NSGAII);
+    builder = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, NSGAIIBuilder.NSGAIIVariant.NSGAII);
   }
 
   @After public void cleanup() {
@@ -53,7 +53,7 @@ public class NSGAIIBuilderTest {
   }
 
   @Test public void buildAlgorithm() {
-    NSGAII algorithm = (NSGAII) builder.build();
+    NSGAII<DoubleSolution> algorithm = builder.build();
     assertNotNull(algorithm);
   }
 
@@ -94,7 +94,7 @@ public class NSGAIIBuilderTest {
   }
 
   @Test public void setNewSelectionOperator() {
-    SelectionOperator selection = mock(SelectionOperator.class);
+    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection = mock(SelectionOperator.class);
     assertNotEquals(selection, builder.getSelectionOperator());
     builder.setSelectionOperator(selection);
     assertEquals(selection, builder.getSelectionOperator());
@@ -105,8 +105,8 @@ public class NSGAIIBuilderTest {
   }
 
   @Test public void setNewEvaluator() {
-    MultithreadedSolutionListEvaluator evaluator =
-        new MultithreadedSolutionListEvaluator(2, problem);
+    MultithreadedSolutionListEvaluator<DoubleSolution> evaluator =
+        new MultithreadedSolutionListEvaluator<DoubleSolution>(2, problem);
     assertNotEquals(evaluator, builder.getSolutionListEvaluator());
     builder.setSolutionListEvaluator(evaluator);
     assertEquals(evaluator, builder.getSolutionListEvaluator());

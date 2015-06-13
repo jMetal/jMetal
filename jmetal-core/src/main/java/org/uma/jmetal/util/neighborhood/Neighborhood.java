@@ -7,6 +7,6 @@ import java.util.List;
 /**
  * Created by ajnebro on 20/5/15.
  */
-public interface Neighborhood<S extends Solution> {
+public interface Neighborhood<S extends Solution<?>> {
   public List<S> getNeighbors(List<S> solutionList, int solutionIndex) ;
 }

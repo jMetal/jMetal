@@ -1,6 +1,7 @@
 package org.uma.jmetal.util;
 
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.solution.Solution;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -14,10 +15,10 @@ public class ProblemUtils {
    * @param problemName A full qualified problem name
    * @return An instance of the problem
    */
-  public static Problem loadProblem(String problemName) {
-    Problem problem ;
+  public static <S extends Solution<?>> Problem<S> loadProblem(String problemName) {
+    Problem<S> problem ;
     try {
-      problem = (Problem)Class.forName(problemName).getConstructor().newInstance() ;
+      problem = (Problem<S>)Class.forName(problemName).getConstructor().newInstance() ;
     } catch (InstantiationException e) {
       throw new JMetalException("newInstance() cannot instantiate (abstract class)", e) ;
     } catch (IllegalAccessException e) {

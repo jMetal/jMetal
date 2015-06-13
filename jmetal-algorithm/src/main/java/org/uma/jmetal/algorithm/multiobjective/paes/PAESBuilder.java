@@ -21,7 +21,7 @@ import org.uma.jmetal.util.AlgorithmBuilder;
 /**
  * Created by ajnebro on 17/11/14.
  */
-public class PAESBuilder<S extends Solution>  implements AlgorithmBuilder {
+public class PAESBuilder<S extends Solution<?>>  implements AlgorithmBuilder<PAES<S>> {
   public Problem<S> problem;
 
   public int archiveSize;
@@ -34,31 +34,31 @@ public class PAESBuilder<S extends Solution>  implements AlgorithmBuilder {
     this.problem = problem;
   }
 
-  public PAESBuilder setArchiveSize(int archiveSize) {
+  public PAESBuilder<S> setArchiveSize(int archiveSize) {
     this.archiveSize = archiveSize;
 
     return this;
   }
 
-  public PAESBuilder setMaxEvaluations(int maxEvaluations) {
+  public PAESBuilder<S> setMaxEvaluations(int maxEvaluations) {
     this.maxEvaluations = maxEvaluations;
 
     return this;
   }
 
-  public PAESBuilder setBiSections(int biSections) {
+  public PAESBuilder<S> setBiSections(int biSections) {
     this.biSections = biSections;
 
     return this;
   }
 
-  public PAESBuilder setMutationOperator(MutationOperator<S> mutation) {
+  public PAESBuilder<S> setMutationOperator(MutationOperator<S> mutation) {
     mutationOperator = mutation;
 
     return this;
   }
 
-  public PAES build() {
+  public PAES<S> build() {
     return new PAES<S>(problem, archiveSize, maxEvaluations, biSections, mutationOperator);
   }
 }

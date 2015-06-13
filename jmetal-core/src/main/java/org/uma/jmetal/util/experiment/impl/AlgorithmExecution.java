@@ -32,10 +32,10 @@ import java.io.File;
  * Created by Antonio J. Nebro on 18/07/14.
  */
 public class AlgorithmExecution implements ExperimentComponent {
-  private ExperimentConfiguration configuration ;
+  private ExperimentConfiguration<?> configuration ;
 
   /** Constructor */
-  public AlgorithmExecution(ExperimentConfiguration configuration) {
+  public AlgorithmExecution(ExperimentConfiguration<?> configuration) {
     this.configuration = configuration ;
   }
 

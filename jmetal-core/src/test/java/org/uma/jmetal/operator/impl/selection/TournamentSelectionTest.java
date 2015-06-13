@@ -22,7 +22,6 @@ import static org.mockito.Mockito.mock;
  * Created by ajnebro on 3/5/15.
  */
 public class TournamentSelectionTest {
-  private TournamentSelection selection ;
 
   @Rule
   public ExpectedException exception = ExpectedException.none();
@@ -32,7 +31,7 @@ public class TournamentSelectionTest {
     exception.expect(JMetalException.class);
     exception.expectMessage(containsString("The solution list is null"));
 
-    selection = new TournamentSelection(4) ;
+    TournamentSelection<Solution<?>> selection = new TournamentSelection<Solution<?>>(4) ;
     selection.execute(null) ;
   }
 
@@ -41,7 +40,7 @@ public class TournamentSelectionTest {
     exception.expect(JMetalException.class);
     exception.expectMessage(containsString("The solution list is empty"));
 
-    selection = new TournamentSelection(4) ;
+    TournamentSelection<DoubleSolution> selection = new TournamentSelection<DoubleSolution>(4) ;
     List<DoubleSolution> list = new ArrayList<>() ;
 
     selection.execute(list) ;
@@ -49,7 +48,7 @@ public class TournamentSelectionTest {
 
   @Test
   public void shouldConstructorAssignTheCorrectValueToTheNumberOfTournaments() {
-    selection = new TournamentSelection(5) ;
+    TournamentSelection<Solution<?>> selection = new TournamentSelection<Solution<?>>(5) ;
 
     int result = (int) ReflectionTestUtils.getField(selection, "numberOfTournaments");
     int expectedResult = 5 ;
@@ -58,11 +57,11 @@ public class TournamentSelectionTest {
 
   @Test
   public void shouldConstructorAssignTheCorrectValueSToTheNumberOfTournamentsAndTheComparator() {
-    Comparator comparator = mock(Comparator.class) ;
-    selection = new TournamentSelection(comparator, 7) ;
+    Comparator<Solution<?>> comparator = mock(Comparator.class) ;
+    TournamentSelection<Solution<?>> selection = new TournamentSelection<Solution<?>>(comparator, 7) ;
 
     int result = (int) ReflectionTestUtils.getField(selection, "numberOfTournaments");
-    Comparator comp = (Comparator) ReflectionTestUtils.getField(selection, "comparator");
+    Object comp = ReflectionTestUtils.getField(selection, "comparator");
 
     int expectedResult = 7 ;
     assertEquals(expectedResult, result) ;
@@ -71,10 +70,10 @@ public class TournamentSelectionTest {
 
   @Test
   public void shouldExecuteReturnAnElementIfTheListHasOneElement() {
-    List<Solution> population = new ArrayList<>(1);
+    List<Solution<?>> population = new ArrayList<>(1);
 
-    Comparator comparator = mock(Comparator.class) ;
-    selection = new TournamentSelection(comparator, 2) ;
+    Comparator<Solution<?>> comparator = mock(Comparator.class) ;
+    TournamentSelection<Solution<?>> selection = new TournamentSelection<Solution<?>>(comparator, 2) ;
 
     BinarySolution solution = mock(BinarySolution.class) ;
     population.add(solution) ;

@@ -23,25 +23,21 @@ package org.uma.jmetal.util.archive.impl;
 import org.uma.jmetal.qualityindicator.util.FastHypervolume;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
-import org.uma.jmetal.util.archive.BoundedArchive;
-import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.HypervolumeContributorComparator;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
 
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 
 /**
  * This class implements a bounded archive based on the hypervolume quality indicator
  */
-public class FastHypervolumeArchive <S extends Solution> extends AbstractBoundedArchive<S> {
+public class FastHypervolumeArchive <S extends Solution<?>> extends AbstractBoundedArchive<S> {
 
   public Point referencePoint;
 
 
-  private Comparator<Solution> hvContributionComparator;
+  private Comparator<Solution<?>> hvContributionComparator;
 
   /**
    * Constructor.

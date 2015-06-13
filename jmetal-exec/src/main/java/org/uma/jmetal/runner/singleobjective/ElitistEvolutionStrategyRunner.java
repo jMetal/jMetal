@@ -22,7 +22,6 @@ import org.uma.jmetal.problem.BinaryProblem;
 import org.uma.jmetal.problem.singleobjective.OneMax;
 import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
@@ -60,8 +59,8 @@ public class ElitistEvolutionStrategyRunner {
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
         .execute() ;
 
-    Solution solution = algorithm.getResult() ;
-    List<Solution> population = new ArrayList<>(1) ;
+    BinarySolution solution = algorithm.getResult() ;
+    List<BinarySolution> population = new ArrayList<>(1) ;
     population.add(solution) ;
 
     long computingTime = algorithmRunner.getComputingTime() ;

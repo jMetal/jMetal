@@ -1,6 +1,5 @@
 package org.uma.jmetal.algorithm.multiobjective.pesa2;
 
-import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.problem.Problem;
@@ -10,25 +9,23 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
-import java.util.List;
-
 /**
  * Created by Antonio J. Nebro
  */
-public class PESA2Builder<S extends Solution> implements AlgorithmBuilder {
+public class PESA2Builder<S extends Solution<?>> implements AlgorithmBuilder<PESA2<S>> {
   private final Problem<S> problem;
   private int maxEvaluations ;
   private int archiveSize ;
   private int populationSize ;
   private int biSections ;
-  private CrossoverOperator<List<S>, List<S>> crossoverOperator;
+  private CrossoverOperator<S> crossoverOperator;
   private MutationOperator<S> mutationOperator;
-  private SolutionListEvaluator evaluator;
+  private SolutionListEvaluator<S> evaluator;
 
   /**
    * Constructor
    */
-  public PESA2Builder(Problem problem, CrossoverOperator<List<S>, List<S>> crossoverOperator,
+  public PESA2Builder(Problem<S> problem, CrossoverOperator<S> crossoverOperator,
       MutationOperator<S> mutationOperator) {
     this.problem = problem;
     maxEvaluations = 250;
@@ -38,10 +35,10 @@ public class PESA2Builder<S extends Solution> implements AlgorithmBuilder {
     this.crossoverOperator = crossoverOperator ;
     this.mutationOperator = mutationOperator ;
 
-    evaluator = new SequentialSolutionListEvaluator();
+    evaluator = new SequentialSolutionListEvaluator<S>();
   }
 
-  public PESA2Builder setMaxEvaluations(int maxEvaluations) {
+  public PESA2Builder<S> setMaxEvaluations(int maxEvaluations) {
     if (maxEvaluations < 0) {
       throw new JMetalException("maxEvaluations is negative: " + maxEvaluations);
     }
@@ -50,7 +47,7 @@ public class PESA2Builder<S extends Solution> implements AlgorithmBuilder {
     return this;
   }
 
-  public PESA2Builder setArchiveSize(int archiveSize) {
+  public PESA2Builder<S> setArchiveSize(int archiveSize) {
     if (archiveSize < 0) {
       throw new JMetalException("archiveSize is negative: " + maxEvaluations);
     }
@@ -59,7 +56,7 @@ public class PESA2Builder<S extends Solution> implements AlgorithmBuilder {
     return this;
   }
 
-  public PESA2Builder setBisections(int biSections) {
+  public PESA2Builder<S> setBisections(int biSections) {
     if (biSections < 0) {
       throw new JMetalException("biSections is negative: " + maxEvaluations);
     }
@@ -68,7 +65,7 @@ public class PESA2Builder<S extends Solution> implements AlgorithmBuilder {
     return this;
   }
 
-  public PESA2Builder setPopulationSize(int populationSize) {
+  public PESA2Builder<S> setPopulationSize(int populationSize) {
     if (populationSize < 0) {
       throw new JMetalException("Population size is negative: " + populationSize);
     }
@@ -78,7 +75,7 @@ public class PESA2Builder<S extends Solution> implements AlgorithmBuilder {
     return this;
   }
 
-  public PESA2Builder setSolutionListEvaluator(SolutionListEvaluator evaluator) {
+  public PESA2Builder<S> setSolutionListEvaluator(SolutionListEvaluator<S> evaluator) {
     if (evaluator == null) {
       throw new JMetalException("evaluator is null");
     }
@@ -87,8 +84,8 @@ public class PESA2Builder<S extends Solution> implements AlgorithmBuilder {
     return this;
   }
 
-  public Algorithm build() {
-    Algorithm algorithm  ;
+  public PESA2<S> build() {
+    PESA2<S> algorithm  ;
     algorithm = new PESA2<S>(problem, maxEvaluations, populationSize, archiveSize, biSections,
         crossoverOperator, mutationOperator, evaluator);
     
@@ -96,7 +93,7 @@ public class PESA2Builder<S extends Solution> implements AlgorithmBuilder {
   }
 
   /* Getters */
-  public Problem getProblem() {
+  public Problem<S> getProblem() {
     return problem;
   }
 
@@ -108,15 +105,15 @@ public class PESA2Builder<S extends Solution> implements AlgorithmBuilder {
     return populationSize;
   }
 
-  public CrossoverOperator getCrossoverOperator() {
+  public CrossoverOperator<S> getCrossoverOperator() {
     return crossoverOperator;
   }
 
-  public MutationOperator getMutationOperator() {
+  public MutationOperator<S> getMutationOperator() {
     return mutationOperator;
   }
 
-  public SolutionListEvaluator getSolutionListEvaluator() {
+  public SolutionListEvaluator<S> getSolutionListEvaluator() {
     return evaluator;
   }
 

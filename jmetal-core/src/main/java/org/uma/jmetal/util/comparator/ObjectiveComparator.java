@@ -24,7 +24,7 @@ import java.util.Comparator;
  *
  * This class implements a comparator based on a given objective
  */
-public class ObjectiveComparator implements Comparator<Solution> {
+public class ObjectiveComparator<S extends Solution<?>> implements Comparator<S> {
   public enum Ordering {ASCENDING, DESCENDING} ;
   private int objectiveId;
 
@@ -59,7 +59,7 @@ public class ObjectiveComparator implements Comparator<Solution> {
    * respectively, according to the established order
    */
   @Override
-  public int compare(Solution solution1, Solution solution2) {
+  public int compare(S solution1, S solution2) {
     int result ;
     if (solution1 == null) {
       if (solution2 == null) {

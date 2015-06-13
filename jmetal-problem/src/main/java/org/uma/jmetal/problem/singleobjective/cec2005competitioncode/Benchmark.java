@@ -111,7 +111,7 @@ public class Benchmark {
 
   // Class loader & reflection
   static final public ClassLoader loader = ClassLoader.getSystemClassLoader();
-  static final Class[] test_func_arg_types = {int.class, double.class};
+  static final Class<?>[] test_func_arg_types = {int.class, double.class};
 
   // Class variables
   static private double[] m_iSqrt;

@@ -37,7 +37,6 @@ import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.Golinski;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
@@ -65,14 +64,14 @@ public class NSGAIIMeasuresRunner {
   public static void main(String[] args) throws JMetalException, InterruptedException {
     DoubleProblem problem;
     Algorithm<List<DoubleSolution>> algorithm;
-    CrossoverOperator<List<DoubleSolution>, List<DoubleSolution>> crossover;
+    CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
-    SelectionOperator selection;
+    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
 
     String problemName ;
     if (args.length == 1) {
       problemName = args[0] ;
-      problem = (DoubleProblem) ProblemUtils.loadProblem(problemName);
+      problem = (DoubleProblem) ProblemUtils.<DoubleSolution> loadProblem(problemName);
     } else {
       problem = new Golinski();
     }
@@ -85,7 +84,7 @@ public class NSGAIIMeasuresRunner {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    selection = new BinaryTournamentSelection(new RankingAndCrowdingDistanceComparator());
+    selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
     int maxIterations = 250 ;
     int populationSize = 100 ;
@@ -98,7 +97,7 @@ public class NSGAIIMeasuresRunner {
         .build() ;
 
     /* Measure management */
-    MeasureManager measureManager = ((NSGAIIMeasures)algorithm).getMeasureManager() ;
+    MeasureManager measureManager = ((NSGAIIMeasures<DoubleSolution>)algorithm).getMeasureManager() ;
 
     CountingMeasure iteration =
         (CountingMeasure) measureManager.<Long>getPullMeasure("currentIteration");
@@ -107,13 +106,13 @@ public class NSGAIIMeasuresRunner {
     BasicMeasure<Integer> nonDominatedSolutions =
         (BasicMeasure<Integer>) measureManager.<Integer>getPullMeasure("numberOfNonDominatedSolutionsInPopulation");
 
-    BasicMeasure<List<Solution>> solutionListMeasure =
-        (BasicMeasure) measureManager.getPushMeasure("currentPopulation");
+    BasicMeasure<List<DoubleSolution>> solutionListMeasure =
+        (BasicMeasure<List<DoubleSolution>>) measureManager.<List<DoubleSolution>> getPushMeasure("currentPopulation");
     CountingMeasure iteration2 =
         (CountingMeasure) measureManager.<Long>getPushMeasure("currentIteration");
 
     BasicMeasure<Integer> numberOfFeasibleSolutions =
-        (BasicMeasure) measureManager.getPushMeasure("numberOfFeasibleSolutionsInPopulation") ;
+        (BasicMeasure<Integer>) measureManager.<Integer> getPushMeasure("numberOfFeasibleSolutionsInPopulation") ;
 
     solutionListMeasure.register(new Listener());
     iteration2.register(new Listener2());
@@ -152,10 +151,10 @@ public class NSGAIIMeasuresRunner {
   }
 
 
-  private static class Listener implements MeasureListener<List<Solution>> {
+  private static class Listener implements MeasureListener<List<DoubleSolution>> {
     private int counter = 0 ;
 
-    @Override synchronized public void measureGenerated(List<Solution> solutions) {
+    @Override synchronized public void measureGenerated(List<DoubleSolution> solutions) {
       if ((counter % 10 == 0)) {
         System.out.println("PUSH MEASURE. Counter = " + counter+ " First solution: " + solutions.get(0)) ;
       }

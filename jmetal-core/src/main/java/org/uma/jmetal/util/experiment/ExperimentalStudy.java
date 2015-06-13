@@ -19,7 +19,7 @@ public class ExperimentalStudy {
   public static class Builder {
     private LinkedList<ExperimentComponent> resultObjectList ;
 
-    public Builder(ExperimentConfiguration experimentData) {
+    public Builder(ExperimentConfiguration<?> experimentData) {
       this.resultObjectList = new LinkedList<>() ;
   	}
 

@@ -29,35 +29,35 @@ import static org.mockito.Mockito.*;
  * @version 1.0
  */
 public class ObjectiveComparatorTest {
-  private ObjectiveComparator comparator ;
+  private ObjectiveComparator<Solution<?>> comparator ;
 
   @Rule
   public ExpectedException exception = ExpectedException.none();
 
   @Test public void shouldCompareReturnOneIfTheFirstSolutionIsNull() {
-    comparator = new ObjectiveComparator(0) ;
+    comparator = new ObjectiveComparator<Solution<?>>(0) ;
 
-    Solution solution2 = mock(Solution.class) ;
+    Solution<?> solution2 = mock(Solution.class) ;
 
     assertEquals(1, comparator.compare(null, solution2)) ;
   }
 
   @Test public void shouldCompareReturnMinusOneIfTheSecondSolutionIsNull() {
-    comparator = new ObjectiveComparator(0) ;
+    comparator = new ObjectiveComparator<Solution<?>>(0) ;
 
-    Solution solution1 = mock(Solution.class) ;
+    Solution<?> solution1 = mock(Solution.class) ;
 
     assertEquals(-1, comparator.compare(solution1, null)) ;
   }
 
   @Test public void shouldCompareReturnZeroIfBothSolutionsAreNull() {
-    comparator = new ObjectiveComparator(0) ;
+    comparator = new ObjectiveComparator<Solution<?>>(0) ;
 
     assertEquals(0, comparator.compare(null, null)) ;
   }
 
   @Test public void shouldCompareReturnMinusOneIfTheObjectiveOfSolution1IsLower() {
-    comparator = new ObjectiveComparator(0) ;
+    comparator = new ObjectiveComparator<Solution<?>>(0) ;
 
     DoubleSolution solution1 = mock(DoubleSolution.class) ;
     DoubleSolution solution2 = mock(DoubleSolution.class) ;
@@ -74,7 +74,7 @@ public class ObjectiveComparatorTest {
   }
 
   @Test public void shouldCompareReturnOneIfTheObjectiveOfSolution2IsLower() {
-    comparator = new ObjectiveComparator(2) ;
+    comparator = new ObjectiveComparator<Solution<?>>(2) ;
 
     DoubleSolution solution1 = mock(DoubleSolution.class) ;
     DoubleSolution solution2 = mock(DoubleSolution.class) ;
@@ -89,7 +89,7 @@ public class ObjectiveComparatorTest {
   }
 
   @Test public void shouldCompareReturnZeroIfTheObjectiveOfTheSolutionsIsTheSame() {
-    comparator = new ObjectiveComparator(2) ;
+    comparator = new ObjectiveComparator<Solution<?>>(2) ;
 
     DoubleSolution solution1 = mock(DoubleSolution.class) ;
     DoubleSolution solution2 = mock(DoubleSolution.class) ;
@@ -104,7 +104,7 @@ public class ObjectiveComparatorTest {
   }
 
   @Test public void shouldCompareReturnMinusOneIfTheObjectiveOfSolution1IsGreaterInDescendingOrder() {
-    comparator = new ObjectiveComparator(0, ObjectiveComparator.Ordering.DESCENDING) ;
+    comparator = new ObjectiveComparator<Solution<?>>(0, ObjectiveComparator.Ordering.DESCENDING) ;
 
     DoubleSolution solution1 = mock(DoubleSolution.class) ;
     DoubleSolution solution2 = mock(DoubleSolution.class) ;
@@ -121,7 +121,7 @@ public class ObjectiveComparatorTest {
   }
 
   @Test public void shouldCompareReturnOneIfTheObjectiveOfSolution2IsGreaterInDescendingOrder() {
-    comparator = new ObjectiveComparator(2, ObjectiveComparator.Ordering.DESCENDING) ;
+    comparator = new ObjectiveComparator<Solution<?>>(2, ObjectiveComparator.Ordering.DESCENDING) ;
 
     DoubleSolution solution1 = mock(DoubleSolution.class) ;
     DoubleSolution solution2 = mock(DoubleSolution.class) ;
@@ -145,7 +145,7 @@ public class ObjectiveComparatorTest {
     exception.expectMessage(containsString("The solution1 has 3 objectives and the objective "
         + "to sort is 5"));
 
-    comparator = new ObjectiveComparator(5, ObjectiveComparator.Ordering.DESCENDING) ;
+    comparator = new ObjectiveComparator<Solution<?>>(5, ObjectiveComparator.Ordering.DESCENDING) ;
 
     DoubleSolution solution1 = mock(DoubleSolution.class) ;
     DoubleSolution solution2 = mock(DoubleSolution.class) ;
@@ -164,7 +164,7 @@ public class ObjectiveComparatorTest {
     exception.expectMessage(containsString("The solution2 has 5 objectives and the objective "
         + "to sort is 5"));
 
-    comparator = new ObjectiveComparator(5, ObjectiveComparator.Ordering.DESCENDING) ;
+    comparator = new ObjectiveComparator<Solution<?>>(5, ObjectiveComparator.Ordering.DESCENDING) ;
 
     DoubleSolution solution1 = mock(DoubleSolution.class) ;
     DoubleSolution solution2 = mock(DoubleSolution.class) ;

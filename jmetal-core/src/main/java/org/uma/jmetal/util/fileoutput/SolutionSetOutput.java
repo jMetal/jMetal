@@ -31,7 +31,6 @@ import java.util.List;
 /**
  * Created by Antonio J. Nebro on 31/05/14.
  */
-@SuppressWarnings("ALL")
 public class SolutionSetOutput {
 
   public static class Printer {
@@ -40,15 +39,15 @@ public class SolutionSetOutput {
     private String varFileName = "VAR";
     private String funFileName = "FUN";
     private String separator = "\t";
-    private List<Solution> solutionSet;
+    private List<? extends Solution<?>> solutionSet;
     private boolean selectFeasibleSolutions;
 
-    public Printer(List<? extends Solution> solutionSet)  {
+    public Printer(List<? extends Solution<?>> solutionSet)  {
       varFileContext = new DefaultFileOutputContext(varFileName);
       funFileContext = new DefaultFileOutputContext(funFileName);
       varFileContext.setSeparator(separator);
       funFileContext.setSeparator(separator);
-      this.solutionSet = (List<Solution>) solutionSet;
+      this.solutionSet = solutionSet;
       selectFeasibleSolutions = false;
     }
 
@@ -83,7 +82,7 @@ public class SolutionSetOutput {
     }
   }
 
-  static public void printVariablesToFile(FileOutputContext context, List<Solution> solutionSet) {
+  static public void printVariablesToFile(FileOutputContext context, List<? extends Solution<?>> solutionSet) {
     BufferedWriter bufferedWriter = context.getFileWriter();
 
     int numberOfVariables = solutionSet.get(0).getNumberOfVariables();
@@ -100,7 +99,7 @@ public class SolutionSetOutput {
     }
   }
 
-  static public void printObjectivesToFile(FileOutputContext context, List<Solution> solutionSet) {
+  static public void printObjectivesToFile(FileOutputContext context, List<? extends Solution<?>> solutionSet) {
     BufferedWriter bufferedWriter = context.getFileWriter();
 
     int numberOfObjectives = solutionSet.get(0).getNumberOfObjectives();
@@ -120,11 +119,11 @@ public class SolutionSetOutput {
   /*
    * Wrappers for printing with default configuration
    */
-  public static void printObjectivesToFile(List<Solution> solutionSet, String fileName) throws IOException {
+  public static void printObjectivesToFile(List<? extends Solution<?>> solutionSet, String fileName) throws IOException {
     printObjectivesToFile(new DefaultFileOutputContext(fileName), solutionSet);
   }
 
-  public static void printVariablesToFile(List<Solution> solutionSet, String fileName) throws IOException {
+  public static void printVariablesToFile(List<? extends Solution<?>> solutionSet, String fileName) throws IOException {
     printVariablesToFile(new DefaultFileOutputContext(fileName), solutionSet);
   }
 

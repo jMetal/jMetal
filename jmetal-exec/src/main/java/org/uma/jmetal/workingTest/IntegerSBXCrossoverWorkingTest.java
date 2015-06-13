@@ -45,7 +45,7 @@ public class IntegerSBXCrossoverWorkingTest {
     IntegerProblem problem ;
 
     problem = new NMMin(1, -50, 50, -100, 100) ;
-    CrossoverOperator crossover = new IntegerSBXCrossover(1.0, distributionIndex) ;
+    CrossoverOperator<IntegerSolution> crossover = new IntegerSBXCrossover(1.0, distributionIndex) ;
 
     IntegerSolution solution1 = problem.createSolution() ;
     IntegerSolution solution2 = problem.createSolution() ;

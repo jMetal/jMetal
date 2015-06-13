@@ -26,8 +26,8 @@ import org.uma.jmetal.util.comparator.ConstraintViolationComparator;
 import java.util.List;
 
 // This class implements the ViolationThreshold Comparator
-public class ViolationThresholdComparator<S extends Solution> implements
-    ConstraintViolationComparator {
+public class ViolationThresholdComparator<S extends Solution<?>> implements
+    ConstraintViolationComparator<S> {
 
   private double threshold = 0.0;
 
@@ -40,7 +40,7 @@ public class ViolationThresholdComparator<S extends Solution> implements
    * respectively.
    */
   @Override
-  public int compare(Solution solution1, Solution solution2) {
+  public int compare(S solution1, S solution2) {
     double overall1, overall2;
     overall1 = solution1.getNumberOfViolatedConstraints() *
         solution1.getOverallConstraintViolationDegree();
@@ -68,7 +68,7 @@ public class ViolationThresholdComparator<S extends Solution> implements
    * Returns true if solutions s1 and/or s2 have an overall constraint
    * violation with value less than 0
    */
-  public boolean needToCompare(Solution solution1, Solution solution2) {
+  public boolean needToCompare(S solution1, S solution2) {
     boolean needToCompare;
     double overall1, overall2;
     overall1 = Math.abs(solution1.getNumberOfViolatedConstraints() *

@@ -1,6 +1,5 @@
 package org.uma.jmetal.algorithm.multiobjective.smsemoa;
 
-import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -14,7 +13,7 @@ import java.util.List;
 /**
  * Created by ajnebro on 17/4/15.
  */
-public class SMSEMOABuilder<S extends Solution> implements AlgorithmBuilder {
+public class SMSEMOABuilder<S extends Solution<?>> implements AlgorithmBuilder<SMSEMOA<S>> {
   private static final double DEFAULT_OFFSET = 100.0 ;
 
   protected Problem<S> problem;
@@ -22,13 +21,13 @@ public class SMSEMOABuilder<S extends Solution> implements AlgorithmBuilder {
   protected int populationSize;
   protected int maxEvaluations;
 
-  private CrossoverOperator<List<S>, List<S>> crossoverOperator;
+  private CrossoverOperator<S> crossoverOperator;
   private MutationOperator<S> mutationOperator;
-  protected SelectionOperator selectionOperator;
+  protected SelectionOperator<List<S>, S> selectionOperator;
 
   protected double offset ;
 
-  public SMSEMOABuilder(Problem<S> problem, CrossoverOperator<List<S>, List<S>> crossoverOperator,
+  public SMSEMOABuilder(Problem<S> problem, CrossoverOperator<S> crossoverOperator,
       MutationOperator<S> mutationOperator) {
     this.problem = problem ;
     this.offset = DEFAULT_OFFSET ;
@@ -37,46 +36,46 @@ public class SMSEMOABuilder<S extends Solution> implements AlgorithmBuilder {
 
     this.crossoverOperator = crossoverOperator ;
     this.mutationOperator = mutationOperator ;
-    this.selectionOperator = new RandomSelection() ;
+    this.selectionOperator = new RandomSelection<S>() ;
   }
 
-  public SMSEMOABuilder setPopulationSize(int populationSize) {
+  public SMSEMOABuilder<S> setPopulationSize(int populationSize) {
     this.populationSize = populationSize ;
 
     return this ;
   }
 
-  public SMSEMOABuilder setMaxEvaluations(int maxEvaluations) {
+  public SMSEMOABuilder<S> setMaxEvaluations(int maxEvaluations) {
     this.maxEvaluations = maxEvaluations ;
 
     return this ;
   }
 
-  public SMSEMOABuilder setCrossoverOperator(CrossoverOperator<List<S>, List<S>> crossover) {
+  public SMSEMOABuilder<S> setCrossoverOperator(CrossoverOperator<S> crossover) {
     crossoverOperator = crossover ;
 
     return this ;
   }
 
-  public SMSEMOABuilder setMutationOperator(MutationOperator<S> mutation) {
+  public SMSEMOABuilder<S> setMutationOperator(MutationOperator<S> mutation) {
     mutationOperator = mutation ;
 
     return this ;
   }
 
-  public SMSEMOABuilder setSelectionOperator(SelectionOperator selection) {
+  public SMSEMOABuilder<S> setSelectionOperator(SelectionOperator<List<S>, S> selection) {
     selectionOperator = selection ;
 
     return this ;
   }
 
-  public SMSEMOABuilder setOffset(double offset) {
+  public SMSEMOABuilder<S> setOffset(double offset) {
     this.offset = offset ;
 
     return this ;
   }
 
-  @Override public Algorithm<List<S>> build() {
+  @Override public SMSEMOA<S> build() {
     return new SMSEMOA<S>(problem, maxEvaluations, populationSize, offset,
         crossoverOperator, mutationOperator, selectionOperator);
   }

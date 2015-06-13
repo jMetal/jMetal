@@ -2,7 +2,6 @@ package org.uma.jmetal.solution.impl;
 
 import org.uma.jmetal.problem.DoubleBinaryProblem;
 import org.uma.jmetal.solution.DoubleBinarySolution;
-import org.uma.jmetal.solution.Solution;
 
 import java.util.BitSet;
 import java.util.HashMap;
@@ -17,12 +16,12 @@ import java.util.HashMap;
  *  - the bitset is the last variable
  */
 public class DefaultDoubleBinarySolution
-    extends AbstractGenericSolution<Object, DoubleBinaryProblem>
+    extends AbstractGenericSolution<Object, DoubleBinaryProblem<?>>
     implements DoubleBinarySolution {
   private int numberOfDoubleVariables ;
 
   /** Constructor */
-  public DefaultDoubleBinarySolution(DoubleBinaryProblem problem) {
+  public DefaultDoubleBinarySolution(DoubleBinaryProblem<?> problem) {
     super(problem) ;
 
     numberOfDoubleVariables = problem.getNumberOfDoubleVariables() ;
@@ -47,7 +46,7 @@ public class DefaultDoubleBinarySolution
     overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
     numberOfViolatedConstraints = solution.numberOfViolatedConstraints ;
 
-    attributes = new HashMap(solution.attributes) ;
+    attributes = new HashMap<Object, Object>(solution.attributes) ;
   }
 
   private void initializeDoubleVariables() {

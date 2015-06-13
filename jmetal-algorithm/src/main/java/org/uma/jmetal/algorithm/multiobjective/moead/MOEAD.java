@@ -34,12 +34,12 @@ import java.util.List;
 public class MOEAD extends AbstractMOEAD<DoubleSolution> {
   private DifferentialEvolutionCrossover differentialEvolutionCrossover ;
 
-  public MOEAD(Problem problem,
+  public MOEAD(Problem<DoubleSolution> problem,
       int populationSize,
       int resultPopulationSize,
       int maxEvaluations,
-      MutationOperator mutation,
-      CrossoverOperator crossover,
+      MutationOperator<DoubleSolution> mutation,
+      CrossoverOperator<DoubleSolution> crossover,
       FunctionType functionType,
       String dataDirectory,
       double neighborhoodSelectionProbability,

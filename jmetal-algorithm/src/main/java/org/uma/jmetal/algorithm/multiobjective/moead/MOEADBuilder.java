@@ -13,12 +13,12 @@
 
 package org.uma.jmetal.algorithm.multiobjective.moead;
 
-import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmBuilder;
 
 /**
@@ -27,10 +27,10 @@ import org.uma.jmetal.util.AlgorithmBuilder;
  * @author Antonio J. Nebro
  * @version 1.0
  */
-public class MOEADBuilder implements AlgorithmBuilder {
+public class MOEADBuilder implements AlgorithmBuilder<AbstractMOEAD<DoubleSolution>> {
   public enum Variant {MOEAD, ConstraintMOEAD, MOEADDRA} ;
 
-  private Problem problem ;
+  private Problem<DoubleSolution> problem ;
 
   /** T in Zhang & Li paper */
   private int neighborSize;
@@ -41,8 +41,8 @@ public class MOEADBuilder implements AlgorithmBuilder {
 
   private MOEAD.FunctionType functionType;
 
-  private CrossoverOperator crossover;
-  private MutationOperator mutation;
+  private CrossoverOperator<DoubleSolution> crossover;
+  private MutationOperator<DoubleSolution> mutation;
   private String dataDirectory;
 
   private int populationSize;
@@ -55,7 +55,7 @@ public class MOEADBuilder implements AlgorithmBuilder {
   private Variant moeadVariant ;
 
   /** Constructor */
-  public MOEADBuilder(Problem problem, Variant variant) {
+  public MOEADBuilder(Problem<DoubleSolution> problem, Variant variant) {
     this.problem = problem ;
     populationSize = 300 ;
     resultPopulationSize = 300 ;
@@ -92,11 +92,11 @@ public class MOEADBuilder implements AlgorithmBuilder {
     return dataDirectory;
   }
 
-  public MutationOperator getMutation() {
+  public MutationOperator<DoubleSolution> getMutation() {
     return mutation;
   }
 
-  public CrossoverOperator getCrossover() {
+  public CrossoverOperator<DoubleSolution> getCrossover() {
     return crossover;
   }
 
@@ -158,13 +158,13 @@ public class MOEADBuilder implements AlgorithmBuilder {
     return this ;
   }
 
-  public MOEADBuilder setCrossover(CrossoverOperator crossover) {
+  public MOEADBuilder setCrossover(CrossoverOperator<DoubleSolution> crossover) {
     this.crossover = crossover ;
 
     return this ;
   }
 
-  public MOEADBuilder setMutation(MutationOperator mutation) {
+  public MOEADBuilder setMutation(MutationOperator<DoubleSolution> mutation) {
     this.mutation = mutation ;
 
     return this ;
@@ -182,8 +182,8 @@ public class MOEADBuilder implements AlgorithmBuilder {
     return this ;
   }
 
-  public Algorithm build() {
-    Algorithm algorithm = null ;
+  public AbstractMOEAD<DoubleSolution> build() {
+    AbstractMOEAD<DoubleSolution> algorithm = null ;
     if (moeadVariant.equals(Variant.MOEAD)) {
       algorithm = new MOEAD(problem, populationSize, resultPopulationSize, maxEvaluations, mutation,
           crossover, functionType, dataDirectory, neighborhoodSelectionProbability,

@@ -19,7 +19,6 @@ import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
@@ -39,14 +38,14 @@ import java.util.List;
 public class MOEADDRA extends AbstractMOEAD<DoubleSolution> {
   private DifferentialEvolutionCrossover differentialEvolutionCrossover ;
 
-  private Solution[] savedValues;
+  private DoubleSolution[] savedValues;
   private double[] utility;
   private int[] frequency;
 
   JMetalRandom randomGenerator ;
 
-  public MOEADDRA(Problem problem, int populationSize, int resultPopulationSize, int maxEvaluations,
-      MutationOperator mutation, CrossoverOperator crossover, FunctionType functionType,
+  public MOEADDRA(Problem<DoubleSolution> problem, int populationSize, int resultPopulationSize, int maxEvaluations,
+      MutationOperator<DoubleSolution> mutation, CrossoverOperator<DoubleSolution> crossover, FunctionType functionType,
       String dataDirectory, double neighborhoodSelectionProbability,
       int maximumNumberOfReplacedSolutions, int neighborSize) {
     super(problem, populationSize, resultPopulationSize, maxEvaluations, crossover, mutation, functionType,
@@ -55,7 +54,7 @@ public class MOEADDRA extends AbstractMOEAD<DoubleSolution> {
 
     differentialEvolutionCrossover = (DifferentialEvolutionCrossover)crossoverOperator ;
 
-    savedValues = new Solution[populationSize];
+    savedValues = new DoubleSolution[populationSize];
     utility = new double[populationSize];
     frequency = new int[populationSize];
     for (int i = 0; i < utility.length; i++) {
@@ -113,7 +112,7 @@ public class MOEADDRA extends AbstractMOEAD<DoubleSolution> {
 
       problem.evaluate(newSolution);
       population.add(newSolution);
-      savedValues[i] = newSolution.copy();
+      savedValues[i] = (DoubleSolution) newSolution.copy();
     }
   }
 
@@ -133,7 +132,7 @@ public class MOEADDRA extends AbstractMOEAD<DoubleSolution> {
         uti = (0.95 + (0.05 * delta / 0.001)) * utility[n];
         utility[n] = uti < 1.0 ? uti : 1.0;
       }
-      savedValues[n] = population.get(n).copy();
+      savedValues[n] = (DoubleSolution) population.get(n).copy();
     }
   }
 

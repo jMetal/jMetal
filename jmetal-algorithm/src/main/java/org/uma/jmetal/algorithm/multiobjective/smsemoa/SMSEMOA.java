@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * Created by ajnebro on 17/4/15.
  */
-public class SMSEMOA<S extends Solution> extends AbstractGeneticAlgorithm<S, List<S>> {
+public class SMSEMOA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>> {
   protected final int maxEvaluations;
   protected final int populationSize;
   protected final double offset ;
@@ -39,7 +39,7 @@ public class SMSEMOA<S extends Solution> extends AbstractGeneticAlgorithm<S, Lis
    * Constructor
    */
   public SMSEMOA(Problem<S> problem, int maxEvaluations, int populationSize, double offset,
-      CrossoverOperator<List<S>, List<S>> crossoverOperator, MutationOperator<S> mutationOperator,
+      CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
       SelectionOperator<List<S>, S> selectionOperator) {
     super() ;
     this.problem = problem;
@@ -137,7 +137,7 @@ public class SMSEMOA<S extends Solution> extends AbstractGeneticAlgorithm<S, Lis
   }
 
   protected Ranking<S> computeRanking(List<S> solutionList) {
-    Ranking ranking = new DominanceRanking();
+    Ranking<S> ranking = new DominanceRanking<S>();
     ranking.computeRanking(solutionList);
 
     return ranking;
@@ -173,7 +173,7 @@ public class SMSEMOA<S extends Solution> extends AbstractGeneticAlgorithm<S, Lis
         }
       }
 
-      HypervolumeContribution hvContribution = new HypervolumeContribution() ;
+      HypervolumeContribution<S> hvContribution = new HypervolumeContribution<S>() ;
 
       // calculate contributions and sort
       double[] contributions = hvContributions(FrontUtils.convertFrontToArray(invertedFront));

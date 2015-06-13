@@ -15,10 +15,10 @@ import java.util.List;
  * This implementation is based on the code of Tsung-Che Chiang
  * http://web.ntnu.edu.tw/~tcchiang/publications/nsga3cpp/nsga3cpp.htm
  */
-public class ReferencePoint {
+public class ReferencePoint<S extends Solution<?>> {
   public List<Double> position;
   private int memberSize;
-  private List<Pair<Solution, Double>> potentialMembers;
+  private List<Pair<S, Double>> potentialMembers;
 
   /**
    * Constructor
@@ -31,7 +31,7 @@ public class ReferencePoint {
     potentialMembers = new ArrayList<>();
   }
 
-  public ReferencePoint(ReferencePoint point) {
+  public ReferencePoint(ReferencePoint<S> point) {
     position = new ArrayList<>(point.position.size());
     for (Double d : point.position) {
       position.add(new Double(d));
@@ -41,19 +41,19 @@ public class ReferencePoint {
   }
 
 
-  public static void generateReferencePoints(List<ReferencePoint> referencePoints,
+  public static <S extends Solution<?>> void generateReferencePoints(List<ReferencePoint<S>> referencePoints,
       int numberOfObjectives, List<Integer> numberOfDivisions) {
 
-    ReferencePoint refPoint = new ReferencePoint(numberOfObjectives);
+    ReferencePoint<S> refPoint = new ReferencePoint<S>(numberOfObjectives);
     generateRecursive(referencePoints, refPoint, numberOfObjectives, numberOfDivisions.get(0),
         numberOfDivisions.get(0), 0);
   }
 
-  private static void generateRecursive(List<ReferencePoint> referencePoints,
-      ReferencePoint refPoint, int numberOfObjectives, int left, int total, int element) {
+  private static <S extends Solution<?>> void generateRecursive(List<ReferencePoint<S>> referencePoints,
+      ReferencePoint<S> refPoint, int numberOfObjectives, int left, int total, int element) {
     if (element == (numberOfObjectives - 1)) {
       refPoint.position.set(element, (double) left / total);
-      referencePoints.add(new ReferencePoint(refPoint));
+      referencePoints.add(new ReferencePoint<S>(refPoint));
     } else {
       for (int i = 0; i <= left; i += 1) {
         refPoint.position.set(element, (double) i / total);
@@ -85,14 +85,14 @@ public class ReferencePoint {
     this.memberSize++;
   }
 
-  public void AddPotentialMember(Solution member_ind, double distance) {
-    this.potentialMembers.add(new ImmutablePair<Solution, Double>(member_ind, distance));
+  public void AddPotentialMember(S member_ind, double distance) {
+    this.potentialMembers.add(new ImmutablePair<S, Double>(member_ind, distance));
   }
 
-  public Solution FindClosestMember() {
+  public S FindClosestMember() {
     double min_dist = Double.MAX_VALUE;
-    Solution min_indv = null;
-    for (Pair<Solution, Double> p : this.potentialMembers) {
+    S min_indv = null;
+    for (Pair<S, Double> p : this.potentialMembers) {
       if (p.getRight() < min_dist) {
         min_dist = p.getRight();
         min_indv = p.getLeft();
@@ -102,15 +102,15 @@ public class ReferencePoint {
     return min_indv;
   }
 
-  public Solution RandomMember() {
+  public S RandomMember() {
     int index = this.potentialMembers.size() > 1 ?
         JMetalRandom.getInstance().nextInt(0, this.potentialMembers.size() - 1) :
         0;
     return this.potentialMembers.get(index).getLeft();
   }
 
-  public void RemovePotentialMember(Solution solution) {
-    Iterator<Pair<Solution, Double>> it = this.potentialMembers.iterator();
+  public void RemovePotentialMember(S solution) {
+    Iterator<Pair<S, Double>> it = this.potentialMembers.iterator();
     while (it.hasNext())
       if (it.next().getLeft()==(solution)) // this removal is based only on references
         it.remove();

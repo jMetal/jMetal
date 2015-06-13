@@ -25,7 +25,6 @@ import org.uma.jmetal.operator.impl.localsearch.MutationLocalSearch;
 import org.uma.jmetal.problem.ConstrainedProblem;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 
 
@@ -42,9 +41,9 @@ import java.util.List;
  *   IEEE Transactions on Evolutionary Computation. Vol. 12,
  *   No. 4 (August 2008), pp. 439-457
  */
-public class ABYSS extends AbstractABYSS<DoubleSolution> {
+public class ABYSS extends AbstractABYSS {
   public ABYSS(int numberOfSubranges,int solutionSetSize, int refSet1Size, int refSet2Size, int archiveSize, int maxEvaluations,
-      CrowdingDistanceArchive archive,     CrossoverOperator crossoverOperator,MutationLocalSearch improvement, DoubleProblem problem){
+      CrowdingDistanceArchive<DoubleSolution> archive,     CrossoverOperator<DoubleSolution> crossoverOperator,MutationLocalSearch<DoubleSolution> improvement, DoubleProblem problem){
     super(numberOfSubranges,solutionSetSize,refSet1Size,refSet2Size,archiveSize,maxEvaluations,archive,crossoverOperator,improvement,problem);
   }
   /**
@@ -84,7 +83,7 @@ public class ABYSS extends AbstractABYSS<DoubleSolution> {
             solution = refSet1.get(i);
             //solution.unMarked();
             marked.setAttribute(solution,false);
-            solution = (DoubleSolution) improvementOperator.execute(solution);
+            solution = improvementOperator.execute(solution);
             evaluations += improvementOperator.getEvaluations();
             solutionSet.add(solution);
           }
@@ -115,7 +114,7 @@ public class ABYSS extends AbstractABYSS<DoubleSolution> {
           while (solutionSet.size() < solutionSetSize) {
             solution = diversificationGeneration();
             if(problem instanceof ConstrainedProblem){
-              ((ConstrainedProblem)problem).evaluateConstraints(solution);
+              ((ConstrainedProblem<DoubleSolution>)problem).evaluateConstraints(solution);
             }
 
             problem.evaluate(solution);
@@ -140,7 +139,7 @@ public class ABYSS extends AbstractABYSS<DoubleSolution> {
   }
 
   @Override
-  public List<? extends Solution> getResult() {
+  public List<DoubleSolution> getResult() {
     return archive.getSolutionList();
   }
 
@@ -151,7 +150,7 @@ public class ABYSS extends AbstractABYSS<DoubleSolution> {
         solution = super.diversificationGeneration();
         problem.evaluate(solution);
         if(problem instanceof ConstrainedProblem) {
-          ((ConstrainedProblem)problem).evaluateConstraints(solution);
+          ((ConstrainedProblem<DoubleSolution>)problem).evaluateConstraints(solution);
         }
         evaluations++;
         solution = (DoubleSolution) improvementOperator.execute(solution);

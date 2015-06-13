@@ -58,9 +58,9 @@ public class NSGAIIRunner {
   public static void main(String[] args) throws JMetalException {
     DoubleProblem problem;
     Algorithm<List<DoubleSolution>> algorithm;
-    CrossoverOperator<List<DoubleSolution>,List<DoubleSolution>> crossover;
+    CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
-    SelectionOperator selection;
+    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
 
     String problemName ;
     if (args.length == 1) {
@@ -69,7 +69,7 @@ public class NSGAIIRunner {
       problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
     }
 
-    problem = (DoubleProblem)ProblemUtils.loadProblem(problemName);
+    problem = (DoubleProblem)ProblemUtils.<DoubleSolution> loadProblem(problemName);
 
     double crossoverProbability = 0.9 ;
     double crossoverDistributionIndex = 20.0 ;
@@ -79,7 +79,7 @@ public class NSGAIIRunner {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    selection = new BinaryTournamentSelection(new RankingAndCrowdingDistanceComparator());
+    selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
     algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation,
         NSGAIIBuilder.NSGAIIVariant.NSGAII)
