@@ -53,6 +53,7 @@ public class CrowdingDistanceComparatorTest {
   }
 
   @Test public void shouldCompareReturnZeroIfBothSolutionsHaveNoCrowdingDistanceAttribute() {
+    @SuppressWarnings("unchecked")
     CrowdingDistance<Solution<?>> distance = mock(CrowdingDistance.class) ;
     when(distance.getAttribute(any(Solution.class))).thenReturn(null, null) ;
 
@@ -66,6 +67,7 @@ public class CrowdingDistanceComparatorTest {
   }
 
   @Test public void shouldCompareReturnZeroIfBothSolutionsHaveTheSameDistance() {
+    @SuppressWarnings("unchecked")
     CrowdingDistance<Solution<?>> distance = mock(CrowdingDistance.class) ;
     when(distance.getAttribute(any(DoubleSolution.class))).thenReturn(2.0, 2.0, 2.0, 2.0) ;
 
@@ -79,6 +81,7 @@ public class CrowdingDistanceComparatorTest {
   }
 
   @Test public void shouldCompareReturnOneIfSolutionAHasLessDistance() {
+    @SuppressWarnings("unchecked")
     CrowdingDistance<Solution<?>> distance = mock(CrowdingDistance.class) ;
     when(distance.getAttribute(any(BinarySolution.class))).thenReturn(0.0, 0.0, 2.0, 2.0) ;
 
@@ -92,6 +95,7 @@ public class CrowdingDistanceComparatorTest {
   }
 
   @Test public void shouldCompareReturnMinusOneIfSolutionBHasHigherDistance() {
+    @SuppressWarnings("unchecked")
     CrowdingDistance<Solution<?>> distance = mock(CrowdingDistance.class) ;
     when(distance.getAttribute(any(BinarySolution.class))).thenReturn(3.0, 3.0, 2.0, 2.0) ;
 

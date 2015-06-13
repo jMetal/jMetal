@@ -63,7 +63,8 @@ public class BinaryTournamentSelectionTest {
 
   @Test
   public void shouldExecuteReturnAValidSolutionIsWithCorrectParameters() {
-	  Solution<Object> solution = mock(Solution.class) ;
+    @SuppressWarnings("unchecked")
+    Solution<Object> solution = mock(Solution.class) ;
 
     Mockito.when(problem.createSolution()).thenReturn(solution) ;
 
@@ -78,7 +79,8 @@ public class BinaryTournamentSelectionTest {
 
   @Test
   public void shouldExecuteReturnTheSameSolutionIfTheListContainsOneSolution() {
-	  Solution<Object> solution = mock(Solution.class) ;
+	@SuppressWarnings("unchecked")
+	Solution<Object> solution = mock(Solution.class);
 
     population = new ArrayList<>(1) ;
     population.add(solution) ;
@@ -88,7 +90,9 @@ public class BinaryTournamentSelectionTest {
 
   @Test
   public void shouldExecuteReturnTwoSolutionsIfTheListContainsTwoSolutions() {
+    @SuppressWarnings("unchecked")
     Solution<Object> solution1 = mock(Solution.class) ;
+    @SuppressWarnings("unchecked")
     Solution<Object> solution2 = mock(Solution.class) ;
 
     population = Arrays.asList(solution1, solution2) ;
@@ -97,6 +101,7 @@ public class BinaryTournamentSelectionTest {
 
   @Test
   public void shouldExecuteWorkProperlyIfTheTwoSolutionsInTheListAreNondominated() {
+    @SuppressWarnings("unchecked")
     Comparator<DoubleSolution> comparator = mock(Comparator.class) ;
 
     DoubleSolution solution1 = mock(DoubleSolution.class) ;

@@ -63,6 +63,7 @@ public class RankingAndCrowdingDistanceComparatorTest {
   }
 
   @Test public void shouldCompareWithRankingYieldingANonZeroValueReturnThatValue() {
+    @SuppressWarnings("unchecked")
     Comparator<Solution<?>> rankComparator = mock(Comparator.class) ;
 
     when(rankComparator.compare(any(Solution.class), any(Solution.class))).thenReturn(1) ;
@@ -76,9 +77,11 @@ public class RankingAndCrowdingDistanceComparatorTest {
   }
 
   @Test public void shouldCompareWhenRankingYieldingAZeroReturnTheCrowdingDistanceValue() {
+    @SuppressWarnings("unchecked")
     Comparator<Solution<?>> rankComparator = mock(Comparator.class) ;
     when(rankComparator.compare(any(Solution.class), any(Solution.class))).thenReturn(0) ;
 
+    @SuppressWarnings("unchecked")
     Comparator<Solution<?>> crowdingDistanceComparator = mock(CrowdingDistanceComparator.class) ;
     when(crowdingDistanceComparator.compare(any(Solution.class), any(Solution.class))).thenReturn(-1) ;
 
