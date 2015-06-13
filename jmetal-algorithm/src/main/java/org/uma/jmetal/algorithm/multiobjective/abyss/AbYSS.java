@@ -460,8 +460,8 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
       problem.evaluate(offspring.get(1));
       evaluations += 2;
       //if (evaluations < maxEvaluations) {
-        resultList.add(offspring.get(0));
-        resultList.add(offspring.get(1));
+      resultList.add(offspring.get(0));
+      resultList.add(offspring.get(1));
       //}
 
       //marked.setAttribute(pair.get(0), true);

@@ -1,9 +1,10 @@
 package org.uma.jmetal.algorithm.multiobjective.abyss;
 
+import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.operator.CrossoverOperator;
+import org.uma.jmetal.operator.LocalSearchOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
-import org.uma.jmetal.operator.impl.localsearch.MutationLocalSearch;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
@@ -19,21 +20,22 @@ import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
  *   IEEE Transactions on Evolutionary Computation. Vol. 12,
  *   No. 4 (August 2008), pp. 439-457
  */
-public class ABYSSBuilder implements AlgorithmBuilder<ABYSS> {
+public class ABYSSBuilder implements AlgorithmBuilder {
+  private DoubleProblem problem  ; // The problem to solve
+  private CrossoverOperator crossoverOperator   ; // Crossover operator
+  //private MutationLocalSearch improvementOperator ; // Operator for improvement
+  protected LocalSearchOperator<DoubleSolution> improvementOperator ;
 
-  private DoubleProblem problem     ; // The problem to solve
-  private CrossoverOperator<DoubleSolution> crossoverOperator   ; // Crossover operator
-  private MutationLocalSearch<DoubleSolution> improvementOperator ; // Operator for improvement
-  private MutationOperator<DoubleSolution> mutationOperator; // Mutation operator
+  private MutationOperator mutationOperator; // Mutation operator
   private int numberOfSubranges; //subranges
   private int populationSize;//Maximum size of the population
   private int refSet1Size;//Maximum size of the reference set one
   private int refSet2Size;//Maximum size of the reference set two
   private int archiveSize;//Maximum size of the external archive
   private int maxEvaluations;//Maximum number of getEvaluations to carry out
-  private CrowdingDistanceArchive<DoubleSolution> archive;
+  private CrowdingDistanceArchive archive;
 
-  public ABYSSBuilder(DoubleProblem problem,Archive<DoubleSolution> archive){
+  public ABYSSBuilder(DoubleProblem problem, Archive archive){
     this.populationSize = 20;
     this.maxEvaluations = 25000;
     this.archiveSize = 100;
@@ -47,41 +49,39 @@ public class ABYSSBuilder implements AlgorithmBuilder<ABYSS> {
     double mutationProbability= 1.0/problem.getNumberOfVariables();
     this.mutationOperator = new PolynomialMutation(mutationProbability,distributionIndex);
     int improvementRounds= 1;
-
-    this.archive =(CrowdingDistanceArchive<DoubleSolution>)archive;
-    this.improvementOperator = new MutationLocalSearch<DoubleSolution>(improvementRounds,mutationOperator,this.archive,problem);
-
+    this.archive =(CrowdingDistanceArchive)archive;
+    this.improvementOperator = new AbYSSLocalSearch<>(improvementRounds,mutationOperator,this.archive,problem);
   }
 
   @Override
-  public ABYSS build() {
-    return new ABYSS(problem,maxEvaluations, populationSize,refSet1Size,refSet2Size,archiveSize,
+  public Algorithm build() {
+    return new ABYSS(problem, maxEvaluations, populationSize,refSet1Size,refSet2Size,archiveSize,
         archive, improvementOperator, crossoverOperator, numberOfSubranges);
   }
 
-  public CrossoverOperator<DoubleSolution> getCrossoverOperator() {
+  public CrossoverOperator getCrossoverOperator() {
     return crossoverOperator;
   }
 
-  public ABYSSBuilder setCrossoverOperator(CrossoverOperator<DoubleSolution> crossoverOperator) {
+  public ABYSSBuilder setCrossoverOperator(CrossoverOperator crossoverOperator) {
     this.crossoverOperator = crossoverOperator;
     return  this;
   }
 
-  public MutationLocalSearch<DoubleSolution> getImprovementOperator() {
+  public LocalSearchOperator<DoubleSolution> getImprovementOperator() {
     return improvementOperator;
   }
 
-  public ABYSSBuilder setImprovementOperator(MutationLocalSearch<DoubleSolution> improvementOperator) {
+  public ABYSSBuilder setImprovementOperator(AbYSSLocalSearch<DoubleSolution> improvementOperator) {
     this.improvementOperator = improvementOperator;
     return  this;
   }
 
-  public MutationOperator<DoubleSolution> getMutationOperator() {
+  public MutationOperator getMutationOperator() {
     return mutationOperator;
   }
 
-  public ABYSSBuilder setMutationOperator(MutationOperator<DoubleSolution> mutationOperator) {
+  public ABYSSBuilder setMutationOperator(MutationOperator mutationOperator) {
     this.mutationOperator = mutationOperator;
     return  this;
   }
