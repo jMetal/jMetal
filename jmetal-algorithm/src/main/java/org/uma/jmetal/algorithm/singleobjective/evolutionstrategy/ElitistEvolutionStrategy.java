@@ -34,7 +34,7 @@ import java.util.List;
 /**
  * Class implementing a (mu + lambda) Evolution Strategy (lambda must be divisible by mu)
  */
-public class ElitistEvolutionStrategy<S extends Solution> extends AbstractEvolutionStrategy<S, S> {
+public class ElitistEvolutionStrategy<S extends Solution<?>> extends AbstractEvolutionStrategy<S, S> {
   private Problem<S> problem;
 
   private int mu;
@@ -43,7 +43,7 @@ public class ElitistEvolutionStrategy<S extends Solution> extends AbstractEvolut
   private int evaluations;
   private MutationOperator<S> mutation;
 
-  private Comparator comparator;
+  private Comparator<S> comparator;
 
   /**
    * Constructor
@@ -56,7 +56,7 @@ public class ElitistEvolutionStrategy<S extends Solution> extends AbstractEvolut
     this.maxEvaluations = maxEvaluations;
     this.mutation = mutation;
 
-    comparator = new ObjectiveComparator(0);
+    comparator = new ObjectiveComparator<S>(0);
   }
 
   @Override protected void initProgress() {

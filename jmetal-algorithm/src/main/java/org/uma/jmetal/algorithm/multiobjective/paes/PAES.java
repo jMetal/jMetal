@@ -31,7 +31,7 @@ import java.util.List;
  *
  * This class implements the PAES algorithm.
  */
-public class PAES<S extends Solution> extends AbstractEvolutionStrategy<S, List<S>> {
+public class PAES<S extends Solution<?>> extends AbstractEvolutionStrategy<S, List<S>> {
   private Problem<S> problem;
 
   private int archiveSize;
@@ -41,8 +41,8 @@ public class PAES<S extends Solution> extends AbstractEvolutionStrategy<S, List<
 
   private MutationOperator<S> mutationOperator;
 
-  private AdaptiveGridArchive archive;
-  private Comparator comparator;
+  private AdaptiveGridArchive<S> archive;
+  private Comparator<S> comparator;
 
   /**
    * Constructor
@@ -55,8 +55,8 @@ public class PAES<S extends Solution> extends AbstractEvolutionStrategy<S, List<
     this.biSections = biSections;
     this.mutationOperator = mutationOperator;
 
-    archive = new AdaptiveGridArchive(archiveSize, biSections, problem.getNumberOfObjectives());
-    comparator = new DominanceComparator();
+    archive = new AdaptiveGridArchive<S>(archiveSize, biSections, problem.getNumberOfObjectives());
+    comparator = new DominanceComparator<S>();
   }
 
   /* Getters */
@@ -72,7 +72,7 @@ public class PAES<S extends Solution> extends AbstractEvolutionStrategy<S, List<
     return biSections;
   }
 
-  public MutationOperator getMutationOperator() {
+  public MutationOperator<S> getMutationOperator() {
     return mutationOperator;
   }
 
@@ -141,7 +141,7 @@ public class PAES<S extends Solution> extends AbstractEvolutionStrategy<S, List<
    * @param solution        The actual guide of PAES
    * @param mutatedSolution A candidate guide
    */
-  public S test(S solution, S mutatedSolution, AdaptiveGridArchive archive) {
+  public S test(S solution, S mutatedSolution, AdaptiveGridArchive<S> archive) {
 
     int originalLocation = archive.getGrid().location(solution);
     int mutatedLocation = archive.getGrid().location(mutatedSolution);

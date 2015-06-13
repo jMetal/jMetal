@@ -34,7 +34,7 @@ import java.util.List;
  */
 public class ExperimentConfiguration<S extends Solution<?>> {
 	private String experimentName;
-	private List<Algorithm<S>> algorithmList;
+	private List<Algorithm<?>> algorithmList;
 	private List<Problem<S>> problemList;
 	private String experimentBaseDirectory;
 
@@ -58,7 +58,7 @@ public class ExperimentConfiguration<S extends Solution<?>> {
     return experimentName;
   }
 
-  public List<Algorithm<S>> getAlgorithmList() {
+  public List<Algorithm<?>> getAlgorithmList() {
     return algorithmList;
   }
 

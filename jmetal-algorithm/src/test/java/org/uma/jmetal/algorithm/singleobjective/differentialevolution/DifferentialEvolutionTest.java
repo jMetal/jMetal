@@ -41,7 +41,7 @@ public class DifferentialEvolutionTest {
 
   @Mock private DifferentialEvolutionSelection selection;
 
-  @Mock private SequentialSolutionListEvaluator evaluator;
+  @Mock private SequentialSolutionListEvaluator<DoubleSolution> evaluator;
 
   @Mock private DoubleProblem problem;
 

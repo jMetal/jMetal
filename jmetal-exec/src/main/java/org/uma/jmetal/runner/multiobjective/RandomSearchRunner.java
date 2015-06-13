@@ -60,7 +60,7 @@ public class RandomSearchRunner {
 
     problem = ProblemUtils.loadProblem(problemName);
 
-    algorithm = new RandomSearchBuilder(problem)
+    algorithm = new RandomSearchBuilder<DoubleSolution>(problem)
             .setMaxEvaluations(2500000)
             .build() ;
 

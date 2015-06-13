@@ -21,6 +21,8 @@
 
 package org.uma.jmetal.algorithm.multiobjective.randomsearch;
 
+import java.util.List;
+
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
@@ -29,16 +31,16 @@ import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 /**
  * This class implements a simple random search algorithm.
  */
-public class RandomSearch implements Algorithm {
-  private Problem problem ;
+public class RandomSearch<S extends Solution<?>> implements Algorithm<List<S>> {
+  private Problem<S> problem ;
   private int maxEvaluations ;
-  NonDominatedSolutionListArchive nonDominatedArchive ;
+  NonDominatedSolutionListArchive<S> nonDominatedArchive ;
 
   /** Constructor */
-  public RandomSearch(Problem problem, int maxEvaluations) {
+  public RandomSearch(Problem<S> problem, int maxEvaluations) {
     this.problem = problem ;
     this.maxEvaluations = maxEvaluations ;
-    nonDominatedArchive = new NonDominatedSolutionListArchive();
+    nonDominatedArchive = new NonDominatedSolutionListArchive<S>();
   }
 
   /* Getter */
@@ -51,7 +53,7 @@ public class RandomSearch implements Algorithm {
 
     evaluations = 0;
 
-    Solution newSolution;
+    S newSolution;
     for (int i = 0; i < maxEvaluations; i++) {
       newSolution = problem.createSolution() ;
       problem.evaluate(newSolution);
@@ -61,7 +63,7 @@ public class RandomSearch implements Algorithm {
     }
   }
 
-  @Override public Object getResult() {
+  @Override public List<S> getResult() {
     return nonDominatedArchive.getSolutionList();
   }
 } 

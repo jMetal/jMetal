@@ -6,6 +6,7 @@ import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.multiobjective.zdt.*;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.experiment.ExperimentConfiguration;
 import org.uma.jmetal.util.experiment.ExperimentConfigurationBuilder;
 import org.uma.jmetal.util.experiment.ExperimentalStudy;
@@ -20,12 +21,12 @@ import java.util.List;
  */
 public class NSGAIIStudy  {
   public NSGAIIStudy() {
-    List<Problem> problemList = Arrays.<Problem>asList(new ZDT1(), new ZDT2(),
+    List<Problem<DoubleSolution>> problemList = Arrays.<Problem<DoubleSolution>>asList(new ZDT1(), new ZDT2(),
         new ZDT3(), new ZDT4(), new ZDT6()) ;
 
-    List<Algorithm> algorithmList = configureAlgorithmList(problemList) ;
+    List<Algorithm<List<DoubleSolution>>> algorithmList = configureAlgorithmList(problemList) ;
 
-    ExperimentConfiguration configuration = new ExperimentConfigurationBuilder("Experiment")
+    ExperimentConfiguration<DoubleSolution> configuration = new ExperimentConfigurationBuilder<DoubleSolution>("Experiment")
         .setAlgorithmList(algorithmList)
         .setProblemList(problemList)
         .setExperimentBaseDirectory("/Users/antelverde/Softw/jMetal/jMetalGitHub/pruebas")
@@ -45,8 +46,8 @@ public class NSGAIIStudy  {
 
 
 
-  List<Algorithm> configureAlgorithmList(List<Problem> problemList) {
-    List<Algorithm> algorithms = new ArrayList<>() ;
+  List<Algorithm<List<DoubleSolution>>> configureAlgorithmList(List<Problem<DoubleSolution>> problemList) {
+    List<Algorithm<List<DoubleSolution>>> algorithms = new ArrayList<>() ;
     for (int i = 0 ; i < problemList.size(); i++) {
       algorithms.add(
           new NSGAIIBuilder<>(problemList.get(i), new SBXCrossover(1.0, 20.0),

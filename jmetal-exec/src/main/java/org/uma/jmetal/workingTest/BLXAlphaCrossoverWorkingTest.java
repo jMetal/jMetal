@@ -44,7 +44,7 @@ public class BLXAlphaCrossoverWorkingTest {
     DoubleProblem problem ;
 
     problem = new Kursawe(1) ;
-    CrossoverOperator crossover = new BLXAlphaCrossover(1.0, alpha) ;
+    CrossoverOperator<DoubleSolution> crossover = new BLXAlphaCrossover(1.0, alpha) ;
 
     DoubleSolution solution1 = problem.createSolution() ;
     DoubleSolution solution2 = problem.createSolution() ;

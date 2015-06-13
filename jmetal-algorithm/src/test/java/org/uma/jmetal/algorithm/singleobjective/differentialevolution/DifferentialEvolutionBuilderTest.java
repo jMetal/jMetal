@@ -6,7 +6,6 @@ import org.junit.Test;
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.impl.selection.DifferentialEvolutionSelection;
 import org.uma.jmetal.problem.DoubleProblem;
-import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.evaluator.impl.MultithreadedSolutionListEvaluator;
@@ -86,8 +85,8 @@ public class DifferentialEvolutionBuilderTest {
   }
 
   @Test public void setNewEvaluator() {
-    MultithreadedSolutionListEvaluator evaluator =
-        new MultithreadedSolutionListEvaluator(2, problem);
+    MultithreadedSolutionListEvaluator<DoubleSolution> evaluator =
+        new MultithreadedSolutionListEvaluator<DoubleSolution>(2, problem);
     assertNotEquals(evaluator, builder.getSolutionListEvaluator());
     builder.setSolutionListEvaluator(evaluator);
     assertEquals(evaluator, builder.getSolutionListEvaluator());

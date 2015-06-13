@@ -35,7 +35,7 @@ import java.util.List;
  */
 public class ExperimentConfigurationBuilder<S extends Solution<?>> {
   private final String experimentName ;
-  private List<Algorithm<S>> algorithmList;
+  private List<Algorithm<?>> algorithmList;
   private List<Problem<S>> problemList;
   private String experimentBaseDirectory;
   private String outputParetoFrontFileName;
@@ -46,7 +46,7 @@ public class ExperimentConfigurationBuilder<S extends Solution<?>> {
     this.experimentName = experimentName ;
   }
 
-  public ExperimentConfigurationBuilder<S> setAlgorithmList(List<Algorithm<S>> algorithmList) {
+  public ExperimentConfigurationBuilder<S> setAlgorithmList(List<? extends Algorithm<?>> algorithmList) {
     this.algorithmList = new ArrayList<>(algorithmList) ;
 
     return this ;
@@ -91,7 +91,7 @@ public class ExperimentConfigurationBuilder<S extends Solution<?>> {
     return experimentName;
   }
 
-  public List<Algorithm<S>> getAlgorithmList() {
+  public List<Algorithm<?>> getAlgorithmList() {
     return algorithmList;
   }
 

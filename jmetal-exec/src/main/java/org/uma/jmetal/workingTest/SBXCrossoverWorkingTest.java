@@ -44,7 +44,7 @@ public class SBXCrossoverWorkingTest {
     DoubleProblem problem ;
 
     problem = new Kursawe(1) ;
-    CrossoverOperator crossover = new SBXCrossover(1.0, distributionIndex) ;
+    CrossoverOperator<DoubleSolution> crossover = new SBXCrossover(1.0, distributionIndex) ;
 
     DoubleSolution solution1 = problem.createSolution() ;
     DoubleSolution solution2 = problem.createSolution() ;

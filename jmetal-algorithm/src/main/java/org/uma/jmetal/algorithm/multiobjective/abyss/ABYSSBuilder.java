@@ -66,11 +66,11 @@ public class ABYSSBuilder implements AlgorithmBuilder<ABYSS> {
     return  this;
   }
 
-  public MutationLocalSearch getImprovementOperator() {
+  public MutationLocalSearch<DoubleSolution> getImprovementOperator() {
     return improvementOperator;
   }
 
-  public ABYSSBuilder setImprovementOperator(MutationLocalSearch improvementOperator) {
+  public ABYSSBuilder setImprovementOperator(MutationLocalSearch<DoubleSolution> improvementOperator) {
     this.improvementOperator = improvementOperator;
     return  this;
   }

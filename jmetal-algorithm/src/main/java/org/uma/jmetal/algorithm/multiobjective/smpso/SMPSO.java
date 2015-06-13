@@ -17,7 +17,6 @@ import org.uma.jmetal.algorithm.impl.AbstractParticleSwarmOptimization;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
@@ -59,24 +58,24 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
 
   private Archive<DoubleSolution> leaders;
   private double[][] speed;
-  private Comparator<Solution> dominanceComparator;
-  private Comparator<Solution> crowdingDistanceComparator;
+  private Comparator<DoubleSolution> dominanceComparator;
+  private Comparator<DoubleSolution> crowdingDistanceComparator;
 
-  private MutationOperator mutation;
+  private MutationOperator<DoubleSolution> mutation;
 
   private double deltaMax[];
   private double deltaMin[];
 
-  private SolutionListEvaluator evaluator;
+  private SolutionListEvaluator<DoubleSolution> evaluator;
 
   /**
    * Constructor
    */
   public SMPSO(DoubleProblem problem, int swarmSize, Archive<DoubleSolution> leaders,
-      MutationOperator mutationOperator, int maxIterations, double r1Min, double r1Max,
+      MutationOperator<DoubleSolution> mutationOperator, int maxIterations, double r1Min, double r1Max,
       double r2Min, double r2Max, double c1Min, double c1Max, double c2Min, double c2Max,
       double weightMin, double weightMax, double changeVelocity1, double changeVelocity2,
-      SolutionListEvaluator evaluator) {
+      SolutionListEvaluator<DoubleSolution> evaluator) {
     this.problem = problem;
     this.swarmSize = swarmSize;
     this.leaders = leaders;
@@ -99,8 +98,8 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
     randomGenerator = JMetalRandom.getInstance();
     this.evaluator = evaluator;
 
-    dominanceComparator = new DominanceComparator();
-    crowdingDistanceComparator = new CrowdingDistanceComparator();
+    dominanceComparator = new DominanceComparator<DoubleSolution>();
+    crowdingDistanceComparator = new CrowdingDistanceComparator<DoubleSolution>();
     best = new DoubleSolution[swarmSize];
     speed = new double[swarmSize][problem.getNumberOfVariables()];
 
@@ -136,9 +135,9 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
 
   protected void updateLeadersDensityEstimator() {
     if (leaders instanceof CrowdingDistanceArchive) {
-      ((CrowdingDistanceArchive) leaders).computeDistance();
+      ((CrowdingDistanceArchive<DoubleSolution>) leaders).computeDistance();
     } else if (leaders instanceof FastHypervolumeArchive) {
-      ((FastHypervolumeArchive) leaders).computeHVContribution();
+      ((FastHypervolumeArchive<DoubleSolution>) leaders).computeHVContribution();
     } else {
       throw new JMetalException("Invalid setArchive type");
     }
@@ -191,7 +190,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
 
   @Override protected void initializeParticlesMemory(List<DoubleSolution> swarm) {
     for (int i = 0; i < swarm.size(); i++) {
-      Solution particle = swarm.get(i).copy();
+      DoubleSolution particle = (DoubleSolution) swarm.get(i).copy();
       best[i] = (DoubleSolution) particle;
     }
   }
@@ -273,7 +272,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
   }
 
   protected DoubleSolution selectGlobalBest() {
-    Solution one, two;
+    DoubleSolution one, two;
     DoubleSolution bestGlobal;
     int pos1 = randomGenerator.nextInt(0, leaders.getSolutionList().size() - 1);
     int pos2 = randomGenerator.nextInt(0, leaders.getSolutionList().size() - 1);

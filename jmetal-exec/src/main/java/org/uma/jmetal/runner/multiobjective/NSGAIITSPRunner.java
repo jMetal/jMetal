@@ -59,9 +59,9 @@ public class NSGAIITSPRunner {
   public static void main(String[] args) throws JMetalException, IOException {
     PermutationProblem<PermutationSolution<Integer>> problem;
     Algorithm<List<PermutationSolution<Integer>>> algorithm;
-    CrossoverOperator crossover;
+    CrossoverOperator<PermutationSolution<Integer>> crossover;
     MutationOperator<PermutationSolution<Integer>> mutation;
-    SelectionOperator selection;
+    SelectionOperator<List<PermutationSolution<Integer>>, PermutationSolution<Integer>> selection;
 
     problem = new MultiobjectiveTSP("/tspInstances/kroA100.tsp", "/tspInstances/kroB100.tsp");
 
@@ -70,7 +70,7 @@ public class NSGAIITSPRunner {
     double mutationProbability = 0.2 ;
     mutation = new PermutationSwapMutation<Integer>(mutationProbability) ;
 
-    selection = new BinaryTournamentSelection(new RankingAndCrowdingDistanceComparator());
+    selection = new BinaryTournamentSelection<PermutationSolution<Integer>>(new RankingAndCrowdingDistanceComparator<PermutationSolution<Integer>>());
 
     algorithm = new NSGAIIBuilder<PermutationSolution<Integer>>(problem, crossover, mutation,
         NSGAIIBuilder.NSGAIIVariant.NSGAII)
