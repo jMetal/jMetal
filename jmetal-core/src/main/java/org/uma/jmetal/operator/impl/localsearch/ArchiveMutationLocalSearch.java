@@ -1,4 +1,4 @@
-package org.uma.jmetal.algorithm.multiobjective.abyss;
+package org.uma.jmetal.operator.impl.localsearch;
 
 import org.uma.jmetal.operator.LocalSearchOperator;
 import org.uma.jmetal.operator.MutationOperator;
@@ -17,7 +17,7 @@ import java.util.Comparator;
  * mutation operator. An archive is used to store the non-dominated solutions
  * found during the search.
  */
-public class AbYSSLocalSearch<S extends Solution<?>> implements LocalSearchOperator<S>{
+public class ArchiveMutationLocalSearch<S extends Solution<?>> implements LocalSearchOperator<S>{
   private Problem<S> problem;
   private Archive<S> archive;
   private int improvementRounds ;
@@ -36,7 +36,7 @@ public class AbYSSLocalSearch<S extends Solution<?>> implements LocalSearchOpera
    * @param problem problem to resolve
 
    */
-  public AbYSSLocalSearch(int improvementRounds, MutationOperator<S> mutationOperator,
+  public ArchiveMutationLocalSearch(int improvementRounds, MutationOperator<S> mutationOperator,
       Archive<S> archive, Problem<S> problem){
     this.problem=problem;
     this.mutationOperator=mutationOperator;
@@ -70,12 +70,12 @@ public class AbYSSLocalSearch<S extends Solution<?>> implements LocalSearchOpera
 
         ((ConstrainedProblem) problem).evaluateConstraints(mutatedSolution);
         best = constraintComparator.compare(mutatedSolution, solution);
-        if (best == 0) //none of then is better that the other one
+        if (best == 0)
         {
           problem.evaluate(mutatedSolution);
           evaluations++;
           best = dominanceComparator.compare(mutatedSolution, solution);
-        } else if (best == -1) //mutatedSolution is best
+        } else if (best == -1)
         {
           problem.evaluate(mutatedSolution);
           evaluations++;
@@ -88,7 +88,6 @@ public class AbYSSLocalSearch<S extends Solution<?>> implements LocalSearchOpera
       if (best == -1)
         solution = mutatedSolution;
       else if (best == 1)
-        //delete mutatedSolution
         ;
       else {
         archive.add(mutatedSolution);

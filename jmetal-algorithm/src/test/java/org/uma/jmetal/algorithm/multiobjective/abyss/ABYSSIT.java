@@ -7,6 +7,7 @@ import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.LocalSearchOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
+import org.uma.jmetal.operator.impl.localsearch.ArchiveMutationLocalSearch;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT4;
@@ -47,7 +48,7 @@ public class ABYSSIT {
 
     archive = new CrowdingDistanceArchive<>(100) ;
 
-    localSearchOperator = new AbYSSLocalSearch<>(1, mutation, archive, problem) ;
+    localSearchOperator = new ArchiveMutationLocalSearch<>(1, mutation, archive, problem) ;
   }
 
   @Test

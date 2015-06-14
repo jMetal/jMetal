@@ -383,12 +383,7 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
     solutionGroupsList = generatePairsFromSolutionList(referenceSet1) ;
 
     solutionGroupsList.addAll(generatePairsFromSolutionList(referenceSet2));
-/*
-    for (List<DoubleSolution> pair : solutionGroupsList) {
-      marked.setAttribute(pair.get(0), true);
-      marked.setAttribute(pair.get(1), true);
-    }
-*/
+
     return solutionGroupsList ;
   }
 
@@ -431,13 +426,8 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
       problem.evaluate(offspring.get(0));
       problem.evaluate(offspring.get(1));
       evaluations += 2;
-      //if (evaluations < maxEvaluations) {
       resultList.add(offspring.get(0));
       resultList.add(offspring.get(1));
-      //}
-
-      //marked.setAttribute(pair.get(0), true);
-      //marked.setAttribute(pair.get(1), true);
     }
 
     return resultList;
