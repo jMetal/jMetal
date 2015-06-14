@@ -179,7 +179,7 @@ public class SolutionListUtils {
     return invertedFront;
   }
 
-  public static <S extends Solution<?>> boolean isSolutionDominatedBySolutionList(S solution, List<S> solutionSet) {
+  public static <S extends Solution<?>> boolean isSolutionDominatedBySolutionList(S solution, List<? extends S> solutionSet) {
     boolean result = false ;
     Comparator<S> dominance = new DominanceComparator<S>() ;
 
