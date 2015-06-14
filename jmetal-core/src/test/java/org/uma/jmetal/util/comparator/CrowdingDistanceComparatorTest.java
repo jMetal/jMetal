@@ -54,7 +54,7 @@ public class CrowdingDistanceComparatorTest {
 
   @Test public void shouldCompareReturnZeroIfBothSolutionsHaveNoCrowdingDistanceAttribute() {
     CrowdingDistance<Solution<?>> distance = mock(CrowdingDistance.class) ;
-    when(distance.getAttribute(any(Solution.class))).thenReturn(null, null) ;
+    when(distance.getAttribute(any(Solution.class))).thenReturn((Double) null, (Double) null) ;
 
     ReflectionTestUtils.setField(comparator, "crowdingDistance", distance);
 

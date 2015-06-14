@@ -54,7 +54,7 @@ public class RankingComparatorTest {
 
   @Test public void shouldCompareReturnZeroIfBothSolutionsHaveNoRankingAttribute() {
     Ranking<Solution<?>> ranking = mock(Ranking.class) ;
-    when(ranking.getAttribute(any(Solution.class))).thenReturn(null, null) ;
+    when(ranking.getAttribute(any(Solution.class))).thenReturn((Integer) null, (Integer) null) ;
 
     ReflectionTestUtils.setField(comparator, "ranking", ranking);
 
