@@ -44,6 +44,7 @@ public class AbYSSLocalSearch<S extends Solution<?>> implements LocalSearchOpera
     this.archive=archive;
     dominanceComparator  = new DominanceComparator();
     constraintComparator = new OverallConstraintViolationComparator();
+
     evaluations=0;
   }
 
@@ -58,13 +59,14 @@ public class AbYSSLocalSearch<S extends Solution<?>> implements LocalSearchOpera
    */
   public S execute(S solution) {
     int i = 0;
-    int best = 0;
+    int best ;
     evaluations = 0;
 
     int rounds = improvementRounds;
-    S mutatedSolution = (S) mutationOperator.execute(solution.copy());
 
-    while (i < rounds) {if (problem.getNumberOfConstraints() > 0) {
+    while (i < rounds) {
+      S mutatedSolution = (S) mutationOperator.execute(solution.copy());
+      if (problem.getNumberOfConstraints() > 0) {
 
         ((ConstrainedProblem) problem).evaluateConstraints(mutatedSolution);
         best = constraintComparator.compare(mutatedSolution, solution);
@@ -83,20 +85,17 @@ public class AbYSSLocalSearch<S extends Solution<?>> implements LocalSearchOpera
         evaluations++;
         best = dominanceComparator.compare(mutatedSolution, solution);
       }
-      if (best == -1) // This is: Mutated is best
+      if (best == -1)
         solution = mutatedSolution;
-      else if (best == 1) // This is: Original is best
+      else if (best == 1)
         //delete mutatedSolution
         ;
-      else // This is mutatedSolution and original are non-dominated
-      {
-
-        if (archive != null)
-          archive.add(mutatedSolution);
+      else {
+        archive.add(mutatedSolution);
       }
       i++ ;
     }
-  return mutatedSolution ;
+    return (S) solution.copy();
   }
 
   /**

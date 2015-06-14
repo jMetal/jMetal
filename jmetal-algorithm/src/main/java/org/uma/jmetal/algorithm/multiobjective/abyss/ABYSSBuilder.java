@@ -50,8 +50,7 @@ public class ABYSSBuilder implements AlgorithmBuilder {
     this.mutationOperator = new PolynomialMutation(mutationProbability,distributionIndex);
     int improvementRounds= 1;
     this.archive =(CrowdingDistanceArchive)archive;
-    this.improvementOperator = new AbYSSLocalSearch2<>(improvementRounds,mutationOperator,this.archive,problem);
-    //this.improvementOperator = new MutationLocalSearch<>(improvementRounds,mutationOperator,this.archive,problem);
+    this.improvementOperator = new AbYSSLocalSearch<>(improvementRounds,mutationOperator,this.archive,problem);
   }
 
   @Override
