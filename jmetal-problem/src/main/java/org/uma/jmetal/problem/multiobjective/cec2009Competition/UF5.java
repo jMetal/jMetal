@@ -54,8 +54,8 @@ public class UF5 extends AbstractDoubleProblem {
     List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
     List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
     
-    n       = N ;
-    epsilon = epsilon ;
+    this.n       = N ;
+    this.epsilon = epsilon ;
 
     lowerLimit.add(0.0);
     upperLimit.add(1.0);
