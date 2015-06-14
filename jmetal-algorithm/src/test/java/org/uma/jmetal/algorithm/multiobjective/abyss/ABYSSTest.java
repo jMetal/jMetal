@@ -113,63 +113,7 @@ public class ABYSSTest {
     assertEquals(populationSize - referenceSet1Size, abyss.referenceSet2.size());
     assertEquals(0, abyss.getPopulation().size());
   }
-/*
-  @Test
-  public void shouldRestartConditionIsFulfilledReturnTrueIfAllTheSolutionsInTheRefSetsAreMarked() {
-    int populationSize = 10 ;
-    int numberOfSubRanges = 4 ;
-    int referenceSet1Size = 4 ;
-    int referenceSet2Size = 4 ;
 
-    DoubleProblem problem = new MockProblem() ;
-
-    abyss = new ABYSS(problem, 0, populationSize, referenceSet1Size, referenceSet2Size,
-        0, null, localSearch, null, numberOfSubRanges) ;
-
-    abyss.initializationPhase() ;
-    abyss.referenceSetUpdate();
-
-    MarkAttribute marked = new MarkAttribute();
-    for (Solution solution : abyss.referenceSet1) {
-      marked.setAttribute(solution, true);
-    }
-
-    for (Solution solution : abyss.referenceSet2) {
-      marked.setAttribute(solution, true);
-    }
-
-    assertTrue(abyss.restartConditionIsFulfilled()) ;
-  }
-
-  @Test
-  public void shouldRestartConditionIsFulfilledReturnFalseIfNotAllTheSolutionsInTheRefSetsAreMarked() {
-    int populationSize = 10 ;
-    int numberOfSubRanges = 4 ;
-    int referenceSet1Size = 4 ;
-    int referenceSet2Size = 4 ;
-
-    DoubleProblem problem = new MockProblem() ;
-
-    abyss = new ABYSS(problem, 0, populationSize, referenceSet1Size, referenceSet2Size,
-        0, null, localSearch, null, numberOfSubRanges) ;
-
-    abyss.initializationPhase() ;
-    abyss.referenceSetUpdate();
-
-    MarkAttribute marked = new MarkAttribute();
-    for (Solution solution : abyss.referenceSet1) {
-      marked.setAttribute(solution, true);
-    }
-
-    for (Solution solution : abyss.referenceSet2) {
-      marked.setAttribute(solution, true);
-    }
-
-    marked.setAttribute(abyss.referenceSet1.get(0), false) ;
-
-    assertFalse(abyss.restartConditionIsFulfilled()) ;
-  }
-*/
   @Test
   public void shouldSubsetGenerationGenerateAllPairWiseCombinationsOfTheRefSets() {
     int populationSize = 10;

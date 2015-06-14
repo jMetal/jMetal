@@ -1,6 +1,5 @@
 package org.uma.jmetal.algorithm.multiobjective.abyss;
 
-import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.LocalSearchOperator;
 import org.uma.jmetal.operator.MutationOperator;
@@ -51,12 +50,6 @@ public class ABYSSBuilder implements AlgorithmBuilder {
     int improvementRounds= 1;
     this.archive =(CrowdingDistanceArchive)archive;
     this.improvementOperator = new AbYSSLocalSearch<>(improvementRounds,mutationOperator,this.archive,problem);
-  }
-
-  @Override
-  public Algorithm build() {
-    return new ABYSS(problem, maxEvaluations, populationSize,refSet1Size,refSet2Size,archiveSize,
-        archive, improvementOperator, crossoverOperator, numberOfSubranges);
   }
 
   public CrossoverOperator getCrossoverOperator() {
@@ -139,4 +132,11 @@ public class ABYSSBuilder implements AlgorithmBuilder {
     this.maxEvaluations = maxEvaluations;
     return  this;
   }
+
+  @Override
+  public ABYSS build() {
+    return new ABYSS(problem, maxEvaluations, populationSize,refSet1Size,refSet2Size,archiveSize,
+        archive, improvementOperator, crossoverOperator, numberOfSubranges);
+  }
+
 }
