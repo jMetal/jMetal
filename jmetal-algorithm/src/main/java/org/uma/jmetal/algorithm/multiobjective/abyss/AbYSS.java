@@ -84,12 +84,7 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
     referenceSet1 = new ArrayList<>(referenceSet1Size) ;
     referenceSet2 = new ArrayList<>(referenceSet2Size) ;
 
-    evaluations = 0 ;
-
     this.numberOfSubRanges = numberOfSubRanges ;
-
-    this.localSearch = localSearch ;
-    this.archive = archive ;
 
     randomGenerator = JMetalRandom.getInstance() ;
 
@@ -161,6 +156,9 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
       value = randomGenerator.nextDouble(low, high);
       solution.setVariableValue(i, value);
     }
+
+    problem.evaluate(solution);
+    evaluations ++ ;
     return solution;
   }
 
@@ -280,13 +278,12 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
    * otherwise.
    */
   public boolean refSet1Test(DoubleSolution solution) {
-
     boolean dominated = false;
     int flag;
     int i = 0;
     while (i < referenceSet1.size()) {
       flag = dominanceComparator.compare(solution, referenceSet1.get(i));
-      if (flag == -1) {
+      if (flag == -1) { //This is: solution dominates
         referenceSet1.remove(i);
       } else if (flag == 1) {
         dominated = true;
@@ -295,21 +292,21 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
         flag = equalComparator.compare(solution, referenceSet1.get(i));
         if (flag == 0) {
           return true;
-        }
+        } // if
         i++;
-      }
-    }
+      } // if
+    } // while
 
     if (!dominated) {
       marked.setAttribute(solution, false);
-      if (referenceSet1.size() < referenceSet1Size) {
+      if (referenceSet1.size() < referenceSet1Size) { //refSet1 isn't full
         referenceSet1.add(solution);
       } else {
         archive.add(solution);
-      }
+      } // if
     } else {
       return false;
-    }
+    } // if
     return true;
   }
 
@@ -373,31 +370,6 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
     } else {
       return false ;
     }
-    /*
-    boolean allTheSolutionsAreMarked = true ;
-
-    int i = 0 ;
-    while ((i < referenceSet1.size()) && allTheSolutionsAreMarked) {
-      if (marked.getAttribute(referenceSet1.get(i))) {
-        i++ ;
-      } else {
-        allTheSolutionsAreMarked = false ;
-      }
-    }
-
-    i = 0 ;
-    while ((i < referenceSet2.size()) && allTheSolutionsAreMarked) {
-      if (marked.getAttribute(referenceSet2.get(i))) {
-        i++ ;
-      } else {
-        allTheSolutionsAreMarked = false ;
-      }
-    }
-
-    System.out.println("Test: " + allTheSolutionsAreMarked) ;
-
-    return allTheSolutionsAreMarked ;
-    */
   }
 
   /**
@@ -411,12 +383,12 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
     solutionGroupsList = generatePairsFromSolutionList(referenceSet1) ;
 
     solutionGroupsList.addAll(generatePairsFromSolutionList(referenceSet2));
-
+/*
     for (List<DoubleSolution> pair : solutionGroupsList) {
-      //marked.setAttribute(pair.get(0), true);
-      //marked.setAttribute(pair.get(1), true);
+      marked.setAttribute(pair.get(0), true);
+      marked.setAttribute(pair.get(1), true);
     }
-
+*/
     return solutionGroupsList ;
   }
 
@@ -482,9 +454,10 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
   private void addReferenceSet1ToPopulation() {
     for (int i = 0; i < referenceSet1.size(); i++) {
       DoubleSolution solution = referenceSet1.get(i);
+      solution = improvement(solution);
       marked.setAttribute(solution, false);
 
-      getPopulation().add(improvement(solution));
+      getPopulation().add(solution);
     }
     referenceSet1.clear();
     referenceSet2.clear();

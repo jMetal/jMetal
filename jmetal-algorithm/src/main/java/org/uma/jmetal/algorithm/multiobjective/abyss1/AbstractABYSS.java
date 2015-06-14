@@ -359,6 +359,7 @@ public abstract class AbstractABYSS implements Algorithm<List<DoubleSolution>> {
       if (refSet1.size() < refSet1Size) { //refSet1 isn't full
         refSet1.add(solution);
       } else {
+        System.out.println("Archive");
         archive.add(solution);
       } // if
     } else {
@@ -461,8 +462,6 @@ public abstract class AbstractABYSS implements Algorithm<List<DoubleSolution>> {
       }
     }
 
-    System.out.println("Subset1 size: " + subSet.size()) ;
-
     // All pairs from refSet2
     for (int i = 0; i < refSet2.size(); i++) {
       parents.set(0, refSet2.get(i));
@@ -486,8 +485,6 @@ public abstract class AbstractABYSS implements Algorithm<List<DoubleSolution>> {
         }
       }
     }
-
-    System.out.println("Subset2 size: " + subSet.size()) ;
 
     return subSet.size();
   }
