@@ -13,26 +13,20 @@ import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 
 /**
- * This class implements the AbYSS algorithm, a
- * multiobjective scatter search metaheuristics, which is described in:
- *   A.J. Nebro, F. Luna, E. Alba, B. Dorronsoro, J.J. Durillo, A. Beham
- *   "AbYSS: Adapting Scatter Search to Multiobjective Optimization."
- *   IEEE Transactions on Evolutionary Computation. Vol. 12,
- *   No. 4 (August 2008), pp. 439-457
+ *  @author Cristobal Barba
  */
 public class ABYSSBuilder implements AlgorithmBuilder {
-  private DoubleProblem problem  ; // The problem to solve
-  private CrossoverOperator crossoverOperator   ; // Crossover operator
-  //private MutationLocalSearch improvementOperator ; // Operator for improvement
+  private DoubleProblem problem  ;
+  private CrossoverOperator crossoverOperator   ;
   protected LocalSearchOperator<DoubleSolution> improvementOperator ;
 
-  private MutationOperator mutationOperator; // Mutation operator
-  private int numberOfSubranges; //subranges
-  private int populationSize;//Maximum size of the population
-  private int refSet1Size;//Maximum size of the reference set one
-  private int refSet2Size;//Maximum size of the reference set two
-  private int archiveSize;//Maximum size of the external archive
-  private int maxEvaluations;//Maximum number of getEvaluations to carry out
+  private MutationOperator mutationOperator;
+  private int numberOfSubranges;
+  private int populationSize;
+  private int refSet1Size;
+  private int refSet2Size;
+  private int archiveSize;
+  private int maxEvaluations;
   private CrowdingDistanceArchive archive;
 
   public ABYSSBuilder(DoubleProblem problem, Archive archive){
@@ -139,5 +133,4 @@ public class ABYSSBuilder implements AlgorithmBuilder {
     return new ABYSS(problem, maxEvaluations, populationSize,refSet1Size,refSet2Size,archiveSize,
         archive, improvementOperator, crossoverOperator, numberOfSubranges);
   }
-
 }

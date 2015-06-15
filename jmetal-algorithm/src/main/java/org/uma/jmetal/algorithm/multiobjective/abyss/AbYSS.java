@@ -27,7 +27,14 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * Created by ajnebro on 11/6/15.
+ * This class implements the AbYSS algorithm, a multiobjective scatter search metaheuristics,
+ * which is described in:
+ *   A.J. Nebro, F. Luna, E. Alba, B. Dorronsoro, J.J. Durillo, A. Beham
+ *   "AbYSS: Adapting Scatter Search to Multiobjective Optimization." IEEE Transactions on
+ *   Evolutionary Computation. Vol. 12, No. 4 (August 2008), pp. 439-457
+ *
+ *   @author Antonio J. Nebro <antonio@lcc.uma.es>
+ *   @author Cristobal Barba
  */
 public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolution>> {
   protected final int maxEvaluations ;
