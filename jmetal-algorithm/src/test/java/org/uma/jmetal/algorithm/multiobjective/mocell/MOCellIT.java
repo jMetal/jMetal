@@ -75,6 +75,6 @@ public class MOCellIT {
 
     double hv = hypervolume.execute(new ArrayFront(population), referenceFront) ;
 
-    assertTrue(hv > 0.65) ;
+    assertTrue(hv > 0.64) ;
   }
 }

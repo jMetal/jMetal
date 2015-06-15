@@ -80,7 +80,7 @@ public class ABYSSIT {
 
     Hypervolume hypervolume = new Hypervolume() ;
 
-    // Rationale: the default problem is ZDT4, and MOCell, configured with standard settings, should
+    // Rationale: the default problem is ZDT4, and AbYSS, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.65
 
     Front referenceFront = new ArrayFront() ;
@@ -88,6 +88,6 @@ public class ABYSSIT {
 
     double hv = hypervolume.execute(new ArrayFront(population), referenceFront) ;
 
-    assertTrue(hv > 0.65) ;
+    assertTrue(hv > 0.64) ;
   }
 }
