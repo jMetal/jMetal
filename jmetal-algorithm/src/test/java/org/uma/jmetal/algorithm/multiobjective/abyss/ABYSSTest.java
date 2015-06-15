@@ -3,6 +3,7 @@ package org.uma.jmetal.algorithm.multiobjective.abyss;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
+import org.uma.jmetal.algorithm.multiobjective.abyss.util.MarkAttribute;
 import org.uma.jmetal.operator.LocalSearchOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
@@ -15,7 +16,6 @@ import org.uma.jmetal.solution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-import org.uma.jmetal.util.solutionattribute.impl.MarkAttribute;
 
 import java.util.ArrayList;
 import java.util.List;

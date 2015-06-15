@@ -1,6 +1,7 @@
 package org.uma.jmetal.algorithm.multiobjective.abyss;
 
 import org.uma.jmetal.algorithm.impl.AbstractScatterSearch;
+import org.uma.jmetal.algorithm.multiobjective.abyss.util.MarkAttribute;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.LocalSearchOperator;
 import org.uma.jmetal.problem.ConstrainedProblem;
@@ -17,7 +18,6 @@ import org.uma.jmetal.util.comparator.EqualSolutionsComparator;
 import org.uma.jmetal.util.comparator.StrengthFitnessComparator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.solutionattribute.impl.DistanceToSolutionListAttribute;
-import org.uma.jmetal.util.solutionattribute.impl.MarkAttribute;
 import org.uma.jmetal.util.solutionattribute.impl.StrengthRawFitness;
 
 import javax.management.JMException;
@@ -66,7 +66,6 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
   protected Comparator<Solution> fitnessComparator; //TODO: invert this dependency
   protected MarkAttribute marked;
   protected DistanceToSolutionListAttribute distanceToSolutionListAttribute;
-  //protected CrossoverOperator crossoverOperator;
   protected Comparator<Solution> dominanceComparator;
   protected Comparator<Solution> equalComparator;
   protected Comparator<Solution> crowdingDistanceComparator;
