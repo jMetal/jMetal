@@ -50,13 +50,13 @@ public class SMPSOIT {
     Hypervolume hypervolume = new Hypervolume() ;
 
     // Rationale: the default problem is ZDT4, and SMPSO, configured with standard settings, should
-    // return find a front with a hypervolume value higher than 0.66
+    // return find a front with a hypervolume value higher than 0.64
 
     Front referenceFront = new ArrayFront() ;
     referenceFront.readFrontFromFile("/referenceFronts/ZDT4.pf");
 
     double hv = hypervolume.execute(new ArrayFront(population), referenceFront) ;
 
-    assertTrue(hv > 0.66) ;
+    assertTrue(hv > 0.64) ;
   }
 }
