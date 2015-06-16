@@ -29,6 +29,8 @@ public class ArchiveMutationLocalSearch<S extends Solution<?>> implements LocalS
   private MutationOperator mutationOperator;
   private int evaluations ;
 
+  private int numberOfImprovements ;
+  private int numberOfNonComparableSolutions ;
   /**
    * Constructor.
    * Creates a new local search object.
@@ -46,6 +48,9 @@ public class ArchiveMutationLocalSearch<S extends Solution<?>> implements LocalS
     this.archive=archive;
     dominanceComparator  = new DominanceComparator();
     constraintComparator = new OverallConstraintViolationComparator();
+
+    numberOfImprovements = 0 ;
+    numberOfNonComparableSolutions = 0 ;
   }
 
   /**
@@ -83,11 +88,13 @@ public class ArchiveMutationLocalSearch<S extends Solution<?>> implements LocalS
       }
       if (best == -1) {
         solution = mutatedSolution;
+        numberOfImprovements ++ ;
       }
       else if (best == 1) {
         ;
       }
       else {
+        numberOfNonComparableSolutions ++ ;
         archive.add(mutatedSolution);
       }
       i++ ;
@@ -100,5 +107,13 @@ public class ArchiveMutationLocalSearch<S extends Solution<?>> implements LocalS
    */
   public int getEvaluations() {
     return evaluations;
+  }
+
+  @Override public int getNumberOfImprovements() {
+    return numberOfImprovements ;
+  }
+
+  @Override public int getNumberOfNonComparableSolutions() {
+    return numberOfNonComparableSolutions ;
   }
 }

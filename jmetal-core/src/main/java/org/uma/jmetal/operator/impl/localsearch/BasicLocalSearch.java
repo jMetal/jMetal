@@ -24,8 +24,11 @@ public class BasicLocalSearch<S extends Solution<?>> implements LocalSearchOpera
 
   private MutationOperator mutationOperator;
   private int evaluations ;
+  private int numberOfImprovements ;
 
   private JMetalRandom randomGenerator ;
+
+  private int numberOfNonComparableSolutions ;
   /**
    * Constructor.
    * Creates a new local search object.
@@ -44,6 +47,8 @@ public class BasicLocalSearch<S extends Solution<?>> implements LocalSearchOpera
     constraintComparator = new OverallConstraintViolationComparator();
 
     randomGenerator = JMetalRandom.getInstance() ;
+    numberOfImprovements = 0 ;
+    numberOfNonComparableSolutions = 0 ;
   }
 
   /**
@@ -77,13 +82,17 @@ public class BasicLocalSearch<S extends Solution<?>> implements LocalSearchOpera
         evaluations++;
         best = comparator.compare(mutatedSolution, solution);
       }
+
       if (best == -1) {
         solution = mutatedSolution;
+        numberOfImprovements ++ ;
       }
       else if (best == 1) {
         ;
       }
       else {
+        numberOfNonComparableSolutions ++ ;
+
         if (randomGenerator.nextDouble() < 0.5) {
           solution = mutatedSolution ;
         }
@@ -98,5 +107,13 @@ public class BasicLocalSearch<S extends Solution<?>> implements LocalSearchOpera
    */
   public int getEvaluations() {
     return evaluations;
+  }
+
+  @Override public int getNumberOfImprovements() {
+    return numberOfImprovements ;
+  }
+
+  @Override public int getNumberOfNonComparableSolutions() {
+    return numberOfNonComparableSolutions ;
   }
 }
