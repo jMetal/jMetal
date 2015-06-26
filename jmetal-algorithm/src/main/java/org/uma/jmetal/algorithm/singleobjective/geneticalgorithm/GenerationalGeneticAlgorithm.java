@@ -95,9 +95,7 @@ public class GenerationalGeneticAlgorithm<S extends Solution<?>> extends Abstrac
   }
 
   @Override protected List<S> evaluatePopulation(List<S> population) {
-    for (S solution : population) {
-      problem.evaluate(solution);
-    }
+    population = evaluator.evaluate(population,problem);
 
     return population;
   }
