@@ -48,7 +48,6 @@ public class BasicLocalSearch<S extends Solution<?>> implements LocalSearchOpera
 
     randomGenerator = JMetalRandom.getInstance() ;
     numberOfImprovements = 0 ;
-    numberOfNonComparableSolutions = 0 ;
   }
 
   /**
@@ -60,6 +59,7 @@ public class BasicLocalSearch<S extends Solution<?>> implements LocalSearchOpera
     int i = 0;
     int best ;
     evaluations = 0;
+    numberOfNonComparableSolutions = 0 ;
 
     int rounds = improvementRounds;
 

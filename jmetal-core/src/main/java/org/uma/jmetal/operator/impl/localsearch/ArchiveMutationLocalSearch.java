@@ -63,6 +63,7 @@ public class ArchiveMutationLocalSearch<S extends Solution<?>> implements LocalS
     int i = 0;
     int best ;
     evaluations = 0;
+    numberOfNonComparableSolutions = 0 ;
 
     int rounds = improvementRounds;
 
