@@ -15,15 +15,13 @@ package org.uma.jmetal.problem;
 
 import org.uma.jmetal.solution.Solution;
 
-import java.io.Serializable;
-
 /**
  * Interface representing a multi-objective optimization problem
  * @author Antonio J. Nebro
  * @version 0.1
  * @param <S> Encoding
  */
-public interface Problem<S extends Solution<?>> extends Serializable {
+public interface Problem<S extends Solution<?>> {
   /* Getters */
   public int getNumberOfVariables() ;
   public int getNumberOfObjectives() ;

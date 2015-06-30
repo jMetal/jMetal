@@ -20,13 +20,13 @@
 
 package org.uma.jmetal.util;
 
-import java.io.Serializable;
 import java.util.logging.Level;
 
 /**
  * jMetal exception class
  */
-public class JMetalException extends RuntimeException implements Serializable {
+@SuppressWarnings("serial")
+public class JMetalException extends RuntimeException {
   public JMetalException(String message) {
     super(message);
   }

@@ -21,14 +21,13 @@
 package org.uma.jmetal.util;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
 /**
  * jMetal logger class
  */
-public class JMetalLogger implements Serializable {
+public class JMetalLogger {
 
   public static final Logger logger = Logger.getLogger("jMetal");
 

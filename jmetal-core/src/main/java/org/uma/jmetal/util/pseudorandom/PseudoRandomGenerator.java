@@ -13,13 +13,11 @@
 
 package org.uma.jmetal.util.pseudorandom;
 
-import java.io.Serializable;
-
 /**
  * @author Antonio J. Nebro
  * @version 0.1
  */
-public interface PseudoRandomGenerator extends Serializable {
+public interface PseudoRandomGenerator {
   public int nextInt(int lowerBound, int upperBound) ;
   public double nextDouble(double lowerBound, double upperBound) ;
   public double nextDouble() ;

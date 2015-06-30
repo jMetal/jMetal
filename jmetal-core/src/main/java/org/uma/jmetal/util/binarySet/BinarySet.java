@@ -6,6 +6,7 @@ import java.util.BitSet;
  * Class representing a bit set including a method to get the total number of bits
  * Created by Antonio J. Nebro on 9/12/14.
  */
+@SuppressWarnings("serial")
 public class BinarySet extends BitSet {
   private int numberOfBits ;
 
