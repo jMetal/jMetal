@@ -5,6 +5,7 @@ import org.uma.jmetal.operator.impl.crossover.IntegerSBXCrossover;
 import org.uma.jmetal.problem.IntegerProblem;
 import org.uma.jmetal.problem.multiobjective.NMMin;
 import org.uma.jmetal.solution.IntegerSolution;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
@@ -35,8 +36,7 @@ public class IntegerSBXCrossoverWorkingTest {
    */
   public static void main(String[] args) throws FileNotFoundException {
     if (args.length !=4) {
-      System.err.println("Usage: numberOfSolutions granularity distributionIndex outputFile") ;
-      System.exit(-1) ;
+      throw new JMetalException("Usage: numberOfSolutions granularity distributionIndex outputFile") ;
     }
     int numberOfPoints = Integer.valueOf(args[0]) ;
     int granularity = Integer.valueOf(args[1]) ;

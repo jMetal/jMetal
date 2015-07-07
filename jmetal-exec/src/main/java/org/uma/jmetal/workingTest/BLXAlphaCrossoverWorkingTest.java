@@ -5,6 +5,7 @@ import org.uma.jmetal.operator.impl.crossover.BLXAlphaCrossover;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.Kursawe;
 import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
@@ -34,8 +35,7 @@ public class BLXAlphaCrossoverWorkingTest {
    */
   public static void main(String[] args) throws FileNotFoundException {
     if (args.length !=4) {
-      System.err.println("Usage: numberOfSolutions granularity alpha outputFile") ;
-      System.exit(-1) ;
+      throw new JMetalException("Usage: numberOfSolutions granularity alpha outputFile") ;
     }
     int numberOfPoints = Integer.valueOf(args[0]) ;
     int granularity = Integer.valueOf(args[1]) ;

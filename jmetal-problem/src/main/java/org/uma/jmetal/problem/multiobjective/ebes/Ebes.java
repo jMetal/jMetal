@@ -5269,9 +5269,7 @@ public void EbesMutation(int groupId, int hi, Variable[] x) {
       input.close();
     }
     catch (Exception ex) {
-      System.out.println("Error: data file EBEs not readed");
-      System.out.println(ex.getMessage());
-      System.exit(1);
+      throw new JMetalException("Error: data file EBEs not read", ex);
     }
   }
 
@@ -5389,15 +5387,14 @@ public void EbesMutation(int groupId, int hi, Variable[] x) {
           Groups_[gr][CONSTRAINT]=4;
 
         } else {
-          System.out.println("Error: transversal section not considerated in " + gr + " group");
-          System.exit(1);
-        } // end if
-      } // gr
+          throw new JMetalException("Error: transversal section not considerated in " + gr + " group");
+        }
+      }
     }
     catch (Exception ex) {
-      System.out.println(ex.getCause());
-      System.out.println(ex.getMessage());
-      System.exit(1);
+      //System.out.println(ex.getCause());
+      //System.out.println(ex.getMessage());
+      throw new JMetalException(ex) ;
     }
 
     return numberOfVariables_ ;

@@ -5,6 +5,7 @@ import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.singleobjective.Sphere;
 import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.util.JMetalException;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -35,8 +36,7 @@ public class PolynomialMutationWorkingTest {
    */
   public static void main(String[] args) throws FileNotFoundException {
     if (args.length !=4) {
-      System.err.println("Usage: numberOfSolutions granularity distributionIndex outputFile") ;
-      System.exit(-1) ;
+      throw new JMetalException("Usage: numberOfSolutions granularity distributionIndex outputFile") ;
     }
     int numberOfPoints = Integer.valueOf(args[0]) ;
     int granularity = Integer.valueOf(args[1]) ;
