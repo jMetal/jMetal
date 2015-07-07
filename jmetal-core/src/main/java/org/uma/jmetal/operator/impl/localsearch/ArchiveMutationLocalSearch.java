@@ -23,10 +23,10 @@ public class ArchiveMutationLocalSearch<S extends Solution<?>> implements LocalS
   private Problem<S> problem;
   private Archive<S> archive;
   private int improvementRounds ;
-  private Comparator constraintComparator ;
-  private Comparator dominanceComparator ;
+  private Comparator<S> constraintComparator ;
+  private Comparator<S> dominanceComparator ;
 
-  private MutationOperator mutationOperator;
+  private MutationOperator<S> mutationOperator;
   private int evaluations ;
 
   private int numberOfImprovements ;
@@ -46,8 +46,8 @@ public class ArchiveMutationLocalSearch<S extends Solution<?>> implements LocalS
     this.mutationOperator=mutationOperator;
     this.improvementRounds=improvementRounds;
     this.archive=archive;
-    dominanceComparator  = new DominanceComparator();
-    constraintComparator = new OverallConstraintViolationComparator();
+    dominanceComparator  = new DominanceComparator<S>();
+    constraintComparator = new OverallConstraintViolationComparator<S>();
 
     numberOfImprovements = 0 ;
     numberOfNonComparableSolutions = 0 ;
@@ -68,10 +68,10 @@ public class ArchiveMutationLocalSearch<S extends Solution<?>> implements LocalS
     int rounds = improvementRounds;
 
     while (i < rounds) {
-      S mutatedSolution = (S) mutationOperator.execute(solution.copy());
+      S mutatedSolution = mutationOperator.execute((S) solution.copy());
       if (problem.getNumberOfConstraints() > 0) {
 
-        ((ConstrainedProblem) problem).evaluateConstraints(mutatedSolution);
+        ((ConstrainedProblem<S>) problem).evaluateConstraints(mutatedSolution);
         best = constraintComparator.compare(mutatedSolution, solution);
         if (best == 0)
         {

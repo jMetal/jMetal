@@ -62,13 +62,13 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
   protected int[][] frequency;
   protected int[][] reverseFrequency;
 
-  protected StrengthRawFitness strengthRawFitness; //TODO: invert this dependency
-  protected Comparator<Solution> fitnessComparator; //TODO: invert this dependency
+  protected StrengthRawFitness<DoubleSolution> strengthRawFitness; //TODO: invert this dependency
+  protected Comparator<DoubleSolution> fitnessComparator; //TODO: invert this dependency
   protected MarkAttribute marked;
   protected DistanceToSolutionListAttribute distanceToSolutionListAttribute;
-  protected Comparator<Solution> dominanceComparator;
-  protected Comparator<Solution> equalComparator;
-  protected Comparator<Solution> crowdingDistanceComparator;
+  protected Comparator<DoubleSolution> dominanceComparator;
+  protected Comparator<DoubleSolution> equalComparator;
+  protected Comparator<DoubleSolution> crowdingDistanceComparator;
 
   public ABYSS(DoubleProblem problem, int maxEvaluations, int populationSize, int referenceSet1Size,
       int referenceSet2Size, int archiveSize, Archive<DoubleSolution> archive,
@@ -99,14 +99,14 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
     frequency       = new int[numberOfSubRanges][problem.getNumberOfVariables()] ;
     reverseFrequency = new int[numberOfSubRanges][problem.getNumberOfVariables()] ;
 
-    strengthRawFitness = new StrengthRawFitness() ;
-    fitnessComparator = new StrengthFitnessComparator();
+    strengthRawFitness = new StrengthRawFitness<DoubleSolution>() ;
+    fitnessComparator = new StrengthFitnessComparator<DoubleSolution>();
     marked = new MarkAttribute();
     distanceToSolutionListAttribute = new DistanceToSolutionListAttribute();
-    crowdingDistanceComparator = new CrowdingDistanceComparator();
+    crowdingDistanceComparator = new CrowdingDistanceComparator<DoubleSolution>();
 
-    dominanceComparator = new DominanceComparator();
-    equalComparator = new EqualSolutionsComparator();
+    dominanceComparator = new DominanceComparator<DoubleSolution>();
+    equalComparator = new EqualSolutionsComparator<DoubleSolution>();
 
     evaluations = 0 ;
   }
@@ -252,7 +252,7 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
         double aux = SolutionUtils.distanceBetweenSolutions(getPopulation().get(j), individual);
 
         if (aux < distanceToSolutionListAttribute.getAttribute(individual)) {
-          Solution auxSolution = getPopulation().get(j);
+          DoubleSolution auxSolution = getPopulation().get(j);
           distanceToSolutionListAttribute.setAttribute(auxSolution, aux);
         }
       }
@@ -266,7 +266,7 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
         for (int k = 0; k < referenceSet2.size(); k++) {
           if (i != j) {
             double aux = SolutionUtils.distanceBetweenSolutions(referenceSet2.get(j), referenceSet2.get(k));
-            Solution auxSolution = referenceSet2.get(j);
+            DoubleSolution auxSolution = referenceSet2.get(j);
             if (aux < distanceToSolutionListAttribute.getAttribute(auxSolution)) {
               distanceToSolutionListAttribute.setAttribute(auxSolution, aux);
             }
@@ -425,8 +425,8 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
     for (List<DoubleSolution> pair : solutionList) {
       List<DoubleSolution> offspring = (List<DoubleSolution>) crossover.execute(pair);
       if (problem instanceof ConstrainedProblem) {
-        ((ConstrainedProblem) problem).evaluateConstraints(offspring.get(0));
-        ((ConstrainedProblem) problem).evaluateConstraints(offspring.get(1));
+        ((ConstrainedProblem<DoubleSolution>) problem).evaluateConstraints(offspring.get(0));
+        ((ConstrainedProblem<DoubleSolution>) problem).evaluateConstraints(offspring.get(1));
       }
 
       problem.evaluate(offspring.get(0));
@@ -485,7 +485,7 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
     while (getPopulation().size() < getPopulationSize()) {
       DoubleSolution solution = diversificationGeneration();
       if (problem instanceof ConstrainedProblem){
-        ((ConstrainedProblem)problem).evaluateConstraints(solution);
+        ((ConstrainedProblem<DoubleSolution>)problem).evaluateConstraints(solution);
       }
 
       problem.evaluate(solution);

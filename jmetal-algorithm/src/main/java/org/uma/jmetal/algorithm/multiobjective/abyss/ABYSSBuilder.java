@@ -15,21 +15,21 @@ import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 /**
  *  @author Cristobal Barba
  */
-public class ABYSSBuilder implements AlgorithmBuilder {
+public class ABYSSBuilder implements AlgorithmBuilder<ABYSS> {
   private DoubleProblem problem  ;
-  private CrossoverOperator crossoverOperator   ;
+  private CrossoverOperator<DoubleSolution> crossoverOperator   ;
   protected LocalSearchOperator<DoubleSolution> improvementOperator ;
 
-  private MutationOperator mutationOperator;
+  private MutationOperator<DoubleSolution> mutationOperator;
   private int numberOfSubranges;
   private int populationSize;
   private int refSet1Size;
   private int refSet2Size;
   private int archiveSize;
   private int maxEvaluations;
-  private CrowdingDistanceArchive archive;
+  private CrowdingDistanceArchive<DoubleSolution> archive;
 
-  public ABYSSBuilder(DoubleProblem problem, Archive archive){
+  public ABYSSBuilder(DoubleProblem problem, Archive<DoubleSolution> archive){
     this.populationSize = 20;
     this.maxEvaluations = 25000;
     this.archiveSize = 100;
@@ -43,15 +43,15 @@ public class ABYSSBuilder implements AlgorithmBuilder {
     double mutationProbability= 1.0/problem.getNumberOfVariables();
     this.mutationOperator = new PolynomialMutation(mutationProbability,distributionIndex);
     int improvementRounds= 1;
-    this.archive =(CrowdingDistanceArchive)archive;
+    this.archive =(CrowdingDistanceArchive<DoubleSolution>)archive;
     this.improvementOperator = new ArchiveMutationLocalSearch<>(improvementRounds,mutationOperator,this.archive,problem);
   }
 
-  public CrossoverOperator getCrossoverOperator() {
+  public CrossoverOperator<DoubleSolution> getCrossoverOperator() {
     return crossoverOperator;
   }
 
-  public ABYSSBuilder setCrossoverOperator(CrossoverOperator crossoverOperator) {
+  public ABYSSBuilder setCrossoverOperator(CrossoverOperator<DoubleSolution> crossoverOperator) {
     this.crossoverOperator = crossoverOperator;
     return  this;
   }
@@ -65,11 +65,11 @@ public class ABYSSBuilder implements AlgorithmBuilder {
     return  this;
   }
 
-  public MutationOperator getMutationOperator() {
+  public MutationOperator<DoubleSolution> getMutationOperator() {
     return mutationOperator;
   }
 
-  public ABYSSBuilder setMutationOperator(MutationOperator mutationOperator) {
+  public ABYSSBuilder setMutationOperator(MutationOperator<DoubleSolution> mutationOperator) {
     this.mutationOperator = mutationOperator;
     return  this;
   }
