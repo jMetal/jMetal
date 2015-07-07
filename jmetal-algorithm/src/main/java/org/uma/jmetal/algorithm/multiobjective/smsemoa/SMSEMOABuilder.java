@@ -21,8 +21,8 @@ public class SMSEMOABuilder<S extends Solution<?>> implements AlgorithmBuilder<S
   protected int populationSize;
   protected int maxEvaluations;
 
-  private CrossoverOperator<S> crossoverOperator;
-  private MutationOperator<S> mutationOperator;
+  protected CrossoverOperator<S> crossoverOperator;
+  protected MutationOperator<S> mutationOperator;
   protected SelectionOperator<List<S>, S> selectionOperator;
 
   protected double offset ;
@@ -78,5 +78,37 @@ public class SMSEMOABuilder<S extends Solution<?>> implements AlgorithmBuilder<S
   @Override public SMSEMOA<S> build() {
     return new SMSEMOA<S>(problem, maxEvaluations, populationSize, offset,
         crossoverOperator, mutationOperator, selectionOperator);
+  }
+
+  /*
+   * Getters
+   */
+
+  public Problem<S> getProblem() {
+    return problem;
+  }
+
+  public int getPopulationSize() {
+    return populationSize;
+  }
+
+  public int getMaxEvaluations() {
+    return maxEvaluations;
+  }
+
+  public CrossoverOperator<S> getCrossoverOperator() {
+    return crossoverOperator;
+  }
+
+  public MutationOperator<S> getMutationOperator() {
+    return mutationOperator;
+  }
+
+  public SelectionOperator<List<S>, S> getSelectionOperator() {
+    return selectionOperator;
+  }
+
+  public double getOffset() {
+    return offset;
   }
 }

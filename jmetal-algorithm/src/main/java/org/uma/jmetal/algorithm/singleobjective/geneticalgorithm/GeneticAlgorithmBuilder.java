@@ -37,7 +37,7 @@ public class GeneticAlgorithmBuilder<S extends Solution<?>> {
    */
   public GeneticAlgorithmBuilder(Problem<S> problem,
       CrossoverOperator<S> crossoverOperator,
-      MutationOperator<S> mutationOperator, GeneticAlgorithmVariant variant) {
+      MutationOperator<S> mutationOperator) {
     this.problem = problem;
     maxEvaluations = 25000;
     populationSize = 100;
@@ -47,7 +47,7 @@ public class GeneticAlgorithmBuilder<S extends Solution<?>> {
 
     evaluator = new SequentialSolutionListEvaluator<S>();
 
-    this.variant = variant ;
+    this.variant = GeneticAlgorithmVariant.GENERATIONAL ;
   }
 
   public GeneticAlgorithmBuilder<S> setMaxEvaluations(int maxEvaluations) {
@@ -74,6 +74,12 @@ public class GeneticAlgorithmBuilder<S extends Solution<?>> {
     return this;
   }
 
+  public GeneticAlgorithmBuilder<S> setVariant(GeneticAlgorithmVariant variant) {
+    this.variant = variant;
+
+    return this;
+  }
+
   public Algorithm<S> build() {
     if (variant == GeneticAlgorithmVariant.GENERATIONAL) {
       return new GenerationalGeneticAlgorithm<S>(problem, maxEvaluations, populationSize,
@@ -84,5 +90,40 @@ public class GeneticAlgorithmBuilder<S extends Solution<?>> {
     } else {
       throw new JMetalException("Unknown variant: " + variant) ;
     }
+  }
+
+  /*
+   * Getters
+   */
+  public Problem<S> getProblem() {
+    return problem;
+  }
+
+  public int getMaxEvaluations() {
+    return maxEvaluations;
+  }
+
+  public int getPopulationSize() {
+    return populationSize;
+  }
+
+  public CrossoverOperator<S> getCrossoverOperator() {
+    return crossoverOperator;
+  }
+
+  public MutationOperator<S> getMutationOperator() {
+    return mutationOperator;
+  }
+
+  public SelectionOperator<List<S>, S> getSelectionOperator() {
+    return selectionOperator;
+  }
+
+  public SolutionListEvaluator<S> getEvaluator() {
+    return evaluator;
+  }
+
+  public GeneticAlgorithmVariant getVariant() {
+    return variant ;
   }
 }

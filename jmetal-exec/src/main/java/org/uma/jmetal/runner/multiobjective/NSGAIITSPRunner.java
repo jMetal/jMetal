@@ -72,8 +72,7 @@ public class NSGAIITSPRunner {
 
     selection = new BinaryTournamentSelection<PermutationSolution<Integer>>(new RankingAndCrowdingDistanceComparator<PermutationSolution<Integer>>());
 
-    algorithm = new NSGAIIBuilder<PermutationSolution<Integer>>(problem, crossover, mutation,
-        NSGAIIBuilder.NSGAIIVariant.NSGAII)
+    algorithm = new NSGAIIBuilder<PermutationSolution<Integer>>(problem, crossover, mutation)
             .setSelectionOperator(selection)
             .setMaxIterations(10000)
             .setPopulationSize(100)

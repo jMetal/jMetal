@@ -89,11 +89,11 @@ public class NSGAIIMeasuresRunner {
     int maxIterations = 250 ;
     int populationSize = 100 ;
 
-    algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation,
-        NSGAIIBuilder.NSGAIIVariant.Measures)
+    algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation)
         .setSelectionOperator(selection)
         .setMaxIterations(maxIterations)
         .setPopulationSize(populationSize)
+        .setVariant(NSGAIIBuilder.NSGAIIVariant.Measures)
         .build() ;
 
     /* Measure management */

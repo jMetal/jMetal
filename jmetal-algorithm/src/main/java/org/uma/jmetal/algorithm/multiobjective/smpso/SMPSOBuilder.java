@@ -247,6 +247,30 @@ public class SMPSOBuilder implements AlgorithmBuilder<SMPSO> {
         r2Min, r2Max, c1Min, c1Max, c2Min, c2Max, weightMin, weightMax, changeVelocity1,
         changeVelocity2, evaluator);
   }
+
+  /*
+   * Getters
+   */
+
+  public DoubleProblem getProblem() {
+    return problem;
+  }
+
+  public int getArchiveSize() {
+    return archiveSize;
+  }
+
+  public MutationOperator<DoubleSolution> getMutationOperator() {
+    return mutationOperator;
+  }
+
+  public Archive<DoubleSolution> getLeaders() {
+    return leaders;
+  }
+
+  public SolutionListEvaluator<DoubleSolution> getEvaluator() {
+    return evaluator;
+  }
 }
 
 

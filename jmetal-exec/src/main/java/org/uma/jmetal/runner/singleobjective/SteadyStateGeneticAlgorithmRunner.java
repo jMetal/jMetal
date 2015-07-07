@@ -51,15 +51,15 @@ public class SteadyStateGeneticAlgorithmRunner {
         new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0) ;
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selectionOperator = new BinaryTournamentSelection<DoubleSolution>() ;
 
-    algorithm = new GeneticAlgorithmBuilder<DoubleSolution>(problem, crossoverOperator, mutationOperator,
-        GeneticAlgorithmBuilder.GeneticAlgorithmVariant.STEADY_STATE)
-            .setPopulationSize(100)
-            .setMaxEvaluations(25000)
-            .setSelectionOperator(selectionOperator)
-            .build() ;
+    algorithm = new GeneticAlgorithmBuilder<DoubleSolution>(problem, crossoverOperator, mutationOperator)
+        .setPopulationSize(100)
+        .setMaxEvaluations(25000)
+        .setSelectionOperator(selectionOperator)
+        .setVariant(GeneticAlgorithmBuilder.GeneticAlgorithmVariant.STEADY_STATE)
+        .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-            .execute() ;
+        .execute() ;
 
     long computingTime = algorithmRunner.getComputingTime() ;
 
@@ -68,10 +68,10 @@ public class SteadyStateGeneticAlgorithmRunner {
     population.add(solution) ;
 
     new SolutionSetOutput.Printer(population)
-            .setSeparator("\t")
-            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
-            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
-            .print();
+        .setSeparator("\t")
+        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+        .print();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
     JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");

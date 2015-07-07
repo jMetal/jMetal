@@ -17,17 +17,16 @@ import java.util.List;
  * Created by juanjo 
  */
 public class SPEA2Builder<S extends Solution<?>> implements AlgorithmBuilder<SPEA2<S>> {
-
   /**
    * SPEA2Builder class
    */
-  private final Problem<S> problem;
-  private int maxIterations;
-  private int populationSize;
-  private CrossoverOperator<S> crossoverOperator;
-  private MutationOperator<S> mutationOperator;
-  private SelectionOperator<List<S>, S> selectionOperator;
-  private SolutionListEvaluator<S> evaluator;
+  protected final Problem<S> problem;
+  protected int maxIterations;
+  protected int populationSize;
+  protected CrossoverOperator<S> crossoverOperator;
+  protected MutationOperator<S> mutationOperator;
+  protected SelectionOperator<List<S>, S> selectionOperator;
+  protected SolutionListEvaluator<S> evaluator;
 
   /**
    * SPEA2Builder constructor

@@ -32,17 +32,17 @@ import java.util.List;
  * This class implements the PAES algorithm.
  */
 public class PAES<S extends Solution<?>> extends AbstractEvolutionStrategy<S, List<S>> {
-  private Problem<S> problem;
+  protected Problem<S> problem;
 
-  private int archiveSize;
-  private int maxEvaluations;
-  private int biSections;
-  private int evaluations;
+  protected int archiveSize;
+  protected int maxEvaluations;
+  protected int biSections;
+  protected int evaluations;
 
-  private MutationOperator<S> mutationOperator;
+  protected MutationOperator<S> mutationOperator;
 
-  private AdaptiveGridArchive<S> archive;
-  private Comparator<S> comparator;
+  protected AdaptiveGridArchive<S> archive;
+  protected Comparator<S> comparator;
 
   /**
    * Constructor

@@ -59,7 +59,7 @@ public class GenerationalGeneticAlgorithmTSPRunner {
 
     selection = new BinaryTournamentSelection<PermutationSolution<Integer>>(new RankingAndCrowdingDistanceComparator<PermutationSolution<Integer>>());
 
-    algorithm = new GeneticAlgorithmBuilder<>(problem, crossover, mutation, GeneticAlgorithmBuilder.GeneticAlgorithmVariant.GENERATIONAL)
+    algorithm = new GeneticAlgorithmBuilder<>(problem, crossover, mutation)
             .setPopulationSize(100)
             .setMaxEvaluations(250000)
             .setSelectionOperator(selection)

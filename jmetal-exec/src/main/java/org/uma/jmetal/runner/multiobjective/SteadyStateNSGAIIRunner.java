@@ -79,24 +79,24 @@ public class SteadyStateNSGAIIRunner {
 
     selection = new BinaryTournamentSelection<DoubleSolution>();
 
-    algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation,
-        NSGAIIBuilder.NSGAIIVariant.SteadyStateNSGAII)
-            .setSelectionOperator(selection)
-            .setMaxIterations(25000)
-            .setPopulationSize(100)
-            .build() ;
+    algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation)
+        .setSelectionOperator(selection)
+        .setMaxIterations(25000)
+        .setPopulationSize(100)
+        .setVariant(NSGAIIBuilder.NSGAIIVariant.SteadyStateNSGAII)
+        .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-            .execute() ;
+        .execute() ;
 
     List<DoubleSolution> population = algorithm.getResult() ;
     long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)
-            .setSeparator("\t")
-            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
-            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
-            .print();
+        .setSeparator("\t")
+        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+        .print();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
     JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");

@@ -49,8 +49,7 @@ public class GenerationalGeneticAlgorithmRunner {
     MutationOperator<BinarySolution> mutationOperator = new BitFlipMutation(1.0 / problem.getNumberOfBits(0)) ;
     SelectionOperator<List<BinarySolution>, BinarySolution> selectionOperator = new BinaryTournamentSelection<BinarySolution>();
 
-    algorithm = new GeneticAlgorithmBuilder<BinarySolution>(problem,
-        crossoverOperator, mutationOperator, GeneticAlgorithmBuilder.GeneticAlgorithmVariant.GENERATIONAL)
+    algorithm = new GeneticAlgorithmBuilder<BinarySolution>(problem, crossoverOperator, mutationOperator)
             .setPopulationSize(100)
             .setMaxEvaluations(25000)
             .setSelectionOperator(selectionOperator)

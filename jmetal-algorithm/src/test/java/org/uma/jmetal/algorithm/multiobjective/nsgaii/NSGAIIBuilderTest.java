@@ -44,7 +44,7 @@ public class NSGAIIBuilderTest {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    builder = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, NSGAIIBuilder.NSGAIIVariant.NSGAII);
+    builder = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation);
   }
 
   @After public void cleanup() {

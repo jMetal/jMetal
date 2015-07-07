@@ -51,8 +51,7 @@ public class NSGAIIStudy  {
     for (int i = 0 ; i < problemList.size(); i++) {
       algorithms.add(
           new NSGAIIBuilder<>(problemList.get(i), new SBXCrossover(1.0, 20.0),
-              new PolynomialMutation(1.0/problemList.get(i).getNumberOfVariables(), 20.0),
-              NSGAIIBuilder.NSGAIIVariant.NSGAII)
+              new PolynomialMutation(1.0/problemList.get(i).getNumberOfVariables(), 20.0))
               .build()) ;
     }
 

@@ -25,15 +25,15 @@ public class MOCellBuilder<S extends Solution<?>> implements AlgorithmBuilder<MO
   /**
    * MOCellBuilder class
    */
-  private final Problem<S> problem;
-  private int maxEvaluations;
-  private int populationSize;
-  private int archiveSize ;
-  private CrossoverOperator<S>  crossoverOperator;
-  private MutationOperator<S> mutationOperator;
-  private SelectionOperator<List<S>,S> selectionOperator;
-  private SolutionListEvaluator<S> evaluator;
-  private Neighborhood<S> neighborhood ;
+  protected final Problem<S> problem;
+  protected int maxEvaluations;
+  protected int populationSize;
+  protected int archiveSize ;
+  protected CrossoverOperator<S>  crossoverOperator;
+  protected MutationOperator<S> mutationOperator;
+  protected SelectionOperator<List<S>,S> selectionOperator;
+  protected SolutionListEvaluator<S> evaluator;
+  protected Neighborhood<S> neighborhood ;
 
   /**
    * MOCellBuilder constructor

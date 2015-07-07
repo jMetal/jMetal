@@ -30,29 +30,29 @@ import org.uma.jmetal.util.AlgorithmBuilder;
 public class MOEADBuilder implements AlgorithmBuilder<AbstractMOEAD<DoubleSolution>> {
   public enum Variant {MOEAD, ConstraintMOEAD, MOEADDRA} ;
 
-  private Problem<DoubleSolution> problem ;
+  protected Problem<DoubleSolution> problem ;
 
   /** T in Zhang & Li paper */
-  private int neighborSize;
+  protected int neighborSize;
   /** Delta in Zhang & Li paper */
-  private double neighborhoodSelectionProbability;
+  protected double neighborhoodSelectionProbability;
   /** nr in Zhang & Li paper */
-  private int maximumNumberOfReplacedSolutions;
+  protected int maximumNumberOfReplacedSolutions;
 
-  private MOEAD.FunctionType functionType;
+  protected MOEAD.FunctionType functionType;
 
-  private CrossoverOperator<DoubleSolution> crossover;
-  private MutationOperator<DoubleSolution> mutation;
-  private String dataDirectory;
+  protected CrossoverOperator<DoubleSolution> crossover;
+  protected MutationOperator<DoubleSolution> mutation;
+  protected String dataDirectory;
 
-  private int populationSize;
-  private int resultPopulationSize ;
+  protected int populationSize;
+  protected int resultPopulationSize ;
 
-  private int maxEvaluations;
+  protected int maxEvaluations;
 
-  private int numberOfThreads ;
+  protected int numberOfThreads ;
 
-  private Variant moeadVariant ;
+  protected Variant moeadVariant ;
 
   /** Constructor */
   public MOEADBuilder(Problem<DoubleSolution> problem, Variant variant) {

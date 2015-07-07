@@ -96,7 +96,6 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
     for (int i = 0; i < populationSize; i++) {
       S newIndividual = problem.createSolution();
       population.add(newIndividual);
-      archive.add(newIndividual);
     }
     location = new LocationAttribute<>(population);
     return population;
@@ -105,9 +104,14 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
   @Override
   protected List<S> evaluatePopulation(List<S> population) {
     population = evaluator.evaluate(population, problem);
+    for (S solution : population) {
+      archive.add((S)solution.copy()) ;
+    }
+    /*
     Iterator<S> it = population.iterator();
     while (it.hasNext())
       archive.add(it.next());
+      */
     return population;
   }
 

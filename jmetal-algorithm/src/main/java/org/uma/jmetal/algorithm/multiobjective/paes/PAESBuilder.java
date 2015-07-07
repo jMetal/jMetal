@@ -22,13 +22,13 @@ import org.uma.jmetal.util.AlgorithmBuilder;
  * Created by ajnebro on 17/11/14.
  */
 public class PAESBuilder<S extends Solution<?>>  implements AlgorithmBuilder<PAES<S>> {
-  public Problem<S> problem;
+  private Problem<S> problem;
 
-  public int archiveSize;
-  public int maxEvaluations;
-  public int biSections;
+  private int archiveSize;
+  private int maxEvaluations;
+  private int biSections;
 
-  public MutationOperator<S> mutationOperator;
+  private MutationOperator<S> mutationOperator;
 
   public PAESBuilder(Problem<S> problem) {
     this.problem = problem;
@@ -60,5 +60,28 @@ public class PAESBuilder<S extends Solution<?>>  implements AlgorithmBuilder<PAE
 
   public PAES<S> build() {
     return new PAES<S>(problem, archiveSize, maxEvaluations, biSections, mutationOperator);
+  }
+
+  /*
+   * Getters
+   */
+  public Problem<S> getProblem() {
+    return problem;
+  }
+
+  public int getArchiveSize() {
+    return archiveSize;
+  }
+
+  public int getMaxEvaluations() {
+    return maxEvaluations;
+  }
+
+  public int getBiSections() {
+    return biSections;
+  }
+
+  public MutationOperator<S> getMutationOperator() {
+    return mutationOperator;
   }
 }

@@ -75,15 +75,18 @@ public class ParallelNSGAIIRunner {
 
     selection = new BinaryTournamentSelection<DoubleSolution>();
 
-    algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, NSGAIIBuilder.NSGAIIVariant.NSGAII)
-            .setSelectionOperator(selection)
-            .setMaxIterations(250)
-            .setPopulationSize(100)
-            .setSolutionListEvaluator(new MultithreadedSolutionListEvaluator<DoubleSolution>(8, problem))
-            .build() ;
+    NSGAIIBuilder<DoubleSolution> builder = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation)
+        .setSelectionOperator(selection)
+        .setMaxIterations(250)
+        .setPopulationSize(100)
+        .setSolutionListEvaluator(new MultithreadedSolutionListEvaluator<DoubleSolution>(8, problem)) ;
+
+    algorithm = builder.build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
+
+    builder.getSolutionListEvaluator().shutdown();
 
     List<DoubleSolution> population = algorithm.getResult() ;
     long computingTime = algorithmRunner.getComputingTime() ;

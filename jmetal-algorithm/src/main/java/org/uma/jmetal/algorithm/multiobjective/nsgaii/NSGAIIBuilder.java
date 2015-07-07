@@ -36,7 +36,7 @@ public class NSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<NS
    * NSGAIIBuilder constructor
    */
   public NSGAIIBuilder(Problem<S> problem, CrossoverOperator<S> crossoverOperator,
-      MutationOperator<S> mutationOperator, NSGAIIVariant variant) {
+      MutationOperator<S> mutationOperator) {
     this.problem = problem;
     maxIterations = 250;
     populationSize = 100;
@@ -45,7 +45,7 @@ public class NSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<NS
     selectionOperator = new BinaryTournamentSelection<S>();
     evaluator = new SequentialSolutionListEvaluator<S>();
 
-    this.variant = variant ;
+    this.variant = NSGAIIVariant.NSGAII ;
   }
 
   public NSGAIIBuilder<S> setMaxIterations(int maxIterations) {
@@ -81,6 +81,13 @@ public class NSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<NS
       throw new JMetalException("evaluator is null");
     }
     this.evaluator = evaluator;
+
+    return this;
+  }
+
+
+  public NSGAIIBuilder<S> setVariant(NSGAIIVariant variant) {
+    this.variant = variant;
 
     return this;
   }

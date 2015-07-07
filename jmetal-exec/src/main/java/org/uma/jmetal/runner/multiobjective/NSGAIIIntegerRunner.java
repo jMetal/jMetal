@@ -74,7 +74,7 @@ public class NSGAIIIntegerRunner {
 
     selection = new BinaryTournamentSelection<IntegerSolution>() ;
 
-    algorithm = new NSGAIIBuilder<IntegerSolution>(problem, crossover, mutation, NSGAIIBuilder.NSGAIIVariant.NSGAII)
+    algorithm = new NSGAIIBuilder<IntegerSolution>(problem, crossover, mutation)
             .setSelectionOperator(selection)
             .setMaxIterations(250)
             .setPopulationSize(100)

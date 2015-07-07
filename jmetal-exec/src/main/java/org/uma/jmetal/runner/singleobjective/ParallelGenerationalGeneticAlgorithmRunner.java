@@ -60,16 +60,19 @@ public class ParallelGenerationalGeneticAlgorithmRunner {
     MutationOperator<BinarySolution> mutationOperator = new BitFlipMutation(1.0 / problem.getNumberOfBits(0)) ;
     SelectionOperator<List<BinarySolution>, BinarySolution> selectionOperator = new BinaryTournamentSelection<BinarySolution>();
 
-    algorithm = new GeneticAlgorithmBuilder<BinarySolution>(problem, crossoverOperator, mutationOperator,
-        GeneticAlgorithmBuilder.GeneticAlgorithmVariant.GENERATIONAL)
-            .setPopulationSize(100)
-            .setMaxEvaluations(25000)
-            .setSelectionOperator(selectionOperator)
-            .setSolutionListEvaluator(new MultithreadedSolutionListEvaluator<BinarySolution>(numberOfCores, problem))
-            .build() ;
+    GeneticAlgorithmBuilder<BinarySolution> builder = new GeneticAlgorithmBuilder<BinarySolution>(
+        problem, crossoverOperator, mutationOperator)
+        .setPopulationSize(100)
+        .setMaxEvaluations(25000)
+        .setSelectionOperator(selectionOperator)
+        .setSolutionListEvaluator(new MultithreadedSolutionListEvaluator<BinarySolution>(numberOfCores, problem)) ;
+
+    algorithm = builder.build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-            .execute() ;
+        .execute() ;
+
+    builder.getEvaluator().shutdown();
 
     BinarySolution solution = algorithm.getResult() ;
     List<BinarySolution> population = new ArrayList<>(1) ;
@@ -78,10 +81,10 @@ public class ParallelGenerationalGeneticAlgorithmRunner {
     long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)
-            .setSeparator("\t")
-            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
-            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
-            .print();
+        .setSeparator("\t")
+        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+        .print();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
     JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
