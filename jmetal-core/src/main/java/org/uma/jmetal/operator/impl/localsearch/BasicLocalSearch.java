@@ -19,10 +19,10 @@ import java.util.Comparator;
 public class BasicLocalSearch<S extends Solution<?>> implements LocalSearchOperator<S>{
   private Problem<S> problem;
   private int improvementRounds ;
-  private Comparator constraintComparator ;
-  private Comparator comparator ;
+  private Comparator<S> constraintComparator ;
+  private Comparator<S> comparator ;
 
-  private MutationOperator mutationOperator;
+  private MutationOperator<S> mutationOperator;
   private int evaluations ;
   private int numberOfImprovements ;
 
@@ -44,7 +44,7 @@ public class BasicLocalSearch<S extends Solution<?>> implements LocalSearchOpera
     this.mutationOperator=mutationOperator;
     this.improvementRounds=improvementRounds;
     this.comparator  = comparator ;
-    constraintComparator = new OverallConstraintViolationComparator();
+    constraintComparator = new OverallConstraintViolationComparator<S>();
 
     randomGenerator = JMetalRandom.getInstance() ;
     numberOfImprovements = 0 ;
@@ -64,10 +64,10 @@ public class BasicLocalSearch<S extends Solution<?>> implements LocalSearchOpera
     int rounds = improvementRounds;
 
     while (i < rounds) {
-      S mutatedSolution = (S) mutationOperator.execute(solution.copy());
+      S mutatedSolution = mutationOperator.execute((S) solution.copy());
       if (problem.getNumberOfConstraints() > 0) {
 
-        ((ConstrainedProblem) problem).evaluateConstraints(mutatedSolution);
+        ((ConstrainedProblem<S>) problem).evaluateConstraints(mutatedSolution);
         best = constraintComparator.compare(mutatedSolution, solution);
         if (best == 0) {
           problem.evaluate(mutatedSolution);
