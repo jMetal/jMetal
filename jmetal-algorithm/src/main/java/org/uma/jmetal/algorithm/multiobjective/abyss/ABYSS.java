@@ -8,7 +8,6 @@ import org.uma.jmetal.problem.ConstrainedProblem;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionUtils;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
@@ -371,11 +370,7 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
 
   @Override
   public boolean restartConditionIsFulfilled(List<DoubleSolution> combinedSolutions) {
-    if (combinedSolutions.isEmpty()) {
-      return true ;
-    } else {
-      return false ;
-    }
+    return combinedSolutions.isEmpty() ;
   }
 
   /**

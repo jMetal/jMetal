@@ -98,8 +98,6 @@ public class ParallelSPEA2Runner {
 
     List<DoubleSolution> population =algorithm.getResult();
 
-
-
     long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)

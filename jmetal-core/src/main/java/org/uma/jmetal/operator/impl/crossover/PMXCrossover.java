@@ -32,8 +32,6 @@ import java.util.List;
 /**
  * This class allows to apply a PMX crossover operator using two parent
  * solutions.
- * NOTE: the operator is applied to the first encodings.variable of the solutions, and
- * the type of those variables must be VariableType_.Permutation.
  */
 public class PMXCrossover implements
     CrossoverOperator<PermutationSolution<Integer>> {
@@ -49,7 +47,6 @@ public class PMXCrossover implements
     }
     this.crossoverProbability = crossoverProbability;
     randomGenerator = JMetalRandom.getInstance() ;
-
   }
 
   /**
