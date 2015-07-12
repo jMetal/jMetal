@@ -29,6 +29,9 @@ import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.qualityindicator.QualityIndicator;
+import org.uma.jmetal.qualityindicator.impl.Epsilon;
+import org.uma.jmetal.qualityindicator.impl.Hypervolume;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
@@ -37,7 +40,10 @@ import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+import org.uma.jmetal.util.front.Front;
+import org.uma.jmetal.util.front.imp.ArrayFront;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
@@ -55,7 +61,7 @@ public class NSGAIIRunner {
    *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner
    *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName
    */
-  public static void main(String[] args) throws JMetalException {
+  public static void main(String[] args) throws JMetalException, FileNotFoundException {
     DoubleProblem problem;
     Algorithm<List<DoubleSolution>> algorithm;
     CrossoverOperator<DoubleSolution> crossover;
@@ -69,7 +75,7 @@ public class NSGAIIRunner {
       problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
     }
 
-    problem = (DoubleProblem)ProblemUtils.<DoubleSolution> loadProblem(problemName);
+    problem = (DoubleProblem) ProblemUtils.<DoubleSolution> loadProblem(problemName);
 
     double crossoverProbability = 0.9 ;
     double crossoverDistributionIndex = 20.0 ;
@@ -99,7 +105,17 @@ public class NSGAIIRunner {
             .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
             .print();
 
+    Front referenceFront = new ArrayFront() ;
+    referenceFront.readFrontFromFile("jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf");
+
+    QualityIndicator hypervolume = new Hypervolume() ;
+    QualityIndicator epsilon = new Epsilon() ;
+    double hvValue = hypervolume.execute(new ArrayFront(population), referenceFront) ;
+    double epsilonValue = epsilon.execute(new ArrayFront(population), referenceFront) ;
+
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
+    JMetalLogger.logger.info("Hypervolume: " + hvValue);
+    JMetalLogger.logger.info("Epsilon    : " + epsilonValue);
     JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
     JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
   }
