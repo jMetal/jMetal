@@ -43,50 +43,39 @@ import java.util.List;
 public class Hypervolume extends SimpleDescribedEntity implements QualityIndicator<List<Solution<?>>, Double> {
   private Front referenceParetoFront ;
 
-  public Hypervolume() {
-    super("HV", "Hypervolume quality indicator") ;
-  }
-
+  /**
+   * Constructor
+   * @param referenceParetoFrontFile
+   * @throws FileNotFoundException
+   */
   public Hypervolume(String referenceParetoFrontFile) throws FileNotFoundException {
-    this() ;
-    Front front = new ArrayFront() ;
+    super("HV", "Hypervolume quality indicator") ;
+    Front front = new ArrayFront();
     front.readFrontFromFile(referenceParetoFrontFile);
     referenceParetoFront = front ;
   }
 
-
-
-  @Override public Double evaluate(List<Solution<?>> solutionList) {
-    return null;
-  }
-
-
-
-  
-
-  public double execute(Front paretoFrontApproximation, Front trueParetoFront) {
-    if (paretoFrontApproximation == null) {
-      throw new JMetalException("The pareto front approximation object is null") ;
-    } else if (trueParetoFront == null) {
-      throw new JMetalException("The pareto front object is null");
+  /**
+   *
+   * @param referenceParetoFront
+   * @throws FileNotFoundException
+   */
+  public Hypervolume(Front referenceParetoFront) {
+    super("HV", "Hypervolume quality indicator") ;
+    if (referenceParetoFront == null) {
+      throw new JMetalException("The pareto front is null");
     }
 
-    return hypervolume(paretoFrontApproximation, trueParetoFront) ;
+    this.referenceParetoFront = referenceParetoFront ;
   }
 
-  public <S extends Solution<?>> double execute(List<S> paretoFrontApproximation,
-      List<S> trueParetoFront) {
-
+  @Override public Double evaluate(List<Solution<?>> paretoFrontApproximation) {
     if (paretoFrontApproximation == null) {
       throw new JMetalException("The pareto front approximation object is null") ;
-    } else if (trueParetoFront == null) {
-      throw new JMetalException("The pareto front object is null");
     }
 
-    return hypervolume(new ArrayFront(paretoFrontApproximation),
-        new ArrayFront(trueParetoFront)) ;
+    return hypervolume(new ArrayFront(paretoFrontApproximation), referenceParetoFront);
   }
-
 
   @Override
   public String getName() {
@@ -97,7 +86,7 @@ public class Hypervolume extends SimpleDescribedEntity implements QualityIndicat
    returns true if 'point1' dominates 'points2' with respect to the
    to the first 'noObjectives' objectives
    */
-  boolean dominates(double point1[], double point2[], int noObjectives) {
+  private boolean dominates(double point1[], double point2[], int noObjectives) {
     int i;
     int betterInAnyObjective;
 
@@ -111,7 +100,7 @@ public class Hypervolume extends SimpleDescribedEntity implements QualityIndicat
     return ((i >= noObjectives) && (betterInAnyObjective > 0));
   }
 
-  void swap(double[][] front, int i, int j) {
+  private void swap(double[][] front, int i, int j) {
     double[] temp;
 
     temp = front[i];
@@ -123,7 +112,7 @@ public class Hypervolume extends SimpleDescribedEntity implements QualityIndicat
   are collected; the points referenced by 'front[0..noPoints-1]' are
   considered; 'front' is resorted, such that 'front[0..n-1]' contains
   the nondominated points; n is returned */
-  int filterNondominatedSet(double[][] front, int noPoints, int noObjectives) {
+  private int filterNondominatedSet(double[][] front, int noPoints, int noObjectives) {
     int i, j;
     int n;
 
@@ -154,7 +143,7 @@ public class Hypervolume extends SimpleDescribedEntity implements QualityIndicat
 
   /* calculate next value regarding dimension 'objective'; consider
      points referenced in 'front[0..noPoints-1]' */
-  double surfaceUnchangedTo(double[][] front, int noPoints, int objective) {
+  private double surfaceUnchangedTo(double[][] front, int noPoints, int objective) {
     int i;
     double minValue, value;
 
@@ -176,7 +165,7 @@ public class Hypervolume extends SimpleDescribedEntity implements QualityIndicat
      dimension 'objective'; the points referenced by
      'front[0..noPoints-1]' are considered; 'front' is resorted, such that
      'front[0..n-1]' contains the remaining points; 'n' is returned */
-  int reduceNondominatedSet(double[][] front, int noPoints, int objective,
+  private int reduceNondominatedSet(double[][] front, int noPoints, int objective,
       double threshold) {
     int n;
     int i;
@@ -223,22 +212,12 @@ public class Hypervolume extends SimpleDescribedEntity implements QualityIndicat
   }
 
   /**
-   * Returns the hypervolume value of a list of solutions
-   *
-   * @param solutionListA    The list
-   * @param solutionListB    The true pareto front
-   */
-  //private double hypervolume (List<? extends Solution> solutionListA, List<? extends Solution> solutionListB) {
-  //  return hypervolume(new ArrayFront(solutionListA), new ArrayFront(solutionListB)) ;
-  //}
-
-  /**
    * Returns the hypervolume value of a front of points
    *
    * @param front        The front
    * @param trueParetoFront    The true pareto front
    */
-  public double hypervolume(Front front, Front trueParetoFront) {
+  private double hypervolume(Front front, Front trueParetoFront) {
 
     double[] maximumValues;
     double[] minimumValues;

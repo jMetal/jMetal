@@ -29,9 +29,9 @@ import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.DoubleProblem;
-import org.uma.jmetal.qualityindicator.QualityIndicator;
-import org.uma.jmetal.qualityindicator.impl.Epsilon;
-import org.uma.jmetal.qualityindicator.impl.Hypervolume;
+import org.uma.jmetal.qualityindicator2.QualityIndicator;
+import org.uma.jmetal.qualityindicator2.impl.Epsilon;
+import org.uma.jmetal.qualityindicator2.impl.Hypervolume;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
@@ -40,8 +40,6 @@ import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-import org.uma.jmetal.util.front.Front;
-import org.uma.jmetal.util.front.imp.ArrayFront;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -105,13 +103,11 @@ public class NSGAIIRunner {
             .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
             .print();
 
-    Front referenceFront = new ArrayFront() ;
-    referenceFront.readFrontFromFile("jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf");
+    QualityIndicator hypervolume = new Hypervolume("jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf") ;
+    QualityIndicator epsilon = new Epsilon("jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf") ;
 
-    QualityIndicator hypervolume = new Hypervolume() ;
-    QualityIndicator epsilon = new Epsilon() ;
-    double hvValue = hypervolume.execute(new ArrayFront(population), referenceFront) ;
-    double epsilonValue = epsilon.execute(new ArrayFront(population), referenceFront) ;
+    Double hvValue = (Double) hypervolume.evaluate(population);
+    Double epsilonValue = (Double) epsilon.evaluate(population);
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
     JMetalLogger.logger.info("Hypervolume: " + hvValue);
