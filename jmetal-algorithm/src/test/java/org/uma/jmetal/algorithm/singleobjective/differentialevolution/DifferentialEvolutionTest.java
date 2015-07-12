@@ -1,15 +1,6 @@
 package org.uma.jmetal.algorithm.singleobjective.differentialevolution;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-
-import java.util.Arrays;
-import java.util.List;
-
 import junit.framework.TestCase;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,6 +14,12 @@ import org.uma.jmetal.operator.impl.selection.DifferentialEvolutionSelection;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
+
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by Antonio J. Nebro on 25/11/14.
@@ -103,7 +100,7 @@ public class DifferentialEvolutionTest {
     assertTrue("Stopping condition not reached", algorithm.isStoppingConditionReached());
   }
 
-  @Test public void shouldCreateInitialPopulationWhenPopulationSizeIs0() {
+  @Test public void shouldCreateInitialPopulationWhenPopulationSizeIsZero() {
     Integer populationSize = 0;
     ReflectionTestUtils.setField(algorithm, "populationSize", populationSize);
 
@@ -112,7 +109,7 @@ public class DifferentialEvolutionTest {
     assertTrue("Population is not empty.", population.isEmpty());
   }
 
-  @Test public void shouldCreateInitialPopulationWhenPopulationSizeIsBiggerThan0() {
+  @Test public void shouldCreateInitialPopulationWhenPopulationSizeIsBiggerThanZero() {
     int populationSize = 3;
     ReflectionTestUtils.setField(algorithm, "populationSize", populationSize);
 
