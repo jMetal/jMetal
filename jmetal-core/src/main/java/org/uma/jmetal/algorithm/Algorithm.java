@@ -19,9 +19,9 @@ import java.io.Serializable;
  * Interface representing an algorithm
  * @author Antonio J. Nebro
  * @version 0.1
- * @param <R> Result
+ * @param <Result> Result
  */
-public interface Algorithm<R> extends Runnable, Serializable {
-  public void run() ;
-  public R getResult() ;
+public interface Algorithm<Result> extends Runnable, Serializable {
+  void run() ;
+  Result getResult() ;
 }
