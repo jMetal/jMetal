@@ -140,7 +140,7 @@ public class MeasureFactory {
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-					
+
 					long measureStart = System.currentTimeMillis();
 
 					PullMeasure<Value> pull = weakPull.get();

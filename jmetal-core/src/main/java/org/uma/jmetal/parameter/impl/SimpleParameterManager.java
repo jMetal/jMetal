@@ -31,7 +31,7 @@ public class SimpleParameterManager implements ParameterManager {
 	public Collection<Parameter<?>> getParameters() {
 		return parameters.values();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public <Value> Parameter<Value> getParameter(String name) {
