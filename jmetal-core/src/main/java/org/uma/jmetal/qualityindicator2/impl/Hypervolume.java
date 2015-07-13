@@ -50,8 +50,8 @@ public class Hypervolume extends SimpleDescribedEntity implements QualityIndicat
    */
   public Hypervolume(String referenceParetoFrontFile) throws FileNotFoundException {
     super("HV", "Hypervolume quality indicator") ;
-    Front front = new ArrayFront();
-    front.readFrontFromFile(referenceParetoFrontFile);
+    Front front = new ArrayFront(referenceParetoFrontFile);
+    //front.readFrontFromFile(referenceParetoFrontFile);
     referenceParetoFront = front ;
   }
 

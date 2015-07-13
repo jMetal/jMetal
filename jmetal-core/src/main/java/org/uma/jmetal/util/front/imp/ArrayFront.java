@@ -95,7 +95,13 @@ public class ArrayFront implements Front {
     }
   }
 
-  @Override public void readFrontFromFile(String fileName) throws FileNotFoundException {
+  /**
+   * Constructor
+   * @param fileName
+   * @throws FileNotFoundException
+   */
+  public ArrayFront(String fileName) throws FileNotFoundException {
+    this() ;
     InputStream inputStream = createInputStream(fileName) ;
 
     InputStreamReader isr = new InputStreamReader(inputStream);

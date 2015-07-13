@@ -277,7 +277,7 @@ public class WfgHypervolume {
     }
 
     //if (args.length > 0) {
-    front.readFrontFromFile(args[0]);
+    // TODO: front.readFrontFromFile(args[0]);
     //}
 
     int dimensions = front.getPointDimensions();

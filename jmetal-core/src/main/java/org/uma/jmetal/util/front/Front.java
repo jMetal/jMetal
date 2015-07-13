@@ -15,7 +15,6 @@ package org.uma.jmetal.util.front;
 
 import org.uma.jmetal.util.point.Point;
 
-import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.Comparator;
 
@@ -26,8 +25,6 @@ import java.util.Comparator;
  * @version 1.0
  */
 public interface Front extends Serializable {
-  public void readFrontFromFile(String fileName) throws FileNotFoundException;
- // public void createFrontFromAListOfSolutions(List<Solution> solutionList) ;
   public int getNumberOfPoints() ;
   public int getPointDimensions() ;
   public Point getPoint(int index) ;

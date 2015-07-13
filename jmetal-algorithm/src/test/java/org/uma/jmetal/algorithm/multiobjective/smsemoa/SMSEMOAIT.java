@@ -82,11 +82,10 @@ public class SMSEMOAIT {
 
     Hypervolume hypervolume = new Hypervolume() ;
 
-    // Rationale: the default problem is ZDT4, and SMSEMOA, configured with standard settings, should
+    // Rationale: the default problem is ZDT1, and SMSEMOA, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.65
 
-    Front referenceFront = new ArrayFront() ;
-    referenceFront.readFrontFromFile("/referenceFronts/ZDT4.pf");
+    Front referenceFront = new ArrayFront("/referenceFronts/ZDT1.pf") ;
 
     double hv = hypervolume.execute(new ArrayFront(population), referenceFront) ;
 

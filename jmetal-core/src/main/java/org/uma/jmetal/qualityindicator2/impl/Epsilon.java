@@ -50,13 +50,12 @@ public class Epsilon extends SimpleDescribedEntity implements QualityIndicator<L
    * @throws FileNotFoundException
    */
   public Epsilon(String referenceParetoFrontFile) throws FileNotFoundException {
-    super("HV", "Hypervolume quality indicator") ;
+    super("EP", "Epsilon quality indicator") ;
     if (referenceParetoFrontFile == null) {
       throw new JMetalException("The pareto front object is null");
     }
 
-    Front front = new ArrayFront();
-    front.readFrontFromFile(referenceParetoFrontFile);
+    Front front = new ArrayFront(referenceParetoFrontFile);
     referenceParetoFront = front ;
   }
 
@@ -66,7 +65,7 @@ public class Epsilon extends SimpleDescribedEntity implements QualityIndicator<L
    * @throws FileNotFoundException
    */
   public Epsilon(Front referenceParetoFront) {
-    super("HV", "Hypervolume quality indicator") ;
+    super("EP", "Epsilon quality indicator") ;
     if (referenceParetoFront == null) {
       throw new JMetalException("The pareto front is null");
     }

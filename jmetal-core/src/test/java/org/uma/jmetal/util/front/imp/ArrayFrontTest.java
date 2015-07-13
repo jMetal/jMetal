@@ -378,16 +378,14 @@ public class ArrayFrontTest {
       throws FileNotFoundException {
     String fileName = "abcdefadg" ;
 
-    Front front = new ArrayFront() ;
-    front.readFrontFromFile(fileName);
+    Front front = new ArrayFront(fileName) ;
   }
 
   @Test
   public void shouldReadFrontAnEmptyFileCreateAnEmptyFront()
       throws FileNotFoundException {
     String fileName = "/arrayFront/emptyFile.dat" ;
-    Front front = new ArrayFront() ;
-    front.readFrontFromFile(fileName);
+    Front front = new ArrayFront(fileName) ;
 
     assertEquals(0, front.getNumberOfPoints());
   }
@@ -401,8 +399,7 @@ public class ArrayFrontTest {
       throws FileNotFoundException {
     String fileName = "/arrayFront/fileWithOnePoint.dat" ;
 
-    Front front = new ArrayFront() ;
-    front.readFrontFromFile(fileName);
+    Front front = new ArrayFront(fileName) ;
 
     assertEquals(1, front.getNumberOfPoints());
     assertEquals(3, ReflectionTestUtils.getField(front, "pointDimensions"));
@@ -421,8 +418,7 @@ public class ArrayFrontTest {
       throws FileNotFoundException, JMetalException {
     String fileName = "/arrayFront/fileWithWrongData.dat" ;
 
-    Front front = new ArrayFront() ;
-    front.readFrontFromFile(fileName);
+    Front front = new ArrayFront(fileName) ;
   }
 
   /**
@@ -439,8 +435,7 @@ public class ArrayFrontTest {
     exception.expectMessage(containsString("Invalid number of points read. "
         + "Expected: 3, received: 2"));
 
-    Front front = new ArrayFront() ;
-    front.readFrontFromFile(fileName);
+    Front front = new ArrayFront(fileName) ;
   }
 
   /**
@@ -455,8 +450,7 @@ public class ArrayFrontTest {
       throws FileNotFoundException, JMetalException {
     String fileName = "/arrayFront/fileWithFourPoints.dat" ;
 
-    Front front = new ArrayFront() ;
-    front.readFrontFromFile(fileName);
+    Front front = new ArrayFront(fileName) ;
 
     assertEquals(4, front.getNumberOfPoints());
     assertEquals(4, ReflectionTestUtils.getField(front, "pointDimensions"));

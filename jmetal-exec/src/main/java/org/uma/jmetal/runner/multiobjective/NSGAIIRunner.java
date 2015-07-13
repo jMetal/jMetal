@@ -40,6 +40,8 @@ import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+import org.uma.jmetal.util.front.Front;
+import org.uma.jmetal.util.front.imp.ArrayFront;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -103,8 +105,10 @@ public class NSGAIIRunner {
             .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
             .print();
 
-    QualityIndicator hypervolume = new Hypervolume("jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf") ;
-    QualityIndicator epsilon = new Epsilon("jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf") ;
+
+    Front referenceFront = new ArrayFront("jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf") ;
+    QualityIndicator hypervolume = new Hypervolume(referenceFront) ;
+    QualityIndicator epsilon = new Epsilon(referenceFront) ;
 
     Double hvValue = (Double) hypervolume.evaluate(population);
     Double epsilonValue = (Double) epsilon.evaluate(population);

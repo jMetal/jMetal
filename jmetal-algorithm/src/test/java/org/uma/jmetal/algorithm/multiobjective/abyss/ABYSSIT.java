@@ -83,8 +83,7 @@ public class ABYSSIT {
     // Rationale: the default problem is ZDT4, and AbYSS, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.64
 
-    Front referenceFront = new ArrayFront() ;
-    referenceFront.readFrontFromFile("/referenceFronts/ZDT4.pf");
+    Front referenceFront = new ArrayFront("/referenceFronts/ZDT4.pf") ;
 
     double hv = hypervolume.execute(new ArrayFront(population), referenceFront) ;
 
