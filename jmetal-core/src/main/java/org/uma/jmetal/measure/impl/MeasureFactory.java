@@ -191,7 +191,7 @@ public class MeasureFactory {
 		Class<? extends Object> clazz = object.getClass();
 		for (final Method method : clazz.getMethods()) {
 			if (method.getParameterTypes().length == 0
-					&& method.getReturnType() != null
+					&& !method.getReturnType().equals(Void.TYPE)
 					&& !method.getName().equals("getClass")
 					&& method.getName().matches("get[^a-z].*")) {
 				String key = method.getName().substring(3);
