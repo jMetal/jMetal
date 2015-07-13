@@ -20,6 +20,8 @@
 
 package org.uma.jmetal.runner.multiobjective;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.operator.CrossoverOperator;
@@ -30,8 +32,7 @@ import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.qualityindicator2.QualityIndicator;
-import org.uma.jmetal.qualityindicator2.impl.Epsilon;
-import org.uma.jmetal.qualityindicator2.impl.Hypervolume;
+import org.uma.jmetal.qualityindicator2.impl.*;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
@@ -42,6 +43,7 @@ import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
+import org.uma.jmetal.util.front.util.FrontUtils;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -109,13 +111,33 @@ public class NSGAIIRunner {
     Front referenceFront = new ArrayFront("jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf") ;
     QualityIndicator hypervolume = new Hypervolume(referenceFront) ;
     QualityIndicator epsilon = new Epsilon(referenceFront) ;
+    QualityIndicator igd = new InvertedGenerationalDistance(referenceFront) ;
+    QualityIndicator gd = new GenerationalDistance(referenceFront) ;
+    QualityIndicator spread = new Spread(referenceFront) ;
+    QualityIndicator r2 = new R2(referenceFront) ;
+    QualityIndicator errorRatio = new ErrorRatio(referenceFront) ;
+    QualityIndicator setCoverage = new SetCoverage() ;
 
     Double hvValue = (Double) hypervolume.evaluate(population);
     Double epsilonValue = (Double) epsilon.evaluate(population);
+    Double igdValue = (Double) igd.evaluate(population);
+    Double gdValue = (Double) gd.evaluate(population);
+    Double spreadValue = (Double) spread.evaluate(population);
+    Double r2Value = (Double) r2.evaluate(population);
+    Double errorRatioValue = (Double) errorRatio.evaluate(population);
+    Pair<Double, Double> setCoverageValues =
+        (Pair<Double, Double>) setCoverage.evaluate(new ImmutablePair(population, FrontUtils.convertFrontToSolutionList(referenceFront)));
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
-    JMetalLogger.logger.info("Hypervolume: " + hvValue);
-    JMetalLogger.logger.info("Epsilon    : " + epsilonValue);
+    JMetalLogger.logger.info("Hypervolume : " + hvValue);
+    JMetalLogger.logger.info("Epsilon     : " + epsilonValue);
+    JMetalLogger.logger.info("GD          : " + gdValue);
+    JMetalLogger.logger.info("IGD         : " + igdValue);
+    JMetalLogger.logger.info("Spread      : " + spreadValue);
+    JMetalLogger.logger.info("R2          : " + r2Value);
+    JMetalLogger.logger.info("Error ratio : " + errorRatioValue);
+    JMetalLogger.logger.info("C(pop, ref) : " + setCoverageValues.getLeft());
+    JMetalLogger.logger.info("C(ref, pop) : " + setCoverageValues.getRight());
     JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
     JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
   }
