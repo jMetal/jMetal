@@ -8,7 +8,7 @@ public class SimpleParameterTest {
 
 	@Test
 	public void testSetGetAligned() {
-		SimpleParameter<Integer> parameter = new SimpleParameter<>();
+		SimpleParameter<Integer> parameter = new SimpleParameter<>("");
 
 		parameter.set(3);
 		assertEquals(3, (Object) parameter.get());

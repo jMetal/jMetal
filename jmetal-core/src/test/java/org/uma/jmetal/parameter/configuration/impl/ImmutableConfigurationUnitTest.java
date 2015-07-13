@@ -10,7 +10,7 @@ public class ImmutableConfigurationUnitTest {
 
 	@Test
 	public void testGetParameter() {
-		Parameter<Integer> parameter = new SimpleParameter<>();
+		Parameter<Integer> parameter = new SimpleParameter<>("");
 		Integer value = 3;
 		ImmutableConfigurationUnit<Integer> unit = new ImmutableConfigurationUnit<>(
 				parameter, value);
@@ -19,7 +19,7 @@ public class ImmutableConfigurationUnitTest {
 
 	@Test
 	public void testGetValue() {
-		Parameter<Integer> parameter = new SimpleParameter<>();
+		Parameter<Integer> parameter = new SimpleParameter<>("");
 		Integer value = 3;
 		ImmutableConfigurationUnit<Integer> unit = new ImmutableConfigurationUnit<>(
 				parameter, value);
@@ -28,7 +28,7 @@ public class ImmutableConfigurationUnitTest {
 
 	@Test
 	public void testIsApplied() {
-		Parameter<Integer> parameter = new SimpleParameter<>();
+		Parameter<Integer> parameter = new SimpleParameter<>("");
 		Integer value = 3;
 		ImmutableConfigurationUnit<Integer> unit = new ImmutableConfigurationUnit<>(
 				parameter, value);
@@ -45,7 +45,7 @@ public class ImmutableConfigurationUnitTest {
 
 	@Test
 	public void testApply() {
-		Parameter<Integer> parameter = new SimpleParameter<>();
+		Parameter<Integer> parameter = new SimpleParameter<>("");
 		Integer value = 3;
 		ImmutableConfigurationUnit<Integer> unit = new ImmutableConfigurationUnit<>(
 				parameter, value);
