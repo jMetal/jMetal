@@ -12,10 +12,11 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-package org.uma.jmetal.qualityindicator2.impl;
+package org.uma.jmetal.qualityindicator.impl;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
+import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.SolutionListUtils;
@@ -31,7 +32,7 @@ import java.util.List;
  * @version 1.0
  */
 public class SetCoverage extends SimpleDescribedEntity implements
-    org.uma.jmetal.qualityindicator2.QualityIndicator<Pair<List<Solution<?>>, List<Solution<?>>>, Pair<Double, Double>> {
+    QualityIndicator<Pair<List<Solution<?>>, List<Solution<?>>>, Pair<Double, Double>> {
 
   public SetCoverage() {
     super("SC", "Set coverage") ;
