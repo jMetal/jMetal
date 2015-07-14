@@ -11,14 +11,14 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.qualityindicator2.impl;
+package org.uma.jmetal.qualityindicator.impl;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.qualityindicator2.QualityIndicator;
+import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;

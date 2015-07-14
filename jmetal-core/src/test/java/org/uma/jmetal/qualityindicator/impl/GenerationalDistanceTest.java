@@ -11,15 +11,15 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.qualityindicator2.impl;
+package org.uma.jmetal.qualityindicator.impl;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.uma.jmetal.qualityindicator2.QualityIndicator;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
+import org.uma.jmetal.util.front.util.FrontUtils;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
 
@@ -39,18 +39,18 @@ public class GenerationalDistanceTest {
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheFrontApproximationIsNull() {
     exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The pareto front approximation object is null"));
+    exception.expectMessage(containsString("The pareto front approximation is null"));
 
     Front front = new ArrayFront(0, 0) ;
 
-    QualityIndicator gd = new GenerationalDistance(front) ;
+    GenerationalDistance gd = new GenerationalDistance(front) ;
     gd.evaluate(null) ;
   }
 
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheParetoFrontIsNull() {
     exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The pareto front object is null"));
+    exception.expectMessage(containsString("The pareto front is null"));
 
     Front front = null ;
 
@@ -74,9 +74,9 @@ public class GenerationalDistanceTest {
     frontApproximation.setPoint(0, point1);
     paretoFront.setPoint(0, point1);
 
-    QualityIndicator gd = new GenerationalDistance(paretoFront) ;
+    GenerationalDistance gd = new GenerationalDistance(paretoFront) ;
 
-    assertEquals(0.0, (Double)gd.evaluate(frontApproximation), EPSILON);
+    assertEquals(0.0, gd.evaluate(FrontUtils.convertFrontToSolutionList(frontApproximation)), EPSILON);
   }
 /**
   @Test

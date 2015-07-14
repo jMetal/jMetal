@@ -76,7 +76,7 @@ public class GenerationalDistance extends SimpleDescribedEntity implements Quali
 
   @Override public Double evaluate(List<? extends Solution<?>> solutionList) {
     if (solutionList == null) {
-      throw new JMetalException("The pareto front approximation list is null") ;
+      throw new JMetalException("The pareto front approximation is null") ;
     }
 
     return generationalDistance(new ArrayFront(solutionList), referenceParetoFront);
