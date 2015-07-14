@@ -16,12 +16,12 @@ package org.uma.jmetal.util.front.imp;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.util.FrontUtils;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
-import org.uma.jmetal.util.point.impl.PointSolution;
 
 import java.util.List;
 
@@ -767,7 +767,7 @@ public class FrontUtilsTest {
 
     Front front = new ArrayFront(numberOfPoints, numberOfDimensions) ;
 
-    List<PointSolution> list ;
+    List<DoubleSolution> list ;
     list = FrontUtils.convertFrontToSolutionList(front) ;
 
     assertEquals(0, list.size());
@@ -789,7 +789,7 @@ public class FrontUtilsTest {
 
     front.setPoint(0, point1);
 
-    List<PointSolution> list ;
+    List<DoubleSolution> list ;
     list = FrontUtils.convertFrontToSolutionList(front) ;
 
     assertEquals(1, list.size());
@@ -827,7 +827,7 @@ public class FrontUtilsTest {
     front.setPoint(1, point2);
     front.setPoint(2, point3);
 
-    List<PointSolution> list ;
+    List<DoubleSolution> list ;
     list = FrontUtils.convertFrontToSolutionList(front) ;
 
     assertEquals(3, list.size());

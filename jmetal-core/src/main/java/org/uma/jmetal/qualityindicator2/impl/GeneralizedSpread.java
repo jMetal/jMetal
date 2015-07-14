@@ -44,7 +44,7 @@ import java.util.List;
  * multi-objective optimization using a convergence criterion,
  * 2006 IEEE Congress on Evolutionary Computation, 2006, pp. 3234-3241.
  */
-public class GeneralizedSpread extends SimpleDescribedEntity implements QualityIndicator<List<Solution<?>>, Double> {
+public class GeneralizedSpread extends SimpleDescribedEntity implements QualityIndicator<List<? extends Solution<?>>, Double> {
 
   private Front referenceParetoFront ;
 
@@ -77,7 +77,7 @@ public class GeneralizedSpread extends SimpleDescribedEntity implements QualityI
     this.referenceParetoFront = referenceParetoFront ;
   }
 
-  @Override public Double evaluate(List<Solution<?>> solutionList) {
+  @Override public Double evaluate(List<? extends Solution<?>> solutionList) {
     return generalizedSpread(new ArrayFront(solutionList), referenceParetoFront);
   }
 

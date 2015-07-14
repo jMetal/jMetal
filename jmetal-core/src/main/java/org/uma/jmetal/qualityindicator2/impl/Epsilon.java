@@ -41,7 +41,7 @@ import java.util.List;
  * <trueFrontFile> <getNumberOfObjectives>
  */
 
-public class Epsilon extends SimpleDescribedEntity implements QualityIndicator<List<Solution<?>>, Double> {
+public class Epsilon extends SimpleDescribedEntity implements QualityIndicator<List<? extends Solution<?>>, Double> {
   private Front referenceParetoFront ;
 
   /**
@@ -52,7 +52,7 @@ public class Epsilon extends SimpleDescribedEntity implements QualityIndicator<L
   public Epsilon(String referenceParetoFrontFile) throws FileNotFoundException {
     super("EP", "Epsilon quality indicator") ;
     if (referenceParetoFrontFile == null) {
-      throw new JMetalException("The pareto front object is null");
+      throw new JMetalException("The reference pareto front is null");
     }
 
     Front front = new ArrayFront(referenceParetoFrontFile);
@@ -67,13 +67,13 @@ public class Epsilon extends SimpleDescribedEntity implements QualityIndicator<L
   public Epsilon(Front referenceParetoFront) {
     super("EP", "Epsilon quality indicator") ;
     if (referenceParetoFront == null) {
-      throw new JMetalException("The pareto front is null");
+      throw new JMetalException("The reference pareto front is null");
     }
 
     this.referenceParetoFront = referenceParetoFront ;
   }
 
-  @Override public Double evaluate(List<Solution<?>> solutionList) {
+  @Override public Double evaluate(List<? extends Solution<?>> solutionList) {
     if (solutionList == null) {
       throw new JMetalException("The pareto front approximation list is null") ;
     }

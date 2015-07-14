@@ -40,8 +40,12 @@ import java.util.List;
  * IEEE Transactions on Evolutionary Computation, vol. 3, no. 4,
  * pp. 257-271, 1999.
  */
-public class Hypervolume extends SimpleDescribedEntity implements QualityIndicator<List<Solution<?>>, Double> {
+public class Hypervolume extends SimpleDescribedEntity implements QualityIndicator<List<? extends Solution<?>>, Double> {
   private Front referenceParetoFront ;
+
+  public Hypervolume() {
+    super("HV", "Hypervolume quality indicator") ;
+  }
 
   /**
    * Constructor
@@ -49,9 +53,8 @@ public class Hypervolume extends SimpleDescribedEntity implements QualityIndicat
    * @throws FileNotFoundException
    */
   public Hypervolume(String referenceParetoFrontFile) throws FileNotFoundException {
-    super("HV", "Hypervolume quality indicator") ;
+    this() ;
     Front front = new ArrayFront(referenceParetoFrontFile);
-    //front.readFrontFromFile(referenceParetoFrontFile);
     referenceParetoFront = front ;
   }
 
@@ -61,7 +64,7 @@ public class Hypervolume extends SimpleDescribedEntity implements QualityIndicat
    * @throws FileNotFoundException
    */
   public Hypervolume(Front referenceParetoFront) {
-    super("HV", "Hypervolume quality indicator") ;
+    this() ;
     if (referenceParetoFront == null) {
       throw new JMetalException("The pareto front is null");
     }
@@ -69,13 +72,12 @@ public class Hypervolume extends SimpleDescribedEntity implements QualityIndicat
     this.referenceParetoFront = referenceParetoFront ;
   }
 
-  @Override public Double evaluate(List<Solution<?>> paretoFrontApproximation) {
+  @Override public Double evaluate(List<? extends Solution<?>> paretoFrontApproximation) {
     if (paretoFrontApproximation == null) {
-      throw new JMetalException("The pareto front approximation object is null") ;
+      throw new JMetalException("The pareto front approximation is null") ;
     }
 
-    return hypervolume(new ArrayFront(paretoFrontApproximation), referenceParetoFront);
-  }
+    return hypervolume(new ArrayFront(paretoFrontApproximation), referenceParetoFront);  }
 
   @Override
   public String getName() {

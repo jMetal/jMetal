@@ -11,20 +11,22 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.qualityindicator.impl;
+package org.uma.jmetal.qualityindicator2.impl;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontUtils;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
-import org.uma.jmetal.util.point.impl.PointSolution;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,40 +51,25 @@ public class SetCoverageTest {
   }
 
   @Test
-  public void shouldExecuteRaiseAnExceptionIfTheFrontApproximationIsNull() {
+  public void shouldExecuteRaiseAnExceptionIfTheFirstFrontIsNull() {
     exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The front A is null"));
+    exception.expectMessage(containsString("The first front is null"));
 
-    Front front = new ArrayFront(0, 0) ;
-    setCoverage.execute(null, front) ;
+    List<Solution<DoubleSolution>> frontA = null ;
+    List<Solution<DoubleSolution>> frontB = new ArrayList<>() ;
+
+    setCoverage.evaluate(new ImmutablePair(frontA, frontB));
   }
 
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheParetoFrontIsNull() {
     exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The front B is null"));
+    exception.expectMessage(containsString("The second front is null"));
 
-    Front front = new ArrayFront(0, 0) ;
+    List<Solution<DoubleSolution>> frontA = new ArrayList<>() ;
+    List<Solution<DoubleSolution>> frontB = null ;
 
-    setCoverage.execute(front, null) ;
-  }
-
-  @Test
-  public void shouldExecuteRaiseAnExceptionIfTheFrontApproximationListIsNull() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The list A is null"));
-
-    List<DoubleSolution> list = new ArrayList<>();
-    setCoverage.execute(null, list) ;
-  }
-
-  @Test
-  public void shouldExecuteRaiseAnExceptionIfTheParetoFrontListIsNull() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The list B is null"));
-
-    List<DoubleSolution> list = new ArrayList<>();
-    setCoverage.execute(list, null) ;
+    setCoverage.evaluate(new ImmutablePair(frontA, frontB));
   }
 
   @Test
@@ -100,7 +87,11 @@ public class SetCoverageTest {
     frontA.setPoint(0, point1);
     frontB.setPoint(0, point1);
 
-    assertEquals(0.0, setCoverage.execute(frontA, frontB), EPSILON);
+    Pair<Double, Double> result = setCoverage.evaluate(new ImmutablePair(
+        FrontUtils.convertFrontToSolutionList(frontA),
+        FrontUtils.convertFrontToSolutionList(frontB))) ;
+
+    assertEquals(0.0, result.getLeft(), EPSILON);
   }
 
   @Test
@@ -110,7 +101,12 @@ public class SetCoverageTest {
     Front frontA = new ArrayFront(numberOfPoints, numberOfDimensions);
     Front frontB = new ArrayFront(numberOfPoints, numberOfDimensions);
 
-    assertEquals(0.0, setCoverage.execute(frontA, frontB), EPSILON);
+    Pair<Double, Double> result = setCoverage.evaluate(new ImmutablePair(
+        FrontUtils.convertFrontToSolutionList(frontA),
+        FrontUtils.convertFrontToSolutionList(frontB))) ;
+
+    assertEquals(0.0, result.getLeft(), EPSILON);
+    assertEquals(0.0, result.getRight(), EPSILON);
   }
 
   @Test
@@ -125,7 +121,11 @@ public class SetCoverageTest {
 
     frontA.setPoint(0, point1);
 
-    assertEquals(1.0, setCoverage.execute(frontA, frontB), EPSILON);
+    Pair<Double, Double> result = setCoverage.evaluate(new ImmutablePair(
+        FrontUtils.convertFrontToSolutionList(frontA),
+        FrontUtils.convertFrontToSolutionList(frontB))) ;
+
+    assertEquals(1.0, result.getLeft(), EPSILON);
   }
 
   /**
@@ -149,8 +149,12 @@ public class SetCoverageTest {
     frontA.setPoint(0, point1);
     frontB.setPoint(0, point2);
 
-    assertEquals(0.0, setCoverage.execute(frontA, frontB), EPSILON);
-    assertEquals(1.0, setCoverage.execute(frontB, frontA), EPSILON);
+    Pair<Double, Double> result = setCoverage.evaluate(new ImmutablePair(
+        FrontUtils.convertFrontToSolutionList(frontA),
+        FrontUtils.convertFrontToSolutionList(frontB))) ;
+
+    assertEquals(0.0, result.getLeft(), EPSILON);
+    assertEquals(1.0, result.getRight(), EPSILON);
   }
 
   /**
@@ -193,8 +197,12 @@ public class SetCoverageTest {
     frontB.setPoint(1, point5);
     frontB.setPoint(2, point6);
 
-    assertEquals(1.0/3.0, setCoverage.execute(frontA, frontB), EPSILON);
-    assertEquals(1.0/3.0, setCoverage.execute(frontB, frontA), EPSILON);
+    Pair<Double, Double> result = setCoverage.evaluate(new ImmutablePair(
+        FrontUtils.convertFrontToSolutionList(frontA),
+        FrontUtils.convertFrontToSolutionList(frontB))) ;
+
+    assertEquals(1.0/3.0, result.getLeft(), EPSILON);
+    assertEquals(1.0/3.0, result.getRight(), EPSILON);
   }
 
   /**
@@ -237,13 +245,18 @@ public class SetCoverageTest {
     frontB.setPoint(1, point5);
     frontB.setPoint(2, point6);
 
-    assertEquals(1.0, setCoverage.execute(frontA, frontB), EPSILON);
-    assertEquals(0.0, setCoverage.execute(frontB, frontA), EPSILON);
+    Pair<Double, Double> result = setCoverage.evaluate(new ImmutablePair(
+        FrontUtils.convertFrontToSolutionList(frontA),
+        FrontUtils.convertFrontToSolutionList(frontB))) ;
+
+    assertEquals(1.0, result.getLeft(), EPSILON);
+    assertEquals(0.0, result.getRight(), EPSILON);
   }
 
   /**
    * The same case as shouldExecuteReturnTheCorrectValueCaseB() but using solution lists
    */
+  /*
   @Test
   public void shouldExecuteReturnTheCorrectValueCaseC() {
     int numberOfPoints = 3 ;
@@ -285,7 +298,7 @@ public class SetCoverageTest {
     assertEquals(1.0, setCoverage.execute(listA, listB), EPSILON);
     assertEquals(0.0, setCoverage.execute(listB, listA), EPSILON);
   }
-
+*/
   @Test
   public void shouldGetNameReturnTheCorrectValue() {
     assertEquals("SC", setCoverage.getName());

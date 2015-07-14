@@ -34,7 +34,7 @@ import java.util.List;
  * It is a responsibility of the caller to ensure that this does not happen.
  */
 public class ErrorRatio extends SimpleDescribedEntity implements
-    QualityIndicator<List<Solution<?>>, Double> {
+    QualityIndicator<List<? extends Solution<?>>, Double> {
 
   private Front referenceParetoFront ;
 
@@ -56,12 +56,11 @@ public class ErrorRatio extends SimpleDescribedEntity implements
   /**
    *
    * @param referenceParetoFront
-   * @throws FileNotFoundException
    */
   public ErrorRatio(Front referenceParetoFront) {
-    super("HV", "Error ratio quality indicator") ;
+    super("ER", "Error ratio quality indicator") ;
     if (referenceParetoFront == null) {
-      throw new JMetalException("The pareto front is null");
+      throw new JMetalException("\"The Pareto front approximation is null");
     }
 
     this.referenceParetoFront = referenceParetoFront ;
@@ -72,7 +71,10 @@ public class ErrorRatio extends SimpleDescribedEntity implements
    * @param solutionList
    * @return
    */
-  @Override public Double evaluate(List<Solution<?>> solutionList) {
+  @Override public Double evaluate(List<? extends Solution<?>> solutionList) {
+    if (solutionList == null) {
+      throw new JMetalException("The solution list is null") ;
+    }
     return er(new ArrayFront(solutionList), referenceParetoFront);
   }
 

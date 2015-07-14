@@ -39,7 +39,7 @@ import java.util.List;
  * Technical Report TR-98-03, Dept. Elec. Comput. Eng., Air Force
  * Inst. Technol. (1998)
  */
-public class GenerationalDistance extends SimpleDescribedEntity implements QualityIndicator<List<Solution<?>>, Double>   {
+public class GenerationalDistance extends SimpleDescribedEntity implements QualityIndicator<List<? extends Solution<?>>, Double>   {
 
   private static final double POW = 2.0;
 
@@ -74,7 +74,7 @@ public class GenerationalDistance extends SimpleDescribedEntity implements Quali
     this.referenceParetoFront = referenceParetoFront ;
   }
 
-  @Override public Double evaluate(List<Solution<?>> solutionList) {
+  @Override public Double evaluate(List<? extends Solution<?>> solutionList) {
     if (solutionList == null) {
       throw new JMetalException("The pareto front approximation list is null") ;
     }

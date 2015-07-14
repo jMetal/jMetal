@@ -40,7 +40,7 @@ import java.util.List;
  * Inst. Technol. (1998)
  */
 public class InvertedGenerationalDistance extends SimpleDescribedEntity
-    implements QualityIndicator<List<Solution<?>>, Double>  {
+    implements QualityIndicator<List<? extends Solution<?>>, Double>  {
   private static final double POW = 2.0;
 
   private Front referenceParetoFront ;
@@ -74,7 +74,7 @@ public class InvertedGenerationalDistance extends SimpleDescribedEntity
     this.referenceParetoFront = referenceParetoFront ;
   }
 
-  @Override public Double evaluate(List<Solution<?>> solutionList) {
+  @Override public Double evaluate(List<? extends Solution<?>> solutionList) {
     return invertedGenerationalDistance(new ArrayFront(solutionList), referenceParetoFront);
   }
 

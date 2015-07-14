@@ -11,21 +11,23 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.qualityindicator.impl;
+package org.uma.jmetal.qualityindicator2.impl;
 
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.qualityindicator2.QualityIndicator;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
+import org.uma.jmetal.util.front.util.FrontUtils;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -43,47 +45,23 @@ public class ErrorRatioTest {
   @Rule
   public ExpectedException exception = ExpectedException.none();
 
-  private ErrorRatio errorRatio ;
-
-  @Before public void setup() {
-    errorRatio = new ErrorRatio() ;
-  }
-
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheFrontApproximationIsNull() {
     exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The pareto front approximation object is null"));
+    exception.expectMessage(containsString("The Pareto front approximation is null"));
 
-    Front front = new ArrayFront(0, 0) ;
-    errorRatio.execute(null, front) ;
+    Front referenceFront = null ;
+    new ErrorRatio(referenceFront) ;
   }
 
   @Test
-  public void shouldExecuteRaiseAnExceptionIfTheParetoFrontIsNull() {
+  public void shouldExecuteRaiseAnExceptionIfTheParetoFrontApproximationListIsNull() {
     exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The pareto front object is null"));
+    exception.expectMessage(containsString("The solution list is null"));
 
-    Front front = new ArrayFront(0, 0) ;
+    QualityIndicator errorRatio = new ErrorRatio(new ArrayFront(0, 0)) ;
 
-    errorRatio.execute(front, null) ;
-  }
-
-  @Test
-  public void shouldExecuteRaiseAnExceptionIfTheFrontApproximationListIsNull() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The pareto front approximation list is null"));
-
-    List<DoubleSolution> list = new ArrayList<>();
-    errorRatio.execute(null, list) ;
-  }
-
-  @Test
-  public void shouldExecuteRaiseAnExceptionIfTheParetoFrontListIsNull() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The pareto front list is null"));
-
-    List<DoubleSolution> list = new ArrayList<>();
-    errorRatio.execute(list, null) ;
+    errorRatio.evaluate(null) ;
   }
 
   @Test
@@ -91,7 +69,7 @@ public class ErrorRatioTest {
     int numberOfPoints = 1 ;
     int numberOfDimensions = 3 ;
     Front frontApproximation = new ArrayFront(numberOfPoints, numberOfDimensions);
-    Front paretoFront = new ArrayFront(numberOfPoints, numberOfDimensions);
+    Front referenceFront = new ArrayFront(numberOfPoints, numberOfDimensions);
 
     Point point1 = new ArrayPoint(numberOfDimensions) ;
     point1.setDimensionValue(0, 10.0);
@@ -99,9 +77,11 @@ public class ErrorRatioTest {
     point1.setDimensionValue(2, -1.0);
 
     frontApproximation.setPoint(0, point1);
-    paretoFront.setPoint(0, point1);
+    referenceFront.setPoint(0, point1);
 
-    assertEquals(0.0, errorRatio.execute(frontApproximation, paretoFront), EPSILON);
+    QualityIndicator errorRatio = new ErrorRatio(referenceFront) ;
+
+    assertEquals(0.0, (Double)errorRatio.evaluate(FrontUtils.convertFrontToSolutionList(frontApproximation)), EPSILON);
   }
 
   @Test
@@ -109,7 +89,7 @@ public class ErrorRatioTest {
     int numberOfPoints = 1 ;
     int numberOfDimensions = 3 ;
     Front frontApproximation = new ArrayFront(numberOfPoints, numberOfDimensions);
-    Front paretoFront = new ArrayFront(numberOfPoints, numberOfDimensions);
+    Front referenceFront = new ArrayFront(numberOfPoints, numberOfDimensions);
 
     Point point1 = new ArrayPoint(numberOfDimensions) ;
     point1.setDimensionValue(0, 10.0);
@@ -122,9 +102,11 @@ public class ErrorRatioTest {
     point2.setDimensionValue(2, -2.0);
 
     frontApproximation.setPoint(0, point1);
-    paretoFront.setPoint(0, point2);
+    referenceFront.setPoint(0, point2);
 
-    assertEquals(1.0, errorRatio.execute(frontApproximation, paretoFront), EPSILON);
+    QualityIndicator errorRatio = new ErrorRatio(referenceFront) ;
+
+    assertEquals(1.0, (Double)errorRatio.evaluate(FrontUtils.convertFrontToSolutionList(frontApproximation)), EPSILON);
   }
 
   /**
@@ -165,7 +147,10 @@ public class ErrorRatioTest {
     paretoFront.setPoint(0, point4);
     paretoFront.setPoint(1, point5);
     paretoFront.setPoint(2, point6);
-    assertEquals(1.0/numberOfPoints, errorRatio.execute(frontApproximation, paretoFront), EPSILON);
+
+    QualityIndicator errorRatio = new ErrorRatio(paretoFront) ;
+
+    assertEquals(1.0/numberOfPoints, (Double)errorRatio.evaluate(FrontUtils.convertFrontToSolutionList(frontApproximation)), EPSILON);
   }
 
   /**
@@ -192,12 +177,14 @@ public class ErrorRatioTest {
     paretoFront.get(1).setObjective(0, 0.0);
     paretoFront.get(1).setObjective(1, 0.0);
 
-    assertEquals(1.0, errorRatio.execute(frontApproximation, paretoFront), EPSILON);
+    QualityIndicator errorRatio = new ErrorRatio(new ArrayFront(paretoFront)) ;
+
+    assertEquals(1.0, (Double)errorRatio.evaluate(frontApproximation), EPSILON);
   }
 
-
   @Test
-  public void shouldGetNameReturnTheCorrectValue() {
+  public void shouldGetNameReturnTheCorrectValue() throws FileNotFoundException {
+    QualityIndicator errorRatio = new ErrorRatio(new ArrayFront()) ;
     assertEquals("ER", errorRatio.getName());
   }
 

@@ -11,12 +11,12 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.qualityindicator.impl;
+package org.uma.jmetal.qualityindicator2.impl;
 
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.uma.jmetal.qualityindicator2.QualityIndicator;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
@@ -24,7 +24,6 @@ import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontUtils;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
-import org.uma.jmetal.util.point.impl.PointSolution;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,29 +41,13 @@ public class EpsilonTest {
   @Rule
   public ExpectedException exception = ExpectedException.none();
 
-  private Epsilon epsilon ;
-
-  @Before public void setup() {
-    epsilon = new Epsilon() ;
-  }
-
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheFrontApproximationIsNull() {
     exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The pareto front approximation object is null"));
+    exception.expectMessage(containsString("The reference pareto front is null"));
 
-    Front front = new ArrayFront(0, 0) ;
-    epsilon.execute(null, front) ;
-  }
-
-  @Test
-  public void shouldExecuteRaiseAnExceptionIfTheParetoFrontIsNull() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The pareto front object is null"));
-
-    Front front = new ArrayFront(0, 0) ;
-
-    epsilon.execute(front, null) ;
+    Front referenceFront = null ;
+    new Epsilon(referenceFront) ;
   }
 
   @Test
@@ -73,16 +56,10 @@ public class EpsilonTest {
     exception.expectMessage(containsString("The pareto front approximation list is null"));
 
     List<DoubleSolution> list = new ArrayList<>();
-    epsilon.execute(null, list) ;
-  }
+    Front referenceFront = new ArrayFront() ;
 
-  @Test
-  public void shouldExecuteRaiseAnExceptionIfTheParetoFrontListIsNull() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The pareto front list is null"));
-
-    List<DoubleSolution> list = new ArrayList<>();
-    epsilon.execute(list, null) ;
+    Epsilon epsilon = new Epsilon(referenceFront) ;
+    epsilon.evaluate(null) ;
   }
 
   @Test
@@ -90,7 +67,7 @@ public class EpsilonTest {
     int numberOfPoints = 1 ;
     int numberOfDimensions = 3 ;
     Front frontApproximation = new ArrayFront(numberOfPoints, numberOfDimensions);
-    Front paretoFront = new ArrayFront(numberOfPoints, numberOfDimensions);
+    Front referenceFront = new ArrayFront(numberOfPoints, numberOfDimensions);
 
     Point point1 = new ArrayPoint(numberOfDimensions) ;
     point1.setDimensionValue(0, 10.0);
@@ -98,9 +75,13 @@ public class EpsilonTest {
     point1.setDimensionValue(2, -1.0);
 
     frontApproximation.setPoint(0, point1);
-    paretoFront.setPoint(0, point1);
+    referenceFront.setPoint(0, point1);
 
-    assertEquals(0.0, epsilon.execute(frontApproximation, paretoFront), EPSILON);
+    QualityIndicator epsilon = new Epsilon(referenceFront) ;
+
+    List<DoubleSolution> front = FrontUtils.convertFrontToSolutionList(frontApproximation) ;
+
+    assertEquals(0.0, (Double)epsilon.evaluate(front), EPSILON);
   }
 
   /**
@@ -112,7 +93,7 @@ public class EpsilonTest {
     int numberOfPoints = 1 ;
     int numberOfDimensions = 2 ;
     Front frontApproximation = new ArrayFront(numberOfPoints, numberOfDimensions);
-    Front paretoFront = new ArrayFront(numberOfPoints, numberOfDimensions);
+    Front referenceFront = new ArrayFront(numberOfPoints, numberOfDimensions);
 
     Point point1 = new ArrayPoint(numberOfDimensions) ;
     point1.setDimensionValue(0, 2.0);
@@ -122,9 +103,13 @@ public class EpsilonTest {
     point2.setDimensionValue(1, 2.0);
 
     frontApproximation.setPoint(0, point1);
-    paretoFront.setPoint(0, point2);
+    referenceFront.setPoint(0, point2);
 
-    assertEquals(1.0, epsilon.execute(frontApproximation, paretoFront), EPSILON);
+    QualityIndicator epsilon = new Epsilon(referenceFront) ;
+
+    List<DoubleSolution> front = FrontUtils.convertFrontToSolutionList(frontApproximation) ;
+
+    assertEquals(1.0, (Double)epsilon.evaluate(front), EPSILON);
   }
 
   /**
@@ -136,7 +121,7 @@ public class EpsilonTest {
     int numberOfPoints = 3 ;
     int numberOfDimensions = 2 ;
     Front frontApproximation = new ArrayFront(numberOfPoints, numberOfDimensions);
-    Front paretoFront = new ArrayFront(numberOfPoints, numberOfDimensions);
+    Front referenceFront = new ArrayFront(numberOfPoints, numberOfDimensions);
 
     Point point1 = new ArrayPoint(numberOfDimensions) ;
     point1.setDimensionValue(0, 1.5);
@@ -162,11 +147,13 @@ public class EpsilonTest {
     point6.setDimensionValue(0, 2.0);
     point6.setDimensionValue(1, 1.5);
 
-    paretoFront.setPoint(0, point4);
-    paretoFront.setPoint(1, point5);
-    paretoFront.setPoint(2, point6);
+    referenceFront.setPoint(0, point4);
+    referenceFront.setPoint(1, point5);
+    referenceFront.setPoint(2, point6);
 
-    assertEquals(1.0, epsilon.execute(frontApproximation, paretoFront), EPSILON);
+    QualityIndicator epsilon = new Epsilon(referenceFront) ;
+    List<DoubleSolution> front = FrontUtils.convertFrontToSolutionList(frontApproximation) ;
+    assertEquals(1.0, (Double)epsilon.evaluate(front), EPSILON);
   }
 
   /**
@@ -178,7 +165,7 @@ public class EpsilonTest {
     int numberOfPoints = 3 ;
     int numberOfDimensions = 2 ;
     Front frontApproximation = new ArrayFront(numberOfPoints, numberOfDimensions);
-    Front paretoFront = new ArrayFront(numberOfPoints, numberOfDimensions);
+    Front referenceFront = new ArrayFront(numberOfPoints, numberOfDimensions);
 
     Point point1 = new ArrayPoint(numberOfDimensions) ;
     point1.setDimensionValue(0, 1.5);
@@ -204,22 +191,25 @@ public class EpsilonTest {
     point6.setDimensionValue(0, 2.0);
     point6.setDimensionValue(1, 1.5);
 
-    paretoFront.setPoint(0, point4);
-    paretoFront.setPoint(1, point5);
-    paretoFront.setPoint(2, point6);
+    referenceFront.setPoint(0, point4);
+    referenceFront.setPoint(1, point5);
+    referenceFront.setPoint(2, point6);
 
-    assertEquals(0.5, epsilon.execute(frontApproximation, paretoFront), EPSILON);
+    QualityIndicator epsilon = new Epsilon(referenceFront) ;
+    List<DoubleSolution> front = FrontUtils.convertFrontToSolutionList(frontApproximation) ;
+    assertEquals(0.5, (Double)epsilon.evaluate(front), EPSILON);
   }
 
   /**
    * The same case as shouldExecuteReturnTheCorrectValueCaseB() but using list of solutions
    */
+  /*
   @Test
   public void shouldExecuteReturnTheCorrectValueCaseC() {
     int numberOfPoints = 3 ;
     int numberOfDimensions = 2 ;
     Front frontApproximation = new ArrayFront(numberOfPoints, numberOfDimensions);
-    Front paretoFront = new ArrayFront(numberOfPoints, numberOfDimensions);
+    Front referenceFront = new ArrayFront(numberOfPoints, numberOfDimensions);
 
     Point point1 = new ArrayPoint(numberOfDimensions) ;
     point1.setDimensionValue(0, 1.5);
@@ -245,18 +235,20 @@ public class EpsilonTest {
     point6.setDimensionValue(0, 2.0);
     point6.setDimensionValue(1, 1.5);
 
-    paretoFront.setPoint(0, point4);
-    paretoFront.setPoint(1, point5);
-    paretoFront.setPoint(2, point6);
+    referenceFront.setPoint(0, point4);
+    referenceFront.setPoint(1, point5);
+    referenceFront.setPoint(2, point6);
 
     List<PointSolution> listA = FrontUtils.convertFrontToSolutionList(frontApproximation) ;
-    List<PointSolution> listB = FrontUtils.convertFrontToSolutionList(paretoFront) ;
+    List<PointSolution> listB = FrontUtils.convertFrontToSolutionList(referenceFront) ;
 
     assertEquals(0.5, epsilon.execute(listA, listB), EPSILON);
   }
-
+*/
   @Test
   public void shouldGetNameReturnTheCorrectValue() {
-    assertEquals("EPSILON", epsilon.getName());
+    QualityIndicator epsilon = new Epsilon(new ArrayFront()) ;
+
+    assertEquals("EP", epsilon.getName());
   }
 }

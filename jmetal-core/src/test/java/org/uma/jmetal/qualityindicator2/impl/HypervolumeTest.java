@@ -11,12 +11,11 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.qualityindicator.impl;
+package org.uma.jmetal.qualityindicator2.impl;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.problem.impl.AbstractIntegerProblem;
 import org.uma.jmetal.solution.DoubleSolution;
@@ -26,7 +25,6 @@ import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.containsString;
@@ -44,40 +42,23 @@ public class HypervolumeTest {
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheFrontApproximationIsNull() {
     exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The pareto front approximation object is null"));
+    exception.expectMessage(containsString("The pareto front approximation is null"));
 
     Front front = new ArrayFront(0, 0) ;
 
-    Hypervolume hypervolume = new Hypervolume() ;
-    hypervolume.execute(null, front) ;
+    Hypervolume hypervolume = new Hypervolume(front) ;
+    hypervolume.evaluate(null) ;
   }
 
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheParetoFrontIsNull() {
     exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The pareto front object is null"));
+    exception.expectMessage(containsString("The pareto front is null"));
 
-    Front front = new ArrayFront(0, 0) ;
+    Front front = null ;
 
-    Hypervolume hypervolume = new Hypervolume() ;
-    hypervolume.execute(front, null) ;
+    Hypervolume hypervolume = new Hypervolume(front) ;;
   }
-
-  @Test
-  public void tobecompleted() {
-    int numberOfObjectives = 3 ;
-    DoubleProblem problem = new MockDoubleProblem(numberOfObjectives) ;
-
-    List<DoubleSolution> front1 = Arrays.asList(problem.createSolution(), problem.createSolution()) ;
-    List<DoubleSolution> front2 = Arrays.asList(problem.createSolution(), problem.createSolution()) ;
-
-    Hypervolume hypervolume = new Hypervolume() ;
-//    hypervolume.execute(new ArrayFront(front1), new ArrayFront(front2)) ;
-  }
-
-
-
-
 
 
 

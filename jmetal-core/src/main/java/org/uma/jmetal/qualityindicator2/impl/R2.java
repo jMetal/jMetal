@@ -33,7 +33,7 @@ import java.util.List;
 /**
  * TODO: Add comments here
  */
-public class R2 extends SimpleDescribedEntity implements QualityIndicator<List<Solution<?>>, Double>{
+public class R2 extends SimpleDescribedEntity implements QualityIndicator<List<? extends Solution<?>>, Double>{
   private double[][] matrix = null;
   private double[][] lambda = null;
   private int numberOfObjectives = 0;
@@ -105,7 +105,7 @@ public class R2 extends SimpleDescribedEntity implements QualityIndicator<List<S
     }
   }
 
-  @Override public Double evaluate(List<Solution<?>> solutionList) {
+  @Override public Double evaluate(List<? extends Solution<?>> solutionList) {
     return r2(new ArrayFront(solutionList), referenceParetoFront);
   }
 

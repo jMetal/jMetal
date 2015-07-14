@@ -14,11 +14,13 @@
 
 package org.uma.jmetal.util.front.util;
 
+import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.solution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.point.Point;
-import org.uma.jmetal.util.point.impl.PointSolution;
 import org.uma.jmetal.util.point.impl.PointUtils;
 
 import java.util.ArrayList;
@@ -302,6 +304,7 @@ public class FrontUtils {
    * @param front
    * @return A front as a List<FrontSolution>
    */
+  /*
   public static List<PointSolution> convertFrontToSolutionList(Front front) {
     if (front == null) {
       throw new JMetalException("The front is null");
@@ -326,6 +329,50 @@ public class FrontUtils {
     }
 
     return solutionSet ;
+  }
+*/
+  /**
+   * Given a front, converts it to a Solution set of PointSolutions
+   *
+   * @param front
+   * @return A front as a List<FrontSolution>
+   */
+
+  public static List<DoubleSolution> convertFrontToSolutionList(Front front) {
+    if (front == null) {
+      throw new JMetalException("The front is null");
+    }
+
+    int numberOfObjectives ;
+    int solutionSetSize = front.getNumberOfPoints() ;
+    if (front.getNumberOfPoints() == 0) {
+      numberOfObjectives = 0 ;
+    } else {
+      numberOfObjectives = front.getPoint(0).getNumberOfDimensions();
+    }
+    List<DoubleSolution> solutionSet = new ArrayList<>(solutionSetSize) ;
+
+    for (int i = 0; i < front.getNumberOfPoints(); i++) {
+      DoubleSolution solution = new DefaultDoubleSolution(new DummyClass(numberOfObjectives));
+      for (int j = 0 ; j < numberOfObjectives; j++) {
+        solution.setObjective(j, front.getPoint(i).getDimensionValue(j));
+      }
+
+      solutionSet.add(solution) ;
+    }
+
+    return solutionSet ;
+  }
+
+
+  private static class DummyClass extends AbstractDoubleProblem {
+    public DummyClass(int numberOfObjectives) {
+      setNumberOfObjectives(numberOfObjectives);
+    }
+
+    @Override public void evaluate(DoubleSolution solution) {
+
+    }
   }
 
 }

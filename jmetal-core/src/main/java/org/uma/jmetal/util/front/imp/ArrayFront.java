@@ -44,9 +44,9 @@ public class ArrayFront implements Front {
   /** Constructor */
   public ArrayFront(List<? extends Solution<?>> solutionList) {
     if (solutionList == null) {
-      throw new JMetalException("The list of solution is null") ;
+      throw new JMetalException("The list of solutions is null") ;
     } else if (solutionList.size() == 0) {
-      throw new JMetalException("The list of solution is empty") ;
+      throw new JMetalException("The list of solutions is empty") ;
     }
 
     numberOfPoints = solutionList.size();

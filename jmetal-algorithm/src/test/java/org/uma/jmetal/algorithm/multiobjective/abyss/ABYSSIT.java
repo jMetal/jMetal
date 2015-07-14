@@ -11,13 +11,12 @@ import org.uma.jmetal.operator.impl.localsearch.ArchiveMutationLocalSearch;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT4;
-import org.uma.jmetal.qualityindicator.impl.Hypervolume;
+import org.uma.jmetal.qualityindicator2.QualityIndicator;
+import org.uma.jmetal.qualityindicator2.impl.Hypervolume;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
-import org.uma.jmetal.util.front.Front;
-import org.uma.jmetal.util.front.imp.ArrayFront;
 
 import java.util.List;
 
@@ -78,14 +77,12 @@ public class ABYSSIT {
 
     List<DoubleSolution> population = algorithm.getResult();
 
-    Hypervolume hypervolume = new Hypervolume() ;
+    QualityIndicator hypervolume = new Hypervolume("/referenceFronts/ZDT4.pf") ;
 
     // Rationale: the default problem is ZDT4, and AbYSS, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.64
 
-    Front referenceFront = new ArrayFront("/referenceFronts/ZDT4.pf") ;
-
-    double hv = hypervolume.execute(new ArrayFront(population), referenceFront) ;
+    double hv = (Double)hypervolume.evaluate(population) ;
 
     assertTrue(hv > 0.64) ;
   }

@@ -107,24 +107,23 @@ public class NSGAIIRunner {
             .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
             .print();
 
-
     Front referenceFront = new ArrayFront("jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf") ;
-    QualityIndicator hypervolume = new Hypervolume(referenceFront) ;
-    QualityIndicator epsilon = new Epsilon(referenceFront) ;
-    QualityIndicator igd = new InvertedGenerationalDistance(referenceFront) ;
-    QualityIndicator gd = new GenerationalDistance(referenceFront) ;
-    QualityIndicator spread = new Spread(referenceFront) ;
-    QualityIndicator r2 = new R2(referenceFront) ;
-    QualityIndicator errorRatio = new ErrorRatio(referenceFront) ;
+    Hypervolume hypervolume = new Hypervolume(referenceFront) ;
+    Epsilon epsilon = new Epsilon(referenceFront) ;
+    InvertedGenerationalDistance igd = new InvertedGenerationalDistance(referenceFront) ;
+    GenerationalDistance gd = new GenerationalDistance(referenceFront) ;
+    Spread spread = new Spread(referenceFront) ;
+    R2 r2 = new R2(referenceFront) ;
+    ErrorRatio errorRatio = new ErrorRatio(referenceFront) ;
     QualityIndicator setCoverage = new SetCoverage() ;
 
-    Double hvValue = (Double) hypervolume.evaluate(population);
-    Double epsilonValue = (Double) epsilon.evaluate(population);
-    Double igdValue = (Double) igd.evaluate(population);
-    Double gdValue = (Double) gd.evaluate(population);
-    Double spreadValue = (Double) spread.evaluate(population);
-    Double r2Value = (Double) r2.evaluate(population);
-    Double errorRatioValue = (Double) errorRatio.evaluate(population);
+    Double hvValue = hypervolume.evaluate(population);
+    Double epsilonValue = epsilon.evaluate(population);
+    Double igdValue = igd.evaluate(population);
+    Double gdValue = gd.evaluate(population);
+    Double spreadValue = spread.evaluate(population);
+    Double r2Value = r2.evaluate(population);
+    Double errorRatioValue = errorRatio.evaluate(population);
     Pair<Double, Double> setCoverageValues =
         (Pair<Double, Double>) setCoverage.evaluate(new ImmutablePair(population, FrontUtils.convertFrontToSolutionList(referenceFront)));
 

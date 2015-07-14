@@ -17,6 +17,7 @@ package org.uma.jmetal.qualityindicator2.impl;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.naming.impl.SimpleDescribedEntity;
@@ -42,6 +43,12 @@ public class SetCoverage extends SimpleDescribedEntity implements
   public Pair<Double, Double> evaluate(Pair<List<Solution<?>>, List<Solution<?>>> pairOfSolutionLists) {
     List<Solution<?>> front1 = pairOfSolutionLists.getLeft() ;
     List<Solution<?>> front2 = pairOfSolutionLists.getRight() ;
+
+    if (front1 == null) {
+      throw new JMetalException("The first front is null") ;
+    } else if (front2 == null) {
+      throw new JMetalException("The second front is null");
+    }
 
     Pair<Double, Double> result = new ImmutablePair<>(setCoverage(front1, front2), setCoverage(front2, front1)) ;
 
