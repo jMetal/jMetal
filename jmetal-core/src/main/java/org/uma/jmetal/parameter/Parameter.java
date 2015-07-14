@@ -1,6 +1,7 @@
 package org.uma.jmetal.parameter;
 
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.util.naming.DescribedEntity;
 
 /**
  * A {@link Parameter} aims at describing the {@link Value} of a specific
@@ -16,7 +17,7 @@ import org.uma.jmetal.algorithm.Algorithm;
  * @param <Value>
  *            the type of value the {@link Parameter} can manage
  */
-public interface Parameter<Value> {
+public interface Parameter<Value> extends DescribedEntity {
 	/**
 	 * 
 	 * @param value

@@ -21,9 +21,9 @@ public class SimpleParameterManagerTest {
 	@Test
 	public void testAddGetParameters() {
 		SimpleParameterManager manager = new SimpleParameterManager();
-		SimpleParameter<?> parameter1 = new SimpleParameter<>();
-		SimpleParameter<?> parameter2 = new SimpleParameter<>();
-		SimpleParameter<?> parameter3 = new SimpleParameter<>();
+		SimpleParameter<?> parameter1 = new SimpleParameter<>("A");
+		SimpleParameter<?> parameter2 = new SimpleParameter<>("B");
+		SimpleParameter<?> parameter3 = new SimpleParameter<>("C");
 
 		manager.addParameter(parameter1);
 		assertEquals(1, manager.getParameters().size());
@@ -47,9 +47,9 @@ public class SimpleParameterManagerTest {
 	@Test
 	public void testRemoveParameter() {
 		SimpleParameterManager manager = new SimpleParameterManager();
-		SimpleParameter<?> parameter1 = new SimpleParameter<>();
-		SimpleParameter<?> parameter2 = new SimpleParameter<>();
-		SimpleParameter<?> parameter3 = new SimpleParameter<>();
+		SimpleParameter<?> parameter1 = new SimpleParameter<>("A");
+		SimpleParameter<?> parameter2 = new SimpleParameter<>("B");
+		SimpleParameter<?> parameter3 = new SimpleParameter<>("C");
 
 		manager.addParameter(parameter1);
 		manager.addParameter(parameter2);
@@ -80,9 +80,9 @@ public class SimpleParameterManagerTest {
 
 	@Test
 	public void testAddMultipleParameters() {
-		SimpleParameter<?> parameter1 = new SimpleParameter<>();
-		SimpleParameter<?> parameter2 = new SimpleParameter<>();
-		SimpleParameter<?> parameter3 = new SimpleParameter<>();
+		SimpleParameter<?> parameter1 = new SimpleParameter<>("A");
+		SimpleParameter<?> parameter2 = new SimpleParameter<>("B");
+		SimpleParameter<?> parameter3 = new SimpleParameter<>("C");
 
 		SimpleParameterManager manager = new SimpleParameterManager();
 		manager.addAllParameters(Arrays.asList(parameter1, parameter2,
@@ -95,9 +95,9 @@ public class SimpleParameterManagerTest {
 
 	@Test
 	public void testRemoveMultipleParameters() {
-		SimpleParameter<?> parameter1 = new SimpleParameter<>();
-		SimpleParameter<?> parameter2 = new SimpleParameter<>();
-		SimpleParameter<?> parameter3 = new SimpleParameter<>();
+		SimpleParameter<?> parameter1 = new SimpleParameter<>("A");
+		SimpleParameter<?> parameter2 = new SimpleParameter<>("B");
+		SimpleParameter<?> parameter3 = new SimpleParameter<>("C");
 
 		SimpleParameterManager manager = new SimpleParameterManager();
 		manager.addAllParameters(Arrays.asList(parameter1, parameter2,
@@ -119,10 +119,10 @@ public class SimpleParameterManagerTest {
 
 	@Test
 	public void testIteratorRecall() {
-		SimpleParameter<Value> parameter1 = new SimpleParameter<Value>();
-		SimpleParameter<Value> parameter2 = new SimpleParameter<Value>();
-		SimpleParameter<Value> parameter3 = new SimpleParameter<Value>();
-		SimpleParameter<Value> parameter4 = new SimpleParameter<Value>();
+		SimpleParameter<Value> parameter1 = new SimpleParameter<Value>("A");
+		SimpleParameter<Value> parameter2 = new SimpleParameter<Value>("B");
+		SimpleParameter<Value> parameter3 = new SimpleParameter<Value>("C");
+		SimpleParameter<Value> parameter4 = new SimpleParameter<Value>("D");
 
 		SimpleParameterManager manager = new SimpleParameterManager();
 		manager.addParameter(parameter1);
@@ -144,10 +144,10 @@ public class SimpleParameterManagerTest {
 
 	@Test
 	public void testIteratorPrecision() {
-		SimpleParameter<Value> parameter1 = new SimpleParameter<Value>();
-		SimpleParameter<Value> parameter2 = new SimpleParameter<Value>();
-		SimpleParameter<Value> parameter3 = new SimpleParameter<Value>();
-		SimpleParameter<Value> parameter4 = new SimpleParameter<Value>();
+		SimpleParameter<Value> parameter1 = new SimpleParameter<Value>("A");
+		SimpleParameter<Value> parameter2 = new SimpleParameter<Value>("B");
+		SimpleParameter<Value> parameter3 = new SimpleParameter<Value>("C");
+		SimpleParameter<Value> parameter4 = new SimpleParameter<Value>("D");
 
 		SimpleParameterManager manager = new SimpleParameterManager();
 		manager.addParameter(parameter1);

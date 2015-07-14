@@ -20,4 +20,12 @@ public interface ParameterManager extends Iterable<Parameter<?>> {
 	 *         {@link ParameterManager}
 	 */
 	public Collection<Parameter<?>> getParameters();
+
+	/**
+	 * 
+	 * @param name
+	 *            the name of the {@link Parameter}
+	 * @return the {@link Parameter} corresponding to this name
+	 */
+	public <Value> Parameter<Value> getParameter(String name);
 }
