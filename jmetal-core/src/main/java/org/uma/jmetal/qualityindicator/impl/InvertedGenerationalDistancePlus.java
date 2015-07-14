@@ -122,7 +122,7 @@ public class InvertedGenerationalDistancePlus extends SimpleDescribedEntity
     for (int i = 0; i < point.getNumberOfDimensions(); i++) {
       double value = referencePoint.getDimensionValue(i) - point.getDimensionValue(i) ;
       if (value > 0.0) {
-        result += value ;
+        result += Math.pow(value, 2.0) ;
       }
     }
 
