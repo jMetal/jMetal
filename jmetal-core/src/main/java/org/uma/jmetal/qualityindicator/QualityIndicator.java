@@ -19,20 +19,21 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.qualityindicator;
+package org.uma.jmetal.qualityindicator2;
 
-import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.naming.DescribedEntity;
-
-import java.io.Serializable;
-import java.util.List;
 
 /**
  * Created by Antonio J. Nebro on 20/07/14.
  */
-public interface QualityIndicator extends Serializable, DescribedEntity {
-  public double execute(Front frontA, Front frontB) ;
-  public <S extends Solution<?>> double execute(List<S> frontA, List<S> frontB) ;
+
+
+/**
+ * Created by Antonio J. Nebro on 20/07/14.
+ * @param <Evaluate> Entity to evaluate
+ * @param <Result> Result of the evaluation
+ */
+public interface QualityIndicator<Evaluate, Result> extends DescribedEntity {
+  public Result evaluate(Evaluate evaluate) ;
   public String getName() ;
 }
