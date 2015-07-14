@@ -1,7 +1,7 @@
 package org.uma.jmetal.parameter.impl;
 
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -25,11 +25,17 @@ public class SimpleParameterManager implements ParameterManager {
 	/**
 	 * The {@link Parameter}s registered to this {@link SimpleParameterManager}.
 	 */
-	private Collection<Parameter<?>> parameters = new HashSet<>();
+	private Map<String, Parameter<?>> parameters = new HashMap<>();
 
 	@Override
 	public Collection<Parameter<?>> getParameters() {
-		return parameters;
+		return parameters.values();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <Value> Parameter<Value> getParameter(String name) {
+		return (Parameter<Value>) parameters.get(name);
 	}
 
 	/**
@@ -38,7 +44,15 @@ public class SimpleParameterManager implements ParameterManager {
 	 *            the {@link Parameter} to register
 	 */
 	public void addParameter(Parameter<?> parameter) {
-		parameters.add(parameter);
+		if (parameters.containsKey(parameter.getName())) {
+			throw new RuntimeException(
+					"The new parameter "
+							+ parameter
+							+ " has the same name than another parameter already registered: "
+							+ parameters.get(parameter.getName()));
+		} else {
+			parameters.put(parameter.getName(), parameter);
+		}
 	}
 
 	/**
@@ -47,7 +61,16 @@ public class SimpleParameterManager implements ParameterManager {
 	 *            the {@link Parameter} to remove
 	 */
 	public void removeParameter(Parameter<?> parameter) {
-		this.parameters.remove(parameter);
+		this.parameters.values().remove(parameter);
+	}
+
+	/**
+	 * 
+	 * @param name
+	 *            the name of the {@link Parameter} to remove
+	 */
+	public void removeParameter(String name) {
+		this.parameters.remove(name);
 	}
 
 	/**
@@ -58,7 +81,9 @@ public class SimpleParameterManager implements ParameterManager {
 	 *            keys
 	 */
 	public void addAllParameters(Collection<? extends Parameter<?>> parameters) {
-		this.parameters.addAll(parameters);
+		for (Parameter<?> parameter : parameters) {
+			addParameter(parameter);
+		}
 	}
 
 	/**
@@ -69,11 +94,13 @@ public class SimpleParameterManager implements ParameterManager {
 	 */
 	public void removeAllParameters(
 			Collection<? extends Parameter<?>> parameters) {
-		this.parameters.removeAll(parameters);
+		for (Parameter<?> parameter : parameters) {
+			removeParameter(parameter);
+		}
 	}
 
 	@Override
 	public Iterator<Parameter<?>> iterator() {
-		return parameters.iterator();
+		return parameters.values().iterator();
 	}
 }

@@ -47,13 +47,15 @@ public class CountingMeasure extends SimplePushMeasure<Long> implements
 	 * Create a {@link CountingMeasure} which starts at a given value. The next
 	 * value to be pushed to the registered observers will be this value + 1.
 	 * 
+	 * @param name
+	 *            the name of the measure
+	 * @param description
+	 *            the description of the measure
 	 * @param initialCount
 	 *            the value to start from
 	 */
-	public CountingMeasure(long initialCount) {
-		super(
-				"Counter",
-				"Generic counting measure which should be renamed/redescribed when it is used to count specific occurrences.");
+	public CountingMeasure(String name, String description, long initialCount) {
+		super(name, description);
 		count = initialCount;
 	}
 
@@ -61,6 +63,35 @@ public class CountingMeasure extends SimplePushMeasure<Long> implements
 	 * Create a {@link CountingMeasure} starting from zero. The registered
 	 * observers will receive their first notification when it will increment to
 	 * 1.
+	 * 
+	 * @param name
+	 *            the name of the measure
+	 * @param description
+	 *            the description of the measure
+	 */
+	public CountingMeasure(String name, String description) {
+		this(name, description, 0);
+	}
+
+	/**
+	 * Create a {@link CountingMeasure} which starts at a given value. The next
+	 * value to be pushed to the registered observers will be this value + 1. A
+	 * default name and description are used.
+	 * 
+	 * @param initialCount
+	 *            the value to start from
+	 */
+	public CountingMeasure(long initialCount) {
+		this(
+				"Counter",
+				"Generic counting measure which should be renamed/redescribed when it is used to count specific occurrences.",
+				initialCount);
+	}
+
+	/**
+	 * Create a {@link CountingMeasure} starting from zero. The registered
+	 * observers will receive their first notification when it will increment to
+	 * 1. A default name and description are used.
 	 */
 	public CountingMeasure() {
 		this(0);

@@ -21,8 +21,23 @@ public class SimpleParameter<Value> extends SimpleDescribedEntity implements
 	private Value value;
 
 	/**
-	 * Create a {@link SimpleParameter} with a given name and a given
-	 * description.
+	 * Create a {@link SimpleParameter} with a given name, a given description,
+	 * and a given value.
+	 * 
+	 * @param name
+	 *            the name of the {@link Parameter}
+	 * @param description
+	 *            the description of the {@link Parameter}
+	 * @param value
+	 *            the initial value of the {@link Parameter}
+	 */
+	public SimpleParameter(String name, String description, Value value) {
+		super(name, description);
+	}
+
+	/**
+	 * Create a {@link SimpleParameter} with a given name, a given description,
+	 * and a <code>null</code> value.
 	 * 
 	 * @param name
 	 *            the name of the {@link Parameter}
@@ -30,27 +45,18 @@ public class SimpleParameter<Value> extends SimpleDescribedEntity implements
 	 *            the description of the {@link Parameter}
 	 */
 	public SimpleParameter(String name, String description) {
-		super(name, description);
+		this(name, description, null);
 	}
 
 	/**
-	 * Create a {@link SimpleParameter} with a given name and a
-	 * <code>null</code> description.
+	 * Create a {@link SimpleParameter} with a given name, a <code>null</code>
+	 * description, and a <code>null</code> value.
 	 * 
 	 * @param name
 	 *            the name of the {@link Parameter}
 	 */
 	public SimpleParameter(String name) {
-		super(name);
-	}
-
-	/**
-	 * Create a {@link SimpleParameter} with the class name as its name and a
-	 * <code>null</code> description.
-	 * 
-	 */
-	public SimpleParameter() {
-		super();
+		this(name, null, null);
 	}
 
 	@Override
