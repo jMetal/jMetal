@@ -1,11 +1,3 @@
-//  InvertedGenerationalDistance.java
-//
-//  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
-//
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
-//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -28,18 +20,19 @@ import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontUtils;
 import org.uma.jmetal.util.naming.impl.SimpleDescribedEntity;
+import org.uma.jmetal.util.point.Point;
 
 import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
- * This class implements the inverted generational distance metric.
- * Reference: Van Veldhuizen, D.A., Lamont, G.B.: Multiobjective Evolutionary Algorithm Research:
- * A History and Analysis.
- * Technical Report TR-98-03, Dept. Elec. Comput. Eng., Air Force
- * Inst. Technol. (1998)
+ * This class implements the inverted generational distance metric plust (IGD+)
+ * Reference: Ishibuchi et al 2015, "A Study on Performance Evaluation Ability of a Modified
+ * Inverted Generational Distance Indicator", GECCO 2015
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class InvertedGenerationalDistance extends SimpleDescribedEntity
+public class InvertedGenerationalDistancePlus extends SimpleDescribedEntity
     implements QualityIndicator<List<? extends Solution<?>>, Double>  {
   private static final double POW = 2.0;
 
@@ -50,10 +43,10 @@ public class InvertedGenerationalDistance extends SimpleDescribedEntity
    * @param referenceParetoFrontFile
    * @throws FileNotFoundException
    */
-  public InvertedGenerationalDistance(String referenceParetoFrontFile) throws FileNotFoundException {
+  public InvertedGenerationalDistancePlus(String referenceParetoFrontFile) throws FileNotFoundException {
     super("IGD", "Inverted generational distance") ;
     if (referenceParetoFrontFile == null) {
-      throw new JMetalException("The pareto front object is null");
+      throw new JMetalException("The reference pareto front is null");
     }
 
     Front front = new ArrayFront(referenceParetoFrontFile);
@@ -65,7 +58,7 @@ public class InvertedGenerationalDistance extends SimpleDescribedEntity
    * @param referenceParetoFront
    * @throws FileNotFoundException
    */
-  public InvertedGenerationalDistance(Front referenceParetoFront) {
+  public InvertedGenerationalDistancePlus(Front referenceParetoFront) {
     super("IGD", "Inverted generational distance") ;
     if (referenceParetoFront == null) {
       throw new JMetalException("The pareto front is null");
@@ -81,44 +74,58 @@ public class InvertedGenerationalDistance extends SimpleDescribedEntity
   /**
    * Returns the inverted generational distance value for a given front
    *
-   * @param front           The front
-   * @param trueParetoFront The true pareto front
+   * @param front The front
+   * @param referenceFront The reference pareto front
    */
-  public double invertedGenerationalDistance(Front front, Front trueParetoFront) {
+  public double invertedGenerationalDistance(Front front, Front referenceFront) {
     double[] maximumValue;
     double[] minimumValue;
     Front normalizedFront;
-    Front normalizedParetoFront;
+    Front normalizedReferenceFront;
 
     // STEP 1. Obtain the maximum and minimum values of the Pareto front
-    maximumValue = FrontUtils.getMaximumValues(trueParetoFront);
-    minimumValue = FrontUtils.getMinimumValues(trueParetoFront);
+    maximumValue = FrontUtils.getMaximumValues(referenceFront);
+    minimumValue = FrontUtils.getMinimumValues(referenceFront);
 
     // STEP 2. Get the normalized front and true Pareto fronts
-    normalizedFront = FrontUtils.getNormalizedFront(front,
-      maximumValue,
-      minimumValue);
-    normalizedParetoFront = FrontUtils.getNormalizedFront(trueParetoFront,
+    normalizedFront = FrontUtils.getNormalizedFront(front, maximumValue, minimumValue);
+    normalizedReferenceFront = FrontUtils.getNormalizedFront(referenceFront,
       maximumValue,
       minimumValue);
 
-    // STEP 3. Sum the distances between each point of the true Pareto front and
-    // the nearest point in the true Pareto front
+    // STEP 3. Sum the distances between each point of the reference Pareto front and the dominated
+    // region of the front
     double sum = 0.0;
-    for (int i = 0 ; i < normalizedParetoFront.getNumberOfPoints(); i++) {
-      sum += Math.pow(FrontUtils.distanceToClosestPoint(normalizedParetoFront.getPoint(i),
-          normalizedFront), POW);
+    for (int i = 0 ; i < normalizedReferenceFront.getNumberOfPoints(); i++) {
+      sum += calculateDistance(normalizedReferenceFront.getPoint(i),
+          normalizedFront.getPoint(i)) ;
     }
 
-    // STEP 4. Obtain the sqrt of the sum
-    sum = Math.pow(sum, 1.0 / POW);
-
-    // STEP 5. Divide the sum by the maximum number of points of the front
-    return sum / normalizedParetoFront.getNumberOfPoints();
+    // STEP 4. Divide the sum by the maximum number of points of the front
+    return sum / normalizedReferenceFront.getNumberOfPoints();
   }
 
   @Override
   public String getName() {
     return super.getName();
+  }
+
+  /**
+   * Calculate distance of the reference point to the point of the front point according to
+   * Pareto dominance
+   * @param point
+   * @param referencePoint
+   * @return
+   */
+  private double calculateDistance(Point point, Point referencePoint) {
+    double result = 0.0 ;
+    for (int i = 0; i < point.getNumberOfDimensions(); i++) {
+      double value = referencePoint.getDimensionValue(i) - point.getDimensionValue(i) ;
+      if (value > 0.0) {
+        result += value ;
+      }
+    }
+
+    return Math.sqrt(result) ;
   }
 }
