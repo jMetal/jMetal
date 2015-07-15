@@ -125,27 +125,35 @@ public class NSGAIIRunner {
       ErrorRatio errorRatio = new ErrorRatio(referenceFront);
       SetCoverage setCoverage = new SetCoverage();
 
-      Double hvValue = hypervolume.evaluate(population);
+      Double hvValueNormalized = hypervolume.evaluate(population);
+      Double hvValue = hypervolume.setNormalize(false).evaluate(population);
       Double epsilonValue = epsilon.evaluate(population);
+      Double epsilonValueNormalized = epsilon.setNormalize(true).evaluate(population);
       Double gdValue = gd.evaluate(population);
-      Double igdValue = igd.evaluate(population);
-      Double igdPlusValue = igdplus.evaluate(population);
+      Double igdValueNormalized = igd.evaluate(population);
+      Double igdValue = igd.setNormalize(false).evaluate(population);
+      Double igdPlusValueNormalized = igdplus.evaluate(population);
+      Double igdPlusValue = igdplus.setNormalize(false).evaluate(population);
       Double spreadValue = spread.evaluate(population);
       Double r2Value = r2.evaluate(population);
       Double errorRatioValue = errorRatio.evaluate(population);
       Pair<Double, Double> setCoverageValues = (Pair<Double, Double>) setCoverage.evaluate(
           new ImmutablePair(population, FrontUtils.convertFrontToSolutionList(referenceFront)));
 
-      JMetalLogger.logger.info("Hypervolume : " + hvValue);
-      JMetalLogger.logger.info("Epsilon     : " + epsilonValue);
-      JMetalLogger.logger.info("GD          : " + gdValue);
-      JMetalLogger.logger.info("IGD         : " + igdValue);
-      JMetalLogger.logger.info("IGD+        : " + igdPlusValue);
-      JMetalLogger.logger.info("Spread      : " + spreadValue);
-      JMetalLogger.logger.info("R2          : " + r2Value);
-      JMetalLogger.logger.info("Error ratio : " + errorRatioValue);
-      JMetalLogger.logger.info("C(pop, ref) : " + setCoverageValues.getLeft());
-      JMetalLogger.logger.info("C(ref, pop) : " + setCoverageValues.getRight());
+      JMetalLogger.logger.info("Hypervolume (N) : " + hvValueNormalized);
+      JMetalLogger.logger.info("Hypervolume     : " + hvValue);
+      JMetalLogger.logger.info("Epsilon         : " + epsilonValue);
+      JMetalLogger.logger.info("Epsilon (N)     : " + epsilonValueNormalized);
+      JMetalLogger.logger.info("GD              : " + gdValue);
+      JMetalLogger.logger.info("IGD (N)         : " + igdValueNormalized);
+      JMetalLogger.logger.info("IGD             : " + igdValue);
+      JMetalLogger.logger.info("IGD+ (N)        : " + igdPlusValueNormalized);
+      JMetalLogger.logger.info("IGD+            : " + igdPlusValue);
+      JMetalLogger.logger.info("Spread          : " + spreadValue);
+      JMetalLogger.logger.info("R2              : " + r2Value);
+      JMetalLogger.logger.info("Error ratio     : " + errorRatioValue);
+      JMetalLogger.logger.info("C(pop, ref)     : " + setCoverageValues.getLeft());
+      JMetalLogger.logger.info("C(ref, pop)     : " + setCoverageValues.getRight());
     }
   }
 }

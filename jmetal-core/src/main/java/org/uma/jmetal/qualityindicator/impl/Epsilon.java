@@ -26,6 +26,7 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
+import org.uma.jmetal.util.front.util.FrontUtils;
 import org.uma.jmetal.util.naming.impl.SimpleDescribedEntity;
 
 import java.io.FileNotFoundException;
@@ -41,8 +42,11 @@ import java.util.List;
  * <trueFrontFile> <getNumberOfObjectives>
  */
 
-public class Epsilon extends SimpleDescribedEntity implements QualityIndicator<List<? extends Solution<?>>, Double> {
+public class Epsilon extends SimpleDescribedEntity
+    implements QualityIndicator<List<? extends Solution<?>>, Double> {
   private Front referenceParetoFront ;
+
+  private boolean normalize ;
 
   /**
    *
@@ -57,6 +61,7 @@ public class Epsilon extends SimpleDescribedEntity implements QualityIndicator<L
 
     Front front = new ArrayFront(referenceParetoFrontFile);
     referenceParetoFront = front ;
+    normalize = false ;
   }
 
   /**
@@ -71,8 +76,33 @@ public class Epsilon extends SimpleDescribedEntity implements QualityIndicator<L
     }
 
     this.referenceParetoFront = referenceParetoFront ;
+    normalize = false ;
   }
 
+  /**
+   * Set normalization of the fronts
+   * @param normalize
+   * @return
+   */
+  public Epsilon setNormalize(boolean normalize) {
+    this.normalize = normalize ;
+
+    return this ;
+  }
+
+  /**
+   * Return true if the fronts are normalized before computing the indicator
+   * @return
+   */
+  public boolean frontsNormalized() {
+    return normalize ;
+  }
+
+  /**
+   * Evaluate method
+   * @param solutionList
+   * @return
+   */
   @Override public Double evaluate(List<? extends Solution<?>> solutionList) {
     if (solutionList == null) {
       throw new JMetalException("The pareto front approximation list is null") ;
@@ -94,6 +124,9 @@ public class Epsilon extends SimpleDescribedEntity implements QualityIndicator<L
    * @throws JMetalException
    */
   private double epsilon(Front front, Front referenceFront) throws JMetalException {
+    Front normalizedFront;
+    Front normalizedParetoFront;
+
     int i, j, k;
     double eps, epsJ = 0.0, epsK = 0.0, epsTemp;
 
@@ -101,11 +134,28 @@ public class Epsilon extends SimpleDescribedEntity implements QualityIndicator<L
 
     eps = Double.MIN_VALUE;
 
-    for (i = 0; i < referenceFront.getNumberOfPoints(); i++) {
-      for (j = 0; j < front.getNumberOfPoints(); j++) {
+    if (normalize) {
+      double[] maximumValue;
+      double[] minimumValue;
+
+      // STEP 1. Obtain the maximum and minimum values of the Pareto front
+      maximumValue = FrontUtils.getMaximumValues(referenceFront);
+      minimumValue = FrontUtils.getMinimumValues(referenceFront);
+
+      // STEP 2. Get the normalized front and true Pareto fronts
+      normalizedFront = FrontUtils.getNormalizedFront(front, maximumValue, minimumValue);
+      normalizedParetoFront =
+          FrontUtils.getNormalizedFront(referenceFront, maximumValue, minimumValue);
+    } else {
+      normalizedFront = front ;
+      normalizedParetoFront = referenceFront ;
+    }
+
+    for (i = 0; i < normalizedParetoFront.getNumberOfPoints(); i++) {
+      for (j = 0; j < normalizedFront.getNumberOfPoints(); j++) {
         for (k = 0; k < numberOfObjectives; k++) {
-          epsTemp = front.getPoint(j).getDimensionValue(k)
-              - referenceFront.getPoint(i).getDimensionValue(k);
+          epsTemp = normalizedFront.getPoint(j).getDimensionValue(k)
+              - normalizedParetoFront.getPoint(i).getDimensionValue(k);
           if (k == 0) {
             epsK = epsTemp;
           } else if (epsK < epsTemp) {

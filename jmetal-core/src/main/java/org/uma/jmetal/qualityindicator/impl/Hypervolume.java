@@ -46,6 +46,7 @@ public class Hypervolume extends SimpleDescribedEntity implements QualityIndicat
   public Hypervolume() {
     super("HV", "Hypervolume quality indicator") ;
   }
+  private boolean normalize ;
 
   /**
    * Constructor
@@ -56,6 +57,7 @@ public class Hypervolume extends SimpleDescribedEntity implements QualityIndicat
     this() ;
     Front front = new ArrayFront(referenceParetoFrontFile);
     referenceParetoFront = front ;
+    normalize = true ;
   }
 
   /**
@@ -72,6 +74,30 @@ public class Hypervolume extends SimpleDescribedEntity implements QualityIndicat
     this.referenceParetoFront = referenceParetoFront ;
   }
 
+  /**
+   * Set normalization of the fronts
+   * @param normalize
+   * @return
+   */
+  public Hypervolume setNormalize(boolean normalize) {
+    this.normalize = normalize ;
+
+    return this ;
+  }
+
+  /**
+   * Return true if the fronts are normalized before computing the indicator
+   * @return
+   */
+  public boolean frontsNormalized() {
+    return normalize ;
+  }
+
+  /**
+   * Evaluate method
+   * @param paretoFrontApproximation
+   * @return
+   */
   @Override public Double evaluate(List<? extends Solution<?>> paretoFrontApproximation) {
     if (paretoFrontApproximation == null) {
       throw new JMetalException("The pareto front approximation is null") ;
@@ -220,24 +246,29 @@ public class Hypervolume extends SimpleDescribedEntity implements QualityIndicat
    * @param trueParetoFront    The true pareto front
    */
   private double hypervolume(Front front, Front trueParetoFront) {
-
-    double[] maximumValues;
-    double[] minimumValues;
     Front normalizedFront;
-    Front invertedFront;
 
-    int numberOfObjectives = trueParetoFront.getPoint(0).getNumberOfDimensions() ;
+    if (normalize) {
+      double[] maximumValue;
+      double[] minimumValue;
 
-    // STEP 1. Obtain the maximum and minimum values of the Pareto front
-    maximumValues = FrontUtils.getMaximumValues(trueParetoFront);
-    minimumValues = FrontUtils.getMinimumValues(trueParetoFront);
+      // STEP 1. Obtain the maximum and minimum values of the Pareto front
+      maximumValue = FrontUtils.getMaximumValues(trueParetoFront);
+      minimumValue = FrontUtils.getMinimumValues(trueParetoFront);
 
-    // STEP 2. Get the normalized front
-    normalizedFront = FrontUtils.getNormalizedFront(front, maximumValues, minimumValues);
+      // STEP 2. Get the normalized front and true Pareto fronts
+      normalizedFront = FrontUtils.getNormalizedFront(front, maximumValue, minimumValue);
+
+    } else {
+      normalizedFront = front ;
+    }
 
     // STEP 3. Inverse the pareto front. This is needed because of the original
     //metric by Zitzler is for maximization problem
+    Front invertedFront;
     invertedFront = FrontUtils.getInvertedFront(normalizedFront);
+
+    int numberOfObjectives = trueParetoFront.getPoint(0).getNumberOfDimensions() ;
 
     // STEP4. The hypervolume (control is passed to the Java version of Zitzler code)
     return this.calculateHypervolume(FrontUtils.convertFrontToArray(invertedFront),

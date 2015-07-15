@@ -36,6 +36,7 @@ public class InvertedGenerationalDistancePlus extends SimpleDescribedEntity
     implements QualityIndicator<List<? extends Solution<?>>, Double>  {
 
   private Front referenceParetoFront ;
+  private boolean normalize ;
 
   /**
    *
@@ -43,13 +44,14 @@ public class InvertedGenerationalDistancePlus extends SimpleDescribedEntity
    * @throws FileNotFoundException
    */
   public InvertedGenerationalDistancePlus(String referenceParetoFrontFile) throws FileNotFoundException {
-    super("IGD", "Inverted generational distance") ;
+    super("IGD+", "Inverted generational distance plus") ;
     if (referenceParetoFrontFile == null) {
       throw new JMetalException("The reference pareto front is null");
     }
 
     Front front = new ArrayFront(referenceParetoFrontFile);
     referenceParetoFront = front ;
+    normalize = true ;
   }
 
   /**
@@ -58,14 +60,39 @@ public class InvertedGenerationalDistancePlus extends SimpleDescribedEntity
    * @throws FileNotFoundException
    */
   public InvertedGenerationalDistancePlus(Front referenceParetoFront) {
-    super("IGD", "Inverted generational distance") ;
+    super("IGD+", "Inverted generational distance plus") ;
     if (referenceParetoFront == null) {
-      throw new JMetalException("The pareto front is null");
+      throw new JMetalException("The reference pareto front is null");
     }
 
     this.referenceParetoFront = referenceParetoFront ;
+    normalize = true ;
   }
 
+  /**
+   * Set normalization of the fronts
+   * @param normalize
+   * @return
+   */
+  public InvertedGenerationalDistancePlus setNormalize(boolean normalize) {
+    this.normalize = normalize ;
+
+    return this ;
+  }
+
+  /**
+   * Return true if the fronts are normalized before computing the indicator
+   * @return
+   */
+  public boolean frontsNormalized() {
+    return normalize ;
+  }
+
+  /**
+   * Evaluate method
+   * @param solutionList
+   * @return
+   */
   @Override public Double evaluate(List<? extends Solution<?>> solutionList) {
     return invertedGenerationalDistance(new ArrayFront(solutionList), referenceParetoFront);
   }
@@ -77,20 +104,25 @@ public class InvertedGenerationalDistancePlus extends SimpleDescribedEntity
    * @param referenceFront The reference pareto front
    */
   public double invertedGenerationalDistance(Front front, Front referenceFront) {
-    double[] maximumValue;
-    double[] minimumValue;
     Front normalizedFront;
     Front normalizedReferenceFront;
 
-    // STEP 1. Obtain the maximum and minimum values of the reference Pareto front
-    maximumValue = FrontUtils.getMaximumValues(referenceFront);
-    minimumValue = FrontUtils.getMinimumValues(referenceFront);
+    if (normalize) {
+      double[] maximumValue;
+      double[] minimumValue;
 
-    // STEP 2. Get the normalized front and normalized reference Pareto front
-    normalizedFront = FrontUtils.getNormalizedFront(front, maximumValue, minimumValue);
-    normalizedReferenceFront = FrontUtils.getNormalizedFront(referenceFront,
-      maximumValue,
-      minimumValue);
+      // STEP 1. Obtain the maximum and minimum values of the Pareto front
+      maximumValue = FrontUtils.getMaximumValues(referenceFront);
+      minimumValue = FrontUtils.getMinimumValues(referenceFront);
+
+      // STEP 2. Get the normalized front and true Pareto fronts
+      normalizedFront = FrontUtils.getNormalizedFront(front, maximumValue, minimumValue);
+      normalizedReferenceFront =
+          FrontUtils.getNormalizedFront(referenceFront, maximumValue, minimumValue);
+    } else {
+      normalizedFront = front ;
+      normalizedReferenceFront = referenceFront ;
+    }
 
     // STEP 3. Sum the distances between each point of the reference Pareto front and the dominated
     // region of the front

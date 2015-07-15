@@ -44,6 +44,7 @@ public class InvertedGenerationalDistance extends SimpleDescribedEntity
   private static final double POW = 2.0;
 
   private Front referenceParetoFront ;
+  private boolean normalize ;
 
   /**
    *
@@ -58,6 +59,7 @@ public class InvertedGenerationalDistance extends SimpleDescribedEntity
 
     Front front = new ArrayFront(referenceParetoFrontFile);
     referenceParetoFront = front ;
+    normalize = true ;
   }
 
   /**
@@ -72,8 +74,33 @@ public class InvertedGenerationalDistance extends SimpleDescribedEntity
     }
 
     this.referenceParetoFront = referenceParetoFront ;
+    this.normalize = true ;
   }
 
+  /**
+   * Set normalization of the fronts
+   * @param normalize
+   * @return
+   */
+  public InvertedGenerationalDistance setNormalize(boolean normalize) {
+    this.normalize = normalize ;
+
+    return this ;
+  }
+
+  /**
+   * Return true if the fronts are normalized before computing the indicator
+   * @return
+   */
+  public boolean frontsNormalized() {
+    return normalize ;
+  }
+
+  /**
+   * Evaluate method
+   * @param solutionList
+   * @return
+   */
   @Override public Double evaluate(List<? extends Solution<?>> solutionList) {
     return invertedGenerationalDistance(new ArrayFront(solutionList), referenceParetoFront);
   }
@@ -85,22 +112,25 @@ public class InvertedGenerationalDistance extends SimpleDescribedEntity
    * @param trueParetoFront The true pareto front
    */
   public double invertedGenerationalDistance(Front front, Front trueParetoFront) {
-    double[] maximumValue;
-    double[] minimumValue;
     Front normalizedFront;
     Front normalizedParetoFront;
 
-    // STEP 1. Obtain the maximum and minimum values of the Pareto front
-    maximumValue = FrontUtils.getMaximumValues(trueParetoFront);
-    minimumValue = FrontUtils.getMinimumValues(trueParetoFront);
+    if (normalize) {
+      double[] maximumValue;
+      double[] minimumValue;
 
-    // STEP 2. Get the normalized front and true Pareto fronts
-    normalizedFront = FrontUtils.getNormalizedFront(front,
-      maximumValue,
-      minimumValue);
-    normalizedParetoFront = FrontUtils.getNormalizedFront(trueParetoFront,
-      maximumValue,
-      minimumValue);
+      // STEP 1. Obtain the maximum and minimum values of the Pareto front
+      maximumValue = FrontUtils.getMaximumValues(trueParetoFront);
+      minimumValue = FrontUtils.getMinimumValues(trueParetoFront);
+
+      // STEP 2. Get the normalized front and true Pareto fronts
+      normalizedFront = FrontUtils.getNormalizedFront(front, maximumValue, minimumValue);
+      normalizedParetoFront =
+          FrontUtils.getNormalizedFront(trueParetoFront, maximumValue, minimumValue);
+    } else {
+      normalizedFront = front ;
+      normalizedParetoFront = trueParetoFront ;
+    }
 
     // STEP 3. Sum the distances between each point of the true Pareto front and
     // the nearest point in the true Pareto front

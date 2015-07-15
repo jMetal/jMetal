@@ -42,6 +42,7 @@ import java.util.List;
 public class Spread extends SimpleDescribedEntity implements QualityIndicator<List<? extends Solution<?>>, Double> {
 
   private Front referenceParetoFront ;
+  private boolean normalize ;
 
   /**
    *
@@ -56,6 +57,7 @@ public class Spread extends SimpleDescribedEntity implements QualityIndicator<Li
 
     Front front = new ArrayFront(referenceParetoFrontFile);
     referenceParetoFront = front ;
+    normalize = true ;
   }
 
   /**
@@ -70,8 +72,33 @@ public class Spread extends SimpleDescribedEntity implements QualityIndicator<Li
     }
 
     this.referenceParetoFront = referenceParetoFront ;
+    normalize = true ;
   }
 
+  /**
+   * Set normalization of the fronts
+   * @param normalize
+   * @return
+   */
+  public Spread setNormalize(boolean normalize) {
+    this.normalize = normalize ;
+
+    return this ;
+  }
+
+  /**
+   * Return true if the fronts are normalized before computing the indicator
+   * @return
+   */
+  public boolean frontsNormalized() {
+    return normalize ;
+  }
+
+  /**
+   * Evaluate method
+   * @param solutionList
+   * @return
+   */
   @Override public Double evaluate(List<? extends Solution<?>> solutionList) {
     return spread(new ArrayFront(solutionList), referenceParetoFront);
   }

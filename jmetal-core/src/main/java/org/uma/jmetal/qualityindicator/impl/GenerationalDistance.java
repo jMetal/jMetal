@@ -44,6 +44,7 @@ public class GenerationalDistance extends SimpleDescribedEntity implements Quali
   private static final double POW = 2.0;
 
   private Front referenceParetoFront ;
+  private boolean normalize ;
 
   /**
    *
@@ -58,6 +59,7 @@ public class GenerationalDistance extends SimpleDescribedEntity implements Quali
 
     Front front = new ArrayFront(referenceParetoFrontFile);
     referenceParetoFront = front ;
+    normalize = true ;
   }
 
   /**
@@ -72,8 +74,33 @@ public class GenerationalDistance extends SimpleDescribedEntity implements Quali
     }
 
     this.referenceParetoFront = referenceParetoFront ;
+    normalize = true ;
   }
 
+  /**
+   * Set normalization of the fronts
+   * @param normalize
+   * @return
+   */
+  public GenerationalDistance setNormalize(boolean normalize) {
+    this.normalize = normalize ;
+
+    return this ;
+  }
+
+  /**
+   * Return true if the fronts are normalized before computing the indicator
+   * @return
+   */
+  public boolean frontsNormalized() {
+    return normalize ;
+  }
+
+  /**
+   * Evaluate method
+   * @param solutionList
+   * @return
+   */
   @Override public Double evaluate(List<? extends Solution<?>> solutionList) {
     if (solutionList == null) {
       throw new JMetalException("The pareto front approximation is null") ;
