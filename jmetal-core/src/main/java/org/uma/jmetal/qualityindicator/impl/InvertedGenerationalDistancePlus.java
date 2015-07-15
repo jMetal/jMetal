@@ -19,7 +19,7 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontUtils;
-import org.uma.jmetal.util.point.Point;
+import org.uma.jmetal.util.point.util.DominanceDistance;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -111,7 +111,8 @@ public class InvertedGenerationalDistancePlus
     // region of the front
     double sum = 0.0;
     for (int i = 0 ; i < normalizedReferenceFront.getNumberOfPoints(); i++) {
-        sum += distanceToClosestPoint(normalizedReferenceFront.getPoint(i), normalizedFront);
+        sum += FrontUtils.distanceToClosestPoint(normalizedReferenceFront.getPoint(i),
+            normalizedFront, new DominanceDistance());
     }
 
     // STEP 4. Divide the sum by the maximum number of points of the reference Pareto front
@@ -121,44 +122,5 @@ public class InvertedGenerationalDistancePlus
   @Override
   public String getName() {
     return super.getName();
-  }
-
-  /**
-   * Calculate distance of the reference point to the point of the front point according to
-   * Pareto dominance. As jMetal minimizes by default, the expression (zk - ak) of the reference
-   * paper is changed by (ak - zk). Note: a is the point, z is the reference point
-   * @param point
-   * @param referencePoint
-   * @return
-   */
-  public double calculateDistanceBetweenPoints(Point point, Point referencePoint) {
-    double result = 0.0 ;
-    for (int i = 0; i < point.getNumberOfDimensions(); i++) {
-      double value = point.getDimensionValue(i) - referencePoint.getDimensionValue(i) ;
-      if (value > 0.0) {
-        result += Math.pow(value, 2.0) ;
-      }
-    }
-
-    return Math.sqrt(result) ;
-  }
-
-  /**
-   * Calculates the minimum distance from a point of the reference Pareto front to the front
-   * @param point
-   * @param front
-   * @return
-   */
-  private double distanceToClosestPoint(Point point, Front front) {
-    double minDistance = calculateDistanceBetweenPoints(point, front.getPoint(0));
-
-    for (int i = 1; i < front.getNumberOfPoints(); i++) {
-      double aux = calculateDistanceBetweenPoints(point, front.getPoint(i));
-      if (aux < minDistance) {
-        minDistance = aux;
-      }
-    }
-
-    return minDistance;
   }
 }

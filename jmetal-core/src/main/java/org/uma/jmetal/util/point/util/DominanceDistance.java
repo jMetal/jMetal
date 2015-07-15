@@ -38,7 +38,7 @@ public class DominanceDistance implements PointDistance {
     double distance = 0.0;
 
     for (int i = 0; i < a.getNumberOfDimensions(); i++) {
-      double max = Math.max(a.getDimensionValue(i) - b.getDimensionValue(i), 0.0) ;
+      double max = Math.max(b.getDimensionValue(i) - a.getDimensionValue(i), 0.0) ;
       distance += Math.pow(max, 2);
     }
     return Math.sqrt(distance);

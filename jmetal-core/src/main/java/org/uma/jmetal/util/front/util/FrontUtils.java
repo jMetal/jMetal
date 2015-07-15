@@ -185,7 +185,6 @@ public class FrontUtils {
     return getNormalizedFront(front, maximumValues, minimumValues) ;
   }
 
-
   /**
    * Gets the distance between a point and the nearest one in a front. If a distance equals to 0
    * is found, that means that the point is in the front, so it is excluded
@@ -195,6 +194,18 @@ public class FrontUtils {
    * @return The minimum distance between the point and the front
    */
   public static double distanceToNearestPoint(Point point, Front front) {
+    return distanceToNearestPoint(point, front, new EuclideanDistance()) ;
+  }
+
+  /**
+   * Gets the distance between a point and the nearest one in a front. If a distance equals to 0
+   * is found, that means that the point is in the front, so it is excluded
+   *
+   * @param point The point
+   * @param front The front that contains the other points to calculate the distances
+   * @return The minimum distance between the point and the front
+   */
+  public static double distanceToNearestPoint(Point point, Front front, PointDistance distance) {
     if (front == null) {
       throw new JMetalException("The front is null");
     } else if (front.getNumberOfPoints() == 0) {
@@ -206,13 +217,26 @@ public class FrontUtils {
     double minDistance = Double.MAX_VALUE;
 
     for (int i = 0; i < front.getNumberOfPoints(); i++) {
-      double aux = new EuclideanDistance().compute(point, front.getPoint(i));
+      double aux = distance.compute(point, front.getPoint(i));
       if ((aux < minDistance) && (aux > 0.0)) {
         minDistance = aux;
       }
     }
 
     return minDistance;
+  }
+
+  /**
+   * Gets the distance between a point and the nearest one in a given front. The Euclidean distance
+   * is assumed
+   *
+   * @param point The point
+   * @param front The front that contains the other points to calculate the
+   *              distances
+   * @return The minimum distance between the point and the front
+   */
+  public static double distanceToClosestPoint(Point point, Front front) {
+    return distanceToClosestPoint(point, front, new EuclideanDistance()) ;
   }
 
   /**
@@ -223,7 +247,7 @@ public class FrontUtils {
    *              distances
    * @return The minimum distance between the point and the front
    */
-  public static double distanceToClosestPoint(Point point, Front front) {
+  public static double distanceToClosestPoint(Point point, Front front, PointDistance distance) {
     if (front == null) {
       throw new JMetalException("The front is null");
     } else if (front.getNumberOfPoints() == 0) {
@@ -232,12 +256,10 @@ public class FrontUtils {
       throw new JMetalException("The point is null");
     }
 
-    PointDistance distance = new EuclideanDistance() ;
-
     double minDistance = distance.compute(point, front.getPoint(0));
 
     for (int i = 1; i < front.getNumberOfPoints(); i++) {
-      double aux = new EuclideanDistance().compute(point, front.getPoint(i));
+      double aux = distance.compute(point, front.getPoint(i));
       if (aux < minDistance) {
         minDistance = aux;
       }
