@@ -31,7 +31,6 @@ import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.DoubleProblem;
-import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.*;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
@@ -118,26 +117,30 @@ public class NSGAIIRunner {
 
       Hypervolume hypervolume = new Hypervolume(referenceFront);
       Epsilon epsilon = new Epsilon(referenceFront);
-      InvertedGenerationalDistance igd = new InvertedGenerationalDistance(referenceFront);
       GenerationalDistance gd = new GenerationalDistance(referenceFront);
+      InvertedGenerationalDistance igd = new InvertedGenerationalDistance(referenceFront);
+      InvertedGenerationalDistancePlus igdplus = new InvertedGenerationalDistancePlus(referenceFront) ;
       Spread spread = new Spread(referenceFront);
       R2 r2 = new R2(referenceFront);
       ErrorRatio errorRatio = new ErrorRatio(referenceFront);
-      QualityIndicator setCoverage = new SetCoverage();
+      SetCoverage setCoverage = new SetCoverage();
 
       Double hvValue = hypervolume.evaluate(population);
       Double epsilonValue = epsilon.evaluate(population);
-      Double igdValue = igd.evaluate(population);
       Double gdValue = gd.evaluate(population);
+      Double igdValue = igd.evaluate(population);
+      Double igdPlusValue = igdplus.evaluate(population);
       Double spreadValue = spread.evaluate(population);
       Double r2Value = r2.evaluate(population);
       Double errorRatioValue = errorRatio.evaluate(population);
-      Pair<Double, Double> setCoverageValues = (Pair<Double, Double>) setCoverage.evaluate(new ImmutablePair(population, FrontUtils.convertFrontToSolutionList(referenceFront)));
+      Pair<Double, Double> setCoverageValues = (Pair<Double, Double>) setCoverage.evaluate(
+          new ImmutablePair(population, FrontUtils.convertFrontToSolutionList(referenceFront)));
 
       JMetalLogger.logger.info("Hypervolume : " + hvValue);
       JMetalLogger.logger.info("Epsilon     : " + epsilonValue);
       JMetalLogger.logger.info("GD          : " + gdValue);
       JMetalLogger.logger.info("IGD         : " + igdValue);
+      JMetalLogger.logger.info("IGD+        : " + igdPlusValue);
       JMetalLogger.logger.info("Spread      : " + spreadValue);
       JMetalLogger.logger.info("R2          : " + r2Value);
       JMetalLogger.logger.info("Error ratio : " + errorRatioValue);

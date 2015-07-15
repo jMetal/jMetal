@@ -96,8 +96,7 @@ public class InvertedGenerationalDistancePlus extends SimpleDescribedEntity
     // region of the front
     double sum = 0.0;
     for (int i = 0 ; i < normalizedReferenceFront.getNumberOfPoints(); i++) {
-      sum += calculateDistance(normalizedReferenceFront.getPoint(i),
-          normalizedFront.getPoint(i)) ;
+        sum += distanceToClosestPoint(normalizedReferenceFront.getPoint(i), normalizedFront);
     }
 
     // STEP 4. Divide the sum by the maximum number of points of the reference Pareto front
@@ -117,7 +116,7 @@ public class InvertedGenerationalDistancePlus extends SimpleDescribedEntity
    * @param referencePoint
    * @return
    */
-  private double calculateDistance(Point point, Point referencePoint) {
+  private double calculateDistanceBetweenPoints(Point point, Point referencePoint) {
     double result = 0.0 ;
     for (int i = 0; i < point.getNumberOfDimensions(); i++) {
       double value = point.getDimensionValue(i) - referencePoint.getDimensionValue(i) ;
@@ -127,5 +126,24 @@ public class InvertedGenerationalDistancePlus extends SimpleDescribedEntity
     }
 
     return Math.sqrt(result) ;
+  }
+
+  /**
+   * Calculates the minimum distance from a point of the reference Pareto front to the front
+   * @param point
+   * @param front
+   * @return
+   */
+  private double distanceToClosestPoint(Point point, Front front) {
+    double minDistance = calculateDistanceBetweenPoints(point, front.getPoint(0));
+
+    for (int i = 1; i < front.getNumberOfPoints(); i++) {
+      double aux = calculateDistanceBetweenPoints(point, front.getPoint(i));
+      if (aux < minDistance) {
+        minDistance = aux;
+      }
+    }
+
+    return minDistance;
   }
 }
