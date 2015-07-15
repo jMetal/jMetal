@@ -113,7 +113,7 @@ public class InvertedGenerationalDistance extends SimpleDescribedEntity
     // STEP 4. Obtain the sqrt of the sum
     sum = Math.pow(sum, 1.0 / POW);
 
-    // STEP 5. Divide the sum by the maximum number of points of the front
+    // STEP 5. Divide the sum by the maximum number of points of the reference Pareto front
     return sum / normalizedParetoFront.getNumberOfPoints();
   }
 

@@ -34,7 +34,6 @@ import java.util.List;
  */
 public class InvertedGenerationalDistancePlus extends SimpleDescribedEntity
     implements QualityIndicator<List<? extends Solution<?>>, Double>  {
-  private static final double POW = 2.0;
 
   private Front referenceParetoFront ;
 
@@ -83,11 +82,11 @@ public class InvertedGenerationalDistancePlus extends SimpleDescribedEntity
     Front normalizedFront;
     Front normalizedReferenceFront;
 
-    // STEP 1. Obtain the maximum and minimum values of the Pareto front
+    // STEP 1. Obtain the maximum and minimum values of the reference Pareto front
     maximumValue = FrontUtils.getMaximumValues(referenceFront);
     minimumValue = FrontUtils.getMinimumValues(referenceFront);
 
-    // STEP 2. Get the normalized front and true Pareto fronts
+    // STEP 2. Get the normalized front and normalized reference Pareto front
     normalizedFront = FrontUtils.getNormalizedFront(front, maximumValue, minimumValue);
     normalizedReferenceFront = FrontUtils.getNormalizedFront(referenceFront,
       maximumValue,
@@ -101,7 +100,7 @@ public class InvertedGenerationalDistancePlus extends SimpleDescribedEntity
           normalizedFront.getPoint(i)) ;
     }
 
-    // STEP 4. Divide the sum by the maximum number of points of the front
+    // STEP 4. Divide the sum by the maximum number of points of the reference Pareto front
     return sum / normalizedReferenceFront.getNumberOfPoints();
   }
 
@@ -112,7 +111,8 @@ public class InvertedGenerationalDistancePlus extends SimpleDescribedEntity
 
   /**
    * Calculate distance of the reference point to the point of the front point according to
-   * Pareto dominance
+   * Pareto dominance. As jMetal minimizes by default, the expression (zk - ak) of the reference
+   * paper is changed by (ak - zk). Note: a is the point, z is the reference point
    * @param point
    * @param referencePoint
    * @return
@@ -120,7 +120,7 @@ public class InvertedGenerationalDistancePlus extends SimpleDescribedEntity
   private double calculateDistance(Point point, Point referencePoint) {
     double result = 0.0 ;
     for (int i = 0; i < point.getNumberOfDimensions(); i++) {
-      double value = referencePoint.getDimensionValue(i) - point.getDimensionValue(i) ;
+      double value = point.getDimensionValue(i) - referencePoint.getDimensionValue(i) ;
       if (value > 0.0) {
         result += Math.pow(value, 2.0) ;
       }
