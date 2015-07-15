@@ -28,7 +28,8 @@ import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontUtils;
 import org.uma.jmetal.util.point.impl.LexicographicalPointComparator;
-import org.uma.jmetal.util.point.impl.PointUtils;
+import org.uma.jmetal.util.point.util.EuclideanDistance;
+import org.uma.jmetal.util.point.util.PointDistance;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -95,6 +96,8 @@ public class Spread
     Front normalizedFront;
     Front normalizedParetoFront;
 
+    PointDistance distance = new EuclideanDistance() ;
+
     // STEP 1. Obtain the maximum and minimum values of the Pareto front
     maximumValue = FrontUtils.getMaximumValues(trueParetoFront);
     minimumValue = FrontUtils.getMinimumValues(trueParetoFront);
@@ -112,10 +115,9 @@ public class Spread
     normalizedParetoFront.sort(new LexicographicalPointComparator());
 
     // STEP 4. Compute df and dl (See specifications in Deb's description of the metric)
-    double df = PointUtils.euclideanDistance(normalizedFront.getPoint(0), normalizedParetoFront.getPoint(0)) ;
-    double dl = PointUtils.euclideanDistance(
-        normalizedFront.getPoint(normalizedFront.getNumberOfPoints()-1),
-        normalizedParetoFront.getPoint(normalizedParetoFront.getNumberOfPoints()-1)) ;
+    double df = distance.compute(normalizedFront.getPoint(0), normalizedParetoFront.getPoint(0)) ;
+    double dl = distance.compute(normalizedFront.getPoint(normalizedFront.getNumberOfPoints() - 1),
+        normalizedParetoFront.getPoint(normalizedParetoFront.getNumberOfPoints() - 1)) ;
 
     double mean = 0.0;
     double diversitySum = df + dl;
@@ -125,7 +127,7 @@ public class Spread
     // STEP 5. Calculate the mean of distances between points i and (i - 1).
     // (the points are in lexicografical order)
     for (int i = 0; i < (numberOfPoints - 1); i++) {
-      mean += PointUtils.euclideanDistance(normalizedFront.getPoint(i), normalizedFront.getPoint(i + 1));
+      mean += distance.compute(normalizedFront.getPoint(i), normalizedFront.getPoint(i + 1));
     }
 
     mean = mean / (double) (numberOfPoints - 1);
@@ -134,8 +136,8 @@ public class Spread
     // metric. In other case, return the worse value (1.0, see metric's description).
     if (numberOfPoints > 1) {
       for (int i = 0; i < (numberOfPoints - 1); i++) {
-        diversitySum += Math.abs(PointUtils.euclideanDistance(normalizedFront.getPoint(i),
-          normalizedFront.getPoint(i + 1)) - mean);
+        diversitySum += Math.abs(distance.compute(normalizedFront.getPoint(i),
+            normalizedFront.getPoint(i + 1)) - mean);
       }
       return diversitySum / (df + dl + (numberOfPoints - 1) * mean);
     } else {

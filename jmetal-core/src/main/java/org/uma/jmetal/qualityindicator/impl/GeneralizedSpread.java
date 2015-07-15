@@ -31,7 +31,7 @@ import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
 import org.uma.jmetal.util.point.impl.LexicographicalPointComparator;
 import org.uma.jmetal.util.point.impl.PointDimensionComparator;
-import org.uma.jmetal.util.point.impl.PointUtils;
+import org.uma.jmetal.util.point.util.EuclideanDistance;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -132,7 +132,7 @@ public class GeneralizedSpread
     normalizedFront.sort(new LexicographicalPointComparator());
 
     // STEP 5. Calculate the metric value. The value is 1.0 by default
-    if (PointUtils.euclideanDistance(normalizedFront.getPoint(0),
+    if (new EuclideanDistance().compute(normalizedFront.getPoint(0),
         normalizedFront.getPoint(normalizedFront.getNumberOfPoints() - 1)) == 0.0) {
       return 1.0;
     } else {

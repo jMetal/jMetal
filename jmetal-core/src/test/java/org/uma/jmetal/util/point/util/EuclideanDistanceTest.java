@@ -11,34 +11,41 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.util.point.impl;
+package org.uma.jmetal.util.point.util;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.point.Point;
+import org.uma.jmetal.util.point.impl.ArrayPoint;
 
 import static org.junit.Assert.assertEquals;
 
 /**
- * @author Antonio J. Nebro
- * @version 1.0
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class PointUtilsTest {
+public class EuclideanDistanceTest {
   private static final double EPSILON = 0.0000000000001 ;
+
+  private EuclideanDistance distance ;
+
+  @Before
+  public void setup() {
+    distance = new EuclideanDistance() ;
+  }
 
   @Test(expected = JMetalException.class)
   public void shouldFirstPointToCompareEqualsToNullRaiseAnException() {
-    PointUtils utils = new PointUtils() ;
     Point point = new ArrayPoint(5) ;
 
-    utils.euclideanDistance(null, point) ;
+    distance.compute(null, point) ;
   }
 
   @Test (expected = JMetalException.class)
   public void shouldSecondPointToCompareEqualsToNullRaiseAnException() {
     Point point = new ArrayPoint(5) ;
 
-    PointUtils.euclideanDistance(point, null) ;
+    distance.compute(point, null) ;
   }
 
   @Test (expected = JMetalException.class)
@@ -46,11 +53,11 @@ public class PointUtilsTest {
     Point point1 = new ArrayPoint(5) ;
     Point point2 = new ArrayPoint(2) ;
 
-    PointUtils.euclideanDistance(point1, point2) ;
+    distance.compute(point1, point2) ;
   }
 
   @Test public void shouldCalculatingDistanceOfPointsWithZeroDimensionReturnZero() {
-    PointUtils.euclideanDistance(new ArrayPoint(0), new ArrayPoint(0)) ;
+    distance.compute(new ArrayPoint(0), new ArrayPoint(0)) ;
   }
 
   @Test public void shouldCalculatingDistanceOfPointsWithOneDimensionReturnTheCorrectValue() {
@@ -60,7 +67,7 @@ public class PointUtilsTest {
     point1.setDimensionValue(0, -2.0);
     point2.setDimensionValue(0, +2.0);
 
-    assertEquals(4.0, PointUtils.euclideanDistance(point1, point2), EPSILON) ;
+    assertEquals(4.0, distance.compute(point1, point2), EPSILON) ;
   }
 
   @Test public void shouldCalculatingDistanceOfPointsWithTwoDimensionsReturnTheCorrectValue() {
@@ -72,7 +79,6 @@ public class PointUtilsTest {
     point2.setDimensionValue(0, +2.0);
     point2.setDimensionValue(1, +2.0);
 
-    assertEquals(Math.sqrt(8.0), PointUtils.euclideanDistance(point1, point2), EPSILON) ;
+    assertEquals(Math.sqrt(8.0), distance.compute(point1, point2), EPSILON) ;
   }
-
 }

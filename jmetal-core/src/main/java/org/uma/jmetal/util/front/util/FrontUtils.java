@@ -21,7 +21,8 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.point.Point;
-import org.uma.jmetal.util.point.impl.PointUtils;
+import org.uma.jmetal.util.point.util.EuclideanDistance;
+import org.uma.jmetal.util.point.util.PointDistance;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -205,7 +206,7 @@ public class FrontUtils {
     double minDistance = Double.MAX_VALUE;
 
     for (int i = 0; i < front.getNumberOfPoints(); i++) {
-      double aux = PointUtils.euclideanDistance(point, front.getPoint(i));
+      double aux = new EuclideanDistance().compute(point, front.getPoint(i));
       if ((aux < minDistance) && (aux > 0.0)) {
         minDistance = aux;
       }
@@ -231,10 +232,12 @@ public class FrontUtils {
       throw new JMetalException("The point is null");
     }
 
-    double minDistance = PointUtils.euclideanDistance(point, front.getPoint(0));
+    PointDistance distance = new EuclideanDistance() ;
+
+    double minDistance = distance.compute(point, front.getPoint(0));
 
     for (int i = 1; i < front.getNumberOfPoints(); i++) {
-      double aux = PointUtils.euclideanDistance(point, front.getPoint(i));
+      double aux = new EuclideanDistance().compute(point, front.getPoint(i));
       if (aux < minDistance) {
         minDistance = aux;
       }

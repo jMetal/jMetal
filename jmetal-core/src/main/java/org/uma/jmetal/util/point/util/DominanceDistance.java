@@ -11,38 +11,35 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.util.point.impl;
+package org.uma.jmetal.util.point.util;
 
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.point.Point;
 
 /**
- * @author Antonio J. Nebro
- * @version 1.0
+ * Computes the distance between two points a y b according to the dominance relationship. Point a
+ * is supposed to be point of the Pareto front
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class PointUtils {
-  /**
-   * This method returns the distance (taken the euclidean distance) between
-   * two points
-   *
-   * @param a A point
-   * @param b A point
-   * @return The euclidean distance between the points
-   */
-  public static double euclideanDistance(Point a, Point b) {
+public class DominanceDistance implements PointDistance {
+
+  @Override
+  public double compute(Point a, Point b) {
     if (a == null) {
       throw new JMetalException("The first point is null") ;
     } else if (b == null) {
       throw new JMetalException("The second point is null") ;
     } else if (a.getNumberOfDimensions() != b.getNumberOfDimensions()) {
       throw new JMetalException("The dimensions of the points are different: "
-      + a.getNumberOfDimensions() + ", " + b.getNumberOfDimensions()) ;
+          + a.getNumberOfDimensions() + ", " + b.getNumberOfDimensions()) ;
     }
 
     double distance = 0.0;
 
     for (int i = 0; i < a.getNumberOfDimensions(); i++) {
-      distance += Math.pow(a.getDimensionValue(i) - b.getDimensionValue(i), 2.0);
+      double max = Math.max(a.getDimensionValue(i) - b.getDimensionValue(i), 0.0) ;
+      distance += Math.pow(max, 2);
     }
     return Math.sqrt(distance);
   }
