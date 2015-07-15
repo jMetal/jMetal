@@ -21,13 +21,12 @@
 
 package org.uma.jmetal.qualityindicator.impl;
 
-import org.uma.jmetal.qualityindicator.QualityIndicator;
+import org.uma.jmetal.qualityindicator.NormalizableQualityIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontUtils;
-import org.uma.jmetal.util.naming.impl.SimpleDescribedEntity;
 import org.uma.jmetal.util.point.impl.LexicographicalPointComparator;
 import org.uma.jmetal.util.point.impl.PointUtils;
 
@@ -39,10 +38,10 @@ import java.util.List;
  * Reference: Deb, K., Pratap, A., Agarwal, S., Meyarivan, T.: A fast and
  * elitist multiobjective genetic algorithm: NSGA-II. IEEE Trans. on Evol. Computation 6 (2002) 182-197
  */
-public class Spread extends SimpleDescribedEntity implements QualityIndicator<List<? extends Solution<?>>, Double> {
+public class Spread
+    extends NormalizableQualityIndicator<List<? extends Solution<?>>, Double> {
 
   private Front referenceParetoFront ;
-  private boolean normalize ;
 
   /**
    *
@@ -73,25 +72,6 @@ public class Spread extends SimpleDescribedEntity implements QualityIndicator<Li
 
     this.referenceParetoFront = referenceParetoFront ;
     normalize = true ;
-  }
-
-  /**
-   * Set normalization of the fronts
-   * @param normalize
-   * @return
-   */
-  public Spread setNormalize(boolean normalize) {
-    this.normalize = normalize ;
-
-    return this ;
-  }
-
-  /**
-   * Return true if the fronts are normalized before computing the indicator
-   * @return
-   */
-  public boolean frontsNormalized() {
-    return normalize ;
   }
 
   /**

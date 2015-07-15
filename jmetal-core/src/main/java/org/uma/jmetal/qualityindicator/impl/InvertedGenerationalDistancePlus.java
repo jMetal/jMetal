@@ -13,13 +13,12 @@
 
 package org.uma.jmetal.qualityindicator.impl;
 
-import org.uma.jmetal.qualityindicator.QualityIndicator;
+import org.uma.jmetal.qualityindicator.NormalizableQualityIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontUtils;
-import org.uma.jmetal.util.naming.impl.SimpleDescribedEntity;
 import org.uma.jmetal.util.point.Point;
 
 import java.io.FileNotFoundException;
@@ -32,11 +31,10 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class InvertedGenerationalDistancePlus extends SimpleDescribedEntity
-    implements QualityIndicator<List<? extends Solution<?>>, Double>  {
+public class InvertedGenerationalDistancePlus
+    extends NormalizableQualityIndicator<List<? extends Solution<?>>, Double> {
 
   private Front referenceParetoFront ;
-  private boolean normalize ;
 
   /**
    *
@@ -67,25 +65,6 @@ public class InvertedGenerationalDistancePlus extends SimpleDescribedEntity
 
     this.referenceParetoFront = referenceParetoFront ;
     normalize = true ;
-  }
-
-  /**
-   * Set normalization of the fronts
-   * @param normalize
-   * @return
-   */
-  public InvertedGenerationalDistancePlus setNormalize(boolean normalize) {
-    this.normalize = normalize ;
-
-    return this ;
-  }
-
-  /**
-   * Return true if the fronts are normalized before computing the indicator
-   * @return
-   */
-  public boolean frontsNormalized() {
-    return normalize ;
   }
 
   /**
