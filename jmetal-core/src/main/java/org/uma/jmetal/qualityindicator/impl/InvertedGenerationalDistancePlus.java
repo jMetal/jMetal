@@ -43,9 +43,9 @@ public class InvertedGenerationalDistancePlus
    */
   public InvertedGenerationalDistancePlus(String referenceParetoFrontFile) throws FileNotFoundException {
     super("IGD+", "Inverted generational distance plus") ;
-    if (referenceParetoFrontFile == null) {
-      throw new JMetalException("The reference pareto front is null");
-    }
+    //if (referenceParetoFrontFile == null) {
+    //  throw new JMetalException("The pareto front approximation is null");
+    //}
 
     Front front = new ArrayFront(referenceParetoFrontFile);
     referenceParetoFront = front ;
@@ -60,7 +60,7 @@ public class InvertedGenerationalDistancePlus
   public InvertedGenerationalDistancePlus(Front referenceParetoFront) {
     super("IGD+", "Inverted generational distance plus") ;
     if (referenceParetoFront == null) {
-      throw new JMetalException("The reference pareto front is null");
+      throw new JMetalException("The pareto front approximation is null");
     }
 
     this.referenceParetoFront = referenceParetoFront ;
@@ -73,7 +73,11 @@ public class InvertedGenerationalDistancePlus
    * @return
    */
   @Override public Double evaluate(List<? extends Solution<?>> solutionList) {
-    return invertedGenerationalDistance(new ArrayFront(solutionList), referenceParetoFront);
+    if (solutionList == null) {
+      throw new JMetalException("The pareto front approximation is null") ;
+    }
+
+    return invertedGenerationalDistancePlus(new ArrayFront(solutionList), referenceParetoFront);
   }
 
   /**
@@ -82,7 +86,7 @@ public class InvertedGenerationalDistancePlus
    * @param front The front
    * @param referenceFront The reference pareto front
    */
-  public double invertedGenerationalDistance(Front front, Front referenceFront) {
+  public double invertedGenerationalDistancePlus(Front front, Front referenceFront) {
     Front normalizedFront;
     Front normalizedReferenceFront;
 
@@ -127,7 +131,7 @@ public class InvertedGenerationalDistancePlus
    * @param referencePoint
    * @return
    */
-  private double calculateDistanceBetweenPoints(Point point, Point referencePoint) {
+  public double calculateDistanceBetweenPoints(Point point, Point referencePoint) {
     double result = 0.0 ;
     for (int i = 0; i < point.getNumberOfDimensions(); i++) {
       double value = point.getDimensionValue(i) - referencePoint.getDimensionValue(i) ;

@@ -1,0 +1,144 @@
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU Lesser General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU Lesser General Public License for more details.
+//
+//  You should have received a copy of the GNU Lesser General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+package org.uma.jmetal.qualityindicator.impl;
+
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.front.Front;
+import org.uma.jmetal.util.front.imp.ArrayFront;
+import org.uma.jmetal.util.front.util.FrontUtils;
+import org.uma.jmetal.util.point.Point;
+import org.uma.jmetal.util.point.impl.ArrayPoint;
+
+import java.io.FileNotFoundException;
+
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.junit.Assert.assertEquals;
+
+/**
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ */
+public class InvertedGenerationalDistancePlusTest {
+
+  private static final double EPSILON = 0.0000000000001 ;
+
+  @Rule
+  public ExpectedException exception = ExpectedException.none();
+
+  @Test
+  public void shouldConstructorRaiseAnExceptionIfTheParetoFrontIsNull() {
+    exception.expect(JMetalException.class);
+    exception.expectMessage(containsString("The pareto front approximation is null"));
+
+    Front front = null ;
+
+    new InvertedGenerationalDistancePlus(front) ;
+  }
+
+  @Test (expected = FileNotFoundException.class)
+  public void shouldConstructorRaiseAnExceptionIfFileNameIsNull() throws FileNotFoundException {
+    new InvertedGenerationalDistancePlus("nonExistingFile") ;
+  }
+
+  /* TODO test pending of solving an issue in class ArrayFront
+  @Test (expected = JMetalException.class)
+  public void shouldConstructorRaiseAnExceptionIfFileNameIsEmpty() throws FileNotFoundException {
+    new InvertedGenerationalDistancePlus("") ;
+  }
+  */
+
+  @Test
+  public void shouldEvaluateRaiseAnExceptionIfTheFrontApproximationIsNull() {
+    exception.expect(JMetalException.class);
+    exception.expectMessage(containsString("The pareto front approximation is null"));
+
+    Front front = new ArrayFront(0, 0) ;
+
+    InvertedGenerationalDistancePlus igdplus = new InvertedGenerationalDistancePlus(front) ;
+    igdplus.evaluate(null) ;
+  }
+
+  @Test
+  public void shouldEvaluateReturnZeroIfTheFrontAndTheReferenceFrontContainsTheSamePoints() {
+    int numberOfPoints = 1 ;
+    int numberOfDimensions = 2 ;
+    Front frontApproximation = new ArrayFront(numberOfPoints, numberOfDimensions);
+    Front paretoFront = new ArrayFront(numberOfPoints, numberOfDimensions);
+
+    Point point1 = new ArrayPoint(numberOfDimensions) ;
+    point1.setDimensionValue(0, 4.0);
+    point1.setDimensionValue(1, 10.0);
+
+    frontApproximation.setPoint(0, point1);
+    paretoFront.setPoint(0, point1);
+
+    InvertedGenerationalDistancePlus igdPlus = new InvertedGenerationalDistancePlus(paretoFront) ;
+    igdPlus.setNormalize(false) ;
+
+    assertEquals(0.0, igdPlus.evaluate(FrontUtils.convertFrontToSolutionList(frontApproximation)),
+        EPSILON);
+  }
+
+  /*
+  @Test
+  public void shouldEvaluateReturnTheCorrectValueCaseA() {
+    int numberOfPointsOfTheParetoFront = 3 ;
+    int numberOfPointsOfTheFront = 3 ;
+    int numberOfDimensions = 2 ;
+
+    Front frontApproximation = new ArrayFront(numberOfPointsOfTheFront, numberOfDimensions);
+    Front paretoFront = new ArrayFront(numberOfPointsOfTheParetoFront, numberOfDimensions);
+
+    Point [] points ;
+    points = new ArrayPoint[numberOfPointsOfTheParetoFront] ;
+    for (int i = 0; i < numberOfPointsOfTheParetoFront; i++) {
+      points[i] = new ArrayPoint(numberOfDimensions) ;
+    }
+
+    points[0].setDimensionValue(0, 0.1);
+    points[0].setDimensionValue(1, 0.7);
+    points[1].setDimensionValue(0, 0.2);
+    points[1].setDimensionValue(1, 0.3);
+    points[2].setDimensionValue(0, 0.6);
+    points[2].setDimensionValue(1, 0.2);
+
+    paretoFront.setPoint(0, points[0]);
+    paretoFront.setPoint(1, points[1]);
+    paretoFront.setPoint(2, points[2]);
+
+    points = new ArrayPoint[numberOfPointsOfTheFront] ;
+    for (int i = 0; i < numberOfPointsOfTheFront; i++) {
+      points[i] = new ArrayPoint(numberOfDimensions) ;
+    }
+
+    points[0].setDimensionValue(0, 0.2);
+    points[0].setDimensionValue(1, 0.5);
+    points[1].setDimensionValue(0, 0.3);
+    points[1].setDimensionValue(1, 0.4);
+    points[2].setDimensionValue(0, 0.4);
+    points[2].setDimensionValue(1, 0.3);
+
+    frontApproximation.setPoint(0, points[0]);
+    frontApproximation.setPoint(1, points[1]);
+    frontApproximation.setPoint(2, points[2]);
+
+    InvertedGenerationalDistancePlus igdPlus = new InvertedGenerationalDistancePlus(paretoFront) ;
+    igdPlus.setNormalize(false) ;
+
+    assertEquals(0.2449, igdPlus.evaluate(FrontUtils.convertFrontToSolutionList(frontApproximation)),
+        EPSILON);
+  }*/
+}
