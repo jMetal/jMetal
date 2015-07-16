@@ -110,18 +110,29 @@ public class NSGAIIRunner {
     JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
     JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
 
+    /* Quality indicators section */
+
     if (referenceParetoFront != null) {
       Front referenceFront = new ArrayFront(referenceParetoFront);
 
-      Hypervolume hypervolume = new Hypervolume(referenceFront);
-      Epsilon epsilon = new Epsilon(referenceFront);
-      GenerationalDistance gd = new GenerationalDistance(referenceFront);
-      InvertedGenerationalDistance igd = new InvertedGenerationalDistance(referenceFront);
-      InvertedGenerationalDistancePlus igdplus = new InvertedGenerationalDistancePlus(referenceFront) ;
-      Spread spread = new Spread(referenceFront);
-      R2 r2 = new R2(referenceFront);
-      ErrorRatio errorRatio = new ErrorRatio(referenceFront);
-      SetCoverage setCoverage = new SetCoverage();
+      Hypervolume<List<DoubleSolution>> hypervolume =
+          new Hypervolume(referenceFront);
+      Epsilon<List<DoubleSolution>> epsilon =
+          new Epsilon<List<DoubleSolution>>(referenceFront);
+      GenerationalDistance<List<DoubleSolution>> gd =
+          new GenerationalDistance<List<DoubleSolution>>(referenceFront);
+      InvertedGenerationalDistance<List<DoubleSolution>> igd =
+          new InvertedGenerationalDistance<List<DoubleSolution>>(referenceFront);
+      InvertedGenerationalDistancePlus<List<DoubleSolution>> igdplus =
+          new InvertedGenerationalDistancePlus<List<DoubleSolution>>(referenceFront) ;
+      Spread<List<DoubleSolution>> spread =
+          new Spread<List<DoubleSolution>>(referenceFront);
+      R2<List<DoubleSolution>> r2 =
+          new R2<List<DoubleSolution>>(referenceFront);
+      ErrorRatio<List<DoubleSolution>> errorRatio =
+          new ErrorRatio<List<DoubleSolution>>(referenceFront);
+      SetCoverage setCoverage =
+          new SetCoverage();
 
       Double hvValueNormalized = hypervolume.evaluate(population);
       Double hvValue = hypervolume.setNormalize(false).evaluate(population);
@@ -155,8 +166,8 @@ public class NSGAIIRunner {
       JMetalLogger.logger.info("Spread          : " + spreadValue);
       JMetalLogger.logger.info("R2              : " + r2Value);
       JMetalLogger.logger.info("Error ratio     : " + errorRatioValue);
-      JMetalLogger.logger.info("C(pop, ref)     : " + setCoveragePopRef);
-      JMetalLogger.logger.info("C(ref, pop)     : " + setCoverageRefPop);
+      JMetalLogger.logger.info("SC(pop, ref)    : " + setCoveragePopRef);
+      JMetalLogger.logger.info("SC(ref, pop)    : " + setCoverageRefPop);
     }
   }
 }

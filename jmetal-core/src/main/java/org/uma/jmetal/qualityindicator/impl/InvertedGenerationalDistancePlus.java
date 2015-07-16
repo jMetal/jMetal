@@ -31,8 +31,8 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class InvertedGenerationalDistancePlus
-    extends NormalizableQualityIndicator<List<? extends Solution<?>>, Double> {
+public class InvertedGenerationalDistancePlus<Evaluate extends List<? extends Solution<?>>>
+    extends NormalizableQualityIndicator<Evaluate, Double> {
 
   private Front referenceParetoFront ;
 
@@ -43,9 +43,9 @@ public class InvertedGenerationalDistancePlus
    */
   public InvertedGenerationalDistancePlus(String referenceParetoFrontFile) throws FileNotFoundException {
     super("IGD+", "Inverted generational distance plus") ;
-    //if (referenceParetoFrontFile == null) {
-    //  throw new JMetalException("The pareto front approximation is null");
-    //}
+    if (referenceParetoFrontFile == null) {
+      throw new JMetalException("The pareto front approximation is null");
+    }
 
     Front front = new ArrayFront(referenceParetoFrontFile);
     referenceParetoFront = front ;
@@ -72,7 +72,7 @@ public class InvertedGenerationalDistancePlus
    * @param solutionList
    * @return
    */
-  @Override public Double evaluate(List<? extends Solution<?>> solutionList) {
+  @Override public Double evaluate(Evaluate solutionList) {
     if (solutionList == null) {
       throw new JMetalException("The pareto front approximation is null") ;
     }

@@ -39,8 +39,8 @@ import java.util.List;
  * IEEE Transactions on Evolutionary Computation, vol. 3, no. 4,
  * pp. 257-271, 1999.
  */
-public class Hypervolume
-    extends NormalizableQualityIndicator<List<? extends Solution<?>>, Double> {
+public class Hypervolume<Evaluate extends List<? extends Solution<?>>>
+    extends NormalizableQualityIndicator<Evaluate, Double> {
   private Front referenceParetoFront ;
 
   public Hypervolume() {
@@ -78,7 +78,7 @@ public class Hypervolume
    * @param paretoFrontApproximation
    * @return
    */
-  @Override public Double evaluate(List<? extends Solution<?>> paretoFrontApproximation) {
+  @Override public Double evaluate(Evaluate paretoFrontApproximation) {
     if (paretoFrontApproximation == null) {
       throw new JMetalException("The pareto front approximation is null") ;
     }

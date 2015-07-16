@@ -43,8 +43,8 @@ import java.util.List;
  * multi-objective optimization using a convergence criterion,
  * 2006 IEEE Congress on Evolutionary Computation, 2006, pp. 3234-3241.
  */
-public class GeneralizedSpread
-    extends NormalizableQualityIndicator<List<? extends Solution<?>>, Double> {
+public class GeneralizedSpread<Evaluate extends List<? extends Solution<?>>>
+    extends NormalizableQualityIndicator<Evaluate, Double> {
 
   private Front referenceParetoFront ;
 
@@ -79,7 +79,7 @@ public class GeneralizedSpread
     normalize = true ;
   }
 
-  @Override public Double evaluate(List<? extends Solution<?>> solutionList) {
+  @Override public Double evaluate(Evaluate solutionList) {
     return generalizedSpread(new ArrayFront(solutionList), referenceParetoFront);
   }
 

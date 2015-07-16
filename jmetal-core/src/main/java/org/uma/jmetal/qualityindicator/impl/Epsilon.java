@@ -41,8 +41,8 @@ import java.util.List;
  * <trueFrontFile> <getNumberOfObjectives>
  */
 
-public class Epsilon
-    extends NormalizableQualityIndicator<List<? extends Solution<?>>, Double> {
+public class Epsilon<Evaluate extends List<? extends Solution<?>>>
+    extends NormalizableQualityIndicator<Evaluate, Double> {
   private Front referenceParetoFront ;
 
   /**
@@ -64,7 +64,6 @@ public class Epsilon
   /**
    *
    * @param referenceParetoFront
-   * @throws FileNotFoundException
    */
   public Epsilon(Front referenceParetoFront) {
     super("EP", "Epsilon quality indicator") ;
@@ -81,7 +80,7 @@ public class Epsilon
    * @param solutionList
    * @return
    */
-  @Override public Double evaluate(List<? extends Solution<?>> solutionList) {
+  @Override public Double evaluate(Evaluate solutionList) {
     if (solutionList == null) {
       throw new JMetalException("The pareto front approximation list is null") ;
     }

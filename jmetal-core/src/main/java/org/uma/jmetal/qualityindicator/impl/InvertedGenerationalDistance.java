@@ -30,8 +30,8 @@ import java.util.List;
  * Technical Report TR-98-03, Dept. Elec. Comput. Eng., Air Force
  * Inst. Technol. (1998)
  */
-public class InvertedGenerationalDistance
-    extends NormalizableQualityIndicator<List<? extends Solution<?>>, Double> {
+public class InvertedGenerationalDistance<Evaluate extends List<? extends Solution<?>>>
+    extends NormalizableQualityIndicator<Evaluate, Double> {
   private static final double POW = 2.0;
 
   private Front referenceParetoFront ;
@@ -72,7 +72,7 @@ public class InvertedGenerationalDistance
    * @param solutionList
    * @return
    */
-  @Override public Double evaluate(List<? extends Solution<?>> solutionList) {
+  @Override public Double evaluate(Evaluate solutionList) {
     return invertedGenerationalDistance(new ArrayFront(solutionList), referenceParetoFront);
   }
 

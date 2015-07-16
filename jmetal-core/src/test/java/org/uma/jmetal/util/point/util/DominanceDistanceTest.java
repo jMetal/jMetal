@@ -25,7 +25,7 @@ import static org.junit.Assert.assertEquals;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class DominanceDistanceTest {
-  private static final double EPSILON = 0.0000000000001 ;
+  private static final double EPSILON = 0.000000000001 ;
 
   private DominanceDistance distance ;
 
@@ -106,7 +106,7 @@ public class DominanceDistanceTest {
     point2.setDimensionValue(0, 0.3);
     point2.setDimensionValue(1, 0.7);
 
-    assertEquals(Math.sqrt(0.02), distance.compute(point1, point2), EPSILON) ;
+    assertEquals(0.2, distance.compute(point1, point2), EPSILON) ;
   }
 
   @Test public void shouldCalculatingDistanceOfPointsWithTwoDimensionsReturnTheCorrectValueCaseD() {

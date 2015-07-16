@@ -195,9 +195,10 @@ public class EpsilonTest {
     referenceFront.setPoint(1, point5);
     referenceFront.setPoint(2, point6);
 
-    QualityIndicator epsilon = new Epsilon(referenceFront) ;
+    QualityIndicator<List<DoubleSolution>, Double> epsilon =
+        new Epsilon<List<DoubleSolution>>(referenceFront) ;
     List<DoubleSolution> front = FrontUtils.convertFrontToSolutionList(frontApproximation) ;
-    assertEquals(0.5, (Double)epsilon.evaluate(front), EPSILON);
+    assertEquals(0.5, epsilon.evaluate(front), EPSILON);
   }
 
   /**

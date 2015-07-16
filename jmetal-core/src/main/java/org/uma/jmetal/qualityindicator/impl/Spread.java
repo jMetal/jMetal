@@ -39,8 +39,8 @@ import java.util.List;
  * Reference: Deb, K., Pratap, A., Agarwal, S., Meyarivan, T.: A fast and
  * elitist multiobjective genetic algorithm: NSGA-II. IEEE Trans. on Evol. Computation 6 (2002) 182-197
  */
-public class Spread
-    extends NormalizableQualityIndicator<List<? extends Solution<?>>, Double> {
+public class Spread<Evaluate extends List<? extends Solution<?>>>
+    extends NormalizableQualityIndicator<Evaluate, Double> {
 
   private Front referenceParetoFront ;
 
@@ -80,7 +80,7 @@ public class Spread
    * @param solutionList
    * @return
    */
-  @Override public Double evaluate(List<? extends Solution<?>> solutionList) {
+  @Override public Double evaluate(Evaluate solutionList) {
     return spread(new ArrayFront(solutionList), referenceParetoFront);
   }
 
