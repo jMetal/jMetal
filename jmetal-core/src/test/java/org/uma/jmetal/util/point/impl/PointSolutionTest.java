@@ -60,7 +60,7 @@ public class PointSolutionTest {
     assertEquals(values[2], solution.getObjective(2), EPSILON) ;
   }
 
-  @Test public void shouldSetObjectiveAssingTheTheCorrectValue() {
+  @Test public void shouldSetObjectiveAssignTheTheCorrectValue() {
     int numberOfObjectives = 3 ;
     double [] values = {1.0, 2.0, 3.0} ;
 

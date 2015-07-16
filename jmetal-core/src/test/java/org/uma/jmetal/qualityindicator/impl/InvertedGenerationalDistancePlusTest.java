@@ -92,7 +92,7 @@ public class InvertedGenerationalDistancePlusTest {
         EPSILON);
   }
 
-  /*
+
   @Test
   public void shouldEvaluateReturnTheCorrectValueCaseA() {
     int numberOfPointsOfTheParetoFront = 3 ;
@@ -138,7 +138,58 @@ public class InvertedGenerationalDistancePlusTest {
     InvertedGenerationalDistancePlus igdPlus = new InvertedGenerationalDistancePlus(paretoFront) ;
     igdPlus.setNormalize(false) ;
 
-    assertEquals(0.2449, igdPlus.evaluate(FrontUtils.convertFrontToSolutionList(frontApproximation)),
+    assertEquals((2.0 * Math.sqrt(0.01) + Math.sqrt(0.02))/3.0,
+        igdPlus.evaluate(FrontUtils.convertFrontToSolutionList(frontApproximation)),
         EPSILON);
-  }*/
+  }
+
+  @Test
+  public void shouldEvaluateReturnTheCorrectValueCaseB() {
+    int numberOfPointsOfTheParetoFront = 3 ;
+    int numberOfPointsOfTheFront = 3 ;
+    int numberOfDimensions = 2 ;
+
+    Front frontApproximation = new ArrayFront(numberOfPointsOfTheFront, numberOfDimensions);
+    Front paretoFront = new ArrayFront(numberOfPointsOfTheParetoFront, numberOfDimensions);
+
+    Point [] points ;
+    points = new ArrayPoint[numberOfPointsOfTheParetoFront] ;
+    for (int i = 0; i < numberOfPointsOfTheParetoFront; i++) {
+      points[i] = new ArrayPoint(numberOfDimensions) ;
+    }
+
+    points[0].setDimensionValue(0, 0.1);
+    points[0].setDimensionValue(1, 0.7);
+    points[1].setDimensionValue(0, 0.2);
+    points[1].setDimensionValue(1, 0.3);
+    points[2].setDimensionValue(0, 0.6);
+    points[2].setDimensionValue(1, 0.2);
+
+    paretoFront.setPoint(0, points[0]);
+    paretoFront.setPoint(1, points[1]);
+    paretoFront.setPoint(2, points[2]);
+
+    points = new ArrayPoint[numberOfPointsOfTheFront] ;
+    for (int i = 0; i < numberOfPointsOfTheFront; i++) {
+      points[i] = new ArrayPoint(numberOfDimensions) ;
+    }
+
+    points[0].setDimensionValue(0, 0.3);
+    points[0].setDimensionValue(1, 0.7);
+    points[1].setDimensionValue(0, 0.5);
+    points[1].setDimensionValue(1, 0.6);
+    points[2].setDimensionValue(0, 0.7);
+    points[2].setDimensionValue(1, 0.4);
+
+    frontApproximation.setPoint(0, points[0]);
+    frontApproximation.setPoint(1, points[1]);
+    frontApproximation.setPoint(2, points[2]);
+
+    InvertedGenerationalDistancePlus igdPlus = new InvertedGenerationalDistancePlus(paretoFront) ;
+    igdPlus.setNormalize(false) ;
+
+    assertEquals((0.2 + Math.sqrt(0.01+0.16) + Math.sqrt(0.01+0.04))/3.0,
+        igdPlus.evaluate(FrontUtils.convertFrontToSolutionList(frontApproximation)),
+        EPSILON);
+  }
 }

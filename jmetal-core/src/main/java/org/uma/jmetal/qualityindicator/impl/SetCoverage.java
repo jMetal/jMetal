@@ -20,10 +20,8 @@ import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.SolutionListUtils;
-import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.naming.impl.SimpleDescribedEntity;
 
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -38,8 +36,6 @@ public class SetCoverage extends SimpleDescribedEntity implements
     super("SC", "Set coverage") ;
   }
 
-  private Comparator<Solution<?>> dominance;
-
   @Override
   public Pair<Double, Double> evaluate(Pair<List<Solution<?>>, List<Solution<?>>> pairOfSolutionLists) {
     List<Solution<?>> front1 = pairOfSolutionLists.getLeft() ;
@@ -51,9 +47,7 @@ public class SetCoverage extends SimpleDescribedEntity implements
       throw new JMetalException("The second front is null");
     }
 
-    Pair<Double, Double> result = new ImmutablePair<>(setCoverage(front1, front2), setCoverage(front2, front1)) ;
-
-    return result ;
+    return new ImmutablePair<>(evaluate(front1, front2), evaluate(front2, front1));
   }
 
   /**
@@ -62,7 +56,7 @@ public class SetCoverage extends SimpleDescribedEntity implements
    * @param set2
    * @return The value of the set coverage
    */
-  public double setCoverage(List<? extends Solution<?>> set1, List<? extends Solution<?>> set2) {
+  public double evaluate(List<? extends Solution<?>> set1, List<? extends Solution<?>> set2) {
     double result ;
     int sum = 0 ;
 
@@ -73,10 +67,8 @@ public class SetCoverage extends SimpleDescribedEntity implements
         result = 1.0 ;
       }
     } else {
-      dominance = new DominanceComparator<Solution<?>>();
-
-      for (int i = 0; i < set2.size(); i++) {
-        if (SolutionListUtils.isSolutionDominatedBySolutionList(set2.get(i), set1)) {
+      for (Solution<?> solution : set2) {
+        if (SolutionListUtils.isSolutionDominatedBySolutionList(solution, set1)) {
           sum++;
         }
       }

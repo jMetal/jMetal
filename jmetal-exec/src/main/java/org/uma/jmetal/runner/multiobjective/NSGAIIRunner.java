@@ -20,8 +20,6 @@
 
 package org.uma.jmetal.runner.multiobjective;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.operator.CrossoverOperator;
@@ -137,8 +135,13 @@ public class NSGAIIRunner {
       Double spreadValue = spread.evaluate(population);
       Double r2Value = r2.evaluate(population);
       Double errorRatioValue = errorRatio.evaluate(population);
-      Pair<Double, Double> setCoverageValues = (Pair<Double, Double>) setCoverage.evaluate(
-          new ImmutablePair(population, FrontUtils.convertFrontToSolutionList(referenceFront)));
+      //Pair<Double, Double> setCoverageValues;
+      //setCoverageValues = (Pair<Double, Double>) setCoverage.evaluate(
+      //    new ImmutablePair(population, FrontUtils.convertFrontToSolutionList(referenceFront)));
+      double setCoveragePopRef = setCoverage.evaluate(
+          population, FrontUtils.convertFrontToSolutionList(referenceFront)) ;
+      double setCoverageRefPop = setCoverage.evaluate(
+          FrontUtils.convertFrontToSolutionList(referenceFront), population) ;
 
       JMetalLogger.logger.info("Hypervolume (N) : " + hvValueNormalized);
       JMetalLogger.logger.info("Hypervolume     : " + hvValue);
@@ -152,8 +155,8 @@ public class NSGAIIRunner {
       JMetalLogger.logger.info("Spread          : " + spreadValue);
       JMetalLogger.logger.info("R2              : " + r2Value);
       JMetalLogger.logger.info("Error ratio     : " + errorRatioValue);
-      JMetalLogger.logger.info("C(pop, ref)     : " + setCoverageValues.getLeft());
-      JMetalLogger.logger.info("C(ref, pop)     : " + setCoverageValues.getRight());
+      JMetalLogger.logger.info("C(pop, ref)     : " + setCoveragePopRef);
+      JMetalLogger.logger.info("C(ref, pop)     : " + setCoverageRefPop);
     }
   }
 }

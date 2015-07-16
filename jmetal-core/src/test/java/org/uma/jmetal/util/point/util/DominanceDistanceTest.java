@@ -96,4 +96,55 @@ public class DominanceDistanceTest {
     assertEquals(0.3, distance.compute(point1, point2), EPSILON) ;
   }
 
+  @Test public void shouldCalculatingDistanceOfPointsWithTwoDimensionsReturnTheCorrectValueCaseC() {
+    Point point1 = new ArrayPoint(2) ;
+    Point point2 = new ArrayPoint(2) ;
+
+    point1.setDimensionValue(0, 0.1);
+    point1.setDimensionValue(1, 0.7);
+
+    point2.setDimensionValue(0, 0.3);
+    point2.setDimensionValue(1, 0.7);
+
+    assertEquals(Math.sqrt(0.02), distance.compute(point1, point2), EPSILON) ;
+  }
+
+  @Test public void shouldCalculatingDistanceOfPointsWithTwoDimensionsReturnTheCorrectValueCaseD() {
+    Point point1 = new ArrayPoint(2) ;
+    Point point2 = new ArrayPoint(2) ;
+
+    point1.setDimensionValue(0, 0.2);
+    point1.setDimensionValue(1, 0.3);
+
+    point2.setDimensionValue(0, 0.3);
+    point2.setDimensionValue(1, 0.4);
+
+    assertEquals(Math.sqrt(0.02), distance.compute(point1, point2), EPSILON) ;
+  }
+
+  @Test public void shouldCalculatingDistanceOfPointsWithTwoDimensionsReturnTheCorrectValueCaseE() {
+    Point point1 = new ArrayPoint(2) ;
+    Point point2 = new ArrayPoint(2) ;
+
+    point1.setDimensionValue(0, 0.2);
+    point1.setDimensionValue(1, 0.3);
+
+    point2.setDimensionValue(0, 0.5);
+    point2.setDimensionValue(1, 0.6);
+
+    assertEquals(Math.sqrt(0.09 + 0.09), distance.compute(point1, point2), EPSILON) ;
+  }
+
+  @Test public void shouldCalculatingDistanceOfPointsWithTwoDimensionsReturnTheCorrectValueCaseF() {
+    Point point1 = new ArrayPoint(2) ;
+    Point point2 = new ArrayPoint(2) ;
+
+    point1.setDimensionValue(0, 0.6);
+    point1.setDimensionValue(1, 0.2);
+
+    point2.setDimensionValue(0, 0.7);
+    point2.setDimensionValue(1, 0.4);
+
+    assertEquals(Math.sqrt(0.01 + 0.04), distance.compute(point1, point2), EPSILON) ;
+  }
 }
