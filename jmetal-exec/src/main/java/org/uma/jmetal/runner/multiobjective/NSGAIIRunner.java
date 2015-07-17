@@ -29,6 +29,7 @@ import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.qualityindicator.impl.*;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
@@ -53,15 +54,14 @@ import java.util.List;
 public class NSGAIIRunner {
   /**
    * @param args Command line arguments.
-   * @throws java.io.IOException
-   * @throws SecurityException
-   * @throws ClassNotFoundException
+   * @throws JMetalException
+   * @throws FileNotFoundException
    * Usage: two options
    *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner
    *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName
    */
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
-    DoubleProblem problem;
+    Problem<DoubleSolution> problem;
     Algorithm<List<DoubleSolution>> algorithm;
     CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;

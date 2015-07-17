@@ -29,6 +29,7 @@ import org.uma.jmetal.operator.impl.crossover.IntegerSBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.IntegerPolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.IntegerProblem;
+import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.IntegerSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
@@ -54,7 +55,7 @@ public class NSGAIIIntegerRunner {
    *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName paretoFrontFile
    */
   public static void main(String[] args) {
-    IntegerProblem problem;
+    Problem<IntegerSolution> problem;
     Algorithm<List<IntegerSolution>> algorithm;
     CrossoverOperator<IntegerSolution> crossover;
     MutationOperator<IntegerSolution> mutation;

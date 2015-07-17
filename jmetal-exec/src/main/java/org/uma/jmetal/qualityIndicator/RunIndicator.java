@@ -31,7 +31,10 @@ import java.util.List;
  * indicate whether the fronts are to be normalized by the quality indicators.
  *
  * Invoking command:
- * java org.uma.jmetal.qualityIndicator.RunIndicator indicatorName referenceFront front [normalize]
+ * mvn
+   -pl jmetal-exec
+   exec:java -Dexec.mainClass="org.uma.jmetal.qualityIndicator.RunIndicator"
+   -Dexec.args="indicator referenceFront front [normalize]"
  *
  * Antonio J. Nebro <antonio@lcc.uma.es>
  */
@@ -79,8 +82,8 @@ public class RunIndicator {
    * Prints the command line options in the screen
    */
   private static void printOptions() {
-    JMetalLogger.logger.info("Usage: java org.uma.jmetal.qualityIndicator.RunIndicator "
-        + "indicatorName referenceFront front [normalize] \n\n"
+    JMetalLogger.logger.info("Usage: mvn -pl jmetal-exec exec:java -Dexec:mainClass=\"org.uma.jmetal.qualityIndicator.RunIndicator\""
+        + "-Dexec.args=\"indicatorName referenceFront front [normalize]\" \n\n"
         + "Where indicatorValue can be one of these:\n" + "GD   - Generational distance\n"
         + "IGD  - Inverted generational distance\n" + "IGD  - Inverted generational distance\n"
         + "IGD+ - Inverted generational distance plus \n" + "HV   - Hypervolume \n"
