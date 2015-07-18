@@ -1,11 +1,11 @@
-package org.uma.jmetal.runner.multiobjective;
+package org.uma.jmetal.runner;
 
 import org.uma.jmetal.algorithm.Algorithm;
 
 /**
  * Created by ajnebro on 17/7/15.
  */
-public abstract class AbstractRunner {
+public abstract class AbstractAlgorithmRunner {
   public static void printFinalSolutionSet(Algorithm<?> algorithm) {
     /*
     List<Solution<?>> population = (List<Solution<?>>) algorithm.getResult();

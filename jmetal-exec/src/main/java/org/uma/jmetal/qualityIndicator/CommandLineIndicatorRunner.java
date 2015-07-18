@@ -38,7 +38,7 @@ import java.util.List;
  *
  * Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class RunIndicator {
+public class CommandLineIndicatorRunner {
   public static void main(String[] args) throws Exception {
     boolean normalize ;
 
