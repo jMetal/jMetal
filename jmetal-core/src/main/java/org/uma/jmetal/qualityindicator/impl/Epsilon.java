@@ -104,7 +104,6 @@ public class Epsilon<Evaluate extends List<? extends Solution<?>>>
     Front normalizedFront;
     Front normalizedParetoFront;
 
-    int i, j, k;
     double eps, epsJ = 0.0, epsK = 0.0, epsTemp;
 
     int numberOfObjectives = front.getPointDimensions() ;
@@ -128,9 +127,9 @@ public class Epsilon<Evaluate extends List<? extends Solution<?>>>
       normalizedParetoFront = referenceFront ;
     }
 
-    for (i = 0; i < normalizedParetoFront.getNumberOfPoints(); i++) {
-      for (j = 0; j < normalizedFront.getNumberOfPoints(); j++) {
-        for (k = 0; k < numberOfObjectives; k++) {
+    for (int i = 0; i < normalizedParetoFront.getNumberOfPoints(); i++) {
+      for (int j = 0; j < normalizedFront.getNumberOfPoints(); j++) {
+        for (int k = 0; k < numberOfObjectives; k++) {
           epsTemp = normalizedFront.getPoint(j).getDimensionValue(k)
               - normalizedParetoFront.getPoint(i).getDimensionValue(k);
           if (k == 0) {

@@ -139,15 +139,15 @@ public class CommandLineIndicatorRunner {
       Front referenceFront, boolean normalize) throws FileNotFoundException {
 
     List<QualityIndicator<List<DoubleSolution>, Double>> list = new ArrayList<>() ;
-    list.add(new Epsilon<List<DoubleSolution>>(referenceFront).setNormalize(normalize)) ;
-    list.add(new Hypervolume<List<DoubleSolution>>(referenceFront).setNormalize(normalize)) ;
-    list.add(new GenerationalDistance<List<DoubleSolution>>(referenceFront).setNormalize(normalize)) ;
-    list.add(new InvertedGenerationalDistance<List<DoubleSolution>>(referenceFront).setNormalize(normalize)) ;
-    list.add(new InvertedGenerationalDistancePlus<List<DoubleSolution>>(referenceFront).setNormalize(normalize)) ;
-    list.add(new Spread<List<DoubleSolution>>(referenceFront).setNormalize(normalize)) ;
-    list.add(new GeneralizedSpread<List<DoubleSolution>>(referenceFront).setNormalize(normalize)) ;
-    list.add(new R2<List<DoubleSolution>>(referenceFront).setNormalize(normalize)) ;
-    list.add(new ErrorRatio<List<DoubleSolution>>(referenceFront).setNormalize(normalize)) ;
+    list.add(new Epsilon<List<DoubleSolution>>(referenceFront).setNormalize()) ;
+    list.add(new Hypervolume<List<DoubleSolution>>(referenceFront).setNormalize()) ;
+    list.add(new GenerationalDistance<List<DoubleSolution>>(referenceFront).setNormalize()) ;
+    list.add(new InvertedGenerationalDistance<List<DoubleSolution>>(referenceFront).setNormalize()) ;
+    list.add(new InvertedGenerationalDistancePlus<List<DoubleSolution>>(referenceFront).setNormalize()) ;
+    list.add(new Spread<List<DoubleSolution>>(referenceFront).setNormalize()) ;
+    list.add(new GeneralizedSpread<List<DoubleSolution>>(referenceFront).setNormalize()) ;
+    list.add(new R2<List<DoubleSolution>>(referenceFront).setNormalize()) ;
+    list.add(new ErrorRatio<List<DoubleSolution>>(referenceFront).setNormalize()) ;
 
     return list ;
   }

@@ -86,7 +86,7 @@ public class InvertedGenerationalDistancePlusTest {
     paretoFront.setPoint(0, point1);
 
     InvertedGenerationalDistancePlus igdPlus = new InvertedGenerationalDistancePlus(paretoFront) ;
-    igdPlus.setNormalize(false) ;
+    igdPlus.unsetNormalize() ;
 
     assertEquals(0.0, igdPlus.evaluate(FrontUtils.convertFrontToSolutionList(frontApproximation)),
         EPSILON);
@@ -136,7 +136,7 @@ public class InvertedGenerationalDistancePlusTest {
     frontApproximation.setPoint(2, points[2]);
 
     InvertedGenerationalDistancePlus igdPlus = new InvertedGenerationalDistancePlus(paretoFront) ;
-    igdPlus.setNormalize(false) ;
+    igdPlus.unsetNormalize() ;
 
     assertEquals((2.0 * Math.sqrt(0.01) + Math.sqrt(0.02))/3.0,
         igdPlus.evaluate(FrontUtils.convertFrontToSolutionList(frontApproximation)),
@@ -186,7 +186,7 @@ public class InvertedGenerationalDistancePlusTest {
     frontApproximation.setPoint(2, points[2]);
 
     InvertedGenerationalDistancePlus igdPlus = new InvertedGenerationalDistancePlus(paretoFront) ;
-    igdPlus.setNormalize(false) ;
+    igdPlus.unsetNormalize() ;
 
     assertEquals((0.2 + Math.sqrt(0.01+0.16) + Math.sqrt(0.01+0.04))/3.0,
         igdPlus.evaluate(FrontUtils.convertFrontToSolutionList(frontApproximation)),

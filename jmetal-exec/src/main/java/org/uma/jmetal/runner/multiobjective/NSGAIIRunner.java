@@ -132,15 +132,15 @@ public class NSGAIIRunner {
       SetCoverage setCoverage =
           new SetCoverage();
 
-      Double hvValueNormalized = hypervolume.evaluate(population);
-      Double hvValue = hypervolume.setNormalize(false).evaluate(population);
+      Double hvValueNormalized = hypervolume.setNormalize().evaluate(population);
+      Double hvValue = hypervolume.unsetNormalize().evaluate(population);
       Double epsilonValue = epsilon.evaluate(population);
-      Double epsilonValueNormalized = epsilon.setNormalize(true).evaluate(population);
+      //Double epsilonValueNormalized = epsilon.setNormalize().evaluate(population);
       Double gdValue = gd.evaluate(population);
       Double igdValueNormalized = igd.evaluate(population);
-      Double igdValue = igd.setNormalize(false).evaluate(population);
+      Double igdValue = igd.unsetNormalize().evaluate(population);
       Double igdPlusValueNormalized = igdplus.evaluate(population);
-      Double igdPlusValue = igdplus.setNormalize(false).evaluate(population);
+      Double igdPlusValue = igdplus.unsetNormalize().evaluate(population);
       Double spreadValue = spread.evaluate(population);
       Double r2Value = r2.evaluate(population);
       Double errorRatioValue = errorRatio.evaluate(population);
@@ -155,7 +155,7 @@ public class NSGAIIRunner {
       JMetalLogger.logger.info("Hypervolume (N) : " + hvValueNormalized);
       JMetalLogger.logger.info("Hypervolume     : " + hvValue);
       JMetalLogger.logger.info("Epsilon         : " + epsilonValue);
-      JMetalLogger.logger.info("Epsilon (N)     : " + epsilonValueNormalized);
+      //JMetalLogger.logger.info("Epsilon (N)     : " + epsilonValueNormalized);
       JMetalLogger.logger.info("GD              : " + gdValue);
       JMetalLogger.logger.info("IGD (N)         : " + igdValueNormalized);
       JMetalLogger.logger.info("IGD             : " + igdValue);

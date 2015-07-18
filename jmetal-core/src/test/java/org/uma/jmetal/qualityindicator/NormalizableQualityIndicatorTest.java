@@ -50,10 +50,10 @@ public class NormalizableQualityIndicatorTest {
 
   @Test
   public void shouldSetNormalizeSetTheCorrectValue() {
-    indicator.setNormalize(true) ;
+    indicator.setNormalize() ;
     assertTrue((Boolean) ReflectionTestUtils.getField(indicator, "normalize")) ;
 
-    indicator.setNormalize(false) ;
+    indicator.unsetNormalize() ;
     assertFalse((Boolean) ReflectionTestUtils.getField(indicator, "normalize")) ;
   }
 

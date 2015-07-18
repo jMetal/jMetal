@@ -33,11 +33,20 @@ public abstract class NormalizableQualityIndicator<Evaluate, Result>
 
   /**
    * Set normalization of the fronts
-   * @param normalize
    * @return
    */
-  public QualityIndicator<Evaluate, Result> setNormalize(boolean normalize) {
-    this.normalize = normalize ;
+  public QualityIndicator<Evaluate, Result> setNormalize() {
+    this.normalize = true ;
+
+    return this ;
+  }
+
+  /**
+   * Unset normalization of the fronts
+   * @return
+   */
+  public QualityIndicator<Evaluate, Result> unsetNormalize() {
+    this.normalize = false ;
 
     return this ;
   }
