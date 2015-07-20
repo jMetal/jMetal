@@ -13,8 +13,6 @@
 
 package org.uma.jmetal.operator;
 
-import java.io.Serializable;
-
 /**
  * Interface representing an operator
  * @author Antonio J. Nebro
@@ -22,7 +20,7 @@ import java.io.Serializable;
  * @param <S> Source
  * @param <R> Result
  */
-public interface Operator<S, R> extends Serializable {
+public interface Operator<S, R> {
   /**
    * @param source the data to process
    */
