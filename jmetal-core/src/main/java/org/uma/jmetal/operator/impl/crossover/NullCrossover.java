@@ -27,6 +27,7 @@ import java.util.List;
  * @author Antonio J. Nebro
  * @version 1.0
  */
+@SuppressWarnings("unchecked")
 public class NullCrossover<S extends Solution<?>>
     implements CrossoverOperator<S> {
 
