@@ -221,4 +221,9 @@ public class ArrayFront implements Front {
     result = 31 * result + pointDimensions;
     return result;
   }
+  
+  @Override
+	public String toString() {
+		return Arrays.toString(points);
+	}
 }
