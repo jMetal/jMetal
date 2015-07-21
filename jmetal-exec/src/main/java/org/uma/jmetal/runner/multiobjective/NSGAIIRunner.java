@@ -23,20 +23,13 @@ import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.qualityindicator.impl.*;
+import org.uma.jmetal.runner.AbstractAlgorithmRunner;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
-import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
-import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-import org.uma.jmetal.util.front.Front;
-import org.uma.jmetal.util.front.imp.ArrayFront;
-import org.uma.jmetal.util.front.util.FrontNormalizer;
-import org.uma.jmetal.util.front.util.FrontUtils;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -46,7 +39,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class NSGAIIRunner {
+public class NSGAIIRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws JMetalException
@@ -98,6 +91,14 @@ public class NSGAIIRunner {
     List<DoubleSolution> population = algorithm.getResult() ;
     long computingTime = algorithmRunner.getComputingTime() ;
 
+    JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
+
+    printFinalSolutionSet(population);
+    if (referenceParetoFront != null) {
+      printQualityIndicators(population, referenceParetoFront) ;
+    }
+
+    /*
     new SolutionSetOutput.Printer(population)
         .setSeparator("\t")
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
@@ -108,9 +109,9 @@ public class NSGAIIRunner {
     JMetalLogger.logger.info("Random seed: " + JMetalRandom.getInstance().getSeed());
     JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
     JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
-
+*/
     /* Quality indicators section */
-
+/*
     if (referenceParetoFront != null) {
       Front referenceFront = new ArrayFront(referenceParetoFront);
       FrontNormalizer frontNormalizer = new FrontNormalizer(referenceFront) ;
@@ -119,46 +120,7 @@ public class NSGAIIRunner {
       Front normalizedFront = frontNormalizer.normalize(new ArrayFront(population)) ;
       List<DoubleSolution> normalizedPopulation = FrontUtils.convertFrontToSolutionList(
           normalizedFront) ;
-/*
-      Hypervolume<List<DoubleSolution>> hypervolume =
-          new Hypervolume(referenceFront);
-      Epsilon<List<DoubleSolution>> epsilon =
-          new Epsilon<List<DoubleSolution>>(referenceFront);
-      GenerationalDistance<List<DoubleSolution>> gd =
-          new GenerationalDistance<List<DoubleSolution>>(referenceFront);
-      InvertedGenerationalDistance<List<DoubleSolution>> igd =
-          new InvertedGenerationalDistance<List<DoubleSolution>>(referenceFront);
-      InvertedGenerationalDistancePlus<List<DoubleSolution>> igdplus =
-          new InvertedGenerationalDistancePlus<List<DoubleSolution>>(referenceFront) ;
-      Spread<List<DoubleSolution>> spread =
-          new Spread<List<DoubleSolution>>(referenceFront);
-      R2<List<DoubleSolution>> r2 =
-          new R2<List<DoubleSolution>>(referenceFront);
-      ErrorRatio<List<DoubleSolution>> errorRatio =
-          new ErrorRatio<List<DoubleSolution>>(referenceFront);
-      SetCoverage setCoverage =
-          new SetCoverage();
 
-      Double hvValueNormalized = hypervolume.evaluate(normalizedPopulation);
-      Double hvValue = hypervolume.evaluate(population);
-      Double epsilonValue = epsilon.evaluate(population);
-      //Double epsilonValueNormalized = epsilon.setNormalize().evaluate(population);
-      Double gdValue = gd.evaluate(population);
-      Double igdValueNormalized = igd.evaluate(population);
-      Double igdValue = igd.unsetNormalize().evaluate(population);
-      Double igdPlusValueNormalized = igdplus.evaluate(population);
-      Double igdPlusValue = igdplus.unsetNormalize().evaluate(population);
-      Double spreadValue = spread.evaluate(population);
-      Double r2Value = r2.evaluate(population);
-      Double errorRatioValue = errorRatio.evaluate(population);
-      //Pair<Double, Double> setCoverageValues;
-      //setCoverageValues = (Pair<Double, Double>) setCoverage.evaluate(
-      //    new ImmutablePair(population, FrontUtils.convertFrontToSolutionList(referenceFront)));
-      double setCoveragePopRef = setCoverage.evaluate(
-          population, FrontUtils.convertFrontToSolutionList(referenceFront)) ;
-      double setCoverageRefPop = setCoverage.evaluate(
-          FrontUtils.convertFrontToSolutionList(referenceFront), population) ;
-*/
       JMetalLogger.logger.info("Hypervolume (N) : " +
           new Hypervolume<List<DoubleSolution>>(normalizedReferenceFront).evaluate(normalizedPopulation));
       JMetalLogger.logger.info("Hypervolume     : " +
@@ -193,5 +155,6 @@ public class NSGAIIRunner {
       //new SetCoverage().evaluate());
       //JMetalLogger.logger.info("SC(ref, pop)    : " + setCoverageRefPop);
     }
+    */
   }
 }
