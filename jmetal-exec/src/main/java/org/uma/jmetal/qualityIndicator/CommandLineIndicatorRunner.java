@@ -15,7 +15,7 @@ package org.uma.jmetal.qualityIndicator;
 
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.*;
-import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.front.Front;
@@ -105,15 +105,15 @@ public class CommandLineIndicatorRunner {
     Front referenceFront = new ArrayFront(args[1]);
     Front front = new ArrayFront(args[2]);
 
-    List<QualityIndicator<List<DoubleSolution>, Double>> indicatorList =
+    List<QualityIndicator<List<? extends Solution<?>>, Double>> indicatorList =
         getAvailableIndicators(referenceFront, normalize);
 
     if (!args[0].equals("ALL")) {
-      QualityIndicator<List<DoubleSolution>, Double> indicator = getIndicatorFromName(
+      QualityIndicator<List<? extends Solution<?>>, Double> indicator = getIndicatorFromName(
           args[0], indicatorList);
       System.out.println(indicator.evaluate(FrontUtils.convertFrontToSolutionList(front)));
     } else {
-      for (QualityIndicator indicator : indicatorList) {
+      for (QualityIndicator<List<? extends Solution<?>>, Double> indicator : indicatorList) {
         System.out.println(indicator.getName() + ": " +
             indicator.evaluate(FrontUtils.convertFrontToSolutionList(front)));
       }
@@ -135,19 +135,19 @@ public class CommandLineIndicatorRunner {
    * @return
    * @throws FileNotFoundException
    */
-  private static List<QualityIndicator<List<DoubleSolution>, Double>> getAvailableIndicators(
+  private static List<QualityIndicator<List<? extends Solution<?>>, Double>> getAvailableIndicators(
       Front referenceFront, boolean normalize) throws FileNotFoundException {
 
-    List<QualityIndicator<List<DoubleSolution>, Double>> list = new ArrayList<>() ;
-    list.add(new Epsilon<List<DoubleSolution>>(referenceFront).setNormalize()) ;
-    list.add(new Hypervolume<List<DoubleSolution>>(referenceFront).setNormalize()) ;
-    list.add(new GenerationalDistance<List<DoubleSolution>>(referenceFront).setNormalize()) ;
-    list.add(new InvertedGenerationalDistance<List<DoubleSolution>>(referenceFront).setNormalize()) ;
-    list.add(new InvertedGenerationalDistancePlus<List<DoubleSolution>>(referenceFront).setNormalize()) ;
-    list.add(new Spread<List<DoubleSolution>>(referenceFront).setNormalize()) ;
-    list.add(new GeneralizedSpread<List<DoubleSolution>>(referenceFront).setNormalize()) ;
-    list.add(new R2<List<DoubleSolution>>(referenceFront).setNormalize()) ;
-    list.add(new ErrorRatio<List<DoubleSolution>>(referenceFront).setNormalize()) ;
+    List<QualityIndicator<List<? extends Solution<?>>, Double>> list = new ArrayList<>() ;
+    list.add(new Epsilon<List<? extends Solution<?>>>(referenceFront)) ;
+    list.add(new Hypervolume<List<? extends Solution<?>>>(referenceFront)) ;
+    list.add(new GenerationalDistance<List<? extends Solution<?>>>(referenceFront)) ;
+    list.add(new InvertedGenerationalDistance<List<? extends Solution<?>>>(referenceFront)) ;
+    list.add(new InvertedGenerationalDistancePlus<List<? extends Solution<?>>>(referenceFront)) ;
+    list.add(new Spread<List<? extends Solution<?>>>(referenceFront)) ;
+    list.add(new GeneralizedSpread<List<? extends Solution<?>>>(referenceFront)) ;
+    list.add(new R2<List<? extends Solution<?>>>(referenceFront)) ;
+    list.add(new ErrorRatio<List<? extends Solution<?>>>(referenceFront)) ;
 
     return list ;
   }
@@ -158,11 +158,11 @@ public class CommandLineIndicatorRunner {
    * @param list
    * @return
    */
-  private static QualityIndicator<List<DoubleSolution>, Double> getIndicatorFromName(
-      String name, List<QualityIndicator<List<DoubleSolution>, Double>> list) {
-    QualityIndicator<List<DoubleSolution>, Double> result = null ;
+  private static QualityIndicator<List<? extends Solution<?>>, Double> getIndicatorFromName(
+      String name, List<QualityIndicator<List<? extends Solution<?>>, Double>> list) {
+    QualityIndicator<List<? extends Solution<?>>, Double> result = null ;
 
-    for (QualityIndicator<List<DoubleSolution>, Double> indicator : list) {
+    for (QualityIndicator<List<? extends Solution<?>>, Double> indicator : list) {
       if (indicator.getName().equals(name)) {
         result = indicator ;
       }
