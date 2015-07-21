@@ -14,6 +14,7 @@
 package org.uma.jmetal.util.front.util;
 
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 
@@ -37,6 +38,20 @@ public class FrontNormalizer {
     minimumValues = FrontUtils.getMinimumValues(new ArrayFront(referenceFront));
   }
 
+  /**
+   * Constructor.
+   * @param referenceFront
+   */
+  public FrontNormalizer(Front referenceFront) {
+    maximumValues = FrontUtils.getMaximumValues(referenceFront);
+    minimumValues = FrontUtils.getMinimumValues(referenceFront);
+  }
+
+  /**
+   * Constructor
+   * @param minimumValues
+   * @param maximumValues
+   */
   public FrontNormalizer(double[] minimumValues, double[] maximumValues) {
     this.maximumValues = maximumValues ;
     this.minimumValues = minimumValues ;
@@ -48,10 +63,56 @@ public class FrontNormalizer {
    * @return
    */
   public List<? extends Solution<?>> normalize(List<? extends Solution<?>> solutionList) {
-    // STEP 2. Get the normalized front and true Pareto fronts
     Front normalizedFront ;
-    normalizedFront = FrontUtils.getNormalizedFront(new ArrayFront(solutionList), maximumValues, minimumValues);
+    normalizedFront = getNormalizedFront(new ArrayFront(solutionList), maximumValues, minimumValues);
 
     return FrontUtils.convertFrontToSolutionList(normalizedFront) ;
+  }
+
+  /**
+   * Returns a normalized front
+   * @param front
+   * @return
+   */
+  public Front normalize(Front front) {
+    Front normalizedFront ;
+    normalizedFront = getNormalizedFront(front, maximumValues, minimumValues);
+
+    return normalizedFront ;
+  }
+
+  private Front getNormalizedFront(Front front, double[] maximumValues, double[] minimumValues) {
+    if (front == null) {
+      throw new JMetalException("The front is null") ;
+    } else if (front.getNumberOfPoints() == 0) {
+      throw new JMetalException("The front is empty") ;
+    } else if (maximumValues == null) {
+      throw new JMetalException("The maximum values array is null") ;
+    } else if (minimumValues == null) {
+      throw new JMetalException("The minimum values array is null") ;
+    } else if (maximumValues.length != minimumValues.length) {
+      throw new JMetalException("The length of the maximum array (" + maximumValues.length + ") "
+          + "is different from the length of the minimum array (" + minimumValues.length+")") ;
+    } else if (front.getPoint(0).getNumberOfDimensions() != maximumValues.length) {
+      throw new JMetalException("The length of the point dimensions ("
+          + front.getPoint(0).getNumberOfDimensions() + ") "
+          + "is different from the length of the maximum array (" + maximumValues.length+")") ;
+    }
+
+    Front normalizedFront = new ArrayFront(front) ;
+    int numberOfPointDimensions = front.getPoint(0).getNumberOfDimensions() ;
+
+    for (int i = 0; i < front.getNumberOfPoints(); i++) {
+      for (int j = 0; j < numberOfPointDimensions; j++) {
+        if ((maximumValues[j] - minimumValues[j]) == 0) {
+          throw new JMetalException("Maximum and minimum values of index " + j + " "
+              + "are the same: " + maximumValues[j]);
+        }
+
+        normalizedFront.getPoint(i).setDimensionValue(j, (front.getPoint(i).getDimensionValue(j)
+            - minimumValues[j]) / (maximumValues[j] - minimumValues[j]));
+      }
+    }
+    return normalizedFront;
   }
 }
