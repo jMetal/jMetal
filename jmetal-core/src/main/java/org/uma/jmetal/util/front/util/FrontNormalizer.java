@@ -76,15 +76,17 @@ public class FrontNormalizer {
    */
   public Front normalize(Front front) {
     Front normalizedFront ;
+    if (front == null) {
+      throw new JMetalException("The front is null") ;
+    }
+
     normalizedFront = getNormalizedFront(front, maximumValues, minimumValues);
 
     return normalizedFront ;
   }
 
   private Front getNormalizedFront(Front front, double[] maximumValues, double[] minimumValues) {
-    if (front == null) {
-      throw new JMetalException("The front is null") ;
-    } else if (front.getNumberOfPoints() == 0) {
+   if (front.getNumberOfPoints() == 0) {
       throw new JMetalException("The front is empty") ;
     } else if (maximumValues == null) {
       throw new JMetalException("The maximum values array is null") ;

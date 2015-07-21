@@ -44,9 +44,11 @@ public class NSGAIIRunner extends AbstractAlgorithmRunner {
    * @param args Command line arguments.
    * @throws JMetalException
    * @throws FileNotFoundException
-   * Usage: two options
-   *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner
-   *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName [referenceFront]
+   * Invoking command:
+   * mvn
+    -pl jmetal-exec
+    exec:java -Dexec.mainClass="org.uma.jmetal.qualityIndicator.multiobjective.NSGAIIRunner"
+    -Dexec.args="problemName [referenceFront]"
    */
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
     Problem<DoubleSolution> problem;
@@ -54,7 +56,7 @@ public class NSGAIIRunner extends AbstractAlgorithmRunner {
     CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
-    String referenceParetoFront = null ;
+    String referenceParetoFront = "" ;
 
     String problemName ;
     if (args.length == 1) {
@@ -94,7 +96,7 @@ public class NSGAIIRunner extends AbstractAlgorithmRunner {
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 
     printFinalSolutionSet(population);
-    if (referenceParetoFront != null) {
+    if (!referenceParetoFront.equals("")) {
       printQualityIndicators(population, referenceParetoFront) ;
     }
   }
