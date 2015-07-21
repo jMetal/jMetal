@@ -158,7 +158,6 @@ public class ArrayFront implements Front {
     if (inputStream == null) {
       inputStream = new FileInputStream(fileName) ;
     }
-
     return inputStream ;
   }
 
