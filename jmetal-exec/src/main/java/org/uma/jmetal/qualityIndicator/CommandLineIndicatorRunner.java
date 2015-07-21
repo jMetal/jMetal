@@ -20,6 +20,7 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
+import org.uma.jmetal.util.front.util.FrontNormalizer;
 import org.uma.jmetal.util.front.util.FrontUtils;
 
 import java.io.FileNotFoundException;
@@ -34,7 +35,7 @@ import java.util.List;
  * mvn
    -pl jmetal-exec
    exec:java -Dexec.mainClass="org.uma.jmetal.qualityIndicator.RunIndicator"
-   -Dexec.args="indicator referenceFront front [normalize]"
+   -Dexec.args="indicator referenceFront front normalize"
  *
  * Antonio J. Nebro <antonio@lcc.uma.es>
  */
@@ -105,8 +106,15 @@ public class CommandLineIndicatorRunner {
     Front referenceFront = new ArrayFront(args[1]);
     Front front = new ArrayFront(args[2]);
 
+    if (normalize) {
+      referenceFront = new FrontNormalizer(referenceFront).normalize(referenceFront) ;
+      front = new FrontNormalizer(referenceFront).normalize(front) ;
+      System.out.println("The fronts are NORMALIZED before computing the indicators") ;
+    } else {
+      System.out.println("The fronts are NOT NORMALIZED before computing the indicators") ;
+    }
     List<QualityIndicator<List<DoubleSolution>, Double>> indicatorList =
-        getAvailableIndicators(referenceFront, normalize);
+        getAvailableIndicators(referenceFront);
 
     if (!args[0].equals("ALL")) {
       QualityIndicator<List<DoubleSolution>, Double> indicator = getIndicatorFromName(
@@ -138,15 +146,15 @@ public class CommandLineIndicatorRunner {
       Front referenceFront) throws FileNotFoundException {
 
     List<QualityIndicator<List<DoubleSolution>, Double>> list = new ArrayList<>() ;
-    list.add(new Epsilon<List<DoubleSolution>>(referenceFront).setNormalize()) ;
-    list.add(new Hypervolume<List<DoubleSolution>>(referenceFront).setNormalize()) ;
-    list.add(new GenerationalDistance<List<DoubleSolution>>(referenceFront).setNormalize()) ;
-    list.add(new InvertedGenerationalDistance<List<DoubleSolution>>(referenceFront).setNormalize()) ;
-    list.add(new InvertedGenerationalDistancePlus<List<DoubleSolution>>(referenceFront).setNormalize()) ;
-    list.add(new Spread<List<DoubleSolution>>(referenceFront).setNormalize()) ;
-    list.add(new GeneralizedSpread<List<DoubleSolution>>(referenceFront).setNormalize()) ;
-    list.add(new R2<List<DoubleSolution>>(referenceFront).setNormalize()) ;
-    list.add(new ErrorRatio<List<DoubleSolution>>(referenceFront).setNormalize()) ;
+    list.add(new Epsilon<List<DoubleSolution>>(referenceFront)) ;
+    list.add(new Hypervolume<List<DoubleSolution>>(referenceFront)) ;
+    list.add(new GenerationalDistance<List<DoubleSolution>>(referenceFront)) ;
+    list.add(new InvertedGenerationalDistance<List<DoubleSolution>>(referenceFront)) ;
+    list.add(new InvertedGenerationalDistancePlus<List<DoubleSolution>>(referenceFront)) ;
+    list.add(new Spread<List<DoubleSolution>>(referenceFront)) ;
+    list.add(new GeneralizedSpread<List<DoubleSolution>>(referenceFront)) ;
+    list.add(new R2<List<DoubleSolution>>(referenceFront)) ;
+    list.add(new ErrorRatio<List<DoubleSolution>>(referenceFront)) ;
 
     return list ;
   }
