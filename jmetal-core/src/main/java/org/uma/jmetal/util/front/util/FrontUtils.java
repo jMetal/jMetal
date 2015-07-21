@@ -106,6 +106,7 @@ public class FrontUtils {
    * @param minimumValues The minimum values allowed
    * @return the normalized front
    */
+  @Deprecated
   public static Front getNormalizedFront(Front front, double[] maximumValues, double[] minimumValues) {
     if (front == null) {
       throw new JMetalException("The front is null") ;
@@ -147,6 +148,7 @@ public class FrontUtils {
    * @param front        A front of points.
    * @return the normalized front
    */
+  @Deprecated
   public static Front getNormalizedFront(Front front) {
     if (front == null) {
       throw new JMetalException("The front is null") ;
@@ -167,6 +169,7 @@ public class FrontUtils {
    * @param referenceFront
    * @return the normalized front
    */
+  @Deprecated
   public static Front getNormalizedFront(Front front, Front referenceFront) {
     if (front == null) {
       throw new JMetalException("The front is null") ;
