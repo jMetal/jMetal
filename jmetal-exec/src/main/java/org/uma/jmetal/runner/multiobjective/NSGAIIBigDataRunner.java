@@ -30,6 +30,7 @@ import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.multiobjective.cec2015OptBigDataCompetition.BigOpt2015;
+import org.uma.jmetal.runner.AbstractAlgorithmRunner;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
@@ -44,7 +45,7 @@ import java.util.List;
 /**
  * Class to configure and run the NSGA-II algorithm
  */
-public class NSGAIIBigDataRunner {
+public class NSGAIIBigDataRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws java.io.IOException
@@ -103,8 +104,7 @@ public class NSGAIIBigDataRunner {
         .print();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
-    JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
-    JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
 
+    printFinalSolutionSet(population);
   }
 }
