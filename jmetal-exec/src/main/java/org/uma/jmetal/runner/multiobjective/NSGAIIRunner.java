@@ -34,6 +34,7 @@ import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
+import org.uma.jmetal.util.front.util.FrontNormalizer;
 import org.uma.jmetal.util.front.util.FrontUtils;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
@@ -86,22 +87,22 @@ public class NSGAIIRunner {
     selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
     algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation)
-            .setSelectionOperator(selection)
-            .setMaxIterations(250)
-            .setPopulationSize(100)
-            .build() ;
+        .setSelectionOperator(selection)
+        .setMaxIterations(250)
+        .setPopulationSize(100)
+        .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-            .execute() ;
+        .execute() ;
 
     List<DoubleSolution> population = algorithm.getResult() ;
     long computingTime = algorithmRunner.getComputingTime() ;
 
     new SolutionSetOutput.Printer(population)
-            .setSeparator("\t")
-            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
-            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
-            .print();
+        .setSeparator("\t")
+        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+        .print();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
     JMetalLogger.logger.info("Random seed: " + JMetalRandom.getInstance().getSeed());
@@ -112,7 +113,13 @@ public class NSGAIIRunner {
 
     if (referenceParetoFront != null) {
       Front referenceFront = new ArrayFront(referenceParetoFront);
+      FrontNormalizer frontNormalizer = new FrontNormalizer(referenceFront) ;
 
+      Front normalizedReferenceFront = frontNormalizer.normalize(referenceFront) ;
+      Front normalizedFront = frontNormalizer.normalize(new ArrayFront(population)) ;
+      List<DoubleSolution> normalizedPopulation = FrontUtils.convertFrontToSolutionList(
+          normalizedFront) ;
+/*
       Hypervolume<List<DoubleSolution>> hypervolume =
           new Hypervolume(referenceFront);
       Epsilon<List<DoubleSolution>> epsilon =
@@ -132,8 +139,8 @@ public class NSGAIIRunner {
       SetCoverage setCoverage =
           new SetCoverage();
 
-      Double hvValueNormalized = hypervolume.setNormalize().evaluate(population);
-      Double hvValue = hypervolume.unsetNormalize().evaluate(population);
+      Double hvValueNormalized = hypervolume.evaluate(normalizedPopulation);
+      Double hvValue = hypervolume.evaluate(population);
       Double epsilonValue = epsilon.evaluate(population);
       //Double epsilonValueNormalized = epsilon.setNormalize().evaluate(population);
       Double gdValue = gd.evaluate(population);
@@ -151,21 +158,40 @@ public class NSGAIIRunner {
           population, FrontUtils.convertFrontToSolutionList(referenceFront)) ;
       double setCoverageRefPop = setCoverage.evaluate(
           FrontUtils.convertFrontToSolutionList(referenceFront), population) ;
-
-      JMetalLogger.logger.info("Hypervolume (N) : " + hvValueNormalized);
-      JMetalLogger.logger.info("Hypervolume     : " + hvValue);
-      JMetalLogger.logger.info("Epsilon         : " + epsilonValue);
-      //JMetalLogger.logger.info("Epsilon (N)     : " + epsilonValueNormalized);
-      JMetalLogger.logger.info("GD              : " + gdValue);
-      JMetalLogger.logger.info("IGD (N)         : " + igdValueNormalized);
-      JMetalLogger.logger.info("IGD             : " + igdValue);
-      JMetalLogger.logger.info("IGD+ (N)        : " + igdPlusValueNormalized);
-      JMetalLogger.logger.info("IGD+            : " + igdPlusValue);
-      JMetalLogger.logger.info("Spread          : " + spreadValue);
-      JMetalLogger.logger.info("R2              : " + r2Value);
-      JMetalLogger.logger.info("Error ratio     : " + errorRatioValue);
-      JMetalLogger.logger.info("SC(pop, ref)    : " + setCoveragePopRef);
-      JMetalLogger.logger.info("SC(ref, pop)    : " + setCoverageRefPop);
+*/
+      JMetalLogger.logger.info("Hypervolume (N) : " +
+          new Hypervolume<List<DoubleSolution>>(normalizedReferenceFront).evaluate(normalizedPopulation));
+      JMetalLogger.logger.info("Hypervolume     : " +
+          new Hypervolume<List<DoubleSolution>>(referenceFront).evaluate(population));
+      JMetalLogger.logger.info("Epsilon (N)     : " +
+          new Epsilon<List<DoubleSolution>>(normalizedReferenceFront).evaluate(normalizedPopulation));
+      JMetalLogger.logger.info("Epsilon         : " +
+          new Epsilon<List<DoubleSolution>>(referenceFront).evaluate(population));
+      JMetalLogger.logger.info("GD (N)          : " +
+      new GenerationalDistance<List<DoubleSolution>>(normalizedReferenceFront).evaluate(normalizedPopulation));
+      JMetalLogger.logger.info("GD              : " +
+          new GenerationalDistance<List<DoubleSolution>>(referenceFront).evaluate(population));
+      JMetalLogger.logger.info("IGD (N)         : " +
+          new InvertedGenerationalDistance<List<DoubleSolution>>(normalizedReferenceFront).evaluate(normalizedPopulation));
+      JMetalLogger.logger.info("IGD             : " +
+          new InvertedGenerationalDistance<List<DoubleSolution>>(referenceParetoFront).evaluate(population));
+      JMetalLogger.logger.info("IGD+ (N)        : " +
+          new InvertedGenerationalDistancePlus<List<DoubleSolution>>(normalizedReferenceFront).evaluate(normalizedPopulation));
+      JMetalLogger.logger.info("IGD+            : " +
+          new InvertedGenerationalDistancePlus<List<DoubleSolution>>(referenceFront).evaluate(population));
+      JMetalLogger.logger.info("Spread (N)      : " +
+          new Spread<List<DoubleSolution>>(normalizedReferenceFront).evaluate(normalizedPopulation));
+      JMetalLogger.logger.info("Spread          : " +
+          new Spread<List<DoubleSolution>>(referenceFront).evaluate(population));
+      JMetalLogger.logger.info("R2 (N)          : " +
+          new R2<List<DoubleSolution>>(normalizedReferenceFront).evaluate(normalizedPopulation));
+      JMetalLogger.logger.info("R2              : " +
+          new R2<List<DoubleSolution>>(referenceFront).evaluate(population));
+      JMetalLogger.logger.info("Error ratio     : " +
+          new ErrorRatio<List<DoubleSolution>>(referenceFront).evaluate(population));
+      //JMetalLogger.logger.info("SC(pop, ref)    : " +
+      //new SetCoverage().evaluate());
+      //JMetalLogger.logger.info("SC(ref, pop)    : " + setCoverageRefPop);
     }
   }
 }
