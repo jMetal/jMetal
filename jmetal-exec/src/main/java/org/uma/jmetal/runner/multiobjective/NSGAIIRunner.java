@@ -97,6 +97,5 @@ public class NSGAIIRunner extends AbstractAlgorithmRunner {
     if (referenceParetoFront != null) {
       printQualityIndicators(population, referenceParetoFront) ;
     }
-
   }
 }

@@ -75,7 +75,7 @@ public abstract class AbstractAlgorithmRunner {
         new R2<List<? extends Solution<?>>>(referenceFront).evaluate(population) + "\n";
     outputString += "Error ratio     : " +
         new ErrorRatio<List<? extends Solution<?>>>(referenceFront).evaluate(population) + "\n";
-    
+
     JMetalLogger.logger.info(outputString);
   }
 }
