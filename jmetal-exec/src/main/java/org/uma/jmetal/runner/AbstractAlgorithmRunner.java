@@ -43,35 +43,37 @@ public abstract class AbstractAlgorithmRunner {
         .convertFrontToSolutionList(normalizedFront) ;
 
     JMetalLogger.logger.info("Hypervolume (N) : " +
-        new Hypervolume<List<DoubleSolution>>(normalizedReferenceFront).evaluate(normalizedPopulation));
+        new Hypervolume<List<? extends Solution<?>>>(normalizedReferenceFront).evaluate(
+            normalizedPopulation));
     JMetalLogger.logger.info("Hypervolume     : " +
-        new Hypervolume<List<DoubleSolution>>(referenceFront).evaluate(population));
+        new Hypervolume<List<? extends Solution<?>>>(referenceFront).evaluate(population));
     JMetalLogger.logger.info("Epsilon (N)     : " +
-        new Epsilon<List<DoubleSolution>>(normalizedReferenceFront).evaluate(normalizedPopulation));
+        new Epsilon<List<? extends Solution<?>>>(normalizedReferenceFront).evaluate(normalizedPopulation));
     JMetalLogger.logger.info("Epsilon         : " +
-        new Epsilon<List<DoubleSolution>>(referenceFront).evaluate(population));
+        new Epsilon<List<? extends Solution<?>>>(referenceFront).evaluate(population));
     JMetalLogger.logger.info("GD (N)          : " +
-        new GenerationalDistance<List<DoubleSolution>>(normalizedReferenceFront).evaluate(normalizedPopulation));
+        new GenerationalDistance<List<? extends Solution<?>>>(normalizedReferenceFront).evaluate(normalizedPopulation));
     JMetalLogger.logger.info("GD              : " +
-        new GenerationalDistance<List<DoubleSolution>>(referenceFront).evaluate(population));
+        new GenerationalDistance<List<? extends Solution<?>>>(referenceFront).evaluate(population));
     JMetalLogger.logger.info("IGD (N)         : " +
-        new InvertedGenerationalDistance<List<DoubleSolution>>(normalizedReferenceFront).evaluate(normalizedPopulation));
+        new InvertedGenerationalDistance<List<? extends Solution<?>>>(normalizedReferenceFront).evaluate(normalizedPopulation));
     JMetalLogger.logger.info("IGD             : " +
-        new InvertedGenerationalDistance<List<DoubleSolution>>(referenceFront).evaluate(population));
+        new InvertedGenerationalDistance<List<? extends Solution<?>>>(referenceFront).evaluate(population));
     JMetalLogger.logger.info("IGD+ (N)        : " +
-        new InvertedGenerationalDistancePlus<List<DoubleSolution>>(normalizedReferenceFront).evaluate(normalizedPopulation));
+        new InvertedGenerationalDistancePlus<List<? extends Solution<?>>>(normalizedReferenceFront).evaluate(normalizedPopulation));
     JMetalLogger.logger.info("IGD+            : " +
-        new InvertedGenerationalDistancePlus<List<DoubleSolution>>(referenceFront).evaluate(population));
+        new InvertedGenerationalDistancePlus<List<? extends Solution<?>>>(referenceFront).evaluate(population));
     JMetalLogger.logger.info("Spread (N)      : " +
-        new Spread<List<DoubleSolution>>(normalizedReferenceFront).evaluate(normalizedPopulation));
+        new Spread<List<? extends Solution<?>>>(normalizedReferenceFront).evaluate(
+            normalizedPopulation));
     JMetalLogger.logger.info("Spread          : " +
-        new Spread<List<DoubleSolution>>(referenceFront).evaluate(population));
+        new Spread<List<? extends Solution<?>>>(referenceFront).evaluate(population));
     JMetalLogger.logger.info("R2 (N)          : " +
-        new R2<List<DoubleSolution>>(normalizedReferenceFront).evaluate(normalizedPopulation));
+        new R2<List<? extends Solution<?>>>(normalizedReferenceFront).evaluate(normalizedPopulation));
     JMetalLogger.logger.info("R2              : " +
-        new R2<List<DoubleSolution>>(referenceFront).evaluate(population));
+        new R2<List<? extends Solution<?>>>(referenceFront).evaluate(population));
     JMetalLogger.logger.info("Error ratio     : " +
-        new ErrorRatio<List<DoubleSolution>>(referenceFront).evaluate(population));
+        new ErrorRatio<List<? extends Solution<?>>>(referenceFront).evaluate(population));
     //JMetalLogger.logger.info("SC(pop, ref)    : " +
     //new SetCoverage().evaluate());
     //JMetalLogger.logger.info("SC(ref, pop)    : " + setCoverageRefPop);
