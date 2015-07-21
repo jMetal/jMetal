@@ -113,7 +113,7 @@ public class CommandLineIndicatorRunner {
           args[0], indicatorList);
       System.out.println(indicator.evaluate(FrontUtils.convertFrontToSolutionList(front)));
     } else {
-      for (QualityIndicator indicator : indicatorList) {
+      for (QualityIndicator<List<DoubleSolution>, Double> indicator : indicatorList) {
         System.out.println(indicator.getName() + ": " +
             indicator.evaluate(FrontUtils.convertFrontToSolutionList(front)));
       }
@@ -131,12 +131,11 @@ public class CommandLineIndicatorRunner {
   /**
    * Creates a list with the available indicators (but setCoverage)
    * @param referenceFront
-   * @param normalize
    * @return
    * @throws FileNotFoundException
    */
   private static List<QualityIndicator<List<DoubleSolution>, Double>> getAvailableIndicators(
-      Front referenceFront, boolean normalize) throws FileNotFoundException {
+      Front referenceFront) throws FileNotFoundException {
 
     List<QualityIndicator<List<DoubleSolution>, Double>> list = new ArrayList<>() ;
     list.add(new Epsilon<List<DoubleSolution>>(referenceFront).setNormalize()) ;

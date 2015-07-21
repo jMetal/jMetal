@@ -42,38 +42,40 @@ public abstract class AbstractAlgorithmRunner {
     List<DoubleSolution> normalizedPopulation = FrontUtils
         .convertFrontToSolutionList(normalizedFront) ;
 
-    JMetalLogger.logger.info("Hypervolume (N) : " +
-        new Hypervolume<List<DoubleSolution>>(normalizedReferenceFront).evaluate(normalizedPopulation));
-    JMetalLogger.logger.info("Hypervolume     : " +
-        new Hypervolume<List<DoubleSolution>>(referenceFront).evaluate(population));
-    JMetalLogger.logger.info("Epsilon (N)     : " +
-        new Epsilon<List<DoubleSolution>>(normalizedReferenceFront).evaluate(normalizedPopulation));
-    JMetalLogger.logger.info("Epsilon         : " +
-        new Epsilon<List<DoubleSolution>>(referenceFront).evaluate(population));
-    JMetalLogger.logger.info("GD (N)          : " +
-        new GenerationalDistance<List<DoubleSolution>>(normalizedReferenceFront).evaluate(normalizedPopulation));
-    JMetalLogger.logger.info("GD              : " +
-        new GenerationalDistance<List<DoubleSolution>>(referenceFront).evaluate(population));
-    JMetalLogger.logger.info("IGD (N)         : " +
-        new InvertedGenerationalDistance<List<DoubleSolution>>(normalizedReferenceFront).evaluate(normalizedPopulation));
-    JMetalLogger.logger.info("IGD             : " +
-        new InvertedGenerationalDistance<List<DoubleSolution>>(referenceFront).evaluate(population));
-    JMetalLogger.logger.info("IGD+ (N)        : " +
-        new InvertedGenerationalDistancePlus<List<DoubleSolution>>(normalizedReferenceFront).evaluate(normalizedPopulation));
-    JMetalLogger.logger.info("IGD+            : " +
-        new InvertedGenerationalDistancePlus<List<DoubleSolution>>(referenceFront).evaluate(population));
-    JMetalLogger.logger.info("Spread (N)      : " +
-        new Spread<List<DoubleSolution>>(normalizedReferenceFront).evaluate(normalizedPopulation));
-    JMetalLogger.logger.info("Spread          : " +
-        new Spread<List<DoubleSolution>>(referenceFront).evaluate(population));
-    JMetalLogger.logger.info("R2 (N)          : " +
-        new R2<List<DoubleSolution>>(normalizedReferenceFront).evaluate(normalizedPopulation));
-    JMetalLogger.logger.info("R2              : " +
-        new R2<List<DoubleSolution>>(referenceFront).evaluate(population));
-    JMetalLogger.logger.info("Error ratio     : " +
-        new ErrorRatio<List<DoubleSolution>>(referenceFront).evaluate(population));
-    //JMetalLogger.logger.info("SC(pop, ref)    : " +
-    //new SetCoverage().evaluate());
-    //JMetalLogger.logger.info("SC(ref, pop)    : " + setCoverageRefPop);
+    String outputString = "\n" ;
+    outputString += "Hypervolume (N) : " +
+        new Hypervolume<List<? extends Solution<?>>>(normalizedReferenceFront).evaluate(
+            normalizedPopulation) + "\n";
+    outputString += "Hypervolume     : " +
+        new Hypervolume<List<? extends Solution<?>>>(referenceFront).evaluate(population) + "\n";
+    outputString += "Epsilon (N)     : " +
+        new Epsilon<List<? extends Solution<?>>>(normalizedReferenceFront).evaluate(normalizedPopulation) +
+        "\n" ;
+    outputString += "Epsilon         : " +
+        new Epsilon<List<? extends Solution<?>>>(referenceFront).evaluate(population) + "\n" ;
+    outputString += "GD (N)          : " +
+        new GenerationalDistance<List<? extends Solution<?>>>(normalizedReferenceFront).evaluate(normalizedPopulation) + "\n";
+    outputString += "GD              : " +
+        new GenerationalDistance<List<? extends Solution<?>>>(referenceFront).evaluate(population) + "\n";
+    outputString += "IGD (N)         : " +
+        new InvertedGenerationalDistance<List<? extends Solution<?>>>(normalizedReferenceFront).evaluate(normalizedPopulation) + "\n";
+    outputString +="IGD             : " +
+        new InvertedGenerationalDistance<List<? extends Solution<?>>>(referenceFront).evaluate(population) + "\n";
+    outputString += "IGD+ (N)        : " +
+        new InvertedGenerationalDistancePlus<List<? extends Solution<?>>>(normalizedReferenceFront).evaluate(normalizedPopulation) + "\n";
+    outputString += "IGD+            : " +
+        new InvertedGenerationalDistancePlus<List<? extends Solution<?>>>(referenceFront).evaluate(population) + "\n";
+    outputString += "Spread (N)      : " +
+        new Spread<List<? extends Solution<?>>>(normalizedReferenceFront).evaluate(normalizedPopulation) + "\n";
+    outputString += "Spread          : " +
+        new Spread<List<? extends Solution<?>>>(referenceFront).evaluate(population) + "\n";
+    outputString += "R2 (N)          : " +
+        new R2<List<DoubleSolution>>(normalizedReferenceFront).evaluate(normalizedPopulation) + "\n";
+    outputString += "R2              : " +
+        new R2<List<? extends Solution<?>>>(referenceFront).evaluate(population) + "\n";
+    outputString += "Error ratio     : " +
+        new ErrorRatio<List<? extends Solution<?>>>(referenceFront).evaluate(population) + "\n";
+    
+    JMetalLogger.logger.info(outputString);
   }
 }
