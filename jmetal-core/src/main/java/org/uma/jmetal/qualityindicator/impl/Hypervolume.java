@@ -21,12 +21,13 @@
 
 package org.uma.jmetal.qualityindicator.impl;
 
-import org.uma.jmetal.qualityindicator.NormalizableQualityIndicator;
+import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontUtils;
+import org.uma.jmetal.util.naming.impl.SimpleDescribedEntity;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -40,7 +41,9 @@ import java.util.List;
  * pp. 257-271, 1999.
  */
 public class Hypervolume<Evaluate extends List<? extends Solution<?>>>
-    extends NormalizableQualityIndicator<Evaluate, Double> {
+    extends SimpleDescribedEntity
+    implements QualityIndicator<Evaluate,Double> {
+
   private Front referenceParetoFront ;
 
   public Hypervolume() {
@@ -56,7 +59,6 @@ public class Hypervolume<Evaluate extends List<? extends Solution<?>>>
     this() ;
     Front front = new ArrayFront(referenceParetoFrontFile);
     referenceParetoFront = front ;
-    normalize = true ;
   }
 
   /**
@@ -226,25 +228,7 @@ public class Hypervolume<Evaluate extends List<? extends Solution<?>>>
    * @param referenceFront    The true pareto front
    */
   private double hypervolume(Front front, Front referenceFront) {
-    Front normalizedFront;
-/*
-    if (normalize) {
-      double[] maximumValue;
-      double[] minimumValue;
 
-      // STEP 1. Obtain the maximum and minimum values of the Pareto front
-      maximumValue = FrontUtils.getMaximumValues(referenceFront);
-      minimumValue = FrontUtils.getMinimumValues(referenceFront);
-
-      // STEP 2. Get the normalized front and true Pareto fronts
-      normalizedFront = FrontUtils.getNormalizedFront(front, maximumValue, minimumValue);
-
-    } else {
-      normalizedFront = front ;
-    }
-*/
-    // STEP 3. Inverse the pareto front. This is needed because of the original
-    //metric by Zitzler is for maximization problem
     Front invertedFront;
     invertedFront = FrontUtils.getInvertedFront(front);
 

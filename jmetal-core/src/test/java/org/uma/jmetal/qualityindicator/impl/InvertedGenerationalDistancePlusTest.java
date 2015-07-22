@@ -16,6 +16,7 @@ package org.uma.jmetal.qualityindicator.impl;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
@@ -24,6 +25,7 @@ import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
 
 import java.io.FileNotFoundException;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertEquals;
@@ -67,8 +69,9 @@ public class InvertedGenerationalDistancePlusTest {
 
     Front front = new ArrayFront(0, 0) ;
 
-    InvertedGenerationalDistancePlus igdplus = new InvertedGenerationalDistancePlus(front) ;
-    igdplus.evaluate(null) ;
+    InvertedGenerationalDistancePlus<List<DoubleSolution>> igdPlus =
+        new InvertedGenerationalDistancePlus<List<DoubleSolution>>(front) ;
+    igdPlus.evaluate(null) ;
   }
 
   @Test
@@ -85,8 +88,8 @@ public class InvertedGenerationalDistancePlusTest {
     frontApproximation.setPoint(0, point1);
     paretoFront.setPoint(0, point1);
 
-    InvertedGenerationalDistancePlus igdPlus = new InvertedGenerationalDistancePlus(paretoFront) ;
-    igdPlus.unsetNormalize() ;
+    InvertedGenerationalDistancePlus<List<DoubleSolution>> igdPlus =
+        new InvertedGenerationalDistancePlus<List<DoubleSolution>>(paretoFront) ;
 
     assertEquals(0.0, igdPlus.evaluate(FrontUtils.convertFrontToSolutionList(frontApproximation)),
         EPSILON);
@@ -135,8 +138,8 @@ public class InvertedGenerationalDistancePlusTest {
     frontApproximation.setPoint(1, points[1]);
     frontApproximation.setPoint(2, points[2]);
 
-    InvertedGenerationalDistancePlus igdPlus = new InvertedGenerationalDistancePlus(paretoFront) ;
-    igdPlus.unsetNormalize() ;
+    InvertedGenerationalDistancePlus<List<DoubleSolution>> igdPlus =
+        new InvertedGenerationalDistancePlus<List<DoubleSolution>>(paretoFront) ;
 
     assertEquals((2.0 * Math.sqrt(0.01) + Math.sqrt(0.02))/3.0,
         igdPlus.evaluate(FrontUtils.convertFrontToSolutionList(frontApproximation)),
@@ -185,8 +188,8 @@ public class InvertedGenerationalDistancePlusTest {
     frontApproximation.setPoint(1, points[1]);
     frontApproximation.setPoint(2, points[2]);
 
-    InvertedGenerationalDistancePlus igdPlus = new InvertedGenerationalDistancePlus(paretoFront) ;
-    igdPlus.unsetNormalize() ;
+    InvertedGenerationalDistancePlus<List<DoubleSolution>> igdPlus =
+        new InvertedGenerationalDistancePlus<List<DoubleSolution>>(paretoFront) ;
 
     assertEquals((0.2 + Math.sqrt(0.01+0.16) + Math.sqrt(0.01+0.04))/3.0,
         igdPlus.evaluate(FrontUtils.convertFrontToSolutionList(frontApproximation)),

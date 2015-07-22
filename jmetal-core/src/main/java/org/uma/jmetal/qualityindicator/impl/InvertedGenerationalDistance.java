@@ -13,12 +13,13 @@
 
 package org.uma.jmetal.qualityindicator.impl;
 
-import org.uma.jmetal.qualityindicator.NormalizableQualityIndicator;
+import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontUtils;
+import org.uma.jmetal.util.naming.impl.SimpleDescribedEntity;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -31,7 +32,9 @@ import java.util.List;
  * Inst. Technol. (1998)
  */
 public class InvertedGenerationalDistance<Evaluate extends List<? extends Solution<?>>>
-    extends NormalizableQualityIndicator<Evaluate, Double> {
+    extends SimpleDescribedEntity
+    implements QualityIndicator<Evaluate,Double> {
+
   private static final double POW = 2.0;
 
   private Front referenceParetoFront ;
@@ -49,7 +52,6 @@ public class InvertedGenerationalDistance<Evaluate extends List<? extends Soluti
 
     Front front = new ArrayFront(referenceParetoFrontFile);
     referenceParetoFront = front ;
-    normalize = true ;
   }
 
   /**
@@ -64,7 +66,6 @@ public class InvertedGenerationalDistance<Evaluate extends List<? extends Soluti
     }
 
     this.referenceParetoFront = referenceParetoFront ;
-    this.normalize = true ;
   }
 
   /**

@@ -20,10 +20,11 @@
 
 package org.uma.jmetal.qualityindicator.impl;
 
-import org.uma.jmetal.qualityindicator.NormalizableQualityIndicator;
+import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
+import org.uma.jmetal.util.naming.impl.SimpleDescribedEntity;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -32,7 +33,8 @@ import java.util.List;
  * TODO: Add comments here
  */
 public class R2<Evaluate extends List<? extends Solution<?>>>
-    extends NormalizableQualityIndicator<Evaluate, Double> {
+    extends SimpleDescribedEntity
+    implements QualityIndicator<Evaluate,Double> {
   private double[][] matrix = null;
   private double[][] lambda = null;
   private int numberOfObjectives = 0;
