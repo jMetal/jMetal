@@ -26,6 +26,7 @@ import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.runner.AbstractAlgorithmRunner;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
@@ -34,34 +35,27 @@ import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.MultithreadedSolutionListEvaluator;
-import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
-import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.List;
 
 /**
- * This class executes:
- * - The SMPSO algorithm described in:
- *   Antonio J. Nebro, Juan José Durillo, Carlos Artemio Coello Coello:
- *   Analysis of leader selection strategies in a multi-objective Particle Swarm Optimizer.
- *   IEEE Congress on Evolutionary Computation 2013: 3153-3160
- * - The SMPSOhv algorithm described in:
- *   Antonio J. Nebro, Juan José Durillo, Carlos Artemio Coello Coello:
- *   Analysis of leader selection strategies in a multi-objective Particle Swarm Optimizer.
- *   IEEE Congress on Evolutionary Computation 2013: 3153-3160
+ * Class for configuring and running the SMPSO algorithm (parallel version)
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class ParallelSMPSORunner {
+
+public class ParallelSMPSORunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments. The first (optional) argument specifies
    *             the problem to solve.
    * @throws org.uma.jmetal.util.JMetalException
    * @throws java.io.IOException
    * @throws SecurityException
-   * Usage: three options
-   *          - org.uma.jmetal.runner.multiobjective.SMPSORunner
-   *          - org.uma.jmetal.runner.multiobjective.SMPSORunner problemName
-   *          - org.uma.jmetal.runner.multiobjective.SMPSORunner problemName ParetoFrontFile
+   * Invoking command:
+   mvn
+  -pl jmetal-exec
+  exec:java -Dexec.mainClass="org.uma.jmetal.qualityIndicator.multiobjective.ParallelSMPSORunner"
+  -Dexec.args="problemName [referenceFront]"
    */
   public static void main(String[] args) throws Exception {
     DoubleProblem problem;
@@ -69,11 +63,17 @@ public class ParallelSMPSORunner {
     MutationOperator<DoubleSolution> mutation;
     SolutionListEvaluator<DoubleSolution> evaluator ;
 
+    String referenceParetoFront = "" ;
+
     String problemName ;
     if (args.length == 1) {
+      problemName = args[0];
+    } else if (args.length == 2) {
       problemName = args[0] ;
+      referenceParetoFront = args[1] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
+      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf" ;
     }
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution> loadProblem(problemName);
@@ -101,15 +101,11 @@ public class ParallelSMPSORunner {
 
     evaluator.shutdown();
 
-    new SolutionSetOutput.Printer(population)
-            .setSeparator("\t")
-            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
-            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
-            .print();
-
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
-    JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
-    JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
-    JMetalLogger.logger.info("Random seed: " + JMetalRandom.getInstance().getSeed()) ;
+
+    printFinalSolutionSet(population);
+    if (!referenceParetoFront.equals("")) {
+      printQualityIndicators(population, referenceParetoFront) ;
+    }
   }
 }

@@ -27,6 +27,7 @@ import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.cec2015OptBigDataCompetition.BigOpt2015;
+import org.uma.jmetal.runner.AbstractAlgorithmRunner;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
@@ -39,27 +40,24 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import java.util.List;
 
 /**
- * This class executes:
- * - The SMPSO algorithm described in:
- *   Antonio J. Nebro, Juan José Durillo, Carlos Artemio Coello Coello:
- *   Analysis of leader selection strategies in a multi-objective Particle Swarm Optimizer.
- *   IEEE Congress on Evolutionary Computation 2013: 3153-3160
- * - The SMPSOhv algorithm described in:
- *   Antonio J. Nebro, Juan José Durillo, Carlos Artemio Coello Coello:
- *   Analysis of leader selection strategies in a multi-objective Particle Swarm Optimizer.
- *   IEEE Congress on Evolutionary Computation 2013: 3153-3160
+ * Class for configuring and running the SMPSO algorithm to solve a problem of the CEC2015
+ * Big Optimization competition
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class SMPSOBigDataRunner {
+
+public class SMPSOBigDataRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments. The first (optional) argument specifies
    *             the problem to solve.
    * @throws org.uma.jmetal.util.JMetalException
    * @throws java.io.IOException
    * @throws SecurityException
-   * Usage: three options
-   *          - org.uma.jmetal.runner.multiobjective.SMPSORunner
-   *          - org.uma.jmetal.runner.multiobjective.SMPSORunner problemName
-   *          - org.uma.jmetal.runner.multiobjective.SMPSORunner problemName ParetoFrontFile
+   * Invoking command:
+  mvn
+  -pl jmetal-exec
+  exec:java -Dexec.mainClass="org.uma.jmetal.qualityIndicator.multiobjective.SMPSOBigDataRunner"
+  -Dexec.args="problemName [referenceFront]"
    */
   public static void main(String[] args) throws Exception {
     DoubleProblem problem;

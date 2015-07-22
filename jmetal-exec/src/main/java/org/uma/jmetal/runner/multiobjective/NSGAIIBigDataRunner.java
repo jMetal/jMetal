@@ -43,18 +43,23 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
- * Class to configure and run the NSGA-II algorithm
+ * Class for configuring and running the NSGA-II algorithm to solve a problem of the CEC 2015
+ * Big Optimization competition
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+
 public class NSGAIIBigDataRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws java.io.IOException
    * @throws SecurityException
    * @throws ClassNotFoundException
-   * Usage: three options
-   *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner
-   *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName
-   *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName paretoFrontFile
+   * Invoking command:
+     mvn
+  -pl jmetal-exec
+  exec:java -Dexec.mainClass="org.uma.jmetal.qualityIndicator.multiobjective.NSGAIIBigDataRunner"
+  -Dexec.args="problemName [referenceFront]"
    */
   public static void main(String[] args)
       throws JMetalException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException,

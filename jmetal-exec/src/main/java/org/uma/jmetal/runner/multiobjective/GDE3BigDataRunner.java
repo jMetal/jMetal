@@ -36,18 +36,20 @@ import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import java.util.List;
 
 /**
- * Class for configuring and running the GDE3 algorithm
+ * Class for configuring and running the GDE3 algorithm for solving a problem of the Big Optimization
+ * competition at CEC2015
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class GDE3BigDataRunner {
   /**
    * @param args Command line arguments.
-   * @throws java.io.IOException
    * @throws SecurityException
-   * @throws ClassNotFoundException
-   * Usage: three choices
-   *        - org.uma.jmetal45.runner.multiobjective.GDE3Runner
-   *        - org.uma.jmetal45.runner.multiobjective.GDE3Runner problemName
-   *        - org.uma.jmetal45.runner.multiobjective.GDE3Runner problemName paretoFrontFile
+   * Invoking command:
+   mvn
+    -pl jmetal-exec
+    exec:java -Dexec.mainClass="org.uma.jmetal.qualityIndicator.multiobjective.GDE3BigDataRunner"
+    -Dexec.args="[problemName]"
    */
   public static void main(String[] args) {
     DoubleProblem problem;
