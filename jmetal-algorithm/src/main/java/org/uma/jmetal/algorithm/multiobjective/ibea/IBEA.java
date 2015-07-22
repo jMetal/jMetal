@@ -148,7 +148,7 @@ public class IBEA<S extends Solution<?>> implements Algorithm<List<S>> {
   double calculateHypervolumeIndicator(Solution<?> solutionA, Solution<?> solutionB, int d,
       double maximumValues[], double minimumValues[]) {
     double a, b, r, max;
-    double volume = 0;
+    double volume ;
     double rho = 2.0;
 
     r = rho * (maximumValues[d - 1] - minimumValues[d - 1]);
@@ -200,13 +200,13 @@ public class IBEA<S extends Solution<?>> implements Algorithm<List<S>> {
       A.add(solutionSet.get(j));
 
       List<Double> aux = new ArrayList<Double>();
-      for (int i = 0; i < solutionSet.size(); i++) {
+      for (S solution : solutionSet) {
         B = new ArrayList<>(1);
-        B.add(solutionSet.get(i));
+        B.add(solution);
 
         int flag = (new DominanceComparator<S>()).compare(A.get(0), B.get(0));
 
-        double value = 0.0;
+        double value;
         if (flag == -1) {
           value =
               -calculateHypervolumeIndicator(A.get(0), B.get(0), problem.getNumberOfObjectives(),
@@ -254,9 +254,9 @@ public class IBEA<S extends Solution<?>> implements Algorithm<List<S>> {
       minimumValues[i] = Double.MAX_VALUE;
     }
 
-    for (int pos = 0; pos < solutionSet.size(); pos++) {
+    for (S solution : solutionSet) {
       for (int obj = 0; obj < problem.getNumberOfObjectives(); obj++) {
-        double value = solutionSet.get(pos).getObjective(obj);
+        double value = solution.getObjective(obj);
         if (value > maximumValues[obj]) {
           maximumValues[obj] = value;
         }

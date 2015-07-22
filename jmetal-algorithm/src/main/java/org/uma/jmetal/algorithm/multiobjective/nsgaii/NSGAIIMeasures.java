@@ -14,8 +14,7 @@ import org.uma.jmetal.util.solutionattribute.Ranking;
 import java.util.List;
 
 /**
- * @author Antonio J. Nebro
- * @version 1.0
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class NSGAIIMeasures<S extends Solution<?>> extends NSGAII<S> implements Measurable {
   private CountingMeasure iterations ;
@@ -33,7 +32,8 @@ public class NSGAIIMeasures<S extends Solution<?>> extends NSGAII<S> implements 
   public NSGAIIMeasures(Problem<S> problem, int maxIterations, int populationSize,
       CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
       SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator) {
-    super(problem, maxIterations, populationSize, crossoverOperator, mutationOperator, selectionOperator, evaluator) ;
+    super(problem, maxIterations, populationSize, crossoverOperator, mutationOperator,
+        selectionOperator, evaluator) ;
 
     initMeasures() ;
   }
@@ -88,11 +88,13 @@ public class NSGAIIMeasures<S extends Solution<?>> extends NSGAII<S> implements 
     measureManager = new SimpleMeasureManager() ;
     measureManager.setPullMeasure("currentExecutionTime", durationMeasure);
     measureManager.setPullMeasure("currentIteration", iterations);
-    measureManager.setPullMeasure("numberOfNonDominatedSolutionsInPopulation", numberOfNonDominatedSolutionsInPopulation);
+    measureManager.setPullMeasure("numberOfNonDominatedSolutionsInPopulation",
+        numberOfNonDominatedSolutionsInPopulation);
 
     measureManager.setPushMeasure("currentPopulation", solutionListMeasure);
     measureManager.setPushMeasure("currentIteration", iterations);
-    measureManager.setPushMeasure("numberOfFeasibleSolutionsInPopulation", numberOfFeasibleSolutionsInPopulation);
+    measureManager.setPushMeasure("numberOfFeasibleSolutionsInPopulation",
+        numberOfFeasibleSolutionsInPopulation);
   }
 
   @Override

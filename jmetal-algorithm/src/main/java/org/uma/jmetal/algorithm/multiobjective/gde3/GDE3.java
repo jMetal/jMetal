@@ -93,10 +93,13 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
     return population;
   }
 
+  /**
+   * Evaluate population method
+   * @param population The list of solutions to be evaluated
+   * @return A list of evaluated solutions
+   */
   @Override protected List<DoubleSolution> evaluatePopulation(List<DoubleSolution> population) {
-    List<DoubleSolution> pop = evaluator.evaluate(population, problem);
-
-    return pop;
+    return evaluator.evaluate(population, problem);
   }
 
   @Override protected List<DoubleSolution> selection(List<DoubleSolution> population) {
@@ -154,9 +157,8 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
       }
     }
     Ranking<DoubleSolution> ranking = computeRanking(tmpList);
-    List<DoubleSolution> pop = crowdingDistanceSelection(ranking);
 
-    return pop;
+    return crowdingDistanceSelection(ranking);
   }
 
   @Override public List<DoubleSolution> getResult() {
@@ -203,8 +205,8 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
 
     front = ranking.getSubfront(rank);
 
-    for (int i = 0; i < front.size(); i++) {
-      population.add(front.get(i));
+    for (DoubleSolution solution : front) {
+      population.add(solution);
     }
   }
 

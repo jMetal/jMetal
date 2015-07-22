@@ -25,7 +25,7 @@ import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
 import org.uma.jmetal.util.AlgorithmBuilder;
 
 /**
- * Created by antonio on 24/09/14.
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class SMPSOBuilder implements AlgorithmBuilder<SMPSO> {
   private DoubleProblem problem;

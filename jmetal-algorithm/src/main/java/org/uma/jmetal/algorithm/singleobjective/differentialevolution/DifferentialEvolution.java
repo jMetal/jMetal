@@ -33,6 +33,7 @@ import java.util.*;
 
 /**
  * This class implements a differential evolution algorithm.
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class DifferentialEvolution extends AbstractDifferentialEvolution<DoubleSolution> {
   private DoubleProblem problem;
@@ -96,9 +97,7 @@ public class DifferentialEvolution extends AbstractDifferentialEvolution<DoubleS
   }
 
   @Override protected List<DoubleSolution> evaluatePopulation(List<DoubleSolution> population) {
-    List<DoubleSolution> pop = evaluator.evaluate(population, problem);
-
-    return pop;
+    return evaluator.evaluate(population, problem);
   }
 
   @Override protected List<DoubleSolution> selection(List<DoubleSolution> population) {

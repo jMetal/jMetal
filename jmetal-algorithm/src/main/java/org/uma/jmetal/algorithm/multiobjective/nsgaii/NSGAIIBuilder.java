@@ -14,7 +14,7 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import java.util.List;
 
 /**
- * Created by ajnebro on 16/11/14.
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class NSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<NSGAII<S>> {
   public enum NSGAIIVariant {NSGAII, SteadyStateNSGAII, Measures}

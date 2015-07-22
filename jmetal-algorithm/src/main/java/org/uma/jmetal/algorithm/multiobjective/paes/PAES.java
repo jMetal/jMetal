@@ -103,6 +103,7 @@ public class PAES<S extends Solution<?>> extends AbstractEvolutionStrategy<S, Li
     return population;
   }
 
+  @SuppressWarnings("unchecked")
   @Override protected List<S> reproduction(List<S> population) {
     S mutatedSolution = (S)population.get(0).copy();
     mutationOperator.execute(mutatedSolution);
@@ -112,6 +113,7 @@ public class PAES<S extends Solution<?>> extends AbstractEvolutionStrategy<S, Li
     return mutationSolutionList;
   }
 
+  @SuppressWarnings("unchecked")
   @Override protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
     S current = population.get(0);
     S mutatedSolution = offspringPopulation.get(0);
@@ -141,8 +143,8 @@ public class PAES<S extends Solution<?>> extends AbstractEvolutionStrategy<S, Li
    * @param solution        The actual guide of PAES
    * @param mutatedSolution A candidate guide
    */
+  @SuppressWarnings("unchecked")
   public S test(S solution, S mutatedSolution, AdaptiveGridArchive<S> archive) {
-
     int originalLocation = archive.getGrid().location(solution);
     int mutatedLocation = archive.getGrid().location(mutatedSolution);
 

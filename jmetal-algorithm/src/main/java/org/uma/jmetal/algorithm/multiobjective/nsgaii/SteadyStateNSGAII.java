@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by ajnebro on 30/10/14.
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class SteadyStateNSGAII<S extends Solution<?>> extends NSGAII<S> {
   /**

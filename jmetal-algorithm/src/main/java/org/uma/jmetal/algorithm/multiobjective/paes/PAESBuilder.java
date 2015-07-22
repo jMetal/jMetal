@@ -19,7 +19,7 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AlgorithmBuilder;
 
 /**
- * Created by ajnebro on 17/11/14.
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class PAESBuilder<S extends Solution<?>>  implements AlgorithmBuilder<PAES<S>> {
   private Problem<S> problem;

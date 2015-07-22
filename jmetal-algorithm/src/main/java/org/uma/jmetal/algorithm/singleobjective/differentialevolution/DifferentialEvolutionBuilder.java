@@ -9,8 +9,8 @@ import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
 /**
- * Created by Antonio J. Nebro on 25/11/14.
  * DifferentialEvolutionBuilder class
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class DifferentialEvolutionBuilder {
   private DoubleProblem problem;

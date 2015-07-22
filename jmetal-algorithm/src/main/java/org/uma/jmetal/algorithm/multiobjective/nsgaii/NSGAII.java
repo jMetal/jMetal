@@ -18,7 +18,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by Antonio J. Nebro on 30/10/14.
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class NSGAII<S extends  Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>> {
   protected final int maxIterations;
@@ -109,9 +109,8 @@ public class NSGAII<S extends  Solution<?>> extends AbstractGeneticAlgorithm<S, 
     jointPopulation.addAll(offspringPopulation);
 
     Ranking<S> ranking = computeRanking(jointPopulation);
-    List<S> pop = crowdingDistanceSelection(ranking);
 
-    return pop;
+    return crowdingDistanceSelection(ranking);
   }
 
   @Override public List<S> getResult() {
@@ -155,8 +154,8 @@ public class NSGAII<S extends  Solution<?>> extends AbstractGeneticAlgorithm<S, 
 
     front = ranking.getSubfront(rank);
 
-    for (int i = 0; i < front.size(); i++) {
-      population.add(front.get(i));
+    for (S solution : front) {
+      population.add(solution);
     }
   }
 
