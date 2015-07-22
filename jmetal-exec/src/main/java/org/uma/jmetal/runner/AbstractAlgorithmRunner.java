@@ -16,7 +16,7 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
- * Created by ajnebro on 17/7/15.
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public abstract class AbstractAlgorithmRunner {
   public static void printFinalSolutionSet(List<? extends Solution<?>> population) {

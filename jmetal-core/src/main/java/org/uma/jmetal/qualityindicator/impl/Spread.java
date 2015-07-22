@@ -26,7 +26,6 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
-import org.uma.jmetal.util.front.util.FrontUtils;
 import org.uma.jmetal.util.point.impl.LexicographicalPointComparator;
 import org.uma.jmetal.util.point.util.EuclideanDistance;
 import org.uma.jmetal.util.point.util.PointDistance;
@@ -88,56 +87,40 @@ public class Spread<Evaluate extends List<? extends Solution<?>>>
    * Calculates the Spread metric.
    *
    * @param front              The front.
-   * @param trueParetoFront    The true pareto front.
+   * @param referenceFront    The true pareto front.
    */
-  public double spread(Front front, Front trueParetoFront) {
-    double[] maximumValue;
-    double[] minimumValue;
-    Front normalizedFront;
-    Front normalizedParetoFront;
+  public double spread(Front front, Front referenceFront) {
 
     PointDistance distance = new EuclideanDistance() ;
 
-    // STEP 1. Obtain the maximum and minimum values of the Pareto front
-    maximumValue = FrontUtils.getMaximumValues(trueParetoFront);
-    minimumValue = FrontUtils.getMinimumValues(trueParetoFront);
+    // STEP 1. Sort normalizedFront and normalizedParetoFront;
+    front.sort(new LexicographicalPointComparator());
+    referenceFront.sort(new LexicographicalPointComparator());
 
-    // STEP 2. Get the normalized front and true Pareto fronts
-    normalizedFront = FrontUtils.getNormalizedFront(front,
-      maximumValue,
-      minimumValue);
-    normalizedParetoFront = FrontUtils.getNormalizedFront(trueParetoFront,
-      maximumValue,
-      minimumValue);
-
-    // STEP 3. Sort normalizedFront and normalizedParetoFront;
-    normalizedFront.sort(new LexicographicalPointComparator());
-    normalizedParetoFront.sort(new LexicographicalPointComparator());
-
-    // STEP 4. Compute df and dl (See specifications in Deb's description of the metric)
-    double df = distance.compute(normalizedFront.getPoint(0), normalizedParetoFront.getPoint(0)) ;
-    double dl = distance.compute(normalizedFront.getPoint(normalizedFront.getNumberOfPoints() - 1),
-        normalizedParetoFront.getPoint(normalizedParetoFront.getNumberOfPoints() - 1)) ;
+    // STEP 2. Compute df and dl (See specifications in Deb's description of the metric)
+    double df = distance.compute(front.getPoint(0), referenceFront.getPoint(0)) ;
+    double dl = distance.compute(front.getPoint(front.getNumberOfPoints() - 1),
+        referenceFront.getPoint(referenceFront.getNumberOfPoints() - 1)) ;
 
     double mean = 0.0;
     double diversitySum = df + dl;
 
-    int numberOfPoints = normalizedFront.getNumberOfPoints() ;
+    int numberOfPoints = front.getNumberOfPoints() ;
 
-    // STEP 5. Calculate the mean of distances between points i and (i - 1).
+    // STEP 3. Calculate the mean of distances between points i and (i - 1).
     // (the points are in lexicografical order)
     for (int i = 0; i < (numberOfPoints - 1); i++) {
-      mean += distance.compute(normalizedFront.getPoint(i), normalizedFront.getPoint(i + 1));
+      mean += distance.compute(front.getPoint(i), front.getPoint(i + 1));
     }
 
     mean = mean / (double) (numberOfPoints - 1);
 
-    // STEP 6. If there are more than a single point, continue computing the
+    // STEP 4. If there are more than a single point, continue computing the
     // metric. In other case, return the worse value (1.0, see metric's description).
     if (numberOfPoints > 1) {
       for (int i = 0; i < (numberOfPoints - 1); i++) {
-        diversitySum += Math.abs(distance.compute(normalizedFront.getPoint(i),
-            normalizedFront.getPoint(i + 1)) - mean);
+        diversitySum += Math.abs(distance.compute(front.getPoint(i),
+            front.getPoint(i + 1)) - mean);
       }
       return diversitySum / (df + dl + (numberOfPoints - 1) * mean);
     } else {

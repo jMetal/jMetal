@@ -26,7 +26,6 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
-import org.uma.jmetal.util.front.util.FrontUtils;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -110,28 +109,12 @@ public class Epsilon<Evaluate extends List<? extends Solution<?>>>
 
     eps = Double.MIN_VALUE;
 
-    if (normalize) {
-      double[] maximumValue;
-      double[] minimumValue;
 
-      // STEP 1. Obtain the maximum and minimum values of the Pareto front
-      maximumValue = FrontUtils.getMaximumValues(referenceFront);
-      minimumValue = FrontUtils.getMinimumValues(referenceFront);
-
-      // STEP 2. Get the normalized front and true Pareto fronts
-      normalizedFront = FrontUtils.getNormalizedFront(front, maximumValue, minimumValue);
-      normalizedParetoFront =
-          FrontUtils.getNormalizedFront(referenceFront, maximumValue, minimumValue);
-    } else {
-      normalizedFront = front ;
-      normalizedParetoFront = referenceFront ;
-    }
-
-    for (int i = 0; i < normalizedParetoFront.getNumberOfPoints(); i++) {
-      for (int j = 0; j < normalizedFront.getNumberOfPoints(); j++) {
+    for (int i = 0; i < referenceFront.getNumberOfPoints(); i++) {
+      for (int j = 0; j < front.getNumberOfPoints(); j++) {
         for (int k = 0; k < numberOfObjectives; k++) {
-          epsTemp = normalizedFront.getPoint(j).getDimensionValue(k)
-              - normalizedParetoFront.getPoint(i).getDimensionValue(k);
+          epsTemp = front.getPoint(j).getDimensionValue(k)
+              - referenceFront.getPoint(i).getDimensionValue(k);
           if (k == 0) {
             epsK = epsTemp;
           } else if (epsK < epsTemp) {
