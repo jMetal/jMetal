@@ -64,7 +64,6 @@ public class GenerationalDistance<Evaluate extends List<? extends Solution<?>>>
   /**
    *
    * @param referenceParetoFront
-   * @throws FileNotFoundException
    */
   public GenerationalDistance(Front referenceParetoFront) {
     super("GD", "Generational distance quality indicator") ;
@@ -95,26 +94,15 @@ public class GenerationalDistance<Evaluate extends List<? extends Solution<?>>>
    * @param referenceFront The reference pareto front
    */
   public double generationalDistance(Front front, Front referenceFront) {
-    double[] maximumValue;
-    double[] minimumValue;
-    Front normalizedFront;
-    Front normalizedParetoFront;
-
-    // STEP 3. Sum the distances between each point of the front and the
-    // nearest point in the true Pareto front
     double sum = 0.0;
     for (int i = 0; i < front.getNumberOfPoints(); i++) {
       sum += Math.pow(FrontUtils.distanceToClosestPoint(front.getPoint(i),
           referenceFront), POW);
     }
 
-    // STEP 4. Obtain the sqrt of the sum
     sum = Math.pow(sum, 1.0 / POW);
 
-    // STEP 5. Divide the sum by the maximum number of points of the front
-    double generationalDistance = sum / front.getNumberOfPoints();
-
-    return generationalDistance;
+    return sum / front.getNumberOfPoints();
   }
 
   @Override
