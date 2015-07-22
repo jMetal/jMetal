@@ -181,10 +181,9 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
    */
   @Override public void referenceSetUpdate(DoubleSolution solution) {
     if (refSet1Test(solution)) {
-      for (int indSet2 = 0; indSet2 < referenceSet2.size(); indSet2++) {
-        double aux = SolutionUtils.distanceBetweenSolutions(solution,
-            referenceSet2.get(indSet2));
-        DoubleSolution auxSolution = referenceSet2.get(indSet2);
+      for (DoubleSolution solutionInRefSet2 : referenceSet2) {
+        double aux = SolutionUtils.distanceBetweenSolutions(solution, solutionInRefSet2);
+        DoubleSolution auxSolution = solutionInRefSet2;
         if (aux < distanceToSolutionListAttribute.getAttribute(auxSolution)) {
           distanceToSolutionListAttribute.setAttribute(auxSolution, aux);
         }
@@ -316,7 +315,7 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
   }
 
   /**
-   * Tries to update the reference set 2 with a <code>Solution</code>
+   * Try to update the reference set 2 with a <code>Solution</code>
    *
    * @param solution The <code>Solution</code>
    * @return true if the <code>Solution</code> has been inserted, false
@@ -374,7 +373,7 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
   }
 
   /**
-   *
+   * Subset generation method
    * @return
    */
   @Override
