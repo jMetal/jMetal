@@ -87,36 +87,15 @@ public class InvertedGenerationalDistancePlus<Evaluate extends List<? extends So
    * @param referenceFront The reference pareto front
    */
   public double invertedGenerationalDistancePlus(Front front, Front referenceFront) {
-    Front normalizedFront;
-    Front normalizedReferenceFront;
 
-    if (normalize) {
-      double[] maximumValue;
-      double[] minimumValue;
-
-      // STEP 1. Obtain the maximum and minimum values of the Pareto front
-      maximumValue = FrontUtils.getMaximumValues(referenceFront);
-      minimumValue = FrontUtils.getMinimumValues(referenceFront);
-
-      // STEP 2. Get the normalized front and true Pareto fronts
-      normalizedFront = FrontUtils.getNormalizedFront(front, maximumValue, minimumValue);
-      normalizedReferenceFront =
-          FrontUtils.getNormalizedFront(referenceFront, maximumValue, minimumValue);
-    } else {
-      normalizedFront = front ;
-      normalizedReferenceFront = referenceFront ;
-    }
-
-    // STEP 3. Sum the distances between each point of the reference Pareto front and the dominated
-    // region of the front
     double sum = 0.0;
-    for (int i = 0 ; i < normalizedReferenceFront.getNumberOfPoints(); i++) {
-        sum += FrontUtils.distanceToClosestPoint(normalizedReferenceFront.getPoint(i),
-            normalizedFront, new DominanceDistance());
+    for (int i = 0 ; i < referenceFront.getNumberOfPoints(); i++) {
+        sum += FrontUtils.distanceToClosestPoint(referenceFront.getPoint(i),
+            front, new DominanceDistance());
     }
 
     // STEP 4. Divide the sum by the maximum number of points of the reference Pareto front
-    return sum / normalizedReferenceFront.getNumberOfPoints();
+    return sum / referenceFront.getNumberOfPoints();
   }
 
   @Override

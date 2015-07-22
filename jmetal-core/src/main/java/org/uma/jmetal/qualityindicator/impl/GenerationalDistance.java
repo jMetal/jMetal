@@ -93,39 +93,27 @@ public class GenerationalDistance<Evaluate extends List<? extends Solution<?>>>
    * Returns the generational distance value for a given front
    *
    * @param front           The front
-   * @param trueParetoFront The true pareto front
+   * @param referenceFront The reference pareto front
    */
-  public double generationalDistance(Front front, Front trueParetoFront) {
+  public double generationalDistance(Front front, Front referenceFront) {
     double[] maximumValue;
     double[] minimumValue;
     Front normalizedFront;
     Front normalizedParetoFront;
 
-    // STEP 1. Obtain the maximum and minimum values of the Pareto front
-    maximumValue = FrontUtils.getMaximumValues(trueParetoFront);
-    minimumValue = FrontUtils.getMinimumValues(trueParetoFront);
-
-    // STEP 2. Get the normalized front and true Pareto fronts
-    normalizedFront = FrontUtils.getNormalizedFront(front,
-        maximumValue,
-        minimumValue);
-    normalizedParetoFront = FrontUtils.getNormalizedFront(trueParetoFront,
-        maximumValue,
-        minimumValue);
-
     // STEP 3. Sum the distances between each point of the front and the
     // nearest point in the true Pareto front
     double sum = 0.0;
     for (int i = 0; i < front.getNumberOfPoints(); i++) {
-      sum += Math.pow(FrontUtils.distanceToClosestPoint(normalizedFront.getPoint(i),
-              normalizedParetoFront), POW);
+      sum += Math.pow(FrontUtils.distanceToClosestPoint(front.getPoint(i),
+          referenceFront), POW);
     }
 
     // STEP 4. Obtain the sqrt of the sum
     sum = Math.pow(sum, 1.0 / POW);
 
     // STEP 5. Divide the sum by the maximum number of points of the front
-    double generationalDistance = sum / normalizedFront.getNumberOfPoints();
+    double generationalDistance = sum / front.getNumberOfPoints();
 
     return generationalDistance;
   }

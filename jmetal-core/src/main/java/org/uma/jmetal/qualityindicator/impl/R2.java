@@ -24,7 +24,6 @@ import org.uma.jmetal.qualityindicator.NormalizableQualityIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
-import org.uma.jmetal.util.front.util.FrontUtils;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -115,46 +114,34 @@ public class R2<Evaluate extends List<? extends Solution<?>>>
 
   /**
    * Returns the R2 indicator value of a given front
-   *
+   * @param front
+   * @param referenceFront
+   * @return
    */
-  public double r2(Front approximation, Front paretoFront) {
-    double[] maximumValue;
-    double[] minimumValue;
-    Front normalizedApproximation;
-
-    int numberOfObjectives = approximation.getPoint(0).getNumberOfDimensions() ;
-
-    // STEP 1. Obtain the maximum and minimum values of the Pareto front
-    maximumValue = FrontUtils.getMaximumValues(paretoFront);
-    minimumValue = FrontUtils.getMinimumValues(paretoFront);
-
-    // STEP 2. Get the normalized front and true Pareto fronts
-    normalizedApproximation = FrontUtils.getNormalizedFront(approximation,
-      maximumValue, minimumValue);
+  public double r2(Front front, Front referenceFront) {
+    int numberOfObjectives = front.getPoint(0).getNumberOfDimensions() ;
 
     // STEP 3. compute all the matrix of tchebicheff values if it is null
-    matrix = new double[approximation.getNumberOfPoints()][lambda.length];
-    for (int i = 0; i < approximation.getNumberOfPoints(); i++) {
+    matrix = new double[front.getNumberOfPoints()][lambda.length];
+    for (int i = 0; i < front.getNumberOfPoints(); i++) {
       for (int j = 0; j < lambda.length; j++) {
-        matrix[i][j] = lambda[j][0] * Math.abs(normalizedApproximation.getPoint(i).getDimensionValue(0));
+        matrix[i][j] = lambda[j][0] * Math.abs(front.getPoint(i).getDimensionValue(0));
         for (int n = 1; n < numberOfObjectives; n++) {
           matrix[i][j] = Math.max(matrix[i][j],
-            lambda[j][n] * Math.abs(normalizedApproximation.getPoint(i).getDimensionValue(n)));
+            lambda[j][n] * Math.abs(front.getPoint(i).getDimensionValue(n)));
         }
       }
     }
 
-    // STEP 4. The matrix is not null. Compute the R2 value
     double sum = 0.0;
     for (int i = 0; i < lambda.length; i++) {
       double tmp = matrix[0][i];
-      for (int j = 1; j < approximation.getNumberOfPoints(); j++) {
+      for (int j = 1; j < front.getNumberOfPoints(); j++) {
         tmp = Math.min(tmp, matrix[j][i]);
       }
       sum += tmp;
     }
 
-    // STEP 5. Return the R2 value
     return sum / (double) lambda.length;
   }
 }

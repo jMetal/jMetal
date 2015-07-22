@@ -223,18 +223,18 @@ public class Hypervolume<Evaluate extends List<? extends Solution<?>>>
    * Returns the hypervolume value of a front of points
    *
    * @param front        The front
-   * @param trueParetoFront    The true pareto front
+   * @param referenceFront    The true pareto front
    */
-  private double hypervolume(Front front, Front trueParetoFront) {
+  private double hypervolume(Front front, Front referenceFront) {
     Front normalizedFront;
-
+/*
     if (normalize) {
       double[] maximumValue;
       double[] minimumValue;
 
       // STEP 1. Obtain the maximum and minimum values of the Pareto front
-      maximumValue = FrontUtils.getMaximumValues(trueParetoFront);
-      minimumValue = FrontUtils.getMinimumValues(trueParetoFront);
+      maximumValue = FrontUtils.getMaximumValues(referenceFront);
+      minimumValue = FrontUtils.getMinimumValues(referenceFront);
 
       // STEP 2. Get the normalized front and true Pareto fronts
       normalizedFront = FrontUtils.getNormalizedFront(front, maximumValue, minimumValue);
@@ -242,13 +242,13 @@ public class Hypervolume<Evaluate extends List<? extends Solution<?>>>
     } else {
       normalizedFront = front ;
     }
-
+*/
     // STEP 3. Inverse the pareto front. This is needed because of the original
     //metric by Zitzler is for maximization problem
     Front invertedFront;
-    invertedFront = FrontUtils.getInvertedFront(normalizedFront);
+    invertedFront = FrontUtils.getInvertedFront(front);
 
-    int numberOfObjectives = trueParetoFront.getPoint(0).getNumberOfDimensions() ;
+    int numberOfObjectives = referenceFront.getPoint(0).getNumberOfDimensions() ;
 
     // STEP4. The hypervolume (control is passed to the Java version of Zitzler code)
     return this.calculateHypervolume(FrontUtils.convertFrontToArray(invertedFront),

@@ -88,73 +88,48 @@ public class GeneralizedSpread<Evaluate extends List<? extends Solution<?>>>
    *  pareto front, the true pareto front as <code>double []</code>
    *  and the number of objectives, the method return the value for the
    *  metric.
-   *  @param paretoFront The pareto front.
-   *  @param paretoTrueFront The true pareto front.
+   *  @param front The front.
+   *  @param referenceFront The reference pareto front.
    *  @return the value of the generalized spread metric
    **/
-  public double generalizedSpread(Front paretoFront, Front paretoTrueFront) {
-    double [] maximumValue;
-    double [] minimumValue;
-    Front normalizedFront;
-    Front normalizedParetoFront;
-
-    int numberOfObjectives = paretoFront.getPoint(0).getNumberOfDimensions() ;
-
-    // STEP 1. Obtain the maximum and minimum values of the Pareto front
-    maximumValue = FrontUtils.getMaximumValues(paretoTrueFront);
-    minimumValue = FrontUtils.getMinimumValues(paretoTrueFront);
-
-    normalizedFront = FrontUtils.getNormalizedFront(paretoFront,
-        maximumValue,
-        minimumValue);
-
-    // STEP 2. Get the normalized front and true Pareto fronts
-    normalizedParetoFront = FrontUtils.getNormalizedFront(paretoTrueFront,
-        maximumValue,
-        minimumValue);
-
-    // STEP 3. Find extremal values
+  public double generalizedSpread(Front front, Front referenceFront) {
+    int numberOfObjectives = front.getPoint(0).getNumberOfDimensions() ;
 
     Point[] extremeValues = new Point[numberOfObjectives] ;
     for (int i = 0; i < numberOfObjectives; i++) {
-      normalizedParetoFront.sort(new PointDimensionComparator(i));
+      referenceFront.sort(new PointDimensionComparator(i));
       Point newPoint = new ArrayPoint(numberOfObjectives) ;
       for (int j = 0 ; j < numberOfObjectives; j++) {
         newPoint.setDimensionValue(j,
-            normalizedParetoFront.getPoint(normalizedParetoFront.getNumberOfPoints()-1).getDimensionValue(j));
+            referenceFront.getPoint(referenceFront.getNumberOfPoints()-1).getDimensionValue(j));
       }
       extremeValues[i] = newPoint ;
     }
 
-    int numberOfPoints     = normalizedFront.getNumberOfPoints();
+    int numberOfPoints = front.getNumberOfPoints();
 
-    // STEP 4. Sorts the normalized front
-    normalizedFront.sort(new LexicographicalPointComparator());
+    front.sort(new LexicographicalPointComparator());
 
-    // STEP 5. Calculate the metric value. The value is 1.0 by default
-    if (new EuclideanDistance().compute(normalizedFront.getPoint(0),
-        normalizedFront.getPoint(normalizedFront.getNumberOfPoints() - 1)) == 0.0) {
+    if (new EuclideanDistance().compute(front.getPoint(0),
+        front.getPoint(front.getNumberOfPoints() - 1)) == 0.0) {
       return 1.0;
     } else {
       double dmean = 0.0;
 
-      // STEP 6. Calculate the mean distance between each point and its nearest neighbor
-      for (int i = 0 ; i < normalizedFront.getNumberOfPoints(); i++) {
-        dmean += FrontUtils.distanceToNearestPoint(normalizedFront.getPoint(i), normalizedFront);
+      for (int i = 0 ; i < front.getNumberOfPoints(); i++) {
+        dmean += FrontUtils.distanceToNearestPoint(front.getPoint(i), front);
       }
 
       dmean = dmean / (numberOfPoints);
 
-      // STEP 7. Calculate the distance to extremal values
       double dExtrems = 0.0;
       for (int i = 0 ; i < extremeValues.length; i++) {
-        dExtrems += FrontUtils.distanceToClosestPoint(extremeValues[i], normalizedFront);
+        dExtrems += FrontUtils.distanceToClosestPoint(extremeValues[i], front);
       }
 
-      // STEP 8. Computing the value of the metric
       double mean = 0.0;
-      for (int i = 0; i < normalizedFront.getNumberOfPoints(); i++) {
-        mean += Math.abs(FrontUtils.distanceToNearestPoint(normalizedFront.getPoint(i), normalizedFront) -
+      for (int i = 0; i < front.getNumberOfPoints(); i++) {
+        mean += Math.abs(FrontUtils.distanceToNearestPoint(front.getPoint(i), front) -
             dmean);
       }
 
