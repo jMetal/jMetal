@@ -30,6 +30,7 @@ import org.uma.jmetal.operator.impl.mutation.PermutationSwapMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.PermutationProblem;
 import org.uma.jmetal.problem.multiobjective.MultiobjectiveTSP;
+import org.uma.jmetal.runner.AbstractAlgorithmRunner;
 import org.uma.jmetal.solution.PermutationSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
@@ -42,19 +43,21 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Class to configure and run the NSGA-II algorithm
+ * Class for configuring and running the NSGA-II algorithm to solve the bi-objective TSP
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class NSGAIITSPRunner {
+
+public class NSGAIITSPRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws java.io.IOException
    * @throws SecurityException
    * @throws ClassNotFoundException
-   * Usage: two options
-   *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner
-   *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName
+   * Invoking command:
+    mvn
+  -pl jmetal-exec
+  exec:java -Dexec.mainClass="org.uma.jmetal.qualityIndicator.multiobjective.NSGAIITSPRunner"
    */
   public static void main(String[] args) throws JMetalException, IOException {
     PermutationProblem<PermutationSolution<Integer>> problem;

@@ -28,42 +28,56 @@ import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.operator.impl.crossover.IntegerSBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.IntegerPolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
-import org.uma.jmetal.problem.IntegerProblem;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.runner.AbstractAlgorithmRunner;
 import org.uma.jmetal.solution.IntegerSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
-import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
-import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
- * Class to configure and run the NSGA-II algorithm
+ * Class for configuring and running the NSGA-II algorithm (integer encoding)
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class NSGAIIIntegerRunner {
+
+public class NSGAIIIntegerRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws org.uma.jmetal.util.JMetalException
    * @throws java.io.IOException
    * @throws SecurityException
    * @throws ClassNotFoundException
-   * Usage: three options
-   *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner
-   *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName
-   *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName paretoFrontFile
+   * Invoking command:
+  mvn
+  -pl jmetal-exec
+  exec:java -Dexec.mainClass="org.uma.jmetal.qualityIndicator.multiobjective.NSGAIIIntegerRunner"
+  -Dexec.args="problemName [referenceFront]"
    */
-  public static void main(String[] args) {
+  public static void main(String[] args) throws FileNotFoundException {
     Problem<IntegerSolution> problem;
     Algorithm<List<IntegerSolution>> algorithm;
     CrossoverOperator<IntegerSolution> crossover;
     MutationOperator<IntegerSolution> mutation;
     SelectionOperator<List<IntegerSolution>, IntegerSolution> selection;
     
-    String problemName = "org.uma.jmetal.problem.multiobjective.NMMin" ;
+    String problemName ;
 
-    problem = (IntegerProblem) ProblemUtils.<IntegerSolution> loadProblem(problemName);
+    String referenceParetoFront = "" ;
+    if (args.length == 1) {
+      problemName = args[0];
+    } else if (args.length == 2) {
+      problemName = args[0] ;
+      referenceParetoFront = args[1] ;
+    } else {
+      problemName = "org.uma.jmetal.problem.multiobjective.NMMin" ;
+      referenceParetoFront = "";
+    }
+
+    problem = ProblemUtils.<IntegerSolution> loadProblem(problemName);
 
     double crossoverProbability = 0.9 ;
     double crossoverDistributionIndex = 20.0 ;
@@ -87,15 +101,11 @@ public class NSGAIIIntegerRunner {
     List<IntegerSolution> population = algorithm.getResult() ;
     long computingTime = algorithmRunner.getComputingTime() ;
 
-    new SolutionSetOutput.Printer(population)
-            .setSeparator("\t")
-            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
-            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
-            .print();
-
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
-    JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
-    JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
 
+    printFinalSolutionSet(population);
+    if (!referenceParetoFront.equals("")) {
+      printQualityIndicators(population, referenceParetoFront) ;
+    }
   }
 }

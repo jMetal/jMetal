@@ -29,44 +29,50 @@ import org.uma.jmetal.operator.impl.crossover.SinglePointCrossover;
 import org.uma.jmetal.operator.impl.mutation.BitFlipMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.BinaryProblem;
+import org.uma.jmetal.runner.AbstractAlgorithmRunner;
 import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
-import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
-import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
- * Class to configure and run the SPEA2 algorithm. Copied from the NSGAII Runner Class
+ * Class for configuring and running the SPEA2 algorithm (binary encoding)
  *
- * @author juanjo
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class SPEA2BinaryRunner {
+
+public class SPEA2BinaryRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
-   * @throws java.io.IOException
    * @throws SecurityException
-   * @throws ClassNotFoundException
-   * Usage: two options
-   *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner
-   *        - org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName
+   * Invoking command:
+  mvn
+  -pl jmetal-exec
+  exec:java -Dexec.mainClass="org.uma.jmetal.qualityIndicator.multiobjective.SPEA2BinaryRunner"
+  -Dexec.args="problemName [referenceFront]"
    */
-  public static void main(String[] args) throws JMetalException {
+  public static void main(String[] args) throws JMetalException, FileNotFoundException {
     BinaryProblem problem;
     Algorithm<List<BinarySolution>> algorithm;
     CrossoverOperator<BinarySolution> crossover;
     MutationOperator<BinarySolution> mutation;
     SelectionOperator<List<BinarySolution>, BinarySolution> selection;
 
+    String referenceParetoFront = "" ;
+
     String problemName ;
     if (args.length == 1) {
+      problemName = args[0];
+    } else if (args.length == 2) {
       problemName = args[0] ;
+      referenceParetoFront = args[1] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT5";
+      problemName = "org.uma.jmetal.problem.multiobjective.OneZeroMax";
+      referenceParetoFront = "" ;
     }
 
     problem = (BinaryProblem)ProblemUtils.<BinarySolution> loadProblem(problemName);
@@ -92,14 +98,9 @@ public class SPEA2BinaryRunner {
 
     long computingTime = algorithmRunner.getComputingTime() ;
 
-    new SolutionSetOutput.Printer(population)
-        .setSeparator("\t")
-        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
-        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
-        .print();
-
-    JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
-    JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
-    JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
+    printFinalSolutionSet(population);
+    if (!referenceParetoFront.equals("")) {
+      printQualityIndicators(population, referenceParetoFront) ;
+    }
   }
 }

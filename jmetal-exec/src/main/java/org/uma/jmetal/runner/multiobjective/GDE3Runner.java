@@ -21,55 +21,53 @@
 package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.gde3.GDE3;
 import org.uma.jmetal.algorithm.multiobjective.gde3.GDE3Builder;
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.impl.selection.DifferentialEvolutionSelection;
 import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.runner.AbstractAlgorithmRunner;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
-import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
-import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
  * Class for configuring and running the GDE3 algorithm
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class GDE3Runner {
+public class GDE3Runner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
-   * @throws java.io.IOException
    * @throws SecurityException
-   * @throws ClassNotFoundException
-   * Usage: three choices
-   *        - org.uma.jmetal45.runner.multiobjective.GDE3Runner
-   *        - org.uma.jmetal45.runner.multiobjective.GDE3Runner problemName
-   *        - org.uma.jmetal45.runner.multiobjective.GDE3Runner problemName paretoFrontFile
+   * Invoking command:
+    mvn
+    -pl jmetal-exec
+    exec:java -Dexec.mainClass="org.uma.jmetal.qualityIndicator.multiobjective.GDE3Runner"
+    -Dexec.args="problemName [referenceFront]"
    */
-  public static void main(String[] args) {
+  public static void main(String[] args) throws FileNotFoundException {
     DoubleProblem problem;
     Algorithm<List<DoubleSolution>> algorithm;
     DifferentialEvolutionSelection selection;
     DifferentialEvolutionCrossover crossover;
 
     String problemName ;
+    String referenceParetoFront = "" ;
     if (args.length == 1) {
+      problemName = args[0];
+    } else if (args.length == 2) {
       problemName = args[0] ;
+      referenceParetoFront = args[1] ;
     } else {
-      //problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-      problemName = "org.uma.jmetal.problem.multiobjective.Srinivas";
+      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf" ;
     }
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution> loadProblem(problemName);
-
-     /*
-     * Alternatives:
-     * - evaluator = new SequentialSolutionSetEvaluator()
-     * - evaluator = new MultithreadedSolutionSetEvaluator(threads, problem)
-     */
 
     double cr = 0.5 ;
     double f = 0.5 ;
@@ -87,17 +85,14 @@ public class GDE3Runner {
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
       .execute() ;
 
-    List<DoubleSolution> population = ((GDE3)algorithm).getResult() ;
+    List<DoubleSolution> population = algorithm.getResult() ;
     long computingTime = algorithmRunner.getComputingTime() ;
 
-    new SolutionSetOutput.Printer(population)
-      .setSeparator("\t")
-      .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
-      .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
-      .print();
-
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
-    JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
-    JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
+
+    printFinalSolutionSet(population);
+    if (!referenceParetoFront.equals("")) {
+      printQualityIndicators(population, referenceParetoFront) ;
+    }
   }
 }
