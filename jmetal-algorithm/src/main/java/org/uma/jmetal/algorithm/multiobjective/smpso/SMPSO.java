@@ -30,7 +30,7 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * Created by antonio on 24/09/14.
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, List<DoubleSolution>> {
   private DoubleProblem problem;
@@ -171,8 +171,8 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
   }
 
   @Override protected void initializeLeaders(List<DoubleSolution> swarm) {
-    for (int i = 0; i < swarm.size(); i++) {
-      DoubleSolution particle = (DoubleSolution) swarm.get(i).copy();
+    for (DoubleSolution solution : swarm) {
+      DoubleSolution particle = (DoubleSolution) solution.copy();
       leaders.add(particle);
     }
   }
@@ -224,7 +224,6 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
     for (int i = 0; i < swarmSize; i++) {
       DoubleSolution particle = swarm.get(i);
       for (int j = 0; j < particle.getNumberOfVariables(); j++) {
-        double v = particle.getVariableValue(j);
         particle.setVariableValue(j, particle.getVariableValue(j) + speed[i][j]);
 
         if (particle.getVariableValue(j) < problem.getLowerBound(j)) {
@@ -248,8 +247,8 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
   }
 
   @Override protected void updateLeaders(List<DoubleSolution> swarm) {
-    for (int i = 0; i < swarm.size(); i++) {
-      DoubleSolution particle = (DoubleSolution) swarm.get(i).copy();
+    for (DoubleSolution solution : swarm) {
+      DoubleSolution particle = (DoubleSolution) solution.copy();
       leaders.add(particle);
     }
   }

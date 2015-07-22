@@ -238,6 +238,14 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
     }
   }
 
+  /**
+   * Update neighborhood method
+   * @param individual
+   * @param subProblemId
+   * @param neighborType
+   * @throws JMetalException
+   */
+  @SuppressWarnings("unchecked")
   void updateNeighborhood(S individual, int subProblemId, NeighborType neighborType) throws JMetalException {
     int size;
     int time;

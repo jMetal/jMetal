@@ -69,8 +69,9 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
   private CrowdingDistance<DoubleSolution> crowdingDistance;
 
   /** Constructor */
-  public OMOPSO(DoubleProblem problem, SolutionListEvaluator<DoubleSolution> evaluator, int swarmSize, int maxIterations,
-      int archiveSize, UniformMutation uniformMutation, NonUniformMutation nonUniformMutation) {
+  public OMOPSO(DoubleProblem problem, SolutionListEvaluator<DoubleSolution> evaluator,
+      int swarmSize, int maxIterations, int archiveSize, UniformMutation uniformMutation,
+      NonUniformMutation nonUniformMutation) {
     this.problem = problem ;
     this.evaluator = evaluator ;
 
@@ -97,14 +98,14 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
   @Override public void run() {
     swarm = createInitialSwarm();
     swarm = evaluateSwarm(swarm);
-    initializeLeaders(swarm); ;
+    initializeLeaders(swarm);
     initializeParticlesMemory(swarm) ;
     initializeLeaders(swarm);
     initializeVelocity(swarm);
 
     crowdingDistance.computeDensityEstimator(leaderArchive.getSolutionList());
 
-    initProgress(); ;
+    initProgress();
     while (currentIteration < maxIterations) {
       updateVelocity(swarm);
       updatePosition(swarm);
@@ -145,10 +146,10 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
 
   @Override
   protected void initializeLeaders(List<DoubleSolution> swarm) {
-    for (int i = 0; i < swarm.size(); i++) {
-      DoubleSolution particle = (DoubleSolution) swarm.get(i).copy();
+    for (DoubleSolution solution : swarm) {
+      DoubleSolution particle = (DoubleSolution) solution.copy();
       if (leaderArchive.add(particle)) {
-        epsilonArchive.add((DoubleSolution)particle.copy());
+        epsilonArchive.add((DoubleSolution) particle.copy());
       }
     }
   }
@@ -261,14 +262,17 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
         nonUniformMutation.execute(swarm.get(i));
       } else if (i % 3 == 1) {
         uniformMutation.execute(swarm.get(i));
-      } else {
       }
     }
   }
 
+  /**
+   * Update leaders method
+   * @param swarm List of solutions (swarm)
+   */
   @Override protected void updateLeaders(List<DoubleSolution> swarm) {
-    for (int i = 0; i < swarm.size(); i++) {
-      DoubleSolution particle = (DoubleSolution) swarm.get(i).copy();
+    for (DoubleSolution solution : swarm) {
+      DoubleSolution particle = (DoubleSolution) solution.copy();
       if (leaderArchive.add(particle)) {
         epsilonArchive.add((DoubleSolution) particle.copy());
       }

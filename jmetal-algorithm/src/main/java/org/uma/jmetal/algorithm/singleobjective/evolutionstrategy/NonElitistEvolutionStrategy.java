@@ -1,10 +1,3 @@
-//  ElitistES.java
-//
-//  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//
-//  Copyright (c) 2014 Antonio J. Nebro
-//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -33,6 +26,8 @@ import java.util.List;
 
 /**
  * Class implementing a (mu + lambda) Evolution Strategy (lambda must be divisible by mu)
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class NonElitistEvolutionStrategy<S extends Solution<?>> extends AbstractEvolutionStrategy<S, S> {
   private Problem<S> problem;
@@ -98,6 +93,7 @@ public class NonElitistEvolutionStrategy<S extends Solution<?>> extends Abstract
     //    return matingPopulation ;
   }
 
+  @SuppressWarnings("unchecked")
   @Override protected List<S> reproduction(List<S> population) {
     List<S> offspringPopulation = new ArrayList<>(lambda);
     for (int i = 0; i < mu; i++) {
