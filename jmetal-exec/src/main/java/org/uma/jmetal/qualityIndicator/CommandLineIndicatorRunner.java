@@ -32,12 +32,12 @@ import java.util.List;
  * indicate whether the fronts are to be normalized by the quality indicators.
  *
  * Invoking command:
- * mvn
+   mvn
    -pl jmetal-exec
    exec:java -Dexec.mainClass="org.uma.jmetal.qualityIndicator.RunIndicator"
    -Dexec.args="indicator referenceFront front normalize"
  *
- * Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class CommandLineIndicatorRunner {
   public static void main(String[] args) throws Exception {

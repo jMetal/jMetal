@@ -16,9 +16,15 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
+ * Abstract class for Runner classes
+ *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public abstract class AbstractAlgorithmRunner {
+  /**
+   * Write the population into two files and prints some data on screen
+   * @param population
+   */
   public static void printFinalSolutionSet(List<? extends Solution<?>> population) {
 
     new SolutionSetOutput.Printer(population)
@@ -32,6 +38,12 @@ public abstract class AbstractAlgorithmRunner {
     JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
   }
 
+  /**
+   * Print all the available quality indicators
+   * @param population
+   * @param paretoFrontFile
+   * @throws FileNotFoundException
+   */
   public static void printQualityIndicators(List<? extends Solution<?>> population, String paretoFrontFile)
       throws FileNotFoundException {
     Front referenceFront = new ArrayFront(paretoFrontFile);
