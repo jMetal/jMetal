@@ -13,11 +13,12 @@
 
 package org.uma.jmetal.qualityindicator.impl;
 
-import org.uma.jmetal.qualityindicator.NormalizableQualityIndicator;
+import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
+import org.uma.jmetal.util.naming.impl.SimpleDescribedEntity;
 import org.uma.jmetal.util.point.Point;
 
 import java.io.FileNotFoundException;
@@ -35,8 +36,8 @@ import java.util.List;
  * TODO: using an epsilon value
  */
 public class ErrorRatio<Evaluate extends List<? extends Solution<?>>>
-    extends NormalizableQualityIndicator<Evaluate, Double> {
-
+    extends SimpleDescribedEntity
+    implements QualityIndicator<Evaluate,Double> {
   private Front referenceParetoFront ;
 
   /**

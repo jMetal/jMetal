@@ -21,11 +21,12 @@
 
 package org.uma.jmetal.qualityindicator.impl;
 
-import org.uma.jmetal.qualityindicator.NormalizableQualityIndicator;
+import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
+import org.uma.jmetal.util.naming.impl.SimpleDescribedEntity;
 import org.uma.jmetal.util.point.impl.LexicographicalPointComparator;
 import org.uma.jmetal.util.point.util.EuclideanDistance;
 import org.uma.jmetal.util.point.util.PointDistance;
@@ -39,7 +40,8 @@ import java.util.List;
  * elitist multiobjective genetic algorithm: NSGA-II. IEEE Trans. on Evol. Computation 6 (2002) 182-197
  */
 public class Spread<Evaluate extends List<? extends Solution<?>>>
-    extends NormalizableQualityIndicator<Evaluate, Double> {
+    extends SimpleDescribedEntity
+    implements QualityIndicator<Evaluate,Double> {
 
   private Front referenceParetoFront ;
 
@@ -56,7 +58,6 @@ public class Spread<Evaluate extends List<? extends Solution<?>>>
 
     Front front = new ArrayFront(referenceParetoFrontFile);
     referenceParetoFront = front ;
-    normalize = true ;
   }
 
   /**
@@ -71,7 +72,6 @@ public class Spread<Evaluate extends List<? extends Solution<?>>>
     }
 
     this.referenceParetoFront = referenceParetoFront ;
-    normalize = true ;
   }
 
   /**
@@ -90,7 +90,6 @@ public class Spread<Evaluate extends List<? extends Solution<?>>>
    * @param referenceFront    The true pareto front.
    */
   public double spread(Front front, Front referenceFront) {
-
     PointDistance distance = new EuclideanDistance() ;
 
     // STEP 1. Sort normalizedFront and normalizedParetoFront;

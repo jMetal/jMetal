@@ -21,12 +21,13 @@
 
 package org.uma.jmetal.qualityindicator.impl;
 
-import org.uma.jmetal.qualityindicator.NormalizableQualityIndicator;
+import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontUtils;
+import org.uma.jmetal.util.naming.impl.SimpleDescribedEntity;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
 import org.uma.jmetal.util.point.impl.LexicographicalPointComparator;
@@ -44,7 +45,8 @@ import java.util.List;
  * 2006 IEEE Congress on Evolutionary Computation, 2006, pp. 3234-3241.
  */
 public class GeneralizedSpread<Evaluate extends List<? extends Solution<?>>>
-    extends NormalizableQualityIndicator<Evaluate, Double> {
+    extends SimpleDescribedEntity
+    implements QualityIndicator<Evaluate,Double> {
 
   private Front referenceParetoFront ;
 
@@ -61,7 +63,6 @@ public class GeneralizedSpread<Evaluate extends List<? extends Solution<?>>>
 
     Front front = new ArrayFront(referenceParetoFrontFile);
     referenceParetoFront = front ;
-    normalize = true ;
   }
 
   /**
@@ -76,7 +77,6 @@ public class GeneralizedSpread<Evaluate extends List<? extends Solution<?>>>
     }
 
     this.referenceParetoFront = referenceParetoFront ;
-    normalize = true ;
   }
 
   @Override public Double evaluate(Evaluate solutionList) {
