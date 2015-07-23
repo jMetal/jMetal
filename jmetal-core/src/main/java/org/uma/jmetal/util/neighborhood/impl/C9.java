@@ -1,12 +1,3 @@
-package org.uma.jmetal.util.neighborhood.impl;
-
-//  Neighborhood.java
-//
-//  Author:
-//       Juan J. Durillo <durillo@lcc.uma.es>
-//
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
-//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -20,18 +11,21 @@ package org.uma.jmetal.util.neighborhood.impl;
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+package org.uma.jmetal.util.neighborhood.impl;
+
 import org.uma.jmetal.solution.Solution;
 
-
 /**
- * Class representing neighborhoods for a <code>Solution</code> into a
- * <code>SolutionSet</code>.
+ * Class representing neighborhoods for a {@link Solution} into a list of solutions
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Juan J. Durillo
  */
 public class C9<S extends Solution<?>> extends TwoDimensionalMesh<S> {
 
-  // 8 possible movements north, south, east, west, northeast, northwest,southeast, southwest
-  // each movement is represented by an array of two positions, first component represents the
-  // movement in the file, second in the column
+  // There are 8 possible movements: north, south, east, west, northeast, northwest,southeast, southwest
+  // Each movement is represented by an array of two positions: first component represents the
+  // movement in the file, the second one the movement in the column
   private static final int [] north      = {-1,  0};
   private static final int [] south      = { 1 , 0};
   private static final int [] east       = { 0 , 1};
@@ -45,7 +39,8 @@ public class C9<S extends Solution<?>> extends TwoDimensionalMesh<S> {
       north_west, south_east, south_west};
 
   /**
-   * Constructor.
+   * Constructor
+   *
    * Defines a neighborhood of shape rows x columns (rows x columns must equal solutionSetSize)
    * @param rows the number of rows
    * @param columns the number of columns

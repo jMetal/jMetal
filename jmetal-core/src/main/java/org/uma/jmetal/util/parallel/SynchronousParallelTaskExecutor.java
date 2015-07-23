@@ -1,10 +1,3 @@
-//  SynchronousParallelRunner.java
-//
-//  Authors:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//
-//  Copyright (c) 2014 Antonio J. Nebro
-//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -22,8 +15,9 @@
 package org.uma.jmetal.util.parallel;
 
 /**
- * Created by Antonio J. Nebro on 09/02/14.
- * Abstract class for running tasks in parallel using threads
+ * Interface representing classes for running tasks in parallel
+
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 
 public interface SynchronousParallelTaskExecutor {

@@ -17,15 +17,19 @@
 // 
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-package org.uma.jmetal.util.comparator.impl;
 
+package org.uma.jmetal.util.comparator.impl;
 
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.ConstraintViolationComparator;
 
 import java.util.List;
 
-// This class implements the ViolationThreshold Comparator
+/**
+ * This class implements the ViolationThreshold Comparator *
+ *
+ * @author Juan J. Durillo
+ */
 public class ViolationThresholdComparator<S extends Solution<?>> implements
     ConstraintViolationComparator<S> {
 
@@ -107,7 +111,6 @@ public class ViolationThresholdComparator<S extends Solution<?>> implements
     }
     return aux / (double) solutionSet.size();
   }
-
 
   /**
    * Updates the threshold value using the population

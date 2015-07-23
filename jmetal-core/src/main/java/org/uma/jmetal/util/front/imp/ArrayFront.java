@@ -24,10 +24,9 @@ import java.io.*;
 import java.util.*;
 
 /**
- * This class implements the Front interface by using an array of Point objects
+ * This class implements the {@link Front} interface by using an array of {@link Point} objects
  *
  * @author Antonio J. Nebro
- * @version 1.0
  */
 public class ArrayFront implements Front {
   protected Point[] points;

@@ -22,7 +22,6 @@ import java.util.Comparator;
  * A front is a list of points
  *
  * @author Antonio J. Nebro
- * @version 1.0
  */
 public interface Front extends Serializable {
   public int getNumberOfPoints() ;
