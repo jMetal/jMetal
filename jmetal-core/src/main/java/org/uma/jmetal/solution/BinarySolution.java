@@ -16,8 +16,9 @@ package org.uma.jmetal.solution;
 import org.uma.jmetal.util.binarySet.BinarySet;
 
 /**
- * @author Antonio J. Nebro
- * @version 0.1
+ * Interface representing a binary (bitset) solutions
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public interface BinarySolution extends Solution<BinarySet> {
   public int getNumberOfBits(int index) ;
