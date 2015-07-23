@@ -30,8 +30,9 @@ import java.util.List;
  * @author Antonio J. Nebro
  * @version 1.0
  */
-public class SetCoverage extends SimpleDescribedEntity implements
-    QualityIndicator<Pair<List<Solution<?>>, List<Solution<?>>>, Pair<Double, Double>> {
+public class SetCoverage
+    extends SimpleDescribedEntity
+    implements QualityIndicator<Pair<List<? extends Solution<?>>, List<? extends Solution<?>>>, Pair<Double, Double>> {
 
   /**
    * Constructor
@@ -41,9 +42,10 @@ public class SetCoverage extends SimpleDescribedEntity implements
   }
 
   @Override
-  public Pair<Double, Double> evaluate(Pair<List<Solution<?>>, List<Solution<?>>> pairOfSolutionLists) {
-    List<Solution<?>> front1 = pairOfSolutionLists.getLeft() ;
-    List<Solution<?>> front2 = pairOfSolutionLists.getRight() ;
+  public Pair<Double, Double> evaluate(
+      Pair<List<? extends Solution<?>>, List<? extends Solution<?>>> pairOfSolutionLists) {
+    List<? extends Solution<?>> front1 = pairOfSolutionLists.getLeft() ;
+    List<? extends Solution<?>> front2 = pairOfSolutionLists.getRight() ;
 
     if (front1 == null) {
       throw new JMetalException("The first front is null") ;
