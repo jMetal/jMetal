@@ -1,3 +1,16 @@
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU Lesser General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU Lesser General Public License for more details.
+//
+//  You should have received a copy of the GNU Lesser General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 package org.uma.jmetal.util.fileoutput.impl;
 
 import org.uma.jmetal.util.JMetalException;
@@ -9,7 +22,9 @@ import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 
 /**
- * Created by Antonio J. Nebro on 31/05/14.
+ * Class using the default method for getting a buffered writer
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class  DefaultFileOutputContext implements FileOutputContext {
   private static final String DEFAULT_SEPARATOR = " " ;
@@ -24,7 +39,7 @@ public class  DefaultFileOutputContext implements FileOutputContext {
 
   @Override
   public BufferedWriter getFileWriter() {
-    FileOutputStream outputStream = null;
+    FileOutputStream outputStream ;
     try {
       outputStream = new FileOutputStream(fileName);
     } catch (FileNotFoundException e) {

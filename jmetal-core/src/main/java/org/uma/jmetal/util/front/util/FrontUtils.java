@@ -27,10 +27,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A Front is a  list of points. This class includes utilities to work with fronts.
+ * A Front is a  list of points. This class includes utilities to work with {@link Front} objects.
  *
- * @author Antonio J. Nebro
- * @version 1.0
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class FrontUtils {
 

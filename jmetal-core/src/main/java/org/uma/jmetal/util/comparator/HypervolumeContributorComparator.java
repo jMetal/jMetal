@@ -19,11 +19,10 @@ import org.uma.jmetal.util.solutionattribute.impl.HypervolumeContribution;
 import java.util.Comparator;
 
 /**
- * @author Antonio J. Nebro
- * @version 1.0
- *
  * Compares two solutions according to the crowding distance attribute. The higher
  * the distance the better
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class HypervolumeContributorComparator implements Comparator<Solution<?>> {
   private final HypervolumeContribution<Solution<?>> hvContribution = new HypervolumeContribution<Solution<?>>() ;

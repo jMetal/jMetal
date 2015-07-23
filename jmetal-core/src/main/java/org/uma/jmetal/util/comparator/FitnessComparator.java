@@ -1,11 +1,3 @@
-//  FitnessComparator.java
-//
-//  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
-//
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
-//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -26,11 +18,12 @@ import org.uma.jmetal.util.solutionattribute.impl.Fitness;
 
 import java.util.Comparator;
 
-
 /**
  * This class implements a <code>Comparator</code> (a method for comparing
  * <code>Solution</code> objects) based on the fitness value returned by the
  * method <code>getFitness</code>.
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class FitnessComparator<S extends Solution<?>> implements Comparator<S> {
   private Fitness<S> solutionFitness = new Fitness<S>() ;

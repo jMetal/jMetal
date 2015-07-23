@@ -19,10 +19,9 @@ import org.uma.jmetal.util.JMetalException;
 import java.util.Comparator;
 
 /**
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
- * @version 1.0
- *
  * This class implements a comparator based on a given objective
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class ObjectiveComparator<S extends Solution<?>> implements Comparator<S> {
   public enum Ordering {ASCENDING, DESCENDING} ;

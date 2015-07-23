@@ -19,11 +19,10 @@ import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;
 import java.util.Comparator;
 
 /**
- * @author Antonio J. Nebro
- * @version 1.0
- *
  * Compares two solutions according to the crowding distance attribute. The higher
  * the distance the better
+ *
+ * @author Antonio J. Nebro
  */
 public class CrowdingDistanceComparator<S extends Solution<?>> implements Comparator<S> {
   private final CrowdingDistance<S> crowdingDistance = new CrowdingDistance<S>() ;

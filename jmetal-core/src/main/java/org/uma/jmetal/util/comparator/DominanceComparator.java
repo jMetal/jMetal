@@ -1,5 +1,3 @@
-//  Copyright (c) 2014 Antonio J. Nebro, Juan J. Durillo
-//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -22,11 +20,10 @@ import org.uma.jmetal.util.comparator.impl.OverallConstraintViolationComparator;
 import java.util.Comparator;
 
 /**
- * @author Antonio J. Nebro
- * @version 1.1
- *
  * This class implements a solution comparator taking into account the violation constraints and
  * an optional epsilon value (i.e, implements an epsilon dominance comparator)
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class DominanceComparator<S extends Solution<?>> implements Comparator<S> {
   private ConstraintViolationComparator<S> constraintViolationComparator;

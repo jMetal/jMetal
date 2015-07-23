@@ -21,7 +21,8 @@ import org.uma.jmetal.util.front.imp.ArrayFront;
 import java.util.List;
 
 /**
- * Class for normalizing fronts
+ * Class for normalizing {@link Front} objects
+ *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class FrontNormalizer {

@@ -21,7 +21,6 @@ import java.util.Comparator;
 
 /**
  * @author Antonio J. Nebro
- * @version 1.0
  *
  * This class implements a comparator based on the rank of the solutions.
  */

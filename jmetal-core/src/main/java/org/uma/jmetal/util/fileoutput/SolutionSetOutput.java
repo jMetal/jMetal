@@ -1,10 +1,3 @@
-//  SolutionSetOutput.Java
-//
-//  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//
-//  Copyright (c) 2014 Antonio J. Nebro
-//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -29,7 +22,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by Antonio J. Nebro on 31/05/14.
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class SolutionSetOutput {
 
