@@ -14,9 +14,9 @@
 package org.uma.jmetal.solution;
 
 /**
- * @author Antonio J. Nebro
- * @version 0.1
+ * Interface representing permutation based solutions
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public interface PermutationSolution<T> extends Solution<T> {
-  //public int getLength() ;
 }

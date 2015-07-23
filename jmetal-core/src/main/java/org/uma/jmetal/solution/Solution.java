@@ -17,8 +17,8 @@ import java.io.Serializable;
 
 /**
  * Interface representing a Solution
- * @author Antonio J. Nebro
- * @version 0.1
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * @param <T> Type (Double, Integer, etc.)
  */
 public interface Solution<T> extends Serializable {

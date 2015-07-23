@@ -14,8 +14,9 @@
 package org.uma.jmetal.solution;
 
 /**
- * @author Antonio J. Nebro
- * @version 0.1
+ * Interface representing a solution composed of integers and real values
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public interface IntegerDoubleSolution extends Solution<Number> {
   public Number getLowerBound(int index) ;

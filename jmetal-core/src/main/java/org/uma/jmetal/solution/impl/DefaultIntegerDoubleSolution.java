@@ -6,7 +6,9 @@ import org.uma.jmetal.solution.IntegerDoubleSolution;
 import java.util.HashMap;
 
 /**
- * Created by Antonio J. Nebro on 03/09/14.
+ * Defines an implementation of a class for solutions having integers and doubles
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class DefaultIntegerDoubleSolution
         extends AbstractGenericSolution<Number, IntegerDoubleProblem<?>>
@@ -46,17 +48,6 @@ public class DefaultIntegerDoubleSolution
       setObjective(i, solution.getObjective(i)) ;
     }
 
-    /*
-    variables = new ArrayList<>() ;
-    for (int i = 0 ; i < numberOfIntegerVariables; i++) {
-      variables.add(new Integer((Integer) solution.getVariableValue(i))) ;
-    }
-
-    variables = new ArrayList<>() ;
-    for (int i = numberOfIntegerVariables ; i < (numberOfIntegerVariables+numberOfDoubleVariables); i++) {
-      variables.add(new Double((Double) solution.getVariableValue(i))) ;
-    }
-*/
     for (int i = 0 ; i < numberOfIntegerVariables; i++) {
       setVariableValue(i, solution.getVariableValue(i)) ;
     }

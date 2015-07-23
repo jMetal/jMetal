@@ -14,8 +14,9 @@
 package org.uma.jmetal.solution;
 
 /**
- * @author Antonio J. Nebro
- * @version 0.1
+ * Interface representing a integer solutions
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public interface IntegerSolution extends Solution<Integer> {
   public Integer getLowerBound(int index) ;

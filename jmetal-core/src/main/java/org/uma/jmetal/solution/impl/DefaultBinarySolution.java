@@ -1,11 +1,3 @@
-//  GenericBinarySolution.java
-//
-//  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
-//
-//  Copyright (c) 2014 Antonio J. Nebro, Juan J. Durillo
-//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -29,9 +21,11 @@ import java.util.HashMap;
 
 /**
  * Defines an implementation of a binary solution
- * Created by Antonio J. Nebro on 03/09/14.
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class DefaultBinarySolution extends AbstractGenericSolution<BinarySet, BinaryProblem> implements BinarySolution {
+public class DefaultBinarySolution extends AbstractGenericSolution<BinarySet, BinaryProblem>
+    implements BinarySolution {
 
   /** Constructor */
   public DefaultBinarySolution(BinaryProblem problem) {

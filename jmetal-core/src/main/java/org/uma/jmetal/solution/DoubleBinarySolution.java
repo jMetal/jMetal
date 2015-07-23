@@ -1,8 +1,9 @@
 package org.uma.jmetal.solution;
 
 /**
- * Created by ajnebro on 24/11/14.
  * Interface representing a solution having an array of real values and a bitset
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public interface DoubleBinarySolution extends Solution<Object>{
   public int getNumberOfDoubleVariables() ;
