@@ -50,7 +50,7 @@ public class PESA2Runner extends AbstractAlgorithmRunner {
    * Invoking command:
    mvn
   -pl jmetal-exec
-  exec:java -Dexec.mainClass="org.uma.jmetal.qualityIndicator.multiobjective.PESA2Runner"
+  exec:java -Dexec.mainClass="org.uma.jmetal.runner.multiobjective.PESA2Runner"
   -Dexec.args="problemName [referenceFront]"
    */
   public static void main(String[] args) throws JMetalException, FileNotFoundException {

@@ -34,7 +34,7 @@ import java.util.List;
  * Invoking command:
    mvn
    -pl jmetal-exec
-   exec:java -Dexec.mainClass="org.uma.jmetal.qualityIndicator.RunIndicator"
+   exec:java -Dexec.mainClass="org.uma.jmetal.qualityIndicator.CommandLineIndicatorRunner"
    -Dexec.args="indicator referenceFront front normalize"
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>

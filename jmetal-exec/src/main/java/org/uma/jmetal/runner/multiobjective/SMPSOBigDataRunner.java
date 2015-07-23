@@ -56,7 +56,7 @@ public class SMPSOBigDataRunner extends AbstractAlgorithmRunner {
    * Invoking command:
   mvn
   -pl jmetal-exec
-  exec:java -Dexec.mainClass="org.uma.jmetal.qualityIndicator.multiobjective.SMPSOBigDataRunner"
+  exec:java -Dexec.mainClass="org.uma.jmetal.runner.multiobjective.SMPSOBigDataRunner"
   -Dexec.args="problemName [referenceFront]"
    */
   public static void main(String[] args) throws Exception {

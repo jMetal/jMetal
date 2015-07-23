@@ -54,7 +54,7 @@ public class NSGAIIIntegerRunner extends AbstractAlgorithmRunner {
    * Invoking command:
   mvn
   -pl jmetal-exec
-  exec:java -Dexec.mainClass="org.uma.jmetal.qualityIndicator.multiobjective.NSGAIIIntegerRunner"
+  exec:java -Dexec.mainClass="org.uma.jmetal.runner.multiobjective.NSGAIIIntegerRunner"
   -Dexec.args="problemName [referenceFront]"
    */
   public static void main(String[] args) throws FileNotFoundException {

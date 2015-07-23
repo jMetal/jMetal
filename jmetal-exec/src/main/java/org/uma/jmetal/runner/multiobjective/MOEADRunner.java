@@ -41,7 +41,7 @@ public class MOEADRunner extends AbstractAlgorithmRunner {
    * Invoking command:
    mvn
   -pl jmetal-exec
-  exec:java -Dexec.mainClass="org.uma.jmetal.qualityIndicator.multiobjective.MOEADRunner"
+  exec:java -Dexec.mainClass="org.uma.jmetal.runner.multiobjective.MOEADRunner"
   -Dexec.args="problemName [referenceFront]"
    */
   public static void main(String[] args) throws FileNotFoundException {

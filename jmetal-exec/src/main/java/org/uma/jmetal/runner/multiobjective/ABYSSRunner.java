@@ -34,7 +34,7 @@ public class ABYSSRunner extends AbstractAlgorithmRunner {
    * Invoking command:
   mvn
   -pl jmetal-exec
-  exec:java -Dexec.mainClass="org.uma.jmetal.qualityIndicator.multiobjective.AbYSSRunner"
+  exec:java -Dexec.mainClass="org.uma.jmetal.runner.multiobjective.AbYSSRunner"
   -Dexec.args="problemName [referenceFront]"
    */
   public static void main(String[] args) throws Exception {

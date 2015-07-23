@@ -36,7 +36,7 @@ public class SPEA2Runner extends AbstractAlgorithmRunner {
    * Invoking command:
   mvn
   -pl jmetal-exec
-  exec:java -Dexec.mainClass="org.uma.jmetal.qualityIndicator.multiobjective.SPEA2Runner"
+  exec:java -Dexec.mainClass="org.uma.jmetal.runner.multiobjective.SPEA2Runner"
   -Dexec.args="problemName [referenceFront]"
    */
   public static void main(String[] args) throws JMetalException, FileNotFoundException {

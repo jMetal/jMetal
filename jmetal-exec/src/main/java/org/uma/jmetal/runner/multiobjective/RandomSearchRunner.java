@@ -46,7 +46,7 @@ public class RandomSearchRunner extends AbstractAlgorithmRunner {
    * Invoking command:
   mvn
   -pl jmetal-exec
-  exec:java -Dexec.mainClass="org.uma.jmetal.qualityIndicator.multiobjective.RandomSearchRunner"
+  exec:java -Dexec.mainClass="org.uma.jmetal.runner.multiobjective.RandomSearchRunner"
   -Dexec.args="problemName [referenceFront]"
    */
   public static void main(String[] args) throws JMetalException, FileNotFoundException {

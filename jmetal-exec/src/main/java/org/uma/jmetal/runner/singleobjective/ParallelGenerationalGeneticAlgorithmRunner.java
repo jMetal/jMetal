@@ -43,7 +43,7 @@ import java.util.List;
 public class ParallelGenerationalGeneticAlgorithmRunner {
   private static final int DEFAULT_NUMBER_OF_CORES = 0 ;
   /**
-   * Usage: org.uma.jmetal.runner.singleobjective.ParallelGenerationalGeneticAlgorithmRunner [cores]
+   * Usage: java org.uma.jmetal.runner.singleobjective.ParallelGenerationalGeneticAlgorithmRunner [cores]
    */
   public static void main(String[] args) throws Exception {
     Algorithm<BinarySolution> algorithm;

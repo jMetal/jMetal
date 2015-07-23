@@ -57,7 +57,7 @@ public class NSGAIITSPRunner extends AbstractAlgorithmRunner {
    * Invoking command:
     mvn
   -pl jmetal-exec
-  exec:java -Dexec.mainClass="org.uma.jmetal.qualityIndicator.multiobjective.NSGAIITSPRunner"
+  exec:java -Dexec.mainClass="org.uma.jmetal.runner.multiobjective.NSGAIITSPRunner"
    */
   public static void main(String[] args) throws JMetalException, IOException {
     PermutationProblem<PermutationSolution<Integer>> problem;

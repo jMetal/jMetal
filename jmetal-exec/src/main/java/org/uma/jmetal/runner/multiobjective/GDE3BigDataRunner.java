@@ -48,7 +48,7 @@ public class GDE3BigDataRunner {
    * Invoking command:
    mvn
     -pl jmetal-exec
-    exec:java -Dexec.mainClass="org.uma.jmetal.qualityIndicator.multiobjective.GDE3BigDataRunner"
+    exec:java -Dexec.mainClass="org.uma.jmetal.runner.multiobjective.GDE3BigDataRunner"
     -Dexec.args="[problemName]"
    */
   public static void main(String[] args) {

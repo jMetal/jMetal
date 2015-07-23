@@ -52,7 +52,7 @@ public class SMPSORunner extends AbstractAlgorithmRunner {
    * Invoking command:
   mvn
   -pl jmetal-exec
-  exec:java -Dexec.mainClass="org.uma.jmetal.qualityIndicator.multiobjective.SMPSORunner"
+  exec:java -Dexec.mainClass="org.uma.jmetal.runner.multiobjective.SMPSORunner"
   -Dexec.args="problemName [referenceFront]"
    */
   public static void main(String[] args) throws Exception {

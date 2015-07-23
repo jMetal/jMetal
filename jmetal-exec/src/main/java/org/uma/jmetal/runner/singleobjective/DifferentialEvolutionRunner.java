@@ -41,7 +41,7 @@ public class DifferentialEvolutionRunner {
   private static final int DEFAULT_NUMBER_OF_CORES = 1 ;
 
   /**
-   *  Usage: org.uma.jmetal.runner.singleobjective.DifferentialEvolutionRunner [cores]
+   *  Usage: java org.uma.jmetal.runner.singleobjective.DifferentialEvolutionRunner [cores]
    */
   public static void main(String[] args) throws Exception {
 

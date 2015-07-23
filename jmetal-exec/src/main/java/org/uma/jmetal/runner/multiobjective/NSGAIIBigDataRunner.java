@@ -56,7 +56,7 @@ public class NSGAIIBigDataRunner extends AbstractAlgorithmRunner {
    * Invoking command:
      mvn
   -pl jmetal-exec
-  exec:java -Dexec.mainClass="org.uma.jmetal.qualityIndicator.multiobjective.NSGAIIBigDataRunner"
+  exec:java -Dexec.mainClass="org.uma.jmetal.runner.multiobjective.NSGAIIBigDataRunner"
   -Dexec.args="problemName [referenceFront]"
    */
   public static void main(String[] args)
