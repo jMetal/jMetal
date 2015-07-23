@@ -29,7 +29,11 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import java.util.ArrayList;
 import java.util.List;
 
-/** This class allows to apply a SBX crossover operator using two parent solutions (Integer encoding) */
+/**
+ * This class allows to apply a SBX crossover operator using two parent solutions (Integer encoding)
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ */
 public class IntegerSBXCrossover implements CrossoverOperator<IntegerSolution> {
   /** EPS defines the minimum difference allowed between real values */
   private static final double EPS = 1.0e-14;

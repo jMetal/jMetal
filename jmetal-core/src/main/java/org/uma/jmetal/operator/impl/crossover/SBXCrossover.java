@@ -25,13 +25,14 @@ import java.util.List;
 
 /**
  * This class allows to apply a SBX crossover operator using two parent solutions (Double encoding).
+ * A {@link RepairDoubleSolution} object is used to decide the strategy to apply when a value is out
+ * of range.
  *
  * The implementation is based on the NSGA-II code available in
  * <a href="http://www.iitk.ac.in/kangal/codes.shtml">http://www.iitk.ac.in/kangal/codes.shtml</a>
  *
- * @author Antonio J. Nebro
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * @author Juan J. Durillo
- * @version 1.0
  */
 public class SBXCrossover implements CrossoverOperator<DoubleSolution> {
   /** EPS defines the minimum difference allowed between real values */

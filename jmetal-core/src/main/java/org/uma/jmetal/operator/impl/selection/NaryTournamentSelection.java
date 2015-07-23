@@ -23,11 +23,10 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * @author Antonio J. Nebro
- * @version 1.0
- * 
  * Applies a N-ary tournament selection to return the best solution between N that have been
  * chosen at random from a solution list.
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class NaryTournamentSelection<S extends Solution<?>> implements SelectionOperator<List<S>, S> {
   private Comparator<S> comparator;

@@ -1,11 +1,3 @@
-//  RankingAndCrowdingSelection.java
-//
-//  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
-//
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
-//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -37,6 +29,8 @@ import java.util.List;
  * This class implements a selection for selecting a number of solutions from
  * a solution list. The solutions are taken by mean of its ranking and
  * crowding distance values.
+ *
+ * @author Antonio J. Nebro, Juan J. Durillo
  */
 public class RankingAndCrowdingSelection<S extends Solution<?>>
     implements SelectionOperator<List<S>,List<S>> {
@@ -66,9 +60,7 @@ public class RankingAndCrowdingSelection<S extends Solution<?>>
     Ranking<S> ranking = new DominanceRanking<S>();
     ranking.computeRanking(solutionList) ;
 
-    List<S> resultPopulation = crowdingDistanceSelection(ranking) ;
-
-    return resultPopulation;
+    return crowdingDistanceSelection(ranking);
   }
 
   protected List<S> crowdingDistanceSelection(Ranking<S> ranking) {

@@ -23,10 +23,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Antonio J. Nebro
- * @version 1.0
- *
  * This class implements a single point crossover operator.
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class SinglePointCrossover implements CrossoverOperator<BinarySolution> {
   private double crossoverProbability ;

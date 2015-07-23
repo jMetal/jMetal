@@ -1,10 +1,3 @@
-//  NullMutation.java
-//
-//  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//
-//  Copyright (c) 2014 Antonio J. Nebro
-//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -23,7 +16,12 @@ package org.uma.jmetal.operator.impl.mutation;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.solution.Solution;
 
-/** This class is intended to perform no mutation */
+/**
+ * This class is intended to perform no mutation. It can be useful when configuring a genetic
+ * algorithm and we want to use only crossover.
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ */
 public class NullMutation implements MutationOperator<Solution<?>> {
   public NullMutation() {
   }

@@ -15,14 +15,15 @@ package org.uma.jmetal.operator;
 
 /**
  * Interface representing an operator
- * @author Antonio J. Nebro
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * @version 0.1
- * @param <S> Source
- * @param <R> Result
+ * @param <Source> Source Class of the object to be operated with
+ * @param <Result> Result Class of the result obtained after applying the operator
  */
-public interface Operator<S, R> {
+public interface Operator<Source, Result> {
   /**
-   * @param source the data to process
+   * @param source The data to process
    */
-  public R execute(S source) ;
+  public Result execute(Source source) ;
 }

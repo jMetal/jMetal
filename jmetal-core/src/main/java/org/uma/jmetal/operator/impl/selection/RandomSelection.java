@@ -17,7 +17,6 @@ import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.SolutionListUtils;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.List;
 
@@ -25,17 +24,9 @@ import java.util.List;
  * This class implements a random selection operator used for selecting a N number of solutions from
  * a list
  *
- * @author Antonio J. Nebro
- * @version 1.0
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class RandomSelection<S extends Solution<?>> implements SelectionOperator<List<S>, S> {
-  private JMetalRandom randomGenerator ;
-  private int numberOfSolutionsToBeReturned ;
-
-  /** Constructor */
-  public RandomSelection() {
-    randomGenerator = JMetalRandom.getInstance() ;
-  }
 
   /** Execute() method */
   public S execute(List<S> solutionList) {

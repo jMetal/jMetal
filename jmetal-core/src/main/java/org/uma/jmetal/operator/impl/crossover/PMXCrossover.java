@@ -1,11 +1,3 @@
-//  PMXCrossover.java
-//
-//  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
-//
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
-//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -30,8 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class allows to apply a PMX crossover operator using two parent
- * solutions.
+ * This class allows to apply a PMX crossover operator using two parent solutions.
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Juan J. Durillo
  */
 public class PMXCrossover implements
     CrossoverOperator<PermutationSolution<Integer>> {
