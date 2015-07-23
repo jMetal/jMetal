@@ -1,10 +1,3 @@
-//  JMetalLogger.java
-//
-//  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//
-//  Copyright (c) 2014 Antonio J. Nebro
-//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -27,6 +20,8 @@ import java.util.logging.Logger;
 
 /**
  * jMetal logger class
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class JMetalLogger implements Serializable {
 

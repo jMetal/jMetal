@@ -17,7 +17,6 @@ package org.uma.jmetal.util.point;
  * Interface representing a point
  *
  * @author Antonio J. Nebro
- * @version 1.0
  */
 public interface Point {
   public int getNumberOfDimensions();

@@ -17,8 +17,7 @@ import org.apache.commons.math3.random.MersenneTwister;
 import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
 
 /**
- * @author Antonio J. Nebro
- * @version 0.1
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class MersenneTwisterGenerator implements PseudoRandomGenerator {
   private MersenneTwister rnd ;

@@ -1,10 +1,3 @@
-//  AlgorithmRunningTime.java
-//
-//  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//
-//  Copyright (c) 2014 Antonio J. Nebro
-//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -23,7 +16,9 @@ package org.uma.jmetal.util;
 import org.uma.jmetal.algorithm.Algorithm;
 
 /**
- * Created by Antonio J. Nebro on 08/06/14.
+ * Class for running algorithms in a concurrent thread
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class AlgorithmRunner {
   private long computingTime;
@@ -50,7 +45,6 @@ public class AlgorithmRunner {
     public AlgorithmRunner execute() {
       long initTime = System.currentTimeMillis();
       Thread thread = new Thread(algorithm) ;
-      //algorithm.run() ;
       thread.start();
       try {
         thread.join();

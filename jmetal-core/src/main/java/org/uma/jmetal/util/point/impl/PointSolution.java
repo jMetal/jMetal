@@ -19,10 +19,9 @@ import org.uma.jmetal.util.point.Point;
 import java.util.Arrays;
 
 /**
- * Solution used to wrap a Point object. Only objectives are used.
+ * Solution used to wrap a {@link Point} object. Only objectives are used.
  *
  * @author Antonio J. Nebro
- * @version 1.0
  */
 public class PointSolution implements Solution<Double> {
   private int numberOfObjectives ;

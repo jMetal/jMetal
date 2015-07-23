@@ -18,7 +18,6 @@ import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
 
 /**
  * @author Antonio J. Nebro
- * @version 0.1
  */
 public class Well44497bGenerator implements PseudoRandomGenerator {
   private Well44497b rnd ;

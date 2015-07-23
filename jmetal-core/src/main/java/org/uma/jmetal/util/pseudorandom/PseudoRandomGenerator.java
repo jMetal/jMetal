@@ -16,8 +16,7 @@ package org.uma.jmetal.util.pseudorandom;
 import java.io.Serializable;
 
 /**
- * @author Antonio J. Nebro
- * @version 0.1
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public interface PseudoRandomGenerator extends Serializable {
   public int nextInt(int lowerBound, int upperBound) ;

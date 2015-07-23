@@ -31,7 +31,7 @@ public class PointComparatorTest {
 
   @Test(expected = JMetalException.class)
   public void shouldFirstPointToCompareEqualsToNullRaiseAnException() throws Exception {
-    comparator = new PointComparator(true) ;
+    comparator = new PointComparator() ;
 
     point2 = new ArrayPoint(4) ;
     comparator.compare(null, point2);
@@ -39,7 +39,7 @@ public class PointComparatorTest {
 
   @Test (expected = JMetalException.class)
   public void shouldSecondPointToCompareEqualsToNullRaiseAnException() throws Exception {
-    comparator = new PointComparator(true) ;
+    comparator = new PointComparator() ;
 
     point1 = new ArrayPoint(4) ;
     comparator.compare(point1, null);
@@ -50,7 +50,7 @@ public class PointComparatorTest {
     point1 = new ArrayPoint(2) ;
     point2 = new ArrayPoint(3) ;
 
-    comparator = new PointComparator(true) ;
+    comparator = new PointComparator() ;
     comparator.compare(point1, point2);
   }
 
@@ -64,8 +64,8 @@ public class PointComparatorTest {
     point2.setDimensionValue(0, 1.0);
     point2.setDimensionValue(1, 2.0);
 
-    boolean maximization = true ;
-    comparator = new PointComparator(maximization) ;
+    comparator = new PointComparator() ;
+    comparator.setMaximizing();
 
     assertEquals(-1, comparator.compare(point1, point2)) ;
   }
@@ -80,8 +80,8 @@ public class PointComparatorTest {
     point2.setDimensionValue(0, 1.0);
     point2.setDimensionValue(1, 5.0);
 
-    boolean maximization = true ;
-    comparator = new PointComparator(maximization) ;
+    comparator = new PointComparator() ;
+    comparator.setMaximizing();
 
     assertEquals(1, comparator.compare(point1, point2)) ;
   }
@@ -96,8 +96,8 @@ public class PointComparatorTest {
     point2.setDimensionValue(0, 1.0);
     point2.setDimensionValue(1, 3.0);
 
-    boolean maximization = true ;
-    comparator = new PointComparator(maximization) ;
+    comparator = new PointComparator() ;
+    comparator.setMaximizing();
 
     assertEquals(0, comparator.compare(point1, point2)) ;
   }
@@ -112,8 +112,8 @@ public class PointComparatorTest {
     point2.setDimensionValue(0, 1.0);
     point2.setDimensionValue(1, 3.0);
 
-    boolean maximization = false ;
-    comparator = new PointComparator(maximization) ;
+    comparator = new PointComparator() ;
+    comparator.setMinimizing();
 
     assertEquals(0, comparator.compare(point1, point2)) ;
   }

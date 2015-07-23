@@ -18,8 +18,7 @@ import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
 import java.util.Random;
 
 /**
- * @author Antonio J. Nebro
- * @version 0.1
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class JavaRandomGenerator implements PseudoRandomGenerator {
   private Random rnd ;

@@ -1,11 +1,3 @@
-//  LexicoGraphicalComparator.java
-//
-//  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
-//
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
-//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -26,10 +18,13 @@ import org.uma.jmetal.util.point.Point;
 
 import java.util.Comparator;
 
-
 /**
  * This class implements the Comparator interface for comparing tow points.
  * The order used is lexicographical order.
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Juan J. Durillo
+
  */
 public class LexicographicalPointComparator implements Comparator<Point> {
 

@@ -38,7 +38,7 @@ public class WfgHypervolume {
     currentDimension = dimension;
     this.maxNumberOfPoints = maxNumberOfPoints;
     maxNumberOfObjectives = dimension;
-    pointComparator = new PointComparator(true);
+    pointComparator = new PointComparator();
 
     int maxd = this.maxNumberOfPoints - (OPT / 2 + 1);
     fs = new WfgHypervolumeFront[maxd];
@@ -54,7 +54,7 @@ public class WfgHypervolume {
     currentDimension = dimension;
     this.maxNumberOfPoints = maxNumberOfPoints;
     maxNumberOfObjectives = dimension;
-    pointComparator = new PointComparator(true);
+    pointComparator = new PointComparator();
 
     int maxd = this.maxNumberOfPoints - (OPT / 2 + 1);
     fs = new WfgHypervolumeFront[maxd];

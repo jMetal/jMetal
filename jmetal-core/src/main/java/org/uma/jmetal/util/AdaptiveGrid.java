@@ -1,11 +1,3 @@
-//  AdaptiveGrid.java
-//
-//  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
-//
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
-//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -28,6 +20,9 @@ import java.util.List;
 
 /**
  * This class defines an adaptive grid over a list of solutions as the one used by algorithm PAES.
+ *
+ * @author Antonio J. Nebro
+ * @author Juan J. Durillo
  */
 public class AdaptiveGrid<S extends Solution<?>> {
   private int bisections;

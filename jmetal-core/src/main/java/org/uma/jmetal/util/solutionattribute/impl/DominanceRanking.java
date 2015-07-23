@@ -1,11 +1,3 @@
-//  Ranking.java
-//
-//  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
-//
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
-//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -37,6 +29,9 @@ import java.util.*;
  * numbering starts from 1); thus, subset 0 contains the non-dominated
  * solutions, subset 1 contains the non-dominated solutions after removing those
  * belonging to subset 0, and so on.
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Juan J. Durillo
  */
 public class DominanceRanking <S extends Solution<?>>
     extends GenericSolutionAttribute<S, Integer> implements Ranking<S> {
