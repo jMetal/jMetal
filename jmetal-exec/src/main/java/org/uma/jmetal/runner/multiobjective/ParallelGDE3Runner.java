@@ -50,7 +50,7 @@ public class ParallelGDE3Runner extends AbstractAlgorithmRunner {
    * Invoking command:
    mvn
   -pl jmetal-exec
-  exec:java -Dexec.mainClass="org.uma.jmetal.qualityIndicator.multiobjective.ParallelGDE3Runner"
+  exec:java -Dexec.mainClass="org.uma.jmetal.runner.multiobjective.ParallelGDE3Runner"
   -Dexec.args="problemName [referenceFront]"
    */
   public static void main(String[] args) throws FileNotFoundException {

@@ -56,7 +56,7 @@ public class NSGAIIMeasuresRunner extends AbstractAlgorithmRunner {
    * Invoking command:
   mvn
   -pl jmetal-exec
-  exec:java -Dexec.mainClass="org.uma.jmetal.qualityIndicator.multiobjective.NSGAIIMeasuresRunner"
+  exec:java -Dexec.mainClass="org.uma.jmetal.runner.multiobjective.NSGAIIMeasuresRunner"
   -Dexec.args="problemName [referenceFront]"
    */
   public static void main(String[] args)

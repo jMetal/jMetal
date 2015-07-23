@@ -52,7 +52,7 @@ public class SPEA2BinaryRunner extends AbstractAlgorithmRunner {
    * Invoking command:
   mvn
   -pl jmetal-exec
-  exec:java -Dexec.mainClass="org.uma.jmetal.qualityIndicator.multiobjective.SPEA2BinaryRunner"
+  exec:java -Dexec.mainClass="org.uma.jmetal.runner.multiobjective.SPEA2BinaryRunner"
   -Dexec.args="problemName [referenceFront]"
    */
   public static void main(String[] args) throws JMetalException, FileNotFoundException {

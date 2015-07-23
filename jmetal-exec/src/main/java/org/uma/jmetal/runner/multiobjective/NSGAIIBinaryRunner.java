@@ -53,7 +53,7 @@ public class NSGAIIBinaryRunner extends AbstractAlgorithmRunner {
    * Invoking command:
    mvn
   -pl jmetal-exec
-  exec:java -Dexec.mainClass="org.uma.jmetal.qualityIndicator.multiobjective.NSGAIIBinaryRunner"
+  exec:java -Dexec.mainClass="org.uma.jmetal.runner.multiobjective.NSGAIIBinaryRunner"
   -Dexec.args="problemName [referenceFront]"
    */
   public static void main(String[] args) throws

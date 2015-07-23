@@ -36,7 +36,7 @@ import java.util.List;
  */
 public class NonElitistEvolutionStrategyRunner {
   /**
-   * Usage: org.uma.jmetal.runner.singleobjective.NonElitistEvolutionStrategyRunner
+   * Usage: java org.uma.jmetal.runner.singleobjective.NonElitistEvolutionStrategyRunner
    */
   public static void main(String[] args) throws Exception {
 

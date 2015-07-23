@@ -39,7 +39,7 @@ import java.util.List;
  */
 public class GenerationalGeneticAlgorithmRunner {
   /**
-   * Usage: org.uma.jmetal.runner.singleobjective.GenerationalGeneticAlgorithmRunner
+   * Usage: java org.uma.jmetal.runner.singleobjective.GenerationalGeneticAlgorithmRunner
    */
   public static void main(String[] args) throws Exception {
     Algorithm<BinarySolution> algorithm;

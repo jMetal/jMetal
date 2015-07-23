@@ -54,7 +54,7 @@ public class ParallelSMPSORunner extends AbstractAlgorithmRunner {
    * Invoking command:
    mvn
   -pl jmetal-exec
-  exec:java -Dexec.mainClass="org.uma.jmetal.qualityIndicator.multiobjective.ParallelSMPSORunner"
+  exec:java -Dexec.mainClass="org.uma.jmetal.runner.multiobjective.ParallelSMPSORunner"
   -Dexec.args="problemName [referenceFront]"
    */
   public static void main(String[] args) throws Exception {

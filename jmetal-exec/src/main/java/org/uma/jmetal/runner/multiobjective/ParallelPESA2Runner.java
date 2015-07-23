@@ -51,7 +51,7 @@ public class ParallelPESA2Runner extends AbstractAlgorithmRunner {
    * Invoking command:
    mvn
   -pl jmetal-exec
-  exec:java -Dexec.mainClass="org.uma.jmetal.qualityIndicator.multiobjective.ParallelPESA2Runner"
+  exec:java -Dexec.mainClass="org.uma.jmetal.runner.multiobjective.ParallelPESA2Runner"
   -Dexec.args="problemName [referenceFront]"
    */
   public static void main(String[] args) throws JMetalException, FileNotFoundException {

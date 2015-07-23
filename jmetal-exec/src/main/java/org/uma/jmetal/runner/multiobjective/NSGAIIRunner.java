@@ -46,7 +46,7 @@ public class NSGAIIRunner extends AbstractAlgorithmRunner {
    * Invoking command:
     mvn
     -pl jmetal-exec
-    exec:java -Dexec.mainClass="org.uma.jmetal.qualityIndicator.multiobjective.NSGAIIRunner"
+    exec:java -Dexec.mainClass="org.uma.jmetal.runner.multiobjective.NSGAIIRunner"
     -Dexec.args="problemName [referenceFront]"
    */
   public static void main(String[] args) throws JMetalException, FileNotFoundException {

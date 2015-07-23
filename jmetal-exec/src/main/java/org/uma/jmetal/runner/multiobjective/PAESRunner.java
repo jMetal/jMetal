@@ -48,7 +48,7 @@ public class PAESRunner extends AbstractAlgorithmRunner {
    * Invoking command:
    mvn
   -pl jmetal-exec
-  exec:java -Dexec.mainClass="org.uma.jmetal.qualityIndicator.multiobjective.PAESRunner"
+  exec:java -Dexec.mainClass="org.uma.jmetal.runner.multiobjective.PAESRunner"
   -Dexec.args="problemName [referenceFront]"
    */
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
