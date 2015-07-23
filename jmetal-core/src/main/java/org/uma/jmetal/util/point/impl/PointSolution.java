@@ -125,4 +125,9 @@ public class PointSolution implements Solution<Double> {
   @Override public int hashCode() {
     return Arrays.hashCode(objectives);
   }
+  
+  @Override
+	public String toString() {
+		return Arrays.toString(objectives);
+	}
 }
