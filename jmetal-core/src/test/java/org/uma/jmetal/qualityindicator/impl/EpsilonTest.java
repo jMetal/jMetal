@@ -25,7 +25,6 @@ import org.uma.jmetal.util.front.util.FrontUtils;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.containsString;
@@ -55,11 +54,11 @@ public class EpsilonTest {
     exception.expect(JMetalException.class);
     exception.expectMessage(containsString("The pareto front approximation list is null"));
 
-    List<DoubleSolution> list = new ArrayList<>();
     Front referenceFront = new ArrayFront() ;
 
-    Epsilon epsilon = new Epsilon(referenceFront) ;
-    epsilon.evaluate(null) ;
+    Epsilon<List<DoubleSolution>> epsilon = new Epsilon<List<DoubleSolution>>(referenceFront) ;
+    List<DoubleSolution> list = null ;
+    epsilon.evaluate(list) ;
   }
 
   @Test
@@ -77,11 +76,12 @@ public class EpsilonTest {
     frontApproximation.setPoint(0, point1);
     referenceFront.setPoint(0, point1);
 
-    QualityIndicator epsilon = new Epsilon(referenceFront) ;
+    QualityIndicator<List<DoubleSolution>, Double> epsilon =
+        new Epsilon<List<DoubleSolution>>(referenceFront) ;
 
     List<DoubleSolution> front = FrontUtils.convertFrontToSolutionList(frontApproximation) ;
 
-    assertEquals(0.0, (Double)epsilon.evaluate(front), EPSILON);
+    assertEquals(0.0, epsilon.evaluate(front), EPSILON);
   }
 
   /**
@@ -105,11 +105,12 @@ public class EpsilonTest {
     frontApproximation.setPoint(0, point1);
     referenceFront.setPoint(0, point2);
 
-    QualityIndicator epsilon = new Epsilon(referenceFront) ;
+    QualityIndicator<List<DoubleSolution>, Double> epsilon =
+        new Epsilon<List<DoubleSolution>>(referenceFront) ;
 
     List<DoubleSolution> front = FrontUtils.convertFrontToSolutionList(frontApproximation) ;
 
-    assertEquals(1.0, (Double)epsilon.evaluate(front), EPSILON);
+    assertEquals(1.0, epsilon.evaluate(front), EPSILON);
   }
 
   /**
@@ -151,9 +152,11 @@ public class EpsilonTest {
     referenceFront.setPoint(1, point5);
     referenceFront.setPoint(2, point6);
 
-    QualityIndicator epsilon = new Epsilon(referenceFront) ;
+    QualityIndicator<List<DoubleSolution>, Double> epsilon =
+        new Epsilon<List<DoubleSolution>>(referenceFront) ;
+
     List<DoubleSolution> front = FrontUtils.convertFrontToSolutionList(frontApproximation) ;
-    assertEquals(1.0, (Double)epsilon.evaluate(front), EPSILON);
+    assertEquals(1.0, epsilon.evaluate(front), EPSILON);
   }
 
   /**
