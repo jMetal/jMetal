@@ -38,6 +38,9 @@ import java.util.List;
  * Algorithm Research: A History and Analysis.
  * Technical Report TR-98-03, Dept. Elec. Comput. Eng., Air Force
  * Inst. Technol. (1998)
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Juan J. Durillo
  */
 public class GenerationalDistance<Evaluate extends List<? extends Solution<?>>>
     extends SimpleDescribedEntity
@@ -47,6 +50,7 @@ public class GenerationalDistance<Evaluate extends List<? extends Solution<?>>>
   private Front referenceParetoFront ;
 
   /**
+   * Constructor
    *
    * @param referenceParetoFrontFile
    * @throws FileNotFoundException
@@ -62,6 +66,7 @@ public class GenerationalDistance<Evaluate extends List<? extends Solution<?>>>
   }
 
   /**
+   * Constructor
    *
    * @param referenceParetoFront
    */
@@ -75,7 +80,7 @@ public class GenerationalDistance<Evaluate extends List<? extends Solution<?>>>
   }
 
   /**
-   * Evaluate method
+   * Evaluate() method
    * @param solutionList
    * @return
    */

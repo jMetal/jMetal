@@ -39,6 +39,7 @@ public class InvertedGenerationalDistancePlus<Evaluate extends List<? extends So
   private Front referenceParetoFront ;
 
   /**
+   * Constructor
    *
    * @param referenceParetoFrontFile
    * @throws FileNotFoundException
@@ -54,6 +55,7 @@ public class InvertedGenerationalDistancePlus<Evaluate extends List<? extends So
   }
 
   /**
+   * Constructor
    *
    * @param referenceParetoFront
    * @throws FileNotFoundException
@@ -68,7 +70,7 @@ public class InvertedGenerationalDistancePlus<Evaluate extends List<? extends So
   }
 
   /**
-   * Evaluate method
+   * Evaluate() method
    * @param solutionList
    * @return
    */

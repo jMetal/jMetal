@@ -39,6 +39,9 @@ import java.util.List;
  * Multiobjective Evolutionary Algorithms: A Comparative Case Study and the Strength Pareto Approach,
  * IEEE Transactions on Evolutionary Computation, vol. 3, no. 4,
  * pp. 257-271, 1999.
+
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Juan J. Durillo
  */
 public class Hypervolume<Evaluate extends List<? extends Solution<?>>>
     extends SimpleDescribedEntity
@@ -52,6 +55,7 @@ public class Hypervolume<Evaluate extends List<? extends Solution<?>>>
 
   /**
    * Constructor
+   *
    * @param referenceParetoFrontFile
    * @throws FileNotFoundException
    */
@@ -62,6 +66,7 @@ public class Hypervolume<Evaluate extends List<? extends Solution<?>>>
   }
 
   /**
+   * Constructor
    *
    * @param referenceParetoFront
    * @throws FileNotFoundException
@@ -76,7 +81,7 @@ public class Hypervolume<Evaluate extends List<? extends Solution<?>>>
   }
 
   /**
-   * Evaluate method
+   * Evaluate() method
    * @param paretoFrontApproximation
    * @return
    */

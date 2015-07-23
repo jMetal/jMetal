@@ -25,13 +25,17 @@ import org.uma.jmetal.util.naming.impl.SimpleDescribedEntity;
 import java.util.List;
 
 /**
- * TODO Add comments here
+ * Set coverage metric
+ *
  * @author Antonio J. Nebro
  * @version 1.0
  */
 public class SetCoverage extends SimpleDescribedEntity implements
     QualityIndicator<Pair<List<Solution<?>>, List<Solution<?>>>, Pair<Double, Double>> {
 
+  /**
+   * Constructor
+   */
   public SetCoverage() {
     super("SC", "Set coverage") ;
   }

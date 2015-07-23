@@ -38,6 +38,9 @@ import java.util.List;
  * This class implements the spread quality indicator. It must be only to two bi-objective problem.
  * Reference: Deb, K., Pratap, A., Agarwal, S., Meyarivan, T.: A fast and
  * elitist multiobjective genetic algorithm: NSGA-II. IEEE Trans. on Evol. Computation 6 (2002) 182-197
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Juan J. Durillo
  */
 public class Spread<Evaluate extends List<? extends Solution<?>>>
     extends SimpleDescribedEntity
@@ -46,6 +49,7 @@ public class Spread<Evaluate extends List<? extends Solution<?>>>
   private Front referenceParetoFront ;
 
   /**
+   * Constructor
    *
    * @param referenceParetoFrontFile
    * @throws FileNotFoundException
@@ -61,6 +65,7 @@ public class Spread<Evaluate extends List<? extends Solution<?>>>
   }
 
   /**
+   * Constructor
    *
    * @param referenceParetoFront
    * @throws FileNotFoundException
@@ -75,7 +80,7 @@ public class Spread<Evaluate extends List<? extends Solution<?>>>
   }
 
   /**
-   * Evaluate method
+   * Evaluate() method
    * @param solutionList
    * @return
    */
