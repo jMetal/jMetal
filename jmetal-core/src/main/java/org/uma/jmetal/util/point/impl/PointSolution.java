@@ -14,6 +14,7 @@
 package org.uma.jmetal.util.point.impl;
 
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.point.Point;
 
 import java.util.Arrays;
 
@@ -35,6 +36,20 @@ public class PointSolution implements Solution<Double> {
   public PointSolution(int numberOfObjectives) {
     this.numberOfObjectives = numberOfObjectives ;
     objectives = new double[numberOfObjectives] ;
+  }
+
+  /**
+   * Constructor
+   *
+   * @param point
+   */
+  public PointSolution(Point point) {
+    this.numberOfObjectives = point.getNumberOfDimensions() ;
+    objectives = new double[numberOfObjectives] ;
+
+    for (int i = 0; i < numberOfObjectives; i++) {
+      this.objectives[i] = point.getDimensionValue(i) ;
+    }
   }
 
   /**
