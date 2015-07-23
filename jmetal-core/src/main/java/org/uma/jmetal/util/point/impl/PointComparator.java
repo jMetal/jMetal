@@ -27,15 +27,21 @@ import java.util.Comparator;
  * Point comparator. Starts the comparison from front last point dimension to the first one
  *
  * @author Antonio J. Nebro
- * @version 1.0
  */
 public class PointComparator implements Comparator<Point> {
   private boolean maximizing;
 
-  public PointComparator(boolean maximizing) {
-    this.maximizing = maximizing;
+  public PointComparator() {
+    this.maximizing = true;
   }
 
+  public void setMaximizing() {
+    maximizing = true ;
+  }
+
+  public void setMinimizing() {
+    maximizing = false ;
+  }
   /**
    * Compares two Point objects
    *

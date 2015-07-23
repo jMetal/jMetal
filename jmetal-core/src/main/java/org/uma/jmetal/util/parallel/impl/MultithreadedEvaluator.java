@@ -116,10 +116,10 @@ public class MultithreadedEvaluator<S extends Solution<?>> implements Synchronou
   }
 
   /**
+   * Private class representing tasks to evaluate solutions.
+   *
    * @author Antonio J. Nebro
-   *         Private class representing tasks to evaluate solutions.
    */
-
   private class EvaluationTask implements Callable<Object> {
     private Problem<S> problem;
     private S solution;

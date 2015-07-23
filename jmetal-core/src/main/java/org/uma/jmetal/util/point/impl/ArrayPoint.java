@@ -23,7 +23,6 @@ import java.util.Arrays;
  * Class representing a point (i.e, an array of double values)
  *
  * @author Antonio J. Nebro
- * @version 1.0
  */
 public class ArrayPoint implements Point {
   private double[] point;
@@ -32,7 +31,6 @@ public class ArrayPoint implements Point {
    * Constructor
    *
    * @param dimensions Dimensions of the point
-
    */
   public ArrayPoint(int dimensions) {
     point = new double[dimensions];

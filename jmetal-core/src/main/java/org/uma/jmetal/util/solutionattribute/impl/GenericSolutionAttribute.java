@@ -1,10 +1,3 @@
-//  Fitness.java
-//
-//  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//
-//  Copyright (c) 2014 Antonio J. Nebro
-//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -24,6 +17,9 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.solutionattribute.SolutionAttribute;
 
 /**
+ * Generic class for implementing {@link SolutionAttribute} classes
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class GenericSolutionAttribute <S extends Solution<?>, V> implements SolutionAttribute<S, V>{
 

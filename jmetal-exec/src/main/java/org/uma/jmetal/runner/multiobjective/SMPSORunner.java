@@ -50,7 +50,7 @@ public class SMPSORunner extends AbstractAlgorithmRunner {
    * @throws java.io.IOException
    * @throws SecurityException
    * Invoking command:
-   mvn
+  mvn
   -pl jmetal-exec
   exec:java -Dexec.mainClass="org.uma.jmetal.qualityIndicator.multiobjective.SMPSORunner"
   -Dexec.args="problemName [referenceFront]"
@@ -82,15 +82,15 @@ public class SMPSORunner extends AbstractAlgorithmRunner {
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
     algorithm = new SMPSOBuilder(problem, archive)
-            .setMutation(mutation)
-            .setMaxIterations(250)
-            .setSwarmSize(100)
-            //.setRandomGenerator(new MersenneTwisterGenerator())
-            .setSolutionListEvaluator(new SequentialSolutionListEvaluator<DoubleSolution>())
-            .build();
+        .setMutation(mutation)
+        .setMaxIterations(250)
+        .setSwarmSize(100)
+        //.setRandomGenerator(new MersenneTwisterGenerator())
+        .setSolutionListEvaluator(new SequentialSolutionListEvaluator<DoubleSolution>())
+        .build();
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-            .execute();
+        .execute();
 
     List<DoubleSolution> population = ((SMPSO)algorithm).getResult();
     long computingTime = algorithmRunner.getComputingTime();
