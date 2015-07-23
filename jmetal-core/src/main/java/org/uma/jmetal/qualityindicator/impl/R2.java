@@ -37,7 +37,7 @@ public class R2<Evaluate extends List<? extends Solution<?>>>
     implements QualityIndicator<Evaluate,Double> {
   private double[][] matrix = null;
   private double[][] lambda = null;
-  private int numberOfObjectives = 0;
+  private int numberOfObjectives ;
 
   private Front referenceParetoFront ;
 

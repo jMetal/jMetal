@@ -19,8 +19,9 @@ import java.io.Serializable;
 
 /**
  * Interface representing a multi-objective optimization problem
- * @author Antonio J. Nebro
- * @version 0.1
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ *
  * @param <S> Encoding
  */
 public interface Problem<S extends Solution<?>> extends Serializable {

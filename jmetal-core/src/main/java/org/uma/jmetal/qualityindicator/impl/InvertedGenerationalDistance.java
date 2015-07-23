@@ -30,6 +30,9 @@ import java.util.List;
  * A History and Analysis.
  * Technical Report TR-98-03, Dept. Elec. Comput. Eng., Air Force
  * Inst. Technol. (1998)
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Juan J. Durillo
  */
 public class InvertedGenerationalDistance<Evaluate extends List<? extends Solution<?>>>
     extends SimpleDescribedEntity
@@ -40,6 +43,7 @@ public class InvertedGenerationalDistance<Evaluate extends List<? extends Soluti
   private Front referenceParetoFront ;
 
   /**
+   * Constructor
    *
    * @param referenceParetoFrontFile
    * @throws FileNotFoundException
@@ -55,6 +59,7 @@ public class InvertedGenerationalDistance<Evaluate extends List<? extends Soluti
   }
 
   /**
+   * Constructor
    *
    * @param referenceParetoFront
    * @throws FileNotFoundException
@@ -69,7 +74,7 @@ public class InvertedGenerationalDistance<Evaluate extends List<? extends Soluti
   }
 
   /**
-   * Evaluate method
+   * Evaluate() method
    * @param solutionList
    * @return
    */
@@ -80,7 +85,7 @@ public class InvertedGenerationalDistance<Evaluate extends List<? extends Soluti
   /**
    * Returns the inverted generational distance value for a given front
    *
-   * @param front           The front
+   * @param front The front
    * @param referenceFront The reference pareto front
    */
   public double invertedGenerationalDistance(Front front, Front referenceFront) {

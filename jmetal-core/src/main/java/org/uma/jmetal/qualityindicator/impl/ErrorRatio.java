@@ -33,6 +33,7 @@ import java.util.List;
  * the front could contain solutions that dominate some of those of the supposed Pareto front.
  * It is a responsibility of the caller to ensure that this does not happen.
  *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * TODO: using an epsilon value
  */
 public class ErrorRatio<Evaluate extends List<? extends Solution<?>>>
@@ -41,6 +42,7 @@ public class ErrorRatio<Evaluate extends List<? extends Solution<?>>>
   private Front referenceParetoFront ;
 
   /**
+   * Constructor
    *
    * @param referenceParetoFrontFile
    * @throws FileNotFoundException
@@ -56,6 +58,7 @@ public class ErrorRatio<Evaluate extends List<? extends Solution<?>>>
   }
 
   /**
+   * Constructor
    *
    * @param referenceParetoFront
    */
@@ -69,7 +72,7 @@ public class ErrorRatio<Evaluate extends List<? extends Solution<?>>>
   }
 
   /**
-   *
+   * Evaluate() method
    * @param solutionList
    * @return
    */

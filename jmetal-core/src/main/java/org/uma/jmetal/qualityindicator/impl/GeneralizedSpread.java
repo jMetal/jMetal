@@ -43,6 +43,9 @@ import java.util.List;
  * Combining model-based and genetics-based offspring generation for
  * multi-objective optimization using a convergence criterion,
  * 2006 IEEE Congress on Evolutionary Computation, 2006, pp. 3234-3241.
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Juan J. Durillo
  */
 public class GeneralizedSpread<Evaluate extends List<? extends Solution<?>>>
     extends SimpleDescribedEntity
@@ -51,6 +54,7 @@ public class GeneralizedSpread<Evaluate extends List<? extends Solution<?>>>
   private Front referenceParetoFront ;
 
   /**
+   * Constructor
    *
    * @param referenceParetoFrontFile
    * @throws FileNotFoundException
@@ -66,6 +70,7 @@ public class GeneralizedSpread<Evaluate extends List<? extends Solution<?>>>
   }
 
   /**
+   * Constructor
    *
    * @param referenceParetoFront
    * @throws FileNotFoundException
@@ -79,6 +84,11 @@ public class GeneralizedSpread<Evaluate extends List<? extends Solution<?>>>
     this.referenceParetoFront = referenceParetoFront ;
   }
 
+  /**
+   * Evaluate() method
+   * @param solutionList
+   * @return
+   */
   @Override public Double evaluate(Evaluate solutionList) {
     return generalizedSpread(new ArrayFront(solutionList), referenceParetoFront);
   }

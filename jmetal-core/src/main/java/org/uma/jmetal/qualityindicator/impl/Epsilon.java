@@ -39,6 +39,9 @@ import java.util.List;
  * by Eckart Zitzler. It can be used also as a command line program just by
  * typing $java org.uma.jmetal.qualityindicator.impl.Epsilon <solutionFrontFile>
  * <trueFrontFile> <getNumberOfObjectives>
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Juan J. Durillo
  */
 
 public class Epsilon<Evaluate extends List<? extends Solution<?>>>
@@ -48,6 +51,7 @@ public class Epsilon<Evaluate extends List<? extends Solution<?>>>
   private Front referenceParetoFront ;
 
   /**
+   * Constructor
    *
    * @param referenceParetoFrontFile
    * @throws FileNotFoundException
@@ -63,6 +67,7 @@ public class Epsilon<Evaluate extends List<? extends Solution<?>>>
   }
 
   /**
+   * Constructor
    *
    * @param referenceParetoFront
    */
@@ -76,7 +81,8 @@ public class Epsilon<Evaluate extends List<? extends Solution<?>>>
   }
 
   /**
-   * Evaluate method
+   * Evaluate() method
+   *
    * @param solutionList
    * @return
    */

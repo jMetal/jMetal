@@ -16,12 +16,8 @@ package org.uma.jmetal.qualityindicator;
 import org.uma.jmetal.util.naming.DescribedEntity;
 
 /**
- * Created by Antonio J. Nebro on 20/07/14.
- */
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
 
-
-/**
- * Created by Antonio J. Nebro on 20/07/14.
  * @param <Evaluate> Entity to evaluate
  * @param <Result> Result of the evaluation
  */
