@@ -23,6 +23,7 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.HypervolumeContributorComparator;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
+import org.uma.jmetal.util.front.util.FrontNormalizer;
 import org.uma.jmetal.util.front.util.FrontUtils;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.solutionattribute.Ranking;
@@ -166,7 +167,8 @@ public class SMSEMOA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
       double[] minimumValues = FrontUtils.getMinimumValues(front) ;
 
       // STEP 2. Get the normalized front
-      Front normalizedFront = FrontUtils.getNormalizedFront(subFront, maximumValues, minimumValues) ;
+      FrontNormalizer frontNormalizer = new FrontNormalizer(minimumValues, maximumValues) ;
+      Front normalizedFront = frontNormalizer.normalize(subFront) ;
 
       // compute offsets for reference point in normalized space
       double[] offsets = new double[maximumValues.length];
