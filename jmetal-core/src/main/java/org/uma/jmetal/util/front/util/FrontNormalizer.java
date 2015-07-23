@@ -34,6 +34,9 @@ public class FrontNormalizer {
    * @param referenceFront
    */
   public FrontNormalizer(List<? extends Solution<?>> referenceFront) {
+    if (referenceFront == null) {
+      throw new JMetalException("The reference front is null") ;
+    }
     maximumValues = FrontUtils.getMaximumValues(new ArrayFront(referenceFront));
     minimumValues = FrontUtils.getMinimumValues(new ArrayFront(referenceFront));
   }
@@ -43,6 +46,9 @@ public class FrontNormalizer {
    * @param referenceFront
    */
   public FrontNormalizer(Front referenceFront) {
+    if (referenceFront == null) {
+      throw new JMetalException("The reference front is null") ;
+    }
     maximumValues = FrontUtils.getMaximumValues(referenceFront);
     minimumValues = FrontUtils.getMinimumValues(referenceFront);
   }
@@ -53,6 +59,14 @@ public class FrontNormalizer {
    * @param maximumValues
    */
   public FrontNormalizer(double[] minimumValues, double[] maximumValues) {
+    if (minimumValues == null) {
+      throw new JMetalException("The array of minimum values is null") ;
+    } else if (maximumValues == null) {
+      throw new JMetalException("The array of maximum values is null") ;
+    } else if (maximumValues.length != minimumValues.length) {
+      throw new JMetalException("The length of the maximum array (" + maximumValues.length + ") " +
+          "is different from the length of the minimum array (" + minimumValues.length + ")");
+    }
     this.maximumValues = maximumValues ;
     this.minimumValues = minimumValues ;
   }
@@ -64,6 +78,10 @@ public class FrontNormalizer {
    */
   public List<? extends Solution<?>> normalize(List<? extends Solution<?>> solutionList) {
     Front normalizedFront ;
+    if (solutionList == null) {
+      throw new JMetalException("The front is null") ;
+    }
+
     normalizedFront = getNormalizedFront(new ArrayFront(solutionList), maximumValues, minimumValues);
 
     return FrontUtils.convertFrontToSolutionList(normalizedFront) ;
@@ -75,26 +93,16 @@ public class FrontNormalizer {
    * @return
    */
   public Front normalize(Front front) {
-    Front normalizedFront ;
     if (front == null) {
       throw new JMetalException("The front is null") ;
     }
 
-    normalizedFront = getNormalizedFront(front, maximumValues, minimumValues);
-
-    return normalizedFront ;
+    return getNormalizedFront(front, maximumValues, minimumValues);
   }
 
   private Front getNormalizedFront(Front front, double[] maximumValues, double[] minimumValues) {
    if (front.getNumberOfPoints() == 0) {
       throw new JMetalException("The front is empty") ;
-    } else if (maximumValues == null) {
-      throw new JMetalException("The maximum values array is null") ;
-    } else if (minimumValues == null) {
-      throw new JMetalException("The minimum values array is null") ;
-    } else if (maximumValues.length != minimumValues.length) {
-      throw new JMetalException("The length of the maximum array (" + maximumValues.length + ") "
-          + "is different from the length of the minimum array (" + minimumValues.length+")") ;
     } else if (front.getPoint(0).getNumberOfDimensions() != maximumValues.length) {
       throw new JMetalException("The length of the point dimensions ("
           + front.getPoint(0).getNumberOfDimensions() + ") "
