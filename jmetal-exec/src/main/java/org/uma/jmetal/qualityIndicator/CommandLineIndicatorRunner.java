@@ -55,7 +55,7 @@ public class CommandLineIndicatorRunner {
   private static void checkArguments(String[] args) {
     if ((args.length != 3) && (args.length != 4)) {
       printOptions();
-      throw new JMetalException("Bad arguments");
+      throw new JMetalException("Incorrect arguments");
     }
   }
 
