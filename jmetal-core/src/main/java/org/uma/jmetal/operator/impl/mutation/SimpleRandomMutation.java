@@ -21,8 +21,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 /**
  * This class implements a random mutation operator for double solutions
  *
- * @author Antonio J. Nebro
- * @version 1.0
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class SimpleRandomMutation implements MutationOperator<DoubleSolution> {
   private double mutationProbability ;

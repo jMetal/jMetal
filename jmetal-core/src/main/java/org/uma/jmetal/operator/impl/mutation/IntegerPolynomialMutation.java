@@ -27,8 +27,10 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  * If the lower and upper bounds of a variable are the same, no mutation is carried out and the
  * bound value is returned.
  *
- * @author Antonio J. Nebro
- * @version 1.0
+ * A {@link RepairDoubleSolution} object is used to decide the strategy to apply when a value is out
+ * of range.
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class IntegerPolynomialMutation implements MutationOperator<IntegerSolution> {
   private static final double DEFAULT_PROBABILITY = 0.01 ;

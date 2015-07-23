@@ -30,8 +30,8 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  * If the lower and upper bounds of a variable are the same, no mutation is carried out and the
  * bound value is returned.
  *
- * @author Antonio J. Nebro
- * @version 1.0
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Juan J. Durillo
  */
 public class PolynomialMutation implements MutationOperator<DoubleSolution> {
   private static final double DEFAULT_PROBABILITY = 0.01 ;

@@ -3,7 +3,11 @@ package org.uma.jmetal.operator;
 import org.uma.jmetal.solution.Solution;
 
 /**
- * Created by Antonio J. Nebro on 05/09/14.
+ * Interface representing mutation operators
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ *
+ * @param <Source> The solution class of the solution to be mutated
  */
 public interface MutationOperator<Source extends Solution<?>> extends Operator<Source, Source> {
 }

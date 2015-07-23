@@ -25,8 +25,8 @@ import java.util.List;
 
 /**
  * This class allows to apply a BLX-alpha crossover operator to two parent solutions.
- * @author Antonio J. Nebro.
- * @version 1.0
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class BLXAlphaCrossover implements CrossoverOperator<DoubleSolution> {
   private static final double DEFAULT_ALPHA = 0.5;

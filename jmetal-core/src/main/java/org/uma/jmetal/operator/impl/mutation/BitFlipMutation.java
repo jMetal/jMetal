@@ -19,7 +19,7 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /**
- * @author Antonio J. Nebro
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * @version 1.0
  *
  * This class implements a bit flip mutation operator.
