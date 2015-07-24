@@ -95,7 +95,6 @@ public class InvertedGenerationalDistancePlusTest {
         EPSILON);
   }
 
-
   @Test
   public void shouldEvaluateReturnTheCorrectValueCaseA() {
     int numberOfPointsOfTheParetoFront = 3 ;

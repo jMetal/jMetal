@@ -34,6 +34,7 @@ import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
+import org.uma.jmetal.util.pseudorandom.impl.MersenneTwisterGenerator;
 
 import java.util.List;
 
@@ -50,9 +51,7 @@ public class SMPSORunner extends AbstractAlgorithmRunner {
    * @throws java.io.IOException
    * @throws SecurityException
    * Invoking command:
-  mvn
-  -pl jmetal-exec
-  exec:java -Dexec.mainClass="org.uma.jmetal.runner.multiobjective.SMPSORunner"
+  mvn -pl jmetal-exec exec:java -Dexec.mainClass="org.uma.jmetal.runner.multiobjective.SMPSORunner"
   -Dexec.args="problemName [referenceFront]"
    */
   public static void main(String[] args) throws Exception {
@@ -85,7 +84,7 @@ public class SMPSORunner extends AbstractAlgorithmRunner {
         .setMutation(mutation)
         .setMaxIterations(250)
         .setSwarmSize(100)
-        //.setRandomGenerator(new MersenneTwisterGenerator())
+        .setRandomGenerator(new MersenneTwisterGenerator())
         .setSolutionListEvaluator(new SequentialSolutionListEvaluator<DoubleSolution>())
         .build();
 
