@@ -21,4 +21,4 @@ package org.uma.jmetal.solution;
 public interface IntegerSolution extends Solution<Integer> {
   public Integer getLowerBound(int index) ;
   public Integer getUpperBound(int index) ;
- }
+}
