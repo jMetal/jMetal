@@ -116,12 +116,8 @@ public class NSGAIIMeasuresRunner extends AbstractAlgorithmRunner {
     CountingMeasure iteration2 =
         (CountingMeasure) measureManager.<Long>getPushMeasure("currentIteration");
 
-    BasicMeasure<Integer> numberOfFeasibleSolutions =
-        (BasicMeasure<Integer>) measureManager.<Integer> getPushMeasure("numberOfFeasibleSolutionsInPopulation") ;
-
     solutionListMeasure.register(new Listener());
     iteration2.register(new Listener2());
-    numberOfFeasibleSolutions.register(new feasibleSolutionsListener());
     /* End of measure management */
 
     Thread algorithmThread = new Thread(algorithm) ;
@@ -150,7 +146,6 @@ public class NSGAIIMeasuresRunner extends AbstractAlgorithmRunner {
     }
   }
 
-
   private static class Listener implements MeasureListener<List<DoubleSolution>> {
     private int counter = 0 ;
 
@@ -167,12 +162,6 @@ public class NSGAIIMeasuresRunner extends AbstractAlgorithmRunner {
       if ((value % 50 == 0)) {
         System.out.println("PUSH MEASURE. Iteration: " + value) ;
       }
-    }
-  }
-
-  private static class feasibleSolutionsListener implements MeasureListener<Integer> {
-    @Override synchronized public void measureGenerated(Integer value) {
-      System.out.println("Feasible solutions: " + value) ;
     }
   }
 }

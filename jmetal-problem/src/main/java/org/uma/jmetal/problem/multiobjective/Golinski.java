@@ -24,6 +24,8 @@ package org.uma.jmetal.problem.multiobjective;
 import org.uma.jmetal.problem.ConstrainedProblem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.util.solutionattribute.impl.NumberOfViolatedConstraints;
+import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
 
 import java.util.Arrays;
 import java.util.List;
@@ -32,6 +34,9 @@ import java.util.List;
  * Class representing problem Golinski.
  */
 public class Golinski extends AbstractDoubleProblem implements ConstrainedProblem<DoubleSolution> {
+  public OverallConstraintViolation<DoubleSolution> overallConstraintViolationDegree ;
+  public NumberOfViolatedConstraints<DoubleSolution> numberOfViolatedConstraints ;
+
   /**
    * Constructor.
    * Creates a default instance of the Golinski problem.
@@ -47,6 +52,9 @@ public class Golinski extends AbstractDoubleProblem implements ConstrainedProble
 
     setLowerLimit(lowerLimit);
     setUpperLimit(upperLimit);
+
+    overallConstraintViolationDegree = new OverallConstraintViolation<DoubleSolution>() ;
+    numberOfViolatedConstraints = new NumberOfViolatedConstraints<DoubleSolution>() ;
   }
 
   /** Evaluate() method */
@@ -103,17 +111,17 @@ public class Golinski extends AbstractDoubleProblem implements ConstrainedProble
     double b = 1.575e8;
     constraint[10] = -(java.lang.Math.sqrt(a*a+b)/(0.1*x7*x7*x7)-1100.0);
 
-    double total = 0.0;
-    int number = 0;
+    double overallConstraintViolation = 0.0;
+    int violatedConstraints = 0;
     for (int i = 0; i < getNumberOfConstraints(); i++) {
       if (constraint[i]<0.0){
-        total+=constraint[i];
-        number++;
+        overallConstraintViolation+=constraint[i];
+        violatedConstraints++;
       }
     }
 
-    solution.setOverallConstraintViolationDegree(total);
-    solution.setNumberOfViolatedConstraints(number);
+    overallConstraintViolationDegree.setAttribute(solution, overallConstraintViolation);
+    numberOfViolatedConstraints.setAttribute(solution, violatedConstraints);
   }
 }
 

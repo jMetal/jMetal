@@ -149,20 +149,4 @@ public class DominanceRanking <S extends Solution<?>>
   public int getNumberOfSubfronts() {
     return rankedSubpopulations.size();
   }
-/*
-  @Override
-  public void setAttribute(Solution solution, Integer value) {
-    solution.setAttribute(getAttributeID(), value);
-  }
-
-  @Override
-  public Integer getAttribute(Solution solution) {
-    return (Integer) solution.getAttribute(getAttributeID());
-  }
-
-  @Override
-  public Object getAttributeID() {
-    return this.getClass();
-  }
-  */
 }

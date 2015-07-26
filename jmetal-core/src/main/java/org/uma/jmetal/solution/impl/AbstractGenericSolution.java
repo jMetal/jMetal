@@ -88,25 +88,6 @@ public abstract class AbstractGenericSolution<T, P extends Problem<?>> implement
     return objectives.length;
   }
 
-  @Override
-  public double getOverallConstraintViolationDegree() {
-    return overallConstraintViolationDegree ;
-  }
-
-  @Override
-  public void setOverallConstraintViolationDegree(double violationDegree) {
-    overallConstraintViolationDegree = violationDegree ;
-  }
-
-  @Override public int getNumberOfViolatedConstraints() {
-    return numberOfViolatedConstraints;
-  }
-
-  @Override
-  public void setNumberOfViolatedConstraints(int numberOfViolatedConstraints) {
-    this.numberOfViolatedConstraints = numberOfViolatedConstraints;
-  }
-
   protected void initializeObjectiveValues() {
     for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
       objectives[i] = 0.0 ;

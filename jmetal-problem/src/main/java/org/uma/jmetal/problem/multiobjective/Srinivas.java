@@ -23,12 +23,17 @@ package org.uma.jmetal.problem.multiobjective;
 import org.uma.jmetal.problem.ConstrainedProblem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.util.solutionattribute.impl.NumberOfViolatedConstraints;
+import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /** Class representing problem Srinivas */
 public class Srinivas extends AbstractDoubleProblem implements ConstrainedProblem<DoubleSolution> {
+
+  public OverallConstraintViolation<DoubleSolution> overallConstraintViolationDegree ;
+  public NumberOfViolatedConstraints<DoubleSolution> numberOfViolatedConstraints ;
 
   /** Constructor */
   public Srinivas()  {
@@ -47,6 +52,9 @@ public class Srinivas extends AbstractDoubleProblem implements ConstrainedProble
 
     setLowerLimit(lowerLimit);
     setUpperLimit(upperLimit);
+
+    overallConstraintViolationDegree = new OverallConstraintViolation<DoubleSolution>() ;
+    numberOfViolatedConstraints = new NumberOfViolatedConstraints<DoubleSolution>() ;
   }
 
   /** Evaluate() method */
@@ -74,16 +82,16 @@ public class Srinivas extends AbstractDoubleProblem implements ConstrainedProble
     constraint[0] = 1.0 - (x1 * x1 + x2 * x2) / 225.0;
     constraint[1] = (3.0 * x2 - x1) / 10.0 - 1.0;
 
-    double total = 0.0;
-    int numberOfViolatedConstraints = 0;
+    double overallConstraintViolation = 0.0;
+    int violatedConstraints = 0;
     for (int i = 0; i < getNumberOfConstraints(); i++) {
       if (constraint[i]<0.0){
-        total+=constraint[i];
-        numberOfViolatedConstraints++;
+        overallConstraintViolation+=constraint[i];
+        violatedConstraints++;
       }
     }
 
-    solution.setOverallConstraintViolationDegree(total);
-    solution.setNumberOfViolatedConstraints(numberOfViolatedConstraints);
+    overallConstraintViolationDegree.setAttribute(solution, overallConstraintViolation);
+    numberOfViolatedConstraints.setAttribute(solution, violatedConstraints);
   }
 }

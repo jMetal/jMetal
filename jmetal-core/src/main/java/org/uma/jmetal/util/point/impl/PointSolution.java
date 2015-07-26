@@ -92,22 +92,6 @@ public class PointSolution implements Solution<Double> {
     return numberOfObjectives;
   }
 
-  @Override public double getOverallConstraintViolationDegree() {
-    return 0;
-  }
-
-  @Override public void setOverallConstraintViolationDegree(double violationDegree) {
-
-  }
-
-  @Override public int getNumberOfViolatedConstraints() {
-    return 0;
-  }
-
-  @Override public void setNumberOfViolatedConstraints(int numberOfViolatedConstraints) {
-
-  }
-
   @Override public PointSolution copy() {
     return new PointSolution(this);
   }
