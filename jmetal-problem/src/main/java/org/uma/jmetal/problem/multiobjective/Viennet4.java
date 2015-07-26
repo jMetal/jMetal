@@ -24,6 +24,8 @@ package org.uma.jmetal.problem.multiobjective;
 import org.uma.jmetal.problem.ConstrainedProblem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.util.solutionattribute.impl.NumberOfViolatedConstraints;
+import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +34,9 @@ import java.util.List;
  * Class representing problem Viennet4
  */
 public class Viennet4 extends AbstractDoubleProblem implements ConstrainedProblem<DoubleSolution> {
-  
+  public OverallConstraintViolation<DoubleSolution> overallConstraintViolationDegree ;
+  public NumberOfViolatedConstraints<DoubleSolution> numberOfViolatedConstraints ;
+
  /** 
   * Constructor.
   * Creates a default instance of the Viennet4 problem.
@@ -53,6 +57,9 @@ public class Viennet4 extends AbstractDoubleProblem implements ConstrainedProble
 
     setLowerLimit(lowerLimit);
     setUpperLimit(upperLimit);
+
+    overallConstraintViolationDegree = new OverallConstraintViolation<DoubleSolution>() ;
+    numberOfViolatedConstraints = new NumberOfViolatedConstraints<DoubleSolution>() ;
   }
 
   /** Evaluate() method */
@@ -94,17 +101,18 @@ public class Viennet4 extends AbstractDoubleProblem implements ConstrainedProble
     constraint[0] = -x2 - (4.0 * x1) + 4.0  ;
     constraint[1] = x1 + 1.0 ;
     constraint[2] = x2 - x1 + 2.0 ;
-        
-    int number = 0;
-    double total = 0.0;
+
+    double overallConstraintViolation = 0.0;
+    int violatedConstraints = 0;
     for (int i = 0; i < getNumberOfConstraints(); i++) {
       if (constraint[i]<0.0){
-        number++;
-        total+=constraint[i];
+        overallConstraintViolation+=constraint[i];
+        violatedConstraints++;
       }
     }
-    solution.setOverallConstraintViolationDegree(total);
-    solution.setNumberOfViolatedConstraints(number);
+
+    overallConstraintViolationDegree.setAttribute(solution, overallConstraintViolation);
+    numberOfViolatedConstraints.setAttribute(solution, violatedConstraints);
   }
 }
 

@@ -18,7 +18,6 @@ import java.util.List;
  */
 public class NSGAIIMeasures<S extends Solution<?>> extends NSGAII<S> implements Measurable {
   private CountingMeasure iterations ;
-  private BasicMeasure<Integer> numberOfFeasibleSolutionsInPopulation ;
   private DurationMeasure durationMeasure ;
   private SimpleMeasureManager measureManager ;
 
@@ -52,23 +51,6 @@ public class NSGAIIMeasures<S extends Solution<?>> extends NSGAII<S> implements 
     return iterations.get() >= maxIterations;
   }
 
-  @Override protected List<S> evaluatePopulation(List<S> population) {
-    population = super.evaluatePopulation(population);
-
-    int countFeasibleSolutions = 0 ;
-    for (S solution : population) {
-      if (solution.getOverallConstraintViolationDegree() == 0) {
-        countFeasibleSolutions ++ ;
-      }
-    }
-
-    if (countFeasibleSolutions > 0) {
-      numberOfFeasibleSolutionsInPopulation.push(countFeasibleSolutions);
-    }
-
-    return population;
-  }
-
   @Override
   public void run() {
     durationMeasure.reset();
@@ -83,7 +65,6 @@ public class NSGAIIMeasures<S extends Solution<?>> extends NSGAII<S> implements 
     iterations = new CountingMeasure(0) ;
     numberOfNonDominatedSolutionsInPopulation = new BasicMeasure<>() ;
     solutionListMeasure = new BasicMeasure<>() ;
-    numberOfFeasibleSolutionsInPopulation = new BasicMeasure<>() ;
 
     measureManager = new SimpleMeasureManager() ;
     measureManager.setPullMeasure("currentExecutionTime", durationMeasure);
@@ -93,8 +74,6 @@ public class NSGAIIMeasures<S extends Solution<?>> extends NSGAII<S> implements 
 
     measureManager.setPushMeasure("currentPopulation", solutionListMeasure);
     measureManager.setPushMeasure("currentIteration", iterations);
-    measureManager.setPushMeasure("numberOfFeasibleSolutionsInPopulation",
-        numberOfFeasibleSolutionsInPopulation);
   }
 
   @Override

@@ -24,6 +24,8 @@ package org.uma.jmetal.problem.multiobjective;
 import org.uma.jmetal.problem.ConstrainedProblem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.util.solutionattribute.impl.NumberOfViolatedConstraints;
+import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
 
 import java.util.Arrays;
 import java.util.List;
@@ -32,6 +34,8 @@ import java.util.List;
  * Class representing problem Water
  */
 public class Water extends AbstractDoubleProblem implements ConstrainedProblem<DoubleSolution> {
+  public OverallConstraintViolation<DoubleSolution> overallConstraintViolationDegree ;
+  public NumberOfViolatedConstraints<DoubleSolution> numberOfViolatedConstraints ;
 
   // defining the lower and upper limits
   public static final Double [] LOWERLIMIT = {0.01, 0.01, 0.01};
@@ -52,6 +56,9 @@ public class Water extends AbstractDoubleProblem implements ConstrainedProblem<D
 
     setLowerLimit(lowerLimit);
     setUpperLimit(upperLimit);
+
+    overallConstraintViolationDegree = new OverallConstraintViolation<DoubleSolution>() ;
+    numberOfViolatedConstraints = new NumberOfViolatedConstraints<DoubleSolution>() ;
   }
 
   /** Evaluate() method */
@@ -93,16 +100,16 @@ public class Water extends AbstractDoubleProblem implements ConstrainedProblem<D
     constraint[5] = 2000 - (0.417*x[0]*x[1] + 1721.26*x[2]-136.54)       ;
     constraint[6] = 550 - (0.164/(x[0]*x[1])+631.13*x[2]-54.48) ;
 
-    double total = 0.0;
-    int numberOfViolatedConstraints = 0;
+    double overallConstraintViolation = 0.0;
+    int violatedConstraints = 0;
     for (int i = 0; i < getNumberOfConstraints(); i++) {
       if (constraint[i]<0.0){
-        total+=constraint[i];
-        numberOfViolatedConstraints++;
+        overallConstraintViolation+=constraint[i];
+        violatedConstraints++;
       }
     }
 
-    solution.setOverallConstraintViolationDegree(total);
-    solution.setNumberOfViolatedConstraints(numberOfViolatedConstraints);
+    overallConstraintViolationDegree.setAttribute(solution, overallConstraintViolation);
+    numberOfViolatedConstraints.setAttribute(solution, violatedConstraints);
   }
 }

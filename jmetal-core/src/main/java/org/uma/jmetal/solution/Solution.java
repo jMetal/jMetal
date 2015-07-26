@@ -32,12 +32,6 @@ public interface Solution<T> extends Serializable {
   public int getNumberOfVariables() ;
   public int getNumberOfObjectives() ;
 
-  public double getOverallConstraintViolationDegree() ;
-  public void setOverallConstraintViolationDegree(double violationDegree) ;
-
-  public int getNumberOfViolatedConstraints() ;
-  public void setNumberOfViolatedConstraints(int numberOfViolatedConstraints) ;
-
   public Solution<T> copy() ;
 
   public void setAttribute(Object id, Object value) ;

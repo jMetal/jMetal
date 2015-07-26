@@ -24,6 +24,8 @@ package org.uma.jmetal.problem.multiobjective;
 import org.uma.jmetal.problem.ConstrainedProblem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.util.solutionattribute.impl.NumberOfViolatedConstraints;
+import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
 
 import java.util.Arrays;
 import java.util.List;
@@ -32,6 +34,9 @@ import java.util.List;
  * Class representing problem Oyczka2
  */
 public class Osyczka2 extends AbstractDoubleProblem implements ConstrainedProblem<DoubleSolution> {
+  public OverallConstraintViolation<DoubleSolution> overallConstraintViolationDegree ;
+  public NumberOfViolatedConstraints<DoubleSolution> numberOfViolatedConstraints ;
+
  /**
   * Constructor.
   * Creates a default instance of the Osyczka2 problem.
@@ -47,6 +52,9 @@ public class Osyczka2 extends AbstractDoubleProblem implements ConstrainedProble
 
     setLowerLimit(lowerLimit);
     setUpperLimit(upperLimit);
+
+    overallConstraintViolationDegree = new OverallConstraintViolation<DoubleSolution>() ;
+    numberOfViolatedConstraints = new NumberOfViolatedConstraints<DoubleSolution>() ;
   }
 
   /** Evaluate() method */
@@ -94,16 +102,17 @@ public class Osyczka2 extends AbstractDoubleProblem implements ConstrainedProble
     constraint[4] = (4.0 - (x3-3.0)*(x3-3.0) - x4)/4.0;
     constraint[5] = ((x5-3.0)*(x5-3.0) +x6 - 4.0)/4.0;
 
-    double total = 0.0;
-    int number = 0;
-    for (int i = 0; i < this.getNumberOfConstraints(); i++)
+    double overallConstraintViolation = 0.0;
+    int violatedConstraints = 0;
+    for (int i = 0; i < getNumberOfConstraints(); i++) {
       if (constraint[i]<0.0){
-        total+=constraint[i];
-        number++;
-      }        
-       
-    solution.setOverallConstraintViolationDegree(total);
-    solution.setNumberOfViolatedConstraints(number);
+        overallConstraintViolation+=constraint[i];
+        violatedConstraints++;
+      }
+    }
+
+    overallConstraintViolationDegree.setAttribute(solution, overallConstraintViolation);
+    numberOfViolatedConstraints.setAttribute(solution, violatedConstraints);
   }
 }
 

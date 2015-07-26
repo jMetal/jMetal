@@ -96,15 +96,11 @@ public class PointSolutionTest {
     PointSolution solution = new PointSolution(3) ;
 
     solution.setVariableValue(0, 0.0);
-    solution.setOverallConstraintViolationDegree(0);
-    solution.setNumberOfViolatedConstraints(0);
     solution.setAttribute(null, null);
 
     assertNull(solution.getVariableValue(0)) ;
     assertNull(solution.getVariableValueString(0)) ;
     assertEquals(0, solution.getNumberOfVariables()) ;
-    assertEquals(0, solution.getOverallConstraintViolationDegree(), EPSILON) ;
-    assertEquals(0, solution.getNumberOfViolatedConstraints()) ;
     assertNull(solution.getAttribute(null)) ;
   }
 
