@@ -21,4 +21,4 @@ package org.uma.jmetal.solution;
 public interface DoubleSolution extends Solution<Double> {
   public Double getLowerBound(int index) ;
   public Double getUpperBound(int index) ;
- }
+}

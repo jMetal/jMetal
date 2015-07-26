@@ -23,4 +23,4 @@ public interface IntegerDoubleSolution extends Solution<Number> {
   public Number getUpperBound(int index) ;
   public int getNumberOfIntegerVariables() ;
   public int getNumberOfDoubleVariables() ;
- }
+}

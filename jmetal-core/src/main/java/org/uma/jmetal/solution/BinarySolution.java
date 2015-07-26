@@ -23,4 +23,4 @@ import org.uma.jmetal.util.binarySet.BinarySet;
 public interface BinarySolution extends Solution<BinarySet> {
   public int getNumberOfBits(int index) ;
   public int getTotalNumberOfBits() ;
- }
+}
