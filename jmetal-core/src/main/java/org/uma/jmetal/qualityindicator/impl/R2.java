@@ -37,7 +37,7 @@ public class R2<Evaluate extends List<? extends Solution<?>>>
     implements QualityIndicator<Evaluate,Double> {
   private double[][] matrix = null;
   private double[][] lambda = null;
-  private int numberOfObjectives ;
+  
 
   private Front referenceParetoFront ;
 
@@ -53,7 +53,7 @@ public class R2<Evaluate extends List<? extends Solution<?>>>
     Front front = new ArrayFront(referenceParetoFrontFile);
     referenceParetoFront = front ;
 
-    numberOfObjectives = 2;
+  
     // generating the weights
     lambda = new double[100][2];
     for (int n = 0; n < 100; n++) {
@@ -74,7 +74,7 @@ public class R2<Evaluate extends List<? extends Solution<?>>>
 
     referenceParetoFront = referenceParetoFrontFile ;
 
-    numberOfObjectives = 2;
+  
     // generating the weights
     lambda = new double[100][2];
     for (int n = 0; n < 100; n++) {
@@ -96,7 +96,7 @@ public class R2<Evaluate extends List<? extends Solution<?>>>
     Front front = new ArrayFront(referenceParetoFrontFile);
     referenceParetoFront = front ;
 
-    numberOfObjectives = 2;
+  
     // generating the weights
     lambda = new double[nVectors][2];
     for (int n = 0; n < nVectors; n++) {
@@ -123,7 +123,7 @@ public class R2<Evaluate extends List<? extends Solution<?>>>
   public double r2(Front front, Front referenceFront) {
     int numberOfObjectives = front.getPoint(0).getNumberOfDimensions() ;
 
-    // STEP 3. compute all the matrix of tchebicheff values if it is null
+    // STEP 3. compute all the matrix of Tschebyscheff values if it is null
     matrix = new double[front.getNumberOfPoints()][lambda.length];
     for (int i = 0; i < front.getNumberOfPoints(); i++) {
       for (int j = 0; j < lambda.length; j++) {
