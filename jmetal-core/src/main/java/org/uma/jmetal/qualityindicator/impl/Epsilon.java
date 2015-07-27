@@ -102,13 +102,11 @@ public class Epsilon<Evaluate extends List<? extends Solution<?>>>
    * Returns the value of the epsilon indicator.
    *
    * @param front Solution front
-   * @param referenceFront True Pareto front
+   * @param referenceFront Optimal Pareto front
    * @return the value of the epsilon indicator
    * @throws JMetalException
    */
   private double epsilon(Front front, Front referenceFront) throws JMetalException {
-    Front normalizedFront;
-    Front normalizedParetoFront;
 
     double eps, epsJ = 0.0, epsK = 0.0, epsTemp;
 
