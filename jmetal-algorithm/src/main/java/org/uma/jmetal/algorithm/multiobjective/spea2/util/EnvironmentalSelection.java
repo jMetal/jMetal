@@ -34,7 +34,6 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
       size = this.solutionsToSelect;
     }
 
-    // Create a new auxiliar population for no alter the original population
     List<S> aux = new ArrayList<>(source.size());
 
     int i = 0;

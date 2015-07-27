@@ -110,7 +110,6 @@ public class SPEA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
       candidateSecondParent = selectionOperator.execute(population);
       parents.add(candidateSecondParent);
 
-      //make the crossover
       List<S> offspring = crossoverOperator.execute(parents);
       mutationOperator.execute(offspring.get(0));
       offSpringPopulation.add(offspring.get(0));
