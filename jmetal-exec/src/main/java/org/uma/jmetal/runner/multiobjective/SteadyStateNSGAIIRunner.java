@@ -50,10 +50,7 @@ public class SteadyStateNSGAIIRunner extends AbstractAlgorithmRunner {
    * @throws JMetalException
    * @throws FileNotFoundException
    * Invoking command:
-   mvn
-    -pl jmetal-exec
-    exec:java -Dexec.mainClass="org.uma.jmetal.runner.multiobjective.SteadyStateNSGAIIRunner"
-    -Dexec.args="problemName [referenceFront]"
+  java org.uma.jmetal.runner.multiobjective.SteadyStateNSGAIIRunner problemName [referenceFront]
    */
 
   public static void main(String[] args) throws JMetalException, FileNotFoundException {

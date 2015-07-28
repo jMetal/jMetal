@@ -32,10 +32,7 @@ public class ABYSSRunner extends AbstractAlgorithmRunner {
    * @throws JMetalException
    * @throws FileNotFoundException
    * Invoking command:
-  mvn
-  -pl jmetal-exec
-  exec:java -Dexec.mainClass="org.uma.jmetal.runner.multiobjective.AbYSSRunner"
-  -Dexec.args="problemName [referenceFront]"
+  java org.uma.jmetal.runner.multiobjective.AbYSSRunner problemName [referenceFront]
    */
   public static void main(String[] args) throws Exception {
     DoubleProblem problem;

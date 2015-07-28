@@ -56,10 +56,7 @@ public class NSGAIIBigDataRunner extends AbstractAlgorithmRunner {
    * @throws SecurityException
    * @throws ClassNotFoundException
    * Invoking command:
-     mvn
-  -pl jmetal-exec
-  exec:java -Dexec.mainClass="org.uma.jmetal.runner.multiobjective.NSGAIIBigDataRunner"
-  -Dexec.args="problemName [referenceFront]"
+  java org.uma.jmetal.runner.multiobjective.NSGAIIBigDataRunner problemName [referenceFront]
    */
   public static void main(String[] args)
       throws JMetalException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException,

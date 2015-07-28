@@ -50,10 +50,7 @@ public class SPEA2BinaryRunner extends AbstractAlgorithmRunner {
    * @param args Command line arguments.
    * @throws SecurityException
    * Invoking command:
-  mvn
-  -pl jmetal-exec
-  exec:java -Dexec.mainClass="org.uma.jmetal.runner.multiobjective.SPEA2BinaryRunner"
-  -Dexec.args="problemName [referenceFront]"
+  java org.uma.jmetal.runner.multiobjective.SPEA2BinaryRunner problemName [referenceFront]
    */
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
     BinaryProblem problem;

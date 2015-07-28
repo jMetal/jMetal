@@ -44,10 +44,7 @@ public class GDE3Runner extends AbstractAlgorithmRunner {
    * @param args Command line arguments.
    * @throws SecurityException
    * Invoking command:
-    mvn
-    -pl jmetal-exec
-    exec:java -Dexec.mainClass="org.uma.jmetal.runner.multiobjective.GDE3Runner"
-    -Dexec.args="problemName [referenceFront]"
+  java org.uma.jmetal.runner.multiobjective.GDE3Runner problemName [referenceFront]
    */
   public static void main(String[] args) throws FileNotFoundException {
     DoubleProblem problem;
