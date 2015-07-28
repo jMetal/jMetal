@@ -51,10 +51,7 @@ public class NSGAIIBinaryRunner extends AbstractAlgorithmRunner {
    * @throws SecurityException
    * @throws ClassNotFoundException
    * Invoking command:
-   mvn
-  -pl jmetal-exec
-  exec:java -Dexec.mainClass="org.uma.jmetal.runner.multiobjective.NSGAIIBinaryRunner"
-  -Dexec.args="problemName [referenceFront]"
+  java org.uma.jmetal.runner.multiobjective.NSGAIIBinaryRunner problemName [referenceFront]
    */
   public static void main(String[] args) throws
           Exception {
