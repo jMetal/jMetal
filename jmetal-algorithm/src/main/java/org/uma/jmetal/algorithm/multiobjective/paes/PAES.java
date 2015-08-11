@@ -38,9 +38,7 @@ public class PAES<S extends Solution<?>> extends AbstractEvolutionStrategy<S, Li
   protected int maxEvaluations;
   protected int biSections;
   protected int evaluations;
-
-  protected MutationOperator<S> mutationOperator;
-
+  
   protected AdaptiveGridArchive<S> archive;
   protected Comparator<S> comparator;
 
