@@ -58,7 +58,7 @@ public class SetCoverageTest {
     List<Solution<DoubleSolution>> frontA = null ;
     List<Solution<DoubleSolution>> frontB = new ArrayList<>() ;
 
-    setCoverage.evaluate(new ImmutablePair(frontA, frontB));
+    setCoverage.evaluate(new ImmutablePair<List<? extends Solution<?>>, List<? extends Solution<?>>>(frontA, frontB));
   }
 
   @Test
@@ -69,7 +69,7 @@ public class SetCoverageTest {
     List<Solution<DoubleSolution>> frontA = new ArrayList<>() ;
     List<Solution<DoubleSolution>> frontB = null ;
 
-    setCoverage.evaluate(new ImmutablePair(frontA, frontB));
+    setCoverage.evaluate(new ImmutablePair<List<? extends Solution<?>>, List<? extends Solution<?>>>(frontA, frontB));
   }
 
   @Test
@@ -87,7 +87,7 @@ public class SetCoverageTest {
     frontA.setPoint(0, point1);
     frontB.setPoint(0, point1);
 
-    Pair<Double, Double> result = setCoverage.evaluate(new ImmutablePair(
+    Pair<Double, Double> result = setCoverage.evaluate(new ImmutablePair<List<? extends Solution<?>>, List<? extends Solution<?>>>(
         FrontUtils.convertFrontToSolutionList(frontA),
         FrontUtils.convertFrontToSolutionList(frontB))) ;
 
@@ -101,7 +101,7 @@ public class SetCoverageTest {
     Front frontA = new ArrayFront(numberOfPoints, numberOfDimensions);
     Front frontB = new ArrayFront(numberOfPoints, numberOfDimensions);
 
-    Pair<Double, Double> result = setCoverage.evaluate(new ImmutablePair(
+    Pair<Double, Double> result = setCoverage.evaluate(new ImmutablePair<List<? extends Solution<?>>, List<? extends Solution<?>>>(
         FrontUtils.convertFrontToSolutionList(frontA),
         FrontUtils.convertFrontToSolutionList(frontB))) ;
 
@@ -121,7 +121,7 @@ public class SetCoverageTest {
 
     frontA.setPoint(0, point1);
 
-    Pair<Double, Double> result = setCoverage.evaluate(new ImmutablePair(
+    Pair<Double, Double> result = setCoverage.evaluate(new ImmutablePair<List<? extends Solution<?>>, List<? extends Solution<?>>>(
         FrontUtils.convertFrontToSolutionList(frontA),
         FrontUtils.convertFrontToSolutionList(frontB))) ;
 
@@ -149,7 +149,7 @@ public class SetCoverageTest {
     frontA.setPoint(0, point1);
     frontB.setPoint(0, point2);
 
-    Pair<Double, Double> result = setCoverage.evaluate(new ImmutablePair(
+    Pair<Double, Double> result = setCoverage.evaluate(new ImmutablePair<List<? extends Solution<?>>, List<? extends Solution<?>>>(
         FrontUtils.convertFrontToSolutionList(frontA),
         FrontUtils.convertFrontToSolutionList(frontB))) ;
 
@@ -197,7 +197,7 @@ public class SetCoverageTest {
     frontB.setPoint(1, point5);
     frontB.setPoint(2, point6);
 
-    Pair<Double, Double> result = setCoverage.evaluate(new ImmutablePair(
+    Pair<Double, Double> result = setCoverage.evaluate(new ImmutablePair<List<? extends Solution<?>>, List<? extends Solution<?>>>(
         FrontUtils.convertFrontToSolutionList(frontA),
         FrontUtils.convertFrontToSolutionList(frontB))) ;
 
@@ -245,7 +245,7 @@ public class SetCoverageTest {
     frontB.setPoint(1, point5);
     frontB.setPoint(2, point6);
 
-    Pair<Double, Double> result = setCoverage.evaluate(new ImmutablePair(
+    Pair<Double, Double> result = setCoverage.evaluate(new ImmutablePair<List<? extends Solution<?>>, List<? extends Solution<?>>>(
         FrontUtils.convertFrontToSolutionList(frontA),
         FrontUtils.convertFrontToSolutionList(frontB))) ;
 

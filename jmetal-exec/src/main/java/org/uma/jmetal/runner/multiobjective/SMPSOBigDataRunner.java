@@ -58,8 +58,8 @@ public class SMPSOBigDataRunner extends AbstractAlgorithmRunner {
    */
   public static void main(String[] args) throws Exception {
     DoubleProblem problem;
-    Algorithm algorithm;
-    MutationOperator mutation;
+    Algorithm<List<DoubleSolution>> algorithm;
+    MutationOperator<DoubleSolution> mutation;
 
     String instanceName ;
 
@@ -71,7 +71,7 @@ public class SMPSOBigDataRunner extends AbstractAlgorithmRunner {
 
     problem = new BigOpt2015(instanceName) ;
 
-    Archive archive = new CrowdingDistanceArchive(20) ;
+    Archive<DoubleSolution> archive = new CrowdingDistanceArchive<DoubleSolution>(20) ;
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
     double mutationDistributionIndex = 20.0 ;

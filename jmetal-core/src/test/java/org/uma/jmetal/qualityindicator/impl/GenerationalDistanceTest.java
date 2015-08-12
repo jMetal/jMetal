@@ -53,7 +53,7 @@ public class GenerationalDistanceTest {
 
     Front front = null ;
 
-    new GenerationalDistance(front) ;
+    new GenerationalDistance<>(front) ;
   }
 /*
   @Test
