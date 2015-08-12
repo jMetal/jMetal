@@ -51,7 +51,7 @@ public class ErrorRatioTest {
     exception.expectMessage(containsString("The Pareto front approximation is null"));
 
     Front referenceFront = null ;
-    new ErrorRatio(referenceFront) ;
+    new ErrorRatio<>(referenceFront) ;
   }
 
   @Test
@@ -190,7 +190,7 @@ public class ErrorRatioTest {
 
   @Test
   public void shouldGetNameReturnTheCorrectValue() throws FileNotFoundException {
-    QualityIndicator errorRatio = new ErrorRatio(new ArrayFront()) ;
+    QualityIndicator<?, Double> errorRatio = new ErrorRatio<>(new ArrayFront()) ;
     assertEquals("ER", errorRatio.getName());
   }
 

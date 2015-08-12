@@ -53,7 +53,7 @@ public class GDE3BigDataRunner {
    */
   public static void main(String[] args) {
     DoubleProblem problem;
-    Algorithm algorithm;
+    Algorithm<List<DoubleSolution>> algorithm;
     DifferentialEvolutionSelection selection;
     DifferentialEvolutionCrossover crossover;
 

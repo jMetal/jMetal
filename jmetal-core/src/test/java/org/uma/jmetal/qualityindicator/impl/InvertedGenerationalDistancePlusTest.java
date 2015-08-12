@@ -47,12 +47,12 @@ public class InvertedGenerationalDistancePlusTest {
 
     Front front = null ;
 
-    new InvertedGenerationalDistancePlus(front) ;
+    new InvertedGenerationalDistancePlus<>(front) ;
   }
 
   @Test (expected = FileNotFoundException.class)
   public void shouldConstructorRaiseAnExceptionIfFileNameIsNull() throws FileNotFoundException {
-    new InvertedGenerationalDistancePlus("nonExistingFile") ;
+    new InvertedGenerationalDistancePlus<>("nonExistingFile") ;
   }
 
   /* TODO test pending of solving an issue in class ArrayFront
