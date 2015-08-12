@@ -32,26 +32,21 @@ public class SolutionListUtils {
     return ranking.computeRanking(solutionList).getSubfront(0);
   }
 
-  public <S extends Solution<?>> int findWorstSolution(List<S> solutionList, Comparator<S> comparator) {
+  public <S extends Solution<?>> S findWorstSolution(Collection<S> solutionList, Comparator<S> comparator) {
     if ((solutionList == null) || (solutionList.isEmpty())) {
-      return -1;
+      throw new IllegalArgumentException("No solution provided: "+solutionList);
     }
 
-    int index = 0;
-    S worstKnown = solutionList.get(0), candidateSolution;
-    int flag;
-    for (int i = 1; i < solutionList.size(); i++) {
-      candidateSolution = solutionList.get(i);
-      flag = comparator.compare(worstKnown, candidateSolution);
-      if (flag == -1) {
-        index = i;
+    S worstKnown = solutionList.iterator().next();
+    for (S candidateSolution : solutionList) {
+      if (comparator.compare(worstKnown, candidateSolution) < 0) {
         worstKnown = candidateSolution;
       }
     }
 
-    return index;
+    return worstKnown;
   }
-
+  
   /**
    * Finds the index of the best solution in the list according to a comparator
    * @param solutionList
