@@ -59,7 +59,7 @@ public class PESA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
 
     this.evaluator = evaluator ;
 
-    archive = new AdaptiveGridArchive<>(archiveSize,biSections,problem.getNumberOfObjectives()) ;
+    archive = new AdaptiveGridArchive<>(this.archiveSize, this.biSections,problem.getNumberOfObjectives()) ;
   }
 
   @Override protected void initProgress() {

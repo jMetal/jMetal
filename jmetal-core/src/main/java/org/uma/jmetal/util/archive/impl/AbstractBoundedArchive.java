@@ -25,20 +25,19 @@ import java.util.List;
 public abstract class AbstractBoundedArchive<S extends Solution<?>> implements BoundedArchive<S> {
 	protected NonDominatedSolutionListArchive<S> list;
 	protected int maxSize;
-	
+
 	public AbstractBoundedArchive(int maxSize) {
 		this.maxSize = maxSize;
 		this.list = new NonDominatedSolutionListArchive<S>();
 	}
-	
+
 	@Override
 	public boolean add(S solution) {
 		boolean success = list.add(solution);
-		if (success) 
+		if (success)
 			prune();
 
 		return success;
-			
 	}
 
 	@Override
@@ -60,6 +59,6 @@ public abstract class AbstractBoundedArchive<S extends Solution<?>> implements B
 	public int getMaxSize() {
 		return maxSize;
 	}
-	
+
 	public abstract void prune();
 }
