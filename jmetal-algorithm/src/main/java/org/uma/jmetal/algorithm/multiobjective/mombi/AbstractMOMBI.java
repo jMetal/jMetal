@@ -1,6 +1,7 @@
 package org.uma.jmetal.algorithm.multiobjective.mombi;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
@@ -21,6 +22,8 @@ public abstract class AbstractMOMBI<S extends Solution<?>> extends AbstractGenet
 
 	private 	  int						iterations = 0;
 	private final SolutionListEvaluator<S> 	evaluator;
+	private final List<Double>				referencePoint;
+	private final List<Double>				nadirPoint;
 	
 	/**
 	 * Constructor
@@ -52,6 +55,12 @@ public abstract class AbstractMOMBI<S extends Solution<?>> extends AbstractGenet
 		
 		// info to evaluate the problem
 		this.evaluator = evaluator;
+		
+		// info required for MOMBI
+		this.nadirPoint     = new ArrayList<>(this.getProblem().getNumberOfObjectives());
+		this.initializeNadirPoint(this.getProblem().getNumberOfObjectives());
+		this.referencePoint = new ArrayList<>(this.getProblem().getNumberOfObjectives());
+		this.initializeReferencePoint(this.getProblem().getNumberOfObjectives());
 	}
 	
 	
@@ -151,5 +160,45 @@ public abstract class AbstractMOMBI<S extends Solution<?>> extends AbstractGenet
 	public Problem<S> getProblem() {
 		return this.problem;
 	}
+	
+	public List<Double> getReferencePoint() {
+		return this.referencePoint;		
+	}
+	
+	public List<Double> getNadirPoint() {
+		return this.nadirPoint;
+	}
+	
+	private void initializeReferencePoint(int size) {
+		for (int i = 0; i < size; i++)			
+			this.getReferencePoint().add(Double.POSITIVE_INFINITY);
+	}
+	
+	private void initializeNadirPoint(int size) {
+		
+		for (int i = 0; i < size; i++)
+			this.getNadirPoint().add(Double.NEGATIVE_INFINITY);
+	}
+	
+	private void updateReferencePoint(S s) {
+		for (int i = 0; i < s.getNumberOfObjectives(); i++) 
+			this.getReferencePoint().set(i, Math.min(this.getReferencePoint().get(i),s.getObjective(i)));		
+	}
+	
+	private void updateNadirPoint(S s) {
+		for (int i = 0; i < s.getNumberOfObjectives(); i++)
+			this.getNadirPoint().set(i, Math.max(this.getNadirPoint().get(i),s.getObjective(i)));
+	}
+	
+	public void updateReferencePoint(List<S> population) {		
+		for (S solution : population)
+			this.updateReferencePoint(solution);
+	}
+	
+	public void updateNadirPoint(List<S> population) {
+		for (S solution : population)
+			this.updateNadirPoint(solution);
+	}
+
 	
 }

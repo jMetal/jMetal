@@ -9,10 +9,13 @@ import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
+import org.uma.jmetal.util.solutionattribute.Ranking;
+import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;
 
 public class MOMBI<S extends Solution<?>> extends AbstractMOMBI<S>{
-	private List<Double> referencePoint  = null;
-	private List<Double> nadirPoint      = null;
+	
+	
+	AbstractUtilityFunctionsSet<S> utilityFunctions;
 	
 	public MOMBI(Problem<S> problem, 
 			int maxIterations, 
@@ -20,48 +23,12 @@ public class MOMBI<S extends Solution<?>> extends AbstractMOMBI<S>{
 			CrossoverOperator<S> crossover,
 			MutationOperator<S> mutation, 
 			SelectionOperator<List<S>, S> selection, 
-			SolutionListEvaluator<S> evaluator) {
+			SolutionListEvaluator<S> evaluator,
+			String pathWeights) {
 		super(problem, maxIterations, populationSize, crossover, mutation, selection, evaluator);
-		
+		this.utilityFunctions = new TchebycheffUtilityFunctionsSet(pathWeights, this.getReferencePoint());
 	}
 	
-	private void initializeReferenceVector(int size) {
-		this.referencePoint = new ArrayList<>(size);
-		for (int i = 0; i < size; i++)
-			this.referencePoint.add(Double.POSITIVE_INFINITY);
-	}
-	
-	private void initializeNadirPoint(int size) {
-		this.nadirPoint = new ArrayList<>(size);
-		for (int i = 0; i < size; i++)
-			this.nadirPoint.add(Double.NEGATIVE_INFINITY);
-	}
-	
-	private void updateReferencePoint(S s) {
-		for (int i = 0; i < s.getNumberOfObjectives(); i++) 
-			this.referencePoint.set(i, Math.min(this.referencePoint.get(i),s.getObjective(i)));		
-	}
-	
-	private void updateNadirPoint(S s) {
-		for (int i = 0; i < s.getNumberOfObjectives(); i++)
-			this.nadirPoint.set(i, Math.max(this.nadirPoint.get(i),s.getObjective(i)));
-	}
-	
-	public void updateReferencePoint(List<S> population) {
-		if (this.referencePoint==null) 
-			initializeReferenceVector(this.getProblem().getNumberOfObjectives());
-		
-		for (S solution : population)
-			this.updateReferencePoint(solution);
-	}
-	
-	public void updateNadirPoint(List<S> population) {
-		if (this.nadirPoint==null)
-			initializeNadirPoint(this.getProblem().getNumberOfObjectives());
-		
-		for (S solution : population)
-			this.updateNadirPoint(solution);
-	}
 	
 	
 	@Override
@@ -72,8 +39,41 @@ public class MOMBI<S extends Solution<?>> extends AbstractMOMBI<S>{
 
 	@Override
 	protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
-		// TODO Auto-generated method stub
+		List<S> jointPopulation = new ArrayList<>();
+		jointPopulation.addAll(population);
+		jointPopulation.addAll(offspringPopulation);
+		
+		Ranking<S> ranking = computeRanking(jointPopulation);
+		return selectBests(ranking);
+		
 		return null;
 	}
 
+	
+	protected Ranking<S> computeRanking(List<S> solutionList) {
+		Ranking<S> ranking = new R2Ranking<>(this.utilityFunctions);
+		ranking.computeRanking(solutionList);
+		
+		return ranking;
+	}
+	
+	protected List<S> crowdingDistanceSelection(Ranking<S> ranking) {
+	    CrowdingDistance<S> crowdingDistance = new CrowdingDistance<S>();
+	    List<S> population = new ArrayList<>(populationSize);
+	    int rankingIndex = 0;
+	    while (populationIsNotFull(population)) {
+	      if (subfrontFillsIntoThePopulation(ranking, rankingIndex, population)) {
+	        addRankedSolutionsToPopulation(ranking, rankingIndex, population);
+	        rankingIndex++;
+	      } else {
+	        crowdingDistance.computeDensityEstimator(ranking.getSubfront(rankingIndex));
+	        addLastRankedSolutionsToPopulation(ranking, rankingIndex, population);
+	      }
+	    }
+
+	    return population;
+	}
+	
+	
+	
 }

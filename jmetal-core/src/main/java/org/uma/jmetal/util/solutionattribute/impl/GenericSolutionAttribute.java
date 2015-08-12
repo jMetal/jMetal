@@ -35,7 +35,7 @@ public class GenericSolutionAttribute <S extends Solution<?>, V> implements Solu
   }
 
   @Override
-  public Object getAttributeID() {
+  public static Object getAttributeID() {
     return this.getClass() ;
   }
 }
