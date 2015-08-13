@@ -15,38 +15,42 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
 
-public class R2Ranking<S extends Solution<?>> extends GenericSolutionAttribute<S, Integer>implements Ranking<S> {
+public class R2Ranking<S extends Solution<?>> implements Ranking<S> {
 
-	private AbstractUtilityFunctionsSet utilityFunctions;
+	private AbstractUtilityFunctionsSet<S> utilityFunctions;
 	private List<List<S>> rankedSubpopulations;
 	private int numberOfRanks = 0;
 
-	public R2Ranking(AbstractUtilityFunctionsSet utilityFunctions) {
+	public R2Ranking(AbstractUtilityFunctionsSet<S> utilityFunctions) {
 		this.utilityFunctions = utilityFunctions;
 	}
 
 	@Override
 	public Ranking<S> computeRanking(List<S> population) {
+		
+		R2RankingAttribute<S> attribute = new R2RankingAttribute<>();
 
 		for (S solution : population)
-			solution.setAttribute(getAttributeID(), new R2SolutionData());
+			solution.setAttribute(attribute, new R2SolutionData());
 
 		for (int i = 0; i < this.utilityFunctions.getSize(); i++) {
 			for (S p : population) {
-				((R2SolutionData) p.getAttribute(getAttributeID())).alpha = this.utilityFunctions.evaluate(p, i);
+				attribute.getAttribute(p).alpha = this.utilityFunctions.evaluate(p, i);
 
-				if (((R2SolutionData) p.getAttribute(getAttributeID())).alpha < ((R2SolutionData) p
+				if (((R2SolutionData) p.getAttribute(attribute.getAttributeID())).alpha < ((R2SolutionData) p
 						.getAttribute(getAttributeID())).utility)
-					((R2SolutionData) p.getAttribute(getAttributeID())).utility = ((R2SolutionData) p
+					((R2SolutionData) p.getAttribute(attribute.getAttributeID())).utility = ((R2SolutionData) p
 							.getAttribute(getAttributeID())).alpha;
 
 			}
 
-			Collections.sort(population, new Comparator<R2Ranking<S>>() {
+			Collections.sort(population, new Comparator<S>() {
 				@Override
-				public int compare(R2Ranking<S> o1, R2Ranking<S> o2) {
-					R2SolutionData data1 = (R2SolutionData) o1.getAttribute(o1.getClass());
-					R2SolutionData data2 = (R2SolutionData) o2.getAttribute(Ranking);
+				public int compare(S o1, S o2) {
+					R2RankingAttribute<S> attribute = new R2RankingAttribute<>();
+					R2SolutionData data1 = (R2SolutionData) attribute.getAttribute(o1);
+					R2SolutionData data2 = (R2SolutionData) attribute.getAttribute(o2);
+										
 					if (data1.alpha < data2.alpha)
 						return -1;
 					else if (data1.alpha > data2.alpha)
@@ -57,9 +61,10 @@ public class R2Ranking<S extends Solution<?>> extends GenericSolutionAttribute<S
 			});
 
 			int rank = 1;
-			for (Solution p : population) {
-				if (rank < p.getRight().rank) {
-					p.getLeft().setAttribute(getAttributeID(), rank);
+			for (S p : population) {
+				R2SolutionData r2Data = attribute.getAttribute(p);
+				if (rank < r2Data.rank) {
+					p.setAttribute(attribute.getAttributeID(), rank);
 					numberOfRanks = Math.max(numberOfRanks, rank);
 				}
 				rank = rank + 1;
@@ -67,12 +72,12 @@ public class R2Ranking<S extends Solution<?>> extends GenericSolutionAttribute<S
 		}
 
 		Map<Integer, List<S>> fronts = new TreeMap<>(); // sorted on key
-		for (Pair<S, R2SolutionData> p : population) {
-			if (fronts.get(p.getRight().rank) == null)
-				fronts.put(p.getRight().rank, new LinkedList<S>());
+		for (S p : population) {
+			R2SolutionData r2Data = attribute.getAttribute(p);
+			if (fronts.get(r2Data.rank) == null)
+				fronts.put(r2Data.rank, new LinkedList<S>());
 
-			fronts.get(p.getRight().rank).add(p.getLeft());
-			p.getLeft().setAttribute(getAttributeID(), p.getRight().rank);
+			fronts.get(r2Data.rank).add(p);			
 		}
 
 		this.rankedSubpopulations = new ArrayList<>(fronts.size());
@@ -92,5 +97,6 @@ public class R2Ranking<S extends Solution<?>> extends GenericSolutionAttribute<S
 	public int getNumberOfSubfronts() {
 		return this.rankedSubpopulations.size();
 	}
+		
 
 }
