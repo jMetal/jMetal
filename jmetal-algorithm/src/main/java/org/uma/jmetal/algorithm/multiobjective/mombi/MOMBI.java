@@ -1,6 +1,8 @@
 package org.uma.jmetal.algorithm.multiobjective.mombi;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.uma.jmetal.operator.CrossoverOperator;
@@ -9,26 +11,30 @@ import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
-import org.uma.jmetal.util.solutionattribute.Ranking;
-import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;
 
+
+@SuppressWarnings("serial")
 public class MOMBI<S extends Solution<?>> extends AbstractMOMBI<S>{
 	
 	
-	AbstractUtilityFunctionsSet<S> utilityFunctions;
+	private final AbstractUtilityFunctionsSet<S> utilityFunctions;
 	
+		
 	public MOMBI(Problem<S> problem, 
 			int maxIterations, 
-			int populationSize, 
 			CrossoverOperator<S> crossover,
 			MutationOperator<S> mutation, 
 			SelectionOperator<List<S>, S> selection, 
 			SolutionListEvaluator<S> evaluator,
 			String pathWeights) {
-		super(problem, maxIterations, populationSize, crossover, mutation, selection, evaluator);
-		this.utilityFunctions = new TchebycheffUtilityFunctionsSet(pathWeights, this.getReferencePoint());
+		super(problem, maxIterations, crossover, mutation, selection, evaluator);
+		//this.utilityFunctions = new TchebycheffUtilityFunctionsSet<>(pathWeights,this.getReferencePoint());		
+		this.utilityFunctions = new ASFUtilityFunctionSet<>(pathWeights,this.getReferencePoint());
 	}
 	
+	public int getPopulationSize() {
+		return this.utilityFunctions.getSize();
+	}
 	
 	
 	@Override
@@ -43,37 +49,72 @@ public class MOMBI<S extends Solution<?>> extends AbstractMOMBI<S>{
 		jointPopulation.addAll(population);
 		jointPopulation.addAll(offspringPopulation);
 		
-		Ranking<S> ranking = computeRanking(jointPopulation);
-		return selectBests(ranking);
+		R2Ranking<S> ranking = computeRanking(jointPopulation);
+		return selectBest(ranking);
 		
-		return null;
+		
 	}
 
 	
-	protected Ranking<S> computeRanking(List<S> solutionList) {
-		Ranking<S> ranking = new R2Ranking<>(this.utilityFunctions);
+	protected R2Ranking<S> computeRanking(List<S> solutionList) {
+		R2Ranking<S> ranking = new R2Ranking<>(this.utilityFunctions);
 		ranking.computeRanking(solutionList);
 		
 		return ranking;
 	}
 	
-	protected List<S> crowdingDistanceSelection(Ranking<S> ranking) {
-	    CrowdingDistance<S> crowdingDistance = new CrowdingDistance<S>();
-	    List<S> population = new ArrayList<>(populationSize);
-	    int rankingIndex = 0;
+	protected void addRankedSolutionsToPopulation(R2Ranking<S> ranking, int index, List<S> population) {
+		for (S solution : ranking.getSubfront(index)) 
+			population.add(solution);		
+	}
+	
+	protected void addLastRankedSolutionsToPopulation(R2Ranking<S> ranking,int index, List<S>population) {
+		List<S> front = ranking.getSubfront(index);
+		Collections.sort(front, new Comparator<S>() {
+			@Override
+			public int compare(S arg0, S arg1) {
+				R2Ranking.R2RankingAttribute<S> attribute = new R2Ranking.R2RankingAttribute<>();
+				R2SolutionData dataFirst  = attribute.getAttribute(arg0);
+				R2SolutionData dataSecond = attribute.getAttribute(arg0);
+				if (dataFirst.utility < dataSecond.utility)
+					return -1;
+				else if (dataFirst.utility > dataSecond.utility)
+					return 1;
+				else
+					return 0;
+			}
+			
+		});
+		int remain = this.getPopulationSize() - population.size();
+		for (S solution : front.subList(0, remain))
+			population.add(solution);						
+	}
+	
+	
+	
+	protected List<S> selectBest(R2Ranking<S> ranking) {
+		List<S> population = new ArrayList<>(this.getPopulationSize());
+		int rankingIndex = 0;
+	    
 	    while (populationIsNotFull(population)) {
 	      if (subfrontFillsIntoThePopulation(ranking, rankingIndex, population)) {
 	        addRankedSolutionsToPopulation(ranking, rankingIndex, population);
 	        rankingIndex++;
-	      } else {
-	        crowdingDistance.computeDensityEstimator(ranking.getSubfront(rankingIndex));
+	      } else {	    	  	        
 	        addLastRankedSolutionsToPopulation(ranking, rankingIndex, population);
 	      }
 	    }
-
-	    return population;
+		
+		
+		return population;
 	}
 	
+	
+	private boolean subfrontFillsIntoThePopulation(R2Ranking<S> ranking, int index, List<S> population) {
+		return (population.size()+ranking.getSubfront(index).size() < this.getPopulationSize());
+	}
+	
+
 	
 	
 }

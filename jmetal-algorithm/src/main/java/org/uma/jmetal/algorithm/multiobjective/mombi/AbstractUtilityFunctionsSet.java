@@ -108,6 +108,7 @@ public abstract class AbstractUtilityFunctionsSet<S extends Solution<?>> {
 						List<Double> new_vector = new ArrayList<>(number_of_objectives);
 						for (int i = 0; i < number_of_objectives; i++) 
 							new_vector.add(new Double(st.nextToken()));
+						this.weightVectors.add(new_vector);
 				}											
 						
 			} catch (IOException e) {
