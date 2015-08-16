@@ -47,7 +47,7 @@ public class SMSEMOA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
 
   protected int evaluations;
 
-  private Hypervolume hypervolume;
+  private Hypervolume<?> hypervolume;
 
   /**
    * Constructor
@@ -66,7 +66,7 @@ public class SMSEMOA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
     this.mutationOperator = mutationOperator;
     this.selectionOperator = selectionOperator;
 
-    hypervolume = new Hypervolume() ;
+    hypervolume = new Hypervolume<>() ;
   }
 
   @Override protected void initProgress() {

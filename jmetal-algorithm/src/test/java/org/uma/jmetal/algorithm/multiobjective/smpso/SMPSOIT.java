@@ -46,7 +46,7 @@ public class SMPSOIT {
 
     List<DoubleSolution> population = algorithm.getResult();
 
-    QualityIndicator hypervolume = new Hypervolume("/referenceFronts/ZDT4.pf") ;
+    QualityIndicator<List<DoubleSolution>, Double> hypervolume = new Hypervolume<>("/referenceFronts/ZDT4.pf") ;
 
     // Rationale: the default problem is ZDT4, and SMPSO, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.64
