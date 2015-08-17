@@ -28,8 +28,13 @@ public class MOMBI<S extends Solution<?>> extends AbstractMOMBI<S>{
 			SolutionListEvaluator<S> evaluator,
 			String pathWeights) {
 		super(problem, maxIterations, crossover, mutation, selection, evaluator);
+		utilityFunctions = this.createUtilityFunction(pathWeights);
+		
+	}
+	
+	public AbstractUtilityFunctionsSet<S> createUtilityFunction(String pathWeights) {
 		//this.utilityFunctions = new TchebycheffUtilityFunctionsSet<>(pathWeights,this.getReferencePoint());		
-		this.utilityFunctions = new ASFUtilityFunctionSet<>(pathWeights,this.getReferencePoint());
+		return new ASFUtilityFunctionSet<>(pathWeights,this.getReferencePoint());
 	}
 	
 	public int getPopulationSize() {
@@ -39,8 +44,8 @@ public class MOMBI<S extends Solution<?>> extends AbstractMOMBI<S>{
 	
 	@Override
 	public void specificMOEAComputations() {
-		updateReferencePoint(this.getPopulation());
-		updateNadirPoint(this.getPopulation());								
+		updateNadirPoint(this.getPopulation());
+		updateReferencePoint(this.getPopulation());										
 	}
 
 	@Override
@@ -114,6 +119,10 @@ public class MOMBI<S extends Solution<?>> extends AbstractMOMBI<S>{
 		return (population.size()+ranking.getSubfront(index).size() < this.getPopulationSize());
 	}
 	
+	
+	protected AbstractUtilityFunctionsSet<S> getUtilityFunctions() {
+		return this.getUtilityFunctions();
+	}
 
 	
 	

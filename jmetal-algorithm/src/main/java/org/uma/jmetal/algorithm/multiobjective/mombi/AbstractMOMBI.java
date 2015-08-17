@@ -181,7 +181,7 @@ public abstract class AbstractMOMBI<S extends Solution<?>> extends AbstractGenet
 			this.getNadirPoint().add(Double.NEGATIVE_INFINITY);
 	}
 	
-	private void updateReferencePoint(S s) {
+	protected void updateReferencePoint(S s) {
 		for (int i = 0; i < s.getNumberOfObjectives(); i++) 
 			this.getReferencePoint().set(i, Math.min(this.getReferencePoint().get(i),s.getObjective(i)));		
 	}
@@ -205,6 +205,15 @@ public abstract class AbstractMOMBI<S extends Solution<?>> extends AbstractGenet
 		
 	protected boolean populationIsNotFull(List<S> population) {
 		return population.size() < getPopulationSize();
+	}
+	
+	protected void setReferencePointValue(Double value, int index) {		
+		
+		if ((index < 0) || (index >= this.referencePoint.size()))
+				throw new IndexOutOfBoundsException();
+		
+		this.referencePoint.set(index, value);
+		
 	}
 	
 }
