@@ -15,7 +15,6 @@ package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.mombi.MOMBI;
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -38,7 +37,7 @@ import java.util.List;
 /**
  * Class to configure and run the MOMBI algorithm
  *
- * @author Juan J. Durillo <antonio@lcc.uma.es>
+ * @author Juan J. Durillo <juanjod@gmail.com>
  */
 public class MOMBIRunner extends AbstractAlgorithmRunner {
   /**
@@ -63,7 +62,7 @@ public class MOMBIRunner extends AbstractAlgorithmRunner {
       problemName = args[0] ;
       referenceParetoFront = args[1] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT2";
+      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
       referenceParetoFront = "" ;
     }
 

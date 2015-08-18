@@ -10,6 +10,7 @@ import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 
 @SuppressWarnings("serial")
@@ -114,8 +115,12 @@ public abstract class AbstractMOMBI<S extends Solution<?>> extends AbstractGenet
 	    List<S> offspringPopulation = new ArrayList<>(this.getPopulationSize());
 	    for (int i = 0; i < this.getPopulationSize(); i += 2) {
 	      List<S> parents = new ArrayList<>(2);
-	      parents.add(population.get(i));
-	      parents.add(population.get(i + 1));
+	      int parent1Index = JMetalRandom.getInstance().nextInt(0, this.getPopulationSize()-1);
+	      int parent2Index = JMetalRandom.getInstance().nextInt(0, this.getPopulationSize()-1);
+	      while (parent1Index==parent2Index)
+	    	  parent2Index = JMetalRandom.getInstance().nextInt(0, this.getPopulationSize()-1);
+	      parents.add(population.get(parent1Index));
+	      parents.add(population.get(parent2Index));
 
 	      List<S> offspring = crossoverOperator.execute(parents);
 

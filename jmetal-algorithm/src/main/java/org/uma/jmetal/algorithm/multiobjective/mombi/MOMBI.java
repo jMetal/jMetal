@@ -33,8 +33,8 @@ public class MOMBI<S extends Solution<?>> extends AbstractMOMBI<S>{
 	}
 	
 	public AbstractUtilityFunctionsSet<S> createUtilityFunction(String pathWeights) {
-		//this.utilityFunctions = new TchebycheffUtilityFunctionsSet<>(pathWeights,this.getReferencePoint());		
-		return new ASFUtilityFunctionSet<>(pathWeights,this.getReferencePoint());
+		return  new TchebycheffUtilityFunctionsSet<>(pathWeights,this.getReferencePoint());		
+		//return new ASFUtilityFunctionSet<>(pathWeights,this.getReferencePoint());
 	}
 	
 	public int getPopulationSize() {
@@ -121,7 +121,7 @@ public class MOMBI<S extends Solution<?>> extends AbstractMOMBI<S>{
 	
 	
 	protected AbstractUtilityFunctionsSet<S> getUtilityFunctions() {
-		return this.getUtilityFunctions();
+		return this.utilityFunctions;
 	}
 
 	

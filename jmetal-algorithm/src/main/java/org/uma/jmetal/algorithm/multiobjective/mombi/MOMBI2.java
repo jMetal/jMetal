@@ -25,6 +25,7 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
 	private final Double		   alpha		= 0.5;
 	private final Double 		   epsilon 		= 1e-3;	
 	private  List<Double>     	   maxs;
+	private Normalizer             normalizer;
 	
 	
 	/**
@@ -46,11 +47,12 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
 	
 	public AbstractUtilityFunctionsSet<S> createUtilityFunction(String pathWeights) {
 		System.out.println("MOMBI 2");
-		//this.mins    = new ArrayList<>(getProblem().getNumberOfObjectives());
+		//this.mins    = new ArrayList<>(getProblem().getNumberOfObjectives());		
 		this.maxs    = new ArrayList<>(getProblem().getNumberOfObjectives());
+		this.normalizer = new Normalizer(this.getReferencePoint(), maxs);
 		//this.utilityFunctions = new TchebycheffUtilityFunctionsSet<>(pathWeights,this.getReferencePoint());		
 		ASFUtilityFunctionSet<S> aux = new ASFUtilityFunctionSet<>(pathWeights,this.getReferencePoint());
-		aux.setNormalizer(new ASFUtilityFunctionSet.Normalizer(this.getReferencePoint(), maxs));
+		aux.setNormalizer(this.normalizer);
 		return aux;
 	}
 	
@@ -109,6 +111,15 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
 			}		
 		}
 	}
+	
+	
+	protected R2Ranking<S> computeRanking(List<S> solutionList) {
+		R2Ranking<S> ranking = new R2RankingNormalized<>(this.getUtilityFunctions(),this.normalizer);
+		ranking.computeRanking(solutionList);
+		
+		return ranking;
+	}
+	
 	
 	
 	public Double getMax(List<Double> list) {

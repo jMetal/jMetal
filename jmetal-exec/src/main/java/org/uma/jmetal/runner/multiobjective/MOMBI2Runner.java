@@ -64,7 +64,7 @@ public class MOMBI2Runner extends AbstractAlgorithmRunner {
       problemName = args[0] ;
       referenceParetoFront = args[1] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
+      problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ7";
       referenceParetoFront = "" ;
     }
 
@@ -80,8 +80,8 @@ public class MOMBI2Runner extends AbstractAlgorithmRunner {
 
     selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
-    algorithm = new MOMBI2<>(problem,250,crossover,mutation,selection,new SequentialSolutionListEvaluator<DoubleSolution>(),
-    		"/home/juan/software/coello/EMO_Proyect/demo/weight/many_objective/weight_03D_19.sld");
+    algorithm = new MOMBI2<>(problem,400,crossover,mutation,selection,new SequentialSolutionListEvaluator<DoubleSolution>(),
+    		"/home/juan/software/coello/EMO_Proyect/demo/weight/weight_03D_12.inv");
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
         .execute() ;
 

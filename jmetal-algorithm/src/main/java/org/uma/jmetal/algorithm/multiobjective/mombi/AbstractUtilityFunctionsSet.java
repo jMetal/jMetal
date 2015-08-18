@@ -110,7 +110,7 @@ public abstract class AbstractUtilityFunctionsSet<S extends Solution<?>> {
 							new_vector.add(new Double(st.nextToken()));
 						this.weightVectors.add(new_vector);
 				}											
-						
+									
 			} catch (IOException e) {
 				e.printStackTrace(); // ToDo: adding logging messages
 			}

@@ -41,21 +41,6 @@ public class ASFUtilityFunctionSet<S extends Solution<?>> extends AbstractUtilit
 		this.normalizer = normalizer;
 	}
 	
-	public static class Normalizer {
-		private final List<Double> min;
-		private final List<Double> max;
-		
-		public Normalizer(List<Double> min, List<Double> max) {
-			this.min = min;
-			this.max = max;
-		}
-		
-		public Double normalize(Double input, int index) {						 			
-			Double diff		= max.get(index) - min.get(index);
-			Double output 	= (diff==0.0) ? input : (input-min.get(index))/diff; 
-							
-			return output;			
-		}
-	}
+
 
 }

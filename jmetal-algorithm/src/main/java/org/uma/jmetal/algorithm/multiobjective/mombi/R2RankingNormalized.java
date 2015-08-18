@@ -13,32 +13,47 @@ import java.util.TreeMap;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
 
-public class R2Ranking<S extends Solution<?>> extends GenericSolutionAttribute<S,R2SolutionData> {
+public class R2RankingNormalized<S extends Solution<?>> extends R2Ranking<S> {
 
-	private AbstractUtilityFunctionsSet<S> utilityFunctions;
 	private List<List<S>> rankedSubpopulations;
-	private int numberOfRanks 								= 0;
-	private R2RankingAttribute<S>	attribute			    = new R2RankingAttribute<>();	
+	private int numberOfRanks 								= 0;	
+	private final Normalizer        normalizer;
 	
 	
-	public R2Ranking(AbstractUtilityFunctionsSet<S> utilityFunctions) {
-		this.utilityFunctions = utilityFunctions;
+	public R2RankingNormalized(AbstractUtilityFunctionsSet<S> utilityFunctions, Normalizer normalizer) {
+		super(utilityFunctions);		
+		this.normalizer       = normalizer;
 	}
+	
+	private double computeNorm(S solution) {
+		List<Double> values = new ArrayList<Double>(solution.getNumberOfObjectives());
+		for (int i = 0; i < solution.getNumberOfObjectives(); i++)
+			if (normalizer == null)
+				values.add(solution.getObjective(i));
+			else
+				values.add(this.normalizer.normalize(solution.getObjective(i), i));
+		
+		double result = 0.0;
+		for (Double d : values)
+			result += Math.pow(d, 2.0);
+		
+		return Math.sqrt(result);
+	}
+	
 
-	public R2Ranking<S> computeRanking(List<S> population) {
+	public R2RankingNormalized<S> computeRanking(List<S> population) {
 
-		for (S solution : population)
-			solution.setAttribute(getAttributeID(), new R2SolutionData());
+		for (S solution : population) {
+			R2SolutionData data =  new R2SolutionData();
+			data.utility = this.computeNorm(solution);
+			solution.setAttribute(getAttributeID(), data);
+		}
 
-		for (int i = 0; i < this.utilityFunctions.getSize(); i++) {
+		for (int i = 0; i < this.getUtilityFunctions().getSize(); i++) {
 			
 			for (S solution : population) {								
 				R2SolutionData solutionData = this.getAttribute(solution); 
-				solutionData.alpha = this.utilityFunctions.evaluate(solution, i);
-				
-				if (solutionData.alpha < solutionData.utility)
-					solutionData.utility = solutionData.alpha;
-
+				solutionData.alpha = this.getUtilityFunctions().evaluate(solution, i);								
 			}
 
 			Collections.sort(population, new Comparator<S>() {
@@ -93,25 +108,6 @@ public class R2Ranking<S extends Solution<?>> extends GenericSolutionAttribute<S
 		return this.rankedSubpopulations.size();
 	}
 
-	@Override
-	public void setAttribute(S solution, R2SolutionData value) {
-		this.attribute.setAttribute(solution, value);
 
-	}
 
-	@Override
-	public R2SolutionData getAttribute(S solution) {								
-		return this.attribute.getAttribute(solution);
-	}
-
-	@Override
-	public Object getAttributeID() {		
-		return this.attribute.getAttributeID();
-	}
-	
-	public AbstractUtilityFunctionsSet<S> getUtilityFunctions() {
-		return this.utilityFunctions;
-	}
-	
-	public static class R2RankingAttribute<T extends Solution<?>> extends GenericSolutionAttribute<T,R2SolutionData> {}
 }
