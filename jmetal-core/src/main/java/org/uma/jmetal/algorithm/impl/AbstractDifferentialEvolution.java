@@ -14,6 +14,8 @@
 
 package org.uma.jmetal.algorithm.impl;
 
+import java.util.List;
+
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.impl.selection.DifferentialEvolutionSelection;
 import org.uma.jmetal.solution.DoubleSolution;
@@ -23,7 +25,7 @@ import org.uma.jmetal.solution.DoubleSolution;
  * @author Antonio J. Nebro
  * @version 1.0
  */
-public abstract class AbstractDifferentialEvolution<Result> extends AbstractEvolutionaryAlgorithm<DoubleSolution, Result> {
+public abstract class AbstractDifferentialEvolution<Result> extends AbstractEvolutionaryAlgorithm<DoubleSolution, List<DoubleSolution>, Result> {
   protected DifferentialEvolutionCrossover crossoverOperator ;
   protected DifferentialEvolutionSelection selectionOperator ;
 }

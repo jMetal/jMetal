@@ -10,14 +10,14 @@ import java.util.List;
  * @param <S> Solution
  * @param <R> Result
  */
-public abstract class AbstractEvolutionaryAlgorithm<S extends Solution<?>, R>  implements Algorithm<R>{
-  private List<S> population;
+public abstract class AbstractEvolutionaryAlgorithm<S extends Solution<?>, Population extends Iterable<S>, R>  implements Algorithm<R>{
+  private Population population;
 
-  public List<S> getPopulation() {
+  public Population getPopulation() {
     return population;
   }
 
-  public void setPopulation(List<S> population) {
+  public void setPopulation(Population population) {
     this.population = population;
   }
 
@@ -27,21 +27,21 @@ public abstract class AbstractEvolutionaryAlgorithm<S extends Solution<?>, R>  i
 
   protected abstract boolean isStoppingConditionReached();
 
-  protected abstract List<S> createInitialPopulation();
+  protected abstract Population createInitialPopulation();
 
-  protected abstract List<S> evaluatePopulation(List<S> population);
+  protected abstract Population evaluatePopulation(Population population);
 
-  protected abstract List<S> selection(List<S> population);
+  protected abstract Population selection(Population population);
 
-  protected abstract List<S> reproduction(List<S> population);
+  protected abstract Population reproduction(Population population);
 
-  protected abstract List<S> replacement(List<S> population, List<S> offspringPopulation);
+  protected abstract Population replacement(Population population, Population offspringPopulation);
 
   @Override public abstract R getResult();
 
   @Override public void run() {
-    List<S> offspringPopulation;
-    List<S> matingPopulation;
+    Population offspringPopulation;
+    Population matingPopulation;
 
     population = createInitialPopulation();
     population = evaluatePopulation(population);
