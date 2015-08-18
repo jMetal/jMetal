@@ -10,7 +10,7 @@ import java.util.List;
  * @param <S> Solution
  * @param <R> Result
  */
-public abstract class AbstractEvolutionaryAlgorithm<S extends Solution<?>, Population extends Iterable<S>, R>  implements Algorithm<R>{
+public abstract class AbstractEvolutionaryAlgorithm<S extends Solution<?>, Population, R>  implements Algorithm<R>{
   private Population population;
 
   public Population getPopulation() {
