@@ -24,7 +24,7 @@ import java.util.*;
  *
  * @param <S>
  */
-public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>> {
+public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>, List<S>> {
   protected int evaluations;
   protected int maxEvaluations;
   protected int populationSize;

@@ -18,7 +18,7 @@ import java.util.Vector;
  * This implementation is based on the code of Tsung-Che Chiang
  * http://web.ntnu.edu.tw/~tcchiang/publications/nsga3cpp/nsga3cpp.htm
  */
-public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>> {
+public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>, List<S>> {
   protected int evaluations;
   protected int maxEvaluations;
   protected int populationSize;

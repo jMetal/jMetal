@@ -38,7 +38,7 @@ import java.util.List;
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class SMSEMOA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>> {
+public class SMSEMOA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>, List<S>> {
   protected final int maxEvaluations;
   protected final int populationSize;
   protected final double offset ;

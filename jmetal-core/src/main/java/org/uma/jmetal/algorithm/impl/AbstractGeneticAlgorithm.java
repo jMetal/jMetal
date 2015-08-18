@@ -5,13 +5,11 @@ import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.solution.Solution;
 
-import java.util.List;
-
 /**
  * Created by ajnebro on 26/10/14.
  */
-public abstract class AbstractGeneticAlgorithm<S extends Solution<?>, Result> extends AbstractEvolutionaryAlgorithm<S, List<S>, Result> {
-  protected SelectionOperator<List<S>, S> selectionOperator ;
+public abstract class AbstractGeneticAlgorithm<S extends Solution<?>, Population extends Iterable<S>, Result> extends AbstractEvolutionaryAlgorithm<S, Population, Result> {
+  protected SelectionOperator<Population, S> selectionOperator ;
   protected CrossoverOperator<S> crossoverOperator ;
   protected MutationOperator<S> mutationOperator ;
 }

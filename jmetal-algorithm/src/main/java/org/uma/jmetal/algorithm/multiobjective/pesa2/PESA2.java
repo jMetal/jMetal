@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class PESA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>> {
+public class PESA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>, List<S>> {
   private int maxEvaluations ;
   private int archiveSize ;
   private int populationSize ;

@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * @author Juan J. Durillo
  **/
-public class SPEA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>> {
+public class SPEA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>, List<S>> {
   protected final int maxIterations;
   protected final int populationSize;
   protected final Problem<S> problem;

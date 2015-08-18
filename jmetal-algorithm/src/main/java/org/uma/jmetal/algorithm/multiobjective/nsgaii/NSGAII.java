@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class NSGAII<S extends  Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>> {
+public class NSGAII<S extends  Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>, List<S>> {
   protected final int maxIterations;
   protected final int populationSize;
 
