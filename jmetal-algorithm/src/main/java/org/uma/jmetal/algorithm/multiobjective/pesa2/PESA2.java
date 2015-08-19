@@ -17,20 +17,23 @@ import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.algorithm.multiobjective.pesa2.util.PESA2Selection;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
+import org.uma.jmetal.operator.Operator;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.AdaptiveGridArchive;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class PESA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>, List<S>> {
+public class PESA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, AdaptiveGridArchive<S>, List<S>> {
   private int maxEvaluations ;
   private int archiveSize ;
   private int populationSize ;
@@ -39,7 +42,6 @@ public class PESA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
   private int evaluations ;
 
   protected final Problem<S> problem;
-  protected SelectionOperator<AdaptiveGridArchive<S>, S> selectionOperator ;
 
   private AdaptiveGridArchive<S> archive;
   protected final SolutionListEvaluator<S> evaluator;
@@ -58,8 +60,6 @@ public class PESA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
     this.selectionOperator = new PESA2Selection<S>();
 
     this.evaluator = evaluator ;
-
-    archive = new AdaptiveGridArchive<>(this.archiveSize, this.biSections,problem.getNumberOfObjectives()) ;
   }
 
   @Override protected void initProgress() {
@@ -74,27 +74,26 @@ public class PESA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
     return evaluations >= maxEvaluations ;
   }
 
-  @Override protected List<S> createInitialPopulation() {
+  @Override protected AdaptiveGridArchive<S> createInitialPopulation() {
     List<S> population = new ArrayList<>(populationSize);
     for (int i = 0; i < populationSize; i++) {
       S newIndividual = problem.createSolution();
       population.add(newIndividual);
     }
-    return evaluatePopulation(population);
+    population = evaluatePopulation(population);
+    archive = new AdaptiveGridArchive<>(this.archiveSize, this.biSections, this.problem.getNumberOfObjectives());
+    for (S solution : population) {
+      archive.add(solution);
+    }
+    return archive;
   }
 
   protected List<S> evaluatePopulation(List<S> population) {
-    population = evaluator.evaluate(population, problem);
-
-    return population;
+	return evaluator.evaluate(population, problem);
   }
 
-  @Override protected List<S> selection(List<S> population) {
+  @Override protected List<S> selection(AdaptiveGridArchive<S> archive) {
     List<S> matingPopulation = new ArrayList<>(populationSize) ;
-
-    for (S solution : population) {
-      archive.add(solution) ;
-    }
 
     while (matingPopulation.size() < populationSize) {
       S solution = selectionOperator.execute(archive) ;
@@ -105,12 +104,12 @@ public class PESA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
     return matingPopulation ;
   }
 
-  @Override protected List<S> reproduction(List<S> population) {
+  @Override protected List<S> reproduction(List<S> selectedIndividuals) {
     List<S> offspringPopulation = new ArrayList<>(populationSize);
     for (int i = 0; i < populationSize; i+=2) {
       List<S> parents = new ArrayList<>(2);
-      parents.add(population.get(i));
-      parents.add(population.get(i + 1));
+      parents.add(selectedIndividuals.get(i));
+      parents.add(selectedIndividuals.get(i + 1));
 
       List<S> offspring = crossoverOperator.execute(parents);
 
@@ -121,13 +120,13 @@ public class PESA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
     return offspringPopulation;
   }
 
-  @Override protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
-    offspringPopulation = evaluatePopulation(offspringPopulation);
-    for (S solution : offspringPopulation) {
+  @Override protected AdaptiveGridArchive<S> replacement(AdaptiveGridArchive<S> archive, List<S> offsprings) {
+    offsprings = evaluatePopulation(offsprings);
+    for (S solution : offsprings) {
       archive.add(solution) ;
     }
 
-    return Collections.emptyList();
+    return archive;
   }
 
   @Override public List<S> getResult() {
