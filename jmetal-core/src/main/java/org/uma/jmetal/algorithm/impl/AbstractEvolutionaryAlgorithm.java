@@ -29,24 +29,24 @@ public abstract class AbstractEvolutionaryAlgorithm<S extends Solution<?>, Popul
 
   protected abstract Population createInitialPopulation();
 
-  protected abstract Population selection(Population population);
+  protected abstract List<S> selection(Population population);
 
-  protected abstract Population reproduction(Population population);
+  protected abstract List<S> reproduction(List<S> selectedIndividuals);
 
-  protected abstract Population replacement(Population population, Population offspringPopulation);
+  protected abstract Population replacement(Population population, List<S> offsprings);
 
   @Override public abstract R getResult();
 
   @Override public void run() {
-    Population offspringPopulation;
-    Population matingPopulation;
+    List<S> offsprings;
+    List<S> selectedIndividuals;
 
     population = createInitialPopulation();
     initProgress();
     while (!isStoppingConditionReached()) {
-      matingPopulation = selection(population);
-      offspringPopulation = reproduction(matingPopulation);
-      population = replacement(population, offspringPopulation);
+      selectedIndividuals = selection(population);
+      offsprings = reproduction(selectedIndividuals);
+      population = replacement(population, offsprings);
       updateProgress();
     }
   }
