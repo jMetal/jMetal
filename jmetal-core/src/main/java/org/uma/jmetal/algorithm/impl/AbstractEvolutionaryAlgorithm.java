@@ -29,8 +29,6 @@ public abstract class AbstractEvolutionaryAlgorithm<S extends Solution<?>, Popul
 
   protected abstract Population createInitialPopulation();
 
-  protected abstract Population evaluatePopulation(Population population);
-
   protected abstract Population selection(Population population);
 
   protected abstract Population reproduction(Population population);
@@ -44,12 +42,10 @@ public abstract class AbstractEvolutionaryAlgorithm<S extends Solution<?>, Popul
     Population matingPopulation;
 
     population = createInitialPopulation();
-    population = evaluatePopulation(population);
     initProgress();
     while (!isStoppingConditionReached()) {
       matingPopulation = selection(population);
       offspringPopulation = reproduction(matingPopulation);
-      offspringPopulation = evaluatePopulation(offspringPopulation);
       population = replacement(population, offspringPopulation);
       updateProgress();
     }

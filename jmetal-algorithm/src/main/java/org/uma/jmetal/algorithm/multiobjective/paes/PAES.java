@@ -89,10 +89,10 @@ public class PAES<S extends Solution<?>> extends AbstractEvolutionStrategy<S, Li
   @Override protected List<S> createInitialPopulation() {
     List<S> solutionList = new ArrayList<>(1);
     solutionList.add(problem.createSolution());
-    return solutionList;
+    return evaluatePopulation(solutionList);
   }
 
-  @Override protected List<S> evaluatePopulation(List<S> population) {
+  protected List<S> evaluatePopulation(List<S> population) {
     problem.evaluate(population.get(0));
     return population;
   }
@@ -113,6 +113,7 @@ public class PAES<S extends Solution<?>> extends AbstractEvolutionStrategy<S, Li
 
   @SuppressWarnings("unchecked")
   @Override protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
+    offspringPopulation = evaluatePopulation(offspringPopulation);
     S current = population.get(0);
     S mutatedSolution = offspringPopulation.get(0);
 

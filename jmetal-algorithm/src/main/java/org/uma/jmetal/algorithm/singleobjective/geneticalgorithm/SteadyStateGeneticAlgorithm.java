@@ -63,10 +63,11 @@ public class SteadyStateGeneticAlgorithm<S extends Solution<?>> extends Abstract
       S newIndividual = problem.createSolution();
       population.add(newIndividual);
     }
-    return population;
+    return evaluatePopulation(population);
   }
 
   @Override protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
+    offspringPopulation = evaluatePopulation(offspringPopulation);
     Collections.sort(population, comparator) ;
     int worstSolutionIndex = population.size() - 1;
     if (comparator.compare(population.get(worstSolutionIndex), offspringPopulation.get(0)) > 0) {
@@ -101,7 +102,7 @@ public class SteadyStateGeneticAlgorithm<S extends Solution<?>> extends Abstract
     return matingPopulation;
   }
 
-  @Override protected List<S> evaluatePopulation(List<S> population) {
+  protected List<S> evaluatePopulation(List<S> population) {
     for (S solution : population) {
       problem.evaluate(solution);
     }

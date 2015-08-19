@@ -201,10 +201,10 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
       DoubleSolution newIndividual = problem.createSolution();
       population.add(newIndividual);
     }
-    return population;
+    return evaluatePopulation(population);
   }
 
-  @Override protected List<DoubleSolution> evaluatePopulation(List<DoubleSolution> population) {
+  protected List<DoubleSolution> evaluatePopulation(List<DoubleSolution> population) {
     for (DoubleSolution solution : population) {
       problem.evaluate(solution);
     }
@@ -228,6 +228,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
 
   @Override protected List<DoubleSolution> replacement(List<DoubleSolution> population,
       List<DoubleSolution> offspringPopulation) {
+	offspringPopulation = evaluatePopulation(offspringPopulation);
     return offspringPopulation;
   }
 

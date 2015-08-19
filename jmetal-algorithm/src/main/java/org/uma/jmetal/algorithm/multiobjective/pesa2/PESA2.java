@@ -80,10 +80,10 @@ public class PESA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
       S newIndividual = problem.createSolution();
       population.add(newIndividual);
     }
-    return population;
+    return evaluatePopulation(population);
   }
 
-  @Override protected List<S> evaluatePopulation(List<S> population) {
+  protected List<S> evaluatePopulation(List<S> population) {
     population = evaluator.evaluate(population, problem);
 
     return population;
@@ -122,6 +122,7 @@ public class PESA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
   }
 
   @Override protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
+    offspringPopulation = evaluatePopulation(offspringPopulation);
     for (S solution : offspringPopulation) {
       archive.add(solution) ;
     }

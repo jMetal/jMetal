@@ -90,7 +90,7 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
       DoubleSolution newIndividual = problem.createSolution();
       population.add(newIndividual);
     }
-    return population;
+    return evaluatePopulation(population);
   }
 
   /**
@@ -98,7 +98,7 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
    * @param population The list of solutions to be evaluated
    * @return A list of evaluated solutions
    */
-  @Override protected List<DoubleSolution> evaluatePopulation(List<DoubleSolution> population) {
+  protected List<DoubleSolution> evaluatePopulation(List<DoubleSolution> population) {
     return evaluator.evaluate(population, problem);
   }
 
@@ -138,6 +138,7 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
 
   @Override protected List<DoubleSolution> replacement(List<DoubleSolution> population,
       List<DoubleSolution> offspringPopulation) {
+    offspringPopulation = evaluatePopulation(offspringPopulation);
     List<DoubleSolution> tmpList = new ArrayList<>();
     for (int i = 0; i < populationSize; i++) {
       // Dominance test

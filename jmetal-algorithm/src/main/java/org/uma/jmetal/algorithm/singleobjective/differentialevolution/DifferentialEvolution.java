@@ -93,10 +93,10 @@ public class DifferentialEvolution extends AbstractDifferentialEvolution<DoubleS
       DoubleSolution newIndividual = problem.createSolution();
       population.add(newIndividual);
     }
-    return population;
+    return evaluatePopulation(population);
   }
 
-  @Override protected List<DoubleSolution> evaluatePopulation(List<DoubleSolution> population) {
+  protected List<DoubleSolution> evaluatePopulation(List<DoubleSolution> population) {
     return evaluator.evaluate(population, problem);
   }
 
@@ -122,6 +122,7 @@ public class DifferentialEvolution extends AbstractDifferentialEvolution<DoubleS
 
   @Override protected List<DoubleSolution> replacement(List<DoubleSolution> population,
       List<DoubleSolution> offspringPopulation) {
+    offspringPopulation = evaluatePopulation(offspringPopulation);
     List<DoubleSolution> pop = new ArrayList<>();
 
     for (int i = 0; i < populationSize; i++) {

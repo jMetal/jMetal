@@ -72,11 +72,10 @@ public class ElitistEvolutionStrategy<S extends Solution<?>> extends AbstractEvo
       S newIndividual = (S)problem.createSolution();
       population.add(newIndividual);
     }
-
-    return population;
+    return evaluatePopulation(population);
   }
 
-  @Override protected List<S> evaluatePopulation(List<S> population) {
+  protected List<S> evaluatePopulation(List<S> population) {
     for (S solution : population) {
       problem.evaluate(solution);
     }
@@ -104,6 +103,7 @@ public class ElitistEvolutionStrategy<S extends Solution<?>> extends AbstractEvo
 
   @Override protected List<S> replacement(List<S> population,
       List<S> offspringPopulation) {
+    offspringPopulation = evaluatePopulation(offspringPopulation);
     for (int i = 0; i < mu; i++) {
       offspringPopulation.add(population.get(i));
     }

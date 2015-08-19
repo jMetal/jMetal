@@ -98,10 +98,9 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
       population.add(newIndividual);
     }
     location = new LocationAttribute<>(population);
-    return population;
+    return evaluatePopulation(population);
   }
 
-  @Override
   protected List<S> evaluatePopulation(List<S> population) {
     population = evaluator.evaluate(population, problem);
     for (S solution : population) {
@@ -141,6 +140,7 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
 
   @Override
   protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
+    offspringPopulation = evaluatePopulation(offspringPopulation);
     int flag = dominanceComparator.compare(population.get(currentIndividual),offspringPopulation.get(0));
 
     if (flag == 1) { //The new individual dominates
