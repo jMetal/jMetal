@@ -32,7 +32,7 @@ public class ASFUtilityFunctionSet<S extends Solution<?>> extends AbstractUtilit
 		
 		for (int i = 0; i < weightVector.size(); i++) {
 			//System.out.println(objectiveValues.get(i)+"\t"+this.referencePoint.get(i));
-			result = Math.max(result, Math.abs(objectiveValues.get(i) - 0.0)/weightVector.get(i));
+			result = Math.max(result, Math.abs(objectiveValues.get(i) - 0.0)/(weightVector.get(i) > 0.0 ? weightVector.get(i):1e-2));
 		}
 		return result;
 		
