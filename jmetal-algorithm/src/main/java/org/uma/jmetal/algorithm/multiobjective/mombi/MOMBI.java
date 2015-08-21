@@ -59,7 +59,6 @@ public class MOMBI<S extends Solution<?>> extends AbstractMOMBI<S>{
 		
 		
 	}
-
 	
 	protected R2Ranking<S> computeRanking(List<S> solutionList) {
 		R2Ranking<S> ranking = new R2Ranking<>(this.utilityFunctions);
@@ -80,10 +79,10 @@ public class MOMBI<S extends Solution<?>> extends AbstractMOMBI<S>{
 			public int compare(S arg0, S arg1) {
 				R2Ranking.R2RankingAttribute<S> attribute = new R2Ranking.R2RankingAttribute<>();
 				R2SolutionData dataFirst  = attribute.getAttribute(arg0);
-				R2SolutionData dataSecond = attribute.getAttribute(arg0);
-				if (dataFirst.utility < dataSecond.utility)
+				R2SolutionData dataSecond = attribute.getAttribute(arg1);
+				if (dataFirst.utility > dataSecond.utility)
 					return -1;
-				else if (dataFirst.utility > dataSecond.utility)
+				else if (dataFirst.utility < dataSecond.utility)
 					return 1;
 				else
 					return 0;

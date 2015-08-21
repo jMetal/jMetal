@@ -23,7 +23,7 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
 	
 	private final MOMBI2History<S> history;
 	private final Double		   alpha		= 0.5;
-	private final Double 		   epsilon 		= 1e-3;	
+	private final Double 		   epsilon 		= 1.0e-3;	
 	private  List<Double>     	   maxs;
 	private Normalizer             normalizer;
 	
@@ -45,6 +45,26 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
 		
 	}
 	
+	private void updateMax(List<S> population) {
+		if (this.maxs.isEmpty())
+			for (int i = 0; i < this.getProblem().getNumberOfObjectives(); i++)
+				this.maxs.add(Double.NEGATIVE_INFINITY);
+		
+		for (S solution : population)
+			for (int i = 0; i < this.maxs.size(); i++)
+				this.maxs.set(i,Math.max(this.maxs.get(i),solution.getObjective(i)));
+			
+		this.history.add(maxs);
+	}
+	
+	
+	@Override
+	protected void initProgress() {
+		super.initProgress();
+		this.updateMax(this.getPopulation());
+	}
+	
+	
 	public AbstractUtilityFunctionsSet<S> createUtilityFunction(String pathWeights) {
 		System.out.println("MOMBI 2");
 		//this.mins    = new ArrayList<>(getProblem().getNumberOfObjectives());		
@@ -63,53 +83,47 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
 		System.out.println("Updating reference point");
 		
 		List<Double> iterationMaxs = new ArrayList<>(maxs.size());
-		List<Double> mins 		   = new ArrayList<>(maxs.size());
-		for (int i = 0; i < this.getProblem().getNumberOfObjectives(); i++) {
-			mins.add(Double.POSITIVE_INFINITY);
+		
+		for (int i = 0; i < this.getProblem().getNumberOfObjectives(); i++) {		
 			iterationMaxs.add(Double.NEGATIVE_INFINITY);
 		}
 		
 		for (S solution : population) {
 			updateReferencePoint(solution);
-			for (int i = 0; i < solution.getNumberOfObjectives(); i++) {
-				mins.set(i, Math.min(mins.get(i), solution.getObjective(i)));
+			for (int i = 0; i < solution.getNumberOfObjectives(); i++) {				
 				iterationMaxs.set(i, Math.max(iterationMaxs.get(i), solution.getObjective(i)));				
 			}
 		}
 		
 		history.add(iterationMaxs);
 		
-		if (this.maxs.isEmpty())
-			this.maxs.addAll(iterationMaxs);
-		else {
-			List<Double> mean = history.mean();
-			List<Double> var  = history.variance(mean);
+		List<Double> mean = history.mean();
+		List<Double> var  = history.variance(mean);
 			
-			Double maxVariance = this.getMax(var);						
+		Double maxVariance = this.getMax(var);						
 			
-			if (maxVariance > alpha) {
-				Double maxInNadir = this.getMax(this.maxs);
-				for (int i = 0; i < this.getProblem().getNumberOfObjectives(); i++) 
-					this.maxs.set(i, maxInNadir);						
-			} else {
-			
-				Double maxInMaxs = this.getMax(this.maxs);
-				for (int i = 0; i < this.getProblem().getNumberOfObjectives(); i++) {
-					if (Math.abs(maxs.get(i) - this.getReferencePoint().get(i)) < this.epsilon) {
-						this.maxs.set(i,maxInMaxs);
-						history.mark(i);
-					} else if (iterationMaxs.get(i) > this.maxs.get(i)) {
-						this.maxs.set(i, iterationMaxs.get(i) + Math.abs(iterationMaxs.get(i)-maxs.get(i)));
-						history.mark(i);
-					} else if ((var.get(i)==0.0) && history.isUnMarked(i)) {
-						double v = history.getMaxObjective(i);
-						this.maxs.set(i, (maxs.get(i)+v)/2.0);
-						history.mark(i);
-					}
-					history.decreaseMark(i);
-				}						
-			}		
-		}
+		if (maxVariance > alpha) {
+			Double maxInNadir = this.getMax(this.maxs);
+			for (int i = 0; i < this.getProblem().getNumberOfObjectives(); i++) 
+				this.maxs.set(i, maxInNadir);						
+		} else {						
+			for (int i = 0; i < this.getProblem().getNumberOfObjectives(); i++) {
+				if (Math.abs(maxs.get(i) - this.getReferencePoint().get(i)) < this.epsilon) {
+					Double maxInMaxs = this.getMax(this.maxs);
+					this.maxs.set(i,maxInMaxs);
+					history.mark(i);
+				} else if (iterationMaxs.get(i) > this.maxs.get(i)) {
+					this.maxs.set(i, iterationMaxs.get(i) + Math.abs(iterationMaxs.get(i)-this.maxs.get(i)));
+					history.mark(i);
+				} else if ((var.get(i)==0.0) && history.isUnMarked(i)) {
+					double v = history.getMaxObjective(i);
+					this.maxs.set(i, (maxs.get(i)+v)/2.0);
+					history.mark(i);
+				}
+				history.decreaseMark(i);
+			}						
+		}		
+		
 	}
 	
 	
@@ -221,7 +235,8 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
 		}
 		
 		public void decreaseMark(int index) {
-			this.marks.set(index,this.marks.get(index)-1);
+			if (this.marks.get(index) > 0)
+				this.marks.set(index,this.marks.get(index)-1);
 		}
 		
 		public Double getMaxObjective(int index) {

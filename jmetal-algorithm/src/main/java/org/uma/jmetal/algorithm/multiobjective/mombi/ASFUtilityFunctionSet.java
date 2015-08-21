@@ -30,9 +30,10 @@ public class ASFUtilityFunctionSet<S extends Solution<?>> extends AbstractUtilit
 				objectiveValues.add(this.normalizer.normalize(solution.getObjective(i),i));
 				
 		
-		for (int i = 0; i < weightVector.size(); i++) 
-			result = Math.max(result, Math.abs(objectiveValues.get(i) - this.referencePoint.get(i))/weightVector.get(i));
-		
+		for (int i = 0; i < weightVector.size(); i++) {
+			//System.out.println(objectiveValues.get(i)+"\t"+this.referencePoint.get(i));
+			result = Math.max(result, Math.abs(objectiveValues.get(i) - 0.0)/weightVector.get(i));
+		}
 		return result;
 		
 	}

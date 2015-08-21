@@ -34,7 +34,7 @@ public class R2Ranking<S extends Solution<?>> extends GenericSolutionAttribute<S
 			
 			for (S solution : population) {								
 				R2SolutionData solutionData = this.getAttribute(solution); 
-				solutionData.alpha = this.utilityFunctions.evaluate(solution, i);
+				solutionData.alpha 			= this.utilityFunctions.evaluate(solution, i);
 				
 				if (solutionData.alpha < solutionData.utility)
 					solutionData.utility = solutionData.alpha;

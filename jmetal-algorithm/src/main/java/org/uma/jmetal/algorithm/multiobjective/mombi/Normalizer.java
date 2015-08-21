@@ -13,8 +13,8 @@ public class Normalizer {
 	
 	public Double normalize(Double input, int index) {						 			
 		Double diff		= max.get(index) - min.get(index);
-		Double output 	= (diff==0.0) ? input : (input-min.get(index))/diff; 
-						
+		Double output 	= (input-min.get(index))/diff; 
+		//System.out.println(diff+"\t"+output);				
 		return output;			
 	}
 }
