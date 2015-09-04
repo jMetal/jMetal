@@ -88,11 +88,10 @@ public class GenerationalGeneticAlgorithm<S extends Solution<?>> extends Abstrac
       parents.add(matingPopulation.get(i + 1));
 
       List<S> offspring = crossoverOperator.execute(parents);
-      mutationOperator.execute(offspring.get(0));
-      mutationOperator.execute(offspring.get(1));
-
-      offspringPopulation.add(offspring.get(0));
-      offspringPopulation.add(offspring.get(1));
+      for(S s: offspring){
+    	  mutationOperator.execute(s);
+    	  offspringPopulation.add(s);
+      }
     }
     return offspringPopulation;
   }
