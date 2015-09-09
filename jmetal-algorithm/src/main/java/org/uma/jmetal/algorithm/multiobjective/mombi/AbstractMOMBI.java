@@ -174,8 +174,7 @@ public abstract class AbstractMOMBI<S extends Solution<?>> extends AbstractGenet
 	}
 
 	private void initializeNadirPoint(int size) {
-
-		for (int i = 0; i < size; i++)
+    for (int i = 0; i < size; i++)
 			this.getNadirPoint().add(Double.NEGATIVE_INFINITY);
 	}
 
@@ -206,7 +205,6 @@ public abstract class AbstractMOMBI<S extends Solution<?>> extends AbstractGenet
 	}
 
 	protected void setReferencePointValue(Double value, int index) {
-
 		if ((index < 0) || (index >= this.referencePoint.size())) {
 			throw new IndexOutOfBoundsException();
 		}
