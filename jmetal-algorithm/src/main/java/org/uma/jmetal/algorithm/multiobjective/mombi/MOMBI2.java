@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.uma.jmetal.algorithm.multiobjective.mombi.util.*;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -183,7 +184,6 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
 				result.set(i, result.get(i)/(double)this.history.size());
 			
 			return result;
-			
 		}
 		
 		/**
@@ -202,7 +202,6 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
 				result.set(i, result.get(i) / (double)this.history.size());
 			
 			return result;
-			
 		}
 		
 		/**
@@ -215,7 +214,6 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
 				result.set(i,Math.sqrt(result.get(i)));
 			
 			return result;
-			
 		}
 		
 		public void mark(int index) {

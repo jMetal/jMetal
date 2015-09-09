@@ -5,6 +5,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.uma.jmetal.algorithm.multiobjective.mombi.util.AbstractUtilityFunctionsSet;
+import org.uma.jmetal.algorithm.multiobjective.mombi.util.R2Ranking;
+import org.uma.jmetal.algorithm.multiobjective.mombi.util.R2SolutionData;
+import org.uma.jmetal.algorithm.multiobjective.mombi.util.TchebycheffUtilityFunctionsSet;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -26,7 +30,6 @@ public class MOMBI<S extends Solution<?>> extends AbstractMOMBI<S>{
 							 String pathWeights) {
 		super(problem, maxIterations, crossover, mutation, selection, evaluator);
 		utilityFunctions = this.createUtilityFunction(pathWeights);
-		
 	}
 	
 	public AbstractUtilityFunctionsSet<S> createUtilityFunction(String pathWeights) {
@@ -52,8 +55,6 @@ public class MOMBI<S extends Solution<?>> extends AbstractMOMBI<S>{
 		
 		R2Ranking<S> ranking = computeRanking(jointPopulation);
 		return selectBest(ranking);
-		
-		
 	}
 	
 	protected R2Ranking<S> computeRanking(List<S> solutionList) {
