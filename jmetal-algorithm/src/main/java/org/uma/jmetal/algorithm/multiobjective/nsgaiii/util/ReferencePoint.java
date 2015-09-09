@@ -1,4 +1,4 @@
-package org.uma.jmetal.algorithm.multiobjective.nsgaiii;
+package org.uma.jmetal.algorithm.multiobjective.nsgaiii.util;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -21,15 +21,13 @@ public class ReferencePoint<S extends Solution<?>> {
   private List<Pair<S, Double>> potentialMembers ;
 
   public ReferencePoint() {
-	 
   }
 
-  
   /** Constructor */
   public ReferencePoint(int size) {
-	position = new ArrayList<>();
-	for (int i =0; i < size; i++)
-		position.add(0.0);
+    position = new ArrayList<>();
+    for (int i =0; i < size; i++)
+      position.add(0.0);
     memberSize = 0 ;
     potentialMembers = new ArrayList<>();
   }
@@ -37,13 +35,12 @@ public class ReferencePoint<S extends Solution<?>> {
   public ReferencePoint(ReferencePoint<S> point) {
     position = new ArrayList<>(point.position.size());
     for (Double d : point.position) {
-    	position.add(new Double(d));
+      position.add(new Double(d));
     }
     memberSize = 0 ;
-    potentialMembers = new ArrayList<>();    
+    potentialMembers = new ArrayList<>();
   }
-  
-  
+
   public void generateReferencePoints(
           List<ReferencePoint<S>> referencePoints,
           int numberOfObjectives,
@@ -78,36 +75,33 @@ public class ReferencePoint<S extends Solution<?>> {
   public void clear(){ memberSize=0; this.potentialMembers.clear();}
   public void AddMember(){this.memberSize++;}
   public void AddPotentialMember(S member_ind, double distance){
-	  this.potentialMembers.add(new ImmutablePair<S,Double>(member_ind,distance) );
+    this.potentialMembers.add(new ImmutablePair<S,Double>(member_ind,distance) );
   }
-  public S FindClosestMember() {
-		double min_dist = Double.MAX_VALUE;
-		S min_indv = null;
-		for (Pair<S,Double> p : this.potentialMembers)
-		{
-			if ( p.getRight() < min_dist)
-			{
-				min_dist = p.getRight();
-				min_indv = p.getLeft();
-			}
-		}
 
-		return min_indv;
+  public S FindClosestMember() {
+    double minDistance = Double.MAX_VALUE;
+    S closetMember = null;
+    for (Pair<S,Double> p : this.potentialMembers) {
+      if (p.getRight() < minDistance) {
+        minDistance = p.getRight();
+        closetMember = p.getLeft();
+      }
+    }
+
+    return closetMember;
   }
   
   public S RandomMember() {
-	int index = this.potentialMembers.size()>1 ? JMetalRandom.getInstance().nextInt(0, this.potentialMembers.size()-1):0;
-	return this.potentialMembers.get(index).getLeft();
+    int index = this.potentialMembers.size()>1 ? JMetalRandom.getInstance().nextInt(0, this.potentialMembers.size()-1):0;
+    return this.potentialMembers.get(index).getLeft();
   }
   
   public void RemovePotentialMember(S solution) {
-	  Iterator<Pair<S, Double>> it = this.potentialMembers.iterator();
-	  while (it.hasNext()) 
-		  if (it.next().getLeft()==solution) 
-			  it.remove();
-	  
+    Iterator<Pair<S, Double>> it = this.potentialMembers.iterator();
+    while (it.hasNext()) {
+      if (it.next().getLeft() == solution) {
+        it.remove();
+      }
+    }
   }
-
- 
-  
 }

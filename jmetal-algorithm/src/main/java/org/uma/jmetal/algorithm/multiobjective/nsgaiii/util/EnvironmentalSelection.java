@@ -1,4 +1,4 @@
-package org.uma.jmetal.algorithm.multiobjective.nsgaiii;
+package org.uma.jmetal.algorithm.multiobjective.nsgaiii.util;
 
 
 import org.uma.jmetal.operator.SelectionOperator;
@@ -66,7 +66,7 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
 	// ASF: Achivement Scalarization Function
 	// I implement here a effcient version of it, which only receives the index
 	// of the objective which uses 1.0; the rest will use 0.00001. This is 
-	// differnet to the one impelemented in C++
+	// different to the one impelemented in C++
 	// ----------------------------------------------------------------------
 	private double ASF(S s, int index) {
 		double max_ratio = Double.NEGATIVE_INFINITY;
@@ -79,25 +79,23 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
 	
 	// ----------------------------------------------------------------------
 	private List<S> findExtremePoints(List<S> population) {
-		List<S> extreme_points = new ArrayList<>();
+		List<S> extremePoints = new ArrayList<>();
 		S min_indv = null;
 		for (int f=0; f < numberOfObjectives; f+=1)
 		{
 			double min_ASF = Double.MAX_VALUE;	
-			for (S s : fronts.get(0))  // only consider the individuals in the first front
-			{
+			for (S s : fronts.get(0)) { // only consider the individuals in the first front
 				double asf = ASF(s, f);
-				if ( asf < min_ASF )
-				{
+				if ( asf < min_ASF ) {
 					min_ASF = asf;
 					min_indv = s;
 				}
 			}
 			
-			extreme_points.add(min_indv);
+			extremePoints.add(min_indv);
 		}
-		return extreme_points;
-	}// FindExtremePoints()
+		return extremePoints;
+	}
 	
 	public List<Double> guassianElimination(List<List<Double>> A, List<Double> b) {
 		List<Double> x = new ArrayList<>();

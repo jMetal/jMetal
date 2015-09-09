@@ -1,8 +1,11 @@
 package org.uma.jmetal.algorithm.multiobjective.nsgaiii;
 
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
+import org.uma.jmetal.algorithm.multiobjective.nsgaiii.util.EnvironmentalSelection;
+import org.uma.jmetal.algorithm.multiobjective.nsgaiii.util.ReferencePoint;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.solutionattribute.Ranking;
@@ -64,8 +67,7 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
     while (populationSize%4>0) populationSize++;
 
     
-    System.out.println("rpssize: " + referencePoints.size()) ;
-    
+    JMetalLogger.logger.info("rpssize: " + referencePoints.size()); ;
   }
 
   @Override
@@ -162,10 +164,7 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
     }
     
     // A copy of the reference list should be used as parameter of the environmental selection
-    
-    
     EnvironmentalSelection<S> selection = new EnvironmentalSelection<>(fronts,populationSize,getReferencePointsCopy(),problem.getNumberOfObjectives());
-    
     
     pop = selection.execute(pop);
      
@@ -184,14 +183,6 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
     ranking.computeRanking(solutionList) ;
 
     return ranking ;
-  }
-
-  protected boolean populationIsNotFull(List<S> population) {
-    return population.size() < populationSize;
-  }
-
-  protected boolean subfrontFillsIntoThePopulation(Ranking<S> ranking, int rank, List<S> population) {
-    return ranking.getSubfront(rank).size() < (populationSize - population.size()) ;
   }
 
   protected void addRankedSolutionsToPopulation(Ranking<S> ranking, int rank, List<S> population) {
