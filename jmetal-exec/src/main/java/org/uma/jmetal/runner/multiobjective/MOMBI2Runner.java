@@ -81,7 +81,7 @@ public class MOMBI2Runner extends AbstractAlgorithmRunner {
     selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
     algorithm = new MOMBI2<>(problem,400,crossover,mutation,selection,new SequentialSolutionListEvaluator<DoubleSolution>(),
-    		"/home/juan/software/coello/EMO_Proyect/demo/weight/weight_03D_12.sld");
+    		"mombi2-weights/weight/weight_03D_12.sld");
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
         .execute() ;
 
