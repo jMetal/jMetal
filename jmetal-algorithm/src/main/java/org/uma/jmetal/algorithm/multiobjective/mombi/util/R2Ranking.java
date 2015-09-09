@@ -27,18 +27,17 @@ public class R2Ranking<S extends Solution<?>> extends GenericSolutionAttribute<S
 
   public R2Ranking<S> computeRanking(List<S> population) {
 
-    for (S solution : population)
+    for (S solution : population) {
       solution.setAttribute(getAttributeID(), new R2SolutionData());
+    }
 
     for (int i = 0; i < this.utilityFunctions.getSize(); i++) {
-
       for (S solution : population) {
         R2SolutionData solutionData = this.getAttribute(solution);
         solutionData.alpha = this.utilityFunctions.evaluate(solution, i);
 
         if (solutionData.alpha < solutionData.utility)
           solutionData.utility = solutionData.alpha;
-
       }
 
       Collections.sort(population, new Comparator<S>() {
