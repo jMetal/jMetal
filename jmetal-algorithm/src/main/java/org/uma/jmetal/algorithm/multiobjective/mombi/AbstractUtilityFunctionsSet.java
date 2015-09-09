@@ -8,19 +8,26 @@ import java.util.StringTokenizer;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 
+import javax.management.JMException;
+
+/**
+ * @author Juan J. Durillo
+ * Modified by Antonio J. Nebro
+ *
+ * @param <S>
+ */
 public abstract class AbstractUtilityFunctionsSet<S extends Solution<?>> {
 	
 	private List<List<Double>> weightVectors;
-	private int				   vectorSize;
+	private int vectorSize;
 	
 	public AbstractUtilityFunctionsSet(String file_path) {
 		loadWeightsFromFile(file_path);
 	}
-	
-	
+
 	/**
 	 * Returns the number of utility functions stored in this set
-	 * @return
+	 * @return The number of vectors
 	 */
 	public int getSize() {
 		return this.weightVectors.size();
@@ -37,6 +44,9 @@ public abstract class AbstractUtilityFunctionsSet<S extends Solution<?>> {
 	 * Returns a given weight vector
 	 */
 	public List<Double> getWeightVector(int index) {
+		if ((index < 0) && (index >= weightVectors.size())) {
+			throw new JMetalException("getWeightVector: index " + index + " invalid ") ;
+		}
 		return this.weightVectors.get(index);
 	}
 	
@@ -51,7 +61,6 @@ public abstract class AbstractUtilityFunctionsSet<S extends Solution<?>> {
 			result.add(evaluate(solution,i));
 		}
 		return result;
-		
 	}
 	
 	/**
@@ -61,8 +70,7 @@ public abstract class AbstractUtilityFunctionsSet<S extends Solution<?>> {
 	 * @return
 	 */
 	public abstract Double evaluate(S solution, int vector);
-	
-	
+
 	/**
 	 * Reads a set of weight vectors from a file. 
 	 * The expected format for the file is as follows.
@@ -76,11 +84,11 @@ public abstract class AbstractUtilityFunctionsSet<S extends Solution<?>> {
 	 * <number_of_objectives> components 
 	 * If more components are provided, they will be ignored by the program
 	 *
-	 * @param file_path The path in the file system of the file containing the weight vectors
+	 * @param filePath The path in the file system of the file containing the weight vectors
 	 */
-	public void loadWeightsFromFile(String file_path) {
-    System.out.println("FILE PATH: " + file_path) ;
-		InputStream in = getClass().getResourceAsStream("/" + file_path);
+	public void loadWeightsFromFile(String filePath) {
+    System.out.println("FILE PATH: " + filePath) ;
+		InputStream in = getClass().getResourceAsStream("/" + filePath);
 		InputStreamReader isr = new InputStreamReader(in);
 		BufferedReader buffer = new BufferedReader(isr);
 
@@ -111,7 +119,7 @@ public abstract class AbstractUtilityFunctionsSet<S extends Solution<?>> {
 			}
 		} catch (IOException e) {
 			throw new JMetalException("loadWeightsFromFile: failed when reading for file: "
-							+ "/" + file_path) ;
+							+ "/" + filePath) ;
     }
 	}
 }
