@@ -1,4 +1,4 @@
-package org.uma.jmetal.algorithm.multiobjective.mombi;
+package org.uma.jmetal.algorithm.multiobjective.mombi.util;
 
 import java.util.List;
 

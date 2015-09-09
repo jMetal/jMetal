@@ -1,4 +1,4 @@
-package org.uma.jmetal.algorithm.multiobjective.mombi;
+package org.uma.jmetal.algorithm.multiobjective.mombi.util;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,13 +11,12 @@ import java.util.TreeMap;
 
 
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
 
 public class R2RankingNormalized<S extends Solution<?>> extends R2Ranking<S> {
 
   private List<List<S>> rankedSubpopulations;
   private int numberOfRanks 								= 0;
-  private final Normalizer        normalizer;
+  private final Normalizer normalizer;
 
 
   public R2RankingNormalized(AbstractUtilityFunctionsSet<S> utilityFunctions, Normalizer normalizer) {
@@ -40,9 +39,7 @@ public class R2RankingNormalized<S extends Solution<?>> extends R2Ranking<S> {
     return Math.sqrt(result);
   }
 
-
   public R2RankingNormalized<S> computeRanking(List<S> population) {
-
     for (S solution : population) {
       R2SolutionData data =  new R2SolutionData();
       data.utility = this.computeNorm(solution);
