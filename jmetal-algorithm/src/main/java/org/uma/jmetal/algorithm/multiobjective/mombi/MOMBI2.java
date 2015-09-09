@@ -22,12 +22,11 @@ import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
 	
 	private final MOMBI2History<S> history;
-	private final Double		   alpha		= 0.5;
-	private final Double 		   epsilon 		= 1.0e-3;	
-	private  List<Double>     	   maxs;
-	private Normalizer             normalizer;
-	
-	
+	private final Double alpha		= 0.5;
+	private final Double epsilon 		= 1.0e-3;
+	private  List<Double> maxs;
+	private Normalizer normalizer;
+
 	/**
 	 * Creates a new instance of the MOMBI algorithm
 	 * @param problem
@@ -56,14 +55,12 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
 			
 		this.history.add(maxs);
 	}
-	
-	
+
 	@Override
 	protected void initProgress() {
 		super.initProgress();
 		this.updateMax(this.getPopulation());
 	}
-	
 	
 	public AbstractUtilityFunctionsSet<S> createUtilityFunction(String pathWeights) {
 		System.out.println("MOMBI 2");
@@ -126,15 +123,12 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
 		
 	}
 	
-	
 	protected R2Ranking<S> computeRanking(List<S> solutionList) {
 		R2Ranking<S> ranking = new R2RankingNormalized<>(this.getUtilityFunctions(),this.normalizer);
 		ranking.computeRanking(solutionList);
 		
 		return ranking;
 	}
-	
-	
 	
 	public Double getMax(List<Double> list) {
 		Double result = Double.NEGATIVE_INFINITY;
@@ -143,8 +137,6 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
 		
 		return result;
 	}
-	
-	
 	
 	private class MOMBI2History<T extends Solution<?>> {
 		public static final int MAX_LENGHT 			= 5;
@@ -247,8 +239,5 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
 		
 			return result;
 		}
-		
 	}
-	
-
 }

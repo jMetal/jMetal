@@ -3,6 +3,7 @@ package org.uma.jmetal.algorithm.multiobjective.mombi;
 import java.util.List;
 
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.JMetalException;
 
 /** 
  * This class implements a set of utility functions based on the Tchebycheff aggregation approach
@@ -18,8 +19,6 @@ import org.uma.jmetal.solution.Solution;
 public class TchebycheffUtilityFunctionsSet<S extends Solution<?>> extends AbstractUtilityFunctionsSet<S> {
 	private final List<Double> referencePoint;
 
-	
-	
 	public TchebycheffUtilityFunctionsSet(String file_path, 
 										  List<Double> referencePoint) {
 		super(file_path);
@@ -29,7 +28,7 @@ public class TchebycheffUtilityFunctionsSet<S extends Solution<?>> extends Abstr
 	@Override
 	public Double evaluate(S solution, int vector) {
 		if ((vector < 0) || (vector >= this.getSize()))
-			return Double.NaN; // ToDo: to properly address this case (maybe an exception?)
+			throw new JMetalException("Vector value " + vector + " invalid") ;
 		
 		double result = Double.NEGATIVE_INFINITY;
 		List<Double> weightVector = this.getWeightVector(vector);

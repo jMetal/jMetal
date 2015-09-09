@@ -207,10 +207,10 @@ public abstract class AbstractMOMBI<S extends Solution<?>> extends AbstractGenet
 
 	protected void setReferencePointValue(Double value, int index) {
 
-		if ((index < 0) || (index >= this.referencePoint.size()))
+		if ((index < 0) || (index >= this.referencePoint.size())) {
 			throw new IndexOutOfBoundsException();
+		}
 
 		this.referencePoint.set(index, value);
-
 	}
 }
