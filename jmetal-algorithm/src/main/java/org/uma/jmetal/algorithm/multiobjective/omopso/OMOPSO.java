@@ -95,30 +95,19 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
     crowdingDistance = new CrowdingDistance<DoubleSolution>();
   }
 
-  @Override public void run() {
-    swarm = createInitialSwarm();
-    swarm = evaluateSwarm(swarm);
-    initializeLeaders(swarm);
-    initializeParticlesMemory(swarm) ;
-    initializeLeaders(swarm);
-    initializeVelocity(swarm);
 
+  @Override protected void initProgress() {
+    currentIteration = 1;
     crowdingDistance.computeDensityEstimator(leaderArchive.getSolutionList());
+  }
 
-    initProgress();
-    while (currentIteration < maxIterations) {
-      updateVelocity(swarm);
-      updatePosition(swarm);
-      perturbation(swarm);
-      swarm = evaluateSwarm(swarm);
-      updateLeaders(swarm);
-      updateParticlesMemory(swarm) ;
+  @Override protected void updateProgress() {
+    currentIteration += 1;
+    crowdingDistance.computeDensityEstimator(leaderArchive.getSolutionList());
+  }
 
-      crowdingDistance.computeDensityEstimator(leaderArchive.getSolutionList());
-      updateProgress();
-    }
-
-    tearDown();
+  @Override protected boolean isStoppingConditionReached() {
+    return currentIteration >= maxIterations;
   }
 
   @Override
@@ -219,18 +208,6 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
         }
       }
     }
-  }
-
-  @Override protected void initProgress() {
-    currentIteration = 1;
-  }
-
-  @Override protected void updateProgress() {
-    currentIteration += 1;
-  }
-
-  @Override protected boolean isStoppingConditionReached() {
-    return currentIteration >= maxIterations;
   }
 
   @Override

@@ -110,28 +110,6 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
     }
   }
 
-  @Override public void run() {
-    List<DoubleSolution> swarm;
-    swarm = createInitialSwarm();
-    swarm = evaluateSwarm(swarm);
-    initializeLeaders(swarm);
-    initializeParticlesMemory(swarm);
-    initializeLeaders(swarm);
-    updateLeadersDensityEstimator();
-    initProgress();
-
-    while (!isStoppingConditionReached()) {
-      updateVelocity(swarm);
-      updatePosition(swarm);
-      perturbation(swarm);
-      swarm = evaluateSwarm(swarm);
-      updateLeaders(swarm);
-      updateParticlesMemory(swarm);
-      updateLeadersDensityEstimator();
-      updateProgress();
-    }
-  }
-
   protected void updateLeadersDensityEstimator() {
     if (leaders instanceof CrowdingDistanceArchive) {
       ((CrowdingDistanceArchive<DoubleSolution>) leaders).computeDistance();
@@ -142,10 +120,12 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
 
   @Override protected void initProgress() {
     iterations = 1;
+    updateLeadersDensityEstimator();
   }
 
   @Override protected void updateProgress() {
     iterations += 1;
+    updateLeadersDensityEstimator();
   }
 
   @Override protected boolean isStoppingConditionReached() {
