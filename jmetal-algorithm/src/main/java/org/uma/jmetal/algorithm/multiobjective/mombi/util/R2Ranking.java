@@ -111,7 +111,4 @@ public class R2Ranking<S extends Solution<?>> extends GenericSolutionAttribute<S
   public AbstractUtilityFunctionsSet<S> getUtilityFunctions() {
     return this.utilityFunctions;
   }
-
-  public static class R2RankingAttribute<T extends Solution<?>> extends GenericSolutionAttribute<T, R2SolutionData> {
-  }
 }

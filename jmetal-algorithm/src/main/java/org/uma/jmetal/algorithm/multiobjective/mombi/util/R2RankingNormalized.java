@@ -103,7 +103,4 @@ public class R2RankingNormalized<S extends Solution<?>> extends R2Ranking<S> {
   public int getNumberOfSubfronts() {
     return this.rankedSubpopulations.size();
   }
-
-
-
 }
