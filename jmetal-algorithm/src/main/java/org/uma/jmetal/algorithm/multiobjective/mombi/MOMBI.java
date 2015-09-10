@@ -5,10 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import org.uma.jmetal.algorithm.multiobjective.mombi.util.AbstractUtilityFunctionsSet;
-import org.uma.jmetal.algorithm.multiobjective.mombi.util.R2Ranking;
-import org.uma.jmetal.algorithm.multiobjective.mombi.util.R2SolutionData;
-import org.uma.jmetal.algorithm.multiobjective.mombi.util.TchebycheffUtilityFunctionsSet;
+import org.uma.jmetal.algorithm.multiobjective.mombi.util.*;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -74,7 +71,7 @@ public class MOMBI<S extends Solution<?>> extends AbstractMOMBI<S>{
 		Collections.sort(front, new Comparator<S>() {
 			@Override
 			public int compare(S arg0, S arg1) {
-				R2Ranking.R2RankingAttribute<S> attribute = new R2Ranking.R2RankingAttribute<>();
+				R2RankingAttribute<S> attribute = new R2RankingAttribute<>();
 				R2SolutionData dataFirst  = attribute.getAttribute(arg0);
 				R2SolutionData dataSecond = attribute.getAttribute(arg1);
 				if (dataFirst.utility > dataSecond.utility)

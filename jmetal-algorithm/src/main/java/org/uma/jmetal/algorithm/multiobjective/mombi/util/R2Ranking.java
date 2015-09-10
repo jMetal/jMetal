@@ -95,7 +95,6 @@ public class R2Ranking<S extends Solution<?>> extends GenericSolutionAttribute<S
   @Override
   public void setAttribute(S solution, R2SolutionData value) {
     this.attribute.setAttribute(solution, value);
-
   }
 
   @Override
