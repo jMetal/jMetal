@@ -17,6 +17,7 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.parallel.SynchronousParallelTaskExecutor;
+import org.uma.jmetal.problem.ConstrainedProblem;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,6 +29,7 @@ import java.util.logging.Level;
 /**
  * Class for evaluating solutions in parallel using threads
  * @author Antonio J. Nebro
+ * @modified by Jackson Antonio do Prado Lima 09/09/2015
  */
 public class MultithreadedEvaluator<S extends Solution<?>> implements SynchronousParallelTaskExecutor {
   private Problem<S> problem;
@@ -136,7 +138,12 @@ public class MultithreadedEvaluator<S extends Solution<?>> implements Synchronou
     }
 
     public S call() throws Exception {
-      problem.evaluate(solution);
+      if (problem instanceof ConstrainedProblem) {
+          problem.evaluate(solution);
+          ((ConstrainedProblem<S>) problem).evaluateConstraints(solution);
+      } else {
+          problem.evaluate(solution);
+      }
 
       return solution;
     }
