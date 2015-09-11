@@ -1,5 +1,4 @@
-package org.uma.jmetal.util.neighborhood.impl;
-
+package org.uma.jmetal.util.neighborhood.util;
 
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
@@ -8,24 +7,18 @@ import org.uma.jmetal.util.neighborhood.Neighborhood;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
- * Class defining a L5 neighborhood of a solution belonging to a list of solutions which is
- * structured as a bi-dimensional square mesh. The neighbors are those solutions that are in the positions
- * North, South, East and West
+ * Class defining a bi-dimensional mesh.
  */
 public class TwoDimensionalMesh<S extends Solution<?>> implements Neighborhood<S> {
   private int rows ;
   private int columns ;
-
-
   private int[][] neighborhood ;
-
   private int [][] mesh;
 
   /**
    * Constructor.
-   * Defines a neighborhood for solutionSetSize (it has to have an exact squared root)
+   * Defines a neighborhood for list of solutions
    */
   public TwoDimensionalMesh(int rows, int columns, int[][]neighborhood) {
     this.rows = rows ;
@@ -106,7 +99,7 @@ public class TwoDimensionalMesh<S extends Solution<?>> implements Neighborhood<S
    * @param neighborhood The list of neighbors we want to obtain as shift regarding to solution
    * @return
    */
-  public List<S> findNeighbors(List<S> solutionSet, int solution, int [][] neighborhood) {
+  private List<S> findNeighbors(List<S> solutionSet, int solution, int [][] neighborhood) {
     List<S> neighbors = new ArrayList<>(neighborhood.length+1);
 
     for (int [] neighbor : neighborhood) {
