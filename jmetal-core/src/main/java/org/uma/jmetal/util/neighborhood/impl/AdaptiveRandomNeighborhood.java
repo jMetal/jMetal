@@ -88,6 +88,14 @@ public class AdaptiveRandomNeighborhood<S extends Solution<?>> implements Neighb
     return neighborhood ;
   }
 
+  /**
+   * Recomputes the neighbors
+   */
+  public void recompute() {
+    createNeighborhoods();
+    addRandomNeighbors();
+  }
+
   @Override
   public List<S> getNeighbors(List<S> solutionList, int solutionIndex) {
     if (solutionList == null) {

@@ -1,0 +1,244 @@
+//  StandardPSO2007.java
+//
+//  Author:
+//       Antonio J. Nebro <antonio@lcc.uma.es>
+//
+//  Copyright (c) 2014 Antonio J. Nebro
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU Lesser General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU Lesser General Public License for more details.
+// 
+//  You should have received a copy of the GNU Lesser General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+package org.uma.jmetal.algorithm.singleobjective.particleswarmoptimization;
+
+import org.uma.jmetal.algorithm.impl.AbstractParticleSwarmOptimization;
+import org.uma.jmetal.operator.Operator;
+import org.uma.jmetal.operator.impl.selection.BestSolutionSelection;
+import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.comparator.ObjectiveComparator;
+import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
+import org.uma.jmetal.util.neighborhood.impl.AdaptiveRandomNeighborhood;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.logging.Level;
+
+/**
+ * Class implementing a Standard PSO 2007 algorithm
+ */
+public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSolution, DoubleSolution> {
+  private DoubleProblem problem;
+  private SolutionListEvaluator<DoubleSolution> evaluator ;
+
+  private Operator<List<DoubleSolution>, DoubleSolution> findBestSolution;
+  private Comparator<DoubleSolution> fitnessComparator ;
+  private List<DoubleSolution> swarm;
+  private int swarmSize;
+  private int maxIterations;
+  private int iterations;
+  private int numberOfParticlesToInform;
+  private LocalBestAttribute localBest;
+  private DoubleSolution[] neighborhoodBest;
+  private double[][] speed;
+  private AdaptiveRandomNeighborhood<DoubleSolution> neighborhood;
+  private double weight;
+  private double c;
+  private JMetalRandom randomGenerator = JMetalRandom.getInstance() ;
+  private DoubleSolution bestFoundParticle ;
+
+  public StandardPSO2007(DoubleProblem problem, int swarmSize, int maxIterations,
+                         int numberOfParticlesToInform, SolutionListEvaluator<DoubleSolution> evaluator) {
+    this.problem = problem ;
+    this.swarmSize = swarmSize ;
+    this.maxIterations = maxIterations ;
+    this.numberOfParticlesToInform = numberOfParticlesToInform ;
+    this.evaluator = evaluator ;
+
+    weight = 1.0 / (2.0 * Math.log(2));
+    c = 1.0 / 2.0 + Math.log(2);
+
+    fitnessComparator = new ObjectiveComparator<DoubleSolution>(0) ;
+    findBestSolution = new BestSolutionSelection<DoubleSolution>(fitnessComparator) ;
+
+    swarm = new ArrayList<DoubleSolution>(swarmSize);
+    neighborhoodBest = new DoubleSolution[swarmSize];
+
+    speed = new double[swarmSize][problem.getNumberOfVariables()];
+    localBest = new LocalBestAttribute() ;
+    bestFoundParticle = null ;
+  }
+
+  @Override protected void initProgress() {
+    iterations = 1;
+    neighborhood = new AdaptiveRandomNeighborhood<DoubleSolution>(swarmSize, numberOfParticlesToInform);
+  }
+
+  @Override protected void updateProgress() {
+    iterations += 1;
+  }
+
+  @Override protected boolean isStoppingConditionReached() {
+    return iterations >= maxIterations;
+  }
+
+
+  @Override protected List<DoubleSolution> createInitialSwarm() {
+    List<DoubleSolution> swarm = new ArrayList<>(swarmSize);
+
+    DoubleSolution newSolution;
+    for (int i = 0; i < swarmSize; i++) {
+      newSolution = problem.createSolution();
+      swarm.add(newSolution);
+    }
+
+    return swarm;
+  }
+
+  @Override protected List<DoubleSolution> evaluateSwarm(List<DoubleSolution> swarm) {
+    swarm = evaluator.evaluate(swarm, problem);
+
+    return swarm;
+  }
+
+  @Override
+  protected void initializeLeaders(List<DoubleSolution> swarm) {
+
+  }
+
+  @Override
+  protected void initializeParticlesMemory(List<DoubleSolution> swarm) {
+    for (int i = 0; i < swarm.size(); i++) {
+      DoubleSolution particle = (DoubleSolution) swarm.get(i).copy();
+      localBest.setAttribute(particle, particle);
+
+      neighborhoodBest[i] = getNeighborBest(i);
+    }
+  }
+
+  @Override
+  protected void initializeVelocity(List<DoubleSolution> swarm) {
+    for (int i = 0; i < swarmSize; i++) {
+      DoubleSolution particle = swarm.get(i) ;
+      for (int j = 0; j < problem.getNumberOfVariables(); j++) {
+        speed[i][j] =
+                (randomGenerator.nextDouble(particle.getLowerBound(j), particle.getUpperBound(j))
+                        - particle.getVariableValue(j)) / 2.0;
+      }
+    }
+  }
+
+  @Override
+  protected void updateVelocity(List<DoubleSolution> swarm) {
+    double r1, r2;
+
+    for (int i = 0; i < swarmSize; i++) {
+      DoubleSolution particle = swarm.get(i);
+
+      r1 = randomGenerator.nextDouble(0, c);
+      r2 = randomGenerator.nextDouble(0, c);
+
+      if (localBest.getAttribute(particle) != neighborhoodBest[i]) {
+        for (int var = 0; var < particle.getNumberOfVariables(); var++) {
+          speed[i][var] = weight * speed[i][var] +
+                  r1 * (localBest.getAttribute(particle).getVariableValue(var) - particle.getVariableValue(var)) +
+                  r2 * (neighborhoodBest[i].getVariableValue(var) - particle.getVariableValue(var));
+        }
+      } else {
+        for (int var = 0; var < particle.getNumberOfVariables(); var++) {
+          speed[i][var] = weight * speed[i][var] +
+                  r1 * (localBest.getAttribute(particle).getVariableValue(var) -
+                          particle.getVariableValue(var));
+        }
+      }
+    }
+  }
+
+  @Override
+  protected void updatePosition(List<DoubleSolution> swarm) {
+    for (int i = 0; i < swarmSize; i++) {
+      DoubleSolution particle = swarm.get(i);
+      for (int var = 0; var < particle.getNumberOfVariables(); var++) {
+        particle.setVariableValue(var, particle.getVariableValue(var) + speed[i][var]);
+
+        if (particle.getVariableValue(var) < problem.getLowerBound(var)) {
+          particle.setVariableValue(var, problem.getLowerBound(var));
+          speed[i][var] = 0;
+        }
+        if (particle.getVariableValue(var) > problem.getUpperBound(var)) {
+          particle.setVariableValue(var, problem.getUpperBound(var));
+          speed[i][var] = 0;
+        }
+      }
+    }
+  }
+
+  @Override
+  protected void perturbation(List<DoubleSolution> swarm) {
+  }
+
+  @Override
+  protected void updateLeaders(List<DoubleSolution> swarm) {
+    for (int i = 0; i < swarm.size(); i++) {
+      neighborhoodBest[i] = getNeighborBest(i);
+    }
+
+    DoubleSolution bestSolution = findBestSolution.execute(swarm) ;
+
+    if (bestFoundParticle == null) {
+      bestFoundParticle = bestSolution ;
+    } else {
+      if (bestSolution.getObjective(0) == bestFoundParticle.getObjective(0)) {
+        neighborhood.recompute();
+      }
+      if (bestSolution.getObjective(0) < bestFoundParticle.getObjective(0)) {
+        bestFoundParticle = bestSolution;
+      }
+    }
+  }
+
+  @Override
+  protected void updateParticlesMemory(List<DoubleSolution> swarm) {
+    for (DoubleSolution particle : swarm) {
+      if ((particle.getObjective(0) < localBest.getAttribute(particle).getObjective(0))) {
+        localBest.setAttribute(particle, (DoubleSolution)particle.copy()) ;
+      }
+    }
+  }
+
+  @Override
+  public DoubleSolution getResult() {
+    return null;
+  }
+
+
+  private DoubleSolution getNeighborBest(int i) {
+    DoubleSolution bestLocalBestSolution = null;
+
+    for (DoubleSolution neighbor : neighborhood.getNeighbors(swarm, i)) {
+      if ((bestLocalBestSolution == null) || (bestLocalBestSolution.getObjective(0)
+              > localBest.getAttribute(neighbor).getObjective(0))) {
+        bestLocalBestSolution = localBest.getAttribute(neighbor);
+      }
+    }
+    return bestLocalBestSolution;
+  }
+
+  private class LocalBestAttribute extends GenericSolutionAttribute<DoubleSolution,DoubleSolution> {
+  }
+}
