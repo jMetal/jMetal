@@ -19,6 +19,7 @@ import org.uma.jmetal.algorithm.singleobjective.particleswarmoptimization.Standa
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.impl.selection.DifferentialEvolutionSelection;
 import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.problem.singleobjective.CEC2005Problem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
@@ -39,7 +40,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class StandardPSO2007Runner {
-  private static final int DEFAULT_NUMBER_OF_CORES = 1 ;
+  private static final int DEFAULT_NUMBER_OF_CORES = 4 ;
 
   /**
    *  Usage: java org.uma.jmetal.runner.singleobjective.StandardPSO2007Runner [cores]
@@ -67,7 +68,9 @@ public class StandardPSO2007Runner {
       evaluator = new MultithreadedSolutionListEvaluator<DoubleSolution>(numberOfCores, problem) ;
     }
 
-    algorithm = new StandardPSO2007(problem, 100, 250, 3, evaluator) ;
+    algorithm = new StandardPSO2007(problem,
+            10 + (int) (2 * Math.sqrt(problem.getNumberOfVariables())),
+            800000, 3, evaluator) ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
         .execute() ;

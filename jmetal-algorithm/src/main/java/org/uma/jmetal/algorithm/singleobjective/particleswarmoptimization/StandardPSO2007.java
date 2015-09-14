@@ -25,9 +25,6 @@ import org.uma.jmetal.operator.Operator;
 import org.uma.jmetal.operator.impl.selection.BestSolutionSelection;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.neighborhood.impl.AdaptiveRandomNeighborhood;
@@ -37,7 +34,6 @@ import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.logging.Level;
 
 /**
  * Class implementing a Standard PSO 2007 algorithm
@@ -48,7 +44,7 @@ public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSol
 
   private Operator<List<DoubleSolution>, DoubleSolution> findBestSolution;
   private Comparator<DoubleSolution> fitnessComparator ;
-  private List<DoubleSolution> swarm;
+  //private List<DoubleSolution> swarm;
   private int swarmSize;
   private int maxIterations;
   private int iterations;
@@ -76,17 +72,15 @@ public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSol
     fitnessComparator = new ObjectiveComparator<DoubleSolution>(0) ;
     findBestSolution = new BestSolutionSelection<DoubleSolution>(fitnessComparator) ;
 
-    swarm = new ArrayList<DoubleSolution>(swarmSize);
-    neighborhoodBest = new DoubleSolution[swarmSize];
-
     speed = new double[swarmSize][problem.getNumberOfVariables()];
     localBest = new LocalBestAttribute() ;
     bestFoundParticle = null ;
+    neighborhoodBest = new DoubleSolution[swarmSize] ;
+    neighborhood = new AdaptiveRandomNeighborhood<DoubleSolution>(swarmSize, this.numberOfParticlesToInform);
   }
 
   @Override protected void initProgress() {
     iterations = 1;
-    neighborhood = new AdaptiveRandomNeighborhood<DoubleSolution>(swarmSize, numberOfParticlesToInform);
   }
 
   @Override protected void updateProgress() {
@@ -124,9 +118,10 @@ public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSol
   @Override
   protected void initializeParticlesMemory(List<DoubleSolution> swarm) {
     for (int i = 0; i < swarm.size(); i++) {
-      DoubleSolution particle = (DoubleSolution) swarm.get(i).copy();
-      localBest.setAttribute(particle, particle);
+      localBest.setAttribute(swarm.get(i), swarm.get(i));
+    }
 
+    for (int i = 0; i < swarm.size(); i++) {
       neighborhoodBest[i] = getNeighborBest(i);
     }
   }
@@ -223,14 +218,13 @@ public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSol
 
   @Override
   public DoubleSolution getResult() {
-    return null;
+    return bestFoundParticle;
   }
-
 
   private DoubleSolution getNeighborBest(int i) {
     DoubleSolution bestLocalBestSolution = null;
 
-    for (DoubleSolution neighbor : neighborhood.getNeighbors(swarm, i)) {
+    for (DoubleSolution neighbor : neighborhood.getNeighbors(getSwarm(), i)) {
       if ((bestLocalBestSolution == null) || (bestLocalBestSolution.getObjective(0)
               > localBest.getAttribute(neighbor).getObjective(0))) {
         bestLocalBestSolution = localBest.getAttribute(neighbor);
