@@ -9,14 +9,14 @@ the new incoming features in advance.
 If you are interested in contributing with your ideas and comments, please take a look the current discussions in the [Issues section](https://github.com/jMetal/jMetal/issues).
 
 ##Changelog
-### New algorithms
-* Standard PSO 2007 (single objective)
+*New algorithms
+  * Standard PSO 2007 (single objective)
 
-### New operators
-* BestSolutionSelection
+* New operators
+  * BestSolutionSelection
 
-### New util classes
-* AdaptiveRandomNeighborhood
+* New util classes
+  * AdaptiveRandomNeighborhood
 
 
 ##jMetal is available as a Maven Project in The Central Repository
