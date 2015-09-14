@@ -49,7 +49,7 @@ public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSol
   private int maxIterations;
   private int iterations;
   private int numberOfParticlesToInform;
-  private LocalBestAttribute localBest;
+  private GenericSolutionAttribute<DoubleSolution, DoubleSolution> localBest;
   private DoubleSolution[] neighborhoodBest;
   private double[][] speed;
   private AdaptiveRandomNeighborhood<DoubleSolution> neighborhood;
@@ -73,7 +73,7 @@ public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSol
     findBestSolution = new BestSolutionSelection<DoubleSolution>(fitnessComparator) ;
 
     speed = new double[swarmSize][problem.getNumberOfVariables()];
-    localBest = new LocalBestAttribute() ;
+    localBest = new GenericSolutionAttribute<DoubleSolution, DoubleSolution>() ;
     bestFoundParticle = null ;
     neighborhoodBest = new DoubleSolution[swarmSize] ;
     neighborhood = new AdaptiveRandomNeighborhood<DoubleSolution>(swarmSize, this.numberOfParticlesToInform);
@@ -231,8 +231,5 @@ public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSol
       }
     }
     return bestLocalBestSolution;
-  }
-
-  private class LocalBestAttribute extends GenericSolutionAttribute<DoubleSolution,DoubleSolution> {
   }
 }
