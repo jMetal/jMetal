@@ -59,6 +59,14 @@ public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSol
   private JMetalRandom randomGenerator = JMetalRandom.getInstance() ;
   private DoubleSolution bestFoundParticle ;
 
+  /**
+   * Constructor
+   * @param problem
+   * @param swarmSize
+   * @param maxIterations
+   * @param numberOfParticlesToInform
+   * @param evaluator
+   */
   public StandardPSO2007(DoubleProblem problem, int swarmSize, int maxIterations,
                          int numberOfParticlesToInform, SolutionListEvaluator<DoubleSolution> evaluator) {
     this.problem = problem ;
@@ -73,7 +81,6 @@ public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSol
     fitnessComparator = new ObjectiveComparator<DoubleSolution>(0) ;
     findBestSolution = new BestSolutionSelection<DoubleSolution>(fitnessComparator) ;
 
-    //speed = new double[swarmSize][problem.getNumberOfVariables()];
     speed = new GenericSolutionAttribute<DoubleSolution, double[]>() ;
     localBest = new LocalBestAttribute() ;
     neighborhoodBest = new NeighborhoodBestAttribute() ;
@@ -94,14 +101,12 @@ public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSol
     return iterations >= maxIterations;
   }
 
-
   @Override protected List<DoubleSolution> createInitialSwarm() {
     List<DoubleSolution> swarm = new ArrayList<>(swarmSize);
 
     DoubleSolution newSolution;
     for (int i = 0; i < swarmSize; i++) {
       newSolution = problem.createSolution();
-      //speed.setAttribute(newSolution, new double[problem.getNumberOfVariables()]);
       swarm.add(newSolution);
     }
 
@@ -116,17 +121,15 @@ public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSol
 
   @Override
   protected void initializeLeaders(List<DoubleSolution> swarm) {
-
+    for (int i = 0; i < swarm.size(); i++) {
+      neighborhoodBest.setAttribute(swarm.get(i), getNeighborBest(i));
+    }
   }
 
   @Override
   protected void initializeParticlesMemory(List<DoubleSolution> swarm) {
-    for (int i = 0; i < swarm.size(); i++) {
-      localBest.setAttribute(swarm.get(i), swarm.get(i));
-    }
-
-    for (int i = 0; i < swarm.size(); i++) {
-      neighborhoodBest.setAttribute(swarm.get(i), getNeighborBest(i));
+    for (DoubleSolution particle :swarm) {
+      localBest.setAttribute(particle, particle);
     }
   }
 
