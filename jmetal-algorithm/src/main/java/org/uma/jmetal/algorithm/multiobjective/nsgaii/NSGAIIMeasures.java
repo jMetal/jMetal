@@ -24,7 +24,6 @@ public class NSGAIIMeasures<S extends Solution<?>> extends NSGAII<S> implements 
   private BasicMeasure<List<S>> solutionListMeasure ;
   private BasicMeasure<Integer> numberOfNonDominatedSolutionsInPopulation ;
 
-
   /**
    * Constructor
    */

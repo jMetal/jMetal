@@ -14,6 +14,7 @@
 package org.uma.jmetal.util.neighborhood.impl;
 
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.neighborhood.util.TwoDimensionalMesh;
 
 /**
  * Class defining a L5 neighborhood of a solution belonging to a list of solutions which is

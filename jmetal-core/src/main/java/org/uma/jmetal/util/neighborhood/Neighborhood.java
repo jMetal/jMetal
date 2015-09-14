@@ -18,6 +18,8 @@ import org.uma.jmetal.solution.Solution;
 import java.util.List;
 
 /**
+ * Interface representing a neighborhood of a given solution in a list of solutions
+ *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public interface Neighborhood<S extends Solution<?>> {

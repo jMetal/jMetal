@@ -9,6 +9,14 @@ import java.util.List;
  * Created by ajnebro on 26/10/14.
  */
 public abstract class AbstractParticleSwarmOptimization<S extends Solution<?>, Result> implements Algorithm <Result> {
+  private List<S> swarm;
+  public List<S> getSwarm() {
+    return swarm;
+  }
+  public void setSwarm(List<S> swarm) {
+    this.swarm = swarm;
+  }
+
   protected abstract void initProgress() ;
   protected abstract void updateProgress() ;
 
@@ -29,7 +37,6 @@ public abstract class AbstractParticleSwarmOptimization<S extends Solution<?>, R
 
   @Override
   public void run() {
-    List<S> swarm ;
     swarm = createInitialSwarm() ;
     swarm = evaluateSwarm(swarm);
     initializeLeaders(swarm) ;

@@ -14,6 +14,7 @@
 package org.uma.jmetal.util.neighborhood.impl;
 
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.neighborhood.util.TwoDimensionalMesh;
 
 /**
  * Class representing neighborhoods for a {@link Solution} into a list of solutions
