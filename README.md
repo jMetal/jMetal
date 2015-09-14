@@ -9,7 +9,7 @@ the new incoming features in advance.
 If you are interested in contributing with your ideas and comments, please take a look the current discussions in the [Issues section](https://github.com/jMetal/jMetal/issues).
 
 ##Changelog
-*New algorithms
+* New algorithms
   * Standard PSO 2007 (single objective)
 
 * New operators
