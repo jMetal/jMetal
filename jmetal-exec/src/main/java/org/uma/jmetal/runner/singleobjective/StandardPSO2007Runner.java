@@ -40,7 +40,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class StandardPSO2007Runner {
-  private static final int DEFAULT_NUMBER_OF_CORES = 4 ;
+  private static final int DEFAULT_NUMBER_OF_CORES = 1 ;
 
   /**
    *  Usage: java org.uma.jmetal.runner.singleobjective.StandardPSO2007Runner [cores]
@@ -70,7 +70,7 @@ public class StandardPSO2007Runner {
 
     algorithm = new StandardPSO2007(problem,
             10 + (int) (2 * Math.sqrt(problem.getNumberOfVariables())),
-            800000, 3, evaluator) ;
+            80000, 3, evaluator) ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
         .execute() ;

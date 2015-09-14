@@ -40,8 +40,8 @@ public abstract class AbstractParticleSwarmOptimization<S extends Solution<?>, R
     swarm = createInitialSwarm() ;
     swarm = evaluateSwarm(swarm);
     initializeLeaders(swarm) ;
+    initializeVelocity(swarm);
     initializeParticlesMemory(swarm) ;
-    initializeLeaders(swarm);
     initProgress();
 
     while (!isStoppingConditionReached()) {
