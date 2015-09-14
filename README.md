@@ -1,7 +1,7 @@
-# jMetal Development Site
+# jMetal 5 Development Site
 
 **jMetal** is an object-oriented Java-based framework for multi-objective optimization with metaheuristics
-The Web page of the project is: [http://jmetal.github.io/jMetal/](http://jmetal.github.io/jMetal/)
+The Web page of the project is: [http://jmetal.github.io/jMetal/](http://jmetal.github.io/jMetal/). Former jMetal versions can be found in [SourceForge](http://jmetal.sourceforge.net).
 
 The current jMetal development version is hosted in this repository; this way, interested users can take a look to
 the new incoming features in advance.
@@ -9,6 +9,14 @@ the new incoming features in advance.
 If you are interested in contributing with your ideas and comments, please take a look the current discussions in the [Issues section](https://github.com/jMetal/jMetal/issues).
 
 ##Changelog
+* New algorithms
+  * Standard PSO 2007 (single objective)
+
+* New operators
+  * BestSolutionSelection
+
+* New util classes
+  * AdaptiveRandomNeighborhood
 
 
 ##jMetal is available as a Maven Project in The Central Repository
