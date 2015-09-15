@@ -61,6 +61,39 @@ public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSol
   private JMetalRandom randomGenerator = JMetalRandom.getInstance() ;
   private DoubleSolution bestFoundParticle ;
 
+  private int objectiveId ;
+  /**
+   * Constructor
+   * @param problem
+   * @param objectiveId
+   * @param swarmSize
+   * @param maxIterations
+   * @param numberOfParticlesToInform
+   * @param evaluator
+   */
+  public StandardPSO2007(DoubleProblem problem, int objectiveId, int swarmSize, int maxIterations,
+                         int numberOfParticlesToInform, SolutionListEvaluator<DoubleSolution> evaluator) {
+    this.problem = problem ;
+    this.swarmSize = swarmSize ;
+    this.maxIterations = maxIterations ;
+    this.numberOfParticlesToInform = numberOfParticlesToInform ;
+    this.evaluator = evaluator ;
+    this.objectiveId = 0 ;
+
+    weight = 1.0 / (2.0 * Math.log(2));
+    c = 1.0 / 2.0 + Math.log(2);
+
+    fitnessComparator = new ObjectiveComparator<DoubleSolution>(objectiveId) ;
+    findBestSolution = new BestSolutionSelection<DoubleSolution>(fitnessComparator) ;
+
+    speed = new GenericSolutionAttribute<DoubleSolution, double[]>() ;
+    localBest = new LocalBestAttribute() ;
+    neighborhoodBest = new NeighborhoodBestAttribute() ;
+
+    bestFoundParticle = null ;
+    neighborhood = new AdaptiveRandomNeighborhood<DoubleSolution>(swarmSize, this.numberOfParticlesToInform);
+  }
+
   /**
    * Constructor
    * @param problem
@@ -71,24 +104,7 @@ public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSol
    */
   public StandardPSO2007(DoubleProblem problem, int swarmSize, int maxIterations,
                          int numberOfParticlesToInform, SolutionListEvaluator<DoubleSolution> evaluator) {
-    this.problem = problem ;
-    this.swarmSize = swarmSize ;
-    this.maxIterations = maxIterations ;
-    this.numberOfParticlesToInform = numberOfParticlesToInform ;
-    this.evaluator = evaluator ;
-
-    weight = 1.0 / (2.0 * Math.log(2));
-    c = 1.0 / 2.0 + Math.log(2);
-
-    fitnessComparator = new ObjectiveComparator<DoubleSolution>(0) ;
-    findBestSolution = new BestSolutionSelection<DoubleSolution>(fitnessComparator) ;
-
-    speed = new GenericSolutionAttribute<DoubleSolution, double[]>() ;
-    localBest = new LocalBestAttribute() ;
-    neighborhoodBest = new NeighborhoodBestAttribute() ;
-
-    bestFoundParticle = null ;
-    neighborhood = new AdaptiveRandomNeighborhood<DoubleSolution>(swarmSize, this.numberOfParticlesToInform);
+    this(problem, 0, swarmSize, maxIterations, numberOfParticlesToInform, evaluator) ;
   }
 
   @Override public void initProgress() {
@@ -207,10 +223,10 @@ public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSol
     if (bestFoundParticle == null) {
       bestFoundParticle = bestSolution ;
     } else {
-      if (bestSolution.getObjective(0) == bestFoundParticle.getObjective(0)) {
+      if (bestSolution.getObjective(objectiveId) == bestFoundParticle.getObjective(0)) {
         neighborhood.recompute();
       }
-      if (bestSolution.getObjective(0) < bestFoundParticle.getObjective(0)) {
+      if (bestSolution.getObjective(objectiveId) < bestFoundParticle.getObjective(0)) {
         bestFoundParticle = bestSolution;
       }
     }
@@ -219,7 +235,7 @@ public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSol
   @Override
   public void updateParticlesMemory(List<DoubleSolution> swarm) {
     for (DoubleSolution particle : swarm) {
-      if ((particle.getObjective(0) < localBest.getAttribute(particle).getObjective(0))) {
+      if ((particle.getObjective(objectiveId) < localBest.getAttribute(particle).getObjective(0))) {
         localBest.setAttribute(particle, (DoubleSolution)particle.copy()) ;
       }
     }
@@ -234,8 +250,8 @@ public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSol
     DoubleSolution bestLocalBestSolution = null;
 
     for (DoubleSolution neighbor : neighborhood.getNeighbors(getSwarm(), i)) {
-      if ((bestLocalBestSolution == null) || (bestLocalBestSolution.getObjective(0)
-              > localBest.getAttribute(neighbor).getObjective(0))) {
+      if ((bestLocalBestSolution == null) || (bestLocalBestSolution.getObjective(objectiveId)
+              > localBest.getAttribute(neighbor).getObjective(objectiveId))) {
         bestLocalBestSolution = localBest.getAttribute(neighbor);
       }
     }
