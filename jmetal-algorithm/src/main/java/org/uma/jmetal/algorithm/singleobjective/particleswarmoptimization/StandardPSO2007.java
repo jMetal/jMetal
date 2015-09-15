@@ -21,6 +21,8 @@
 package org.uma.jmetal.algorithm.singleobjective.particleswarmoptimization;
 
 import org.uma.jmetal.algorithm.impl.AbstractParticleSwarmOptimization;
+import org.uma.jmetal.algorithm.singleobjective.particleswarmoptimization.util.LocalBestAttribute;
+import org.uma.jmetal.algorithm.singleobjective.particleswarmoptimization.util.NeighborhoodBestAttribute;
 import org.uma.jmetal.operator.Operator;
 import org.uma.jmetal.operator.impl.selection.BestSolutionSelection;
 import org.uma.jmetal.problem.DoubleProblem;
@@ -89,19 +91,19 @@ public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSol
     neighborhood = new AdaptiveRandomNeighborhood<DoubleSolution>(swarmSize, this.numberOfParticlesToInform);
   }
 
-  @Override protected void initProgress() {
+  @Override public void initProgress() {
     iterations = 1;
   }
 
-  @Override protected void updateProgress() {
+  @Override public void updateProgress() {
     iterations += 1;
   }
 
-  @Override protected boolean isStoppingConditionReached() {
+  @Override public boolean isStoppingConditionReached() {
     return iterations >= maxIterations;
   }
 
-  @Override protected List<DoubleSolution> createInitialSwarm() {
+  @Override public List<DoubleSolution> createInitialSwarm() {
     List<DoubleSolution> swarm = new ArrayList<>(swarmSize);
 
     DoubleSolution newSolution;
@@ -113,28 +115,28 @@ public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSol
     return swarm;
   }
 
-  @Override protected List<DoubleSolution> evaluateSwarm(List<DoubleSolution> swarm) {
+  @Override public List<DoubleSolution> evaluateSwarm(List<DoubleSolution> swarm) {
     swarm = evaluator.evaluate(swarm, problem);
 
     return swarm;
   }
 
   @Override
-  protected void initializeLeaders(List<DoubleSolution> swarm) {
+  public void initializeLeaders(List<DoubleSolution> swarm) {
     for (int i = 0; i < swarm.size(); i++) {
       neighborhoodBest.setAttribute(swarm.get(i), getNeighborBest(i));
     }
   }
 
   @Override
-  protected void initializeParticlesMemory(List<DoubleSolution> swarm) {
+  public void initializeParticlesMemory(List<DoubleSolution> swarm) {
     for (DoubleSolution particle :swarm) {
       localBest.setAttribute(particle, particle);
     }
   }
 
   @Override
-  protected void initializeVelocity(List<DoubleSolution> swarm) {
+  public void initializeVelocity(List<DoubleSolution> swarm) {
     for (DoubleSolution particle : swarm) {
       speed.setAttribute(particle, new double[problem.getNumberOfVariables()]);
       for (int j = 0; j < problem.getNumberOfVariables(); j++) {
@@ -146,7 +148,7 @@ public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSol
   }
 
   @Override
-  protected void updateVelocity(List<DoubleSolution> swarm) {
+  public void updateVelocity(List<DoubleSolution> swarm) {
     double r1, r2;
 
     for (int i = 0; i < swarmSize; i++) {
@@ -172,7 +174,7 @@ public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSol
   }
 
   @Override
-  protected void updatePosition(List<DoubleSolution> swarm) {
+  public void updatePosition(List<DoubleSolution> swarm) {
     for (int i = 0; i < swarmSize; i++) {
       DoubleSolution particle = swarm.get(i);
       for (int var = 0; var < particle.getNumberOfVariables(); var++) {
@@ -191,11 +193,11 @@ public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSol
   }
 
   @Override
-  protected void perturbation(List<DoubleSolution> swarm) {
+  public void perturbation(List<DoubleSolution> swarm) {
   }
 
   @Override
-  protected void updateLeaders(List<DoubleSolution> swarm) {
+  public void updateLeaders(List<DoubleSolution> swarm) {
     for (int i = 0; i < swarm.size(); i++) {
       neighborhoodBest.setAttribute(swarm.get(i), getNeighborBest(i));
     }
@@ -215,7 +217,7 @@ public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSol
   }
 
   @Override
-  protected void updateParticlesMemory(List<DoubleSolution> swarm) {
+  public void updateParticlesMemory(List<DoubleSolution> swarm) {
     for (DoubleSolution particle : swarm) {
       if ((particle.getObjective(0) < localBest.getAttribute(particle).getObjective(0))) {
         localBest.setAttribute(particle, (DoubleSolution)particle.copy()) ;
@@ -238,17 +240,5 @@ public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSol
       }
     }
     return bestLocalBestSolution;
-  }
-
-  /**
-   * Solution attribute representing the local best of a particle
-   */
-  private class LocalBestAttribute extends GenericSolutionAttribute<DoubleSolution,DoubleSolution> {
-  }
-
-  /**
-   * Solution attribute representing the neighborhood best of a particle
-   */
-  private class NeighborhoodBestAttribute extends GenericSolutionAttribute<DoubleSolution,DoubleSolution> {
   }
 }
