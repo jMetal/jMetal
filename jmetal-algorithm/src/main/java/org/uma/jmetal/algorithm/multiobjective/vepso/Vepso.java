@@ -37,19 +37,22 @@ public class Vepso implements Algorithm<List<DoubleSolution>> {
   private int maxIterations;
   private int iterations;
   private int numberOfParticlesToInform;
-  private DoubleSolution bestFoundParticle ;
 
   private List<StandardPSO2007> psoIsland ;
   private List<List<DoubleSolution>> psoIslandSwarm ;
 
-  public Vepso(DoubleProblem problem, int swarmSize, int maxIterations,
-                         int numberOfParticlesToInform) {
+  private Archive<DoubleSolution> archive ;
+
+  public Vepso(DoubleProblem problem,
+               int swarmSize,
+               int maxIterations,
+               int numberOfParticlesToInform,
+               Archive<DoubleSolution> archive) {
     this.problem = problem ;
     this.swarmSize = swarmSize ;
     this.maxIterations = maxIterations ;
     this.numberOfParticlesToInform = numberOfParticlesToInform ;
-
-    bestFoundParticle = null ;
+    this.archive = archive ;
 
     psoIsland = new ArrayList<StandardPSO2007>() ;
     for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
@@ -121,6 +124,7 @@ public class Vepso implements Algorithm<List<DoubleSolution>> {
   protected void initializeParticlesMemory(List<List<DoubleSolution>> swarm) {
     for (int i = 0; i < psoIsland.size(); i++) {
       psoIsland.get(i).initializeParticlesMemory(swarm.get(i)) ;
+      psoIsland.get(i).setSwarm(swarm.get(i));
     }
   }
 
