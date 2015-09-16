@@ -67,7 +67,7 @@ public class VEPSORunner extends AbstractAlgorithmRunner {
       problemName = args[0] ;
       referenceParetoFront = args[1] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+      problemName = "org.uma.jmetal.problem.multiobjective.Kursawe";
       //problemName = "org.uma.jmetal.problem.singleobjective.Sphere" ;
 
       //referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf" ;

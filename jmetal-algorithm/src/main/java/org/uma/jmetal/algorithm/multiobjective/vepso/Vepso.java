@@ -41,8 +41,6 @@ public class Vepso implements Algorithm<List<DoubleSolution>> {
   private List<StandardPSO2007> psoIsland ;
   private List<List<DoubleSolution>> psoIslandSwarm ;
 
-  private Archive<DoubleSolution> archive ;
-
   public Vepso(DoubleProblem problem,
                int swarmSize,
                int maxIterations,
@@ -110,6 +108,7 @@ public class Vepso implements Algorithm<List<DoubleSolution>> {
     List<List<DoubleSolution>> swarms = new ArrayList<>(problem.getNumberOfObjectives()) ;
     for (int i = 0; i < psoIsland.size(); i++) {
       swarms.add(i, psoIsland.get(i).evaluateSwarm(swarm.get(i))) ;
+      updateArchive(swarm.get(i));
     }
 
     return swarms;
@@ -162,11 +161,17 @@ public class Vepso implements Algorithm<List<DoubleSolution>> {
     }
   }
 
-  public List<DoubleSolution> getResult() {
-    List<DoubleSolution> result = new ArrayList<>() ;
-    for (int i = 0; i < psoIsland.size(); i++) {
-      result.add(psoIsland.get(i).getResult()) ;
+  protected void updateArchive(List<DoubleSolution> swarm) {
+    for (DoubleSolution solution : swarm) {
+      archive.add((DoubleSolution)solution.copy()) ;
     }
-    return result;
+  }
+
+  public List<DoubleSolution> getResult() {
+    //List<DoubleSolution> result = new ArrayList<>() ;
+    //for (int i = 0; i < psoIsland.size(); i++) {
+    //  result.add(psoIsland.get(i).getResult()) ;
+    //}
+    return archive.getSolutionList() ;
   }
 }
