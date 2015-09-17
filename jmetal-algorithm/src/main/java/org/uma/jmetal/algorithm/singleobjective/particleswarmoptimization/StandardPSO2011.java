@@ -30,6 +30,8 @@ import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.neighborhood.impl.AdaptiveRandomNeighborhood;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.pseudorandom.impl.ExtendedPseudoRandomGenerator;
+import org.uma.jmetal.util.pseudorandom.impl.JavaRandomGenerator;
 import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
 
 import java.util.ArrayList;
@@ -58,7 +60,7 @@ public class StandardPSO2011 extends AbstractParticleSwarmOptimization<DoubleSol
   private GenericSolutionAttribute<DoubleSolution, Integer> positionInSwarm;
   private double weight;
   private double c;
-  private JMetalRandom randomGenerator = JMetalRandom.getInstance();
+  private JMetalRandom randomGenerator ;
   private DoubleSolution bestFoundParticle;
   private double changeVelocity;
 
@@ -96,6 +98,9 @@ public class StandardPSO2011 extends AbstractParticleSwarmOptimization<DoubleSol
     speed = new double[swarmSize][problem.getNumberOfVariables()];
 
     positionInSwarm = new GenericSolutionAttribute<DoubleSolution, Integer>();
+
+    randomGenerator = JMetalRandom.getInstance() ;
+    randomGenerator.setRandomGenerator(new ExtendedPseudoRandomGenerator(new JavaRandomGenerator()));
 
     bestFoundParticle = null;
     neighborhood = new AdaptiveRandomNeighborhood<DoubleSolution>(swarmSize, this.numberOfParticlesToInform);
@@ -213,7 +218,7 @@ public class StandardPSO2011 extends AbstractParticleSwarmOptimization<DoubleSol
       double radius = 0;
       radius = SolutionUtils.distanceBetweenSolutions(gravityCenter, particle);
 
-      double[] random = PseudoRandom.randSphere(problem.getNumberOfVariables());
+      double[] random = ((ExtendedPseudoRandomGenerator)randomGenerator.getRanndomGenerator()).randSphere(problem.getNumberOfVariables());
 
       for (int var = 0; var < particle.getNumberOfVariables(); var++) {
         randomParticle.setVariableValue(var, gravityCenter.getVariableValue(var) + radius * random[var]);
