@@ -67,17 +67,13 @@ public class VEPSORunner extends AbstractAlgorithmRunner {
       problemName = args[0] ;
       referenceParetoFront = args[1] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.Kursawe";
-      //problemName = "org.uma.jmetal.problem.singleobjective.Sphere" ;
-
-      //referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf" ;
+      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf" ;
     }
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution> loadProblem(problemName);
 
     Archive<DoubleSolution> archive = new CrowdingDistanceArchive<DoubleSolution>(100) ;
-
-    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
 
     algorithm = new Vepso(problem, 100, 250, 3, archive) ;
 

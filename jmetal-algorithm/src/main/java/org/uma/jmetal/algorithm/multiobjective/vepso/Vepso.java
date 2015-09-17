@@ -3,8 +3,6 @@ package org.uma.jmetal.algorithm.multiobjective.vepso;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.impl.AbstractParticleSwarmOptimization;
 import org.uma.jmetal.algorithm.singleobjective.particleswarmoptimization.StandardPSO2007;
-import org.uma.jmetal.algorithm.singleobjective.particleswarmoptimization.util.LocalBestAttribute;
-import org.uma.jmetal.algorithm.singleobjective.particleswarmoptimization.util.NeighborhoodBestAttribute;
 import org.uma.jmetal.operator.Operator;
 import org.uma.jmetal.operator.impl.selection.BestSolutionSelection;
 import org.uma.jmetal.problem.DoubleProblem;
@@ -44,10 +42,6 @@ public class Vepso implements Algorithm<List<DoubleSolution>> {
   private List<StandardPSO2007> psoIsland ;
   private List<List<DoubleSolution>> psoIslandSwarm ;
 
-  private LocalBestAttribute localBest;
-  private NeighborhoodBestAttribute neighborhoodBest;
-  private GenericSolutionAttribute<DoubleSolution, double[]> speed;
-
   private double weight;
   private double c;
 
@@ -66,10 +60,6 @@ public class Vepso implements Algorithm<List<DoubleSolution>> {
 
     weight = 1.0 / (2.0 * Math.log(2));
     c = 1.0 / 2.0 + Math.log(2);
-
-    speed = new GenericSolutionAttribute<DoubleSolution, double[]>() ;
-    localBest = new LocalBestAttribute() ;
-    neighborhoodBest = new NeighborhoodBestAttribute() ;
 
     psoIsland = new ArrayList<StandardPSO2007>() ;
     for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
@@ -200,33 +190,37 @@ public class Vepso implements Algorithm<List<DoubleSolution>> {
 
 
   private void updateSwarmVelocity(List<List<DoubleSolution>> swarmList) {
-    for (List<DoubleSolution> swarm : swarmList) {
+    for (StandardPSO2007 pso : psoIsland) {
       double r1, r2;
-
       for (int i = 0; i < swarmSize; i++) {
-        DoubleSolution particle = swarm.get(i);
+        DoubleSolution particle = pso.getSwarm().get(i);
 
         r1 = JMetalRandom.getInstance().nextDouble(0, c);
         r2 = JMetalRandom.getInstance().nextDouble(0, c);
 
         DoubleSolution globalBest ;
-        //globalBest = neighborhoodBest.getAttribute(particle) ;
-        //int swarmId = JMetalRandom.getInstance().nextInt(0, 1) ;
-        //int particleID = JMetalRandom.getInstance().nextInt(0, swarmSize-1) ;
-        //globalBest = neighborhoodBest.getAttribute(swarmList.get(swarmId).get(particleID)) ;
+        DoubleSolution localBest ;
+
+        int swarmId = JMetalRandom.getInstance().nextInt(0, 1) ;
+        int particleID = JMetalRandom.getInstance().nextInt(0, swarmSize-1) ;
+
+        localBest = pso.getLocalBest()[i] ;
 
         globalBest = selectGlobalBest() ;
+        //globalBest = pso.getNeighborhoodBest()[i] ;
+        //globalBest = swarmList.get(swarmId).get(particleID) ;
 
-        if (localBest.getAttribute(particle) != globalBest) {
+        if (localBest != globalBest) {
           for (int var = 0; var < particle.getNumberOfVariables(); var++) {
-            speed.getAttribute(particle)[var] = weight * speed.getAttribute(particle)[var] +
-                    r1 * (localBest.getAttribute(particle).getVariableValue(var) - particle.getVariableValue(var)) +
-                    r2 * (globalBest.getVariableValue(var) - particle.getVariableValue(var));
+            pso.getSwarmSpeedMatrix()[i][var] = weight * pso.getSwarmSpeedMatrix()[i][var] +
+                    r1 * (localBest.getVariableValue(var) - particle.getVariableValue(var)) +
+                    r2 * (globalBest.getVariableValue(var) - particle.getVariableValue
+                            (var));
           }
         } else {
           for (int var = 0; var < particle.getNumberOfVariables(); var++) {
-            speed.getAttribute(particle)[var] = weight * speed.getAttribute(particle)[var] +
-                    r1 * (localBest.getAttribute(particle).getVariableValue(var) -
+            pso.getSwarmSpeedMatrix()[i][var] = weight * pso.getSwarmSpeedMatrix()[i][var] +
+                    r1 * (localBest.getVariableValue(var) -
                             particle.getVariableValue(var));
           }
         }
