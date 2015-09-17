@@ -1,26 +1,21 @@
 package org.uma.jmetal.algorithm.multiobjective.vepso;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.impl.AbstractParticleSwarmOptimization;
 import org.uma.jmetal.algorithm.singleobjective.particleswarmoptimization.StandardPSO2007;
 import org.uma.jmetal.operator.Operator;
-import org.uma.jmetal.operator.impl.selection.BestSolutionSelection;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
-import org.uma.jmetal.util.comparator.ObjectiveComparator;
-import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
-import org.uma.jmetal.util.neighborhood.impl.AdaptiveRandomNeighborhood;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
 
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 /**
- * This class implements the VEPSO algorithm described in:
+ * This class implements a version of the VEPSO algorithm described in:
  * MULTIOBJECTIVE OPTIMIZATION USING PARALLEL VECTOR EVALUATED PARTICLE SWARM OPTIMIZATION
  * K.E. Parsopoulos, D.K. Tasoulis, M.N. Vrahatis
  * Proceedings of international conference on artificial intelligence
@@ -28,7 +23,7 @@ import java.util.*;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class Vepso implements Algorithm<List<DoubleSolution>> {
+public class VEPSO implements Algorithm<List<DoubleSolution>> {
   private DoubleProblem problem;
   private Archive<DoubleSolution> archive ;
 
@@ -47,7 +42,7 @@ public class Vepso implements Algorithm<List<DoubleSolution>> {
 
   private JMetalRandom randomGenerator = JMetalRandom.getInstance() ;
 
-  public Vepso(DoubleProblem problem,
+  public VEPSO(DoubleProblem problem,
                int swarmSize,
                int maxIterations,
                int numberOfParticlesToInform,
