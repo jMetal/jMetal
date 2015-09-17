@@ -13,6 +13,7 @@
 
 package org.uma.jmetal.util.pseudorandom;
 
+import org.apache.commons.math3.random.RandomGenerator;
 import org.uma.jmetal.util.pseudorandom.impl.JavaRandomGenerator;
 
 import java.io.Serializable;
@@ -37,6 +38,10 @@ public class JMetalRandom implements Serializable {
 
   public void setRandomGenerator(PseudoRandomGenerator randomGenerator) {
     this.randomGenerator = randomGenerator;
+  }
+
+  public PseudoRandomGenerator getRanndomGenerator() {
+    return randomGenerator ;
   }
 
   public int nextInt(int lowerBound, int upperBound) {
