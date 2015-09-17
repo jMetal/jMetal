@@ -78,7 +78,7 @@ public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSol
     this.maxIterations = maxIterations ;
     this.numberOfParticlesToInform = numberOfParticlesToInform ;
     this.evaluator = evaluator ;
-    this.objectiveId = 0 ;
+    this.objectiveId = objectiveId ;
 
     weight = 1.0 / (2.0 * Math.log(2));
     c = 1.0 / 2.0 + Math.log(2);

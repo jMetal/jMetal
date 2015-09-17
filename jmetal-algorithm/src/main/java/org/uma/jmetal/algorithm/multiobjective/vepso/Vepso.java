@@ -3,11 +3,14 @@ package org.uma.jmetal.algorithm.multiobjective.vepso;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.impl.AbstractParticleSwarmOptimization;
 import org.uma.jmetal.algorithm.singleobjective.particleswarmoptimization.StandardPSO2007;
+import org.uma.jmetal.algorithm.singleobjective.particleswarmoptimization.util.LocalBestAttribute;
+import org.uma.jmetal.algorithm.singleobjective.particleswarmoptimization.util.NeighborhoodBestAttribute;
 import org.uma.jmetal.operator.Operator;
 import org.uma.jmetal.operator.impl.selection.BestSolutionSelection;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.archive.Archive;
+import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
@@ -41,6 +44,15 @@ public class Vepso implements Algorithm<List<DoubleSolution>> {
   private List<StandardPSO2007> psoIsland ;
   private List<List<DoubleSolution>> psoIslandSwarm ;
 
+  private LocalBestAttribute localBest;
+  private NeighborhoodBestAttribute neighborhoodBest;
+  private GenericSolutionAttribute<DoubleSolution, double[]> speed;
+
+  private double weight;
+  private double c;
+
+  private JMetalRandom randomGenerator = JMetalRandom.getInstance() ;
+
   public Vepso(DoubleProblem problem,
                int swarmSize,
                int maxIterations,
@@ -52,9 +64,18 @@ public class Vepso implements Algorithm<List<DoubleSolution>> {
     this.numberOfParticlesToInform = numberOfParticlesToInform ;
     this.archive = archive ;
 
+    weight = 1.0 / (2.0 * Math.log(2));
+    c = 1.0 / 2.0 + Math.log(2);
+
+    speed = new GenericSolutionAttribute<DoubleSolution, double[]>() ;
+    localBest = new LocalBestAttribute() ;
+    neighborhoodBest = new NeighborhoodBestAttribute() ;
+
     psoIsland = new ArrayList<StandardPSO2007>() ;
     for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      psoIsland.add(new StandardPSO2007(problem, i, swarmSize, maxIterations, numberOfParticlesToInform,
+      psoIsland.add(new StandardPSO2007(problem, i, swarmSize,
+              maxIterations/problem.getNumberOfObjectives(),
+              numberOfParticlesToInform,
               new SequentialSolutionListEvaluator<DoubleSolution>())) ;
     }
   }
@@ -104,60 +125,61 @@ public class Vepso implements Algorithm<List<DoubleSolution>> {
     return psoIslandSwarm ;
   }
 
-  protected List<List<DoubleSolution>> evaluateSwarm(List<List<DoubleSolution>> swarm) {
+  protected List<List<DoubleSolution>> evaluateSwarm(List<List<DoubleSolution>> swarmList) {
     List<List<DoubleSolution>> swarms = new ArrayList<>(problem.getNumberOfObjectives()) ;
     for (int i = 0; i < psoIsland.size(); i++) {
-      swarms.add(i, psoIsland.get(i).evaluateSwarm(swarm.get(i))) ;
-      updateArchive(swarm.get(i));
+      swarms.add(i, psoIsland.get(i).evaluateSwarm(swarmList.get(i))) ;
+      updateArchive(swarmList.get(i));
     }
 
     return swarms;
   }
 
-  protected void initializeLeaders(List<List<DoubleSolution>> swarm) {
+  protected void initializeLeaders(List<List<DoubleSolution>> swarmList) {
     for (int i = 0; i < psoIsland.size(); i++) {
-      psoIsland.get(i).initializeLeaders(swarm.get(i)) ;
+      psoIsland.get(i).initializeLeaders(swarmList.get(i)) ;
     }
   }
 
-  protected void initializeParticlesMemory(List<List<DoubleSolution>> swarm) {
+  protected void initializeParticlesMemory(List<List<DoubleSolution>> swarmList) {
     for (int i = 0; i < psoIsland.size(); i++) {
-      psoIsland.get(i).initializeParticlesMemory(swarm.get(i)) ;
-      psoIsland.get(i).setSwarm(swarm.get(i));
+      psoIsland.get(i).initializeParticlesMemory(swarmList.get(i)) ;
+      psoIsland.get(i).setSwarm(swarmList.get(i));
     }
   }
 
-  protected void initializeVelocity(List<List<DoubleSolution>> swarm) {
+  protected void initializeVelocity(List<List<DoubleSolution>> swarmList) {
     for (int i = 0; i < psoIsland.size(); i++) {
-      psoIsland.get(i).initializeVelocity(swarm.get(i)) ;
+      psoIsland.get(i).initializeVelocity(swarmList.get(i)) ;
     }
   }
 
-  protected void updateVelocity(List<List<DoubleSolution>> swarm) {
+  protected void updateVelocity(List<List<DoubleSolution>> swarmList) {
+    updateSwarmVelocity(swarmList);
+    //for (int i = 0; i < psoIsland.size(); i++) {
+      //psoIsland.get(i).updateVelocity(swarmList.get(i)) ;
+    //}
+  }
+
+  protected void updatePosition(List<List<DoubleSolution>> swarmList) {
     for (int i = 0; i < psoIsland.size(); i++) {
-      psoIsland.get(i).updateVelocity(swarm.get(i)) ;
+      psoIsland.get(i).updatePosition(swarmList.get(i)) ;
     }
   }
 
-  protected void updatePosition(List<List<DoubleSolution>> swarm) {
+  protected void perturbation(List<List<DoubleSolution>> swarmList) {
+
+  }
+
+  protected void updateLeaders(List<List<DoubleSolution>> swarmList) {
     for (int i = 0; i < psoIsland.size(); i++) {
-      psoIsland.get(i).updatePosition(swarm.get(i)) ;
+      psoIsland.get(i).updateLeaders(swarmList.get(i)) ;
     }
   }
 
-  protected void perturbation(List<List<DoubleSolution>> swarm) {
-
-  }
-
-  protected void updateLeaders(List<List<DoubleSolution>> swarm) {
+  protected void updateParticlesMemory(List<List<DoubleSolution>> swarmList) {
     for (int i = 0; i < psoIsland.size(); i++) {
-      psoIsland.get(i).updateLeaders(swarm.get(i)) ;
-    }
-  }
-
-  protected void updateParticlesMemory(List<List<DoubleSolution>> swarm) {
-    for (int i = 0; i < psoIsland.size(); i++) {
-      psoIsland.get(i).updateParticlesMemory(swarm.get(i));
+      psoIsland.get(i).updateParticlesMemory(swarmList.get(i));
     }
   }
 
@@ -173,5 +195,61 @@ public class Vepso implements Algorithm<List<DoubleSolution>> {
     //  result.add(psoIsland.get(i).getResult()) ;
     //}
     return archive.getSolutionList() ;
+  }
+
+
+
+  private void updateSwarmVelocity(List<List<DoubleSolution>> swarmList) {
+    for (List<DoubleSolution> swarm : swarmList) {
+      double r1, r2;
+
+      for (int i = 0; i < swarmSize; i++) {
+        DoubleSolution particle = swarm.get(i);
+
+        r1 = JMetalRandom.getInstance().nextDouble(0, c);
+        r2 = JMetalRandom.getInstance().nextDouble(0, c);
+
+        DoubleSolution globalBest ;
+        //globalBest = neighborhoodBest.getAttribute(particle) ;
+        //int swarmId = JMetalRandom.getInstance().nextInt(0, 1) ;
+        //int particleID = JMetalRandom.getInstance().nextInt(0, swarmSize-1) ;
+        //globalBest = neighborhoodBest.getAttribute(swarmList.get(swarmId).get(particleID)) ;
+
+        globalBest = selectGlobalBest() ;
+
+        if (localBest.getAttribute(particle) != globalBest) {
+          for (int var = 0; var < particle.getNumberOfVariables(); var++) {
+            speed.getAttribute(particle)[var] = weight * speed.getAttribute(particle)[var] +
+                    r1 * (localBest.getAttribute(particle).getVariableValue(var) - particle.getVariableValue(var)) +
+                    r2 * (globalBest.getVariableValue(var) - particle.getVariableValue(var));
+          }
+        } else {
+          for (int var = 0; var < particle.getNumberOfVariables(); var++) {
+            speed.getAttribute(particle)[var] = weight * speed.getAttribute(particle)[var] +
+                    r1 * (localBest.getAttribute(particle).getVariableValue(var) -
+                            particle.getVariableValue(var));
+          }
+        }
+      }
+    }
+  }
+
+  protected DoubleSolution selectGlobalBest() {
+    DoubleSolution one, two;
+    DoubleSolution bestGlobal;
+    int pos1 = randomGenerator.nextInt(0, archive.getSolutionList().size() - 1);
+    int pos2 = randomGenerator.nextInt(0, archive.getSolutionList().size() - 1);
+    one = archive.getSolutionList().get(pos1);
+    two = archive.getSolutionList().get(pos2);
+
+    Comparator<DoubleSolution> crowdingDistanceComparator = new CrowdingDistanceComparator<DoubleSolution>() ;
+
+    if (crowdingDistanceComparator.compare(one, two) < 1) {
+      bestGlobal = (DoubleSolution) one.copy();
+    } else {
+      bestGlobal = (DoubleSolution) two.copy();
+    }
+
+    return bestGlobal;
   }
 }
