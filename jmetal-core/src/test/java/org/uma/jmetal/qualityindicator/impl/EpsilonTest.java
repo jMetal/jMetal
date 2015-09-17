@@ -46,7 +46,7 @@ public class EpsilonTest {
     exception.expectMessage(containsString("The reference pareto front is null"));
 
     Front referenceFront = null ;
-    new Epsilon<>(referenceFront) ;
+    new Epsilon<List<DoubleSolution>>(referenceFront) ;
   }
 
   @Test
@@ -251,7 +251,7 @@ public class EpsilonTest {
 */
   @Test
   public void shouldGetNameReturnTheCorrectValue() {
-    QualityIndicator<?, Double> epsilon = new Epsilon<>(new ArrayFront()) ;
+    QualityIndicator<?, Double> epsilon = new Epsilon<List<DoubleSolution>>(new ArrayFront()) ;
 
     assertEquals("EP", epsilon.getName());
   }

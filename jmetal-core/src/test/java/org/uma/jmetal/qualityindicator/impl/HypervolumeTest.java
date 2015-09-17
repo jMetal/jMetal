@@ -46,7 +46,7 @@ public class HypervolumeTest {
 
     Front front = new ArrayFront(0, 0) ;
 
-    Hypervolume<?> hypervolume = new Hypervolume<>(front) ;
+    Hypervolume<?> hypervolume = new Hypervolume<List<DoubleSolution>>(front) ;
     hypervolume.evaluate(null) ;
   }
 
@@ -57,6 +57,6 @@ public class HypervolumeTest {
 
     Front front = null ;
 
-    Hypervolume<?> hypervolume = new Hypervolume<>(front) ;;
+    Hypervolume<?> hypervolume = new Hypervolume<List<DoubleSolution>>(front) ;;
   }
 }
