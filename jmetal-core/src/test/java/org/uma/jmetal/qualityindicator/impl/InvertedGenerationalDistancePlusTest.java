@@ -47,7 +47,7 @@ public class InvertedGenerationalDistancePlusTest {
 
     Front front = null ;
 
-    new InvertedGenerationalDistancePlus<>(front) ;
+    new InvertedGenerationalDistancePlus<List<DoubleSolution>>(front) ;
   }
 
   @Test (expected = FileNotFoundException.class)

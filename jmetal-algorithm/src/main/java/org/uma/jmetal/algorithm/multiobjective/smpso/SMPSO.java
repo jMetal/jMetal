@@ -24,6 +24,7 @@ import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -51,12 +52,13 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
   private int swarmSize;
   private int maxIterations;
   private int iterations;
-  private DoubleSolution[] best;
+
+  private GenericSolutionAttribute<DoubleSolution, DoubleSolution> localBest;
+  private double[][] speed;
 
   private JMetalRandom randomGenerator;
 
   private Archive<DoubleSolution> leaders;
-  private double[][] speed;
   private Comparator<DoubleSolution> dominanceComparator;
   private Comparator<DoubleSolution> crowdingDistanceComparator;
 
@@ -99,7 +101,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
 
     dominanceComparator = new DominanceComparator<DoubleSolution>();
     crowdingDistanceComparator = new CrowdingDistanceComparator<DoubleSolution>();
-    best = new DoubleSolution[swarmSize];
+    localBest = new GenericSolutionAttribute<DoubleSolution, DoubleSolution>();
     speed = new double[swarmSize][problem.getNumberOfVariables()];
 
     deltaMax = new double[problem.getNumberOfVariables()];
@@ -151,8 +153,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
   }
 
   @Override protected void initializeLeaders(List<DoubleSolution> swarm) {
-    for (DoubleSolution solution : swarm) {
-      DoubleSolution particle = (DoubleSolution) solution.copy();
+    for (DoubleSolution particle : swarm) {
       leaders.add(particle);
     }
   }
@@ -166,9 +167,8 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
   }
 
   @Override protected void initializeParticlesMemory(List<DoubleSolution> swarm) {
-    for (int i = 0; i < swarm.size(); i++) {
-      DoubleSolution particle = (DoubleSolution) swarm.get(i).copy();
-      best[i] = (DoubleSolution) particle;
+    for (DoubleSolution particle : swarm) {
+      localBest.setAttribute(particle, (DoubleSolution) particle.copy());
     }
   }
 
@@ -179,7 +179,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
 
     for (int i = 0; i < swarm.size(); i++) {
       DoubleSolution particle = (DoubleSolution) swarm.get(i).copy();
-      DoubleSolution bestParticle = (DoubleSolution) best[i].copy();
+      DoubleSolution bestParticle = (DoubleSolution) localBest.getAttribute(swarm.get(i)).copy();
 
       bestGlobal = selectGlobalBest();
 
@@ -227,24 +227,23 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
   }
 
   @Override protected void updateLeaders(List<DoubleSolution> swarm) {
-    for (DoubleSolution solution : swarm) {
-      DoubleSolution particle = (DoubleSolution) solution.copy();
-      leaders.add(particle);
+    for (DoubleSolution particle : swarm) {
+      leaders.add((DoubleSolution)particle.copy());
     }
   }
 
   @Override protected void updateParticlesMemory(List<DoubleSolution> swarm) {
     for (int i = 0; i < swarm.size(); i++) {
-      int flag = dominanceComparator.compare(swarm.get(i), best[i]);
+      int flag = dominanceComparator.compare(swarm.get(i), localBest.getAttribute(swarm.get(i)));
       if (flag != 1) {
         DoubleSolution particle = (DoubleSolution) swarm.get(i).copy();
-        best[i] = particle;
+        localBest.setAttribute(swarm.get(i), particle);
       }
     }
   }
 
   @Override public List<DoubleSolution> getResult() {
-    return this.leaders.getSolutionList();
+    return leaders.getSolutionList();
   }
 
   protected DoubleSolution selectGlobalBest() {

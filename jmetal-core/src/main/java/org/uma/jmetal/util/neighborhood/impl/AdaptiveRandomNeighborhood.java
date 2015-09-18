@@ -32,7 +32,7 @@ public class AdaptiveRandomNeighborhood<S extends Solution<?>> implements Neighb
   private int solutionListSize ;
   private int numberOfRandomNeighbours;
   private List<List<Integer>> neighbours;
-  private JMetalRandom randomGenerator = JMetalRandom.getInstance() ;
+  private JMetalRandom randomGenerator ;
 
   /**
    * Constructor
@@ -49,6 +49,7 @@ public class AdaptiveRandomNeighborhood<S extends Solution<?>> implements Neighb
 
     this.solutionListSize = solutionListSize ;
     this.numberOfRandomNeighbours = numberOfRandomNeighbours ;
+    this.randomGenerator = JMetalRandom.getInstance() ;
 
     createNeighborhoods();
     addRandomNeighbors() ;

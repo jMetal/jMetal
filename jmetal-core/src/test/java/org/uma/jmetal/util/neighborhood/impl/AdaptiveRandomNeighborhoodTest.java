@@ -168,8 +168,12 @@ public class AdaptiveRandomNeighborhoodTest {
   /**
    * Case 1
    *
-   * Solution list size: 4
-   * Number of neighbors: 3
+   * Solution list size: 3
+   * Number of neighbors: 1
+   * Neighbors:
+   *  - solution 0: 0, 2
+   *  - solution 1: 1, 0
+   *  - solution 2: 2, 0
    *
    */
   @Test
@@ -180,7 +184,7 @@ public class AdaptiveRandomNeighborhoodTest {
             new AdaptiveRandomNeighborhood<IntegerSolution>(solutionListSize, numberOfNeighbors) ;
 
     JMetalRandom randomGenerator = mock(JMetalRandom.class) ;
-    when(randomGenerator.nextInt(0, solutionListSize-1)).thenReturn(2, 0, 1) ;
+    when(randomGenerator.nextInt(0, solutionListSize-1)).thenReturn(2, 0, 0) ;
 
     ReflectionTestUtils.setField(neighborhood, "randomGenerator", randomGenerator);
 
@@ -189,9 +193,22 @@ public class AdaptiveRandomNeighborhoodTest {
       list.add(mock(IntegerSolution.class)) ;
     }
 
-    List<IntegerSolution> result = neighborhood.getNeighbors(list, 0) ;
+    neighborhood.recompute();
+
+    List<IntegerSolution> result ;
+    result = neighborhood.getNeighbors(list, 0) ;
     assertEquals(numberOfNeighbors + 1, result.size()) ;
-    assertEquals(list.get(0), result.get(0)); ;
-    assertEquals(list.get(2), result.get(1)); ;
+    assertEquals(list.get(0), result.get(0));
+    assertEquals(list.get(2), result.get(1));
+
+    result = neighborhood.getNeighbors(list, 1) ;
+    assertEquals(numberOfNeighbors + 1, result.size()) ;
+    assertEquals(list.get(1), result.get(0));
+    assertEquals(list.get(0), result.get(1));
+
+    result = neighborhood.getNeighbors(list, 2) ;
+    assertEquals(numberOfNeighbors + 1, result.size()) ;
+    assertEquals(list.get(2), result.get(0));
+    assertEquals(list.get(0), result.get(1));
   }
 }
