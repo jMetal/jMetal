@@ -130,7 +130,8 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
   }
 
   @Override public List<DoubleSolution> getResult() {
-    return this.leaderArchive.getSolutionList();
+    //return this.leaderArchive.getSolutionList();
+      return this.epsilonArchive.getSolutionList();
   }
 
   @Override

@@ -90,7 +90,8 @@ public class DominanceComparator<S extends Solution<?>> implements Comparator<S>
       value2 = solution2.getObjective(i);
       if (value1 / (1 + epsilon) < value2) {
         flag = -1;
-      } else if (value1 / (1 + epsilon) > value2) {
+      //} else if (value1 / (1 + epsilon) > value2) {
+      } else if (value2 / (1 + epsilon) < value1) {
         flag = 1;
       } else {
         flag = 0;
