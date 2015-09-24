@@ -18,6 +18,8 @@ If you are interested in contributing with your ideas and comments, please take 
 * New util classes
   * AdaptiveRandomNeighborhood
 
+* Bugs fixed
+  * Fixed a bug in class `DominanceComparator`
 
 ##jMetal is available as a Maven Project in The Central Repository
 
