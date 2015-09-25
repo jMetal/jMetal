@@ -14,12 +14,21 @@ import org.uma.jmetal.util.JMetalException;
  */
 public class ASFUtilityFunctionSet<S extends Solution<?>> extends AbstractUtilityFunctionsSet<S> {
 
-	private final List<Double> referencePoint; // todo: unused variable
+	private final List<Double> referencePoint; 
 	private Normalizer normalizer = null;
 	
 	public ASFUtilityFunctionSet(String file_path, List<Double> referencePoint) {
 		super(file_path);
 		this.referencePoint = referencePoint;
+	}
+	
+	
+	public ASFUtilityFunctionSet(String file_path) {
+		super(file_path);
+		this.referencePoint = new ArrayList<>(this.getVectorSize());
+		for (int i = 0; i < this.getVectorSize(); i++)
+			this.referencePoint.add(0.0);
+		
 	}
 
 	@Override
@@ -40,7 +49,9 @@ public class ASFUtilityFunctionSet<S extends Solution<?>> extends AbstractUtilit
       }
 		
 		for (int i = 0; i < weightVector.size(); i++) {
-			result = Math.max(result, Math.abs(objectiveValues.get(i) - 0.0)/(weightVector.get(i) > 0.0 ? weightVector.get(i):1e-2));
+			result = Math.max(result, 
+							  Math.abs(objectiveValues.get(i) - this.referencePoint.get(i))
+							  /(weightVector.get(i) > 0.0 ? weightVector.get(i):1e-2));
 		}
 		return result;
 		

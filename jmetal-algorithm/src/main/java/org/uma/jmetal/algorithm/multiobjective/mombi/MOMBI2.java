@@ -68,7 +68,7 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
 		this.maxs    = new ArrayList<>(getProblem().getNumberOfObjectives());
 		this.normalizer = new Normalizer(this.getReferencePoint(), maxs);
 		//this.utilityFunctions = new TchebycheffUtilityFunctionsSet<>(pathWeights,this.getReferencePoint());		
-		ASFUtilityFunctionSet<S> aux = new ASFUtilityFunctionSet<>(pathWeights,this.getReferencePoint());
+		ASFUtilityFunctionSet<S> aux = new ASFUtilityFunctionSet<>(pathWeights);
 		aux.setNormalizer(this.normalizer);
 		return aux;
 	}
