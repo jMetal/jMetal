@@ -1,5 +1,6 @@
 package org.uma.jmetal.algorithm.multiobjective.mombi.util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.uma.jmetal.solution.Solution;
@@ -23,6 +24,13 @@ public class TchebycheffUtilityFunctionsSet<S extends Solution<?>> extends Abstr
 										  List<Double> referencePoint) {
 		super(file_path);
 		this.referencePoint = referencePoint;		
+	}
+	
+	public TchebycheffUtilityFunctionsSet(String file_path) {
+		super(file_path);
+		this.referencePoint = new ArrayList<>(this.getVectorSize());
+		for (int i = 0; i < this.getVectorSize(); i++) 
+			this.referencePoint.add(0.0);		
 	}
 
 	@Override
