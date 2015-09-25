@@ -1,7 +1,6 @@
 package org.uma.jmetal.algorithm.multiobjective.mombi;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.*;
