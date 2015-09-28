@@ -22,13 +22,11 @@ public class ASFUtilityFunctionSet<S extends Solution<?>> extends AbstractUtilit
 		this.referencePoint = referencePoint;
 	}
 	
-	
 	public ASFUtilityFunctionSet(String file_path) {
 		super(file_path);
 		this.referencePoint = new ArrayList<>(this.getVectorSize());
 		for (int i = 0; i < this.getVectorSize(); i++)
 			this.referencePoint.add(0.0);
-		
 	}
 
 	@Override
