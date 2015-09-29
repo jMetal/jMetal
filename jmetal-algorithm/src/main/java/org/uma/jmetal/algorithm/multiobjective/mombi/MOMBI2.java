@@ -75,9 +75,7 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
 	
 	// ToDo: refactor this method (first implementation just try to mimic c implementation)
 	@Override
-	public void updateReferencePoint(List<S> population) {		
-		System.out.println("Updating reference point");
-		
+	public void updateReferencePoint(List<S> population) {
 		List<Double> iterationMaxs = new ArrayList<>(maxs.size());
 		
 		for (int i = 0; i < this.getProblem().getNumberOfObjectives(); i++) {		
