@@ -40,7 +40,7 @@ public class DominanceRanking <S extends Solution<?>>
   private static final Comparator<Solution<?>> CONSTRAINT_VIOLATION_COMPARATOR =
     new OverallConstraintViolationComparator<Solution<?>>();
 
-  private List<ArrayList<S>> rankedSubpopulations;
+	private List<ArrayList<S>> rankedSubpopulations;
 
   /**
    * Constructor

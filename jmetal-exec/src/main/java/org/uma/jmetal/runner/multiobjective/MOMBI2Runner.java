@@ -1,10 +1,3 @@
-//  NSGAIIIRunner.java
-//
-//  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//
-//  Copyright (c) 2014 Antonio J. Nebro
-//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -21,7 +14,9 @@
 package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.nsgaiii.BuilderNSGAIII;
+import org.uma.jmetal.algorithm.multiobjective.mombi.MOMBI;
+import org.uma.jmetal.algorithm.multiobjective.mombi.MOMBI2;
+import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -35,68 +30,69 @@ import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
-import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
-import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
+import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
- * Class to configure and run the NSGA-III algorithm
+ * Class to configure and run the MOMBI algorithm
+ *
+ * @author Juan J. Durillo <juan@dps.uibk.ac.at>
  */
-public class NSGAIIIRunner extends AbstractAlgorithmRunner {
+public class MOMBI2Runner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
-   * @throws java.io.IOException
-   * @throws SecurityException
-   * @throws ClassNotFoundException
-   * Usage: three options
-   *        - org.uma.jmetal.runner.multiobjective.NSGAIIIRunner
-   *        - org.uma.jmetal.runner.multiobjective.NSGAIIIRunner problemName
-   *        - org.uma.jmetal.runner.multiobjective.NSGAIIIRunner problemName paretoFrontFile
+   * @throws JMetalException
+   * @throws FileNotFoundException
+   * Invoking command:
+    java org.uma.jmetal.runner.multiobjective.MOMBIRunner problemName [referenceFront]
    */
-  public static void main(String[] args) throws JMetalException {
-	    Problem<DoubleSolution> problem;
-	    Algorithm<List<DoubleSolution>> algorithm;
-	    CrossoverOperator<DoubleSolution> crossover;
-	    MutationOperator<DoubleSolution> mutation;
-	    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
-	    String referenceParetoFront = "" ;
+  public static void main(String[] args) throws JMetalException, FileNotFoundException {
+    Problem<DoubleSolution> problem;
+    Algorithm<List<DoubleSolution>> algorithm;
+    CrossoverOperator<DoubleSolution> crossover;
+    MutationOperator<DoubleSolution> mutation;
+    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
+    String referenceParetoFront = "" ;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1" ;
+    String problemName ;
+    if (args.length == 1) {
+      problemName = args[0];
+    } else if (args.length == 2) {
+      problemName = args[0] ;
+      referenceParetoFront = args[1] ;
+    } else {
+      problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
+      referenceParetoFront = "" ;
+    }
 
-    problem = ProblemUtils.loadProblem(problemName);
-    
+    problem = ProblemUtils.<DoubleSolution> loadProblem(problemName);
+
     double crossoverProbability = 0.9 ;
-    double crossoverDistributionIndex = 30.0 ;
+    double crossoverDistributionIndex = 20.0 ;
     crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex) ;
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
-    
-    selection = new BinaryTournamentSelection<DoubleSolution>();
-    
-    algorithm = new BuilderNSGAIII<>(problem)
-            .setCrossoverOperator(crossover)
-            .setMutationOperator(mutation)
-            .setSelectionOperator(selection)
-            .setMaxIterations(500)
-            .build() ;
 
+    selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
+
+    algorithm = new MOMBI2<>(problem,400,crossover,mutation,selection,new SequentialSolutionListEvaluator<DoubleSolution>(),
+    		"mombi2-weights/weight/weight_03D_12.sld");
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-            .execute() ;
+        .execute() ;
 
     List<DoubleSolution> population = algorithm.getResult() ;
     long computingTime = algorithmRunner.getComputingTime() ;
 
-    new SolutionSetOutput.Printer(population)
-            .setSeparator("\t")
-            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
-            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
-            .print() ;
-
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
-    JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
-    JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
+
+    printFinalSolutionSet(population);
+    if (!referenceParetoFront.equals("")) {
+      printQualityIndicators(population, referenceParetoFront) ;
+    }
   }
 }

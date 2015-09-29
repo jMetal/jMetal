@@ -1,0 +1,140 @@
+package org.uma.jmetal.algorithm.multiobjective.mombi;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.uma.jmetal.algorithm.multiobjective.mombi.util.*;
+import org.uma.jmetal.operator.CrossoverOperator;
+import org.uma.jmetal.operator.MutationOperator;
+import org.uma.jmetal.operator.SelectionOperator;
+import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
+
+/**
+ * 
+ * @author Juan J. Durillo
+ * @version 1.0
+ * This class implements the MOMBI2 algorithm (a.k.a. MOMBI-II)
+ *
+ */
+@SuppressWarnings("serial") // remove warning for serialization
+public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
+	
+	protected final MOMBI2History<S> history;
+	protected final Double alpha		= 0.5;
+	protected final Double epsilon 		= 1.0e-3;
+	protected  List<Double> maxs;
+	protected Normalizer normalizer;
+
+	/**
+	 * Creates a new instance of the MOMBI algorithm
+	 * @param problem
+	 * @param maxIterations
+	 * @param crossover
+	 * @param mutation
+	 * @param selection
+	 * @param evaluator
+	 * @param pathWeights
+	 */
+	public MOMBI2(Problem<S> problem, int maxIterations, CrossoverOperator<S> crossover, MutationOperator<S> mutation,
+			SelectionOperator<List<S>, S> selection, SolutionListEvaluator<S> evaluator, String pathWeights) {
+		super(problem, maxIterations, crossover, mutation, selection, evaluator, pathWeights);
+		this.history = new MOMBI2History<>(problem.getNumberOfObjectives());
+	}
+	
+	private void updateMax(List<S> population) {
+		if (this.maxs.isEmpty())
+			for (int i = 0; i < this.getProblem().getNumberOfObjectives(); i++)
+				this.maxs.add(Double.NEGATIVE_INFINITY);
+		
+		for (S solution : population)
+			for (int i = 0; i < this.maxs.size(); i++)
+				this.maxs.set(i,Math.max(this.maxs.get(i),solution.getObjective(i)));
+			
+		this.history.add(maxs);
+	}
+
+	@Override
+	protected void initProgress() {
+		super.initProgress();
+		this.updateMax(this.getPopulation());
+	}
+	
+	public AbstractUtilityFunctionsSet<S> createUtilityFunction(String pathWeights) {
+		System.out.println("MOMBI 2");
+		//this.mins    = new ArrayList<>(getProblem().getNumberOfObjectives());		
+		this.maxs    = new ArrayList<>(getProblem().getNumberOfObjectives());
+		this.normalizer = new Normalizer(this.getReferencePoint(), maxs);
+		//this.utilityFunctions = new TchebycheffUtilityFunctionsSet<>(pathWeights,this.getReferencePoint());		
+		ASFUtilityFunctionSet<S> aux = new ASFUtilityFunctionSet<>(pathWeights);
+		aux.setNormalizer(this.normalizer);
+		return aux;
+	}
+	
+	
+	// ToDo: refactor this method (first implementation just try to mimic c implementation)
+	@Override
+	public void updateReferencePoint(List<S> population) {		
+		System.out.println("Updating reference point");
+		
+		List<Double> iterationMaxs = new ArrayList<>(maxs.size());
+		
+		for (int i = 0; i < this.getProblem().getNumberOfObjectives(); i++) {		
+			iterationMaxs.add(Double.NEGATIVE_INFINITY);
+		}
+		
+		for (S solution : population) {
+			updateReferencePoint(solution);
+			for (int i = 0; i < solution.getNumberOfObjectives(); i++) {				
+				iterationMaxs.set(i, Math.max(iterationMaxs.get(i), solution.getObjective(i)));				
+			}
+		}
+		
+		history.add(iterationMaxs);
+		
+		List<Double> mean = history.mean();
+		List<Double> var  = history.variance(mean);
+			
+		Double maxVariance = this.getMax(var);						
+			
+		if (maxVariance > alpha) {
+			Double maxInNadir = this.getMax(this.maxs);
+			for (int i = 0; i < this.getProblem().getNumberOfObjectives(); i++) 
+				this.maxs.set(i, maxInNadir);						
+		} else {						
+			for (int i = 0; i < this.getProblem().getNumberOfObjectives(); i++) {
+				if (Math.abs(maxs.get(i) - this.getReferencePoint().get(i)) < this.epsilon) {
+					Double maxInMaxs = this.getMax(this.maxs);
+					this.maxs.set(i,maxInMaxs);
+					history.mark(i);
+				} else if (iterationMaxs.get(i) > this.maxs.get(i)) {
+					this.maxs.set(i, iterationMaxs.get(i) + Math.abs(iterationMaxs.get(i)-this.maxs.get(i)));
+					history.mark(i);
+				} else if ((var.get(i)==0.0) && history.isUnMarked(i)) {
+					double v = history.getMaxObjective(i);
+					this.maxs.set(i, (maxs.get(i)+v)/2.0);
+					history.mark(i);
+				}
+				history.decreaseMark(i);
+			}						
+		}
+	}
+	
+	protected R2Ranking<S> computeRanking(List<S> solutionList) {
+		R2Ranking<S> ranking = new R2RankingNormalized<>(this.getUtilityFunctions(),this.normalizer);
+		ranking.computeRanking(solutionList);
+		
+		return ranking;
+	}
+	
+	public Double getMax(List<Double> list) {
+		Double result = Double.NEGATIVE_INFINITY;
+		for (Double d : list) 
+			result = Math.max(result, d);
+		
+		return result;
+	}
+	
+
+}
