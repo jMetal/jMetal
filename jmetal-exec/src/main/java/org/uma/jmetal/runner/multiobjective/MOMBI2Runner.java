@@ -37,9 +37,14 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
- * Class to configure and run the MOMBI algorithm
+ * Class to configure and run the MOMBI2 algorithm
  *
  * @author Juan J. Durillo <juan@dps.uibk.ac.at>
+ *
+ * Reference: Improved Metaheuristic Based on the R2 Indicator for Many-Objective Optimization.
+ * R. Hernández Gómez, C.A. Coello Coello. Proceeding GECCO '15 Proceedings of the 2015 on Genetic
+ * and Evolutionary Computation Conference. Pages 679-686
+ * DOI: 10.1145/2739480.2754776
  */
 public class MOMBI2Runner extends AbstractAlgorithmRunner {
   /**
