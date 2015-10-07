@@ -81,6 +81,15 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
     return distributionIndex;
   }
 
+  /* Setters */
+  public void setMutationProbability(double probability) {
+    this.mutationProbability = probability ;
+  }
+
+  public void setDistributionIndex(double distributionIndex) {
+    this.distributionIndex = distributionIndex ;
+  }
+  
   /** Execute() method */
   @Override
   public DoubleSolution execute(DoubleSolution solution) throws JMetalException {
