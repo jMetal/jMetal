@@ -20,6 +20,9 @@ If you are interested in contributing with your ideas and comments, please take 
 
 * New util classes
   * AdaptiveRandomNeighborhood
+ 
+* New features
+  * Classes `PolynomialMutation` and `SBXCrossover` include setters to update their probability and distribution index values.
 
 * Bugs fixed
   * Fixed a bug in class `DominanceComparator`
