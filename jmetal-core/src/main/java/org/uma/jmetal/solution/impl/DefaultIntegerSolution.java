@@ -23,7 +23,9 @@ import java.util.HashMap;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class DefaultIntegerSolution extends AbstractGenericSolution<Integer, IntegerProblem> implements IntegerSolution {
+public class DefaultIntegerSolution
+    extends AbstractGenericSolution<Integer, IntegerProblem>
+    implements IntegerSolution {
 
   /** Constructor */
   public DefaultIntegerSolution(IntegerProblem problem) {
@@ -32,14 +34,8 @@ public class DefaultIntegerSolution extends AbstractGenericSolution<Integer, Int
     overallConstraintViolationDegree = 0.0 ;
     numberOfViolatedConstraints = 0 ;
 
-    for (int i = 0 ; i < problem.getNumberOfVariables(); i++) {
-      Integer value = randomGenerator.nextInt(getLowerBound(i), getUpperBound(i));
-      setVariableValue(i, value) ;
-    }
-
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      setObjective(i, 0.0) ;
-    }
+    initializeIntegerVariables();
+    initializeObjectiveValues();
   }
 
   /** Copy constructor */
@@ -78,5 +74,12 @@ public class DefaultIntegerSolution extends AbstractGenericSolution<Integer, Int
   @Override
   public String getVariableValueString(int index) {
     return getVariableValue(index).toString() ;
+  }
+  
+  private void initializeIntegerVariables() {
+    for (int i = 0 ; i < problem.getNumberOfVariables(); i++) {
+      Integer value = randomGenerator.nextInt(getLowerBound(i), getUpperBound(i));
+      setVariableValue(i, value) ;
+    }
   }
 }
