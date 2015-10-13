@@ -11,8 +11,9 @@ import java.util.HashMap;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class DefaultIntegerDoubleSolution
-        extends AbstractGenericSolution<Number, IntegerDoubleProblem<?>>
-        implements IntegerDoubleSolution {
+    extends AbstractGenericSolution<Number, IntegerDoubleProblem<?>>
+    implements IntegerDoubleSolution {
+
   private int numberOfIntegerVariables ;
   private int numberOfDoubleVariables ;
 
@@ -25,19 +26,8 @@ public class DefaultIntegerDoubleSolution
     overallConstraintViolationDegree = 0.0 ;
     numberOfViolatedConstraints = 0 ;
 
-    for (int i = 0 ; i < numberOfIntegerVariables; i++) {
-      Integer value = randomGenerator.nextInt((Integer)getLowerBound(i), (Integer)getUpperBound(i)) ;
-      setVariableValue(i, value) ;
-    }
-
-    for (int i = numberOfIntegerVariables ; i < getNumberOfVariables(); i++) {
-      Double value = randomGenerator.nextDouble((Double)getLowerBound(i), (Double)getUpperBound(i)) ;
-      setVariableValue(i, value) ;
-    }
-
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      setObjective(i, 0.0) ;
-    }
+    initializeIntegerDoubleVariables() ;
+    initializeObjectiveValues() ;
   }
 
   /** Copy constructor */
@@ -90,5 +80,17 @@ public class DefaultIntegerDoubleSolution
   @Override
   public String getVariableValueString(int index) {
     return getVariableValue(index).toString() ;
+  }
+  
+  private void initializeIntegerDoubleVariables() {
+    for (int i = 0 ; i < numberOfIntegerVariables; i++) {
+      Integer value = randomGenerator.nextInt((Integer)getLowerBound(i), (Integer)getUpperBound(i)) ;
+      setVariableValue(i, value) ;
+    }
+
+    for (int i = numberOfIntegerVariables ; i < getNumberOfVariables(); i++) {
+      Double value = randomGenerator.nextDouble((Double)getLowerBound(i), (Double)getUpperBound(i)) ;
+      setVariableValue(i, value) ;
+    }
   }
 }
