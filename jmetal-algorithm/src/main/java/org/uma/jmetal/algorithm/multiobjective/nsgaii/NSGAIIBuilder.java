@@ -17,7 +17,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class NSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<NSGAII<S>> {
-  public enum NSGAIIVariant {NSGAII, SteadyStateNSGAII, Measures}
+  public enum NSGAIIVariant {NSGAII, SteadyStateNSGAII, Measures, NSGAII45}
 
   /**
    * NSGAIIBuilder class
