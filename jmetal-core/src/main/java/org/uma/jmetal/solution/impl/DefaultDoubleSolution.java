@@ -23,22 +23,19 @@ import java.util.HashMap;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class DefaultDoubleSolution extends AbstractGenericSolution<Double, DoubleProblem>
+public class DefaultDoubleSolution 
+    extends AbstractGenericSolution<Double, DoubleProblem>
     implements DoubleSolution {
+
   /** Constructor */
   public DefaultDoubleSolution(DoubleProblem problem) {
     super(problem) ;
+    
     overallConstraintViolationDegree = 0.0 ;
     numberOfViolatedConstraints = 0 ;
-
-    for (int i = 0 ; i < problem.getNumberOfVariables(); i++) {
-      Double value = randomGenerator.nextDouble() * (getUpperBound(i) - getLowerBound(i)) + getLowerBound(i);
-      setVariableValue(i, value) ;
-    }
-
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      setObjective(i, 0.0) ;
-    }
+    
+    initializeDoubleVariables();
+    initializeObjectiveValues();
   }
 
   /** Copy constructor */
@@ -76,5 +73,12 @@ public class DefaultDoubleSolution extends AbstractGenericSolution<Double, Doubl
   @Override
   public String getVariableValueString(int index) {
     return getVariableValue(index).toString() ;
+  }
+  
+  private void initializeDoubleVariables() {
+    for (int i = 0 ; i < problem.getNumberOfVariables(); i++) {
+      Double value = randomGenerator.nextDouble(getLowerBound(i), getUpperBound(i)) ;
+      setVariableValue(i, value) ;
+    }
   }
 }

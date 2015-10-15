@@ -24,7 +24,8 @@ import java.util.HashMap;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class DefaultBinarySolution extends AbstractGenericSolution<BinarySet, BinaryProblem>
+public class DefaultBinarySolution
+    extends AbstractGenericSolution<BinarySet, BinaryProblem>
     implements BinarySolution {
 
   /** Constructor */
@@ -34,13 +35,8 @@ public class DefaultBinarySolution extends AbstractGenericSolution<BinarySet, Bi
     overallConstraintViolationDegree = 0.0 ;
     numberOfViolatedConstraints = 0 ;
 
-    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      setVariableValue(i, createNewBitSet(problem.getNumberOfBits(i)));
-    }
-
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      setObjective(i, 0.0);
-    }
+    initializeBinaryVariables();
+    initializeObjectiveValues();
   }
 
   /** Copy constructor */
@@ -107,5 +103,11 @@ public class DefaultBinarySolution extends AbstractGenericSolution<BinarySet, Bi
       }
     }
     return result ;
+  }
+  
+  private void initializeBinaryVariables() {
+    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
+      setVariableValue(i, createNewBitSet(problem.getNumberOfBits(i)));
+    }
   }
 }
