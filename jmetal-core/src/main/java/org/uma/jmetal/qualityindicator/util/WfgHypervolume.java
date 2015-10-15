@@ -6,7 +6,7 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
-import org.uma.jmetal.util.point.impl.PointComparator;
+import org.uma.jmetal.util.point.util.PointComparator;
 import org.uma.jmetal.util.solutionattribute.impl.HypervolumeContribution;
 
 import java.io.IOException;

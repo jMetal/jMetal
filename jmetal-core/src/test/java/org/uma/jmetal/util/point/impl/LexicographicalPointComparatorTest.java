@@ -17,6 +17,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.point.Point;
+import org.uma.jmetal.util.point.util.LexicographicalPointComparator;
 
 import static org.junit.Assert.assertEquals;
 

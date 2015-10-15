@@ -11,7 +11,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.util.point.impl;
+package org.uma.jmetal.util.point.util;
 
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.point.Point;
@@ -19,46 +19,56 @@ import org.uma.jmetal.util.point.Point;
 import java.util.Comparator;
 
 /**
- * This class implements the Comparator interface for comparing tow points.
- * The order used is lexicographical order.
+ * This class implements the {@link Comparator} interface. It is used
+ * to compare two points according the value of a particular dimension.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * @author Juan J. Durillo
-
  */
-public class LexicographicalPointComparator implements Comparator<Point> {
+public class PointDimensionComparator implements Comparator<Point> {
 
   /**
-   * The compare method compare the objects o1 and o2.
+   * Stores the value of the index to compare
+   */
+  private int index;
+
+  /**
+   * Constructor
+   */
+  public PointDimensionComparator(int index) {
+    if (index < 0) {
+      throw new JMetalException("The index value is negative");
+    }
+    this.index = index;
+  }
+
+  /**
+   * Compares the objects o1 and o2.
    *
    * @param pointOne An object that reference a double[]
    * @param pointTwo An object that reference a double[]
-   * @return The following value: -1 if point1 < point2, 1 if point1 > point2 or 0 in other case.
+   * @return -1 if o1 < o1, 1 if o1 > o2 or 0 in other case.
    */
   @Override
   public int compare(Point pointOne, Point pointTwo) {
     if (pointOne ==  null) {
       throw new JMetalException("PointOne is null") ;
     } else if (pointTwo == null) {
-      throw new JMetalException("PointTwo is null");
+      throw new JMetalException("PointTwo is null") ;
+    } else if (index >= pointOne.getNumberOfDimensions()) {
+      throw new JMetalException("The index value " + index
+          + " is out of range (0,  " + (pointOne.getNumberOfDimensions()-1) + ")") ;
+    } else if (index >= pointTwo.getNumberOfDimensions()) {
+      throw new JMetalException("The index value " + index
+          + " is out of range (0,  " + (pointTwo.getNumberOfDimensions()-1) + ")") ;
     }
 
-    // Determine the first i such as pointOne[i] != pointTwo[i];
-    int index = 0;
-    while ((index < pointOne.getNumberOfDimensions())
-        && (index < pointTwo.getNumberOfDimensions())
-        && pointOne.getDimensionValue(index) == pointTwo.getDimensionValue(index)) {
-      index++;
-    }
-
-    int result = 0 ;
-    if ((index >= pointOne.getNumberOfDimensions()) || (index >= pointTwo.getNumberOfDimensions())) {
-      result = 0;
-    } else if (pointOne.getDimensionValue(index) < pointTwo.getDimensionValue(index)) {
-      result = -1;
+    if (pointOne.getDimensionValue(index) < pointTwo.getDimensionValue(index)) {
+      return -1;
     } else if (pointOne.getDimensionValue(index) > pointTwo.getDimensionValue(index)) {
-      result = 1;
+      return 1;
+    } else {
+      return 0;
     }
-    return result ;
   }
 }

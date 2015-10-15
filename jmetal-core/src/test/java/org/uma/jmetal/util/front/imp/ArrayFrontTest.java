@@ -27,7 +27,7 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
-import org.uma.jmetal.util.point.impl.LexicographicalPointComparator;
+import org.uma.jmetal.util.point.util.LexicographicalPointComparator;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
