@@ -16,7 +16,7 @@
 //  This class is based on the code of the wfg group (http://www.wfg.csse.uwa.edu.au/hypervolume/)
 //  Copyright (C) 2010 Lyndon While, Lucas Bradstreet.
 
-package org.uma.jmetal.util.point.util;
+package org.uma.jmetal.util.point.util.comparator;
 
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.point.Point;

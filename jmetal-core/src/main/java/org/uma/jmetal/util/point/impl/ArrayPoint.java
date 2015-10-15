@@ -25,7 +25,7 @@ import java.util.Arrays;
  * @author Antonio J. Nebro
  */
 public class ArrayPoint implements Point {
-  private double[] point;
+  protected double[] point;
 
   /**
    * Constructor
@@ -39,7 +39,6 @@ public class ArrayPoint implements Point {
       point[i] = 0.0;
     }
   }
-
 
   /**
    * Copy constructor
