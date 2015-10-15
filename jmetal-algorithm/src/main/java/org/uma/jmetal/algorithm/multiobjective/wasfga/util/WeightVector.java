@@ -10,7 +10,7 @@ import java.util.Vector;
  * @author Rubén Saborido Infantes
  * This class offers different methods to manipulate weight vectors.
  */
-public class Weights {
+public class WeightVector {
   /**
    * Generate uniform weight vectors in two dimension
    * @param epsilon Distance between each component of the weight vector
@@ -231,22 +231,19 @@ public class Weights {
   public static double[][] invertWeights(double[][] weights, boolean normalize) {
     double[][] result = new double[weights.length][weights[0].length];
 
-    for (int indexOfWeight = 0; indexOfWeight < weights.length; indexOfWeight++)
-    {
+    for (int indexOfWeight = 0; indexOfWeight < weights.length; indexOfWeight++) {
       double sum = 0;
 
-      for (int indexOfComponent = 0; indexOfComponent < weights[indexOfWeight].length; indexOfComponent++)
-      {
+      for (int indexOfComponent = 0; indexOfComponent < weights[indexOfWeight].length; indexOfComponent++) {
         sum = sum + (1.0/weights[indexOfWeight][indexOfComponent]);
       }
 
-      if (normalize)
-      {
-        for (int indexOfComponent = 0; indexOfComponent < weights[indexOfWeight].length; indexOfComponent++)
-          result[indexOfWeight][indexOfComponent] = (1.0/weights[indexOfWeight][indexOfComponent])/sum;
+      if (normalize) {
+        for (int indexOfComponent = 0; indexOfComponent < weights[indexOfWeight].length; indexOfComponent++) {
+          result[indexOfWeight][indexOfComponent] = (1.0 / weights[indexOfWeight][indexOfComponent]) / sum;
+        }
       }
-      else
-      {
+      else {
         for (int indexOfComponent = 0; indexOfComponent < weights[indexOfWeight].length; indexOfComponent++)
           result[indexOfWeight][indexOfComponent] = 1.0/weights[indexOfWeight][indexOfComponent];
       }

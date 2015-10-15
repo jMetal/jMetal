@@ -25,7 +25,7 @@ public class AchievementScalarizingFunction<S extends Solution<?>> {
 
     for (int index=0;index < numberOfObjectives; index++)
     {
-      this.referencePoint.set(index, new Double(0.0));
+      this.referencePoint.setDimensionValue(index, new Double(0.0));
       this.nadir[index] = Double.MIN_VALUE;
       this.ideal[index] = Double.MAX_VALUE;
     }
@@ -82,7 +82,7 @@ public class AchievementScalarizingFunction<S extends Solution<?>> {
    * @param referenceValue New value of the specified component
    */
   public void setReferencePoint(int objective, double referenceValue) {
-    this.referencePoint.set(objective, referenceValue);
+    this.referencePoint.setDimensionValue(objective, referenceValue);
   }
 
   /**
@@ -162,9 +162,9 @@ public class AchievementScalarizingFunction<S extends Solution<?>> {
     double first_sum, second_sum = 0, temp_product, difference;
 
     first_sum = -1e10;
-    for (component_index=0; component_index < this.referencePoint.size(); component_index++)
+    for (component_index=0; component_index < this.referencePoint.getNumberOfDimensions(); component_index++)
     {
-      difference = (objectives[component_index] - this.referencePoint.get(component_index));
+      difference = (objectives[component_index] - this.referencePoint.getDimensionValue(component_index));
 
       temp_product = (weights[component_index])*(difference);
 
@@ -188,9 +188,10 @@ public class AchievementScalarizingFunction<S extends Solution<?>> {
     double first_sum, second_sum = 0, temp_product, normalizedDifference;
 
     first_sum = -1e10;
-    for (component_index=0; component_index < this.referencePoint.size(); component_index++)
+    for (component_index=0; component_index < this.referencePoint.getNumberOfDimensions(); component_index++)
     {
-      normalizedDifference = (objectives[component_index] - this.referencePoint.get(component_index))/(this.nadir[component_index]-this.ideal[component_index]);
+      normalizedDifference = (objectives[component_index] - this.referencePoint.getDimensionValue(component_index))/(this
+              .nadir[component_index]-this.ideal[component_index]);
 
       temp_product = weights[component_index]*(normalizedDifference);
 

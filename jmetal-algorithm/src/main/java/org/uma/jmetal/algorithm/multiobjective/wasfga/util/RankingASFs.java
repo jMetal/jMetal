@@ -43,12 +43,12 @@ public class RankingASFs<S extends Solution<?>> {
    * @param weights The weight vectors to be used for each <code>AchievementScalarizingFunction</code>
    * @param normalization True if the ASF should be normalized
    */
-  public RankingASFs(List<S> solutionSet, AchievementScalarizingFunction asf, double[][] weights, boolean
+  public RankingASFs(List<S> solutionSet, AchievementScalarizingFunction<S> asf, double[][] weights, boolean
           normalization) {
     this.solutionSet = solutionSet;
 
     // List that contains the index of a solution and the value of the ASF (one for each vector of weights)
-    LinkedList<Node> l = new LinkedList<Node>();
+    LinkedList<Node> list = new LinkedList<Node>();
     LinkedList<Node> solutionsToRemove = new LinkedList<Node>();
     Node bestNode;
     int solutionIndex, asfIndex, frontierIndex, numberOfFrontiersInNewPopulation;
@@ -68,7 +68,7 @@ public class RankingASFs<S extends Solution<?>> {
       node.solutionIndex = solutionIndex;
       node.asfs = evaluationsAsfs[solutionIndex];
 
-      l.add(node);
+      list.add(node);
     }
 
     //Each frontier will have many solutions as weight vectors.
@@ -84,15 +84,15 @@ public class RankingASFs<S extends Solution<?>> {
     //Assign each solution in the correct frontier
     solutionIndex = 0;
     for (frontierIndex = 0; frontierIndex < numberOfFrontiersInNewPopulation; frontierIndex++) {
-      ranking.set(frontierIndex, new ArrayList<S>(weights.length));
+      ranking.add(frontierIndex, new ArrayList<S>(weights.length));
       solutionsToRemove.clear();
 
       //Search the best solution for the current ASF
       for (asfIndex = 0; (asfIndex < weights.length); asfIndex++) {
         //Initially, the best solution is the first
-        bestNode = l.get(0);
+        bestNode = list.get(0);
 
-        for (Node node : l) {
+        for (Node node : list) {
           if (node.asfs[asfIndex] < bestNode.asfs[asfIndex]) {
             bestNode = node;
           }
@@ -100,7 +100,7 @@ public class RankingASFs<S extends Solution<?>> {
 
         ranking.get(frontierIndex).add(solutionSet.get(bestNode.solutionIndex));
 
-        l.remove(bestNode);
+        list.remove(bestNode);
 
         solutionIndex++;
       }
@@ -116,8 +116,8 @@ public class RankingASFs<S extends Solution<?>> {
    * @param oddWeights The weight vectors to be used for each <code>AchievementScalarizingFunction</code> in the nadir point
    * @param normalization True if the ASF should be normalized
    */
-  public RankingASFs(List<S> solutionSet, AchievementScalarizingFunction asfInUtopian, double[][] pairWeights,
-                     AchievementScalarizingFunction asfInNadir, double[][] oddWeights, boolean normalization) {
+  public RankingASFs(List<S> solutionSet, AchievementScalarizingFunction<S> asfInUtopian, double[][] pairWeights,
+                     AchievementScalarizingFunction<S> asfInNadir, double[][] oddWeights, boolean normalization) {
     this.solutionSet = solutionSet;
 
     int numberOfWeights = oddWeights.length + pairWeights.length;

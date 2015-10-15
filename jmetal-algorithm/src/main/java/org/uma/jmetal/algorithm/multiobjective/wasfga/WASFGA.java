@@ -4,7 +4,7 @@ import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.wasfga.util.AchievementScalarizingFunction;
 import org.uma.jmetal.algorithm.multiobjective.wasfga.util.RankingASFs;
 import org.uma.jmetal.algorithm.multiobjective.wasfga.util.ReferencePoint;
-import org.uma.jmetal.algorithm.multiobjective.wasfga.util.Weights;
+import org.uma.jmetal.algorithm.multiobjective.wasfga.util.WeightVector;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -118,16 +118,16 @@ public class WASFGA<S extends Solution<?>> implements Algorithm<List<S>> {
       // If the dimension of the problem is equal to 2, the weight vectors are
       // calculated
       if (problem.getNumberOfObjectives() == 2) {
-        this.weights = Weights.initUniformWeights2D(0.005, populationSize);
+        this.weights = WeightVector.initUniformWeights2D(0.005, populationSize);
       }
       // If the dimension of the problem is greater than 2, the weight vectors
       // are read from a file
       else {
-        this.weights = Weights.getWeightsFromFile(weightFileName);
+        this.weights = WeightVector.getWeightsFromFile(weightFileName);
       }
 
       // The weight vectors are inverted
-      this.weights = Weights.invertWeights(weights, true);
+      this.weights = WeightVector.invertWeights(weights, true);
 
       // --- ALGORITHM --- \\
 
@@ -225,7 +225,7 @@ public class WASFGA<S extends Solution<?>> implements Algorithm<List<S>> {
       } // end while (evaluations < maxEvaluations)
 
       // Return the first non-dominated front
-      RankingASFs<S> ranking = new RankingASFs<S>(population, achievementScalarizingFunction, this.weights, normalization);
+      ranking = new RankingASFs<S>(population, achievementScalarizingFunction, this.weights, normalization);
 
       // If the nadir and ideal points of the problem are not known, they are
       // estimated for the Achievement Scalarizing Function
@@ -234,6 +234,7 @@ public class WASFGA<S extends Solution<?>> implements Algorithm<List<S>> {
         updateUpperBounds(ranking.getSubfront(0));
       }
     }
+    System.out.println("End") ;
   }
 
 	/**
