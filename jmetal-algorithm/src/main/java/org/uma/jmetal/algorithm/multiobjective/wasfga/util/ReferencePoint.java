@@ -54,7 +54,7 @@ public class ReferencePoint extends ArrayPoint {
    * @param type The type of the created reference point
    * @param paretoFrontFileName A Pareto front in a file
    */
-
+/*
   public ReferencePoint(ReferencePointType type, String paretoFrontFileName)
           throws JMetalException, FileNotFoundException {
     int randomIndexPoint;
@@ -93,4 +93,5 @@ public class ReferencePoint extends ArrayPoint {
       point[i] = referencePoint.get(i) ;
     }
   }
+  */
 }

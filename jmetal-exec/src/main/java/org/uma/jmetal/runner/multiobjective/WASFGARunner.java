@@ -18,6 +18,7 @@ import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII45;
 import org.uma.jmetal.algorithm.multiobjective.wasfga.WASFGA;
 import org.uma.jmetal.algorithm.multiobjective.wasfga.util.AchievementScalarizingFunction;
 import org.uma.jmetal.algorithm.multiobjective.wasfga.util.ReferencePoint;
+import org.uma.jmetal.algorithm.multiobjective.wasfga.util.WeightVector;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -84,8 +85,8 @@ public class WASFGARunner extends AbstractAlgorithmRunner {
 
     selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
-    algorithm = new WASFGA<DoubleSolution>(problem, 250, 100, crossover, mutation,
-            selection, "", "", true, true, referencePoint,
+    algorithm = new WASFGA<DoubleSolution>(problem, 100, 30000, crossover, mutation,
+            selection, "", "", WeightVector.NORMALIZE.TRUE, true, referencePoint,
             new AchievementScalarizingFunction<DoubleSolution>(problem.getNumberOfObjectives())) ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
