@@ -14,7 +14,7 @@ public class Normalizer {
 	public Double normalize(Double input, int index) {						 			
 		Double diff		= max.get(index) - min.get(index);
 		Double output 	= (input-min.get(index))/diff; 
-
+		
 		return output;
 	}
 }

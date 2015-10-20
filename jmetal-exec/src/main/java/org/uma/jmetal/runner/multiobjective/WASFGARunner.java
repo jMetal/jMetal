@@ -16,8 +16,6 @@ package org.uma.jmetal.runner.multiobjective;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII45;
 import org.uma.jmetal.algorithm.multiobjective.wasfga.WASFGA;
-import org.uma.jmetal.algorithm.multiobjective.wasfga.util.AchievementScalarizingFunction;
-import org.uma.jmetal.algorithm.multiobjective.wasfga.util.ReferencePoint;
 import org.uma.jmetal.algorithm.multiobjective.wasfga.util.WeightVector;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
@@ -36,14 +34,9 @@ import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Class to configure and run the implementation of the NSGA-II algorithm included
- * in {@link NSGAII45}
- *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
- */
 public class WASFGARunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
@@ -59,7 +52,7 @@ public class WASFGARunner extends AbstractAlgorithmRunner {
     MutationOperator<DoubleSolution> mutation;
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
     String referenceParetoFront = "" ;
-    ReferencePoint referencePoint = null;
+    List<Double> referencePoint = null;
 
     String problemName ;
     if (args.length == 1) {
@@ -69,11 +62,14 @@ public class WASFGARunner extends AbstractAlgorithmRunner {
       referenceParetoFront = args[1] ;
     } else {
       problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf" ;
+      referenceParetoFront = "";//"jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf" ;
     }
 
     problem = ProblemUtils.<DoubleSolution> loadProblem(problemName);
-    referencePoint = new ReferencePoint(new double[]{0.0, 0.0}) ;
+    
+    referencePoint = new ArrayList<>();
+    referencePoint.add(0.0);
+    referencePoint.add(0.0);
 
     double crossoverProbability = 0.9 ;
     double crossoverDistributionIndex = 20.0 ;
@@ -85,9 +81,7 @@ public class WASFGARunner extends AbstractAlgorithmRunner {
 
     selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
-    algorithm = new WASFGA<DoubleSolution>(problem, 100, 30000, crossover, mutation,
-            selection, "", "", WeightVector.NORMALIZE.TRUE, true, referencePoint,
-            new AchievementScalarizingFunction<DoubleSolution>(problem.getNumberOfObjectives())) ;
+    algorithm = new WASFGA<DoubleSolution>(problem, 100, 250, crossover, mutation, selection,new SequentialSolutionListEvaluator<DoubleSolution>(),referencePoint) ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;

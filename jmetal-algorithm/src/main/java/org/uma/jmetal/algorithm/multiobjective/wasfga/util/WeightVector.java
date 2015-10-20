@@ -31,6 +31,7 @@ public class WeightVector {
     w = epsilon;
 
     while(w <= (1-epsilon))
+    //while (indexOfWeight < numberOfWeights)
     {
       weights[indexOfWeight][0] = w;
       weights[indexOfWeight][1] = 1-w;
@@ -99,14 +100,14 @@ public class WeightVector {
   /**
    * Calculate the inverse of a set of weight vectors
    * @param weights A set of weight vectors
-   * @param normalize True if the weights should be normalize by the sum of the components
+   * @param b True if the weights should be normalize by the sum of the components
    * @return A set of weight vectors
    */
-  public static double[][] invertWeights(double[][] weights, NORMALIZE normalize) {
+  public static double[][] invertWeights(double[][] weights, boolean b) {
     double[][] result = new double[weights.length][weights[0].length];
 
     for (int indexOfWeight = 0; indexOfWeight < weights.length; indexOfWeight++) {
-      if (normalize == NORMALIZE.TRUE) {
+      if (b) {
         double sum = 0;
 
         for (int indexOfComponent = 0; indexOfComponent < weights[indexOfWeight].length; indexOfComponent++) {

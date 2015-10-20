@@ -30,7 +30,7 @@ public class MOMBI<S extends Solution<?>> extends AbstractMOMBI<S>{
 	}
 	
 	public AbstractUtilityFunctionsSet<S> createUtilityFunction(String pathWeights) {
-		return  new TchebycheffUtilityFunctionsSet<>(pathWeights,this.getReferencePoint());
+		return  new TchebycheffUtilityFunctionsSet<>(pathWeights,this.getUtopiaPoint());
 		//return new ASFUtilityFunctionSet<>(pathWeights,this.getReferencePoint());
 	}
 	
@@ -41,7 +41,7 @@ public class MOMBI<S extends Solution<?>> extends AbstractMOMBI<S>{
 	@Override
 	public void specificMOEAComputations() {
 		updateNadirPoint(this.getPopulation());
-		updateReferencePoint(this.getPopulation());
+		updateUtopiaPoint(this.getPopulation());
 	}
 
 	@Override
