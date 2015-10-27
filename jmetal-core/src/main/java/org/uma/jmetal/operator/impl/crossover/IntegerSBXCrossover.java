@@ -169,4 +169,12 @@ public class IntegerSBXCrossover implements CrossoverOperator<IntegerSolution> {
 
     return offspring;
   }
+
+  /**
+   * Two parents are required to apply this operator.
+   * @return
+   */
+  public int getNumberOfParents() {
+    return 2 ;
+  }
 }

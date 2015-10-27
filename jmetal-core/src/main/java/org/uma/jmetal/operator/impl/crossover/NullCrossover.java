@@ -44,4 +44,12 @@ public class NullCrossover<S extends Solution<?>>
 
     return list ;
   }
+
+  /**
+   * Two parents are required to apply this operator.
+   * @return
+   */
+  public int getNumberOfParents() {
+    return 2 ;
+  }
 }
