@@ -25,7 +25,7 @@ import static org.mockito.Mockito.*;
  * Created by Antonio J. Nebro on 25/11/14.
  */
 @RunWith(MockitoJUnitRunner.class)
-public class DifferentialEvolutionTest {
+public class DifferentialEvolutionTestIT {
   private static final int DEFAULT_POPULATION_SIZE = 100 ;
   private static final int DEFAULT_MAX_EVALUATIONS = 25000 ;
   private DifferentialEvolution algorithm;
