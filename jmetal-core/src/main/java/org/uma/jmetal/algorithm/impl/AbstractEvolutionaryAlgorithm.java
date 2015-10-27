@@ -12,6 +12,7 @@ import java.util.List;
  */
 public abstract class AbstractEvolutionaryAlgorithm<S extends Solution<?>, R>  implements Algorithm<R>{
   private List<S> population;
+  private int maxPopulationSize ;
 
   public List<S> getPopulation() {
     return population;
@@ -19,6 +20,13 @@ public abstract class AbstractEvolutionaryAlgorithm<S extends Solution<?>, R>  i
 
   public void setPopulation(List<S> population) {
     this.population = population;
+  }
+
+  public void setMaxPopulationSize(int maxPopulationSize) {
+    this.maxPopulationSize = maxPopulationSize ;
+  }
+  public int getMaxPopulationSize() {
+    return maxPopulationSize ;
   }
 
   protected abstract void initProgress();
