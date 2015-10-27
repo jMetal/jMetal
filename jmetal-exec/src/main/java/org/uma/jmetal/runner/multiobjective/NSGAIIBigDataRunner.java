@@ -89,7 +89,7 @@ public class NSGAIIBigDataRunner extends AbstractAlgorithmRunner {
 
     algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation)
         .setSelectionOperator(selection)
-        .setMaxIterations(500)
+        .setMaxEvaluations(50000)
         .setPopulationSize(20)
         .build() ;
 

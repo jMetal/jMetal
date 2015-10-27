@@ -88,7 +88,7 @@ public class NSGAIIIntegerRunner extends AbstractAlgorithmRunner {
 
     algorithm = new NSGAIIBuilder<IntegerSolution>(problem, crossover, mutation)
             .setSelectionOperator(selection)
-            .setMaxIterations(250)
+            .setMaxEvaluations(25000)
             .setPopulationSize(100)
             .build() ;
 

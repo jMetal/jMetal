@@ -90,7 +90,7 @@ public class ParallelNSGAIIRunner extends AbstractAlgorithmRunner {
 
     NSGAIIBuilder<DoubleSolution> builder = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation)
         .setSelectionOperator(selection)
-        .setMaxIterations(250)
+        .setMaxEvaluations(25000)
         .setPopulationSize(100)
         .setSolutionListEvaluator(evaluator) ;
 

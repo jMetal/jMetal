@@ -47,7 +47,6 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
   NSGAIII(NSGAIIIBuilder<S> builder) { // can be created from the NSGAIIIBuilder within the same package
     problem = builder.problem ;
     maxIterations = builder.maxIterations ;
-    
 
     crossoverOperator =  builder.crossoverOperator ;
     mutationOperator  =  builder.mutationOperator ;
@@ -59,9 +58,7 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
     numberOfDivisions = new Vector<>(1) ;
     numberOfDivisions.add(12) ; // Default value for 3D problems
 
-
-    (new ReferencePoint<S>()).generateReferencePoints(referencePoints,problem.getNumberOfObjectives() , numberOfDivisions); 
-    
+    (new ReferencePoint<S>()).generateReferencePoints(referencePoints,problem.getNumberOfObjectives() , numberOfDivisions);
     
     populationSize = referencePoints.size();
     System.out.println(referencePoints.size());

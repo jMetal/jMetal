@@ -80,7 +80,7 @@ public class NSGAII45Runner extends AbstractAlgorithmRunner {
 
     selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
-    algorithm = new NSGAII45<DoubleSolution>(problem, 250, 100, crossover, mutation,
+    algorithm = new NSGAII45<DoubleSolution>(problem, 25000, 100, crossover, mutation,
             selection, new SequentialSolutionListEvaluator<DoubleSolution>()) ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)

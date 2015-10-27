@@ -17,7 +17,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class NSGAIIMeasures<S extends Solution<?>> extends NSGAII<S> implements Measurable {
-  private CountingMeasure iterations ;
+  private CountingMeasure evaluations ;
   private DurationMeasure durationMeasure ;
   private SimpleMeasureManager measureManager ;
 
@@ -37,17 +37,17 @@ public class NSGAIIMeasures<S extends Solution<?>> extends NSGAII<S> implements 
   }
 
   @Override protected void initProgress() {
-    iterations.reset(1);
+    evaluations.reset(getMaxPopulationSize());
   }
 
   @Override protected void updateProgress() {
-    iterations.increment();
+    evaluations.increment(getMaxPopulationSize());
 
     solutionListMeasure.push(getPopulation());
   }
 
   @Override protected boolean isStoppingConditionReached() {
-    return iterations.get() >= maxIterations;
+    return evaluations.get() >= maxEvaluations;
   }
 
   @Override
@@ -61,18 +61,18 @@ public class NSGAIIMeasures<S extends Solution<?>> extends NSGAII<S> implements 
   /* Measures code */
   private void initMeasures() {
     durationMeasure = new DurationMeasure() ;
-    iterations = new CountingMeasure(0) ;
+    evaluations = new CountingMeasure(0) ;
     numberOfNonDominatedSolutionsInPopulation = new BasicMeasure<>() ;
     solutionListMeasure = new BasicMeasure<>() ;
 
     measureManager = new SimpleMeasureManager() ;
     measureManager.setPullMeasure("currentExecutionTime", durationMeasure);
-    measureManager.setPullMeasure("currentIteration", iterations);
+    measureManager.setPullMeasure("currentEvaluation", evaluations);
     measureManager.setPullMeasure("numberOfNonDominatedSolutionsInPopulation",
         numberOfNonDominatedSolutionsInPopulation);
 
     measureManager.setPushMeasure("currentPopulation", solutionListMeasure);
-    measureManager.setPushMeasure("currentIteration", iterations);
+    measureManager.setPushMeasure("currentEvaluation", evaluations);
   }
 
   @Override

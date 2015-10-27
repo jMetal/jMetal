@@ -21,23 +21,23 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>> {
-  protected final int maxIterations;
+  protected final int maxEvaluations;
 
   protected final Problem<S> problem;
 
   protected final SolutionListEvaluator<S> evaluator;
 
-  protected int iterations;
+  protected int evaluations;
 
   /**
    * Constructor
    */
-  public NSGAII(Problem<S> problem, int maxIterations, int populationSize,
+  public NSGAII(Problem<S> problem, int maxEvaluations, int populationSize,
       CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
       SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator) {
     super() ;
     this.problem = problem;
-    this.maxIterations = maxIterations;
+    this.maxEvaluations = maxEvaluations;
     setMaxPopulationSize(populationSize); ;
 
     this.crossoverOperator = crossoverOperator;
@@ -48,15 +48,15 @@ public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
   }
 
   @Override protected void initProgress() {
-    iterations = 1;
+    evaluations = getMaxPopulationSize();
   }
 
   @Override protected void updateProgress() {
-    iterations++;
+    evaluations += getMaxPopulationSize() ;
   }
 
   @Override protected boolean isStoppingConditionReached() {
-    return iterations >= maxIterations;
+    return evaluations >= maxEvaluations;
   }
 
   @Override protected List<S> createInitialPopulation() {
