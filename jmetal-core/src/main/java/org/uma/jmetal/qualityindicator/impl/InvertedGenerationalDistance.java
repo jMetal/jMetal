@@ -38,7 +38,7 @@ public class InvertedGenerationalDistance<Evaluate extends List<? extends Soluti
     extends SimpleDescribedEntity
     implements QualityIndicator<Evaluate,Double> {
 
-  private static final double POW = 2.0;
+  private double pow = 2.0;
 
   private Front referenceParetoFront ;
 
@@ -48,7 +48,7 @@ public class InvertedGenerationalDistance<Evaluate extends List<? extends Soluti
    * @param referenceParetoFrontFile
    * @throws FileNotFoundException
    */
-  public InvertedGenerationalDistance(String referenceParetoFrontFile) throws FileNotFoundException {
+  public InvertedGenerationalDistance(String referenceParetoFrontFile, double p) throws FileNotFoundException {
     super("IGD", "Inverted generational distance") ;
     if (referenceParetoFrontFile == null) {
       throw new JMetalException("The pareto front object is null");
@@ -56,6 +56,17 @@ public class InvertedGenerationalDistance<Evaluate extends List<? extends Soluti
 
     Front front = new ArrayFront(referenceParetoFrontFile);
     referenceParetoFront = front ;
+    pow = p ;
+  }
+
+  /**
+   * Constructor
+   *
+   * @param referenceParetoFrontFile
+   * @throws FileNotFoundException
+   */
+  public InvertedGenerationalDistance(String referenceParetoFrontFile) throws FileNotFoundException {
+    this(referenceParetoFrontFile, 2.0) ;
   }
 
   /**
@@ -92,10 +103,10 @@ public class InvertedGenerationalDistance<Evaluate extends List<? extends Soluti
     double sum = 0.0;
     for (int i = 0 ; i < referenceFront.getNumberOfPoints(); i++) {
       sum += Math.pow(FrontUtils.distanceToClosestPoint(referenceFront.getPoint(i),
-          front), POW);
+          front), pow);
     }
 
-    sum = Math.pow(sum, 1.0 / POW);
+    sum = Math.pow(sum, 1.0 / pow);
 
     return sum / referenceFront.getNumberOfPoints();
   }

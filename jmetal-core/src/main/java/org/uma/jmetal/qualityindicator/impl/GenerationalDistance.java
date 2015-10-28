@@ -45,9 +45,27 @@ import java.util.List;
 public class GenerationalDistance<Evaluate extends List<? extends Solution<?>>>
     extends SimpleDescribedEntity
     implements QualityIndicator<Evaluate,Double> {
-  private static final double POW = 2.0;
+  private double pow = 2.0;
 
   private Front referenceParetoFront ;
+
+  /**
+   * Constructor
+   *
+   * @param referenceParetoFrontFile
+   * @param p
+   * @throws FileNotFoundException
+   */
+  public GenerationalDistance(String referenceParetoFrontFile, double p) throws FileNotFoundException {
+    super("GD", "Generational distance quality indicator") ;
+    if (referenceParetoFrontFile == null) {
+      throw new JMetalException("The pareto front object is null");
+    }
+
+    Front front = new ArrayFront(referenceParetoFrontFile);
+    referenceParetoFront = front ;
+    pow = p ;
+  }
 
   /**
    * Constructor
@@ -56,13 +74,7 @@ public class GenerationalDistance<Evaluate extends List<? extends Solution<?>>>
    * @throws FileNotFoundException
    */
   public GenerationalDistance(String referenceParetoFrontFile) throws FileNotFoundException {
-    super("GD", "Generational distance quality indicator") ;
-    if (referenceParetoFrontFile == null) {
-      throw new JMetalException("The pareto front object is null");
-    }
-
-    Front front = new ArrayFront(referenceParetoFrontFile);
-    referenceParetoFront = front ;
+    this(referenceParetoFrontFile, 2.0) ;
   }
 
   /**
@@ -102,10 +114,10 @@ public class GenerationalDistance<Evaluate extends List<? extends Solution<?>>>
     double sum = 0.0;
     for (int i = 0; i < front.getNumberOfPoints(); i++) {
       sum += Math.pow(FrontUtils.distanceToClosestPoint(front.getPoint(i),
-          referenceFront), POW);
+          referenceFront), pow);
     }
 
-    sum = Math.pow(sum, 1.0 / POW);
+    sum = Math.pow(sum, 1.0 / pow);
 
     return sum / front.getNumberOfPoints();
   }
