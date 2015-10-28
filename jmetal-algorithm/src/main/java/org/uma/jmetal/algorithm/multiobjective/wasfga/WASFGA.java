@@ -33,9 +33,9 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> {
 	 * 
 	 */
   private static final long serialVersionUID = 1L;
-  int populationSize;
-  int maxEvaluations;
-  int evaluations;
+  protected int populationSize;
+  protected int maxEvaluations;
+  protected int evaluations;
   protected Normalizer normalizer;
   
   
