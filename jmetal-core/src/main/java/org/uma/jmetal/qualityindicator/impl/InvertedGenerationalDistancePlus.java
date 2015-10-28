@@ -83,7 +83,7 @@ public class InvertedGenerationalDistancePlus<Evaluate extends List<? extends So
   }
 
   /**
-   * Returns the inverted generational distance value for a given front
+   * Returns the inverted generational distance plus value for a given front
    *
    * @param front The front
    * @param referenceFront The reference pareto front
