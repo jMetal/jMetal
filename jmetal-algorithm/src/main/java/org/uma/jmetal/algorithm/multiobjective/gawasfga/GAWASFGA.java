@@ -46,8 +46,9 @@ public class GAWASFGA<S extends Solution<?>> extends WASFGA<S> {
 			oddVectors[index++] = weights[i];
 				
 		
-	    this.achievementScalarizingUtopia =  createUtilityFunction(this.getUtopiaPoint(), evenVectors);
-	    this.achievementScalarizingNadir  =  createUtilityFunction(this.getNadirPoint(), oddVectors);
+	    //this.achievementScalarizingUtopia =  createUtilityFunction(this.getUtopiaPoint(), evenVectors);
+	    this.achievementScalarizingNadir  =  createUtilityFunction(this.getNadirPoint(), evenVectors);
+	    this.achievementScalarizingUtopia =  createUtilityFunction(this.getUtopiaPoint(), oddVectors);
 	    
 	}
 	
@@ -56,8 +57,8 @@ public class GAWASFGA<S extends Solution<?>> extends WASFGA<S> {
 	public AbstractUtilityFunctionsSet<S> createUtilityFunction(List<Double> referencePoint, double [][] weights) {	  		  	
 		  	weights = WeightVector.invertWeights(weights,true);	    				
 			ASFWASFGA<S> aux = new ASFWASFGA<>(weights,referencePoint);
-			aux.setNadir(this.getNadirPoint());
-			aux.setUtopia(this.getUtopiaPoint());
+			//aux.setNadir(this.getNadirPoint());
+			//aux.setUtopia(this.getUtopiaPoint());
 		  	//ASFUtilityFunctionSet<S> aux = new ASFUtilityFunctionSet<>(weights,this.referencePoint);
 			return aux;
 	  }

@@ -60,6 +60,7 @@ public class ASFWASFGA<S extends Solution<?>> extends AbstractUtilityFunctionsSe
 		double result = -1e10;
 		double secondSum = 0.0;
 		for (int i = 0; i < weightVector.size(); i++) {
+									
 			double temp = objectiveValues.get(i) - this.referencePoint.get(i);
 						 
 			
@@ -72,7 +73,7 @@ public class ASFWASFGA<S extends Solution<?>> extends AbstractUtilityFunctionsSe
 			if (temp_product > result)
 				result = temp_product;
 			
-			secondSum += temp;
+			secondSum += temp_product;
 		}
 
 		return result + (secondSum * this.augmentationCoefficient);		

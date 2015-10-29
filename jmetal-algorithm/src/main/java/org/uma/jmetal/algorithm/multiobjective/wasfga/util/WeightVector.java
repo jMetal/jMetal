@@ -30,8 +30,8 @@ public class WeightVector {
 
     w = epsilon;
 
-    while(w <= (1-epsilon))
-    //while (indexOfWeight < numberOfWeights)
+    //while(w <= (1-epsilon))
+    while (indexOfWeight < numberOfWeights)
     {
       weights[indexOfWeight][0] = w;
       weights[indexOfWeight][1] = 1-w;
@@ -40,6 +40,14 @@ public class WeightVector {
 
       indexOfWeight = indexOfWeight+1;
     }
+//    
+//    for (int i = 0; i < weights.length; i++) {
+//    	for (int j = 0; j < weights[i].length; j++) {
+//    		System.out.print(weights[i][j]+" ");    		
+//    	}
+//    	System.out.println();
+//    }
+    
 
     return weights;
   }

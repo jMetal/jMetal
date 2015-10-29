@@ -69,8 +69,8 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> {
 	  	double [][] weights = WeightVector.initUniformWeights2D(0.005, this.populationSize);
 	  	weights = WeightVector.invertWeights(weights,true);	    				
 		ASFWASFGA<S> aux = new ASFWASFGA<>(weights,referencePoint);
-		aux.setNadir(this.getNadirPoint());
-		aux.setUtopia(this.getUtopiaPoint());
+		//aux.setNadir(this.getNadirPoint());
+		//aux.setUtopia(this.getUtopiaPoint());
 	  	//ASFUtilityFunctionSet<S> aux = new ASFUtilityFunctionSet<>(weights,this.referencePoint);
 		return aux;
   }
