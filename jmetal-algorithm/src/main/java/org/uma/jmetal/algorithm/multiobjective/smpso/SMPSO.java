@@ -31,6 +31,11 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
+ * This class implements the SMPSO algorithm described in:
+ * SMPSO: A new PSO-based metaheuristic for multi-objective optimization
+ * MCDM 2009
+ * DOI: http://dx.doi.org/10.1109/MCDM.2009.4938830
+ *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, List<DoubleSolution>> {
