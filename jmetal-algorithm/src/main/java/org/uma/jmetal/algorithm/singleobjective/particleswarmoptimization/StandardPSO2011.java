@@ -157,7 +157,7 @@ public class StandardPSO2011 extends AbstractParticleSwarmOptimization<DoubleSol
   }
 
   @Override
-  public void initializeLeaders(List<DoubleSolution> swarm) {
+  public void initializeLeader(List<DoubleSolution> swarm) {
     for (int i = 0; i < swarm.size(); i++) {
       neighborhoodBest[i] = getNeighborBest(i);
     }

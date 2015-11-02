@@ -157,7 +157,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
     return swarm;
   }
 
-  @Override protected void initializeLeaders(List<DoubleSolution> swarm) {
+  @Override protected void initializeLeader(List<DoubleSolution> swarm) {
     for (DoubleSolution particle : swarm) {
       leaders.add(particle);
     }
