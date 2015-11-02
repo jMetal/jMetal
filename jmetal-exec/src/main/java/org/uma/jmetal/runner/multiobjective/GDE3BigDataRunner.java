@@ -82,7 +82,7 @@ public class GDE3BigDataRunner {
     algorithm = new GDE3Builder(problem)
       .setCrossover(crossover)
       .setSelection(selection)
-      .setMaxIterations(2500)
+      .setMaxEvaluations(250000)
       .setPopulationSize(100)
       .build() ;
 

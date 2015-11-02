@@ -36,7 +36,6 @@ import java.util.*;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class DifferentialEvolution extends AbstractDifferentialEvolution<DoubleSolution> {
-  private DoubleProblem problem;
   private int populationSize;
   private int maxEvaluations;
   private SolutionListEvaluator<DoubleSolution> evaluator;
@@ -57,7 +56,7 @@ public class DifferentialEvolution extends AbstractDifferentialEvolution<DoubleS
   public DifferentialEvolution(DoubleProblem problem, int maxEvaluations, int populationSize,
       DifferentialEvolutionCrossover crossoverOperator,
       DifferentialEvolutionSelection selectionOperator, SolutionListEvaluator<DoubleSolution> evaluator) {
-    this.problem = problem;
+    setProblem(problem); ;
     this.maxEvaluations = maxEvaluations;
     this.populationSize = populationSize;
     this.crossoverOperator = crossoverOperator;
@@ -90,14 +89,14 @@ public class DifferentialEvolution extends AbstractDifferentialEvolution<DoubleS
   @Override protected List<DoubleSolution> createInitialPopulation() {
     List<DoubleSolution> population = new ArrayList<>(populationSize);
     for (int i = 0; i < populationSize; i++) {
-      DoubleSolution newIndividual = problem.createSolution();
+      DoubleSolution newIndividual = getProblem().createSolution();
       population.add(newIndividual);
     }
     return population;
   }
 
   @Override protected List<DoubleSolution> evaluatePopulation(List<DoubleSolution> population) {
-    return evaluator.evaluate(population, problem);
+    return evaluator.evaluate(population, getProblem());
   }
 
   @Override protected List<DoubleSolution> selection(List<DoubleSolution> population) {

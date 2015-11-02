@@ -39,7 +39,7 @@ import java.util.List;
 public class GDE3Builder implements AlgorithmBuilder<GDE3> {
   private DoubleProblem problem;
   protected int populationSize;
-  protected int maxIterations;
+  protected int maxEvaluations;
 
   protected DifferentialEvolutionCrossover crossoverOperator;
   protected DifferentialEvolutionSelection selectionOperator;
@@ -49,7 +49,7 @@ public class GDE3Builder implements AlgorithmBuilder<GDE3> {
   /** Constructor */
   public GDE3Builder(DoubleProblem problem) {
     this.problem = problem;
-    maxIterations = 250 ;
+    maxEvaluations = 25000 ;
     populationSize = 100 ;
     selectionOperator = new DifferentialEvolutionSelection();
     crossoverOperator = new DifferentialEvolutionCrossover() ;
@@ -63,8 +63,8 @@ public class GDE3Builder implements AlgorithmBuilder<GDE3> {
     return this;
   }
 
-  public GDE3Builder setMaxIterations(int maxIterations) {
-    this.maxIterations = maxIterations;
+  public GDE3Builder setMaxEvaluations(int maxEvaluations) {
+    this.maxEvaluations = maxEvaluations;
 
     return this;
   }
@@ -88,7 +88,7 @@ public class GDE3Builder implements AlgorithmBuilder<GDE3> {
   }
 
   public GDE3 build() {
-    return new GDE3(problem, populationSize, maxIterations, selectionOperator, crossoverOperator, evaluator) ;
+    return new GDE3(problem, populationSize, maxEvaluations, selectionOperator, crossoverOperator, evaluator) ;
   }
 
   /* Getters */
@@ -104,8 +104,8 @@ public class GDE3Builder implements AlgorithmBuilder<GDE3> {
     return populationSize;
   }
 
-  public int getMaxIterations() {
-    return maxIterations;
+  public int getMaxEvaluations() {
+    return maxEvaluations;
   }
 
 }
