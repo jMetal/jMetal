@@ -20,12 +20,38 @@ public abstract class AbstractGeneticAlgorithm<S extends Solution<?>, Result> ex
   protected CrossoverOperator<S> crossoverOperator ;
   protected MutationOperator<S> mutationOperator ;
 
+  /* Getters */
+  public SelectionOperator<List<S>, S> getSelectionOperator() {
+    return selectionOperator;
+  }
+
+  public CrossoverOperator<S> getCrossoverOperator() {
+    return crossoverOperator;
+  }
+
+  public MutationOperator<S> getMutationOperator() {
+    return mutationOperator;
+  }
+
   /**
    * Constructor
    * @param problem The problem to solve
    */
   public AbstractGeneticAlgorithm(Problem<S> problem) {
     setProblem(problem);
+  }
+
+  /**
+   * This method implements a default scheme create the initial population of genetic algorithm
+   * @return
+   */
+  protected List<S> createInitialPopulation() {
+    List<S> population = new ArrayList<>(getMaxPopulationSize());
+    for (int i = 0; i < getMaxPopulationSize(); i++) {
+      S newIndividual = getProblem().createSolution();
+      population.add(newIndividual);
+    }
+    return population;
   }
 
   /**

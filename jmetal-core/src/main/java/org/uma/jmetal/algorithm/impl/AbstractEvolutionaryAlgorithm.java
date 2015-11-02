@@ -44,6 +44,8 @@ public abstract class AbstractEvolutionaryAlgorithm<S extends Solution<?>, R>  i
 
   protected abstract boolean isStoppingConditionReached();
 
+  protected abstract  List<S> createInitialPopulation() ;
+
   protected abstract List<S> evaluatePopulation(List<S> population);
 
   protected abstract List<S> selection(List<S> population);
@@ -69,14 +71,4 @@ public abstract class AbstractEvolutionaryAlgorithm<S extends Solution<?>, R>  i
       updateProgress();
     }
   }
-
-  protected List<S> createInitialPopulation() {
-    List<S> population = new ArrayList<>(getMaxPopulationSize());
-    for (int i = 0; i < getMaxPopulationSize(); i++) {
-      S newIndividual = getProblem().createSolution();
-      population.add(newIndividual);
-    }
-    return population;
-  }
-
 }

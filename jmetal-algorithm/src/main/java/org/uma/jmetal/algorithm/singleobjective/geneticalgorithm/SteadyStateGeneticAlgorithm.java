@@ -31,7 +31,6 @@ import java.util.List;
 public class SteadyStateGeneticAlgorithm<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, S> {
   private Comparator<S> comparator;
   private int maxEvaluations;
-  private int populationSize;
   private int evaluations;
 
   /**
@@ -41,8 +40,8 @@ public class SteadyStateGeneticAlgorithm<S extends Solution<?>> extends Abstract
       CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
       SelectionOperator<List<S>, S> selectionOperator) {
     super(problem);
+    setMaxPopulationSize(populationSize);
     this.maxEvaluations = maxEvaluations;
-    this.populationSize = populationSize;
 
     this.crossoverOperator = crossoverOperator;
     this.mutationOperator = mutationOperator;
