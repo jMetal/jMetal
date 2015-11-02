@@ -135,7 +135,7 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
   }
 
   @Override
-  protected void initializeLeaders(List<DoubleSolution> swarm) {
+  protected void initializeLeader(List<DoubleSolution> swarm) {
     for (DoubleSolution solution : swarm) {
       DoubleSolution particle = (DoubleSolution) solution.copy();
       if (leaderArchive.add(particle)) {

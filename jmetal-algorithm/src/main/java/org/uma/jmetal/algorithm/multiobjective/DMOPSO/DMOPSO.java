@@ -23,14 +23,12 @@ import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
+import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
-import java.util.Vector;
+import java.util.*;
 
 public class DMOPSO implements Algorithm<List<DoubleSolution>> {
   private DoubleProblem problem;
@@ -73,12 +71,11 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
   private JMetalRandom randomGenerator;
   private SolutionListEvaluator<DoubleSolution> evaluator;
 
-  public DMOPSO(DoubleProblem problem, int swarmSize, Archive<DoubleSolution> leaders,
-                MutationOperator<DoubleSolution> mutationOperator, int maxIterations, double r1Min, double r1Max,
+  public DMOPSO(DoubleProblem problem, int swarmSize,
+                int maxIterations, double r1Min, double r1Max,
                 double r2Min, double r2Max, double c1Min, double c1Max, double c2Min, double c2Max,
                 double weightMin, double weightMax, double changeVelocity1, double changeVelocity2,
-                String functionType, String dataDirectory, int maxAge,
-                SolutionListEvaluator<DoubleSolution> evaluator) {
+                String functionType, String dataDirectory, int maxAge) {
     this.problem = problem;
     this.swarmSize = swarmSize;
     this.maxIterations = maxIterations;
@@ -99,7 +96,10 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
     this.maxAge = maxAge ;
 
     this.dataDirectory = dataDirectory ;
-    this.evaluator = evaluator ;
+
+    evaluator = new SequentialSolutionListEvaluator<DoubleSolution>();
+
+    randomGenerator = JMetalRandom.getInstance() ;
 
     localBest = new DoubleSolution[swarmSize] ;
     globalBest = new DoubleSolution[swarmSize] ;
@@ -118,9 +118,6 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
               problem.getLowerBound(i)) / 2.0;
       deltaMin[i] = -deltaMax[i];
     }
-
-    initUniformWeight();
-    initIdealPoint();
   }
 
   public List<DoubleSolution> getSwarm() {
@@ -219,11 +216,6 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
     }
   }
 
-  @Override
-  public List<DoubleSolution> getResult() {
-    return getSwarm() ;
-  }
-
   /**
    * initUniformWeight
    */
@@ -282,7 +274,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
 
     for (int i = 0; i < swarmSize; i++) {
       updateReference(getSwarm().get(i));
-    } // for
+    }
   } // initIdealPoint
 
   private void updateReference(Solution individual) {
@@ -486,25 +478,42 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
   @Override
   public void run() {
     swarm = createInitialSwarm() ;
-
-    initializeLeaders(getSwarm());
-    initializeParticlesMemory(getSwarm());
+    evaluateSwarm(swarm) ;
     initializeVelocity(getSwarm());
 
     initUniformWeight();
     initIdealPoint();
 
+    initializeLeaders(getSwarm());
+    initializeParticlesMemory(getSwarm());
+
     updateGlobalBest();
 
     initProgress();
     while (!isStoppingConditionReached()) {
+      System.out.println("Iter: " + iterations) ;
       shuffleGlobalBest();
 
       for (int i = 0 ; i < getSwarm().size(); i++) {
         if (age[i] < maxAge) {
           updateVelocity(i);
+        } else {
+          resetParticle(i);
         }
+
+        repairBounds(i);
+
+        problem.evaluate(swarm.get(i));
+        updateReference(swarm.get(i));
+        updateLocalBest(i);
       }
+      updateGlobalBest();
+      updateProgress();
     }
+  }
+
+  @Override
+  public List<DoubleSolution> getResult() {
+    return Arrays.asList(globalBest) ;
   }
 }
