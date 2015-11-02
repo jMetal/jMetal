@@ -45,6 +45,7 @@ public class PAES<S extends Solution<?>> extends AbstractEvolutionStrategy<S, Li
    */
   public PAES(Problem<S> problem, int archiveSize, int maxEvaluations, int biSections,
       MutationOperator<S> mutationOperator) {
+    super(problem);
     setProblem(problem);
     this.archiveSize = archiveSize;
     this.maxEvaluations = maxEvaluations;

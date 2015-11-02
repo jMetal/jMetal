@@ -30,8 +30,6 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class ElitistEvolutionStrategy<S extends Solution<?>> extends AbstractEvolutionStrategy<S, S> {
-  private Problem<S> problem;
-
   private int mu;
   private int lambda;
   private int maxEvaluations;
@@ -45,7 +43,7 @@ public class ElitistEvolutionStrategy<S extends Solution<?>> extends AbstractEvo
    */
   public ElitistEvolutionStrategy(Problem<S> problem, int mu, int lambda, int maxEvaluations,
       MutationOperator<S> mutation) {
-    this.problem = problem;
+    super(problem) ;
     this.mu = mu;
     this.lambda = lambda;
     this.maxEvaluations = maxEvaluations;
@@ -69,7 +67,7 @@ public class ElitistEvolutionStrategy<S extends Solution<?>> extends AbstractEvo
   @Override protected List<S> createInitialPopulation() {
     List<S> population = new ArrayList<>(mu);
     for (int i = 0; i < mu; i++) {
-      S newIndividual = (S)problem.createSolution();
+      S newIndividual = getProblem().createSolution();
       population.add(newIndividual);
     }
 
@@ -78,7 +76,7 @@ public class ElitistEvolutionStrategy<S extends Solution<?>> extends AbstractEvo
 
   @Override protected List<S> evaluatePopulation(List<S> population) {
     for (S solution : population) {
-      problem.evaluate(solution);
+      getProblem().evaluate(solution);
     }
 
     return population;
