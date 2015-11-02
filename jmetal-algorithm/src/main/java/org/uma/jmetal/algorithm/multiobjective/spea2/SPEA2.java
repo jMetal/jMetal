@@ -32,7 +32,6 @@ import java.util.List;
 public class SPEA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>> {
   protected final int maxIterations;
   protected final int populationSize;
-  protected final Problem<S> problem;
   protected final SolutionListEvaluator<S> evaluator;
   protected int iterations;
   protected List<S> archive;
@@ -42,8 +41,7 @@ public class SPEA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
   public SPEA2(Problem<S> problem, int maxIterations, int populationSize,
       CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
       SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator) {
-    super();
-    this.problem = problem;
+    super(problem);
     this.maxIterations = maxIterations;
     this.populationSize = populationSize;
 
@@ -73,18 +71,8 @@ public class SPEA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
   }
 
   @Override
-  protected List<S> createInitialPopulation() {
-    List<S> population = new ArrayList<>(populationSize);
-    for (int i = 0; i < populationSize; i++) {
-      S newIndividual = problem.createSolution();
-      population.add(newIndividual);
-    }
-    return population;
-  }
-
-  @Override
   protected List<S> evaluatePopulation(List<S> population) {
-    population = evaluator.evaluate(population, problem);
+    population = evaluator.evaluate(population, getProblem());
     return population;
   }
 

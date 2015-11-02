@@ -29,23 +29,16 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
   protected int maxIterations ;
   protected int populationSize ;
 
-  protected Problem<S> problem ;
-
   protected SolutionListEvaluator<S> evaluator ;
 
   private Vector<Integer> numberOfDivisions  ;
   private List<ReferencePoint<S>> referencePoints = new Vector<>() ;
   
   public NSGAIIIBuilder<S> Builder;
-  
-
-  /** Constructor */
-  public NSGAIII() {
-  }
 
   /** Constructor */
   NSGAIII(NSGAIIIBuilder<S> builder) { // can be created from the NSGAIIIBuilder within the same package
-    problem = builder.problem ;
+    super(builder.problem) ;
     maxIterations = builder.maxIterations ;
 
     crossoverOperator =  builder.crossoverOperator ;
@@ -58,7 +51,7 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
     numberOfDivisions = new Vector<>(1) ;
     numberOfDivisions.add(12) ; // Default value for 3D problems
 
-    (new ReferencePoint<S>()).generateReferencePoints(referencePoints,problem.getNumberOfObjectives() , numberOfDivisions);
+    (new ReferencePoint<S>()).generateReferencePoints(referencePoints,getProblem().getNumberOfObjectives() , numberOfDivisions);
     
     populationSize = referencePoints.size();
     System.out.println(referencePoints.size());
@@ -84,18 +77,8 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
   }
 
   @Override
-  protected List<S> createInitialPopulation() {
-    List<S> population = new ArrayList<>(populationSize) ;
-    for (int i = 0; i < populationSize; i++) {
-      S newIndividual = problem.createSolution();
-      population.add(newIndividual);
-    }
-    return population;
-  }
-
-  @Override
   protected List<S> evaluatePopulation(List<S> population) {
-    population = evaluator.evaluate(population, problem) ;
+    population = evaluator.evaluate(population, getProblem()) ;
 
     return population ;
   }
@@ -162,7 +145,9 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
     }
     
     // A copy of the reference list should be used as parameter of the environmental selection
-    EnvironmentalSelection<S> selection = new EnvironmentalSelection<>(fronts,populationSize,getReferencePointsCopy(),problem.getNumberOfObjectives());
+    EnvironmentalSelection<S> selection =
+            new EnvironmentalSelection<>(fronts,populationSize,getReferencePointsCopy(),
+                    getProblem().getNumberOfObjectives());
     
     pop = selection.execute(pop);
      
@@ -173,8 +158,6 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
   public List<S> getResult() {
     return getNonDominatedSolutions(getPopulation()) ;
   }
-
-
 
   protected Ranking<S> computeRanking(List<S> solutionList) {
     Ranking<S> ranking = new DominanceRanking<>() ;

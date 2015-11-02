@@ -38,7 +38,6 @@ public class PESA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
 
   private int evaluations ;
 
-  protected final Problem<S> problem;
   protected SelectionOperator<AdaptiveGridArchive<S>, S> selectionOperator ;
 
   private AdaptiveGridArchive<S> archive;
@@ -47,7 +46,7 @@ public class PESA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
   public PESA2(Problem<S> problem, int maxEvaluations, int populationSize, int archiveSize,
       int biSections, CrossoverOperator<S> crossoverOperator,
       MutationOperator<S> mutationOperator, SolutionListEvaluator<S> evaluator) {
-    this.problem = problem ;
+    super(problem) ;
     this.maxEvaluations = maxEvaluations ;
     this.populationSize = populationSize ;
     this.archiveSize = archiveSize ;
@@ -74,17 +73,8 @@ public class PESA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
     return evaluations >= maxEvaluations ;
   }
 
-  @Override protected List<S> createInitialPopulation() {
-    List<S> population = new ArrayList<>(populationSize);
-    for (int i = 0; i < populationSize; i++) {
-      S newIndividual = problem.createSolution();
-      population.add(newIndividual);
-    }
-    return population;
-  }
-
   @Override protected List<S> evaluatePopulation(List<S> population) {
-    population = evaluator.evaluate(population, problem);
+    population = evaluator.evaluate(population, getProblem());
 
     return population;
   }

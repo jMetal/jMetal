@@ -32,8 +32,6 @@ import java.util.List;
  * This class implements the PAES algorithm.
  */
 public class PAES<S extends Solution<?>> extends AbstractEvolutionStrategy<S, List<S>> {
-  protected Problem<S> problem;
-
   protected int archiveSize;
   protected int maxEvaluations;
   protected int biSections;
@@ -47,7 +45,7 @@ public class PAES<S extends Solution<?>> extends AbstractEvolutionStrategy<S, Li
    */
   public PAES(Problem<S> problem, int archiveSize, int maxEvaluations, int biSections,
       MutationOperator<S> mutationOperator) {
-    this.problem = problem;
+    setProblem(problem);
     this.archiveSize = archiveSize;
     this.maxEvaluations = maxEvaluations;
     this.biSections = biSections;
@@ -88,12 +86,12 @@ public class PAES<S extends Solution<?>> extends AbstractEvolutionStrategy<S, Li
 
   @Override protected List<S> createInitialPopulation() {
     List<S> solutionList = new ArrayList<>(1);
-    solutionList.add(problem.createSolution());
+    solutionList.add(getProblem().createSolution());
     return solutionList;
   }
 
   @Override protected List<S> evaluatePopulation(List<S> population) {
-    problem.evaluate(population.get(0));
+    getProblem().evaluate(population.get(0));
     return population;
   }
 

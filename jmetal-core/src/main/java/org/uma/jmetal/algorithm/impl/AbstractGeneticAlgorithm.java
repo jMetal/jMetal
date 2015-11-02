@@ -3,6 +3,7 @@ package org.uma.jmetal.algorithm.impl;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
+import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 
@@ -18,6 +19,14 @@ public abstract class AbstractGeneticAlgorithm<S extends Solution<?>, Result> ex
   protected SelectionOperator<List<S>, S> selectionOperator ;
   protected CrossoverOperator<S> crossoverOperator ;
   protected MutationOperator<S> mutationOperator ;
+
+  /**
+   * Constructor
+   * @param problem The problem to solve
+   */
+  public AbstractGeneticAlgorithm(Problem<S> problem) {
+    setProblem(problem);
+  }
 
   /**
    * This method iteratively applies a {@link SelectionOperator} to the population to fill the mating pool population.

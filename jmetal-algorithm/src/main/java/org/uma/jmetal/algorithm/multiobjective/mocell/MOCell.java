@@ -36,7 +36,6 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
   private List<S> currentNeighbors;
 
   private CrowdingDistanceArchive<S> archive;
-  protected final Problem<S> problem;
 
   private Comparator<S> dominanceComparator;
   private LocationAttribute<S> location;
@@ -57,8 +56,7 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
       Neighborhood<S> neighborhood,
       CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
       SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator) {
-    super();
-    this.problem = problem;
+    super(problem);
     this.maxEvaluations = maxEvaluations;
     this.populationSize = populationSize;
     this.archiveSize = archiveSize ;
@@ -94,7 +92,7 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
   protected List<S> createInitialPopulation() {
     List<S> population = new ArrayList<>(populationSize);
     for (int i = 0; i < populationSize; i++) {
-      S newIndividual = problem.createSolution();
+      S newIndividual = getProblem().createSolution();
       population.add(newIndividual);
     }
     location = new LocationAttribute<>(population);
@@ -103,7 +101,7 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
 
   @Override
   protected List<S> evaluatePopulation(List<S> population) {
-    population = evaluator.evaluate(population, problem);
+    population = evaluator.evaluate(population, getProblem());
     for (S solution : population) {
       archive.add((S)solution.copy()) ;
     }

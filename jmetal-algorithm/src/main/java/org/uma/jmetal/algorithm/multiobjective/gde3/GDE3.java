@@ -59,7 +59,7 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
   public GDE3(DoubleProblem problem, int populationSize, int maxIterations,
       DifferentialEvolutionSelection selection, DifferentialEvolutionCrossover crossover,
       SolutionListEvaluator<DoubleSolution> evaluator) {
-    this.problem = problem;
+    setProblem(problem);
     this.populationSize = populationSize;
     this.maxIterations = maxIterations;
     this.crossoverOperator = crossover;
