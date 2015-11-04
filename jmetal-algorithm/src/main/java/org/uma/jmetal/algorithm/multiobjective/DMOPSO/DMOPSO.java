@@ -497,10 +497,11 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
       for (int i = 0 ; i < getSwarm().size(); i++) {
         if (age[i] < maxAge) {
           updateVelocity(i);
+          computeNewPositions(i);
         } else {
           resetParticle(i);
         }
-
+       
         repairBounds(i);
 
         problem.evaluate(swarm.get(i));
