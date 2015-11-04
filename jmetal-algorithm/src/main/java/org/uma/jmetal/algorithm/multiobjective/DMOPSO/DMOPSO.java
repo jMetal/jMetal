@@ -14,23 +14,20 @@
 package org.uma.jmetal.algorithm.multiobjective.DMOPSO;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.impl.AbstractParticleSwarmOptimization;
-import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.archive.Archive;
-import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
-import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
 
 import java.io.*;
 import java.util.*;
 
 public class DMOPSO implements Algorithm<List<DoubleSolution>> {
+  /**
+	 * 
+	 */
+  private static final long serialVersionUID = 1L;
   private DoubleProblem problem;
   private List<DoubleSolution> swarm ;
 
@@ -181,26 +178,20 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
   }
 
   protected void updateVelocity(int i) {
-    double r1, r2, W, C1, C2;
-    double wmax, wmin;
-
+    
     DoubleSolution particle = getSwarm().get(i) ;
     DoubleSolution bestParticle = localBest[i] ;
     DoubleSolution bestGlobal = globalBest[shfGBest[i]] ;
 
-    r1 = randomGenerator.nextDouble(r1Min, r1Max);
-    r2 = randomGenerator.nextDouble(r2Min, r2Max);
-    C1 = randomGenerator.nextDouble(c1Min, c1Max);
-    C2 = randomGenerator.nextDouble(c2Min, c2Max);
-    W = randomGenerator.nextDouble(weightMin, weightMax);
-
-    wmax = weightMax;
-    wmin = weightMin;
-
+    double r1 = randomGenerator.nextDouble(r1Min, r1Max);
+    double r2 = randomGenerator.nextDouble(r2Min, r2Max);
+    double C1 = randomGenerator.nextDouble(c1Min, c1Max);
+    double C2 = randomGenerator.nextDouble(c2Min, c2Max);
+    
     for (int var = 0; var < particle.getNumberOfVariables(); var++) {
       //Computing the velocity of this particle
         speed[i][var] = velocityConstriction(constrictionCoefficient(C1, C2) *
-                (inertiaWeight(iterations, maxIterations, wmax, wmin) * speed[i][var] +
+                (inertiaWeight(iterations, maxIterations, this.weightMax, this.weightMin) * speed[i][var] +
                         C1 * r1 * (bestParticle.getVariableValue(var) -
                                 particle.getVariableValue(var)) +
                         C2 * r2 * (bestGlobal.getVariableValue(var) -
@@ -277,7 +268,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
     }
   } // initIdealPoint
 
-  private void updateReference(Solution individual) {
+  private void updateReference(DoubleSolution individual) {
     for (int n = 0; n < problem.getNumberOfObjectives(); n++) {
       if (individual.getObjective(n) < z[n]) {
         z[n] = individual.getObjective(n);
@@ -325,7 +316,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
   } // updateLocalBest
 
 
-  private double fitnessFunction(Solution sol, double[] lambda){
+  private double fitnessFunction(DoubleSolution sol, double[] lambda){
     double fitness = 0.0;
 
     if (functionType.equals("_TCHE")) {
