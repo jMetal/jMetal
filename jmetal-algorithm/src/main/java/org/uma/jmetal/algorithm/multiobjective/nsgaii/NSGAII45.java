@@ -83,6 +83,8 @@ public class NSGAII45<S extends Solution<?>> implements Algorithm<List<S>> {
         offspringPopulation.add(offspring.get(1));
       }
 
+      evaluatePopulation(offspringPopulation) ;
+
       List<S> jointPopulation = new ArrayList<>();
       jointPopulation.addAll(population);
       jointPopulation.addAll(offspringPopulation);
