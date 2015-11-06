@@ -334,7 +334,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
         if (feval > maxFun) {
           maxFun = feval;
         }
-      } // for
+      }
 
       fitness = maxFun;
 
@@ -390,7 +390,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
       aux[rnd] = aux[i];
       shfGBest[i] = tmp;
     }
-  } // shuffleGlobalBest
+  }
 
   private void repairBounds(int part){
 
@@ -406,8 +406,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
         speed[part][var] = speed[part][var] * changeVelocity2;
       }
     }
-
-  } // repairBounds
+  }
 
   private void resetParticle(int i) {
     DoubleSolution particle = getSwarm().get(i) ;
@@ -424,13 +423,12 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
 
       java.util.Random rnd = new java.util.Random();
 
-      N = rnd.nextGaussian()*sigma + mean; // N(mean, sigma)
-      //N = box_muller(mean, sigma);
+      N = rnd.nextGaussian()*sigma + mean;
 
       particle.setVariableValue(var,N);
       speed[i][var] = 0.0;
     }
-  } // resetParticle
+  }
 
   private double velocityConstriction(double v, double[] deltaMax, double[] deltaMin,
                                       int variableIndex, int particleIndex) {
