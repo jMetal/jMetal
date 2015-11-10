@@ -24,6 +24,7 @@ package org.uma.jmetal.util.experiment;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
 
 import java.util.List;
 
@@ -34,7 +35,7 @@ import java.util.List;
  */
 public class ExperimentConfiguration<S extends Solution<?>> {
 	private String experimentName;
-	private List<Algorithm<?>> algorithmList;
+	private List<TaggedAlgorithm<?>> algorithmList;
 	private List<Problem<S>> problemList;
 	private String experimentBaseDirectory;
 
@@ -58,7 +59,7 @@ public class ExperimentConfiguration<S extends Solution<?>> {
     return experimentName;
   }
 
-  public List<Algorithm<?>> getAlgorithmList() {
+  public List<TaggedAlgorithm<?>> getAlgorithmList() {
     return algorithmList;
   }
 

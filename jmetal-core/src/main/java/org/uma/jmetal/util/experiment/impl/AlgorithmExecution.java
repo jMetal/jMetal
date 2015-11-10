@@ -27,6 +27,7 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.experiment.ExperimentComponent;
 import org.uma.jmetal.util.experiment.ExperimentConfiguration;
+import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
 
 import java.io.File;
 
@@ -46,10 +47,10 @@ public class AlgorithmExecution implements ExperimentComponent {
     JMetalLogger.logger.info("ExperimentExecution: Preparing output directory");
     prepareOutputDirectory() ;
 
-    for (Algorithm algorithm : configuration.getAlgorithmList()) {
+    for (TaggedAlgorithm algorithm : configuration.getAlgorithmList()) {
       for (Problem problem : configuration.getProblemList()) {
         for (int i = 0; i < configuration.getIndependentRuns(); i++) {
-          System.out.println(algorithm.getName() + " | " + problem.getName() + " | " + i) ;
+          System.out.println(algorithm.getTag() + " | " + problem.getName() + " | " + i) ;
         }
       }
     }

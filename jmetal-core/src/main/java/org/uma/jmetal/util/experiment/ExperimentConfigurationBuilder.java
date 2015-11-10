@@ -24,6 +24,7 @@ package org.uma.jmetal.util.experiment;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,7 @@ import java.util.List;
  */
 public class ExperimentConfigurationBuilder<S extends Solution<?>> {
   private final String experimentName ;
-  private List<Algorithm<?>> algorithmList;
+  private List<TaggedAlgorithm<?>> algorithmList;
   private List<Problem<S>> problemList;
   private String experimentBaseDirectory;
   private String outputParetoFrontFileName;
@@ -46,7 +47,7 @@ public class ExperimentConfigurationBuilder<S extends Solution<?>> {
     this.experimentName = experimentName ;
   }
 
-  public ExperimentConfigurationBuilder<S> setAlgorithmList(List<? extends Algorithm<?>> algorithmList) {
+  public ExperimentConfigurationBuilder<S> setAlgorithmList(List<? extends TaggedAlgorithm<?>> algorithmList) {
     this.algorithmList = new ArrayList<>(algorithmList) ;
 
     return this ;
@@ -91,7 +92,7 @@ public class ExperimentConfigurationBuilder<S extends Solution<?>> {
     return experimentName;
   }
 
-  public List<Algorithm<?>> getAlgorithmList() {
+  public List<TaggedAlgorithm<?>> getAlgorithmList() {
     return algorithmList;
   }
 
