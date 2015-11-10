@@ -118,4 +118,12 @@ public class ElitistEvolutionStrategy<S extends Solution<?>> extends AbstractEvo
   @Override public S getResult() {
     return getPopulation().get(0);
   }
+
+  @Override public String getName() {
+    return "ElitistEA" ;
+  }
+
+  @Override public String getDescription() {
+    return "Elitist Evolution Strategy Algorithm, i.e, (mu + lambda) EA" ;
+  }
 }

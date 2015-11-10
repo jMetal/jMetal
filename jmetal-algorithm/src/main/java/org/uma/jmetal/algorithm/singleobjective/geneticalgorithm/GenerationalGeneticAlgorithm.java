@@ -86,4 +86,12 @@ public class GenerationalGeneticAlgorithm<S extends Solution<?>> extends Abstrac
   @Override public void updateProgress() {
     evaluations += getMaxPopulationSize();
   }
+
+  @Override public String getName() {
+    return "gGA" ;
+  }
+
+  @Override public String getDescription() {
+    return "Generational Genetic Algorithm" ;
+  }
 }

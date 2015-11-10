@@ -173,4 +173,12 @@ public class NSGAII45<S extends Solution<?>> implements Algorithm<List<S>> {
   protected List<S> getNonDominatedSolutions(List<S> solutionList) {
     return SolutionListUtils.getNondominatedSolutions(solutionList);
   }
+
+  @Override public String getName() {
+    return "NSGAII45" ;
+  }
+
+  @Override public String getDescription() {
+    return "Nondominated Sorting Genetic Algorithm version II. Version not using the AbstractGeneticAlgorithm template" ;
+  }
 }

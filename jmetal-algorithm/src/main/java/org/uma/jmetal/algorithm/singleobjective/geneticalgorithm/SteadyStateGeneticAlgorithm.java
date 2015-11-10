@@ -109,4 +109,12 @@ public class SteadyStateGeneticAlgorithm<S extends Solution<?>> extends Abstract
   @Override public void updateProgress() {
     evaluations++;
   }
+
+  @Override public String getName() {
+    return "ssGA" ;
+  }
+
+  @Override public String getDescription() {
+    return "Steady-State Genetic Algorithm" ;
+  }
 }

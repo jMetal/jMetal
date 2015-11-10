@@ -220,4 +220,12 @@ public class SMSEMOA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
     }
     return contributions;
   }
+
+  @Override public String getName() {
+    return "SMSEMOA" ;
+  }
+
+  @Override public String getDescription() {
+    return "S metric selection EMOA" ;
+  }
 }

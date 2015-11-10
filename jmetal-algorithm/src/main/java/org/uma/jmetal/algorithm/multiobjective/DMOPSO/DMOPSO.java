@@ -506,4 +506,12 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
   public List<DoubleSolution> getResult() {
     return Arrays.asList(globalBest) ;
   }
+
+  @Override public String getName() {
+    return "dMOPSO" ;
+  }
+
+  @Override public String getDescription() {
+    return "MOPSO with decomposition" ;
+  }
 }

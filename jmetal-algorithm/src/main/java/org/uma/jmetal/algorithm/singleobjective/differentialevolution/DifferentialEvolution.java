@@ -143,4 +143,12 @@ public class DifferentialEvolution extends AbstractDifferentialEvolution<DoubleS
 
     return getPopulation().get(0);
   }
+
+  @Override public String getName() {
+    return "DE" ;
+  }
+
+  @Override public String getDescription() {
+    return "Differential Evolution Algorithm" ;
+  }
 }

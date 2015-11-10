@@ -47,4 +47,12 @@ public class SteadyStateNSGAII<S extends Solution<?>> extends NSGAII<S> {
     offspringPopulation.add(offspring.get(0));
     return offspringPopulation;
   }
+
+  @Override public String getName() {
+    return "ssNSGAII" ;
+  }
+
+  @Override public String getDescription() {
+    return "Nondominated Sorting Genetic Algorithm version II. Steady-state version" ;
+  }
 }

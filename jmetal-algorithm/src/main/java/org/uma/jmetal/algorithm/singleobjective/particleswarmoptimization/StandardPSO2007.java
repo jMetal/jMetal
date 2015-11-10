@@ -287,4 +287,12 @@ public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSol
   public DoubleSolution[] getLocalBest() {
     return localBest ;
   }
+
+  @Override public String getName() {
+    return "SPSO07" ;
+  }
+
+  @Override public String getDescription() {
+    return "Standard PSO 2007" ;
+  }
 }

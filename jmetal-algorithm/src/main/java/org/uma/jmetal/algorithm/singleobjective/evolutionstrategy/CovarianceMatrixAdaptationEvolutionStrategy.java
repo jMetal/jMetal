@@ -547,4 +547,12 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
     }
   }
 
+  @Override public String getName() {
+    return "CMAES" ;
+  }
+
+  @Override public String getDescription() {
+    return "Covariance Matrix Adaptation Evolution Strategy" ;
+  }
+
 }

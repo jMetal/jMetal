@@ -116,4 +116,11 @@ public class SPEA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
     return archive;
   }
 
+  @Override public String getName() {
+    return "SPEA2" ;
+  }
+
+  @Override public String getDescription() {
+    return "Strength Pareto. Evolutionary Algorithm" ;
+  }
 }

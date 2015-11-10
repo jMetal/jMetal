@@ -133,4 +133,12 @@ public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
   protected List<S> getNonDominatedSolutions(List<S> solutionList) {
     return SolutionListUtils.getNondominatedSolutions(solutionList);
   }
+
+  @Override public String getName() {
+    return "NSGAII" ;
+  }
+
+  @Override public String getDescription() {
+    return "Nondominated Sorting Genetic Algorithm version II" ;
+  }
 }

@@ -21,6 +21,8 @@
 
 package org.uma.jmetal.util.experiment.impl;
 
+import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.experiment.ExperimentComponent;
@@ -44,7 +46,13 @@ public class AlgorithmExecution implements ExperimentComponent {
     JMetalLogger.logger.info("ExperimentExecution: Preparing output directory");
     prepareOutputDirectory() ;
 
-
+    for (Algorithm algorithm : configuration.getAlgorithmList()) {
+      for (Problem problem : configuration.getProblemList()) {
+        for (int i = 0; i < configuration.getIndependentRuns(); i++) {
+          System.out.println(algorithm.getName() + " | " + problem.getName() + " | " + i) ;
+        }
+      }
+    }
 
 /*
     parallelExecutor.start(this);

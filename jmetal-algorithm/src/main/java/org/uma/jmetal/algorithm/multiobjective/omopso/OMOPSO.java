@@ -260,4 +260,13 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
   protected void tearDown() {
     evaluator.shutdown();
   }
+
+  @Override public String getName() {
+    return "OMOPSO" ;
+  }
+
+  @Override public String getDescription() {
+    return "Optimized MOPSO" ;
+  }
+
 }

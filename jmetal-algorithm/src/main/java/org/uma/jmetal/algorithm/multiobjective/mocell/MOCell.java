@@ -187,4 +187,12 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
       archive.add(offspringPopulation.get(0));
     }
   }
+
+  @Override public String getName() {
+    return "MOCell" ;
+  }
+
+  @Override public String getDescription() {
+    return "Multi-Objective Cellular evolutionry algorithm" ;
+  }
 }

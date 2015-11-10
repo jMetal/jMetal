@@ -119,4 +119,12 @@ public class NonElitistEvolutionStrategy<S extends Solution<?>> extends Abstract
   @Override public S getResult() {
     return getPopulation().get(0);
   }
+
+  @Override public String getName() {
+    return "NonElitistEA" ;
+  }
+
+  @Override public String getDescription() {
+    return "Non Elitist Evolution Strategy Algorithm, i.e, (mu , lambda) EA" ;
+  }
 }

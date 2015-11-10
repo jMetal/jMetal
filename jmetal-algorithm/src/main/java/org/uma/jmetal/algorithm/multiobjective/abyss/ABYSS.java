@@ -490,5 +490,13 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
       getPopulation().add(solution);
     }
   }
+
+  @Override public String getName() {
+    return "AbYSS" ;
+  }
+
+  @Override public String getDescription() {
+    return "Archived based hYbrid Scatter Search Algorithm" ;
+  }
 }
 

@@ -12,6 +12,7 @@ import org.uma.jmetal.util.experiment.ExperimentConfigurationBuilder;
 import org.uma.jmetal.util.experiment.ExperimentalStudy;
 import org.uma.jmetal.util.experiment.impl.AlgorithmExecution;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.List;
  * Created by ajnebro on 22/3/15.
  */
 public class NSGAIIStudy  {
-  public NSGAIIStudy() {
+  public static void main(String[] args) {
     List<Problem<DoubleSolution>> problemList = Arrays.<Problem<DoubleSolution>>asList(new ZDT1(), new ZDT2(),
         new ZDT3(), new ZDT4(), new ZDT6()) ;
 
@@ -29,7 +30,7 @@ public class NSGAIIStudy  {
     ExperimentConfiguration<DoubleSolution> configuration = new ExperimentConfigurationBuilder<DoubleSolution>("Experiment")
         .setAlgorithmList(algorithmList)
         .setProblemList(problemList)
-        .setExperimentBaseDirectory("/Users/antelverde/Softw/jMetal/jMetalGitHub/pruebas")
+        .setExperimentBaseDirectory("/Users/ajnebro/Softw/tmp/pruebas2")
         .setOutputParetoFrontFileName("FUN")
         .setOutputParetoSetFileName("VAR")
         .setIndependentRuns(4)
@@ -45,8 +46,7 @@ public class NSGAIIStudy  {
   }
 
 
-
-  List<Algorithm<List<DoubleSolution>>> configureAlgorithmList(List<Problem<DoubleSolution>> problemList) {
+  static List<Algorithm<List<DoubleSolution>>> configureAlgorithmList(List<Problem<DoubleSolution>> problemList) {
     List<Algorithm<List<DoubleSolution>>> algorithms = new ArrayList<>() ;
     for (int i = 0 ; i < problemList.size(); i++) {
       algorithms.add(

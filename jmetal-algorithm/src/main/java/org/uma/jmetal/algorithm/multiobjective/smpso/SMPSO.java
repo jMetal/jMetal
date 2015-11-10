@@ -301,4 +301,12 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
   private double inertiaWeight(int iter, int miter, double wma, double wmin) {
     return wma;
   }
+
+  @Override public String getName() {
+    return "SMPSO" ;
+  }
+
+  @Override public String getDescription() {
+    return "Speed contrained Multiobjective PSO" ;
+  }
 }

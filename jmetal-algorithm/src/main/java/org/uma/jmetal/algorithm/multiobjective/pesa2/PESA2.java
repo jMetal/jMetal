@@ -122,4 +122,12 @@ public class PESA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
   @Override public List<S> getResult() {
     return archive.getSolutionList();
   }
+
+  @Override public String getName() {
+    return "PESA2" ;
+  }
+
+  @Override public String getDescription() {
+    return "Pareto Envelope-based Selection Algorithm " ;
+  }
 }
