@@ -46,8 +46,6 @@ public class NSGAIIStudy  {
     study.run() ;
   }
 
-
-
   static List<TaggedAlgorithm<List<DoubleSolution>>> configureAlgorithmList(List<Problem<DoubleSolution>> problemList) {
     List<TaggedAlgorithm<List<DoubleSolution>>> algorithms = new ArrayList<>() ;
 
