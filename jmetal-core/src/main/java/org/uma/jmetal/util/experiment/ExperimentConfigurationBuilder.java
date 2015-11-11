@@ -34,9 +34,9 @@ import java.util.List;
  *
  * Class for describing the configuration of a jMetal experiment
  */
-public class ExperimentConfigurationBuilder<S extends Solution<?>> {
+public class ExperimentConfigurationBuilder<S extends Solution<?>, Result> {
   private final String experimentName ;
-  private List<TaggedAlgorithm<?>> algorithmList;
+  private List<TaggedAlgorithm<Result>> algorithmList;
   private List<Problem<S>> problemList;
   private String experimentBaseDirectory;
   private String outputParetoFrontFileName;
@@ -47,44 +47,44 @@ public class ExperimentConfigurationBuilder<S extends Solution<?>> {
     this.experimentName = experimentName ;
   }
 
-  public ExperimentConfigurationBuilder<S> setAlgorithmList(List<? extends TaggedAlgorithm<?>> algorithmList) {
+  public ExperimentConfigurationBuilder<S, Result> setAlgorithmList(List<TaggedAlgorithm<Result>> algorithmList) {
     this.algorithmList = new ArrayList<>(algorithmList) ;
 
     return this ;
   }
 
-  public ExperimentConfigurationBuilder<S> setProblemList(List<Problem<S>> problemList) {
+  public ExperimentConfigurationBuilder<S, Result> setProblemList(List<Problem<S>> problemList) {
     this.problemList = new ArrayList<>(problemList) ;
 
     return this ;
   }
 
-  public ExperimentConfigurationBuilder<S> setExperimentBaseDirectory(String experimentBaseDirectory) {
+  public ExperimentConfigurationBuilder<S, Result> setExperimentBaseDirectory(String experimentBaseDirectory) {
     this.experimentBaseDirectory = experimentBaseDirectory+"/"+experimentName ;
 
     return this ;
   }
 
-  public ExperimentConfigurationBuilder<S> setOutputParetoFrontFileName(String outputParetoFrontFileName) {
+  public ExperimentConfigurationBuilder<S, Result> setOutputParetoFrontFileName(String outputParetoFrontFileName) {
     this.outputParetoFrontFileName = outputParetoFrontFileName ;
 
     return this ;
   }
 
-  public ExperimentConfigurationBuilder<S> setOutputParetoSetFileName(String outputParetoSetFileName) {
+  public ExperimentConfigurationBuilder<S, Result> setOutputParetoSetFileName(String outputParetoSetFileName) {
     this.outputParetoSetFileName = outputParetoSetFileName ;
 
     return this ;
   }
 
-  public ExperimentConfigurationBuilder<S> setIndependentRuns(int independentRuns) {
+  public ExperimentConfigurationBuilder<S, Result> setIndependentRuns(int independentRuns) {
     this.independentRuns = independentRuns ;
 
     return this ;
   }
 
-  public ExperimentConfiguration<S> build() {
-    return new ExperimentConfiguration<S>(this);
+  public ExperimentConfiguration<S, Result> build() {
+    return new ExperimentConfiguration<S, Result>(this);
   }
 
   /* Getters */
@@ -92,7 +92,7 @@ public class ExperimentConfigurationBuilder<S extends Solution<?>> {
     return experimentName;
   }
 
-  public List<TaggedAlgorithm<?>> getAlgorithmList() {
+  public List<TaggedAlgorithm<Result>> getAlgorithmList() {
     return algorithmList;
   }
 

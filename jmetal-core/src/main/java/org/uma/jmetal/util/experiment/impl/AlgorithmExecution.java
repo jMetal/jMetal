@@ -23,22 +23,28 @@ package org.uma.jmetal.util.experiment.impl;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.experiment.ExperimentComponent;
 import org.uma.jmetal.util.experiment.ExperimentConfiguration;
+import org.uma.jmetal.util.experiment.util.MultithreadedExperimentExecutor;
 import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
+import org.uma.jmetal.util.parallel.SynchronousParallelTaskExecutor;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * Created by Antonio J. Nebro on 18/07/14.
  */
-public class AlgorithmExecution implements ExperimentComponent {
-  private ExperimentConfiguration<?> configuration ;
+public class AlgorithmExecution<S extends Solution<?>, Result> implements ExperimentComponent {
+  private ExperimentConfiguration<S, Result> configuration ;
 
   /** Constructor */
-  public AlgorithmExecution(ExperimentConfiguration<?> configuration) {
+  public AlgorithmExecution(ExperimentConfiguration<S, Result> configuration) {
     this.configuration = configuration ;
   }
 
@@ -47,17 +53,25 @@ public class AlgorithmExecution implements ExperimentComponent {
     JMetalLogger.logger.info("ExperimentExecution: Preparing output directory");
     prepareOutputDirectory() ;
 
-    for (TaggedAlgorithm algorithm : configuration.getAlgorithmList()) {
-      for (Problem problem : configuration.getProblemList()) {
+    MultithreadedExperimentExecutor<S, Result> parallelExecutor ;
+    parallelExecutor = new MultithreadedExperimentExecutor<S, Result>(2) ;
+    parallelExecutor.start(this);
+
+
+    for (TaggedAlgorithm<Result> algorithm : configuration.getAlgorithmList()) {
         for (int i = 0; i < configuration.getIndependentRuns(); i++) {
-          System.out.println(algorithm.getTag() + " | " + problem.getName() + " | " + i) ;
-        }
+          //System.out.println(algorithm.getTag() + " | " + algorithm.getProblem().getName() + " | " + i) ;
+          //AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+          //    .execute();
+          //Result population = algorithm.getResult() ;
+          parallelExecutor.addTask(new Object[]{algorithm, i, configuration});
       }
     }
 
-/*
-    parallelExecutor.start(this);
+    parallelExecutor.parallelExecution();
+    parallelExecutor.stop();
 
+/*
     for (String algorithm : experimentData.getAlgorithmNameList()) {
       for (String problem : experimentData.getProblemList()) {
         for (int i = 0; i < experimentData.getIndependentRuns(); i++) {

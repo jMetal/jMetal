@@ -33,9 +33,9 @@ import java.util.List;
  * 
  * Class for describing the configuration of a jMetal experiment
  */
-public class ExperimentConfiguration<S extends Solution<?>> {
+public class ExperimentConfiguration<S extends Solution<?>, Result> {
 	private String experimentName;
-	private List<TaggedAlgorithm<?>> algorithmList;
+	private List<TaggedAlgorithm<Result>> algorithmList;
 	private List<Problem<S>> problemList;
 	private String experimentBaseDirectory;
 
@@ -44,7 +44,7 @@ public class ExperimentConfiguration<S extends Solution<?>> {
 	private int independentRuns;
 
 	/** Constructor */
-	public ExperimentConfiguration(ExperimentConfigurationBuilder<S> builder) {
+	public ExperimentConfiguration(ExperimentConfigurationBuilder<S, Result> builder) {
 		experimentName = builder.getExperimentName() ;
     this.experimentBaseDirectory = builder.getExperimentBaseDirectory() ;
     this.algorithmList = builder.getAlgorithmList() ;
@@ -59,7 +59,7 @@ public class ExperimentConfiguration<S extends Solution<?>> {
     return experimentName;
   }
 
-  public List<TaggedAlgorithm<?>> getAlgorithmList() {
+  public List<TaggedAlgorithm<Result>> getAlgorithmList() {
     return algorithmList;
   }
 

@@ -1,23 +1,25 @@
 package org.uma.jmetal.util.experiment.util;
 
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.problem.Problem;
 
 /**
  * Created by ajnebro on 10/11/15.
  */
 public class TaggedAlgorithm<Result> implements Algorithm<Result> {
-  protected Algorithm<Result> algorithm ;
+  private Algorithm<Result> algorithm ;
+  private Problem<?> problem ;
 
   private String tag ;
 
-  public TaggedAlgorithm (Algorithm<Result> algorithm) {
-    this.algorithm = algorithm ;
-    tag = algorithm.getName() ;
+  public TaggedAlgorithm (Algorithm<Result> algorithm, Problem<?> problem) {
+    this(algorithm, algorithm.getName(), problem) ;
   }
 
-  public TaggedAlgorithm (Algorithm<Result> algorithm, String tag) {
+  public TaggedAlgorithm (Algorithm<Result> algorithm, String tag, Problem<?> problem) {
     this.algorithm = algorithm ;
     this.tag = tag ;
+    this.problem = problem ;
   }
 
   @Override
@@ -46,5 +48,13 @@ public class TaggedAlgorithm<Result> implements Algorithm<Result> {
 
   public void setTag(String tag) {
     this.tag = tag ;
+  }
+
+  public Problem<?> getProblem() {
+    return problem ;
+  }
+
+  public void setProblem(Problem<?> problem) {
+    this.problem = problem ;
   }
 }

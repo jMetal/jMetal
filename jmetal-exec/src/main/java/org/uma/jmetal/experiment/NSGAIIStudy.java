@@ -28,16 +28,18 @@ public class NSGAIIStudy  {
 
     List<TaggedAlgorithm<List<DoubleSolution>>> algorithmList = configureAlgorithmList(problemList) ;
 
-    ExperimentConfiguration<DoubleSolution> configuration = new ExperimentConfigurationBuilder<DoubleSolution>("Experiment")
+    ExperimentConfiguration<DoubleSolution, List<DoubleSolution>> configuration =
+        new ExperimentConfigurationBuilder<DoubleSolution, List<DoubleSolution>>("Experiment")
         .setAlgorithmList(algorithmList)
         .setProblemList(problemList)
-        .setExperimentBaseDirectory("/Users/ajnebro/Softw/tmp/pruebas2")
+        .setExperimentBaseDirectory("/Users/ajnebro/Softw/tmp/pruebas")
         .setOutputParetoFrontFileName("FUN")
         .setOutputParetoSetFileName("VAR")
-        .setIndependentRuns(4)
+        .setIndependentRuns(2)
         .build();
 
-    AlgorithmExecution algorithmExecution = new AlgorithmExecution(configuration) ;
+    AlgorithmExecution<DoubleSolution, List<DoubleSolution>> algorithmExecution =
+        new AlgorithmExecution<DoubleSolution, List<DoubleSolution>>(configuration) ;
 
     ExperimentalStudy study = new ExperimentalStudy.Builder(configuration)
         .addExperiment(algorithmExecution)
@@ -53,21 +55,21 @@ public class NSGAIIStudy  {
       Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(problemList.get(i), new SBXCrossover(1.0, 20.0),
           new PolynomialMutation(1.0/problemList.get(i).getNumberOfVariables(), 20.0))
           .build() ;
-      algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, "NSGAIIa")) ;
+      algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, "NSGAIIa", problemList.get(i))) ;
     }
 
     for (int i = 0 ; i < problemList.size(); i++) {
       Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(problemList.get(i), new SBXCrossover(1.0, 10.0),
           new PolynomialMutation(1.0/problemList.get(i).getNumberOfVariables(), 20.0))
           .build() ;
-      algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, "NSGAIIb")) ;
+      algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, "NSGAIIb", problemList.get(i))) ;
     }
 
     for (int i = 0 ; i < problemList.size(); i++) {
       Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(problemList.get(i), new SBXCrossover(1.0, 50.0),
           new PolynomialMutation(1.0/problemList.get(i).getNumberOfVariables(), 20.0))
           .build() ;
-      algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, "NSGAIIc")) ;
+      algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, "NSGAIIc", problemList.get(i))) ;
     }
 
     return algorithms ;

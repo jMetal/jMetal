@@ -32,16 +32,18 @@ public class ZDTStudy {
 
     List<TaggedAlgorithm<List<DoubleSolution>>> algorithmList = configureAlgorithmList(problemList) ;
 
-    ExperimentConfiguration<DoubleSolution> configuration = new ExperimentConfigurationBuilder<DoubleSolution>("ZDTStudy")
-        .setAlgorithmList(algorithmList)
-        .setProblemList(problemList)
-        .setExperimentBaseDirectory("/Users/ajnebro/Softw/tmp")
-        .setOutputParetoFrontFileName("FUN")
-        .setOutputParetoSetFileName("VAR")
-        .setIndependentRuns(4)
-        .build();
+    ExperimentConfiguration<DoubleSolution, List<DoubleSolution>> configuration =
+        new ExperimentConfigurationBuilder<DoubleSolution, List<DoubleSolution>>("ZDTStudy")
+            .setAlgorithmList(algorithmList)
+            .setProblemList(problemList)
+            .setExperimentBaseDirectory("/Users/ajnebro/Softw/tmp/pruebas2")
+            .setOutputParetoFrontFileName("FUN")
+            .setOutputParetoSetFileName("VAR")
+            .setIndependentRuns(4)
+            .build();
 
-    AlgorithmExecution algorithmExecution = new AlgorithmExecution(configuration) ;
+    AlgorithmExecution<DoubleSolution, List<DoubleSolution>> algorithmExecution =
+        new AlgorithmExecution<DoubleSolution, List<DoubleSolution>>(configuration) ;
 
     ExperimentalStudy study = new ExperimentalStudy.Builder(configuration)
         .addExperiment(algorithmExecution)
@@ -57,21 +59,21 @@ public class ZDTStudy {
       Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<DoubleSolution>(problemList.get(i), new SBXCrossover(1.0, 20.0),
           new PolynomialMutation(1.0/problemList.get(i).getNumberOfVariables(), 20.0))
           .build() ;
-      algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm)) ;
+      algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, problemList.get(i))) ;
     }
 
     for (int i = 0 ; i < problemList.size(); i++) {
       Algorithm<List<DoubleSolution>> algorithm = new SPEA2Builder<DoubleSolution>(problemList.get(i), new SBXCrossover(1.0, 10.0),
           new PolynomialMutation(1.0/problemList.get(i).getNumberOfVariables(), 20.0))
           .build() ;
-      algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm)) ;
+      algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, problemList.get(i))) ;
     }
 
     for (int i = 0 ; i < problemList.size(); i++) {
       Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder((DoubleProblem)problemList.get(i),
           new CrowdingDistanceArchive<DoubleSolution>(100))
           .build() ;
-      algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm)) ;
+      algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, problemList.get(i))) ;
     }
 
     return algorithms ;
