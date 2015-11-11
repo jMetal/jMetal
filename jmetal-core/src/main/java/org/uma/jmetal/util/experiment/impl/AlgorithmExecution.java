@@ -54,7 +54,7 @@ public class AlgorithmExecution<S extends Solution<?>, Result> implements Experi
     prepareOutputDirectory() ;
 
     MultithreadedExperimentExecutor<S, Result> parallelExecutor ;
-    parallelExecutor = new MultithreadedExperimentExecutor<S, Result>(2) ;
+    parallelExecutor = new MultithreadedExperimentExecutor<S, Result>(configuration.getNumberOfCores()) ;
     parallelExecutor.start(this);
 
 

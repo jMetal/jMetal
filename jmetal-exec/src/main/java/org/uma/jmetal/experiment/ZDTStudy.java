@@ -36,10 +36,11 @@ public class ZDTStudy {
         new ExperimentConfigurationBuilder<DoubleSolution, List<DoubleSolution>>("ZDTStudy")
             .setAlgorithmList(algorithmList)
             .setProblemList(problemList)
-            .setExperimentBaseDirectory("/Users/ajnebro/Softw/tmp/pruebas2")
+            .setExperimentBaseDirectory("/Users/ajnebro/Softw/tmp/pruebas")
             .setOutputParetoFrontFileName("FUN")
             .setOutputParetoSetFileName("VAR")
-            .setIndependentRuns(4)
+            .setIndependentRuns(2)
+            .setNumberOfCores(8)
             .build();
 
     AlgorithmExecution<DoubleSolution, List<DoubleSolution>> algorithmExecution =

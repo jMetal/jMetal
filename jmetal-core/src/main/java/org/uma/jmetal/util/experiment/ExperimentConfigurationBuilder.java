@@ -43,8 +43,12 @@ public class ExperimentConfigurationBuilder<S extends Solution<?>, Result> {
   private String outputParetoSetFileName;
   private int independentRuns;
 
+  private int numberOfCores ;
+
   public ExperimentConfigurationBuilder(String experimentName) {
     this.experimentName = experimentName ;
+    this.independentRuns = 1 ;
+    this.numberOfCores = 1 ;
   }
 
   public ExperimentConfigurationBuilder<S, Result> setAlgorithmList(List<TaggedAlgorithm<Result>> algorithmList) {
@@ -83,6 +87,12 @@ public class ExperimentConfigurationBuilder<S extends Solution<?>, Result> {
     return this ;
   }
 
+  public ExperimentConfigurationBuilder<S, Result> setNumberOfCores(int numberOfCores) {
+    this.numberOfCores = numberOfCores;
+
+    return this ;
+  }
+
   public ExperimentConfiguration<S, Result> build() {
     return new ExperimentConfiguration<S, Result>(this);
   }
@@ -114,5 +124,9 @@ public class ExperimentConfigurationBuilder<S extends Solution<?>, Result> {
 
   public int getIndependentRuns() {
     return independentRuns;
+  }
+
+  public int getNumberOfCores() {
+    return numberOfCores;
   }
 }

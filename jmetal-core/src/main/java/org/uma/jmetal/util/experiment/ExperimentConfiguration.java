@@ -43,6 +43,8 @@ public class ExperimentConfiguration<S extends Solution<?>, Result> {
 	private String outputParetoSetFileName;
 	private int independentRuns;
 
+  private int numberOfCores ;
+
 	/** Constructor */
 	public ExperimentConfiguration(ExperimentConfigurationBuilder<S, Result> builder) {
 		experimentName = builder.getExperimentName() ;
@@ -52,6 +54,7 @@ public class ExperimentConfiguration<S extends Solution<?>, Result> {
     this.independentRuns = builder.getIndependentRuns() ;
     this.outputParetoFrontFileName = builder.getOutputParetoFrontFileName() ;
     this.outputParetoSetFileName = builder.getOutputParetoSetFileName() ;
+    this.numberOfCores = builder.getNumberOfCores() ;
   }
 
   /* Getters */
@@ -81,5 +84,9 @@ public class ExperimentConfiguration<S extends Solution<?>, Result> {
 
   public int getIndependentRuns() {
     return independentRuns;
+  }
+
+  public int getNumberOfCores() {
+    return numberOfCores ;
   }
 }

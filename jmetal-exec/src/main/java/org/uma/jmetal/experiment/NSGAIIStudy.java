@@ -30,13 +30,14 @@ public class NSGAIIStudy  {
 
     ExperimentConfiguration<DoubleSolution, List<DoubleSolution>> configuration =
         new ExperimentConfigurationBuilder<DoubleSolution, List<DoubleSolution>>("Experiment")
-        .setAlgorithmList(algorithmList)
-        .setProblemList(problemList)
-        .setExperimentBaseDirectory("/Users/ajnebro/Softw/tmp/pruebas")
-        .setOutputParetoFrontFileName("FUN")
-        .setOutputParetoSetFileName("VAR")
-        .setIndependentRuns(2)
-        .build();
+            .setAlgorithmList(algorithmList)
+            .setProblemList(problemList)
+            .setExperimentBaseDirectory("/Users/ajnebro/Softw/tmp/pruebas")
+            .setOutputParetoFrontFileName("FUN")
+            .setOutputParetoSetFileName("VAR")
+            .setIndependentRuns(2)
+            .setNumberOfCores(8)
+            .build();
 
     AlgorithmExecution<DoubleSolution, List<DoubleSolution>> algorithmExecution =
         new AlgorithmExecution<DoubleSolution, List<DoubleSolution>>(configuration) ;
