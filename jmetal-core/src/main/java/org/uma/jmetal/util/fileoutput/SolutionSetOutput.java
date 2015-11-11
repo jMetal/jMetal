@@ -72,7 +72,7 @@ public class SolutionSetOutput {
     printVariablesToFile(varFileContext, solutionSet);
   }
 
-  static public void printVariablesToFile(FileOutputContext context, List<? extends Solution<?>> solutionSet) {
+  public void printVariablesToFile(FileOutputContext context, List<? extends Solution<?>> solutionSet) {
     BufferedWriter bufferedWriter = context.getFileWriter();
 
     int numberOfVariables = solutionSet.get(0).getNumberOfVariables();
@@ -89,7 +89,7 @@ public class SolutionSetOutput {
     }
   }
 
-  static public void printObjectivesToFile(FileOutputContext context, List<? extends Solution<?>> solutionSet) {
+  static void printObjectivesToFile(FileOutputContext context, List<? extends Solution<?>> solutionSet) {
     BufferedWriter bufferedWriter = context.getFileWriter();
 
     int numberOfObjectives = solutionSet.get(0).getNumberOfObjectives();
@@ -109,11 +109,11 @@ public class SolutionSetOutput {
   /*
    * Wrappers for printing with default configuration
    */
-  public static void printObjectivesToFile(List<? extends Solution<?>> solutionSet, String fileName) throws IOException {
+  public void printObjectivesToFile(List<? extends Solution<?>> solutionSet, String fileName) throws IOException {
     printObjectivesToFile(new DefaultFileOutputContext(fileName), solutionSet);
   }
 
-  public static void printVariablesToFile(List<? extends Solution<?>> solutionSet, String fileName) throws IOException {
+  public void printVariablesToFile(List<? extends Solution<?>> solutionSet, String fileName) throws IOException {
     printVariablesToFile(new DefaultFileOutputContext(fileName), solutionSet);
   }
 

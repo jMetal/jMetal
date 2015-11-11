@@ -39,8 +39,8 @@ public class ZDTStudy {
             .setExperimentBaseDirectory("/Users/ajnebro/Softw/tmp/pruebas2")
             .setOutputParetoFrontFileName("FUN")
             .setOutputParetoSetFileName("VAR")
-            .setIndependentRuns(10)
-            .setNumberOfCores(8)
+            .setIndependentRuns(4)
+            .setNumberOfCores(4)
             .build();
 
     AlgorithmExecution<DoubleSolution, List<DoubleSolution>> algorithmExecution =

@@ -19,6 +19,7 @@ class EvaluationTask<S extends Solution<?>, Result> implements Callable<Object> 
   private TaggedAlgorithm<Result> algorithm ;
   private int id;
   private ExperimentConfiguration<?, ?> experimentData ;
+  private String outputDirectoryName ;
 
   /** Constructor */
   public EvaluationTask(TaggedAlgorithm<Result> algorithm, int id, ExperimentConfiguration<?,?> experimentData) {
@@ -27,15 +28,8 @@ class EvaluationTask<S extends Solution<?>, Result> implements Callable<Object> 
     this.algorithm = algorithm ;
     this.id = id;
     this.experimentData = experimentData ;
-  }
 
-  public Integer call() throws Exception {
-    JMetalLogger.logger.info(
-        " Running algorithm: " + algorithm.getTag() +
-            ", problem: " + algorithm.getProblem().getName() +
-            ", run: " + id);
-
-    String outputDirectoryName = experimentData.getExperimentBaseDirectory()
+    outputDirectoryName = experimentData.getExperimentBaseDirectory()
         + "/data/"
         + algorithm.getTag()
         + "/"
@@ -46,15 +40,24 @@ class EvaluationTask<S extends Solution<?>, Result> implements Callable<Object> 
       boolean result = new File(outputDirectoryName).mkdirs();
       JMetalLogger.logger.info("Creating " + outputDirectoryName);
     }
+  }
+
+  public Integer call() throws Exception {
+
+    JMetalLogger.logger.info(
+        " Running algorithm: " + algorithm.getTag() +
+            ", problem: " + algorithm.getProblem().getName() +
+            ", run: " + id);
+
 
     algorithm.run();
 
     Result population = algorithm.getResult() ;
 
-    new SolutionSetOutput((List<? extends Solution<?>>)population)
+    new SolutionSetOutput((List<? extends Solution<?>>) population)
         .setSeparator("\t")
-        .setVarFileOutputContext(new DefaultFileOutputContext(outputDirectoryName+"/VAR" + id+".tsv"))
-        .setFunFileOutputContext(new DefaultFileOutputContext(outputDirectoryName+"/FUN" + id+".tsv"))
+        .setVarFileOutputContext(new DefaultFileOutputContext(outputDirectoryName + "/VAR" + id + ".tsv"))
+        .setFunFileOutputContext(new DefaultFileOutputContext(outputDirectoryName + "/FUN" + id + ".tsv"))
         .print();
 
     return id;
