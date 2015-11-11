@@ -144,17 +144,18 @@ public class MultithreadedExperimentExecutor<S extends Solution<?>, Result>
         JMetalLogger.logger.info("Creating " + outputDirectoryName);
       }
 
-      AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-          .execute();
+      //AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+      //    .execute();
+      algorithm.run();
 
       Result population = algorithm.getResult() ;
-
+/*
       new SolutionSetOutput.Printer((List<? extends Solution<?>>)population)
           .setSeparator("\t")
           .setVarFileOutputContext(new DefaultFileOutputContext(outputDirectoryName+"/VAR" + id+".tsv"))
           .setFunFileOutputContext(new DefaultFileOutputContext(outputDirectoryName+"/FUN" + id+".tsv"))
           .print();
-
+*/
       /*
       Algorithm algorithm;
       Object[] settingsParams = {problemName};

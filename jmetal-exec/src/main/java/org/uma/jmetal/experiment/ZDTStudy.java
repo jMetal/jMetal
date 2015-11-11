@@ -39,7 +39,7 @@ public class ZDTStudy {
             .setExperimentBaseDirectory("/Users/ajnebro/Softw/tmp/pruebas")
             .setOutputParetoFrontFileName("FUN")
             .setOutputParetoSetFileName("VAR")
-            .setIndependentRuns(2)
+            .setIndependentRuns(1)
             .setNumberOfCores(8)
             .build();
 
