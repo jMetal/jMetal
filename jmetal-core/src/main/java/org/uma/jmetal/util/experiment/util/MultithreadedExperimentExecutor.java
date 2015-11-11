@@ -149,13 +149,13 @@ public class MultithreadedExperimentExecutor<S extends Solution<?>, Result>
       algorithm.run();
 
       Result population = algorithm.getResult() ;
-/*
+
       new SolutionSetOutput.Printer((List<? extends Solution<?>>)population)
           .setSeparator("\t")
           .setVarFileOutputContext(new DefaultFileOutputContext(outputDirectoryName+"/VAR" + id+".tsv"))
           .setFunFileOutputContext(new DefaultFileOutputContext(outputDirectoryName+"/FUN" + id+".tsv"))
           .print();
-*/
+
       /*
       Algorithm algorithm;
       Object[] settingsParams = {problemName};
