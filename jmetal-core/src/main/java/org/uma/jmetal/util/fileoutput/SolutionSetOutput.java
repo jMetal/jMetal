@@ -25,54 +25,51 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class SolutionSetOutput {
+  private FileOutputContext varFileContext;
+  private FileOutputContext funFileContext;
+  private String varFileName = "VAR";
+  private String funFileName = "FUN";
+  private String separator = "\t";
+  private List<? extends Solution<?>> solutionSet;
+  private boolean selectFeasibleSolutions;
 
-  public static class Printer {
-    private FileOutputContext varFileContext;
-    private FileOutputContext funFileContext;
-    private String varFileName = "VAR";
-    private String funFileName = "FUN";
-    private String separator = "\t";
-    private List<? extends Solution<?>> solutionSet;
-    private boolean selectFeasibleSolutions;
+  public SolutionSetOutput(List<? extends Solution<?>> solutionSet) {
+    varFileContext = new DefaultFileOutputContext(varFileName);
+    funFileContext = new DefaultFileOutputContext(funFileName);
+    varFileContext.setSeparator(separator);
+    funFileContext.setSeparator(separator);
+    this.solutionSet = solutionSet;
+    selectFeasibleSolutions = false;
+  }
 
-    public Printer(List<? extends Solution<?>> solutionSet)  {
-      varFileContext = new DefaultFileOutputContext(varFileName);
-      funFileContext = new DefaultFileOutputContext(funFileName);
-      varFileContext.setSeparator(separator);
-      funFileContext.setSeparator(separator);
-      this.solutionSet = solutionSet;
-      selectFeasibleSolutions = false;
-    }
+  public SolutionSetOutput setVarFileOutputContext(FileOutputContext fileContext) {
+    varFileContext = fileContext;
 
-    public Printer setVarFileOutputContext(FileOutputContext fileContext) {
-      varFileContext = fileContext;
+    return this;
+  }
 
-      return this;
-    }
+  public SolutionSetOutput setFunFileOutputContext(FileOutputContext fileContext) {
+    funFileContext = fileContext;
 
-    public Printer setFunFileOutputContext(FileOutputContext fileContext) {
-      funFileContext = fileContext;
+    return this;
+  }
 
-      return this;
-    }
+  public SolutionSetOutput selectFeasibleSolutions() {
+    selectFeasibleSolutions = true ;
+    return this;
+  }
 
-    public Printer selectFeasibleSolutions() {
+  public SolutionSetOutput setSeparator(String separator) {
+    this.separator = separator;
+    varFileContext.setSeparator(this.separator);
+    funFileContext.setSeparator(this.separator);
 
-      return this;
-    }
+    return this;
+  }
 
-    public Printer setSeparator(String separator) {
-      this.separator = separator;
-      varFileContext.setSeparator(this.separator);
-      funFileContext.setSeparator(this.separator);
-
-      return this;
-    }
-
-    public void print()  {
-        printObjectivesToFile(funFileContext, solutionSet);
-        printVariablesToFile(varFileContext, solutionSet);
-    }
+  public void print()  {
+    printObjectivesToFile(funFileContext, solutionSet);
+    printVariablesToFile(varFileContext, solutionSet);
   }
 
   static public void printVariablesToFile(FileOutputContext context, List<? extends Solution<?>> solutionSet) {

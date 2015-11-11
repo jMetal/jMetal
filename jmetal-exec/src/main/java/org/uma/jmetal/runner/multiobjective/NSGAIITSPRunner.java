@@ -85,7 +85,7 @@ public class NSGAIITSPRunner extends AbstractAlgorithmRunner {
     List<PermutationSolution<Integer>> population = algorithm.getResult() ;
     long computingTime = algorithmRunner.getComputingTime() ;
 
-    new SolutionSetOutput.Printer(population)
+    new SolutionSetOutput(population)
             .setSeparator("\t")
             .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
             .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))

@@ -87,7 +87,7 @@ public class DifferentialEvolutionRunner {
 
     List<DoubleSolution> population = new ArrayList<>(1) ;
     population.add(solution) ;
-    new SolutionSetOutput.Printer(population)
+    new SolutionSetOutput(population)
         .setSeparator("\t")
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
         .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))

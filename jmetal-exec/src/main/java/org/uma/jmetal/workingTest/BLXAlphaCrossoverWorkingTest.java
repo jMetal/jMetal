@@ -61,7 +61,7 @@ public class BLXAlphaCrossoverWorkingTest {
 
     Collections.sort(population, new VariableComparator()) ;
 
-    new SolutionSetOutput.Printer(population)
+    new SolutionSetOutput(population)
         .setSeparator("\t")
         .setVarFileOutputContext(new DefaultFileOutputContext("solutionsBLXAlpha"))
         .print();

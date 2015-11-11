@@ -51,7 +51,7 @@ class EvaluationTask<S extends Solution<?>, Result> implements Callable<Object> 
 
     Result population = algorithm.getResult() ;
 
-    new SolutionSetOutput.Printer((List<? extends Solution<?>>)population)
+    new SolutionSetOutput((List<? extends Solution<?>>)population)
         .setSeparator("\t")
         .setVarFileOutputContext(new DefaultFileOutputContext(outputDirectoryName+"/VAR" + id+".tsv"))
         .setFunFileOutputContext(new DefaultFileOutputContext(outputDirectoryName+"/FUN" + id+".tsv"))

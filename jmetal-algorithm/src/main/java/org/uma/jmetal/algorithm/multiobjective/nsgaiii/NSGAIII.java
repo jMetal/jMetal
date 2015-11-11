@@ -33,7 +33,7 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
 
   private Vector<Integer> numberOfDivisions  ;
   private List<ReferencePoint<S>> referencePoints = new Vector<>() ;
-  
+
   public NSGAIIIBuilder<S> Builder;
 
   /** Constructor */
@@ -52,12 +52,12 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
     numberOfDivisions.add(12) ; // Default value for 3D problems
 
     (new ReferencePoint<S>()).generateReferencePoints(referencePoints,getProblem().getNumberOfObjectives() , numberOfDivisions);
-    
+
     populationSize = referencePoints.size();
     System.out.println(referencePoints.size());
     while (populationSize%4>0) populationSize++;
 
-    
+
     JMetalLogger.logger.info("rpssize: " + referencePoints.size()); ;
   }
 
