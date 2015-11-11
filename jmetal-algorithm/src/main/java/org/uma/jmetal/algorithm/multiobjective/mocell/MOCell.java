@@ -27,7 +27,6 @@ import java.util.*;
 public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>> {
   protected int evaluations;
   protected int maxEvaluations;
-  protected int populationSize;
   protected int archiveSize;
   protected final SolutionListEvaluator<S> evaluator;
 
@@ -58,7 +57,7 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
       SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator) {
     super(problem);
     this.maxEvaluations = maxEvaluations;
-    this.populationSize = populationSize;
+    setMaxPopulationSize(populationSize);
     this.archiveSize = archiveSize ;
     this.archive = new CrowdingDistanceArchive<>(archiveSize);
     this.neighborhood = neighborhood ;
@@ -80,7 +79,7 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
   @Override
   protected void updateProgress() {
     evaluations++;
-    currentIndividual=(currentIndividual+1)%populationSize;
+    currentIndividual=(currentIndividual+1)%getMaxPopulationSize();
   }
 
   @Override
@@ -90,8 +89,8 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
 
   @Override
   protected List<S> createInitialPopulation() {
-    List<S> population = new ArrayList<>(populationSize);
-    for (int i = 0; i < populationSize; i++) {
+    List<S> population = new ArrayList<>(getMaxPopulationSize());
+    for (int i = 0; i < getMaxPopulationSize(); i++) {
       S newIndividual = getProblem().createSolution();
       population.add(newIndividual);
     }

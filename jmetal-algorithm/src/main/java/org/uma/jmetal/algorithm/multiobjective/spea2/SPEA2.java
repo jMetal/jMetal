@@ -31,7 +31,6 @@ import java.util.List;
  **/
 public class SPEA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>> {
   protected final int maxIterations;
-  protected final int populationSize;
   protected final SolutionListEvaluator<S> evaluator;
   protected int iterations;
   protected List<S> archive;
@@ -43,7 +42,7 @@ public class SPEA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
       SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator) {
     super(problem);
     this.maxIterations = maxIterations;
-    this.populationSize = populationSize;
+    this.setMaxPopulationSize(populationSize);
 
     this.crossoverOperator = crossoverOperator;
     this.mutationOperator = mutationOperator;
@@ -78,7 +77,7 @@ public class SPEA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
 
   @Override
   protected List<S> selection(List<S> population) {
-    List<S> union = new ArrayList<>(2*populationSize);
+    List<S> union = new ArrayList<>(2*getMaxPopulationSize());
     union.addAll(archive);
     union.addAll(population);
     strenghtRawFitness.computeDensityEstimator(union);
@@ -88,9 +87,9 @@ public class SPEA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
 
   @Override
   protected List<S> reproduction(List<S> population) {
-    List<S> offSpringPopulation= new ArrayList<>(populationSize);
+    List<S> offSpringPopulation= new ArrayList<>(getMaxPopulationSize());
 
-    while (offSpringPopulation.size() < populationSize){
+    while (offSpringPopulation.size() < getMaxPopulationSize()){
       List<S> parents = new ArrayList<>(2);
       S candidateFirstParent = selectionOperator.execute(population);
       parents.add(candidateFirstParent);

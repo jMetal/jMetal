@@ -27,7 +27,6 @@ import java.util.Vector;
 public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>> {
   protected int iterations ;
   protected int maxIterations ;
-  protected int populationSize ;
 
   protected SolutionListEvaluator<S> evaluator ;
 
@@ -53,10 +52,13 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
 
     (new ReferencePoint<S>()).generateReferencePoints(referencePoints,getProblem().getNumberOfObjectives() , numberOfDivisions);
 
-    populationSize = referencePoints.size();
+    int populationSize = referencePoints.size();
     System.out.println(referencePoints.size());
-    while (populationSize%4>0) populationSize++;
+    while (populationSize%4>0) {
+      populationSize++;
+    }
 
+    setMaxPopulationSize(populationSize);
 
     JMetalLogger.logger.info("rpssize: " + referencePoints.size()); ;
   }
@@ -86,7 +88,7 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
   @Override
   protected List<S> selection(List<S> population) {
     List<S> matingPopulation = new ArrayList<>(population.size()) ;
-    for (int i = 0; i < populationSize; i++) {
+    for (int i = 0; i < getMaxPopulationSize(); i++) {
       S solution = selectionOperator.execute(population);
       matingPopulation.add(solution) ;
     }
@@ -96,8 +98,8 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
 
   @Override
   protected List<S> reproduction(List<S> population) {
-    List<S> offspringPopulation = new ArrayList<>(populationSize);
-    for (int i = 0; i < populationSize; i+=2) {
+    List<S> offspringPopulation = new ArrayList<>(getMaxPopulationSize());
+    for (int i = 0; i < getMaxPopulationSize(); i+=2) {
       List<S> parents = new ArrayList<>(2);
       parents.add(population.get(i));
       parents.add(population.get(i+1));
@@ -136,17 +138,17 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
     List<List<S>> fronts = new ArrayList<>();
     int rankingIndex = 0;
     int candidateSolutions = 0;
-    while (candidateSolutions < populationSize) {
+    while (candidateSolutions < getMaxPopulationSize()) {
       fronts.add(ranking.getSubfront(rankingIndex));
       candidateSolutions += ranking.getSubfront(rankingIndex).size();
-      if ((pop.size() + ranking.getSubfront(rankingIndex).size()) <= populationSize) 
+      if ((pop.size() + ranking.getSubfront(rankingIndex).size()) <= getMaxPopulationSize())
         addRankedSolutionsToPopulation(ranking, rankingIndex, pop);
       rankingIndex++;
     }
     
     // A copy of the reference list should be used as parameter of the environmental selection
     EnvironmentalSelection<S> selection =
-            new EnvironmentalSelection<>(fronts,populationSize,getReferencePointsCopy(),
+            new EnvironmentalSelection<>(fronts,getMaxPopulationSize(),getReferencePointsCopy(),
                     getProblem().getNumberOfObjectives());
     
     pop = selection.execute(pop);
