@@ -35,7 +35,7 @@ public class NSGAIIStudy  {
             .setExperimentBaseDirectory("/Users/ajnebro/Softw/tmp/pruebas")
             .setOutputParetoFrontFileName("FUN")
             .setOutputParetoSetFileName("VAR")
-            .setIndependentRuns(2)
+            .setIndependentRuns(10)
             .setNumberOfCores(8)
             .build();
 
@@ -55,6 +55,8 @@ public class NSGAIIStudy  {
     for (int i = 0 ; i < problemList.size(); i++) {
       Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(problemList.get(i), new SBXCrossover(1.0, 20.0),
           new PolynomialMutation(1.0/problemList.get(i).getNumberOfVariables(), 20.0))
+          .setMaxEvaluations(25000)
+          .setPopulationSize(100)
           .build() ;
       algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, "NSGAIIa", problemList.get(i))) ;
     }
@@ -62,6 +64,8 @@ public class NSGAIIStudy  {
     for (int i = 0 ; i < problemList.size(); i++) {
       Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(problemList.get(i), new SBXCrossover(1.0, 10.0),
           new PolynomialMutation(1.0/problemList.get(i).getNumberOfVariables(), 20.0))
+          .setMaxEvaluations(25000)
+          .setPopulationSize(100)
           .build() ;
       algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, "NSGAIIb", problemList.get(i))) ;
     }
@@ -69,6 +73,8 @@ public class NSGAIIStudy  {
     for (int i = 0 ; i < problemList.size(); i++) {
       Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(problemList.get(i), new SBXCrossover(1.0, 50.0),
           new PolynomialMutation(1.0/problemList.get(i).getNumberOfVariables(), 20.0))
+          .setMaxEvaluations(25000)
+          .setPopulationSize(100)
           .build() ;
       algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, "NSGAIIc", problemList.get(i))) ;
     }

@@ -47,7 +47,6 @@ import java.util.logging.Level;
 public class MultithreadedExperimentExecutor<S extends Solution<?>, Result>
     implements SynchronousParallelTaskExecutor {
   private Collection<EvaluationTask<S,Result>> taskList;
-  private AlgorithmExecution<S, Result> experimentExecution;
   private int numberOfThreads;
   private ExecutorService executor;
 
@@ -65,8 +64,8 @@ public class MultithreadedExperimentExecutor<S extends Solution<?>, Result>
     JMetalLogger.logger.info("THREADS: " + numberOfThreads);
   }
 
-  public void start(Object object) {
-    experimentExecution = (AlgorithmExecution<S, Result>)object ;
+  @Override
+  public void start(Object configuration) {
     executor = Executors.newFixedThreadPool(numberOfThreads);
     JMetalLogger.logger.info("Cores: " + numberOfThreads);
     taskList = null;
@@ -80,7 +79,7 @@ public class MultithreadedExperimentExecutor<S extends Solution<?>, Result>
     TaggedAlgorithm<Result> algorithm = (TaggedAlgorithm<Result>) taskParameters[0];
     Integer id = (Integer) taskParameters[1];
     ExperimentConfiguration<?,?> experimentData = (ExperimentConfiguration<?,?>) taskParameters[2] ;
-    taskList.add(new EvaluationTask(algorithm, id, experimentData));
+    taskList.add(new EvaluationTask<S, Result>(algorithm, id, experimentData));
   }
 
   public Object parallelExecution() {
@@ -91,7 +90,7 @@ public class MultithreadedExperimentExecutor<S extends Solution<?>, Result>
       JMetalLogger.logger.log(Level.SEVERE, "Error", e1);
     }
     List<Object> resultList = new Vector<Object>();
-
+/*
     for (Future<Object> result : future) {
       Object returnValue = null;
       try {
@@ -103,6 +102,7 @@ public class MultithreadedExperimentExecutor<S extends Solution<?>, Result>
         JMetalLogger.logger.log(Level.SEVERE, "Error", e);
       }
     }
+*/
     taskList = null;
     return null;
   }
@@ -110,85 +110,4 @@ public class MultithreadedExperimentExecutor<S extends Solution<?>, Result>
   public void stop() {
     executor.shutdown();
   }
-
-  /** Class defining the tasks to be computed in parallel */
-  private class EvaluationTask<S extends Solution<?>, Result> implements Callable<Object> {
-    private TaggedAlgorithm<Result> algorithm ;
-    private int id;
-    private ExperimentConfiguration<?, ?> experimentData ;
-
-    /** Constructor */
-    public EvaluationTask(TaggedAlgorithm<Result> algorithm, int id, ExperimentConfiguration<?,?> experimentData) {
-      JMetalLogger.logger.info(
-        " Task: " + algorithm.getTag() + ", problem: " + algorithm.getProblem().getName() + ", run: " + id);
-      this.algorithm = algorithm ;
-      this.id = id;
-      this.experimentData = experimentData ;
-    }
-
-    public Integer call() throws Exception {
-      JMetalLogger.logger.info(
-          " Running algorithm: " + algorithm.getTag() +
-              ", problem: " + algorithm.getProblem().getName() +
-              ", run: " + id);
-
-      String outputDirectoryName = experimentData.getExperimentBaseDirectory()
-          + "/data/"
-          + algorithm.getTag()
-          + "/"
-          + algorithm.getProblem().getName() ;
-
-      File outputDirectory = new File(outputDirectoryName);
-      if (!outputDirectory.exists()) {
-        boolean result = new File(outputDirectoryName).mkdirs();
-        JMetalLogger.logger.info("Creating " + outputDirectoryName);
-      }
-
-      //AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-      //    .execute();
-      algorithm.run();
-
-      Result population = algorithm.getResult() ;
-/*
-      new SolutionSetOutput.Printer((List<? extends Solution<?>>)population)
-          .setSeparator("\t")
-          .setVarFileOutputContext(new DefaultFileOutputContext(outputDirectoryName+"/VAR" + id+".tsv"))
-          .setFunFileOutputContext(new DefaultFileOutputContext(outputDirectoryName+"/FUN" + id+".tsv"))
-          .print();
-*/
-      /*
-      Algorithm algorithm;
-      Object[] settingsParams = {problemName};
-      Settings settings;
-
-        settings = (new SettingsFactory()).getSettingsObject(algorithmName, settingsParams);
-        algorithm = settings.configure();
-
-      JMetalLogger.logger.info(
-        " Running algorithm: " + algorithmName + ", problem: " + problemName + ", run: " + id);
-
-      SolutionSet resultFront = algorithm.execute();
-
-      File experimentDirectory;
-      String directory;
-
-      directory =
-        experimentData.getExperimentBaseDirectory() + "/data/" + algorithmName + "/" + problemName;
-
-      experimentDirectory = new File(directory);
-      if (!experimentDirectory.exists()) {
-        boolean result = new File(directory).mkdirs();
-        JMetalLogger.logger.info("Creating " + directory);
-      }
-
-      SolutionSetOutput.printObjectivesToFile(resultFront,
-          directory + "/" + experimentExecution.getParetoFrontFileName() + "." + id);
-      SolutionSetOutput.printVariablesToFile(resultFront,
-          directory + "/" + experimentExecution.getParetoSetFileName() + "." + id);
-*/
-      return id;
-    }
-
-  }
-
 }
