@@ -3,7 +3,6 @@ package org.uma.jmetal.experiment;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
-import org.uma.jmetal.algorithm.multiobjective.spea2.SPEA2;
 import org.uma.jmetal.algorithm.multiobjective.spea2.SPEA2Builder;
 import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
@@ -14,8 +13,7 @@ import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.experiment.ExperimentConfiguration;
 import org.uma.jmetal.util.experiment.ExperimentConfigurationBuilder;
-import org.uma.jmetal.util.experiment.ExperimentalStudy;
-import org.uma.jmetal.util.experiment.impl.AlgorithmExecution;
+import org.uma.jmetal.util.experiment.ExperimentExecution;
 import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
 
 import java.util.ArrayList;
@@ -43,14 +41,17 @@ public class ZDTStudy {
             .setNumberOfCores(8)
             .build();
 
-    AlgorithmExecution<DoubleSolution, List<DoubleSolution>> algorithmExecution =
-        new AlgorithmExecution<DoubleSolution, List<DoubleSolution>>(configuration) ;
+    ExperimentExecution<DoubleSolution, List<DoubleSolution>> algorithmExecution =
+        new ExperimentExecution<DoubleSolution, List<DoubleSolution>>(configuration) ;
 
+    algorithmExecution.run();
+    /*
     ExperimentalStudy study = new ExperimentalStudy.Builder(configuration)
         .addExperiment(algorithmExecution)
         .build() ;
 
     study.run() ;
+    */
   }
 
   static List<TaggedAlgorithm<List<DoubleSolution>>> configureAlgorithmList(List<Problem<DoubleSolution>> problemList) {

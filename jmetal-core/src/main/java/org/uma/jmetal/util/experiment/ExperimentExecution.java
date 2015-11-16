@@ -19,36 +19,27 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-package org.uma.jmetal.util.experiment.impl;
+package org.uma.jmetal.util.experiment;
 
-import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.experiment.ExperimentComponent;
-import org.uma.jmetal.util.experiment.ExperimentConfiguration;
 import org.uma.jmetal.util.experiment.util.MultithreadedExperimentExecutor;
 import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
-import org.uma.jmetal.util.parallel.SynchronousParallelTaskExecutor;
 
 import java.io.File;
-import java.util.List;
 
 /**
  * Created by Antonio J. Nebro on 18/07/14.
  */
-public class AlgorithmExecution<S extends Solution<?>, Result> implements ExperimentComponent {
+public class ExperimentExecution<S extends Solution<?>, Result> {
   private ExperimentConfiguration<S, Result> configuration ;
 
   /** Constructor */
-  public AlgorithmExecution(ExperimentConfiguration<S, Result> configuration) {
+  public ExperimentExecution(ExperimentConfiguration<S, Result> configuration) {
     this.configuration = configuration ;
   }
 
-  @Override
   public void run() {
     JMetalLogger.logger.info("ExperimentExecution: Preparing output directory");
     prepareOutputDirectory() ;

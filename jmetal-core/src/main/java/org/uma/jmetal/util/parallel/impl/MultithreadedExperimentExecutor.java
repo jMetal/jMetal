@@ -23,7 +23,7 @@ package org.uma.jmetal.util.parallel.impl;
 
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.experiment.ExperimentConfiguration;
-import org.uma.jmetal.util.experiment.impl.AlgorithmExecution;
+import org.uma.jmetal.util.experiment.ExperimentExecution;
 import org.uma.jmetal.util.parallel.SynchronousParallelTaskExecutor;
 
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ import java.util.logging.Level;
  */
 public class MultithreadedExperimentExecutor implements SynchronousParallelTaskExecutor {
   private Collection<EvaluationTask> taskList;
-  private AlgorithmExecution experimentExecution;
+  private ExperimentExecution experimentExecution;
   private int numberOfThreads;
   private ExecutorService executor;
 
@@ -58,7 +58,7 @@ public class MultithreadedExperimentExecutor implements SynchronousParallelTaskE
   }
 
   public void start(Object object) {
-    experimentExecution = (AlgorithmExecution)object ;
+    experimentExecution = (ExperimentExecution)object ;
     executor = Executors.newFixedThreadPool(numberOfThreads);
     JMetalLogger.logger.info("Cores: " + numberOfThreads);
     taskList = null;

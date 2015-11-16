@@ -21,18 +21,11 @@
 
 package org.uma.jmetal.util.experiment.util;
 
-import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.experiment.ExperimentConfiguration;
-import org.uma.jmetal.util.experiment.impl.AlgorithmExecution;
-import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
-import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.parallel.SynchronousParallelTaskExecutor;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
