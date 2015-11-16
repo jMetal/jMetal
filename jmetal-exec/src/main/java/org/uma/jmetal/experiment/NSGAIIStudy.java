@@ -51,34 +51,34 @@ public class NSGAIIStudy  {
 
   static List<TaggedAlgorithm<List<DoubleSolution>>> configureAlgorithmList(List<Problem<DoubleSolution>> problemList) {
     List<TaggedAlgorithm<List<DoubleSolution>>> algorithms = new ArrayList<>() ;
+for (int run = 0; run < 4; run++) {
+  for (int i = 0; i < problemList.size(); i++) {
+    Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(problemList.get(i), new SBXCrossover(1.0, 20.0),
+        new PolynomialMutation(1.0 / problemList.get(i).getNumberOfVariables(), 20.0))
+        .setMaxEvaluations(25000)
+        .setPopulationSize(100)
+        .build();
+    algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, "NSGAIIa", problemList.get(i), run));
+  }
 
-    for (int i = 0 ; i < problemList.size(); i++) {
-      Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(problemList.get(i), new SBXCrossover(1.0, 20.0),
-          new PolynomialMutation(1.0/problemList.get(i).getNumberOfVariables(), 20.0))
-          .setMaxEvaluations(25000)
-          .setPopulationSize(100)
-          .build() ;
-      algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, "NSGAIIa", problemList.get(i))) ;
-    }
+  for (int i = 0; i < problemList.size(); i++) {
+    Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(problemList.get(i), new SBXCrossover(1.0, 10.0),
+        new PolynomialMutation(1.0 / problemList.get(i).getNumberOfVariables(), 20.0))
+        .setMaxEvaluations(25000)
+        .setPopulationSize(100)
+        .build();
+    algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, "NSGAIIb", problemList.get(i), run));
+  }
 
-    for (int i = 0 ; i < problemList.size(); i++) {
-      Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(problemList.get(i), new SBXCrossover(1.0, 10.0),
-          new PolynomialMutation(1.0/problemList.get(i).getNumberOfVariables(), 20.0))
-          .setMaxEvaluations(25000)
-          .setPopulationSize(100)
-          .build() ;
-      algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, "NSGAIIb", problemList.get(i))) ;
-    }
-
-    for (int i = 0 ; i < problemList.size(); i++) {
-      Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(problemList.get(i), new SBXCrossover(1.0, 50.0),
-          new PolynomialMutation(1.0/problemList.get(i).getNumberOfVariables(), 20.0))
-          .setMaxEvaluations(25000)
-          .setPopulationSize(100)
-          .build() ;
-      algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, "NSGAIIc", problemList.get(i))) ;
-    }
-
+  for (int i = 0; i < problemList.size(); i++) {
+    Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(problemList.get(i), new SBXCrossover(1.0, 50.0),
+        new PolynomialMutation(1.0 / problemList.get(i).getNumberOfVariables(), 20.0))
+        .setMaxEvaluations(25000)
+        .setPopulationSize(100)
+        .build();
+    algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, "NSGAIIc", problemList.get(i), run));
+  }
+}
     return algorithms ;
   }
 }

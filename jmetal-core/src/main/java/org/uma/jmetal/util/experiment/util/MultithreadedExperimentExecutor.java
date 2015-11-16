@@ -89,20 +89,20 @@ public class MultithreadedExperimentExecutor<S extends Solution<?>, Result>
     } catch (InterruptedException e1) {
       JMetalLogger.logger.log(Level.SEVERE, "Error", e1);
     }
-    List<Object> resultList = new Vector<Object>();
-/*
+    List<Integer> resultList = new Vector<Integer>();
+
     for (Future<Object> result : future) {
       Object returnValue = null;
       try {
         returnValue = result.get();
-        resultList.add(returnValue);
+        resultList.add((Integer) returnValue);
       } catch (InterruptedException e) {
         JMetalLogger.logger.log(Level.SEVERE, "Error", e);
       } catch (ExecutionException e) {
         JMetalLogger.logger.log(Level.SEVERE, "Error", e);
       }
     }
-*/
+
     taskList = null;
     return null;
   }

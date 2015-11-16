@@ -59,32 +59,17 @@ public class AlgorithmExecution<S extends Solution<?>, Result> implements Experi
 
 
     for (TaggedAlgorithm<Result> algorithm : configuration.getAlgorithmList()) {
-        for (int i = 0; i < configuration.getIndependentRuns(); i++) {
+        //for (int i = 0; i < configuration.getIndependentRuns(); i++) {
           //System.out.println(algorithm.getTag() + " | " + algorithm.getProblem().getName() + " | " + i) ;
           //AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
           //    .execute();
           //Result population = algorithm.getResult() ;
-          parallelExecutor.addTask(new Object[]{algorithm, i, configuration});
-      }
+          parallelExecutor.addTask(new Object[]{algorithm, algorithm.getRunId(), configuration});
+      //}
     }
 
     parallelExecutor.parallelExecution();
     parallelExecutor.stop();
-
-/*
-    for (String algorithm : experimentData.getAlgorithmNameList()) {
-      for (String problem : experimentData.getProblemList()) {
-        for (int i = 0; i < experimentData.getIndependentRuns(); i++) {
-          JMetalLogger.logger.info(
-            "Adding task. Algorithm:  " + algorithm + " Problem: " + problem + " Run: " + i);
-          parallelExecutor.addTask(new Object[] {algorithm, problem, i, experimentData});
-        }
-      }
-    }
-
-    parallelExecutor.parallelExecution();
-    parallelExecutor.stop();
-    */
   }
 
   private void prepareOutputDirectory() {

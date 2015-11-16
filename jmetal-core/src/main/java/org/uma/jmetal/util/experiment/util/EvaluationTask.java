@@ -43,21 +43,22 @@ class EvaluationTask<S extends Solution<?>, Result> implements Callable<Object> 
   }
 
   public Integer call() throws Exception {
-
+    String funFile = outputDirectoryName + "/FUN" + id + ".tsv" ;
+    String varFile = outputDirectoryName + "/VAR" + id + ".tsv" ;
     JMetalLogger.logger.info(
         " Running algorithm: " + algorithm.getTag() +
             ", problem: " + algorithm.getProblem().getName() +
-            ", run: " + id);
+            ", run: " + id+
+            ", funFile: " + funFile);
 
 
     algorithm.run();
-
     Result population = algorithm.getResult() ;
 
     new SolutionSetOutput((List<? extends Solution<?>>) population)
         .setSeparator("\t")
-        .setVarFileOutputContext(new DefaultFileOutputContext(outputDirectoryName + "/VAR" + id + ".tsv"))
-        .setFunFileOutputContext(new DefaultFileOutputContext(outputDirectoryName + "/FUN" + id + ".tsv"))
+        .setVarFileOutputContext(new DefaultFileOutputContext(varFile))
+        .setFunFileOutputContext(new DefaultFileOutputContext(funFile))
         .print();
 
     return id;

@@ -9,17 +9,19 @@ import org.uma.jmetal.problem.Problem;
 public class TaggedAlgorithm<Result> implements Algorithm<Result> {
   private Algorithm<Result> algorithm ;
   private Problem<?> problem ;
+  private int runId ;
 
   private String tag ;
 
-  public TaggedAlgorithm (Algorithm<Result> algorithm, Problem<?> problem) {
-    this(algorithm, algorithm.getName(), problem) ;
+  public TaggedAlgorithm (Algorithm<Result> algorithm, Problem<?> problem, int runId) {
+    this(algorithm, algorithm.getName(), problem, runId) ;
   }
 
-  public TaggedAlgorithm (Algorithm<Result> algorithm, String tag, Problem<?> problem) {
+  public TaggedAlgorithm (Algorithm<Result> algorithm, String tag, Problem<?> problem, int runId) {
     this.algorithm = algorithm ;
     this.tag = tag ;
     this.problem = problem ;
+    this.runId = runId ;
   }
 
   @Override
@@ -56,5 +58,9 @@ public class TaggedAlgorithm<Result> implements Algorithm<Result> {
 
   public void setProblem(Problem<?> problem) {
     this.problem = problem ;
+  }
+
+  public int getRunId() {
+    return runId ;
   }
 }

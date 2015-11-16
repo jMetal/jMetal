@@ -68,6 +68,7 @@ public class SolutionSetOutput {
   }
 
   public void print()  {
+    System.out.println("FILENAME: " + funFileContext.getFileName()) ;
     printObjectivesToFile(funFileContext, solutionSet);
     printVariablesToFile(varFileContext, solutionSet);
   }
@@ -89,7 +90,7 @@ public class SolutionSetOutput {
     }
   }
 
-  static void printObjectivesToFile(FileOutputContext context, List<? extends Solution<?>> solutionSet) {
+  void printObjectivesToFile(FileOutputContext context, List<? extends Solution<?>> solutionSet) {
     BufferedWriter bufferedWriter = context.getFileWriter();
 
     int numberOfObjectives = solutionSet.get(0).getNumberOfObjectives();
