@@ -14,6 +14,8 @@
 package org.uma.jmetal.util.comparator;
 
 import org.uma.jmetal.solution.Solution;
+
+import java.io.Serializable;
 import java.util.Comparator;
 
 /**
@@ -23,7 +25,7 @@ import java.util.Comparator;
  * This class implements a comparator based on the rank of the solutions; if the rank is the same
  * then the crowding distance is used.
  */
-public class RankingAndCrowdingDistanceComparator<S extends Solution<?>> implements Comparator<S> {
+public class RankingAndCrowdingDistanceComparator<S extends Solution<?>> implements Comparator<S>, Serializable {
   private final Comparator<S> rankComparator = new RankingComparator<S>();
   private final Comparator<S> crowdingDistanceComparator = new CrowdingDistanceComparator<S>() ;
 

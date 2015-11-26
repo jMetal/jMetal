@@ -21,6 +21,7 @@
 
 package org.uma.jmetal.util.experiment;
 
+import org.apache.commons.lang3.SerializationUtils;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
@@ -50,12 +51,13 @@ public class ExperimentExecution<S extends Solution<?>, Result> {
 
 
     for (TaggedAlgorithm<Result> algorithm : configuration.getAlgorithmList()) {
-        //for (int i = 0; i < configuration.getIndependentRuns(); i++) {
-          //System.out.println(algorithm.getTag() + " | " + algorithm.getProblem().getName() + " | " + i) ;
+      TaggedAlgorithm<Result> object = SerializationUtils.clone(algorithm) ;
+      //  for (int i = 0; i < configuration.getIndependentRuns(); i++) {
+          //System.out.println(object.getTag() + " | " + object.getProblem().getName() + " | " + i) ;
           //AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
           //    .execute();
-          //Result population = algorithm.getResult() ;
-          parallelExecutor.addTask(new Object[]{algorithm, algorithm.getRunId(), configuration});
+          //Result population = algorithm.getResult()
+      parallelExecutor.addTask(new Object[]{object, object.getRunId(), configuration});
       //}
     }
 
