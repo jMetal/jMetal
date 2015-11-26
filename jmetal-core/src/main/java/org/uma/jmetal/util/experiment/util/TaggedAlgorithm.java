@@ -4,24 +4,28 @@ import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.problem.Problem;
 
 /**
- * Created by ajnebro on 10/11/15.
+ * This class is a decorator for {@link Algorithm} objects that will be used in an experimental study.
+ * An {@link Algorithm} is decorated with two fiels:
+ * - problem: the {@link Problem} to be optimized by the {@link Algorithm}
+ * - tag: used to indicate the name of the algorithm in the experiment. By the default it is assigned the
+ *        value of algorithm.getName(), but it can be set to another value if a same algorithm is configured
+ *        with different settings in the experiment.
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class TaggedAlgorithm<Result> implements Algorithm<Result> {
   private Algorithm<Result> algorithm ;
   private Problem<?> problem ;
-  private int runId ;
-
   private String tag ;
 
-  public TaggedAlgorithm (Algorithm<Result> algorithm, Problem<?> problem, int runId) {
-    this(algorithm, algorithm.getName(), problem, runId) ;
+  public TaggedAlgorithm (Algorithm<Result> algorithm, Problem<?> problem) {
+    this(algorithm, algorithm.getName(), problem) ;
   }
 
-  public TaggedAlgorithm (Algorithm<Result> algorithm, String tag, Problem<?> problem, int runId) {
+  public TaggedAlgorithm (Algorithm<Result> algorithm, String tag, Problem<?> problem) {
     this.algorithm = algorithm ;
     this.tag = tag ;
     this.problem = problem ;
-    this.runId = runId ;
   }
 
   @Override
@@ -58,9 +62,5 @@ public class TaggedAlgorithm<Result> implements Algorithm<Result> {
 
   public void setProblem(Problem<?> problem) {
     this.problem = problem ;
-  }
-
-  public int getRunId() {
-    return runId ;
   }
 }

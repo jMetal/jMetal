@@ -51,14 +51,10 @@ public class ExperimentExecution<S extends Solution<?>, Result> {
 
 
     for (TaggedAlgorithm<Result> algorithm : configuration.getAlgorithmList()) {
-      TaggedAlgorithm<Result> object = SerializationUtils.clone(algorithm) ;
-      //  for (int i = 0; i < configuration.getIndependentRuns(); i++) {
-          //System.out.println(object.getTag() + " | " + object.getProblem().getName() + " | " + i) ;
-          //AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-          //    .execute();
-          //Result population = algorithm.getResult()
-      parallelExecutor.addTask(new Object[]{object, object.getRunId(), configuration});
-      //}
+      for (int i = 0; i < configuration.getIndependentRuns(); i++) {
+        TaggedAlgorithm<Result> clonedAlgorithm = SerializationUtils.clone(algorithm) ;
+        parallelExecutor.addTask(new Object[]{clonedAlgorithm, i, configuration});
+      }
     }
 
     parallelExecutor.parallelExecution();
@@ -97,7 +93,7 @@ public class ExperimentExecution<S extends Solution<?>, Result> {
     result = new File(configuration.getExperimentBaseDirectory()).mkdirs() ;
     if (!result) {
       throw new JMetalException("Error creating experiment directory: " +
-        configuration.getExperimentBaseDirectory()) ;
+          configuration.getExperimentBaseDirectory()) ;
     }
   }
 }

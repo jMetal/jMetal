@@ -14,7 +14,7 @@ import java.io.File;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-/** Class defining the tasks to be computed in parallel */
+/** Class defining tasks of an experiment to be computed in parallel */
 class EvaluationTask<S extends Solution<?>, Result> implements Callable<Object> {
   private TaggedAlgorithm<Result> algorithm ;
   private int id;

@@ -41,44 +41,36 @@ public class ZDTStudy {
             .setNumberOfCores(8)
             .build();
 
-    ExperimentExecution<DoubleSolution, List<DoubleSolution>> algorithmExecution =
+    ExperimentExecution<DoubleSolution, List<DoubleSolution>> experimentExecution =
         new ExperimentExecution<DoubleSolution, List<DoubleSolution>>(configuration) ;
 
-    algorithmExecution.run();
-    /*
-    ExperimentalStudy study = new ExperimentalStudy.Builder(configuration)
-        .addExperiment(algorithmExecution)
-        .build() ;
-
-    study.run() ;
-    */
+    experimentExecution.run();
   }
 
   static List<TaggedAlgorithm<List<DoubleSolution>>> configureAlgorithmList(List<Problem<DoubleSolution>> problemList) {
     List<TaggedAlgorithm<List<DoubleSolution>>> algorithms = new ArrayList<>() ;
 
-    for (int run = 0 ; run < 4; run++) {
       for (int i = 0; i < problemList.size(); i++) {
         Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<DoubleSolution>(problemList.get(i), new SBXCrossover(1.0, 20.0),
             new PolynomialMutation(1.0 / problemList.get(i).getNumberOfVariables(), 20.0))
             .build();
-        algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, problemList.get(i), run));
+        algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, problemList.get(i)));
       }
 
     for (int i = 0 ; i < problemList.size(); i++) {
       Algorithm<List<DoubleSolution>> algorithm = new SPEA2Builder<DoubleSolution>(problemList.get(i), new SBXCrossover(1.0, 10.0),
           new PolynomialMutation(1.0/problemList.get(i).getNumberOfVariables(), 20.0))
           .build() ;
-      algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, problemList.get(i), run)) ;
+      algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, problemList.get(i))) ;
     }
 
     for (int i = 0 ; i < problemList.size(); i++) {
       Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder((DoubleProblem)problemList.get(i),
           new CrowdingDistanceArchive<DoubleSolution>(100))
           .build() ;
-      algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, problemList.get(i), run)) ;
+      algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, problemList.get(i))) ;
     }
-    }
+
     return algorithms ;
   }
 }
