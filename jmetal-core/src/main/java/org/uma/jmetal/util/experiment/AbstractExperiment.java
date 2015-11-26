@@ -25,5 +25,7 @@ public abstract class AbstractExperiment<S extends Solution<?>, Result> {
 
     ExperimentExecution<S, Result> experimentExecution ;
     experimentExecution = experimentExecution(experimentConfiguration) ;
+
+    experimentExecution.run();
   }
 }
