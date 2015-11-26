@@ -18,7 +18,6 @@ import java.util.concurrent.Callable;
 class EvaluationTask<S extends Solution<?>, Result> implements Callable<Object> {
   private TaggedAlgorithm<Result> algorithm ;
   private int id;
-  private ExperimentConfiguration<?, ?> experimentData ;
   private String outputDirectoryName ;
 
   /** Constructor */
@@ -27,7 +26,6 @@ class EvaluationTask<S extends Solution<?>, Result> implements Callable<Object> 
         " Task: " + algorithm.getTag() + ", problem: " + algorithm.getProblem().getName() + ", run: " + id);
     this.algorithm = algorithm ;
     this.id = id;
-    this.experimentData = experimentData ;
 
     outputDirectoryName = experimentData.getExperimentBaseDirectory()
         + "/data/"
@@ -38,10 +36,15 @@ class EvaluationTask<S extends Solution<?>, Result> implements Callable<Object> 
     File outputDirectory = new File(outputDirectoryName);
     if (!outputDirectory.exists()) {
       boolean result = new File(outputDirectoryName).mkdirs();
-      JMetalLogger.logger.info("Creating " + outputDirectoryName);
+      if (result) {
+        JMetalLogger.logger.info("Creating " + outputDirectoryName);
+      } else {
+        JMetalLogger.logger.severe("Creating " + outputDirectoryName + " failed");
+      }
     }
   }
 
+  @SuppressWarnings("unchecked")
   public Integer call() throws Exception {
     String funFile = outputDirectoryName + "/FUN" + id + ".tsv" ;
     String varFile = outputDirectoryName + "/VAR" + id + ".tsv" ;
@@ -55,7 +58,7 @@ class EvaluationTask<S extends Solution<?>, Result> implements Callable<Object> 
     algorithm.run();
     Result population = algorithm.getResult() ;
 
-    new SolutionSetOutput((List<? extends Solution<?>>) population)
+    new SolutionSetOutput((List<? extends S>) population)
         .setSeparator("\t")
         .setVarFileOutputContext(new DefaultFileOutputContext(varFile))
         .setFunFileOutputContext(new DefaultFileOutputContext(funFile))
