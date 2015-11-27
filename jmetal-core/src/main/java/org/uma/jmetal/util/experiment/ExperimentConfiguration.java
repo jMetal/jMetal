@@ -43,6 +43,9 @@ public class ExperimentConfiguration<S extends Solution<?>, Result> {
 	private String outputParetoSetFileName;
 	private int independentRuns;
 
+  private List<String> referenceFrontFileNames ;
+  private String referenceFrontDirectory;
+
   private int numberOfCores ;
 
 	/** Constructor */
@@ -55,6 +58,8 @@ public class ExperimentConfiguration<S extends Solution<?>, Result> {
     this.outputParetoFrontFileName = builder.getOutputParetoFrontFileName() ;
     this.outputParetoSetFileName = builder.getOutputParetoSetFileName() ;
     this.numberOfCores = builder.getNumberOfCores() ;
+    this.referenceFrontDirectory = builder.getReferenceFrontDirectory() ;
+    this.referenceFrontFileNames = builder.getReferenceFrontFileNames() ;
   }
 
   /* Getters */
@@ -89,4 +94,13 @@ public class ExperimentConfiguration<S extends Solution<?>, Result> {
   public int getNumberOfCores() {
     return numberOfCores ;
   }
+
+  public List<String> getReferenceFrontFileNames() {
+    return referenceFrontFileNames;
+  }
+
+  public String getReferenceFrontDirectory() {
+    return referenceFrontDirectory;
+  }
+  
 }

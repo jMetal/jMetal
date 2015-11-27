@@ -1,5 +1,3 @@
-//  AlgorithmExecution.java
-//
 //  Authors:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
 //
@@ -19,12 +17,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-package org.uma.jmetal.util.experiment;
+package org.uma.jmetal.util.experiment.component;
 
 import org.apache.commons.lang3.SerializationUtils;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.experiment.ExperimentComponent;
+import org.uma.jmetal.util.experiment.ExperimentConfiguration;
 import org.uma.jmetal.util.experiment.util.MultithreadedExperimentExecutor;
 import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
 
@@ -33,16 +33,17 @@ import java.io.File;
 /**
  * Created by Antonio J. Nebro on 18/07/14.
  */
-public class ExperimentExecution<S extends Solution<?>, Result> {
+public class ExecuteAlgorithms<S extends Solution<?>, Result> implements ExperimentComponent {
   private ExperimentConfiguration<S, Result> configuration ;
 
   /** Constructor */
-  public ExperimentExecution(ExperimentConfiguration<S, Result> configuration) {
+  public ExecuteAlgorithms(ExperimentConfiguration<S, Result> configuration) {
     this.configuration = configuration ;
   }
 
+  @Override
   public void run() {
-    JMetalLogger.logger.info("ExperimentExecution: Preparing output directory");
+    JMetalLogger.logger.info("ExecuteAlgorithms: Preparing output directory");
     prepareOutputDirectory() ;
 
     MultithreadedExperimentExecutor<S, Result> parallelExecutor ;

@@ -1,17 +1,18 @@
-package org.uma.jmetal.util.experiment.util;
+package org.uma.jmetal.util.experiment.component;
 
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
+import org.uma.jmetal.util.experiment.ExperimentComponent;
 import org.uma.jmetal.util.experiment.ExperimentConfiguration;
+import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontUtils;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -20,19 +21,20 @@ import java.util.List;
  *
  * @author Antonio J. Nebro
  */
-public class ReferenceParetoFront {
+public class GenerateReferenceParetoFront implements ExperimentComponent{
   private static final String DEFAULT_OUTPUT_DIRECTORY = "referenceFronts" ;
 
   private final ExperimentConfiguration<?, ?> experimentConfiguration;
   
-  public ReferenceParetoFront(ExperimentConfiguration experimentConfiguration) {
+  public GenerateReferenceParetoFront(ExperimentConfiguration experimentConfiguration) {
     this.experimentConfiguration = experimentConfiguration ;
   }
 
   /**
    * This method creates de output directory and compute the fronts
    */
-  public void generate() throws IOException {
+  @Override
+  public void run() throws IOException {
     String outputDirectoryName ;
     outputDirectoryName = experimentConfiguration.getExperimentBaseDirectory() + "/" + DEFAULT_OUTPUT_DIRECTORY ;
 

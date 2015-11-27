@@ -9,15 +9,18 @@ import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.multiobjective.zdt.*;
+import org.uma.jmetal.qualityindicator.impl.Epsilon;
+import org.uma.jmetal.qualityindicator.impl.Spread;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.experiment.ExperimentConfiguration;
 import org.uma.jmetal.util.experiment.ExperimentConfigurationBuilder;
 import org.uma.jmetal.util.experiment.ExperimentExecution;
-import org.uma.jmetal.util.experiment.util.ReferenceParetoFront;
+import org.uma.jmetal.util.experiment.component.ComputeQualityIndicators;
+import org.uma.jmetal.util.experiment.component.ExecuteAlgorithms;
+import org.uma.jmetal.util.experiment.component.GenerateReferenceParetoFront;
 import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,7 +40,6 @@ public class ZDTStudy2 {
         new ExperimentConfigurationBuilder<DoubleSolution, List<DoubleSolution>>("ZDTStudy")
             .setAlgorithmList(algorithmList)
             .setProblemList(problemList)
-            .setComputeReferenceParetoFronts()
             .setExperimentBaseDirectory("/Users/ajnebro/Softw/tmp/pruebas3")
             .setOutputParetoFrontFileName("FUN")
             .setOutputParetoSetFileName("VAR")
@@ -45,37 +47,37 @@ public class ZDTStudy2 {
             .setNumberOfCores(8)
             .build();
 
-    ExperimentExecution<DoubleSolution, List<DoubleSolution>> experimentExecution =
-        new ExperimentExecution<DoubleSolution, List<DoubleSolution>>(configuration) ;
-
-    //experimentExecution.run();
-
-    ReferenceParetoFront referenceParetoFront = new ReferenceParetoFront(configuration) ;
-    referenceParetoFront.generate();
+    ExperimentExecution experimentExecution = new ExperimentExecution() ;
+    experimentExecution
+        //.add(new ExecuteAlgorithms<>(configuration))
+        //.add(new GenerateReferenceParetoFront((configuration)))
+        .add(new ComputeQualityIndicators(configuration, Arrays.asList(new Epsilon<>(), new Spread<>())))
+        .run();
   }
+
 
   static List<TaggedAlgorithm<List<DoubleSolution>>> configureAlgorithmList(List<Problem<DoubleSolution>> problemList) {
     List<TaggedAlgorithm<List<DoubleSolution>>> algorithms = new ArrayList<>() ;
 
-      for (int i = 0; i < problemList.size(); i++) {
-        Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<DoubleSolution>(problemList.get(i), new SBXCrossover(1.0, 20.0),
-            new PolynomialMutation(1.0 / problemList.get(i).getNumberOfVariables(), 20.0))
-            .build();
-        algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, problemList.get(i)));
-      }
-
-    for (int i = 0 ; i < problemList.size(); i++) {
-      Algorithm<List<DoubleSolution>> algorithm = new SPEA2Builder<DoubleSolution>(problemList.get(i), new SBXCrossover(1.0, 10.0),
-          new PolynomialMutation(1.0/problemList.get(i).getNumberOfVariables(), 20.0))
-          .build() ;
-      algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, problemList.get(i))) ;
+    for (Problem<DoubleSolution> problem : problemList) {
+      Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<DoubleSolution>(problem, new SBXCrossover(1.0, 20.0),
+          new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0))
+          .build();
+      algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, problem));
     }
 
-    for (int i = 0 ; i < problemList.size(); i++) {
-      Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder((DoubleProblem)problemList.get(i),
+    for (Problem<DoubleSolution> problem : problemList) {
+      Algorithm<List<DoubleSolution>> algorithm = new SPEA2Builder<DoubleSolution>(problem, new SBXCrossover(1.0, 10.0),
+          new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0))
+          .build();
+      algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, problem));
+    }
+
+    for (Problem<DoubleSolution> problem : problemList) {
+      Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder((DoubleProblem) problem,
           new CrowdingDistanceArchive<DoubleSolution>(100))
-          .build() ;
-      algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, problemList.get(i))) ;
+          .build();
+      algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, problem));
     }
 
     return algorithms ;

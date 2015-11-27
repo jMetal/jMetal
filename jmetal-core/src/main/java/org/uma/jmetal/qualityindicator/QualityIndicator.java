@@ -23,5 +23,4 @@ import org.uma.jmetal.util.naming.DescribedEntity;
  */
 public interface QualityIndicator<Evaluate, Result> extends DescribedEntity {
   public Result evaluate(Evaluate evaluate) ;
-  public String getName() ;
 }

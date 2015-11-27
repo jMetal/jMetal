@@ -43,10 +43,13 @@ import java.util.List;
  * @author Juan J. Durillo
  */
 public class Spread<Evaluate extends List<? extends Solution<?>>>
-    extends SimpleDescribedEntity
-    implements QualityIndicator<Evaluate,Double> {
+    extends GenericIndicator<Evaluate> {
 
-  private Front referenceParetoFront ;
+  /**
+   * Default constructor
+   */
+  public Spread() {
+  }
 
   /**
    * Constructor
@@ -55,13 +58,7 @@ public class Spread<Evaluate extends List<? extends Solution<?>>>
    * @throws FileNotFoundException
    */
   public Spread(String referenceParetoFrontFile) throws FileNotFoundException {
-    super("SPREAD", "SPREAD quality indicator") ;
-    if (referenceParetoFrontFile == null) {
-      throw new JMetalException("The pareto front object is null");
-    }
-
-    Front front = new ArrayFront(referenceParetoFrontFile);
-    referenceParetoFront = front ;
+    super(referenceParetoFrontFile) ;
   }
 
   /**
@@ -71,12 +68,7 @@ public class Spread<Evaluate extends List<? extends Solution<?>>>
    * @throws FileNotFoundException
    */
   public Spread(Front referenceParetoFront) {
-    super("SPREAD", "SPREAD quality indicator") ;
-    if (referenceParetoFront == null) {
-      throw new JMetalException("The pareto front is null");
-    }
-
-    this.referenceParetoFront = referenceParetoFront ;
+    super(referenceParetoFront) ;
   }
 
   /**
@@ -133,6 +125,9 @@ public class Spread<Evaluate extends List<? extends Solution<?>>>
   }
 
   @Override public String getName() {
-    return super.getName() ;
+    return "SPREAD" ;
+  }
+  @Override public String getDescription() {
+    return "Spread quality indicator" ;
   }
 }

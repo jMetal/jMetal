@@ -10,8 +10,11 @@ import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.experiment.ExperimentConfiguration;
 import org.uma.jmetal.util.experiment.ExperimentConfigurationBuilder;
 import org.uma.jmetal.util.experiment.ExperimentExecution;
+import org.uma.jmetal.util.experiment.component.ExecuteAlgorithms;
+import org.uma.jmetal.util.experiment.component.GenerateReferenceParetoFront;
 import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,7 +23,7 @@ import java.util.List;
  * Created by ajnebro on 22/3/15.
  */
 public class NSGAIIStudy  {
-  public static void main(String[] args) {
+  public static void main(String[] args) throws IOException {
     List<Problem<DoubleSolution>> problemList = Arrays.<Problem<DoubleSolution>>asList(new ZDT1(), new ZDT2(),
         new ZDT3(), new ZDT4(), new ZDT6()) ;
 
@@ -37,10 +40,11 @@ public class NSGAIIStudy  {
             .setNumberOfCores(8)
             .build();
 
-    ExperimentExecution<DoubleSolution, List<DoubleSolution>> algorithmExecution =
-        new ExperimentExecution<DoubleSolution, List<DoubleSolution>>(configuration) ;
-
-    algorithmExecution.run();
+    ExperimentExecution experimentExecution = new ExperimentExecution() ;
+    experimentExecution
+        .add(new ExecuteAlgorithms<>(configuration))
+        .add(new GenerateReferenceParetoFront((configuration)))
+        .run();
   }
 
   static List<TaggedAlgorithm<List<DoubleSolution>>> configureAlgorithmList(List<Problem<DoubleSolution>> problemList) {

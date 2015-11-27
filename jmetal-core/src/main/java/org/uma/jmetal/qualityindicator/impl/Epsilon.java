@@ -45,10 +45,13 @@ import java.util.List;
  */
 
 public class Epsilon<Evaluate extends List<? extends Solution<?>>>
-    extends SimpleDescribedEntity
-    implements QualityIndicator<Evaluate,Double> {
+    extends GenericIndicator<Evaluate> {
 
-  private Front referenceParetoFront ;
+  /**
+   * Default constructor
+   */
+  public Epsilon() {
+  }
 
   /**
    * Constructor
@@ -57,13 +60,7 @@ public class Epsilon<Evaluate extends List<? extends Solution<?>>>
    * @throws FileNotFoundException
    */
   public Epsilon(String referenceParetoFrontFile) throws FileNotFoundException {
-    super("EP", "Epsilon quality indicator") ;
-    if (referenceParetoFrontFile == null) {
-      throw new JMetalException("The reference pareto front is null");
-    }
-
-    Front front = new ArrayFront(referenceParetoFrontFile);
-    referenceParetoFront = front ;
+    super(referenceParetoFrontFile) ;
   }
 
   /**
@@ -72,12 +69,7 @@ public class Epsilon<Evaluate extends List<? extends Solution<?>>>
    * @param referenceParetoFront
    */
   public Epsilon(Front referenceParetoFront) {
-    super("EP", "Epsilon quality indicator") ;
-    if (referenceParetoFront == null) {
-      throw new JMetalException("The reference pareto front is null");
-    }
-
-    this.referenceParetoFront = referenceParetoFront ;
+    super(referenceParetoFront) ;
   }
 
   /**
@@ -92,10 +84,6 @@ public class Epsilon<Evaluate extends List<? extends Solution<?>>>
     }
 
     return epsilon(new ArrayFront(solutionList), referenceParetoFront);
-  }
-
-  @Override public String getName() {
-    return super.getName() ;
   }
 
   /**
@@ -139,5 +127,13 @@ public class Epsilon<Evaluate extends List<? extends Solution<?>>>
       }
     }
     return eps;
+  }
+
+  @Override public String getName() {
+    return "EP" ;
+  }
+
+  @Override public String getDescription() {
+    return "Additive Epsilon quality indicator" ;
   }
 }

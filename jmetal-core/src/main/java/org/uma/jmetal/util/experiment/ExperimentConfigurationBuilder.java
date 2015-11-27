@@ -39,22 +39,20 @@ public class ExperimentConfigurationBuilder<S extends Solution<?>, Result> {
   private List<TaggedAlgorithm<Result>> algorithmList;
   private List<Problem<S>> problemList;
   private List<String> referenceFrontFileNames ;
+  private String referenceFrontDirectory;
   private String experimentBaseDirectory;
   private String outputParetoFrontFileName;
   private String outputParetoSetFileName;
   private int independentRuns;
-  private boolean computeReferenceFronts ;
 
   private int numberOfCores ;
-  private String referenceFrontDirectory;
 
   public ExperimentConfigurationBuilder(String experimentName) {
     this.experimentName = experimentName ;
     this.independentRuns = 1 ;
     this.numberOfCores = 1 ;
-    referenceFrontFileNames = null ;
-    referenceFrontDirectory = null ;
-    computeReferenceFronts = false ;
+    this.referenceFrontFileNames = null ;
+    this.referenceFrontDirectory = "dfd" ;
   }
 
   public ExperimentConfigurationBuilder<S, Result> setAlgorithmList(List<TaggedAlgorithm<Result>> algorithmList) {
@@ -111,12 +109,6 @@ public class ExperimentConfigurationBuilder<S extends Solution<?>, Result> {
     return this ;
   }
 
-  public ExperimentConfigurationBuilder<S, Result> setComputeReferenceParetoFronts() {
-    computeReferenceFronts = true ;
-
-    return this ;
-  }
-
   public ExperimentConfiguration<S, Result> build() {
     return new ExperimentConfiguration<S, Result>(this);
   }
@@ -152,5 +144,13 @@ public class ExperimentConfigurationBuilder<S extends Solution<?>, Result> {
 
   public int getNumberOfCores() {
     return numberOfCores;
+  }
+
+  public List<String> getReferenceFrontFileNames() {
+    return referenceFrontFileNames;
+  }
+
+  public String getReferenceFrontDirectory() {
+    return referenceFrontDirectory;
   }
 }
