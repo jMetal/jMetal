@@ -23,12 +23,10 @@ import java.util.List;
 /**
  * Created by ajnebro on 22/3/15.
  */
-public class ZDTStudy {
+public class ZDTStudy2 {
   public static void main(String[] args) {
     List<Problem<DoubleSolution>> problemList = Arrays.<Problem<DoubleSolution>>asList(new ZDT1(), new ZDT2(),
         new ZDT3(), new ZDT4(), new ZDT6()) ;
-
-    List<String> referenceFrontFileNames = Arrays.asList("ZDT1.pf", "ZDT2.pf", "ZDT3.pf", "ZDT4.pf", "ZDT6.pf") ;
 
     List<TaggedAlgorithm<List<DoubleSolution>>> algorithmList = configureAlgorithmList(problemList) ;
 
@@ -36,8 +34,7 @@ public class ZDTStudy {
         new ExperimentConfigurationBuilder<DoubleSolution, List<DoubleSolution>>("ZDTStudy")
             .setAlgorithmList(algorithmList)
             .setProblemList(problemList)
-            .setReferenceFrontDirectory("rfdirectory")
-            .setReferenceFrontFileNames(referenceFrontFileNames)
+            .setComputeReferenceParetoFronts()
             .setExperimentBaseDirectory("/Users/ajnebro/Softw/tmp/pruebas3")
             .setOutputParetoFrontFileName("FUN")
             .setOutputParetoSetFileName("VAR")

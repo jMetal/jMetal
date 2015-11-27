@@ -38,17 +38,23 @@ public class ExperimentConfigurationBuilder<S extends Solution<?>, Result> {
   private final String experimentName ;
   private List<TaggedAlgorithm<Result>> algorithmList;
   private List<Problem<S>> problemList;
+  private List<String> referenceFrontFileNames ;
   private String experimentBaseDirectory;
   private String outputParetoFrontFileName;
   private String outputParetoSetFileName;
   private int independentRuns;
+  private boolean computeReferenceFronts ;
 
   private int numberOfCores ;
+  private String referenceFrontDirectory;
 
   public ExperimentConfigurationBuilder(String experimentName) {
     this.experimentName = experimentName ;
     this.independentRuns = 1 ;
     this.numberOfCores = 1 ;
+    referenceFrontFileNames = null ;
+    referenceFrontDirectory = null ;
+    computeReferenceFronts = false ;
   }
 
   public ExperimentConfigurationBuilder<S, Result> setAlgorithmList(List<TaggedAlgorithm<Result>> algorithmList) {
@@ -65,6 +71,18 @@ public class ExperimentConfigurationBuilder<S extends Solution<?>, Result> {
 
   public ExperimentConfigurationBuilder<S, Result> setExperimentBaseDirectory(String experimentBaseDirectory) {
     this.experimentBaseDirectory = experimentBaseDirectory+"/"+experimentName ;
+
+    return this ;
+  }
+
+  public ExperimentConfigurationBuilder<S, Result> setReferenceFrontDirectory(String referenceFrontDirectory) {
+    this.referenceFrontDirectory = referenceFrontDirectory ;
+
+    return this ;
+  }
+
+  public ExperimentConfigurationBuilder<S, Result> setReferenceFrontFileNames(List<String> referenceFrontFileNames) {
+    this.referenceFrontFileNames = referenceFrontFileNames ;
 
     return this ;
   }
@@ -89,6 +107,12 @@ public class ExperimentConfigurationBuilder<S extends Solution<?>, Result> {
 
   public ExperimentConfigurationBuilder<S, Result> setNumberOfCores(int numberOfCores) {
     this.numberOfCores = numberOfCores;
+
+    return this ;
+  }
+
+  public ExperimentConfigurationBuilder<S, Result> setComputeReferenceParetoFronts() {
+    computeReferenceFronts = true ;
 
     return this ;
   }
