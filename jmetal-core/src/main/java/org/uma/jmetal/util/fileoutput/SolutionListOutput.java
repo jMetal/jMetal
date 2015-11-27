@@ -15,6 +15,7 @@ package org.uma.jmetal.util.fileoutput;
 
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
 import java.io.BufferedWriter;
@@ -24,42 +25,42 @@ import java.util.List;
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class SolutionSetOutput {
+public class SolutionListOutput {
   private FileOutputContext varFileContext;
   private FileOutputContext funFileContext;
   private String varFileName = "VAR";
   private String funFileName = "FUN";
   private String separator = "\t";
-  private List<? extends Solution<?>> solutionSet;
+  private List<? extends Solution<?>> solutionList;
   private boolean selectFeasibleSolutions;
 
-  public SolutionSetOutput(List<? extends Solution<?>> solutionSet) {
+  public SolutionListOutput(List<? extends Solution<?>> solutionList) {
     varFileContext = new DefaultFileOutputContext(varFileName);
     funFileContext = new DefaultFileOutputContext(funFileName);
     varFileContext.setSeparator(separator);
     funFileContext.setSeparator(separator);
-    this.solutionSet = solutionSet;
+    this.solutionList = solutionList;
     selectFeasibleSolutions = false;
   }
 
-  public SolutionSetOutput setVarFileOutputContext(FileOutputContext fileContext) {
+  public SolutionListOutput setVarFileOutputContext(FileOutputContext fileContext) {
     varFileContext = fileContext;
 
     return this;
   }
 
-  public SolutionSetOutput setFunFileOutputContext(FileOutputContext fileContext) {
+  public SolutionListOutput setFunFileOutputContext(FileOutputContext fileContext) {
     funFileContext = fileContext;
 
     return this;
   }
 
-  public SolutionSetOutput selectFeasibleSolutions() {
+  public SolutionListOutput selectFeasibleSolutions() {
     selectFeasibleSolutions = true ;
     return this;
   }
 
-  public SolutionSetOutput setSeparator(String separator) {
+  public SolutionListOutput setSeparator(String separator) {
     this.separator = separator;
     varFileContext.setSeparator(this.separator);
     funFileContext.setSeparator(this.separator);
@@ -68,9 +69,9 @@ public class SolutionSetOutput {
   }
 
   public void print()  {
-    System.out.println("FILENAME: " + funFileContext.getFileName()) ;
-    printObjectivesToFile(funFileContext, solutionSet);
-    printVariablesToFile(varFileContext, solutionSet);
+    JMetalLogger.logger.info("FILENAME: " + funFileContext.getFileName()); ;
+    printObjectivesToFile(funFileContext, solutionList);
+    printVariablesToFile(varFileContext, solutionList);
   }
 
   public void printVariablesToFile(FileOutputContext context, List<? extends Solution<?>> solutionSet) {
@@ -110,12 +111,12 @@ public class SolutionSetOutput {
   /*
    * Wrappers for printing with default configuration
    */
-  public void printObjectivesToFile(List<? extends Solution<?>> solutionSet, String fileName) throws IOException {
-    printObjectivesToFile(new DefaultFileOutputContext(fileName), solutionSet);
+  public void printObjectivesToFile(String fileName) throws IOException {
+    printObjectivesToFile(new DefaultFileOutputContext(fileName), solutionList);
   }
 
-  public void printVariablesToFile(List<? extends Solution<?>> solutionSet, String fileName) throws IOException {
-    printVariablesToFile(new DefaultFileOutputContext(fileName), solutionSet);
+  public void printVariablesToFile(String fileName) throws IOException {
+    printVariablesToFile(new DefaultFileOutputContext(fileName), solutionList);
   }
 
 }
